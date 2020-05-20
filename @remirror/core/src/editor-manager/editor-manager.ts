@@ -43,7 +43,7 @@ import {
   transformExtensionOrPreset as transformExtensionOrPresetList,
 } from './editor-manager-helpers';
 
-export type AnyEditorManager = EditorManager<any, any>;
+export type AnyEditorManager = EditorManager<AnyExtension, AnyPreset>;
 
 /**
  * Checks to see whether the provided value is an `Manager`.
@@ -126,7 +126,8 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     presets = [] as PresetUnion[],
     settings = {},
   }: Partial<EditorManagerParameter<ExtensionUnion, PresetUnion>>) {
-    const builtInPreset = BuiltinPreset.of();
+    const builtInPreset = new BuiltinPreset();
+
     return new EditorManager<ExtensionUnion, PresetUnion | typeof builtInPreset>({
       extensions,
       presets: [...presets, builtInPreset],
@@ -251,7 +252,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * A shorthand getter for retrieving the tags from the extension manager.
    */
   get extensionTags() {
-    return this.#store.extensionTags;
+    return this.#store.tags;
   }
 
   /**
@@ -484,7 +485,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
           '`getState` can only be called after the view has been added to the manager. Avoid using it in the outer scope of `creatorMethods`.',
       });
 
-      return this.view.state;
+      return this.view.state as EditorState;
     };
 
     return methodParameter;
@@ -502,7 +503,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     });
 
     this.#phase = ManagerPhase.AddView;
-    this.#store.view = view;
+    this.#store.view = view as EditorView;
     this.#extensionStore.view = view;
 
     for (const extension of this.#extensions) {

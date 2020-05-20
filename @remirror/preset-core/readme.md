@@ -36,7 +36,7 @@ import { ParagraphExtension } from '@remirror/extension-paragraph';
 import { CorePreset } from '@remirror/preset-core';
 
 // Create the preset
-const corePreset = CorePreset.of({ rootContent: });
+const corePreset = new CorePreset({ rootContent: 'block*' });
 
 // Create the Editor Manager with the required preset.
 const manager = EditorManager.of([corePreset]);

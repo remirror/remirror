@@ -1,14 +1,24 @@
 import { pmBuild } from 'jest-prosemirror';
 
 import { NodeGroup } from '@remirror/core-constants';
+import { NodeExtensionSpec } from '@remirror/core-types';
 import { fromHTML } from '@remirror/core-utils';
 import { createBaseManager } from '@remirror/test-fixtures';
 
-import { ExtensionFactory } from '../..';
+import { NodeExtension } from '..';
 
-const CustomExtension = ExtensionFactory.node({
-  name: 'custom',
-  createNodeSchema() {
+class CustomExtension extends NodeExtension {
+  public name = 'custom' as const;
+
+  protected createDefaultSettings(): import('..').DefaultSettingsType<{}> {
+    return {};
+  }
+
+  protected createDefaultProperties(): Required<{}> {
+    return {};
+  }
+
+  public createNodeSpec(): NodeExtensionSpec {
     return {
       content: 'inline*',
       group: NodeGroup.Block,
@@ -20,13 +30,13 @@ const CustomExtension = ExtensionFactory.node({
       ],
       toDOM: () => ['p', 0],
     };
-  },
-});
+  }
+}
 
 describe('extraAttributes', () => {
   const run = 'true';
   const title = 'awesome';
-  const customExtension = CustomExtension.of({
+  const customExtension = new CustomExtension({
     extraAttributes: [
       'title',
       ['run', 'failure', 'data-run'],

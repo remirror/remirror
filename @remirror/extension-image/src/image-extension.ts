@@ -18,7 +18,7 @@ import { Plugin } from '@remirror/pm/state';
  */
 export const ImageExtension = createTypedExtension().node({
   name: 'image',
-  createNodeSchema(): NodeExtensionSpec {
+  createNodeSpec(): NodeExtensionSpec {
     return {
       inline: true,
       attrs: {

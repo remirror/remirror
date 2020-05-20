@@ -29,7 +29,7 @@ export const BoldExtension = ExtensionFactory.typed<BoldExtensionSettings>().mar
 
   extensionTags: [ExtensionTag.FormattingMark],
 
-  createMarkSchema(parameter) {
+  createMarkSpec(parameter) {
     const { weight } = parameter.settings;
     return {
       group: MarkGroup.FontStyle,

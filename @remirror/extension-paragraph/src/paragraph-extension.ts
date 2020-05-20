@@ -94,7 +94,7 @@ export const ParagraphExtension = ExtensionFactory.typed<ParagraphExtensionSetti
     indentAttribute: INDENT_ATTRIBUTE,
     indentLevels: INDENT_LEVELS,
   },
-  createNodeSchema(parameter) {
+  createNodeSpec(parameter) {
     const { settings } = parameter;
 
     return {

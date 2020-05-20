@@ -1,4 +1,4 @@
-import { ExtensionPriority, PresetFactory } from '@remirror/core';
+import { ExtensionPriority, Preset } from '@remirror/core';
 import { DocExtension } from '@remirror/extension-doc';
 import { ParagraphExtension } from '@remirror/extension-paragraph';
 import { TextExtension } from '@remirror/extension-text';
@@ -13,19 +13,26 @@ export interface CorePresetSettings {
   content?: string | null;
 }
 
-export const CorePreset = PresetFactory.typed<CorePresetSettings>().preset({
-  name: 'core',
-  defaultSettings: {
-    content: DocExtension.defaultSettings.content,
-  },
+export class CorePreset extends Preset<CorePresetSettings> {
+  public readonly name = 'core' as const;
 
-  createExtensions(parameter) {
-    const { settings } = parameter;
+  protected createDefaultSettings() {
+    return { content: DocExtension.defaultSettings.content };
+  }
 
+  protected createDefaultProperties() {
+    return {};
+  }
+
+  protected onSetProperties() {
+    return;
+  }
+
+  public createExtensions = () => {
     return [
-      DocExtension.of({ content: settings.content, priority: ExtensionPriority.Low }),
-      TextExtension.of({ priority: ExtensionPriority.Low }),
-      ParagraphExtension.of({ priority: ExtensionPriority.Low }),
+      new DocExtension({ content: this.settings.content, priority: ExtensionPriority.Low }),
+      new TextExtension({ priority: ExtensionPriority.Low }),
+      new ParagraphExtension({ priority: ExtensionPriority.Low }),
     ];
-  },
-});
+  };
+}

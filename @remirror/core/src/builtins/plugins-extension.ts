@@ -4,9 +4,16 @@ import { EditorSchema, ProsemirrorPlugin, Shape } from '@remirror/core-types';
 import { getPluginState } from '@remirror/core-utils';
 import { Plugin, PluginKey } from '@remirror/pm/state';
 
-import { AnyExtension, AnyExtensionConstructor, GetExtensionUnion } from '../extension';
+import {
+  AnyExtension,
+  AnyExtensionConstructor,
+  CreateLifecycleMethod,
+  GetExtensionUnion,
+  InitializeLifecycleMethod,
+  PlainExtension,
+} from '../extension';
 import { AnyPreset } from '../preset';
-import { GetNameUnion, ManagerTypeParameter } from '../types';
+import { GetNameUnion } from '../types';
 
 /**
  * This extension allows others extension to add the `createPlugin` method
@@ -19,13 +26,22 @@ import { GetNameUnion, ManagerTypeParameter } from '../types';
  *
  * @builtin
  */
-export const PluginsExtension = ExtensionFactory.plain({
-  name: 'plugins',
-  defaultPriority: ExtensionPriority.Medium,
+export class PluginsExtension extends PlainExtension {
+  public readonly name = 'plugins' as const;
+  public readonly defaultPriority = ExtensionPriority.Medium as const;
+
+  protected createDefaultSettings() {
+    return {};
+  }
+  protected createDefaultProperties() {
+    return {};
+  }
 
   // Here set the plugins keys and state getters for retrieving plugin state.
   // These methods are later used.
-  onCreate({ setStoreKey, setExtensionStore, getStoreKey }) {
+  public onCreate: CreateLifecycleMethod = (parameter) => {
+    const { setStoreKey, setExtensionStore, getStoreKey } = parameter;
+
     const pluginKeys: Record<string, PluginKey> = object();
     const stateGetters = new Map<string | AnyExtensionConstructor, <State = unknown>() => State>();
 
@@ -56,21 +72,21 @@ export const PluginsExtension = ExtensionFactory.plain({
         setExtensionStore('getPluginState', getStateByName);
       },
     };
-  },
+  };
 
   /**
    * Ensure that all ssr transformers are run.
    */
-  onInitialize(parameter) {
-    const { getParameter, addPlugins, managerSettings, getStoreKey } = parameter;
+  public onInitialize: InitializeLifecycleMethod = (parameter) => {
+    const { addPlugins, managerSettings, getStoreKey } = parameter;
 
     const extensionPlugins: ProsemirrorPlugin[] = [];
 
     return {
       forEachExtension: (extension) => {
         if (
-          // Extension doesn't create a plugin
-          !extension.parameter.createPlugin ||
+          // Extension doesn't create any plugins
+          !extension.createPlugin ||
           // the manager settings don't exclude plugins
           managerSettings.exclude?.plugins ||
           // The extension settings don't exclude plugins
@@ -80,8 +96,7 @@ export const PluginsExtension = ExtensionFactory.plain({
         }
 
         const key: PluginKey = getStoreKey('pluginKeys')[extension.name];
-        const pluginParameter = getParameter(extension, { key });
-        const plugin: Plugin = extension.parameter.createPlugin(pluginParameter);
+        const plugin: Plugin | Plugin[] = extension.createPlugin(key);
 
         extensionPlugins.push(...(isArray(plugin) ? plugin : [plugin]));
       },
@@ -90,8 +105,8 @@ export const PluginsExtension = ExtensionFactory.plain({
         addPlugins(...extensionPlugins);
       },
     };
-  },
-});
+  };
+}
 
 declare global {
   namespace Remirror {
@@ -152,19 +167,7 @@ declare global {
        *
        * @param parameter - schema parameter with the prosemirror type included
        */
-      createPlugin?: (
-        parameter: ManagerTypeParameter<ProsemirrorType> & {
-          /**
-           * The plugin key which should be used when creating this plugin
-           */
-          key: PluginKey;
-
-          /**
-           * The extension which provides access to the settings and properties.
-           */
-          extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
-        },
-      ) => ProsemirrorPlugin | ProsemirrorPlugin[];
+      createPlugin?: (pluginKey: PluginKey) => ProsemirrorPlugin | ProsemirrorPlugin[];
     }
   }
 }

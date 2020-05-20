@@ -1,5 +1,4 @@
-import { PresetFactory } from '../preset';
-import { Of } from '../types';
+import { Preset } from '../preset';
 import { AttributesExtension } from './attributes-extension';
 import { CommandsExtension } from './commands-extension';
 import { HelpersExtension } from './helpers-extension';
@@ -39,39 +38,22 @@ export const builtInExtensions = [
  *
  * @builtin
  */
-export const BuiltinPreset = PresetFactory.typed().preset({
-  name: 'builtin',
-  createExtensions() {
-    return builtInExtensions.map((extension) => extension.of());
-  },
-});
+export class BuiltinPreset extends Preset {
+  public name = 'builtin' as const;
 
-/*
-const BuiltinPreset = PresetFactory.typed<
-  { excludeStrikeThrough: boolean },
-  { boldWeight: number }
->().preset({
-  name: 'builtin',
-  defaultSettings: {
-    excludeStrikeThrough: false,
-  },
-  defaultProperties: {
-    boldWeight: 500,
-  },
-  createExtensions({ settings }) {
-    if (settings.excludeStrikeThrough) {
-    }
-    return builtInExtensions.map(extension => extension.of());
-  },
-  onSetProperties({ getExtension, changes, previous, update }) {
-    if (changes.boldWeight.changed) {
+  protected createDefaultSettings() {
+    return {};
+  }
 
-      const extension = getExtension(InputRulesExtension);
-      extension.setProperties({weight: changes.boldWeight.value})
-    }
-  },
-});
-*/
+  protected createDefaultProperties(): Required<{}> {
+    return {};
+  }
 
-/** The built in extension as a type. */
-export type BuiltInExtensions = Of<typeof builtInExtensions[number]>;
+  protected onSetProperties(): void {
+    return;
+  }
+
+  public createExtensions() {
+    return builtInExtensions.map((Extension) => new Extension());
+  }
+}

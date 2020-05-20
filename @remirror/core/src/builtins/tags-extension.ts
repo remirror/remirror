@@ -4,10 +4,11 @@ import { EditorSchema } from '@remirror/core-types';
 
 import {
   AnyExtension,
-  ExtensionFactory,
+  CreateLifecycleMethod,
   ExtensionTags,
   isMarkExtension,
   isNodeExtension,
+  PlainExtension,
 } from '../extension';
 import { AnyPreset } from '../preset';
 import { GeneralExtensionTags, MarkExtensionTags, NodeExtensionTags } from '../types';
@@ -18,10 +19,18 @@ import { GeneralExtensionTags, MarkExtensionTags, NodeExtensionTags } from '../t
  *
  * @builtin
  */
-export const TagsExtension = ExtensionFactory.plain({
-  name: 'tags',
+export class TagsExtension extends PlainExtension {
+  public readonly name = 'tags' as const;
 
-  onCreate(parameter) {
+  protected createDefaultSettings() {
+    return {};
+  }
+
+  protected createDefaultProperties() {
+    return {};
+  }
+
+  public onCreate: CreateLifecycleMethod = (parameter) => {
     const general: GeneralExtensionTags = {
       [ExtensionTag.FormattingMark]: [],
       [ExtensionTag.FormattingNode]: [],
@@ -67,14 +76,15 @@ export const TagsExtension = ExtensionFactory.plain({
         }
       },
       afterExtensionLoop() {
-        const { setStoreKey, setExtensionStore, getStoreKey } = parameter;
+        const { setStoreKey, setExtensionStore } = parameter;
+        const tags = { general, mark, node };
 
-        setStoreKey('extensionTags', { general, mark, node });
-        setExtensionStore('extensionTags', () => getStoreKey('extensionTags'));
+        setStoreKey('tags', tags);
+        setExtensionStore('tags', () => tags);
       },
     };
-  },
-});
+  };
+}
 
 declare global {
   namespace Remirror {
@@ -82,14 +92,14 @@ declare global {
       /**
        * Store the built in and custom tags for the editor instance.
        */
-      extensionTags: Readonly<ExtensionTags<ExtensionUnion>>;
+      tags: Readonly<ExtensionTags<ExtensionUnion>>;
     }
 
     export interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {
       /**
        * The tags provided by the configured extensions.
        */
-      extensionTags: () => ExtensionTags<AnyExtension>;
+      tags: () => ExtensionTags<any>;
     }
   }
 }

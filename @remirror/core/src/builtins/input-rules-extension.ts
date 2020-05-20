@@ -1,9 +1,8 @@
 import { ExtensionPriority } from '@remirror/core-constants';
-import { And, Shape } from '@remirror/core-types';
+import { Shape } from '@remirror/core-types';
 import { InputRule, inputRules } from '@remirror/pm/inputrules';
 
-import { Extension, ExtensionFactory } from '../extension';
-import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } from '../types';
+import { InitializeLifecycleMethod, PlainExtension } from '../extension';
 
 /**
  * This extension allows others extension to add the `createInputRules` method
@@ -16,14 +15,23 @@ import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } f
  *
  * @builtin
  */
-export const InputRulesExtension = ExtensionFactory.plain({
-  name: 'inputRules',
-  defaultPriority: ExtensionPriority.High,
+export class InputRulesExtension extends PlainExtension {
+  public readonly name = 'inputRules' as const;
+  public readonly defaultPriority = ExtensionPriority.High as const;
+
+  protected createDefaultSettings() {
+    return {};
+  }
+
+  protected createDefaultProperties() {
+    return {};
+  }
 
   /**
    * Ensure that all ssr transformers are run.
    */
-  onInitialize({ getParameter, addPlugins, managerSettings }) {
+  public onInitialize: InitializeLifecycleMethod = (parameter) => {
+    const { addPlugins, managerSettings } = parameter;
     const rules: InputRule[] = [];
 
     return {
@@ -32,23 +40,22 @@ export const InputRulesExtension = ExtensionFactory.plain({
           // managerSettings excluded this from running
           managerSettings.exclude?.inputRules ||
           // Method doesn't exist
-          !extension.parameter.createInputRules ||
+          !extension.createInputRules ||
           // Extension settings exclude it
           extension.settings.exclude.inputRules
         ) {
           return;
         }
 
-        const parameter = getParameter(extension);
-        rules.push(...extension.parameter.createInputRules(parameter));
+        rules.push(...extension.createInputRules());
       },
 
       afterExtensionLoop: () => {
         addPlugins(inputRules({ rules }));
       },
     };
-  },
-});
+  };
+}
 
 declare global {
   namespace Remirror {
@@ -68,17 +75,7 @@ declare global {
        *
        * @param parameter - schema parameter with type included
        */
-      createInputRules?: (
-        parameter: And<
-          ManagerTypeParameter<ProsemirrorType>,
-          {
-            /**
-             * The extension which provides access to the settings and properties.
-             */
-            extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
-          }
-        >,
-      ) => InputRule[];
+      createInputRules?: () => InputRule[];
     }
   }
 }

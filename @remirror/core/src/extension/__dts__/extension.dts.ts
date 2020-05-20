@@ -1,5 +1,13 @@
-import { AnyExtension, AnyNodeExtension, AnyMarkExtension } from '../extension-base';
-import { ExtensionFactory } from '../extension-factory';
+import {
+  AnyExtension,
+  AnyMarkExtension,
+  AnyNodeExtension,
+  MarkExtension,
+  NodeExtension,
+  NodeExtensionSpec,
+  PlainExtension,
+  RemirrorIdentifier,
+} from '../../..';
 
 const anyExtensionTester = <ExtensionUnion extends AnyExtension>(extension: ExtensionUnion) => {};
 const anyNodeExtensionTester = <ExtensionUnion extends AnyNodeExtension>(
@@ -11,8 +19,18 @@ const anyMarkExtensionTester = <ExtensionUnion extends AnyMarkExtension>(
 
 // Extension without settings.
 
-const ExtensionWithoutSettings = ExtensionFactory.typed().plain({ name: 'withoutSettings' });
-const extensionWithoutSettings = ExtensionWithoutSettings.of();
+class ExtensionWithoutSettings extends PlainExtension {
+  public name = 'withoutSettings' as const;
+
+  protected createDefaultSettings(): import('../extension-base').DefaultSettingsType<{}> {
+    throw new Error('Method not implemented.');
+  }
+
+  protected createDefaultProperties(): Required<{}> {
+    throw new Error('Method not implemented.');
+  }
+}
+const extensionWithoutSettings = new ExtensionWithoutSettings();
 
 type AnyExtensionSupportsNoSettings = typeof extensionWithoutSettings extends AnyExtension
   ? true
@@ -22,18 +40,27 @@ anyExtensionTester(extensionWithoutSettings);
 
 // Extension with settings
 
-const ExtensionWithSettings = ExtensionFactory.typed<{ oops: boolean }>().plain({
-  name: 'withSettings',
-  defaultSettings: {},
-});
+class ExtensionWithSettings extends PlainExtension<{ oops: boolean }> {
+  public name = 'withSettings' as const;
+
+  protected createDefaultSettings(): import('../extension-base').DefaultSettingsType<{
+    oops: boolean;
+  }> {
+    throw new Error('Method not implemented.');
+  }
+
+  protected createDefaultProperties(): Required<{}> {
+    throw new Error('Method not implemented.');
+  }
+}
 
 // @ts-expect-error
-ExtensionWithSettings.of({});
+new ExtensionWithSettings({});
 
 // @ts-expect-error
-ExtensionWithSettings.of();
+new ExtensionWithSettings();
 
-const extensionWithSettings = ExtensionWithSettings.of({ oops: true });
+const extensionWithSettings = new ExtensionWithSettings({ oops: true });
 
 type AnyExtensionsSupportsSettings = typeof extensionWithSettings extends AnyExtension
   ? true
@@ -43,46 +70,69 @@ anyExtensionTester(extensionWithSettings);
 
 // Extension with properties
 
-const ExtensionWithProperties = ExtensionFactory.typed<
-  { awesome?: string },
-  { oops: boolean }
->().plain({
-  name: 'withProperties',
-  defaultSettings: { awesome: 'never' },
-  defaultProperties: { oops: false },
-});
-const NodeExtensionWithProperties = ExtensionFactory.typed<
-  { awesome?: string },
-  { oops: boolean }
->().node({
-  name: 'withProperties',
-  defaultSettings: { awesome: 'never' },
-  defaultProperties: { oops: false },
-  createNodeSchema() {
-    return {};
-  },
-});
-const MarkExtensionWithProperties = ExtensionFactory.typed<
-  { awesome?: string },
-  { oops: boolean }
->().mark({
-  name: 'withProperties',
-  defaultSettings: { awesome: 'never' },
-  defaultProperties: { oops: false },
-  createMarkSchema() {
-    return {};
-  },
-});
+class ExtensionWithProperties extends PlainExtension<{ awesome?: string }, { oops: boolean }> {
+  public name = 'withProperties';
 
-// @ts-expect-error
-ExtensionFactory.typed<{}, { oops: boolean }>().plain({
-  name: 'withProperties',
-});
+  protected createDefaultSettings(): import('../extension-base').DefaultSettingsType<{
+    awesome?: string | undefined;
+  }> {
+    return { awesome: 'never' };
+  }
+  protected createDefaultProperties(): Required<{ oops: boolean }> {
+    return { oops: false };
+  }
+}
 
-const extensionWithProperties = ExtensionWithProperties.of({ properties: { oops: true } });
-type AnyExtensionsSupportsProperties = typeof extensionWithProperties extends AnyExtension
-  ? true
-  : never;
+new ExtensionWithProperties();
+
+class NodeExtensionWithProperties extends NodeExtension<{ awesome?: string }, { oops: boolean }> {
+  public name = 'withProperties' as const;
+
+  protected createNodeSpec(): NodeExtensionSpec {
+    return {};
+  }
+
+  protected createDefaultSettings(): import('../extension-base').DefaultSettingsType<{
+    awesome?: string | undefined;
+  }> {
+    return { awesome: 'never' };
+  }
+
+  protected createDefaultProperties(): Required<{ oops: boolean }> {
+    return { oops: false };
+  }
+}
+
+class MarkExtensionWithProperties extends MarkExtension<{ awesome?: string }, { oops: boolean }> {
+  public name = 'withProperties' as const;
+
+  protected createMarkSpec() {
+    return {};
+  }
+
+  protected createDefaultSettings(): import('../extension-base').DefaultSettingsType<{
+    awesome?: string | undefined;
+  }> {
+    return { awesome: 'never' };
+  }
+
+  protected createDefaultProperties(): Required<{ oops: boolean }> {
+    return { oops: false };
+  }
+}
+
+class InvalidPropertiesExtension extends PlainExtension<{}, { oops: boolean }> {
+  public name = 'withProperties' as const;
+  protected createDefaultSettings(): import('../extension-base').DefaultSettingsType<{}> {
+    return {};
+  }
+  protected createDefaultProperties(): Required<{ oops: boolean }> {
+    // @ts-expect-error
+    return {};
+  }
+}
+
+const extensionWithProperties = new ExtensionWithProperties({ properties: { oops: true } });
 const anyExtensionsSupportsProperties: AnyExtension = extensionWithProperties;
 anyExtensionTester(extensionWithProperties);
 // @ts-expect-error
@@ -90,18 +140,18 @@ anyNodeExtensionTester(extensionWithProperties);
 // @ts-expect-error
 anyMarkExtensionTester(extensionWithProperties);
 
-const nodeExtensionWithProperties = NodeExtensionWithProperties.of({ properties: { oops: true } });
+const nodeExtensionWithProperties = new NodeExtensionWithProperties({ properties: { oops: true } });
 const anyNodeExtensionsSupportsProperties: AnyNodeExtension = nodeExtensionWithProperties;
 anyExtensionTester(nodeExtensionWithProperties);
 anyNodeExtensionTester(nodeExtensionWithProperties);
 // @ts-expect-error
 anyMarkExtensionTester(nodeExtensionWithProperties);
 
-const markExtensionWithProperties = MarkExtensionWithProperties.of({ properties: { oops: true } });
+const markExtensionWithProperties = new MarkExtensionWithProperties({ properties: { oops: true } });
 const anyMarkExtensionsSupportsProperties: AnyMarkExtension = markExtensionWithProperties;
 anyExtensionTester(markExtensionWithProperties);
 anyMarkExtensionTester(markExtensionWithProperties);
 // @ts-expect-error
 anyNodeExtensionTester(markExtensionWithProperties);
 
-const a = anyMarkExtensionsSupportsProperties['~~remirror~~'];
+const a: RemirrorIdentifier.NodeExtension = anyMarkExtensionsSupportsProperties['~~remirror~~'];

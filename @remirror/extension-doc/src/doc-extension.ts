@@ -50,7 +50,7 @@ export const DocExtension = ExtensionFactory.typed<DocExtensionOptions>().node({
     content: 'block+',
   },
 
-  createNodeSchema(parameters) {
+  createNodeSpec(parameters) {
     return {
       content: parameters.settings.content,
     };

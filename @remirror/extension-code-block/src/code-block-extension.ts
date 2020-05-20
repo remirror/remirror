@@ -59,7 +59,7 @@ export const CodeBlockExtension = ExtensionFactory.typed<
       },
     };
   },
-  createNodeSchema({ properties }) {
+  createNodeSpec({ properties }) {
     return {
       attrs: {
         language: { default: properties.defaultLanguage },

@@ -1,7 +1,6 @@
 import { ExtensionPriority } from '@remirror/core-constants';
 import { hasOwnProperty, object } from '@remirror/core-helpers';
 import {
-  And,
   KeyBindingCommandFunction,
   KeyBindings,
   ProsemirrorCommandFunction,
@@ -10,8 +9,7 @@ import {
 import { chainKeyBindingCommands } from '@remirror/core-utils';
 import { keymap } from '@remirror/pm/keymap';
 
-import { Extension, ExtensionFactory } from '../extension';
-import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } from '../types';
+import { InitializeLifecycleMethod, PlainExtension } from '../extension';
 
 /**
  * This extension allows others extension to use the `createKeymaps` method.
@@ -23,13 +21,23 @@ import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } f
  *
  * @builtin
  */
-export const KeymapExtension = ExtensionFactory.plain({
-  name: 'keymap',
-  defaultPriority: ExtensionPriority.High,
+export class KeymapExtension extends PlainExtension {
+  public readonly name = 'keymap' as const;
+  public readonly defaultPriority = ExtensionPriority.High as const;
+
+  protected createDefaultSettings(): import('../extension').DefaultSettingsType<{}> {
+    return {};
+  }
+
+  protected createDefaultProperties(): Required<{}> {
+    return {};
+  }
+
   /**
    * This adds the `createKeymap` method functionality to all extensions.
    */
-  onInitialize({ getParameter, addPlugins, managerSettings }) {
+  public onInitialize: InitializeLifecycleMethod = (parameter) => {
+    const { addPlugins, managerSettings } = parameter;
     const extensionKeymaps: KeyBindings[] = [];
 
     return {
@@ -39,14 +47,14 @@ export const KeymapExtension = ExtensionFactory.plain({
           // The user doesn't want any keymaps in the editor.
           managerSettings.exclude?.keymap ||
           // The extension doesn't have the `createKeymap` method.
-          !extension.parameter.createKeymap ||
+          !extension.createKeymap ||
           // The extension was configured to ignore the keymap.
           extension.settings.exclude.keymap
         ) {
           return;
         }
 
-        extensionKeymaps.push(extension.parameter.createKeymap(getParameter(extension)));
+        extensionKeymaps.push(extension.createKeymap());
       },
       afterExtensionLoop: () => {
         const previousCommandsMap = new Map<string, KeyBindingCommandFunction[]>();
@@ -73,8 +81,8 @@ export const KeymapExtension = ExtensionFactory.plain({
         addPlugins(keymap(mappedCommands));
       },
     };
-  },
-});
+  };
+}
 
 declare global {
   namespace Remirror {
@@ -93,17 +101,7 @@ declare global {
        *
        * @param parameter - schema parameter with type included
        */
-      createKeymap?: (
-        parameter: And<
-          ManagerTypeParameter<ProsemirrorType>,
-          {
-            /**
-             * The extension which provides access to the settings and properties.
-             */
-            extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
-          }
-        >,
-      ) => KeyBindings;
+      createKeymap?: () => KeyBindings;
     }
   }
 }

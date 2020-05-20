@@ -1,8 +1,7 @@
 import { ExtensionPriority } from '@remirror/core-constants';
-import { And, ProsemirrorPlugin, Shape } from '@remirror/core-types';
+import { ProsemirrorPlugin, Shape } from '@remirror/core-types';
 
-import { Extension, ExtensionFactory } from '../extension';
-import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } from '../types';
+import { InitializeLifecycleMethod, PlainExtension } from '../extension';
 
 /**
  * This extension allows others extension to add the `createPasteRules` method
@@ -11,14 +10,23 @@ import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } f
  *
  * @builtin
  */
-export const PasteRulesExtension = ExtensionFactory.plain({
-  name: 'pasteRules',
-  defaultPriority: ExtensionPriority.High,
+export class PasteRulesExtension extends PlainExtension {
+  public readonly name = 'pasteRules' as const;
+  public readonly defaultPriority = ExtensionPriority.High;
+
+  protected createDefaultSettings() {
+    return {};
+  }
+
+  protected createDefaultProperties() {
+    return {};
+  }
 
   /**
    * Ensure that all ssr transformers are run.
    */
-  onInitialize({ getParameter, addPlugins, managerSettings }) {
+  public onInitialize: InitializeLifecycleMethod = (parameter) => {
+    const { addPlugins, managerSettings } = parameter;
     const pasteRules: ProsemirrorPlugin[] = [];
 
     return {
@@ -27,23 +35,22 @@ export const PasteRulesExtension = ExtensionFactory.plain({
           // managerSettings excluded this from running
           managerSettings.exclude?.pasteRules ||
           // Method doesn't exist
-          !extension.parameter.createPasteRules ||
+          !extension.createPasteRules ||
           // Extension settings exclude it
           extension.settings.exclude.pasteRules
         ) {
           return;
         }
 
-        const parameter = getParameter(extension);
-        pasteRules.push(...extension.parameter.createPasteRules(parameter));
+        pasteRules.push(...extension.createPasteRules());
       },
 
       afterExtensionLoop: () => {
         addPlugins(...pasteRules);
       },
     };
-  },
-});
+  };
+}
 
 declare global {
   namespace Remirror {
@@ -64,17 +71,7 @@ declare global {
        *
        * @param parameter - schema parameter with type included
        */
-      createPasteRules?: (
-        parameter: And<
-          ManagerTypeParameter<ProsemirrorType>,
-          {
-            /**
-             * The extension which provides access to the settings and properties.
-             */
-            extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
-          }
-        >,
-      ) => ProsemirrorPlugin[];
+      createPasteRules?: () => ProsemirrorPlugin[];
     }
   }
 }

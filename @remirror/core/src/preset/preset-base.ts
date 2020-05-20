@@ -25,18 +25,14 @@ import {
 /**
  * The type which is applicable to any `Preset` instances.
  */
-export type AnyPreset<Settings extends Shape = Shape, Properties extends Shape = Shape> = Preset<
-  Settings,
-  Properties
->;
+export type AnyPreset = Omit<Preset<any, any>, 'constructor'> & {
+  constructor: AnyPresetConstructor;
+};
 
 /**
  * The type which is applicable to any `Preset` constructor.
  */
-export type AnyPresetConstructor<
-  Settings extends Shape = Shape,
-  Properties extends Shape = Shape
-> = PresetConstructor<Settings, Properties>;
+export type AnyPresetConstructor = PresetConstructor<any, any>;
 
 /**
  *
@@ -58,6 +54,15 @@ export interface PresetConstructor<Settings extends Shape = {}, Properties exten
  */
 export function isPreset(value: unknown): value is AnyPreset {
   return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Preset);
+}
+
+/**
+ * Determines if the passed in value is a preset constructor.
+ *
+ * @param value - the value to test
+ */
+export function isPresetConstructor(value: unknown): value is AnyPresetConstructor {
+  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.PresetConstructor);
 }
 
 export type PresetConstructorParameter<
@@ -312,7 +317,7 @@ export interface Preset<Settings extends Shape = {}, Properties extends Shape = 
   ['~E']: ReturnType<this['createExtensions']>[number];
 }
 
-interface SetPresetPropertiesParameter<Properties extends Shape = {}>
+export interface SetPresetPropertiesParameter<Properties extends Shape = {}>
   extends DefaultPropertiesParameter<Properties>,
     GetChangedPropertiesReturn<Properties>,
     PropertiesUpdateReasonParameter {}

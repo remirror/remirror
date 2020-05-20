@@ -16,9 +16,9 @@ import {
   TextParameter,
 } from '@remirror/core-types';
 import { findElementAtPosition, isElementDOMNode, isTextDOMNode } from '@remirror/core-utils';
+import { inputRules } from '@remirror/pm/inputrules';
 import { AllSelection, NodeSelection, TextSelection } from '@remirror/pm/state';
 import { DirectEditorProps, EditorView } from '@remirror/pm/view';
-import { inputRules } from '@remirror/pm/inputrules';
 
 import { createEvents, EventType } from './jest-prosemirror-events';
 import {
@@ -662,5 +662,5 @@ export const findTextNode = (node: Node, text: string): Node | undefined => {
       }
     }
   }
-  return undefined;
+  return;
 };

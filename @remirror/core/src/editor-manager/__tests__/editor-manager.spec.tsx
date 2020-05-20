@@ -9,7 +9,7 @@ import {
 import { EditorView } from '@remirror/pm/view';
 import { CorePreset, createBaseManager } from '@remirror/test-fixtures';
 
-import { ExtensionFactory } from '../../extension';
+import { PlainExtension } from '../../extension';
 import { EditorManager, isEditorManager } from '../editor-manager';
 
 describe('Manager', () => {
@@ -19,38 +19,57 @@ describe('Manager', () => {
   const mock = jest.fn((_: ProsemirrorAttributes) => innerMock);
   const getInformation = jest.fn(() => 'information');
 
-  const DummyExtension = ExtensionFactory.plain({
-    name: 'dummy',
-    extensionTags: ['simple', ExtensionTag.LastNodeCompatible],
-    createCommands() {
+  class DummyExtension extends PlainExtension {
+    public readonly name = 'dummy' as const;
+    public readonly extensionTags = ['simple', ExtensionTag.LastNodeCompatible];
+
+    protected createDefaultSettings(): import('../../extension').DefaultSettingsType<{}> {
+      return {};
+    }
+    protected createDefaultProperties(): Required<{}> {
+      return {};
+    }
+
+    public createCommands = () => {
       return { dummy: mock };
-    },
-    createHelpers() {
+    };
+
+    public createHelpers = () => {
       return {
         getInformation,
       };
-    },
-    createAttributes() {
+    };
+
+    public createAttributes = () => {
       return {
         class: 'custom',
       };
-    },
-  });
+    };
+  }
 
-  const BigExtension = ExtensionFactory.node({
-    name: 'big',
-    createNodeSchema() {
+  class BigExtension extends PlainExtension {
+    public readonly name = 'big' as const;
+
+    protected createDefaultSettings(): import('../../extension').DefaultSettingsType<{}> {
+      return {};
+    }
+
+    protected createDefaultProperties(): Required<{}> {
+      return {};
+    }
+
+    public createNodeSpec = () => {
       return {
         toDOM: () => ['h1', 0],
       };
-    },
-  });
+    };
+  }
 
-  const dummyExtension = DummyExtension.of({ priority: ExtensionPriority.Critical });
-  const bigExtension = BigExtension.of({ priority: ExtensionPriority.Lowest });
+  const dummyExtension = new DummyExtension({ priority: ExtensionPriority.Critical });
+  const bigExtension = new BigExtension({ priority: ExtensionPriority.Lowest });
   let manager = EditorManager.of({
     extensions: [dummyExtension, bigExtension],
-    presets: [CorePreset.of()],
+    presets: [new CorePreset()],
   });
 
   let view: EditorView;
@@ -58,7 +77,7 @@ describe('Manager', () => {
   beforeEach(() => {
     manager = EditorManager.of({
       extensions: [dummyExtension, bigExtension],
-      presets: [CorePreset.of()],
+      presets: [new CorePreset()],
     });
     state = manager.createState({ content: EMPTY_PARAGRAPH_NODE });
     view = new EditorView(document.createElement('div'), {

@@ -34,7 +34,7 @@ import {
 export const TableExtension = createTypedExtension().node({
   name: 'table',
 
-  createNodeSchema(): TableSchemaSpec {
+  createNodeSpec(): TableSchemaSpec {
     return {
       content: 'tableRow+',
       tableRole: 'table',
@@ -113,7 +113,7 @@ export const TableExtension = createTypedExtension().node({
 export const TableRowExtension = createTypedExtension().node({
   name: 'tableRow',
 
-  createNodeSchema(): TableSchemaSpec {
+  createNodeSpec(): TableSchemaSpec {
     return {
       content: 'tableCell+',
       tableRole: 'row',
@@ -128,7 +128,7 @@ export const TableRowExtension = createTypedExtension().node({
 export const TableCellExtension = createTypedExtension().node({
   name: 'tableCell',
 
-  createNodeSchema(): TableSchemaSpec {
+  createNodeSpec(): TableSchemaSpec {
     return {
       content: 'inline*',
       attrs: cellAttributes,
@@ -144,7 +144,7 @@ export const TableCellExtension = createTypedExtension().node({
 
 export const TableHeaderCell = createTypedExtension().node({
   name: 'tableHeader',
-  createNodeSchema(): TableSchemaSpec {
+  createNodeSpec(): TableSchemaSpec {
     return {
       content: 'inline*',
       attrs: cellAttributes,

@@ -1,10 +1,9 @@
 import { ExtensionPriority } from '@remirror/core-constants';
 import { isArray } from '@remirror/core-helpers';
-import { And, Shape } from '@remirror/core-types';
+import { Shape } from '@remirror/core-types';
 import { suggest, Suggestion } from '@remirror/pm/suggest';
 
-import { Extension, ExtensionFactory } from '../extension';
-import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } from '../types';
+import { InitializeLifecycleMethod, PlainExtension } from '../extension';
 
 /**
  * This extension allows others extension to add the `createSuggestion` method
@@ -17,14 +16,23 @@ import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } f
  *
  * @builtin
  */
-export const SuggestionsExtension = ExtensionFactory.plain({
-  name: 'suggestions',
-  defaultPriority: ExtensionPriority.High,
+export class SuggestionsExtension extends PlainExtension {
+  public readonly name = 'suggestions';
+  public readonly defaultPriority = ExtensionPriority.High;
+
+  protected createDefaultSettings() {
+    return {};
+  }
+
+  protected createDefaultProperties() {
+    return {};
+  }
 
   /**
    * Ensure that all ssr transformers are run.
    */
-  onInitialize({ getParameter, addPlugins, managerSettings }) {
+  public onInitialize: InitializeLifecycleMethod = (parameter) => {
+    const { addPlugins, managerSettings } = parameter;
     const suggesters: Suggestion[] = [];
 
     return {
@@ -33,15 +41,14 @@ export const SuggestionsExtension = ExtensionFactory.plain({
           // Manager settings excluded this from running
           managerSettings.exclude?.suggesters ||
           // Method doesn't exist
-          !extension.parameter.createSuggestions ||
+          !extension.createSuggestions ||
           // Extension settings exclude it from running
           extension.settings.exclude.suggesters
         ) {
           return;
         }
 
-        const parameter = getParameter(extension);
-        const suggester = extension.parameter.createSuggestions(parameter);
+        const suggester = extension.createSuggestions();
 
         suggesters.push(...(isArray(suggester) ? suggester : [suggester]));
       },
@@ -50,8 +57,8 @@ export const SuggestionsExtension = ExtensionFactory.plain({
         addPlugins(suggest(...suggesters));
       },
     };
-  },
-});
+  };
+}
 
 declare global {
   namespace Remirror {
@@ -75,17 +82,7 @@ declare global {
        * functionality. They can support `@` mentions, `#` tagging, `/` special
        * command keys which trigger an actions menu and much more.
        */
-      createSuggestions?: (
-        parameter: And<
-          ManagerTypeParameter<ProsemirrorType>,
-          {
-            /**
-             * The extension which provides access to the settings and properties.
-             */
-            extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
-          }
-        >,
-      ) => Suggestion[] | Suggestion;
+      createSuggestions?: () => Suggestion[] | Suggestion;
     }
   }
 }

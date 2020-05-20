@@ -1,10 +1,9 @@
 import { ExtensionPriority } from '@remirror/core-constants';
 import { isFunction, object } from '@remirror/core-helpers';
-import { And, NodeViewMethod, Shape } from '@remirror/core-types';
+import { NodeViewMethod, Shape } from '@remirror/core-types';
 
-import { AnyExtension, Extension, ExtensionFactory } from '../extension';
+import { AnyExtension, InitializeLifecycleMethod, PlainExtension } from '../extension';
 import { AnyPreset } from '../preset';
-import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } from '../types';
 
 /**
  * This extension allows others extension to add the `createNodeView` method
@@ -17,14 +16,24 @@ import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } f
  *
  * @builtin
  */
-export const NodeViewsExtension = ExtensionFactory.plain({
-  name: 'nodeView',
-  defaultPriority: ExtensionPriority.High,
+export class NodeViewsExtension extends PlainExtension {
+  public readonly name = 'nodeView' as const;
+  public readonly defaultPriority = ExtensionPriority.High as const;
+
+  protected createDefaultSettings(): import('../extension').DefaultSettingsType<{}> {
+    return {};
+  }
+
+  protected createDefaultProperties(): Required<{}> {
+    return {};
+  }
 
   /**
    * Ensure that all ssr transformers are run.
    */
-  onInitialize({ getParameter, setStoreKey, managerSettings }) {
+  public onInitialize: InitializeLifecycleMethod = (parameter) => {
+    const { setStoreKey, managerSettings } = parameter;
+
     const nodeViewList: Array<Record<string, NodeViewMethod>> = [];
     const nodeViews: Record<string, NodeViewMethod> = object();
 
@@ -34,15 +43,14 @@ export const NodeViewsExtension = ExtensionFactory.plain({
           // managerSettings excluded this from running
           managerSettings.exclude?.nodeViews ||
           // Method doesn't exist
-          !extension.parameter.createNodeViews ||
+          !extension.createNodeViews ||
           // Extension settings exclude it
           extension.settings.exclude.nodeViews
         ) {
           return;
         }
 
-        const parameter = getParameter(extension);
-        const nodeView = extension.parameter.createNodeViews(parameter);
+        const nodeView = extension.createNodeViews();
 
         // Unshift used to add make sure higher priority extensions can
         // overwrite the lower priority nodeViews.
@@ -57,8 +65,8 @@ export const NodeViewsExtension = ExtensionFactory.plain({
         setStoreKey('nodeViews', nodeViews);
       },
     };
-  },
-});
+  };
+}
 
 declare global {
   namespace Remirror {
@@ -94,17 +102,7 @@ declare global {
        *
        * @alpha
        */
-      createNodeViews?: (
-        parameter: And<
-          ManagerTypeParameter<ProsemirrorType>,
-          {
-            /**
-             * The extension which provides access to the settings and properties.
-             */
-            extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
-          }
-        >,
-      ) => NodeViewMethod | Record<string, NodeViewMethod>;
+      createNodeViews?: () => NodeViewMethod | Record<string, NodeViewMethod>;
     }
   }
 }

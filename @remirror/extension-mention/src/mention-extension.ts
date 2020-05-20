@@ -67,7 +67,7 @@ export const MentionExtension = ExtensionFactory.typed<
     keyBindings: {},
     noDecorations: false,
   },
-  createMarkSchema(parameter) {
+  createMarkSpec(parameter) {
     const { settings } = parameter;
 
     const dataAttributeId = 'data-mention-id';

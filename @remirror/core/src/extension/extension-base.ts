@@ -43,42 +43,36 @@ import {
 /**
  * The type which is applicable to any extension instance.
  */
-export type AnyExtension<
-  Settings extends Shape = Shape,
-  Properties extends Shape = Shape
-> = Extension<Settings, Properties>;
+export type AnyExtension<Settings extends Shape = Shape, Properties extends Shape = Shape> = Omit<
+  Extension<Settings, Properties>,
+  'constructor'
+> & { constructor: AnyExtensionConstructor };
 
 /**
  * The type which is applicable to any extension instance.
  */
-export type AnyExtensionConstructor<
-  Settings extends Shape = Shape,
-  Properties extends Shape = Shape
-> = ExtensionConstructor<Settings, Properties>;
+export type AnyExtensionConstructor = ExtensionConstructor<any, any>;
 
 /**
  * The type for any potential PlainExtension.
  */
-export type AnyPlainExtension<
-  Settings extends Shape = Shape,
-  Properties extends Shape = Shape
-> = PlainExtension<Settings, Properties>;
+export type AnyPlainExtension = Omit<PlainExtension<any, any>, 'constructor'> & {
+  constructor: AnyExtensionConstructor;
+};
 
 /**
  * The type for any potential NodeExtension.
  */
-export type AnyNodeExtension<
-  Settings extends Shape = Shape,
-  Properties extends Shape = Shape
-> = NodeExtension<Settings, Properties>;
+export type AnyNodeExtension = Omit<NodeExtension<any, any>, 'constructor'> & {
+  constructor: AnyExtensionConstructor;
+};
 
 /**
  * The type for any potential MarkExtension.
  */
-export type AnyMarkExtension<
-  Settings extends Shape = Shape,
-  Properties extends Shape = Shape
-> = MarkExtension<Settings, Properties>;
+export type AnyMarkExtension = Omit<MarkExtension<any, any>, 'constructor'> & {
+  constructor: AnyExtensionConstructor;
+};
 
 /**
  * These are the default options merged into every extension. They can be
@@ -124,10 +118,7 @@ export function isExtension<Settings extends Shape = Shape, Properties extends S
  *
  * @param value - the value to test
  */
-export function isExtensionConstructor<
-  Settings extends Shape = Shape,
-  Properties extends Shape = Shape
->(value: unknown): value is AnyExtension<Settings, Properties> {
+export function isExtensionConstructor(value: unknown): value is AnyExtensionConstructor {
   return (
     isRemirrorType(value) &&
     isIdentifierOfType(value, [
@@ -143,9 +134,7 @@ export function isExtensionConstructor<
  *
  * @param value - the extension to check
  */
-export function isPlainExtension<Settings extends Shape = Shape, Properties extends Shape = Shape>(
-  value: unknown,
-): value is AnyPlainExtension<Settings, Properties> {
+export function isPlainExtension(value: unknown): value is AnyPlainExtension {
   return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.PlainExtension);
 }
 
@@ -155,9 +144,7 @@ export function isPlainExtension<Settings extends Shape = Shape, Properties exte
  *
  * @param value - the extension to check
  */
-export function isNodeExtension<Settings extends Shape = Shape, Properties extends Shape = Shape>(
-  value: unknown,
-): value is AnyNodeExtension<Settings, Properties> {
+export function isNodeExtension(value: unknown): value is AnyNodeExtension {
   return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.NodeExtension);
 }
 
@@ -167,14 +154,15 @@ export function isNodeExtension<Settings extends Shape = Shape, Properties exten
  *
  * @param value - the extension to check
  */
-export function isMarkExtension<Settings extends Shape = Shape, Properties extends Shape = Shape>(
-  value: unknown,
-): value is AnyMarkExtension<Settings, Properties> {
+export function isMarkExtension(value: unknown): value is AnyMarkExtension {
   return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.MarkExtension);
 }
 
 /**
- * Allows for properties to be used as
+ * Adds a partial and optional properties key to the provided object.
+ *
+ * This is used to allow for the settings object to also define some initial
+ * properties when being constructed.
  */
 export type WithProperties<Type extends Shape, Properties extends Shape = {}> = And<
   Type,
@@ -572,7 +560,7 @@ export abstract class MarkExtension<
   constructor(...parameters: ExtensionConstructorParameter<Settings, Properties>) {
     super(...parameters);
 
-    this.#spec = this.createMarkSchema();
+    this.#spec = this.createMarkSpec();
   }
 
   /**
@@ -589,7 +577,7 @@ export abstract class MarkExtension<
    * Provide a method for creating the schema. This is required in order to
    * create a `MarkExtension`.
    */
-  public abstract createMarkSchema(): MarkExtensionSpec;
+  protected abstract createMarkSpec(): MarkExtensionSpec;
 }
 
 /**
@@ -601,7 +589,7 @@ export abstract class MarkExtension<
  * For more information see {@link https://prosemirror.net/docs/ref/#model.Node}
  */
 export abstract class NodeExtension<
-  Settings extends Shape,
+  Settings extends Shape = {},
   Properties extends Shape = {}
 > extends Extension<Settings, Properties> {
   static get [REMIRROR_IDENTIFIER_KEY]() {
@@ -633,7 +621,7 @@ export abstract class NodeExtension<
   constructor(...parameters: ExtensionConstructorParameter<Settings, Properties>) {
     super(...parameters);
 
-    this.#spec = this.createNodeSchema();
+    this.#spec = this.createNodeSpec();
   }
 
   /**
@@ -656,7 +644,7 @@ export abstract class NodeExtension<
    * more about it is in the
    * {@link https://prosemirror.net/docs/guide/#schema docs}.
    */
-  public abstract createNodeSchema(): NodeExtensionSpec;
+  protected abstract createNodeSpec(): NodeExtensionSpec;
 }
 
 /**

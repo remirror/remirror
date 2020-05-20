@@ -35,7 +35,7 @@ export const EnhancedLinkExtension = createTypedExtension<{}, EnhancedLinkProper
     onUrlUpdate() {}, // Default noop
   },
 
-  createMarkSchema() {
+  createMarkSpec() {
     return {
       attrs: {
         href: {

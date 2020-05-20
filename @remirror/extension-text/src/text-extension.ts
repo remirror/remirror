@@ -7,7 +7,7 @@ import { ExtensionFactory } from '@remirror/core';
  */
 export const TextExtension = ExtensionFactory.node({
   name: 'text',
-  createNodeSchema() {
+  createNodeSpec() {
     return { group: 'inline' };
   },
 });
