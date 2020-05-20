@@ -24,6 +24,7 @@
     "@remirror/core": "^0.11.0",
     "@types/hoist-non-react-statics": "^3.3.1",
     "@types/min-document": "^2.19.0",
+    "@types/use-deep-compare-effect": "^1.2.0",
     "hoist-non-react-statics": "^3.3.2",
     "min-document": "^2.19.0",
     "nanoevents": "^5.1.7",

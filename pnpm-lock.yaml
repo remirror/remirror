@@ -540,6 +540,7 @@ importers:
       '@remirror/core': 'link:../core'
       '@types/hoist-non-react-statics': 3.3.1
       '@types/min-document': 2.19.0
+      '@types/use-deep-compare-effect': 1.2.0
       hoist-non-react-statics: 3.3.2
       min-document: 2.19.0
       nanoevents: 5.1.7
@@ -561,6 +562,7 @@ importers:
       '@types/min-document': ^2.19.0
       '@types/react': ^16.9.35
       '@types/react-dom': ^16.9.8
+      '@types/use-deep-compare-effect': ^1.2.0
       hoist-non-react-statics: ^3.3.2
       min-document: ^2.19.0
       nanoevents: ^5.1.7
@@ -602,6 +604,7 @@ importers:
       '@remirror/pm': 'link:../pm'
       '@remirror/preset-core': 'link:../preset-core'
       '@remirror/ui': 'link:../../deprecated/ui'
+      jest-diff: 26.0.1
       min-document: 2.19.0
     specifiers:
       '@babel/runtime': ^7
@@ -612,6 +615,7 @@ importers:
       '@remirror/pm': ^0.0.0
       '@remirror/preset-core': ^0.11.0
       '@remirror/ui': ^0.7.6
+      jest-diff: ^26.0.1
       min-document: ^2.19.0
   deprecated/cli:
     dependencies:

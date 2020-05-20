@@ -1,11 +1,12 @@
 import {
   ALIGN_PATTERN,
   convertCommand,
-  ExtensionFactory,
   ExtensionTag,
   INDENT_ATTRIBUTE,
   INDENT_LEVELS,
   IndentLevels,
+  NodeExtension,
+  NodeExtensionSpec,
   NodeGroup,
   object,
   ProsemirrorAttributes,
@@ -13,6 +14,92 @@ import {
 import { setBlockType } from '@remirror/pm/commands';
 
 import { marginToIndent } from './node-utils';
+
+/**
+ * The paragraph is one of the essential building blocks for a prosemirror
+ * editor and by default it is provided to all editors.
+ *
+ * @core
+ */
+export class ParagraphExtension extends NodeExtension<ParagraphExtensionSettings> {
+  public static readonly defaultSettings = {
+    indentAttribute: INDENT_ATTRIBUTE,
+    indentLevels: INDENT_LEVELS,
+  };
+  public static readonly defaultProperties = {};
+
+  public readonly name = 'paragraph' as const;
+  public readonly extensionTags = [ExtensionTag.LastNodeCompatible] as const;
+
+  protected createDefaultSettings() {
+    return ParagraphExtension.defaultSettings;
+  }
+
+  protected createDefaultProperties() {
+    return ParagraphExtension.defaultProperties;
+  }
+
+  protected createNodeSpec(): NodeExtensionSpec {
+    return {
+      content: 'inline*',
+      group: NodeGroup.Block,
+      attrs: {
+        align: { default: null },
+        id: { default: null },
+        indent: { default: 0 },
+        lineSpacing: { default: null },
+      },
+      draggable: false,
+      parseDOM: [
+        {
+          tag: 'p',
+          getAttrs: (node) => ({
+            ...getAttributes(this.settings, node as HTMLElement),
+          }),
+        },
+      ],
+
+      toDOM: (node) => {
+        const { align, indent, lineSpacing, id } = node.attrs as ParagraphExtensionAttributes;
+        const attributes: Record<string, string> = object();
+        let style = '';
+
+        if (align && align !== 'left') {
+          style += `text-align: ${align};`;
+        }
+
+        if (lineSpacing) {
+          style += `line-height: ${lineSpacing};`;
+        }
+
+        if (style) {
+          attributes.style = style;
+        }
+
+        if (indent) {
+          attributes[INDENT_ATTRIBUTE] = String(indent);
+        }
+
+        if (id) {
+          attributes.id = id;
+        }
+
+        return ['p', attributes, 0];
+      },
+    };
+  }
+
+  /**
+   * Provides the commands that this extension uses.
+   */
+  public createCommands = () => {
+    return {
+      createParagraph: (attributes: ParagraphExtensionAttributes) => {
+        return convertCommand(setBlockType(this.type, attributes));
+      },
+    };
+  };
+}
 
 export interface ParagraphExtensionSettings {
   /**
@@ -59,10 +146,10 @@ export type ParagraphExtensionAttributes = ProsemirrorAttributes<{
 /**
  * Pull the paragraph attributes from the dom element.
  */
-const getAttributes = (
+function getAttributes(
   { indentAttribute, indentLevels }: Required<ParagraphExtensionSettings>,
   dom: HTMLElement,
-) => {
+) {
   const { lineHeight, textAlign, marginLeft } = dom.style;
   let align: string | undefined = dom.getAttribute('align') ?? (textAlign || '');
   let indent = Number.parseInt(dom.getAttribute(indentAttribute) ?? '0', 10);
@@ -79,80 +166,4 @@ const getAttributes = (
   const id = dom.getAttribute('id') ?? undefined;
 
   return { align, indent, lineSpacing, id } as ParagraphExtensionAttributes;
-};
-
-/**
- * The paragraph is one of the essential building blocks for a prosemirror
- * editor and by default it is provided to all editors.
- *
- * @core
- */
-export const ParagraphExtension = ExtensionFactory.typed<ParagraphExtensionSettings>().node({
-  name: 'paragraph',
-  extensionTags: [ExtensionTag.LastNodeCompatible],
-  defaultSettings: {
-    indentAttribute: INDENT_ATTRIBUTE,
-    indentLevels: INDENT_LEVELS,
-  },
-  createNodeSpec(parameter) {
-    const { settings } = parameter;
-
-    return {
-      content: 'inline*',
-      group: NodeGroup.Block,
-      attrs: {
-        align: { default: null },
-        id: { default: null },
-        indent: { default: 0 },
-        lineSpacing: { default: null },
-      },
-      draggable: false,
-      parseDOM: [
-        {
-          tag: 'p',
-          getAttrs: (node) => ({
-            ...getAttributes(settings, node as HTMLElement),
-          }),
-        },
-      ],
-      toDOM: (node) => {
-        const { align, indent, lineSpacing, id } = node.attrs as ParagraphExtensionAttributes;
-        const attributes: Record<string, string> = object();
-        let style = '';
-
-        if (align && align !== 'left') {
-          style += `text-align: ${align};`;
-        }
-
-        if (lineSpacing) {
-          style += `line-height: ${lineSpacing};`;
-        }
-
-        if (style) {
-          attributes.style = style;
-        }
-
-        if (indent) {
-          attributes[INDENT_ATTRIBUTE] = String(indent);
-        }
-
-        if (id) {
-          attributes.id = id;
-        }
-
-        return ['p', attributes, 0];
-      },
-    };
-  },
-
-  /**
-   * Provides the commands that this extension uses.
-   */
-  createCommands({ type }) {
-    return {
-      createParagraph: (attributes: ParagraphExtensionAttributes) => {
-        return convertCommand(setBlockType(type, attributes));
-      },
-    };
-  },
-});
+}

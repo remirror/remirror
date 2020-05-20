@@ -38,9 +38,9 @@ import { DocExtension } from '@remirror/extension-doc';
 import { TextExtension } from '@remirror/extension-text';
 
 // Create the extension
-const paragraphExtension = ParagraphExtension.of();
-const docExtension = DocExtension.of({ priority: ExtensionPriority.Low });
-const textExtension = TextExtension.of({ priority: ExtensionPriority.Low });
+const paragraphExtension = new ParagraphExtension();
+const docExtension = new DocExtension({ priority: ExtensionPriority.Low });
+const textExtension = new TextExtension({ priority: ExtensionPriority.Low });
 
 // Create the Editor Manager with the paragraph extension passed through.
 const manager = EditorManager.of([paragraphExtension, docExtension, textExtension]);

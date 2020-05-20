@@ -44,6 +44,17 @@ export interface PresetConstructor<Settings extends Shape = {}, Properties exten
    * @internal
    */
   readonly [REMIRROR_IDENTIFIER_KEY]: RemirrorIdentifier;
+
+  /**
+   * Default settings.
+   */
+  readonly defaultSettings: FlipPartialAndRequired<Settings>;
+
+  /**
+   * Default properties.
+   */
+  readonly defaultProperties: Required<Properties>;
+
   new (...args: PresetConstructorParameter<Settings, Properties>): Preset<Settings, Shape>;
 }
 

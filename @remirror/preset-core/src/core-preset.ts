@@ -1,4 +1,4 @@
-import { ExtensionPriority, Preset } from '@remirror/core';
+import { ExtensionPriority, FlipPartialAndRequired, Preset } from '@remirror/core';
 import { DocExtension } from '@remirror/extension-doc';
 import { ParagraphExtension } from '@remirror/extension-paragraph';
 import { TextExtension } from '@remirror/extension-text';
@@ -14,25 +14,31 @@ export interface CorePresetSettings {
 }
 
 export class CorePreset extends Preset<CorePresetSettings> {
+  public static defaultSettings: FlipPartialAndRequired<CorePresetSettings> = {
+    content: DocExtension.defaultSettings.content,
+  };
+  public static defaultProperties = {};
+
   public readonly name = 'core' as const;
 
   protected createDefaultSettings() {
-    return { content: DocExtension.defaultSettings.content };
+    return CorePreset.defaultSettings;
   }
 
   protected createDefaultProperties() {
-    return {};
+    return CorePreset.defaultProperties;
   }
 
-  protected onSetProperties() {
-    return;
-  }
+  /**
+   * No properties are defined so this can be ignored.
+   */
+  protected onSetProperties() {}
 
-  public createExtensions = () => {
+  public createExtensions() {
     return [
       new DocExtension({ content: this.settings.content, priority: ExtensionPriority.Low }),
       new TextExtension({ priority: ExtensionPriority.Low }),
       new ParagraphExtension({ priority: ExtensionPriority.Low }),
     ];
-  };
+  }
 }

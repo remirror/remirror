@@ -2,15 +2,13 @@ import { Attributes } from 'react';
 
 import { ExtensionPriority, ExtensionTag, MarkGroup, NodeGroup } from '@remirror/core-constants';
 import {
+  AnyConstructor,
   AnyFunction,
   AttributesParameter,
   CommandFunction,
   EditorSchema,
   EditorState,
   EditorStateParameter,
-  EditorViewParameter,
-  MarkType,
-  NodeType,
   TransactionParameter,
 } from '@remirror/core-types';
 
@@ -115,7 +113,8 @@ export type GetCommands<Type extends { ['~C']: unknown }> = Type['~C'];
 export type GetExtensions<Type extends { ['~E']: unknown }> = Type['~E'];
 
 /**
- * Get the helpers provided by an from an `EditorManager`, `Extension` or `Preset`.
+ * Get the helpers provided by an from an `EditorManager`, `Extension` or
+ * `Preset`.
  */
 export type GetHelpers<Type extends { ['~H']: unknown }> = Type['~H'];
 
@@ -130,53 +129,27 @@ export type GetNameUnion<Type extends { name: string }> = Type['name'];
 export type GetConstructor<Type extends { constructor: unknown }> = Type['constructor'];
 
 /**
- * Get the settings from any constructor. Can be used for both presets and extensions.
+ * Get the settings from any constructor. Can be used for both presets and
+ * extensions.
  */
-export type SettingsOfConstructor<Constructor extends { of: AnyFunction }> = GetSettings<
-  Of<Constructor>
+export type SettingsOfConstructor<Constructor extends AnyConstructor> = GetSettings<
+  InstanceType<Constructor>
 >;
 
 /**
- * Get the properties from any constructor. Can be used for both presets and extensions.
+ * Get the properties from any constructor. Can be used for both presets and
+ * extensions.
  */
-export type PropertiesOfConstructor<Constructor extends { of: AnyFunction }> = GetProperties<
-  Of<Constructor>
+export type PropertiesOfConstructor<Constructor extends AnyConstructor> = GetProperties<
+  InstanceType<Constructor>
 >;
 
 /**
- * Retrieve the instance type from an ExtensionConstructor.
- */
-export type InstanceFromConstructor<Constructor extends { of: AnyFunction }> = ReturnType<
-  Constructor['of']
->;
-
-/**
- * Retrieve the instance type from any of the library constructors.
- *
- * @remarks
- *
- * This is an alias of the `InstanceFromConstructor` type.
- */
-export type Of<Constructor extends { of: AnyFunction }> = InstanceFromConstructor<Constructor>;
-
-/**
- * Parameters passed into many of the extension methods.
+ * The extension store which is shared across all extensions. It provides access
+ * to methods and data that can be used throughout the extension lifecycle.
  */
 export interface ExtensionStore<Schema extends EditorSchema = EditorSchema>
   extends Remirror.ExtensionStore<Schema> {}
-
-/**
- * Parameters passed into many of the extension methods with a view added.
- *
- * Inherits from
- * - {@link EditorViewParameter}
- * - {@link ManagerParameter}
- *
- * @typeParam Schema - the underlying editor schema.
- */
-export interface ViewManagerParameter<Schema extends EditorSchema = any>
-  extends EditorViewParameter<Schema>,
-    Remirror.ExtensionStore {}
 
 export type ExtensionCommandFunction = (...args: any[]) => CommandFunction<EditorSchema>;
 
@@ -194,58 +167,6 @@ export interface ExtensionCommandReturn {
  */
 export interface ExtensionHelperReturn {
   [helper: string]: AnyFunction;
-}
-
-/**
- * Generic extension manager type params for methods which require a prosemirror
- * NodeType.
- *
- * This is used to generate the specific types for Marks and Nodes.
- */
-export interface ManagerTypeParameter<ProsemirrorType, Schema extends EditorSchema = EditorSchema>
-  extends ExtensionStore<Schema> {
-  type: ProsemirrorType;
-}
-export interface ViewManagerTypeParameter<
-  ProsemirrorType,
-  Schema extends EditorSchema = EditorSchema
-> extends ViewManagerParameter<Schema> {
-  type: ProsemirrorType;
-}
-
-/**
- * The extension manager type params for a prosemirror `NodeType` extension
- */
-export interface ManagerNodeTypeParameter extends ManagerTypeParameter<NodeType<EditorSchema>> {}
-
-/**
- * The extension manager type params for a prosemirror `NodeType` extension
- */
-export interface ManagerMarkTypeParameter extends ManagerTypeParameter<MarkType<EditorSchema>> {}
-
-export interface CommandParameter extends ViewManagerParameter<EditorSchema> {
-  /**
-   * Returns true when the editor can be edited and false when it cannot.
-   *
-   * This is useful for deciding whether or not to run a command especially if
-   * the command is resource intensive or slow.
-   */
-  isEditable: () => boolean;
-}
-
-/**
- * The parameter passed to the commands method.
- */
-export interface CreateCommandsParameter<ProsemirrorType> extends CommandParameter {
-  type: ProsemirrorType;
-}
-
-/**
- * The parameter passed to the helper methods.
- */
-export interface CreateHelpersParameter<ProsemirrorType>
-  extends ViewManagerParameter<EditorSchema> {
-  type: ProsemirrorType;
 }
 
 export interface CommandMethod<Parameter extends any[] = []> {
@@ -324,10 +245,10 @@ export interface PropertiesUpdateReasonParameter {
    * Describes what triggered an update.
    *
    * - `set` - the change was triggered by an update in some properties
-   * - `reset` - the user has specifically requested to reset all properties
-   *   to their initial defaults
-   * - `init` - the update is happening when the preset is being
-   *   It will receive all the items as changes.
+   * - `reset` - the user has specifically requested to reset all properties to
+   *   their initial defaults
+   * - `init` - the update is happening when the preset is being It will receive
+   *   all the items as changes.
    */
   reason: PropertiesUpdateReason;
 }
@@ -348,14 +269,6 @@ export interface DefaultPropertiesParameter<Properties extends object> {
    */
   defaultProperties: Required<Properties>;
 }
-
-/**
- * The parameters passed to the `createSchema` method for node and mark
- * extensions.
- */
-export interface CreateSchemaParameter<Settings extends object, Properties extends object>
-  extends ReadonlySettingsParameter<Settings>,
-    ReadonlyPropertiesParameter<Properties> {}
 
 declare global {
   namespace Remirror {

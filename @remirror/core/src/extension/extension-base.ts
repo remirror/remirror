@@ -33,8 +33,6 @@ import {
   ExtensionIsActiveFunction,
   GeneralExtensionTags,
   GetNameUnion,
-  ManagerMarkTypeParameter,
-  ManagerNodeTypeParameter,
   MarkExtensionTags,
   NodeExtensionTags,
   PartialProperties,
@@ -197,6 +195,16 @@ interface ExtensionConstructor<Settings extends Shape = {}, Properties extends S
    * @internal
    */
   readonly [REMIRROR_IDENTIFIER_KEY]: RemirrorIdentifier;
+
+  /**
+   * Default settings.
+   */
+  readonly defaultSettings: DefaultSettingsType<Settings>;
+
+  /**
+   * Default properties.
+   */
+  readonly defaultProperties: Required<Properties>;
 }
 
 /**
@@ -297,7 +305,7 @@ abstract class Extension<Settings extends Shape = {}, Properties extends Shape =
    * and also the lifecycle extension methods.
    */
   protected get store() {
-    return freeze(this.#store, { requireKeys: true });
+    return freeze(this._store, { requireKeys: true });
   }
 
   /**
@@ -307,7 +315,7 @@ abstract class Extension<Settings extends Shape = {}, Properties extends Shape =
    * Different properties are added at different times so it's important to
    * check the documentation for each property to know what phase is being added.
    */
-  #store!: Remirror.ExtensionStore;
+  private _store!: Remirror.ExtensionStore;
 
   /**
    * Cached `defaultSettings`.
@@ -390,11 +398,11 @@ abstract class Extension<Settings extends Shape = {}, Properties extends Shape =
    * @internal
    */
   public setStore(store: Remirror.ExtensionStore) {
-    if (this.#store) {
+    if (this._store) {
       return;
     }
 
-    this.#store = store;
+    this._store = store;
   }
 
   /**
@@ -862,3 +870,6 @@ declare global {
 
 /* eslint-enable @typescript-eslint/member-ordering */
 /* eslint-enable @typescript-eslint/explicit-member-accessibility */
+
+// Make the abstract extension available but only as a type.
+export type { Extension };

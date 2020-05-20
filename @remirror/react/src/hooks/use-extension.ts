@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import {
-  AnyExtension,
   AnyExtensionConstructor,
   ExtensionConstructorParameter,
   PropertiesOfConstructor,
@@ -49,7 +48,7 @@ export const useExtension = <Type extends AnyExtensionConstructor>(
     PropertiesOfConstructor<Type>
   >
 ) => {
-  return useMemo(() => Constructor.of(settings), [Constructor, settings]);
+  return useMemo(() => new Constructor(settings), [Constructor, settings]);
 };
 
 export const useExtensionProperties = <Type extends AnyExtensionConstructor>(
@@ -58,10 +57,7 @@ export const useExtensionProperties = <Type extends AnyExtensionConstructor>(
 ) => {
   const { manager } = useRemirror();
 
-  const extension: AnyExtension = useMemo(() => manager.getExtension(Constructor), [
-    Constructor,
-    manager,
-  ]);
+  const extension = useMemo(() => manager.getExtension(Constructor), [Constructor, manager]);
 
   useDeepCompareEffect(() => {
     extension.setProperties(properties);

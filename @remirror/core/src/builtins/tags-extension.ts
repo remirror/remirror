@@ -69,10 +69,15 @@ export class TagsExtension extends PlainExtension {
           mark[group] = isUndefined(mark[group]) ? [name] : [...mark[group], name];
         }
 
-        for (const tag of extension.tags as ExtensionTag[]) {
-          general[tag] = isUndefined(general[tag])
+        if (!extension.tags) {
+          return;
+        }
+
+        for (const tag of extension.tags) {
+          const generalTag = general[tag];
+          general[tag] = isUndefined(generalTag)
             ? [extension.name]
-            : [...general[tag], extension.name];
+            : [...generalTag, extension.name];
         }
       },
       afterExtensionLoop() {

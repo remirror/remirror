@@ -28,6 +28,8 @@ if (process.env.NODE !== 'production') {
     [ErrorConstant.MISSING_REQUIRED_EXTENSION]: 'Your editor is missing a required extension.',
     [ErrorConstant.MANAGER_PHASE_ERROR]:
       'Called a method event at the wrong time. Please make sure getter functions are only called with within the scope of the returned functions. They should not be called in the outer scope of your method.',
+    [ErrorConstant.NEW_EDITOR_MANAGER]:
+      'No directly invoking the editor manager with `new`. Instead use one of the available static methods to create your instance.',
     [ErrorConstant.INVALID_PRESET_EXTENSION]:
       'You requested an invalid extension from the preset. Please check the `createExtensions` return method is returning an extension with the requested constructor.',
     [ErrorConstant.INVALID_MANAGER_ARGUMENTS]:
@@ -62,8 +64,8 @@ function isErrorConstant(code: unknown): code is ErrorConstant {
  */
 function createErrorMessage(code: ErrorConstant, extraMessage?: string) {
   const message = errorMessageMap[code];
-  const prefix = message ? `${message}\n` : '';
-  const customMessage = extraMessage ? `${extraMessage}\n` : '';
+  const prefix = message ? `${message}\n\n` : '';
+  const customMessage = extraMessage ? `${extraMessage}\n\n` : '';
 
   return `${prefix}${customMessage}For more information visit ${ERROR_INFORMATION_URL}#${code}`;
 }

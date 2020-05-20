@@ -43,40 +43,9 @@ import {
   transformExtensionOrPreset as transformExtensionOrPresetList,
 } from './editor-manager-helpers';
 
-export type AnyEditorManager = EditorManager<AnyExtension, AnyPreset>;
-
 /**
- * Checks to see whether the provided value is an `Manager`.
- *
- * @param value - the value to check
- */
-export function isEditorManager(value: unknown): value is AnyEditorManager {
-  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Manager);
-}
-
-export interface EditorManagerParameter<
-  ExtensionUnion extends AnyExtension,
-  PresetUnion extends AnyPreset
-> {
-  /**
-   * The extensions so use when creating the editor.
-   */
-  extensions: ExtensionUnion[];
-
-  /**
-   * The presets to include with the editor.
-   */
-  presets: PresetUnion[];
-
-  /**
-   * Settings to customise the behaviour of the editor.
-   */
-  settings?: Remirror.ManagerSettings;
-}
-
-/**
- * The `Manager` has multiple hook phases which are able to hook into
- * the extension manager flow and add new functionality to the editor.
+ * The `Manager` has multiple hook phases which are able to hook into the
+ * extension manager flow and add new functionality to the editor.
  *
  * The `ExtensionEventMethod`s
  *
@@ -131,12 +100,13 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     return new EditorManager<ExtensionUnion, PresetUnion | typeof builtInPreset>({
       extensions,
       presets: [...presets, builtInPreset],
-      settings,
+      settings: { ...settings, privacy: privacySymbol },
     });
   }
 
   /**
-   * Pseudo property which is a small hack to store the type of the extension union.
+   * Pseudo property which is a small hack to store the type of the extension
+   * union.
    */
   public ['~E']!: ExtensionUnion;
 
@@ -276,8 +246,13 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * This should not be called directly if you want to use prioritized
    * extensions. Instead use `Manager.create`.
    */
-  constructor(parameter: EditorManagerParameter<ExtensionUnion, PresetUnion>) {
+  private constructor(parameter: EditorManagerConstructorParameter<ExtensionUnion, PresetUnion>) {
     this.#settings = parameter.settings ?? {};
+
+    invariant(parameter.settings?.privacy === privacySymbol, {
+      message: `The extension manager can only be invoked via one of it's static methods. e.g 'ExtensionManager.of([...extensions])'.`,
+      code: ErrorConstant.NEW_EDITOR_MANAGER,
+    });
 
     const { extensions, extensionMap, presets, presetMap } = transformExtensionOrPresetList<
       ExtensionUnion,
@@ -420,7 +395,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
   /**
    * Called during the extension loop of the initialization phase.
    */
-  private onInitializeExtensionLoop(extension: this['extensions'][number]) {
+  private onInitializeExtensionLoop(extension: this['~E']) {
     for (const { forEachExtension } of this.#handlers.initialize) {
       forEachExtension?.(extension);
     }
@@ -505,6 +480,8 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     this.#phase = ManagerPhase.AddView;
     this.#store.view = view as EditorView;
     this.#extensionStore.view = view;
+    this.#extensionStore.isEditable = () => view.editable;
+    this.#extensionStore.hasFocus = () => view.hasFocus();
 
     for (const extension of this.#extensions) {
       this.onViewExtensionLoop(extension);
@@ -592,15 +569,17 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
   }
 
   /**
-   * Get the extension instance matching the provided constructor from the
+   * Get the extension instance matching the provided constructor from the manager.
+   *
+   * This will throw an error if non existent.
    */
   public getExtension<ExtensionConstructor extends this['~E']['constructor']>(
     Constructor: ExtensionConstructor,
   ): InstanceType<ExtensionConstructor> {
     const extension = this.#extensionMap.get(Constructor);
 
-    // Throws an error if attempting to get an extension which is not present
-    // in the manager.
+    // Throws an error if attempting to get an extension which is not present in
+    // the manager.
     invariant(extension, { code: ErrorConstant.INVALID_MANAGER_EXTENSION });
 
     return extension as InstanceType<ExtensionConstructor>;
@@ -631,6 +610,60 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
   }
 }
 
+/**
+ * This is an internal value which is used to check that the extension manager
+ * has not created using the new operator. It must be provided to the
+ * constructor and if it isn't there it will cause the manager to throw an
+ * error.
+ */
+const privacySymbol = Symbol('privacy symbol');
+
+export type AnyEditorManager = EditorManager<AnyExtension, AnyPreset>;
+
+/**
+ * Checks to see whether the provided value is an `Manager`.
+ *
+ * @param value - the value to check
+ */
+export function isEditorManager(value: unknown): value is AnyEditorManager {
+  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Manager);
+}
+
+export interface EditorManagerParameter<
+  ExtensionUnion extends AnyExtension,
+  PresetUnion extends AnyPreset
+> {
+  /**
+   * The extensions so use when creating the editor.
+   */
+  extensions: ExtensionUnion[];
+
+  /**
+   * The presets to include with the editor.
+   */
+  presets: PresetUnion[];
+
+  /**
+   * Settings to customise the behaviour of the editor.
+   */
+  settings?: Remirror.ManagerSettings;
+}
+
+interface EditorManagerConstructorParameter<
+  ExtensionUnion extends AnyExtension,
+  PresetUnion extends AnyPreset
+> extends EditorManagerParameter<ExtensionUnion, PresetUnion> {
+  settings?: Remirror.ManagerSettings & {
+    /**
+     * A symbol value that prevents the EditorManager constructor from being called
+     * directly.
+     *
+     * @internal
+     */
+    privacy: symbol;
+  };
+}
+
 declare global {
   namespace Remirror {
     /**
@@ -638,8 +671,8 @@ declare global {
      */
     interface ManagerSettings<ExtensionUnion extends AnyExtension = any> {
       /**
-       * An object which excludes certain functionality from all extensions within
-       * the manager.
+       * An object which excludes certain functionality from all extensions
+       * within the manager.
        */
       exclude?: ExcludeOptions;
     }
@@ -660,8 +693,8 @@ declare global {
     }
 
     /**
-     * The extension which are available on an `EditorManager` based on the passed
-     * in type params.
+     * The extension which are available on an `EditorManager` based on the
+     * passed in type params.
      */
     type ManagerExtensions<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> =
       | ExtensionUnion
@@ -669,7 +702,8 @@ declare global {
 
     /**
      * The initialization params which are passed by the view layer into the
-     * extension manager. This can be added to by the requesting framework layer.
+     * extension manager. This can be added to by the requesting framework
+     * layer.
      */
     interface ManagerInitializationParameter<
       ExtensionUnion extends AnyExtension,
@@ -682,6 +716,22 @@ declare global {
        * `EditorManager` instance.
        */
       view: EditorView<Schema>;
+
+      /**
+       * Returns true when the editor can be edited and false when it cannot.
+       *
+       * This is useful for deciding whether or not to run a command especially
+       * if the command is resource intensive or slow.
+       */
+      isEditable: () => boolean;
+
+      /**
+       * Returns true when the is focused.
+       *
+       * This is useful for deciding whether or not to run a command which
+       * requires the editor to be focused in order to make any sense.
+       */
+      hasFocus: () => boolean;
     }
   }
 }

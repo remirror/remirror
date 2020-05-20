@@ -3,7 +3,7 @@ import { invariant, isEmptyArray, isFunction, object, sort } from '@remirror/cor
 
 import { AnyExtension, AnyExtensionConstructor, isExtension } from '../extension';
 import { AnyPreset, isPreset } from '../preset';
-import { GetConstructor, Of } from '../types';
+import { GetConstructor } from '../types';
 
 export interface TransformExtensionOrPreset<
   ExtensionUnion extends AnyExtension,
@@ -18,11 +18,11 @@ export interface TransformExtensionOrPreset<
 /**
  * Transforms the unsorted array of presets and extension into presets and
  * sorted extensions. Handles uniqueness of extensions and automatically pulling
- * in required extensions.
+ * throwing an error when required extensions are missing.
  *
- * TODO Add a check for requiredExtensions and inject them automatically
- * TODO Currently matching by constructor - what if different versions exist in
- * the same app...
+ * TODO Add a check for requiredExtensions and inject them automatically TODO
+ * Currently matching by constructor - what if different versions exist in the
+ * same app...
  *
  * @param unionValues - the extensions to transform as well as their priorities
  *
@@ -34,34 +34,29 @@ export function transformExtensionOrPreset<
 >(
   unionValues: ReadonlyArray<ExtensionUnion | PresetUnion>,
 ): TransformExtensionOrPreset<ExtensionUnion, PresetUnion> {
-  type BuiltinExtensionUnion = ExtensionUnion;
-  type BuiltinPresetUnion = PresetUnion;
-  type ExtensionConstructor = GetConstructor<BuiltinExtensionUnion>;
-  type PresetConstructor = GetConstructor<BuiltinPresetUnion>;
+  type ExtensionConstructor = GetConstructor<ExtensionUnion>;
+  type PresetConstructor = GetConstructor<PresetUnion>;
   interface MissingConstructor {
     Constructor: AnyExtensionConstructor;
-    extension: BuiltinExtensionUnion;
+    extension: ExtensionUnion;
   }
 
   // The items to return.
-  const presets: BuiltinPresetUnion[] = [];
-  const presetMap = new WeakMap<PresetConstructor, BuiltinPresetUnion>();
-  const extensions: BuiltinExtensionUnion[] = [];
-  const extensionMap = new WeakMap<ExtensionConstructor, BuiltinExtensionUnion>();
+  const presets: PresetUnion[] = [];
+  const presetMap = new WeakMap<PresetConstructor, PresetUnion>();
+  const extensions: ExtensionUnion[] = [];
+  const extensionMap = new WeakMap<ExtensionConstructor, ExtensionUnion>();
 
   // Used to track duplicates and the presets they've been added by.
-  const duplicateMap = new WeakMap<
-    AnyExtensionConstructor,
-    Array<BuiltinPresetUnion | undefined>
-  >();
+  const duplicateMap = new WeakMap<AnyExtensionConstructor, Array<PresetUnion | undefined>>();
 
   // The unsorted, de-duped, unrefined extensions.
-  let rawExtensions: BuiltinExtensionUnion[] = [];
+  let rawExtensions: ExtensionUnion[] = [];
 
   /**
    * Adds the values to the duplicate map for checking duplicates.
    */
-  const updateDuplicateMap = (extension: BuiltinExtensionUnion, preset?: BuiltinPresetUnion) => {
+  const updateDuplicateMap = (extension: ExtensionUnion, preset?: PresetUnion) => {
     const key = extension.constructor;
     const duplicate = duplicateMap.get(key);
     duplicateMap.set(key as never, duplicate ? [...duplicate, preset] : [preset]);
@@ -79,11 +74,11 @@ export function transformExtensionOrPreset<
     // Update the presets list in this block
     if (isPreset(presetOrExtension)) {
       presets.push(presetOrExtension);
-      rawExtensions.push(...presetOrExtension.extensions);
+      rawExtensions.push(...(presetOrExtension.extensions as ExtensionUnion[]));
       presetMap.set(presetOrExtension.constructor, presetOrExtension);
 
       presetOrExtension.extensions.forEach((extension) =>
-        updateDuplicateMap(extension, presetOrExtension),
+        updateDuplicateMap(extension as ExtensionUnion, presetOrExtension),
       );
 
       continue;
@@ -120,7 +115,7 @@ export function transformExtensionOrPreset<
     extensions.push(extension);
 
     // Replace the extensions for all presets that referenced this constructor.
-    duplicates.forEach((preset) => preset?.replaceExtension(key, extension as Of<typeof key>));
+    duplicates.forEach((preset) => preset?.replaceExtension(key, extension));
   }
 
   const missing: MissingConstructor[] = [];
@@ -128,15 +123,18 @@ export function transformExtensionOrPreset<
   /**
    * Populate the missing Constructors.
    */
-  const findMissingExtensions = (extension: BuiltinExtensionUnion) => {
-    for (const Constructor of extension.requiredExtensions) {
-      if (found.has(Constructor)) {
+  const findMissingExtensions = (extension: ExtensionUnion) => {
+    if (!extension.requiredExtensions) {
+      return;
+    }
+
+    for (const Constructor of extension.requiredExtensions ?? []) {
+      if (found.has(Constructor as AnyExtensionConstructor)) {
         continue;
       }
 
-      missing.push({ Constructor, extension });
+      missing.push({ Constructor: Constructor as AnyExtensionConstructor, extension });
     }
-    extension.requiredExtensions.every((Constructor) => found.has(Constructor));
   };
 
   // Throw if any required extension missing.
@@ -149,7 +147,7 @@ export function transformExtensionOrPreset<
     message: missing
       .map(
         ({ Constructor, extension }) =>
-          `The extension '${extension.name}' requires '${Constructor.extensionName} in order to run correctly.`,
+          `The extension '${extension.name}' requires '${Constructor.name} in order to run correctly.`,
       )
       .join('\n'),
   });
@@ -195,7 +193,10 @@ export enum ManagerPhase {
   None,
 
   /**
-   * When the extension manager is being created.
+   * When the extension manager is being created and the onCreate methods are
+   * being called.
+   *
+   * This happens within the EditorManager constructor.
    */
   Create,
 

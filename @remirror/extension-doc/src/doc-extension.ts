@@ -1,6 +1,6 @@
-import { ExtensionFactory } from '@remirror/core';
+import { DefaultSettingsType, NodeExtension } from '@remirror/core';
 
-export interface DocExtensionOptions {
+export interface DocExtensionSettings {
   /**
    * Adjust the content allowed in this prosemirror document.
    *
@@ -33,7 +33,7 @@ export interface DocExtensionOptions {
    *
    * @core
    */
-  content?: string | null;
+  content?: string;
 }
 
 /**
@@ -44,15 +44,26 @@ export interface DocExtensionOptions {
  * @required
  * @core
  */
-export const DocExtension = ExtensionFactory.typed<DocExtensionOptions>().node({
-  name: 'doc',
-  defaultSettings: {
+export class DocExtension extends NodeExtension<DocExtensionSettings> {
+  public static defaultSettings: DefaultSettingsType<DocExtensionSettings> = {
     content: 'block+',
-  },
+  };
 
-  createNodeSpec(parameters) {
+  public static defaultProperties = {};
+
+  public readonly name = 'doc' as const;
+
+  protected createDefaultSettings() {
+    return DocExtension.defaultSettings;
+  }
+
+  protected createDefaultProperties() {
+    return DocExtension.defaultProperties;
+  }
+
+  protected createNodeSpec() {
     return {
-      content: parameters.settings.content,
+      content: this.settings.content,
     };
-  },
-});
+  }
+}

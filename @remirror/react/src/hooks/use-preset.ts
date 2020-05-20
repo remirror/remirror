@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import {
-  AnyPreset,
   AnyPresetConstructor,
   PresetConstructorParameter,
   PropertiesOfConstructor,
@@ -18,11 +17,11 @@ export const usePreset = <Type extends AnyPresetConstructor>(
     PropertiesOfConstructor<Type>
   >
 ) => {
-  return useMemo(() => Constructor.of(settings), [Constructor, settings]);
+  return useMemo(() => new Constructor(settings), [Constructor, settings]);
 };
 
 /**
- * Update preset properties dynamically why the editor is still running.
+ * Update preset properties dynamically while the editor is still running.
  */
 export const usePresetProperties = <Type extends AnyPresetConstructor>(
   Constructor: Type,
@@ -30,10 +29,7 @@ export const usePresetProperties = <Type extends AnyPresetConstructor>(
 ) => {
   const { manager } = useRemirror();
 
-  const preset: AnyPreset = useMemo(() => manager.getExtension(Constructor), [
-    Constructor,
-    manager,
-  ]);
+  const preset = useMemo(() => manager.getPreset(Constructor), [Constructor, manager]);
 
   useDeepCompareEffect(() => {
     preset.setProperties(properties);

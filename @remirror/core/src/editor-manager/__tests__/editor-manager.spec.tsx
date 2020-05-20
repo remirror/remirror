@@ -69,7 +69,7 @@ describe('Manager', () => {
   const bigExtension = new BigExtension({ priority: ExtensionPriority.Lowest });
   const corePreset = new CorePreset({});
 
-  let manager = new EditorManager({
+  let manager = EditorManager.of({
     extensions: [dummyExtension, bigExtension],
     presets: [corePreset],
   });
@@ -77,7 +77,7 @@ describe('Manager', () => {
   let view: EditorView;
 
   beforeEach(() => {
-    manager = new EditorManager({
+    manager = EditorManager.of({
       extensions: [dummyExtension, bigExtension],
       presets: [new CorePreset({})],
     });
@@ -201,13 +201,14 @@ test('keymaps', () => {
     }
 
     public createKeymap = () => {
+      console.log('creating the keymap 3');
       return {
         Enter: mocks.thirdEnter,
       };
     };
   }
 
-  const manager = new EditorManager({
+  const manager = EditorManager.of({
     extensions: [new FirstExtension(), new SecondExtension(), new ThirdExtension()],
     presets: [new CorePreset({})],
   });

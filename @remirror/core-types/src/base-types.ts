@@ -104,6 +104,11 @@ export interface Shape {
 export type AnyFunction<Type = any> = (...args: any[]) => Type;
 
 /**
+ * Matches any constructor type.
+ */
+export type AnyConstructor = new (...args: any) => any;
+
+/**
  * Make the whole interface partial except for some specified keys which will be
  * made required.
  */

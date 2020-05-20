@@ -45,6 +45,12 @@ export enum ErrorConstant {
   MANAGER_PHASE_ERROR = 'RMR0008',
 
   /**
+   * No directly invoking the editor manager with `new`. Instead use one of the
+   * static methods to create your instance.
+   */
+  NEW_EDITOR_MANAGER = 'RMR0009',
+
+  /**
    * The user requested an invalid extension from the preset. Please check the
    * `createExtensions` return method is returning an extension with the defined
    * constructor.
