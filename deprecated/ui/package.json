@@ -18,7 +18,7 @@
     "@remirror/core-helpers": "^0.7.6",
     "@remirror/core-types": "^0.9.0",
     "@styled-system/css": "^5.0.23",
-    "@types/styled-system__css": "^5.0.8",
+    "@types/styled-system__css": "^5.0.9",
     "csstype": "^2.6.10",
     "emotion-theming": "^10.0.19"
   },
