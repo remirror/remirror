@@ -1,4 +1,4 @@
-# @remirror/extension-enhanced-link
+# @remirror/extension-auto-link
 
 ## 0.11.0
 

@@ -1,6 +1,5 @@
-import React from 'react';
 import matchSorter from 'match-sorter';
-import { ChangeEvent, useCallback, useMemo, useState } from 'react';
+import React, { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import bash from 'refractor/lang/bash';
 import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
@@ -227,7 +226,7 @@ export const RICH_SOCIAL_SHOWCASE_CONTENT = {
           type: 'text',
           marks: [
             {
-              type: 'enhancedLink',
+              type: 'autoLink',
               attrs: {
                 href: 'http://Random.com',
               },

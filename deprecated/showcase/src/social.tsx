@@ -1,6 +1,5 @@
-import React from 'react';
 import matchSorter from 'match-sorter';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import { startCase, take } from '@remirror/core';
 import {
@@ -108,7 +107,7 @@ export const SOCIAL_SHOWCASE_CONTENT = {
           type: 'text',
           marks: [
             {
-              type: 'enhancedLink',
+              type: 'autoLink',
               attrs: {
                 href: 'http://Random.com',
               },

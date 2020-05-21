@@ -1,11 +1,4 @@
-import React from 'react';
-import {
-  SuggestChangeHandlerParameter,
-  SuggestKeyBindingMap,
-  SuggestKeyBindingParameter,
-  SuggestStateMatch,
-} from '@remirror/pm/suggest';
-import { Fragment, PureComponent } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 
 import { deepMerge, isUndefined, object, omit, RemirrorTheme } from '@remirror/core';
 import { NodeCursorExtension, PlaceholderExtension } from '@remirror/core-extensions';
@@ -18,12 +11,18 @@ import {
   EmojiSuggestionExitHandler,
   EmojiSuggestionKeyBindings,
 } from '@remirror/extension-emoji';
-import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
+import { AutoLinkExtension } from '@remirror/extension-enhanced-link';
 import {
   MentionExtension,
   MentionExtensionMatcher,
   MentionExtensionSettings,
 } from '@remirror/extension-mention';
+import {
+  SuggestChangeHandlerParameter,
+  SuggestKeyBindingMap,
+  SuggestKeyBindingParameter,
+  SuggestStateMatch,
+} from '@remirror/pm/suggest';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@remirror/react';
 import { RemirrorThemeProvider } from '@remirror/ui';
 
@@ -266,7 +265,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
       });
     }
 
-    this.props.onMentionChange(undefined);
+    this.props.onMentionChange();
     this.setState({ activeIndex: 0, activeMatcher: undefined });
     this.mention = undefined;
     this.mentionExitTriggeredInternally = false;
@@ -401,7 +400,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
             keyBindings={this.mentionKeyBindings}
           />
           <RemirrorExtension
-            Constructor={EnhancedLinkExtension}
+            Constructor={AutoLinkExtension}
             onUrlsChange={this.props.onUrlsChange}
           />
           <RemirrorExtension<typeof EmojiExtension, EmojiExtensionOptions>

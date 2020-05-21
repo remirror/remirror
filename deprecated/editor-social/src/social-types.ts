@@ -8,7 +8,7 @@ import {
   PlaceholderExtension,
 } from '@remirror/core-extensions';
 import { EmojiExtension } from '@remirror/extension-emoji';
-import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
+import { AutoLinkExtension } from '@remirror/extension-enhanced-link';
 import { MentionExtension, MentionExtensionMatcher } from '@remirror/extension-mention';
 import { ManagedRemirrorProviderProps, RemirrorManagerProps } from '@remirror/react';
 
@@ -167,5 +167,5 @@ export type SocialExtensions =
   | NodeCursorExtension
   | PlaceholderExtension
   | EmojiExtension
-  | EnhancedLinkExtension
+  | AutoLinkExtension
   | MentionExtension;

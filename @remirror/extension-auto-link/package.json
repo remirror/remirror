@@ -1,16 +1,16 @@
 {
-  "name": "@remirror/extension-enhanced-link",
+  "name": "@remirror/extension-auto-link",
   "version": "0.11.0",
   "description": "Enhanced link extension for the remirror wysiwyg editor",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-enhanced-link",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-auto-link",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-enhanced-link.cjs.js",
-  "module": "dist/extension-enhanced-link.esm.js",
-  "types": "dist/extension-enhanced-link.cjs.d.ts",
+  "main": "dist/extension-auto-link.cjs.js",
+  "module": "dist/extension-auto-link.esm.js",
+  "types": "dist/extension-auto-link.cjs.d.ts",
   "files": [
     "dist"
   ],

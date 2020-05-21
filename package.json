@@ -4,6 +4,7 @@
   "scripts": {
     "build": "preconstruct build",
     "build:docs": "cd docs && pnpm run build",
+    "changeset": "changeset",
     "checks": "run-s lint typecheck test",
     "checks:ci": "run-s lint typecheck",
     "checks:release": "run-s checks build test:e2e:ssr",

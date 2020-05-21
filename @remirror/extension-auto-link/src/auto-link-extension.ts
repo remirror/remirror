@@ -1,7 +1,6 @@
 import {
   Cast,
   convertCommand,
-  createTypedExtension,
   EditorState,
   EditorStateParameter,
   EditorView,
@@ -10,8 +9,11 @@ import {
   getMatchString,
   LEAF_NODE_REPLACING_CHARACTER,
   Mark,
+  MarkExtension,
+  MarkExtensionSpec,
   markPasteRule,
   MarkTypeParameter,
+  PluginKey,
   ProsemirrorAttributes,
   removeMark,
   TransactionParameter,
@@ -21,7 +23,8 @@ import { Plugin, TextSelection } from '@remirror/pm/state';
 import { ReplaceStep } from '@remirror/pm/transform';
 
 /**
- * An auto complete auto decorated linker.
+ * An auto complete auto decorated linker. This is more aggressive than the
+ * `@remirror/extension-link` in that it rewrites any url-like
  *
  * @remarks
  *
@@ -29,13 +32,15 @@ import { ReplaceStep } from '@remirror/pm/transform';
  *
  * TODO Merge this with the link extension
  */
-export const EnhancedLinkExtension = createTypedExtension<{}, EnhancedLinkProperties>().mark({
-  name: 'enhancedLink',
-  defaultProperties: {
+export class AutoLinkExtension extends MarkExtension<{}, AutoLinkProperties> {
+  public static defaultSettings = {};
+  public static defaultProperties: Required<AutoLinkProperties> = {
     onUrlUpdate() {}, // Default noop
-  },
+  };
 
-  createMarkSpec() {
+  public readonly name = 'autoLink' as const;
+
+  public createMarkSpec(): MarkExtensionSpec {
     return {
       attrs: {
         href: {
@@ -63,26 +68,31 @@ export const EnhancedLinkExtension = createTypedExtension<{}, EnhancedLinkProper
         ];
       },
     };
-  },
+  }
 
-  createCommands(parameter) {
-    const { type } = parameter;
+  public createCommands = () => {
     return {
-      toggleEnhancedLink: (attributes: ProsemirrorAttributes) => {
-        if (attributes?.href) {
-          return convertCommand(updateMark({ type, attrs: attributes }));
-        }
+      /**
+       * Remove the `autoLink`.
+       */
+      removeAutoLink: () => {
+        return convertCommand(removeMark({ type: this.type }));
+      },
 
-        return convertCommand(removeMark({ type }));
+      /**
+       * Update the automatically created auto link location.
+       */
+      updateAutoLink: (attrs: ProsemirrorAttributes) => {
+        return convertCommand(updateMark({ type: this.type, attrs }));
       },
     };
-  },
+  };
 
-  createPasteRules({ type }) {
+  public createPasteRules = () => {
     return [
       markPasteRule({
         regexp: URL_REGEX,
-        type,
+        type: this.type,
         getAttributes: (url) => {
           return {
             href: extractHref(getMatchString(url)),
@@ -90,11 +100,9 @@ export const EnhancedLinkExtension = createTypedExtension<{}, EnhancedLinkProper
         },
       }),
     ];
-  },
+  };
 
-  createPlugin({ type, key, extension }) {
-    const name = extension.name;
-
+  public createPlugin = (key: PluginKey) => {
     return new Plugin({
       key,
       state: {
@@ -110,7 +118,7 @@ export const EnhancedLinkExtension = createTypedExtension<{}, EnhancedLinkProper
       // Runs through the current line (and previous line if it exists) to reapply
       // social link marks to the relevant parts of text.
       // TODO extract this as a standalone prosemirror plugin
-      appendTransaction(transactions, _oldState, state: EditorState) {
+      appendTransaction: (transactions, _oldState, state: EditorState) => {
         // Used to represent leaf nodes as text otherwise they just get replaced
         const leafChar = ' ';
         const { selection, doc } = state;
@@ -128,7 +136,7 @@ export const EnhancedLinkExtension = createTypedExtension<{}, EnhancedLinkProper
           doc.textBetween($from.start(), from, LEAF_NODE_REPLACING_CHARACTER, leafChar) +
           doc.textBetween(to, $to.end(), LEAF_NODE_REPLACING_CHARACTER, leafChar);
         const tr = state.tr;
-        const collectedParameters: EnhancedLinkHandlerProps[] = [];
+        const collectedParameters: AutoLinkHandlerProps[] = [];
 
         // If at the start of a new line (i.e. new block added and not at the start of the document)
         if (from === $from.start() && from >= 2) {
@@ -145,10 +153,10 @@ export const EnhancedLinkExtension = createTypedExtension<{}, EnhancedLinkProper
             const start = $pos.start() + startIndex;
             const end = $pos.start() + startIndex + match[0].length;
 
-            collectedParameters.push({ state, url, from: start, to: end, type });
+            collectedParameters.push({ state, url, from: start, to: end, type: this.type });
           });
 
-          tr.removeMark($pos.start(), $pos.end(), type);
+          tr.removeMark($pos.start(), $pos.end(), this.type);
         }
 
         // Finds matches within the current node when in the middle of a node
@@ -166,33 +174,33 @@ export const EnhancedLinkExtension = createTypedExtension<{}, EnhancedLinkProper
           );
 
           if (!/\w/.test(textBefore)) {
-            collectedParameters.push({ state, url, from: start, to: end, type });
+            collectedParameters.push({ state, url, from: start, to: end, type: this.type });
           }
         });
 
         // Remove all marks within the current block
-        tr.removeMark($from.start(), $from.end(), type);
+        tr.removeMark($from.start(), $from.end(), this.type);
 
         // Add all marks again for the nodes
         collectedParameters.forEach((parameters) => {
-          enhancedLinkHandler({ ...parameters, tr });
+          autoLinkHandler({ ...parameters, tr });
         });
 
         return tr;
       },
       view: () => ({
-        update(view: EditorView, previousState: EditorState) {
+        update: (view: EditorView, previousState: EditorState) => {
           const next = getUrlsFromState(view.state, name);
           const previous = getUrlsFromState(previousState, name);
 
-          if (!isSetEqual(next.set, previous.set)) {
-            extension.properties.onUrlUpdate(next);
+          if (!areSetsEqual(next.set, previous.set)) {
+            this.properties.onUrlUpdate(next);
           }
         },
       }),
     });
-  },
-});
+  };
+}
 
 export const URL_REGEX = /((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/.*)?)/gi;
 
@@ -200,7 +208,7 @@ export interface UrlUpdateHandlerParameter {
   set: Set<string>;
   urls: string[];
 }
-export interface EnhancedLinkProperties {
+export interface AutoLinkProperties {
   /**
    * This handler is called every time the matched urls are updated.
    */
@@ -210,7 +218,7 @@ export interface EnhancedLinkProperties {
 const extractHref = (url: string) =>
   url.startsWith('http') || url.startsWith('//') ? url : `http://${url}`;
 
-interface EnhancedLinkHandlerProps
+interface AutoLinkHandlerProps
   extends EditorStateParameter,
     FromToParameter,
     Partial<TransactionParameter>,
@@ -224,11 +232,11 @@ interface EnhancedLinkHandlerProps
 /**
  * Add the provided URL as a mark to the text range provided
  */
-const enhancedLinkHandler = ({ state, url, from, to, tr, type }: EnhancedLinkHandlerProps) => {
+const autoLinkHandler = ({ state, url, from, to, tr, type }: AutoLinkHandlerProps) => {
   const endPosition = state.selection.to;
-  const enhancedLink = type.create({ href: extractHref(url) });
+  const autoLink = type.create({ href: extractHref(url) });
 
-  tr = (tr ?? state.tr).replaceWith(from, to, state.schema.text(url, [enhancedLink]));
+  tr = (tr ?? state.tr).replaceWith(from, to, state.schema.text(url, [autoLink]));
 
   // Ensure that the selection doesn't jump when the the current selection is within the range
   if (endPosition < to) {
@@ -257,11 +265,9 @@ const getUrlsFromState = (state: EditorState, markName: string) => {
 };
 
 /**
- * Checks whether two sets are equal
- * @param setOne
- * @param setTwo
+ * Checks whether two sets are equal.
  */
-const isSetEqual = <GSetType>(setOne: Set<GSetType>, setTwo: Set<GSetType>) => {
+function areSetsEqual<GSetType>(setOne: Set<GSetType>, setTwo: Set<GSetType>) {
   if (setOne.size !== setTwo.size) {
     return false;
   }
@@ -273,4 +279,4 @@ const isSetEqual = <GSetType>(setOne: Set<GSetType>, setTwo: Set<GSetType>) => {
   }
 
   return true;
-};
+}
