@@ -1,5 +1,4 @@
 import { cleanup } from '@testing-library/react';
-import { Plugin } from '@remirror/pm/state';
 
 import { Extension, toHTML } from '@remirror/core';
 import {
@@ -8,6 +7,7 @@ import {
   HeadingExtension,
   LinkExtension,
 } from '@remirror/core-extensions';
+import { Plugin } from '@remirror/pm/state';
 
 import { renderEditor } from '../jest-remirror-editor';
 
@@ -22,14 +22,14 @@ test('renders an editor into the dom', () => {
   expect(editor).toBeVisible();
 });
 
-test('allows for injection of basic content', () => {
+test('add content', () => {
   const expected = 'This is a p';
   const {
     view,
     nodes: { doc, p },
     add,
     // TODO Investigate why typescript autocomplete on plain nodes doesn't work without at least an empty array
-  } = renderEditor({ plainNodes: [] });
+  } = renderEditor({ extensions: [], presets: [] });
   add(doc(p(expected)));
 
   expect(view.dom).toHaveTextContent(expected);

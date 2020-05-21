@@ -14,14 +14,12 @@ import {
 import React from 'react';
 
 import {
-  AnyEditorManager,
   AnyExtension,
   AnyPreset,
   CommandFunction,
   CommandsFromExtensions,
   EditorManager,
   EditorState,
-  GetExtensions,
   GetMarkNameUnion,
   GetNodeNameUnion,
   HelpersFromExtensions,
@@ -50,6 +48,8 @@ import { replaceSelection } from './jest-remirror-utils';
 
 /**
  * Render the editor for test purposes.
+ *
+ * By default it already has the core preset applied.
  */
 export function renderEditor<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>(
   parameter: RenderEditorParameter<ExtensionUnion, PresetUnion>,
@@ -89,9 +89,9 @@ export function renderEditor<ExtensionUnion extends AnyExtension, PresetUnion ex
  * This creates a chainable test helper for testing your remirror presets,
  * extensions and commands.
  */
-export class RemirrorTestChain<Manager extends AnyEditorManager> {
+export class RemirrorTestChain<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
   /** The editor manager */
-  #manager: Manager;
+  #manager: EditorManager<ExtensionUnion, PresetUnion>;
 
   /** Additional custom tags */
   #tags?: Tags;
@@ -107,14 +107,14 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
    * The nodes available for building the prosemirror document.
    */
   public readonly nodes: Omit<
-    NodeWithoutAttributes<GetNodeNameUnion<GetExtensions<Manager>> | 'p'>,
+    NodeWithoutAttributes<this['manager']['~N'] | 'p'>,
     'text'
   > = object();
 
   /**
    * The marks available for building up the prosemirror document.
    */
-  public readonly marks: MarkWithoutAttributes<GetMarkNameUnion<GetExtensions<Manager>>> = object();
+  public readonly marks: MarkWithoutAttributes<this['manager']['~M']> = object();
 
   /**
    * The nodes available for building the prosemirror document as a function
@@ -123,7 +123,7 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
    * Use this when testing nodes that can take custom attributes.
    */
   public readonly attributeNodes: Omit<
-    NodeWithAttributes<GetNodeNameUnion<GetExtensions<Manager>>>,
+    NodeWithAttributes<this['manager']['~N']>,
     'text'
   > = object();
 
@@ -133,14 +133,12 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
    *
    * Use this when testing marks that can take custom attributes.
    */
-  public readonly attributeMarks: MarkWithAttributes<
-    GetMarkNameUnion<GetExtensions<Manager>>
-  > = object();
+  public readonly attributeMarks: MarkWithAttributes<this['manager']['~M']> = object();
 
   /**
    * Provide access to the editor manager.
    */
-  get manager() {
+  get manager(): EditorManager<ExtensionUnion, PresetUnion> {
     return this.#manager;
   }
 
@@ -148,7 +146,7 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
    * The editor view.
    */
   get view(): TestEditorView {
-    return this.#manager.view as TestEditorView;
+    return this.#manager.view as TestEditorView<this['manager']['~Sch']>;
   }
 
   /**
@@ -177,7 +175,7 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
    * TestEditor make sure not to use a stale copy of the actions otherwise it
    * will throw errors due to using an outdated state.
    */
-  get commands(): CommandsFromExtensions<GetExtensions<Manager>> {
+  get commands(): CommandsFromExtensions<this['manager']['~E']> {
     return this.#manager.store.commands as any;
   }
 
@@ -186,7 +184,7 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
    * TestEditor make sure not to use a stale copy of the helpers object
    * otherwise it will throw errors due to using an outdated state.
    */
-  get helpers(): HelpersFromExtensions<GetExtensions<Manager>> {
+  get helpers(): HelpersFromExtensions<this['manager']['~E']> {
     return this.#manager.store.helpers as any;
   }
 
@@ -220,7 +218,7 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
     return this.#tags ?? {};
   }
 
-  constructor(manager: Manager, utils: RenderResult) {
+  constructor(manager: EditorManager<ExtensionUnion, PresetUnion>, utils: RenderResult) {
     this.#manager = manager;
     this.utils = utils;
 
@@ -231,8 +229,8 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
    * Create the node and mark document builders.
    */
   private createDocBuilders() {
-    type MarkNames = GetMarkNameUnion<GetExtensions<Manager>>;
-    type NodeNames = Exclude<GetNodeNameUnion<GetExtensions<Manager>>, 'text'>;
+    type MarkNames = GetMarkNameUnion<this['manager']['~E']>;
+    type NodeNames = Exclude<GetNodeNameUnion<this['manager']['~E']>, 'text'>;
 
     this.nodes.p = nodeFactory({ name: 'paragraph', schema: this.schema });
 
@@ -267,7 +265,7 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
    * If content already exists it will be overwritten.
    */
   public add = (
-    taggedDocument: TaggedProsemirrorNode<SchemaFromExtensionUnion<GetExtensions<Manager>>>,
+    taggedDocument: TaggedProsemirrorNode<SchemaFromExtensionUnion<this['manager']['~E']>>,
   ) => {
     const { content } = taggedDocument;
     const { cursor, node, start, end, all, ...tags } = taggedDocument.tags;
@@ -301,7 +299,7 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
    * Alias for add.
    */
   public overwrite = (
-    taggedDocument: TaggedProsemirrorNode<SchemaFromExtensionUnion<GetExtensions<Manager>>>,
+    taggedDocument: TaggedProsemirrorNode<SchemaFromExtensionUnion<this['manager']['~E']>>,
   ) => {
     return this.add(taggedDocument);
   };
@@ -343,11 +341,13 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
     fn: (
       content: Pick<
         this,
-        'helpers' | 'commands' | 'end' | 'state' | 'tags' | 'start' | 'doc' | 'view'
+        'helpers' | 'commands' | 'end' | 'state' | 'tags' | 'start' | 'doc' | 'view' | 'utils'
       >,
     ) => void,
   ) => {
-    fn(pick(this, ['helpers', 'commands', 'end', 'state', 'tags', 'start', 'doc', 'view']));
+    fn(
+      pick(this, ['helpers', 'commands', 'end', 'state', 'tags', 'start', 'doc', 'view', 'utils']),
+    );
 
     return this;
   };

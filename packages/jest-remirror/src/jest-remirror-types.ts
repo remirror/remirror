@@ -8,10 +8,9 @@ import {
   ProsemirrorAttributes,
   ProsemirrorNode,
 } from '@remirror/core';
-import { Node as PMNode } from '@remirror/pm/model';
 import { RenderEditorProps } from '@remirror/react';
 
-export interface BaseFactoryParameter<GSchema extends EditorSchema = EditorSchema>
+export interface BaseFactoryParameter<Schema extends EditorSchema = EditorSchema>
   extends Partial<AttributesParameter> {
   /**
    * The name of the node or mark
@@ -21,7 +20,7 @@ export interface BaseFactoryParameter<GSchema extends EditorSchema = EditorSchem
   /**
    * The editor schema
    */
-  schema: GSchema;
+  schema: Schema;
 }
 
 /**
@@ -80,34 +79,34 @@ export class TagTracker {
 /**
  * A standard ProseMirror Node that also tracks tags.
  */
-export interface TaggedProsemirrorNode<GSchema extends EditorSchema = EditorSchema>
-  extends PMNode<GSchema> {
+export interface TaggedProsemirrorNode<Schema extends EditorSchema = EditorSchema>
+  extends ProsemirrorNode<Schema> {
   tags: Tags;
 }
 
-export type MarkWithAttributes<GNames extends string> = {
-  [P in GNames]: (
+export type MarkWithAttributes<Names extends string> = {
+  [P in Names]: (
     attrs?: ProsemirrorAttributes,
   ) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode[];
 };
 
-export type NodeWithAttributes<GNames extends string> = {
-  [P in GNames]: (
+export type NodeWithAttributes<Names extends string> = {
+  [P in Names]: (
     attrs?: ProsemirrorAttributes,
   ) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
 };
 
-export type MarkWithoutAttributes<GNames extends string> = {
-  [P in GNames]: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode[];
+export type MarkWithoutAttributes<Names extends string> = {
+  [P in Names]: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode[];
 };
 
-export type NodeWithoutAttributes<GNames extends string> = {
-  [P in GNames]: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
+export type NodeWithoutAttributes<Names extends string> = {
+  [P in Names]: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
 };
 
 export interface RenderEditorParameter<
   ExtensionUnion extends AnyExtension,
   PresetUnion extends AnyPreset
-> extends Partial<EditorManagerParameter<ExtensionUnion, PresetUnion>> {
+> extends EditorManagerParameter<ExtensionUnion, PresetUnion> {
   props?: Partial<Omit<RenderEditorProps<EditorManager<ExtensionUnion, PresetUnion>>, 'manager'>>;
 }

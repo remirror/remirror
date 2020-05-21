@@ -1,5 +1,6 @@
-import { clone } from '@remirror/core';
-import { schema } from '@remirror/test-fixtures';
+import { schema } from 'jest-prosemirror';
+
+import { clone, keys } from '@remirror/core';
 
 import { markFactory, nodeFactory, sequence, text } from '../jest-remirror-builder';
 import { TagTracker } from '../jest-remirror-types';
@@ -72,7 +73,7 @@ describe('text', () => {
   it('supports text with no tags', () => {
     const node = text('0', schema);
 
-    expect(Object.keys(node.tags).length).toBe(0);
+    expect(keys(node.tags).length).toBe(0);
   });
 
   it('supports escaping tags with backslash', () => {
@@ -95,13 +96,13 @@ describe('text', () => {
   });
 });
 
-const p = nodeFactory({ name: 'paragraph', schema, attributes: {} });
-const doc = nodeFactory({ name: 'doc', schema, attributes: {} });
-const blockquote = nodeFactory({ name: 'blockquote', schema, attributes: {} });
+const p = nodeFactory({ name: 'paragraph', schema, attrs: {} });
+const doc = nodeFactory({ name: 'doc', schema, attrs: {} });
+const blockquote = nodeFactory({ name: 'blockquote', schema, attrs: {} });
 
 describe('nodeFactory', () => {
   it('returns a function', () => {
-    expect(nodeFactory({ name: 'paragraph', schema, attributes: {} })).toBeFunction();
+    expect(nodeFactory({ name: 'paragraph', schema, attrs: {} })).toBeFunction();
   });
 
   it("returns a factory that returns tag'd nodes", () => {
@@ -143,7 +144,7 @@ describe('nodeFactory', () => {
   });
 });
 
-const em = markFactory({ name: 'italic', schema, attributes: {} });
+const em = markFactory({ name: 'italic', schema, attrs: {} });
 
 describe('markFactory', () => {
   it('returns a function', () => {
@@ -219,7 +220,7 @@ describe('sequence', () => {
 
     const { tags } = sequence(a, b, c);
 
-    expect(Object.keys(tags)).toEqual(['a', 'b', 'c']);
+    expect(keys(tags)).toEqual(['a', 'b', 'c']);
   });
 
   it('returns tags with correct positions for text nodes', () => {

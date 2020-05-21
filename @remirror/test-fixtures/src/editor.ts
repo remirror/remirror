@@ -10,7 +10,7 @@ export function createBaseManager<
   ExtensionUnion extends AnyExtension,
   PresetUnion extends AnyPreset
 >(parameter: Partial<EditorManagerParameter<ExtensionUnion, PresetUnion>> = {}) {
-  const { extensions, presets = [] as PresetUnion[], settings } = parameter;
+  const { extensions = [], presets = [], settings } = parameter;
   const corePreset = new CorePreset();
 
   return EditorManager.of({
@@ -24,3 +24,4 @@ export * from '@remirror/preset-core';
 export * from '@remirror/extension-doc';
 export * from '@remirror/extension-text';
 export * from '@remirror/extension-paragraph';
+export * from '@remirror/extension-bold';

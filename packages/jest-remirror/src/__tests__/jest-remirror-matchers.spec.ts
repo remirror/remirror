@@ -1,5 +1,5 @@
 import { Cast } from '@remirror/core';
-import { BoldExtension } from '@remirror/core-extensions';
+import { BoldExtension } from '@remirror/test-fixtures';
 
 import { renderEditor } from '../jest-remirror-editor';
 
@@ -8,7 +8,7 @@ describe('toContainRemirrorDocument', () => {
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor({ plainNodes: [] });
+    } = renderEditor({ extensions: [], presets: [] });
     const expected = p('simple');
     const { state } = add(doc(expected));
 
@@ -19,7 +19,7 @@ describe('toContainRemirrorDocument', () => {
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor({ plainNodes: [] });
+    } = renderEditor({ extensions: [], presets: [] });
     const expected = p('simple');
     const { state } = add(doc(expected));
 
@@ -31,7 +31,7 @@ describe('toContainRemirrorDocument', () => {
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor({ plainNodes: [] });
+    } = renderEditor({ extensions: [], presets: [] });
     const { state } = add(doc(p('old')));
     const { state: newState } = add(doc(p('new')));
 
@@ -43,12 +43,12 @@ describe('toContainRemirrorDocument', () => {
     const {
       nodes: { doc: docOld, p: pOld },
       add: addOld,
-    } = renderEditor({ plainNodes: [] });
+    } = renderEditor({ extensions: [], presets: [] });
 
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor({ plainMarks: [new BoldExtension()], plainNodes: [] });
+    } = renderEditor({ extensions: [new BoldExtension()], presets: [] });
     const oldNode = pOld('simple');
     const newNode = p('simple');
     const { state: oldState } = addOld(docOld(oldNode));
@@ -64,7 +64,7 @@ describe('toEqualRemirrorDocument', () => {
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor({ plainNodes: [] });
+    } = renderEditor({ extensions: [], presets: [] });
     const expected = p('simple');
     const { state } = add(doc(expected));
 
@@ -75,7 +75,7 @@ describe('toEqualRemirrorDocument', () => {
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor({ plainNodes: [] });
+    } = renderEditor({ extensions: [], presets: [] });
     const expected = p('simple');
     const { state } = add(doc(expected));
 
@@ -87,7 +87,7 @@ describe('toEqualRemirrorDocument', () => {
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor({ plainNodes: [] });
+    } = renderEditor({ extensions: [], presets: [] });
     const { state } = add(doc(p('old')));
     const { state: newState } = add(doc(p('new')));
 
@@ -99,12 +99,12 @@ describe('toEqualRemirrorDocument', () => {
     const {
       nodes: { doc: docOld, p: pOld },
       add: addOld,
-    } = renderEditor({ plainNodes: [] });
+    } = renderEditor({ extensions: [], presets: [] });
 
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor({ plainMarks: [new BoldExtension()], plainNodes: [] });
+    } = renderEditor({ extensions: [new BoldExtension()], presets: [] });
     const oldNode = pOld('simple');
     const newNode = p('simple');
     const { state: oldState } = addOld(docOld(oldNode));
