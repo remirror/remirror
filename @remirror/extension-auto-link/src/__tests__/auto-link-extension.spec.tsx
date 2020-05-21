@@ -2,19 +2,19 @@ import { renderEditor } from 'jest-remirror';
 
 import { AutoLinkExtension, UrlUpdateHandlerParameter } from '../auto-link-extension';
 
+const {
+  nodes: { doc, p },
+  attributeMarks: { autoLink },
+  add,
+} = renderEditor({ extensions: [new AutoLinkExtension()], presets: [] });
+
 describe('AutoLinkExtension', () => {
   it('can update a link automatically', () => {
-    const {
-      nodes: { doc, p },
-      attributeMarks: { autoLink },
-      add,
-    } = renderEditor({ extensions: [new AutoLinkExtension()], presets: [] });
-
     add(doc(p('i am here<cursor>')))
       .insertText(' hello.com ')
       .callback(({ state }) => {
         expect(state).toContainRemirrorDocument(
-          p('i am here ', autoLink({ href: 'http://hello.com' })('hello.com'), ' '),
+          p('i am here ', autoLink({ href: '//hello.com' })('hello.com'), ' '),
         );
       });
   });
@@ -23,7 +23,7 @@ describe('AutoLinkExtension', () => {
     expect.assertions(2);
 
     const mock = jest.fn(({ urls }: UrlUpdateHandlerParameter) => {
-      expect(urls[0]).toBe('http://hello.co');
+      expect(urls[0]).toBe('//hello.co');
     });
 
     const {

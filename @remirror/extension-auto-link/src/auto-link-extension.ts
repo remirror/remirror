@@ -1,6 +1,5 @@
 import {
   Cast,
-  convertCommand,
   EditorState,
   EditorStateParameter,
   EditorView,
@@ -9,15 +8,14 @@ import {
   getMatchString,
   LEAF_NODE_REPLACING_CHARACTER,
   Mark,
+  markEqualsType,
   MarkExtension,
   MarkExtensionSpec,
   markPasteRule,
+  MarkType,
   MarkTypeParameter,
   PluginKey,
-  ProsemirrorAttributes,
-  removeMark,
   TransactionParameter,
-  updateMark,
 } from '@remirror/core';
 import { Plugin, TextSelection } from '@remirror/pm/state';
 import { ReplaceStep } from '@remirror/pm/transform';
@@ -35,7 +33,8 @@ import { ReplaceStep } from '@remirror/pm/transform';
 export class AutoLinkExtension extends MarkExtension<{}, AutoLinkProperties> {
   public static defaultSettings = {};
   public static defaultProperties: Required<AutoLinkProperties> = {
-    onUrlUpdate() {}, // Default noop
+    onUrlUpdate() {},
+    defaultProtocol: '',
   };
 
   public readonly name = 'autoLink' as const;
@@ -70,24 +69,6 @@ export class AutoLinkExtension extends MarkExtension<{}, AutoLinkProperties> {
     };
   }
 
-  public createCommands = () => {
-    return {
-      /**
-       * Remove the `autoLink`.
-       */
-      removeAutoLink: () => {
-        return convertCommand(removeMark({ type: this.type }));
-      },
-
-      /**
-       * Update the automatically created auto link location.
-       */
-      updateAutoLink: (attrs: ProsemirrorAttributes) => {
-        return convertCommand(updateMark({ type: this.type, attrs }));
-      },
-    };
-  };
-
   public createPasteRules = () => {
     return [
       markPasteRule({
@@ -95,7 +76,7 @@ export class AutoLinkExtension extends MarkExtension<{}, AutoLinkProperties> {
         type: this.type,
         getAttributes: (url) => {
           return {
-            href: extractHref(getMatchString(url)),
+            href: extractHref(getMatchString(url), this.properties.defaultProtocol),
           };
         },
       }),
@@ -153,7 +134,14 @@ export class AutoLinkExtension extends MarkExtension<{}, AutoLinkProperties> {
             const start = $pos.start() + startIndex;
             const end = $pos.start() + startIndex + match[0].length;
 
-            collectedParameters.push({ state, url, from: start, to: end, type: this.type });
+            collectedParameters.push({
+              state,
+              url,
+              from: start,
+              to: end,
+              type: this.type,
+              defaultProtocol: this.properties.defaultProtocol,
+            });
           });
 
           tr.removeMark($pos.start(), $pos.end(), this.type);
@@ -174,7 +162,14 @@ export class AutoLinkExtension extends MarkExtension<{}, AutoLinkProperties> {
           );
 
           if (!/\w/.test(textBefore)) {
-            collectedParameters.push({ state, url, from: start, to: end, type: this.type });
+            collectedParameters.push({
+              state,
+              url,
+              from: start,
+              to: end,
+              type: this.type,
+              defaultProtocol: this.properties.defaultProtocol,
+            });
           }
         });
 
@@ -182,16 +177,16 @@ export class AutoLinkExtension extends MarkExtension<{}, AutoLinkProperties> {
         tr.removeMark($from.start(), $from.end(), this.type);
 
         // Add all marks again for the nodes
-        collectedParameters.forEach((parameters) => {
-          autoLinkHandler({ ...parameters, tr });
-        });
+        for (const collected of collectedParameters) {
+          autoLinkHandler({ ...collected, tr });
+        }
 
         return tr;
       },
       view: () => ({
         update: (view: EditorView, previousState: EditorState) => {
-          const next = getUrlsFromState(view.state, name);
-          const previous = getUrlsFromState(previousState, name);
+          const next = getUrlsFromState(view.state, this.type);
+          const previous = getUrlsFromState(previousState, this.type);
 
           if (!areSetsEqual(next.set, previous.set)) {
             this.properties.onUrlUpdate(next);
@@ -208,15 +203,27 @@ export interface UrlUpdateHandlerParameter {
   set: Set<string>;
   urls: string[];
 }
+
+/**
+ * Can be an empty string which sets url's to '//google.com'.
+ */
+export type DefaultProtocol = 'http:' | 'https:' | '';
+
 export interface AutoLinkProperties {
   /**
    * This handler is called every time the matched urls are updated.
    */
   onUrlUpdate?: (parameter: UrlUpdateHandlerParameter) => void;
+
+  /**
+   * The default protocol to use when it can't be inferred
+   */
+  defaultProtocol?: DefaultProtocol;
 }
 
-const extractHref = (url: string) =>
-  url.startsWith('http') || url.startsWith('//') ? url : `http://${url}`;
+function extractHref(url: string, defaultProtocol: DefaultProtocol) {
+  return url.startsWith('http') || url.startsWith('//') ? url : `${defaultProtocol}//${url}`;
+}
 
 interface AutoLinkHandlerProps
   extends EditorStateParameter,
@@ -227,16 +234,18 @@ interface AutoLinkHandlerProps
    * The url to add as a mark to the range provided.
    */
   url: string;
+
+  defaultProtocol: DefaultProtocol;
 }
 
 /**
  * Add the provided URL as a mark to the text range provided
  */
-const autoLinkHandler = ({ state, url, from, to, tr, type }: AutoLinkHandlerProps) => {
+function autoLinkHandler(parameter: AutoLinkHandlerProps) {
+  const { state, url, from, to, type, defaultProtocol } = parameter;
   const endPosition = state.selection.to;
-  const autoLink = type.create({ href: extractHref(url) });
-
-  tr = (tr ?? state.tr).replaceWith(from, to, state.schema.text(url, [autoLink]));
+  const autoLink = type.create({ href: extractHref(url, defaultProtocol) });
+  const tr = (parameter.tr ?? state.tr).replaceWith(from, to, state.schema.text(url, [autoLink]));
 
   // Ensure that the selection doesn't jump when the the current selection is within the range
   if (endPosition < to) {
@@ -244,25 +253,29 @@ const autoLinkHandler = ({ state, url, from, to, tr, type }: AutoLinkHandlerProp
   }
 
   return tr;
-};
+}
 
 /**
  * Retrieves all the automatically applied URLs from the state.
  */
-const getUrlsFromState = (state: EditorState, markName: string) => {
+function getUrlsFromState(state: EditorState, type: MarkType) {
   const $pos = state.doc.resolve(0);
-  let marks: Mark[] = [];
+  const marks: Mark[] = [];
 
   state.doc.nodesBetween($pos.start(), $pos.end(), (node) => {
-    marks = [...marks, ...node.marks];
+    marks.push(...node.marks);
   });
 
-  const urls = marks
-    .filter((markItem) => markItem.type.name === markName)
-    .map((mark) => mark.attrs.href);
+  const urls: string[] = [];
+
+  for (const mark of marks) {
+    if (markEqualsType({ mark, types: type })) {
+      urls.push(mark.attrs.href);
+    }
+  }
 
   return { set: new Set(urls), urls };
-};
+}
 
 /**
  * Checks whether two sets are equal.
