@@ -266,5 +266,11 @@ module.exports = {
         '@typescript-eslint/no-unused-vars-experimental': 'off',
       },
     },
+    {
+      files: ['support/scripts/**'],
+      rules: {
+        'unicorn/no-process-exit': 'off',
+      },
+    },
   ],
 };
