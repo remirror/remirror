@@ -1,7 +1,7 @@
 `@remirror/core-constants`
 
 - Add error constants
-- Rename `Tags` to `Tag`.
+- Rename `Tags` to `ExtensionTag`.
 
 `@remirror/core`
 
@@ -127,3 +127,32 @@ BEHAVIOURS:
 ```ts
 const { commands, helpers } = useRemirror();
 ```
+
+### Switch back to classes
+
+So much of this document has changed since last updated.
+
+The project has moved back to using classes. They're just much better for type inference than
+factory objects in typescript.
+
+- With a class I can infer the type of all the fields without needing to capture the type in a
+  generic. The initial factory pattern had reached 6 generics at a certain point all which need to
+  be captured to create good inference.
+- Classes are types and can be used without the `typeof` indicator.
+- Classes are inherently stateful which allows creators of extensions and presets to manage the
+  lifecycle and state directly on the class. With the factory pattern I was just about to create a
+  new state field where extensions could store state. This would have required another generic type
+  parameter.
+- With the object parameter everything has to be passed into each method, since there's no access to
+  `this`. Classes allow me to create a store object on the extension which has commonly used items
+  like the `view` `prevState` `schema`.
+
+There are a few pitfalls to the new solution.
+
+- `defaultSettings` and `defaultProperties` were really nice with the factory pattern. The extension
+  factory could infer whether you needed to add defaults based on the shape of the `Settings` /
+  `Properties`. With the new class syntax this isn't possible. Now the extension requires a static
+  property on the Extension class. The value should be the right shape. However this means a lot of
+  mistakes can be made by extension creators. I will create an eslint plugin at
+  `eslint-plugin-remirror` which produces an error when the wrong default settings / default
+  properties are set. It also creates auto fixable suggestions which add the expected type etc...
