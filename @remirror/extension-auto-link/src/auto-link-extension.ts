@@ -1,5 +1,6 @@
 import {
   Cast,
+  DefaultExtensionSettings,
   EditorState,
   EditorStateParameter,
   EditorView,
@@ -30,8 +31,10 @@ import { ReplaceStep } from '@remirror/pm/transform';
  *
  * TODO Merge this with the link extension
  */
-export class AutoLinkExtension extends MarkExtension<{}, AutoLinkProperties> {
-  public static defaultSettings = {};
+export class AutoLinkExtension extends MarkExtension<AutoLinkSettings, AutoLinkProperties> {
+  public static defaultSettings: DefaultExtensionSettings<AutoLinkSettings> = {
+    urlRegex: /((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/.*)?)/gi,
+  };
   public static defaultProperties: Required<AutoLinkProperties> = {
     onUrlUpdate() {},
     defaultProtocol: '',
@@ -72,7 +75,7 @@ export class AutoLinkExtension extends MarkExtension<{}, AutoLinkProperties> {
   public createPasteRules = () => {
     return [
       markPasteRule({
-        regexp: URL_REGEX,
+        regexp: this.settings.urlRegex,
         type: this.type,
         getAttributes: (url) => {
           return {
@@ -128,7 +131,7 @@ export class AutoLinkExtension extends MarkExtension<{}, AutoLinkProperties> {
             LEAF_NODE_REPLACING_CHARACTER,
             leafChar,
           );
-          findMatches(previousSearchText, URL_REGEX).forEach((match) => {
+          findMatches(previousSearchText, this.settings.urlRegex).forEach((match) => {
             const startIndex = match.index;
             const url = match[1];
             const start = $pos.start() + startIndex;
@@ -148,7 +151,7 @@ export class AutoLinkExtension extends MarkExtension<{}, AutoLinkProperties> {
         }
 
         // Finds matches within the current node when in the middle of a node
-        findMatches(searchText, URL_REGEX).forEach((match) => {
+        findMatches(searchText, this.settings.urlRegex).forEach((match) => {
           const startIndex = match.index;
           const url = match[1];
           const start = $from.start() + startIndex;
@@ -197,8 +200,6 @@ export class AutoLinkExtension extends MarkExtension<{}, AutoLinkProperties> {
   };
 }
 
-export const URL_REGEX = /((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/.*)?)/gi;
-
 export interface UrlUpdateHandlerParameter {
   set: Set<string>;
   urls: string[];
@@ -219,6 +220,18 @@ export interface AutoLinkProperties {
    * The default protocol to use when it can't be inferred
    */
   defaultProtocol?: DefaultProtocol;
+}
+
+export interface AutoLinkSettings {
+  /**
+   * The regex matcher for matching against the RegExp. The matcher must capture
+   * the URL part of the string as it's first match. Take a look at the default
+   * value.
+   *
+   * @defaultValue
+   * `/((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/.*)?)/gi`
+   */
+  urlRegex?: RegExp;
 }
 
 function extractHref(url: string, defaultProtocol: DefaultProtocol) {

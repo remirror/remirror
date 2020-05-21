@@ -1,7 +1,14 @@
 {
   "name": "@remirror/extension-auto-link",
   "version": "0.11.0",
-  "description": "Enhanced link extension for the remirror wysiwyg editor",
+  "description": "Automatic linking for url like matches in your editor. Great for social experiences.",
+  "keywords": [
+    "remirror",
+    "extension",
+    "link",
+    "auto link",
+    "social"
+  ],
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-auto-link",
   "repository": "https://github.com/remirror/remirror/tree/next/@remirror/extension-auto-link",
   "license": "MIT",
