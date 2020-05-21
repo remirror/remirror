@@ -1,0 +1,23 @@
+---
+title: Tooling
+---
+
+This document is a brief breakdown of the tools used when contributing to remirror and why these
+choices where made.
+
+## Pnpm
+
+I've recently started moving over several projects so use `pnpm` and I'm very happy with what I've
+seen so far.
+
+- Great workspace support (modules are scoped to the package where they are installed).
+- Fast
+- I like the colors in the CLI
+- Regular updates. One of the things that scared me about `yarn` was the sudden break between
+  version 1 and 2. They're basically two seperate projects with the same name. Pnpm has a track
+  record of incremental updates and speedy bug fixes.
+- Reduce multiple copies of node_modules being downloaded and installed on my machine
+
+One of the potential pitfalls of this choice is the lack of support for tools like react native.
+Certain tools don't work well with symlinks and this could be a problem. A workaround for react
+native is two switch to using `haul` as the bundler.
