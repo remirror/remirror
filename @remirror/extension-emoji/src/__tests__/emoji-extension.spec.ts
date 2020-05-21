@@ -17,7 +17,7 @@ function create(
 ) {
   return renderEditor({
     extensions: [
-      EmojiExtension.of({
+      new EmojiExtension({
         ...parameter,
         properties: {
           onSuggestionChange,

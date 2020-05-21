@@ -39,7 +39,7 @@ import { CorePreset } from '@remirror/preset-core';
 const corePreset = new CorePreset({ rootContent: 'block*' });
 
 // Create the Editor Manager with the required preset.
-const manager = EditorManager.of([corePreset]);
+const manager = EditorManager.create([corePreset]);
 
 // Pass the dom element to the editor. If you are using `@remirror/react` this is done for you.
 const element = document.createElement('div');

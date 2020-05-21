@@ -37,7 +37,7 @@ const dropCursorExtension = new DropCursorExtension({ supportedLanguages: [types
 const corePreset = new CorePreset();
 
 // Create the Editor Manager with the codeBlock extension passed through.
-const manager = EditorManager.of([dropCursorExtension, corePreset]);
+const manager = EditorManager.create([dropCursorExtension, corePreset]);
 
 // Pass the dom element to the editor. If you are using `@remirror/react` or
 // other framework wrappers then this is handled for you.

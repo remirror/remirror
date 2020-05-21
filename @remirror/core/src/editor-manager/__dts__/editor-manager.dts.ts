@@ -6,7 +6,7 @@ import { EditorManager } from '../editor-manager';
 const manager: EditorManager<
   ParagraphExtension | DocExtension,
   CorePreset | BuiltinPreset
-> = EditorManager.of({
+> = EditorManager.create({
   extensions: [new ParagraphExtension(), new DocExtension()],
   presets: [new CorePreset()],
 });

@@ -13,7 +13,7 @@ export function createBaseManager<
   const { extensions = [], presets = [], settings } = parameter;
   const corePreset = new CorePreset();
 
-  return EditorManager.of({
+  return EditorManager.create({
     extensions,
     presets: [...presets, corePreset],
     settings,

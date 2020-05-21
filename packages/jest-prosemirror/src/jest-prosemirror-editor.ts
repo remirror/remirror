@@ -93,7 +93,7 @@ export function createEditor<Schema extends EditorSchema = EditorSchema>(
     });
   }
 
-  return ProsemirrorTestChain.of(view);
+  return new ProsemirrorTestChain(view);
 }
 
 /**

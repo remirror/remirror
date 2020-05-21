@@ -22,7 +22,7 @@ export function renderEditorString<
   } = parameter;
   const corePreset = new CorePreset();
 
-  const manager = EditorManager.of({
+  const manager = EditorManager.create({
     extensions,
     presets: [...presets, corePreset],
     settings,

@@ -85,7 +85,7 @@ export class RemirrorError extends BaseError {
   /**
    * A shorthand way of creating an error message.
    */
-  public static of(options: RemirrorErrorOptions = {}) {
+  public static create(options: RemirrorErrorOptions = {}) {
     return new RemirrorError(options);
   }
 
@@ -98,17 +98,17 @@ export class RemirrorError extends BaseError {
    * The constructor is intentionally kept private to prevent being extended from.
    */
   private constructor({ code, message }: RemirrorErrorOptions = {}) {
+    let errorCode: ErrorConstant;
+
     if (isErrorConstant(code)) {
       // If this is a internal code then use the internal error message.
       super(createErrorMessage(code, message));
-      this.errorCode = code;
-
-      return;
+      errorCode = code;
+    } else {
+      errorCode = ErrorConstant.CUSTOM;
+      super(createErrorMessage(errorCode, message));
     }
 
-    const errorCode = ErrorConstant.CUSTOM;
-
-    super(createErrorMessage(errorCode, message));
     this.errorCode = errorCode;
   }
 }
@@ -124,12 +124,12 @@ export function invariant(condition: unknown, options: RemirrorErrorOptions): as
 
   // When not in 'DEV' strip the message but still throw
   if (process.env.NODE === 'production') {
-    throw RemirrorError.of({ code: ErrorConstant.PROD });
+    throw RemirrorError.create({ code: ErrorConstant.PROD });
   }
 
   // When not in production we allow the message to pass through
   // **This block will be removed in production builds**
-  throw RemirrorError.of(options);
+  throw RemirrorError.create(options);
 }
 
 /**

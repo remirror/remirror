@@ -104,9 +104,9 @@ const SmallEditorWrapper = () => {
   ${useExtensions.join('\n  ')}
 
   const extensionManager = useManager([
-    DocExtension.of(),
-    TextExtension.of(),
-    ParagraphExtension.of(),
+    new DocExtension(),
+    new TextExtension(),
+    new ParagraphExtension(),
     ${extensionList.join(',\n    ')}
   ], {
     //excludeBaseExtensions: false,

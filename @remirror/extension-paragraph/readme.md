@@ -43,7 +43,7 @@ const docExtension = new DocExtension({ priority: ExtensionPriority.Low });
 const textExtension = new TextExtension({ priority: ExtensionPriority.Low });
 
 // Create the Editor Manager with the paragraph extension passed through.
-const manager = EditorManager.of([paragraphExtension, docExtension, textExtension]);
+const manager = EditorManager.create([paragraphExtension, docExtension, textExtension]);
 
 // Pass the dom element to the editor. If you are using `@remirror/react` this is done for you.
 const element = document.createElement('div');

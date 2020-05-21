@@ -10,7 +10,7 @@ import { MentionExtensionSuggestCommand } from '../mention-types';
 
 describe('schema', () => {
   const { schema } = createBaseManager({
-    extensions: [MentionExtension.of({ matchers: [{ char: '@', name: 'at' }] })],
+    extensions: [new MentionExtension({ matchers: [{ char: '@', name: 'at' }] })],
     presets: [],
   });
   const attributes = { id: 'test', label: '@test', name: 'testing' };

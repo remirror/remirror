@@ -62,7 +62,7 @@ export function renderEditor<ExtensionUnion extends AnyExtension, PresetUnion ex
   } = parameter;
   const corePreset = new CorePreset();
 
-  const manager = EditorManager.of({
+  const manager = EditorManager.create({
     extensions,
     presets: [...presets, corePreset],
     settings,

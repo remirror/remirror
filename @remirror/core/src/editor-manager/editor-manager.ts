@@ -90,9 +90,9 @@ import {
  */
 export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
   /**
-   * A static method for creating a manager.
+   * The main static method for creating a manager.
    */
-  public static of<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>({
+  public static create<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>({
     extensions = [] as ExtensionUnion[],
     presets = [] as PresetUnion[],
     settings = {},
@@ -272,7 +272,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     this.#settings = parameter.settings ?? {};
 
     invariant(parameter.settings?.privacy === privacySymbol, {
-      message: `The extension manager can only be invoked via one of it's static methods. e.g 'ExtensionManager.of([...extensions])'.`,
+      message: `The extension manager can only be invoked via one of it's static methods. e.g 'EditorManager.create([...extensions])'.`,
       code: ErrorConstant.NEW_EDITOR_MANAGER,
     });
 

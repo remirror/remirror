@@ -33,11 +33,11 @@ import { CorePreset } from '@remirror/preset-core';
 import { EpicModeExtension } from '@remirror/extension-epic-mode';
 
 // Create the codeBlock extension
-const epicModeExtension = EpicModeExtension.of();
-const corePreset = CorePreset.of();
+const epicModeExtension = new EpicModeExtension();
+const corePreset = new CorePreset();
 
 // Create the Editor Manager with the codeBlock extension passed through.
-const manager = EditorManager.of([epicModeExtension, corePreset]);
+const manager = EditorManager.create([epicModeExtension, corePreset]);
 
 // Pass the dom element to the editor. If you are using `@remirror/react` or
 // other framework wrappers then this is handled for you.

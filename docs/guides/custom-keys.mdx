@@ -16,13 +16,6 @@ interface CustomKeymapExtensionOptions extends BaseExtensionOptions {
 }
 
 export class CustomKeymapExtension extends Extension<CustomKeymapExtensionOptions> {
-  /**
-   * Shorthand method for creating the `BaseKeymapExtension`
-   */
-  public static of(options: CustomKeymapExtensionOptions) {
-    return new CustomKeymapExtension(options);
-  }
-
   get name() {
     return 'customKeymap' as const;
   }
@@ -65,9 +58,9 @@ import { baseExtensions } from '@remirror/core-extensions';
 
 import { CustomKeymapExtension } from './custom-keymap-extension';
 
-const manager = Manager.of([
+const manager = EditorManager.create([
   ...baseExtensions,
-  { priority: 1, extension: CustomKeymapExtension.of({ override: true }) },
+  { priority: 1, extension: new CustomKeymapExtension({ override: true }) },
 ]);
 ```
 

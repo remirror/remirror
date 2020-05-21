@@ -38,11 +38,11 @@ import { CorePreset } from '@remirror/preset-core';
 import { CodeBlockExtension } from '@remirror/extension-code-block';
 
 // Create the codeBlock extension
-const codeBlockExtension = CodeBlockExtension.of({ supportedLanguages: [typescript, jsx] });
-const corePreset = CorePreset.of();
+const codeBlockExtension = new CodeBlockExtension({ supportedLanguages: [typescript, jsx] });
+const corePreset = new CorePreset();
 
 // Create the Editor Manager with the codeBlock extension passed through.
-const manager = EditorManager.of([codeBlockExtension, corePreset]);
+const manager = EditorManager.create([codeBlockExtension, corePreset]);
 
 // Pass the dom element to the editor. If you are using `@remirror/react` or
 // other framework wrappers then this is handled for you.

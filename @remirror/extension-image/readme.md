@@ -33,11 +33,11 @@ import { CorePreset } from '@remirror/preset-core';
 import { ImageExtension } from '@remirror/extension-image';
 
 // Create the codeBlock extension
-const imageExtension = ImageExtension.of();
-const corePreset = CorePreset.of();
+const imageExtension = new ImageExtension();
+const corePreset = new CorePreset();
 
 // Create the Editor Manager with the codeBlock extension passed through.
-const manager = EditorManager.of([imageExtension, corePreset]);
+const manager = EditorManager.create([imageExtension, corePreset]);
 
 // Pass the dom element to the editor. If you are using `@remirror/react` or
 // other framework wrappers then this is handled for you.

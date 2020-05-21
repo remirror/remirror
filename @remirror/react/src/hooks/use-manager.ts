@@ -54,7 +54,7 @@ export const useManager = <ExtensionUnion extends AnyExtension, PresetUnion exte
 ) => {
   const parameter = useParameter(settings);
 
-  return useMemo(() => EditorManager.of(extensionOrPresetList, parameter), [
+  return useMemo(() => EditorManager.create(extensionOrPresetList, parameter), [
     extensionOrPresetList,
     parameter,
   ]);
