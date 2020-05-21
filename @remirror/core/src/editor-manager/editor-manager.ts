@@ -24,6 +24,8 @@ import {
   CreateLifecycleParameter,
   CreateLifecycleReturn,
   GetExtensionUnion,
+  GetMarkNameUnion,
+  GetNodeNameUnion,
   InitializeLifecycleParameter,
   InitializeLifecycleReturn,
   ManagerStoreKeys,
@@ -33,6 +35,7 @@ import {
 import { AnyPreset } from '../preset';
 import {
   GetConstructor,
+  GetExtensions,
   TransactionLifecycleMethod,
   TransactionLifecycleParameter,
 } from '../types';
@@ -93,7 +96,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     extensions = [] as ExtensionUnion[],
     presets = [] as PresetUnion[],
     settings = {},
-  }: Partial<EditorManagerParameter<ExtensionUnion, PresetUnion>>) {
+  }: EditorManagerParameter<ExtensionUnion, PresetUnion>) {
     const builtInPreset = new BuiltinPreset();
 
     return new EditorManager<ExtensionUnion, PresetUnion | typeof builtInPreset>({
@@ -107,7 +110,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * Pseudo property which is a small hack to store the type of the extension
    * union.
    */
-  public ['~E']!: ExtensionUnion;
+  public ['~E']!: ExtensionUnion | GetExtensions<PresetUnion>;
 
   /**
    * Pseudo property which is a small hack to store the type of the presets
@@ -120,6 +123,26 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * available from this manager..
    */
   public ['~Sch']!: SchemaFromExtensionUnion<this['~E']>;
+
+  /**
+   * `NodeNames`
+   *
+   * Type inference hack for node extension names.
+   * This is the only way I know to store types on a class.
+   *
+   * @internal
+   */
+  public readonly ['~N']!: GetNodeNameUnion<this['~E']>;
+
+  /**
+   * `MarkNames`
+   *
+   * Type inference hack for mark extension names.
+   * This is the only way I know to store types on a class.
+   *
+   * @internal
+   */
+  public readonly ['~M']!: GetMarkNameUnion<this['~E']>;
 
   /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
@@ -610,11 +633,11 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
 
 /**
  * This is an internal value which is used to check that the extension manager
- * has not created using the new operator. It must be provided to the
+ * was not created using the new operator. It must be provided to the
  * constructor and if it isn't there it will cause the manager to throw an
  * error.
  */
-const privacySymbol = Symbol('privacy symbol');
+const privacySymbol = Symbol('privacy');
 
 export type AnyEditorManager = EditorManager<any, any>;
 
@@ -633,11 +656,19 @@ export interface EditorManagerParameter<
 > {
   /**
    * The extensions so use when creating the editor.
+   *
+   * @remarks
+   *
+   * This is a required even when just an empty array to improve type inference.
    */
   extensions: ExtensionUnion[];
 
   /**
    * The presets to include with the editor.
+   *
+   * @remarks
+   *
+   * This is required even when just an empty array to improve type inference.
    */
   presets: PresetUnion[];
 

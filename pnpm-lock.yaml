@@ -598,6 +598,7 @@ importers:
     dependencies:
       '@babel/runtime': 7.9.6
       '@remirror/core': 'link:../core'
+      '@remirror/extension-bold': 'link:../extension-bold'
       '@remirror/extension-doc': 'link:../extension-doc'
       '@remirror/extension-paragraph': 'link:../extension-paragraph'
       '@remirror/extension-text': 'link:../extension-text'
@@ -609,6 +610,7 @@ importers:
     specifiers:
       '@babel/runtime': ^7
       '@remirror/core': ^0.11.0
+      '@remirror/extension-bold': ^0.11.0
       '@remirror/extension-doc': ^0.11.0
       '@remirror/extension-paragraph': ^0.11.0
       '@remirror/extension-text': ^0.11.0
@@ -1453,12 +1455,14 @@ importers:
       '@types/node': 13.13.5
       '@types/react': 16.9.35
       '@types/react-dom': 16.9.8
+      '@types/sanitize-html': 1.23.0
       '@types/testing-library__react': 10.0.1
       jest-prosemirror: 'link:../jest-prosemirror'
       jest-snapshot: 26.0.1
       mutationobserver-shim: 0.3.5
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
+      sanitize-html: 1.24.0
     specifiers:
       '@babel/runtime': ^7
       '@remirror/core': ^0.11.0
@@ -1470,12 +1474,14 @@ importers:
       '@types/node': '>=10'
       '@types/react': ^16.9.35
       '@types/react-dom': ^16.9.8
+      '@types/sanitize-html': ^1.23.0
       '@types/testing-library__react': ^10.0.1
       jest-prosemirror: ^0.8.3
       jest-snapshot: ^26.0.0
       mutationobserver-shim: ^0.3.5
       react: ^16.13.1
       react-dom: ^16.13.1
+      sanitize-html: ^1.24.0
   packages/multishift:
     dependencies:
       '@babel/runtime': 7.9.6
@@ -6146,6 +6152,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-7WhJ0MdpFgYQPXlF4Dx+DhgvlPCfz/x5mHaeDQAKhcenvQP1KCpLQ18JklAqeGMYSAT2PxLpzd0g2/HE7fj7hQ==
+  /@types/sanitize-html/1.23.0:
+    dependencies:
+      htmlparser2: 4.1.0
+    dev: false
+    resolution:
+      integrity: sha512-yl0HvhWOZWzmkGEBQLKYf+BtotvbGLFhCejuBvwyM1Q23RliLXNfviuOMLQ/nCRFWR2yI0LRRiaH/Oz7CIpCGw==
   /@types/semver/6.2.1:
     dev: false
     resolution:
@@ -10652,6 +10664,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-JiK04h0Ht5u/80fdLMCEmV4zkNh2BcoMFBmZ/91WtYZ8qVXSKjiw7fXMgFPnHcSZgOo3XdinHvmnDUeMf5R4wA==
+  /domhandler/3.0.0:
+    dependencies:
+      domelementtype: 2.0.1
+    dev: false
+    engines:
+      node: '>= 4'
+    resolution:
+      integrity: sha512-eKLdI5v9m67kbXQbJSNn1zjh0SDzvzWVWtX+qEI3eMjZw8daH9k8rlj1FZY9memPwjiskQFbe7vHVVJIAqoEhw==
   /domino/2.1.5:
     dev: true
     resolution:
@@ -10670,6 +10690,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Lgd2XcJ/NjEw+7tFvfKxOzCYKZsdct5lczQ2ZaQY8Djz7pfAD3Gbp8ySJWtreII/vDlMVmxwa6pHmdxIYgttDg==
+  /domutils/2.1.0:
+    dependencies:
+      dom-serializer: 0.2.2
+      domelementtype: 2.0.1
+      domhandler: 3.0.0
+    dev: false
+    resolution:
+      integrity: sha512-CD9M0Dm1iaHfQ1R/TI+z3/JWp/pgub0j4jIQKH89ARR4ATAV2nbaOQS5XxU9maJP5jHaPdDDQSEHuE2UmpUTKg==
   /dot-case/2.1.1:
     dependencies:
       no-case: 2.3.2
@@ -14672,6 +14700,15 @@ packages:
     dev: false
     resolution:
       integrity: sha512-IgieNijUMbkDovyoKObU1DUhm1iwNYE/fuifEoEHfd1oZKZDaONBSkal7Y01shxsM49R4XaMdGez3WnF9UfiCQ==
+  /htmlparser2/4.1.0:
+    dependencies:
+      domelementtype: 2.0.1
+      domhandler: 3.0.0
+      domutils: 2.1.0
+      entities: 2.0.2
+    dev: false
+    resolution:
+      integrity: sha512-4zDq1a1zhE4gQso/c5LP1OtrhYTncXNSpvJYtWJBtXAETPlMfi3IFNjGuQbYLuVY4ZR0QMqRVvo4Pdy9KLyP8Q==
   /http-cache-semantics/3.8.1:
     dev: false
     resolution:
@@ -17371,6 +17408,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-0JF4cW/+pN3p5ft7N/bwgCJ0WAw=
+  /lodash.escaperegexp/4.1.2:
+    dev: false
+    resolution:
+      integrity: sha1-ZHYsSGGAglGKw99Mz11YhtriA0c=
   /lodash.every/4.6.0:
     dev: false
     resolution:
@@ -17455,6 +17496,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
+  /lodash.mergewith/4.6.2:
+    dev: false
+    resolution:
+      integrity: sha512-GK3g5RPZWTRSeLSpgP8Xhra+pnjBC56q9FZYe1d5RN3TJ35dbkGy3YqBSMbyCrlbi+CM9Z3Jk5yTL7RCsqboyQ==
   /lodash.omit/4.5.0:
     dev: false
     resolution:
@@ -22814,6 +22859,21 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-hhbzAgTIX8O7SHfp2c8/kREfEn4qO/9q8C9beyY6+tvZ87EpoZ3i1RIEvp27YBswnNbY9mWd6paKVmKbAgLfZA==
+  /sanitize-html/1.24.0:
+    dependencies:
+      chalk: 2.4.2
+      htmlparser2: 4.1.0
+      lodash.clonedeep: 4.5.0
+      lodash.escaperegexp: 4.1.2
+      lodash.isplainobject: 4.0.6
+      lodash.isstring: 4.0.1
+      lodash.mergewith: 4.6.2
+      postcss: 7.0.30
+      srcset: 2.0.1
+      xtend: 4.0.2
+    dev: false
+    resolution:
+      integrity: sha512-TAIFx39V/y06jDd4YUz7ntCdMUXN5Z28pSG7sTP2BCLXwHA9+ermacDpQs35Evo4p6YSgmaPdSbGiX4Fgptuuw==
   /sax/1.2.4:
     dev: false
     resolution:
@@ -23666,6 +23726,12 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-MwRQN7ZDiLVnZ0uEMiplIQc5FsM=
+  /srcset/2.0.1:
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-00kZI87TdRKwt+P8jj8UZxbfp7mK2ufxcIMWvhAOZNJTRROimpHeruWrGvCZneiuVDLqdyHefVp748ECTnyUBQ==
   /sshpk/1.16.1:
     dependencies:
       asn1: 0.2.4

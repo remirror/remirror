@@ -108,7 +108,7 @@ describe('Manager', () => {
     });
 
     it('should provide the schema at instantiation', () => {
-      expect(createBaseManager({}).schema).toBeTruthy();
+      expect(createBaseManager().schema).toBeTruthy();
     });
 
     it('should provide access to `attributes`', () => {

@@ -1,6 +1,3 @@
-import { ResolvedPos } from '@remirror/pm/model';
-import { Selection, SelectionRange, TextSelection } from '@remirror/pm/state';
-
 import { bool } from '@remirror/core-helpers';
 import {
   AttributesParameter,
@@ -12,6 +9,8 @@ import {
   Transaction,
 } from '@remirror/core-types';
 import { isMarkActive, isTextSelection } from '@remirror/core-utils';
+import { ResolvedPos } from '@remirror/pm/model';
+import { Selection, SelectionRange, TextSelection } from '@remirror/pm/state';
 
 /**
  * Check if the active selection has a cursor available.
@@ -28,6 +27,9 @@ interface MarkAppliesParameter<Schema extends EditorSchema = any>
   ranges: Array<SelectionRange<Schema>>;
 }
 
+/**
+ * Verifies that the mark can be applied
+ */
 function markApplies(parameter: MarkAppliesParameter) {
   const { doc, ranges, type } = parameter;
 
@@ -78,12 +80,17 @@ export function toggleMark(parameter: ToggleMarkParameter): CommandFunction {
     const { tr } = state;
     const { selection } = state.tr; // Selection picked from transaction to allow for chaining.
     const { empty, ranges } = selection;
+    const useCurrentSelection = !range;
 
     if (
-      !range ||
-      (empty && !selectionHasCursor(selection)) ||
-      !markApplies({ doc: tr.doc, ranges, type })
+      // When using the current selection
+      useCurrentSelection &&
+      // Check that this is a valid and usable selection
+      ((empty && !selectionHasCursor(selection)) ||
+        // If not make sure that the mark can be applied.
+        !markApplies({ doc: tr.doc, ranges, type }))
     ) {
+      // Otherwise return false
       return false;
     }
 
@@ -93,7 +100,8 @@ export function toggleMark(parameter: ToggleMarkParameter): CommandFunction {
       return true;
     }
 
-    // Wrap dispatch with an automatic true return.
+    // Wrap dispatch with an automatic true return. This removes the need for
+    // even more `return true` statements.
     const done = (transaction: Transaction) => {
       if (dispatch) {
         dispatch(transaction);

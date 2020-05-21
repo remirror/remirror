@@ -369,7 +369,7 @@ export abstract class MarkExtension<
   }
 
   get [REMIRROR_IDENTIFIER_KEY]() {
-    return RemirrorIdentifier.NodeExtension as const;
+    return RemirrorIdentifier.MarkExtension as const;
   }
 
   get spec(): Readonly<MarkExtensionSpec> {
