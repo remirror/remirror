@@ -2,8 +2,8 @@
   "name": "@remirror/react",
   "version": "0.13.1",
   "description": "react utilities for remirror",
-  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/react",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/react",
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/react",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/react",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

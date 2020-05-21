@@ -2,7 +2,8 @@
   "name": "@remirror/extension-auto-link",
   "version": "0.11.0",
   "description": "Enhanced link extension for the remirror wysiwyg editor",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-auto-link",
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-auto-link",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/extension-auto-link",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

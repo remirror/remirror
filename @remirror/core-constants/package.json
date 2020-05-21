@@ -2,8 +2,8 @@
   "name": "@remirror/core-constants",
   "version": "0.7.4",
   "description": "The core constants used throughout the remirror codebase",
-  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/core-constants",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/core-constants",
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/core-constants",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/core-constants",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

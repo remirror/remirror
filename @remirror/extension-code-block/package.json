@@ -11,8 +11,8 @@
     "prism",
     "editor"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-code-block",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-code-block",
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-code-block",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/extension-code-block",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

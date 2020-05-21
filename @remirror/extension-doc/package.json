@@ -9,8 +9,8 @@
     "root",
     "text-editor"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-doc",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-doc",
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-doc",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/extension-doc",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

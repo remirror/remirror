@@ -2,8 +2,8 @@
   "name": "@remirror/showcase",
   "version": "0.13.1",
   "description": "ui for a what you see is what you get (wysiwyg) editing experience",
-  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/showcase",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/showcase",
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/showcase",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/showcase",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

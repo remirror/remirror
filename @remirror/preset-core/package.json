@@ -8,8 +8,8 @@
     "core",
     "text-editor"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/preset-core",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/preset-core",
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/preset-core",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/preset-core",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

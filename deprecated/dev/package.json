@@ -2,8 +2,8 @@
   "name": "@remirror/dev",
   "version": "0.13.2",
   "description": "Development utilities for remirror",
-  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/dev",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/dev",
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/dev",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/dev",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

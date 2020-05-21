@@ -1,5 +1,6 @@
 {
   "name": "@remirror/extension-collaboration",
+  "version": "0.13.2",
   "description": "Add collaboration to your remirror editor.",
   "keywords": [
     "remirror",
@@ -7,9 +8,8 @@
     "collaboration",
     "editor"
   ],
-  "version": "0.13.2",
-  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-collaboration",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-collaboration",
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-collaboration",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/extension-collaboration",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

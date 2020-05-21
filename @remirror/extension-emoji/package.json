@@ -10,8 +10,8 @@
     "emoticons",
     "editor"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-emoji",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-emoji",
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-emoji",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/extension-emoji",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

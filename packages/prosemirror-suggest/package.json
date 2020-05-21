@@ -2,8 +2,8 @@
   "name": "prosemirror-suggest",
   "version": "0.7.6",
   "description": "Primitives for building your prosemirror suggestion and autocomplete functionality",
-  "homepage": "https://github.com/remirror/remirror/tree/master/packages/prosemirror-suggest",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/prosemirror-suggest",
+  "homepage": "https://github.com/remirror/remirror/tree/next/packages/prosemirror-suggest",
+  "repository": "https://github.com/remirror/remirror/tree/next/packages/prosemirror-suggest",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

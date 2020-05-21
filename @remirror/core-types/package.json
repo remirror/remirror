@@ -2,8 +2,8 @@
   "name": "@remirror/core-types",
   "version": "0.9.0",
   "description": "Provides the core TS types for use throughout the remirror codebase",
-  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/core-types",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/core-types",
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/core-types",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/core-types",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

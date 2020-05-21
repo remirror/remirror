@@ -7,8 +7,8 @@
     "events",
     "keyboard"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/master/packages/test-keyboard",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/test-keyboard",
+  "homepage": "https://github.com/remirror/remirror/tree/next/packages/test-keyboard",
+  "repository": "https://github.com/remirror/remirror/tree/next/packages/test-keyboard",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

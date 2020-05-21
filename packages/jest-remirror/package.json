@@ -8,8 +8,8 @@
     "ssr",
     "text editor"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/master/packages/jest-remirror",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/jest-remirror",
+  "homepage": "https://github.com/remirror/remirror/tree/next/packages/jest-remirror",
+  "repository": "https://github.com/remirror/remirror/tree/next/packages/jest-remirror",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

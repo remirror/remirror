@@ -2,8 +2,8 @@
   "name": "@remirror/editor-wysiwyg",
   "version": "0.13.1",
   "description": "ui for a what you see is what you get (wysiwyg) editing experience",
-  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/editor-wysiwyg",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/editor-wysiwyg",
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/editor-wysiwyg",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/editor-wysiwyg",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

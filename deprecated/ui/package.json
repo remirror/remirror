@@ -2,8 +2,8 @@
   "name": "@remirror/ui",
   "version": "0.7.6",
   "description": "ui utilities for remirror",
-  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/ui",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/ui",
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/ui",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/ui",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

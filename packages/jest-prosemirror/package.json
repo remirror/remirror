@@ -8,8 +8,8 @@
     "snapshots",
     "tests"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/master/packages/jest-prosemirror",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/jest-prosemirror",
+  "homepage": "https://github.com/remirror/remirror/tree/next/packages/jest-prosemirror",
+  "repository": "https://github.com/remirror/remirror/tree/next/packages/jest-prosemirror",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
