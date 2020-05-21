@@ -66,12 +66,16 @@ export interface GetChangedPropertiesReturn<Properties extends object> {
    * properties to be passed that are identical to the previous, by checking if
    * the object was changed this can be avoided.
    *
-   * This uses a discriminated union. When the `changed` property
+   * This uses a discriminated union. When the `changed` property is true then
+   * the object has a value as well.
    *
    * ```ts
-   * if (changes.myProperty.changed) {}
+   * if (changes.myProperty.changed) {
+   *   doSomething(changes.myProperty.value);
+   * }
+   * ```
    */
-  changes: Readonly<ChangedProperties<Properties>>;
+  changes: Readonly<Required<ChangedProperties<Properties>>>;
 }
 
 export interface IsNameUniqueParameter {

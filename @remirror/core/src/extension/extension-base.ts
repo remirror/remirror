@@ -190,7 +190,26 @@ abstract class Extension<Settings extends Shape = {}, Properties extends Shape =
       settings ?? object(),
     );
     this.#properties = { ...this.constructor.defaultProperties, ...settings?.properties };
+
+    this.init();
   }
+
+  /**
+   * This method is called by the extension constructor. It is not strictly a
+   * lifecycle method since at this point the manager has not yet been
+   * instantiated.
+   *
+   * @remarks
+   *
+   * It should be used instead of overriding the constructor which can lead to
+   * problems.
+   *
+   * At this point
+   * - `this.store` will throw an error since it doesn't yet exist.
+   * - `this.type` in `NodeExtension` and `MarkExtension` will also throw an
+   *   error since the schema hasn't been created yet.
+   */
+  protected init() {}
 
   /**
    * Update the properties with the provided partial value when changed.
@@ -494,8 +513,33 @@ export abstract class NodeExtension<
    * is very tied to the prosemirror implementation and the best place to learn
    * more about it is in the
    * {@link https://prosemirror.net/docs/guide/#schema docs}.
+   *
+   * @params hole - a method that is meant to indicate where extra attributes
+   * should be placed (if they exist).
+   *
+   * The `hole` is a function that augments the passed object adding a special
+   * `secret` key which is used to insert the extra attributes setter.
+   *
+   * ```ts
+   * import { NodeExtension, SpecHole } from 'remirror/core';
+   *
+   * class AwesomeExtension extends NodeExtension {
+   *   public readonly name = 'awesome' as const';
+   *
+   *   createNodeSpec(hole: SpecHole) {
+   *     return {
+   *       toDOM: (node) => {
+   *         return ['p', hole(), 0]
+   *       }
+   *     }
+   *   }
+   * }
+   * ```
+   *
+   * The above example will have the `hole()` method call replaced with the
+   * extra attributes.
    */
-  protected abstract createNodeSpec(): NodeExtensionSpec;
+  protected abstract createNodeSpec(hole?: <T extends object>(attrs?: T) => T): NodeExtensionSpec;
 }
 
 /**

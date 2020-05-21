@@ -230,8 +230,8 @@ declare global {
        * commands.
        *
        * ```ts
-       * if (commands.bold.isEnabled()) {
-       *   commands.bold();
+       * if (commands.toggleBold.isEnabled()) {
+       *   commands.toggleBold();
        * }
        * ```
        *
@@ -242,14 +242,16 @@ declare global {
        *
        * ```ts
        * commands
-       *   .bold()
+       *   .chain
+       *   .toggleBold()
        *   .insertText('Hello')
        *   .setSelection('start')
        *   .custom((transaction) => transaction)
        *   .run();
        * ```
        *
-       * The `run()` method ends the chain.
+       * The `run()` method ends the chain and dispatches the accumulated
+       * transaction.
        *
        */
       commands: CommandsFromExtensions<ExtensionUnion | GetExtensionUnion<PresetUnion>>;
@@ -260,12 +262,18 @@ declare global {
        *
        * @remarks
        *
-       * You can use this property to create expressive and complex commands that
-       * build up the transaction until it can be run.
+       * You can use this property to create expressive and complex commands
+       * that build up the transaction until it can be run.
        *
        * ```ts
-       * chain.bold().insertText('Hi').setSelection('start').run();
+       * chain
+       *   .toggleBold()
+       *   .insertText('Hi')
+       *   .setSelection('all')
+       *   .run();
        * ```
+       *
+       * The `run()` method ends the chain and dispatches the command.
        */
       chain: ChainedFromExtensions<ExtensionUnion | GetExtensionUnion<PresetUnion>>;
     }
@@ -320,7 +328,8 @@ declare global {
       /**
        * `ExtensionCommands`
        *
-       * This pseudo property makes it easier to infer Generic types of this class.
+       * This pseudo property makes it easier to infer Generic types of this
+       * class.
        * @private
        */
       [`~C`]: this['createCommands'] extends AnyFunction ? ReturnType<this['createCommands']> : {};
@@ -330,7 +339,7 @@ declare global {
       /**
        * A method to return the editor's available commands.
        */
-      getCommands: <ExtensionUnion extends AnyExtension = AnyExtension>() => CommandsFromExtensions<
+      getCommands: <ExtensionUnion extends AnyExtension = any>() => CommandsFromExtensions<
         CommandsExtension | ExtensionUnion
       >;
 
