@@ -182,7 +182,6 @@ test('keymaps', () => {
     public readonly name = 'third' as const;
 
     public createKeymap = () => {
-      console.log('creating the keymap 3');
       return {
         Enter: mocks.thirdEnter,
       };

@@ -76,7 +76,7 @@ describe('extraAttributes', () => {
     expect(node).toEqualProsemirrorNode(doc(custom('hello')));
   });
 
-  it('support parsing with getAttributes method', () => {
+  it('supports parsing with getAttributes method', () => {
     const node = fromHTML({
       content: `<p title="${title}" data-run="${run}" simple="believe me">hello</p>`,
       schema,
@@ -84,5 +84,15 @@ describe('extraAttributes', () => {
     const expected = doc(other('hello'));
 
     expect(node).toEqualProsemirrorNode(expected);
+  });
+
+  it('can `disableExtraAttributes`', () => {
+    const { schema } = createBaseManager({
+      extensions: [customExtension],
+      presets: [],
+      settings: { disableExtraAttributes: true },
+    });
+
+    expect(schema.nodes.custom.spec.attrs).toBeUndefined();
   });
 });

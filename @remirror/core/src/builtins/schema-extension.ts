@@ -26,8 +26,8 @@ import {
 import { AnyPreset } from '../preset';
 
 /**
- * This extension creates the schema that is used throughout the rest of the
- * extension.
+ * This extension creates the schema and provides extra attributes as defined in
+ * the manager or the extension settings.
  *
  * @builtin
  */
@@ -47,8 +47,14 @@ export class SchemaExtension extends PlainExtension {
     const nodes: Record<string, NodeExtensionSpec> = object();
     const marks: Record<string, MarkExtensionSpec> = object();
     const extraAttributes: Record<string, ExtraAttributes[]> = object();
+    let managerExtraAttributes = managerSettings.extraAttributes ?? [];
 
-    for (const attributeGroup of managerSettings.extraAttributes ?? []) {
+    // Skip the for loop by setting the list to empty when extra attributes are disabled
+    if (managerSettings.disableExtraAttributes) {
+      managerExtraAttributes = [];
+    }
+
+    for (const attributeGroup of managerExtraAttributes) {
       for (const identifier of attributeGroup.identifiers) {
         const currentValue = extraAttributes[identifier] ?? [];
         extraAttributes[identifier] = [...currentValue, ...attributeGroup.attributes];
@@ -65,13 +71,17 @@ export class SchemaExtension extends PlainExtension {
 
         if (isNodeExtension(extension)) {
           const { name, spec } = extension;
-          nodes[name] = transformSchemaAttributes(extraAttributes[extension.name], spec);
+          nodes[name] = managerSettings.disableExtraAttributes
+            ? spec
+            : transformSchemaAttributes(extraAttributes[extension.name], spec);
         }
 
         if (isMarkExtension(extension)) {
           const { name, spec } = extension;
 
-          marks[name] = transformSchemaAttributes(extraAttributes[extension.name], spec);
+          marks[name] = managerSettings.disableExtraAttributes
+            ? spec
+            : transformSchemaAttributes(extraAttributes[extension.name], spec);
         }
       },
 
@@ -260,6 +270,14 @@ declare global {
        * ```
        */
       extraAttributes?: ExtraSchemaAttributes[];
+
+      /**
+       * Perhaps you don't need extra attributes at all in the editor. This
+       * allows you to disable extra attributes when set to true.
+       *
+       * @defaultValue undefined
+       */
+      disableExtraAttributes?: boolean;
     }
 
     interface ManagerStore<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
