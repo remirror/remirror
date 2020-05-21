@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
+import sanitizeHtml from 'sanitize-html';
 
-import { environment, isEmptyArray, isTextDOMNode } from '@remirror/core';
+import { environment, isFunction } from '@remirror/core';
 
 /**
  * Polyfill DOMElement.innerText because JSDOM lacks support for it.
@@ -14,42 +15,14 @@ export const jsdomPolyfill = () => {
   }
 
   if (!('innerText' in document.createElement('a'))) {
-    const getInnerText = (node: Node): string =>
-      Array.prototype.slice.call(node.childNodes).reduce((text, child) => {
-        if (child.nodeType === child.TEXT_NODE) {
-          return `${text as string}${child.textContent as string}`;
-        }
-
-        if (!isEmptyArray(child.childNodes.length)) {
-          return `${text as string}${getInnerText(child)}`;
-        }
-
-        return text;
-      }, '');
-
-    Object.defineProperty(HTMLElement.prototype, 'innerText', {
-      configurable: false,
-      enumerable: true,
+    Object.defineProperty(Element.prototype, 'innerText', {
       get() {
-        return getInnerText(this);
+        return sanitizeHtml(this.textContent, {
+          allowedTags: [], // remove all tags and return text content only
+          allowedAttributes: {}, // remove all tags and return text content only
+        });
       },
-      set(text) {
-        const textNodes = Array.prototype.slice
-          .call(this.childNodes)
-          .filter((node) => isTextDOMNode(node));
-
-        // If there's only one child that is a text node, update it
-        if (textNodes.length === 1) {
-          textNodes[0].textContent = text;
-          return;
-        }
-
-        // Remove all child nodes as per WHATWG LS Spec
-        Array.prototype.slice.call(this.childNodes).forEach((node) => node.remove());
-
-        // Append a single text child node with the text
-        this.append(this.ownerDocument.createTextNode(text));
-      },
+      configurable: true, // make it so that it doesn't blow chunks on re-running tests with things like --watch
     });
   }
 
@@ -72,12 +45,53 @@ export const jsdomExtras = () => {
     return;
   }
 
-  document.getSelection = window.getSelection = () => {
+  const originalGetBoundingClientRect = Element.prototype.getBoundingClientRect.bind(
+    Element.prototype,
+  );
+
+  Element.prototype.getBoundingClientRect = function () {
+    if (isFunction(originalGetBoundingClientRect)) {
+      try {
+        return originalGetBoundingClientRect();
+      } catch {
+        // Oh well...
+      }
+    }
+
     return {
-      addRange: (_) => {},
-      removeAllRanges: () => {},
-    } as Selection;
+      toJSON() {
+        return {};
+      },
+      width: Number.parseFloat((this as HTMLElement).style?.width) ?? 0,
+      height: Number.parseFloat((this as HTMLElement).style?.height) ?? 0,
+      top: Number.parseFloat((this as HTMLElement).style?.marginTop) ?? 0,
+      left: Number.parseFloat((this as HTMLElement).style?.marginLeft) ?? 0,
+      x: Number.parseFloat((this as HTMLElement).style?.marginLeft) ?? 0,
+      y: Number.parseFloat((this as HTMLElement).style?.marginTop) ?? 0,
+      right: Number.parseFloat((this as HTMLElement).style?.width) ?? 0,
+      bottom: Number.parseFloat((this as HTMLElement).style?.height) ?? 0,
+    };
   };
+
+  const originalGetClientRects = Element.prototype.getClientRects;
+
+  Element.prototype.getClientRects = function () {
+    if (isFunction(originalGetClientRects)) {
+      try {
+        return originalGetClientRects();
+      } catch {
+        // If at first you don't succeed, roll your own polyfill.
+      }
+    }
+
+    const rects: DOMRectList = [] as any;
+    rects.item = (_: number) => null;
+
+    return rects;
+  };
+
+  Range.prototype.getClientRects = Element.prototype.getClientRects;
+  Range.prototype.getBoundingClientRect = Element.prototype.getBoundingClientRect;
 
   // Copied from react-beautiful-dnd/test/setup.js
   // overriding these properties in jsdom to allow them to be controlled
@@ -105,15 +119,17 @@ export const jsdomExtras = () => {
   (document.documentElement as any).clientWidth = window.innerWidth;
   (document.documentElement as any).clientHeight = window.innerHeight;
 
-  document.createRange = () =>
-    ({
-      setStart: () => {},
-      setEnd: () => {},
-      commonAncestorContainer: {
-        nodeName: 'BODY',
-        ownerDocument: document,
-      } as Node,
-    } as any);
+  document.createRange =
+    document.createRange ??
+    (() =>
+      ({
+        setStart: () => {},
+        setEnd: () => {},
+        commonAncestorContainer: {
+          nodeName: 'BODY',
+          ownerDocument: document,
+        } as Node,
+      } as any));
 
   // Taken from https://github.com/jsdom/jsdom/issues/639#issuecomment-371278152
   const mutationObserver = readFileSync(require.resolve('mutationobserver-shim'), {

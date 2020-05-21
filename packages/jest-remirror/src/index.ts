@@ -10,7 +10,6 @@ export * from './jest-remirror-types';
 declare global {
   interface Window {
     hasWarnedAboutCancelAnimationFramePolyfill?: boolean;
-    hasWarnedAboutJsdomFixtures: boolean;
     ignoreAllJSDOMWarnings: boolean;
   }
 }
