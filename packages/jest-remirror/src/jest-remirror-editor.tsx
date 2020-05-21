@@ -278,18 +278,24 @@ export class RemirrorTestChain<ExtensionUnion extends AnyExtension, PresetUnion 
     tr.setMeta('addToHistory', false);
     this.view.dispatch(tr);
 
-    if (all) {
-      dispatchAllSelection({ view: this.view });
-    } else if (node) {
-      dispatchNodeSelection({ view: this.view, pos: node });
-    } else if (cursor) {
+    if (cursor) {
       dispatchTextSelection({ view: this.view, start: cursor });
-    } else if (start) {
+    }
+
+    if (start) {
       dispatchTextSelection({
         view: this.view,
         start,
         end: end && start <= end ? end : taggedDocument.resolve(start).end(),
       });
+    }
+
+    if (node) {
+      dispatchNodeSelection({ view: this.view, pos: node });
+    }
+
+    if (all) {
+      dispatchAllSelection(this.view);
     }
 
     return this;
@@ -464,6 +470,14 @@ export class RemirrorTestChain<ExtensionUnion extends AnyExtension, PresetUnion 
     const { from } = this.state.selection;
 
     insertText({ start: from, text, view: this.view });
+    return this;
+  };
+
+  /**
+   * Logs the view to the dom for help debugging the html in your tests.
+   */
+  public debug = () => {
+    this.utils.debug(this.view.dom as HTMLElement);
     return this;
   };
 }
