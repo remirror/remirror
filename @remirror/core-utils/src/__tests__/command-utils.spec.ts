@@ -96,7 +96,7 @@ test('updateMark', () => {
   const from = doc(p('Make <start>bold<end>'));
   const to = doc(p('Make ', strong('bold')));
 
-  expect(updateMark({ type: schema.marks.strong })).toTransformNode({ from, to });
+  expect(updateMark({ type: schema.marks.strong })).toTransform({ from, to });
 });
 
 describe('toggleWrap', () => {
@@ -104,7 +104,7 @@ describe('toggleWrap', () => {
     const from = doc(p('Wrap ', '<cursor>me'));
     const to = doc(blockquote(p('Wrap me')));
 
-    expect(toggleWrap(schema.nodes.blockquote)).toTransformNode({ from, to });
+    expect(toggleWrap(schema.nodes.blockquote)).toTransform({ from, to });
   });
 
   it('lifts the node when already wrapped', () => {

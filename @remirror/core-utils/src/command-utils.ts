@@ -2,6 +2,7 @@ import { isFunction, isNumber, object } from '@remirror/core-helpers';
 import {
   AnyFunction,
   AttributesParameter,
+  CommandFunction,
   EditorSchema,
   MarkType,
   MarkTypeParameter,
@@ -13,7 +14,8 @@ import {
   RangeParameter,
   TransformTransactionParameter,
 } from '@remirror/core-types';
-import { lift, liftListItem, setBlockType, wrapIn, wrapInList } from '@remirror/pm/commands';
+import { lift, setBlockType, wrapIn } from '@remirror/pm/commands';
+import { liftListItem, wrapInList } from '@remirror/pm/schema-list';
 
 import { getMarkRange, isMarkType, isNodeType } from './dom-utils';
 import { findParentNode, isNodeActive, selectionEmpty } from './prosemirror-utils';
@@ -35,56 +37,49 @@ interface UpdateMarkParameter
   type: MarkType;
 }
 /**
- * Update the selection with the provided MarkType
- *
- * @param type - the type to update the mark to
- * @param attrs - attrs to use for the mark
- *
- * @public
+ * Update the selection with the provided MarkType.
  */
-export const updateMark = ({
-  type,
-  attrs: attributes = object<ProsemirrorAttributes>(),
-  appendText,
-  range,
-}: UpdateMarkParameter): ProsemirrorCommandFunction => (state, dispatch) => {
-  const { selection } = state;
-  const { tr } = state;
-  const { from, to } = range ?? selection;
+export function updateMark(parameter: UpdateMarkParameter): CommandFunction {
+  return ({ state, dispatch }) => {
+    const { type, attrs = object(), appendText, range } = parameter;
+    const { selection } = state;
+    const { tr } = state;
+    const { from, to } = range ?? selection;
 
-  tr.addMark(from, to, type.create(attributes));
+    tr.addMark(from, to, type.create(attrs));
 
-  if (appendText) {
-    tr.insertText(appendText);
-  }
+    if (appendText) {
+      tr.insertText(appendText);
+    }
 
-  if (dispatch) {
-    dispatch(tr);
-  }
+    if (dispatch) {
+      dispatch(tr);
+    }
 
-  return true;
-};
+    return true;
+  };
+}
 
 /**
- * Toggle between wrapping an inactive node with the provided node type, and lifting it up into it's parent.
+ * Toggle between wrapping an inactive node with the provided node type, and
+ * lifting it up into it's parent.
  *
  * @param type - the node type to toggle
  * @param attrs - the attrs to use for the node
  *
  * @public
  */
-export const toggleWrap = (
-  type: NodeType,
-  attributes: ProsemirrorAttributes,
-): ProsemirrorCommandFunction => (state, dispatch) => {
-  const isActive = isNodeActive({ state, type });
+export function toggleWrap(type: NodeType, attrs: ProsemirrorAttributes = {}): CommandFunction {
+  return ({ state, dispatch }) => {
+    const isActive = isNodeActive({ state, type });
 
-  if (isActive) {
-    return lift(state, dispatch);
-  }
+    if (isActive) {
+      return lift(state, dispatch);
+    }
 
-  return wrapIn(type, attributes)(state, dispatch);
-};
+    return wrapIn(type, attrs)(state, dispatch);
+  };
+}
 
 function isList(node: ProsemirrorNode, schema: EditorSchema) {
   return node.type === schema.nodes.bulletList || node.type === schema.nodes.orderedList;
@@ -94,8 +89,8 @@ function isList(node: ProsemirrorNode, schema: EditorSchema) {
  * Toggles a list item.
  *
  * @remarks
- * When the provided list wrapper is inactive (e.g. ul) then wrap the list with this type.
- * When it is active then remove the selected line from the list.
+ * When the provided list wrapper is inactive (e.g. ul) then wrap the list with
+ * this type. When it is active then remove the selected line from the list.
  *
  * @param type - the list node type
  * @param itemType - the list item type (must be in the schema)
@@ -211,13 +206,14 @@ const callMethod = <
 /**
  * Taken from https://stackoverflow.com/a/4900484
  *
- * Check that the browser is chrome. Supports passing a minimum version to check that it is a greater than or equal version.
+ * Check that the browser is chrome. Supports passing a minimum version to check
+ * that it is a greater than or equal version.
  */
-const isChrome = (minVersion = 0): boolean => {
+function isChrome(minVersion = 0): boolean {
   const parsedAgent = navigator.userAgent.match(/Chrom(e|ium)\/(\d+)\./);
 
   return parsedAgent ? Number.parseInt(parsedAgent[2], 10) >= minVersion : false;
-};
+}
 
 /**
  * Replaces text with an optional appended string at the end
@@ -296,34 +292,31 @@ interface RemoveMarkParameter
  *
  * @public
  */
-export const removeMark = ({
-  type,
-  expand = false,
-  range,
-  endTransaction,
-  startTransaction,
-}: RemoveMarkParameter): ProsemirrorCommandFunction => (state, dispatch) => {
-  const { selection } = state;
-  const tr = callMethod({ fn: startTransaction, defaultReturn: state.tr }, [state.tr, state]);
-  let { from, to } = range ?? selection;
+export function removeMark(parameter: RemoveMarkParameter): ProsemirrorCommandFunction {
+  return (state, dispatch) => {
+    const { type, expand = false, range, endTransaction, startTransaction } = parameter;
+    const { selection } = state;
+    const tr = callMethod({ fn: startTransaction, defaultReturn: state.tr }, [state.tr, state]);
+    let { from, to } = range ?? selection;
 
-  if (expand) {
-    ({ from, to } = range
-      ? getMarkRange(state.doc.resolve(range.from), type) ||
-        (isNumber(range.to) && getMarkRange(state.doc.resolve(range.to), type)) || { from, to }
-      : selectionEmpty(state)
-      ? getMarkRange(state.selection.$anchor, type) || { from, to }
-      : { from, to });
-  }
+    if (expand) {
+      ({ from, to } = range
+        ? getMarkRange(state.doc.resolve(range.from), type) ||
+          (isNumber(range.to) && getMarkRange(state.doc.resolve(range.to), type)) || { from, to }
+        : selectionEmpty(state)
+        ? getMarkRange(state.selection.$anchor, type) || { from, to }
+        : { from, to });
+    }
 
-  tr.removeMark(from, isNumber(to) ? to : from, type);
+    tr.removeMark(from, isNumber(to) ? to : from, type);
 
-  if (dispatch) {
-    dispatch(callMethod({ fn: endTransaction, defaultReturn: tr }, [tr, state]));
-  }
+    if (dispatch) {
+      dispatch(callMethod({ fn: endTransaction, defaultReturn: tr }, [tr, state]));
+    }
 
-  return true;
-};
+    return true;
+  };
+}
 
 /**
  * An empty (noop) command function.

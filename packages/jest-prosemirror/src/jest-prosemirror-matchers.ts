@@ -2,6 +2,7 @@ import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 
 import { bool } from '@remirror/core-helpers';
 import {
+  CommandFunction,
   ProsemirrorCommandFunction,
   ProsemirrorNode as _ProsemirrorNode,
 } from '@remirror/core-types';
@@ -32,6 +33,48 @@ export const prosemirrorMatchers = {
     const expected = to ? to : from;
     const shouldChange = bool(to);
     const { pass, taggedDoc: actual } = apply(from, command, to);
+    const properties = { actual, expected, name: 'toTransformNode' };
+
+    if (pass) {
+      return {
+        ...properties,
+        pass,
+        message: transformsNodePassMessage(actual, expected, shouldChange),
+      };
+    } else {
+      return {
+        ...properties,
+        pass,
+        message: transformsNodeFailMessage(actual, expected, shouldChange),
+      };
+    }
+  },
+
+  toTransform(
+    this: jest.MatcherUtils,
+    command: CommandFunction,
+    { from, to }: CommandTransformation,
+  ) {
+    if (typeof command !== 'function') {
+      return {
+        message: () => `Please specify a valid command`,
+        pass: false,
+      };
+    }
+    if (!bool(from)) {
+      return {
+        message: () =>
+          `Please specify the 'from' node which this command: ${command.name} should transform`,
+        pass: false,
+      };
+    }
+    const expected = to ? to : from;
+    const shouldChange = bool(to);
+    const { pass, taggedDoc: actual } = apply(
+      from,
+      (state, dispatch, view) => command({ state, dispatch, view }),
+      to,
+    );
     const properties = { actual, expected, name: 'toTransformNode' };
 
     if (pass) {
@@ -92,7 +135,7 @@ declare global {
        * the prosemirror node in the desired way.
        *
        * ```ts
-       * import { removeMark } from '@remirror/core-utils';
+       * import { toggleMark } from 'prosemirror-commands';
        * import {schema, doc, p, strong} from 'jest-prosemirror';
        *
        * test('remove the mark', () => {
@@ -100,7 +143,7 @@ declare global {
        *   const from = doc(p(strong('<start>bold<end>')));
        *   const to = doc(p('bold'));
        *
-       *   expect(removeMark({ type })).toTransformNode({ from, to });
+       *   expect(toggleMark(type)).toTransformNode({ from, to });
        * });
        * ```
        *
@@ -110,6 +153,33 @@ declare global {
        * node is identical after the transform.
        */
       toTransformNode: (params: CommandTransformation) => R;
+
+      /**
+       * **Note** This is specific for remirror projects due to the different
+       * command type signature.
+       *
+       * A utility from jest-prosemirror which tests that a command transforms
+       * the prosemirror node in the desired way.
+       *
+       * ```ts
+       * import { removeMark } from '@remirror/core-utils';
+       * import { schema, doc, p, strong } from 'jest-prosemirror';
+       *
+       * test('remove the mark', () => {
+       *   const type = schema.marks.bold
+       *   const from = doc(p(strong('<start>bold<end>')));
+       *   const to = doc(p('bold'));
+       *
+       *   expect(removeMark({ type })).toTransform({ from, to });
+       * });
+       * ```
+       *
+       * This tests that mark has been removed by the provided command.
+       *
+       * The `to` property is optional and can be left blank to test that the
+       * node is identical after the transform.
+       */
+      toTransform: (params: CommandTransformation) => R;
 
       /**
        * Tests that two prosemirror documents are equal. Pass in the expected

@@ -1,5 +1,3 @@
-import { wrappingInputRule } from '@remirror/pm/inputrules';
-
 import {
   CommandNodeTypeParameter,
   convertCommand,
@@ -11,6 +9,7 @@ import {
   NodeGroup,
   toggleWrap,
 } from '@remirror/core';
+import { wrappingInputRule } from '@remirror/pm/inputrules';
 
 export class BlockquoteExtension extends NodeExtension {
   get name() {

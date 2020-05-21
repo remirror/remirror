@@ -1,12 +1,12 @@
 import { ErrorConstant } from '@remirror/core-constants';
 import {
   bool,
+  entries,
   invariant,
   isEmptyArray,
   isEmptyObject,
   isNullOrUndefined,
   isUndefined,
-  keys,
   object,
 } from '@remirror/core-helpers';
 import {
@@ -18,12 +18,13 @@ import {
   EditorStateParameter,
   EditorView,
   KeyBindingCommandFunction,
+  MarkTypesParameter,
   NodeTypeParameter,
   NodeTypesParameter,
+  OptionalMarkParameter,
   OptionalProsemirrorNodeParameter,
   PosParameter,
   PredicateParameter,
-  ProsemirrorAttributes,
   ProsemirrorCommandFunction,
   ProsemirrorNode,
   ProsemirrorNodeParameter,
@@ -44,14 +45,33 @@ import {
   isTextDOMNode,
 } from './dom-utils';
 
-interface NodeEqualsTypeParameter extends NodeTypesParameter, OptionalProsemirrorNodeParameter {}
+interface NodeEqualsTypeParameter<Schema extends EditorSchema = any>
+  extends NodeTypesParameter<Schema>,
+    OptionalProsemirrorNodeParameter<Schema> {}
 
 /**
- * Checks if the type a given `node` equals to a given `nodeType`.
+ * Checks if the type a given `node` has a given `nodeType`.
  */
-export const nodeEqualsType = ({ types, node }: NodeEqualsTypeParameter) => {
+export function nodeEqualsType<Schema extends EditorSchema = any>(
+  parameter: NodeEqualsTypeParameter<Schema>,
+) {
+  const { types, node } = parameter;
   return node ? (Array.isArray(types) && types.includes(node.type)) || node.type === types : false;
-};
+}
+
+interface MarkEqualsTypeParameter<Schema extends EditorSchema = any>
+  extends MarkTypesParameter<Schema>,
+    OptionalMarkParameter<Schema> {}
+
+/**
+ * Checks if the type a given `node` has a given `nodeType`.
+ */
+export function markEqualsType<Schema extends EditorSchema = any>(
+  parameter: MarkEqualsTypeParameter<Schema>,
+) {
+  const { types, mark } = parameter;
+  return mark ? (Array.isArray(types) && types.includes(mark.type)) || mark.type === types : false;
+}
 
 /**
  * Creates a new transaction object from a given transaction
@@ -235,9 +255,9 @@ export const findParentNodeOfType = ({
  *
  * @param selection - the prosemirror selection
  */
-export const findPositionOfNodeBefore = <GSchema extends EditorSchema = any>(
-  value: Selection<GSchema> | ResolvedPos<GSchema> | EditorState<GSchema> | Transaction<GSchema>,
-): FindProsemirrorNodeResult | undefined => {
+export function findPositionOfNodeBefore<Schema extends EditorSchema = any>(
+  value: Selection<Schema> | ResolvedPos<Schema> | EditorState<Schema> | Transaction<Schema>,
+): FindProsemirrorNodeResult | undefined {
   const $pos = isResolvedPos(value)
     ? value
     : isSelection(value)
@@ -265,7 +285,7 @@ export const findPositionOfNodeBefore = <GSchema extends EditorSchema = any>(
         depth: selection.$from.depth + 1,
         start: selection.$from.start(selection.$from.depth + 1),
       };
-};
+}
 
 /**
  * Returns a new transaction that deletes previous node.
@@ -288,13 +308,12 @@ export const removeNodeBefore = (tr: Transaction): Transaction => {
   return tr;
 };
 
-interface FindSelectedNodeOfTypeParameter<
-  GSchema extends EditorSchema = any,
-  GSelection extends Selection<GSchema> = Selection<GSchema>
-> extends NodeTypesParameter<GSchema>, SelectionParameter<GSchema, GSelection> {}
+interface FindSelectedNodeOfTypeParameter<Schema extends EditorSchema = any>
+  extends NodeTypesParameter<Schema>,
+    SelectionParameter<Schema> {}
 
-export interface FindSelectedNodeOfType<GSchema extends EditorSchema = any>
-  extends FindProsemirrorNodeResult<GSchema> {
+export interface FindSelectedNodeOfType<Schema extends EditorSchema = any>
+  extends FindProsemirrorNodeResult<Schema> {
   /**
    * The depth of the returned node.
    */
@@ -314,32 +333,26 @@ export interface FindSelectedNodeOfType<GSchema extends EditorSchema = any>
  * });
  * ```
  */
-export const findSelectedNodeOfType = <
-  GSchema extends EditorSchema = any,
-  GSelection extends Selection<GSchema> = Selection<GSchema>
->({
-  types,
-  selection,
-}: FindSelectedNodeOfTypeParameter<GSchema, GSelection>):
-  | FindSelectedNodeOfType<GSchema>
-  | undefined => {
-  if (isNodeSelection(selection)) {
-    const { node, $from } = selection;
-    if (nodeEqualsType({ types, node })) {
-      return {
-        node,
-        pos: $from.pos,
-        depth: $from.depth,
-        start: $from.start(),
-        end: $from.pos + node.nodeSize,
-      };
-    }
-  }
-  return;
-};
+export function findSelectedNodeOfType<Schema extends EditorSchema = any>(
+  parameter: FindSelectedNodeOfTypeParameter<Schema>,
+): FindSelectedNodeOfType<Schema> | undefined {
+  const { types, selection } = parameter;
 
-export interface FindProsemirrorNodeResult<GSchema extends EditorSchema = any>
-  extends ProsemirrorNodeParameter<GSchema> {
+  if (!isNodeSelection(selection) || nodeEqualsType({ types, node: selection.node })) {
+    return;
+  }
+
+  return {
+    pos: selection.$from.pos,
+    depth: selection.$from.depth,
+    start: selection.$from.start(),
+    end: selection.$from.pos + selection.node.nodeSize,
+    node: selection.node as ProsemirrorNode<Schema>,
+  };
+}
+
+export interface FindProsemirrorNodeResult<Schema extends EditorSchema = any>
+  extends ProsemirrorNodeParameter<Schema> {
   /**
    * The start position of the node.
    */
@@ -373,8 +386,8 @@ interface FindParentNodeParameter extends SelectionParameter, PredicateParameter
  *
  * @param selection - the prosemirror selection
  */
-export const findPositionOfNodeAfter = <GSchema extends EditorSchema = any>(
-  value: Selection<GSchema> | ResolvedPos<GSchema> | EditorState<GSchema>,
+export const findPositionOfNodeAfter = <Schema extends EditorSchema = any>(
+  value: Selection<Schema> | ResolvedPos<Schema> | EditorState<Schema>,
 ): FindProsemirrorNodeResult | undefined => {
   const $pos = isResolvedPos(value)
     ? value
@@ -472,43 +485,44 @@ export const isNodeActive = ({ state, type, attrs }: IsNodeActiveParameter) => {
   return parent.node.hasMarkup(type, attrs);
 };
 
-export interface SchemaJSON<GNodes extends string = string, GMarks extends string = string> {
-  nodes: Record<GNodes, NodeSpec>;
-  marks: Record<GMarks, MarkSpec>;
+export interface SchemaJSON<Nodes extends string = string, Marks extends string = string> {
+  nodes: Record<Nodes, NodeSpec>;
+  marks: Record<Marks, MarkSpec>;
 }
 
 /**
  * Converts a schema to a simple json compatible object.
  */
-export const schemaToJSON = <GNodes extends string = string, GMarks extends string = string>(
-  schema: EditorSchema<GNodes, GMarks>,
-): SchemaJSON<GNodes, GMarks> => {
-  const nodes = keys(schema.nodes).reduce((accumulator, key) => {
-    const { spec } = schema.nodes[key];
-    return { ...accumulator, [key]: spec };
-  }, object<SchemaJSON['nodes']>());
+export function schemaToJSON<Nodes extends string = string, Marks extends string = string>(
+  schema: EditorSchema<Nodes, Marks>,
+): SchemaJSON<Nodes, Marks> {
+  const nodes: SchemaJSON['nodes'] = object();
+  const marks: SchemaJSON['marks'] = object();
 
-  const marks = keys(schema.marks).reduce((accumulator, key) => {
-    const { spec } = schema.marks[key];
-    return { ...accumulator, [key]: spec };
-  }, object<SchemaJSON['marks']>());
+  for (const [key, { spec }] of entries(schema.nodes)) {
+    nodes[key] = spec;
+  }
+
+  for (const [key, { spec }] of entries(schema.marks)) {
+    marks[key] = spec;
+  }
 
   return {
     nodes,
     marks,
   };
-};
+}
 
 /**
  * Wraps the default {@link ProsemirrorCommandFunction} and makes it compatible
  * with the default **remirror** {@link CommandFunction} call signature.
  */
 export const convertCommand = <
-  GSchema extends EditorSchema = any,
+  Schema extends EditorSchema = any,
   GExtraParameter extends object = {}
 >(
-  commandFunction: ProsemirrorCommandFunction<GSchema>,
-): CommandFunction<GSchema, GExtraParameter> => ({ state, dispatch, view }) =>
+  commandFunction: ProsemirrorCommandFunction<Schema>,
+): CommandFunction<Schema, GExtraParameter> => ({ state, dispatch, view }) =>
   commandFunction(state, dispatch, view);
 
 /**
@@ -516,9 +530,9 @@ export const convertCommand = <
  * inferred chainable commands.
  */
 export type NonChainableCommandFunction<
-  GSchema extends EditorSchema = any,
+  Schema extends EditorSchema = any,
   GExtraParameter extends object = {}
-> = Brand<CommandFunction<GSchema, GExtraParameter>, 'non-chainable'>;
+> = Brand<CommandFunction<Schema, GExtraParameter>, 'non-chainable'>;
 
 /**
  * Marks a command function as non chainable. It will throw an error when
@@ -531,18 +545,18 @@ export type NonChainableCommandFunction<
  * ```
  */
 export function nonChainable<
-  GSchema extends EditorSchema = any,
+  Schema extends EditorSchema = any,
   GExtraParameter extends object = {}
 >(
-  commandFunction: CommandFunction<GSchema, GExtraParameter>,
-): NonChainableCommandFunction<GSchema, GExtraParameter> {
+  commandFunction: CommandFunction<Schema, GExtraParameter>,
+): NonChainableCommandFunction<Schema, GExtraParameter> {
   return ((parameter) => {
     invariant(parameter.dispatch === undefined || parameter.dispatch === parameter.view?.dispatch, {
       code: ErrorConstant.NON_CHAINABLE_COMMAND,
     });
 
     return commandFunction(parameter);
-  }) as NonChainableCommandFunction<GSchema, GExtraParameter>;
+  }) as NonChainableCommandFunction<Schema, GExtraParameter>;
 }
 
 /**
@@ -551,11 +565,11 @@ export function nonChainable<
  * true.
  */
 export const chainCommands = <
-  GSchema extends EditorSchema = any,
+  Schema extends EditorSchema = any,
   GExtraParameter extends object = {}
 >(
-  ...commands: Array<CommandFunction<GSchema, GExtraParameter>>
-): CommandFunction<GSchema, GExtraParameter> => ({ state, dispatch, view, ...rest }) => {
+  ...commands: Array<CommandFunction<Schema, GExtraParameter>>
+): CommandFunction<Schema, GExtraParameter> => ({ state, dispatch, view, ...rest }) => {
   for (const element of commands) {
     if (element({ state, dispatch, view, ...(rest as GExtraParameter) })) {
       return true;

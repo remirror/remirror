@@ -211,6 +211,9 @@ export const MentionExtension = ExtensionFactory.typed<
     };
 
     return {
+      /**
+       * The command for creating a mention.
+       */
       createMention: createMention({ shouldUpdate: false }),
       updateMention: createMention({ shouldUpdate: true }),
       removeMention: ({ range }: Partial<RangeParameter> = object()) => {

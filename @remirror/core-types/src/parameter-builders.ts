@@ -174,6 +174,23 @@ export interface NodeTypesParameter<Schema extends EditorSchema = any> {
 }
 
 /**
+ * A parameter builder interface containing the `types` property which takes a
+ * single type or multiple types.
+ *
+ * @remarks
+ *
+ * This can be used to check whether a certain type matches any of these types.
+ *
+ * @typeParam Schema - the underlying editor schema.
+ */
+export interface MarkTypesParameter<Schema extends EditorSchema = any> {
+  /**
+   * The prosemirror node types to use.
+   */
+  types: MarkType<Schema> | Array<MarkType<Schema>>;
+}
+
+/**
  * A parameter builder interface containing the mark `type` property.
  *
  * @typeParam Schema - the underlying editor schema.
@@ -215,11 +232,18 @@ export interface DocParameter {
   doc: ProsemirrorNode;
 }
 
-export interface OptionalProsemirrorNodeParameter {
+export interface OptionalProsemirrorNodeParameter<Schema extends EditorSchema = any> {
   /**
    * The nullable prosemirror node which may or may not exist.
    */
-  node: ProsemirrorNode | null | undefined;
+  node: ProsemirrorNode<Schema> | null | undefined;
+}
+
+export interface OptionalMarkParameter<Schema extends EditorSchema = any> {
+  /**
+   * The nullable prosemirror mark which may or may not exist.
+   */
+  mark: Mark<Schema> | null | undefined;
 }
 
 export interface PosParameter {
@@ -294,14 +318,11 @@ export interface TextParameter {
   text: string;
 }
 
-export interface SelectionParameter<
-  Schema extends EditorSchema = any,
-  GSelection extends Selection<Schema> = Selection<Schema>
-> {
+export interface SelectionParameter<Schema extends EditorSchema = any> {
   /**
    * The text editor selection
    */
-  selection: GSelection;
+  selection: Selection<Schema>;
 }
 
 export interface PredicateParameter<Parameter> {
