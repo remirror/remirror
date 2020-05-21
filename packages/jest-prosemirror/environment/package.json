@@ -1,0 +1,7 @@
+{
+  "main": "dist/jest-prosemirror.cjs.js",
+  "module": "dist/jest-prosemirror.esm.js",
+  "preconstruct": {
+    "source": "../src/jest-prosemirror-environment"
+  }
+}
