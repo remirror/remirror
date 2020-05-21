@@ -1,0 +1,7 @@
+{
+  "main": "dist/jest-remirror.cjs.js",
+  "module": "dist/jest-remirror.esm.js",
+  "preconstruct": {
+    "source": "../src/jest-remirror-environment"
+  }
+}

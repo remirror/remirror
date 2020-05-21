@@ -18,9 +18,8 @@
   "module": "dist/jest-remirror.esm.js",
   "types": "dist/jest-remirror.cjs.d.ts",
   "files": [
-    "environment.d.ts",
-    "environment.js",
-    "dist"
+    "dist",
+    "environment"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
@@ -44,5 +43,10 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "preconstruct": {
+    "entrypoints": [
+      "environment"
+    ]
   }
 }
