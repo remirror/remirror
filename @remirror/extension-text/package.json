@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-text",
-  "version": "0.11.0",
+  "version": "0.0.0",
   "description": "Enable text in your text-editor, an oxymoron of sorts.",
   "keywords": [
     "remirror",

@@ -198,7 +198,7 @@ export abstract class Preset<Settings extends Shape = {}, Properties extends Sha
    *
    * @remarks
    *
-   * This method will throw and error if the constructor doesn't exist.
+   * This method will throw an error if the constructor doesn't exist.
    */
   public getExtension<Type extends this['~E']['constructor']>(
     Constructor: Type,
