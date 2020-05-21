@@ -33,8 +33,8 @@ import { CorePreset } from '@remirror/preset-core';
 import { DropCursorExtension } from '@remirror/extension-drop-cursor';
 
 // Create the codeBlock extension
-const dropCursorExtension = DropCursorExtension.of({ supportedLanguages: [typescript, jsx] });
-const corePreset = CorePreset.of();
+const dropCursorExtension = new DropCursorExtension({ supportedLanguages: [typescript, jsx] });
+const corePreset = new CorePreset();
 
 // Create the Editor Manager with the codeBlock extension passed through.
 const manager = EditorManager.of([dropCursorExtension, corePreset]);

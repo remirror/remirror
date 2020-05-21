@@ -1,11 +1,13 @@
 import {
-  AnyExtension,
-  createTypedExtension,
+  bool,
+  DefaultExtensionSettings,
   EditorView,
   findPositionOfNodeAfter,
   findPositionOfNodeBefore,
   isUndefined,
   pick,
+  PlainExtension,
+  PluginKey,
   ResolvedPos,
   throttle,
 } from '@remirror/core';
@@ -17,12 +19,8 @@ import { Decoration, DecorationSet } from '@remirror/pm/view';
  * A drop cursor plugin which adds a decoration at the active drop location. The
  * decoration has a class and can be styled however you want.
  */
-export const DropCursorExtension = createTypedExtension<
-  DropCursorSettings,
-  DropCursorProperties
->().plain({
-  name: 'dropCursor',
-  defaultSettings: {
+export class DropCursorExtension extends PlainExtension<DropCursorSettings, DropCursorProperties> {
+  public static defaultSettings: DefaultExtensionSettings<DropCursorSettings> = {
     inlineWidth: '2px',
     inlineSpacing: '10px',
     blockWidth: '100%',
@@ -34,29 +32,30 @@ export const DropCursorExtension = createTypedExtension<
     inlineClassName: 'remirror-drop-cursor-inline',
     beforeInlineClassName: 'remirror-drop-cursor-before-inline',
     afterInlineClassName: 'remirror-drop-cursor-after-inline',
-  },
-  defaultProperties: {
+  };
+  public static defaultProperties: Required<DropCursorProperties> = {
     onInit() {},
     onDestroy() {},
-  },
+  };
 
-  createHelpers({ extension, getPluginState }) {
+  public readonly name = 'dropCursor' as const;
+
+  public createHelpers = () => {
     return {
       /**
        * Check if the anything is currently being dragged over the editor.
        */
       isDragging: () => {
-        return !!getPluginState<DropCursorState>(extension.name).isDragging();
+        return this.store.getPluginState<DropCursorState>(this.name).isDragging();
       },
     };
-  },
+  };
 
   /**
    * Use the dropCursor plugin with provided options.
    */
-  createPlugin(parameter) {
-    const { extension, key } = parameter;
-    const dropCursorState = new DropCursorState(extension);
+  public createPlugin = (key: PluginKey) => {
+    const dropCursorState = new DropCursorState(this);
 
     return new Plugin<DropCursorState>({
       key,
@@ -90,16 +89,14 @@ export const DropCursorExtension = createTypedExtension<
         },
       },
     });
-  },
-});
+  };
+}
 
 /**
  * This indicates whether the current cursor position is within a textblock or
  * between two nodes.
  */
 export type DropCursorType = 'block' | 'inline';
-
-type AnyDropCursorExtension = AnyExtension<DropCursorSettings, DropCursorProperties>;
 
 export interface DropCursorProperties {
   /**
@@ -108,7 +105,7 @@ export interface DropCursorProperties {
   onInit: (parameter: {
     blockElement: HTMLElement;
     inlineElement: HTMLElement;
-    extension: AnyDropCursorExtension;
+    extension: DropCursorExtension;
   }) => void;
 
   /**
@@ -207,7 +204,7 @@ class DropCursorState {
   public decorationSet = DecorationSet.empty;
 
   /* eslint-disable @typescript-eslint/explicit-member-accessibility */
-  readonly #extension: AnyDropCursorExtension;
+  readonly #extension: DropCursorExtension;
 
   /**
    * The currently active timeout. This is used when removing the drop cursor to prevent any flicker.
@@ -236,7 +233,7 @@ class DropCursorState {
 
   /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
-  constructor(extension: AnyDropCursorExtension) {
+  constructor(extension: DropCursorExtension) {
     this.#extension = extension;
     this.dragover = throttle(50, this.dragover);
   }
@@ -271,8 +268,10 @@ class DropCursorState {
    * Check if the editor is currently being dragged around.
    */
   public isDragging = () =>
-    this.#view.dragging ??
-    (this.decorationSet !== DecorationSet.empty || !isUndefined(this.#target));
+    bool(
+      this.#view.dragging ??
+        (this.decorationSet !== DecorationSet.empty || !isUndefined(this.#target)),
+    );
 
   /**
    * Called on every dragover event.
