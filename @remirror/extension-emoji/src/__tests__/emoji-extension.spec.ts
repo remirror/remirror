@@ -157,19 +157,17 @@ describe('commands', () => {
     } = create();
 
     add(doc(p('<cursor>')))
-      .commandsCallback((commands) => {
+      .callback(({ commands, view }) => {
         commands.suggestEmoji();
-      })
-      .callback((content) => {
-        expect(content.state.doc).toEqualRemirrorDocument(doc(p(':')));
+
+        expect(view.state.doc).toEqualRemirrorDocument(doc(p(':')));
         expect(onSuggestionChange).toHaveBeenCalledTimes(1);
       })
       .overwrite(doc(p('abcde')))
-      .commandsCallback((commands) => {
+      .callback(({ commands, view }) => {
         commands.suggestEmoji({ from: 3, to: 4 });
-      })
-      .callback((content) => {
-        expect(content.state.doc).toEqualRemirrorDocument(doc(p('ab:de')));
+
+        expect(view.state.doc).toEqualRemirrorDocument(doc(p('ab:de')));
       });
   });
 
@@ -180,18 +178,16 @@ describe('commands', () => {
     } = create();
 
     add(doc(p('<cursor>')))
-      .commandsCallback((commands) => {
+      .callback(({ commands, view }) => {
         commands.insertEmojiByName('heart');
-      })
-      .callback((content) => {
-        expect(content.state.doc).toEqualRemirrorDocument(doc(p('❤️')));
+
+        expect(view.state.doc).toEqualRemirrorDocument(doc(p('❤️')));
       })
       .overwrite(doc(p('abcde')))
-      .commandsCallback((commands) => {
+      .callback(({ commands, view }) => {
         commands.insertEmojiByName('heart', { from: 3, to: 4 });
-      })
-      .callback((content) => {
-        expect(content.state.doc).toEqualRemirrorDocument(doc(p('ab❤️de')));
+
+        expect(view.state.doc).toEqualRemirrorDocument(doc(p('ab❤️de')));
       });
   });
 });

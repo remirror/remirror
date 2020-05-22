@@ -37,7 +37,7 @@ describe('commands', () => {
       marks: { bold },
     } = renderEditor({ extensions: [boldExtension], presets: [] });
 
-    add(doc(p('Hello <start>friend<end>, lets dance.'))).commandsCallback((commands) => {
+    add(doc(p('Hello <start>friend<end>, lets dance.'))).callback(({ commands }) => {
       commands.toggleBold();
 
       expect(view.dom.innerHTML).toMatchInlineSnapshot(`
@@ -73,7 +73,7 @@ describe('commands', () => {
       marks: { bold },
     } = renderEditor({ extensions: [boldExtension], presets: [] });
 
-    add(doc(p('Hello <start>friend<end>, lets dance.'))).commandsCallback((commands) => {
+    add(doc(p('Hello <start>friend<end>, lets dance.'))).callback(({ commands }) => {
       commands.setBold({ from: 1, to: 6 });
 
       expect(view.dom.innerHTML).toMatchInlineSnapshot(`
@@ -97,7 +97,7 @@ describe('commands', () => {
       marks: { bold },
     } = renderEditor({ extensions: [boldExtension], presets: [] });
 
-    add(doc(p(bold('Hello'), ' friend, lets dance.'))).commandsCallback((commands) => {
+    add(doc(p(bold('Hello'), ' friend, lets dance.'))).callback(({ commands }) => {
       commands.removeBold({ from: 1, to: 6 });
 
       expect(view.dom.innerHTML).toMatchInlineSnapshot(`

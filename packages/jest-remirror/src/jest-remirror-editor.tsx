@@ -359,24 +359,6 @@ export class RemirrorTestChain<ExtensionUnion extends AnyExtension, PresetUnion 
   };
 
   /**
-   * Allows for the chaining of commands.
-   */
-  public commandsCallback = (callback: (commands: this['commands']) => void) => {
-    callback(this.commands);
-
-    return this;
-  };
-
-  /**
-   * Allows for the chaining of helper calls.
-   */
-  public helpersCallback = (callback: (helpers: this['helpers']) => void) => {
-    callback(this.helpers);
-
-    return this;
-  };
-
-  /**
    * Runs a keyboard shortcut. e.g. `Mod-X`
    *
    * @param shortcut
