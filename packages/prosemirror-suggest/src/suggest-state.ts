@@ -402,6 +402,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
       ...this.createParameter(match),
     };
 
+    // TODO this is a performance bottleneck
     return runKeyBindings(isFunction(keyBindings) ? keyBindings() : keyBindings, parameter);
   }
 

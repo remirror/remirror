@@ -1,0 +1,46 @@
+{
+  "title": "prosemirror-suggest mark removed",
+  "steps": [
+    {
+      "file": "packages/prosemirror-suggest/src/suggest-state.ts",
+      "line": 367,
+      "description": "`this.removed` is a property which tracks whether or not a suggestion has been removed. This is needed because sometimes a mark can be removed from the document without the transaction showing that it has changed. In these cases we need to track with `this.removed`.",
+      "selection": {
+        "start": {
+          "line": 367,
+          "character": 37
+        },
+        "end": {
+          "line": 367,
+          "character": 49
+        }
+      }
+    },
+    {
+      "file": "packages/prosemirror-suggest/src/suggest-state.ts",
+      "line": 137,
+      "description": "Here is the method that is passed to consumers of the `prosemirror-suggest` package. This should be called in cases where a changes happens like the removal of a mark, but for some reason prosemirror doesn't seem to capture it. By setting this to true the apply method of this class know's not to skip the update of the state. "
+    },
+    {
+      "file": "packages/prosemirror-suggest/src/suggest-state.ts",
+      "line": 401,
+      "description": "`this.setRemovedTrue` is passed as a method to the parameter that will be received by the keybinding methods. For example if a user wants to remove a mark when delete is activated, they can setup a keybind to the delete key and call this method to indicate a mark has been removed. \n\n```ts\nconst keyBindings = {\n  Delete: (parameter: SuggestBindingParameter) => {\n    // Do work to remove mark. \n    \n    // Indicate the mark has been removed so that the update is reflected in your code base.\n    parameter.setMarkRemoved();\n  }\n}\n```"
+    },
+    {
+      "file": "packages/prosemirror-suggest/src/suggest-state.ts",
+      "line": 149,
+      "description": "The method is also available to the `createCommand` property passed to the suggester.",
+      "selection": {
+        "start": {
+          "line": 149,
+          "character": 7
+        },
+        "end": {
+          "line": 149,
+          "character": 21
+        }
+      }
+    }
+  ],
+  "ref": "next"
+}

@@ -2,12 +2,13 @@ import escapeStringRegex from 'escape-string-regexp';
 
 import {
   CommandFunction,
-  createTypedExtension,
   FromToParameter,
   isNullOrUndefined,
   noop,
   object,
   plainInputRule,
+  PlainExtension,
+  DefaultExtensionSettings,
 } from '@remirror/core';
 
 import {
@@ -26,33 +27,36 @@ import {
   SKIN_VARIATIONS,
   sortEmojiMatches,
 } from './emoji-utils';
+import { Suggestion } from '@remirror/pm/suggest';
 
 interface Data {
   frequentlyUsed: EmojiObject[];
 }
 
-export const EmojiExtension = createTypedExtension<EmojiSettings, EmojiProperties>().plain({
-  /**
-   * The name is dynamically generated based on the passed in type.
-   */
-  name: 'emoji',
-  defaultSettings: {
+export class EmojiExtension extends PlainExtension<EmojiSettings, EmojiProperties> {
+  public static readonly defaultSettings: DefaultExtensionSettings<EmojiSettings> = {
     defaultEmoji: DEFAULT_FREQUENTLY_USED,
     suggestionCharacter: ':',
+  };
+
+  public static readonly defaultProperties: Required<EmojiProperties> = {
     maxResults: 20,
-  },
-  defaultProperties: {
     onSuggestionChange: noop,
     onSuggestionExit: noop,
     suggestionKeyBindings: {},
-  },
+  };
 
-  setInitialData(parameter): Data {
-    return {
-      frequentlyUsed: populateFrequentlyUsed(parameter.settings.defaultEmoji),
-    };
-  },
-  createInputRules() {
+  /**
+   * The name is dynamically generated based on the passed in type.
+   */
+  public readonly name = 'emoji';
+
+  /**
+   * Keep track of the frequently used list.
+   */
+  private frequentlyUsed: EmojiObject[] = populateFrequentlyUsed(this.settings.defaultEmoji);
+
+  public createInputRules = () => {
     return [
       // Emoticons
       plainInputRule({
@@ -72,9 +76,9 @@ export const EmojiExtension = createTypedExtension<EmojiSettings, EmojiPropertie
         },
       }),
     ];
-  },
+  };
 
-  createCommands({ extension }) {
+  public createCommands = () => {
     const commands = {
       /**
        * Insert an emoji into the document at the requested location by name
@@ -97,6 +101,7 @@ export const EmojiExtension = createTypedExtension<EmojiSettings, EmojiPropertie
 
         return commands.insertEmojiByObject(emoji, options)(parameter);
       },
+
       /**
        * Insert an emoji into the document at the requested location.
        *
@@ -122,15 +127,15 @@ export const EmojiExtension = createTypedExtension<EmojiSettings, EmojiPropertie
       },
 
       /**
-       * Inserts the suggestion character into the current position in the editor
-       * in order to activate the suggestion popup..
+       * Inserts the suggestion character into the current position in the
+       * editor in order to activate the suggestion popup.
        */
       suggestEmoji: ({ from, to }: Partial<FromToParameter> = object()): CommandFunction => ({
         state,
         dispatch,
       }) => {
         if (dispatch) {
-          dispatch(state.tr.insertText(extension.settings.suggestionCharacter, from, to));
+          dispatch(state.tr.insertText(this.settings.suggestionCharacter, from, to));
         }
 
         return true;
@@ -138,44 +143,48 @@ export const EmojiExtension = createTypedExtension<EmojiSettings, EmojiPropertie
     };
 
     return commands;
-  },
+  };
 
-  createHelpers({ extension }) {
+  public createHelpers = () => {
     return {
       /**
        * Update the emoji which are displayed to the user when the query is not
        * specific enough.
        */
       updateFrequentlyUsed: (names: NamesAndAliases[]) => {
-        extension.setData<Data>({ frequentlyUsed: populateFrequentlyUsed(names) });
+        this.frequentlyUsed = populateFrequentlyUsed(names);
       },
     };
-  },
+  };
 
-  createSuggestions(parameter) {
-    const { extension, getCommands } = parameter;
+  /**
+   * Emojis can be selected via `:` the colon key (by default). This sets the
+   * configuration using `prosemirror-suggest`
+   */
+  public createSuggestions = (): Suggestion => {
     // const fn = debounce(100, sortEmojiMatches);
 
     return {
       noDecorations: true,
-      invalidPrefixCharacters: escapeStringRegex(extension.settings.suggestionCharacter),
-      char: extension.settings.suggestionCharacter,
+      invalidPrefixCharacters: escapeStringRegex(this.settings.suggestionCharacter),
+      char: this.settings.suggestionCharacter,
       name: this.name,
       appendText: '',
       suggestTag: 'span',
-      keyBindings: () => extension.properties.suggestionKeyBindings,
+      keyBindings: () => this.properties.suggestionKeyBindings,
       onChange: (parameters) => {
-        const { frequentlyUsed } = parameter.extension.getData<Data>();
         const query = parameters.queryText.full;
         const emojiMatches =
           query.length === 0
-            ? frequentlyUsed
-            : sortEmojiMatches(query, extension.settings.maxResults);
-        extension.properties.onSuggestionChange({ ...parameters, emojiMatches });
+            ? this.frequentlyUsed
+            : sortEmojiMatches(query, this.properties.maxResults);
+        this.properties.onSuggestionChange({ ...parameters, emojiMatches });
       },
-      onExit: (parameter) => extension.properties.onSuggestionExit(parameter),
-      createCommand: ({ match }) => {
-        const create = getCommands<typeof extension>().insertEmojiByObject;
+      onExit: (parameter) => this.properties.onSuggestionExit(parameter),
+      createCommand: (parameter) => {
+        const { match } = parameter;
+        const { getCommands } = this.store;
+        const create = getCommands().insertEmojiByObject;
 
         return (emoji, skinVariation) => {
           if (isNullOrUndefined(emoji)) {
@@ -189,8 +198,8 @@ export const EmojiExtension = createTypedExtension<EmojiSettings, EmojiPropertie
         };
       },
     };
-  },
-});
+  };
+}
 
 export interface EmojiCommandOptions extends Partial<FromToParameter> {
   /**

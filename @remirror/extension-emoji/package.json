@@ -23,6 +23,9 @@
   "files": [
     "dist"
   ],
+  "scripts": {
+    "build:custom": "node ./build.js"
+  },
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core": "^0.11.0",
@@ -35,8 +38,7 @@
   },
   "devDependencies": {
     "@remirror/pm": "^0.0.0",
-    "emoji-mart": "3.0.0",
-    "emojilib": "^2.4.0"
+    "emojibase-data": "^5.0.1"
   },
   "peerDependencies": {
     "@remirror/pm": "^0.0.0"

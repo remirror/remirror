@@ -1,3 +1,10 @@
+// TODO setup emojibase https://milesj.gitbook.io/emojibase/data
+// https://github.com/milesj/emojibase/blob/master/packages/core/src/types.ts
+// https://github.com/milesj/emojibase/blob/master/packages/core/src/constants.ts
+// https://raw.githubusercontent.com/milesj/emojibase/master/packages/data/en-gb/raw.json
+// Multilanguage support and sub categories for splitting the build (allow
+// multiple entry points)
+
 const emojiLib = require('emojilib');
 const data = require('emoji-mart/data/all.json');
 const { join, resolve } = require('path');

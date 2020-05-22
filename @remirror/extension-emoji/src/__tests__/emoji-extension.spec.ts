@@ -1,6 +1,6 @@
 import { renderEditor } from 'jest-remirror';
 
-import { BaseExtensionSettings, object, WithProperties } from '@remirror/core';
+import { object, WithProperties } from '@remirror/core';
 import { SuggestKeyBindingParameter } from '@remirror/pm/suggest';
 
 import { EmojiExtension } from '../emoji-extension';
@@ -12,9 +12,7 @@ import {
   EmojiSuggestionChangeHandlerParameter,
 } from '../emoji-types';
 
-function create(
-  parameter: WithProperties<EmojiSettings & BaseExtensionSettings, EmojiProperties> = object(),
-) {
+function create(parameter: WithProperties<EmojiSettings, EmojiProperties> = object()) {
   return renderEditor({
     extensions: [
       new EmojiExtension({
@@ -200,7 +198,7 @@ describe('helpers', () => {
     } = create();
 
     add(doc(p('<cursor>')))
-      .helpersCallback((helpers) => {
+      .callback(({ helpers }) => {
         helpers.updateFrequentlyUsed(['heart']);
       })
       .insertText(':')

@@ -50,13 +50,6 @@ export interface EmojiSettings {
    * These are used when the query typed is less than two characters long.
    */
   defaultEmoji?: NamesAndAliases[];
-
-  /**
-   * The maximum results to show when searching for matching emoji.
-   *
-   * @defaultValue 15
-   */
-  maxResults?: number;
 }
 
 export interface EmojiProperties {
@@ -75,6 +68,13 @@ export interface EmojiProperties {
    * This is useful for cleaning up local state when emoji is set.
    */
   onSuggestionExit?: EmojiSuggestionExitHandler;
+
+  /**
+   * The maximum results to show when searching for matching emoji.
+   *
+   * @defaultValue 15
+   */
+  maxResults?: number;
 }
 
 export type EmojiObjectRecord = Record<Names, EmojiObject>;

@@ -365,6 +365,9 @@ export interface SuggestMarkParameter {
    * without the change reflecting in the prosemirror state. This method should
    * be used when removing a suggestion if you are using prosemirror `Marks` to
    * identify the suggestion.
+   *
+   * When this method is called, `prosemirror-suggest` will handle the removal
+   * of the mark in the next state update (during apply).
    */
   setMarkRemoved: () => void;
 }

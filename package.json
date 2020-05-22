@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "preconstruct build",
+    "build:custom": "pnpm recursive run build:custom",
     "build:docs": "cd docs && pnpm run build",
     "changeset": "changeset",
     "checks": "run-s lint typecheck test",

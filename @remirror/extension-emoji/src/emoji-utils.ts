@@ -60,13 +60,19 @@ export const EMOTICONS: Record<string, string[]> = {
   anguished: ['D:', 'D:'],
 };
 
+/**
+ * The different skin variations supported.
+ */
 export const SKIN_VARIATIONS = ['🏻', '🏼', '🏽', '🏾', '🏿'] as const;
 
 /**
  * Check that the value is a valid skin variation index.
+ *
+ * Perhaps a controversial name...
  */
-export const isValidSkinVariation = (value: unknown): value is SkinVariation =>
-  isNumber(value) && within(value, 0, 4);
+export function isValidSkinVariation(value: unknown): value is SkinVariation {
+  return isNumber(value) && within(value, 0, 4);
+}
 
 export const DEFAULT_FREQUENTLY_USED: Names[] = [
   '+1',
@@ -109,45 +115,76 @@ export const emojiCategories = [
   'flags',
 ] as const;
 
-export const isEmojiName = (name: unknown): name is Names => includes(emojiNames, name);
-export const isEmojiAliasName = (name: unknown): name is AliasNames =>
-  includes(keys(aliasObject), name);
-export const isValidEmojiName = (name: unknown): name is NamesAndAliases =>
-  isEmojiName(name) || isEmojiAliasName(name);
-export const isValidEmojiObject = (value: unknown): value is EmojiObject =>
-  bool(isPlainObject(value) && isEmojiName(value.name));
-export const aliasToName = (name: AliasNames) => aliasObject[name];
+/**
+ * Verifies that this is a valid and supported emoji name.
+ */
+export function isEmojiName(name: unknown): name is Names {
+  return includes(emojiNames, name);
+}
 
-export const getEmojiByName = (name: string | undefined) =>
-  isEmojiName(name)
+/**
+ * Verifies that the provided names is an alias name.
+ */
+export function isEmojiAliasName(name: unknown): name is AliasNames {
+  return includes(keys(aliasObject), name);
+}
+
+/**
+ * Verifies that the name is either and alias or valid emoji name.
+ */
+export function isValidEmojiName(name: unknown): name is NamesAndAliases {
+  return isEmojiName(name) || isEmojiAliasName(name);
+}
+
+/**
+ * Verify that this is a valid emoji object
+ */
+export function isValidEmojiObject(value: unknown): value is EmojiObject {
+  return bool(isPlainObject(value) && isEmojiName(value.name));
+}
+
+/**
+ * Convert an alias to the correct name.
+ */
+export function aliasToName(name: AliasNames) {
+  return aliasObject[name];
+}
+
+export function getEmojiByName(name: string | undefined) {
+  return isEmojiName(name)
     ? emojiObject[name]
     : isEmojiAliasName(name)
     ? emojiObject[aliasToName(name)]
     : undefined;
+}
 
 /**
  * Retrieve the EmojiData from an emoticon.
  *
  * @param emoticon e.g. `:-)`
  */
-export const getEmojiFromEmoticon = (emoticon: string) => {
+export function getEmojiFromEmoticon(emoticon: string) {
   const emoticonName = Object.keys(EMOTICONS).find((name) => EMOTICONS[name].includes(emoticon));
   return getEmojiByName(emoticonName);
-};
+}
 
 /**
  * Return a list of `maxResults` length of closest matches
  */
-export const sortEmojiMatches = (query: string, maxResults = -1) => {
+export function sortEmojiMatches(query: string, maxResults = -1) {
   const results = matchSorter(emojiList, query, {
     keys: ['name', (item) => item.description.replace(/\W/g, '')],
     threshold: matchSorter.rankings.CONTAINS,
   });
 
   return take(results, maxResults);
-};
+}
 
-export const populateFrequentlyUsed = (names: NamesAndAliases[]) => {
+/**
+ * Keeps track of the frequently used list. Eventually restore this
+ * automatically from an async localStorage.
+ */
+export function populateFrequentlyUsed(names: NamesAndAliases[]): EmojiObject[] {
   const frequentlyUsed: EmojiObject[] = [];
   for (const name of names) {
     const emoji = getEmojiByName(name);
@@ -157,14 +194,14 @@ export const populateFrequentlyUsed = (names: NamesAndAliases[]) => {
   }
 
   return frequentlyUsed;
-};
+}
 
 /**
  * Return a string array of hexadecimals representing the hex code for an emoji
  */
-export const getHexadecimalsFromEmoji = (emoji: string) => {
+export function getHexadecimalsFromEmoji(emoji: string) {
   return range(emoji.length / 2).map((index) => {
     const codePoint = emoji.codePointAt(index * 2);
     return codePoint ? codePoint.toString(16) : '';
   });
-};
+}

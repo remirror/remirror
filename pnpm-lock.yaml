@@ -380,8 +380,7 @@ importers:
       match-sorter: 4.1.0
     devDependencies:
       '@remirror/pm': 'link:../pm'
-      emoji-mart: 3.0.0
-      emojilib: 2.4.0
+      emojibase-data: 5.0.1
     specifiers:
       '@babel/runtime': ^7
       '@remirror/core': ^0.11.0
@@ -389,9 +388,8 @@ importers:
       '@remirror/react-node-view': ^0.7.6
       '@types/emoji-regex': ^8.0.0
       '@types/match-sorter': ^4.0.0
-      emoji-mart: 3.0.0
       emoji-regex: ^9.0.0
-      emojilib: ^2.4.0
+      emojibase-data: ^5.0.1
       escape-string-regexp: ^4.0.0
       match-sorter: ^4.1.0
   '@remirror/extension-epic-mode':
@@ -10890,15 +10888,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-f4x70okzZbIQl/NSRLkI/+tteV/9WqL98zx+SQ69KbXxmVrmjwsNUPn/gYJJ0sHvEak24cZgHIPegRePAtA/xw==
-  /emoji-mart/3.0.0:
-    dependencies:
-      '@babel/runtime': 7.9.6
-      prop-types: 15.7.2
-    dev: true
-    peerDependencies:
-      react: ^0.14.0 || ^15.0.0-0 || ^16.0.0
-    resolution:
-      integrity: sha512-r5DXyzOLJttdwRYfJmPq/XL3W5tiAE/VsRnS0Hqyn27SqPA/GOYwVUSx50px/dXdJyDSnvmoPbuJ/zzhwSaU4A==
   /emoji-regex/6.1.1:
     dev: false
     resolution:
@@ -10914,10 +10903,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-6p1NII1Vm62wni/VR/cUMauVQoxmLVb9csqQlvLz+hO2gk8U2UYDfXHQSUYIBKmZwAKz867IDqG7B+u0mj+M6w==
-  /emojilib/2.4.0:
+  /emojibase-data/5.0.1:
     dev: true
+    peerDependencies:
+      emojibase: '*'
     resolution:
-      integrity: sha512-5U0rVMU5Y2n2+ykNLQqMoqklN9ICBT/KsvC1Gz6vqHbz2AXXGkG+Pm5rMWk/8Vjrr/mY9985Hi8DYzn1F09Nyw==
+      integrity: sha512-rYWlogJ2q5P78U8Xx1vhsXHcYKu1wFnr7+o6z9QHssZ1SsJLTCkJINZIPHRFWuDreAUK457TkqHpdOXElu0fzA==
   /emojis-list/2.1.0:
     dev: false
     engines:
