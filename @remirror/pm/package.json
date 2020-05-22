@@ -32,7 +32,7 @@
     "@types/prosemirror-gapcursor": "^1.0.1",
     "@types/prosemirror-history": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",
-    "@types/prosemirror-keymap": "^1.0.1",
+    "@types/prosemirror-keymap": "^1.0.2",
     "@types/prosemirror-model": "^1.7.2",
     "@types/prosemirror-schema-list": "^1.0.1",
     "@types/prosemirror-state": "^1.2.4",

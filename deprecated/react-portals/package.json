@@ -23,7 +23,7 @@
     "@types/nanoid": "2.1.0",
     "nanoevents": "^5.1.7",
     "nanoid": "^3.1.9",
-    "type-fest": "^0.13.1"
+    "type-fest": "^0.14.0"
   },
   "devDependencies": {
     "@emotion/core": "^10.0.22",

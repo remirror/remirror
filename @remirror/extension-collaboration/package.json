@@ -24,7 +24,7 @@
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core": "^0.11.0",
-    "@types/prosemirror-collab": "^1.0.2"
+    "@types/prosemirror-collab": "^1.1.0"
   },
   "devDependencies": {
     "@remirror/pm": "^0.0.0",

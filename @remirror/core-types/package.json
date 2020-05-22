@@ -21,7 +21,7 @@
     "@styled-system/css": "^5.0.23",
     "@types/styled-system__css": "^5.0.9",
     "csstype": "^2.6.10",
-    "type-fest": "^0.13.1"
+    "type-fest": "^0.14.0"
   },
   "devDependencies": {
     "@remirror/pm": "^0.0.0"
