@@ -4,7 +4,7 @@ import {
   debounce,
   EditorSchema,
   EditorState,
-  ExtensionFactory,
+  PlainExtension,
   invariant,
   isArray,
   isNumber,
@@ -12,8 +12,100 @@ import {
   ProsemirrorAttributes,
   Transaction,
   uniqueId,
+  DefaultExtensionSettings,
+  CommandFunction,
+  TransactionLifecycleMethod,
 } from '@remirror/core';
 import { Step } from '@remirror/pm/transform';
+
+/**
+ * The collaboration extension adds collaborative functionality to your editor.
+ *
+ * Once a central server is created the collaboration extension is good.
+ */
+export class CollaborationExtension extends PlainExtension<
+  CollaborationSettings,
+  CollaborationProperties
+> {
+  public static readonly defaultSettings: DefaultExtensionSettings<CollaborationSettings> = {
+    version: 0,
+    clientID: uniqueId(),
+    debounceMs: 250,
+  };
+  public static readonly defaultProperties: Required<CollaborationProperties> = {
+    onSendableReceived() {},
+  };
+
+  public readonly name = 'collaboration';
+
+  protected init() {
+    this.getSendableSteps = debounce(this.settings.debounceMs, this.getSendableSteps);
+  }
+
+  public createCommands = () => {
+    return {
+      /**
+       * Send a collaboration update.
+       */
+      sendCollaborationUpdate: (attributes: CollaborationAttributes): CommandFunction => ({
+        state,
+        dispatch,
+      }) => {
+        invariant(isValidCollaborationAttributes(attributes), {
+          message: 'Invalid attributes passed to the collaboration command.',
+        });
+
+        const { version, steps } = attributes;
+
+        if (getVersion(state) > version) {
+          return false;
+        }
+
+        if (dispatch) {
+          dispatch(
+            receiveTransaction(
+              state,
+              steps.map((item) => Step.fromJSON(this.store.schema, item)),
+              steps.map((item) => item.clientID),
+            ),
+          );
+        }
+
+        return true;
+      },
+    };
+  };
+
+  public createPlugin = () => {
+    const { version, clientID } = this.settings;
+
+    return collab({
+      version,
+      clientID,
+    });
+  };
+
+  public onTransaction: TransactionLifecycleMethod = (parameter) => {
+    this.getSendableSteps(parameter.state);
+  };
+
+  /**
+   * This passes the sendable steps into the `onSendableReceived` handler defined in the
+   * options when there is something to send.
+   */
+  private getSendableSteps = (state: EditorState) => {
+    const sendable = sendableSteps(state);
+
+    if (sendable) {
+      const jsonSendable = {
+        version: sendable.version,
+        steps: sendable.steps.map((step) => step.toJSON()),
+        clientID: sendable.clientID,
+      };
+      this.properties.onSendableReceived({ sendable, jsonSendable });
+    }
+  };
+}
 
 export interface Sendable {
   version: number;
@@ -38,7 +130,7 @@ export interface OnSendableReceivedParameter {
   jsonSendable: JSONSendable;
 }
 
-export interface CollaborationExtensionSettings {
+export interface CollaborationSettings {
   /**
    * The document version.
    *
@@ -59,7 +151,7 @@ export interface CollaborationExtensionSettings {
   debounceMs?: number;
 }
 
-export interface CollaborationExtensionProperties {
+export interface CollaborationProperties {
   /**
    * Called when an an editor transaction occurs and there are changes ready to
    * be sent to the server.
@@ -101,78 +193,3 @@ const isValidCollaborationAttributes = (
 ): attributes is CollaborationAttributes => {
   return !(!attributes || !isArray(attributes.steps) || !isNumber(attributes.version));
 };
-
-/**
- * The collaboration extension adds collaborative functionality to your editor.
- *
- * Once a central server is created the collaboration extension is good.
- */
-export const CollaborationExtension = ExtensionFactory.typed<
-  CollaborationExtensionSettings,
-  CollaborationExtensionProperties
->().plain({
-  name: 'collaboration',
-  defaultSettings: {
-    version: 0,
-    clientID: uniqueId(),
-    debounceMs: 250,
-  },
-  defaultProperties: {
-    onSendableReceived() {},
-  },
-  createCommands({ schema }) {
-    return {
-      collaborationUpdate: (attributes: CollaborationAttributes) => ({ state, dispatch }) => {
-        invariant(isValidCollaborationAttributes(attributes), {
-          message: 'Invalid attributes passed to the collaboration command.',
-        });
-
-        const { version, steps } = attributes;
-
-        if (getVersion(state) > version) {
-          return false;
-        }
-
-        if (dispatch) {
-          dispatch(
-            receiveTransaction(
-              state,
-              steps.map((item) => Step.fromJSON(schema(), item)),
-              steps.map((item) => item.clientID),
-            ),
-          );
-        }
-
-        return true;
-      },
-    };
-  },
-  createPlugin({ extension }) {
-    const { version, clientID } = extension.settings;
-
-    return collab({
-      version,
-      clientID,
-    });
-  },
-
-  onTransaction(extension) {
-    const handler = debounce(extension.settings.debounceMs, (state: EditorState) => {
-      const sendable = sendableSteps(state);
-
-      if (sendable) {
-        const jsonSendable = {
-          version: sendable.version,
-          steps: sendable.steps.map((step) => step.toJSON()),
-          clientID: sendable.clientID,
-        };
-
-        extension.properties.onSendableReceived({ sendable, jsonSendable });
-      }
-    });
-
-    return ({ state }) => {
-      handler(state);
-    };
-  },
-});

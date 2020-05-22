@@ -17,7 +17,7 @@ import { MakeOptional, Position, ProsemirrorAttributes } from './base-types';
  *
  * @typeParam Schema - the underlying editor schema.
  */
-export interface EditorViewParameter<Schema extends EditorSchema = any> {
+export interface EditorViewParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * An instance of the Prosemirror editor `view`.
    */
@@ -42,14 +42,14 @@ export interface SchemaParameter<Nodes extends string = string, Marks extends st
  *
  * @typeParam Schema - the underlying editor schema.
  */
-export interface EditorStateParameter<Schema extends EditorSchema = any> {
+export interface EditorStateParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * A snapshot of the prosemirror editor state
    */
   state: EditorState<Schema>;
 }
 
-export interface StateOrTransactionParameter<Schema extends EditorSchema = any> {
+export interface StateOrTransactionParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * The shared types between a state and a transaction. Allows for commands to
    * operate on either a state object or a transaction object.
@@ -76,7 +76,7 @@ export interface StateOrTransactionParameter<Schema extends EditorSchema = any> 
  *
  * @typeParam Schema - the underlying editor schema.
  */
-export interface CompareStateParameter<Schema extends EditorSchema = any> {
+export interface CompareStateParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * The previous snapshot of the prosemirror editor state.
    */
@@ -149,7 +149,7 @@ export interface AttributesParameter {
  *
  * @typeParam Schema - the underlying editor schema.
  */
-export interface NodeTypeParameter<Schema extends EditorSchema = any> {
+export interface NodeTypeParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * A prosemirror node type instance.
    */
@@ -166,7 +166,7 @@ export interface NodeTypeParameter<Schema extends EditorSchema = any> {
  *
  * @typeParam Schema - the underlying editor schema.
  */
-export interface NodeTypesParameter<Schema extends EditorSchema = any> {
+export interface NodeTypesParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * The prosemirror node types to use.
    */
@@ -183,7 +183,7 @@ export interface NodeTypesParameter<Schema extends EditorSchema = any> {
  *
  * @typeParam Schema - the underlying editor schema.
  */
-export interface MarkTypesParameter<Schema extends EditorSchema = any> {
+export interface MarkTypesParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * The prosemirror node types to use.
    */
@@ -195,14 +195,14 @@ export interface MarkTypesParameter<Schema extends EditorSchema = any> {
  *
  * @typeParam Schema - the underlying editor schema.
  */
-export interface MarkTypeParameter<Schema extends EditorSchema = any> {
+export interface MarkTypeParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * The prosemirror mark type instance.
    */
   type: MarkType<Schema>;
 }
 
-export interface ProsemirrorNodeParameter<Schema extends EditorSchema = any> {
+export interface ProsemirrorNodeParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * The prosemirror node
    */
@@ -232,14 +232,14 @@ export interface DocParameter {
   doc: ProsemirrorNode;
 }
 
-export interface OptionalProsemirrorNodeParameter<Schema extends EditorSchema = any> {
+export interface OptionalProsemirrorNodeParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * The nullable prosemirror node which may or may not exist.
    */
   node: ProsemirrorNode<Schema> | null | undefined;
 }
 
-export interface OptionalMarkParameter<Schema extends EditorSchema = any> {
+export interface OptionalMarkParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * The nullable prosemirror mark which may or may not exist.
    */
@@ -253,7 +253,7 @@ export interface PosParameter {
   pos: number;
 }
 
-export interface TransactionParameter<Schema extends EditorSchema = any> {
+export interface TransactionParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * The prosemirror transaction
    */
@@ -272,7 +272,7 @@ export interface CallbackParameter {
  *
  * Can be used to update the transaction and customise commands.
  */
-export type TransactionTransformer<Schema extends EditorSchema = any> = (
+export type TransactionTransformer<Schema extends EditorSchema = EditorSchema> = (
   tr: Transaction<Schema>,
   state: EditorState<Schema>,
 ) => Transaction<Schema>;
@@ -280,7 +280,7 @@ export type TransactionTransformer<Schema extends EditorSchema = any> = (
 /**
  * Perform transformations on the transaction before
  */
-export interface TransformTransactionParameter<Schema extends EditorSchema = any> {
+export interface TransformTransactionParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * Transforms the transaction before any other actions are done to it.
    *
@@ -303,7 +303,7 @@ export interface RangeParameter<GKey extends keyof FromToParameter = never> {
   range: OptionalFromToParameter<GKey>;
 }
 
-export interface ResolvedPosParameter<Schema extends EditorSchema = any> {
+export interface ResolvedPosParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * A prosemirror resolved pos with provides helpful context methods when working with
    * a position in the editor.
@@ -318,7 +318,7 @@ export interface TextParameter {
   text: string;
 }
 
-export interface SelectionParameter<Schema extends EditorSchema = any> {
+export interface SelectionParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * The text editor selection
    */

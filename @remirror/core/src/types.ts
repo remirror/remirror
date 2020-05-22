@@ -186,7 +186,12 @@ export interface CommandMethod<Parameter extends any[] = []> {
   (...args: Parameter): void;
 }
 
-export interface TransactionLifecycleParameter extends TransactionParameter, EditorStateParameter {}
+export interface TransactionLifecycleParameter extends TransactionParameter, EditorStateParameter {
+  /**
+   * The previous state.
+   */
+  previousState: EditorState;
+}
 export type TransactionLifecycleMethod = (parameter: TransactionLifecycleParameter) => void;
 
 export interface BaseExtensionSettings extends Remirror.BaseExtensionSettings {

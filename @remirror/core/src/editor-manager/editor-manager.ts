@@ -498,8 +498,13 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
       code: ErrorConstant.MANAGER_PHASE_ERROR,
     });
 
+    // Update the lifecycle phase.
     this.#phase = ManagerPhase.AddView;
+
+    // Store the view.
     this.#store.view = view as EditorView;
+
+    // Store the view, state and helpers for extensions
     this.#extensionStore.view = view;
     this.#extensionStore.isEditable = () => view.editable;
     this.#extensionStore.hasFocus = () => view.hasFocus();
@@ -584,6 +589,9 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * An example usage of this is within the collaboration plugin.
    */
   public onTransaction(parameter: TransactionLifecycleParameter) {
+    this.#extensionStore.currentState = parameter.state;
+    this.#extensionStore.previousState = parameter.previousState;
+
     for (const handler of this.#handlers.transaction) {
       handler(parameter);
     }
@@ -745,6 +753,16 @@ declare global {
        * `EditorManager` instance.
        */
       view: EditorView<Schema>;
+
+      /**
+       * The latest state.
+       */
+      currentState: EditorState<Schema>;
+
+      /**
+       * The previous state. Will be undefined when the view is first created.
+       */
+      previousState?: EditorState<Schema>;
 
       /**
        * Returns true when the editor can be edited and false when it cannot.

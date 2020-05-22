@@ -417,14 +417,14 @@ export class RenderEditor<Manager extends AnyEditorManager> extends PureComponen
    */
   private readonly dispatchTransaction = (tr: Transaction) => {
     tr = this.props.onDispatchTransaction(tr, this.getState());
-
-    const state = this.getState().apply(tr);
+    const previousState = this.getState();
+    const state = previousState.apply(tr);
 
     this.updateState({
       tr,
       state,
       onUpdate: () => {
-        this.manager.onTransaction({ tr, state });
+        this.manager.onTransaction({ tr, state, previousState });
       },
     });
   };
