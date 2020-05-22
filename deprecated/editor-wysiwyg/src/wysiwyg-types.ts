@@ -18,7 +18,7 @@ import {
   TrailingNodeExtension,
   UnderlineExtension,
 } from '@remirror/core-extensions';
-import { CodeBlockExtension, CodeBlockExtensionSettings } from '@remirror/extension-code-block';
+import { CodeBlockExtension, CodeBlockSettings } from '@remirror/extension-code-block';
 import { DropCursorExtension } from '@remirror/extension-drop-cursor';
 import { ImageExtension } from '@remirror/extension-image';
 import { RenderEditorProps } from '@remirror/react';
@@ -74,10 +74,7 @@ export interface WysiwygEditorProps
         | 'suppressHydrationWarning'
       >
     >,
-    Pick<
-      CodeBlockExtensionSettings,
-      'supportedLanguages' | 'defaultLanguage' | 'syntaxTheme' | 'formatter'
-    >,
+    Pick<CodeBlockSettings, 'supportedLanguages' | 'defaultLanguage' | 'syntaxTheme' | 'formatter'>,
     Pick<RemirrorManagerProps, 'extensions'> {
   /**
    * The message to show when the editor is empty.

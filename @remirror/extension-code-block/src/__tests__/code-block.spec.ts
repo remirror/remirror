@@ -10,16 +10,20 @@ import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
 import yaml from 'refractor/lang/yaml';
 
-import { fromHTML, object, toHTML } from '@remirror/core';
-import { BaseKeymapExtension } from '@remirror/core-extensions';
-import { createBaseTestManager } from '@remirror/test-fixtures';
+import { ExtensionPriority, fromHTML, object, toHTML } from '@remirror/core';
+import { createBaseManager, isExtensionValid } from '@remirror/test-fixtures';
 
-import { CodeBlockExtension, CodeBlockExtensionSettings } from '..';
-import { CodeBlockFormatter } from '../code-block-types';
+import { CodeBlockExtension, CodeBlockProperties, CodeBlockSettings, FormatterParameter } from '..';
 import { getLanguage } from '../code-block-utils';
 
+test('is code block extension valid', () => {
+  isExtensionValid(CodeBlockExtension);
+});
+
 describe('schema', () => {
-  const { schema } = createBaseTestManager([{ extension: new CodeBlockExtension(), priority: 1 }]);
+  const { schema } = createBaseManager({
+    extensions: [new CodeBlockExtension({ priority: ExtensionPriority.High })],
+  });
   const attributes = { language: 'typescript' };
   const content = 'unchanged without decorations';
 
@@ -45,47 +49,37 @@ describe('schema', () => {
 });
 
 describe('constructor', () => {
-  it('is created with the correct options', () => {
+  it('is created with the correct default properties and settings', () => {
     const codeBlock = new CodeBlockExtension({
-      syntaxTheme: 'a11yDark',
+      properties: {
+        syntaxTheme: 'a11yDark',
+      },
     });
 
-    expect(codeBlock.options.syntaxTheme).toEqual('a11yDark');
-    expect(codeBlock.options.defaultLanguage).toEqual('markup');
+    expect(codeBlock.properties.syntaxTheme).toEqual('a11yDark');
+    expect(codeBlock.properties.defaultLanguage).toEqual('markup');
   });
 });
 
 const supportedLanguages = [typescript, javascript, markdown, tsx];
 
-const create = (parameters: CodeBlockExtensionSettings = object()) =>
+const create = (settings: CodeBlockSettings = object(), properties?: CodeBlockProperties) =>
   renderEditor({
-    plainNodes: [],
-    attrNodes: [new CodeBlockExtension({ ...parameters, supportedLanguages })],
-    others: [{ priority: 10, extension: new BaseKeymapExtension() }],
+    extensions: [new CodeBlockExtension({ ...{ ...settings, properties }, supportedLanguages })],
+    presets: [],
   });
 
 describe('plugin', () => {
-  let {
+  const {
     view,
     add,
-    attrNodes: { codeBlock },
+    attributeNodes: { codeBlock },
     nodes: { doc, p },
   } = create();
 
-  let { dom } = view;
+  const { dom } = view;
 
-  let tsBlock = codeBlock({ language: 'typescript' });
-
-  beforeEach(() => {
-    ({
-      view,
-      add,
-      attrNodes: { codeBlock },
-      nodes: { doc, p },
-    } = create());
-    tsBlock = codeBlock({ language: 'typescript' });
-    ({ dom } = view);
-  });
+  const tsBlock = codeBlock({ language: 'typescript' });
 
   it('renders the correct decorations', () => {
     add(doc(tsBlock(`const a = 'test';`)));
@@ -252,94 +246,84 @@ describe('plugin', () => {
 });
 
 describe('commands', () => {
-  let {
+  const {
     view,
     add,
-    attrNodes: { codeBlock },
+    attributeNodes: { codeBlock },
     nodes: { doc, p },
   } = create();
 
-  let tsBlock = codeBlock({ language: 'typescript' });
-
-  beforeEach(() => {
-    ({
-      view,
-      add,
-      attrNodes: { codeBlock },
-      nodes: { doc, p },
-    } = create());
-    tsBlock = codeBlock({ language: 'typescript' });
-  });
+  const tsBlock = codeBlock({ language: 'typescript' });
 
   describe('updateCodeBlock ', () => {
     it('updates the language', () => {
       const markupBlock = codeBlock({ language: 'markup' });
-      const { actions } = add(doc(markupBlock(`const a = 'test';<cursor>`)));
+      add(doc(markupBlock(`const a = 'test';<cursor>`))).callback((content) => {
+        expect(view.dom.querySelector('.language-markup code')).toBeTruthy();
 
-      expect(view.dom.querySelector('.language-markup code')).toBeTruthy();
+        content.commands.updateCodeBlock({ language: 'javascript' });
 
-      actions.updateCodeBlock({ language: 'javascript' });
-
-      expect(view.dom.querySelector('.language-markup code')).toBeFalsy();
-      expect(view.dom.querySelector('.language-javascript code')!.outerHTML).toMatchSnapshot();
+        expect(view.dom.querySelector('.language-markup code')).toBeFalsy();
+        expect(view.dom.querySelector('.language-javascript code')!.outerHTML).toMatchSnapshot();
+      });
     });
   });
 
   describe('createCodeBlock ', () => {
     it('creates the codeBlock', () => {
-      const { state } = add(doc(p(`<cursor>`))).actionsCallback((actions) => {
-        actions.createCodeBlock({ language: 'typescript' });
-      });
+      add(doc(p(`<cursor>`))).callback((content) => {
+        content.commands.createCodeBlock({ language: 'typescript' });
 
-      expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('')));
+        expect(content.state.doc).toEqualRemirrorDocument(doc(tsBlock('')));
+      });
     });
 
     it('creates the default codeBlock when no language is provided', () => {
       const markupBlock = codeBlock({ language: 'markup' });
 
-      const { state } = add(doc(p(`<cursor>`))).actionsCallback((actions) => {
+      add(doc(p(`<cursor>`))).callback((content) => {
         // @ts-expect-error
-        actions.createCodeBlock();
-      });
+        content.commands.createCodeBlock();
 
-      expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('')));
+        expect(content.state.doc).toEqualRemirrorDocument(doc(markupBlock('')));
+      });
     });
   });
 
   describe('toggleCodeBlock ', () => {
     it('toggles the codeBlock', () => {
-      const { state, actionsCallback } = add(doc(p(`<cursor>`))).actionsCallback((actions) => {
-        actions.toggleCodeBlock({ language: 'typescript' });
-      });
-
-      expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('')));
-
-      const { state: stateTwo } = actionsCallback((actions) =>
-        actions.toggleCodeBlock({ language: 'typescript' }),
-      );
-
-      expect(stateTwo.doc).toEqualRemirrorDocument(doc(p('')));
+      add(doc(p(`<cursor>`)))
+        .callback(({ commands }) => {
+          commands.toggleCodeBlock({ language: 'typescript' });
+        })
+        .callback(({ state }) => {
+          expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('')));
+        })
+        .callback(({ commands }) => {
+          commands.toggleCodeBlock({ language: 'typescript' });
+        })
+        .callback(({ state }) => {
+          expect(state.doc).toEqualRemirrorDocument(doc(p('')));
+        });
     });
 
     it('toggles the default codeBlock when no language is provided', () => {
       const markupBlock = codeBlock({ language: 'markup' });
-      const { state: stateOne, actionsCallback } = add(doc(p(`<cursor>`))).actionsCallback(
-        (actions) => {
-          actions.toggleCodeBlock();
-        },
-      );
+      add(doc(p(`<cursor>`))).callback((content) => {
+        content.commands.toggleCodeBlock({});
 
-      expect(stateOne.doc).toEqualRemirrorDocument(doc(markupBlock('')));
+        expect(content.view.state.doc).toEqualRemirrorDocument(doc(markupBlock('')));
 
-      const { state: stateTwo } = actionsCallback((actions) => actions.toggleCodeBlock());
+        content.commands.toggleCodeBlock({});
 
-      expect(stateTwo.doc).toEqualRemirrorDocument(doc(p('')));
+        expect(content.view.state.doc).toEqualRemirrorDocument(doc(p('')));
+      });
     });
   });
 
   describe('formatCodeBlock', () => {
-    const formatter: CodeBlockFormatter = ({ cursorOffset, language, source }) => {
-      if (getLanguage({ fallback: 'text', language, supportedLanguages }) === 'typescript') {
+    function formatter({ cursorOffset, language, source }: FormatterParameter) {
+      if (getLanguage({ fallback: 'text', language }) === 'typescript') {
         return formatWithCursor(source, {
           cursorOffset,
           plugins: [typescriptPlugin],
@@ -347,57 +331,57 @@ describe('commands', () => {
           singleQuote: true,
         });
       }
+
       return;
-    };
+    }
 
-    beforeEach(() => {
-      ({
-        view,
-        add,
-        attrNodes: { codeBlock },
-        nodes: { doc, p },
-      } = create({ formatter }));
-
-      tsBlock = codeBlock({ language: 'typescript' });
-    });
+    const {
+      add,
+      attributeNodes: { codeBlock },
+      nodes: { doc, p },
+    } = create({}, { formatter });
+    const tsBlock = codeBlock({ language: 'typescript' });
 
     it('can format the codebase', () => {
-      const { state } = add(
+      add(
         doc(tsBlock(`const a: string\n = 'test'  ;\n\n\nlog("welcome friends")<cursor>`)),
-      ).actionsCallback((actions) => actions.formatCodeBlock());
+      ).callback(({ commands, view }) => {
+        commands.formatCodeBlock();
 
-      expect(state.doc).toEqualRemirrorDocument(
-        doc(tsBlock(`const a: string = 'test';\n\nlog('welcome friends');\n`)),
-      );
+        expect(view.state.doc).toEqualRemirrorDocument(
+          doc(tsBlock(`const a: string = 'test';\n\nlog('welcome friends');\n`)),
+        );
+      });
     });
 
     it('maintains cursor position after formatting', () => {
-      const { state } = add(
-        doc(tsBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nlog("welcome friends")`)),
-      )
-        .actionsCallback((actions) => actions.formatCodeBlock())
-        .insertText('ing');
-
-      expect(state.doc).toEqualRemirrorDocument(
-        doc(tsBlock(`const a: string = 'testing';\n\nlog('welcome friends');\n`)),
-      );
+      add(doc(tsBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nlog("welcome friends")`)))
+        .callback(({ commands }) => commands.formatCodeBlock())
+        .insertText('ing')
+        .callback(({ state }) => {
+          expect(state.doc).toEqualRemirrorDocument(
+            doc(tsBlock(`const a: string = 'testing';\n\nlog('welcome friends');\n`)),
+          );
+        });
     });
 
     it('formats text selections', () => {
-      const { state, start, end } = add(
-        doc(tsBlock(`<start>const a: string\n = 'test'  ;<end>\n\n\nlog("welcome friends")`)),
-      ).actionsCallback((actions) => actions.formatCodeBlock());
-
-      expect(state.doc).toEqualRemirrorDocument(
-        doc(tsBlock(`const a: string = 'test';\n\nlog('welcome friends');\n`)),
-      );
-      expect([start, end]).toEqual([1, 26]);
+      add(doc(tsBlock(`<start>const a: string\n = 'test'  ;<end>\n\n\nlog("welcome friends")`)))
+        .callback(({ commands }) => {
+          commands.formatCodeBlock();
+        })
+        .callback(({ state, start, end }) => {
+          expect(state.doc).toEqualRemirrorDocument(
+            doc(tsBlock(`const a: string = 'test';\n\nlog('welcome friends');\n`)),
+          );
+          expect([start, end]).toEqual([1, 26]);
+        });
     });
 
     it('can format complex scenarios', () => {
       const content = p('Hello darkness, my old friend.');
       const otherCode = tsBlock(`document.addEventListener("click",  log)`);
-      const { state } = add(
+      add(
         doc(
           content,
           content,
@@ -407,19 +391,20 @@ describe('commands', () => {
           otherCode,
         ),
       )
-        .actionsCallback((actions) => actions.formatCodeBlock())
-        .insertText('ing');
-
-      expect(state.doc).toEqualRemirrorDocument(
-        doc(
-          content,
-          content,
-          tsBlock(`const a: string = 'testing';\n\nlog('welcome friends');\n`),
-          content,
-          content,
-          otherCode,
-        ),
-      );
+        .callback(({ commands }) => commands.formatCodeBlock())
+        .insertText('ing')
+        .callback(({ state }) => {
+          expect(state.doc).toEqualRemirrorDocument(
+            doc(
+              content,
+              content,
+              tsBlock(`const a: string = 'testing';\n\nlog('welcome friends');\n`),
+              content,
+              content,
+              otherCode,
+            ),
+          );
+        });
     });
   });
 });
@@ -428,11 +413,11 @@ describe('language', () => {
   const getLang = (language: string) =>
     getLanguage({
       language,
-      supportedLanguages: [yaml, graphql, cssExtras],
       fallback: '',
     });
 
   it('yaml', () => {
+    // Just here to make sure it's not undefined
     expect(yaml.name).toEqual('yaml');
     expect(yaml.aliases[0]).toEqual('yml');
 

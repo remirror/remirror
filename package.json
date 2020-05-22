@@ -222,7 +222,7 @@
     "jest-axe": "^3.4.0",
     "jest-circus": "^26.0.0",
     "jest-dev-server": "^4.4.0",
-    "jest-diff": "^26.0.0",
+    "jest-diff": "^26.0.1",
     "jest-emotion": "^10.0.32",
     "jest-extended": "^0.11.5",
     "jest-github-reporter": "^1.0.0",

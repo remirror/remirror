@@ -33,7 +33,8 @@
     "type-fest": "^0.13.1"
   },
   "devDependencies": {
-    "@remirror/pm": "^0.0.0"
+    "@remirror/pm": "^0.0.0",
+    "@types/prettier": "^2.0.0"
   },
   "peerDependencies": {
     "@remirror/pm": "^0.0.0"

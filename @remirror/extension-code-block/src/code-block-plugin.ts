@@ -13,7 +13,7 @@ import {
 import { Step } from '@remirror/pm/transform';
 import { DecorationSet } from '@remirror/pm/view';
 
-import { CodeBlockExtensionProperties, CodeBlockExtensionSettings } from './code-block-types';
+import { CodeBlockProperties, CodeBlockSettings } from './code-block-types';
 import {
   createDecorations,
   getNodeInformationFromState,
@@ -29,7 +29,7 @@ export class CodeBlockState {
    */
   #blocks: NodeWithPosition[] = [];
 
-  #extension: AnyExtension<CodeBlockExtensionSettings, CodeBlockExtensionProperties>;
+  #extension: AnyExtension<CodeBlockSettings, CodeBlockProperties>;
 
   /**
    * Keep track of the node type of the `codeBlock`
@@ -47,10 +47,7 @@ export class CodeBlockState {
    */
   public decorationSet!: DecorationSet;
 
-  constructor(
-    type: NodeType,
-    extension: AnyExtension<CodeBlockExtensionSettings, CodeBlockExtensionProperties>,
-  ) {
+  constructor(type: NodeType, extension: AnyExtension<CodeBlockSettings, CodeBlockProperties>) {
     this.#type = type;
     this.#extension = extension;
   }

@@ -13,7 +13,11 @@ import { CodeBlockExtension } from '..';
 
 const supportedLanguages = [typescript, javascript, markdown];
 const create = (initialContent: ObjectNode) =>
-  renderEditorString([new CodeBlockExtension({ supportedLanguages })], { initialContent });
+  renderEditorString({
+    extensions: [new CodeBlockExtension({ supportedLanguages })],
+    presets: [],
+    props: { initialContent },
+  });
 
 test('ssr component', () => {
   const reactString = create({

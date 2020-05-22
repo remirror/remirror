@@ -2,7 +2,7 @@ import refractor from 'refractor/core';
 
 import {
   convertCommand,
-  ExtensionFactory,
+  DefaultExtensionSettings,
   findNodeAtSelection,
   findParentNodeOfType,
   GetAttributes,
@@ -10,10 +10,15 @@ import {
   isElementDOMNode,
   isNodeActive,
   isTextSelection,
+  KeyBindings,
   mod,
   nodeEqualsType,
+  NodeExtension,
+  NodeExtensionSpec,
   NodeGroup,
   nodeInputRule,
+  PluginKey,
+  PosParameter,
   removeNodeAtPosition,
   toggleBlockItem,
 } from '@remirror/core';
@@ -22,11 +27,7 @@ import { keydownHandler } from '@remirror/pm/keymap';
 import { Plugin, TextSelection } from '@remirror/pm/state';
 
 import { CodeBlockState } from './code-block-plugin';
-import {
-  CodeBlockAttributes,
-  CodeBlockExtensionProperties,
-  CodeBlockExtensionSettings,
-} from './code-block-types';
+import { CodeBlockAttributes, CodeBlockProperties, CodeBlockSettings } from './code-block-types';
 import {
   codeBlockToDOM,
   dataAttribute,
@@ -35,34 +36,34 @@ import {
   updateNodeAttributes,
 } from './code-block-utils';
 
-export const CodeBlockExtension = ExtensionFactory.typed<
-  CodeBlockExtensionSettings,
-  CodeBlockExtensionProperties
->().node({
-  name: 'codeBlock',
-  defaultSettings: {
+export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlockProperties> {
+  public static readonly defaultSettings: DefaultExtensionSettings<CodeBlockSettings> = {
     supportedLanguages: [],
     keyboardShortcut: mod('ShiftAlt', 'f'),
-  },
-  defaultProperties: {
+  };
+  public static readonly defaultProperties: Required<CodeBlockProperties> = {
     toggleName: 'paragraph',
-    formatter: () => {},
+    // eslint-disable-next-line unicorn/no-useless-undefined
+    formatter: () => undefined,
     syntaxTheme: 'atomDark',
     defaultLanguage: 'markup',
-  },
-  onCreate({ settings }) {
-    return {
-      beforeExtensionLoop() {
-        for (const language of settings.supportedLanguages) {
-          refractor.register(language);
-        }
-      },
-    };
-  },
-  createNodeSpec({ properties }) {
+  };
+
+  public readonly name = 'codeBlock' as const;
+
+  /**
+   * Add the languages to the environment if they have not yet been added.
+   */
+  protected init() {
+    for (const language of this.settings.supportedLanguages) {
+      refractor.register(language);
+    }
+  }
+
+  protected createNodeSpec(): NodeExtensionSpec {
     return {
       attrs: {
-        language: { default: properties.defaultLanguage },
+        language: { default: this.properties.defaultLanguage },
       },
       content: 'text*',
       marks: '',
@@ -91,28 +92,30 @@ export const CodeBlockExtension = ExtensionFactory.typed<
           },
         },
       ],
-      toDOM: (node) => codeBlockToDOM(node, properties.defaultLanguage),
+      toDOM: (node) => codeBlockToDOM(node, this.properties.defaultLanguage),
     };
-  },
+  }
 
-  createCommands({ type, schema, extension }) {
+  public createCommands = () => {
     return {
       /**
        * Call this method to toggle the code block.
+       *
+       * @remarks
        *
        * ```ts
        * actions.toggleCodeBlock({ language: 'ts' });
        * ```
        *
-       * The above makes the current node a codeBlock with the language ts or remove the
-       * code block altogether.
+       * The above makes the current node a codeBlock with the language ts or
+       * remove the code block altogether.
        */
       toggleCodeBlock: (attributes: Partial<CodeBlockAttributes>) =>
         convertCommand(
           toggleBlockItem({
-            type,
-            toggleType: schema().nodes[extension.properties.toggleName],
-            attrs: { language: extension.properties.defaultLanguage, ...attributes },
+            type: this.type,
+            toggleType: this.store.schema.nodes[this.properties.toggleName],
+            attrs: { language: this.properties.defaultLanguage, ...attributes },
           }),
         ),
 
@@ -124,10 +127,11 @@ export const CodeBlockExtension = ExtensionFactory.typed<
        * ```
        */
       createCodeBlock: (attributes: CodeBlockAttributes) =>
-        convertCommand(setBlockType(type, attributes)),
+        convertCommand(setBlockType(this.type, attributes)),
 
       /**
-       * Update the code block at the current position. Primarily this is used to change the language.
+       * Update the code block at the current position. Primarily this is used
+       * to change the language.
        *
        * ```ts
        * if (commands.updateCodeBlock.isEnabled()) {
@@ -135,13 +139,15 @@ export const CodeBlockExtension = ExtensionFactory.typed<
        * }
        * ```
        */
-      updateCodeBlock: updateNodeAttributes(type),
+      updateCodeBlock: updateNodeAttributes(this.type),
 
       /**
-       * Format the code block with the code formatting function passed as an option.
+       * Format the code block with the code formatting function passed as an
+       * option.
        *
-       * Code formatters (like prettier) add a lot to the bundle size and hence it is up to you
-       * to provide a formatter which will be run on the entire code block when this method is used.
+       * Code formatters (like prettier) add a lot to the bundle size and hence
+       * it is up to you to provide a formatter which will be run on the entire
+       * code block when this method is used.
        *
        * ```ts
        * if (actions.formatCodeBlock.isActive()) {
@@ -151,24 +157,26 @@ export const CodeBlockExtension = ExtensionFactory.typed<
        * }
        * ```
        */
-      formatCodeBlock: (parameter) =>
-        formatCodeBlockFactory({
-          type,
-          formatter: extension.properties.formatter,
-          defaultLanguage: extension.properties.defaultLanguage,
-        })(parameter),
+      formatCodeBlock: (parameter?: Partial<PosParameter>) => {
+        return formatCodeBlockFactory({
+          type: this.type,
+          formatter: this.properties.formatter,
+          defaultLanguage: this.properties.defaultLanguage,
+        })(parameter);
+      },
     };
-  },
+  };
 
   /**
-   * Create an input rule that listens converts the code fence into a code block with space.
+   * Create an input rule that listens converts the code fence into a code block
+   * with space.
    */
-  createInputRules({ type, extension }) {
+  public createInputRules = () => {
     const regexp = /^```([\dA-Za-z]*) $/;
     const getAttributes: GetAttributes = (match) => {
       const language = getLanguage({
         language: getMatchString(match, 1),
-        fallback: extension.properties.defaultLanguage,
+        fallback: this.properties.defaultLanguage,
       });
 
       return { language };
@@ -177,21 +185,22 @@ export const CodeBlockExtension = ExtensionFactory.typed<
     return [
       nodeInputRule({
         regexp,
-        type,
+        type: this.type,
         updateSelection: true,
         getAttributes: getAttributes,
       }),
     ];
-  },
+  };
 
-  createKeymap({ type, getCommands: commands, extension }) {
+  public createKeymap = (): KeyBindings => {
     return {
       Tab: ({ state, dispatch }) => {
         const { selection, tr, schema } = state;
-        // Check that this is the correct node.
+
+        // Check to ensure that this is the correct node.
         const { node } = findNodeAtSelection(selection);
 
-        if (!nodeEqualsType({ node, types: type })) {
+        if (!nodeEqualsType({ node, types: this.type })) {
           return false;
         }
 
@@ -208,11 +217,12 @@ export const CodeBlockExtension = ExtensionFactory.typed<
 
         return true;
       },
+
       Backspace: ({ state, dispatch }) => {
         const { selection } = state;
 
-        // If the selection is not empty, return false and let other extension (ie: BaseKeymapExtension) to do
-        // the deleting operation.
+        // If the selection is not empty, return false and let other extension
+        // (ie: BaseKeymapExtension) to do the deleting operation.
         if (!selection.empty) {
           return false;
         }
@@ -220,7 +230,7 @@ export const CodeBlockExtension = ExtensionFactory.typed<
         let tr = state.tr;
 
         // Check that this is the correct node.
-        const parent = findParentNodeOfType({ types: type, selection });
+        const parent = findParentNodeOfType({ types: this.type, selection });
 
         if (parent?.start !== selection.from) {
           return false;
@@ -234,8 +244,9 @@ export const CodeBlockExtension = ExtensionFactory.typed<
           // Make the cursor jump to the previous node.
           tr.setSelection(TextSelection.create(tr.doc, start - 2));
         } else {
-          // There is no content before the codeBlock so simply create a new block and jump into it.
-          tr.insert(0, state.schema.nodes[extension.properties.toggleName].create());
+          // There is no content before the codeBlock so simply create a new
+          // block and jump into it.
+          tr.insert(0, state.schema.nodes[this.properties.toggleName].create());
           tr.setSelection(TextSelection.create(tr.doc, 1));
         }
 
@@ -244,6 +255,7 @@ export const CodeBlockExtension = ExtensionFactory.typed<
         }
         return true;
       },
+
       Enter: ({ state, dispatch }) => {
         const { selection, tr } = state;
         if (!isTextSelection(selection) || !selection.$cursor) {
@@ -273,12 +285,12 @@ export const CodeBlockExtension = ExtensionFactory.typed<
 
         const language = getLanguage({
           language: lang,
-          fallback: extension.properties.defaultLanguage,
+          fallback: this.properties.defaultLanguage,
         });
 
         const pos = selection.$from.before();
         const end = pos + nodeBefore.nodeSize + 1; // +1 to account for the extra pos a node takes up
-        tr.replaceWith(pos, end, type.create({ language }));
+        tr.replaceWith(pos, end, this.type.create({ language }));
 
         // Set the selection to within the codeBlock
         tr.setSelection(TextSelection.create(tr.doc, pos + 1));
@@ -289,21 +301,26 @@ export const CodeBlockExtension = ExtensionFactory.typed<
 
         return true;
       },
-      [extension.settings.keyboardShortcut]: ({ state }) => {
-        const chain = commands<typeof extension>();
+      [this.settings.keyboardShortcut]: ({ state }) => {
+        const commands = this.store.getCommands();
 
-        if (!isNodeActive({ type, state })) {
+        if (!isNodeActive({ type: this.type, state })) {
           return false;
         }
 
-        chain.formatCodeBlock().run();
-        return true;
+        const enabled = commands.formatCodeBlock.isEnabled();
+
+        if (enabled) {
+          commands.formatCodeBlock();
+        }
+
+        return enabled;
       },
     };
-  },
+  };
 
-  createPlugin({ type, key, extension }) {
-    const pluginState = new CodeBlockState(type, extension);
+  public createPlugin = (key: PluginKey): Plugin => {
+    const pluginState = new CodeBlockState(this.type, this);
 
     /** Handles deletions within the plugin state. */
     const handler = () => {
@@ -341,7 +358,7 @@ export const CodeBlockExtension = ExtensionFactory.typed<
         },
       },
     });
-  },
-});
+  };
+}
 
 export { getLanguage };

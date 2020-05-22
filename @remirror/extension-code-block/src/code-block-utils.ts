@@ -23,14 +23,10 @@ import {
   ProsemirrorNodeParameter,
   TextParameter,
 } from '@remirror/core';
-import { Decoration } from '@remirror/pm/view';
 import { TextSelection } from '@remirror/pm/state';
+import { Decoration } from '@remirror/pm/view';
 
-import {
-  CodeBlockAttributes,
-  CodeBlockExtensionProperties,
-  FormattedContent,
-} from './code-block-types';
+import { CodeBlockAttributes, CodeBlockProperties, FormattedContent } from './code-block-types';
 
 export const dataAttribute = 'data-code-block-language';
 
@@ -277,7 +273,7 @@ function mapRefractorNodesToDOMArray(nodes: RefractorNode[]): any[] {
 }
 
 /**
- * Used to provide a `toDom` function for the codeblock for both the browser and
+ * Used to provide a `toDom` function for the code block for both the browser and
  * non browser environments.
  */
 export function codeBlockToDOM(node: ProsemirrorNode, defaultLanguage = 'markup'): DOMOutputSpec {
@@ -296,78 +292,76 @@ export function codeBlockToDOM(node: ProsemirrorNode, defaultLanguage = 'markup'
   const mappedNodes = mapRefractorNodesToDOMArray(refractorNodes);
 
   // TODO test the logic for this
-  return ['pre', attributes, ['code', { [dataAttribute]: language }, mappedNodes, 0]] as any;
+  return ['pre', attributes, ['code', { [dataAttribute]: language }, ...mappedNodes, 0]] as any;
 }
 
 interface FormatCodeBlockFactoryParameter
   extends NodeTypeParameter,
-    Required<Pick<CodeBlockExtensionProperties, 'formatter' | 'defaultLanguage'>> {}
+    Required<Pick<CodeBlockProperties, 'formatter' | 'defaultLanguage'>> {}
 
 /**
  * A factory for creating a command which can format a selected codeBlock (or
  * one located at the provided position).
  */
-export const formatCodeBlockFactory = ({
-  type,
-  formatter,
-  defaultLanguage: fallback,
-}: FormatCodeBlockFactoryParameter) => (
-  { pos }: Partial<PosParameter> = object(),
-): CommandFunction => ({ state, dispatch }) => {
-  const { tr, selection } = state;
+export function formatCodeBlockFactory(parameter: FormatCodeBlockFactoryParameter) {
+  const { type, formatter, defaultLanguage: fallback } = parameter;
 
-  const { from, to } = pos ? { from: pos, to: pos } : selection;
+  return ({ pos }: Partial<PosParameter> = object()): CommandFunction => ({ state, dispatch }) => {
+    const { tr, selection } = state;
 
-  // Find the current codeBlock the cursor is positioned in.
-  const codeBlock = findParentNodeOfType({ types: type, selection });
+    const { from, to } = pos ? { from: pos, to: pos } : selection;
 
-  if (!codeBlock) {
-    return false;
-  }
+    // Find the current codeBlock the cursor is positioned in.
+    const codeBlock = findParentNodeOfType({ types: type, selection });
 
-  // Get the `language`, `source` and `cursorOffset` for the block and run the
-  // formatter
-  const {
-    node: { attrs, textContent },
-    start,
-  } = codeBlock;
+    if (!codeBlock) {
+      return false;
+    }
 
-  const offsetStart = from - start;
-  const offsetEnd = to - start;
-  const language = getLanguage({ language: attrs.language, fallback });
-  const formatStart = formatter({ source: textContent, language, cursorOffset: offsetStart });
-  let formatEnd: FormattedContent | undefined;
+    // Get the `language`, `source` and `cursorOffset` for the block and run the
+    // formatter
+    const {
+      node: { attrs, textContent },
+      start,
+    } = codeBlock;
 
-  // When the user has a selection
-  if (offsetStart !== offsetEnd) {
-    formatEnd = formatter({ source: textContent, language, cursorOffset: offsetEnd });
-  }
+    const offsetStart = from - start;
+    const offsetEnd = to - start;
+    const language = getLanguage({ language: attrs.language, fallback });
+    const formatStart = formatter({ source: textContent, language, cursorOffset: offsetStart });
+    let formatEnd: FormattedContent | undefined;
 
-  if (!formatStart) {
-    return false;
-  }
+    // When the user has a selection
+    if (offsetStart !== offsetEnd) {
+      formatEnd = formatter({ source: textContent, language, cursorOffset: offsetEnd });
+    }
 
-  const { cursorOffset, formatted } = formatStart;
+    if (!formatStart) {
+      return false;
+    }
 
-  // Do nothing if nothing has changed
-  if (formatted === textContent) {
-    return false;
-  }
+    const { cursorOffset, formatted } = formatStart;
 
-  const end = start + textContent.length;
+    // Do nothing if nothing has changed
+    if (formatted === textContent) {
+      return false;
+    }
 
-  // Replace the codeBlock content with the transformed text.
-  tr.insertText(formatted, start, end);
+    const end = start + textContent.length;
 
-  // Set the new selection
-  const anchor = start + cursorOffset;
-  const head = formatEnd ? start + formatEnd.cursorOffset : undefined;
+    // Replace the codeBlock content with the transformed text.
+    tr.insertText(formatted, start, end);
 
-  tr.setSelection(TextSelection.create(tr.doc, anchor, head));
+    // Set the new selection
+    const anchor = start + cursorOffset;
+    const head = formatEnd ? start + formatEnd.cursorOffset : undefined;
 
-  if (dispatch) {
-    dispatch(tr);
-  }
+    tr.setSelection(TextSelection.create(tr.doc, anchor, head));
 
-  return true;
-};
+    if (dispatch) {
+      dispatch(tr);
+    }
+
+    return true;
+  };
+}

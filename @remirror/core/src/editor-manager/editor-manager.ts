@@ -698,7 +698,7 @@ declare global {
     /**
      * Settings which can be passed into the manager.
      */
-    interface ManagerSettings<ExtensionUnion extends AnyExtension = any> {
+    interface ManagerSettings {
       /**
        * An object which excludes certain functionality from all extensions
        * within the manager.

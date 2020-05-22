@@ -53,10 +53,10 @@ document.body.appendChild(element);
 manager.addView(element);
 
 // Access the code block commands
-manager.commands.createCodeBlock({ language: 'markdown' });
+manager.store.commands.createCodeBlock({ language: 'markdown' });
 
 // Also supports chaining
-manager.commands.chain.updateCodeBlock({ language: 'js' }).formatCodeBlock().run();
+manager.store.chain.updateCodeBlock({ language: 'js' }).formatCodeBlock().run();
 ```
 
 ## Credits

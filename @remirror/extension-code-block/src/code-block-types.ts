@@ -25,7 +25,7 @@ export type SyntaxTheme =
   | 'vs'
   | 'xonokai';
 
-export interface CodeBlockExtensionSettings {
+export interface CodeBlockSettings {
   /**
    * Import languages from refractor.
    *
@@ -66,9 +66,11 @@ export interface CodeBlockExtensionSettings {
   keyboardShortcut?: string;
 }
 
-export interface CodeBlockExtensionProperties {
+export interface CodeBlockProperties {
   /**
    * The default language to use when none is provided.
+   *
+   * It is a property so it can change during the editor's life.
    *
    * @defaultValue 'markup'
    */
@@ -86,6 +88,7 @@ export interface CodeBlockExtensionProperties {
    * @defaultValue 'atomDark'
    */
   syntaxTheme?: LiteralUnion<SyntaxTheme, string>;
+
   /**
    * Provide a formatter which can format the provided source code.
    *
