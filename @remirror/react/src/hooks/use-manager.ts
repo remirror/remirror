@@ -1,6 +1,14 @@
 import { useMemo, useRef } from 'react';
 
-import { AnyExtension, AnyPreset, EditorManager, keys } from '@remirror/core';
+import {
+  AnyExtension,
+  AnyPreset,
+  EditorManager,
+  EditorManagerParameter,
+  keys,
+} from '@remirror/core';
+import { ReactPreset } from '@remirror/preset-react';
+import { CorePreset } from '@remirror/test-fixtures';
 
 function arePropertiesEqual<Type extends object>(value: Type, compare?: Type) {
   if (compare === undefined) {
@@ -11,9 +19,9 @@ function arePropertiesEqual<Type extends object>(value: Type, compare?: Type) {
 }
 
 /**
- * Takes an object check that each of it's keys are different
+ * Takes an object and checks that each of it's keys are different
  */
-function useParameter<Type extends object>(parameter: Type): Type {
+function useObjectCheck<Type extends object>(parameter: Type): Type {
   const ref = useRef<Type>();
 
   if (!ref.current || !arePropertiesEqual(parameter, ref.current)) {
@@ -49,13 +57,17 @@ function useParameter<Type extends object>(parameter: Type): Type {
  * ```
  */
 export const useManager = <ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>(
-  extensionOrPresetList: Array<ExtensionUnion | PresetUnion>,
-  settings: Remirror.ManagerSettings,
+  parameter: EditorManagerParameter<ExtensionUnion, PresetUnion>,
 ) => {
-  const parameter = useParameter(settings);
+  const { extensions } = parameter;
+  const settings = useObjectCheck(parameter.settings ?? {});
+  const presets = useMemo(() => [...parameter.presets, new CorePreset(), new ReactPreset()], [
+    parameter.presets,
+  ]);
 
-  return useMemo(() => EditorManager.create(extensionOrPresetList, parameter), [
-    extensionOrPresetList,
-    parameter,
+  return useMemo(() => EditorManager.create({ extensions, settings, presets }), [
+    extensions,
+    settings,
+    presets,
   ]);
 };

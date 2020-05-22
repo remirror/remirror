@@ -30,6 +30,9 @@
     "@remirror/core": "^0.11.0",
     "@remirror/react-utils": "^0.7.6"
   },
+  "devDependencies": {
+    "@remirror/pm": "*"
+  },
   "peerDependencies": {
     "@remirror/pm": "0.0.0"
   },
@@ -38,8 +41,5 @@
   },
   "meta": {
     "sizeLimit": "50 KB"
-  },
-  "devDependencies": {
-    "@remirror/pm": "*"
   }
 }

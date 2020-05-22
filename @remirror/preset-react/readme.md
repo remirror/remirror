@@ -1,4 +1,4 @@
-# @remirror/preset-core
+# @remirror/preset-react
 
 > The core preset providing the functionality you need and want.
 
@@ -6,39 +6,51 @@
 [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)
 ![MIT License][license]
 
-[version]: https://flat.badgen.net/npm/v/@remirror/preset-core
-[npm]: https://npmjs.com/package/@remirror/preset-core
+[version]: https://flat.badgen.net/npm/v/@remirror/preset-react
+[npm]: https://npmjs.com/package/@remirror/preset-react
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/preset-core
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/preset-core
+[size]: https://bundlephobia.com/result?p=@remirror/preset-react
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/preset-react
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
-[downloads-badge]: https://badgen.net/npm/dw/@remirror/preset-core/red?icon=npm
+[downloads-badge]: https://badgen.net/npm/dw/@remirror/preset-react/red?icon=npm
 
 <br />
 
 ## Installation
 
 ```bash
-yarn add @remirror/preset-core # yarn
-pnpm add @remirror/preset-core # pnpm
-npm install @remirror/preset-core # npm
+# yarn
+yarn add @remirror/preset-react @remirror/pm
+
+# pnpm
+pnpm add @remirror/preset-react @remirror/pm
+
+# npm
+npm install @remirror/preset-react @remirror/pm
 ```
 
 <br />
 
 ## Usage
 
-When added to your editor it will provide the required nodes, marks to your editor.
+This preset adds
+
+- Server side support for nodes and marks.
+- Transformations for server side components.
+- Placeholder support for the editor.
 
 ```ts
 import { EditorManager } from '@remirror/core';
+import { ReactPreset } from '@remirror/preset-react';
 import { CorePreset } from '@remirror/preset-core';
 
+const reactPreset = new ReactPreset({ rootContent: 'block*' });
+
 // Create the preset
-const corePreset = new CorePreset({ rootContent: 'block*' });
+const reactPreset = new ReactPreset(transformers);
 
 // Create the Editor Manager with the required preset.
-const manager = EditorManager.create([corePreset]);
+const manager = EditorManager.create([reactPreset]);
 
 // Pass the dom element to the editor. If you are using `@remirror/react` this is done for you.
 const element = document.createElement('div');

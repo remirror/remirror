@@ -1,27 +1,18 @@
-import { ComponentType } from 'react';
+import { Children, cloneElement, ComponentType, createElement, JSXElementConstructor } from 'react';
 
 import {
   AnyExtension,
   AnyPreset,
   CreateLifecycleMethod,
-  DefaultExtensionSettings,
   InitializeLifecycleMethod,
+  isArray,
   object,
   PlainExtension,
+  PlainObject,
   Shape,
 } from '@remirror/core';
+import { getElementProps, isReactDOMElement, isReactFragment } from '@remirror/react-utils';
 
-import { DEFAULT_TRANSFORMATIONS, SSRTransformer } from './react-ssr-helpers';
-
-interface ReactSSRSettings {
-  /**
-   * The transformers that will be automatically used in the editor for properly
-   * rendering ssr.
-   *
-   * @defaultValue `DEFAULT_TRANSFORMATIONS`
-   */
-  transformers?: SSRTransformer[];
-}
 /**
  * This extension allows for React based SSR transformations to the editor. It
  * adds a parameter option called `createSSRTransformer` which is used to handle
@@ -41,9 +32,10 @@ interface ReactSSRSettings {
  * The transformations can also serve as a guideline when creating your own
  * SSRTransforms. However in most cases the defaults should be sufficient.
  */
-export class ReactSSRExtension extends PlainExtension<ReactSSRSettings> {
-  public static readonly defaultSettings: DefaultExtensionSettings<ReactSSRSettings> = {
-    transformers: DEFAULT_TRANSFORMATIONS,
+export class ReactSSRExtension extends PlainExtension<{}, ReactSSRProperties> {
+  public static readonly defaultSettings = {};
+  public static readonly defaultProperties: Required<ReactSSRProperties> = {
+    transformers: [injectBrIntoEmptyParagraphs],
   };
 
   public readonly name = 'reactSSR' as const;
@@ -76,13 +68,13 @@ export class ReactSSRExtension extends PlainExtension<ReactSSRSettings> {
    */
   public onInitialize: InitializeLifecycleMethod = (parameter) => {
     const { setStoreKey } = parameter;
-    const ssrTransformers: SSRTransformer[] = [];
+    const ssrTransformers: Array<() => SSRTransformer> = [];
 
     const ssrTransformer: SSRTransformer = (initialElement) => {
       let element: JSX.Element = initialElement;
 
       for (const transformer of ssrTransformers) {
-        element = transformer(element);
+        element = transformer()(element);
       }
 
       return element;
@@ -94,7 +86,7 @@ export class ReactSSRExtension extends PlainExtension<ReactSSRSettings> {
           return;
         }
 
-        ssrTransformers.push(extension.createSSRTransformer());
+        ssrTransformers.push(extension.createSSRTransformer);
       },
 
       afterExtensionLoop: () => {
@@ -111,12 +103,98 @@ export class ReactSSRExtension extends PlainExtension<ReactSSRSettings> {
   public createSSRTransformer = () => (initialElement: JSX.Element) => {
     let element: JSX.Element = initialElement;
 
-    for (const transformer of this.settings.transformers) {
+    for (const transformer of this.properties.transformers) {
       element = transformer(element);
     }
 
     return element;
   };
+}
+
+export interface ReactSSRProperties {
+  /**
+   * The transformers that will be automatically used in the editor for properly
+   * rendering ssr.
+   *
+   * @defaultValue `DEFAULT_TRANSFORMATIONS`
+   */
+  transformers?: SSRTransformer[];
+}
+
+export type SSRTransformer = (element: JSX.Element) => JSX.Element;
+
+/**
+ * Clone SSR elements ignoring the top level Fragment
+ *
+ * @remarks
+ * A utility method for the SSR JSX
+ *
+ * @param element - the element to transform which must be from the JSX received in `ssrTransformer`
+ * @param transformChildElements - receives the nested elements and props and transforms them into another JSX.Element
+ */
+function cloneSSRElement(
+  element: JSX.Element,
+  transformChildElements: (
+    children: JSX.Element | JSX.Element[],
+    childrenProps: PlainObject,
+  ) => JSX.Element | JSX.Element[],
+) {
+  if (!isReactFragment(element)) {
+    throw new Error('Invalid element passed. The top level element must be a fragment');
+  }
+
+  const { children } = getElementProps(element);
+  const childrenProperties = getElementProps(children);
+
+  return cloneElement(element, {}, transformChildElements(children, childrenProperties));
+}
+
+/**
+ * Returns true when a react element has no children.
+ *
+ * @param element - the element to test
+ */
+function elementIsEmpty(element: JSX.Element) {
+  return Children.count(element.props.children) === 0;
+}
+
+/**
+ * Checks to see that the element is of the provided type.
+ *
+ * @param element - the element to test
+ * @param type - the type to match
+ */
+function elementIsOfType<
+  GType extends string | JSXElementConstructor<any> = string | JSXElementConstructor<any>
+>(element: JSX.Element, type: GType) {
+  return element.type === type;
+}
+
+/**
+ * This utility maps through the SSR element and injects break tags into all
+ * empty p tags.
+ *
+ * @remarks
+ *
+ * Prosemirror automatically injects break tags into empty paragraph tags. This
+ * causes the document rendered during SSR to be different than when the page
+ * loads.
+ */
+function injectBrIntoEmptyParagraphs(element: JSX.Element) {
+  return cloneSSRElement(element, (children) => {
+    if (!isArray(children)) {
+      return children;
+    }
+
+    return Children.map(children, (child) => {
+      if (!(isReactDOMElement(child) && elementIsEmpty(child) && elementIsOfType(child, 'p'))) {
+        return child;
+      }
+
+      const properties = getElementProps(child);
+      return cloneElement(child, properties, createElement('br'));
+    });
+  });
 }
 
 declare global {
