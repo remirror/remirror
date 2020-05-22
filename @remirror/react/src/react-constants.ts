@@ -1,7 +1,7 @@
 import { AnyEditorManager, EMPTY_PARAGRAPH_NODE, Transaction } from '@remirror/core';
+import { asDefaultProps } from '@remirror/react-utils';
 
 import { BaseProps } from './react-types';
-import { asDefaultProps } from './react-utils';
 
 export const defaultProps = asDefaultProps<BaseProps<AnyEditorManager>>()({
   initialContent: EMPTY_PARAGRAPH_NODE,

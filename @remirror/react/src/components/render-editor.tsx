@@ -27,6 +27,16 @@ import {
   uniqueId,
 } from '@remirror/core';
 import { EditorState, TextSelection } from '@remirror/pm/state';
+import {
+  addKeyToElement,
+  getElementProps,
+  isManagedRemirrorProvider,
+  isReactDOMElement,
+  isRemirrorContextProvider,
+  isRemirrorProvider,
+  propIsFunction,
+  RemirrorType,
+} from '@remirror/react-utils';
 
 import { PortalContainer, RemirrorPortals } from '../portals';
 import { defaultProps } from '../react-constants';
@@ -51,16 +61,6 @@ import {
   RemirrorStateListenerParameter,
   UpdateStateParameter,
 } from '../react-types';
-import {
-  addKeyToElement,
-  getElementProps,
-  isManagedRemirrorProvider,
-  isReactDOMElement,
-  isRemirrorContextProvider,
-  isRemirrorProvider,
-  propIsFunction,
-  RemirrorType,
-} from '../react-utils';
 import { createEditorView, RemirrorSSR } from '../ssr';
 
 /**

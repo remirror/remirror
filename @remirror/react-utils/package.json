@@ -1,7 +1,13 @@
 {
   "name": "@remirror/react-utils",
   "version": "0.7.6",
-  "description": "React utilities for remirror",
+  "description": "A small set of utilities for react components in remirror.",
+  "keywords": [
+    "react",
+    "utils",
+    "remirror",
+    "prosemirror"
+  ],
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/react-utils",
   "repository": "https://github.com/remirror/remirror/tree/next/@remirror/react-utils",
   "license": "MIT",
@@ -9,6 +15,7 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "main": "dist/react-utils.cjs.js",
   "files": [
     "dist"
   ],

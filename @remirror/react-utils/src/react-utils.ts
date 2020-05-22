@@ -9,7 +9,8 @@ import React, {
   ReactNode,
 } from 'react';
 
-import { AnyFunction, bool, isFunction, isObject, isString, PlainObject } from '@remirror/core';
+import { bool, isFunction, isObject, isString } from '@remirror/core-helpers';
+import { AnyFunction, PlainObject } from '@remirror/core-types';
 
 export interface RemirrorComponentStaticProperties {
   /**
@@ -50,47 +51,42 @@ export enum RemirrorType {
  *
  * @param value - the value to check
  */
-export const isValidElement = <GProps extends object = any>(
+export function isValidElement<GProps extends object = any>(
   value: unknown,
-): value is ReactElement<GProps> => isObject(value) && isValidReactElement(value);
+): value is ReactElement<GProps> {
+  return isObject(value) && isValidReactElement(value);
+}
 
 /**
  * Check whether a react node is a built in dom element (i.e. `div`, `span`)
  *
  * @param value - the value to check
  */
-export const isReactDOMElement = <GProps extends object = any>(
+export function isReactDOMElement<GProps extends object = any>(
   value: unknown,
-): value is ReactElement<GProps> & { type: string } => {
+): value is ReactElement<GProps> & { type: string } {
   return isValidElement(value) && isString(value.type);
-};
+}
 
 /**
  * Checks whether the element is a react fragment
  *
  * @param value - the value to check
  */
-export const isReactFragment = <GProps extends object = any>(
+export function isReactFragment<GProps extends object = any>(
   value: unknown,
-): value is ReactElement<GProps> & { type: typeof Fragment } =>
-  isObject(value) && isValidElement(value) && value.type === Fragment;
+): value is ReactElement<GProps> & { type: typeof Fragment } {
+  return isObject(value) && isValidElement(value) && value.type === Fragment;
+}
 
 /**
  * Retrieve the element props for JSX Element
  *
  * @param element
  */
-export const getElementProps = (element: JSX.Element): PlainObject & { children: JSX.Element } => {
+export function getElementProps(element: JSX.Element): PlainObject & { children: JSX.Element } {
   return isValidElement(element) ? element.props : {};
-};
-
-/**
- * Utility for generating a unique class name
- *
- * @param uid
- * @param className
- */
-export const uniqueClass = (uid: string, className: string) => `${className}-${uid}`;
+}
 
 /**
  * Utility for properly typechecking static defaultProps for a class component in react.

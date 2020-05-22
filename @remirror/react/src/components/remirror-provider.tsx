@@ -1,10 +1,10 @@
 import React, { ProviderProps, ReactElement } from 'react';
 
 import { AnyEditorManager } from '@remirror/core';
+import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
 
 import { RemirrorContext } from '../react-contexts';
 import { BaseProps, GetRootPropsConfig, InjectedRenderEditorProps } from '../react-types';
-import { oneChildOnly, RemirrorType } from '../react-utils';
 import { RenderEditor } from './render-editor';
 
 interface RemirrorContextProviderProps<Manager extends AnyEditorManager = any>

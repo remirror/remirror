@@ -22,6 +22,7 @@
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core": "^0.11.0",
+    "@remirror/react-utils": "^0.7.6",
     "@types/hoist-non-react-statics": "^3.3.1",
     "@types/min-document": "^2.19.0",
     "@types/use-deep-compare-effect": "^1.2.0",
