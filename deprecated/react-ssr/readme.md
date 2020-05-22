@@ -1,15 +1,16 @@
 # @remirror/react-ssr
 
-[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/react-ssr.svg?)](https://bundlephobia.com/result?p=@remirror/react-ssr)
-[![npm](https://img.shields.io/npm/dm/@remirror/react-ssr.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/react-ssr)
+This package is deprecated and is now included by default with the react package.
 
-Enables rendering the remirror editor within an ssr environment preventing the flash of an
-uninitialized state.
-
-## Installation
+It is now accessible with the following installation.
 
 ```bash
-yarn add @remirror/react-ssr # yarn
-pnpm add @remirror/react-ssr # pnpm
-npm install @remirror/react-ssr # npm
+# Yarn
+yarn add @remirror/react
+
+# PNPM
+pnpm add @remirror/react
+
+# npm
+npm install @remirror/react
 ```

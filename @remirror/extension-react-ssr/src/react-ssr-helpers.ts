@@ -1,7 +1,6 @@
-import { Children, cloneElement, createElement, JSXElementConstructor } from 'react';
+import { Children, cloneElement, createElement, JSXElementConstructor, ReactElement } from 'react';
 
-import { AnyExtension, ExtensionStore, PlainObject } from '@remirror/core';
-import { isArray } from '@remirror/core-helpers';
+import { AnyExtension, ExtensionStore, isArray, isString, PlainObject } from '@remirror/core';
 import { getElementProps, isReactDOMElement, isReactFragment } from '@remirror/react-utils';
 
 /**
@@ -16,6 +15,17 @@ type CreateSSRTransformer = <ExtensionUnion extends AnyExtension>(
 type SSRTransformer = (element: JSX.Element) => JSX.Element;
 
 /**
+ * Check whether a react node is a built in dom element (i.e. `div`, `span`)
+ *
+ * @param value - the value to check
+ */
+export function isReactDOMElement<GProps extends object = any>(
+  value: unknown,
+): value is ReactElement<GProps> & { type: string } {
+  return isElement(value) && isString(value.type);
+}
+
+/**
  * Clone SSR elements ignoring the top level Fragment
  *
  * @remarks
@@ -24,13 +34,13 @@ type SSRTransformer = (element: JSX.Element) => JSX.Element;
  * @param element - the element to transform which must be from the JSX received in `ssrTransformer`
  * @param transformChildElements - receives the nested elements and props and transforms them into another JSX.Element
  */
-const cloneSSRElement = (
+function cloneSSRElement(
   element: JSX.Element,
   transformChildElements: (
     children: JSX.Element | JSX.Element[],
     childrenProps: PlainObject,
   ) => JSX.Element | JSX.Element[],
-) => {
+) {
   if (!isReactFragment(element)) {
     throw new Error('Invalid element passed. The top level element must be a fragment');
   }
@@ -39,14 +49,16 @@ const cloneSSRElement = (
   const childrenProperties = getElementProps(children);
 
   return cloneElement(element, {}, transformChildElements(children, childrenProperties));
-};
+}
 
 /**
  * Returns true when a react element has no children.
  *
  * @param element - the element to test
  */
-const elementIsEmpty = (element: JSX.Element) => Children.count(element.props.children) === 0;
+function elementIsEmpty(element: JSX.Element) {
+  return Children.count(element.props.children) === 0;
+}
 
 /**
  * Checks to see that the element is of the provided type.
@@ -54,12 +66,11 @@ const elementIsEmpty = (element: JSX.Element) => Children.count(element.props.ch
  * @param element - the element to test
  * @param type - the type to match
  */
-const elementIsOfType = <
+function elementIsOfType<
   GType extends string | JSXElementConstructor<any> = string | JSXElementConstructor<any>
->(
-  element: JSX.Element,
-  type: GType,
-) => element.type === type;
+>(element: JSX.Element, type: GType) {
+  return element.type === type;
+}
 
 /**
  * This utility maps through the SSR element and injects break tags into all
@@ -71,7 +82,7 @@ const elementIsOfType = <
  * causes the document rendered during SSR to be different than when the page
  * loads.
  */
-const injectBrIntoEmptyParagraphs: SSRTransformer = (element) => {
+function injectBrIntoEmptyParagraphs(element: JSX.Element) {
   return cloneSSRElement(element, (children) => {
     if (!isArray(children)) {
       return children;
@@ -86,7 +97,7 @@ const injectBrIntoEmptyParagraphs: SSRTransformer = (element) => {
       return cloneElement(child, properties, createElement('br'));
     });
   });
-};
+}
 
 /**
  * The default transformations which are applied when none are passed.

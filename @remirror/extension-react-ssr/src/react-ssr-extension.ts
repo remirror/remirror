@@ -1,0 +1,184 @@
+import { ComponentType } from 'react';
+
+import {
+  AnyExtension,
+  AnyPreset,
+  CreateLifecycleMethod,
+  DefaultExtensionSettings,
+  InitializeLifecycleMethod,
+  object,
+  PlainExtension,
+  Shape,
+} from '@remirror/core';
+
+import { DEFAULT_TRANSFORMATIONS, SSRTransformer } from './react-ssr-helpers';
+
+interface ReactSSRSettings {
+  /**
+   * The transformers that will be automatically used in the editor for properly
+   * rendering ssr.
+   *
+   * @defaultValue `DEFAULT_TRANSFORMATIONS`
+   */
+  transformers?: SSRTransformer[];
+}
+/**
+ * This extension allows for React based SSR transformations to the editor. It
+ * adds a parameter option called `createSSRTransformer` which is used to handle
+ * the differences between how prosemirror renders the dom and how it appears in
+ * an ssr environment.
+ *
+ * @remarks
+ *
+ * There are subtle things that prosemirror does when it loads the document that
+ * can cause things to jump around.
+ *
+ * The aim of this extension is to provide a series of helper transformations
+ * which deal with the typical problems that prosemirror presents when rendering
+ * on the server. It also allows other extensions to use the
+ * `createSSRTransformer` option to handle their own ssr discrepancies.
+ *
+ * The transformations can also serve as a guideline when creating your own
+ * SSRTransforms. However in most cases the defaults should be sufficient.
+ */
+export class ReactSSRExtension extends PlainExtension<ReactSSRSettings> {
+  public static readonly defaultSettings: DefaultExtensionSettings<ReactSSRSettings> = {
+    transformers: DEFAULT_TRANSFORMATIONS,
+  };
+
+  public readonly name = 'reactSSR' as const;
+
+  public onCreate: CreateLifecycleMethod = (parameter) => {
+    const { setStoreKey, managerSettings } = parameter;
+
+    const components: Record<string, ComponentType<any>> = object();
+
+    return {
+      forEachExtension(extension) {
+        if (
+          managerSettings.exclude?.reactSSR ||
+          !extension.createSSRComponent ||
+          extension.settings.exclude.reactSSR
+        ) {
+          return;
+        }
+
+        components[extension.name] = extension.createSSRComponent();
+      },
+      afterExtensionLoop() {
+        setStoreKey('components', components);
+      },
+    };
+  };
+
+  /**
+   * Ensure that all ssr transformers are run.
+   */
+  public onInitialize: InitializeLifecycleMethod = (parameter) => {
+    const { setStoreKey } = parameter;
+    const ssrTransformers: SSRTransformer[] = [];
+
+    const ssrTransformer: SSRTransformer = (initialElement) => {
+      let element: JSX.Element = initialElement;
+
+      for (const transformer of ssrTransformers) {
+        element = transformer(element);
+      }
+
+      return element;
+    };
+
+    return {
+      forEachExtension: (extension) => {
+        if (!extension.createSSRTransformer || extension.settings.exclude.reactSSR) {
+          return;
+        }
+
+        ssrTransformers.push(extension.createSSRTransformer());
+      },
+
+      afterExtensionLoop: () => {
+        setStoreKey('ssrTransformer', ssrTransformer);
+      },
+    };
+  };
+
+  /**
+   * A function that takes in the initial automatically produced JSX by the
+   * ReactSSRSerializer and transforms it into and element that is consistent
+   * between the browser and the server.
+   */
+  public createSSRTransformer = () => (initialElement: JSX.Element) => {
+    let element: JSX.Element = initialElement;
+
+    for (const transformer of this.settings.transformers) {
+      element = transformer(element);
+    }
+
+    return element;
+  };
+}
+
+declare global {
+  namespace Remirror {
+    interface ExcludeOptions {
+      /**
+       * Whether to use the SSR component when not in a DOM environment
+       *
+       * @defaultValue `undefined`
+       */
+      reactSSR?: boolean;
+    }
+
+    interface ManagerStore<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
+      /**
+       * The transformer for updating the SSR rendering of the prosemirror state
+       * and allowing it to render without defects.
+       */
+      ssrTransformer: SSRTransformer;
+
+      /**
+       * Components for ssr transformations.
+       */
+      components: Record<string, ComponentType<any>>;
+    }
+
+    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
+      /**
+       * A method for transforming the original JSX element received by the
+       * extension. This is typically for usage in server side rendered
+       * environment.
+       *
+       * @remarks
+       *
+       * Some extensions add decorations to the ProsemirrorView based on their
+       * state. These decorations can touch any node or mark and it would be
+       * very difficult to model this without transforming the complete
+       * produced JSX element.
+       *
+       * An example is that all empty paragraphs in prosemirror automatically
+       * have a `<br />` tag injected into them during runtime. The
+       * ReactSSRSerializer which transform the `toDOM` method output for paragraph
+       * tags `[p, 0]` into JSX `<p />` has no way of knowing about this. That
+       * is where this creator method can help. We can transform the
+       * automatically generated JSX and inject `<br />` tags for the initial
+       * server render. That way there is no jump or layout adjustment when the
+       * document first loads on the browser.
+       */
+      createSSRTransformer?: () => SSRTransformer;
+
+      /**
+       * A function that returns the component that will be used to render in
+       * SSR.
+       *
+       * Use this if the automatic componentization in ReactSerializer of the
+       * `toDOM` method doesn't produce the expected results in SSR.
+       *
+       * TODO move this into a seperate NodeExtension and MarkExtension based
+       * merged interface so that the props can be specified as `{ mark: Mark }`
+       * or `{ node: ProsemirrorNode }`.
+       */
+      createSSRComponent?: () => ComponentType<any>;
+    }
+  }
+}

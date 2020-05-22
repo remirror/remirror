@@ -119,7 +119,6 @@ export class ReactSerializer<ExtensionUnion extends AnyExtension, PresetUnion ex
 
   /* eslint-disable @typescript-eslint/explicit-member-accessibility */
   readonly #components: Record<string, ComponentType<any>>;
-  readonly #options: Record<string, PlainObject>;
   /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
   constructor(
@@ -130,7 +129,6 @@ export class ReactSerializer<ExtensionUnion extends AnyExtension, PresetUnion ex
     this.nodes = nodes;
     this.marks = marks;
     this.#components = manager.store.components ?? object();
-    this.#options = manager.store.componentOptions ?? object();
   }
 
   /**
@@ -166,7 +164,6 @@ export class ReactSerializer<ExtensionUnion extends AnyExtension, PresetUnion ex
    */
   public serializeNode(node: ProsemirrorNode): ReactNode {
     const Component = this.#components[node.type.name];
-    const options = this.#options[node.type.name];
     const toDOM = this.nodes[node.type.name];
 
     let children: ReactNode;
@@ -175,9 +172,7 @@ export class ReactSerializer<ExtensionUnion extends AnyExtension, PresetUnion ex
       children = this.serializeFragment(node.content);
     }
     return bool(Component) ? (
-      <Component options={options} node={node}>
-        {children}
-      </Component>
+      <Component node={node}>{children}</Component>
     ) : (
       toDOM && ReactSerializer.renderSpec(toDOM(node), children)
     );
@@ -193,12 +188,9 @@ export class ReactSerializer<ExtensionUnion extends AnyExtension, PresetUnion ex
   public serializeMark(mark: Mark, inline: boolean, wrappedElement: ReactNode): ReactNode {
     const toDOM = this.marks[mark.type.name];
     const Component = this.#components[mark.type.name];
-    const options = this.#options[mark.type.name];
 
     return bool(Component) ? (
-      <Component options={options} mark={mark}>
-        {wrappedElement}
-      </Component>
+      <Component mark={mark}>{wrappedElement}</Component>
     ) : (
       toDOM && ReactSerializer.renderSpec(toDOM(mark, inline), wrappedElement)
     );
