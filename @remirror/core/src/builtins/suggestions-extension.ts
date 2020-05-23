@@ -17,9 +17,6 @@ import { InitializeLifecycleMethod, PlainExtension } from '../extension';
  * @builtin
  */
 export class SuggestionsExtension extends PlainExtension {
-  public static readonly defaultSettings = {};
-  public static readonly defaultProperties = {};
-
   public readonly name = 'suggestions' as const;
   public readonly defaultPriority = ExtensionPriority.High;
 
@@ -66,7 +63,10 @@ declare global {
       suggesters?: boolean;
     }
 
-    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
+    interface ExtensionCreatorMethods<
+      Settings extends Shape = object,
+      Properties extends Shape = object
+    > {
       /**
        * Create suggesters which respond to character key combinations within the
        * editor instance.

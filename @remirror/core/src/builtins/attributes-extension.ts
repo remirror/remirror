@@ -18,9 +18,6 @@ import { AnyPreset } from '../preset';
  * @builtin
  */
 export class AttributesExtension extends PlainExtension {
-  public static readonly defaultSettings = {};
-  public static readonly defaultProperties = {};
-
   public readonly name = 'attributes' as const;
   public readonly defaultPriority = ExtensionPriority.High as const;
 
@@ -87,7 +84,10 @@ declare global {
       attributes?: boolean;
     }
 
-    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
+    interface ExtensionCreatorMethods<
+      Settings extends Shape = object,
+      Properties extends Shape = object
+    > {
       /**
        * Allows the extension to modify the attributes for the Prosemirror editor
        * dom element.

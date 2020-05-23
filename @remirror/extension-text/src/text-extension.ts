@@ -6,9 +6,6 @@ import { NodeExtension, NodeGroup } from '@remirror/core';
  * @core
  */
 export class TextExtension extends NodeExtension {
-  public static readonly defaultSettings = {};
-  public static readonly defaultProperties = {};
-
   public readonly name = 'text' as const;
 
   protected createNodeSpec() {

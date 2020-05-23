@@ -1,7 +1,7 @@
 import React, { ComponentType } from 'react';
 import { renderToString } from 'react-dom/server';
 
-import { AnyEditorManager, object, PlainObject } from '@remirror/core';
+import { AnyEditorManager, object, Shape } from '@remirror/core';
 
 import { useRemirror } from './hooks/use-remirror';
 
@@ -20,7 +20,7 @@ export interface GetManagerFromComponentTreeParameter {
   /**
    * Other props that need to be passed into the component
    */
-  extraProps?: PlainObject;
+  extraProps?: Shape;
 }
 
 /**
@@ -72,7 +72,7 @@ export interface GetManagerFromComponentTreeParameter {
 export function getSchemaFromComponentTree({
   Component,
   prop = 'children',
-  extraProps = object<PlainObject>(),
+  extraProps = object<Shape>(),
 }: GetManagerFromComponentTreeParameter) {
   return new Promise<AnyEditorManager>((resolve, reject) => {
     const ManagerRetriever = () => {

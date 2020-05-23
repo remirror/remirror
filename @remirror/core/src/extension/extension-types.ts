@@ -3,7 +3,7 @@ import { UnionToIntersection } from 'type-fest';
 import { AnyFunction, StringKey } from '@remirror/core-types';
 import { NonChainableCommandFunction } from '@remirror/core-utils';
 
-import { CommandMethod, GetHelpers } from '../types';
+import { CommandShape, GetHelpers } from '../types';
 import { AnyExtension } from './extension-base';
 
 export interface ExtensionParameter<ExtensionUnion extends AnyExtension = any> {
@@ -25,7 +25,7 @@ export interface ExtensionListParameter<ExtensionUnion extends AnyExtension = An
  * is store in the `manager.store.actions.commandName()`.
  */
 type MapToUnchainedCommand<RawCommands extends Record<string, AnyFunction>> = {
-  [Command in keyof RawCommands]: CommandMethod<Parameters<RawCommands[Command]>>;
+  [Command in keyof RawCommands]: CommandShape<Parameters<RawCommands[Command]>>;
 };
 
 /**
@@ -102,8 +102,8 @@ export type HelpersFromExtensions<ExtensionUnion extends AnyExtension> = UnionTo
 /**
  * Utility type for pulling all the action names from a list
  */
-export type HelperNames<GExtension extends AnyExtension> = StringKey<
-  HelpersFromExtensions<GExtension>
+export type HelperNames<ExtensionUnion extends AnyExtension> = StringKey<
+  HelpersFromExtensions<ExtensionUnion>
 >;
 
 /**

@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 
 import { bool, isFunction, isObject, isString } from '@remirror/core-helpers';
-import { AnyFunction, PlainObject } from '@remirror/core-types';
+import { AnyFunction, Shape } from '@remirror/core-types';
 
 export interface RemirrorComponentStaticProperties {
   /**
@@ -84,7 +84,7 @@ export function isReactFragment<GProps extends object = any>(
  *
  * @param element
  */
-export function getElementProps(element: JSX.Element): PlainObject & { children: JSX.Element } {
+export function getElementProps(element: JSX.Element): Shape & { children: JSX.Element } {
   return isValidElement(element) ? element.props : {};
 }
 

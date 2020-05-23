@@ -32,9 +32,6 @@ import { AnyPreset } from '../preset';
  * @builtin
  */
 export class SchemaExtension extends PlainExtension {
-  public static readonly defaultSettings = {};
-  public static readonly defaultProperties = {};
-
   public readonly name = 'schema' as const;
 
   /**

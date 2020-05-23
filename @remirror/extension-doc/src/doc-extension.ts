@@ -48,7 +48,6 @@ export class DocExtension extends NodeExtension<DocExtensionSettings> {
   public static defaultSettings: DefaultExtensionSettings<DocExtensionSettings> = {
     content: 'block+',
   };
-  public static defaultProperties = {};
 
   public readonly name = 'doc' as const;
 

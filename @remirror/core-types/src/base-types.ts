@@ -30,7 +30,7 @@ export type Nullable<Type> = Type | null | undefined;
 /**
  * A shorthand for creating and intersection of two object types.
  */
-export type And<Type extends object, Other extends object> = Type & Other;
+export type And<Type extends Shape, Other extends Shape> = Type & Other;
 
 /**
  * Extract the values of a tuple as a union type.
@@ -56,8 +56,8 @@ declare const _flavor: unique symbol;
 /**
  * Used by Brand to mark a type in a readable way.
  */
-interface Branding<GBrand> {
-  readonly [_brand]: GBrand;
+interface Branding<Type> {
+  readonly [_brand]: Type;
 }
 
 /**
@@ -81,18 +81,21 @@ export type Flavor<Type, GFlavor> = Type & Flavoring<GFlavor>;
 export type Brand<Type, GBrand> = Type & Branding<GBrand>;
 
 /**
- * An object with string keys and values of type `unknown`
- */
-export interface PlainObject {
-  [key: string]: unknown;
-}
-
-/**
- * An object with string keys and value type of `any`.
+ * An object with string keys and values of type `any`
  */
 export interface Shape {
   [key: string]: any;
 }
+
+/**
+ * An object with string keys and values of type `unknown`
+ */
+export type UnknownShape = Record<string, unknown>;
+
+/**
+ * An alternative to usage of `{}` as a type.
+ */
+export type EmptyShape = Record<never, never>;
 
 /**
  * Concisely and cleanly define an arbitrary function.
@@ -145,7 +148,7 @@ export type MakeReadonly<Type extends object, Keys extends keyof Type> = Omit<Ty
 /**
  * All the literal types
  */
-export type Literal = string | number | boolean | undefined | null | void | {};
+export type Literal = string | number | boolean | undefined | null | void | object;
 
 /**
  * A recursive partial type. Useful for object that will be merged with
@@ -204,7 +207,8 @@ export interface Position {
 /**
  * Used for attributes which can be added to prosemirror nodes and marks.
  */
-export type ProsemirrorAttributes<GExtra extends object = {}> = Record<string, unknown> & GExtra;
+export type ProsemirrorAttributes<GExtra extends object = object> = Record<string, unknown> &
+  GExtra;
 
 export type AttributesWithClass = ProsemirrorAttributes & { class?: string };
 

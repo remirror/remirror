@@ -16,9 +16,6 @@ import { InitializeLifecycleMethod, PlainExtension } from '../extension';
  * @builtin
  */
 export class InputRulesExtension extends PlainExtension {
-  public static readonly defaultSettings = {};
-  public static readonly defaultProperties = {};
-
   public readonly name = 'inputRules' as const;
   public readonly defaultPriority = ExtensionPriority.High as const;
 
@@ -63,7 +60,10 @@ declare global {
       inputRules?: boolean;
     }
 
-    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
+    interface ExtensionCreatorMethods<
+      Settings extends Shape = object,
+      Properties extends Shape = object
+    > {
       /**
        * Register input rules which are activated if the regex matches as a user is
        * typing.

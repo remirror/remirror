@@ -11,9 +11,6 @@ import { InitializeLifecycleMethod, PlainExtension } from '../extension';
  * @builtin
  */
 export class PasteRulesExtension extends PlainExtension {
-  public static readonly defaultSettings = {};
-  public static readonly defaultProperties = {};
-
   public readonly name = 'pasteRules' as const;
   public readonly defaultPriority = ExtensionPriority.High;
 
@@ -58,7 +55,10 @@ declare global {
       pasteRules?: boolean;
     }
 
-    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
+    interface ExtensionCreatorMethods<
+      Settings extends Shape = object,
+      Properties extends Shape = object
+    > {
       /**
        * Register paste rules for this extension.
        *

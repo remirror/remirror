@@ -28,9 +28,6 @@ import { ExtensionHelperReturn } from '../types';
  * @builtin
  */
 export class HelpersExtension extends PlainExtension {
-  public static readonly defaultSettings = {};
-  public static readonly defaultProperties = {};
-
   public readonly name = 'helpers' as const;
 
   /**
@@ -87,7 +84,10 @@ declare global {
       helpers: HelpersFromExtensions<ExtensionUnion | GetExtensionUnion<PresetUnion>>;
     }
 
-    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
+    interface ExtensionCreatorMethods<
+      Settings extends Shape = object,
+      Properties extends Shape = object
+    > {
       /**
        * A helper method is a function that takes in arguments and returns a
        * value depicting the state of the editor specific to this extension.
@@ -132,7 +132,9 @@ declare global {
        * This pseudo property makes it easier to infer Generic types of this class.
        * @private
        */
-      ['~H']: this['createHelpers'] extends AnyFunction ? ReturnType<this['createHelpers']> : {};
+      ['~H']: this['createHelpers'] extends AnyFunction
+        ? ReturnType<this['createHelpers']>
+        : object;
     }
 
     interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {

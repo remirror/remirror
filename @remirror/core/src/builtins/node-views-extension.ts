@@ -17,9 +17,6 @@ import { AnyPreset } from '../preset';
  * @builtin
  */
 export class NodeViewsExtension extends PlainExtension {
-  public static readonly defaultSettings = {};
-  public static readonly defaultProperties = {};
-
   public readonly name = 'nodeView' as const;
   public readonly defaultPriority = ExtensionPriority.High as const;
 
@@ -82,7 +79,10 @@ declare global {
       nodeViews?: boolean;
     }
 
-    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
+    interface ExtensionCreatorMethods<
+      Settings extends Shape = object,
+      Properties extends Shape = object
+    > {
       /**
        * Registers one or multiple nodeViews for the extension.
        *

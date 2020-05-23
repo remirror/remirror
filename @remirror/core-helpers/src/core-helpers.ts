@@ -6,10 +6,10 @@ import pick from 'object.pick';
 import { Primitive } from 'type-fest';
 
 import { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
-import { Nullable, Predicate, RemirrorIdentifierShape } from '@remirror/core-types';
+import { Nullable, Predicate, RemirrorIdentifierShape, Shape } from '@remirror/core-types';
 
-type AnyConstructor<GType = unknown> = new (...args: any[]) => GType;
-type AnyFunction<GType = any> = (...args: any[]) => GType;
+type AnyConstructor<Type = unknown> = new (...args: any[]) => Type;
+type AnyFunction<Type = any> = (...args: any[]) => Type;
 interface PlainObject<Type = unknown> {
   [key: string]: Type;
 }
@@ -24,7 +24,9 @@ type Falsy = false | 0 | '' | null | undefined;
  *
  * @param arg - the arg to typecast
  */
-export const Cast = <GType = any>(argument: any): GType => argument;
+export function Cast<Type = any>(argument: any): Type {
+  return argument;
+}
 
 /**
  * A typesafe implementation of `Object.entries()`
@@ -32,51 +34,55 @@ export const Cast = <GType = any>(argument: any): GType => argument;
  * Taken from
  * https://github.com/biggyspender/ts-entries/blob/master/src/ts-entries.ts
  */
-export const entries = <
-  GType extends object,
-  GKey extends Extract<keyof GType, string>,
-  GValue extends GType[GKey],
-  GEntry extends [GKey, GValue]
->(
-  object_: GType,
-): GEntry[] => Object.entries(object_) as GEntry[];
+export function entries<
+  Type extends object,
+  Key extends Extract<keyof Type, string>,
+  Value extends Type[Key],
+  Entry extends [Key, Value]
+>(value: Type): Entry[] {
+  return Object.entries(value) as Entry[];
+}
 
 /**
  * A typesafe implementation of `Object.keys()`
  */
-export const keys = <GType extends object, GKey extends Extract<keyof GType, string>>(
-  object_: GType,
-): GKey[] => Object.keys(object_) as GKey[];
+export function keys<Type extends object, Key extends Extract<keyof Type, string>>(
+  value: Type,
+): Key[] {
+  return Object.keys(value) as Key[];
+}
 
 /**
  * A typesafe implementation of `Object.values()`
  */
-export const values = <
-  GType extends object,
-  GKey extends Extract<keyof GType, string>,
-  GValue extends GType[GKey]
->(
-  object_: GType,
-): GValue[] => Object.values(object_) as GValue[];
+export function values<
+  Type extends object,
+  Key extends Extract<keyof Type, string>,
+  Value extends Type[Key]
+>(value: Type): Value[] {
+  return Object.values(value) as Value[];
+}
 
 /**
  * A more lenient typed version of `Array.prototype.includes` which allow less
  * specific types to be checked.
  */
-export const includes = <GType>(
-  array: GType[] | readonly GType[],
+export function includes<Type>(
+  array: Type[] | readonly Type[],
   item: unknown,
   fromIndex?: number,
-): item is GType => array.includes(item as GType, fromIndex);
+): item is Type {
+  return array.includes(item as Type, fromIndex);
+}
 
 /**
  * Creates an object with the null prototype.
  *
  * @param value - the object to create
  */
-export const object = <Type extends object>(value?: Type): Type => {
+export function object<Type extends object>(value?: Type): Type {
   return Object.assign(Object.create(null), value);
-};
+}
 
 /**
  * Shorthand for casting a value to it's boolean equivalent.
@@ -85,7 +91,9 @@ export const object = <Type extends object>(value?: Type): Type => {
  *
  * @public
  */
-export const bool = <GValue>(value: GValue): value is Exclude<GValue, Falsy> => !!value;
+export function bool<Value>(value: Value): value is Exclude<Value, Falsy> {
+  return !!value;
+}
 
 /**
  * A type name matcher for object types.
@@ -108,17 +116,21 @@ enum TypeName {
  * This is a safe way of calling `toString` on objects created with
  * `Object.create(null)`.
  */
-export const toString = (value: unknown) => Object.prototype.toString.call(value);
+export function toString(value: unknown) {
+  return Object.prototype.toString.call(value);
+}
 
 /**
  * Negates a predicate check.
  *
  * @remarks
  *
- * Unfortunately I'm not sure if it's possible to actually negate the predicate
- * with typescript automatically.
+ * Unfortunately it doesn't seem possible to automatically negate the predicate
+ * with typescript.
  */
-export const not = <GType>(predicate: Predicate<GType>) => (a: unknown) => !predicate(a);
+export function not<Type>(predicate: Predicate<Type>) {
+  return (a: unknown) => !predicate(a);
+}
 
 /**
  * Retrieve the object type of a value via it's string reference. This is safer
@@ -126,11 +138,11 @@ export const not = <GType>(predicate: Predicate<GType>) => (a: unknown) => !pred
  *
  * @param value - the object to inspect
  */
-const getObjectType = (value: unknown): TypeName | undefined => {
+function getObjectType(value: unknown): TypeName | undefined {
   const objectName = toString(value).slice(8, -1);
 
   return objectName as TypeName;
-};
+}
 
 /**
  * A helper for building type predicates
@@ -138,15 +150,15 @@ const getObjectType = (value: unknown): TypeName | undefined => {
  * @param type -  the name of the type to check for
  * @returns a predicate function for checking the value type
  */
-const isOfType = <GType>(type: string, test?: (value: GType) => boolean) => (
-  value: unknown,
-): value is GType => {
-  if (typeof value !== type) {
-    return false;
-  }
+function isOfType<Type>(type: string, test?: (value: Type) => boolean) {
+  return (value: unknown): value is Type => {
+    if (typeof value !== type) {
+      return false;
+    }
 
-  return test ? test(value as GType) : true;
-};
+    return test ? test(value as Type) : true;
+  };
+}
 /**
  * Get the object type of passed in value. This avoids the reliance on
  * `instanceof` checks which are subject to cross frame issues as outlined in
@@ -156,16 +168,19 @@ const isOfType = <GType>(type: string, test?: (value: GType) => boolean) => (
  *
  * @private
  */
-const isObjectOfType = <GType>(type: TypeName) => (value: unknown): value is GType =>
-  getObjectType(value) === type;
+function isObjectOfType<Type>(type: TypeName) {
+  return (value: unknown): value is Type => getObjectType(value) === type;
+}
 
 /**
  * Check if an instance is the direct instance of the provided class.
  */
-export const isDirectInstanceOf = <T>(
+export function isDirectInstanceOf<Type>(
   instance: unknown,
-  Constructor: AnyConstructor<T>,
-): instance is T => Object.getPrototypeOf(instance) === Constructor.prototype;
+  Constructor: AnyConstructor<Type>,
+): instance is Type {
+  return Object.getPrototypeOf(instance) === Constructor.prototype;
+}
 
 /**
  * Predicate check that value is undefined
@@ -194,7 +209,9 @@ export const isString = isOfType<string>('string');
  *
  * @public
  */
-export const isNumber = isOfType<number>('number', (value) => !Number.isNaN(value));
+export const isNumber = isOfType<number>('number', (value) => {
+  return !Number.isNaN(value);
+});
 
 /**
  * Predicate check that value is a function
@@ -212,7 +229,9 @@ export const isFunction = isOfType<AnyFunction>('function');
  *
  * @public
  */
-export const isNull = (value: unknown): value is null => value === null;
+export function isNull(value: unknown): value is null {
+  return value === null;
+}
 
 /**
  * Predicate check that value is a class
@@ -223,8 +242,9 @@ export const isNull = (value: unknown): value is null => value === null;
  *
  * @public
  */
-export const isClass = (value: unknown): value is AnyConstructor =>
-  isFunction(value) && value.toString().startsWith('class ');
+export function isClass(value: unknown): value is AnyConstructor {
+  return isFunction(value) && value.toString().startsWith('class ');
+}
 
 /**
  * Predicate check that value is boolean
@@ -233,7 +253,9 @@ export const isClass = (value: unknown): value is AnyConstructor =>
  *
  * @public
  */
-export const isBoolean = (value: unknown): value is boolean => value === true || value === false;
+export function isBoolean(value: unknown): value is boolean {
+  return value === true || value === false;
+}
 
 /**
  * Predicate check that value is a symbol
@@ -251,7 +273,9 @@ export const isSymbol = isOfType<symbol>('symbol');
  *
  * @public
  */
-export const isInteger = (value: unknown): value is number => Number.isInteger(value as number);
+export function isInteger(value: unknown): value is number {
+  return Number.isInteger(value as number);
+}
 
 /**
  * Helper function for Number.isSafeInteger allowing for unknown values to be
@@ -261,8 +285,9 @@ export const isInteger = (value: unknown): value is number => Number.isInteger(v
  *
  * @public
  */
-export const isSafeInteger = (value: unknown): value is number =>
-  Number.isSafeInteger(value as number);
+export function isSafeInteger(value: unknown): value is number {
+  return Number.isSafeInteger(value as number);
+}
 
 /**
  * Predicate check for whether passed in value is a plain object
@@ -305,15 +330,17 @@ export function isNullOrUndefined(value: unknown): value is null | undefined {
  *
  * @public
  */
-export const isObject = <Type extends object>(value: unknown): value is Type =>
-  !isNullOrUndefined(value) && (isFunction(value) || isOfType('object')(value));
+export function isObject<Type extends Shape>(value: unknown): value is Type {
+  return !isNullOrUndefined(value) && (isFunction(value) || isOfType('object')(value));
+}
 
 /**
  * A shorthand method for creating instance of checks.
  */
-export const isInstanceOf = <GConstructor extends AnyConstructor>(Constructor: GConstructor) => (
-  value: unknown,
-): value is InstanceType<GConstructor> => isObject(value) && value instanceof Constructor;
+export function isInstanceOf<Constructor extends AnyConstructor>(Constructor: Constructor) {
+  return (value: unknown): value is InstanceType<Constructor> =>
+    isObject(value) && value instanceof Constructor;
+}
 
 /**
  * Predicate check that value is a native promise
@@ -322,8 +349,9 @@ export const isInstanceOf = <GConstructor extends AnyConstructor>(Constructor: G
  *
  * @public
  */
-export const isNativePromise = (value: unknown): value is Promise<unknown> =>
-  isObjectOfType<Promise<unknown>>(TypeName.Promise)(value);
+export function isNativePromise(value: unknown): value is Promise<unknown> {
+  return isObjectOfType<Promise<unknown>>(TypeName.Promise)(value);
+}
 
 /**
  * Check to see if a value has the built in promise API.
@@ -332,11 +360,14 @@ export const isNativePromise = (value: unknown): value is Promise<unknown> =>
  *
  * @public
  */
-const hasPromiseAPI = (value: unknown): value is Promise<unknown> =>
-  !isNull(value) &&
-  (isObject(value) as unknown) &&
-  isFunction((value as Promise<unknown>).then) &&
-  isFunction((value as Promise<unknown>).catch);
+const hasPromiseAPI = (value: unknown): value is Promise<unknown> => {
+  return (
+    !isNull(value) &&
+    (isObject(value) as unknown) &&
+    isFunction((value as Promise<unknown>).then) &&
+    isFunction((value as Promise<unknown>).catch)
+  );
+};
 
 /**
  * Predicate check that value has the promise api implemented
@@ -345,8 +376,9 @@ const hasPromiseAPI = (value: unknown): value is Promise<unknown> =>
  *
  * @public
  */
-export const isPromise = (value: unknown): value is Promise<unknown> =>
-  isNativePromise(value) || hasPromiseAPI(value);
+export function isPromise(value: unknown): value is Promise<unknown> {
+  return isNativePromise(value) || hasPromiseAPI(value);
+}
 
 /**
  * Predicate check that value is a RegExp
@@ -382,8 +414,9 @@ export const isError = isObjectOfType<Error>(TypeName.Error);
  *
  * @public
  */
-export const isMap = (value: unknown): value is Map<unknown, unknown> =>
-  isObjectOfType<Map<unknown, unknown>>(TypeName.Map)(value);
+export function isMap(value: unknown): value is Map<unknown, unknown> {
+  return isObjectOfType<Map<unknown, unknown>>(TypeName.Map)(value);
+}
 
 /**
  * Predicate check that value is a `Set`
@@ -392,8 +425,9 @@ export const isMap = (value: unknown): value is Map<unknown, unknown> =>
  *
  * @public
  */
-export const isSet = (value: unknown): value is Set<unknown> =>
-  isObjectOfType<Set<unknown>>(TypeName.Set)(value);
+export function isSet(value: unknown): value is Set<unknown> {
+  return isObjectOfType<Set<unknown>>(TypeName.Set)(value);
+}
 
 /**
  * Predicate check that value is an empty object
@@ -402,8 +436,9 @@ export const isSet = (value: unknown): value is Set<unknown> =>
  *
  * @public
  */
-export const isEmptyObject = (value: unknown): value is { [key: string]: never } =>
-  isObject(value) && !isMap(value) && !isSet(value) && Object.keys(value).length === 0;
+export function isEmptyObject(value: unknown): value is { [key: string]: never } {
+  return isObject(value) && !isMap(value) && !isSet(value) && Object.keys(value).length === 0;
+}
 
 /**
  * Alias the isArray method.
@@ -417,8 +452,9 @@ export const isArray = Array.isArray;
  *
  * @public
  */
-export const isEmptyArray = (value: unknown): value is never[] =>
-  isArray(value) && value.length === 0;
+export function isEmptyArray(value: unknown): value is never[] {
+  return isArray(value) && value.length === 0;
+}
 
 /**
  * Identifies the value as having a remirror identifier. This is the core
@@ -442,7 +478,7 @@ export const isRemirrorType = (value: unknown): value is RemirrorIdentifierShape
 export function isIdentifierOfType(
   value: RemirrorIdentifierShape,
   type: RemirrorIdentifier | RemirrorIdentifier[],
-) {
+): boolean {
   return isArray(type)
     ? includes(type, value[REMIRROR_IDENTIFIER_KEY])
     : type === value[REMIRROR_IDENTIFIER_KEY];
@@ -505,7 +541,7 @@ export function callIfDefined<Method extends AnyFunction>(
  *
  * @public
  */
-export function findMatches(text: string, regexp: RegExp) {
+export function findMatches(text: string, regexp: RegExp): RegExpExecArray[] {
   const results: RegExpExecArray[] = [];
   const flags = regexp.flags;
   let match: RegExpExecArray | null;
@@ -660,7 +696,7 @@ export function uniqueId({ prefix = '', size }: UniqueIdParameter = { prefix: ''
  *
  * @public
  */
-export function take<GArray extends any[]>(array: GArray, number: number) {
+export function take<Type extends any[]>(array: Type, number: number) {
   number = Math.max(Math.min(0, number), number);
   return array.slice(0, number);
 }
@@ -711,26 +747,33 @@ export const isEqual = fastDeepEqual;
  *
  * @public
  */
-export const uniqueArray = <GType>(array: GType[], fromStart = false) => {
+export function uniqueArray<Type>(array: Type[], fromStart = false) {
   const array_ = fromStart ? [...array].reverse() : array;
   const set = new Set(array_);
   return fromStart ? [...set].reverse() : [...set];
-};
+}
 
 /**
- * Flattens an array
+ * Flattens an array.
  *
  * @param array
  *
  * @public
  */
-export const flattenArray = <GType>(array: any[]): GType[] =>
-  array.reduce((a, b) => a.concat(Array.isArray(b) ? flattenArray(b) : b), []);
+export function flattenArray<Type>(array: any[]): Type[] {
+  const flattened: any[] = [];
+
+  for (const item of array) {
+    flattened.push(...[isArray(item) ? flattenArray(item) : [item]]);
+  }
+
+  return flattened;
+}
 
 /**
  * Sometimes doing nothing is the best policy.
  */
-export const noop = () => {};
+export function noop() {}
 
 /**
  * Use this to completely overwrite an object when merging.
@@ -757,7 +800,7 @@ export class Merge {
    * @param [obj] - the object to replace the key with. When blank an empty
    * object is used.
    */
-  public static overwrite<GReturn = any>(object_: PlainObject = object()): GReturn {
+  public static overwrite<Return = any>(object_: PlainObject = object()): Return {
     return new Merge(object_) as any;
   }
 
@@ -782,9 +825,9 @@ export class Merge {
  * To completely remove a key you can use the `Merge` helper class which
  * replaces it's key with a completely new object
  */
-export const deepMerge = <GType = any>(...objects: Array<PlainObject | unknown[]>): GType => {
-  return deepmerge.all<GType>(objects as any, { isMergeableObject: isPlainObject });
-};
+export function deepMerge<Type = any>(...objects: Array<PlainObject | unknown[]>): Type {
+  return deepmerge.all<Type>(objects as any, { isMergeableObject: isPlainObject });
+}
 
 interface ClampParameter {
   min: number;
@@ -795,18 +838,20 @@ interface ClampParameter {
 /**
  * Clamps the value to the provided range.
  */
-export const clamp = ({ min, max, value }: ClampParameter): number => {
+export function clamp({ min, max, value }: ClampParameter) {
   if (value < min) {
     return min;
   }
 
   return value > max ? max : value;
-};
+}
 
 /**
  * Get the last element of the array.
  */
-export const last = <GType>(array: GType[]) => array[array.length - 1];
+export function last<Type>(array: Type[]) {
+  return array[array.length - 1];
+}
 
 /**
  * Sorts an array while retaining the original order when the compare method
@@ -822,12 +867,12 @@ export const last = <GType>(array: GType[]) => array[array.length - 1];
  *                  equal - return number > 0 for a > b - return number < 0 for
  *                  b > a
  */
-export const sort = <GType>(array: GType[], compareFn: (a: GType, b: GType) => number) => {
+export function sort<Type>(array: Type[], compareFn: (a: Type, b: Type) => number) {
   return [...array]
     .map((value, index) => ({ value, index }))
     .sort((a, b) => compareFn(a.value, b.value) || a.index - b.index)
     .map(({ value }) => value);
-};
+}
 
 /**
  * Get a property from an object or array by a string path or an array path.
@@ -835,11 +880,11 @@ export const sort = <GType>(array: GType[], compareFn: (a: GType, b: GType) => n
  * @param path - path to property
  * @param obj - object to retrieve property from
  */
-export const get = <GReturn = any>(
+export function get<Return = any>(
   path: string | Array<string | number>,
   object_: any,
   fallback?: any,
-): GReturn => {
+): Return {
   if (!path || isEmptyArray(path)) {
     return isUndefined(object_) ? fallback : object_;
   }
@@ -857,11 +902,13 @@ export const get = <GReturn = any>(
   }
 
   return isUndefined(object_) ? fallback : object_;
-};
+}
 
-const makeFunctionForUniqueBy = <GItem = any, GKey = any>(
-  value: string | Array<string | number>,
-) => (item: GItem) => get<GKey>(value, item);
+function makeFunctionForUniqueBy<Item = any, Key = any>(value: string | Array<string | number>) {
+  return (item: Item) => {
+    return get<Key>(value, item);
+  };
+}
 
 /**
  * Create a unique array of objects from a getter function or a property list.
@@ -882,13 +929,13 @@ const makeFunctionForUniqueBy = <GItem = any, GKey = any>(
  * // Same as above
  * ```
  */
-export const uniqueBy = <GItem = any, GKey = any>(
-  array: GItem[],
-  getValue: ((item: GItem) => GKey) | string | Array<string | number>,
+export function uniqueBy<Item = any, Key = any>(
+  array: Item[],
+  getValue: ((item: Item) => Key) | string | Array<string | number>,
   fromStart = false,
-): GItem[] => {
-  const unique: GItem[] = [];
-  const found: Set<GKey> = new Set();
+): Item[] {
+  const unique: Item[] = [];
+  const found: Set<Key> = new Set();
 
   const getter = isFunction(getValue) ? getValue : makeFunctionForUniqueBy(getValue);
   const array_ = fromStart ? [...array].reverse() : array;
@@ -902,7 +949,7 @@ export const uniqueBy = <GItem = any, GKey = any>(
   }
 
   return fromStart ? unique.reverse() : unique;
-};
+}
 
 /**
  * Create a range from start to end.
@@ -911,7 +958,7 @@ export const uniqueBy = <GItem = any, GKey = any>(
  * and end are provided it creates an array who's first position is start and
  * final position is end. i.e. `length = (end - start) + 1`
  */
-export const range = (start: number, end?: number) => {
+export function range(start: number, end?: number) {
   if (!isNumber(end)) {
     return Array.from({ length: Math.abs(start) }, (_, index) => (start < 0 ? -1 : 1) * index);
   }
@@ -921,7 +968,7 @@ export const range = (start: number, end?: number) => {
   }
 
   return Array.from({ length: start + 1 - end }, (_, index) => -1 * index + start);
-};
+}
 
 /**
  * Check that a number is within the minimum and maximum bounds of a set of
@@ -929,10 +976,10 @@ export const range = (start: number, end?: number) => {
  *
  * @param value - the number to test
  */
-export const within = (value: number, ...rest: Array<number | undefined | null>) => {
+export function within(value: number, ...rest: Array<number | undefined | null>) {
   const numbers: number[] = rest.filter<number>(isNumber);
   return value >= Math.min(...numbers) && value <= Math.max(...numbers);
-};
+}
 
 /**
  * Safe implementation of hasOwnProperty with typechecking.
@@ -944,13 +991,13 @@ export const within = (value: number, ...rest: Array<number | undefined | null>)
  * @param obj - the object to check
  * @param key - the property to check
  *
- * @typeParam GObj - the object type
- * @typeParam GProperty - the property which can be a string | number | symbol
+ * @typeParam Obj - the object type
+ * @typeParam Property - the property which can be a string | number | symbol
  */
-export const hasOwnProperty = <GObj extends object, GProperty extends string | number | symbol>(
-  object_: GObj,
-  key: GProperty,
-): object_ is GProperty extends keyof GObj ? GObj : GObj & { GKey: unknown } => {
+export const hasOwnProperty = <Obj extends object, Property extends string | number | symbol>(
+  object_: Obj,
+  key: Property,
+): object_ is Property extends keyof Obj ? Obj : Obj & { Key: unknown } => {
   return Object.prototype.hasOwnProperty.call(object_, key);
 };
 

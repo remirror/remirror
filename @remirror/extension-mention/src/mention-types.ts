@@ -73,7 +73,7 @@ export interface MentionExtensionMatcher
 /**
  * The static settings passed into a mention
  */
-export interface MentionExtensionSettings {
+export interface MentionSettings {
   /**
    * Provide a custom tag for the mention
    */
@@ -89,7 +89,7 @@ export interface MentionExtensionSettings {
 /**
  * The dynamic properties used to change the behaviour of the mentions created.
  */
-export interface MentionExtensionProperties
+export interface MentionProperties
   extends Pick<
     Suggestion<MentionExtensionSuggestCommand>,
     | 'suggestTag'

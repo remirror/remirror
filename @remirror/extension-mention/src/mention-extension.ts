@@ -1,17 +1,18 @@
 import {
   convertCommand,
+  DefaultExtensionSettings,
   ErrorConstant,
-  ExtensionFactory,
   getMarkRange,
   getMatchString,
   invariant,
   isElementDOMNode,
   isMarkActive,
+  MarkExtension,
+  MarkExtensionSpec,
   MarkGroup,
   markPasteRule,
   noop,
   object,
-  ProsemirrorAttributes,
   RangeParameter,
   removeMark,
   replaceText,
@@ -29,9 +30,9 @@ import {
 
 import {
   MentionExtensionAttributes,
-  MentionExtensionProperties,
-  MentionExtensionSettings,
   MentionExtensionSuggestCommand,
+  MentionProperties,
+  MentionSettings,
   SuggestionCommandAttributes,
 } from './mention-types';
 import {
@@ -44,32 +45,43 @@ import {
 const defaultHandler = () => false;
 
 /**
- * The mention extension manages suggesters through onChange, onKeyDown, onExit and onEnter callbacks.
- * It also allows for configuration options to be passed into transforming suggestion queries into a mention
- * node.
+ * The mention extension wraps mentions as a prosemirror mark. It allows for
+ * very fluid and flexible social experiences to be built up.
+ *
+ * @remarks
+ *
+ * Mentions have the following features
+ * - An activation character you define.
+ * - A min number of characters before mentions are suggested
+ * - Ability to exclude matching character
+ * - Ability to wrap content in a decoration which excludes mentions from being
+ *   suggested.
+ * - Decorations for in progress mentions
+ * - Keybindings for handling arrow keys and other more exotic commands.
+ *
+ * Please note, there is still a lot of work required in your view layer when
+ * creating a mention and it's not at trivial (I found it quite difficult). With
+ * remirror I'm hoping to reduce the cognitive strain required to set up
+ * mentions in your own editor.
  */
-export const MentionExtension = ExtensionFactory.typed<
-  MentionExtensionSettings,
-  MentionExtensionProperties
->().mark({
-  name: 'mention',
-  extensionTags: [],
-  defaultSettings: {
-    mentionTag: 'a' as 'a',
+export class MentionExtension extends MarkExtension<MentionSettings, MentionProperties> {
+  public static readonly defaultSettings: DefaultExtensionSettings<MentionSettings> = {
+    mentionTag: 'a' as const,
     matchers: [],
-  },
-  defaultProperties: {
+  };
+  public static readonly defaultProperties: Required<MentionProperties> = {
     appendText: ' ',
-    suggestTag: 'a' as 'a',
+    suggestTag: 'a' as const,
     onChange: defaultHandler,
     onExit: defaultHandler,
     onCharacterEntry: defaultHandler,
     keyBindings: {},
     noDecorations: false,
-  },
-  createMarkSpec(parameter) {
-    const { settings } = parameter;
+  };
 
+  public readonly name = 'mention' as const;
+
+  public createMarkSpec(): MarkExtensionSpec {
     const dataAttributeId = 'data-mention-id';
     const dataAttributeName = 'data-mention-name';
 
@@ -84,7 +96,7 @@ export const MentionExtension = ExtensionFactory.typed<
       inclusive: false,
       parseDOM: [
         {
-          tag: `${settings.mentionTag}[${dataAttributeId}]`,
+          tag: `${this.settings.mentionTag}[${dataAttributeId}]`,
           getAttrs: (node) => {
             if (!isElementDOMNode(node)) {
               return false;
@@ -106,14 +118,14 @@ export const MentionExtension = ExtensionFactory.typed<
           range,
           ...attributes
         } = node.attrs as Required<MentionExtensionAttributes>;
-        const matcher = settings.matchers.find((matcher) => matcher.name === name);
+        const matcher = this.settings.matchers.find((matcher) => matcher.name === name);
 
         const mentionClassName = matcher
           ? matcher.mentionClassName ?? DEFAULT_MATCHER.mentionClassName
           : DEFAULT_MATCHER.mentionClassName;
 
         return [
-          settings.mentionTag,
+          this.settings.mentionTag,
           {
             ...attributes,
             class: name ? `${mentionClassName} ${mentionClassName}-${name}` : mentionClassName,
@@ -124,14 +136,145 @@ export const MentionExtension = ExtensionFactory.typed<
         ];
       },
     };
-  },
+  }
 
-  createCommands(parameter) {
-    const { type, getState, extension } = parameter;
+  public createCommands = () => {
+    return {
+      /**
+       * Create a new mention
+       */
+      createMention: this.createMention({ shouldUpdate: false }),
 
-    const createMention = ({ shouldUpdate }: { shouldUpdate: boolean }) => (
-      config?: ProsemirrorAttributes,
-    ) => {
+      /**
+       * Update an existing mention.
+       */
+      updateMention: this.createMention({ shouldUpdate: true }),
+
+      /**
+       * Remove the mention(s) at the current selection or provided range.
+       */
+      removeMention: ({ range }: Partial<RangeParameter> = object()) => {
+        return convertCommand(removeMark({ type: this.type, expand: true, range }));
+      },
+    };
+  };
+
+  public createPasteRules = () => {
+    return this.settings.matchers.map((matcher) => {
+      const { startOfLine, char, supportedCharacters, name } = {
+        ...DEFAULT_MATCHER,
+        ...matcher,
+      };
+
+      const regexp = new RegExp(
+        `(${getRegexPrefix(startOfLine)}${escapeChar(char)}${regexToString(supportedCharacters)})`,
+        'g',
+      );
+
+      return markPasteRule({
+        regexp,
+        type: this.type,
+        getAttributes: (string) => ({
+          id: getMatchString(string.slice(char.length, string.length)),
+          label: getMatchString(string),
+          name,
+        }),
+      });
+    });
+  };
+
+  public createSuggestions = () => {
+    return this.settings.matchers.map<Suggestion<MentionExtensionSuggestCommand>>((matcher) => {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
+      const extension = this;
+
+      return {
+        ...DEFAULT_MATCHER,
+        ...matcher,
+
+        // The following properties are provided as getter so that the
+        // prosemirror-suggest plugin always references the latest version of
+        // the suggestion. This is not a good idea and should be fixed in a
+        // better way soon.
+        get noDecorations() {
+          return extension.properties.noDecorations;
+        },
+
+        get suggestTag() {
+          return extension.properties.suggestTag;
+        },
+
+        get onChange() {
+          return extension.properties.onChange;
+        },
+
+        get onExit() {
+          return extension.properties.onExit;
+        },
+
+        get keyBindings() {
+          return extension.properties.keyBindings;
+        },
+
+        get onCharacterEntry() {
+          return extension.properties.onCharacterEntry;
+        },
+
+        createCommand: ({ match, reason, setMarkRemoved }) => {
+          const { range, suggester } = match;
+          const { name } = suggester;
+          const create = this.store.getCommands().createMention;
+          const update = this.store.getCommands().updateMention;
+          const remove = this.store.getCommands().removeMention;
+
+          const isActive = isMarkActive({
+            from: range.from,
+            to: range.end,
+            type: this.type,
+            stateOrTransaction: this.store.getState(),
+          });
+
+          const fn = isActive ? update : create;
+          const isSplit = isSplitReason(reason);
+          const isInvalid = isInvalidSplitReason(reason);
+          const isRemoved = isRemovedReason(reason);
+
+          const removeCommand = () => {
+            setMarkRemoved();
+            try {
+              // This might fail when a deletion has taken place.
+              isInvalid ? remove({ range }) : noop();
+            } catch {
+              // This sometimes fails and it's best to ignore until more is
+              // known about the impact. Please create an issue if this blocks
+              // you in some way.
+            }
+          };
+
+          const createCommand = ({
+            replacementType = isSplit ? 'partial' : 'full',
+            id = match.queryText[replacementType],
+            label = match.matchText[replacementType],
+            appendText,
+            ...attributes
+          }: SuggestionCommandAttributes) => {
+            fn({ id, label, appendText, replacementType, name, range, ...attributes });
+          };
+
+          const command: MentionExtensionSuggestCommand =
+            isInvalid || isRemoved ? removeCommand : createCommand;
+
+          return command;
+        },
+      };
+    });
+  };
+
+  /**
+   * The factory method for mention commands to update and create new mentions.
+   */
+  private createMention({ shouldUpdate }: CreateMentionParameter) {
+    return (config: MentionExtensionAttributes) => {
       invariant(isValidMentionAttributes(config), {
         message: 'Invalid configuration attributes passed to the MentionExtension command.',
       });
@@ -140,32 +283,32 @@ export const MentionExtension = ExtensionFactory.typed<
       let name = attributes.name;
 
       if (!name) {
-        invariant(extension.settings.matchers.length < 2, {
+        invariant(this.settings.matchers.length < 2, {
           code: ErrorConstant.EXTENSION,
           message:
             'The MentionExtension command must specify a name since there are multiple matchers configured',
         });
 
-        name = extension.settings.matchers[0].name;
+        name = this.settings.matchers[0].name;
       }
 
-      const allowedNames = extension.settings.matchers.map(({ name }) => name);
+      const allowedNames = this.settings.matchers.map(({ name }) => name);
 
-      if (!allowedNames.includes(name)) {
-        throw new Error(
-          `The name '${name}' specified for this command is invalid. Please choose from: ${JSON.stringify(
-            allowedNames,
-          )}.`,
-        );
-      }
+      invariant(allowedNames.includes(name), {
+        code: ErrorConstant.EXTENSION,
+        message: `The name '${name}' specified for this command is invalid. Please choose from: ${JSON.stringify(
+          allowedNames,
+        )}.`,
+      });
 
-      const matcher = getMatcher(name, extension.settings.matchers);
+      const matcher = getMatcher(name, this.settings.matchers);
 
-      if (!matcher) {
-        throw new Error(`Mentions matcher not found for name ${name}.`);
-      }
+      invariant(matcher, {
+        code: ErrorConstant.EXTENSION,
+        message: `Mentions matcher not found for name ${name}.`,
+      });
 
-      const { from, to } = range ?? getState().selection;
+      const { from, to } = range ?? this.store.getState().selection;
       let startTransaction: TransactionTransformer | undefined;
 
       if (shouldUpdate) {
@@ -175,22 +318,22 @@ export const MentionExtension = ExtensionFactory.typed<
           let { oldFrom, oldTo } = { oldFrom: from, oldTo: range ? range.end : to };
           const $oldTo = state.doc.resolve(oldTo);
 
-          ({ from: oldFrom, to: oldTo } = getMarkRange($oldTo, type) || {
+          ({ from: oldFrom, to: oldTo } = getMarkRange($oldTo, this.type) || {
             from: oldFrom,
             to: oldTo,
           });
 
-          tr.removeMark(oldFrom, oldTo, type);
+          tr.removeMark(oldFrom, oldTo, this.type);
           tr.setMeta('addToHistory', false);
 
           // Remove mark at current position
           const $newTo = tr.selection.$from;
-          const { from: newFrom, to: newTo } = getMarkRange($newTo, type) || {
+          const { from: newFrom, to: newTo } = getMarkRange($newTo, this.type) || {
             from: $newTo.pos,
             to: $newTo.pos,
           };
 
-          tr.removeMark(newFrom, newTo, type);
+          tr.removeMark(newFrom, newTo, this.type);
 
           return tr.setMeta('addToHistory', false);
         };
@@ -198,7 +341,7 @@ export const MentionExtension = ExtensionFactory.typed<
 
       return convertCommand(
         replaceText({
-          type,
+          type: this.type,
           attrs: { ...attributes, name },
           appendText: getAppendText(appendText, matcher.appendText),
           range: range
@@ -209,126 +352,12 @@ export const MentionExtension = ExtensionFactory.typed<
         }),
       );
     };
+  }
+}
 
-    return {
-      /**
-       * The command for creating a mention.
-       */
-      createMention: createMention({ shouldUpdate: false }),
-      updateMention: createMention({ shouldUpdate: true }),
-      removeMention: ({ range }: Partial<RangeParameter> = object()) => {
-        return convertCommand(removeMark({ type, expand: true, range }));
-      },
-    };
-  },
-
-  createPasteRules(parameter) {
-    const { type, extension } = parameter;
-
-    return extension.settings.matchers.map((matcher) => {
-      const { startOfLine, char, supportedCharacters, name } = {
-        ...DEFAULT_MATCHER,
-        ...matcher,
-      };
-      const regexp = new RegExp(
-        `(${getRegexPrefix(startOfLine)}${escapeChar(char)}${regexToString(supportedCharacters)})`,
-        'g',
-      );
-
-      return markPasteRule({
-        regexp,
-        type,
-        getAttributes: (string) => ({
-          id: getMatchString(string.slice(char.length, string.length)),
-          label: getMatchString(string),
-          name,
-        }),
-      });
-    });
-  },
-
-  createSuggestions(parameter) {
-    const { getCommands: commands, type, getState, extension } = parameter;
-
-    return extension.settings.matchers.map<Suggestion<MentionExtensionSuggestCommand>>(
-      (matcher) => {
-        return {
-          ...DEFAULT_MATCHER,
-          ...matcher,
-
-          // The following properties are wrapped in getters so that they always
-          // use the latest version of the suggestion.
-          get noDecorations() {
-            return extension.properties.noDecorations;
-          },
-
-          get suggestTag() {
-            return extension.properties.suggestTag;
-          },
-
-          get onChange() {
-            return extension.properties.onChange;
-          },
-
-          get onExit() {
-            return extension.properties.onExit;
-          },
-
-          get keyBindings() {
-            return extension.properties.keyBindings;
-          },
-
-          get onCharacterEntry() {
-            return extension.properties.onCharacterEntry;
-          },
-
-          createCommand: ({ match, reason, setMarkRemoved }) => {
-            const { range, suggester } = match;
-            const { name } = suggester;
-            const create = commands().createMention;
-            const update = commands().updateMention;
-            const remove = commands().removeMention;
-            const isActive = isMarkActive({
-              from: range.from,
-              to: range.end,
-              type: type,
-
-              stateOrTransaction: getState(),
-            });
-
-            const fn = isActive ? update : create;
-            const isSplit = isSplitReason(reason);
-            const isInvalid = isInvalidSplitReason(reason);
-            const isRemoved = isRemovedReason(reason);
-
-            const removeCommand = () => {
-              setMarkRemoved();
-              try {
-                // This might fail when a deletion has taken place.
-                isInvalid ? remove({ range }) : noop();
-              } catch {
-                // This sometimes fails and it's best to ignore until more is
-                // known about the impact.
-              }
-            };
-
-            const createCommand = ({
-              replacementType = isSplit ? 'partial' : 'full',
-              id = match.queryText[replacementType],
-              label = match.matchText[replacementType],
-              appendText,
-              ...attributes
-            }: SuggestionCommandAttributes) => {
-              fn({ id, label, appendText, replacementType, name, range, ...attributes });
-            };
-
-            const command: MentionExtensionSuggestCommand =
-              isInvalid || isRemoved ? removeCommand : createCommand;
-
-            return command;
-          },
-        };
-      },
-    );
-  },
-});
+interface CreateMentionParameter {
+  /**
+   * Whether the mention command should handle updates.
+   */
+  shouldUpdate: boolean;
+}

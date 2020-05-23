@@ -5,8 +5,8 @@ import { fromHTML, toHTML } from '@remirror/core';
 import { SuggestCommandParameter } from '@remirror/pm/suggest';
 import { createBaseManager } from '@remirror/test-fixtures';
 
-import { MentionExtension, MentionExtensionSettings } from '..';
-import { MentionExtensionSuggestCommand } from '../mention-types';
+import { MentionExtension, MentionSettings } from '..';
+import { MentionExtensionSuggestCommand, MentionProperties } from '../mention-types';
 
 describe('schema', () => {
   const { schema } = createBaseManager({
@@ -44,15 +44,15 @@ describe('schema', () => {
 
   describe('extraAttributes', () => {
     const custom = 'test';
-    const { schema } = createBaseTestManager([
-      {
-        extension: new MentionExtension({
+    const { schema } = createBaseManager({
+      extensions: [
+        new MentionExtension({
           matchers: [],
           extraAttributes: ['data-custom'],
         }),
-        priority: 1,
-      },
-    ]);
+      ],
+      presets: [],
+    });
 
     const { doc, p, mention } = pmBuild(schema, {
       mention: { markType: 'mention', ['data-custom']: custom, ...attributes },
@@ -72,7 +72,7 @@ describe('schema', () => {
 });
 
 describe('constructor', () => {
-  it('is created with the correct options', () => {
+  it('is created with the correct settings', () => {
     const matcher = {
       char: '@',
       allowSpaces: false,
@@ -83,26 +83,27 @@ describe('constructor', () => {
       matchers: [matcher],
     });
 
-    expect(mentions.options.matchers).toEqual([matcher]);
+    expect(mentions.settings.matchers).toEqual([matcher]);
     expect(mentions.name).toEqual('mention');
   });
 
-  it('uses can be created with partial matchers', () => {
+  it('can be created with partial matchers', () => {
     const mentionOne = new MentionExtension({
       matchers: [{ char: '#', name: 'tag' }],
     });
 
-    expect(mentionOne.options.matchers).toEqual([{ char: '#', name: 'tag' }]);
+    expect(mentionOne.settings.matchers).toEqual([{ char: '#', name: 'tag' }]);
   });
 });
 
-const create = (parameters: MentionExtensionSettings) =>
+const create = (settings: MentionSettings, properties?: Partial<MentionProperties>) =>
   renderEditor({
-    attrMarks: [new MentionExtension(parameters)],
+    extensions: [new MentionExtension({ ...settings, properties })],
+    presets: [],
   });
 
 describe('plugin', () => {
-  const options: MentionExtensionSettings = {
+  const settings: MentionSettings = {
     matchers: [
       { char: '#', name: 'tag', mentionClassName: 'custom' },
       { char: '@', name: 'at', mentionClassName: 'custom' },
@@ -120,59 +121,38 @@ describe('plugin', () => {
   const id = 'mention';
   const label = `@${id}`;
 
-  let {
+  const {
     add,
     nodes: { doc, p },
-    attrMarks: { mention },
+    attributeMarks: { mention },
     view,
   } = create({
-    ...options,
+    ...settings,
     ...mocks,
   });
-  let mentionMark = mention({ id, label, name: 'at' });
-
-  beforeEach(() => {
-    ({
-      add,
-      nodes: { doc, p },
-      attrMarks: { mention },
-      view,
-    } = create({
-      ...options,
-      ...mocks,
-    }));
-    mentionMark = mention({ id, label, name: 'at' });
-  });
+  const mentionMark = mention({ id, label, name: 'at' });
 
   it('uses default noop callbacks', () => {
-    ({
-      add,
-      nodes: { doc, p },
-      attrMarks: { mention },
-      view,
-    } = create(options));
-
-    add(doc(p('<cursor>'))).insertText(`This ${label} `);
-
-    expect(view.state).toContainRemirrorDocument(p(`This ${label} `));
+    add(doc(p('<cursor>')))
+      .insertText(`This ${label} `)
+      .callback(({ state }) => {
+        expect(state).toContainRemirrorDocument(p(`This ${label} `));
+      });
   });
 
   it('should support onExit', () => {
     add(doc(p('<cursor>'))).insertText(`${label} `);
-
     expect(view.state).toContainRemirrorDocument(p(mentionMark(label), ' '));
   });
 
   it('should handle joined text separated by space', () => {
     add(doc(p('hello <cursor>friend'))).insertText(`${label} `);
-
     expect(view.state).toContainRemirrorDocument(p('hello ', mentionMark(label), ' friend'));
   });
 
   it('can split mentions', () => {
     const splitMention = mention({ id: '123', label: '@123', name: 'at' });
     add(doc(p(splitMention('@1<cursor>23')))).insertText(` `);
-
     expect(view.state).toContainRemirrorDocument(
       p(mention({ id: '1', label: '@1', name: 'at' })('@1'), ' 23'),
     );
@@ -201,7 +181,7 @@ describe('plugin', () => {
   it('supports deleting content', () => {
     add(doc(p('<cursor>')))
       .insertText(`@1`)
-      .dispatchCommand((state, dispatch) => {
+      .dispatchCommand(({ state, dispatch }) => {
         if (dispatch) {
           dispatch(state.tr.delete(0, state.selection.head));
         }
@@ -221,21 +201,18 @@ describe('plugin', () => {
     const atMark = mention({ id, label: labelFn('@'), name: 'at' });
 
     add(doc(p('<cursor>'))).insertText(`This ${labelFn('#')} `);
-
     expect(view.state).toContainRemirrorDocument(p('This ', hashMark(labelFn('#')), ' '));
 
     add(doc(p('<cursor>'))).insertText(`This ${labelFn('+')} `);
-
     expect(view.state).toContainRemirrorDocument(p('This ', plusMark(labelFn('+')), ' '));
 
     add(doc(p('<cursor>'))).insertText(`This ${labelFn('@')} `);
-
     expect(view.state).toContainRemirrorDocument(p('This ', atMark(labelFn('@')), ' '));
   });
 });
 
 describe('pasteRules', () => {
-  const options = {
+  const settings = {
     matchers: [
       { char: '#', name: 'tag' },
       { char: '@', name: 'at' },
@@ -243,32 +220,28 @@ describe('pasteRules', () => {
     ],
   };
 
-  it('supports pasting content', () => {
-    const {
-      p,
-      doc,
-      attrMarks: { mention },
-      add,
-    } = create(options);
+  const {
+    add,
+    nodes: { doc, p },
+    attributeMarks: { mention },
+  } = create(settings);
+
+  it('supports pasted content', () => {
     add(doc(p('<cursor>')))
       .paste(p('This is text @hello'))
-      .callback((content) => {
-        expect(content.state).toContainRemirrorDocument(
-          p('This is text ', mention({ id: '@hello', name: 'at', label: '@hello' })('@hello')),
-        );
+      .callback(({ state }) => {
+        const expectedMention = mention({ id: '@hello', name: 'at', label: '@hello' })('@hello');
+        const expected = p('This is text ', expectedMention);
+
+        expect(state).toContainRemirrorDocument(expected);
       });
   });
 
   it('supports pasting multiple matchers', () => {
-    const {
-      p,
-      doc,
-      attrMarks: { mention },
-      add,
-    } = create(options);
     const at = mention({ id: '@hello', name: 'at', label: '@hello' })('@hello');
     const plus = mention({ id: '+awesome', name: 'plus', label: '+awesome' })('+awesome');
     const tag = mention({ id: '#12', name: 'tag', label: '#12' })('#12');
+
     add(doc(p('<cursor>')))
       .paste(p('#12 +awesome @hello'))
       .callback((content) => {
@@ -278,37 +251,28 @@ describe('pasteRules', () => {
 });
 
 describe('commands', () => {
-  const options = {
+  const settings = {
     matchers: [
       { char: '#', name: 'tag' },
       { char: '@', name: 'at' },
       { char: '+', name: 'plus' },
     ],
   };
-  let {
+
+  const {
     nodes: { doc, p },
     view,
-    attrMarks: { mention },
-    actions,
+    attributeMarks: { mention },
+    commands,
     add,
-  } = create(options);
+  } = create(settings);
 
   const attributes = { id: 'test', label: '@test', name: 'at', appendText: '' };
-
-  beforeEach(() => {
-    ({
-      nodes: { doc, p },
-      view,
-      attrMarks: { mention },
-      actions,
-      add,
-    } = create(options));
-  });
 
   describe('createMention', () => {
     it('replaces text at the current position by default', () => {
       add(doc(p('This is ', '<cursor>')));
-      actions.createMention(attributes);
+      commands.createMention(attributes);
 
       expect(view.state).toContainRemirrorDocument(
         p('This is ', mention(attributes)(attributes.label)),
@@ -317,7 +281,7 @@ describe('commands', () => {
 
     it('replaces text at the specified position', () => {
       add(doc(p('This is ', '<cursor>')));
-      actions.createMention({ ...attributes, range: { from: 1, to: 1, end: 1 } });
+      commands.createMention({ ...attributes, range: { from: 1, to: 1, end: 1 } });
 
       expect(view.state).toContainRemirrorDocument(
         p(mention(attributes)(attributes.label), 'This is '),
@@ -327,29 +291,36 @@ describe('commands', () => {
     it('throws when invalid config passed into the command', () => {
       add(doc(p('This is ', '<cursor>')));
 
-      expect(() => actions.createMention()).toThrowErrorMatchingInlineSnapshot(
+      // @ts-expect-error
+      expect(() => commands.createMention()).toThrowErrorMatchingInlineSnapshot(
         `"Invalid configuration attributes passed to the MentionExtension command."`,
       );
-      expect(() => actions.createMention({})).toThrowErrorMatchingInlineSnapshot(
+
+      // @ts-expect-error
+      expect(() => commands.createMention({})).toThrowErrorMatchingInlineSnapshot(
         `"Invalid configuration attributes passed to the MentionExtension command."`,
       );
+
       expect(() =>
-        actions.createMention({ ...attributes, id: '' }),
+        commands.createMention({ ...attributes, id: '' }),
       ).toThrowErrorMatchingInlineSnapshot(
         `"Invalid configuration attributes passed to the MentionExtension command."`,
       );
+
       expect(() =>
-        actions.createMention({ ...attributes, label: '' }),
+        commands.createMention({ ...attributes, label: '' }),
       ).toThrowErrorMatchingInlineSnapshot(
         `"Invalid configuration attributes passed to the MentionExtension command."`,
       );
+
       expect(() =>
-        actions.createMention({ ...attributes, name: 'invalid' }),
+        commands.createMention({ ...attributes, name: 'invalid' }),
       ).toThrowErrorMatchingInlineSnapshot(
         `"The name 'invalid' specified for this command is invalid. Please choose from: [\\"tag\\",\\"at\\",\\"plus\\"]."`,
       );
+
       expect(() =>
-        actions.createMention({ ...attributes, name: undefined }),
+        commands.createMention({ ...attributes, name: undefined }),
       ).toThrowErrorMatchingInlineSnapshot(
         `"The MentionExtension command must specify a name since there are multiple matchers configured"`,
       );

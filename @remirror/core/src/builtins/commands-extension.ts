@@ -21,7 +21,7 @@ import {
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
 import { AnyPreset } from '../preset';
-import { CommandMethod, ExtensionCommandFunction, ExtensionCommandReturn } from '../types';
+import { CommandShape, ExtensionCommandFunction, ExtensionCommandReturn } from '../types';
 
 /**
  * Generate chained and unchained commands for making changes to the editor.
@@ -34,9 +34,6 @@ import { CommandMethod, ExtensionCommandFunction, ExtensionCommandReturn } from 
  * @builtin
  */
 export class CommandsExtension extends PlainExtension {
-  public static readonly defaultSettings = {};
-  public static readonly defaultProperties = {};
-
   public readonly name = 'commands' as const;
 
   public onCreate: CreateLifecycleMethod = (parameter) => {
@@ -98,7 +95,7 @@ export class CommandsExtension extends PlainExtension {
         const { setStoreKey } = parameter;
 
         for (const [commandName, { command, isEnabled }] of entries(unchained)) {
-          commands[commandName] = command as CommandMethod;
+          commands[commandName] = command as CommandShape;
           commands[commandName].isEnabled = isEnabled;
         }
 
@@ -278,7 +275,10 @@ declare global {
       chain: ChainedFromExtensions<ExtensionUnion | GetExtensionUnion<PresetUnion>>;
     }
 
-    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
+    interface ExtensionCreatorMethods<
+      Settings extends Shape = object,
+      Properties extends Shape = object
+    > {
       /**
        * Create and register commands for that can be called within the editor.
        *
@@ -332,7 +332,9 @@ declare global {
        * class.
        * @private
        */
-      [`~C`]: this['createCommands'] extends AnyFunction ? ReturnType<this['createCommands']> : {};
+      [`~C`]: this['createCommands'] extends AnyFunction
+        ? ReturnType<this['createCommands']>
+        : object;
     }
 
     interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {

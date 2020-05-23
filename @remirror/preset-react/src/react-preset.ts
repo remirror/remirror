@@ -9,7 +9,6 @@ export interface ReactPresetSettings {}
 export interface ReactPresetProperties extends ReactSSRProperties {}
 
 export class ReactPreset extends Preset<ReactPresetSettings, ReactPresetProperties> {
-  public static defaultSettings = {};
   public static defaultProperties: Required<ReactPresetProperties> = {
     ...ReactSSRExtension.defaultProperties,
   };

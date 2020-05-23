@@ -167,7 +167,11 @@ export interface ExtensionHelperReturn {
   [helper: string]: AnyFunction;
 }
 
-export interface CommandMethod<Parameter extends any[] = []> {
+/**
+ * The type of a non chainable command. It is a function with an `isEnabled`
+ * method to check whether the command can be run.
+ */
+export interface CommandShape<Parameter extends any[] = []> {
   /**
    * Returns true when the command can be run and false when it can't be run. It
    * basically runs the command without dispatching it to see whether it returns

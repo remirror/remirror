@@ -6,9 +6,6 @@ import { ChainedFromExtensions, PlainExtension } from '..';
 import { CommandsFromExtensions } from '../extension-types';
 
 class FirstExtension extends PlainExtension {
-  public static readonly defaultSettings = {};
-  public static readonly defaultProperties = {};
-
   public readonly name = 'first' as const;
 
   public createCommands = () => {
@@ -25,9 +22,6 @@ class FirstExtension extends PlainExtension {
 }
 
 class SecondExtension extends PlainExtension<{ option: boolean }> {
-  public static readonly defaultSettings = {};
-  public static readonly defaultProperties = {};
-
   public readonly name = 'second' as const;
 
   public createCommands = () => {
@@ -40,9 +34,6 @@ class SecondExtension extends PlainExtension<{ option: boolean }> {
 }
 
 class ThirdExtension extends PlainExtension {
-  public static readonly defaultSettings = {};
-  public static readonly defaultProperties = {};
-
   public readonly name = 'third' as const;
 
   public createCommands = () => {

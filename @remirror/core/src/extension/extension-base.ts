@@ -21,6 +21,7 @@ import {
   AttributesParameter,
   EditorSchema,
   EditorView,
+  EmptyShape,
   FlipPartialAndRequired,
   IfNoRequiredProperties,
   MarkExtensionSpec,
@@ -54,14 +55,13 @@ import {
  *
  * - How the editor displays certain content, i.e. **bold**, _italic_,
  *   **underline**.
- * - Which commands should be made available e.g. `commands.toggleBold()` to make
- *   selected text bold.
- * - Check if a command is currently enabled (it would have an impact if run) e.g.
+ * - Which commands should be made available e.g. `commands.toggleBold()` to
+ *   toggle the weight of the selected text.
+ * - Check if a command is currently enabled (i.e a successful dry run) e.g.
  *   `commands.toggleBold.isEnabled()`.
- * - Register Prosemirror `Plugin`s, `keymap`s, `InputRule`s `PasteRule`s and custom
- *   `nodeViews` which affect the behavior of the editor.
- *
- *
+ * - Register Prosemirror `Plugin`s, `keymap`s, `InputRule`s `PasteRule`s,
+ *   `Suggestions`, and custom `nodeViews` which affect the behavior of the
+ *   editor.
  *
  * There are three types of `Extension`.
  *
@@ -69,9 +69,11 @@ import {
  *   {@link NodeExtension}
  * - `MarkExtension` - For creating Prosemirror marks in the editor. See
  *   {@link MarkExtension}
- * - `Extension` - For behavior which doesn't need to be displayed in the dom.
+ * - `PlainExtension` - For behavior which doesn't map to a `ProsemirrorNode` or
+ *   `Mark` and as a result doesn't directly affect the Prosemirror `Schema` or
+ *   content. See {@link PlainExtension}.
  *
- * The extension is an abstract class that should not be used directly but
+ * This `Extension` is an abstract class that should not be used directly but
  * rather extended to add the intended functionality.
  *
  * ```ts
@@ -102,8 +104,17 @@ import {
  * }
  * ```
  */
-abstract class Extension<Settings extends Shape = {}, Properties extends Shape = {}>
+abstract class Extension<Settings extends Shape = EmptyShape, Properties extends Shape = EmptyShape>
   implements PropertiesShape<Properties> {
+  /**
+   * The default settings for this extension.
+   */
+  public static readonly defaultSettings = {};
+
+  /**
+   * The default properties for this extension.
+   */
+  public static readonly defaultProperties = {};
   /**
    * The unique name of this extension.
    *
@@ -254,7 +265,7 @@ abstract class Extension<Settings extends Shape = {}, Properties extends Shape =
  * Declaration merging since the constructor property can't be defined on the
  * actual class.
  */
-interface Extension<Settings extends Shape = {}, Properties extends Shape = {}>
+interface Extension<Settings extends Shape = EmptyShape, Properties extends Shape = EmptyShape>
   extends ExtensionLifecycleMethods,
     Remirror.ExtensionCreatorMethods<Settings, Properties>,
     Remirror.BaseExtension {
@@ -357,8 +368,8 @@ interface ExtensionLifecycleMethods {
 }
 
 export abstract class PlainExtension<
-  Settings extends Shape = {},
-  Properties extends Shape = {}
+  Settings extends Shape = object,
+  Properties extends Shape = object
 > extends Extension<Settings, Properties> {
   static get [REMIRROR_IDENTIFIER_KEY]() {
     return RemirrorIdentifier.PlainExtensionConstructor as const;
@@ -380,8 +391,8 @@ export abstract class PlainExtension<
  * provide additional information about them.
  */
 export abstract class MarkExtension<
-  Settings extends Shape = {},
-  Properties extends Shape = {}
+  Settings extends Shape = object,
+  Properties extends Shape = object
 > extends Extension<Settings, Properties> {
   static get [REMIRROR_IDENTIFIER_KEY]() {
     return RemirrorIdentifier.MarkExtensionConstructor as const;
@@ -452,8 +463,8 @@ export abstract class MarkExtension<
  * For more information see {@link https://prosemirror.net/docs/ref/#model.Node}
  */
 export abstract class NodeExtension<
-  Settings extends Shape = {},
-  Properties extends Shape = {}
+  Settings extends Shape = object,
+  Properties extends Shape = object
 > extends Extension<Settings, Properties> {
   static get [REMIRROR_IDENTIFIER_KEY]() {
     return RemirrorIdentifier.NodeExtensionConstructor as const;
@@ -716,7 +727,7 @@ export function isMarkExtension(value: unknown): value is AnyMarkExtension {
  * This is used to allow for the settings object to also define some initial
  * properties when being constructed.
  */
-export type WithProperties<Type extends Shape, Properties extends Shape = {}> = And<
+export type WithProperties<Type extends Shape, Properties extends Shape = object> = And<
   Type,
   Partial<PartialProperties<Properties>>
 >;
@@ -734,7 +745,7 @@ export type ExtensionConstructorParameter<
   [WithProperties<Settings & BaseExtensionSettings, Properties>]
 >;
 
-interface ExtensionConstructor<Settings extends Shape = {}, Properties extends Shape = {}>
+interface ExtensionConstructor<Settings extends Shape = object, Properties extends Shape = object>
   extends Function {
   new (...parameters: ExtensionConstructorParameter<Settings, Properties>): Extension<
     Settings,
@@ -949,7 +960,7 @@ declare global {
      */
     export interface ExtensionCreatorMethods<
       Settings extends Shape,
-      Properties extends Shape = {}
+      Properties extends Shape = object
     > {}
   }
 }

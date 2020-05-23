@@ -14,8 +14,8 @@ import {
   MarkExtensionSpec,
   NodeExtensionSpec,
   object,
-  PlainObject,
   ProsemirrorNode,
+  Shape,
 } from '@remirror/core';
 
 import { gatherToDOM, mapProps } from './renderer-utils';
@@ -40,7 +40,7 @@ export class ReactSerializer<ExtensionUnion extends AnyExtension, PresetUnion ex
     }
 
     const Component = structure[0];
-    const props: PlainObject = object();
+    const props: Shape = object();
     const attributes = structure[1];
     const children: ReactNode[] = [];
 

@@ -1,14 +1,11 @@
 import {
   AnyExtension,
-  AnyExtensionConstructor,
   AnyMarkExtension,
   AnyNodeExtension,
-  EditorManager,
   MarkExtension,
   NodeExtension,
   NodeExtensionSpec,
   PlainExtension,
-  RemirrorIdentifier,
 } from '../../..';
 
 const anyExtensionTester = <ExtensionUnion extends AnyExtension>(extension: ExtensionUnion) => {};
@@ -22,9 +19,6 @@ const anyMarkExtensionTester = <ExtensionUnion extends AnyMarkExtension>(
 // Extension without settings.
 
 class ExtensionWithoutSettings extends PlainExtension {
-  public static readonly defaultSettings = {};
-  public static readonly defaultProperties = {};
-
   public readonly name = 'withoutSettings' as const;
 }
 const extensionWithoutSettings = new ExtensionWithoutSettings();
@@ -38,9 +32,6 @@ anyExtensionTester(extensionWithoutSettings);
 // Extension with settings
 
 class ExtensionWithSettings extends PlainExtension<{ oops: boolean }> {
-  public static readonly defaultSettings = {};
-  public static readonly defaultProperties = {};
-
   public readonly name = 'withSettings' as const;
 }
 
@@ -88,10 +79,7 @@ class MarkExtensionWithProperties extends MarkExtension<{ awesome?: string }, { 
   }
 }
 
-class InvalidPropertiesExtension extends PlainExtension<{}, { oops: boolean }> {
-  public static readonly defaultSettings = {};
-  public static readonly defaultProperties = {};
-
+class InvalidPropertiesExtension extends PlainExtension<object, { oops: boolean }> {
   public readonly name = 'withProperties' as const;
 }
 
@@ -119,5 +107,3 @@ anyExtensionTester(markExtensionWithProperties);
 anyMarkExtensionTester(markExtensionWithProperties);
 // @ts-expect-error
 anyNodeExtensionTester(markExtensionWithProperties);
-
-const a: RemirrorIdentifier.NodeExtension = anyMarkExtensionsSupportsProperties['~~remirror~~'];

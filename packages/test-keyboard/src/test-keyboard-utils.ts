@@ -1,5 +1,5 @@
 import { omit } from '@remirror/core-helpers';
-import { PlainObject } from '@remirror/core-types';
+import { Shape } from '@remirror/core-types';
 
 import { KeyboardEventName, ModifierInformation } from './test-keyboard-types';
 import { SupportedCharacters, usKeyboardLayout } from './us-keyboard-layout';
@@ -10,10 +10,8 @@ import { SupportedCharacters, usKeyboardLayout } from './us-keyboard-layout';
  * @param type
  * @param options
  */
-export const createKeyboardEvent = (
-  type: KeyboardEventName,
-  options: KeyboardEventInit & PlainObject,
-) => new KeyboardEvent(type, { ...options, bubbles: true });
+export const createKeyboardEvent = (type: KeyboardEventName, options: KeyboardEventInit & Shape) =>
+  new KeyboardEvent(type, { ...options, bubbles: true });
 
 interface GetModifierInformationParameter {
   /**

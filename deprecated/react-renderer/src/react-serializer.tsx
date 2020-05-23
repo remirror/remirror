@@ -13,8 +13,8 @@ import {
   MarkExtensionSpec,
   NodeExtensionSpec,
   object,
-  PlainObject,
   ProsemirrorNode,
+  Shape,
 } from '@remirror/core';
 
 import { gatherToDOM, mapProps } from './renderer-utils';
@@ -29,7 +29,7 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
   public nodes: Record<string, NodeToDOM>;
   public marks: Record<string, MarkToDOM>;
   private readonly components: Record<string, ComponentType<any>>;
-  private readonly options: Record<string, PlainObject>;
+  private readonly options: Record<string, Shape>;
 
   constructor(
     nodes: Record<string, NodeToDOM>,
@@ -126,7 +126,7 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
     }
 
     const Component = structure[0];
-    const props: PlainObject = object();
+    const props: Shape = object();
     const attributes = structure[1];
     const children: ReactNode[] = [];
     let currentIndex = 1;

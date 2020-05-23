@@ -22,9 +22,6 @@ import { InitializeLifecycleMethod, PlainExtension } from '../extension';
  * @builtin
  */
 export class KeymapExtension extends PlainExtension {
-  public static readonly defaultSettings = {};
-  public static readonly defaultProperties = {};
-
   public readonly name = 'keymap' as const;
   public readonly defaultPriority = ExtensionPriority.High as const;
 
@@ -90,7 +87,10 @@ declare global {
       keymap?: boolean;
     }
 
-    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
+    interface ExtensionCreatorMethods<
+      Settings extends Shape = object,
+      Properties extends Shape = object
+    > {
       /**
        * Add keymap bindings for this extension.
        *

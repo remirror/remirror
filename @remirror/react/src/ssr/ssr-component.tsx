@@ -4,8 +4,8 @@ import {
   AnyEditorManager,
   EditorStateParameter,
   GetExtensionUnion,
-  PlainObject,
   SchemaFromExtensionUnion,
+  Shape,
 } from '@remirror/core';
 
 import { mapProps, ReactSerializer } from '../renderers';
@@ -15,7 +15,7 @@ export interface RemirrorSSRProps<ManagerType extends AnyEditorManager = any>
   /**
    * The attributes to pass into the root div element.
    */
-  attributes: PlainObject;
+  attributes: Shape;
   /**
    * Whether or not the editor is in an editable state
    */

@@ -1,8 +1,10 @@
 import {
   AnyExtension,
-  createTypedExtension,
   EditorSchema,
   EditorView,
+  EmptyShape,
+  PlainExtension,
+  PluginKey,
   randomInt,
   throttle,
 } from '@remirror/core';
@@ -11,9 +13,9 @@ import { Plugin } from '@remirror/pm/state';
 import { defaultEffect, PARTICLE_NUM_RANGE, VIBRANT_COLORS } from './epic-mode-effects';
 import { EpicModeProperties, Particle } from './epic-mode-types';
 
-export const EpicModeExtension = createTypedExtension<{}, EpicModeProperties>().plain({
-  name: 'epicMode',
-  defaultProperties: {
+export class EpicModeExtension extends PlainExtension<EmptyShape, EpicModeProperties> {
+  //
+  public static readonly defaultProperties: Required<EpicModeProperties> = {
     particleEffect: defaultEffect,
     getCanvasContainer: () => document.body,
     colors: VIBRANT_COLORS,
@@ -21,10 +23,12 @@ export const EpicModeExtension = createTypedExtension<{}, EpicModeProperties>().
     active: true,
     shakeTime: 0.3,
     shakeIntensity: 5,
-  },
-  createPlugin(parameter) {
-    const { extension, key } = parameter;
-    const pluginState = new EpicModePluginState(extension);
+  };
+
+  public readonly name = 'epicMode' as const;
+
+  public createPlugin = (key: PluginKey): Plugin => {
+    const pluginState = new EpicModePluginState(this);
 
     return new Plugin<EpicModePluginState, EditorSchema>({
       key,
@@ -54,8 +58,8 @@ export const EpicModeExtension = createTypedExtension<{}, EpicModeProperties>().
         };
       },
     });
-  },
-});
+  };
+}
 
 function getRGBComponents(node: Element) {
   const color = getComputedStyle(node).color;
@@ -81,7 +85,7 @@ export class EpicModePluginState {
   }
 
   /* eslint-disable @typescript-eslint/explicit-member-accessibility */
-  readonly #extension: AnyExtension<{}, EpicModeProperties>;
+  readonly #extension: AnyExtension<Record<never, never>, EpicModeProperties>;
   #container!: HTMLElement;
   #shakeTime = 0;
   #shakeTimeMax = 0;
@@ -91,7 +95,7 @@ export class EpicModePluginState {
   #view!: EditorView;
   /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
-  constructor(extension: AnyExtension<{}, EpicModeProperties>) {
+  constructor(extension: EpicModeExtension) {
     this.#extension = extension;
 
     // Throttle methods

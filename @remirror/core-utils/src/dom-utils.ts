@@ -19,7 +19,6 @@ import {
   MarkTypeParameter,
   NodeMatch,
   ObjectNode,
-  PlainObject,
   PluginKey,
   PositionParameter,
   ProsemirrorNode,
@@ -729,9 +728,7 @@ export const isDocNode = (node: ProsemirrorNode | null | undefined, schema?: Edi
  * @public
  */
 export const isObjectNode = (value: unknown): value is ObjectNode =>
-  isObject(value) &&
-  (value as PlainObject).type === 'doc' &&
-  Array.isArray((value as PlainObject).content);
+  isObject(value) && value.type === 'doc' && Array.isArray(value.content);
 
 export interface CreateDocumentNodeParameter
   extends SchemaParameter,

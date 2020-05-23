@@ -1,20 +1,20 @@
 import { collab, getVersion, receiveTransaction, sendableSteps } from 'prosemirror-collab';
 
 import {
+  CommandFunction,
   debounce,
+  DefaultExtensionSettings,
   EditorSchema,
   EditorState,
-  PlainExtension,
   invariant,
   isArray,
   isNumber,
-  PlainObject,
+  PlainExtension,
   ProsemirrorAttributes,
+  Shape,
   Transaction,
-  uniqueId,
-  DefaultExtensionSettings,
-  CommandFunction,
   TransactionLifecycleMethod,
+  uniqueId,
 } from '@remirror/core';
 import { Step } from '@remirror/pm/transform';
 
@@ -115,7 +115,7 @@ export interface Sendable {
 }
 
 export interface JSONSendable extends Omit<Sendable, 'steps' | 'origins'> {
-  steps: PlainObject[];
+  steps: Shape[];
 }
 
 export interface OnSendableReceivedParameter {

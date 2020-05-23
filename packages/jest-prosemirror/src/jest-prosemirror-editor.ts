@@ -8,12 +8,12 @@ import {
   EditorState,
   EditorStateParameter,
   InputRule,
-  PlainObject,
   Plugin,
   PosParameter,
   ProsemirrorCommandFunction,
   ProsemirrorNode,
   SelectionParameter,
+  Shape,
   TextParameter,
 } from '@remirror/core-types';
 import { findElementAtPosition, isElementDOMNode, isTextDOMNode } from '@remirror/core-utils';
@@ -305,7 +305,7 @@ export interface FireParameter {
   /**
    * Options passed into the event
    */
-  options?: PlainObject;
+  options?: Shape;
 
   /**
    * Override the default position to use
@@ -327,7 +327,7 @@ export function fireEventAtPosition<Schema extends EditorSchema = EditorSchema>(
   const {
     view,
     event,
-    options = object<PlainObject>(),
+    options = object<Shape>(),
     position = view.state.selection.anchor,
   } = parameter;
   const element = findElementAtPosition(position, view);

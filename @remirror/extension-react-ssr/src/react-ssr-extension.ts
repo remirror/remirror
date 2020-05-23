@@ -8,7 +8,6 @@ import {
   isArray,
   object,
   PlainExtension,
-  PlainObject,
   Shape,
 } from '@remirror/core';
 import { getElementProps, isReactDOMElement, isReactFragment } from '@remirror/react-utils';
@@ -32,8 +31,7 @@ import { getElementProps, isReactDOMElement, isReactFragment } from '@remirror/r
  * The transformations can also serve as a guideline when creating your own
  * SSRTransforms. However in most cases the defaults should be sufficient.
  */
-export class ReactSSRExtension extends PlainExtension<{}, ReactSSRProperties> {
-  public static readonly defaultSettings = {};
+export class ReactSSRExtension extends PlainExtension<object, ReactSSRProperties> {
   public static readonly defaultProperties: Required<ReactSSRProperties> = {
     transformers: [injectBrIntoEmptyParagraphs],
   };
@@ -136,7 +134,7 @@ function cloneSSRElement(
   element: JSX.Element,
   transformChildElements: (
     children: JSX.Element | JSX.Element[],
-    childrenProps: PlainObject,
+    childrenProps: Shape,
   ) => JSX.Element | JSX.Element[],
 ) {
   if (!isReactFragment(element)) {
@@ -221,7 +219,10 @@ declare global {
       components: Record<string, ComponentType<any>>;
     }
 
-    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
+    interface ExtensionCreatorMethods<
+      Settings extends Shape = object,
+      Properties extends Shape = object
+    > {
       /**
        * A method for transforming the original JSX element received by the
        * extension. This is typically for usage in server side rendered

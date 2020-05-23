@@ -1,5 +1,3 @@
-import { PlainObject } from '@remirror/core-types';
-
 import {
   capitalize,
   clone,
@@ -136,7 +134,6 @@ describe('predicates', () => {
   });
 
   it('isFunction', () => {
-    // eslint-disable-next-line unicorn/consistent-function-scoping
     const passValue = () => {};
     const failValue = '() => {}';
 
@@ -187,12 +184,14 @@ describe('predicates', () => {
   });
 
   it('isPrimitive', () => {
+    const noValue = undefined;
+
     expect(isPrimitive(1)).toBeTrue();
     expect(isPrimitive('string')).toBeTrue();
     expect(isPrimitive(10000000000000n)).toBeTrue();
     expect(isPrimitive(Symbol(''))).toBeTrue();
     expect(isPrimitive(null)).toBeTrue();
-    expect(isPrimitive(undefined)).toBeTrue();
+    expect(isPrimitive(noValue)).toBeTrue();
     expect(isPrimitive(false)).toBeTrue();
     expect(isPrimitive([])).toBeFalse();
     expect(isPrimitive({})).toBeFalse();
@@ -336,16 +335,16 @@ test('get', () => {
   const obj = { a: 'a', b: 'b', nested: [{ awesome: true }] };
 
   expect(get('', obj)).toBe(obj);
-  expect(get('a', 1)).toBe(undefined);
+  expect(get('a', 1)).toBeUndefined();
   expect(get('a', obj)).toBe('a');
   expect(get('nested.0.awesome', obj)).toBe(true);
-  expect(get('nested.0.fake', obj)).toBe(undefined);
+  expect(get('nested.0.fake', obj)).toBeUndefined();
 
   expect(get([], obj)).toBe(obj);
-  expect(get(['a'], 1)).toBe(undefined);
+  expect(get(['a'], 1)).toBeUndefined();
   expect(get(['a'], obj)).toBe('a');
   expect(get(['nested', 0, 'awesome'], obj)).toBe(true);
-  expect(get(['nested', 0, 'fake'], obj)).toBe(undefined);
+  expect(get(['nested', 0, 'fake'], obj)).toBeUndefined();
 
   expect(get(['nested', 0, 'fake'], obj, 'fallback')).toBe('fallback');
 });
@@ -448,7 +447,7 @@ test('hasOwnProperty', () => {
   expect(hasOwnProperty({ a: 1 }, 'b')).toBeFalse();
   expect(hasOwnProperty({ a: 1, hasOwnProperty: () => true }, 'b')).toBeFalse();
 
-  const noProto = object<PlainObject>();
+  const noProto = object();
   noProto.a = 1;
 
   expect(hasOwnProperty(noProto, 'a')).toBeTrue();

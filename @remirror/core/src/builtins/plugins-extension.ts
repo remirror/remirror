@@ -27,9 +27,6 @@ import { GetNameUnion } from '../types';
  * @builtin
  */
 export class PluginsExtension extends PlainExtension {
-  public static readonly defaultSettings = {};
-  public static readonly defaultProperties = {};
-
   public readonly name = 'plugins' as const;
   public readonly defaultPriority = ExtensionPriority.Medium as const;
 
@@ -153,7 +150,10 @@ declare global {
       plugins?: boolean;
     }
 
-    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
+    interface ExtensionCreatorMethods<
+      Settings extends Shape = object,
+      Properties extends Shape = object
+    > {
       /**
        * Register a prosemirror plugin for the extension.
        *

@@ -15,13 +15,13 @@ import {
   GetExtensionUnion,
   GetSchema,
   ObjectNode,
-  PlainObject,
   Position,
   PositionParameter,
   ProsemirrorNode,
   RemirrorContentType,
   RenderEnvironment,
   SchemaFromExtensionUnion,
+  Shape,
   StringHandlerParameter,
   TextParameter,
   Transaction,
@@ -273,14 +273,14 @@ export type PositionerProps = IsActiveParameter & Position;
 
 export interface GetRootPropsConfig<RefKey extends string = 'ref'>
   extends RefParameter<RefKey>,
-    PlainObject {}
+    Shape {}
 
 export type RefKeyRootProps<RefKey extends string = 'ref'> = {
   [P in Exclude<RefKey, 'key'>]: Ref<any>;
 } & {
   key: string;
   children: ReactNode;
-} & PlainObject;
+} & Shape;
 
 export type GetPositionerReturn<RefKey extends string = 'ref'> = { [P in RefKey]: Ref<any> } &
   PositionerProps;

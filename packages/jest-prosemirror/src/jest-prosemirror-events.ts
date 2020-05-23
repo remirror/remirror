@@ -1,4 +1,4 @@
-import { PlainObject } from '@remirror/core-types';
+import { Shape } from '@remirror/core-types';
 
 // Taken from dom-testing-library
 
@@ -356,10 +356,7 @@ interface EventProperties {
 type EventMap = Record<EventType, EventProperties>;
 const eventMap: EventMap = rawEventMap as EventMap;
 
-export const createEvents = <GEvent extends Event>(
-  event: EventType,
-  options: PlainObject,
-): GEvent[] => {
+export const createEvents = <GEvent extends Event>(event: EventType, options: Shape): GEvent[] => {
   const { Constructor, defaultProperties } =
     event in eventMap
       ? eventMap[event]
@@ -368,7 +365,7 @@ export const createEvents = <GEvent extends Event>(
           defaultProperties: { bubbles: true, cancelable: true },
         };
   let eventName = event.toLowerCase();
-  const properties: PlainObject = { ...defaultProperties, ...options };
+  const properties: Shape = { ...defaultProperties, ...options };
   type GEventConstructor = new (type: string, eventInitDict?: EventInit) => GEvent;
 
   if (event === 'doubleClick') {

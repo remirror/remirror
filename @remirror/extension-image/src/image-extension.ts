@@ -1,11 +1,13 @@
 import {
   bool,
   Cast,
-  createTypedExtension,
+  CommandFunction,
   CSS_ROTATE_PATTERN,
   EMPTY_CSS_VALUE,
   isElementDOMNode,
+  NodeExtension,
   NodeExtensionSpec,
+  PluginKey,
   ProsemirrorAttributes,
 } from '@remirror/core';
 import { ResolvedPos } from '@remirror/pm/model';
@@ -14,11 +16,14 @@ import { Plugin } from '@remirror/pm/state';
 /**
  * The image extension for placing images into your editor.
  *
- * TODO integrate https://glitch.com/edit/#!/pet-figcaption?path=index.js%3A27%3A1
+ * TODO ->
+ * - Captions https://glitch.com/edit/#!/pet-figcaption?path=index.js%3A27%3A1 into a preset
+ * - Resizable https://glitch.com/edit/#!/toothsome-shoemaker?path=index.js%3A1%3A0
  */
-export const ImageExtension = createTypedExtension().node({
-  name: 'image',
-  createNodeSpec(): NodeExtensionSpec {
+export class ImageExtension extends NodeExtension {
+  public readonly name = 'image' as const;
+
+  public createNodeSpec(): NodeExtensionSpec {
     return {
       inline: true,
       attrs: {
@@ -43,19 +48,16 @@ export const ImageExtension = createTypedExtension().node({
         return ['img', node.attrs];
       },
     };
-  },
+  }
 
-  createCommands(parameter) {
-    const { type } = parameter;
-
+  public createCommands = () => {
     return {
-      insertImage: (attributes: ProsemirrorAttributes<ImageExtensionAttributes>) => ({
-        state,
-        dispatch,
-      }) => {
+      insertImage: (
+        attributes: ProsemirrorAttributes<ImageExtensionAttributes>,
+      ): CommandFunction => ({ state, dispatch }) => {
         const { selection } = state;
         const position = hasCursor(selection) ? selection.$cursor.pos : selection.$to.pos;
-        const node = type.create(attributes);
+        const node = this.type.create(attributes);
         const transaction = state.tr.insert(position, node);
 
         if (dispatch) {
@@ -65,10 +67,11 @@ export const ImageExtension = createTypedExtension().node({
         return true;
       },
     };
-  },
+  };
 
-  createPlugin() {
+  public createPlugin = (key: PluginKey) => {
     return new Plugin({
+      key,
       props: {
         handleDOMEvents: {
           drop(view, e) {
@@ -113,8 +116,8 @@ export const ImageExtension = createTypedExtension().node({
         },
       },
     });
-  },
-});
+  };
+}
 
 export interface ImageExtensionAttributes {
   align?: 'center' | 'end' | 'justify' | 'left' | 'match-parent' | 'right' | 'start';
