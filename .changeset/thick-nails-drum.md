@@ -1,7 +1,8 @@
-# @remirror/react-node-view
+---
+'@remirror/react-node-view': major
+---
 
-This package is **deprecated** and it's functionality is included by default with the
-`@remirror/react` package.
+This package is **deprecated** and it's functionality is included by default with the `@remirror/react` package.
 
 It is now accessible with the following installation.
 
