@@ -1,0 +1,44 @@
+{
+  "name": "@remirror/preset-table",
+  "version": "0.0.0",
+  "description": "A table a day keeps the doctor away. Remirror and play keeps the bad times at bay.",
+  "keywords": [
+    "remirror",
+    "preset",
+    "react",
+    "tables",
+    "prosemirror",
+    "table editing"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/preset-table",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/preset-table",
+  "license": "MIT",
+  "contributors": [
+    "Ocavue <ocavue@gmail.com>",
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/preset-table.cjs.js",
+  "module": "dist/preset-table.esm.js",
+  "types": "dist/preset-table.cjs.d.ts",
+  "files": [
+    "internal",
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7",
+    "@remirror/core": "^0.11.0"
+  },
+  "devDependencies": {
+    "@remirror/pm": "^0.0.0"
+  },
+  "peerDependencies": {
+    "@remirror/pm": "^0.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "120 KB"
+  }
+}
