@@ -10,8 +10,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "meta": {
-    "sizeLimit": "90 KB"
   }
 }
