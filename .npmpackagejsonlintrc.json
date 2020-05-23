@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json.schemastore.org/npmpackagejsonlintrc",
+
+  "rules": {
+    "require-version": "error",
+    "valid-values-license": ["error", ["MIT"]],
+    "require-contributors": "error",
+    "prefer-caret-version-dependencies": "error",
+    "prefer-caret-version-devDependencies": "error",
+    "no-archive-dependencies": "error",
+    "no-file-dependencies": "error",
+    "no-git-dependencies": "error",
+    "require-description": "error",
+    "description-format": [
+      "error",
+      {
+        "requireCapitalFirstLetter": true,
+        "requireEndingPeriod": true
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "patterns": ["deprecated/*/package.json"],
+      "rules": {
+        "require-license": "error",
+        "require-homepage": "error",
+        "valid-values-publishConfig": ["error", [{ "access": "public" }]]
+      }
+    },
+    {
+      "patterns": ["@remirror/*/package.json"],
+      "rules": {
+        "valid-values-name-scope": ["error", ["@remirror"]]
+      }
+    },
+    {
+      "patterns": ["{@remirror,packages}/*/package.json"],
+      "rules": {
+        "require-files": "error",
+        "require-main": "error",
+        "require-funding": "error",
+        "require-homepage": "error",
+        "require-types": "error",
+        "require-repository": "error",
+        "valid-values-name-scope": ["error", ["@remirror"]],
+        "valid-values-publishConfig": ["error", [{ "access": "public" }]]
+      }
+    }
+  ]
+}
