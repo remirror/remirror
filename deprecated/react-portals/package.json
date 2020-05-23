@@ -1,48 +1,20 @@
 {
   "name": "@remirror/react-portals",
   "version": "0.7.4",
-  "description": "Enables using react portals to render prosemirror nodes",
+  "description": "DEPRECATED - Enables using react portals to render prosemirror nodes.",
   "keywords": [
     "prosemirror",
     "react",
     "ssr",
     "text editor"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/react-portals",
-  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/react-portals",
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/react",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/react",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
-  "sideEffects": false,
-  "files": [
-    "dist"
-  ],
-  "dependencies": {
-    "@babel/runtime": "^7",
-    "@types/nanoid": "2.1.0",
-    "nanoevents": "^5.1.7",
-    "nanoid": "^3.1.9",
-    "type-fest": "^0.14.0"
-  },
-  "devDependencies": {
-    "@emotion/core": "^10.0.22",
-    "@types/react": "^16.9.35",
-    "@types/react-dom": "^16.9.8",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
-  },
-  "peerDependencies": {
-    "@emotion/core": "^10",
-    "@types/react": "^16.8.0",
-    "@types/react-dom": "^16.8.0",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
-  },
   "publishConfig": {
     "access": "public"
-  },
-  "meta": {
-    "sizeLimit": "15 KB"
   }
 }

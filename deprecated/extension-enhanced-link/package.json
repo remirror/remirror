@@ -7,5 +7,8 @@
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
-  "sideEffects": false
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  }
 }

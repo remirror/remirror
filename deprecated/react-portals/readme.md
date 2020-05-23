@@ -1,6 +1,17 @@
 # @remirror/react-portals
 
-[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/react-portals.svg?)](https://bundlephobia.com/result?p=@remirror/react-portals)
-[![npm](https://img.shields.io/npm/dm/@remirror/react-portals.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/react-portals)
+This package is **deprecated** and it's functionality is included by default with the
+`@remirror/react` package.
 
-This package allows for rendering prosemirror nodes via the react portal api.
+It is now accessible with the following installation.
+
+```bash
+# Yarn
+yarn add @remirror/react
+
+# PNPM
+pnpm add @remirror/react
+
+# npm
+npm install @remirror/react
+```
