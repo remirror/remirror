@@ -38,10 +38,16 @@
   },
   "devDependencies": {
     "@remirror/pm": "^0.0.0",
+    "@testing-library/react": "^10.0.4",
+    "@testing-library/react-hooks": "^3.2.1",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
+    "@types/react-test-renderer": "^16.9.2",
+    "@types/testing-library__react": "^10.0.1",
+    "@types/testing-library__react-hooks": "^3.2.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-test-renderer": "^16.13.1"
   },
   "peerDependencies": {
     "@remirror/pm": "^0.0.0",

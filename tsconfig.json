@@ -8,9 +8,7 @@
   "include": ["**/*.ts", "**/*.tsx", "../global.d.ts"],
   "exclude": [
     "**/dist/",
-    "**/lib/",
     "dist",
-    "lib",
     "deprecated/**"
 
     // TODO remove these temporary exclusions
