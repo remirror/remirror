@@ -1,5 +1,4 @@
 import {
-  AnyExtension,
   CreatePluginReturn,
   EditorView,
   EmptyShape,
@@ -86,7 +85,7 @@ export class EpicModePluginState {
   private container!: HTMLElement;
 
   /* eslint-disable @typescript-eslint/explicit-member-accessibility */
-  readonly #extension: AnyExtension<Record<never, never>, EpicModeProperties>;
+  readonly #extension: PlainExtension<Record<never, never>, EpicModeProperties>;
   #shakeTime = 0;
   #shakeTimeMax = 0;
   #lastTime = 0;

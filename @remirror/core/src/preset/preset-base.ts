@@ -25,8 +25,8 @@ import { getChangedProperties } from '../helpers';
 import { PropertiesUpdateReason, SetPropertiesParameter } from '../types';
 
 /**
- * A preset is our way of bundling similar extensions with unified
- * settings and dynamic properties.
+ * A preset is our way of bundling similar extensions with unified settings and
+ * dynamic properties.
  */
 export abstract class Preset<
   Settings extends Shape = EmptyShape,
@@ -137,7 +137,8 @@ export abstract class Preset<
 
   /**
    * Called every time properties for this extension are set or reset. This is
-   * also called when the extension is first created with the default properties.
+   * also called when the extension is first created with the default
+   * properties.
    */
   protected abstract onSetProperties(parameter: SetPropertiesParameter<Properties>): void;
 
@@ -155,7 +156,8 @@ export abstract class Preset<
   /**
    * Set the properties of the preset.
    *
-   * Calls the `onSetProperties` parameter property when creating the constructor.
+   * Calls the `onSetProperties` parameter property when creating the
+   * constructor.
    */
   public setProperties(update: Partial<Properties>) {
     const reason: PropertiesUpdateReason = this.#hasInitialized ? 'set' : 'init';
@@ -260,15 +262,21 @@ export interface Preset<
 /**
  * The type which is applicable to any `Preset` instances.
  */
-export type AnyPreset = Omit<Preset<any, any>, 'constructor'> & {
-  constructor: AnyPresetConstructor;
-};
+export type AnyPreset = Omit<Preset<any, any>, keyof Remirror.AnyPresetOverrides> &
+  Remirror.AnyPresetOverrides;
 
 /**
  * The type which is applicable to any `Preset` constructor.
  */
 export type AnyPresetConstructor = PresetConstructor<any, any>;
 
+/**
+ * The required `defaultSetting`'s type derived from the settings provided to
+ * the preset.
+ *
+ * It works by making all partial properties required and all required
+ * properties partial.
+ */
 export type DefaultPresetSettings<Settings extends Shape> = FlipPartialAndRequired<Settings>;
 
 /**
@@ -279,7 +287,8 @@ export interface PresetConstructor<
   Properties extends Shape = EmptyShape
 > extends Function {
   /**
-   * The identifier for the constructor which identifies it as a preset constructor.
+   * The identifier for the constructor which identifies it as a preset
+   * constructor.
    * @internal
    */
   readonly [REMIRROR_IDENTIFIER_KEY]: RemirrorIdentifier;
@@ -316,8 +325,8 @@ export function isPresetConstructor(value: unknown): value is AnyPresetConstruct
 }
 
 /**
- * Checks that the preset has a valid constructor with the `defaultSettings`
- * and `defaultProperties` defined as static properties.
+ * Checks that the preset has a valid constructor with the `defaultSettings` and
+ * `defaultProperties` defined as static properties.
  */
 export function isValidPresetConstructor(
   Constructor: unknown,
@@ -354,3 +363,25 @@ export type PresetConstructorParameter<
 >;
 
 /* eslint-enable @typescript-eslint/explicit-member-accessibility */
+
+declare global {
+  namespace Remirror {
+    /**
+     * An override to for the `AnyPreset` type. If you're Preset adds a new
+     * property to the `Preset` that is deeply nested or very complex it can
+     * break the `AnyPreset` implementation from being compatible with all valid
+     * Presets.
+     *
+     * The keys you provide on this override replace the default `AnyPreset`
+     * types include unsafe properties that need to be simplified.
+     *
+     * An example is the `constructor` property which makes it impossible to
+     * find a common interface between presets with different settings and
+     * properties. By setting the `constructor` to a much simpler override all
+     * `Preset`'s are now assignable to the `AnyPreset type again.`
+     */
+    interface AnyPresetOverrides {
+      constructor: AnyPresetConstructor;
+    }
+  }
+}

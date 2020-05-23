@@ -615,10 +615,8 @@ export abstract class NodeExtension<
 /**
  * The type which is applicable to any extension instance.
  */
-export type AnyExtension<Settings extends Shape = Shape, Properties extends Shape = Shape> = Omit<
-  Extension<Settings, Properties>,
-  'constructor'
-> & { constructor: AnyExtensionConstructor };
+export type AnyExtension = Omit<Extension<Shape, Shape>, keyof Remirror.AnyExtensionOverrides> &
+  Remirror.AnyExtensionOverrides;
 
 /**
  * The type which is applicable to any extension instance.
@@ -628,23 +626,23 @@ export type AnyExtensionConstructor = ExtensionConstructor<any, any>;
 /**
  * The type for any potential PlainExtension.
  */
-export type AnyPlainExtension = Omit<PlainExtension<any, any>, 'constructor'> & {
-  constructor: AnyExtensionConstructor;
-};
+export type AnyPlainExtension = Omit<
+  PlainExtension<any, any>,
+  keyof Remirror.AnyExtensionOverrides
+> &
+  Remirror.AnyExtensionOverrides;
 
 /**
  * The type for any potential NodeExtension.
  */
-export type AnyNodeExtension = Omit<NodeExtension<any, any>, 'constructor'> & {
-  constructor: AnyExtensionConstructor;
-};
+export type AnyNodeExtension = Omit<NodeExtension<any, any>, keyof Remirror.AnyExtensionOverrides> &
+  Remirror.AnyExtensionOverrides;
 
 /**
  * The type for any potential MarkExtension.
  */
-export type AnyMarkExtension = Omit<MarkExtension<any, any>, 'constructor'> & {
-  constructor: AnyExtensionConstructor;
-};
+export type AnyMarkExtension = Omit<MarkExtension<any, any>, keyof Remirror.AnyExtensionOverrides> &
+  Remirror.AnyExtensionOverrides;
 
 /**
  * These are the default options merged into every extension. They can be
@@ -699,9 +697,7 @@ export function mutateDefaultExtensionSettings(
  *
  * @param value - the value to test
  */
-export function isExtension<Settings extends Shape = Shape, Properties extends Shape = Shape>(
-  value: unknown,
-): value is AnyExtension<Settings, Properties> {
+export function isExtension(value: unknown): value is AnyExtension {
   return (
     isRemirrorType(value) &&
     isIdentifierOfType(value, [
@@ -804,8 +800,10 @@ export type ExtensionConstructorParameter<
   [WithProperties<Settings & BaseExtensionSettings, Properties>]
 >;
 
-interface ExtensionConstructor<Settings extends Shape = object, Properties extends Shape = object>
-  extends Function {
+interface ExtensionConstructor<
+  Settings extends Shape = EmptyShape,
+  Properties extends Shape = EmptyShape
+> extends Function {
   new (...parameters: ExtensionConstructorParameter<Settings, Properties>): Extension<
     Settings,
     Shape
@@ -1011,16 +1009,31 @@ declare global {
      * }
      * ```
      */
-    export interface BaseExtension {}
+    interface BaseExtension {}
 
     /**
      * This interface is global and uses declaration merging to add new methods
      * to the `Extension` class.
      */
-    export interface ExtensionCreatorMethods<
-      Settings extends Shape,
-      Properties extends Shape = object
-    > {}
+    interface ExtensionCreatorMethods<Settings extends Shape, Properties extends Shape = object> {}
+
+    /**
+     * An override to for the `AnyExtension` type. If you're extension adds a
+     * new property to the `Extension` that is deeply nested or very complex it
+     * can break the `AnyExtension` implementation from being compatible with
+     * all valid extensions.
+     *
+     * The keys you provide on this override replace the default `AnyExtension`
+     * types include unsafe properties that need to be simplified.
+     *
+     * An example is the `constructor` property which makes it impossible to
+     * find a common interface between extensions with different settings and
+     * properties. By setting the `constructor` to a much simpler override all
+     * `Extension`'s are now assignable to the `AnyExtension type again.`
+     */
+    interface AnyExtensionOverrides {
+      constructor: AnyExtensionConstructor;
+    }
   }
 }
 

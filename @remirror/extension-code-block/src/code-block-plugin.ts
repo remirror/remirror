@@ -1,5 +1,4 @@
 import {
-  AnyExtension,
   CompareStateParameter,
   EditorState,
   findChildrenByNode,
@@ -30,7 +29,7 @@ export class CodeBlockState {
    */
   #blocks: NodeWithPosition[] = [];
 
-  #extension: AnyExtension<CodeBlockSettings, CodeBlockProperties>;
+  #extension: NodeExtension<CodeBlockSettings, CodeBlockProperties>;
 
   /**
    * Keep track of the node type of the `codeBlock`
