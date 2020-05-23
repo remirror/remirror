@@ -143,7 +143,7 @@ This creates a suggestion plugin with all the suggesters provided.
 <b>Signature:</b>
 
 ```ts
-suggest: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(...suggesters: Suggestion<import("@remirror/core-types").AnyFunction<void>>[]) => Plugin<SuggestState<any>, GSchema>
+suggest: (...suggesters: Suggestion[]) => Plugin;
 ```
 
 The priority of the suggesters is the order in which they are passed into this function.

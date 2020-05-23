@@ -13,8 +13,8 @@ const suggestPluginKey = new PluginKey('suggest');
  *
  * @param state - the editor state.
  */
-export function getSuggestPluginState<GSchema extends EditorSchema = any>(
-  state: EditorState<GSchema>,
+export function getSuggestPluginState<Schema extends EditorSchema = any>(
+  state: EditorState<Schema>,
 ) {
   return getPluginState<SuggestState>(suggestPluginKey, state);
 }
@@ -114,10 +114,10 @@ export function getSuggestPluginState<GSchema extends EditorSchema = any>(
  * @param suggesters - a list of suggesters in the order they should be
  * evaluated.
  */
-export function suggest<GSchema extends EditorSchema = any>(...suggesters: Suggestion[]) {
+export function suggest<Schema extends EditorSchema = any>(...suggesters: Suggestion[]) {
   const pluginState = SuggestState.create(suggesters);
 
-  return new Plugin<SuggestState, GSchema>({
+  return new Plugin<SuggestState, Schema>({
     key: suggestPluginKey,
 
     // Handle the plugin view

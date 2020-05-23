@@ -1,4 +1,3 @@
-import { cellAround, CellSelection } from 'prosemirror-tables';
 import pm, {
   MarkTypeAttributes,
   NodeTypeAttributes,
@@ -7,6 +6,7 @@ import pm, {
 
 import { Cast, keys } from '@remirror/core-helpers';
 import { EditorSchema, Plugin } from '@remirror/core-types';
+import { GapCursor } from '@remirror/pm/gapcursor';
 import {
   AllSelection,
   EditorState,
@@ -14,8 +14,7 @@ import {
   Selection,
   TextSelection,
 } from '@remirror/pm/state';
-import { Schema } from '@remirror/pm/model';
-import { GapCursor } from '@remirror/pm/gapcursor';
+import { cellAround, CellSelection } from '@remirror/pm/tables';
 
 import { schema } from './jest-prosemirror-schema';
 import { TaggedDocParameter } from './jest-prosemirror-types';
@@ -34,8 +33,8 @@ function resolveCell(taggedDoc: TaggedProsemirrorNode, tag?: number) {
   return cellAround(taggedDoc.resolve(tag));
 }
 
-interface CreateTextSelectionParameter<GSchema extends EditorSchema = any>
-  extends TaggedDocParameter<GSchema> {
+interface CreateTextSelectionParameter<Schema extends EditorSchema = any>
+  extends TaggedDocParameter<Schema> {
   start: number;
   end?: number;
 }
@@ -48,14 +47,14 @@ interface CreateTextSelectionParameter<GSchema extends EditorSchema = any>
  * @param param.start
  * @param param.end
  */
-function createTextSelection<GSchema extends EditorSchema = any>({
+function createTextSelection<Schema extends EditorSchema = any>({
   taggedDoc,
   start,
   end,
-}: CreateTextSelectionParameter<GSchema>) {
+}: CreateTextSelectionParameter<Schema>) {
   const $start = taggedDoc.resolve(start);
   const $end = end && start <= end ? taggedDoc.resolve(end) : taggedDoc.resolve($start.end());
-  return new TextSelection<GSchema>($start, $end);
+  return new TextSelection<Schema>($start, $end);
 }
 
 const supportedTags = new Set(['cursor', 'node', 'start', 'end', 'anchor', 'all', 'gap']);
@@ -76,20 +75,20 @@ export function taggedDocHasSelection(taggedDoc: TaggedProsemirrorNode) {
  *
  * @param taggedDoc
  */
-export function initSelection<GSchema extends EditorSchema = any>(
-  taggedDoc: TaggedProsemirrorNode<GSchema>,
+export function initSelection<Schema extends EditorSchema = any>(
+  taggedDoc: TaggedProsemirrorNode<Schema>,
 ) {
   const { cursor, node, start, end, anchor, all, gap } = taggedDoc.tag;
   if (all) {
-    return new AllSelection<GSchema>(taggedDoc);
+    return new AllSelection<Schema>(taggedDoc);
   }
 
   if (node) {
-    return new NodeSelection<GSchema>(taggedDoc.resolve(node));
+    return new NodeSelection<Schema>(taggedDoc.resolve(node));
   }
 
   if (cursor) {
-    return new TextSelection<GSchema>(taggedDoc.resolve(cursor));
+    return new TextSelection<Schema>(taggedDoc.resolve(cursor));
   }
 
   if (gap) {
@@ -103,8 +102,8 @@ export function initSelection<GSchema extends EditorSchema = any>(
 
   const $anchor = resolveCell(taggedDoc, anchor);
   if ($anchor) {
-    return Cast<Selection<GSchema>>(
-      new CellSelection<GSchema>($anchor, resolveCell(taggedDoc, taggedDoc.tag.head) ?? undefined),
+    return Cast<Selection<Schema>>(
+      new CellSelection<Schema>($anchor, resolveCell(taggedDoc, taggedDoc.tag.head) ?? undefined),
     );
   }
   return null;
@@ -115,9 +114,9 @@ export function initSelection<GSchema extends EditorSchema = any>(
  *
  * @param taggedDoc
  */
-export function selectionFor<GSchema extends EditorSchema = any>(
-  taggedDoc: TaggedProsemirrorNode<GSchema>,
-): Selection<GSchema> {
+export function selectionFor<Schema extends EditorSchema = any>(
+  taggedDoc: TaggedProsemirrorNode<Schema>,
+): Selection<Schema> {
   return initSelection(taggedDoc) ?? Selection.atStart(taggedDoc);
 }
 
@@ -126,10 +125,10 @@ export function selectionFor<GSchema extends EditorSchema = any>(
  *
  * @param taggedDoc
  */
-export function createState<GSchema extends EditorSchema = any>(
-  taggedDoc: TaggedProsemirrorNode<GSchema>,
+export function createState<Schema extends EditorSchema = any>(
+  taggedDoc: TaggedProsemirrorNode<Schema>,
   plugins: Plugin[] = [],
-): EditorState<GSchema> {
+): EditorState<Schema> {
   return EditorState.create({
     doc: taggedDoc,
     selection: initSelection(taggedDoc),
@@ -141,20 +140,20 @@ export function createState<GSchema extends EditorSchema = any>(
 /**
  * A short hand way for building prosemirror test builders with the core nodes already provided
  * - `doc`
- * - `paragraph`
+ * - `paragraph` | 'p'
  * - `text`
  *
  * @param testSchema - The schema to use which provided a doc, paragraph and text schema
  * @param names - the extra marks and nodes to provide with their attributes
  */
 export function pmBuild<
-  GObj extends Record<string, NodeTypeAttributes | MarkTypeAttributes> = Record<
+  Type extends Record<string, NodeTypeAttributes | MarkTypeAttributes> = Record<
     string,
     NodeTypeAttributes | MarkTypeAttributes
   >,
-  GNodes extends string = string,
-  GMarks extends string = string
->(testSchema: Schema<GNodes, GMarks>, names: GObj) {
+  Nodes extends string = string,
+  Marks extends string = string
+>(testSchema: EditorSchema<Nodes, Marks>, names: Type) {
   return pm.builders(testSchema, {
     doc: { nodeType: 'doc' },
     p: { nodeType: 'paragraph' },

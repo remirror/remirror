@@ -2,7 +2,8 @@ import { RemirrorIdentifier } from '@remirror/core-constants';
 import { ignoreUnused } from '@remirror/test-fixtures';
 
 import { PlainExtension } from '../../extension';
-import { AnyPreset, Preset, SetPropertiesParameter } from '../preset-base';
+import { SetPropertiesParameter } from '../../types';
+import { AnyPreset, Preset } from '../preset-base';
 
 // @ts-expect-error
 class PresetNoName extends Preset {}

@@ -12,7 +12,7 @@ import {
   object,
   SchemaParameter,
 } from '@remirror/core';
-import { Fragment, Mark, Node as PMNode, Slice } from '@remirror/pm/model';
+import { Fragment, Mark, Node as ProsemirrorNode, Slice } from '@remirror/pm/model';
 
 import {
   BaseFactoryParameter,
@@ -160,8 +160,8 @@ export function coerce(parameter: CoerceParameter) {
   return sequence(...flattenArray<TaggedContentItem>(taggedContent));
 }
 
-interface NodeFactoryParameter<GSchema extends EditorSchema = EditorSchema>
-  extends BaseFactoryParameter<GSchema> {
+interface NodeFactoryParameter<Schema extends EditorSchema = EditorSchema>
+  extends BaseFactoryParameter<Schema> {
   /**
    * The marks which wrap this node.
    */
@@ -171,8 +171,8 @@ interface NodeFactoryParameter<GSchema extends EditorSchema = EditorSchema>
 /**
  * Create a builder function for nodes.
  */
-export function nodeFactory<GSchema extends EditorSchema = EditorSchema>(
-  parameter: NodeFactoryParameter<GSchema>,
+export function nodeFactory<Schema extends EditorSchema = EditorSchema>(
+  parameter: NodeFactoryParameter<Schema>,
 ) {
   const { name, schema, attrs, marks } = parameter;
   const nodeBuilder = hasOwnProperty(schema.nodes, name) ? schema.nodes[name] : undefined;
@@ -253,17 +253,19 @@ export function clean(parameter: CleanParameter) {
   const { schema, content } = parameter;
 
   if (!isArray(content)) {
-    return isProsemirrorNode(content) ? PMNode.fromJSON(schema, content.toJSON()) : undefined;
+    return isProsemirrorNode(content)
+      ? ProsemirrorNode.fromJSON(schema, content.toJSON())
+      : undefined;
   }
 
-  const nodes: PMNode[] = [];
+  const nodes: ProsemirrorNode[] = [];
 
   for (const node of content) {
     if (!isProsemirrorNode(node)) {
       continue;
     }
 
-    nodes.push(PMNode.fromJSON(schema, node.toJSON()));
+    nodes.push(ProsemirrorNode.fromJSON(schema, node.toJSON()));
   }
 
   return nodes;

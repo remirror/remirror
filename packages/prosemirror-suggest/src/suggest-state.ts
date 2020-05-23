@@ -1,6 +1,6 @@
 import mergeDescriptors from 'merge-descriptors';
 import { Transaction } from 'prosemirror-state';
-import { Decoration, DecorationSet } from 'prosemirror-view';
+import { Decoration, DecorationSet, EditorView } from 'prosemirror-view';
 
 import { bool, isFunction, object } from '@remirror/core-helpers';
 import {
@@ -8,7 +8,6 @@ import {
   EditorSchema,
   EditorState,
   EditorStateParameter,
-  EditorView,
   FromToParameter,
   ResolvedPosParameter,
   TextParameter,
@@ -34,7 +33,7 @@ import { findFromSuggestions, findReason, runKeyBindings } from './suggest-utils
 /**
  * The suggestion state which manages the list of suggesters.
  */
-export class SuggestState<GSchema extends EditorSchema = any> {
+export class SuggestState {
   /**
    * Create an instance of the SuggestState class.
    */
@@ -65,7 +64,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   /**
    * Holds a copy of the view
    */
-  private view!: EditorView<GSchema>;
+  private view!: EditorView;
 
   /**
    * The set of ignored decorations
@@ -361,7 +360,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    *
    * @param - params
    */
-  public apply({ tr, newState }: TransactionParameter<GSchema> & CompareStateParameter<GSchema>) {
+  public apply({ tr, newState }: TransactionParameter & CompareStateParameter) {
     const { exit } = this.handlerMatches;
 
     if (!transactionChanged(tr) && !this.removed) {
@@ -461,9 +460,9 @@ export class SuggestState<GSchema extends EditorSchema = any> {
 }
 
 interface HandleTextInputParameter extends FromToParameter, TextParameter {}
-interface UpdateReasonsParameter<GSchema extends EditorSchema = any>
-  extends EditorStateParameter<GSchema>,
-    ResolvedPosParameter<GSchema>,
+interface UpdateReasonsParameter<Schema extends EditorSchema = any>
+  extends EditorStateParameter<Schema>,
+    ResolvedPosParameter<Schema>,
     Partial<CompareMatchParameter> {}
 
 /**
@@ -476,8 +475,8 @@ interface UpdateReasonsParameter<GSchema extends EditorSchema = any>
  * -  {@link @remirror/core-types#TransactionParameter}
  * -  {@link @remirror/core-types#CompareStateParameter}
  *
- * @typeParam GSchema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
-export interface SuggestStateApplyParameter<GSchema extends EditorSchema = any>
-  extends TransactionParameter<GSchema>,
-    CompareStateParameter<GSchema> {}
+export interface SuggestStateApplyParameter<Schema extends EditorSchema = any>
+  extends TransactionParameter<Schema>,
+    CompareStateParameter<Schema> {}

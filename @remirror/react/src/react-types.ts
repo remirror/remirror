@@ -518,9 +518,9 @@ export interface UsePositionerParameter<RefKey extends string = 'ref'>
     PositionerParameter,
     RefParameter<RefKey> {}
 
-export interface UpdateStateParameter<GSchema extends EditorSchema = any>
-  extends Partial<TransactionParameter<GSchema>>,
-    EditorStateParameter<GSchema> {
+export interface UpdateStateParameter<Schema extends EditorSchema = any>
+  extends Partial<TransactionParameter<Schema>>,
+    EditorStateParameter<Schema> {
   /**
    * Whether or not to trigger this as a change and call any handlers.
    *
@@ -536,16 +536,16 @@ export interface UpdateStateParameter<GSchema extends EditorSchema = any>
 
 export interface EditorStateEventListenerParameter<
   ExtensionUnion extends AnyExtension = any,
-  GSchema extends EditorSchema = any
+  Schema extends EditorSchema = any
 >
-  extends Partial<CompareStateParameter<GSchema>>,
+  extends Partial<CompareStateParameter<Schema>>,
     Pick<BaseListenerParameter<ExtensionUnion>, 'tr'> {}
 
-export interface RemirrorState<GSchema extends EditorSchema = any> {
+export interface RemirrorState<Schema extends EditorSchema = any> {
   /**
    * The Prosemirror editor state
    */
-  editor: CompareStateParameter<GSchema>;
+  editor: CompareStateParameter<Schema>;
   /**
    * Used when suppressHydrationWarning is true to determine when it's okay to
    * render the client content.
@@ -555,7 +555,7 @@ export interface RemirrorState<GSchema extends EditorSchema = any> {
 
 export interface ListenerParameter<
   ExtensionUnion extends AnyExtension = any,
-  GSchema extends EditorSchema = any
+  Schema extends EditorSchema = any
 >
-  extends Partial<EditorStateParameter<GSchema>>,
+  extends Partial<EditorStateParameter<Schema>>,
     Pick<BaseListenerParameter<ExtensionUnion>, 'tr'> {}

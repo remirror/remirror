@@ -7,7 +7,7 @@ import { EditorView } from '@remirror/pm/view';
  * Tests that a command run transform the nodes from one state to another.
  * The second state is optional if nothing has changed.
  */
-export interface CommandTransformation<GSchema extends EditorSchema = any> {
+export interface CommandTransformation<Schema extends EditorSchema = any> {
   /**
    * The initial prosemirror node.
    *
@@ -17,7 +17,7 @@ export interface CommandTransformation<GSchema extends EditorSchema = any> {
    * const from = doc(p('Hello ', strong('Friend')));
    * ```
    */
-  from: TaggedProsemirrorNode<GSchema>;
+  from: TaggedProsemirrorNode<Schema>;
 
   /**
    * The output of the command transformation.
@@ -31,27 +31,27 @@ export interface CommandTransformation<GSchema extends EditorSchema = any> {
    * This is optional and can be omitted if the transformation doesn't produce
    * any results.
    */
-  to?: TaggedProsemirrorNode<GSchema>;
+  to?: TaggedProsemirrorNode<Schema>;
 }
 
-export interface TaggedDocParameter<GSchema extends EditorSchema = any> {
+export interface TaggedDocParameter<Schema extends EditorSchema = any> {
   /**
    * A tagged ProsemirrorNode which can hold cursor information from the passed in text.
    */
-  taggedDoc: TaggedProsemirrorNode<GSchema>;
+  taggedDoc: TaggedProsemirrorNode<Schema>;
 }
 
-export interface TestEditorView<GSchema extends EditorSchema = any> extends EditorView<GSchema> {
+export interface TestEditorView<Schema extends EditorSchema = any> extends EditorView<Schema> {
   dispatchEvent: (event: string | CustomEvent | { type: string }) => void;
   domObserver: {
     flush: () => void;
   };
 }
 
-export interface TestEditorViewParameter<GSchema extends EditorSchema = any> {
+export interface TestEditorViewParameter<Schema extends EditorSchema = any> {
   /**
    * An instance of the test editor view which allows for dispatching events
    * and also containers TaggedProsemirrorNodes
    */
-  view: TestEditorView<GSchema>;
+  view: TestEditorView<Schema>;
 }

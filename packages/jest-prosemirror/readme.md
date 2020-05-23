@@ -267,13 +267,13 @@ not actually create a new line.
 
 **`char`** - the character to type
 
-#### fire - `(params: Omit<FireEventAtPositionParameter<GSchema>, 'view'>) => ReturnType<typeof createEditor>`
+#### fire - `(params: Omit<FireEventAtPositionParameter<Schema>, 'view'>) => ReturnType<typeof createEditor>`
 
 Fire an event in the editor (very hit and miss).
 
 **`params`** - the fire event parameters
 
-#### callback - `(fn: (content: ReturnValueCallbackParameter<GSchema>) => void) => ReturnType<typeof createEditor>`
+#### callback - `(fn: (content: ReturnValueCallbackParameter<Schema>) => void) => ReturnType<typeof createEditor>`
 
 Callback function which receives the `start`, `end`, `state`, `view`, `schema` and `selection`
 properties and allows for easier testing of the current state of the editor.

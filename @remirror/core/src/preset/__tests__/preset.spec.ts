@@ -1,5 +1,6 @@
+import { SetPropertiesParameter } from '../..';
 import { PlainExtension } from '../../extension';
-import { Preset, SetPropertiesParameter } from '../preset-base';
+import { Preset } from '../preset-base';
 
 interface FirstSettings {
   a?: number;
