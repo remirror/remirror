@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { AnyEditorManager, invariant } from '@remirror/core';
+import { AnyEditorManager, ErrorConstant, invariant } from '@remirror/core';
 
 import { RemirrorContext } from '../react-contexts';
 import { InjectedRenderEditorProps } from '../react-types';
@@ -32,11 +32,14 @@ import { InjectedRenderEditorProps } from '../react-types';
  * }
  * ```
  */
-export const useRemirror = <
+export function useRemirror<
   ManagerType extends AnyEditorManager = AnyEditorManager
->(): InjectedRenderEditorProps<ManagerType> => {
+>(): InjectedRenderEditorProps<ManagerType> {
   const params = useContext(RemirrorContext);
-  invariant(params, { message: 'There is no remirror context defined.' });
+
+  invariant(params, {
+    code: ErrorConstant.REACT_PROVIDER_CONTEXT,
+  });
 
   return params;
-};
+}

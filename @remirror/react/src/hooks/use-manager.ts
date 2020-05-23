@@ -56,9 +56,9 @@ function useObjectCheck<Type extends object>(parameter: Type): Type {
  * }
  * ```
  */
-export const useManager = <ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>(
+export function useManager<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>(
   parameter: EditorManagerParameter<ExtensionUnion, PresetUnion>,
-) => {
+) {
   const { extensions } = parameter;
   const settings = useObjectCheck(parameter.settings ?? {});
   const presets = useMemo(() => [...parameter.presets, new CorePreset(), new ReactPreset()], [
@@ -70,4 +70,4 @@ export const useManager = <ExtensionUnion extends AnyExtension, PresetUnion exte
     settings,
     presets,
   ]);
-};
+}

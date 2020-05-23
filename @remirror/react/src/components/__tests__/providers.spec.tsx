@@ -1,6 +1,5 @@
-import React from 'react';
 import { render } from '@testing-library/react';
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 import { createBaseTestManager, docNodeBasicJSON } from '@remirror/test-fixtures';
 

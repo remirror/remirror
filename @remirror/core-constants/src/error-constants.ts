@@ -103,4 +103,10 @@ export enum ErrorConstant {
 
   /** An error occurred within an extension. */
   EXTENSION = 'RMR0100',
+
+  /**
+   * `useRemirror` was called outside of the remirror context. It can only be used
+   * within an active remirror context created by the `<RemirrorProvider />`.
+   */
+  REACT_PROVIDER_CONTEXT = 'RMR0200',
 }

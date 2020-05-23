@@ -21,14 +21,14 @@ import { useRemirror } from './use-remirror';
  *
  * @example
  *
- * ```javascript
- * import { useExtension } from '@remirror/react';
- * import { PresetCore } from '@remirror/preset-core';
- * import { BoldExtension } from '@remirror/extension-bold';
+ * ```ts
+ * import { useExtensionInstance, usePresetInstance } from 'remirror/react';
+ * import { PresetCore } from 'remirror/preset-core';
+ * import { BoldExtension } from 'remirror/extension-bold';
  *
  * const EditorWrapper = () => {
- *   const corePreset = usePreset(PresetCore);
- *   const boldExtension = useExtension(BoldExtension, { weight: 700 });
+ *   const corePreset = usePresetInstance(PresetCore);
+ *   const boldExtension = useExtensionInstance(BoldExtension, { weight: 700 });
  *   const manager = useManager([corePreset, boldExtension]);
  *
  *   <RemirrorProvider >
@@ -41,20 +41,52 @@ import { useRemirror } from './use-remirror';
  * switch out the editor multiple times in apps like the
  * `@remirror/playground`.
  */
-export const useExtension = <Type extends AnyExtensionConstructor>(
+export function useExtensionInstance<Type extends AnyExtensionConstructor>(
   Constructor: Type,
   ...[settings]: ExtensionConstructorParameter<
     SettingsOfConstructor<Type>,
     PropertiesOfConstructor<Type>
   >
-) => {
+) {
   return useMemo(() => new Constructor(settings), [Constructor, settings]);
-};
+}
 
-export const useExtensionProperties = <Type extends AnyExtensionConstructor>(
+/**
+ * Dynamically update the properties of your extension via hooks. Provide the
+ * Extension constructor and the properties you want to update.
+ *
+ * @remarks
+ *
+ * Please note that every time the properties change your extension is updated.
+ * You will want to memoize or prevent needless updates somehow to the
+ * properties passed in.
+ *
+ * This is only available within the context of the `RemirrorProvider` it will
+ * throw an error otherwise.
+ *
+ * ```ts
+ * import React, { useCallback, useState } from 'react';
+ * import { useExtension } from 'remirror/react';
+ * import { MentionExtension } from 'remirror/extension/mention';
+ *
+ * const FloatingQueryText = () => {
+ *   const [query, setQuery] = useState('');
+ *   const onChange = useCallback(({ query }) => setQuery(query.full), [setQuery]);
+ *   useExtension(MentionExtension, { onChange });
+ *
+ *   return <p>{query}</p>
+ * }
+ * ```
+ *
+ * The above example would add the `onChange` handler property to the extension.
+ *
+ * TODO - What about using this multiple times how could the extension handle
+ * that?
+ */
+export function useExtension<Type extends AnyExtensionConstructor>(
   Constructor: Type,
   properties: PropertiesOfConstructor<Type>,
-) => {
+) {
   const { manager } = useRemirror();
 
   const extension = useMemo(() => manager.getExtension(Constructor), [Constructor, manager]);
@@ -62,4 +94,4 @@ export const useExtensionProperties = <Type extends AnyExtensionConstructor>(
   useDeepCompareEffect(() => {
     extension.setProperties(properties);
   }, [extension, properties]);
-};
+}

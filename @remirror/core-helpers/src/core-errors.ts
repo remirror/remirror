@@ -51,6 +51,8 @@ if (process.env.NODE !== 'production') {
     [ErrorConstant.INVALID_NAME]: 'An invalid name was used for the extension.',
     [ErrorConstant.EXTENSION]:
       'An error occurred within an extension. More details should be made available.',
+    [ErrorConstant.REACT_PROVIDER_CONTEXT]:
+      '`useRemirror` was called outside of the `remirror` context. It can only be used within an active remirror context created by the `<RemirrorProvider />`.',
   };
 }
 

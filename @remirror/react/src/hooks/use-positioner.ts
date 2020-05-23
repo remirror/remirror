@@ -10,7 +10,11 @@ import { useRemirror } from './use-remirror';
  * import { bubblePositioner } from '@remirror/react';
  *
  * const MenuComponent: FC = () => {
- *   const { isActive, bottom, left } = usePositioner({positionerId: 'bubbleMenu', positioner: bubblePositioner })
+ *   const {
+ *     isActive,
+ *     bottom,
+ *     left
+ * } = usePositioner({positionerId: 'bubbleMenu', positioner: bubblePositioner });
  *
  *   return (
  *     <div style={{ bottom, left }}>
@@ -23,17 +27,12 @@ import { useRemirror } from './use-remirror';
  *   <MenuComponent />
  * </RemirrorProvider>
  * ```
- *
- * @param params
- * @param params.positioner
- * @param params.positionerId
- * @param params.refKey
  */
-export const usePositioner = <GRefKey extends string = 'ref'>({
+export const usePositioner = <Ref extends string = 'ref'>({
   positioner,
   ...rest
-}: UsePositionerParameter<GRefKey>) => {
+}: UsePositionerParameter<Ref>) => {
   const { getPositionerProps } = useRemirror();
 
-  return getPositionerProps<GRefKey>({ ...positioner, ...rest });
+  return getPositionerProps<Ref>({ ...positioner, ...rest });
 };

@@ -10,7 +10,7 @@ import {
 
 import { useRemirror } from './use-remirror';
 
-export const usePreset = <Type extends AnyPresetConstructor>(
+export const usePresetInstance = <Type extends AnyPresetConstructor>(
   Constructor: Type,
   ...[settings]: PresetConstructorParameter<
     SettingsOfConstructor<Type>,
@@ -23,7 +23,7 @@ export const usePreset = <Type extends AnyPresetConstructor>(
 /**
  * Update preset properties dynamically while the editor is still running.
  */
-export const usePresetProperties = <Type extends AnyPresetConstructor>(
+export const usePreset = <Type extends AnyPresetConstructor>(
   Constructor: Type,
   properties: PropertiesOfConstructor<Type>,
 ) => {
