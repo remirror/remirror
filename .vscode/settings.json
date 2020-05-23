@@ -1,41 +1,30 @@
 {
+  // Editor
   "editor.tabSize": 2,
   "editor.rulers": [80, 100],
   "editor.insertSpaces": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "eslint.enable": true,
-  "files.insertFinalNewline": true,
-  "files.trimTrailingWhitespace": true,
-  "javascript.format.enable": false,
-  "typescript.format.enable": false,
-  "typescript.tsdk": "node_modules/typescript/lib",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "prettier.ignorePath": ".eslintignore",
 
+  // File
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
   "files.exclude": {
     ".yarn/releases/**": true
   },
-  "gitdoc.enabled": false,
-  "workbench.colorCustomizations": {
-    "activityBar.activeBackground": "#43619d",
-    "activityBar.activeBorder": "#cf8fa5",
-    "activityBar.background": "#43619d",
-    "activityBar.foreground": "#e7e7e7",
-    "activityBar.inactiveForeground": "#e7e7e799",
-    "activityBarBadge.background": "#cf8fa5",
-    "activityBarBadge.foreground": "#15202b",
-    "statusBar.background": "#344b79",
-    "statusBar.border": "#344b79",
-    "statusBar.foreground": "#e7e7e7",
-    "statusBarItem.hoverBackground": "#43619d",
-    "titleBar.activeBackground": "#344b79",
-    "titleBar.activeForeground": "#e7e7e7",
-    "titleBar.border": "#344b79",
-    "titleBar.inactiveBackground": "#344b7999",
-    "titleBar.inactiveForeground": "#e7e7e799"
-  },
-  "peacock.color": "#344b79"
+
+  // Javascript
+  "javascript.format.enable": false,
+
+  // Typescript
+  "typescript.format.enable": false,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  // Prettier
+  "prettier.ignorePath": ".eslintignore",
 }

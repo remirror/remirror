@@ -40,19 +40,18 @@ module.exports = {
     'graphql',
     'simple-import-sort',
     'eslint-comments',
-    '@getify/proper-arrows',
     'security',
+    'sonarjs',
   ],
   extends: [
     'eslint:recommended',
-    'plugin:@typescript-eslint/eslint-recommended', // Disables incompatible eslint:recommended settings
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:import/typescript',
     'prettier',
     'prettier/@typescript-eslint',
     'prettier/react',
-    'plugin:jest-formatting/strict',
+    'plugin:jest-formatting/recommended',
     'plugin:unicorn/recommended',
     'plugin:eslint-comments/recommended',
   ],
@@ -78,6 +77,7 @@ module.exports = {
   },
   rules: {
     ...graphqlRules,
+    'sonarjs/cognitive-complexity': ['warn', 15],
 
     'eslint-comments/no-unused-disable': 'error',
 
@@ -148,10 +148,62 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-namespace': 'off',
     '@typescript-eslint/no-unused-vars': ['off'],
-    '@typescript-eslint/camelcase': ['warn', { ignoreDestructuring: true, properties: 'never' }],
+    '@typescript-eslint/naming-convention': [
+      'warn',
+      { selector: 'typeParameter', format: ['StrictPascalCase'] },
+    ],
     '@typescript-eslint/no-non-null-assertion': 'warn',
     '@typescript-eslint/no-inferrable-types': 'warn',
-    '@typescript-eslint/ban-types': 'warn',
+    '@typescript-eslint/ban-types': [
+      'warn',
+      {
+        extendDefaults: false,
+        types: {
+          String: {
+            message: 'Use string instead',
+            fixWith: 'string',
+          },
+          Boolean: {
+            message: 'Use boolean instead',
+            fixWith: 'boolean',
+          },
+          Number: {
+            message: 'Use number instead',
+            fixWith: 'number',
+          },
+          Symbol: {
+            message: 'Use symbol instead',
+            fixWith: 'symbol',
+          },
+          Function: {
+            message: [
+              'The `Function` type accepts any function-like value.',
+              'It provides no type safety when calling the function, which can be a common source of bugs.',
+              'It also accepts things like class declarations, which will throw at runtime as they will not be called with `new`.',
+              'If you are expecting the function to accept certain arguments, you should explicitly define the function shape.',
+            ].join('\n'),
+          },
+
+          // object typing
+          Object: {
+            message: [
+              'The `Object` type actually means "any non-nullish value", so it is marginally better than `unknown`.',
+              '- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.',
+              '- If you want a type meaning "any value", you probably want `unknown` instead.',
+            ].join('\n'),
+          },
+          '{}': {
+            message: [
+              '`{}` actually means "any non-nullish value".',
+              '- If you want a type meaning "object", you probably want `object` instead.',
+              '- If you want a type meaning "any value", you probably want `unknown` instead.',
+            ].join('\n'),
+            fixWith: 'object',
+          },
+        },
+      },
+    ],
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     // Turning off as it leads to code with bad patterns, where implementation
     // details are placed before the actual meaningful code.
     '@typescript-eslint/no-use-before-define': ['off', { typedefs: false }],
@@ -239,11 +291,12 @@ module.exports = {
     {
       files: ['**/__tests__/**', '**/__stories__/**', 'support/**', '**/__dts__/**'],
       rules: {
-        '@getify/proper-arrows/where': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off',
         '@typescript-eslint/ban-ts-ignore': 'off', // Often you need to use @ts-ignore in tests
         '@typescript-eslint/no-non-null-assertion': 'off', // Makes writing tests more convenient
         '@typescript-eslint/no-use-before-define': 'off',
         'react/display-name': 'off',
+        // eslint-disable-next-line unicorn/no-reduce
         ...Object.keys(tsProjectRules).reduce(
           (accumulator, key) => ({ ...accumulator, [key]: 'off' }),
           {},
