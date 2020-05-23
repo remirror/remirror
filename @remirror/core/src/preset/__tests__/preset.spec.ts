@@ -1,5 +1,5 @@
 import { PlainExtension } from '../../extension';
-import { Preset, SetPresetPropertiesParameter } from '../preset-base';
+import { Preset, SetPropertiesParameter } from '../preset-base';
 
 interface FirstSettings {
   a?: number;
@@ -53,11 +53,11 @@ describe('simplest preset', () => {
       return 'test' as const;
     }
 
-    protected createExtensions() {
+    public createExtensions() {
       return [new FirstExtension({}), new SecondExtension({ b: this.settings.b })];
     }
 
-    protected onSetProperties(parameter: SetPresetPropertiesParameter<Properties>) {
+    protected onSetProperties(parameter: SetPropertiesParameter<Properties>) {
       const { changes } = parameter;
 
       if (changes.y.changed) {

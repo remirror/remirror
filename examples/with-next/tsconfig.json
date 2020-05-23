@@ -3,6 +3,7 @@
   "compilerOptions": {
     "lib": ["DOM", "ES2017"],
     "declaration": false,
+    "declarationMap": false,
     "noEmit": true,
     "target": "ESNext",
     "allowJs": true,

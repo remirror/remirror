@@ -8,7 +8,7 @@ export class TablePreset extends Preset {
     return 'table' as const;
   }
 
-  protected createExtensions() {
+  public createExtensions() {
     return [];
   }
 

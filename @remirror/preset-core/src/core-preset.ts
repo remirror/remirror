@@ -2,7 +2,7 @@ import {
   DefaultPresetSettings,
   ExtensionPriority,
   Preset,
-  SetPresetPropertiesParameter,
+  SetPropertiesParameter,
 } from '@remirror/core';
 import {
   BaseKeymapExtension,
@@ -41,7 +41,7 @@ export class CorePreset extends Preset<CorePresetSettings, CorePresetProperties>
   /**
    * No properties are defined so this can be ignored.
    */
-  protected onSetProperties(parameter: SetPresetPropertiesParameter<CorePresetProperties>) {
+  protected onSetProperties(parameter: SetPropertiesParameter<CorePresetProperties>) {
     const { changes } = parameter;
 
     if (changes.keymap.changed) {
@@ -50,7 +50,7 @@ export class CorePreset extends Preset<CorePresetSettings, CorePresetProperties>
     }
   }
 
-  protected createExtensions() {
+  public createExtensions() {
     const { content, ...baseKeymapSettings } = this.settings;
     const { keymap } = this.properties;
 

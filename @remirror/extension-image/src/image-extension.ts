@@ -43,7 +43,10 @@ export class ImageExtension extends NodeExtension {
       parseDOM: [
         {
           tag: 'img[src]',
-          getAttrs: (domNode) => (isElementDOMNode(domNode) ? getAttributes(domNode) : {}),
+          getAttrs: (element) =>
+            isElementDOMNode(element)
+              ? getImageAttributes({ element, parseExtraAttributes: (x) => x })
+              : {},
         },
       ],
       toDOM: (node) => {
@@ -154,12 +157,13 @@ export function isImageFileType(file: File) {
 }
 
 /**
- * Retrieve attributes from the dom for the image extension.
+ * Get the alignment of the text in the element.
  */
-function getAttributes(domNode: HTMLElement, extraAttributes: ProsemirrorAttributes = {}) {
-  const { cssFloat, display, marginTop, marginLeft } = domNode.style;
-  let { width, height } = domNode.style;
-  let align = domNode.getAttribute('data-align') ?? domNode.getAttribute('align');
+function getAlignment(element: HTMLElement) {
+  const { cssFloat, display } = element.style;
+
+  let align = element.getAttribute('data-align') ?? element.getAttribute('align');
+
   if (align) {
     align = /(left|right|center)/.test(align) ? align : null;
   } else if (cssFloat === 'left' && !display) {
@@ -170,51 +174,103 @@ function getAttributes(domNode: HTMLElement, extraAttributes: ProsemirrorAttribu
     align = 'block';
   }
 
-  width = (width || domNode.getAttribute('width')) ?? '';
-  height = (height || domNode.getAttribute('height')) ?? '';
+  return align;
+}
 
-  let crop = null;
-  let rotate = null;
-  const { parentElement } = domNode;
-  if (parentElement instanceof HTMLElement) {
-    // Special case for Google doc's image.
-    if (
-      parentElement.style.display === 'inline-block' &&
-      parentElement.style.overflow === 'hidden' &&
-      parentElement.style.width &&
-      parentElement.style.height &&
-      marginLeft &&
-      !EMPTY_CSS_VALUE.has(marginLeft) &&
-      marginTop &&
-      !EMPTY_CSS_VALUE.has(marginTop)
-    ) {
-      crop = {
-        width: Number.parseInt(parentElement.style.width, 10) || 0,
-        height: Number.parseInt(parentElement.style.height, 10) || 0,
-        left: Number.parseInt(marginLeft, 10) || 0,
-        top: Number.parseInt(marginTop, 10) || 0,
-      };
-    }
-    if (parentElement.style.transform) {
-      // example: `rotate(1.57rad) translateZ(0px)`;
-      const mm = parentElement.style.transform.match(CSS_ROTATE_PATTERN);
-      if (mm?.[1]) {
-        rotate = Number.parseFloat(mm[1]) || null;
-      }
-    }
+/**
+ * Get the width and the height of the image.
+ */
+function getDimensions(element: HTMLElement) {
+  let { width, height } = element.style;
+  width = width ?? element.getAttribute('width') ?? '';
+  height = height ?? element.getAttribute('height') ?? '';
+
+  return { width, height };
+}
+
+/**
+ * Get the rotation of the image from the parent element.
+ */
+function getRotation(element: HTMLElement) {
+  const { parentElement } = element;
+
+  if (!isElementDOMNode(parentElement)) {
+    return null;
+  }
+
+  if (!parentElement.style.transform) {
+    return null;
+  }
+
+  // example text to match: `rotate(1.57rad) translateZ(0px)`;
+  const matchingPattern = parentElement.style.transform.match(CSS_ROTATE_PATTERN);
+
+  if (!matchingPattern?.[1]) {
+    return null;
+  }
+
+  return Number.parseFloat(matchingPattern[1]) || null;
+}
+
+/**
+ * Get the crop value for this element. Only applies to google doc images.
+ */
+function getCrop(element: HTMLElement) {
+  const { parentElement } = element;
+
+  if (!isElementDOMNode(parentElement)) {
+    return null;
+  }
+
+  const { marginTop, marginLeft } = element.style;
+
+  const hasCropValue =
+    parentElement.style.display === 'inline-block' &&
+    parentElement.style.overflow === 'hidden' &&
+    parentElement.style.width &&
+    parentElement.style.height &&
+    marginLeft &&
+    !EMPTY_CSS_VALUE.has(marginLeft) &&
+    marginTop &&
+    !EMPTY_CSS_VALUE.has(marginTop);
+
+  if (!hasCropValue) {
+    return null;
   }
 
   return {
-    ...extraAttributes,
+    width: Number.parseInt(parentElement.style.width, 10) || 0,
+    height: Number.parseInt(parentElement.style.height, 10) || 0,
+    left: Number.parseInt(marginLeft, 10) || 0,
+    top: Number.parseInt(marginTop, 10) || 0,
+  };
+}
+
+/**
+ * Retrieve attributes from the dom for the image extension.
+ */
+function getImageAttributes({
+  element,
+  parseExtraAttributes,
+}: {
+  element: HTMLElement;
+  parseExtraAttributes: <Type extends object>(value: Type) => Type;
+}) {
+  const { width, height } = getDimensions(element);
+  const align = getAlignment(element);
+  const crop = getCrop(element);
+  const rotate = getRotation(element);
+
+  return parseExtraAttributes({
     align,
-    alt: domNode.getAttribute('alt') ?? null,
+    alt: element.getAttribute('alt') ?? null,
     crop,
     height: Number.parseInt(height || '0', 10) || null,
     rotate,
-    src: domNode.getAttribute('src') ?? null,
-    title: domNode.getAttribute('title') ?? null,
+    src: element.getAttribute('src') ?? null,
+    title: element.getAttribute('title') ?? null,
     width: Number.parseInt(width || '0', 10) || null,
-  };
+  });
 }
 
 function hasCursor<T extends object>(argument: T): argument is T & { $cursor: ResolvedPos } {

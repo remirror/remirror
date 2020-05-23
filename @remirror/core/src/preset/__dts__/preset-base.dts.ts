@@ -2,7 +2,7 @@ import { RemirrorIdentifier } from '@remirror/core-constants';
 import { ignoreUnused } from '@remirror/test-fixtures';
 
 import { PlainExtension } from '../../extension';
-import { AnyPreset, Preset, SetPresetPropertiesParameter } from '../preset-base';
+import { AnyPreset, Preset, SetPropertiesParameter } from '../preset-base';
 
 // @ts-expect-error
 class PresetNoName extends Preset {}
@@ -27,7 +27,7 @@ class MissingSettingsPreset extends Preset<{ oops?: boolean }> {
     return;
   }
 
-  protected createExtensions() {
+  public createExtensions() {
     return [];
   }
 }
@@ -45,7 +45,7 @@ class WithSettingsPreset extends Preset<{ me: 'friend' | 'enemy' }> {
     return 'withSettings' as const;
   }
 
-  protected createExtensions() {
+  public createExtensions() {
     return [new ExtensionWithSettings({ oops: false })];
   }
 
@@ -76,7 +76,7 @@ class WithPropertiesPreset extends Preset<{ me?: string }, { required: boolean }
     return 'withSettings' as const;
   }
 
-  protected onSetProperties(parameter: SetPresetPropertiesParameter<{ required: boolean }>): void {
+  protected onSetProperties(parameter: SetPropertiesParameter<{ required: boolean }>): void {
     const { changes } = parameter;
 
     // @ts-expect-error
@@ -89,7 +89,7 @@ class WithPropertiesPreset extends Preset<{ me?: string }, { required: boolean }
     }
   }
 
-  protected createExtensions() {
+  public createExtensions() {
     return [new ExtensionWithSettings({ oops: false })];
   }
 }

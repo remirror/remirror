@@ -29,10 +29,6 @@ import {
   sortEmojiMatches,
 } from './emoji-utils';
 
-interface Data {
-  frequentlyUsed: EmojiObject[];
-}
-
 export class EmojiExtension extends PlainExtension<EmojiSettings, EmojiProperties> {
   public static readonly defaultSettings: DefaultExtensionSettings<EmojiSettings> = {
     defaultEmoji: DEFAULT_FREQUENTLY_USED,

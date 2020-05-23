@@ -21,12 +21,8 @@ import {
 } from '@remirror/core-types';
 
 import { AnyExtension, AnyExtensionConstructor, WithProperties } from '../extension';
-import { getChangedProperties, GetChangedPropertiesReturn } from '../helpers';
-import {
-  DefaultPropertiesParameter,
-  PropertiesUpdateReason,
-  PropertiesUpdateReasonParameter,
-} from '../types';
+import { getChangedProperties } from '../helpers';
+import { PropertiesUpdateReason, SetPropertiesParameter } from '../types';
 
 /**
  * A preset is our way of bundling similar extensions with unified
@@ -100,7 +96,7 @@ export abstract class Preset<
   #extensionMap = new Map<this['~E']['constructor'], this['~E']>();
 
   /**
-   * Keep track of whether this extension has been initialized or not.
+   * Keep track of whether this preset has been initialized or not.
    */
   #hasInitialized = false;
 
@@ -137,13 +133,13 @@ export abstract class Preset<
   /**
    * Create the extensions which will be consumed by the preset.
    */
-  protected abstract createExtensions(): AnyExtension[];
+  public abstract createExtensions(): AnyExtension[];
 
   /**
    * Called every time properties for this extension are set or reset. This is
    * also called when the extension is first created with the default properties.
    */
-  protected abstract onSetProperties(parameter: SetPresetPropertiesParameter<Properties>): void;
+  protected abstract onSetProperties(parameter: SetPropertiesParameter<Properties>): void;
 
   /**
    * When there are duplicate extensions used within the editor the extension
@@ -261,11 +257,6 @@ export interface Preset<
   ['~E']: ReturnType<this['createExtensions']>[number];
 }
 
-export interface SetPresetPropertiesParameter<Properties extends Shape = object>
-  extends DefaultPropertiesParameter<Properties>,
-    GetChangedPropertiesReturn<Properties>,
-    PropertiesUpdateReasonParameter {}
-
 /**
  * The type which is applicable to any `Preset` instances.
  */
@@ -284,8 +275,8 @@ export type DefaultPresetSettings<Settings extends Shape> = FlipPartialAndRequir
  *
  */
 export interface PresetConstructor<
-  Settings extends Shape = object,
-  Properties extends Shape = object
+  Settings extends Shape = EmptyShape,
+  Properties extends Shape = EmptyShape
 > extends Function {
   /**
    * The identifier for the constructor which identifies it as a preset constructor.

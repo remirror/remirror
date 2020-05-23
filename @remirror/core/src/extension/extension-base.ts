@@ -33,6 +33,7 @@ import {
 } from '@remirror/core-types';
 import { isMarkActive, isNodeActive } from '@remirror/core-utils';
 
+import { getChangedProperties } from '../helpers';
 import {
   BaseExtensionSettings,
   GeneralExtensionTags,
@@ -41,6 +42,8 @@ import {
   NodeExtensionTags,
   PartialProperties,
   PropertiesShape,
+  PropertiesUpdateReason,
+  SetPropertiesParameter,
   TransactionLifecycleMethod,
 } from '../types';
 
@@ -190,6 +193,11 @@ abstract class Extension<Settings extends Shape = EmptyShape, Properties extends
    */
   #properties: Required<Properties>;
 
+  /**
+   * Keep track of whether this extension has been initialized or not.
+   */
+  #hasInitialized = false;
+
   constructor(...parameters: ExtensionConstructorParameter<Settings, Properties>) {
     isValidExtensionConstructor(this.constructor);
 
@@ -201,6 +209,10 @@ abstract class Extension<Settings extends Shape = EmptyShape, Properties extends
       settings ?? object(),
     );
     this.#properties = { ...this.constructor.defaultProperties, ...settings?.properties };
+
+    // Triggers the `init` properties update for this extension.
+    this.setProperties(this.#properties);
+    this.#hasInitialized = true;
 
     this.init();
   }
@@ -225,15 +237,62 @@ abstract class Extension<Settings extends Shape = EmptyShape, Properties extends
   /**
    * Update the properties with the provided partial value when changed.
    */
-  public setProperties(properties: Partial<Properties>) {
-    this.#properties = { ...this.#properties, ...properties };
+  public setProperties(update: Partial<Properties>) {
+    const reason: PropertiesUpdateReason = this.#hasInitialized ? 'set' : 'init';
+    const previousProperties = this.#properties;
+
+    const { changes, properties } = getChangedProperties({
+      previousProperties,
+      update,
+    });
+
+    // Trigger the update handler so the extension can respond to any relevant property
+    // updates.
+    this.onSetProperties?.({
+      reason,
+      changes,
+      properties,
+      defaultProperties: this.constructor.defaultProperties,
+    });
+
+    // The constructor already sets the properties to their default values.
+    if (reason === 'init') {
+      return;
+    }
+
+    // Update the stored properties value.
+    this.#properties = properties;
   }
+
+  /**
+   * Override to received updates whenever `setProperties` is called. It is an
+   * optional abstract method
+   *
+   * @abstract
+   */
+  protected onSetProperties?(parameter: SetPropertiesParameter): void;
 
   /**
    * Reset the extension properties to their default values.
    */
   public resetProperties() {
-    this.#properties = { ...this.constructor.defaultProperties };
+    const previousProperties = this.#properties;
+    const { changes, properties } = getChangedProperties({
+      previousProperties,
+      update: this.constructor.defaultProperties,
+    });
+
+    // Trigger the update handler so that child extension properties can also be
+    // updated.
+    this.onSetProperties?.({
+      reason: 'reset',
+      properties,
+      changes,
+      defaultProperties: this.constructor.defaultProperties,
+    });
+
+    // Update the stored properties value.
+    this.#properties = properties;
   }
 
   /**

@@ -47,7 +47,7 @@ export class BuiltinPreset extends Preset {
     return;
   }
 
-  protected createExtensions() {
+  public createExtensions() {
     return builtInExtensions.map((Extension) => new Extension());
   }
 }

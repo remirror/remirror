@@ -1,7 +1,7 @@
 import { ErrorConstant } from '@remirror/core-constants';
-import { freeze, invariant, keys } from '@remirror/core-helpers';
+import { freeze, invariant, keys, object } from '@remirror/core-helpers';
 
-import { ChangedProperties } from './types';
+import { ChangedProperties, GetChangedPropertiesReturn } from './types';
 
 export interface GetChangedPropertiesParameter<Properties extends object> {
   /**
@@ -32,7 +32,7 @@ export function getChangedProperties<Properties extends object>(
 ): GetChangedPropertiesReturn<Properties> {
   const { previousProperties: previous, update, equals = defaultEquals } = parameter;
   const next = freeze({ ...previous, ...update });
-  const changes = {} as ChangedProperties<Properties>;
+  const changes: ChangedProperties<Required<Properties>> = object();
   const propertyKeys = keys(previous);
 
   for (const key of propertyKeys) {
@@ -48,34 +48,6 @@ export function getChangedProperties<Properties extends object>(
   }
 
   return { changes: freeze(changes), properties: next };
-}
-
-export interface GetChangedPropertiesReturn<Properties extends object> {
-  /**
-   * The next value of the properties after the update.This also includes values which have not been changed.
-   */
-  properties: Readonly<Required<Properties>>;
-
-  /**
-   * An object with all the keys showing what's been changed. This should be
-   * used to determine the children extensions which should be updated.
-   *
-   * @remarks
-   *
-   * Using this can prevent unnecessary updates. It's possible for new
-   * properties to be passed that are identical to the previous, by checking if
-   * the object was changed this can be avoided.
-   *
-   * This uses a discriminated union. When the `changed` property is true then
-   * the object has a value as well.
-   *
-   * ```ts
-   * if (changes.myProperty.changed) {
-   *   doSomething(changes.myProperty.value);
-   * }
-   * ```
-   */
-  changes: Readonly<Required<ChangedProperties<Properties>>>;
 }
 
 export interface IsNameUniqueParameter {
