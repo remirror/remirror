@@ -906,7 +906,7 @@ export interface CreateLifecycleParameter {
   /**
    * Get the value of a key from the manager store.
    */
-  getStoreKey: <Key extends ManagerStoreKeys>(key: Key) => Readonly<AnyManagerStore[Key]>;
+  getStoreKey: <Key extends ManagerStoreKeys>(key: Key) => AnyManagerStore[Key];
 
   /**
    * Update the store with a specific key.

@@ -2,16 +2,15 @@ import {
   bool,
   Cast,
   CommandFunction,
+  CreatePluginReturn,
   CSS_ROTATE_PATTERN,
   EMPTY_CSS_VALUE,
   isElementDOMNode,
   NodeExtension,
   NodeExtensionSpec,
-  PluginKey,
   ProsemirrorAttributes,
 } from '@remirror/core';
 import { ResolvedPos } from '@remirror/pm/model';
-import { Plugin } from '@remirror/pm/state';
 
 /**
  * The image extension for placing images into your editor.
@@ -74,9 +73,8 @@ export class ImageExtension extends NodeExtension {
     };
   };
 
-  public createPlugin = (key: PluginKey) => {
-    return new Plugin({
-      key,
+  public createPlugin = (): CreatePluginReturn => {
+    return {
       props: {
         handleDOMEvents: {
           drop(view, e) {
@@ -120,7 +118,7 @@ export class ImageExtension extends NodeExtension {
           },
         },
       },
-    });
+    };
   };
 }
 

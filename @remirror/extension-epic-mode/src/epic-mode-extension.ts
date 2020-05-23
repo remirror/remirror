@@ -1,5 +1,6 @@
 import {
   AnyExtension,
+  CreatePluginReturn,
   EditorSchema,
   EditorView,
   EmptyShape,
@@ -29,11 +30,10 @@ export class EpicModeExtension extends PlainExtension<EmptyShape, EpicModeProper
     return 'epicMode' as const;
   }
 
-  public createPlugin = (key: PluginKey): Plugin => {
+  public createPlugin = (): CreatePluginReturn<EpicModePluginState> => {
     const pluginState = new EpicModePluginState(this);
 
-    return new Plugin<EpicModePluginState, EditorSchema>({
-      key,
+    return {
       state: {
         init() {
           return pluginState;
@@ -59,7 +59,7 @@ export class EpicModeExtension extends PlainExtension<EmptyShape, EpicModeProper
           },
         };
       },
-    });
+    };
   };
 }
 

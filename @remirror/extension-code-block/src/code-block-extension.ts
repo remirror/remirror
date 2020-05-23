@@ -2,6 +2,7 @@ import refractor from 'refractor/core';
 
 import {
   convertCommand,
+  CreatePluginReturn,
   DefaultExtensionSettings,
   findNodeAtSelection,
   findParentNodeOfType,
@@ -17,14 +18,13 @@ import {
   NodeExtensionSpec,
   NodeGroup,
   nodeInputRule,
-  PluginKey,
   PosParameter,
   removeNodeAtPosition,
   toggleBlockItem,
 } from '@remirror/core';
 import { setBlockType } from '@remirror/pm/commands';
 import { keydownHandler } from '@remirror/pm/keymap';
-import { Plugin, TextSelection } from '@remirror/pm/state';
+import { TextSelection } from '@remirror/pm/state';
 
 import { CodeBlockState } from './code-block-plugin';
 import { CodeBlockAttributes, CodeBlockProperties, CodeBlockSettings } from './code-block-types';
@@ -321,17 +321,20 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlo
     };
   };
 
-  public createPlugin = (key: PluginKey): Plugin => {
+  public createPlugin = (): CreatePluginReturn<CodeBlockState> => {
     const pluginState = new CodeBlockState(this.type, this);
 
-    /** Handles deletions within the plugin state. */
+    /**
+     * Handles deletions within the plugin state.
+     */
     const handler = () => {
       pluginState.setDeleted(true);
+
+      // Delegate to the next key handler.
       return false;
     };
 
-    return new Plugin<CodeBlockState>({
-      key,
+    return {
       state: {
         init(_, state) {
           return pluginState.init(state);
@@ -353,13 +356,12 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlo
           'Alt-Delete': handler,
           'Alt-d': handler,
         }),
-        // handleDOMEvents:
         decorations() {
           pluginState.setDeleted(false);
           return pluginState.decorationSet;
         },
       },
-    });
+    };
   };
 }
 

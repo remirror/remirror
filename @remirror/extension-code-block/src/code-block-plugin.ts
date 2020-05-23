@@ -47,7 +47,7 @@ export class CodeBlockState {
    */
   public decorationSet!: DecorationSet;
 
-  constructor(type: NodeType, extension: AnyExtension<CodeBlockSettings, CodeBlockProperties>) {
+  constructor(type: NodeType, extension: NodeExtension<CodeBlockSettings, CodeBlockProperties>) {
     this.#type = type;
     this.#extension = extension;
   }

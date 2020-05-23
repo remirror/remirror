@@ -78,13 +78,15 @@ export class CollaborationExtension extends PlainExtension<
     };
   };
 
-  public createPlugin = () => {
+  public createExternalPlugins = () => {
     const { version, clientID } = this.settings;
 
-    return collab({
+    const plugin = collab({
       version,
       clientID,
     });
+
+    return [plugin];
   };
 
   public onTransaction: TransactionLifecycleMethod = (parameter) => {

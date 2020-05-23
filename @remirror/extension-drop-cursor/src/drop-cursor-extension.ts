@@ -1,5 +1,6 @@
 import {
   bool,
+  CreatePluginReturn,
   DefaultExtensionSettings,
   EditorView,
   findPositionOfNodeAfter,
@@ -7,11 +8,9 @@ import {
   isUndefined,
   pick,
   PlainExtension,
-  PluginKey,
   ResolvedPos,
   throttle,
 } from '@remirror/core';
-import { Plugin } from '@remirror/pm/state';
 import { dropPoint, insertPoint } from '@remirror/pm/transform';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
 
@@ -56,11 +55,10 @@ export class DropCursorExtension extends PlainExtension<DropCursorSettings, Drop
   /**
    * Use the dropCursor plugin with provided options.
    */
-  public createPlugin = (key: PluginKey) => {
+  public createPlugin = (): CreatePluginReturn<DropCursorState> => {
     const dropCursorState = new DropCursorState(this);
 
-    return new Plugin<DropCursorState>({
-      key,
+    return {
       view(editorView) {
         dropCursorState.init(editorView);
         return pick(dropCursorState, ['destroy']);
@@ -90,7 +88,7 @@ export class DropCursorExtension extends PlainExtension<DropCursorSettings, Drop
           },
         },
       },
-    });
+    };
   };
 }
 

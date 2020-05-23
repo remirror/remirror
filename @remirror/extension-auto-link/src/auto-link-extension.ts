@@ -1,5 +1,6 @@
 import {
   Cast,
+  CreatePluginReturn,
   DefaultExtensionSettings,
   EditorState,
   EditorStateParameter,
@@ -88,9 +89,8 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkSettings, AutoLinkP
     ];
   };
 
-  public createPlugin = (key: PluginKey) => {
-    return new Plugin({
-      key,
+  public createPlugin = (): CreatePluginReturn => {
+    return {
       state: {
         init() {
           return null;
@@ -198,7 +198,7 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkSettings, AutoLinkP
           }
         },
       }),
-    });
+    };
   };
 }
 

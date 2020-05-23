@@ -1,8 +1,10 @@
+import { Except } from 'type-fest';
+
 import { ExtensionPriority } from '@remirror/core-constants';
-import { invariant, isArray, object } from '@remirror/core-helpers';
+import { invariant, object } from '@remirror/core-helpers';
 import { EditorSchema, ProsemirrorPlugin, Shape } from '@remirror/core-types';
 import { getPluginState } from '@remirror/core-utils';
-import { Plugin, PluginKey } from '@remirror/pm/state';
+import { Plugin, PluginKey, PluginSpec } from '@remirror/pm/state';
 
 import {
   AnyExtension,
@@ -16,8 +18,8 @@ import { AnyPreset } from '../preset';
 import { GetNameUnion } from '../types';
 
 /**
- * This extension allows others extension to add the `createPlugin` method
- * using Prosemirror Plugins.
+ * This extension allows others extension to add the `createPlugin` method using
+ * Prosemirror Plugins.
  *
  * @remarks
  *
@@ -75,13 +77,20 @@ export class PluginsExtension extends PlainExtension {
   public onInitialize: InitializeLifecycleMethod = (parameter) => {
     const { addPlugins, managerSettings, getStoreKey } = parameter;
 
+    const createGetPluginState = (name: string) => <Type = any>(): Type => {
+      return getStoreKey('getPluginState')(name);
+    };
+
     const extensionPlugins: ProsemirrorPlugin[] = [];
 
     return {
       forEachExtension: (extension) => {
+        // Extension doesn't create it's own plugin or use any third party
+        // plugins
+        const hasNoPluginCreators = !extension.createPlugin && !extension.createExternalPlugins;
+
         if (
-          // Extension doesn't create any plugins
-          !extension.createPlugin ||
+          hasNoPluginCreators ||
           // the manager settings don't exclude plugins
           managerSettings.exclude?.plugins ||
           // The extension settings don't exclude plugins
@@ -90,10 +99,17 @@ export class PluginsExtension extends PlainExtension {
           return;
         }
 
-        const key: PluginKey = getStoreKey('pluginKeys')[extension.name];
-        const plugin: Plugin | Plugin[] = extension.createPlugin(key);
+        // Create the custom plugin if it exists.
+        if (extension.createPlugin) {
+          const getPluginState = createGetPluginState(extension.name);
+          const key: PluginKey = getStoreKey('pluginKeys')[extension.name];
+          const pluginSpec = { ...extension.createPlugin(getPluginState), key };
 
-        extensionPlugins.push(...(isArray(plugin) ? plugin : [plugin]));
+          extensionPlugins.push(new Plugin(pluginSpec));
+        }
+
+        // Add the external plugins if they exist
+        extensionPlugins.push(...(extension.createExternalPlugins?.() ?? []));
       },
 
       afterExtensionLoop: () => {
@@ -102,6 +118,12 @@ export class PluginsExtension extends PlainExtension {
     };
   };
 }
+
+/**
+ * An interface for creating custom plugins in your `remirror` editor.
+ */
+export interface CreatePluginReturn<PluginState = any>
+  extends Except<PluginSpec<PluginState, EditorSchema>, 'key'> {}
 
 declare global {
   namespace Remirror {
@@ -157,15 +179,62 @@ declare global {
       Properties extends Shape = object
     > {
       /**
-       * Register a prosemirror plugin for the extension.
+       * Create a custom plugin directly in the editor.
        *
        * @remarks
        *
-       * All plugins should use the ``
+       * A unique `key` is automatically applied to enable easier retrieval of
+       * the plugin state.
        *
-       * @param parameter - schema parameter with the prosemirror type included
+       * ```ts
+       * import { ExtensionPluginSpec } from 'remirror/core';
+       *
+       * class MyExtension extends PlainExtension {
+       *   get name() {
+       *     return 'me' as const;
+       *   }
+       *
+       *   public createPlugin: (): ExtensionPluginSpec => ({
+       *     props: {
+       *       handleKeyDown: keydownHandler({
+       *         Backspace: handler,
+       *         'Mod-Backspace': handler,
+       *         Delete: handler,
+       *         'Mod-Delete': handler,
+       *         'Ctrl-h': handler,
+       *         'Alt-Backspace': handler,
+       *         'Ctrl-d': handler,
+       *         'Ctrl-Alt-Backspace': handler,
+       *         'Alt-Delete': handler,
+       *         'Alt-d': handler,
+       *       }),
+       *       decorations() {
+       *         pluginState.setDeleted(false);
+       *         return pluginState.decorationSet;
+       *       },
+       *     },
+       *   })
+       * }
+       * ```
+       *
+       * @param getPluginState - a function you can call within any of the
+       * `CreatePluginSpec` methods to get the latest plugin state. Don't call
+       * in the outer scope of the `createPlugin` function or you will get
+       * errors..
        */
-      createPlugin?: (pluginKey: PluginKey) => ProsemirrorPlugin | ProsemirrorPlugin[];
+      createPlugin?: (getPluginState: <T = any>() => T) => CreatePluginReturn;
+
+      /**
+       * Register third party plugins when this extension is placed into the
+       * editor.
+       *
+       * @remarks
+       *
+       * Some plugins (like the table plugin) consume several different plugins,
+       * creator method allows you to return a list of plugins you'd like to
+       * support.
+       */
+      createExternalPlugins?: () => ProsemirrorPlugin[];
     }
   }
 }

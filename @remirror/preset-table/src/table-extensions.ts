@@ -50,8 +50,11 @@ export class TableExtension extends NodeExtension {
     };
   }
 
-  public createPlugin = () => {
-    return tableEditing();
+  /**
+   * Add the table plugins to the editor.
+   */
+  public createExternalPlugins = () => {
+    return [tableEditing()];
   };
 
   public createCommands = () => {
