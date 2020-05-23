@@ -36,7 +36,9 @@ export class ReactSSRExtension extends PlainExtension<object, ReactSSRProperties
     transformers: [injectBrIntoEmptyParagraphs],
   };
 
-  public readonly name = 'reactSSR' as const;
+  get name() {
+    return 'reactSSR' as const;
+  }
 
   public onCreate: CreateLifecycleMethod = (parameter) => {
     const { setStoreKey, managerSettings } = parameter;

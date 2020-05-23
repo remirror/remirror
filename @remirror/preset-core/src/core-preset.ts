@@ -34,7 +34,9 @@ export class CorePreset extends Preset<CorePresetSettings, CorePresetProperties>
     keymap: BaseKeymapExtension.defaultProperties.keymap,
   };
 
-  public readonly name = 'core' as const;
+  get name() {
+    return 'core' as const;
+  }
 
   /**
    * No properties are defined so this can be ignored.
@@ -48,7 +50,7 @@ export class CorePreset extends Preset<CorePresetSettings, CorePresetProperties>
     }
   }
 
-  public createExtensions() {
+  protected createExtensions() {
     const { content, ...baseKeymapSettings } = this.settings;
     const { keymap } = this.properties;
 

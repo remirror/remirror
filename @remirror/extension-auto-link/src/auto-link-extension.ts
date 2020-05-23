@@ -40,7 +40,9 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkSettings, AutoLinkP
     defaultProtocol: '',
   };
 
-  public readonly name = 'autoLink' as const;
+  get name() {
+    return 'autoLink' as const;
+  }
 
   public createMarkSpec(): MarkExtensionSpec {
     return {

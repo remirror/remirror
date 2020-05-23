@@ -28,7 +28,9 @@ import { ExtensionHelperReturn } from '../types';
  * @builtin
  */
 export class HelpersExtension extends PlainExtension {
-  public readonly name = 'helpers' as const;
+  get name() {
+    return 'helpers' as const;
+  }
 
   /**
    * Provide a method with access to the helpers for use in commands and helpers.

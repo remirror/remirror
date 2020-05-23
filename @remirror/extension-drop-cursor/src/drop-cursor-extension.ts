@@ -38,7 +38,9 @@ export class DropCursorExtension extends PlainExtension<DropCursorSettings, Drop
     onDestroy() {},
   };
 
-  public readonly name = 'dropCursor' as const;
+  get name() {
+    return 'dropCursor' as const;
+  }
 
   public createHelpers = () => {
     return {

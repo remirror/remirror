@@ -28,7 +28,9 @@ export interface BoldExtensionSettings {
 export class BoldExtension extends MarkExtension<BoldExtensionSettings> {
   public static readonly defaultSettings = { weight: null };
 
-  public readonly name = 'bold' as const;
+  get name() {
+    return 'bold' as const;
+  }
   public readonly tags = [ExtensionTag.FormattingMark];
 
   public createMarkSpec(): MarkExtensionSpec {

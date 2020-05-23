@@ -25,7 +25,9 @@ export class EpicModeExtension extends PlainExtension<EmptyShape, EpicModeProper
     shakeIntensity: 5,
   };
 
-  public readonly name = 'epicMode' as const;
+  get name() {
+    return 'epicMode' as const;
+  }
 
   public createPlugin = (key: PluginKey): Plugin => {
     const pluginState = new EpicModePluginState(this);

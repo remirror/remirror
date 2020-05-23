@@ -17,7 +17,9 @@ import { AnyPreset } from '../preset';
  * @builtin
  */
 export class NodeViewsExtension extends PlainExtension {
-  public readonly name = 'nodeView' as const;
+  get name() {
+    return 'nodeView' as const;
+  }
   public readonly defaultPriority = ExtensionPriority.High as const;
 
   /**

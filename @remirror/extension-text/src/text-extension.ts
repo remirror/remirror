@@ -6,7 +6,9 @@ import { NodeExtension, NodeGroup } from '@remirror/core';
  * @core
  */
 export class TextExtension extends NodeExtension {
-  public readonly name = 'text' as const;
+  get name() {
+    return 'text' as const;
+  }
 
   protected createNodeSpec() {
     return { group: NodeGroup.Inline };

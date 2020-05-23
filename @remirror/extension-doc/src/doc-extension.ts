@@ -49,7 +49,9 @@ export class DocExtension extends NodeExtension<DocExtensionSettings> {
     content: 'block+',
   };
 
-  public readonly name = 'doc' as const;
+  get name() {
+    return 'doc' as const;
+  }
 
   protected createNodeSpec() {
     return {

@@ -115,7 +115,9 @@ export class BaseKeymapExtension extends PlainExtension<BaseKeymapSettings, Base
   };
   public static readonly defaultProperties: Required<BaseKeymapProperties> = { keymap: object() };
 
-  public readonly name = 'baseKeymap' as const;
+  get name() {
+    return 'baseKeymap' as const;
+  }
 
   public readonly defaultPriority = ExtensionPriority.Low as const;
 

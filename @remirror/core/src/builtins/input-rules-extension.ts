@@ -16,7 +16,9 @@ import { InitializeLifecycleMethod, PlainExtension } from '../extension';
  * @builtin
  */
 export class InputRulesExtension extends PlainExtension {
-  public readonly name = 'inputRules' as const;
+  get name() {
+    return 'inputRules' as const;
+  }
   public readonly defaultPriority = ExtensionPriority.High as const;
 
   /**

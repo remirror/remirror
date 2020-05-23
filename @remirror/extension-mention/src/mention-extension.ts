@@ -79,7 +79,9 @@ export class MentionExtension extends MarkExtension<MentionSettings, MentionProp
     noDecorations: false,
   };
 
-  public readonly name = 'mention' as const;
+  get name() {
+    return 'mention' as const;
+  }
 
   public createMarkSpec(): MarkExtensionSpec {
     const dataAttributeId = 'data-mention-id';

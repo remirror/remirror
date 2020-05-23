@@ -22,7 +22,9 @@ import { InitializeLifecycleMethod, PlainExtension } from '../extension';
  * @builtin
  */
 export class KeymapExtension extends PlainExtension {
-  public readonly name = 'keymap' as const;
+  get name() {
+    return 'keymap' as const;
+  }
   public readonly defaultPriority = ExtensionPriority.High as const;
 
   /**

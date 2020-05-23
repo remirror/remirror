@@ -27,7 +27,9 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionSettings
     indentLevels: INDENT_LEVELS,
   };
 
-  public readonly name = 'paragraph' as const;
+  get name() {
+    return 'paragraph' as const;
+  }
   public readonly extensionTags = [ExtensionTag.LastNodeCompatible] as const;
 
   protected createNodeSpec(): NodeExtensionSpec {

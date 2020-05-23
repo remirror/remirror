@@ -2,14 +2,15 @@ import escapeStringRegex from 'escape-string-regexp';
 
 import {
   CommandFunction,
+  DefaultExtensionSettings,
   FromToParameter,
   isNullOrUndefined,
   noop,
   object,
-  plainInputRule,
   PlainExtension,
-  DefaultExtensionSettings,
+  plainInputRule,
 } from '@remirror/core';
+import { Suggestion } from '@remirror/pm/suggest';
 
 import {
   EmojiObject,
@@ -27,7 +28,6 @@ import {
   SKIN_VARIATIONS,
   sortEmojiMatches,
 } from './emoji-utils';
-import { Suggestion } from '@remirror/pm/suggest';
 
 interface Data {
   frequentlyUsed: EmojiObject[];
@@ -49,7 +49,9 @@ export class EmojiExtension extends PlainExtension<EmojiSettings, EmojiPropertie
   /**
    * The name is dynamically generated based on the passed in type.
    */
-  public readonly name = 'emoji';
+  get name() {
+    return 'emoji';
+  }
 
   /**
    * Keep track of the frequently used list.

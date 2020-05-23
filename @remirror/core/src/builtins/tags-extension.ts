@@ -20,7 +20,9 @@ import { GeneralExtensionTags, MarkExtensionTags, NodeExtensionTags } from '../t
  * @builtin
  */
 export class TagsExtension extends PlainExtension {
-  public readonly name = 'tags' as const;
+  get name() {
+    return 'tags' as const;
+  }
 
   public onCreate: CreateLifecycleMethod = (parameter) => {
     const general: GeneralExtensionTags = {

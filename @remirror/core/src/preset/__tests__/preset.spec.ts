@@ -25,14 +25,18 @@ class FirstExtension extends PlainExtension<FirstSettings, FirstProperties> {
   public static defaultSettings = { a: 0 };
   public static defaultProperties = { y: 100 };
 
-  public readonly name = 'first' as const;
+  get name() {
+    return 'first' as const;
+  }
 }
 
 class SecondExtension extends PlainExtension<SecondSettings, SecondProperties> {
   public static defaultSettings = { b: 'setting b' };
   public static defaultProperties = { z: 'property z' };
 
-  public readonly name = 'second' as const;
+  get name() {
+    return 'second' as const;
+  }
 }
 
 describe('simplest preset', () => {
@@ -45,9 +49,11 @@ describe('simplest preset', () => {
       y: FirstExtension.defaultProperties.y,
       z: 'override property z',
     };
-    public readonly name = 'test' as const;
+    get name() {
+      return 'test' as const;
+    }
 
-    public createExtensions() {
+    protected createExtensions() {
       return [new FirstExtension({}), new SecondExtension({ b: this.settings.b })];
     }
 

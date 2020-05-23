@@ -16,7 +16,9 @@ import { createTestManager, simpleJSON, testJSON } from '@remirror/test-fixtures
 import { ReactSerializer } from '../react-serializer';
 
 class FooExtension extends NodeExtension {
-  public readonly name = 'foo' as const;
+  get name() {
+    return 'foo' as const;
+  }
   public schema: NodeExtensionSpec = {
     content: 'block*',
     group: NodeGroup.Block,

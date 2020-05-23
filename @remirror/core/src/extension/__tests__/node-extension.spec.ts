@@ -8,7 +8,9 @@ import { createBaseManager } from '@remirror/test-fixtures';
 import { NodeExtension } from '..';
 
 class CustomExtension extends NodeExtension {
-  public readonly name = 'custom' as const;
+  get name() {
+    return 'custom' as const;
+  }
 
   public createNodeSpec(): NodeExtensionSpec {
     return {

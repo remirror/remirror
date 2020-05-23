@@ -6,7 +6,9 @@ import { ChainedFromExtensions, PlainExtension } from '..';
 import { CommandsFromExtensions } from '../extension-types';
 
 class FirstExtension extends PlainExtension {
-  public readonly name = 'first' as const;
+  get name() {
+    return 'first' as const;
+  }
 
   public createCommands = () => {
     return {
@@ -22,7 +24,9 @@ class FirstExtension extends PlainExtension {
 }
 
 class SecondExtension extends PlainExtension<{ option: boolean }> {
-  public readonly name = 'second' as const;
+  get name() {
+    return 'second' as const;
+  }
 
   public createCommands = () => {
     return {
@@ -34,7 +38,9 @@ class SecondExtension extends PlainExtension<{ option: boolean }> {
 }
 
 class ThirdExtension extends PlainExtension {
-  public readonly name = 'third' as const;
+  get name() {
+    return 'third' as const;
+  }
 
   public createCommands = () => {
     return {

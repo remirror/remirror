@@ -100,7 +100,7 @@ import {
  *     id: '',
  *   }
  *
- *   public readonly name = 'awesome' as const;
+ *   get name() { return 'awesome' as const; }
  * }
  * ```
  */
@@ -535,7 +535,7 @@ export abstract class NodeExtension<
    * import { NodeExtension, SpecHole } from 'remirror/core';
    *
    * class AwesomeExtension extends NodeExtension {
-   *   public readonly name = 'awesome' as const';
+   *   get name() { return 'awesome' as const'; }
    *
    *   createNodeSpec(hole: SpecHole) {
    *     return {

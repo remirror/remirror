@@ -137,7 +137,7 @@ export abstract class Preset<
   /**
    * Create the extensions which will be consumed by the preset.
    */
-  public abstract createExtensions(): AnyExtension[];
+  protected abstract createExtensions(): AnyExtension[];
 
   /**
    * Called every time properties for this extension are set or reset. This is

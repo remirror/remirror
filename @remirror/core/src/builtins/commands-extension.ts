@@ -34,7 +34,9 @@ import { CommandShape, ExtensionCommandFunction, ExtensionCommandReturn } from '
  * @builtin
  */
 export class CommandsExtension extends PlainExtension {
-  public readonly name = 'commands' as const;
+  get name() {
+    return 'commands' as const;
+  }
 
   public onCreate: CreateLifecycleMethod = (parameter) => {
     return {

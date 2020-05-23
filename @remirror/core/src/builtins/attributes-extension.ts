@@ -18,7 +18,9 @@ import { AnyPreset } from '../preset';
  * @builtin
  */
 export class AttributesExtension extends PlainExtension {
-  public readonly name = 'attributes' as const;
+  get name() {
+    return 'attributes' as const;
+  }
   public readonly defaultPriority = ExtensionPriority.High as const;
 
   /**

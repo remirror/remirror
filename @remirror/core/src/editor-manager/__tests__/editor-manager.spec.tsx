@@ -20,7 +20,9 @@ describe('Manager', () => {
   const getInformation = jest.fn(() => 'information');
 
   class DummyExtension extends PlainExtension {
-    public readonly name = 'dummy' as const;
+    get name() {
+      return 'dummy' as const;
+    }
     public readonly extensionTags = ['simple', ExtensionTag.LastNodeCompatible];
 
     public createCommands = () => {
@@ -41,7 +43,9 @@ describe('Manager', () => {
   }
 
   class BigExtension extends PlainExtension {
-    public readonly name = 'big' as const;
+    get name() {
+      return 'big' as const;
+    }
 
     public createNodeSpec = () => {
       return {
@@ -144,7 +148,9 @@ test('keymaps', () => {
   };
 
   class FirstExtension extends PlainExtension {
-    public readonly name = 'first' as const;
+    get name() {
+      return 'first' as const;
+    }
 
     public createKeymap = () => {
       return {
@@ -154,7 +160,9 @@ test('keymaps', () => {
   }
 
   class SecondExtension extends PlainExtension {
-    public readonly name = 'second' as const;
+    get name() {
+      return 'second' as const;
+    }
 
     public createKeymap = () => {
       return {
@@ -164,7 +172,9 @@ test('keymaps', () => {
   }
 
   class ThirdExtension extends PlainExtension {
-    public readonly name = 'third' as const;
+    get name() {
+      return 'third' as const;
+    }
 
     public createKeymap = () => {
       return {

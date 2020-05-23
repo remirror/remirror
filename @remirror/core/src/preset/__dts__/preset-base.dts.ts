@@ -9,7 +9,9 @@ class PresetNoName extends Preset {}
 
 // @ts-expect-error
 class NoExtensionPreset extends Preset {
-  public readonly name = 'noExtensions' as const;
+  get name() {
+    return 'noExtensions' as const;
+  }
 
   protected onSetProperties(): void {
     return;
@@ -17,27 +19,33 @@ class NoExtensionPreset extends Preset {
 }
 
 class MissingSettingsPreset extends Preset<{ oops?: boolean }> {
-  public readonly name = 'missingSettings' as const;
+  get name() {
+    return 'missingSettings' as const;
+  }
 
   protected onSetProperties(): void {
     return;
   }
 
-  public createExtensions() {
+  protected createExtensions() {
     return [];
   }
 }
 
 class ExtensionWithSettings extends PlainExtension<{ oops: boolean }> {
-  public readonly name = 'withSettings' as const;
+  get name() {
+    return 'withSettings' as const;
+  }
 }
 
 class WithSettingsPreset extends Preset<{ me: 'friend' | 'enemy' }> {
   public static readonly defaultSettings = { me: 'friend' };
 
-  public readonly name = 'withSettings' as const;
+  get name() {
+    return 'withSettings' as const;
+  }
 
-  public createExtensions() {
+  protected createExtensions() {
     return [new ExtensionWithSettings({ oops: false })];
   }
 
@@ -64,7 +72,9 @@ class WithPropertiesPreset extends Preset<{ me?: string }, { required: boolean }
   public static readonly defaultSettings = { required: true };
   public static readonly defaultProperties = { me: 'friend' };
 
-  public readonly name = 'withSettings' as const;
+  get name() {
+    return 'withSettings' as const;
+  }
 
   protected onSetProperties(parameter: SetPresetPropertiesParameter<{ required: boolean }>): void {
     const { changes } = parameter;
@@ -79,7 +89,7 @@ class WithPropertiesPreset extends Preset<{ me?: string }, { required: boolean }
     }
   }
 
-  public createExtensions() {
+  protected createExtensions() {
     return [new ExtensionWithSettings({ oops: false })];
   }
 }

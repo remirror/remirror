@@ -21,7 +21,9 @@ import { Plugin } from '@remirror/pm/state';
  * - Resizable https://glitch.com/edit/#!/toothsome-shoemaker?path=index.js%3A1%3A0
  */
 export class ImageExtension extends NodeExtension {
-  public readonly name = 'image' as const;
+  get name() {
+    return 'image' as const;
+  }
 
   public createNodeSpec(): NodeExtensionSpec {
     return {

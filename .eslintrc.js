@@ -304,7 +304,7 @@ module.exports = {
       },
     },
     {
-      files: ['**/*.d.ts'],
+      files: ['**/*.d.ts', '**/__mocks__/**'],
       rules: {
         'import/no-default-export': 'off',
         'import/no-duplicates': 'off',

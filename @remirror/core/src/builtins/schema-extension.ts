@@ -32,7 +32,9 @@ import { AnyPreset } from '../preset';
  * @builtin
  */
 export class SchemaExtension extends PlainExtension {
-  public readonly name = 'schema' as const;
+  get name() {
+    return 'schema' as const;
+  }
 
   /**
    * This extension is essential and hence the priority is set to high.

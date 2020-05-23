@@ -17,7 +17,9 @@ import { InitializeLifecycleMethod, PlainExtension } from '../extension';
  * @builtin
  */
 export class SuggestionsExtension extends PlainExtension {
-  public readonly name = 'suggestions' as const;
+  get name() {
+    return 'suggestions' as const;
+  }
   public readonly defaultPriority = ExtensionPriority.High;
 
   /**

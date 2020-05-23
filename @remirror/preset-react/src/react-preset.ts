@@ -13,7 +13,9 @@ export class ReactPreset extends Preset<ReactPresetSettings, ReactPresetProperti
     ...ReactSSRExtension.defaultProperties,
   };
 
-  public readonly name = 'react' as const;
+  get name() {
+    return 'react' as const;
+  }
 
   /**
    * No properties are defined so this can be ignored.
@@ -27,7 +29,7 @@ export class ReactPreset extends Preset<ReactPresetSettings, ReactPresetProperti
     }
   }
 
-  public createExtensions() {
+  protected createExtensions() {
     const { transformers } = this.properties;
 
     return [new ReactSSRExtension({ properties: { transformers } })];

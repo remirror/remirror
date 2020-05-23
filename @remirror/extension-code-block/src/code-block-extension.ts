@@ -49,7 +49,9 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlo
     defaultLanguage: 'markup',
   };
 
-  public readonly name = 'codeBlock' as const;
+  get name() {
+    return 'codeBlock' as const;
+  }
 
   /**
    * Add the languages to the environment if they have not yet been added.

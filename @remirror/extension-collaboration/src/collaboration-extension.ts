@@ -36,7 +36,9 @@ export class CollaborationExtension extends PlainExtension<
     onSendableReceived() {},
   };
 
-  public readonly name = 'collaboration';
+  get name() {
+    return 'collaboration';
+  }
 
   protected init() {
     this.getSendableSteps = debounce(this.settings.debounceMs, this.getSendableSteps);

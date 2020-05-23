@@ -19,7 +19,9 @@ const anyMarkExtensionTester = <ExtensionUnion extends AnyMarkExtension>(
 // Extension without settings.
 
 class ExtensionWithoutSettings extends PlainExtension {
-  public readonly name = 'withoutSettings' as const;
+  get name() {
+    return 'withoutSettings' as const;
+  }
 }
 const extensionWithoutSettings = new ExtensionWithoutSettings();
 
@@ -32,7 +34,9 @@ anyExtensionTester(extensionWithoutSettings);
 // Extension with settings
 
 class ExtensionWithSettings extends PlainExtension<{ oops: boolean }> {
-  public readonly name = 'withSettings' as const;
+  get name() {
+    return 'withSettings' as const;
+  }
 }
 
 // @ts-expect-error
@@ -55,13 +59,17 @@ class ExtensionWithProperties extends PlainExtension<{ awesome?: string }, { oop
   public static readonly defaultSettings = { awesome: 'never' };
   public static readonly defaultProperties = { oops: false };
 
-  public readonly name = 'withProperties' as const;
+  get name() {
+    return 'withProperties' as const;
+  }
 }
 
 new ExtensionWithProperties();
 
 class NodeExtensionWithProperties extends NodeExtension<{ awesome?: string }, { oops: boolean }> {
-  public readonly name = 'withProperties' as const;
+  get name() {
+    return 'withProperties' as const;
+  }
 
   protected createNodeSpec(): NodeExtensionSpec {
     return {};
@@ -72,7 +80,9 @@ class MarkExtensionWithProperties extends MarkExtension<{ awesome?: string }, { 
   public static readonly defaultSettings = { awesome: 'nice' };
   public static readonly defaultProperties = { oops: true };
 
-  public readonly name = 'withProperties' as const;
+  get name() {
+    return 'withProperties' as const;
+  }
 
   protected createMarkSpec() {
     return {};
@@ -80,7 +90,9 @@ class MarkExtensionWithProperties extends MarkExtension<{ awesome?: string }, { 
 }
 
 class InvalidPropertiesExtension extends PlainExtension<object, { oops: boolean }> {
-  public readonly name = 'withProperties' as const;
+  get name() {
+    return 'withProperties' as const;
+  }
 }
 
 function fn<Type extends AnyExtension>(extension: Type) {}
