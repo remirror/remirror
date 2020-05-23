@@ -31,10 +31,14 @@
     "@remirror/react-utils": "^0.7.6"
   },
   "devDependencies": {
-    "@remirror/pm": "*"
+    "@remirror/pm": "*",
+    "@types/react": "^16.9.35",
+    "react": "^16.13.1"
   },
   "peerDependencies": {
-    "@remirror/pm": "0.0.0"
+    "@remirror/pm": "0.0.0",
+    "@types/react": "^16.8.0",
+    "react": "^16.8.0"
   },
   "publishConfig": {
     "access": "public"

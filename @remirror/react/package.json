@@ -22,6 +22,7 @@
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core": "^0.11.0",
+    "@remirror/preset-core": "^0.0.0",
     "@remirror/preset-react": "^0.0.0",
     "@remirror/react-utils": "^0.7.6",
     "@types/hoist-non-react-statics": "^3.3.1",

@@ -207,24 +207,24 @@ class DropCursorState {
   readonly #extension: DropCursorExtension;
 
   /**
-   * The currently active timeout. This is used when removing the drop cursor to prevent any flicker.
-   */
-  #timeout?: any;
-
-  /**
    * The editor view.
    */
-  #view!: EditorView;
+  private view!: EditorView;
 
   /**
    * The dom element which holds the block `Decoration.widget`.
    */
-  #blockElement!: HTMLElement;
+  private blockElement!: HTMLElement;
 
   /**
    * The dom element which holds the inline `Decoration.widget`.
    */
-  #inlineElement!: HTMLElement;
+  private inlineElement!: HTMLElement;
+
+  /**
+   * The currently active timeout. This is used when removing the drop cursor to prevent any flicker.
+   */
+  #timeout?: any;
 
   /**
    * The current derived target position. This is cached to help prevent unnecessary re-rendering.
@@ -241,15 +241,15 @@ class DropCursorState {
   public init(view: EditorView) {
     const { blockClassName, inlineClassName } = this.#extension.settings;
 
-    this.#view = view;
-    this.#blockElement = document.createElement('div');
-    this.#inlineElement = document.createElement('span');
-    this.#blockElement.classList.add(blockClassName);
-    this.#inlineElement.classList.add(inlineClassName);
+    this.view = view;
+    this.blockElement = document.createElement('div');
+    this.inlineElement = document.createElement('span');
+    this.blockElement.classList.add(blockClassName);
+    this.inlineElement.classList.add(inlineClassName);
 
     this.#extension.properties.onInit({
-      blockElement: this.#blockElement,
-      inlineElement: this.#inlineElement,
+      blockElement: this.blockElement,
+      inlineElement: this.inlineElement,
       extension: this.#extension,
     });
   }
@@ -259,8 +259,8 @@ class DropCursorState {
    */
   public destroy = () => {
     this.#extension.properties.onDestroy({
-      blockElement: this.#blockElement,
-      inlineElement: this.#inlineElement,
+      blockElement: this.blockElement,
+      inlineElement: this.inlineElement,
     });
   };
 
@@ -269,7 +269,7 @@ class DropCursorState {
    */
   public isDragging = () =>
     bool(
-      this.#view.dragging ??
+      this.view.dragging ??
         (this.decorationSet !== DecorationSet.empty || !isUndefined(this.#target)),
     );
 
@@ -279,13 +279,13 @@ class DropCursorState {
    * Captures the current position and whether
    */
   public dragover = (event: DragEvent) => {
-    const pos = this.#view.posAtCoords({ left: event.clientX, top: event.clientY });
+    const pos = this.view.posAtCoords({ left: event.clientX, top: event.clientY });
 
     if (pos) {
       const {
         dragging,
         state: { doc, schema },
-      } = this.#view;
+      } = this.view;
 
       const target = dragging?.slice
         ? dropPoint(doc, pos.pos, dragging.slice) ?? pos.pos
@@ -325,7 +325,7 @@ class DropCursorState {
    * Called when the drag leaves the boundaries of the prosemirror editor dom node.
    */
   public dragleave = (event: DragEvent) => {
-    if (event.target === this.#view.dom || !this.#view.dom.contains(event.relatedTarget as Node)) {
+    if (event.target === this.view.dom || !this.view.dom.contains(event.relatedTarget as Node)) {
       this.scheduleRemoval(100);
     }
   };
@@ -333,7 +333,7 @@ class DropCursorState {
   /**
    * Dispatch an empty transaction to trigger a decoration update.
    */
-  private readonly triggerDecorationSet = () => this.#view.dispatch(this.#view.state.tr);
+  private readonly triggerDecorationSet = () => this.view.dispatch(this.view.state.tr);
 
   /**
    * Removes the decoration and (by default) the current target value.
@@ -372,7 +372,7 @@ class DropCursorState {
 
     const {
       state: { doc },
-    } = this.#view;
+    } = this.view;
     const $pos = doc.resolve(this.#target);
     const cursorIsInline = $pos.parent.inlineContent;
 
@@ -388,7 +388,7 @@ class DropCursorState {
    * is within a text block.
    */
   private createInlineDecoration($pos: ResolvedPos): Decoration[] {
-    const dropCursor = Decoration.widget($pos.pos, this.#inlineElement, {
+    const dropCursor = Decoration.widget($pos.pos, this.inlineElement, {
       key: 'drop-cursor-inline',
     });
 
@@ -403,7 +403,7 @@ class DropCursorState {
     const { beforeBlockClassName, afterBlockClassName } = this.#extension.settings;
     const decorations: Decoration[] = [];
 
-    const dropCursor = Decoration.widget($pos.pos, this.#blockElement, {
+    const dropCursor = Decoration.widget($pos.pos, this.blockElement, {
       key: 'drop-cursor-block',
     });
     const before = findPositionOfNodeBefore($pos);

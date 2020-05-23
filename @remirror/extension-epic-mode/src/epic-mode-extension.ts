@@ -1,15 +1,12 @@
 import {
   AnyExtension,
   CreatePluginReturn,
-  EditorSchema,
   EditorView,
   EmptyShape,
   PlainExtension,
-  PluginKey,
   randomInt,
   throttle,
 } from '@remirror/core';
-import { Plugin } from '@remirror/pm/state';
 
 import { defaultEffect, PARTICLE_NUM_RANGE, VIBRANT_COLORS } from './epic-mode-effects';
 import { EpicModeProperties, Particle } from './epic-mode-types';
@@ -86,15 +83,16 @@ export class EpicModePluginState {
     return this.#extension.properties;
   }
 
+  private container!: HTMLElement;
+
   /* eslint-disable @typescript-eslint/explicit-member-accessibility */
   readonly #extension: AnyExtension<Record<never, never>, EpicModeProperties>;
-  #container!: HTMLElement;
   #shakeTime = 0;
   #shakeTimeMax = 0;
   #lastTime = 0;
   #particles: Particle[] = [];
   #isActive = false;
-  #view!: EditorView;
+  private view!: EditorView;
   /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
   constructor(extension: EpicModeExtension) {
@@ -111,8 +109,8 @@ export class EpicModePluginState {
    * @param view
    */
   public init(view: EditorView) {
-    this.#view = view;
-    this.#container = this.properties.getCanvasContainer();
+    this.view = view;
+    this.container = this.properties.getCanvasContainer();
 
     const canvas = document.createElement('canvas');
     this.canvas = canvas;
@@ -131,7 +129,7 @@ export class EpicModePluginState {
     }
 
     this.ctx = ctx;
-    this.#container.append(this.canvas);
+    this.container.append(this.canvas);
     this.#isActive = true;
     this.loop();
 
@@ -143,7 +141,7 @@ export class EpicModePluginState {
     try {
       this.#isActive = false;
       this.canvas.remove();
-      if (this.#container.contains(this.canvas)) {
+      if (this.container.contains(this.canvas)) {
         this.canvas.remove();
       }
     } catch (error) {
@@ -158,8 +156,8 @@ export class EpicModePluginState {
   };
 
   public spawnParticles = () => {
-    const { selection } = this.#view.state;
-    const coords = this.#view.coordsAtPos(selection.$anchor.pos);
+    const { selection } = this.view.state;
+    const coords = this.view.coordsAtPos(selection.$anchor.pos);
 
     // Move the canvas
     this.canvas.style.top = `${window.scrollY}px`;
@@ -216,7 +214,7 @@ export class EpicModePluginState {
       const magnitude = (this.#shakeTime / this.#shakeTimeMax) * this.properties.shakeIntensity;
       const shakeX = randomInt(-magnitude, magnitude);
       const shakeY = randomInt(-magnitude, magnitude);
-      (this.#view.dom as HTMLElement).style.transform = `translate(${shakeX}px,${shakeY}px)`;
+      (this.view.dom as HTMLElement).style.transform = `translate(${shakeX}px,${shakeY}px)`;
     }
     this.drawParticles();
     requestAnimationFrame(this.loop);

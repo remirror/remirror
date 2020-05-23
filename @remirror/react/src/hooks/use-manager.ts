@@ -7,8 +7,8 @@ import {
   EditorManagerParameter,
   keys,
 } from '@remirror/core';
+import { CorePreset } from '@remirror/preset-core';
 import { ReactPreset } from '@remirror/preset-react';
-import { CorePreset } from '@remirror/test-fixtures';
 
 function arePropertiesEqual<Type extends object>(value: Type, compare?: Type) {
   if (compare === undefined) {

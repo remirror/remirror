@@ -81,6 +81,7 @@ importers:
       jest-remirror: 'link:packages/jest-remirror'
       jest-watch-typeahead: 0.6.0_jest@26.0.1
       lint-staged: 10.2.6
+      npm-package-json-lint: 5.1.0
       npm-run-all: 4.1.5
       pkg.macro: 1.0.1
       prettier: 2.0.5
@@ -178,6 +179,7 @@ importers:
       jest-remirror: ^0.13.1
       jest-watch-typeahead: ^0.6.0
       lint-staged: ^10.2.6
+      npm-package-json-lint: ^5.1.0
       npm-run-all: ^4.1.5
       pkg.macro: ^1.0.1
       prettier: ^2.0.5
@@ -289,7 +291,7 @@ importers:
       '@remirror/core-types': ^0.9.0
       '@remirror/pm': ^0.0.0
       '@types/min-document': ^2.19.0
-      '@types/node': '>=10 <15'
+      '@types/node': ^14.0.5
       domino: ^2.1.3
       min-document: ^2.19.0
   '@remirror/extension-auto-link':
@@ -442,11 +444,15 @@ importers:
       '@remirror/react-utils': 'link:../react-utils'
     devDependencies:
       '@remirror/pm': 'link:../pm'
+      '@types/react': 16.9.35
+      react: 16.13.1
     specifiers:
       '@babel/runtime': ^7
       '@remirror/core': ^0.11.0
       '@remirror/pm': '*'
       '@remirror/react-utils': ^0.7.6
+      '@types/react': ^16.9.35
+      react: ^16.13.1
   '@remirror/extension-text':
     dependencies:
       '@babel/runtime': 7.9.6
@@ -583,6 +589,7 @@ importers:
     dependencies:
       '@babel/runtime': 7.9.6
       '@remirror/core': 'link:../core'
+      '@remirror/preset-core': 'link:../preset-core'
       '@remirror/preset-react': 'link:../preset-react'
       '@remirror/react-utils': 'link:../react-utils'
       '@types/hoist-non-react-statics': 3.3.1
@@ -605,6 +612,7 @@ importers:
       '@babel/runtime': ^7
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
+      '@remirror/preset-core': ^0.0.0
       '@remirror/preset-react': ^0.0.0
       '@remirror/react-utils': ^0.7.6
       '@types/hoist-non-react-statics': ^3.3.1
@@ -717,7 +725,7 @@ importers:
       '@types/ink-spinner': ^3.0.0
       '@types/ink-testing-library': ^1.0.1
       '@types/jsesc': ^2.5.1
-      '@types/node': '>=10 <15'
+      '@types/node': ^14.0.5
       '@types/parcel-bundler': ^1.12.1
       '@types/rimraf': ^3.0.0
       '@types/yargs': ^15.0.5
@@ -1391,8 +1399,8 @@ importers:
       '@remirror/preset-core': ^0.0.0
       '@remirror/react': ^0.13.1
       '@remirror/react-utils': ^0.7.6
-      '@testing-library/react': ^10.0.2
-      '@types/node': '>=10 <15'
+      '@testing-library/react': ^10.0.4
+      '@types/node': ^14.0.5
       '@types/react': ^16.9.35
       '@types/react-dom': ^16.9.8
       '@types/sanitize-html': ^1.23.0
@@ -13861,7 +13869,7 @@ packages:
       array-union: 2.1.0
       dir-glob: 3.0.1
       fast-glob: 3.2.2
-      ignore: 5.1.4
+      ignore: 5.1.6
       merge2: 1.3.0
       slash: 3.0.0
     dev: false
@@ -15229,6 +15237,12 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-Y75zBYLkh0lJ9qxeHlMjQ7bSbyiSqNW/UOPWDmzC7cXskL1hekSITh1Oc6JV0XCWWZ9DE8VYSB71xocLk3gmGw==
+  /irregular-plurals/3.2.0:
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-YqTdPLfwP7YFN0SsD3QUVCkm9ZG2VzOXv3DOrw5G5mkMbVwptTwVcFv7/C0vOpBmgTxAeTG19XpUs1E522LW9Q==
   /is-absolute-url/2.1.0:
     dev: false
     engines:
@@ -16858,6 +16872,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-hk/69oAeaIzchq/v3lS50PXuzn5O2ynldopMC+SWBql7J2WtdptfB9dy8Y7+Og5rPkTCpn83zTiO8FMcqlXJ/g==
+  /jsonc-parser/2.2.1:
+    dev: false
+    resolution:
+      integrity: sha512-o6/yDBYccGvTz1+QFevz6l6OBZ2+fMVu2JZ9CIhzsYRX4mjaK5IyX9eldUdCmga16zlgQxyrj5pt9kzuj2C02w==
   /jsondiffpatch/0.4.1:
     dependencies:
       chalk: 2.4.2
@@ -17981,7 +17999,7 @@ packages:
       camelcase-keys: 6.2.2
       decamelize-keys: 1.1.0
       hard-rejection: 2.1.0
-      minimist-options: 4.0.2
+      minimist-options: 4.1.0
       normalize-package-data: 2.5.0
       read-pkg-up: 7.0.1
       redent: 3.0.0
@@ -18198,15 +18216,16 @@ packages:
       node: '>= 4'
     resolution:
       integrity: sha512-FyBrT/d0d4+uiZRbqznPXqw3IpZZG3gl3wKWiX784FycUKVwBt0uLBFkQrtE4tZOrgo78nZp2jnKz3L65T5LdQ==
-  /minimist-options/4.0.2:
+  /minimist-options/4.1.0:
     dependencies:
       arrify: 1.0.1
       is-plain-obj: 1.1.0
+      kind-of: 6.0.3
     dev: false
     engines:
       node: '>= 6'
     resolution:
-      integrity: sha512-seq4hpWkYSUh1y7NXxzucwAN9yVlBc3Upgdjz8vLCP97jG8kaOmzYrVH/m7tQ1NYD1wdtZbSLfdy4zFmRWuc/w==
+      integrity: sha512-Q4r8ghd80yhO/0j1O3B2BjweX3fiHg9cdOwjJd2J76Q135c+NDxGCqdYKQ1SKBuFfgWbAUzBfvYjPUEeNgqN1A==
   /minimist/0.2.1:
     dev: false
     resolution:
@@ -18774,6 +18793,30 @@ packages:
     dev: false
     resolution:
       integrity: sha512-EPfafl6JL5/rU+ot6P3gRSCpPDW5VmIzX959Ob1+ySFUuuYHWHekXpwdUZcKP5C+DS4GEtdJluwBjnsNDl+fSA==
+  /npm-package-json-lint/5.1.0:
+    dependencies:
+      ajv: 6.12.2
+      ajv-errors: 1.0.1_ajv@6.12.2
+      chalk: 4.0.0
+      cosmiconfig: 6.0.0
+      debug: 4.1.1
+      globby: 11.0.0
+      ignore: 5.1.6
+      is-plain-obj: 2.1.0
+      jsonc-parser: 2.2.1
+      log-symbols: 4.0.0
+      meow: 6.1.1
+      plur: 4.0.0
+      semver: 7.3.2
+      slash: 3.0.0
+      strip-json-comments: 3.1.0
+    dev: false
+    engines:
+      node: '>=10.0.0'
+      npm: '>=6.0.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-gPGpoFTbt0H4uPlubAKqHORg4+GObXqeYJh5ovkkSv76ua+t29vzRP4Qhm+9N/Q59Z3LT0tCmpoDlbTcNB7Jcg==
   /npm-packlist/2.1.2:
     dependencies:
       glob: 7.1.6
@@ -20038,6 +20081,14 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-t1Ax8KUvV3FFII8ltczPn2tJdjqbd1sIzu6t4JL7nQ3EyeL/lTrj5PWKb06ic5/6XYDr65rQ4uzQEGN70/6X5w==
+  /plur/4.0.0:
+    dependencies:
+      irregular-plurals: 3.2.0
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-4UGewrYgqDFw9vV6zNV+ADmPAUAfJPKtGvb/VdpQAx25X5f3xXdGdyOEVFwkl8Hl/tl7+xbeHqSEM+D5/TirUg==
   /pn/1.1.0:
     dev: false
     resolution:
@@ -23577,12 +23628,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-j4JKEcncSjFlqIwU5L/rp2N5SIPsdxaRsIv678+TZxZ0SRDJTm8JrxJMjE/XuiEZNEir3S8l0Fa3Ke339WI4qA==
-  /spdx-correct/3.1.0:
+  /spdx-correct/3.1.1:
     dependencies:
       spdx-expression-parse: 3.0.1
       spdx-license-ids: 3.0.5
     resolution:
-      integrity: sha512-lr2EZCctC2BNR7j7WzJ2FpDznxky1sjfxvvYEyzxNyb6lZXHODmEoJeFu4JupYlkfha1KZpJyoqiJ7pgA1qq8Q==
+      integrity: sha512-cOYcUWwhCuHCXi49RhFRCyJEK3iPj1Ziz9DpViV3tbZOwXD49QzIN3MpOLJNxh2qwq2lJJZaKMVw9qNi4jTC0w==
   /spdx-exceptions/2.3.0:
     resolution:
       integrity: sha512-/tTrYOC7PPI1nUAgx34hUpqXuyJG+DTHJTnIULG4rDygi4xu/tfgmq1e1cIRwRzwZgo4NLySi+ricLkZkw4i5A==
@@ -25666,7 +25717,7 @@ packages:
       integrity: sha1-HBRHm0DxOXp1eC8RXkCGRHQzogA=
   /validate-npm-package-license/3.0.4:
     dependencies:
-      spdx-correct: 3.1.0
+      spdx-correct: 3.1.1
       spdx-expression-parse: 3.0.1
     resolution:
       integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==
