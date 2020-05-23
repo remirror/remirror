@@ -37,7 +37,7 @@ export class PluginsExtension extends PlainExtension {
   // Here set the plugins keys and state getters for retrieving plugin state.
   // These methods are later used.
   public onCreate: CreateLifecycleMethod = (parameter) => {
-    const { setStoreKey, setExtensionStore, getStoreKey } = parameter;
+    const { setStoreKey, setExtensionStore, getStoreKey, managerSettings } = parameter;
 
     const pluginKeys: Record<string, PluginKey> = object();
     const stateGetters = new Map<string | AnyExtensionConstructor, <State = unknown>() => State>();
@@ -52,12 +52,26 @@ export class PluginsExtension extends PlainExtension {
 
     return {
       forEachExtension(extension) {
-        // Create a key for each extension
+        // Create a key for each extension that has a `createPlugin` method.
+        if (
+          // The extension doesn't create a plugin and can be skipped.
+          !extension.createPlugin ||
+          // Or the manager settings exclude plugins
+          managerSettings.exclude?.plugins ||
+          // The extension settings exclude plugins
+          extension.settings.exclude.plugins
+        ) {
+          return;
+        }
+
         const key = new PluginKey(extension.name);
 
         // Assign the plugin key to the extension name.
         pluginKeys[extension.name] = key;
         const getter = <State>() => getPluginState<State>(key, getStoreKey('view').state);
+
+        extension.pluginKey = key;
+        extension.getPluginState = getter;
 
         stateGetters.set(extension.name, getter);
         stateGetters.set(extension.constructor, getter);
@@ -75,11 +89,7 @@ export class PluginsExtension extends PlainExtension {
    * Ensure that all ssr transformers are run.
    */
   public onInitialize: InitializeLifecycleMethod = (parameter) => {
-    const { addPlugins, managerSettings, getStoreKey } = parameter;
-
-    const createGetPluginState = (name: string) => <Type = any>(): Type => {
-      return getStoreKey('getPluginState')(name);
-    };
+    const { addPlugins, managerSettings } = parameter;
 
     const extensionPlugins: ProsemirrorPlugin[] = [];
 
@@ -101,9 +111,10 @@ export class PluginsExtension extends PlainExtension {
 
         // Create the custom plugin if it exists.
         if (extension.createPlugin) {
-          const getPluginState = createGetPluginState(extension.name);
-          const key: PluginKey = getStoreKey('pluginKeys')[extension.name];
-          const pluginSpec = { ...extension.createPlugin(getPluginState), key };
+          const pluginSpec = {
+            ...extension.createPlugin(),
+            key: extension.pluginKey,
+          };
 
           extensionPlugins.push(new Plugin(pluginSpec));
         }
@@ -129,8 +140,9 @@ declare global {
   namespace Remirror {
     interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {
       /**
-       * Retrieve the state for a given extension name. This will throw an error
-       * if the extension doesn't exist.
+       * Retrieve the state for any given extension name. This will throw an
+       * error if the extension identified by that name doesn't implement the
+       * `createPlugin` method.
        *
        * @param name - the name of the extension
        *
@@ -172,6 +184,42 @@ declare global {
        * @defaultValue `undefined`
        */
       plugins?: boolean;
+    }
+
+    interface BaseExtension {
+      /**
+       * Retrieve the state of the custom plugin for this extension. This will
+       * throw an error if the extension doesn't have a valid `createPlugin`
+       * method.
+       *
+       * @remarks
+       *
+       * ```ts
+       * const pluginState = this.getPluginState();
+       * ```
+       *
+       * This is only available after the initialize stage of the editor manager
+       * lifecycle.
+       */
+      getPluginState: <State>() => State;
+
+      /**
+       * The plugin key for custom plugin created by this extension. This only
+       * exists when there is a valid `createPlugin` method on the extension.
+       *
+       * This can be used to set and retrieve metadata.
+       *
+       * ```ts
+       * const meta = tr.getMeta(this.pluginKey);
+       * ```
+       */
+      pluginKey: PluginKey;
+
+      /**
+       * The plugin that was created by the `createPlugin` method. This only
+       * exists for extension which implement that method.
+       */
+      plugin: Plugin;
     }
 
     interface ExtensionCreatorMethods<
@@ -222,7 +270,7 @@ declare global {
        * in the outer scope of the `createPlugin` function or you will get
        * errors..
        */
-      createPlugin?: (getPluginState: <T = any>() => T) => CreatePluginReturn;
+      createPlugin?: () => CreatePluginReturn;
 
       /**
        * Register third party plugins when this extension is placed into the

@@ -92,11 +92,11 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkSettings, AutoLinkP
   public createPlugin = (): CreatePluginReturn => {
     return {
       state: {
-        init() {
+        init: () => {
           return null;
         },
-        apply(tr, previous) {
-          const stored = tr.getMeta(key);
+        apply: (tr, previous) => {
+          const stored = tr.getMeta(this.pluginKey);
           return stored ? stored : tr.selectionSet || tr.docChanged ? null : previous;
         },
       },

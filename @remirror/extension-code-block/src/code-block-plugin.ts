@@ -4,6 +4,7 @@ import {
   EditorState,
   findChildrenByNode,
   nodeEqualsType,
+  NodeExtension,
   NodeType,
   NodeWithPosition,
   ProsemirrorNodeParameter,
