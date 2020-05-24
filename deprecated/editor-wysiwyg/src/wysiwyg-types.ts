@@ -30,7 +30,7 @@ import { RenderEditorProps } from '@remirror/react';
  * better typechecking and inference.
  *
  * ```ts
- * const { actions } = useRemirrorContext<WysiwygExtensions[]>();
+ * const { actions } = useRemirror<WysiwygExtensions[]>();
  * const actions.updateLink() // => full type checking
  */
 export type WysiwygExtensions =

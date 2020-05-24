@@ -6,7 +6,7 @@ import { usePositioner } from '../hooks/use-positioner';
 import { useRemirror } from '../hooks/use-remirror';
 import { bubblePositioner } from '../react-positioners';
 
-test('useRemirrorContext', () => {
+test('useRemirror', () => {
   expect.assertions(1);
 
   const HookComponent: FC = () => {

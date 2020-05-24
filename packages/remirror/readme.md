@@ -38,7 +38,7 @@ import {
   RemirrorProps,
   Underline,
   bubblePositioner,
-  useRemirrorContext,
+  useRemirror,
 } from 'remirror';
 
 const runAction = (action: () => void): MouseEventHandler<HTMLElement> => (e) => {
@@ -47,7 +47,7 @@ const runAction = (action: () => void): MouseEventHandler<HTMLElement> => (e) =>
 };
 
 const SimpleFloatingMenu: FC = () => {
-  const { getPositionerProps, actions } = useRemirrorContext(); // Pull in injected props from context
+  const { getPositionerProps, actions } = useRemirror(); // Pull in injected props from context
 
   const props = getPositionerProps({
     positionerId: 'bubble',

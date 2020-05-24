@@ -85,7 +85,7 @@ RemirrorContextProvider.defaultProps = {
  * injected (root element).
  *
  * These can either be consumed using React Hooks
- * - `useRemirrorContext`
+ * - `useRemirror`
  * - `usePositioner`
  */
 export const RemirrorProvider = <Manager extends AnyEditorManager = any>({
