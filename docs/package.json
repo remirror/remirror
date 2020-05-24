@@ -40,7 +40,7 @@
     "gatsby-plugin-sharp": "^2.6.9",
     "gatsby-plugin-sitemap": "^2.4.3",
     "gatsby-plugin-theme-ui": "^0.3.0",
-    "gatsby-plugin-typegen": "^2.0.0",
+    "gatsby-plugin-typegen": "^2.2.0",
     "gatsby-plugin-typescript": "^2.4.3",
     "gatsby-remark-copy-linked-files": "^2.3.3",
     "gatsby-remark-external-links": "^0.0.4",
