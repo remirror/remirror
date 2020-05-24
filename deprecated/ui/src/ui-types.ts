@@ -17,7 +17,7 @@ import {
   ZIndexProperty,
 } from 'csstype';
 
-import { StringKey } from './base-types';
+import { StringKey } from '@remirror/core-types';
 
 export type RemirrorThemeColorMode = {
   /**
@@ -114,13 +114,13 @@ export interface RemirrorThemeProperties {
   fontWeights?: ThemeValue<FontWeightProperty>;
   lineHeights?: ThemeValue<LineHeightProperty<string>>;
   letterSpacings?: ThemeValue<LetterSpacingProperty<string>>;
-  borders?: ThemeValue<BorderProperty<{}>>;
-  borderWidths?: ThemeValue<BorderWidthProperty<{}>>;
+  borders?: ThemeValue<BorderProperty<object>>;
+  borderWidths?: ThemeValue<BorderWidthProperty<object>>;
   borderStyles?: ThemeValue<LineStyle>;
-  radii?: ThemeValue<BorderRadiusProperty<{}>>;
+  radii?: ThemeValue<BorderRadiusProperty<object>>;
   shadows?: ThemeValue<BoxShadowProperty>;
   zIndices?: ThemeValue<ZIndexProperty>;
-  sizes?: ThemeValue<HeightProperty<{}> | WidthProperty<{}>>;
+  sizes?: ThemeValue<HeightProperty<object> | WidthProperty<object>>;
   styles: RemirrorThemeStyles & Record<string, WithVariants<SxThemeProp>>;
 }
 

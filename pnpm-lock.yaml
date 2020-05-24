@@ -242,9 +242,6 @@ importers:
     dependencies:
       '@babel/runtime': 7.9.6
       '@remirror/core-constants': 'link:../core-constants'
-      '@styled-system/css': 5.1.5
-      '@types/styled-system__css': 5.0.9
-      csstype: 2.6.10
       type-fest: 0.14.0
     devDependencies:
       '@remirror/pm': 'link:../pm'
@@ -252,9 +249,6 @@ importers:
       '@babel/runtime': ^7
       '@remirror/core-constants': ^0.7.4
       '@remirror/pm': ^0.0.0
-      '@styled-system/css': ^5.0.23
-      '@types/styled-system__css': ^5.0.9
-      csstype: ^2.6.10
       type-fest: ^0.14.0
   '@remirror/core-utils':
     dependencies:

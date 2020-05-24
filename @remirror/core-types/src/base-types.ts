@@ -72,13 +72,13 @@ interface Flavoring<Flavor> {
  * flavors, but will allow unflavored values of that type to be passed in where
  * a flavored version is expected. This is a less restrictive form of branding.
  */
-export type Flavor<Type, GFlavor> = Type & Flavoring<GFlavor>;
+export type Flavor<Type, F> = Type & Flavoring<F>;
 
 /**
  * Create a "branded" version of a type. TypeScript won't allow implicit
  * conversion to this type
  */
-export type Brand<Type, GBrand> = Type & Branding<GBrand>;
+export type Brand<Type, B> = Type & Branding<B>;
 
 /**
  * An object with string keys and values of type `any`
@@ -329,9 +329,6 @@ export type GetRequiredKeys<Type extends object> = keyof ConditionalPick<
 /**
  * Keeps the partial properties of a type unchanged. Transforms the rest to
  * `never`.
- *
- * TODO Instead of never why not try a unique brand type to prevent false
- * positives.
  */
 export type KeepPartialProperties<Type extends object> = {
   [Key in keyof Type]: Type[Key] extends undefined ? Type[Key] : NeverBrand;
