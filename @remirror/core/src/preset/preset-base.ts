@@ -4,20 +4,11 @@ import {
   ErrorConstant,
   RemirrorIdentifier,
 } from '@remirror/core-constants';
-import {
-  deepMerge,
-  invariant,
-  isIdentifierOfType,
-  isPlainObject,
-  isRemirrorType,
-  object,
-  uniqueBy,
-} from '@remirror/core-helpers';
+import { invariant, isIdentifierOfType, isRemirrorType, uniqueBy } from '@remirror/core-helpers';
 import {
   EmptyShape,
   FlipPartialAndRequired,
   GetDynamic,
-  GetFixed,
   GetPartialDynamic,
   GetStatic,
   IfNoRequiredProperties,
@@ -25,14 +16,17 @@ import {
 } from '@remirror/core-types';
 
 import { AnyExtension, AnyExtensionConstructor } from '../extension';
-import { getChangedOptions } from '../helpers';
-import { SetOptionsParameter, UpdateReason } from '../types';
+import { BaseClass, BaseClassConstructor, isValidConstructor } from '../extension/base-class';
+import { SetOptionsParameter } from '../types';
 
 /**
  * A preset is our way of bundling similar extensions with unified options and
  * dynamic properties.
  */
-export abstract class Preset<Options extends ValidOptions = EmptyShape> {
+export abstract class Preset<Options extends ValidOptions = EmptyShape> extends BaseClass<
+  Options,
+  object
+> {
   /**
    * The default options for this preset.
    */
@@ -60,26 +54,9 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> {
    */
   public abstract readonly name: string;
 
-  /**
-   * The preset options.
-   */
-  get options() {
-    return this.#options;
-  }
-
   get extensions() {
     return this.#extensions;
   }
-
-  /**
-   * The extension options.
-   */
-  #options: GetFixed<Options>;
-
-  /**
-   * The initial options, used when resetting.
-   */
-  readonly #initialOptions: GetFixed<Options>;
 
   /**
    * Private list of extension stored in within this preset.
@@ -91,20 +68,8 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> {
    */
   #extensionMap = new Map<this['~E']['constructor'], this['~E']>();
 
-  /**
-   * Keep track of whether this preset has been initialized or not.
-   */
-  #hasInitialized = false;
-
   constructor(...parameters: PresetConstructorParameter<Options>) {
-    isValidPresetConstructor(this.constructor);
-    const [options] = parameters;
-
-    // Create the preset options.
-    this.#options = this.#initialOptions = deepMerge(object(), {
-      ...this.constructor.defaultOptions,
-      ...options,
-    });
+    super(isValidPresetConstructor, {}, ...(parameters as any));
 
     // Create the extension list.
     this.#extensions = uniqueBy(
@@ -113,14 +78,10 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> {
       (extension) => extension.constructor,
     );
 
-    // Create the extension map.
+    // Create the extension map for retrieving extensions from the `Preset`
     for (const extension of this.#extensions) {
       this.#extensionMap.set(extension.constructor, extension);
     }
-
-    // Triggers the `init` properties update for this extension.
-    this.setOptions(this.#options);
-    this.#hasInitialized = true;
   }
 
   /**
@@ -144,58 +105,6 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> {
     if (this.#extensionMap.has(constructor)) {
       this.#extensionMap.set(constructor, extension);
     }
-  }
-
-  /**
-   * Set the properties of the preset.
-   *
-   * Calls the `onSetOptions` parameter property when creating the
-   * constructor.
-   */
-  public setOptions(update: GetPartialDynamic<Options>) {
-    const reason: UpdateReason = this.#hasInitialized ? 'set' : 'init';
-    const previousOptions = this.#options;
-    const { changes, options } = getChangedOptions<Options>({
-      previousOptions: previousOptions,
-      update,
-    });
-
-    // Trigger the update handler so that child extension properties can also be
-    // updated.
-    this.onSetOptions({
-      reason,
-      changes,
-      options,
-      initialOptions: this.#initialOptions,
-    });
-
-    // The constructor already sets the properties to their default values.
-    if (reason === 'init') {
-      return;
-    }
-
-    // Update the stored properties value.
-    this.#options = options;
-  }
-
-  public resetOption() {
-    const previousOptions = this.#options;
-    const { changes, options } = getChangedOptions({
-      previousOptions: previousOptions,
-      update: this.constructor.defaultOptions,
-    });
-
-    // Trigger the update handler so that child extension properties can also be
-    // updated.
-    this.onSetOptions({
-      reason: 'reset',
-      options,
-      changes,
-      initialOptions: this.#initialOptions,
-    });
-
-    // Update the stored properties value.
-    this.#options = options;
   }
 
   /**
@@ -279,7 +188,8 @@ export type DefaultPresetOptions<Options extends ValidOptions> = FlipPartialAndR
  * TypeScript doesn't automatically provide a meaningful type for the
  * `constructor` property.
  */
-export interface PresetConstructor<Options extends ValidOptions = EmptyShape> extends Function {
+export interface PresetConstructor<Options extends ValidOptions = EmptyShape>
+  extends BaseClassConstructor {
   /**
    * The identifier for the constructor which identifies it as a preset
    * constructor.
@@ -320,20 +230,14 @@ export function isPresetConstructor(value: unknown): value is AnyPresetConstruct
 export function isValidPresetConstructor(
   Constructor: unknown,
 ): asserts Constructor is AnyPresetConstructor {
+  const code = ErrorConstant.INVALID_PRESET;
+
   invariant(isPresetConstructor(Constructor), {
     message: 'This is not a valid extension constructor',
-    code: ErrorConstant.INVALID_PRESET,
+    code,
   });
 
-  invariant(isPlainObject(Constructor.defaultOptions), {
-    message: `No static 'defaultOptions' provided for '${Constructor.name}'.\n`,
-    code: ErrorConstant.INVALID_PRESET,
-  });
-
-  invariant(isPlainObject(Constructor.defaultOptions), {
-    message: `No static 'defaultOptions' provided for '${Constructor.name}'.\n`,
-    code: ErrorConstant.INVALID_PRESET,
-  });
+  isValidConstructor(Constructor, code);
 }
 
 /**
