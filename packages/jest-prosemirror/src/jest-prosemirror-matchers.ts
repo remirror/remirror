@@ -37,13 +37,13 @@ export const prosemirrorMatchers = {
 
     if (pass) {
       return {
-        ...properties,
+        ...options,
         pass,
         message: transformsNodePassMessage(actual, expected, shouldChange),
       };
     } else {
       return {
-        ...properties,
+        ...options,
         pass,
         message: transformsNodeFailMessage(actual, expected, shouldChange),
       };
@@ -79,13 +79,13 @@ export const prosemirrorMatchers = {
 
     if (pass) {
       return {
-        ...properties,
+        ...options,
         pass,
         message: transformsNodePassMessage(actual, expected, shouldChange),
       };
     } else {
       return {
-        ...properties,
+        ...options,
         pass,
         message: transformsNodeFailMessage(actual, expected, shouldChange),
       };

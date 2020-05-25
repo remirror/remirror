@@ -23,14 +23,14 @@ export interface CorePresetSettings extends BaseKeymapSettings {
   content?: string;
 }
 
-export interface CorePresetProperties extends BaseKeymapProperties {}
+export interface CorePresetOptions extends BaseKeymapProperties {}
 
-export class CorePreset extends Preset<CorePresetSettings, CorePresetProperties> {
+export class CorePreset extends Preset<CorePresetSettings, CorePresetOptions> {
   public static defaultSettings: DefaultPresetSettings<CorePresetSettings> = {
     content: DocExtension.defaultSettings.content,
     ...BaseKeymapExtension.defaultSettings,
   };
-  public static defaultProperties: Required<CorePresetProperties> = {
+  public static defaultProperties: Required<CorePresetOptions> = {
     keymap: BaseKeymapExtension.defaultProperties.keymap,
   };
 
@@ -41,18 +41,18 @@ export class CorePreset extends Preset<CorePresetSettings, CorePresetProperties>
   /**
    * No properties are defined so this can be ignored.
    */
-  protected onSetOptions(parameter: SetOptionsParameter<CorePresetProperties>) {
+  protected onSetOptions(parameter: SetOptionsParameter<CorePresetOptions>) {
     const { changes } = parameter;
 
     if (changes.keymap.changed) {
       const baseKeymapExtension = this.getExtension(BaseKeymapExtension);
-      baseKeymapExtension.setProperties({ keymap: changes.keymap.value });
+      baseKeymapExtension.setOptions({ keymap: changes.keymap.value });
     }
   }
 
   public createExtensions() {
-    const { content, ...baseKeymapSettings } = this.settings;
-    const { keymap } = this.properties;
+    const { content, ...baseKeymapSettings } = this.options;
+    const { keymap } = this.options;
 
     return [
       new DocExtension({ content, priority: ExtensionPriority.Low }),

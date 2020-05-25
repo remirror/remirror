@@ -239,7 +239,7 @@ class DropCursorState {
   }
 
   public init(view: EditorView) {
-    const { blockClassName, inlineClassName } = this.#extension.settings;
+    const { blockClassName, inlineClassName } = this.#extension.options;
 
     this.view = view;
     this.blockElement = document.createElement('div');
@@ -247,7 +247,7 @@ class DropCursorState {
     this.blockElement.classList.add(blockClassName);
     this.inlineElement.classList.add(inlineClassName);
 
-    this.#extension.properties.onInit({
+    this.#extension.options.onInit({
       blockElement: this.blockElement,
       inlineElement: this.inlineElement,
       extension: this.#extension,
@@ -258,7 +258,7 @@ class DropCursorState {
    * Called when the view is destroyed
    */
   public destroy = () => {
-    this.#extension.properties.onDestroy({
+    this.#extension.options.onDestroy({
       blockElement: this.blockElement,
       inlineElement: this.inlineElement,
     });
@@ -400,7 +400,7 @@ class DropCursorState {
    * is between two nodes.
    */
   private createBlockDecoration($pos: ResolvedPos): Decoration[] {
-    const { beforeBlockClassName, afterBlockClassName } = this.#extension.settings;
+    const { beforeBlockClassName, afterBlockClassName } = this.#extension.options;
     const decorations: Decoration[] = [];
 
     const dropCursor = Decoration.widget($pos.pos, this.blockElement, {

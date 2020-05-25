@@ -36,7 +36,7 @@ export class InputRulesExtension extends PlainExtension {
           // Method doesn't exist
           !extension.createInputRules ||
           // Extension settings exclude it
-          extension.settings.exclude.inputRules
+          extension.options.exclude?.inputRules
         ) {
           return;
         }

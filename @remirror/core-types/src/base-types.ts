@@ -207,8 +207,7 @@ export interface Position {
 /**
  * Used for attributes which can be added to prosemirror nodes and marks.
  */
-export type ProsemirrorAttributes<GExtra extends object = object> = Record<string, unknown> &
-  GExtra;
+export type ProsemirrorAttributes<Extra extends object = object> = Record<string, unknown> & Extra;
 
 export type AttributesWithClass = ProsemirrorAttributes & { class?: string };
 
@@ -393,8 +392,5 @@ export type StrictReplace<Type, Replacements extends Record<keyof Type, unknown>
 /**
  * Replace and extend any object keys.
  */
-export type Replace<Type, Replacements extends Record<string, unknown>> = Omit<
-  Type,
-  keyof Replacements
-> &
+export type Replace<Type, Replacements extends Shape> = Omit<Type, keyof Replacements> &
   Replacements;

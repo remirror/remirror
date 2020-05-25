@@ -13,7 +13,7 @@ import {
   ExtensionConstructorParameter,
   invariant,
   isEqual,
-  mutateDefaultExtensionSettings,
+  mutateDefaultExtensionOptions,
   object,
   OptionsOfConstructor,
   PresetConstructorParameter,
@@ -30,11 +30,11 @@ export function isExtensionValid<Type extends AnyExtensionConstructor>(
 
   let defaultOptions: BaseExtensionOptions = object();
 
-  mutateDefaultExtensionSettings((value) => {
+  mutateDefaultExtensionOptions((value) => {
     defaultOptions = value;
   });
 
-  const expectedSettings = { ...defaultOptions, ...Extension.defaultOptions, ...settings };
+  const expectedSettings = { ...defaultOptions, ...Extension.defaultOptions, ...options };
   invariant(isEqual(extension.options, expectedSettings), {
     message: `Invalid 'defaultOptions' for '${Extension.name}'\n\n${
       diff(extension.options, expectedSettings) ?? ''
@@ -54,17 +54,17 @@ export function isPresetValid<Type extends AnyPresetConstructor>(
 ) {
   const extension = new Preset(settings);
 
-  const expectedSettings = { ...Preset.defaultOptions, ...settings };
-  invariant(isEqual(extension.settings, expectedSettings), {
+  const expectedSettings = { ...Preset.defaultOptions, ...options };
+  invariant(isEqual(extension.options, expectedSettings), {
     message: `Invalid 'defaultOptions' for '${Preset.name}'\n\n${
-      diff(extension.settings, expectedSettings) ?? ''
+      diff(extension.options, expectedSettings) ?? ''
     }\n`,
   });
 
-  const expectedProperties = { ...Preset.defaultProperties, ...Cast(settings)?.properties };
-  invariant(isEqual(extension.properties, expectedProperties), {
+  const expectedProperties = { ...Preset.defaultProperties, ...Cast(settings)?.options };
+  invariant(isEqual(extension.options, expectedProperties), {
     message: `Invalid 'defaultProperties' for '${Preset.name}' \n\n${
-      diff(extension.properties, expectedProperties) ?? ''
+      diff(extension.options, expectedProperties) ?? ''
     }\n`,
   });
 

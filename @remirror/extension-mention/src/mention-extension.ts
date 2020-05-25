@@ -98,7 +98,7 @@ export class MentionExtension extends MarkExtension<MentionSettings, MentionProp
       inclusive: false,
       parseDOM: [
         {
-          tag: `${this.settings.mentionTag}[${dataAttributeId}]`,
+          tag: `${this.options.mentionTag}[${dataAttributeId}]`,
           getAttrs: (node) => {
             if (!isElementDOMNode(node)) {
               return false;
@@ -120,14 +120,14 @@ export class MentionExtension extends MarkExtension<MentionSettings, MentionProp
           range,
           ...attributes
         } = node.attrs as Required<MentionExtensionAttributes>;
-        const matcher = this.settings.matchers.find((matcher) => matcher.name === name);
+        const matcher = this.options.matchers.find((matcher) => matcher.name === name);
 
         const mentionClassName = matcher
           ? matcher.mentionClassName ?? DEFAULT_MATCHER.mentionClassName
           : DEFAULT_MATCHER.mentionClassName;
 
         return [
-          this.settings.mentionTag,
+          this.options.mentionTag,
           {
             ...attributes,
             class: name ? `${mentionClassName} ${mentionClassName}-${name}` : mentionClassName,
@@ -162,7 +162,7 @@ export class MentionExtension extends MarkExtension<MentionSettings, MentionProp
   };
 
   public createPasteRules = () => {
-    return this.settings.matchers.map((matcher) => {
+    return this.options.matchers.map((matcher) => {
       const { startOfLine, char, supportedCharacters, name } = {
         ...DEFAULT_MATCHER,
         ...matcher,
@@ -186,7 +186,7 @@ export class MentionExtension extends MarkExtension<MentionSettings, MentionProp
   };
 
   public createSuggestions = () => {
-    return this.settings.matchers.map<Suggestion<MentionExtensionSuggestCommand>>((matcher) => {
+    return this.options.matchers.map<Suggestion<MentionExtensionSuggestCommand>>((matcher) => {
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const extension = this;
 
@@ -199,27 +199,27 @@ export class MentionExtension extends MarkExtension<MentionSettings, MentionProp
         // the suggestion. This is not a good idea and should be fixed in a
         // better way soon.
         get noDecorations() {
-          return extension.properties.noDecorations;
+          return extension.options.noDecorations;
         },
 
         get suggestTag() {
-          return extension.properties.suggestTag;
+          return extension.options.suggestTag;
         },
 
         get onChange() {
-          return extension.properties.onChange;
+          return extension.options.onChange;
         },
 
         get onExit() {
-          return extension.properties.onExit;
+          return extension.options.onExit;
         },
 
         get keyBindings() {
-          return extension.properties.keyBindings;
+          return extension.options.keyBindings;
         },
 
         get onCharacterEntry() {
-          return extension.properties.onCharacterEntry;
+          return extension.options.onCharacterEntry;
         },
 
         createCommand: ({ match, reason, setMarkRemoved }) => {
@@ -285,16 +285,16 @@ export class MentionExtension extends MarkExtension<MentionSettings, MentionProp
       let name = attributes.name;
 
       if (!name) {
-        invariant(this.settings.matchers.length < 2, {
+        invariant(this.options.matchers.length < 2, {
           code: ErrorConstant.EXTENSION,
           message:
             'The MentionExtension command must specify a name since there are multiple matchers configured',
         });
 
-        name = this.settings.matchers[0].name;
+        name = this.options.matchers[0].name;
       }
 
-      const allowedNames = this.settings.matchers.map(({ name }) => name);
+      const allowedNames = this.options.matchers.map(({ name }) => name);
 
       invariant(allowedNames.includes(name), {
         code: ErrorConstant.EXTENSION,
@@ -303,7 +303,7 @@ export class MentionExtension extends MarkExtension<MentionSettings, MentionProp
         )}.`,
       });
 
-      const matcher = getMatcher(name, this.settings.matchers);
+      const matcher = getMatcher(name, this.options.matchers);
 
       invariant(matcher, {
         code: ErrorConstant.EXTENSION,

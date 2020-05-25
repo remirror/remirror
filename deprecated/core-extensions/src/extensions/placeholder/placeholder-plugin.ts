@@ -31,7 +31,7 @@ const applyState = ({ pluginState, extension, tr, state }: ApplyStateParameter) 
     return pluginState;
   }
 
-  return { ...extension.settings, empty: isDocNodeEmpty(state.doc) };
+  return { ...extension.options, empty: isDocNodeEmpty(state.doc) };
 };
 
 /**
@@ -42,7 +42,7 @@ const applyState = ({ pluginState, extension, tr, state }: ApplyStateParameter) 
  */
 const createDecorationSet = ({ extension, state }: SharedParameter) => {
   const { empty } = getPluginState<PlaceholderPluginState>(extension.pluginKey, state);
-  const { emptyNodeClass, placeholder } = extension.settings;
+  const { emptyNodeClass, placeholder } = extension.options;
 
   if (!empty) {
     return;
@@ -69,7 +69,7 @@ export const createPlaceholderPlugin = (extension: AnyExtension<PlaceholderExten
     key: extension.pluginKey,
     state: {
       init: (_, state): PlaceholderPluginState => ({
-        ...extension.settings,
+        ...extension.options,
         empty: isDocNodeEmpty(state.doc),
       }),
       apply: (tr, pluginState: PlaceholderPluginState, _, state): PlaceholderPluginState => {

@@ -14,7 +14,7 @@ export const PlaceholderExtension = ExtensionFactory.typed<PlaceholderExtensionS
   createPlugin: (_, extension) => {
     return createPlaceholderPlugin(extension);
   },
-  createAttributes: (_, extension) => ({ 'aria-placeholder': extension.settings.placeholder }),
+  createAttributes: (_, extension) => ({ 'aria-placeholder': extension.options.placeholder }),
 });
 
 //   public styles() {
@@ -61,7 +61,7 @@ export const PlaceholderExtension = ExtensionFactory.typed<PlaceholderExtensionS
 //       element,
 //       {},
 //       cloneElement(children, {
-//         ...properties,
+//         ...options,
 //         className: isString(properties.className)
 //           ? `${properties.className} ${emptyNodeClass}`
 //           : emptyNodeClass,

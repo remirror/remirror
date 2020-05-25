@@ -37,7 +37,7 @@ export class SuggestionsExtension extends PlainExtension {
           // Method doesn't exist
           !extension.createSuggestions ||
           // Extension settings exclude it from running
-          extension.settings.exclude.suggesters
+          extension.options.exclude?.suggesters
         ) {
           return;
         }

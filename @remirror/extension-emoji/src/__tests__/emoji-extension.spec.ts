@@ -21,7 +21,7 @@ function create(parameter: WithProperties<EmojiSettings, EmojiProperties> = obje
           onSuggestionChange,
           onSuggestionExit,
           suggestionKeyBindings,
-          ...parameter.properties,
+          ...parameter.options,
         },
       }),
     ],

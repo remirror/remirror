@@ -43,7 +43,7 @@ export class KeymapExtension extends PlainExtension {
           // The extension doesn't have the `createKeymap` method.
           !extension.createKeymap ||
           // The extension was configured to ignore the keymap.
-          extension.settings.exclude.keymap
+          extension.options.exclude?.keymap
         ) {
           return;
         }

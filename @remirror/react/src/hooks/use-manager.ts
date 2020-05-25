@@ -60,7 +60,7 @@ export function useManager<ExtensionUnion extends AnyExtension, PresetUnion exte
   parameter: EditorManagerParameter<ExtensionUnion, PresetUnion>,
 ) {
   const { extensions } = parameter;
-  const settings = useObjectCheck(parameter.settings ?? {});
+  const settings = useObjectCheck(parameter.options ?? {});
   const presets = useMemo(() => [...parameter.presets, new CorePreset(), new ReactPreset()], [
     parameter.presets,
   ]);

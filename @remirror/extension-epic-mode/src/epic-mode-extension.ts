@@ -79,7 +79,7 @@ export class EpicModePluginState {
   public ctx!: CanvasRenderingContext2D;
 
   get properties() {
-    return this.#extension.properties;
+    return this.#extension.options;
   }
 
   private container!: HTMLElement;
@@ -109,7 +109,7 @@ export class EpicModePluginState {
    */
   public init(view: EditorView) {
     this.view = view;
-    this.container = this.properties.getCanvasContainer();
+    this.container = this.options.getCanvasContainer();
 
     const canvas = document.createElement('canvas');
     this.canvas = canvas;
@@ -149,8 +149,8 @@ export class EpicModePluginState {
   }
 
   public shake = () => {
-    if (this.properties.active) {
-      this.#shakeTime = this.#shakeTimeMax = this.properties.shakeTime;
+    if (this.options.active) {
+      this.#shakeTime = this.#shakeTimeMax = this.options.shakeTime;
     }
   };
 
@@ -167,19 +167,16 @@ export class EpicModePluginState {
       return;
     }
 
-    const numParticles = randomInt(
-      this.properties.particleRange.min,
-      this.properties.particleRange.max,
-    );
+    const numParticles = randomInt(this.options.particleRange.min, this.options.particleRange.max);
     const textColor = getRGBComponents(node);
     for (let ii = 0; ii < numParticles; ii++) {
-      const colorCode = this.properties.colors[ii % this.properties.colors.length];
+      const colorCode = this.options.colors[ii % this.options.colors.length];
       const r = Number.parseInt(colorCode.slice(1, 3), 16);
       const g = Number.parseInt(colorCode.slice(3, 5), 16);
       const b = Number.parseInt(colorCode.slice(5, 7), 16);
       const color = [r, g, b];
 
-      this.#particles[ii] = this.properties.particleEffect.createParticle({
+      this.#particles[ii] = this.options.particleEffect.createParticle({
         x: coords.left + 10,
         y: coords.top - 10,
         color,
@@ -210,7 +207,7 @@ export class EpicModePluginState {
 
     if (this.#shakeTime > 0) {
       this.#shakeTime -= dt;
-      const magnitude = (this.#shakeTime / this.#shakeTimeMax) * this.properties.shakeIntensity;
+      const magnitude = (this.#shakeTime / this.#shakeTimeMax) * this.options.shakeIntensity;
       const shakeX = randomInt(-magnitude, magnitude);
       const shakeY = randomInt(-magnitude, magnitude);
       (this.view.dom as HTMLElement).style.transform = `translate(${shakeX}px,${shakeY}px)`;
@@ -225,7 +222,7 @@ export class EpicModePluginState {
         continue;
       }
 
-      this.properties.particleEffect.updateParticle({
+      this.options.particleEffect.updateParticle({
         particle,
         ctx: this.ctx,
         canvas: this.canvas,

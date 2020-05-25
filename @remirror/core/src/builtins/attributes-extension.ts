@@ -39,7 +39,7 @@ export class AttributesExtension extends PlainExtension {
         if (
           !extension.createAttributes ||
           managerSettings.exclude?.attributes ||
-          extension.settings.exclude.attributes
+          extension.options.exclude?.attributes
         ) {
           return;
         }

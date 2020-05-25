@@ -55,7 +55,7 @@ export class DocExtension extends NodeExtension<DocExtensionSettings> {
 
   protected createNodeSpec() {
     return {
-      content: this.settings.content,
+      content: this.options.content,
     };
   }
 }

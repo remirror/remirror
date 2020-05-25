@@ -103,7 +103,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     return new EditorManager<ExtensionUnion, PresetUnion | typeof builtInPreset>({
       extensions,
       presets: [...presets, builtInPreset],
-      settings: { ...settings, privacy: privacySymbol },
+      settings: { ...options, privacy: privacySymbol },
     });
   }
 
@@ -270,9 +270,9 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * extensions. Instead use `Manager.create`.
    */
   private constructor(parameter: EditorManagerConstructorParameter<ExtensionUnion, PresetUnion>) {
-    this.#settings = parameter.settings ?? {};
+    this.#settings = parameter.options ?? {};
 
-    invariant(parameter.settings?.privacy === privacySymbol, {
+    invariant(parameter.options?.privacy === privacySymbol, {
       message: `The extension manager can only be invoked via one of it's static methods. e.g 'EditorManager.create([...extensions])'.`,
       code: ErrorConstant.NEW_EDITOR_MANAGER,
     });

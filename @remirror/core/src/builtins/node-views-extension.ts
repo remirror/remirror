@@ -39,7 +39,7 @@ export class NodeViewsExtension extends PlainExtension {
           // Method doesn't exist
           !extension.createNodeViews ||
           // Extension settings exclude it
-          extension.settings.exclude.nodeViews
+          extension.options.exclude?.nodeViews
         ) {
           return;
         }

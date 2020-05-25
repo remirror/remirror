@@ -56,8 +56,8 @@ describe('constructor', () => {
       },
     });
 
-    expect(codeBlock.properties.syntaxTheme).toEqual('a11yDark');
-    expect(codeBlock.properties.defaultLanguage).toEqual('markup');
+    expect(codeBlock.options.syntaxTheme).toEqual('a11yDark');
+    expect(codeBlock.options.defaultLanguage).toEqual('markup');
   });
 });
 
@@ -65,7 +65,7 @@ const supportedLanguages = [typescript, javascript, markdown, tsx];
 
 const create = (settings: CodeBlockSettings = object(), properties?: CodeBlockProperties) =>
   renderEditor({
-    extensions: [new CodeBlockExtension({ ...{ ...settings, properties }, supportedLanguages })],
+    extensions: [new CodeBlockExtension({ ...{ ...options, properties }, supportedLanguages })],
     presets: [],
   });
 

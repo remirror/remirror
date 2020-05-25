@@ -1,5 +1,4 @@
-import React from 'react';
-import { FC, Fragment, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { FC, Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import bash from 'refractor/lang/bash';
 import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
@@ -80,7 +79,7 @@ const useMarkdownManager = () => {
 
 const InternalMarkdownEditor: FC<InternalEditorProps> = (properties) => {
   return (
-    <RemirrorProvider {...properties} childAsRoot={true}>
+    <RemirrorProvider {...options} childAsRoot={true}>
       <div />
     </RemirrorProvider>
   );
@@ -110,9 +109,9 @@ const useWysiwygManager = () => {
   );
 };
 
-const WysiwygEditor: FC<InternalEditorProps> = ({ children, ...properties }) => {
+const WysiwygEditor: FC<InternalEditorProps> = ({ children, ...options }) => {
   return (
-    <RemirrorProvider {...properties} childAsRoot={true}>
+    <RemirrorProvider {...options} childAsRoot={true}>
       <div>{children}</div>
     </RemirrorProvider>
   );

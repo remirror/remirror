@@ -125,7 +125,7 @@ export class BaseKeymapExtension extends PlainExtension<BaseKeymapSettings, Base
    * Use the default keymaps available via
    */
   public createKeymap = () => {
-    const { selectParentNodeOnEscape, undoInputRuleOnBackspace, excludeBaseKeymap } = this.settings;
+    const { selectParentNodeOnEscape, undoInputRuleOnBackspace, excludeBaseKeymap } = this.options;
 
     const keyBindings: KeyBindings = object();
 
@@ -163,17 +163,16 @@ export class BaseKeymapExtension extends PlainExtension<BaseKeymapSettings, Base
   private buildExtraKeyBindings() {
     const keyBindings: KeyBindings = object();
 
-    for (const key of this.settings.extraKeys) {
+    for (const key of this.options.extraKeys) {
       keyBindings[key] = (parameter) => {
         // Get the keymap object from the properties
-        const keymap = isFunction(this.properties.keymap)
-          ? this.properties.keymap(this.store)
-          : this.properties.keymap;
+        const keymap = isFunction(this.options.keymap)
+          ? this.options.keymap(this.store)
+          : this.options.keymap;
 
         // If the supported keys doesn't exist on the properties keymap then use
         // the default method.
-        const binding: KeyBindingCommandFunction =
-          keymap[key] ?? this.settings.defaultBindingMethod;
+        const binding: KeyBindingCommandFunction = keymap[key] ?? this.options.defaultBindingMethod;
 
         return binding(parameter);
       };

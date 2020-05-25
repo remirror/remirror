@@ -6,10 +6,10 @@ import { ReactSSRExtension, ReactSSRProperties } from '@remirror/extension-react
  */
 export interface ReactPresetSettings {}
 
-export interface ReactPresetProperties extends ReactSSRProperties {}
+export interface ReactPresetOptions extends ReactSSRProperties {}
 
-export class ReactPreset extends Preset<ReactPresetSettings, ReactPresetProperties> {
-  public static defaultProperties: Required<ReactPresetProperties> = {
+export class ReactPreset extends Preset<ReactPresetSettings, ReactPresetOptions> {
+  public static defaultProperties: Required<ReactPresetOptions> = {
     ...ReactSSRExtension.defaultProperties,
   };
 
@@ -20,17 +20,17 @@ export class ReactPreset extends Preset<ReactPresetSettings, ReactPresetProperti
   /**
    * No properties are defined so this can be ignored.
    */
-  protected onSetOptions(parameter: SetOptionsParameter<ReactPresetProperties>) {
+  protected onSetOptions(parameter: SetOptionsParameter<ReactPresetOptions>) {
     const { changes } = parameter;
 
     if (changes.transformers.changed) {
       const reactSSRExtension = this.getExtension(ReactSSRExtension);
-      reactSSRExtension.setProperties({ transformers: changes.transformers.value });
+      reactSSRExtension.setOptions({ transformers: changes.transformers.value });
     }
   }
 
   public createExtensions() {
-    const { transformers } = this.properties;
+    const { transformers } = this.options;
 
     return [new ReactSSRExtension({ properties: { transformers } })];
   }

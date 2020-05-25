@@ -1,12 +1,16 @@
+import { Custom, CustomKeyList, Handler, HandlerKeyList, Static } from '@remirror/core-types';
+
 import {
   AnyExtension,
   AnyMarkExtension,
   AnyNodeExtension,
+  DefaultExtensionOptions,
   MarkExtension,
   NodeExtension,
   NodeExtensionSpec,
   PlainExtension,
 } from '../../..';
+import { OnSetCustomOption } from '../base-class';
 
 const anyExtensionTester = <ExtensionUnion extends AnyExtension>(extension: ExtensionUnion) => {};
 const anyNodeExtensionTester = <ExtensionUnion extends AnyNodeExtension>(
@@ -18,57 +22,72 @@ const anyMarkExtensionTester = <ExtensionUnion extends AnyMarkExtension>(
 
 // Extension without settings.
 
-class ExtensionWithoutSettings extends PlainExtension {
+class ExtensionWithoutStaticOptions extends PlainExtension {
   get name() {
-    return 'withoutSettings' as const;
+    return 'withoutStaticOptions' as const;
   }
 }
-const extensionWithoutSettings = new ExtensionWithoutSettings();
+const extensionWithoutStaticOptions = new ExtensionWithoutStaticOptions();
 
-type AnyExtensionSupportsNoSettings = typeof extensionWithoutSettings extends AnyExtension
+type AnyExtensionSupportsNoStaticOptions = typeof extensionWithoutStaticOptions extends AnyExtension
   ? true
   : never;
-const anyExtensionSupportsNoSettings: AnyExtension = extensionWithoutSettings;
-anyExtensionTester(extensionWithoutSettings);
+const anyExtensionSupportsNoStaticOptions: AnyExtension = extensionWithoutStaticOptions;
+anyExtensionTester(extensionWithoutStaticOptions);
 
 // Extension with settings
 
-class ExtensionWithSettings extends PlainExtension<{ oops: boolean }> {
+class ExtensionWithStaticOptions extends PlainExtension<{ oops: Static<boolean> }> {
   get name() {
-    return 'withSettings' as const;
+    return 'withStaticOptions' as const;
   }
 }
 
 // @ts-expect-error
-new ExtensionWithSettings({});
+new ExtensionWithStaticOptions({});
 
 // @ts-expect-error
-new ExtensionWithSettings();
+new ExtensionWithStaticOptions();
 
-const extensionWithSettings = new ExtensionWithSettings({ oops: true });
+const extensionWithStaticOptions = new ExtensionWithStaticOptions({ oops: true });
 
-type AnyExtensionsSupportsSettings = typeof extensionWithSettings extends AnyExtension
+type AnyExtensionsSupportsStaticOptions = typeof extensionWithStaticOptions extends AnyExtension
   ? true
-  : never;
-const anyExtensionsSupportsSettings: AnyExtensionsSupportsSettings = true;
-anyExtensionTester(extensionWithSettings);
+  : false;
+const anyExtensionsSupportsStaticOptions: AnyExtensionsSupportsStaticOptions = true;
+anyExtensionTester(extensionWithStaticOptions);
 
 // Extension with properties
 
-class ExtensionWithProperties extends PlainExtension<{ awesome?: string }, { oops: boolean }> {
-  public static readonly defaultSettings = { awesome: 'never' };
-  public static readonly defaultProperties = { oops: false };
+interface WithDynamicOptions {
+  awesome?: Static<string>;
+  oops: boolean;
+  onChange: Handler<() => void>;
+}
+
+const defaultOptions: DefaultExtensionOptions<WithDynamicOptions> = {
+  awesome: 'yes indeed',
+  oops: false,
+};
+// @ts-expect-error
+const failDefaultOptions: DefaultExtensionOptions<WithDynamicOptions> = { onChange: () => {} };
+
+class ExtensionWithDynamicOptions extends PlainExtension<WithDynamicOptions> {
+  public static readonly defaultOptions: DefaultExtensionOptions<WithDynamicOptions> = {
+    awesome: 'yes indeed',
+    oops: true,
+  };
 
   get name() {
-    return 'withProperties' as const;
+    return 'withDynamicOptions' as const;
   }
 }
 
-new ExtensionWithProperties();
+new ExtensionWithDynamicOptions();
 
-class NodeExtensionWithProperties extends NodeExtension<{ awesome?: string }, { oops: boolean }> {
+class NodeExtensionWithDynamicOptions extends NodeExtension<WithDynamicOptions> {
   get name() {
-    return 'withProperties' as const;
+    return 'nodeWithDynamicOptions' as const;
   }
 
   protected createNodeSpec(): NodeExtensionSpec {
@@ -76,12 +95,12 @@ class NodeExtensionWithProperties extends NodeExtension<{ awesome?: string }, { 
   }
 }
 
-class MarkExtensionWithProperties extends MarkExtension<{ awesome?: string }, { oops: boolean }> {
-  public static readonly defaultSettings = { awesome: 'nice' };
-  public static readonly defaultProperties = { oops: true };
+class MarkExtensionWithDynamicOptions extends MarkExtension<WithDynamicOptions> {
+  public static readonly defaultStaticOptions = { awesome: 'nice' };
+  public static readonly defaultDynamicOptions = { oops: true };
 
   get name() {
-    return 'withProperties' as const;
+    return 'markWithDynamicOptions' as const;
   }
 
   protected createMarkSpec() {
@@ -89,33 +108,75 @@ class MarkExtensionWithProperties extends MarkExtension<{ awesome?: string }, { 
   }
 }
 
-class InvalidPropertiesExtension extends PlainExtension<object, { oops: boolean }> {
+class InvalidDynamicOptionsExtension extends PlainExtension<{ oops: boolean }> {
   get name() {
-    return 'withProperties' as const;
+    return 'invalidWithDynamicOptions' as const;
   }
 }
 
 function fn<Type extends AnyExtension>(extension: Type) {}
-fn(new InvalidPropertiesExtension());
+fn(new InvalidDynamicOptionsExtension());
 
-const extensionWithProperties = new ExtensionWithProperties({ properties: { oops: true } });
-const anyExtensionsSupportsProperties: AnyExtension = extensionWithProperties;
-anyExtensionTester(extensionWithProperties);
+const extensionWithDynamicOptions = new ExtensionWithDynamicOptions({ oops: true });
+const anyExtensionsSupportsDynamicOptions: AnyExtension = extensionWithDynamicOptions;
+anyExtensionTester(extensionWithDynamicOptions);
 // @ts-expect-error
-anyNodeExtensionTester(extensionWithProperties);
+anyNodeExtensionTester(extensionWithDynamicOptions);
 // @ts-expect-error
-anyMarkExtensionTester(extensionWithProperties);
+anyMarkExtensionTester(extensionWithDynamicOptions);
 
-const nodeExtensionWithProperties = new NodeExtensionWithProperties({ properties: { oops: true } });
-const anyNodeExtensionsSupportsProperties: AnyNodeExtension = nodeExtensionWithProperties;
-anyExtensionTester(nodeExtensionWithProperties);
-anyNodeExtensionTester(nodeExtensionWithProperties);
+const nodeExtensionWithDynamicOptions = new NodeExtensionWithDynamicOptions({ oops: true });
+const anyNodeExtensionsSupportsDynamicOptions: AnyNodeExtension = nodeExtensionWithDynamicOptions;
+anyExtensionTester(nodeExtensionWithDynamicOptions);
+anyNodeExtensionTester(nodeExtensionWithDynamicOptions);
 // @ts-expect-error
-anyMarkExtensionTester(nodeExtensionWithProperties);
+anyMarkExtensionTester(nodeExtensionWithDynamicOptions);
 
-const markExtensionWithProperties = new MarkExtensionWithProperties({ properties: { oops: true } });
-const anyMarkExtensionsSupportsProperties: AnyMarkExtension = markExtensionWithProperties;
-anyExtensionTester(markExtensionWithProperties);
-anyMarkExtensionTester(markExtensionWithProperties);
+const markExtensionWithDynamicOptions = new MarkExtensionWithDynamicOptions({ oops: true });
+const anyMarkExtensionsSupportsDynamicOptions: AnyMarkExtension = markExtensionWithDynamicOptions;
+anyExtensionTester(markExtensionWithDynamicOptions);
+anyMarkExtensionTester(markExtensionWithDynamicOptions);
 // @ts-expect-error
-anyNodeExtensionTester(markExtensionWithProperties);
+anyNodeExtensionTester(markExtensionWithDynamicOptions);
+
+// Handlers
+
+interface WithHandlers {
+  onChange: Handler<(text: string) => void>;
+  onUpdate: Handler<(valid: boolean) => void>;
+  bindings: Custom<Record<string, (value: string) => boolean>>;
+}
+
+class ExtensionWithHandlers extends PlainExtension<WithHandlers> {
+  public static defaultOptions: DefaultExtensionOptions<WithHandlers> = {};
+  public static handlerKeys: HandlerKeyList<WithHandlers> = ['onChange', 'onUpdate'];
+  public static customKeys: CustomKeyList<WithHandlers> = ['bindings'];
+
+  get name() {
+    return 'withHandlers' as const;
+  }
+
+  public onSetCustomOption: OnSetCustomOption<WithHandlers> = (key, value) => {
+    const a: 'bindings' = key;
+
+    if (key === 'bindings') {
+      value.a('');
+      // @ts-expect-error
+      value.b(100);
+    }
+
+    return () => {};
+  };
+}
+
+const withHandlers = new ExtensionWithHandlers();
+
+withHandlers.setCustomOption('bindings', {});
+// @ts-expect-error
+withHandlers.setCustomOption('oops', {});
+// @ts-expect-error
+withHandlers.setCustomOption('bindings', { value: () => '' });
+
+withHandlers.addHandler('onChange', (value: string) => {});
+// @ts-expect-error
+withHandlers.addHandler('onUpdate', (value: string) => {});

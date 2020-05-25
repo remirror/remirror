@@ -5,18 +5,16 @@ import {
   RemirrorIdentifier,
 } from '@remirror/core-constants';
 import { invariant, isIdentifierOfType, isRemirrorType, uniqueBy } from '@remirror/core-helpers';
-import {
-  EmptyShape,
-  FlipPartialAndRequired,
-  GetDynamic,
-  GetPartialDynamic,
-  GetStatic,
-  IfNoRequiredProperties,
-  ValidOptions,
-} from '@remirror/core-types';
+import { AnyFunction, EmptyShape, Replace, ValidOptions } from '@remirror/core-types';
 
 import { AnyExtension, AnyExtensionConstructor } from '../extension';
-import { BaseClass, BaseClassConstructor, isValidConstructor } from '../extension/base-class';
+import {
+  BaseClass,
+  BaseClassConstructor,
+  ConstructorParameter,
+  DefaultOptions,
+  isValidConstructor,
+} from '../extension/base-class';
 import { SetOptionsParameter } from '../types';
 
 /**
@@ -69,7 +67,7 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
   #extensionMap = new Map<this['~E']['constructor'], this['~E']>();
 
   constructor(...parameters: PresetConstructorParameter<Options>) {
-    super(isValidPresetConstructor, {}, ...(parameters as any));
+    super(isValidPresetConstructor, {}, ...parameters);
 
     // Create the extension list.
     this.#extensions = uniqueBy(
@@ -82,6 +80,16 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
     for (const extension of this.#extensions) {
       this.#extensionMap.set(extension.constructor, extension);
     }
+  }
+
+  /**
+   * Check if the type of this extension's constructor matches the type of the
+   * provided constructor.
+   */
+  public isOfType<Type extends AnyPresetConstructor>(
+    Constructor: Type,
+  ): this is InstanceType<Type> {
+    return this.constructor === (Constructor as unknown);
   }
 
   /**
@@ -167,7 +175,11 @@ export type AnyPreset = Omit<Preset<any>, keyof Remirror.AnyPresetOverrides> &
 /**
  * The type which is applicable to any `Preset` constructor.
  */
-export type AnyPresetConstructor = PresetConstructor<any>;
+export type AnyPresetConstructor = Replace<
+  PresetConstructor<any>,
+  // eslint-disable-next-line @typescript-eslint/prefer-function-type
+  { new (...args: any[]): AnyFunction }
+>;
 
 /**
  * The default preset options.
@@ -178,10 +190,10 @@ export type AnyPresetConstructor = PresetConstructor<any>;
  *   or required
  * -  1
  */
-export type DefaultPresetOptions<Options extends ValidOptions> = FlipPartialAndRequired<
-  GetStatic<Options>
-> &
-  Required<GetDynamic<Options>>;
+export type DefaultPresetOptions<Options extends ValidOptions> = DefaultOptions<
+  Options,
+  EmptyShape
+>;
 
 /**
  * The preset constructor. This is used to annotate the Preset class since
@@ -229,7 +241,7 @@ export function isPresetConstructor(value: unknown): value is AnyPresetConstruct
  */
 export function isValidPresetConstructor(
   Constructor: unknown,
-): asserts Constructor is AnyPresetConstructor {
+): asserts Constructor is AnyExtensionConstructor {
   const code = ErrorConstant.INVALID_PRESET;
 
   invariant(isPresetConstructor(Constructor), {
@@ -246,10 +258,9 @@ export function isValidPresetConstructor(
  *
  * - Required when any of the options are not optional.
  */
-export type PresetConstructorParameter<Options extends ValidOptions> = IfNoRequiredProperties<
-  GetStatic<Options>,
-  [(GetStatic<Options> & GetPartialDynamic<Options>)?],
-  [GetStatic<Options> & GetPartialDynamic<Options>]
+export type PresetConstructorParameter<Options extends ValidOptions> = ConstructorParameter<
+  Options,
+  EmptyShape
 >;
 
 /* eslint-enable @typescript-eslint/explicit-member-accessibility */

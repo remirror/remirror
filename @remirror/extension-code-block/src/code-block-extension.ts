@@ -57,7 +57,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlo
    * Add the languages to the environment if they have not yet been added.
    */
   protected init() {
-    for (const language of this.settings.supportedLanguages) {
+    for (const language of this.options.supportedLanguages) {
       refractor.register(language);
     }
   }
@@ -65,7 +65,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlo
   protected createNodeSpec(): NodeExtensionSpec {
     return {
       attrs: {
-        language: { default: this.properties.defaultLanguage },
+        language: { default: this.options.defaultLanguage },
       },
       content: 'text*',
       marks: '',
@@ -94,7 +94,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlo
           },
         },
       ],
-      toDOM: (node) => codeBlockToDOM(node, this.properties.defaultLanguage),
+      toDOM: (node) => codeBlockToDOM(node, this.options.defaultLanguage),
     };
   }
 
@@ -116,8 +116,8 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlo
         convertCommand(
           toggleBlockItem({
             type: this.type,
-            toggleType: this.store.schema.nodes[this.properties.toggleName],
-            attrs: { language: this.properties.defaultLanguage, ...attributes },
+            toggleType: this.store.schema.nodes[this.options.toggleName],
+            attrs: { language: this.options.defaultLanguage, ...attributes },
           }),
         ),
 
@@ -162,8 +162,8 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlo
       formatCodeBlock: (parameter?: Partial<PosParameter>) => {
         return formatCodeBlockFactory({
           type: this.type,
-          formatter: this.properties.formatter,
-          defaultLanguage: this.properties.defaultLanguage,
+          formatter: this.options.formatter,
+          defaultLanguage: this.options.defaultLanguage,
         })(parameter);
       },
     };
@@ -178,7 +178,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlo
     const getAttributes: GetAttributes = (match) => {
       const language = getLanguage({
         language: getMatchString(match, 1),
-        fallback: this.properties.defaultLanguage,
+        fallback: this.options.defaultLanguage,
       });
 
       return { language };
@@ -248,7 +248,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlo
         } else {
           // There is no content before the codeBlock so simply create a new
           // block and jump into it.
-          tr.insert(0, state.schema.nodes[this.properties.toggleName].create());
+          tr.insert(0, state.schema.nodes[this.options.toggleName].create());
           tr.setSelection(TextSelection.create(tr.doc, 1));
         }
 
@@ -287,7 +287,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlo
 
         const language = getLanguage({
           language: lang,
-          fallback: this.properties.defaultLanguage,
+          fallback: this.options.defaultLanguage,
         });
 
         const pos = selection.$from.before();
@@ -303,7 +303,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlo
 
         return true;
       },
-      [this.settings.keyboardShortcut]: ({ state }) => {
+      [this.options.keyboardShortcut]: ({ state }) => {
         const commands = this.store.getCommands();
 
         if (!isNodeActive({ type: this.type, state })) {

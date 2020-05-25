@@ -1,9 +1,11 @@
-import { RemirrorIdentifier } from '@remirror/core-constants';
+import { __INTERNAL_REMIRROR_IDENTIFIER_KEY__, RemirrorIdentifier } from '@remirror/core-constants';
+import { Dynamic, Static } from '@remirror/core-types';
 import { ignoreUnused } from '@remirror/test-fixtures';
 
+import { EditorManager } from '../..';
 import { PlainExtension } from '../../extension';
 import { SetOptionsParameter } from '../../types';
-import { AnyPreset, Preset } from '../preset-base';
+import { AnyPreset, DefaultPresetOptions, Preset } from '../preset-base';
 
 // @ts-expect-error
 class PresetNoName extends Preset {}
@@ -19,9 +21,9 @@ class NoExtensionPreset extends Preset {
   }
 }
 
-class MissingSettingsPreset extends Preset<{ oops?: boolean }> {
+class MissingStaticOptionsPreset extends Preset<{ oops?: boolean }> {
   get name() {
-    return 'missingSettings' as const;
+    return 'missingStaticOptions' as const;
   }
 
   protected onSetOptions(): void {
@@ -33,21 +35,31 @@ class MissingSettingsPreset extends Preset<{ oops?: boolean }> {
   }
 }
 
-class ExtensionWithSettings extends PlainExtension<{ oops: boolean }> {
+const manager = EditorManager.create({
+  extensions: [],
+  presets: [new MissingStaticOptionsPreset()],
+});
+const a = manager.getPreset(MissingStaticOptionsPreset);
+
+class ExtensionWithStaticOptions extends PlainExtension<{ oops: Static<boolean> }> {
   get name() {
-    return 'withSettings' as const;
+    return 'withStaticOptions' as const;
   }
 }
 
-class WithSettingsPreset extends Preset<{ me: 'friend' | 'enemy' }> {
-  public static readonly defaultSettings = { me: 'friend' };
+interface WithStaticOptions {
+  me: Static<'friend' | 'enemy'>;
+}
+
+class WithStaticOptionsPreset extends Preset<WithStaticOptions> {
+  public static readonly defaultOptions: DefaultPresetOptions<WithStaticOptions> = { me: 'friend' };
 
   get name() {
-    return 'withSettings' as const;
+    return 'withStaticOptions' as const;
   }
 
   public createExtensions() {
-    return [new ExtensionWithSettings({ oops: false })];
+    return [new ExtensionWithStaticOptions({ oops: false })];
   }
 
   protected onSetOptions() {
@@ -56,44 +68,56 @@ class WithSettingsPreset extends Preset<{ me: 'friend' | 'enemy' }> {
 }
 
 // @ts-expect-error
-new WithSettingsPreset();
+new WithStaticOptionsPreset();
 // @ts-expect-error
-new WithSettingsPreset({});
+new WithStaticOptionsPreset({});
 
-const extensionArray: Array<WithSettingsPreset['~E']> = [
-  new ExtensionWithSettings({ oops: false }),
+const extensionArray: Array<WithStaticOptionsPreset['~E']> = [
+  new ExtensionWithStaticOptions({ oops: false }),
 ];
 
-const anyPresetWithSettings: AnyPreset = new WithSettingsPreset({ me: 'friend' });
-const temp1: RemirrorIdentifier.Preset = anyPresetWithSettings['~~remirror~~'];
+const anyPresetWithStaticOptions: AnyPreset = new WithStaticOptionsPreset({ me: 'friend' });
+const temp1: RemirrorIdentifier.Preset =
+  anyPresetWithStaticOptions[__INTERNAL_REMIRROR_IDENTIFIER_KEY__];
 // @ts-expect-error
-const temp2: RemirrorIdentifier.Extension = anyPresetWithSettings['~~remirror~~'];
+const temp2: RemirrorIdentifier.PlainExtension =
+  anyPresetWithStaticOptions[__INTERNAL_REMIRROR_IDENTIFIER_KEY__];
 
-class WithPropertiesPreset extends Preset<{ me?: string }, { required: boolean }> {
-  public static readonly defaultSettings = { required: true };
-  public static readonly defaultProperties = { me: 'friend' };
+interface WithDynamicOptions {
+  me?: Static<string>;
+  required: boolean;
+  custom: Dynamic<string>;
+}
+
+class WithDynamicOptionsPreset extends Preset<WithDynamicOptions> {
+  public static readonly defaultOptions: DefaultPresetOptions<WithDynamicOptions> = {
+    required: true,
+    custom: '',
+    me: '',
+  };
 
   get name() {
-    return 'withSettings' as const;
+    return 'withStaticOptions' as const;
   }
 
-  protected onSetOptions(parameter: SetOptionsParameter<{ required: boolean }>): void {
+  protected onSetOptions(parameter: SetOptionsParameter<WithDynamicOptions>): void {
     const { changes } = parameter;
+    const keys: Array<keyof typeof changes> = ['custom', 'required'];
 
     // @ts-expect-error
     ignoreUnused(changes.required.value);
 
     if (changes.required.changed) {
-      const extension = this.getExtension(ExtensionWithSettings);
+      const extension = this.getExtension(ExtensionWithStaticOptions);
       ignoreUnused(changes.required.value);
       ignoreUnused(changes.required.previousValue);
     }
   }
 
   public createExtensions() {
-    return [new ExtensionWithSettings({ oops: false })];
+    return [new ExtensionWithStaticOptions({ oops: false })];
   }
 }
 
-new WithPropertiesPreset();
-new WithPropertiesPreset({ properties: { required: false } });
+new WithDynamicOptionsPreset();
+new WithDynamicOptionsPreset({ required: false });

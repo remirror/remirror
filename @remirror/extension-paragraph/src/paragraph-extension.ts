@@ -47,7 +47,7 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionSettings
         {
           tag: 'p',
           getAttrs: (node) => ({
-            ...getAttributes(this.settings, node as HTMLElement),
+            ...getAttributes(this.options, node as HTMLElement),
           }),
         },
       ],

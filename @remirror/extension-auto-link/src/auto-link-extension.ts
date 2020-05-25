@@ -78,11 +78,11 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkSettings, AutoLinkP
   public createPasteRules = () => {
     return [
       markPasteRule({
-        regexp: this.settings.urlRegex,
+        regexp: this.options.urlRegex,
         type: this.type,
         getAttributes: (url) => {
           return {
-            href: extractHref(getMatchString(url), this.properties.defaultProtocol),
+            href: extractHref(getMatchString(url), this.options.defaultProtocol),
           };
         },
       }),
@@ -133,7 +133,7 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkSettings, AutoLinkP
             LEAF_NODE_REPLACING_CHARACTER,
             leafChar,
           );
-          findMatches(previousSearchText, this.settings.urlRegex).forEach((match) => {
+          findMatches(previousSearchText, this.options.urlRegex).forEach((match) => {
             const startIndex = match.index;
             const url = match[1];
             const start = $pos.start() + startIndex;
@@ -145,7 +145,7 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkSettings, AutoLinkP
               from: start,
               to: end,
               type: this.type,
-              defaultProtocol: this.properties.defaultProtocol,
+              defaultProtocol: this.options.defaultProtocol,
             });
           });
 
@@ -153,7 +153,7 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkSettings, AutoLinkP
         }
 
         // Finds matches within the current node when in the middle of a node
-        findMatches(searchText, this.settings.urlRegex).forEach((match) => {
+        findMatches(searchText, this.options.urlRegex).forEach((match) => {
           const startIndex = match.index;
           const url = match[1];
           const start = $from.start() + startIndex;
@@ -173,7 +173,7 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkSettings, AutoLinkP
               from: start,
               to: end,
               type: this.type,
-              defaultProtocol: this.properties.defaultProtocol,
+              defaultProtocol: this.options.defaultProtocol,
             });
           }
         });
@@ -194,7 +194,7 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkSettings, AutoLinkP
           const previous = getUrlsFromState(previousState, this.type);
 
           if (!areSetsEqual(next.set, previous.set)) {
-            this.properties.onUrlUpdate(next);
+            this.options.onUrlUpdate(next);
           }
         },
       }),

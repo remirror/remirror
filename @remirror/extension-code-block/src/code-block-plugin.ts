@@ -69,7 +69,7 @@ export class CodeBlockState {
     const decorations = createDecorations({
       blocks,
       skipLast: this.#deleted,
-      defaultLanguage: this.#extension.properties.defaultLanguage,
+      defaultLanguage: this.#extension.options.defaultLanguage,
     });
     this.decorationSet = DecorationSet.create(node, decorations);
     this.#blocks = blocks;
@@ -169,7 +169,7 @@ export class CodeBlockState {
       createDecorations({
         blocks: [{ node, pos }],
         skipLast: this.#deleted,
-        defaultLanguage: this.#extension.properties.defaultLanguage,
+        defaultLanguage: this.#extension.options.defaultLanguage,
       }),
     );
   }

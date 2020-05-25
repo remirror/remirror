@@ -300,7 +300,7 @@ export class RenderEditor<Manager extends AnyEditorManager> extends PureComponen
     const properties = this.calculatePositionProps({ ...config });
 
     return {
-      ...properties,
+      ...options,
       [referenceKey]: reference,
     } as GetPositionerReturn<GRefKey>;
   };
@@ -881,7 +881,7 @@ export class RenderEditor<Manager extends AnyEditorManager> extends PureComponen
       ...this.renderParameter,
     });
 
-    const { children, ...properties } = getElementProps(element);
+    const { children, ...options } = getElementProps(element);
 
     if (this.rootPropsConfig.called) {
       // Simply return the element as this method can never actually be called

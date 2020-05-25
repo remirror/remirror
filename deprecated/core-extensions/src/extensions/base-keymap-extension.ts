@@ -96,7 +96,7 @@ export const BaseKeymapExtension = ExtensionFactory.typed<KeymapExtensionSetting
       undoInputRuleOnBackspace,
       keymap,
       excludeBaseKeymap,
-    } = extension.settings;
+    } = extension.options;
 
     let base: KeyBindings = {};
     let backspaceRule: KeyBindings = {};

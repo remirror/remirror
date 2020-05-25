@@ -83,7 +83,7 @@ describe('constructor', () => {
       matchers: [matcher],
     });
 
-    expect(mentions.settings.matchers).toEqual([matcher]);
+    expect(mentions.options.matchers).toEqual([matcher]);
     expect(mentions.name).toEqual('mention');
   });
 
@@ -92,13 +92,13 @@ describe('constructor', () => {
       matchers: [{ char: '#', name: 'tag' }],
     });
 
-    expect(mentionOne.settings.matchers).toEqual([{ char: '#', name: 'tag' }]);
+    expect(mentionOne.options.matchers).toEqual([{ char: '#', name: 'tag' }]);
   });
 });
 
 const create = (settings: MentionSettings, properties?: Partial<MentionProperties>) =>
   renderEditor({
-    extensions: [new MentionExtension({ ...settings, properties })],
+    extensions: [new MentionExtension({ ...options, properties })],
     presets: [],
   });
 
@@ -127,7 +127,7 @@ describe('plugin', () => {
     attributeMarks: { mention },
     view,
   } = create({
-    ...settings,
+    ...options,
     ...mocks,
   });
   const mentionMark = mention({ id, label, name: 'at' });

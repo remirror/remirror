@@ -50,7 +50,7 @@ export class ReactSSRExtension extends PlainExtension<object, ReactSSRProperties
         if (
           managerSettings.exclude?.reactSSR ||
           !extension.createSSRComponent ||
-          extension.settings.exclude.reactSSR
+          extension.options.exclude.reactSSR
         ) {
           return;
         }
@@ -82,7 +82,7 @@ export class ReactSSRExtension extends PlainExtension<object, ReactSSRProperties
 
     return {
       forEachExtension: (extension) => {
-        if (!extension.createSSRTransformer || extension.settings.exclude.reactSSR) {
+        if (!extension.createSSRTransformer || extension.options.exclude.reactSSR) {
           return;
         }
 
@@ -103,7 +103,7 @@ export class ReactSSRExtension extends PlainExtension<object, ReactSSRProperties
   public createSSRTransformer = () => (initialElement: JSX.Element) => {
     let element: JSX.Element = initialElement;
 
-    for (const transformer of this.properties.transformers) {
+    for (const transformer of this.options.transformers) {
       element = transformer(element);
     }
 

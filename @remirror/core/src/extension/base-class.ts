@@ -11,6 +11,7 @@ import {
   Dispose,
   EmptyShape,
   FlipPartialAndRequired,
+  GetConstructorParameter,
   GetCustom,
   GetFixed,
   GetFixedDynamic,
@@ -18,7 +19,9 @@ import {
   GetMappedHandler,
   GetPartialDynamic,
   GetStatic,
+  HandlerKeyList,
   IfNoRequiredProperties,
+  Replace,
   Shape,
   ValidOptions,
 } from '@remirror/core-types';
@@ -33,22 +36,22 @@ export abstract class BaseClass<
   /**
    * The default options for this extension.
    */
-  public static readonly defaultOptions = {};
+  public static defaultOptions = {};
 
   /**
    * The static keys for this class.
    */
-  public static readonly staticKeys = [];
+  public static staticKeys: string[] = [];
 
   /**
    * The event handler keys.
    */
-  public static readonly handlerKeys = [];
+  public static handlerKeys: string[] = [];
 
   /**
    * The custom keys.
    */
-  public static readonly customKeys = [];
+  public static customKeys: string[] = [];
 
   /**
    * Not for public usage. This is purely for types to make it easier to infer
@@ -135,7 +138,7 @@ export abstract class BaseClass<
       defaultOptions,
       this.constructor.defaultOptions,
       options ?? object(),
-      this.createDefaultHandlers(),
+      this.createDefaultHandlerOptions(),
     );
 
     // Triggers the `init` options update for this extension.
@@ -234,7 +237,7 @@ export abstract class BaseClass<
   }
 
   /**
-   * Override this to received updates whenever `setProperties` is called.
+   * Override this to received updates whenever `setOptions` is called.
    *
    * @abstract
    */
@@ -244,7 +247,7 @@ export abstract class BaseClass<
    * Set up the mapped handlers object with default values (an empty array);
    */
   private populateMappedHandlers() {
-    for (const key of this.constructor.handlerKeys) {
+    for (const key of this.constructor.handlerKeys as HandlerKeyList<Options>) {
       this.#mappedHandlers[key] = [];
     }
   }
@@ -252,9 +255,9 @@ export abstract class BaseClass<
   /**
    * This is currently fudged together, I'm not sure it will work.
    */
-  private createDefaultHandlers() {
+  private createDefaultHandlerOptions() {
     const methods = object<any>();
-    for (const key of this.constructor.handlerKeys) {
+    for (const key of this.constructor.handlerKeys as HandlerKeyList<Options>) {
       methods[key] = (...args: any[]) => {
         this.#mappedHandlers[key].forEach((handler) =>
           ((handler as unknown) as AnyFunction)(...args),
@@ -276,6 +279,8 @@ export abstract class BaseClass<
    * most relevant part of the code.
    *
    * More to come on this pattern.
+   *
+   * @nonVirtual
    */
   public addHandler = <Key extends keyof GetHandler<Options>>(
     key: Key,
@@ -303,11 +308,15 @@ export abstract class BaseClass<
   /**
    * Override this method if you want to set custom options on your extension.
    */
-  public onSetCustomOption?: <Key extends keyof GetCustom<Options>>(
-    key: Key,
-    method: GetCustom<Options>[Key],
-  ) => Dispose;
+  public onSetCustomOption?: OnSetCustomOption<Options>;
 }
+
+export type OnSetCustomOption<Options extends ValidOptions> = <
+  Key extends keyof GetCustom<Options>
+>(
+  key: Key,
+  value: GetCustom<Options>[Key],
+) => Dispose;
 
 export interface BaseClass<
   Options extends ValidOptions,
@@ -355,7 +364,7 @@ export interface BaseClassConstructor<
    * This is actually currently unused, but might become useful in the future.
    * An auto-fix lint rule will be added should that be the case.
    */
-  readonly staticKeys: Array<keyof GetStatic<Options>>;
+  readonly staticKeys: string[];
 
   /**
    * An array of all the keys which correspond to the the event handler options.
@@ -368,13 +377,19 @@ export interface BaseClassConstructor<
    * all the handlers into one method that can be called effortlessly. All this
    * work is done for you.
    */
-  readonly handlerKeys: Array<keyof GetHandler<Options>>;
+  readonly handlerKeys: string[];
 
   /**
    * A list of the custom keys in the extension or preset options.
    */
-  readonly customKeys: Array<keyof GetCustom<Options>>;
+  readonly customKeys: string[];
 }
+
+export type AnyBaseClassConstructor = Replace<
+  BaseClassConstructor<any, any>,
+  // eslint-disable-next-line @typescript-eslint/prefer-function-type
+  { new (...args: any[]): AnyFunction }
+>;
 
 /* eslint-enable @typescript-eslint/member-ordering */
 /* eslint-enable @typescript-eslint/explicit-member-accessibility */
@@ -389,8 +404,8 @@ export type ConstructorParameter<
   DefaultStaticOptions extends Shape
 > = IfNoRequiredProperties<
   GetStatic<Options>,
-  [(Options & DefaultStaticOptions)?],
-  [Options & DefaultStaticOptions]
+  [(GetConstructorParameter<Options> & DefaultStaticOptions)?],
+  [GetConstructorParameter<Options> & DefaultStaticOptions]
 >;
 
 /**
@@ -398,11 +413,12 @@ export type ConstructorParameter<
  * every optional setting key (except for keys which are defined on the
  * `BaseExtensionOptions`) has a value assigned.
  */
-export type DefaultOptions<Options extends ValidOptions, DefaultStaticOptions extends Shape> = Omit<
-  FlipPartialAndRequired<GetStatic<Options>>,
-  keyof DefaultStaticOptions
-> &
-  Partial<DefaultStaticOptions>;
+export type DefaultOptions<
+  Options extends ValidOptions,
+  DefaultStaticOptions extends Shape
+> = FlipPartialAndRequired<GetStatic<Options>> &
+  Partial<DefaultStaticOptions> &
+  GetFixedDynamic<Options>;
 
 /**
  * Checks that the extension has a valid constructor with the `defaultOptions`
@@ -436,4 +452,8 @@ export function isValidConstructor(
     message: `No static 'customKeys' provided for '${Constructor.name}'.\n`,
     code,
   });
+}
+
+export interface AnyBaseClassOverrides {
+  onSetCustomOption?: AnyFunction;
 }

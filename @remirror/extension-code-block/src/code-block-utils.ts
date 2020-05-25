@@ -50,7 +50,7 @@ function parseRefractorNodes(
   return refractorNodes.map((node) => {
     const classes = [
       ...className,
-      ...(node.type === 'element' && node.properties.className ? node.properties.className : []),
+      ...(node.type === 'element' && node.options.className ? node.options.className : []),
     ];
 
     if (node.type === 'element') {

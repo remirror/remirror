@@ -31,7 +31,7 @@ export class PasteRulesExtension extends PlainExtension {
           // Method doesn't exist
           !extension.createPasteRules ||
           // Extension settings exclude it
-          extension.settings.exclude.pasteRules
+          extension.options.exclude?.pasteRules
         ) {
           return;
         }

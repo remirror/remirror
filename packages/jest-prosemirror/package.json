@@ -50,6 +50,7 @@
   },
   "preconstruct": {
     "entrypoints": [
+      ".",
       "environment",
       "serializer"
     ]

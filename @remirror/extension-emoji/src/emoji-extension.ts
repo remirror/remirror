@@ -52,7 +52,7 @@ export class EmojiExtension extends PlainExtension<EmojiSettings, EmojiPropertie
   /**
    * Keep track of the frequently used list.
    */
-  private frequentlyUsed: EmojiObject[] = populateFrequentlyUsed(this.settings.defaultEmoji);
+  private frequentlyUsed: EmojiObject[] = populateFrequentlyUsed(this.options.defaultEmoji);
 
   public createInputRules = () => {
     return [
@@ -133,7 +133,7 @@ export class EmojiExtension extends PlainExtension<EmojiSettings, EmojiPropertie
         dispatch,
       }) => {
         if (dispatch) {
-          dispatch(state.tr.insertText(this.settings.suggestionCharacter, from, to));
+          dispatch(state.tr.insertText(this.options.suggestionCharacter, from, to));
         }
 
         return true;
@@ -164,21 +164,21 @@ export class EmojiExtension extends PlainExtension<EmojiSettings, EmojiPropertie
 
     return {
       noDecorations: true,
-      invalidPrefixCharacters: escapeStringRegex(this.settings.suggestionCharacter),
-      char: this.settings.suggestionCharacter,
+      invalidPrefixCharacters: escapeStringRegex(this.options.suggestionCharacter),
+      char: this.options.suggestionCharacter,
       name: this.name,
       appendText: '',
       suggestTag: 'span',
-      keyBindings: () => this.properties.suggestionKeyBindings,
+      keyBindings: () => this.options.suggestionKeyBindings,
       onChange: (parameters) => {
         const query = parameters.queryText.full;
         const emojiMatches =
           query.length === 0
             ? this.frequentlyUsed
-            : sortEmojiMatches(query, this.properties.maxResults);
-        this.properties.onSuggestionChange({ ...parameters, emojiMatches });
+            : sortEmojiMatches(query, this.options.maxResults);
+        this.options.onSuggestionChange({ ...parameters, emojiMatches });
       },
-      onExit: (parameter) => this.properties.onSuggestionExit(parameter),
+      onExit: (parameter) => this.options.onSuggestionExit(parameter),
       createCommand: (parameter) => {
         const { match } = parameter;
         const { getCommands } = this.store;

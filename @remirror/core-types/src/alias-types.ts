@@ -34,9 +34,9 @@ export type EditorView<Schema extends EditorSchema = any> = PMEditorView<Schema>
 export type Selection<Schema extends EditorSchema = any> = PMSelection<Schema>;
 export type DecorationSet<Schema extends EditorSchema = any> = PMDecorationSet<Schema>;
 export type Transaction<Schema extends EditorSchema = any> = PMTransaction<Schema>;
-export type PluginKey<GPluginState = any> = PMPluginKey<GPluginState, EditorSchema>;
-export type Plugin<GPluginState = any, Schema extends EditorSchema = any> = PMPlugin<
-  GPluginState,
+export type PluginKey<PluginState = any> = PMPluginKey<PluginState, EditorSchema>;
+export type Plugin<PluginState = any, Schema extends EditorSchema = any> = PMPlugin<
+  PluginState,
   Schema
 >;
 export type Mark<Schema extends EditorSchema = any> = PMMark<Schema>;
@@ -45,7 +45,7 @@ export type InputRule<Schema extends EditorSchema = any> = PMInputRule<Schema>;
 export type Fragment<Schema extends EditorSchema = any> = PMFragment<Schema>;
 export type NodeView<Schema extends EditorSchema = any> = PMNodeView<Schema>;
 export type ProsemirrorNode<Schema extends EditorSchema = any> = PMNode<Schema>;
-export type ProsemirrorPlugin<GPluginState = any> = PMPlugin<GPluginState, EditorSchema>;
+export type ProsemirrorPlugin<PluginState = any> = PMPlugin<PluginState, EditorSchema>;
 export type MarkType<Schema extends EditorSchema = any> = PMMarkType<Schema>;
 export type NodeType<Schema extends EditorSchema = any> = PMNodeType<Schema>;
 export type EditorState<Schema extends EditorSchema = any> = Readonly<PMEditorState<Schema>>;

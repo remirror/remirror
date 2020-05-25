@@ -32,6 +32,6 @@ export const usePreset = <Type extends AnyPresetConstructor>(
   const preset = useMemo(() => manager.getPreset(Constructor), [Constructor, manager]);
 
   useDeepCompareEffect(() => {
-    preset.setProperties(properties);
+    preset.setOptions(properties);
   }, [preset, properties]);
 };

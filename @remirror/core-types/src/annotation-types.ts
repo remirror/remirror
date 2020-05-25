@@ -1,6 +1,6 @@
 import { ConditionalExcept, ConditionalPick } from 'type-fest';
 
-import { AnyFunction, Flavoring, FlipPartialAndRequired, Shape } from './base-types';
+import { AnyFunction, Flavoring, FlipPartialAndRequired, PickPartial, Shape } from './base-types';
 
 type StaticAnnotation = Flavoring<'StaticAnnotation'>;
 type DynamicAnnotation = Flavoring<'DynamicAnnotation'>;
@@ -29,6 +29,9 @@ type CustomAnnotation = Flavoring<'CustomAnnotation'>;
  *
  * The above example creates an extension with the content options set to
  * 'awesome string'. This value is set and can never be updated.
+ *
+ * One slight downside to the `Static` annotation is that is does mess up auto
+ * suggestions for string literals.
  */
 export type Static<Type> = Type & StaticAnnotation;
 
@@ -115,25 +118,34 @@ export type Custom<Type> = Type & CustomAnnotation;
 /**
  * Get the static `Options` from the options type.
  */
-export type GetStatic<Options extends Shape> = ConditionalPick<Options, StaticAnnotation>;
+export type GetStatic<Options extends Shape> = ConditionalPick<Options, StaticAnnotation> &
+  Partial<ConditionalPick<PickPartial<Options>, StaticAnnotation>>;
 
 /**
  * Get the dynamic `Options` from the options type.
  */
-export type GetDynamic<Options extends Shape> = ConditionalExcept<
-  Options,
-  Exclude<Remirror.ValidOptionsExtender[keyof Remirror.ValidOptionsExtender], DynamicAnnotation>
+export type GetDynamic<Options extends Shape> = Omit<
+  ConditionalExcept<
+    Options,
+    Exclude<Remirror.ValidOptionsExtender[keyof Remirror.ValidOptionsExtender], DynamicAnnotation>
+  >,
+  keyof ConditionalPick<
+    PickPartial<Options>,
+    Exclude<Remirror.ValidOptionsExtender[keyof Remirror.ValidOptionsExtender], DynamicAnnotation>
+  >
 >;
 
 /**
  * Get the event handler `Options` from the options type.
  */
-export type GetHandler<Options extends Shape> = ConditionalPick<Options, HandlerAnnotation>;
+export type GetHandler<Options extends Shape> = ConditionalPick<Options, HandlerAnnotation> &
+  Partial<ConditionalPick<PickPartial<Options>, HandlerAnnotation>>;
 
 /**
  * Get the object event handler `Options` from the options type.
  */
-export type GetCustom<Options extends Shape> = ConditionalPick<Options, CustomAnnotation>;
+export type GetCustom<Options extends Shape> = ConditionalPick<Options, CustomAnnotation> &
+  Partial<ConditionalPick<PickPartial<Options>, CustomAnnotation>>;
 
 /**
  * This constrains the valid options that can be passed into your extensions or presets.
@@ -173,7 +185,7 @@ export type GetMappedCustom<Options extends ValidOptions> = {
 /**
  * The options that can be passed into a constructor.
  */
-export type GetForConstructor<Options extends ValidOptions> = GetStatic<Options> &
+export type GetConstructorParameter<Options extends ValidOptions> = GetStatic<Options> &
   Partial<GetDynamic<Options>>;
 
 /**
@@ -184,6 +196,15 @@ export type GetForConstructor<Options extends ValidOptions> = GetStatic<Options>
  * as the clean up function for your `useEffect` hooks.
  */
 export type Dispose = () => void;
+
+export type HandlerKey<Options extends ValidOptions> = keyof GetHandler<Options>;
+export type StaticKey<Options extends ValidOptions> = keyof GetStatic<Options>;
+export type DynamicKey<Options extends ValidOptions> = keyof GetDynamic<Options>;
+export type CustomKey<Options extends ValidOptions> = keyof GetCustom<Options>;
+export type HandlerKeyList<Options extends ValidOptions> = Array<HandlerKey<Options>>;
+export type StaticKeyList<Options extends ValidOptions> = Array<StaticKey<Options>>;
+export type DynamicKeyList<Options extends ValidOptions> = Array<DynamicKey<Options>>;
+export type CustomKeyList<Options extends ValidOptions> = Array<CustomKey<Options>>;
 
 declare global {
   namespace Remirror {

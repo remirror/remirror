@@ -48,7 +48,7 @@ document.body.appendChild(element);
 manager.addView(element);
 
 // Make the epic mode extension active.
-epicModeExtension.setProperties({ active: true });
+epicModeExtension.setOptions({ active: true });
 ```
 
 When using with react you can update the properties with the `useExtensionProperties` hook.

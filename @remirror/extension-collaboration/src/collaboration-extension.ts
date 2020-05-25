@@ -41,7 +41,7 @@ export class CollaborationExtension extends PlainExtension<
   }
 
   protected init() {
-    this.getSendableSteps = debounce(this.settings.debounceMs, this.getSendableSteps);
+    this.getSendableSteps = debounce(this.options.debounceMs, this.getSendableSteps);
   }
 
   public createCommands = () => {
@@ -79,7 +79,7 @@ export class CollaborationExtension extends PlainExtension<
   };
 
   public createExternalPlugins = () => {
-    const { version, clientID } = this.settings;
+    const { version, clientID } = this.options;
 
     const plugin = collab({
       version,
@@ -106,7 +106,7 @@ export class CollaborationExtension extends PlainExtension<
         steps: sendable.steps.map((step) => step.toJSON()),
         clientID: sendable.clientID,
       };
-      this.properties.onSendableReceived({ sendable, jsonSendable });
+      this.options.onSendableReceived({ sendable, jsonSendable });
     }
   };
 }

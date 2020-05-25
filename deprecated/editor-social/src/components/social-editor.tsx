@@ -237,7 +237,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
         name,
         query: queryText.full,
       } as MentionState;
-      this.props.onMentionChange({ ...properties, activeIndex: this.state.activeIndex });
+      this.props.onMentionChange({ ...options, activeIndex: this.state.activeIndex });
     }
 
     // Reset the active index so that the dropdown is back to the top.

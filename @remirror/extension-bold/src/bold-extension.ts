@@ -34,7 +34,7 @@ export class BoldExtension extends MarkExtension<BoldExtensionSettings> {
   public readonly tags = [ExtensionTag.FormattingMark];
 
   public createMarkSpec(): MarkExtensionSpec {
-    const { weight } = this.settings;
+    const { weight } = this.options;
 
     return {
       group: MarkGroup.FontStyle,

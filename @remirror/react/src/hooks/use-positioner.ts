@@ -18,7 +18,7 @@ import { useRemirror } from './use-remirror';
  *
  *   return (
  *     <div style={{ bottom, left }}>
- *       <MenuIcon {...properties} />
+ *       <MenuIcon {...options} />
  *     </div>
  *   );
  * }

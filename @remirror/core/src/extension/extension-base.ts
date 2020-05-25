@@ -9,18 +9,17 @@ import {
 } from '@remirror/core-constants';
 import { freeze, invariant, isIdentifierOfType, isRemirrorType } from '@remirror/core-helpers';
 import {
+  AnyFunction,
   AttributesParameter,
   EditorSchema,
   EditorView,
   EmptyShape,
-  FlipPartialAndRequired,
-  GetStatic,
-  IfNoRequiredProperties,
   MarkExtensionSpec,
   MarkType,
   NodeExtensionSpec,
   NodeType,
   ProsemirrorPlugin,
+  Replace,
   Shape,
   ValidOptions,
 } from '@remirror/core-types';
@@ -34,17 +33,23 @@ import {
   NodeExtensionTags,
   TransactionLifecycleMethod,
 } from '../types';
-import { BaseClass, BaseClassConstructor, isValidConstructor } from './base-class';
+import {
+  AnyBaseClassOverrides,
+  BaseClass,
+  BaseClassConstructor,
+  ConstructorParameter,
+  DefaultOptions,
+  isValidConstructor,
+} from './base-class';
 
 /**
  * Auto infers the parameter for the constructor. If there is a
  * required static option then the TypeScript compiler will error if nothing is
  * passed in.
  */
-export type ExtensionConstructorParameter<Options extends ValidOptions> = IfNoRequiredProperties<
-  GetStatic<Options>,
-  [(Options & BaseExtensionOptions)?],
-  [Options & BaseExtensionOptions]
+export type ExtensionConstructorParameter<Options extends ValidOptions> = ConstructorParameter<
+  Options,
+  BaseExtensionOptions
 >;
 
 /**
@@ -147,6 +152,16 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
   }
 
   /**
+   * Check if the type of this extension's constructor matches the type of the
+   * provided constructor.
+   */
+  public isOfType<Type extends AnyExtensionConstructor>(
+    Constructor: Type,
+  ): this is InstanceType<Type> {
+    return this.constructor === (Constructor as unknown);
+  }
+
+  /**
    * Pass a reference to the globally shared `ExtensionStore` for this extension.
    *
    * @remarks
@@ -224,11 +239,10 @@ interface Extension<Options extends ValidOptions = EmptyShape>
  * every optional setting key (except for keys which are defined on the
  * `BaseExtensionOptions`) has a value assigned.
  */
-export type DefaultExtensionOptions<Settings extends Shape> = Omit<
-  FlipPartialAndRequired<Settings>,
-  keyof BaseExtensionOptions
-> &
-  Partial<BaseExtensionOptions>;
+export type DefaultExtensionOptions<Options extends ValidOptions> = DefaultOptions<
+  Options,
+  BaseExtensionOptions
+>;
 
 interface ExtensionLifecycleMethods {
   /**
@@ -263,6 +277,12 @@ interface ExtensionLifecycleMethods {
   onDestroy?: () => void;
 }
 
+/**
+ * Create a plain extension which doesn't directly map to Prosemirror nodes or
+ * marks.
+ *
+ * Plain extensions are a great way to add custom behavior to your editor.
+ */
 export abstract class PlainExtension<Options extends ValidOptions = EmptyShape> extends Extension<
   Options
 > {
@@ -449,13 +469,16 @@ export abstract class NodeExtension<Options extends ValidOptions = EmptyShape> e
 /**
  * The type which is applicable to any extension instance.
  */
-export type AnyExtension = Omit<Extension<Shape>, keyof Remirror.AnyExtensionOverrides> &
-  Remirror.AnyExtensionOverrides;
+export type AnyExtension = Replace<Extension<Shape>, Remirror.AnyExtensionOverrides>;
 
 /**
  * The type which is applicable to any extension instance.
  */
-export type AnyExtensionConstructor = ExtensionConstructor<any>;
+export type AnyExtensionConstructor = Replace<
+  ExtensionConstructor<any>,
+  // eslint-disable-next-line @typescript-eslint/prefer-function-type
+  { new (...args: any[]): AnyFunction }
+>;
 
 /**
  * The type for any potential PlainExtension.
@@ -517,7 +540,7 @@ const defaultOptions: Required<BaseExtensionOptions> = {
  *
  * The mutation must happen before any extension have been instantiated.
  */
-export function mutateDefaultExtensionSettings(
+export function mutateDefaultExtensionOptions(
   mutatorMethod: (defaultOptions: BaseExtensionOptions) => void,
 ): void {
   mutatorMethod(defaultOptions);
@@ -602,7 +625,7 @@ export function isMarkExtension(value: unknown): value is AnyMarkExtension {
 }
 
 interface ExtensionConstructor<Options extends ValidOptions = EmptyShape>
-  extends BaseClassConstructor<Options> {
+  extends BaseClassConstructor<Options, BaseExtensionOptions> {
   new (...parameters: ExtensionConstructorParameter<Options>): Extension<Options>;
 
   /**
@@ -800,7 +823,7 @@ declare global {
      * properties. By setting the `constructor` to a much simpler override all
      * `Extension`'s are now assignable to the `AnyExtension type again.`
      */
-    interface AnyExtensionOverrides {
+    interface AnyExtensionOverrides extends AnyBaseClassOverrides {
       constructor: AnyExtensionConstructor;
     }
   }

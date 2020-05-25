@@ -59,7 +59,7 @@ export class PluginsExtension extends PlainExtension {
           // Or the manager settings exclude plugins
           managerSettings.exclude?.plugins ||
           // The extension settings exclude plugins
-          extension.settings.exclude.plugins
+          extension.options.exclude?.plugins
         ) {
           return;
         }
@@ -104,7 +104,7 @@ export class PluginsExtension extends PlainExtension {
           // the manager settings don't exclude plugins
           managerSettings.exclude?.plugins ||
           // The extension settings don't exclude plugins
-          extension.settings.exclude.plugins
+          extension.options.exclude?.plugins
         ) {
           return;
         }
