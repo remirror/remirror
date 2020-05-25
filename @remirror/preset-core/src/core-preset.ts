@@ -6,18 +6,19 @@ import {
 } from '@remirror/core';
 import { BaseKeymapExtension, BaseKeymapOptions } from '@remirror/extension-base-keymap';
 import { DocExtension, DocOptions } from '@remirror/extension-doc';
-import { ParagraphExtension } from '@remirror/extension-paragraph';
+import { ParagraphExtension, ParagraphOptions } from '@remirror/extension-paragraph';
 import { TextExtension } from '@remirror/extension-text';
 
 /**
  * The static settings for the core preset.
  */
-export interface CorePresetOptions extends BaseKeymapOptions, DocOptions {}
+export interface CorePresetOptions extends BaseKeymapOptions, DocOptions, ParagraphOptions {}
 
 export class CorePreset extends Preset<CorePresetOptions> {
   public static defaultOptions: DefaultPresetOptions<CorePresetOptions> = {
-    content: DocExtension.defaultOptions.content,
+    ...DocExtension.defaultOptions,
     ...BaseKeymapExtension.defaultOptions,
+    ...ParagraphExtension.defaultOptions,
   };
 
   get name() {
@@ -28,17 +29,24 @@ export class CorePreset extends Preset<CorePresetOptions> {
    * No properties are defined so this can be ignored.
    */
   protected onSetOptions(parameter: OnSetOptionsParameter<CorePresetOptions>) {
-    const { changes } = parameter;
+    const { pickChanged } = parameter;
 
-    if (changes.keymap.changed) {
-      const baseKeymapExtension = this.getExtension(BaseKeymapExtension);
-      baseKeymapExtension.setOptions({ keymap: changes.keymap.value });
-    }
+    const baseKeymapExtension = this.getExtension(BaseKeymapExtension);
+    baseKeymapExtension.setOptions(
+      pickChanged([
+        'defaultBindingMethod',
+        'selectParentNodeOnEscape',
+        'excludeBaseKeymap',
+        'undoInputRuleOnBackspace',
+      ]),
+    );
+
+    const paragraphExtension = this.getExtension(ParagraphExtension);
+    paragraphExtension.setOptions(pickChanged(['indentAttribute', 'indentLevels']));
   }
 
   public createExtensions() {
     const { content, ...baseKeymapSettings } = this.options;
-    const { keymap } = this.options;
 
     return [
       new DocExtension({ content, priority: ExtensionPriority.Low }),

@@ -276,10 +276,20 @@ export interface GetChangeOptionsReturn<Options extends ValidOptions> {
    * ```
    */
   changes: Readonly<Required<ChangedOptions<Options>>>;
+
+  /**
+   * Pick the changed values by their key. An object populated with only the
+   * changed items will be returned to you.
+   */
+  pickChanged: PickChanged<Options>;
 }
 
+export type PickChanged<Options> = <Key extends keyof GetFixedDynamic<Options>>(
+  keys: Key[],
+) => Partial<Pick<GetFixedDynamic<Options>, Key>>;
+
 export interface OnSetOptionsParameter<Options extends ValidOptions>
-  extends Pick<GetChangeOptionsReturn<Options>, 'changes'>,
+  extends Pick<GetChangeOptionsReturn<Options>, 'changes' | 'pickChanged'>,
     UpdateReasonParameter {
   /**
    * The initial options for the extension. Falls back to default options.

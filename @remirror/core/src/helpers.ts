@@ -2,7 +2,7 @@ import { ErrorConstant } from '@remirror/core-constants';
 import { freeze, invariant, keys, object } from '@remirror/core-helpers';
 import { GetFixedDynamic, GetPartialDynamic, ValidOptions } from '@remirror/core-types';
 
-import { GetChangeOptionsReturn } from './types';
+import { GetChangeOptionsReturn, PickChanged } from './types';
 
 export interface GetChangedOptionsParameter<Options extends ValidOptions> {
   /**
@@ -48,7 +48,21 @@ export function getChangedOptions<Options extends ValidOptions>(
     changes[key] = { changed: true, previousValue, value };
   }
 
-  return { changes: freeze(changes), options: next };
+  const pickChanged: PickChanged<Options> = (keys) => {
+    const picked = object<any>();
+
+    for (const key of keys) {
+      const item = changes[key];
+
+      if (item.changed) {
+        picked[key] = item.value;
+      }
+    }
+
+    return picked;
+  };
+
+  return { changes: freeze(changes), options: next, pickChanged };
 }
 
 export interface IsNameUniqueParameter {
