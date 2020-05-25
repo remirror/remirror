@@ -1,10 +1,10 @@
 import { ExtensionFactory } from '@remirror/core';
 
 import { EMPTY_NODE_CLASS_NAME } from '../../core-extension-constants';
-import { PlaceholderExtensionSettings } from '../../core-extension-types';
+import { PlaceholderExtensionOptions } from '../../core-extension-types';
 import { createPlaceholderPlugin } from './placeholder-plugin';
 
-export const PlaceholderExtension = ExtensionFactory.typed<PlaceholderExtensionSettings>().plain({
+export const PlaceholderExtension = ExtensionFactory.typed<PlaceholderExtensionOptions>().plain({
   name: 'placeholder',
   defaultSettings: {
     emptyNodeClass: EMPTY_NODE_CLASS_NAME,

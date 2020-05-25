@@ -1,10 +1,11 @@
 import {
   chainKeyBindingCommands,
   convertCommand,
+  Custom,
+  CustomKeyList,
   DefaultExtensionOptions,
   entries,
   ExtensionPriority,
-  ExtensionStore,
   isFunction,
   KeyBindingCommandFunction,
   KeyBindings,
@@ -18,7 +19,7 @@ import {
 } from '@remirror/pm/commands';
 import { undoInputRule } from '@remirror/pm/inputrules';
 
-export interface BaseKeymapSettings {
+export interface BaseKeymapOptions {
   /**
    * Determines whether a backspace after an input rule has been applied should
    * reverse the effect of the input rule.
@@ -33,21 +34,6 @@ export interface BaseKeymapSettings {
    * @defaultValue `false`
    */
   selectParentNodeOnEscape?: boolean;
-
-  /**
-   * Extra keys that you want to support for this extension. The full binding
-   * is added to the `properties`.
-   *
-   * This setting acts as a placeholder so the extension knows what you plan on
-   * adding via `properties`.
-   *
-   * @defaultValue `[]`
-   *
-   * ```ts
-   * new BaseKeymapExtension({ extraKeys: ['Ctrl-Shift-B', 'Mod-Shift-P']});
-   * ```
-   */
-  extraKeys?: string[];
 
   /**
    * When a keybinding is undefined in the extension properties, this is the
@@ -69,9 +55,7 @@ export interface BaseKeymapSettings {
    * @default `false`
    */
   excludeBaseKeymap?: boolean;
-}
 
-export interface BaseKeymapProperties {
   /**
    * The implementation for the extra keybindings added to the settings.
    *
@@ -92,7 +76,7 @@ export interface BaseKeymapProperties {
    * }});
    * ```
    */
-  keymap?: KeyBindings | ((parameter: ExtensionStore) => KeyBindings);
+  keymap?: Custom<KeyBindings>;
 }
 
 /**
@@ -105,15 +89,15 @@ export interface BaseKeymapProperties {
  *
  * @builtin
  */
-export class BaseKeymapExtension extends PlainExtension<BaseKeymapSettings, BaseKeymapProperties> {
-  public static readonly defaultSettings: DefaultExtensionOptions<BaseKeymapSettings> = {
+export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
+  public static readonly defaultOptions: DefaultExtensionOptions<BaseKeymapOptions> = {
     undoInputRuleOnBackspace: true,
     defaultBindingMethod: () => false,
     selectParentNodeOnEscape: false,
     excludeBaseKeymap: false,
-    extraKeys: [],
   };
-  public static readonly defaultProperties: Required<BaseKeymapProperties> = { keymap: object() };
+
+  public static readonly customKeys: CustomKeyList<BaseKeymapOptions> = ['keymap'];
 
   get name() {
     return 'baseKeymap' as const;

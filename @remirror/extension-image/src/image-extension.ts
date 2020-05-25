@@ -140,7 +140,7 @@ export interface ImageExtensionAttributes {
 
 export interface ImageExtensionProperties {}
 
-export interface ImageExtensionSettings {}
+export interface ImageExtensionOptions {}
 
 /**
  * The set of valid image files.

@@ -1,36 +1,30 @@
 import {
-  DefaultPresetSettings,
+  DefaultPresetOptions,
   ExtensionPriority,
   OnSetOptionsParameter,
   Preset,
+  StaticShape,
 } from '@remirror/core';
 import {
   BaseKeymapExtension,
+  BaseKeymapOptions,
   BaseKeymapProperties,
-  BaseKeymapSettings,
 } from '@remirror/extension-base-keymap';
-import { DocExtension } from '@remirror/extension-doc';
+import { DocExtension, DocOptions } from '@remirror/extension-doc';
 import { ParagraphExtension } from '@remirror/extension-paragraph';
 import { TextExtension } from '@remirror/extension-text';
 
 /**
  * The static settings for the core preset.
  */
-export interface CorePresetSettings extends BaseKeymapSettings {
-  /**
-   * The content type accepted by the top level `DocumentExtension`.
-   */
-  content?: string;
-}
+export interface CorePresetOptions extends StaticShape<BaseKeymapOptions & DocOptions> {}
 
 export interface CorePresetOptions extends BaseKeymapProperties {}
 
-export class CorePreset extends Preset<CorePresetSettings, CorePresetOptions> {
-  public static defaultSettings: DefaultPresetSettings<CorePresetSettings> = {
-    content: DocExtension.defaultSettings.content,
-    ...BaseKeymapExtension.defaultSettings,
-  };
-  public static defaultProperties: Required<CorePresetOptions> = {
+export class CorePreset extends Preset<CorePresetOptions> {
+  public static defaultOptions: DefaultPresetOptions<CorePresetOptions> = {
+    content: DocExtension.defaultOptions.content,
+    ...BaseKeymapExtension.defaultOptions,
     keymap: BaseKeymapExtension.defaultProperties.keymap,
   };
 
@@ -60,7 +54,6 @@ export class CorePreset extends Preset<CorePresetSettings, CorePresetOptions> {
       new ParagraphExtension({ priority: ExtensionPriority.Low }),
       new BaseKeymapExtension({
         ...baseKeymapSettings,
-        properties: { keymap },
         priority: ExtensionPriority.Low,
       }),
     ];

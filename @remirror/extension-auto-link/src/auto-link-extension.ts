@@ -8,6 +8,8 @@ import {
   findMatches,
   FromToParameter,
   getMatchString,
+  Handler,
+  HandlerKeyList,
   LEAF_NODE_REPLACING_CHARACTER,
   Mark,
   markEqualsType,
@@ -16,30 +18,25 @@ import {
   markPasteRule,
   MarkType,
   MarkTypeParameter,
-  PluginKey,
+  Static,
   TransactionParameter,
 } from '@remirror/core';
-import { Plugin, TextSelection } from '@remirror/pm/state';
+import { TextSelection } from '@remirror/pm/state';
 import { ReplaceStep } from '@remirror/pm/transform';
 
 /**
  * An auto complete auto decorated linker. This is more aggressive than the
- * `@remirror/extension-link` in that it rewrites any url-like
+ * `@remirror/extension-link` in that it wraps any url like string as a mark.
  *
- * @remarks
- *
- * There's nothing enhanced about it.
- *
- * TODO Merge this with the link extension
+ * It's inspired by the behavior of several social sites like `twitter`.
  */
-export class AutoLinkExtension extends MarkExtension<AutoLinkSettings, AutoLinkProperties> {
-  public static defaultSettings: DefaultExtensionOptions<AutoLinkSettings> = {
+export class AutoLinkExtension extends MarkExtension<AutoLinkOptions> {
+  public static readonly defaultOptions: DefaultExtensionOptions<AutoLinkOptions> = {
     urlRegex: /((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/.*)?)/gi,
-  };
-  public static defaultProperties: Required<AutoLinkProperties> = {
-    onUrlUpdate() {},
     defaultProtocol: '',
   };
+
+  public static readonly handlerKeys: HandlerKeyList<AutoLinkOptions> = ['onUrlUpdate'];
 
   get name() {
     return 'autoLink' as const;
@@ -212,19 +209,7 @@ export interface UrlUpdateHandlerParameter {
  */
 export type DefaultProtocol = 'http:' | 'https:' | '';
 
-export interface AutoLinkProperties {
-  /**
-   * This handler is called every time the matched urls are updated.
-   */
-  onUrlUpdate?: (parameter: UrlUpdateHandlerParameter) => void;
-
-  /**
-   * The default protocol to use when it can't be inferred
-   */
-  defaultProtocol?: DefaultProtocol;
-}
-
-export interface AutoLinkSettings {
+export interface AutoLinkOptions {
   /**
    * The regex matcher for matching against the RegExp. The matcher must capture
    * the URL part of the string as it's first match. Take a look at the default
@@ -233,7 +218,17 @@ export interface AutoLinkSettings {
    * @defaultValue
    * `/((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/.*)?)/gi`
    */
-  urlRegex?: RegExp;
+  urlRegex?: Static<RegExp>;
+
+  /**
+   * This handler is called every time the matched urls are updated.
+   */
+  onUrlUpdate?: Handler<(parameter: UrlUpdateHandlerParameter) => void>;
+
+  /**
+   * The default protocol to use when it can't be inferred
+   */
+  defaultProtocol?: DefaultProtocol;
 }
 
 function extractHref(url: string, defaultProtocol: DefaultProtocol) {

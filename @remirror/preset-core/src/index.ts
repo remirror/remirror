@@ -1,2 +1,2 @@
 export { CorePreset } from './core-preset';
-export type { CorePresetSettings } from './core-preset';
+export type { CorePresetOptions } from './core-preset';

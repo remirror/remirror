@@ -1,2 +1,2 @@
 export { BoldExtension } from './bold-extension';
-export type { BoldExtensionSettings } from './bold-extension';
+export type { BoldExtensionOptions } from './bold-extension';

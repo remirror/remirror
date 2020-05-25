@@ -9,7 +9,8 @@ import {
 import { chainKeyBindingCommands } from '@remirror/core-utils';
 import { keymap } from '@remirror/pm/keymap';
 
-import { InitializeLifecycleMethod, PlainExtension } from '../extension';
+import { AnyExtension, InitializeLifecycleMethod, PlainExtension } from '../extension';
+import { AnyPreset } from '../preset';
 
 /**
  * This extension allows others extension to use the `createKeymaps` method.
@@ -87,6 +88,14 @@ declare global {
        * @defaultValue `undefined`
        */
       keymap?: boolean;
+    }
+
+    interface ManagerStore<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
+      rebuildKeymap: () => void;
+    }
+
+    interface ExtensionStore {
+      rebuildKeymap: () => void;
     }
 
     interface ExtensionCreatorMethods<

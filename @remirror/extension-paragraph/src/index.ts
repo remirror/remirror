@@ -1,6 +1,6 @@
 export { ParagraphExtension } from './paragraph-extension';
 export type {
   ParagraphExtensionAttributes,
-  ParagraphExtensionSettings,
+  ParagraphOptions as ParagraphExtensionOptions,
   TextAlignment,
 } from './paragraph-extension';

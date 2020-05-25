@@ -9,7 +9,7 @@ export interface CompositionExtensionOptions {
   ensureNodeDeletion?: NodeMatch[];
 }
 
-export interface PlaceholderExtensionSettings {
+export interface PlaceholderExtensionOptions {
   /**
    * The placeholder text to use.
    */
@@ -26,7 +26,7 @@ export interface PlaceholderExtensionSettings {
   placeholderStyle?: ObjectInterpolation<undefined>;
 }
 
-export interface PlaceholderPluginState extends Required<PlaceholderExtensionSettings> {
+export interface PlaceholderPluginState extends Required<PlaceholderExtensionOptions> {
   empty: boolean;
 }
 

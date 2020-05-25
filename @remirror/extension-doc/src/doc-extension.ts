@@ -1,6 +1,6 @@
-import { DefaultExtensionOptions, NodeExtension } from '@remirror/core';
+import { DefaultExtensionOptions, NodeExtension, Static } from '@remirror/core';
 
-export interface DocExtensionSettings {
+export interface DocOptions {
   /**
    * Adjust the content allowed in this prosemirror document.
    *
@@ -33,7 +33,7 @@ export interface DocExtensionSettings {
    *
    * @core
    */
-  content?: string;
+  content?: Static<string>;
 }
 
 /**
@@ -44,8 +44,8 @@ export interface DocExtensionSettings {
  * @required
  * @core
  */
-export class DocExtension extends NodeExtension<DocExtensionSettings> {
-  public static defaultSettings: DefaultExtensionOptions<DocExtensionSettings> = {
+export class DocExtension extends NodeExtension<DocOptions> {
+  public static defaultOptions: DefaultExtensionOptions<DocOptions> = {
     content: 'block+',
   };
 

@@ -84,30 +84,22 @@ export type ExtensionConstructorParameter<Options extends ValidOptions> = Constr
  * rather extended to add the intended functionality.
  *
  * ```ts
- * import { PlainExtension } from '@remirror/core';
+ * import { PlainExtension, Static } from 'remirror/core';
  *
- * interface AwesomeExtensionSettings {
- *   isAwesome?: boolean;
+ * interface AwesomeExtensionOptions {
+ *   isAwesome?: Static<boolean>;
+ *   id?: string;
  * }
  *
- * interface AwesomeExtensionProperties {
- *   id: string;
- * }
- *
- * class AwesomeExtension extends PlainExtension<
- *   AwesomeExtensionSettings,
- *   AwesomeExtensionProperties
- * > {
- *   public static defaultOptions: DefaultExtensionSettings<
- *     AwesomeExtensionSettings
- *   > = {
+ * class AwesomeExtension extends PlainExtension<AwesomeExtensionOptions> {
+ *   public static defaultOptions: DefaultExtensionOptions<AwesomeExtensionOptions> = {
  *     isAwesome: true,
- *   }
- *   public static defaultProperties: Required<AwesomeExtensionProperties> = {
  *     id: '',
  *   }
  *
- *   get name() { return 'awesome' as const; }
+ *   get name() {
+ *     return 'awesome' as const;
+ *   }
  * }
  * ```
  */
@@ -521,9 +513,9 @@ const defaultOptions: Required<BaseExtensionOptions> = {
  * @example
  *
  * ```ts
- * import { mutateDefaultExtensionSettings } from 'remirror/core';
+ * import { mutateDefaultExtensionOptions } from 'remirror/core';
  *
- * mutateDefaultExtensionSettings((settings) => {
+ * mutateDefaultExtensionOptions((settings) => {
  *   // Set the default value of all extensions to have a property `customSetting` with value `false`.
  *   settings.customSetting = false;
  * })

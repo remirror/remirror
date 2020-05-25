@@ -14,7 +14,7 @@ import {
   toggleMark,
 } from '@remirror/core';
 
-export interface BoldExtensionSettings {
+export interface BoldExtensionOptions {
   /**
    * Optionally set the font weight property for this extension.
    */
@@ -25,7 +25,7 @@ export interface BoldExtensionSettings {
  * When added to your editor it will provide the `bold` command which makes the text under the cursor /
  * or at the provided position range bold.
  */
-export class BoldExtension extends MarkExtension<BoldExtensionSettings> {
+export class BoldExtension extends MarkExtension<BoldExtensionOptions> {
   public static readonly defaultSettings = { weight: null };
 
   get name() {

@@ -1,6 +1,7 @@
 import {
   ALIGN_PATTERN,
   convertCommand,
+  DefaultExtensionOptions,
   ExtensionTag,
   INDENT_ATTRIBUTE,
   INDENT_LEVELS,
@@ -21,8 +22,8 @@ import { marginToIndent } from './node-utils';
  *
  * @core
  */
-export class ParagraphExtension extends NodeExtension<ParagraphExtensionSettings> {
-  public static readonly defaultSettings = {
+export class ParagraphExtension extends NodeExtension<ParagraphOptions> {
+  public static readonly defaultSettings: DefaultExtensionOptions<ParagraphOptions> = {
     indentAttribute: INDENT_ATTRIBUTE,
     indentLevels: INDENT_LEVELS,
   };
@@ -30,6 +31,7 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionSettings
   get name() {
     return 'paragraph' as const;
   }
+
   public readonly extensionTags = [ExtensionTag.LastNodeCompatible] as const;
 
   protected createNodeSpec(): NodeExtensionSpec {
@@ -94,7 +96,7 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionSettings
   };
 }
 
-export interface ParagraphExtensionSettings {
+export interface ParagraphOptions {
   /**
    * The attribute to use to store the value of the current indentation level.
    */
@@ -140,7 +142,7 @@ export type ParagraphExtensionAttributes = ProsemirrorAttributes<{
  * Pull the paragraph attributes from the dom element.
  */
 function getAttributes(
-  { indentAttribute, indentLevels }: Required<ParagraphExtensionSettings>,
+  { indentAttribute, indentLevels }: Required<ParagraphOptions>,
   dom: HTMLElement,
 ) {
   const { lineHeight, textAlign, marginLeft } = dom.style;

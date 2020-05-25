@@ -26,18 +26,28 @@ describe('AutoLinkExtension', () => {
       expect(urls[0]).toBe('//hello.co');
     });
 
+    const extension = new AutoLinkExtension();
+
     const {
       nodes: { doc, p },
       add,
     } = renderEditor({
-      extensions: [new AutoLinkExtension({ properties: { onUrlUpdate: mock } })],
+      extensions: [extension],
       presets: [],
     });
+
+    const dispose = extension.addHandler('onUrlUpdate', mock);
 
     add(doc(p('i am here<cursor>')))
       .insertText(' hello.co')
       .callback(() => {
         expect(mock).toHaveBeenCalledTimes(1);
+        mock.mockClear();
+        dispose();
+      })
+      .insertText(' test.com')
+      .callback(() => {
+        expect(mock).not.toHaveBeenCalled();
       });
   });
 });

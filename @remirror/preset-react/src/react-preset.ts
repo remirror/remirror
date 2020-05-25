@@ -4,11 +4,11 @@ import { ReactSSRExtension, ReactSSRProperties } from '@remirror/extension-react
 /**
  * The static settings for the core preset.
  */
-export interface ReactPresetSettings {}
+export interface ReactPresetOptions {}
 
 export interface ReactPresetOptions extends ReactSSRProperties {}
 
-export class ReactPreset extends Preset<ReactPresetSettings, ReactPresetOptions> {
+export class ReactPreset extends Preset<ReactPresetOptions, ReactPresetOptions> {
   public static defaultProperties: Required<ReactPresetOptions> = {
     ...ReactSSRExtension.defaultProperties,
   };

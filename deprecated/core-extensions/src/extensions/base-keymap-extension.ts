@@ -17,7 +17,7 @@ import {
 } from '@remirror/pm/commands';
 import { undoInputRule } from '@remirror/pm/inputrules';
 
-interface KeymapExtensionSettings {
+interface KeymapExtensionOptions {
   /**
    * Determines whether a backspace after an input rule has been applied undoes the input rule.
    *
@@ -77,7 +77,7 @@ interface KeymapExtensionSettings {
  *
  * @builtin
  */
-export const BaseKeymapExtension = ExtensionFactory.typed<KeymapExtensionSettings>().plain({
+export const BaseKeymapExtension = ExtensionFactory.typed<KeymapExtensionOptions>().plain({
   name: 'baseKeymap',
   defaultPriority: ExtensionPriority.Low,
   defaultSettings: {

@@ -1,15 +1,14 @@
-import { EditorState, Plugin } from '@remirror/pm/state';
-import { Decoration, DecorationSet } from '@remirror/pm/view';
-
 import { AnyExtension } from '@remirror/core';
 import { EditorSchema, Transaction } from '@remirror/core-types';
 import { getPluginState, isDocNodeEmpty } from '@remirror/core-utils';
+import { EditorState, Plugin } from '@remirror/pm/state';
+import { Decoration, DecorationSet } from '@remirror/pm/view';
 
-import { PlaceholderExtensionSettings, PlaceholderPluginState } from '../../core-extension-types';
+import { PlaceholderExtensionOptions, PlaceholderPluginState } from '../../core-extension-types';
 
 interface SharedParameter {
   /** The placeholder extension */
-  extension: AnyExtension<PlaceholderExtensionSettings>;
+  extension: AnyExtension<PlaceholderExtensionOptions>;
   /** The editor state */
   state: EditorState;
 }
@@ -64,7 +63,7 @@ const createDecorationSet = ({ extension, state }: SharedParameter) => {
  *
  * @param extension
  */
-export const createPlaceholderPlugin = (extension: AnyExtension<PlaceholderExtensionSettings>) => {
+export const createPlaceholderPlugin = (extension: AnyExtension<PlaceholderExtensionOptions>) => {
   return new Plugin<PlaceholderPluginState, EditorSchema>({
     key: extension.pluginKey,
     state: {
