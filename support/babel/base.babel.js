@@ -27,7 +27,8 @@ module.exports = {
       test: /\.tsx?$/,
       plugins: [
         '@babel/plugin-proposal-class-properties',
-        '@babel/plugin-proposal-private-methods',
+        // Private methods not yet supported by TypeScript
+        // '@babel/plugin-proposal-private-methods',
       ],
     },
   ],

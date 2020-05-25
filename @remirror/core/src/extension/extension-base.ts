@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import {
+  __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
   ErrorConstant,
   ExtensionPriority,
   ExtensionTag,
-  REMIRROR_IDENTIFIER_KEY,
   RemirrorIdentifier,
 } from '@remirror/core-constants';
 import {
@@ -14,15 +14,25 @@ import {
   isIdentifierOfType,
   isPlainObject,
   isRemirrorType,
+  noop,
   object,
+  omit,
 } from '@remirror/core-helpers';
 import {
-  And,
+  AnyFunction,
   AttributesParameter,
+  Dispose,
   EditorSchema,
   EditorView,
   EmptyShape,
   FlipPartialAndRequired,
+  GetCustom,
+  GetFixed,
+  GetFixedDynamic,
+  GetHandler,
+  GetMappedHandler,
+  GetPartialDynamic,
+  GetStatic,
   IfNoRequiredProperties,
   MarkExtensionSpec,
   MarkType,
@@ -30,22 +40,348 @@ import {
   NodeType,
   ProsemirrorPlugin,
   Shape,
+  ValidOptions,
 } from '@remirror/core-types';
 import { isMarkActive, isNodeActive } from '@remirror/core-utils';
 
-import { getChangedProperties } from '../helpers';
+import { getChangedOptions } from '../helpers';
 import {
-  BaseExtensionSettings,
+  BaseExtensionOptions,
   GeneralExtensionTags,
   GetNameUnion,
   MarkExtensionTags,
   NodeExtensionTags,
-  PartialProperties,
-  PropertiesShape,
-  PropertiesUpdateReason,
-  SetPropertiesParameter,
+  SetOptionsParameter,
   TransactionLifecycleMethod,
+  UpdateReason,
 } from '../types';
+
+abstract class BaseClass<Options extends ValidOptions = EmptyShape> {
+  /**
+   * The default options for this extension.
+   */
+  public static readonly defaultOptions = {};
+
+  /**
+   * The event handler keys.
+   */
+  public static readonly handlerKeys = [];
+
+  /**
+   * The custom keys.
+   */
+  public static readonly customKeys = [];
+
+  /**
+   * Not for public usage. This is purely for types to make it easier to infer
+   * the type of `Settings` on an extension instance.
+   */
+  [Remirror._OPTIONS]: Options & BaseExtensionOptions;
+
+  /**
+   * The identifier for the extension which can determine whether it is a node,
+   * mark or plain extension.
+   * @internal
+   */
+  public abstract readonly [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]: RemirrorIdentifier;
+
+  /**
+   * The unique name of this extension.
+   *
+   * @remarks
+   *
+   * Every extension **must** have a name. The name should have a distinct type
+   * to allow for better type inference for end users. By convention the name
+   * should be `camelCased` and unique within your editor instance.
+   *
+   * ```ts
+   * class SimpleExtension extends Extension {
+   *   get name() {
+   *     return 'simple' as const;
+   *   }
+   * }
+   * ```
+   */
+  public abstract readonly name: string;
+
+  /**
+   * The options for this extension.
+   *
+   * @remarks
+   *
+   * Options are composed of Static, Dynamic, Handlers and ObjectHandlers.
+   *
+   * - `Static` - set at instantiation by the constructor.
+   * - `Dynamic` - optionally set at instantiation by the constructor and also
+   *   set during the runtime.
+   * - `Handlers` - can only be set during the runtime.
+   * - `ObjectHandlers` - Can only be set during the runtime of the extension.
+   */
+  get options() {
+    return this.#options;
+  }
+
+  /**
+   * The initial options at creation (used to reset).
+   */
+  readonly #initialOptions: GetFixed<Options> & BaseExtensionOptions;
+
+  /**
+   * Private instance of the extension options.
+   */
+  #options: GetFixed<Options> & BaseExtensionOptions;
+
+  /**
+   * The mapped function handlers.
+   */
+  #mappedHandlers: GetMappedHandler<Options>;
+
+  /**
+   * Keep track of whether this extension has been initialized or not.
+   */
+  #hasInitialized = false;
+
+  constructor(
+    validator: (Constructor: unknown) => void,
+    ...parameters: ExtensionConstructorParameter<Options>
+  ) {
+    validator(this.constructor);
+
+    const [options] = parameters;
+
+    this.#mappedHandlers = object();
+    this.populateMappedHandlers();
+
+    this.#options = this.#initialOptions = deepMerge(
+      defaultOptions,
+      this.constructor.defaultOptions,
+      options ?? object(),
+      this.createDefaultHandlers(),
+    );
+
+    // Triggers the `init` options update for this extension.
+    this.setOptions(this.#options);
+    this.#hasInitialized = true;
+
+    this.init();
+  }
+
+  /**
+   * This method is called by the extension constructor. It is not strictly a
+   * lifecycle method since at this point the manager has not yet been
+   * instantiated.
+   *
+   * @remarks
+   *
+   * It should be used instead of overriding the constructor which can lead to
+   * problems.
+   *
+   * At this point
+   * - `this.store` will throw an error since it doesn't yet exist.
+   * - `this.type` in `NodeExtension` and `MarkExtension` will also throw an
+   *   error since the schema hasn't been created yet.
+   */
+  protected init() {}
+
+  /**
+   * Update the properties with the provided partial value when changed.
+   */
+  public setOptions(update: GetPartialDynamic<Options>) {
+    const previousOptions = this.getDynamicOptions();
+    const reason: UpdateReason = this.#hasInitialized ? 'set' : 'init';
+
+    const { changes, options } = getChangedOptions({
+      previousOptions,
+      update,
+    });
+
+    // Trigger the update handler so the extension can respond to any relevant property
+    // updates.
+    this.onSetOptions?.({
+      reason,
+      changes,
+      options,
+      initialOptions: this.#initialOptions,
+    });
+
+    if (reason === 'init') {
+      // The constructor has already set the options so no need to update the
+      // dynamic values.
+      return;
+    }
+
+    this.updateDynamicOptions(options);
+  }
+
+  /**
+   * Reset the extension properties to their default values.
+   *
+   * @nonVirtual
+   */
+  public resetOptions() {
+    const previousOptions = this.getDynamicOptions();
+    const { changes, options } = getChangedOptions<Options>({
+      previousOptions,
+      update: this.#initialOptions,
+    });
+
+    // Trigger the update handler so that child extension properties can also be
+    // updated.
+    this.onSetOptions?.({
+      reason: 'reset',
+      options,
+      changes,
+      initialOptions: this.#initialOptions,
+    });
+
+    this.updateDynamicOptions(options);
+  }
+
+  /**
+   * Update the private options.
+   */
+  private getDynamicOptions(): GetFixedDynamic<Options> {
+    return omit(this.#options, [
+      ...this.constructor.customKeys,
+      ...this.constructor.handlerKeys,
+    ]) as any;
+  }
+
+  /**
+   * Update the dynamic options.
+   */
+  private updateDynamicOptions(options: GetFixedDynamic<Options>) {
+    this.#options = { ...this.#options, ...options };
+  }
+
+  /**
+   * Override this to received updates whenever `setProperties` is called.
+   *
+   * @abstract
+   */
+  protected onSetOptions?(parameter: SetOptionsParameter<Options>): void;
+
+  /**
+   * Set up the mapped handlers object with default values (an empty array);
+   */
+  private populateMappedHandlers() {
+    for (const key of this.constructor.handlerKeys) {
+      this.#mappedHandlers[key] = [];
+    }
+  }
+
+  /**
+   * This is currently cludged together, I'm not sure it will work.
+   */
+  private createDefaultHandlers() {
+    const methods = object<any>();
+    for (const key of this.constructor.handlerKeys) {
+      methods[key] = (...args: any[]) => {
+        this.#mappedHandlers[key].forEach((handler) =>
+          ((handler as unknown) as AnyFunction)(...args),
+        );
+      };
+    }
+
+    return methods;
+  }
+
+  /**
+   * Add a handler to the event handlers so that it is called along with all
+   * the other handler methods.
+   *
+   * This is helpful for integrating react hooks which can be used in multiple
+   * places. The original problem with fixed properties is that you can only
+   * assign to a method once and it overwrites any other methods. This pattern
+   * for adding handlers allows for multiple usages of the same handler in the
+   * most relevant part of the code.
+   *
+   * More to come on this pattern.
+   */
+  public addHandler = <Key extends keyof GetHandler<Options>>(
+    key: Key,
+    method: GetHandler<Options>[Key],
+  ): Dispose => {
+    this.#mappedHandlers[key].push(method);
+
+    // Return a method for disposing of the handler.
+    return () =>
+      (this.#mappedHandlers[key] = this.#mappedHandlers[key].filter(
+        (handler) => handler !== method,
+      ));
+  };
+
+  /**
+   * A method that can be used to set the value of a custom option.
+   */
+  public setCustomOption = <Key extends keyof GetCustom<Options>>(
+    key: Key,
+    method: GetCustom<Options>[Key],
+  ): Dispose => {
+    return this.onSetCustomOption?.(key, method) ?? noop;
+  };
+
+  /**
+   * Override this method if you want to set custom options on your extension.
+   */
+  public onSetCustomOption?: <Key extends keyof GetCustom<Options>>(
+    key: Key,
+    method: GetCustom<Options>[Key],
+  ) => Dispose;
+}
+
+interface BaseClass<Options extends ValidOptions> {
+  constructor: BaseClassConstructor<Options>;
+}
+
+interface BaseClassConstructor<Options extends ValidOptions = EmptyShape> extends Function {
+  new (...parameters: ExtensionConstructorParameter<Options>): any;
+
+  /**
+   * The identifier for the constructor which can determine whether it is a node
+   * constructor, mark constructor or plain constructor.
+   * @internal
+   */
+  readonly [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]: RemirrorIdentifier;
+
+  /**
+   * Defines the `defaultOptions` for all extension instances.
+   *
+   * @remarks
+   *
+   * Once set it can't be updated during run time. Some of the settings are
+   * optional and some are not. Any non-required settings must be specified in
+   * the `defaultOptions`.
+   *
+   * **Please note**: There is a slight downside when setting up
+   * `defaultOptions`. `undefined` is not supported for partial settings at
+   * this point in time. As a workaround use `null` as the type and pass it as
+   * the value in the default settings.
+   *
+   * @defaultValue `{}`
+   *
+   * @internal
+   */
+  readonly defaultOptions: DefaultExtensionOptions<Options>;
+
+  /**
+   * An array of all the keys which correspond to the the event handler options.
+   *
+   * This **MUST** be present if you want to use event handlers in your extension.
+   *
+   * Every key here is automatically removed from the `setOptions` method and is
+   * added to the `addHandler` method for adding new handlers. The
+   * `this.options[key]` is automatically replaced with a method that combines
+   * all the handlers into one method that can be called effortlessly. All this
+   * work is done for you.
+   */
+  readonly handlerKeys: Array<keyof GetHandler<Options>>;
+
+  /**
+   * A list of the custom keys in the extension or preset options.
+   */
+  readonly customKeys: Array<keyof GetCustom<Options>>;
+}
 
 /**
  * Extensions are fundamental to the way that Remirror works by grouping
@@ -94,7 +430,7 @@ import {
  *   AwesomeExtensionSettings,
  *   AwesomeExtensionProperties
  * > {
- *   public static defaultSettings: DefaultExtensionSettings<
+ *   public static defaultOptions: DefaultExtensionSettings<
  *     AwesomeExtensionSettings
  *   > = {
  *     isAwesome: true,
@@ -107,61 +443,17 @@ import {
  * }
  * ```
  */
-abstract class Extension<Settings extends Shape = EmptyShape, Properties extends Shape = EmptyShape>
-  implements PropertiesShape<Properties> {
+abstract class Extension<Options extends ValidOptions = EmptyShape> extends BaseClass<Options> {
   /**
-   * The default settings for this extension.
+   * The default priority for this family of extensions.
    */
-  public static readonly defaultSettings = {};
-
-  /**
-   * The default properties for this extension.
-   */
-  public static readonly defaultProperties = {};
-  /**
-   * The unique name of this extension.
-   *
-   * @remarks
-   *
-   * Every extension **must** have a name. The name should have a distinct type
-   * to allow for better type inference for end users. By convention the name
-   * should be `camelCased` and unique within your editor instance.
-   *
-   * ```ts
-   * class SimpleExtension extends Extension {
-   *   get name() {
-   *     return 'simple' as const;
-   *   }
-   * }
-   * ```
-   */
-  public abstract readonly name: string;
-
-  /**
-   * The static settings for this extension.
-   *
-   * @remarks
-   *
-   * The static settings are automatically merged with the default options of
-   * this extension when it is created.
-   */
-  get settings(): Readonly<Required<Settings & BaseExtensionSettings>> {
-    return this.#settings;
-  }
-
-  /**
-   * The dynamic properties for this extension. Callback handlers and behavioral
-   * properties should be placed here.
-   */
-  get properties() {
-    return this.#properties;
-  }
+  public static readonly defaultPriority = ExtensionPriority.Default;
 
   /**
    * The priority level for this instance of the extension.
    */
   get priority(): ExtensionPriority {
-    return this.#settings.priority ?? this.defaultPriority ?? ExtensionPriority.Default;
+    return this.options.priority ?? this.constructor.defaultPriority;
   }
 
   /**
@@ -183,126 +475,34 @@ abstract class Extension<Settings extends Shape = EmptyShape, Properties extends
    */
   private _store!: Remirror.ExtensionStore;
 
-  /**
-   * Private instance of the static settings.
-   */
-  #settings: Readonly<Required<Settings & BaseExtensionSettings>>;
-
-  /**
-   * Private instance of the dynamic properties for this extension.
-   */
-  #properties: Required<Properties>;
-
-  /**
-   * Keep track of whether this extension has been initialized or not.
-   */
-  #hasInitialized = false;
-
-  constructor(...parameters: ExtensionConstructorParameter<Settings, Properties>) {
-    isValidExtensionConstructor(this.constructor);
-
-    const [settings] = parameters;
-
-    this.#settings = deepMerge(
-      defaultSettings,
-      this.constructor.defaultSettings,
-      settings ?? object(),
-    );
-    this.#properties = { ...this.constructor.defaultProperties, ...settings?.properties };
-
-    // Triggers the `init` properties update for this extension.
-    this.setProperties(this.#properties);
-    this.#hasInitialized = true;
-
-    this.init();
+  constructor(...parameters: ExtensionConstructorParameter<Options>) {
+    super(isValidExtensionConstructor, ...parameters);
   }
 
   /**
-   * This method is called by the extension constructor. It is not strictly a
-   * lifecycle method since at this point the manager has not yet been
-   * instantiated.
+   * Pass a reference to the globally shared `ExtensionStore` for this extension.
    *
    * @remarks
    *
-   * It should be used instead of overriding the constructor which can lead to
-   * problems.
+   * The extension store allows extensions to access important variables without
+   * complicating their creator methods.
    *
-   * At this point
-   * - `this.store` will throw an error since it doesn't yet exist.
-   * - `this.type` in `NodeExtension` and `MarkExtension` will also throw an
-   *   error since the schema hasn't been created yet.
-   */
-  protected init() {}
-
-  /**
-   * Update the properties with the provided partial value when changed.
-   */
-  public setProperties(update: Partial<Properties>) {
-    const reason: PropertiesUpdateReason = this.#hasInitialized ? 'set' : 'init';
-    const previousProperties = this.#properties;
-
-    const { changes, properties } = getChangedProperties({
-      previousProperties,
-      update,
-    });
-
-    // Trigger the update handler so the extension can respond to any relevant property
-    // updates.
-    this.onSetProperties?.({
-      reason,
-      changes,
-      properties,
-      defaultProperties: this.constructor.defaultProperties,
-    });
-
-    // The constructor already sets the properties to their default values.
-    if (reason === 'init') {
-      return;
-    }
-
-    // Update the stored properties value.
-    this.#properties = properties;
-  }
-
-  /**
-   * Override to received updates whenever `setProperties` is called. It is an
-   * optional abstract method
+   * ```ts
+   * import { PlainExtension } from 'remirror/core';
    *
-   * @abstract
-   */
-  protected onSetProperties?(parameter: SetPropertiesParameter): void;
-
-  /**
-   * Reset the extension properties to their default values.
-   */
-  public resetProperties() {
-    const previousProperties = this.#properties;
-    const { changes, properties } = getChangedProperties({
-      previousProperties,
-      update: this.constructor.defaultProperties,
-    });
-
-    // Trigger the update handler so that child extension properties can also be
-    // updated.
-    this.onSetProperties?.({
-      reason: 'reset',
-      properties,
-      changes,
-      defaultProperties: this.constructor.defaultProperties,
-    });
-
-    // Update the stored properties value.
-    this.#properties = properties;
-  }
-
-  /**
-   * Pass a reference to the manager store into the extension.
+   * class Awesome extends PlainExtension {
+   *   customMethod() {
+   *     if (this.store.view.hasFocus()) {
+   *       console.log('dance dance dance');
+   *     }
+   *   }
+   * }
+   * ```
    *
-   * @remarks
-   *
-   * This should only be used by the `EditorManager`.
+   * This should only be called by the `EditorManager`.
    *
    * @internal
+   * @nonVirtual
    */
   public setStore(store: Remirror.ExtensionStore) {
     if (this._store) {
@@ -311,35 +511,17 @@ abstract class Extension<Settings extends Shape = EmptyShape, Properties extends
 
     this._store = store;
   }
-
-  /**
-   * The identifier for the extension which can determine whether it is a node,
-   * mark or plain extension.
-   * @internal
-   */
-  public abstract readonly [REMIRROR_IDENTIFIER_KEY]: RemirrorIdentifier;
 }
 
 /**
  * Declaration merging since the constructor property can't be defined on the
  * actual class.
  */
-interface Extension<Settings extends Shape = EmptyShape, Properties extends Shape = EmptyShape>
+interface Extension<Options extends ValidOptions = EmptyShape>
   extends ExtensionLifecycleMethods,
-    Remirror.ExtensionCreatorMethods<Settings, Properties>,
+    Remirror.ExtensionCreatorMethods<Options>,
     Remirror.BaseExtension {
-  constructor: ExtensionConstructor<Settings, Properties>;
-  /**
-   * The default priority level for the extension to use.
-   *
-   * @remarks
-   *
-   * The priority levels help determine the order in which an extension is
-   * loaded within the editor. High priority extensions are given precedence.
-   *
-   * @defaultValue `ExtensionPriority.Default`
-   */
-  defaultPriority?: ExtensionPriority;
+  constructor: ExtensionConstructor<Options>;
 
   /**
    * Define the tags for this extension.
@@ -368,30 +550,18 @@ interface Extension<Settings extends Shape = EmptyShape, Properties extends Shap
    * thrown.
    */
   requiredExtensions?: object[];
-
-  /**
-   * Not for public usage. This is purely for types to make it easier to infer
-   * the type of `Settings` on an extension instance.
-   */
-  ['~S']: Settings & BaseExtensionSettings;
-
-  /**
-   * Not for public usage. This is purely for types to make it easier to infer
-   * the type of `Settings` on an extension instance.
-   */
-  ['~P']: Properties;
 }
 
 /**
- * Get the expected type signature for the `defaultSettings`. Requires that
+ * Get the expected type signature for the `defaultOptions`. Requires that
  * every optional setting key (except for keys which are defined on the
- * `BaseExtensionSettings`) has a value assigned.
+ * `BaseExtensionOptions`) has a value assigned.
  */
-export type DefaultExtensionSettings<Settings extends Shape> = Omit<
+export type DefaultExtensionOptions<Settings extends Shape> = Omit<
   FlipPartialAndRequired<Settings>,
-  keyof BaseExtensionSettings
+  keyof BaseExtensionOptions
 > &
-  Partial<BaseExtensionSettings>;
+  Partial<BaseExtensionOptions>;
 
 interface ExtensionLifecycleMethods {
   /**
@@ -426,15 +596,14 @@ interface ExtensionLifecycleMethods {
   onDestroy?: () => void;
 }
 
-export abstract class PlainExtension<
-  Settings extends Shape = object,
-  Properties extends Shape = object
-> extends Extension<Settings, Properties> {
-  static get [REMIRROR_IDENTIFIER_KEY]() {
+export abstract class PlainExtension<Options extends ValidOptions = EmptyShape> extends Extension<
+  Options
+> {
+  static get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
     return RemirrorIdentifier.PlainExtensionConstructor as const;
   }
 
-  get [REMIRROR_IDENTIFIER_KEY]() {
+  get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
     return RemirrorIdentifier.PlainExtension as const;
   }
 }
@@ -449,15 +618,14 @@ export abstract class PlainExtension<
  * Mark types are objects much like node types, used to tag mark objects and
  * provide additional information about them.
  */
-export abstract class MarkExtension<
-  Settings extends Shape = object,
-  Properties extends Shape = object
-> extends Extension<Settings, Properties> {
-  static get [REMIRROR_IDENTIFIER_KEY]() {
+export abstract class MarkExtension<Options extends ValidOptions = EmptyShape> extends Extension<
+  Options
+> {
+  static get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
     return RemirrorIdentifier.MarkExtensionConstructor as const;
   }
 
-  get [REMIRROR_IDENTIFIER_KEY]() {
+  get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
     return RemirrorIdentifier.MarkExtension as const;
   }
 
@@ -492,7 +660,7 @@ export abstract class MarkExtension<
    */
   readonly #spec: MarkExtensionSpec;
 
-  constructor(...parameters: ExtensionConstructorParameter<Settings, Properties>) {
+  constructor(...parameters: ExtensionConstructorParameter<Options>) {
     super(...parameters);
 
     this.#spec = this.createMarkSpec();
@@ -521,15 +689,14 @@ export abstract class MarkExtension<
  *
  * For more information see {@link https://prosemirror.net/docs/ref/#model.Node}
  */
-export abstract class NodeExtension<
-  Settings extends Shape = object,
-  Properties extends Shape = object
-> extends Extension<Settings, Properties> {
-  static get [REMIRROR_IDENTIFIER_KEY]() {
+export abstract class NodeExtension<Options extends ValidOptions = EmptyShape> extends Extension<
+  Options
+> {
+  static get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
     return RemirrorIdentifier.NodeExtensionConstructor as const;
   }
 
-  get [REMIRROR_IDENTIFIER_KEY]() {
+  get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
     return RemirrorIdentifier.NodeExtension as const;
   }
 
@@ -558,7 +725,7 @@ export abstract class NodeExtension<
    */
   readonly #spec: NodeExtensionSpec;
 
-  constructor(...parameters: ExtensionConstructorParameter<Settings, Properties>) {
+  constructor(...parameters: ExtensionConstructorParameter<Options>) {
     super(...parameters);
 
     this.#spec = this.createNodeSpec();
@@ -615,40 +782,37 @@ export abstract class NodeExtension<
 /**
  * The type which is applicable to any extension instance.
  */
-export type AnyExtension = Omit<Extension<Shape, Shape>, keyof Remirror.AnyExtensionOverrides> &
+export type AnyExtension = Omit<Extension<Shape>, keyof Remirror.AnyExtensionOverrides> &
   Remirror.AnyExtensionOverrides;
 
 /**
  * The type which is applicable to any extension instance.
  */
-export type AnyExtensionConstructor = ExtensionConstructor<any, any>;
+export type AnyExtensionConstructor = ExtensionConstructor<any>;
 
 /**
  * The type for any potential PlainExtension.
  */
-export type AnyPlainExtension = Omit<
-  PlainExtension<any, any>,
-  keyof Remirror.AnyExtensionOverrides
-> &
+export type AnyPlainExtension = Omit<PlainExtension<any>, keyof Remirror.AnyExtensionOverrides> &
   Remirror.AnyExtensionOverrides;
 
 /**
  * The type for any potential NodeExtension.
  */
-export type AnyNodeExtension = Omit<NodeExtension<any, any>, keyof Remirror.AnyExtensionOverrides> &
+export type AnyNodeExtension = Omit<NodeExtension<any>, keyof Remirror.AnyExtensionOverrides> &
   Remirror.AnyExtensionOverrides;
 
 /**
  * The type for any potential MarkExtension.
  */
-export type AnyMarkExtension = Omit<MarkExtension<any, any>, keyof Remirror.AnyExtensionOverrides> &
+export type AnyMarkExtension = Omit<MarkExtension<any>, keyof Remirror.AnyExtensionOverrides> &
   Remirror.AnyExtensionOverrides;
 
 /**
  * These are the default options merged into every extension. They can be
  * overridden.
  */
-const defaultSettings: Required<BaseExtensionSettings> = {
+const defaultOptions: Required<BaseExtensionOptions> = {
   priority: null,
   extraAttributes: [],
   exclude: {},
@@ -677,7 +841,7 @@ const defaultSettings: Required<BaseExtensionSettings> = {
  *
  * declare global {
  *   namespace Remirror {
- *     interface BaseExtensionSettings {
+ *     interface BaseExtensionOptions {
  *       customSetting?: boolean;
  *     }
  *   }
@@ -687,9 +851,9 @@ const defaultSettings: Required<BaseExtensionSettings> = {
  * The mutation must happen before any extension have been instantiated.
  */
 export function mutateDefaultExtensionSettings(
-  mutatorMethod: (defaultSettings: BaseExtensionSettings) => void,
+  mutatorMethod: (defaultOptions: BaseExtensionOptions) => void,
 ): void {
-  mutatorMethod(defaultSettings);
+  mutatorMethod(defaultOptions);
 }
 
 /**
@@ -709,7 +873,7 @@ export function isExtension(value: unknown): value is AnyExtension {
 }
 
 /**
- * Checks that the extension has a valid constructor with the `defaultSettings`
+ * Checks that the extension has a valid constructor with the `defaultOptions`
  * and `defaultProperties` defined as static properties.
  */
 export function isValidExtensionConstructor(
@@ -720,13 +884,18 @@ export function isValidExtensionConstructor(
     code: ErrorConstant.INVALID_EXTENSION,
   });
 
-  invariant(isPlainObject(Constructor.defaultSettings), {
-    message: `No static 'defaultSettings' provided for '${Constructor.name}'.\n`,
+  invariant(isPlainObject(Constructor.defaultOptions), {
+    message: `No static 'defaultOptions' provided for '${Constructor.name}'.\n`,
     code: ErrorConstant.INVALID_EXTENSION,
   });
 
-  invariant(isPlainObject(Constructor.defaultProperties), {
-    message: `No static 'defaultProperties' provided for '${Constructor.name}'.\n`,
+  invariant(isPlainObject(Constructor.defaultPriority), {
+    message: `No static 'defaultPriority' provided for '${Constructor.name}'.\n`,
+    code: ErrorConstant.INVALID_EXTENSION,
+  });
+
+  invariant(isPlainObject(Constructor.handlerKeys), {
+    message: `No static 'defaultPriority' provided for '${Constructor.name}'.\n`,
     code: ErrorConstant.INVALID_EXTENSION,
   });
 }
@@ -777,71 +946,26 @@ export function isMarkExtension(value: unknown): value is AnyMarkExtension {
 }
 
 /**
- * Adds a partial and optional properties key to the provided object.
- *
- * This is used to allow for the settings object to also define some initial
- * properties when being constructed.
+ * Auto infers the parameter for the constructor. If there is a
+ * required static option then the TypeScript compiler will error if nothing is
+ * passed in.
  */
-export type WithProperties<Type extends Shape, Properties extends Shape = object> = And<
-  Type,
-  Partial<PartialProperties<Properties>>
+export type ExtensionConstructorParameter<Options extends ValidOptions> = IfNoRequiredProperties<
+  GetStatic<Options>,
+  [(Options & BaseExtensionOptions)?],
+  [Options & BaseExtensionOptions]
 >;
 
-/**
- * Auto infers the parameter for the extension constructor. If there is a
- * required setting then it won't compile without that setting defined.
- */
-export type ExtensionConstructorParameter<
-  Settings extends Shape,
-  Properties extends Shape
-> = IfNoRequiredProperties<
-  Settings,
-  [WithProperties<Settings & BaseExtensionSettings, Properties>?],
-  [WithProperties<Settings & BaseExtensionSettings, Properties>]
->;
-
-interface ExtensionConstructor<
-  Settings extends Shape = EmptyShape,
-  Properties extends Shape = EmptyShape
-> extends Function {
-  new (...parameters: ExtensionConstructorParameter<Settings, Properties>): Extension<
-    Settings,
-    Shape
-  >;
+interface ExtensionConstructor<Options extends ValidOptions = EmptyShape>
+  extends BaseClassConstructor<Options> {
+  new (...parameters: ExtensionConstructorParameter<Options>): Extension<Options>;
 
   /**
-   * The identifier for the constructor which can determine whether it is a node
-   * constructor, mark constructor or plain constructor.
-   * @internal
+   * The default priority level for all instance of this extension.
+   *
+   * @defaultValue `ExtensionPriority.Default`
    */
-  readonly [REMIRROR_IDENTIFIER_KEY]: RemirrorIdentifier;
-
-  /**
-   * Defines the `defaultSettings` for all extension instances.
-   *
-   * @remarks
-   *
-   * Once set it can't be updated during run time. Some of the settings are
-   * optional and some are not. Any non-required settings must be specified in
-   * the `defaultSettings`.
-   *
-   * This must be set when creating the extension, even if just to the empty
-   * object when no properties are used at runtime.
-   *
-   * **Please note**: There is a slight downside when setting up
-   * `defaultSettings`. `undefined` is not supported for partial settings at
-   * this point in time. As a workaround use `null` as the type and pass it as
-   * the value in the default settings.
-   *
-   * @internal
-   */
-  readonly defaultSettings: DefaultExtensionSettings<Settings>;
-
-  /**
-   * A method that creates the default properties. All properties must have a
-   * default property assigned.
-   */
-  readonly defaultProperties: Required<Properties>;
+  readonly defaultPriority: ExtensionPriority;
 }
 
 /**

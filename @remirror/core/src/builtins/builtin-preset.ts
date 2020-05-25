@@ -43,7 +43,7 @@ export class BuiltinPreset extends Preset {
     return 'builtin' as const;
   }
 
-  protected onSetProperties(): void {
+  protected onSetOptions(): void {
     return;
   }
 

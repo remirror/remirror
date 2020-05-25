@@ -1,4 +1,4 @@
-import { SetPropertiesParameter } from '../..';
+import { SetOptionsParameter } from '../..';
 import { PlainExtension } from '../../extension';
 import { Preset } from '../preset-base';
 
@@ -58,7 +58,7 @@ describe('simplest preset', () => {
       return [new FirstExtension({}), new SecondExtension({ b: this.settings.b })];
     }
 
-    protected onSetProperties(parameter: SetPropertiesParameter<Properties>) {
+    protected onSetOptions(parameter: SetOptionsParameter<Properties>) {
       const { changes } = parameter;
 
       if (changes.y.changed) {

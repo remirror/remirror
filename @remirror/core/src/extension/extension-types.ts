@@ -3,15 +3,8 @@ import { UnionToIntersection } from 'type-fest';
 import { AnyFunction, StringKey } from '@remirror/core-types';
 import { NonChainableCommandFunction } from '@remirror/core-utils';
 
-import { CommandShape, GetHelpers } from '../types';
+import { CommandShape, GetCommands, GetHelpers } from '../types';
 import { AnyExtension } from './extension-base';
-
-export interface ExtensionParameter<ExtensionUnion extends AnyExtension = any> {
-  /**
-   * An extension.
-   */
-  extension: ExtensionUnion;
-}
 
 export interface ExtensionListParameter<ExtensionUnion extends AnyExtension = AnyExtension> {
   /**
@@ -44,7 +37,7 @@ type MapToChainedCommand<RawCommands extends Record<string, AnyFunction>> = {
  * makes available.
  */
 export type CommandsFromExtensions<ExtensionUnion extends AnyExtension> = UnionToIntersection<
-  MapToUnchainedCommand<ExtensionUnion['~C']>
+  MapToUnchainedCommand<GetCommands<ExtensionUnion>>
 >;
 
 export interface ChainedCommandRunParameter {
@@ -61,7 +54,7 @@ export interface ChainedCommandRunParameter {
 }
 
 export type ChainedIntersection<ExtensionUnion extends AnyExtension> = UnionToIntersection<
-  MapToChainedCommand<ExtensionUnion['~C']>
+  MapToChainedCommand<GetCommands<ExtensionUnion>>
 >;
 
 export type ChainedFromExtensions<
@@ -105,25 +98,6 @@ export type HelpersFromExtensions<ExtensionUnion extends AnyExtension> = UnionTo
 export type HelperNames<ExtensionUnion extends AnyExtension> = StringKey<
   HelpersFromExtensions<ExtensionUnion>
 >;
-
-/**
- * Provides a method for retrieving an extension from an extension holder.
- */
-export interface GetExtensionParameter<ExtensionUnion extends AnyExtension> {
-  /**
-   * Get an extension from the extension holder (either a preset or a manager)
-   * that corresponds to the provided `Constructor`.
-   *
-   * @param Constructor - the extension constructor to find in the editor.
-   *
-   * @remarks
-   *
-   * This method will throw and error if the constructor doesn't exist.
-   */
-  getExtension: <ExtensionConstructor extends ExtensionUnion['constructor']>(
-    Constructor: ExtensionConstructor,
-  ) => InstanceType<ExtensionConstructor>;
-}
 
 /**
  * Get the extensions from any type with an `extensions` property.

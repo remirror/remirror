@@ -1,5 +1,3 @@
-import { Attributes } from 'react';
-
 import { ExtensionPriority, ExtensionTag, MarkGroup, NodeGroup } from '@remirror/core-constants';
 import {
   AnyConstructor,
@@ -8,9 +6,13 @@ import {
   EditorSchema,
   EditorState,
   EditorStateParameter,
-  EmptyShape,
-  Shape,
+  GetDynamic,
+  GetFixed,
+  GetFixedDynamic,
+  GetPartialDynamic,
+  ProsemirrorAttributes,
   TransactionParameter,
+  ValidOptions,
 } from '@remirror/core-types';
 
 /**
@@ -19,17 +21,17 @@ import {
  *
  * @typeParam Properties - The properties used by the object.
  */
-export interface PropertiesShape<Properties extends object>
-  extends ReadonlyPropertiesParameter<Properties> {
+export interface OptionsSetter<Options extends ValidOptions>
+  extends ReadonlyOptionsParameter<Options> {
   /**
-   * Reset the properties object to the default values.
+   * Reset the options object to the initial values.
    */
-  resetProperties: () => void;
+  resetOptions: () => void;
 
   /**
    * Set the properties to the newly defined values.
    */
-  setProperties: (properties: Partial<Properties>) => void;
+  setOptions: (properties: GetPartialDynamic<Options>) => void;
 }
 
 type Changes<Type> =
@@ -62,8 +64,8 @@ type Changes<Type> =
 /**
  * Highlights all the properties that have changed.
  */
-export type ChangedProperties<Properties extends object> = {
-  [Key in keyof Properties]: Changes<Properties[Key]>;
+export type ChangedOptions<Options extends ValidOptions> = {
+  [Key in keyof GetDynamic<Options>]: Changes<GetDynamic<Options>[Key]>;
 };
 
 /**
@@ -91,12 +93,9 @@ export type NodeExtensionTags<NodeNames extends string = string> = Record<NodeGr
 /**
  * Get the static extension settings.
  */
-export type GetSettings<Type extends { ['~S']: unknown }> = Type['~S'];
-
-/**
- * Get the dynamic extension properties.
- */
-export type GetProperties<Type extends { ['~P']: unknown }> = Type['~P'];
+export type GetOptions<
+  Type extends { [Remirror._OPTIONS]: unknown }
+> = Type[typeof Remirror._OPTIONS];
 
 /**
  * Get the schema from an `EditorManager`.
@@ -106,7 +105,9 @@ export type GetSchema<Type extends { ['~Sch']: unknown }> = Type['~Sch'];
 /**
  * Get the commands from an `EditorManager`, `Extension` or `Preset`.
  */
-export type GetCommands<Type extends { ['~C']: unknown }> = Type['~C'];
+export type GetCommands<
+  Type extends { [Remirror._COMMANDS]: unknown }
+> = Type[typeof Remirror._COMMANDS];
 
 /**
  * Get the Extensions from an `EditorManager`, or `Preset`.
@@ -117,7 +118,9 @@ export type GetExtensions<Type extends { ['~E']: unknown }> = Type['~E'];
  * Get the helpers provided by an from an `EditorManager`, `Extension` or
  * `Preset`.
  */
-export type GetHelpers<Type extends { ['~H']: unknown }> = Type['~H'];
+export type GetHelpers<
+  Type extends { [Remirror._HELPERS]: unknown }
+> = Type[typeof Remirror._HELPERS];
 
 /**
  * Get the name of an extension.
@@ -130,18 +133,10 @@ export type GetNameUnion<Type extends { name: string }> = Type['name'];
 export type GetConstructor<Type extends { constructor: unknown }> = Type['constructor'];
 
 /**
- * Get the settings from any constructor. Can be used for both presets and
+ * Get the options from any constructor. Can be used for both presets and
  * extensions.
  */
-export type SettingsOfConstructor<Constructor extends AnyConstructor> = GetSettings<
-  InstanceType<Constructor>
->;
-
-/**
- * Get the properties from any constructor. Can be used for both presets and
- * extensions.
- */
-export type PropertiesOfConstructor<Constructor extends AnyConstructor> = GetProperties<
+export type OptionsOfConstructor<Constructor extends AnyConstructor> = GetOptions<
   InstanceType<Constructor>
 >;
 
@@ -186,7 +181,7 @@ export interface CommandShape<Parameter extends any[] = []> {
    *
    * @param attrs - certain commands require attrs to run
    */
-  isEnabled: (attrs?: Attributes) => boolean;
+  isEnabled: (attrs?: ProsemirrorAttributes) => boolean;
 
   (...args: Parameter): void;
 }
@@ -199,7 +194,7 @@ export interface TransactionLifecycleParameter extends TransactionParameter, Edi
 }
 export type TransactionLifecycleMethod = (parameter: TransactionLifecycleParameter) => void;
 
-export interface BaseExtensionSettings extends Remirror.BaseExtensionSettings {
+export interface BaseExtensionOptions extends Remirror.BaseExtensionOptions {
   /**
    * An object which excludes certain functionality from an extension.
    */
@@ -221,34 +216,19 @@ export interface BaseExtensionSettings extends Remirror.BaseExtensionSettings {
 
 export interface ExcludeOptions extends Partial<Remirror.ExcludeOptions> {}
 
-export interface ReadonlySettingsParameter<Settings extends object> {
+interface ReadonlyOptionsParameter<Options extends ValidOptions> {
   /**
-   * The static config that was passed into the extension that created this node
-   * or mark.
+   * The readonly value for the options.
    */
-  readonly settings: Required<Readonly<Settings>>;
-}
-
-export interface ReadonlyPropertiesParameter<Properties extends object> {
-  /**
-   * The current value of the dynamic properties.
-   */
-  readonly properties: Required<Readonly<Properties>>;
-}
-
-export interface PartialProperties<Properties extends object> {
-  /**
-   * The current value of the dynamic properties.
-   */
-  properties?: Partial<Properties>;
+  readonly options: GetFixed<Options>;
 }
 
 /**
  * @internal
  */
-export type PropertiesUpdateReason = 'init' | 'set' | 'reset';
+export type UpdateReason = 'init' | 'set' | 'reset';
 
-export interface PropertiesUpdateReasonParameter {
+export interface UpdateReasonParameter {
   /**
    * Describes what triggered an update.
    *
@@ -258,15 +238,15 @@ export interface PropertiesUpdateReasonParameter {
    * - `init` - the update is happening when the preset is being It will receive
    *   all the items as changes.
    */
-  reason: PropertiesUpdateReason;
+  reason: UpdateReason;
 }
 
-export interface GetChangedPropertiesReturn<Properties extends object> {
+export interface GetChangeOptionsReturn<Options extends ValidOptions> {
   /**
    * The next value of the properties after the update.This also includes values
    * which have not been changed.
    */
-  properties: Readonly<Required<Properties>>;
+  options: GetFixedDynamic<Options>;
 
   /**
    * An object with all the keys showing what's been changed. This should be
@@ -287,26 +267,22 @@ export interface GetChangedPropertiesReturn<Properties extends object> {
    * }
    * ```
    */
-  changes: Readonly<Required<ChangedProperties<Properties>>>;
+  changes: Readonly<Required<ChangedOptions<Options>>>;
 }
 
-export interface SetPropertiesParameter<Properties extends Shape = EmptyShape>
-  extends GetChangedPropertiesReturn<Properties>,
-    PropertiesUpdateReasonParameter {
+export interface SetOptionsParameter<Options extends ValidOptions>
+  extends Pick<GetChangeOptionsReturn<Options>, 'changes'>,
+    UpdateReasonParameter {
   /**
-   * Properties are dynamic and generated at run time. For this reason you will
-   * need to provide a default value for every prop this extension uses.
-   *
-   * @remarks
-   *
-   * Properties are dynamically assigned options that are injected into the
-   * editor at runtime. Every single property that the extension will use needs
-   * to have a default value set.
-   *
-   * This must be set when creating the extension, even if just to the empty
-   * object when no properties are used at runtime.
+   * The initial options for the extension. Falls back to default options.
    */
-  defaultProperties: Required<Properties>;
+  initialOptions: GetFixedDynamic<Options>;
+
+  /**
+   * The next value of the properties after the update.This also includes values
+   * which have not been changed.
+   */
+  options: GetFixedDynamic<Options>;
 }
 
 declare global {
@@ -320,7 +296,7 @@ declare global {
      * A global type which allows additional default settings to be added to the
      * editor.
      */
-    interface BaseExtensionSettings {}
+    interface BaseExtensionOptions {}
 
     /**
      * Parameters passed into many of the extension methods. These can be added

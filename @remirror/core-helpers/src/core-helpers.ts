@@ -5,7 +5,7 @@ import omit from 'object.omit';
 import pick from 'object.pick';
 import { Primitive } from 'type-fest';
 
-import { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
+import { __INTERNAL_REMIRROR_IDENTIFIER_KEY__, RemirrorIdentifier } from '@remirror/core-constants';
 import { Nullable, Predicate, RemirrorIdentifierShape, Shape } from '@remirror/core-types';
 
 type AnyConstructor<Type = unknown> = new (...args: any[]) => Type;
@@ -480,8 +480,8 @@ export function isIdentifierOfType(
   type: RemirrorIdentifier | RemirrorIdentifier[],
 ): boolean {
   return isArray(type)
-    ? includes(type, value[REMIRROR_IDENTIFIER_KEY])
-    : type === value[REMIRROR_IDENTIFIER_KEY];
+    ? includes(type, value[__INTERNAL_REMIRROR_IDENTIFIER_KEY__])
+    : type === value[__INTERNAL_REMIRROR_IDENTIFIER_KEY__];
 }
 
 /**
@@ -771,7 +771,10 @@ export function flattenArray<Type>(array: any[]): Type[] {
 }
 
 /**
- * Sometimes doing nothing is the best policy.
+ * noop is a shorthand way of saying `No Operation` and is a function that does
+ * nothing.
+ *
+ * And Sometimes doing nothing is the best policy.
  */
 export function noop() {}
 

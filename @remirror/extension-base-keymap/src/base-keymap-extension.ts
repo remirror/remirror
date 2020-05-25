@@ -1,7 +1,7 @@
 import {
   chainKeyBindingCommands,
   convertCommand,
-  DefaultExtensionSettings,
+  DefaultExtensionOptions,
   entries,
   ExtensionPriority,
   ExtensionStore,
@@ -106,7 +106,7 @@ export interface BaseKeymapProperties {
  * @builtin
  */
 export class BaseKeymapExtension extends PlainExtension<BaseKeymapSettings, BaseKeymapProperties> {
-  public static readonly defaultSettings: DefaultExtensionSettings<BaseKeymapSettings> = {
+  public static readonly defaultSettings: DefaultExtensionOptions<BaseKeymapSettings> = {
     undoInputRuleOnBackspace: true,
     defaultBindingMethod: () => false,
     selectParentNodeOnEscape: false,

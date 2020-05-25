@@ -1,7 +1,7 @@
 import {
   Cast,
   CreatePluginReturn,
-  DefaultExtensionSettings,
+  DefaultExtensionOptions,
   EditorState,
   EditorStateParameter,
   EditorView,
@@ -33,7 +33,7 @@ import { ReplaceStep } from '@remirror/pm/transform';
  * TODO Merge this with the link extension
  */
 export class AutoLinkExtension extends MarkExtension<AutoLinkSettings, AutoLinkProperties> {
-  public static defaultSettings: DefaultExtensionSettings<AutoLinkSettings> = {
+  public static defaultSettings: DefaultExtensionOptions<AutoLinkSettings> = {
     urlRegex: /((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/.*)?)/gi,
   };
   public static defaultProperties: Required<AutoLinkProperties> = {

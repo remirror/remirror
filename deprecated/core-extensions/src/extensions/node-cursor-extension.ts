@@ -1,5 +1,5 @@
 import {
-  BaseExtensionSettings,
+  BaseExtensionOptions,
   Extension,
   ExtensionStore,
   isEmptyArray,
@@ -105,7 +105,7 @@ const createNodeCursorExtensionPlugin = (context: NodeCursorExtension, nodeNames
   });
 };
 
-export interface NodeCursorExtensionOptions extends BaseExtensionSettings {
+export interface NodeCursorExtensionOptions extends BaseExtensionOptions {
   targets?: NodeMatch[];
 }
 

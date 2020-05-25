@@ -1,7 +1,7 @@
 import {
   bool,
   CreatePluginReturn,
-  DefaultExtensionSettings,
+  DefaultExtensionOptions,
   EditorView,
   findPositionOfNodeAfter,
   findPositionOfNodeBefore,
@@ -19,7 +19,7 @@ import { Decoration, DecorationSet } from '@remirror/pm/view';
  * decoration has a class and can be styled however you want.
  */
 export class DropCursorExtension extends PlainExtension<DropCursorSettings, DropCursorProperties> {
-  public static defaultSettings: DefaultExtensionSettings<DropCursorSettings> = {
+  public static defaultSettings: DefaultExtensionOptions<DropCursorSettings> = {
     inlineWidth: '2px',
     inlineSpacing: '10px',
     blockWidth: '100%',

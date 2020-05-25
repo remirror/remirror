@@ -1,4 +1,4 @@
-import { Preset, SetPropertiesParameter } from '@remirror/core';
+import { Preset, SetOptionsParameter } from '@remirror/core';
 import { ReactSSRExtension, ReactSSRProperties } from '@remirror/extension-react-ssr';
 
 /**
@@ -20,7 +20,7 @@ export class ReactPreset extends Preset<ReactPresetSettings, ReactPresetProperti
   /**
    * No properties are defined so this can be ignored.
    */
-  protected onSetProperties(parameter: SetPropertiesParameter<ReactPresetProperties>) {
+  protected onSetOptions(parameter: SetOptionsParameter<ReactPresetProperties>) {
     const { changes } = parameter;
 
     if (changes.transformers.changed) {

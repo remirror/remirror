@@ -12,7 +12,7 @@ import { useRemirror } from '@remirror/react';
  * Make sure not to use this in production as it increase the bundle size quite
  * significantly.
  *
- * Based on https://github.com/d4rkr00t/prosemirror-dev-tools
+ * Built with https://github.com/d4rkr00t/prosemirror-dev-tools
  */
 export const ProsemirrorDevTools = () => {
   const { view } = useRemirror();

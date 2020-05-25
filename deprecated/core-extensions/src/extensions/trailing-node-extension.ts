@@ -3,7 +3,7 @@ import { Plugin } from '@remirror/pm/state';
 import { Extension, ExtensionParameter } from '@remirror/core';
 import { entries, uniqueArray } from '@remirror/core-helpers';
 import {
-  BaseExtensionSettings,
+  BaseExtensionOptions,
   ExtensionTagParameter,
   ManagerParameter,
   SchemaParameter,
@@ -76,7 +76,7 @@ export const createTrailingNodePlugin = ({
   });
 };
 
-export interface TrailingNodeExtensionOptions extends BaseExtensionSettings {
+export interface TrailingNodeExtensionOptions extends BaseExtensionOptions {
   /**
    * The node to create at the end of the document.
    *

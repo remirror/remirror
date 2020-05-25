@@ -1,9 +1,9 @@
 import { dropCursor } from '@remirror/pm/dropcursor';
 
 import { Extension } from '@remirror/core';
-import { BaseExtensionSettings } from '@remirror/core-types';
+import { BaseExtensionOptions } from '@remirror/core-types';
 
-export interface DropCursorExtensionOptions extends BaseExtensionSettings {
+export interface DropCursorExtensionOptions extends BaseExtensionOptions {
   /**
    * Set the color of the cursor.
    *

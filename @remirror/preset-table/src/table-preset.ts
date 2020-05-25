@@ -12,5 +12,5 @@ export class TablePreset extends Preset {
     return [];
   }
 
-  protected onSetProperties(): void {}
+  protected onSetOptions(): void {}
 }

@@ -3,7 +3,7 @@ import { collab, getVersion, receiveTransaction, sendableSteps } from 'prosemirr
 import {
   CommandFunction,
   debounce,
-  DefaultExtensionSettings,
+  DefaultExtensionOptions,
   EditorSchema,
   EditorState,
   invariant,
@@ -27,7 +27,7 @@ export class CollaborationExtension extends PlainExtension<
   CollaborationSettings,
   CollaborationProperties
 > {
-  public static readonly defaultSettings: DefaultExtensionSettings<CollaborationSettings> = {
+  public static readonly defaultSettings: DefaultExtensionOptions<CollaborationSettings> = {
     version: 0,
     clientID: uniqueId(),
     debounceMs: 250,

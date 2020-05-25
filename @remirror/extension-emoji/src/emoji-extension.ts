@@ -2,7 +2,7 @@ import escapeStringRegex from 'escape-string-regexp';
 
 import {
   CommandFunction,
-  DefaultExtensionSettings,
+  DefaultExtensionOptions,
   FromToParameter,
   isNullOrUndefined,
   noop,
@@ -30,7 +30,7 @@ import {
 } from './emoji-utils';
 
 export class EmojiExtension extends PlainExtension<EmojiSettings, EmojiProperties> {
-  public static readonly defaultSettings: DefaultExtensionSettings<EmojiSettings> = {
+  public static readonly defaultSettings: DefaultExtensionOptions<EmojiSettings> = {
     defaultEmoji: DEFAULT_FREQUENTLY_USED,
     suggestionCharacter: ':',
   };

@@ -1,4 +1,7 @@
-import type { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
+import type {
+  __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
+  RemirrorIdentifier,
+} from '@remirror/core-constants';
 import { MarkSpec, NodeSpec } from '@remirror/pm/model';
 import { Decoration } from '@remirror/pm/view';
 
@@ -115,7 +118,7 @@ export type ProsemirrorCommandFunction<Schema extends EditorSchema = any> = (
  */
 export type CommandFunction<
   Schema extends EditorSchema = any,
-  ExtraParameter extends object = {}
+  ExtraParameter extends object = object
 > = (params: CommandFunctionParameter<Schema> & ExtraParameter) => boolean;
 
 /**
@@ -304,5 +307,5 @@ export type NodeViewMethod<GNodeView extends NodeView = NodeView> = (
  * The core shape of any remirror specific object.
  */
 export interface RemirrorIdentifierShape {
-  [REMIRROR_IDENTIFIER_KEY]: RemirrorIdentifier;
+  [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]: RemirrorIdentifier;
 }

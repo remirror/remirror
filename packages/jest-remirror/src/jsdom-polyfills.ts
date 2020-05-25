@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import sanitizeHtml from 'sanitize-html';
 
-import { environment, isFunction } from '@remirror/core';
+import { environment, isFunction, noop } from '@remirror/core';
 
 /**
  * Polyfill DOMElement.innerText because JSDOM lacks support for it.
@@ -123,8 +123,8 @@ export const jsdomExtras = () => {
     document.createRange ??
     (() =>
       ({
-        setStart: () => {},
-        setEnd: () => {},
+        setStart: noop,
+        setEnd: noop,
         commonAncestorContainer: {
           nodeName: 'BODY',
           ownerDocument: document,

@@ -1,18 +1,19 @@
 import { ErrorConstant } from '@remirror/core-constants';
 import { freeze, invariant, keys, object } from '@remirror/core-helpers';
+import { GetFixedDynamic, GetPartialDynamic, ValidOptions } from '@remirror/core-types';
 
-import { ChangedProperties, GetChangedPropertiesReturn } from './types';
+import { GetChangeOptionsReturn } from './types';
 
-export interface GetChangedPropertiesParameter<Properties extends object> {
+export interface GetChangedOptionsParameter<Options extends ValidOptions> {
   /**
    * The previous readonly properties object.
    */
-  previousProperties: Required<Readonly<Properties>>;
+  previousOptions: GetFixedDynamic<Options>;
 
   /**
    * The partial update object that was passed through.
    */
-  update: Partial<Properties>;
+  update: GetPartialDynamic<Options>;
 
   /**
    * A method to check whether two values are equal.
@@ -27,16 +28,16 @@ function defaultEquals(valueA: unknown, valueB: unknown) {
 /**
  * Get the property changes and the next value from an update.
  */
-export function getChangedProperties<Properties extends object>(
-  parameter: GetChangedPropertiesParameter<Properties>,
-): GetChangedPropertiesReturn<Properties> {
-  const { previousProperties: previous, update, equals = defaultEquals } = parameter;
-  const next = freeze({ ...previous, ...update });
-  const changes: ChangedProperties<Required<Properties>> = object();
-  const propertyKeys = keys(previous);
+export function getChangedOptions<Options extends ValidOptions>(
+  parameter: GetChangedOptionsParameter<Options>,
+): GetChangeOptionsReturn<Options> {
+  const { previousOptions, update, equals = defaultEquals } = parameter;
+  const next = freeze({ ...previousOptions, ...update });
+  const changes = object<any>();
+  const optionKeys = keys(previousOptions);
 
-  for (const key of propertyKeys) {
-    const previousValue = previous[key];
+  for (const key of optionKeys) {
+    const previousValue = previousOptions[key];
     const value = next[key];
 
     if (equals(previousValue, value)) {
@@ -47,7 +48,7 @@ export function getChangedProperties<Properties extends object>(
     changes[key] = { changed: true, previousValue, value };
   }
 
-  return { changes: freeze(changes), properties: next };
+  return { changes: freeze(changes), options: next };
 }
 
 export interface IsNameUniqueParameter {

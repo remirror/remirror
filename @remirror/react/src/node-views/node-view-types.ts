@@ -9,7 +9,7 @@ import {
 import { PortalContainer } from '../portals';
 
 export interface NodeViewComponentProps<
-  GOptions extends BaseExtensionSettings = BaseExtensionSettings,
+  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
   GAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
 > extends EditorViewParameter, SSRComponentProps<GOptions, GAttributes> {
   /**
@@ -35,13 +35,13 @@ export interface NodeViewComponentProps<
 export type GetPosition = (() => number) | boolean;
 
 export interface ReactNodeViewParameter<
-  GOptions extends BaseExtensionSettings = BaseExtensionSettings,
+  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
   GAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
 >
   extends EditorViewParameter,
     ComponentParameter<GOptions, GAttributes>,
     NodeWithAttributesParameter<GAttributes>,
-    BaseExtensionSettingsParameter<GOptions> {
+    BaseExtensionOptionsParameter<GOptions> {
   /**
    * Method for retrieving the position of the current nodeView
    */
@@ -55,15 +55,15 @@ export interface ReactNodeViewParameter<
 }
 
 export interface CreateNodeViewParameter<
-  GOptions extends BaseExtensionSettings = BaseExtensionSettings,
+  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
   GAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
 >
   extends Pick<ReactNodeViewParameter, 'portalContainer'>,
     ComponentParameter<GOptions, GAttributes>,
-    BaseExtensionSettingsParameter<GOptions> {}
+    BaseExtensionOptionsParameter<GOptions> {}
 
 export interface ComponentParameter<
-  GOptions extends BaseExtensionSettings = BaseExtensionSettings,
+  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
   GAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
 > {
   /**

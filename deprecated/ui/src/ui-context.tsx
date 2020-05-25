@@ -1,9 +1,10 @@
 import { css, ThemeContext } from '@emotion/core';
 import { Context, createContext } from 'react';
 
-import { RemirrorTheme, RemirrorThemeContextType } from '@remirror/core-types';
+import { noop } from '@remirror/core-helpers';
 
 import { baseTheme } from './ui-theme';
+import { RemirrorTheme, RemirrorThemeContextType } from './ui-types';
 import { getColorModes, getFactory, sx } from './ui-utils';
 
 /**
@@ -28,7 +29,7 @@ export const defaultRemirrorThemeValue: RemirrorThemeContextType = {
   get: getFactory(baseTheme),
   colorMode: baseTheme.initialColorMode,
   colorModes: getColorModes(baseTheme),
-  setColorMode: () => {},
+  setColorMode: noop,
 };
 
 export const withoutEmotionProps: Pick<RemirrorThemeContextType, 'css' | 'sx'> = {

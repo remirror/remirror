@@ -3,7 +3,7 @@ import refractor from 'refractor/core';
 import {
   convertCommand,
   CreatePluginReturn,
-  DefaultExtensionSettings,
+  DefaultExtensionOptions,
   findNodeAtSelection,
   findParentNodeOfType,
   GetAttributes,
@@ -37,7 +37,7 @@ import {
 } from './code-block-utils';
 
 export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlockProperties> {
-  public static readonly defaultSettings: DefaultExtensionSettings<CodeBlockSettings> = {
+  public static readonly defaultSettings: DefaultExtensionOptions<CodeBlockSettings> = {
     supportedLanguages: [],
     keyboardShortcut: mod('ShiftAlt', 'f'),
   };

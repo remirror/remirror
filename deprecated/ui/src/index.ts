@@ -5,3 +5,4 @@ export * from './ui-hooks';
 export * from './ui-utils';
 export * from './ui-hsl';
 export * from './ui-theme-root';
+export * from './ui-types';

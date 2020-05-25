@@ -1,6 +1,6 @@
 import {
+  __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
   ErrorConstant,
-  REMIRROR_IDENTIFIER_KEY,
   RemirrorIdentifier,
 } from '@remirror/core-constants';
 import {
@@ -33,6 +33,7 @@ import {
   ViewLifecycleReturn,
 } from '../extension';
 import { AnyPreset } from '../preset';
+import { privacySymbol } from '../privacy';
 import {
   GetConstructor,
   GetExtensions,
@@ -193,7 +194,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    *
    * @internal
    */
-  get [REMIRROR_IDENTIFIER_KEY]() {
+  get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
     return RemirrorIdentifier.Manager;
   }
 
@@ -572,7 +573,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
 
       if (
         extension.constructor === otherExtension.constructor &&
-        isEqual(ignoreFunctions(extension.settings), ignoreFunctions(otherExtension.settings))
+        isEqual(ignoreFunctions(extension.options), ignoreFunctions(otherExtension.options))
       ) {
         continue;
       }
@@ -638,14 +639,6 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     }
   }
 }
-
-/**
- * This is an internal value which is used to check that the extension manager
- * was not created using the new operator. It must be provided to the
- * constructor and if it isn't there it will cause the manager to throw an
- * error.
- */
-const privacySymbol = Symbol('privacy');
 
 export type AnyEditorManager = EditorManager<any, any>;
 

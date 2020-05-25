@@ -1,6 +1,6 @@
 import {
   convertCommand,
-  DefaultExtensionSettings,
+  DefaultExtensionOptions,
   ErrorConstant,
   getMarkRange,
   getMatchString,
@@ -65,7 +65,7 @@ const defaultHandler = () => false;
  * mentions in your own editor.
  */
 export class MentionExtension extends MarkExtension<MentionSettings, MentionProperties> {
-  public static readonly defaultSettings: DefaultExtensionSettings<MentionSettings> = {
+  public static readonly defaultSettings: DefaultExtensionOptions<MentionSettings> = {
     mentionTag: 'a' as const,
     matchers: [],
   };

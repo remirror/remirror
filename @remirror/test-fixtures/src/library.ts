@@ -7,7 +7,7 @@ import diff from 'jest-diff';
 import {
   AnyExtensionConstructor,
   AnyPresetConstructor,
-  BaseExtensionSettings,
+  BaseExtensionOptions,
   Cast,
   ErrorConstant,
   ExtensionConstructorParameter,
@@ -15,9 +15,8 @@ import {
   isEqual,
   mutateDefaultExtensionSettings,
   object,
+  OptionsOfConstructor,
   PresetConstructorParameter,
-  PropertiesOfConstructor,
-  SettingsOfConstructor,
 } from '@remirror/core';
 
 /**
@@ -25,31 +24,20 @@ import {
  */
 export function isExtensionValid<Type extends AnyExtensionConstructor>(
   Extension: Type,
-  ...[settings]: ExtensionConstructorParameter<
-    SettingsOfConstructor<Type>,
-    PropertiesOfConstructor<Type>
-  >
+  ...[settings]: ExtensionConstructorParameter<OptionsOfConstructor<Type>>
 ) {
   const extension = new Extension(settings);
 
-  let defaultSettings: BaseExtensionSettings = object();
+  let defaultOptions: BaseExtensionOptions = object();
 
   mutateDefaultExtensionSettings((value) => {
-    defaultSettings = value;
+    defaultOptions = value;
   });
 
-  const expectedSettings = { ...defaultSettings, ...Extension.defaultSettings, ...settings };
-  invariant(isEqual(extension.settings, expectedSettings), {
-    message: `Invalid 'defaultSettings' for '${Extension.name}'\n\n${
-      diff(extension.settings, expectedSettings) ?? ''
-    }\n`,
-    code: ErrorConstant.INVALID_EXTENSION,
-  });
-
-  const expectedProperties = { ...Extension.defaultProperties, ...Cast(settings)?.properties };
-  invariant(isEqual(extension.properties, expectedProperties), {
-    message: `Invalid 'defaultProperties' for '${Extension.name}' \n\n${
-      diff(extension.properties, expectedProperties) ?? ''
+  const expectedSettings = { ...defaultOptions, ...Extension.defaultOptions, ...settings };
+  invariant(isEqual(extension.options, expectedSettings), {
+    message: `Invalid 'defaultOptions' for '${Extension.name}'\n\n${
+      diff(extension.options, expectedSettings) ?? ''
     }\n`,
     code: ErrorConstant.INVALID_EXTENSION,
   });
@@ -62,16 +50,13 @@ export function isExtensionValid<Type extends AnyExtensionConstructor>(
  */
 export function isPresetValid<Type extends AnyPresetConstructor>(
   Preset: Type,
-  ...[settings]: PresetConstructorParameter<
-    SettingsOfConstructor<Type>,
-    PropertiesOfConstructor<Type>
-  >
+  ...[settings]: PresetConstructorParameter<OptionsOfConstructor<Type>>
 ) {
   const extension = new Preset(settings);
 
-  const expectedSettings = { ...Preset.defaultSettings, ...settings };
+  const expectedSettings = { ...Preset.defaultOptions, ...settings };
   invariant(isEqual(extension.settings, expectedSettings), {
-    message: `Invalid 'defaultSettings' for '${Preset.name}'\n\n${
+    message: `Invalid 'defaultOptions' for '${Preset.name}'\n\n${
       diff(extension.settings, expectedSettings) ?? ''
     }\n`,
   });

@@ -3,9 +3,9 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import {
   AnyPresetConstructor,
+  OptionsOfConstructor,
   PresetConstructorParameter,
   PropertiesOfConstructor,
-  SettingsOfConstructor,
 } from '@remirror/core';
 
 import { useRemirror } from './use-remirror';
@@ -13,7 +13,7 @@ import { useRemirror } from './use-remirror';
 export const usePresetInstance = <Type extends AnyPresetConstructor>(
   Constructor: Type,
   ...[settings]: PresetConstructorParameter<
-    SettingsOfConstructor<Type>,
+    OptionsOfConstructor<Type>,
     PropertiesOfConstructor<Type>
   >
 ) => {

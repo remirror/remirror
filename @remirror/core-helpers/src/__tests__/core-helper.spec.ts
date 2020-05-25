@@ -32,6 +32,7 @@ import {
   kebabCase,
   keys,
   Merge,
+  noop,
   object,
   randomInt,
   range,
@@ -134,7 +135,7 @@ describe('predicates', () => {
   });
 
   it('isFunction', () => {
-    const passValue = () => {};
+    const passValue = noop;
     const failValue = '() => {}';
 
     expect(isFunction(passValue)).toBeTrue();
@@ -212,7 +213,7 @@ describe('predicates', () => {
   });
 
   it('isPromise', () => {
-    const passValue = { then: () => {}, catch: () => {} };
+    const passValue = { then: noop, catch: noop };
     const failValue = null;
 
     expect(isPromise(passValue)).toBeTrue();

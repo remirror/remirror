@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import {
+  __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
   ErrorConstant,
-  REMIRROR_IDENTIFIER_KEY,
   RemirrorIdentifier,
 } from '@remirror/core-constants';
 import {
@@ -16,37 +16,34 @@ import {
 import {
   EmptyShape,
   FlipPartialAndRequired,
+  GetDynamic,
+  GetFixed,
+  GetPartialDynamic,
+  GetStatic,
   IfNoRequiredProperties,
-  Shape,
+  ValidOptions,
 } from '@remirror/core-types';
 
-import { AnyExtension, AnyExtensionConstructor, WithProperties } from '../extension';
-import { getChangedProperties } from '../helpers';
-import { PropertiesUpdateReason, SetPropertiesParameter } from '../types';
+import { AnyExtension, AnyExtensionConstructor } from '../extension';
+import { getChangedOptions } from '../helpers';
+import { SetOptionsParameter, UpdateReason } from '../types';
 
 /**
- * A preset is our way of bundling similar extensions with unified settings and
+ * A preset is our way of bundling similar extensions with unified options and
  * dynamic properties.
  */
-export abstract class Preset<
-  Settings extends Shape = EmptyShape,
-  Properties extends Shape = EmptyShape
-> {
+export abstract class Preset<Options extends ValidOptions = EmptyShape> {
   /**
-   * The default settings for this preset.
+   * The default options for this preset.
    */
-  public static readonly defaultSettings = {};
+  public static readonly defaultOptions = {};
 
-  /**
-   * The default properties for this preset.
-   */
-  public static readonly defaultProperties = {};
   /**
    * The preset constructor identifier key.
    *
    * @internal
    */
-  static get [REMIRROR_IDENTIFIER_KEY]() {
+  static get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
     return RemirrorIdentifier.PresetConstructor as const;
   }
   /**
@@ -54,7 +51,7 @@ export abstract class Preset<
    *
    * @internal
    */
-  get [REMIRROR_IDENTIFIER_KEY]() {
+  get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
     return RemirrorIdentifier.Preset as const;
   }
 
@@ -63,12 +60,11 @@ export abstract class Preset<
    */
   public abstract readonly name: string;
 
-  get settings() {
-    return this.#settings;
-  }
-
-  get properties() {
-    return this.#properties;
+  /**
+   * The preset options.
+   */
+  get options() {
+    return this.#options;
   }
 
   get extensions() {
@@ -76,14 +72,14 @@ export abstract class Preset<
   }
 
   /**
-   * Private instance of the presets static settings.
+   * The extension options.
    */
-  #settings: Required<Settings>;
+  #options: GetFixed<Options>;
 
   /**
-   * Private instance of the presets dynamic properties.
+   * The initial options, used when resetting.
    */
-  #properties: Readonly<Required<Properties>>;
+  readonly #initialOptions: GetFixed<Options>;
 
   /**
    * Private list of extension stored in within this preset.
@@ -100,18 +96,15 @@ export abstract class Preset<
    */
   #hasInitialized = false;
 
-  constructor(...parameters: PresetConstructorParameter<Settings, Properties>) {
+  constructor(...parameters: PresetConstructorParameter<Options>) {
     isValidPresetConstructor(this.constructor);
-    const [settings] = parameters;
+    const [options] = parameters;
 
-    // Create the preset settings.
-    this.#settings = deepMerge(object(), {
-      ...this.constructor.defaultSettings,
-      ...settings,
+    // Create the preset options.
+    this.#options = this.#initialOptions = deepMerge(object(), {
+      ...this.constructor.defaultOptions,
+      ...options,
     });
-
-    // Create the preset properties.
-    this.#properties = { ...this.constructor.defaultProperties, ...settings?.properties };
 
     // Create the extension list.
     this.#extensions = uniqueBy(
@@ -126,7 +119,7 @@ export abstract class Preset<
     }
 
     // Triggers the `init` properties update for this extension.
-    this.setProperties(this.#properties);
+    this.setOptions(this.#options);
     this.#hasInitialized = true;
   }
 
@@ -140,7 +133,7 @@ export abstract class Preset<
    * also called when the extension is first created with the default
    * properties.
    */
-  protected abstract onSetProperties(parameter: SetPropertiesParameter<Properties>): void;
+  protected abstract onSetOptions(parameter: SetOptionsParameter<Options>): void;
 
   /**
    * When there are duplicate extensions used within the editor the extension
@@ -156,24 +149,24 @@ export abstract class Preset<
   /**
    * Set the properties of the preset.
    *
-   * Calls the `onSetProperties` parameter property when creating the
+   * Calls the `onSetOptions` parameter property when creating the
    * constructor.
    */
-  public setProperties(update: Partial<Properties>) {
-    const reason: PropertiesUpdateReason = this.#hasInitialized ? 'set' : 'init';
-    const previousProperties = this.#properties;
-    const { changes, properties } = getChangedProperties({
-      previousProperties,
+  public setOptions(update: GetPartialDynamic<Options>) {
+    const reason: UpdateReason = this.#hasInitialized ? 'set' : 'init';
+    const previousOptions = this.#options;
+    const { changes, options } = getChangedOptions<Options>({
+      previousOptions: previousOptions,
       update,
     });
 
     // Trigger the update handler so that child extension properties can also be
     // updated.
-    this.onSetProperties({
+    this.onSetOptions({
       reason,
       changes,
-      properties,
-      defaultProperties: this.constructor.defaultProperties,
+      options,
+      initialOptions: this.#initialOptions,
     });
 
     // The constructor already sets the properties to their default values.
@@ -182,27 +175,27 @@ export abstract class Preset<
     }
 
     // Update the stored properties value.
-    this.#properties = properties;
+    this.#options = options;
   }
 
-  public resetProperties() {
-    const previousProperties = this.#properties;
-    const { changes, properties } = getChangedProperties({
-      previousProperties,
-      update: this.constructor.defaultProperties,
+  public resetOption() {
+    const previousOptions = this.#options;
+    const { changes, options } = getChangedOptions({
+      previousOptions: previousOptions,
+      update: this.constructor.defaultOptions,
     });
 
     // Trigger the update handler so that child extension properties can also be
     // updated.
-    this.onSetProperties({
+    this.onSetOptions({
       reason: 'reset',
-      properties,
+      options,
       changes,
-      defaultProperties: this.constructor.defaultProperties,
+      initialOptions: this.#initialOptions,
     });
 
     // Update the stored properties value.
-    this.#properties = properties;
+    this.#options = options;
   }
 
   /**
@@ -231,26 +224,23 @@ export abstract class Preset<
   }
 }
 
-export interface Preset<
-  Settings extends Shape = EmptyShape,
-  Properties extends Shape = EmptyShape
-> {
+export interface Preset<Options extends ValidOptions = EmptyShape> {
   /**
    * The typed constructor for the `Preset` instance.
    */
-  constructor: PresetConstructor<Settings, Properties>;
+  constructor: PresetConstructor<Options>;
 
   /**
    * Not for public usage. This is purely for types to make it easier to infer
-   * the type of `Settings` on an extension instance.
+   * the type of `Options` on an extension instance.
    */
-  ['~S']: Settings;
+  ['~S']: Options;
 
   /**
    * Not for public usage. This is purely for types to make it easier to infer
-   * the type of `Settings` on an extension instance.
+   * the type of `Options` on an extension instance.
    */
-  ['~P']: Properties;
+  ['~P']: Options;
 
   /**
    * Not for public usage. This is purely for types to make it easier to infer
@@ -262,48 +252,47 @@ export interface Preset<
 /**
  * The type which is applicable to any `Preset` instances.
  */
-export type AnyPreset = Omit<Preset<any, any>, keyof Remirror.AnyPresetOverrides> &
+export type AnyPreset = Omit<Preset<any>, keyof Remirror.AnyPresetOverrides> &
   Remirror.AnyPresetOverrides;
 
 /**
  * The type which is applicable to any `Preset` constructor.
  */
-export type AnyPresetConstructor = PresetConstructor<any, any>;
+export type AnyPresetConstructor = PresetConstructor<any>;
 
 /**
- * The required `defaultSetting`'s type derived from the settings provided to
- * the preset.
+ * The default preset options.
  *
- * It works by making all partial properties required and all required
+ * - `StaticOptions` - It works by making all partial properties required and all required
  * properties partial.
+ * - `DynamicOptions` - All properties must have a default value whether default
+ *   or required
+ * -  1
  */
-export type DefaultPresetSettings<Settings extends Shape> = FlipPartialAndRequired<Settings>;
+export type DefaultPresetOptions<Options extends ValidOptions> = FlipPartialAndRequired<
+  GetStatic<Options>
+> &
+  Required<GetDynamic<Options>>;
 
 /**
- *
+ * The preset constructor. This is used to annotate the Preset class since
+ * TypeScript doesn't automatically provide a meaningful type for the
+ * `constructor` property.
  */
-export interface PresetConstructor<
-  Settings extends Shape = EmptyShape,
-  Properties extends Shape = EmptyShape
-> extends Function {
+export interface PresetConstructor<Options extends ValidOptions = EmptyShape> extends Function {
   /**
    * The identifier for the constructor which identifies it as a preset
    * constructor.
    * @internal
    */
-  readonly [REMIRROR_IDENTIFIER_KEY]: RemirrorIdentifier;
+  readonly [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]: RemirrorIdentifier;
 
   /**
-   * Default settings.
+   * Default options.
    */
-  readonly defaultSettings: DefaultPresetSettings<Settings>;
+  readonly defaultOptions: DefaultPresetOptions<Options>;
 
-  /**
-   * Default properties.
-   */
-  readonly defaultProperties: Required<Properties>;
-
-  new (...args: PresetConstructorParameter<Settings, Properties>): Preset<Settings, Shape>;
+  new (...args: PresetConstructorParameter<Options>): Preset<Options>;
 }
 
 /**
@@ -325,8 +314,8 @@ export function isPresetConstructor(value: unknown): value is AnyPresetConstruct
 }
 
 /**
- * Checks that the preset has a valid constructor with the `defaultSettings` and
- * `defaultProperties` defined as static properties.
+ * Checks that the preset has a valid constructor with the `defaultOptions` and
+ * `defaultOptions` defined as static properties.
  */
 export function isValidPresetConstructor(
   Constructor: unknown,
@@ -336,13 +325,13 @@ export function isValidPresetConstructor(
     code: ErrorConstant.INVALID_PRESET,
   });
 
-  invariant(isPlainObject(Constructor.defaultSettings), {
-    message: `No static 'defaultSettings' provided for '${Constructor.name}'.\n`,
+  invariant(isPlainObject(Constructor.defaultOptions), {
+    message: `No static 'defaultOptions' provided for '${Constructor.name}'.\n`,
     code: ErrorConstant.INVALID_PRESET,
   });
 
-  invariant(isPlainObject(Constructor.defaultProperties), {
-    message: `No static 'defaultProperties' provided for '${Constructor.name}'.\n`,
+  invariant(isPlainObject(Constructor.defaultOptions), {
+    message: `No static 'defaultOptions' provided for '${Constructor.name}'.\n`,
     code: ErrorConstant.INVALID_PRESET,
   });
 }
@@ -351,15 +340,12 @@ export function isValidPresetConstructor(
  * Automatically infers whether the constructor parameter is required for the
  * Preset.
  *
- * - Required when any of the settings are not optional.
+ * - Required when any of the options are not optional.
  */
-export type PresetConstructorParameter<
-  Settings extends Shape,
-  Properties extends Shape
-> = IfNoRequiredProperties<
-  Settings,
-  [WithProperties<Settings, Properties>?],
-  [WithProperties<Settings, Properties>]
+export type PresetConstructorParameter<Options extends ValidOptions> = IfNoRequiredProperties<
+  GetStatic<Options>,
+  [(GetStatic<Options> & GetPartialDynamic<Options>)?],
+  [GetStatic<Options> & GetPartialDynamic<Options>]
 >;
 
 /* eslint-enable @typescript-eslint/explicit-member-accessibility */
@@ -376,7 +362,7 @@ declare global {
      * types include unsafe properties that need to be simplified.
      *
      * An example is the `constructor` property which makes it impossible to
-     * find a common interface between presets with different settings and
+     * find a common interface between presets with different options and
      * properties. By setting the `constructor` to a much simpler override all
      * `Preset`'s are now assignable to the `AnyPreset type again.`
      */

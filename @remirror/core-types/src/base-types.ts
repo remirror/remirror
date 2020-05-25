@@ -63,7 +63,7 @@ interface Branding<Type> {
 /**
  * Used by `Flavor` to mark a type in a readable way.
  */
-interface Flavoring<Flavor> {
+export interface Flavoring<Flavor> {
   readonly [_flavor]?: Flavor;
 }
 
@@ -380,3 +380,21 @@ export type IfEmpty<Type extends object, Then, Else> = keyof Type extends never 
  * respond with `Then` otherwise `Else`.
  */
 export type IfMatches<A, B, Then, Else> = IfEmpty<Diff<A, B>, Then, Else>;
+
+/**
+ * Replace only the current keys with different types.
+ */
+export type StrictReplace<Type, Replacements extends Record<keyof Type, unknown>> = Omit<
+  Type,
+  keyof Replacements
+> &
+  Replacements;
+
+/**
+ * Replace and extend any object keys.
+ */
+export type Replace<Type, Replacements extends Record<string, unknown>> = Omit<
+  Type,
+  keyof Replacements
+> &
+  Replacements;

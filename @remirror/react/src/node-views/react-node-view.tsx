@@ -1,5 +1,4 @@
-import React from 'react';
-import { ComponentType } from 'react';
+import React, { ComponentType } from 'react';
 
 import { EDITOR_CLASS_NAME, SELECTED_NODE_CLASS_NAME } from '@remirror/core-constants';
 import { isFunction, isPlainObject, isString, keys } from '@remirror/core-helpers';
@@ -22,7 +21,7 @@ import {
 } from './node-view-types';
 
 export class ReactNodeView<
-  GOptions extends BaseExtensionSettings = BaseExtensionSettings,
+  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
   GAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
 > implements NodeView {
   /**
@@ -168,7 +167,7 @@ export class ReactNodeView<
    * Override this method in order to return a content dom which allow
    */
   public getContentDOM(): { dom: Node; contentDOM?: Node | null | undefined } | undefined {
-    return undefined;
+    return;
   }
 
   private readonly handleRef = (node: HTMLElement | undefined) => {
@@ -211,7 +210,7 @@ export class ReactNodeView<
       this.setDomAttributes(node, this.domRef);
     }
 
-    this.node = node as NodeWithAttributes<GAttributes>;
+    this.node = node;
     this.renderReactComponent(() => this.render(this.handleRef));
 
     return true;
@@ -288,7 +287,7 @@ export class ReactNodeView<
    * A shorthand method for creating the ReactNodeView
    */
   public static createNodeView<
-    GOptions extends BaseExtensionSettings = BaseExtensionSettings,
+    GOptions extends BaseExtensionOptions = BaseExtensionOptions,
     GAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
   >({
     Component,
@@ -297,7 +296,7 @@ export class ReactNodeView<
   }: CreateNodeViewParameter<GOptions, GAttributes>) {
     return (node: ProsemirrorNode, view: EditorView, getPosition: GetPosition) =>
       new ReactNodeView<GOptions, GAttributes>({
-        node: node as NodeWithAttributes<GAttributes>,
+        node: node,
         view,
         getPosition,
         portalContainer,

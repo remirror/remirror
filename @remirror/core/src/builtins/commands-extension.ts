@@ -5,6 +5,7 @@ import {
   CommandFunction,
   DispatchFunction,
   EditorSchema,
+  EmptyShape,
   Shape,
   Transaction,
 } from '@remirror/core-types';
@@ -213,6 +214,8 @@ const forbiddenNames = new Set(['run', 'chain']);
 
 declare global {
   namespace Remirror {
+    const _COMMANDS: unique symbol;
+
     interface ManagerStore<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
       /**
        * Enables the use of custom commands created by the extensions for
@@ -334,9 +337,9 @@ declare global {
        * class.
        * @private
        */
-      [`~C`]: this['createCommands'] extends AnyFunction
+      [_COMMANDS]: this['createCommands'] extends AnyFunction
         ? ReturnType<this['createCommands']>
-        : object;
+        : EmptyShape;
     }
 
     interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {

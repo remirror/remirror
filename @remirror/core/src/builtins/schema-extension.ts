@@ -65,7 +65,7 @@ export class SchemaExtension extends PlainExtension {
         const currentAttributes = extraAttributes[extension.name] ?? [];
         extraAttributes[extension.name] = [
           ...currentAttributes,
-          ...(extension.settings.extraAttributes ?? []),
+          ...(extension.options.extraAttributes ?? []),
         ];
 
         if (isNodeExtension(extension)) {
@@ -223,7 +223,7 @@ function transformSchemaAttributes<
 
 declare global {
   namespace Remirror {
-    interface BaseExtensionSettings {
+    interface BaseExtensionOptions {
       /**
        * Inject additional attributes into the defined mark / node schema. This can
        * only be used for `NodeExtensions` and `MarkExtensions`.

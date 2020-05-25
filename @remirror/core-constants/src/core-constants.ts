@@ -215,7 +215,7 @@ export enum ExtensionTag {
  *
  * @internal
  */
-export const REMIRROR_IDENTIFIER_KEY = '~~remirror~~' as const;
+export const __INTERNAL_REMIRROR_IDENTIFIER_KEY__: unique symbol = Symbol.for('__remirror__');
 
 /**
  * These constants are stored on the `REMIRROR_IDENTIFIER_KEY` property of

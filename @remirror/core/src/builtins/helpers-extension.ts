@@ -1,6 +1,6 @@
 import { ErrorConstant } from '@remirror/core-constants';
 import { entries, invariant, object } from '@remirror/core-helpers';
-import { AnyFunction, EditorSchema, Shape } from '@remirror/core-types';
+import { AnyFunction, EditorSchema, EmptyShape, Shape } from '@remirror/core-types';
 
 import {
   AnyExtension,
@@ -79,6 +79,8 @@ export class HelpersExtension extends PlainExtension {
 
 declare global {
   namespace Remirror {
+    const _HELPERS: unique symbol;
+
     interface ManagerStore<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
       /**
        * The helpers provided by the extensions used.
@@ -134,9 +136,9 @@ declare global {
        * This pseudo property makes it easier to infer Generic types of this class.
        * @private
        */
-      ['~H']: this['createHelpers'] extends AnyFunction
+      [_HELPERS]: this['createHelpers'] extends AnyFunction
         ? ReturnType<this['createHelpers']>
-        : object;
+        : EmptyShape;
     }
 
     interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {
