@@ -19,7 +19,6 @@ import {
   object,
   ObjectNode,
   RemirrorContentType,
-  RemirrorThemeContextType,
   SchemaFromExtensionUnion,
   shouldUseDOMEnvironment,
   toHTML,
@@ -156,11 +155,6 @@ export class RenderEditor<Manager extends AnyEditorManager> extends PureComponen
   private get manager(): Manager {
     return this.props.manager;
   }
-
-  /**
-   * The Remirror Theme context which is made available to all components.
-   */
-  public context!: RemirrorThemeContextType;
 
   private rootPropsConfig = {
     called: false,
@@ -300,7 +294,7 @@ export class RenderEditor<Manager extends AnyEditorManager> extends PureComponen
     const properties = this.calculatePositionProps({ ...config });
 
     return {
-      ...options,
+      ...properties,
       [referenceKey]: reference,
     } as GetPositionerReturn<GRefKey>;
   };
@@ -881,7 +875,7 @@ export class RenderEditor<Manager extends AnyEditorManager> extends PureComponen
       ...this.renderParameter,
     });
 
-    const { children, ...options } = getElementProps(element);
+    const { children, ...properties } = getElementProps(element);
 
     if (this.rootPropsConfig.called) {
       // Simply return the element as this method can never actually be called

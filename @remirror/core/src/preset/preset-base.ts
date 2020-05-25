@@ -5,7 +5,7 @@ import {
   RemirrorIdentifier,
 } from '@remirror/core-constants';
 import { invariant, isIdentifierOfType, isRemirrorType, uniqueBy } from '@remirror/core-helpers';
-import { AnyFunction, EmptyShape, Replace, ValidOptions } from '@remirror/core-types';
+import { EmptyShape, Replace, ValidOptions } from '@remirror/core-types';
 
 import { AnyExtension, AnyExtensionConstructor } from '../extension';
 import {
@@ -15,7 +15,7 @@ import {
   DefaultOptions,
   isValidConstructor,
 } from '../extension/base-class';
-import { SetOptionsParameter } from '../types';
+import { OnSetOptionsParameter } from '../types';
 
 /**
  * A preset is our way of bundling similar extensions with unified options and
@@ -102,7 +102,7 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
    * also called when the extension is first created with the default
    * properties.
    */
-  protected abstract onSetOptions(parameter: SetOptionsParameter<Options>): void;
+  protected abstract onSetOptions(parameter: OnSetOptionsParameter<Options>): void;
 
   /**
    * When there are duplicate extensions used within the editor the extension
@@ -178,7 +178,7 @@ export type AnyPreset = Omit<Preset<any>, keyof Remirror.AnyPresetOverrides> &
 export type AnyPresetConstructor = Replace<
   PresetConstructor<any>,
   // eslint-disable-next-line @typescript-eslint/prefer-function-type
-  { new (...args: any[]): AnyFunction }
+  { new (...args: any[]): AnyPreset }
 >;
 
 /**

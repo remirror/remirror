@@ -27,7 +27,7 @@ import {
 } from '@remirror/core-types';
 
 import { getChangedOptions } from '../helpers';
-import { SetOptionsParameter, UpdateReason } from '../types';
+import { OnSetOptionsParameter, UpdateReason } from '../types';
 
 export abstract class BaseClass<
   Options extends ValidOptions = EmptyShape,
@@ -220,6 +220,13 @@ export abstract class BaseClass<
   }
 
   /**
+   * Override this to received updates whenever `setOptions` is called.
+   *
+   * @abstract
+   */
+  protected onSetOptions?(parameter: OnSetOptionsParameter<Options>): void;
+
+  /**
    * Update the private options.
    */
   private getDynamicOptions(): GetFixedDynamic<Options> {
@@ -235,13 +242,6 @@ export abstract class BaseClass<
   private updateDynamicOptions(options: GetFixedDynamic<Options>) {
     this.#options = { ...this.#options, ...options };
   }
-
-  /**
-   * Override this to received updates whenever `setOptions` is called.
-   *
-   * @abstract
-   */
-  protected onSetOptions?(parameter: SetOptionsParameter<Options>): void;
 
   /**
    * Set up the mapped handlers object with default values (an empty array);

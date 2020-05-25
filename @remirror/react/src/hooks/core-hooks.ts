@@ -245,13 +245,14 @@ export const useEffectOnUpdate: typeof useEffect = (effect) => {
  * ```
  */
 export const useEffectOnce = (effect: EffectCallback) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(effect, []);
 };
 
 /**
  * React lifecycle hook that calls a function when the component will unmount.
  *
- * @remaarks
+ * @remarks
  *
  * Try `useEffectOnce` if you need both a mount and unmount function.
  *

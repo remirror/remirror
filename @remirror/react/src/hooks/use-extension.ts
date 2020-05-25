@@ -3,8 +3,8 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import {
   AnyExtensionConstructor,
-  BaseExtensionOptions,
-  ConstructorParameter,
+  DynamicOptionsOfConstructor,
+  ExtensionConstructorParameter,
   OptionsOfConstructor,
 } from '@remirror/core';
 
@@ -43,7 +43,7 @@ import { useRemirror } from './use-remirror';
  */
 export function useExtensionInstance<Type extends AnyExtensionConstructor>(
   Constructor: Type,
-  ...[options]: ConstructorParameter<OptionsOfConstructor<Type>, BaseExtensionOptions>
+  ...[options]: ExtensionConstructorParameter<OptionsOfConstructor<Type>>
 ) {
   return useMemo(() => new Constructor(options), [Constructor, options]);
 }
@@ -82,13 +82,13 @@ export function useExtensionInstance<Type extends AnyExtensionConstructor>(
  */
 export function useExtension<Type extends AnyExtensionConstructor>(
   Constructor: Type,
-  properties: PropertiesOfConstructor<Type>,
+  options: DynamicOptionsOfConstructor<Type>,
 ) {
   const { manager } = useRemirror();
 
   const extension = useMemo(() => manager.getExtension(Constructor), [Constructor, manager]);
 
   useDeepCompareEffect(() => {
-    extension.setOptions(properties);
-  }, [extension, properties]);
+    extension.setOptions(options);
+  }, [extension, options]);
 }

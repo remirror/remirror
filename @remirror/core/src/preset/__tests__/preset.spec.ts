@@ -1,6 +1,6 @@
 import { Static, StaticKeyList } from '@remirror/core-types';
 
-import { SetOptionsParameter } from '../..';
+import { OnSetOptionsParameter } from '../..';
 import { PlainExtension } from '../../extension';
 import { DefaultPresetOptions, Preset } from '../preset-base';
 
@@ -54,7 +54,7 @@ describe('simplest preset', () => {
       return [new FirstExtension({}), new SecondExtension({ b: this.options.b })];
     }
 
-    protected onSetOptions(parameter: SetOptionsParameter<Partial<Options>>) {
+    protected onSetOptions(parameter: OnSetOptionsParameter<Partial<Options>>) {
       const { changes } = parameter;
 
       if (changes.y.changed) {

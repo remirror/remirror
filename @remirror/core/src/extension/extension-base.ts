@@ -9,7 +9,6 @@ import {
 } from '@remirror/core-constants';
 import { freeze, invariant, isIdentifierOfType, isRemirrorType } from '@remirror/core-helpers';
 import {
-  AnyFunction,
   AttributesParameter,
   EditorSchema,
   EditorView,
@@ -477,7 +476,7 @@ export type AnyExtension = Replace<Extension<Shape>, Remirror.AnyExtensionOverri
 export type AnyExtensionConstructor = Replace<
   ExtensionConstructor<any>,
   // eslint-disable-next-line @typescript-eslint/prefer-function-type
-  { new (...args: any[]): AnyFunction }
+  { new (...args: any[]): AnyExtension }
 >;
 
 /**

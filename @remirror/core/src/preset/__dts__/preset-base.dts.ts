@@ -4,7 +4,7 @@ import { ignoreUnused } from '@remirror/test-fixtures';
 
 import { EditorManager } from '../..';
 import { PlainExtension } from '../../extension';
-import { SetOptionsParameter } from '../../types';
+import { OnSetOptionsParameter } from '../../types';
 import { AnyPreset, DefaultPresetOptions, Preset } from '../preset-base';
 
 // @ts-expect-error
@@ -100,7 +100,7 @@ class WithDynamicOptionsPreset extends Preset<WithDynamicOptions> {
     return 'withStaticOptions' as const;
   }
 
-  protected onSetOptions(parameter: SetOptionsParameter<WithDynamicOptions>): void {
+  protected onSetOptions(parameter: OnSetOptionsParameter<WithDynamicOptions>): void {
     const { changes } = parameter;
     const keys: Array<keyof typeof changes> = ['custom', 'required'];
 

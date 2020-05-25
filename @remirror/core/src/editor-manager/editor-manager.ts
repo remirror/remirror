@@ -32,7 +32,7 @@ import {
   SchemaFromExtensionUnion,
   ViewLifecycleReturn,
 } from '../extension';
-import { AnyPreset } from '../preset';
+import { AnyPreset, AnyPresetConstructor } from '../preset';
 import { privacySymbol } from '../privacy';
 import {
   GetConstructor,
@@ -103,7 +103,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     return new EditorManager<ExtensionUnion, PresetUnion | typeof builtInPreset>({
       extensions,
       presets: [...presets, builtInPreset],
-      settings: { ...options, privacy: privacySymbol },
+      settings: { ...settings, privacy: privacySymbol },
     });
   }
 
@@ -270,9 +270,9 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * extensions. Instead use `Manager.create`.
    */
   private constructor(parameter: EditorManagerConstructorParameter<ExtensionUnion, PresetUnion>) {
-    this.#settings = parameter.options ?? {};
+    this.#settings = parameter.settings ?? {};
 
-    invariant(parameter.options?.privacy === privacySymbol, {
+    invariant(parameter.settings?.privacy === privacySymbol, {
       message: `The extension manager can only be invoked via one of it's static methods. e.g 'EditorManager.create([...extensions])'.`,
       code: ErrorConstant.NEW_EDITOR_MANAGER,
     });
@@ -603,7 +603,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    *
    * This will throw an error if non existent.
    */
-  public getExtension<ExtensionConstructor extends this['~E']['constructor']>(
+  public getExtension<ExtensionConstructor extends AnyExtensionConstructor>(
     Constructor: ExtensionConstructor,
   ): InstanceType<ExtensionConstructor> {
     const extension = this.#extensionMap.get(Constructor);
@@ -618,7 +618,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
   /**
    * Get the preset from the editor.
    */
-  public getPreset<PresetConstructor extends PresetUnion['constructor']>(
+  public getPreset<PresetConstructor extends AnyPresetConstructor>(
     Constructor: PresetConstructor,
   ): InstanceType<PresetConstructor> {
     const preset = this.#presetMap.get(Constructor);

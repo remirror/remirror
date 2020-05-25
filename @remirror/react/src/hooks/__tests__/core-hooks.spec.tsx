@@ -13,7 +13,8 @@ test('usePrevious', () => {
     initialProps: { initialValue: 10 },
   });
 
-  expect(result.current).toBe(undefined);
+  const noValue = undefined;
+  expect(result.current).toBe(noValue);
 
   rerender({ initialValue: 20 });
 

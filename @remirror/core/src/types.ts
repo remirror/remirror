@@ -141,6 +141,14 @@ export type OptionsOfConstructor<Constructor extends AnyConstructor> = GetOption
 >;
 
 /**
+ * Get the options from any constructor. Can be used for both presets and
+ * extensions.
+ */
+export type DynamicOptionsOfConstructor<Constructor extends AnyConstructor> = GetPartialDynamic<
+  GetOptions<InstanceType<Constructor>>
+>;
+
+/**
  * The extension store which is shared across all extensions. It provides access
  * to methods and data that can be used throughout the extension lifecycle.
  */
@@ -270,7 +278,7 @@ export interface GetChangeOptionsReturn<Options extends ValidOptions> {
   changes: Readonly<Required<ChangedOptions<Options>>>;
 }
 
-export interface SetOptionsParameter<Options extends ValidOptions>
+export interface OnSetOptionsParameter<Options extends ValidOptions>
   extends Pick<GetChangeOptionsReturn<Options>, 'changes'>,
     UpdateReasonParameter {
   /**
