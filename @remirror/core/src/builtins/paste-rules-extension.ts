@@ -11,10 +11,11 @@ import { InitializeLifecycleMethod, PlainExtension } from '../extension';
  * @builtin
  */
 export class PasteRulesExtension extends PlainExtension {
+  public static readonly defaultPriority = ExtensionPriority.High;
+
   get name() {
     return 'pasteRules' as const;
   }
-  public readonly defaultPriority = ExtensionPriority.High;
 
   /**
    * Ensure that all ssr transformers are run.

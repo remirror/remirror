@@ -17,10 +17,11 @@ import { InitializeLifecycleMethod, PlainExtension } from '../extension';
  * @builtin
  */
 export class SuggestionsExtension extends PlainExtension {
+  public static readonly defaultPriority = ExtensionPriority.High;
+
   get name() {
     return 'suggestions' as const;
   }
-  public readonly defaultPriority = ExtensionPriority.High;
 
   /**
    * Ensure that all ssr transformers are run.

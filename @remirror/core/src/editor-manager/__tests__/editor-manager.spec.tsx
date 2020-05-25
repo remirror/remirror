@@ -100,9 +100,9 @@ describe('Manager', () => {
 
   describe('#properties', () => {
     it('should sort extensions by priority', () => {
-      expect(manager.extensions).toHaveLength(16);
+      expect(manager.extensions).toHaveLength(17);
       expect(manager.extensions[0]).toEqual(dummyExtension);
-      expect(manager.extensions[15]).toEqual(bigExtension);
+      expect(manager.extensions[16]).toEqual(bigExtension);
     });
 
     it('should provide the schema at instantiation', () => {
@@ -185,10 +185,11 @@ test('keymaps', () => {
 
   const manager = EditorManager.create({
     extensions: [new FirstExtension(), new SecondExtension(), new ThirdExtension()],
-    presets: [new CorePreset({})],
+    presets: [new CorePreset()],
   });
 
   createEditor(doc(p('simple<cursor>')), { plugins: manager.store.plugins })
+    .insertText('abcd')
     .press('Enter')
     .callback(() => {
       expect(mocks.firstEnter).toHaveBeenCalled();
@@ -227,7 +228,7 @@ test('keymaps', () => {
 // "getCommands" | "getChain" | "helpers" | "rebuildKeymap" | "getPluginState" | "replacePlugin" | "reconfigureStatePlugins" | "addPlugins" | "schema" | "tags" | "phase" | "getState"
 
 test('lifecycle', () => {
-  expect.assertions(4);
+  expect.assertions(6);
   class LifecycleExtension extends PlainExtension {
     public get name() {
       return 'test' as const;

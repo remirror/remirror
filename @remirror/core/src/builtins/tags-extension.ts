@@ -1,4 +1,4 @@
-import { ExtensionTag, MarkGroup, NodeGroup } from '@remirror/core-constants';
+import { ExtensionPriority, ExtensionTag, MarkGroup, NodeGroup } from '@remirror/core-constants';
 import { isUndefined } from '@remirror/core-helpers';
 import { EditorSchema } from '@remirror/core-types';
 
@@ -20,6 +20,8 @@ import { GeneralExtensionTags, MarkExtensionTags, NodeExtensionTags } from '../t
  * @builtin
  */
 export class TagsExtension extends PlainExtension {
+  public static readonly defaultPriority = ExtensionPriority.High;
+
   get name() {
     return 'tags' as const;
   }
@@ -78,7 +80,7 @@ export class TagsExtension extends PlainExtension {
         const tags = { general, mark, node };
 
         this.store.setStoreKey('tags', tags);
-        this.store.setExtensionStore('tags', () => tags);
+        this.store.setExtensionStore('tags', tags);
       },
     };
   };
@@ -97,7 +99,7 @@ declare global {
       /**
        * The tags provided by the configured extensions.
        */
-      tags: () => ExtensionTags<any>;
+      tags: ExtensionTags<any>;
     }
   }
 }

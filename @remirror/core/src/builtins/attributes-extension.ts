@@ -18,10 +18,11 @@ import { AnyPreset } from '../preset';
  * @builtin
  */
 export class AttributesExtension extends PlainExtension {
+  public static readonly defaultPriority = ExtensionPriority.High;
+
   get name() {
     return 'attributes' as const;
   }
-  public readonly defaultPriority = ExtensionPriority.High as const;
 
   /**
    * Create the attributes object on initialization.

@@ -1,4 +1,4 @@
-import { ErrorConstant } from '@remirror/core-constants';
+import { ErrorConstant, ExtensionPriority } from '@remirror/core-constants';
 import { entries, invariant, object } from '@remirror/core-helpers';
 import {
   AnyFunction,
@@ -35,6 +35,8 @@ import { CommandShape, ExtensionCommandFunction, ExtensionCommandReturn } from '
  * @builtin
  */
 export class CommandsExtension extends PlainExtension {
+  public static readonly defaultPriority = ExtensionPriority.High;
+
   get name() {
     return 'commands' as const;
   }

@@ -471,18 +471,6 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
         },
         enumerable: true,
       },
-      isEditable: {
-        get: () => {
-          return this.view.editable;
-        },
-        enumerable: true,
-      },
-      hasFocus: {
-        get: () => {
-          return this.view.hasFocus();
-        },
-        enumerable: true,
-      },
       managerSettings: {
         get: () => {
           return freeze(this.#settings);
@@ -806,26 +794,6 @@ declare global {
        * Availability: **return scope** - `onView`
        */
       readonly previousState?: EditorState<Schema>;
-
-      /**
-       * Returns true when the editor can be edited and false when it cannot.
-       *
-       * This is useful for deciding whether or not to run a command especially
-       * if the command is resource intensive or slow.
-       *
-       * Availability: **return scope** - `onView`
-       */
-      readonly isEditable: () => boolean;
-
-      /**
-       * Returns true when the is focused.
-       *
-       * This is useful for deciding whether or not to run a command which
-       * requires the editor to be focused in order to make any sense.
-       *
-       * Availability: **return scope** - `onView`
-       */
-      readonly hasFocus: () => boolean;
 
       /**
        * The settings passed to the manager.

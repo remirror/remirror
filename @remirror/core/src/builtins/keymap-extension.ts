@@ -16,10 +16,11 @@ import { AnyExtension, InitializeLifecycleMethod, PlainExtension } from '../exte
  * @builtin
  */
 export class KeymapExtension extends PlainExtension {
+  public static readonly defaultPriority = ExtensionPriority.High;
+
   get name() {
     return 'keymap' as const;
   }
-  public readonly defaultPriority = ExtensionPriority.High as const;
 
   private keymap!: ProsemirrorPlugin;
   private readonly extensions: AnyExtension[] = [];

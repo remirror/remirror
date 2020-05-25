@@ -17,10 +17,11 @@ import { AnyPreset } from '../preset';
  * @builtin
  */
 export class NodeViewsExtension extends PlainExtension {
+  public static readonly defaultPriority = ExtensionPriority.High;
+
   get name() {
     return 'nodeView' as const;
   }
-  public readonly defaultPriority = ExtensionPriority.High as const;
 
   /**
    * Ensure that all ssr transformers are run.

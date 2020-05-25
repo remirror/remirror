@@ -148,7 +148,7 @@ interface WithHandlers {
 }
 
 class ExtensionWithHandlers extends PlainExtension<WithHandlers> {
-  public static defaultOptions: DefaultExtensionOptions<WithHandlers> = {};
+  public static defaultOptions: DefaultExtensionOptions<WithHandlers> = { bindings: {} };
   public static handlerKeys: HandlerKeyList<WithHandlers> = ['onChange', 'onUpdate'];
   public static customKeys: CustomKeyList<WithHandlers> = ['bindings'];
 
