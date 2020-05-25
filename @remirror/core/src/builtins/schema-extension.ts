@@ -32,6 +32,11 @@ import { AnyPreset } from '../preset';
  * @builtin
  */
 export class SchemaExtension extends PlainExtension {
+  /**
+   * Really this always needs to be the first extension to run.
+   */
+  public static defaultPriority: ExtensionPriority = ExtensionPriority.Critical;
+
   get name() {
     return 'schema' as const;
   }
@@ -41,11 +46,12 @@ export class SchemaExtension extends PlainExtension {
    */
   public readonly defaultPriority = ExtensionPriority.High;
 
-  public onCreate: CreateLifecycleMethod = (parameter) => {
-    const { managerSettings } = parameter;
+  public onCreate: CreateLifecycleMethod = () => {
+    const { managerSettings } = this.store;
     const nodes: Record<string, NodeExtensionSpec> = object();
     const marks: Record<string, MarkExtensionSpec> = object();
     const extraAttributes: Record<string, ExtraAttributes[]> = object();
+
     let managerExtraAttributes = managerSettings.extraAttributes ?? [];
 
     // Skip the for loop by setting the list to empty when extra attributes are disabled
@@ -84,8 +90,8 @@ export class SchemaExtension extends PlainExtension {
         }
       },
 
-      afterExtensionLoop() {
-        const { setStoreKey, setExtensionStore } = parameter;
+      afterExtensionLoop: () => {
+        const { setStoreKey, setExtensionStore } = this.store;
 
         const schema = new Schema({ nodes, marks });
 
@@ -311,6 +317,8 @@ declare global {
        * The type is available when the manager initializes. So it can be used
        * in the outer scope of `createCommands`, `createHelpers`, `createKeymap`
        * and most of the creator methods.
+       *
+       * Available: *return function* - `onCreate`
        */
       schema: Schema;
     }

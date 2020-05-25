@@ -9,7 +9,7 @@ import {
 import { EditorView } from '@remirror/pm/view';
 import { CorePreset, createBaseManager } from '@remirror/test-fixtures';
 
-import { PlainExtension } from '../../extension';
+import { CreateLifecycleMethod, InitializeLifecycleMethod, PlainExtension } from '../../extension';
 import { EditorManager, isEditorManager } from '../editor-manager';
 
 describe('Manager', () => {
@@ -222,4 +222,37 @@ test('keymaps', () => {
       expect(mocks.secondEnter).toHaveBeenCalledTimes(1);
       expect(mocks.thirdEnter).not.toHaveBeenCalled();
     });
+});
+
+// "getCommands" | "getChain" | "helpers" | "rebuildKeymap" | "getPluginState" | "replacePlugin" | "reconfigureStatePlugins" | "addPlugins" | "schema" | "tags" | "phase" | "getState"
+
+test('lifecycle', () => {
+  expect.assertions(4);
+  class LifecycleExtension extends PlainExtension {
+    public get name() {
+      return 'test' as const;
+    }
+
+    public onCreate: CreateLifecycleMethod = () => {
+      expect(this.store.setExtensionStore).toBeFunction();
+      expect(this.store.setStoreKey).toBeFunction();
+      expect(this.store.getStoreKey).toBeFunction();
+
+      return {
+        afterExtensionLoop: () => {
+          expect(this.store.tags).toBeTruthy();
+          expect(this.store.schema).toBeTruthy();
+        },
+      };
+    };
+
+    public onInitialize: InitializeLifecycleMethod = () => {
+      expect(this.store.addPlugins).toBeFunction();
+      return {};
+    };
+  }
+
+  const extension = new LifecycleExtension();
+
+  createBaseManager({ extensions: [extension], presets: [] });
 });

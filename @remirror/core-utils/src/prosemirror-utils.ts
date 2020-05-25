@@ -7,9 +7,11 @@ import {
   isEmptyObject,
   isNullOrUndefined,
   isUndefined,
+  keys,
   object,
 } from '@remirror/core-helpers';
 import {
+  AnyFunction,
   AttributesParameter,
   Brand,
   CommandFunction,
@@ -17,7 +19,9 @@ import {
   EditorState,
   EditorStateParameter,
   EditorView,
+  EmptyShape,
   KeyBindingCommandFunction,
+  KeyBindings,
   MarkTypesParameter,
   NodeTypeParameter,
   NodeTypesParameter,
@@ -26,11 +30,13 @@ import {
   PosParameter,
   PredicateParameter,
   ProsemirrorCommandFunction,
+  ProsemirrorKeyBindings,
   ProsemirrorNode,
   ProsemirrorNodeParameter,
   ResolvedPos,
   Selection,
   SelectionParameter,
+  Shape,
   Transaction,
   TransactionParameter,
 } from '@remirror/core-types';
@@ -517,13 +523,11 @@ export function schemaToJSON<Nodes extends string = string, Marks extends string
  * Wraps the default {@link ProsemirrorCommandFunction} and makes it compatible
  * with the default **remirror** {@link CommandFunction} call signature.
  */
-export const convertCommand = <
-  Schema extends EditorSchema = any,
-  GExtraParameter extends object = {}
->(
+export function convertCommand<Schema extends EditorSchema = any, Extra extends Shape = EmptyShape>(
   commandFunction: ProsemirrorCommandFunction<Schema>,
-): CommandFunction<Schema, GExtraParameter> => ({ state, dispatch, view }) =>
-  commandFunction(state, dispatch, view);
+): CommandFunction<Schema, Extra> {
+  return ({ state, dispatch, view }) => commandFunction(state, dispatch, view);
+}
 
 /**
  * Brands a command as non chainable so that it can be excluded from the
@@ -531,8 +535,8 @@ export const convertCommand = <
  */
 export type NonChainableCommandFunction<
   Schema extends EditorSchema = any,
-  GExtraParameter extends object = {}
-> = Brand<CommandFunction<Schema, GExtraParameter>, 'non-chainable'>;
+  Extra extends Shape = EmptyShape
+> = Brand<CommandFunction<Schema, Extra>, 'non-chainable'>;
 
 /**
  * Marks a command function as non chainable. It will throw an error when
@@ -544,19 +548,16 @@ export type NonChainableCommandFunction<
  * const command = nonChainable(({ state, dispatch }) => {...});
  * ```
  */
-export function nonChainable<
-  Schema extends EditorSchema = any,
-  GExtraParameter extends object = {}
->(
-  commandFunction: CommandFunction<Schema, GExtraParameter>,
-): NonChainableCommandFunction<Schema, GExtraParameter> {
+export function nonChainable<Schema extends EditorSchema = any, Extra extends Shape = EmptyShape>(
+  commandFunction: CommandFunction<Schema, Extra>,
+): NonChainableCommandFunction<Schema, Extra> {
   return ((parameter) => {
     invariant(parameter.dispatch === undefined || parameter.dispatch === parameter.view?.dispatch, {
       code: ErrorConstant.NON_CHAINABLE_COMMAND,
     });
 
     return commandFunction(parameter);
-  }) as NonChainableCommandFunction<Schema, GExtraParameter>;
+  }) as NonChainableCommandFunction<Schema, Extra>;
 }
 
 /**
@@ -564,14 +565,11 @@ export function nonChainable<
  * multiple commands to be chained together and runs until one of them returns
  * true.
  */
-export const chainCommands = <
-  Schema extends EditorSchema = any,
-  GExtraParameter extends object = {}
->(
-  ...commands: Array<CommandFunction<Schema, GExtraParameter>>
-): CommandFunction<Schema, GExtraParameter> => ({ state, dispatch, view, ...rest }) => {
+export const chainCommands = <Schema extends EditorSchema = any, Extra extends object = object>(
+  ...commands: Array<CommandFunction<Schema, Extra>>
+): CommandFunction<Schema, Extra> => ({ state, dispatch, view, ...rest }) => {
   for (const element of commands) {
-    if (element({ state, dispatch, view, ...(rest as GExtraParameter) })) {
+    if (element({ state, dispatch, view, ...(rest as Extra) })) {
       return true;
     }
   }
@@ -637,3 +635,57 @@ export const chainKeyBindingCommands = (
   // Continue on through the chain of commands.
   return next();
 };
+
+function mergeKeyBindingCreator<
+  Schema extends EditorSchema = any,
+  Type extends AnyFunction = KeyBindingCommandFunction<Schema>
+>(
+  extensionKeymaps: Array<KeyBindings<Schema>>,
+  mapper: (command: KeyBindingCommandFunction) => Type,
+): Record<string, Type> {
+  const previousCommandsMap = new Map<string, KeyBindingCommandFunction[]>();
+  const mappedCommands: Record<string, Type> = object();
+
+  for (const extensionKeymap of extensionKeymaps) {
+    for (const key of keys(extensionKeymap)) {
+      const previousCommands: KeyBindingCommandFunction[] = previousCommandsMap.get(key) ?? [];
+      const commands = [...previousCommands, extensionKeymap[key]];
+      const command = chainKeyBindingCommands(...commands);
+      previousCommandsMap.set(key, commands);
+
+      mappedCommands[key] = mapper(command);
+    }
+  }
+
+  return mappedCommands;
+}
+
+/**
+ * This merges an array of keybindings into one keybinding with the priority
+ * given to the items earlier in the array. `index: 0` has priority over `index: 1`
+ * which has priority over `index: 2` and so on.
+ *
+ * This is for use on remirror keybindings. See `mergeProsemirrorKeyBindings`
+ * for transforming the methods into `ProsemirrorCommandFunction`'s.
+ */
+export function mergeKeyBindings<Schema extends EditorSchema = any>(
+  extensionKeymaps: Array<KeyBindings<Schema>>,
+): KeyBindings<Schema> {
+  return mergeKeyBindingCreator(extensionKeymaps, (command) => command);
+}
+
+/**
+ * This merges an array of keybindings into one keybinding with the priority
+ * given to the items earlier in the array. `index: 0` has priority over `index: 1`
+ * which has priority over `index: 2` and so on.
+ */
+export function mergeProsemirrorKeyBindings<Schema extends EditorSchema = any>(
+  extensionKeymaps: Array<KeyBindings<Schema>>,
+): ProsemirrorKeyBindings<Schema> {
+  return mergeKeyBindingCreator(
+    extensionKeymaps,
+    (command): ProsemirrorCommandFunction => (state, dispatch, view) => {
+      return command({ state, dispatch, view, next: () => false });
+    },
+  );
+}

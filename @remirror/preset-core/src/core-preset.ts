@@ -3,13 +3,8 @@ import {
   ExtensionPriority,
   OnSetOptionsParameter,
   Preset,
-  StaticShape,
 } from '@remirror/core';
-import {
-  BaseKeymapExtension,
-  BaseKeymapOptions,
-  BaseKeymapProperties,
-} from '@remirror/extension-base-keymap';
+import { BaseKeymapExtension, BaseKeymapOptions } from '@remirror/extension-base-keymap';
 import { DocExtension, DocOptions } from '@remirror/extension-doc';
 import { ParagraphExtension } from '@remirror/extension-paragraph';
 import { TextExtension } from '@remirror/extension-text';
@@ -17,15 +12,12 @@ import { TextExtension } from '@remirror/extension-text';
 /**
  * The static settings for the core preset.
  */
-export interface CorePresetOptions extends StaticShape<BaseKeymapOptions & DocOptions> {}
-
-export interface CorePresetOptions extends BaseKeymapProperties {}
+export interface CorePresetOptions extends BaseKeymapOptions, DocOptions {}
 
 export class CorePreset extends Preset<CorePresetOptions> {
   public static defaultOptions: DefaultPresetOptions<CorePresetOptions> = {
     content: DocExtension.defaultOptions.content,
     ...BaseKeymapExtension.defaultOptions,
-    keymap: BaseKeymapExtension.defaultProperties.keymap,
   };
 
   get name() {

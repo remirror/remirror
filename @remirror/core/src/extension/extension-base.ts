@@ -17,7 +17,6 @@ import {
   MarkType,
   NodeExtensionSpec,
   NodeType,
-  ProsemirrorPlugin,
   Replace,
   Shape,
   ValidOptions,
@@ -110,7 +109,7 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
   /**
    * The default priority for this family of extensions.
    */
-  public static readonly defaultPriority = ExtensionPriority.Default;
+  public static readonly defaultPriority: ExtensionPriority = ExtensionPriority.Default;
 
   /**
    * The priority level for this instance of the extension.
@@ -123,8 +122,21 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
    * The store is a property that's internal to extension. It include important
    * items like the `view` and `schema` that are added by the extension manager
    * and also the lifecycle extension methods.
+   *
+   * **NOTE** - The store is not available until the manager has been created and
+   * received the extension. As a result trying to access the store during
+   * `init` and `constructor` will result in a runtime error.
+   *
+   * Some properties of the store are available at different phases. You should
+   * check the inline documentation to know when a certain property is useable
+   * in your extension.
    */
   protected get store() {
+    invariant(this._store, {
+      code: ErrorConstant.MANAGER_PHASE_ERROR,
+      message: `An error ocurred while attempting to access the 'extension.store' when the Manager has not yet set upt the lifecycle methods.`,
+    });
+
     return freeze(this._store, { requireKeys: true });
   }
 
@@ -139,7 +151,14 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
   private _store!: Remirror.ExtensionStore;
 
   constructor(...parameters: ExtensionConstructorParameter<Options>) {
-    super(isValidExtensionConstructor, defaultOptions, ...parameters);
+    super(
+      {
+        validator: isValidExtensionConstructor,
+        defaultOptions,
+        code: ErrorConstant.INVALID_EXTENSION,
+      },
+      ...parameters,
+    );
   }
 
   /**
@@ -166,7 +185,7 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
    * class Awesome extends PlainExtension {
    *   customMethod() {
    *     if (this.store.view.hasFocus()) {
-   *       console.log('dance dance dance');
+   *       log('dance dance dance');
    *     }
    *   }
    * }
@@ -235,9 +254,46 @@ export type DefaultExtensionOptions<Options extends ValidOptions> = DefaultOptio
   BaseExtensionOptions
 >;
 
+/**
+ * Here is the extension lifecycle order.
+ *
+ * ### Definitions
+ *
+ * - **outer scope** - refers to the main body of the function
+ * - **return scope** - refers to the scope of the methods in the object
+ *   returned by each lifecycle method (except for onTransaction which only has
+ *   an outer scope)
+ *
+ *
+ * ### Ordering
+ *
+ * - **outer scope** - `onCreate`
+ * - **outer scope** - `onInitialize`
+ * - **outer scope** - `onView`
+ * - **return scope** - `onCreate`
+ * - **return scope** - `onInitialize`
+ * - **return scope** - `onView`
+ *
+ * - **runtime**
+ * - **outer scope** - `onTransaction` (repeats)
+ *
+ * - **outer scope** - `onDestroy`
+ */
 interface ExtensionLifecycleMethods {
   /**
-   * Handlers called when the Manager is first created.
+   * This handler is called when the extension manager is first created.
+   *
+   * The outer scope of the `onCreate` is called as soon as the manager is
+   * created and some methods may not be available in the extension store. In
+   * order to account for that your `onCreate` should return an object with
+   * optional values of a
+   *
+   * - `forEachExtension` - method that takes an extension as it first
+   *   parameter. It is called for each extension in the editor and is the most
+   *   performant way of handling looping through multiple extensions.
+   * - `afterExtensionLoop` - method with no parameters which is called after
+   *   the extensions have been looped through. This is where you are most
+   *   likely to do you work.
    */
   onCreate?: CreateLifecycleMethod;
 
@@ -683,29 +739,6 @@ export type SchemaFromExtensionUnion<ExtensionUnion extends AnyExtension> = Edit
 export type AnyManagerStore = Remirror.ManagerStore<any, any>;
 export type ManagerStoreKeys = keyof Remirror.ManagerStore<any, any>;
 
-export interface CreateLifecycleParameter {
-  /**
-   * Get the value of a key from the manager store.
-   */
-  getStoreKey: <Key extends ManagerStoreKeys>(key: Key) => AnyManagerStore[Key];
-
-  /**
-   * Update the store with a specific key.
-   */
-  setStoreKey: <Key extends ManagerStoreKeys>(key: Key, value: AnyManagerStore[Key]) => void;
-
-  /**
-   * The settings passed through to the manager.
-   */
-  managerSettings: Remirror.ManagerSettings;
-
-  /** Set a custom manager method parameter. */
-  setExtensionStore: <Key extends keyof Remirror.ExtensionStore>(
-    key: Key,
-    value: Remirror.ExtensionStore[Key],
-  ) => void;
-}
-
 export interface CreateLifecycleReturn {
   /**
    * Called for each extension in order of their priority.
@@ -719,24 +752,11 @@ export interface CreateLifecycleReturn {
   afterExtensionLoop?: () => void;
 }
 
-export type CreateLifecycleMethod = (parameter: CreateLifecycleParameter) => CreateLifecycleReturn;
-
-export interface InitializeLifecycleParameter extends ViewLifecycleParameter {
-  /**
-   * Use this to push custom plugins to the store which are added to the plugin
-   * list after the extensionPlugins.
-   */
-  addPlugins: (...plugins: ProsemirrorPlugin[]) => void;
-}
+export type CreateLifecycleMethod = () => CreateLifecycleReturn;
 
 export interface InitializeLifecycleReturn extends CreateLifecycleReturn {}
 
-export type InitializeLifecycleMethod = (
-  parameter: InitializeLifecycleParameter,
-) => InitializeLifecycleReturn;
-
-export interface ViewLifecycleParameter
-  extends Omit<CreateLifecycleParameter, 'setExtensionStore'> {}
+export type InitializeLifecycleMethod = () => InitializeLifecycleReturn;
 
 export interface ViewLifecycleReturn {
   /**
@@ -751,7 +771,7 @@ export interface ViewLifecycleReturn {
   afterExtensionLoop?: (view: EditorView<EditorSchema>) => void;
 }
 
-export type ViewLifecycleMethod = (parameter: ViewLifecycleParameter) => ViewLifecycleReturn;
+export type ViewLifecycleMethod = () => ViewLifecycleReturn;
 
 declare global {
   /**

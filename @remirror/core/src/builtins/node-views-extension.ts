@@ -25,9 +25,7 @@ export class NodeViewsExtension extends PlainExtension {
   /**
    * Ensure that all ssr transformers are run.
    */
-  public onInitialize: InitializeLifecycleMethod = (parameter) => {
-    const { setStoreKey, managerSettings } = parameter;
-
+  public onInitialize: InitializeLifecycleMethod = () => {
     const nodeViewList: Array<Record<string, NodeViewMethod>> = [];
     const nodeViews: Record<string, NodeViewMethod> = object();
 
@@ -35,7 +33,7 @@ export class NodeViewsExtension extends PlainExtension {
       forEachExtension: (extension) => {
         if (
           // managerSettings excluded this from running
-          managerSettings.exclude?.nodeViews ||
+          this.store.managerSettings.exclude?.nodeViews ||
           // Method doesn't exist
           !extension.createNodeViews ||
           // Extension settings exclude it
@@ -56,7 +54,7 @@ export class NodeViewsExtension extends PlainExtension {
           Object.assign(nodeViews, nodeView);
         }
 
-        setStoreKey('nodeViews', nodeViews);
+        this.store.setStoreKey('nodeViews', nodeViews);
       },
     };
   };

@@ -39,10 +39,10 @@ export class CommandsExtension extends PlainExtension {
     return 'commands' as const;
   }
 
-  public onCreate: CreateLifecycleMethod = (parameter) => {
+  public onCreate: CreateLifecycleMethod = () => {
     return {
-      afterExtensionLoop() {
-        const { setExtensionStore, getStoreKey } = parameter;
+      afterExtensionLoop: () => {
+        const { setExtensionStore, getStoreKey } = this.store;
 
         setExtensionStore('getCommands', () => {
           const commands = getStoreKey('commands');
@@ -61,7 +61,7 @@ export class CommandsExtension extends PlainExtension {
     };
   };
 
-  public onView: ViewLifecycleMethod = (parameter) => {
+  public onView: ViewLifecycleMethod = () => {
     const commands: any = object();
     const names = new Set<string>();
     const chained: Record<string, any> & ChainedCommandRunParameter = object();
@@ -95,7 +95,7 @@ export class CommandsExtension extends PlainExtension {
         }
       },
       afterExtensionLoop: (view) => {
-        const { setStoreKey } = parameter;
+        const { setStoreKey } = this.store;
 
         for (const [commandName, { command, isEnabled }] of entries(unchained)) {
           commands[commandName] = command as CommandShape;

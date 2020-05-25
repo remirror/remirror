@@ -24,9 +24,9 @@ import {
  */
 export function isExtensionValid<Type extends AnyExtensionConstructor>(
   Extension: Type,
-  ...[settings]: ExtensionConstructorParameter<OptionsOfConstructor<Type>>
+  ...[options]: ExtensionConstructorParameter<OptionsOfConstructor<Type>>
 ) {
-  const extension = new Extension(settings);
+  const extension = new Extension(options);
 
   let defaultOptions: BaseExtensionOptions = object();
 
@@ -34,10 +34,10 @@ export function isExtensionValid<Type extends AnyExtensionConstructor>(
     defaultOptions = value;
   });
 
-  const expectedSettings = { ...defaultOptions, ...Extension.defaultOptions, ...options };
-  invariant(isEqual(extension.options, expectedSettings), {
+  const expectedOptions = { ...defaultOptions, ...Extension.defaultOptions, ...options };
+  invariant(isEqual(extension.options, expectedOptions), {
     message: `Invalid 'defaultOptions' for '${Extension.name}'\n\n${
-      diff(extension.options, expectedSettings) ?? ''
+      diff(extension.options, expectedOptions) ?? ''
     }\n`,
     code: ErrorConstant.INVALID_EXTENSION,
   });
@@ -50,21 +50,14 @@ export function isExtensionValid<Type extends AnyExtensionConstructor>(
  */
 export function isPresetValid<Type extends AnyPresetConstructor>(
   Preset: Type,
-  ...[settings]: PresetConstructorParameter<OptionsOfConstructor<Type>>
+  ...[options]: PresetConstructorParameter<OptionsOfConstructor<Type>>
 ) {
-  const extension = new Preset(settings);
+  const extension = new Preset(options);
 
-  const expectedSettings = { ...Preset.defaultOptions, ...options };
-  invariant(isEqual(extension.options, expectedSettings), {
+  const expectedOptions = { ...Preset.defaultOptions, ...options };
+  invariant(isEqual(extension.options, expectedOptions), {
     message: `Invalid 'defaultOptions' for '${Preset.name}'\n\n${
-      diff(extension.options, expectedSettings) ?? ''
-    }\n`,
-  });
-
-  const expectedProperties = { ...Preset.defaultProperties, ...Cast(settings)?.options };
-  invariant(isEqual(extension.options, expectedProperties), {
-    message: `Invalid 'defaultProperties' for '${Preset.name}' \n\n${
-      diff(extension.options, expectedProperties) ?? ''
+      diff(extension.options, expectedOptions) ?? ''
     }\n`,
   });
 

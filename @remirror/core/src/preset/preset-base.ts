@@ -67,7 +67,14 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
   #extensionMap = new Map<this['~E']['constructor'], this['~E']>();
 
   constructor(...parameters: PresetConstructorParameter<Options>) {
-    super(isValidPresetConstructor, {}, ...parameters);
+    super(
+      {
+        validator: isValidPresetConstructor,
+        defaultOptions: {},
+        code: ErrorConstant.INVALID_PRESET,
+      },
+      ...parameters,
+    );
 
     // Create the extension list.
     this.#extensions = uniqueBy(

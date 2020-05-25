@@ -5,7 +5,15 @@ import {
   ErrorConstant,
   RemirrorIdentifier,
 } from '@remirror/core-constants';
-import { deepMerge, invariant, isPlainObject, noop, object, omit } from '@remirror/core-helpers';
+import {
+  deepMerge,
+  invariant,
+  isArray,
+  isPlainObject,
+  noop,
+  object,
+  omit,
+} from '@remirror/core-helpers';
 import {
   AnyFunction,
   Dispose,
@@ -14,6 +22,7 @@ import {
   GetConstructorParameter,
   GetCustom,
   GetFixed,
+  GetFixedCustom,
   GetFixedDynamic,
   GetHandler,
   GetMappedHandler,
@@ -28,6 +37,12 @@ import {
 
 import { getChangedOptions } from '../helpers';
 import { OnSetOptionsParameter, UpdateReason } from '../types';
+
+interface BaseClassConstructorParameter<DefaultStaticOptions extends Shape = EmptyShape> {
+  validator: (Constructor: unknown, code: ErrorConstant) => void;
+  code: ErrorConstant;
+  defaultOptions: DefaultStaticOptions;
+}
 
 export abstract class BaseClass<
   Options extends ValidOptions = EmptyShape,
@@ -83,7 +98,7 @@ export abstract class BaseClass<
    * }
    * ```
    */
-  public abstract readonly name: string;
+  public abstract get name(): string;
 
   /**
    * The options for this extension.
@@ -123,14 +138,12 @@ export abstract class BaseClass<
   #hasInitialized = false;
 
   constructor(
-    validator: (Constructor: unknown) => void,
-    defaultOptions: DefaultStaticOptions,
+    { validator, defaultOptions, code }: BaseClassConstructorParameter<DefaultStaticOptions>,
     ...parameters: ConstructorParameter<Options, DefaultStaticOptions>
   ) {
-    validator(this.constructor);
+    validator(this.constructor, code);
 
     const [options] = parameters;
-
     this.#mappedHandlers = object();
     this.populateMappedHandlers();
 
@@ -315,7 +328,7 @@ export type OnSetCustomOption<Options extends ValidOptions> = <
   Key extends keyof GetCustom<Options>
 >(
   key: Key,
-  value: GetCustom<Options>[Key],
+  value: Required<GetCustom<Options>>[Key],
 ) => Dispose;
 
 export interface BaseClass<
@@ -418,7 +431,8 @@ export type DefaultOptions<
   DefaultStaticOptions extends Shape
 > = FlipPartialAndRequired<GetStatic<Options>> &
   Partial<DefaultStaticOptions> &
-  GetFixedDynamic<Options>;
+  GetFixedDynamic<Options> &
+  GetFixedCustom<Options>;
 
 /**
  * Checks that the extension has a valid constructor with the `defaultOptions`
@@ -433,22 +447,17 @@ export function isValidConstructor(
     code,
   });
 
-  invariant(isPlainObject(Constructor.staticKeys), {
-    message: `No static 'defaultPriority' provided for '${Constructor.name}'.\n`,
-    code,
-  });
-
-  invariant(isPlainObject(Constructor.staticKeys), {
+  invariant(isArray(Constructor.staticKeys), {
     message: `No static 'staticKeys' provided for '${Constructor.name}'.\n`,
     code,
   });
 
-  invariant(isPlainObject(Constructor.handlerKeys), {
+  invariant(isArray(Constructor.handlerKeys), {
     message: `No static 'handlerKeys' provided for '${Constructor.name}'.\n`,
     code,
   });
 
-  invariant(isPlainObject(Constructor.customKeys), {
+  invariant(isArray(Constructor.customKeys), {
     message: `No static 'customKeys' provided for '${Constructor.name}'.\n`,
     code,
   });

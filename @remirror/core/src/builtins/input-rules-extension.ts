@@ -24,15 +24,14 @@ export class InputRulesExtension extends PlainExtension {
   /**
    * Ensure that all ssr transformers are run.
    */
-  public onInitialize: InitializeLifecycleMethod = (parameter) => {
-    const { addPlugins, managerSettings } = parameter;
+  public onInitialize: InitializeLifecycleMethod = () => {
     const rules: InputRule[] = [];
 
     return {
       forEachExtension: (extension) => {
         if (
           // managerSettings excluded this from running
-          managerSettings.exclude?.inputRules ||
+          this.store.managerSettings.exclude?.inputRules ||
           // Method doesn't exist
           !extension.createInputRules ||
           // Extension settings exclude it
@@ -45,7 +44,7 @@ export class InputRulesExtension extends PlainExtension {
       },
 
       afterExtensionLoop: () => {
-        addPlugins(inputRules({ rules }));
+        this.store.addPlugins(inputRules({ rules }));
       },
     };
   };

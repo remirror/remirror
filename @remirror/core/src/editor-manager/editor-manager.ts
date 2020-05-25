@@ -1,6 +1,7 @@
 import {
   __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
   ErrorConstant,
+  ManagerPhase,
   RemirrorIdentifier,
 } from '@remirror/core-constants';
 import {
@@ -8,11 +9,11 @@ import {
   invariant,
   isEqual,
   isIdentifierOfType,
+  isNullOrUndefined,
   isRemirrorType,
   object,
-  omit,
 } from '@remirror/core-helpers';
-import { EditorSchema, EditorView, ProsemirrorPlugin } from '@remirror/core-types';
+import { EditorSchema, EditorView } from '@remirror/core-types';
 import { createDocumentNode, CreateDocumentNodeParameter } from '@remirror/core-utils';
 import { EditorState } from '@remirror/pm/state';
 
@@ -21,12 +22,10 @@ import {
   AnyExtension,
   AnyExtensionConstructor,
   AnyManagerStore,
-  CreateLifecycleParameter,
   CreateLifecycleReturn,
   GetExtensionUnion,
   GetMarkNameUnion,
   GetNodeNameUnion,
-  InitializeLifecycleParameter,
   InitializeLifecycleReturn,
   ManagerStoreKeys,
   SchemaFromExtensionUnion,
@@ -42,7 +41,6 @@ import {
 } from '../types';
 import {
   ignoreFunctions,
-  ManagerPhase,
   transformExtensionOrPreset as transformExtensionOrPresetList,
 } from './editor-manager-helpers';
 
@@ -151,9 +149,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * Utility getter for storing the base method parameter which is available to
    * all extensions.
    */
-  #extensionStore: Remirror.ExtensionStore<
-    SchemaFromExtensionUnion<this['~E']>
-  > = this.createExtensionStore();
+  #extensionStore: Remirror.ExtensionStore<SchemaFromExtensionUnion<this['~E']>>;
 
   #extensions: ReadonlyArray<this['~E']>;
   #extensionMap: WeakMap<AnyExtensionConstructor, this['~E']>;
@@ -287,6 +283,8 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     this.#presets = freeze(presets);
     this.#presetMap = presetMap;
 
+    this.#extensionStore = this.createExtensionStore();
+
     this.setupLifecycleHandlers();
 
     this.#phase = ManagerPhase.Create;
@@ -304,27 +302,12 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * Loops through all extensions to set up the lifecycle handlers.
    */
   private setupLifecycleHandlers() {
-    const initializeParameter = this.initializeParameter;
-    const viewParameter = omit(initializeParameter, ['addPlugins']);
-    const createParameter: CreateLifecycleParameter = {
-      ...viewParameter,
-      setExtensionStore: (key, value) => {
-        invariant(this.#phase <= ManagerPhase.Create, {
-          code: ErrorConstant.MANAGER_PHASE_ERROR,
-          message:
-            '`setExtensionStore` should only be called during the `onCreate` lifecycle hook. Make sure to only call it within the returned methods.',
-        });
-
-        this.#extensionStore[key] = value;
-      },
-    };
-
     for (const extension of this.#extensions) {
       extension.setStore(this.#extensionStore);
 
-      const createHandler = extension.onCreate?.({ ...createParameter });
-      const initializeHandler = extension.onInitialize?.({ ...initializeParameter });
-      const viewHandler = extension.onView?.({ ...viewParameter });
+      const createHandler = extension.onCreate?.();
+      const initializeHandler = extension.onInitialize?.();
+      const viewHandler = extension.onView?.();
       const transactionHandler = extension.onTransaction;
       const destroyHandler = extension.onDestroy;
 
@@ -350,15 +333,6 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     }
   }
 
-  private get initializeParameter(): Omit<InitializeLifecycleParameter, 'settings' | 'properties'> {
-    return {
-      addPlugins: this.addPlugins,
-      getStoreKey: this.getStoreKey,
-      setStoreKey: this.setStoreKey,
-      managerSettings: this.#settings,
-    };
-  }
-
   /**
    * Set the store key.
    */
@@ -366,25 +340,37 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     key: Key,
     value: AnyManagerStore[Key],
   ) => {
-    invariant(this.#phase > ManagerPhase.None, {
-      code: ErrorConstant.MANAGER_PHASE_ERROR,
-      message: '`setStoreKey` should only be called within the returned methods scope.',
-    });
-
     this.#store[key] = value;
   };
 
   private readonly getStoreKey = <Key extends ManagerStoreKeys>(key: Key): AnyManagerStore[Key] => {
-    invariant(this.#phase >= ManagerPhase.Initialize, {
+    const value = this.#store[key];
+
+    invariant(!isNullOrUndefined(value), {
       code: ErrorConstant.MANAGER_PHASE_ERROR,
-      message: '`getStoreKey` should only be called within the returned methods scope.',
+      message: '`getStoreKey` should not be called before the values are available.',
     });
 
-    return this.#store[key];
+    return value;
   };
 
-  private readonly addPlugins = (...plugins: ProsemirrorPlugin[]) => {
-    this.#store.plugins.push(...plugins);
+  /**
+   * A method to set values in the extension store which is made available to extension.
+   *
+   * **NOTE** This method should only be used in the `onCreate` extension method
+   * or it will throw an error.
+   */
+  private readonly setExtensionStore = <Key extends keyof Remirror.ExtensionStore>(
+    key: Key,
+    value: Remirror.ExtensionStore[Key],
+  ) => {
+    invariant(this.#phase <= ManagerPhase.Create, {
+      code: ErrorConstant.MANAGER_PHASE_ERROR,
+      message:
+        '`setExtensionStore` should only be called during the `onCreate` lifecycle hook. Make sure to only call it within the returned methods.',
+    });
+
+    this.#extensionStore[key] = value;
   };
 
   /**
@@ -470,23 +456,64 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * Create the initial store.
    */
   private createExtensionStore() {
-    const methodParameter: Remirror.ExtensionStore<SchemaFromExtensionUnion<this['~E']>> = object();
+    const store: Remirror.ExtensionStore<SchemaFromExtensionUnion<this['~E']>> = object();
 
-    /**
-     * A state getter method which is passed into the params.
-     */
-    methodParameter.getState = () => {
-      invariant(this.#phase >= ManagerPhase.AddView, {
-        code: ErrorConstant.MANAGER_PHASE_ERROR,
-        message:
-          '`getState` can only be called after the view has been added to the manager. Avoid using it in the outer scope of `creatorMethods`.',
-      });
+    Object.defineProperties(store, {
+      phase: {
+        get: () => {
+          return this.#phase;
+        },
+        enumerable: true,
+      },
+      view: {
+        get: () => {
+          return this.view;
+        },
+        enumerable: true,
+      },
+      isEditable: {
+        get: () => {
+          return this.view.editable;
+        },
+        enumerable: true,
+      },
+      hasFocus: {
+        get: () => {
+          return this.view.hasFocus();
+        },
+        enumerable: true,
+      },
+      managerSettings: {
+        get: () => {
+          return freeze(this.#settings);
+        },
+        enumerable: true,
+      },
+      getState: {
+        value: this.getState,
+        enumerable: true,
+      },
+    });
 
-      return this.view.state as EditorState;
-    };
+    store.getStoreKey = this.getStoreKey;
+    store.setStoreKey = this.setStoreKey;
+    store.setExtensionStore = this.setExtensionStore;
 
-    return methodParameter;
+    return store;
   }
+
+  /**
+   * A state getter method which is passed into the params.
+   */
+  private readonly getState = () => {
+    invariant(this.#phase >= ManagerPhase.EditorView, {
+      code: ErrorConstant.MANAGER_PHASE_ERROR,
+      message:
+        '`getState` can only be called after the view has been added to the manager. Avoid using it in the outer scope of `creatorMethods`.',
+    });
+
+    return this.view.state as EditorState;
+  };
 
   /**
    * Stores the editor view on the manager
@@ -500,15 +527,12 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     });
 
     // Update the lifecycle phase.
-    this.#phase = ManagerPhase.AddView;
+    this.#phase = ManagerPhase.EditorView;
 
     // Store the view.
     this.#store.view = view as EditorView;
 
     // Store the view, state and helpers for extensions
-    this.#extensionStore.view = view;
-    this.#extensionStore.isEditable = () => view.editable;
-    this.#extensionStore.hasFocus = () => view.hasFocus();
 
     for (const extension of this.#extensions) {
       this.onViewExtensionLoop(extension);
@@ -516,7 +540,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
 
     this.afterView(view);
 
-    this.#phase = ManagerPhase.Done;
+    this.#phase = ManagerPhase.Runtime;
   }
 
   /* Public Methods */
@@ -590,8 +614,16 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * An example usage of this is within the collaboration plugin.
    */
   public onTransaction(parameter: TransactionLifecycleParameter) {
-    this.#extensionStore.currentState = parameter.state;
-    this.#extensionStore.previousState = parameter.previousState;
+    Object.defineProperties(this.#extensionStore, {
+      currentState: {
+        get: () => parameter.state,
+        enumerable: true,
+      },
+      previousState: {
+        get: () => parameter.previousState,
+        enumerable: true,
+      },
+    });
 
     for (const handler of this.#handlers.transaction) {
       handler(parameter);
@@ -742,36 +774,89 @@ declare global {
 
     interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {
       /**
+       * The stage the manager is currently at.
+       */
+      readonly phase: ManagerPhase;
+
+      /**
+       * A helper method for retrieving the state of the editor
+       *
+       * Availability: **return scope** - `onView`
+       */
+      readonly getState: () => EditorState<Schema>;
+
+      /**
        * The view available to extensions once `addView` has been called on the
        * `EditorManager` instance.
+       *
+       * Availability: **return scope** - `onView`
        */
-      view: EditorView<Schema>;
+      readonly view: EditorView<Schema>;
 
       /**
        * The latest state.
+       *
+       * Availability: **return scope** - `onView`
        */
-      currentState: EditorState<Schema>;
+      readonly currentState: EditorState<Schema>;
 
       /**
        * The previous state. Will be undefined when the view is first created.
+       *
+       * Availability: **return scope** - `onView`
        */
-      previousState?: EditorState<Schema>;
+      readonly previousState?: EditorState<Schema>;
 
       /**
        * Returns true when the editor can be edited and false when it cannot.
        *
        * This is useful for deciding whether or not to run a command especially
        * if the command is resource intensive or slow.
+       *
+       * Availability: **return scope** - `onView`
        */
-      isEditable: () => boolean;
+      readonly isEditable: () => boolean;
 
       /**
        * Returns true when the is focused.
        *
        * This is useful for deciding whether or not to run a command which
        * requires the editor to be focused in order to make any sense.
+       *
+       * Availability: **return scope** - `onView`
        */
-      hasFocus: () => boolean;
+      readonly hasFocus: () => boolean;
+
+      /**
+       * The settings passed to the manager.
+       *
+       * Availability: **outer scope** - `onCreate`
+       */
+      readonly managerSettings: ManagerSettings;
+
+      /**
+       * Get the value of a key from the manager store.
+       *
+       * Availability: **outer scope** - `onCreate`
+       */
+      getStoreKey: <Key extends ManagerStoreKeys>(key: Key) => AnyManagerStore[Key];
+
+      /**
+       * Update the store with a specific key.
+       *
+       * Availability: **outer scope** - `onCreate`
+       */
+      setStoreKey: <Key extends ManagerStoreKeys>(key: Key, value: AnyManagerStore[Key]) => void;
+
+      /**
+       * Set a custom manager method parameter.
+       *
+       * Availability: **outer scope** - `onCreate`
+       */
+      setExtensionStore: <Key extends keyof Remirror.ExtensionStore>(
+        key: Key,
+        value: Remirror.ExtensionStore[Key],
+      ) => void;
     }
   }
 }

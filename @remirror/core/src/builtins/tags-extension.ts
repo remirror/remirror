@@ -24,7 +24,7 @@ export class TagsExtension extends PlainExtension {
     return 'tags' as const;
   }
 
-  public onCreate: CreateLifecycleMethod = (parameter) => {
+  public onCreate: CreateLifecycleMethod = () => {
     const general: GeneralExtensionTags = {
       [ExtensionTag.FormattingMark]: [],
       [ExtensionTag.FormattingNode]: [],
@@ -48,7 +48,7 @@ export class TagsExtension extends PlainExtension {
     };
 
     return {
-      forEachExtension(extension) {
+      forEachExtension: (extension) => {
         if (isNodeExtension(extension)) {
           const group = extension.spec.group as NodeGroup;
           const name = extension.name;
@@ -74,12 +74,11 @@ export class TagsExtension extends PlainExtension {
             : [...generalTag, extension.name];
         }
       },
-      afterExtensionLoop() {
-        const { setStoreKey, setExtensionStore } = parameter;
+      afterExtensionLoop: () => {
         const tags = { general, mark, node };
 
-        setStoreKey('tags', tags);
-        setExtensionStore('tags', () => tags);
+        this.store.setStoreKey('tags', tags);
+        this.store.setExtensionStore('tags', () => tags);
       },
     };
   };

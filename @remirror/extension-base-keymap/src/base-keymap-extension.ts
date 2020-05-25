@@ -1,17 +1,19 @@
 import {
-  chainKeyBindingCommands,
   convertCommand,
   Custom,
   CustomKeyList,
   DefaultExtensionOptions,
   entries,
   ExtensionPriority,
-  isFunction,
   KeyBindingCommandFunction,
   KeyBindings,
+  mergeKeyBindings,
+  noop,
   object,
+  OnSetOptionsParameter,
   PlainExtension,
 } from '@remirror/core';
+import { OnSetCustomOption } from '@remirror/core/src/extension/base-class';
 import {
   baseKeymap,
   chainCommands as pmChainCommands,
@@ -95,6 +97,7 @@ export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
     defaultBindingMethod: () => false,
     selectParentNodeOnEscape: false,
     excludeBaseKeymap: false,
+    keymap: {},
   };
 
   public static readonly customKeys: CustomKeyList<BaseKeymapOptions> = ['keymap'];
@@ -106,62 +109,89 @@ export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
   public readonly defaultPriority = ExtensionPriority.Low as const;
 
   /**
-   * Use the default keymaps available via
+   * The base keybinding which will be generated from the provided properties.
+   */
+  private baseKeyBindings: KeyBindings = object();
+
+  /**
+   * The custom keybindings added
+   */
+  private extraKeyBindings: KeyBindings[] = [];
+
+  /**
+   * Create the base keymap and merge it with any custom keymaps provided by the
+   * user as CustomOptions.
    */
   public createKeymap = () => {
+    this.createBaseKeymap();
+    return this.buildKeymap();
+  };
+
+  /**
+   * TODO think about the case where bindings are being disposed and then added
+   * in a different position in the `extraKeyBindings` array.
+   */
+  public onSetCustomOption: OnSetCustomOption<BaseKeymapOptions> = (key, value) => {
+    if (key === 'keymap') {
+      this.extraKeyBindings = [...this.extraKeyBindings, value];
+
+      return () => this.extraKeyBindings.filter((binding) => binding !== value);
+    }
+
+    return noop;
+  };
+
+  /**
+   * Handle changes in the dynamic properties.
+   */
+  protected onSetOptions(parameter: OnSetOptionsParameter<BaseKeymapOptions>) {
+    const { changes, reason } = parameter;
+    let shouldReconfigureBindings = false;
+
+    if (reason === 'init') {
+      return;
+    }
+
+    if (
+      changes.defaultBindingMethod ||
+      changes.excludeBaseKeymap ||
+      changes.selectParentNodeOnEscape ||
+      changes.undoInputRuleOnBackspace
+    ) {
+      shouldReconfigureBindings = true;
+    }
+
+    if (shouldReconfigureBindings) {
+      this.store.rebuildKeymap();
+    }
+  }
+
+  private createBaseKeymap() {
     const { selectParentNodeOnEscape, undoInputRuleOnBackspace, excludeBaseKeymap } = this.options;
 
-    const keyBindings: KeyBindings = object();
+    this.baseKeyBindings = object();
 
     // Only add the base keymap if it is **NOT** excluded.
     if (!excludeBaseKeymap) {
       for (const [key, value] of entries(baseKeymap)) {
-        keyBindings[key] = convertCommand(value);
+        this.baseKeyBindings[key] = convertCommand(value);
       }
     }
 
     // Automatically remove the input rule when the option is set to true.
     if (undoInputRuleOnBackspace) {
-      keyBindings.Backspace = convertCommand(pmChainCommands(undoInputRule, baseKeymap.Backspace));
+      this.baseKeyBindings.Backspace = convertCommand(
+        pmChainCommands(undoInputRule, baseKeymap.Backspace),
+      );
     }
 
     // Allow escape to select the parent node when set to true.
     if (selectParentNodeOnEscape) {
-      keyBindings.Escape = convertCommand(selectParentNode);
+      this.baseKeyBindings.Escape = convertCommand(selectParentNode);
     }
+  }
 
-    const extraBindings = this.buildExtraKeyBindings();
-
-    for (const [key, newCommand] of entries(extraBindings)) {
-      const oldCommand = keyBindings[key];
-      keyBindings[key] = oldCommand ? chainKeyBindingCommands(newCommand, oldCommand) : newCommand;
-    }
-
-    return keyBindings;
-  };
-
-  /**
-   * Dynamically create the keybindings object so that it always uses the latest
-   * properties in the methods.
-   */
-  private buildExtraKeyBindings() {
-    const keyBindings: KeyBindings = object();
-
-    for (const key of this.options.extraKeys) {
-      keyBindings[key] = (parameter) => {
-        // Get the keymap object from the properties
-        const keymap = isFunction(this.options.keymap)
-          ? this.options.keymap(this.store)
-          : this.options.keymap;
-
-        // If the supported keys doesn't exist on the properties keymap then use
-        // the default method.
-        const binding: KeyBindingCommandFunction = keymap[key] ?? this.options.defaultBindingMethod;
-
-        return binding(parameter);
-      };
-    }
-
-    return keyBindings;
+  private buildKeymap() {
+    return mergeKeyBindings([...this.extraKeyBindings, this.baseKeyBindings]);
   }
 }

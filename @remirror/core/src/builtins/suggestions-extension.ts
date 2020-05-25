@@ -25,15 +25,14 @@ export class SuggestionsExtension extends PlainExtension {
   /**
    * Ensure that all ssr transformers are run.
    */
-  public onInitialize: InitializeLifecycleMethod = (parameter) => {
-    const { addPlugins, managerSettings } = parameter;
+  public onInitialize: InitializeLifecycleMethod = () => {
     const suggesters: Suggestion[] = [];
 
     return {
       forEachExtension: (extension) => {
         if (
           // Manager settings excluded this from running
-          managerSettings.exclude?.suggesters ||
+          this.store.managerSettings.exclude?.suggesters ||
           // Method doesn't exist
           !extension.createSuggestions ||
           // Extension settings exclude it from running
@@ -48,7 +47,7 @@ export class SuggestionsExtension extends PlainExtension {
       },
 
       afterExtensionLoop: () => {
-        addPlugins(suggest(...suggesters));
+        this.store.addPlugins(suggest(...suggesters));
       },
     };
   };

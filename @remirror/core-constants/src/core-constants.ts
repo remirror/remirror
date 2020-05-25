@@ -329,3 +329,41 @@ export enum ExtensionPriority {
    */
   Lowest = 100000,
 }
+
+/**
+ * Identifies the stage the extension manager is at.
+ */
+export enum ManagerPhase {
+  None,
+
+  /**
+   * When the extension manager is being created and the onCreate methods are
+   * being called.
+   *
+   * This happens within the EditorManager constructor.
+   */
+  Create,
+
+  /**
+   * When the extension manager is being initialized. This is when the
+   * onInitialize methods are being called.
+   */
+  Initialize,
+
+  /**
+   * When the view is being added and all onViewAdded methods are being called.
+   */
+  EditorView,
+
+  /**
+   * The phases of creating this manager are completed.
+   */
+  Runtime,
+
+  /**
+   * The manager is being destroyed.
+   *
+   * TODO not currently implemented
+   */
+  Destroy,
+}

@@ -305,16 +305,5 @@ declare global {
      * editor.
      */
     interface BaseExtensionOptions {}
-
-    /**
-     * Parameters passed into many of the extension methods. These can be added
-     * to by the parameter methods.
-     */
-    interface ExtensionStore<Schema extends EditorSchema> {
-      /**
-       * A helper method for retrieving the state of the editor
-       */
-      getState: () => EditorState<Schema>;
-    }
   }
 }

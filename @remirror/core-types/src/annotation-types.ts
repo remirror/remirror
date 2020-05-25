@@ -174,6 +174,7 @@ export type GetFlippedStatic<Options extends ValidOptions> = FlipPartialAndRequi
 export type GetPartialDynamic<Options extends ValidOptions> = Partial<GetDynamic<Options>>;
 export type GetFixedStatic<Options extends ValidOptions> = Readonly<Required<GetStatic<Options>>>;
 export type GetFixedDynamic<Options extends ValidOptions> = Readonly<Required<GetDynamic<Options>>>;
+export type GetFixedCustom<Options extends ValidOptions> = Readonly<Required<GetCustom<Options>>>;
 
 export type GetMappedHandler<Options extends ValidOptions> = {
   [Key in keyof GetHandler<Options>]: Array<GetHandler<Options>[Key]>;
@@ -186,7 +187,7 @@ export type GetMappedCustom<Options extends ValidOptions> = {
  * The options that can be passed into a constructor.
  */
 export type GetConstructorParameter<Options extends ValidOptions> = GetStatic<Options> &
-  Partial<GetDynamic<Options>>;
+  GetDynamic<Options>;
 
 /**
  * A function used to cleanup any effects from the `Handler` or `Custom`

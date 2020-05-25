@@ -28,9 +28,7 @@ export class AttributesExtension extends PlainExtension {
    *
    * @internal
    */
-  public onInitialize: InitializeLifecycleMethod = (parameter) => {
-    const { managerSettings, setStoreKey } = parameter;
-
+  public onInitialize: InitializeLifecycleMethod = () => {
     const attributeList: AttributesWithClass[] = [];
     let attributeObject: AttributesWithClass = object();
 
@@ -38,7 +36,7 @@ export class AttributesExtension extends PlainExtension {
       forEachExtension: (extension) => {
         if (
           !extension.createAttributes ||
-          managerSettings.exclude?.attributes ||
+          this.store.managerSettings.exclude?.attributes ||
           extension.options.exclude?.attributes
         ) {
           return;
@@ -62,7 +60,7 @@ export class AttributesExtension extends PlainExtension {
           };
         }
 
-        setStoreKey('attributes', attributeObject);
+        this.store.setStoreKey('attributes', attributeObject);
       },
     };
   };

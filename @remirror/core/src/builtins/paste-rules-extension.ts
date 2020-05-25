@@ -19,15 +19,14 @@ export class PasteRulesExtension extends PlainExtension {
   /**
    * Ensure that all ssr transformers are run.
    */
-  public onInitialize: InitializeLifecycleMethod = (parameter) => {
-    const { addPlugins, managerSettings } = parameter;
+  public onInitialize: InitializeLifecycleMethod = () => {
     const pasteRules: ProsemirrorPlugin[] = [];
 
     return {
       forEachExtension: (extension) => {
         if (
           // managerSettings excluded this from running
-          managerSettings.exclude?.pasteRules ||
+          this.store.managerSettings.exclude?.pasteRules ||
           // Method doesn't exist
           !extension.createPasteRules ||
           // Extension settings exclude it
@@ -40,7 +39,7 @@ export class PasteRulesExtension extends PlainExtension {
       },
 
       afterExtensionLoop: () => {
-        addPlugins(...pasteRules);
+        this.store.addPlugins(...pasteRules);
       },
     };
   };

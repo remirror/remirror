@@ -35,11 +35,9 @@ export class HelpersExtension extends PlainExtension {
   /**
    * Provide a method with access to the helpers for use in commands and helpers.
    */
-  public onCreate: CreateLifecycleMethod = (parameter) => {
-    const { setExtensionStore, getStoreKey } = parameter;
-
-    setExtensionStore('helpers', () => {
-      const helpers = getStoreKey('helpers');
+  public onCreate: CreateLifecycleMethod = () => {
+    this.store.setExtensionStore('getHelpers', () => {
+      const helpers = this.store.getStoreKey('helpers');
       invariant(helpers, { code: ErrorConstant.HELPERS_CALLED_IN_OUTER_SCOPE });
 
       return helpers as any;
@@ -51,7 +49,7 @@ export class HelpersExtension extends PlainExtension {
   /**
    * Helpers are only available once the view has been added to `EditorManager`.
    */
-  public onView: ViewLifecycleMethod = (parameter) => {
+  public onView: ViewLifecycleMethod = () => {
     const helpers: Record<string, AnyFunction> = object();
     const names = new Set<string>();
 
@@ -68,10 +66,8 @@ export class HelpersExtension extends PlainExtension {
           helpers[name] = helper;
         }
       },
-      afterExtensionLoop() {
-        const { setStoreKey } = parameter;
-
-        setStoreKey('helpers', helpers);
+      afterExtensionLoop: () => {
+        this.store.setStoreKey('helpers', helpers);
       },
     };
   };
@@ -146,7 +142,7 @@ declare global {
        * Helper method to provide information about the content of the editor.
        * Each extension can register its own helpers.
        */
-      helpers: <ExtensionUnion extends AnyExtension = AnyExtension>() => HelpersFromExtensions<
+      getHelpers: <ExtensionUnion extends AnyExtension = AnyExtension>() => HelpersFromExtensions<
         ExtensionUnion | HelpersExtension
       >;
     }

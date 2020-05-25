@@ -6,12 +6,12 @@ import { DefaultPresetOptions, Preset } from '../preset-base';
 
 interface FirstOptions {
   a?: Static<number>;
-  y: number | undefined;
+  y?: number | undefined;
 }
 
 interface SecondOptions {
   b: Static<string>;
-  z: string;
+  z?: string;
 }
 
 interface Options extends FirstOptions, SecondOptions {}
@@ -28,7 +28,7 @@ class FirstExtension extends PlainExtension<FirstOptions> {
 class SecondExtension extends PlainExtension<SecondOptions> {
   public static readonly defaultOptions: DefaultPresetOptions<SecondOptions> = {
     b: 'setting b',
-    z: '',
+    z: 'z is awesome',
   };
   public static staticKeys = ['b'];
 
@@ -41,8 +41,8 @@ describe('simplest preset', () => {
   class TestPreset extends Preset<Partial<Options>> {
     public static readonly defaultOptions: DefaultPresetOptions<Options> = {
       a: FirstExtension.defaultOptions.a ?? '',
+      y: FirstExtension.defaultOptions.y,
       b: SecondExtension.defaultOptions.b ?? 'none specified',
-      y: undefined,
       z: SecondExtension.defaultOptions.z,
     };
 
@@ -51,7 +51,7 @@ describe('simplest preset', () => {
     }
 
     public createExtensions() {
-      return [new FirstExtension({}), new SecondExtension({ b: this.options.b })];
+      return [new FirstExtension({ y: 10 }), new SecondExtension({ b: this.options.b })];
     }
 
     protected onSetOptions(parameter: OnSetOptionsParameter<Partial<Options>>) {
@@ -89,10 +89,10 @@ describe('simplest preset', () => {
     expect(secondExtension.options.z).toBe('a whole new world');
   });
 
-  it('can reset properties', () => {
+  it('can reset properties to initial values', () => {
     testPreset.resetOptions();
 
-    expect(firstExtension.options).toEqual(FirstExtension.defaultOptions);
-    expect(secondExtension.options).toEqual({ z: 'override property z' });
+    expect(firstExtension.options).toMatchObject(FirstExtension.defaultOptions);
+    expect(secondExtension.options).toMatchObject({ z: SecondExtension.defaultOptions.z });
   });
 });

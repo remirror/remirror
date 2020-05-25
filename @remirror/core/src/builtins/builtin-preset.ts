@@ -13,6 +13,8 @@ import { TagsExtension } from './tags-extension';
 
 /** A list of all the builtIn extensions. */
 export const builtInExtensions = [
+  SchemaExtension,
+  PluginsExtension,
   AttributesExtension,
   CommandsExtension,
   HelpersExtension,
@@ -20,8 +22,6 @@ export const builtInExtensions = [
   KeymapExtension,
   NodeViewsExtension,
   PasteRulesExtension,
-  PluginsExtension,
-  SchemaExtension,
   SuggestionsExtension,
   TagsExtension,
 ] as const;
