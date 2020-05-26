@@ -5,3 +5,4 @@ packages:
   - 'deprecated/*'
   - docs
   - e2e
+  - support

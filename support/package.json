@@ -1,0 +1,14 @@
+{
+  "name": "@remirror/support",
+  "version": "0.0.0",
+  "description": "The support directory for the remirror monorepo",
+  "license": "ISC",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@remirror/pm": "*",
+    "remirror": "*"
+  }
+}
