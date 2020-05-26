@@ -8,7 +8,7 @@ export interface TemplateExtensionOptions {}
  * @core
  */
 export class TemplateExtension extends PlainExtension<TemplateExtensionOptions> {
-  public onSetCus = {};
+  public static readonly defaultOptions = {};
 
   get name() {
     return 'template' as const;

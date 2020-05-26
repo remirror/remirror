@@ -185,7 +185,7 @@ export abstract class BaseClass<
     const previousOptions = this.getDynamicOptions();
     const reason: UpdateReason = this.#hasInitialized ? 'set' : 'init';
 
-    const { changes, options } = getChangedOptions({
+    const { changes, options, pickChanged } = getChangedOptions({
       previousOptions,
       update,
     });
@@ -196,6 +196,7 @@ export abstract class BaseClass<
       reason,
       changes,
       options,
+      pickChanged,
       initialOptions: this.#initialOptions,
     });
 
@@ -215,7 +216,7 @@ export abstract class BaseClass<
    */
   public resetOptions() {
     const previousOptions = this.getDynamicOptions();
-    const { changes, options } = getChangedOptions<Options>({
+    const { changes, options, pickChanged } = getChangedOptions<Options>({
       previousOptions,
       update: this.#initialOptions,
     });
@@ -226,6 +227,7 @@ export abstract class BaseClass<
       reason: 'reset',
       options,
       changes,
+      pickChanged,
       initialOptions: this.#initialOptions,
     });
 
@@ -234,6 +236,21 @@ export abstract class BaseClass<
 
   /**
    * Override this to received updates whenever `setOptions` is called.
+   *
+   * **Please Note**:
+   *
+   * This must be defined as a instance method and not a property since it is
+   * called in the constructor.
+   *
+   * ```ts
+   * class ThisPreset extends Preset {
+   *   // GOOD ✅
+   *   onSetOptions(parameter: OnSetOptionsParameter<{}>) {}
+   *
+   *    // BAD ❌
+   *   onSetOptions = (parameter: OnSetOptionsParameter<{}>) => {}
+   * }
+   * ```
    *
    * @abstract
    */
@@ -295,10 +312,7 @@ export abstract class BaseClass<
    *
    * @nonVirtual
    */
-  public addHandler = <Key extends keyof GetHandler<Options>>(
-    key: Key,
-    method: GetHandler<Options>[Key],
-  ): Dispose => {
+  public addHandler: AddHandler<Options> = (key, method) => {
     this.#mappedHandlers[key].push(method);
 
     // Return a method for disposing of the handler.
@@ -311,24 +325,24 @@ export abstract class BaseClass<
   /**
    * A method that can be used to set the value of a custom option.
    */
-  public setCustomOption = <Key extends keyof GetCustom<Options>>(
-    key: Key,
-    method: GetCustom<Options>[Key],
-  ): Dispose => {
+  public setCustomOption: SetCustomOption<Options> = (key, method) => {
     return this.onSetCustomOption?.(key, method) ?? noop;
   };
 
   /**
    * Override this method if you want to set custom options on your extension.
    */
-  public onSetCustomOption?: OnSetCustomOption<Options>;
+  public onSetCustomOption?: SetCustomOption<Options>;
 }
 
-export type OnSetCustomOption<Options extends ValidOptions> = <
-  Key extends keyof GetCustom<Options>
->(
+export type SetCustomOption<Options extends ValidOptions> = <Key extends keyof GetCustom<Options>>(
   key: Key,
   value: Required<GetCustom<Options>>[Key],
+) => Dispose;
+
+export type AddHandler<Options extends ValidOptions> = <Key extends keyof GetHandler<Options>>(
+  key: Key,
+  method: GetHandler<Options>[Key],
 ) => Dispose;
 
 export interface BaseClass<

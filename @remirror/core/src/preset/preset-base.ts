@@ -28,7 +28,7 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
   /**
    * The default options for this preset.
    */
-  public onSetCus = {};
+  public static readonly defaultOptions = {};
 
   /**
    * The preset constructor identifier key.
@@ -105,9 +105,26 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
   public abstract createExtensions(): AnyExtension[];
 
   /**
-   * Called every time properties for this extension are set or reset. This is
+   * Called every time the options for this extension are set or reset. This is
    * also called when the extension is first created with the default
-   * properties.
+   * options.
+   *
+   * @remarks
+   *
+   * **Please Note**:
+   *
+   * This must be defined as a instance method and not a property since it is
+   * called in the constructor.
+   *
+   * ```ts
+   * class ThisPreset extends Preset {
+   *   // GOOD ✅
+   *   onSetOptions(parameter: OnSetOptionsParameter<{}>) {}
+   *
+   *    // BAD ❌
+   *   onSetOptions = (parameter: OnSetOptionsParameter<{}>) => {}
+   * }
+   * ```
    */
   protected abstract onSetOptions(parameter: OnSetOptionsParameter<Options>): void;
 

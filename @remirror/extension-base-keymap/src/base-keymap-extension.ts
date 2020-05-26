@@ -12,8 +12,8 @@ import {
   object,
   OnSetOptionsParameter,
   PlainExtension,
+  SetCustomOption,
 } from '@remirror/core';
-import { OnSetCustomOption } from '@remirror/core/src/extension/base-class';
 import {
   baseKeymap,
   chainCommands as pmChainCommands,
@@ -92,7 +92,7 @@ export interface BaseKeymapOptions {
  * @builtin
  */
 export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
-  public onSetCus: DefaultExtensionOptions<BaseKeymapOptions> = {
+  public static readonly defaultOptions: DefaultExtensionOptions<BaseKeymapOptions> = {
     undoInputRuleOnBackspace: true,
     defaultBindingMethod: () => false,
     selectParentNodeOnEscape: false,
@@ -131,7 +131,7 @@ export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
    * TODO think about the case where bindings are being disposed and then added
    * in a different position in the `extraKeyBindings` array.
    */
-  public onSetCustomOption: OnSetCustomOption<BaseKeymapOptions> = (key, value) => {
+  public onSetCustomOption: SetCustomOption<BaseKeymapOptions> = (key, value) => {
     if (key === 'keymap') {
       this.extraKeyBindings = [...this.extraKeyBindings, value];
 

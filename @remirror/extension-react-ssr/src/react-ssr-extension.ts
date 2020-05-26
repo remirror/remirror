@@ -31,8 +31,8 @@ import { getElementProps, isReactDOMElement, isReactFragment } from '@remirror/r
  * The transformations can also serve as a guideline when creating your own
  * SSRTransforms. However in most cases the defaults should be sufficient.
  */
-export class ReactSSRExtension extends PlainExtension<object, ReactSSRProperties> {
-  public static readonly defaultProperties: Required<ReactSSRProperties> = {
+export class ReactSSRExtension extends PlainExtension<ReactSSROptions> {
+  public static readonly defaultOptions: Required<ReactSSROptions> = {
     transformers: [injectBrIntoEmptyParagraphs],
   };
 
@@ -40,25 +40,23 @@ export class ReactSSRExtension extends PlainExtension<object, ReactSSRProperties
     return 'reactSSR' as const;
   }
 
-  public onCreate: CreateLifecycleMethod = (parameter) => {
-    const { setStoreKey, managerSettings } = parameter;
-
+  public onCreate: CreateLifecycleMethod = () => {
     const components: Record<string, ComponentType<any>> = object();
 
     return {
-      forEachExtension(extension) {
+      forEachExtension: (extension) => {
         if (
-          managerSettings.exclude?.reactSSR ||
+          this.store.managerSettings.exclude?.reactSSR ||
           !extension.createSSRComponent ||
-          extension.options.exclude.reactSSR
+          extension.options.exclude?.reactSSR
         ) {
           return;
         }
 
         components[extension.name] = extension.createSSRComponent();
       },
-      afterExtensionLoop() {
-        setStoreKey('components', components);
+      afterExtensionLoop: () => {
+        this.store.setStoreKey('components', components);
       },
     };
   };
@@ -66,8 +64,7 @@ export class ReactSSRExtension extends PlainExtension<object, ReactSSRProperties
   /**
    * Ensure that all ssr transformers are run.
    */
-  public onInitialize: InitializeLifecycleMethod = (parameter) => {
-    const { setStoreKey } = parameter;
+  public onInitialize: InitializeLifecycleMethod = () => {
     const ssrTransformers: Array<() => SSRTransformer> = [];
 
     const ssrTransformer: SSRTransformer = (initialElement) => {
@@ -82,7 +79,7 @@ export class ReactSSRExtension extends PlainExtension<object, ReactSSRProperties
 
     return {
       forEachExtension: (extension) => {
-        if (!extension.createSSRTransformer || extension.options.exclude.reactSSR) {
+        if (!extension.createSSRTransformer || extension.options.exclude?.reactSSR) {
           return;
         }
 
@@ -90,7 +87,7 @@ export class ReactSSRExtension extends PlainExtension<object, ReactSSRProperties
       },
 
       afterExtensionLoop: () => {
-        setStoreKey('ssrTransformer', ssrTransformer);
+        this.store.setStoreKey('ssrTransformer', ssrTransformer);
       },
     };
   };
@@ -111,7 +108,7 @@ export class ReactSSRExtension extends PlainExtension<object, ReactSSRProperties
   };
 }
 
-export interface ReactSSRProperties {
+export interface ReactSSROptions {
   /**
    * The transformers that will be automatically used in the editor for properly
    * rendering ssr.

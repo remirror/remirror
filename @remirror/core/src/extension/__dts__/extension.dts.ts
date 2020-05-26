@@ -10,7 +10,7 @@ import {
   NodeExtensionSpec,
   PlainExtension,
 } from '../../..';
-import { OnSetCustomOption } from '../base-class';
+import { SetCustomOption } from '../base-class';
 
 const anyExtensionTester = <ExtensionUnion extends AnyExtension>(extension: ExtensionUnion) => {};
 const anyNodeExtensionTester = <ExtensionUnion extends AnyNodeExtension>(
@@ -73,7 +73,7 @@ const defaultOptions: DefaultExtensionOptions<WithDynamicOptions> = {
 const failDefaultOptions: DefaultExtensionOptions<WithDynamicOptions> = { onChange: () => {} };
 
 class ExtensionWithDynamicOptions extends PlainExtension<WithDynamicOptions> {
-  public onSetCus: DefaultExtensionOptions<WithDynamicOptions> = {
+  public static readonly defaultOptions: DefaultExtensionOptions<WithDynamicOptions> = {
     awesome: 'yes indeed',
     oops: true,
   };
@@ -156,7 +156,7 @@ class ExtensionWithHandlers extends PlainExtension<WithHandlers> {
     return 'withHandlers' as const;
   }
 
-  public onSetCustomOption: OnSetCustomOption<WithHandlers> = (key, value) => {
+  public onSetCustomOption: SetCustomOption<WithHandlers> = (key, value) => {
     const a: 'bindings' = key;
 
     if (key === 'bindings') {

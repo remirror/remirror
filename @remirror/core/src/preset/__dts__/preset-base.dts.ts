@@ -52,7 +52,7 @@ interface WithStaticOptions {
 }
 
 class WithStaticOptionsPreset extends Preset<WithStaticOptions> {
-  public onSetCus: DefaultPresetOptions<WithStaticOptions> = { me: 'friend' };
+  public static readonly defaultOptions: DefaultPresetOptions<WithStaticOptions> = { me: 'friend' };
 
   get name() {
     return 'withStaticOptions' as const;
@@ -90,7 +90,7 @@ interface WithDynamicOptions {
 }
 
 class WithDynamicOptionsPreset extends Preset<WithDynamicOptions> {
-  public onSetCus: DefaultPresetOptions<WithDynamicOptions> = {
+  public static readonly defaultOptions: DefaultPresetOptions<WithDynamicOptions> = {
     required: true,
     custom: '',
     me: '',

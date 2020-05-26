@@ -13,4 +13,9 @@ export * from './types';
 // TODO move to a new package.
 export * from './commands';
 
-export type { BaseClass, BaseClassConstructor } from './extension/base-class';
+export type {
+  BaseClass,
+  BaseClassConstructor,
+  AddHandler,
+  SetCustomOption,
+} from './extension/base-class';
