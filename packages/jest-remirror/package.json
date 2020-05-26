@@ -22,7 +22,7 @@
     "environment"
   ],
   "dependencies": {
-    "@babel/runtime": "^7",
+    "@babel/runtime": "^7.10.0",
     "@remirror/core": "^0.11.0",
     "@remirror/pm": "^0.0.0",
     "@remirror/preset-core": "^0.0.0",
@@ -35,7 +35,7 @@
     "@types/sanitize-html": "^1.23.0",
     "@types/testing-library__react": "^10.0.1",
     "jest-prosemirror": "^0.8.3",
-    "jest-snapshot": "^26.0.0",
+    "jest-snapshot": "^26.0.1",
     "mutationobserver-shim": "^0.3.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

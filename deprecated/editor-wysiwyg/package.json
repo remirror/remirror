@@ -13,8 +13,8 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7",
-    "@emotion/styled": "^10.0.23",
+    "@babel/runtime": "^7.10.0",
+    "@emotion/styled": "^10.0.27",
     "@remirror/core": "^0.11.0",
     "@remirror/core-extensions": "^0.13.1",
     "@remirror/extension-code-block": "^0.12.0",
@@ -24,12 +24,12 @@
     "@remirror/react-utils": "^0.7.6",
     "@remirror/ui": "^0.7.6",
     "@remirror/ui-buttons": "^0.7.7",
-    "@remirror/ui-icons": "^0.7.7",
+    "@remirror/ui-icons": "^0.7.8",
     "refractor": "^3.0.0",
     "w3c-keyname": "^2.2.4"
   },
   "devDependencies": {
-    "@emotion/core": "^10.0.22",
+    "@emotion/core": "^10.0.28",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "react": "^16.13.1",

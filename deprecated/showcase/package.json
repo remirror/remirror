@@ -13,10 +13,10 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7",
+    "@babel/runtime": "^7.10.0",
     "@remirror/core": "^0.11.0",
     "@remirror/core-extensions": "^0.13.1",
-    "@remirror/dev": "^0.13.1",
+    "@remirror/dev": "^0.13.2",
     "@remirror/editor-markdown": "^0.13.1",
     "@remirror/editor-social": "^0.13.1",
     "@remirror/editor-wysiwyg": "^0.13.1",
@@ -30,7 +30,7 @@
     "prettier": "^2.0.5"
   },
   "devDependencies": {
-    "@emotion/core": "^10.0.22",
+    "@emotion/core": "^10.0.28",
     "@types/react": "^16.9.35",
     "react": "^16.13.1"
   },
