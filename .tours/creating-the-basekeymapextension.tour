@@ -9,7 +9,7 @@
     {
       "file": "%40remirror/extension-base-keymap/src/base-keymap-extension.ts",
       "line": 109,
-      "description": "When settings are defined for an extension class it needs to set some `defaultSettings` as a static property. This means they can be accessed via the constructor at runtime.\n\nUnfortunately it's very hard for typescript to enforce settings for static properties, but the value of static properties is that they can be accessed by other parts of the codebase. \n\nThis means settings can be shared easily between `Preset`'s and `Extension`'s. Eventually an `eslint` rule will be added to automatically warn when the required settings or properties are missing  and fill in the template for you."
+      "description": "When settings are defined for an extension class it needs to set some `defaultOptions` as a static property. This means they can be accessed via the constructor at runtime.\n\nUnfortunately it's very hard for typescript to enforce settings for static properties, but the value of static properties is that they can be accessed by other parts of the codebase. \n\nThis means settings can be shared easily between `Preset`'s and `Extension`'s. Eventually an `eslint` rule will be added to automatically warn when the required settings or properties are missing  and fill in the template for you."
     },
     {
       "file": "%40remirror/extension-base-keymap/src/base-keymap-extension.ts",

@@ -149,7 +149,7 @@ factory objects in typescript.
 
 There are a few pitfalls to the new solution.
 
-- `defaultSettings` and `defaultProperties` were really nice with the factory pattern. The extension
+- `defaultOptions` and `defaultProperties` were really nice with the factory pattern. The extension
   factory could infer whether you needed to add defaults based on the shape of the `Settings` /
   `Properties`. With the new class syntax this isn't possible. Now the extension requires a static
   property on the Extension class. The value should be the right shape. However this means a lot of

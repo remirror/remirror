@@ -80,7 +80,7 @@ interface KeymapExtensionOptions {
 export const BaseKeymapExtension = ExtensionFactory.typed<KeymapExtensionOptions>().plain({
   name: 'baseKeymap',
   defaultPriority: ExtensionPriority.Low,
-  defaultSettings: {
+  defaultOptions: {
     undoInputRuleOnBackspace: true,
     selectParentNodeOnEscape: false,
     excludeBaseKeymap: false,

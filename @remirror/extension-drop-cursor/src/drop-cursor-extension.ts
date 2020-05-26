@@ -19,7 +19,7 @@ import { Decoration, DecorationSet } from '@remirror/pm/view';
  * decoration has a class and can be styled however you want.
  */
 export class DropCursorExtension extends PlainExtension<DropCursorSettings, DropCursorProperties> {
-  public static defaultSettings: DefaultExtensionOptions<DropCursorSettings> = {
+  public static defaultOptions: DefaultExtensionOptions<DropCursorSettings> = {
     inlineWidth: '2px',
     inlineSpacing: '10px',
     blockWidth: '100%',

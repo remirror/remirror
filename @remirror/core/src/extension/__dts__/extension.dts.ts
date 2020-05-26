@@ -73,7 +73,7 @@ const defaultOptions: DefaultExtensionOptions<WithDynamicOptions> = {
 const failDefaultOptions: DefaultExtensionOptions<WithDynamicOptions> = { onChange: () => {} };
 
 class ExtensionWithDynamicOptions extends PlainExtension<WithDynamicOptions> {
-  public static readonly defaultOptions: DefaultExtensionOptions<WithDynamicOptions> = {
+  public onSetCus: DefaultExtensionOptions<WithDynamicOptions> = {
     awesome: 'yes indeed',
     oops: true,
   };

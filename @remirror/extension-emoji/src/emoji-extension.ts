@@ -30,7 +30,7 @@ import {
 } from './emoji-utils';
 
 export class EmojiExtension extends PlainExtension<EmojiSettings, EmojiProperties> {
-  public static readonly defaultSettings: DefaultExtensionOptions<EmojiSettings> = {
+  public static readonly defaultOptions: DefaultExtensionOptions<EmojiSettings> = {
     defaultEmoji: DEFAULT_FREQUENTLY_USED,
     suggestionCharacter: ':',
   };

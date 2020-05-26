@@ -6,7 +6,7 @@ import { createPlaceholderPlugin } from './placeholder-plugin';
 
 export const PlaceholderExtension = ExtensionFactory.typed<PlaceholderExtensionOptions>().plain({
   name: 'placeholder',
-  defaultSettings: {
+  defaultOptions: {
     emptyNodeClass: EMPTY_NODE_CLASS_NAME,
     placeholderStyle: {},
     placeholder: '',

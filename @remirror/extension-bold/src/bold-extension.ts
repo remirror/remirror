@@ -26,7 +26,7 @@ export interface BoldExtensionOptions {
  * or at the provided position range bold.
  */
 export class BoldExtension extends MarkExtension<BoldExtensionOptions> {
-  public static readonly defaultSettings = { weight: null };
+  public static readonly defaultOptions = { weight: null };
 
   get name() {
     return 'bold' as const;

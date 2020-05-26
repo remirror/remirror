@@ -23,7 +23,7 @@ import { marginToIndent } from './node-utils';
  * @core
  */
 export class ParagraphExtension extends NodeExtension<ParagraphOptions> {
-  public static readonly defaultOptions: DefaultExtensionOptions<ParagraphOptions> = {
+  public onSetCus: DefaultExtensionOptions<ParagraphOptions> = {
     indentAttribute: INDENT_ATTRIBUTE,
     indentLevels: INDENT_LEVELS,
   };

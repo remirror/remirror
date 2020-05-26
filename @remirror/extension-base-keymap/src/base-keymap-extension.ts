@@ -92,7 +92,7 @@ export interface BaseKeymapOptions {
  * @builtin
  */
 export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
-  public static readonly defaultOptions: DefaultExtensionOptions<BaseKeymapOptions> = {
+  public onSetCus: DefaultExtensionOptions<BaseKeymapOptions> = {
     undoInputRuleOnBackspace: true,
     defaultBindingMethod: () => false,
     selectParentNodeOnEscape: false,

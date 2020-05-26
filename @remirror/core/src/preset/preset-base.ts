@@ -28,7 +28,7 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
   /**
    * The default options for this preset.
    */
-  public static readonly defaultOptions = {};
+  public onSetCus = {};
 
   /**
    * The preset constructor identifier key.

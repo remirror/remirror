@@ -37,7 +37,7 @@ import {
 } from './code-block-utils';
 
 export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlockProperties> {
-  public static readonly defaultSettings: DefaultExtensionOptions<CodeBlockSettings> = {
+  public static readonly defaultOptions: DefaultExtensionOptions<CodeBlockSettings> = {
     supportedLanguages: [],
     keyboardShortcut: mod('ShiftAlt', 'f'),
   };

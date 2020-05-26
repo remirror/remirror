@@ -65,7 +65,7 @@ const defaultHandler = () => false;
  * mentions in your own editor.
  */
 export class MentionExtension extends MarkExtension<MentionSettings, MentionProperties> {
-  public static readonly defaultSettings: DefaultExtensionOptions<MentionSettings> = {
+  public static readonly defaultOptions: DefaultExtensionOptions<MentionSettings> = {
     mentionTag: 'a' as const,
     matchers: [],
   };

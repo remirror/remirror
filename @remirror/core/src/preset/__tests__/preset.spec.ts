@@ -17,7 +17,7 @@ interface SecondOptions {
 interface Options extends FirstOptions, SecondOptions {}
 
 class FirstExtension extends PlainExtension<FirstOptions> {
-  public static readonly defaultOptions: DefaultPresetOptions<FirstOptions> = { a: 0, y: 10 };
+  public onSetCus: DefaultPresetOptions<FirstOptions> = { a: 0, y: 10 };
   public static staticKeys: StaticKeyList<FirstOptions> = ['a'];
 
   get name() {
@@ -26,7 +26,7 @@ class FirstExtension extends PlainExtension<FirstOptions> {
 }
 
 class SecondExtension extends PlainExtension<SecondOptions> {
-  public static readonly defaultOptions: DefaultPresetOptions<SecondOptions> = {
+  public onSetCus: DefaultPresetOptions<SecondOptions> = {
     b: 'setting b',
     z: 'z is awesome',
   };
@@ -39,7 +39,7 @@ class SecondExtension extends PlainExtension<SecondOptions> {
 
 describe('simplest preset', () => {
   class TestPreset extends Preset<Partial<Options>> {
-    public static readonly defaultOptions: DefaultPresetOptions<Options> = {
+    public onSetCus: DefaultPresetOptions<Options> = {
       a: FirstExtension.defaultOptions.a ?? '',
       y: FirstExtension.defaultOptions.y,
       b: SecondExtension.defaultOptions.b ?? 'none specified',

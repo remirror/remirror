@@ -6,12 +6,15 @@ import {
   DefaultExtensionOptions,
   EditorSchema,
   EditorState,
+  Handler,
+  HandlerKeyList,
   invariant,
   isArray,
   isNumber,
   PlainExtension,
   ProsemirrorAttributes,
   Shape,
+  Static,
   Transaction,
   TransactionLifecycleMethod,
   uniqueId,
@@ -23,18 +26,14 @@ import { Step } from '@remirror/pm/transform';
  *
  * Once a central server is created the collaboration extension is good.
  */
-export class CollaborationExtension extends PlainExtension<
-  CollaborationSettings,
-  CollaborationProperties
-> {
-  public static readonly defaultSettings: DefaultExtensionOptions<CollaborationSettings> = {
+export class CollaborationExtension extends PlainExtension<CollaborationOptions> {
+  public static readonly defaultOptions: DefaultExtensionOptions<CollaborationOptions> = {
     version: 0,
     clientID: uniqueId(),
     debounceMs: 250,
   };
-  public static readonly defaultProperties: Required<CollaborationProperties> = {
-    onSendableReceived() {},
-  };
+
+  public static readonly handlerKeys: HandlerKeyList<CollaborationOptions> = ['onSendableReceived'];
 
   get name() {
     return 'collaboration';
@@ -134,28 +133,26 @@ export interface OnSendableReceivedParameter {
   jsonSendable: JSONSendable;
 }
 
-export interface CollaborationSettings {
+export interface CollaborationOptions {
   /**
    * The document version.
    *
    * @defaultValue 0
    */
-  version?: number;
+  version?: Static<number>;
 
   /**
    * The unique ID of the client connecting to the server.
    */
-  clientID: number | string;
+  clientID: Static<number | string>;
 
   /**
    * The debounce time in milliseconds
    *
    * @defaultValue 250
    */
-  debounceMs?: number;
-}
+  debounceMs?: Static<number>;
 
-export interface CollaborationProperties {
   /**
    * Called when an an editor transaction occurs and there are changes ready to
    * be sent to the server.
@@ -172,12 +169,11 @@ export interface CollaborationProperties {
    * @param params - the sendable and jsonSendable properties which can be sent
    * to your backend
    */
-  onSendableReceived: (params: OnSendableReceivedParameter) => void;
+  onSendableReceived: Handler<(params: OnSendableReceivedParameter) => void>;
 }
 
 export type CollaborationAttributes = ProsemirrorAttributes<{
   /**
-   * @internalremarks
    * TODO give this some better types
    */
   steps: any[];
