@@ -64,7 +64,7 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
   /**
    * An extension mapping of the extensions and their constructors.
    */
-  #extensionMap = new Map<this['~E']['constructor'], this['~E']>();
+  #extensionMap: Map<this['~E']['constructor'], this['~E']>;
 
   constructor(...parameters: PresetConstructorParameter<Options>) {
     super(
@@ -82,6 +82,8 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
       // Ensure that all the provided extensions are unique.
       (extension) => extension.constructor,
     );
+
+    this.#extensionMap = new Map<this['~E']['constructor'], this['~E']>();
 
     // Create the extension map for retrieving extensions from the `Preset`
     for (const extension of this.#extensions) {

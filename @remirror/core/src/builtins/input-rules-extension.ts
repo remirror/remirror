@@ -2,7 +2,7 @@ import { ExtensionPriority } from '@remirror/core-constants';
 import { Shape } from '@remirror/core-types';
 import { InputRule, inputRules } from '@remirror/pm/inputrules';
 
-import { InitializeLifecycleMethod, PlainExtension } from '../extension';
+import { CreateLifecycleMethod, PlainExtension } from '../extension';
 
 /**
  * This extension allows others extension to add the `createInputRules` method
@@ -25,29 +25,25 @@ export class InputRulesExtension extends PlainExtension {
   /**
    * Ensure that all ssr transformers are run.
    */
-  public onInitialize: InitializeLifecycleMethod = () => {
+  public onCreate: CreateLifecycleMethod = (extensions) => {
     const rules: InputRule[] = [];
 
-    return {
-      forEachExtension: (extension) => {
-        if (
-          // managerSettings excluded this from running
-          this.store.managerSettings.exclude?.inputRules ||
-          // Method doesn't exist
-          !extension.createInputRules ||
-          // Extension settings exclude it
-          extension.options.exclude?.inputRules
-        ) {
-          return;
-        }
+    for (const extension of extensions) {
+      if (
+        // managerSettings excluded this from running
+        this.store.managerSettings.exclude?.inputRules ||
+        // Method doesn't exist
+        !extension.createInputRules ||
+        // Extension settings exclude it
+        extension.options.exclude?.inputRules
+      ) {
+        break;
+      }
 
-        rules.push(...extension.createInputRules());
-      },
+      rules.push(...extension.createInputRules());
+    }
 
-      afterExtensionLoop: () => {
-        this.store.addPlugins(inputRules({ rules }));
-      },
-    };
+    this.store.addPlugins(inputRules({ rules }));
   };
 }
 

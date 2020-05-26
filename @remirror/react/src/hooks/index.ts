@@ -1,2 +1,2 @@
 export * from './core-hooks';
-export * from './hooks';
+export * from './editor-hooks';

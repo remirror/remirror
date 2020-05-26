@@ -44,34 +44,29 @@ export class HelpersExtension extends PlainExtension {
 
       return helpers as any;
     });
-
-    return {};
   };
 
   /**
    * Helpers are only available once the view has been added to `EditorManager`.
    */
-  public onView: ViewLifecycleMethod = () => {
+  public onView: ViewLifecycleMethod = (extensions) => {
     const helpers: Record<string, AnyFunction> = object();
     const names = new Set<string>();
 
-    return {
-      forEachExtension(extension) {
-        if (!extension.createHelpers) {
-          return;
-        }
+    for (const extension of extensions) {
+      if (!extension.createHelpers) {
+        break;
+      }
 
-        const extensionHelpers = extension.createHelpers();
+      const extensionHelpers = extension.createHelpers();
 
-        for (const [name, helper] of entries(extensionHelpers)) {
-          throwIfNameNotUnique({ name, set: names, code: ErrorConstant.DUPLICATE_HELPER_NAMES });
-          helpers[name] = helper;
-        }
-      },
-      afterExtensionLoop: () => {
-        this.store.setStoreKey('helpers', helpers);
-      },
-    };
+      for (const [name, helper] of entries(extensionHelpers)) {
+        throwIfNameNotUnique({ name, set: names, code: ErrorConstant.DUPLICATE_HELPER_NAMES });
+        helpers[name] = helper;
+      }
+    }
+
+    this.store.setStoreKey('helpers', helpers);
   };
 }
 

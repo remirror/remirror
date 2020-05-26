@@ -13,6 +13,7 @@ importers:
       '@babel/plugin-transform-typescript': 7.9.6_@babel+core@7.9.6
       '@babel/preset-env': 7.9.6_@babel+core@7.9.6
       '@babel/preset-react': 7.9.4_@babel+core@7.9.6
+      '@babel/preset-typescript': 7.9.0_@babel+core@7.9.6
       '@babel/runtime': 7.9.6
       '@changesets/cli': 2.7.2
       '@jest/types': 26.0.1
@@ -103,6 +104,7 @@ importers:
       '@babel/plugin-transform-typescript': ^7.9.6
       '@babel/preset-env': ^7.9.6
       '@babel/preset-react': ^7.9.4
+      '@babel/preset-typescript': ^7.9.0
       '@babel/runtime': ^7
       '@changesets/cli': ^2.7.2
       '@jest/types': ^26.0.0

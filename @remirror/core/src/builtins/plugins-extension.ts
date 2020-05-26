@@ -11,7 +11,6 @@ import {
   AnyExtensionConstructor,
   CreateLifecycleMethod,
   GetExtensionUnion,
-  InitializeLifecycleMethod,
   PlainExtension,
 } from '../extension';
 import { AnyPreset } from '../preset';
@@ -35,8 +34,6 @@ export class PluginsExtension extends PlainExtension {
     return 'plugins' as const;
   }
 
-  public readonly defaultPriority = ExtensionPriority.Medium as const;
-
   /**
    * All plugins created by other extension as well.
    */
@@ -47,98 +44,90 @@ export class PluginsExtension extends PlainExtension {
    */
   private extensionPlugins: ProsemirrorPlugin[] = [];
 
+  private readonly pluginKeys: Record<string, PluginKey> = object();
+
+  private readonly stateGetters = new Map<
+    string | AnyExtensionConstructor,
+    <State = unknown>() => State
+  >();
+
   // Here set the plugins keys and state getters for retrieving plugin state.
   // These methods are later used.
-  public onCreate: CreateLifecycleMethod = () => {
+  public onCreate: CreateLifecycleMethod = (extensions) => {
     const { setStoreKey, setExtensionStore, getStoreKey, managerSettings } = this.store;
     this.updateExtensionStore();
 
-    const pluginKeys: Record<string, PluginKey> = object();
-    const stateGetters = new Map<string | AnyExtensionConstructor, <State = unknown>() => State>();
+    for (const extension of extensions) {
+      this.createEachExtensionPlugins(extension);
 
-    // Method for retrieving the plugin state by the extension name.
-    const getStateByName = <State>(identifier: string | AnyExtensionConstructor) => {
-      const stateGetter = stateGetters.get(identifier);
-      invariant(stateGetter, { message: 'No plugin exists for the requested extension name.' });
+      if (
+        // The extension doesn't create a plugin and can be skipped.
+        !extension.createPlugin ||
+        // Or the manager settings exclude plugins
+        managerSettings.exclude?.plugins ||
+        // The extension settings exclude plugins
+        extension.options.exclude?.plugins
+      ) {
+        return;
+      }
 
-      return stateGetter<State>();
-    };
+      const key = new PluginKey(extension.name);
 
-    return {
-      forEachExtension(extension) {
-        // Create a key for each extension that has a `createPlugin` method.
-        if (
-          // The extension doesn't create a plugin and can be skipped.
-          !extension.createPlugin ||
-          // Or the manager settings exclude plugins
-          managerSettings.exclude?.plugins ||
-          // The extension settings exclude plugins
-          extension.options.exclude?.plugins
-        ) {
-          return;
-        }
+      // Assign the plugin key to the extension name.
+      this.pluginKeys[extension.name] = key;
+      const getter = <State>() => getPluginState<State>(key, getStoreKey('view').state);
 
-        const key = new PluginKey(extension.name);
+      extension.pluginKey = key;
+      extension.getPluginState = getter;
 
-        // Assign the plugin key to the extension name.
-        pluginKeys[extension.name] = key;
-        const getter = <State>() => getPluginState<State>(key, getStoreKey('view').state);
+      this.stateGetters.set(extension.name, getter);
+      this.stateGetters.set(extension.constructor, getter);
+    }
 
-        extension.pluginKey = key;
-        extension.getPluginState = getter;
+    setStoreKey('pluginKeys', this.pluginKeys);
+    setStoreKey('getPluginState', this.getStateByName);
+    setExtensionStore('getPluginState', this.getStateByName);
+    this.store.addPlugins(...this.extensionPlugins);
+  };
 
-        stateGetters.set(extension.name, getter);
-        stateGetters.set(extension.constructor, getter);
-      },
-      afterExtensionLoop() {
-        setStoreKey('pluginKeys', pluginKeys);
-        setStoreKey('getPluginState', getStateByName);
-        setExtensionStore('getPluginState', getStateByName);
-      },
-    };
+  private createEachExtensionPlugins(extension: AnyExtension) {
+    const isNotPluginCreator = !extension.createPlugin && !extension.createExternalPlugins;
+
+    if (
+      isNotPluginCreator ||
+      // the manager settings don't exclude plugins
+      this.store.managerSettings.exclude?.plugins ||
+      // The extension settings don't exclude plugins
+      extension.options.exclude?.plugins
+    ) {
+      return;
+    }
+
+    // Create the custom plugin if it exists.
+    if (extension.createPlugin) {
+      const pluginSpec = {
+        ...extension.createPlugin(),
+        key: extension.pluginKey,
+      };
+
+      this.extensionPlugins.push(new Plugin(pluginSpec));
+    }
+
+    // Add the external plugins if they exist
+    this.extensionPlugins.push(...(extension.createExternalPlugins?.() ?? []));
+  }
+
+  // Method for retrieving the plugin state by the extension name.
+  private readonly getStateByName = <State>(identifier: string | AnyExtensionConstructor) => {
+    const stateGetter = this.stateGetters.get(identifier);
+    invariant(stateGetter, { message: 'No plugin exists for the requested extension name.' });
+
+    return stateGetter<State>();
   };
 
   /**
    * Ensure that all ssr transformers are run.
    */
-  public onInitialize: InitializeLifecycleMethod = () => {
-    this.extensionPlugins = [];
-
-    return {
-      forEachExtension: (extension) => {
-        // Extension doesn't create it's own plugin or use any third party
-        // plugins
-        const hasNoPluginCreators = !extension.createPlugin && !extension.createExternalPlugins;
-
-        if (
-          hasNoPluginCreators ||
-          // the manager settings don't exclude plugins
-          this.store.managerSettings.exclude?.plugins ||
-          // The extension settings don't exclude plugins
-          extension.options.exclude?.plugins
-        ) {
-          return;
-        }
-
-        // Create the custom plugin if it exists.
-        if (extension.createPlugin) {
-          const pluginSpec = {
-            ...extension.createPlugin(),
-            key: extension.pluginKey,
-          };
-
-          this.extensionPlugins.push(new Plugin(pluginSpec));
-        }
-
-        // Add the external plugins if they exist
-        this.extensionPlugins.push(...(extension.createExternalPlugins?.() ?? []));
-      },
-
-      afterExtensionLoop: () => {
-        this.store.addPlugins(...this.extensionPlugins);
-      },
-    };
-  };
 
   /**
    * Add the plugin specific properties and methods to the manager and extension store.
@@ -150,7 +139,6 @@ export class PluginsExtension extends PlainExtension {
 
     // Allow adding, replacing and removing plugins by other extensions.
     setExtensionStore('addPlugins', this.addPlugins);
-    setExtensionStore('addPlugins', this.addPlugins);
     setExtensionStore('replacePlugin', this.replacePlugin);
     setExtensionStore('reconfigureStatePlugins', this.reconfigureStatePlugins);
   }
@@ -159,7 +147,7 @@ export class PluginsExtension extends PlainExtension {
    * Adds a plugin to the list of plugins.
    */
   private readonly addPlugins = (...plugins: ProsemirrorPlugin[]) => {
-    this.plugins = plugins;
+    this.plugins = [...this.plugins, ...plugins];
 
     this.store.setStoreKey('plugins', this.plugins);
   };

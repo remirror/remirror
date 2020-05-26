@@ -3,7 +3,7 @@ import { KeyBindings, ProsemirrorPlugin, Shape } from '@remirror/core-types';
 import { mergeProsemirrorKeyBindings } from '@remirror/core-utils';
 import { keymap } from '@remirror/pm/keymap';
 
-import { AnyExtension, InitializeLifecycleMethod, PlainExtension } from '../extension';
+import { AnyExtension, CreateLifecycleMethod, PlainExtension } from '../extension';
 
 /**
  * This extension allows others extension to use the `createKeymaps` method.
@@ -16,7 +16,7 @@ import { AnyExtension, InitializeLifecycleMethod, PlainExtension } from '../exte
  * @builtin
  */
 export class KeymapExtension extends PlainExtension {
-  public static readonly defaultPriority = ExtensionPriority.High;
+  public static readonly defaultPriority = ExtensionPriority.Low;
 
   get name() {
     return 'keymap' as const;
@@ -25,27 +25,19 @@ export class KeymapExtension extends PlainExtension {
   private keymap!: ProsemirrorPlugin;
   private readonly extensions: AnyExtension[] = [];
 
-  public onCreate = () => {
-    this.store.setExtensionStore('rebuildKeymap', this.rebuildKeymap);
-
-    return {};
-  };
-
   /**
    * This adds the `createKeymap` method functionality to all extensions.
    */
-  public onInitialize: InitializeLifecycleMethod = () => {
+  public onCreate: CreateLifecycleMethod = (extensions) => {
     const extensionKeymaps: KeyBindings[] = [];
+    this.store.setExtensionStore('rebuildKeymap', this.rebuildKeymap);
 
-    return {
-      forEachExtension: (extension) => {
-        this.forEachExtension({ extension, extensionKeymaps });
-      },
-      afterExtensionLoop: () => {
-        this.afterExtensionLoop(extensionKeymaps);
-        this.store.addPlugins(this.keymap);
-      },
-    };
+    for (const extension of extensions) {
+      this.forEachExtension({ extension, extensionKeymaps });
+    }
+
+    this.afterExtensionLoop(extensionKeymaps);
+    this.store.addPlugins(this.keymap);
   };
 
   /**

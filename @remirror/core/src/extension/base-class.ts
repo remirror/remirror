@@ -132,11 +132,6 @@ export abstract class BaseClass<
    */
   #mappedHandlers: GetMappedHandler<Options>;
 
-  /**
-   * Keep track of whether this extension has been initialized or not.
-   */
-  #hasInitialized = false;
-
   constructor(
     { validator, defaultOptions, code }: BaseClassConstructorParameter<DefaultStaticOptions>,
     ...parameters: ConstructorParameter<Options, DefaultStaticOptions>
@@ -155,9 +150,6 @@ export abstract class BaseClass<
     );
 
     // Triggers the `init` options update for this extension.
-    this.setOptions(this.#options);
-    this.#hasInitialized = true;
-
     this.init();
   }
 
@@ -183,7 +175,6 @@ export abstract class BaseClass<
    */
   public setOptions(update: GetPartialDynamic<Options>) {
     const previousOptions = this.getDynamicOptions();
-    const reason: UpdateReason = this.#hasInitialized ? 'set' : 'init';
 
     const { changes, options, pickChanged } = getChangedOptions({
       previousOptions,
@@ -193,18 +184,12 @@ export abstract class BaseClass<
     // Trigger the update handler so the extension can respond to any relevant property
     // updates.
     this.onSetOptions?.({
-      reason,
+      reason: 'set',
       changes,
       options,
       pickChanged,
       initialOptions: this.#initialOptions,
     });
-
-    if (reason === 'init') {
-      // The constructor has already set the options so no need to update the
-      // dynamic values.
-      return;
-    }
 
     this.updateDynamicOptions(options);
   }

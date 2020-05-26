@@ -2,8 +2,7 @@ import React, { ComponentType } from 'react';
 import { renderToString } from 'react-dom/server';
 
 import { AnyEditorManager, object, Shape } from '@remirror/core';
-
-import { useRemirror } from './hooks/use-remirror';
+import { useRemirror } from './hooks';
 
 export interface GetManagerFromComponentTreeParameter {
   /**

@@ -41,30 +41,26 @@ export class CommandsExtension extends PlainExtension {
     return 'commands' as const;
   }
 
-  public onCreate: CreateLifecycleMethod = () => {
-    return {
-      afterExtensionLoop: () => {
-        const { setExtensionStore, getStoreKey } = this.store;
+  public onCreate: CreateLifecycleMethod = (extensions) => {
+    const { setExtensionStore, getStoreKey } = this.store;
 
-        setExtensionStore('getCommands', () => {
-          const commands = getStoreKey('commands');
-          invariant(commands, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
+    setExtensionStore('getCommands', () => {
+      const commands = getStoreKey('commands');
+      invariant(commands, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
 
-          return commands as any;
-        });
+      return commands as any;
+    });
 
-        setExtensionStore('getChain', () => {
-          const chain = getStoreKey('chain');
-          invariant(chain, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
+    setExtensionStore('getChain', () => {
+      const chain = getStoreKey('chain');
+      invariant(chain, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
 
-          return chain as any;
-        });
-      },
-    };
+      return chain as any;
+    });
   };
 
-  public onView: ViewLifecycleMethod = () => {
-    const commands: any = object();
+  public onView: ViewLifecycleMethod = (extensions, view) => {
+    const commands: Record<string, CommandShape> = object();
     const names = new Set<string>();
     const chained: Record<string, any> & ChainedCommandRunParameter = object();
     const unchained: Record<
@@ -72,46 +68,46 @@ export class CommandsExtension extends PlainExtension {
       { command: AnyFunction; isEnabled: AnyFunction; name: string }
     > = object();
 
-    return {
-      forEachExtension: (extension) => {
-        if (!extension.createCommands) {
-          return;
-        }
+    for (const extension of extensions) {
+      if (!extension.createCommands) {
+        break;
+      }
 
-        const extensionCommands = extension.createCommands();
+      const extensionCommands = extension.createCommands();
 
-        for (const [name, command] of entries(extensionCommands)) {
-          throwIfNameNotUnique({ name, set: names, code: ErrorConstant.DUPLICATE_COMMAND_NAMES });
-          invariant(!forbiddenNames.has(name), {
-            code: ErrorConstant.DUPLICATE_COMMAND_NAMES,
-            message: 'The command name you chose is forbidden.',
-          });
+      for (const [name, command] of entries(extensionCommands)) {
+        throwIfNameNotUnique({ name, set: names, code: ErrorConstant.DUPLICATE_COMMAND_NAMES });
+        invariant(!forbiddenNames.has(name), {
+          code: ErrorConstant.DUPLICATE_COMMAND_NAMES,
+          message: 'The command name you chose is forbidden.',
+        });
 
-          unchained[name] = {
-            name: extension.name,
-            command: this.unchainedFactory({ command }),
-            isEnabled: this.unchainedFactory({ command, shouldDispatch: false }),
-          };
+        unchained[name] = {
+          name: extension.name,
+          command: this.unchainedFactory({ command }),
+          isEnabled: this.unchainedFactory({ command, shouldDispatch: false }),
+        };
 
-          chained[name] = this.chainedFactory({ command, chained });
-        }
-      },
-      afterExtensionLoop: (view) => {
-        const { setStoreKey } = this.store;
+        chained[name] = this.chainedFactory({ command, chained });
+      }
+    }
 
-        for (const [commandName, { command, isEnabled }] of entries(unchained)) {
-          commands[commandName] = command as CommandShape;
-          commands[commandName].isEnabled = isEnabled;
-        }
+    const { setStoreKey } = this.store;
 
-        chained.run = () => view.dispatch(view.state.tr);
+    for (const [commandName, { command, isEnabled }] of entries(unchained)) {
+      commands[commandName] = command as CommandShape;
+      commands[commandName].isEnabled = isEnabled;
+    }
 
-        setStoreKey('commands', commands);
-        setStoreKey('chain', chained as never);
-      },
-    };
+    chained.run = () => view.dispatch(view.state.tr);
+
+    setStoreKey('commands', commands);
+    setStoreKey('chain', chained as any);
   };
 
+  /**
+   * Create the default commands available to all extensions.
+   */
   public createCommands = () => {
     return {
       /**

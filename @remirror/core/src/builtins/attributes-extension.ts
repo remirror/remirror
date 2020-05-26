@@ -2,7 +2,7 @@ import { ExtensionPriority } from '@remirror/core-constants';
 import { bool, object } from '@remirror/core-helpers';
 import { AttributesWithClass, Shape } from '@remirror/core-types';
 
-import { AnyExtension, InitializeLifecycleMethod, PlainExtension } from '../extension';
+import { AnyExtension, CreateLifecycleMethod, PlainExtension } from '../extension';
 import { AnyPreset } from '../preset';
 
 /**
@@ -18,7 +18,7 @@ import { AnyPreset } from '../preset';
  * @builtin
  */
 export class AttributesExtension extends PlainExtension {
-  public static readonly defaultPriority = ExtensionPriority.High;
+  public static readonly defaultPriority = ExtensionPriority.Default;
 
   get name() {
     return 'attributes' as const;
@@ -29,41 +29,36 @@ export class AttributesExtension extends PlainExtension {
    *
    * @internal
    */
-  public onInitialize: InitializeLifecycleMethod = () => {
+  public onCreate: CreateLifecycleMethod = (extensions) => {
     const attributeList: AttributesWithClass[] = [];
     let attributeObject: AttributesWithClass = object();
 
-    return {
-      forEachExtension: (extension) => {
-        if (
-          !extension.createAttributes ||
-          this.store.managerSettings.exclude?.attributes ||
-          extension.options.exclude?.attributes
-        ) {
-          return;
-        }
+    for (const extension of extensions) {
+      if (
+        !extension.createAttributes ||
+        this.store.managerSettings.exclude?.attributes ||
+        extension.options.exclude?.attributes
+      ) {
+        break;
+      }
 
-        // Inserted at the start of the list so that when combining the full
-        // attribute object the higher priority extension attributes are
-        // preferred to the lower priority since they merge with the object
-        // later.
-        attributeList.unshift(extension.createAttributes());
-      },
+      // Inserted at the start of the list so that when combining the full
+      // attribute object the higher priority extension attributes are
+      // preferred to the lower priority since they merge with the object
+      // later.
+      attributeList.unshift(extension.createAttributes());
+    }
 
-      afterExtensionLoop: () => {
-        for (const attributes of attributeList) {
-          attributeObject = {
-            ...attributeObject,
-            ...attributes,
-            class:
-              (attributeObject.class ?? '') + (bool(attributes.class) ? attributes.class : '') ||
-              '',
-          };
-        }
+    for (const attributes of attributeList) {
+      attributeObject = {
+        ...attributeObject,
+        ...attributes,
+        class:
+          (attributeObject.class ?? '') + (bool(attributes.class) ? attributes.class : '') || '',
+      };
+    }
 
-        this.store.setStoreKey('attributes', attributeObject);
-      },
-    };
+    this.store.setStoreKey('attributes', attributeObject);
   };
 }
 

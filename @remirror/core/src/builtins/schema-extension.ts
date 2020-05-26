@@ -41,12 +41,7 @@ export class SchemaExtension extends PlainExtension {
     return 'schema' as const;
   }
 
-  /**
-   * This extension is essential and hence the priority is set to high.
-   */
-  public readonly defaultPriority = ExtensionPriority.High;
-
-  public onCreate: CreateLifecycleMethod = () => {
+  public onCreate: CreateLifecycleMethod = (extensions) => {
     const { managerSettings } = this.store;
     const nodes: Record<string, NodeExtensionSpec> = object();
     const marks: Record<string, MarkExtensionSpec> = object();
@@ -66,41 +61,37 @@ export class SchemaExtension extends PlainExtension {
       }
     }
 
-    return {
-      forEachExtension(extension) {
-        const currentAttributes = extraAttributes[extension.name] ?? [];
-        extraAttributes[extension.name] = [
-          ...currentAttributes,
-          ...(extension.options.extraAttributes ?? []),
-        ];
+    for (const extension of extensions) {
+      const currentAttributes = extraAttributes[extension.name] ?? [];
+      extraAttributes[extension.name] = [
+        ...currentAttributes,
+        ...(extension.options.extraAttributes ?? []),
+      ];
 
-        if (isNodeExtension(extension)) {
-          const { name, spec } = extension;
-          nodes[name] = managerSettings.disableExtraAttributes
-            ? spec
-            : transformSchemaAttributes(extraAttributes[extension.name], spec);
-        }
+      if (isNodeExtension(extension)) {
+        const { name, spec } = extension;
+        nodes[name] = managerSettings.disableExtraAttributes
+          ? spec
+          : transformSchemaAttributes(extraAttributes[extension.name], spec);
+      }
 
-        if (isMarkExtension(extension)) {
-          const { name, spec } = extension;
+      if (isMarkExtension(extension)) {
+        const { name, spec } = extension;
 
-          marks[name] = managerSettings.disableExtraAttributes
-            ? spec
-            : transformSchemaAttributes(extraAttributes[extension.name], spec);
-        }
-      },
+        marks[name] = managerSettings.disableExtraAttributes
+          ? spec
+          : transformSchemaAttributes(extraAttributes[extension.name], spec);
+      }
+    }
 
-      afterExtensionLoop: () => {
-        const { setStoreKey, setExtensionStore } = this.store;
+    const { setStoreKey, setExtensionStore } = this.store;
 
-        const schema = new Schema({ nodes, marks });
+    const schema = new Schema({ nodes, marks });
 
-        setStoreKey('nodes', nodes);
-        setStoreKey('marks', marks);
-        setStoreKey('schema', schema);
-        setExtensionStore('schema', schema);
-      },
-    };
+    setStoreKey('nodes', nodes);
+    setStoreKey('marks', marks);
+    setStoreKey('schema', schema);
+    setExtensionStore('schema', schema);
   };
 }
 

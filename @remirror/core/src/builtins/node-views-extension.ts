@@ -2,7 +2,7 @@ import { ExtensionPriority } from '@remirror/core-constants';
 import { isFunction, object } from '@remirror/core-helpers';
 import { NodeViewMethod, Shape } from '@remirror/core-types';
 
-import { AnyExtension, InitializeLifecycleMethod, PlainExtension } from '../extension';
+import { AnyExtension, CreateLifecycleMethod, PlainExtension } from '../extension';
 import { AnyPreset } from '../preset';
 
 /**
@@ -26,38 +26,34 @@ export class NodeViewsExtension extends PlainExtension {
   /**
    * Ensure that all ssr transformers are run.
    */
-  public onInitialize: InitializeLifecycleMethod = () => {
+  public onCreate: CreateLifecycleMethod = (extensions) => {
     const nodeViewList: Array<Record<string, NodeViewMethod>> = [];
     const nodeViews: Record<string, NodeViewMethod> = object();
 
-    return {
-      forEachExtension: (extension) => {
-        if (
-          // managerSettings excluded this from running
-          this.store.managerSettings.exclude?.nodeViews ||
-          // Method doesn't exist
-          !extension.createNodeViews ||
-          // Extension settings exclude it
-          extension.options.exclude?.nodeViews
-        ) {
-          return;
-        }
+    for (const extension of extensions) {
+      if (
+        // managerSettings excluded this from running
+        this.store.managerSettings.exclude?.nodeViews ||
+        // Method doesn't exist
+        !extension.createNodeViews ||
+        // Extension settings exclude it
+        extension.options.exclude?.nodeViews
+      ) {
+        break;
+      }
 
-        const nodeView = extension.createNodeViews();
+      const nodeView = extension.createNodeViews();
 
-        // Unshift used to add make sure higher priority extensions can
-        // overwrite the lower priority nodeViews.
-        nodeViewList.unshift(isFunction(nodeView) ? { [extension.name]: nodeView } : nodeView);
-      },
+      // Unshift used to add make sure higher priority extensions can
+      // overwrite the lower priority nodeViews.
+      nodeViewList.unshift(isFunction(nodeView) ? { [extension.name]: nodeView } : nodeView);
+    }
 
-      afterExtensionLoop: () => {
-        for (const nodeView of nodeViewList) {
-          Object.assign(nodeViews, nodeView);
-        }
+    for (const nodeView of nodeViewList) {
+      Object.assign(nodeViews, nodeView);
+    }
 
-        this.store.setStoreKey('nodeViews', nodeViews);
-      },
-    };
+    this.store.setStoreKey('nodeViews', nodeViews);
   };
 }
 

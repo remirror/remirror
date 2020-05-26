@@ -26,7 +26,7 @@ export class TagsExtension extends PlainExtension {
     return 'tags' as const;
   }
 
-  public onCreate: CreateLifecycleMethod = () => {
+  public onCreate: CreateLifecycleMethod = (extensions) => {
     const general: GeneralExtensionTags = {
       [ExtensionTag.FormattingMark]: [],
       [ExtensionTag.FormattingNode]: [],
@@ -49,40 +49,35 @@ export class TagsExtension extends PlainExtension {
       [NodeGroup.Inline]: [],
     };
 
-    return {
-      forEachExtension: (extension) => {
-        if (isNodeExtension(extension)) {
-          const group = extension.spec.group as NodeGroup;
-          const name = extension.name;
+    for (const extension of extensions) {
+      if (isNodeExtension(extension)) {
+        const group = extension.spec.group as NodeGroup;
+        const name = extension.name;
 
-          node[group] = isUndefined(node[group]) ? [name] : [...node[group], name];
-        }
+        node[group] = isUndefined(node[group]) ? [name] : [...node[group], name];
+      }
 
-        if (isMarkExtension(extension)) {
-          const group = extension.spec.group as MarkGroup;
-          const name = extension.name;
+      if (isMarkExtension(extension)) {
+        const group = extension.spec.group as MarkGroup;
+        const name = extension.name;
 
-          mark[group] = isUndefined(mark[group]) ? [name] : [...mark[group], name];
-        }
+        mark[group] = isUndefined(mark[group]) ? [name] : [...mark[group], name];
+      }
 
-        if (!extension.tags) {
-          return;
-        }
+      if (!extension.tags) {
+        return;
+      }
 
-        for (const tag of extension.tags) {
-          const generalTag = general[tag];
-          general[tag] = isUndefined(generalTag)
-            ? [extension.name]
-            : [...generalTag, extension.name];
-        }
-      },
-      afterExtensionLoop: () => {
-        const tags = { general, mark, node };
+      for (const tag of extension.tags) {
+        const generalTag = general[tag];
+        general[tag] = isUndefined(generalTag) ? [extension.name] : [...generalTag, extension.name];
+      }
+    }
 
-        this.store.setStoreKey('tags', tags);
-        this.store.setExtensionStore('tags', tags);
-      },
-    };
+    const tags = { general, mark, node };
+
+    this.store.setStoreKey('tags', tags);
+    this.store.setExtensionStore('tags', tags);
   };
 }
 

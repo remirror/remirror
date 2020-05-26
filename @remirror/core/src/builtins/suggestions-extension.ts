@@ -3,7 +3,7 @@ import { isArray } from '@remirror/core-helpers';
 import { Shape } from '@remirror/core-types';
 import { suggest, Suggestion } from '@remirror/pm/suggest';
 
-import { InitializeLifecycleMethod, PlainExtension } from '../extension';
+import { CreateLifecycleMethod, PlainExtension } from '../extension';
 
 /**
  * This extension allows others extension to add the `createSuggestion` method
@@ -26,31 +26,27 @@ export class SuggestionsExtension extends PlainExtension {
   /**
    * Ensure that all ssr transformers are run.
    */
-  public onInitialize: InitializeLifecycleMethod = () => {
+  public onInitialize: CreateLifecycleMethod = (extensions) => {
     const suggesters: Suggestion[] = [];
 
-    return {
-      forEachExtension: (extension) => {
-        if (
-          // Manager settings excluded this from running
-          this.store.managerSettings.exclude?.suggesters ||
-          // Method doesn't exist
-          !extension.createSuggestions ||
-          // Extension settings exclude it from running
-          extension.options.exclude?.suggesters
-        ) {
-          return;
-        }
+    for (const extension of extensions) {
+      if (
+        // Manager settings excluded this from running
+        this.store.managerSettings.exclude?.suggesters ||
+        // Method doesn't exist
+        !extension.createSuggestions ||
+        // Extension settings exclude it from running
+        extension.options.exclude?.suggesters
+      ) {
+        return;
+      }
 
-        const suggester = extension.createSuggestions();
+      const suggester = extension.createSuggestions();
 
-        suggesters.push(...(isArray(suggester) ? suggester : [suggester]));
-      },
+      suggesters.push(...(isArray(suggester) ? suggester : [suggester]));
+    }
 
-      afterExtensionLoop: () => {
-        this.store.addPlugins(suggest(...suggesters));
-      },
-    };
+    this.store.addPlugins(suggest(...suggesters));
   };
 }
 

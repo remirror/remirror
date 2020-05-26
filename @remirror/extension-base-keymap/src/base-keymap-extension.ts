@@ -92,6 +92,8 @@ export interface BaseKeymapOptions {
  * @builtin
  */
 export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
+  public static readonly defaultPriority = ExtensionPriority.Low as const;
+
   public static readonly defaultOptions: DefaultExtensionOptions<BaseKeymapOptions> = {
     undoInputRuleOnBackspace: true,
     defaultBindingMethod: () => false,
@@ -105,8 +107,6 @@ export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
   get name() {
     return 'baseKeymap' as const;
   }
-
-  public readonly defaultPriority = ExtensionPriority.Low as const;
 
   /**
    * The base keybinding which will be generated from the provided properties.

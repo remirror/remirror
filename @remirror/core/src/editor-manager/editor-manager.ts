@@ -22,14 +22,14 @@ import {
   AnyExtension,
   AnyExtensionConstructor,
   AnyManagerStore,
-  CreateLifecycleReturn,
   GetExtensionUnion,
   GetMarkNameUnion,
   GetNodeNameUnion,
-  InitializeLifecycleReturn,
   ManagerStoreKeys,
   SchemaFromExtensionUnion,
-  ViewLifecycleReturn,
+  CreateLifecycleMethod,
+  ViewLifecycleMethod,
+  DestroyLifecycleMethod,
 } from '../extension';
 import { AnyPreset, AnyPresetConstructor } from '../preset';
 import { privacySymbol } from '../privacy';
@@ -105,44 +105,6 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     });
   }
 
-  /**
-   * Pseudo property which is a small hack to store the type of the extension
-   * union.
-   */
-  public ['~E']!: ExtensionUnion | GetExtensions<PresetUnion>;
-
-  /**
-   * Pseudo property which is a small hack to store the type of the presets
-   * available from this manager..
-   */
-  public ['~P']!: PresetUnion;
-
-  /**
-   * Pseudo property which is a small hack to store the type of the schema
-   * available from this manager..
-   */
-  public ['~Sch']!: SchemaFromExtensionUnion<this['~E']>;
-
-  /**
-   * `NodeNames`
-   *
-   * Type inference hack for node extension names.
-   * This is the only way I know to store types on a class.
-   *
-   * @internal
-   */
-  public readonly ['~N']!: GetNodeNameUnion<this['~E']>;
-
-  /**
-   * `MarkNames`
-   *
-   * Type inference hack for mark extension names.
-   * This is the only way I know to store types on a class.
-   *
-   * @internal
-   */
-  public readonly ['~M']!: GetMarkNameUnion<this['~E']>;
-
   /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
   /**
@@ -176,12 +138,11 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * Store the handlers that will be run when for each event method.
    */
   #handlers: {
-    create: CreateLifecycleReturn[];
-    initialize: InitializeLifecycleReturn[];
-    view: ViewLifecycleReturn[];
+    create: CreateLifecycleMethod[];
+    view: ViewLifecycleMethod[];
     transaction: TransactionLifecycleMethod[];
-    destroy: Array<() => void>;
-  } = { initialize: [], transaction: [], view: [], create: [], destroy: [] };
+    destroy: DestroyLifecycleMethod[];
+  } = { transaction: [], view: [], create: [], destroy: [] };
 
   /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
@@ -191,7 +152,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * @internal
    */
   get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
-    return RemirrorIdentifier.Manager;
+    return RemirrorIdentifier.Manager as const;
   }
 
   /**
@@ -289,13 +250,9 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
 
     this.#phase = ManagerPhase.Create;
 
-    for (const extension of this.#extensions) {
-      this.onCreateExtensionLoop(extension);
+    for (const handler of this.#handlers.create) {
+      handler(this.#extensions as AnyExtension[]);
     }
-
-    this.afterCreate();
-
-    this.initialize();
   }
 
   /**
@@ -305,18 +262,13 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     for (const extension of this.#extensions) {
       extension.setStore(this.#extensionStore);
 
-      const createHandler = extension.onCreate?.();
-      const initializeHandler = extension.onInitialize?.();
-      const viewHandler = extension.onView?.();
+      const createHandler = extension.onCreate;
+      const viewHandler = extension.onView;
       const transactionHandler = extension.onTransaction;
       const destroyHandler = extension.onDestroy;
 
       if (createHandler) {
         this.#handlers.create.push(createHandler);
-      }
-
-      if (initializeHandler) {
-        this.#handlers.initialize.push(initializeHandler);
       }
 
       if (viewHandler) {
@@ -372,77 +324,6 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
 
     this.#extensionStore[key] = value;
   };
-
-  /**
-   * Called after the extension loop of the initialization phase.
-   */
-  private afterCreate() {
-    for (const { afterExtensionLoop } of this.#handlers.create) {
-      afterExtensionLoop?.();
-    }
-  }
-
-  /**
-   * Called during the extension loop of the initialization phase.
-   */
-  private onCreateExtensionLoop(extension: this['extensions'][number]) {
-    for (const { forEachExtension } of this.#handlers.create) {
-      forEachExtension?.(extension);
-    }
-  }
-
-  /**
-   * Called after the extension loop of the initialization phase.
-   */
-  private afterInitialize() {
-    for (const { afterExtensionLoop } of this.#handlers.initialize) {
-      afterExtensionLoop?.();
-    }
-  }
-
-  /**
-   * Called during the extension loop of the initialization phase.
-   */
-  private onInitializeExtensionLoop(extension: this['~E']) {
-    for (const { forEachExtension } of this.#handlers.initialize) {
-      forEachExtension?.(extension);
-    }
-  }
-
-  /**
-   * Called during the extension loop of the initialization phase.
-   */
-  private onViewExtensionLoop(extension: AnyExtension) {
-    for (const { forEachExtension } of this.#handlers.view) {
-      forEachExtension?.(extension);
-    }
-  }
-
-  /**
-   * Called after the extension loop of the initialization phase.
-   */
-  private afterView(view: EditorView<EditorSchema>) {
-    for (const { afterExtensionLoop } of this.#handlers.view) {
-      afterExtensionLoop?.(view);
-    }
-  }
-
-  /**
-   * Initialize the extension manager with important data.
-   *
-   * This is called by the view layer and provides
-   */
-  private initialize() {
-    this.#phase = ManagerPhase.Initialize;
-
-    for (const extension of this.#extensions) {
-      this.onInitializeExtensionLoop(extension);
-    }
-
-    this.afterInitialize();
-
-    // this.#store.helpers = this.helpers();
-  }
 
   /**
    * Create the initial store.
@@ -509,24 +390,15 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * @param view - the editor view
    */
   public addView(view: EditorView<SchemaFromExtensionUnion<this['~E']>>) {
-    invariant(this.#phase === ManagerPhase.Initialize, {
-      message: '`addView` called before manager was initialized.',
-      code: ErrorConstant.MANAGER_PHASE_ERROR,
-    });
-
     // Update the lifecycle phase.
     this.#phase = ManagerPhase.EditorView;
 
     // Store the view.
     this.#store.view = view as EditorView;
 
-    // Store the view, state and helpers for extensions
-
-    for (const extension of this.#extensions) {
-      this.onViewExtensionLoop(extension);
+    for (const handler of this.#handlers.view) {
+      handler(this.#extensions as AnyExtension[], view);
     }
-
-    this.afterView(view);
 
     this.#phase = ManagerPhase.Runtime;
   }
@@ -602,16 +474,8 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * An example usage of this is within the collaboration plugin.
    */
   public onTransaction(parameter: TransactionLifecycleParameter) {
-    Object.defineProperties(this.#extensionStore, {
-      currentState: {
-        get: () => parameter.state,
-        enumerable: true,
-      },
-      previousState: {
-        get: () => parameter.previousState,
-        enumerable: true,
-      },
-    });
+    this.#extensionStore.currentState = parameter.state;
+    this.#extensionStore.previousState = parameter.previousState;
 
     for (const handler of this.#handlers.transaction) {
       handler(parameter);
@@ -655,7 +519,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    */
   public destroy() {
     for (const onDestroy of this.#handlers.destroy) {
-      onDestroy();
+      onDestroy(this.#extensions as AnyExtension[]);
     }
   }
 }
@@ -712,6 +576,46 @@ interface EditorManagerConstructorParameter<
      */
     privacy: symbol;
   };
+}
+
+export interface EditorManager<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
+  /**
+   * Pseudo property which is a small hack to store the type of the extension
+   * union.
+   */
+  ['~E']: ExtensionUnion | GetExtensions<PresetUnion>;
+
+  /**
+   * Pseudo property which is a small hack to store the type of the presets
+   * available from this manager..
+   */
+  ['~P']: PresetUnion;
+
+  /**
+   * Pseudo property which is a small hack to store the type of the schema
+   * available from this manager..
+   */
+  ['~Sch']: SchemaFromExtensionUnion<this['~E']>;
+
+  /**
+   * `NodeNames`
+   *
+   * Type inference hack for node extension names.
+   * This is the only way I know to store types on a class.
+   *
+   * @internal
+   */
+  ['~N']: GetNodeNameUnion<this['~E']>;
+
+  /**
+   * `MarkNames`
+   *
+   * Type inference hack for mark extension names.
+   * This is the only way I know to store types on a class.
+   *
+   * @internal
+   */
+  ['~M']: GetMarkNameUnion<this['~E']>;
 }
 
 declare global {
@@ -786,14 +690,14 @@ declare global {
        *
        * Availability: **return scope** - `onView`
        */
-      readonly currentState: EditorState<Schema>;
+      currentState: EditorState<Schema>;
 
       /**
        * The previous state. Will be undefined when the view is first created.
        *
        * Availability: **return scope** - `onView`
        */
-      readonly previousState?: EditorState<Schema>;
+      previousState?: EditorState<Schema>;
 
       /**
        * The settings passed to the manager.

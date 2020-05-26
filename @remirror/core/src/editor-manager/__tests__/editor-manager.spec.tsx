@@ -9,7 +9,7 @@ import {
 import { EditorView } from '@remirror/pm/view';
 import { CorePreset, createBaseManager } from '@remirror/test-fixtures';
 
-import { CreateLifecycleMethod, InitializeLifecycleMethod, PlainExtension } from '../../extension';
+import { CreateLifecycleMethod, PlainExtension } from '../../extension';
 import { EditorManager, isEditorManager } from '../editor-manager';
 
 describe('Manager', () => {
@@ -230,6 +230,8 @@ test('keymaps', () => {
 test('lifecycle', () => {
   expect.assertions(6);
   class LifecycleExtension extends PlainExtension {
+    public static defaultPriority = ExtensionPriority.Lowest;
+
     public get name() {
       return 'test' as const;
     }
@@ -238,18 +240,9 @@ test('lifecycle', () => {
       expect(this.store.setExtensionStore).toBeFunction();
       expect(this.store.setStoreKey).toBeFunction();
       expect(this.store.getStoreKey).toBeFunction();
-
-      return {
-        afterExtensionLoop: () => {
-          expect(this.store.tags).toBeTruthy();
-          expect(this.store.schema).toBeTruthy();
-        },
-      };
-    };
-
-    public onInitialize: InitializeLifecycleMethod = () => {
       expect(this.store.addPlugins).toBeFunction();
-      return {};
+      expect(this.store.tags).toBeTruthy();
+      expect(this.store.schema).toBeTruthy();
     };
   }
 

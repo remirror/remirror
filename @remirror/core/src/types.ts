@@ -234,7 +234,7 @@ interface ReadonlyOptionsParameter<Options extends ValidOptions> {
 /**
  * @internal
  */
-export type UpdateReason = 'init' | 'set' | 'reset';
+export type UpdateReason = 'set' | 'reset';
 
 export interface UpdateReasonParameter {
   /**

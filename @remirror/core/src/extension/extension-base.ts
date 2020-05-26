@@ -257,27 +257,13 @@ export type DefaultExtensionOptions<Options extends ValidOptions> = DefaultOptio
 /**
  * Here is the extension lifecycle order.
  *
- * ### Definitions
- *
- * - **outer scope** - refers to the main body of the function
- * - **return scope** - refers to the scope of the methods in the object
- *   returned by each lifecycle method (except for onTransaction which only has
- *   an outer scope)
- *
- *
  * ### Ordering
  *
- * - **outer scope** - `onCreate`
- * - **outer scope** - `onInitialize`
- * - **outer scope** - `onView`
- * - **return scope** - `onCreate`
- * - **return scope** - `onInitialize`
- * - **return scope** - `onView`
- *
+ * - `onCreate`
+ * - `onView`
  * - **runtime**
- * - **outer scope** - `onTransaction` (repeats)
- *
- * - **outer scope** - `onDestroy`
+ * - `onTransaction` (repeats)
+ * - `onDestroy` (end of life)
  */
 interface ExtensionLifecycleMethods {
   /**
@@ -298,11 +284,6 @@ interface ExtensionLifecycleMethods {
   onCreate?: CreateLifecycleMethod;
 
   /**
-   * This happens when the store is initialized.
-   */
-  onInitialize?: InitializeLifecycleMethod;
-
-  /**
    * This event happens when the view is first received from the view layer
    * (e.g. React).
    */
@@ -321,7 +302,7 @@ interface ExtensionLifecycleMethods {
   /**
    * Called when the extension is being destroyed.
    */
-  onDestroy?: () => void;
+  onDestroy?: DestroyLifecycleMethod;
 }
 
 /**
@@ -739,39 +720,12 @@ export type SchemaFromExtensionUnion<ExtensionUnion extends AnyExtension> = Edit
 export type AnyManagerStore = Remirror.ManagerStore<any, any>;
 export type ManagerStoreKeys = keyof Remirror.ManagerStore<any, any>;
 
-export interface CreateLifecycleReturn {
-  /**
-   * Called for each extension in order of their priority.
-   */
-  forEachExtension?: (extension: AnyExtension) => void;
-
-  /**
-   * Run after the extensions have been looped through. Useful for adding data
-   * to the store and doing any cleanup for the RemirrorMethod.
-   */
-  afterExtensionLoop?: () => void;
-}
-
-export type CreateLifecycleMethod = () => CreateLifecycleReturn;
-
-export interface InitializeLifecycleReturn extends CreateLifecycleReturn {}
-
-export type InitializeLifecycleMethod = () => InitializeLifecycleReturn;
-
-export interface ViewLifecycleReturn {
-  /**
-   * Called for each extension in order of their priority.
-   */
-  forEachExtension?: (extension: AnyExtension) => void;
-
-  /**
-   * Run after the extensions have been looped through. Useful for adding data
-   * to the store and doing any cleanup for the RemirrorMethod.
-   */
-  afterExtensionLoop?: (view: EditorView<EditorSchema>) => void;
-}
-
-export type ViewLifecycleMethod = () => ViewLifecycleReturn;
+export type CreateLifecycleMethod = (extensions: AnyExtension[]) => void;
+export type ViewLifecycleMethod = (
+  extensions: AnyExtension[],
+  view: EditorView<EditorSchema>,
+) => void;
+export type DestroyLifecycleMethod = (extensions: AnyExtension[]) => void;
 
 declare global {
   /**

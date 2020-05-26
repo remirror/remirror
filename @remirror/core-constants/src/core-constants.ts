@@ -345,12 +345,6 @@ export enum ManagerPhase {
   Create,
 
   /**
-   * When the extension manager is being initialized. This is when the
-   * onInitialize methods are being called.
-   */
-  Initialize,
-
-  /**
    * When the view is being added and all onViewAdded methods are being called.
    */
   EditorView,

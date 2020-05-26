@@ -24,23 +24,22 @@ module.exports = {
     { test: /\.ts$/, plugins: [['@babel/plugin-transform-typescript', { isTSX: false }]] },
     { test: /\.tsx$/, plugins: [['@babel/plugin-transform-typescript', { isTSX: true }]] },
     {
-      test: /\.tsx?$/,
+      test: /\.[jt]sx?$/,
       plugins: [
-        '@babel/plugin-proposal-class-properties',
-        // Private methods not yet supported by TypeScript
-        // '@babel/plugin-proposal-private-methods',
+        ['@babel/plugin-proposal-class-properties'],
+        ['@babel/plugin-proposal-private-methods'],
       ],
     },
   ],
   plugins: [
-    'annotate-pure-calls',
-    'dev-expression',
-    'macros',
     '@babel/plugin-transform-runtime',
     '@babel/plugin-proposal-object-rest-spread',
     '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-proposal-nullish-coalescing-operator',
     '@babel/plugin-proposal-optional-chaining',
+    'annotate-pure-calls',
+    'dev-expression',
+    'macros',
   ],
   env: { production: nonTestEnv, development: nonTestEnv },
 };
