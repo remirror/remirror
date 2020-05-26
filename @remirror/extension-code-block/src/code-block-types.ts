@@ -25,7 +25,7 @@ export type SyntaxTheme =
   | 'vs'
   | 'xonokai';
 
-export interface CodeBlockSettings {
+export interface CodeBlockOptions {
   /**
    * Import languages from refractor.
    *
@@ -64,9 +64,7 @@ export interface CodeBlockSettings {
    * @defaultValue `Alt-Shift-F` (Mac) `Shift-Ctrl-F` (PC)
    */
   keyboardShortcut?: string;
-}
 
-export interface CodeBlockProperties {
   /**
    * The default language to use when none is provided.
    *

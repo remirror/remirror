@@ -18,6 +18,7 @@ import {
   NodeExtensionSpec,
   NodeGroup,
   nodeInputRule,
+  OnSetOptionsParameter,
   PosParameter,
   removeNodeAtPosition,
   toggleBlockItem,
@@ -27,7 +28,7 @@ import { keydownHandler } from '@remirror/pm/keymap';
 import { TextSelection } from '@remirror/pm/state';
 
 import { CodeBlockState } from './code-block-plugin';
-import { CodeBlockAttributes, CodeBlockProperties, CodeBlockSettings } from './code-block-types';
+import { CodeBlockAttributes, CodeBlockOptions } from './code-block-types';
 import {
   codeBlockToDOM,
   dataAttribute,
@@ -36,12 +37,10 @@ import {
   updateNodeAttributes,
 } from './code-block-utils';
 
-export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlockProperties> {
-  public static readonly defaultOptions: DefaultExtensionOptions<CodeBlockSettings> = {
+export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
+  public static readonly defaultOptions: DefaultExtensionOptions<CodeBlockOptions> = {
     supportedLanguages: [],
     keyboardShortcut: mod('ShiftAlt', 'f'),
-  };
-  public static readonly defaultProperties: Required<CodeBlockProperties> = {
     toggleName: 'paragraph',
     // eslint-disable-next-line unicorn/no-useless-undefined
     formatter: () => undefined,
@@ -57,9 +56,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlo
    * Add the languages to the environment if they have not yet been added.
    */
   protected init() {
-    for (const language of this.options.supportedLanguages) {
-      refractor.register(language);
-    }
+    this.registerLanguages();
   }
 
   protected createNodeSpec(): NodeExtensionSpec {
@@ -171,7 +168,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlo
 
   /**
    * Create an input rule that listens converts the code fence into a code block
-   * with space.
+   * when typing triple back tick followed by a space.
    */
   public createInputRules = () => {
     const regexp = /^```([\dA-Za-z]*) $/;
@@ -194,6 +191,17 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlo
     ];
   };
 
+  protected onSetOptions(parameter: OnSetOptionsParameter<CodeBlockOptions>) {
+    const { changes } = parameter;
+
+    if (changes.supportedLanguages) {
+      this.registerLanguages();
+    }
+  }
+
+  /**
+   * Create specific keyboard bindings for the code block.
+   */
   public createKeymap = (): KeyBindings => {
     return {
       Tab: ({ state, dispatch }) => {
@@ -321,6 +329,9 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlo
     };
   };
 
+  /**
+   * Create the custom code block plugin which handles the delete key amongst other things.
+   */
   public createPlugin = (): CreatePluginReturn<CodeBlockState> => {
     const pluginState = new CodeBlockState(this.type, this);
 
@@ -363,6 +374,19 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockSettings, CodeBlo
       },
     };
   };
+
+  /**
+   * Register passed in languages.
+   */
+  private registerLanguages() {
+    for (const language of this.options.supportedLanguages) {
+      if (refractor.registered(language.name)) {
+        return;
+      }
+
+      refractor.register(language);
+    }
+  }
 }
 
 export { getLanguage };

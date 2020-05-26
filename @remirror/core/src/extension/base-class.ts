@@ -206,6 +206,8 @@ export abstract class BaseClass<
       update: this.#initialOptions,
     });
 
+    this.updateDynamicOptions(options);
+
     // Trigger the update handler so that child extension properties can also be
     // updated.
     this.onSetOptions?.({
@@ -215,12 +217,13 @@ export abstract class BaseClass<
       pickChanged,
       initialOptions: this.#initialOptions,
     });
-
-    this.updateDynamicOptions(options);
   }
 
   /**
-   * Override this to received updates whenever `setOptions` is called.
+   * Override this to receive updates whenever the options have been updated on
+   * this instance. This method is called after the updates have already been
+   * applied to the instance. If you need more control over exactly how the
+   * option should be applied you should set the option to be `Custom`.
    *
    * **Please Note**:
    *
@@ -230,10 +233,10 @@ export abstract class BaseClass<
    * ```ts
    * class ThisPreset extends Preset {
    *   // GOOD ✅
-   *   onSetOptions(parameter: OnSetOptionsParameter<{}>) {}
+   *   onSetOptions(parameter: OnSetOptionsParameter<Options>) {}
    *
    *    // BAD ❌
-   *   onSetOptions = (parameter: OnSetOptionsParameter<{}>) => {}
+   *   onSetOptions = (parameter: OnSetOptionsParameter<Options>) => {}
    * }
    * ```
    *

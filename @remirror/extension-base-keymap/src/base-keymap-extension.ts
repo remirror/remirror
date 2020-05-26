@@ -145,12 +145,8 @@ export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
    * Handle changes in the dynamic properties.
    */
   protected onSetOptions(parameter: OnSetOptionsParameter<BaseKeymapOptions>) {
-    const { changes, reason } = parameter;
+    const { changes } = parameter;
     let shouldReconfigureBindings = false;
-
-    if (reason === 'init') {
-      return;
-    }
 
     if (
       changes.defaultBindingMethod ||

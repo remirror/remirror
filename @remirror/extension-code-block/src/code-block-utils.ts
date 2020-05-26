@@ -26,7 +26,7 @@ import {
 import { TextSelection } from '@remirror/pm/state';
 import { Decoration } from '@remirror/pm/view';
 
-import { CodeBlockAttributes, CodeBlockProperties, FormattedContent } from './code-block-types';
+import { CodeBlockAttributes, CodeBlockOptions, FormattedContent } from './code-block-types';
 
 export const dataAttribute = 'data-code-block-language';
 
@@ -50,7 +50,7 @@ function parseRefractorNodes(
   return refractorNodes.map((node) => {
     const classes = [
       ...className,
-      ...(node.type === 'element' && node.options.className ? node.options.className : []),
+      ...(node.type === 'element' && node.properties.className ? node.properties.className : []),
     ];
 
     if (node.type === 'element') {
@@ -297,7 +297,7 @@ export function codeBlockToDOM(node: ProsemirrorNode, defaultLanguage = 'markup'
 
 interface FormatCodeBlockFactoryParameter
   extends NodeTypeParameter,
-    Required<Pick<CodeBlockProperties, 'formatter' | 'defaultLanguage'>> {}
+    Required<Pick<CodeBlockOptions, 'formatter' | 'defaultLanguage'>> {}
 
 /**
  * A factory for creating a command which can format a selected codeBlock (or

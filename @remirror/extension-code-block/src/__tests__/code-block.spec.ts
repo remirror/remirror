@@ -13,7 +13,7 @@ import yaml from 'refractor/lang/yaml';
 import { ExtensionPriority, fromHTML, object, toHTML } from '@remirror/core';
 import { createBaseManager, isExtensionValid } from '@remirror/test-fixtures';
 
-import { CodeBlockExtension, CodeBlockProperties, CodeBlockSettings, FormatterParameter } from '..';
+import { CodeBlockExtension, CodeBlockOptions, FormatterParameter } from '..';
 import { getLanguage } from '../code-block-utils';
 
 test('is code block extension valid', () => {
@@ -50,11 +50,7 @@ describe('schema', () => {
 
 describe('constructor', () => {
   it('is created with the correct default properties and settings', () => {
-    const codeBlock = new CodeBlockExtension({
-      properties: {
-        syntaxTheme: 'a11yDark',
-      },
-    });
+    const codeBlock = new CodeBlockExtension({ syntaxTheme: 'a11yDark' });
 
     expect(codeBlock.options.syntaxTheme).toEqual('a11yDark');
     expect(codeBlock.options.defaultLanguage).toEqual('markup');
@@ -63,9 +59,9 @@ describe('constructor', () => {
 
 const supportedLanguages = [typescript, javascript, markdown, tsx];
 
-const create = (settings: CodeBlockSettings = object(), properties?: CodeBlockProperties) =>
+const create = (options: CodeBlockOptions = object()) =>
   renderEditor({
-    extensions: [new CodeBlockExtension({ ...{ ...options, properties }, supportedLanguages })],
+    extensions: [new CodeBlockExtension({ ...options, supportedLanguages })],
     presets: [],
   });
 
@@ -339,7 +335,7 @@ describe('commands', () => {
       add,
       attributeNodes: { codeBlock },
       nodes: { doc, p },
-    } = create({}, { formatter });
+    } = create({ formatter });
     const tsBlock = codeBlock({ language: 'typescript' });
 
     it('can format the codebase', () => {
