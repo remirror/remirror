@@ -287,18 +287,18 @@ interface TransformKeyBindingsParameter {
  * Transforms the keybindings into an object that can be consumed by the
  * prosemirror keydownHandler method.
  */
-export const transformKeyBindings = (
+export function transformKeyBindings(
   parameter: TransformKeyBindingsParameter,
-): Record<string, ProsemirrorCommandFunction> => {
+): Record<string, ProsemirrorCommandFunction> {
   const { bindings, suggestionParameter } = parameter;
   const transformed: Record<string, ProsemirrorCommandFunction> = object();
 
-  for (const [key, method] of entries(bindings)) {
-    transformed[key] = () => bool(method(suggestionParameter));
+  for (const [key, binding] of entries(bindings)) {
+    transformed[key] = () => bool(binding(suggestionParameter));
   }
 
   return transformed;
-};
+}
 
 /**
  * Run the keyBindings when a key is pressed to perform actions.
@@ -309,15 +309,15 @@ export const transformKeyBindings = (
  *
  * This is useful for intercepting events.
  */
-export const runKeyBindings = (
+export function runKeyBindings(
   bindings: SuggestKeyBindingMap,
   suggestionParameter: SuggestKeyBindingParameter,
-) => {
+) {
   return keydownHandler(transformKeyBindings({ bindings, suggestionParameter }))(
     suggestionParameter.view,
     suggestionParameter.event,
   );
-};
+}
 
 interface FindFromSuggestionsParameter extends ResolvedPosParameter {
   /**

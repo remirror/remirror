@@ -401,7 +401,7 @@ export class SuggestState {
       ...this.createParameter(match),
     };
 
-    // TODO this is a performance bottleneck
+    // TODO recalculating the keybindings on every update this is a performance bottleneck
     return runKeyBindings(isFunction(keyBindings) ? keyBindings() : keyBindings, parameter);
   }
 

@@ -134,8 +134,12 @@ export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
   public onSetCustomOption: SetCustomOption<BaseKeymapOptions> = (key, value) => {
     if (key === 'keymap') {
       this.extraKeyBindings = [...this.extraKeyBindings, value];
+      this.store?.rebuildKeymap?.();
 
-      return () => this.extraKeyBindings.filter((binding) => binding !== value);
+      return () => {
+        this.extraKeyBindings = this.extraKeyBindings.filter((binding) => binding !== value);
+        this.store?.rebuildKeymap?.();
+      };
     }
 
     return noop;
@@ -158,7 +162,7 @@ export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
     }
 
     if (shouldReconfigureBindings) {
-      this.store.rebuildKeymap();
+      this.store?.rebuildKeymap?.();
     }
   }
 

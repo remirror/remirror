@@ -1,30 +1,25 @@
 import { renderEditor } from 'jest-remirror';
 
-import { object, WithProperties } from '@remirror/core';
+import { object } from '@remirror/core';
 import { SuggestKeyBindingParameter } from '@remirror/pm/suggest';
 
 import { EmojiExtension } from '../emoji-extension';
 import {
   EmojiObject,
-  EmojiProperties,
-  EmojiSettings,
+  EmojiOptions,
   EmojiSuggestCommand,
   EmojiSuggestionChangeHandlerParameter,
 } from '../emoji-types';
 
-function create(parameter: WithProperties<EmojiSettings, EmojiProperties> = object()) {
+function create(options: EmojiOptions = object()) {
+  const extension = new EmojiExtension(options);
+
+  extension.addHandler('onSuggestionExit', onSuggestionExit);
+  extension.addHandler('onSuggestionChange', onSuggestionChange);
+  extension.setCustomOption('suggestionKeyBindings', suggestionKeyBindings);
+
   return renderEditor({
-    extensions: [
-      new EmojiExtension({
-        ...parameter,
-        properties: {
-          onSuggestionChange,
-          onSuggestionExit,
-          suggestionKeyBindings,
-          ...parameter.options,
-        },
-      }),
-    ],
+    extensions: [extension],
     presets: [],
   });
 }
@@ -99,7 +94,7 @@ describe('suggestions', () => {
     const {
       nodes: { doc, p },
       add,
-    } = create({ properties: {} });
+    } = create();
 
     add(doc(p('<cursor>')))
       .insertText(':')

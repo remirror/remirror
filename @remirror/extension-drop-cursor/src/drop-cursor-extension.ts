@@ -5,6 +5,7 @@ import {
   EditorView,
   findPositionOfNodeAfter,
   findPositionOfNodeBefore,
+  Handler,
   isUndefined,
   pick,
   PlainExtension,
@@ -14,111 +15,16 @@ import {
 import { dropPoint, insertPoint } from '@remirror/pm/transform';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
 
-/**
- * A drop cursor plugin which adds a decoration at the active drop location. The
- * decoration has a class and can be styled however you want.
- */
-export class DropCursorExtension extends PlainExtension<DropCursorSettings, DropCursorProperties> {
-  public static defaultOptions: DefaultExtensionOptions<DropCursorSettings> = {
-    inlineWidth: '2px',
-    inlineSpacing: '10px',
-    blockWidth: '100%',
-    blockHeight: '10px',
-    color: 'primary',
-    blockClassName: 'remirror-drop-cursor-block',
-    beforeBlockClassName: 'remirror-drop-cursor-before-block',
-    afterBlockClassName: 'remirror-drop-cursor-after-block',
-    inlineClassName: 'remirror-drop-cursor-inline',
-    beforeInlineClassName: 'remirror-drop-cursor-before-inline',
-    afterInlineClassName: 'remirror-drop-cursor-after-inline',
-  };
-  public static defaultProperties: Required<DropCursorProperties> = {
-    onInit() {},
-    onDestroy() {},
-  };
-
-  get name() {
-    return 'dropCursor' as const;
-  }
-
-  public createHelpers = () => {
-    return {
-      /**
-       * Check if the anything is currently being dragged over the editor.
-       */
-      isDragging: () => {
-        return this.store.getPluginState<DropCursorState>(this.name).isDragging();
-      },
-    };
-  };
-
-  /**
-   * Use the dropCursor plugin with provided options.
-   */
-  public createPlugin = (): CreatePluginReturn<DropCursorState> => {
-    const dropCursorState = new DropCursorState(this);
-
-    return {
-      view(editorView) {
-        dropCursorState.init(editorView);
-        return pick(dropCursorState, ['destroy']);
-      },
-      state: {
-        init: () => dropCursorState,
-        apply: () => dropCursorState,
-      },
-      props: {
-        decorations: () => dropCursorState.decorationSet,
-        handleDOMEvents: {
-          dragover: (_, event) => {
-            dropCursorState.dragover(event as DragEvent);
-            return false;
-          },
-          dragend: () => {
-            dropCursorState.dragend();
-            return false;
-          },
-          drop: () => {
-            dropCursorState.drop();
-            return false;
-          },
-          dragleave: (_, event) => {
-            dropCursorState.dragleave(event as DragEvent);
-            return false;
-          },
-        },
-      },
-    };
-  };
+interface OnInitParameter extends OnDestroyParameter {
+  extension: DropCursorExtension;
 }
 
-/**
- * This indicates whether the current cursor position is within a textblock or
- * between two nodes.
- */
-export type DropCursorType = 'block' | 'inline';
-
-export interface DropCursorProperties {
-  /**
-   * When the plugin is first initialized.
-   */
-  onInit: (parameter: {
-    blockElement: HTMLElement;
-    inlineElement: HTMLElement;
-    extension: DropCursorExtension;
-  }) => void;
-
-  /**
-   * Cleanup when the drop cursor plugin is destroyed. This happens when the
-   * editor is unmounted.
-   *
-   * If you've attached a portal to the element then this is the place to handle
-   * that.
-   */
-  onDestroy: (parameter: { blockElement: HTMLElement; inlineElement: HTMLElement }) => void;
+interface OnDestroyParameter {
+  blockElement: HTMLElement;
+  inlineElement: HTMLElement;
 }
 
-export interface DropCursorSettings {
+export interface DropCursorOptions {
   /**
    * The main color of the component being rendered.
    *
@@ -195,7 +101,103 @@ export interface DropCursorSettings {
    * @defaultValue 'remirror-drop-cursor-after-inline'
    */
   afterInlineClassName?: string;
+
+  /**
+   * When the plugin is first initialized.
+   */
+  onInit: Handler<(parameter: OnInitParameter) => void>;
+
+  /**
+   * Cleanup when the drop cursor plugin is destroyed. This happens when the
+   * editor is unmounted.
+   *
+   * If you've attached a portal to the element then this is the place to handle
+   * that.
+   */
+  onDestroy: Handler<(parameter: OnDestroyParameter) => void>;
 }
+
+/**
+ * A drop cursor plugin which adds a decoration at the active drop location. The
+ * decoration has a class and can be styled however you want.
+ */
+export class DropCursorExtension extends PlainExtension<DropCursorOptions> {
+  public static defaultOptions: DefaultExtensionOptions<DropCursorOptions> = {
+    inlineWidth: '2px',
+    inlineSpacing: '10px',
+    blockWidth: '100%',
+    blockHeight: '10px',
+    color: 'primary',
+    blockClassName: 'remirror-drop-cursor-block',
+    beforeBlockClassName: 'remirror-drop-cursor-before-block',
+    afterBlockClassName: 'remirror-drop-cursor-after-block',
+    inlineClassName: 'remirror-drop-cursor-inline',
+    beforeInlineClassName: 'remirror-drop-cursor-before-inline',
+    afterInlineClassName: 'remirror-drop-cursor-after-inline',
+  };
+
+  public static readonly handlerKeys = ['onInit', 'onDestroy'];
+
+  get name() {
+    return 'dropCursor' as const;
+  }
+
+  public createHelpers = () => {
+    return {
+      /**
+       * Check if the anything is currently being dragged over the editor.
+       */
+      isDragging: () => {
+        return this.store.getPluginState<DropCursorState>(this.name).isDragging();
+      },
+    };
+  };
+
+  /**
+   * Use the dropCursor plugin with provided options.
+   */
+  public createPlugin = (): CreatePluginReturn<DropCursorState> => {
+    const dropCursorState = new DropCursorState(this);
+
+    return {
+      view(editorView) {
+        dropCursorState.init(editorView);
+        return pick(dropCursorState, ['destroy']);
+      },
+      state: {
+        init: () => dropCursorState,
+        apply: () => dropCursorState,
+      },
+      props: {
+        decorations: () => dropCursorState.decorationSet,
+        handleDOMEvents: {
+          dragover: (_, event) => {
+            dropCursorState.dragover(event as DragEvent);
+            return false;
+          },
+          dragend: () => {
+            dropCursorState.dragend();
+            return false;
+          },
+          drop: () => {
+            dropCursorState.drop();
+            return false;
+          },
+          dragleave: (_, event) => {
+            dropCursorState.dragleave(event as DragEvent);
+            return false;
+          },
+        },
+      },
+    };
+  };
+}
+
+/**
+ * This indicates whether the current cursor position is within a textblock or
+ * between two nodes.
+ */
+export type DropCursorType = 'block' | 'inline';
 
 class DropCursorState {
   /**

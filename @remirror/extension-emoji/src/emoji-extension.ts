@@ -2,20 +2,23 @@ import escapeStringRegex from 'escape-string-regexp';
 
 import {
   CommandFunction,
+  CustomKeyList,
   DefaultExtensionOptions,
   FromToParameter,
+  HandlerKeyList,
   isNullOrUndefined,
   noop,
   object,
   PlainExtension,
   plainInputRule,
+  SetCustomOption,
 } from '@remirror/core';
 import { Suggestion } from '@remirror/pm/suggest';
 
 import {
   EmojiObject,
-  EmojiProperties,
-  EmojiSettings,
+  EmojiOptions,
+  EmojiSuggestionKeyBindings,
   NamesAndAliases,
   SkinVariation,
 } from './emoji-types';
@@ -29,18 +32,19 @@ import {
   sortEmojiMatches,
 } from './emoji-utils';
 
-export class EmojiExtension extends PlainExtension<EmojiSettings, EmojiProperties> {
-  public static readonly defaultOptions: DefaultExtensionOptions<EmojiSettings> = {
+export class EmojiExtension extends PlainExtension<EmojiOptions> {
+  public static readonly defaultOptions: DefaultExtensionOptions<EmojiOptions> = {
     defaultEmoji: DEFAULT_FREQUENTLY_USED,
     suggestionCharacter: ':',
-  };
-
-  public static readonly defaultProperties: Required<EmojiProperties> = {
     maxResults: 20,
-    onSuggestionChange: noop,
-    onSuggestionExit: noop,
     suggestionKeyBindings: {},
   };
+
+  public static readonly customKeys: CustomKeyList<EmojiOptions> = ['suggestionKeyBindings'];
+  public static readonly handlerKeys: HandlerKeyList<EmojiOptions> = [
+    'onSuggestionChange',
+    'onSuggestionExit',
+  ];
 
   /**
    * The name is dynamically generated based on the passed in type.
@@ -54,6 +58,19 @@ export class EmojiExtension extends PlainExtension<EmojiSettings, EmojiPropertie
    */
   private frequentlyUsed: EmojiObject[] = populateFrequentlyUsed(this.options.defaultEmoji);
 
+  /**
+   * The custom keybindings added for the emoji plugin.
+   */
+  private keyBindingsList: EmojiSuggestionKeyBindings[] = [];
+
+  /**
+   * The compiled keybindings.
+   */
+  private suggestionKeyBindings: EmojiSuggestionKeyBindings = {};
+
+  /**
+   * Manage input rules for emoticons.
+   */
   public createInputRules = () => {
     return [
       // Emoticons
@@ -155,6 +172,37 @@ export class EmojiExtension extends PlainExtension<EmojiSettings, EmojiPropertie
     };
   };
 
+  public onSetCustomOption: SetCustomOption<EmojiOptions> = (key, value) => {
+    switch (key) {
+      case 'suggestionKeyBindings':
+        this.keyBindingsList = [...this.keyBindingsList, value];
+        this.updateKeyBindings();
+
+        return () => {
+          this.keyBindingsList = this.keyBindingsList.filter((binding) => binding !== value);
+          this.updateKeyBindings();
+        };
+
+        return noop;
+
+      default:
+        return noop;
+    }
+  };
+
+  /**
+   * For now a dumb merge for the key binding command. Later entries are given priority over earlier entries.
+   */
+  private updateKeyBindings() {
+    let newBindings: EmojiSuggestionKeyBindings = object();
+
+    for (const binding of this.keyBindingsList) {
+      newBindings = { ...newBindings, ...binding };
+    }
+
+    this.suggestionKeyBindings = newBindings;
+  }
+
   /**
    * Emojis can be selected via `:` the colon key (by default). This sets the
    * configuration using `prosemirror-suggest`
@@ -169,7 +217,7 @@ export class EmojiExtension extends PlainExtension<EmojiSettings, EmojiPropertie
       name: this.name,
       appendText: '',
       suggestTag: 'span',
-      keyBindings: () => this.options.suggestionKeyBindings,
+      keyBindings: () => this.suggestionKeyBindings,
       onChange: (parameters) => {
         const query = parameters.queryText.full;
         const emojiMatches =
@@ -178,7 +226,8 @@ export class EmojiExtension extends PlainExtension<EmojiSettings, EmojiPropertie
             : sortEmojiMatches(query, this.options.maxResults);
         this.options.onSuggestionChange({ ...parameters, emojiMatches });
       },
-      onExit: (parameter) => this.options.onSuggestionExit(parameter),
+
+      onExit: this.options.onSuggestionExit,
       createCommand: (parameter) => {
         const { match } = parameter;
         const { getCommands } = this.store;

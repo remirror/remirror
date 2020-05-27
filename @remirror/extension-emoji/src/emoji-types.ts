@@ -1,3 +1,4 @@
+import { Custom, Handler } from '@remirror/core';
 import {
   SuggestChangeHandlerParameter,
   SuggestExitHandlerParameter,
@@ -39,7 +40,7 @@ export type EmojiSuggestionChangeHandler = (
 ) => void;
 export type EmojiSuggestionExitHandler = (parameter: SuggestExitHandlerParameter) => void;
 
-export interface EmojiSettings {
+export interface EmojiOptions {
   /**
    * The character which will trigger the emoji suggesters popup.
    */
@@ -50,24 +51,22 @@ export interface EmojiSettings {
    * These are used when the query typed is less than two characters long.
    */
   defaultEmoji?: NamesAndAliases[];
-}
 
-export interface EmojiProperties {
   /**
    * Key bindings for suggesters.
    */
-  suggestionKeyBindings?: EmojiSuggestionKeyBindings;
+  suggestionKeyBindings?: Custom<EmojiSuggestionKeyBindings>;
 
   /**
    * Called whenever the suggestion value is updated.
    */
-  onSuggestionChange?: EmojiSuggestionChangeHandler;
+  onSuggestionChange?: Handler<EmojiSuggestionChangeHandler>;
 
   /**
    * Called when the suggestion exits.
    * This is useful for cleaning up local state when emoji is set.
    */
-  onSuggestionExit?: EmojiSuggestionExitHandler;
+  onSuggestionExit?: Handler<EmojiSuggestionExitHandler>;
 
   /**
    * The maximum results to show when searching for matching emoji.
