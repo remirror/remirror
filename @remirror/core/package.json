@@ -17,9 +17,12 @@
   },
   "types": "dist/core.cjs.d.ts",
   "files": [
-    "internal",
+    "style",
     "dist"
   ],
+  "scripts": {
+    "style": "node-sass style/main.scss dist/style.css"
+  },
   "dependencies": {
     "@babel/runtime": "^7.10.0",
     "@remirror/core-constants": "^0.7.4",

@@ -1,5 +1,4 @@
 import { EDITOR_CLASS_SELECTOR } from '@remirror/core-constants';
-import { RemirrorTheme } from '@remirror/core-types';
 
 import { HSL } from './ui-hsl';
 
