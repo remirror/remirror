@@ -261,6 +261,10 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * Loops through all extensions to set up the lifecycle handlers.
    */
   private setupLifecycleHandlers() {
+    for (const preset of this.#presets) {
+      preset.setExtensionStore(this.#extensionStore);
+    }
+
     for (const extension of this.#extensions) {
       extension.setStore(this.#extensionStore);
 

@@ -4,7 +4,13 @@ import {
   ErrorConstant,
   RemirrorIdentifier,
 } from '@remirror/core-constants';
-import { invariant, isIdentifierOfType, isRemirrorType, uniqueBy } from '@remirror/core-helpers';
+import {
+  freeze,
+  invariant,
+  isIdentifierOfType,
+  isRemirrorType,
+  uniqueBy,
+} from '@remirror/core-helpers';
 import { EmptyShape, Replace, Shape, ValidOptions } from '@remirror/core-types';
 
 import { AnyExtension, AnyExtensionConstructor } from '../extension';
@@ -56,6 +62,33 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
   get extensions() {
     return this.#extensions;
   }
+
+  /**
+   * The store is a property that's internal to the preset. It include important
+   * items like the `view` and `schema` that are added by the editor manager.
+   *
+   * **NOTE** - The store is not available until the manager has been created and
+   * received the extension. As a result trying to access the store during
+   * `init` and `constructor` will result in a runtime error.
+   */
+  protected get extensionStore() {
+    invariant(this.#extensionStore, {
+      code: ErrorConstant.MANAGER_PHASE_ERROR,
+      message: `An error ocurred while attempting to access the 'extension.store' when the Manager has not yet set upt the lifecycle methods.`,
+    });
+
+    return freeze(this.#extensionStore, { requireKeys: true });
+  }
+
+  /**
+   * This store is can be modified by the extension manager with and lifecycle
+   * extension methods.
+   *
+   * Different properties are added at different times so it's important to
+   * check the documentation for each property to know what phase is being
+   * added.
+   */
+  #extensionStore!: Remirror.ExtensionStore;
 
   /**
    * Private list of extension stored in within this preset.
@@ -165,6 +198,39 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
     });
 
     return extension as InstanceType<Type>;
+  }
+
+  /**
+   * Pass a reference to the globally shared `ExtensionStore` for this extension.
+   *
+   * @remarks
+   *
+   * The extension store allows extensions to access important variables without
+   * complicating their creator methods.
+   *
+   * ```ts
+   * import { PlainExtension } from 'remirror/core';
+   *
+   * class Awesome extends PlainExtension {
+   *   customMethod() {
+   *     if (this.store.view.hasFocus()) {
+   *       log('dance dance dance');
+   *     }
+   *   }
+   * }
+   * ```
+   *
+   * This should only be called by the `EditorManager`.
+   *
+   * @internal
+   * @nonVirtual
+   */
+  public setExtensionStore(store: Remirror.ExtensionStore) {
+    if (this.#extensionStore) {
+      return;
+    }
+
+    this.#extensionStore = store;
   }
 }
 

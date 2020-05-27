@@ -431,6 +431,16 @@ importers:
       '@babel/runtime': ^7.10.0
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
+  '@remirror/extension-placeholder':
+    dependencies:
+      '@babel/runtime': 7.10.0
+      '@remirror/core': 'link:../core'
+    devDependencies:
+      '@remirror/pm': 'link:../pm'
+    specifiers:
+      '@babel/runtime': ^7.10.0
+      '@remirror/core': ^0.11.0
+      '@remirror/pm': ^0.0.0
   '@remirror/extension-react-ssr':
     dependencies:
       '@babel/runtime': 7.10.0
@@ -561,14 +571,22 @@ importers:
     dependencies:
       '@babel/runtime': 7.10.0
       '@remirror/core': 'link:../core'
+      '@remirror/extension-placeholder': 'link:../extension-placeholder'
       '@remirror/extension-react-ssr': 'link:../extension-react-ssr'
+      '@remirror/react-utils': 'link:../react-utils'
     devDependencies:
       '@remirror/pm': 'link:../pm'
+      '@types/react': 16.9.35
+      react: 16.13.1
     specifiers:
       '@babel/runtime': ^7.10.0
       '@remirror/core': ^0.11.0
+      '@remirror/extension-placeholder': ^0.0.0
       '@remirror/extension-react-ssr': ^0.0.0
       '@remirror/pm': '*'
+      '@remirror/react-utils': ^0.7.6
+      '@types/react': ^16.9.35
+      react: ^16.13.1
   '@remirror/preset-table':
     dependencies:
       '@babel/runtime': 7.10.0

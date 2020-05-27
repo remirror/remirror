@@ -4,7 +4,6 @@ import {
   __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
   ErrorConstant,
   ExtensionPriority,
-  ExtensionTag,
   RemirrorIdentifier,
 } from '@remirror/core-constants';
 import { freeze, invariant, isIdentifierOfType, isRemirrorType } from '@remirror/core-helpers';
@@ -214,22 +213,6 @@ interface Extension<Options extends ValidOptions = EmptyShape>
     Remirror.ExtensionCreatorMethods<Options>,
     Remirror.BaseExtension {
   constructor: ExtensionConstructor<Options>;
-
-  /**
-   * Define the tags for this extension.
-   *
-   * @remarks
-   *
-   * Tags are a helpful tool for categorizing the behavior of an extension. This
-   * behavior is later grouped in the `Manager` and passed as `tag` to each
-   * method defined in the `ExtensionFactoryParameter`. It can be used by
-   * commands that need to remove all formatting and use the tag to identify
-   * which registered extensions are formatters.
-   *
-   * There are internally defined tags but it's also possible to define any
-   * custom string as a tag. See {@link ExtensionTag}
-   */
-  tags?: Array<ExtensionTag | string>;
 
   /**
    * An extension can declare the extensions it requires.

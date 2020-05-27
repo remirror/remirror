@@ -1,11 +1,16 @@
-import { OnSetOptionsParameter, Preset } from '@remirror/core';
-import { ReactSSRExtension, ReactSSROptions } from '@remirror/extension-react-ssr';
+import { Children, cloneElement } from 'react';
 
-export interface ReactPresetOptions extends ReactSSROptions {}
+import { isDocNodeEmpty, isString, OnSetOptionsParameter, Preset } from '@remirror/core';
+import { PlaceholderExtension, PlaceholderOptions } from '@remirror/extension-placeholder';
+import { ReactSSRExtension, ReactSSROptions } from '@remirror/extension-react-ssr';
+import { getElementProps } from '@remirror/react-utils';
+
+export interface ReactPresetOptions extends ReactSSROptions, PlaceholderOptions {}
 
 export class ReactPreset extends Preset<ReactPresetOptions> {
   public static defaultOptions: Required<ReactPresetOptions> = {
     ...ReactSSRExtension.defaultOptions,
+    ...PlaceholderExtension.defaultOptions,
   };
 
   get name() {
@@ -25,8 +30,41 @@ export class ReactPreset extends Preset<ReactPresetOptions> {
   }
 
   public createExtensions() {
-    const { transformers } = this.options;
+    const { transformers, emptyNodeClass, placeholder } = this.options;
+    const placeholderExtension = new PlaceholderExtension({ emptyNodeClass, placeholder });
+    this.addSSRToPlaceholder(placeholderExtension);
 
-    return [new ReactSSRExtension({ transformers })];
+    return [new ReactSSRExtension({ transformers }), placeholderExtension];
+  }
+
+  private addSSRToPlaceholder(extension: PlaceholderExtension) {
+    /**
+     * Add a class and props to the root element if the document is empty.
+     */
+    extension.createSSRTransformer = () => {
+      return (element: JSX.Element) => {
+        const state = this.extensionStore.getState();
+
+        const { emptyNodeClass, placeholder } = extension.options;
+        const { children } = getElementProps(element);
+        if (Children.count(children) > 1 || !isDocNodeEmpty(state.doc)) {
+          return element;
+        }
+
+        const properties = getElementProps(children);
+        return cloneElement(
+          element,
+          {},
+          cloneElement(children, {
+            emptyNodeClass,
+            placeholder,
+            className: isString(properties.className)
+              ? `${properties.className} ${emptyNodeClass}`
+              : emptyNodeClass,
+            'data-placeholder': placeholder,
+          }),
+        );
+      };
+    };
   }
 }

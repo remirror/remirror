@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 
 import { bool, isFunction, isObject, isString } from '@remirror/core-helpers';
-import { AnyFunction, Shape } from '@remirror/core-types';
+import { AnyFunction, UnknownShape } from '@remirror/core-types';
 
 export interface RemirrorComponentStaticProperties {
   /**
@@ -19,11 +19,12 @@ export interface RemirrorComponentStaticProperties {
   $$remirrorType: RemirrorType;
 }
 
-export type RemirrorFC<GProps extends object = {}> = FC<GProps> & RemirrorComponentStaticProperties;
-export type RemirrorComponentClass<GProps extends object = {}> = ComponentClass<GProps> &
+export type RemirrorFC<GProps extends object = object> = FC<GProps> &
+  RemirrorComponentStaticProperties;
+export type RemirrorComponentClass<GProps extends object = object> = ComponentClass<GProps> &
   RemirrorComponentStaticProperties;
 
-export type RemirrorComponentType<GProps extends object = {}> = ComponentType<GProps> &
+export type RemirrorComponentType<GProps extends object = object> = ComponentType<GProps> &
   RemirrorComponentStaticProperties;
 export type RemirrorElement<GOptions extends object = any> = ReactElement & {
   type: RemirrorComponentType<GOptions>;
@@ -84,7 +85,9 @@ export function isReactFragment<GProps extends object = any>(
  *
  * @param element
  */
-export function getElementProps(element: JSX.Element): Shape & { children: JSX.Element } {
+export function getElementProps<Type = UnknownShape>(
+  element: JSX.Element,
+): UnknownShape & Type & { children: JSX.Element } {
   return isValidElement(element) ? element.props : {};
 }
 
