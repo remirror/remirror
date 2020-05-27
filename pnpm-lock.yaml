@@ -392,6 +392,16 @@ importers:
       '@babel/runtime': ^7.10.0
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
+  '@remirror/extension-history':
+    dependencies:
+      '@babel/runtime': 7.10.0
+      '@remirror/core': 'link:../core'
+    devDependencies:
+      '@remirror/pm': 'link:../pm'
+    specifiers:
+      '@babel/runtime': ^7.10.0
+      '@remirror/core': ^0.11.0
+      '@remirror/pm': ^0.0.0
   '@remirror/extension-image':
     dependencies:
       '@babel/runtime': 7.10.0

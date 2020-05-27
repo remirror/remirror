@@ -399,3 +399,7 @@ export type StrictReplace<Type, Replacements extends Record<keyof Type, unknown>
  */
 export type Replace<Type, Replacements extends Shape> = Omit<Type, keyof Replacements> &
   Replacements;
+
+export type NonNullableShape<Type extends object> = {
+  [Key in keyof Type]: NonNullable<Type[Key]>;
+};

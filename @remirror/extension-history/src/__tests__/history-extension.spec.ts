@@ -1,23 +1,29 @@
 import { renderEditor } from 'jest-remirror';
 
 import { EditorState } from '@remirror/core';
+import { isExtensionValid } from '@remirror/test-fixtures';
 
 import { HistoryExtension } from '../history-extension';
 
+test('is valid', () => {
+  expect(isExtensionValid(HistoryExtension, {}));
+});
+
 describe('commands', () => {
-  const create = () => renderEditor({ others: [new HistoryExtension()] });
+  const create = () => renderEditor({ extensions: [new HistoryExtension()], presets: [] });
 
   it('can undo', () => {
-    const { p, doc, add } = create();
+    const {
+      nodes: { p, doc },
+      add,
+    } = create();
     add(doc(p('<cursor>')))
       .insertText('Text goes here')
-      .actionsCallback((actions) => {
-        expect(actions.undo.isActive()).toBeFalse();
-        expect(actions.undo.isEnabled()).toBeTrue();
+      .callback(({ commands }) => {
+        expect(commands.undo.isEnabled()).toBeTrue();
 
-        actions.undo();
-
-        expect(actions.undo.isEnabled()).toBeFalse();
+        commands.undo();
+        expect(commands.undo.isEnabled()).toBeFalse();
       })
       .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('')));
@@ -25,20 +31,20 @@ describe('commands', () => {
   });
 
   it('can redo', () => {
-    const { p, doc, add } = create();
+    const {
+      nodes: { p, doc },
+      add,
+    } = create();
     add(doc(p('<cursor>')))
       .insertText('Text goes here')
-      .actionsCallback((actions) => {
-        expect(actions.redo.isActive()).toBeFalse();
-        expect(actions.redo.isEnabled()).toBeFalse();
+      .callback(({ commands }) => {
+        expect(commands.redo.isEnabled()).toBeFalse();
 
-        actions.undo();
+        commands.undo();
+        expect(commands.redo.isEnabled()).toBeTrue();
 
-        expect(actions.redo.isEnabled()).toBeTrue();
-
-        actions.redo();
-
-        expect(actions.redo.isEnabled()).toBeFalse();
+        commands.redo();
+        expect(commands.redo.isEnabled()).toBeFalse();
       })
       .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('Text goes here')));
@@ -55,12 +61,11 @@ describe('`getState` and `getDispatch`', () => {
     getDispatch: () => dispatcher,
   };
 
-  const create = () => renderEditor({ others: [new HistoryExtension(mocks)] });
-  let { p, doc, add } = create();
-
-  beforeEach(() => {
-    ({ p, doc, add } = create());
-  });
+  const create = () => renderEditor({ extensions: [new HistoryExtension(mocks)], presets: [] });
+  const {
+    nodes: { p, doc },
+    add,
+  } = create();
 
   it('overrides for undo', () => {
     add(doc(p('<cursor>')))
@@ -68,8 +73,8 @@ describe('`getState` and `getDispatch`', () => {
       .callback((content) => {
         state = content.state;
       })
-      .actionsCallback((actions) => {
-        actions.undo();
+      .callback(({ commands }) => {
+        commands.undo();
 
         expect(mocks.getState).toHaveBeenCalledTimes(1);
         expect(dispatcher).toHaveBeenCalledTimes(1);
@@ -82,17 +87,20 @@ describe('`getState` and `getDispatch`', () => {
       .callback((content) => {
         state = content.state;
       })
-      .actionsCallback((actions) => {
-        actions.undo();
+      .callback(({ commands }) => {
+        commands.undo();
         jest.clearAllMocks();
-        actions.redo();
+        commands.redo();
 
         expect(mocks.getState).toHaveBeenCalled();
       });
   });
 
   it('overrides for keyboard shortcut', () => {
-    const { p, doc, add } = create();
+    const {
+      nodes: { p, doc },
+      add,
+    } = create();
     add(doc(p('<cursor>')))
       .insertText('Text goes here')
       .shortcut('Mod-z')

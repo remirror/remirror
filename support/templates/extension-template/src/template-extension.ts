@@ -9,9 +9,7 @@ import {
 export interface TemplateOptions {}
 
 /**
- * The default text passed into the prosemirror schema.
- *
- * @core
+ * An extension for the remirror editor. CHANGE ME.
  */
 export class TemplateExtension extends PlainExtension<TemplateOptions> {
   public static readonly staticKeys: StaticKeyList<TemplateOptions> = [];

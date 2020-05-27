@@ -17,56 +17,56 @@ export const PlaceholderExtension = ExtensionFactory.typed<PlaceholderExtensionO
   createAttributes: (_, extension) => ({ 'aria-placeholder': extension.options.placeholder }),
 });
 
-//   public styles() {
-//     const selector = `.${this.options.emptyNodeClass}:first-of-type::before`;
-//     return [
-//       `
-//        ${selector} {
-//         position: absolute;
-//         color: #aaa;
-//         pointer-events: none;
-//         height: 0;
-//         font-style: italic;
-//         content: attr(data-placeholder);
-//       }
-//     `,
-//       { [selector]: this.options.placeholderStyle },
-//     ];
-//   }
+  public styles() {
+    const selector = `.${this.options.emptyNodeClass}:first-of-type::before`;
+    return [
+      `
+       ${selector} {
+        position: absolute;
+        color: #aaa;
+        pointer-events: none;
+        height: 0;
+        font-style: italic;
+        content: attr(data-placeholder);
+      }
+    `,
+      { [selector]: this.options.placeholderStyle },
+    ];
+  }
 
-//   public plugin(): Plugin<PlaceholderPluginState> {
-//     return createPlaceholderPlugin(this);
-//   }
+  public plugin(): Plugin<PlaceholderPluginState> {
+    return createPlaceholderPlugin(this);
+  }
 
-//   /**
-//    * When the view becomes available set the aria placeholder property.
-//    */
-//   public attributes() {
-//     return { 'aria-placeholder': this.options.placeholder };
-//   }
+  /**
+   * When the view becomes available set the aria placeholder property.
+   */
+  public attributes() {
+    return { 'aria-placeholder': this.options.placeholder };
+  }
 
-//   /**
-//    * Add a class and props to the root element if the document is empty.
-//    */
-//   public ssrTransformer(element: JSX.Element, { getState }: ManagerParameter) {
-//     const state = getState();
-//     const { emptyNodeClass, placeholder } = this.options;
-//     const { children } = getElementProps(element);
-//     if (Children.count(children) > 1 || !isDocNodeEmpty(state.doc)) {
-//       return element;
-//     }
+  /**
+   * Add a class and props to the root element if the document is empty.
+   */
+  public ssrTransformer(element: JSX.Element, { getState }: ManagerParameter) {
+    const state = getState();
+    const { emptyNodeClass, placeholder } = this.options;
+    const { children } = getElementProps(element);
+    if (Children.count(children) > 1 || !isDocNodeEmpty(state.doc)) {
+      return element;
+    }
 
-//     const properties = getElementProps(children);
-//     return cloneElement(
-//       element,
-//       {},
-//       cloneElement(children, {
-//         ...options,
-//         className: isString(properties.className)
-//           ? `${properties.className} ${emptyNodeClass}`
-//           : emptyNodeClass,
-//         'data-placeholder': placeholder,
-//       }),
-//     );
-//   }
-// }
+    const properties = getElementProps(children);
+    return cloneElement(
+      element,
+      {},
+      cloneElement(children, {
+        ...options,
+        className: isString(properties.className)
+          ? `${properties.className} ${emptyNodeClass}`
+          : emptyNodeClass,
+        'data-placeholder': placeholder,
+      }),
+    );
+  }
+}
