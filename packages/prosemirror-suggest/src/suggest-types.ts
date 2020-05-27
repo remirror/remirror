@@ -154,7 +154,7 @@ export interface Suggestion<Command extends AnyFunction<void> = AnyFunction<void
    *
    * @defaultValue `() => void`
    */
-  onChange?: (parameter: SuggestChangeHandlerParameter<Command>) => void;
+  onChange?: SuggestChangeHandlerMethod<Command>;
 
   /**
    * Called whenever a suggestion is exited with the pre-exit match value.
@@ -167,7 +167,7 @@ export interface Suggestion<Command extends AnyFunction<void> = AnyFunction<void
    *
    * @defaultValue `() => void`
    */
-  onExit?: (parameter: SuggestExitHandlerParameter<Command>) => void;
+  onExit?: SuggestExitHandlerMethod<Command>;
 
   /**
    * Called for each character entry and can be used to disable certain
@@ -181,7 +181,7 @@ export interface Suggestion<Command extends AnyFunction<void> = AnyFunction<void
    *
    * @defaultValue `() => false`
    */
-  onCharacterEntry?: (parameter: SuggestCharacterEntryParameter<Command>) => boolean;
+  onCharacterEntry?: SuggestCharacterEntryMethod<Command>;
 
   /**
    * An object that describes how certain key bindings should be handled.
@@ -452,6 +452,10 @@ export interface SuggestChangeHandlerParameter<
   Command extends AnyFunction<void> = AnyFunction<void>
 > extends SuggestCallbackParameter<Command>, ReasonParameter<ChangeReason> {}
 
+export type SuggestChangeHandlerMethod<Command extends AnyFunction<void> = AnyFunction<void>> = (
+  parameter: SuggestChangeHandlerParameter<Command>,
+) => void;
+
 /**
  * The parameters passed to the {@link Suggestion.onExit} method.
  *
@@ -462,6 +466,10 @@ export interface SuggestExitHandlerParameter<Command extends AnyFunction<void> =
   extends SuggestCallbackParameter<Command>,
     ReasonParameter<ExitReason> {}
 
+export type SuggestExitHandlerMethod<Command extends AnyFunction<void> = AnyFunction<void>> = (
+  parameter: SuggestExitHandlerParameter<Command>,
+) => void;
+
 /**
  * The parameters passed to the {@link Suggestion.onCharacterEntry} method.
  *
@@ -471,6 +479,10 @@ export interface SuggestExitHandlerParameter<Command extends AnyFunction<void> =
 export interface SuggestCharacterEntryParameter<
   Command extends AnyFunction<void> = AnyFunction<void>
 > extends SuggestCallbackParameter<Command>, FromToParameter, TextParameter {}
+
+export type SuggestCharacterEntryMethod<Command extends AnyFunction<void> = AnyFunction<void>> = (
+  parameter: SuggestCharacterEntryParameter<Command>,
+) => boolean;
 
 /**
  * The parameters required by the {@link SuggestKeyBinding} method.

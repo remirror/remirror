@@ -9,6 +9,7 @@ import { EmptyShape, Replace, ValidOptions } from '@remirror/core-types';
 
 import { AnyExtension, AnyExtensionConstructor } from '../extension';
 import {
+  AnyBaseClassOverrides,
   BaseClass,
   BaseClassConstructor,
   ConstructorParameter,
@@ -307,7 +308,7 @@ declare global {
      * properties. By setting the `constructor` to a much simpler override all
      * `Preset`'s are now assignable to the `AnyPreset type again.`
      */
-    interface AnyPresetOverrides {
+    interface AnyPresetOverrides extends AnyBaseClassOverrides {
       constructor: AnyPresetConstructor;
     }
   }

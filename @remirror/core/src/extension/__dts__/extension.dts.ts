@@ -156,13 +156,13 @@ class ExtensionWithHandlers extends PlainExtension<WithHandlers> {
     return 'withHandlers' as const;
   }
 
-  public onSetCustomOption: SetCustomOption<WithHandlers> = (key, value) => {
-    const a: 'bindings' = key;
+  public onSetCustomOption: SetCustomOption<WithHandlers> = (parameter) => {
+    const { bindings } = parameter;
 
-    if (key === 'bindings') {
-      value.a('');
+    if (bindings) {
+      bindings.a('');
       // @ts-expect-error
-      value.b(100);
+      bindings.b(100);
     }
 
     return () => {};

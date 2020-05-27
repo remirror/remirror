@@ -1,5 +1,13 @@
-import { ProsemirrorAttributes } from '@remirror/core';
-import { FromToEndParameter, Suggestion, SuggestReplacementType } from '@remirror/pm/suggest';
+import { Custom, Handler, ProsemirrorAttributes, Static } from '@remirror/core';
+import {
+  FromToEndParameter,
+  SuggestChangeHandlerMethod,
+  SuggestCharacterEntryMethod,
+  SuggestExitHandlerMethod,
+  Suggestion,
+  SuggestKeyBindingMap,
+  SuggestReplacementType,
+} from '@remirror/pm/suggest';
 
 export interface OptionalMentionExtensionParameter {
   /**
@@ -73,33 +81,89 @@ export interface MentionExtensionMatcher
 /**
  * The static settings passed into a mention
  */
-export interface MentionSettings {
+export interface MentionOptions {
   /**
    * Provide a custom tag for the mention
    */
-  mentionTag?: string;
+  mentionTag?: Static<string>;
 
   /**
    * Provide the custom matchers that will be used to match mention text in the
    * editor.
    */
-  matchers: MentionExtensionMatcher[];
+  matchers: Static<MentionExtensionMatcher[]>;
+
+  /**
+   * Text to append after the mention has been added.
+   *
+   * @defaultValue ''
+   */
+  appendText?: string;
+  /**
+   * Tag for the prosemirror decoration which wraps an active match.
+   *
+   * @defaultValue 'span'
+   */
+  suggestTag?: string;
+
+  /**
+   * When true, decorations are not created when this mention is being edited..
+   */
+  noDecorations?: boolean;
+
+  /**
+   * Called whenever a suggestion becomes active or changes in any way.
+   *
+   * @remarks
+   *
+   * It receives a parameters object with the `reason` for the change for more
+   * granular control.
+   *
+   * @defaultValue `() => void`
+   */
+  onChange?: Handler<MentionChangeHandlerMethod>;
+
+  /**
+   * Called whenever a suggestion is exited with the pre-exit match value.
+   *
+   * @remarks
+   *
+   * Can be used to force the command to run the command e.g. when no match was
+   * found but a tag should still be created. To accomplish this you would call
+   * the `command` parameter and trigger whatever action is felt required.
+   *
+   * @defaultValue `() => void`
+   */
+  onExit?: Handler<MentionExitHandlerMethod>;
+
+  /**
+   * Called for each character entry and can be used to disable certain
+   * characters.
+   *
+   * @remarks
+   *
+   * For example you may want to disable all `@` symbols while the suggester is
+   * active. Return `true` to prevent any further character handlers from
+   * running.
+   *
+   * @defaultValue `() => false`
+   */
+  onCharacterEntry?: Custom<MentionCharacterEntryMethod>;
+
+  /**
+   * An object that describes how certain key bindings should be handled.
+   *
+   * @remarks
+   *
+   * Return `true` to prevent any further prosemirror actions or return `false`
+   * to allow prosemirror to continue.
+   */
+  keyBindings?: Custom<MentionKeyBinding>;
 }
 
 /**
  * The dynamic properties used to change the behaviour of the mentions created.
  */
-export interface MentionProperties
-  extends Pick<
-    Suggestion<MentionExtensionSuggestCommand>,
-    | 'suggestTag'
-    | 'noDecorations'
-    | 'onChange'
-    | 'onExit'
-    | 'onCharacterEntry'
-    | 'keyBindings'
-    | 'appendText'
-  > {}
 
 export type SuggestionCommandAttributes = ProsemirrorAttributes<
   Partial<Pick<MentionExtensionAttributes, 'id' | 'label' | 'appendText' | 'replacementType'>>
@@ -109,3 +173,9 @@ export type SuggestionCommandAttributes = ProsemirrorAttributes<
  * The attrs for the command on a mention extension.
  */
 export type MentionExtensionSuggestCommand = (attrs: SuggestionCommandAttributes) => void;
+export type MentionKeyBinding = SuggestKeyBindingMap<MentionExtensionSuggestCommand>;
+export type MentionChangeHandlerMethod = SuggestChangeHandlerMethod<MentionExtensionSuggestCommand>;
+export type MentionExitHandlerMethod = SuggestExitHandlerMethod<MentionExtensionSuggestCommand>;
+export type MentionCharacterEntryMethod = SuggestCharacterEntryMethod<
+  MentionExtensionSuggestCommand
+>;

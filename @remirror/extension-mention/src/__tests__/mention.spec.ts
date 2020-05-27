@@ -1,12 +1,11 @@
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
-import { fromHTML, toHTML } from '@remirror/core';
+import { entries, fromHTML, GetHandler, toHTML } from '@remirror/core';
 import { SuggestCommandParameter } from '@remirror/pm/suggest';
 import { createBaseManager } from '@remirror/test-fixtures';
 
-import { MentionExtension, MentionSettings } from '..';
-import { MentionExtensionSuggestCommand, MentionProperties } from '../mention-types';
+import { MentionExtension, MentionExtensionSuggestCommand, MentionOptions } from '..';
 
 describe('schema', () => {
   const { schema } = createBaseManager({
@@ -72,7 +71,7 @@ describe('schema', () => {
 });
 
 describe('constructor', () => {
-  it('is created with the correct settings', () => {
+  it('is created with the correct options', () => {
     const matcher = {
       char: '@',
       allowSpaces: false,
@@ -96,14 +95,21 @@ describe('constructor', () => {
   });
 });
 
-const create = (settings: MentionSettings, properties?: Partial<MentionProperties>) =>
-  renderEditor({
-    extensions: [new MentionExtension({ ...options, properties })],
+const create = (options: MentionOptions, handlers: GetHandler<MentionOptions> = {}) => {
+  const extension = new MentionExtension({ ...options });
+
+  for (const [key, handler] of entries(handlers)) {
+    extension.addHandler(key, handler);
+  }
+
+  return renderEditor({
+    extensions: [extension],
     presets: [],
   });
+};
 
 describe('plugin', () => {
-  const settings: MentionSettings = {
+  const options: MentionOptions = {
     matchers: [
       { char: '#', name: 'tag', mentionClassName: 'custom' },
       { char: '@', name: 'at', mentionClassName: 'custom' },
@@ -126,10 +132,7 @@ describe('plugin', () => {
     nodes: { doc, p },
     attributeMarks: { mention },
     view,
-  } = create({
-    ...options,
-    ...mocks,
-  });
+  } = create(options, mocks);
   const mentionMark = mention({ id, label, name: 'at' });
 
   it('uses default noop callbacks', () => {
@@ -212,7 +215,7 @@ describe('plugin', () => {
 });
 
 describe('pasteRules', () => {
-  const settings = {
+  const options = {
     matchers: [
       { char: '#', name: 'tag' },
       { char: '@', name: 'at' },
@@ -224,7 +227,7 @@ describe('pasteRules', () => {
     add,
     nodes: { doc, p },
     attributeMarks: { mention },
-  } = create(settings);
+  } = create(options);
 
   it('supports pasted content', () => {
     add(doc(p('<cursor>')))
@@ -251,7 +254,7 @@ describe('pasteRules', () => {
 });
 
 describe('commands', () => {
-  const settings = {
+  const options = {
     matchers: [
       { char: '#', name: 'tag' },
       { char: '@', name: 'at' },
@@ -265,7 +268,7 @@ describe('commands', () => {
     attributeMarks: { mention },
     commands,
     add,
-  } = create(settings);
+  } = create(options);
 
   const attributes = { id: 'test', label: '@test', name: 'at', appendText: '' };
 

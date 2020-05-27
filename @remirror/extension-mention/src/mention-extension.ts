@@ -1,9 +1,11 @@
 import {
   convertCommand,
+  CustomKeyList,
   DefaultExtensionOptions,
   ErrorConstant,
   getMarkRange,
   getMatchString,
+  HandlerKeyList,
   invariant,
   isElementDOMNode,
   isMarkActive,
@@ -16,6 +18,8 @@ import {
   RangeParameter,
   removeMark,
   replaceText,
+  SetCustomOption,
+  StaticKeyList,
   TransactionTransformer,
 } from '@remirror/core';
 import {
@@ -25,14 +29,16 @@ import {
   isRemovedReason,
   isSplitReason,
   regexToString,
+  SuggestCharacterEntryMethod,
   Suggestion,
 } from '@remirror/pm/suggest';
 
 import {
+  MentionCharacterEntryMethod,
   MentionExtensionAttributes,
   MentionExtensionSuggestCommand,
-  MentionProperties,
-  MentionSettings,
+  MentionKeyBinding,
+  MentionOptions,
   SuggestionCommandAttributes,
 } from './mention-types';
 import {
@@ -64,24 +70,64 @@ const defaultHandler = () => false;
  * remirror I'm hoping to reduce the cognitive strain required to set up
  * mentions in your own editor.
  */
-export class MentionExtension extends MarkExtension<MentionSettings, MentionProperties> {
-  public static readonly defaultOptions: DefaultExtensionOptions<MentionSettings> = {
+export class MentionExtension extends MarkExtension<MentionOptions> {
+  public static readonly defaultOptions: DefaultExtensionOptions<MentionOptions> = {
     mentionTag: 'a' as const,
     matchers: [],
-  };
-  public static readonly defaultProperties: Required<MentionProperties> = {
     appendText: ' ',
     suggestTag: 'a' as const,
-    onChange: defaultHandler,
-    onExit: defaultHandler,
     onCharacterEntry: defaultHandler,
     keyBindings: {},
     noDecorations: false,
   };
 
+  public static readonly staticKeys: StaticKeyList<MentionOptions> = ['matchers', 'mentionTag'];
+  public static readonly handlerKeys: HandlerKeyList<MentionOptions> = ['onChange', 'onExit'];
+  public static readonly customKeys: CustomKeyList<MentionOptions> = [
+    'keyBindings',
+    'onCharacterEntry',
+  ];
+
   get name() {
     return 'mention' as const;
   }
+
+  private characterEntryMethods: Array<
+    SuggestCharacterEntryMethod<MentionExtensionSuggestCommand>
+  > = [];
+
+  private keyBindingsList: MentionKeyBinding[] = [];
+
+  /**
+   * The compiled keybindings.
+   */
+  private keyBindings: MentionKeyBinding = {};
+
+  public onSetCustomOption: SetCustomOption<MentionOptions> = (parameter) => {
+    const { keyBindings, onCharacterEntry } = parameter;
+
+    if (keyBindings) {
+      this.keyBindingsList = [...this.keyBindingsList, keyBindings];
+      this.updateKeyBindings();
+
+      return () => {
+        this.keyBindingsList = this.keyBindingsList.filter((binding) => binding !== keyBindings);
+        this.updateKeyBindings();
+      };
+    }
+
+    if (onCharacterEntry) {
+      this.characterEntryMethods = [...this.characterEntryMethods, onCharacterEntry];
+
+      return () => {
+        this.characterEntryMethods = this.characterEntryMethods.filter(
+          (method) => method !== onCharacterEntry,
+        );
+      };
+    }
+
+    return;
+  };
 
   public createMarkSpec(): MarkExtensionSpec {
     const dataAttributeId = 'data-mention-id';
@@ -206,21 +252,10 @@ export class MentionExtension extends MarkExtension<MentionSettings, MentionProp
           return extension.options.suggestTag;
         },
 
-        get onChange() {
-          return extension.options.onChange;
-        },
-
-        get onExit() {
-          return extension.options.onExit;
-        },
-
-        get keyBindings() {
-          return extension.options.keyBindings;
-        },
-
-        get onCharacterEntry() {
-          return extension.options.onCharacterEntry;
-        },
+        keyBindings: () => this.keyBindings,
+        onCharacterEntry: this.onCharacterEntry,
+        onChange: this.options.onChange,
+        onExit: this.options.onExit,
 
         createCommand: ({ match, reason, setMarkRemoved }) => {
           const { range, suggester } = match;
@@ -354,6 +389,32 @@ export class MentionExtension extends MarkExtension<MentionSettings, MentionProp
         }),
       );
     };
+  }
+
+  /**
+   * Create the `onCharacterEntry` method.
+   */
+  private onCharacterEntry(parameter: Parameters<MentionCharacterEntryMethod>[0]): boolean {
+    for (const method of this.characterEntryMethods) {
+      if (method(parameter)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * For now a dumb merge for the key binding command. Later entries are given priority over earlier entries.
+   */
+  private updateKeyBindings() {
+    let newBindings: MentionKeyBinding = object();
+
+    for (const binding of this.keyBindingsList) {
+      newBindings = { ...newBindings, ...binding };
+    }
+
+    this.keyBindings = newBindings;
   }
 }
 

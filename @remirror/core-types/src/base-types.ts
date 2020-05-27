@@ -68,6 +68,11 @@ export interface Flavoring<Flavor> {
 }
 
 /**
+ * Remove the flavaring from a type.
+ */
+export type RemoveFlavoring<Type> = Omit<Type, typeof _flavor>;
+
+/**
  * Create a "flavored" version of a type. TypeScript will disallow mixing
  * flavors, but will allow unflavored values of that type to be passed in where
  * a flavored version is expected. This is a less restrictive form of branding.

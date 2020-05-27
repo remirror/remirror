@@ -131,13 +131,13 @@ export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
    * TODO think about the case where bindings are being disposed and then added
    * in a different position in the `extraKeyBindings` array.
    */
-  public onSetCustomOption: SetCustomOption<BaseKeymapOptions> = (key, value) => {
-    if (key === 'keymap') {
-      this.extraKeyBindings = [...this.extraKeyBindings, value];
+  public onSetCustomOption: SetCustomOption<BaseKeymapOptions> = ({ keymap }) => {
+    if (keymap) {
+      this.extraKeyBindings = [...this.extraKeyBindings, keymap];
       this.store?.rebuildKeymap?.();
 
       return () => {
-        this.extraKeyBindings = this.extraKeyBindings.filter((binding) => binding !== value);
+        this.extraKeyBindings = this.extraKeyBindings.filter((binding) => binding !== keymap);
         this.store?.rebuildKeymap?.();
       };
     }

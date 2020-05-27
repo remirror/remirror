@@ -6,7 +6,13 @@ import pick from 'object.pick';
 import { Primitive } from 'type-fest';
 
 import { __INTERNAL_REMIRROR_IDENTIFIER_KEY__, RemirrorIdentifier } from '@remirror/core-constants';
-import { Nullable, Predicate, RemirrorIdentifierShape, Shape } from '@remirror/core-types';
+import {
+  EmptyShape,
+  Nullable,
+  Predicate,
+  RemirrorIdentifierShape,
+  Shape,
+} from '@remirror/core-types';
 
 type AnyConstructor<Type = unknown> = new (...args: any[]) => Type;
 type AnyFunction<Type = any> = (...args: any[]) => Type;
@@ -436,7 +442,7 @@ export function isSet(value: unknown): value is Set<unknown> {
  *
  * @public
  */
-export function isEmptyObject(value: unknown): value is { [key: string]: never } {
+export function isEmptyObject(value: unknown): value is EmptyShape {
   return isObject(value) && !isMap(value) && !isSet(value) && Object.keys(value).length === 0;
 }
 

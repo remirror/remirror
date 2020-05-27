@@ -172,22 +172,22 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
     };
   };
 
-  public onSetCustomOption: SetCustomOption<EmojiOptions> = (key, value) => {
-    switch (key) {
-      case 'suggestionKeyBindings':
-        this.keyBindingsList = [...this.keyBindingsList, value];
-        this.updateKeyBindings();
+  public onSetCustomOption: SetCustomOption<EmojiOptions> = (parameter) => {
+    const { suggestionKeyBindings } = parameter;
 
-        return () => {
-          this.keyBindingsList = this.keyBindingsList.filter((binding) => binding !== value);
-          this.updateKeyBindings();
-        };
-
-        return noop;
-
-      default:
-        return noop;
+    if (!suggestionKeyBindings) {
+      return;
     }
+
+    this.keyBindingsList = [...this.keyBindingsList, suggestionKeyBindings];
+    this.updateKeyBindings();
+
+    return () => {
+      this.keyBindingsList = this.keyBindingsList.filter(
+        (binding) => binding !== suggestionKeyBindings,
+      );
+      this.updateKeyBindings();
+    };
   };
 
   /**

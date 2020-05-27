@@ -120,4 +120,4 @@ class WithDynamicOptionsPreset extends Preset<WithDynamicOptions> {
 }
 
 new WithDynamicOptionsPreset();
-new WithDynamicOptionsPreset({ required: false });
+new WithDynamicOptionsPreset({ required: false, custom: '' });

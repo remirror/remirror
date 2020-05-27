@@ -1,11 +1,20 @@
 import { ConditionalExcept, ConditionalPick } from 'type-fest';
 
-import { AnyFunction, Flavoring, FlipPartialAndRequired, PickPartial, Shape } from './base-types';
+import {
+  AnyFunction,
+  Flavoring,
+  FlipPartialAndRequired,
+  PickPartial,
+  RemoveFlavoring,
+  Shape,
+} from './base-types';
 
 type StaticAnnotation = Flavoring<'StaticAnnotation'>;
 type DynamicAnnotation = Flavoring<'DynamicAnnotation'>;
 type HandlerAnnotation = Flavoring<'HandlerAnnotation'>;
 type CustomAnnotation = Flavoring<'CustomAnnotation'>;
+
+export type RemoveAnnotation<Type> = RemoveFlavoring<Type>;
 
 /**
  * Wrap your type in this to represent a static option, which can only be set at
@@ -160,10 +169,10 @@ export interface ValidOptions {
 
 export type StaticShape<Type extends object> = { [Key in keyof Type]: Static<Type[Key]> };
 export type DynamicShape<Type extends object> = { [Key in keyof Type]: Dynamic<Type[Key]> };
-export type HandlerShape<Type extends Record<string, AnyFunction>> = {
+export type HandlerShape<Type extends Shape> = {
   [Key in keyof Type]: Handler<Type[Key]>;
 };
-export type CustomShape<Type extends Record<string, Record<string, AnyFunction>>> = {
+export type CustomShape<Type extends Shape> = {
   [Key in keyof Type]: Custom<Type[Key]>;
 };
 

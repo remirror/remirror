@@ -36,7 +36,7 @@ import {
 } from '@remirror/core-types';
 
 import { getChangedOptions } from '../helpers';
-import { OnSetOptionsParameter, UpdateReason } from '../types';
+import { OnSetOptionsParameter } from '../types';
 
 interface BaseClassConstructorParameter<DefaultStaticOptions extends Shape = EmptyShape> {
   validator: (Constructor: unknown, code: ErrorConstant) => void;
@@ -313,24 +313,35 @@ export abstract class BaseClass<
   /**
    * A method that can be used to set the value of a custom option.
    */
-  public setCustomOption: SetCustomOption<Options> = (key, method) => {
-    return this.onSetCustomOption?.(key, method) ?? noop;
+  public setCustomOption = <Key extends keyof GetCustom<Options>>(
+    key: Key,
+    value: Required<GetCustom<Options>>[Key],
+  ): Dispose => {
+    return this.onSetCustomOption?.({ [key]: value } as any) ?? noop;
   };
 
   /**
    * Override this method if you want to set custom options on your extension.
+   *
+   * This must return a dispose function.
    */
   public onSetCustomOption?: SetCustomOption<Options>;
 }
 
-export type SetCustomOption<Options extends ValidOptions> = <Key extends keyof GetCustom<Options>>(
-  key: Key,
-  value: Required<GetCustom<Options>>[Key],
-) => Dispose;
+export type SetCustomOption<Options extends ValidOptions> = (
+  parameter: Partial<GetCustom<Options>>,
+) => Dispose | undefined;
 
 export type AddHandler<Options extends ValidOptions> = <Key extends keyof GetHandler<Options>>(
   key: Key,
   method: GetHandler<Options>[Key],
+) => Dispose;
+
+/**
+ * TODO see if this is needed or remove.
+ */
+export type AddHandlers<Options extends ValidOptions> = (
+  parameter: Partial<GetHandler<Options>>,
 ) => Dispose;
 
 export interface BaseClass<
@@ -467,4 +478,6 @@ export function isValidConstructor(
 
 export interface AnyBaseClassOverrides {
   onSetCustomOption?: AnyFunction;
+  setCustomOption?: AnyFunction;
+  addHandler?: AnyFunction;
 }
