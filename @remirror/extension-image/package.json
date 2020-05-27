@@ -21,7 +21,6 @@
   "module": "dist/extension-image.esm.js",
   "types": "dist/extension-image.cjs.d.ts",
   "files": [
-    "internal",
     "dist"
   ],
   "dependencies": {

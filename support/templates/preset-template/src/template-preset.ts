@@ -1,16 +1,25 @@
-import { Preset, SetOptionsParameter } from '@remirror/core';
+import {
+  CustomKeyList,
+  DefaultPresetOptions,
+  HandlerKeyList,
+  Preset,
+  SetOptionsParameter,
+  StaticKeyList,
+} from '@remirror/core';
 
-export interface TemplatePresetOptions {}
+export interface TemplateOptions {}
 
-export class TemplatePreset extends Preset<TemplatePresetOptions> {
+export class TemplatePreset extends Preset<TemplateOptions> {
+  public static readonly staticKeys: StaticKeyList<TemplateOptions> = [];
+  public static readonly handlerKeys: HandlerKeyList<TemplateOptions> = [];
+  public static readonly customKeys: CustomKeyList<TemplateOptions> = [];
+
+  public static readonly defaultOptions: DefaultPresetOptions<TemplateOptions> = {};
   get name() {
     return 'template' as const;
   }
 
-  /**
-   * Use this to define how the
-   */
-  protected onSetOptions(_: SetOptionsParameter<TemplatePresetOptions>) {}
+  protected onSetOptions(_: SetOptionsParameter<TemplateOptions>) {}
 
   public createExtensions() {
     return [];

@@ -17,11 +17,10 @@
   "module": "dist/extension-template.esm.js",
   "types": "dist/extension-template.cjs.d.ts",
   "files": [
-    "internal",
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7",
+    "@babel/runtime": "^7.10.0",
     "@remirror/core": "^0.11.0"
   },
   "publishConfig": {

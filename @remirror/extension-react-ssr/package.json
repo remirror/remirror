@@ -22,7 +22,6 @@
   "module": "dist/extension-react-ssr.esm.js",
   "types": "dist/extension-react-ssr.cjs.d.ts",
   "files": [
-    "internal",
     "dist"
   ],
   "dependencies": {

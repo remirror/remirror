@@ -19,7 +19,6 @@
   "module": "dist/preset-core.esm.js",
   "types": "dist/preset-core.cjs.d.ts",
   "files": [
-    "internal",
     "dist"
   ],
   "dependencies": {

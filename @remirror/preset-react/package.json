@@ -20,7 +20,6 @@
   "module": "dist/preset-react.esm.js",
   "types": "dist/preset-react.cjs.d.ts",
   "files": [
-    "internal",
     "dist"
   ],
   "dependencies": {

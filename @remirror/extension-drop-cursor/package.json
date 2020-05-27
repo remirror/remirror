@@ -20,7 +20,6 @@
   "module": "dist/extension-drop-cursor.esm.js",
   "types": "dist/extension-drop-cursor.cjs.d.ts",
   "files": [
-    "internal",
     "dist"
   ],
   "dependencies": {

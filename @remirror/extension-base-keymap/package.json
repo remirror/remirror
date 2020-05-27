@@ -21,7 +21,6 @@
   "module": "dist/extension-base-keymap.esm.js",
   "types": "dist/extension-base-keymap.cjs.d.ts",
   "files": [
-    "internal",
     "dist"
   ],
   "dependencies": {

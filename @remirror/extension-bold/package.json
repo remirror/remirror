@@ -19,7 +19,6 @@
   "module": "dist/extension-bold.esm.js",
   "types": "dist/extension-bold.cjs.d.ts",
   "files": [
-    "internal",
     "dist"
   ],
   "dependencies": {

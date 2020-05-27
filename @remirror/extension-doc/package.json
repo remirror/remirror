@@ -20,7 +20,6 @@
   "module": "dist/extension-doc.esm.js",
   "types": "dist/extension-doc.cjs.d.ts",
   "files": [
-    "internal",
     "dist"
   ],
   "dependencies": {

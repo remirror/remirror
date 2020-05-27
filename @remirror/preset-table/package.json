@@ -22,7 +22,6 @@
   "module": "dist/preset-table.esm.js",
   "types": "dist/preset-table.cjs.d.ts",
   "files": [
-    "internal",
     "dist"
   ],
   "dependencies": {
