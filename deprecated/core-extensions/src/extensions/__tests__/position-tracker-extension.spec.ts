@@ -81,7 +81,7 @@ describe('plugin', () => {
       .overwrite(doc(h('awesome'), p('<cursor>')))
       .insertText(' new text')
       .helpersCallback((helpers) => {
-        expect(helpers.findPositionTracker('test')).toBe(undefined);
+        expect(helpers.findPositionTracker('test')).toBeUndefined();
       });
   });
 
@@ -92,7 +92,7 @@ describe('plugin', () => {
       .insertText(' new text')
       .actionsCallback((actions) => actions.removePositionTracker({ id: 'test' }))
       .helpersCallback((helpers) => {
-        expect(helpers.findPositionTracker('test')).toBe(undefined);
+        expect(helpers.findPositionTracker('test')).toBeUndefined();
       });
   });
 

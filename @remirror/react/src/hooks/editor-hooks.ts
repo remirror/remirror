@@ -25,7 +25,7 @@ import { CorePreset } from '@remirror/preset-core';
 import { ReactPreset } from '@remirror/preset-react';
 
 import { RemirrorContext } from '../react-contexts';
-import { InjectedRenderEditorProps, UsePositionerParameter } from '../react-types';
+import { RemirrorContextProps, UsePositionerParameter } from '../react-types';
 
 /**
  * This provides access to the Remirror Editor context using hooks.
@@ -56,7 +56,7 @@ import { InjectedRenderEditorProps, UsePositionerParameter } from '../react-type
  */
 export function useRemirror<
   ManagerType extends AnyEditorManager = AnyEditorManager
->(): InjectedRenderEditorProps<ManagerType> {
+>(): RemirrorContextProps<ManagerType> {
   const params = useContext(RemirrorContext);
 
   invariant(params, {

@@ -39,7 +39,7 @@ import {
  */
 export type FocusType = FromToParameter | number | 'start' | 'end' | boolean;
 
-export interface BaseProps<Manager extends AnyEditorManager> extends StringHandlerParameter {
+export interface BaseProps<Manager extends AnyEditorManager = any> extends StringHandlerParameter {
   /**
    * Pass in the extension manager.
    *
@@ -289,7 +289,7 @@ export type GetPositionerReturn<RefKey extends string = 'ref'> = { [P in RefKey]
  * These are the props passed to the render function provided when setting up
  * your editor.
  */
-export interface InjectedRenderEditorProps<Manager extends AnyEditorManager> {
+export interface RemirrorContextProps<Manager extends AnyEditorManager = AnyEditorManager> {
   /**
    * An instance of the extension manager
    */

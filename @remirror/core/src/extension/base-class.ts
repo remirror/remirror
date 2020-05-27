@@ -478,6 +478,6 @@ export function isValidConstructor(
 
 export interface AnyBaseClassOverrides {
   onSetCustomOption?: AnyFunction;
-  setCustomOption?: AnyFunction;
-  addHandler?: AnyFunction;
+  setCustomOption: AnyFunction;
+  addHandler: AnyFunction;
 }

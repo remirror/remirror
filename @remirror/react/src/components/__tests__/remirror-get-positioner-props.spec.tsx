@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
 
 import { Shape } from '@remirror/core';
-import { createTestManager } from '@remirror/test-fixtures';
+import { createReactManager } from '@remirror/test-fixtures';
 
 import { RenderEditor } from '..';
 
@@ -14,7 +14,7 @@ const Menu: FunctionComponent<RefAttributes<HTMLDivElement> & Shape> = forwardRe
 
 test('updates the offscreen attribute when a selection is active', () => {
   render(
-    <RenderEditor manager={createTestManager()}>
+    <RenderEditor manager={createReactManager()}>
       {({ getPositionerProps }) => {
         const { ref } = getPositionerProps({ positionerId: 'test' });
         return (
@@ -31,7 +31,7 @@ test('updates the offscreen attribute when a selection is active', () => {
 
 test('provides correct menu props', () => {
   render(
-    <RenderEditor manager={createTestManager()}>
+    <RenderEditor manager={createReactManager()}>
       {({ getPositionerProps }) => {
         const { ref, ...props } = getPositionerProps({ positionerId: 'test' });
 

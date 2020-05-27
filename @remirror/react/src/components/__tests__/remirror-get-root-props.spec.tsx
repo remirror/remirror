@@ -1,9 +1,8 @@
-import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
 import { axe } from 'jest-axe';
-import { forwardRef, FunctionComponent, Ref, RefAttributes } from 'react';
+import React, { forwardRef, FunctionComponent, Ref, RefAttributes } from 'react';
 
-import { createTestManager } from '@remirror/test-fixtures';
+import { createReactManager } from '@remirror/test-fixtures';
 
 import { RenderEditor } from '..';
 
@@ -15,7 +14,7 @@ const CustomRoot: FunctionComponent<RefAttributes<HTMLDivElement>> = forwardRef(
 
 test('supports a custom root element', () => {
   render(
-    <RenderEditor manager={createTestManager()}>
+    <RenderEditor manager={createReactManager()}>
       {({ getRootProps }) => {
         return <CustomRoot {...getRootProps()} />;
       }}
@@ -32,7 +31,7 @@ test('supports a custom ref label and passed props through', () => {
   }
   const testProp = 'test';
   render(
-    <RenderEditor manager={createTestManager()}>
+    <RenderEditor manager={createReactManager()}>
       {({ getRootProps }) => {
         return <Cmp {...getRootProps({ refKey: 'customRef', testProp })} />;
       }}
@@ -47,7 +46,7 @@ test('throws an error when called multiple times during render', () => {
   expect.assertions(2);
 
   render(
-    <RenderEditor manager={createTestManager()}>
+    <RenderEditor manager={createReactManager()}>
       {({ getRootProps }) => {
         expect(() => getRootProps()).not.toThrow();
         expect(() => getRootProps()).toThrowErrorMatchingInlineSnapshot(
@@ -66,7 +65,7 @@ describe('nestedRootProps', () => {
   beforeEach(() => {
     result = render(
       <main>
-        <RenderEditor manager={createTestManager()} label='Editor'>
+        <RenderEditor manager={createReactManager()} label='Editor'>
           {({ getRootProps }) => {
             return (
               <div>

@@ -19,7 +19,12 @@
     "@remirror/extension-text": "^0.0.0",
     "@remirror/pm": "^0.0.0",
     "@remirror/preset-core": "^0.0.0",
+    "@remirror/preset-react": "^0.0.0",
     "jest-diff": "^26.0.1",
     "min-document": "^2.19.0"
+  },
+  "peerDependencies": {
+    "@types/react": "^16.8.0",
+    "react": "^16.8.0"
   }
 }

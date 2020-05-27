@@ -5,7 +5,7 @@ import {
   RemirrorIdentifier,
 } from '@remirror/core-constants';
 import { invariant, isIdentifierOfType, isRemirrorType, uniqueBy } from '@remirror/core-helpers';
-import { EmptyShape, Replace, ValidOptions } from '@remirror/core-types';
+import { EmptyShape, Replace, Shape, ValidOptions } from '@remirror/core-types';
 
 import { AnyExtension, AnyExtensionConstructor } from '../extension';
 import {
@@ -195,9 +195,11 @@ export interface Preset<Options extends ValidOptions = EmptyShape> {
 
 /**
  * The type which is applicable to any `Preset` instances.
+ *
+ * **NOTE** `& object` forces VSCode to use the name `AnyPreset` rather than
+ * print out `Replace<Preset<Shape>, Remirror.AnyPresetOverrides>`
  */
-export type AnyPreset = Omit<Preset<any>, keyof Remirror.AnyPresetOverrides> &
-  Remirror.AnyPresetOverrides;
+export type AnyPreset = Replace<Preset<Shape>, Remirror.AnyPresetOverrides> & object;
 
 /**
  * The type which is applicable to any `Preset` constructor.

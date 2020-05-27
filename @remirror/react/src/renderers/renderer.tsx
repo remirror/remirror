@@ -1,7 +1,6 @@
-import React from 'react';
-import { ComponentType, FC, Fragment } from 'react';
+import React, { ComponentType, FC, Fragment } from 'react';
 
-import { isString, object, ObjectMark, ObjectNode } from '@remirror/core';
+import { isEmptyArray, isString, object, ObjectMark, ObjectNode } from '@remirror/core';
 
 /* Inspired by https://github.com/rexxars/react-prosemirror-document */
 
@@ -20,13 +19,13 @@ const TextHandler: FC<TextHandlerProps> = ({ node, ...props }) => {
     return null;
   }
 
-  const textElement = <Fragment>{node.text}</Fragment>;
+  let textElement = <Fragment>{node.text}</Fragment>;
 
   if (!node.marks) {
     return textElement;
   }
 
-  const fn = (child: JSX.Element, mark: ObjectMark | string) => {
+  for (const mark of node.marks) {
     const normalized = normalizeMark(mark);
     const MarkHandler = props.markMap[normalized.type];
 
@@ -35,14 +34,13 @@ const TextHandler: FC<TextHandlerProps> = ({ node, ...props }) => {
         throw new Error(`No handler for mark type \`${normalized.type}\` registered`);
       }
 
-      return child;
+      continue;
     }
 
-    return <MarkHandler {...normalized.attrs}>{child}</MarkHandler>;
-  };
+    textElement = <MarkHandler {...normalized.attrs}>{textElement}</MarkHandler>;
+  }
 
-  // Use assigned mark handlers
-  return node.marks.reduce<JSX.Element>(fn, textElement);
+  return textElement;
 };
 
 const CodeBlock: FC<{
@@ -67,7 +65,8 @@ const CodeBlock: FC<{
 
 const Doc: FC<SubRenderTreeProps> = ({ node, ...props }) => {
   const content = node.content;
-  if (!content || !content.length) {
+
+  if (!content || isEmptyArray(content)) {
     return null;
   }
 
@@ -111,20 +110,25 @@ export interface RenderTreeProps extends Partial<BaseRenderTreeProps> {
   json: ObjectNode;
 }
 
-export const RenderTree: FC<RenderTreeProps> = ({
-  json,
-  markMap = defaultMarkMap,
-  skipUnknownMarks = false,
-  skipUnknownTypes = false,
-  typeMap = defaultTypeMap,
-}) => {
-  if (json.type === 'text' && json.text && (!json.marks || !json.marks.length)) {
+/**
+ * A recursively rendered tree.
+ */
+export const RenderTree: FC<RenderTreeProps> = (props) => {
+  const {
+    json,
+    markMap = defaultMarkMap,
+    skipUnknownMarks = false,
+    skipUnknownTypes = false,
+    typeMap = defaultTypeMap,
+  } = props;
+
+  if (json.type === 'text' && json.text && (!json.marks || isEmptyArray(json.marks))) {
     return <Fragment>{json.text}</Fragment>; // For some reason FunctionalComponent don't allow returning react-nodes
   }
 
   const rest = { markMap, typeMap, skipUnknownMarks, skipUnknownTypes };
-
   const TypeHandler = typeMap[json.type];
+
   if (!TypeHandler) {
     if (!skipUnknownTypes) {
       throw new Error(`No handler for node type \`${json.type}\` registered`);
@@ -132,15 +136,16 @@ export const RenderTree: FC<RenderTreeProps> = ({
     return null;
   }
 
-  const props = isString(TypeHandler) ? json.attrs ?? object() : { ...rest, node: json };
+  const childProps = isString(TypeHandler) ? json.attrs ?? object() : { ...rest, node: json };
   const { content } = json;
-  if (!content || !content.length) {
-    return <TypeHandler {...props} />;
+
+  if (!content || isEmptyArray(content)) {
+    return <TypeHandler {...childProps} />;
   }
 
   const children = content.map((child, ii) => {
     return <RenderTree key={ii} json={child} {...rest} />;
   });
 
-  return <TypeHandler {...props}>{children}</TypeHandler>;
+  return <TypeHandler {...childProps}>{children}</TypeHandler>;
 };

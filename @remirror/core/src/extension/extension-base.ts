@@ -496,8 +496,11 @@ export abstract class NodeExtension<Options extends ValidOptions = EmptyShape> e
 
 /**
  * The type which is applicable to any extension instance.
+ *
+ * **NOTE** `& object` forces VSCode to use the name `AnyExtension` rather than
+ * print out `Replace<Extension<Shape>, Remirror.AnyExtensionOverrides>`
  */
-export type AnyExtension = Replace<Extension<Shape>, Remirror.AnyExtensionOverrides>;
+export type AnyExtension = Replace<Extension<Shape>, Remirror.AnyExtensionOverrides> & object;
 
 /**
  * The type which is applicable to any extension instance.

@@ -5,9 +5,9 @@
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-import { createTestManager, docNodeBasicJSON } from '@remirror/test-fixtures';
+import { createBaseManager, docNodeBasicJSON } from '@remirror/test-fixtures';
 
-import { useRemirror } from '../../hooks/use-remirror';
+import { useRemirror } from '../../hooks';
 import { RemirrorProvider } from '../remirror-provider';
 
 test('RemirrorProvider', () => {
@@ -24,7 +24,7 @@ test('RemirrorProvider', () => {
   };
 
   const element = (
-    <RemirrorProvider initialContent={docNodeBasicJSON} manager={createTestManager()}>
+    <RemirrorProvider initialContent={docNodeBasicJSON} manager={createBaseManager()}>
       <TestComponent />
     </RemirrorProvider>
   );

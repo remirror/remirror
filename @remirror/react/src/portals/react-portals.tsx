@@ -1,5 +1,4 @@
-import React from 'react';
-import { Fragment, ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { Fragment, ReactElement, useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { PortalContainer, PortalMap } from './portal-container';

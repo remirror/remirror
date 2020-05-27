@@ -1,16 +1,22 @@
 import React, { ComponentType } from 'react';
 
-import { EDITOR_CLASS_NAME, SELECTED_NODE_CLASS_NAME } from '@remirror/core-constants';
-import { isFunction, isPlainObject, isString, keys } from '@remirror/core-helpers';
 import {
   Decoration,
+  EDITOR_CLASS_NAME,
   EditorView,
+  isDOMNode,
+  isElementDOMNode,
+  isFunction,
+  isPlainObject,
+  isString,
+  keys,
   NodeView,
   NodeWithAttributes,
   ProsemirrorAttributes,
   ProsemirrorNode,
-} from '@remirror/core-types';
-import { isDOMNode, isElementDOMNode } from '@remirror/core-utils';
+  SELECTED_NODE_CLASS_NAME,
+  Shape,
+} from '@remirror/core';
 
 import { PortalContainer } from '../portals';
 import {
@@ -21,9 +27,27 @@ import {
 } from './node-view-types';
 
 export class ReactNodeView<
-  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
-  GAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
+  Options extends Shape,
+  Attributes extends ProsemirrorAttributes = ProsemirrorAttributes
 > implements NodeView {
+  /**
+   * A shorthand method for creating the ReactNodeView
+   */
+  public static createNodeView<
+    Options extends Shape,
+    Attributes extends ProsemirrorAttributes = ProsemirrorAttributes
+  >(parameter: CreateNodeViewParameter<Options, Attributes>) {
+    const { Component, portalContainer, options } = parameter;
+    return (node: NodeWithAttributes<Attributes>, view: EditorView, getPosition: GetPosition) =>
+      new ReactNodeView<Options, Attributes>({
+        node,
+        view,
+        getPosition,
+        portalContainer,
+        Component,
+        options,
+      }).init();
+  }
   /**
    * The outer element exposed to the editor.
    */
@@ -41,17 +65,12 @@ export class ReactNodeView<
   /**
    * The ProsemirrorNode that this nodeView is responsible for rendering.
    */
-  public node: NodeWithAttributes<GAttributes>;
+  public node: NodeWithAttributes<Attributes>;
 
   /**
    * The editor this nodeView belongs to.
    */
   public view: EditorView;
-
-  /**
-   * Method for retrieving the position of the current nodeView
-   */
-  private readonly getPosition = () => 0;
 
   // /**
   //  * Only applicable for mark nodeViews. Indicates whether the mark content is inline.
@@ -67,7 +86,7 @@ export class ReactNodeView<
   /**
    * The component responsible for rendering the dom via React.
    */
-  private readonly Component: ComponentType<NodeViewComponentProps<GOptions, GAttributes>>;
+  private readonly Component: ComponentType<NodeViewComponentProps>;
 
   /**
    * Whether or not the node is currently selected.
@@ -77,7 +96,7 @@ export class ReactNodeView<
   /**
    * The options that were passed into the extension that created this nodeView
    */
-  private readonly options: GOptions;
+  private readonly options: Options;
 
   constructor({
     Component,
@@ -85,8 +104,8 @@ export class ReactNodeView<
     node,
     portalContainer,
     view,
-    config: options,
-  }: ReactNodeViewParameter<GOptions, GAttributes>) {
+    options,
+  }: ReactNodeViewParameter<Options, Attributes>) {
     this.node = node;
     this.view = view;
     this.portalContainer = portalContainer;
@@ -99,6 +118,11 @@ export class ReactNodeView<
       // this._markContentInline = getPosition;
     }
   }
+
+  /**
+   * Method for retrieving the position of the current nodeView
+   */
+  private readonly getPosition = () => 0;
 
   /**
    * This method exists to move initialization logic out of the constructor,
@@ -210,7 +234,7 @@ export class ReactNodeView<
       this.setDomAttributes(node, this.domRef);
     }
 
-    this.node = node;
+    this.node = node as NodeWithAttributes<Attributes>;
     this.renderReactComponent(() => this.render(this.handleRef));
 
     return true;
@@ -281,27 +305,5 @@ export class ReactNodeView<
     this.portalContainer.remove(this.domRef);
     this.domRef = undefined;
     this.contentDOM = undefined;
-  }
-
-  /**
-   * A shorthand method for creating the ReactNodeView
-   */
-  public static createNodeView<
-    GOptions extends BaseExtensionOptions = BaseExtensionOptions,
-    GAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
-  >({
-    Component,
-    portalContainer,
-    config: options,
-  }: CreateNodeViewParameter<GOptions, GAttributes>) {
-    return (node: ProsemirrorNode, view: EditorView, getPosition: GetPosition) =>
-      new ReactNodeView<GOptions, GAttributes>({
-        node: node,
-        view,
-        getPosition,
-        portalContainer,
-        Component,
-        config: options,
-      }).init();
   }
 }

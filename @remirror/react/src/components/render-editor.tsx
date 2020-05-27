@@ -49,12 +49,12 @@ import {
   GetPositionerPropsConfig,
   GetPositionerReturn,
   GetRootPropsConfig,
-  InjectedRenderEditorProps,
   ListenerParameter,
   PositionerMapValue,
   PositionerProps,
   PositionerRefFactoryParameter,
   RefKeyRootProps,
+  RemirrorContextProps,
   RemirrorEventListenerParameter,
   RemirrorState,
   RemirrorStateListenerParameter,
@@ -68,7 +68,7 @@ import { createEditorView, RemirrorSSR } from '../ssr';
  * @param - injected remirror params
  */
 type RenderPropFunction<Manager extends AnyEditorManager> = (
-  params: InjectedRenderEditorProps<Manager>,
+  params: RemirrorContextProps<Manager>,
 ) => JSX.Element;
 
 export interface RenderEditorProps<Manager extends AnyEditorManager>
@@ -237,8 +237,8 @@ export class RenderEditor<Manager extends AnyEditorManager> extends PureComponen
    * The external `getRootProps` that is used to spread props onto a desired
    * holder element for the prosemirror view.
    */
-  private readonly getRootProps = <GRefKey extends string = 'ref'>(
-    options?: GetRootPropsConfig<GRefKey>,
+  private readonly getRootProps = <RefKey extends string = 'ref'>(
+    options?: GetRootPropsConfig<RefKey>,
   ) => {
     return this.internalGetRootProps(options, null);
   };
@@ -247,10 +247,10 @@ export class RenderEditor<Manager extends AnyEditorManager> extends PureComponen
    * Creates the props that should be spread on the root element inside which
    * the prosemirror instance will be rendered.
    */
-  private readonly internalGetRootProps = <GRefKey extends string = 'ref'>(
-    options?: GetRootPropsConfig<GRefKey>,
+  private readonly internalGetRootProps = <RefKey extends string = 'ref'>(
+    options?: GetRootPropsConfig<RefKey>,
     children?: ReactNode,
-  ): RefKeyRootProps<GRefKey> => {
+  ): RefKeyRootProps<RefKey> => {
     // Ensure that this is the first time `getRootProps` is being called during
     // this render.
     invariant(!this.rootPropsConfig.called, {
@@ -275,9 +275,9 @@ export class RenderEditor<Manager extends AnyEditorManager> extends PureComponen
    * position and positioner information components that want to respond to the
    * cursor position (e.g.) a floating / bubble menu.
    */
-  private readonly getPositionerProps = <GRefKey extends string = 'ref'>(
-    options: GetPositionerPropsConfig<GetExtensionUnion<Manager>, GRefKey> | undefined,
-  ): GetPositionerReturn<GRefKey> => {
+  private readonly getPositionerProps = <RefKey extends string = 'ref'>(
+    options: GetPositionerPropsConfig<GetExtensionUnion<Manager>, RefKey> | undefined,
+  ): GetPositionerReturn<RefKey> => {
     const { refKey: referenceKey = 'ref', ...config } = {
       ...defaultPositioner,
       ...(options ?? object<NonNullable<typeof options>>()),
@@ -296,7 +296,7 @@ export class RenderEditor<Manager extends AnyEditorManager> extends PureComponen
     return {
       ...properties,
       [referenceKey]: reference,
-    } as GetPositionerReturn<GRefKey>;
+    } as GetPositionerReturn<RefKey>;
   };
 
   /**
@@ -758,7 +758,7 @@ export class RenderEditor<Manager extends AnyEditorManager> extends PureComponen
     requestAnimationFrame(() => this.view.focus());
   };
 
-  get renderParameter(): InjectedRenderEditorProps<Manager> {
+  get renderParameter(): RemirrorContextProps<Manager> {
     return {
       /* Properties */
       uid: this.uid,

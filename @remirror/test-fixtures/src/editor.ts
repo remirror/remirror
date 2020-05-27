@@ -2,6 +2,7 @@ import { AnyExtension, AnyPreset, EditorManager, EditorManagerParameter } from '
 import type {} from '@remirror/extension-doc';
 import type {} from '@remirror/extension-paragraph';
 import { CorePreset } from '@remirror/preset-core';
+import { ReactPreset } from '@remirror/preset-react';
 
 /**
  * A manager used for testing with the preset core already applied.
@@ -16,6 +17,24 @@ export function createBaseManager<
   return EditorManager.create({
     extensions,
     presets: [...presets, corePreset],
+    settings,
+  });
+}
+
+/**
+ * A manager for use to test `@remirror/react`.
+ */
+export function createReactManager<
+  ExtensionUnion extends AnyExtension,
+  PresetUnion extends AnyPreset
+>(parameter: Partial<EditorManagerParameter<ExtensionUnion, PresetUnion>> = {}) {
+  const { extensions = [], presets = [], settings } = parameter;
+  const corePreset = new CorePreset();
+  const reactPreset = new ReactPreset();
+
+  return EditorManager.create({
+    extensions,
+    presets: [...presets, corePreset, reactPreset],
     settings,
   });
 }

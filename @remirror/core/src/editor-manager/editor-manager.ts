@@ -22,20 +22,22 @@ import {
   AnyExtension,
   AnyExtensionConstructor,
   AnyManagerStore,
+  CreateLifecycleMethod,
+  DestroyLifecycleMethod,
   GetExtensionUnion,
   GetMarkNameUnion,
   GetNodeNameUnion,
   ManagerStoreKeys,
   SchemaFromExtensionUnion,
-  CreateLifecycleMethod,
   ViewLifecycleMethod,
-  DestroyLifecycleMethod,
 } from '../extension';
 import { AnyPreset, AnyPresetConstructor } from '../preset';
 import { privacySymbol } from '../privacy';
 import {
+  GetCommands,
   GetConstructor,
   GetExtensions,
+  GetHelpers,
   TransactionLifecycleMethod,
   TransactionLifecycleParameter,
 } from '../types';
@@ -616,6 +618,9 @@ export interface EditorManager<ExtensionUnion extends AnyExtension, PresetUnion 
    * @internal
    */
   ['~M']: GetMarkNameUnion<this['~E']>;
+
+  [Remirror._COMMANDS]: GetCommands<GetExtensions<this>>;
+  [Remirror._HELPERS]: GetHelpers<GetExtensions<this>>;
 }
 
 declare global {

@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react';
 import React, { FC } from 'react';
 
-import { createBaseTestManager, docNodeBasicJSON } from '@remirror/test-fixtures';
+import { createBaseManager, docNodeBasicJSON } from '@remirror/test-fixtures';
 
-import { useRemirror } from '../../hooks/use-remirror';
+import { useRemirror } from '../../hooks';
 import { RemirrorProvider } from '../remirror-provider';
 
 test('RemirrorProvider', () => {
@@ -16,7 +16,7 @@ test('RemirrorProvider', () => {
     );
   };
 
-  const manager = createBaseTestManager();
+  const manager = createBaseManager();
 
   const { getByRole, getByTestId } = render(
     <RemirrorProvider initialContent={docNodeBasicJSON} manager={manager}>

@@ -4,11 +4,11 @@ import { AnyEditorManager } from '@remirror/core';
 import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
 
 import { RemirrorContext } from '../react-contexts';
-import { BaseProps, GetRootPropsConfig, InjectedRenderEditorProps } from '../react-types';
+import { BaseProps, GetRootPropsConfig, RemirrorContextProps } from '../react-types';
 import { RenderEditor } from './render-editor';
 
 interface RemirrorContextProviderProps<Manager extends AnyEditorManager = any>
-  extends ProviderProps<InjectedRenderEditorProps<Manager>>,
+  extends ProviderProps<RemirrorContextProps<Manager>>,
     Pick<RemirrorProviderProps<Manager>, 'childAsRoot'> {}
 
 export interface RemirrorProviderProps<Manager extends AnyEditorManager = any>

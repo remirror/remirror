@@ -671,6 +671,7 @@ importers:
       '@remirror/extension-text': 'link:../extension-text'
       '@remirror/pm': 'link:../pm'
       '@remirror/preset-core': 'link:../preset-core'
+      '@remirror/preset-react': 'link:../preset-react'
       jest-diff: 26.0.1
       min-document: 2.19.0
     specifiers:
@@ -682,6 +683,7 @@ importers:
       '@remirror/extension-text': ^0.0.0
       '@remirror/pm': ^0.0.0
       '@remirror/preset-core': ^0.0.0
+      '@remirror/preset-react': ^0.0.0
       jest-diff: ^26.0.1
       min-document: ^2.19.0
   deprecated/cli:

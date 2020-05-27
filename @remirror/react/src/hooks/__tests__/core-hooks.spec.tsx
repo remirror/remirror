@@ -5,7 +5,7 @@ import React from 'react';
 import {
   fakeResizeObserverPolyfill,
   triggerChange,
-} from '../../__mocks__/resize-observer-polyfill';
+} from '../../../__mocks__/resize-observer-polyfill';
 import { useMeasure, usePrevious, useSetState, useStateWithCallback } from '../core-hooks';
 
 test('usePrevious', () => {
