@@ -1,18 +1,17 @@
 import {
   CreatePluginReturn,
   EditorView,
-  EmptyShape,
   PlainExtension,
   randomInt,
   throttle,
 } from '@remirror/core';
 
 import { defaultEffect, PARTICLE_NUM_RANGE, VIBRANT_COLORS } from './epic-mode-effects';
-import { EpicModeProperties, Particle } from './epic-mode-types';
+import { EpicModeOptions, Particle } from './epic-mode-types';
 
-export class EpicModeExtension extends PlainExtension<EmptyShape, EpicModeProperties> {
+export class EpicModeExtension extends PlainExtension<EpicModeOptions> {
   //
-  public static readonly defaultProperties: Required<EpicModeProperties> = {
+  public static readonly defaultProperties: Required<EpicModeOptions> = {
     particleEffect: defaultEffect,
     getCanvasContainer: () => document.body,
     colors: VIBRANT_COLORS,
@@ -78,14 +77,14 @@ export class EpicModePluginState {
   public canvas!: HTMLCanvasElement;
   public ctx!: CanvasRenderingContext2D;
 
-  get properties() {
+  get options() {
     return this.#extension.options;
   }
 
   private container!: HTMLElement;
 
   /* eslint-disable @typescript-eslint/explicit-member-accessibility */
-  readonly #extension: PlainExtension<Record<never, never>, EpicModeProperties>;
+  readonly #extension: EpicModeExtension;
   #shakeTime = 0;
   #shakeTimeMax = 0;
   #lastTime = 0;

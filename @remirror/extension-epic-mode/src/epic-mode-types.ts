@@ -1,11 +1,11 @@
-export type EpicModePluginStateParameter = Required<EpicModeProperties>;
+export type EpicModePluginStateParameter = Required<EpicModeOptions>;
 
 export interface ParticleRange {
   min: number;
   max: number;
 }
 
-export interface EpicModeProperties {
+export interface EpicModeOptions {
   /**
    * The particle effect to use
    */
