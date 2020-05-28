@@ -3,6 +3,7 @@
   "version": "0.0.3",
   "private": true,
   "description": "e2e tests",
+  "repository": "https://github.com/remirror/remirror/tree/next/e2e",
   "dependencies": {
     "@babel/runtime": "^7.10.0",
     "@remirror/core": "^0.11.0",

@@ -2,7 +2,7 @@
   "name": "@remirror/extension-enhanced-link",
   "version": "0.11.0",
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-auto-link",
-  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/extension-auto-link",
+  "repository": "https://github.com/remirror/remirror/tree/next/deprecated/extension-enhanced-link",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

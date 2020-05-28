@@ -3,7 +3,7 @@
   "version": "0.13.1",
   "description": "Provides the core extensions for your remirror editor",
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/core-extensions",
-  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/core-extensions",
+  "repository": "https://github.com/remirror/remirror/tree/next/deprecated/core-extensions",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

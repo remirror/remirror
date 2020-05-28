@@ -3,7 +3,7 @@
   "version": "0.13.2",
   "description": "Development utilities for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/react-dev",
-  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/react-dev",
+  "repository": "https://github.com/remirror/remirror/tree/next/deprecated/dev",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

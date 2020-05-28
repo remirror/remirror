@@ -3,7 +3,7 @@
   "version": "0.7.4",
   "description": "Create a singleton live region for a11y status updates",
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/ui-a11y-status",
-  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/ui-a11y-status",
+  "repository": "https://github.com/remirror/remirror/tree/next/deprecated/ui-a11y-status",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

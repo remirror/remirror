@@ -3,7 +3,7 @@
   "version": "0.11.0",
   "description": "DEPRECATED - This package is now deprecated.",
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/preset-table",
-  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/preset-table",
+  "repository": "https://github.com/remirror/remirror/tree/next/deprecated/extension-tables",
   "license": "MIT",
   "contributors": [
     "Ocavue <ocavue@gmail.com>",

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "A configurable social editor.",
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/react-react-editor-social",
-  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/react-react-editor-social",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/react-editor-social",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
@@ -26,6 +26,7 @@
     "type-fest": "^0.15.0"
   },
   "devDependencies": {
+    "@remirror/pm": "^0.0.0",
     "@testing-library/react": "^10.0.4",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
@@ -34,7 +35,7 @@
     "react-dom": "^16.13.1"
   },
   "peerDependencies": {
-    "@emotion/core": "^10",
+    "@remirror/pm": "^0.0.0",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "react": "^16.8.0",

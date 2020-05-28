@@ -3,7 +3,7 @@
   "version": "0.7.8",
   "description": "ui-icons utilities for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/ui-icons",
-  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/ui-icons",
+  "repository": "https://github.com/remirror/remirror/tree/next/deprecated/ui-icons",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

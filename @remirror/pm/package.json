@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "A bundled library containing all the core prosemirror libraries required for using remirror",
   "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/pm",
-  "repository": "https://github.com/remirror/remirror/tree/next/packages/@remirror/pm",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/pm",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

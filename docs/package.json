@@ -3,6 +3,7 @@
   "version": "0.0.5",
   "private": true,
   "description": "A world class text editor toolkit for every environment",
+  "repository": "https://github.com/remirror/remirror/tree/next/docs",
   "scripts": {
     "build": "gatsby build",
     "clean": "gatsby clean",
