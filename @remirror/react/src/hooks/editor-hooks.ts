@@ -121,7 +121,7 @@ export function useCreateExtension<Type extends AnyExtensionConstructor>(
  * const EditorWrapper = () => {
  *   const corePreset = useCreatePreset(PresetCore);
  *   const boldExtension = useCreateExtension(BoldExtension, { weight: 700 });
- *   const manager = useManager([corePreset, boldExtension]);
+ *   const manager = useManager({extension: [boldExtension], presets: [] });
  *
  *   <RemirrorProvider >
  *     <MyEditor />
@@ -354,7 +354,7 @@ function useObjectCheck<Type extends object>(parameter: Type): Type {
  * const EditorWrapper = () => {
  *   const corePreset = usePreset(PresetCore);
  *   const boldExtension = useExtension(BoldExtension);
- *   const manager = useManager([corePreset, boldExtension]);
+ *   const manager = useManager({ extension: [boldExtension], presets: [] });
  *
  *   <RemirrorProvider >
  *     <MyEditor />

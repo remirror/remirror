@@ -53,6 +53,8 @@ if (process.env.NODE !== 'production') {
       'An error occurred within an extension. More details should be made available.',
     [ErrorConstant.REACT_PROVIDER_CONTEXT]:
       '`useRemirror` was called outside of the `remirror` context. It can only be used within an active remirror context created by the `<RemirrorProvider />`.',
+    [ErrorConstant.REACT_GET_ROOT_PROPS]:
+      '`getRootProps` has been called MULTIPLE times. It should only be called ONCE during render.',
   };
 }
 

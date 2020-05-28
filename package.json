@@ -1,6 +1,8 @@
 {
   "name": "root",
   "private": true,
+  "homepage": "https://github.com/remirror/remirror",
+  "repository": "https://github.com/remirror/remirror",
   "scripts": {
     "build": "preconstruct build",
     "build:custom": "pnpm recursive run build:custom",

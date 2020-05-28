@@ -109,4 +109,8 @@ export enum ErrorConstant {
    * within an active remirror context created by the `<RemirrorProvider />`.
    */
   REACT_PROVIDER_CONTEXT = 'RMR0200',
+  /**
+   * `getRootProps` has been called MULTIPLE times. It should only be called ONCE during render.
+   */
+  REACT_GET_ROOT_PROPS = 'RMR0201',
 }

@@ -4,7 +4,10 @@ import CodeBlock from '@theme-ui/prism';
 import { ElementType, FC, Fragment } from 'react';
 import { jsx } from 'theme-ui';
 
-import { capitalize, isString } from '@remirror/core-helpers';
+import {
+  capitalize,
+  isString,
+} from '../../../@remirror/react/src/__mocks__/node_modules/@remirror/core-helpers';
 
 const heading = (Tag: ElementType) => {
   const Component: FC<{ id: string }> = (props) =>

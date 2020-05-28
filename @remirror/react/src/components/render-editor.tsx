@@ -6,6 +6,7 @@ import {
   clamp,
   EDITOR_CLASS_NAME,
   EditorView as EditorViewType,
+  ErrorConstant,
   fromHTML,
   FromToParameter,
   getDocument,
@@ -80,7 +81,9 @@ export interface RenderEditorProps<Manager extends AnyEditorManager>
   children: RenderPropFunction<Manager>;
 }
 
-export class RenderEditor<Manager extends AnyEditorManager> extends PureComponent<
+export class RenderEditor<
+  Manager extends AnyEditorManager = AnyEditorManager
+> extends PureComponent<
   RenderEditorProps<Manager>,
   RemirrorState<SchemaFromExtensionUnion<GetExtensionUnion<Manager>>>
 > {
@@ -253,10 +256,7 @@ export class RenderEditor<Manager extends AnyEditorManager> extends PureComponen
   ): RefKeyRootProps<RefKey> => {
     // Ensure that this is the first time `getRootProps` is being called during
     // this render.
-    invariant(!this.rootPropsConfig.called, {
-      message:
-        '`getRootProps` has been called MULTIPLE times. It should only be called ONCE during render.',
-    });
+    invariant(!this.rootPropsConfig.called, { code: ErrorConstant.REACT_GET_ROOT_PROPS });
     this.rootPropsConfig.called = true;
 
     const { refKey: referenceKey = 'ref', ...config } =
@@ -827,7 +827,7 @@ export class RenderEditor<Manager extends AnyEditorManager> extends PureComponen
     content: RemirrorContentType,
   ): EditorState<SchemaFromExtensionUnion<GetExtensionUnion<Manager>>> => {
     const { stringHandler, fallbackContent: fallback } = this.props;
-    return this.manager.createState({ content, doc: this.doc, stringHandler, fallback });
+    return this.manager.createState({ content, doc: this.doc, stringHandler, onError: fallback });
   };
 
   /**

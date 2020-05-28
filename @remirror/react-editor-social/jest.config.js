@@ -2,6 +2,6 @@ const config = require('../../support/jest/jest.config');
 
 module.exports = {
   ...config,
-  name: '@remirror/editor-social',
-  displayName: 'editor-social',
+  name: '@remirror/react-editor-social',
+  displayName: 'react-editor-social',
 };

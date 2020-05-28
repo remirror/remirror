@@ -1,11 +1,10 @@
+import { EditorManager } from '@remirror/core';
 import { EditorView } from '@remirror/pm/view';
 
-import { EditorManager } from '@remirror/core';
-
-export const injectedPropsShape = {
+export const contextPropsShape = {
   view: expect.any(EditorView),
   manager: expect.any(EditorManager),
-  actions: expect.any(Object),
+  commands: expect.any(Object),
   uid: expect.any(String),
   clearContent: expect.any(Function),
   setContent: expect.any(Function),

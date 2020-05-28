@@ -5,7 +5,7 @@ import React from 'react';
 import {
   fakeResizeObserverPolyfill,
   triggerChange,
-} from '../../../__mocks__/resize-observer-polyfill';
+} from '../../__mocks__/resize-observer-polyfill';
 import { useMeasure, usePrevious, useSetState, useStateWithCallback } from '../core-hooks';
 
 test('usePrevious', () => {
@@ -17,11 +17,9 @@ test('usePrevious', () => {
   expect(result.current).toBe(noValue);
 
   rerender({ initialValue: 20 });
-
   expect(result.current).toBe(10);
 
   rerender({ initialValue: 30 });
-
   expect(result.current).toBe(20);
 });
 
@@ -52,7 +50,6 @@ test('useMeasure', () => {
   expect(getByTestId('test')).toHaveTextContent('Height: 100');
 
   rerender(<div />);
-
   expect(fakeResizeObserverPolyfill.disconnect).toHaveBeenCalled();
 });
 

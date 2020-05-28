@@ -1,15 +1,18 @@
 {
-  "name": "@remirror/editor-social",
-  "version": "0.13.1",
+  "name": "@remirror/react-editor-social",
+  "version": "0.0.0",
   "description": "A configurable social editor.",
-  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/editor-social",
-  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/editor-social",
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/react-react-editor-social",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/react-react-editor-social",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "main": "dist/react-editor-social.cjs.js",
+  "module": "dist/react-editor-social.esm.js",
   "files": [
+    "style",
     "dist"
   ],
   "dependencies": {

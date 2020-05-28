@@ -1,6 +1,7 @@
 import React, { Fragment, PureComponent } from 'react';
 
-import { deepMerge, isUndefined, object, omit, RemirrorTheme } from '@remirror/core';
+import { deepMerge, isUndefined, object, omit } from '@remirror/core';
+import { AutoLinkExtension } from '@remirror/extension-auto-link';
 import {
   EmojiExtension,
   EmojiExtensionOptions,
@@ -10,11 +11,10 @@ import {
   EmojiSuggestionExitHandler,
   EmojiSuggestionKeyBindings,
 } from '@remirror/extension-emoji';
-import { AutoLinkExtension } from '@remirror/extension-enhanced-link';
 import {
   MentionExtension,
   MentionExtensionMatcher,
-  MentionExtensionOptions,
+  MentionOptions,
 } from '@remirror/extension-mention';
 import {
   SuggestChangeHandlerParameter,
@@ -22,8 +22,7 @@ import {
   SuggestKeyBindingParameter,
   SuggestStateMatch,
 } from '@remirror/pm/suggest';
-import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@remirror/react';
-import { RemirrorThemeProvider } from '@remirror/ui';
+import { RemirrorProvider } from '@remirror/react';
 
 import { socialEditorTheme } from '../social-theme';
 import {

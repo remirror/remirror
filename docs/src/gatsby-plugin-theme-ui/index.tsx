@@ -1,4 +1,4 @@
-import { object } from '@remirror/core-helpers';
+import { object } from '../../../@remirror/react/src/__mocks__/node_modules/@remirror/core-helpers';
 
 const heading = {
   fontFamily: 'heading',

@@ -346,6 +346,12 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     const store: Remirror.ExtensionStore<SchemaFromExtensionUnion<this['~E']>> = object();
 
     Object.defineProperties(store, {
+      extensions: {
+        get: () => {
+          return this.#extensions;
+        },
+        enumerable: true,
+      },
       phase: {
         get: () => {
           return this.#phase;
@@ -418,7 +424,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     content,
     doc,
     stringHandler,
-    fallback,
+    onError: fallback,
   }: Omit<CreateDocumentNodeParameter, 'schema'>) {
     const { schema, plugins } = this.store;
     return EditorState.create({
@@ -428,7 +434,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
         doc,
         schema,
         stringHandler,
-        fallback,
+        onError: fallback,
       }),
       plugins,
     });
@@ -674,6 +680,11 @@ declare global {
     > {}
 
     interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {
+      /**
+       * The list of all extensions included in the editor.
+       */
+      readonly extensions: AnyExtension[];
+
       /**
        * The stage the manager is currently at.
        */

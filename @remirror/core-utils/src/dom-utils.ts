@@ -9,6 +9,7 @@ import {
   isNumber,
   isObject,
   isString,
+  RemirrorError,
 } from '@remirror/core-helpers';
 import {
   EditorSchema,
@@ -742,9 +743,11 @@ export interface CreateDocumentNodeParameter
   /**
    * The fallback object node to use if unable to convert the value correctly
    */
-  fallback?: ObjectNode | ProsemirrorNode;
+  onError?: Fallback | CreateDocumentErrorHandler;
 }
 
+export type CreateDocumentErrorHandler = (error: Error) => Fallback;
+export type Fallback = ObjectNode | ProsemirrorNode;
 export interface StringHandlerParameter {
   /**
    * A function which transforms a string into a prosemirror node.
@@ -758,28 +761,39 @@ export interface StringHandlerParameter {
   stringHandler?: (params: FromStringParameter) => ProsemirrorNode;
 }
 
-const fallbackContent = ({
-  fallback,
-  schema,
-}: {
-  fallback: ObjectNode | ProsemirrorNode;
+interface CreateDocumentErrorHandlerParameter {
+  onError: Fallback | CreateDocumentErrorHandler;
   schema: EditorSchema;
-}) => (isProsemirrorNode(fallback) ? fallback : schema.nodeFromJSON(fallback));
+  error: Error;
+}
+
+function createDocumentErrorHandler(parameter: CreateDocumentErrorHandlerParameter) {
+  const { onError, schema, error } = parameter;
+  if (isFunction(onError)) {
+    return createFallback(onError(error), schema);
+  }
+
+  return createFallback(onError, schema);
+}
+
+function createFallback(fallback: Fallback, schema: EditorSchema) {
+  return isProsemirrorNode(fallback) ? fallback : schema.nodeFromJSON(fallback);
+}
 
 /**
  * Creates a document node from the passed in content and schema.
  *
- * @param params - the destructured create document node params
+ * @param parameter - the destructured create document node params
  *
  * @public
  */
-export const createDocumentNode = (params: CreateDocumentNodeParameter): ProsemirrorNode => {
-  const { content, schema, doc, stringHandler } = params;
+export function createDocumentNode(parameter: CreateDocumentNodeParameter): ProsemirrorNode {
+  const { content, schema, doc, stringHandler } = parameter;
 
-  const fallback =
-    params.fallback ?? schema.nodes.doc.spec.content?.startsWith('block')
-      ? EMPTY_PARAGRAPH_NODE
-      : EMPTY_NODE;
+  const onError =
+    parameter.onError ?? schema.nodes.doc.spec.content?.startsWith('block')
+      ? () => EMPTY_PARAGRAPH_NODE
+      : () => EMPTY_NODE;
 
   if (isProsemirrorNode(content)) {
     return content;
@@ -789,8 +803,7 @@ export const createDocumentNode = (params: CreateDocumentNodeParameter): Prosemi
     try {
       return schema.nodeFromJSON(content);
     } catch (error) {
-      console.error(error);
-      return fallbackContent({ fallback, schema });
+      return createDocumentErrorHandler({ onError, schema, error });
     }
   }
 
@@ -798,8 +811,12 @@ export const createDocumentNode = (params: CreateDocumentNodeParameter): Prosemi
     return stringHandler({ doc, content, schema });
   }
 
-  return fallbackContent({ fallback, schema });
-};
+  return createDocumentErrorHandler({
+    onError,
+    schema,
+    error: RemirrorError.create({ message: 'Unrecognized content type' }),
+  });
+}
 
 /**
  * Checks which environment should be used. Returns true when we are in the dom
@@ -808,9 +825,9 @@ export const createDocumentNode = (params: CreateDocumentNodeParameter): Prosemi
  * @param forceEnvironment - force a specific environment to override the
  * outcome
  */
-export const shouldUseDOMEnvironment = (forceEnvironment?: RenderEnvironment) => {
+export function shouldUseDOMEnvironment(forceEnvironment?: RenderEnvironment) {
   return forceEnvironment === 'dom' || (environment.isBrowser && !forceEnvironment);
-};
+}
 
 /**
  * Retrieves the document based on the environment we are currently in.
@@ -833,10 +850,10 @@ export interface CustomDocParameter {
  *
  * @public
  */
-export const toDOM = ({ node, schema, doc }: FromNodeParameter): DocumentFragment => {
+export function toDOM({ node, schema, doc }: FromNodeParameter): DocumentFragment {
   const fragment = isDocNode(node, schema) ? node.content : Fragment.from(node);
   return DOMSerializer.fromSchema(schema).serializeFragment(fragment, { document: doc });
-};
+}
 
 interface FromNodeParameter
   extends SchemaParameter,
@@ -850,12 +867,12 @@ interface FromNodeParameter
  *
  * @public
  */
-export const toHTML = ({ node, schema, doc = getDocument() }: FromNodeParameter) => {
+export function toHTML({ node, schema, doc = getDocument() }: FromNodeParameter) {
   const element = doc.createElement('div');
   element.append(toDOM({ node, schema, doc }));
 
   return element.innerHTML;
-};
+}
 
 interface FromStringParameter extends Partial<CustomDocParameter>, SchemaParameter {
   /** The content  passed in an a string */
