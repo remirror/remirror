@@ -68,8 +68,10 @@ export interface GetManagerFromComponentTreeParameter {
  * ```
  *
  * This is useful in DOM-less (e.g. server-side) environments.
+ *
+ * TODO is this still needed.
  */
-export function getSchemaFromComponentTree({
+export function getManagerFromComponentTree({
   Component,
   prop = 'children',
   extraProps = object<Shape>(),
