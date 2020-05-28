@@ -2,9 +2,12 @@ import {
   AnyExtension,
   AnyPreset,
   AttributesParameter,
+  CombinedUnion,
   EditorManager,
   EditorManagerParameter,
   EditorSchema,
+  InferCombinedExtensions,
+  InferCombinedPresets,
   ProsemirrorAttributes,
   ProsemirrorNode,
 } from '@remirror/core';
@@ -104,9 +107,7 @@ export type NodeWithoutAttributes<Names extends string> = {
   [P in Names]: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
 };
 
-export interface RenderEditorParameter<
-  ExtensionUnion extends AnyExtension,
-  PresetUnion extends AnyPreset
-> extends EditorManagerParameter<ExtensionUnion, PresetUnion> {
-  props?: Partial<Omit<RenderEditorProps<EditorManager<ExtensionUnion, PresetUnion>>, 'manager'>>;
+export interface RenderEditorParameter<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
+  settings?: Remirror.ManagerSettings;
+  props?: Partial<Omit<RenderEditorProps<Combined>, 'manager'>>;
 }

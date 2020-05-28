@@ -485,7 +485,7 @@ export abstract class NodeExtension<Options extends ValidOptions = EmptyShape> e
  * **NOTE** `& object` forces VSCode to use the name `AnyExtension` rather than
  * print out `Replace<Extension<Shape>, Remirror.AnyExtensionOverrides>`
  */
-export type AnyExtension = Replace<Extension<Shape>, Remirror.AnyExtensionOverrides> & object;
+export type AnyExtension = Replace<Extension<Shape>, Remirror.AnyExtensionOverrides>;
 
 /**
  * The type which is applicable to any extension instance.
@@ -705,15 +705,15 @@ export type SchemaFromExtensionUnion<ExtensionUnion extends AnyExtension> = Edit
   GetMarkNameUnion<ExtensionUnion>
 >;
 
-export type AnyManagerStore = Remirror.ManagerStore<any, any>;
-export type ManagerStoreKeys = keyof Remirror.ManagerStore<any, any>;
+export type AnyManagerStore = Remirror.ManagerStore<any>;
+export type ManagerStoreKeys = keyof Remirror.ManagerStore<any>;
 
-export type CreateLifecycleMethod = (extensions: AnyExtension[]) => void;
+export type CreateLifecycleMethod = (extensions: readonly AnyExtension[]) => void;
 export type ViewLifecycleMethod = (
-  extensions: AnyExtension[],
+  extensions: readonly AnyExtension[],
   view: EditorView<EditorSchema>,
 ) => void;
-export type DestroyLifecycleMethod = (extensions: AnyExtension[]) => void;
+export type DestroyLifecycleMethod = (extensions: readonly AnyExtension[]) => void;
 
 declare global {
   /**

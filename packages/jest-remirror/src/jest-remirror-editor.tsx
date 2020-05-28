@@ -16,6 +16,7 @@ import React from 'react';
 import {
   AnyExtension,
   AnyPreset,
+  CombinedUnion,
   CommandFunction,
   CommandsFromExtensions,
   EditorManager,
@@ -51,22 +52,13 @@ import { replaceSelection } from './jest-remirror-utils';
  *
  * By default it already has the core preset applied.
  */
-export function renderEditor<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>(
-  parameter: RenderEditorParameter<ExtensionUnion, PresetUnion>,
+export function renderEditor<Combined extends CombinedUnion<AnyExtension, AnyPreset>>(
+  combined: Combined[],
+  { settings, props }: RenderEditorParameter<Combined> = object(),
 ) {
-  const {
-    extensions = [] as ExtensionUnion[],
-    presets = [] as PresetUnion[],
-    props,
-    settings = object(),
-  } = parameter;
   const corePreset = new CorePreset();
 
-  const manager = EditorManager.create({
-    extensions,
-    presets: [...presets, corePreset],
-    settings,
-  });
+  const manager = EditorManager.fromList([...combined, corePreset], settings);
 
   const utils = render(
     <RenderEditor {...props} manager={manager}>
@@ -89,9 +81,9 @@ export function renderEditor<ExtensionUnion extends AnyExtension, PresetUnion ex
  * This creates a chainable test helper for testing your remirror presets,
  * extensions and commands.
  */
-export class RemirrorTestChain<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
+export class RemirrorTestChain<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
   /** The editor manager */
-  #manager: EditorManager<ExtensionUnion, PresetUnion>;
+  #manager: EditorManager<Combined>;
 
   /** Additional custom tags */
   #tags?: Tags;
@@ -138,7 +130,7 @@ export class RemirrorTestChain<ExtensionUnion extends AnyExtension, PresetUnion 
   /**
    * Provide access to the editor manager.
    */
-  get manager(): EditorManager<ExtensionUnion, PresetUnion> {
+  get manager(): EditorManager<Combined> {
     return this.#manager;
   }
 
@@ -218,7 +210,7 @@ export class RemirrorTestChain<ExtensionUnion extends AnyExtension, PresetUnion 
     return this.#tags ?? {};
   }
 
-  constructor(manager: EditorManager<ExtensionUnion, PresetUnion>, utils: RenderResult) {
+  constructor(manager: EditorManager<Combined>, utils: RenderResult) {
     this.#manager = manager;
     this.utils = utils;
 

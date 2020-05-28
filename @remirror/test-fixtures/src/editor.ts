@@ -1,6 +1,4 @@
 import { AnyExtension, AnyPreset, EditorManager, EditorManagerParameter } from '@remirror/core';
-import type {} from '@remirror/extension-doc';
-import type {} from '@remirror/extension-paragraph';
 import { CorePreset } from '@remirror/preset-core';
 import { ReactPreset } from '@remirror/preset-react';
 

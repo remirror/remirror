@@ -10,7 +10,7 @@ import {
   isNodeExtension,
   PlainExtension,
 } from '../extension';
-import { AnyPreset } from '../preset';
+import { AnyPreset, CombinedUnion, InferCombinedExtensions } from '../preset';
 import { GeneralExtensionTags, MarkExtensionTags, NodeExtensionTags } from '../types';
 
 /**
@@ -127,14 +127,14 @@ declare global {
       tags?: Array<ExtensionTag | string>;
     }
 
-    interface ManagerStore<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
+    interface ManagerStore<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
       /**
        * Store the built in and custom tags for the editor instance.
        */
-      tags: Readonly<ExtensionTags<ExtensionUnion>>;
+      tags: Readonly<ExtensionTags<InferCombinedExtensions<Combined>>>;
     }
 
-    export interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {
+    export interface ExtensionStore {
       /**
        * The tags provided by the configured extensions.
        */

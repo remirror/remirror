@@ -152,8 +152,7 @@ export type DynamicOptionsOfConstructor<Constructor extends AnyConstructor> = Ge
  * The extension store which is shared across all extensions. It provides access
  * to methods and data that can be used throughout the extension lifecycle.
  */
-export interface ExtensionStore<Schema extends EditorSchema = EditorSchema>
-  extends Remirror.ExtensionStore<Schema> {}
+export interface ExtensionStore extends Remirror.ExtensionStore {}
 
 export type ExtensionCommandFunction = (...args: any[]) => CommandFunction<EditorSchema>;
 

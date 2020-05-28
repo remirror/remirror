@@ -15,7 +15,6 @@ import { AttributeSpec, ParseRule, Schema } from '@remirror/pm/model';
 import {
   AnyExtension,
   CreateLifecycleMethod,
-  GetExtensionUnion,
   GetMarkNameUnion,
   GetNodeNameUnion,
   isMarkExtension,
@@ -23,7 +22,7 @@ import {
   PlainExtension,
   SchemaFromExtensionUnion,
 } from '../extension';
-import { AnyPreset } from '../preset';
+import { AnyPreset, CombinedUnion, InferCombinedExtensions } from '../preset';
 
 /**
  * This extension creates the schema and provides extra attributes as defined in
@@ -276,30 +275,24 @@ declare global {
       disableExtraAttributes?: boolean;
     }
 
-    interface ManagerStore<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
+    interface ManagerStore<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
       /**
        * The nodes to place on the schema.
        */
-      nodes: Record<
-        GetNodeNameUnion<ExtensionUnion | GetExtensionUnion<PresetUnion>>,
-        NodeExtensionSpec
-      >;
+      nodes: Record<GetNodeNameUnion<InferCombinedExtensions<Combined>>, NodeExtensionSpec>;
 
       /**
        * The marks to be added to the schema.
        */
-      marks: Record<
-        GetMarkNameUnion<ExtensionUnion | GetExtensionUnion<PresetUnion>>,
-        MarkExtensionSpec
-      >;
+      marks: Record<GetMarkNameUnion<InferCombinedExtensions<Combined>>, MarkExtensionSpec>;
 
       /**
        * The schema created by this extension manager.
        */
-      schema: SchemaFromExtensionUnion<ExtensionUnion | GetExtensionUnion<PresetUnion>>;
+      schema: SchemaFromExtensionUnion<InferCombinedExtensions<Combined>>;
     }
 
-    interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {
+    interface ExtensionStore {
       /**
        * The Prosemirror schema being used for the current editor.
        *
@@ -311,7 +304,7 @@ declare global {
        *
        * Available: *return function* - `onCreate`
        */
-      schema: Schema;
+      schema: EditorSchema;
     }
   }
 }

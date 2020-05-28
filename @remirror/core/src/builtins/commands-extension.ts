@@ -16,12 +16,11 @@ import {
   ChainedFromExtensions,
   CommandsFromExtensions,
   CreateLifecycleMethod,
-  GetExtensionUnion,
   PlainExtension,
   ViewLifecycleMethod,
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
-import { AnyPreset } from '../preset';
+import { AnyPreset, ChainedFromCombined, CombinedUnion, CommandsFromCombined } from '../preset';
 import { CommandShape, ExtensionCommandFunction, ExtensionCommandReturn } from '../types';
 
 /**
@@ -41,7 +40,7 @@ export class CommandsExtension extends PlainExtension {
     return 'commands' as const;
   }
 
-  public onCreate: CreateLifecycleMethod = (extensions) => {
+  public onCreate: CreateLifecycleMethod = () => {
     const { setExtensionStore, getStoreKey } = this.store;
 
     setExtensionStore('getCommands', () => {
@@ -231,7 +230,7 @@ declare global {
   namespace Remirror {
     const _COMMANDS: unique symbol;
 
-    interface ManagerStore<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
+    interface ManagerStore<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
       /**
        * Enables the use of custom commands created by the extensions for
        * extending the functionality of your editor in an expressive way.
@@ -271,7 +270,7 @@ declare global {
        * transaction.
        *
        */
-      commands: CommandsFromExtensions<ExtensionUnion | GetExtensionUnion<PresetUnion>>;
+      commands: CommandsFromCombined<Combined>;
 
       /**
        * Chainable commands for composing functionality together in quaint and
@@ -292,7 +291,7 @@ declare global {
        *
        * The `run()` method ends the chain and dispatches the command.
        */
-      chain: ChainedFromExtensions<ExtensionUnion | GetExtensionUnion<PresetUnion>>;
+      chain: ChainedFromCombined<Combined>;
     }
 
     interface ExtensionCreatorMethods<
@@ -357,7 +356,7 @@ declare global {
         : EmptyShape;
     }
 
-    interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {
+    interface ExtensionStore {
       /**
        * A method to return the editor's available commands.
        */

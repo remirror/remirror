@@ -24,20 +24,24 @@ import {
   AnyManagerStore,
   CreateLifecycleMethod,
   DestroyLifecycleMethod,
-  GetExtensionUnion,
   GetMarkNameUnion,
   GetNodeNameUnion,
   ManagerStoreKeys,
   SchemaFromExtensionUnion,
   ViewLifecycleMethod,
 } from '../extension';
-import { AnyPreset, AnyPresetConstructor } from '../preset';
+import {
+  AnyPreset,
+  AnyPresetConstructor,
+  CombinedUnion,
+  InferCombinedExtensions,
+  InferCombinedPresets,
+  SchemaFromCombined,
+} from '../preset';
 import { privacySymbol } from '../privacy';
 import {
-  GetCommands,
   GetConstructor,
   GetExtensions,
-  GetHelpers,
   TransactionLifecycleMethod,
   TransactionLifecycleParameter,
 } from '../types';
@@ -89,7 +93,7 @@ import {
  * manager.data.actions
  * ```
  */
-export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
+export class EditorManager<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
   /**
    * The main static method for creating a manager.
    */
@@ -100,10 +104,24 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
   }: EditorManagerParameter<ExtensionUnion, PresetUnion>) {
     const builtInPreset = new BuiltinPreset();
 
-    return new EditorManager<ExtensionUnion, PresetUnion | typeof builtInPreset>({
-      extensions,
-      presets: [...presets, builtInPreset],
-      settings: { ...settings, privacy: privacySymbol },
+    return new EditorManager<ExtensionUnion | PresetUnion | BuiltinPreset>(
+      [...extensions, ...presets, builtInPreset],
+      { ...settings, privacy: privacySymbol },
+    );
+  }
+
+  /**
+   * The main static method for creating a manager.
+   */
+  public static fromList<Combined extends CombinedUnion<AnyExtension, AnyPreset>>(
+    combined: Combined[],
+    settings: Remirror.ManagerSettings = {},
+  ) {
+    const builtInPreset = new BuiltinPreset();
+
+    return new EditorManager<Combined | BuiltinPreset>([...combined, builtInPreset], {
+      ...settings,
+      privacy: privacySymbol,
     });
   }
 
@@ -113,7 +131,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * Utility getter for storing the base method parameter which is available to
    * all extensions.
    */
-  #extensionStore: Remirror.ExtensionStore<SchemaFromExtensionUnion<this['~E']>>;
+  #extensionStore: Remirror.ExtensionStore;
 
   #extensions: ReadonlyArray<this['~E']>;
   #extensionMap: WeakMap<AnyExtensionConstructor, this['~E']>;
@@ -124,7 +142,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
   /**
    * The extension manager store.
    */
-  #store: Remirror.ManagerStore<ExtensionUnion, PresetUnion> = this.createInitialStore();
+  #store: Remirror.ManagerStore<Combined> = this.createInitialStore();
 
   /**
    * The stage the manager is currently running.
@@ -160,7 +178,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
   /**
    * The extensions stored by this manager
    */
-  get extensions(): ReadonlyArray<ExtensionUnion | GetExtensionUnion<PresetUnion>> {
+  get extensions(): ReadonlyArray<GetExtensions<this>> {
     return this.#extensions;
   }
 
@@ -228,18 +246,20 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * This should not be called directly if you want to use prioritized
    * extensions. Instead use `Manager.create`.
    */
-  private constructor(parameter: EditorManagerConstructorParameter<ExtensionUnion, PresetUnion>) {
-    this.#settings = parameter.settings ?? {};
+  private constructor(
+    combined: readonly Combined[],
+    { privacy, ...settings }: SettingsWithPrivacy = {},
+  ) {
+    this.#settings = settings;
 
-    invariant(parameter.settings?.privacy === privacySymbol, {
+    invariant(privacy === privacySymbol, {
       message: `The extension manager can only be invoked via one of it's static methods. e.g 'EditorManager.create([...extensions])'.`,
       code: ErrorConstant.NEW_EDITOR_MANAGER,
     });
 
     const { extensions, extensionMap, presets, presetMap } = transformExtensionOrPresetList<
-      ExtensionUnion,
-      PresetUnion
-    >([...parameter.extensions, ...parameter.presets]);
+      Combined
+    >(combined);
 
     this.#extensions = freeze(extensions);
     this.#extensionMap = extensionMap;
@@ -253,7 +273,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     this.#phase = ManagerPhase.Create;
 
     for (const handler of this.#handlers.create) {
-      handler(this.#extensions as AnyExtension[]);
+      handler(this.#extensions as readonly AnyExtension[]);
     }
   }
 
@@ -335,7 +355,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * Create the initial store.
    */
   private createInitialStore() {
-    const store: Remirror.ManagerStore<ExtensionUnion, PresetUnion> = object();
+    const store: Remirror.ManagerStore<Combined> = object();
     return store;
   }
 
@@ -343,7 +363,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * Create the initial store.
    */
   private createExtensionStore() {
-    const store: Remirror.ExtensionStore<SchemaFromExtensionUnion<this['~E']>> = object();
+    const store: Remirror.ExtensionStore = object();
 
     Object.defineProperties(store, {
       extensions: {
@@ -409,7 +429,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     this.#store.view = view as EditorView;
 
     for (const handler of this.#handlers.view) {
-      handler(this.#extensions as AnyExtension[], view);
+      handler(this.#extensions as readonly AnyExtension[], view);
     }
 
     this.#phase = ManagerPhase.Runtime;
@@ -531,12 +551,12 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    */
   public destroy() {
     for (const onDestroy of this.#handlers.destroy) {
-      onDestroy(this.#extensions as AnyExtension[]);
+      onDestroy(this.#extensions);
     }
   }
 }
 
-export type AnyEditorManager = EditorManager<any, any>;
+export type AnyEditorManager = EditorManager<CombinedUnion<AnyExtension, AnyPreset>>;
 
 /**
  * Checks to see whether the provided value is an `Manager`.
@@ -575,33 +595,28 @@ export interface EditorManagerParameter<
   settings?: Remirror.ManagerSettings;
 }
 
-interface EditorManagerConstructorParameter<
-  ExtensionUnion extends AnyExtension,
-  PresetUnion extends AnyPreset
-> extends EditorManagerParameter<ExtensionUnion, PresetUnion> {
-  settings?: Remirror.ManagerSettings & {
-    /**
-     * A symbol value that prevents the EditorManager constructor from being called
-     * directly.
-     *
-     * @internal
-     */
-    privacy: symbol;
-  };
+interface SettingsWithPrivacy extends Remirror.ManagerSettings {
+  /**
+   * A symbol value that prevents the EditorManager constructor from being called
+   * directly.
+   *
+   * @internal
+   */
+  privacy?: symbol;
 }
 
-export interface EditorManager<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
+export interface EditorManager<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
   /**
    * Pseudo property which is a small hack to store the type of the extension
    * union.
    */
-  ['~E']: ExtensionUnion | GetExtensions<PresetUnion>;
+  ['~E']: InferCombinedExtensions<Combined>;
 
   /**
    * Pseudo property which is a small hack to store the type of the presets
    * available from this manager..
    */
-  ['~P']: PresetUnion;
+  ['~P']: InferCombinedPresets<Combined>;
 
   /**
    * Pseudo property which is a small hack to store the type of the schema
@@ -628,9 +643,6 @@ export interface EditorManager<ExtensionUnion extends AnyExtension, PresetUnion 
    * @internal
    */
   ['~M']: GetMarkNameUnion<this['~E']>;
-
-  [Remirror._COMMANDS]: GetCommands<GetExtensions<this>>;
-  [Remirror._HELPERS]: GetHelpers<GetExtensions<this>>;
 }
 
 declare global {
@@ -654,20 +666,12 @@ declare global {
      * Since this is a global namespace, you can extend the store if your
      * extension is modifying the shape of the `Manager.store` property.
      */
-    interface ManagerStore<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
+    interface ManagerStore<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
       /**
        * The editor view stored by this instance.
        */
-      view: EditorView<SchemaFromExtensionUnion<ManagerExtensions<ExtensionUnion, PresetUnion>>>;
+      view: EditorView<SchemaFromCombined<Combined>>;
     }
-
-    /**
-     * The extension which are available on an `EditorManager` based on the
-     * passed in type params.
-     */
-    type ManagerExtensions<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> =
-      | ExtensionUnion
-      | GetExtensionUnion<PresetUnion>;
 
     /**
      * The initialization params which are passed by the view layer into the
@@ -679,7 +683,7 @@ declare global {
       PresetUnion extends AnyPreset
     > {}
 
-    interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {
+    interface ExtensionStore {
       /**
        * The list of all extensions included in the editor.
        */
@@ -695,7 +699,7 @@ declare global {
        *
        * Availability: **return scope** - `onView`
        */
-      readonly getState: () => EditorState<Schema>;
+      readonly getState: () => EditorState<EditorSchema>;
 
       /**
        * The view available to extensions once `addView` has been called on the
@@ -703,21 +707,21 @@ declare global {
        *
        * Availability: **return scope** - `onView`
        */
-      readonly view: EditorView<Schema>;
+      readonly view: EditorView<EditorSchema>;
 
       /**
        * The latest state.
        *
        * Availability: **return scope** - `onView`
        */
-      currentState: EditorState<Schema>;
+      currentState: EditorState<EditorSchema>;
 
       /**
        * The previous state. Will be undefined when the view is first created.
        *
        * Availability: **return scope** - `onView`
        */
-      previousState?: EditorState<Schema>;
+      previousState?: EditorState<EditorSchema>;
 
       /**
        * The settings passed to the manager.

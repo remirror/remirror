@@ -10,10 +10,9 @@ import {
   AnyExtension,
   AnyExtensionConstructor,
   CreateLifecycleMethod,
-  GetExtensionUnion,
   PlainExtension,
 } from '../extension';
-import { AnyPreset } from '../preset';
+import { AnyPreset, CombinedUnion, InferCombinedExtensions } from '../preset';
 import { GetNameUnion } from '../types';
 
 /**
@@ -42,7 +41,7 @@ export class PluginsExtension extends PlainExtension {
   /**
    * Plugins created by the `createPlugin` methods and `createExternalPlugins`.
    */
-  private extensionPlugins: ProsemirrorPlugin[] = [];
+  private readonly extensionPlugins: ProsemirrorPlugin[] = [];
 
   private readonly pluginKeys: Record<string, PluginKey> = object();
 
@@ -75,6 +74,7 @@ export class PluginsExtension extends PlainExtension {
 
       // Assign the plugin key to the extension name.
       this.pluginKeys[extension.name] = key;
+      // eslint-disable-next-line unicorn/consistent-function-scoping
       const getter = <State>() => getPluginState<State>(key, getStoreKey('view').state);
 
       extension.pluginKey = key;
@@ -191,7 +191,7 @@ export interface CreatePluginReturn<PluginState = any>
 
 declare global {
   namespace Remirror {
-    interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {
+    interface ExtensionStore {
       /**
        * Retrieve the state for any given extension name. This will throw an
        * error if the extension identified by that name doesn't implement the
@@ -242,7 +242,7 @@ declare global {
       addPlugins: (...plugins: ProsemirrorPlugin[]) => void;
     }
 
-    interface ManagerStore<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
+    interface ManagerStore<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
       /**
        * All of the plugins combined together from all sources
        */
@@ -254,9 +254,7 @@ declare global {
        *
        * @param name - the name of the extension
        */
-      getPluginState: <State>(
-        name: GetNameUnion<ExtensionUnion | GetExtensionUnion<PresetUnion>>,
-      ) => State;
+      getPluginState: <State>(name: GetNameUnion<InferCombinedExtensions<Combined>>) => State;
 
       /**
        * All the plugin keys available to be used by plugins.

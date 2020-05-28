@@ -5,13 +5,12 @@ import { AnyFunction, EditorSchema, EmptyShape, Shape } from '@remirror/core-typ
 import {
   AnyExtension,
   CreateLifecycleMethod,
-  GetExtensionUnion,
   HelpersFromExtensions,
   PlainExtension,
   ViewLifecycleMethod,
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
-import { AnyPreset } from '../preset';
+import { AnyPreset, CombinedUnion, HelpersFromCombined } from '../preset';
 import { ExtensionHelperReturn } from '../types';
 
 /**
@@ -74,11 +73,11 @@ declare global {
   namespace Remirror {
     const _HELPERS: unique symbol;
 
-    interface ManagerStore<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
+    interface ManagerStore<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
       /**
        * The helpers provided by the extensions used.
        */
-      helpers: HelpersFromExtensions<ExtensionUnion | GetExtensionUnion<PresetUnion>>;
+      helpers: HelpersFromCombined<Combined>;
     }
 
     interface ExtensionCreatorMethods<
@@ -134,7 +133,7 @@ declare global {
         : EmptyShape;
     }
 
-    interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {
+    interface ExtensionStore {
       /**
        * Helper method to provide information about the content of the editor.
        * Each extension can register its own helpers.

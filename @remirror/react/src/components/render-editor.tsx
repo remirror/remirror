@@ -1,16 +1,18 @@
 import React, { cloneElement, Fragment, PureComponent, ReactNode, Ref } from 'react';
 
 import {
-  AnyEditorManager,
+  AnyExtension,
+  AnyPreset,
   bool,
   clamp,
+  CombinedUnion,
   EDITOR_CLASS_NAME,
+  EditorManager,
   EditorView as EditorViewType,
   ErrorConstant,
   fromHTML,
   FromToParameter,
   getDocument,
-  GetExtensionUnion,
   invariant,
   isArray,
   isFunction,
@@ -20,7 +22,7 @@ import {
   object,
   ObjectNode,
   RemirrorContentType,
-  SchemaFromExtensionUnion,
+  SchemaFromCombined,
   shouldUseDOMEnvironment,
   toHTML,
   Transaction,
@@ -45,6 +47,7 @@ import {
   BaseListenerParameter,
   BaseProps,
   CalculatePositionerParameter,
+  DefaultCombined,
   EditorStateEventListenerParameter,
   FocusType,
   GetPositionerPropsConfig,
@@ -68,25 +71,22 @@ import { createEditorView, RemirrorSSR } from '../ssr';
  *
  * @param - injected remirror params
  */
-type RenderPropFunction<Manager extends AnyEditorManager> = (
-  params: RemirrorContextProps<Manager>,
+type RenderPropFunction<Combined extends CombinedUnion<AnyExtension, AnyPreset>> = (
+  params: RemirrorContextProps<Combined>,
 ) => JSX.Element;
 
-export interface RenderEditorProps<Manager extends AnyEditorManager>
-  extends MakeRequired<BaseProps<Manager>, keyof typeof defaultProps> {
+export interface RenderEditorProps<Combined extends CombinedUnion<AnyExtension, AnyPreset>>
+  extends MakeRequired<BaseProps<Combined>, keyof typeof defaultProps> {
   /**
    * The render prop that takes the injected remirror params and returns an
    * element to render. The editor view is automatically attached to the DOM.
    */
-  children: RenderPropFunction<Manager>;
+  children: RenderPropFunction<Combined>;
 }
 
 export class RenderEditor<
-  Manager extends AnyEditorManager = AnyEditorManager
-> extends PureComponent<
-  RenderEditorProps<Manager>,
-  RemirrorState<SchemaFromExtensionUnion<GetExtensionUnion<Manager>>>
-> {
+  Combined extends CombinedUnion<AnyExtension, AnyPreset>
+> extends PureComponent<RenderEditorProps<Combined>, RemirrorState<SchemaFromCombined<Combined>>> {
   public static defaultProps = defaultProps;
 
   /**
@@ -99,7 +99,7 @@ export class RenderEditor<
    * to the components state for internal usage.
    */
   public static getDerivedStateFromProps(
-    properties: RenderEditorProps<AnyEditorManager>,
+    properties: RenderEditorProps<DefaultCombined>,
     state: RemirrorState,
   ): RemirrorState | null {
     const { onStateChange, value } = properties;
@@ -131,7 +131,7 @@ export class RenderEditor<
   /**
    * The prosemirror EditorView.
    */
-  private readonly view: EditorViewType<SchemaFromExtensionUnion<GetExtensionUnion<Manager>>>;
+  private readonly view: EditorViewType<SchemaFromCombined<Combined>>;
 
   /**
    * A unique ID for the editor which is also used as a key to pass into
@@ -155,7 +155,7 @@ export class RenderEditor<
   /**
    * A utility for quickly retrieving the extension manager.
    */
-  private get manager(): Manager {
+  private get manager(): EditorManager<Combined> {
     return this.props.manager;
   }
 
@@ -163,7 +163,7 @@ export class RenderEditor<
     called: false,
   };
 
-  constructor(properties: RenderEditorProps<Manager>) {
+  constructor(properties: RenderEditorProps<Combined>) {
     super(properties);
 
     // Ensure that children is a render prop.
@@ -200,9 +200,7 @@ export class RenderEditor<
    *
    * At this point both oldState and newState point to the same state object.
    */
-  private createInitialState(): RemirrorState<
-    SchemaFromExtensionUnion<GetExtensionUnion<Manager>>
-  > {
+  private createInitialState(): RemirrorState<SchemaFromCombined<Combined>> {
     const { suppressHydrationWarning } = this.props;
 
     const newState = this.createStateFromContent(this.props.initialContent);
@@ -220,7 +218,7 @@ export class RenderEditor<
    * Create the prosemirror editor view.
    */
   private createView() {
-    return createEditorView<SchemaFromExtensionUnion<GetExtensionUnion<Manager>>>(
+    return createEditorView<SchemaFromCombined<Combined>>(
       undefined,
       {
         state: this.state.editor.newState,
@@ -276,7 +274,7 @@ export class RenderEditor<
    * cursor position (e.g.) a floating / bubble menu.
    */
   private readonly getPositionerProps = <RefKey extends string = 'ref'>(
-    options: GetPositionerPropsConfig<GetExtensionUnion<Manager>, RefKey> | undefined,
+    options: GetPositionerPropsConfig<Combined, RefKey> | undefined,
   ): GetPositionerReturn<RefKey> => {
     const { refKey: referenceKey = 'ref', ...config } = {
       ...defaultPositioner,
@@ -342,7 +340,7 @@ export class RenderEditor<
     hasChanged,
     isActive,
     positionerId,
-  }: CalculatePositionerParameter<GetExtensionUnion<Manager>>): PositionerProps {
+  }: CalculatePositionerParameter<Combined>): PositionerProps {
     const positionerMapItem = this.positionerMap.get(positionerId);
     let positionerProperties = { isActive: false, ...initialPosition };
 
@@ -428,9 +426,7 @@ export class RenderEditor<
    * into the editor. Since it's up to the user to provide state updates to the
    * editor this method is called when the value prop has changed.
    */
-  private readonly controlledUpdate = (
-    state: EditorState<SchemaFromExtensionUnion<GetExtensionUnion<Manager>>>,
-  ) => {
+  private readonly controlledUpdate = (state: EditorState<SchemaFromCombined<Combined>>) => {
     const updateHandler = this.createUpdateStateHandler({ state });
     this.view.updateState(state);
     updateHandler();
@@ -444,9 +440,7 @@ export class RenderEditor<
     triggerOnChange,
     onUpdate,
     tr,
-  }: UpdateStateParameter<SchemaFromExtensionUnion<GetExtensionUnion<Manager>>>) => (
-    updatedState = state,
-  ) => {
+  }: UpdateStateParameter<SchemaFromCombined<Combined>>) => (updatedState = state) => {
     const { onChange } = this.props;
 
     // No need to continue if triggerOnChange is `false`
@@ -472,7 +466,7 @@ export class RenderEditor<
     triggerOnChange = true,
     onUpdate,
     tr,
-  }: UpdateStateParameter<SchemaFromExtensionUnion<GetExtensionUnion<Manager>>>) {
+  }: UpdateStateParameter<SchemaFromCombined<Combined>>) {
     const { onStateChange } = this.props;
 
     const updateHandler = this.createUpdateStateHandler({ state, triggerOnChange, onUpdate });
@@ -557,8 +551,8 @@ export class RenderEditor<
   }
 
   public componentDidUpdate(
-    { editable, manager: previousManager }: RenderEditorProps<Manager>,
-    previousState: RemirrorState<SchemaFromExtensionUnion<GetExtensionUnion<Manager>>>,
+    { editable, manager: previousManager }: RenderEditorProps<Combined>,
+    previousState: RemirrorState<SchemaFromCombined<Combined>>,
   ) {
     // Ensure that children is still a render prop
     propIsFunction(this.props.children);
@@ -664,9 +658,7 @@ export class RenderEditor<
   private baseListenerParameter({
     state,
     tr,
-  }: ListenerParameter<GetExtensionUnion<Manager>>): BaseListenerParameter<
-    GetExtensionUnion<Manager>
-  > {
+  }: ListenerParameter<Combined>): BaseListenerParameter<Combined> {
     return {
       tr,
       internalUpdate: !tr,
@@ -683,8 +675,8 @@ export class RenderEditor<
    * e.g. `onChange`
    */
   private eventListenerParameter(
-    { state, tr }: ListenerParameter = object(),
-  ): RemirrorEventListenerParameter<GetExtensionUnion<Manager>> {
+    { state, tr }: ListenerParameter<Combined> = object(),
+  ): RemirrorEventListenerParameter<Combined> {
     return {
       ...this.baseListenerParameter({ tr }),
       state: state ?? this.state.editor.newState,
@@ -695,12 +687,8 @@ export class RenderEditor<
    * The params passed into onStateChange (within controlled components)
    */
   private editorStateEventListenerParameter(
-    {
-      newState,
-      oldState,
-      tr,
-    }: EditorStateEventListenerParameter<GetExtensionUnion<Manager>> = object(),
-  ): RemirrorStateListenerParameter<GetExtensionUnion<Manager>> {
+    { newState, oldState, tr }: EditorStateEventListenerParameter<Combined> = object(),
+  ): RemirrorStateListenerParameter<Combined> {
     return {
       ...this.baseListenerParameter({ state: newState, tr }),
       newState: newState ?? this.state.editor.newState,
@@ -758,16 +746,14 @@ export class RenderEditor<
     requestAnimationFrame(() => this.view.focus());
   };
 
-  get renderParameter(): RemirrorContextProps<Manager> {
+  get renderParameter(): RemirrorContextProps<Combined> {
     return {
+      ...this.manager.store,
       /* Properties */
       uid: this.uid,
       manager: this.manager,
       view: this.view,
       state: this.state.editor,
-
-      /* Mapped methods */
-      commands: this.manager.store.commands as any,
 
       /* Getter Methods */
       getRootProps: this.getRootProps,
@@ -782,9 +768,9 @@ export class RenderEditor<
     };
   }
 
-  private readonly getText = (
-    state?: EditorState<SchemaFromExtensionUnion<GetExtensionUnion<Manager>>>,
-  ) => (lineBreakDivider = '\n\n') => {
+  private readonly getText = (state?: EditorState<SchemaFromCombined<Combined>>) => (
+    lineBreakDivider = '\n\n',
+  ) => {
     const { doc } = state ?? this.state.editor.newState;
     return doc.textBetween(0, doc.content.size, lineBreakDivider);
   };
@@ -792,9 +778,7 @@ export class RenderEditor<
   /**
    * Retrieve the HTML from the `doc` prosemirror node
    */
-  private readonly getHTML = (
-    state?: EditorState<SchemaFromExtensionUnion<GetExtensionUnion<Manager>>>,
-  ) => () => {
+  private readonly getHTML = (state?: EditorState<SchemaFromCombined<Combined>>) => () => {
     return toHTML({
       node: (state ?? this.state.editor.newState).doc,
       schema: this.manager.store.schema,
@@ -806,7 +790,7 @@ export class RenderEditor<
    * Retrieve the full state json object
    */
   private readonly getJSON = (
-    state?: EditorState<SchemaFromExtensionUnion<GetExtensionUnion<Manager>>>,
+    state?: EditorState<SchemaFromCombined<Combined>>,
   ) => (): ObjectNode => {
     return (state ?? this.state.editor.newState).toJSON() as ObjectNode;
   };
@@ -815,7 +799,7 @@ export class RenderEditor<
    * Return the json object for the prosemirror document.
    */
   private readonly getObjectNode = (
-    state?: EditorState<SchemaFromExtensionUnion<GetExtensionUnion<Manager>>>,
+    state?: EditorState<SchemaFromCombined<Combined>>,
   ) => (): ObjectNode => {
     return (state ?? this.state.editor.newState).doc.toJSON() as ObjectNode;
   };
@@ -825,7 +809,7 @@ export class RenderEditor<
    */
   private readonly createStateFromContent = (
     content: RemirrorContentType,
-  ): EditorState<SchemaFromExtensionUnion<GetExtensionUnion<Manager>>> => {
+  ): EditorState<SchemaFromCombined<Combined>> => {
     const { stringHandler, fallbackContent: fallback } = this.props;
     return this.manager.createState({ content, doc: this.doc, stringHandler, onError: fallback });
   };

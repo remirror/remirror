@@ -1,26 +1,24 @@
 import { ReactNode, Ref } from 'react';
 
 import {
-  AnyEditorManager,
   AnyExtension,
+  AnyPreset,
+  CombinedUnion,
   CompareStateParameter,
+  EditorManager,
   EditorSchema,
   EditorState,
   EditorStateParameter,
-  EditorView,
   EditorViewParameter,
   ElementParameter,
   FromToParameter,
-  GetCommands,
-  GetExtensionUnion,
-  GetSchema,
   ObjectNode,
   Position,
   PositionParameter,
   ProsemirrorNode,
   RemirrorContentType,
   RenderEnvironment,
-  SchemaFromExtensionUnion,
+  SchemaFromCombined,
   Shape,
   StringHandlerParameter,
   TextParameter,
@@ -28,6 +26,8 @@ import {
   TransactionParameter,
   TransactionTransformer,
 } from '@remirror/core';
+import { CorePreset } from '@remirror/preset-core';
+import { ReactPreset } from '@remirror/preset-react';
 
 /**
  * The type of arguments acceptable for the focus parameter.
@@ -39,14 +39,17 @@ import {
  */
 export type FocusType = FromToParameter | number | 'start' | 'end' | boolean;
 
-export interface BaseProps<Manager extends AnyEditorManager = any> extends StringHandlerParameter {
+export type DefaultCombined = CombinedUnion<AnyExtension, CorePreset | ReactPreset>;
+
+export interface BaseProps<Combined extends CombinedUnion<AnyExtension, AnyPreset>>
+  extends StringHandlerParameter {
   /**
    * Pass in the extension manager.
    *
    * The manager is responsible for handling all Prosemirror related
    * functionality.
    */
-  manager: Manager;
+  manager: EditorManager<Combined>;
 
   /**
    * Set the starting value object of the editor.
@@ -66,20 +69,20 @@ export interface BaseProps<Manager extends AnyEditorManager = any> extends Strin
    *
    * Without a deep understanding of Prosemirror this is not recommended.
    */
-  onStateChange?: (params: RemirrorStateListenerParameter<GetExtensionUnion<Manager>>) => void;
+  onStateChange?: (params: RemirrorStateListenerParameter<Combined>) => void;
 
   /**
    * When onStateChange is defined this prop is used to set the next state value
    * of the remirror editor.
    */
-  value?: EditorState<GetSchema<Manager>> | null;
+  value?: EditorState<SchemaFromCombined<Combined>> | null;
 
   /**
    * Adds attributes directly to the prosemirror html element.
    *
    * @defaultValue `{}`
    */
-  attributes?: Record<string, string> | AttributePropFunction;
+  attributes?: Record<string, string> | AttributePropFunction<Combined>;
 
   /**
    * Determines whether this editor is editable or not.
@@ -99,29 +102,23 @@ export interface BaseProps<Manager extends AnyEditorManager = any> extends Strin
   /**
    * An event listener which is called whenever the editor gains focus.
    */
-  onFocus?: (
-    params: RemirrorEventListenerParameter<GetExtensionUnion<Manager>>,
-    event: Event,
-  ) => void;
+  onFocus?: (params: RemirrorEventListenerParameter<Combined>, event: Event) => void;
 
   /**
    * An event listener which is called whenever the editor is blurred.
    */
-  onBlur?: (
-    params: RemirrorEventListenerParameter<GetExtensionUnion<Manager>>,
-    event: Event,
-  ) => void;
+  onBlur?: (params: RemirrorEventListenerParameter<Combined>, event: Event) => void;
 
   /**
    * Called on the first render when the prosemirror instance first becomes
    * available
    */
-  onFirstRender?: RemirrorEventListener<GetExtensionUnion<Manager>>;
+  onFirstRender?: RemirrorEventListener<Combined>;
 
   /**
    * Called on every change to the Prosemirror state.
    */
-  onChange?: RemirrorEventListener<GetExtensionUnion<Manager>>;
+  onChange?: RemirrorEventListener<Combined>;
 
   /**
    * A method called when the editor is dispatching the transaction.
@@ -130,7 +127,7 @@ export interface BaseProps<Manager extends AnyEditorManager = any> extends Strin
    * Use this to update the transaction which will be used to update the editor
    * state.
    */
-  onDispatchTransaction?: TransactionTransformer<GetSchema<Manager>>;
+  onDispatchTransaction?: TransactionTransformer<SchemaFromCombined<Combined>>;
 
   /**
    * Sets the accessibility label for the editor instance.
@@ -212,7 +209,7 @@ export interface BaseProps<Manager extends AnyEditorManager = any> extends Strin
   fallbackContent?: ObjectNode | ProsemirrorNode;
 }
 
-export interface Positioner<ExtensionUnion extends AnyExtension = any> {
+export interface Positioner<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
   /**
    * The default and initial position value. This is used at the start and
    * whenever isActive becomes false
@@ -236,28 +233,28 @@ export interface Positioner<ExtensionUnion extends AnyExtension = any> {
    *
    * @param params
    */
-  hasChanged: (params: CompareStateParameter<SchemaFromExtensionUnion<ExtensionUnion>>) => boolean;
+  hasChanged: (params: CompareStateParameter<SchemaFromCombined<Combined>>) => boolean;
 
   /**
    * Determines whether the positioner should be active
    */
-  isActive: (params: GetPositionParameter<ExtensionUnion>) => boolean;
+  isActive: (params: GetPositionParameter<Combined>) => boolean;
 
   /**
    * Calculate and return a new position (only called when `hasChanged` and
    * `isActive` return true)
    */
-  getPosition: (params: GetPositionParameter<ExtensionUnion>) => Position;
+  getPosition: (params: GetPositionParameter<Combined>) => Position;
 }
 
 export type CalculatePositionerParameter<
-  ExtensionUnion extends AnyExtension = any
-> = PositionerIdParameter & Positioner<ExtensionUnion>;
+  Combined extends CombinedUnion<AnyExtension, AnyPreset>
+> = PositionerIdParameter & Positioner<Combined>;
 
 export type GetPositionerPropsConfig<
-  ExtensionUnion extends AnyExtension = any,
+  Combined extends CombinedUnion<AnyExtension, AnyPreset>,
   RefKey extends string = 'ref'
-> = RefParameter<RefKey> & Partial<Positioner<ExtensionUnion>> & PositionerIdParameter;
+> = RefParameter<RefKey> & Partial<Positioner<Combined>> & PositionerIdParameter;
 
 export interface RefParameter<RefKey = 'ref'> {
   /**
@@ -289,20 +286,12 @@ export type GetPositionerReturn<RefKey extends string = 'ref'> = { [P in RefKey]
  * These are the props passed to the render function provided when setting up
  * your editor.
  */
-export interface RemirrorContextProps<Manager extends AnyEditorManager = AnyEditorManager> {
+export interface RemirrorContextProps<Combined extends CombinedUnion<AnyExtension, AnyPreset>>
+  extends Remirror.ManagerStore<Combined> {
   /**
    * An instance of the extension manager
    */
-  manager: Manager;
-  /**
-   * The prosemirror view
-   */
-  view: EditorView<GetSchema<Manager>>;
-
-  /**
-   * A map of all actions made available by the configured extensions.
-   */
-  commands: GetCommands<Manager>;
+  manager: EditorManager<Combined>;
 
   /**
    * The unique id for the editor instance.
@@ -381,13 +370,13 @@ export interface RemirrorContextProps<Manager extends AnyEditorManager = AnyEdit
    * the position.
    */
   getPositionerProps: <RefKey extends string = 'ref'>(
-    options: GetPositionerPropsConfig<GetExtensionUnion<Manager>, RefKey>,
+    options: GetPositionerPropsConfig<Combined, RefKey>,
   ) => GetPositionerReturn<RefKey>;
 
   /**
    * The previous and next state
    */
-  state: CompareStateParameter<GetSchema<Manager>>;
+  state: CompareStateParameter<SchemaFromCombined<Combined>>;
 
   /**
    * Focus the editor at the `start` | `end` a specific position or at a valid range between `{ from, to }`
@@ -422,8 +411,8 @@ export interface RemirrorGetterParameter {
   getObjectNode: () => ObjectNode;
 }
 
-export interface BaseListenerParameter<ExtensionUnion extends AnyExtension = any>
-  extends EditorViewParameter<SchemaFromExtensionUnion<ExtensionUnion>>,
+export interface BaseListenerParameter<Combined extends CombinedUnion<AnyExtension, AnyPreset>>
+  extends EditorViewParameter<SchemaFromCombined<Combined>>,
     RemirrorGetterParameter {
   /**
    * The original transaction which caused this state update.
@@ -437,7 +426,7 @@ export interface BaseListenerParameter<ExtensionUnion extends AnyExtension = any
    * - Was ths change caused by an updated selection? `tr.selectionSet`
    * - `tr.steps` can be inspected for further granularity.
    */
-  tr?: Transaction<SchemaFromExtensionUnion<ExtensionUnion>>;
+  tr?: Transaction<SchemaFromCombined<Combined>>;
 
   /**
    * A shorthand way of checking whether the update was triggered by editor usage (internal) or
@@ -450,27 +439,27 @@ export interface BaseListenerParameter<ExtensionUnion extends AnyExtension = any
   internalUpdate: boolean;
 }
 
-export interface RemirrorEventListenerParameter<ExtensionUnion extends AnyExtension = any>
-  extends EditorStateParameter<SchemaFromExtensionUnion<ExtensionUnion>>,
-    BaseListenerParameter<ExtensionUnion> {}
+export interface RemirrorEventListenerParameter<
+  Combined extends CombinedUnion<AnyExtension, AnyPreset>
+> extends EditorStateParameter<SchemaFromCombined<Combined>>, BaseListenerParameter<Combined> {}
 
-export interface RemirrorStateListenerParameter<ExtensionUnion extends AnyExtension = any>
-  extends CompareStateParameter<SchemaFromExtensionUnion<ExtensionUnion>>,
-    BaseListenerParameter<ExtensionUnion> {
+export interface RemirrorStateListenerParameter<
+  Combined extends CombinedUnion<AnyExtension, AnyPreset>
+> extends CompareStateParameter<SchemaFromCombined<Combined>>, BaseListenerParameter<Combined> {
   /**
    * Manually create a new state object with the desired content.
    */
   createStateFromContent: (
     content: RemirrorContentType,
-  ) => EditorState<SchemaFromExtensionUnion<ExtensionUnion>>;
+  ) => EditorState<SchemaFromCombined<Combined>>;
 }
 
-export type RemirrorEventListener<ExtensionUnion extends AnyExtension = any> = (
-  params: RemirrorEventListenerParameter<ExtensionUnion>,
+export type RemirrorEventListener<Combined extends CombinedUnion<AnyExtension, AnyPreset>> = (
+  params: RemirrorEventListenerParameter<Combined>,
 ) => void;
 
-export type AttributePropFunction<ExtensionUnion extends AnyExtension = any> = (
-  params: RemirrorEventListenerParameter<ExtensionUnion>,
+export type AttributePropFunction<Combined extends CombinedUnion<AnyExtension, AnyPreset>> = (
+  params: RemirrorEventListenerParameter<Combined>,
 ) => Record<string, string>;
 
 export interface PlaceholderConfig extends TextParameter {
@@ -483,10 +472,10 @@ export type PositionerMapValue = ElementParameter & {
 
 export interface PositionerRefFactoryParameter extends PositionerIdParameter, PositionParameter {}
 
-export interface GetPositionParameter<ExtensionUnion extends AnyExtension = any>
-  extends EditorViewParameter<SchemaFromExtensionUnion<ExtensionUnion>>,
+export interface GetPositionParameter<Combined extends CombinedUnion<AnyExtension, AnyPreset>>
+  extends EditorViewParameter<SchemaFromCombined<Combined>>,
     ElementParameter,
-    CompareStateParameter<SchemaFromExtensionUnion<ExtensionUnion>> {}
+    CompareStateParameter<SchemaFromCombined<Combined>> {}
 
 export interface PositionerIdParameter {
   /**
@@ -510,7 +499,7 @@ export interface PositionerParameter {
    * The positioner object which determines how the changes in the view impact
    * the calculated position.
    */
-  positioner: Partial<Positioner>;
+  positioner: Partial<Positioner<DefaultCombined>>;
 }
 
 export interface UsePositionerParameter<RefKey extends string = 'ref'>
@@ -535,11 +524,9 @@ export interface UpdateStateParameter<Schema extends EditorSchema = any>
 }
 
 export interface EditorStateEventListenerParameter<
-  ExtensionUnion extends AnyExtension = any,
+  Combined extends CombinedUnion<AnyExtension, AnyPreset>,
   Schema extends EditorSchema = any
->
-  extends Partial<CompareStateParameter<Schema>>,
-    Pick<BaseListenerParameter<ExtensionUnion>, 'tr'> {}
+> extends Partial<CompareStateParameter<Schema>>, Pick<BaseListenerParameter<Combined>, 'tr'> {}
 
 export interface RemirrorState<Schema extends EditorSchema = any> {
   /**
@@ -554,8 +541,6 @@ export interface RemirrorState<Schema extends EditorSchema = any> {
 }
 
 export interface ListenerParameter<
-  ExtensionUnion extends AnyExtension = any,
+  Combined extends CombinedUnion<AnyExtension, AnyPreset>,
   Schema extends EditorSchema = any
->
-  extends Partial<EditorStateParameter<Schema>>,
-    Pick<BaseListenerParameter<ExtensionUnion>, 'tr'> {}
+> extends Partial<EditorStateParameter<Schema>>, Pick<BaseListenerParameter<Combined>, 'tr'> {}

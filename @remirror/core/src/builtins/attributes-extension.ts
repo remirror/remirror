@@ -3,7 +3,7 @@ import { bool, object } from '@remirror/core-helpers';
 import { AttributesWithClass, Shape } from '@remirror/core-types';
 
 import { AnyExtension, CreateLifecycleMethod, PlainExtension } from '../extension';
-import { AnyPreset } from '../preset';
+import { AnyPreset, CombinedUnion } from '../preset';
 
 /**
  * This extension allows others extension to add the `createAttributes` method
@@ -84,7 +84,7 @@ export class AttributesExtension extends PlainExtension {
 
 declare global {
   namespace Remirror {
-    interface ManagerStore<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
+    interface ManagerStore<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
       /**
        * The attributes to be added to the prosemirror editor.
        */

@@ -2,17 +2,37 @@ import { ErrorConstant } from '@remirror/core-constants';
 import { invariant, isEmptyArray, isFunction, object, sort } from '@remirror/core-helpers';
 
 import { AnyExtension, AnyExtensionConstructor, isExtension } from '../extension';
-import { AnyPreset, isPreset } from '../preset';
+import {
+  AnyPreset,
+  CombinedUnion,
+  InferCombinedExtensions,
+  InferCombinedPresets,
+  isPreset,
+} from '../preset';
 import { GetConstructor } from '../types';
 
 export interface TransformExtensionOrPreset<
-  ExtensionUnion extends AnyExtension,
-  PresetUnion extends AnyPreset
+  Combined extends CombinedUnion<AnyExtension, AnyPreset>
 > {
-  extensions: ExtensionUnion[];
-  extensionMap: WeakMap<GetConstructor<ExtensionUnion>, ExtensionUnion>;
-  presets: PresetUnion[];
-  presetMap: WeakMap<GetConstructor<PresetUnion>, PresetUnion>;
+  extensions: Array<InferCombinedExtensions<Combined>>;
+  extensionMap: WeakMap<
+    GetConstructor<InferCombinedExtensions<Combined>>,
+    InferCombinedExtensions<Combined>
+  >;
+  presets: Array<InferCombinedPresets<Combined>>;
+  presetMap: WeakMap<
+    GetConstructor<InferCombinedPresets<Combined>>,
+    InferCombinedPresets<Combined>
+  >;
+}
+
+function isExtensionOfType<ExtensionUnion extends AnyExtension>(
+  value: unknown,
+): value is ExtensionUnion {
+  return isExtension(value);
+}
+function isPresetOfType<PresetUnion extends AnyPreset>(value: unknown): value is PresetUnion {
+  return isPreset(value);
 }
 
 /**
@@ -28,13 +48,12 @@ export interface TransformExtensionOrPreset<
  *
  * @returns the list of extension instances sorted by priority
  */
-export function transformExtensionOrPreset<
-  ExtensionUnion extends AnyExtension,
-  PresetUnion extends AnyPreset
->(
-  unionValues: ReadonlyArray<ExtensionUnion | PresetUnion>,
-): TransformExtensionOrPreset<ExtensionUnion, PresetUnion> {
+export function transformExtensionOrPreset<Combined extends CombinedUnion<AnyExtension, AnyPreset>>(
+  unionValues: readonly Combined[],
+): TransformExtensionOrPreset<Combined> {
+  type ExtensionUnion = InferCombinedExtensions<Combined>;
   type ExtensionConstructor = GetConstructor<ExtensionUnion>;
+  type PresetUnion = InferCombinedPresets<Combined>;
   type PresetConstructor = GetConstructor<PresetUnion>;
   interface MissingConstructor {
     Constructor: AnyExtensionConstructor;
@@ -64,7 +83,7 @@ export function transformExtensionOrPreset<
 
   for (const presetOrExtension of unionValues) {
     // Update the extension list in this block
-    if (isExtension(presetOrExtension)) {
+    if (isExtensionOfType<ExtensionUnion>(presetOrExtension)) {
       rawExtensions.push(presetOrExtension);
       updateDuplicateMap(presetOrExtension);
 
@@ -72,7 +91,7 @@ export function transformExtensionOrPreset<
     }
 
     // Update the presets list in this block
-    if (isPreset(presetOrExtension)) {
+    if (isPresetOfType<PresetUnion>(presetOrExtension)) {
       presets.push(presetOrExtension);
       rawExtensions.push(...(presetOrExtension.extensions as ExtensionUnion[]));
       presetMap.set(presetOrExtension.constructor, presetOrExtension);
