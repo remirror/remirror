@@ -3,6 +3,7 @@ import { CommandFunction } from '@remirror/core-types';
 import { nonChainable } from '@remirror/core-utils';
 
 import { ChainedFromExtensions, PlainExtension } from '..';
+import { AnyExtension } from '../extension-base';
 import { CommandsFromExtensions } from '../extension-types';
 
 class FirstExtension extends PlainExtension {
@@ -73,3 +74,8 @@ chain.free().love().run();
 chain.free().love(100).fun({ key: false }).run();
 // @ts-expect-error
 chain.free('asdf').love(20).notChainable().run();
+
+// Any extension should be loose.
+const anyCommands: CommandsFromExtensions<AnyExtension> = object();
+const doSomethingReturn: void = anyCommands.doSomething();
+const doSomethingIsEnabled: boolean = anyCommands.doSomething.isEnabled();

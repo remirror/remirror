@@ -24,6 +24,8 @@ import { isMarkActive, isNodeActive } from '@remirror/core-utils';
 
 import {
   BaseExtensionOptions,
+  ExtensionCommandReturn,
+  ExtensionHelperReturn,
   GeneralExtensionTags,
   GetNameUnion,
   MarkExtensionTags,
@@ -776,6 +778,8 @@ declare global {
      */
     interface AnyExtensionOverrides extends AnyBaseClassOverrides {
       constructor: AnyExtensionConstructor;
+      [_COMMANDS]: ExtensionCommandReturn;
+      [_HELPERS]: ExtensionHelperReturn;
     }
   }
 }

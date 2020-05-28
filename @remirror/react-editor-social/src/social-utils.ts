@@ -6,10 +6,10 @@ import { MentionGetterParameter } from './social-types';
 /**
  * Maps the items to items with an active property
  */
-export const mapToActiveIndex = <GItem extends object>(
-  items: GItem[],
+export const mapToActiveIndex = <Item extends object>(
+  items: Item[],
   activeIndex: number,
-): Array<GItem & { active: boolean }> => {
+): Array<Item & { active: boolean }> => {
   return items.map((item, index) => ({
     ...item,
     active: index === activeIndex,
