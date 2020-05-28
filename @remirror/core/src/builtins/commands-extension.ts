@@ -131,6 +131,23 @@ export class CommandsExtension extends PlainExtension {
           return true;
         };
       },
+
+      /**
+       * Fire an empty update to trigger an update to all decorations, and state
+       * that may not yet have run.
+       *
+       * This can be used in extensions to when certain options that affect the
+       * plugin state have updated.
+       */
+      emptyUpdate(): CommandFunction {
+        return ({ state, dispatch }) => {
+          if (dispatch) {
+            dispatch(state.tr);
+          }
+
+          return true;
+        };
+      },
     };
   };
 
@@ -344,7 +361,7 @@ declare global {
       /**
        * A method to return the editor's available commands.
        */
-      getCommands: <ExtensionUnion extends AnyExtension = any>() => CommandsFromExtensions<
+      getCommands: <ExtensionUnion extends AnyExtension = AnyExtension>() => CommandsFromExtensions<
         CommandsExtension | ExtensionUnion
       >;
 

@@ -24,16 +24,32 @@ export class AttributesExtension extends PlainExtension {
     return 'attributes' as const;
   }
 
+  /* eslint-disable @typescript-eslint/explicit-member-accessibility */
+  #attributeList: AttributesWithClass[] = [];
+  #attributeObject: AttributesWithClass = object();
+  /* eslint-enable @typescript-eslint/explicit-member-accessibility */
+
   /**
    * Create the attributes object on initialization.
    *
    * @internal
    */
-  public onCreate: CreateLifecycleMethod = (extensions) => {
-    const attributeList: AttributesWithClass[] = [];
-    let attributeObject: AttributesWithClass = object();
+  public onCreate: CreateLifecycleMethod = () => {
+    this.transformAttributes();
+    this.store.setExtensionStore('updateAttributes', this.updateAttributes);
+  };
 
-    for (const extension of extensions) {
+  private readonly updateAttributes = () => {
+    this.transformAttributes();
+    this.store.getCommands().emptyUpdate();
+  };
+
+  private transformAttributes() {
+    // Reset this attributes
+    this.#attributeList = [];
+    this.#attributeObject = object();
+
+    for (const extension of this.store.extensions) {
       if (
         !extension.createAttributes ||
         this.store.managerSettings.exclude?.attributes ||
@@ -46,20 +62,21 @@ export class AttributesExtension extends PlainExtension {
       // attribute object the higher priority extension attributes are
       // preferred to the lower priority since they merge with the object
       // later.
-      attributeList.unshift(extension.createAttributes());
+      this.#attributeList.unshift(extension.createAttributes());
     }
 
-    for (const attributes of attributeList) {
-      attributeObject = {
-        ...attributeObject,
+    for (const attributes of this.#attributeList) {
+      this.#attributeObject = {
+        ...this.#attributeObject,
         ...attributes,
         class:
-          (attributeObject.class ?? '') + (bool(attributes.class) ? attributes.class : '') || '',
+          (this.#attributeObject.class ?? '') + (bool(attributes.class) ? attributes.class : '') ||
+          '',
       };
     }
 
-    this.store.setStoreKey('attributes', attributeObject);
-  };
+    this.store.setStoreKey('attributes', this.#attributeObject);
+  }
 }
 
 declare global {
@@ -69,6 +86,14 @@ declare global {
        * The attributes to be added to the prosemirror editor.
        */
       attributes: AttributesWithClass;
+    }
+
+    interface ExtensionStore {
+      /**
+       * Triggers a recalculation of the attributes for each extension and
+       * notifies the parent UI once done.
+       */
+      updateAttributes: () => void;
     }
 
     interface ExcludeOptions {
