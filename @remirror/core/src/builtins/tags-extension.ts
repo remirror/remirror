@@ -1,5 +1,5 @@
 import { ExtensionPriority, ExtensionTag, MarkGroup, NodeGroup } from '@remirror/core-constants';
-import { isUndefined } from '@remirror/core-helpers';
+import { isUndefined, object } from '@remirror/core-helpers';
 import { EditorSchema } from '@remirror/core-types';
 
 import {
@@ -26,15 +26,40 @@ export class TagsExtension extends PlainExtension {
     return 'tags' as const;
   }
 
+  /* eslint-disable @typescript-eslint/explicit-member-accessibility */
+  #generalTags: GeneralExtensionTags = object();
+  #markTags: MarkExtensionTags = object();
+  #nodeTags: NodeExtensionTags = object();
+  /* eslint-enable @typescript-eslint/explicit-member-accessibility */
+
+  get combinedTags() {
+    return {
+      general: this.#generalTags,
+      mark: this.#markTags,
+      node: this.#nodeTags,
+    };
+  }
+
   public onCreate: CreateLifecycleMethod = (extensions) => {
-    const general: GeneralExtensionTags = {
+    this.resetTags();
+
+    for (const extension of extensions) {
+      this.updateTagForExtension(extension);
+    }
+
+    this.store.setStoreKey('tags', this.combinedTags);
+    this.store.setExtensionStore('tags', this.combinedTags);
+  };
+
+  private resetTags() {
+    this.#generalTags = {
       [ExtensionTag.FormattingMark]: [],
       [ExtensionTag.FormattingNode]: [],
       [ExtensionTag.LastNodeCompatible]: [],
       [ExtensionTag.NodeCursor]: [],
     };
 
-    const mark: MarkExtensionTags = {
+    this.#markTags = {
       [MarkGroup.Alignment]: [],
       [MarkGroup.Behavior]: [],
       [MarkGroup.Color]: [],
@@ -44,41 +69,42 @@ export class TagsExtension extends PlainExtension {
       [MarkGroup.Code]: [],
     };
 
-    const node: NodeExtensionTags = {
+    this.#nodeTags = {
       [NodeGroup.Block]: [],
       [NodeGroup.Inline]: [],
     };
+  }
 
-    for (const extension of extensions) {
-      if (isNodeExtension(extension)) {
-        const group = extension.spec.group as NodeGroup;
-        const name = extension.name;
+  private updateTagForExtension(extension: AnyExtension) {
+    if (isNodeExtension(extension)) {
+      const group = extension.spec.group as NodeGroup;
+      const name = extension.name;
 
-        node[group] = isUndefined(node[group]) ? [name] : [...node[group], name];
-      }
-
-      if (isMarkExtension(extension)) {
-        const group = extension.spec.group as MarkGroup;
-        const name = extension.name;
-
-        mark[group] = isUndefined(mark[group]) ? [name] : [...mark[group], name];
-      }
-
-      if (!extension.tags) {
-        return;
-      }
-
-      for (const tag of extension.tags) {
-        const generalTag = general[tag];
-        general[tag] = isUndefined(generalTag) ? [extension.name] : [...generalTag, extension.name];
-      }
+      this.#nodeTags[group] = isUndefined(this.#nodeTags[group])
+        ? [name]
+        : [...this.#nodeTags[group], name];
     }
 
-    const tags = { general, mark, node };
+    if (isMarkExtension(extension)) {
+      const group = extension.spec.group as MarkGroup;
+      const name = extension.name;
 
-    this.store.setStoreKey('tags', tags);
-    this.store.setExtensionStore('tags', tags);
-  };
+      this.#markTags[group] = isUndefined(this.#markTags[group])
+        ? [name]
+        : [...this.#markTags[group], name];
+    }
+
+    if (!extension.tags) {
+      return;
+    }
+
+    for (const tag of extension.tags) {
+      const generalTag = this.#generalTags[tag];
+      this.#generalTags[tag] = isUndefined(generalTag)
+        ? [extension.name]
+        : [...generalTag, extension.name];
+    }
+  }
 }
 
 declare global {
