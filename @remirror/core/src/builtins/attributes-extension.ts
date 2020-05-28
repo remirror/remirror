@@ -39,9 +39,12 @@ export class AttributesExtension extends PlainExtension {
     this.store.setExtensionStore('updateAttributes', this.updateAttributes);
   };
 
-  private readonly updateAttributes = () => {
+  private readonly updateAttributes = (triggerUpdate = true) => {
     this.transformAttributes();
-    this.store.getCommands().emptyUpdate();
+
+    if (triggerUpdate) {
+      this.store.getCommands().emptyUpdate();
+    }
   };
 
   private transformAttributes() {
@@ -92,8 +95,10 @@ declare global {
       /**
        * Triggers a recalculation of the attributes for each extension and
        * notifies the parent UI once done.
+       *
+       * This will also dispatch an update to the state automatically. However you can disable this by setting `triggerUpdate` to `false`.
        */
-      updateAttributes: () => void;
+      updateAttributes: (triggerUpdate?: boolean) => void;
     }
 
     interface ExcludeOptions {

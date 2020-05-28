@@ -5,6 +5,7 @@ import {
   getPluginState,
   HandlerKeyList,
   isDocNodeEmpty,
+  OnSetOptionsParameter,
   PlainExtension,
   Static,
   StaticKeyList,
@@ -79,6 +80,15 @@ export class PlaceholderExtension extends PlainExtension<PlaceholderOptions> {
       },
     };
   };
+
+  public onSetOptions(parameter: OnSetOptionsParameter<PlaceholderOptions>) {
+    const { changes } = parameter;
+
+    if (changes.placeholder) {
+      // update the attributes object
+      this.store.updateAttributes();
+    }
+  }
 }
 
 interface SharedParameter {
