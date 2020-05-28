@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-auto-link",
-  "version": "0.11.0",
+  "version": "0.0.0",
   "description": "Automatic linking for url like matches in your editor. Great for social experiences.",
   "keywords": [
     "remirror",

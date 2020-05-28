@@ -14,24 +14,19 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.10.0",
-    "@emotion/styled": "^10.0.27",
     "@remirror/core": "^0.11.0",
-    "@remirror/core-extensions": "^0.13.1",
+    "@remirror/extension-auto-link": "^0.0.0",
     "@remirror/extension-emoji": "^0.11.0",
-    "@remirror/extension-enhanced-link": "^0.11.0",
     "@remirror/extension-mention": "^0.11.1",
     "@remirror/react": "^0.13.1",
     "@remirror/react-utils": "^0.7.6",
-    "@remirror/ui": "^0.7.6",
-    "@remirror/ui-buttons": "^0.7.7",
-    "@remirror/ui-icons": "^0.7.8",
-    "multishift": "^0.7.7",
     "type-fest": "^0.15.0"
   },
   "devDependencies": {
-    "@emotion/core": "^10.0.28",
+    "@testing-library/react": "^10.0.4",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
+    "@types/testing-library__react": "^10.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },

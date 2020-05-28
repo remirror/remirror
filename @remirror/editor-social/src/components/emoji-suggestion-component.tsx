@@ -1,6 +1,5 @@
-import React from 'react';
 import { Type, useMultishift } from 'multishift';
-import { FunctionComponent } from 'react';
+import React, { FunctionComponent } from 'react';
 
 import { EmojiObject, EmojiSuggestCommand } from '@remirror/extension-emoji';
 import { popupMenuPositioner, useRemirror } from '@remirror/react';

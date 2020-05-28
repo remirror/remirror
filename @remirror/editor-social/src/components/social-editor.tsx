@@ -1,7 +1,6 @@
 import React, { Fragment, PureComponent } from 'react';
 
 import { deepMerge, isUndefined, object, omit, RemirrorTheme } from '@remirror/core';
-import { NodeCursorExtension, PlaceholderExtension } from '@remirror/core-extensions';
 import {
   EmojiExtension,
   EmojiExtensionOptions,

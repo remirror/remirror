@@ -24,15 +24,15 @@ module.exports = {
   ],
   snapshotSerializers: ['jest-emotion'],
   cacheDirectory: baseDir('.jest', TEST_BUILD ? 'build' : 'aliased'),
-  moduleNameMapper:
-    TEST_BUILD === 'true'
-      ? { '^@remirror\\/test-fixtures$': baseDir('@remirror', 'test-fixtures', 'src') }
-      : {
-          '^test-keyboard$': baseDir('packages', 'test-keyboard', 'src'),
-          '^jest-remirror$': baseDir('packages', 'jest-remirror', 'src'),
-          '^jest-prosemirror$': baseDir('packages', 'jest-prosemirror', 'src'),
-          '^prosemirror-suggest$': baseDir('packages', 'prosemirror-suggest', 'src'),
-          '^multishift$': baseDir('packages', 'multishift', 'src'),
-          '^@remirror\\/([a-z0-9-]+)$': baseDir('@remirror', '$1', 'src'),
-        },
+  // moduleNameMapper:
+  //   TEST_BUILD === 'true'
+  //     ? { '^@remirror\\/test-fixtures$': baseDir('@remirror', 'test-fixtures', 'src') }
+  //     : {
+  //         '^test-keyboard$': baseDir('packages', 'test-keyboard', 'src'),
+  //         '^jest-remirror$': baseDir('packages', 'jest-remirror', 'src'),
+  //         '^jest-prosemirror$': baseDir('packages', 'jest-prosemirror', 'src'),
+  //         '^prosemirror-suggest$': baseDir('packages', 'prosemirror-suggest', 'src'),
+  //         '^multishift$': baseDir('packages', 'multishift', 'src'),
+  //         '^@remirror\\/([a-z0-9-]+)$': baseDir('@remirror', '$1', 'src'),
+  //       },
 };

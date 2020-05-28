@@ -1,4 +1,3 @@
-import { SuggestStateMatch } from '@remirror/pm/suggest';
 import { Except } from 'type-fest';
 
 import { RemirrorTheme } from '@remirror/core';
@@ -7,9 +6,10 @@ import {
   NodeCursorExtension,
   PlaceholderExtension,
 } from '@remirror/core-extensions';
+import { AutoLinkExtension } from '@remirror/extension-auto-link';
 import { EmojiExtension } from '@remirror/extension-emoji';
-import { AutoLinkExtension } from '@remirror/extension-enhanced-link';
 import { MentionExtension, MentionExtensionMatcher } from '@remirror/extension-mention';
+import { SuggestStateMatch } from '@remirror/pm/suggest';
 import { ManagedRemirrorProviderProps, RemirrorManagerProps } from '@remirror/react';
 
 export type OnMentionChangeParameter = MentionState & {

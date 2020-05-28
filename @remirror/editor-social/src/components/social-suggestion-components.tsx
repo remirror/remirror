@@ -1,5 +1,4 @@
-import React from 'react';
-import { forwardRef, FunctionComponent } from 'react';
+import React, { forwardRef, FunctionComponent } from 'react';
 
 import { object, Position, RemirrorTheme } from '@remirror/core';
 import { useRemirror } from '@remirror/react';

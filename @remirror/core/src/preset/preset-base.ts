@@ -88,7 +88,7 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
    * check the documentation for each property to know what phase is being
    * added.
    */
-  #extensionStore!: Remirror.ExtensionStore;
+  #extensionStore?: Remirror.ExtensionStore;
 
   /**
    * Private list of extension stored in within this preset.

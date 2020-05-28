@@ -131,12 +131,12 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
    * in your extension.
    */
   protected get store() {
-    invariant(this._store, {
+    invariant(this.#store, {
       code: ErrorConstant.MANAGER_PHASE_ERROR,
-      message: `An error ocurred while attempting to access the 'extension.store' when the Manager has not yet set upt the lifecycle methods.`,
+      message: `An error ocurred while attempting to access the 'extension.store' when the Manager has not yet set created the lifecycle methods.`,
     });
 
-    return freeze(this._store, { requireKeys: true });
+    return freeze(this.#store, { requireKeys: true });
   }
 
   /**
@@ -147,7 +147,7 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
    * check the documentation for each property to know what phase is being
    * added.
    */
-  private _store!: Remirror.ExtensionStore;
+  #store?: Remirror.ExtensionStore;
 
   constructor(...parameters: ExtensionConstructorParameter<Options>) {
     super(
@@ -196,11 +196,11 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
    * @nonVirtual
    */
   public setStore(store: Remirror.ExtensionStore) {
-    if (this._store) {
+    if (this.#store) {
       return;
     }
 
-    this._store = store;
+    this.#store = store;
   }
 }
 
