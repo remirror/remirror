@@ -3,11 +3,7 @@ import {
   AnyPreset,
   AttributesParameter,
   CombinedUnion,
-  EditorManager,
-  EditorManagerParameter,
   EditorSchema,
-  InferCombinedExtensions,
-  InferCombinedPresets,
   ProsemirrorAttributes,
   ProsemirrorNode,
 } from '@remirror/core';

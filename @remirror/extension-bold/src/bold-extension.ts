@@ -31,6 +31,7 @@ export class BoldExtension extends MarkExtension<BoldExtensionOptions> {
   get name() {
     return 'bold' as const;
   }
+
   public readonly tags = [ExtensionTag.FormattingMark];
 
   public createMarkSpec(): MarkExtensionSpec {

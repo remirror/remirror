@@ -10,7 +10,7 @@ test('is valid', () => {
 });
 
 describe('commands', () => {
-  const create = () => renderEditor({ extensions: [new HistoryExtension()], presets: [] });
+  const create = () => renderEditor([new HistoryExtension()]);
 
   it('can undo', () => {
     const {
@@ -61,7 +61,7 @@ describe('`getState` and `getDispatch`', () => {
     getDispatch: () => dispatcher,
   };
 
-  const create = () => renderEditor({ extensions: [new HistoryExtension(mocks)], presets: [] });
+  const create = () => renderEditor([new HistoryExtension(mocks)]);
   const {
     nodes: { p, doc },
     add,

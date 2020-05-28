@@ -8,6 +8,7 @@ import {
   AnyExtensionConstructor,
   AnyPreset,
   AnyPresetConstructor,
+  CombinedFromManager,
   Dispose,
   DynamicOptionsOfConstructor,
   EditorManager,
@@ -55,8 +56,8 @@ import { RemirrorContextProps, UsePositionerParameter } from '../react-types';
  * ```
  */
 export function useRemirror<
-  ManagerType extends AnyEditorManager = AnyEditorManager
->(): RemirrorContextProps<ManagerType> {
+  Manager extends AnyEditorManager = AnyEditorManager
+>(): RemirrorContextProps<CombinedFromManager<Manager>> {
   const params = useContext(RemirrorContext);
 
   invariant(params, {

@@ -1,6 +1,5 @@
 import { ExtensionPriority, ExtensionTag, MarkGroup, NodeGroup } from '@remirror/core-constants';
 import { isUndefined, object } from '@remirror/core-helpers';
-import { EditorSchema } from '@remirror/core-types';
 
 import {
   AnyExtension,

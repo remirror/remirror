@@ -16,7 +16,7 @@ beforeEach(cleanup);
 test('renders an editor into the dom', () => {
   const {
     utils: { getByRole },
-  } = renderEditor();
+  } = renderEditor([]);
   const editor = getByRole('textbox');
 
   expect(editor).toBeVisible();
@@ -29,7 +29,7 @@ test('add content', () => {
     nodes: { doc, p },
     add,
     // TODO Investigate why typescript autocomplete on plain nodes doesn't work without at least an empty array
-  } = renderEditor({ extensions: [], presets: [] });
+  } = renderEditor([]);
   add(doc(p(expected)));
 
   expect(view.dom).toHaveTextContent(expected);

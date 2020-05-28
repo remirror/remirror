@@ -6,7 +6,7 @@ const {
   nodes: { doc, p },
   attributeMarks: { autoLink },
   add,
-} = renderEditor({ extensions: [new AutoLinkExtension()], presets: [] });
+} = renderEditor([new AutoLinkExtension()]);
 
 describe('AutoLinkExtension', () => {
   it('can update a link automatically', () => {
@@ -31,10 +31,7 @@ describe('AutoLinkExtension', () => {
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor({
-      extensions: [extension],
-      presets: [],
-    });
+    } = renderEditor([extension]);
 
     const dispose = extension.addHandler('onUrlUpdate', mock);
 

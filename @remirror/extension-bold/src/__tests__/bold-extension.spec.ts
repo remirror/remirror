@@ -16,7 +16,7 @@ test('inputRules', () => {
     add,
     nodes: { p, doc },
     marks: { bold },
-  } = renderEditor({ extensions: [boldExtension], presets: [] });
+  } = renderEditor([boldExtension]);
 
   add(doc(p('Start<cursor>')))
     .insertText(' **bold me** for input rule match')
@@ -35,7 +35,7 @@ describe('commands', () => {
       view,
       nodes: { p, doc },
       marks: { bold },
-    } = renderEditor({ extensions: [boldExtension], presets: [] });
+    } = renderEditor([boldExtension]);
 
     add(doc(p('Hello <start>friend<end>, lets dance.'))).callback(({ commands }) => {
       commands.toggleBold();
@@ -71,7 +71,7 @@ describe('commands', () => {
       view,
       nodes: { p, doc },
       marks: { bold },
-    } = renderEditor({ extensions: [boldExtension], presets: [] });
+    } = renderEditor([boldExtension]);
 
     add(doc(p('Hello <start>friend<end>, lets dance.'))).callback(({ commands }) => {
       commands.setBold({ from: 1, to: 6 });
@@ -95,7 +95,7 @@ describe('commands', () => {
       view,
       nodes: { p, doc },
       marks: { bold },
-    } = renderEditor({ extensions: [boldExtension], presets: [] });
+    } = renderEditor([boldExtension]);
 
     add(doc(p(bold('Hello'), ' friend, lets dance.'))).callback(({ commands }) => {
       commands.removeBold({ from: 1, to: 6 });

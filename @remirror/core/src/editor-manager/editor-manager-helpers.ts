@@ -31,6 +31,7 @@ function isExtensionOfType<ExtensionUnion extends AnyExtension>(
 ): value is ExtensionUnion {
   return isExtension(value);
 }
+
 function isPresetOfType<PresetUnion extends AnyPreset>(value: unknown): value is PresetUnion {
   return isPreset(value);
 }

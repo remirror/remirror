@@ -204,6 +204,13 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
 
     this.#store = store;
   }
+
+  /**
+   * Clone an extension..
+   */
+  clone(...parameters: ExtensionConstructorParameter<Options>) {
+    return new this.constructor(...parameters);
+  }
 }
 
 /**

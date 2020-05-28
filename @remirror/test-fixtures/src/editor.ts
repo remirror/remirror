@@ -1,4 +1,5 @@
 import { AnyExtension, AnyPreset, EditorManager, EditorManagerParameter } from '@remirror/core';
+import { BoldExtension } from '@remirror/extension-bold';
 import { CorePreset } from '@remirror/preset-core';
 import { ReactPreset } from '@remirror/preset-react';
 
@@ -36,6 +37,9 @@ export function createReactManager<
     settings,
   });
 }
+
+const manager = createReactManager();
+const newManager = manager.clone([new BoldExtension()]);
 
 export * from '@remirror/preset-core';
 export * from '@remirror/extension-doc';

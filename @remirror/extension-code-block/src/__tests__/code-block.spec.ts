@@ -60,10 +60,7 @@ describe('constructor', () => {
 const supportedLanguages = [typescript, javascript, markdown, tsx];
 
 const create = (options: CodeBlockOptions = object()) =>
-  renderEditor({
-    extensions: [new CodeBlockExtension({ ...options, supportedLanguages })],
-    presets: [],
-  });
+  renderEditor([new CodeBlockExtension({ ...options, supportedLanguages })]);
 
 describe('plugin', () => {
   const {

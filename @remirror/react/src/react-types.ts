@@ -48,8 +48,10 @@ export interface BaseProps<Combined extends CombinedUnion<AnyExtension, AnyPrese
    *
    * The manager is responsible for handling all Prosemirror related
    * functionality.
+   *
+   * TODO - why does this only work as any.
    */
-  manager: EditorManager<Combined>;
+  manager: EditorManager<any>;
 
   /**
    * Set the starting value object of the editor.
@@ -370,7 +372,7 @@ export interface RemirrorContextProps<Combined extends CombinedUnion<AnyExtensio
    * the position.
    */
   getPositionerProps: <RefKey extends string = 'ref'>(
-    options: GetPositionerPropsConfig<Combined, RefKey>,
+    options: GetPositionerPropsConfig<any, RefKey>,
   ) => GetPositionerReturn<RefKey>;
 
   /**

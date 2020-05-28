@@ -102,10 +102,7 @@ const create = (options: MentionOptions, handlers: GetHandler<MentionOptions> = 
     extension.addHandler(key, handler);
   }
 
-  return renderEditor({
-    extensions: [extension],
-    presets: [],
-  });
+  return renderEditor([extension]);
 };
 
 describe('plugin', () => {

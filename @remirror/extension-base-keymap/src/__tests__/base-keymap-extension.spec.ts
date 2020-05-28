@@ -10,14 +10,12 @@ test('is base keymap extension valid', () => {
 
 test('supports custom keymaps', () => {
   const mock = jest.fn();
-  const baseKeymapExtension = new BaseKeymapExtension({
-    extraKeys: ['a'],
-    properties: { keymap: { a: mock } },
-  });
+  const baseKeymapExtension = new BaseKeymapExtension();
+  baseKeymapExtension.setCustomOption('keymap', { a: mock });
   const {
     add,
     nodes: { p, doc },
-  } = renderEditor({ extensions: [baseKeymapExtension], presets: [] });
+  } = renderEditor([baseKeymapExtension]);
 
   add(doc(p('Start<cursor>')))
     .press('a')
@@ -31,7 +29,7 @@ test('supports default keymap', () => {
   const {
     add,
     nodes: { p, doc },
-  } = renderEditor({ extensions: [baseKeymapExtension], presets: [] });
+  } = renderEditor([baseKeymapExtension]);
 
   add(doc(p('Start<cursor>')))
     .press('\n')

@@ -18,10 +18,7 @@ function create(options: EmojiOptions = object()) {
   extension.addHandler('onSuggestionChange', onSuggestionChange);
   extension.setCustomOption('suggestionKeyBindings', suggestionKeyBindings);
 
-  return renderEditor({
-    extensions: [extension],
-    presets: [],
-  });
+  return renderEditor([extension]);
 }
 
 let emoji: EmojiObject | undefined;

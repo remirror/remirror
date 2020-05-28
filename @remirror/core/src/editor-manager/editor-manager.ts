@@ -155,6 +155,11 @@ export class EditorManager<Combined extends CombinedUnion<AnyExtension, AnyPrese
   #settings: Remirror.ManagerSettings;
 
   /**
+   * The original combined array passed into the editor..
+   */
+  #combined: readonly Combined[];
+
+  /**
    * Store the handlers that will be run when for each event method.
    */
   #handlers: {
@@ -251,6 +256,7 @@ export class EditorManager<Combined extends CombinedUnion<AnyExtension, AnyPrese
     { privacy, ...settings }: SettingsWithPrivacy = {},
   ) {
     this.#settings = settings;
+    this.#combined = combined;
 
     invariant(privacy === privacySymbol, {
       message: `The extension manager can only be invoked via one of it's static methods. e.g 'EditorManager.create([...extensions])'.`,
@@ -547,6 +553,22 @@ export class EditorManager<Combined extends CombinedUnion<AnyExtension, AnyPrese
   }
 
   /**
+   * Recreate the manager.
+   *
+   * What about the state stored in the extensions and presets these need to be recreated as well
+   */
+  public clone<ExtraCombined extends CombinedUnion<AnyExtension, AnyPreset>>(
+    combined: ExtraCombined[],
+    settings: Remirror.ManagerSettings = {},
+  ): EditorManager<Combined | ExtraCombined> {
+    const currentCombined = this.#combined.map((e) => e.clone(e.initialOptions as any));
+
+    return EditorManager.fromList([...currentCombined, ...combined], settings) as EditorManager<
+      Combined | ExtraCombined
+    >;
+  }
+
+  /**
    * Called when removing the manager and all preset and extensions.
    */
   public destroy() {
@@ -605,6 +627,10 @@ interface SettingsWithPrivacy extends Remirror.ManagerSettings {
   privacy?: symbol;
 }
 
+export type CombinedFromManager<
+  Manager extends AnyEditorManager
+> = Manager[typeof Remirror._COMBINED];
+
 export interface EditorManager<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
   /**
    * Pseudo property which is a small hack to store the type of the extension
@@ -643,10 +669,13 @@ export interface EditorManager<Combined extends CombinedUnion<AnyExtension, AnyP
    * @internal
    */
   ['~M']: GetMarkNameUnion<this['~E']>;
+
+  [Remirror._COMBINED]: Combined;
 }
 
 declare global {
   namespace Remirror {
+    const _COMBINED: unique symbol;
     /**
      * Settings which can be passed into the manager.
      */

@@ -232,6 +232,13 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
 
     this.#extensionStore = store;
   }
+
+  /**
+   * Clone a preset.
+   */
+  clone(...parameters: PresetConstructorParameter<Options>) {
+    return new this.constructor(...parameters);
+  }
 }
 
 export interface Preset<Options extends ValidOptions = EmptyShape> {

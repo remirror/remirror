@@ -1,16 +1,10 @@
 import { Except } from 'type-fest';
 
-import { RemirrorTheme } from '@remirror/core';
-import {
-  BaseExtensions,
-  NodeCursorExtension,
-  PlaceholderExtension,
-} from '@remirror/core-extensions';
 import { AutoLinkExtension } from '@remirror/extension-auto-link';
 import { EmojiExtension } from '@remirror/extension-emoji';
 import { MentionExtension, MentionExtensionMatcher } from '@remirror/extension-mention';
 import { SuggestStateMatch } from '@remirror/pm/suggest';
-import { ManagedRemirrorProviderProps, RemirrorManagerProps } from '@remirror/react';
+import { ManagedRemirrorProviderProps } from '@remirror/react';
 
 export type OnMentionChangeParameter = MentionState & {
   /**

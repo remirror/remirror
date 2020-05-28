@@ -4,8 +4,8 @@ import { deepMerge, isUndefined, object, omit } from '@remirror/core';
 import { AutoLinkExtension } from '@remirror/extension-auto-link';
 import {
   EmojiExtension,
-  EmojiExtensionOptions,
   EmojiObject,
+  EmojiOptions,
   EmojiSuggestCommand,
   EmojiSuggestionChangeHandler,
   EmojiSuggestionExitHandler,
@@ -49,7 +49,6 @@ interface State {
 
 export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   public static defaultProps = {
-    theme: { colors: {}, font: {} },
     emojiSet: 'social',
     placeholder: "What's happening?",
   };
@@ -250,7 +249,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   /**
    * Called when the none of our configured matchers match
    */
-  private readonly onExit: Required<MentionExtensionOptions>['onExit'] = (parameters) => {
+  private readonly onExit: Required<MentionOptions>['onExit'] = (parameters) => {
     const { queryText, command } = parameters;
 
     // Check whether we've manually caused this exit. If not, trigger the
@@ -401,7 +400,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
             Constructor={AutoLinkExtension}
             onUrlsChange={this.props.onUrlsChange}
           />
-          <RemirrorExtension<typeof EmojiExtension, EmojiExtensionOptions>
+          <RemirrorExtension<typeof EmojiExtension, EmojiOptions>
             Constructor={EmojiExtension}
             onSuggestionChange={this.onEmojiSuggestionChange}
             suggestionKeyBindings={this.emojiKeyBindings}

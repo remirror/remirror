@@ -4,6 +4,7 @@ import {
   AnyExtension,
   AnyPreset,
   bool,
+  CombinedUnion,
   DOMOutputSpec,
   EditorManager,
   Fragment as ProsemirrorFragment,
@@ -26,7 +27,7 @@ type MarkToDOM = MarkExtensionSpec['toDOM'];
 /**
  * Serialize the extension provided schema into a JSX element that can be displayed node and non-dom environments.
  */
-export class ReactSerializer<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
+export class ReactSerializer<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
   /**
    * Receives the return value from toDOM defined in the node schema and transforms it
    * into JSX
@@ -76,8 +77,8 @@ export class ReactSerializer<ExtensionUnion extends AnyExtension, PresetUnion ex
    *
    * @param manager
    */
-  public static fromManager<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>(
-    manager: EditorManager<ExtensionUnion, PresetUnion>,
+  public static fromManager<Combined extends CombinedUnion<AnyExtension, AnyPreset>>(
+    manager: EditorManager<Combined>,
   ) {
     return new ReactSerializer(
       this.nodesFromManager(manager),
@@ -91,10 +92,9 @@ export class ReactSerializer<ExtensionUnion extends AnyExtension, PresetUnion ex
    *
    * @param manager
    */
-  private static nodesFromManager<
-    ExtensionUnion extends AnyExtension,
-    PresetUnion extends AnyPreset
-  >(manager: EditorManager<ExtensionUnion, PresetUnion>) {
+  private static nodesFromManager<Combined extends CombinedUnion<AnyExtension, AnyPreset>>(
+    manager: EditorManager<Combined>,
+  ) {
     const result = gatherToDOM(manager.nodes);
     if (!result.text) {
       result.text = (node) => (node.text ? node.text : '');
@@ -107,10 +107,9 @@ export class ReactSerializer<ExtensionUnion extends AnyExtension, PresetUnion ex
    *
    * @param manager
    */
-  private static marksFromManager<
-    ExtensionUnion extends AnyExtension,
-    PresetUnion extends AnyPreset
-  >(manager: EditorManager<ExtensionUnion, PresetUnion>) {
+  private static marksFromManager<Combined extends CombinedUnion<AnyExtension, AnyPreset>>(
+    manager: EditorManager<Combined>,
+  ) {
     return gatherToDOM(manager.marks);
   }
 
@@ -124,7 +123,7 @@ export class ReactSerializer<ExtensionUnion extends AnyExtension, PresetUnion ex
   constructor(
     nodes: Record<string, NodeToDOM>,
     marks: Record<string, MarkToDOM>,
-    manager: EditorManager<ExtensionUnion, PresetUnion>,
+    manager: EditorManager<Combined>,
   ) {
     this.nodes = nodes;
     this.marks = marks;

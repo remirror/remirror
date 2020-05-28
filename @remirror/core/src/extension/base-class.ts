@@ -117,6 +117,10 @@ export abstract class BaseClass<
     return this.#options;
   }
 
+  get initialOptions() {
+    return this.#initialOptions;
+  }
+
   /**
    * The initial options at creation (used to reset).
    */

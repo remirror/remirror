@@ -1,17 +1,15 @@
 import React from 'react';
 import TestRenderer from 'react-test-renderer';
 
-import {
-  DocExtension,
-  EditorManager,
-  NodeExtension,
-  NodeExtensionSpec,
-  NodeGroup,
-  TextExtension,
-} from '@remirror/core';
-import { BoldExtension, CodeBlockExtension, ParagraphExtension } from '@remirror/core-extensions';
+import { EditorManager, NodeExtension, NodeExtensionSpec, NodeGroup } from '@remirror/core';
 import { Node as PMNode } from '@remirror/pm/model';
-import { createTestManager, simpleJSON, testJSON } from '@remirror/test-fixtures';
+import {
+  BoldExtension,
+  createReactManager,
+  ParagraphExtension,
+  simpleJSON,
+  testJSON,
+} from '@remirror/test-fixtures';
 
 import { ReactSerializer } from '../react-serializer';
 
@@ -19,20 +17,22 @@ class FooExtension extends NodeExtension {
   get name() {
     return 'foo' as const;
   }
-  public schema: NodeExtensionSpec = {
-    content: 'block*',
-    group: NodeGroup.Block,
+  public createNodeSpec(): NodeExtensionSpec {
+    return {
+      content: 'block*',
+      group: NodeGroup.Block,
 
-    toDOM: () => {
-      const attributes = {
-        'data-foo-type': 'true',
-      };
-      return ['div', attributes, ['div', { class: 'inside' }, 0]];
-    },
-  };
+      toDOM: () => {
+        const attributes = {
+          'data-foo-type': 'true',
+        };
+        return ['div', attributes, ['div', { class: 'inside' }, 0]];
+      },
+    };
+  }
 }
 
-const manager = createTestManager([
+const manager = createReactManager([
   { extension: new CodeBlockExtension(), priority: 2 },
   { extension: new FooExtension(), priority: 3 },
 ]);
