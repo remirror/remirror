@@ -1,0 +1,7 @@
+{
+  "main": "dist/remirror.cjs.js",
+  "module": "dist/remirror.esm.js",
+  "preconstruct": {
+    "source": "../../src/extension/auto-link"
+  }
+}

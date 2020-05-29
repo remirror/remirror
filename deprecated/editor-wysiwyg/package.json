@@ -3,7 +3,7 @@
   "version": "0.13.1",
   "description": "ui for a what you see is what you get (wysiwyg) editing experience",
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/editor-wysiwyg",
-  "repository": "https://github.com/remirror/remirror/tree/next/deprecated/editor-wysiwyg",
+  "repository": "https://github.com/remirror/remirror/tree/master/deprecated/editor-wysiwyg",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
@@ -13,7 +13,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.0",
+    "@babel/runtime": "^7.10.1",
     "@emotion/styled": "^10.0.27",
     "@remirror/core": "^0.11.0",
     "@remirror/core-extensions": "^0.13.1",

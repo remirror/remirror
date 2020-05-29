@@ -11,7 +11,7 @@
     "productivity"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-base-keymap",
-  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/extension-base-keymap",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-base-keymap",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
@@ -24,7 +24,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.0",
+    "@babel/runtime": "^7.10.1",
     "@remirror/core": "^0.11.0",
     "map-obj": "^4.1.0"
   },

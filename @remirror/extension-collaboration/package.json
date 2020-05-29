@@ -9,7 +9,7 @@
     "editor"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-collaboration",
-  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/extension-collaboration",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-collaboration",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
@@ -22,7 +22,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.0",
+    "@babel/runtime": "^7.10.1",
     "@remirror/core": "^0.11.0",
     "@types/prosemirror-collab": "^1.1.0"
   },

@@ -3,7 +3,7 @@
   "version": "0.7.7",
   "description": "ui-buttons utilities for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/ui-buttons",
-  "repository": "https://github.com/remirror/remirror/tree/next/deprecated/ui-buttons",
+  "repository": "https://github.com/remirror/remirror/tree/master/deprecated/ui-buttons",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
@@ -13,7 +13,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.0",
+    "@babel/runtime": "^7.10.1",
     "@remirror/core": "^0.11.0",
     "@remirror/ui": "^0.7.6",
     "@remirror/ui-icons": "^0.7.8",

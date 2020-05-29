@@ -2,7 +2,7 @@
   "name": "@remirror/support",
   "version": "0.0.0",
   "description": "The support directory for the remirror monorepo",
-  "repository": "https://github.com/remirror/remirror/tree/next/support",
+  "repository": "https://github.com/remirror/remirror/tree/master/support",
   "license": "ISC",
   "main": "index.js",
   "scripts": {

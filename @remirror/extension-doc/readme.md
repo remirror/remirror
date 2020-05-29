@@ -17,9 +17,14 @@
 ## Installation
 
 ```bash
-yarn add @remirror/extension-doc # yarn
-pnpm add @remirror/extension-doc # pnpm
-npm install @remirror/extension-doc # npm
+# yarn
+yarn add @remirror/extension-doc @remirror/pm
+
+# pnpm
+pnpm add @remirror/extension-doc @remirror/pm
+
+# npm
+npm install @remirror/extension-doc @remirror/pm
 ```
 
 ## Usage

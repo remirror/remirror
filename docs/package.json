@@ -3,7 +3,7 @@
   "version": "0.0.5",
   "private": true,
   "description": "A world class text editor toolkit for every environment",
-  "repository": "https://github.com/remirror/remirror/tree/next/docs",
+  "repository": "https://github.com/remirror/remirror/tree/master/docs",
   "scripts": {
     "build": "gatsby build",
     "clean": "gatsby clean",
@@ -12,7 +12,7 @@
     "start": "gatsby develop"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.0",
+    "@babel/runtime": "^7.10.1",
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@mdx-js/mdx": "^1.6.4",
@@ -28,13 +28,13 @@
     "@theme-ui/typography": "^0.3.0",
     "copy-text-to-clipboard": "^2.2.0",
     "emotion-theming": "^10.0.27",
-    "gatsby": "^2.22.11",
+    "gatsby": "^2.22.12",
     "gatsby-plugin-catch-links": "^2.3.3",
     "gatsby-plugin-emotion": "^4.3.2",
     "gatsby-plugin-google-analytics": "^2.3.2",
     "gatsby-plugin-layout": "^1.3.2",
     "gatsby-plugin-manifest": "^2.4.9",
-    "gatsby-plugin-mdx": "^1.2.12",
+    "gatsby-plugin-mdx": "^1.2.13",
     "gatsby-plugin-netlify": "^2.3.3",
     "gatsby-plugin-pnpm": "^1.2.5",
     "gatsby-plugin-react-helmet": "^3.3.2",
@@ -67,14 +67,14 @@
     "remark-unwrap-images": "^2.0.0",
     "source-map-support": "^0.5.19",
     "theme-ui": "^0.3.1",
-    "ts-node": "^8.10.1"
+    "ts-node": "^8.10.2"
   },
   "devDependencies": {
     "@types/mdx-js__react": "^1.5.2",
     "@types/reach__router": "^1.3.5",
     "@types/react-helmet": "^6.0.0",
     "@types/styled-system": "^5.1.9",
-    "@types/styled-system__css": "^5.0.9",
+    "@types/styled-system__css": "^5.0.11",
     "@types/theme-ui": "^0.3.2",
     "type-fest": "^0.15.0"
   }

@@ -3,7 +3,7 @@
   "version": "0.11.1",
   "description": "Mention extension for the remirror wysiwyg editor",
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-mention",
-  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/extension-mention",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-mention",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
@@ -16,7 +16,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.0",
+    "@babel/runtime": "^7.10.1",
     "@remirror/core": "^0.11.0"
   },
   "devDependencies": {

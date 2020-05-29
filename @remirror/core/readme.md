@@ -1,130 +1,38 @@
 # @remirror/core
 
-[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/core.svg?)](https://bundlephobia.com/result?p=@remirror/core)
-[![npm](https://img.shields.io/npm/dm/@remirror/core.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/core)
+> Where you quest to create a world class editor begins.
 
-This packages provides the core building blocks for the remirror editing experience. It provides the
-api for extensions and TypeScript types used throughout the other packages.
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
+[![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)
+![MIT License][license]
 
-It should rarely be used independently.
-
-Note that this package itself is framework agnostic and while remirror today is targeted at react
-users it's possible to widen the scope to `angular`, `vue` and other popular framework libraries.
+[version]: https://flat.badgen.net/npm/v/@remirror/core
+[npm]: https://npmjs.com/package/@remirror/core
+[license]: https://flat.badgen.net/badge/license/MIT/purple
+[size]: https://bundlephobia.com/result?p=@remirror/core
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/core
+[typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
+[downloads-badge]: https://badgen.net/npm/dw/@remirror/core/red?icon=npm
 
 ## Installation
 
 ```bash
-yarn add @remirror/core prosemirror-view # yarn
-pnpm add @remirror/core prosemirror-view # pnpm
-npm install @remirror/core prosemirror-view # npm
+# yarn
+yarn add @remirror/core @remirror/pm
+
+# pnpm
+pnpm add @remirror/core @remirror/pm
+
+# npm
+npm install @remirror/core @remirror/pm
 ```
 
-## Extensions
+## Usage
 
-Extensions are the building blocks of the editing experience in remirror. They provide behaviour,
-plugins, [marks](https://prosemirror.net/docs/guide/#schema.marks), and
-[nodes](https://prosemirror.net/docs/guide/#schema.node_types) as well as configuration at
-instantiation for any extension.
+This is the core package for using remirror and more docs will be added soon.
 
-### Create an extension
+## Credits
 
-Extension can be `Extension`, `MarkExtension` or `NodeExtension`.
+This package was bootstrapped with [monots].
 
-- `Extension` Pure extensions only concern themselves with the behaviour of the editor. For example
-  the extension called `History` is a plain extension and it tracks all the actions and provides
-  undo and redo commands to your configured editor.
-- `MarkExtension` These are used to add extra styling or other information to inline content. Marks
-  are used for adding links to content, bold stying, italic and other changes which affect the
-  content in a standard way.
-- `NodeExtension` These add make nodes available to the content of the editor. Examples include
-  [`@remirror/extension-emoji`](../extension-emoji) and
-  [`@remirror/extension-mention`](../extension-mention)
-
-To create an extension extend from the class provided from the core library. The following example
-is taken from the Strikethrough extension in the [`@remirror/core-extensions`](../core-extensions)
-library.
-
-```ts
-import {
-  ManagerMarkTypeParameter,
-  MarkExtension,
-  MarkExtensionSpec,
-  markInputRule,
-  markPasteRule,
-  toggleMark,
-} from '@remirror/core';
-
-export class StrikeExtension extends MarkExtension {
-  get name() {
-    return 'strike' as const;
-  }
-
-  // This is the prosemirror related schema information
-  get schema(): MarkExtensionSpec {
-    return {
-      parseDOM: [
-        {
-          tag: 's',
-        },
-        {
-          tag: 'del',
-        },
-        {
-          tag: 'strike',
-        },
-        {
-          style: 'text-decoration',
-          getAttrs: (value) => (value === 'line-through' ? {} : false),
-        },
-      ],
-      toDOM: () => ['s', 0],
-    };
-  }
-
-  // Defines keymaps for this extension
-  public keys({ type }: ManagerMarkTypeParameter) {
-    return {
-      'Mod-d': toggleMark(type),
-    };
-  }
-
-  // Defines commands that can be used to build menu UI's
-  public commands({ type }: CommandMarkTypeParameter) {
-    return () => toggleMark(type);
-  }
-
-  // Input rules happen as code is being typed
-  public inputRules({ type }: ManagerMarkTypeParameter) {
-    return [markInputRule({ regexp: /~([^~]+)~$/, type })];
-  }
-
-  // Paste rules are activated when code is pasted into the editor
-  public pasteRules({ type }: ManagerMarkTypeParameter) {
-    return [markPasteRule({ regexp: /~([^~]+)~/g, type })];
-  }
-}
-```
-
-## Extension Manager
-
-The extension manager is used to manage the extensions passed into the editor. It automatically
-creates the nodes and marks which are used for generating a schema.
-
-```ts
-import { DocExtension, Manager, TextExtension } from '@remirror/core';
-import { BoldExtension, ItalicExtension, ParagraphExtension } from '@remirror/core-extensions';
-
-const manager = Manager.create([
-  { extension: new DocExtension(), priority: 2 },
-  { extension: new TextExtension(), priority: 2 },
-  { extension: new ParagraphExtension(), priority: 2 },
-  { extension: new BoldExtension(), priority: 2 },
-  { extension: new ItalicExtension(), priority: 2 },
-]);
-
-log(manager.nodes); // { doc: { ... }, paragraph: { ... }, text: { ... } }
-log(extension.marks); // { bold: { ... }, italic: { ... } }
-
-// Can also create a schema for you
-manager.createSchema(); // Returns a schema composed of nodes and marks in the extensions provided
-```
+[monots]: https://github.com/monots/monots

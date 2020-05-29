@@ -1,117 +1,69 @@
 # remirror
 
-[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/remirror.svg?)](https://bundlephobia.com/result?p=remirror)
-[![npm](https://img.shields.io/npm/dm/remirror.svg?&logo=npm)](https://www.npmjs.com/package/remirror)
+> One editing package to rule them all, one editing package to find them.
 
-Remirror is an extensible text-editor for react, built with prosemirror.
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
+[![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)
+![MIT License][license]
 
-## Getting Started
-
-### Prerequisites
-
-- Typescript `>= 3.6`
-- React `>= 16.9`
-- Yarn `>= 1.17`
+[version]: https://flat.badgen.net/npm/v/remirror
+[npm]: https://npmjs.com/package/remirror
+[license]: https://flat.badgen.net/badge/license/MIT/purple
+[size]: https://bundlephobia.com/result?p=remirror
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/remirror
+[typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
+[downloads-badge]: https://badgen.net/npm/dw/remirror/red?icon=npm
 
 ## Installation
 
 ```bash
-yarn add remirror # yarn
-pnpm add remirror # pnpm
-npm install remirror # npm
+# yarn
+yarn add remirror @remirror/pm
+
+# pnpm
+pnpm add remirror @remirror/pm
+
+# npm
+npm install remirror @remirror/pm
 ```
 
-The following is a small example which renders a floating menu and enables the extensions `Bold`,
-`Italic` and `Underline`.
+## Usage
+
+Rather than installing multiple scoped packages, the `remirror` package is a gateway to using all
+the goodness that remirror provides while minimising your bundle size.
+
+The following creates a dom based remirror editor.
 
 ```ts
-import React, { FC, FunctionComponent, MouseEventHandler, useState } from 'react';
+import { SocialPreset } from 'remirror/preset/social';
+import { RemirrorProvider, useRemirror, useCreateManager, useCreatePreset, usePreset } from 'remirror/react';
 
-import {
-  Bold,
-  EMPTY_PARAGRAPH_NODE,
-  Italic,
-  ManagedRemirrorProvider,
-  RemirrorEventListener,
-  RemirrorExtension,
-  RemirrorManager,
-  RemirrorProps,
-  Underline,
-  bubblePositioner,
-  useRemirror,
-} from 'remirror';
+const EditorWrapper = () => {
+  const socialPreset = useCreatePreset(SocialPreset, {})
+  const manager = useCreateManager([socialPreset]);
 
-const runAction = (action: () => void): MouseEventHandler<HTMLElement> => (e) => {
-  e.preventDefault();
-  action();
-};
+  return (
+    <RemirrorProvider manager={manager}>
+      <Editor />
+    </RemirrorProvider>
+  )
+}
 
-const SimpleFloatingMenu: FC = () => {
-  const { getPositionerProps, actions } = useRemirror(); // Pull in injected props from context
+const Editor = () => {
+  const { getRootProps } = useRemirror();
 
-  const props = getPositionerProps({
-    positionerId: 'bubble',
-    ...bubblePositioner,
+  const usePreset(SocialPreset, ({addHandler}) => {
+    const dispose = addHandler('mentionOnChange', () => {
+      // Do something
+    });
   });
-  return (
-    <div
-      style={{
-        position: 'absolute',
-        bottom: props.isActive ? props.bottom : -9999,
-        left: props.isActive ? props.left : -9999,
-      }}
-      ref={props.ref}
-    >
-      <button
-        style={{
-          backgroundColor: actions.bold.isActive() ? 'white' : 'pink',
-          fontWeight: actions.bold.isActive() ? 600 : 300,
-        }}
-        disabled={!actions.bold.isEnabled()}
-        onClick={runAction(actions.bold.command)}
-      >
-        b
-      </button>
-      <button
-        style={{
-          backgroundColor: actions.italic.isActive() ? 'white' : 'pink',
-          fontWeight: actions.italic.isActive() ? 600 : 300,
-        }}
-        disabled={!actions.italic.isEnabled()}
-        onClick={runAction(actions.italic.command)}
-      >
-        i
-      </button>
-      <button
-        style={{
-          backgroundColor: actions.underline.isActive() ? 'white' : 'pink',
-          fontWeight: actions.underline.isActive() ? 600 : 300,
-        }}
-        disabled={!actions.underline.isEnabled()}
-        onClick={runAction(actions.underline.command)}
-      >
-        u
-      </button>
-    </div>
-  );
-};
 
-const EditorLayout: FunctionComponent = () => {
-  return (
-    <RemirrorManager>
-      <RemirrorExtension Constructor={Bold} />
-      <RemirrorExtension Constructor={Italic} />
-      <RemirrorExtension Constructor={Underline} />
-      <ManagedRemirrorProvider
-        attributes={{ 'data-testid': 'editor-instance' }}
-        onChange={onChange}
-        placeholder='Start typing for magic...'
-        autoFocus={true}
-        initialContent={EMPTY_PARAGRAPH_NODE}
-      >
-        <SimpleFloatingMenu />
-      </ManagedRemirrorProvider>
-    </RemirrorManager>
-  );
-};
+  return <div {...getRootProps()}>
+}
 ```
+
+## Credits
+
+This package was bootstrapped with [monots].
+
+[monots]: https://github.com/monots/monots

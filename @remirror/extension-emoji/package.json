@@ -11,7 +11,7 @@
     "editor"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-emoji",
-  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/extension-emoji",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-emoji",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
@@ -27,7 +27,7 @@
     "build:custom": "node ./build.js"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.0",
+    "@babel/runtime": "^7.10.1",
     "@remirror/core": "^0.11.0",
     "@remirror/react-node-view": "^0.7.6",
     "@types/emoji-regex": "^8.0.0",

@@ -12,7 +12,7 @@
     "editor"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-code-block",
-  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/extension-code-block",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-code-block",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
@@ -26,7 +26,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.0",
+    "@babel/runtime": "^7.10.1",
     "@remirror/core": "^0.11.0",
     "@types/refractor": "2.8.0",
     "refractor": "^3.0.0",
