@@ -4,8 +4,8 @@ import {
   EditorSchema,
   ProsemirrorAttributes,
   ProsemirrorNode,
-} from '@remirror/core';
-import { RenderEditorProps } from '@remirror/react';
+} from 'remirror/core';
+import { RenderEditorProps } from 'remirror/react';
 
 export interface BaseFactoryParameter<Schema extends EditorSchema = EditorSchema>
   extends Partial<AttributesParameter> {

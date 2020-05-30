@@ -1,9 +1,9 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 
-import { AnyCombinedUnion, EditorManager, object } from '@remirror/core';
-import { CorePreset } from '@remirror/preset-core';
-import { RenderEditor } from '@remirror/react';
+import { AnyCombinedUnion, EditorManager, object } from 'remirror/core';
+import { CorePreset } from 'remirror/preset/core';
+import { RenderEditor } from 'remirror/react';
 
 import { RenderEditorParameter } from './jest-remirror-types';
 

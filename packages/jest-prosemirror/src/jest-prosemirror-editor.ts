@@ -2,7 +2,10 @@ import { fireEvent, prettyDOM } from '@testing-library/dom';
 import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 import { Keyboard } from 'test-keyboard';
 
-import { isString, object, pick } from '@remirror/core-helpers';
+import { inputRules } from '@remirror/pm/inputrules';
+import { AllSelection, NodeSelection, TextSelection } from '@remirror/pm/state';
+import { DirectEditorProps, EditorView } from '@remirror/pm/view';
+import { isString, object, pick } from 'remirror/core/helpers';
 import {
   EditorSchema,
   EditorState,
@@ -15,11 +18,8 @@ import {
   SelectionParameter,
   Shape,
   TextParameter,
-} from '@remirror/core-types';
-import { findElementAtPosition, isElementDOMNode, isTextDOMNode } from '@remirror/core-utils';
-import { inputRules } from '@remirror/pm/inputrules';
-import { AllSelection, NodeSelection, TextSelection } from '@remirror/pm/state';
-import { DirectEditorProps, EditorView } from '@remirror/pm/view';
+} from 'remirror/core/types';
+import { findElementAtPosition, isElementDOMNode, isTextDOMNode } from 'remirror/core/utils';
 
 import { createEvents, EventType } from './jest-prosemirror-events';
 import {

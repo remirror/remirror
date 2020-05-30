@@ -1378,10 +1378,6 @@ importers:
   packages/jest-prosemirror:
     dependencies:
       '@babel/runtime': 7.10.1
-      '@remirror/core-constants': 'link:../../@remirror/core-constants'
-      '@remirror/core-helpers': 'link:../../@remirror/core-helpers'
-      '@remirror/core-types': 'link:../../@remirror/core-types'
-      '@remirror/core-utils': 'link:../../@remirror/core-utils'
       '@remirror/pm': 'link:../../@remirror/pm'
       '@testing-library/dom': 7.6.0
       '@types/prosemirror-schema-basic': 1.0.1
@@ -1391,15 +1387,12 @@ importers:
       prosemirror-schema-basic: 1.1.2
       prosemirror-tables: 1.1.0
       prosemirror-test-builder: 1.0.3
+      remirror: 'link:../remirror'
       test-keyboard: 'link:../test-keyboard'
     devDependencies:
       jest: 26.0.1
     specifiers:
       '@babel/runtime': ^7.10.1
-      '@remirror/core-constants': ^0.7.4
-      '@remirror/core-helpers': ^0.7.6
-      '@remirror/core-types': ^0.9.0
-      '@remirror/core-utils': ^0.8.0
       '@remirror/pm': ^0.0.0
       '@testing-library/dom': ^7.6.0
       '@types/prosemirror-schema-basic': ^1.0.1
@@ -1410,15 +1403,11 @@ importers:
       prosemirror-schema-basic: ^1.1.2
       prosemirror-tables: ^1.1.0
       prosemirror-test-builder: ^1.0.3
+      remirror: ^0.13.1
       test-keyboard: ^0.7.6
   packages/jest-remirror:
     dependencies:
       '@babel/runtime': 7.10.1
-      '@remirror/core': 'link:../../@remirror/core'
-      '@remirror/pm': 'link:../../@remirror/pm'
-      '@remirror/preset-core': 'link:../../@remirror/preset-core'
-      '@remirror/react': 'link:../../@remirror/react'
-      '@remirror/react-utils': 'link:../../@remirror/react-utils'
       '@testing-library/react': 10.0.4_react-dom@16.13.1+react@16.13.1
       '@types/node': 14.0.5
       '@types/react': 16.9.35
@@ -1430,14 +1419,10 @@ importers:
       mutationobserver-shim: 0.3.5
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
+      remirror: 'link:../remirror'
       sanitize-html: 1.24.0
     specifiers:
       '@babel/runtime': ^7.10.1
-      '@remirror/core': ^0.11.0
-      '@remirror/pm': ^0.0.0
-      '@remirror/preset-core': ^0.0.0
-      '@remirror/react': ^0.13.1
-      '@remirror/react-utils': ^0.7.6
       '@testing-library/react': ^10.0.4
       '@types/node': ^14.0.5
       '@types/react': ^16.9.35
@@ -1449,6 +1434,7 @@ importers:
       mutationobserver-shim: ^0.3.5
       react: ^16.13.1
       react-dom: ^16.13.1
+      remirror: ^0.13.1
       sanitize-html: ^1.24.0
   packages/multishift:
     dependencies:

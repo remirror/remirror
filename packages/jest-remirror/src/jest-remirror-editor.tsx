@@ -15,7 +15,6 @@ import React from 'react';
 
 import {
   AnyCombinedUnion,
-  AnyCombinedUnion,
   CommandFunction,
   CommandsFromExtensions,
   EditorManager,
@@ -30,9 +29,9 @@ import {
   ProsemirrorAttributes,
   ProsemirrorNode,
   SchemaFromExtensionUnion,
-} from '@remirror/core';
-import { CorePreset } from '@remirror/preset-core';
-import { RenderEditor } from '@remirror/react';
+} from 'remirror/core';
+import { CorePreset } from 'remirror/preset/core';
+import { RenderEditor } from 'remirror/react';
 
 import { markFactory, nodeFactory } from './jest-remirror-builder';
 import {

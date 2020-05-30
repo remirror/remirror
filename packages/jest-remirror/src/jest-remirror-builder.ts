@@ -1,3 +1,4 @@
+import { Fragment, Mark, Node as ProsemirrorNode, Slice } from '@remirror/pm/model';
 import {
   EditorSchema,
   findMatches,
@@ -11,8 +12,7 @@ import {
   keys,
   object,
   SchemaParameter,
-} from '@remirror/core';
-import { Fragment, Mark, Node as ProsemirrorNode, Slice } from '@remirror/pm/model';
+} from 'remirror/core';
 
 import {
   BaseFactoryParameter,

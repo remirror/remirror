@@ -1,11 +1,11 @@
 import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 
-import { bool } from '@remirror/core-helpers';
+import { bool } from 'remirror/core/helpers';
 import {
   CommandFunction,
   ProsemirrorCommandFunction,
   ProsemirrorNode as _ProsemirrorNode,
-} from '@remirror/core-types';
+} from 'remirror/core/types';
 
 import { apply } from './jest-prosemirror-editor';
 import { transformsNodeFailMessage, transformsNodePassMessage } from './jest-prosemirror-messages';
@@ -162,7 +162,7 @@ declare global {
        * the prosemirror node in the desired way.
        *
        * ```ts
-       * import { removeMark } from '@remirror/core-utils';
+       * import { removeMark } from 'remirror/core/utils';
        * import { schema, doc, p, strong } from 'jest-prosemirror';
        *
        * test('remove the mark', () => {
@@ -187,7 +187,7 @@ declare global {
        *
        * ```ts
        * import { createEditor, doc, p } from 'jest-prosemirror';
-       * import { removeNodeAtPosition } from '@remirror/core-utils';
+       * import { removeNodeAtPosition } from 'remirror/core/utils';
        *
        * test('remove block top level node at specified position', () => {
        *   const {

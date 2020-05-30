@@ -1,13 +1,13 @@
 import { cleanup } from '@testing-library/react';
 
-import { Extension, toHTML } from '@remirror/core';
+import { Extension, toHTML } from 'remirror/core';
+import { Plugin } from '@remirror/pm/state';
 import {
   BlockquoteExtension,
   BoldExtension,
   HeadingExtension,
   LinkExtension,
-} from '@remirror/core-extensions';
-import { Plugin } from '@remirror/pm/state';
+} from 'remirror/core/extensions';
 
 import { renderEditor } from '../jest-remirror-editor';
 

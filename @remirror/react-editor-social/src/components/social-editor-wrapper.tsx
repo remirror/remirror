@@ -45,3 +45,5 @@ const Editor: FC<SocialEditorProps> = (props) => {
 
   return <>{children}</>;
 };
+
+const Emoji;
