@@ -21,7 +21,8 @@ pnpm add @remirror/ui-a11y-status # pnpm
 npm install @remirror/ui-a11y-status # npm
 ```
 
-Note that the `11` is two digit ones. It is a widely used shorthand for typing `accessibility`.
+Note that the `11` is the number eleven. `A-Eleven-Y` is a widely used shorthand for
+`accessibility`.
 
 ## Usage
 

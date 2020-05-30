@@ -2,8 +2,8 @@ import { ExtensionPriority } from '@remirror/core-constants';
 import { isFunction, object } from '@remirror/core-helpers';
 import { NodeViewMethod, Shape } from '@remirror/core-types';
 
-import { AnyExtension, CreateLifecycleMethod, PlainExtension } from '../extension';
-import { AnyPreset, CombinedUnion } from '../preset';
+import { CreateLifecycleMethod, PlainExtension } from '../extension';
+import { AnyCombinedUnion } from '../preset';
 
 /**
  * This extension allows others extension to add the `createNodeView` method
@@ -59,7 +59,7 @@ export class NodeViewsExtension extends PlainExtension {
 
 declare global {
   namespace Remirror {
-    interface ManagerStore<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
+    interface ManagerStore<Combined extends AnyCombinedUnion> {
       /**
        * The custom nodeView which can be used to replace the nodes or marks in
        * the dom and change their browser behaviour.

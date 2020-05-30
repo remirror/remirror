@@ -1,9 +1,7 @@
 import { Children, cloneElement, ComponentType, createElement, JSXElementConstructor } from 'react';
 
 import {
-  AnyExtension,
-  AnyPreset,
-  CombinedUnion,
+  AnyCombinedUnion,
   CreateLifecycleMethod,
   ExtensionPriority,
   isArray,
@@ -189,7 +187,7 @@ declare global {
       reactSSR?: boolean;
     }
 
-    interface ManagerStore<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
+    interface ManagerStore<Combined extends AnyCombinedUnion> {
       /**
        * The transformer for updating the SSR rendering of the prosemirror state
        * and allowing it to render without defects.

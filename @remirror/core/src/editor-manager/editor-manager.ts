@@ -31,9 +31,9 @@ import {
   ViewLifecycleMethod,
 } from '../extension';
 import {
+  AnyCombinedUnion,
   AnyPreset,
   AnyPresetConstructor,
-  CombinedUnion,
   InferCombinedExtensions,
   InferCombinedPresets,
   SchemaFromCombined,
@@ -93,7 +93,7 @@ import {
  * manager.data.actions
  * ```
  */
-export class EditorManager<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
+export class EditorManager<Combined extends AnyCombinedUnion> {
   /**
    * The main static method for creating a manager.
    */
@@ -113,7 +113,7 @@ export class EditorManager<Combined extends CombinedUnion<AnyExtension, AnyPrese
   /**
    * The main static method for creating a manager.
    */
-  public static fromList<Combined extends CombinedUnion<AnyExtension, AnyPreset>>(
+  public static fromList<Combined extends AnyCombinedUnion>(
     combined: Combined[],
     settings: Remirror.ManagerSettings = {},
   ) {
@@ -557,7 +557,7 @@ export class EditorManager<Combined extends CombinedUnion<AnyExtension, AnyPrese
    *
    * What about the state stored in the extensions and presets these need to be recreated as well
    */
-  public clone<ExtraCombined extends CombinedUnion<AnyExtension, AnyPreset>>(
+  public clone<ExtraCombined extends AnyCombinedUnion>(
     combined: ExtraCombined[],
     settings: Remirror.ManagerSettings = {},
   ): EditorManager<Combined | ExtraCombined> {
@@ -578,7 +578,7 @@ export class EditorManager<Combined extends CombinedUnion<AnyExtension, AnyPrese
   }
 }
 
-export type AnyEditorManager = EditorManager<CombinedUnion<AnyExtension, AnyPreset>>;
+export type AnyEditorManager = EditorManager<AnyCombinedUnion>;
 
 /**
  * Checks to see whether the provided value is an `Manager`.
@@ -631,7 +631,7 @@ export type CombinedFromManager<
   Manager extends AnyEditorManager
 > = Manager[typeof Remirror._COMBINED];
 
-export interface EditorManager<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
+export interface EditorManager<Combined extends AnyCombinedUnion> {
   /**
    * Pseudo property which is a small hack to store the type of the extension
    * union.
@@ -695,7 +695,7 @@ declare global {
      * Since this is a global namespace, you can extend the store if your
      * extension is modifying the shape of the `Manager.store` property.
      */
-    interface ManagerStore<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
+    interface ManagerStore<Combined extends AnyCombinedUnion> {
       /**
        * The editor view stored by this instance.
        */

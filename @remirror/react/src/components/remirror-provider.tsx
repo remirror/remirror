@@ -1,18 +1,18 @@
 import React, { ProviderProps, ReactElement } from 'react';
 
-import { AnyEditorManager } from '@remirror/core';
+import { AnyCombinedUnion } from '@remirror/core';
 import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
 
 import { RemirrorContext } from '../react-contexts';
 import { BaseProps, GetRootPropsConfig, RemirrorContextProps } from '../react-types';
 import { RenderEditor } from './render-editor';
 
-interface RemirrorContextProviderProps<Manager extends AnyEditorManager = any>
-  extends ProviderProps<RemirrorContextProps<Manager>>,
-    Pick<RemirrorProviderProps<Manager>, 'childAsRoot'> {}
+interface RemirrorContextProviderProps<Combined extends AnyCombinedUnion>
+  extends ProviderProps<RemirrorContextProps<Combined>>,
+    Pick<RemirrorProviderProps<Combined>, 'childAsRoot'> {}
 
-export interface RemirrorProviderProps<Manager extends AnyEditorManager = any>
-  extends BaseProps<Manager> {
+export interface RemirrorProviderProps<Combined extends AnyCombinedUnion>
+  extends BaseProps<Combined> {
   /**
    * The `RemirrorProvider` only supports **ONE** child element.
    */
@@ -64,10 +64,10 @@ export interface RemirrorProviderProps<Manager extends AnyEditorManager = any>
  * the element is actually rendered that the getRootProp in any nested
  * components is called.
  */
-const RemirrorContextProvider = <Manager extends AnyEditorManager = any>({
+const RemirrorContextProvider = <Combined extends AnyCombinedUnion>({
   childAsRoot: _,
   ...props
-}: RemirrorContextProviderProps<Manager>) => {
+}: RemirrorContextProviderProps<Combined>) => {
   return <RemirrorContext.Provider {...props} />;
 };
 
@@ -88,11 +88,11 @@ RemirrorContextProvider.defaultProps = {
  * - `useRemirror`
  * - `usePositioner`
  */
-export const RemirrorProvider = <Manager extends AnyEditorManager = any>({
+export const RemirrorProvider = <Combined extends AnyCombinedUnion>({
   children,
   childAsRoot,
   ...props
-}: RemirrorProviderProps<Manager>) => {
+}: RemirrorProviderProps<Combined>) => {
   return (
     <RenderEditor {...props}>
       {(value) => {
@@ -107,6 +107,3 @@ export const RemirrorProvider = <Manager extends AnyEditorManager = any>({
 };
 
 RemirrorProvider.$$remirrorType = RemirrorType.EditorProvider;
-
-export interface ManagedRemirrorProviderProps<Manager extends AnyEditorManager = any>
-  extends Omit<BaseProps<Manager>, 'manager'> {}

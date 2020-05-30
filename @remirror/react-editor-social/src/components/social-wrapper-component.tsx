@@ -9,7 +9,7 @@ import {
   MatchName,
   MentionGetterParameter,
   SetExitTriggeredInternallyParameter,
-  SocialExtensions,
+  SocialCombinedUnion,
 } from '../social-types';
 import { EmojiSuggestions } from './emoji-suggestion-component';
 import { CharacterCountWrapper, EditorWrapper } from './social-base-components';
@@ -70,7 +70,7 @@ export const SocialEditorComponent: FC<SocialEditorComponentProps> = ({
   const {
     getRootProps,
     state: { newState },
-  } = useRemirror<SocialExtensions>();
+  } = useRemirror<SocialCombinedUnion>();
   const content = newState.doc.textContent;
   return (
     <div>

@@ -3,16 +3,13 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import {
   AddHandler,
-  AnyEditorManager,
-  AnyExtension,
+  AnyCombinedUnion,
   AnyExtensionConstructor,
-  AnyPreset,
   AnyPresetConstructor,
-  CombinedFromManager,
+  BuiltinPreset,
   Dispose,
   DynamicOptionsOfConstructor,
   EditorManager,
-  EditorManagerParameter,
   ErrorConstant,
   ExtensionConstructorParameter,
   invariant,
@@ -55,16 +52,12 @@ import { RemirrorContextProps, UsePositionerParameter } from '../react-types';
  * }
  * ```
  */
-export function useRemirror<
-  Manager extends AnyEditorManager = AnyEditorManager
->(): RemirrorContextProps<CombinedFromManager<Manager>> {
-  const params = useContext(RemirrorContext);
+export function useRemirror<Combined extends AnyCombinedUnion>(): RemirrorContextProps<Combined> {
+  const context = useContext(RemirrorContext);
 
-  invariant(params, {
-    code: ErrorConstant.REACT_PROVIDER_CONTEXT,
-  });
+  invariant(context, { code: ErrorConstant.REACT_PROVIDER_CONTEXT });
 
-  return params;
+  return context;
 }
 
 /**
@@ -101,7 +94,7 @@ export function useCreateExtension<Type extends AnyExtensionConstructor>(
   Constructor: Type,
   ...[options]: ExtensionConstructorParameter<OptionsOfConstructor<Type>>
 ) {
-  return useMemo(() => new Constructor(options), [Constructor, options]);
+  return useMemo(() => new Constructor(options), [Constructor, options]) as InstanceType<Type>;
 }
 
 /**
@@ -138,7 +131,7 @@ export function useCreatePreset<Type extends AnyPresetConstructor>(
   Constructor: Type,
   ...[settings]: PresetConstructorParameter<OptionsOfConstructor<Type>>
 ) {
-  return useMemo(() => new Constructor(settings), [Constructor, settings]);
+  return useMemo(() => new Constructor(settings), [Constructor, settings]) as InstanceType<Type>;
 }
 
 /**
@@ -363,21 +356,21 @@ function useObjectCheck<Type extends object>(parameter: Type): Type {
  * }
  * ```
  */
-export function useManager<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>(
-  parameter: EditorManagerParameter<ExtensionUnion, PresetUnion>,
-) {
-  const { extensions } = parameter;
-  const settings = useObjectCheck(parameter.settings ?? {});
-  const presets = useMemo(() => [...parameter.presets, new CorePreset(), new ReactPreset()], [
-    parameter.presets,
+export function useManager<Combined extends AnyCombinedUnion>(
+  combined: Combined[],
+  settings: Remirror.ManagerSettings = {},
+): EditorManager<Combined | ReactPreset | CorePreset | BuiltinPreset> {
+  const extensionsAndPresets = useMemo(() => [...combined, new CorePreset(), new ReactPreset()], [
+    combined,
   ]);
 
-  return useMemo(() => EditorManager.create({ extensions, settings, presets }), [
-    extensions,
+  return useMemo(() => EditorManager.fromList(extensionsAndPresets, settings), [
+    extensionsAndPresets,
     settings,
-    presets,
   ]);
 }
+
+export type BaseReactCombinedUnion = ReactPreset | CorePreset | BuiltinPreset;
 
 /**
  * A shorthand tool for retrieving the positioner props and adding them to a component.

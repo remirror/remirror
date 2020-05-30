@@ -25,30 +25,32 @@ export type CombinedUnion<ExtensionUnion extends AnyExtension, PresetUnion exten
   | ExtensionUnion
   | PresetUnion;
 
+export type AnyCombinedUnion = CombinedUnion<AnyExtension, AnyPreset>;
+
 export type InferCombinedExtensions<
-  Combined extends CombinedUnion<AnyExtension, AnyPreset>
+  Combined extends AnyCombinedUnion
 > = Combined extends AnyExtension
   ? Combined
   : Combined extends AnyPreset
   ? GetExtensions<Combined>
   : never;
 
-export type InferCombinedPresets<
-  Combined extends CombinedUnion<AnyExtension, AnyPreset>
-> = Combined extends AnyPreset ? Combined : never;
+export type InferCombinedPresets<Combined extends AnyCombinedUnion> = Combined extends AnyPreset
+  ? Combined
+  : never;
 
-export type SchemaFromCombined<
-  Combined extends CombinedUnion<AnyExtension, AnyPreset>
-> = SchemaFromExtensionUnion<InferCombinedExtensions<Combined>>;
+export type SchemaFromCombined<Combined extends AnyCombinedUnion> = SchemaFromExtensionUnion<
+  InferCombinedExtensions<Combined>
+>;
 
-export type CommandsFromCombined<
-  Combined extends CombinedUnion<AnyExtension, AnyPreset>
-> = CommandsFromExtensions<InferCombinedExtensions<Combined>>;
+export type CommandsFromCombined<Combined extends AnyCombinedUnion> = CommandsFromExtensions<
+  InferCombinedExtensions<Combined>
+>;
 
-export type ChainedFromCombined<
-  Combined extends CombinedUnion<AnyExtension, AnyPreset>
-> = ChainedFromExtensions<InferCombinedExtensions<Combined>>;
+export type ChainedFromCombined<Combined extends AnyCombinedUnion> = ChainedFromExtensions<
+  InferCombinedExtensions<Combined>
+>;
 
-export type HelpersFromCombined<
-  Combined extends CombinedUnion<AnyExtension, AnyPreset>
-> = HelpersFromExtensions<InferCombinedExtensions<Combined>>;
+export type HelpersFromCombined<Combined extends AnyCombinedUnion> = HelpersFromExtensions<
+  InferCombinedExtensions<Combined>
+>;

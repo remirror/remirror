@@ -1,8 +1,9 @@
 import { ReactNode, Ref } from 'react';
 
 import {
+  AnyCombinedUnion,
   AnyExtension,
-  AnyPreset,
+  BuiltinPreset,
   CombinedUnion,
   CompareStateParameter,
   EditorManager,
@@ -39,10 +40,12 @@ import { ReactPreset } from '@remirror/preset-react';
  */
 export type FocusType = FromToParameter | number | 'start' | 'end' | boolean;
 
-export type DefaultCombined = CombinedUnion<AnyExtension, CorePreset | ReactPreset>;
+export type DefaultReactCombined = CombinedUnion<
+  AnyExtension,
+  CorePreset | ReactPreset | BuiltinPreset
+>;
 
-export interface BaseProps<Combined extends CombinedUnion<AnyExtension, AnyPreset>>
-  extends StringHandlerParameter {
+export interface BaseProps<Combined extends AnyCombinedUnion> extends StringHandlerParameter {
   /**
    * Pass in the extension manager.
    *
@@ -211,7 +214,7 @@ export interface BaseProps<Combined extends CombinedUnion<AnyExtension, AnyPrese
   fallbackContent?: ObjectNode | ProsemirrorNode;
 }
 
-export interface Positioner<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
+export interface Positioner<Combined extends AnyCombinedUnion> {
   /**
    * The default and initial position value. This is used at the start and
    * whenever isActive becomes false
@@ -250,11 +253,11 @@ export interface Positioner<Combined extends CombinedUnion<AnyExtension, AnyPres
 }
 
 export type CalculatePositionerParameter<
-  Combined extends CombinedUnion<AnyExtension, AnyPreset>
+  Combined extends AnyCombinedUnion
 > = PositionerIdParameter & Positioner<Combined>;
 
 export type GetPositionerPropsConfig<
-  Combined extends CombinedUnion<AnyExtension, AnyPreset>,
+  Combined extends AnyCombinedUnion,
   RefKey extends string = 'ref'
 > = RefParameter<RefKey> & Partial<Positioner<Combined>> & PositionerIdParameter;
 
@@ -288,7 +291,7 @@ export type GetPositionerReturn<RefKey extends string = 'ref'> = { [P in RefKey]
  * These are the props passed to the render function provided when setting up
  * your editor.
  */
-export interface RemirrorContextProps<Combined extends CombinedUnion<AnyExtension, AnyPreset>>
+export interface RemirrorContextProps<Combined extends AnyCombinedUnion>
   extends Remirror.ManagerStore<Combined> {
   /**
    * An instance of the extension manager
@@ -413,7 +416,7 @@ export interface RemirrorGetterParameter {
   getObjectNode: () => ObjectNode;
 }
 
-export interface BaseListenerParameter<Combined extends CombinedUnion<AnyExtension, AnyPreset>>
+export interface BaseListenerParameter<Combined extends AnyCombinedUnion>
   extends EditorViewParameter<SchemaFromCombined<Combined>>,
     RemirrorGetterParameter {
   /**
@@ -441,13 +444,13 @@ export interface BaseListenerParameter<Combined extends CombinedUnion<AnyExtensi
   internalUpdate: boolean;
 }
 
-export interface RemirrorEventListenerParameter<
-  Combined extends CombinedUnion<AnyExtension, AnyPreset>
-> extends EditorStateParameter<SchemaFromCombined<Combined>>, BaseListenerParameter<Combined> {}
+export interface RemirrorEventListenerParameter<Combined extends AnyCombinedUnion>
+  extends EditorStateParameter<SchemaFromCombined<Combined>>,
+    BaseListenerParameter<Combined> {}
 
-export interface RemirrorStateListenerParameter<
-  Combined extends CombinedUnion<AnyExtension, AnyPreset>
-> extends CompareStateParameter<SchemaFromCombined<Combined>>, BaseListenerParameter<Combined> {
+export interface RemirrorStateListenerParameter<Combined extends AnyCombinedUnion>
+  extends CompareStateParameter<SchemaFromCombined<Combined>>,
+    BaseListenerParameter<Combined> {
   /**
    * Manually create a new state object with the desired content.
    */
@@ -456,11 +459,11 @@ export interface RemirrorStateListenerParameter<
   ) => EditorState<SchemaFromCombined<Combined>>;
 }
 
-export type RemirrorEventListener<Combined extends CombinedUnion<AnyExtension, AnyPreset>> = (
+export type RemirrorEventListener<Combined extends AnyCombinedUnion> = (
   params: RemirrorEventListenerParameter<Combined>,
 ) => void;
 
-export type AttributePropFunction<Combined extends CombinedUnion<AnyExtension, AnyPreset>> = (
+export type AttributePropFunction<Combined extends AnyCombinedUnion> = (
   params: RemirrorEventListenerParameter<Combined>,
 ) => Record<string, string>;
 
@@ -474,7 +477,7 @@ export type PositionerMapValue = ElementParameter & {
 
 export interface PositionerRefFactoryParameter extends PositionerIdParameter, PositionParameter {}
 
-export interface GetPositionParameter<Combined extends CombinedUnion<AnyExtension, AnyPreset>>
+export interface GetPositionParameter<Combined extends AnyCombinedUnion>
   extends EditorViewParameter<SchemaFromCombined<Combined>>,
     ElementParameter,
     CompareStateParameter<SchemaFromCombined<Combined>> {}
@@ -501,7 +504,7 @@ export interface PositionerParameter {
    * The positioner object which determines how the changes in the view impact
    * the calculated position.
    */
-  positioner: Partial<Positioner<DefaultCombined>>;
+  positioner: Partial<Positioner<DefaultReactCombined>>;
 }
 
 export interface UsePositionerParameter<RefKey extends string = 'ref'>
@@ -526,7 +529,7 @@ export interface UpdateStateParameter<Schema extends EditorSchema = any>
 }
 
 export interface EditorStateEventListenerParameter<
-  Combined extends CombinedUnion<AnyExtension, AnyPreset>,
+  Combined extends AnyCombinedUnion,
   Schema extends EditorSchema = any
 > extends Partial<CompareStateParameter<Schema>>, Pick<BaseListenerParameter<Combined>, 'tr'> {}
 
@@ -543,6 +546,6 @@ export interface RemirrorState<Schema extends EditorSchema = any> {
 }
 
 export interface ListenerParameter<
-  Combined extends CombinedUnion<AnyExtension, AnyPreset>,
+  Combined extends AnyCombinedUnion,
   Schema extends EditorSchema = any
 > extends Partial<EditorStateParameter<Schema>>, Pick<BaseListenerParameter<Combined>, 'tr'> {}

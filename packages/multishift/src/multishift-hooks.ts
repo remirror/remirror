@@ -1,7 +1,6 @@
 import { useId } from '@reach/auto-id';
-import { useEffect, useReducer, useRef } from 'react';
+import { DependencyList, EffectCallback, useEffect, useReducer, useRef } from 'react';
 
-import { useEffectOnce, useEffectOnUpdate } from '@remirror/react-hooks';
 import { setStatus } from '@remirror/ui-a11y-status';
 
 import { multishiftReducer } from './multishift-reducer';
@@ -25,13 +24,11 @@ import {
 /**
  * Creates the reducer for managing the multishift internal state.
  */
-export const useMultishiftReducer = <GItem = any>({
-  stateReducer,
-  ...props
-}: MultishiftProps<GItem>) => {
-  const initialState = getInitialStateProps<GItem>(props);
+export function useMultishiftReducer<Item = any>(parameter: MultishiftProps<Item>) {
+  const { stateReducer, ...props } = parameter;
+  const initialState = getInitialStateProps<Item>(props);
 
-  return useReducer((prevState: MultishiftState<GItem>, action: MultishiftRootActions<GItem>) => {
+  return useReducer((prevState: MultishiftState<Item>, action: MultishiftRootActions<Item>) => {
     const [state, changes] = multishiftReducer(prevState, action, props);
     const changeset = { changes, state, prevState };
 
@@ -43,21 +40,21 @@ export const useMultishiftReducer = <GItem = any>({
 
     return state;
   }, initialState);
-};
+}
 
 /**
  * Creates the ids for identifying the elements in the app.
  */
-export const useElementIds = (props: MultishiftA11yIdProps) => {
+export function useElementIds(props: MultishiftA11yIdProps) {
   const defaultId = useId();
 
   return getElementIds(defaultId ?? '', props);
-};
+}
 
 /**
  * Get the element references.
  */
-export const useElementRefs = () => {
+export function useElementRefs() {
   const items = useRef<HTMLElement[]>([]);
   const ignored = useRef<HTMLElement[]>([]);
   const toggleButton = useRef<HTMLElement>();
@@ -77,7 +74,7 @@ export const useElementRefs = () => {
     items,
     ignored,
   };
-};
+}
 
 /**
  * A default getA11yStatusMessage function is provided that will check `items.current.length`
@@ -86,11 +83,11 @@ export const useElementRefs = () => {
  * If items are highlighted it will run `itemToString(highlightedItem)` and display
  * the value of the `highlightedItem`.
  */
-const defaultGetA11yStatusMessage = <GItem = any>({
+const defaultGetA11yStatusMessage = <Item = any>({
   items,
   state: { selectedItems, isOpen },
   itemsToString = defaultItemsToString,
-}: A11yStatusMessageParameter<GItem>) => {
+}: A11yStatusMessageParameter<Item>) => {
   if (selectedItems.length) {
     return `${itemsToString(selectedItems)} has been selected.`;
   }
@@ -113,21 +110,22 @@ const defaultGetA11yStatusMessage = <GItem = any>({
   return '';
 };
 
-interface UseSetA11yProps<GItem = any> {
-  state: MultishiftState<GItem>;
-  items: GItem[];
-  itemsToString?: ItemsToString<GItem>;
-  getA11yStatusMessage?: GetA11yStatusMessage<GItem>;
+interface UseSetA11yProps<Item = any> {
+  state: MultishiftState<Item>;
+  items: Item[];
+  itemsToString?: ItemsToString<Item>;
+  getA11yStatusMessage?: GetA11yStatusMessage<Item>;
   customA11yStatusMessage?: string;
 }
 
-export const useSetA11y = <GItem = any>({
-  state,
-  items,
-  itemsToString = defaultItemsToString,
-  getA11yStatusMessage = defaultGetA11yStatusMessage,
-  customA11yStatusMessage = '',
-}: UseSetA11yProps<GItem>) => {
+export function useSetA11y<Item = any>(props: UseSetA11yProps<Item>) {
+  const {
+    state,
+    items,
+    itemsToString = defaultItemsToString,
+    getA11yStatusMessage = defaultGetA11yStatusMessage,
+    customA11yStatusMessage = '',
+  } = props;
   const automaticMessage = getA11yStatusMessage({
     state,
     items,
@@ -145,7 +143,7 @@ export const useSetA11y = <GItem = any>({
       setStatus(customA11yStatusMessage);
     }
   }, [customA11yStatusMessage]);
-};
+}
 
 /**
  * This is a hook that listens for events mouse and touch events.
@@ -153,11 +151,11 @@ export const useSetA11y = <GItem = any>({
  * When something does occur outside of the registered elements it will dispatch
  * the relevant action.
  */
-export const useOuterEventListener = <GItem = any>(
+export function useOuterEventListener<Item = any>(
   refs: ReturnType<typeof useElementRefs>,
-  state: MultishiftState<GItem>,
+  state: MultishiftState<Item>,
   { outerMouseUp, outerTouchEnd }: { outerMouseUp: () => void; outerTouchEnd: () => void },
-) => {
+) {
   const context = useRef({
     isMouseDown: false,
     isTouchMove: false,
@@ -243,4 +241,131 @@ export const useOuterEventListener = <GItem = any>(
   });
 
   return context;
-};
+}
+
+/**
+ * A hook for managing multiple timeouts.
+ *
+ * @remarks
+ *
+ * All timeouts are automatically cleared when un-mounting.
+ */
+export function useTimeouts() {
+  const timeoutIds = useRef<any[]>([]);
+
+  const setHookTimeout = (fn: () => void, time = 1) => {
+    const id = setTimeout(() => {
+      timeoutIds.current = timeoutIds.current.filter((timeoutId) => timeoutId !== id);
+      fn();
+    }, time);
+
+    timeoutIds.current.push(id);
+  };
+
+  const clearHookTimeouts = () => {
+    timeoutIds.current.forEach((id) => {
+      clearTimeout(id);
+    });
+
+    timeoutIds.current = [];
+  };
+
+  // Clear the timeouts on dismount
+  useEffectOnce(() => clearHookTimeouts);
+
+  return [setHookTimeout, clearHookTimeouts] as const;
+}
+
+/**
+ * React effect hook that ignores the first invocation (e.g. on mount).
+ *
+ * @remarks
+ *
+ * The signature is exactly the same as the useEffect hook.
+ *
+ * ```tsx
+ * import React from 'react'
+ * import { useEffectOnUpdate } from 'react-use';
+ *
+ * const Demo = () => {
+ *   const [count, setCount] = React.useState(0);
+ *
+ *   React.useEffect(() => {
+ *     const interval = setInterval(() => {
+ *       setCount(count => count + 1)
+ *     }, 1000)
+ *
+ *     return () => {
+ *       clearInterval(interval)
+ *     }
+ *   }, [])
+ *
+ *   useEffectOnUpdate(() => {
+ *     log('count', count) // will only show 1 and beyond
+ *
+ *     return () => { // *OPTIONAL*
+ *       // do something on unmount
+ *     }
+ *   }) // you can include deps array if necessary
+ *
+ *   return <div>Count: {count}</div>
+ * };
+ * ```
+ */
+export function useEffectOnUpdate(effect: EffectCallback, dependencies?: DependencyList) {
+  const isInitialMount = useRef(true);
+
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      return effect();
+    }
+  }, [effect]);
+}
+
+/**
+ * React lifecycle hook that runs an effect only once.
+ *
+ * @remarks
+ *
+ * ```ts
+ * import {useEffectOnce} from 'react-use';
+ *
+ * const Demo = () => {
+ *   useEffectOnce(() => {
+ *     log('Running effect once on mount')
+ *
+ *     return () => {
+ *       log('Running clean-up of effect on unmount')
+ *     }
+ *   });
+ *
+ *   return null;
+ * };
+ * ```
+ */
+export function useEffectOnce(effect: EffectCallback) {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(effect, []);
+}
+
+/**
+ * React lifecycle hook that calls a function when the component will unmount.
+ *
+ * @remarks
+ *
+ * Try `useEffectOnce` if you need both a mount and unmount function.
+ *
+ * ```jsx
+ * import {useUnmount} from 'react-use';
+ *
+ * const Demo = () => {
+ *   useUnmount(() => log('UNMOUNTED'));
+ *   return null;
+ * };
+ * ```
+ */
+export function useUnmount(fn: () => void | undefined) {
+  useEffectOnce(() => fn);
+}

@@ -5,7 +5,7 @@ import { EmojiObject, EmojiSuggestCommand } from '@remirror/extension-emoji';
 import { popupMenuPositioner, useRemirror } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 
-import { DataParameter, SocialExtensions } from '../social-types';
+import { DataParameter, SocialCombinedUnion } from '../social-types';
 
 interface EmojiSuggestionsProps extends DataParameter<EmojiObject> {
   highlightedIndex: number;
@@ -21,7 +21,7 @@ export const EmojiSuggestions: FunctionComponent<EmojiSuggestionsProps> = ({
   command,
 }) => {
   const { sxx } = useRemirrorTheme();
-  const { view, getPositionerProps } = useRemirror<SocialExtensions>();
+  const { view, getPositionerProps } = useRemirror<SocialCombinedUnion>();
   const { getMenuProps, getItemProps, itemHighlightedAtIndex, hoveredIndex } = useMultishift({
     highlightedIndexes: [highlightedIndex],
     type: Type.ControlledMenu,

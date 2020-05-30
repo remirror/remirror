@@ -1,6 +1,6 @@
 import { ErrorConstant, ExtensionPriority } from '@remirror/core-constants';
 import { entries, invariant, object } from '@remirror/core-helpers';
-import { AnyFunction, EditorSchema, EmptyShape, Shape } from '@remirror/core-types';
+import { AnyFunction, EmptyShape, Shape } from '@remirror/core-types';
 
 import {
   AnyExtension,
@@ -10,7 +10,7 @@ import {
   ViewLifecycleMethod,
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
-import { AnyPreset, CombinedUnion, HelpersFromCombined } from '../preset';
+import { AnyCombinedUnion, HelpersFromCombined } from '../preset';
 import { ExtensionHelperReturn } from '../types';
 
 /**
@@ -73,7 +73,7 @@ declare global {
   namespace Remirror {
     const _HELPERS: unique symbol;
 
-    interface ManagerStore<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
+    interface ManagerStore<Combined extends AnyCombinedUnion> {
       /**
        * The helpers provided by the extensions used.
        */

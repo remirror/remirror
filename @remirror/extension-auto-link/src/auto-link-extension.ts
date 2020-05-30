@@ -222,6 +222,8 @@ export interface AutoLinkOptions {
 
   /**
    * This handler is called every time the matched urls are updated.
+   *
+   * @defaultValue ''
    */
   onUrlUpdate?: Handler<(parameter: UrlUpdateHandlerParameter) => void>;
 

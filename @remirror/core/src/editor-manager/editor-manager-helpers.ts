@@ -3,17 +3,15 @@ import { invariant, isEmptyArray, isFunction, object, sort } from '@remirror/cor
 
 import { AnyExtension, AnyExtensionConstructor, isExtension } from '../extension';
 import {
+  AnyCombinedUnion,
   AnyPreset,
-  CombinedUnion,
   InferCombinedExtensions,
   InferCombinedPresets,
   isPreset,
 } from '../preset';
 import { GetConstructor } from '../types';
 
-export interface TransformExtensionOrPreset<
-  Combined extends CombinedUnion<AnyExtension, AnyPreset>
-> {
+export interface TransformExtensionOrPreset<Combined extends AnyCombinedUnion> {
   extensions: Array<InferCombinedExtensions<Combined>>;
   extensionMap: WeakMap<
     GetConstructor<InferCombinedExtensions<Combined>>,
@@ -49,7 +47,7 @@ function isPresetOfType<PresetUnion extends AnyPreset>(value: unknown): value is
  *
  * @returns the list of extension instances sorted by priority
  */
-export function transformExtensionOrPreset<Combined extends CombinedUnion<AnyExtension, AnyPreset>>(
+export function transformExtensionOrPreset<Combined extends AnyCombinedUnion>(
   unionValues: readonly Combined[],
 ): TransformExtensionOrPreset<Combined> {
   type ExtensionUnion = InferCombinedExtensions<Combined>;

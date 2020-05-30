@@ -1,10 +1,11 @@
 import { Except } from 'type-fest';
 
+import { AnyExtension, AnyPreset } from '@remirror/core';
 import { AutoLinkExtension } from '@remirror/extension-auto-link';
 import { EmojiExtension } from '@remirror/extension-emoji';
 import { MentionExtension, MentionExtensionMatcher } from '@remirror/extension-mention';
 import { SuggestStateMatch } from '@remirror/pm/suggest';
-import { ManagedRemirrorProviderProps } from '@remirror/react';
+import { BaseReactCombinedUnion, RemirrorProviderProps } from '@remirror/react';
 
 export type OnMentionChangeParameter = MentionState & {
   /**
@@ -13,9 +14,10 @@ export type OnMentionChangeParameter = MentionState & {
   activeIndex: number;
 };
 
-export interface SocialEditorProps
-  extends Partial<ManagedRemirrorProviderProps<SocialExtensions>>,
-    Pick<RemirrorManagerProps, 'extensions'> {
+export interface SocialEditorProps extends Partial<RemirrorProviderProps<SocialCombinedUnion>> {
+  extensions?: AnyExtension[];
+  presets?: AnyPreset[];
+
   /**
    * Display a typing hint that limits the number of characters to this number. Defaults to 140, set to `null` to disable.
    */
@@ -47,11 +49,6 @@ export interface SocialEditorProps
   onMentionChange: (params?: OnMentionChangeParameter) => void;
 
   /**
-   * The theme to be used for setting .
-   */
-  theme?: Partial<RemirrorTheme & Partial<RemirrorTheme['colors']>>;
-
-  /**
    * The matcher options for the `@` mention character.
    */
   atMatcherOptions?: Except<MentionExtensionMatcher, 'name' | 'char'>;
@@ -69,12 +66,12 @@ interface BaseMentionState {
   query: string;
 }
 
-interface NameParameter<GName extends string> {
+interface NameParameter<Name extends string> {
   /**
    * The name of the currently active suggestion.
    * This is the name passed into the suggestersMatcher config object.
    */
-  name: GName;
+  name: Name;
 }
 
 interface AtMentionState extends BaseMentionState, NameParameter<'at'> {}
@@ -156,10 +153,8 @@ export type ImgProps = JSX.IntrinsicElements['img'];
  *
  * Using this as a generic value allows for better type inference in the editor.
  */
-export type SocialExtensions =
-  | BaseExtensions
-  | NodeCursorExtension
-  | PlaceholderExtension
+export type SocialCombinedUnion =
+  | BaseReactCombinedUnion
   | EmojiExtension
   | AutoLinkExtension
   | MentionExtension;

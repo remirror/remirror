@@ -4,7 +4,6 @@ import {
   AnyFunction,
   CommandFunction,
   DispatchFunction,
-  EditorSchema,
   EmptyShape,
   Shape,
   Transaction,
@@ -20,7 +19,7 @@ import {
   ViewLifecycleMethod,
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
-import { AnyPreset, ChainedFromCombined, CombinedUnion, CommandsFromCombined } from '../preset';
+import { AnyCombinedUnion, ChainedFromCombined, CommandsFromCombined } from '../preset';
 import { CommandShape, ExtensionCommandFunction, ExtensionCommandReturn } from '../types';
 
 /**
@@ -230,7 +229,7 @@ declare global {
   namespace Remirror {
     const _COMMANDS: unique symbol;
 
-    interface ManagerStore<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
+    interface ManagerStore<Combined extends AnyCombinedUnion> {
       /**
        * Enables the use of custom commands created by the extensions for
        * extending the functionality of your editor in an expressive way.

@@ -192,7 +192,7 @@ export type SxThemeProp = SystemStyleObject &
  * This is used with the `SxThemeProp` and allow a user to
  * configure the variant to use for the active style.
  */
-export type WithVariants<GObject extends object> = GObject & { variant?: string };
+export type WithVariants<Type extends object> = Type & { variant?: string };
 
 export interface RemirrorThemeContextType {
   /**
@@ -201,7 +201,7 @@ export interface RemirrorThemeContextType {
    * @param path - a string or array path to search within the theme
    * @param fallback - the value to use when no value found
    */
-  get: <GReturn = any>(path: string | Array<string | number>, fallback?: any) => GReturn;
+  get: <Return = any>(path: string | Array<string | number>, fallback?: any) => Return;
 
   /**
    * Access to the css method from within the remirror theme context

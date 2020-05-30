@@ -13,7 +13,6 @@ import { isElementDOMNode } from '@remirror/core-utils';
 import { AttributeSpec, ParseRule, Schema } from '@remirror/pm/model';
 
 import {
-  AnyExtension,
   CreateLifecycleMethod,
   GetMarkNameUnion,
   GetNodeNameUnion,
@@ -22,7 +21,7 @@ import {
   PlainExtension,
   SchemaFromExtensionUnion,
 } from '../extension';
-import { AnyPreset, CombinedUnion, InferCombinedExtensions } from '../preset';
+import { AnyCombinedUnion, InferCombinedExtensions } from '../preset';
 
 /**
  * This extension creates the schema and provides extra attributes as defined in
@@ -275,7 +274,7 @@ declare global {
       disableExtraAttributes?: boolean;
     }
 
-    interface ManagerStore<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
+    interface ManagerStore<Combined extends AnyCombinedUnion> {
       /**
        * The nodes to place on the schema.
        */

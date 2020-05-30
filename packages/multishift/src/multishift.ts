@@ -18,7 +18,6 @@ import {
   isUndefined,
   object,
 } from '@remirror/core-helpers';
-import { useEffectOnce, useEffectOnUpdate, useTimeouts } from '@remirror/react-hooks';
 
 import * as MultishiftActions from './multishift-action-creators';
 import {
@@ -28,11 +27,14 @@ import {
   Type,
 } from './multishift-constants';
 import {
+  useEffectOnce,
+  useEffectOnUpdate,
   useElementIds,
   useElementRefs,
   useMultishiftReducer,
   useOuterEventListener,
   useSetA11y,
+  useTimeouts,
 } from './multishift-hooks';
 import {
   AllMultishiftDispatchActions,

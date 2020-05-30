@@ -1,8 +1,6 @@
 import {
-  AnyExtension,
-  AnyPreset,
+  AnyCombinedUnion,
   AttributesParameter,
-  CombinedUnion,
   EditorSchema,
   ProsemirrorAttributes,
   ProsemirrorNode,
@@ -103,7 +101,7 @@ export type NodeWithoutAttributes<Names extends string> = {
   [P in Names]: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
 };
 
-export interface RenderEditorParameter<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
+export interface RenderEditorParameter<Combined extends AnyCombinedUnion> {
   settings?: Remirror.ManagerSettings;
   props?: Partial<Omit<RenderEditorProps<Combined>, 'manager'>>;
 }

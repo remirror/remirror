@@ -492,7 +492,7 @@ export abstract class NodeExtension<Options extends ValidOptions = EmptyShape> e
  * **NOTE** `& object` forces VSCode to use the name `AnyExtension` rather than
  * print out `Replace<Extension<Shape>, Remirror.AnyExtensionOverrides>`
  */
-export type AnyExtension = Replace<Extension<Shape>, Remirror.AnyExtensionOverrides>;
+export type AnyExtension = Replace<Extension<Shape>, Remirror.AnyExtensionOverrides> & object;
 
 /**
  * The type which is applicable to any extension instance.
@@ -506,20 +506,20 @@ export type AnyExtensionConstructor = Replace<
 /**
  * The type for any potential PlainExtension.
  */
-export type AnyPlainExtension = Omit<PlainExtension<any>, keyof Remirror.AnyExtensionOverrides> &
-  Remirror.AnyExtensionOverrides;
+export type AnyPlainExtension = Replace<PlainExtension<Shape>, Remirror.AnyExtensionOverrides> &
+  object;
 
 /**
  * The type for any potential NodeExtension.
  */
-export type AnyNodeExtension = Omit<NodeExtension<any>, keyof Remirror.AnyExtensionOverrides> &
-  Remirror.AnyExtensionOverrides;
+export type AnyNodeExtension = Replace<NodeExtension<Shape>, Remirror.AnyExtensionOverrides> &
+  object;
 
 /**
  * The type for any potential MarkExtension.
  */
-export type AnyMarkExtension = Omit<MarkExtension<any>, keyof Remirror.AnyExtensionOverrides> &
-  Remirror.AnyExtensionOverrides;
+export type AnyMarkExtension = Replace<MarkExtension<Shape>, Remirror.AnyExtensionOverrides> &
+  object;
 
 /**
  * These are the default options merged into every extension. They can be
@@ -574,7 +574,9 @@ export function mutateDefaultExtensionOptions(
  *
  * @param value - the value to test
  */
-export function isExtension(value: unknown): value is AnyExtension {
+export function isExtension<Type extends AnyExtension = AnyExtension>(
+  value: unknown,
+): value is Type {
   return (
     isRemirrorType(value) &&
     isIdentifierOfType(value, [
@@ -607,7 +609,9 @@ export function isValidExtensionConstructor(
  *
  * @param value - the value to test
  */
-export function isExtensionConstructor(value: unknown): value is AnyExtensionConstructor {
+export function isExtensionConstructor<
+  Type extends AnyExtensionConstructor = AnyExtensionConstructor
+>(value: unknown): value is Type {
   return (
     isRemirrorType(value) &&
     isIdentifierOfType(value, [
@@ -623,7 +627,9 @@ export function isExtensionConstructor(value: unknown): value is AnyExtensionCon
  *
  * @param value - the extension to check
  */
-export function isPlainExtension(value: unknown): value is AnyPlainExtension {
+export function isPlainExtension<Type extends AnyPlainExtension = AnyPlainExtension>(
+  value: unknown,
+): value is Type {
   return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.PlainExtension);
 }
 
@@ -633,7 +639,9 @@ export function isPlainExtension(value: unknown): value is AnyPlainExtension {
  *
  * @param value - the extension to check
  */
-export function isNodeExtension(value: unknown): value is AnyNodeExtension {
+export function isNodeExtension<Type extends AnyNodeExtension = AnyNodeExtension>(
+  value: unknown,
+): value is Type {
   return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.NodeExtension);
 }
 
@@ -643,7 +651,9 @@ export function isNodeExtension(value: unknown): value is AnyNodeExtension {
  *
  * @param value - the extension to check
  */
-export function isMarkExtension(value: unknown): value is AnyMarkExtension {
+export function isMarkExtension<Type extends AnyMarkExtension = AnyMarkExtension>(
+  value: unknown,
+): value is Type {
   return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.MarkExtension);
 }
 

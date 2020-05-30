@@ -7,7 +7,7 @@ import { useRemirrorTheme } from '@remirror/ui';
 import {
   DivProps,
   ImgProps,
-  SocialExtensions,
+  SocialCombinedUnion,
   SpanProps,
   TagSuggestionsProps,
   UserSuggestionsProps,
@@ -118,7 +118,7 @@ export const AtSuggestions: FunctionComponent<UserSuggestionsProps> = ({
   data,
   setExitTriggeredInternally,
 }) => {
-  const { view, actions } = useRemirror<SocialExtensions>();
+  const { view, actions } = useRemirror<SocialCombinedUnion>();
 
   /**
    * Click handler for accepting a user suggestion
@@ -182,7 +182,7 @@ export const TagSuggestions: FunctionComponent<TagSuggestionsProps> = ({
   data,
   setExitTriggeredInternally,
 }) => {
-  const { view, actions } = useRemirror<SocialExtensions>();
+  const { view, actions } = useRemirror<SocialCombinedUnion>();
 
   /**
    * Click handler for accepting a tag suggestion

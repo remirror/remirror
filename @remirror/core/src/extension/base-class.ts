@@ -484,4 +484,5 @@ export interface AnyBaseClassOverrides {
   onSetCustomOption?: AnyFunction;
   setCustomOption: AnyFunction;
   addHandler: AnyFunction;
+  clone: AnyFunction;
 }

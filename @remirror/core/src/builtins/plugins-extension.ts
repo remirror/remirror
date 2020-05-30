@@ -12,7 +12,7 @@ import {
   CreateLifecycleMethod,
   PlainExtension,
 } from '../extension';
-import { AnyPreset, CombinedUnion, InferCombinedExtensions } from '../preset';
+import { AnyCombinedUnion, InferCombinedExtensions } from '../preset';
 import { GetNameUnion } from '../types';
 
 /**
@@ -242,7 +242,7 @@ declare global {
       addPlugins: (...plugins: ProsemirrorPlugin[]) => void;
     }
 
-    interface ManagerStore<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
+    interface ManagerStore<Combined extends AnyCombinedUnion> {
       /**
        * All of the plugins combined together from all sources
        */

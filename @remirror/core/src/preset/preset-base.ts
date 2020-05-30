@@ -324,7 +324,7 @@ export interface PresetConstructor<Options extends ValidOptions = EmptyShape>
  *
  * @param value - the preset to check
  */
-export function isPreset(value: unknown): value is AnyPreset {
+export function isPreset<Type extends AnyPreset = AnyPreset>(value: unknown): value is Type {
   return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Preset);
 }
 
@@ -333,7 +333,9 @@ export function isPreset(value: unknown): value is AnyPreset {
  *
  * @param value - the value to test
  */
-export function isPresetConstructor(value: unknown): value is AnyPresetConstructor {
+export function isPresetConstructor<Type extends AnyPresetConstructor = AnyPresetConstructor>(
+  value: unknown,
+): value is Type {
   return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.PresetConstructor);
 }
 

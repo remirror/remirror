@@ -1,11 +1,9 @@
 import React, { cloneElement, Fragment, PureComponent, ReactNode, Ref } from 'react';
 
 import {
-  AnyExtension,
-  AnyPreset,
+  AnyCombinedUnion,
   bool,
   clamp,
-  CombinedUnion,
   EDITOR_CLASS_NAME,
   EditorManager,
   EditorView as EditorViewType,
@@ -47,7 +45,7 @@ import {
   BaseListenerParameter,
   BaseProps,
   CalculatePositionerParameter,
-  DefaultCombined,
+  DefaultReactCombined,
   EditorStateEventListenerParameter,
   FocusType,
   GetPositionerPropsConfig,
@@ -71,11 +69,11 @@ import { createEditorView, RemirrorSSR } from '../ssr';
  *
  * @param - injected remirror params
  */
-type RenderPropFunction<Combined extends CombinedUnion<AnyExtension, AnyPreset>> = (
+type RenderPropFunction<Combined extends AnyCombinedUnion> = (
   params: RemirrorContextProps<Combined>,
 ) => JSX.Element;
 
-export interface RenderEditorProps<Combined extends CombinedUnion<AnyExtension, AnyPreset>>
+export interface RenderEditorProps<Combined extends AnyCombinedUnion>
   extends MakeRequired<BaseProps<Combined>, keyof typeof defaultProps> {
   /**
    * The render prop that takes the injected remirror params and returns an
@@ -84,9 +82,10 @@ export interface RenderEditorProps<Combined extends CombinedUnion<AnyExtension, 
   children: RenderPropFunction<Combined>;
 }
 
-export class RenderEditor<
-  Combined extends CombinedUnion<AnyExtension, AnyPreset>
-> extends PureComponent<RenderEditorProps<Combined>, RemirrorState<SchemaFromCombined<Combined>>> {
+export class RenderEditor<Combined extends AnyCombinedUnion> extends PureComponent<
+  RenderEditorProps<Combined>,
+  RemirrorState<SchemaFromCombined<Combined>>
+> {
   public static defaultProps = defaultProps;
 
   /**
@@ -99,7 +98,7 @@ export class RenderEditor<
    * to the components state for internal usage.
    */
   public static getDerivedStateFromProps(
-    properties: RenderEditorProps<DefaultCombined>,
+    properties: RenderEditorProps<DefaultReactCombined>,
     state: RemirrorState,
   ): RemirrorState | null {
     const { onStateChange, value } = properties;

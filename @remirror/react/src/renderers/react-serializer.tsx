@@ -1,10 +1,8 @@
 import React, { ComponentType, createElement, Fragment, ReactNode } from 'react';
 
 import {
-  AnyExtension,
-  AnyPreset,
+  AnyCombinedUnion,
   bool,
-  CombinedUnion,
   DOMOutputSpec,
   EditorManager,
   Fragment as ProsemirrorFragment,
@@ -27,7 +25,7 @@ type MarkToDOM = MarkExtensionSpec['toDOM'];
 /**
  * Serialize the extension provided schema into a JSX element that can be displayed node and non-dom environments.
  */
-export class ReactSerializer<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
+export class ReactSerializer<Combined extends AnyCombinedUnion> {
   /**
    * Receives the return value from toDOM defined in the node schema and transforms it
    * into JSX
@@ -77,9 +75,7 @@ export class ReactSerializer<Combined extends CombinedUnion<AnyExtension, AnyPre
    *
    * @param manager
    */
-  public static fromManager<Combined extends CombinedUnion<AnyExtension, AnyPreset>>(
-    manager: EditorManager<Combined>,
-  ) {
+  public static fromManager<Combined extends AnyCombinedUnion>(manager: EditorManager<Combined>) {
     return new ReactSerializer(
       this.nodesFromManager(manager),
       this.marksFromManager(manager),
@@ -92,7 +88,7 @@ export class ReactSerializer<Combined extends CombinedUnion<AnyExtension, AnyPre
    *
    * @param manager
    */
-  private static nodesFromManager<Combined extends CombinedUnion<AnyExtension, AnyPreset>>(
+  private static nodesFromManager<Combined extends AnyCombinedUnion>(
     manager: EditorManager<Combined>,
   ) {
     const result = gatherToDOM(manager.nodes);
@@ -107,7 +103,7 @@ export class ReactSerializer<Combined extends CombinedUnion<AnyExtension, AnyPre
    *
    * @param manager
    */
-  private static marksFromManager<Combined extends CombinedUnion<AnyExtension, AnyPreset>>(
+  private static marksFromManager<Combined extends AnyCombinedUnion>(
     manager: EditorManager<Combined>,
   ) {
     return gatherToDOM(manager.marks);

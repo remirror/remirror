@@ -14,9 +14,8 @@ import {
 import React from 'react';
 
 import {
-  AnyExtension,
-  AnyPreset,
-  CombinedUnion,
+  AnyCombinedUnion,
+  AnyCombinedUnion,
   CommandFunction,
   CommandsFromExtensions,
   EditorManager,
@@ -52,7 +51,7 @@ import { replaceSelection } from './jest-remirror-utils';
  *
  * By default it already has the core preset applied.
  */
-export function renderEditor<Combined extends CombinedUnion<AnyExtension, AnyPreset>>(
+export function renderEditor<Combined extends AnyCombinedUnion>(
   combined: Combined[],
   { settings, props }: RenderEditorParameter<Combined> = object(),
 ) {
@@ -81,7 +80,7 @@ export function renderEditor<Combined extends CombinedUnion<AnyExtension, AnyPre
  * This creates a chainable test helper for testing your remirror presets,
  * extensions and commands.
  */
-export class RemirrorTestChain<Combined extends CombinedUnion<AnyExtension, AnyPreset>> {
+export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /** The editor manager */
   #manager: EditorManager<Combined>;
 
