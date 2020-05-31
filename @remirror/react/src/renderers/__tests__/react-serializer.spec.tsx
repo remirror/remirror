@@ -5,15 +5,20 @@ import { EditorManager, NodeExtension, NodeExtensionSpec, NodeGroup } from '@rem
 import { Node as PMNode } from '@remirror/pm/model';
 import {
   BoldExtension,
-  createReactManager,
+  CodeBlockExtension,
+  DocExtension,
   ParagraphExtension,
   simpleJSON,
   testJSON,
+  TextExtension,
 } from '@remirror/test-fixtures';
 
+import { createReactManager } from '../../hooks';
 import { ReactSerializer } from '../react-serializer';
 
 class FooExtension extends NodeExtension {
+  public static disableExtraAttributes = true;
+
   get name() {
     return 'foo' as const;
   }
@@ -32,10 +37,7 @@ class FooExtension extends NodeExtension {
   }
 }
 
-const manager = createReactManager([
-  { extension: new CodeBlockExtension(), priority: 2 },
-  { extension: new FooExtension(), priority: 3 },
-]);
+const manager = createReactManager([new CodeBlockExtension(), new FooExtension()]);
 const { schema } = manager;
 const serializer = ReactSerializer.fromManager(manager);
 
@@ -45,14 +47,13 @@ test('ReactSerializer.fromManager', () => {
   expect(serializer.marks.bold).toBeFunction();
 
   // fills in for a missing text
-  const altExtensions = [
-    { extension: new DocExtension(), priority: 2 },
-    { extension: new ParagraphExtension(), priority: 2 },
-    { extension: new TextExtension(), priority: 2 },
-    { extension: new BoldExtension(), priority: 2 },
-    { extension: new CodeBlockExtension(), priority: 2 },
-  ];
-  const altManager = EditorManager.fromObject(altExtensions);
+  const altManager = EditorManager.create([
+    new DocExtension(),
+    new ParagraphExtension(),
+    new TextExtension(),
+    new BoldExtension(),
+    new CodeBlockExtension(),
+  ]);
 
   expect(ReactSerializer.fromManager(altManager).nodes.text).toBeFunction();
 });

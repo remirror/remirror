@@ -1,4 +1,5 @@
 import {
+  ApplyExtraAttributes,
   bool,
   Cast,
   CommandFunction,
@@ -24,10 +25,11 @@ export class ImageExtension extends NodeExtension {
     return 'image' as const;
   }
 
-  public createNodeSpec(): NodeExtensionSpec {
+  public createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
     return {
       inline: true,
       attrs: {
+        ...extra.defaults(),
         align: { default: null },
         alt: { default: '' },
         crop: { default: null },
@@ -43,13 +45,11 @@ export class ImageExtension extends NodeExtension {
         {
           tag: 'img[src]',
           getAttrs: (element) =>
-            isElementDOMNode(element)
-              ? getImageAttributes({ element, parseExtraAttributes: (x) => x })
-              : {},
+            isElementDOMNode(element) ? getImageAttributes({ element, parse: extra.parse }) : {},
         },
       ],
       toDOM: (node) => {
-        return ['img', node.attrs];
+        return ['img', { ...extra.dom(node.attrs), ...node.attrs }];
       },
     };
   }
@@ -249,17 +249,18 @@ function getCrop(element: HTMLElement) {
  */
 function getImageAttributes({
   element,
-  parseExtraAttributes,
+  parse,
 }: {
   element: HTMLElement;
-  parseExtraAttributes: <Type extends object>(value: Type) => Type;
+  parse: ApplyExtraAttributes['parse'];
 }) {
   const { width, height } = getDimensions(element);
   const align = getAlignment(element);
   const crop = getCrop(element);
   const rotate = getRotation(element);
 
-  return parseExtraAttributes({
+  return {
+    ...parse(element),
     align,
     alt: element.getAttribute('alt') ?? null,
     crop,
@@ -268,7 +269,7 @@ function getImageAttributes({
     src: element.getAttribute('src') ?? null,
     title: element.getAttribute('title') ?? null,
     width: Number.parseInt(width || '0', 10) || null,
-  });
+  };
 }
 
 function hasCursor<T extends object>(argument: T): argument is T & { $cursor: ResolvedPos } {

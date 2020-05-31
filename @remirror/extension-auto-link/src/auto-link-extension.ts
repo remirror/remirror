@@ -1,4 +1,5 @@
 import {
+  ApplyExtraAttributes,
   Cast,
   CreatePluginReturn,
   DefaultExtensionOptions,
@@ -42,9 +43,10 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkOptions> {
     return 'autoLink' as const;
   }
 
-  public createMarkSpec(): MarkExtensionSpec {
+  public createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec {
     return {
       attrs: {
+        ...extra.defaults(),
         href: {
           default: null,
         },
@@ -55,6 +57,7 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkOptions> {
         {
           tag: 'a[href]',
           getAttrs: (node) => ({
+            ...extra.parse(node),
             href: Cast<Element>(node).getAttribute('href'),
           }),
         },
@@ -63,6 +66,7 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkOptions> {
         return [
           'a',
           {
+            ...extra.dom(node.attrs),
             ...node.attrs,
             role: 'presentation',
           },

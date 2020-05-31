@@ -1,6 +1,7 @@
 import { FontWeightProperty } from 'csstype';
 
 import {
+  ApplyExtraAttributes,
   CommandFunction,
   ExtensionTag,
   FromToParameter,
@@ -34,14 +35,16 @@ export class BoldExtension extends MarkExtension<BoldExtensionOptions> {
 
   public readonly tags = [ExtensionTag.FormattingMark];
 
-  public createMarkSpec(): MarkExtensionSpec {
+  public createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec {
     const { weight } = this.options;
 
     return {
+      attrs: extra.defaults(),
       group: MarkGroup.FontStyle,
       parseDOM: [
         {
           tag: 'strong',
+          getAttrs: extra.parse,
         },
         // This works around a Google Docs misbehavior where
         // pasted content will be inexplicably wrapped in `<b>`
@@ -49,7 +52,9 @@ export class BoldExtension extends MarkExtension<BoldExtensionOptions> {
         {
           tag: 'b',
           getAttrs: (node) =>
-            isElementDOMNode(node) && node.style.fontWeight !== 'normal' ? null : false,
+            isElementDOMNode(node) && node.style.fontWeight !== 'normal'
+              ? extra.parse(node)
+              : false,
         },
         {
           style: 'font-weight',
@@ -57,12 +62,12 @@ export class BoldExtension extends MarkExtension<BoldExtensionOptions> {
             isString(node) && /^(bold(er)?|[5-9]\d{2,})$/.test(node) ? null : false,
         },
       ],
-      toDOM: () => {
+      toDOM: (node) => {
         if (weight) {
           return ['strong', { 'font-weight': weight.toString() }, 0];
         }
 
-        return ['strong', 0];
+        return ['strong', extra.dom(node.attrs), 0];
       },
     };
   }

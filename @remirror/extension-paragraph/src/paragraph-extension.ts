@@ -10,7 +10,6 @@ import {
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
-  object,
   ProsemirrorAttributes,
 } from '@remirror/core';
 import { setBlockType } from '@remirror/pm/commands';
@@ -59,7 +58,7 @@ export class ParagraphExtension extends NodeExtension<ParagraphOptions> {
 
       toDOM: (node) => {
         const { align, indent, lineSpacing, id } = node.attrs as ParagraphExtensionAttributes;
-        const attributes: Record<string, string> = object(extra.dom(node.attrs));
+        const attributes: Record<string, string> = extra.dom(node.attrs);
         let style = '';
 
         if (align && align !== 'left') {

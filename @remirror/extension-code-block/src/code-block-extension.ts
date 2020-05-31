@@ -1,6 +1,7 @@
 import refractor from 'refractor/core';
 
 import {
+  ApplyExtraAttributes,
   convertCommand,
   CreatePluginReturn,
   DefaultExtensionOptions,
@@ -59,9 +60,10 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
     this.registerLanguages();
   }
 
-  public createNodeSpec(): NodeExtensionSpec {
+  public createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
     return {
       attrs: {
+        ...extra.defaults(),
         language: { default: this.options.defaultLanguage },
       },
       content: 'text*',
@@ -87,11 +89,11 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
             }
 
             const language = codeElement.getAttribute(dataAttribute);
-            return { language };
+            return { ...extra.parse(node), language };
           },
         },
       ],
-      toDOM: (node) => codeBlockToDOM(node, this.options.defaultLanguage),
+      toDOM: (node) => codeBlockToDOM(node, extra.dom, this.options.defaultLanguage),
     };
   }
 

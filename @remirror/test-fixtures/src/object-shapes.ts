@@ -13,10 +13,6 @@ export const contextPropsShape = {
 };
 
 export const positionerShape = {
-  isActive: expect.any(Boolean),
-  top: expect.any(Number),
-  left: expect.any(Number),
-  bottom: expect.any(Number),
-  right: expect.any(Number),
+  active: expect.any(Boolean),
   ref: expect.any(Function),
 };

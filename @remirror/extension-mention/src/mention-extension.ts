@@ -1,5 +1,6 @@
 import {
   AddCustomHandler,
+  ApplyExtraAttributes,
   convertCommand,
   CustomHandlerKeyList,
   DefaultExtensionOptions,
@@ -125,12 +126,13 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     return;
   };
 
-  public createMarkSpec(): MarkExtensionSpec {
+  public createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec {
     const dataAttributeId = 'data-mention-id';
     const dataAttributeName = 'data-mention-name';
 
     return {
       attrs: {
+        ...extra.defaults(),
         id: {},
         label: {},
         name: {},
@@ -149,7 +151,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
             const id = node.getAttribute(dataAttributeId);
             const name = node.getAttribute(dataAttributeName);
             const label = node.textContent;
-            return { id, label, name };
+            return { ...extra.parse(node), id, label, name };
           },
         },
       ],
@@ -171,6 +173,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
         return [
           this.options.mentionTag,
           {
+            ...extra.dom(node.attrs),
             ...attributes,
             class: name ? `${mentionClassName} ${mentionClassName}-${name}` : mentionClassName,
             [dataAttributeId]: id,

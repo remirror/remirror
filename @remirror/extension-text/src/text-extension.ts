@@ -3,6 +3,8 @@ import { NodeExtension, NodeGroup } from '@remirror/core';
 /**
  * The default text passed into the prosemirror schema.
  *
+ * Extra attributes are not allowed on the text extension.
+ *
  * @core
  */
 export class TextExtension extends NodeExtension {

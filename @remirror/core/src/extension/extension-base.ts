@@ -467,7 +467,7 @@ export abstract class NodeExtension<Options extends ValidOptions = EmptyShape> e
    * The above example will have the `hole()` method call replaced with the
    * extra attributes.
    */
-  public abstract createNodeSpec(parameter: ApplyExtraAttributes): NodeExtensionSpec;
+  public abstract createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec;
 }
 
 export interface NodeExtension<Options extends ValidOptions = EmptyShape>

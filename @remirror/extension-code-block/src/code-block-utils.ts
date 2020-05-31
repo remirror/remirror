@@ -2,6 +2,7 @@
 import refractor, { RefractorNode } from 'refractor/core';
 
 import {
+  ApplyExtraAttributes,
   bool,
   CommandFunction,
   DOMOutputSpec,
@@ -276,9 +277,13 @@ function mapRefractorNodesToDOMArray(nodes: RefractorNode[]): any[] {
  * Used to provide a `toDom` function for the code block for both the browser and
  * non browser environments.
  */
-export function codeBlockToDOM(node: ProsemirrorNode, defaultLanguage = 'markup'): DOMOutputSpec {
+export function codeBlockToDOM(
+  node: ProsemirrorNode,
+  toDOM: ApplyExtraAttributes['dom'],
+  defaultLanguage = 'markup',
+): DOMOutputSpec {
   const { language, ...rest } = node.attrs as CodeBlockAttributes;
-  const attributes = { ...rest, class: `language-${language}` };
+  const attributes = { ...toDOM(node.attrs), ...rest, class: `language-${language}` };
 
   if (environment.isBrowser) {
     return ['pre', attributes, ['code', { [dataAttribute]: language }, 0]];

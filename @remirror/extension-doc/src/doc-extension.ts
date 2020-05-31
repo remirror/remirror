@@ -1,4 +1,9 @@
-import { DefaultExtensionOptions, NodeExtension, Static } from '@remirror/core';
+import {
+  ApplyExtraAttributes,
+  DefaultExtensionOptions,
+  NodeExtension,
+  Static,
+} from '@remirror/core';
 
 export interface DocOptions {
   /**
@@ -41,6 +46,8 @@ export interface DocOptions {
  * a representation of the `doc` is required as the top level node in all
  * editors.
  *
+ * Extra attributes are disallowed for the doc extension.
+ *
  * @required
  * @core
  */
@@ -55,7 +62,7 @@ export class DocExtension extends NodeExtension<DocOptions> {
     return 'doc' as const;
   }
 
-  public createNodeSpec() {
+  public createNodeSpec(_: ApplyExtraAttributes) {
     return {
       content: this.options.content,
     };

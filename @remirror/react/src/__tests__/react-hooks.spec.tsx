@@ -5,7 +5,6 @@ import { contextPropsShape, createReactManager, positionerShape } from '@remirro
 
 import { RemirrorProvider } from '../components/remirror-provider';
 import { usePositioner, useRemirror } from '../hooks';
-import { bubblePositioner } from '../react-positioners';
 
 test('useRemirror', () => {
   expect.assertions(1);
@@ -29,12 +28,9 @@ test('usePositioner', () => {
   expect.assertions(1);
 
   const HookComponent: FC = () => {
-    const injectedProps = usePositioner({
-      positioner: bubblePositioner,
-      positionerId: 'bubble-menu',
-    });
+    const positionerProps = usePositioner('bubble');
 
-    expect(injectedProps).toMatchObject(positionerShape);
+    expect(positionerProps).toMatchObject(positionerShape);
 
     return <div />;
   };
