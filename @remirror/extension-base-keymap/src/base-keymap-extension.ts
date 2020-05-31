@@ -130,7 +130,7 @@ export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
    * TODO think about the case where bindings are being disposed and then added
    * in a different position in the `extraKeyBindings` array.
    */
-  public onAddCustomHandler: AddCustomHandler<BaseKeymapOptions> = ({ keymap }) => {
+  protected onAddCustomHandler: AddCustomHandler<BaseKeymapOptions> = ({ keymap }) => {
     if (keymap) {
       this.extraKeyBindings = [...this.extraKeyBindings, keymap];
       this.store?.rebuildKeymap?.();

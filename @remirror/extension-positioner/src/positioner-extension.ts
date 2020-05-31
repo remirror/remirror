@@ -20,9 +20,10 @@ import {
 export interface PositionerOptions {
   /**
    * An object specifying the positioner and the change handler for responding
-   * to changes in the positioner output.
+   * to changes in the positioner output. This is a custom handler and should be
+   * amended with `addCustomHandler`.
    */
-  changeHandler?: CustomHandler<PositionerChangeHandler>;
+  positionerHandler?: CustomHandler<PositionerChangeHandler>;
 }
 
 /**
@@ -41,27 +42,27 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  #changeHandlerList: PositionerChangeHandler[] = [];
+  #positionerHandlerList: PositionerChangeHandler[] = [];
 
-  public onAddCustomHandler: AddCustomHandler<PositionerOptions> = ({ changeHandler }) => {
-    if (!changeHandler) {
+  protected onAddCustomHandler: AddCustomHandler<PositionerOptions> = ({ positionerHandler }) => {
+    if (!positionerHandler) {
       return;
     }
 
-    this.#changeHandlerList = [...this.#changeHandlerList, changeHandler];
+    this.#positionerHandlerList = [...this.#positionerHandlerList, positionerHandler];
     return () => {
-      this.#changeHandlerList = this.#changeHandlerList.filter(
-        (handler) => handler !== changeHandler,
+      this.#positionerHandlerList = this.#positionerHandlerList.filter(
+        (handler) => handler !== positionerHandler,
       );
     };
   };
 
   public onTransaction: TransactionLifecycleMethod = (update) => {
-    this.changeHandler(update);
+    this.positionerHandler(update);
   };
 
-  private changeHandler(update: TransactionLifecycleParameter) {
-    for (const handler of this.#changeHandlerList) {
+  private positionerHandler(update: TransactionLifecycleParameter) {
+    for (const handler of this.#positionerHandlerList) {
       this.calculatePositioner(handler, update);
     }
   }

@@ -174,7 +174,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
     };
   };
 
-  public onAddCustomHandler: AddCustomHandler<EmojiOptions> = (parameter) => {
+  protected onAddCustomHandler: AddCustomHandler<EmojiOptions> = (parameter) => {
     const { suggestionKeyBindings } = parameter;
 
     if (!suggestionKeyBindings) {

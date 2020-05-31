@@ -329,7 +329,7 @@ export abstract class BaseClass<
    *
    * This must return a dispose function.
    */
-  public onAddCustomHandler?: AddCustomHandler<Options>;
+  protected onAddCustomHandler?: AddCustomHandler<Options>;
 }
 
 export type AddCustomHandler<Options extends ValidOptions> = (
@@ -480,7 +480,6 @@ export function isValidConstructor(
 }
 
 export interface AnyBaseClassOverrides {
-  onAddCustomHandler?: AnyFunction;
   addCustomHandler: AnyFunction;
   addHandler: AnyFunction;
   clone: AnyFunction;

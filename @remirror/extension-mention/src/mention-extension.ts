@@ -48,8 +48,6 @@ import {
   isValidMentionAttributes,
 } from './mention-utils';
 
-const defaultHandler = () => false;
-
 /**
  * The mention extension wraps mentions as a prosemirror mark. It allows for
  * very fluid and flexible social experiences to be built up.
@@ -76,8 +74,6 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     matchers: [],
     appendText: ' ',
     suggestTag: 'a' as const,
-    onCharacterEntry: defaultHandler,
-    keyBindings: {},
     noDecorations: false,
   };
 
@@ -103,7 +99,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
    */
   private keyBindings: MentionKeyBinding = {};
 
-  public onAddCustomHandler: AddCustomHandler<MentionOptions> = (parameter) => {
+  protected onAddCustomHandler: AddCustomHandler<MentionOptions> = (parameter) => {
     const { keyBindings, onCharacterEntry } = parameter;
 
     if (keyBindings) {
