@@ -1,9 +1,12 @@
+import { Shape } from '@remirror/core-types';
+
 import {
   capitalize,
   clone,
   deepMerge,
   entries,
   findMatches,
+  flattenArray,
   format,
   get,
   hasOwnProperty,
@@ -29,7 +32,6 @@ import {
   isString,
   isSymbol,
   isUndefined,
-  kebabCase,
   keys,
   Merge,
   noop,
@@ -70,12 +72,17 @@ describe('findMatches', () => {
     expect(findMatches(str, regex)).toHaveLength(2);
   });
 
-  // it.only('should worl', () => {
-  //   const text = 'this is some @awesome text and #should @work';
-  //   const reg = /(\@[\w\d_]+)/;
-  //   const matches = findMatches(text, reg);
-  //   expect(matches).toHaveLength(2);
-  // });
+  it('should find multiple matches without the `g` flag', () => {
+    const text = 'this is some @awesome text and #should @work';
+    const reg = /(@\w+)/;
+    const matches = findMatches(text, reg);
+    expect(matches).toHaveLength(2);
+  });
+});
+
+test('flatterArray', () => {
+  const array = [[1, [2, [[3]]]], 4, [5, [[[6]]]]];
+  expect(flattenArray(array)).toEqual([1, 2, 3, 4, 5, 6]);
 });
 
 test('format', () => {
@@ -350,31 +357,6 @@ test('get', () => {
   expect(get(['nested', 0, 'fake'], obj, 'fallback')).toBe('fallback');
 });
 
-describe('kebabCase', () => {
-  it('handles string with spaces', () => {
-    expect(kebabCase('the quick brown fox')).toBe('the-quick-brown-fox');
-    expect(kebabCase('the quick     brownfox')).toBe('the-quick-brownfox');
-  });
-
-  it('handles string with punctuation', () => {
-    expect(kebabCase('the_quick_brown_fox')).toBe('the-quick-brown-fox');
-    expect(kebabCase('the_quick_brown_fox')).toBe('the-quick-brown-fox');
-    expect(kebabCase('the*quick-brown_fox')).toBe('the-quick-brown-fox');
-    expect(kebabCase('the****quick-_-brown_:fox')).toBe('the-quick-brown-fox');
-  });
-
-  it('handles string with mixed spaces and punctuation', () => {
-    expect(kebabCase('the_quick_brown_   fox')).toBe('the-quick-brown-fox');
-    expect(kebabCase('the** **quick-_-brown_:fox')).toBe('the-quick-brown-fox');
-  });
-
-  it('handles string with capitalization', () => {
-    expect(kebabCase('theQuickBrownFox')).toBe('the-quick-brown-fox');
-    expect(kebabCase('the QuickBrown Fox')).toBe('the-quick-brown-fox');
-    expect(kebabCase('The quick brown FOX')).toBe('the-quick-brown-f-o-x');
-  });
-});
-
 test('deepMerge', () => {
   expect(deepMerge({ a: 'a', c: 2 }, { b: 'b', c: 'c' })).toEqual({ a: 'a', b: 'b', c: 'c' });
   expect(
@@ -448,7 +430,7 @@ test('hasOwnProperty', () => {
   expect(hasOwnProperty({ a: 1 }, 'b')).toBeFalse();
   expect(hasOwnProperty({ a: 1, hasOwnProperty: () => true }, 'b')).toBeFalse();
 
-  const noProto = object();
+  const noProto: Shape = object();
   noProto.a = 1;
 
   expect(hasOwnProperty(noProto, 'a')).toBeTrue();

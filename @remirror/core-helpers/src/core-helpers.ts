@@ -7,18 +7,15 @@ import { Primitive } from 'type-fest';
 
 import { __INTERNAL_REMIRROR_IDENTIFIER_KEY__, RemirrorIdentifier } from '@remirror/core-constants';
 import {
+  AnyConstructor,
+  AnyFunction,
   EmptyShape,
   Nullable,
   Predicate,
   RemirrorIdentifierShape,
   Shape,
+  UnknownShape,
 } from '@remirror/core-types';
-
-type AnyConstructor<Type = unknown> = new (...args: any[]) => Type;
-type AnyFunction<Type = any> = (...args: any[]) => Type;
-interface PlainObject<Type = unknown> {
-  [key: string]: Type;
-}
 
 /**
  * Any falsy type.
@@ -302,7 +299,7 @@ export function isSafeInteger(value: unknown): value is number {
  *
  * @public
  */
-export function isPlainObject<Type = unknown>(value: unknown): value is PlainObject<Type> {
+export function isPlainObject<Type = unknown>(value: unknown): value is UnknownShape<Type> {
   if (getObjectType(value) !== TypeName.Object) {
     return false;
   }
@@ -707,7 +704,7 @@ export function take<Type extends any[]>(array: Type, number: number) {
   return array.slice(0, number);
 }
 
-export function omitUndefined(object: PlainObject) {
+export function omitUndefined(object: UnknownShape) {
   return omit(object, (value) => !isUndefined(value));
 }
 
@@ -770,7 +767,8 @@ export function flattenArray<Type>(array: any[]): Type[] {
   const flattened: any[] = [];
 
   for (const item of array) {
-    flattened.push(...[isArray(item) ? flattenArray(item) : [item]]);
+    const itemsToInsert = isArray(item) ? flattenArray(item) : [item];
+    flattened.push(...itemsToInsert);
   }
 
   return flattened;
@@ -809,7 +807,7 @@ export class Merge {
    * @param [obj] - the object to replace the key with. When blank an empty
    * object is used.
    */
-  public static overwrite<Return = any>(object_: PlainObject = object()): Return {
+  public static overwrite<Return = any>(object_: UnknownShape = object()): Return {
     return new Merge(object_) as any;
   }
 
@@ -820,7 +818,7 @@ export class Merge {
     return undefined as any;
   }
 
-  private constructor(object_: PlainObject = object()) {
+  private constructor(object_: UnknownShape = object()) {
     keys(object_).forEach((key) => {
       this[key] = object_[key];
     });
@@ -834,7 +832,7 @@ export class Merge {
  * To completely remove a key you can use the `Merge` helper class which
  * replaces it's key with a completely new object
  */
-export function deepMerge<Type = any>(...objects: Array<PlainObject | unknown[]>): Type {
+export function deepMerge<Type = any>(...objects: Array<UnknownShape | unknown[]>): Type {
   return deepmerge.all<Type>(objects as any, { isMergeableObject: isPlainObject });
 }
 
@@ -1012,6 +1010,14 @@ export const hasOwnProperty = <Obj extends object, Property extends string | num
 
 // Forwarded exports
 
-export * from 'case-anything';
+export {
+  camelCase,
+  capitalCase,
+  constantCase,
+  spaceCase,
+  snakeCase,
+  pathCase,
+  pascalCase,
+} from 'case-anything';
 export { debounce, throttle } from 'throttle-debounce';
 export { omit, pick };

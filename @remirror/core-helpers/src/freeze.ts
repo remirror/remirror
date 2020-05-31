@@ -1,7 +1,7 @@
 import { ErrorConstant } from '@remirror/core-constants';
 
 import { invariant } from './core-errors';
-import { includes, isArray, isObject } from './core-helpers';
+import { isArray, isObject } from './core-helpers';
 
 /**
  * A freeze method for objects that only runs in development. Helps prevent code
@@ -17,7 +17,7 @@ export const freeze = <Target extends object>(
   target: Target,
   options: FreezeOptions = {},
 ): Readonly<Target> => {
-  if (process.env.NODE === 'production') {
+  if (process.env.NODE_ENV === 'production') {
     return target;
   }
 

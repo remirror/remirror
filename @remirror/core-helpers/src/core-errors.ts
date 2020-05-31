@@ -13,7 +13,7 @@ const ERROR_INFORMATION_URL = 'https://docs.remirror.org/errors';
 let errorMessageMap: Partial<Record<ErrorConstant, string>> = {};
 
 // This will be removed in a production environment.
-if (process.env.NODE !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
   errorMessageMap = {
     [ErrorConstant.PROD]: 'Production error. No details available.',
     [ErrorConstant.UNKNOWN]: "An error occurred but we're not quite sure why. 🧐",
@@ -127,7 +127,7 @@ export function invariant(condition: unknown, options: RemirrorErrorOptions): as
   }
 
   // When not in 'DEV' strip the message but still throw
-  if (process.env.NODE === 'production') {
+  if (process.env.NODE_ENV === 'production') {
     throw RemirrorError.create({ code: ErrorConstant.PROD });
   }
 
