@@ -61,10 +61,7 @@ declare global {
       suggesters?: boolean;
     }
 
-    interface ExtensionCreatorMethods<
-      Settings extends Shape = object,
-      Properties extends Shape = object
-    > {
+    interface ExtensionCreatorMethods {
       /**
        * Create suggesters which respond to character key combinations within the
        * editor instance.

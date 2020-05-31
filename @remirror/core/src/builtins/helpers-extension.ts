@@ -80,10 +80,7 @@ declare global {
       helpers: HelpersFromCombined<Combined>;
     }
 
-    interface ExtensionCreatorMethods<
-      Settings extends Shape = object,
-      Properties extends Shape = object
-    > {
+    interface ExtensionCreatorMethods {
       /**
        * A helper method is a function that takes in arguments and returns a
        * value depicting the state of the editor specific to this extension.

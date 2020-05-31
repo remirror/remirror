@@ -1,7 +1,7 @@
 import { pmBuild } from 'jest-prosemirror';
 
 import { NodeGroup } from '@remirror/core-constants';
-import { NodeExtensionSpec } from '@remirror/core-types';
+import { ApplyExtraAttributes, NodeExtensionSpec } from '@remirror/core-types';
 import { fromHTML } from '@remirror/core-utils';
 import { createBaseManager } from '@remirror/test-fixtures';
 
@@ -12,17 +12,21 @@ class CustomExtension extends NodeExtension {
     return 'custom' as const;
   }
 
-  public createNodeSpec(): NodeExtensionSpec {
+  public createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
     return {
       content: 'inline*',
+      attrs: {
+        ...extra.defaults(),
+      },
       group: NodeGroup.Block,
       draggable: false,
       parseDOM: [
         {
           tag: 'p',
+          getAttrs: (node) => extra.parse(node as HTMLElement),
         },
       ],
-      toDOM: () => ['p', 0],
+      toDOM: (node) => ['p', extra.dom(node.attrs), 0],
     };
   }
 }
@@ -31,23 +35,13 @@ describe('extraAttributes', () => {
   const run = 'true';
   const title = 'awesome';
   const customExtension = new CustomExtension({
-    extraAttributes: [
-      'title',
-      ['run', 'failure', 'data-run'],
-      {
-        default: 'yo',
-        getAttribute: (domNode) => (domNode as Element).getAttribute('simple'),
-        name: 'crazy',
-      },
-      {
-        name: 'foo',
-        default: '',
-      },
-      {
-        name: 'bar',
-        default: null,
-      },
-    ],
+    extraAttributes: {
+      title: { default: null },
+      run: { default: 'failure', parseDOM: (dom) => dom.getAttribute('data-run') },
+      crazy: { default: 'yo', parseDOM: (domNode) => domNode.getAttribute('simple') },
+      foo: { default: '' },
+      bar: { default: null },
+    },
   });
 
   const { schema } = createBaseManager({ extensions: [customExtension], presets: [] });
@@ -92,6 +86,6 @@ describe('extraAttributes', () => {
       settings: { disableExtraAttributes: true },
     });
 
-    expect(schema.nodes.custom.spec.attrs).toBeUndefined();
+    expect(schema.nodes.custom.spec.attrs).toEqual({});
   });
 });

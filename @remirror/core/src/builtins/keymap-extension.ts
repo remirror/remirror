@@ -117,10 +117,7 @@ declare global {
       rebuildKeymap: () => void;
     }
 
-    interface ExtensionCreatorMethods<
-      Settings extends Shape = object,
-      Properties extends Shape = object
-    > {
+    interface ExtensionCreatorMethods {
       /**
        * Add keymap bindings for this extension.
        *

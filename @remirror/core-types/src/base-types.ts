@@ -4,6 +4,8 @@ import { ConditionalExcept, ConditionalPick } from 'type-fest';
 
 import { AttributeSpec } from '@remirror/pm/model';
 
+import { ProsemirrorNode } from './alias-types';
+
 /**
  * An alternative to keyof that only extracts the string keys.
  */
@@ -218,35 +220,48 @@ export type AttributesWithClass = ProsemirrorAttributes & { class?: string };
 
 export interface ExtraAttributesObject {
   /**
-   * The name of the attribute
-   */
-  name: string;
-
-  /**
    * The default value for the attr, if left undefined then this becomes a
    * required. and must be provided whenever a node or mark of a type that has
    * them is created.
    */
-  default?: string | null;
+  default: string | null;
 
   /**
-   * A function used to extract the attribute from the dom.
+   * A function used to extract the attribute from the dom and must be applied
+   * to the `parseDOM` method.
    */
-  getAttribute?: (domNode: Node) => unknown;
+  parseDOM?: (domNode: HTMLElement) => unknown;
+
+  /**
+   * Takes the node attributes and applies them to the dom.
+   *
+   * This is called in the `toDOM` method.
+   */
+  toDOM?: (attrs: ProsemirrorAttributes) => string;
+}
+
+export interface ApplyExtraAttributes {
+  /**
+   * A function which returns the object of defaults. Since this is for extra
+   * attributes a default must be provided.
+   */
+  defaults: () => Record<string, { default: string | null }>;
+
+  /**
+   * Transform the dom to prosemirror attributes
+   */
+  parse: (domNode: Node | string) => ProsemirrorAttributes;
+
+  /**
+   * Take the node attributes and create an object that can be stored in the dom.
+   */
+  dom: (node: ProsemirrorAttributes) => Record<string, string>;
 }
 
 /**
- * The first value is the name of the attribute the second value is the default
- * and the third is the optional parse name from the dom via
- * `node.getAttribute()`.
+ * A mapping of the attribute name to it's default, getter and setter.
  */
-export type ExtraAttributesTuple = [string, string, string?];
-
-/**
- * Data representation tuple used for injecting extra attributes into an
- * extension.
- */
-export type ExtraAttributes = string | ExtraAttributesTuple | ExtraAttributesObject;
+export type ExtraAttributes = Record<string, ExtraAttributesObject>;
 
 /**
  * A method that can pull all the extraAttributes from the provided dom node.

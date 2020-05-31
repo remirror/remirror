@@ -110,10 +110,7 @@ declare global {
       attributes?: boolean;
     }
 
-    interface ExtensionCreatorMethods<
-      Settings extends Shape = object,
-      Properties extends Shape = object
-    > {
+    interface ExtensionCreatorMethods {
       /**
        * Allows the extension to modify the attributes for the Prosemirror editor
        * dom element.

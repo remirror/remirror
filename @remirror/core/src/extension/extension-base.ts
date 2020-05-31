@@ -8,6 +8,7 @@ import {
 } from '@remirror/core-constants';
 import { freeze, invariant, isIdentifierOfType, isRemirrorType } from '@remirror/core-helpers';
 import {
+  ApplyExtraAttributes,
   AttributesParameter,
   EditorSchema,
   EditorView,
@@ -219,7 +220,7 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
  */
 interface Extension<Options extends ValidOptions = EmptyShape>
   extends ExtensionLifecycleMethods,
-    Remirror.ExtensionCreatorMethods<Options>,
+    Remirror.ExtensionCreatorMethods,
     Remirror.BaseExtension {
   constructor: ExtensionConstructor<Options>;
 
@@ -332,12 +333,13 @@ export abstract class MarkExtension<Options extends ValidOptions = EmptyShape> e
     return RemirrorIdentifier.MarkExtensionConstructor as const;
   }
 
+  /**
+   * Whether to disable extra attributes for this extension.
+   */
+  public static readonly disableExtraAttributes: boolean = false;
+
   get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
     return RemirrorIdentifier.MarkExtension as const;
-  }
-
-  get spec(): Readonly<MarkExtensionSpec> {
-    return this.#spec;
   }
 
   /**
@@ -353,24 +355,8 @@ export abstract class MarkExtension<Options extends ValidOptions = EmptyShape> e
     return this.store.schema.marks[this.name];
   }
 
-  /**
-   * The prosemirror specification which sets up the mark in the schema.
-   *
-   * @remarks
-   *
-   * The main difference between this and Prosemirror `MarkSpec` is that that
-   * the `toDOM` method doesn't allow dom manipulation. You can only return an
-   * array or string.
-   *
-   * For more advanced requirements, it may be possible to create a `nodeView` to
-   * manage the dom interactions.
-   */
-  readonly #spec: MarkExtensionSpec;
-
   constructor(...parameters: ExtensionConstructorParameter<Options>) {
     super(...parameters);
-
-    this.#spec = this.createMarkSpec();
   }
 
   /**
@@ -384,9 +370,22 @@ export abstract class MarkExtension<Options extends ValidOptions = EmptyShape> e
   /**
    * Provide a method for creating the schema. This is required in order to
    * create a `MarkExtension`.
+   *
+   * @remarks
+   *
+   * The main difference between the return value of this method and Prosemirror
+   * `MarkSpec` is that that the `toDOM` method doesn't allow dom manipulation.
+   * You can only return an array or string.
+   *
+   * For more advanced requirements, it may be possible to create a `nodeView`
+   * to manage the dom interactions.
    */
-  protected abstract createMarkSpec(): MarkExtensionSpec;
+  public abstract createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec;
 }
+
+export interface MarkExtension<Options extends ValidOptions = EmptyShape>
+  extends Extension<Options>,
+    Remirror.MarkExtension {}
 
 /**
  * Defines the abstract class for extensions which can place nodes into the
@@ -403,12 +402,13 @@ export abstract class NodeExtension<Options extends ValidOptions = EmptyShape> e
     return RemirrorIdentifier.NodeExtensionConstructor as const;
   }
 
+  /**
+   * Whether to disable extra attributes for this extension.
+   */
+  public static readonly disableExtraAttributes: boolean = false;
+
   get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
     return RemirrorIdentifier.NodeExtension as const;
-  }
-
-  get spec(): Readonly<NodeExtensionSpec> {
-    return this.#spec;
   }
 
   /**
@@ -418,24 +418,8 @@ export abstract class NodeExtension<Options extends ValidOptions = EmptyShape> e
     return this.store.schema.nodes[this.name];
   }
 
-  /**
-   * The prosemirror specification which sets up the node in the schema.
-   *
-   * @remarks
-   *
-   * The main difference between this and Prosemirror `NodeSpec` is that that
-   * the `toDOM` method doesn't allow dom manipulation. You can only return an
-   * array or string.
-   *
-   * For more advanced settings, where dom manipulation is required, it is
-   * advisable to set up a nodeView.
-   */
-  readonly #spec: NodeExtensionSpec;
-
   constructor(...parameters: ExtensionConstructorParameter<Options>) {
     super(...parameters);
-
-    this.#spec = this.createNodeSpec();
   }
 
   /**
@@ -470,7 +454,7 @@ export abstract class NodeExtension<Options extends ValidOptions = EmptyShape> e
    * class AwesomeExtension extends NodeExtension {
    *   get name() { return 'awesome' as const'; }
    *
-   *   createNodeSpec(hole: SpecHole) {
+   *   createNodeSpec() {
    *     return {
    *       toDOM: (node) => {
    *         return ['p', hole(), 0]
@@ -483,8 +467,12 @@ export abstract class NodeExtension<Options extends ValidOptions = EmptyShape> e
    * The above example will have the `hole()` method call replaced with the
    * extra attributes.
    */
-  protected abstract createNodeSpec(hole?: <T extends object>(attrs?: T) => T): NodeExtensionSpec;
+  public abstract createNodeSpec(parameter: ApplyExtraAttributes): NodeExtensionSpec;
 }
+
+export interface NodeExtension<Options extends ValidOptions = EmptyShape>
+  extends Extension<Options>,
+    Remirror.NodeExtension {}
 
 /**
  * The type which is applicable to any extension instance.
@@ -667,6 +655,13 @@ interface ExtensionConstructor<Options extends ValidOptions = EmptyShape>
    * @defaultValue `ExtensionPriority.Default`
    */
   readonly defaultPriority: ExtensionPriority;
+
+  /**
+   * When true will disable extra attributes for all instances of this extension.
+   *
+   * @defaultValue `false`
+   */
+  readonly disableExtraAttributes?: boolean;
 }
 
 /**
@@ -777,7 +772,10 @@ declare global {
      * This interface is global and uses declaration merging to add new methods
      * to the `Extension` class.
      */
-    interface ExtensionCreatorMethods<Settings extends Shape, Properties extends Shape = object> {}
+    interface ExtensionCreatorMethods {}
+
+    interface NodeExtension {}
+    interface MarkExtension {}
 
     /**
      * An override to for the `AnyExtension` type. If you're extension adds a

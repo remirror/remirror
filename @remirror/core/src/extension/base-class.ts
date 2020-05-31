@@ -50,22 +50,22 @@ export abstract class BaseClass<
   /**
    * The default options for this extension.
    */
-  public static defaultOptions = {};
+  public static readonly defaultOptions = {};
 
   /**
    * The static keys for this class.
    */
-  public static staticKeys: string[] = [];
+  public static readonly staticKeys: string[] = [];
 
   /**
    * The event handler keys.
    */
-  public static handlerKeys: string[] = [];
+  public static readonly handlerKeys: string[] = [];
 
   /**
    * The custom keys.
    */
-  public static customHandlerKeys: string[] = [];
+  public static readonly customHandlerKeys: string[] = [];
 
   /**
    * Not for public usage. This is purely for types to make it easier to infer

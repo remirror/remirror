@@ -9,7 +9,10 @@ const tsProjectRules = {
   '@typescript-eslint/restrict-plus-operands': 'warn',
   '@typescript-eslint/no-misused-promises': 'warn',
   '@typescript-eslint/no-unnecessary-type-assertion': 'error',
-  '@typescript-eslint/prefer-nullish-coalescing': 'error',
+  '@typescript-eslint/prefer-nullish-coalescing': [
+    'error',
+    { ignoreConditionalTests: true, ignoreMixedLogicalExpressions: true },
+  ],
 };
 
 const schemaJsonFilePath = `${__dirname}/docs/.cache/caches/gatsby-plugin-typegen/schema.json`;

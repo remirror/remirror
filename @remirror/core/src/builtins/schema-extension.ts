@@ -1,16 +1,15 @@
-import { ExtensionPriority } from '@remirror/core-constants';
-import { freeze, isArray, isFunction, isString, object } from '@remirror/core-helpers';
+import { ErrorConstant, ExtensionPriority } from '@remirror/core-constants';
+import { entries, invariant, isFunction, object } from '@remirror/core-helpers';
 import {
-  CreateExtraAttributes,
+  ApplyExtraAttributes,
   EditorSchema,
   ExtraAttributes,
-  GetExtraAttributes,
   MarkExtensionSpec,
   NodeExtensionSpec,
   ProsemirrorAttributes,
 } from '@remirror/core-types';
 import { isElementDOMNode } from '@remirror/core-utils';
-import { AttributeSpec, ParseRule, Schema } from '@remirror/pm/model';
+import { Schema } from '@remirror/pm/model';
 
 import {
   CreateLifecycleMethod,
@@ -43,177 +42,200 @@ export class SchemaExtension extends PlainExtension {
     const { managerSettings } = this.store;
     const nodes: Record<string, NodeExtensionSpec> = object();
     const marks: Record<string, MarkExtensionSpec> = object();
-    const extraAttributes: Record<string, ExtraAttributes[]> = object();
-
-    let managerExtraAttributes = managerSettings.extraAttributes ?? [];
+    const namedExtraAttributes = getManagerExtraAttributes(managerSettings);
 
     // Skip the for loop by setting the list to empty when extra attributes are disabled
-    if (managerSettings.disableExtraAttributes) {
-      managerExtraAttributes = [];
-    }
-
-    for (const attributeGroup of managerExtraAttributes) {
-      for (const identifier of attributeGroup.identifiers) {
-        const currentValue = extraAttributes[identifier] ?? [];
-        extraAttributes[identifier] = [...currentValue, ...attributeGroup.attributes];
-      }
-    }
 
     for (const extension of extensions) {
-      const currentAttributes = extraAttributes[extension.name] ?? [];
-      extraAttributes[extension.name] = [
+      const currentAttributes = namedExtraAttributes[extension.name] ?? object();
+
+      namedExtraAttributes[extension.name] = {
         ...currentAttributes,
-        ...(extension.options.extraAttributes ?? []),
-      ];
+        ...(extension.options.extraAttributes ?? object()),
+      };
+
+      const ignoreExtraAttributes =
+        managerSettings.disableExtraAttributes === true ||
+        extension.options.disableExtraAttributes === true ||
+        extension.constructor.disableExtraAttributes === true;
 
       if (isNodeExtension(extension)) {
-        const { name, spec } = extension;
-        nodes[name] = managerSettings.disableExtraAttributes
-          ? spec
-          : transformSchemaAttributes(extraAttributes[extension.name], spec);
+        const spec = createSpec({
+          createExtensionSpec: (extra) => extension.createNodeSpec(extra),
+          extraAttributes: namedExtraAttributes[extension.name],
+          ignoreExtraAttributes,
+          name: extension.constructor.name,
+        });
+
+        extension.spec = spec;
+        nodes[extension.name] = spec;
       }
 
       if (isMarkExtension(extension)) {
-        const { name, spec } = extension;
+        const spec = createSpec({
+          createExtensionSpec: (extra) => extension.createMarkSpec(extra),
+          extraAttributes: namedExtraAttributes[extension.name],
+          ignoreExtraAttributes,
+          name: extension.constructor.name,
+        });
 
-        marks[name] = managerSettings.disableExtraAttributes
-          ? spec
-          : transformSchemaAttributes(extraAttributes[extension.name], spec);
+        extension.spec = spec;
+        marks[extension.name] = spec;
       }
     }
 
-    const { setStoreKey, setExtensionStore } = this.store;
-
     const schema = new Schema({ nodes, marks });
 
-    setStoreKey('nodes', nodes);
-    setStoreKey('marks', marks);
-    setStoreKey('schema', schema);
-    setExtensionStore('schema', schema);
+    this.store.setStoreKey('nodes', nodes);
+    this.store.setStoreKey('marks', marks);
+    this.store.setStoreKey('schema', schema);
+    this.store.setExtensionStore('schema', schema);
   };
 }
 
 /**
- * The interface for adding extra attributes to multiple node and mark extensions.
+ * The interface for adding extra attributes to multiple node and mark
+ * extensions.
  */
 export interface ExtraSchemaAttributes {
   /**
-   * The string identifiers for the extension.
+   * The nodes or marks to add extra attributes to.
    */
   identifiers: string[];
 
   /**
    * The attributes to be added.
    */
-  attributes: ExtraAttributes[];
+  attributes: ExtraAttributes;
+}
+
+type NamedExtraAttributes = Record<string, ExtraAttributes>;
+
+/**
+ * Get the extension extra attributes
+ */
+function getManagerExtraAttributes(settings: Remirror.ManagerSettings) {
+  const extraAttributes: NamedExtraAttributes = object();
+
+  if (settings.disableExtraAttributes) {
+    return extraAttributes;
+  }
+
+  for (const attributeGroup of settings.extraAttributes ?? []) {
+    for (const identifier of attributeGroup.identifiers) {
+      const currentValue = extraAttributes[identifier] ?? {};
+      extraAttributes[identifier] = { ...currentValue, ...attributeGroup.attributes };
+    }
+  }
+
+  return extraAttributes;
+}
+
+interface CreateSpecParameter<Type> {
+  createExtensionSpec: (extra: ApplyExtraAttributes) => Type;
+  extraAttributes: ExtraAttributes;
+  ignoreExtraAttributes: boolean;
+  /**
+   * The name for displaying in an error message (prefer the constructor name)
+   */
+  name: string;
+}
+
+function createSpec<Type>(parameter: CreateSpecParameter<Type>): Type {
+  const { createExtensionSpec, extraAttributes, ignoreExtraAttributes, name } = parameter;
+
+  let defaultsCalled = false;
+
+  const defaults = createDefaults(extraAttributes, ignoreExtraAttributes, () => {
+    defaultsCalled = true;
+  });
+
+  const parse = createParseDOM(extraAttributes, ignoreExtraAttributes);
+
+  const dom = createToDOM(extraAttributes, ignoreExtraAttributes);
+
+  const spec = createExtensionSpec({ defaults, parse, dom });
+
+  invariant(ignoreExtraAttributes || defaultsCalled, {
+    code: ErrorConstant.EXTENSION_SPEC,
+    message: `When creating a node specification you must call the 'defaults', and parse, and 'dom' methods. To avoid this error you can set the static property 'disableExtraAttributes' of '${name}' to 'true'.`,
+  });
+
+  return spec;
 }
 
 /**
- * Automatically set the default attributes and also parse the extra attributes.
- *
- * @remarks
- *
- * TODO thing about how to automatically set the to dom
+ * Create the `defaults()` method which is used for setting the property .
  */
-function transformSchemaAttributes<
-  Spec extends { parseDOM?: ParseRule[] | null; attrs?: { [name: string]: AttributeSpec } | null }
->(extraAttributes: ExtraAttributes[], spec: Readonly<Spec>): Readonly<Spec> {
-  const { parseDOM: originalParseDom, attrs: initialAttributes, ...rest } = spec;
+function createDefaults(
+  extraAttributes: ExtraAttributes,
+  shouldIgnore: boolean,
+  onCalled: () => void,
+) {
+  // Store all the default attributes here.
 
-  /**
-   * Set the default extra attributes.
-   */
-  const defaultExtraAttributes: CreateExtraAttributes = (parameter) => {
-    const { fallback = null } = parameter ?? {};
+  return () => {
+    onCalled();
+    const attributes: Record<string, { default: string | null }> = object();
 
-    // Store all the default attributes here.
-    const attributes: Record<string, AttributeSpec> = object();
-
-    // Loop through the extra attributes and attach to the attributes object.
-    for (const item of extraAttributes) {
-      if (isArray(item)) {
-        // Arrays have a first element as the attribute name and second as the
-        // default value.
-        attributes[item[0]] = { default: item[1] };
-        continue;
-      }
-
-      if (isString(item)) {
-        attributes[item] = { default: fallback };
-        continue;
-      }
-
-      const { name, default: default_ } = item;
-      attributes[name] = default_ !== undefined ? { default: default_ } : {};
-    }
-
-    return attributes;
-  };
-
-  const attrs = { ...defaultExtraAttributes(), ...initialAttributes };
-
-  /**
-   * Retrieve the extra attributes from the domNode.
-   */
-  const parseExtraAttributes: GetExtraAttributes = (domNode) => {
-    const attributes: ProsemirrorAttributes = object();
-
-    if (!isElementDOMNode(domNode)) {
+    if (shouldIgnore) {
       return attributes;
     }
 
-    for (const attribute of extraAttributes) {
-      if (isArray(attribute)) {
-        // Use the default
-        const [name, , attributeName] = attribute;
-        attributes[name] = attributeName
-          ? (domNode as Element).getAttribute(attributeName)
-          : undefined;
-
-        continue;
-      }
-
-      if (isString(attribute)) {
-        // Assume the name is the same
-        attributes[attribute] = (domNode as Element).getAttribute(attribute);
-        continue;
-      }
-
-      const { name, getAttribute, default: fallback } = attribute;
-      attributes[name] = getAttribute ? getAttribute(domNode) || fallback : fallback;
+    // Loop through the extra attributes and attach to the attributes object.
+    for (const [name, value] of entries(extraAttributes)) {
+      attributes[name] = { default: value.default ?? null };
     }
 
     return attributes;
   };
+}
 
-  // Rewrite the parse dom to correctly parse the extra attributes.
-  const parseDOM = originalParseDom
-    ? originalParseDom.map((parseRule) => {
-        const prevGetAttrs = parseRule.getAttrs;
+/**
+ * Create the parseDOM method to be applied to the extension `createNodeSpec`.
+ */
+function createParseDOM(extraAttributes: ExtraAttributes, shouldIgnore: boolean) {
+  return (domNode: string | Node) => {
+    const attributes: ProsemirrorAttributes = object();
+    if (shouldIgnore) {
+      return attributes;
+    }
+    for (const [name, { parseDOM, ...other }] of entries(extraAttributes)) {
+      if (!isElementDOMNode(domNode)) {
+        continue;
+      }
 
-        if (parseRule.attrs && !prevGetAttrs) {
-          return parseRule;
-        }
+      if (!isFunction(parseDOM)) {
+        attributes[name] = domNode.getAttribute(name) ?? other.default;
+      } else {
+        attributes[name] = parseDOM(domNode) ?? other.default;
+      }
+    }
 
-        const getAttrs: NonNullable<ParseRule['getAttrs']> = (domNode) => {
-          if (!isFunction(prevGetAttrs)) {
-            return parseExtraAttributes(domNode);
-          }
+    return attributes;
+  };
+}
 
-          const attrs = prevGetAttrs(domNode);
+/**
+ * Create the `toDOM` method to be applied to the extension `createNodeSpec`.
+ */
+function createToDOM(extraAttributes: ExtraAttributes, shouldIgnore: boolean) {
+  return (attributes: ProsemirrorAttributes) => {
+    const domAttributes: Record<string, string> = object();
+    if (shouldIgnore) {
+      return domAttributes;
+    }
+    for (const [name, { toDOM }] of entries(extraAttributes)) {
+      if (!isFunction(toDOM)) {
+        domAttributes[name] = attributes[name] as string;
+      } else {
+        domAttributes[name] = toDOM(attributes);
+      }
+      console.log(name);
+    }
 
-          if (attrs) {
-            return { ...parseExtraAttributes(domNode), ...attrs };
-          }
-
-          return attrs;
-        };
-
-        return { ...parseRule, getAttrs };
-      })
-    : originalParseDom;
-
-  return freeze({ ...rest, attrs, parseDOM }) as Spec;
+    return domAttributes;
+  };
 }
 
 declare global {
@@ -228,15 +250,17 @@ declare global {
        * Sometimes you need to add additional attributes to a node or mark. This
        * property enables this without needing to create a new extension.
        *
-       * - `extraAttributes: ['title']` Create an attribute with name `title`.When
-       *   parsing the dom it will look for the attribute `title`
-       * - `extraAttributes: [['custom', 'false', 'data-custom'],'title']` - Creates an
-       *   attribute with name `custom` and default value `false`. When parsing the
-       *   dom it will look for the attribute `data-custom`
-       *
-       * @defaultValue `[]`
+       * @defaultValue `{}`
        */
-      extraAttributes?: ExtraAttributes[];
+      extraAttributes?: ExtraAttributes;
+
+      /**
+       * When true will disable extra attributes for this instance of the
+       * extension.
+       *
+       * @defaultValue `undefined`
+       */
+      disableExtraAttributes?: boolean;
     }
 
     interface ManagerSettings {
@@ -250,6 +274,8 @@ declare global {
        * An example is shown below.
        *
        * ```ts
+       * import { EditorManager } from 'remirror/core';
+       *
        * const managerSettings = {
        *   extraAttributes: [
        *     {
@@ -261,6 +287,8 @@ declare global {
        *     },
        *   ]
        * };
+       *
+       * const manager = EditorManager.create([], { extraAttributes })
        * ```
        */
       extraAttributes?: ExtraSchemaAttributes[];
@@ -289,6 +317,20 @@ declare global {
        * The schema created by this extension manager.
        */
       schema: SchemaFromExtensionUnion<InferCombinedExtensions<Combined>>;
+    }
+
+    interface MarkExtension {
+      /**
+       * Provides access to the `MarkExtensionSpec`.
+       */
+      spec: MarkExtensionSpec;
+    }
+
+    interface NodeExtension {
+      /**
+       * Provides access to the `NodeExtensionSpec`.
+       */
+      spec: NodeExtensionSpec;
     }
 
     interface ExtensionStore {

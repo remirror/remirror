@@ -76,10 +76,7 @@ declare global {
       nodeViews?: boolean;
     }
 
-    interface ExtensionCreatorMethods<
-      Settings extends Shape = object,
-      Properties extends Shape = object
-    > {
+    interface ExtensionCreatorMethods {
       /**
        * Registers one or multiple nodeViews for the extension.
        *

@@ -1,4 +1,5 @@
 import {
+  ApplyExtraAttributes,
   CustomHandler,
   CustomHandlerKeyList,
   Handler,
@@ -96,7 +97,7 @@ class NodeExtensionWithDynamicOptions extends NodeExtension<WithDynamicOptions> 
     return 'nodeWithDynamicOptions' as const;
   }
 
-  protected createNodeSpec(): NodeExtensionSpec {
+  public createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
     return {};
   }
 }
@@ -109,7 +110,7 @@ class MarkExtensionWithDynamicOptions extends MarkExtension<WithDynamicOptions> 
     return 'markWithDynamicOptions' as const;
   }
 
-  protected createMarkSpec() {
+  public createMarkSpec() {
     return {};
   }
 }

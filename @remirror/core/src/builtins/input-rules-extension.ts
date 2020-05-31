@@ -58,10 +58,7 @@ declare global {
       inputRules?: boolean;
     }
 
-    interface ExtensionCreatorMethods<
-      Settings extends Shape = object,
-      Properties extends Shape = object
-    > {
+    interface ExtensionCreatorMethods {
       /**
        * Register input rules which are activated if the regex matches as a user is
        * typing.

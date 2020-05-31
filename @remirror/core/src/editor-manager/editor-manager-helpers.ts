@@ -1,10 +1,9 @@
 import { ErrorConstant } from '@remirror/core-constants';
 import { invariant, isEmptyArray, isFunction, object, sort } from '@remirror/core-helpers';
 
-import { AnyExtension, AnyExtensionConstructor, isExtension } from '../extension';
+import { AnyExtensionConstructor, isExtension } from '../extension';
 import {
   AnyCombinedUnion,
-  AnyPreset,
   InferCombinedExtensions,
   InferCombinedPresets,
   isPreset,
@@ -22,16 +21,6 @@ export interface TransformExtensionOrPreset<Combined extends AnyCombinedUnion> {
     GetConstructor<InferCombinedPresets<Combined>>,
     InferCombinedPresets<Combined>
   >;
-}
-
-function isExtensionOfType<ExtensionUnion extends AnyExtension>(
-  value: unknown,
-): value is ExtensionUnion {
-  return isExtension(value);
-}
-
-function isPresetOfType<PresetUnion extends AnyPreset>(value: unknown): value is PresetUnion {
-  return isPreset(value);
 }
 
 /**
@@ -82,7 +71,7 @@ export function transformExtensionOrPreset<Combined extends AnyCombinedUnion>(
 
   for (const presetOrExtension of unionValues) {
     // Update the extension list in this block
-    if (isExtensionOfType<ExtensionUnion>(presetOrExtension)) {
+    if (isExtension<ExtensionUnion>(presetOrExtension)) {
       rawExtensions.push(presetOrExtension);
       updateDuplicateMap(presetOrExtension);
 
@@ -90,7 +79,7 @@ export function transformExtensionOrPreset<Combined extends AnyCombinedUnion>(
     }
 
     // Update the presets list in this block
-    if (isPresetOfType<PresetUnion>(presetOrExtension)) {
+    if (isPreset<PresetUnion>(presetOrExtension)) {
       presets.push(presetOrExtension);
       rawExtensions.push(...(presetOrExtension.extensions as ExtensionUnion[]));
       presetMap.set(presetOrExtension.constructor, presetOrExtension);
@@ -188,17 +177,17 @@ export function transformExtensionOrPreset<Combined extends AnyCombinedUnion>(
  * A current limitation is that it only dives one level deep. So objects with
  * nested object methods will retain those methods.
  *
- * @param object_ - an object which might contain methods
+ * @param value - an object which might contain methods
  *
  * @returns a new object without any of the functions defined
  */
-export function ignoreFunctions(object_: Record<string, unknown>) {
+export function ignoreFunctions(value: Record<string, unknown>) {
   const newObject: Record<string, unknown> = object();
-  for (const key of Object.keys(object_)) {
-    if (isFunction(object_[key])) {
+  for (const key of Object.keys(value)) {
+    if (isFunction(value[key])) {
       continue;
     }
-    newObject[key] = object_[key];
+    newObject[key] = value[key];
   }
 
   return newObject;

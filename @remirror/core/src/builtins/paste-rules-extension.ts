@@ -55,10 +55,7 @@ declare global {
       pasteRules?: boolean;
     }
 
-    interface ExtensionCreatorMethods<
-      Settings extends Shape = object,
-      Properties extends Shape = object
-    > {
+    interface ExtensionCreatorMethods {
       /**
        * Register paste rules for this extension.
        *

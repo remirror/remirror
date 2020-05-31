@@ -59,7 +59,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
     this.registerLanguages();
   }
 
-  protected createNodeSpec(): NodeExtensionSpec {
+  public createNodeSpec(): NodeExtensionSpec {
     return {
       attrs: {
         language: { default: this.options.defaultLanguage },

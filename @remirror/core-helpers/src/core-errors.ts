@@ -51,6 +51,8 @@ if (process.env.NODE_ENV !== 'production') {
     [ErrorConstant.INVALID_NAME]: 'An invalid name was used for the extension.',
     [ErrorConstant.EXTENSION]:
       'An error occurred within an extension. More details should be made available.',
+    [ErrorConstant.EXTENSION_SPEC]:
+      'The spec was defined without calling the `defaults`, `parse` or `dom` methods.',
     [ErrorConstant.REACT_PROVIDER_CONTEXT]:
       '`useRemirror` was called outside of the `remirror` context. It can only be used within an active remirror context created by the `<RemirrorProvider />`.',
     [ErrorConstant.REACT_GET_ROOT_PROPS]:
@@ -71,7 +73,7 @@ function isErrorConstant(code: unknown): code is ErrorConstant {
 function createErrorMessage(code: ErrorConstant, extraMessage?: string) {
   const message = errorMessageMap[code];
   const prefix = message ? `${message}\n\n` : '';
-  const customMessage = extraMessage ? `${extraMessage}\n` : '';
+  const customMessage = extraMessage ? `${extraMessage}\n\n` : '';
 
   return `${prefix}${customMessage}For more information visit ${ERROR_INFORMATION_URL}#${code}`;
 }

@@ -37,7 +37,7 @@ export class TableExtension extends NodeExtension {
     return 'table';
   }
 
-  protected createNodeSpec(): TableSchemaSpec {
+  public createNodeSpec(): TableSchemaSpec {
     return {
       content: 'tableRow+',
       tableRole: 'table',
@@ -122,7 +122,7 @@ export class TableRowExtension extends NodeExtension {
     return 'tableRow';
   }
 
-  protected createNodeSpec(): TableSchemaSpec {
+  public createNodeSpec(): TableSchemaSpec {
     return {
       content: 'tableCell+',
       tableRole: 'row',
@@ -139,7 +139,7 @@ export class TableCellExtension extends NodeExtension {
     return 'tableCell';
   }
 
-  protected createNodeSpec(): TableSchemaSpec {
+  public createNodeSpec(): TableSchemaSpec {
     return {
       content: 'inline*',
       attrs: cellAttributes,
@@ -158,7 +158,7 @@ export class TableHeaderCell extends NodeExtension {
     return 'tableHeader';
   }
 
-  protected createNodeSpec(): TableSchemaSpec {
+  public createNodeSpec(): TableSchemaSpec {
     return {
       content: 'inline*',
       attrs: cellAttributes,

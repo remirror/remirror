@@ -104,6 +104,9 @@ export enum ErrorConstant {
   /** An error occurred within an extension. */
   EXTENSION = 'RMR0100',
 
+  /** The spec was defined without calling the `defaults`, `parse` or `dom` methods. */
+  EXTENSION_SPEC = 'RMR0101',
+
   /**
    * `useRemirror` was called outside of the remirror context. It can only be used
    * within an active remirror context created by the `<RemirrorProvider />`.

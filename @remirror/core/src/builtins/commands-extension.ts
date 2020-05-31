@@ -293,10 +293,7 @@ declare global {
       chain: ChainedFromCombined<Combined>;
     }
 
-    interface ExtensionCreatorMethods<
-      Settings extends Shape = object,
-      Properties extends Shape = object
-    > {
+    interface ExtensionCreatorMethods {
       /**
        * Create and register commands for that can be called within the editor.
        *

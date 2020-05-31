@@ -200,10 +200,7 @@ declare global {
       components: Record<string, ComponentType<any>>;
     }
 
-    interface ExtensionCreatorMethods<
-      Settings extends Shape = object,
-      Properties extends Shape = object
-    > {
+    interface ExtensionCreatorMethods {
       /**
        * A method for transforming the original JSX element received by the
        * extension. This is typically for usage in server side rendered

@@ -297,10 +297,7 @@ declare global {
       plugin: Plugin;
     }
 
-    interface ExtensionCreatorMethods<
-      Settings extends Shape = object,
-      Properties extends Shape = object
-    > {
+    interface ExtensionCreatorMethods {
       /**
        * Create a custom plugin directly in the editor.
        *

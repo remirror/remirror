@@ -6,11 +6,13 @@ import { NodeExtension, NodeGroup } from '@remirror/core';
  * @core
  */
 export class TextExtension extends NodeExtension {
+  public static readonly disableExtraAttributes = true;
+
   get name() {
     return 'text' as const;
   }
 
-  protected createNodeSpec() {
+  public createNodeSpec() {
     return { group: NodeGroup.Inline };
   }
 }

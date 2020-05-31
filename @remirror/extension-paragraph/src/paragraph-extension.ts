@@ -1,5 +1,6 @@
 import {
   ALIGN_PATTERN,
+  ApplyExtraAttributes,
   convertCommand,
   DefaultExtensionOptions,
   ExtensionTag,
@@ -34,11 +35,12 @@ export class ParagraphExtension extends NodeExtension<ParagraphOptions> {
 
   public readonly extensionTags = [ExtensionTag.LastNodeCompatible] as const;
 
-  protected createNodeSpec(): NodeExtensionSpec {
+  public createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
     return {
       content: 'inline*',
       group: NodeGroup.Block,
       attrs: {
+        ...extra.defaults(),
         align: { default: null },
         id: { default: null },
         indent: { default: 0 },
@@ -49,6 +51,7 @@ export class ParagraphExtension extends NodeExtension<ParagraphOptions> {
         {
           tag: 'p',
           getAttrs: (node) => ({
+            ...extra.parse(node),
             ...getAttributes(this.options, node as HTMLElement),
           }),
         },
@@ -56,7 +59,7 @@ export class ParagraphExtension extends NodeExtension<ParagraphOptions> {
 
       toDOM: (node) => {
         const { align, indent, lineSpacing, id } = node.attrs as ParagraphExtensionAttributes;
-        const attributes: Record<string, string> = object();
+        const attributes: Record<string, string> = object(extra.dom(node.attrs));
         let style = '';
 
         if (align && align !== 'left') {
