@@ -16,7 +16,7 @@ export const mapToActiveIndex = <Item extends object>(
   }));
 };
 
-interface CalculateNewIndexFromArrowPressParameter {
+interface IndexFromArrowPressParameter {
   /**
    * Whether the arrow key was the up key or the down key
    */
@@ -32,11 +32,11 @@ interface CalculateNewIndexFromArrowPressParameter {
    */
   prevIndex: number;
 }
-export const calculateNewIndexFromArrowPress = ({
+export const indexFromArrowPress = ({
   direction,
   matchLength,
   prevIndex,
-}: CalculateNewIndexFromArrowPressParameter) =>
+}: IndexFromArrowPressParameter) =>
   direction === 'down'
     ? prevIndex + 1 > matchLength - 1
       ? 0

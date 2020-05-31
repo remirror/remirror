@@ -7,12 +7,13 @@ import { MentionExtension, MentionExtensionMatcher } from '@remirror/extension-m
 import { SuggestStateMatch } from '@remirror/pm/suggest';
 import { BaseReactCombinedUnion, RemirrorProviderProps } from '@remirror/react';
 
-export type OnMentionChangeParameter = MentionState & {
+export interface MentionChangeParameter extends BaseMentionState {
+  name: MatchName;
   /**
    * The currently active matching index
    */
   activeIndex: number;
-};
+}
 
 export interface SocialEditorProps extends Partial<RemirrorProviderProps<SocialCombinedUnion>> {
   extensions?: AnyExtension[];
@@ -46,7 +47,7 @@ export interface SocialEditorProps extends Partial<RemirrorProviderProps<SocialC
   /**
    * Called any time there is a change in the mention
    */
-  onMentionChange: (params?: OnMentionChangeParameter) => void;
+  onMentionChange: (params?: MentionChangeParameter) => void;
 
   /**
    * The matcher options for the `@` mention character.
@@ -66,24 +67,10 @@ interface BaseMentionState {
   query: string;
 }
 
-interface NameParameter<Name extends string> {
-  /**
-   * The name of the currently active suggestion.
-   * This is the name passed into the suggestersMatcher config object.
-   */
-  name: Name;
-}
-
-interface AtMentionState extends BaseMentionState, NameParameter<'at'> {}
-
-interface HashMentionState extends BaseMentionState, NameParameter<'tag'> {}
-
 /**
  * The possible active suggestion names.
  */
 export type MatchName = 'at' | 'tag';
-
-export type MentionState = AtMentionState | HashMentionState;
 
 export interface UserData {
   id?: string;

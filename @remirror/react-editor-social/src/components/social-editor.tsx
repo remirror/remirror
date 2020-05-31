@@ -29,11 +29,11 @@ import {
   ActiveTagData,
   ActiveUserData,
   MatchName,
+  MentionChangeParameter,
   MentionState,
-  OnMentionChangeParameter,
   SocialEditorProps,
 } from '../social-types';
-import { calculateNewIndexFromArrowPress, mapToActiveIndex } from '../social-utils';
+import { indexFromArrowPress, mapToActiveIndex } from '../social-utils';
 import { SocialEditorComponent } from './social-wrapper-component';
 
 interface State {
@@ -102,14 +102,14 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
     }
 
     // pressed up arrow
-    const activeIndex = calculateNewIndexFromArrowPress({
+    const activeIndex = indexFromArrowPress({
       direction,
       matchLength: matches.length,
       prevIndex: previousIndex,
     });
 
     this.setState({ activeIndex, activeMatcher: name as MatchName });
-    onMentionStateChange({ name, query: queryText.full, activeIndex } as OnMentionChangeParameter);
+    onMentionStateChange({ name, query: queryText.full, activeIndex } as MentionChangeParameter);
 
     return true;
   };
@@ -312,7 +312,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
     }
 
     // pressed up arrow
-    const activeEmojiIndex = calculateNewIndexFromArrowPress({
+    const activeEmojiIndex = indexFromArrowPress({
       direction,
       matchLength: emojiList.length,
       prevIndex: previousIndex,

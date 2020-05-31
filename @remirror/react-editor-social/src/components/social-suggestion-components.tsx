@@ -1,8 +1,7 @@
 import React, { forwardRef, FunctionComponent } from 'react';
 
-import { object, Position, RemirrorTheme } from '@remirror/core';
+import { object, Position } from '@remirror/core';
 import { useRemirror } from '@remirror/react';
-import { useRemirrorTheme } from '@remirror/ui';
 
 import {
   DivProps,
