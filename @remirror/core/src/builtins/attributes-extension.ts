@@ -58,7 +58,7 @@ export class AttributesExtension extends PlainExtension {
         this.store.managerSettings.exclude?.attributes ||
         extension.options.exclude?.attributes
       ) {
-        break;
+        continue;
       }
 
       // Inserted at the start of the list so that when combining the full

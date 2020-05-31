@@ -39,7 +39,7 @@ export class NodeViewsExtension extends PlainExtension {
         // Extension settings exclude it
         extension.options.exclude?.nodeViews
       ) {
-        break;
+        continue;
       }
 
       const nodeView = extension.createNodeViews();

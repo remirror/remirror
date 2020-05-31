@@ -54,7 +54,7 @@ export class HelpersExtension extends PlainExtension {
 
     for (const extension of extensions) {
       if (!extension.createHelpers) {
-        break;
+        continue;
       }
 
       const extensionHelpers = extension.createHelpers();

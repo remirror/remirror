@@ -68,7 +68,7 @@ export class CommandsExtension extends PlainExtension {
 
     for (const extension of extensions) {
       if (!extension.createCommands) {
-        break;
+        continue;
       }
 
       const extensionCommands = extension.createCommands();

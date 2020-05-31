@@ -33,7 +33,7 @@ export class PasteRulesExtension extends PlainExtension {
           // Extension settings exclude it
           extension.options.exclude?.pasteRules
         ) {
-          break;
+          continue;
         }
 
         pasteRules.push(...extension.createPasteRules());

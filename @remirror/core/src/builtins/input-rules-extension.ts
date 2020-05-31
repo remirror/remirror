@@ -37,7 +37,7 @@ export class InputRulesExtension extends PlainExtension {
         // Extension settings exclude it
         extension.options.exclude?.inputRules
       ) {
-        break;
+        continue;
       }
 
       rules.push(...extension.createInputRules());
