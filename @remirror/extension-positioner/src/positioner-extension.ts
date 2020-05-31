@@ -23,7 +23,7 @@ export interface PositionerOptions {
    * to changes in the positioner output. This is a custom handler and should be
    * amended with `addCustomHandler`.
    */
-  positionerHandler?: CustomHandler<PositionerChangeHandler>;
+  positionerHandler?: CustomHandler<PositionerHandler>;
 }
 
 /**
@@ -42,7 +42,7 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  #positionerHandlerList: PositionerChangeHandler[] = [];
+  #positionerHandlerList: PositionerHandler[] = [];
 
   protected onAddCustomHandler: AddCustomHandler<PositionerOptions> = ({ positionerHandler }) => {
     if (!positionerHandler) {
@@ -67,10 +67,7 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
     }
   }
 
-  private calculatePositioner(
-    handler: PositionerChangeHandler,
-    update: TransactionLifecycleParameter,
-  ) {
+  private calculatePositioner(handler: PositionerHandler, update: TransactionLifecycleParameter) {
     const { element, onChange, positioner } = handler;
     const { initialPosition, getPosition, hasChanged, isActive } = getPositioner(positioner);
 
@@ -91,7 +88,7 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
   }
 }
 
-export interface PositionerChangeHandler {
+export interface PositionerHandler {
   /**
    * The HTML element to calculate a position for.
    */
@@ -105,8 +102,10 @@ export interface PositionerChangeHandler {
   /**
    * Method to call when there is a change in the position.
    */
-  onChange: (position: ChangeHandlerParameter) => void;
+  onChange: PositionerChangeHandlerMethod;
 }
+
+export type PositionerChangeHandlerMethod = (position: PositionerChangeHandlerParameter) => void;
 
 interface ActiveChangeHandlerParameter extends Position {
   /**
@@ -122,7 +121,9 @@ interface InactiveChangeHandlerParameter {
   active: false;
 }
 
-type ChangeHandlerParameter = ActiveChangeHandlerParameter | InactiveChangeHandlerParameter;
+export type PositionerChangeHandlerParameter =
+  | ActiveChangeHandlerParameter
+  | InactiveChangeHandlerParameter;
 
 const positioners = {
   bubble: bubblePositioner,

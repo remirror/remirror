@@ -11,11 +11,8 @@ import {
   EditorState,
   EditorStateParameter,
   EditorViewParameter,
-  ElementParameter,
   FromToParameter,
   ObjectNode,
-  Position,
-  PositionParameter,
   ProsemirrorNode,
   RemirrorContentType,
   RenderEnvironment,
@@ -214,66 +211,6 @@ export interface BaseProps<Combined extends AnyCombinedUnion> extends StringHand
   fallbackContent?: ObjectNode | ProsemirrorNode;
 }
 
-export interface Positioner<Combined extends AnyCombinedUnion = any> {
-  /**
-   * The default and initial position value. This is used at the start and
-   * whenever isActive becomes false
-   */
-  initialPosition: Position;
-
-  /**
-   * Determines whether anything has changed and whether to continue with a
-   * recalculation. By default this is only true when the document has or
-   * selection has changed.
-   *
-   * @remarks
-   *
-   * Sometimes it is useful to recalculate the positioner on every state update. In this case
-   * you can set this method to always return true.
-   *
-   * ```ts
-   * const positioner: Positioner = {
-   *   hasChanged: () => true
-   *
-   * };
-   *
-   * @param params
-   */
-  hasChanged: (params: CompareStateParameter<SchemaFromCombined<Combined>>) => boolean;
-
-  /**
-   * Determines whether the positioner should be active
-   */
-  isActive: (params: GetPositionParameter<Combined>) => boolean;
-
-  /**
-   * Calculate and return a new position (only called when `hasChanged` and
-   * `isActive` return true)
-   */
-  getPosition: (params: GetPositionParameter<Combined>) => Position;
-}
-
-export type CalculatePositionerParameter<
-  Combined extends AnyCombinedUnion
-> = PositionerIdParameter & Positioner<Combined>;
-
-export type GetPositionerPropsConfig<
-  Combined extends AnyCombinedUnion,
-  RefKey extends string = 'ref'
-> = RefParameter<RefKey> & Partial<Positioner<Combined>> & PositionerIdParameter;
-
-export interface RefParameter<RefKey = 'ref'> {
-  /**
-   * A custom ref key which allows a reference to be obtained from non standard
-   * components.
-   *
-   * @defaultValue 'ref'
-   */
-  refKey?: RefKey;
-}
-
-export type PositionerProps = IsActiveParameter & Position;
-
 export interface GetRootPropsConfig<RefKey extends string = 'ref'>
   extends RefParameter<RefKey>,
     Shape {}
@@ -284,9 +221,15 @@ export type RefKeyRootProps<RefKey extends string = 'ref'> = {
   key: string;
   children: ReactNode;
 } & Shape;
-
-export type GetPositionerReturn<RefKey extends string = 'ref'> = { [P in RefKey]: Ref<any> } &
-  PositionerProps;
+export interface RefParameter<RefKey = 'ref'> {
+  /**
+   * A custom ref key which allows a reference to be obtained from non standard
+   * components.
+   *
+   * @defaultValue 'ref'
+   */
+  refKey?: RefKey;
+}
 
 /**
  * These are the props passed to the render function provided when setting up
@@ -367,17 +310,6 @@ export interface RemirrorContextProps<Combined extends AnyCombinedUnion>
   getRootProps: <RefKey extends string = 'ref'>(
     options?: GetRootPropsConfig<RefKey>,
   ) => RefKeyRootProps<RefKey>;
-
-  /**
-   * Attach these props to a component to inject it with position data.
-   * Typically this is used for creating menu components.
-   *
-   * A custom positioner can be passed in to update the method used to calculate
-   * the position.
-   */
-  getPositionerProps: <RefKey extends string = 'ref'>(
-    options: GetPositionerPropsConfig<any, RefKey>,
-  ) => GetPositionerReturn<RefKey>;
 
   /**
    * The previous and next state
@@ -471,47 +403,6 @@ export type AttributePropFunction<Combined extends AnyCombinedUnion> = (
 export interface PlaceholderConfig extends TextParameter {
   className: string;
 }
-
-export type PositionerMapValue = ElementParameter & {
-  prev: PositionerProps;
-};
-
-export interface PositionerRefFactoryParameter extends PositionerIdParameter, PositionParameter {}
-
-export interface GetPositionParameter<Combined extends AnyCombinedUnion>
-  extends EditorViewParameter<SchemaFromCombined<Combined>>,
-    ElementParameter,
-    CompareStateParameter<SchemaFromCombined<Combined>> {}
-
-export interface PositionerIdParameter {
-  /**
-   * A unique id for the positioner.
-   *
-   * This is used to map the ref of the tracked component to a unique id and
-   * cant be updated without losing track of the component's reference element.
-   */
-  positionerId: string;
-}
-
-export interface IsActiveParameter {
-  /**
-   * A boolean value determining whether the positioner should be active.
-   */
-  isActive: boolean;
-}
-
-export interface PositionerParameter {
-  /**
-   * The positioner object which determines how the changes in the view impact
-   * the calculated position.
-   */
-  positioner: Partial<Positioner>;
-}
-
-export interface UsePositionerParameter<RefKey extends string = 'ref'>
-  extends PositionerIdParameter,
-    PositionerParameter,
-    RefParameter<RefKey> {}
 
 export interface UpdateStateParameter<Schema extends EditorSchema = any>
   extends Partial<TransactionParameter<Schema>>,

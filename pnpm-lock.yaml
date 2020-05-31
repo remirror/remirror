@@ -573,6 +573,7 @@ importers:
       '@remirror/extension-base-keymap': 'link:../extension-base-keymap'
       '@remirror/extension-doc': 'link:../extension-doc'
       '@remirror/extension-paragraph': 'link:../extension-paragraph'
+      '@remirror/extension-positioner': 'link:../extension-positioner'
       '@remirror/extension-text': 'link:../extension-text'
     devDependencies:
       '@remirror/pm': 'link:../pm'
@@ -582,6 +583,7 @@ importers:
       '@remirror/extension-base-keymap': ^0.0.0
       '@remirror/extension-doc': ^0.0.0
       '@remirror/extension-paragraph': ^0.0.0
+      '@remirror/extension-positioner': ^0.0.0
       '@remirror/extension-text': ^0.0.0
       '@remirror/pm': '*'
   '@remirror/preset-react':
@@ -618,6 +620,7 @@ importers:
     dependencies:
       '@babel/runtime': 7.10.1
       '@remirror/core': 'link:../core'
+      '@remirror/extension-positioner': 'link:../extension-positioner'
       '@remirror/preset-core': 'link:../preset-core'
       '@remirror/preset-react': 'link:../preset-react'
       '@remirror/react-utils': 'link:../react-utils'
@@ -646,6 +649,7 @@ importers:
     specifiers:
       '@babel/runtime': ^7.10.1
       '@remirror/core': ^0.11.0
+      '@remirror/extension-positioner': ^0.0.0
       '@remirror/pm': ^0.0.0
       '@remirror/preset-core': ^0.0.0
       '@remirror/preset-react': ^0.0.0

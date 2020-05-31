@@ -1,8 +1,15 @@
-import { DependencyList, useContext, useMemo, useRef } from 'react';
+import {
+  DependencyList,
+  RefCallback,
+  useCallback,
+  useContext,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import {
-  AddCustomHandler,
   AddHandler,
   AnyCombinedUnion,
   AnyExtensionConstructor,
@@ -19,11 +26,19 @@ import {
   OptionsOfConstructor,
   PresetConstructorParameter,
 } from '@remirror/core';
+import { CustomHandlerMethod } from '@remirror/core/src/extension/base-class';
+import {
+  PositionerChangeHandlerMethod,
+  PositionerChangeHandlerParameter,
+  PositionerExtension,
+  StringPositioner,
+} from '@remirror/extension-positioner';
 import { CorePreset } from '@remirror/preset-core';
 import { ReactPreset } from '@remirror/preset-react';
 
+import { Positioner } from '../../../../packages/remirror/node_modules/@remirror/extension-positioner/src';
 import { RemirrorContext } from '../react-contexts';
-import { RemirrorContextProps, UsePositionerParameter } from '../react-types';
+import { RemirrorContextProps } from '../react-types';
 
 /**
  * This provides access to the Remirror Editor context using hooks.
@@ -229,7 +244,7 @@ interface UseExtensionCallbackParameter<Type extends AnyExtensionConstructor> {
    * addCustomHandler('keybindings', { Enter: () => false });
    * ```
    */
-  addCustomHandler: AddCustomHandler<OptionsOfConstructor<Type>>;
+  addCustomHandler: CustomHandlerMethod<OptionsOfConstructor<Type>>;
 
   /**
    * An instance of the extension. This can be used for more advanced scenarios.
@@ -239,7 +254,7 @@ interface UseExtensionCallbackParameter<Type extends AnyExtensionConstructor> {
 
 type UseExtensionCallback<Type extends AnyExtensionConstructor> = (
   parameter: UseExtensionCallbackParameter<Type>,
-) => Dispose;
+) => Dispose | undefined;
 
 /**
  * Update preset properties dynamically while the editor is still running.
@@ -306,7 +321,7 @@ interface UsePresetCallbackParameter<Type extends AnyPresetConstructor> {
   /**
    * Set the value of a custom option which returns a dispose method.
    */
-  addCustomHandler: AddCustomHandler<OptionsOfConstructor<Type>>;
+  addCustomHandler: CustomHandlerMethod<OptionsOfConstructor<Type>>;
 
   /**
    * An instance of the preset. This should only be needed in advanced situations.
@@ -316,7 +331,7 @@ interface UsePresetCallbackParameter<Type extends AnyPresetConstructor> {
 
 type UsePresetCallback<Type extends AnyPresetConstructor> = (
   parameter: UsePresetCallbackParameter<Type>,
-) => Dispose;
+) => Dispose | undefined;
 
 /**
  * Takes an object and checks if any of it's properties are different from previously
@@ -372,20 +387,30 @@ export function useManager<Combined extends AnyCombinedUnion>(
 
 export type BaseReactCombinedUnion = ReactPreset | CorePreset | BuiltinPreset;
 
+export type UsePositionerHookReturn = PositionerChangeHandlerParameter & {
+  ref: RefCallback<HTMLElement>;
+};
+
 /**
- * A shorthand tool for retrieving the positioner props and adding them to a component.
+ * A shorthand tool for creating a positioner with the `PositionerExtension`
+ * applied via .
  *
  * @remarks
  *
  * ```ts
- * import { bubblePositioner } from '@remirror/react';
+ * import { usePositioner } from '@remirror/react';
  *
  * const MenuComponent: FC = () => {
+ *
+ *   const onChange = ({active, bottom, left}) => {
+ *     re
+ *   }
+ *
  *   const {
- *     isActive,
+ *     active,
  *     bottom,
  *     left
- * } = usePositioner({positionerId: 'bubbleMenu', positioner: bubblePositioner });
+ * } = usePositioner({positioner });
  *
  *   return (
  *     <div style={{ bottom, left }}>
@@ -399,11 +424,45 @@ export type BaseReactCombinedUnion = ReactPreset | CorePreset | BuiltinPreset;
  * </RemirrorProvider>
  * ```
  */
-export function usePositioner<Ref extends string = 'ref'>({
-  positioner,
-  ...rest
-}: UsePositionerParameter<Ref>) {
-  const { getPositionerProps } = useRemirror();
+export function usePositioner(
+  positioner: Positioner | StringPositioner,
+  onChange?: PositionerChangeHandlerMethod,
+): UsePositionerHookReturn {
+  const [state, setState] = useState<PositionerChangeHandlerParameter>({ active: false });
+  const [element, setElement] = useState<HTMLElement>();
 
-  return getPositionerProps<Ref>({ ...positioner, ...rest });
+  const ref: RefCallback<HTMLElement> = useCallback((instance) => {
+    if (instance) {
+      setElement(instance);
+    }
+  }, []);
+
+  const onChangeHandler: PositionerChangeHandlerMethod = useCallback(
+    (parameter) => {
+      setState(parameter);
+      onChange?.(parameter);
+    },
+    [onChange],
+  );
+
+  useExtension(
+    PositionerExtension,
+    (parameter) => {
+      if (!element) {
+        return;
+      }
+
+      const { addCustomHandler } = parameter;
+      const dispose = addCustomHandler('positionerHandler', {
+        element,
+        positioner,
+        onChange: onChangeHandler,
+      });
+
+      return dispose;
+    },
+    [positioner],
+  );
+
+  return { ...state, ref };
 }

@@ -40,21 +40,14 @@ import {
 
 import { PortalContainer, RemirrorPortals } from '../portals';
 import { defaultProps } from '../react-constants';
-import { defaultPositioner } from '../react-positioners';
 import {
   BaseListenerParameter,
   BaseProps,
-  CalculatePositionerParameter,
   DefaultReactCombined,
   EditorStateEventListenerParameter,
   FocusType,
-  GetPositionerPropsConfig,
-  GetPositionerReturn,
   GetRootPropsConfig,
   ListenerParameter,
-  PositionerMapValue,
-  PositionerProps,
-  PositionerRefFactoryParameter,
   RefKeyRootProps,
   RemirrorContextProps,
   RemirrorEventListenerParameter,
@@ -121,11 +114,6 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
    * Stores the Prosemirror EditorView dom element.
    */
   private editorRef?: HTMLElement;
-
-  /**
-   * A map to keep track of all registered positioners.
-   */
-  private readonly positionerMap = new Map<string, PositionerMapValue>();
 
   /**
    * The prosemirror EditorView.
@@ -268,35 +256,6 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
   };
 
   /**
-   * The method passed to the render props that can be used for passing the
-   * position and positioner information components that want to respond to the
-   * cursor position (e.g.) a floating / bubble menu.
-   */
-  private readonly getPositionerProps = <RefKey extends string = 'ref'>(
-    options: GetPositionerPropsConfig<Combined, RefKey> | undefined,
-  ): GetPositionerReturn<RefKey> => {
-    const { refKey: referenceKey = 'ref', ...config } = {
-      ...defaultPositioner,
-      ...(options ?? object<NonNullable<typeof options>>()),
-    };
-
-    // Create the onRef handler which will store the ref to the positioner
-    // component
-    const reference = this.positionerRefFactory({
-      positionerId: config.positionerId,
-      position: config.initialPosition,
-    });
-
-    // Calculate the props
-    const properties = this.calculatePositionProps({ ...config });
-
-    return {
-      ...properties,
-      [referenceKey]: reference,
-    } as GetPositionerReturn<RefKey>;
-  };
-
-  /**
    * Stores the Prosemirror editor dom instance for this component using `refs`
    */
   private readonly onRef: Ref<HTMLElement> = (reference) => {
@@ -305,71 +264,6 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
       this.onRefLoad();
     }
   };
-
-  /**
-   * A curried function which holds the positionerId and position in a closure.
-   * It generate the method that is passed into a `ref` prop for any component
-   * to register dom element for the positioner.
-   *
-   * It works since each positioner is created with a distinct `positionerId` (a
-   * descriptive string) so that multiple positioners can be registered per
-   * editor.
-   */
-  private readonly positionerRefFactory = ({
-    positionerId,
-    position,
-  }: PositionerRefFactoryParameter): Ref<HTMLElement> => (element) => {
-    if (!element) {
-      return;
-    }
-
-    // Retrieve the current
-    const current = this.positionerMap.get(positionerId);
-    if (!current || current.element !== element) {
-      this.positionerMap.set(positionerId, { element, prev: { ...position, isActive: false } });
-    }
-  };
-
-  /**
-   * Returns the positioner props for a given positionerId.
-   */
-  private calculatePositionProps(
-    parameter: CalculatePositionerParameter<Combined>,
-  ): PositionerProps {
-    const { initialPosition, getPosition, hasChanged, isActive, positionerId } = parameter;
-    const positionerMapItem = this.positionerMap.get(positionerId);
-    let positionerProperties = { isActive: false, ...initialPosition };
-
-    // No element exist yet - so we can return early
-    if (!positionerMapItem) {
-      return positionerProperties;
-    }
-
-    // Nothing has changed so return the prev value.
-    if (!hasChanged(this.state.editor)) {
-      return positionerMapItem.prev;
-    }
-
-    const { element, prev } = positionerMapItem;
-    const parameters = { element, view: this.view, ...this.state.editor };
-
-    positionerProperties.isActive = isActive(parameters);
-
-    if (!positionerProperties.isActive) {
-      if (prev.isActive) {
-        // This has changed so store the new value.
-        this.positionerMap.set(positionerId, { element, prev: positionerProperties });
-        return positionerProperties;
-      }
-
-      return prev;
-    }
-
-    positionerProperties = { ...positionerProperties, ...getPosition(parameters) };
-    this.positionerMap.set(positionerId, { element, prev: positionerProperties });
-
-    return positionerProperties;
-  }
 
   /**
    * This sets the attributes that wrap the outer prosemirror node.
@@ -754,7 +648,6 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
 
       /* Getter Methods */
       getRootProps: this.getRootProps,
-      getPositionerProps: this.getPositionerProps,
 
       /* Setter Methods */
       clearContent: this.clearContent,

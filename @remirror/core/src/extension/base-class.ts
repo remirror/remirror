@@ -332,6 +332,16 @@ export abstract class BaseClass<
   protected onAddCustomHandler?: AddCustomHandler<Options>;
 }
 
+/**
+ * @internal
+ */
+export type CustomHandlerMethod<Options extends ValidOptions> = <
+  Key extends keyof GetCustomHandler<Options>
+>(
+  key: Key,
+  value: Required<GetCustomHandler<Options>>[Key],
+) => Dispose;
+
 export type AddCustomHandler<Options extends ValidOptions> = (
   parameter: Partial<GetCustomHandler<Options>>,
 ) => Dispose | undefined;
