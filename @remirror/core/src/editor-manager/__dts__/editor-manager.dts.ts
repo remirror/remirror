@@ -4,9 +4,8 @@ import { BuiltinPreset } from '../../builtins';
 import { EditorManager } from '../editor-manager';
 
 const manager: EditorManager<
-  ParagraphExtension | DocExtension,
-  CorePreset | BuiltinPreset
-> = EditorManager.create({
+  ParagraphExtension | DocExtension | CorePreset | BuiltinPreset
+> = EditorManager.fromObject({
   extensions: [new ParagraphExtension(), new DocExtension()],
   presets: [new CorePreset()],
 });

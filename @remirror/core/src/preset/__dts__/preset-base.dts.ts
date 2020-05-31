@@ -35,7 +35,7 @@ class MissingStaticOptionsPreset extends Preset<{ oops?: boolean }> {
   }
 }
 
-const manager = EditorManager.create({
+const manager = EditorManager.fromObject({
   extensions: [],
   presets: [new MissingStaticOptionsPreset()],
 });

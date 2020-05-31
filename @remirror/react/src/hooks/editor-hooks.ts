@@ -379,7 +379,7 @@ export function useManager<Combined extends AnyCombinedUnion>(
     combined,
   ]);
 
-  return useMemo(() => EditorManager.fromList(extensionsAndPresets, settings), [
+  return useMemo(() => createReactManager(extensionsAndPresets, settings), [
     extensionsAndPresets,
     settings,
   ]);
@@ -465,4 +465,14 @@ export function usePositioner(
   );
 
   return { ...state, ref };
+}
+
+/**
+ * Create a react manager with all the default react presets and extensions.
+ */
+export function createReactManager<Combined extends AnyCombinedUnion>(
+  combined: Combined[],
+  settings?: Remirror.ManagerSettings,
+): EditorManager<Combined | BuiltinPreset | ReactPreset | CorePreset> {
+  return EditorManager.create([...combined, new ReactPreset(), new CorePreset()], settings);
 }

@@ -56,9 +56,8 @@ import {
  *
  * The `ExtensionEventMethod`s
  *
- * - onConstruct - when the extension manager is created and after the schema is
+ * - onCreate - when the extension manager is created and after the schema is
  *   made available.
- * - onInit - when the editor manager is initialized within the component
  * - onView - when the view has been received from the dom ref.
  */
 
@@ -95,11 +94,11 @@ import {
  */
 export class EditorManager<Combined extends AnyCombinedUnion> {
   /**
-   * The main static method for creating a manager.
+   * A static method to create the editor manager from an object.
    */
-  public static create<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>({
-    extensions = [] as ExtensionUnion[],
-    presets = [] as PresetUnion[],
+  public static fromObject<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>({
+    extensions,
+    presets,
     settings = {},
   }: EditorManagerParameter<ExtensionUnion, PresetUnion>) {
     const builtInPreset = new BuiltinPreset();
@@ -113,7 +112,7 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   /**
    * The main static method for creating a manager.
    */
-  public static fromList<Combined extends AnyCombinedUnion>(
+  public static create<Combined extends AnyCombinedUnion>(
     combined: Combined[],
     settings: Remirror.ManagerSettings = {},
   ) {
@@ -563,7 +562,7 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   ): EditorManager<Combined | ExtraCombined> {
     const currentCombined = this.#combined.map((e) => e.clone(e.initialOptions as any));
 
-    return EditorManager.fromList([...currentCombined, ...combined], settings) as EditorManager<
+    return EditorManager.create([...currentCombined, ...combined], settings) as EditorManager<
       Combined | ExtraCombined
     >;
   }
@@ -631,7 +630,21 @@ export type CombinedFromManager<
   Manager extends AnyEditorManager
 > = Manager[typeof Remirror._COMBINED];
 
+interface EditorManagerConstructor extends Function, Remirror.EditorManagerConstructor {
+  fromObject: <ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>(
+    parameter: EditorManagerParameter<ExtensionUnion, PresetUnion>,
+  ) => EditorManager<ExtensionUnion | PresetUnion | BuiltinPreset>;
+  create: <Combined extends AnyCombinedUnion>(
+    combined: Combined,
+  ) => EditorManager<Combined | BuiltinPreset>;
+}
+
 export interface EditorManager<Combined extends AnyCombinedUnion> {
+  /**
+   * The constructor for the editor manager.
+   */
+  constructor: EditorManagerConstructor;
+
   /**
    * Pseudo property which is a small hack to store the type of the extension
    * union.
@@ -676,6 +689,13 @@ export interface EditorManager<Combined extends AnyCombinedUnion> {
 declare global {
   namespace Remirror {
     const _COMBINED: unique symbol;
+
+    /**
+     * Extend this to add extra static methods to the
+     * `EditorManagerConstructor`.
+     */
+    interface EditorManagerConstructor {}
+
     /**
      * Settings which can be passed into the manager.
      */

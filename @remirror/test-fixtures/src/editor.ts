@@ -1,5 +1,4 @@
 import { AnyExtension, AnyPreset, EditorManager, EditorManagerParameter } from '@remirror/core';
-import { BoldExtension } from '@remirror/extension-bold';
 import { CorePreset } from '@remirror/preset-core';
 import { ReactPreset } from '@remirror/preset-react';
 
@@ -13,7 +12,7 @@ export function createBaseManager<
   const { extensions = [], presets = [], settings } = parameter;
   const corePreset = new CorePreset();
 
-  return EditorManager.create({
+  return EditorManager.fromObject({
     extensions,
     presets: [...presets, corePreset],
     settings,
@@ -31,7 +30,7 @@ export function createReactManager<
   const corePreset = new CorePreset();
   const reactPreset = new ReactPreset();
 
-  return EditorManager.create({
+  return EditorManager.fromObject({
     extensions,
     presets: [...presets, corePreset, reactPreset],
     settings,

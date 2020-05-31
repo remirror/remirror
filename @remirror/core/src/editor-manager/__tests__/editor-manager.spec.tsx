@@ -58,7 +58,7 @@ describe('Manager', () => {
   const bigExtension = new BigExtension({ priority: ExtensionPriority.Lowest + 1 });
   const corePreset = new CorePreset();
 
-  let manager = EditorManager.create({
+  let manager = EditorManager.fromObject({
     extensions: [dummyExtension, bigExtension],
     presets: [corePreset],
   });
@@ -66,7 +66,7 @@ describe('Manager', () => {
   let view: EditorView;
 
   beforeEach(() => {
-    manager = EditorManager.create({
+    manager = EditorManager.fromObject({
       extensions: [dummyExtension, bigExtension],
       presets: [new CorePreset({})],
     });
@@ -182,7 +182,7 @@ test('keymaps', () => {
     };
   }
 
-  const manager = EditorManager.create({
+  const manager = EditorManager.fromObject({
     extensions: [new FirstExtension(), new SecondExtension(), new ThirdExtension()],
     presets: [new CorePreset()],
   });

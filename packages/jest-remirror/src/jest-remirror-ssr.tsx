@@ -16,7 +16,7 @@ export function renderEditorString<Combined extends AnyCombinedUnion>(
 ): string {
   const corePreset = new CorePreset();
 
-  const manager = EditorManager.fromList([...combined, corePreset], settings);
+  const manager = EditorManager.create([...combined, corePreset], settings);
 
   return renderToString(
     <RenderEditor {...props} manager={manager}>

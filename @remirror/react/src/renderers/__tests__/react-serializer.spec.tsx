@@ -52,7 +52,7 @@ test('ReactSerializer.fromManager', () => {
     { extension: new BoldExtension(), priority: 2 },
     { extension: new CodeBlockExtension(), priority: 2 },
   ];
-  const altManager = EditorManager.create(altExtensions);
+  const altManager = EditorManager.fromObject(altExtensions);
 
   expect(ReactSerializer.fromManager(altManager).nodes.text).toBeFunction();
 });
