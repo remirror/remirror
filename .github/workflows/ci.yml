@@ -82,6 +82,8 @@ jobs:
         uses: changesets/action@master
         with:
           publish: pnpm run release
+          commit: 'chore: update versions' # The commit message to use. Default to `Version Packages`.
+          title: 'chore: update versions' # The pull request title. Default to `Version Packages`.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
