@@ -255,7 +255,8 @@
     "write-json-file": "^4.3.0"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=12",
+    "pnpm": ">=5"
   },
   "preconstruct": {
     "packages": [
