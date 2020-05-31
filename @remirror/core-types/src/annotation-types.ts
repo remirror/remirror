@@ -12,7 +12,7 @@ import {
 type StaticAnnotation = Flavoring<'StaticAnnotation'>;
 type DynamicAnnotation = Flavoring<'DynamicAnnotation'>;
 type HandlerAnnotation = Flavoring<'HandlerAnnotation'>;
-type CustomAnnotation = Flavoring<'CustomAnnotation'>;
+type CustomHandlerAnnotation = Flavoring<'CustomAnnotation'>;
 
 export type RemoveAnnotation<Type> = RemoveFlavoring<Type>;
 
@@ -119,10 +119,14 @@ export type Handler<Type extends AnyFunction<void>> = Type & HandlerAnnotation;
  * what is can return.
  *
  * For example with keybindings you will probably receive an object of event
- * handlers which need to be added to the `keymap` plugin. The custom handler annotation allows you to accept functions or
- * objects which return non void values and decide how the handler should be used.
+ * handlers which need to be added to the `keymap` plugin. The custom handler
+ * annotation allows you to accept functions or objects which return non void
+ * values and set upt the handler for yourself.
+ *
+ * For custom handlers the `option`s value is meaningless and can only be changed
+ * through the `addCustomHandler` method.
  */
-export type Custom<Type> = Type & CustomAnnotation;
+export type CustomHandler<Type> = Type & CustomHandlerAnnotation;
 
 /**
  * Get the static `Options` from the options type.
@@ -153,8 +157,11 @@ export type GetHandler<Options extends Shape> = ConditionalPick<Options, Handler
 /**
  * Get the object event handler `Options` from the options type.
  */
-export type GetCustom<Options extends Shape> = ConditionalPick<Options, CustomAnnotation> &
-  Partial<ConditionalPick<PickPartial<Options>, CustomAnnotation>>;
+export type GetCustomHandler<Options extends Shape> = ConditionalPick<
+  Options,
+  CustomHandlerAnnotation
+> &
+  Partial<ConditionalPick<PickPartial<Options>, CustomHandlerAnnotation>>;
 
 /**
  * This constrains the valid options that can be passed into your extensions or presets.
@@ -172,8 +179,8 @@ export type DynamicShape<Type extends object> = { [Key in keyof Type]: Dynamic<T
 export type HandlerShape<Type extends Shape> = {
   [Key in keyof Type]: Handler<Type[Key]>;
 };
-export type CustomShape<Type extends Shape> = {
-  [Key in keyof Type]: Custom<Type[Key]>;
+export type CustomHandlerShape<Type extends Shape> = {
+  [Key in keyof Type]: CustomHandler<Type[Key]>;
 };
 
 export type GetFixed<Options extends ValidOptions> = Readonly<Required<Options>>;
@@ -183,13 +190,15 @@ export type GetFlippedStatic<Options extends ValidOptions> = FlipPartialAndRequi
 export type GetPartialDynamic<Options extends ValidOptions> = Partial<GetDynamic<Options>>;
 export type GetFixedStatic<Options extends ValidOptions> = Readonly<Required<GetStatic<Options>>>;
 export type GetFixedDynamic<Options extends ValidOptions> = Readonly<Required<GetDynamic<Options>>>;
-export type GetFixedCustom<Options extends ValidOptions> = Readonly<Required<GetCustom<Options>>>;
+export type GetFixedCustomHandler<Options extends ValidOptions> = Readonly<
+  Required<GetCustomHandler<Options>>
+>;
 
 export type GetMappedHandler<Options extends ValidOptions> = {
   [Key in keyof GetHandler<Options>]: Array<GetHandler<Options>[Key]>;
 };
-export type GetMappedCustom<Options extends ValidOptions> = {
-  [Key in keyof GetCustom<Options>]: Array<GetCustom<Options>[Key]>;
+export type GetMappedCustomHandler<Options extends ValidOptions> = {
+  [Key in keyof GetCustomHandler<Options>]: Array<GetCustomHandler<Options>[Key]>;
 };
 
 /**
@@ -210,11 +219,11 @@ export type Dispose = () => void;
 export type HandlerKey<Options extends ValidOptions> = keyof GetHandler<Options>;
 export type StaticKey<Options extends ValidOptions> = keyof GetStatic<Options>;
 export type DynamicKey<Options extends ValidOptions> = keyof GetDynamic<Options>;
-export type CustomKey<Options extends ValidOptions> = keyof GetCustom<Options>;
+export type CustomHandlerKey<Options extends ValidOptions> = keyof GetCustomHandler<Options>;
 export type HandlerKeyList<Options extends ValidOptions> = Array<HandlerKey<Options>>;
 export type StaticKeyList<Options extends ValidOptions> = Array<StaticKey<Options>>;
 export type DynamicKeyList<Options extends ValidOptions> = Array<DynamicKey<Options>>;
-export type CustomKeyList<Options extends ValidOptions> = Array<CustomKey<Options>>;
+export type CustomHandlerKeyList<Options extends ValidOptions> = Array<CustomHandlerKey<Options>>;
 
 declare global {
   namespace Remirror {
@@ -229,7 +238,7 @@ declare global {
     interface ValidOptionsExtender {
       DynamicAnnotation: DynamicAnnotation;
       HandlerAnnotation: HandlerAnnotation;
-      CustomAnnotation: CustomAnnotation;
+      CustomAnnotation: CustomHandlerAnnotation;
       StaticAnnotation: StaticAnnotation;
     }
   }

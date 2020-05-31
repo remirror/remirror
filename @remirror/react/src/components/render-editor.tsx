@@ -333,13 +333,10 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
   /**
    * Returns the positioner props for a given positionerId.
    */
-  private calculatePositionProps({
-    initialPosition,
-    getPosition,
-    hasChanged,
-    isActive,
-    positionerId,
-  }: CalculatePositionerParameter<Combined>): PositionerProps {
+  private calculatePositionProps(
+    parameter: CalculatePositionerParameter<Combined>,
+  ): PositionerProps {
+    const { initialPosition, getPosition, hasChanged, isActive, positionerId } = parameter;
     const positionerMapItem = this.positionerMap.get(positionerId);
     let positionerProperties = { isActive: false, ...initialPosition };
 
@@ -364,6 +361,7 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
         this.positionerMap.set(positionerId, { element, prev: positionerProperties });
         return positionerProperties;
       }
+
       return prev;
     }
 

@@ -1,17 +1,17 @@
 import React from 'react';
 
 import {
-  AnyEditorManager,
+  AnyCombinedUnion,
+  EditorManager,
   EditorStateParameter,
-  GetExtensionUnion,
-  SchemaFromExtensionUnion,
+  SchemaFromCombined,
   Shape,
 } from '@remirror/core';
 
 import { mapProps, ReactSerializer } from '../renderers';
 
-export interface RemirrorSSRProps<ManagerType extends AnyEditorManager = any>
-  extends EditorStateParameter<SchemaFromExtensionUnion<GetExtensionUnion<ManagerType>>> {
+export interface RemirrorSSRProps<Combined extends AnyCombinedUnion>
+  extends EditorStateParameter<SchemaFromCombined<Combined>> {
   /**
    * The attributes to pass into the root div element.
    */
@@ -24,18 +24,18 @@ export interface RemirrorSSRProps<ManagerType extends AnyEditorManager = any>
   /**
    * The manager.
    */
-  manager: ManagerType;
+  manager: EditorManager<Combined>;
 }
 
 /**
- * Remirror SSR component used for rendering in non dom environments
+ * Remirror SSR component used for rendering in non dom environments.
  */
-export const RemirrorSSR = <ManagerType extends AnyEditorManager = any>({
+export const RemirrorSSR = <Combined extends AnyCombinedUnion>({
   attributes,
   manager,
   state,
   editable,
-}: RemirrorSSRProps<ManagerType>) => {
+}: RemirrorSSRProps<Combined>) => {
   const outerProperties = mapProps(attributes);
   const ssrElement = ReactSerializer.fromManager(manager).serializeFragment(state.doc.content);
   const transformedElement = manager.store.ssrTransformer(ssrElement);

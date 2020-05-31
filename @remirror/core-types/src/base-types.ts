@@ -95,7 +95,7 @@ export interface Shape {
 /**
  * An object with string keys and values of type `unknown`
  */
-export type UnknownShape = Record<string, unknown>;
+export type UnknownShape<Type = unknown> = Record<string, Type>;
 
 /**
  * An alternative to usage of `{}` as a type.
@@ -114,7 +114,7 @@ export type AnyFunction<Type = any> = (...args: any[]) => Type;
 /**
  * Matches any constructor type.
  */
-export type AnyConstructor = new (...args: any) => any;
+export type AnyConstructor<Type = any> = new (...args: any[]) => Type;
 
 /**
  * Make the whole interface partial except for some specified keys which will be

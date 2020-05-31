@@ -1,8 +1,9 @@
 import escapeStringRegex from 'escape-string-regexp';
 
 import {
+  AddCustomHandler,
   CommandFunction,
-  CustomKeyList,
+  CustomHandlerKeyList,
   DefaultExtensionOptions,
   FromToParameter,
   HandlerKeyList,
@@ -11,7 +12,6 @@ import {
   object,
   PlainExtension,
   plainInputRule,
-  SetCustomOption,
 } from '@remirror/core';
 import { Suggestion } from '@remirror/pm/suggest';
 
@@ -40,7 +40,9 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
     suggestionKeyBindings: {},
   };
 
-  public static readonly customKeys: CustomKeyList<EmojiOptions> = ['suggestionKeyBindings'];
+  public static readonly customHandlerKeys: CustomHandlerKeyList<EmojiOptions> = [
+    'suggestionKeyBindings',
+  ];
   public static readonly handlerKeys: HandlerKeyList<EmojiOptions> = [
     'onSuggestionChange',
     'onSuggestionExit',
@@ -172,7 +174,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
     };
   };
 
-  public onSetCustomOption: SetCustomOption<EmojiOptions> = (parameter) => {
+  public onAddCustomHandler: AddCustomHandler<EmojiOptions> = (parameter) => {
     const { suggestionKeyBindings } = parameter;
 
     if (!suggestionKeyBindings) {

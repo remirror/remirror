@@ -1,4 +1,4 @@
-import { Custom, Handler, ProsemirrorAttributes, Static } from '@remirror/core';
+import { CustomHandler, Handler, ProsemirrorAttributes, Static } from '@remirror/core';
 import {
   FromToEndParameter,
   SuggestChangeHandlerMethod,
@@ -148,7 +148,7 @@ export interface MentionOptions {
    *
    * @defaultValue `() => false`
    */
-  onCharacterEntry?: Custom<MentionCharacterEntryMethod>;
+  onCharacterEntry?: CustomHandler<MentionCharacterEntryMethod>;
 
   /**
    * An object that describes how certain key bindings should be handled.
@@ -158,7 +158,7 @@ export interface MentionOptions {
    * Return `true` to prevent any further prosemirror actions or return `false`
    * to allow prosemirror to continue.
    */
-  keyBindings?: Custom<MentionKeyBinding>;
+  keyBindings?: CustomHandler<MentionKeyBinding>;
 }
 
 /**

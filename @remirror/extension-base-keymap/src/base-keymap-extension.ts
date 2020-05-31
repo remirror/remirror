@@ -1,7 +1,8 @@
 import {
+  AddCustomHandler,
   convertCommand,
-  Custom,
-  CustomKeyList,
+  CustomHandler,
+  CustomHandlerKeyList,
   DefaultExtensionOptions,
   entries,
   ExtensionPriority,
@@ -12,7 +13,6 @@ import {
   object,
   OnSetOptionsParameter,
   PlainExtension,
-  SetCustomOption,
 } from '@remirror/core';
 import {
   baseKeymap,
@@ -78,7 +78,7 @@ export interface BaseKeymapOptions {
    * }});
    * ```
    */
-  keymap?: Custom<KeyBindings>;
+  keymap?: CustomHandler<KeyBindings>;
 }
 
 /**
@@ -99,10 +99,9 @@ export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
     defaultBindingMethod: () => false,
     selectParentNodeOnEscape: false,
     excludeBaseKeymap: false,
-    keymap: {},
   };
 
-  public static readonly customKeys: CustomKeyList<BaseKeymapOptions> = ['keymap'];
+  public static readonly customHandlerKeys: CustomHandlerKeyList<BaseKeymapOptions> = ['keymap'];
 
   get name() {
     return 'baseKeymap' as const;
@@ -131,7 +130,7 @@ export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
    * TODO think about the case where bindings are being disposed and then added
    * in a different position in the `extraKeyBindings` array.
    */
-  public onSetCustomOption: SetCustomOption<BaseKeymapOptions> = ({ keymap }) => {
+  public onAddCustomHandler: AddCustomHandler<BaseKeymapOptions> = ({ keymap }) => {
     if (keymap) {
       this.extraKeyBindings = [...this.extraKeyBindings, keymap];
       this.store?.rebuildKeymap?.();

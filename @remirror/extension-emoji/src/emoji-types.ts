@@ -1,4 +1,4 @@
-import { Custom, Handler } from '@remirror/core';
+import { CustomHandler, Handler } from '@remirror/core';
 import {
   SuggestChangeHandlerParameter,
   SuggestExitHandlerParameter,
@@ -55,7 +55,7 @@ export interface EmojiOptions {
   /**
    * Key bindings for suggesters.
    */
-  suggestionKeyBindings?: Custom<EmojiSuggestionKeyBindings>;
+  suggestionKeyBindings?: CustomHandler<EmojiSuggestionKeyBindings>;
 
   /**
    * Called whenever the suggestion value is updated.

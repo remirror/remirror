@@ -1,6 +1,6 @@
 import {
   CommandFunction,
-  CustomKeyList,
+  CustomHandlerKeyList,
   DefaultExtensionOptions,
   DispatchFunction,
   EditorState,
@@ -79,7 +79,7 @@ export interface HistoryOptions {
 export class HistoryExtension extends PlainExtension<HistoryOptions> {
   public static readonly staticKeys: StaticKeyList<HistoryOptions> = ['depth', 'newGroupDelay'];
   public static readonly handlerKeys: HandlerKeyList<HistoryOptions> = ['onRedo', 'onUndo'];
-  public static readonly customKeys: CustomKeyList<HistoryOptions> = [];
+  public static readonly customHandlerKeys: CustomHandlerKeyList<HistoryOptions> = [];
 
   public static readonly defaultOptions: DefaultExtensionOptions<HistoryOptions> = {
     depth: 100,

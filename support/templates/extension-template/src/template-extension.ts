@@ -14,7 +14,7 @@ export interface TemplateOptions {}
 export class TemplateExtension extends PlainExtension<TemplateOptions> {
   public static readonly staticKeys: StaticKeyList<TemplateOptions> = [];
   public static readonly handlerKeys: HandlerKeyList<TemplateOptions> = [];
-  public static readonly customKeys: CustomKeyList<TemplateOptions> = [];
+  public static readonly customHandlerKeys: CustomKeyList<TemplateOptions> = [];
 
   public static readonly defaultOptions: DefaultExtensionOptions<TemplateOptions> = {};
 

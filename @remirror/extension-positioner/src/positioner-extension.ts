@@ -1,10 +1,10 @@
 import {
-  Custom,
+  AddCustomHandler,
+  CustomHandler,
   DefaultExtensionOptions,
   isString,
   PlainExtension,
   Position,
-  SetCustomOption,
   TransactionLifecycleMethod,
   TransactionLifecycleParameter,
 } from '@remirror/core';
@@ -22,7 +22,7 @@ export interface PositionerOptions {
    * An object specifying the positioner and the change handler for responding
    * to changes in the positioner output.
    */
-  changeHandler?: Custom<PositionerChangeHandler>;
+  changeHandler?: CustomHandler<PositionerChangeHandler>;
 }
 
 /**
@@ -43,7 +43,7 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   #changeHandlerList: PositionerChangeHandler[] = [];
 
-  public onSetCustomOption: SetCustomOption<PositionerOptions> = ({ changeHandler }) => {
+  public onAddCustomHandler: AddCustomHandler<PositionerOptions> = ({ changeHandler }) => {
     if (!changeHandler) {
       return;
     }

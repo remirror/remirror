@@ -1,7 +1,7 @@
 import {
-  Custom,
+  CustomHandler,
   Dynamic,
-  GetCustom,
+  GetCustomHandler,
   GetDynamic,
   GetHandler,
   GetStatic,
@@ -23,8 +23,8 @@ interface MixedOptions {
   onOptionalChange?: Handler<(value?: number) => void>;
 
   /** Defined as custom so, it's up to me. */
-  keyBindings: Custom<Record<string, (event: Event) => boolean>>;
-  optionalKeyBindings?: Custom<Record<string, (event: Event) => boolean>>;
+  keyBindings: CustomHandler<Record<string, (event: Event) => boolean>>;
+  optionalKeyBindings?: CustomHandler<Record<string, (event: Event) => boolean>>;
 
   /**
    * Dynamic is optional but can make it obvious.
@@ -56,12 +56,12 @@ const mixedHandler: GetHandler<MixedOptions> = { onChange() {}, onOptionalChange
 // @ts-expect-error
 const failedHandler: GetHandler<MixedOptions> = { keyBindings: {} };
 
-const mixedCustom: GetCustom<MixedOptions> = {
+const mixedCustom: GetCustomHandler<MixedOptions> = {
   keyBindings: { Enter: () => false },
   optionalKeyBindings: {},
 };
 // @ts-expect-error
-const failedCustom: GetCustom<MixedOptions> = { onChange() {} };
+const failedCustom: GetCustomHandler<MixedOptions> = { onChange() {} };
 
 // @ts-expect-error
 type FailedHandler1 = Handler<object>;

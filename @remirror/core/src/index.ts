@@ -17,5 +17,5 @@ export type {
   BaseClass,
   BaseClassConstructor,
   AddHandler,
-  SetCustomOption,
+  AddCustomHandler,
 } from './extension/base-class';

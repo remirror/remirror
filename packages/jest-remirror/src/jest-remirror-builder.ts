@@ -153,6 +153,7 @@ interface CoerceParameter extends SchemaParameter {
  */
 export function coerce(parameter: CoerceParameter) {
   const { content, schema } = parameter;
+
   const taggedContent = content.map((item) =>
     isString(item) ? text(item, schema) : item,
   ) as Array<TaggedContentItem | TaggedContentItem[]>;

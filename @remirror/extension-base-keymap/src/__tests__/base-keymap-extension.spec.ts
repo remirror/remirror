@@ -11,7 +11,7 @@ test('is base keymap extension valid', () => {
 test('supports custom keymaps', () => {
   const mock = jest.fn();
   const baseKeymapExtension = new BaseKeymapExtension();
-  baseKeymapExtension.setCustomOption('keymap', { a: mock });
+  baseKeymapExtension.addCustomHandler('keymap', { a: mock });
   const {
     add,
     nodes: { p, doc },

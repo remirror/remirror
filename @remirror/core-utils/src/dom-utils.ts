@@ -21,6 +21,7 @@ import {
   NodeMatch,
   ObjectNode,
   PluginKey,
+  Position,
   PositionParameter,
   ProsemirrorNode,
   ProsemirrorNodeParameter,
@@ -431,7 +432,7 @@ export function getPluginState<GState>(plugin: Plugin | PluginKey, state: Editor
  *
  * @public
  */
-export function getPluginMeta<GMeta>(key: PluginKey | Plugin | string, tr: Transaction): GMeta {
+export function getPluginMeta<Meta>(key: PluginKey | Plugin | string, tr: Transaction): Meta {
   return tr.getMeta(key);
 }
 
@@ -444,10 +445,10 @@ export function getPluginMeta<GMeta>(key: PluginKey | Plugin | string, tr: Trans
  *
  * @public
  */
-export function setPluginMeta<GMeta>(
+export function setPluginMeta<Meta>(
   key: PluginKey | Plugin | string,
   tr: Transaction,
-  data: GMeta,
+  data: Meta,
 ): Transaction {
   return tr.setMeta(key, data);
 }
@@ -536,10 +537,8 @@ export function isTextDOMNode(domNode: unknown): domNode is Text {
 
 interface GetOffsetParentParameter extends EditorViewParameter, ElementParameter {}
 
-export function getOffsetParent({ view, element }: GetOffsetParentParameter): HTMLElement {
-  return isNullOrUndefined(element)
-    ? ((view.dom as HTMLElement).offsetParent as HTMLElement)
-    : (element.offsetParent as HTMLElement);
+export function getOffsetParent({ view, element }: GetOffsetParentParameter): Element | null {
+  return isNullOrUndefined(element) ? (view.dom as HTMLElement).offsetParent : element.offsetParent;
 }
 
 /**
@@ -579,10 +578,15 @@ interface AbsoluteCoordinatesParameter
  *
  * @param params - see {@link AbsoluteCoordinatesParameter}.
  */
-export function absoluteCoordinates(parameter: AbsoluteCoordinatesParameter) {
+export function absoluteCoordinates(parameter: AbsoluteCoordinatesParameter): Partial<Position> {
   const { view, element, position, cursorHeight = getLineHeight({ element }) } = parameter;
 
   const offsetParent = getOffsetParent({ view, element });
+
+  if (!offsetParent) {
+    return {};
+  }
+
   const box = offsetParent.getBoundingClientRect();
 
   return {

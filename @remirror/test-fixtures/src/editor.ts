@@ -38,11 +38,9 @@ export function createReactManager<
   });
 }
 
-const manager = createReactManager();
-const newManager = manager.clone([new BoldExtension()]);
-
 export * from '@remirror/preset-core';
 export * from '@remirror/extension-doc';
 export * from '@remirror/extension-text';
 export * from '@remirror/extension-paragraph';
 export * from '@remirror/extension-bold';
+export * from '@remirror/extension-code-block';

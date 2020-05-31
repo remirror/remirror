@@ -1,6 +1,6 @@
 # remirror
 
-> One editing package to rule them all, one editing package to find them.
+> One package to rule them all, one entry point to bind them.
 
 [![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
 [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)

@@ -1,4 +1,10 @@
-import { Custom, CustomKeyList, Handler, HandlerKeyList, Static } from '@remirror/core-types';
+import {
+  CustomHandler,
+  CustomHandlerKeyList,
+  Handler,
+  HandlerKeyList,
+  Static,
+} from '@remirror/core-types';
 
 import {
   AnyExtension,
@@ -10,7 +16,7 @@ import {
   NodeExtensionSpec,
   PlainExtension,
 } from '../../..';
-import { SetCustomOption } from '../base-class';
+import { AddCustomHandler } from '../base-class';
 
 const anyExtensionTester = <ExtensionUnion extends AnyExtension>(extension: ExtensionUnion) => {};
 const anyNodeExtensionTester = <ExtensionUnion extends AnyNodeExtension>(
@@ -144,19 +150,19 @@ anyNodeExtensionTester(markExtensionWithDynamicOptions);
 interface WithHandlers {
   onChange: Handler<(text: string) => void>;
   onUpdate: Handler<(valid: boolean) => void>;
-  bindings: Custom<Record<string, (value: string) => boolean>>;
+  bindings: CustomHandler<Record<string, (value: string) => boolean>>;
 }
 
 class ExtensionWithHandlers extends PlainExtension<WithHandlers> {
   public static defaultOptions: DefaultExtensionOptions<WithHandlers> = { bindings: {} };
   public static handlerKeys: HandlerKeyList<WithHandlers> = ['onChange', 'onUpdate'];
-  public static customKeys: CustomKeyList<WithHandlers> = ['bindings'];
+  public static customHandlerKeys: CustomHandlerKeyList<WithHandlers> = ['bindings'];
 
   get name() {
     return 'withHandlers' as const;
   }
 
-  public onSetCustomOption: SetCustomOption<WithHandlers> = (parameter) => {
+  public onAddCustomHandler: AddCustomHandler<WithHandlers> = (parameter) => {
     const { bindings } = parameter;
 
     if (bindings) {
@@ -171,11 +177,11 @@ class ExtensionWithHandlers extends PlainExtension<WithHandlers> {
 
 const withHandlers = new ExtensionWithHandlers();
 
-withHandlers.setCustomOption('bindings', {});
+withHandlers.addCustomHandler('bindings', {});
 // @ts-expect-error
-withHandlers.setCustomOption('oops', {});
+withHandlers.addCustomHandler('oops', {});
 // @ts-expect-error
-withHandlers.setCustomOption('bindings', { value: () => '' });
+withHandlers.addCustomHandler('bindings', { value: () => '' });
 
 withHandlers.addHandler('onChange', (value: string) => {});
 // @ts-expect-error

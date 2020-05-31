@@ -1,6 +1,6 @@
 import { isExtensionValid } from '@remirror/test-fixtures';
 
-import { PlaceholderExtension } from '../../dist/extension-placeholder.cjs';
+import { PlaceholderExtension } from '../placeholder-extension';
 
 test('is valid', () => {
   expect(isExtensionValid(PlaceholderExtension, {}));

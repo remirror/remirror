@@ -16,19 +16,19 @@ import React from 'react';
 import {
   AnyCombinedUnion,
   CommandFunction,
-  CommandsFromExtensions,
+  CommandsFromCombined,
   EditorManager,
   EditorState,
   GetMarkNameUnion,
   GetNodeNameUnion,
-  HelpersFromExtensions,
+  HelpersFromCombined,
   isMarkExtension,
   isNodeExtension,
   object,
   pick,
   ProsemirrorAttributes,
   ProsemirrorNode,
-  SchemaFromExtensionUnion,
+  SchemaFromCombined,
 } from 'remirror/core';
 import { CorePreset } from 'remirror/preset/core';
 import { RenderEditor } from 'remirror/react';
@@ -136,13 +136,13 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * The editor view.
    */
   get view(): TestEditorView {
-    return this.#manager.view as TestEditorView<this['manager']['~Sch']>;
+    return this.#manager.view as TestEditorView<SchemaFromCombined<Combined>>;
   }
 
   /**
    * The editor state.
    */
-  get state(): EditorState {
+  get state(): EditorState<SchemaFromCombined<Combined>> {
     return this.view.state;
   }
 
@@ -156,7 +156,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * The root node for the editor.
    */
-  get doc(): ProsemirrorNode<this['schema']> {
+  get doc(): ProsemirrorNode<SchemaFromCombined<Combined>> {
     return this.state.doc;
   }
 
@@ -165,8 +165,8 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * TestEditor make sure not to use a stale copy of the actions otherwise it
    * will throw errors due to using an outdated state.
    */
-  get commands(): CommandsFromExtensions<this['manager']['~E']> {
-    return this.#manager.store.commands as any;
+  get commands(): CommandsFromCombined<Combined> {
+    return this.#manager.store.commands;
   }
 
   /**
@@ -174,8 +174,8 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * TestEditor make sure not to use a stale copy of the helpers object
    * otherwise it will throw errors due to using an outdated state.
    */
-  get helpers(): HelpersFromExtensions<this['manager']['~E']> {
-    return this.#manager.store.helpers as any;
+  get helpers(): HelpersFromCombined<Combined> {
+    return this.#manager.store.helpers;
   }
 
   /**
@@ -254,9 +254,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *
    * If content already exists it will be overwritten.
    */
-  public add = (
-    taggedDocument: TaggedProsemirrorNode<SchemaFromExtensionUnion<this['manager']['~E']>>,
-  ) => {
+  public add = (taggedDocument: TaggedProsemirrorNode<SchemaFromCombined<Combined>>) => {
     const { content } = taggedDocument;
     const { cursor, node, start, end, all, ...tags } = taggedDocument.tags;
 
@@ -294,9 +292,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Alias for add.
    */
-  public overwrite = (
-    taggedDocument: TaggedProsemirrorNode<SchemaFromExtensionUnion<this['manager']['~E']>>,
-  ) => {
+  public overwrite = (taggedDocument: TaggedProsemirrorNode<SchemaFromCombined<Combined>>) => {
     return this.add(taggedDocument);
   };
 
@@ -308,6 +304,19 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
 
     return this;
   }
+
+  /**
+   * Selects the text between the provided start and end.
+   */
+  public selectText = (start: number, end?: number) => {
+    dispatchTextSelection({
+      view: this.view,
+      start,
+      end: end && start <= end ? end : this.doc.resolve(start).end(),
+    });
+
+    return this;
+  };
 
   /**
    * Allows for the chaining of calls and is useful for running tests after
@@ -389,6 +398,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    */
   public dispatchCommand = (command: CommandFunction) => {
     command({ state: this.state, dispatch: this.view.dispatch, view: this.view });
+
     return this;
   };
 

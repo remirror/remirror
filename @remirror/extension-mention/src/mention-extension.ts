@@ -1,6 +1,7 @@
 import {
+  AddCustomHandler,
   convertCommand,
-  CustomKeyList,
+  CustomHandlerKeyList,
   DefaultExtensionOptions,
   ErrorConstant,
   getMarkRange,
@@ -18,7 +19,6 @@ import {
   RangeParameter,
   removeMark,
   replaceText,
-  SetCustomOption,
   StaticKeyList,
   TransactionTransformer,
 } from '@remirror/core';
@@ -83,7 +83,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
 
   public static readonly staticKeys: StaticKeyList<MentionOptions> = ['matchers', 'mentionTag'];
   public static readonly handlerKeys: HandlerKeyList<MentionOptions> = ['onChange', 'onExit'];
-  public static readonly customKeys: CustomKeyList<MentionOptions> = [
+  public static readonly customHandlerKeys: CustomHandlerKeyList<MentionOptions> = [
     'keyBindings',
     'onCharacterEntry',
   ];
@@ -103,7 +103,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
    */
   private keyBindings: MentionKeyBinding = {};
 
-  public onSetCustomOption: SetCustomOption<MentionOptions> = (parameter) => {
+  public onAddCustomHandler: AddCustomHandler<MentionOptions> = (parameter) => {
     const { keyBindings, onCharacterEntry } = parameter;
 
     if (keyBindings) {

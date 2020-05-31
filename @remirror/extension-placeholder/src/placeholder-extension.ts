@@ -1,6 +1,6 @@
 import {
   CreatePluginReturn,
-  CustomKeyList,
+  CustomHandlerKeyList,
   DefaultExtensionOptions,
   getPluginState,
   HandlerKeyList,
@@ -46,7 +46,7 @@ export interface PlaceholderOptions {}
 export class PlaceholderExtension extends PlainExtension<PlaceholderOptions> {
   public static readonly staticKeys: StaticKeyList<PlaceholderOptions> = ['emptyNodeClass'];
   public static readonly handlerKeys: HandlerKeyList<PlaceholderOptions> = [];
-  public static readonly customKeys: CustomKeyList<PlaceholderOptions> = [];
+  public static readonly customHandlerKeys: CustomHandlerKeyList<PlaceholderOptions> = [];
 
   public static readonly defaultOptions: DefaultExtensionOptions<PlaceholderOptions> = {
     emptyNodeClass: EMPTY_NODE_CLASS_NAME,

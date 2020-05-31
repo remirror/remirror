@@ -12,7 +12,7 @@ export interface TemplateOptions {}
 export class TemplatePreset extends Preset<TemplateOptions> {
   public static readonly staticKeys: StaticKeyList<TemplateOptions> = [];
   public static readonly handlerKeys: HandlerKeyList<TemplateOptions> = [];
-  public static readonly customKeys: CustomKeyList<TemplateOptions> = [];
+  public static readonly customHandlerKeys: CustomKeyList<TemplateOptions> = [];
 
   public static readonly defaultOptions: DefaultPresetOptions<TemplateOptions> = {};
   get name() {

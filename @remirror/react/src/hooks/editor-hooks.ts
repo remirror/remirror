@@ -2,6 +2,7 @@ import { DependencyList, useContext, useMemo, useRef } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import {
+  AddCustomHandler,
   AddHandler,
   AnyCombinedUnion,
   AnyExtensionConstructor,
@@ -17,7 +18,6 @@ import {
   keys,
   OptionsOfConstructor,
   PresetConstructorParameter,
-  SetCustomOption,
 } from '@remirror/core';
 import { CorePreset } from '@remirror/preset-core';
 import { ReactPreset } from '@remirror/preset-react';
@@ -205,7 +205,7 @@ export function useExtension<Type extends AnyExtensionConstructor>(
 
     return optionsOrCallback({
       addHandler: extension.addHandler,
-      setCustomOption: extension.setCustomOption,
+      addCustomHandler: extension.addCustomHandler,
       extension,
     });
   }, [extension, optionsOrCallback, memoizedDependencies]);
@@ -226,10 +226,10 @@ interface UseExtensionCallbackParameter<Type extends AnyExtensionConstructor> {
    * value is handled internally by the extension.
    *
    * ```ts
-   * setCustomOption('keybindings', { Enter: () => false });
+   * addCustomHandler('keybindings', { Enter: () => false });
    * ```
    */
-  setCustomOption: SetCustomOption<OptionsOfConstructor<Type>>;
+  addCustomHandler: AddCustomHandler<OptionsOfConstructor<Type>>;
 
   /**
    * An instance of the extension. This can be used for more advanced scenarios.
@@ -279,7 +279,7 @@ export function usePreset<Type extends AnyPresetConstructor>(
 
     return optionsOrCallback({
       addHandler: preset.addHandler,
-      setCustomOption: preset.setCustomOption,
+      addCustomHandler: preset.addCustomHandler,
       preset,
     });
   }, [preset, optionsOrCallback, memoizedDependencies]);
@@ -306,7 +306,7 @@ interface UsePresetCallbackParameter<Type extends AnyPresetConstructor> {
   /**
    * Set the value of a custom option which returns a dispose method.
    */
-  setCustomOption: SetCustomOption<OptionsOfConstructor<Type>>;
+  addCustomHandler: AddCustomHandler<OptionsOfConstructor<Type>>;
 
   /**
    * An instance of the preset. This should only be needed in advanced situations.

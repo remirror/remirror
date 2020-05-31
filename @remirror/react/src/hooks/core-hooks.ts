@@ -13,8 +13,8 @@ import { isFunction, object } from '@remirror/core';
  * return <span onClick={() => setOpen(!isOpen)}>{isOpen && previous === isOpen ? 'Stable' : 'Unstable' }</span>
  * ```
  */
-export const usePrevious = <GValue>(value: GValue) => {
-  const ref = useRef<GValue>();
+export const usePrevious = <Value>(value: Value) => {
+  const ref = useRef<Value>();
   useEffect(() => void (ref.current = value), [value]);
   return ref.current;
 };
@@ -45,8 +45,8 @@ const defaultBounds = { x: 0, y: 0, width: 0, height: 0, top: 0, right: 0, botto
  * return <div {...bindRef}>Height: {height}</div>
  * ```
  */
-export const useMeasure = <GRef extends HTMLElement = any>() => {
-  const ref = useRef<GRef>(null);
+export const useMeasure = <Ref extends HTMLElement = any>() => {
+  const ref = useRef<Ref>(null);
   const [bounds, setBounds] = useState<DOMRectReadOnlyLike>(defaultBounds);
 
   useLayoutEffect(() => {
@@ -62,14 +62,14 @@ export const useMeasure = <GRef extends HTMLElement = any>() => {
   return [{ ref }, bounds] as const;
 };
 
-export type DispatchWithCallback<GValue> = (value: GValue, callback?: () => void) => void;
+export type DispatchWithCallback<Value> = (value: Value, callback?: () => void) => void;
 
 interface UseStateWithCallback {
-  <GType = undefined>(): readonly [
-    GType | undefined,
-    DispatchWithCallback<SetStateAction<GType | undefined>>,
+  <Type = undefined>(): readonly [
+    Type | undefined,
+    DispatchWithCallback<SetStateAction<Type | undefined>>,
   ];
-  <GType>(value: GType): readonly [GType, DispatchWithCallback<SetStateAction<GType>>];
+  <Type>(value: Type): readonly [Type, DispatchWithCallback<SetStateAction<Type>>];
 }
 
 /**
@@ -80,10 +80,10 @@ interface UseStateWithCallback {
  *
  * The callback is called once when the state next updates.
  */
-export const useStateWithCallback: UseStateWithCallback = <GState>(
-  initialState?: GState | (() => GState),
+export const useStateWithCallback: UseStateWithCallback = <State>(
+  initialState?: State | (() => State),
 ) => {
-  const [[state, callback], setState] = useState<[GState | undefined, (() => void) | undefined]>([
+  const [[state, callback], setState] = useState<[State | undefined, (() => void) | undefined]>([
     isFunction(initialState) ? initialState() : initialState,
     undefined,
   ]);
@@ -96,7 +96,7 @@ export const useStateWithCallback: UseStateWithCallback = <GState>(
   }, [callback, state]);
 
   const setStateWithCallback = useCallback(
-    (value: SetStateAction<GState | undefined>, cb?: () => void) => {
+    (value: SetStateAction<State | undefined>, cb?: () => void) => {
       setState((prevState) => [isFunction(value) ? value(prevState[0]) : value, cb]);
     },
     [setState],
@@ -105,9 +105,7 @@ export const useStateWithCallback: UseStateWithCallback = <GState>(
   return [state, setStateWithCallback] as const;
 };
 
-export type PartialSetStateAction<GState> =
-  | Partial<GState>
-  | ((prevState: GState) => Partial<GState>);
+export type PartialSetStateAction<State> = Partial<State> | ((prevState: State) => Partial<State>);
 
 /**
  * A replication of the setState from class Components.
@@ -133,14 +131,14 @@ export type PartialSetStateAction<GState> =
  * log(state); // => { a: 'initial', b: 'initial' }
  * ```
  */
-export const useSetState = <GState extends object>(
-  initialState: GState | (() => GState) = object<GState>(),
+export const useSetState = <State extends object>(
+  initialState: State | (() => State) = object<State>(),
 ): readonly [
-  GState,
-  DispatchWithCallback<PartialSetStateAction<GState>>,
+  State,
+  DispatchWithCallback<PartialSetStateAction<State>>,
   (callback?: () => void) => void,
 ] => {
-  const [state, setStateWithCallback] = useStateWithCallback<GState>(
+  const [state, setStateWithCallback] = useStateWithCallback<State>(
     isFunction(initialState) ? initialState() : initialState,
   );
 
@@ -152,9 +150,9 @@ export const useSetState = <GState extends object>(
   );
 
   const setState = useCallback(
-    (patch: PartialSetStateAction<GState>, cb?: () => void) => {
+    (patch: PartialSetStateAction<State>, cb?: () => void) => {
       setStateWithCallback(
-        (prevState: GState) => ({
+        (prevState: State) => ({
           ...prevState,
           ...(isFunction(patch) ? patch(prevState) : patch),
         }),

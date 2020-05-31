@@ -20,9 +20,8 @@ import {
   EmptyShape,
   FlipPartialAndRequired,
   GetConstructorParameter,
-  GetCustom,
+  GetCustomHandler,
   GetFixed,
-  GetFixedCustom,
   GetFixedDynamic,
   GetHandler,
   GetMappedHandler,
@@ -66,7 +65,7 @@ export abstract class BaseClass<
   /**
    * The custom keys.
    */
-  public static customKeys: string[] = [];
+  public static customHandlerKeys: string[] = [];
 
   /**
    * Not for public usage. This is purely for types to make it easier to infer
@@ -253,7 +252,7 @@ export abstract class BaseClass<
    */
   private getDynamicOptions(): GetFixedDynamic<Options> {
     return omit(this.#options, [
-      ...this.constructor.customKeys,
+      ...this.constructor.customHandlerKeys,
       ...this.constructor.handlerKeys,
     ]) as any;
   }
@@ -315,13 +314,14 @@ export abstract class BaseClass<
   };
 
   /**
-   * A method that can be used to set the value of a custom option.
+   * A method that can be used to add a custom handler. It is up to the
+   * extension creator to manage the handlers and dispose methods.
    */
-  public setCustomOption = <Key extends keyof GetCustom<Options>>(
+  public addCustomHandler = <Key extends keyof GetCustomHandler<Options>>(
     key: Key,
-    value: Required<GetCustom<Options>>[Key],
+    value: Required<GetCustomHandler<Options>>[Key],
   ): Dispose => {
-    return this.onSetCustomOption?.({ [key]: value } as any) ?? noop;
+    return this.onAddCustomHandler?.({ [key]: value } as any) ?? noop;
   };
 
   /**
@@ -329,11 +329,11 @@ export abstract class BaseClass<
    *
    * This must return a dispose function.
    */
-  public onSetCustomOption?: SetCustomOption<Options>;
+  public onAddCustomHandler?: AddCustomHandler<Options>;
 }
 
-export type SetCustomOption<Options extends ValidOptions> = (
-  parameter: Partial<GetCustom<Options>>,
+export type AddCustomHandler<Options extends ValidOptions> = (
+  parameter: Partial<GetCustomHandler<Options>>,
 ) => Dispose | undefined;
 
 export type AddHandler<Options extends ValidOptions> = <Key extends keyof GetHandler<Options>>(
@@ -412,7 +412,7 @@ export interface BaseClassConstructor<
   /**
    * A list of the custom keys in the extension or preset options.
    */
-  readonly customKeys: string[];
+  readonly customHandlerKeys: string[];
 }
 
 export type AnyBaseClassConstructor = Replace<
@@ -448,8 +448,7 @@ export type DefaultOptions<
   DefaultStaticOptions extends Shape
 > = FlipPartialAndRequired<GetStatic<Options>> &
   Partial<DefaultStaticOptions> &
-  GetFixedDynamic<Options> &
-  GetFixedCustom<Options>;
+  GetFixedDynamic<Options>;
 
 /**
  * Checks that the extension has a valid constructor with the `defaultOptions`
@@ -474,15 +473,15 @@ export function isValidConstructor(
     code,
   });
 
-  invariant(isArray(Constructor.customKeys), {
-    message: `No static 'customKeys' provided for '${Constructor.name}'.\n`,
+  invariant(isArray(Constructor.customHandlerKeys), {
+    message: `No static 'customHandlerKeys' provided for '${Constructor.name}'.\n`,
     code,
   });
 }
 
 export interface AnyBaseClassOverrides {
-  onSetCustomOption?: AnyFunction;
-  setCustomOption: AnyFunction;
+  onAddCustomHandler?: AnyFunction;
+  addCustomHandler: AnyFunction;
   addHandler: AnyFunction;
   clone: AnyFunction;
 }

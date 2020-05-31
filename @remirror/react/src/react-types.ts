@@ -214,7 +214,7 @@ export interface BaseProps<Combined extends AnyCombinedUnion> extends StringHand
   fallbackContent?: ObjectNode | ProsemirrorNode;
 }
 
-export interface Positioner<Combined extends AnyCombinedUnion> {
+export interface Positioner<Combined extends AnyCombinedUnion = any> {
   /**
    * The default and initial position value. This is used at the start and
    * whenever isActive becomes false
@@ -223,7 +223,8 @@ export interface Positioner<Combined extends AnyCombinedUnion> {
 
   /**
    * Determines whether anything has changed and whether to continue with a
-   * recalculation. By default this is only true when the document has changed.
+   * recalculation. By default this is only true when the document has or
+   * selection has changed.
    *
    * @remarks
    *
@@ -504,7 +505,7 @@ export interface PositionerParameter {
    * The positioner object which determines how the changes in the view impact
    * the calculated position.
    */
-  positioner: Partial<Positioner<DefaultReactCombined>>;
+  positioner: Partial<Positioner>;
 }
 
 export interface UsePositionerParameter<RefKey extends string = 'ref'>

@@ -37,7 +37,7 @@ import { PositionerExtension } from '@remirror/extension-positioner';
 
 const extension = new PositionerExtension();
 
-const dispose = extension.setCustomOption({
+const dispose = extension.addCustomHandler({
   positioner: 'bubble',
   element,
   onChange: ({ isActive, top, left }) => {
