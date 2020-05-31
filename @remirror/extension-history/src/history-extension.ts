@@ -106,8 +106,8 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
       const { getState, getDispatch } = this.options;
       const wrappedState = isFunction(getState) ? getState() : state;
       const wrappedDispatch = isFunction(getDispatch) && dispatch ? getDispatch() : dispatch;
-
       const success = method(wrappedState, wrappedDispatch, view);
+
       callback?.(success);
 
       return success;
@@ -117,7 +117,7 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
   /**
    * Adds the default key mappings for undo and redo.
    */
-  public keys(): KeyBindings {
+  public createKeymap = (): KeyBindings => {
     const notMacOS = !environment.isMac
       ? { ['Mod-y']: this.wrapMethod(redo, this.options.onRedo) }
       : undefined;
@@ -128,7 +128,7 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
       'Shift-Mod-z': this.wrapMethod(redo, this.options.onRedo),
       ...notMacOS,
     };
-  }
+  };
 
   /**
    * Bring the `prosemirror-history` plugin with options set on this extension.

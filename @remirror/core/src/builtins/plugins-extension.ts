@@ -27,7 +27,7 @@ import { GetNameUnion } from '../types';
  * @builtin
  */
 export class PluginsExtension extends PlainExtension {
-  public static readonly defaultPriority = ExtensionPriority.High;
+  public static readonly defaultPriority = ExtensionPriority.Highest;
 
   get name() {
     return 'plugins' as const;
@@ -53,35 +53,11 @@ export class PluginsExtension extends PlainExtension {
   // Here set the plugins keys and state getters for retrieving plugin state.
   // These methods are later used.
   public onCreate: CreateLifecycleMethod = (extensions) => {
-    const { setStoreKey, setExtensionStore, getStoreKey, managerSettings } = this.store;
+    const { setStoreKey, setExtensionStore } = this.store;
     this.updateExtensionStore();
 
     for (const extension of extensions) {
       this.createEachExtensionPlugins(extension);
-
-      if (
-        // The extension doesn't create a plugin and can be skipped.
-        !extension.createPlugin ||
-        // Or the manager settings exclude plugins
-        managerSettings.exclude?.plugins ||
-        // The extension settings exclude plugins
-        extension.options.exclude?.plugins
-      ) {
-        return;
-      }
-
-      const key = new PluginKey(extension.name);
-
-      // Assign the plugin key to the extension name.
-      this.pluginKeys[extension.name] = key;
-      // eslint-disable-next-line unicorn/consistent-function-scoping
-      const getter = <State>() => getPluginState<State>(key, getStoreKey('view').state);
-
-      extension.pluginKey = key;
-      extension.getPluginState = getter;
-
-      this.stateGetters.set(extension.name, getter);
-      this.stateGetters.set(extension.constructor, getter);
     }
 
     setStoreKey('pluginKeys', this.pluginKeys);
@@ -103,18 +79,32 @@ export class PluginsExtension extends PlainExtension {
       return;
     }
 
+    const key = new PluginKey(extension.name);
+
     // Create the custom plugin if it exists.
     if (extension.createPlugin) {
+      // Assign the plugin key to the extension name.
+      this.pluginKeys[extension.name] = key;
+      const getter = <State>() => getPluginState<State>(key, this.store.getStoreKey('view').state);
+
+      extension.pluginKey = key;
+      extension.getPluginState = getter;
+
+      this.stateGetters.set(extension.name, getter);
+      this.stateGetters.set(extension.constructor, getter);
+
       const pluginSpec = {
         ...extension.createPlugin(),
-        key: extension.pluginKey,
+        key,
       };
 
       this.extensionPlugins.push(new Plugin(pluginSpec));
     }
 
-    // Add the external plugins if they exist
-    this.extensionPlugins.push(...(extension.createExternalPlugins?.() ?? []));
+    if (extension.createExternalPlugins) {
+      // Add the external plugins if they exist
+      this.extensionPlugins.push(...extension.createExternalPlugins());
+    }
   }
 
   // Method for retrieving the plugin state by the extension name.

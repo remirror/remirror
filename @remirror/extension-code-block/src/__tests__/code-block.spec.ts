@@ -255,7 +255,6 @@ describe('commands', () => {
         expect(view.dom.querySelector('.language-markup code')).toBeTruthy();
 
         content.commands.updateCodeBlock({ language: 'javascript' });
-
         expect(view.dom.querySelector('.language-markup code')).toBeFalsy();
         expect(view.dom.querySelector('.language-javascript code')!.outerHTML).toMatchSnapshot();
       });
@@ -266,7 +265,6 @@ describe('commands', () => {
     it('creates the codeBlock', () => {
       add(doc(p(`<cursor>`))).callback((content) => {
         content.commands.createCodeBlock({ language: 'typescript' });
-
         expect(content.state.doc).toEqualRemirrorDocument(doc(tsBlock('')));
       });
     });
@@ -277,7 +275,6 @@ describe('commands', () => {
       add(doc(p(`<cursor>`))).callback((content) => {
         // @ts-expect-error
         content.commands.createCodeBlock();
-
         expect(content.state.doc).toEqualRemirrorDocument(doc(markupBlock('')));
       });
     });
@@ -304,11 +301,9 @@ describe('commands', () => {
       const markupBlock = codeBlock({ language: 'markup' });
       add(doc(p(`<cursor>`))).callback((content) => {
         content.commands.toggleCodeBlock({});
-
         expect(content.view.state.doc).toEqualRemirrorDocument(doc(markupBlock('')));
 
         content.commands.toggleCodeBlock({});
-
         expect(content.view.state.doc).toEqualRemirrorDocument(doc(p('')));
       });
     });
@@ -413,7 +408,6 @@ describe('language', () => {
     // Just here to make sure it's not undefined
     expect(yaml.name).toEqual('yaml');
     expect(yaml.aliases[0]).toEqual('yml');
-
     expect(getLang('yaml')).toEqual(yaml.name);
     expect(getLang('yml')).toEqual(yaml.aliases[0]);
     expect(getLang('YAML')).toEqual(yaml.name);
@@ -422,7 +416,6 @@ describe('language', () => {
 
   it('graphql', () => {
     expect(graphql.name).toEqual('graphql');
-
     expect(getLang('graphql')).toEqual(graphql.name);
     expect(getLang('GraphQL')).toEqual(graphql.name);
     expect(getLang('GRAPHQL')).toEqual(graphql.name);
@@ -430,7 +423,6 @@ describe('language', () => {
 
   it('cssExtras', () => {
     expect(cssExtras.name).toEqual('cssExtras');
-
     expect(getLang('cssExtras')).toEqual(cssExtras.name);
     expect(getLang('cssextras')).toEqual(cssExtras.name);
     expect(getLang('CSSExtras')).toEqual(cssExtras.name);

@@ -6,7 +6,7 @@ import { isExtensionValid } from '@remirror/test-fixtures';
 import { HistoryExtension } from '../history-extension';
 
 test('is valid', () => {
-  expect(isExtensionValid(HistoryExtension, {}));
+  expect(isExtensionValid(HistoryExtension));
 });
 
 describe('commands', () => {

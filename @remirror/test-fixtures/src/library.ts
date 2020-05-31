@@ -8,13 +8,14 @@ import {
   AnyExtensionConstructor,
   AnyPresetConstructor,
   BaseExtensionOptions,
-  Cast,
   ErrorConstant,
   ExtensionConstructorParameter,
   invariant,
   isEqual,
+  isFunction,
   mutateDefaultExtensionOptions,
   object,
+  omit,
   OptionsOfConstructor,
   PresetConstructorParameter,
 } from '@remirror/core';
@@ -34,8 +35,19 @@ export function isExtensionValid<Type extends AnyExtensionConstructor>(
     defaultOptions = value;
   });
 
-  const expectedOptions = { ...defaultOptions, ...Extension.defaultOptions, ...options };
-  invariant(isEqual(extension.options, expectedOptions), {
+  for (const key of Extension.handlerKeys) {
+    invariant(isFunction(extension.options[key]), {
+      message: `Invalid handler 'key'. Make sure not to overwrite the default handler`,
+      code: ErrorConstant.INVALID_EXTENSION,
+    });
+  }
+
+  const expectedOptions = {
+    ...defaultOptions,
+    ...Extension.defaultOptions,
+    ...options,
+  };
+  invariant(isEqual(omit(extension.options, Extension.handlerKeys), expectedOptions), {
     message: `Invalid 'defaultOptions' for '${Extension.name}'\n\n${
       diff(extension.options, expectedOptions) ?? ''
     }\n`,

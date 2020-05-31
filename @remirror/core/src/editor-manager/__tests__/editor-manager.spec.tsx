@@ -55,8 +55,8 @@ describe('Manager', () => {
   }
 
   const dummyExtension = new DummyExtension({ priority: ExtensionPriority.Critical });
-  const bigExtension = new BigExtension({ priority: ExtensionPriority.Lowest });
-  const corePreset = new CorePreset({});
+  const bigExtension = new BigExtension({ priority: ExtensionPriority.Lowest + 1 });
+  const corePreset = new CorePreset();
 
   let manager = EditorManager.create({
     extensions: [dummyExtension, bigExtension],
@@ -100,9 +100,8 @@ describe('Manager', () => {
 
   describe('#properties', () => {
     it('should sort extensions by priority', () => {
-      expect(manager.extensions).toHaveLength(17);
       expect(manager.extensions[0]).toEqual(dummyExtension);
-      expect(manager.extensions[16]).toEqual(bigExtension);
+      expect(manager.extensions[manager.extensions.length - 1]).toEqual(bigExtension);
     });
 
     it('should provide the schema at instantiation', () => {
