@@ -10,7 +10,6 @@
 '@remirror/react-portals': major
 '@remirror/react-renderer': major
 '@remirror/react-ssr': major
-'@remirror/react-utils': major
 '@remirror/ui-a11y-status': major
 '@remirror/ui-buttons': major
 '@remirror/ui-dropdown': major
@@ -21,4 +20,4 @@
 '@remirror/ui': major
 ---
 
-DEPRECATED - this package is being removed.
+Deprecate unused packages in the latest version.

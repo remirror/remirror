@@ -1,4 +1,4 @@
-import { debounce } from '@remirror/core-helpers';
+import { debounce } from 'throttle-debounce';
 
 // Code taken from https://github.com/downshift-js/downshift/blob/master/src/set-a11y-status.js#L1
 
@@ -63,5 +63,3 @@ export const setStatus = (status: string, doc?: Document) => {
   div.textContent = status;
   cleanupStatus();
 };
-
-export default setStatus;

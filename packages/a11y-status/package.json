@@ -1,0 +1,28 @@
+{
+  "name": "a11y-status",
+  "version": "0.0.0",
+  "description": "Create a singleton live region for a11y status updates",
+  "homepage": "https://github.com/remirror/remirror/tree/next/a11y-status",
+  "repository": "https://github.com/remirror/remirror/tree/master/packages/a11y-status",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "main": "dist/a11y-status.cjs.js",
+  "module": "dist/a11y-status.esm.js",
+  "types": "dist/a11y-status.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.10.1",
+    "@types/throttle-debounce": "^2.1.0",
+    "throttle-debounce": "^2.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "1 KB"
+  }
+}
