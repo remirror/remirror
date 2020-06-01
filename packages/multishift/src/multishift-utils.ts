@@ -1,10 +1,11 @@
 import computeScrollIntoView from 'compute-scroll-into-view';
 import { Dispatch, KeyboardEvent, SyntheticEvent } from 'react';
-import keyNames from 'w3c-keyname';
+import { keyName } from 'w3c-keyname';
 
 import {
   clamp,
   isArray,
+  isEmptyArray,
   isNumber,
   isObject,
   isString,
@@ -257,7 +258,7 @@ export const callChangeHandlers = <GItem = any>(
     changeHandlerMap[key](handlers, { changes, state, prevState });
   });
 
-  if (changedKeys.length && onStateChange) {
+  if (!isEmptyArray(changedKeys.length) && onStateChange) {
     onStateChange(changes, state);
   }
 };
@@ -301,7 +302,7 @@ export const getNextWrappingIndex = ({
   circular,
 }: GetNextWrappingIndexParameter): number | undefined => {
   if (size === 0) {
-    return undefined;
+    return;
   }
 
   if (start === -1) {
@@ -387,7 +388,7 @@ export const getHighlightedIndexOnOpen = <GItem = any>(
 
   // initialHighlightedIndexes will give value to highlightedIndex on initial
   // state only.
-  if (!isUndefined(initialHighlightedIndexes) && highlightedIndexes.length) {
+  if (!isUndefined(initialHighlightedIndexes) && !isEmptyArray(highlightedIndexes)) {
     return initialHighlightedIndexes;
   }
 
@@ -395,7 +396,7 @@ export const getHighlightedIndexOnOpen = <GItem = any>(
     return defaultHighlightedIndexes;
   }
 
-  if (selectedItems.length) {
+  if (!isEmptyArray(selectedItems)) {
     const idsOfItems = items.map(getItemId);
     const index = selectedItems
       .map((selectedItem) => idsOfItems.indexOf(getItemId(selectedItem)))
@@ -485,7 +486,7 @@ export const allItemsSelected = <GItem = any>(
   newItems: GItem[],
   getItemId: GetItemId<GItem>,
 ) =>
-  newItems.length
+  !isEmptyArray(newItems)
     ? newItems.every((newItem) =>
         currentItems.some((item) => getItemId(item) === getItemId(newItem)),
       )
@@ -731,8 +732,8 @@ interface GetHighlightedIndexesParameter<GItem = any> {
  *
  * @param event - the keyboard event
  */
-export const getKeyName = (event: KeyboardEvent<HTMLElement>) => {
-  const key = keyNames.keyName(event.nativeEvent);
+export function getKeyName(event: KeyboardEvent<HTMLElement>) {
+  const key = keyName(event.nativeEvent);
 
   if (key === ' ') {
     return 'Space';
@@ -743,7 +744,7 @@ export const getKeyName = (event: KeyboardEvent<HTMLElement>) => {
   }
 
   return key;
-};
+}
 
 /**
  * Log a warning when using in an internal type that doesn't get resolved.

@@ -1,7 +1,6 @@
 import { useId } from '@reach/auto-id';
+import { setStatus } from 'a11y-status';
 import { DependencyList, EffectCallback, useEffect, useReducer, useRef } from 'react';
-
-import { setStatus } from '@remirror/ui-a11y-status';
 
 import { multishiftReducer } from './multishift-reducer';
 import {

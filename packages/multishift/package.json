@@ -23,16 +23,18 @@
     "@remirror/react-hooks": "^0.7.6",
     "@remirror/react-utils": "^0.7.6",
     "@remirror/ui": "^0.7.6",
-    "@remirror/ui-a11y-status": "0.7.4",
     "@remirror/ui-buttons": "^0.7.7",
     "@remirror/ui-icons": "^0.7.8",
     "@remirror/ui-text": "^0.7.6",
     "@seznam/compose-react-refs": "^1.0.4",
+    "a11y-status": "^0.0.0",
     "compute-scroll-into-view": "^1.0.14",
     "w3c-keyname": "^2.2.4"
   },
   "devDependencies": {
+    "@testing-library/react": "^10.0.4",
     "@types/react": "^16.9.35",
+    "@types/testing-library__react": "^10.0.1",
     "react": "^16.13.1"
   },
   "peerDependencies": {
