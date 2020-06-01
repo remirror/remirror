@@ -1,7 +1,8 @@
 import { EditorView, ProsemirrorAttributes } from '@remirror/core';
 import { MentionExtensionAttributes } from '@remirror/extension-mention';
+import { RemirrorContextProps, useRemirror } from '@remirror/react';
 
-import { MentionGetterParameter } from './social-types';
+import { MentionGetterParameter, SocialCombinedUnion } from './social-types';
 
 /**
  * Maps the items to items with an active property
@@ -79,3 +80,5 @@ export const createOnClickMethodFactory = ({
     view.focus();
   }
 };
+
+export const useSocialRemirror = useRemirror as () => RemirrorContextProps<SocialCombinedUnion>;

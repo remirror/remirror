@@ -12,7 +12,7 @@ export interface MentionChangeParameter extends BaseMentionState {
   /**
    * The currently active matching index
    */
-  activeIndex: number;
+  index: number;
 }
 
 export interface SocialEditorProps extends Partial<RemirrorProviderProps<SocialCombinedUnion>> {

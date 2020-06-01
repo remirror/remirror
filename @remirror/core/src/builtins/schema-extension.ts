@@ -7,6 +7,7 @@ import {
   MarkExtensionSpec,
   NodeExtensionSpec,
   ProsemirrorAttributes,
+  Static,
 } from '@remirror/core-types';
 import { isElementDOMNode } from '@remirror/core-utils';
 import { Schema } from '@remirror/pm/model';
@@ -252,7 +253,7 @@ declare global {
        *
        * @defaultValue `{}`
        */
-      extraAttributes?: ExtraAttributes;
+      extraAttributes?: Static<ExtraAttributes>;
 
       /**
        * When true will disable extra attributes for this instance of the
@@ -260,7 +261,7 @@ declare global {
        *
        * @defaultValue `undefined`
        */
-      disableExtraAttributes?: boolean;
+      disableExtraAttributes?: Static<boolean>;
     }
 
     interface ManagerSettings {

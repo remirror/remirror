@@ -1,76 +1,17 @@
 import React, { FC, useCallback, useMemo, useRef } from 'react';
 
 import { isEmptyArray } from '@remirror/core';
-import { AutoLinkExtension } from '@remirror/extension-auto-link';
 import { EmojiExtension } from '@remirror/extension-emoji';
-import { MentionExtension } from '@remirror/extension-mention';
-import { SuggestKeyBindingMap, SuggestKeyBindingParameter } from '@remirror/pm/suggest';
+import { MentionExitHandlerMethod } from '@remirror/extension-mention';
 import {
-  RemirrorProvider,
-  useCreateExtension,
-  useExtension,
-  useManager,
-  useRemirror,
-  useSetState,
-} from '@remirror/react';
+  SuggestChangeHandlerParameter,
+  SuggestKeyBindingMap,
+  SuggestKeyBindingParameter,
+} from '@remirror/pm/suggest';
+import { useExtension, useSetState } from '@remirror/react';
 
-import {
-  MatchName,
-  MentionChangeParameter,
-  SocialEditorProps,
-  TagData,
-  UserData,
-} from '../social-types';
-import { indexFromArrowPress } from '../social-utils';
-
-/**
- * The wrapper for the social editor that provides the context for all te nested
- * editor components to use.
- */
-const SocialEditorWrapper: FC<SocialEditorProps> = (props) => {
-  const { extensions = [], presets = [], atMatcherOptions, tagMatcherOptions, children } = props;
-  const mentionExtensionSettings = useMemo(
-    () => ({
-      matchers: [
-        { name: 'at', char: '@', appendText: ' ', ...atMatcherOptions },
-        { name: 'tag', char: '#', appendText: ' ', ...tagMatcherOptions },
-      ],
-    }),
-    [atMatcherOptions, tagMatcherOptions],
-  );
-
-  const mentionExtension = useCreateExtension(MentionExtension, mentionExtensionSettings);
-  const emojiExtension = useCreateExtension(EmojiExtension);
-  const autoLinkExtension = useCreateExtension(AutoLinkExtension, { defaultProtocol: 'https:' });
-  const combined = useMemo(
-    () => [...extensions, ...presets, mentionExtension, emojiExtension, autoLinkExtension],
-    [autoLinkExtension, emojiExtension, extensions, mentionExtension, presets],
-  );
-
-  const manager = useManager(combined);
-
-  return (
-    <RemirrorProvider manager={manager} childAsRoot={false}>
-      <Editor {...props}>{children}</Editor>
-    </RemirrorProvider>
-  );
-};
-
-const Editor: FC<SocialEditorProps> = (props) => {
-  const { children } = props;
-
-  const { getRootProps } = useRemirror();
-
-  return (
-    <div>
-      <div className='inner-editor'>
-        <div className='remirror-social-editor' {...getRootProps()} />
-        {children}
-      </div>
-      <Mentions tags={props.tagData} users={props.userData} onChange={props.onMentionChange} />
-    </div>
-  );
-};
+import { MatchName, MentionChangeParameter, TagData, UserData } from '../../social-types';
+import { indexFromArrowPress } from '../../social-utils';
 
 interface MentionsProps {
   /**
@@ -88,14 +29,12 @@ interface MentionsProps {
    */
   onChange: (params?: MentionChangeParameter) => void;
 }
-
 interface MentionsState {
   matcher: 'at' | 'tag' | undefined;
   index: number;
   hideSuggestions: boolean;
 }
-
-const Mentions: FC<MentionsProps> = (props) => {
+export const Mentions: FC<MentionsProps> = (props) => {
   const [state, setState] = useSetState<MentionsState>({
     index: 0,
     matcher: undefined,
@@ -104,6 +43,8 @@ const Mentions: FC<MentionsProps> = (props) => {
 
   // When true, ignore the next exit to prevent double exits after a user interaction.
   const ignoreNextExit = useRef(false);
+
+  const mention = useRef<SuggestChangeHandlerParameter>();
 
   const createArrowBinding = useCallback(
     (direction: 'up' | 'down') => {
@@ -130,7 +71,7 @@ const Mentions: FC<MentionsProps> = (props) => {
         onChange({
           name,
           query: queryText.full,
-          activeIndex,
+          index: activeIndex,
         });
 
         return true;
@@ -205,10 +146,84 @@ const Mentions: FC<MentionsProps> = (props) => {
        */
       ArrowDown,
     }),
-    [ArrowDown, ArrowUp, props, setState, state],
+    [ArrowDown, ArrowUp, props, setState, state, ignoreNextExit],
   );
 
-  useExtension(EmojiExtension, ({ addCustomHandler }) => {}, []);
+  /**
+   * The is the callback for when a suggestion is changed.
+   */
+  const onChange = useCallback(
+    (parameters: SuggestChangeHandlerParameter) => {
+      const { queryText, suggester } = parameters;
+      const name = suggester.name as MatchName;
+
+      if (name) {
+        const options = { name, query: queryText.full };
+        props.onChange({ ...options, index: state.index });
+      }
+
+      // Reset the active index so that the dropdown is back to the top.
+      setState({
+        index: 0,
+        matcher: name,
+        hideSuggestions: false,
+      });
+
+      mention.current = parameters;
+    },
+    [props, setState, state.index],
+  );
+
+  /**
+   * Called when the none of our configured matchers match
+   */
+  const onExit: MentionExitHandlerMethod = useCallback(
+    (parameters) => {
+      const { queryText, command } = parameters;
+
+      // Check whether we've manually caused this exit. If not, trigger the
+      // command.
+      if (!ignoreNextExit.current) {
+        command({
+          role: 'presentation',
+          href: `/${queryText.full}`,
+          appendText: '',
+        });
+      }
+
+      props.onChange();
+      setState({ index: 0, matcher: undefined });
+      mention.current = undefined;
+      ignoreNextExit.current = false;
+    },
+    [props, setState],
+  );
+
+  useExtension(
+    EmojiExtension,
+    ({ addCustomHandler, addHandler }) => {
+      const disposeBindings = addCustomHandler('suggestionKeyBindings', keyBindings);
+      const disposeChangeHandler = addHandler('onSuggestionChange', onChange);
+      const disposeExitHandler = addHandler('onSuggestionExit', onExit);
+
+      return () => {
+        disposeBindings();
+        disposeChangeHandler();
+        disposeExitHandler();
+      };
+    },
+    [keyBindings, onChange, onExit],
+  );
+
+  if (!state.matcher || state.hideSuggestions) {
+    return null;
+  }
+
+  if (state.matcher === 'at') {
+    return <AtSuggestions data={props.users} ignoreNextExit={ignoreNextExit} mention={mention} />;
+  }
+
+  return <TagSuggestions data={props.tags} ignoreNextExit={ignoreNextExit} mention={mention} />;
 };
 
 interface GetMentionLabelParameter {

@@ -1,6 +1,6 @@
 import React, { Fragment, PureComponent } from 'react';
 
-import { deepMerge, isUndefined, object, omit } from '@remirror/core';
+import { deepMerge, isEmptyArray, isUndefined, object, omit } from '@remirror/core';
 import { AutoLinkExtension } from '@remirror/extension-auto-link';
 import {
   EmojiExtension,
@@ -22,7 +22,6 @@ import {
   SuggestKeyBindingParameter,
   SuggestStateMatch,
 } from '@remirror/pm/suggest';
-import { RemirrorProvider } from '@remirror/react';
 
 import { socialEditorTheme } from '../social-theme';
 import {
@@ -30,7 +29,6 @@ import {
   ActiveUserData,
   MatchName,
   MentionChangeParameter,
-  MentionState,
   SocialEditorProps,
 } from '../social-types';
 import { indexFromArrowPress, mapToActiveIndex } from '../social-utils';
@@ -97,7 +95,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
 
     const matches = name === 'at' ? this.users : this.tags;
 
-    if (hideSuggestions || !matches.length) {
+    if (hideSuggestions || isEmptyArray(matches)) {
       return false;
     }
 
@@ -109,7 +107,11 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
     });
 
     this.setState({ activeIndex, activeMatcher: name as MatchName });
-    onMentionStateChange({ name, query: queryText.full, activeIndex } as MentionChangeParameter);
+    onMentionStateChange({
+      name,
+      query: queryText.full,
+      index: activeIndex,
+    } as MentionChangeParameter);
 
     return true;
   };
@@ -230,11 +232,11 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
     } = parameters;
 
     if (name) {
-      const properties = {
+      const options = {
         name,
         query: queryText.full,
       } as MentionState;
-      this.props.onMentionChange({ ...options, activeIndex: this.state.activeIndex });
+      this.props.onMentionChange({ ...options, index: this.state.activeIndex });
     }
 
     // Reset the active index so that the dropdown is back to the top.
@@ -243,6 +245,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
       activeMatcher: name as MatchName,
       hideMentionSuggestions: false,
     });
+
     this.mention = parameters;
   };
 

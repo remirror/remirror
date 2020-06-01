@@ -8,7 +8,6 @@ import {
   FromToParameter,
   HandlerKeyList,
   isNullOrUndefined,
-  noop,
   object,
   PlainExtension,
   plainInputRule,
@@ -37,7 +36,6 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
     defaultEmoji: DEFAULT_FREQUENTLY_USED,
     suggestionCharacter: ':',
     maxResults: 20,
-    suggestionKeyBindings: {},
   };
 
   public static readonly customHandlerKeys: CustomHandlerKeyList<EmojiOptions> = [

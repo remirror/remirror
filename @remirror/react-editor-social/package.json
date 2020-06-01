@@ -26,6 +26,7 @@
     "@remirror/extension-mention": "^0.11.1",
     "@remirror/react": "^0.13.1",
     "@remirror/react-utils": "^0.7.6",
+    "multishift": "^0.7.7",
     "type-fest": "^0.15.0"
   },
   "devDependencies": {
