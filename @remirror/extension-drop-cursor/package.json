@@ -23,7 +23,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.1",
+    "@babel/runtime": ">=7 <8",
     "@remirror/core": "^0.11.0"
   },
   "devDependencies": {

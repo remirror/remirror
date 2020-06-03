@@ -13,7 +13,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.1",
+    "@babel/runtime": ">=7 <8",
     "@reach/visually-hidden": "^0.10.2",
     "@remirror/core-helpers": "^0.7.6",
     "@remirror/ui": "^0.7.6",

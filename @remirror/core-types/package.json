@@ -16,7 +16,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.1",
+    "@babel/runtime": ">=7 <8",
     "@remirror/core-constants": "^0.7.4",
     "type-fest": "^0.15.0"
   },

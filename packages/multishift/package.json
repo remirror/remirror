@@ -16,7 +16,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.1",
+    "@babel/runtime": ">=7 <8",
     "@reach/auto-id": "^0.10.3",
     "@remirror/core-helpers": "^0.7.6",
     "@remirror/core-types": "^0.9.0",
@@ -33,7 +33,7 @@
     "w3c-keyname": "^2.2.4"
   },
   "devDependencies": {
-    "@testing-library/react": "^10.0.4",
+    "@testing-library/react": "^10.0.6",
     "@types/react": "^16.9.35",
     "@types/testing-library__react": "^10.0.1",
     "react": "^16.13.1"

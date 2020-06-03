@@ -23,7 +23,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.1",
+    "@babel/runtime": ">=7 <8",
     "@remirror/core": "^0.11.0",
     "@remirror/extension-placeholder": "^0.0.0",
     "@remirror/extension-react-ssr": "^0.0.0",

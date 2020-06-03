@@ -27,7 +27,7 @@
     "build:custom": "node ./build.js"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.1",
+    "@babel/runtime": ">=7 <8",
     "@remirror/core": "^0.11.0",
     "@remirror/react-node-view": "^0.7.6",
     "@types/emoji-regex": "^8.0.0",

@@ -5,7 +5,7 @@
   "description": "e2e tests",
   "repository": "https://github.com/remirror/remirror/tree/master/e2e",
   "dependencies": {
-    "@babel/runtime": "^7.10.1",
+    "@babel/runtime": ">=7 <8",
     "@remirror/core": "^0.11.0",
     "@types/expect-puppeteer": "^4.4.3",
     "@types/jest-environment-puppeteer": "^4.3.1",
@@ -15,7 +15,7 @@
     "jest-puppeteer": "^4.4.0",
     "looks-same": "^7.2.3",
     "pptr-testing-library": "^0.6.0",
-    "puppeteer": "^3.1.0",
+    "puppeteer": "^3.3.0",
     "signal-exit": "^3.0.3",
     "test-keyboard": "^0.7.6"
   }

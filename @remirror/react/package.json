@@ -20,7 +20,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.1",
+    "@babel/runtime": ">=7 <8",
     "@remirror/core": "^0.11.0",
     "@remirror/extension-positioner": "^0.0.0",
     "@remirror/preset-core": "^0.0.0",
@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@remirror/pm": "^0.0.0",
-    "@testing-library/react": "^10.0.4",
+    "@testing-library/react": "^10.0.6",
     "@testing-library/react-hooks": "^3.2.1",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
