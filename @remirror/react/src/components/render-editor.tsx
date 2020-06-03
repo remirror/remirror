@@ -38,7 +38,7 @@ import {
   RemirrorType,
 } from '@remirror/react-utils';
 
-import { PortalContainer, RemirrorPortals } from '../portals';
+import { PortalContainer } from '../portals';
 import { defaultProps } from '../react-constants';
 import {
   BaseListenerParameter,
@@ -405,11 +405,11 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
    * This method handles the cases where the dom is not focused.
    */
   private onRefLoad() {
-    if (!this.editorRef) {
-      throw new Error(
-        'Something went wrong when initializing the text editor. Please check your setup.',
-      );
-    }
+    invariant(this.editorRef, {
+      code: ErrorConstant.REACT_EDITOR_VIEW,
+      message: 'Something went wrong when initializing the text editor. Please check your setup.',
+    });
+
     const { autoFocus, onFirstRender, onStateChange } = this.props;
     this.addProsemirrorViewToDom(this.editorRef, this.view.dom);
     if (autoFocus) {
@@ -640,6 +640,7 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
   get renderParameter(): RemirrorContextProps<Combined> {
     return {
       ...this.manager.store,
+
       /* Properties */
       uid: this.uid,
       manager: this.manager,
@@ -655,6 +656,8 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
 
       /* Helper Methods */
       focus: this.focus,
+
+      portalContainer: this.portalContainer,
     };
   }
 
@@ -753,7 +756,7 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
 
     if (this.rootPropsConfig.called) {
       // Simply return the element as this method can never actually be called
-      // within a domless environment
+      // within an ssr environment
       return element;
     } else if (
       // When called by a provider `getRootProps` can't actually be called until
@@ -799,11 +802,6 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
     // Reset the status of roots props being called
     this.rootPropsConfig.called = false;
 
-    return (
-      <Fragment>
-        {this.renderReactElement()}
-        <RemirrorPortals portalContainer={this.portalContainer} />
-      </Fragment>
-    );
+    return <Fragment>{this.renderReactElement()}</Fragment>;
   }
 }

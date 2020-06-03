@@ -3,6 +3,7 @@ import React, { ProviderProps, ReactElement } from 'react';
 import { AnyCombinedUnion } from '@remirror/core';
 import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
 
+import { RemirrorPortals } from '../portals';
 import { RemirrorContext } from '../react-contexts';
 import { BaseProps, GetRootPropsConfig, RemirrorContextProps } from '../react-types';
 import { RenderEditor } from './render-editor';
@@ -98,6 +99,7 @@ export const RemirrorProvider = <Combined extends AnyCombinedUnion>({
       {(value) => {
         return (
           <RemirrorContextProvider value={value} childAsRoot={childAsRoot}>
+            <RemirrorPortals portalContainer={value.portalContainer} />
             {oneChildOnly(children)}
           </RemirrorContextProvider>
         );

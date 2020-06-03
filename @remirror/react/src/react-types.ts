@@ -27,6 +27,8 @@ import {
 import { CorePreset } from '@remirror/preset-core';
 import { ReactPreset } from '@remirror/preset-react';
 
+import { PortalContainer } from './portals';
+
 /**
  * The type of arguments acceptable for the focus parameter.
  *
@@ -320,6 +322,13 @@ export interface RemirrorContextProps<Combined extends AnyCombinedUnion>
    * Focus the editor at the `start` | `end` a specific position or at a valid range between `{ from, to }`
    */
   focus: (position?: FocusType) => void;
+
+  /**
+   * The portal container.
+   *
+   * @internal
+   */
+  portalContainer: PortalContainer;
 }
 
 export interface RemirrorGetterParameter {
