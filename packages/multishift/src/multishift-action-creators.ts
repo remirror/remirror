@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference path="../globals.d.ts" />
-
 import { MultishiftActionTypes } from './multishift-constants';
 import {
   CreateMultishiftAction,
@@ -9,8 +6,8 @@ import {
   SpecialKeyDownPayload,
 } from './multishift-types';
 
-export interface ItemsPayload<GItem = any> {
-  items: GItem[];
+export interface ItemsPayload<Item = any> {
+  items: Item[];
 
   /**
    * By default whenever a selection is made the highlights are reset.
@@ -22,7 +19,7 @@ export interface ItemsPayload<GItem = any> {
 /**
  * Select the provided items.
  */
-export const selectItems = <GItem = any>(items: GItem[], keepHighlights = false) => ({
+export const selectItems = <Item = any>(items: Item[], keepHighlights = false) => ({
   type: MultishiftActionTypes.SelectItems,
   payload: { items, keepHighlights },
 });
@@ -30,7 +27,7 @@ export const selectItems = <GItem = any>(items: GItem[], keepHighlights = false)
 /**
  * Select the provided item.
  */
-export const selectItem = <GItem = any>(item: GItem, keepHighlights = false) => ({
+export const selectItem = <Item = any>(item: Item, keepHighlights = false) => ({
   type: MultishiftActionTypes.SelectItem,
   payload: { items: [item], keepHighlights },
 });
@@ -38,7 +35,7 @@ export const selectItem = <GItem = any>(item: GItem, keepHighlights = false) => 
 /**
  * Remove the provided items from the current selection.
  */
-export const removeSelectedItems = <GItem = any>(items: GItem[], keepHighlights = false) => ({
+export const removeSelectedItems = <Item = any>(items: Item[], keepHighlights = false) => ({
   type: MultishiftActionTypes.RemoveSelectedItems,
   payload: { items, keepHighlights },
 });
@@ -46,7 +43,7 @@ export const removeSelectedItems = <GItem = any>(items: GItem[], keepHighlights 
 /**
  * Remove the provided item from the current selection.
  */
-export const removeSelectedItem = <GItem = any>(item: GItem, keepHighlights = false) => ({
+export const removeSelectedItem = <Item = any>(item: Item, keepHighlights = false) => ({
   type: MultishiftActionTypes.RemoveSelectedItem,
   payload: { items: [item], keepHighlights },
 });
@@ -212,69 +209,71 @@ export const inputValueChange = (payload: string) => ({
   payload,
 });
 
-export const setState = <GItem = any>(payload: MultishiftStateProps<GItem>) => ({
+export const setState = <Item = any>(payload: MultishiftStateProps<Item>) => ({
   type: MultishiftActionTypes.SetState,
   payload,
 });
 
 declare global {
-  /**
-   * This is an interface of actions available. Use declaration merging to
-   * extend it with your own custom actions.
-   */
-  interface GlobalMultishiftActions<GItem = any> {
-    itemMouseMove: typeof itemMouseMove;
-    itemMouseLeave: typeof itemMouseLeave;
-    itemClick: typeof itemClick;
-    menuBlur: typeof menuBlur;
-    toggleButtonBlur: typeof toggleButtonBlur;
-    inputBlur: typeof inputBlur;
-    toggleButtonClick: typeof toggleButtonClick;
-    menuSpecialKeyDown: typeof menuSpecialKeyDown;
-    toggleButtonSpecialKeyDown: typeof toggleButtonSpecialKeyDown;
-    inputSpecialKeyDown: typeof inputSpecialKeyDown;
-    menuCharacterKeyDown: typeof menuCharacterKeyDown;
-    // toggleButtonCharacterKeyDown: typeof toggleButtonCharacterKeyDown;
-    outerTouchEnd: typeof outerTouchEnd;
-    outerMouseUp: typeof outerMouseUp;
-  }
+  namespace Multishift {
+    /**
+     * This is an interface of actions available. Use declaration merging to
+     * extend it with your own custom actions.
+     */
+    interface Actions<Item = any> {
+      itemMouseMove: typeof itemMouseMove;
+      itemMouseLeave: typeof itemMouseLeave;
+      itemClick: typeof itemClick;
+      menuBlur: typeof menuBlur;
+      toggleButtonBlur: typeof toggleButtonBlur;
+      inputBlur: typeof inputBlur;
+      toggleButtonClick: typeof toggleButtonClick;
+      menuSpecialKeyDown: typeof menuSpecialKeyDown;
+      toggleButtonSpecialKeyDown: typeof toggleButtonSpecialKeyDown;
+      inputSpecialKeyDown: typeof inputSpecialKeyDown;
+      menuCharacterKeyDown: typeof menuCharacterKeyDown;
+      // toggleButtonCharacterKeyDown: typeof toggleButtonCharacterKeyDown;
+      outerTouchEnd: typeof outerTouchEnd;
+      outerMouseUp: typeof outerMouseUp;
+    }
 
-  interface MultishiftActions<GItem = any> {
-    selectItems: CreateMultishiftAction<
-      typeof MultishiftActionTypes.SelectItems,
-      ItemsPayload<GItem>,
-      [GItem[], boolean?]
-    >;
-    selectItem: CreateMultishiftAction<
-      typeof MultishiftActionTypes.SelectItem,
-      ItemsPayload<GItem>,
-      [GItem, boolean?]
-    >;
-    removeSelectedItems: CreateMultishiftAction<
-      typeof MultishiftActionTypes.RemoveSelectedItems,
-      ItemsPayload<GItem>,
-      [GItem[], boolean?]
-    >;
-    removeSelectedItem: CreateMultishiftAction<
-      typeof MultishiftActionTypes.RemoveSelectedItem,
-      ItemsPayload<GItem>,
-      [GItem, boolean?]
-    >;
-    setState: CreateMultishiftAction<
-      typeof MultishiftActionTypes.SetState,
-      MultishiftStateProps<GItem>
-    >;
-    clearSelection: typeof clearSelection;
-    setHoverItemIndex: typeof setHoverItemIndex;
-    inputValueChange: typeof inputValueChange;
-    clearInputValue: typeof clearInputValue;
-    toggleMenu: typeof toggleMenu;
-    closeMenu: typeof closeMenu;
-    openMenu: typeof openMenu;
-    setHighlightedIndexes: typeof setHighlightedIndexes;
-    setHighlightedIndex: typeof setHighlightedIndex;
-    clearHighlighted: typeof clearHighlighted;
-    reset: typeof reset;
-    clearJumpText: typeof clearJumpText;
+    interface CoreActions<Item = any> {
+      selectItems: CreateMultishiftAction<
+        typeof MultishiftActionTypes.SelectItems,
+        ItemsPayload<Item>,
+        [Item[], boolean?]
+      >;
+      selectItem: CreateMultishiftAction<
+        typeof MultishiftActionTypes.SelectItem,
+        ItemsPayload<Item>,
+        [Item, boolean?]
+      >;
+      removeSelectedItems: CreateMultishiftAction<
+        typeof MultishiftActionTypes.RemoveSelectedItems,
+        ItemsPayload<Item>,
+        [Item[], boolean?]
+      >;
+      removeSelectedItem: CreateMultishiftAction<
+        typeof MultishiftActionTypes.RemoveSelectedItem,
+        ItemsPayload<Item>,
+        [Item, boolean?]
+      >;
+      setState: CreateMultishiftAction<
+        typeof MultishiftActionTypes.SetState,
+        MultishiftStateProps<Item>
+      >;
+      clearSelection: typeof clearSelection;
+      setHoverItemIndex: typeof setHoverItemIndex;
+      inputValueChange: typeof inputValueChange;
+      clearInputValue: typeof clearInputValue;
+      toggleMenu: typeof toggleMenu;
+      closeMenu: typeof closeMenu;
+      openMenu: typeof openMenu;
+      setHighlightedIndexes: typeof setHighlightedIndexes;
+      setHighlightedIndex: typeof setHighlightedIndex;
+      clearHighlighted: typeof clearHighlighted;
+      reset: typeof reset;
+      clearJumpText: typeof clearJumpText;
+    }
   }
 }

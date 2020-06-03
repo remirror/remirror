@@ -94,10 +94,11 @@ type MultishiftActionTypes = typeof MultishiftActionTypes;
 type MultishiftTypesInterface = { [P in Value<MultishiftActionTypes>]: any };
 
 declare global {
-  /**
-   * This is an interface of all the actionTypes available. Use declaration merging to
-   * extend it with your own custom actionTypes.
-   */
-
-  interface GlobalMultishiftActionTypes extends MultishiftTypesInterface {}
+  namespace Multishift {
+    /**
+     * This is an interface of all the actionTypes available. Use declaration merging to
+     * extend it with your own custom actionTypes.
+     */
+    interface ActionTypes extends MultishiftTypesInterface {}
+  }
 }

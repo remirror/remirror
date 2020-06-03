@@ -28,6 +28,7 @@ import {
 } from '@remirror/core';
 import { CustomHandlerMethod } from '@remirror/core/src/extension/base-class';
 import {
+  getInitialPosition,
   PositionerChangeHandlerMethod,
   PositionerChangeHandlerParameter,
   PositionerExtension,
@@ -74,6 +75,29 @@ export function useRemirror<Combined extends AnyCombinedUnion>(): RemirrorContex
 
   return context;
 }
+
+/**
+ * This is a type alias for creating your own typed version of the remirror
+ * method.
+ *
+ * ```ts
+ * import { useRemirror, UseRemirrorType } from 'remirror/react';
+ * import { SocialPreset } from 'remirror/preset/social'
+ *
+ * const useSocialRemirror = useRemirror as UseRemirrorType<SocialPreset>;
+ *
+ * // With the remirror provider context.
+ * const Editor = () => {
+ *   const { commands } = useSocialRemirror();
+ *
+ *   // All commands are autocompleted for you.
+ *   commands.toggleBold();
+ * }
+ * ```
+ */
+export type UseRemirrorType<Combined extends AnyCombinedUnion> = () => RemirrorContextProps<
+  Combined
+>;
 
 /**
  * A react hook for for creating an extension within the editor.
@@ -428,8 +452,11 @@ export function usePositioner(
   positioner: Positioner | StringPositioner,
   onChange?: PositionerChangeHandlerMethod,
 ): UsePositionerHookReturn {
-  const [state, setState] = useState<PositionerChangeHandlerParameter>({ active: false });
   const [element, setElement] = useState<HTMLElement>();
+  const [state, setState] = useState<PositionerChangeHandlerParameter>({
+    ...getInitialPosition(positioner),
+    active: false,
+  });
 
   const ref: RefCallback<HTMLElement> = useCallback((instance) => {
     if (instance) {
@@ -461,7 +488,7 @@ export function usePositioner(
 
       return dispose;
     },
-    [positioner],
+    [positioner, element],
   );
 
   return { ...state, ref };

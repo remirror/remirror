@@ -1,8 +1,6 @@
-import { EditorView, ProsemirrorAttributes } from '@remirror/core';
-import { MentionExtensionAttributes } from '@remirror/extension-mention';
-import { RemirrorContextProps, useRemirror } from '@remirror/react';
+import { useRemirror, UseRemirrorType } from '@remirror/react';
 
-import { MentionGetterParameter, SocialCombinedUnion } from './social-types';
+import { SocialCombinedUnion } from './social-types';
 
 /**
  * Maps the items to items with an active property
@@ -46,39 +44,4 @@ export const indexFromArrowPress = ({
     ? matchLength - 1
     : prevIndex - 1;
 
-interface CreateOnClickMethodFactoryParameter extends MentionGetterParameter {
-  setExitTriggeredInternally: () => void;
-  view: EditorView;
-  command: (attrs: ProsemirrorAttributes) => void;
-}
-
-/**
- * This method helps create the onclick factory method used by both types of suggesters supported
- */
-export const createOnClickMethodFactory = ({
-  getMention,
-  setExitTriggeredInternally,
-  view,
-  command,
-}: CreateOnClickMethodFactoryParameter) => (id: string) => () => {
-  const {
-    suggester: { char, name },
-    range,
-  } = getMention();
-  const parameters: MentionExtensionAttributes = {
-    id,
-    label: `${char}${id}`,
-    name,
-    replacementType: 'full',
-    range,
-    role: 'presentation',
-    href: `/${id}`,
-  };
-  setExitTriggeredInternally(); // Prevents further `onExit` calls
-  command(parameters);
-  if (!view.hasFocus()) {
-    view.focus();
-  }
-};
-
-export const useSocialRemirror = useRemirror as () => RemirrorContextProps<SocialCombinedUnion>;
+export const useSocialRemirror = useRemirror as UseRemirrorType<SocialCombinedUnion>;

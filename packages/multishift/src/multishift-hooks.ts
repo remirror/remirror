@@ -1,6 +1,9 @@
 import { useId } from '@reach/auto-id';
 import { setStatus } from 'a11y-status';
 import { DependencyList, EffectCallback, useEffect, useReducer, useRef } from 'react';
+import useShallowCompareEffect from 'react-use/lib/useShallowCompareEffect';
+
+import { isEmptyArray } from '@remirror/core-helpers';
 
 import { multishiftReducer } from './multishift-reducer';
 import {
@@ -87,11 +90,11 @@ const defaultGetA11yStatusMessage = <Item = any>({
   state: { selectedItems, isOpen },
   itemsToString = defaultItemsToString,
 }: A11yStatusMessageParameter<Item>) => {
-  if (selectedItems.length) {
+  if (!isEmptyArray(selectedItems)) {
     return `${itemsToString(selectedItems)} has been selected.`;
   }
 
-  if (!items.length) {
+  if (isEmptyArray(items)) {
     return '';
   }
 
@@ -311,16 +314,16 @@ export function useTimeouts() {
  * };
  * ```
  */
-export function useEffectOnUpdate(effect: EffectCallback, dependencies?: DependencyList) {
+export function useEffectOnUpdate(effect: EffectCallback, dependencies: DependencyList) {
   const isInitialMount = useRef(true);
 
-  useEffect(() => {
+  useShallowCompareEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
     } else {
       return effect();
     }
-  }, [effect]);
+  }, [dependencies]);
 }
 
 /**

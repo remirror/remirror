@@ -27,7 +27,6 @@ import {
   GetMarkNameUnion,
   GetNodeNameUnion,
   ManagerStoreKeys,
-  SchemaFromExtensionUnion,
   ViewLifecycleMethod,
 } from '../extension';
 import {
@@ -426,7 +425,7 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
    *
    * @param view - the editor view
    */
-  public addView(view: EditorView<SchemaFromExtensionUnion<this['~E']>>) {
+  public addView(view: EditorView<this['~Sch']>) {
     // Update the lifecycle phase.
     this.#phase = ManagerPhase.EditorView;
 
@@ -661,7 +660,7 @@ export interface EditorManager<Combined extends AnyCombinedUnion> {
    * Pseudo property which is a small hack to store the type of the schema
    * available from this manager..
    */
-  ['~Sch']: SchemaFromExtensionUnion<this['~E']>;
+  ['~Sch']: SchemaFromCombined<Combined>;
 
   /**
    * `NodeNames`

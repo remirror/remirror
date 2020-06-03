@@ -1,434 +1,76 @@
-import React, { Fragment, PureComponent } from 'react';
+import React, { FC, useMemo } from 'react';
 
-import { deepMerge, isEmptyArray, isUndefined, object, omit } from '@remirror/core';
 import { AutoLinkExtension } from '@remirror/extension-auto-link';
-import {
-  EmojiExtension,
-  EmojiObject,
-  EmojiOptions,
-  EmojiSuggestCommand,
-  EmojiSuggestionChangeHandler,
-  EmojiSuggestionExitHandler,
-  EmojiSuggestionKeyBindings,
-} from '@remirror/extension-emoji';
-import {
-  MentionExtension,
-  MentionExtensionMatcher,
-  MentionOptions,
-} from '@remirror/extension-mention';
-import {
-  SuggestChangeHandlerParameter,
-  SuggestKeyBindingMap,
-  SuggestKeyBindingParameter,
-  SuggestStateMatch,
-} from '@remirror/pm/suggest';
+import { EmojiExtension } from '@remirror/extension-emoji';
+import { MentionExtension } from '@remirror/extension-mention';
+import { RemirrorProvider, useCreateExtension, useManager, useRemirror } from '@remirror/react';
 
-import { socialEditorTheme } from '../social-theme';
-import {
-  ActiveTagData,
-  ActiveUserData,
-  MatchName,
-  MentionChangeParameter,
-  SocialEditorProps,
-} from '../social-types';
-import { indexFromArrowPress, mapToActiveIndex } from '../social-utils';
-import { SocialEditorComponent } from './social-wrapper-component';
+import { SocialEditorProps } from '../social-types';
+import { CharacterCountIndicator, CharacterCountWrapper } from './social-character-count';
+import { EmojiSuggestions } from './social-emoji';
+import { MentionSuggestions } from './social-mentions';
 
-interface State {
-  activeMatcher: MatchName | undefined;
-  activeIndex: number;
-  hideMentionSuggestions: boolean;
+/**
+ * The social editor.
+ */
+export const SocialEditor: FC<SocialEditorProps> = (props) => {
+  const { extensions = [], presets = [], atMatcherOptions, tagMatcherOptions, children } = props;
+  const mentionExtensionSettings = useMemo(
+    () => ({
+      matchers: [
+        { name: 'at', char: '@', appendText: ' ', ...atMatcherOptions },
+        { name: 'tag', char: '#', appendText: ' ', ...tagMatcherOptions },
+      ],
+    }),
+    [atMatcherOptions, tagMatcherOptions],
+  );
 
-  emojiList: EmojiObject[];
-  hideEmojiSuggestions: boolean;
-  activeEmojiIndex: number;
-  emojiCommand?: EmojiSuggestCommand;
-}
+  const mentionExtension = useCreateExtension(MentionExtension, mentionExtensionSettings);
+  const emojiExtension = useCreateExtension(EmojiExtension, {
+    extraAttributes: { role: { default: 'presentation' } },
+  });
 
-export class SocialEditor extends PureComponent<SocialEditorProps, State> {
-  public static defaultProps = {
-    emojiSet: 'social',
-    placeholder: "What's happening?",
-  };
+  const autoLinkExtension = useCreateExtension(AutoLinkExtension, { defaultProtocol: 'https:' });
+  const combined = useMemo(
+    () => [...extensions, ...presets, mentionExtension, emojiExtension, autoLinkExtension],
+    [autoLinkExtension, emojiExtension, extensions, mentionExtension, presets],
+  );
 
-  public readonly state: State = {
-    activeIndex: 0,
-    activeMatcher: undefined,
-    hideMentionSuggestions: false,
-    activeEmojiIndex: 0,
-    emojiList: [],
-    hideEmojiSuggestions: false,
-  };
+  const manager = useManager(combined);
 
-  /**
-   * The mention information
-   */
-  private mention: SuggestStateMatch | undefined;
+  return (
+    <RemirrorProvider manager={manager} childAsRoot={false}>
+      <Editor {...props}>{children}</Editor>
+    </RemirrorProvider>
+  );
+};
 
-  /**
-   * This keeps track of when an exit was triggered by an internal command. For
-   * example when the enter key is pressed to select a suggestion this should be
-   * set to true so that the subsequent `onExit` call can be ignored.
-   */
-  private mentionExitTriggeredInternally = false;
+/**
+ * The editing functionality within the Social Editor context.
+ */
+const Editor: FC<SocialEditorProps> = (props) => {
+  const { children, characterLimit = 280 } = props;
 
-  /**
-   * These are the matchers
-   */
-  private get matchers(): MentionExtensionMatcher[] {
-    const { atMatcherOptions, tagMatcherOptions } = this.props;
-    return [
-      { name: 'at', char: '@', appendText: ' ', ...atMatcherOptions },
-      { name: 'tag', char: '#', appendText: ' ', ...tagMatcherOptions },
-    ];
-  }
+  const { getRootProps, state } = useRemirror();
+  const used = state.newState.doc.textContent.length;
 
-  /**
-   * Create the arrow bindings for the mentions.
-   */
-  private readonly createMentionArrowBindings = (direction: 'up' | 'down') => ({
-    queryText,
-    suggester: { name },
-  }: SuggestKeyBindingParameter) => {
-    const { activeIndex: previousIndex, hideMentionSuggestions: hideSuggestions } = this.state;
-    const { onMentionChange: onMentionStateChange } = this.props;
-
-    const matches = name === 'at' ? this.users : this.tags;
-
-    if (hideSuggestions || isEmptyArray(matches)) {
-      return false;
-    }
-
-    // pressed up arrow
-    const activeIndex = indexFromArrowPress({
-      direction,
-      matchLength: matches.length,
-      prevIndex: previousIndex,
-    });
-
-    this.setState({ activeIndex, activeMatcher: name as MatchName });
-    onMentionStateChange({
-      name,
-      query: queryText.full,
-      index: activeIndex,
-    } as MentionChangeParameter);
-
-    return true;
-  };
-
-  /**
-   * These are the keyBindings for mentions extension. This allows for
-   * overriding
-   */
-  private readonly mentionKeyBindings: SuggestKeyBindingMap = {
-    /**
-     * Handle the enter key being pressed
-     */
-    Enter: ({ suggester: { char, name }, command }) => {
-      const {
-        users,
-        tags,
-        state: { activeIndex, hideMentionSuggestions: hideSuggestions },
-      } = this;
-
-      if (hideSuggestions) {
-        return false;
-      }
-
-      const userData = name === 'at' && users.length > activeIndex ? users[activeIndex] : null;
-      const tagData = name === 'tag' && tags.length > activeIndex ? tags[activeIndex] : null;
-
-      const id = userData ? userData.id : tagData ? tagData.id : null;
-      const label = userData ? userData.username : tagData ? tagData.tag : null;
-      const href = userData ? userData.href : tagData ? tagData.href : null;
-
-      // Check if the user has selected something.
-      if (!label) {
-        return false;
-      }
-
-      this.setMentionExitTriggeredInternally();
-      command({
-        replacementType: 'full',
-        id: id ?? label,
-        label: `${char}${label}`,
-        role: 'presentation',
-        href: href ?? `/${id ?? label}`,
-      });
-
-      return true;
-    },
-
-    /**
-     * Hide the suggesters when the escape key is pressed.
-     */
-    Escape: ({ suggester: { name } }) => {
-      const matches = name === 'at' ? this.users : this.tags;
-
-      if (!matches.length) {
-        return false;
-      }
-
-      this.setState({ hideMentionSuggestions: true });
-      return true;
-    },
-
-    /**
-     * Handle the up arrow being pressed
-     */
-    ArrowUp: this.createMentionArrowBindings('up'),
-
-    /**
-     * Handle the down arrow being pressed
-     */
-    ArrowDown: this.createMentionArrowBindings('down'),
-  };
-
-  /**
-   * The list of users that match the current query
-   */
-  private get users(): ActiveUserData[] {
-    return mapToActiveIndex(this.props.userData, this.state.activeIndex);
-  }
-
-  /**
-   * The list of tags which match the current query
-   */
-  private get tags(): ActiveTagData[] {
-    return mapToActiveIndex(this.props.tagData, this.state.activeIndex);
-  }
-
-  /**
-   * The props which are passed down into the internal remirror editor.
-   */
-  private get remirrorProps() {
-    return omit(this.props, ['userData', 'tagData', 'onMentionChange', 'theme']);
-  }
-
-  /**
-   * Retrieves the mention property and can be passed down into child
-   * components.
-   *
-   * This is defined here and now as a part of state because we don't actually
-   * need to rerender the component when the query or suggestion state changes.
-   * We only need this in children components when clicking on the suggestion so
-   * that the click handler can know what the active mention query is since
-   * mentions can either be `@` or `#`.
-   */
-  private readonly getMention = () => {
-    if (!this.mention) {
-      throw new Error('There is currently no mention data available');
-    }
-    return this.mention;
-  };
-
-  /**
-   * The is the callback for when a suggestion is changed.
-   */
-  private readonly onChange = (parameters: SuggestChangeHandlerParameter) => {
-    const {
-      queryText,
-      suggester: { name },
-    } = parameters;
-
-    if (name) {
-      const options = {
-        name,
-        query: queryText.full,
-      } as MentionState;
-      this.props.onMentionChange({ ...options, index: this.state.activeIndex });
-    }
-
-    // Reset the active index so that the dropdown is back to the top.
-    this.setState({
-      activeIndex: 0,
-      activeMatcher: name as MatchName,
-      hideMentionSuggestions: false,
-    });
-
-    this.mention = parameters;
-  };
-
-  /**
-   * Called when the none of our configured matchers match
-   */
-  private readonly onExit: Required<MentionOptions>['onExit'] = (parameters) => {
-    const { queryText, command } = parameters;
-
-    // Check whether we've manually caused this exit. If not, trigger the
-    // command.
-    if (!this.mentionExitTriggeredInternally) {
-      command({
-        role: 'presentation',
-        href: `/${queryText.full}`,
-        appendText: '',
-      });
-    }
-
-    this.props.onMentionChange();
-    this.setState({ activeIndex: 0, activeMatcher: undefined });
-    this.mention = undefined;
-    this.mentionExitTriggeredInternally = false;
-  };
-
-  private get theme(): RemirrorTheme {
-    return deepMerge(socialEditorTheme, this.props.theme ?? object());
-  }
-
-  /**
-   * Identifies the next exit as one which can be ignored.
-   */
-  private readonly setMentionExitTriggeredInternally = () => {
-    this.mentionExitTriggeredInternally = true;
-  };
-
-  private readonly onEmojiSuggestionChange: EmojiSuggestionChangeHandler = ({
-    emojiMatches,
-    command,
-  }) => {
-    this.setState({
-      hideEmojiSuggestions: false,
-      emojiList: emojiMatches,
-      activeEmojiIndex: 0,
-      emojiCommand: command,
-    });
-    // this.setState({ hideEmojiSuggestions: false, activeEmojiIndex: 0 });
-  };
-
-  private readonly onEmojiSuggestionExit: EmojiSuggestionExitHandler = () => {
-    this.setState({
-      hideEmojiSuggestions: true,
-      emojiList: [],
-      activeEmojiIndex: 0,
-      emojiCommand: undefined,
-    });
-  };
-
-  /**
-   * Create the arrow bindings for the emoji suggesters.
-   */
-  private readonly createEmojiArrowBindings = (direction: 'up' | 'down') => () => {
-    const { activeEmojiIndex: previousIndex, hideMentionSuggestions, emojiList } = this.state;
-
-    if (hideMentionSuggestions || !emojiList.length) {
-      return false;
-    }
-
-    // pressed up arrow
-    const activeEmojiIndex = indexFromArrowPress({
-      direction,
-      matchLength: emojiList.length,
-      prevIndex: previousIndex,
-    });
-
-    this.setState({ activeEmojiIndex });
-    return true;
-  };
-
-  private readonly emojiKeyBindings: EmojiSuggestionKeyBindings = {
-    /**
-     * Handle the enter key being pressed
-     */
-    Enter: ({ command }) => {
-      const { activeEmojiIndex, hideEmojiSuggestions, emojiList } = this.state;
-
-      if (hideEmojiSuggestions) {
-        return false;
-      }
-
-      const emoji: EmojiObject | undefined = emojiList[activeEmojiIndex];
-
-      // Check if a matching id exists because the user has selected something.
-      if (isUndefined(emoji)) {
-        return false;
-      }
-
-      command(emoji);
-
-      return true;
-    },
-
-    /**
-     * Hide the suggesters when the escape key is pressed.
-     */
-    Escape: () => {
-      const { emojiList } = this.state;
-      if (!emojiList.length) {
-        return false;
-      }
-
-      this.setState({ hideEmojiSuggestions: true });
-      return true;
-    },
-
-    ArrowDown: this.createEmojiArrowBindings('down'),
-    ArrowUp: this.createEmojiArrowBindings('up'),
-  };
-
-  public render() {
-    const {
-      activeMatcher,
-      emojiCommand,
-      hideMentionSuggestions,
-      activeEmojiIndex,
-      emojiList,
-      hideEmojiSuggestions,
-    } = this.state;
-
-    const { children, placeholder, extensions = [], characterLimit, ...rest } = this.remirrorProps;
-    return (
-      <RemirrorThemeProvider theme={this.theme}>
-        <RemirrorManager extensions={extensions}>
-          <RemirrorExtension
-            Constructor={PlaceholderExtension}
-            placeholderStyle={{
-              color: '#aab8c2',
-              fontStyle: 'normal',
-              position: 'absolute',
-              fontWeight: 300,
-              letterSpacing: '0.5px',
-            }}
-            placeholder={placeholder}
-          />
-          <RemirrorExtension Constructor={NodeCursorExtension} />
-          <RemirrorExtension
-            Constructor={MentionExtension}
-            matchers={this.matchers}
-            extraAttributes={['href', ['role', 'presentation']]}
-            onChange={this.onChange}
-            onExit={this.onExit}
-            keyBindings={this.mentionKeyBindings}
-          />
-          <RemirrorExtension
-            Constructor={AutoLinkExtension}
-            onUrlsChange={this.props.onUrlsChange}
-          />
-          <RemirrorExtension<typeof EmojiExtension, EmojiOptions>
-            Constructor={EmojiExtension}
-            onSuggestionChange={this.onEmojiSuggestionChange}
-            suggestionKeyBindings={this.emojiKeyBindings}
-            onSuggestionExit={this.onEmojiSuggestionExit}
-          />
-          <ManagedRemirrorProvider {...rest}>
-            <Fragment>
-              <SocialEditorComponent
-                emojiCommand={emojiCommand}
-                activeEmojiIndex={activeEmojiIndex}
-                emojiList={emojiList}
-                hideEmojiSuggestions={hideEmojiSuggestions}
-                hideSuggestions={hideMentionSuggestions}
-                activeMatcher={activeMatcher}
-                setExitTriggeredInternally={this.setMentionExitTriggeredInternally}
-                getMention={this.getMention}
-                users={this.users}
-                tags={this.tags}
-                characterLimit={characterLimit}
-              />
-              {children}
-            </Fragment>
-          </ManagedRemirrorProvider>
-        </RemirrorManager>
-      </RemirrorThemeProvider>
-    );
-  }
-}
+  return (
+    <div>
+      <div className='inner-editor'>
+        <div className='remirror-social-editor' {...getRootProps()} />
+        <EmojiSuggestions />
+        {characterLimit != null && (
+          <CharacterCountWrapper>
+            <CharacterCountIndicator characters={{ maximum: characterLimit, used }} />
+          </CharacterCountWrapper>
+        )}
+        {children}
+      </div>
+      <MentionSuggestions
+        tags={props.tagData}
+        users={props.userData}
+        onChange={props.onMentionChange}
+      />
+    </div>
+  );
+};

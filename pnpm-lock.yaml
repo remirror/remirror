@@ -631,6 +631,7 @@ importers:
       min-document: 2.19.0
       nanoevents: 5.1.7
       nanoid: 3.1.9
+      react-use: 15.1.1_react-dom@16.13.1+react@16.13.1
       resize-observer-polyfill: 1.5.1
       type-fest: 0.15.0
       use-deep-compare-effect: 1.3.1_react@16.13.1
@@ -671,6 +672,7 @@ importers:
       react: ^16.13.1
       react-dom: ^16.13.1
       react-test-renderer: ^16.13.1
+      react-use: ^15.1.1
       resize-observer-polyfill: ^1.5.1
       type-fest: ^0.15.0
       use-deep-compare-effect: ^1.3.1
@@ -709,6 +711,8 @@ importers:
       '@remirror/extension-mention': 'link:../extension-mention'
       '@remirror/react': 'link:../react'
       '@remirror/react-utils': 'link:../react-utils'
+      '@types/classnames': 2.2.10
+      classnames: 2.2.6
       multishift: 'link:../../packages/multishift'
       type-fest: 0.15.0
     devDependencies:
@@ -729,9 +733,11 @@ importers:
       '@remirror/react': ^0.13.1
       '@remirror/react-utils': ^0.7.6
       '@testing-library/react': ^10.0.4
+      '@types/classnames': ^2.2.10
       '@types/react': ^16.9.35
       '@types/react-dom': ^16.9.8
       '@types/testing-library__react': ^10.0.1
+      classnames: ^2.2.6
       multishift: ^0.7.7
       react: ^16.13.1
       react-dom: ^16.13.1
@@ -1470,6 +1476,7 @@ importers:
       '@seznam/compose-react-refs': 1.0.4
       a11y-status: 'link:../a11y-status'
       compute-scroll-into-view: 1.0.14
+      react-use: 15.1.1_react@16.13.1
       w3c-keyname: 2.2.4
     devDependencies:
       '@testing-library/react': 10.0.4_react@16.13.1
@@ -1494,6 +1501,7 @@ importers:
       a11y-status: ^0.0.0
       compute-scroll-into-view: ^1.0.14
       react: ^16.13.1
+      react-use: ^15.1.1
       w3c-keyname: ^2.2.4
   packages/prosemirror-suggest:
     dependencies:
@@ -6318,6 +6326,10 @@ packages:
       '@babel/types': 7.10.1
     resolution:
       integrity: sha512-ddHK5icION5U6q11+tV2f9Mo6CZVuT8GJKld2q9LqHSZbvLbH34Kcu2yFGckZut453+eQU6btIA3RihmnRgI+Q==
+  /@types/classnames/2.2.10:
+    dev: false
+    resolution:
+      integrity: sha512-1UzDldn9GfYYEsWWnn/P4wkTlkZDH7lDb0wBMGbtIQc9zXEQq7FlKBdZUn6OBqD8sKZZ2RQO2mAjGpXiDGoRmQ==
   /@types/cli-spinners/1.3.0:
     dev: true
     resolution:

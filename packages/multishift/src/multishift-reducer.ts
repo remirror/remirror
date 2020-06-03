@@ -1,4 +1,4 @@
-import { object } from '@remirror/core-helpers';
+import { isEmptyArray, object } from '@remirror/core-helpers';
 
 import { MultishiftActionTypes } from './multishift-constants';
 import {
@@ -24,12 +24,12 @@ import {
   warnIfInternalType,
 } from './multishift-utils';
 
-export const multishiftReducer = <GItem = any>(
-  state: MultishiftState<GItem>,
-  action: MultishiftRootActions<GItem>,
-  props: MultishiftProps<GItem>,
-): [MultishiftState<GItem>, MultishiftStateProps<GItem>] => {
-  let changes: MultishiftStateProps<GItem> = object();
+export const multishiftReducer = <Item = any>(
+  state: MultishiftState<Item>,
+  action: MultishiftRootActions<Item>,
+  props: MultishiftProps<Item>,
+): [MultishiftState<Item>, MultishiftStateProps<Item>] => {
+  let changes: MultishiftStateProps<Item> = object();
 
   const defaultState = getDefaultState(props);
   const { multiple, items, getItemId = defaultGetItemId, autoSelectOnBlur = true } = props;
@@ -110,7 +110,7 @@ export const multishiftReducer = <GItem = any>(
       });
 
       const extra =
-        indexes.length && autoSelectOnBlur
+        !isEmptyArray(indexes) && autoSelectOnBlur
           ? {
               selectedItems: addItems(
                 selected,
@@ -189,7 +189,7 @@ export const multishiftReducer = <GItem = any>(
         itemToString: props.itemToString,
         items,
       });
-      const extraHighlights = indexes.length ? { highlightedIndexes: indexes } : {};
+      const extraHighlights = !isEmptyArray(indexes) ? { highlightedIndexes: indexes } : {};
 
       changes = omitUnchangedState({ jumpText, ...extraHighlights }, { state, getItemId });
       break;
@@ -269,7 +269,7 @@ export const multishiftReducer = <GItem = any>(
       });
       const highlightedItems = indexes.map((index) => items[index]);
       const extra =
-        indexes.length && autoSelectOnBlur
+        !isEmptyArray(indexes) && autoSelectOnBlur
           ? { selectedItems: addItems(selected, highlightedItems, getItemId, multiple) }
           : {};
       changes = {

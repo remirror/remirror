@@ -81,7 +81,7 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
     const active = isActive(parameters);
 
     if (!active) {
-      onChange({ active });
+      onChange({ ...initialPosition, active });
     } else {
       onChange({ ...initialPosition, ...getPosition(parameters), active });
     }
@@ -107,23 +107,13 @@ export interface PositionerHandler {
 
 export type PositionerChangeHandlerMethod = (position: PositionerChangeHandlerParameter) => void;
 
-interface ActiveChangeHandlerParameter extends Position {
+export interface PositionerChangeHandlerParameter extends Position {
   /**
-   * This is an active positioner and has position properties available..
+   * When true this is an active positioner. When false the positions default to
+   * the default positioner values.
    */
-  active: true;
+  active: boolean;
 }
-
-interface InactiveChangeHandlerParameter {
-  /**
-   * This is inactive and has now position attached.
-   */
-  active: false;
-}
-
-export type PositionerChangeHandlerParameter =
-  | ActiveChangeHandlerParameter
-  | InactiveChangeHandlerParameter;
 
 const positioners = {
   bubble: bubblePositioner,
@@ -138,6 +128,10 @@ function getPositioner(positioner: StringPositioner | Positioner): Positioner {
   }
 
   return positioner;
+}
+
+export function getInitialPosition(positioner: StringPositioner | Positioner) {
+  return getPositioner(positioner).initialPosition;
 }
 
 export type StringPositioner = keyof typeof positioners;

@@ -114,11 +114,11 @@ export interface MentionGetterParameter {
   getMention: MentionGetter;
 }
 
-export interface DataParameter<GData> {
+export interface DataParameter<Data> {
   /**
    * A list of data items.
    */
-  data: GData[];
+  data: Data[];
 }
 
 export interface UserSuggestionsProps

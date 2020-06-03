@@ -189,7 +189,7 @@ export class CodeBlockState {
   }
 
   /**
-   * Flags that a deletion has just occured.
+   * Flags that a deletion has just occurred.
    */
   public setDeleted(deleted: boolean) {
     this.#deleted = deleted;

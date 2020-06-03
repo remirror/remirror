@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference path="../globals.d.ts" />
-
 import {
   DetailedHTMLProps,
   Dispatch,
@@ -13,7 +10,7 @@ import {
 
 import { DropdownType, SpecialKey } from './multishift-constants';
 
-export interface MultishiftState<GItem = any> {
+export interface MultishiftState<Item = any> {
   /**
    * Contains all the selected items.
    *
@@ -21,7 +18,7 @@ export interface MultishiftState<GItem = any> {
    *
    * @defaultValue []
    */
-  selectedItems: GItem[];
+  selectedItems: Item[];
 
   /**
    * This tracks the text typed when no input is available for filtering.
@@ -91,14 +88,14 @@ export type Modifier = 'shiftKey' | 'altKey' | 'metaKey' | 'ctrlKey';
 /**
  * Type representing Generic Action
  */
-export interface Action<GType extends string = string> {
-  type: GType;
+export interface Action<Type extends string = string> {
+  type: Type;
 }
 /**
  * Type representing an Action with Payload
  */
-export interface ActionWithPayload<GType extends string = string, GPayload = any> {
-  type: GType;
+export interface ActionWithPayload<Type extends string = string, GPayload = any> {
+  type: Type;
   payload: GPayload;
 }
 
@@ -135,21 +132,21 @@ export type ActionCreatorMapToDispatch<GCreatorMap extends ActionCreatorsMapObje
 /**
  * Infers Action union-type from action-creator map object
  */
-type ActionType<GActionCreatorOrMap extends any> = GActionCreatorOrMap extends ActionCreator<any>
-  ? ReturnType<GActionCreatorOrMap>
-  : GActionCreatorOrMap extends Record<any, any>
+type ActionType<ActionCreatorMap extends any> = ActionCreatorMap extends ActionCreator<any>
+  ? ReturnType<ActionCreatorMap>
+  : ActionCreatorMap extends Record<any, any>
   ? {
-      [K in keyof GActionCreatorOrMap]: ActionType<GActionCreatorOrMap[K]>;
-    }[keyof GActionCreatorOrMap]
+      [K in keyof ActionCreatorMap]: ActionType<ActionCreatorMap[K]>;
+    }[keyof ActionCreatorMap]
   : never;
 
-export type AllMultishiftActions<GItem = any> = GlobalMultishiftActions<GItem> &
-  MultishiftActions<GItem>;
+export type AllMultishiftActions<Item = any> = Multishift.Actions<Item> &
+  Multishift.CoreActions<Item>;
 
-export type MultishiftRootActions<GItem = any> = ActionType<AllMultishiftActions<GItem>>;
+export type MultishiftRootActions<Item = any> = ActionType<AllMultishiftActions<Item>>;
 
-export interface MultishiftInitialValueProps<GItem = any> {
-  initialSelectedItems?: GItem[];
+export interface MultishiftInitialValueProps<Item = any> {
+  initialSelectedItems?: Item[];
   initialJumpText?: string;
   initialIsOpen?: boolean;
   initialInputValue?: string;
@@ -158,8 +155,8 @@ export interface MultishiftInitialValueProps<GItem = any> {
   initialHighlightedGroupStartIndex?: number;
   initialHighlightedGroupEndIndex?: number;
 }
-export interface MultishiftDefaultValueProps<GItem = any> {
-  defaultSelectedItems?: GItem[];
+export interface MultishiftDefaultValueProps<Item = any> {
+  defaultSelectedItems?: Item[];
   defaultJumpText?: string;
   defaultIsOpen?: boolean;
   defaultInputValue?: string;
@@ -168,7 +165,7 @@ export interface MultishiftDefaultValueProps<GItem = any> {
   defaultHighlightedGroupStartIndex?: number;
   defaultHighlightedGroupEndIndex?: number;
 }
-export interface MultishiftChangeHandlerProps<GItem = any> {
+export interface MultishiftChangeHandlerProps<Item = any> {
   /**
    * This function is called anytime the internal state changes. This can be
    * useful if you're using multishift as a "controlled" component, where you
@@ -195,7 +192,7 @@ export interface MultishiftChangeHandlerProps<GItem = any> {
    * For example: `<input onBlur={handleBlur} />` should be `<input
    * {...getInputProps({onBlur: handleBlur})} />`).
    */
-  onStateChange?: (changes: MultishiftStateProps<GItem>, state: MultishiftState<GItem>) => void;
+  onStateChange?: (changes: MultishiftStateProps<Item>, state: MultishiftState<Item>) => void;
 
   /**
    * Called when the selected items change, either by the user selecting an item
@@ -206,24 +203,21 @@ export interface MultishiftChangeHandlerProps<GItem = any> {
    * the selection was cleared.
    * @param state - the list of all currently selected items.
    */
-  onSelectedItemsChange?: (selectedItems: GItem[], state: MultishiftState<GItem>) => void;
+  onSelectedItemsChange?: (selectedItems: Item[], state: MultishiftState<Item>) => void;
 
-  onOuterClick?: (state: MultishiftState<GItem>) => void;
-  onJumpTextChange?: (jumpText: string, state: MultishiftState<GItem>) => void;
-  onIsOpenChange?: (isOpen: boolean, state: MultishiftState<GItem>) => void;
-  onInputValueChange?: (inputValue: string, state: MultishiftState<GItem>) => void;
-  onHoveredIndexChange?: (hoveredIndex: number, state: MultishiftState<GItem>) => void;
-  onHighlightedIndexesChange?: (
-    highlightedIndexes: number[],
-    state: MultishiftState<GItem>,
-  ) => void;
+  onOuterClick?: (state: MultishiftState<Item>) => void;
+  onJumpTextChange?: (jumpText: string, state: MultishiftState<Item>) => void;
+  onIsOpenChange?: (isOpen: boolean, state: MultishiftState<Item>) => void;
+  onInputValueChange?: (inputValue: string, state: MultishiftState<Item>) => void;
+  onHoveredIndexChange?: (hoveredIndex: number, state: MultishiftState<Item>) => void;
+  onHighlightedIndexesChange?: (highlightedIndexes: number[], state: MultishiftState<Item>) => void;
   onHighlightedGroupStartIndexChange?: (
     highlightedGroupStartIndex: number,
-    state: MultishiftState<GItem>,
+    state: MultishiftState<Item>,
   ) => void;
   onHighlightedGroupEndIndexChange?: (
     highlightedGroupEndIndex: number | undefined,
-    state: MultishiftState<GItem>,
+    state: MultishiftState<Item>,
   ) => void;
 }
 export interface MultishiftA11yIdProps {
@@ -385,13 +379,13 @@ export interface MultishiftBehaviorProps {
   includeHoveredIndexInSelection?: boolean;
 }
 
-export interface MultishiftBaseProps<GItem = any> {
+export interface MultishiftBaseProps<Item = any> {
   /**
    * The list ot items which are visible in menu.
    *
    * This can be changed via filtering.
    */
-  items: GItem[];
+  items: Item[];
 
   /**
    * A unique id for the item which is used to compare between two items.
@@ -412,7 +406,7 @@ export interface MultishiftBaseProps<GItem = any> {
    * run a uniqueness check and use the function provided above to prevent
    * duplication.
    */
-  getItemId?: GetItemId<GItem>;
+  getItemId?: GetItemId<Item>;
   /**
    * This function will be called each time multishift sets its internal state
    * (or calls the onStateChange handler for controlled props). It allows you to
@@ -429,18 +423,18 @@ export interface MultishiftBaseProps<GItem = any> {
    *
    */
   stateReducer?: (
-    changesAndState: MultishiftStateChangeset<GItem>,
-    action: MultishiftRootActions<GItem>,
-    props: MultishiftProps<GItem>,
-  ) => MultishiftState<GItem>;
+    changesAndState: MultishiftStateChangeset<Item>,
+    action: MultishiftRootActions<Item>,
+    props: MultishiftProps<Item>,
+  ) => MultishiftState<Item>;
 
   /**
    * Takes a list of items and transforms them into a string.
    *
    * This defaults to a comma separated list of the values.
    */
-  itemsToString?: ItemsToString<GItem>;
-  itemToString?: ItemToString<GItem>;
+  itemsToString?: ItemsToString<Item>;
+  itemToString?: ItemToString<Item>;
 
   /**
    * This function is passed as props to a status component nested within and
@@ -456,67 +450,67 @@ export interface MultishiftBaseProps<GItem = any> {
   getA11yStatusMessage?: GetA11yStatusMessage;
 }
 
-export type MultishiftStateProps<GItem = any> = Partial<MultishiftState<GItem>>;
+export type MultishiftStateProps<Item = any> = Partial<MultishiftState<Item>>;
 
-export interface MultishiftProps<GItem = any>
+export interface MultishiftProps<Item = any>
   extends MultishiftA11yIdProps,
     MultishiftBehaviorProps,
-    MultishiftBaseProps<GItem>,
-    MultishiftStateProps<GItem>,
-    MultishiftDefaultValueProps<GItem>,
-    MultishiftInitialValueProps<GItem>,
-    MultishiftChangeHandlerProps<GItem> {}
+    MultishiftBaseProps<Item>,
+    MultishiftStateProps<Item>,
+    MultishiftDefaultValueProps<Item>,
+    MultishiftInitialValueProps<Item>,
+    MultishiftChangeHandlerProps<Item> {}
 
-export type ItemsToString<GItem = any> = (
-  items: GItem[],
-  itemToString?: (item: GItem) => string,
+export type ItemsToString<Item = any> = (
+  items: Item[],
+  itemToString?: (item: Item) => string,
 ) => string;
-export type GetItemId<GItem = any> = (items: GItem) => any;
-export type ItemToString<GItem = any> = (item: GItem) => string;
-export type GetA11yStatusMessage<GItem = any> = (
-  options: A11yStatusMessageParameter<GItem>,
+export type GetItemId<Item = any> = (items: Item) => any;
+export type ItemToString<Item = any> = (item: Item) => string;
+export type GetA11yStatusMessage<Item = any> = (
+  options: A11yStatusMessageParameter<Item>,
 ) => string;
 
-export interface A11yStatusMessageParameter<GItem = any> {
-  state: MultishiftState<GItem>;
-  items: GItem[];
-  itemsToString: (items: GItem[], itemToString?: (item: GItem) => string) => string;
+export interface A11yStatusMessageParameter<Item = any> {
+  state: MultishiftState<Item>;
+  items: Item[];
+  itemsToString: (items: Item[], itemToString?: (item: Item) => string) => string;
 }
 
-export interface MultishiftItemsChangeset<GItem = any> {
-  previous: GItem[];
-  current: GItem[];
+export interface MultishiftItemsChangeset<Item = any> {
+  previous: Item[];
+  current: Item[];
 }
 
-export interface MultishiftStateChangeset<GItem = any> {
+export interface MultishiftStateChangeset<Item = any> {
   /**
    * The changes accumulated so far.
    */
-  changes: MultishiftStateProps<GItem>;
+  changes: MultishiftStateProps<Item>;
 
   /**
    * The current state object
    */
-  state: MultishiftState<GItem>;
+  state: MultishiftState<Item>;
 
   /**
    * The previous state object.
    */
-  prevState: MultishiftState<GItem>;
+  prevState: MultishiftState<Item>;
 }
 
 export type CreateMultishiftAction<
-  GType extends string,
+  Type extends string,
   GPayload = any,
   GArgs extends any[] = [GPayload]
-> = (...args: GArgs) => ActionWithPayload<GType, GPayload>;
+> = (...args: GArgs) => ActionWithPayload<Type, GPayload>;
 
-export interface GetRemoveButtonOptions<GElement extends HTMLElement = any, GItem = any>
+export interface GetRemoveButtonOptions<GElement extends HTMLElement = any, Item = any>
   extends HTMLProps<GElement> {
   /**
    * You must provide the selectedItem property.
    */
-  item: GItem;
+  item: Item;
 
   /**
    * Prevents this from being selected.
@@ -585,13 +579,13 @@ export type GetLabelPropsWithRefReturn<
 export interface GetItemPropsOptions<
   GElement extends HTMLElement = any,
   GRefKey extends string = 'ref',
-  GItem = any
+  Item = any
 > extends GetPropsWithRefOptions<GElement, GRefKey> {
   /**
    * This is the item data that will be selected when the user selects a
    * particular item.
    */
-  item: GItem;
+  item: Item;
 
   /**
    * This is how downshift keeps track of your item when updating the
@@ -634,7 +628,7 @@ export interface GetItemPropsOptions<
  * } />
  * ```
  */
-export interface MultishiftPropGetters<GItem = any> {
+export interface MultishiftPropGetters<Item = any> {
   /**
    * Get the augmented props that will be used in the wrapper element on
    * autocomplete dropdowns.
@@ -723,7 +717,7 @@ export interface MultishiftPropGetters<GItem = any> {
    * actually be applying the props to an item.
    */
   getItemProps: <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
-    options: GetItemPropsOptions<GElement, GRefKey, GItem>,
+    options: GetItemPropsOptions<GElement, GRefKey, Item>,
   ) => GetPropsWithRefReturn<GElement, GRefKey>;
 
   /**
@@ -753,7 +747,7 @@ export interface MultishiftPropGetters<GItem = any> {
    * Gets the props to attach to a button that removes a selected item.
    */
   getRemoveButtonProps: <GElement extends HTMLElement = any>(
-    options: GetRemoveButtonOptions<GElement, GItem>,
+    options: GetRemoveButtonOptions<GElement, Item>,
   ) => GetRemoveButtonReturn<GElement>;
 
   /**
@@ -790,7 +784,7 @@ export interface IgnoredElementOptions<
   GRefKey extends string = 'ref'
 > extends GetPropsWithRefOptions<GElement, GRefKey> {}
 
-export interface MultishiftHelpers<GItem = any> {
+export interface MultishiftHelpers<Item = any> {
   /**
    * Check if the item at the given index is highlighted.
    *
@@ -805,7 +799,7 @@ export interface MultishiftHelpers<GItem = any> {
   /**
    * Return true when the provided item is selected.
    */
-  itemIsSelected: (item: GItem) => boolean;
+  itemIsSelected: (item: Item) => boolean;
 
   /**
    * Return the index of the provided item within the list of items.
@@ -814,7 +808,7 @@ export interface MultishiftHelpers<GItem = any> {
    *
    * `-1` when not found
    */
-  indexOfItem: (item: GItem) => number;
+  indexOfItem: (item: Item) => number;
 
   /**
    * The most recently highlighted index which can be used when making a
@@ -825,14 +819,16 @@ export interface MultishiftHelpers<GItem = any> {
   mostRecentHighlightedIndex: number;
 }
 
-export type AllMultishiftDispatchActions<GItem = any> = {
-  [P in keyof AllMultishiftActions<GItem>]: (
-    ...args: Parameters<AllMultishiftActions<GItem>[P]>
+export type AllMultishiftDispatchActions<Item = any> = {
+  [P in keyof AllMultishiftActions<Item>]: (
+    ...args: Parameters<AllMultishiftActions<Item>[P]>
   ) => void;
 };
 
-export type MultishiftDispatchActions<GItem = any> = {
-  [P in keyof MultishiftActions<GItem>]: (...args: Parameters<MultishiftActions<GItem>[P]>) => void;
+export type MultishiftDispatchActions<Item = any> = {
+  [P in keyof Multishift.CoreActions<Item>]: (
+    ...args: Parameters<Multishift.CoreActions<Item>[P]>
+  ) => void;
 };
 
 export interface MultishiftFocusHelpers {
@@ -861,9 +857,9 @@ export interface MultishiftFocusHelpers {
  * This provides utility methods which make updating the state for
  * _uncontrolled_ components a bit simpler.
  *
- * @typeParam GItem = the underlying item type.
+ * @typeParam Item = the underlying item type.
  */
-export interface MultishiftStateHelpers<GItem = any> {
+export interface MultishiftStateHelpers<Item = any> {
   /**
    * Add multiple items to the `selectedItems`.
    *
@@ -871,7 +867,7 @@ export interface MultishiftStateHelpers<GItem = any> {
    * is not true only the first item will be used and replace any current
    * `selectedItems`.
    */
-  addItems: (items: GItem[]) => any[];
+  addItems: (items: Item[]) => any[];
 
   /**
    * Add one item to the `selectedItems`.
@@ -879,40 +875,40 @@ export interface MultishiftStateHelpers<GItem = any> {
    * @param item - the item to be added to the selection. When multiple is not
    * true this will replace the current selected item.
    */
-  addItem: (item: GItem) => any[];
+  addItem: (item: Item) => any[];
 
   /**
    * Remove items from the `selectedItems`.
    *
    * @param items - the items to be removed.
    */
-  removeItems: (items: GItem[]) => GItem[];
+  removeItems: (items: Item[]) => Item[];
 
   /**
    * Remove one item from the `selectedItems`
    *
    * @param item - the item to remove
    */
-  removeItem: (item: GItem) => GItem[];
+  removeItem: (item: Item) => Item[];
 
   /**
    * Toggle item selection
    */
-  toggleItems: (items: GItem[]) => GItem[];
-  toggleItem: (item: GItem) => GItem[];
+  toggleItems: (items: Item[]) => Item[];
+  toggleItem: (item: Item) => Item[];
 }
 
-export interface MultishiftReturn<GItem = any>
-  extends MultishiftState<GItem>,
-    MultishiftPropGetters<GItem>,
-    MultishiftDispatchActions<GItem>,
-    MultishiftStateHelpers<GItem>,
+export interface MultishiftReturn<Item = any>
+  extends MultishiftState<Item>,
+    MultishiftPropGetters<Item>,
+    MultishiftDispatchActions<Item>,
+    MultishiftStateHelpers<Item>,
     MultishiftHelpers,
     MultishiftFocusHelpers {
   /**
    * Manually dispatch an action into the state reducer.
    */
-  dispatch: Dispatch<MultishiftRootActions<GItem>>;
+  dispatch: Dispatch<MultishiftRootActions<Item>>;
 }
 
 export interface RefParameter<GRefKey extends string = 'ref'> {

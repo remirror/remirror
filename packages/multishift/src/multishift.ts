@@ -14,6 +14,7 @@ import {
   bool,
   debounce,
   includes,
+  isEmptyArray,
   isNullOrUndefined,
   isUndefined,
   object,
@@ -185,7 +186,7 @@ export const useMultishift = <GItem = any>(
 
   // Scroll on highlighted item if change comes from keyboard.
   useEffect(() => {
-    if (!isValidIndex(mostRecentHighlightedIndex) || !isOpen || !refs.items.current.length) {
+    if (!isValidIndex(mostRecentHighlightedIndex) || !isOpen || isEmptyArray(refs.items.current)) {
       return;
     }
 
@@ -315,7 +316,7 @@ export const useMultishift = <GItem = any>(
     }: GetPropsWithRefOptions<GElement, GRefKey> = { refKey: 'ref' as GRefKey },
   ): GetPropsWithRefReturn<GElement, GRefKey> => {
     const multi = props.multiple ? { 'aria-multiselectable': props.multiple } : {};
-    const activeDescendant = highlightedIndexes.length
+    const activeDescendant = !isEmptyArray(highlightedIndexes)
       ? {
           'aria-activedescendant': getItemA11yId(mostRecentHighlightedIndex),
         }

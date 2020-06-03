@@ -1,29 +1,49 @@
 import React, { FC } from 'react';
 
-import { useRemirrorTheme } from '@remirror/ui';
-
 export interface CharacterCountIndicatorProps {
   /**
    * An object describing the total characters and characters remaining
    */
-  characters?: { total: number; used: number };
+  characters?: { maximum: number; used: number };
   size?: number;
   strokeWidth?: number;
   /** The number of characters remaining at which to display a warning */
   warningThreshold?: number;
 }
 
+const colors = {
+  primary: '#1DA1F2',
+  warn: '#FFAD1F',
+  error: '#E0245E',
+  plain: '#657786',
+};
+
+export const CharacterCountWrapper: FC = (props) => {
+  return (
+    <div
+      {...props}
+      css={{
+        position: 'absolute',
+        bottom: '0',
+        right: '0',
+        margin: '0 8px 10px 4px',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+      }}
+    />
+  );
+};
+
 const CharacterCountIndicatorComponent: FC<CharacterCountIndicatorProps> = ({
-  characters = { total: 280, used: 290 },
+  characters = { maximum: 280, used: 290 },
   size = 27,
   strokeWidth = 3,
   warningThreshold = 18,
 }) => {
-  const { theme } = useRemirrorTheme();
-  const { colors } = theme;
-  const remainingCharacters = characters.total - characters.used;
+  const remainingCharacters = characters.maximum - characters.used;
   const warn = remainingCharacters <= warningThreshold;
-  const ratio = characters.used / characters.total;
+  const ratio = characters.used / characters.maximum;
   const strokeColor = remainingCharacters < 0 ? colors.error : warn ? colors.warn : colors.primary;
 
   // SVG centers the stroke width on the radius, subtract out so circle fits in square
