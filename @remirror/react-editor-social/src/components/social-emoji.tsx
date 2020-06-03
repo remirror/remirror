@@ -15,19 +15,25 @@ import { useExtension, usePositioner, useSetState } from '@remirror/react';
 
 import { indexFromArrowPress, useSocialRemirror } from '../social-utils';
 
-interface State {
+interface EmojiState {
   list: EmojiObject[];
   hideSuggestions: boolean;
   index: number;
   command?: EmojiSuggestCommand;
 }
 
+/**
+ * A hook for keeping track of the state of emoji extension integration.
+ */
 function useEmojiState() {
-  const [state, setState] = useSetState<State>({ list: [], hideSuggestions: false, index: 0 });
+  const [state, setState] = useSetState<EmojiState>({ list: [], hideSuggestions: false, index: 0 });
 
   return { ...state, setState };
 }
 
+/**
+ * A hook for managing changes in the emoji suggestions.
+ */
 function useEmojiChangeHandler() {
   const { setState } = useEmojiState();
 

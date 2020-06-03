@@ -10,8 +10,9 @@ import {
   SuggestKeyBindingMap,
   SuggestKeyBindingParameter,
 } from '@remirror/pm/suggest';
-import { useExtension, useSetState } from '@remirror/react';
+import { useExtension, useI18n, useSetState } from '@remirror/react';
 
+import { messages } from '../messages';
 import { MatchName, MentionChangeParameter, TagData, UserData } from '../social-types';
 import { indexFromArrowPress, useSocialRemirror } from '../social-utils';
 
@@ -347,10 +348,15 @@ interface UserMentionItemProps {
 
 const UserMentionItem = (props: UserMentionItemProps) => {
   const { avatarUrl, displayName, username } = props.item;
+  const { i18n } = useI18n();
 
   return (
     <>
-      <img className='mention-user-item-image' src={avatarUrl} alt={`Avatar for ${displayName}`} />
+      <img
+        className='mention-user-item-image'
+        src={avatarUrl}
+        alt={i18n._(messages.userMentionAvatarAlt)}
+      />
       <span className='mention-user-item-display-name'>{displayName}</span>
       <span className='mention-user-item-username'>{username} </span>
     </>

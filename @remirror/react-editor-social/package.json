@@ -20,10 +20,12 @@
   },
   "dependencies": {
     "@babel/runtime": ">=7 <8",
+    "@lingui/core": "^3.0.0-13",
     "@remirror/core": "^0.11.0",
     "@remirror/extension-auto-link": "^0.0.0",
     "@remirror/extension-emoji": "^0.11.0",
     "@remirror/extension-mention": "^0.11.1",
+    "@remirror/i18n": "^0.0.0",
     "@remirror/react": "^0.13.1",
     "@remirror/react-utils": "^0.7.6",
     "@types/classnames": "^2.2.10",
@@ -32,6 +34,7 @@
     "type-fest": "^0.15.0"
   },
   "devDependencies": {
+    "@lingui/macro": "^3.0.0-13",
     "@remirror/pm": "^0.0.0",
     "@testing-library/react": "^10.0.6",
     "@types/react": "^16.9.35",

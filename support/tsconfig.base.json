@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
     "module": "ESNext",
     "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
@@ -19,7 +21,6 @@
     "noImplicitAny": true,
     "alwaysStrict": true,
     "resolveJsonModule": true,
-    "plugins": [{ "name": "typescript-styled-plugin" }],
     "preserveWatchOutput": true,
 
     "noUnusedLocals": false,

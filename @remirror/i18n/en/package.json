@@ -1,0 +1,6 @@
+{
+  "main": "dist/i18n.cjs.js",
+  "preconstruct": {
+    "source": "../src/en"
+  }
+}

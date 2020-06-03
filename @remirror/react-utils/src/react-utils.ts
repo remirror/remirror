@@ -37,14 +37,19 @@ export enum RemirrorType {
   Extension = 'extension',
   SSR = 'ssr',
   EditorProvider = 'editor-provider',
-  ManagedEditorProvider = 'managed-editor-provider',
   Editor = 'editor',
   Manager = 'manager',
   ManagerProvider = 'manager-provider',
+
   /**
    * Used to identify the ContextProviderWrapper
    */
   ContextProvider = 'context-provider',
+
+  /**
+   * Marks the provider for i18n.
+   */
+  I18nProvider = 'i18n-provider',
 }
 
 /**

@@ -5,7 +5,7 @@ import { AutoLinkExtension } from '@remirror/extension-auto-link';
 import { EmojiExtension } from '@remirror/extension-emoji';
 import { MentionExtension, MentionExtensionMatcher } from '@remirror/extension-mention';
 import { SuggestStateMatch } from '@remirror/pm/suggest';
-import { BaseReactCombinedUnion, RemirrorProviderProps } from '@remirror/react';
+import { BaseReactCombinedUnion, I18nContextProps, RemirrorProviderProps } from '@remirror/react';
 
 export interface MentionChangeParameter extends BaseMentionState {
   name: MatchName;
@@ -15,12 +15,22 @@ export interface MentionChangeParameter extends BaseMentionState {
   index: number;
 }
 
-export interface SocialEditorProps extends Partial<RemirrorProviderProps<SocialCombinedUnion>> {
+export interface SocialEditorProps
+  extends Partial<RemirrorProviderProps<SocialCombinedUnion>>,
+    Partial<I18nContextProps> {
+  /**
+   * Add extra extension to the editor.
+   */
   extensions?: AnyExtension[];
+
+  /**
+   * Add extra presets to the editor.
+   */
   presets?: AnyPreset[];
 
   /**
-   * Display a typing hint that limits the number of characters to this number. Defaults to 140, set to `null` to disable.
+   * Display a typing hint that limits the number of characters to this number.
+   * Defaults to 140, set to `null` to disable.
    */
   characterLimit?: number | null;
 
@@ -101,8 +111,8 @@ export type MentionGetter = () => SuggestStateMatch;
 
 export interface SetExitTriggeredInternallyParameter {
   /**
-   * Identifies the command as an internal exit inducing command.
-   * Prevents a second onExit from being dispatched.
+   * Identifies the command as an internal exit inducing command. Prevents a
+   * second onExit from being dispatched.
    */
   setExitTriggeredInternally: () => void;
 }

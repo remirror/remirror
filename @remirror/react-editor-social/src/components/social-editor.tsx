@@ -3,7 +3,13 @@ import React, { FC, useMemo } from 'react';
 import { AutoLinkExtension } from '@remirror/extension-auto-link';
 import { EmojiExtension } from '@remirror/extension-emoji';
 import { MentionExtension } from '@remirror/extension-mention';
-import { RemirrorProvider, useCreateExtension, useManager, useRemirror } from '@remirror/react';
+import {
+  I18nProvider,
+  RemirrorProvider,
+  useCreateExtension,
+  useManager,
+  useRemirror,
+} from '@remirror/react';
 
 import { SocialEditorProps } from '../social-types';
 import { CharacterCountIndicator, CharacterCountWrapper } from './social-character-count';
@@ -14,7 +20,15 @@ import { MentionSuggestions } from './social-mentions';
  * The social editor.
  */
 export const SocialEditor: FC<SocialEditorProps> = (props) => {
-  const { extensions = [], presets = [], atMatcherOptions, tagMatcherOptions, children } = props;
+  const {
+    extensions = [],
+    presets = [],
+    atMatcherOptions,
+    tagMatcherOptions,
+    children,
+    i18n,
+    locale,
+  } = props;
   const mentionExtensionSettings = useMemo(
     () => ({
       matchers: [
@@ -39,9 +53,11 @@ export const SocialEditor: FC<SocialEditorProps> = (props) => {
   const manager = useManager(combined);
 
   return (
-    <RemirrorProvider manager={manager} childAsRoot={false}>
-      <Editor {...props}>{children}</Editor>
-    </RemirrorProvider>
+    <I18nProvider i18n={i18n} locale={locale}>
+      <RemirrorProvider manager={manager} childAsRoot={false}>
+        <Editor {...props}>{children}</Editor>
+      </RemirrorProvider>
+    </I18nProvider>
   );
 };
 

@@ -1,0 +1,13 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2020-06-03 09:38+0100\n"
+"Mime-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+#. The alt text for the user mention avatar.
+#: @remirror/react-editor-social/src/messages.ts:2
+msgid "user.mention.avatar.alt"
+msgstr "Avatar for { name }"

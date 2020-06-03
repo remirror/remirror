@@ -328,5 +328,15 @@ module.exports = {
         'unicorn/no-process-exit': 'off',
       },
     },
+    {
+      files: ['@remirror/i18n/**/*.js'],
+      rules: {
+        'import/no-default-export': 'off',
+        'eslint-comments/disable-enable-pair': 'off',
+        'eslint-comments/no-unlimited-disable': 'off',
+        'unicorn/no-abusive-eslint-disable': 'off',
+        'eslint-comments/no-unused-disable': 'off',
+      },
+    },
   ],
 };

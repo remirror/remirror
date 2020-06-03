@@ -1,11 +1,17 @@
-import React, { ProviderProps, ReactElement } from 'react';
+import React, { ProviderProps, ReactElement, ReactNode, useEffect } from 'react';
 
 import { AnyCombinedUnion } from '@remirror/core';
+import { i18n as defaultI18n } from '@remirror/i18n';
 import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
 
 import { RemirrorPortals } from '../portals';
-import { RemirrorContext } from '../react-contexts';
-import { BaseProps, GetRootPropsConfig, RemirrorContextProps } from '../react-types';
+import { I18nContext, RemirrorContext } from '../react-contexts';
+import {
+  BaseProps,
+  GetRootPropsConfig,
+  I18nContextProps,
+  RemirrorContextProps,
+} from '../react-types';
 import { RenderEditor } from './render-editor';
 
 interface RemirrorContextProviderProps<Combined extends AnyCombinedUnion>
@@ -89,13 +95,13 @@ RemirrorContextProvider.defaultProps = {
  * - `useRemirror`
  * - `usePositioner`
  */
-export const RemirrorProvider = <Combined extends AnyCombinedUnion>({
-  children,
-  childAsRoot,
-  ...props
-}: RemirrorProviderProps<Combined>) => {
+export const RemirrorProvider = <Combined extends AnyCombinedUnion>(
+  props: RemirrorProviderProps<Combined>,
+) => {
+  const { children, childAsRoot, ...rest } = props;
+
   return (
-    <RenderEditor {...props}>
+    <RenderEditor {...rest}>
       {(value) => {
         return (
           <RemirrorContextProvider value={value} childAsRoot={childAsRoot}>
@@ -109,3 +115,22 @@ export const RemirrorProvider = <Combined extends AnyCombinedUnion>({
 };
 
 RemirrorProvider.$$remirrorType = RemirrorType.EditorProvider;
+
+export interface I18nProviderProps extends Partial<I18nContextProps> {
+  children: ReactNode;
+}
+
+/**
+ * A provider component for the remirror i18n helper library.
+ */
+export const I18nProvider = (props: I18nProviderProps) => {
+  const { i18n = defaultI18n, locale = 'en', children } = props;
+
+  useEffect(() => {
+    i18n.activate(locale);
+  }, [i18n, locale]);
+
+  return <I18nContext.Provider value={{ i18n, locale }}>{children}</I18nContext.Provider>;
+};
+
+I18nProvider.$$remirrorType = RemirrorType.I18nProvider;

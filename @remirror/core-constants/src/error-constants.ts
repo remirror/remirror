@@ -120,4 +120,9 @@ export enum ErrorConstant {
    * A problem occurred adding the editor view to the dom.
    */
   REACT_EDITOR_VIEW = 'RMR0201',
+
+  /**
+   * There is something wrong with your i18n setup.
+   */
+  I18N_CONTEXT = 'RMR0300',
 }

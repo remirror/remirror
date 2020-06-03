@@ -24,6 +24,7 @@ import {
   TransactionParameter,
   TransactionTransformer,
 } from '@remirror/core';
+import { I18n } from '@remirror/i18n';
 import { CorePreset } from '@remirror/preset-core';
 import { ReactPreset } from '@remirror/preset-react';
 
@@ -231,6 +232,37 @@ export interface RefParameter<RefKey = 'ref'> {
    * @defaultValue 'ref'
    */
   refKey?: RefKey;
+}
+
+export interface I18nContextProps {
+  /**
+   * Provide your own i18n with all the locales you need for your app.
+   *
+   * ```ts
+   * import { i18n } from '@remirror/i18n';
+   * import esLocale from '@remirror/i18n/es';
+   * import { SocialEditor } from '@remirror/react-social-editor';
+   * import { es } from 'make-plural/plurals';
+   *
+   * i18n.loadLocaleData('es', { plurals: es });
+   *
+   * i18n.load({
+   *   es: esLocale.messages,
+   * });
+   *
+   * const Editor = () => {
+   *   <SocialEditor i18n={i18n} />
+   * }
+   * ```
+   */
+  i18n: I18n;
+
+  /**
+   * The current locale for this context.
+   *
+   * @defaultValue 'en'
+   */
+  locale: string;
 }
 
 /**

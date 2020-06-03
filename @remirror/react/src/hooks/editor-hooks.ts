@@ -38,8 +38,8 @@ import { CorePreset } from '@remirror/preset-core';
 import { ReactPreset } from '@remirror/preset-react';
 
 import { Positioner } from '../../../../packages/remirror/node_modules/@remirror/extension-positioner/src';
-import { RemirrorContext } from '../react-contexts';
-import { RemirrorContextProps } from '../react-types';
+import { I18nContext, RemirrorContext } from '../react-contexts';
+import { I18nContextProps, RemirrorContextProps } from '../react-types';
 
 /**
  * This provides access to the Remirror Editor context using hooks.
@@ -72,6 +72,14 @@ export function useRemirror<Combined extends AnyCombinedUnion>(): RemirrorContex
   const context = useContext(RemirrorContext);
 
   invariant(context, { code: ErrorConstant.REACT_PROVIDER_CONTEXT });
+
+  return context;
+}
+
+export function useI18n(): I18nContextProps {
+  const context = useContext(I18nContext);
+
+  invariant(context, { code: ErrorConstant.I18N_CONTEXT });
 
   return context;
 }

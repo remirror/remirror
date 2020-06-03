@@ -32,14 +32,13 @@ module.exports = {
     },
   ],
   plugins: [
+    'macros',
     '@babel/plugin-transform-runtime',
     '@babel/plugin-proposal-object-rest-spread',
     '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-proposal-nullish-coalescing-operator',
     '@babel/plugin-proposal-optional-chaining',
-    'annotate-pure-calls',
     'dev-expression',
-    'macros',
   ],
   env: { production: nonTestEnv, development: nonTestEnv },
 };

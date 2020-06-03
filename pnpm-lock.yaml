@@ -16,6 +16,8 @@ importers:
       '@babel/runtime': 7.10.2
       '@changesets/cli': 2.8.0
       '@jest/types': 26.0.1
+      '@lingui/cli': 3.0.0-13_683cfe2f71b72cd7fb0e766d77fee5af
+      '@lingui/macro': 3.0.0-13_babel-plugin-macros@2.8.0
       '@manypkg/cli': 0.13.0
       '@manypkg/get-packages': 1.0.1
       '@preconstruct/cli': 1.1.14
@@ -111,9 +113,11 @@ importers:
       '@babel/plugin-transform-typescript': ^7.10.1
       '@babel/preset-env': ^7.10.2
       '@babel/preset-react': ^7.10.1
-      '@babel/runtime': '>=7 <8'
+      '@babel/runtime': ^7.10.2
       '@changesets/cli': ^2.8.0
       '@jest/types': ^26.0.1
+      '@lingui/cli': ^3.0.0-13
+      '@lingui/macro': ^3.0.0-13
       '@manypkg/cli': ^0.13.0
       '@manypkg/get-packages': ^1.0.1
       '@preconstruct/cli': ^1.1.14
@@ -483,6 +487,20 @@ importers:
       '@babel/runtime': '>=7 <8'
       '@remirror/core': ^0.11.0
       csstype: ^2.6.10
+  '@remirror/i18n':
+    dependencies:
+      '@babel/runtime': 7.10.2
+      '@lingui/core': 3.0.0-13
+      '@remirror/core-helpers': 'link:../core-helpers'
+      make-plural: 6.2.1
+    devDependencies:
+      '@remirror/pm': 'link:../pm'
+    specifiers:
+      '@babel/runtime': ^7.10.0
+      '@lingui/core': ^3.0.0-13
+      '@remirror/core-helpers': ^0.7.6
+      '@remirror/pm': ^0.0.0
+      make-plural: ^6.2.1
   '@remirror/playground':
     dependencies:
       '@babel/runtime': 7.10.2
@@ -621,6 +639,7 @@ importers:
       '@babel/runtime': 7.10.2
       '@remirror/core': 'link:../core'
       '@remirror/extension-positioner': 'link:../extension-positioner'
+      '@remirror/i18n': 'link:../i18n'
       '@remirror/preset-core': 'link:../preset-core'
       '@remirror/preset-react': 'link:../preset-react'
       '@remirror/react-utils': 'link:../react-utils'
@@ -651,6 +670,7 @@ importers:
       '@babel/runtime': '>=7 <8'
       '@remirror/core': ^0.11.0
       '@remirror/extension-positioner': ^0.0.0
+      '@remirror/i18n': ^0.0.0
       '@remirror/pm': ^0.0.0
       '@remirror/preset-core': ^0.0.0
       '@remirror/preset-react': ^0.0.0
@@ -705,10 +725,12 @@ importers:
   '@remirror/react-editor-social':
     dependencies:
       '@babel/runtime': 7.10.2
+      '@lingui/core': 3.0.0-13
       '@remirror/core': 'link:../core'
       '@remirror/extension-auto-link': 'link:../extension-auto-link'
       '@remirror/extension-emoji': 'link:../extension-emoji'
       '@remirror/extension-mention': 'link:../extension-mention'
+      '@remirror/i18n': 'link:../i18n'
       '@remirror/react': 'link:../react'
       '@remirror/react-utils': 'link:../react-utils'
       '@types/classnames': 2.2.10
@@ -716,6 +738,7 @@ importers:
       multishift: 'link:../../packages/multishift'
       type-fest: 0.15.0
     devDependencies:
+      '@lingui/macro': 3.0.0-13
       '@remirror/pm': 'link:../pm'
       '@testing-library/react': 10.0.6_react-dom@16.13.1+react@16.13.1
       '@types/react': 16.9.35
@@ -725,10 +748,13 @@ importers:
       react-dom: 16.13.1_react@16.13.1
     specifiers:
       '@babel/runtime': '>=7 <8'
+      '@lingui/core': ^3.0.0-13
+      '@lingui/macro': ^3.0.0-13
       '@remirror/core': ^0.11.0
       '@remirror/extension-auto-link': ^0.0.0
       '@remirror/extension-emoji': ^0.11.0
       '@remirror/extension-mention': ^0.11.1
+      '@remirror/i18n': ^0.0.0
       '@remirror/pm': ^0.0.0
       '@remirror/react': ^0.13.1
       '@remirror/react-utils': ^0.7.6
@@ -5330,6 +5356,102 @@ packages:
     dev: false
     resolution:
       integrity: sha512-44DWNv5gDR9EwrCTVQ4ZC99yPqVS0VCWrYIBl45qNR8XQy+4lbl0IQG8kBDf6NHwj4Ib4c2z1Fq1IUJOCbkZcw==
+  /@lingui/babel-plugin-extract-messages/3.0.0-13:
+    dependencies:
+      '@babel/generator': 7.10.2
+      '@babel/runtime': 7.10.2
+      '@lingui/conf': 3.0.0-13
+      mkdirp: 1.0.4
+    dev: false
+    engines:
+      node: '>=10.0.0'
+    resolution:
+      integrity: sha512-POrHH0hzC/LN7Fml3910YXux8N74zHnMcEYbkpbbDhdhsDgLUM87JCB5CH5WUIF+nZMXsC33lgMVEzy5At4dNg==
+  /@lingui/cli/3.0.0-13_683cfe2f71b72cd7fb0e766d77fee5af:
+    dependencies:
+      '@babel/core': 7.10.2
+      '@babel/generator': 7.10.2
+      '@babel/parser': 7.10.2
+      '@babel/plugin-syntax-jsx': 7.10.1_@babel+core@7.10.2
+      '@babel/runtime': 7.10.2
+      '@babel/types': 7.10.2
+      '@lingui/babel-plugin-extract-messages': 3.0.0-13
+      '@lingui/conf': 3.0.0-13
+      babel-plugin-macros: 2.8.0
+      bcp-47: 1.0.7
+      chalk: 4.0.0
+      cli-table: 0.3.1
+      commander: 5.1.0
+      date-fns: 2.14.0
+      fs-extra: 9.0.0
+      fuzzaldrin: 2.1.0
+      glob: 7.1.6
+      inquirer: 7.1.0
+      make-plural: 6.2.1
+      messageformat-parser: 4.1.3
+      micromatch: 4.0.2
+      mkdirp: 1.0.4
+      normalize-path: 3.0.0
+      ora: 4.0.4
+      papaparse: 5.2.0
+      pofile: 1.1.0
+      pseudolocale: 1.1.0
+      ramda: 0.27.0
+      typescript: 3.9.3
+    dev: false
+    engines:
+      node: '>=10.0.0'
+    hasBin: true
+    peerDependencies:
+      '@babel/core': ^7.0.0
+      typescript: 2 || 3
+    resolution:
+      integrity: sha512-4YiQR9ByFKpHFDcymKpGs+Ben77cpJ1+YE0MpDps5At6ej+sYORAORkvpn+afePTNmwQeViipbUF77D6HciHRw==
+  /@lingui/conf/3.0.0-13:
+    dependencies:
+      '@babel/runtime': 7.10.2
+      chalk: 4.0.0
+      cosmiconfig: 6.0.0
+      jest-validate: 26.0.1
+    engines:
+      node: '>=10.0.0'
+    resolution:
+      integrity: sha512-xHHsROaAojqxAaVCJrWsgflFI3PejR1r1IIv0hzo6Q9M7B5ID/bHLrriF8BVEKsu8tEHGa9wyUuOaccwZTLYgg==
+  /@lingui/core/3.0.0-13:
+    dependencies:
+      '@babel/runtime': 7.10.2
+      make-plural: 6.2.1
+      messageformat-parser: 4.1.3
+    dev: false
+    engines:
+      node: '>=10.0.0'
+    resolution:
+      integrity: sha512-sC63qOfsOIijCL1sYj3eMRGUjbfH/6/UCQdziC1p3bv5MYYgw96RYrJ7Xkf6EFXxP+6f6BwpyxFrL49bcvo6sw==
+  /@lingui/macro/3.0.0-13:
+    dependencies:
+      '@babel/runtime': 7.10.2
+      '@lingui/conf': 3.0.0-13
+      ramda: 0.27.0
+    dev: true
+    engines:
+      node: '>=10.0.0'
+    peerDependencies:
+      babel-plugin-macros: ^2.5.1
+    resolution:
+      integrity: sha512-VacvNvvH6CUak3+hq6qArZ4D+3X3EL47hdnnDCJxBYORhnRroEL6VBgi2YVcA/1+C2y+cYOTuDPWBDWt1Lr9cg==
+  /@lingui/macro/3.0.0-13_babel-plugin-macros@2.8.0:
+    dependencies:
+      '@babel/runtime': 7.10.2
+      '@lingui/conf': 3.0.0-13
+      babel-plugin-macros: 2.8.0
+      ramda: 0.27.0
+    dev: false
+    engines:
+      node: '>=10.0.0'
+    peerDependencies:
+      babel-plugin-macros: ^2.5.1
+    resolution:
+      integrity: sha512-VacvNvvH6CUak3+hq6qArZ4D+3X3EL47hdnnDCJxBYORhnRroEL6VBgi2YVcA/1+C2y+cYOTuDPWBDWt1Lr9cg==
   /@manypkg/cli/0.13.0:
     dependencies:
       '@babel/runtime': 7.10.1
@@ -9874,6 +9996,14 @@ packages:
     dev: false
     resolution:
       integrity: sha1-3DQxT05nkxgJP8dgJyUl+UvyXBY=
+  /bcp-47/1.0.7:
+    dependencies:
+      is-alphabetical: 1.0.4
+      is-alphanumerical: 1.0.4
+      is-decimal: 1.0.4
+    dev: false
+    resolution:
+      integrity: sha512-XywQRckEigetKCTuxsaecL/68psvr7ayWsPq6LLwoz5k+qwpwnpcTMyU/Gs+JO3u8J+BxofouYCS+s9ACiNyrw==
   /bcrypt-pbkdf/1.0.2:
     dependencies:
       tweetnacl: 0.14.5
@@ -10909,6 +11039,14 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-Xs2Hf2nzrvJMFKimOR7YR0QwZ8fc0u98kdtwN1eNAZzNQgH3vK2pXzff6GJtKh7S5hoJ87ECiAiZFS2fb5Ii2w==
+  /cli-table/0.3.1:
+    dependencies:
+      colors: 1.0.3
+    dev: false
+    engines:
+      node: '>= 0.2.0'
+    resolution:
+      integrity: sha1-9TsFJmqLGguTSz0IIebi3FkUriM=
   /cli-table3/0.5.1:
     dependencies:
       object-assign: 4.1.1
@@ -11084,6 +11222,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-vXTJhHebByxZn3lDvDJYw4lR5+uB3vuoHsuYA5AKuxRVn5wzzIfQKGLBmgdVRHKTJYeK5rvJcHnrd0Li49CFpg==
+  /colors/1.0.3:
+    dev: false
+    engines:
+      node: '>=0.1.90'
+    resolution:
+      integrity: sha1-BDP0TYCWgP3rYO0mDxsMJi6CpAs=
   /colors/1.4.0:
     dev: false
     engines:
@@ -14958,6 +15102,10 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-hT9yh/tiinkmirKrlv4KWOjztdoZo1mx9Qh4KvWqC7isoXwdUY3PNWUxceF4/qO9R6riA2C29jdTOeQOIROjgw==
+  /fuzzaldrin/2.1.0:
+    dev: false
+    resolution:
+      integrity: sha1-kCBMPi/appQbso0WZF1BgGOpDps=
   /gatsby-admin/0.1.58_3f0314c72b7a2f48279a956530b64647:
     dependencies:
       '@emotion/core': 10.0.28_react@16.13.1
@@ -20252,6 +20400,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==
+  /make-plural/6.2.1:
+    dev: false
+    resolution:
+      integrity: sha512-AmkruwJ9EjvyTv6AM8MBMK3TAeOJvhgTv5YQXzF0EP2qawhpvMjDpHvsdOIIT0Vn+BB0+IogmYZ1z+Ulm/m0Fg==
   /makeerror/1.0.11:
     dependencies:
       tmpl: 1.0.4
@@ -20592,6 +20744,10 @@ packages:
       node: '>= 6'
     resolution:
       integrity: sha512-2j4DAdlBOkiSZIsaXk4mTE3sRS02yBHAtfy127xRV3bQUFqXkjHCHLW6Scv7DwNRbIWNHH8zpnz9zMaKXIdvYw==
+  /messageformat-parser/4.1.3:
+    dev: false
+    resolution:
+      integrity: sha512-2fU3XDCanRqeOCkn7R5zW5VQHWf+T3hH65SzuqRvjatBK7r4uyFa5mEX+k6F9Bd04LVM5G4/BHBTUJsOdW7uyg==
   /methods/1.1.2:
     dev: false
     engines:
@@ -22197,6 +22353,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==
+  /papaparse/5.2.0:
+    dev: false
+    resolution:
+      integrity: sha512-ylq1wgUSnagU+MKQtNeVqrPhZuMYBvOSL00DHycFTCxownF95gpLAk1HiHdUW77N8yxRq1qHXLdlIPyBSG9NSA==
   /parallel-transform/1.2.0:
     dependencies:
       cyclist: 1.0.1
@@ -22860,6 +23020,10 @@ packages:
       typescript: '*'
     resolution:
       integrity: sha512-7Wjy+9E3WwLOEL30D+m8TSTF7qJJUJLONBnwQp0518siuMxUQUbgZwssaFX+QKlZkjHZcw/IpZCt/H0srrntSg==
+  /pofile/1.1.0:
+    dev: false
+    resolution:
+      integrity: sha512-6XYcNkXWGiJ2CVXogTP7uJ6ZXQCldYLZc16wgRp8tqRaBTTyIfF+TUT3EQJPXTLAT7OTPpTAoaFdoXKfaTRU1w==
   /polished/3.6.4:
     dependencies:
       '@babel/runtime': 7.10.1
@@ -23782,6 +23946,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-0/wRS6BplaRexok/SEzrHXj19HY=
+  /pseudolocale/1.1.0:
+    dependencies:
+      commander: 5.1.0
+    dev: false
+    resolution:
+      integrity: sha512-OZ8I/hwYEJ3beN3IEcNnt8EpcqblH0/x23hulKBXjs+WhTTEle+ijCHCkh2bd+cIIeCuCwSCbBe93IthGG6hLw==
   /pseudomap/1.0.2:
     dev: false
     resolution:
@@ -23980,6 +24150,9 @@ packages:
     dev: false
     resolution:
       integrity: sha1-oAGr7bP/YQd9T/HVd9RN536NCjU=
+  /ramda/0.27.0:
+    resolution:
+      integrity: sha512-pVzZdDpWwWqEVVLshWUHjNwuVP7SfcmPraYuqocJp1yo2U1R7P+5QAfDhdItkuoGqIBnBYrtPp7rEPqDn9HlZA==
   /randombytes/2.1.0:
     dependencies:
       safe-buffer: 5.2.1
