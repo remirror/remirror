@@ -79,7 +79,6 @@ module.exports = {
     es6: true,
   },
   rules: {
-    ...graphqlRules,
     'sonarjs/cognitive-complexity': ['warn', 15],
 
     'eslint-comments/no-unused-disable': 'error',
@@ -307,12 +306,12 @@ module.exports = {
       },
     },
     {
+      files: ['**/*.d.ts', '**/__mocks__/**', '@remirror/i18n/**/*.ts', 'docs/**'],
+      rules: { 'import/no-default-export': 'off' },
+    },
+    {
       files: ['**/*.d.ts', '**/__mocks__/**'],
-      rules: {
-        'import/no-default-export': 'off',
-        'import/no-duplicates': 'off',
-        '@typescript-eslint/no-namespace': 'off',
-      },
+      rules: { 'import/no-duplicates': 'off', '@typescript-eslint/no-namespace': 'off' },
     },
     {
       files: ['**/__dts__/**'],
@@ -324,14 +323,15 @@ module.exports = {
     },
     {
       files: ['support/scripts/**'],
-      rules: {
-        'unicorn/no-process-exit': 'off',
-      },
+      rules: { 'unicorn/no-process-exit': 'off' },
+    },
+    {
+      files: ['docs/**'],
+      rules: { ...graphqlRules, },
     },
     {
       files: ['@remirror/i18n/**/*.js'],
       rules: {
-        'import/no-default-export': 'off',
         'eslint-comments/disable-enable-pair': 'off',
         'eslint-comments/no-unlimited-disable': 'off',
         'unicorn/no-abusive-eslint-disable': 'off',

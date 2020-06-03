@@ -52,6 +52,7 @@ export default {
     'gatsby-plugin-emotion',
     'gatsby-plugin-sitemap',
     'gatsby-plugin-typescript',
+    'gatsby-plugin-sass',
     'gatsby-plugin-netlify',
     {
       resolve: 'gatsby-plugin-mdx',
@@ -84,7 +85,7 @@ export default {
     {
       resolve: 'gatsby-plugin-typegen',
       options: {
-        typeDefsOutputPath: `${__dirname}/generated/gatsby.ts`,
+        outputPath: `${__dirname}/generated/gatsby.ts`,
       },
     },
   ],

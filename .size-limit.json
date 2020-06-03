@@ -1,161 +1,217 @@
 [
   {
     "name": "@remirror/core",
-    "path": "@remirror/core/lib/dist/core.esm.js",
+    "path": "@remirror/core/dist/core.esm.js",
     "limit": "70 KB",
     "ignore": ["@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/core-constants",
-    "path": "@remirror/core-constants/lib/dist/core-constants.esm.js",
+    "path": "@remirror/core-constants/dist/core-constants.esm.js",
     "limit": "2 KB",
     "ignore": [],
     "running": false
   },
   {
     "name": "@remirror/core-types",
-    "path": "@remirror/core-types/lib/dist/core-types.esm.js",
+    "path": "@remirror/core-types/dist/core-types.esm.js",
     "limit": "1 KB",
     "ignore": ["@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/core-utils",
-    "path": "@remirror/core-utils/lib/dist/core-utils.esm.js",
+    "path": "@remirror/core-utils/dist/core-utils.esm.js",
+    "limit": "50 KB",
+    "ignore": ["@remirror/pm"],
+    "running": false
+  },
+  {
+    "name": "@remirror/extension-auto-link",
+    "path": "@remirror/extension-auto-link/dist/extension-auto-link.esm.js",
+    "limit": "90 KB",
+    "ignore": ["@remirror/pm"],
+    "running": false
+  },
+  {
+    "name": "@remirror/extension-base-keymap",
+    "path": "@remirror/extension-base-keymap/dist/extension-base-keymap.esm.js",
     "limit": "50 KB",
     "ignore": ["@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-bold",
-    "path": "@remirror/extension-bold/lib/dist/extension-bold.esm.js",
+    "path": "@remirror/extension-bold/dist/extension-bold.esm.js",
     "limit": "50 KB",
     "ignore": [],
     "running": false
   },
   {
     "name": "@remirror/extension-code-block",
-    "path": "@remirror/extension-code-block/lib/dist/extension-code-block.esm.js",
+    "path": "@remirror/extension-code-block/dist/extension-code-block.esm.js",
     "limit": "120 KB",
     "ignore": ["@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-collaboration",
-    "path": "@remirror/extension-collaboration/lib/dist/extension-collaboration.esm.js",
+    "path": "@remirror/extension-collaboration/dist/extension-collaboration.esm.js",
     "limit": "90 KB",
     "ignore": ["@remirror/pm", "prosemirror-collab"],
     "running": false
   },
   {
     "name": "@remirror/extension-doc",
-    "path": "@remirror/extension-doc/lib/dist/extension-doc.esm.js",
+    "path": "@remirror/extension-doc/dist/extension-doc.esm.js",
     "limit": "50 KB",
     "ignore": [],
     "running": false
   },
   {
     "name": "@remirror/extension-drop-cursor",
-    "path": "@remirror/extension-drop-cursor/lib/dist/extension-drop-cursor.esm.js",
+    "path": "@remirror/extension-drop-cursor/dist/extension-drop-cursor.esm.js",
     "limit": "90 KB",
     "ignore": ["@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-emoji",
-    "path": "@remirror/extension-emoji/lib/dist/extension-emoji.esm.js",
+    "path": "@remirror/extension-emoji/dist/extension-emoji.esm.js",
     "limit": "150 KB",
     "ignore": ["@remirror/pm"],
     "running": false
   },
   {
-    "name": "@remirror/extension-enhanced-link",
-    "path": "@remirror/extension-enhanced-link/lib/dist/extension-enhanced-link.esm.js",
+    "name": "@remirror/extension-epic-mode",
+    "path": "@remirror/extension-epic-mode/dist/extension-epic-mode.esm.js",
     "limit": "90 KB",
     "ignore": ["@remirror/pm"],
     "running": false
   },
   {
-    "name": "@remirror/extension-epic-mode",
-    "path": "@remirror/extension-epic-mode/lib/dist/extension-epic-mode.esm.js",
-    "limit": "90 KB",
+    "name": "@remirror/extension-history",
+    "path": "@remirror/extension-history/dist/extension-history.esm.js",
+    "limit": "50 KB",
     "ignore": ["@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-image",
-    "path": "@remirror/extension-image/lib/dist/extension-image.esm.js",
+    "path": "@remirror/extension-image/dist/extension-image.esm.js",
     "limit": "120 KB",
     "ignore": ["@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-mention",
-    "path": "@remirror/extension-mention/lib/dist/extension-mention.esm.js",
+    "path": "@remirror/extension-mention/dist/extension-mention.esm.js",
     "limit": "90 KB",
     "ignore": ["@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-paragraph",
-    "path": "@remirror/extension-paragraph/lib/dist/extension-paragraph.esm.js",
+    "path": "@remirror/extension-paragraph/dist/extension-paragraph.esm.js",
     "limit": "90 KB",
     "ignore": [],
     "running": false
   },
   {
-    "name": "@remirror/extension-tables",
-    "path": "@remirror/extension-tables/lib/dist/extension-tables.esm.js",
-    "limit": "120 KB",
-    "ignore": ["@remirror/pm", "prosemirror-tables"],
+    "name": "@remirror/extension-placeholder",
+    "path": "@remirror/extension-placeholder/dist/extension-placeholder.esm.js",
+    "limit": "50 KB",
+    "ignore": ["@remirror/pm"],
+    "running": false
+  },
+  {
+    "name": "@remirror/extension-positioner",
+    "path": "@remirror/extension-positioner/dist/extension-positioner.esm.js",
+    "limit": "50 KB",
+    "ignore": [],
+    "running": false
+  },
+  {
+    "name": "@remirror/extension-react-ssr",
+    "path": "@remirror/extension-react-ssr/dist/extension-react-ssr.esm.js",
+    "limit": "50 KB",
+    "ignore": ["@remirror/pm", "@types/react", "react"],
     "running": false
   },
   {
     "name": "@remirror/extension-text",
-    "path": "@remirror/extension-text/lib/dist/extension-text.esm.js",
+    "path": "@remirror/extension-text/dist/extension-text.esm.js",
     "limit": "50 KB",
     "ignore": [],
     "running": false
   },
   {
-    "name": "@remirror/pm",
-    "path": "@remirror/pm/lib/dist/pm.esm.js",
-    "limit": "250 KB",
-    "ignore": [],
+    "name": "@remirror/playground",
+    "path": "@remirror/playground/dist/playground.esm.js",
+    "limit": "2 MB",
+    "ignore": ["@types/react", "@types/react-dom", "react", "react-dom"],
     "running": false
   },
   {
     "name": "@remirror/preset-core",
-    "path": "@remirror/preset-core/lib/dist/preset-core.esm.js",
+    "path": "@remirror/preset-core/dist/preset-core.esm.js",
     "limit": "50 KB",
-    "ignore": [],
+    "ignore": ["@remirror/pm"],
+    "running": false
+  },
+  {
+    "name": "@remirror/preset-react",
+    "path": "@remirror/preset-react/dist/preset-react.esm.js",
+    "limit": "50 KB",
+    "ignore": ["@remirror/pm", "@types/react", "react"],
+    "running": false
+  },
+  {
+    "name": "@remirror/preset-table",
+    "path": "@remirror/preset-table/dist/preset-table.esm.js",
+    "limit": "120 KB",
+    "ignore": ["@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/react",
-    "path": "@remirror/react/lib/dist/react.esm.js",
+    "path": "@remirror/react/dist/react.esm.js",
     "limit": "140 KB",
     "ignore": ["@remirror/pm", "@types/react", "@types/react-dom", "react", "react-dom"],
     "running": false
   },
   {
+    "name": "@remirror/react-editor-social",
+    "path": "@remirror/react-editor-social/dist/react-editor-social.esm.js",
+    "limit": "200 KB",
+    "ignore": ["@remirror/pm", "@types/react", "@types/react-dom", "react", "react-dom"],
+    "running": false
+  },
+  {
+    "name": "a11y-status",
+    "path": "packages/a11y-status/dist/a11y-status.esm.js",
+    "limit": "1 KB",
+    "ignore": [],
+    "running": false
+  },
+  {
     "name": "multishift",
-    "path": "packages/multishift/lib/dist/multishift.esm.js",
+    "path": "packages/multishift/dist/multishift.esm.js",
     "limit": "20 KB",
-    "ignore": ["@emotion/core", "@types/react", "react"],
+    "ignore": ["@types/react", "react"],
     "running": false
   },
   {
     "name": "prosemirror-suggest",
-    "path": "packages/prosemirror-suggest/lib/dist/prosemirror-suggest.esm.js",
+    "path": "packages/prosemirror-suggest/dist/prosemirror-suggest.esm.js",
     "limit": "90 KB",
     "ignore": ["prosemirror-view"],
     "running": false
   },
   {
     "name": "test-keyboard",
-    "path": "packages/test-keyboard/lib/dist/test-keyboard.esm.js",
+    "path": "packages/test-keyboard/dist/test-keyboard.esm.js",
     "limit": "10 KB",
     "ignore": [],
     "running": false

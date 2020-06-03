@@ -797,11 +797,6 @@ export function noop() {}
  */
 export class Merge {
   /**
-   * This can be used to mimic any object shape.
-   */
-  [key: string]: unknown;
-
-  /**
    * Create an object that will completely replace the key when merging.
    *
    * @param [obj] - the object to replace the key with. When blank an empty
@@ -823,6 +818,13 @@ export class Merge {
       this[key] = object_[key];
     });
   }
+}
+
+export interface Merge {
+  /**
+   * This can be used to mimic any object shape.
+   */
+  [key: string]: unknown;
 }
 
 /**

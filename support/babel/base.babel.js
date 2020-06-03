@@ -38,6 +38,7 @@ module.exports = {
     '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-proposal-nullish-coalescing-operator',
     '@babel/plugin-proposal-optional-chaining',
+    '@babel/plugin-proposal-numeric-separator',
     'dev-expression',
   ],
   env: { production: nonTestEnv, development: nonTestEnv },

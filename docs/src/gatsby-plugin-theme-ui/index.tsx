@@ -1,16 +1,15 @@
-import { object } from '../../../@remirror/react/src/__mocks__/node_modules/@remirror/core-helpers';
-
 const heading = {
   fontFamily: 'heading',
   fontWeight: 'heading',
   lineHeight: 'heading',
 };
 
-const spreadObject = <GProps extends string, GObj extends object>(
-  props: GProps[],
-  obj: GObj,
-): Record<GProps, GObj> => {
-  const returnValue = object<Record<GProps, GObj>>();
+const spreadObject = <Props extends string, Shape extends object>(
+  props: Props[],
+  obj: Shape,
+): Record<Props, Shape> => {
+  const returnValue = {} as any;
+
   for (const prop of props) {
     returnValue[prop] = obj;
   }

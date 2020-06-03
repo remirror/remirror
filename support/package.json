@@ -1,6 +1,7 @@
 {
   "name": "@remirror/support",
   "version": "0.0.0",
+  "private": true,
   "description": "The support directory for the remirror monorepo",
   "repository": "https://github.com/remirror/remirror/tree/master/support",
   "license": "ISC",
@@ -10,6 +11,10 @@
   },
   "dependencies": {
     "@remirror/pm": "*",
+    "monaco-editor-webpack-plugin": "^1.9.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "regenerator-runtime": "^0.13.5",
     "remirror": "*"
   }
 }
