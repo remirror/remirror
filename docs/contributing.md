@@ -23,6 +23,14 @@ pnpm install
 git checkout -b BRANCH_NAME
 ```
 
+If you already have a previous version of the repository checked out then you will also need to make
+sure to clean your `node_modules` and run the following command before installation.
+
+```bash
+pnpm run clean:all
+pnpm install
+```
+
 From the root directory use the following command to work on examples or the documentation website.
 
 ```bash
