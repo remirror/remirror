@@ -33,7 +33,7 @@ const PRETTIER_SCRIPTS = [
   'https://unpkg.com/prettier@2.0.5/parser-typescript.js',
 ];
 
-export const Playground: FC = function () {
+export const Playground: FC = () => {
   const [value, setValue] = useState('// Add some code here\n');
   const [advanced, setAdvanced] = useState(false);
   const [modules, setModules] = useState<RemirrorModules>({});
