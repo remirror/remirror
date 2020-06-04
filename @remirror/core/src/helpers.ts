@@ -100,6 +100,7 @@ export function throwIfNameNotUnique(parameter: IsNameUniqueParameter) {
   const label = codeLabelMap[code];
 
   invariant(!set.has(name), {
+    code,
     message: `There is a naming conflict for the name: ${name} used in this '${label}'. Please rename or remove from the editor to avoid runtime errors.`,
   });
 

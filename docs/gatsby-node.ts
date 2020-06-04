@@ -1,6 +1,1 @@
-export {
-  createPages,
-  onCreateNode,
-  onCreateWebpackConfig,
-  onCreateBabelConfig,
-} from './src/gatsby/node';
+export { createPages, onCreateNode, onCreateWebpackConfig } from './src/gatsby/node';

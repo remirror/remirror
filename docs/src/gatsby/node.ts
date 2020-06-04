@@ -61,21 +61,25 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
 };
 
 /**
- * Create a babel config (might be needed in the future).
- *
- * Currently it's pretty hard to compose babel provided by gatsby with babel
- * used in this project. Might need to address this in the future if random
- * stuff keeps breaking.
- */
-export const onCreateBabelConfig: GatsbyNode['onCreateBabelConfig'] = () => {};
-
-/**
  * Add monaco editor support to the webpack plugin.
  */
 export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = (parameter, _options) => {
-  const { actions } = parameter;
+  const { actions, getConfig, loaders } = parameter;
+  const config = getConfig();
 
-  actions.setWebpackConfig({
-    plugins: [new MonacoEditorWebpackPlugin({ languages: ['typescript', 'javascript'] })],
-  });
+  // console.log(loaders.js());
+
+  config.plugins.push(new MonacoEditorWebpackPlugin({ languages: ['typescript', 'javascript'] }));
+
+  config.module.rules = [
+    ...config.module.rules.filter((rule: any) => String(rule.test) !== String(/\.tsx?$/)),
+    {
+      ...loaders.js(),
+      test: /\.[jt]sx?$/,
+      exclude: (modulePath: string) =>
+        /node_modules/.test(modulePath) && !/node_modules\/(@?remirror)/.test(modulePath),
+    },
+  ];
+
+  actions.replaceWebpackConfig(config);
 };

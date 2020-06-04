@@ -1,5 +1,6 @@
 {
   "main": "dist/i18n.cjs.js",
+  "module": "dist/i18n.esm.js",
   "preconstruct": {
     "source": "../src/plurals"
   }

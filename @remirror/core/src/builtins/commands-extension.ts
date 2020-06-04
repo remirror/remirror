@@ -5,7 +5,6 @@ import {
   CommandFunction,
   DispatchFunction,
   EmptyShape,
-  Shape,
   Transaction,
 } from '@remirror/core-types';
 
