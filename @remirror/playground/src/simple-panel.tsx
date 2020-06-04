@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo } from 'react';
+import React, { FC, Fragment, useCallback, useMemo } from 'react';
 
 import { CodeOptions, ExtensionSpec, RemirrorModules } from './interfaces';
 
@@ -105,7 +105,7 @@ export const SimplePanel: FC<SimplePanelProps> = function (props) {
       {Object.keys(modules).map((moduleName) => {
         const mod = modules[moduleName];
         return (
-          <>
+          <Fragment key={moduleName}>
             <p>
               <strong>{moduleName}</strong>{' '}
               {moduleName !== '@remirror/core' ? (
@@ -129,7 +129,7 @@ export const SimplePanel: FC<SimplePanelProps> = function (props) {
                 />
               ))
             )}
-          </>
+          </Fragment>
         );
       })}
       <p>

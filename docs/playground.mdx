@@ -3,6 +3,8 @@ title: Playground
 fullWidth: true
 ---
 
-import Playground from '@remirror/playground';
+import * as foo from '@remirror/playground';
 
-<Playground />
+<foo.Playground />
+
+<p>{((React.Component._hello = 123), 'done')}</p>

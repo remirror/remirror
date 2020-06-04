@@ -20,6 +20,7 @@ export const Head: FC<Pick<GatsbyTypes.MdxFrontmatter, 'fullWidth' | 'title'>> =
       />
       <meta name='social:title' content={title} />
       <meta name='social:description' content={pkg.description} />
+      <script src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
     </Helmet>
   );
 };

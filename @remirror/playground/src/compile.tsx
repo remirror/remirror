@@ -1,9 +1,9 @@
-import { BabelFileResult } from '@babel/core';
-import { registerPlugin, transform } from '@babel/standalone';
+import type * as BabelType from '@babel/standalone';
 import * as t from '@babel/types'; // DO NOT IMPORT FROM @babel/core!
 
 // DO NOT import @babel/core except in type positions
 type NodePath<T = t.Node> = import('@babel/core').NodePath<T>;
+type BabelFileResult = import('@babel/core').BabelFileResult;
 
 let requires: string[] = [];
 function playgroundImports() {
@@ -27,7 +27,7 @@ function playgroundImports() {
   };
 }
 
-registerPlugin('playgroundImports', playgroundImports);
+Babel.registerPlugin('playgroundImports', playgroundImports);
 
 export function compile(
   code: string,
@@ -41,7 +41,7 @@ export function compile(
   let error: Error | null = null;
   let result: BabelFileResult | null = null;
   try {
-    result = transform(code, {
+    result = Babel.transform(code, {
       filename: 'usercode.tsx',
 
       /*
@@ -67,4 +67,8 @@ export function compile(
     code: result?.code ? String(result.code) : null,
     error,
   };
+}
+
+declare global {
+  const Babel: typeof BabelType;
 }
