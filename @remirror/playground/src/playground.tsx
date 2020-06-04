@@ -9,14 +9,24 @@ import { makeCode } from './make-code';
 import { Container, Divide, Header, Main, Panel } from './primitives';
 import { SimplePanel } from './simple-panel';
 import { Viewer } from './viewer';
+import { REQUIRED_MODULES } from './execute';
 
 export { useRemirrorPlayground } from './use-remirror-playground';
 
+/**
+ * Returns a new object which is the module's exports with non-extensions
+ * removed. Also removes built in required extensions since these are not
+ * toggleable.
+ */
 function cleanse(moduleName: string, moduleExports: Exports): Exports {
   const cleansedExports = { ...moduleExports };
-  if (moduleName === '@remirror/core') {
+  if (moduleName === 'remirror/extension/doc') {
     delete cleansedExports.DocExtension;
+  }
+  if (moduleName === 'remirror/extension/text') {
     delete cleansedExports.TextExtension;
+  }
+  if (moduleName === 'remirror/extension/paragraph') {
     delete cleansedExports.ParagraphExtension;
   }
   for (const exportName of Object.keys(cleansedExports)) {
@@ -77,19 +87,20 @@ export const Playground: FC = () => {
     setModules(({ [moduleName]: _moduleToDelete, ...remainingModules }) => remainingModules);
   }, []);
   useEffect(() => {
-    const CORE = '@remirror/core';
-    if (!modules[CORE]) {
-      addModule(CORE);
+    for (const requiredModule of REQUIRED_MODULES) {
+      if (!modules[requiredModule]) {
+        addModule(requiredModule);
+      }
     }
   });
   const [options, setOptions] = useState({
     extensions: [
       // {
-      //   module: '@remirror/core-extensions',
+      //   module: 'remirror/extensions/bold',
       //   export: 'BoldExtension',
       // },
       // {
-      //   module: '@remirror/core-extensions',
+      //   module: 'remirror/extensions/italic',
       //   export: 'ItalicExtension',
       // },
     ],

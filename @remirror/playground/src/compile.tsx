@@ -53,7 +53,7 @@ export function compile(
       plugins: [
         ['transform-runtime'],
         ['proposal-object-rest-spread'],
-        'syntax-dynamic-import',
+        //'syntax-dynamic-import',
         'proposal-nullish-coalescing-operator',
         'proposal-optional-chaining',
         'playgroundImports',

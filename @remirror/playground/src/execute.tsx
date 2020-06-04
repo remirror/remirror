@@ -3,10 +3,10 @@
 import * as babelRuntimeHelpersInteropRequireDefault from '@babel/runtime/helpers/interopRequireDefault';
 import * as crypto from 'crypto';
 import { languages } from 'monaco-editor';
-import React, { FC, useEffect, useMemo, useRef } from 'react';
+import React, { FC, useMemo, useEffect, useRef } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 
-import * as remirrorCore from '@remirror/core';
+import * as remirrorCore from 'remirror/core';
 // addImport('@remirror/react', 'RemirrorProvider');
 // addImport('@remirror/react', 'useManager');
 // addImport('@remirror/react', 'useExtension');
@@ -19,6 +19,12 @@ import { RemirrorProvider, useExtension, useManager, useRemirror } from '@remirr
 import { ErrorBoundary } from './error-boundary';
 import { useRemirrorPlayground } from './use-remirror-playground';
 import { acquiredTypeDefs, dtsCache } from './vendor/type-acquisition';
+
+export const REQUIRED_MODULES = [
+  'remirror/extension/doc',
+  'remirror/extension/text',
+  'remirror/extension/paragraph',
+];
 
 const tsOptions = {
   // Maybe need to do manual syntax highlighting like found here:
@@ -43,43 +49,51 @@ For every module added here, you must provided `acquiredTypeDefs` below,
 otherwise it will fetch out-of-sync typedefs from npm
 
 */
+
+// Hack it so ESModule imports and CommonJS both work
+babelRuntimeHelpersInteropRequireDefault.default.default =
+  babelRuntimeHelpersInteropRequireDefault.default;
+
 const knownRequires: { [moduleName: string]: any } = {
-  '@babel/runtime/helpers/interopRequireDefault': babelRuntimeHelpersInteropRequireDefault,
+  '@babel/runtime/helpers/interopRequireDefault': babelRuntimeHelpersInteropRequireDefault.default,
   // '@remirror/core-extensions': remirrorCoreExtensions,
-  '@remirror/react': remirrorReact,
-  '@remirror/core': remirrorCore,
+  remirror: require('remirror'),
+  'remirror/extension/doc': require('remirror/extension/doc'),
+  'remirror/extension/text': require('remirror/extension/text'),
+  'remirror/extension/paragraph': require('remirror/extension/paragraph'),
+  'remirror/react': remirrorReact,
+  'remirror/core': remirrorCore,
   '@remirror/playground': { useRemirrorPlayground },
   //remirror: remirror,
   react: React,
 };
-acquiredTypeDefs['@remirror/core'] = {
-  types: {
-    ts: 'included',
-  },
-};
-acquiredTypeDefs['node_modules/@remirror/core/package.json'] = JSON.stringify({
-  // This should be the package.json
-  name: '@remirror/core',
-  types: 'index.d.ts',
-});
-dtsCache['@remirror/core'] = {
-  'index.d.ts': `
-declare module "@remirror/core" {
-
-export const DocExtension = any;
-export const ParagraphExtension = any;
-
+REQUIRED_MODULES.forEach((moduleName) => {
+  acquiredTypeDefs[moduleName] = {
+    types: {
+      ts: 'included',
+    },
+  };
+  // This is a really bad hack, really there should just be one `package.json`
+  // at the root of the module.
+  acquiredTypeDefs[`node_modules/${moduleName}/package.json`] = JSON.stringify({
+    // This should be the package.json
+    name: moduleName,
+    types: 'index.d.ts',
+  });
+  dtsCache[moduleName] = {
+    'index.d.ts': `
+declare module "${moduleName}" {
+  const foo: any;
+  export default foo;
 }
 `,
-};
-addLibraryToRuntime(
-  acquiredTypeDefs['node_modules/@remirror/core/package.json'],
-  'node_modules/@remirror/core/package.json',
-);
-addLibraryToRuntime(
-  dtsCache['@remirror/core']['index.d.ts'],
-  'node_modules/@remirror/core/index.d.ts',
-);
+  };
+  addLibraryToRuntime(
+    acquiredTypeDefs[`node_modules/${moduleName}/package.json`] as any,
+    `node_modules/${moduleName}/package.json`,
+  );
+  addLibraryToRuntime(dtsCache[moduleName]['index.d.ts'], `node_modules/${moduleName}/index.d.ts`);
+});
 
 const fetchedModules: {
   [id: string]: {

@@ -1,6 +1,7 @@
 import React, { FC, Fragment, useCallback, useMemo } from 'react';
 
 import { CodeOptions, ExtensionSpec, RemirrorModules } from './interfaces';
+import { REQUIRED_MODULES } from './execute';
 
 export interface SimplePanelProps {
   options: CodeOptions;
@@ -10,26 +11,6 @@ export interface SimplePanelProps {
   addModule: (moduleName: string) => void;
   removeModule: (moduleName: string) => void;
 }
-/*
-const knownExtensions: ExtensionSpec[] = [
-  {
-    module: '@remirror/core',
-    export: 'ParagraphExtension',
-  },
-  {
-    module: '@remirror/core',
-    export: 'BoldExtension',
-  },
-  {
-    module: '@remirror/core',
-    export: 'ItalicExtension',
-  },
-  {
-    module: '@remirror/core',
-    export: 'UnderlineExtension',
-  },
-];
-*/
 
 interface ExtensionCheckboxProps {
   options: CodeOptions;
@@ -108,7 +89,7 @@ export const SimplePanel: FC<SimplePanelProps> = function (props) {
           <Fragment key={moduleName}>
             <p>
               <strong>{moduleName}</strong>{' '}
-              {moduleName !== '@remirror/core' ? (
+              {!REQUIRED_MODULES.includes(moduleName) ? (
                 <button onClick={() => removeModule(moduleName)} title='remove'>
                   -
                 </button>

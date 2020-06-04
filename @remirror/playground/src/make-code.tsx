@@ -36,13 +36,13 @@ export function makeCode(codeOptions: CodeOptions): string {
 
   addImport('react', ['default', 'React']);
   addImport('react', 'FC');
-  addImport('@remirror/react', 'RemirrorProvider');
-  addImport('@remirror/core', 'DocExtension');
-  addImport('@remirror/core', 'TextExtension');
-  addImport('@remirror/core', 'ParagraphExtension');
-  addImport('@remirror/react', 'useManager');
-  addImport('@remirror/react', 'useExtension');
-  addImport('@remirror/react', 'useRemirror');
+  addImport('remirror/react', 'RemirrorProvider');
+  addImport('remirror/extension/doc', 'DocExtension');
+  addImport('remirror/extension/text', 'TextExtension');
+  addImport('remirror/extension/paragraph', 'ParagraphExtension');
+  addImport('remirror/react', 'useManager');
+  addImport('remirror/react', 'useExtension');
+  addImport('remirror/react', 'useRemirror');
   addImport('@remirror/playground', 'useRemirrorPlayground');
 
   const useExtensions: string[] = [];
