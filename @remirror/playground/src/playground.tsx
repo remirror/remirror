@@ -113,7 +113,9 @@ export const Playground: FC = () => {
     }
     const unlisten: Array<() => void> = [];
     const format = () => {
-      handleFormatRef.current();
+      if (loadedScripts.length === PRETTIER_SCRIPTS.length) {
+        handleFormatRef.current();
+      }
     };
     PRETTIER_SCRIPTS.forEach((script) => {
       if (!loadedScripts.includes(script)) {
