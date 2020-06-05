@@ -1,0 +1,11 @@
+{
+  "extends": ["stylelint-config-recommended", "linaria/stylelint-config"],
+  "ignoreFiles": [
+    "node_modules",
+    "**/node_modules",
+    "docs/public/**",
+    "docs/.cache",
+    ".jest",
+    "coverage"
+  ]
+}

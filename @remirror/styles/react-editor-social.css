@@ -1,0 +1,7 @@
+/**
+ * Styles extracted from: @remirror/react-editor-social/src/components/social-mentions.tsx
+ */
+.remirror-title {
+  font-size: 24px;
+  font-weight: bold;
+}

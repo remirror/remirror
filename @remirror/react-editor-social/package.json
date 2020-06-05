@@ -15,9 +15,6 @@
     "style",
     "dist"
   ],
-  "scripts": {
-    "style": "node-sass style/main.scss dist/style.css"
-  },
   "dependencies": {
     "@babel/runtime": ">=7 <8",
     "@lingui/core": "^3.0.0-13",
@@ -30,6 +27,7 @@
     "@remirror/react-utils": "^0.7.6",
     "@types/classnames": "^2.2.10",
     "classnames": "^2.2.6",
+    "linaria": "^2.0.0-alpha.5",
     "multishift": "^0.7.7",
     "type-fest": "^0.15.0"
   },

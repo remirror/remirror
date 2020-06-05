@@ -70,8 +70,8 @@
       "schema-list",
       "state",
       "suggest",
-      "transform",
       "tables",
+      "transform",
       "view"
     ]
   }

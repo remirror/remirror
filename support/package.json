@@ -8,8 +8,16 @@
   "main": "index.js",
   "dependencies": {
     "@remirror/pm": "0.0.0",
+    "@types/lodash.groupby": "^4.6.6",
+    "chalk": "^4.0.0",
+    "diffable-html": "^4.0.0",
+    "globby": "^11.0.1",
+    "jest-axe": "^3.4.0",
+    "linaria": "^2.0.0-alpha.5",
+    "lodash.groupby": "^4.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "remirror": "^0.13.1"
+    "remirror": "^0.13.1",
+    "write-json-file": "^4.3.0"
   }
 }

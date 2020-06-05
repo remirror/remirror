@@ -20,15 +20,13 @@
     "style",
     "dist"
   ],
-  "scripts": {
-    "style": "node-sass style/main.scss dist/style.css"
-  },
   "dependencies": {
     "@babel/runtime": ">=7 <8",
     "@remirror/core-constants": "^0.7.4",
     "@remirror/core-helpers": "^0.7.6",
     "@remirror/core-types": "^0.9.0",
     "@remirror/core-utils": "^0.8.0",
+    "linaria": "^2.0.0-alpha.5",
     "semver": "^7.3.2",
     "type-fest": "^0.15.0"
   },

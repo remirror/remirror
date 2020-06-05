@@ -1,4 +1,7 @@
-.is-empty:first-of-type::before {
+/**
+ * Styles extracted from: @remirror/extension-placeholder/src/styles.ts
+ */
+.remirror-core .is-empty:first-of-type::before {
   position: absolute;
   color: #aaa;
   pointer-events: none;

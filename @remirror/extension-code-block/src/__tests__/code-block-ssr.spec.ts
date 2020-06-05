@@ -13,9 +13,7 @@ import { CodeBlockExtension } from '..';
 
 const supportedLanguages = [typescript, javascript, markdown];
 const create = (initialContent: ObjectNode) =>
-  renderEditorString({
-    extensions: [new CodeBlockExtension({ supportedLanguages })],
-    presets: [],
+  renderEditorString([new CodeBlockExtension({ supportedLanguages })], {
     props: { initialContent },
   });
 

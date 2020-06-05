@@ -1,0 +1,67 @@
+/**
+ * Styles extracted from: @remirror/core/src/styles.ts
+ */
+.remirror-core .ProseMirror {
+  position: relative;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  white-space: break-spaces;
+  -webkit-font-variant-ligatures: none;
+  font-variant-ligatures: none;
+  font-feature-settings: 'liga' 0;
+}
+.remirror-core .ProseMirror pre {
+  white-space: pre-wrap;
+}
+.remirror-core .ProseMirror li {
+  position: relative;
+}
+.remirror-core .ProseMirror[contenteditable='false'] {
+  white-space: normal;
+}
+.remirror-core .ProseMirror[contenteditable='true'] {
+  white-space: pre-wrap;
+}
+.remirror-core .ProseMirror-hideselection {
+  caret-color: transparent;
+}
+.remirror-core .ProseMirror-hideselection *::selection,
+.remirror-core .ProseMirror-hideselection *::-moz-selection {
+  background: transparent;
+}
+.remirror-core .ProseMirror-selectednode {
+  outline: 2px solid #8cf;
+}
+.remirror-core li.ProseMirror-selectednode {
+  outline: none;
+}
+.remirror-core li.ProseMirror-selectednode:after {
+  content: '';
+  position: absolute;
+  left: -32px;
+  right: -2px;
+  top: -2px;
+  bottom: -2px;
+  border: 2px solid #8cf;
+  pointer-events: none;
+}
+
+/**
+ * Styles extracted from: @remirror/extension-placeholder/src/styles.ts
+ */
+.remirror-core .is-empty:first-of-type::before {
+  position: absolute;
+  color: #aaa;
+  pointer-events: none;
+  height: 0;
+  font-style: italic;
+  content: attr(data-placeholder);
+}
+
+/**
+ * Styles extracted from: @remirror/react-editor-social/src/components/social-mentions.tsx
+ */
+.remirror-title {
+  font-size: 24px;
+  font-weight: bold;
+}

@@ -4,14 +4,10 @@ module.exports = {
   },
 };
 
-function readPackage(pkg, context) {
+function readPackage(pkg) {
   if (pkg.dependencies && pkg.dependencies.graphql) {
     pkg.dependencies.graphql = '^14';
   }
-
-  // if (pkg.dependencies && pkg.dependencies.graphql) {
-  //   pkg.dependencies.graphql = '^14';
-  // }
 
   return pkg;
 }

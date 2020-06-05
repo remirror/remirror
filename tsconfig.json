@@ -5,7 +5,7 @@
     "noEmit": true,
     "skipLibCheck": false
   },
-  "include": ["**/*.ts", "**/*.tsx", "../global.d.ts"],
+  "include": ["**/*.ts", "**/*.tsx", "../global.d.ts", "support/scripts/linaria.js"],
   "exclude": [
     "**/dist/",
     "dist",

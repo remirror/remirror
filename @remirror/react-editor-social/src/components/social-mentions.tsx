@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { css } from 'linaria';
 import { Type, useMultishift } from 'multishift';
 import React, { ComponentType, useCallback, useMemo, useRef } from 'react';
 
@@ -402,4 +403,15 @@ function getMentionLabel(parameter: GetMentionLabelParameter) {
   const label = userData ? userData.username : tagData ? tagData.tag : null;
   const href = userData ? userData.href : tagData ? tagData.href : null;
   return { label, id, href };
+}
+
+// Create a class name
+const title = css`
+  font-size: 24px;
+  font-weight: bold;
+`;
+
+export function Heading() {
+  // Pass it to a component
+  return <h1 className={title}>This is a title</h1>;
 }

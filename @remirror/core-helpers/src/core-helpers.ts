@@ -947,9 +947,9 @@ export function uniqueBy<Item = any, Key = any>(
   const found: Set<Key> = new Set();
 
   const getter = isFunction(getValue) ? getValue : makeFunctionForUniqueBy(getValue);
-  const array_ = fromStart ? [...array].reverse() : array;
+  const list = fromStart ? [...array].reverse() : array;
 
-  for (const item of array_) {
+  for (const item of list) {
     const value = getter(item);
     if (!found.has(value)) {
       found.add(value);
@@ -1003,12 +1003,12 @@ export function within(value: number, ...rest: Array<number | undefined | null>)
  * @typeParam Obj - the object type
  * @typeParam Property - the property which can be a string | number | symbol
  */
-export const hasOwnProperty = <Obj extends object, Property extends string | number | symbol>(
+export function hasOwnProperty<Obj extends object, Property extends string | number | symbol>(
   object_: Obj,
   key: Property,
-): object_ is Property extends keyof Obj ? Obj : Obj & { Key: unknown } => {
+): object_ is Property extends keyof Obj ? Obj : Obj & { Key: unknown } {
   return Object.prototype.hasOwnProperty.call(object_, key);
-};
+}
 
 // Forwarded exports
 
@@ -1016,10 +1016,11 @@ export {
   camelCase,
   capitalCase,
   constantCase,
-  spaceCase,
-  snakeCase,
-  pathCase,
+  kebabCase,
   pascalCase,
+  pathCase,
+  snakeCase,
+  spaceCase,
 } from 'case-anything';
 export { debounce, throttle } from 'throttle-debounce';
 export { omit, pick };

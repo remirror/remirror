@@ -1,4 +1,3 @@
-// Refractor languages
 import refractor, { RefractorNode } from 'refractor/core';
 
 import {

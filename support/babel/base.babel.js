@@ -11,7 +11,7 @@ const ignore = [
   '*.d.ts',
 ];
 
-const basePreset = ['@babel/preset-react'];
+const basePreset = ['@babel/preset-react', 'linaria/babel'];
 
 const presets = [...basePreset, ['@babel/preset-env']];
 
@@ -39,6 +39,7 @@ module.exports = {
     '@babel/plugin-proposal-nullish-coalescing-operator',
     '@babel/plugin-proposal-optional-chaining',
     '@babel/plugin-proposal-numeric-separator',
+    'annotate-pure-calls',
     'dev-expression',
   ],
   env: { production: nonTestEnv, development: nonTestEnv },
