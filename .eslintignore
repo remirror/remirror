@@ -8,7 +8,6 @@ lib
 dist
 node_modules
 .out
-storybook-static
 examples/with-razzle/build/**
 public
 coverage

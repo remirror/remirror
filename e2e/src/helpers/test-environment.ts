@@ -31,7 +31,7 @@ declare global {
     }
   }
 
-  type RemirrorTestServers = 'storybook' | 'next' | 'docs' | 'razzle';
+  type RemirrorTestServers = 'next' | 'docs' | 'razzle';
   type RemirrorTestEditors = 'social' | 'wysiwyg' | 'epic';
   type SupportedBrowserName = 'firefox' | 'chromium';
 }

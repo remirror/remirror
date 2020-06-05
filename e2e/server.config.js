@@ -1,6 +1,6 @@
 const {
   REMIRROR_E2E_BROWSER = 'chromium',
-  REMIRROR_E2E_SERVER = 'storybook',
+  REMIRROR_E2E_SERVER = 'next',
   REMIRROR_E2E_BASIC,
 } = process.env;
 
@@ -33,17 +33,6 @@ const servers = (exports.servers = {
     home: 'http://localhost:3030',
   },
 
-  storybook: {
-    server: {
-      command: 'pnpm run start-storybook -p 3030 -c support/storybook --quiet --ci',
-      port: 3030,
-      usedPortAction: 'kill',
-      launchTimeout: 120000,
-    },
-    regex: noSSRRegex,
-    home: 'http://localhost:3030',
-  },
-
   docs: {
     server: {
       command: 'cd docs && pnpm run start -p 3030',
@@ -69,10 +58,6 @@ const servers = (exports.servers = {
 
 const editors = (exports.editors = {
   social: {
-    storybook: {
-      empty: 'http://localhost:3030/iframe.html?id=social-editor--basic',
-      content: 'http://localhost:3030/iframe.html?id=social-editor--with-content',
-    },
     next: {
       empty: 'http://localhost:3030/editor/social',
       content: 'http://localhost:3030/editor/social/content',
@@ -87,10 +72,6 @@ const editors = (exports.editors = {
     },
   },
   wysiwyg: {
-    storybook: {
-      empty: 'http://localhost:3030/iframe.html?id=wysiwyg-editor--basic',
-      content: 'http://localhost:3030/iframe.html?id=wysiwyg-editor--with-content',
-    },
     next: {
       empty: 'http://localhost:3030/editor/wysiwyg',
       content: 'http://localhost:3030/editor/wysiwyg/content',

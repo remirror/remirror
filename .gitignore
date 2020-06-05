@@ -135,7 +135,6 @@ secret.json
 *.env
 
 .out
-storybook-static
 
 docs/public/**
 *.tsbuildinfo
