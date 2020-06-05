@@ -1,6 +1,7 @@
 {
   "main": "dist/i18n.cjs.js",
   "module": "dist/i18n.esm.js",
+  "types": "dist/i18n.cjs.d.ts",
   "preconstruct": {
     "source": "../src/en"
   }

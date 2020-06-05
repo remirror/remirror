@@ -1,6 +1,7 @@
 {
   "main": "dist/pm.cjs.js",
   "module": "dist/pm.esm.js",
+  "types": "dist/pm.cjs.d.ts",
   "preconstruct": {
     "source": "../src/view"
   }

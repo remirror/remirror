@@ -1,6 +1,7 @@
 {
   "main": "dist/jest-prosemirror.cjs.js",
   "module": "dist/jest-prosemirror.esm.js",
+  "types": "dist/jest-prosemirror.cjs.d.ts",
   "preconstruct": {
     "source": "../src/jest-prosemirror-serializer"
   }

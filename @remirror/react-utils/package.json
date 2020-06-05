@@ -17,6 +17,7 @@
   "sideEffects": false,
   "main": "dist/react-utils.cjs.js",
   "module": "dist/react-utils.esm.js",
+  "types": "dist/react-utils.cjs.d.ts",
   "files": [
     "dist"
   ],

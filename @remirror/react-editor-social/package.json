@@ -11,6 +11,7 @@
   "sideEffects": false,
   "main": "dist/react-editor-social.cjs.js",
   "module": "dist/react-editor-social.esm.js",
+  "types": "dist/react-editor-social.cjs.d.ts",
   "files": [
     "style",
     "dist"
