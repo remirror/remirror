@@ -123,6 +123,7 @@ export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
    */
   public createKeymap = () => {
     this.createBaseKeymap();
+
     return this.buildKeymap();
   };
 

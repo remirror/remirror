@@ -232,6 +232,8 @@ export function useExtension<Type extends AnyExtensionConstructor>(
 ): void {
   const { manager } = useRemirror();
 
+  console.log('MANAGER', manager);
+
   const extension = useMemo(() => manager.getExtension(Constructor), [Constructor, manager]);
 
   // Handle the case where it an options object passed in.
@@ -407,14 +409,7 @@ export function useManager<Combined extends AnyCombinedUnion>(
   combined: Combined[],
   settings: Remirror.ManagerSettings = {},
 ): EditorManager<Combined | ReactPreset | CorePreset | BuiltinPreset> {
-  const extensionsAndPresets = useMemo(() => [...combined, new CorePreset(), new ReactPreset()], [
-    combined,
-  ]);
-
-  return useMemo(() => createReactManager(extensionsAndPresets, settings), [
-    extensionsAndPresets,
-    settings,
-  ]);
+  return useMemo(() => createReactManager(combined, settings), [combined, settings]);
 }
 
 export type BaseReactCombinedUnion = ReactPreset | CorePreset | BuiltinPreset;

@@ -1,15 +1,15 @@
 import matchSorter from 'match-sorter';
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
-import { startCase, take } from '@remirror/core';
+import { isNotEmpty, startCase, take } from '@remirror/core';
 import {
   ActiveTagData,
   ActiveUserData,
-  OnMentionChangeParameter,
+  MentionChangeParameter,
   SocialEditor,
   SocialEditorProps,
   UserData,
-} from '@remirror/editor-social';
+} from '@remirror/react-editor-social';
 
 import { fakeUsers } from './data/fake-users';
 
@@ -39,27 +39,33 @@ const userData: UserData[] = fakeUsers.results.map(
 export { fakeUsers, fakeTags, userData };
 
 export const ExampleSocialEditor = (props: Partial<SocialEditorProps>) => {
-  const [mention, setMention] = useState<OnMentionChangeParameter>();
+  const [mention, setMention] = useState<MentionChangeParameter>();
 
-  const onChange = (params: OnMentionChangeParameter) => {
-    setMention(params);
-  };
+  const onChange = useCallback((parameter?: MentionChangeParameter) => {
+    setMention(parameter);
+  }, []);
 
-  const userMatches: ActiveUserData[] =
-    mention && mention.name === 'at' && mention.query.length
-      ? take(
-          matchSorter(userData, mention.query, { keys: ['username', 'displayName'] }),
-          6,
-        ).map((user, index) => ({ ...user, active: index === mention.activeIndex }))
-      : [];
+  const userMatches: ActiveUserData[] = useMemo(
+    () =>
+      mention && mention.name === 'at' && isNotEmpty(mention.query)
+        ? take(
+            matchSorter(userData, mention.query, { keys: ['username', 'displayName'] }),
+            6,
+          ).map((user, index) => ({ ...user, active: index === mention.index }))
+        : [],
+    [mention],
+  );
 
-  const tagMatches: ActiveTagData[] =
-    mention && mention.name === 'tag' && mention.query.length
-      ? take(matchSorter(fakeTags, mention.query), 6).map((tag, index) => ({
-          tag,
-          active: index === mention.activeIndex,
-        }))
-      : [];
+  const tagMatches: ActiveTagData[] = useMemo(
+    () =>
+      mention && mention.name === 'tag' && isNotEmpty(mention.query)
+        ? take(matchSorter(fakeTags, mention.query), 6).map((tag, index) => ({
+            tag,
+            active: index === mention.index,
+          }))
+        : [],
+    [mention],
+  );
 
   return (
     <SocialEditor

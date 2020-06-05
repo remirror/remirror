@@ -38,7 +38,7 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
   public static defaultOptions: DefaultExtensionOptions<PositionerOptions> = {};
 
   get name() {
-    return 'doc' as const;
+    return 'positioner' as const;
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility

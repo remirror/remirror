@@ -744,6 +744,44 @@ importers:
       react: ^16.13.1
       react-dom: ^16.13.1
       type-fest: ^0.15.0
+  '@remirror/react-showcase':
+    dependencies:
+      '@babel/runtime': 7.10.2
+      '@remirror/core': 'link:../core'
+      '@remirror/core-extensions': 'link:../../deprecated/core-extensions'
+      '@remirror/dev': 'link:../../deprecated/dev'
+      '@remirror/editor-markdown': 'link:../../deprecated/editor-markdown'
+      '@remirror/extension-code-block': 'link:../extension-code-block'
+      '@remirror/extension-epic-mode': 'link:../extension-epic-mode'
+      '@remirror/react': 'link:../react'
+      '@remirror/react-editor-social': 'link:../react-editor-social'
+      '@remirror/ui-buttons': 'link:../../deprecated/ui-buttons'
+      '@types/match-sorter': 4.0.0
+      '@types/prettier': 2.0.1
+      match-sorter: 4.1.0
+      prettier: 2.0.5
+    devDependencies:
+      '@emotion/core': 10.0.28_react@16.13.1
+      '@types/react': 16.9.35
+      react: 16.13.1
+    specifiers:
+      '@babel/runtime': '>=7 <8'
+      '@emotion/core': ^10.0.28
+      '@remirror/core': ^0.11.0
+      '@remirror/core-extensions': ^0.13.1
+      '@remirror/dev': ^0.13.2
+      '@remirror/editor-markdown': ^0.13.1
+      '@remirror/extension-code-block': ^0.12.0
+      '@remirror/extension-epic-mode': ^0.11.0
+      '@remirror/react': ^0.13.1
+      '@remirror/react-editor-social': ^0.0.0
+      '@remirror/ui-buttons': ^0.7.7
+      '@types/match-sorter': ^4.0.0
+      '@types/prettier': ^2.0.1
+      '@types/react': ^16.9.35
+      match-sorter: ^4.1.0
+      prettier: ^2.0.5
+      react: ^16.13.1
   '@remirror/react-utils':
     dependencies:
       '@babel/runtime': 7.10.2
@@ -1013,45 +1051,7 @@ importers:
   deprecated/react-ssr:
     specifiers: {}
   deprecated/showcase:
-    dependencies:
-      '@babel/runtime': 7.10.2
-      '@remirror/core': 'link:../../@remirror/core'
-      '@remirror/core-extensions': 'link:../core-extensions'
-      '@remirror/dev': 'link:../dev'
-      '@remirror/editor-markdown': 'link:../editor-markdown'
-      '@remirror/editor-social': 'link:../editor-social'
-      '@remirror/editor-wysiwyg': 'link:../editor-wysiwyg'
-      '@remirror/extension-code-block': 'link:../../@remirror/extension-code-block'
-      '@remirror/extension-epic-mode': 'link:../../@remirror/extension-epic-mode'
-      '@remirror/react': 'link:../../@remirror/react'
-      '@remirror/ui-buttons': 'link:../ui-buttons'
-      '@types/match-sorter': 4.0.0
-      '@types/prettier': 2.0.1
-      match-sorter: 4.1.0
-      prettier: 2.0.5
-    devDependencies:
-      '@emotion/core': 10.0.28_react@16.13.1
-      '@types/react': 16.9.35
-      react: 16.13.1
-    specifiers:
-      '@babel/runtime': '>=7 <8'
-      '@emotion/core': ^10.0.28
-      '@remirror/core': ^0.11.0
-      '@remirror/core-extensions': ^0.13.1
-      '@remirror/dev': ^0.13.2
-      '@remirror/editor-markdown': ^0.13.1
-      '@remirror/editor-social': ^0.13.1
-      '@remirror/editor-wysiwyg': ^0.13.1
-      '@remirror/extension-code-block': ^0.12.0
-      '@remirror/extension-epic-mode': ^0.11.0
-      '@remirror/react': ^0.13.1
-      '@remirror/ui-buttons': ^0.7.7
-      '@types/match-sorter': ^4.0.0
-      '@types/prettier': ^2.0.1
-      '@types/react': ^16.9.35
-      match-sorter: ^4.1.0
-      prettier: ^2.0.5
-      react: ^16.13.1
+    specifiers: {}
   deprecated/ui:
     dependencies:
       '@babel/runtime': 7.10.2
@@ -1244,6 +1244,8 @@ importers:
       '@reach/router': 1.3.3_react-dom@16.13.1+react@16.13.1
       '@remirror/playground': 'link:../@remirror/playground'
       '@remirror/pm': 'link:../@remirror/pm'
+      '@remirror/react-showcase': 'link:../@remirror/react-showcase'
+      '@remirror/styles': 'link:../@remirror/styles'
       '@styled-system/edit': 5.1.5_react@16.13.1
       '@theme-ui/presets': 0.3.0
       '@theme-ui/prism': 0.3.0_react@16.13.1+theme-ui@0.3.1
@@ -1281,6 +1283,7 @@ importers:
       graphql-tag: 2.10.3_graphql@14.6.0
       graphql-tag-pluck: 0.8.7
       is-absolute-url: 3.0.3
+      linaria: 2.0.0-alpha.5
       prismjs: 1.20.0
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
@@ -1303,6 +1306,7 @@ importers:
       '@types/styled-system': 5.1.9
       '@types/styled-system__css': 5.0.11
       '@types/theme-ui': 0.3.2_react@16.13.1
+      babel-plugin-transform-react-remove-prop-types: 0.4.24
       babel-preset-gatsby: 0.4.8
       monaco-editor-webpack-plugin: 1.9.0
       type-fest: 0.15.0
@@ -1315,6 +1319,8 @@ importers:
       '@reach/router': ^1.3.3
       '@remirror/playground': ^0.0.0
       '@remirror/pm': 0.0.0
+      '@remirror/react-showcase': 0.0.0
+      '@remirror/styles': 0.0.0
       '@styled-system/edit': ^5.1.5
       '@theme-ui/presets': ^0.3.0
       '@theme-ui/prism': ^0.3.0
@@ -1329,6 +1335,7 @@ importers:
       '@types/styled-system': ^5.1.9
       '@types/styled-system__css': ^5.0.11
       '@types/theme-ui': ^0.3.2
+      babel-plugin-transform-react-remove-prop-types: ^0.4.24
       babel-preset-gatsby: ^0.4.8
       copy-text-to-clipboard: ^2.2.0
       emotion-theming: ^10.0.27
@@ -1361,6 +1368,7 @@ importers:
       graphql-tag: ^2.10.3
       graphql-tag-pluck: ^0.8.7
       is-absolute-url: ^3.0.3
+      linaria: ^2.0.0-alpha.5
       monaco-editor-webpack-plugin: ^1.9.0
       prismjs: ^1.20.0
       react: ^16.13.1

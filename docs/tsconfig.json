@@ -5,5 +5,6 @@
     "target": "es5",
     "lib": ["dom", "esnext"],
     "jsx": "react"
-  }
+  },
+  "exclude": ["public/", ".cache/", "node_modules", "static"]
 }

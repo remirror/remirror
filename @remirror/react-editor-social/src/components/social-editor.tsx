@@ -1,3 +1,4 @@
+import { css } from 'linaria';
 import React, { FC, useMemo } from 'react';
 
 import { AutoLinkExtension } from '@remirror/extension-auto-link';
@@ -39,15 +40,33 @@ export const SocialEditor: FC<SocialEditorProps> = (props) => {
     [atMatcherOptions, tagMatcherOptions],
   );
 
-  const mentionExtension = useCreateExtension(MentionExtension, mentionExtensionSettings);
-  const emojiExtension = useCreateExtension(EmojiExtension, {
-    extraAttributes: { role: { default: 'presentation' } },
-  });
+  // const mentionExtension = useCreateExtension(MentionExtension, mentionExtensionSettings);
+  const emojiExtension = useCreateExtension(
+    EmojiExtension,
+    useMemo(
+      () => ({
+        extraAttributes: { role: { default: 'presentation' } },
+      }),
+      [],
+    ),
+  );
 
   const autoLinkExtension = useCreateExtension(AutoLinkExtension, { defaultProtocol: 'https:' });
   const combined = useMemo(
-    () => [...extensions, ...presets, mentionExtension, emojiExtension, autoLinkExtension],
-    [autoLinkExtension, emojiExtension, extensions, mentionExtension, presets],
+    () => [
+      ...extensions,
+      ...presets,
+      // mentionExtension,
+      emojiExtension,
+      autoLinkExtension,
+    ],
+    [
+      autoLinkExtension,
+      emojiExtension,
+      extensions,
+      // mentionExtension,
+      presets,
+    ],
   );
 
   const manager = useManager(combined);
@@ -72,8 +91,8 @@ const Editor: FC<SocialEditorProps> = (props) => {
 
   return (
     <div>
-      <div className='inner-editor'>
-        <div className='remirror-social-editor' {...getRootProps()} />
+      <div className={socialEditorWrapperStyles}>
+        <div className={socialEditorStyles} {...getRootProps()} />
         <EmojiSuggestions />
         {characterLimit != null && (
           <CharacterCountWrapper>
@@ -82,11 +101,14 @@ const Editor: FC<SocialEditorProps> = (props) => {
         )}
         {children}
       </div>
-      <MentionSuggestions
+      {/* <MentionSuggestions
         tags={props.tagData}
         users={props.userData}
         onChange={props.onMentionChange}
-      />
+      /> */}
     </div>
   );
 };
+
+const socialEditorStyles = css``;
+const socialEditorWrapperStyles = css``;

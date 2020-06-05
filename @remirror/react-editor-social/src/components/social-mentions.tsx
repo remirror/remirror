@@ -1,5 +1,4 @@
-import classNames from 'classnames';
-import { css } from 'linaria';
+import { cx } from 'linaria';
 import { Type, useMultishift } from 'multishift';
 import React, { ComponentType, useCallback, useMemo, useRef } from 'react';
 
@@ -16,6 +15,14 @@ import { useExtension, useI18n, useSetState } from '@remirror/react';
 import { messages } from '../messages';
 import { MatchName, MentionChangeParameter, TagData, UserData } from '../social-types';
 import { indexFromArrowPress, useSocialRemirror } from '../social-utils';
+import {
+  mentionSuggestionsDropdownWrapperStyles,
+  mentionSuggestionsItemStyles,
+  mentionSuggestionsTagItemTagStyles,
+  mentionSuggestionsUserItemDisplayNameStyles,
+  mentionSuggestionsUserItemImageStyles,
+  mentionSuggestionsUserItemUsernameStyles,
+} from '../styles';
 
 interface MentionSuggestionProps {
   /**
@@ -316,7 +323,7 @@ function MentionDropdown<Item>(props: MentionDropdownProps<Item>) {
   });
 
   return (
-    <div className='mention-suggestions-dropdown-wrapper' {...getMenuProps()} style={{}}>
+    <div className={mentionSuggestionsDropdownWrapperStyles} {...getMenuProps()} style={{}}>
       {items.map((item, ii) => {
         const isHighlighted = itemHighlightedAtIndex(index);
         const id = getKey(item);
@@ -328,11 +335,11 @@ function MentionDropdown<Item>(props: MentionDropdownProps<Item>) {
               onClick: onClickFactory(id),
               item: item,
               index: ii,
-              className: classNames({
-                'mention-item': true,
-                highlighted: isHighlighted,
-                hovered: isHovered,
-              }),
+              className: cx(
+                mentionSuggestionsItemStyles,
+                isHighlighted && 'highlighted',
+                isHovered && 'hovered',
+              ),
             })}
           >
             <Component item={item} />
@@ -354,12 +361,12 @@ const UserMentionItem = (props: UserMentionItemProps) => {
   return (
     <>
       <img
-        className='mention-user-item-image'
+        className={mentionSuggestionsUserItemImageStyles}
         src={avatarUrl}
         alt={i18n._(messages.userMentionAvatarAlt)}
       />
-      <span className='mention-user-item-display-name'>{displayName}</span>
-      <span className='mention-user-item-username'>{username} </span>
+      <span className={mentionSuggestionsUserItemDisplayNameStyles}>{displayName}</span>
+      <span className={mentionSuggestionsUserItemUsernameStyles}>{username} </span>
     </>
   );
 };
@@ -371,7 +378,7 @@ interface TagMentionItemProps {
 const TagMentionItem = (props: TagMentionItemProps) => {
   const { tag } = props.item;
 
-  return <span className='mention-tag-item-tag'>{tag}</span>;
+  return <span className={mentionSuggestionsTagItemTagStyles}>{tag}</span>;
 };
 
 interface GetMentionLabelParameter {
@@ -403,15 +410,4 @@ function getMentionLabel(parameter: GetMentionLabelParameter) {
   const label = userData ? userData.username : tagData ? tagData.tag : null;
   const href = userData ? userData.href : tagData ? tagData.href : null;
   return { label, id, href };
-}
-
-// Create a class name
-const title = css`
-  font-size: 24px;
-  font-weight: bold;
-`;
-
-export function Heading() {
-  // Pass it to a component
-  return <h1 className={title}>This is a title</h1>;
 }

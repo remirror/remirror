@@ -12,15 +12,12 @@ import { GetConstructor } from '../types';
 
 export interface TransformExtensionOrPreset<Combined extends AnyCombinedUnion> {
   extensions: Array<InferCombinedExtensions<Combined>>;
-  extensionMap: WeakMap<
+  extensionMap: Map<
     GetConstructor<InferCombinedExtensions<Combined>>,
     InferCombinedExtensions<Combined>
   >;
   presets: Array<InferCombinedPresets<Combined>>;
-  presetMap: WeakMap<
-    GetConstructor<InferCombinedPresets<Combined>>,
-    InferCombinedPresets<Combined>
-  >;
+  presetMap: Map<GetConstructor<InferCombinedPresets<Combined>>, InferCombinedPresets<Combined>>;
 }
 
 /**
@@ -50,9 +47,9 @@ export function transformExtensionOrPreset<Combined extends AnyCombinedUnion>(
 
   // The items to return.
   const presets: PresetUnion[] = [];
-  const presetMap = new WeakMap<PresetConstructor, PresetUnion>();
+  const presetMap = new Map<PresetConstructor, PresetUnion>();
   const extensions: ExtensionUnion[] = [];
-  const extensionMap = new WeakMap<ExtensionConstructor, ExtensionUnion>();
+  const extensionMap = new Map<ExtensionConstructor, ExtensionUnion>();
 
   // Used to track duplicates and the presets they've been added by.
   const duplicateMap = new WeakMap<AnyExtensionConstructor, Array<PresetUnion | undefined>>();
@@ -120,6 +117,7 @@ export function transformExtensionOrPreset<Combined extends AnyCombinedUnion>(
 
     found.add(key);
     extensions.push(extension);
+    extensionMap.set(key, extension);
 
     // Replace the extensions for all presets that referenced this constructor.
     duplicates.forEach((preset) => preset?.replaceExtension(key, extension));

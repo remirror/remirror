@@ -1,23 +1,17 @@
 # @remirror/showcase
 
-[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/showcase.svg?)](https://bundlephobia.com/result?p=@remirror/showcase)
-[![npm](https://img.shields.io/npm/dm/@remirror/showcase.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/showcase)
+This package is **deprecated** and it's functionality is included by default with the
+`@remirror/react-showcase` package.
 
-A collection of demonstrations for quick usage of the codebase. Every UI package has an associated
-demonstration showcasing how it can be used.
-
-## Installation
+It is now accessible with the following installation.
 
 ```bash
-yarn add @remirror/showcase # yarn
-pnpm add @remirror/showcase # pnpm
-npm install @remirror/showcase # npm
-```
+# Yarn
+yarn add @remirror/react-showcase
 
-The recommendation is to import from the direct files.
+# PNPM
+pnpm add @remirror/react-showcase
 
-```tsx
-import { SocialEditorDemo, SocialEditorDemoProps } from '@remirror/showcase/lib/editor-social';
-
-const MyEditor = () => <SocialEditorDemo />;
+# npm
+npm install @remirror/react-showcase
 ```

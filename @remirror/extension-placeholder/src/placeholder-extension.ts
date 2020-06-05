@@ -73,7 +73,6 @@ export class PlaceholderExtension extends PlainExtension<PlaceholderOptions> {
         },
       },
       props: {
-        editable: () => false,
         decorations: (state) => {
           return createDecorationSet({ state, extension: this });
         },

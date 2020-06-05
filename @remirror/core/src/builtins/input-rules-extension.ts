@@ -1,6 +1,6 @@
 import { ExtensionPriority } from '@remirror/core-constants';
-import { Shape } from '@remirror/core-types';
 import { InputRule, inputRules } from '@remirror/pm/inputrules';
+import { Plugin } from '@remirror/pm/state';
 
 import { CreateLifecycleMethod, PlainExtension } from '../extension';
 
@@ -22,13 +22,22 @@ export class InputRulesExtension extends PlainExtension {
     return 'inputRules' as const;
   }
 
+  private inputRulesPlugin!: Plugin;
+
   /**
    * Ensure that all ssr transformers are run.
    */
-  public onCreate: CreateLifecycleMethod = (extensions) => {
+  public onCreate: CreateLifecycleMethod = () => {
+    this.store.setExtensionStore('rebuildInputRules', this.rebuildInputRules);
+    this.loopExtensions();
+
+    this.store.addPlugins(this.inputRulesPlugin);
+  };
+
+  private loopExtensions() {
     const rules: InputRule[] = [];
 
-    for (const extension of extensions) {
+    for (const extension of this.store.extensions) {
       if (
         // managerSettings excluded this from running
         this.store.managerSettings.exclude?.inputRules ||
@@ -43,7 +52,22 @@ export class InputRulesExtension extends PlainExtension {
       rules.push(...extension.createInputRules());
     }
 
-    this.store.addPlugins(inputRules({ rules }));
+    this.inputRulesPlugin = inputRules({ rules });
+  }
+
+  /**
+   * The method for rebuilding all the input rules.
+   *
+   * 1. Rebuild inputRules.
+   * 2. Replace the old input rules plugin.
+   * 3. Update the plugins used in the state (triggers an editor update).
+   */
+  private readonly rebuildInputRules = () => {
+    const previousInputRules = this.inputRulesPlugin;
+
+    this.loopExtensions();
+    this.store.replacePlugin(previousInputRules, this.inputRulesPlugin);
+    this.store.reconfigureStatePlugins();
   };
 }
 
@@ -56,6 +80,20 @@ declare global {
        * @defaultValue `undefined`
        */
       inputRules?: boolean;
+    }
+
+    interface ExtensionStore {
+      /**
+       * When called this will run through every `createInputRules` method on every
+       * extension to recreate input rules.
+       *
+       * @remarks
+       *
+       * Under the hood it updates the plugin which is used to insert the
+       * input rules into the editor. This causes the state to be updated and
+       * will cause a rerender in your ui framework.
+       */
+      rebuildInputRules: () => void;
     }
 
     interface ExtensionCreatorMethods {

@@ -60,6 +60,14 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
   });
 };
 
+export const onCreateBabelConfig: GatsbyNode['onCreateBabelConfig'] = (parameter, options) => {
+  const { actions } = parameter;
+  actions.setBabelPreset({
+    name: require.resolve(`linaria/babel`),
+    options: options ?? {},
+  });
+};
+
 /**
  * Add monaco editor support to the webpack plugin.
  */

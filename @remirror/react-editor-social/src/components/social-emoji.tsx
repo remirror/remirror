@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import { cx } from 'linaria';
 import { Type, useMultishift } from 'multishift';
 import React, { useCallback, useMemo } from 'react';
 
@@ -14,6 +14,7 @@ import {
 import { useExtension, usePositioner, useSetState } from '@remirror/react';
 
 import { indexFromArrowPress, useSocialRemirror } from '../social-utils';
+import { emojiSuggestionsDropdownWrapperStyles, emojiSuggestionsItemStyles } from '../styles';
 
 interface EmojiState {
   list: EmojiObject[];
@@ -75,6 +76,9 @@ function useEmojiChangeHandler() {
   );
 }
 
+/**
+ * A hook for adding keybindings to the emoji dropdown.
+ */
 function useEmojiKeyBindings() {
   const { list, index, hideSuggestions, setState } = useEmojiState();
 
@@ -155,6 +159,9 @@ function useEmojiKeyBindings() {
   );
 }
 
+/**
+ * The emoji suggestions component.
+ */
 export const EmojiSuggestions = () => {
   const { focus } = useSocialRemirror();
   const { ref, top, left } = usePositioner('popupMenu');
@@ -177,7 +184,7 @@ export const EmojiSuggestions = () => {
   return (
     <div
       {...getMenuProps({ ref })}
-      className='emoji-suggestions-dropdown-wrapper'
+      className={emojiSuggestionsDropdownWrapperStyles}
       style={{
         top: top + 10,
         left,
@@ -189,11 +196,11 @@ export const EmojiSuggestions = () => {
         return (
           <div
             key={emoji.name}
-            className={classNames({
-              'emoji-item': true,
-              highlighted: isHighlighted,
-              hovered: isHovered,
-            })}
+            className={cx(
+              emojiSuggestionsItemStyles,
+              isHighlighted && 'highlighted',
+              isHovered && 'hovered',
+            )}
             {...getItemProps({
               onClick: () => {
                 command(emoji);

@@ -7,6 +7,18 @@ import typescript from 'refractor/lang/typescript';
 
 import { EditorState, take } from '@remirror/core';
 import {
+  ActiveTagData,
+  ActiveUserData,
+  OnMentionChangeParameter,
+  SocialEditor,
+  SocialEditorProps,
+  SocialExtensions,
+} from '@remirror/editor-social';
+import { CodeBlockExtension } from '@remirror/extension-code-block';
+import { RemirrorStateListenerParameter } from '@remirror/react';
+import { userData } from '@remirror/react-showcase';
+
+import {
   BlockquoteExtension,
   BoldExtension,
   CodeExtension,
@@ -17,18 +29,7 @@ import {
   StrikeExtension,
   TrailingNodeExtension,
   UnderlineExtension,
-} from '@remirror/core-extensions';
-import {
-  ActiveTagData,
-  ActiveUserData,
-  OnMentionChangeParameter,
-  SocialEditor,
-  SocialEditorProps,
-  SocialExtensions,
-} from '@remirror/editor-social';
-import { CodeBlockExtension } from '@remirror/extension-code-block';
-import { RemirrorStateListenerParameter } from '@remirror/react';
-import { userData } from '@remirror/showcase';
+} from '';
 
 const DEFAULT_LANGUAGES = [markdown, typescript, tsx, bash];
 

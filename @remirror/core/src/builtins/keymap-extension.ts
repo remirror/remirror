@@ -1,9 +1,9 @@
 import { ExtensionPriority } from '@remirror/core-constants';
-import { KeyBindings, ProsemirrorPlugin, Shape } from '@remirror/core-types';
+import { KeyBindings, ProsemirrorPlugin } from '@remirror/core-types';
 import { mergeProsemirrorKeyBindings } from '@remirror/core-utils';
 import { keymap } from '@remirror/pm/keymap';
 
-import { AnyExtension, CreateLifecycleMethod, PlainExtension } from '../extension';
+import { CreateLifecycleMethod, PlainExtension } from '../extension';
 
 /**
  * This extension allows others extension to use the `createKeymaps` method.
@@ -23,68 +23,57 @@ export class KeymapExtension extends PlainExtension {
   }
 
   private keymap!: ProsemirrorPlugin;
-  private readonly extensions: AnyExtension[] = [];
 
   /**
    * This adds the `createKeymap` method functionality to all extensions.
    */
-  public onCreate: CreateLifecycleMethod = (extensions) => {
-    const extensionKeymaps: KeyBindings[] = [];
+  public onCreate: CreateLifecycleMethod = () => {
     this.store.setExtensionStore('rebuildKeymap', this.rebuildKeymap);
-
-    for (const extension of extensions) {
-      this.forEachExtension({ extension, extensionKeymaps });
-    }
-
-    this.afterExtensionLoop(extensionKeymaps);
+    this.loopExtensions();
     this.store.addPlugins(this.keymap);
   };
 
   /**
-   * Mutates the extensionKeymaps list.
+   * Updates the stored keymap plugin on this extension.
    */
-  private forEachExtension({ extension, extensionKeymaps }: ForEachExtensionParameter) {
-    // Ignore this extension when.
-    if (
-      // The user doesn't want any keymaps in the editor.
-      this.store.managerSettings.exclude?.keymap ||
-      // The extension doesn't have the `createKeymap` method.
-      !extension.createKeymap ||
-      // The extension was configured to ignore the keymap.
-      extension.options.exclude?.keymap
-    ) {
-      return;
-    }
-
-    this.extensions.push(extension);
-    extensionKeymaps.push(extension.createKeymap());
-  }
-
-  /**
-   * Creates the keymap and stores it on this instance.
-   */
-  private afterExtensionLoop(extensionKeymaps: KeyBindings[]) {
-    const mappedCommands = mergeProsemirrorKeyBindings(extensionKeymaps);
-    this.keymap = keymap(mappedCommands);
-  }
-
-  /**
-   * The method for rebuilding tll the extension keymaps.
-   */
-  private readonly rebuildKeymap = () => {
+  private loopExtensions() {
     const extensionKeymaps: KeyBindings[] = [];
 
-    for (const extension of this.extensions) {
-      this.forEachExtension({ extension, extensionKeymaps });
+    for (const extension of this.store.extensions) {
+      // Ignore this extension when.
+      if (
+        // The user doesn't want any keymaps in the editor.
+        this.store.managerSettings.exclude?.keymap ||
+        // The extension doesn't have the `createKeymap` method.
+        !extension.createKeymap ||
+        // The extension was configured to ignore the keymap.
+        extension.options.exclude?.keymap
+      ) {
+        continue;
+      }
+
+      extensionKeymaps.push(extension.createKeymap());
     }
 
-    this.afterExtensionLoop(extensionKeymaps);
-  };
-}
+    const mappedCommands = mergeProsemirrorKeyBindings(extensionKeymaps);
+    this.keymap = keymap(mappedCommands);
+    console.log('Internal keymaps', this.keymap);
+  }
 
-interface ForEachExtensionParameter {
-  extension: AnyExtension;
-  extensionKeymaps: KeyBindings[];
+  /**
+   * The method for rebuilding all the extension keymaps.
+   *
+   * 1. Rebuild keymaps.
+   * 2. Replace the old keymap plugin.
+   * 3. Update the plugins used in the state (triggers an editor update).
+   */
+  private readonly rebuildKeymap = () => {
+    const previousKeymap = this.keymap;
+
+    this.loopExtensions();
+    this.store.replacePlugin(previousKeymap, this.keymap);
+    this.store.reconfigureStatePlugins();
+  };
 }
 
 declare global {
@@ -109,10 +98,8 @@ declare global {
        * keybindings into the editor. This causes the state to be updated and
        * will cause a rerender in your ui framework.
        *
-       * **NOTE** - This will not update keybinding for extension that implement
+       * **NOTE** - This will not update keybinding for extensions that implement
        * their own keybinding functionality (e.g. any plugin using Suggestions)
-       *
-       * Availability: **runtime**
        */
       rebuildKeymap: () => void;
     }

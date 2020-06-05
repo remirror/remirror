@@ -460,6 +460,13 @@ export function isEmptyArray(value: unknown): value is never[] {
 }
 
 /**
+ * Predicate check that the value is not empty.
+ */
+export function isNotEmpty(value: unknown) {
+  return value !== '' || !isEmptyArray(value) || !isEmptyObject(value);
+}
+
+/**
  * Identifies the value as having a remirror identifier. This is the core
  * predicate check for the remirror library.
  *

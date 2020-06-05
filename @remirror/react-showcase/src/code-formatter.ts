@@ -11,7 +11,7 @@ import markdownPlugin from 'prettier/parser-markdown';
 import typescriptPlugin from 'prettier/parser-typescript';
 import { formatWithCursor } from 'prettier/standalone';
 
-import { CodeBlockFormatter } from '@remirror/extension-code-block';
+import { FormattedContent, FormatterParameter } from '@remirror/extension-code-block';
 
 const plugins = [babelPlugin, htmlPlugin, typescriptPlugin, markdownPlugin];
 const options: Partial<CursorOptions> = {
@@ -54,15 +54,15 @@ const formatCode = ({ parser, source, cursorOffset }: FormatCodeParameter) => {
 /**
  * A hacky workaround the jumping cursorOffset when text is replaced.
  */
-const offsetIncrement = (
+function offsetIncrement(
   source: string,
   initialCursor: number,
   formatted: string,
   endCursor: number,
   replacementPairs: Array<[string, string]>,
-): 0 | 1 => {
-  const beforeCursorSource = source.substr(initialCursor - 1, 1);
-  const afterCursorFormatted = formatted.substr(endCursor, 1);
+): 0 | 1 {
+  const beforeCursorSource = source.slice(initialCursor - 1, initialCursor);
+  const afterCursorFormatted = formatted.slice(endCursor, endCursor + 1);
 
   for (const [invalid, replacement] of replacementPairs) {
     if (beforeCursorSource === invalid && afterCursorFormatted === replacement) {
@@ -70,12 +70,14 @@ const offsetIncrement = (
     }
   }
   return 0;
-};
+}
 
 /**
  * A prettier based code formatter which can be dropped in for use within the CodeBlockExtension
  */
-export const formatter: CodeBlockFormatter = ({ cursorOffset, language, source }) => {
+export function formatter(parameter: FormatterParameter): FormattedContent | undefined {
+  const { cursorOffset, language, source } = parameter;
+
   const fn = (
     result: CursorResult,
     pairs: Array<[string, string]> = [
@@ -127,4 +129,4 @@ export const formatter: CodeBlockFormatter = ({ cursorOffset, language, source }
   } catch {
     return;
   }
-};
+}

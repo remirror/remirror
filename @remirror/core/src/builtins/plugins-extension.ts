@@ -2,7 +2,7 @@ import { Except } from 'type-fest';
 
 import { ErrorConstant, ExtensionPriority, ManagerPhase } from '@remirror/core-constants';
 import { invariant, object } from '@remirror/core-helpers';
-import { EditorSchema, ProsemirrorPlugin, Shape } from '@remirror/core-types';
+import { EditorSchema, ProsemirrorPlugin } from '@remirror/core-types';
 import { getPluginState } from '@remirror/core-utils';
 import { Plugin, PluginKey, PluginSpec } from '@remirror/pm/state';
 

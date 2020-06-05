@@ -132,10 +132,10 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   #extensionStore: Remirror.ExtensionStore;
 
   #extensions: ReadonlyArray<this['~E']>;
-  #extensionMap: WeakMap<AnyExtensionConstructor, this['~E']>;
+  #extensionMap: Map<AnyExtensionConstructor, this['~E']>;
 
   #presets: ReadonlyArray<this['~P']>;
-  #presetMap: WeakMap<GetConstructor<this['~P']>, this['~P']>;
+  #presetMap: Map<GetConstructor<this['~P']>, this['~P']>;
 
   /**
    * The extension manager store.
@@ -269,6 +269,8 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
     this.#extensionMap = extensionMap;
     this.#presets = freeze(presets);
     this.#presetMap = presetMap;
+
+    console.log('THIS map should not be empty', this.#extensionMap, this.#presetMap);
 
     this.#extensionStore = this.createExtensionStore();
 
@@ -451,6 +453,8 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
     onError: fallback,
   }: Omit<CreateDocumentNodeParameter, 'schema'>) {
     const { schema, plugins } = this.store;
+    console.log(plugins);
+
     return EditorState.create({
       schema,
       doc: createDocumentNode({
@@ -526,11 +530,15 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   public getExtension<ExtensionConstructor extends AnyExtensionConstructor>(
     Constructor: ExtensionConstructor,
   ): InstanceType<ExtensionConstructor> {
+    console.log(this.#extensionMap);
     const extension = this.#extensionMap.get(Constructor);
 
     // Throws an error if attempting to get an extension which is not present in
     // the manager.
-    invariant(extension, { code: ErrorConstant.INVALID_MANAGER_EXTENSION });
+    invariant(extension, {
+      code: ErrorConstant.INVALID_MANAGER_EXTENSION,
+      message: `The ${Constructor.name} is not available in this manager.`,
+    });
 
     return extension as InstanceType<ExtensionConstructor>;
   }

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { ExampleWysiwygEditor } from '@remirror/showcase/lib/wysiwyg';
+import { ExampleWysiwygEditor } from '@remirror/react-showcase/lib/wysiwyg';
 
 const WysiwygEditor: FC = () => <ExampleWysiwygEditor suppressHydrationWarning={true} />;
 WysiwygEditor.displayName = 'WysiwygEditor';

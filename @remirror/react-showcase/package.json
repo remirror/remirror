@@ -1,0 +1,53 @@
+{
+  "name": "@remirror/react-showcase",
+  "version": "0.0.0",
+  "description": "A showcase of editors built with remirror and react.",
+  "keywords": [
+    "remirror",
+    "react",
+    "text editor",
+    "wysiwyg"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/react-showcase",
+  "repository": "https://github.com/remirror/remirror/tree/master/deprecated/showcase",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/react-showcase.cjs.js",
+  "module": "dist/react-showcase.esm.js",
+  "types": "dist/react-showcase.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": ">=7 <8",
+    "@remirror/core": "^0.11.0",
+    "@remirror/core-extensions": "^0.13.1",
+    "@remirror/dev": "^0.13.2",
+    "@remirror/editor-markdown": "^0.13.1",
+    "@remirror/extension-code-block": "^0.12.0",
+    "@remirror/extension-epic-mode": "^0.11.0",
+    "@remirror/react": "^0.13.1",
+    "@remirror/react-editor-social": "^0.0.0",
+    "@remirror/ui-buttons": "^0.7.7",
+    "@types/match-sorter": "^4.0.0",
+    "@types/prettier": "^2.0.1",
+    "match-sorter": "^4.1.0",
+    "prettier": "^2.0.5"
+  },
+  "devDependencies": {
+    "@emotion/core": "^10.0.28",
+    "@types/react": "^16.9.35",
+    "react": "^16.13.1"
+  },
+  "peerDependencies": {
+    "@emotion/core": "^10",
+    "@types/react": "^16.8.0",
+    "react": "^16.8.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

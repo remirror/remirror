@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { ExampleSocialEditor } from '@remirror/showcase/lib/social';
+import { ExampleSocialEditor } from '@remirror/react-showcase/lib/social';
 
 const SocialEditor: FC = () => <ExampleSocialEditor suppressHydrationWarning={true} />;
 SocialEditor.displayName = 'SocialEditor';
