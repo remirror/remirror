@@ -77,9 +77,9 @@ jobs:
       - template: pipeline-install.yml
       - template: pipeline-restore-build.yml
       - bash: pnpm run test:e2e
-        displayName: 'razzle integration tests'
+        displayName: 'nextjs integration tests'
         env:
-          REMIRROR_E2E_SERVER: razzle
+          REMIRROR_E2E_SERVER: next
       - publish: $(System.DefaultWorkingDirectory)/e2e/__failed-diffs__
         condition: failed()
         artifact: ImageSnapshots

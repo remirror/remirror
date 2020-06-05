@@ -43,17 +43,6 @@ const servers = (exports.servers = {
     regex: noSSRRegex,
     home: 'http://localhost:3030',
   },
-
-  razzle: {
-    server: {
-      command: 'cd examples/with-razzle && PORT=3030 pnpm run start',
-      port: 3030,
-      usedPortAction: 'kill',
-      launchTimeout: 120000,
-    },
-    regex: allTestRegex,
-    home: 'http://localhost:3030',
-  },
 });
 
 const editors = (exports.editors = {
@@ -66,10 +55,6 @@ const editors = (exports.editors = {
       empty: 'http://localhost:3030/showcase/social',
       content: '',
     },
-    razzle: {
-      empty: 'http://localhost:3030/editors/social',
-      content: 'http://localhost:3030/editors/social/content',
-    },
   },
   wysiwyg: {
     next: {
@@ -79,10 +64,6 @@ const editors = (exports.editors = {
     docs: {
       empty: 'http://localhost:3030/showcase/wysiwyg',
       content: '',
-    },
-    razzle: {
-      empty: 'http://localhost:3030/editors/wysiwyg',
-      content: 'http://localhost:3030/editors/wysiwyg/content',
     },
   },
 });

@@ -8,7 +8,6 @@ lib
 dist
 node_modules
 .out
-examples/with-razzle/build/**
 public
 coverage
 docs/generated/*

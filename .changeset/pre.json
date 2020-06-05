@@ -42,7 +42,6 @@
     "@remirror/docs": "0.0.3",
     "@remirror/e2e": "0.0.3",
     "with-next": "0.0.5",
-    "with-razzle": "0.0.1",
     "jest-prosemirror": "0.8.1",
     "jest-remirror": "0.11.0",
     "multishift": "0.7.6",
