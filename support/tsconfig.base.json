@@ -22,7 +22,7 @@
     "alwaysStrict": true,
     "resolveJsonModule": true,
     "preserveWatchOutput": true,
-
+    "noEmit": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "allowUnreachableCode": true

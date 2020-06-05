@@ -1644,12 +1644,16 @@ importers:
     dependencies:
       '@remirror/pm': 'link:../@remirror/pm'
       '@types/lodash.groupby': 4.6.6
+      '@types/prettier': 2.0.1
+      '@types/rimraf': 3.0.0
       chalk: 4.0.0
       diffable-html: 4.0.0
       globby: 11.0.1
       jest-axe: 3.4.0
+      jest-diff: 26.0.1
       linaria: 2.0.0-alpha.5
       lodash.groupby: 4.6.0
+      lodash.isequal: 4.5.0
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
       remirror: 'link:../packages/remirror'
@@ -1657,12 +1661,16 @@ importers:
     specifiers:
       '@remirror/pm': 0.0.0
       '@types/lodash.groupby': ^4.6.6
+      '@types/prettier': ^2.0.1
+      '@types/rimraf': ^3.0.0
       chalk: ^4.0.0
       diffable-html: ^4.0.0
       globby: ^11.0.1
       jest-axe: ^3.4.0
+      jest-diff: ^26.0.1
       linaria: ^2.0.0-alpha.5
       lodash.groupby: ^4.6.0
+      lodash.isequal: ^4.5.0
       react: ^16.13.1
       react-dom: ^16.13.1
       remirror: ^0.13.1
@@ -7714,7 +7722,6 @@ packages:
     dependencies:
       '@types/glob': 7.1.1
       '@types/node': 14.0.9
-    dev: true
     resolution:
       integrity: sha512-7WhJ0MdpFgYQPXlF4Dx+DhgvlPCfz/x5mHaeDQAKhcenvQP1KCpLQ18JklAqeGMYSAT2PxLpzd0g2/HE7fj7hQ==
   /@types/sanitize-html/1.23.0:
