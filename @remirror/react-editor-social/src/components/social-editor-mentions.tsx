@@ -12,9 +12,7 @@ import {
 } from '@remirror/pm/suggest';
 import { useExtension, useI18n, useSetState } from '@remirror/react';
 
-import { messages } from '../messages';
-import { MatchName, MentionChangeParameter, TagData, UserData } from '../social-types';
-import { indexFromArrowPress, useSocialRemirror } from '../social-utils';
+import { messages } from '../social-editor-messages';
 import {
   mentionSuggestionsDropdownWrapperStyles,
   mentionSuggestionsItemStyles,
@@ -22,7 +20,9 @@ import {
   mentionSuggestionsUserItemDisplayNameStyles,
   mentionSuggestionsUserItemImageStyles,
   mentionSuggestionsUserItemUsernameStyles,
-} from '../styles';
+} from '../social-editor-styles';
+import { MatchName, MentionChangeParameter, TagData, UserData } from '../social-editor-types';
+import { indexFromArrowPress, useSocialRemirror } from '../social-editor-utils';
 
 interface MentionSuggestionProps {
   /**

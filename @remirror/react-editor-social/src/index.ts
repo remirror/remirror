@@ -1,3 +1,3 @@
 export * from './components/social-editor';
-export * from './social-types';
-export * from './messages';
+export * from './social-editor-types';
+export * from './social-editor-messages';

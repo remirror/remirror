@@ -1,6 +1,6 @@
 import { css } from 'linaria';
 
-export const editorStyles = css`
+export const socialEditorStyles = css`
   flex-grow: 1px;
   display: flex;
   flex-direction: column;

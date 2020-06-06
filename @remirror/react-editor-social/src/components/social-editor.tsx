@@ -12,10 +12,10 @@ import {
   useRemirror,
 } from '@remirror/react';
 
-import { SocialEditorProps } from '../social-types';
-import { CharacterCountIndicator, CharacterCountWrapper } from './social-character-count';
-import { EmojiSuggestions } from './social-emoji';
-import { MentionSuggestions } from './social-mentions';
+import { SocialEditorProps } from '../social-editor-types';
+import { CharacterCountIndicator, CharacterCountWrapper } from './social-editor-character-count';
+import { EmojiSuggestions } from './social-editor-emoji';
+import { MentionSuggestions } from './social-editor-mentions';
 
 /**
  * The social editor.
@@ -53,22 +53,8 @@ export const SocialEditor: FC<SocialEditorProps> = (props) => {
 
   const autoLinkExtension = useCreateExtension(AutoLinkExtension, { defaultProtocol: 'https:' });
   const combined = useMemo(
-    () => [
-      ...extensions,
-      ...presets,
-      mentionExtension,
-      emojiExtension,
-      // adsf,
-      autoLinkExtension,
-    ],
-    [
-      // asdf
-      autoLinkExtension,
-      emojiExtension,
-      extensions,
-      mentionExtension,
-      presets,
-    ],
+    () => [...extensions, ...presets, mentionExtension, emojiExtension, autoLinkExtension],
+    [autoLinkExtension, emojiExtension, extensions, mentionExtension, presets],
   );
 
   const manager = useManager(combined);

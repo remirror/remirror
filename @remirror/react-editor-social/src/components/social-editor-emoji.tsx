@@ -13,8 +13,11 @@ import {
 } from '@remirror/extension-emoji';
 import { useExtension, usePositioner, useSetState } from '@remirror/react';
 
-import { indexFromArrowPress, useSocialRemirror } from '../social-utils';
-import { emojiSuggestionsDropdownWrapperStyles, emojiSuggestionsItemStyles } from '../styles';
+import {
+  emojiSuggestionsDropdownWrapperStyles,
+  emojiSuggestionsItemStyles,
+} from '../social-editor-styles';
+import { indexFromArrowPress, useSocialRemirror } from '../social-editor-utils';
 
 interface EmojiState {
   list: EmojiObject[];

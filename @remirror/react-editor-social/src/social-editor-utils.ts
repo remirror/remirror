@@ -1,6 +1,6 @@
 import { useRemirror, UseRemirrorType } from '@remirror/react';
 
-import { SocialCombinedUnion } from './social-types';
+import { SocialCombinedUnion } from './social-editor-types';
 
 /**
  * Maps the items to items with an active property
