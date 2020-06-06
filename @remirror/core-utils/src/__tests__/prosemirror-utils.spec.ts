@@ -14,11 +14,11 @@ import {
   tdEmpty,
   tr as row,
 } from 'jest-prosemirror';
-import { Schema } from '@remirror/pm/model';
-import { marks, nodes } from 'prosemirror-schema-basic';
-import { NodeSelection, Selection, TextSelection } from '@remirror/pm/state';
 
 import { omit, pick } from '@remirror/core-helpers';
+import { Schema } from '@remirror/pm/model';
+import { NodeSelection, Selection, TextSelection } from '@remirror/pm/state';
+import { BoldExtension, createBaseManager } from '@remirror/test-fixtures';
 
 import {
   cloneTransaction,
@@ -504,12 +504,12 @@ describe('findSelectedNodeOfType', () => {
   });
 
   it('should return selected node of one of the given `nodeType`s', () => {
-    const { state } = createEditor(doc(p('<cursor>one')));
-    const { paragraph, table: table_ } = state.schema.nodes;
-    const tr = state.tr.setSelection(NodeSelection.create(state.doc, 0));
+    const { state } = createEditor(doc(p('<node>one')));
+    const { paragraph, table: t } = state.schema.nodes;
+    // const tr = state.tr.setSelection(NodeSelection.create(state.doc, 0));
     const selectedNode = findSelectedNodeOfType({
-      types: [paragraph, table_],
-      selection: tr.selection,
+      types: [paragraph, t],
+      selection: state.selection,
     });
 
     expect(selectedNode!.node.type.name).toEqual('paragraph');
@@ -518,7 +518,7 @@ describe('findSelectedNodeOfType', () => {
 
 describe('findNodeAt...', () => {
   const expectedEnd = h2('Heading here');
-  const expectedStart = p('<cursor> I am champion');
+  const expectedStart = p('<cursor> You am champion');
   const pmDocument = doc(expectedStart, expectedEnd);
 
   test('findNodeAtSelection', () => {
@@ -526,15 +526,17 @@ describe('findNodeAt...', () => {
     const { node, pos, start } = findNodeAtSelection(selection);
 
     expect(node).toBe(expectedEnd);
-    expect(pos).toBe(16);
-    expect(start).toBe(17);
+    expect(pos).toBe(18);
+    expect(start).toBe(19);
   });
 });
 
 test('schemaToJSON', () => {
+  const { nodes, marks } = createBaseManager({ extensions: [new BoldExtension()] });
+
   const testSchema = new Schema({
     nodes: pick(nodes, ['doc', 'paragraph', 'text']),
-    marks: pick(marks, ['em', 'strong']),
+    marks: pick(marks, ['bold']),
   });
 
   expect(schemaToJSON(testSchema)).toMatchSnapshot();

@@ -111,7 +111,7 @@ describe('toggleWrap', () => {
     const from = doc(p(blockquote('Lift <cursor>me')));
     const to = doc(blockquote('Lift me'));
 
-    expect(toggleWrap(schema.nodes.blockquote)).toTransformNode({ from, to });
+    expect(toggleWrap(schema.nodes.blockquote)).toTransform({ from, to });
   });
 });
 

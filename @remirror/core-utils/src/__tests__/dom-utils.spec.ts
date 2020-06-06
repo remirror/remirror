@@ -12,9 +12,9 @@ import {
   table,
   tableRow,
 } from 'jest-prosemirror';
-import { TextSelection } from '@remirror/pm/state';
 
 import { NodeMatch } from '@remirror/core-types';
+import { TextSelection } from '@remirror/pm/state';
 import { docNodeBasicJSON } from '@remirror/test-fixtures';
 
 import {
@@ -236,9 +236,11 @@ describe('selections', () => {
   });
 
   it('returns false for `undefined`', () => {
-    expect(isTextSelection(undefined)).toBeFalse();
-    expect(isNodeSelection(undefined)).toBeFalse();
-    expect(isSelection(undefined)).toBeFalse();
+    const noValue = undefined;
+
+    expect(isTextSelection(noValue)).toBeFalse();
+    expect(isNodeSelection(noValue)).toBeFalse();
+    expect(isSelection(noValue)).toBeFalse();
   });
 });
 
@@ -380,7 +382,8 @@ describe('isDocNode', () => {
 
   it('returns false for non-doc nodes', () => {
     expect(isDocumentNode(p())).toBeFalse();
-    expect(isDocumentNode(undefined)).toBeFalse();
+    // @ts-expect-error
+    expect(isDocumentNode()).toBeFalse();
   });
 });
 
@@ -431,7 +434,7 @@ describe('toHTML', () => {
   });
 
   it('allows for custom document to be passed in', () => {
-    expect(toHTML({ node, schema: testSchema, doc: domino.createDocument() })).toBe('<p>hello</p>');
+    expect(toHTML({ node, schema: testSchema, doc: document })).toBe('<p>hello</p>');
   });
 });
 

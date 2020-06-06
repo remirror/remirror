@@ -132,10 +132,10 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   #extensionStore: Remirror.ExtensionStore;
 
   #extensions: ReadonlyArray<this['~E']>;
-  #extensionMap: Map<AnyExtensionConstructor, this['~E']>;
+  #extensionMap: WeakMap<AnyExtensionConstructor, this['~E']>;
 
   #presets: ReadonlyArray<this['~P']>;
-  #presetMap: Map<GetConstructor<this['~P']>, this['~P']>;
+  #presetMap: WeakMap<GetConstructor<this['~P']>, this['~P']>;
 
   /**
    * The extension manager store.
@@ -269,8 +269,6 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
     this.#extensionMap = extensionMap;
     this.#presets = freeze(presets);
     this.#presetMap = presetMap;
-
-    console.log('THIS map should not be empty', this.#extensionMap, this.#presetMap);
 
     this.#extensionStore = this.createExtensionStore();
 

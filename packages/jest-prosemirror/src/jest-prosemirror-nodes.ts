@@ -84,7 +84,10 @@ export function initSelection<Schema extends EditorSchema = any>(
   }
 
   if (node) {
-    return new NodeSelection<Schema>(taggedDoc.resolve(node));
+    // Node selections should always be at the start of their nodes. This is
+    // impossible to annotate since the first text position is always the `node
+    // + 1` place.
+    return new NodeSelection<Schema>(taggedDoc.resolve(node - 1));
   }
 
   if (cursor) {

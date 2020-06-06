@@ -344,7 +344,7 @@ export function findSelectedNodeOfType<Schema extends EditorSchema = any>(
 ): FindSelectedNodeOfType<Schema> | undefined {
   const { types, selection } = parameter;
 
-  if (!isNodeSelection(selection) || nodeEqualsType({ types, node: selection.node })) {
+  if (!isNodeSelection(selection) || !nodeEqualsType({ types, node: selection.node })) {
     return;
   }
 

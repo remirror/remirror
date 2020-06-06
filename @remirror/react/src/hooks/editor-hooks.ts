@@ -231,9 +231,6 @@ export function useExtension<Type extends AnyExtensionConstructor>(
   dependencies: DependencyList = [],
 ): void {
   const { manager } = useRemirror();
-
-  console.log('MANAGER', manager);
-
   const extension = useMemo(() => manager.getExtension(Constructor), [Constructor, manager]);
 
   // Handle the case where it an options object passed in.

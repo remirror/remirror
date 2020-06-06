@@ -40,7 +40,7 @@ export const SocialEditor: FC<SocialEditorProps> = (props) => {
     [atMatcherOptions, tagMatcherOptions],
   );
 
-  // const mentionExtension = useCreateExtension(MentionExtension, mentionExtensionSettings);
+  const mentionExtension = useCreateExtension(MentionExtension, mentionExtensionSettings);
   const emojiExtension = useCreateExtension(
     EmojiExtension,
     useMemo(
@@ -56,15 +56,17 @@ export const SocialEditor: FC<SocialEditorProps> = (props) => {
     () => [
       ...extensions,
       ...presets,
-      // mentionExtension,
+      mentionExtension,
       emojiExtension,
+      // adsf,
       autoLinkExtension,
     ],
     [
+      // asdf
       autoLinkExtension,
       emojiExtension,
       extensions,
-      // mentionExtension,
+      mentionExtension,
       presets,
     ],
   );
@@ -101,11 +103,11 @@ const Editor: FC<SocialEditorProps> = (props) => {
         )}
         {children}
       </div>
-      {/* <MentionSuggestions
+      <MentionSuggestions
         tags={props.tagData}
         users={props.userData}
         onChange={props.onMentionChange}
-      /> */}
+      />
     </div>
   );
 };

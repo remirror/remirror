@@ -39,7 +39,10 @@ export class PasteRulesExtension extends PlainExtension {
         pasteRules.push(...extension.createPasteRules());
       }
 
-      this.store.addPlugins(...pasteRules);
+      console.log(pasteRules);
+
+      // TODO rewrite so this is all one plugin
+      // this.store.addPlugins(...pasteRules);
     }
   };
 }
@@ -61,7 +64,7 @@ declare global {
        *
        * Paste rules are activated when text is pasted into the editor.
        *
-       * @param parameter - schema parameter with type included
+       * TODO - The paste plugin is currently switched off.
        */
       createPasteRules?: () => ProsemirrorPlugin[];
     }

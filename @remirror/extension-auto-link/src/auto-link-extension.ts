@@ -296,7 +296,7 @@ function getUrlsFromState(state: EditorState, type: MarkType) {
 /**
  * Checks whether two sets are equal.
  */
-function areSetsEqual<GSetType>(setOne: Set<GSetType>, setTwo: Set<GSetType>) {
+function areSetsEqual<Type>(setOne: Set<Type>, setTwo: Set<Type>) {
   if (setOne.size !== setTwo.size) {
     return false;
   }

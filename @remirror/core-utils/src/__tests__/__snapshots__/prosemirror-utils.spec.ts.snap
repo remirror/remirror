@@ -3,31 +3,20 @@
 exports[`schemaToJSON 1`] = `
 Object {
   "marks": Object {
-    "em": Object {
+    "bold": Object {
+      "attrs": Object {},
+      "group": "fontStyle",
       "parseDOM": Array [
         Object {
-          "tag": "i",
-        },
-        Object {
-          "tag": "em",
-        },
-        Object {
-          "style": "font-style=italic",
-        },
-      ],
-      "toDOM": [Function],
-    },
-    "strong": Object {
-      "parseDOM": Array [
-        Object {
+          "getAttrs": [Function],
           "tag": "strong",
         },
         Object {
-          "getAttributes": [Function],
+          "getAttrs": [Function],
           "tag": "b",
         },
         Object {
-          "getAttributes": [Function],
+          "getAttrs": [Function],
           "style": "font-weight",
         },
       ],
@@ -39,10 +28,26 @@ Object {
       "content": "block+",
     },
     "paragraph": Object {
+      "attrs": Object {
+        "align": Object {
+          "default": null,
+        },
+        "id": Object {
+          "default": null,
+        },
+        "indent": Object {
+          "default": 0,
+        },
+        "lineSpacing": Object {
+          "default": null,
+        },
+      },
       "content": "inline*",
+      "draggable": false,
       "group": "block",
       "parseDOM": Array [
         Object {
+          "getAttrs": [Function],
           "tag": "p",
         },
       ],

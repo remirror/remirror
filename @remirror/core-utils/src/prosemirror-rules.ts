@@ -9,7 +9,7 @@ import {
 } from '@remirror/core-types';
 import { InputRule } from '@remirror/pm/inputrules';
 import { Fragment, Slice } from '@remirror/pm/model';
-import { Plugin, TextSelection } from '@remirror/pm/state';
+import { Plugin, PluginKey, TextSelection } from '@remirror/pm/state';
 
 interface NodeInputRuleParameter
   extends Partial<GetAttributesParameter>,
@@ -39,8 +39,14 @@ interface MarkInputRuleParameter
     RegExpParameter,
     MarkTypeParameter {}
 
+let int = 0;
 /**
- * Creates a paste rule based on the provided regex for the provided mark type
+ * Creates a paste rule based on the provided regex for the provided mark type.
+ *
+ * TODO extract this into a seperate package
+ * - All contained in one plugin.
+ * - Support for node paste rules
+ * - Support for pasting different kinds of content.
  */
 export const markPasteRule = ({ regexp, type, getAttributes }: MarkInputRuleParameter) => {
   const handler = (fragment: Fragment) => {
@@ -82,6 +88,7 @@ export const markPasteRule = ({ regexp, type, getAttributes }: MarkInputRulePara
   };
 
   return new Plugin({
+    key: new PluginKey(`pastePlugin${int++}`),
     props: {
       transformPasted: (slice) => new Slice(handler(slice.content), slice.openStart, slice.openEnd),
     },

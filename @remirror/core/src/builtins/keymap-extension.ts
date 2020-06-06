@@ -57,7 +57,6 @@ export class KeymapExtension extends PlainExtension {
 
     const mappedCommands = mergeProsemirrorKeyBindings(extensionKeymaps);
     this.keymap = keymap(mappedCommands);
-    console.log('Internal keymaps', this.keymap);
   }
 
   /**

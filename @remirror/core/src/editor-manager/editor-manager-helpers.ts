@@ -12,12 +12,15 @@ import { GetConstructor } from '../types';
 
 export interface TransformExtensionOrPreset<Combined extends AnyCombinedUnion> {
   extensions: Array<InferCombinedExtensions<Combined>>;
-  extensionMap: Map<
+  extensionMap: WeakMap<
     GetConstructor<InferCombinedExtensions<Combined>>,
     InferCombinedExtensions<Combined>
   >;
   presets: Array<InferCombinedPresets<Combined>>;
-  presetMap: Map<GetConstructor<InferCombinedPresets<Combined>>, InferCombinedPresets<Combined>>;
+  presetMap: WeakMap<
+    GetConstructor<InferCombinedPresets<Combined>>,
+    InferCombinedPresets<Combined>
+  >;
 }
 
 /**
@@ -47,9 +50,9 @@ export function transformExtensionOrPreset<Combined extends AnyCombinedUnion>(
 
   // The items to return.
   const presets: PresetUnion[] = [];
-  const presetMap = new Map<PresetConstructor, PresetUnion>();
+  const presetMap = new WeakMap<PresetConstructor, PresetUnion>();
   const extensions: ExtensionUnion[] = [];
-  const extensionMap = new Map<ExtensionConstructor, ExtensionUnion>();
+  const extensionMap = new WeakMap<ExtensionConstructor, ExtensionUnion>();
 
   // Used to track duplicates and the presets they've been added by.
   const duplicateMap = new WeakMap<AnyExtensionConstructor, Array<PresetUnion | undefined>>();
