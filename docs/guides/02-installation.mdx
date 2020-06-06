@@ -1,0 +1,68 @@
+---
+title: '2. Installation'
+---
+
+# Installation
+
+Rather than installing multiple scoped packages, the `remirror` package is a gateway to using all
+the goodness that remirror provides while minimising your bundle size.
+
+Use the installation instruction outlined below, depending on the package manager used in your
+project.
+
+```bash
+# yarn
+yarn add remirror @remirror/pm
+
+# pnpm
+pnpm add remirror @remirror/pm
+
+# npm
+npm install remirror @remirror/pm
+```
+
+You will also notice that you are also installing `@remirror/pm`. This is a peer dependency to all
+the scoped `@remirror` packages which interact with prosemirror. It provides some assurances around
+the versions of prosemirror libraries being used and helps simplify the codebase.
+
+## Usage
+
+Once installed you will be able to add the following code which creates an editor with the bold
+extension active. Clicking the button when text is selected will toggle between bold and not bold.
+
+```tsx live=true
+import React, { useCallback } from 'react';
+import { BoldExtension } from 'remirror/extension/bold';
+import { ReactProvider, useManager, useRemirror, useExtensionCreator } from 'remirror/react';
+
+const Editor = () => {
+  const { getRootProps, active, commands } = useRemirror();
+
+  const toggleBold = useCallback(() => {
+    commands.toggleBold();
+  }, [commands]);
+
+  return (
+    <div>
+      <div {...getRootProps()} />
+      <button onClick={toggleBold} style={{ fontWeight: active.bold() ? 'bold' : undefined }}>
+        Bold
+      </button>
+    </div>
+  );
+};
+
+const EditorWrapper = () => {
+  const boldExtension = useExtensionCreator(BoldExtension);
+  const manager = useManager([boldExtension]);
+
+  return (
+    <ReactProvider manager={manager}>
+      <Editor />
+    </ReactProvider>
+  );
+};
+```
+
+While a lot of the above code may not make much sense at the moment, keep reading the guide to
+understand more.
