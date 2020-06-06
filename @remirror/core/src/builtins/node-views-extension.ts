@@ -1,6 +1,6 @@
 import { ExtensionPriority } from '@remirror/core-constants';
 import { isFunction, object } from '@remirror/core-helpers';
-import { NodeViewMethod, Shape } from '@remirror/core-types';
+import { NodeViewMethod } from '@remirror/core-types';
 
 import { CreateLifecycleMethod, PlainExtension } from '../extension';
 import { AnyCombinedUnion } from '../preset';
@@ -24,13 +24,13 @@ export class NodeViewsExtension extends PlainExtension {
   }
 
   /**
-   * Ensure that all ssr transformers are run.
+   * Ensure that all SSR transformers are run.
    */
-  public onCreate: CreateLifecycleMethod = (extensions) => {
+  public onCreate: CreateLifecycleMethod = () => {
     const nodeViewList: Array<Record<string, NodeViewMethod>> = [];
     const nodeViews: Record<string, NodeViewMethod> = object();
 
-    for (const extension of extensions) {
+    for (const extension of this.store.extensions) {
       if (
         // managerSettings excluded this from running
         this.store.managerSettings.exclude?.nodeViews ||
@@ -44,8 +44,8 @@ export class NodeViewsExtension extends PlainExtension {
 
       const nodeView = extension.createNodeViews();
 
-      // Unshift used to add make sure higher priority extensions can
-      // overwrite the lower priority nodeViews.
+      // `.unshift` ensures higher priority extensions can overwrite the lower
+      // priority nodeViews.
       nodeViewList.unshift(isFunction(nodeView) ? { [extension.name]: nodeView } : nodeView);
     }
 

@@ -115,10 +115,8 @@ function getPositionedRefractorNodes(parameter: NodeWithPosition) {
 /**
  * Creates a decoration set for the provided blocks
  */
-export const createDecorations = ({
-  blocks,
-  skipLast,
-}: CreateDecorationsParameter): Decoration[] => {
+export function createDecorations(paramter: CreateDecorationsParameter): Decoration[] {
+  const { blocks, skipLast } = paramter;
   const decorations: Decoration[] = [];
 
   for (const block of blocks) {
@@ -142,21 +140,23 @@ export const createDecorations = ({
   }
 
   return decorations;
-};
+}
 
 interface PosWithinRangeParameter extends PosParameter, FromToParameter {}
 
 /**
  * Check if the position is within the range.
  */
-export const posWithinRange = ({ from, to, pos }: PosWithinRangeParameter) =>
-  from <= pos && to >= pos;
+export function posWithinRange({ from, to, pos }: PosWithinRangeParameter) {
+  return from <= pos && to >= pos;
+}
 
 /**
  * Check whether the length of an array has changed
  */
-export const lengthHasChanged = <GType>(previous: ArrayLike<GType>, next: ArrayLike<GType>) =>
-  next.length !== previous.length;
+export function lengthHasChanged<Type>(previous: ArrayLike<Type>, next: ArrayLike<Type>) {
+  return next.length !== previous.length;
+}
 
 export interface NodeInformation
   extends NodeTypeParameter,
@@ -167,7 +167,7 @@ export interface NodeInformation
 /**
  * Retrieves helpful node information from the current state.
  */
-export const getNodeInformationFromState = (state: EditorState): NodeInformation => {
+export function getNodeInformationFromState(state: EditorState): NodeInformation {
   const { $head } = state.selection;
   const depth = $head.depth;
   const from = $head.start(depth);
@@ -182,49 +182,53 @@ export const getNodeInformationFromState = (state: EditorState): NodeInformation
     node,
     pos,
   };
-};
+}
 
 /**
  * Check that the attributes exist and are valid for the codeBlock
  * updateAttributes.
  */
-export const isValidCodeBlockAttributes = (
+export function isValidCodeBlockAttributes(
   attributes: ProsemirrorAttributes,
-): attributes is CodeBlockAttributes =>
-  bool(
+): attributes is CodeBlockAttributes {
+  return bool(
     attributes &&
       isObject(attributes) &&
       isString(attributes.language) &&
       attributes.language.length,
   );
+}
 
 /**
  * Updates the node attrs.
  *
  * This is used to update the language for the codeBlock.
  */
-export const updateNodeAttributes = (type: NodeType) => (
-  attributes: CodeBlockAttributes,
-): CommandFunction => ({ state: { tr, selection }, dispatch }) => {
-  if (!isValidCodeBlockAttributes(attributes)) {
-    throw new Error('Invalid attrs passed to the updateAttributes method');
-  }
+export function updateNodeAttributes(type: NodeType) {
+  return (attributes: CodeBlockAttributes): CommandFunction => ({
+    state: { tr, selection },
+    dispatch,
+  }) => {
+    if (!isValidCodeBlockAttributes(attributes)) {
+      throw new Error('Invalid attrs passed to the updateAttributes method');
+    }
 
-  const parent = findParentNodeOfType({ types: type, selection });
+    const parent = findParentNodeOfType({ types: type, selection });
 
-  if (!parent || isEqual(attributes, parent.node.attrs)) {
-    // Do nothing since the attrs are the same
-    return false;
-  }
+    if (!parent || isEqual(attributes, parent.node.attrs)) {
+      // Do nothing since the attrs are the same
+      return false;
+    }
 
-  tr.setNodeMarkup(parent.pos, type, attributes);
+    tr.setNodeMarkup(parent.pos, type, { ...parent.node.attrs, ...attributes });
 
-  if (dispatch) {
-    dispatch(tr);
-  }
+    if (dispatch) {
+      dispatch(tr);
+    }
 
-  return true;
-};
+    return true;
+  };
+}
 
 interface GetLanguageParameter {
   /**

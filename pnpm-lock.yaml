@@ -576,6 +576,20 @@ importers:
       '@remirror/extension-positioner': ^0.0.0
       '@remirror/extension-text': ^0.0.0
       '@remirror/pm': '*'
+  '@remirror/preset-embed':
+    dependencies:
+      '@babel/runtime': 7.10.2
+      '@remirror/core': 'link:../core'
+      linaria: 2.0.0-alpha.5
+      tiny-querystring: 0.0.2
+    devDependencies:
+      '@remirror/pm': 'link:../pm'
+    specifiers:
+      '@babel/runtime': ^7.10.0
+      '@remirror/core': ^0.11.0
+      '@remirror/pm': ^0.0.0
+      linaria: ^2.0.0-alpha.5
+      tiny-querystring: ^0.0.2
   '@remirror/preset-react':
     dependencies:
       '@babel/runtime': 7.10.2
@@ -16087,7 +16101,7 @@ packages:
   /ink-spinner/3.0.1_ink@2.7.1+react@16.13.1:
     dependencies:
       cli-spinners: 1.3.1
-      ink: 2.7.1_58ada4f344753973cec6c48efae47dbd
+      ink: 2.7.1_react@16.13.1
       prop-types: 15.7.2
       react: 16.13.1
     dev: false
@@ -25411,6 +25425,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-pkY1fj1cKHb2seWDy0B16HeWyczlJA9/WW3u3c4z/NiWDsO3DOU5D7nhTLE9CF0yXv/QZFY7sEJmj24dK+Rrqw==
+  /tiny-querystring/0.0.2:
+    dev: false
+    resolution:
+      integrity: sha512-WnloT2ybDHPuokoSKOT66Los469hVgGFPZAPKxvJ5X0iXICyDihTFE96sLaaZRv6qRxCv9YeNQYm4iwV83xefw==
   /tiny-warning/1.0.3:
     dev: false
     resolution:

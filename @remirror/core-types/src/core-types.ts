@@ -215,8 +215,10 @@ export type ProsemirrorKeyBindings<Schema extends EditorSchema = EditorSchema> =
   ProsemirrorCommandFunction<Schema>
 >;
 
+type DOMCompatible = string;
+
 type DOMOutputSpecPos1 = DOMOutputSpecPosX | { [attr: string]: string };
-type DOMOutputSpecPosX = string | 0 | [string, 0] | [string, { [attr: string]: string }, 0];
+type DOMOutputSpecPosX = string | 0 | [string, 0] | [string, { [attr: string]: DOMCompatible }, 0];
 
 /**
  * Defines the return type of the toDom methods for both Nodes and marks
@@ -232,7 +234,7 @@ export type DOMOutputSpec =
   | string
   | [string, 0?]
   | [string, 0?]
-  | [string, { [attr: string]: string }, 0?]
+  | [string, { [attr: string]: DOMCompatible }, 0?]
   | [
       string,
       DOMOutputSpecPos1?,

@@ -420,7 +420,7 @@ export function getSelectedWord(state: EditorState) {
  *
  * @public
  */
-export function getPluginState<GState>(plugin: Plugin | PluginKey, state: EditorState): GState {
+export function getPluginState<State>(plugin: Plugin | PluginKey, state: EditorState): State {
   return plugin.getState(state);
 }
 

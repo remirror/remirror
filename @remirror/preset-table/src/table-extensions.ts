@@ -6,6 +6,7 @@ import {
   includes,
   NodeExtension,
   NodeExtensionSpec,
+  NodeGroup,
   NodeType,
   NodeTypeParameter,
   object,
@@ -42,7 +43,7 @@ export class TableExtension extends NodeExtension {
       content: 'tableRow+',
       tableRole: 'table',
       isolating: true,
-      group: 'block',
+      group: NodeGroup.Block,
       parseDOM: [{ tag: 'table' }],
       toDOM() {
         return ['table', 0];

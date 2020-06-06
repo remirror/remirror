@@ -47,7 +47,7 @@ describe('schema', () => {
       extensions: [
         new MentionExtension({
           matchers: [],
-          extraAttributes: ['data-custom'],
+          extraAttributes: { 'data-custom': { default: null } },
         }),
       ],
       presets: [],
