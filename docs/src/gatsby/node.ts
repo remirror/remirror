@@ -40,7 +40,6 @@ const baseDir = resolve(__dirname, '../../../');
 export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions }) => {
   const result = await graphql<Pick<GatsbyTypes.Query, 'allMdx'>>(print(allMdxQuery));
   if (result.errors) {
-    console.log(result.errors);
     return;
   }
 

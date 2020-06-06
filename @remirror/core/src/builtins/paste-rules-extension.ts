@@ -1,5 +1,5 @@
 import { ExtensionPriority } from '@remirror/core-constants';
-import { ProsemirrorPlugin, Shape } from '@remirror/core-types';
+import { ProsemirrorPlugin } from '@remirror/core-types';
 
 import { CreateLifecycleMethod, PlainExtension } from '../extension';
 
@@ -38,8 +38,6 @@ export class PasteRulesExtension extends PlainExtension {
 
         pasteRules.push(...extension.createPasteRules());
       }
-
-      console.log(pasteRules);
 
       // TODO rewrite so this is all one plugin
       // this.store.addPlugins(...pasteRules);

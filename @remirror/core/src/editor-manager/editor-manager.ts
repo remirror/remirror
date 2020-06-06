@@ -444,14 +444,9 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   /**
    * Create the editor state from content passed to this extension manager.
    */
-  public createState({
-    content,
-    doc,
-    stringHandler,
-    onError: fallback,
-  }: Omit<CreateDocumentNodeParameter, 'schema'>) {
+  public createState(parameter: Omit<CreateDocumentNodeParameter, 'schema'>) {
+    const { content, doc, stringHandler, onError: fallback } = parameter;
     const { schema, plugins } = this.store;
-    console.log(plugins);
 
     return EditorState.create({
       schema,
@@ -528,7 +523,6 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   public getExtension<ExtensionConstructor extends AnyExtensionConstructor>(
     Constructor: ExtensionConstructor,
   ): InstanceType<ExtensionConstructor> {
-    console.log(this.#extensionMap);
     const extension = this.#extensionMap.get(Constructor);
 
     // Throws an error if attempting to get an extension which is not present in

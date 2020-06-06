@@ -263,6 +263,13 @@ export interface I18nContextProps {
    * @defaultValue 'en'
    */
   locale: string;
+
+  /**
+   * Supported locales. Defaults to including the locale.
+   *
+   * @defaultValue `[locale]`
+   */
+  supportedLocales?: string[];
 }
 
 /**

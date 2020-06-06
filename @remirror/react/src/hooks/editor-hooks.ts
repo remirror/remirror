@@ -262,7 +262,7 @@ interface UseExtensionCallbackParameter<Type extends AnyExtensionConstructor> {
    * Add a handler to the the extension callback.
    *
    * ```ts
-   * addHandler('onChange', () => console.log('changed'));
+   * addHandler('onChange', () => log('changed'));
    * ```
    */
   addHandler: AddHandler<OptionsOfConstructor<Type>>;
@@ -344,7 +344,7 @@ interface UsePresetCallbackParameter<Type extends AnyPresetConstructor> {
    * Add a handler to the the preset callback.
    *
    * ```ts
-   * addHandler('onChange', () => console.log('changed'));
+   * addHandler('onChange', () => log('changed'));
    * ```
    */
   addHandler: AddHandler<OptionsOfConstructor<Type>>;

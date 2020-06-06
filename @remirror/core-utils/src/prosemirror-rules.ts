@@ -9,7 +9,7 @@ import {
 } from '@remirror/core-types';
 import { InputRule } from '@remirror/pm/inputrules';
 import { Fragment, Slice } from '@remirror/pm/model';
-import { Plugin, PluginKey, TextSelection } from '@remirror/pm/state';
+import { Plugin, TextSelection } from '@remirror/pm/state';
 
 interface NodeInputRuleParameter
   extends Partial<GetAttributesParameter>,
@@ -39,7 +39,6 @@ interface MarkInputRuleParameter
     RegExpParameter,
     MarkTypeParameter {}
 
-let int = 0;
 /**
  * Creates a paste rule based on the provided regex for the provided mark type.
  *
@@ -57,8 +56,7 @@ export const markPasteRule = ({ regexp, type, getAttributes }: MarkInputRulePara
         const text = child.text ?? '';
         let pos = 0;
 
-        // ? For some reason including the index param makes this work. I'm not sure why...?
-        findMatches(text, regexp).forEach((match, _) => {
+        findMatches(text, regexp).forEach((match) => {
           if (!match[1]) {
             return;
           }
@@ -88,7 +86,6 @@ export const markPasteRule = ({ regexp, type, getAttributes }: MarkInputRulePara
   };
 
   return new Plugin({
-    key: new PluginKey(`pastePlugin${int++}`),
     props: {
       transformPasted: (slice) => new Slice(handler(slice.content), slice.openStart, slice.openEnd),
     },

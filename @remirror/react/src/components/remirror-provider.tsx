@@ -122,15 +122,22 @@ export interface I18nProviderProps extends Partial<I18nContextProps> {
 
 /**
  * A provider component for the remirror i18n helper library.
+ *
+ * This uses `@lingui/core` in the background. So please star the
+ * repo when you have a moment.
  */
 export const I18nProvider = (props: I18nProviderProps) => {
-  const { i18n = defaultI18n, locale = 'en', children } = props;
+  const { i18n = defaultI18n, locale = 'en', supportedLocales, children } = props;
 
   useEffect(() => {
-    i18n.activate(locale);
-  }, [i18n, locale]);
+    i18n.activate(locale, supportedLocales ?? [locale]);
+  }, [i18n, locale, supportedLocales]);
 
-  return <I18nContext.Provider value={{ i18n, locale }}>{children}</I18nContext.Provider>;
+  return (
+    <I18nContext.Provider value={{ i18n, locale, supportedLocales }}>
+      {children}
+    </I18nContext.Provider>
+  );
 };
 
 I18nProvider.$$remirrorType = RemirrorType.I18nProvider;

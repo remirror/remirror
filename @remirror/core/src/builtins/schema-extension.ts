@@ -232,7 +232,6 @@ function createToDOM(extraAttributes: ExtraAttributes, shouldIgnore: boolean) {
       } else {
         domAttributes[name] = toDOM(attributes);
       }
-      console.log(name);
     }
 
     return domAttributes;
