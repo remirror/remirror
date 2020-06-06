@@ -27,4 +27,7 @@
 
   // Prettier
   "prettier.ignorePath": ".eslintignore",
+
+  // Node Project
+  "deno.enable": false,
 }

@@ -31,7 +31,7 @@
     "yargs": "^15.3.1"
   },
   "devDependencies": {
-    "@testing-library/react-hooks": "^3.2.1",
+    "@testing-library/react-hooks": "^3.3.0",
     "@types/ink-spinner": "^3.0.0",
     "@types/ink-testing-library": "^1.0.1",
     "@types/jsesc": "^2.5.1",

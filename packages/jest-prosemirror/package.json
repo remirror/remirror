@@ -25,7 +25,7 @@
   "dependencies": {
     "@babel/runtime": ">=7 <8",
     "@remirror/pm": "^0.0.0",
-    "@testing-library/dom": "^7.9.0",
+    "@testing-library/dom": "^7.10.1",
     "@types/prosemirror-schema-basic": "^1.0.1",
     "@types/prosemirror-test-builder": "^1.0.1",
     "chalk": "^4.0.0",
