@@ -1,0 +1,38 @@
+{
+  "name": "@remirror/extension-hard-break",
+  "version": "0.0.0",
+  "description": "Add `br` tags to your editor.",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-hard-break",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/extension-hard-break",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/extension-hard-break.cjs.js",
+  "module": "dist/extension-hard-break.esm.js",
+  "types": "dist/extension-hard-break.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.10.0",
+    "@remirror/core": "^0.11.0"
+  },
+  "devDependencies": {
+    "@remirror/pm": "^0.0.0"
+  },
+  "peerDependencies": {
+    "@remirror/pm": "^0.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "50 KB"
+  }
+}

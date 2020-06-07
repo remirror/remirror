@@ -1,34 +1,33 @@
-import { exitCode } from '@remirror/pm/commands';
-
 import {
+  ApplyExtraAttributes,
   chainCommands,
   convertCommand,
   KeyBindings,
-  ManagerNodeTypeParameter,
   NodeExtension,
   NodeExtensionSpec,
 } from '@remirror/core';
+import { exitCode } from '@remirror/pm/commands';
 
 export class HardBreakExtension extends NodeExtension {
   get name() {
     return 'hardBreak' as const;
   }
 
-  get schema(): NodeExtensionSpec {
+  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
     return {
-      attrs: this.extraAttributes(),
+      attrs: extra.defaults(),
       inline: true,
       group: 'inline',
       selectable: false,
-      parseDOM: [{ tag: 'br' }],
-      toDOM: () => ['br'],
+      parseDOM: [{ tag: 'br', getAttrs: extra.parse }],
+      toDOM: (node) => ['br', extra.dom(node.attrs)],
     };
   }
 
-  keys({ type }: ManagerNodeTypeParameter): KeyBindings {
+  createKeymap = (): KeyBindings => {
     const command = chainCommands(convertCommand(exitCode), ({ state, dispatch }) => {
       if (dispatch) {
-        dispatch(state.tr.replaceSelectionWith(type.create()).scrollIntoView());
+        dispatch(state.tr.replaceSelectionWith(this.type.create()).scrollIntoView());
       }
 
       return true;
@@ -38,5 +37,5 @@ export class HardBreakExtension extends NodeExtension {
       'Mod-Enter': command,
       'Shift-Enter': command,
     };
-  }
+  };
 }
