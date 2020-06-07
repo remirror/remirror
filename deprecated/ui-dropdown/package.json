@@ -1,45 +1,14 @@
 {
   "name": "@remirror/ui-dropdown",
   "version": "0.7.6",
-  "description": "The dropdown component used throughout the codebase",
+  "description": "DEPRECATED - The dropdown component used throughout the codebase",
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/ui-dropdown",
   "repository": "https://github.com/remirror/remirror/tree/master/deprecated/ui-dropdown",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
-  "sideEffects": false,
-  "files": [
-    "dist"
-  ],
-  "dependencies": {
-    "@babel/runtime": "^7.10.0",
-    "@remirror/core-helpers": "^0.7.6",
-    "@remirror/core-types": "^0.9.0",
-    "@remirror/react-hooks": "^0.7.6",
-    "@remirror/react-utils": "^0.7.6",
-    "@remirror/ui": "^0.7.6",
-    "@remirror/ui-buttons": "^0.7.7",
-    "@remirror/ui-icons": "^0.7.8",
-    "@remirror/ui-text": "^0.7.6",
-    "csstype": "^2.6.10",
-    "multishift": "^0.7.7",
-    "react-spring": "8.0.27"
-  },
-  "devDependencies": {
-    "@emotion/core": "^10.0.28",
-    "@types/react": "^16.9.35",
-    "react": "^16.13.1"
-  },
-  "peerDependencies": {
-    "@emotion/core": "^10",
-    "@types/react": "^16.8.0",
-    "react": "^16.8.0"
-  },
   "publishConfig": {
     "access": "public"
-  },
-  "meta": {
-    "sizeLimit": "40 KB"
   }
 }

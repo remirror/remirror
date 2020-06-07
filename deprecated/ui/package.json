@@ -1,41 +1,14 @@
 {
   "name": "@remirror/ui",
   "version": "0.7.6",
-  "description": "ui utilities for remirror",
+  "description": "DEPRECATED - ui utilities for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/ui",
   "repository": "https://github.com/remirror/remirror/tree/master/deprecated/ui",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
-  "sideEffects": false,
-  "files": [
-    "dist"
-  ],
-  "dependencies": {
-    "@babel/runtime": "^7.10.0",
-    "@remirror/core-constants": "^0.7.4",
-    "@remirror/core-helpers": "^0.7.6",
-    "@remirror/core-types": "^0.9.0",
-    "@styled-system/css": "^5.1.5",
-    "@types/styled-system__css": "^5.0.11",
-    "csstype": "^2.6.10",
-    "emotion-theming": "^10.0.27"
-  },
-  "devDependencies": {
-    "@emotion/core": "^10.0.28",
-    "@types/react": "^16.9.35",
-    "react": "^16.13.1"
-  },
-  "peerDependencies": {
-    "@emotion/core": "^10",
-    "@types/react": "^16.8.0",
-    "react": "^16.8.0"
-  },
   "publishConfig": {
     "access": "public"
-  },
-  "meta": {
-    "sizeLimit": "20 KB"
   }
 }

@@ -1,41 +1,14 @@
 {
   "name": "@remirror/ui-menus",
   "version": "0.7.4",
-  "description": "Menu components for the remirror editor",
+  "description": "DEPRECATED - Menu components for the remirror editor",
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/ui-menus",
   "repository": "https://github.com/remirror/remirror/tree/master/deprecated/ui-menus",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
-  "sideEffects": false,
-  "files": [
-    "dist"
-  ],
-  "dependencies": {
-    "@babel/runtime": "^7.10.0",
-    "@remirror/core-helpers": "^0.7.6",
-    "@remirror/react-hooks": "^0.7.6",
-    "@remirror/ui": "^0.7.6",
-    "@remirror/ui-buttons": "^0.7.7",
-    "@remirror/ui-dropdown": "^0.7.6",
-    "@remirror/ui-icons": "^0.7.8",
-    "@remirror/ui-text": "^0.7.6"
-  },
-  "devDependencies": {
-    "@emotion/core": "^10.0.28",
-    "@types/react": "^16.9.35",
-    "react": "^16.13.1"
-  },
-  "peerDependencies": {
-    "@emotion/core": "^10",
-    "@types/react": "^16.8.0",
-    "react": "^16.8.0"
-  },
   "publishConfig": {
     "access": "public"
-  },
-  "meta": {
-    "sizeLimit": "50 KB"
   }
 }
