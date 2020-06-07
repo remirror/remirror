@@ -122,7 +122,7 @@ export interface DropCursorOptions {
  * decoration has a class and can be styled however you want.
  */
 export class DropCursorExtension extends PlainExtension<DropCursorOptions> {
-  public static defaultOptions: DefaultExtensionOptions<DropCursorOptions> = {
+  static defaultOptions: DefaultExtensionOptions<DropCursorOptions> = {
     inlineWidth: '2px',
     inlineSpacing: '10px',
     blockWidth: '100%',
@@ -136,13 +136,13 @@ export class DropCursorExtension extends PlainExtension<DropCursorOptions> {
     afterInlineClassName: 'remirror-drop-cursor-after-inline',
   };
 
-  public static readonly handlerKeys = ['onInit', 'onDestroy'];
+  static readonly handlerKeys = ['onInit', 'onDestroy'];
 
   get name() {
     return 'dropCursor' as const;
   }
 
-  public createHelpers = () => {
+  createHelpers = () => {
     return {
       /**
        * Check if the anything is currently being dragged over the editor.
@@ -156,7 +156,7 @@ export class DropCursorExtension extends PlainExtension<DropCursorOptions> {
   /**
    * Use the dropCursor plugin with provided options.
    */
-  public createPlugin = (): CreatePluginReturn<DropCursorState> => {
+  createPlugin = (): CreatePluginReturn<DropCursorState> => {
     const dropCursorState = new DropCursorState(this);
 
     return {
@@ -203,7 +203,7 @@ class DropCursorState {
   /**
    * The set of all currently active decorations.
    */
-  public decorationSet = DecorationSet.empty;
+  decorationSet = DecorationSet.empty;
 
   readonly #extension: DropCursorExtension;
 
@@ -237,7 +237,7 @@ class DropCursorState {
     this.dragover = throttle(50, this.dragover);
   }
 
-  public init(view: EditorView) {
+  init(view: EditorView) {
     const { blockClassName, inlineClassName } = this.#extension.options;
 
     this.view = view;
@@ -256,7 +256,7 @@ class DropCursorState {
   /**
    * Called when the view is destroyed
    */
-  public destroy = () => {
+  destroy = () => {
     this.#extension.options.onDestroy({
       blockElement: this.blockElement,
       inlineElement: this.inlineElement,
@@ -266,7 +266,7 @@ class DropCursorState {
   /**
    * Check if the editor is currently being dragged around.
    */
-  public isDragging = () =>
+  isDragging = () =>
     bool(
       this.view.dragging ??
         (this.decorationSet !== DecorationSet.empty || !isUndefined(this.#target)),
@@ -277,7 +277,7 @@ class DropCursorState {
    *
    * Captures the current position and whether
    */
-  public dragover = (event: DragEvent) => {
+  dragover = (event: DragEvent) => {
     const pos = this.view.posAtCoords({ left: event.clientX, top: event.clientY });
 
     if (pos) {
@@ -307,7 +307,7 @@ class DropCursorState {
    *
    * ? Sometimes this event doesn't fire, is there a way to prevent this.
    */
-  public dragend = () => {
+  dragend = () => {
     this.scheduleRemoval(100);
   };
 
@@ -316,14 +316,14 @@ class DropCursorState {
    *
    * ? Sometimes this event doesn't fire, is there a way to prevent this.
    */
-  public drop = () => {
+  drop = () => {
     this.scheduleRemoval(100);
   };
 
   /**
    * Called when the drag leaves the boundaries of the prosemirror editor dom node.
    */
-  public dragleave = (event: DragEvent) => {
+  dragleave = (event: DragEvent) => {
     if (event.target === this.view.dom || !this.view.dom.contains(event.relatedTarget as Node)) {
       this.scheduleRemoval(100);
     }

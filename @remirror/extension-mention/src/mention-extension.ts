@@ -70,7 +70,7 @@ import {
  * mentions in your own editor.
  */
 export class MentionExtension extends MarkExtension<MentionOptions> {
-  public static readonly defaultOptions: DefaultExtensionOptions<MentionOptions> = {
+  static readonly defaultOptions: DefaultExtensionOptions<MentionOptions> = {
     mentionTag: 'a' as const,
     matchers: [],
     appendText: ' ',
@@ -78,9 +78,9 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     noDecorations: false,
   };
 
-  public static readonly staticKeys: StaticKeyList<MentionOptions> = ['matchers', 'mentionTag'];
-  public static readonly handlerKeys: HandlerKeyList<MentionOptions> = ['onChange', 'onExit'];
-  public static readonly customHandlerKeys: CustomHandlerKeyList<MentionOptions> = [
+  static readonly staticKeys: StaticKeyList<MentionOptions> = ['matchers', 'mentionTag'];
+  static readonly handlerKeys: HandlerKeyList<MentionOptions> = ['onChange', 'onExit'];
+  static readonly customHandlerKeys: CustomHandlerKeyList<MentionOptions> = [
     'keyBindings',
     'onCharacterEntry',
   ];
@@ -126,7 +126,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     return;
   };
 
-  public createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec {
+  createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec {
     const dataAttributeId = 'data-mention-id';
     const dataAttributeName = 'data-mention-name';
 
@@ -185,7 +185,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     };
   }
 
-  public createCommands = () => {
+  createCommands = () => {
     return {
       /**
        * Create a new mention
@@ -206,7 +206,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     };
   };
 
-  public createPasteRules = () => {
+  createPasteRules = () => {
     return this.options.matchers.map((matcher) => {
       const { startOfLine, char, supportedCharacters, name } = {
         ...DEFAULT_MATCHER,
@@ -230,7 +230,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     });
   };
 
-  public createSuggestions = () => {
+  createSuggestions = () => {
     return this.options.matchers.map<Suggestion<MentionExtensionSuggestCommand>>((matcher) => {
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const extension = this;

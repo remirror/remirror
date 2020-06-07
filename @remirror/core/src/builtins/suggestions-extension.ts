@@ -17,7 +17,7 @@ import { CreateLifecycleMethod, PlainExtension } from '../extension';
  * @builtin
  */
 export class SuggestionsExtension extends PlainExtension {
-  public static readonly defaultPriority = ExtensionPriority.High;
+  static readonly defaultPriority = ExtensionPriority.High;
 
   get name() {
     return 'suggestions' as const;
@@ -26,7 +26,7 @@ export class SuggestionsExtension extends PlainExtension {
   /**
    * Ensure that all ssr transformers are run.
    */
-  public onInitialize: CreateLifecycleMethod = (extensions) => {
+  onInitialize: CreateLifecycleMethod = (extensions) => {
     const suggesters: Suggestion[] = [];
 
     for (const extension of extensions) {

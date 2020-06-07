@@ -87,20 +87,17 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Utilities provided by `@testing-library/react`.
    */
-  public readonly utils: RenderResult;
+  readonly utils: RenderResult;
 
   /**
    * The nodes available for building the prosemirror document.
    */
-  public readonly nodes: Omit<
-    NodeWithoutAttributes<this['manager']['~N'] | 'p'>,
-    'text'
-  > = object();
+  readonly nodes: Omit<NodeWithoutAttributes<this['manager']['~N'] | 'p'>, 'text'> = object();
 
   /**
    * The marks available for building up the prosemirror document.
    */
-  public readonly marks: MarkWithoutAttributes<this['manager']['~M']> = object();
+  readonly marks: MarkWithoutAttributes<this['manager']['~M']> = object();
 
   /**
    * The nodes available for building the prosemirror document as a function
@@ -108,10 +105,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *
    * Use this when testing nodes that can take custom attributes.
    */
-  public readonly attributeNodes: Omit<
-    NodeWithAttributes<this['manager']['~N']>,
-    'text'
-  > = object();
+  readonly attributeNodes: Omit<NodeWithAttributes<this['manager']['~N']>, 'text'> = object();
 
   /**
    * The marks available for building the prosemirror document as a function
@@ -119,7 +113,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *
    * Use this when testing marks that can take custom attributes.
    */
-  public readonly attributeMarks: MarkWithAttributes<this['manager']['~M']> = object();
+  readonly attributeMarks: MarkWithAttributes<this['manager']['~M']> = object();
 
   /**
    * Provide access to the editor manager.
@@ -250,7 +244,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *
    * If content already exists it will be overwritten.
    */
-  public add = (taggedDocument: TaggedProsemirrorNode<SchemaFromCombined<Combined>>) => {
+  add = (taggedDocument: TaggedProsemirrorNode<SchemaFromCombined<Combined>>) => {
     const { content } = taggedDocument;
     const { cursor, node, start, end, all, ...tags } = taggedDocument.tags;
 
@@ -288,14 +282,14 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Alias for add.
    */
-  public overwrite = (taggedDocument: TaggedProsemirrorNode<SchemaFromCombined<Combined>>) => {
+  overwrite = (taggedDocument: TaggedProsemirrorNode<SchemaFromCombined<Combined>>) => {
     return this.add(taggedDocument);
   };
 
   /**
    * Updates the tags.
    */
-  public update(tags?: Tags) {
+  update(tags?: Tags) {
     this.#tags = { ...this.tags, ...tags };
 
     return this;
@@ -304,7 +298,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Selects the text between the provided start and end.
    */
-  public selectText = (start: number, end?: number) => {
+  selectText = (start: number, end?: number) => {
     dispatchTextSelection({
       view: this.view,
       start,
@@ -338,7 +332,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *   });
    * ```
    */
-  public callback = (
+  callback = (
     fn: (
       content: Pick<
         this,
@@ -358,7 +352,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *
    * @param shortcut
    */
-  public shortcut = (text: string) => {
+  shortcut = (text: string) => {
     shortcut({ shortcut: text, view: this.view });
     return this;
   };
@@ -370,7 +364,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * @param content - The text or node to paste into the document at the current
    * selection.
    */
-  public paste = (content: TaggedProsemirrorNode | string) => {
+  paste = (content: TaggedProsemirrorNode | string) => {
     pasteContent({ view: this.view, content });
     return this;
   };
@@ -380,7 +374,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *
    * @param key - the key to press (or string representing a key)
    */
-  public press = (char: string) => {
+  press = (char: string) => {
     press({ char, view: this.view });
     return this;
   };
@@ -392,7 +386,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * @param command - the command function to run with the current state and
    * view
    */
-  public dispatchCommand = (command: CommandFunction) => {
+  dispatchCommand = (command: CommandFunction) => {
     command({ state: this.state, dispatch: this.view.dispatch, view: this.view });
 
     return this;
@@ -403,7 +397,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *
    * @param shortcut - the shortcut to type
    */
-  public fire = (parameters: FireParameter) => {
+  fire = (parameters: FireParameter) => {
     fireEventAtPosition({ view: this.view, ...parameters });
 
     return this;
@@ -412,7 +406,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Set selection in the document to a certain position
    */
-  public jumpTo = (pos: 'start' | 'end' | number, endPos?: number) => {
+  jumpTo = (pos: 'start' | 'end' | number, endPos?: number) => {
     if (pos === 'start') {
       dispatchTextSelection({ view: this.view, start: 1 });
       return this;
@@ -432,7 +426,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *
    * This should be used to add new content to the dom.
    */
-  public replace = (...replacement: string[]) => {
+  replace = (...replacement: string[]) => {
     replaceSelection({ view: this.view, content: replacement });
     return this;
   };
@@ -444,7 +438,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * ! This doesn't currently support the use of tags and cursors. ! Also adding
    * multiple strings which create nodes also creates an out of position error
    */
-  public insertText = (text: string) => {
+  insertText = (text: string) => {
     const { from } = this.state.selection;
 
     insertText({ start: from, text, view: this.view });
@@ -454,7 +448,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Logs the view to the dom for help debugging the html in your tests.
    */
-  public debug = () => {
+  debug = () => {
     this.utils.debug(this.view.dom as HTMLElement);
     return this;
   };

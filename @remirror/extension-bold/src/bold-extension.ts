@@ -27,15 +27,15 @@ export interface BoldExtensionOptions {
  * or at the provided position range bold.
  */
 export class BoldExtension extends MarkExtension<BoldExtensionOptions> {
-  public static readonly defaultOptions = { weight: null };
+  static readonly defaultOptions = { weight: null };
 
   get name() {
     return 'bold' as const;
   }
 
-  public readonly tags = [ExtensionTag.FormattingMark];
+  readonly tags = [ExtensionTag.FormattingMark];
 
-  public createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec {
+  createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec {
     const { weight } = this.options;
 
     return {
@@ -72,17 +72,17 @@ export class BoldExtension extends MarkExtension<BoldExtensionOptions> {
     };
   }
 
-  public createKeymap = () => {
+  createKeymap = () => {
     return {
       'Mod-b': toggleMark({ type: this.type }),
     };
   };
 
-  public createInputRules = (): InputRule[] => {
+  createInputRules = (): InputRule[] => {
     return [markInputRule({ regexp: /(?:\*\*|__)([^*_]+)(?:\*\*|__)$/, type: this.type })];
   };
 
-  public createCommands = () => {
+  createCommands = () => {
     return {
       /**
        * Toggle the bold styling on and off. Remove the formatting if any

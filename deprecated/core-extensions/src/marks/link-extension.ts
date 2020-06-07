@@ -72,7 +72,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     };
   }
 
-  public keys(): KeyBindings {
+  keys(): KeyBindings {
     return {
       'Mod-k': ({ state, dispatch }) => {
         // if the selection is empty, expand it
@@ -96,7 +96,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     };
   }
 
-  public commands({ type }: CommandMarkTypeParameter) {
+  commands({ type }: CommandMarkTypeParameter) {
     return {
       /**
        * A command to update the selected link
@@ -127,7 +127,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     };
   }
 
-  public pasteRules({ type }: ManagerMarkTypeParameter) {
+  pasteRules({ type }: ManagerMarkTypeParameter) {
     return [
       markPasteRule({
         regexp: /https?:\/\/(www\.)?[\w#%+.:=@~-]{2,256}\.[a-z]{2,6}\b([\w#%&+./:=?@~-]*)/g,
@@ -137,7 +137,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     ];
   }
 
-  public plugin({ type }: ManagerMarkTypeParameter) {
+  plugin({ type }: ManagerMarkTypeParameter) {
     return new Plugin({
       props: {
         handleClick(view, pos) {

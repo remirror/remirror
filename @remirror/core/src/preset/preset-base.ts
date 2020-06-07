@@ -34,7 +34,7 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
   /**
    * The default options for this preset.
    */
-  public static readonly defaultOptions = {};
+  static readonly defaultOptions = {};
 
   /**
    * The preset constructor identifier key.
@@ -56,7 +56,7 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
   /**
    * The `camelCased` name of the preset.
    */
-  public abstract readonly name: string;
+  abstract readonly name: string;
 
   get extensions() {
     return this.#extensions;
@@ -128,16 +128,14 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
    * Check if the type of this extension's constructor matches the type of the
    * provided constructor.
    */
-  public isOfType<Type extends AnyPresetConstructor>(
-    Constructor: Type,
-  ): this is InstanceType<Type> {
+  isOfType<Type extends AnyPresetConstructor>(Constructor: Type): this is InstanceType<Type> {
     return this.constructor === (Constructor as unknown);
   }
 
   /**
    * Create the extensions which will be consumed by the preset.
    */
-  public abstract createExtensions(): AnyExtension[];
+  abstract createExtensions(): AnyExtension[];
 
   /**
    * Called every time the options for this extension are set or reset. This is
@@ -168,7 +166,7 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
    * manager will call this method and make sure all presets are using the same
    * instance of the `ExtensionConstructor`.
    */
-  public replaceExtension(constructor: AnyExtensionConstructor, extension: this['~E']): void {
+  replaceExtension(constructor: AnyExtensionConstructor, extension: this['~E']): void {
     if (this.#extensionMap.has(constructor)) {
       this.#extensionMap.set(constructor, extension);
     }
@@ -184,9 +182,7 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
    *
    * This method will throw an error if the constructor doesn't exist.
    */
-  public getExtension<Type extends this['~E']['constructor']>(
-    Constructor: Type,
-  ): InstanceType<Type> {
+  getExtension<Type extends this['~E']['constructor']>(Constructor: Type): InstanceType<Type> {
     const extension = this.#extensionMap.get(Constructor);
 
     // Throws an error if attempting to get an extension which is not available
@@ -224,7 +220,7 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
    * @internal
    * @nonVirtual
    */
-  public setExtensionStore(store: Remirror.ExtensionStore) {
+  setExtensionStore(store: Remirror.ExtensionStore) {
     if (this.#extensionStore) {
       return;
     }
@@ -247,19 +243,19 @@ export interface Preset<Options extends ValidOptions = EmptyShape> {
   constructor: PresetConstructor<Options>;
 
   /**
-   * Not for public usage. This is purely for types to make it easier to infer
+   * Not for usage. This is purely for types to make it easier to infer
    * the type of `Options` on an extension instance.
    */
   ['~S']: Options;
 
   /**
-   * Not for public usage. This is purely for types to make it easier to infer
+   * Not for usage. This is purely for types to make it easier to infer
    * the type of `Options` on an extension instance.
    */
   ['~P']: Options;
 
   /**
-   * Not for public usage. This is purely for types to make it easier to infer
+   * Not for usage. This is purely for types to make it easier to infer
    * available extension types.
    */
   ['~E']: ReturnType<this['createExtensions']>[number];

@@ -8,7 +8,7 @@ import { getElementProps } from '@remirror/react-utils';
 export interface ReactPresetOptions extends ReactSSROptions, PlaceholderOptions {}
 
 export class ReactPreset extends Preset<ReactPresetOptions> {
-  public static defaultOptions: Required<ReactPresetOptions> = {
+  static defaultOptions: Required<ReactPresetOptions> = {
     ...ReactSSRExtension.defaultOptions,
     ...PlaceholderExtension.defaultOptions,
   };
@@ -29,7 +29,7 @@ export class ReactPreset extends Preset<ReactPresetOptions> {
     }
   }
 
-  public createExtensions() {
+  createExtensions() {
     const { transformers, emptyNodeClass, placeholder } = this.options;
     const placeholderExtension = new PlaceholderExtension({ emptyNodeClass, placeholder });
     this.addSSRToPlaceholder(placeholderExtension);

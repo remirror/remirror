@@ -17,8 +17,8 @@ interface SecondOptions {
 interface Options extends FirstOptions, SecondOptions {}
 
 class FirstExtension extends PlainExtension<FirstOptions> {
-  public static readonly defaultOptions: DefaultPresetOptions<FirstOptions> = { a: 0, y: 10 };
-  public static staticKeys: StaticKeyList<FirstOptions> = ['a'];
+  static readonly defaultOptions: DefaultPresetOptions<FirstOptions> = { a: 0, y: 10 };
+  static staticKeys: StaticKeyList<FirstOptions> = ['a'];
 
   get name() {
     return 'first' as const;
@@ -26,11 +26,11 @@ class FirstExtension extends PlainExtension<FirstOptions> {
 }
 
 class SecondExtension extends PlainExtension<SecondOptions> {
-  public static readonly defaultOptions: DefaultPresetOptions<SecondOptions> = {
+  static readonly defaultOptions: DefaultPresetOptions<SecondOptions> = {
     b: 'setting b',
     z: 'z is awesome',
   };
-  public static staticKeys = ['b'];
+  static staticKeys = ['b'];
 
   get name() {
     return 'second' as const;
@@ -39,7 +39,7 @@ class SecondExtension extends PlainExtension<SecondOptions> {
 
 describe('simplest preset', () => {
   class TestPreset extends Preset<Partial<Options>> {
-    public static readonly defaultOptions: DefaultPresetOptions<Options> = {
+    static readonly defaultOptions: DefaultPresetOptions<Options> = {
       a: FirstExtension.defaultOptions.a ?? '',
       y: FirstExtension.defaultOptions.y,
       b: SecondExtension.defaultOptions.b ?? 'none specified',
@@ -50,7 +50,7 @@ describe('simplest preset', () => {
       return 'test' as const;
     }
 
-    public createExtensions() {
+    createExtensions() {
       return [new FirstExtension({ y: 10 }), new SecondExtension({ b: this.options.b })];
     }
 

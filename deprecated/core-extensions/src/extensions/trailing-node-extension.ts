@@ -135,7 +135,7 @@ export class TrailingNodeExtension extends Extension<TrailingNodeExtensionOption
    * Register the plugin which is responsible for inserting the configured node
    * into the end of the node.
    */
-  public plugin({ tags, schema }: ManagerParameter) {
+  plugin({ tags, schema }: ManagerParameter) {
     return createTrailingNodePlugin({ extension: this, tags, schema });
   }
 }

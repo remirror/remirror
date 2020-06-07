@@ -50,25 +50,25 @@ export abstract class BaseClass<
   /**
    * The default options for this extension.
    */
-  public static readonly defaultOptions = {};
+  static readonly defaultOptions = {};
 
   /**
    * The static keys for this class.
    */
-  public static readonly staticKeys: string[] = [];
+  static readonly staticKeys: string[] = [];
 
   /**
    * The event handler keys.
    */
-  public static readonly handlerKeys: string[] = [];
+  static readonly handlerKeys: string[] = [];
 
   /**
    * The custom keys.
    */
-  public static readonly customHandlerKeys: string[] = [];
+  static readonly customHandlerKeys: string[] = [];
 
   /**
-   * Not for public usage. This is purely for types to make it easier to infer
+   * Not for usage. This is purely for types to make it easier to infer
    * the type of `Settings` on an extension instance.
    */
   [Remirror._OPTIONS]: Options & DefaultStaticOptions;
@@ -78,7 +78,7 @@ export abstract class BaseClass<
    * mark or plain extension.
    * @internal
    */
-  public abstract readonly [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]: RemirrorIdentifier;
+  abstract readonly [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]: RemirrorIdentifier;
 
   /**
    * The unique name of this extension.
@@ -97,7 +97,7 @@ export abstract class BaseClass<
    * }
    * ```
    */
-  public abstract get name(): string;
+  abstract get name(): string;
 
   /**
    * The options for this extension.
@@ -176,7 +176,7 @@ export abstract class BaseClass<
   /**
    * Update the properties with the provided partial value when changed.
    */
-  public setOptions(update: GetPartialDynamic<Options>) {
+  setOptions(update: GetPartialDynamic<Options>) {
     const previousOptions = this.getDynamicOptions();
 
     const { changes, options, pickChanged } = getChangedOptions({
@@ -202,7 +202,7 @@ export abstract class BaseClass<
    *
    * @nonVirtual
    */
-  public resetOptions() {
+  resetOptions() {
     const previousOptions = this.getDynamicOptions();
     const { changes, options, pickChanged } = getChangedOptions<Options>({
       previousOptions,
@@ -303,7 +303,7 @@ export abstract class BaseClass<
    *
    * @nonVirtual
    */
-  public addHandler: AddHandler<Options> = (key, method) => {
+  addHandler: AddHandler<Options> = (key, method) => {
     this.#mappedHandlers[key].push(method);
 
     // Return a method for disposing of the handler.
@@ -317,7 +317,7 @@ export abstract class BaseClass<
    * A method that can be used to add a custom handler. It is up to the
    * extension creator to manage the handlers and dispose methods.
    */
-  public addCustomHandler = <Key extends keyof GetCustomHandler<Options>>(
+  addCustomHandler = <Key extends keyof GetCustomHandler<Options>>(
     key: Key,
     value: Required<GetCustomHandler<Options>>[Key],
   ): Dispose => {

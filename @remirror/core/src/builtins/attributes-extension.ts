@@ -18,7 +18,7 @@ import { AnyCombinedUnion } from '../preset';
  * @builtin
  */
 export class AttributesExtension extends PlainExtension {
-  public static readonly defaultPriority = ExtensionPriority.Default;
+  static readonly defaultPriority = ExtensionPriority.Default;
 
   get name() {
     return 'attributes' as const;
@@ -32,7 +32,7 @@ export class AttributesExtension extends PlainExtension {
    *
    * @internal
    */
-  public onCreate: CreateLifecycleMethod = () => {
+  onCreate: CreateLifecycleMethod = () => {
     this.transformAttributes();
     this.store.setExtensionStore('updateAttributes', this.updateAttributes);
   };

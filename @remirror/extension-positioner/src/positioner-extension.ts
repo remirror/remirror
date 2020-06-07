@@ -35,7 +35,7 @@ export interface PositionerOptions {
  * @core
  */
 export class PositionerExtension extends PlainExtension<PositionerOptions> {
-  public static defaultOptions: DefaultExtensionOptions<PositionerOptions> = {};
+  static defaultOptions: DefaultExtensionOptions<PositionerOptions> = {};
 
   get name() {
     return 'positioner' as const;
@@ -56,7 +56,7 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
     };
   };
 
-  public onTransaction: TransactionLifecycleMethod = (update) => {
+  onTransaction: TransactionLifecycleMethod = (update) => {
     this.positionerHandler(update);
   };
 

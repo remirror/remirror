@@ -227,14 +227,14 @@ const percentageToRatio = (percent: number, precision = 10) =>
  * HSLColor is a small utility for transforming colors, but only hsl colors.
  */
 export class HSL {
-  public static $$id = HSL_SYMBOL;
+  static $$id = HSL_SYMBOL;
 
   /**
    * Create a hsl class from the passed in string / array / object parameters.
    *
    * Throws a descriptive error if invalid parameters are passed in.
    */
-  public static create(value: HSLCreateParameter): HSL {
+  static create(value: HSLCreateParameter): HSL {
     if (isHSL(value)) {
       return value.clone();
     }
@@ -313,7 +313,7 @@ export class HSL {
   /**
    * Returns the object representation of the hsl class.
    */
-  public toJSON() {
+  toJSON() {
     const { h, s, l, a } = this;
     return { h, s, l, a };
   }
@@ -321,7 +321,7 @@ export class HSL {
   /**
    * Return the array representation of the hsl
    */
-  public toArray() {
+  toArray() {
     const { h, s, l, a } = this;
     return [h, s, l, a] as const;
   }
@@ -329,7 +329,7 @@ export class HSL {
   /**
    * Produces a valid HSL string that can be used to represent a color in your css.
    */
-  public toString() {
+  toString() {
     const { h, s, l, a } = this;
     const [hue, saturation, lightness, alpha] = [
       h.toString(),
@@ -346,7 +346,7 @@ export class HSL {
   /**
    * Returns the array
    */
-  public toRGB(): [number, number, number, number?] {
+  toRGB(): [number, number, number, number?] {
     const { h, s, l, a } = this;
     const [r, g, b] = hslToRgb([h, s, l]);
     return [r, g, b, a];
@@ -360,7 +360,7 @@ export class HSL {
    * color.rotate(100).h // => 280
    * ```
    */
-  public rotate(degrees: number): HSL {
+  rotate(degrees: number): HSL {
     const { h, ...sla } = this.hsla;
     return this.clone({ ...sla, h: createValidHue(h + degrees) });
   }
@@ -376,7 +376,7 @@ export class HSL {
    * color.lighten('25%').l // => 62.5
    * ```
    */
-  public lighten(percent: number | string): HSL {
+  lighten(percent: number | string): HSL {
     const { l, ...hsa } = this.hsla;
     const lightness = createValidPercent(clampPercent(l + createValidPercent(percent)));
     return this.clone({ ...hsa, l: lightness });
@@ -393,7 +393,7 @@ export class HSL {
    * color.darken('25%').l // => 37.5
    * ```
    */
-  public darken(percent: number | string): HSL {
+  darken(percent: number | string): HSL {
     const { l, ...hsa } = this.hsla;
     const lightness = createValidPercent(clampPercent(l - createValidPercent(percent)));
     return this.clone({ ...hsa, l: lightness });
@@ -410,7 +410,7 @@ export class HSL {
    * color.unfade('25%').a // => 75
    * ```
    */
-  public unfade(percent: number | string): HSL {
+  unfade(percent: number | string): HSL {
     const { a = 100, ...hsl } = this.hsla;
     const alpha = createValidPercent(clampPercent(a + createValidPercent(percent)));
     return this.clone({ ...hsl, a: alpha });
@@ -427,7 +427,7 @@ export class HSL {
    * color.fade('25%').a // => 25
    * ```
    */
-  public fade(percent: number | string): HSL {
+  fade(percent: number | string): HSL {
     const { a = 100, ...hsl } = this.hsla;
     const num = clampPercent(a - createValidPercent(percent));
     const alpha = createValidPercent(num);
@@ -449,7 +449,7 @@ export class HSL {
    * hsl.saturate('100%').s // => 100
    * ```
    */
-  public saturate(percent: number | string): HSL {
+  saturate(percent: number | string): HSL {
     const { s, ...hla } = this.hsla;
     const saturation = createValidPercent(clampPercent(s + createValidPercent(percent)));
     return this.clone({ ...hla, s: saturation });
@@ -466,7 +466,7 @@ export class HSL {
    * hsl.desaturate('100%').s // => 0
    * ```
    */
-  public desaturate(percent: number | string): HSL {
+  desaturate(percent: number | string): HSL {
     const { s, ...hla } = this.hsla;
     const saturation = createValidPercent(clampPercent(s - createValidPercent(percent)));
     return this.clone({ ...hla, s: saturation });
@@ -480,7 +480,7 @@ export class HSL {
    * hsl.hue(100).h //=> 100
    * ```
    */
-  public hue(hue: number | string): HSL {
+  hue(hue: number | string): HSL {
     return this.clone({ ...this.hsla, h: createValidHue(hue) });
   }
 
@@ -492,7 +492,7 @@ export class HSL {
    * hsl.saturation(15).s //=> 15
    * ```
    */
-  public saturation(saturation: number | string): HSL {
+  saturation(saturation: number | string): HSL {
     return this.clone({ ...this.hsla, s: createValidPercent(saturation) });
   }
 
@@ -504,7 +504,7 @@ export class HSL {
    * hsl.lightness(100).h //=> 100
    * ```
    */
-  public lightness(lightness: number | string): HSL {
+  lightness(lightness: number | string): HSL {
     return this.clone({ ...this.hsla, l: createValidPercent(lightness) });
   }
 
@@ -518,7 +518,7 @@ export class HSL {
    * hsl.alpha(40).a // => 40
    * ```
    */
-  public alpha(alpha?: number | string): HSL {
+  alpha(alpha?: number | string): HSL {
     return this.clone({ ...this.hsla, a: createValidAlpha(isNumber(alpha) ? `${alpha}%` : alpha) });
   }
 
@@ -527,7 +527,7 @@ export class HSL {
    *
    * If an HSLObject is provided it merges these properties into the final object.
    */
-  public clone(hsla: Partial<HSLObject> = object()) {
+  clone(hsla: Partial<HSLObject> = object()) {
     return new HSL(createValidHSLObject({ ...this.hsla, ...hsla }));
   }
 
@@ -542,7 +542,7 @@ export class HSL {
    *
    * In general, complementary colors are really bad for text.
    */
-  public complement(): HSL {
+  complement(): HSL {
     return this.rotate(180);
   }
 
@@ -556,7 +556,7 @@ export class HSL {
    * Choose one color to dominate, a second to support. The third color is used (along with black,
    * white or gray) as an accent.
    */
-  public analagous(direction: 'forwards' | 'backwards' = 'forwards'): [HSL, HSL, HSL] {
+  analagous(direction: 'forwards' | 'backwards' = 'forwards'): [HSL, HSL, HSL] {
     const [secondary, tertiary] = direction === 'forwards' ? [30, 60] : [-30, -60];
     return [this, this.rotate(secondary), this.rotate(tertiary)];
   }
@@ -570,7 +570,7 @@ export class HSL {
    * To use a triadic harmony successfully, the colors should be carefully balanced - let one
    * color dominate and use the two others for accent.
    */
-  public triadic(): [HSL, HSL, HSL] {
+  triadic(): [HSL, HSL, HSL] {
     return [this, this.rotate(120), this.rotate(240)];
   }
 
@@ -584,7 +584,7 @@ export class HSL {
    * The split-complimentary color scheme is often a good choice for beginners, because it is
    * difficult to mess up.
    */
-  public splitComplement(): [HSL, HSL, HSL] {
+  splitComplement(): [HSL, HSL, HSL] {
     return [this, this.rotate(150), this.rotate(210)];
   }
 
@@ -600,7 +600,7 @@ export class HSL {
    *
    * @param spacing - a value between 0 and 180 that separates the edges in degrees around a color wheel.
    */
-  public rectangle(spacing = 60): [HSL, HSL, HSL, HSL] {
+  rectangle(spacing = 60): [HSL, HSL, HSL, HSL] {
     spacing = clamp({ min: 0, max: 180, value: spacing });
     return [this, this.rotate(spacing), this.rotate(180), this.rotate(180 + spacing)];
   }
@@ -613,7 +613,7 @@ export class HSL {
    *
    * You should also pay attention to the balance between warm and cool colors in your design.
    */
-  public square(): [HSL, HSL, HSL, HSL] {
+  square(): [HSL, HSL, HSL, HSL] {
     return this.rectangle(90);
   }
 }

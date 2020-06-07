@@ -52,7 +52,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
     return defaultPositionTrackerExtensionOptions;
   }
 
-  public helpers({ getState }: ManagerParameter) {
+  helpers({ getState }: ManagerParameter) {
     const helpers = {
       /**
        * Add a tracker position with the specified params to the transaction and return the transaction.
@@ -134,7 +134,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
     return helpers;
   }
 
-  public commands({ getHelpers }: CommandParameter) {
+  commands({ getHelpers }: CommandParameter) {
     const commandFactory = <GArg>(helperName: string) => (
       parameters: GArg,
     ): ProsemirrorCommandFunction => (_, dispatch) => {
@@ -174,7 +174,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
     };
   }
 
-  public plugin() {
+  plugin() {
     const key = this.pluginKey;
     const name = this.name;
 

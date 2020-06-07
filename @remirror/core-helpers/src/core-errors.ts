@@ -86,21 +86,21 @@ function createErrorMessage(code: ErrorConstant, extraMessage?: string) {
  *
  * @remarks
  *
- * Use this when creating your own public extensions and notifying the user that
+ * Use this when creating your own extensions and notifying the user that
  * something has gone wrong.
  */
 export class RemirrorError extends BaseError {
   /**
    * A shorthand way of creating an error message.
    */
-  public static create(options: RemirrorErrorOptions = {}) {
+  static create(options: RemirrorErrorOptions = {}) {
     return new RemirrorError(options);
   }
 
   /**
    * The error code used to create this error message.
    */
-  public errorCode: ErrorConstant;
+  errorCode: ErrorConstant;
 
   /**
    * The constructor is intentionally kept private to prevent being extended from.

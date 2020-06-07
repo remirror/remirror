@@ -95,7 +95,7 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   /**
    * A static method to create the editor manager from an object.
    */
-  public static fromObject<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>({
+  static fromObject<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>({
     extensions,
     presets,
     settings = {},
@@ -111,7 +111,7 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   /**
    * The main static method for creating a manager.
    */
-  public static create<Combined extends AnyCombinedUnion>(
+  static create<Combined extends AnyCombinedUnion>(
     combined: Combined[],
     settings: Remirror.ManagerSettings = {},
   ) {
@@ -421,7 +421,7 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
    *
    * @param view - the editor view
    */
-  public addView(view: EditorView<this['~Sch']>) {
+  addView(view: EditorView<this['~Sch']>) {
     // Update the lifecycle phase.
     this.#phase = ManagerPhase.EditorView;
 
@@ -440,7 +440,7 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   /**
    * Create the editor state from content passed to this extension manager.
    */
-  public createState(parameter: Omit<CreateDocumentNodeParameter, 'schema'>) {
+  createState(parameter: Omit<CreateDocumentNodeParameter, 'schema'>) {
     const { content, doc, stringHandler, onError: fallback } = parameter;
     const { schema, plugins } = this.store;
 
@@ -469,7 +469,7 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
    *
    * @param otherManager - the value to test against
    */
-  public isEqual(otherManager: unknown) {
+  isEqual(otherManager: unknown) {
     if (!isEditorManager(otherManager)) {
       return false;
     }
@@ -502,7 +502,7 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
    *
    * An example usage of this is within the collaboration plugin.
    */
-  public onTransaction(parameter: TransactionLifecycleParameter) {
+  onTransaction(parameter: TransactionLifecycleParameter) {
     this.#extensionStore.currentState = parameter.state;
     this.#extensionStore.previousState = parameter.previousState;
 
@@ -516,7 +516,7 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
    *
    * This will throw an error if non existent.
    */
-  public getExtension<ExtensionConstructor extends AnyExtensionConstructor>(
+  getExtension<ExtensionConstructor extends AnyExtensionConstructor>(
     Constructor: ExtensionConstructor,
   ): InstanceType<ExtensionConstructor> {
     const extension = this.#extensionMap.get(Constructor);
@@ -534,7 +534,7 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   /**
    * Get the preset from the editor.
    */
-  public getPreset<PresetConstructor extends AnyPresetConstructor>(
+  getPreset<PresetConstructor extends AnyPresetConstructor>(
     Constructor: PresetConstructor,
   ): InstanceType<PresetConstructor> {
     const preset = this.#presetMap.get(Constructor);
@@ -551,7 +551,7 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
    *
    * What about the state stored in the extensions and presets these need to be recreated as well
    */
-  public clone<ExtraCombined extends AnyCombinedUnion>(
+  clone<ExtraCombined extends AnyCombinedUnion>(
     combined: ExtraCombined[],
     settings: Remirror.ManagerSettings = {},
   ): EditorManager<Combined | ExtraCombined> {
@@ -565,7 +565,7 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   /**
    * Called when removing the manager and all preset and extensions.
    */
-  public destroy() {
+  destroy() {
     for (const onDestroy of this.#handlers.destroy) {
       onDestroy(this.#extensions);
     }

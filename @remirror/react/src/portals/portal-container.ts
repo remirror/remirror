@@ -38,25 +38,25 @@ export class PortalContainer {
   /**
    * A map of all the active portals.
    */
-  public portals: Map<HTMLElement, MountedPortal> = new Map();
+  portals: Map<HTMLElement, MountedPortal> = new Map();
 
   /**
    * The event listener which allows consumers to subscribe to when a new portal
    * is added / deleted via the updated event.
    */
-  public events = createNanoEvents<Events>();
+  events = createNanoEvents<Events>();
 
   /**
    * Event handler for subscribing to update events from the portalContainer.
    */
-  public on = (callback: (portalMap: PortalMap) => void) => {
+  on = (callback: (portalMap: PortalMap) => void) => {
     return this.events.on('update', callback);
   };
 
   /**
    * Subscribe to one event before automatically unbinding.
    */
-  public once = (callback: (portalMap: PortalMap) => void) => {
+  once = (callback: (portalMap: PortalMap) => void) => {
     const unbind = this.events.on('update', (portalMap) => {
       unbind();
       callback(portalMap);
@@ -75,7 +75,7 @@ export class PortalContainer {
   /**
    * Responsible for registering a new portal by rendering the react element into the provided container.
    */
-  public render({ render, container }: RenderMethodParameter) {
+  render({ render, container }: RenderMethodParameter) {
     const portal = this.portals.get(container);
     const key = portal ? portal.key : nanoid();
 
@@ -89,7 +89,7 @@ export class PortalContainer {
    * Delete all orphaned containers (deleted from the DOM). This is useful for
    * Decoration where there is no destroy method.
    */
-  public forceUpdate() {
+  forceUpdate() {
     this.portals.forEach(({ render }, container) => {
       // Assign the portal a new key so it is re-rendered
       this.portals.set(container, { render, key: nanoid() });
@@ -101,7 +101,7 @@ export class PortalContainer {
   /**
    * Deletes the portal within the container.
    */
-  public remove(container: HTMLElement) {
+  remove(container: HTMLElement) {
     this.portals.delete(container);
     this.update();
   }

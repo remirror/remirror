@@ -32,16 +32,14 @@ import {
 } from './emoji-utils';
 
 export class EmojiExtension extends PlainExtension<EmojiOptions> {
-  public static readonly defaultOptions: DefaultExtensionOptions<EmojiOptions> = {
+  static readonly defaultOptions: DefaultExtensionOptions<EmojiOptions> = {
     defaultEmoji: DEFAULT_FREQUENTLY_USED,
     suggestionCharacter: ':',
     maxResults: 20,
   };
 
-  public static readonly customHandlerKeys: CustomHandlerKeyList<EmojiOptions> = [
-    'suggestionKeyBindings',
-  ];
-  public static readonly handlerKeys: HandlerKeyList<EmojiOptions> = [
+  static readonly customHandlerKeys: CustomHandlerKeyList<EmojiOptions> = ['suggestionKeyBindings'];
+  static readonly handlerKeys: HandlerKeyList<EmojiOptions> = [
     'onSuggestionChange',
     'onSuggestionExit',
   ];
@@ -71,7 +69,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
   /**
    * Manage input rules for emoticons.
    */
-  public createInputRules = () => {
+  createInputRules = () => {
     return [
       // Emoticons
       plainInputRule({
@@ -93,7 +91,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
     ];
   };
 
-  public createCommands = () => {
+  createCommands = () => {
     const commands = {
       /**
        * Insert an emoji into the document at the requested location by name
@@ -160,7 +158,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
     return commands;
   };
 
-  public createHelpers = () => {
+  createHelpers = () => {
     return {
       /**
        * Update the emoji which are displayed to the user when the query is not
@@ -207,7 +205,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
    * Emojis can be selected via `:` the colon key (by default). This sets the
    * configuration using `prosemirror-suggest`
    */
-  public createSuggestions = (): Suggestion => {
+  createSuggestions = (): Suggestion => {
     // const fn = debounce(100, sortEmojiMatches);
 
     return {

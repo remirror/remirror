@@ -809,14 +809,14 @@ export class Merge {
    * @param [obj] - the object to replace the key with. When blank an empty
    * object is used.
    */
-  public static overwrite<Return = any>(object_: UnknownShape = object()): Return {
+  static overwrite<Return = any>(object_: UnknownShape = object()): Return {
     return new Merge(object_) as any;
   }
 
   /**
    * Sets the key to undefined thus fully deleting the key.
    */
-  public static delete() {
+  static delete() {
     return undefined as any;
   }
 

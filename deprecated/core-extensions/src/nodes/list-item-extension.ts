@@ -24,7 +24,7 @@ export class ListItemExtension extends NodeExtension {
     };
   }
 
-  public keys({ type }: ManagerNodeTypeParameter): KeyBindings {
+  keys({ type }: ManagerNodeTypeParameter): KeyBindings {
     return {
       Enter: convertCommand(splitListItem(type)),
       Tab: convertCommand(sinkListItem(type)),

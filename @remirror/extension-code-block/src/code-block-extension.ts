@@ -39,7 +39,7 @@ import {
 } from './code-block-utils';
 
 export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
-  public static readonly defaultOptions: DefaultExtensionOptions<CodeBlockOptions> = {
+  static readonly defaultOptions: DefaultExtensionOptions<CodeBlockOptions> = {
     supportedLanguages: [],
     keyboardShortcut: mod('ShiftAlt', 'f'),
     toggleName: 'paragraph',
@@ -60,7 +60,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
     this.registerLanguages();
   }
 
-  public createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
     return {
       attrs: {
         ...extra.defaults(),
@@ -97,7 +97,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
     };
   }
 
-  public createCommands = () => {
+  createCommands = () => {
     return {
       /**
        * Call this method to toggle the code block.
@@ -172,7 +172,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
    * Create an input rule that listens converts the code fence into a code block
    * when typing triple back tick followed by a space.
    */
-  public createInputRules = () => {
+  createInputRules = () => {
     const regexp = /^```([\dA-Za-z]*) $/;
     const getAttributes: GetAttributes = (match) => {
       const language = getLanguage({
@@ -204,7 +204,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
   /**
    * Create specific keyboard bindings for the code block.
    */
-  public createKeymap = (): KeyBindings => {
+  createKeymap = (): KeyBindings => {
     return {
       Tab: ({ state, dispatch }) => {
         const { selection, tr, schema } = state;
@@ -334,7 +334,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
   /**
    * Create the custom code block plugin which handles the delete key amongst other things.
    */
-  public createPlugin = (): CreatePluginReturn<CodeBlockState> => {
+  createPlugin = (): CreatePluginReturn<CodeBlockState> => {
     const pluginState = new CodeBlockState(this.type, this);
 
     /**

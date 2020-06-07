@@ -25,7 +25,7 @@ export class HardBreakExtension extends NodeExtension {
     };
   }
 
-  public keys({ type }: ManagerNodeTypeParameter): KeyBindings {
+  keys({ type }: ManagerNodeTypeParameter): KeyBindings {
     const command = chainCommands(convertCommand(exitCode), ({ state, dispatch }) => {
       if (dispatch) {
         dispatch(state.tr.replaceSelectionWith(type.create()).scrollIntoView());

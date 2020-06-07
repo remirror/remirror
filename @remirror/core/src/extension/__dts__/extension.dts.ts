@@ -80,7 +80,7 @@ const defaultOptions: DefaultExtensionOptions<WithDynamicOptions> = {
 const failDefaultOptions: DefaultExtensionOptions<WithDynamicOptions> = { onChange: () => {} };
 
 class ExtensionWithDynamicOptions extends PlainExtension<WithDynamicOptions> {
-  public static readonly defaultOptions: DefaultExtensionOptions<WithDynamicOptions> = {
+  static readonly defaultOptions: DefaultExtensionOptions<WithDynamicOptions> = {
     awesome: 'yes indeed',
     oops: true,
   };
@@ -97,20 +97,20 @@ class NodeExtensionWithDynamicOptions extends NodeExtension<WithDynamicOptions> 
     return 'nodeWithDynamicOptions' as const;
   }
 
-  public createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
     return {};
   }
 }
 
 class MarkExtensionWithDynamicOptions extends MarkExtension<WithDynamicOptions> {
-  public static readonly defaultStaticOptions = { awesome: 'nice' };
-  public static readonly defaultDynamicOptions = { oops: true };
+  static readonly defaultStaticOptions = { awesome: 'nice' };
+  static readonly defaultDynamicOptions = { oops: true };
 
   get name() {
     return 'markWithDynamicOptions' as const;
   }
 
-  public createMarkSpec() {
+  createMarkSpec() {
     return {};
   }
 }
@@ -155,9 +155,9 @@ interface WithHandlers {
 }
 
 class ExtensionWithHandlers extends PlainExtension<WithHandlers> {
-  public static defaultOptions: DefaultExtensionOptions<WithHandlers> = {};
-  public static handlerKeys: HandlerKeyList<WithHandlers> = ['onChange', 'onUpdate'];
-  public static customHandlerKeys: CustomHandlerKeyList<WithHandlers> = ['bindings'];
+  static defaultOptions: DefaultExtensionOptions<WithHandlers> = {};
+  static handlerKeys: HandlerKeyList<WithHandlers> = ['onChange', 'onUpdate'];
+  static customHandlerKeys: CustomHandlerKeyList<WithHandlers> = ['bindings'];
 
   get name() {
     return 'withHandlers' as const;

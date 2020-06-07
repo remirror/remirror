@@ -12,7 +12,7 @@ class CustomExtension extends NodeExtension {
     return 'custom' as const;
   }
 
-  public createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
     return {
       content: 'inline*',
       attrs: {

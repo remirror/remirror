@@ -32,13 +32,13 @@ import { CommandShape, ExtensionCommandFunction, ExtensionCommandReturn } from '
  * @builtin
  */
 export class CommandsExtension extends PlainExtension {
-  public static readonly defaultPriority = ExtensionPriority.High;
+  static readonly defaultPriority = ExtensionPriority.High;
 
   get name() {
     return 'commands' as const;
   }
 
-  public onCreate: CreateLifecycleMethod = () => {
+  onCreate: CreateLifecycleMethod = () => {
     const { setExtensionStore, getStoreKey } = this.store;
 
     setExtensionStore('getCommands', () => {
@@ -56,7 +56,7 @@ export class CommandsExtension extends PlainExtension {
     });
   };
 
-  public onView: ViewLifecycleMethod = (extensions, view) => {
+  onView: ViewLifecycleMethod = (extensions, view) => {
     const commands: Record<string, CommandShape> = object();
     const names = new Set<string>();
     const chained: Record<string, any> & ChainedCommandRunParameter = object();
@@ -105,7 +105,7 @@ export class CommandsExtension extends PlainExtension {
   /**
    * Create the default commands available to all extensions.
    */
-  public createCommands = () => {
+  createCommands = () => {
     return {
       /**
        * Create a custom transaction.

@@ -46,7 +46,7 @@ export type BatchedCallback = (
 ) => void;
 
 export class Keyboard {
-  public static create(params: KeyboardConstructorParameter) {
+  static create(params: KeyboardConstructorParameter) {
     return new Keyboard(params);
   }
 
@@ -58,7 +58,7 @@ export class Keyboard {
     };
   }
 
-  public status: 'started' | 'ended' | 'idle' = 'idle';
+  status: 'started' | 'ended' | 'idle' = 'idle';
 
   private readonly target: HTMLElement;
   private readonly defaultOptions: KeyboardEventInit;
@@ -88,7 +88,7 @@ export class Keyboard {
   /**
    * Starts the fake timers and sets the keyboard status to 'started'
    */
-  public start() {
+  start() {
     if (this.started) {
       return this;
     }
@@ -101,7 +101,7 @@ export class Keyboard {
   /**
    * Ends the fake timers and sets the keyboard status to 'ended'
    */
-  public end() {
+  end() {
     if (!this.started) {
       return this;
     }
@@ -120,7 +120,7 @@ export class Keyboard {
    * When batched is true the user can run through each event and fire as they
    * please.
    */
-  public forEach(fn: BatchedCallback) {
+  forEach(fn: BatchedCallback) {
     if (!this.started) {
       return this;
     }
@@ -150,11 +150,7 @@ export class Keyboard {
    *
    * @param params - see {@link TextInputParameter}
    */
-  public usChar({
-    text,
-    options = object(),
-    typing = false,
-  }: TextInputParameter<SupportedCharacters>) {
+  usChar({ text, options = object(), typing = false }: TextInputParameter<SupportedCharacters>) {
     if (!isUSKeyboardCharacter(text)) {
       throw new Error(
         'This is not a supported character. For generic characters use the `keyboard.char` method instead',
@@ -168,7 +164,7 @@ export class Keyboard {
    *
    * @param params - see {@link TextInputParameter}
    */
-  public char({ text, options, typing }: TextInputParameter) {
+  char({ text, options, typing }: TextInputParameter) {
     options = {
       ...options,
       ...(isUSKeyboardCharacter(text) ? cleanKey(text) : { key: text }),
@@ -184,7 +180,7 @@ export class Keyboard {
    *
    * @param params - see {@link OptionsParameter}
    */
-  public keyDown = ({ options }: OptionsParameter) => {
+  keyDown = ({ options }: OptionsParameter) => {
     return this.dispatchEvent('keydown', options);
   };
 
@@ -193,7 +189,7 @@ export class Keyboard {
    *
    * @param params - see {@link OptionsParameter}
    */
-  public keyPress = ({ options }: OptionsParameter) => {
+  keyPress = ({ options }: OptionsParameter) => {
     return this.dispatchEvent('keypress', options);
   };
 
@@ -202,7 +198,7 @@ export class Keyboard {
    *
    * @param params - see {@link OptionsParameter}
    */
-  public keyUp = ({ options }: OptionsParameter) => {
+  keyUp = ({ options }: OptionsParameter) => {
     return this.dispatchEvent('keyup', options);
   };
 
@@ -212,7 +208,7 @@ export class Keyboard {
    *
    * @param params - see {@link TypingInputParameter}
    */
-  public type({ text, options = object() }: TypingInputParameter) {
+  type({ text, options = object() }: TypingInputParameter) {
     for (const char of text) {
       this.char({ text: char, options, typing: true });
     }
@@ -233,7 +229,7 @@ export class Keyboard {
    *
    * @param params - see {@link TextInputParameter}
    */
-  public mod({ text, options = object() }: TextInputParameter) {
+  mod({ text, options = object() }: TextInputParameter) {
     let modifiers = text.split(/-(?!$)/);
     let result = modifiers[modifiers.length - 1];
     modifiers = take(modifiers, modifiers.length - 1);

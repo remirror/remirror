@@ -32,18 +32,18 @@ import { ReplaceStep } from '@remirror/pm/transform';
  * It's inspired by the behavior of several social sites like `twitter`.
  */
 export class AutoLinkExtension extends MarkExtension<AutoLinkOptions> {
-  public static readonly defaultOptions: DefaultExtensionOptions<AutoLinkOptions> = {
+  static readonly defaultOptions: DefaultExtensionOptions<AutoLinkOptions> = {
     urlRegex: /((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/.*)?)/gi,
     defaultProtocol: '',
   };
 
-  public static readonly handlerKeys: HandlerKeyList<AutoLinkOptions> = ['onUrlUpdate'];
+  static readonly handlerKeys: HandlerKeyList<AutoLinkOptions> = ['onUrlUpdate'];
 
   get name() {
     return 'autoLink' as const;
   }
 
-  public createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec {
+  createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec {
     return {
       attrs: {
         ...extra.defaults(),
@@ -76,7 +76,7 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkOptions> {
     };
   }
 
-  public createPasteRules = () => {
+  createPasteRules = () => {
     return [
       markPasteRule({
         regexp: this.options.urlRegex,
@@ -90,7 +90,7 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkOptions> {
     ];
   };
 
-  public createPlugin = (): CreatePluginReturn => {
+  createPlugin = (): CreatePluginReturn => {
     return {
       state: {
         init: () => {

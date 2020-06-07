@@ -27,7 +27,7 @@ import { ExtensionHelperReturn } from '../types';
  * @builtin
  */
 export class HelpersExtension extends PlainExtension {
-  public static readonly defaultPriority = ExtensionPriority.High;
+  static readonly defaultPriority = ExtensionPriority.High;
 
   get name() {
     return 'helpers' as const;
@@ -36,7 +36,7 @@ export class HelpersExtension extends PlainExtension {
   /**
    * Provide a method with access to the helpers for use in commands and helpers.
    */
-  public onCreate: CreateLifecycleMethod = () => {
+  onCreate: CreateLifecycleMethod = () => {
     this.store.setExtensionStore('getHelpers', () => {
       const helpers = this.store.getStoreKey('helpers');
       invariant(helpers, { code: ErrorConstant.HELPERS_CALLED_IN_OUTER_SCOPE });
@@ -48,7 +48,7 @@ export class HelpersExtension extends PlainExtension {
   /**
    * Helpers are only available once the view has been added to `EditorManager`.
    */
-  public onView: ViewLifecycleMethod = (extensions) => {
+  onView: ViewLifecycleMethod = (extensions) => {
     const helpers: Record<string, AnyFunction> = object();
     const names = new Set<string>();
 

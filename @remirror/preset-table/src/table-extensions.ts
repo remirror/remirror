@@ -38,7 +38,7 @@ export class TableExtension extends NodeExtension {
     return 'table';
   }
 
-  public createNodeSpec(): TableSchemaSpec {
+  createNodeSpec(): TableSchemaSpec {
     return {
       content: 'tableRow+',
       tableRole: 'table',
@@ -54,11 +54,11 @@ export class TableExtension extends NodeExtension {
   /**
    * Add the table plugins to the editor.
    */
-  public createExternalPlugins = () => {
+  createExternalPlugins = () => {
     return [tableEditing()];
   };
 
-  public createCommands = () => {
+  createCommands = () => {
     return {
       tableAddColumnAfter: () => convertCommand(addColumnAfter),
       tableAddColumnBefore: () => convertCommand(addColumnBefore),
@@ -123,7 +123,7 @@ export class TableRowExtension extends NodeExtension {
     return 'tableRow';
   }
 
-  public createNodeSpec(): TableSchemaSpec {
+  createNodeSpec(): TableSchemaSpec {
     return {
       content: 'tableCell+',
       tableRole: 'row',
@@ -140,7 +140,7 @@ export class TableCellExtension extends NodeExtension {
     return 'tableCell';
   }
 
-  public createNodeSpec(): TableSchemaSpec {
+  createNodeSpec(): TableSchemaSpec {
     return {
       content: 'inline*',
       attrs: cellAttributes,
@@ -159,7 +159,7 @@ export class TableHeaderCell extends NodeExtension {
     return 'tableHeader';
   }
 
-  public createNodeSpec(): TableSchemaSpec {
+  createNodeSpec(): TableSchemaSpec {
     return {
       content: 'inline*',
       attrs: cellAttributes,

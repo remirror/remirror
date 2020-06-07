@@ -105,7 +105,7 @@ class CustomExtension extends Extension {
     return 'custom' as const;
   }
 
-  public plugin() {
+  plugin() {
     return new Plugin({
       key: this.pluginKey,
       props: {

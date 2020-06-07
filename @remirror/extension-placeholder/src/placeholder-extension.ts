@@ -44,11 +44,11 @@ export interface PlaceholderOptions {}
  * An extension for the remirror editor. CHANGE ME.
  */
 export class PlaceholderExtension extends PlainExtension<PlaceholderOptions> {
-  public static readonly staticKeys: StaticKeyList<PlaceholderOptions> = ['emptyNodeClass'];
-  public static readonly handlerKeys: HandlerKeyList<PlaceholderOptions> = [];
-  public static readonly customHandlerKeys: CustomHandlerKeyList<PlaceholderOptions> = [];
+  static readonly staticKeys: StaticKeyList<PlaceholderOptions> = ['emptyNodeClass'];
+  static readonly handlerKeys: HandlerKeyList<PlaceholderOptions> = [];
+  static readonly customHandlerKeys: CustomHandlerKeyList<PlaceholderOptions> = [];
 
-  public static readonly defaultOptions: DefaultExtensionOptions<PlaceholderOptions> = {
+  static readonly defaultOptions: DefaultExtensionOptions<PlaceholderOptions> = {
     emptyNodeClass: EMPTY_NODE_CLASS_NAME,
     placeholder: '',
   };
@@ -57,11 +57,11 @@ export class PlaceholderExtension extends PlainExtension<PlaceholderOptions> {
     return 'placeholder' as const;
   }
 
-  public createAttributes = () => {
+  createAttributes = () => {
     return { 'aria-placeholder': this.options.placeholder };
   };
 
-  public createPlugin = (): CreatePluginReturn => {
+  createPlugin = (): CreatePluginReturn => {
     return {
       state: {
         init: (_, state): PlaceholderPluginState => ({
@@ -80,7 +80,7 @@ export class PlaceholderExtension extends PlainExtension<PlaceholderOptions> {
     };
   };
 
-  public onSetOptions(parameter: OnSetOptionsParameter<PlaceholderOptions>) {
+  onSetOptions(parameter: OnSetOptionsParameter<PlaceholderOptions>) {
     const { changes } = parameter;
 
     if (changes.placeholder) {

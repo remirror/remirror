@@ -92,16 +92,16 @@ export interface BaseKeymapOptions {
  * @builtin
  */
 export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
-  public static readonly defaultPriority = ExtensionPriority.Low as const;
+  static readonly defaultPriority = ExtensionPriority.Low as const;
 
-  public static readonly defaultOptions: DefaultExtensionOptions<BaseKeymapOptions> = {
+  static readonly defaultOptions: DefaultExtensionOptions<BaseKeymapOptions> = {
     undoInputRuleOnBackspace: true,
     defaultBindingMethod: () => false,
     selectParentNodeOnEscape: false,
     excludeBaseKeymap: false,
   };
 
-  public static readonly customHandlerKeys: CustomHandlerKeyList<BaseKeymapOptions> = ['keymap'];
+  static readonly customHandlerKeys: CustomHandlerKeyList<BaseKeymapOptions> = ['keymap'];
 
   get name() {
     return 'baseKeymap' as const;
@@ -121,7 +121,7 @@ export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
    * Create the base keymap and merge it with any custom keymaps provided by the
    * user as CustomOptions.
    */
-  public createKeymap = () => {
+  createKeymap = () => {
     this.createBaseKeymap();
 
     return this.buildKeymap();

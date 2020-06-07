@@ -39,21 +39,21 @@ export class StrikeExtension extends MarkExtension {
     };
   }
 
-  public keys({ type }: ManagerMarkTypeParameter): KeyBindings {
+  keys({ type }: ManagerMarkTypeParameter): KeyBindings {
     return {
       'Mod-d': convertCommand(toggleMark(type)),
     };
   }
 
-  public commands({ type }: CommandMarkTypeParameter) {
+  commands({ type }: CommandMarkTypeParameter) {
     return { strike: () => toggleMark(type) };
   }
 
-  public inputRules({ type }: ManagerMarkTypeParameter) {
+  inputRules({ type }: ManagerMarkTypeParameter) {
     return [markInputRule({ regexp: /~([^~]+)~$/, type })];
   }
 
-  public pasteRules({ type }: ManagerMarkTypeParameter) {
+  pasteRules({ type }: ManagerMarkTypeParameter) {
     return [markPasteRule({ regexp: /~([^~]+)~/g, type })];
   }
 }

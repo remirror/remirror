@@ -33,13 +33,13 @@ export class SchemaExtension extends PlainExtension {
   /**
    * Really this always needs to be the first extension to run.
    */
-  public static defaultPriority: ExtensionPriority = ExtensionPriority.Critical;
+  static defaultPriority: ExtensionPriority = ExtensionPriority.Critical;
 
   get name() {
     return 'schema' as const;
   }
 
-  public onCreate: CreateLifecycleMethod = (extensions) => {
+  onCreate: CreateLifecycleMethod = (extensions) => {
     const { managerSettings } = this.store;
     const nodes: Record<string, NodeExtensionSpec> = object();
     const marks: Record<string, MarkExtensionSpec> = object();

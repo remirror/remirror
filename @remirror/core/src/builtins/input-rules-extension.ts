@@ -16,7 +16,7 @@ import { CreateLifecycleMethod, PlainExtension } from '../extension';
  * @builtin
  */
 export class InputRulesExtension extends PlainExtension {
-  public static readonly defaultPriority = ExtensionPriority.High;
+  static readonly defaultPriority = ExtensionPriority.High;
 
   get name() {
     return 'inputRules' as const;
@@ -27,7 +27,7 @@ export class InputRulesExtension extends PlainExtension {
   /**
    * Ensure that all ssr transformers are run.
    */
-  public onCreate: CreateLifecycleMethod = () => {
+  onCreate: CreateLifecycleMethod = () => {
     this.store.setExtensionStore('rebuildInputRules', this.rebuildInputRules);
     this.loopExtensions();
 

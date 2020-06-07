@@ -25,7 +25,7 @@ export class ImageExtension extends NodeExtension {
     return 'image' as const;
   }
 
-  public createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
     return {
       inline: true,
       attrs: {
@@ -54,7 +54,7 @@ export class ImageExtension extends NodeExtension {
     };
   }
 
-  public createCommands = () => {
+  createCommands = () => {
     return {
       insertImage: (
         attributes: ProsemirrorAttributes<ImageExtensionAttributes>,
@@ -73,7 +73,7 @@ export class ImageExtension extends NodeExtension {
     };
   };
 
-  public createPlugin = (): CreatePluginReturn => {
+  createPlugin = (): CreatePluginReturn => {
     return {
       props: {
         handleDOMEvents: {

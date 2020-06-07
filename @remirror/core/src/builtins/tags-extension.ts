@@ -19,7 +19,7 @@ import { GeneralExtensionTags, MarkExtensionTags, NodeExtensionTags } from '../t
  * @builtin
  */
 export class TagsExtension extends PlainExtension {
-  public static readonly defaultPriority = ExtensionPriority.High;
+  static readonly defaultPriority = ExtensionPriority.High;
 
   get name() {
     return 'tags' as const;
@@ -37,7 +37,7 @@ export class TagsExtension extends PlainExtension {
     };
   }
 
-  public onCreate: CreateLifecycleMethod = (extensions) => {
+  onCreate: CreateLifecycleMethod = (extensions) => {
     this.resetTags();
 
     for (const extension of extensions) {

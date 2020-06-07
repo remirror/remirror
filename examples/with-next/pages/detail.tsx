@@ -12,7 +12,7 @@ interface Props {
 }
 
 class InitialPropsDetail extends Component<Props> {
-  public static getInitialProps = async ({ query }: NextPageContext) => {
+  static getInitialProps = async ({ query }: NextPageContext) => {
     try {
       const { id } = query;
       const item = await findData(Array.isArray(id) ? id[0] : id);
@@ -22,7 +22,7 @@ class InitialPropsDetail extends Component<Props> {
     }
   };
 
-  public render() {
+  render() {
     const { item, errors } = this.props;
 
     if (errors) {

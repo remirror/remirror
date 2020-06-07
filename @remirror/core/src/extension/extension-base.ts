@@ -93,7 +93,7 @@ export type ExtensionConstructorParameter<Options extends ValidOptions> = Constr
  * }
  *
  * class AwesomeExtension extends PlainExtension<AwesomeExtensionOptions> {
- *   public static defaultOptions: DefaultExtensionOptions<AwesomeExtensionOptions> = {
+ *   static defaultOptions: DefaultExtensionOptions<AwesomeExtensionOptions> = {
  *     isAwesome: true,
  *     id: '',
  *   }
@@ -111,7 +111,7 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
   /**
    * The default priority for this family of extensions.
    */
-  public static readonly defaultPriority: ExtensionPriority = ExtensionPriority.Default;
+  static readonly defaultPriority: ExtensionPriority = ExtensionPriority.Default;
 
   /**
    * The priority level for this instance of the extension.
@@ -167,9 +167,7 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
    * Check if the type of this extension's constructor matches the type of the
    * provided constructor.
    */
-  public isOfType<Type extends AnyExtensionConstructor>(
-    Constructor: Type,
-  ): this is InstanceType<Type> {
+  isOfType<Type extends AnyExtensionConstructor>(Constructor: Type): this is InstanceType<Type> {
     return this.constructor === (Constructor as unknown);
   }
 
@@ -198,7 +196,7 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
    * @internal
    * @nonVirtual
    */
-  public setStore(store: Remirror.ExtensionStore) {
+  setStore(store: Remirror.ExtensionStore) {
     if (this.#store) {
       return;
     }
@@ -336,7 +334,7 @@ export abstract class MarkExtension<Options extends ValidOptions = EmptyShape> e
   /**
    * Whether to disable extra attributes for this extension.
    */
-  public static readonly disableExtraAttributes: boolean = false;
+  static readonly disableExtraAttributes: boolean = false;
 
   get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
     return RemirrorIdentifier.MarkExtension as const;
@@ -363,7 +361,7 @@ export abstract class MarkExtension<Options extends ValidOptions = EmptyShape> e
    * Performs a default check to see whether the mark is active at the current
    * selection.
    */
-  public isActive() {
+  isActive() {
     return () => isMarkActive({ stateOrTransaction: this.store.getState(), type: this.type });
   }
 
@@ -380,7 +378,7 @@ export abstract class MarkExtension<Options extends ValidOptions = EmptyShape> e
    * For more advanced requirements, it may be possible to create a `nodeView`
    * to manage the dom interactions.
    */
-  public abstract createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec;
+  abstract createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec;
 }
 
 export interface MarkExtension<Options extends ValidOptions = EmptyShape>
@@ -405,7 +403,7 @@ export abstract class NodeExtension<Options extends ValidOptions = EmptyShape> e
   /**
    * Whether to disable extra attributes for this extension.
    */
-  public static readonly disableExtraAttributes: boolean = false;
+  static readonly disableExtraAttributes: boolean = false;
 
   get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
     return RemirrorIdentifier.NodeExtension as const;
@@ -425,7 +423,7 @@ export abstract class NodeExtension<Options extends ValidOptions = EmptyShape> e
   /**
    * Check if the node is active.
    */
-  public isActive() {
+  isActive() {
     return ({ attrs }: Partial<AttributesParameter>) => {
       return isNodeActive({ state: this.store.getState(), type: this.type, attrs });
     };
@@ -467,7 +465,7 @@ export abstract class NodeExtension<Options extends ValidOptions = EmptyShape> e
    * The above example will have the `hole()` method call replaced with the
    * extra attributes.
    */
-  public abstract createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec;
+  abstract createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec;
 }
 
 export interface NodeExtension<Options extends ValidOptions = EmptyShape>

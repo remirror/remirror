@@ -52,17 +52,17 @@ export interface DocOptions {
  * @core
  */
 export class DocExtension extends NodeExtension<DocOptions> {
-  public static readonly defaultOptions: DefaultExtensionOptions<DocOptions> = {
+  static readonly defaultOptions: DefaultExtensionOptions<DocOptions> = {
     content: 'block+',
   };
 
-  public static readonly disableExtraAttributes = true;
+  static readonly disableExtraAttributes = true;
 
   get name() {
     return 'doc' as const;
   }
 
-  public createNodeSpec(_: ApplyExtraAttributes) {
+  createNodeSpec(_: ApplyExtraAttributes) {
     return {
       content: this.options.content,
     };

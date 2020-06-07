@@ -41,9 +41,9 @@ export interface ReactSSROptions {
  * SSRTransforms. However in most cases the defaults should be sufficient.
  */
 export class ReactSSRExtension extends PlainExtension<ReactSSROptions> {
-  public static readonly defaultPriority = ExtensionPriority.High;
+  static readonly defaultPriority = ExtensionPriority.High;
 
-  public static readonly defaultOptions: Required<ReactSSROptions> = {
+  static readonly defaultOptions: Required<ReactSSROptions> = {
     transformers: [injectBrIntoEmptyParagraphs],
   };
 
@@ -51,7 +51,7 @@ export class ReactSSRExtension extends PlainExtension<ReactSSROptions> {
     return 'reactSSR' as const;
   }
 
-  public onCreate: CreateLifecycleMethod = (extensions) => {
+  onCreate: CreateLifecycleMethod = (extensions) => {
     const components: Record<string, ComponentType<any>> = object();
 
     const ssrTransformers: Array<() => SSRTransformer> = [];
@@ -89,7 +89,7 @@ export class ReactSSRExtension extends PlainExtension<ReactSSROptions> {
    * ReactSSRSerializer and transforms it into and element that is consistent
    * between the browser and the server.
    */
-  public createSSRTransformer = () => (initialElement: JSX.Element) => {
+  createSSRTransformer = () => (initialElement: JSX.Element) => {
     let element: JSX.Element = initialElement;
 
     for (const transformer of this.options.transformers) {

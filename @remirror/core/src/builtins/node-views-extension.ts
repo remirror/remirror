@@ -17,7 +17,7 @@ import { AnyCombinedUnion } from '../preset';
  * @builtin
  */
 export class NodeViewsExtension extends PlainExtension {
-  public static readonly defaultPriority = ExtensionPriority.High;
+  static readonly defaultPriority = ExtensionPriority.High;
 
   get name() {
     return 'nodeView' as const;
@@ -26,7 +26,7 @@ export class NodeViewsExtension extends PlainExtension {
   /**
    * Ensure that all SSR transformers are run.
    */
-  public onCreate: CreateLifecycleMethod = () => {
+  onCreate: CreateLifecycleMethod = () => {
     const nodeViewList: Array<Record<string, NodeViewMethod>> = [];
     const nodeViews: Record<string, NodeViewMethod> = object();
 

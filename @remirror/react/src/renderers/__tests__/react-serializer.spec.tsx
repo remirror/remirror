@@ -17,12 +17,12 @@ import { createReactManager } from '../../hooks';
 import { ReactSerializer } from '../react-serializer';
 
 class FooExtension extends NodeExtension {
-  public static disableExtraAttributes = true;
+  static disableExtraAttributes = true;
 
   get name() {
     return 'foo' as const;
   }
-  public createNodeSpec(): NodeExtensionSpec {
+  createNodeSpec(): NodeExtensionSpec {
     return {
       content: 'block*',
       group: NodeGroup.Block,

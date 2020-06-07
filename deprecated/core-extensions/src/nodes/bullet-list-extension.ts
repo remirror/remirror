@@ -26,17 +26,17 @@ export class BulletListExtension extends NodeExtension {
     };
   }
 
-  public commands({ type, schema }: CommandNodeTypeParameter) {
+  commands({ type, schema }: CommandNodeTypeParameter) {
     return { toggleBulletList: () => toggleList(type, schema.nodes.listItem) };
   }
 
-  public keys({ type, schema }: ManagerNodeTypeParameter): KeyBindings {
+  keys({ type, schema }: ManagerNodeTypeParameter): KeyBindings {
     return {
       'Shift-Ctrl-8': convertCommand(toggleList(type, schema.nodes.listItem)),
     };
   }
 
-  public inputRules({ type }: ManagerNodeTypeParameter) {
+  inputRules({ type }: ManagerNodeTypeParameter) {
     return [wrappingInputRule(/^\s*([*+-])\s$/, type)];
   }
 }

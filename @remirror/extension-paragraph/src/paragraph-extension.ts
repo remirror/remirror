@@ -23,7 +23,7 @@ import { marginToIndent } from './node-utils';
  * @core
  */
 export class ParagraphExtension extends NodeExtension<ParagraphOptions> {
-  public static readonly defaultOptions: DefaultExtensionOptions<ParagraphOptions> = {
+  static readonly defaultOptions: DefaultExtensionOptions<ParagraphOptions> = {
     indentAttribute: INDENT_ATTRIBUTE,
     indentLevels: INDENT_LEVELS,
   };
@@ -32,9 +32,9 @@ export class ParagraphExtension extends NodeExtension<ParagraphOptions> {
     return 'paragraph' as const;
   }
 
-  public readonly extensionTags = [ExtensionTag.LastNodeCompatible] as const;
+  readonly extensionTags = [ExtensionTag.LastNodeCompatible] as const;
 
-  public createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
     return {
       content: 'inline*',
       group: NodeGroup.Block,
@@ -89,7 +89,7 @@ export class ParagraphExtension extends NodeExtension<ParagraphOptions> {
   /**
    * Provides the commands that this extension uses.
    */
-  public createCommands = () => {
+  createCommands = () => {
     return {
       createParagraph: (attributes: ParagraphExtensionAttributes) => {
         return convertCommand(setBlockType(this.type, attributes));

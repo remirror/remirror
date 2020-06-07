@@ -11,7 +11,7 @@ import { EpicModeOptions, Particle } from './epic-mode-types';
 
 export class EpicModeExtension extends PlainExtension<EpicModeOptions> {
   //
-  public static readonly defaultProperties: Required<EpicModeOptions> = {
+  static readonly defaultProperties: Required<EpicModeOptions> = {
     particleEffect: defaultEffect,
     getCanvasContainer: () => document.body,
     colors: VIBRANT_COLORS,
@@ -25,7 +25,7 @@ export class EpicModeExtension extends PlainExtension<EpicModeOptions> {
     return 'epicMode' as const;
   }
 
-  public createPlugin = (): CreatePluginReturn<EpicModePluginState> => {
+  createPlugin = (): CreatePluginReturn<EpicModePluginState> => {
     const pluginState = new EpicModePluginState(this);
 
     return {
@@ -74,8 +74,8 @@ function getRGBComponents(node: Element) {
 }
 
 export class EpicModePluginState {
-  public canvas!: HTMLCanvasElement;
-  public ctx!: CanvasRenderingContext2D;
+  canvas!: HTMLCanvasElement;
+  ctx!: CanvasRenderingContext2D;
 
   get options() {
     return this.#extension.options;
@@ -104,7 +104,7 @@ export class EpicModePluginState {
    *
    * @param view
    */
-  public init(view: EditorView) {
+  init(view: EditorView) {
     this.view = view;
     this.container = this.options.getCanvasContainer();
 
@@ -132,7 +132,7 @@ export class EpicModePluginState {
     return this;
   }
 
-  public destroy() {
+  destroy() {
     // Wrapped in try catch for support of hot module reloading during development
     try {
       this.#isActive = false;
@@ -145,13 +145,13 @@ export class EpicModePluginState {
     }
   }
 
-  public shake = () => {
+  shake = () => {
     if (this.options.active) {
       this.#shakeTime = this.#shakeTimeMax = this.options.shakeTime;
     }
   };
 
-  public spawnParticles = () => {
+  spawnParticles = () => {
     const { selection } = this.view.state;
     const coords = this.view.coordsAtPos(selection.$anchor.pos);
 
@@ -187,7 +187,7 @@ export class EpicModePluginState {
   /**
    * Runs through the animation loop
    */
-  public loop = () => {
+  loop = () => {
     if (!this.#isActive) {
       return;
     }

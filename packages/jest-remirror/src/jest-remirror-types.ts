@@ -70,7 +70,7 @@ export type TaggedContentWithText = string | TaggedContent;
  * - a tag tracker -- when given a string that *only* contains tags.
  */
 export class TagTracker {
-  public tags!: Tags;
+  tags!: Tags;
 }
 
 /**

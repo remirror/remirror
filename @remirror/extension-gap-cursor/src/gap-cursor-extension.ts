@@ -24,7 +24,7 @@ export class GapCursorExtension extends PlainExtension<GapCursorOptions> {
     return 'gapCursor' as const;
   }
 
-  public createExternalPlugins = () => {
+  createExternalPlugins = () => {
     return [gapCursor()];
   };
 }

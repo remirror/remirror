@@ -1,7 +1,7 @@
 import React from 'react';
 
 export class ErrorBoundary extends React.Component<{}, { error: Error | null }> {
-  public static getDerivedStateFromError(error: Error) {
+  static getDerivedStateFromError(error: Error) {
     return { error };
   }
 
@@ -10,7 +10,7 @@ export class ErrorBoundary extends React.Component<{}, { error: Error | null }> 
     this.state = { error: null };
   }
 
-  public render() {
+  render() {
     if (this.state.error) {
       // You can render any custom fallback UI
       return (

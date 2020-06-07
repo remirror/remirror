@@ -30,7 +30,7 @@ class MissingStaticOptionsPreset extends Preset<{ oops?: boolean }> {
     return;
   }
 
-  public createExtensions() {
+  createExtensions() {
     return [];
   }
 }
@@ -52,13 +52,13 @@ interface WithStaticOptions {
 }
 
 class WithStaticOptionsPreset extends Preset<WithStaticOptions> {
-  public static readonly defaultOptions: DefaultPresetOptions<WithStaticOptions> = { me: 'friend' };
+  static readonly defaultOptions: DefaultPresetOptions<WithStaticOptions> = { me: 'friend' };
 
   get name() {
     return 'withStaticOptions' as const;
   }
 
-  public createExtensions() {
+  createExtensions() {
     return [new ExtensionWithStaticOptions({ oops: false })];
   }
 
@@ -90,7 +90,7 @@ interface WithDynamicOptions {
 }
 
 class WithDynamicOptionsPreset extends Preset<WithDynamicOptions> {
-  public static readonly defaultOptions: DefaultPresetOptions<WithDynamicOptions> = {
+  static readonly defaultOptions: DefaultPresetOptions<WithDynamicOptions> = {
     required: true,
     custom: '',
     me: '',
@@ -114,7 +114,7 @@ class WithDynamicOptionsPreset extends Preset<WithDynamicOptions> {
     }
   }
 
-  public createExtensions() {
+  createExtensions() {
     return [new ExtensionWithStaticOptions({ oops: false })];
   }
 }

@@ -31,13 +31,13 @@ export class UnderlineExtension extends MarkExtension {
     };
   }
 
-  public keys({ type }: ManagerMarkTypeParameter): KeyBindings {
+  keys({ type }: ManagerMarkTypeParameter): KeyBindings {
     return {
       'Mod-u': convertCommand(toggleMark(type)),
     };
   }
 
-  public commands({ type }: CommandMarkTypeParameter) {
+  commands({ type }: CommandMarkTypeParameter) {
     return { underline: () => toggleMark(type) };
   }
 }

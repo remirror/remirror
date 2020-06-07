@@ -43,7 +43,7 @@ export class DropCursorExtension extends Extension<DropCursorExtensionOptions> {
   /**
    * Use the dropCursor plugin with provided options.
    */
-  public plugin() {
+  plugin() {
     const { color, width } = this.options;
 
     return dropCursor({ color, width });

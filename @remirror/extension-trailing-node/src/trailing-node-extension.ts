@@ -45,11 +45,11 @@ export interface TrailingNodeOptions {
  *
  */
 export class TrailingNodeExtension extends PlainExtension<TrailingNodeOptions> {
-  public static readonly staticKeys: StaticKeyList<TrailingNodeOptions> = [];
-  public static readonly handlerKeys: HandlerKeyList<TrailingNodeOptions> = [];
-  public static readonly customHandlerKeys: CustomHandlerKeyList<TrailingNodeOptions> = [];
+  static readonly staticKeys: StaticKeyList<TrailingNodeOptions> = [];
+  static readonly handlerKeys: HandlerKeyList<TrailingNodeOptions> = [];
+  static readonly customHandlerKeys: CustomHandlerKeyList<TrailingNodeOptions> = [];
 
-  public static readonly defaultOptions: DefaultExtensionOptions<TrailingNodeOptions> = {
+  static readonly defaultOptions: DefaultExtensionOptions<TrailingNodeOptions> = {
     ignoredNodes: [],
     disableTags: false,
     nodeName: 'paragraph',
@@ -63,7 +63,7 @@ export class TrailingNodeExtension extends PlainExtension<TrailingNodeOptions> {
    * Create the paragraph plugin which can check the end of the document and
    * insert a new node.
    */
-  public createPlugin = (): CreatePluginReturn<boolean> => {
+  createPlugin = (): CreatePluginReturn<boolean> => {
     const { tags, schema } = this.store;
     const { disableTags, ignoredNodes, nodeName } = this.options;
 

@@ -11,7 +11,7 @@ class FirstExtension extends PlainExtension {
     return 'first' as const;
   }
 
-  public createCommands = () => {
+  createCommands = () => {
     return {
       free(title?: string) {
         return () => false;
@@ -29,7 +29,7 @@ class SecondExtension extends PlainExtension<{ option: boolean }> {
     return 'second' as const;
   }
 
-  public createCommands = () => {
+  createCommands = () => {
     return {
       fun: (value: { key?: boolean }) => {
         return () => false;
@@ -43,7 +43,7 @@ class ThirdExtension extends PlainExtension {
     return 'third' as const;
   }
 
-  public createCommands = () => {
+  createCommands = () => {
     return {
       notChainable: (value: string) => {
         return nonChainable(() => false);

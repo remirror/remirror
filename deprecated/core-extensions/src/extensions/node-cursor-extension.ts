@@ -127,7 +127,7 @@ export class NodeCursorExtension extends Extension<NodeCursorExtensionOptions> {
     };
   }
 
-  public plugin({ tags: tags }: ExtensionStore) {
+  plugin({ tags: tags }: ExtensionStore) {
     return createNodeCursorExtensionPlugin(this, tags.general.nodeCursor);
   }
 }

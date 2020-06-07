@@ -16,7 +16,7 @@ import { CreateLifecycleMethod, PlainExtension } from '../extension';
  * @builtin
  */
 export class KeymapExtension extends PlainExtension {
-  public static readonly defaultPriority = ExtensionPriority.Low;
+  static readonly defaultPriority = ExtensionPriority.Low;
 
   get name() {
     return 'keymap' as const;
@@ -27,7 +27,7 @@ export class KeymapExtension extends PlainExtension {
   /**
    * This adds the `createKeymap` method functionality to all extensions.
    */
-  public onCreate: CreateLifecycleMethod = () => {
+  onCreate: CreateLifecycleMethod = () => {
     this.store.setExtensionStore('rebuildKeymap', this.rebuildKeymap);
     this.loopExtensions();
     this.store.addPlugins(this.keymap);

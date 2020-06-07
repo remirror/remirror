@@ -33,7 +33,7 @@ export class ReactNodeView<
   /**
    * A shorthand method for creating the ReactNodeView
    */
-  public static createNodeView<
+  static createNodeView<
     Options extends Shape,
     Attributes extends ProsemirrorAttributes = ProsemirrorAttributes
   >(parameter: CreateNodeViewParameter<Options, Attributes>) {
@@ -53,7 +53,7 @@ export class ReactNodeView<
    */
   private domRef?: HTMLElement;
   private contentDOMWrapper: Node | null = null;
-  public contentDOM: Node | undefined;
+  contentDOM: Node | undefined;
 
   /**
    * Provides readonly access to the dom element
@@ -65,12 +65,12 @@ export class ReactNodeView<
   /**
    * The ProsemirrorNode that this nodeView is responsible for rendering.
    */
-  public node: NodeWithAttributes<Attributes>;
+  node: NodeWithAttributes<Attributes>;
 
   /**
    * The editor this nodeView belongs to.
    */
-  public view: EditorView;
+  view: EditorView;
 
   // /**
   //  * Only applicable for mark nodeViews. Indicates whether the mark content is inline.
@@ -133,7 +133,7 @@ export class ReactNodeView<
    * constructor, which leads to some methods being undefined during the
    * first render.
    */
-  public init() {
+  init() {
     this.domRef = this.createDomRef();
     this.setDomAttributes(this.node, this.domRef);
 
@@ -165,7 +165,7 @@ export class ReactNodeView<
   /**
    * Create a dom ref
    */
-  public createDomRef(): HTMLElement {
+  createDomRef(): HTMLElement {
     const { toDOM } = this.node.type.spec;
 
     if (toDOM) {
@@ -190,7 +190,7 @@ export class ReactNodeView<
   /**
    * Override this method in order to return a content dom which allow
    */
-  public getContentDOM(): { dom: Node; contentDOM?: Node | null | undefined } | undefined {
+  getContentDOM(): { dom: Node; contentDOM?: Node | null | undefined } | undefined {
     return;
   }
 
@@ -203,7 +203,7 @@ export class ReactNodeView<
     }
   };
 
-  public render(forwardReference: (node: HTMLElement) => void): JSX.Element {
+  render(forwardReference: (node: HTMLElement) => void): JSX.Element {
     const { Component, getPosition, node, options, view, selected } = this;
 
     return (
@@ -218,7 +218,7 @@ export class ReactNodeView<
     );
   }
 
-  public update(
+  update(
     node: ProsemirrorNode,
     _: Decoration[],
     validUpdate: (currentNode: ProsemirrorNode, newNode: ProsemirrorNode) => boolean = () => true,
@@ -245,7 +245,7 @@ export class ReactNodeView<
    *
    * @param node The Prosemirror Node from which to source the attributes
    */
-  public setDomAttributes(node: ProsemirrorNode, element: HTMLElement) {
+  setDomAttributes(node: ProsemirrorNode, element: HTMLElement) {
     const { toDOM } = this.node.type.spec;
     if (toDOM) {
       const domSpec = toDOM(node);
@@ -273,7 +273,7 @@ export class ReactNodeView<
   /**
    * Marks the node as being selected
    */
-  public selectNode() {
+  selectNode() {
     this.selected = true;
 
     if (this.domRef) {
@@ -284,7 +284,7 @@ export class ReactNodeView<
   }
 
   // Remove selected node marking from this node.
-  public deselectNode() {
+  deselectNode() {
     this.selected = false;
 
     if (this.domRef) {
@@ -297,7 +297,7 @@ export class ReactNodeView<
   /**
    * This is called whenever the node is being destroyed.
    */
-  public destroy() {
+  destroy() {
     if (!this.domRef) {
       return;
     }

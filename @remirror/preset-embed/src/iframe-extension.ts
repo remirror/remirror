@@ -45,11 +45,11 @@ export type IframeAttributes = ProsemirrorAttributes<{
  * An extension for the remirror editor.
  */
 export class IframeExtension extends NodeExtension<IframeOptions> {
-  public static readonly staticKeys: StaticKeyList<IframeOptions> = [];
-  public static readonly handlerKeys: HandlerKeyList<IframeOptions> = [];
-  public static readonly customHandlerKeys: CustomHandlerKeyList<IframeOptions> = [];
+  static readonly staticKeys: StaticKeyList<IframeOptions> = [];
+  static readonly handlerKeys: HandlerKeyList<IframeOptions> = [];
+  static readonly customHandlerKeys: CustomHandlerKeyList<IframeOptions> = [];
 
-  public static readonly defaultOptions: DefaultExtensionOptions<IframeOptions> = {
+  static readonly defaultOptions: DefaultExtensionOptions<IframeOptions> = {
     defaultSource: '',
     class: 'remirror-iframe',
   };
@@ -58,7 +58,7 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
     return 'iframe' as const;
   }
 
-  public createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
     const { defaultSource } = this.options;
 
     return {
@@ -109,7 +109,7 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
   /**
    * Provides the commands for the iFrame extension.
    */
-  public createCommands = () => {
+  createCommands = () => {
     return {
       /**
        * Add a custom iFrame to the editor.

@@ -10,18 +10,18 @@ import {
 export interface TemplateOptions {}
 
 export class TemplatePreset extends Preset<TemplateOptions> {
-  public static readonly staticKeys: StaticKeyList<TemplateOptions> = [];
-  public static readonly handlerKeys: HandlerKeyList<TemplateOptions> = [];
-  public static readonly customHandlerKeys: CustomHandlerKeyList<TemplateOptions> = [];
+  static readonly staticKeys: StaticKeyList<TemplateOptions> = [];
+  static readonly handlerKeys: HandlerKeyList<TemplateOptions> = [];
+  static readonly customHandlerKeys: CustomHandlerKeyList<TemplateOptions> = [];
 
-  public static readonly defaultOptions: DefaultPresetOptions<TemplateOptions> = {};
+  static readonly defaultOptions: DefaultPresetOptions<TemplateOptions> = {};
   get name() {
     return 'template' as const;
   }
 
   protected onSetOptions(_: OnSetOptionsParameter<TemplateOptions>) {}
 
-  public createExtensions() {
+  createExtensions() {
     return [];
   }
 }

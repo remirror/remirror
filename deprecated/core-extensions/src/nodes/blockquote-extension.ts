@@ -28,7 +28,7 @@ export class BlockquoteExtension extends NodeExtension {
     };
   }
 
-  public commands({ type }: CommandNodeTypeParameter) {
+  commands({ type }: CommandNodeTypeParameter) {
     return {
       /**
        * Toggle the blockquote at the current selection.
@@ -44,7 +44,7 @@ export class BlockquoteExtension extends NodeExtension {
     };
   }
 
-  public styles() {
+  styles() {
     return `${EDITOR_CLASS_SELECTOR} blockquote {
       border-left: 2px solid #ddd;
       margin-left: 0;
@@ -58,13 +58,13 @@ export class BlockquoteExtension extends NodeExtension {
     `;
   }
 
-  public keys({ type }: ManagerNodeTypeParameter): KeyBindings {
+  keys({ type }: ManagerNodeTypeParameter): KeyBindings {
     return {
       'Ctrl->': convertCommand(toggleWrap(type)),
     };
   }
 
-  public inputRules({ type }: ManagerNodeTypeParameter) {
+  inputRules({ type }: ManagerNodeTypeParameter) {
     return [wrappingInputRule(/^\s*>\s$/, type)];
   }
 }

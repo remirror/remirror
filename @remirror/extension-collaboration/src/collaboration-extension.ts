@@ -27,13 +27,13 @@ import { Step } from '@remirror/pm/transform';
  * Once a central server is created the collaboration extension is good.
  */
 export class CollaborationExtension extends PlainExtension<CollaborationOptions> {
-  public static readonly defaultOptions: DefaultExtensionOptions<CollaborationOptions> = {
+  static readonly defaultOptions: DefaultExtensionOptions<CollaborationOptions> = {
     version: 0,
     clientID: uniqueId(),
     debounceMs: 250,
   };
 
-  public static readonly handlerKeys: HandlerKeyList<CollaborationOptions> = ['onSendableReceived'];
+  static readonly handlerKeys: HandlerKeyList<CollaborationOptions> = ['onSendableReceived'];
 
   get name() {
     return 'collaboration';
@@ -43,7 +43,7 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
     this.getSendableSteps = debounce(this.options.debounceMs, this.getSendableSteps);
   }
 
-  public createCommands = () => {
+  createCommands = () => {
     return {
       /**
        * Send a collaboration update.
@@ -77,7 +77,7 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
     };
   };
 
-  public createExternalPlugins = () => {
+  createExternalPlugins = () => {
     const { version, clientID } = this.options;
 
     const plugin = collab({
@@ -88,7 +88,7 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
     return [plugin];
   };
 
-  public onTransaction: TransactionLifecycleMethod = (parameter) => {
+  onTransaction: TransactionLifecycleMethod = (parameter) => {
     this.getSendableSteps(parameter.state);
   };
 

@@ -43,7 +43,7 @@ export class CodeBlockState {
   /**
    * The set of cached decorations to minimise dom updates
    */
-  public decorationSet!: DecorationSet;
+  decorationSet!: DecorationSet;
 
   constructor(type: NodeType, extension: NodeExtension<CodeBlockOptions>) {
     this.#type = type;
@@ -53,7 +53,7 @@ export class CodeBlockState {
   /**
    * Creates the initial set of decorations
    */
-  public init(state: EditorState) {
+  init(state: EditorState) {
     const blocks = findChildrenByNode({ node: state.doc, type: this.#type });
     this.refreshDecorationSet({ blocks, node: state.doc });
 
@@ -127,7 +127,7 @@ export class CodeBlockState {
   /**
    * Apply the state and update decorations when something has changed.
    */
-  public apply({ tr, oldState, newState }: ApplyParameter): this {
+  apply({ tr, oldState, newState }: ApplyParameter): this {
     if (!tr.docChanged) {
       return this;
     }
@@ -189,7 +189,7 @@ export class CodeBlockState {
   /**
    * Flags that a deletion has just occurred.
    */
-  public setDeleted(deleted: boolean) {
+  setDeleted(deleted: boolean) {
     this.#deleted = deleted;
   }
 }

@@ -25,21 +25,21 @@ export class ItalicExtension extends MarkExtension {
     };
   }
 
-  public keys({ type }: ManagerMarkTypeParameter): KeyBindings {
+  keys({ type }: ManagerMarkTypeParameter): KeyBindings {
     return {
       'Mod-i': convertCommand(toggleMark(type)),
     };
   }
 
-  public commands({ type }: CommandMarkTypeParameter) {
+  commands({ type }: CommandMarkTypeParameter) {
     return { italic: () => toggleMark(type) };
   }
 
-  public inputRules({ type }: ManagerMarkTypeParameter) {
+  inputRules({ type }: ManagerMarkTypeParameter) {
     return [markInputRule({ regexp: /(?:^|[^*_])[*_]([^*_]+)[*_]$/, type })];
   }
 
-  public pasteRules({ type }: ManagerMarkTypeParameter) {
+  pasteRules({ type }: ManagerMarkTypeParameter) {
     return [markPasteRule({ regexp: /(?:^|[^*_])[*_]([^*_]+)[*_]/g, type })];
   }
 }

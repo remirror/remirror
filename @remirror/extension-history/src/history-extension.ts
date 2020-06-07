@@ -77,11 +77,11 @@ export interface HistoryOptions {
  * @builtin
  */
 export class HistoryExtension extends PlainExtension<HistoryOptions> {
-  public static readonly staticKeys: StaticKeyList<HistoryOptions> = ['depth', 'newGroupDelay'];
-  public static readonly handlerKeys: HandlerKeyList<HistoryOptions> = ['onRedo', 'onUndo'];
-  public static readonly customHandlerKeys: CustomHandlerKeyList<HistoryOptions> = [];
+  static readonly staticKeys: StaticKeyList<HistoryOptions> = ['depth', 'newGroupDelay'];
+  static readonly handlerKeys: HandlerKeyList<HistoryOptions> = ['onRedo', 'onUndo'];
+  static readonly customHandlerKeys: CustomHandlerKeyList<HistoryOptions> = [];
 
-  public static readonly defaultOptions: DefaultExtensionOptions<HistoryOptions> = {
+  static readonly defaultOptions: DefaultExtensionOptions<HistoryOptions> = {
     depth: 100,
     newGroupDelay: 500,
     getDispatch: null,
@@ -117,7 +117,7 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
   /**
    * Adds the default key mappings for undo and redo.
    */
-  public createKeymap = (): KeyBindings => {
+  createKeymap = (): KeyBindings => {
     const notMacOS = !environment.isMac
       ? { ['Mod-y']: this.wrapMethod(redo, this.options.onRedo) }
       : undefined;
@@ -133,7 +133,7 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
   /**
    * Bring the `prosemirror-history` plugin with options set on this extension.
    */
-  public createExternalPlugins = () => {
+  createExternalPlugins = () => {
     const { depth, newGroupDelay } = this.options;
 
     return [history({ depth, newGroupDelay })];
@@ -142,7 +142,7 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
   /**
    * Provide the undo and redo commands.
    */
-  public createCommands = () => {
+  createCommands = () => {
     return {
       /**
        * Undo the last action that occurred. This can be overridden by

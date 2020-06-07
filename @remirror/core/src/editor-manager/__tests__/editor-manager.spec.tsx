@@ -23,19 +23,19 @@ describe('Manager', () => {
     get name() {
       return 'dummy' as const;
     }
-    public readonly extensionTags = ['simple', ExtensionTag.LastNodeCompatible];
+    readonly extensionTags = ['simple', ExtensionTag.LastNodeCompatible];
 
-    public createCommands = () => {
+    createCommands = () => {
       return { dummy: mock };
     };
 
-    public createHelpers = () => {
+    createHelpers = () => {
       return {
         getInformation,
       };
     };
 
-    public createAttributes = () => {
+    createAttributes = () => {
       return {
         class: 'custom',
       };
@@ -47,7 +47,7 @@ describe('Manager', () => {
       return 'big' as const;
     }
 
-    public createNodeSpec = () => {
+    createNodeSpec = () => {
       return {
         toDOM: () => ['h1', 0],
       };
@@ -151,7 +151,7 @@ test('keymaps', () => {
       return 'first' as const;
     }
 
-    public createKeymap = () => {
+    createKeymap = () => {
       return {
         Enter: mocks.firstEnter,
       };
@@ -163,7 +163,7 @@ test('keymaps', () => {
       return 'second' as const;
     }
 
-    public createKeymap = () => {
+    createKeymap = () => {
       return {
         Enter: mocks.secondEnter,
       };
@@ -175,7 +175,7 @@ test('keymaps', () => {
       return 'third' as const;
     }
 
-    public createKeymap = () => {
+    createKeymap = () => {
       return {
         Enter: mocks.thirdEnter,
       };
@@ -229,13 +229,13 @@ test('keymaps', () => {
 test('lifecycle', () => {
   expect.assertions(6);
   class LifecycleExtension extends PlainExtension {
-    public static defaultPriority = ExtensionPriority.Lowest;
+    static defaultPriority = ExtensionPriority.Lowest;
 
-    public get name() {
+    get name() {
       return 'test' as const;
     }
 
-    public onCreate: CreateLifecycleMethod = () => {
+    onCreate: CreateLifecycleMethod = () => {
       expect(this.store.setExtensionStore).toBeFunction();
       expect(this.store.setStoreKey).toBeFunction();
       expect(this.store.getStoreKey).toBeFunction();

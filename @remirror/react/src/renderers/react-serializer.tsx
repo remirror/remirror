@@ -33,7 +33,7 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
    * @param structure - The DOMOutput spec for the current node
    * @param wraps - passed through any elements that this component should be parent of
    */
-  public static renderSpec(structure: DOMOutputSpec, wraps?: ReactNode): ReactNode {
+  static renderSpec(structure: DOMOutputSpec, wraps?: ReactNode): ReactNode {
     if (isString(structure)) {
       return structure;
     }
@@ -75,7 +75,7 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
    *
    * @param manager
    */
-  public static fromManager<Combined extends AnyCombinedUnion>(manager: EditorManager<Combined>) {
+  static fromManager<Combined extends AnyCombinedUnion>(manager: EditorManager<Combined>) {
     return new ReactSerializer(
       this.nodesFromManager(manager),
       this.marksFromManager(manager),
@@ -109,8 +109,8 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
     return gatherToDOM(manager.marks);
   }
 
-  public nodes: Record<string, NodeToDOM>;
-  public marks: Record<string, MarkToDOM>;
+  nodes: Record<string, NodeToDOM>;
+  marks: Record<string, MarkToDOM>;
 
   readonly #components: Record<string, ComponentType<any>>;
 
@@ -133,7 +133,7 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
    *
    * @param fragment
    */
-  public serializeFragment(fragment: ProsemirrorFragment): JSX.Element {
+  serializeFragment(fragment: ProsemirrorFragment): JSX.Element {
     const children: ReactNode[] = [];
 
     fragment.forEach((node) => {
@@ -155,7 +155,7 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
    *
    * @param node
    */
-  public serializeNode(node: ProsemirrorNode): ReactNode {
+  serializeNode(node: ProsemirrorNode): ReactNode {
     const Component = this.#components[node.type.name];
     const toDOM = this.nodes[node.type.name];
 
@@ -178,7 +178,7 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
    * @param inline
    * @param wrappedElement
    */
-  public serializeMark(mark: Mark, inline: boolean, wrappedElement: ReactNode): ReactNode {
+  serializeMark(mark: Mark, inline: boolean, wrappedElement: ReactNode): ReactNode {
     const toDOM = this.marks[mark.type.name];
     const Component = this.#components[mark.type.name];
 

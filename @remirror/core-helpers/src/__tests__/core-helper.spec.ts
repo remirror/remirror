@@ -210,7 +210,7 @@ describe('predicates', () => {
   it('isPlainObject', () => {
     const passValue = { a: 'a' };
     const failValue = new (class Simple {
-      public a = 'a';
+      a = 'a';
     })();
     const simpleFailValue = undefined;
 

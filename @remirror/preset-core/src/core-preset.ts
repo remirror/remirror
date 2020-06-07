@@ -22,13 +22,13 @@ export interface CorePresetOptions
     PositionerOptions {}
 
 export class CorePreset extends Preset<CorePresetOptions> {
-  public static defaultOptions: DefaultPresetOptions<CorePresetOptions> = {
+  static defaultOptions: DefaultPresetOptions<CorePresetOptions> = {
     ...DocExtension.defaultOptions,
     ...BaseKeymapExtension.defaultOptions,
     ...ParagraphExtension.defaultOptions,
   };
 
-  public static customHandlerKeys: CustomHandlerKeyList<CorePresetOptions> = [
+  static customHandlerKeys: CustomHandlerKeyList<CorePresetOptions> = [
     'keymap',
     'positionerHandler',
   ];
@@ -74,7 +74,7 @@ export class CorePreset extends Preset<CorePresetOptions> {
     return;
   };
 
-  public createExtensions() {
+  createExtensions() {
     const { content, ...baseKeymapSettings } = this.options;
 
     return [

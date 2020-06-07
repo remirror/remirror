@@ -27,7 +27,7 @@ import { GetNameUnion } from '../types';
  * @builtin
  */
 export class PluginsExtension extends PlainExtension {
-  public static readonly defaultPriority = ExtensionPriority.Highest;
+  static readonly defaultPriority = ExtensionPriority.Highest;
 
   get name() {
     return 'plugins' as const;
@@ -52,7 +52,7 @@ export class PluginsExtension extends PlainExtension {
 
   // Here set the plugins keys and state getters for retrieving plugin state.
   // These methods are later used.
-  public onCreate: CreateLifecycleMethod = (extensions) => {
+  onCreate: CreateLifecycleMethod = (extensions) => {
     const { setStoreKey, setExtensionStore } = this.store;
     this.updateExtensionStore();
 
@@ -357,7 +357,7 @@ declare global {
        *     return 'me' as const;
        *   }
        *
-       *   public createPlugin: (): ExtensionPluginSpec => ({
+       *   createPlugin: (): ExtensionPluginSpec => ({
        *     props: {
        *       handleKeyDown: keydownHandler({
        *         Backspace: handler,

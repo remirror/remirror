@@ -37,7 +37,7 @@ export class SuggestState {
   /**
    * Create an instance of the SuggestState class.
    */
-  public static create(suggesters: Suggestion[]) {
+  static create(suggesters: Suggestion[]) {
     return new SuggestState(suggesters);
   }
 
@@ -124,7 +124,7 @@ export class SuggestState {
   /**
    * Initialize the SuggestState with a view which is stored for use later.
    */
-  public init(view: EditorView) {
+  init(view: EditorView) {
     this.view = view;
     return this;
   }
@@ -254,7 +254,7 @@ export class SuggestState {
    * All we need to ignore is the match character. This means that any further
    * matches from the activation character will be ignored.
    */
-  public addIgnored = ({ from, char, name, specific = false }: AddIgnoredParameter) => {
+  addIgnored = ({ from, char, name, specific = false }: AddIgnoredParameter) => {
     const to = from + char.length;
     const suggester = this.suggesters.find((value) => value.name === name);
 
@@ -282,7 +282,7 @@ export class SuggestState {
    * After this point event handlers will begin to be called again for match
    * character.
    */
-  public removeIgnored = ({ from, char, name }: RemoveIgnoredParameter) => {
+  removeIgnored = ({ from, char, name }: RemoveIgnoredParameter) => {
     const decorations = this.ignored.find(from, from + char.length);
     const decoration = decorations[0];
 
@@ -297,7 +297,7 @@ export class SuggestState {
    * Removes all the ignored decorations so that suggesters can active their
    * handlers anywhere in the document.
    */
-  public clearIgnored = (name?: string) => {
+  clearIgnored = (name?: string) => {
     if (name) {
       const decorations = this.ignored.find();
       const decorationsToClear = decorations.filter(({ spec }) => {
@@ -345,13 +345,13 @@ export class SuggestState {
   /**
    * Used to handle the view property of the plugin spec.
    */
-  public viewHandler() {
+  viewHandler() {
     return {
       update: this.onViewUpdate,
     };
   }
 
-  public toJSON() {
+  toJSON() {
     return this.match;
   }
 
@@ -360,7 +360,7 @@ export class SuggestState {
    *
    * @param - params
    */
-  public apply({ tr, newState }: TransactionParameter & CompareStateParameter) {
+  apply({ tr, newState }: TransactionParameter & CompareStateParameter) {
     const { exit } = this.handlerMatches;
 
     if (!transactionChanged(tr) && !this.removed) {
@@ -387,7 +387,7 @@ export class SuggestState {
    *
    * @param event
    */
-  public handleKeyDown(event: KeyboardEvent): boolean {
+  handleKeyDown(event: KeyboardEvent): boolean {
     const { match } = this;
 
     if (!isValidMatch(match)) {
@@ -408,7 +408,7 @@ export class SuggestState {
   /**
    * Handle any key presses of non supported characters
    */
-  public handleTextInput({ text, from, to }: HandleTextInputParameter): boolean {
+  handleTextInput({ text, from, to }: HandleTextInputParameter): boolean {
     const match = this.match;
 
     if (!isValidMatch(match)) {
@@ -429,7 +429,7 @@ export class SuggestState {
    * Handle the decorations which wrap the mention while it is active and not
    * yet complete.
    */
-  public decorations(state: EditorState) {
+  decorations(state: EditorState) {
     const match = this.match;
 
     if (!isValidMatch(match)) {

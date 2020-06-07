@@ -406,14 +406,14 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
   /**
    * A static helper utility for creating new TestReturn values.
    */
-  public static of<Schema extends EditorSchema = EditorSchema>(view: TestEditorView<Schema>) {
+  static of<Schema extends EditorSchema = EditorSchema>(view: TestEditorView<Schema>) {
     return new ProsemirrorTestChain(view);
   }
 
   /**
    * The prosemirror view.
    */
-  public view: TestEditorView<Schema>;
+  view: TestEditorView<Schema>;
 
   /**
    * The current prosemirror node document
@@ -466,7 +466,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    *
    * @param newDoc - the new content to use
    */
-  public overwrite(newDocument: TaggedProsemirrorNode<Schema>) {
+  overwrite(newDocument: TaggedProsemirrorNode<Schema>) {
     const tr = this.state.tr.replaceWith(0, this.view.state.doc.nodeSize - 2, newDocument);
     tr.setMeta('addToHistory', false);
     this.view.dispatch(tr);
@@ -494,7 +494,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    *
    * @param command - the command function to run
    */
-  public command(command: ProsemirrorCommandFunction) {
+  command(command: ProsemirrorCommandFunction) {
     command(this.state, this.view.dispatch, this.view);
     return this;
   }
@@ -504,7 +504,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    *
    * @param text - the text to insert
    */
-  public insertText(text: string) {
+  insertText(text: string) {
     const { from } = this.selection;
     insertText({ start: from, text, view: this.view });
     return this;
@@ -516,7 +516,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    * @param start - a number position or the shorthand 'start' | 'end'
    * @param [end] - the option end position of the new selection
    */
-  public jumpTo(start: 'start' | 'end' | number, end?: number) {
+  jumpTo(start: 'start' | 'end' | number, end?: number) {
     if (start === 'start') {
       dispatchTextSelection({ view: this.view, start: 1 });
     } else if (start === 'end') {
@@ -535,7 +535,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    *
    * @param mod - the keyboard shortcut to type
    */
-  public shortcut(module_: string) {
+  shortcut(module_: string) {
     shortcut({ shortcut: module_, view: this.view });
     return this;
   }
@@ -548,7 +548,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    *
    * @param char - the character to type
    */
-  public press(char: string) {
+  press(char: string) {
     press({ char, view: this.view });
     return this;
   }
@@ -556,7 +556,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
   /**
    * Simulates a backspace keypress and deletes text backwards.
    */
-  public backspace(times?: number) {
+  backspace(times?: number) {
     backspace({ view: this.view, times });
     return this;
   }
@@ -564,7 +564,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
   /**
    * Logs to the dom for help debugging your tests.
    */
-  public debug = () => {
+  debug = () => {
     console.log(prettyDOM(this.view.dom as HTMLElement));
     return this;
   };
@@ -574,7 +574,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    *
    * @param params - the fire event parameters
    */
-  public fire(parameters: Omit<FireEventAtPositionParameter<Schema>, 'view'>) {
+  fire(parameters: Omit<FireEventAtPositionParameter<Schema>, 'view'>) {
     fireEventAtPosition({ view: this.view, ...parameters });
     return this;
   }
@@ -584,7 +584,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    * `schema` and `selection` properties and allows for easier testing of the
    * current state of the editor.
    */
-  public callback(fn: (content: ReturnValueCallbackParameter<Schema>) => void) {
+  callback(fn: (content: ReturnValueCallbackParameter<Schema>) => void) {
     fn(pick(this, ['start', 'end', 'state', 'view', 'schema', 'selection', 'doc', 'debug']));
     return this;
   }
@@ -595,7 +595,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    * TODO - this is overly simplistic and doesn't fully express what prosemirror
    * can do so will need to be improved.
    */
-  public paste(content: ProsemirrorNode | string) {
+  paste(content: ProsemirrorNode | string) {
     pasteContent({ view: this.view, content });
     return this;
   }

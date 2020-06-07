@@ -79,18 +79,18 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
   RenderEditorProps<Combined>,
   RemirrorState<SchemaFromCombined<Combined>>
 > {
-  public static defaultProps = defaultProps;
+  static defaultProps = defaultProps;
 
   /**
    * Sets a flag to be a static remirror
    */
-  public static $$remirrorType = RemirrorType.Editor;
+  static $$remirrorType = RemirrorType.Editor;
 
   /**
    * This is needed to manage the controlled component `value` prop and copy it
    * to the components state for internal usage.
    */
-  public static getDerivedStateFromProps(
+  static getDerivedStateFromProps(
     properties: RenderEditorProps<DefaultReactCombined>,
     state: RemirrorState,
   ): RemirrorState | null {
@@ -169,7 +169,7 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
    * TODO check whether or not the schema has changed and log a warning. Schema
    * shouldn't change.
    */
-  public updateManager() {
+  updateManager() {
     // TODO add a way to reinitialize.
     this.manager.addView(this.view);
   }
@@ -433,7 +433,7 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
    * This is purely used to indicate to the component that this is a client
    * environment when using the `suppressHydrationWarning` prop.
    */
-  public componentDidMount() {
+  componentDidMount() {
     const { suppressHydrationWarning } = this.props;
 
     if (suppressHydrationWarning) {
@@ -441,7 +441,7 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
     }
   }
 
-  public componentDidUpdate(
+  componentDidUpdate(
     { editable, manager: previousManager }: RenderEditorProps<Combined>,
     previousState: RemirrorState<SchemaFromCombined<Combined>>,
   ) {
@@ -491,7 +491,7 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
    * - Destroys the state for each plugin
    * - Destroys the prosemirror view
    */
-  public componentWillUnmount() {
+  componentWillUnmount() {
     this.view.dom.removeEventListener('blur', this.onBlur);
     this.view.dom.removeEventListener('focus', this.onFocus);
     const editorState = this.state.editor.newState;
@@ -798,7 +798,7 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
     );
   }
 
-  public render() {
+  render() {
     // Reset the status of roots props being called
     this.rootPropsConfig.called = false;
 

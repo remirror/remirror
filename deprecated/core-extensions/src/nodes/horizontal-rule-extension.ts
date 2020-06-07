@@ -22,7 +22,7 @@ export class HorizontalRuleExtension extends NodeExtension {
     };
   }
 
-  public commands({ type }: CommandNodeTypeParameter) {
+  commands({ type }: CommandNodeTypeParameter) {
     return {
       horizontalRule: (): ProsemirrorCommandFunction => (state, dispatch) => {
         if (dispatch) {
@@ -34,7 +34,7 @@ export class HorizontalRuleExtension extends NodeExtension {
     };
   }
 
-  public inputRules({ type }: ManagerNodeTypeParameter) {
+  inputRules({ type }: ManagerNodeTypeParameter) {
     return [nodeInputRule({ regexp: /^(?:---|___\s|\*\*\*\s)$/, type })];
   }
 }

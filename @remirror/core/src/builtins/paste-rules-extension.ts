@@ -11,7 +11,7 @@ import { CreateLifecycleMethod, PlainExtension } from '../extension';
  * @builtin
  */
 export class PasteRulesExtension extends PlainExtension {
-  public static readonly defaultPriority = ExtensionPriority.High;
+  static readonly defaultPriority = ExtensionPriority.High;
 
   get name() {
     return 'pasteRules' as const;
@@ -20,7 +20,7 @@ export class PasteRulesExtension extends PlainExtension {
   /**
    * Ensure that all ssr transformers are run.
    */
-  public onCreate: CreateLifecycleMethod = (extensions) => {
+  onCreate: CreateLifecycleMethod = (extensions) => {
     const pasteRules: ProsemirrorPlugin[] = [];
 
     for (const extension of extensions) {

@@ -97,7 +97,7 @@ export type Dynamic<Type> = Type & DynamicAnnotation;
  * }
  *
  * class CustomExtension extends PlainExtension<CustomOptions> {
- *   public static readonly handlerKeys = ['onChange'];
+ *   static readonly handlerKeys = ['onChange'];
  * }
  *
  * // No prompt to include the `onChange` handler due to the annotation.
