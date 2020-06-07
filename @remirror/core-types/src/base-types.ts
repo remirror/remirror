@@ -230,14 +230,17 @@ export interface ExtraAttributesObject {
    * A function used to extract the attribute from the dom and must be applied
    * to the `parseDOM` method.
    */
-  parseDOM?: (domNode: HTMLElement) => unknown;
+  parseDOM?: ((domNode: HTMLElement) => unknown) | string;
 
   /**
    * Takes the node attributes and applies them to the dom.
    *
    * This is called in the `toDOM` method.
    */
-  toDOM?: (attrs: ProsemirrorAttributes) => string;
+  toDOM?:
+    | string
+    | [string, string?]
+    | ((attrs: ProsemirrorAttributes) => string | [string, string?]);
 }
 
 export interface ApplyExtraAttributes {

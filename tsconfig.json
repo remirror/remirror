@@ -6,18 +6,5 @@
     "skipLibCheck": false
   },
   "include": ["**/*.ts", "**/*.tsx", "../global.d.ts", "support/scripts/linaria.js"],
-  "exclude": [
-    "**/dist/",
-    "dist",
-    "deprecated/**"
-
-    // TODO remove these temporary exclusions
-    // "./deprecated/**",
-    // "**/*.test.{ts,tsx}",
-    // "**/*.stories.{ts,tsx}",
-    // "**/*.spec.{ts,tsx}",
-    // "**/__mocks__/**",
-    // "**/__tests__/**",
-    // "**/__stories__/**"
-  ]
+  "exclude": ["**/dist/", "dist", "deprecated/**", "support/templates"]
 }

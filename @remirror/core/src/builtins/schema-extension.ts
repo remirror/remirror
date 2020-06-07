@@ -1,5 +1,13 @@
 import { ErrorConstant, ExtensionPriority } from '@remirror/core-constants';
-import { entries, invariant, isFunction, object } from '@remirror/core-helpers';
+import {
+  entries,
+  invariant,
+  isArray,
+  isFunction,
+  isNullOrUndefined,
+  isString,
+  object,
+} from '@remirror/core-helpers';
 import {
   ApplyExtraAttributes,
   EditorSchema,
@@ -206,11 +214,17 @@ function createParseDOM(extraAttributes: ExtraAttributes, shouldIgnore: boolean)
         continue;
       }
 
-      if (!isFunction(parseDOM)) {
+      if (isNullOrUndefined(parseDOM)) {
         attributes[name] = domNode.getAttribute(name) ?? other.default;
-      } else {
-        attributes[name] = parseDOM(domNode) ?? other.default;
+        continue;
       }
+
+      if (isFunction(parseDOM)) {
+        attributes[name] = parseDOM(domNode) ?? other.default;
+        continue;
+      }
+
+      attributes[name] = domNode.getAttribute(parseDOM) ?? other.default;
     }
 
     return attributes;
@@ -223,15 +237,34 @@ function createParseDOM(extraAttributes: ExtraAttributes, shouldIgnore: boolean)
 function createToDOM(extraAttributes: ExtraAttributes, shouldIgnore: boolean) {
   return (attributes: ProsemirrorAttributes) => {
     const domAttributes: Record<string, string> = object();
+
     if (shouldIgnore) {
       return domAttributes;
     }
-    for (const [name, { toDOM }] of entries(extraAttributes)) {
-      if (!isFunction(toDOM)) {
-        domAttributes[name] = attributes[name] as string;
-      } else {
-        domAttributes[name] = toDOM(attributes);
+
+    function updateDomAttributes(value: string | [string, string?], name: string) {
+      if (isString(value)) {
+        domAttributes[name] = value;
       }
+
+      if (isArray(value)) {
+        domAttributes[value[0]] = value[1] ?? (attributes[name] as string);
+      }
+    }
+
+    for (const [name, { toDOM, parseDOM }] of entries(extraAttributes)) {
+      if (isNullOrUndefined(toDOM)) {
+        const key = isString(parseDOM) ? parseDOM : name;
+        domAttributes[key] = attributes[name] as string;
+        continue;
+      }
+
+      if (isFunction(toDOM)) {
+        updateDomAttributes(toDOM(attributes), name);
+        continue;
+      }
+
+      updateDomAttributes(toDOM, name);
     }
 
     return domAttributes;

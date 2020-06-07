@@ -1,14 +1,17 @@
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
-import { fromHTML, object, toHTML } from '@remirror/core';
-import { createBaseTestManager } from '@remirror/test-fixtures';
+import { fromHTML, toHTML } from '@remirror/core';
+import { BoldExtension, createBaseManager, isExtensionValid } from '@remirror/test-fixtures';
 
-import { BoldExtension } from '../../marks';
-import { HeadingExtension, HeadingExtensionOptions } from '../heading-extension';
+import { HeadingExtension, HeadingOptions } from '../heading-extension';
+
+test('is valid', () => {
+  expect(isExtensionValid(HeadingExtension, {}));
+});
 
 describe('schema', () => {
-  const { schema } = createBaseTestManager([{ extension: new HeadingExtension(), priority: 1 }]);
+  const { schema } = createBaseManager({ extensions: [new HeadingExtension()] });
   const { h1, h2, h3, doc } = pmBuild(schema, {
     h1: { nodeType: 'heading' },
     h2: { nodeType: 'heading', level: 2 },
@@ -32,14 +35,16 @@ describe('schema', () => {
   });
 
   describe('extraAttributes', () => {
-    const { schema } = createBaseTestManager([
-      {
-        extension: new HeadingExtension({
-          extraAttributes: ['title', ['custom', 'failure', 'data-custom']],
+    const { schema } = createBaseManager({
+      extensions: [
+        new HeadingExtension({
+          extraAttributes: {
+            title: { default: null },
+            custom: { default: 'failure', parseDOM: 'data-custom' },
+          },
         }),
-        priority: 1,
-      },
-    ]);
+      ],
+    });
 
     it('sets the extra attributes', () => {
       expect(schema.nodes.heading.spec.attrs).toEqual({
@@ -50,12 +55,11 @@ describe('schema', () => {
     });
 
     it('does not override the built in attributes', () => {
-      const { schema } = createBaseTestManager([
-        {
-          extension: new HeadingExtension({ extraAttributes: [['level', 'should not appear']] }),
-          priority: 1,
-        },
-      ]);
+      const { schema } = createBaseManager({
+        extensions: [
+          new HeadingExtension({ extraAttributes: { level: { default: 'should not appear' } } }),
+        ],
+      });
 
       expect(schema.nodes.heading.spec.attrs).toEqual({
         level: { default: 1 },
@@ -64,17 +68,14 @@ describe('schema', () => {
   });
 });
 
-describe('plugins', () => {
-  const create = (params: HeadingExtensionOptions = object()) =>
-    renderEditor({
-      attrNodes: [new HeadingExtension({ ...params })],
-      plainNodes: [],
-      plainMarks: [new BoldExtension()],
-    });
+function create(options?: HeadingOptions) {
+  return renderEditor([new HeadingExtension(options), new BoldExtension()]);
+}
 
+describe('extension', () => {
   it('falls back to the default level when unsupported level passed through', () => {
     const {
-      attrNodes: { heading },
+      attributeNodes: { heading },
       add,
       utils: { baseElement },
       nodes: { doc },
@@ -85,22 +86,38 @@ describe('plugins', () => {
     expect(baseElement).toContainHTML('<h2>Heading</h2>');
   });
 
+  it('can toggle the heading', () => {
+    const {
+      add,
+      utils: { baseElement },
+      nodes: { doc, p },
+    } = create();
+
+    add(doc(p('Content<cursor>'))).callback(({ commands }) => {
+      commands.toggleHeading({ level: 3 });
+      expect(baseElement).toContainHTML('<h3>Content</h3>');
+
+      commands.toggleHeading({ level: 3 });
+      expect(baseElement).toContainHTML('<p>Content</p>');
+    });
+  });
+
   it('shows the heading as active', () => {
     const {
-      attrNodes: { heading },
+      attributeNodes: { heading },
       add,
       nodes: { doc },
-      actions,
+      helpers,
     } = create();
     const h5 = heading({ level: 5 });
     add(doc(h5('<cursor>Heading')));
 
-    expect(actions.toggleHeading.isActive({ level: 5 })).toBeTrue();
+    expect(helpers.isHeadingActive({ level: 5 })).toBeTrue();
   });
 
   it('responds to keyboard shortcuts', () => {
     const {
-      attrNodes: { heading },
+      attributeNodes: { heading },
       add,
       nodes: { doc, p },
     } = create();
