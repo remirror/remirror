@@ -5,6 +5,7 @@ import {
   entries,
   HandlerKeyList,
   nodeEqualsType,
+  OnSetOptionsParameter,
   PlainExtension,
   StaticKeyList,
   uniqueArray,
@@ -57,6 +58,19 @@ export class TrailingNodeExtension extends PlainExtension<TrailingNodeOptions> {
 
   get name() {
     return 'trailingNode' as const;
+  }
+
+  /**
+   * Whenever the options are changed make sure to update the plugin with the
+   * new values and trigger a state update.
+   */
+  protected onSetOptions(parameter: OnSetOptionsParameter<TrailingNodeOptions>) {
+    const { changes } = parameter;
+
+    if (changes.disableTags || changes.ignoredNodes || changes.nodeName) {
+      this.store.updateExtensionPlugins(this);
+      this.store.reconfigureStatePlugins();
+    }
   }
 
   /**
