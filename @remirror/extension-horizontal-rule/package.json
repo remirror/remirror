@@ -1,0 +1,38 @@
+{
+  "name": "@remirror/extension-horizontal-rule",
+  "version": "0.0.0",
+  "description": "Allow your users to divide their content with horizontal lines. Nice!",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-horizontal-rule",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/extension-horizontal-rule",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/extension-horizontal-rule.cjs.js",
+  "module": "dist/extension-horizontal-rule.esm.js",
+  "types": "dist/extension-horizontal-rule.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.10.0",
+    "@remirror/core": "^0.11.0"
+  },
+  "devDependencies": {
+    "@remirror/pm": "^0.0.0"
+  },
+  "peerDependencies": {
+    "@remirror/pm": "^0.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "50 KB"
+  }
+}
