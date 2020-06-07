@@ -258,6 +258,16 @@ export type DefaultExtensionOptions<Options extends ValidOptions> = DefaultOptio
  */
 interface ExtensionLifecycleMethods {
   /**
+   * Called before the `extensionStore` is ready. No looping over extensions is
+   * available.
+   *
+   * This is currently used to update the manager settings. For example the
+   * formatting extension adds extra attributes to the manager settings so that
+   * all relevant formatting.
+   */
+  onPrepare?: () => void;
+
+  /**
    * This handler is called when the extension manager is first created.
    *
    * The outer scope of the `onCreate` is called as soon as the manager is

@@ -1,66 +1,69 @@
-import { Plugin } from '@remirror/pm/state';
+import {
+  CommandFunction,
+  CreatePluginReturn,
+  CustomHandlerKeyList,
+  DefaultExtensionOptions,
+  getPluginMeta,
+  HandlerKeyList,
+  isNotEmpty,
+  isNullOrUndefined,
+  isNumber,
+  isString,
+  object,
+  PlainExtension,
+  PosParameter,
+  StaticKeyList,
+  Transaction,
+} from '@remirror/core';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
 
-import { Extension } from '@remirror/core';
-import { isNullOrUndefined, isNumber, isString, object } from '@remirror/core-helpers';
-import {
-  BaseExtensionOptions,
-  CommandParameter,
-  ManagerParameter,
-  PosParameter,
-  ProsemirrorCommandFunction,
-  Transaction,
-} from '@remirror/core-types';
-import { getPluginMeta, getPluginState } from '@remirror/core-utils';
-
-const CLEAR = Symbol('CLEAR');
-
-const defaultPositionTrackerExtensionOptions: Partial<PositionTrackerExtensionOptions> = {
-  defaultClassName: 'remirror-tracker-position',
-  defaultElement: 'tracker',
-};
-
-export interface PositionTrackerExtensionOptions extends BaseExtensionOptions {
+export interface PositionTrackerOptions {
   /**
    * The className that is added to all tracker positions
    *
    * '@defaultValue 'remirror-tracker-position'
    */
-  defaultClassName?: string;
+  class?: string;
 
   /**
    * The default element that is used for all trackers.
    *
    * @defaultValue 'tracker'
    */
-  defaultElement?: string;
+  element?: string;
 }
 
+const CLEAR = Symbol('CLEAR');
+
 /**
- * Applies a placeholder to a position in the document for actions that might take a while to complete.
- *
- * An example of this would be uploading an image. From when the upload starts to when it
- * finally completes a lot can happen in the editor. This extension and it's helper functions
- * allow the editor to keep track of where the image should actually be inserted.
+ * An extension for the remirror editor. CHANGE ME.
  */
-export class PositionTrackerExtension extends Extension<PositionTrackerExtensionOptions> {
+export class PositionTrackerExtension extends PlainExtension<PositionTrackerOptions> {
+  static readonly staticKeys: StaticKeyList<PositionTrackerOptions> = [];
+  static readonly handlerKeys: HandlerKeyList<PositionTrackerOptions> = [];
+  static readonly customHandlerKeys: CustomHandlerKeyList<PositionTrackerOptions> = [];
+
+  static readonly defaultOptions: DefaultExtensionOptions<PositionTrackerOptions> = {
+    class: 'remirror-tracker-position',
+    element: 'tracker',
+  };
+
   get name() {
     return 'positionTracker' as const;
   }
 
-  get defaultOptions() {
-    return defaultPositionTrackerExtensionOptions;
-  }
-
-  helpers({ getState }: ManagerParameter) {
+  createHelpers = () => {
     const helpers = {
       /**
        * Add a tracker position with the specified params to the transaction and return the transaction.
        *
        * It is up to you to dispatch the transaction or you can just use the commands.
        */
-      addPositionTracker: ({ pos, id }: AddPositionTrackerParameter, tr = getState().tr) => {
+      addPositionTracker: (parameter: AddPositionTrackerParameter, tr?: Transaction) => {
+        const { id, pos } = parameter;
         const existingPosition = helpers.findPositionTracker(id);
+
+        tr = tr ?? this.store.getState().tr;
 
         if (existingPosition) {
           return;
@@ -76,8 +79,11 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
        *
        * This should be used to cleanup once the position is no longer needed.
        */
-      removePositionTracker: ({ id }: RemovePositionTrackerParameter, tr = getState().tr) => {
+      removePositionTracker: (parameter: RemovePositionTrackerParameter, tr?: Transaction) => {
+        const { id } = parameter;
         const existingPosition = helpers.findPositionTracker(id);
+
+        tr = tr ?? this.store.getState().tr;
 
         if (!existingPosition) {
           return;
@@ -87,12 +93,14 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
       },
 
       /**
-       * This helper returns a transaction that clears all position tracker when any exist.
+       * This helper returns a transaction that clears all position trackers when any exist.
        *
        * Otherwise it returns undefined.
        */
-      clearPositionTrackers: (tr: Transaction = getState().tr) => {
-        const positionTrackerState = getPluginState(this.pluginKey, getState());
+      clearPositionTrackers: (tr?: Transaction) => {
+        const positionTrackerState = this.getPluginState();
+
+        tr = tr ?? this.store.getState().tr;
 
         if (positionTrackerState === DecorationSet.empty) {
           return;
@@ -107,10 +115,10 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
        * @param id - the unique position id which can be any type
        */
       findPositionTracker: (id: unknown) => {
-        const decorations = getPluginState<DecorationSet>(this.pluginKey, getState());
+        const decorations = this.getPluginState<DecorationSet>();
         const found = decorations.find(undefined, undefined, (spec) => spec.id === id);
 
-        return found.length ? found[0].from : undefined;
+        return isNotEmpty(found.length) ? found[0].from : undefined;
       },
 
       /**
@@ -120,7 +128,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
        */
       findAllPositionTrackers: (): Record<string, number> => {
         const trackers: Record<string, number> = object();
-        const decorations = getPluginState<DecorationSet>(this.pluginKey, getState());
+        const decorations = this.getPluginState<DecorationSet>();
         const found = decorations.find(undefined, undefined, (spec) => spec.type === this.name);
 
         for (const decoration of found) {
@@ -132,16 +140,13 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
     };
 
     return helpers;
-  }
+  };
 
-  commands({ getHelpers }: CommandParameter) {
-    const commandFactory = <GArg>(helperName: string) => (
-      parameters: GArg,
-    ): ProsemirrorCommandFunction => (_, dispatch) => {
-      const helper = getHelpers(helperName);
-      const tr = helper(parameters);
+  #commandFactory = <Parameter>(helperName: string) => {
+    return (parameter: Parameter): CommandFunction => ({ dispatch }) => {
+      const helper = this.store.getHelpers()[helperName];
+      const tr: Transaction = helper(parameter);
 
-      // Nothing changed therefore do nothing
       if (!tr) {
         return false;
       }
@@ -152,36 +157,36 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
 
       return true;
     };
+  };
 
+  createCommands = () => {
     return {
       /**
        * Command to dispatch a transaction adding the tracker position to be tracked.
        * If no position parameter is specified it uses the current position.
        */
-      addPositionTracker: commandFactory<AddPositionTrackerParameter>('addPositionTracker'),
+      addPositionTracker: this.#commandFactory<AddPositionTrackerParameter>('addPositionTracker'),
 
       /**
        * A command to remove the specified tracker position.
        */
-      removePositionTracker: commandFactory<RemovePositionTrackerParameter>(
+      removePositionTracker: this.#commandFactory<RemovePositionTrackerParameter>(
         'removePositionTracker',
       ),
 
       /**
        * A command to remove all active tracker positions.
        */
-      clearPositionTrackers: commandFactory<void>('clearPositionTrackers'),
+      clearPositionTrackers: this.#commandFactory<void>('clearPositionTrackers'),
     };
-  }
+  };
 
-  plugin() {
-    const key = this.pluginKey;
+  createPlugin = (): CreatePluginReturn<DecorationSet> => {
     const name = this.name;
 
-    return new Plugin<DecorationSet>({
-      key,
+    return {
       state: {
-        init() {
+        init: () => {
           return DecorationSet.empty;
         },
         apply: (tr, decorationSet) => {
@@ -189,17 +194,16 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
           decorationSet = decorationSet.map(tr.mapping, tr.doc);
 
           // Get tracker updates from the meta data
-          const tracker = getPluginMeta<PositionTrackerExtensionMeta>(key, tr);
+          const tracker = getPluginMeta<PositionTrackerExtensionMeta>(this.pluginKey, tr);
 
           if (isNullOrUndefined(tracker)) {
             return decorationSet;
           }
 
           if (tracker.add) {
-            const { defaultClassName, defaultElement } = this.options;
-            const { className, element = defaultElement } = tracker.add;
+            const { className, element = this.options.element } = tracker.add;
             const widget = isString(element) ? document.createElement(element) : element;
-            const classNames = className ? [defaultClassName, className] : [defaultClassName];
+            const classNames = className ? [this.options.class, className] : [this.options.class];
 
             widget.classList.add(...classNames);
 
@@ -226,12 +230,12 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
         },
       },
       props: {
-        decorations: (state) => {
-          return getPluginState(key, state);
+        decorations: () => {
+          return this.getPluginState();
         },
       },
-    });
-  }
+    };
+  };
 }
 
 export interface PositionTrackerExtensionMeta {

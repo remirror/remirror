@@ -1,6 +1,5 @@
 import { ExtensionPriority } from '@remirror/core-constants';
 import { isArray } from '@remirror/core-helpers';
-import { Shape } from '@remirror/core-types';
 import { suggest, Suggestion } from '@remirror/pm/suggest';
 
 import { CreateLifecycleMethod, PlainExtension } from '../extension';

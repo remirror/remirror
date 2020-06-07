@@ -1,6 +1,6 @@
 import { ErrorConstant, ExtensionPriority } from '@remirror/core-constants';
 import { entries, invariant, object } from '@remirror/core-helpers';
-import { AnyFunction, EmptyShape, Shape } from '@remirror/core-types';
+import { AnyFunction, EmptyShape } from '@remirror/core-types';
 
 import {
   AnyExtension,

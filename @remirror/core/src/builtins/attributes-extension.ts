@@ -1,6 +1,6 @@
 import { ExtensionPriority } from '@remirror/core-constants';
 import { bool, object } from '@remirror/core-helpers';
-import { AttributesWithClass, Shape } from '@remirror/core-types';
+import { AttributesWithClass } from '@remirror/core-types';
 
 import { CreateLifecycleMethod, PlainExtension } from '../extension';
 import { AnyCombinedUnion } from '../preset';

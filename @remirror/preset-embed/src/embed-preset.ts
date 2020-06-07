@@ -9,14 +9,14 @@ import {
 
 import { IframeExtension, IframeOptions } from './iframe-extension';
 
-export interface TemplateOptions extends IframeOptions {}
+export interface EmbedOptions extends IframeOptions {}
 
-export class EmbedPreset extends Preset<TemplateOptions> {
-  static readonly staticKeys: StaticKeyList<TemplateOptions> = [];
-  static readonly handlerKeys: HandlerKeyList<TemplateOptions> = [];
-  static readonly customHandlerKeys: CustomHandlerKeyList<TemplateOptions> = [];
+export class EmbedPreset extends Preset<EmbedOptions> {
+  static readonly staticKeys: StaticKeyList<EmbedOptions> = [];
+  static readonly handlerKeys: HandlerKeyList<EmbedOptions> = [];
+  static readonly customHandlerKeys: CustomHandlerKeyList<EmbedOptions> = [];
 
-  static readonly defaultOptions: DefaultPresetOptions<TemplateOptions> = {
+  static readonly defaultOptions: DefaultPresetOptions<EmbedOptions> = {
     ...IframeExtension.defaultOptions,
   };
 
@@ -24,7 +24,7 @@ export class EmbedPreset extends Preset<TemplateOptions> {
     return 'embed' as const;
   }
 
-  protected onSetOptions(_parameter: OnSetOptionsParameter<TemplateOptions>) {}
+  protected onSetOptions(_parameter: OnSetOptionsParameter<EmbedOptions>) {}
 
   createExtensions() {
     const { defaultSource } = this.options;

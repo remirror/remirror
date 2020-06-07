@@ -433,6 +433,16 @@ importers:
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
       linaria: ^2.0.0-alpha.5
+  '@remirror/extension-position-tracker':
+    dependencies:
+      '@babel/runtime': 7.10.2
+      '@remirror/core': 'link:../core'
+    devDependencies:
+      '@remirror/pm': 'link:../pm'
+    specifiers:
+      '@babel/runtime': ^7.10.0
+      '@remirror/core': ^0.11.0
+      '@remirror/pm': ^0.0.0
   '@remirror/extension-positioner':
     dependencies:
       '@babel/runtime': 7.10.2

@@ -27,16 +27,6 @@ pnpm add @remirror/react-showcase @remirror/pm
 npm install @remirror/react-showcase @remirror/pm
 ```
 
-## Usage
-
-The following code creates an instance of this extension.
-
-```ts
-import { TemplateExtension } from '@remirror/react-showcase';
-
-const extension = new TemplateExtension();
-```
-
 ## Credits
 
 This package was bootstrapped with [monots].
