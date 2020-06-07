@@ -7,7 +7,7 @@
     "extension"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-horizontal-rule",
-  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/extension-horizontal-rule",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-horizontal-rule",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
@@ -20,13 +20,14 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.0",
-    "@remirror/core": "^0.11.0"
+    "@babel/runtime": "^7"
   },
   "devDependencies": {
+    "@remirror/core": "^0.11.0",
     "@remirror/pm": "^0.0.0"
   },
   "peerDependencies": {
+    "@remirror/core": "^0.11.0",
     "@remirror/pm": "^0.0.0"
   },
   "publishConfig": {

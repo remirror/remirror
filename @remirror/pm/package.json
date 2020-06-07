@@ -26,7 +26,7 @@
     "view"
   ],
   "dependencies": {
-    "@babel/runtime": ">=7 <8",
+    "@babel/runtime": "^7",
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-dropcursor": "^1.0.0",
     "@types/prosemirror-gapcursor": "^1.0.1",

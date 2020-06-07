@@ -24,14 +24,15 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": ">=7 <8",
-    "@remirror/core": "^0.11.0",
+    "@babel/runtime": "^7",
     "map-obj": "^4.1.0"
   },
   "devDependencies": {
+    "@remirror/core": "^0.11.0",
     "@remirror/pm": "*"
   },
   "peerDependencies": {
+    "@remirror/core": "^0.11.0",
     "@remirror/pm": "0.0.0"
   },
   "publishConfig": {

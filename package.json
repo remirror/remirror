@@ -175,7 +175,7 @@
     "@babel/plugin-transform-typescript": "^7.10.1",
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
-    "@babel/runtime": "^7.10.2",
+    "@babel/runtime": "^7",
     "@changesets/cli": "^2.8.0",
     "@jest/types": "^26.0.1",
     "@lingui/cli": "^3.0.0-13",

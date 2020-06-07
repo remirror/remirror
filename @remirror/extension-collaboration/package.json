@@ -22,15 +22,16 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": ">=7 <8",
-    "@remirror/core": "^0.11.0",
+    "@babel/runtime": "^7",
     "@types/prosemirror-collab": "^1.1.0"
   },
   "devDependencies": {
+    "@remirror/core": "^0.11.0",
     "@remirror/pm": "^0.0.0",
     "prosemirror-collab": "^1.2.2"
   },
   "peerDependencies": {
+    "@remirror/core": "^0.11.0",
     "@remirror/pm": "^0.0.0",
     "prosemirror-collab": "^1.2.2"
   },

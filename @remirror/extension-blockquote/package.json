@@ -7,7 +7,7 @@
     "extension"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-blockquote",
-  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/extension-blockquote",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-blockquote",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
@@ -20,10 +20,11 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.0",
-    "linaria": "2.0.0-alpha.5"
+    "@babel/runtime": "^7",
+    "linaria": "^2.0.0-alpha.5"
   },
   "devDependencies": {
+    "@remirror/core": "^0.11.0",
     "@remirror/pm": "^0.0.0"
   },
   "peerDependencies": {

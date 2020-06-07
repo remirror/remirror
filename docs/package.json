@@ -12,7 +12,7 @@
     "start": "gatsby develop"
   },
   "dependencies": {
-    "@babel/runtime": ">=7 <8",
+    "@babel/runtime": "^7",
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@mdx-js/mdx": "^1.6.4",
@@ -65,7 +65,7 @@
     "react-dom": "^16.13.1",
     "react-helmet": "^6.0.0",
     "react-live": "^2.2.2",
-    "react-use": "^15.1.0",
+    "react-use": "^15.1.1",
     "remark-emoji": "^2.1.0",
     "remark-slug": "^6.0.0",
     "remark-unwrap-images": "^2.0.0",

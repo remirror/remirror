@@ -22,8 +22,15 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": ">=7 <8",
-    "@remirror/core": "^0.11.0"
+    "@babel/runtime": "^7"
+  },
+  "devDependencies": {
+    "@remirror/core": "*",
+    "@remirror/pm": "*"
+  },
+  "peerDependencies": {
+    "@remirror/core": "^0.11.0",
+    "@remirror/pm": "^0.0.0"
   },
   "publishConfig": {
     "access": "public"

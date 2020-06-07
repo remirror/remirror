@@ -17,7 +17,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": ">=7 <8",
+    "@babel/runtime": "^7",
     "@emotion/core": "^10.0.28",
     "@remirror/core-helpers": "^0.7.6",
     "figures": "^3.2.0",
@@ -26,7 +26,7 @@
     "jsesc": "^3.0.1",
     "parcel-bundler": "^1.12.4",
     "react": "^16.13.1",
-    "react-use": "^15.1.0",
+    "react-use": "^15.1.1",
     "rimraf": "^3.0.2",
     "yargs": "^15.3.1"
   },

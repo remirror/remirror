@@ -20,8 +20,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": ">=7 <8",
-    "@remirror/core": "^0.11.0",
+    "@babel/runtime": "^7",
     "@remirror/extension-positioner": "^0.0.0",
     "@remirror/i18n": "^0.0.0",
     "@remirror/preset-core": "^0.0.0",
@@ -40,6 +39,7 @@
     "use-deep-compare-effect": "^1.3.1"
   },
   "devDependencies": {
+    "@remirror/core": "^0.11.0",
     "@remirror/pm": "^0.0.0",
     "@testing-library/react": "^10.2.1",
     "@testing-library/react-hooks": "^3.3.0",
@@ -54,6 +54,7 @@
     "react-test-renderer": "^16.13.1"
   },
   "peerDependencies": {
+    "@remirror/core": "^0.11.0",
     "@remirror/pm": "^0.0.0",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
