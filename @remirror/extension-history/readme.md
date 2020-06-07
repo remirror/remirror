@@ -1,6 +1,6 @@
 # @remirror/extension-history
 
-> REPLACE ME - DESCRIPTION
+> Add undo and redo history to your editor.
 
 [![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
 [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)

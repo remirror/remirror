@@ -262,23 +262,6 @@ module.exports = {
       files: ['*.ts', '*.tsx'],
       rules: {
         ...tsProjectRules,
-        // '@getify/proper-arrows/where': [
-        //   'error',
-        //   { global: true, export: true, trivial: false, property: false },
-        // ],
-        '@typescript-eslint/explicit-member-accessibility': [
-          'warn',
-          {
-            accessibility: 'explicit',
-            overrides: {
-              accessors: 'off',
-              constructors: 'no-public',
-              methods: 'explicit',
-              properties: 'explicit',
-              parameterProperties: 'explicit',
-            },
-          },
-        ],
         '@typescript-eslint/restrict-template-expressions': [
           'warn',
           { allowNumber: true, allowBoolean: true },
@@ -327,7 +310,7 @@ module.exports = {
     },
     {
       files: ['docs/**'],
-      rules: { ...graphqlRules, },
+      rules: { ...graphqlRules },
     },
     {
       files: ['@remirror/i18n/**/*.js'],

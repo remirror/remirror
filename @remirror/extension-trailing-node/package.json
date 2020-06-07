@@ -1,21 +1,21 @@
 {
-  "name": "@remirror/extension-template",
+  "name": "@remirror/extension-trailing-node",
   "version": "0.0.0",
-  "description": "TEMPLATE_DESCRIPTION",
+  "description": "Make sure there's always space to type in your editor.",
   "keywords": [
     "remirror",
     "extension"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-template",
-  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/extension-template",
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-trailing-node",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/extension-trailing-node",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-template.cjs.js",
-  "module": "dist/extension-template.esm.js",
-  "types": "dist/extension-template.cjs.d.ts",
+  "main": "dist/extension-trailing-node.cjs.js",
+  "module": "dist/extension-trailing-node.esm.js",
+  "types": "dist/extension-trailing-node.cjs.d.ts",
   "files": [
     "dist"
   ],

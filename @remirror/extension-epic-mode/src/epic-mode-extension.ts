@@ -83,7 +83,6 @@ export class EpicModePluginState {
 
   private container!: HTMLElement;
 
-  /* eslint-disable @typescript-eslint/explicit-member-accessibility */
   readonly #extension: EpicModeExtension;
   #shakeTime = 0;
   #shakeTimeMax = 0;
@@ -91,7 +90,6 @@ export class EpicModePluginState {
   #particles: Particle[] = [];
   #isActive = false;
   private view!: EditorView;
-  /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
   constructor(extension: EpicModeExtension) {
     this.#extension = extension;

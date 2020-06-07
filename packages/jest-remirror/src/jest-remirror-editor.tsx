@@ -73,8 +73,6 @@ export function renderEditor<Combined extends AnyCombinedUnion>(
   return new RemirrorTestChain(manager, utils);
 }
 
-/* eslint-disable @typescript-eslint/explicit-member-accessibility */
-
 /**
  * This creates a chainable test helper for testing your remirror presets,
  * extensions and commands.
@@ -85,8 +83,6 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
 
   /** Additional custom tags */
   #tags?: Tags;
-
-  /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
   /**
    * Utilities provided by `@testing-library/react`.

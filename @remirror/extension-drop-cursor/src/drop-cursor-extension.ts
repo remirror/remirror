@@ -205,7 +205,6 @@ class DropCursorState {
    */
   public decorationSet = DecorationSet.empty;
 
-  /* eslint-disable @typescript-eslint/explicit-member-accessibility */
   readonly #extension: DropCursorExtension;
 
   /**
@@ -232,8 +231,6 @@ class DropCursorState {
    * The current derived target position. This is cached to help prevent unnecessary re-rendering.
    */
   #target?: number;
-
-  /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
   constructor(extension: DropCursorExtension) {
     this.#extension = extension;

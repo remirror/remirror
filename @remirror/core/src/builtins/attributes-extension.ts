@@ -24,10 +24,8 @@ export class AttributesExtension extends PlainExtension {
     return 'attributes' as const;
   }
 
-  /* eslint-disable @typescript-eslint/explicit-member-accessibility */
   #attributeList: AttributesWithClass[] = [];
   #attributeObject: AttributesWithClass = object();
-  /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
   /**
    * Create the attributes object on initialization.

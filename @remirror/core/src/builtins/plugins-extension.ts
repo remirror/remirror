@@ -1,7 +1,7 @@
 import { Except } from 'type-fest';
 
 import { ErrorConstant, ExtensionPriority, ManagerPhase } from '@remirror/core-constants';
-import { invariant, object } from '@remirror/core-helpers';
+import { entries, invariant, isEmptyArray, object } from '@remirror/core-helpers';
 import { EditorSchema, ProsemirrorPlugin } from '@remirror/core-types';
 import { getPluginState } from '@remirror/core-utils';
 import { Plugin, PluginKey, PluginSpec } from '@remirror/pm/state';
@@ -36,12 +36,12 @@ export class PluginsExtension extends PlainExtension {
   /**
    * All plugins created by other extension as well.
    */
-  private plugins: ProsemirrorPlugin[] = [];
+  #plugins: ProsemirrorPlugin[] = [];
 
   /**
    * Plugins created by the `createPlugin` methods and `createExternalPlugins`.
    */
-  private readonly extensionPlugins: ProsemirrorPlugin[] = [];
+  private extensionPlugins: ProsemirrorPlugin[] = [];
 
   private readonly pluginKeys: Record<string, PluginKey> = object();
 
@@ -57,7 +57,7 @@ export class PluginsExtension extends PlainExtension {
     this.updateExtensionStore();
 
     for (const extension of extensions) {
-      this.createEachExtensionPlugins(extension);
+      this.updateOrCreateExtensionPlugins(extension);
     }
 
     setStoreKey('pluginKeys', this.pluginKeys);
@@ -66,7 +66,7 @@ export class PluginsExtension extends PlainExtension {
     this.store.addPlugins(...this.extensionPlugins);
   };
 
-  private createEachExtensionPlugins(extension: AnyExtension) {
+  private updateOrCreateExtensionPlugins(extension: AnyExtension) {
     const isNotPluginCreator = !extension.createPlugin && !extension.createExternalPlugins;
 
     if (
@@ -79,10 +79,10 @@ export class PluginsExtension extends PlainExtension {
       return;
     }
 
-    const key = new PluginKey(extension.name);
-
     // Create the custom plugin if it exists.
     if (extension.createPlugin) {
+      const key = new PluginKey(extension.name);
+
       // Assign the plugin key to the extension name.
       this.pluginKeys[extension.name] = key;
       const getter = <State>() => getPluginState<State>(key, this.store.getStoreKey('view').state);
@@ -97,14 +97,52 @@ export class PluginsExtension extends PlainExtension {
         ...extension.createPlugin(),
         key,
       };
+      const plugin = new Plugin(pluginSpec);
 
-      this.extensionPlugins.push(new Plugin(pluginSpec));
+      this.addOrReplacePlugins([plugin], [extension.plugin]);
+      extension.plugin = plugin;
     }
 
     if (extension.createExternalPlugins) {
-      // Add the external plugins if they exist
-      this.extensionPlugins.push(...extension.createExternalPlugins());
+      const externalPlugins = extension.createExternalPlugins();
+
+      this.addOrReplacePlugins(externalPlugins, extension.externalPlugins);
+      extension.externalPlugins = externalPlugins;
     }
+  }
+
+  /**
+   * Add or replace a plugin.
+   */
+  private addOrReplacePlugins(plugins: Plugin[], previous?: Plugin[]) {
+    // This is the first time plugins are being added.
+    if (!previous || isEmptyArray(previous)) {
+      this.extensionPlugins = [...this.extensionPlugins, ...plugins];
+      return;
+    }
+
+    // The number of plugins and previous plugins is different.
+    if (plugins.length !== previous.length) {
+      // Remove previous plugins and add the new plugins to the end.
+      this.extensionPlugins = [
+        ...this.extensionPlugins.filter((plugin) => !previous.includes(plugin)),
+        ...plugins,
+      ];
+      return;
+    }
+
+    // The length of plugins is identical, therefore a replacement is possible.
+
+    const pluginMap = new Map<Plugin, Plugin>();
+
+    for (const [index, plugin] of Object.entries(plugins)) {
+      pluginMap.set(previous[Number.parseInt(index, 10)], plugin);
+    }
+
+    this.extensionPlugins = this.extensionPlugins.map((plugin) => {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      return previous.includes(plugin) ? pluginMap.get(plugin)! : plugin;
+    });
   }
 
   // Method for retrieving the plugin state by the extension name.
@@ -137,9 +175,9 @@ export class PluginsExtension extends PlainExtension {
    * Adds a plugin to the list of plugins.
    */
   private readonly addPlugins = (...plugins: ProsemirrorPlugin[]) => {
-    this.plugins = [...this.plugins, ...plugins];
+    this.#plugins = [...this.#plugins, ...plugins];
 
-    this.store.setStoreKey('plugins', this.plugins);
+    this.store.setStoreKey('plugins', this.#plugins);
   };
 
   /**
@@ -151,9 +189,9 @@ export class PluginsExtension extends PlainExtension {
     original: ProsemirrorPlugin,
     replacement: ProsemirrorPlugin,
   ) => {
-    this.plugins = this.plugins.map((plugin) => (plugin === original ? replacement : original));
+    this.#plugins = this.#plugins.map((plugin) => (plugin === original ? replacement : original));
 
-    this.store.setStoreKey('plugins', this.plugins);
+    this.store.setStoreKey('plugins', this.#plugins);
   };
 
   /**
@@ -167,7 +205,7 @@ export class PluginsExtension extends PlainExtension {
     });
 
     const { state, updateState } = this.store.view;
-    const newState = state.reconfigure({ plugins: this.plugins });
+    const newState = state.reconfigure({ plugins: this.#plugins });
 
     updateState(newState);
   };
@@ -295,6 +333,11 @@ declare global {
        * exists for extension which implement that method.
        */
       plugin: Plugin;
+
+      /**
+       * The external plugins created by the `createExternalPlugins` method.
+       */
+      externalPlugins: Plugin[];
     }
 
     interface ExtensionCreatorMethods {

@@ -23,7 +23,6 @@ import {
 } from './code-block-utils';
 
 export class CodeBlockState {
-  /* eslint-disable @typescript-eslint/explicit-member-accessibility */
   /**
    * Keep track of all document codeBlocks
    */
@@ -40,7 +39,6 @@ export class CodeBlockState {
    * Tracks whether or not a deletion has occurred.
    */
   #deleted = false;
-  /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
   /**
    * The set of cached decorations to minimise dom updates

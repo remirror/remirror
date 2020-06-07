@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/member-ordering */
-/* eslint-disable @typescript-eslint/explicit-member-accessibility */
+
 import {
   __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
   ErrorConstant,
@@ -800,7 +800,6 @@ declare global {
 }
 
 /* eslint-enable @typescript-eslint/member-ordering */
-/* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
 // Make the abstract extension available but only as a type.
 export type { Extension };

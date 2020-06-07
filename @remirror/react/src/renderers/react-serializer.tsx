@@ -112,9 +112,7 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
   public nodes: Record<string, NodeToDOM>;
   public marks: Record<string, MarkToDOM>;
 
-  /* eslint-disable @typescript-eslint/explicit-member-accessibility */
   readonly #components: Record<string, ComponentType<any>>;
-  /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
   constructor(
     nodes: Record<string, NodeToDOM>,

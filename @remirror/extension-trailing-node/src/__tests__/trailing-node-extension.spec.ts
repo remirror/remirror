@@ -1,16 +1,22 @@
 import { renderEditor } from 'jest-remirror';
 
 import { object } from '@remirror/core';
-import { ExtensionMap } from '@remirror/test-fixtures';
+import { isExtensionValid } from '@remirror/test-fixtures';
 
+import { TrailingNodeExtension } from '../..';
 import { TrailingNodeExtension, TrailingNodeExtensionOptions } from '../trailing-node-extension';
 
+test('is valid', () => {
+  expect(isExtensionValid(TrailingNodeExtension, {}));
+});
+
 const { heading: headingNode, blockquote: blockquoteNode } = ExtensionMap.nodes;
-const create = (params: Partial<TrailingNodeExtensionOptions> = object()) =>
-  renderEditor({
+function create(params: Partial<TrailingNodeExtensionOptions> = object()) {
+  return renderEditor({
     plainNodes: [headingNode, blockquoteNode],
     others: [new TrailingNodeExtension(params)],
   });
+}
 
 describe('plugin', () => {
   let {

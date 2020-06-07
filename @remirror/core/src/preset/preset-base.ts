@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import {
   __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
   ErrorConstant,
@@ -366,8 +365,6 @@ export type PresetConstructorParameter<Options extends ValidOptions> = Construct
   Options,
   EmptyShape
 >;
-
-/* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
 declare global {
   namespace Remirror {

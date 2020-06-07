@@ -123,8 +123,6 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
     });
   }
 
-  /* eslint-disable @typescript-eslint/explicit-member-accessibility */
-
   /**
    * Utility getter for storing the base method parameter which is available to
    * all extensions.
@@ -166,8 +164,6 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
     transaction: TransactionLifecycleMethod[];
     destroy: DestroyLifecycleMethod[];
   } = { transaction: [], view: [], create: [], destroy: [] };
-
-  /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
   /**
    * Identifies this as a `Manager`.

@@ -41,7 +41,6 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
     return 'positioner' as const;
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   #positionerHandlerList: PositionerHandler[] = [];
 
   protected onAddCustomHandler: AddCustomHandler<PositionerOptions> = ({ positionerHandler }) => {

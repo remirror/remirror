@@ -1,7 +1,7 @@
 {
   "name": "@remirror/extension-history",
   "version": "0.0.0",
-  "description": "REPLACE ME - DESCRIPTION",
+  "description": "Add undo and redo history to your editor.",
   "keywords": [
     "remirror",
     "extension"

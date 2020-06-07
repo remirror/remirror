@@ -25,11 +25,9 @@ export class TagsExtension extends PlainExtension {
     return 'tags' as const;
   }
 
-  /* eslint-disable @typescript-eslint/explicit-member-accessibility */
   #generalTags: GeneralExtensionTags = object();
   #markTags: MarkExtensionTags = object();
   #nodeTags: NodeExtensionTags = object();
-  /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
   get combinedTags() {
     return {

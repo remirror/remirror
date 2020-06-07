@@ -1,6 +1,6 @@
 # @remirror/extension-placeholder
 
-> REPLACE ME - DESCRIPTION
+> TEMPLATE_DESCRIPTION
 
 [![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
 [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)
