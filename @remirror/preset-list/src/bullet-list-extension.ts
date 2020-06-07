@@ -1,0 +1,49 @@
+import {
+  ApplyExtraAttributes,
+  convertCommand,
+  KeyBindings,
+  NodeExtension,
+  NodeExtensionSpec,
+  NodeGroup,
+  toggleList,
+} from '@remirror/core';
+import { wrappingInputRule } from '@remirror/pm/inputrules';
+
+/**
+ * Creates the node for a bullet list.
+ */
+export class BulletListExtension extends NodeExtension {
+  get name() {
+    return 'bulletList' as const;
+  }
+
+  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
+    return {
+      attrs: extra.defaults(),
+      content: 'listItem+',
+      group: NodeGroup.Block,
+      parseDOM: [{ tag: 'ul', getAttrs: extra.parse }],
+      toDOM: (node) => ['ul', extra.dom(node.attrs), 0],
+    };
+  }
+
+  createCommands = () => {
+    return {
+      /**
+       * Toggle the bullet list.
+       */
+      toggleBulletList: () =>
+        convertCommand(toggleList(this.type, this.store.schema.nodes.listItem)),
+    };
+  };
+
+  createKeymap = (): KeyBindings => {
+    return {
+      'Shift-Ctrl-8': convertCommand(toggleList(this.type, this.store.schema.nodes.listItem)),
+    };
+  };
+
+  createInputRules = () => {
+    return [wrappingInputRule(/^\s*([*+-])\s$/, this.type)];
+  };
+}

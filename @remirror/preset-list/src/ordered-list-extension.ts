@@ -1,29 +1,30 @@
-import { wrappingInputRule } from '@remirror/pm/inputrules';
-
 import {
-  CommandNodeTypeParameter,
+  ApplyExtraAttributes,
   convertCommand,
   isElementDOMNode,
   KeyBindings,
-  ManagerNodeTypeParameter,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
   toggleList,
 } from '@remirror/core';
+import { wrappingInputRule } from '@remirror/pm/inputrules';
 
+/**
+ * Creates the list for the ordered list.
+ */
 export class OrderedListExtension extends NodeExtension {
   get name() {
     return 'orderedList' as const;
   }
 
-  get schema(): NodeExtensionSpec {
+  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
     return {
       attrs: {
+        ...extra.defaults(),
         order: {
           default: 1,
         },
-        ...this.extraAttributes(),
       },
       content: 'listItem+',
       group: NodeGroup.Block,
@@ -36,34 +37,46 @@ export class OrderedListExtension extends NodeExtension {
             }
 
             return {
+              ...extra.parse(node),
               order: +(node.getAttribute('start') ?? 1),
             };
           },
         },
       ],
-      toDOM: (node) =>
-        node.attrs.order === 1 ? ['ol', 0] : ['ol', { start: node.attrs.order }, 0],
+      toDOM: (node) => {
+        const extraAttributes = extra.dom(node.attrs);
+
+        return node.attrs.order === 1
+          ? ['ol', extraAttributes, 0]
+          : ['ol', { ...extraAttributes, start: node.attrs.order }, 0];
+      },
     };
   }
 
-  commands({ type, schema }: CommandNodeTypeParameter) {
-    return { toggleOrderedList: () => toggleList(type, schema.nodes.listItem) };
-  }
-
-  keys({ type, schema }: ManagerNodeTypeParameter): KeyBindings {
+  createCommands = () => {
     return {
-      'Shift-Ctrl-9': convertCommand(toggleList(type, schema.nodes.listItem)),
+      /**
+       * Toggle the ordered list for the current selection.
+       */
+      toggleOrderedList: () =>
+        convertCommand(toggleList(this.type, this.store.schema.nodes.listItem)),
     };
-  }
+  };
 
-  inputRules({ type }: ManagerNodeTypeParameter) {
+  createKeymap = (): KeyBindings => {
+    return {
+      'Shift-Ctrl-9': convertCommand(toggleList(this.type, this.store.schema.nodes.listItem)),
+    };
+  };
+
+  createInputRules = () => {
     return [
       wrappingInputRule(
         /^(\d+)\.\s$/,
-        type,
+        this.type,
         (match) => ({ order: +match[1] }),
         (match, node) => node.childCount + (node.attrs.order as number) === +match[1],
       ),
     ];
-  }
+  };
 }

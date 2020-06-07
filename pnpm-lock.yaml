@@ -278,6 +278,16 @@ importers:
       '@remirror/core': ^0.11.0
       '@remirror/pm': '*'
       map-obj: ^4.1.0
+  '@remirror/extension-blockquote':
+    dependencies:
+      '@babel/runtime': 7.10.2
+      linaria: 2.0.0-alpha.5
+    devDependencies:
+      '@remirror/pm': 'link:../pm'
+    specifiers:
+      '@babel/runtime': ^7.10.0
+      '@remirror/pm': ^0.0.0
+      linaria: 2.0.0-alpha.5
   '@remirror/extension-bold':
     dependencies:
       '@babel/runtime': 7.10.2
@@ -382,6 +392,26 @@ importers:
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
       linaria: ^2.0.0-alpha.5
+  '@remirror/extension-hard-break':
+    dependencies:
+      '@babel/runtime': 7.10.2
+      '@remirror/core': 'link:../core'
+    devDependencies:
+      '@remirror/pm': 'link:../pm'
+    specifiers:
+      '@babel/runtime': ^7.10.0
+      '@remirror/core': ^0.11.0
+      '@remirror/pm': ^0.0.0
+  '@remirror/extension-heading':
+    dependencies:
+      '@babel/runtime': 7.10.2
+      '@remirror/core': 'link:../core'
+    devDependencies:
+      '@remirror/pm': 'link:../pm'
+    specifiers:
+      '@babel/runtime': ^7.10.0
+      '@remirror/core': ^0.11.0
+      '@remirror/pm': ^0.0.0
   '@remirror/extension-history':
     dependencies:
       '@babel/runtime': 7.10.2
@@ -390,6 +420,16 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': '>=7 <8'
+      '@remirror/core': ^0.11.0
+      '@remirror/pm': ^0.0.0
+  '@remirror/extension-horizontal-rule':
+    dependencies:
+      '@babel/runtime': 7.10.2
+      '@remirror/core': 'link:../core'
+    devDependencies:
+      '@remirror/pm': 'link:../pm'
+    specifiers:
+      '@babel/runtime': ^7.10.0
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
   '@remirror/extension-image':
@@ -622,6 +662,16 @@ importers:
       '@remirror/pm': ^0.0.0
       linaria: ^2.0.0-alpha.5
       tiny-querystring: ^0.0.2
+  '@remirror/preset-list':
+    dependencies:
+      '@babel/runtime': 7.10.2
+    devDependencies:
+      '@remirror/core': 'link:../core'
+      '@remirror/pm': 'link:../pm'
+    specifiers:
+      '@babel/runtime': ^7.10.0
+      '@remirror/core': ^0.11.0
+      '@remirror/pm': ^0.0.0
   '@remirror/preset-react':
     dependencies:
       '@babel/runtime': 7.10.2

@@ -4,8 +4,6 @@ import { ConditionalExcept, ConditionalPick } from 'type-fest';
 
 import { AttributeSpec } from '@remirror/pm/model';
 
-import { ProsemirrorNode } from './alias-types';
-
 /**
  * An alternative to keyof that only extracts the string keys.
  */
