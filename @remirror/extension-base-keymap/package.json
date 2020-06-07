@@ -24,7 +24,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7",
+    "@babel/runtime": "^7.10.0",
     "map-obj": "^4.1.0"
   },
   "devDependencies": {

@@ -12,7 +12,7 @@
     "start": "gatsby develop"
   },
   "dependencies": {
-    "@babel/runtime": "^7",
+    "@babel/runtime": "^7.10.0",
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@mdx-js/mdx": "^1.6.4",

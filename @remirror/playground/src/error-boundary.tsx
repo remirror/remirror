@@ -1,11 +1,11 @@
 import React from 'react';
 
-export class ErrorBoundary extends React.Component<{}, { error: Error | null }> {
+export class ErrorBoundary extends React.Component<object, { error: Error | null }> {
   static getDerivedStateFromError(error: Error) {
     return { error };
   }
 
-  constructor(props: {}) {
+  constructor(props: object) {
     super(props);
     this.state = { error: null };
   }

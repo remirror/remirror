@@ -1,5 +1,4 @@
-import React from 'react';
-import { FC, forwardRef, Fragment, ReactElement } from 'react';
+import React, { FC, forwardRef, Fragment, ReactElement } from 'react';
 
 import { isPlainObject } from '@remirror/core-helpers';
 import { useRemirrorTheme } from '@remirror/ui';

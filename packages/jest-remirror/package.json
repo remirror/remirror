@@ -22,7 +22,7 @@
     "environment"
   ],
   "dependencies": {
-    "@babel/runtime": "^7",
+    "@babel/runtime": "^7.10.0",
     "@remirror/pm": "^0.0.0",
     "@testing-library/react": "^10.2.1",
     "@types/node": "^14.0.9",

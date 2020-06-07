@@ -1,7 +1,7 @@
 import { cleanup } from '@testing-library/react';
 
-import { Extension, toHTML } from 'remirror/core';
 import { Plugin } from '@remirror/pm/state';
+import { Extension, toHTML } from 'remirror/core';
 import {
   BlockquoteExtension,
   BoldExtension,

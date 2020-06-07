@@ -6,7 +6,7 @@ import { Bundle } from './cli-components';
 import { bundleFile } from './cli-parcel';
 import { BundleArgv } from './cli-types';
 
-export const bundle: CommandModule<{}, BundleArgv> = {
+export const bundle: CommandModule<object, BundleArgv> = {
   async handler(args) {
     const runBundler = () => bundleFile(args);
     render(<Bundle args={args} startTime={Date.now()} runBundler={runBundler} />);

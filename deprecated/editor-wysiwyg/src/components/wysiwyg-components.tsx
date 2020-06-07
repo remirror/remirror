@@ -1,5 +1,4 @@
-import React from 'react';
-import { FC, forwardRef } from 'react';
+import React, { FC, forwardRef } from 'react';
 
 import { RemirrorInterpolation } from '@remirror/core';
 import { useRemirrorTheme } from '@remirror/ui';

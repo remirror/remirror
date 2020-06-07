@@ -23,7 +23,7 @@
     "serializer"
   ],
   "dependencies": {
-    "@babel/runtime": "^7",
+    "@babel/runtime": "^7.10.0",
     "@remirror/pm": "^0.0.0",
     "@testing-library/dom": "^7.10.1",
     "@types/prosemirror-schema-basic": "^1.0.1",

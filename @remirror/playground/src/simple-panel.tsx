@@ -1,7 +1,7 @@
 import React, { FC, Fragment, useCallback, useMemo } from 'react';
 
-import { CodeOptions, ExtensionSpec, RemirrorModules } from './interfaces';
 import { REQUIRED_MODULES } from './execute';
+import { CodeOptions, ExtensionSpec, RemirrorModules } from './interfaces';
 
 export interface SimplePanelProps {
   options: CodeOptions;

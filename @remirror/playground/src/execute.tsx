@@ -3,10 +3,9 @@
 import * as babelRuntimeHelpersInteropRequireDefault from '@babel/runtime/helpers/interopRequireDefault';
 import * as crypto from 'crypto';
 import { languages } from 'monaco-editor';
-import React, { FC, useMemo, useEffect, useRef } from 'react';
+import React, { FC, useEffect, useMemo, useRef } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 
-import * as remirrorCore from 'remirror/core';
 // addImport('@remirror/react', 'RemirrorProvider');
 // addImport('@remirror/react', 'useManager');
 // addImport('@remirror/react', 'useExtension');
@@ -14,6 +13,7 @@ import { debounce } from '@remirror/core-helpers';
 // import * as remirrorCoreExtensions from '@remirror/core-extensions';
 //import * as remirrorReact from '@remirror/react';
 import { RemirrorProvider, useExtension, useManager, useRemirror } from '@remirror/react';
+import * as remirrorCore from 'remirror/core';
 
 //import * as remirror from 'remirror';
 import { ErrorBoundary } from './error-boundary';

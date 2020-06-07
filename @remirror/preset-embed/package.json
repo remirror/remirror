@@ -21,7 +21,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7",
+    "@babel/runtime": "^7.10.0",
     "linaria": "^2.0.0-alpha.5",
     "tiny-querystring": "^0.0.2"
   },

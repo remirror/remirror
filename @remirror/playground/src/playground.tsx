@@ -2,14 +2,13 @@ import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 
 import CodeEditor from './code-editor';
 import { ErrorBoundary } from './error-boundary';
-import { makeRequire } from './execute';
+import { makeRequire, REQUIRED_MODULES } from './execute';
 import { isExtensionName } from './exports';
 import { CodeOptions, Exports, RemirrorModules } from './interfaces';
 import { makeCode } from './make-code';
 import { Container, Divide, Header, Main, Panel } from './primitives';
 import { SimplePanel } from './simple-panel';
 import { Viewer } from './viewer';
-import { REQUIRED_MODULES } from './execute';
 
 export { useRemirrorPlayground } from './use-remirror-playground';
 

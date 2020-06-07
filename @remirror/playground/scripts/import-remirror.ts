@@ -52,7 +52,7 @@ async function main() {
   console.dir(everything, { depth: 6 });
 }
 
-main().catch((e) => {
-  console.error(e);
+main().catch((error) => {
+  console.error(error);
   process.exit(1);
 });

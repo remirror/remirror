@@ -1,5 +1,4 @@
-import React from 'react';
-import { FC, Fragment, useMemo, useState } from 'react';
+import React, { FC, Fragment, useMemo, useState } from 'react';
 import bash from 'refractor/lang/bash';
 import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';

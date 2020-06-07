@@ -20,7 +20,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7",
+    "@babel/runtime": "^7.10.0",
     "@remirror/extension-positioner": "^0.0.0",
     "@remirror/i18n": "^0.0.0",
     "@remirror/preset-core": "^0.0.0",

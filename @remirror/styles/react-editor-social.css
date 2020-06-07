@@ -1,7 +1,7 @@
 /**
- * Styles extracted from: @remirror/react-editor-social/src/styles.ts
+ * Styles extracted from: @remirror/react-editor-social/src/social-editor-styles.ts
  */
-.remirror-editor {
+.remirror-social-editor {
   -webkit-box-flex: 1px;
   -webkit-flex-grow: 1px;
   -ms-flex-positive: 1px;
@@ -30,7 +30,7 @@
   padding: 8px;
   padding-right: 40px;
 }
-.remirror-editor p {
+.remirror-social-editor p {
   margin: 0px;
   -webkit-letter-spacing: 0.6px;
   -moz-letter-spacing: 0.6px;
@@ -38,20 +38,20 @@
   letter-spacing: 0.6px;
   color: text;
 }
-.remirror-editor a.mention {
+.remirror-social-editor a.mention {
   pointer-events: none;
   cursor: default;
 }
-.remirror-editor a {
+.remirror-social-editor a {
   -webkit-text-decoration: none !important;
   text-decoration: none !important;
   color: primary;
 }
-.remirror-editor:focus {
+.remirror-social-editor:focus {
   outline: none;
   box-shadow: focus;
 }
-.remirror-editor .Prosemirror-selectednode {
+.remirror-social-editor .Prosemirror-selectednode {
   background-color: $oc-gray-1;
 }
 .remirror-emoji-suggestions-item {
@@ -161,7 +161,7 @@
 }
 
 /**
- * Styles extracted from: @remirror/react-editor-social/src/components/social-character-count.tsx
+ * Styles extracted from: @remirror/react-editor-social/src/components/social-editor-character-count.tsx
  */
 .remirror-character-count-wrapper {
   position: absolute;

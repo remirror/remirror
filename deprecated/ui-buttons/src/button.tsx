@@ -1,6 +1,5 @@
-import React from 'react';
 import { MinWidthProperty, WidthProperty } from 'csstype';
-import { ComponentType, forwardRef, ReactNode } from 'react';
+import React, { ComponentType, forwardRef, ReactNode } from 'react';
 
 import {
   KeyOfThemeVariant,

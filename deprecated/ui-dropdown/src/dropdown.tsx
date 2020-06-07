@@ -1,6 +1,5 @@
-import React from 'react';
 import { MultishiftPropGetters, Type, useMultishift } from 'multishift';
-import { forwardRef, useLayoutEffect, useRef, useState } from 'react';
+import React, { forwardRef, useLayoutEffect, useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 
 import { object } from '@remirror/core-helpers';

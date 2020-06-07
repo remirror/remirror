@@ -22,7 +22,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7",
+    "@babel/runtime": "^7.10.0",
     "csstype": "^2.6.10"
   },
   "devDependencies": {

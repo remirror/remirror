@@ -3,7 +3,6 @@
  */
 
 import { EditorState } from '@remirror/pm/state';
-
 import { initialJson, plugins, schema, testDocument } from '@remirror/test-fixtures';
 
 import { createEditorView, EditorViewSSR } from '../ssr-prosemirror-view';
