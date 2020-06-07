@@ -1,13 +1,17 @@
 import { pmBuild } from 'jest-prosemirror';
 
 import { fromHTML, toHTML } from '@remirror/core';
-import { createBaseTestManager } from '@remirror/test-fixtures';
+import { createBaseManager, isExtensionValid } from '@remirror/test-fixtures';
 
-import { CodeExtension } from '../code-extension';
+import { CodeExtension } from '..';
+
+test('is valid', () => {
+  expect(isExtensionValid(CodeExtension, {}));
+});
 
 describe('schema', () => {
   const codeTester = () => {
-    const { schema } = createBaseTestManager([{ extension: new CodeExtension(), priority: 1 }]);
+    const { schema } = createBaseManager({ extensions: [new CodeExtension()] });
     const { code, doc, p } = pmBuild(schema, {
       code: { markType: 'code' },
     });

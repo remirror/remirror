@@ -1,0 +1,55 @@
+import {
+  ApplyExtraAttributes,
+  convertCommand,
+  KeyBindings,
+  LEAF_NODE_REPLACING_CHARACTER,
+  MarkExtension,
+  MarkExtensionSpec,
+  MarkGroup,
+  markInputRule,
+  markPasteRule,
+} from '@remirror/core';
+import { toggleMark } from '@remirror/pm/commands';
+
+export class CodeExtension extends MarkExtension {
+  get name() {
+    return 'code' as const;
+  }
+
+  createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec {
+    return {
+      attrs: extra.defaults(),
+      group: MarkGroup.Code,
+      parseDOM: [{ tag: 'code', getAttrs: extra.parse }],
+      toDOM: ({ attrs }) => ['code', extra.dom(attrs), 0],
+    };
+  }
+
+  createKeymap = (): KeyBindings => {
+    return {
+      'Mod-`': convertCommand(toggleMark(this.type)),
+    };
+  };
+
+  createCommands = () => {
+    return {
+      /**
+       * Toggle the current selection as a code mark.
+       */
+      toggleCode: () => convertCommand(toggleMark(this.type)),
+    };
+  };
+
+  createInputRules = () => {
+    return [
+      markInputRule({
+        regexp: new RegExp(`(?:\`)([^\`${LEAF_NODE_REPLACING_CHARACTER}]+)(?:\`)$`),
+        type: this.type,
+      }),
+    ];
+  };
+
+  createPasteRules = () => {
+    return [markPasteRule({ regexp: /`([^`]+)`/g, type: this.type })];
+  };
+}
