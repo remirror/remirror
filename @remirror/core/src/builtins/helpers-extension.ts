@@ -1,16 +1,19 @@
 import { ErrorConstant, ExtensionPriority } from '@remirror/core-constants';
 import { entries, invariant, object } from '@remirror/core-helpers';
-import { AnyFunction, EmptyShape } from '@remirror/core-types';
+import { AnyFunction, EmptyShape, ProsemirrorAttributes } from '@remirror/core-types';
+import { isMarkActive, isNodeActive } from '@remirror/core-utils';
 
 import {
   AnyExtension,
   CreateLifecycleMethod,
   HelpersFromExtensions,
+  isMarkExtension,
+  isNodeExtension,
   PlainExtension,
   ViewLifecycleMethod,
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
-import { AnyCombinedUnion, HelpersFromCombined } from '../preset';
+import { ActiveFromCombined, AnyCombinedUnion, HelpersFromCombined } from '../preset';
 import { ExtensionHelperReturn } from '../types';
 
 /**
@@ -50,9 +53,22 @@ export class HelpersExtension extends PlainExtension {
    */
   onView: ViewLifecycleMethod = (extensions) => {
     const helpers: Record<string, AnyFunction> = object();
+    const active: Record<string, AnyFunction> = object();
     const names = new Set<string>();
 
     for (const extension of extensions) {
+      if (isNodeExtension(extension)) {
+        active[extension.name] = (attrs?: ProsemirrorAttributes) => {
+          return isNodeActive({ state: this.store.getState(), type: extension.type, attrs });
+        };
+      }
+
+      if (isMarkExtension(extension)) {
+        active[extension.name] = () => {
+          return isMarkActive({ stateOrTransaction: this.store.getState(), type: extension.type });
+        };
+      }
+
       if (!extension.createHelpers) {
         continue;
       }
@@ -65,6 +81,7 @@ export class HelpersExtension extends PlainExtension {
       }
     }
 
+    this.store.setStoreKey('active', active);
     this.store.setStoreKey('helpers', helpers);
   };
 }
@@ -78,6 +95,17 @@ declare global {
        * The helpers provided by the extensions used.
        */
       helpers: HelpersFromCombined<Combined>;
+
+      /**
+       * Check which nodes and marks are active under the current user selection.
+       *
+       * ```ts
+       * const { active } = manager.store;
+       *
+       * return active.bold() ? 'bold' : 'regular';
+       * ```
+       */
+      active: ActiveFromCombined<Combined>;
     }
 
     interface ExtensionCreatorMethods {

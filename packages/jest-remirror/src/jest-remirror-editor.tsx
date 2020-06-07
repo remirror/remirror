@@ -14,6 +14,7 @@ import {
 import React from 'react';
 
 import {
+  ActiveFromCombined,
   AnyCombinedUnion,
   CommandFunction,
   CommandsFromCombined,
@@ -157,6 +158,13 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    */
   get commands(): CommandsFromCombined<Combined> {
     return this.#manager.store.commands;
+  }
+
+  /**
+   * Access to which nodes and marks are active under the current selection.
+   */
+  get active(): ActiveFromCombined<Combined> {
+    return this.#manager.store.active;
   }
 
   /**

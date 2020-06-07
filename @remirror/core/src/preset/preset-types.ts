@@ -1,7 +1,11 @@
+import { ProsemirrorAttributes } from '@remirror/core-types';
+
 import {
   AnyExtension,
   ChainedFromExtensions,
   CommandsFromExtensions,
+  GetMarkNameUnion,
+  GetNodeNameUnion,
   HelpersFromExtensions,
   SchemaFromExtensionUnion,
 } from '../extension';
@@ -54,3 +58,9 @@ export type ChainedFromCombined<Combined extends AnyCombinedUnion> = ChainedFrom
 export type HelpersFromCombined<Combined extends AnyCombinedUnion> = HelpersFromExtensions<
   InferCombinedExtensions<Combined>
 >;
+
+export type ActiveFromCombined<Combined extends AnyCombinedUnion> = Record<
+  GetNodeNameUnion<InferCombinedExtensions<Combined>>,
+  (attributes?: ProsemirrorAttributes) => boolean
+> &
+  Record<GetMarkNameUnion<InferCombinedExtensions<Combined>>, () => boolean>;

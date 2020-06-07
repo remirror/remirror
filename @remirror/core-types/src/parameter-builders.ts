@@ -54,21 +54,7 @@ export interface StateOrTransactionParameter<Schema extends EditorSchema = Edito
    * The shared types between a state and a transaction. Allows for commands to
    * operate on either a state object or a transaction object.
    */
-  stateOrTransaction: {
-    /**
-     * The current document.
-     */
-    doc: ProsemirrorNode<Schema>;
-    /**
-     * The selection.
-     */
-    selection: Selection<Schema>;
-    /**
-     * A set of marks to apply to the next input. Will be null when
-     * no explicit marks have been set.
-     */
-    storedMarks?: Array<Mark<Schema>> | null;
-  };
+  stateOrTransaction: EditorState<Schema> | Transaction<Schema>;
 }
 
 /**

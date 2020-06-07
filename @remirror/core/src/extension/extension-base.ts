@@ -9,7 +9,6 @@ import {
 import { freeze, invariant, isIdentifierOfType, isRemirrorType } from '@remirror/core-helpers';
 import {
   ApplyExtraAttributes,
-  AttributesParameter,
   EditorSchema,
   EditorView,
   EmptyShape,
@@ -21,7 +20,6 @@ import {
   Shape,
   ValidOptions,
 } from '@remirror/core-types';
-import { isMarkActive, isNodeActive } from '@remirror/core-utils';
 
 import {
   BaseExtensionOptions,
@@ -368,14 +366,6 @@ export abstract class MarkExtension<Options extends ValidOptions = EmptyShape> e
   }
 
   /**
-   * Performs a default check to see whether the mark is active at the current
-   * selection.
-   */
-  isActive() {
-    return () => isMarkActive({ stateOrTransaction: this.store.getState(), type: this.type });
-  }
-
-  /**
    * Provide a method for creating the schema. This is required in order to
    * create a `MarkExtension`.
    *
@@ -428,15 +418,6 @@ export abstract class NodeExtension<Options extends ValidOptions = EmptyShape> e
 
   constructor(...parameters: ExtensionConstructorParameter<Options>) {
     super(...parameters);
-  }
-
-  /**
-   * Check if the node is active.
-   */
-  isActive() {
-    return ({ attrs }: Partial<AttributesParameter>) => {
-      return isNodeActive({ state: this.store.getState(), type: this.type, attrs });
-    };
   }
 
   /**

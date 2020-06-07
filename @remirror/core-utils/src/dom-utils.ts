@@ -353,21 +353,24 @@ export function getTextContentFromSlice(slice: Slice) {
  *
  * Can be used to find the nearest selected word. See {@link getSelectedWord}
  *
- * @param state - the editor state
+ * @param stateOrTransaction - the editor state
  * @param exclude - the regex pattern to exclude
  * @returns false if not a text selection or if no expansion available
  *
  * @public
  */
-export function getSelectedGroup(state: EditorState, exclude: RegExp): FromToParameter | false {
-  if (!isTextSelection(state.selection)) {
+export function getSelectedGroup(
+  stateOrTransaction: EditorState | Transaction,
+  exclude: RegExp,
+): FromToParameter | false {
+  if (!isTextSelection(stateOrTransaction.selection)) {
     return false;
   }
 
-  let { from, to } = state.selection;
+  let { from, to } = stateOrTransaction.selection;
 
   const getChar = (start: number, end: number) =>
-    getTextContentFromSlice(TextSelection.create(state.doc, start, end).content());
+    getTextContentFromSlice(TextSelection.create(stateOrTransaction.doc, start, end).content());
 
   for (
     let char = getChar(from - 1, from);
@@ -404,12 +407,12 @@ export function getSelectedGroup(state: EditorState, exclude: RegExp): FromToPar
  *
  * In other words it expands until it meets an invalid character.
  *
- * @param state - the editor state
+ * @param stateOrTransaction - the editor state
  *
  * @public
  */
-export function getSelectedWord(state: EditorState) {
-  return getSelectedGroup(state, /[\s\0]/);
+export function getSelectedWord(stateOrTransaction: EditorState | Transaction) {
+  return getSelectedGroup(stateOrTransaction, /[\s\0]/);
 }
 
 /**
