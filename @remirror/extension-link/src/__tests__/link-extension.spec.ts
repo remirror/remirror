@@ -1,21 +1,25 @@
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
-import { fromHTML, object, toHTML } from '@remirror/core';
-import { createBaseTestManager } from '@remirror/test-fixtures';
+import { fromHTML, GetHandler, toHTML } from '@remirror/core';
+import { createBaseManager, isExtensionValid } from '@remirror/test-fixtures';
 
-import { LinkExtension, LinkExtensionOptions } from '../link-extension';
+import { LinkExtension, LinkOptions } from '..';
+
+test('is valid', () => {
+  expect(isExtensionValid(LinkExtension, {}));
+});
 
 const href = 'https://test.com';
 
 describe('schema', () => {
-  let { schema } = createBaseTestManager([{ extension: new LinkExtension(), priority: 1 }]);
+  let { schema } = createBaseManager({ extensions: [new LinkExtension()] });
   let { a, doc, p } = pmBuild(schema, {
     a: { markType: 'link', href },
   });
 
   beforeEach(() => {
-    ({ schema } = createBaseTestManager([{ extension: new LinkExtension(), priority: 1 }]));
+    ({ schema } = createBaseManager({ extensions: [new LinkExtension()] }));
     ({ a, doc, p } = pmBuild(schema, {
       a: { markType: 'link', href },
     }));
@@ -41,14 +45,16 @@ describe('schema', () => {
     const custom = 'true';
     const title = 'awesome';
 
-    const { schema } = createBaseTestManager([
-      {
-        extension: new LinkExtension({
-          extraAttributes: ['title', ['custom', 'failure', 'data-custom']],
+    const { schema } = createBaseManager({
+      extensions: [
+        new LinkExtension({
+          extraAttributes: {
+            title: { default: null },
+            custom: { default: 'failure', parseDOM: 'data-custom' },
+          },
         }),
-        priority: 1,
-      },
-    ]);
+      ],
+    });
 
     it('sets the extra attributes', () => {
       expect(schema.marks.link.spec.attrs).toEqual({
@@ -59,14 +65,16 @@ describe('schema', () => {
     });
 
     it('does not override the href', () => {
-      const { schema } = createBaseTestManager([
-        {
-          extension: new LinkExtension({
-            extraAttributes: [['href', 'should not appear', 'data-custom']],
+      const { schema } = createBaseManager({
+        extensions: [
+          new LinkExtension({
+            extraAttributes: {
+              title: { default: null },
+              custom: { default: 'failure', parseDOM: 'data-custom' },
+            },
           }),
-          priority: 1,
-        },
-      ]);
+        ],
+      });
 
       expect(schema.marks.link.spec.attrs).toEqual({
         href: { default: null },
@@ -90,55 +98,50 @@ describe('schema', () => {
   });
 });
 
-const create = (params: LinkExtensionOptions = object()) =>
-  renderEditor({
-    attrMarks: [new LinkExtension({ ...params })],
-    plainNodes: [],
-  });
+function create(handlers?: GetHandler<LinkOptions>) {
+  const linkExtension = new LinkExtension();
 
-describe('actions', () => {
-  let {
-    getState,
+  if (handlers) {
+    linkExtension.addHandler('onActivateLink', handlers.onActivateLink);
+  }
+
+  return renderEditor([linkExtension]);
+}
+
+describe('commands', () => {
+  const {
     add,
-    actions,
-    attrMarks: { link },
+    attributeMarks: { link },
     nodes: { doc, p },
+    commands,
+    active,
+    view,
   } = create();
-
-  beforeEach(() => {
-    ({
-      getState,
-      add,
-      actions,
-      attrMarks: { link },
-      nodes: { doc, p },
-    } = create());
-  });
 
   describe('.removeLink', () => {
     describe('command', () => {
       it('removes links when selection is wrapped', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('<start>A link<end>'))));
-        actions.removeLink();
+        commands.removeLink();
 
-        expect(getState()).toContainRemirrorDocument(p('Paragraph A link'));
+        expect(view.state).toContainRemirrorDocument(p('Paragraph A link'));
       });
 
       it('removes the link cursor is within', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('A <cursor>link'))));
-        actions.removeLink();
+        commands.removeLink();
 
-        expect(getState()).toContainRemirrorDocument(p('Paragraph A link'));
+        expect(view.state).toContainRemirrorDocument(p('Paragraph A link'));
       });
 
       it('removes all links when selection contains multiples', () => {
         const testLink = link({ href });
         add(doc(p('<all>', testLink('1'), ' ', testLink('2'), ' ', testLink('3'))));
-        actions.removeLink();
+        commands.removeLink();
 
-        expect(getState()).toContainRemirrorDocument(p('1 2 3'));
+        expect(view.state).toContainRemirrorDocument(p('1 2 3'));
       });
     });
 
@@ -147,28 +150,28 @@ describe('actions', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph<cursor> ', testLink('A link'))));
 
-        expect(actions.removeLink.isEnabled()).toBeFalse();
+        expect(commands.removeLink.isEnabled()).toBeFalse();
       });
 
       it('is enabled with selection wrapped', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('<start>A link<end>'))));
 
-        expect(actions.removeLink.isEnabled()).toBeTrue();
+        expect(commands.removeLink.isEnabled()).toBeTrue();
       });
 
       it('is enabled with cursor within link', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('A <cursor>link'))));
 
-        expect(actions.removeLink.isEnabled()).toBeTrue();
+        expect(commands.removeLink.isEnabled()).toBeTrue();
       });
 
       it('is enabled with selection of multiple nodes', () => {
         const testLink = link({ href });
         add(doc(p('<all>Paragraph ', testLink('A link'))));
 
-        expect(actions.removeLink.isEnabled()).toBeTrue();
+        expect(commands.removeLink.isEnabled()).toBeTrue();
       });
     });
   });
@@ -178,18 +181,18 @@ describe('actions', () => {
       it('creates a link for the selection', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph <start>A link<end>')));
-        actions.updateLink({ href });
+        commands.updateLink({ href });
 
-        expect(getState()).toContainRemirrorDocument(
+        expect(view.state).toContainRemirrorDocument(
           p('Paragraph ', testLink('<start>A link<end>')),
         );
       });
 
       it('does nothing for an empty selection', () => {
         add(doc(p('Paragraph <cursor>A link')));
-        actions.updateLink({ href });
+        commands.updateLink({ href });
 
-        expect(getState()).toContainRemirrorDocument(p('Paragraph A link'));
+        expect(view.state).toContainRemirrorDocument(p('Paragraph A link'));
       });
 
       it('can update an existing link', () => {
@@ -197,9 +200,9 @@ describe('actions', () => {
         const attrs = { href: 'https://alt.com' };
         const altLink = link(attrs);
         add(doc(p('Paragraph ', testLink('<start>A link<end>'))));
-        actions.updateLink(attrs);
+        commands.updateLink(attrs);
 
-        expect(getState()).toContainRemirrorDocument(
+        expect(view.state).toContainRemirrorDocument(
           p('Paragraph ', altLink('<start>A link<end>')),
         );
       });
@@ -207,39 +210,39 @@ describe('actions', () => {
       it('overwrites multiple existing links', () => {
         const testLink = link({ href });
         add(doc(p('<all>', testLink('1'), ' ', testLink('2'), ' ', testLink('3'))));
-        actions.updateLink({ href });
+        commands.updateLink({ href });
 
-        expect(getState()).toContainRemirrorDocument(p(testLink('1 2 3')));
+        expect(view.state).toContainRemirrorDocument(p(testLink('1 2 3')));
       });
     });
 
-    describe('.isActive()', () => {
+    describe('.active', () => {
       it('is not active when not selected', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph<cursor> ', testLink('A link'))));
 
-        expect(actions.updateLink.isActive()).toBeFalse();
+        expect(active.link()).toBeFalse();
       });
 
       it('is active with selection wrapped', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('<start>A link<end>'))));
 
-        expect(actions.updateLink.isActive()).toBeTrue();
+        expect(active.link()).toBeTrue();
       });
 
       it('is active with cursor within link', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('A <cursor>link'))));
 
-        expect(actions.updateLink.isActive()).toBeTrue();
+        expect(active.link()).toBeTrue();
       });
 
       it('is active with selection of multiple nodes', () => {
         const testLink = link({ href });
         add(doc(p('<all>Paragraph ', testLink('A link'))));
 
-        expect(actions.updateLink.isActive()).toBeTrue();
+        expect(active.link()).toBeTrue();
       });
     });
 
@@ -247,50 +250,46 @@ describe('actions', () => {
       it('is enabled when text is selected', () => {
         add(doc(p('Paragraph <start>A<end> link')));
 
-        expect(actions.updateLink.isEnabled()).toBeTrue();
+        expect(commands.updateLink.isEnabled()).toBeTrue();
       });
 
       it('is not enabled for empty selections', () => {
         add(doc(p('Paragraph <cursor>A link')));
 
-        expect(actions.updateLink.isEnabled()).toBeFalse();
+        expect(commands.updateLink.isEnabled()).toBeFalse();
       });
 
       it('is not enabled for node selections', () => {
         add(doc(p('Paragraph <node>A link')));
 
-        expect(actions.updateLink.isEnabled()).toBeFalse();
+        expect(commands.updateLink.isEnabled()).toBeFalse();
       });
     });
   });
 });
 
 describe('keys', () => {
+  const onActivateLink = jest.fn(() => {});
+  const {
+    add,
+    nodes: { doc, p },
+  } = create({ onActivateLink });
+
   it('responds to Mod-k', () => {
-    const activationHandler = jest.fn(() => true);
-    const {
-      add,
-      nodes: { doc, p },
-    } = create({ activationHandler });
     add(doc(p(`<cursor>Link`)))
       .shortcut('Mod-k')
       .callback(({ start, end }) => {
         expect({ start, end }).toEqual({ start: 1, end: 5 });
-        expect(activationHandler).toHaveBeenCalled();
+        expect(onActivateLink).toHaveBeenCalled();
       });
   });
 
   it('does not call handler when no nearby word', () => {
-    const activationHandler = jest.fn(() => true);
-    const {
-      add,
-      nodes: { doc, p },
-    } = create({ activationHandler });
     add(doc(p(`<cursor> Link`)))
       .shortcut('Mod-k')
       .callback(({ start, end }) => {
         expect({ start, end }).toEqual({ start: 1, end: 1 });
-        expect(activationHandler).not.toHaveBeenCalled();
+        expect(onActivateLink).not.toHaveBeenCalled();
       });
   });
 });
@@ -299,9 +298,8 @@ describe('plugin', () => {
   it('clickHandler selects the full text of the link when clicked', () => {
     const {
       add,
-      attrMarks: { link },
-      doc,
-      p,
+      attributeMarks: { link },
+      nodes: { doc, p },
     } = create();
     const testLink = link({ href });
 

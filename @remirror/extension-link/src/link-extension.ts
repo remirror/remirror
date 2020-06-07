@@ -1,37 +1,39 @@
-import { Plugin, TextSelection } from '@remirror/pm/state';
-
 import {
+  ApplyExtraAttributes,
   Cast,
-  CommandMarkTypeParameter,
+  CommandFunction,
+  CreatePluginReturn,
   getMarkRange,
   getMatchString,
   getSelectedWord,
+  Handler,
+  HandlerKeyList,
   isMarkActive,
   isTextSelection,
   KeyBindings,
-  ManagerMarkTypeParameter,
   MarkExtension,
-  MarkExtensionConfig,
   MarkExtensionSpec,
   MarkGroup,
   markPasteRule,
   ProsemirrorAttributes,
-  ProsemirrorCommandFunction,
   removeMark,
   selectionEmpty,
   updateMark,
 } from '@remirror/core';
+import { TextSelection } from '@remirror/pm/state';
 
-export interface LinkExtensionOptions extends MarkExtensionConfig {
+export interface LinkOptions {
   /**
-   * Return true to intercept the activation. This is useful for showing a dialog to replace the selected text.
+   * Called when the user activates the keyboard shortcut.
    */
-  activationHandler?: () => void;
+  onActivateLink?: Handler<(selectedText: string) => void>;
 }
 
 export type LinkExtensionCommands = 'updateLink' | 'removeLink';
 
-export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
+export class LinkExtension extends MarkExtension<LinkOptions> {
+  static readonly handlerKeys: HandlerKeyList<LinkOptions> = ['onActivateLink'];
+
   get name() {
     return 'link' as const;
   }
@@ -42,11 +44,11 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     };
   }
 
-  get schema(): MarkExtensionSpec {
+  createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec {
     return {
       group: MarkGroup.Link,
       attrs: {
-        ...this.extraAttributes(null),
+        ...extra.defaults(),
         href: {
           default: null,
         },
@@ -56,23 +58,20 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
         {
           tag: 'a[href]',
           getAttrs: (node) => ({
+            ...extra.parse(node),
             href: Cast<Element>(node).getAttribute('href'),
-            ...this.getExtraAttributes(Cast<Element>(node)),
           }),
         },
       ],
       toDOM: (node) => [
         'a',
-        {
-          ...node.attrs,
-          rel: 'noopener noreferrer nofollow',
-        },
+        { ...node.attrs, ...extra.dom(node.attrs), rel: 'noopener noreferrer nofollow' },
         0,
       ],
     };
   }
 
-  keys(): KeyBindings {
+  createKeymap = (): KeyBindings => {
     return {
       'Mod-k': ({ state, dispatch }) => {
         // if the selection is empty, expand it
@@ -89,60 +88,65 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
           dispatch(tr);
         }
 
-        this.options.activationHandler();
+        this.options.onActivateLink(tr.doc.textBetween(from, to));
 
         return true;
       },
     };
-  }
+  };
 
-  commands({ type }: CommandMarkTypeParameter) {
+  createCommands = () => {
     return {
       /**
-       * A command to update the selected link
+       * Create or update the link if it doesn't currently exist at the current selection.
        */
-      updateLink: (attributes: ProsemirrorAttributes): ProsemirrorCommandFunction => {
-        return (state, dispatch, view) => {
+      updateLink: (attributes: ProsemirrorAttributes): CommandFunction => {
+        return ({ state, dispatch, view }) => {
           const { selection } = state;
+
           if (
             selectionEmpty(selection) ||
-            (!isTextSelection(selection) && !isMarkActive({ stateOrTransaction: state, type }))
+            (!isTextSelection(selection) &&
+              !isMarkActive({ stateOrTransaction: state.tr, type: this.type }))
           ) {
             return false;
           }
-          return updateMark({ type, attrs: attributes })(state, dispatch, view);
+
+          return updateMark({ type: this.type, attrs: attributes })({ state, dispatch, view });
         };
       },
+
       /**
-       * Remove the link at the current position
+       * Remove the link at the current selection
        */
-      removeLink: (): ProsemirrorCommandFunction => {
-        return (state, dispatch, view) => {
-          if (!isMarkActive({ stateOrTransaction: state, type })) {
+      removeLink: (): CommandFunction => {
+        return ({ state, dispatch, view }) => {
+          if (!isMarkActive({ stateOrTransaction: state.tr, type: this.type })) {
             return false;
           }
-          return removeMark({ type, expand: true })(state, dispatch, view);
+
+          return removeMark({ type: this.type, expand: true })(state, dispatch, view);
         };
       },
     };
-  }
+  };
 
-  pasteRules({ type }: ManagerMarkTypeParameter) {
+  createPasteRules = () => {
     return [
       markPasteRule({
         regexp: /https?:\/\/(www\.)?[\w#%+.:=@~-]{2,256}\.[a-z]{2,6}\b([\w#%&+./:=?@~-]*)/g,
-        type,
+        type: this.type,
         getAttributes: (url) => ({ href: getMatchString(url) }),
       }),
     ];
-  }
+  };
 
-  plugin({ type }: ManagerMarkTypeParameter) {
-    return new Plugin({
+  createPlugin = (): CreatePluginReturn => {
+    return {
       props: {
-        handleClick(view, pos) {
+        handleClick: (view, pos) => {
           const { doc, tr } = view.state;
-          const range = getMarkRange(doc.resolve(pos), type);
+          const range = getMarkRange(doc.resolve(pos), this.type);
           if (!range) {
             return false;
           }
@@ -155,6 +159,6 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
           return true;
         },
       },
-    });
-  }
+    };
+  };
 }
