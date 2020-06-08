@@ -1,52 +1,5 @@
 import { css } from 'linaria';
 
-export const socialEditorStyles = css`
-  flex-grow: 1px;
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-  box-sizing: border-box;
-  position: relative;
-  border-width: 1px;
-  border-style: solid;
-  border-color: border;
-  box-shadow: default;
-  line-height: relaxed;
-  border-radius: 8px;
-  width: 100%;
-  font-family: body;
-  font-size: 2px;
-  max-height: calc(90vh - 124px);
-  min-height: 142px;
-  padding: 8px;
-  padding-right: 40px;
-
-  p {
-    margin: 0px;
-    letter-spacing: 0.6px;
-    color: text;
-  }
-
-  a.mention {
-    pointer-events: none;
-    cursor: default;
-  }
-
-  a {
-    text-decoration: none !important;
-    color: primary;
-  }
-
-  &:focus {
-    outline: none;
-    box-shadow: focus;
-  }
-
-  .Prosemirror-selectednode {
-    background-color: $oc-gray-1;
-  }
-`;
-
 export const emojiSuggestionsItemStyles = css`
   padding: 8px;
   text-overflow: ellipsis;

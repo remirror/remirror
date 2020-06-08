@@ -98,5 +98,56 @@ const Editor: FC<SocialEditorProps> = (props) => {
   );
 };
 
-const socialEditorStyles = css``;
-const socialEditorWrapperStyles = css``;
+export const socialEditorStyles = css`
+  .ProseMirror {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    box-sizing: border-box;
+    position: relative;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #99cfeb;
+    box-shadow: 0 0 0 1px #99cfeb;
+    line-height: 1.625rem;
+    border-radius: 8px;
+    width: 100%;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    max-height: calc(90vh - 124px);
+    min-height: 142px;
+    padding: 8px;
+    padding-right: 40px;
+
+    p {
+      margin: 0px;
+      letter-spacing: 0.6px;
+      color: text;
+    }
+
+    a.mention {
+      pointer-events: none;
+      cursor: default;
+    }
+
+    a {
+      text-decoration: none !important;
+      color: primary;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: focus;
+    }
+
+    .Prosemirror-selectednode {
+      background-color: $oc-gray-1;
+    }
+  }
+`;
+
+const socialEditorWrapperStyles = css`
+  position: relative;
+  height: 100%;
+`;

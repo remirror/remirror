@@ -1,59 +1,6 @@
 /**
  * Styles extracted from: @remirror/react-editor-social/src/social-editor-styles.ts
  */
-.remirror-social-editor {
-  -webkit-box-flex: 1px;
-  -webkit-flex-grow: 1px;
-  -ms-flex-positive: 1px;
-  flex-grow: 1px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  overflow-y: scroll;
-  box-sizing: border-box;
-  position: relative;
-  border-width: 1px;
-  border-style: solid;
-  border-color: border;
-  box-shadow: default;
-  line-height: relaxed;
-  border-radius: 8px;
-  width: 100%;
-  font-family: body;
-  font-size: 2px;
-  max-height: calc(90vh - 124px);
-  min-height: 142px;
-  padding: 8px;
-  padding-right: 40px;
-}
-.remirror-social-editor p {
-  margin: 0px;
-  -webkit-letter-spacing: 0.6px;
-  -moz-letter-spacing: 0.6px;
-  -ms-letter-spacing: 0.6px;
-  letter-spacing: 0.6px;
-  color: text;
-}
-.remirror-social-editor a.mention {
-  pointer-events: none;
-  cursor: default;
-}
-.remirror-social-editor a {
-  -webkit-text-decoration: none !important;
-  text-decoration: none !important;
-  color: primary;
-}
-.remirror-social-editor:focus {
-  outline: none;
-  box-shadow: focus;
-}
-.remirror-social-editor .Prosemirror-selectednode {
-  background-color: $oc-gray-1;
-}
 .remirror-emoji-suggestions-item {
   padding: 8px;
   text-overflow: ellipsis;
@@ -199,3 +146,60 @@
 /**
  * Styles extracted from: @remirror/react-editor-social/src/components/social-editor.tsx
  */
+.remirror-social-editor .ProseMirror {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow-y: scroll;
+  box-sizing: border-box;
+  position: relative;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #99cfeb;
+  box-shadow: 0 0 0 1px #99cfeb;
+  line-height: 1.625rem;
+  border-radius: 8px;
+  width: 100%;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  max-height: calc(90vh - 124px);
+  min-height: 142px;
+  padding: 8px;
+  padding-right: 40px;
+}
+.remirror-social-editor .ProseMirror p {
+  margin: 0px;
+  -webkit-letter-spacing: 0.6px;
+  -moz-letter-spacing: 0.6px;
+  -ms-letter-spacing: 0.6px;
+  letter-spacing: 0.6px;
+  color: text;
+}
+.remirror-social-editor .ProseMirror a.mention {
+  pointer-events: none;
+  cursor: default;
+}
+.remirror-social-editor .ProseMirror a {
+  -webkit-text-decoration: none !important;
+  text-decoration: none !important;
+  color: primary;
+}
+.remirror-social-editor .ProseMirror:focus {
+  outline: none;
+  box-shadow: focus;
+}
+.remirror-social-editor .ProseMirror .Prosemirror-selectednode {
+  background-color: $oc-gray-1;
+}
+.remirror-social-editor-wrapper {
+  position: relative;
+  height: 100%;
+}
