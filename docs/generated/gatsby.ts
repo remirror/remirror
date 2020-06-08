@@ -693,6 +693,24 @@ enum FileFieldsEnum {
   childMdx___rawBody = 'childMdx.rawBody',
   childMdx___fileAbsolutePath = 'childMdx.fileAbsolutePath',
   childMdx___frontmatter___title = 'childMdx.frontmatter.title',
+  childMdx___frontmatter____0 = 'childMdx.frontmatter._0',
+  childMdx___frontmatter____1 = 'childMdx.frontmatter._1',
+  childMdx___frontmatter____2 = 'childMdx.frontmatter._2',
+  childMdx___frontmatter____3 = 'childMdx.frontmatter._3',
+  childMdx___frontmatter____4 = 'childMdx.frontmatter._4',
+  childMdx___frontmatter____5 = 'childMdx.frontmatter._5',
+  childMdx___frontmatter____6 = 'childMdx.frontmatter._6',
+  childMdx___frontmatter____7 = 'childMdx.frontmatter._7',
+  childMdx___frontmatter____8 = 'childMdx.frontmatter._8',
+  childMdx___frontmatter____9 = 'childMdx.frontmatter._9',
+  childMdx___frontmatter____10 = 'childMdx.frontmatter._10',
+  childMdx___frontmatter____11 = 'childMdx.frontmatter._11',
+  childMdx___frontmatter____12 = 'childMdx.frontmatter._12',
+  childMdx___frontmatter____13 = 'childMdx.frontmatter._13',
+  childMdx___frontmatter____14 = 'childMdx.frontmatter._14',
+  childMdx___frontmatter____15 = 'childMdx.frontmatter._15',
+  childMdx___frontmatter____16 = 'childMdx.frontmatter._16',
+  childMdx___frontmatter____17 = 'childMdx.frontmatter._17',
   childMdx___frontmatter___fullWidth = 'childMdx.frontmatter.fullWidth',
   childMdx___body = 'childMdx.body',
   childMdx___excerpt = 'childMdx.excerpt',
@@ -1438,6 +1456,24 @@ enum MdxFieldsEnum {
   rawBody = 'rawBody',
   fileAbsolutePath = 'fileAbsolutePath',
   frontmatter___title = 'frontmatter.title',
+  frontmatter____0 = 'frontmatter._0',
+  frontmatter____1 = 'frontmatter._1',
+  frontmatter____2 = 'frontmatter._2',
+  frontmatter____3 = 'frontmatter._3',
+  frontmatter____4 = 'frontmatter._4',
+  frontmatter____5 = 'frontmatter._5',
+  frontmatter____6 = 'frontmatter._6',
+  frontmatter____7 = 'frontmatter._7',
+  frontmatter____8 = 'frontmatter._8',
+  frontmatter____9 = 'frontmatter._9',
+  frontmatter____10 = 'frontmatter._10',
+  frontmatter____11 = 'frontmatter._11',
+  frontmatter____12 = 'frontmatter._12',
+  frontmatter____13 = 'frontmatter._13',
+  frontmatter____14 = 'frontmatter._14',
+  frontmatter____15 = 'frontmatter._15',
+  frontmatter____16 = 'frontmatter._16',
+  frontmatter____17 = 'frontmatter._17',
   frontmatter___fullWidth = 'frontmatter.fullWidth',
   body = 'body',
   excerpt = 'excerpt',
@@ -1565,11 +1601,47 @@ type MdxFilterInput = {
 
 type MdxFrontmatter = {
   readonly title: Scalars['String'];
+  readonly _0: Maybe<Scalars['String']>;
+  readonly _1: Maybe<Scalars['String']>;
+  readonly _2: Maybe<Scalars['String']>;
+  readonly _3: Maybe<Scalars['String']>;
+  readonly _4: Maybe<Scalars['String']>;
+  readonly _5: Maybe<Scalars['String']>;
+  readonly _6: Maybe<Scalars['String']>;
+  readonly _7: Maybe<Scalars['String']>;
+  readonly _8: Maybe<Scalars['String']>;
+  readonly _9: Maybe<Scalars['String']>;
+  readonly _10: Maybe<Scalars['String']>;
+  readonly _11: Maybe<Scalars['String']>;
+  readonly _12: Maybe<Scalars['String']>;
+  readonly _13: Maybe<Scalars['String']>;
+  readonly _14: Maybe<Scalars['String']>;
+  readonly _15: Maybe<Scalars['String']>;
+  readonly _16: Maybe<Scalars['String']>;
+  readonly _17: Maybe<Scalars['String']>;
   readonly fullWidth: Maybe<Scalars['Boolean']>;
 };
 
 type MdxFrontmatterFilterInput = {
   readonly title: Maybe<StringQueryOperatorInput>;
+  readonly _0: Maybe<StringQueryOperatorInput>;
+  readonly _1: Maybe<StringQueryOperatorInput>;
+  readonly _2: Maybe<StringQueryOperatorInput>;
+  readonly _3: Maybe<StringQueryOperatorInput>;
+  readonly _4: Maybe<StringQueryOperatorInput>;
+  readonly _5: Maybe<StringQueryOperatorInput>;
+  readonly _6: Maybe<StringQueryOperatorInput>;
+  readonly _7: Maybe<StringQueryOperatorInput>;
+  readonly _8: Maybe<StringQueryOperatorInput>;
+  readonly _9: Maybe<StringQueryOperatorInput>;
+  readonly _10: Maybe<StringQueryOperatorInput>;
+  readonly _11: Maybe<StringQueryOperatorInput>;
+  readonly _12: Maybe<StringQueryOperatorInput>;
+  readonly _13: Maybe<StringQueryOperatorInput>;
+  readonly _14: Maybe<StringQueryOperatorInput>;
+  readonly _15: Maybe<StringQueryOperatorInput>;
+  readonly _16: Maybe<StringQueryOperatorInput>;
+  readonly _17: Maybe<StringQueryOperatorInput>;
   readonly fullWidth: Maybe<BooleanQueryOperatorInput>;
 };
 
@@ -2465,6 +2537,8 @@ enum SitePageFieldsEnum {
   pluginCreator___pluginOptions___start_url = 'pluginCreator.pluginOptions.start_url',
   pluginCreator___pluginOptions___lang = 'pluginCreator.pluginOptions.lang',
   pluginCreator___pluginOptions___description = 'pluginCreator.pluginOptions.description',
+  pluginCreator___pluginOptions___background_color = 'pluginCreator.pluginOptions.background_color',
+  pluginCreator___pluginOptions___theme_color = 'pluginCreator.pluginOptions.theme_color',
   pluginCreator___pluginOptions___icon = 'pluginCreator.pluginOptions.icon',
   pluginCreator___pluginOptions___cache_busting_mode = 'pluginCreator.pluginOptions.cache_busting_mode',
   pluginCreator___pluginOptions___include_favicon = 'pluginCreator.pluginOptions.include_favicon',
@@ -2669,6 +2743,8 @@ enum SitePluginFieldsEnum {
   pluginOptions___start_url = 'pluginOptions.start_url',
   pluginOptions___lang = 'pluginOptions.lang',
   pluginOptions___description = 'pluginOptions.description',
+  pluginOptions___background_color = 'pluginOptions.background_color',
+  pluginOptions___theme_color = 'pluginOptions.theme_color',
   pluginOptions___icon = 'pluginOptions.icon',
   pluginOptions___cache_busting_mode = 'pluginOptions.cache_busting_mode',
   pluginOptions___include_favicon = 'pluginOptions.include_favicon',
@@ -2799,6 +2875,8 @@ type SitePluginPluginOptions = {
   readonly start_url: Maybe<Scalars['String']>;
   readonly lang: Maybe<Scalars['String']>;
   readonly description: Maybe<Scalars['String']>;
+  readonly background_color: Maybe<Scalars['String']>;
+  readonly theme_color: Maybe<Scalars['String']>;
   readonly icon: Maybe<Scalars['String']>;
   readonly cache_busting_mode: Maybe<Scalars['String']>;
   readonly include_favicon: Maybe<Scalars['Boolean']>;
@@ -2819,6 +2897,8 @@ type SitePluginPluginOptionsFilterInput = {
   readonly start_url: Maybe<StringQueryOperatorInput>;
   readonly lang: Maybe<StringQueryOperatorInput>;
   readonly description: Maybe<StringQueryOperatorInput>;
+  readonly background_color: Maybe<StringQueryOperatorInput>;
+  readonly theme_color: Maybe<StringQueryOperatorInput>;
   readonly icon: Maybe<StringQueryOperatorInput>;
   readonly cache_busting_mode: Maybe<StringQueryOperatorInput>;
   readonly include_favicon: Maybe<BooleanQueryOperatorInput>;
@@ -2862,16 +2942,6 @@ type StringQueryOperatorInput = {
   readonly regex: Maybe<Scalars['String']>;
   readonly glob: Maybe<Scalars['String']>;
 };
-
-type EntryQueryVariables = {
-  id: Scalars['String'];
-};
-
-
-type EntryQuery = { readonly mdx: Maybe<(
-    Pick<Mdx, 'id' | 'body' | 'timeToRead'>
-    & { readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'fullWidth' | 'title'>>, readonly wordCount: Maybe<Pick<MdxWordCount, 'paragraphs' | 'words' | 'sentences'>> }
-  )> };
 
 type GatsbyImageSharpFixedFragment = Pick<ImageSharpFixed, 'base64' | 'width' | 'height' | 'src' | 'srcSet'>;
 
@@ -2922,6 +2992,16 @@ type GatsbyImageSharpSizes_withWebp_tracedSVGFragment = Pick<ImageSharpSizes, 't
 type GatsbyImageSharpSizes_noBase64Fragment = Pick<ImageSharpSizes, 'aspectRatio' | 'src' | 'srcSet' | 'sizes'>;
 
 type GatsbyImageSharpSizes_withWebp_noBase64Fragment = Pick<ImageSharpSizes, 'aspectRatio' | 'src' | 'srcSet' | 'srcWebp' | 'srcSetWebp' | 'sizes'>;
+
+type EntryQueryVariables = {
+  id: Scalars['String'];
+};
+
+
+type EntryQuery = { readonly mdx: Maybe<(
+    Pick<Mdx, 'id' | 'body' | 'timeToRead'>
+    & { readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'fullWidth' | 'title'>>, readonly wordCount: Maybe<Pick<MdxWordCount, 'paragraphs' | 'words' | 'sentences'>> }
+  )> };
 
 type PagesQueryQueryVariables = {};
 

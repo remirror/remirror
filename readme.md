@@ -1,7 +1,7 @@
 <div align="center">
   <br />
   <div align="center">
-    <img width="300" height="300" src="https://rawcdn.githack.com/remirror/remirror/f94e6c63e555f65ad5f3f13a3f343204cdc92dff/support/assets/logo.svg?sanitize=true" alt="remirror" />
+    <img width="300" height="300" src="https://raw.githubusercontent.com/remirror/remirror/next/support/assets/logo-animated-light.svg?sanitize=true" alt="remirror" />
   </div>
     <br />
     <br />
