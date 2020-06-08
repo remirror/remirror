@@ -167,6 +167,15 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "Ffloriel",
+      "name": "Floriel",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/12745899?v=4",
+      "profile": "https://twitter.com/ffloriel_",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
