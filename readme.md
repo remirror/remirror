@@ -169,10 +169,10 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
   <tr>
     <td align="center"><a href="https://github.com/watlandc"><img src="https://avatars3.githubusercontent.com/u/6117504?v=4" width="100px;" alt=""/><br /><sub><b>Chris Watland</b></sub></a><br /><a href="https://github.com/remirror/remirror/issues?q=author%3Awatlandc" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/lanyusan"><img src="https://avatars3.githubusercontent.com/u/56706512?v=4" width="100px;" alt=""/><br /><sub><b>lanyusan</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=lanyusan" title="Code">💻</a> <a href="https://github.com/remirror/remirror/issues?q=author%3Alanyusan" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://twitter.com/ffloriel_"><img src="https://avatars1.githubusercontent.com/u/12745899?v=4" width="100px;" alt=""/><br /><sub><b>Floriel</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=Ffloriel" title="Documentation">📖</a></td>
   </tr>
 </table>
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
