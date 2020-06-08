@@ -107,6 +107,9 @@ export enum ErrorConstant {
   /** The spec was defined without calling the `defaults`, `parse` or `dom` methods. */
   EXTENSION_SPEC = 'RMR0101',
 
+  /** Extra attributes must either be a string or an object. */
+  EXTENSION_EXTRA_ATTRIBUTES = 'RMR0102',
+
   /**
    * `useRemirror` was called outside of the remirror context. It can only be used
    * within an active remirror context created by the `<RemirrorProvider />`.

@@ -3,6 +3,7 @@ import { FontWeightProperty } from 'csstype';
 import {
   ApplyExtraAttributes,
   CommandFunction,
+  DefaultExtensionOptions,
   ExtensionTag,
   FromToParameter,
   InputRule,
@@ -12,22 +13,25 @@ import {
   MarkExtensionSpec,
   MarkGroup,
   markInputRule,
+  Static,
   toggleMark,
 } from '@remirror/core';
 
-export interface BoldExtensionOptions {
+export interface BoldOptions {
   /**
    * Optionally set the font weight property for this extension.
    */
-  weight?: FontWeightProperty | null;
+  weight?: Static<FontWeightProperty> | null;
 }
 
 /**
  * When added to your editor it will provide the `bold` command which makes the text under the cursor /
  * or at the provided position range bold.
  */
-export class BoldExtension extends MarkExtension<BoldExtensionOptions> {
-  static readonly defaultOptions = { weight: null };
+export class BoldExtension extends MarkExtension<BoldOptions> {
+  static readonly defaultOptions: DefaultExtensionOptions<BoldOptions> = {
+    weight: null,
+  };
 
   get name() {
     return 'bold' as const;
@@ -36,8 +40,6 @@ export class BoldExtension extends MarkExtension<BoldExtensionOptions> {
   readonly tags = [ExtensionTag.FormattingMark];
 
   createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec {
-    const { weight } = this.options;
-
     return {
       attrs: extra.defaults(),
       group: MarkGroup.FontStyle,
@@ -63,6 +65,8 @@ export class BoldExtension extends MarkExtension<BoldExtensionOptions> {
         },
       ],
       toDOM: (node) => {
+        const { weight } = this.options;
+
         if (weight) {
           return ['strong', { 'font-weight': weight.toString() }, 0];
         }

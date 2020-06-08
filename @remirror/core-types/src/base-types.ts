@@ -227,6 +227,9 @@ export interface ExtraAttributesObject {
   /**
    * A function used to extract the attribute from the dom and must be applied
    * to the `parseDOM` method.
+   *
+   * If a string is set this will automatically call
+   * `domNode.getAttribute('<name>')`.
    */
   parseDOM?: ((domNode: HTMLElement) => unknown) | string;
 
@@ -234,6 +237,10 @@ export interface ExtraAttributesObject {
    * Takes the node attributes and applies them to the dom.
    *
    * This is called in the `toDOM` method.
+   *
+   * If a string is set this will always be the constant value set in the dom.
+   * If a tuple with two items is set then the first `string` is the attribute
+   * to set in the dom and the second string is the value that will be stored.
    */
   toDOM?:
     | string
@@ -249,12 +256,13 @@ export interface ApplyExtraAttributes {
   defaults: () => Record<string, { default: string | null }>;
 
   /**
-   * Transform the dom to prosemirror attributes
+   * Read a value from the dome and convert it into prosemirror attributes.
    */
   parse: (domNode: Node | string) => ProsemirrorAttributes;
 
   /**
-   * Take the node attributes and create an object that can be stored in the dom.
+   * Take the node attributes and create the object of string attributes for
+   * storage on the dom node.
    */
   dom: (node: ProsemirrorAttributes) => Record<string, string>;
 }
@@ -262,7 +270,7 @@ export interface ApplyExtraAttributes {
 /**
  * A mapping of the attribute name to it's default, getter and setter.
  */
-export type ExtraAttributes = Record<string, ExtraAttributesObject>;
+export type ExtraAttributes = Record<string, ExtraAttributesObject | string>;
 
 /**
  * A method that can pull all the extraAttributes from the provided dom node.

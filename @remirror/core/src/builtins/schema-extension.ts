@@ -12,6 +12,7 @@ import {
   ApplyExtraAttributes,
   EditorSchema,
   ExtraAttributes,
+  ExtraAttributesObject,
   MarkExtensionSpec,
   NodeExtensionSpec,
   ProsemirrorAttributes,
@@ -174,6 +175,22 @@ function createSpec<Type>(parameter: CreateSpecParameter<Type>): Type {
 }
 
 /**
+ * Get the value of the extra attribute as an object.
+ */
+function getExtraAttributesObject(value: string | ExtraAttributesObject): ExtraAttributesObject {
+  if (isString(value)) {
+    return { default: value };
+  }
+
+  invariant(value, {
+    message: `${value} is not supported`,
+    code: ErrorConstant.EXTENSION_EXTRA_ATTRIBUTES,
+  });
+
+  return value;
+}
+
+/**
  * Create the `defaults()` method which is used for setting the property .
  */
 function createDefaults(
@@ -192,7 +209,8 @@ function createDefaults(
     }
 
     // Loop through the extra attributes and attach to the attributes object.
-    for (const [name, value] of entries(extraAttributes)) {
+    for (const [name, config] of entries(extraAttributes)) {
+      const value = getExtraAttributesObject(config);
       attributes[name] = { default: value.default ?? null };
     }
 
@@ -209,7 +227,9 @@ function createParseDOM(extraAttributes: ExtraAttributes, shouldIgnore: boolean)
     if (shouldIgnore) {
       return attributes;
     }
-    for (const [name, { parseDOM, ...other }] of entries(extraAttributes)) {
+    for (const [name, config] of entries(extraAttributes)) {
+      const { parseDOM, ...other } = getExtraAttributesObject(config);
+
       if (!isElementDOMNode(domNode)) {
         continue;
       }
@@ -252,15 +272,19 @@ function createToDOM(extraAttributes: ExtraAttributes, shouldIgnore: boolean) {
       }
     }
 
-    for (const [name, { toDOM, parseDOM }] of entries(extraAttributes)) {
+    for (const [name, config] of entries(extraAttributes)) {
+      const { toDOM, parseDOM } = getExtraAttributesObject(config);
+
       if (isNullOrUndefined(toDOM)) {
         const key = isString(parseDOM) ? parseDOM : name;
         domAttributes[key] = attributes[name] as string;
+
         continue;
       }
 
       if (isFunction(toDOM)) {
         updateDomAttributes(toDOM(attributes), name);
+
         continue;
       }
 
