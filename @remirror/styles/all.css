@@ -93,9 +93,9 @@
 }
 
 /**
- * Styles extracted from: @remirror/extension-placeholder/src/styles.ts
+ * Styles extracted from: @remirror/extension-placeholder/src/placeholder-extension.ts
  */
-.remirror-core .is-empty:first-of-type::before {
+.remirror-is-empty:first-of-type::before {
   position: absolute;
   color: #aaa;
   pointer-events: none;

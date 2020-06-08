@@ -19,12 +19,12 @@ export const SELECTED_NODE_CLASS_NAME = 'ProseMirror-selectednode';
 export const SELECTED_NODE_CLASS_SELECTOR = `.${SELECTED_NODE_CLASS_NAME}`;
 
 /**
- * Explanation from `@atlaskit` ProseMirror uses the Unicode Character 'OBJECT
- * REPLACEMENT CHARACTER' (U+FFFC) as text representation for leaf nodes, i.e.
- * nodes that don't have any content or text property (e.g. hardBreak, emoji,
- * mention, rule) It was introduced because of
- * https://github.com/ProseMirror/prosemirror/issues/262 This can be used in an
- * input rule regex to be able to include or exclude such nodes.
+ * ProseMirror uses the Unicode Character 'OBJECT REPLACEMENT CHARACTER'
+ * (U+FFFC) as text representation for leaf nodes, i.e. nodes that don't have
+ * any content or text property (e.g. hardBreak, emoji, mention, rule) It was
+ * introduced because of https://github.com/ProseMirror/prosemirror/issues/262
+ * This can be used in an input rule regex to be able to include or exclude such
+ * nodes.
  */
 export const LEAF_NODE_REPLACING_CHARACTER = '\uFFFC';
 
@@ -48,14 +48,6 @@ export const NULL_CHARACTER = '\0';
  * This produces the html entity '8203'
  */
 export const ZERO_WIDTH_SPACE_CHAR = '\u200B';
-
-/**
- * Used to determine the side where a gap-cursor is drawn
- */
-export enum Side {
-  LEFT = 'left',
-  RIGHT = 'right',
-}
 
 /**
  * A default empty object node. Useful for resetting the content of a

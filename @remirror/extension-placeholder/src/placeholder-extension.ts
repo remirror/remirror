@@ -1,3 +1,5 @@
+import { css } from 'linaria';
+
 import {
   CreatePluginReturn,
   CustomHandlerKeyList,
@@ -14,12 +16,23 @@ import {
 import { EditorState } from '@remirror/pm/state';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
 
+const isEmptyStyles = css`
+  &:first-of-type::before {
+    position: absolute;
+    color: #aaa;
+    pointer-events: none;
+    height: 0;
+    font-style: italic;
+    content: attr(data-placeholder);
+  }
+`;
+
 /**
  * Used to denote a node is empty.
  *
  * Currently used by the placeholder extension.
  */
-export const EMPTY_NODE_CLASS_NAME = 'is-empty' as const;
+export const EMPTY_NODE_CLASS_NAME = isEmptyStyles;
 export const EMPTY_NODE_CLASS_SELECTOR = `.${EMPTY_NODE_CLASS_NAME}`;
 
 export interface PlaceholderOptions {
@@ -29,7 +42,8 @@ export interface PlaceholderOptions {
   placeholder?: string;
 
   /**
-   * The class to decorate the empty top level node with.
+   * The class to decorate the empty top level node with. If you change this
+   * then you will also need to apply your own styles.
    */
   emptyNodeClass?: Static<string>;
 }
