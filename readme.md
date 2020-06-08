@@ -1,7 +1,7 @@
 <div align="center">
   <br />
   <div align="center">
-    <img width="300" height="300" src="https://raw.githubusercontent.com/remirror/remirror/next/support/assets/logo-animated-light.svg?sanitize=true" alt="remirror" />
+    <img width="300" height="300" src="https://raw.githubusercontent.com/remirror/remirror/next/support/assets/logo-animated-light.svg?sanitize=true" alt="animated remirror logo" />
   </div>
     <br />
     <br />
@@ -39,13 +39,8 @@
 
 ### Status
 
-Remirror is still undergoing heavy development, but is used in production by at least one company.
-At the moment the focus is on releasing a stable API and while this is ongoing documentation has
-slipped from being the priority.
-
-Right now the best way to understand the library is to read through the codebase and take a look at
-how existing editors have been structured. A quick way to get started is to
-[spin up our Next.js example](https://github.com/remirror/remirror/blob/master/examples/with-next/readme.md#getting-started).
+This is the `next` version of remirror. It is undergoing heavy development at the moment and
+documentation is still being rewritten to capture the updated API.
 
 ### Documentation
 
@@ -69,13 +64,88 @@ View our documentation website at https://docs.remirror.org/
 
 ### Prerequisites
 
-- [Typescript](https://www.typescriptlang.org/) `>= 3.6`
+- [Typescript](https://www.typescriptlang.org/) `>= 3.9`
 - [React](https://reactjs.org/) `>= 16.9`
-- [pnpm](https://pnpm.js.org/en/installation) `>= 4.14`
+- [pnpm](https://pnpm.js.org/en/installation) `>= 5`
 
 <br />
 
+### Editors
+
 ![A gif showing mentions being suggested as the user types with editing supported](https://media.githubusercontent.com/media/ifiokjr/assets/master/remirror/repo-banner.gif 'A gif showing mentions being suggested as the user types with editing supported')
+
+To add this editor to your codebase, first install the required dependencies.
+
+```bash
+# yarn
+yarn add remirror @remirror/pm
+
+# pnpm
+pnpm add remirror @remirror/pm
+
+# npm
+npm install remirror @remirror/pm
+```
+
+`@remirror/pm` is a peer dependency which manages all the prosemirror packages for you.
+
+```tsx
+import {
+  ActiveTagData,
+  ActiveUserData,
+  MentionChangeParameter,
+  SocialEditor,
+  UserData,
+} from 'remirror/react/editor/social';
+
+const tags = ['NeedsStylingSoon', 'LondonHits', 'Awesome'];
+
+const users = [
+  {
+    avatarUrl: 'https://source.unsplash.com/random/100x100',
+    displayName: 'Tolu',
+    id: '1234',
+    username: 'tolu',
+    href: '/u/tolu',
+  },
+  {
+    avatarUrl: 'https://source.unsplash.com/random/100x100',
+    displayName: 'Timi',
+    id: '5678',
+    username: 'timi',
+    href: '/u/timi',
+  },
+];
+
+const MySocialEditor = () => {
+  const [mention, setMention] = useState<MentionChangeParameter>();
+
+  const onChange = useCallback((parameter?: MentionChangeParameter) => {
+    setMention(parameter);
+  }, []);
+
+  const userData: ActiveUserData[] = useMemo(
+    () =>
+      mention?.name === 'at' && (mention.query.length)
+        ? users.filter(user => user.username.includes(mention.query) : [],
+    [mention],
+  );
+
+  const tagData: ActiveTagData[] = useMemo(
+    () => mention?.name === 'tag' && mention.query.length ? tags.filter(tag => tag.includes(mention.query)) : [],
+    [mention],
+  );
+
+  return (
+    <SocialEditor
+      {...props}
+      userData={userData}
+      tagData={tagData}
+      onMentionChange={onChange}
+    />
+  );
+};
+```
 
 ### Testing
 
@@ -106,7 +176,6 @@ pnpm run stop:checks
 - [Typescript]
 - [React]
 - [Prosemirror]
-- [Theme UI]
 
 <br />
 
@@ -124,9 +193,6 @@ process for submitting pull requests.
 This project uses [SemVer](http://semver.org/) for versioning. For the versions available, see the
 [tags on this repository](https://github.com/remirror/remirror/tags).
 
-Currently all versions within the repo are locked and this will continue until `v1.0.0` is. At this
-point versions will be updated independently.
-
 <br />
 
 ### License
@@ -139,7 +205,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 [typescript]: https://github.com/microsoft/Typescript
 [react]: https://github.com/facebook/react
 [prosemirror]: https://prosemirror.net
-[theme ui]: https://github.com/system-ui/theme-ui
 
 <br />
 
@@ -170,6 +235,8 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
   <tr>
     <td align="center"><a href="https://github.com/watlandc"><img src="https://avatars3.githubusercontent.com/u/6117504?v=4" width="100px;" alt=""/><br /><sub><b>Chris Watland</b></sub></a><br /><a href="https://github.com/remirror/remirror/issues?q=author%3Awatlandc" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/lanyusan"><img src="https://avatars3.githubusercontent.com/u/56706512?v=4" width="100px;" alt=""/><br /><sub><b>lanyusan</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=lanyusan" title="Code">💻</a> <a href="https://github.com/remirror/remirror/issues?q=author%3Alanyusan" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://twitter.com/ffloriel_"><img src="https://avatars1.githubusercontent.com/u/12745899?v=4" width="100px;" alt=""/><br /><sub><b>Floriel</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=Ffloriel" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/domq"><img src="https://avatars3.githubusercontent.com/u/1629585?v=4" width="100px;" alt=""/><br /><sub><b>domq</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=domq" title="Code">💻</a> <a href="https://github.com/remirror/remirror/issues?q=author%3Adomq" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 

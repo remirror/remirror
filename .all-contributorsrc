@@ -167,6 +167,25 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "Ffloriel",
+      "name": "Floriel",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/12745899?v=4",
+      "profile": "https://twitter.com/ffloriel_",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "domq",
+      "name": "domq",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1629585?v=4",
+      "profile": "https://github.com/domq",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
