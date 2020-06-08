@@ -25,7 +25,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.0",
+    "@babel/runtime": "^7.10.2",
     "@remirror/react-utils": "^0.7.6"
   },
   "devDependencies": {

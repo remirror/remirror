@@ -18,7 +18,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.0",
+    "@babel/runtime": "^7.10.2",
     "@babel/standalone": "^7.10.2",
     "@babel/types": "^7.10.2",
     "@remirror/core": "^0.11.0",

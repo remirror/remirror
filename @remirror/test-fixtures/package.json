@@ -12,7 +12,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.0",
+    "@babel/runtime": "^7.10.2",
     "@remirror/core": "^0.11.0",
     "@remirror/extension-bold": "^0.0.0",
     "@remirror/extension-code-block": "^0.12.0",
