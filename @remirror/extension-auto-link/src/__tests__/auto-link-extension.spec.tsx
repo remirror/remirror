@@ -20,8 +20,6 @@ describe('AutoLinkExtension', () => {
   });
 
   it('notifies when updated', () => {
-    expect.assertions(2);
-
     const mock = jest.fn(({ urls }: UrlUpdateHandlerParameter) => {
       expect(urls[0]).toBe('//hello.co');
     });

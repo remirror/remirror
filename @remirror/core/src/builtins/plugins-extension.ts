@@ -58,7 +58,6 @@ export class PluginsExtension extends PlainExtension {
     setStoreKey('pluginKeys', this.pluginKeys);
     setStoreKey('getPluginState', this.getStateByName);
     setExtensionStore('getPluginState', this.getStateByName);
-    this.store.addPlugins(...this.#plugins);
   };
 
   private extractExtensionPlugins(extension: AnyExtension) {
@@ -94,7 +93,7 @@ export class PluginsExtension extends PlainExtension {
       };
       const plugin = new Plugin(pluginSpec);
 
-      this.addOrReplacePlugins([plugin], [extension.plugin]);
+      this.addOrReplacePlugins([plugin], extension.plugin ? [extension.plugin] : undefined);
       extension.plugin = plugin;
     }
 
