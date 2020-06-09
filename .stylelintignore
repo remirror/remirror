@@ -5,3 +5,6 @@ docs/public/**
 docs/.cache
 .jest
 coverage
+
+pnpm-lock.yaml/
+.pnpm-store/
