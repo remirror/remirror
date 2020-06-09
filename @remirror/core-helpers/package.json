@@ -29,7 +29,7 @@
     "nanoid": "^3.1.9",
     "object.omit": "^3.0.0",
     "object.pick": "^1.3.0",
-    "throttle-debounce": "^2.1.0",
+    "throttle-debounce": "^2.2.1",
     "type-fest": "^0.15.0"
   },
   "publishConfig": {

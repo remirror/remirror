@@ -33,8 +33,8 @@ importers:
       '@types/testing-library__dom': 7.0.2
       '@types/testing-library__jest-dom': 5.9.1
       '@types/webpack': 4.41.17
-      '@typescript-eslint/eslint-plugin': 3.1.0_260ea45aaf0f8bded6c6e3941a85f6e6
-      '@typescript-eslint/parser': 3.1.0_eslint@7.2.0+typescript@3.9.5
+      '@typescript-eslint/eslint-plugin': 3.2.0_ac50c8aa16ddb60722eab507f8fe73f1
+      '@typescript-eslint/parser': 3.2.0_eslint@7.2.0+typescript@3.9.5
       all-contributors-cli: 6.16.0
       babel-jest: 26.0.1_@babel+core@7.10.2
       babel-plugin-annotate-pure-calls: 0.4.0_@babel+core@7.10.2
@@ -119,8 +119,8 @@ importers:
       '@types/testing-library__dom': ^7.0.2
       '@types/testing-library__jest-dom': ^5.9.1
       '@types/webpack': ^4.41.17
-      '@typescript-eslint/eslint-plugin': ^3.1.0
-      '@typescript-eslint/parser': ^3.1.0
+      '@typescript-eslint/eslint-plugin': ^3.2.0
+      '@typescript-eslint/parser': ^3.2.0
       all-contributors-cli: ^6.16.0
       babel-jest: ^26.0.1
       babel-plugin-annotate-pure-calls: ^0.4.0
@@ -193,7 +193,7 @@ importers:
       ms: 2.1.2
       parcel-bundler: 1.12.4
       react: 16.13.1
-      react-use: 15.2.0_react@16.13.1
+      react-use: 15.2.2_react@16.13.1
       rimraf: 3.0.2
       terminal-link: 2.1.1
       type-fest: 0.15.0
@@ -242,7 +242,7 @@ importers:
       ms: ^2.1.2
       parcel-bundler: ^1.12.4
       react: ^16.13.1
-      react-use: ^15.2.0
+      react-use: ^15.2.2
       rimraf: ^3.0.2
       terminal-link: ^2.1.1
       type-fest: ^0.15.0
@@ -290,7 +290,7 @@ importers:
       nanoid: 3.1.9
       object.omit: 3.0.0
       object.pick: 1.3.0
-      throttle-debounce: 2.1.0
+      throttle-debounce: 2.2.1
       type-fest: 0.15.0
     specifiers:
       '@babel/runtime': ^7.10.2
@@ -306,7 +306,7 @@ importers:
       nanoid: ^3.1.9
       object.omit: ^3.0.0
       object.pick: ^1.3.0
-      throttle-debounce: ^2.1.0
+      throttle-debounce: ^2.2.1
       type-fest: ^0.15.0
   '@remirror/core-types':
     dependencies:
@@ -866,7 +866,7 @@ importers:
       min-document: 2.19.0
       nanoevents: 5.1.7
       nanoid: 3.1.9
-      react-use: 15.2.0_react-dom@16.13.1+react@16.13.1
+      react-use: 15.2.2_react-dom@16.13.1+react@16.13.1
       resize-observer-polyfill: 1.5.1
       type-fest: 0.15.0
       use-deep-compare-effect: 1.3.1_react@16.13.1
@@ -911,7 +911,7 @@ importers:
       react: ^16.13.1
       react-dom: ^16.13.1
       react-test-renderer: ^16.13.1
-      react-use: ^15.2.0
+      react-use: ^15.2.2
       resize-observer-polyfill: ^1.5.1
       type-fest: ^0.15.0
       use-deep-compare-effect: ^1.3.1
@@ -1180,7 +1180,7 @@ importers:
       react-dom: 16.13.1_react@16.13.1
       react-helmet: 6.1.0_react@16.13.1
       react-live: 2.2.2_react-dom@16.13.1+react@16.13.1
-      react-use: 15.2.0_react-dom@16.13.1+react@16.13.1
+      react-use: 15.2.2_react-dom@16.13.1+react@16.13.1
       remark-emoji: 2.1.0
       remark-slug: 6.0.0
       remark-unwrap-images: 2.0.0
@@ -1266,7 +1266,7 @@ importers:
       react-dom: ^16.13.1
       react-helmet: ^6.1.0
       react-live: ^2.2.2
-      react-use: ^15.2.0
+      react-use: ^15.2.2
       remark-emoji: ^2.1.0
       remark-slug: ^6.0.0
       remark-unwrap-images: ^2.0.0
@@ -1336,16 +1336,16 @@ importers:
     dependencies:
       '@babel/runtime': 7.10.2
       '@types/throttle-debounce': 2.1.0
-      throttle-debounce: 2.1.0
+      throttle-debounce: 2.2.1
     specifiers:
       '@babel/runtime': ^7.10.2
       '@types/throttle-debounce': ^2.1.0
-      throttle-debounce: ^2.1.0
+      throttle-debounce: ^2.2.1
   packages/jest-prosemirror:
     dependencies:
       '@babel/runtime': 7.10.2
       '@remirror/pm': 'link:../../@remirror/pm'
-      '@testing-library/dom': 7.10.1
+      '@testing-library/dom': 7.11.0
       '@types/prosemirror-schema-basic': 1.0.1
       '@types/prosemirror-test-builder': 1.0.1
       chalk: 4.0.0
@@ -1360,7 +1360,7 @@ importers:
     specifiers:
       '@babel/runtime': ^7.10.2
       '@remirror/pm': ^0.0.0
-      '@testing-library/dom': ^7.10.1
+      '@testing-library/dom': ^7.11.0
       '@types/prosemirror-schema-basic': ^1.0.1
       '@types/prosemirror-test-builder': ^1.0.1
       chalk: ^4.0.0
@@ -1419,7 +1419,7 @@ importers:
       '@seznam/compose-react-refs': 1.0.4
       a11y-status: 'link:../a11y-status'
       compute-scroll-into-view: 1.0.14
-      react-use: 15.2.0_react@16.13.1
+      react-use: 15.2.2_react@16.13.1
       w3c-keyname: 2.2.4
     devDependencies:
       '@testing-library/react': 10.2.1_react@16.13.1
@@ -1444,7 +1444,7 @@ importers:
       a11y-status: ^0.0.0
       compute-scroll-into-view: ^1.0.14
       react: ^16.13.1
-      react-use: ^15.2.0
+      react-use: ^15.2.2
       w3c-keyname: ^2.2.4
   packages/prosemirror-suggest:
     dependencies:
@@ -6960,6 +6960,17 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-shB6yx0eqoKya8V6zqV152MioYe6R4iIorT9LdGhGMZwvqny0GYMBqzKbAcxbTMlBmG0M0xaqO8AnzVEMuUamA==
+  /@testing-library/dom/7.11.0:
+    dependencies:
+      '@babel/runtime': 7.10.2
+      aria-query: 4.0.2
+      dom-accessibility-api: 0.4.5
+      pretty-format: 25.5.0
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-2j+zfA6dwnzozReA2XrbZs3e9DD9UdetONrWmumIY2QdGH0h08hRW+SaLE8kIytM6KPO5yzypHZhK5AZNFEtiw==
   /@testing-library/jest-dom/5.9.0:
     dependencies:
       '@babel/runtime': 7.10.2
@@ -8061,10 +8072,10 @@ packages:
         optional: true
     resolution:
       integrity: sha512-4zY3Z88rEE99+CNvTbXSyovv2z9PNOVffTWD2W8QF5s2prBQtwN2zadqERcrHpcR7O/+KMI3fcTAmUUhK/iQcQ==
-  /@typescript-eslint/eslint-plugin/3.1.0_260ea45aaf0f8bded6c6e3941a85f6e6:
+  /@typescript-eslint/eslint-plugin/3.2.0_ac50c8aa16ddb60722eab507f8fe73f1:
     dependencies:
-      '@typescript-eslint/experimental-utils': 3.1.0_eslint@7.2.0+typescript@3.9.5
-      '@typescript-eslint/parser': 3.1.0_eslint@7.2.0+typescript@3.9.5
+      '@typescript-eslint/experimental-utils': 3.2.0_eslint@7.2.0+typescript@3.9.5
+      '@typescript-eslint/parser': 3.2.0_eslint@7.2.0+typescript@3.9.5
       eslint: 7.2.0
       functional-red-black-tree: 1.0.1
       regexpp: 3.1.0
@@ -8082,7 +8093,7 @@ packages:
       typescript:
         optional: true
     resolution:
-      integrity: sha512-D52KwdgkjYc+fmTZKW7CZpH5ZBJREJKZXRrveMiRCmlzZ+Rw9wRVJ1JAmHQ9b/+Ehy1ZeaylofDB9wwXUt83wg==
+      integrity: sha512-t9RTk/GyYilIXt6BmZurhBzuMT9kLKw3fQoJtK9ayv0tXTlznXEAnx07sCLXdkN3/tZDep1s1CEV95CWuARYWA==
   /@typescript-eslint/experimental-utils/2.34.0_eslint@6.8.0:
     dependencies:
       '@types/json-schema': 7.0.4
@@ -8129,10 +8140,10 @@ packages:
       typescript: '*'
     resolution:
       integrity: sha512-eS6FTkq+wuMJ+sgtuNTtcqavWXqsflWcfBnlYhg/nS4aZ1leewkXGbvBhaapn1q6qf4M71bsR1tez5JTRMuqwA==
-  /@typescript-eslint/experimental-utils/3.1.0_eslint@7.2.0+typescript@3.9.5:
+  /@typescript-eslint/experimental-utils/3.2.0_eslint@7.2.0+typescript@3.9.5:
     dependencies:
       '@types/json-schema': 7.0.4
-      '@typescript-eslint/typescript-estree': 3.1.0_typescript@3.9.5
+      '@typescript-eslint/typescript-estree': 3.2.0_typescript@3.9.5
       eslint: 7.2.0
       eslint-scope: 5.1.0
       eslint-utils: 2.0.0
@@ -8143,7 +8154,7 @@ packages:
       eslint: '*'
       typescript: '*'
     resolution:
-      integrity: sha512-Zf8JVC2K1svqPIk1CB/ehCiWPaERJBBokbMfNTNRczCbQSlQXaXtO/7OfYz9wZaecNvdSvVADt6/XQuIxhC79w==
+      integrity: sha512-UbJBsk+xO9dIFKtj16+m42EvUvsjZbbgQ2O5xSTSfVT1Z3yGkL90DVu0Hd3029FZ5/uBgl+F3Vo8FAcEcqc6aQ==
   /@typescript-eslint/parser/2.34.0_eslint@6.8.0:
     dependencies:
       '@types/eslint-visitor-keys': 1.0.0
@@ -8181,11 +8192,11 @@ packages:
         optional: true
     resolution:
       integrity: sha512-03ilO0ucSD0EPTw2X4PntSIRFtDPWjrVq7C3/Z3VQHRC7+13YB55rcJI3Jt+YgeHbjUdJPcPa7b23rXCBokuyA==
-  /@typescript-eslint/parser/3.1.0_eslint@7.2.0+typescript@3.9.5:
+  /@typescript-eslint/parser/3.2.0_eslint@7.2.0+typescript@3.9.5:
     dependencies:
       '@types/eslint-visitor-keys': 1.0.0
-      '@typescript-eslint/experimental-utils': 3.1.0_eslint@7.2.0+typescript@3.9.5
-      '@typescript-eslint/typescript-estree': 3.1.0_typescript@3.9.5
+      '@typescript-eslint/experimental-utils': 3.2.0_eslint@7.2.0+typescript@3.9.5
+      '@typescript-eslint/typescript-estree': 3.2.0_typescript@3.9.5
       eslint: 7.2.0
       eslint-visitor-keys: 1.2.0
       typescript: 3.9.5
@@ -8199,7 +8210,7 @@ packages:
       typescript:
         optional: true
     resolution:
-      integrity: sha512-NcDSJK8qTA2tPfyGiPes9HtVKLbksmuYjlgGAUs7Ld2K0swdWibnCq9IJx9kJN8JJdgUJSorFiGaPHBgH81F/Q==
+      integrity: sha512-Vhu+wwdevDLVDjK1lIcoD6ZbuOa93fzqszkaO3iCnmrScmKwyW/AGkzc2UvfE5TCoCXqq7Jyt6SOXjsIlpqF4A==
   /@typescript-eslint/typescript-estree/2.34.0:
     dependencies:
       debug: 4.1.1
@@ -8239,7 +8250,7 @@ packages:
         optional: true
     resolution:
       integrity: sha512-OMAr+nJWKdlVM9LOqCqh3pQQPwxHAN7Du8DR6dmwCrAmxtiXQnhHJ6tBNtf+cggqfo51SG/FCwnKhXCIM7hnVg==
-  /@typescript-eslint/typescript-estree/3.1.0_typescript@3.9.5:
+  /@typescript-eslint/typescript-estree/3.2.0_typescript@3.9.5:
     dependencies:
       debug: 4.1.1
       eslint-visitor-keys: 1.2.0
@@ -8258,7 +8269,7 @@ packages:
       typescript:
         optional: true
     resolution:
-      integrity: sha512-+4nfYauqeQvK55PgFrmBWFVYb6IskLyOosYEmhH3mSVhfBp9AIJnjExdgDmKWoOBHRcPM8Ihfm2BFpZf0euUZQ==
+      integrity: sha512-uh+Y2QO7dxNrdLw7mVnjUqkwO/InxEqwN0wF+Za6eo3coxls9aH9kQ/5rSvW2GcNanebRTmsT5w1/92lAOb1bA==
   /@urql/core/1.11.8_graphql@14.6.0:
     dependencies:
       graphql: 14.6.0
@@ -23556,7 +23567,7 @@ packages:
       tslib: '*'
     resolution:
       integrity: sha512-dg8yXdcQmvgR13RIlZbTRQOoUrDciFVoSBZILwjE2LFISxZZ8loVJKAkuzswl5js8BHda79bIb2b84ehU8IjXw==
-  /react-use/15.2.0_react-dom@16.13.1+react@16.13.1:
+  /react-use/15.2.2_react-dom@16.13.1+react@16.13.1:
     dependencies:
       '@types/js-cookie': 2.2.6
       '@xobotyi/scrollbar-width': 1.9.5
@@ -23571,7 +23582,7 @@ packages:
       resize-observer-polyfill: 1.5.1
       screenfull: 5.0.2
       set-harmonic-interval: 1.0.1
-      throttle-debounce: 2.1.0
+      throttle-debounce: 2.2.1
       ts-easing: 0.2.0
       tslib: 2.0.0
     dev: false
@@ -23579,8 +23590,8 @@ packages:
       react: ^16.8.0
       react-dom: ^16.8.0
     resolution:
-      integrity: sha512-kG/uKvINjPhnmoFXRUWudggPAvnVOV7EnxDpzT8A5q5ccYgDVcMNp22ZkisNOPkS/vCVfKJHsy0eG23gYYFZHg==
-  /react-use/15.2.0_react@16.13.1:
+      integrity: sha512-ews+RJXkJPokAHKXzLl0NLO9lMaiLy8SyhUydO8gFRajuBdsUUKS/HAEmQPlPQ4QxKf7ckgTpA2zO/IUztczwQ==
+  /react-use/15.2.2_react@16.13.1:
     dependencies:
       '@types/js-cookie': 2.2.6
       '@xobotyi/scrollbar-width': 1.9.5
@@ -23594,7 +23605,7 @@ packages:
       resize-observer-polyfill: 1.5.1
       screenfull: 5.0.2
       set-harmonic-interval: 1.0.1
-      throttle-debounce: 2.1.0
+      throttle-debounce: 2.2.1
       ts-easing: 0.2.0
       tslib: 2.0.0
     dev: false
@@ -23602,7 +23613,7 @@ packages:
       react: ^16.8.0
       react-dom: ^16.8.0
     resolution:
-      integrity: sha512-kG/uKvINjPhnmoFXRUWudggPAvnVOV7EnxDpzT8A5q5ccYgDVcMNp22ZkisNOPkS/vCVfKJHsy0eG23gYYFZHg==
+      integrity: sha512-ews+RJXkJPokAHKXzLl0NLO9lMaiLy8SyhUydO8gFRajuBdsUUKS/HAEmQPlPQ4QxKf7ckgTpA2zO/IUztczwQ==
   /react/16.13.1:
     dependencies:
       loose-envify: 1.4.0
@@ -26548,12 +26559,12 @@ packages:
   /throat/5.0.0:
     resolution:
       integrity: sha512-fcwX4mndzpLQKBS1DVYhGAcYaYt7vsHNIvQV+WXMvnow5cgjPphq5CaayLaGsjRdSCKZFNGt7/GYAuXaNOiYCA==
-  /throttle-debounce/2.1.0:
+  /throttle-debounce/2.2.1:
     dev: false
     engines:
       node: '>=8'
     resolution:
-      integrity: sha512-AOvyNahXQuU7NN+VVvOOX+uW6FPaWdAOdRP5HfwYxAfCzXTFKRMoIMk+n+po318+ktcChx+F1Dd91G3YHeMKyg==
+      integrity: sha512-i9hAVld1f+woAiyNGqWelpDD5W1tpMroL3NofTz9xzwq6acWBlO2dC8k5EFSZepU6oOINtV5Q3aSPoRg7o4+fA==
   /through/2.3.8:
     dev: false
     resolution:
