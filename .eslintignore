@@ -23,3 +23,6 @@ lerna.json
 /docs/api/**/*.md
 /docs/api/**
 **/temp/**
+
+
+pnpm-lock.yaml
