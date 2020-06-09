@@ -1,11 +1,11 @@
 import { Children, cloneElement } from 'react';
 
 import {
+  DefaultPresetOptions,
   isDocNodeEmpty,
   isString,
   OnSetOptionsParameter,
   Preset,
-  DefaultPresetOptions,
 } from '@remirror/core';
 import { PlaceholderExtension, PlaceholderOptions } from '@remirror/extension-placeholder';
 import { ReactSSRExtension, ReactSSROptions } from '@remirror/extension-react-ssr';

@@ -183,25 +183,22 @@ interface ReplaceTextParameter
   type?: NodeType | MarkType;
 }
 
-interface CallMethodParameter<
-  GFunction extends AnyFunction,
-  GReturn extends ReturnType<GFunction>
-> {
-  fn: GFunction | unknown;
-  defaultReturn: GReturn;
+interface CallMethodParameter<Fn extends AnyFunction, Return extends ReturnType<Fn>> {
+  fn: Fn | unknown;
+  defaultReturn: Return;
 }
 
 /**
  * A utility for calling option functions that may not exist
  */
 const callMethod = <
-  GFunction extends AnyFunction,
-  GReturn extends ReturnType<GFunction>,
-  GParameter extends Parameters<GFunction>
+  Fn extends AnyFunction,
+  Return extends ReturnType<Fn>,
+  Parameter extends Parameters<Fn>
 >(
-  { fn, defaultReturn }: CallMethodParameter<GFunction, GReturn>,
-  arguments_: GParameter,
-): GReturn => (isFunction(fn) ? fn(...arguments_) : defaultReturn);
+  { fn, defaultReturn }: CallMethodParameter<Fn, Return>,
+  arguments_: Parameter,
+): Return => (isFunction(fn) ? fn(...arguments_) : defaultReturn);
 
 /**
  * Taken from https://stackoverflow.com/a/4900484

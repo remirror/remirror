@@ -2,11 +2,11 @@
  * @jest-environment node
  */
 
+import { EMPTY_PARAGRAPH_NODE } from '@remirror/core';
 import { EditorState } from '@remirror/pm/state';
-import { minDocument, createBaseManager } from '@remirror/test-fixtures';
+import { createBaseManager, minDocument } from '@remirror/test-fixtures';
 
 import { createEditorView, EditorViewSSR } from '../ssr-prosemirror-view';
-import { EMPTY_PARAGRAPH_NODE } from '@remirror/core';
 
 const { schema, plugins } = createBaseManager().store;
 const state = EditorState.create({

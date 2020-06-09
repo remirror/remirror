@@ -94,9 +94,9 @@ export interface Action<Type extends string = string> {
 /**
  * Type representing an Action with Payload
  */
-export interface ActionWithPayload<Type extends string = string, GPayload = any> {
+export interface ActionWithPayload<Type extends string = string, Payload = any> {
   type: Type;
-  payload: GPayload;
+  payload: Payload;
 }
 
 /**
@@ -501,12 +501,12 @@ export interface MultishiftStateChangeset<Item = any> {
 
 export type CreateMultishiftAction<
   Type extends string,
-  GPayload = any,
-  GArgs extends any[] = [GPayload]
-> = (...args: GArgs) => ActionWithPayload<Type, GPayload>;
+  Payload = any,
+  GArgs extends any[] = [Payload]
+> = (...args: GArgs) => ActionWithPayload<Type, Payload>;
 
-export interface GetRemoveButtonOptions<GElement extends HTMLElement = any, Item = any>
-  extends HTMLProps<GElement> {
+export interface GetRemoveButtonOptions<Element extends HTMLElement = any, Item = any>
+  extends HTMLProps<Element> {
   /**
    * You must provide the selectedItem property.
    */
@@ -518,8 +518,8 @@ export interface GetRemoveButtonOptions<GElement extends HTMLElement = any, Item
   disabled?: boolean;
 }
 
-export interface GetRemoveButtonReturn<GElement extends HTMLElement = any>
-  extends DetailedHTMLProps<HTMLAttributes<GElement>, GElement> {
+export interface GetRemoveButtonReturn<Element extends HTMLElement = any>
+  extends DetailedHTMLProps<HTMLAttributes<Element>, Element> {
   /**
    * The aria role for the button. This can be overriden in the options.
    *
@@ -529,15 +529,15 @@ export interface GetRemoveButtonReturn<GElement extends HTMLElement = any>
 }
 
 export interface GetComboBoxPropsOptions<
-  GElement extends HTMLElement = any,
-  GRefKey extends string = 'ref'
-> extends RefParameter<GRefKey>, HTMLProps<GElement> {}
+  Element extends HTMLElement = any,
+  RefKey extends string = 'ref'
+> extends RefParameter<RefKey>, HTMLProps<Element> {}
 
 export type GetComboBoxPropsReturn<
-  GElement extends HTMLElement = any,
-  GRefKey extends string = 'ref'
-> = DetailedHTMLProps<HTMLAttributes<GElement>, GElement> &
-  { [P in GRefKey]: Ref<any> } & {
+  Element extends HTMLElement = any,
+  RefKey extends string = 'ref'
+> = DetailedHTMLProps<HTMLAttributes<Element>, Element> &
+  { [P in RefKey]: Ref<any> } & {
     /**
      * @defaultValue 'combobox'
      */
@@ -549,9 +549,9 @@ export type GetComboBoxPropsReturn<
   };
 
 export interface GetPropsWithRefOptions<
-  GElement extends HTMLElement = any,
-  GRefKey extends string = 'ref'
-> extends RefParameter<GRefKey>, HTMLProps<GElement> {
+  Element extends HTMLElement = any,
+  RefKey extends string = 'ref'
+> extends RefParameter<RefKey>, HTMLProps<Element> {
   /**
    * Determine whether or not the item can be highlighted and selected.
    */
@@ -559,28 +559,28 @@ export interface GetPropsWithRefOptions<
 }
 
 export type GetPropsWithRefReturn<
-  GElement extends HTMLElement = any,
-  GRefKey extends string = 'ref'
+  Element extends HTMLElement = any,
+  RefKey extends string = 'ref'
 > = {
-  [P in Exclude<GRefKey, 'key'>]: Ref<any>;
+  [P in Exclude<RefKey, 'key'>]: Ref<any>;
 } &
-  DetailedHTMLProps<HTMLAttributes<GElement>, GElement>;
+  DetailedHTMLProps<HTMLAttributes<Element>, Element>;
 
 export type GetLabelPropsWithRefReturn<
-  GElement extends HTMLElement = any,
-  GRefKey extends string = 'ref'
+  Element extends HTMLElement = any,
+  RefKey extends string = 'ref'
 > = {
-  [P in Exclude<GRefKey, 'key'>]: Ref<any>;
+  [P in Exclude<RefKey, 'key'>]: Ref<any>;
 } &
-  DetailedHTMLProps<HTMLAttributes<GElement>, GElement> & {
+  DetailedHTMLProps<HTMLAttributes<Element>, Element> & {
     htmlFor?: string;
   };
 
 export interface GetItemPropsOptions<
-  GElement extends HTMLElement = any,
-  GRefKey extends string = 'ref',
+  Element extends HTMLElement = any,
+  RefKey extends string = 'ref',
   Item = any
-> extends GetPropsWithRefOptions<GElement, GRefKey> {
+> extends GetPropsWithRefOptions<Element, RefKey> {
   /**
    * This is the item data that will be selected when the user selects a
    * particular item.
@@ -639,9 +639,9 @@ export interface MultishiftPropGetters<Item = any> {
    * should always be used for `autocomplete` dropdowns but will throw an error
    * if used within a `select` dropdown.
    */
-  getComboBoxProps: <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
-    options?: GetComboBoxPropsOptions<GElement, GRefKey>,
-  ) => GetComboBoxPropsReturn<GElement, GRefKey>;
+  getComboBoxProps: <Element extends HTMLElement = any, RefKey extends string = 'ref'>(
+    options?: GetComboBoxPropsOptions<Element, RefKey>,
+  ) => GetComboBoxPropsReturn<Element, RefKey>;
 
   /**
    * Get the augmented props for the toggle button which typically opens and
@@ -652,9 +652,9 @@ export interface MultishiftPropGetters<Item = any> {
    * Returns the props you should apply to any menu toggle button element you
    * render.
    */
-  getToggleButtonProps: <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
-    options?: GetPropsWithRefOptions<GElement, GRefKey>,
-  ) => GetPropsWithRefReturn<GElement, GRefKey>;
+  getToggleButtonProps: <Element extends HTMLElement = any, RefKey extends string = 'ref'>(
+    options?: GetPropsWithRefOptions<Element, RefKey>,
+  ) => GetPropsWithRefReturn<Element, RefKey>;
 
   /**
    * Get the augmented props for your menu dropdown container element.
@@ -701,9 +701,9 @@ export interface MultishiftPropGetters<Item = any> {
    * > Note that for accessibility reasons it's best if you always render this
    * > element whether or not downshift is in an isOpen state.
    */
-  getMenuProps: <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
-    options?: GetPropsWithRefOptions<GElement, GRefKey>,
-  ) => GetPropsWithRefReturn<GElement, GRefKey>;
+  getMenuProps: <Element extends HTMLElement = any, RefKey extends string = 'ref'>(
+    options?: GetPropsWithRefOptions<Element, RefKey>,
+  ) => GetPropsWithRefReturn<Element, RefKey>;
 
   /**
    * Get the augmented props for each item being rendered.
@@ -716,9 +716,9 @@ export interface MultishiftPropGetters<Item = any> {
    * This is an impure function, so it should only be called when you will
    * actually be applying the props to an item.
    */
-  getItemProps: <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
-    options: GetItemPropsOptions<GElement, GRefKey, Item>,
-  ) => GetPropsWithRefReturn<GElement, GRefKey>;
+  getItemProps: <Element extends HTMLElement = any, RefKey extends string = 'ref'>(
+    options: GetItemPropsOptions<Element, RefKey, Item>,
+  ) => GetPropsWithRefReturn<Element, RefKey>;
 
   /**
    * Get the augmented props for the autocomplete input element.
@@ -739,16 +739,16 @@ export interface MultishiftPropGetters<Item = any> {
    * disabling the input).
    *
    */
-  getInputProps: <GElement extends HTMLInputElement = any, GRefKey extends string = 'ref'>(
-    options?: GetPropsWithRefOptions<GElement, GRefKey>,
-  ) => GetPropsWithRefReturn<GElement, GRefKey>;
+  getInputProps: <Element extends HTMLInputElement = any, RefKey extends string = 'ref'>(
+    options?: GetPropsWithRefOptions<Element, RefKey>,
+  ) => GetPropsWithRefReturn<Element, RefKey>;
 
   /**
    * Gets the props to attach to a button that removes a selected item.
    */
-  getRemoveButtonProps: <GElement extends HTMLElement = any>(
-    options: GetRemoveButtonOptions<GElement, Item>,
-  ) => GetRemoveButtonReturn<GElement>;
+  getRemoveButtonProps: <Element extends HTMLElement = any>(
+    options: GetRemoveButtonOptions<Element, Item>,
+  ) => GetRemoveButtonReturn<Element>;
 
   /**
    * This method should be applied to the label you render. It will generate an
@@ -761,9 +761,9 @@ export interface MultishiftPropGetters<Item = any> {
    * > Note: For accessibility purposes, calling this method is highly
    * recommended.
    */
-  getLabelProps: <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
-    options?: IgnoredElementOptions<GElement, GRefKey>,
-  ) => GetLabelPropsWithRefReturn<GElement, GRefKey>;
+  getLabelProps: <Element extends HTMLElement = any, RefKey extends string = 'ref'>(
+    options?: IgnoredElementOptions<Element, RefKey>,
+  ) => GetLabelPropsWithRefReturn<Element, RefKey>;
 
   /**
    * Adds a ref to an element which will prevent blurring from happening when
@@ -774,15 +774,15 @@ export interface MultishiftPropGetters<Item = any> {
    * - Allows for autofocusing the input / toggle button or items when [a
    *   specific one] when focused.
    */
-  getIgnoredElementProps: <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
-    options?: IgnoredElementOptions<GElement, GRefKey>,
-  ) => GetPropsWithRefReturn<GElement, GRefKey>;
+  getIgnoredElementProps: <Element extends HTMLElement = any, RefKey extends string = 'ref'>(
+    options?: IgnoredElementOptions<Element, RefKey>,
+  ) => GetPropsWithRefReturn<Element, RefKey>;
 }
 
 export interface IgnoredElementOptions<
-  GElement extends HTMLElement = any,
-  GRefKey extends string = 'ref'
-> extends GetPropsWithRefOptions<GElement, GRefKey> {}
+  Element extends HTMLElement = any,
+  RefKey extends string = 'ref'
+> extends GetPropsWithRefOptions<Element, RefKey> {}
 
 export interface MultishiftHelpers<Item = any> {
   /**
@@ -911,14 +911,14 @@ export interface MultishiftReturn<Item = any>
   dispatch: Dispatch<MultishiftRootActions<Item>>;
 }
 
-export interface RefParameter<GRefKey extends string = 'ref'> {
+export interface RefParameter<RefKey extends string = 'ref'> {
   /**
    * A custom ref key which allows a reference to be obtained from non standard
    * components.
    *
    * @defaultValue 'ref'
    */
-  refKey?: GRefKey;
+  refKey?: RefKey;
 }
 
 export interface ItemClickPayload {

@@ -79,8 +79,7 @@ export class ImageExtension extends NodeExtension {
         handleDOMEvents: {
           drop(view, e) {
             const event = Cast<DragEvent>(e);
-            const hasFiles =
-              event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length;
+            const hasFiles = event.dataTransfer?.files?.length;
 
             if (!hasFiles || !event.dataTransfer) {
               return false;

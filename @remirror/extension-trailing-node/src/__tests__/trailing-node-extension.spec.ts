@@ -1,7 +1,6 @@
 import { renderEditor } from 'jest-remirror';
 
-import { object } from '@remirror/core';
-import { isExtensionValid, HeadingExtension, BlockquoteExtension } from '@remirror/test-fixtures';
+import { BlockquoteExtension, HeadingExtension, isExtensionValid } from '@remirror/test-fixtures';
 
 import { TrailingNodeExtension, TrailingNodeOptions } from '../trailing-node-extension';
 
@@ -23,7 +22,7 @@ function create(params?: Partial<TrailingNodeOptions>) {
 }
 
 describe('plugin', () => {
-  const { add, doc, p, h, b } = create();
+  const { add, doc, p, h } = create();
 
   it('adds a new paragraph by default', () => {
     const { state } = add(doc(h('Yo')));

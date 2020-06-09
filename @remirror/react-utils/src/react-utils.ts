@@ -19,15 +19,15 @@ export interface RemirrorComponentStaticProperties {
   $$remirrorType: RemirrorType;
 }
 
-export type RemirrorFC<GProps extends object = object> = FC<GProps> &
+export type RemirrorFC<Props extends object = object> = FC<Props> &
   RemirrorComponentStaticProperties;
-export type RemirrorComponentClass<GProps extends object = object> = ComponentClass<GProps> &
+export type RemirrorComponentClass<Props extends object = object> = ComponentClass<Props> &
   RemirrorComponentStaticProperties;
 
-export type RemirrorComponentType<GProps extends object = object> = ComponentType<GProps> &
+export type RemirrorComponentType<Props extends object = object> = ComponentType<Props> &
   RemirrorComponentStaticProperties;
-export type RemirrorElement<GOptions extends object = any> = ReactElement & {
-  type: RemirrorComponentType<GOptions>;
+export type RemirrorElement<Options extends object = any> = ReactElement & {
+  type: RemirrorComponentType<Options>;
 };
 
 /**
@@ -57,9 +57,9 @@ export enum RemirrorType {
  *
  * @param value - the value to check
  */
-export function isValidElement<GProps extends object = any>(
+export function isValidElement<Props extends object = any>(
   value: unknown,
-): value is ReactElement<GProps> {
+): value is ReactElement<Props> {
   return isObject(value) && isValidReactElement(value);
 }
 
@@ -68,9 +68,9 @@ export function isValidElement<GProps extends object = any>(
  *
  * @param value - the value to check
  */
-export function isReactDOMElement<GProps extends object = any>(
+export function isReactDOMElement<Props extends object = any>(
   value: unknown,
-): value is ReactElement<GProps> & { type: string } {
+): value is ReactElement<Props> & { type: string } {
   return isValidElement(value) && isString(value.type);
 }
 
@@ -79,9 +79,9 @@ export function isReactDOMElement<GProps extends object = any>(
  *
  * @param value - the value to check
  */
-export function isReactFragment<GProps extends object = any>(
+export function isReactFragment<Props extends object = any>(
   value: unknown,
-): value is ReactElement<GProps> & { type: typeof Fragment } {
+): value is ReactElement<Props> & { type: typeof Fragment } {
   return isObject(value) && isValidElement(value) && value.type === Fragment;
 }
 
@@ -106,28 +106,28 @@ export function getElementProps<Type = UnknownShape>(
  * ```
  */
 // eslint-disable-next-line unicorn/consistent-function-scoping
-export const asDefaultProps = <GProps extends object>() => <GDefaultProps extends Partial<GProps>>(
-  props: GDefaultProps,
-): GDefaultProps => props;
+export const asDefaultProps = <Props extends object>() => <DefaultProps extends Partial<Props>>(
+  props: DefaultProps,
+): DefaultProps => props;
 
 /**
  * Checks if this element has a type of any RemirrorComponent
  *
  * @param value - the value to check
  */
-export const isRemirrorElement = <GOptions extends object = any>(
+export const isRemirrorElement = <Options extends object = any>(
   value: unknown,
-): value is RemirrorElement<GOptions> => {
+): value is RemirrorElement<Options> => {
   return bool(
     isObject(value) &&
       isValidElement(value) &&
-      (value.type as RemirrorComponentType<GOptions>).$$remirrorType,
+      (value.type as RemirrorComponentType<Options>).$$remirrorType,
   );
 };
 
-const isRemirrorElementOfType = (type: RemirrorType) => <GOptions extends object = any>(
+const isRemirrorElementOfType = (type: RemirrorType) => <Options extends object = any>(
   value: unknown,
-): value is RemirrorElement<GOptions> =>
+): value is RemirrorElement<Options> =>
   isRemirrorElement(value) && value.type.$$remirrorType === type;
 
 /**
@@ -175,7 +175,7 @@ export const propIsFunction = (prop: unknown): prop is AnyFunction => {
  * A drop in replacement for React.Children.only which provides more readable errors
  * when the child is not a react element or undefined.
  */
-export const oneChildOnly = <GProps extends object = any>(value: unknown): ReactElement<GProps> => {
+export const oneChildOnly = <Props extends object = any>(value: unknown): ReactElement<Props> => {
   if (!value) {
     throw new Error('This component requires ONE child component - Nothing was provided');
   }

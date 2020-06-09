@@ -3,7 +3,7 @@ import { axe } from 'jest-axe';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 
-import { fromHTML, AnyCombinedUnion } from '@remirror/core';
+import { AnyCombinedUnion, fromHTML } from '@remirror/core';
 import { createReactManager } from '@remirror/test-fixtures';
 
 import { RenderEditor } from '..';
@@ -85,7 +85,6 @@ describe('basic functionality', () => {
   });
 
   it('should allow text input and fire all handlers', () => {
-    const manager = createReactManager();
     let setContent: RemirrorContextProps<AnyCombinedUnion>['setContent'] = jest.fn();
     const mock = jest.fn((value: RemirrorContextProps<AnyCombinedUnion>) => {
       setContent = value.setContent;

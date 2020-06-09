@@ -29,8 +29,8 @@ import {
 /**
  * Small utility method for creating a match with the reason property available.
  */
-function createMatchWithReason<GReason>(
-  parameter: SuggestStateMatchParameter & ReasonParameter<GReason>,
+function createMatchWithReason<Reason>(
+  parameter: SuggestStateMatchParameter & ReasonParameter<Reason>,
 ) {
   const { match, reason } = parameter;
 

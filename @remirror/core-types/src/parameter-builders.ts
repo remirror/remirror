@@ -103,11 +103,11 @@ export interface FromToParameter {
  * A parameter builder type which uses {@link FromToParameter} where `from` or `to`, or both
  * can be set as optional.
  *
- * @typeParam GKey - the keys to set as optional (either `from` or `to`).
+ * @typeParam Key - the keys to set as optional (either `from` or `to`).
  */
-export type OptionalFromToParameter<GKey extends keyof FromToParameter> = MakeOptional<
+export type OptionalFromToParameter<Key extends keyof FromToParameter> = MakeOptional<
   FromToParameter,
-  GKey
+  Key
 >;
 
 /**
@@ -282,11 +282,11 @@ export interface TransformTransactionParameter<Schema extends EditorSchema = Edi
   endTransaction?: TransactionTransformer<Schema>;
 }
 
-export interface RangeParameter<GKey extends keyof FromToParameter = never> {
+export interface RangeParameter<Key extends keyof FromToParameter = never> {
   /**
    * The from/to interface.
    */
-  range: OptionalFromToParameter<GKey>;
+  range: OptionalFromToParameter<Key>;
 }
 
 export interface ResolvedPosParameter<Schema extends EditorSchema = EditorSchema> {

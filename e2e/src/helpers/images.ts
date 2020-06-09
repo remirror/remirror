@@ -1,7 +1,6 @@
 import { promises } from 'fs';
 import looksSame, { createDiff } from 'looks-same';
 import { dirname, resolve } from 'path';
-import { promisify } from 'util';
 
 import { kebabCase } from '@remirror/core';
 

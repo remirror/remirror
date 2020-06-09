@@ -88,6 +88,7 @@ module.exports = {
     'unicorn/prevent-abbreviations': 'off', // Too aggressive.
     'unicorn/filename-case': ['error', { case: 'kebabCase' }],
     'unicorn/no-null': 'off',
+    'unicorn/no-reduce': 'off',
 
     'jest/prefer-spy-on': 'warn',
     'jest/no-large-snapshots': ['warn', { maxSize: 12 }],
@@ -239,7 +240,7 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
 
     // Built in eslint rules
-
+    'no-constant-condition': 'off',
     'no-empty': 'warn',
     'no-useless-escape': 'warn',
     'default-case': 'warn',
@@ -249,7 +250,6 @@ module.exports = {
     curly: ['warn', 'all'],
     'no-invalid-regexp': 'error',
     'no-multi-str': 'error',
-    'no-constant-condition': 'error',
     'no-extra-boolean-cast': 'error',
     radix: 'error',
     'no-return-assign': ['error', 'except-parens'],
@@ -288,7 +288,6 @@ module.exports = {
         '@typescript-eslint/no-non-null-assertion': 'off', // Makes writing tests more convenient
         '@typescript-eslint/no-use-before-define': 'off',
         'react/display-name': 'off',
-        // eslint-disable-next-line unicorn/no-reduce
         ...Object.keys(tsProjectRules).reduce(
           (accumulator, key) => ({ ...accumulator, [key]: 'off' }),
           {},
@@ -296,7 +295,14 @@ module.exports = {
       },
     },
     {
-      files: ['**/*.d.ts', '**/__mocks__/**', '@remirror/i18n/**/*.ts', 'docs/**', 'examples/**'],
+      files: [
+        '**/*.d.ts',
+        '**/__mocks__/**',
+        '@remirror/i18n/**/*.ts',
+        'docs/**',
+        'examples/**',
+        'e2e/**',
+      ],
       rules: { 'import/no-default-export': 'off' },
     },
     {
@@ -312,8 +318,11 @@ module.exports = {
       },
     },
     {
-      files: ['support/scripts/**'],
-      rules: { 'unicorn/no-process-exit': 'off' },
+      files: ['support/scripts/**', 'e2e/**'],
+      rules: {
+        'unicorn/no-process-exit': 'off',
+        'unicorn/no-unreadable-array-destructuring': 'off',
+      },
     },
     {
       files: ['docs/**'],
@@ -327,6 +336,10 @@ module.exports = {
         'unicorn/no-abusive-eslint-disable': 'off',
         'eslint-comments/no-unused-disable': 'off',
       },
+    },
+    {
+      files: ['@remirror/playground/**', 'e2e/**'],
+      rules: { '@typescript-eslint/no-var-requires': 'off' },
     },
   ],
 };

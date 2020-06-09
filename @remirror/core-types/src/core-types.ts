@@ -10,7 +10,6 @@ import {
   EditorState,
   EditorView,
   Mark,
-  NodeView,
   ProsemirrorNode,
   Transaction,
 } from './alias-types';
@@ -303,12 +302,12 @@ export interface MarkExtensionSpec
  * @param decorations - a list of the decorations affecting this node view (in
  * case the node view needs to update it's presentation)
  */
-export type NodeViewMethod<GNodeView extends NodeView = NodeView> = (
+export type NodeViewMethod<NodeView extends NodeView = NodeView> = (
   node: ProsemirrorNode,
   view: EditorView,
   getPos: (() => number) | boolean,
   decorations: Decoration[],
-) => GNodeView;
+) => NodeView;
 
 /**
  * The core shape of any remirror specific object.

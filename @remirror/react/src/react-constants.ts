@@ -1,4 +1,4 @@
-import { EMPTY_PARAGRAPH_NODE, Transaction, AnyCombinedUnion } from '@remirror/core';
+import { AnyCombinedUnion, EMPTY_PARAGRAPH_NODE, Transaction } from '@remirror/core';
 import { asDefaultProps } from '@remirror/react-utils';
 
 import { BaseProps } from './react-types';

@@ -1,0 +1,7 @@
+**/*.d.ts
+node_modules
+**/node_modules
+docs/public/**
+docs/.cache
+.jest
+coverage

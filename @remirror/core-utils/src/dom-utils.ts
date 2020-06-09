@@ -115,9 +115,9 @@ export function isEditorState<Schema extends EditorSchema = EditorSchema>(
  *
  * @public
  */
-export function isEditorSchema<GNodes extends string = string, GMarks extends string = string>(
+export function isEditorSchema<Nodes extends string = string, Marks extends string = string>(
   value: unknown,
-): value is Schema<GNodes, GMarks> {
+): value is Schema<Nodes, Marks> {
   return isObject(value) && value instanceof Schema;
 }
 

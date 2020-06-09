@@ -35,13 +35,13 @@ export interface OptionsParameter {
   options: KeyboardEventInit;
 }
 
-export interface TextInputParameter<GType extends string = string>
+export interface TextInputParameter<Type extends string = string>
   extends Partial<OptionsParameter>,
     Partial<IsTypingParameter> {
   /**
    * The text or character being passed into the generated event
    */
-  text: GType;
+  text: Type;
 }
 
 export type TypingInputParameter = Omit<TextInputParameter, 'typing'>;

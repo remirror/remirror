@@ -119,6 +119,7 @@ export enum ErrorConstant {
    * `getRootProps` has been called MULTIPLE times. It should only be called ONCE during render.
    */
   REACT_GET_ROOT_PROPS = 'RMR0201',
+
   /**
    * A problem occurred adding the editor view to the dom.
    */

@@ -6,9 +6,9 @@ import { createReactManager } from '@remirror/test-fixtures';
 
 import { RenderEditor } from '..';
 import {
+  DefaultReactCombined,
   RemirrorContextProps,
   RemirrorStateListenerParameter,
-  DefaultReactCombined,
 } from '../../react-types';
 import { RemirrorProviderProps } from '../remirror-provider';
 

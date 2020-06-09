@@ -208,8 +208,7 @@ const addModuleToRuntime = async (mod: string, path: string, config: ATAConfig) 
 
   const dtsFileURL = isDeno ? path : unpkgURL(mod, path);
 
-  const content =
-    (dtsCache[mod] && dtsCache[mod][path]) || (await getCachedDTSString(config, dtsFileURL));
+  const content = dtsCache[mod]?.[path] || (await getCachedDTSString(config, dtsFileURL));
   if (!content) {
     return errorMsg(`Could not get root d.ts file for the module '${mod}' at ${path}`, {});
   }

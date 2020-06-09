@@ -167,8 +167,8 @@ export class SuggestState {
   /**
    * Create the prop to be passed into the `onChange` or `onExit` handler.
    */
-  private createReasonParameter<GReason extends ExitReason | ChangeReason>(
-    match: SuggestStateMatchReason<GReason>,
+  private createReasonParameter<Reason extends ExitReason | ChangeReason>(
+    match: SuggestStateMatchReason<Reason>,
   ) {
     return {
       ...this.createParameter(match),

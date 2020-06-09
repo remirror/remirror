@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import { Config } from '@jest/types';
 import { setup, teardown } from 'jest-dev-server';
 import onExit from 'signal-exit';
