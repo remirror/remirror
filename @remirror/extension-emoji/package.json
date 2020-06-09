@@ -48,6 +48,6 @@
     "access": "public"
   },
   "meta": {
-    "sizeLimit": "150 KB"
+    "sizeLimit": "60 KB"
   }
 }

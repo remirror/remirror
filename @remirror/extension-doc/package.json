@@ -37,6 +37,6 @@
     "access": "public"
   },
   "meta": {
-    "sizeLimit": "50 KB"
+    "sizeLimit": "5 KB"
   }
 }
