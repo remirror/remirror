@@ -45,6 +45,7 @@
     "lint:repo": "manypkg check # off until package name for entry point works",
     "lint:styles": "node support/scripts/check-styles.js",
     "md": "node support/scripts/md.js",
+    "nuke": "pnpm run clean:all; rm pnpm-lock.yml; pnpm install;",
     "prerelease": "pnpm run if-not-ci run-s checks:release",
     "release": "changeset publish",
     "repo:update": "pnpm update --latest --recursive -i",
