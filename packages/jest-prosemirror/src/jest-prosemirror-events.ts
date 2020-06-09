@@ -375,9 +375,9 @@ export const createEvents = <GEvent extends Event>(event: EventType, options: Sh
   if (event === 'tripleClick') {
     EventConstructor = MouseEvent as any;
     return [
-      new EventConstructor('click', { ...options, detail: 1 }),
-      new EventConstructor('click', { ...options, detail: 2 }),
-      new EventConstructor('click', { ...options, detail: 3 }),
+      new EventConstructor('click', { ...options, detail: 1 } as EventInit),
+      new EventConstructor('click', { ...options, detail: 2 } as EventInit),
+      new EventConstructor('click', { ...options, detail: 3 } as EventInit),
     ];
   }
 

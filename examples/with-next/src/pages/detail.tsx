@@ -15,7 +15,7 @@ class InitialPropsDetail extends Component<Props> {
   static getInitialProps = async ({ query }: NextPageContext) => {
     try {
       const { id } = query;
-      const item = await findData(Array.isArray(id) ? id[0] : id);
+      const item = await findData(Array.isArray(id) ? id[0] : id ?? '');
       return { item };
     } catch (error) {
       return { errors: error.message };

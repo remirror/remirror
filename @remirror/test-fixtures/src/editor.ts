@@ -43,3 +43,6 @@ export * from '@remirror/extension-text';
 export * from '@remirror/extension-paragraph';
 export * from '@remirror/extension-bold';
 export * from '@remirror/extension-code-block';
+export * from '@remirror/extension-heading';
+export * from '@remirror/extension-blockquote';
+export * from '@remirror/extension-link';

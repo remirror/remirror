@@ -1,4 +1,5 @@
-import { css, Global } from '@emotion/core';
+import '@remirror/styles/all.css';
+
 import App from 'next/app';
 import React from 'react';
 
@@ -17,17 +18,6 @@ export default class MyApp extends App {
 
   render() {
     const { Component, pageProps } = this.props;
-    return (
-      <>
-        <Global
-          styles={css`
-            #__next-prerender-indicator {
-              display: none;
-            }
-          `}
-        />
-        <Component {...pageProps} />
-      </>
-    );
+    return <Component {...pageProps} />;
   }
 }

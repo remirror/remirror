@@ -14,9 +14,12 @@
   "dependencies": {
     "@babel/runtime": "^7.10.2",
     "@remirror/core": "^0.11.0",
+    "@remirror/extension-blockquote": "^0.0.0",
     "@remirror/extension-bold": "^0.0.0",
     "@remirror/extension-code-block": "^0.12.0",
     "@remirror/extension-doc": "^0.0.0",
+    "@remirror/extension-heading": "^0.0.0",
+    "@remirror/extension-link": "^0.0.0",
     "@remirror/extension-paragraph": "^0.0.0",
     "@remirror/extension-text": "^0.0.0",
     "@remirror/pm": "^0.0.0",

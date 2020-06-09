@@ -3,6 +3,6 @@
   "compilerOptions": {
     "allowJs": true
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "*.js", ".eslintrc.js"],
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "*.js", ".eslintrc.js", "**/.babelrc.js"],
   "exclude": ["**/dist/", "**/public/", "**/.cache/", "docs/**/*.js"]
 }

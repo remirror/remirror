@@ -1,13 +1,12 @@
 import { cleanup } from '@testing-library/react';
 
-import { Plugin } from '@remirror/pm/state';
-import { Extension, toHTML } from 'remirror/core';
 import {
   BlockquoteExtension,
   BoldExtension,
   HeadingExtension,
   LinkExtension,
-} from 'remirror/core/extensions';
+} from '@remirror/test-fixtures';
+import { PlainExtension, toHTML } from 'remirror/core';
 
 import { renderEditor } from '../jest-remirror-editor';
 
@@ -28,7 +27,6 @@ test('add content', () => {
     view,
     nodes: { doc, p },
     add,
-    // TODO Investigate why typescript autocomplete on plain nodes doesn't work without at least an empty array
   } = renderEditor([]);
   add(doc(p(expected)));
 
@@ -41,7 +39,7 @@ test('can be configured with plain node extensions', () => {
     view: { dom },
     nodes: { blockquote, doc, p },
     add,
-  } = renderEditor({ plainNodes: [new BlockquoteExtension()] });
+  } = renderEditor([new BlockquoteExtension()]);
   add(doc(blockquote(p(expected)), p('This is a p')));
 
   expect(dom).toHaveTextContent('A simple blockquote');
@@ -53,9 +51,9 @@ test('can be configured with attribute node extensions', () => {
     view: { dom },
     schema,
     nodes: { doc },
-    attrNodes: { heading },
+    attributeNodes: { heading },
     add,
-  } = renderEditor({ attrNodes: [new HeadingExtension()] });
+  } = renderEditor([new HeadingExtension()]);
 
   const h3 = heading({ level: 3 });
   const h2 = heading({ level: 2 });
@@ -72,7 +70,7 @@ test('can be configured with plain mark extensions', () => {
     nodes: { doc, p },
     add,
     marks: { bold },
-  } = renderEditor({ plainNodes: [], plainMarks: [new BoldExtension()] });
+  } = renderEditor([new BoldExtension()]);
   add(doc(p('Text is ', bold(expected))));
 
   expect(dom.querySelector('strong')!.textContent).toBe(expected);
@@ -85,8 +83,8 @@ test('can be configured with attribute mark extensions', () => {
     view: { dom },
     nodes: { doc, p },
     add,
-    attrMarks: { link },
-  } = renderEditor({ attrMarks: [new LinkExtension()] });
+    attributeMarks: { link },
+  } = renderEditor([new LinkExtension()]);
   const googleLinkExtension = link({ href });
   add(doc(p('LinkExtension to ', googleLinkExtension(expected))));
 
@@ -100,46 +98,30 @@ const tripleClickMock = jest.fn(() => false);
 const doubleClickMock = jest.fn(() => false);
 const clickMock = jest.fn(() => false);
 
-class CustomExtension extends Extension {
+class CustomExtension extends PlainExtension {
   get name() {
     return 'custom' as const;
   }
 
-  plugin() {
-    return new Plugin({
-      key: this.pluginKey,
+  createPlugin = () => {
+    return {
       props: {
         handleTripleClick: tripleClickMock,
         handleDoubleClick: doubleClickMock,
         handleClick: clickMock,
       },
-    });
-  }
+    };
+  };
 }
 
 describe('add', () => {
-  const params = {
-    plainMarks: [new BoldExtension()],
-    plainNodes: [],
-    others: [new CustomExtension()],
-  };
-  let {
+  const {
     view: { dom },
     schema,
     nodes: { doc, p },
     marks: { bold },
     add,
-  } = renderEditor(params);
-
-  beforeEach(() => {
-    ({
-      view: { dom },
-      schema,
-      nodes: { doc, p },
-      marks: { bold },
-      add,
-    } = renderEditor(params));
-  });
+  } = renderEditor([new BoldExtension(), new CustomExtension()]);
 
   it('overwrites the whole doc on each call', () => {
     const node = p('Hello');
@@ -216,14 +198,14 @@ describe('tags', () => {
     view,
     nodes: { doc, p },
     add,
-  } = renderEditor({ plainNodes: [] });
+  } = renderEditor([]);
 
   beforeEach(() => {
     ({
       view,
       nodes: { doc, p },
       add,
-    } = renderEditor({ plainNodes: [] }));
+    } = renderEditor([]));
   });
 
   it('supports <cursor>', () => {

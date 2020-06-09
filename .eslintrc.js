@@ -274,8 +274,15 @@ module.exports = {
       },
     },
     {
-      files: ['**/__tests__/**', '**/__stories__/**', 'support/**', '**/__dts__/**'],
+      files: [
+        '**/__tests__/**',
+        '**/__stories__/**',
+        'support/**',
+        '**/__dts__/**',
+        '**/*.test.ts',
+      ],
       rules: {
+        '@typescript-eslint/await-thenable': 'off',
         '@typescript-eslint/ban-ts-comment': 'off',
         '@typescript-eslint/ban-ts-ignore': 'off', // Often you need to use @ts-ignore in tests
         '@typescript-eslint/no-non-null-assertion': 'off', // Makes writing tests more convenient
@@ -289,7 +296,7 @@ module.exports = {
       },
     },
     {
-      files: ['**/*.d.ts', '**/__mocks__/**', '@remirror/i18n/**/*.ts', 'docs/**'],
+      files: ['**/*.d.ts', '**/__mocks__/**', '@remirror/i18n/**/*.ts', 'docs/**', 'examples/**'],
       rules: { 'import/no-default-export': 'off' },
     },
     {

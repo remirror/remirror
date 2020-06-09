@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/await-thenable */
 import { getDocument, queries } from 'pptr-testing-library';
 import { ElementHandle } from 'puppeteer';
 

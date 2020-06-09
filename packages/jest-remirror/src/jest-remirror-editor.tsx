@@ -252,7 +252,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *
    * If content already exists it will be overwritten.
    */
-  add = (taggedDocument: TaggedProsemirrorNode<SchemaFromCombined<Combined>>) => {
+  readonly add = (taggedDocument: TaggedProsemirrorNode<SchemaFromCombined<Combined>>) => {
     const { content } = taggedDocument;
     const { cursor, node, start, end, all, ...tags } = taggedDocument.tags;
 
@@ -290,23 +290,23 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Alias for add.
    */
-  overwrite = (taggedDocument: TaggedProsemirrorNode<SchemaFromCombined<Combined>>) => {
+  readonly overwrite = (taggedDocument: TaggedProsemirrorNode<SchemaFromCombined<Combined>>) => {
     return this.add(taggedDocument);
   };
 
   /**
    * Updates the tags.
    */
-  update(tags?: Tags) {
+  readonly update = (tags?: Tags) => {
     this.#tags = { ...this.tags, ...tags };
 
     return this;
-  }
+  };
 
   /**
    * Selects the text between the provided start and end.
    */
-  selectText = (start: number, end?: number) => {
+  readonly selectText = (start: number, end?: number) => {
     dispatchTextSelection({
       view: this.view,
       start,
@@ -340,7 +340,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *   });
    * ```
    */
-  callback = (
+  readonly callback = (
     fn: (
       content: Pick<
         this,
@@ -360,7 +360,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *
    * @param shortcut
    */
-  shortcut = (text: string) => {
+  readonly shortcut = (text: string) => {
     shortcut({ shortcut: text, view: this.view });
     return this;
   };
@@ -372,7 +372,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * @param content - The text or node to paste into the document at the current
    * selection.
    */
-  paste = (content: TaggedProsemirrorNode | string) => {
+  readonly paste = (content: TaggedProsemirrorNode | string) => {
     pasteContent({ view: this.view, content });
     return this;
   };
@@ -382,7 +382,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *
    * @param key - the key to press (or string representing a key)
    */
-  press = (char: string) => {
+  readonly press = (char: string) => {
     press({ char, view: this.view });
     return this;
   };
@@ -394,7 +394,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * @param command - the command function to run with the current state and
    * view
    */
-  dispatchCommand = (command: CommandFunction) => {
+  readonly dispatchCommand = (command: CommandFunction) => {
     command({ state: this.state, dispatch: this.view.dispatch, view: this.view });
 
     return this;
@@ -405,7 +405,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *
    * @param shortcut - the shortcut to type
    */
-  fire = (parameters: FireParameter) => {
+  readonly fire = (parameters: FireParameter) => {
     fireEventAtPosition({ view: this.view, ...parameters });
 
     return this;
@@ -414,7 +414,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Set selection in the document to a certain position
    */
-  jumpTo = (pos: 'start' | 'end' | number, endPos?: number) => {
+  readonly jumpTo = (pos: 'start' | 'end' | number, endPos?: number) => {
     if (pos === 'start') {
       dispatchTextSelection({ view: this.view, start: 1 });
       return this;
@@ -434,7 +434,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *
    * This should be used to add new content to the dom.
    */
-  replace = (...replacement: string[]) => {
+  readonly replace = (...replacement: string[] | TaggedProsemirrorNode[]) => {
     replaceSelection({ view: this.view, content: replacement });
     return this;
   };
@@ -456,7 +456,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Logs the view to the dom for help debugging the html in your tests.
    */
-  debug = () => {
+  readonly debug = () => {
     this.utils.debug(this.view.dom as HTMLElement);
     return this;
   };

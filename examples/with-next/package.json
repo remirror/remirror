@@ -2,6 +2,7 @@
   "name": "with-next",
   "version": "0.0.8",
   "private": true,
+  "repository": "https://github.com/remirror/remirror/tree/master/examples/with-next",
   "scripts": {
     "build": "next build",
     "dev": "next",
@@ -9,18 +10,18 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.22",
     "@preconstruct/next": "^1.0.1",
-    "@remirror/core": "^0.11.0",
-    "@remirror/core-extensions": "^0.13.1",
-    "@remirror/editor-social": "^0.13.1",
-    "@remirror/editor-wysiwyg": "^0.13.1",
-    "@remirror/extension-code-block": "^0.12.0",
-    "@remirror/react": "^0.13.1",
-    "@remirror/react-showcase": "^0.13.1",
-    "next": "^9.3.1",
+    "@remirror/react-showcase": "^0.0.0",
+    "@remirror/styles": "^0.0.0",
+    "next": "^9.4.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "refractor": "^3.0.0"
+    "refractor": "^3.0.0",
+    "remirror": "^0.13.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
+    "@types/refractor": "^2.8.0"
   }
 }
