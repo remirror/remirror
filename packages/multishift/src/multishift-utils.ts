@@ -961,18 +961,13 @@ export const getModifiers = (event: {
  * This is intended to be used to compose event handlers. They are executed in
  * order until one of them returns a truthy value.
  */
-export const callAllEventHandlers = <
-  Typet extends Event = any,
-  Element extends Element = any,
-  TypeheticEvent extends SyntheticEvent<Element, Typet> = SyntheticEvent<Element, Typet>,
-  Typetion extends (
-    event: TypeheticEvent,
-    ...args: any[]
-  ) => void | undefined | false | true = AnyFunction
->(
-  ...fns: Array<Typetion | undefined | null | false>
-) => {
-  return (event: TypeheticEvent, ...args: any[]) => {
+export function callAllEventHandlers<
+  Type extends Event = any,
+  Node extends Element = any,
+  Synth extends SyntheticEvent<Element, Type> = SyntheticEvent<Node, Type>,
+  Method extends (event: Synth, ...args: any[]) => void | undefined | false | true = AnyFunction
+>(...fns: Array<Method | undefined | null | false>) {
+  return (event: Synth, ...args: any[]) => {
     fns.some((fn) => {
       if (fn) {
         return fn(event, ...args) === true;
@@ -981,7 +976,7 @@ export const callAllEventHandlers = <
       return false;
     });
   };
-};
+}
 
 const bindActionCreator = <
   Action,

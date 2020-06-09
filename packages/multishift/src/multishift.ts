@@ -215,11 +215,13 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
     items,
   ]);
 
-  const getComboBoxProps = <Element extends HTMLElement = any, RefKey extends string = 'ref'>(
-    { refKey = 'ref' as RefKey, ref, ...rest }: GetComboBoxPropsOptions<Element, RefKey> = {
+  function getComboBoxProps<Element extends HTMLElement = any, RefKey extends string = 'ref'>(
+    options: GetComboBoxPropsOptions<Element, RefKey> = {
       refKey: 'ref' as RefKey,
     },
-  ): GetComboBoxPropsReturn<Element, RefKey> => {
+  ): GetComboBoxPropsReturn<Element, RefKey> {
+    const { refKey = 'ref' as RefKey, ref, ...rest } = options;
+
     if (type !== Type.ComboBox) {
       throw new Error('`getComboBoxProps` is only available for the autocomplete dropdown');
     }
@@ -235,10 +237,12 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
       ...extra,
       ...rest,
     } as GetComboBoxPropsReturn<Element, RefKey>;
-  };
+  }
 
-  const getInputProps = <Element extends HTMLInputElement = any, RefKey extends string = 'ref'>(
-    {
+  function getInputProps<DomElement extends HTMLInputElement = any, RefKey extends string = 'ref'>(
+    options: GetPropsWithRefOptions<DomElement, RefKey> = { refKey: 'ref' as RefKey },
+  ): GetPropsWithRefReturn<DomElement, RefKey> {
+    const {
       onKeyDown,
       onBlur,
       onChange,
@@ -246,8 +250,8 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
       refKey = 'ref' as RefKey,
       ref,
       ...rest
-    }: GetPropsWithRefOptions<Element, RefKey> = { refKey: 'ref' as RefKey },
-  ): GetPropsWithRefReturn<Element, RefKey> => {
+    } = options;
+
     if (type !== Type.ComboBox) {
       throw new Error('`getInputProps` is only available for the `autocomplete` dropdown');
     }
@@ -258,9 +262,9 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
         }
       : {};
 
-    let eventHandlers: HTMLProps<Element> = {
+    let eventHandlers: HTMLProps<DomElement> = {
       onChange: callAllEventHandlers(onChange, onInput, (event) => {
-        actions.inputValueChange((event as ChangeEvent).target.value);
+        actions.inputValueChange((event as ChangeEvent<DomElement>).target.value);
       }),
       onKeyDown: callAllEventHandlers(onKeyDown, (event) => {
         const key = getKeyName(event);
@@ -288,7 +292,7 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
     }
 
     return {
-      [refKey]: composeRefs(ref as Ref<Element>, refs.input),
+      [refKey]: composeRefs(ref as Ref<DomElement>, refs.input),
       'aria-autocomplete': 'list',
       ...activeDescendant,
       'aria-controls': isOpen ? menuId : null,
@@ -302,17 +306,13 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
       ...eventHandlers,
       ...rest,
     } as any;
-  };
+  }
 
-  const getMenuProps = <Element extends HTMLElement = any, RefKey extends string = 'ref'>(
-    {
-      onKeyDown,
-      onBlur,
-      refKey = 'ref' as RefKey,
-      ref,
-      ...rest
-    }: GetPropsWithRefOptions<Element, RefKey> = { refKey: 'ref' as RefKey },
-  ): GetPropsWithRefReturn<Element, RefKey> => {
+  function getMenuProps<Element extends HTMLElement = any, RefKey extends string = 'ref'>(
+    options: GetPropsWithRefOptions<Element, RefKey> = { refKey: 'ref' as RefKey },
+  ): GetPropsWithRefReturn<Element, RefKey> {
+    const { onKeyDown, onBlur, refKey = 'ref' as RefKey, ref, ...rest } = options;
+
     const multi = props.multiple ? { 'aria-multiselectable': props.multiple } : {};
     const activeDescendant = !isEmptyArray(highlightedIndexes)
       ? {
@@ -370,26 +370,26 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
       ...eventHandlers,
       ...rest,
     } as GetPropsWithRefReturn<Element, RefKey>;
-  };
+  }
 
-  const getToggleButtonProps = <Element extends HTMLElement = any, RefKey extends string = 'ref'>(
-    {
-      onClick,
-      onKeyDown,
-      onBlur,
-      refKey = 'ref' as RefKey,
-      ref,
-      ...rest
-    }: GetPropsWithRefOptions<Element, RefKey> = { refKey: 'ref' as RefKey },
-  ): GetPropsWithRefReturn<Element, RefKey> => {
+  function getToggleButtonProps<
+    DomElement extends HTMLElement = any,
+    RefKey extends string = 'ref'
+  >(
+    options: GetPropsWithRefOptions<DomElement, RefKey> = { refKey: 'ref' as RefKey },
+  ): GetPropsWithRefReturn<DomElement, RefKey> {
+    const { onClick, onKeyDown, onBlur, refKey = 'ref' as RefKey, ref, ...rest } = options;
+
     if (type === Type.ControlledMenu) {
       throw new Error('The toggle button props should not be used for the controlled menu');
     }
-    const isInternalEvent = <GEvent extends SyntheticEvent = any>(event: GEvent) =>
+
+    const isInternalEvent = <Synth extends SyntheticEvent = any>(event: Synth) =>
       [refs.input.current, refs.menu.current, ...refs.items.current].some(
         (node) => node && isOrContainsNode(node, event.target as Node),
       );
-    let eventHandlers: HTMLProps<Element> = {
+
+    let eventHandlers: HTMLProps<DomElement> = {
       onClick: callAllEventHandlers(onClick, () => actions.toggleButtonClick()),
       onKeyDown: callAllEventHandlers(onKeyDown, (event) => {
         const key = getKeyName(event);
@@ -432,7 +432,7 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
       : {};
 
     return {
-      [refKey]: composeRefs(ref as Ref<Element>, refs.toggleButton),
+      [refKey]: composeRefs(ref as Ref<DomElement>, refs.toggleButton),
       type: 'button',
       role: 'button',
       id: toggleButtonId,
@@ -442,18 +442,22 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
       ...eventHandlers,
       ...rest,
     } as any;
-  };
+  }
 
-  const getItemProps = <Element extends HTMLElement = any, RefKey extends string = 'ref'>({
-    item,
-    index,
-    refKey = 'ref' as RefKey,
-    ref,
-    onMouseMove,
-    onMouseLeave,
-    onClick,
-    ...rest
-  }: GetItemPropsOptions<Element, RefKey, Item>): GetPropsWithRefReturn<Element, RefKey> => {
+  function getItemProps<Element extends HTMLElement = any, RefKey extends string = 'ref'>(
+    options: GetItemPropsOptions<Element, RefKey, Item>,
+  ): GetPropsWithRefReturn<Element, RefKey> {
+    const {
+      item,
+      index,
+      refKey = 'ref' as RefKey,
+      ref,
+      onMouseMove,
+      onMouseLeave,
+      onClick,
+      ...rest
+    } = options;
+
     const itemIndex = getItemIndex(index, item, items);
     if (!isValidIndex(itemIndex)) {
       throw new Error('Pass either item or item index in getItemProps!');
@@ -492,17 +496,12 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
       ...eventHandlers,
       ...rest,
     } as GetPropsWithRefReturn<Element, RefKey>;
-  };
+  }
 
-  const getIgnoredElementProps = <Element extends HTMLElement = any, RefKey extends string = 'ref'>(
-    {
-      refKey = 'ref' as RefKey,
-      ref,
-      onMouseMove,
-      onFocus,
-      ...rest
-    }: IgnoredElementOptions<Element, RefKey> = { refKey: 'ref' as RefKey },
-  ): GetPropsWithRefReturn<Element, RefKey> => {
+  function getIgnoredElementProps<Element extends HTMLElement = any, RefKey extends string = 'ref'>(
+    options: IgnoredElementOptions<Element, RefKey> = { refKey: 'ref' as RefKey },
+  ): GetPropsWithRefReturn<Element, RefKey> {
+    const { refKey = 'ref' as RefKey, ref, onMouseMove, onFocus, ...rest } = options;
     let eventHandlers: HTMLProps<Element> = object();
 
     if (rest.disabled) {
@@ -518,14 +517,16 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
       ...eventHandlers,
       ...rest,
     } as GetPropsWithRefReturn<Element, RefKey>;
-  };
+  }
 
-  const getLabelProps = <Element extends HTMLElement = any, RefKey extends string = 'ref'>(
-    { refKey = 'ref' as RefKey, ref, ...rest }: IgnoredElementOptions<Element, RefKey> = {
+  function getLabelProps<Element extends HTMLElement = any, RefKey extends string = 'ref'>(
+    options: IgnoredElementOptions<Element, RefKey> = {
       refKey: 'ref' as RefKey,
     },
-  ): GetLabelPropsWithRefReturn<Element, RefKey> =>
-    ({
+  ): GetLabelPropsWithRefReturn<Element, RefKey> {
+    const { refKey = 'ref' as RefKey, ref, ...rest } = options;
+
+    return {
       [refKey]: composeRefs(ref as Ref<Element>, (node) => {
         if (node) {
           refs.ignored.current.push(node);
@@ -534,13 +535,14 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
       id: labelId,
       htmlFor: type === 'combobox' && refs.input.current ? inputId : menuId,
       ...rest,
-    } as GetLabelPropsWithRefReturn<Element, RefKey>);
+    } as GetLabelPropsWithRefReturn<Element, RefKey>;
+  }
 
-  const getRemoveButtonProps = <Element extends HTMLElement = any>({
-    onClick,
-    item,
-    ...rest
-  }: GetRemoveButtonOptions<Element, Item>): GetRemoveButtonReturn<Element> => {
+  function getRemoveButtonProps<Element extends HTMLElement = any>(
+    options: GetRemoveButtonOptions<Element, Item>,
+  ): GetRemoveButtonReturn<Element> {
+    const { onClick, item, ...rest } = options;
+
     let eventHandlers: Pick<GetRemoveButtonReturn<Element>, 'onClick'> = {
       onClick: callAllEventHandlers(onClick, () => {
         actions.removeSelectedItem(item);
@@ -556,7 +558,7 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
       role: 'button',
       ...rest,
     };
-  };
+  }
 
   const focusHelpers = useMemo(
     (): MultishiftFocusHelpers => ({

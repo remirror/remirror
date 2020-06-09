@@ -3,7 +3,7 @@ import type {
   RemirrorIdentifier,
 } from '@remirror/core-constants';
 import { MarkSpec, NodeSpec } from '@remirror/pm/model';
-import { Decoration } from '@remirror/pm/view';
+import { Decoration, NodeView } from '@remirror/pm/view';
 
 import {
   EditorSchema,
@@ -302,12 +302,12 @@ export interface MarkExtensionSpec
  * @param decorations - a list of the decorations affecting this node view (in
  * case the node view needs to update it's presentation)
  */
-export type NodeViewMethod<NodeView extends NodeView = NodeView> = (
+export type NodeViewMethod<View extends NodeView = NodeView> = (
   node: ProsemirrorNode,
   view: EditorView,
   getPos: (() => number) | boolean,
   decorations: Decoration[],
-) => NodeView;
+) => View;
 
 /**
  * The core shape of any remirror specific object.
