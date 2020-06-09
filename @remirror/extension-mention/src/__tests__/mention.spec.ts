@@ -95,15 +95,24 @@ describe('constructor', () => {
   });
 });
 
-const create = (options: MentionOptions, handlers: GetHandler<MentionOptions> = {}) => {
+function create(options: MentionOptions, handlers: GetHandler<MentionOptions> = {}) {
   const extension = new MentionExtension({ ...options });
 
   for (const [key, handler] of entries(handlers)) {
     extension.addHandler(key, handler);
   }
 
-  return renderEditor([extension]);
-};
+  const {
+    add,
+    nodes: { doc, p },
+    attributeMarks: { mention },
+    view,
+    manager,
+    commands,
+  } = renderEditor([extension]);
+
+  return { add, doc, p, mention, view, manager, commands };
+}
 
 describe('plugin', () => {
   const options: MentionOptions = {
@@ -124,21 +133,25 @@ describe('plugin', () => {
   const id = 'mention';
   const label = `@${id}`;
 
-  const {
-    add,
-    nodes: { doc, p },
-    attributeMarks: { mention },
-    view,
-  } = create(options, mocks);
-  const mentionMark = mention({ id, label, name: 'at' });
+  it('uses default noop callbacks and does nothing', () => {
+    const noop = {
+      onChange: jest.fn(),
+      onExit: jest.fn(),
+    };
 
-  it('uses default noop callbacks', () => {
+    const { add, doc, p } = create(options, noop);
+
     add(doc(p('<cursor>')))
       .insertText(`This ${label} `)
       .callback(({ state }) => {
         expect(state).toContainRemirrorDocument(p(`This ${label} `));
+        expect(noop.onChange).toHaveBeenCalledTimes(7);
+        expect(noop.onExit).toHaveBeenCalledTimes(1);
       });
   });
+
+  const { add, doc, p, mention, view } = create(options, mocks);
+  const mentionMark = mention({ id, label, name: 'at' });
 
   it('should support onExit', () => {
     add(doc(p('<cursor>'))).insertText(`${label} `);
@@ -220,11 +233,7 @@ describe('pasteRules', () => {
     ],
   };
 
-  const {
-    add,
-    nodes: { doc, p },
-    attributeMarks: { mention },
-  } = create(options);
+  const { add, doc, p, mention } = create(options);
 
   it('supports pasted content', () => {
     add(doc(p('<cursor>')))
@@ -259,13 +268,7 @@ describe('commands', () => {
     ],
   };
 
-  const {
-    nodes: { doc, p },
-    view,
-    attributeMarks: { mention },
-    commands,
-    add,
-  } = create(options);
+  const { add, doc, p, mention, view, commands } = create(options);
 
   const attributes = { id: 'test', label: '@test', name: 'at', appendText: '' };
 
@@ -292,38 +295,23 @@ describe('commands', () => {
       add(doc(p('This is ', '<cursor>')));
 
       // @ts-expect-error
-      expect(() => commands.createMention()).toThrowErrorMatchingInlineSnapshot(
-        `"Invalid configuration attributes passed to the MentionExtension command."`,
-      );
+      expect(() => commands.createMention()).toThrowErrorMatchingSnapshot();
 
       // @ts-expect-error
-      expect(() => commands.createMention({})).toThrowErrorMatchingInlineSnapshot(
-        `"Invalid configuration attributes passed to the MentionExtension command."`,
-      );
+      expect(() => commands.createMention({})).toThrowErrorMatchingSnapshot();
 
       expect(() =>
         commands.createMention({ ...attributes, id: '' }),
-      ).toThrowErrorMatchingInlineSnapshot(
-        `"Invalid configuration attributes passed to the MentionExtension command."`,
-      );
-
+      ).toThrowErrorMatchingSnapshot();
       expect(() =>
         commands.createMention({ ...attributes, label: '' }),
-      ).toThrowErrorMatchingInlineSnapshot(
-        `"Invalid configuration attributes passed to the MentionExtension command."`,
-      );
-
+      ).toThrowErrorMatchingSnapshot();
       expect(() =>
         commands.createMention({ ...attributes, name: 'invalid' }),
-      ).toThrowErrorMatchingInlineSnapshot(
-        `"The name 'invalid' specified for this command is invalid. Please choose from: [\\"tag\\",\\"at\\",\\"plus\\"]."`,
-      );
-
+      ).toThrowErrorMatchingSnapshot();
       expect(() =>
         commands.createMention({ ...attributes, name: undefined }),
-      ).toThrowErrorMatchingInlineSnapshot(
-        `"The MentionExtension command must specify a name since there are multiple matchers configured"`,
-      );
+      ).toThrowErrorMatchingSnapshot();
     });
   });
 });

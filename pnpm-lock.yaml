@@ -82,6 +82,7 @@ importers:
       stylelint: 13.6.0
       stylelint-config-recommended: 3.0.0_stylelint@13.6.0
       typescript: 3.9.5
+      typescript-snapshots-plugin: 1.7.0
       typescript-styled-plugin: 0.15.0
     specifiers:
       '@babel/core': ^7.10.2
@@ -165,6 +166,7 @@ importers:
       stylelint: ^13.6.0
       stylelint-config-recommended: ^3.0.0
       typescript: ^3.9.5
+      typescript-snapshots-plugin: ^1.7.0
       typescript-styled-plugin: ^0.15.0
   '@remirror/cli':
     dependencies:
@@ -25590,6 +25592,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+  /typescript-snapshots-plugin/1.7.0:
+    dev: false
+    resolution:
+      integrity: sha512-mWoH2E7/LnXy19YaJKKTWQCajRAdyFMNeMpUFN8XqB0zf/cNTM5JiiGpdpXtzjb3iyzwSEWcGqD8WA0XRp5eug==
   /typescript-styled-plugin/0.15.0:
     dependencies:
       typescript-template-language-service-decorator: 2.2.0

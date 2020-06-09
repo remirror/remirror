@@ -393,7 +393,9 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
   /**
    * Create the `onCharacterEntry` method.
    */
-  private onCharacterEntry(parameter: Parameters<MentionCharacterEntryMethod>[0]): boolean {
+  private readonly onCharacterEntry = (
+    parameter: Parameters<MentionCharacterEntryMethod>[0],
+  ): boolean => {
     for (const method of this.characterEntryMethods) {
       if (method(parameter)) {
         return true;
@@ -401,7 +403,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     }
 
     return false;
-  }
+  };
 
   /**
    * For now a dumb merge for the key binding command. Later entries are given priority over earlier entries.

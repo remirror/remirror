@@ -40,7 +40,7 @@ export class PasteRulesExtension extends PlainExtension {
       }
 
       // TODO rewrite so this is all one plugin
-      // this.store.addPlugins(...pasteRules);
+      this.store.addPlugins(...pasteRules);
     }
   };
 }

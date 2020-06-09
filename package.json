@@ -244,6 +244,7 @@
     "stylelint": "^13.6.0",
     "stylelint-config-recommended": "^3.0.0",
     "typescript": "^3.9.5",
+    "typescript-snapshots-plugin": "^1.7.0",
     "typescript-styled-plugin": "^0.15.0"
   },
   "engines": {

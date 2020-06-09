@@ -218,7 +218,7 @@ export interface BaseExtensionOptions extends Remirror.BaseExtensionOptions {
    * When this is set to `null` the `defaultPriority` level for the extension
    * will be used instead.
    */
-  priority?: ExtensionPriority | null;
+  priority?: ExtensionPriority;
 }
 
 export interface ExcludeOptions extends Partial<Remirror.ExcludeOptions> {}

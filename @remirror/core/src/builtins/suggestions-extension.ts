@@ -2,7 +2,7 @@ import { ExtensionPriority } from '@remirror/core-constants';
 import { isArray } from '@remirror/core-helpers';
 import { suggest, Suggestion } from '@remirror/pm/suggest';
 
-import { CreateLifecycleMethod, PlainExtension } from '../extension';
+import { PlainExtension } from '../extension';
 
 /**
  * This extension allows others extension to add the `createSuggestion` method
@@ -25,10 +25,10 @@ export class SuggestionsExtension extends PlainExtension {
   /**
    * Ensure that all ssr transformers are run.
    */
-  onInitialize: CreateLifecycleMethod = (extensions) => {
+  onCreate = () => {
     const suggesters: Suggestion[] = [];
 
-    for (const extension of extensions) {
+    for (const extension of this.store.extensions) {
       if (
         // Manager settings excluded this from running
         this.store.managerSettings.exclude?.suggesters ||
@@ -37,7 +37,7 @@ export class SuggestionsExtension extends PlainExtension {
         // Extension settings exclude it from running
         extension.options.exclude?.suggesters
       ) {
-        return;
+        continue;
       }
 
       const suggester = extension.createSuggestions();

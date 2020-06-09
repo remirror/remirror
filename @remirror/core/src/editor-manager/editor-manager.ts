@@ -740,58 +740,42 @@ declare global {
 
       /**
        * A helper method for retrieving the state of the editor
-       *
-       * Availability: **return scope** - `onView`
        */
       readonly getState: () => EditorState<EditorSchema>;
 
       /**
        * The view available to extensions once `addView` has been called on the
        * `EditorManager` instance.
-       *
-       * Availability: **return scope** - `onView`
        */
       readonly view: EditorView<EditorSchema>;
 
       /**
        * The latest state.
-       *
-       * Availability: **return scope** - `onView`
        */
       currentState: EditorState<EditorSchema>;
 
       /**
        * The previous state. Will be undefined when the view is first created.
-       *
-       * Availability: **return scope** - `onView`
        */
       previousState?: EditorState<EditorSchema>;
 
       /**
        * The settings passed to the manager.
-       *
-       * Availability: **outer scope** - `onCreate`
        */
       readonly managerSettings: ManagerSettings;
 
       /**
        * Get the value of a key from the manager store.
-       *
-       * Availability: **outer scope** - `onCreate`
        */
       getStoreKey: <Key extends ManagerStoreKeys>(key: Key) => AnyManagerStore[Key];
 
       /**
        * Update the store with a specific key.
-       *
-       * Availability: **outer scope** - `onCreate`
        */
       setStoreKey: <Key extends ManagerStoreKeys>(key: Key, value: AnyManagerStore[Key]) => void;
 
       /**
        * Set a custom manager method parameter.
-       *
-       * Availability: **outer scope** - `onCreate`
        */
       setExtensionStore: <Key extends keyof Remirror.ExtensionStore>(
         key: Key,

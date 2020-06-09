@@ -242,8 +242,6 @@ declare global {
        * ```ts
        * const pluginState = getPluginState(extension.name);
        * ```
-       *
-       * Availability: **return scope** - `onInitialize`
        */
       getPluginState: <State>(name: string) => State;
 
@@ -255,23 +253,17 @@ declare global {
        * ```ts
        * this.store.reconfigureStatePlugins();
        * ```
-       *
-       * Availability: **return scope** - `onView`
        */
       replacePlugin: (original: ProsemirrorPlugin, replacement: ProsemirrorPlugin) => void;
 
       /**
        * Applies the store plugins to the state. If any have changed then it will be updated.
-       *
-       * Availability: **return scope** - `onView`
        */
       reconfigureStatePlugins: () => void;
 
       /**
        * Use this to push custom plugins to the store which are added to the plugin
        * list after the #plugins.
-       *
-       * Availability: **outer scope** - `onInitialize`
        *
        * ```ts
        * this.store.addPlugins(...plugins);

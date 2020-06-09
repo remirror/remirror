@@ -1,6 +1,5 @@
 import {
   ApplyExtraAttributes,
-  Cast,
   CommandFunction,
   CreatePluginReturn,
   getMarkRange,
@@ -59,7 +58,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           tag: 'a[href]',
           getAttrs: (node) => ({
             ...extra.parse(node),
-            href: Cast<Element>(node).getAttribute('href'),
+            href: (node as Element).getAttribute('href'),
           }),
         },
       ],
