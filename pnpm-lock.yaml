@@ -65,6 +65,7 @@ importers:
       jest-github-reporter: 1.0.1_jest@26.0.1
       jest-prosemirror: 'link:packages/jest-prosemirror'
       jest-remirror: 'link:packages/jest-remirror'
+      jest-watch-select-projects: 2.0.0
       jest-watch-typeahead: 0.6.0_jest@26.0.1
       json.macro: 1.3.0_babel-plugin-macros@2.8.0
       linaria: 2.0.0-alpha.5
@@ -147,6 +148,7 @@ importers:
       jest-github-reporter: ^1.0.1
       jest-prosemirror: ^0.8.3
       jest-remirror: ^0.13.1
+      jest-watch-select-projects: ^2.0.0
       jest-watch-typeahead: ^0.6.0
       json.macro: ^1.3.0
       linaria: ^2.0.0-alpha.5
@@ -7739,8 +7741,6 @@ packages:
     dev: false
     engines:
       node: '>=10'
-    peerDependencies:
-      graphql: '*'
     resolution:
       integrity: sha512-lJ9/bk1BH1lD15WhWRha2J3+LrXrPIX5LP5EwiOUHv8PCORp4EUrcujrA3rI5hZeZygrTX8bshcuMdpqpSrvtA==
   /apollo-upload-client/13.0.0_graphql@14.6.0:
@@ -17381,6 +17381,14 @@ packages:
       node: '>= 10.14.2'
     resolution:
       integrity: sha512-u0xRc+rbmov/VqXnX3DlkxD74rHI/CfS5xaV2VpeaVySjbb1JioNVOyly5b56q2l9ZKe7bVG5qWmjfctkQb0bA==
+  /jest-watch-select-projects/2.0.0:
+    dependencies:
+      ansi-escapes: 4.3.1
+      chalk: 3.0.0
+      prompts: 2.3.2
+    dev: false
+    resolution:
+      integrity: sha512-j00nW4dXc2NiCW6znXgFLF9g8PJ0zP25cpQ1xRro/HU2GBfZQFZD0SoXnAlaoKkIY4MlfTMkKGbNXFpvCdjl1w==
   /jest-watch-typeahead/0.6.0_jest@26.0.1:
     dependencies:
       ansi-escapes: 4.3.1

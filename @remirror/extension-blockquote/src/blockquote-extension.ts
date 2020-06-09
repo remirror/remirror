@@ -21,7 +21,7 @@ export class BlockquoteExtension extends NodeExtension {
       group: NodeGroup.Block,
       defining: true,
       draggable: false,
-      parseDOM: [{ tag: 'blockquote', getAttrs: extra.parse }],
+      parseDOM: [{ tag: 'blockquote', getAttrs: extra.parse, priority: 100 }],
       toDOM: (node) => ['blockquote', extra.dom(node.attrs), 0],
     };
   }
@@ -38,7 +38,7 @@ export class BlockquoteExtension extends NodeExtension {
        * actions.blockquote();
        * ```
        */
-      blockquote: (): CommandFunction => toggleWrap(this.type),
+      toggleBlockquote: (): CommandFunction => toggleWrap(this.type),
     };
   };
 
