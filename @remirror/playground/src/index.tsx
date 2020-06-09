@@ -1,13 +1,11 @@
 import React, { FC, useEffect, useState } from 'react';
 
-import { isUndefined } from 'remirror/core';
-
 export { useRemirrorPlayground } from './use-remirror-playground';
 
 export const Playground: FC = () => {
   const [Component, setPlayground] = useState<FC | null>(null);
 
-  const [hasBabel, setHasBabel] = useState(!isUndefined(window['Babel']));
+  const [hasBabel, setHasBabel] = useState(false);
 
   useEffect(() => {
     if (hasBabel) {
