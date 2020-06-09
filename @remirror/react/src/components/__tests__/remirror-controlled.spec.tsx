@@ -5,7 +5,11 @@ import { EditorState, fromHTML } from '@remirror/core';
 import { createReactManager } from '@remirror/test-fixtures';
 
 import { RenderEditor } from '..';
-import { RemirrorContextProps, RemirrorStateListenerParameter } from '../../react-types';
+import {
+  RemirrorContextProps,
+  RemirrorStateListenerParameter,
+  DefaultReactCombined,
+} from '../../react-types';
 import { RemirrorProviderProps } from '../remirror-provider';
 
 const label = 'Remirror editor';
@@ -13,7 +17,7 @@ const label = 'Remirror editor';
 describe('Remirror Controlled Component', () => {
   const initialContent = `<p>Hello</p>`;
   const expectedContent = `<p>World</p>`;
-  let props: Omit<RemirrorProviderProps, 'children'>;
+  let props: Omit<RemirrorProviderProps<DefaultReactCombined>, 'children'>;
 
   beforeEach(() => {
     props = {
@@ -26,9 +30,11 @@ describe('Remirror Controlled Component', () => {
 
   it('should call onStateChange', () => {
     let value: EditorState | null = null;
-    const onStateChange = jest.fn<void, [RemirrorStateListenerParameter]>((params) => {
-      value = params.newState;
-    });
+    const onStateChange = jest.fn<void, [RemirrorStateListenerParameter<DefaultReactCombined>]>(
+      (params) => {
+        value = params.newState;
+      },
+    );
     render(
       <RenderEditor {...props} value={value} onStateChange={onStateChange}>
         {() => <div />}
@@ -40,13 +46,15 @@ describe('Remirror Controlled Component', () => {
   });
 
   it('responds to setContent updates', () => {
-    let stateParameter!: RemirrorStateListenerParameter;
-    let renderParameter!: RemirrorContextProps;
+    let stateParameter!: RemirrorStateListenerParameter<DefaultReactCombined>;
+    let renderParameter!: RemirrorContextProps<DefaultReactCombined>;
 
-    const onStateChange = jest.fn<void, [RemirrorStateListenerParameter]>((params) => {
-      stateParameter = params;
-    });
-    const mock = jest.fn((params: RemirrorContextProps) => {
+    const onStateChange = jest.fn<void, [RemirrorStateListenerParameter<DefaultReactCombined>]>(
+      (params) => {
+        stateParameter = params;
+      },
+    );
+    const mock = jest.fn((params: RemirrorContextProps<DefaultReactCombined>) => {
       renderParameter = params;
       return <div />;
     });
@@ -68,11 +76,13 @@ describe('Remirror Controlled Component', () => {
   });
 
   it('responds to direct value updates', () => {
-    let stateParameter!: RemirrorStateListenerParameter;
+    let stateParameter!: RemirrorStateListenerParameter<DefaultReactCombined>;
 
-    const onStateChange = jest.fn<void, [RemirrorStateListenerParameter]>((params) => {
-      stateParameter = params;
-    });
+    const onStateChange = jest.fn<void, [RemirrorStateListenerParameter<DefaultReactCombined>]>(
+      (params) => {
+        stateParameter = params;
+      },
+    );
 
     const Component = ({ value }: { value?: EditorState | null }) => (
       <RenderEditor {...props} onStateChange={onStateChange} value={value}>
@@ -96,19 +106,19 @@ describe('Remirror Controlled Component', () => {
 
   it('responds to internal editor updates', () => {
     let latestState: EditorState | null = null;
-    let renderParameter!: RemirrorContextProps;
+    let renderParameter!: RemirrorContextProps<DefaultReactCombined>;
 
     const Component = () => {
       const [value, setValue] = useState<EditorState>();
 
-      const onStateChange = (params: RemirrorStateListenerParameter) => {
+      const onStateChange = (params: RemirrorStateListenerParameter<DefaultReactCombined>) => {
         latestState = params.newState;
         setValue(params.newState);
       };
 
       return (
         <RenderEditor {...props} onStateChange={onStateChange} value={value}>
-          {(params: RemirrorContextProps) => {
+          {(params: RemirrorContextProps<DefaultReactCombined>) => {
             renderParameter = params;
             return <div />;
           }}
@@ -127,12 +137,12 @@ describe('Remirror Controlled Component', () => {
   });
 
   it('responds to state overrides', () => {
-    let renderParameter!: RemirrorContextProps;
+    let renderParameter!: RemirrorContextProps<DefaultReactCombined>;
 
     const Component = () => {
       const [value, setValue] = useState<EditorState>();
 
-      const onStateChange = (params: RemirrorStateListenerParameter) => {
+      const onStateChange = (params: RemirrorStateListenerParameter<DefaultReactCombined>) => {
         if (params.getText().includes('World')) {
           setValue(params.newState);
         } else {
@@ -147,7 +157,7 @@ describe('Remirror Controlled Component', () => {
 
       return (
         <RenderEditor {...props} onStateChange={onStateChange} value={value}>
-          {(params: RemirrorContextProps) => {
+          {(params: RemirrorContextProps<DefaultReactCombined>) => {
             renderParameter = params;
             return <div />;
           }}

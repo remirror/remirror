@@ -1,7 +1,17 @@
 {
   "extends": "./support/tsconfig.base.json",
   "compilerOptions": {
-    "types": ["node", "jest", "jest-extended", "jest-axe", "@testing-library/jest-dom"],
+    "types": [
+      "node",
+      "jest",
+      "jest-extended",
+      "jest-axe",
+      "@testing-library/jest-dom",
+      // TODO these are only needed in e2e but had to hoist them to allow typechecking to pass
+      "jest-environment-puppeteer",
+      "expect-puppeteer",
+      "puppeteer"
+    ],
     "noEmit": true,
     "skipLibCheck": true, // TODO lingui has a broken type - open PR to fix it
     "plugins": [{ "name": "typescript-snapshots-plugin" }]

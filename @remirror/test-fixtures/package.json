@@ -25,6 +25,7 @@
     "@remirror/pm": "^0.0.0",
     "@remirror/preset-core": "^0.0.0",
     "@remirror/preset-react": "^0.0.0",
+    "@types/min-document": "^2.19.0",
     "jest-diff": "^26.0.1",
     "min-document": "^2.19.0"
   },

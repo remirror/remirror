@@ -52,8 +52,6 @@ export interface PlaceholderPluginState extends Required<PlaceholderOptions> {
   empty: boolean;
 }
 
-export interface PlaceholderOptions {}
-
 /**
  * An extension for the remirror editor. CHANGE ME.
  */

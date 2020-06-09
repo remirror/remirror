@@ -156,16 +156,6 @@ export const isRemirrorExtension = isRemirrorElementOfType(RemirrorType.Extensio
 export const isRemirrorProvider = isRemirrorElementOfType(RemirrorType.EditorProvider);
 
 /**
- * Checks if this is a ManagedRemirrorProvider which pulls in the manager from the context and places it's children
- * inside the RemirrorProvider
- *
- * @param value - the value to check
- */
-export const isManagedRemirrorProvider = isRemirrorElementOfType(
-  RemirrorType.ManagedEditorProvider,
-);
-
-/**
  * Will throw an error if the child provided is not a function.
  *
  * @remarks

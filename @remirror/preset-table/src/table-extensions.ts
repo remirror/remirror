@@ -120,7 +120,7 @@ export class TableExtension extends NodeExtension {
 
 export class TableRowExtension extends NodeExtension {
   get name() {
-    return 'tableRow';
+    return 'tableRow' as const;
   }
 
   createNodeSpec(): TableSchemaSpec {
@@ -137,7 +137,7 @@ export class TableRowExtension extends NodeExtension {
 
 export class TableCellExtension extends NodeExtension {
   get name() {
-    return 'tableCell';
+    return 'tableCell' as const;
   }
 
   createNodeSpec(): TableSchemaSpec {
@@ -156,7 +156,7 @@ export class TableCellExtension extends NodeExtension {
 
 export class TableHeaderCell extends NodeExtension {
   get name() {
-    return 'tableHeader';
+    return 'tableHeader' as const;
   }
 
   createNodeSpec(): TableSchemaSpec {

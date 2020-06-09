@@ -3,7 +3,7 @@ import { axe } from 'jest-axe';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 
-import { fromHTML } from '@remirror/core';
+import { fromHTML, AnyCombinedUnion } from '@remirror/core';
 import { createReactManager } from '@remirror/test-fixtures';
 
 import { RenderEditor } from '..';
@@ -86,8 +86,8 @@ describe('basic functionality', () => {
 
   it('should allow text input and fire all handlers', () => {
     const manager = createReactManager();
-    let setContent: RemirrorContextProps<typeof manager>['setContent'] = jest.fn();
-    const mock = jest.fn((value: RemirrorContextProps<typeof manager>) => {
+    let setContent: RemirrorContextProps<AnyCombinedUnion>['setContent'] = jest.fn();
+    const mock = jest.fn((value: RemirrorContextProps<AnyCombinedUnion>) => {
       setContent = value.setContent;
       return <div />;
     });
@@ -109,11 +109,9 @@ describe('basic functionality', () => {
     expect(handlers.onFirstRender.mock.calls[0][0].getText()).toBe(textContent);
 
     fireEvent.blur(editorNode);
-
     expect(handlers.onBlur).toHaveBeenCalledTimes(1);
 
     fireEvent.focus(editorNode);
-
     expect(handlers.onFocus).toHaveBeenCalledTimes(1);
   });
 

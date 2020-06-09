@@ -2,7 +2,6 @@ import React from 'react';
 
 import {
   getElementProps,
-  isManagedRemirrorProvider,
   isReactDOMElement,
   isReactFragment,
   isRemirrorExtension,
@@ -52,13 +51,6 @@ test('isRemirrorProvider', () => {
   Custom.$$remirrorType = RemirrorType.EditorProvider;
 
   expect(isRemirrorProvider(<Custom />)).toBeTrue();
-});
-
-test('isManagedRemirrorProvider', () => {
-  const Custom: RemirrorFC = () => <div />;
-  Custom.$$remirrorType = RemirrorType.ManagedEditorProvider;
-
-  expect(isManagedRemirrorProvider(<Custom />)).toBeTrue();
 });
 
 test('oneChildOnly', () => {

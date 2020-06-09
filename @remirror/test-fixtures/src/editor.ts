@@ -4,6 +4,8 @@ import { ReactPreset } from '@remirror/preset-react';
 
 /**
  * A manager used for testing with the preset core already applied.
+ *
+ * TODO refactor to use combined array as parameter.
  */
 export function createBaseManager<
   ExtensionUnion extends AnyExtension,
@@ -21,6 +23,8 @@ export function createBaseManager<
 
 /**
  * A manager for use to test `@remirror/react`.
+ *
+ * TODO refactor to use combined array as parameter.
  */
 export function createReactManager<
   ExtensionUnion extends AnyExtension,
@@ -36,6 +40,15 @@ export function createReactManager<
     settings,
   });
 }
+
+export const initialJson = {
+  type: 'doc',
+  content: [
+    { type: 'paragraph', content: [{ type: 'text', text: 'Better docs to come soon...' }] },
+  ],
+};
+
+export { default as minDocument } from 'min-document';
 
 export * from '@remirror/preset-core';
 export * from '@remirror/extension-doc';

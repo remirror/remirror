@@ -1,35 +1,29 @@
 import { renderEditor } from 'jest-remirror';
 
 import { object } from '@remirror/core';
-import { isExtensionValid } from '@remirror/test-fixtures';
+import { isExtensionValid, HeadingExtension, BlockquoteExtension } from '@remirror/test-fixtures';
 
-import { TrailingNodeExtension } from '../..';
-import { TrailingNodeExtension, TrailingNodeExtensionOptions } from '../trailing-node-extension';
+import { TrailingNodeExtension, TrailingNodeOptions } from '../trailing-node-extension';
 
 test('is valid', () => {
   expect(isExtensionValid(TrailingNodeExtension, {}));
 });
 
-const { heading: headingNode, blockquote: blockquoteNode } = ExtensionMap.nodes;
-function create(params: Partial<TrailingNodeExtensionOptions> = object()) {
-  return renderEditor({
-    plainNodes: [headingNode, blockquoteNode],
-    others: [new TrailingNodeExtension(params)],
-  });
+function create(params?: Partial<TrailingNodeOptions>) {
+  const {
+    add,
+    nodes: { doc, p, heading, blockquote },
+  } = renderEditor([
+    new TrailingNodeExtension(params),
+    new HeadingExtension(),
+    new BlockquoteExtension(),
+  ]);
+
+  return { add, doc, p, h: heading, b: blockquote };
 }
 
 describe('plugin', () => {
-  let {
-    add,
-    nodes: { doc, p, heading: h, blockquote },
-  } = create();
-
-  beforeEach(() => {
-    ({
-      add,
-      nodes: { doc, p, heading: h },
-    } = create());
-  });
+  const { add, doc, p, h, b } = create();
 
   it('adds a new paragraph by default', () => {
     const { state } = add(doc(h('Yo')));
@@ -50,13 +44,10 @@ describe('plugin', () => {
   });
 
   it('appends the node specified', () => {
-    ({
-      add,
-      nodes: { doc, p, heading: h, blockquote },
-    } = create({ nodeName: 'heading' }));
+    const { add, doc, p, h, b } = create({ nodeName: 'heading' });
 
     const { state } = add(doc(p('Yo'), p('<cursor>'))).insertText('> Epic quote');
 
-    expect(state.doc).toEqualRemirrorDocument(doc(p('Yo'), blockquote(p('Epic quote')), h()));
+    expect(state.doc).toEqualRemirrorDocument(doc(p('Yo'), b(p('Epic quote')), h()));
   });
 });

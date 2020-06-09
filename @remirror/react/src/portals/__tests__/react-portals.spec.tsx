@@ -34,7 +34,7 @@ describe('RemirrorPortals', () => {
     const manager = createBaseManager();
 
     const Component = () => {
-      const context = useRemirror<typeof manager>();
+      const context = useRemirror();
       expect(context).toBeTruthy();
 
       return <div data-testid='test' />;

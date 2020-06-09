@@ -21,7 +21,7 @@ test('can position itself', () => {
   expect(
     add(doc(p('hello <cursor>')))
       .callback(() => {
-        positioner.addCustomHandler('changeHandler', {
+        positioner.addCustomHandler('positionerHandler', {
           onChange,
           element: document.createElement('div'),
           positioner: 'default',

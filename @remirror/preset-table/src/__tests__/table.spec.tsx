@@ -7,11 +7,10 @@ import { createBaseManager } from '@remirror/test-fixtures';
 import { TableCellExtension, TableExtension, TableRowExtension } from '..';
 
 describe('schema', () => {
-  const { schema } = createBaseManager([
-    { extension: new TableExtension() },
-    { extension: new TableRowExtension() },
-    { extension: new TableCellExtension() },
-  ]);
+  const { schema } = createBaseManager({
+    extensions: [new TableExtension(), new TableRowExtension(), new TableCellExtension()],
+    presets: [],
+  });
 
   const { doc, table, tableRow, tableCell } = pmBuild(schema, {
     table: { nodeType: 'table' },
@@ -36,28 +35,28 @@ describe('schema', () => {
   });
 });
 
-const create = () =>
-  renderEditor({
-    plainNodes: [new TableExtension(), new TableRowExtension(), new TableCellExtension()],
-    others: [{ priority: 10, extension: new BaseKeymapExtension() }],
-  });
+function create() {
+  return renderEditor([new TableExtension(), new TableRowExtension(), new TableCellExtension()]);
+}
 
 describe('command', () => {
   const setup = () => {
     const {
+      commands,
       view,
       add,
       nodes: { doc, p, table, tableRow, tableCell },
     } = create();
 
     const buildRegularTable = (rows: string[][]) => {
-      // Esnure that all rows have same length
+      // Ensure that all rows have same length
       expect([...new Set(rows.map((row) => row.length))]).toHaveLength(1);
 
       return table(...rows.map((row) => tableRow(...row.map((cell) => tableCell(cell)))));
     };
 
     return {
+      commands,
       view,
       add,
       doc,
@@ -66,18 +65,15 @@ describe('command', () => {
     };
   };
 
-  let { add, doc, p, buildRegularTable } = setup();
-
-  beforeEach(() => {
-    ({ add, doc, p, buildRegularTable } = setup());
-  });
+  const { add, doc, p, buildRegularTable, commands } = setup();
 
   test('tableAddColumnAfter', () => {
     const table = buildRegularTable([
       ['A1', 'B1<cursor>', 'C1'],
       ['A2', 'B2', 'C2'],
     ]);
-    const { state } = add(doc(table)).actionsCallback((actions) => actions.tableAddColumnAfter());
+    const { state } = add(doc(table));
+    commands.tableAddColumnAfter();
 
     expect(state.doc).toEqualRemirrorDocument(
       doc(
@@ -94,7 +90,9 @@ describe('command', () => {
       ['A1', 'B1', 'C1'],
       ['A2', 'B2<cursor>', 'C2'],
     ]);
-    const { state } = add(doc(table)).actionsCallback((actions) => actions.tableAddColumnBefore());
+    const { state } = add(doc(table));
+
+    commands.tableAddColumnBefore();
 
     expect(state.doc).toEqualRemirrorDocument(
       doc(
@@ -111,7 +109,9 @@ describe('command', () => {
       ['A1<cursor>', 'B1'],
       ['A2', 'B2'],
     ]);
-    const { state } = add(doc(table)).actionsCallback((actions) => actions.tableAddRowAfter());
+    const { state } = add(doc(table));
+
+    commands.tableAddRowAfter();
 
     expect(state.doc).toEqualRemirrorDocument(
       doc(
@@ -129,7 +129,9 @@ describe('command', () => {
       ['A1', 'B1<cursor>'],
       ['A2', 'B2'],
     ]);
-    const { state } = add(doc(table)).actionsCallback((actions) => actions.tableAddRowBefore());
+    const { state } = add(doc(table));
+
+    commands.tableAddRowBefore();
 
     expect(state.doc).toEqualRemirrorDocument(
       doc(
@@ -147,7 +149,9 @@ describe('command', () => {
       ['A1', 'B1', 'C1'],
       ['A2<cursor>', 'B2', 'C2'],
     ]);
-    const { state } = add(doc(table)).actionsCallback((actions) => actions.tableDeleteColumn());
+    const { state } = add(doc(table));
+
+    commands.tableDeleteColumn();
 
     expect(state.doc).toEqualRemirrorDocument(
       doc(
@@ -165,7 +169,9 @@ describe('command', () => {
       ['A2', 'B2<cursor>', 'C2'],
       ['A3', 'B3', 'C3'],
     ]);
-    const { state } = add(doc(table)).actionsCallback((actions) => actions.tableDeleteRow());
+    const { state } = add(doc(table));
+
+    commands.tableDeleteRow();
 
     expect(state.doc).toEqualRemirrorDocument(
       doc(
@@ -183,7 +189,9 @@ describe('command', () => {
       ['A2', 'B2', 'C2'],
       ['A3', 'B3<cursor>', 'C3'],
     ]);
-    const { state } = add(doc(table)).actionsCallback((actions) => actions.tableDeleteTable());
+    const { state } = add(doc(table));
+
+    commands.deleteTable();
 
     expect(state.doc).toEqualRemirrorDocument(doc(p()));
   });

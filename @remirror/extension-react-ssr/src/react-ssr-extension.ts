@@ -8,6 +8,7 @@ import {
   object,
   PlainExtension,
   Shape,
+  Static,
 } from '@remirror/core';
 import { getElementProps, isReactDOMElement, isReactFragment } from '@remirror/react-utils';
 
@@ -18,7 +19,7 @@ export interface ReactSSROptions {
    *
    * @defaultValue `DEFAULT_TRANSFORMATIONS`
    */
-  transformers?: SSRTransformer[];
+  transformers?: Static<SSRTransformer[]>;
 }
 
 /**

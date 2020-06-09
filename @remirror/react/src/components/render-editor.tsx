@@ -30,7 +30,6 @@ import { EditorState, TextSelection } from '@remirror/pm/state';
 import {
   addKeyToElement,
   getElementProps,
-  isManagedRemirrorProvider,
   isReactDOMElement,
   isRemirrorContextProvider,
   isRemirrorProvider,
@@ -764,8 +763,7 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
       // context provider. In this case `getRootProps` **must** be called by the
       // consumer.
       isRemirrorContextProvider(element) ||
-      isRemirrorProvider(element) ||
-      isManagedRemirrorProvider(element)
+      isRemirrorProvider(element)
     ) {
       const { childAsRoot } = element.props;
       return childAsRoot

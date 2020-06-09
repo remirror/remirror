@@ -40,7 +40,7 @@ class SecondExtension extends PlainExtension<SecondOptions> {
 describe('simplest preset', () => {
   class TestPreset extends Preset<Partial<Options>> {
     static readonly defaultOptions: DefaultPresetOptions<Options> = {
-      a: FirstExtension.defaultOptions.a ?? '',
+      a: FirstExtension.defaultOptions.a,
       y: FirstExtension.defaultOptions.y,
       b: SecondExtension.defaultOptions.b ?? 'none specified',
       z: SecondExtension.defaultOptions.z,

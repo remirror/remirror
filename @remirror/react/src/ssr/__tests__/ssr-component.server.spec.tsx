@@ -1,26 +1,16 @@
-/**
- * @jest-environment node
- */
-
+import { render } from '@testing-library/react';
 import React from 'react';
-import { renderToString } from 'react-dom/server';
 
-import { EditorManager } from '@remirror/core';
-import { createTestManager, helpers, initialJson } from '@remirror/test-fixtures';
+import { EditorManager, AnyCombinedUnion } from '@remirror/core';
+import { createBaseManager, initialJson } from '@remirror/test-fixtures';
 
 import { RemirrorSSR } from '..';
 
-let manager: EditorManager;
-
-beforeEach(() => {
-  manager = createTestManager();
-});
-
 test('should render the ssr component', () => {
-  manager.initialize({ ...helpers, getState: () => state });
+  const manager = createBaseManager();
   const state = manager.createState({ content: initialJson });
 
-  const htmlString = renderToString(
+  const { container } = render(
     <RemirrorSSR
       editable={true}
       attributes={{
@@ -31,5 +21,5 @@ test('should render the ssr component', () => {
     />,
   );
 
-  expect(htmlString).toMatchSnapshot();
+  expect(container).toHaveTextContent('Better docs to come soon...');
 });

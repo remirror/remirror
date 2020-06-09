@@ -3,15 +3,21 @@
  */
 
 import { EditorState } from '@remirror/pm/state';
-import { initialJson, plugins, schema, testDocument } from '@remirror/test-fixtures';
+import { minDocument, createBaseManager } from '@remirror/test-fixtures';
 
 import { createEditorView, EditorViewSSR } from '../ssr-prosemirror-view';
+import { EMPTY_PARAGRAPH_NODE } from '@remirror/core';
 
-const state = EditorState.create({ doc: schema.nodeFromJSON(initialJson), schema, plugins });
+const { schema, plugins } = createBaseManager().store;
+const state = EditorState.create({
+  doc: schema.nodeFromJSON(EMPTY_PARAGRAPH_NODE),
+  schema,
+  plugins,
+});
 
 test('createEditorView', () => {
   const view = createEditorView(
-    { mount: testDocument.createElement('div') },
+    { mount: minDocument.createElement('div') },
     {
       state,
       editable: () => {
@@ -28,7 +34,7 @@ test('createEditorView', () => {
 test('createEditorView:forceEnvironment', () => {
   expect(() =>
     createEditorView(
-      { mount: testDocument.createElement('div') },
+      { mount: minDocument.createElement('div') },
       {
         state,
         editable: () => {

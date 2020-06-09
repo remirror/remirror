@@ -2,15 +2,7 @@
   "extends": "../support/tsconfig.base.json",
   "compilerOptions": {
     "declarationMap": false,
-    "declaration": false,
-    "types": [
-      "jest",
-      "node",
-      "jest-environment-puppeteer",
-      "expect-puppeteer",
-      "puppeteer",
-      "jest-extended"
-    ]
+    "declaration": false
   },
   "include": ["./", "patches.d.ts"]
 }

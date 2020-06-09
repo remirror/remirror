@@ -1,6 +1,12 @@
 import { Children, cloneElement } from 'react';
 
-import { isDocNodeEmpty, isString, OnSetOptionsParameter, Preset } from '@remirror/core';
+import {
+  isDocNodeEmpty,
+  isString,
+  OnSetOptionsParameter,
+  Preset,
+  DefaultPresetOptions,
+} from '@remirror/core';
 import { PlaceholderExtension, PlaceholderOptions } from '@remirror/extension-placeholder';
 import { ReactSSRExtension, ReactSSROptions } from '@remirror/extension-react-ssr';
 import { getElementProps } from '@remirror/react-utils';
@@ -8,7 +14,7 @@ import { getElementProps } from '@remirror/react-utils';
 export interface ReactPresetOptions extends ReactSSROptions, PlaceholderOptions {}
 
 export class ReactPreset extends Preset<ReactPresetOptions> {
-  static defaultOptions: Required<ReactPresetOptions> = {
+  static defaultOptions: DefaultPresetOptions<ReactPresetOptions> = {
     ...ReactSSRExtension.defaultOptions,
     ...PlaceholderExtension.defaultOptions,
   };
@@ -23,9 +29,9 @@ export class ReactPreset extends Preset<ReactPresetOptions> {
   protected onSetOptions(parameter: OnSetOptionsParameter<ReactPresetOptions>) {
     const { changes } = parameter;
 
-    if (changes.transformers.changed) {
-      const reactSSRExtension = this.getExtension(ReactSSRExtension);
-      reactSSRExtension.setOptions({ transformers: changes.transformers.value });
+    if (changes.placeholder.changed) {
+      const placeholderExtension = this.getExtension(PlaceholderExtension);
+      placeholderExtension.setOptions({ placeholder: changes.placeholder.value });
     }
   }
 

@@ -1,11 +1,12 @@
 import React, { FC, useEffect, useState } from 'react';
+import { isUndefined } from 'remirror/core';
 
 export { useRemirrorPlayground } from './use-remirror-playground';
 
 export const Playground: FC = () => {
   const [Component, setPlayground] = useState<FC | null>(null);
 
-  const [hasBabel, setHasBabel] = useState(typeof window['Babel'] !== 'undefined');
+  const [hasBabel, setHasBabel] = useState(!isUndefined(window['Babel']));
 
   useEffect(() => {
     if (hasBabel) {
@@ -41,3 +42,9 @@ export const Playground: FC = () => {
     <p>Waiting for babel...</p>
   );
 };
+
+declare global {
+  interface Window {
+    Babel: typeof Babel;
+  }
+}

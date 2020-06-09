@@ -1,9 +1,10 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 
-import { ManagedRemirrorProvider, RemirrorManager } from '@remirror/react';
+import { RemirrorProvider } from '@remirror/react';
 
 import { ProsemirrorDevTools } from '../react-dev';
+import { createBaseManager } from '@remirror/test-fixtures';
 
 beforeEach(() => {
   jest.spyOn(console, 'warn').mockImplementation(() => {});
@@ -11,11 +12,9 @@ beforeEach(() => {
 
 test('it supports <ProsemirrorDevTools />', () => {
   const { baseElement } = render(
-    <RemirrorManager>
-      <ManagedRemirrorProvider>
-        <ProsemirrorDevTools />
-      </ManagedRemirrorProvider>
-    </RemirrorManager>,
+    <RemirrorProvider manager={createBaseManager()}>
+      <ProsemirrorDevTools />
+    </RemirrorProvider>,
   );
   const element = baseElement.querySelector('.__prosemirror-dev-tools__');
 
@@ -26,19 +25,15 @@ test('it unmounts <ProsemirrorDevTools />', () => {
   const Component = ({ dev }: { dev: boolean }) => (dev ? <ProsemirrorDevTools /> : <div />);
 
   const { baseElement, rerender } = render(
-    <RemirrorManager>
-      <ManagedRemirrorProvider>
-        <Component dev={true} />
-      </ManagedRemirrorProvider>
-    </RemirrorManager>,
+    <RemirrorProvider manager={createBaseManager()}>
+      <Component dev={true} />
+    </RemirrorProvider>,
   );
 
   rerender(
-    <RemirrorManager>
-      <ManagedRemirrorProvider>
-        <Component dev={false} />
-      </ManagedRemirrorProvider>
-    </RemirrorManager>,
+    <RemirrorProvider manager={createBaseManager()}>
+      <Component dev={false} />
+    </RemirrorProvider>,
   );
   const element = baseElement.querySelector('.__prosemirror-dev-tools__');
 

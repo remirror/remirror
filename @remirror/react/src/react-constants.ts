@@ -1,9 +1,9 @@
-import { AnyEditorManager, EMPTY_PARAGRAPH_NODE, Transaction } from '@remirror/core';
+import { EMPTY_PARAGRAPH_NODE, Transaction, AnyCombinedUnion } from '@remirror/core';
 import { asDefaultProps } from '@remirror/react-utils';
 
 import { BaseProps } from './react-types';
 
-export const defaultProps = asDefaultProps<BaseProps<AnyEditorManager>>()({
+export const defaultProps = asDefaultProps<BaseProps<AnyCombinedUnion>>()({
   initialContent: EMPTY_PARAGRAPH_NODE,
   fallbackContent: EMPTY_PARAGRAPH_NODE,
   editable: true,
