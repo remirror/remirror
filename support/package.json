@@ -11,7 +11,7 @@
     "@types/lodash.groupby": "^4.6.6",
     "@types/prettier": "^2.0.1",
     "@types/rimraf": "^3.0.0",
-    "chalk": "^4.0.0",
+    "chalk": "^4.1.0",
     "diffable-html": "^4.0.0",
     "globby": "^11.0.1",
     "jest-axe": "^3.4.0",

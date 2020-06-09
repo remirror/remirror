@@ -38,12 +38,10 @@
     "prettier": "^2.0.5"
   },
   "devDependencies": {
-    "@emotion/core": "^10.0.28",
     "@types/react": "^16.9.35",
     "react": "^16.13.1"
   },
   "peerDependencies": {
-    "@emotion/core": "^10",
     "@types/react": "^16.8.0",
     "react": "^16.8.0"
   },

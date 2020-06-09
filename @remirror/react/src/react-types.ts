@@ -317,9 +317,6 @@ export interface RemirrorContextProps<Combined extends AnyCombinedUnion>
    * the first child element it receives. Using this method gives you full
    * control over where the editor should be injected.
    *
-   * **IMPORTANT** For this to work properly you will need to use the JSX pragma from
-   * `emotion/core` so that the `css` prop can properly be added to the element.
-   *
    * **IMPORTANT** In order to support SSR pre-rendering this should only be spread
    * on a component with NO children.
    *

@@ -28,7 +28,7 @@
     "@testing-library/dom": "^7.11.0",
     "@types/prosemirror-schema-basic": "^1.0.1",
     "@types/prosemirror-test-builder": "^1.0.1",
-    "chalk": "^4.0.0",
+    "chalk": "^4.1.0",
     "jest-matcher-utils": "^26.0.1",
     "prosemirror-schema-basic": "^1.1.2",
     "prosemirror-tables": "^1.1.0",
