@@ -79,7 +79,7 @@ const Editor: FC<SocialEditorProps> = (props) => {
 
   return (
     <div>
-      <div className={socialEditorWrapperStyles}>
+      <div className={socialEditorWrapperStyles} data-testid='remirror-editor'>
         <div className={socialEditorStyles} {...getRootProps()} />
         <EmojiSuggestions />
         {characterLimit != null && (

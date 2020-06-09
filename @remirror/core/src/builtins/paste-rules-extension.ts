@@ -24,24 +24,22 @@ export class PasteRulesExtension extends PlainExtension {
     const pasteRules: ProsemirrorPlugin[] = [];
 
     for (const extension of extensions) {
-      {
-        if (
-          // managerSettings excluded this from running
-          this.store.managerSettings.exclude?.pasteRules ||
-          // Method doesn't exist
-          !extension.createPasteRules ||
-          // Extension settings exclude it
-          extension.options.exclude?.pasteRules
-        ) {
-          continue;
-        }
-
-        pasteRules.push(...extension.createPasteRules());
+      if (
+        // managerSettings excluded this from running
+        this.store.managerSettings.exclude?.pasteRules ||
+        // Method doesn't exist
+        !extension.createPasteRules ||
+        // Extension settings exclude it
+        extension.options.exclude?.pasteRules
+      ) {
+        continue;
       }
 
-      // TODO rewrite so this is all one plugin
-      this.store.addPlugins(...pasteRules);
+      pasteRules.push(...extension.createPasteRules());
     }
+
+    // TODO rewrite so this is all one plugin
+    this.store.addPlugins(...pasteRules);
   };
 }
 
