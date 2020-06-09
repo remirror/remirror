@@ -502,11 +502,12 @@ export type AnyMarkExtension = Replace<MarkExtension<Shape>, Remirror.AnyExtensi
  * These are the default options merged into every extension. They can be
  * overridden.
  */
-const defaultOptions: Required<BaseExtensionOptions> = {
-  priority: null,
-  extraAttributes: [],
+const defaultOptions: BaseExtensionOptions = {
+  priority: undefined,
+  extraAttributes: {},
+  disableExtraAttributes: false,
   exclude: {},
-} as any;
+} as BaseExtensionOptions;
 
 /**
  * Set the value for a key of the default settings.

@@ -18,7 +18,6 @@ import {
   AnyFunction,
   Dispose,
   EmptyShape,
-  FlipPartialAndRequired,
   GetConstructorParameter,
   GetCustomHandler,
   GetFixed,
@@ -31,6 +30,7 @@ import {
   IfNoRequiredProperties,
   Replace,
   Shape,
+  UndefinedFlipPartialAndRequired,
   ValidOptions,
 } from '@remirror/core-types';
 
@@ -455,7 +455,7 @@ export type ConstructorParameter<
 export type DefaultOptions<
   Options extends ValidOptions,
   DefaultStaticOptions extends Shape
-> = FlipPartialAndRequired<GetStatic<Options>> &
+> = UndefinedFlipPartialAndRequired<GetStatic<Options>> &
   Partial<DefaultStaticOptions> &
   GetFixedDynamic<Options>;
 

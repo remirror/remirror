@@ -21,7 +21,7 @@ export interface BoldOptions {
   /**
    * Optionally set the font weight property for this extension.
    */
-  weight?: Static<FontWeightProperty> | null;
+  weight?: Static<FontWeightProperty>;
 }
 
 /**
@@ -30,7 +30,7 @@ export interface BoldOptions {
  */
 export class BoldExtension extends MarkExtension<BoldOptions> {
   static readonly defaultOptions: DefaultExtensionOptions<BoldOptions> = {
-    weight: null,
+    weight: undefined,
   };
 
   get name() {

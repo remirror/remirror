@@ -371,6 +371,13 @@ export type PickPartial<Type extends object> = {
 };
 
 /**
+ * Like pick partial but all types can still specify undefined.
+ */
+export type UndefinedPickPartial<Type extends object> = {
+  [Key in keyof PickPartial<Type>]: PickPartial<Type>[Key] | undefined;
+};
+
+/**
  * Only pick the `required` (non-`partial`) types from the given `Type`.
  */
 export type PickRequired<Type extends object> = {
@@ -383,6 +390,14 @@ export type PickRequired<Type extends object> = {
  * property it becomes a required property.
  */
 export type FlipPartialAndRequired<Type extends object> = PickPartial<Type> &
+  Partial<PickRequired<Type>>;
+
+/**
+ * Reverses the partial and required keys for the type provided. If it was a
+ * required property it becomes a partial property and if it was a partial
+ * property it becomes a required property.
+ */
+export type UndefinedFlipPartialAndRequired<Type extends object> = UndefinedPickPartial<Type> &
   Partial<PickRequired<Type>>;
 
 /**
