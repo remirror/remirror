@@ -49,8 +49,10 @@ export function getAppendText(preferred: string | undefined, fallback: string | 
   if (isString(preferred)) {
     return preferred;
   }
+
   if (isString(fallback)) {
     return fallback;
   }
+
   return DEFAULT_MATCHER.appendText;
 }

@@ -954,6 +954,7 @@ importers:
       classnames: 2.2.6
       linaria: 2.0.0-alpha.5
       multishift: 'link:../../packages/multishift'
+      react-use: 15.2.2_react-dom@16.13.1+react@16.13.1
       type-fest: 0.15.1
     devDependencies:
       '@lingui/macro': 3.0.0-13
@@ -986,6 +987,7 @@ importers:
       multishift: ^0.7.7
       react: ^16.13.1
       react-dom: ^16.13.1
+      react-use: ^15.2.2
       type-fest: ^0.15.1
   '@remirror/react-showcase':
     dependencies:

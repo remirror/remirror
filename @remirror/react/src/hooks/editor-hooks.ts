@@ -406,7 +406,7 @@ export function useManager<Combined extends AnyCombinedUnion>(
   combined: Combined[],
   settings: Remirror.ManagerSettings = {},
 ): EditorManager<Combined | ReactPreset | CorePreset | BuiltinPreset> {
-  return useMemo(() => createReactManager(combined, settings), [combined, settings]);
+  return useRef(createReactManager(combined, settings)).current;
 }
 
 export type BaseReactCombinedUnion = ReactPreset | CorePreset | BuiltinPreset;

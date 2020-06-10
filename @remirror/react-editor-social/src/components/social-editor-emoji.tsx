@@ -1,4 +1,4 @@
-import { cx } from 'linaria';
+import { css, cx } from 'linaria';
 import { Type, useMultishift } from 'multishift';
 import React, { useCallback, useMemo } from 'react';
 
@@ -11,7 +11,13 @@ import {
   EmojiSuggestionExitHandler,
   EmojiSuggestionKeyBindings,
 } from '@remirror/extension-emoji';
-import { useExtension, usePositioner, useSetState } from '@remirror/react';
+import {
+  DispatchWithCallback,
+  PartialSetStateAction,
+  useExtension,
+  usePositioner,
+  useSetState,
+} from '@remirror/react';
 
 import {
   emojiSuggestionsDropdownWrapperStyles,
@@ -26,25 +32,19 @@ interface EmojiState {
   command?: EmojiSuggestCommand;
 }
 
-/**
- * A hook for keeping track of the state of emoji extension integration.
- */
-function useEmojiState() {
-  const [state, setState] = useSetState<EmojiState>({ list: [], hideSuggestions: false, index: 0 });
+const initialState: EmojiState = { list: [], hideSuggestions: false, index: 0 };
 
-  return { ...state, setState };
+interface EmojiHookParameter extends EmojiState {
+  setState: DispatchWithCallback<PartialSetStateAction<EmojiState>>;
 }
 
 /**
  * A hook for managing changes in the emoji suggestions.
  */
-function useEmojiChangeHandler() {
-  const { setState } = useEmojiState();
-
+function useEmojiChangeHandler(setState: DispatchWithCallback<PartialSetStateAction<EmojiState>>) {
   const onChange: EmojiSuggestionChangeHandler = useCallback(
     (parameter) => {
       const { emojiMatches, command } = parameter;
-
       setState({
         hideSuggestions: false,
         list: emojiMatches,
@@ -67,8 +67,8 @@ function useEmojiChangeHandler() {
   useExtension(
     EmojiExtension,
     ({ addHandler }) => {
-      const change = addHandler('onSuggestionChange', onChange);
-      const exit = addHandler('onSuggestionExit', onExit);
+      const change = addHandler('onChange', onChange);
+      const exit = addHandler('onExit', onExit);
 
       return () => {
         change();
@@ -82,8 +82,8 @@ function useEmojiChangeHandler() {
 /**
  * A hook for adding keybindings to the emoji dropdown.
  */
-function useEmojiKeyBindings() {
-  const { list, index, hideSuggestions, setState } = useEmojiState();
+function useEmojiKeyBindings(parameter: EmojiHookParameter) {
+  const { setState, hideSuggestions, index, list } = parameter;
 
   /**
    * Create the arrow bindings for the emoji suggesters.
@@ -156,7 +156,7 @@ function useEmojiKeyBindings() {
     (parameter) => {
       const { addCustomHandler } = parameter;
 
-      return addCustomHandler('suggestionKeyBindings', keyBindings);
+      return addCustomHandler('keyBindings', keyBindings);
     },
     [keyBindings],
   );
@@ -166,9 +166,10 @@ function useEmojiKeyBindings() {
  * The emoji suggestions component.
  */
 export const EmojiSuggestions = () => {
+  const [state, setState] = useSetState<EmojiState>(initialState);
   const { focus } = useSocialRemirror();
   const { ref, top, left } = usePositioner('popupMenu');
-  const { command, hideSuggestions, index, list } = useEmojiState();
+  const { hideSuggestions, index, list, command } = state;
 
   const { getMenuProps, getItemProps, itemHighlightedAtIndex, hoveredIndex } = useMultishift({
     highlightedIndexes: [index],
@@ -177,8 +178,8 @@ export const EmojiSuggestions = () => {
     isOpen: true,
   });
 
-  useEmojiChangeHandler();
-  useEmojiKeyBindings();
+  useEmojiChangeHandler(setState);
+  useEmojiKeyBindings({ ...state, setState });
 
   if (hideSuggestions || !command) {
     return null;
@@ -213,11 +214,20 @@ export const EmojiSuggestions = () => {
               index,
             })}
           >
-            <span style={{ fontSize: '1.25em' }}>{emoji.char}</span>{' '}
-            <span style={{ color: 'darkGrey' }}>:{emoji.name}:</span>
+            <span className={emojiSuggestionsItemChar}>{emoji.char}</span>
+            <span className={emojiSuggestionsItemName}>:{emoji.name}:</span>
           </div>
         );
       })}
     </div>
   );
 };
+
+const emojiSuggestionsItemName = css`
+  color: rgb(121, 129, 134);
+`;
+
+const emojiSuggestionsItemChar = css`
+  font-size: 1.25em;
+  padding-right: 5px;
+`;

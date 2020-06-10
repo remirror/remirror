@@ -11,10 +11,10 @@
   color: white;
 }
 .remirror-emoji-suggestions-item.hovered {
-  color: hsl(205, 5%, 90%);
+  background-color: hsl(205, 5%, 90%);
 }
 .remirror-emoji-suggestions-item.highlighted {
-  color: hsl(205, 5%, 80%);
+  background-color: hsl(205, 5%, 80%);
 }
 .remirror-emoji-suggestions-dropdown-wrapper {
   position: absolute;
@@ -25,7 +25,8 @@
   padding-bottom: 8px;
   margin: 0 auto;
   border-radius: 8px;
-  box-shadow: hsla(205, 70%, 15%, 0.25) 0 4px 8px -2px 0px, hsla(205, 70%, 15%, 0.31) 0px 0px 1px;
+  box-shadow: hsla(205, 70%, 15%, 0.25) 0 4px 8px, hsla(205, 70%, 15%, 0.31) 0px 0px 1px;
+  background-color: white;
   z-index: 10;
   max-height: 250px;
   overflow-y: scroll;
@@ -48,10 +49,14 @@
   -webkit-flex-shrink: 0px;
   -ms-flex-negative: 0px;
   flex-shrink: 0px;
-  margin: 0px;
+  margin: 4px;
   overflow: hidden;
   list-style: none;
   padding: 0px;
+  box-shadow: hsla(205, 70%, 15%, 0.25) 0 4px 8px, hsla(205, 70%, 15%, 0.31) 0px 0px 1px;
+  background-color: white;
+  border-border-bottom-left-radius: 8px;
+  border-border-bottom-right-radius: 8px;
 }
 .remirror-mention-suggestions-item {
   display: -webkit-box;
@@ -70,11 +75,8 @@
   font-size: 14px;
   color: white;
 }
-.remirror-mention-suggestions-item.hovered {
-  color: hsl(205, 5%, 90%);
-}
 .remirror-mention-suggestions-item.highlighted {
-  color: hsl(205, 5%, 80%);
+  background-color: #e8f5fd;
 }
 .remirror-mention-suggestions-item:hover {
   background-color: #e8f5fd;
@@ -141,6 +143,17 @@
   -webkit-transform: rotate(-90deg);
   -ms-transform: rotate(-90deg);
   transform: rotate(-90deg);
+}
+
+/**
+ * Styles extracted from: @remirror/react-editor-social/src/components/social-editor-emoji.tsx
+ */
+.remirror-emoji-suggestions-item-name {
+  color: rgb(121, 129, 134);
+}
+.remirror-emoji-suggestions-item-char {
+  font-size: 1.25em;
+  padding-right: 5px;
 }
 
 /**

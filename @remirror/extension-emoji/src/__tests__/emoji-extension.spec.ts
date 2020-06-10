@@ -14,24 +14,24 @@ import {
 function create(options: EmojiOptions = object()) {
   const extension = new EmojiExtension(options);
 
-  extension.addHandler('onSuggestionExit', onSuggestionExit);
-  extension.addHandler('onSuggestionChange', onSuggestionChange);
-  extension.addCustomHandler('suggestionKeyBindings', suggestionKeyBindings);
+  extension.addHandler('onExit', onExit);
+  extension.addHandler('onChange', onChange);
+  extension.addCustomHandler('keyBindings', keyBindings);
 
   return renderEditor([extension]);
 }
 
 let emoji: EmojiObject | undefined;
 
-const onSuggestionChange = jest.fn((params: EmojiSuggestionChangeHandlerParameter) => {
+const onChange = jest.fn((params: EmojiSuggestionChangeHandlerParameter) => {
   emoji = params.emojiMatches[0];
 });
 
-const onSuggestionExit = jest.fn(() => {
+const onExit = jest.fn(() => {
   emoji = undefined;
 });
 
-const suggestionKeyBindings = {
+const keyBindings = {
   Enter: jest.fn((params: SuggestKeyBindingParameter<EmojiSuggestCommand>) => {
     params.command(emoji!);
     return true;
@@ -96,13 +96,13 @@ describe('suggestions', () => {
     add(doc(p('<cursor>')))
       .insertText(':')
       .callback(() => {
-        expect(onSuggestionChange).toHaveBeenCalledTimes(1);
+        expect(onChange).toHaveBeenCalledTimes(1);
       })
       .press('Enter')
       .callback((content) => {
-        expect(suggestionKeyBindings.Enter).toHaveBeenCalledTimes(1);
+        expect(keyBindings.Enter).toHaveBeenCalledTimes(1);
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('👍')));
-        expect(onSuggestionExit).toHaveBeenCalledTimes(1);
+        expect(onExit).toHaveBeenCalledTimes(1);
       });
   });
 
@@ -130,7 +130,7 @@ describe('suggestions', () => {
       .insertText('😃')
       .insertText(':')
       .callback(() => {
-        expect(onSuggestionChange).toHaveBeenCalledTimes(1);
+        expect(onChange).toHaveBeenCalledTimes(1);
       })
       .press('Enter')
       .callback((content) => {
@@ -151,7 +151,7 @@ describe('commands', () => {
         commands.suggestEmoji();
 
         expect(view.state.doc).toEqualRemirrorDocument(doc(p(':')));
-        expect(onSuggestionChange).toHaveBeenCalledTimes(1);
+        expect(onChange).toHaveBeenCalledTimes(1);
       })
       .overwrite(doc(p('abcde')))
       .callback(({ commands, view }) => {

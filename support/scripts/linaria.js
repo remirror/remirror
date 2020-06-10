@@ -1,6 +1,5 @@
 /// <reference types="node" />
 
-const rimraf = require('rimraf');
 const fs = require('fs').promises;
 const globby = require('globby');
 const transform = require('linaria/lib/transform').default;
@@ -133,7 +132,6 @@ async function writeOutput() {
 }
 
 async function run() {
-  rimraf.sync('@remirror/styles/*.css');
   await processFiles();
   await writeOutput();
 }

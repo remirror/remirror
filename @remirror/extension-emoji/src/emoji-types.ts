@@ -55,18 +55,18 @@ export interface EmojiOptions {
   /**
    * Key bindings for suggesters.
    */
-  suggestionKeyBindings?: CustomHandler<EmojiSuggestionKeyBindings>;
+  keyBindings?: CustomHandler<EmojiSuggestionKeyBindings>;
 
   /**
    * Called whenever the suggestion value is updated.
    */
-  onSuggestionChange?: Handler<EmojiSuggestionChangeHandler>;
+  onChange?: Handler<EmojiSuggestionChangeHandler>;
 
   /**
    * Called when the suggestion exits.
    * This is useful for cleaning up local state when emoji is set.
    */
-  onSuggestionExit?: Handler<EmojiSuggestionExitHandler>;
+  onExit?: Handler<EmojiSuggestionExitHandler>;
 
   /**
    * The maximum results to show when searching for matching emoji.

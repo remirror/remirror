@@ -3,13 +3,13 @@ import { Type, useMultishift } from 'multishift';
 import React, { ComponentType, useCallback, useMemo, useRef } from 'react';
 
 import { isEmptyArray } from '@remirror/core';
-import { EmojiExtension } from '@remirror/extension-emoji';
-import { MentionExitHandlerMethod, MentionExtensionAttributes } from '@remirror/extension-mention';
 import {
-  SuggestChangeHandlerParameter,
-  SuggestKeyBindingMap,
-  SuggestKeyBindingParameter,
-} from '@remirror/pm/suggest';
+  MentionExitHandlerMethod,
+  MentionExtension,
+  MentionExtensionAttributes,
+  MentionKeyBinding,
+} from '@remirror/extension-mention';
+import { SuggestChangeHandlerParameter, SuggestKeyBindingParameter } from '@remirror/pm/suggest';
 import { useExtension, useI18n, useSetState } from '@remirror/react';
 
 import { messages } from '../social-editor-messages';
@@ -46,6 +46,8 @@ interface MentionsState {
   hideSuggestions: boolean;
 }
 
+type UseMentionState = ReturnType<typeof useMentionState>;
+
 /**
  * Keep track of the state needed for mentions.
  */
@@ -62,8 +64,11 @@ function useMentionState() {
   return useMemo(() => ({ ...state, setState, ignoreNextExit, mention }), [state, setState]);
 }
 
-function useMentionKeyBindings(props: MentionSuggestionProps) {
-  const { setState, ignoreNextExit, index, hideSuggestions } = useMentionState();
+/**
+ * This hook manages the keyboard interactions for the mention plugin.
+ */
+function useMentionKeyBindings(props: MentionSuggestionProps, state: UseMentionState) {
+  const { setState, ignoreNextExit, index, hideSuggestions } = state;
 
   const createArrowBinding = useCallback(
     (direction: 'up' | 'down') => {
@@ -105,7 +110,7 @@ function useMentionKeyBindings(props: MentionSuggestionProps) {
    * These are the keyBindings for mentions extension. This allows for
    * overriding
    */
-  const keyBindings: SuggestKeyBindingMap = useMemo(
+  const keyBindings: MentionKeyBinding = useMemo(
     () => ({
       /**
        * Handle the enter key being pressed
@@ -122,7 +127,7 @@ function useMentionKeyBindings(props: MentionSuggestionProps) {
         const { label, id, href } = getMentionLabel({ name, users, index, tags });
 
         // Only continue if user has an active selection and label.
-        if (!label || !index) {
+        if (!label) {
           return false;
         }
 
@@ -134,6 +139,7 @@ function useMentionKeyBindings(props: MentionSuggestionProps) {
           label: `${char}${label}`,
           role: 'presentation',
           href: href ?? `/${id ?? label}`,
+          appendText: ' ',
         });
 
         return true;
@@ -167,16 +173,19 @@ function useMentionKeyBindings(props: MentionSuggestionProps) {
   );
 
   useExtension(
-    EmojiExtension,
+    MentionExtension,
     ({ addCustomHandler }) => {
-      return addCustomHandler('suggestionKeyBindings', keyBindings);
+      return addCustomHandler('keyBindings', keyBindings);
     },
     [keyBindings],
   );
 }
 
-function useMentionHandlers(props: MentionSuggestionProps) {
-  const { setState, ignoreNextExit, mention, index } = useMentionState();
+/**
+ * The hook for managing the mention keyboard handlers.
+ */
+function useMentionHandlers(props: MentionSuggestionProps, state: UseMentionState) {
+  const { setState, ignoreNextExit, mention, index } = state;
 
   /**
    * The is the callback for when a suggestion is changed.
@@ -197,7 +206,6 @@ function useMentionHandlers(props: MentionSuggestionProps) {
         matcher: name,
         hideSuggestions: false,
       });
-
       mention.current = parameters;
     },
     [props, setState, index, mention],
@@ -228,11 +236,12 @@ function useMentionHandlers(props: MentionSuggestionProps) {
     [props, setState, mention, ignoreNextExit],
   );
 
+  // Add the handlers to the `MentionExtension`
   useExtension(
-    EmojiExtension,
+    MentionExtension,
     ({ addHandler }) => {
-      const disposeChangeHandler = addHandler('onSuggestionChange', onChange);
-      const disposeExitHandler = addHandler('onSuggestionExit', onExit);
+      const disposeChangeHandler = addHandler('onChange', onChange);
+      const disposeExitHandler = addHandler('onExit', onExit);
 
       return () => {
         disposeChangeHandler();
@@ -244,7 +253,8 @@ function useMentionHandlers(props: MentionSuggestionProps) {
 }
 
 export const MentionSuggestions = (props: MentionSuggestionProps) => {
-  const { ignoreNextExit, mention, matcher, hideSuggestions } = useMentionState();
+  const state = useMentionState();
+  const { ignoreNextExit, mention, matcher, hideSuggestions, index } = state;
   const { commands, focus, view } = useSocialRemirror();
 
   const onClickFactory = useCallback(
@@ -276,8 +286,8 @@ export const MentionSuggestions = (props: MentionSuggestionProps) => {
     [commands, focus, ignoreNextExit, mention, view],
   );
 
-  useMentionHandlers(props);
-  useMentionKeyBindings(props);
+  useMentionHandlers(props, state);
+  useMentionKeyBindings(props, state);
 
   if (!matcher || hideSuggestions) {
     return null;
@@ -286,6 +296,7 @@ export const MentionSuggestions = (props: MentionSuggestionProps) => {
   if (matcher === 'at') {
     return (
       <MentionDropdown
+        activeIndex={index}
         items={props.users}
         getKey={(item) => item.username}
         Component={UserMentionItem}
@@ -296,6 +307,7 @@ export const MentionSuggestions = (props: MentionSuggestionProps) => {
 
   return (
     <MentionDropdown
+      activeIndex={index}
       items={props.tags}
       getKey={(item) => item.tag}
       Component={TagMentionItem}
@@ -309,14 +321,14 @@ interface MentionDropdownProps<Item> {
   getKey: (item: Item) => string;
   Component: ComponentType<{ item: Item }>;
   onClickFactory: (id: string) => () => void;
+  activeIndex: number;
 }
 
 function MentionDropdown<Item>(props: MentionDropdownProps<Item>) {
-  const { items, getKey, Component, onClickFactory } = props;
-  const { index } = useMentionState();
+  const { items, getKey, Component, onClickFactory, activeIndex } = props;
 
   const { getMenuProps, getItemProps, itemHighlightedAtIndex, hoveredIndex } = useMultishift({
-    highlightedIndexes: [index],
+    highlightedIndexes: [activeIndex],
     type: Type.ControlledMenu,
     items,
     isOpen: true,
@@ -324,7 +336,7 @@ function MentionDropdown<Item>(props: MentionDropdownProps<Item>) {
 
   return (
     <div className={mentionSuggestionsDropdownWrapperStyles} {...getMenuProps()} style={{}}>
-      {items.map((item, ii) => {
+      {items.map((item, index) => {
         const isHighlighted = itemHighlightedAtIndex(index);
         const id = getKey(item);
         const isHovered = index === hoveredIndex;
@@ -334,7 +346,7 @@ function MentionDropdown<Item>(props: MentionDropdownProps<Item>) {
             {...getItemProps({
               onClick: onClickFactory(id),
               item: item,
-              index: ii,
+              index: index,
               className: cx(
                 mentionSuggestionsItemStyles,
                 isHighlighted && 'highlighted',

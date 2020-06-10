@@ -38,11 +38,8 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
     maxResults: 20,
   };
 
-  static readonly customHandlerKeys: CustomHandlerKeyList<EmojiOptions> = ['suggestionKeyBindings'];
-  static readonly handlerKeys: HandlerKeyList<EmojiOptions> = [
-    'onSuggestionChange',
-    'onSuggestionExit',
-  ];
+  static readonly customHandlerKeys: CustomHandlerKeyList<EmojiOptions> = ['keyBindings'];
+  static readonly handlerKeys: HandlerKeyList<EmojiOptions> = ['onChange', 'onExit'];
 
   /**
    * The name is dynamically generated based on the passed in type.
@@ -64,7 +61,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
   /**
    * The compiled keybindings.
    */
-  private suggestionKeyBindings: EmojiSuggestionKeyBindings = {};
+  private keyBindings: EmojiSuggestionKeyBindings = {};
 
   /**
    * Manage input rules for emoticons.
@@ -171,19 +168,17 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
   };
 
   protected onAddCustomHandler: AddCustomHandler<EmojiOptions> = (parameter) => {
-    const { suggestionKeyBindings } = parameter;
+    const { keyBindings: keyBindings } = parameter;
 
-    if (!suggestionKeyBindings) {
+    if (!keyBindings) {
       return;
     }
 
-    this.keyBindingsList = [...this.keyBindingsList, suggestionKeyBindings];
+    this.keyBindingsList = [...this.keyBindingsList, keyBindings];
     this.updateKeyBindings();
 
     return () => {
-      this.keyBindingsList = this.keyBindingsList.filter(
-        (binding) => binding !== suggestionKeyBindings,
-      );
+      this.keyBindingsList = this.keyBindingsList.filter((binding) => binding !== keyBindings);
       this.updateKeyBindings();
     };
   };
@@ -198,7 +193,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
       newBindings = { ...newBindings, ...binding };
     }
 
-    this.suggestionKeyBindings = newBindings;
+    this.keyBindings = newBindings;
   }
 
   /**
@@ -215,17 +210,17 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
       name: this.name,
       appendText: '',
       suggestTag: 'span',
-      keyBindings: () => this.suggestionKeyBindings,
+      keyBindings: () => this.keyBindings,
       onChange: (parameters) => {
         const query = parameters.queryText.full;
         const emojiMatches =
           query.length === 0
             ? this.frequentlyUsed
             : sortEmojiMatches(query, this.options.maxResults);
-        this.options.onSuggestionChange({ ...parameters, emojiMatches });
+        this.options.onChange({ ...parameters, emojiMatches });
       },
 
-      onExit: this.options.onSuggestionExit,
+      onExit: this.options.onExit,
       createCommand: (parameter) => {
         const { match } = parameter;
         const { getCommands } = this.store;

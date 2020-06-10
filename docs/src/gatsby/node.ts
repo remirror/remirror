@@ -74,8 +74,6 @@ export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = (param
   const { actions, getConfig, loaders } = parameter;
   const config = getConfig();
 
-  // console.log(loaders.js());
-
   config.plugins.push(new MonacoEditorWebpackPlugin({ languages: ['typescript', 'javascript'] }));
 
   config.module.rules = [

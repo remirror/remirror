@@ -9,11 +9,11 @@ export const emojiSuggestionsItemStyles = css`
   white-space: nowrap;
   color: white;
   &.hovered {
-    color: hsl(205, 5%, 90%);
+    background-color: hsl(205, 5%, 90%);
   }
 
   &.highlighted {
-    color: hsl(205, 5%, 80%);
+    background-color: hsl(205, 5%, 80%);
   }
 `;
 
@@ -24,7 +24,8 @@ export const emojiSuggestionsDropdownWrapperStyles = css`
   padding-bottom: 8px;
   margin: 0 auto;
   border-radius: 8px;
-  box-shadow: hsla(205, 70%, 15%, 0.25) 0 4px 8px -2px 0px, hsla(205, 70%, 15%, 0.31) 0px 0px 1px;
+  box-shadow: hsla(205, 70%, 15%, 0.25) 0 4px 8px, hsla(205, 70%, 15%, 0.31) 0px 0px 1px;
+  background-color: white;
   z-index: 10;
   max-height: 250px;
   overflow-y: scroll;
@@ -36,10 +37,14 @@ export const mentionSuggestionsDropdownWrapperStyles = css`
   flex-direction: column;
   flex-basis: auto;
   flex-shrink: 0px;
-  margin: 0px;
+  margin: 4px;
   overflow: hidden;
   list-style: none;
   padding: 0px;
+  box-shadow: hsla(205, 70%, 15%, 0.25) 0 4px 8px, hsla(205, 70%, 15%, 0.31) 0px 0px 1px;
+  background-color: white;
+  border-border-bottom-left-radius: 8px;
+  border-border-bottom-right-radius: 8px;
 `;
 
 export const mentionSuggestionsItemStyles = css`
@@ -51,12 +56,8 @@ export const mentionSuggestionsItemStyles = css`
   font-size: 14px;
   color: white;
 
-  &.hovered {
-    color: hsl(205, 5%, 90%);
-  }
-
   &.highlighted {
-    color: hsl(205, 5%, 80%);
+    background-color: #e8f5fd;
   }
 
   &:hover {

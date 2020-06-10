@@ -13,11 +13,11 @@ import { isFunction, object } from '@remirror/core';
  * return <span onClick={() => setOpen(!isOpen)}>{isOpen && previous === isOpen ? 'Stable' : 'Unstable' }</span>
  * ```
  */
-export const usePrevious = <Value>(value: Value) => {
+export function usePrevious<Value>(value: Value) {
   const ref = useRef<Value>();
   useEffect(() => void (ref.current = value), [value]);
   return ref.current;
-};
+}
 
 export interface DOMRectReadOnlyLike {
   readonly x: number;
@@ -45,7 +45,7 @@ const defaultBounds = { x: 0, y: 0, width: 0, height: 0, top: 0, right: 0, botto
  * return <div {...bindRef}>Height: {height}</div>
  * ```
  */
-export const useMeasure = <Ref extends HTMLElement = any>() => {
+export function useMeasure<Ref extends HTMLElement = any>() {
   const ref = useRef<Ref>(null);
   const [bounds, setBounds] = useState<DOMRectReadOnlyLike>(defaultBounds);
 
@@ -60,7 +60,7 @@ export const useMeasure = <Ref extends HTMLElement = any>() => {
   }, []);
 
   return [{ ref }, bounds] as const;
-};
+}
 
 export type DispatchWithCallback<Value> = (value: Value, callback?: () => void) => void;
 
@@ -131,13 +131,13 @@ export type PartialSetStateAction<State> = Partial<State> | ((prevState: State) 
  * log(state); // => { a: 'initial', b: 'initial' }
  * ```
  */
-export const useSetState = <State extends object>(
+export function useSetState<State extends object>(
   initialState: State | (() => State) = object<State>(),
 ): readonly [
   State,
   DispatchWithCallback<PartialSetStateAction<State>>,
   (callback?: () => void) => void,
-] => {
+] {
   const [state, setStateWithCallback] = useStateWithCallback<State>(
     isFunction(initialState) ? initialState() : initialState,
   );
@@ -163,4 +163,4 @@ export const useSetState = <State extends object>(
   );
 
   return [state, setState, resetState] as const;
-};
+}

@@ -222,7 +222,7 @@ function isChrome(minVersion = 0): boolean {
 export const replaceText = ({
   range,
   type,
-  attrs: attributes = object<ProsemirrorAttributes>(),
+  attrs = object<ProsemirrorAttributes>(),
   appendText = '',
   content = '',
   startTransaction,
@@ -240,7 +240,7 @@ export const replaceText = ({
       return false;
     }
 
-    tr.replaceWith(from, to, type.create(attributes, content ? schema.text(content) : undefined));
+    tr.replaceWith(from, to, type.create(attrs, content ? schema.text(content) : undefined));
   } else {
     if (!content) {
       throw new Error('`replaceText` cannot be called without content when using a mark type');
@@ -249,7 +249,7 @@ export const replaceText = ({
     tr.replaceWith(
       from,
       to,
-      schema.text(content, isMarkType(type) ? [type.create(attributes)] : undefined),
+      schema.text(content, isMarkType(type) ? [type.create(attrs)] : undefined),
     );
   }
 
