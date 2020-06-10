@@ -8725,6 +8725,8 @@ packages:
     dev: false
     engines:
       node: '>=10'
+    peerDependencies:
+      graphql: '*'
     resolution:
       integrity: sha512-lJ9/bk1BH1lD15WhWRha2J3+LrXrPIX5LP5EwiOUHv8PCORp4EUrcujrA3rI5hZeZygrTX8bshcuMdpqpSrvtA==
   /apollo-upload-client/13.0.0_graphql@14.6.0:
