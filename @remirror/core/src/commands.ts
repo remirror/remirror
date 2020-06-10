@@ -127,6 +127,7 @@ export function toggleMark(parameter: ToggleMarkParameter): CommandFunction {
     }
 
     let selectionHasActiveMark = false;
+
     for (
       let rangesIndex = 0;
       !selectionHasActiveMark && rangesIndex < ranges.length;

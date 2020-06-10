@@ -3,6 +3,7 @@ import { renderToString } from 'react-dom/server';
 
 import { AnyCombinedUnion, EditorManager, object } from 'remirror/core';
 import { CorePreset } from 'remirror/preset/core';
+import { ReactPreset } from 'remirror/preset/react';
 import { RenderEditor } from 'remirror/react';
 
 import { RenderEditorParameter } from './jest-remirror-types';
@@ -15,8 +16,9 @@ export function renderEditorString<Combined extends AnyCombinedUnion>(
   { settings, props }: RenderEditorParameter<Combined> = object(),
 ): string {
   const corePreset = new CorePreset();
+  const reactPreset = new ReactPreset();
 
-  const manager = EditorManager.create([...combined, corePreset], settings);
+  const manager = EditorManager.create([...combined, corePreset, reactPreset], settings);
 
   return renderToString(
     <RenderEditor {...props} manager={manager}>

@@ -29,6 +29,7 @@ import {
   pick,
   ProsemirrorAttributes,
   ProsemirrorNode,
+  range,
   SchemaFromCombined,
 } from 'remirror/core';
 import { CorePreset } from 'remirror/preset/core';
@@ -382,8 +383,11 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *
    * @param key - the key to press (or string representing a key)
    */
-  readonly press = (char: string) => {
-    press({ char, view: this.view });
+  readonly press = (char: string, times = 1) => {
+    for (const _ of range(times)) {
+      press({ char, view: this.view });
+    }
+
     return this;
   };
 

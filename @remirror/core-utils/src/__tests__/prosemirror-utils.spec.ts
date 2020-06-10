@@ -15,13 +15,12 @@ import {
   tr as row,
 } from 'jest-prosemirror';
 
-import { omit, pick } from '@remirror/core-helpers';
+import { pick } from '@remirror/core-helpers';
 import { Schema } from '@remirror/pm/model';
 import { NodeSelection, Selection, TextSelection } from '@remirror/pm/state';
 import { BoldExtension, createBaseManager } from '@remirror/test-fixtures';
 
 import {
-  cloneTransaction,
   findElementAtPosition,
   findNodeAtSelection,
   findParentNode,
@@ -327,34 +326,6 @@ describe('transactionChanged', () => {
     const tr = state.tr.setSelection(TextSelection.atStart(state.doc));
 
     expect(transactionChanged(tr)).toBeTrue();
-  });
-});
-
-describe('cloneTransaction', () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
-  afterEach(() => {
-    jest.useRealTimers();
-  });
-
-  it('clones the transaction', () => {
-    return new Promise((done) => {
-      const {
-        state: { tr },
-      } = createEditor(doc(p()));
-
-      setTimeout(() => {
-        const clonedTr = cloneTransaction(tr);
-
-        expect(omit(tr, ['time'])).toEqual(omit(clonedTr, ['time']));
-
-        done();
-      }, 10);
-
-      jest.advanceTimersByTime(20);
-    });
   });
 });
 

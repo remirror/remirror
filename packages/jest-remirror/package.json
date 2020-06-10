@@ -32,7 +32,7 @@
     "@types/testing-library__react": "^10.0.1",
     "jest-prosemirror": "^0.8.3",
     "jest-snapshot": "^26.0.1",
-    "mutationobserver-shim": "^0.3.5",
+    "mutationobserver-shim": "^0.3.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "remirror": "^0.13.1",

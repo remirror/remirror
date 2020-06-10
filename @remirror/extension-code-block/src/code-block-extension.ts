@@ -22,6 +22,7 @@ import {
   OnSetOptionsParameter,
   PosParameter,
   removeNodeAtPosition,
+  replaceNodeAtPosition,
   toggleBlockItem,
 } from '@remirror/core';
 import { setBlockType } from '@remirror/pm/commands';
@@ -93,7 +94,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
           },
         },
       ],
-      toDOM: (node) => codeBlockToDOM(node, extra.dom, this.options.defaultLanguage),
+      toDOM: (node) => codeBlockToDOM(node, extra.dom),
     };
   }
 
@@ -127,8 +128,9 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
        * commands.createCodeBlock({ language: 'js' });
        * ```
        */
-      createCodeBlock: (attributes: CodeBlockAttributes) =>
-        convertCommand(setBlockType(this.type, attributes)),
+      createCodeBlock: (attributes: CodeBlockAttributes) => {
+        return convertCommand(setBlockType(this.type, attributes));
+      },
 
       /**
        * Update the code block at the current position. Primarily this is used
@@ -239,7 +241,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
           return false;
         }
 
-        let tr = state.tr;
+        const tr = state.tr;
 
         // Check that this is the correct node.
         const parent = findParentNodeOfType({ types: this.type, selection });
@@ -249,22 +251,28 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
         }
 
         const { pos, node, start } = parent;
+        const toggleNode = state.schema.nodes[this.options.toggleName];
 
         if (node.textContent.trim() === '') {
-          tr = removeNodeAtPosition({ pos, tr });
-        } else if (start - 2 > 0) {
-          // Make the cursor jump to the previous node.
+          if (tr.doc.lastChild === node && tr.doc.firstChild === node) {
+            replaceNodeAtPosition({ pos, tr, content: toggleNode.create() });
+          } else {
+            removeNodeAtPosition({ pos, tr });
+          }
+        } else if (start > 2) {
+          // Jump to the previous node.
           tr.setSelection(TextSelection.create(tr.doc, start - 2));
         } else {
           // There is no content before the codeBlock so simply create a new
           // block and jump into it.
-          tr.insert(0, state.schema.nodes[this.options.toggleName].create());
+          tr.insert(0, toggleNode.create());
           tr.setSelection(TextSelection.create(tr.doc, 1));
         }
 
         if (dispatch) {
           dispatch(tr);
         }
+
         return true;
       },
 
@@ -382,10 +390,6 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
    */
   private registerLanguages() {
     for (const language of this.options.supportedLanguages) {
-      if (refractor.registered(language.name)) {
-        return;
-      }
-
       refractor.register(language);
     }
   }

@@ -6,7 +6,6 @@ import {
   isEmptyArray,
   isEmptyObject,
   isNullOrUndefined,
-  isUndefined,
   keys,
   object,
 } from '@remirror/core-helpers';
@@ -20,6 +19,7 @@ import {
   EditorStateParameter,
   EditorView,
   EmptyShape,
+  Fragment,
   KeyBindingCommandFunction,
   KeyBindings,
   MarkTypesParameter,
@@ -49,6 +49,7 @@ import {
   isResolvedPos,
   isSelection,
   isTextDOMNode,
+  isTransaction,
 } from './dom-utils';
 
 interface NodeEqualsTypeParameter<Schema extends EditorSchema = any>
@@ -79,21 +80,10 @@ export function markEqualsType<Schema extends EditorSchema = any>(
   return mark ? (Array.isArray(types) && types.includes(mark.type)) || mark.type === types : false;
 }
 
-/**
- * Creates a new transaction object from a given transaction
- *
- * @param tr - the prosemirror transaction
- *
- * @public
- */
-export const cloneTransaction = (tr: Transaction): Transaction => {
-  return Object.assign(Object.create(tr), tr).setTime(Date.now());
-};
-
 interface RemoveNodeAtPositionParameter extends TransactionParameter, PosParameter {}
 
 /**
- * Returns a `delete` transaction that removes a node at a given position with
+ * Performs a `delete` transaction that removes a node at a given position with
  * the given `node`. `position` should point at the position immediately before
  * the node.
  *
@@ -101,15 +91,32 @@ interface RemoveNodeAtPositionParameter extends TransactionParameter, PosParamet
  *
  * @public
  */
-export const removeNodeAtPosition = ({ pos, tr }: RemoveNodeAtPositionParameter) => {
+export function removeNodeAtPosition({ pos, tr }: RemoveNodeAtPositionParameter) {
   const node = tr.doc.nodeAt(pos);
 
-  if (!node) {
-    return tr;
+  if (node) {
+    tr.delete(pos, pos + node.nodeSize);
   }
 
-  return cloneTransaction(tr.delete(pos, pos + node.nodeSize));
-};
+  return tr;
+}
+
+interface ReplaceNodeAtPositionParameter extends RemoveNodeAtPositionParameter {
+  content: Fragment | ProsemirrorNode | ProsemirrorNode[];
+}
+
+/**
+ * Replaces the node at the provided position with the provided content.
+ */
+export function replaceNodeAtPosition({ pos, tr, content }: ReplaceNodeAtPositionParameter) {
+  const node = tr.doc.nodeAt(pos);
+
+  if (node) {
+    tr.replaceWith(pos, pos + node.nodeSize, content);
+  }
+
+  return tr;
+}
 
 /**
  * Returns DOM reference of a node at a given `position`.
@@ -130,7 +137,7 @@ export const removeNodeAtPosition = ({ pos, tr }: RemoveNodeAtPositionParameter)
  *
  * @public
  */
-export const findElementAtPosition = (position: number, view: EditorView): HTMLElement => {
+export function findElementAtPosition(position: number, view: EditorView): HTMLElement {
   const dom = view.domAtPos(position);
   const node = dom.node.childNodes[dom.offset];
 
@@ -143,7 +150,7 @@ export const findElementAtPosition = (position: number, view: EditorView): HTMLE
   }
 
   return node as HTMLElement;
-};
+}
 
 /**
  * Iterates over parent nodes, returning the closest node and its start position
@@ -155,17 +162,20 @@ export const findElementAtPosition = (position: number, view: EditorView): HTMLE
  * const parent = findParentNode({predicate, selection});
  * ```
  */
-export const findParentNode = ({
-  predicate,
-  selection,
-}: FindParentNodeParameter): FindProsemirrorNodeResult | undefined => {
+export function findParentNode(
+  parameter: FindParentNodeParameter,
+): FindProsemirrorNodeResult | undefined {
+  const { predicate, selection } = parameter;
   const { $from } = selection;
+
   for (let depth = $from.depth; depth > 0; depth--) {
     const node = $from.node(depth);
+
     if (predicate(node)) {
       const pos = depth > 0 ? $from.before(depth) : 0;
       const start = $from.start(depth);
       const end = pos + node.nodeSize;
+
       return {
         pos,
         depth,
@@ -175,15 +185,16 @@ export const findParentNode = ({
       };
     }
   }
+
   return;
-};
+}
 
 /**
  * Finds the node at the resolved position.
  *
  * @param $pos - the resolve position in the document
  */
-export const findNodeAtPosition = ($pos: ResolvedPos): FindProsemirrorNodeResult => {
+export function findNodeAtPosition($pos: ResolvedPos): FindProsemirrorNodeResult {
   const { depth } = $pos;
   const pos = depth > 0 ? $pos.before(depth) : 0;
   const node = $pos.node(depth);
@@ -197,42 +208,18 @@ export const findNodeAtPosition = ($pos: ResolvedPos): FindProsemirrorNodeResult
     end,
     depth,
   };
-};
+}
 
 /**
  * Finds the node at the passed selection.
  */
-export const findNodeAtSelection = (selection: Selection): FindProsemirrorNodeResult => {
+export function findNodeAtSelection(selection: Selection): FindProsemirrorNodeResult {
   const parentNode = findParentNode({ predicate: () => true, selection });
 
-  if (isUndefined(parentNode)) {
-    throw new Error('No parent node found for the selection provided.');
-  }
+  invariant(parentNode, { message: 'No parent node found for the selection provided.' });
 
   return parentNode;
-};
-
-/**
- * Finds the node at the end of the Prosemirror document.
- *
- * @param doc - the parent doc node of the editor which contains all the other
- * nodes.
- *
- * @deprecated use `doc.lastChild` instead
- */
-export const findNodeAtEndOfDoc = (doc: ProsemirrorNode) =>
-  findNodeAtPosition(PMSelection.atEnd(doc).$from);
-
-/**
- * Finds the node at the start of the prosemirror.
- *
- * @param doc - the parent doc node of the editor which contains all the other
- * nodes.
- *
- * @deprecated use `doc.firstChild` instead
- */
-export const findNodeAtStartOfDoc = (doc: ProsemirrorNode) =>
-  findNodeAtPosition(PMSelection.atStart(doc).$from);
+}
 
 interface FindParentNodeOfTypeParameter extends NodeTypesParameter, SelectionParameter {}
 
@@ -245,12 +232,13 @@ interface FindParentNodeOfTypeParameter extends NodeTypesParameter, SelectionPar
  *  const parent = findParentNodeOfType({types: schema.nodes.paragraph, selection});
  *  ```
  */
-export const findParentNodeOfType = ({
-  types,
-  selection,
-}: FindParentNodeOfTypeParameter): FindProsemirrorNodeResult | undefined => {
+export function findParentNodeOfType(
+  parameter: FindParentNodeOfTypeParameter,
+): FindProsemirrorNodeResult | undefined {
+  const { types, selection } = parameter;
+
   return findParentNode({ predicate: (node) => nodeEqualsType({ types, node }), selection });
-};
+}
 
 /**
  * Returns position of the previous node.
@@ -294,7 +282,7 @@ export function findPositionOfNodeBefore<Schema extends EditorSchema = any>(
 }
 
 /**
- * Returns a new transaction that deletes previous node.
+ * Updates the provided transaction to remove the node before.
  *
  * ```ts
  * dispatch(
@@ -306,13 +294,15 @@ export function findPositionOfNodeBefore<Schema extends EditorSchema = any>(
  *
  * @public
  */
-export const removeNodeBefore = (tr: Transaction): Transaction => {
+export function removeNodeBefore(tr: Transaction) {
   const result = findPositionOfNodeBefore(tr.selection);
+
   if (result) {
-    return removeNodeAtPosition({ pos: result.pos, tr });
+    removeNodeAtPosition({ pos: result.pos, tr });
   }
+
   return tr;
-};
+}
 
 interface FindSelectedNodeOfTypeParameter<Schema extends EditorSchema = any>
   extends NodeTypesParameter<Schema>,
@@ -392,9 +382,9 @@ interface FindParentNodeParameter extends SelectionParameter, PredicateParameter
  *
  * @param selection - the prosemirror selection
  */
-export const findPositionOfNodeAfter = <Schema extends EditorSchema = any>(
+export function findPositionOfNodeAfter<Schema extends EditorSchema = any>(
   value: Selection<Schema> | ResolvedPos<Schema> | EditorState<Schema>,
-): FindProsemirrorNodeResult | undefined => {
+): FindProsemirrorNodeResult | undefined {
   const $pos = isResolvedPos(value)
     ? value
     : isSelection(value)
@@ -423,36 +413,45 @@ export const findPositionOfNodeAfter = <Schema extends EditorSchema = any>(
         depth: selection.$from.depth + 1,
         start: selection.$from.start(selection.$from.depth + 1),
       };
-};
+}
 
 /**
- * Returns a new transaction that deletes the node after.
+ * Update the transaction to delete the node after the current selection.
  *
  * ```ts
- * dispatch(
- *    removeNodeBefore(state.tr)
- * );
+ * dispatch(removeNodeBefore(state.tr));
  * ```
  *
  * @param tr
  *
  * @public
  */
-export const removeNodeAfter = (tr: Transaction): Transaction => {
+export function removeNodeAfter(tr: Transaction) {
   const result = findPositionOfNodeAfter(tr.selection);
+
   if (result) {
-    return removeNodeAtPosition({ pos: result.pos, tr });
+    removeNodeAtPosition({ pos: result.pos, tr });
   }
+
   return tr;
-};
+}
 
 /**
  * Checks whether the selection or state is currently empty.
  *
- * @param value - the current selection or state
+ * @param value - the transaction selection or state
  */
-export const selectionEmpty = (value: Selection | EditorState) =>
-  isSelection(value) ? value.empty : isEditorState(value) ? value.selection.empty : true;
+export function selectionEmpty(value: Transaction | EditorState | Selection) {
+  if (isSelection(value)) {
+    return value.empty;
+  }
+
+  if (isTransaction(value) || isEditorState(value)) {
+    return value.selection.empty;
+  }
+
+  return true;
+}
 
 /**
  * Check to see if a transaction has changed either the document or the current
@@ -460,9 +459,9 @@ export const selectionEmpty = (value: Selection | EditorState) =>
  *
  * @param params - the TransactionChangeParameter object
  */
-export const transactionChanged = (tr: Transaction) => {
+export function transactionChanged(tr: Transaction) {
   return tr.docChanged || tr.selectionSet;
-};
+}
 
 interface IsNodeActiveParameter
   extends EditorStateParameter,
@@ -477,7 +476,9 @@ interface IsNodeActiveParameter
  *
  * @param params - the destructured node active parameters
  */
-export const isNodeActive = ({ state, type, attrs }: IsNodeActiveParameter) => {
+export function isNodeActive(parameter: IsNodeActiveParameter) {
+  const { state, type, attrs } = parameter;
+
   const { selection } = state;
   const predicate = (node: ProsemirrorNode) => node.type === type;
 
@@ -489,7 +490,7 @@ export const isNodeActive = ({ state, type, attrs }: IsNodeActiveParameter) => {
   }
 
   return parent.node.hasMarkup(type, attrs);
-};
+}
 
 export interface SchemaJSON<Nodes extends string = string, Marks extends string = string> {
   nodes: Record<Nodes, NodeSpec>;
@@ -565,17 +566,19 @@ export function nonChainable<Schema extends EditorSchema = any, Extra extends Sh
  * multiple commands to be chained together and runs until one of them returns
  * true.
  */
-export const chainCommands = <Schema extends EditorSchema = any, Extra extends object = object>(
+export function chainCommands<Schema extends EditorSchema = any, Extra extends object = object>(
   ...commands: Array<CommandFunction<Schema, Extra>>
-): CommandFunction<Schema, Extra> => ({ state, dispatch, view, ...rest }) => {
-  for (const element of commands) {
-    if (element({ state, dispatch, view, ...(rest as Extra) })) {
-      return true;
+): CommandFunction<Schema, Extra> {
+  return ({ state, dispatch, view, ...rest }) => {
+    for (const element of commands) {
+      if (element({ state, dispatch, view, ...(rest as Extra) })) {
+        return true;
+      }
     }
-  }
 
-  return false;
-};
+    return false;
+  };
+}
 
 /**
  * Chains together keybindings, allowing for the sme key binding to be used
@@ -586,55 +589,57 @@ export const chainCommands = <Schema extends EditorSchema = any, Extra extends o
  * When `next` is called it hands over full control of the keybindings to the
  * function that invokes it.
  */
-export const chainKeyBindingCommands = (
+export function chainKeyBindingCommands(
   ...commands: KeyBindingCommandFunction[]
-): KeyBindingCommandFunction => (parameters) => {
-  // When no commands are passed just ignore and continue.
-  if (isEmptyArray(commands)) {
-    return false;
-  }
-
-  const [command, ...rest] = commands;
-
-  // Keeps track of whether the `next` method has been called. If it has been
-  // called we return the result and skip the rest of the downstream commands.
-  let calledNext = false;
-
-  /**
-   * Create the next function call. Updates the outer closure when the next
-   * method has been called.
-   */
-  const createNext = (...nextCommands: KeyBindingCommandFunction[]): (() => boolean) => () => {
-    if (isEmptyArray(nextCommands)) {
+): KeyBindingCommandFunction {
+  return (parameters) => {
+    // When no commands are passed just ignore and continue.
+    if (isEmptyArray(commands)) {
       return false;
     }
 
-    // Update the closure with information that the next method was invoked by
-    // this command.
-    calledNext = true;
+    const [command, ...rest] = commands;
 
-    const [, ...nextRest] = nextCommands;
+    // Keeps track of whether the `next` method has been called. If it has been
+    // called we return the result and skip the rest of the downstream commands.
+    let calledNext = false;
 
-    // Recursively call the key bindings method.
-    return chainKeyBindingCommands(...nextCommands)({
-      ...parameters,
-      next: createNext(...nextRest),
-    });
+    /**
+     * Create the next function call. Updates the outer closure when the next
+     * method has been called.
+     */
+    const createNext = (...nextCommands: KeyBindingCommandFunction[]): (() => boolean) => () => {
+      if (isEmptyArray(nextCommands)) {
+        return false;
+      }
+
+      // Update the closure with information that the next method was invoked by
+      // this command.
+      calledNext = true;
+
+      const [, ...nextRest] = nextCommands;
+
+      // Recursively call the key bindings method.
+      return chainKeyBindingCommands(...nextCommands)({
+        ...parameters,
+        next: createNext(...nextRest),
+      });
+    };
+
+    const next = createNext(...rest);
+    const exitEarly = command({ ...parameters, next });
+
+    // Exit the chain of commands early if either:
+    // - a) next was called
+    // - b) the command returned true
+    if (calledNext || exitEarly) {
+      return exitEarly;
+    }
+
+    // Continue on through the chain of commands.
+    return next();
   };
-
-  const next = createNext(...rest);
-  const exitEarly = command({ ...parameters, next });
-
-  // Exit the chain of commands early if either:
-  // - a) next was called
-  // - b) the command returned true
-  if (calledNext || exitEarly) {
-    return exitEarly;
-  }
-
-  // Continue on through the chain of commands.
-  return next();
-};
+}
 
 function mergeKeyBindingCreator<
   Schema extends EditorSchema = any,

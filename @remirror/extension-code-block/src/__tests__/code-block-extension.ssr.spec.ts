@@ -44,7 +44,7 @@ test('formatted ssr component', () => {
     content: [
       {
         type: 'codeBlock',
-        attrs: { language: 'markdown' },
+        attrs: { language: 'md' },
         content: [
           {
             type: 'text',

@@ -6,7 +6,6 @@ import {
   CommandFunction,
   DOMOutputSpec,
   EditorState,
-  environment,
   findParentNodeOfType,
   flattenArray,
   FromToParameter,
@@ -263,19 +262,6 @@ export function getLanguage(parameter: GetLanguageParameter): string {
   return fallback;
 }
 
-function mapRefractorNodesToDOMArray(nodes: RefractorNode[]): any[] {
-  return nodes.map((node) => {
-    if (node.type === 'text') {
-      return node.value;
-    }
-
-    const { properties, children, tagName } = node;
-    const { className, ...rest } = properties;
-
-    return [tagName, { class: className, ...rest }, mapRefractorNodesToDOMArray(children)];
-  });
-}
-
 /**
  * Used to provide a `toDom` function for the code block for both the browser and
  * non browser environments.
@@ -283,24 +269,11 @@ function mapRefractorNodesToDOMArray(nodes: RefractorNode[]): any[] {
 export function codeBlockToDOM(
   node: ProsemirrorNode,
   toDOM: ApplyExtraAttributes['dom'],
-  defaultLanguage = 'markup',
 ): DOMOutputSpec {
   const { language, ...rest } = node.attrs as CodeBlockAttributes;
   const attributes = { ...toDOM(node.attrs), ...rest, class: `language-${language}` };
 
-  if (environment.isBrowser) {
-    return ['pre', attributes, ['code', { [dataAttribute]: language }, 0]];
-  }
-
-  const refractorNodes = refractor.highlight(
-    node.textContent ?? '',
-    node.attrs.language ?? defaultLanguage,
-  );
-
-  const mappedNodes = mapRefractorNodesToDOMArray(refractorNodes);
-
-  // TODO test the logic for this
-  return ['pre', attributes, ['code', { [dataAttribute]: language }, ...mappedNodes, 0]] as any;
+  return ['pre', attributes, ['code', { [dataAttribute]: language }, 0]];
 }
 
 interface FormatCodeBlockFactoryParameter

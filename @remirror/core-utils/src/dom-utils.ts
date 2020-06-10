@@ -52,6 +52,7 @@ import {
   Plugin,
   Selection as PMSelection,
   TextSelection,
+  Transaction as PMTransaction,
 } from '@remirror/pm/state';
 
 import { environment } from './environment';
@@ -106,6 +107,19 @@ export function isEditorState<Schema extends EditorSchema = EditorSchema>(
   value: unknown,
 ): value is PMEditorState<Schema> {
   return isObject(value) && value instanceof PMEditorState;
+}
+
+/**
+ * Checks to see if the passed value is a Prosemirror Transaction
+ *
+ * @param value - the value to check
+ *
+ * @public
+ */
+export function isTransaction<Schema extends EditorSchema = EditorSchema>(
+  value: unknown,
+): value is PMTransaction<Schema> {
+  return isObject(value) && value instanceof PMTransaction;
 }
 
 /**
@@ -513,9 +527,11 @@ export function closestElement(
   if (!isElementDOMNode(domNode)) {
     return null;
   }
+
   if (isNullOrUndefined(document.documentElement) || !document.documentElement.contains(domNode)) {
     return null;
   }
+
   const matches = isFunction(domNode.matches) ? 'matches' : Cast<'matches'>('msMatchesSelector');
 
   do {
@@ -524,6 +540,7 @@ export function closestElement(
     }
     domNode = (domNode.parentElement ?? domNode.parentNode) as HTMLElement;
   } while (isElementDOMNode(domNode));
+
   return null;
 }
 

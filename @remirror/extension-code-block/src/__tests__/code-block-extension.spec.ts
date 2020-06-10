@@ -2,7 +2,7 @@ import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 import typescriptPlugin from 'prettier/parser-typescript';
 import { formatWithCursor } from 'prettier/standalone';
-import cssExtras from 'refractor/lang/css-extras';
+import refractor from 'refractor/core';
 import graphql from 'refractor/lang/graphql';
 import javascript from 'refractor/lang/javascript';
 import markdown from 'refractor/lang/markdown';
@@ -117,15 +117,21 @@ describe('plugin', () => {
 
   describe('Backspace', () => {
     it('can be deleted', () => {
-      const { state } = add(doc(tsBlock('<cursor>'))).press('Backspace');
+      add(doc(tsBlock('<cursor>'))).press('Backspace');
 
-      expect(state.doc).toEqualRemirrorDocument(doc(p()));
+      expect(view.state.doc).toEqualRemirrorDocument(doc(p()));
     });
 
     it('is still deleted when all that remains is whitespace', () => {
       const { state } = add(doc(tsBlock('<cursor>          '))).press('Backspace');
 
       expect(state.doc).toEqualRemirrorDocument(doc(p()));
+    });
+
+    it('can be deleted when empty with content before', () => {
+      add(doc(p('other content'), tsBlock('<cursor>'))).press('Backspace');
+
+      expect(view.state.doc).toEqualRemirrorDocument(doc(p('other content')));
     });
 
     it('steps into the previous node when content', () => {
@@ -244,6 +250,7 @@ describe('commands', () => {
     add,
     attributeNodes: { codeBlock },
     nodes: { doc, p },
+    commands,
   } = create();
 
   const tsBlock = codeBlock({ language: 'typescript' });
@@ -263,49 +270,43 @@ describe('commands', () => {
 
   describe('createCodeBlock ', () => {
     it('creates the codeBlock', () => {
-      add(doc(p(`<cursor>`))).callback((content) => {
-        content.commands.createCodeBlock({ language: 'typescript' });
-        expect(content.state.doc).toEqualRemirrorDocument(doc(tsBlock('')));
-      });
+      add(doc(p(`<cursor>`)));
+      commands.createCodeBlock({ language: 'typescript' });
+
+      expect(view.state.doc).toEqualRemirrorDocument(doc(tsBlock('')));
     });
 
     it('creates the default codeBlock when no language is provided', () => {
       const markupBlock = codeBlock({ language: 'markup' });
+      add(doc(p(`<cursor>`)));
 
-      add(doc(p(`<cursor>`))).callback((content) => {
-        // @ts-expect-error
-        content.commands.createCodeBlock();
-        expect(content.state.doc).toEqualRemirrorDocument(doc(markupBlock('')));
-      });
+      // @ts-expect-error
+      commands.createCodeBlock();
+
+      expect(view.state.doc).toEqualRemirrorDocument(doc(markupBlock('')));
     });
   });
 
   describe('toggleCodeBlock ', () => {
     it('toggles the codeBlock', () => {
-      add(doc(p(`<cursor>`)))
-        .callback(({ commands }) => {
-          commands.toggleCodeBlock({ language: 'typescript' });
-        })
-        .callback(({ state }) => {
-          expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('')));
-        })
-        .callback(({ commands }) => {
-          commands.toggleCodeBlock({ language: 'typescript' });
-        })
-        .callback(({ state }) => {
-          expect(state.doc).toEqualRemirrorDocument(doc(p('')));
-        });
+      add(doc(p(`<cursor>`)));
+
+      commands.toggleCodeBlock({ language: 'typescript' });
+      expect(view.state.doc).toEqualRemirrorDocument(doc(tsBlock('')));
+
+      commands.toggleCodeBlock({ language: 'typescript' });
+      expect(view.state.doc).toEqualRemirrorDocument(doc(p('')));
     });
 
     it('toggles the default codeBlock when no language is provided', () => {
       const markupBlock = codeBlock({ language: 'markup' });
-      add(doc(p(`<cursor>`))).callback((content) => {
-        content.commands.toggleCodeBlock({});
-        expect(content.view.state.doc).toEqualRemirrorDocument(doc(markupBlock('')));
+      add(doc(p(`<cursor>`)));
 
-        content.commands.toggleCodeBlock({});
-        expect(content.view.state.doc).toEqualRemirrorDocument(doc(p('')));
-      });
+      commands.toggleCodeBlock({});
+      expect(view.state.doc).toEqualRemirrorDocument(doc(markupBlock('')));
+
+      commands.toggleCodeBlock({});
+      expect(view.state.doc).toEqualRemirrorDocument(doc(p('')));
     });
   });
 
@@ -404,6 +405,9 @@ describe('language', () => {
       fallback: '',
     });
 
+  refractor.register(yaml);
+  refractor.register(graphql);
+
   it('yaml', () => {
     // Just here to make sure it's not undefined
     expect(yaml.name).toEqual('yaml');
@@ -419,13 +423,6 @@ describe('language', () => {
     expect(getLang('graphql')).toEqual(graphql.name);
     expect(getLang('GraphQL')).toEqual(graphql.name);
     expect(getLang('GRAPHQL')).toEqual(graphql.name);
-  });
-
-  it('cssExtras', () => {
-    expect(cssExtras.name).toEqual('cssExtras');
-    expect(getLang('cssExtras')).toEqual(cssExtras.name);
-    expect(getLang('cssextras')).toEqual(cssExtras.name);
-    expect(getLang('CSSExtras')).toEqual(cssExtras.name);
   });
 
   it('handles unknown', () => {

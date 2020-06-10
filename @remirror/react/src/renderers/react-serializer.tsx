@@ -5,7 +5,9 @@ import {
   bool,
   DOMOutputSpec,
   EditorManager,
+  ErrorConstant,
   Fragment as ProsemirrorFragment,
+  invariant,
   isArray,
   isPlainObject,
   isString,
@@ -58,9 +60,11 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
       const child = structure[ii];
 
       if (child === 0) {
-        if (ii < structure.length - 1 || ii > currentIndex) {
-          throw new RangeError('Content hole (0) must be the only child of its parent node');
-        }
+        invariant(!(ii < structure.length - 1 || ii > currentIndex), {
+          message: 'Content hole (0) must be the only child of its parent node',
+          code: ErrorConstant.INTERNAL,
+        });
+
         return createElement(Component, mapProps(props), wraps);
       }
 
