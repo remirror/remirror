@@ -2,6 +2,5 @@ const config = require('../../support/jest/jest.config');
 
 module.exports = {
   ...config,
-  name: 'multishift',
-  displayName: 'multishift',
+  displayName: { name: require('./package.json').name.replace('@remirror/', ''), color: 'pink' },
 };

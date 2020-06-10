@@ -4,6 +4,6 @@ module.exports = {
   ...config,
   setupFilesAfterEnv: [],
   snapshotSerializers: [],
-  name: 'jest-prosemirror',
-  displayName: 'jest-prosemirror',
+
+  displayName: { name: require('./package.json').name.replace('@remirror/', ''), color: 'pink' },
 };

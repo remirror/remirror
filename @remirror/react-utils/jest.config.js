@@ -2,6 +2,5 @@ const config = require('../../support/jest/jest.config');
 
 module.exports = {
   ...config,
-  name: '@remirror/react-utils',
-  displayName: 'react-utils',
+  displayName: { name: require('./package.json').name.replace('@remirror/', ''), color: 'pink' },
 };

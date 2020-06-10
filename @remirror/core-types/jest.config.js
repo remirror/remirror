@@ -2,6 +2,5 @@ const config = require('../../support/jest/jest.config');
 
 module.exports = {
   ...config,
-  name: '@remirror/core-types',
-  displayName: 'core-types',
+  displayName: { name: require('./package.json').name.replace('@remirror/', ''), color: 'pink' },
 };
