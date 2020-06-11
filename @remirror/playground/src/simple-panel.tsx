@@ -1,8 +1,8 @@
 import React, { FC, Fragment, useCallback, useMemo } from 'react';
 
 import { REQUIRED_MODULES } from './execute';
-import { CodeOptions, ModuleSpec, RemirrorModules } from './interfaces';
 import { isExtensionName, isPresetName } from './exports';
+import { CodeOptions, ModuleSpec, RemirrorModules } from './interfaces';
 
 export interface SimplePanelProps {
   options: CodeOptions;
@@ -23,7 +23,7 @@ interface ExtensionCheckboxProps {
 
 const ExtensionOrPresetCheckbox: FC<ExtensionCheckboxProps> = function (props) {
   const { options, setOptions, spec, hideModuleName, type } = props;
-  const optionName: 'presets' | 'extensions' = (type + 's') as any;
+  const optionName: 'presets' | 'extensions' = `${type}s` as any;
   const list = options[optionName];
   const existingIndex = useMemo(
     () =>

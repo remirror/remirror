@@ -7,13 +7,13 @@ import { render, unmountComponentAtNode } from 'react-dom';
 // addImport('@remirror/react', 'useManager');
 // addImport('@remirror/react', 'useExtension');
 import { debounce } from '@remirror/core-helpers';
+
+import { IMPORT_CACHE, INTERNAL_MODULES } from './_remirror';
 // import * as remirrorCoreExtensions from '@remirror/core-extensions';
 //import * as remirrorReact from '@remirror/react';
-
 //import * as remirror from 'remirror';
 import { ErrorBoundary } from './error-boundary';
 import { acquiredTypeDefs, dtsCache } from './vendor/type-acquisition';
-import { IMPORT_CACHE, INTERNAL_MODULES } from './_remirror';
 
 // Start with these and cannot remove them
 export const REQUIRED_MODULES = INTERNAL_MODULES.map((mod) => mod.moduleName);
