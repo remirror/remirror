@@ -203,7 +203,7 @@
 .remirror-social-editor .ProseMirror a {
   -webkit-text-decoration: none !important;
   text-decoration: none !important;
-  color: primary;
+  color: #1da1f2;
 }
 .remirror-social-editor .ProseMirror:focus {
   outline: none;

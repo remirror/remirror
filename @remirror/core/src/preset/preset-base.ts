@@ -134,6 +134,24 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
 
   /**
    * Create the extensions which will be consumed by the preset.
+   *
+   * Since this method is called in the constructor it should always be created
+   * as an instance method and not a property. Properties aren't available for
+   * the call to the parent class.
+   *
+   * ```ts
+   * class MyPreset extends Preset {
+   *   // GOOD ✅
+   *   createExtensions() {
+   *     return [];
+   *   }
+   *
+   *   // BAD ❌
+   *   createExtensions = () => {
+   *     return [];
+   *   }
+   * }
+   * ```
    */
   abstract createExtensions(): AnyExtension[];
 

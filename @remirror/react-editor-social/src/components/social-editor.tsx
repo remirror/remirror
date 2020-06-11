@@ -133,7 +133,7 @@ export const socialEditorStyles = css`
 
     a {
       text-decoration: none !important;
-      color: primary;
+      color: #1da1f2;
     }
 
     &:focus {
