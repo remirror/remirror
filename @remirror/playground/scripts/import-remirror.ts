@@ -114,13 +114,7 @@ async function main() {
   const code = template(everything);
   // TODO: prettier
   const filepath = `${__dirname}/../src/_remirror.tsx`;
-  await fsp.writeFile(
-    filepath,
-    prettier.format(code, {
-      parser: 'typescript',
-      filepath,
-    }),
-  );
+  await fsp.writeFile(filepath, prettier.format(code, await prettier.resolveConfig(filepath)));
 }
 
 main().catch((error) => {
