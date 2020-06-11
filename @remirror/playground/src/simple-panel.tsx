@@ -1,7 +1,8 @@
 import React, { FC, Fragment, useCallback, useMemo } from 'react';
 
 import { REQUIRED_MODULES } from './execute';
-import { CodeOptions, ExtensionSpec, RemirrorModules } from './interfaces';
+import { CodeOptions, ModuleSpec, RemirrorModules } from './interfaces';
+import { isExtensionName, isPresetName } from './exports';
 
 export interface SimplePanelProps {
   options: CodeOptions;
@@ -15,34 +16,37 @@ export interface SimplePanelProps {
 interface ExtensionCheckboxProps {
   options: CodeOptions;
   setOptions: (newOptions: CodeOptions) => void;
-  spec: ExtensionSpec;
+  spec: ModuleSpec;
   hideModuleName: boolean;
+  type: 'preset' | 'extension';
 }
 
-const ExtensionCheckbox: FC<ExtensionCheckboxProps> = function (props) {
-  const { options, setOptions, spec, hideModuleName } = props;
+const ExtensionOrPresetCheckbox: FC<ExtensionCheckboxProps> = function (props) {
+  const { options, setOptions, spec, hideModuleName, type } = props;
+  const optionName: 'presets' | 'extensions' = (type + 's') as any;
+  const list = options[optionName];
   const existingIndex = useMemo(
     () =>
-      options.extensions.findIndex(
+      list.findIndex(
         (otherSpec) => otherSpec.module === spec.module && otherSpec.export === spec.export,
       ),
-    [options.extensions, spec.export, spec.module],
+    [list, spec.export, spec.module],
   );
   const handleChange = useCallback(() => {
     if (existingIndex >= 0) {
-      const newExtensions = [...options.extensions];
-      newExtensions.splice(existingIndex, 1);
+      const collection = [...(options as any)[optionName]];
+      collection.splice(existingIndex, 1);
       setOptions({
         ...options,
-        extensions: newExtensions,
+        [optionName]: collection,
       });
     } else {
       setOptions({
         ...options,
-        extensions: [...options.extensions, spec],
+        [optionName]: [...(options as any)[optionName], spec],
       });
     }
-  }, [existingIndex, options, setOptions, spec]);
+  }, [existingIndex, options, setOptions, spec, optionName]);
   const text = hideModuleName
     ? spec.export
       ? spec.export
@@ -83,6 +87,7 @@ export const SimplePanel: FC<SimplePanelProps> = function (props) {
   return (
     <div>
       <button onClick={onAdvanced}>Enter advanced mode</button>
+
       <p>
         <strong>Remirror core extensions</strong>{' '}
       </p>
@@ -97,18 +102,48 @@ export const SimplePanel: FC<SimplePanelProps> = function (props) {
           <em>An error occurred: {String(mod.error)}</em>
         ) : (
           Object.keys(mod.exports).map((exportName) =>
-            exportName.endsWith('Extension') ? (
-              <ExtensionCheckbox
+            isExtensionName(exportName) ? (
+              <ExtensionOrPresetCheckbox
                 key={`${`${moduleName}|${exportName ?? 'default'}`}`}
                 spec={{ module: moduleName, export: exportName }}
                 options={options}
                 setOptions={setOptions}
                 hideModuleName
+                type='extension'
               />
             ) : null,
           )
         );
       })}
+
+      <p>
+        <strong>Remirror core presets</strong>{' '}
+      </p>
+      {Object.keys(modules).map((moduleName) => {
+        if (!REQUIRED_MODULES.includes(moduleName)) {
+          return null;
+        }
+        const mod = modules[moduleName];
+        return mod.loading ? (
+          <em>Loading...</em>
+        ) : mod.error ? (
+          <em>An error occurred: {String(mod.error)}</em>
+        ) : (
+          Object.keys(mod.exports).map((exportName) =>
+            isPresetName(exportName) ? (
+              <ExtensionOrPresetCheckbox
+                key={`${`${moduleName}|${exportName ?? 'default'}`}`}
+                spec={{ module: moduleName, export: exportName }}
+                options={options}
+                setOptions={setOptions}
+                hideModuleName
+                type='preset'
+              />
+            ) : null,
+          )
+        );
+      })}
+
       {Object.keys(modules).map((moduleName) => {
         if (REQUIRED_MODULES.includes(moduleName)) {
           return null;
@@ -129,15 +164,27 @@ export const SimplePanel: FC<SimplePanelProps> = function (props) {
             ) : mod.error ? (
               <em>An error occurred: {String(mod.error)}</em>
             ) : (
-              Object.keys(mod.exports).map((exportName) => (
-                <ExtensionCheckbox
-                  key={`${`${moduleName}|${exportName ?? 'default'}`}`}
-                  spec={{ module: moduleName, export: exportName }}
-                  options={options}
-                  setOptions={setOptions}
-                  hideModuleName
-                />
-              ))
+              Object.keys(mod.exports).map((exportName) =>
+                isExtensionName(exportName) ? (
+                  <ExtensionOrPresetCheckbox
+                    key={`${`${moduleName}|${exportName ?? 'default'}`}`}
+                    spec={{ module: moduleName, export: exportName }}
+                    options={options}
+                    setOptions={setOptions}
+                    hideModuleName
+                    type='extension'
+                  />
+                ) : isPresetName(exportName) ? (
+                  <ExtensionOrPresetCheckbox
+                    key={`${`${moduleName}|${exportName ?? 'default'}`}`}
+                    spec={{ module: moduleName, export: exportName }}
+                    options={options}
+                    setOptions={setOptions}
+                    hideModuleName
+                    type='preset'
+                  />
+                ) : null,
+              )
             )}
           </Fragment>
         );

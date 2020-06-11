@@ -16,7 +16,7 @@ function nameify(str: string): string {
 }
 
 export function makeCode(codeOptions: CodeOptions): string {
-  const { extensions = [] } = codeOptions;
+  const { extensions = [], presets = [] } = codeOptions;
 
   const imports: {
     [moduleName: string]: Array<[string, string]>;
@@ -45,10 +45,10 @@ export function makeCode(codeOptions: CodeOptions): string {
   addImport('remirror/react', 'useRemirror');
   addImport('@remirror/playground', 'useRemirrorPlayground');
 
-  const extensionNames: string[] = [];
-  const extensionList: string[] = [];
-  extensions.forEach((ext) => {
-    const ExtensionName = nameify(
+  const combinedNames: string[] = [];
+  const combinedList: string[] = [];
+  [...extensions, ...presets].forEach((ext) => {
+    const Name = nameify(
       /* Official extensions are guaranteed to be uniquely named, so just use
        * the export name, otherwise we need to scope the name to the module to
        * avoid clashes.
@@ -57,9 +57,9 @@ export function makeCode(codeOptions: CodeOptions): string {
         ? ext.export
         : ext.module + (ext.export ? `-${ext.export}` : ''),
     );
-    addImport(ext.module, ext.export ? [ext.export, ExtensionName] : ['default', ExtensionName]);
-    extensionNames.push(ExtensionName);
-    extensionList.push(`new ${ExtensionName}()`);
+    addImport(ext.module, ext.export ? [ext.export, Name] : ['default', Name]);
+    combinedNames.push(Name);
+    combinedList.push(`new ${Name}()`);
   });
 
   const importLines = [];
@@ -89,12 +89,11 @@ export function makeCode(codeOptions: CodeOptions): string {
     importLines.push(`import ${things.join(', ')} from '${moduleName}';`);
   }
 
-  console.log(extensionNames);
   const actions: string[] = [];
-  if (extensionNames.includes(`BoldExtension`)) {
+  if (combinedNames.includes(`BoldExtension`)) {
     actions.push(`<button onClick={() => commands.toggleBold()}>bold</button>`);
   }
-  if (extensionNames.includes(`ItalicExtension`)) {
+  if (combinedNames.includes(`ItalicExtension`)) {
     actions.push(`<button onClick={() => commands.toggleItalic()}>italic</button>`);
   }
 
@@ -118,7 +117,7 @@ const SmallEditor: FC = () => {
 
 const SmallEditorWrapper = () => {
   const extensionManager = useManager([
-    ${extensionList.join(',\n    ')}
+    ${combinedList.join(',\n    ')}
   ], {
     //excludeBaseExtensions: false,
   });
