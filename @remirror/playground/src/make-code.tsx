@@ -100,12 +100,13 @@ export function makeCode(codeOptions: CodeOptions): string {
   const code = `\
 ${importLines.join('\n')}
 
-// Set up the component to provide the functionality for the editor
+/**
+ * This component contains the editor and any toolbars/chrome it requires.
+ */
 const SmallEditor: FC = () => {
-  const { getRootProps${
-    actions.length ? ', commands' : ''
-  } } = useRemirror(); // Picked from the context.
-  useRemirrorPlayground(); // Remove this line
+  const { getRootProps${actions.length ? ', commands' : ''} } = useRemirror();
+
+  useRemirrorPlayground(); // Delete this line
 
   return (
     <div>
@@ -118,9 +119,7 @@ const SmallEditor: FC = () => {
 const SmallEditorWrapper = () => {
   const extensionManager = useManager([
     ${combinedList.join(',\n    ')}
-  ], {
-    //excludeBaseExtensions: false,
-  });
+  ]);
 
   return (
     <RemirrorProvider manager={extensionManager}>
