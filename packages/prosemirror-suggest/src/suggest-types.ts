@@ -29,8 +29,8 @@ export interface Suggestion<Command extends AnyFunction<void> = AnyFunction<void
    * untested).
    *
    * The character does not have to be unique amongst the suggesters and the
-   * eventually matched suggester will depend on the specificity of the regex
-   * the order in which the suggesters are added to the plugin.
+   * eventually matched suggester will depend on the order in which the
+   * suggestions are added to the plugin.
    */
   char: string;
 
@@ -104,7 +104,7 @@ export interface Suggestion<Command extends AnyFunction<void> = AnyFunction<void
   matchOffset?: number;
 
   /**
-   * Text to append after the mention has been added.
+   * Text to append after the suggestion has been added.
    *
    * @defaultValue ''
    */

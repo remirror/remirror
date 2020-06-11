@@ -8,6 +8,7 @@ import {
 } from '@remirror/core';
 import { BaseKeymapExtension, BaseKeymapOptions } from '@remirror/extension-base-keymap';
 import { DocExtension, DocOptions } from '@remirror/extension-doc';
+import { HistoryExtension, HistoryOptions } from '@remirror/extension-history';
 import { ParagraphExtension, ParagraphOptions } from '@remirror/extension-paragraph';
 import { PositionerExtension, PositionerOptions } from '@remirror/extension-positioner';
 import { TextExtension } from '@remirror/extension-text';
@@ -19,13 +20,15 @@ export interface CorePresetOptions
   extends BaseKeymapOptions,
     DocOptions,
     ParagraphOptions,
-    PositionerOptions {}
+    PositionerOptions,
+    HistoryOptions {}
 
 export class CorePreset extends Preset<CorePresetOptions> {
   static defaultOptions: DefaultPresetOptions<CorePresetOptions> = {
     ...DocExtension.defaultOptions,
     ...BaseKeymapExtension.defaultOptions,
     ...ParagraphExtension.defaultOptions,
+    ...HistoryExtension.defaultOptions,
   };
 
   static customHandlerKeys: CustomHandlerKeyList<CorePresetOptions> = [
@@ -75,15 +78,31 @@ export class CorePreset extends Preset<CorePresetOptions> {
   };
 
   createExtensions() {
-    const { content, ...baseKeymapSettings } = this.options;
+    const {
+      content,
+      defaultBindingMethod,
+      excludeBaseKeymap,
+      indentAttribute,
+      indentLevels,
+      selectParentNodeOnEscape,
+      undoInputRuleOnBackspace,
+      depth,
+      getDispatch,
+      getState,
+      newGroupDelay,
+    } = this.options;
 
     return [
+      new HistoryExtension({ depth, getDispatch, getState, newGroupDelay }),
       new DocExtension({ content, priority: ExtensionPriority.Low }),
       new TextExtension({ priority: ExtensionPriority.Low }),
-      new ParagraphExtension({ priority: ExtensionPriority.Low }),
+      new ParagraphExtension({ priority: ExtensionPriority.Low, indentAttribute, indentLevels }),
       new PositionerExtension(),
       new BaseKeymapExtension({
-        ...baseKeymapSettings,
+        defaultBindingMethod,
+        excludeBaseKeymap,
+        selectParentNodeOnEscape,
+        undoInputRuleOnBackspace,
         priority: ExtensionPriority.Low,
       }),
     ];

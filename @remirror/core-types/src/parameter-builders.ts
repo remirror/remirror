@@ -263,25 +263,6 @@ export type TransactionTransformer<Schema extends EditorSchema = EditorSchema> =
   state: EditorState<Schema>,
 ) => Transaction<Schema>;
 
-/**
- * Perform transformations on the transaction before
- */
-export interface TransformTransactionParameter<Schema extends EditorSchema = EditorSchema> {
-  /**
-   * Transforms the transaction before any other actions are done to it.
-   *
-   * This is useful for updating the transaction value before a command does it's work and helps prevent multiple
-   * dispatches.
-   */
-  startTransaction?: TransactionTransformer<Schema>;
-  /**
-   * Transforms the transaction before after all other actions are performed.
-   *
-   * This is called immediately before the dispatch.
-   */
-  endTransaction?: TransactionTransformer<Schema>;
-}
-
 export interface RangeParameter<Key extends keyof FromToParameter = never> {
   /**
    * The from/to interface.

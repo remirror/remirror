@@ -21,7 +21,6 @@ import {
   removeMark,
   replaceText,
   StaticKeyList,
-  TransactionTransformer,
 } from '@remirror/core';
 import {
   escapeChar,
@@ -344,49 +343,40 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
         message: `Mentions matcher not found for name ${name}.`,
       });
 
-      const { from, to } = range ?? this.store.getState().selection;
-      let startTransaction: TransactionTransformer | undefined;
+      const state = this.store.getState();
+
+      const { from, to } = range ?? state.selection;
+      const tr = state.tr;
 
       if (shouldUpdate) {
-        // Remove all currently active marks before proceeding.
-        startTransaction = (tr, state) => {
-          // Remove mark at previous position
-          let { oldFrom, oldTo } = { oldFrom: from, oldTo: range ? range.end : to };
-          const $oldTo = state.doc.resolve(oldTo);
+        // Remove mark at previous position
+        let { oldFrom, oldTo } = { oldFrom: from, oldTo: range ? range.end : to };
+        const $oldTo = state.doc.resolve(oldTo);
 
-          ({ from: oldFrom, to: oldTo } = getMarkRange($oldTo, this.type) || {
-            from: oldFrom,
-            to: oldTo,
-          });
+        ({ from: oldFrom, to: oldTo } = getMarkRange($oldTo, this.type) || {
+          from: oldFrom,
+          to: oldTo,
+        });
 
-          tr.removeMark(oldFrom, oldTo, this.type);
-          tr.setMeta('addToHistory', false);
+        tr.removeMark(oldFrom, oldTo, this.type).setMeta('addToHistory', false);
 
-          // Remove mark at current position
-          const $newTo = tr.selection.$from;
-          const { from: newFrom, to: newTo } = getMarkRange($newTo, this.type) || {
-            from: $newTo.pos,
-            to: $newTo.pos,
-          };
-
-          tr.removeMark(newFrom, newTo, this.type);
-
-          return tr.setMeta('addToHistory', false);
+        // Remove mark at current position
+        const $newTo = tr.selection.$from;
+        const { from: newFrom, to: newTo } = getMarkRange($newTo, this.type) || {
+          from: $newTo.pos,
+          to: $newTo.pos,
         };
+
+        tr.removeMark(newFrom, newTo, this.type).setMeta('addToHistory', false);
       }
 
-      return convertCommand(
-        replaceText({
-          type: this.type,
-          attrs: { ...attributes, name },
-          appendText: getAppendText(appendText, matcher.appendText),
-          range: range
-            ? { from, to: replacementType === 'full' ? range.end || to : to }
-            : undefined,
-          content: attributes.label,
-          startTransaction,
-        }),
-      );
+      return replaceText({
+        type: this.type,
+        attrs: { ...attributes, name },
+        appendText: getAppendText(appendText, matcher.appendText),
+        range: range ? { from, to: replacementType === 'full' ? range.end || to : to } : undefined,
+        content: attributes.label,
+      });
     };
   }
 

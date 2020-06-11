@@ -1,6 +1,5 @@
-import { isFunction, isNumber, object } from '@remirror/core-helpers';
+import { invariant, isNumber, object } from '@remirror/core-helpers';
 import {
-  AnyFunction,
   AttributesParameter,
   CommandFunction,
   EditorSchema,
@@ -12,7 +11,6 @@ import {
   ProsemirrorCommandFunction,
   ProsemirrorNode,
   RangeParameter,
-  TransformTransactionParameter,
 } from '@remirror/core-types';
 import { lift, setBlockType, wrapIn } from '@remirror/pm/commands';
 import { liftListItem, wrapInList } from '@remirror/pm/schema-list';
@@ -20,10 +18,7 @@ import { liftListItem, wrapInList } from '@remirror/pm/schema-list';
 import { getMarkRange, isMarkType, isNodeType } from './dom-utils';
 import { findParentNode, isNodeActive, selectionEmpty } from './prosemirror-utils';
 
-interface UpdateMarkParameter
-  extends Partial<RangeParameter>,
-    Partial<AttributesParameter>,
-    TransformTransactionParameter {
+interface UpdateMarkParameter extends Partial<RangeParameter>, Partial<AttributesParameter> {
   /**
    * The text to append.
    *
@@ -162,10 +157,7 @@ export const toggleBlockItem = ({
   return setBlockType(type, attributes)(state, dispatch);
 };
 
-interface ReplaceTextParameter
-  extends Partial<RangeParameter>,
-    Partial<AttributesParameter>,
-    TransformTransactionParameter {
+interface ReplaceTextParameter extends Partial<RangeParameter>, Partial<AttributesParameter> {
   /**
    * The text to append.
    *
@@ -182,23 +174,6 @@ interface ReplaceTextParameter
    */
   type?: NodeType | MarkType;
 }
-
-interface CallMethodParameter<Fn extends AnyFunction, Return extends ReturnType<Fn>> {
-  fn: Fn | unknown;
-  defaultReturn: Return;
-}
-
-/**
- * A utility for calling option functions that may not exist
- */
-const callMethod = <
-  Fn extends AnyFunction,
-  Return extends ReturnType<Fn>,
-  Parameter extends Parameters<Fn>
->(
-  { fn, defaultReturn }: CallMethodParameter<Fn, Return>,
-  arguments_: Parameter,
-): Return => (isFunction(fn) ? fn(...arguments_) : defaultReturn);
 
 /**
  * Taken from https://stackoverflow.com/a/4900484
@@ -219,61 +194,54 @@ function isChrome(minVersion = 0): boolean {
  *
  * @public
  */
-export const replaceText = ({
-  range,
-  type,
-  attrs = object<ProsemirrorAttributes>(),
-  appendText = '',
-  content = '',
-  startTransaction,
-  endTransaction,
-}: ReplaceTextParameter): ProsemirrorCommandFunction => (state, dispatch) => {
-  const { schema, selection } = state;
-  // const { $from, $to } = selection;
-  const index = selection.$from.index();
-  const { from, to } = range ?? selection;
+export function replaceText(parameter: ReplaceTextParameter): CommandFunction {
+  const { range, type, attrs = {}, appendText = '', content = '' } = parameter;
 
-  // Run the pre transaction hook
-  const tr = callMethod({ fn: startTransaction, defaultReturn: state.tr }, [state.tr, state]);
-  if (isNodeType(type)) {
-    if (!selection.$from.parent.canReplaceWith(index, index, type)) {
-      return false;
+  return ({ state, dispatch, view }) => {
+    const { schema, selection, tr } = state;
+    // const { $from, $to } = selection;
+    const index = selection.$from.index();
+    const { from, to } = range ?? selection;
+
+    if (isNodeType(type)) {
+      if (!selection.$from.parent.canReplaceWith(index, index, type)) {
+        return false;
+      }
+
+      tr.replaceWith(from, to, type.create(attrs, content ? schema.text(content) : undefined));
+    } else {
+      invariant(content, {
+        message: '`replaceText` cannot be called without content when using a mark type',
+      });
+
+      tr.replaceWith(
+        from,
+        to,
+        schema.text(content, isMarkType(type) ? [type.create(attrs)] : undefined),
+      );
     }
 
-    tr.replaceWith(from, to, type.create(attrs, content ? schema.text(content) : undefined));
-  } else {
-    if (!content) {
-      throw new Error('`replaceText` cannot be called without content when using a mark type');
+    /** Only append the text if when text is provided. */
+    if (appendText) {
+      // TODO for some reason this only works when content follows current selection.
+      tr.insertText(appendText);
     }
 
-    tr.replaceWith(
-      from,
-      to,
-      schema.text(content, isMarkType(type) ? [type.create(attrs)] : undefined),
-    );
-  }
-
-  /** Only append the text if when text is provided. */
-  if (appendText) {
-    tr.insertText(appendText);
-  }
-
-  if (dispatch) {
-    if (isChrome(60)) {
+    if (dispatch) {
       // A workaround for a chrome bug
       // https://github.com/ProseMirror/prosemirror/issues/710#issuecomment-338047650
-      document.getSelection()?.empty();
+      if (isChrome(60) && dispatch === view?.dispatch) {
+        document.getSelection()?.empty();
+      }
+
+      dispatch(tr);
     }
-    dispatch(callMethod({ fn: endTransaction, defaultReturn: tr }, [tr, state]));
-  }
 
-  return true;
-};
+    return true;
+  };
+}
 
-interface RemoveMarkParameter
-  extends MarkTypeParameter,
-    Partial<RangeParameter<'to'>>,
-    TransformTransactionParameter {
+interface RemoveMarkParameter extends MarkTypeParameter, Partial<RangeParameter<'to'>> {
   /**
    * Whether to expand empty selections to the current mark range
    *
@@ -291,9 +259,8 @@ interface RemoveMarkParameter
  */
 export function removeMark(parameter: RemoveMarkParameter): ProsemirrorCommandFunction {
   return (state, dispatch) => {
-    const { type, expand = false, range, endTransaction, startTransaction } = parameter;
-    const { selection } = state;
-    const tr = callMethod({ fn: startTransaction, defaultReturn: state.tr }, [state.tr, state]);
+    const { type, expand = false, range } = parameter;
+    const { selection, tr } = state;
     let { from, to } = range ?? selection;
 
     if (expand) {
@@ -308,7 +275,7 @@ export function removeMark(parameter: RemoveMarkParameter): ProsemirrorCommandFu
     tr.removeMark(from, isNumber(to) ? to : from, type);
 
     if (dispatch) {
-      dispatch(callMethod({ fn: endTransaction, defaultReturn: tr }, [tr, state]));
+      dispatch(tr);
     }
 
     return true;

@@ -126,7 +126,7 @@ function useMentionKeyBindings(props: MentionSuggestionProps, state: UseMentionS
 
         const { label, id, href } = getMentionLabel({ name, users, index, tags });
 
-        // Only continue if user has an active selection and label.
+        // Only continue if mention has an active selection and label.
         if (!label) {
           return false;
         }
@@ -139,7 +139,6 @@ function useMentionKeyBindings(props: MentionSuggestionProps, state: UseMentionS
           label: `${char}${label}`,
           role: 'presentation',
           href: href ?? `/${id ?? label}`,
-          appendText: ' ',
         });
 
         return true;
@@ -375,7 +374,7 @@ const UserMentionItem = (props: UserMentionItemProps) => {
       <img
         className={mentionSuggestionsUserItemImageStyles}
         src={avatarUrl}
-        alt={i18n._(messages.userMentionAvatarAlt)}
+        alt={i18n._(messages.userMentionAvatarAlt, { name: username })}
       />
       <span className={mentionSuggestionsUserItemDisplayNameStyles}>{displayName}</span>
       <span className={mentionSuggestionsUserItemUsernameStyles}>{username} </span>
@@ -417,9 +416,9 @@ function getMentionLabel(parameter: GetMentionLabelParameter) {
   const { name, users, index, tags } = parameter;
   const userData = name === 'at' && users.length > index ? users[index] : null;
   const tagData = name === 'tag' && tags.length > index ? tags[index] : null;
-
   const id = userData ? userData.id : tagData ? tagData.id : null;
   const label = userData ? userData.username : tagData ? tagData.tag : null;
   const href = userData ? userData.href : tagData ? tagData.href : null;
+
   return { label, id, href };
 }

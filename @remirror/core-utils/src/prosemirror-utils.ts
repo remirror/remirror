@@ -71,6 +71,62 @@ interface MarkEqualsTypeParameter<Schema extends EditorSchema = any>
     OptionalMarkParameter<Schema> {}
 
 /**
+ * Creates a new transaction object from a given transaction. This is useful
+ * when applying changes to a transaction, that you may want to rollback.
+ *
+ * ```ts
+ * function() applyUpdateIfValid(state: EditorState) {
+ *   const tr = cloneTransaction(state.tr);
+ *
+ *   tr.insertText('hello');
+ *
+ *   if (!checkValid(tr)) {
+ *     return;
+ *   }
+ *
+ *   applyClonedTransaction({ clone: tr, tr: state.tr });
+ * }
+ * ```
+ *
+ * The above example applies a transaction to the cloned transaction then checks
+ * to see if the changes are still valid and if they are applies the mutative
+ * changes to the original state transaction.
+ *
+ * @param tr - the prosemirror transaction
+ *
+ * @public
+ */
+export function cloneTransaction(tr: Transaction): Transaction {
+  return Object.assign(Object.create(tr), tr).setTime(Date.now());
+}
+
+interface ApplyClonedTransactionParameter extends TransactionParameter {
+  /**
+   * The clone.
+   */
+  clone: Transaction;
+}
+
+/**
+ * Get the diff between two ordered arrays with a reference equality check.
+ */
+function diff<Type>(primary: Type[], other: Type[]): Type[] {
+  return primary.filter((item, index) => item !== other[index]);
+}
+
+/**
+ * Apply the steps of a cloned transaction to the original transaction `tr`.
+ */
+export function applyClonedTransaction(parameter: ApplyClonedTransactionParameter): void {
+  const { clone, tr } = parameter;
+  const steps = diff(clone.steps, tr.steps);
+
+  for (const step of steps) {
+    tr.step(step);
+  }
+}
+
+/**
  * Checks if the type a given `node` has a given `nodeType`.
  */
 export function markEqualsType<Schema extends EditorSchema = any>(

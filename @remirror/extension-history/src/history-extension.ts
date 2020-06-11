@@ -43,7 +43,7 @@ export interface HistoryOptions {
    * can be dispatched into the parent editor allowing them to propagate into
    * the child editor
    */
-  getState?: (() => EditorState) | null;
+  getState?: (() => EditorState) | undefined;
 
   /**
    * Provide a custom dispatch getter function for embedded editors
@@ -55,17 +55,17 @@ export interface HistoryOptions {
    * can be dispatched into the parent editor allowing them to propagate into
    * the child editor.
    */
-  getDispatch?: (() => DispatchFunction) | null;
+  getDispatch?: (() => DispatchFunction) | undefined;
 
   /**
    * A callback to listen to when the user attempts to undo with the keyboard.
-   * When it succeeds it `success` is true.
+   * When it succeeds `success` is true.
    */
   onUndo?: Handler<(success: boolean) => void>;
 
   /**
    * A callback to listen to when the user attempts to redo with the keyboard.
-   * When it succeeds it `success` is true.
+   * When it succeeds `success` is true.
    */
   onRedo?: Handler<(success: boolean) => void>;
 }
@@ -79,13 +79,12 @@ export interface HistoryOptions {
 export class HistoryExtension extends PlainExtension<HistoryOptions> {
   static readonly staticKeys: StaticKeyList<HistoryOptions> = ['depth', 'newGroupDelay'];
   static readonly handlerKeys: HandlerKeyList<HistoryOptions> = ['onRedo', 'onUndo'];
-  static readonly customHandlerKeys: CustomHandlerKeyList<HistoryOptions> = [];
 
   static readonly defaultOptions: DefaultExtensionOptions<HistoryOptions> = {
     depth: 100,
     newGroupDelay: 500,
-    getDispatch: null,
-    getState: null,
+    getDispatch: undefined,
+    getState: undefined,
   };
 
   get name() {

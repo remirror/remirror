@@ -747,7 +747,7 @@ importers:
       prosemirror-state: 1.3.3
       prosemirror-suggest: 'link:../../packages/prosemirror-suggest'
       prosemirror-tables: 1.1.0
-      prosemirror-transform: 1.2.5
+      prosemirror-transform: 1.2.6
       prosemirror-view: 1.14.13
     specifiers:
       '@babel/runtime': ^7.10.2
@@ -773,13 +773,14 @@ importers:
       prosemirror-state: ^1.3.3
       prosemirror-suggest: ^0.7.6
       prosemirror-tables: ^1.1.0
-      prosemirror-transform: ^1.2.5
+      prosemirror-transform: ^1.2.6
       prosemirror-view: ^1.14.13
   '@remirror/preset-core':
     dependencies:
       '@babel/runtime': 7.10.2
       '@remirror/extension-base-keymap': 'link:../extension-base-keymap'
       '@remirror/extension-doc': 'link:../extension-doc'
+      '@remirror/extension-history': 'link:../extension-history'
       '@remirror/extension-paragraph': 'link:../extension-paragraph'
       '@remirror/extension-positioner': 'link:../extension-positioner'
       '@remirror/extension-text': 'link:../extension-text'
@@ -791,6 +792,7 @@ importers:
       '@remirror/core': ^0.11.0
       '@remirror/extension-base-keymap': ^0.0.0
       '@remirror/extension-doc': ^0.0.0
+      '@remirror/extension-history': ^0.0.0
       '@remirror/extension-paragraph': ^0.0.0
       '@remirror/extension-positioner': ^0.0.0
       '@remirror/extension-text': ^0.0.0
@@ -864,7 +866,6 @@ importers:
       min-document: 2.19.0
       nanoevents: 5.1.7
       nanoid: 3.1.9
-      react-use: 15.2.2_react-dom@16.13.1+react@16.13.1
       resize-observer-polyfill: 1.5.1
       type-fest: 0.15.1
       use-deep-compare-effect: 1.3.1_react@16.13.1
@@ -882,6 +883,7 @@ importers:
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
       react-test-renderer: 16.13.1_react@16.13.1
+      react-use: 15.2.2_react-dom@16.13.1+react@16.13.1
     specifiers:
       '@babel/runtime': ^7.10.2
       '@remirror/core': ^0.11.0
@@ -954,7 +956,6 @@ importers:
       classnames: 2.2.6
       linaria: 2.0.0-alpha.5
       multishift: 'link:../../packages/multishift'
-      react-use: 15.2.2_react-dom@16.13.1+react@16.13.1
       type-fest: 0.15.1
     devDependencies:
       '@lingui/macro': 3.0.0-13
@@ -987,7 +988,6 @@ importers:
       multishift: ^0.7.7
       react: ^16.13.1
       react-dom: ^16.13.1
-      react-use: ^15.2.2
       type-fest: ^0.15.1
   '@remirror/react-showcase':
     dependencies:
@@ -7461,7 +7461,6 @@ packages:
     resolution:
       integrity: sha512-/yeMsH9HQ1RLORlXAwoLXe8S98xxvhNtUz3yrgrwbaxYjT+6SFPZZRksmRKRA6L5vsUtSHeN71viDOTTyYAD+g==
   /@types/js-cookie/2.2.6:
-    dev: false
     resolution:
       integrity: sha512-+oY0FDTO2GYKEV0YPvSshGq9t7YozVkgvXLty7zogQNuCxBhT9/3INX9Q7H1aRZ4SUDRXAKlJuA4EA5nTt7SNw==
   /@types/jsesc/2.5.1:
@@ -8370,7 +8369,6 @@ packages:
     resolution:
       integrity: sha512-mwEVBDUVODlsQQ5dfuLUS5/Tf7jqUKyhKYHmVi4fPB6bDMOfWvUPJmKgS1Z7Za/sOI3vzWt4+O7yCiL/70MogA==
   /@xobotyi/scrollbar-width/1.9.5:
-    dev: false
     resolution:
       integrity: sha512-N8tkAACJx2ww8vFMneJmaAgmjAG1tnVBZJRLRcx061tmsLRZHSEZSLuGWnwPtunsSLvSqXQ2wfp7Mgqg1I+2dQ==
   /@xtuc/ieee754/1.2.0:
@@ -9680,7 +9678,6 @@ packages:
     resolution:
       integrity: sha1-aN/1++YMUes3cl6p4+0xDcwed24=
   /bowser/1.9.4:
-    dev: false
     resolution:
       integrity: sha512-9IdMmj2KjigRq6oWhmwv1W36pDuA4STQZ8q6YO9um+x07xgYNCD3Oou+WP/3L1HNz7iqythGet3/p4wvc8AAwQ==
   /boxen/1.3.0:
@@ -11005,7 +11002,6 @@ packages:
   /copy-to-clipboard/3.3.1:
     dependencies:
       toggle-selection: 1.0.6
-    dev: false
     resolution:
       integrity: sha512-i13qo6kIHTTpCm8/Wup+0b1mVWETvu2kIMzKoK8FpkLkFxlt0znUAHcMzox+T8sPlqtZXq3CulEjQHsYiGFJUw==
   /copyfiles/2.3.0:
@@ -11300,7 +11296,6 @@ packages:
     dependencies:
       hyphenate-style-name: 1.0.3
       isobject: 3.0.1
-    dev: false
     resolution:
       integrity: sha512-PJF0SpJT+WdbVVt0AOYp9C8GnuruRlL/UFW7932nLWmFLQTaWEzTBQEx7/hn4BuV+WON75iAViSUJLiU3PKbpA==
   /css-loader/1.0.1_webpack@4.43.0:
@@ -11406,7 +11401,6 @@ packages:
     dependencies:
       mdn-data: 2.0.6
       source-map: 0.6.1
-    dev: false
     engines:
       node: '>=8.0.0'
     resolution:
@@ -12606,7 +12600,6 @@ packages:
   /error-stack-parser/2.0.6:
     dependencies:
       stackframe: 1.2.0
-    dev: false
     resolution:
       integrity: sha512-d51brTeqC+BHlwF0BhPtcYgF5nlzf9ZZ0ZIUQNZpc9ZB9qw5IJ2diTrBY9jlCJkTLITYPjmiX6OWCwH+fuyNgQ==
   /es-abstract/1.17.5:
@@ -13767,11 +13760,9 @@ packages:
     resolution:
       integrity: sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
   /fast-shallow-equal/1.0.0:
-    dev: false
     resolution:
       integrity: sha512-HPtaa38cPgWvaCFmRNhlc6NG7pv6NUHqjPgVAkWGoB9mQMwYB27/K0CvOM5Czy+qpT3e8XJ6Q4aPAnzpNpzNaw==
   /fastest-stable-stringify/1.0.1:
-    dev: false
     resolution:
       integrity: sha1-kSLUBtTJ2YvqZEpraFPVh0uHsCg=
   /fastparse/1.1.2:
@@ -16680,7 +16671,6 @@ packages:
     resolution:
       integrity: sha512-SYZ95AjKcX7goYVZtVZF2i6XiZcHknw50iXvY7b0MiGoj5RwdgRQNEHdb+gPDPCXKlzwrybjFjkL6FOj8uRhZQ==
   /hyphenate-style-name/1.0.3:
-    dev: false
     resolution:
       integrity: sha512-EcuixamT82oplpoJ2XU4pDtKGWQ7b00CD9f1ug9IaQ3p1bkHMiKCZ9ut9QDI6qsa6cpUuB+A/I+zLtdNK4n2DQ==
   /iconv-lite/0.4.24:
@@ -17044,7 +17034,6 @@ packages:
     dependencies:
       bowser: 1.9.4
       css-in-js-utils: 2.0.1
-    dev: false
     resolution:
       integrity: sha512-N8nVhwfYga9MiV9jWlwfdj1UDIaZlBFu4cJSJkIr7tZX7sHpHhGR5su1qdpW+7KPL8ISTvCIkcaFi/JdBknvPg==
   /inquirer/3.3.0:
@@ -18553,7 +18542,6 @@ packages:
     resolution:
       integrity: sha512-9IXdWudL61npZjvLuVe/ktHiA41iE8qFyLB+4VDTblEsWBzeg8WQTlktdUK4CdncUqtUgUg0bbOmTE2bKBKaBQ==
   /js-cookie/2.2.1:
-    dev: false
     resolution:
       integrity: sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==
   /js-graph-algorithms/1.0.18:
@@ -19763,7 +19751,6 @@ packages:
     resolution:
       integrity: sha512-iV3XNKw06j5Q7mi6h+9vbx23Tv7JkjEVgKHW4pimwyDGWm0OIQntJJ+u1C6mg6mK1EaTv42XQ7w76yuzH7M2cA==
   /mdn-data/2.0.6:
-    dev: false
     resolution:
       integrity: sha512-rQvjv71olwNHgiTbfPZFkJtjNMciWgswYeciZhtvWLO8bmX3TnhyA62I6sTWOyZssWHJJjY6/KiWwqQsWWsqOA==
   /mdurl/1.0.1:
@@ -20320,7 +20307,6 @@ packages:
       sourcemap-codec: 1.4.8
       stacktrace-js: 2.0.2
       stylis: 3.5.0
-    dev: false
     peerDependencies:
       react: '*'
       react-dom: '*'
@@ -22814,7 +22800,7 @@ packages:
     dependencies:
       prosemirror-model: 1.10.0
       prosemirror-state: 1.3.3
-      prosemirror-transform: 1.2.5
+      prosemirror-transform: 1.2.6
     dev: false
     resolution:
       integrity: sha512-kj4Qi+8h3EpJtZuuEDwZ9h2/QNGWDsIX/CzjmClxi9GhxWyBUMVUvIFk0mgdqHyX20lLeGmOpc0TLA5aPzgpWg==
@@ -22845,7 +22831,7 @@ packages:
   /prosemirror-dropcursor/1.3.2:
     dependencies:
       prosemirror-state: 1.3.3
-      prosemirror-transform: 1.2.5
+      prosemirror-transform: 1.2.6
       prosemirror-view: 1.14.13
     dev: false
     resolution:
@@ -22862,7 +22848,7 @@ packages:
   /prosemirror-history/1.1.3:
     dependencies:
       prosemirror-state: 1.3.3
-      prosemirror-transform: 1.2.5
+      prosemirror-transform: 1.2.6
       rope-sequence: 1.3.2
     dev: false
     resolution:
@@ -22870,7 +22856,7 @@ packages:
   /prosemirror-inputrules/1.1.2:
     dependencies:
       prosemirror-state: 1.3.3
-      prosemirror-transform: 1.2.5
+      prosemirror-transform: 1.2.6
     dev: false
     resolution:
       integrity: sha512-Ja5Z3BWestlHYGvtSGqyvxMeB8QEuBjlHM8YnKtLGUXMDp965qdDV4goV8lJb17kIWHk7e7JNj6Catuoa3302g==
@@ -22895,14 +22881,14 @@ packages:
   /prosemirror-schema-list/1.1.2:
     dependencies:
       prosemirror-model: 1.10.0
-      prosemirror-transform: 1.2.5
+      prosemirror-transform: 1.2.6
     dev: false
     resolution:
       integrity: sha512-dgM9PwtM4twa5WsgSYMB+J8bwjnR43DAD3L9MsR9rKm/nZR5Y85xcjB7gusVMSsbQ2NomMZF03RE6No6mTnclQ==
   /prosemirror-state/1.3.3:
     dependencies:
       prosemirror-model: 1.10.0
-      prosemirror-transform: 1.2.5
+      prosemirror-transform: 1.2.6
     resolution:
       integrity: sha512-PLXh2VJsIgvlgSTH6I2Yg6vk1CzPDp21DFreVpQtDMY2S6WaMmrQgDTLRcsrD8X38v8Yc873H7+ogdGzyIPn+w==
   /prosemirror-tables/1.1.0:
@@ -22910,7 +22896,7 @@ packages:
       prosemirror-keymap: 1.1.4
       prosemirror-model: 1.10.0
       prosemirror-state: 1.3.3
-      prosemirror-transform: 1.2.5
+      prosemirror-transform: 1.2.6
       prosemirror-view: 1.14.13
     dev: false
     resolution:
@@ -22923,16 +22909,16 @@ packages:
     dev: false
     resolution:
       integrity: sha512-VlRA3uWaOtf+tapHg0Q83fKGZbmLXdAsjskiJs3OyOvb/E/O7gOIMxrfFosa6YeqMePQHWAMM0uoOZQFLtX0dQ==
-  /prosemirror-transform/1.2.5:
+  /prosemirror-transform/1.2.6:
     dependencies:
       prosemirror-model: 1.10.0
     resolution:
-      integrity: sha512-eqeIaxWtUfOnpA1ERrXCuSIMzqIJtL9Qrs5uJMCjY5RMSaH5o4pc390SAjn/IDPeIlw6auh0hCCXs3wRvGnQug==
+      integrity: sha512-DyV6cRip8//GIHTrqBe2B7I8VjPFQZYuBuB4clpguq1SrS9lLponoBt/0XRWxETkCVsxYSvwE76X0zo6AZhwaw==
   /prosemirror-view/1.14.13:
     dependencies:
       prosemirror-model: 1.10.0
       prosemirror-state: 1.3.3
-      prosemirror-transform: 1.2.5
+      prosemirror-transform: 1.2.6
     resolution:
       integrity: sha512-UmAAi72eHApZ6KMklUTORc9FkmGXyeI+rWtqxqZ+6V4vs6K6spbOVozQChKmtVL2EjQlOILvJIJdWKWu0Hkvpw==
   /proto-list/1.2.4:
@@ -23526,7 +23512,6 @@ packages:
     dependencies:
       react: 16.13.1
       tslib: 2.0.0
-    dev: false
     peerDependencies:
       react: '*'
       tslib: '*'
@@ -23550,7 +23535,6 @@ packages:
       throttle-debounce: 2.2.1
       ts-easing: 0.2.0
       tslib: 2.0.0
-    dev: false
     peerDependencies:
       react: ^16.8.0
       react-dom: ^16.8.0
@@ -24269,7 +24253,6 @@ packages:
     resolution:
       integrity: sha1-AKCUD5jNUBrqqsMWQR2a3FKzGrE=
   /resize-observer-polyfill/1.5.1:
-    dev: false
     resolution:
       integrity: sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
   /resolve-cwd/2.0.0:
@@ -24498,7 +24481,6 @@ packages:
   /rtl-css-js/1.14.0:
     dependencies:
       '@babel/runtime': 7.10.2
-    dev: false
     resolution:
       integrity: sha512-Dl5xDTeN3e7scU1cWX8c9b6/Nqz3u/HgR4gePc1kWXYiQWVQbKCEyK6+Hxve9LbcJ5EieHy1J9nJCN3grTtGwg==
   /run-async/2.4.1:
@@ -24696,7 +24678,6 @@ packages:
     resolution:
       integrity: sha512-0ilKFI6QQF5nxDZLFn2dMjvc4hjg/Wkg7rHd3jK6/A4a1Hl9VFdQWvgB1UMGoU94pad1P/8N7fMcEnLnSiju8A==
   /screenfull/5.0.2:
-    dev: false
     engines:
       node: '>=0.10.0'
     resolution:
@@ -24866,7 +24847,6 @@ packages:
     resolution:
       integrity: sha1-BF+XgtARrppoA93TgrJDkrPYkPc=
   /set-harmonic-interval/1.0.1:
-    dev: false
     engines:
       node: '>=6.9'
     resolution:
@@ -25339,7 +25319,6 @@ packages:
     resolution:
       integrity: sha1-PpNdfd1zYxuXZZlW1VEo6HtQhKM=
   /source-map/0.5.6:
-    dev: false
     engines:
       node: '>=0.10.0'
     resolution:
@@ -25368,7 +25347,6 @@ packages:
     resolution:
       integrity: sha512-2ymg6oRBpebeZi9UUNsgQ89bhx01TcTkmNTGnNO88imTmbSgy4nfujrgVEFKWpMTEGA11EDkTt7mqObTPdigIA==
   /sourcemap-codec/1.4.8:
-    dev: false
     resolution:
       integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==
   /space-separated-tokens/1.1.5:
@@ -25524,7 +25502,6 @@ packages:
   /stack-generator/2.0.5:
     dependencies:
       stackframe: 1.2.0
-    dev: false
     resolution:
       integrity: sha512-/t1ebrbHkrLrDuNMdeAcsvynWgoH/i4o8EGGfX7dEYDoTXOYVAkEpFdtshlvabzc6JlJ8Kf9YdFEoz7JkzGN9Q==
   /stack-trace/0.0.10:
@@ -25545,14 +25522,12 @@ packages:
     resolution:
       integrity: sha512-0H7QK2ECz3fyZMzQ8rH0j2ykpfbnd20BFtfg/SqVC2+sCTtcw0aDTGB7dk+de4U4uUeuz6nOtJcrkFFLG1B0Rg==
   /stackframe/1.2.0:
-    dev: false
     resolution:
       integrity: sha512-GrdeshiRmS1YLMYgzF16olf2jJ/IzxXY9lhKOskuVziubpTYcYqyOwYeJKzQkwy7uN0fYSsbsC4RQaXf9LCrYA==
   /stacktrace-gps/3.0.4:
     dependencies:
       source-map: 0.5.6
       stackframe: 1.2.0
-    dev: false
     resolution:
       integrity: sha512-qIr8x41yZVSldqdqe6jciXEaSCKw1U8XTXpjDuy0ki/apyTn/r3w9hDAAQOhZdxvsC93H+WwwEu5cq5VemzYeg==
   /stacktrace-js/2.0.2:
@@ -25560,7 +25535,6 @@ packages:
       error-stack-parser: 2.0.6
       stack-generator: 2.0.5
       stacktrace-gps: 3.0.4
-    dev: false
     resolution:
       integrity: sha512-Je5vBeY4S1r/RnLydLl0TBTi3F2qdfWmYsGvtfZgEI+SCprPppaIhQf5nGcal4gI4cGpCV/duLcAzT1np6sQqg==
   /stacktrace-parser/0.1.10:
@@ -26138,7 +26112,6 @@ packages:
     resolution:
       integrity: sha512-nTbZoaqoBnmK+ptANthb10ZRZOGC+EmTLLUxeYIuHNkEKcmKgXX1XWKkUBT2Ac4es3NybooPe0SmvKdhKJZAuw==
   /stylis/3.5.0:
-    dev: false
     resolution:
       integrity: sha512-pP7yXN6dwMzAR29Q0mBrabPCe0/mNO1MSr93bhay+hcZondvMMTpeGyd8nbhYJdyperNT2DRxONQuUGcJr5iPw==
   /stylis/3.5.4:
@@ -26487,7 +26460,6 @@ packages:
     resolution:
       integrity: sha512-fcwX4mndzpLQKBS1DVYhGAcYaYt7vsHNIvQV+WXMvnow5cgjPphq5CaayLaGsjRdSCKZFNGt7/GYAuXaNOiYCA==
   /throttle-debounce/2.2.1:
-    dev: false
     engines:
       node: '>=8'
     resolution:
@@ -26638,7 +26610,6 @@ packages:
     resolution:
       integrity: sha512-FWtleNAtZ/Ki2qtqej2CXTOayOH9bHDQF+Q48VpWyDXjbYxA4Yz8iDB31zXOBUlOHHKidDbqGVrTUvQMPmBGBw==
   /toggle-selection/1.0.6:
-    dev: false
     resolution:
       integrity: sha1-bkWxJj8gF/oKzH2J14sVuL932jI=
   /toidentifier/1.0.0:
@@ -26749,7 +26720,6 @@ packages:
     resolution:
       integrity: sha512-c3zayb8/kWWpycWYg87P71E1S1ZL6b6IJxfb5fvsUgsf0S2MVGaDhDXXjDMpdCpfWXqptc+4mXwmiy1ypXqRAA==
   /ts-easing/0.2.0:
-    dev: false
     resolution:
       integrity: sha512-Z86EW+fFFh/IFB1fqQ3/+7Zpf9t2ebOAxNI/V6Wo7r5gqiqtxmgTlQ1qbqQcjLKYeSHPTsEmvlJUDg/EuL0uHQ==
   /ts-invariant/0.4.4:
@@ -26826,7 +26796,6 @@ packages:
     resolution:
       integrity: sha512-i/6DQjL8Xf3be4K/E6Wgpekn5Qasl1usyw++dAA35Ue5orEn65VIxOA+YvNNl9HV3qv70T7CNwjODHZrLwvd1Q==
   /tslib/2.0.0:
-    dev: false
     resolution:
       integrity: sha512-lTqkx847PI7xEDYJntxZH89L2/aXInsyF2luSafe/+0fHOMjlBNXdH6th7f70qxLDhul7KZK0zC8V5ZIyHl0/g==
   /tsutils/3.17.1:
