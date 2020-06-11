@@ -1,6 +1,5 @@
 import {
   CommandFunction,
-  CustomHandlerKeyList,
   DefaultExtensionOptions,
   DispatchFunction,
   EditorState,
@@ -43,7 +42,7 @@ export interface HistoryOptions {
    * can be dispatched into the parent editor allowing them to propagate into
    * the child editor
    */
-  getState?: (() => EditorState) | undefined;
+  getState?: (() => EditorState) | null;
 
   /**
    * Provide a custom dispatch getter function for embedded editors
@@ -55,7 +54,7 @@ export interface HistoryOptions {
    * can be dispatched into the parent editor allowing them to propagate into
    * the child editor.
    */
-  getDispatch?: (() => DispatchFunction) | undefined;
+  getDispatch?: (() => DispatchFunction) | null;
 
   /**
    * A callback to listen to when the user attempts to undo with the keyboard.
@@ -83,8 +82,8 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
   static readonly defaultOptions: DefaultExtensionOptions<HistoryOptions> = {
     depth: 100,
     newGroupDelay: 500,
-    getDispatch: undefined,
-    getState: undefined,
+    getDispatch: null,
+    getState: null,
   };
 
   get name() {
