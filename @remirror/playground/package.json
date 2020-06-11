@@ -17,6 +17,9 @@
   "files": [
     "dist"
   ],
+  "scripts": {
+    "import-remirror": "echo 'Be sure to run `pnpm build` in root first!' && ts-node -O '{\"module\":\"commonjs\"}' --transpile-only ./scripts/import-remirror.ts"
+  },
   "dependencies": {
     "@babel/runtime": "^7.10.2",
     "@babel/standalone": "^7.10.2",
@@ -35,7 +38,8 @@
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "ts-node": "^8.10.2"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
