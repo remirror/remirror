@@ -111,6 +111,9 @@ export const Playground: FC = () => {
   }, [options]);
   const handleFormatRef = useRef(handleFormat);
   useEffect(() => {
+    handleFormatRef.current = handleFormat;
+  }, [handleFormat]);
+  useEffect(() => {
     const loadedScripts: string[] = [];
     for (let i = 0, l = document.head.childNodes.length; i < l; i++) {
       const child = document.head.childNodes[i];
@@ -122,19 +125,26 @@ export const Playground: FC = () => {
       }
     }
     const unlisten: Array<() => void> = [];
-    const format = () => {
-      if (loadedScripts.length === PRETTIER_SCRIPTS.length) {
+
+    const format = (e: Event) => {
+      const element = e.target ? (e.target as HTMLScriptElement) : null;
+      if (!element) {
+        return;
+      }
+      loadedScripts.push(element.src);
+      if (PRETTIER_SCRIPTS.every((script) => loadedScripts.includes(script))) {
         handleFormatRef.current();
       }
     };
+
     PRETTIER_SCRIPTS.forEach((script) => {
       if (!loadedScripts.includes(script)) {
         const scriptEl = document.createElement('script');
-        scriptEl.src = script;
         scriptEl.addEventListener('load', format, false);
         unlisten.push(() => {
           scriptEl.removeEventListener('load', format, false);
         });
+        scriptEl.src = script;
         document.head.append(scriptEl);
       }
     });
