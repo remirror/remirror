@@ -37,11 +37,10 @@ export function makeCode(codeOptions: CodeOptions): string {
   addImport('react', ['default', 'React']);
   addImport('react', 'FC');
   addImport('remirror/react', 'RemirrorProvider');
-  addImport('remirror/extension/doc', 'DocExtension');
-  addImport('remirror/extension/text', 'TextExtension');
-  addImport('remirror/extension/paragraph', 'ParagraphExtension');
+  addImport('remirror/extension/bold', 'BoldExtension');
+  addImport('remirror/extension/italic', 'ItalicExtension');
   addImport('remirror/react', 'useManager');
-  addImport('remirror/react', 'useExtension');
+  // addImport('remirror/react', 'useExtension');
   addImport('remirror/react', 'useRemirror');
   addImport('@remirror/playground', 'useRemirrorPlayground');
 
@@ -93,8 +92,8 @@ const SmallEditor: FC = () => {
 
   return (
     <div>
-      <button onClick={() => commands.bold()}>bold</button>
-      <button onClick={() => commands.italic()}>italic</button>
+      <button onClick={() => commands.toggleBold()}>bold</button>
+      <button onClick={() => commands.toggleItalic()}>italic</button>
       <div {...getRootProps()} />
     </div>
   );
@@ -104,9 +103,8 @@ const SmallEditorWrapper = () => {
   ${useExtensions.join('\n  ')}
 
   const extensionManager = useManager([
-    new DocExtension(),
-    new TextExtension(),
-    new ParagraphExtension(),
+    new BoldExtension(),
+    new ItalicExtension(),
     ${extensionList.join(',\n    ')}
   ], {
     //excludeBaseExtensions: false,

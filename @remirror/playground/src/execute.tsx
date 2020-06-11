@@ -24,6 +24,8 @@ export const REQUIRED_MODULES = [
   'remirror/extension/doc',
   'remirror/extension/text',
   'remirror/extension/paragraph',
+  'remirror/extension/bold',
+  'remirror/extension/italic',
 ];
 
 const tsOptions = {
@@ -61,6 +63,8 @@ const knownRequires: { [moduleName: string]: any } = {
   'remirror/extension/doc': require('remirror/extension/doc'),
   'remirror/extension/text': require('remirror/extension/text'),
   'remirror/extension/paragraph': require('remirror/extension/paragraph'),
+  'remirror/extension/bold': require('remirror/extension/bold'),
+  'remirror/extension/italic': require('remirror/extension/italic'),
   'remirror/react': remirrorReact,
   'remirror/core': remirrorCore,
   '@remirror/playground': { useRemirrorPlayground },
