@@ -104,7 +104,7 @@ ${importLines.join('\n')}
  * This component contains the editor and any toolbars/chrome it requires.
  */
 const SmallEditor: FC = () => {
-  const { getRootProps${actions.length ? ', commands' : ''} } = useRemirror();
+  const { getRootProps${actions.length > 0 ? ', commands' : ''} } = useRemirror();
 
   useRemirrorPlayground(); // Delete this line
 

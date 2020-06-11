@@ -24,7 +24,7 @@ export function useRemirrorPlayground() {
   const remirror = useRemirror();
   const manager = remirror.manager;
   useEffect(() => {
-    if (manager != PERSIST.previousManager) {
+    if (manager !== PERSIST.previousManager) {
       // The manager has changed - implies new code context
 
       PERSIST.previousManager = manager;
@@ -36,5 +36,5 @@ export function useRemirrorPlayground() {
       // STORE STATE
       PERSIST.lastKnownGoodState = remirror.state.newState;
     }
-  }, [remirror.state.newState, manager]);
+  }, [remirror.state.newState, manager, remirror]);
 }
