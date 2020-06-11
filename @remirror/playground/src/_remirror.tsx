@@ -8,6 +8,7 @@
 
 // Remirror custom imports
 import { RemirrorProvider, useExtension, useManager, useRemirror } from '@remirror/react';
+
 import { useRemirrorPlayground } from './use-remirror-playground';
 
 export const IMPORT_CACHE: { [moduleName: string]: any } = {
@@ -57,7 +58,7 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
   react: require('react'),
 };
 
-export const INTERNAL_MODULES: { moduleName: string, exports: string[] }[] = [
+export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> = [
   {
     moduleName: 'remirror/extension/auto-link',
     exports: ['AutoLinkExtension'],

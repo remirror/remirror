@@ -68,6 +68,7 @@ function template({ extensions, presets }: Everything) {
 
 // Remirror custom imports
 import { RemirrorProvider, useExtension, useManager, useRemirror } from '@remirror/react';
+
 import { useRemirrorPlayground } from './use-remirror-playground';
 
 export const IMPORT_CACHE: { [moduleName: string]: any } = {
@@ -84,7 +85,7 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
   react: require('react'),
 };
 
-export const INTERNAL_MODULES: {moduleName: string, exports: string[]}[] = [
+export const INTERNAL_MODULES: Array<{ moduleName: string, exports: string[] }> = [
   ${extensionsAndPresets
     .map((meta) => JSON.stringify({ moduleName: meta.name, exports: meta.exports }, null, 2))
     .join(',\n  ')}
@@ -114,7 +115,14 @@ async function main() {
   const code = template(everything);
   // TODO: prettier
   const filepath = `${__dirname}/../src/_remirror.tsx`;
-  await fsp.writeFile(filepath, prettier.format(code, await prettier.resolveConfig(filepath)));
+  await fsp.writeFile(
+    filepath,
+    prettier.format(code, {
+      filepath,
+      parser: 'typescript',
+      ...(await prettier.resolveConfig(filepath)),
+    }),
+  );
 }
 
 main().catch((error) => {
