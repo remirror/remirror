@@ -1,6 +1,6 @@
 import { CodeOptions } from './interfaces';
 
-function nameify(str: string): [string, string] {
+function nameify(str: string): string {
   const base = str
     .replace(/[^\da-z]/gi, '-')
     .replace(/^-+|-+$/g, '')
@@ -10,8 +10,9 @@ function nameify(str: string): [string, string] {
     ? base
     : `ext${base.slice(0, 1).toUpperCase()}${base.slice(1)}`;
   const upper = safeBase.slice(0, 1).toUpperCase() + safeBase.slice(1);
-  const lower = safeBase.slice(0, 1).toLowerCase() + safeBase.slice(1);
-  return [upper, lower];
+  return upper;
+  //const lower = safeBase.slice(0, 1).toLowerCase() + safeBase.slice(1);
+  //return [upper, lower];
 }
 
 export function makeCode(codeOptions: CodeOptions): string {
@@ -37,22 +38,28 @@ export function makeCode(codeOptions: CodeOptions): string {
   addImport('react', ['default', 'React']);
   addImport('react', 'FC');
   addImport('remirror/react', 'RemirrorProvider');
-  addImport('remirror/extension/bold', 'BoldExtension');
-  addImport('remirror/extension/italic', 'ItalicExtension');
+  //addImport('remirror/extension/bold', 'BoldExtension');
+  //addImport('remirror/extension/italic', 'ItalicExtension');
   addImport('remirror/react', 'useManager');
   // addImport('remirror/react', 'useExtension');
   addImport('remirror/react', 'useRemirror');
   addImport('@remirror/playground', 'useRemirrorPlayground');
 
-  const useExtensions: string[] = [];
+  const extensionNames: string[] = [];
   const extensionList: string[] = [];
   extensions.forEach((ext) => {
-    const [ExtensionName, extensionName] = nameify(
-      ext.module + (ext.export ? `-${ext.export}` : ''),
+    const ExtensionName = nameify(
+      /* Official extensions are guaranteed to be uniquely named, so just use
+       * the export name, otherwise we need to scope the name to the module to
+       * avoid clashes.
+       */
+      ext.export && (ext.module.startsWith('remirror/') || ext.module.startsWith('@remirror/'))
+        ? ext.export
+        : ext.module + (ext.export ? `-${ext.export}` : ''),
     );
     addImport(ext.module, ext.export ? [ext.export, ExtensionName] : ['default', ExtensionName]);
-    useExtensions.push(`const ${extensionName} = useExtension(${ExtensionName}, 2);`);
-    extensionList.push(extensionName);
+    extensionNames.push(ExtensionName);
+    extensionList.push(`new ${ExtensionName}()`);
   });
 
   const importLines = [];
@@ -82,29 +89,35 @@ export function makeCode(codeOptions: CodeOptions): string {
     importLines.push(`import ${things.join(', ')} from '${moduleName}';`);
   }
 
+  console.log(extensionNames);
+  const actions: string[] = [];
+  if (extensionNames.includes(`BoldExtension`)) {
+    actions.push(`<button onClick={() => commands.toggleBold()}>bold</button>`);
+  }
+  if (extensionNames.includes(`ItalicExtension`)) {
+    actions.push(`<button onClick={() => commands.toggleItalic()}>italic</button>`);
+  }
+
   const code = `\
 ${importLines.join('\n')}
 
 // Set up the component to provide the functionality for the editor
 const SmallEditor: FC = () => {
-  const { getRootProps, commands } = useRemirror(); // Picked from the context.
+  const { getRootProps${
+    actions.length ? ', commands' : ''
+  } } = useRemirror(); // Picked from the context.
   useRemirrorPlayground(); // Remove this line
 
   return (
     <div>
-      <button onClick={() => commands.toggleBold()}>bold</button>
-      <button onClick={() => commands.toggleItalic()}>italic</button>
+      ${actions.join('\n')}
       <div {...getRootProps()} />
     </div>
   );
 };
 
 const SmallEditorWrapper = () => {
-  ${useExtensions.join('\n  ')}
-
   const extensionManager = useManager([
-    new BoldExtension(),
-    new ItalicExtension(),
     ${extensionList.join(',\n    ')}
   ], {
     //excludeBaseExtensions: false,
