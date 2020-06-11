@@ -83,7 +83,36 @@ export const SimplePanel: FC<SimplePanelProps> = function (props) {
   return (
     <div>
       <button onClick={onAdvanced}>Enter advanced mode</button>
+      <p>
+        <strong>Remirror core extensions</strong>{' '}
+      </p>
       {Object.keys(modules).map((moduleName) => {
+        if (!REQUIRED_MODULES.includes(moduleName)) {
+          return null;
+        }
+        const mod = modules[moduleName];
+        return mod.loading ? (
+          <em>Loading...</em>
+        ) : mod.error ? (
+          <em>An error occurred: {String(mod.error)}</em>
+        ) : (
+          Object.keys(mod.exports).map((exportName) =>
+            exportName.endsWith('Extension') ? (
+              <ExtensionCheckbox
+                key={`${`${moduleName}|${exportName ?? 'default'}`}`}
+                spec={{ module: moduleName, export: exportName }}
+                options={options}
+                setOptions={setOptions}
+                hideModuleName
+              />
+            ) : null,
+          )
+        );
+      })}
+      {Object.keys(modules).map((moduleName) => {
+        if (REQUIRED_MODULES.includes(moduleName)) {
+          return null;
+        }
         const mod = modules[moduleName];
         return (
           <Fragment key={moduleName}>
