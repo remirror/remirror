@@ -1,5 +1,6 @@
 import { promises as fsp } from 'fs';
 import { resolve } from 'path';
+import prettier from 'prettier';
 
 async function scanImportsFrom<T extends RemirrorModuleMeta>(
   sourceDir: string,
@@ -112,7 +113,14 @@ async function main() {
   console.dir(everything, { depth: 6 });
   const code = template(everything);
   // TODO: prettier
-  await fsp.writeFile(`${__dirname}/../src/_remirror.tsx`, code);
+  const filepath = `${__dirname}/../src/_remirror.tsx`;
+  await fsp.writeFile(
+    filepath,
+    prettier.format(code, {
+      parser: 'typescript',
+      filepath,
+    }),
+  );
 }
 
 main().catch((error) => {
