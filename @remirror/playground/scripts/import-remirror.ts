@@ -83,8 +83,10 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
   react: require('react'),
 };
 
-export const INTERNAL_MODULE_NAMES: string[] = [
-  ${extensionsAndPresets.map((meta) => JSON.stringify(meta.name)).join(',\n  ')}
+export const INTERNAL_MODULES: {moduleName: string, exports: string[]}[] = [
+  ${extensionsAndPresets
+    .map((meta) => JSON.stringify({ moduleName: meta.name, exports: meta.exports }, null, 2))
+    .join(',\n  ')}
 ];
 `;
 }
