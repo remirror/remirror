@@ -13,15 +13,10 @@ import { debounce } from '@remirror/core-helpers';
 //import * as remirror from 'remirror';
 import { ErrorBoundary } from './error-boundary';
 import { acquiredTypeDefs, dtsCache } from './vendor/type-acquisition';
-import { knownRequires } from './_remirror';
+import { IMPORT_CACHE, INTERNAL_MODULE_NAMES } from './_remirror';
 
-export const REQUIRED_MODULES = [
-  'remirror/extension/doc',
-  'remirror/extension/text',
-  'remirror/extension/paragraph',
-  'remirror/extension/bold',
-  'remirror/extension/italic',
-];
+// Start with these and cannot remove them
+export const REQUIRED_MODULES = INTERNAL_MODULE_NAMES;
 
 const tsOptions = {
   // Maybe need to do manual syntax highlighting like found here:
@@ -46,7 +41,7 @@ otherwise it will fetch out-of-sync typedefs from npm
 
 */
 
-REQUIRED_MODULES.forEach((moduleName) => {
+INTERNAL_MODULE_NAMES.forEach((moduleName) => {
   acquiredTypeDefs[moduleName] = {
     types: {
       ts: 'included',
@@ -107,8 +102,8 @@ export async function makeRequire(requires: string[]) {
   const tasks: Array<Promise<void>> = [];
   const modules: { [moduleName: string]: any } = {};
   for (const moduleName of requires) {
-    if (knownRequires[moduleName]) {
-      modules[moduleName] = knownRequires[moduleName];
+    if (IMPORT_CACHE[moduleName]) {
+      modules[moduleName] = IMPORT_CACHE[moduleName];
     } else {
       const id = hash(moduleName);
       if (!fetchedModules[id]) {
