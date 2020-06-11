@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import * as babelRuntimeHelpersInteropRequireDefault from '@babel/runtime/helpers/interopRequireDefault';
 import * as crypto from 'crypto';
 import { languages } from 'monaco-editor';
 import React, { FC, useEffect, useMemo, useRef } from 'react';
@@ -12,13 +9,11 @@ import { render, unmountComponentAtNode } from 'react-dom';
 import { debounce } from '@remirror/core-helpers';
 // import * as remirrorCoreExtensions from '@remirror/core-extensions';
 //import * as remirrorReact from '@remirror/react';
-import { RemirrorProvider, useExtension, useManager, useRemirror } from '@remirror/react';
-import * as remirrorCore from 'remirror/core';
 
 //import * as remirror from 'remirror';
 import { ErrorBoundary } from './error-boundary';
-import { useRemirrorPlayground } from './use-remirror-playground';
 import { acquiredTypeDefs, dtsCache } from './vendor/type-acquisition';
+import { knownRequires } from './_remirror';
 
 export const REQUIRED_MODULES = [
   'remirror/extension/doc',
@@ -37,7 +32,6 @@ const tsOptions = {
 languages.typescript.typescriptDefaults.setCompilerOptions(tsOptions);
 languages.typescript.javascriptDefaults.setCompilerOptions(tsOptions);
 
-const remirrorReact = { RemirrorProvider, useManager, useExtension, useRemirror };
 // const remirrorCore = { DocExtension, TextExtension, ParagraphExtension };
 export const addLibraryToRuntime = (code: string, path: string) => {
   languages.typescript.typescriptDefaults.addExtraLib(code, path);
@@ -52,25 +46,6 @@ otherwise it will fetch out-of-sync typedefs from npm
 
 */
 
-// Hack it so ESModule imports and CommonJS both work
-babelRuntimeHelpersInteropRequireDefault.default.default =
-  babelRuntimeHelpersInteropRequireDefault.default;
-
-const knownRequires: { [moduleName: string]: any } = {
-  '@babel/runtime/helpers/interopRequireDefault': babelRuntimeHelpersInteropRequireDefault.default,
-  // '@remirror/core-extensions': remirrorCoreExtensions,
-  remirror: require('remirror'),
-  'remirror/extension/doc': require('remirror/extension/doc'),
-  'remirror/extension/text': require('remirror/extension/text'),
-  'remirror/extension/paragraph': require('remirror/extension/paragraph'),
-  'remirror/extension/bold': require('remirror/extension/bold'),
-  'remirror/extension/italic': require('remirror/extension/italic'),
-  'remirror/react': remirrorReact,
-  'remirror/core': remirrorCore,
-  '@remirror/playground': { useRemirrorPlayground },
-  //remirror: remirror,
-  react: React,
-};
 REQUIRED_MODULES.forEach((moduleName) => {
   acquiredTypeDefs[moduleName] = {
     types: {
