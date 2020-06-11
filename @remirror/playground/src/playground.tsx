@@ -3,7 +3,6 @@ import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import CodeEditor from './code-editor';
 import { ErrorBoundary } from './error-boundary';
 import { makeRequire, REQUIRED_MODULES } from './execute';
-import { isExtensionName } from './exports';
 import { CodeOptions, Exports, RemirrorModules } from './interfaces';
 import { makeCode } from './make-code';
 import { Container, Divide, Header, Main, Panel } from './primitives';
@@ -19,21 +18,20 @@ export { useRemirrorPlayground } from './use-remirror-playground';
  */
 function cleanse(moduleName: string, moduleExports: Exports): Exports {
   const cleansedExports = { ...moduleExports };
+
   if (moduleName === 'remirror/extension/doc') {
     delete cleansedExports.DocExtension;
   }
+
   if (moduleName === 'remirror/extension/text') {
     delete cleansedExports.TextExtension;
   }
+
+  /*
   if (moduleName === 'remirror/extension/paragraph') {
     delete cleansedExports.ParagraphExtension;
   }
-  for (const exportName of Object.keys(cleansedExports)) {
-    if (!isExtensionName(exportName)) {
-      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-      delete cleansedExports[exportName];
-    }
-  }
+  */
 
   return cleansedExports;
 }
@@ -103,6 +101,7 @@ export const Playground: FC = () => {
       //   export: 'ItalicExtension',
       // },
     ],
+    presets: [],
   } as CodeOptions);
 
   // Load prettier for formatting

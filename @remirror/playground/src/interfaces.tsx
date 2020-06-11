@@ -1,10 +1,11 @@
-export interface ExtensionSpec {
+export interface ModuleSpec {
   module: string;
   export?: string;
   version?: string;
 }
 export interface CodeOptions {
-  extensions: ExtensionSpec[];
+  extensions: ModuleSpec[];
+  presets: ModuleSpec[];
 }
 
 export type RemirrorModuleStatus =
