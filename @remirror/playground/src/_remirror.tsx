@@ -1,3 +1,12 @@
+/******************************************************************************\
+*                                                                              *
+*                       THIS FILE IS AUTO-GENERATED                            *
+*                                                                              *
+*           See @remirror/playground/scripts/import-remirror.ts.               *
+*                                                                              *
+\******************************************************************************/
+
+
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import * as babelRuntimeHelpersInteropRequireDefault from '@babel/runtime/helpers/interopRequireDefault';
