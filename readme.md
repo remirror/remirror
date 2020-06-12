@@ -1,7 +1,7 @@
 <div align="center">
   <br />
   <div align="center">
-    <img width="300" height="300" src="https://raw.githubusercontent.com/remirror/remirror/next/support/assets/logo-animated-light.svg?sanitize=true" alt="animated remirror logo" />
+    <a href="https://docs.remirror.org"><img width="300" height="300" src="https://raw.githubusercontent.com/remirror/remirror/next/support/assets/logo-animated-light.svg?sanitize=true" alt="animated remirror logo" /></a>
   </div>
     <br />
     <br />

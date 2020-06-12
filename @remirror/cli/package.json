@@ -8,7 +8,7 @@
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
-  "sideEffects": false,
+  "sideEffects": true,
   "main": "dist/cli.cjs.js",
   "module": "dist/cli.esm.js",
   "bin": {
