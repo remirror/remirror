@@ -65,7 +65,7 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
       attrs: {
         ...extra.defaults(),
         src: defaultSource ? { default: defaultSource } : {},
-        allowFullScreen: { default: 'true' },
+        allowFullScreen: { default: true },
         frameBorder: { default: 0 },
         type: { default: 'custom' },
         width: { default: null },
@@ -76,19 +76,23 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
       parseDOM: [
         {
           tag: 'iframe',
-          getAttrs: (dom) => ({
-            ...extra.parse(dom),
-            type: (dom as HTMLElement).getAttribute('data-embed-type'),
-            height: (dom as HTMLElement).getAttribute('height'),
-            width: (dom as HTMLElement).getAttribute('width'),
-            allowFullScreen: (dom as HTMLElement).getAttribute('allowfullscreen'),
-            frameBorder: (dom as HTMLElement).getAttribute('frameborder'),
-            src: (dom as HTMLElement).getAttribute('src'),
-          }),
+          getAttrs: (dom) => {
+            const frameBorder = (dom as HTMLElement).getAttribute('frameborder');
+            return {
+              ...extra.parse(dom),
+              type: (dom as HTMLElement).getAttribute('data-embed-type'),
+              height: (dom as HTMLElement).getAttribute('height'),
+              width: (dom as HTMLElement).getAttribute('width'),
+              allowFullScreen:
+                (dom as HTMLElement).getAttribute('allowfullscreen') === 'false' ? false : true,
+              frameBorder: frameBorder ? Number.parseInt(frameBorder, 10) : 0,
+              src: (dom as HTMLElement).getAttribute('src'),
+            };
+          },
         },
       ],
       toDOM: (node) => {
-        const { frameBorder, allowFullScreen = 'false', src, type, ...rest } = node.attrs;
+        const { frameBorder, allowFullScreen, src, type, ...rest } = node.attrs;
         const { class: className } = this.options;
 
         return [
@@ -99,6 +103,7 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
             class: cx(className, `${className}-${type as string}`),
             src,
             'data-embed-type': type,
+            allowfullscreen: allowFullScreen ? 'true' : 'false',
             frameBorder: frameBorder.toString(),
           },
         ];

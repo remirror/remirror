@@ -31,6 +31,7 @@ describe('schema', () => {
         <iframe class="remirror-iframe remirror-iframe-custom"
                 src="https://awesome.com"
                 data-embed-type="custom"
+                allowfullscreen="true"
                 frameborder="0"
         >
         </iframe>
