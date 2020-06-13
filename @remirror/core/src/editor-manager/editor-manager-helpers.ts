@@ -81,12 +81,12 @@ export function transformExtensionOrPreset<Combined extends AnyCombinedUnion>(
     // Update the presets list in this block
     if (isPreset<PresetUnion>(presetOrExtension)) {
       presets.push(presetOrExtension);
-      rawExtensions.push(...(presetOrExtension.extensions as ExtensionUnion[]));
       presetMap.set(presetOrExtension.constructor, presetOrExtension);
 
-      presetOrExtension.extensions.forEach((extension) =>
-        updateDuplicateMap(extension as ExtensionUnion, presetOrExtension),
-      );
+      for (const extension of presetOrExtension.extensions) {
+        updateDuplicateMap(extension as ExtensionUnion, presetOrExtension);
+        rawExtensions.push(extension as ExtensionUnion);
+      }
 
       continue;
     }
@@ -161,7 +161,7 @@ export function transformExtensionOrPreset<Combined extends AnyCombinedUnion>(
   });
 
   return {
-    extensions: rawExtensions,
+    extensions,
     extensionMap,
     presets,
     presetMap,
