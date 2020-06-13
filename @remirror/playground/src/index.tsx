@@ -1,7 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
 
-export { useRemirrorPlayground } from './use-remirror-playground';
-
 export const Playground: FC = () => {
   const [Component, setPlayground] = useState<FC | null>(null);
 
@@ -27,6 +25,7 @@ export const Playground: FC = () => {
     if (!hasBabel) {
       return;
     }
+
     import('./playground').then((playground) => {
       // This has to be a function, otherwise React breaks (not unexpectedly)
       setPlayground(() => playground.Playground);

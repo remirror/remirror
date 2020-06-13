@@ -28,6 +28,7 @@
     "@theme-ui/sidenav": "^0.3.1",
     "@theme-ui/style-guide": "^0.3.0",
     "@theme-ui/typography": "^0.3.0",
+    "@types/webpack": "^4.41.17",
     "copy-text-to-clipboard": "^2.2.0",
     "emotion-theming": "^10.0.27",
     "gatsby": "^2.23.3",
@@ -71,8 +72,7 @@
     "remark-unwrap-images": "^2.0.0",
     "remirror": "^0.13.1",
     "source-map-support": "^0.5.19",
-    "theme-ui": "^0.3.1",
-    "ts-node": "^8.10.2"
+    "theme-ui": "^0.3.1"
   },
   "devDependencies": {
     "@types/mdx-js__react": "^1.5.2",

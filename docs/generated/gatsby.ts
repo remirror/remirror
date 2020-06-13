@@ -2,6 +2,7 @@
 
 declare namespace GatsbyTypes {
 type Maybe<T> = T | undefined;
+type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] };
 /** All built-in and custom scalars, mapped to their actual values */
 type Scalars = {
   ID: string;
@@ -2993,9 +2994,9 @@ type GatsbyImageSharpSizes_noBase64Fragment = Pick<ImageSharpSizes, 'aspectRatio
 
 type GatsbyImageSharpSizes_withWebp_noBase64Fragment = Pick<ImageSharpSizes, 'aspectRatio' | 'src' | 'srcSet' | 'srcWebp' | 'srcSetWebp' | 'sizes'>;
 
-type EntryQueryVariables = {
+type EntryQueryVariables = Exact<{
   id: Scalars['String'];
-};
+}>;
 
 
 type EntryQuery = { readonly mdx: Maybe<(
@@ -3003,7 +3004,7 @@ type EntryQuery = { readonly mdx: Maybe<(
     & { readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'fullWidth' | 'title'>>, readonly wordCount: Maybe<Pick<MdxWordCount, 'paragraphs' | 'words' | 'sentences'>> }
   )> };
 
-type PagesQueryQueryVariables = {};
+type PagesQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 type PagesQueryQuery = { readonly allSitePage: { readonly nodes: ReadonlyArray<Pick<SitePage, 'path'>> } };

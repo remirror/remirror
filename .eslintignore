@@ -10,6 +10,7 @@ public
 coverage
 docs/generated/*
 docs/.cache/
+docs/.linaria-cache/
 docs/gatsby-config.js
 
 .cache
