@@ -38,7 +38,7 @@ export const RemirrorSSR = <Combined extends AnyCombinedUnion>({
 }: RemirrorSSRProps<Combined>) => {
   const outerProperties = mapProps(attributes);
   const ssrElement = ReactSerializer.fromManager(manager).serializeFragment(state.doc.content);
-  const transformedElement = manager.store.ssrTransformer(ssrElement);
+  const transformedElement = manager.store.ssrTransformer(ssrElement, state);
 
   return (
     <div {...outerProperties} suppressContentEditableWarning={true} contentEditable={editable}>

@@ -19,7 +19,7 @@ import {
   Shape,
 } from '@remirror/core';
 
-import { gatherToDOM, mapProps } from './renderer-utils';
+import { gatherDomMethods, mapProps } from './renderer-utils';
 
 type NodeToDOM = NodeExtensionSpec['toDOM'];
 type MarkToDOM = MarkExtensionSpec['toDOM'];
@@ -95,7 +95,7 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
   private static nodesFromManager<Combined extends AnyCombinedUnion>(
     manager: EditorManager<Combined>,
   ) {
-    const result = gatherToDOM(manager.nodes);
+    const result = gatherDomMethods(manager.nodes);
     if (!result.text) {
       result.text = (node) => (node.text ? node.text : '');
     }
@@ -110,7 +110,7 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
   private static marksFromManager<Combined extends AnyCombinedUnion>(
     manager: EditorManager<Combined>,
   ) {
-    return gatherToDOM(manager.marks);
+    return gatherDomMethods(manager.marks);
   }
 
   nodes: Record<string, NodeToDOM>;

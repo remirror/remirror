@@ -26,7 +26,6 @@ describe('markPasteRule', () => {
           doc(
             p('Some ', strong('@test'), ' ', strong('@content')),
             p('should ', strong('@be'), ' amazing'),
-            p(''),
           ),
         );
       });
@@ -104,7 +103,7 @@ describe('nodeInputRule', () => {
       f(...parameters);
     });
 
-    expect(view.state.doc).toEqualProsemirrorNode(doc(horizontalRule(), p()));
+    expect(view.state.doc).toEqualProsemirrorNode(doc(horizontalRule()));
     expect(getAttributes).toHaveBeenCalledWith(expect.arrayContaining(['~Hello~', 'Hello']));
   });
 

@@ -49,9 +49,7 @@ test('throws an error when called multiple times during render', () => {
     <RenderEditor manager={createReactManager()}>
       {({ getRootProps }) => {
         expect(() => getRootProps()).not.toThrow();
-        expect(() => getRootProps()).toThrowErrorMatchingInlineSnapshot(
-          `"\`getRootProps\` has been called MULTIPLE times. It should only be called ONCE during render.\n\nFor more information visit https://docs.remirror.org/errors#RMR0201"`,
-        );
+        expect(() => getRootProps()).toThrowErrorMatchingSnapshot();
 
         return <div />;
       }}

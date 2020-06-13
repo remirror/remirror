@@ -1,3 +1,4 @@
+import { cx } from 'linaria';
 import React, { cloneElement, Fragment, PureComponent, ReactNode, Ref } from 'react';
 
 import {
@@ -21,6 +22,7 @@ import {
   ObjectNode,
   RemirrorContentType,
   SchemaFromCombined,
+  Shape,
   shouldUseDOMEnvironment,
   toHTML,
   Transaction,
@@ -267,28 +269,31 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
   /**
    * This sets the attributes that wrap the outer prosemirror node.
    */
-  private readonly getAttributes = (ssr = false) => {
+  private getAttributes(ssr?: false): Record<string, string>;
+  private getAttributes(ssr: true): Shape;
+  private getAttributes(ssr = false) {
     const { attributes, autoFocus } = this.props;
     const propertyAttributes = isFunction(attributes)
       ? attributes(this.eventListenerParameter())
       : attributes;
 
     const managerAttributes = this.manager.store?.attributes;
+    const focus = ssr
+      ? { autoFocus: bool(autoFocus) }
+      : { autofocus: autoFocus ? 'true' : 'false' };
 
     const defaultAttributes = {
       role: 'textbox',
-      autofocus: autoFocus ? 'true' : 'false',
+      ...focus,
       'aria-multiline': 'true',
       ...(!this.props.editable ? { 'aria-readonly': 'true' } : {}),
       'aria-label': this.props.label ?? '',
       ...managerAttributes,
-      class: [ssr && 'Prosemirror', EDITOR_CLASS_NAME, managerAttributes?.class]
-        .filter(bool)
-        .join(' '),
+      class: cx(ssr && 'Prosemirror', EDITOR_CLASS_NAME, managerAttributes?.class),
     };
 
-    return { ...defaultAttributes, ...propertyAttributes };
-  };
+    return { ...defaultAttributes, ...propertyAttributes } as any;
+  }
 
   /**
    * Part of the Prosemirror API and is called whenever there is state change in
@@ -351,12 +356,8 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
    * Updates the state either by calling onStateChange when it exists or
    * directly setting the internal state via a `setState` call.
    */
-  private updateState({
-    state,
-    triggerOnChange = true,
-    onUpdate,
-    tr,
-  }: UpdateStateParameter<SchemaFromCombined<Combined>>) {
+  private updateState(parameter: UpdateStateParameter<SchemaFromCombined<Combined>>) {
+    const { state, triggerOnChange = true, onUpdate, tr } = parameter;
     const { onStateChange } = this.props;
 
     const updateHandler = this.createUpdateStateHandler({ state, triggerOnChange, onUpdate });
@@ -493,13 +494,16 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
   componentWillUnmount() {
     this.view.dom.removeEventListener('blur', this.onBlur);
     this.view.dom.removeEventListener('focus', this.onFocus);
+
     const editorState = this.state.editor.newState;
+
     this.view.state.plugins.forEach((plugin) => {
       const state = plugin.getState(editorState);
       if (state?.destroy) {
         state.destroy();
       }
     });
+
     this.view.destroy();
   }
 

@@ -88,7 +88,12 @@ describe('Manager', () => {
     manager.store.commands.dummy(attributes);
 
     expect(mock).toHaveBeenCalledWith(attributes);
-    expect(innerMock).toHaveBeenCalledWith({ state, dispatch: view.dispatch, view });
+    expect(innerMock).toHaveBeenCalledWith({
+      state,
+      dispatch: view.dispatch,
+      view,
+      tr: expect.any(Object),
+    });
   });
 
   test('helpers', () => {

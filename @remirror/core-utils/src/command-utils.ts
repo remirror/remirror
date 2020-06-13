@@ -197,8 +197,8 @@ function isChrome(minVersion = 0): boolean {
 export function replaceText(parameter: ReplaceTextParameter): CommandFunction {
   const { range, type, attrs = {}, appendText = '', content = '' } = parameter;
 
-  return ({ state, dispatch, view }) => {
-    const { schema, selection, tr } = state;
+  return ({ state, tr, dispatch, view }) => {
+    const { schema, selection } = state;
     // const { $from, $to } = selection;
     const index = selection.$from.index();
     const { from, to } = range ?? selection;

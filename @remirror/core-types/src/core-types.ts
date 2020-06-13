@@ -143,7 +143,8 @@ export type ChainedCommandFunction<Schema extends EditorSchema = any> = (
  */
 export interface CommandFunctionParameter<Schema extends EditorSchema = any>
   extends Partial<EditorViewParameter<Schema>>,
-    EditorStateParameter<Schema> {
+    EditorStateParameter<Schema>,
+    TransactionParameter<Schema> {
   /**
    * The dispatch function which causes the command to be performed.
    *

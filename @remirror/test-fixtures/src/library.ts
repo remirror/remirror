@@ -75,3 +75,5 @@ export function isPresetValid<Type extends AnyPresetConstructor>(
 
   return true;
 }
+
+export { diff };

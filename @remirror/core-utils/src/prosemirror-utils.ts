@@ -579,11 +579,14 @@ export function schemaToJSON<Nodes extends string = string, Marks extends string
 /**
  * Wraps the default {@link ProsemirrorCommandFunction} and makes it compatible
  * with the default **remirror** {@link CommandFunction} call signature.
+ *
+ * By default this is non chainable since it uses the `state.tr` rather than the
+ * accumulated `tr` property passed into all command functions.
  */
 export function convertCommand<Schema extends EditorSchema = any, Extra extends Shape = EmptyShape>(
   commandFunction: ProsemirrorCommandFunction<Schema>,
-): CommandFunction<Schema, Extra> {
-  return ({ state, dispatch, view }) => commandFunction(state, dispatch, view);
+): NonChainableCommandFunction<Schema, Extra> {
+  return nonChainable(({ state, dispatch, view }) => commandFunction(state, dispatch, view));
 }
 
 /**
@@ -625,9 +628,9 @@ export function nonChainable<Schema extends EditorSchema = any, Extra extends Sh
 export function chainCommands<Schema extends EditorSchema = any, Extra extends object = object>(
   ...commands: Array<CommandFunction<Schema, Extra>>
 ): CommandFunction<Schema, Extra> {
-  return ({ state, dispatch, view, ...rest }) => {
+  return ({ state, dispatch, view, tr, ...rest }) => {
     for (const element of commands) {
-      if (element({ state, dispatch, view, ...(rest as Extra) })) {
+      if (element({ state, dispatch, view, tr, ...(rest as Extra) })) {
         return true;
       }
     }
@@ -746,7 +749,7 @@ export function mergeProsemirrorKeyBindings<Schema extends EditorSchema = any>(
   return mergeKeyBindingCreator(
     extensionKeymaps,
     (command): ProsemirrorCommandFunction => (state, dispatch, view) => {
-      return command({ state, dispatch, view, next: () => false });
+      return command({ state, dispatch, view, tr: state.tr, next: () => false });
     },
   );
 }

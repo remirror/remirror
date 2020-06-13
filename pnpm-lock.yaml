@@ -833,6 +833,7 @@ importers:
       '@remirror/extension-placeholder': 'link:../extension-placeholder'
       '@remirror/extension-react-ssr': 'link:../extension-react-ssr'
       '@remirror/react-utils': 'link:../react-utils'
+      linaria: 2.0.0-alpha.5
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -846,6 +847,7 @@ importers:
       '@remirror/pm': ^0.0.0
       '@remirror/react-utils': ^0.7.6
       '@types/react': ^16.9.35
+      linaria: ^2.0.0-alpha.5
       react: ^16.13.1
   '@remirror/preset-table':
     dependencies:
@@ -869,6 +871,7 @@ importers:
       '@types/min-document': 2.19.0
       '@types/use-deep-compare-effect': 1.2.0
       hoist-non-react-statics: 3.3.2
+      linaria: 2.0.0-alpha.5
       min-document: 2.19.0
       nanoevents: 5.1.8
       nanoid: 3.1.10
@@ -911,6 +914,7 @@ importers:
       '@types/use-deep-compare-effect': ^1.2.0
       hoist-non-react-statics: ^3.3.2
       jest-axe: ^3.4.0
+      linaria: ^2.0.0-alpha.5
       min-document: ^2.19.0
       nanoevents: ^5.1.7
       nanoid: ^3.1.9
@@ -1056,9 +1060,11 @@ importers:
       '@remirror/extension-code-block': 'link:../extension-code-block'
       '@remirror/extension-doc': 'link:../extension-doc'
       '@remirror/extension-heading': 'link:../extension-heading'
+      '@remirror/extension-italic': 'link:../extension-italic'
       '@remirror/extension-link': 'link:../extension-link'
       '@remirror/extension-paragraph': 'link:../extension-paragraph'
       '@remirror/extension-text': 'link:../extension-text'
+      '@remirror/extension-underline': 'link:../extension-underline'
       '@remirror/pm': 'link:../pm'
       '@remirror/preset-core': 'link:../preset-core'
       '@remirror/preset-react': 'link:../preset-react'
@@ -1076,9 +1082,11 @@ importers:
       '@remirror/extension-code-block': ^0.12.0
       '@remirror/extension-doc': ^0.0.0
       '@remirror/extension-heading': ^0.0.0
+      '@remirror/extension-italic': ^0.0.0
       '@remirror/extension-link': ^0.0.0
       '@remirror/extension-paragraph': ^0.0.0
       '@remirror/extension-text': ^0.0.0
+      '@remirror/extension-underline': ^0.0.0
       '@remirror/pm': ^0.0.0
       '@remirror/preset-core': ^0.0.0
       '@remirror/preset-react': ^0.0.0
@@ -10966,7 +10974,7 @@ packages:
       aproba: 1.2.0
       fs-write-stream-atomic: 1.0.10
       iferr: 0.1.5
-      mkdirp: 0.5.3
+      mkdirp: 0.5.5
       rimraf: 2.7.1
       run-queue: 1.0.3
     dev: false
@@ -20218,7 +20226,7 @@ packages:
       aproba: 1.2.0
       copy-concurrently: 1.0.5
       fs-write-stream-atomic: 1.0.10
-      mkdirp: 0.5.3
+      mkdirp: 0.5.5
       rimraf: 2.7.1
       run-queue: 1.0.3
     dev: false
@@ -28007,7 +28015,7 @@ packages:
       loader-utils: 1.4.0
       memory-fs: 0.4.1
       micromatch: 3.1.10
-      mkdirp: 0.5.3
+      mkdirp: 0.5.5
       neo-async: 2.6.1
       node-libs-browser: 2.2.1
       schema-utils: 1.0.0

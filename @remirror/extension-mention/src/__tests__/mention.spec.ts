@@ -2,7 +2,7 @@ import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
 import { entries, fromHTML, GetHandler, toHTML } from '@remirror/core';
-import { SuggestCommandParameter } from '@remirror/pm/suggest';
+import { SuggestExitHandlerParameter } from '@remirror/pm/suggest';
 import { createBaseManager } from '@remirror/test-fixtures';
 
 import { MentionExtension, MentionExtensionSuggestCommand, MentionOptions } from '..';
@@ -125,7 +125,7 @@ describe('plugin', () => {
 
   const mocks = {
     onChange: jest.fn(),
-    onExit: jest.fn(({ command }: SuggestCommandParameter<MentionExtensionSuggestCommand>) => {
+    onExit: jest.fn(({ command }: SuggestExitHandlerParameter<MentionExtensionSuggestCommand>) => {
       command({ appendText: '' });
     }),
   };
@@ -165,6 +165,7 @@ describe('plugin', () => {
 
   it('can split mentions', () => {
     const splitMention = mention({ id: '123', label: '@123', name: 'at' });
+
     add(doc(p(splitMention('@1<cursor>23')))).insertText(` `);
     expect(view.state).toContainRemirrorDocument(
       p(mention({ id: '1', label: '@1', name: 'at' })('@1'), ' 23'),

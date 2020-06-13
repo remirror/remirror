@@ -293,6 +293,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
             appendText,
             ...attributes
           }: SuggestionCommandAttributes) => {
+            // .run();
             fn({ id, label, appendText, replacementType, name, range, ...attributes });
           };
 
@@ -346,12 +347,12 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
       const state = this.store.getState();
 
       const { from, to } = range ?? state.selection;
-      const tr = state.tr;
+      const tr = this.store.getTransaction();
 
       if (shouldUpdate) {
         // Remove mark at previous position
         let { oldFrom, oldTo } = { oldFrom: from, oldTo: range ? range.end : to };
-        const $oldTo = state.doc.resolve(oldTo);
+        const $oldTo = tr.doc.resolve(oldTo);
 
         ({ from: oldFrom, to: oldTo } = getMarkRange($oldTo, this.type) || {
           from: oldFrom,

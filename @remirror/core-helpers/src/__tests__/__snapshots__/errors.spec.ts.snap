@@ -4,6 +4,7 @@ exports[`freeze should freeze in development 1`] = `
 "Mutation of immutable value detected.
 
 It seems you're trying to set the value of the property (a) on a frozen object. For your protection this object does not allow direct mutation.
+
 For more information visit https://docs.remirror.org/errors#RMR0005"
 `;
 
@@ -17,5 +18,6 @@ exports[`invariant throws specific errors 1`] = `
 "This is a custom error, possibly thrown by an external library.
 
 always falsy
+
 For more information visit https://docs.remirror.org/errors#RMR0003"
 `;

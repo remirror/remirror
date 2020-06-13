@@ -3,6 +3,7 @@ import { Children, cloneElement, ComponentType, createElement, JSXElementConstru
 import {
   AnyCombinedUnion,
   CreateLifecycleMethod,
+  EditorState,
   ExtensionPriority,
   isArray,
   object,
@@ -57,11 +58,11 @@ export class ReactSSRExtension extends PlainExtension<ReactSSROptions> {
 
     const ssrTransformers: Array<() => SSRTransformer> = [];
 
-    const ssrTransformer: SSRTransformer = (initialElement) => {
+    const ssrTransformer: SSRTransformer = (initialElement, state) => {
       let element: JSX.Element = initialElement;
 
       for (const transformer of ssrTransformers) {
-        element = transformer()(element);
+        element = transformer()(element, state);
       }
 
       return element;
@@ -101,7 +102,7 @@ export class ReactSSRExtension extends PlainExtension<ReactSSROptions> {
   };
 }
 
-export type SSRTransformer = (element: JSX.Element) => JSX.Element;
+export type SSRTransformer = (element: JSX.Element, state?: EditorState) => JSX.Element;
 
 /**
  * Clone SSR elements ignoring the top level Fragment

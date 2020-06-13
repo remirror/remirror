@@ -6,7 +6,7 @@ import {
   EditorSchema,
   MarkTypeParameter,
   RangeParameter,
-  Transaction,
+  TransactionParameter,
 } from '@remirror/core-types';
 import { isMarkActive, isTextSelection } from '@remirror/core-utils';
 import { ResolvedPos } from '@remirror/pm/model';
@@ -53,6 +53,31 @@ function markApplies(parameter: MarkAppliesParameter) {
   return false;
 }
 
+interface ToggleActiveMarkSelectionParameter
+  extends TransactionParameter,
+    Partial<AttributesParameter>,
+    MarkTypeParameter {}
+
+function toggleActiveMarkSelection(parameter: ToggleActiveMarkSelectionParameter) {
+  const { tr, type, attrs } = parameter;
+  const { ranges } = tr.selection;
+  let selectionHasActiveMark = false;
+
+  for (let rangesIndex = 0; !selectionHasActiveMark && rangesIndex < ranges.length; rangesIndex++) {
+    const { $from, $to } = ranges[rangesIndex];
+    selectionHasActiveMark = tr.doc.rangeHasMark($from.pos, $to.pos, type);
+  }
+
+  for (const { $from, $to } of ranges) {
+    if (selectionHasActiveMark) {
+      tr.removeMark($from.pos, $to.pos, type);
+      continue;
+    }
+
+    tr.addMark($from.pos, $to.pos, type.create(attrs));
+  }
+}
+
 export interface ToggleMarkParameter<Schema extends EditorSchema = any>
   extends MarkTypeParameter<Schema>,
     Partial<AttributesParameter>,
@@ -76,9 +101,9 @@ export interface ToggleMarkParameter<Schema extends EditorSchema = any>
  */
 export function toggleMark(parameter: ToggleMarkParameter): CommandFunction {
   const { type, attrs, range } = parameter;
-  return function ({ state, dispatch }) {
-    const { tr } = state;
-    const { selection } = state.tr; // Selection picked from transaction to allow for chaining.
+
+  return ({ dispatch, tr }) => {
+    const { selection } = tr; // Selection picked from transaction to allow for chaining.
     const { empty, ranges } = selection;
     const useCurrentSelection = !range;
 
@@ -102,9 +127,9 @@ export function toggleMark(parameter: ToggleMarkParameter): CommandFunction {
 
     // Wrap dispatch with an automatic true return. This removes the need for
     // even more `return true` statements.
-    const done = (transaction: Transaction) => {
+    const done = () => {
       if (dispatch) {
-        dispatch(transaction);
+        dispatch(tr);
       }
 
       return true;
@@ -115,38 +140,23 @@ export function toggleMark(parameter: ToggleMarkParameter): CommandFunction {
         ? tr.removeMark(range.from, range.to, type)
         : tr.addMark(range.from, range.to, type.create(attrs));
 
-      return done(tr);
+      return done();
     }
 
     if (selectionHasCursor(selection)) {
       if (type.isInSet(tr.storedMarks || selection.$cursor.marks())) {
-        return done(tr.removeStoredMark(type));
+        tr.removeStoredMark(type);
+        return done();
       }
 
-      return done(tr.addStoredMark(type.create(attrs)));
+      tr.addStoredMark(type.create(attrs));
+      return done();
     }
 
-    let selectionHasActiveMark = false;
-
-    for (
-      let rangesIndex = 0;
-      !selectionHasActiveMark && rangesIndex < ranges.length;
-      rangesIndex++
-    ) {
-      const { $from, $to } = ranges[rangesIndex];
-      selectionHasActiveMark = tr.doc.rangeHasMark($from.pos, $to.pos, type);
-    }
-
-    for (const { $from, $to } of ranges) {
-      if (selectionHasActiveMark) {
-        tr.removeMark($from.pos, $to.pos, type);
-        continue;
-      }
-
-      tr.addMark($from.pos, $to.pos, type.create(attrs));
-    }
+    toggleActiveMarkSelection({ tr, type, attrs });
 
     // Scroll into view is needed for very long selections.
-    return done(tr.scrollIntoView());
+    tr.scrollIntoView();
+    return done();
   };
 }

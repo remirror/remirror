@@ -9,7 +9,6 @@ export const contextPropsShape = {
   clearContent: expect.any(Function),
   setContent: expect.any(Function),
   getRootProps: expect.any(Function),
-  getPositionerProps: expect.any(Function),
 };
 
 export const positionerShape = {

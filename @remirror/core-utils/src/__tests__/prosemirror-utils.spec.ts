@@ -55,61 +55,57 @@ describe('removeNodeAtPosition', () => {
     const {
       state: { tr },
     } = createEditor(doc(p('x'), p('one')));
-    const newTr = removeNodeAtPosition({ pos: 3, tr });
+    removeNodeAtPosition({ pos: 3, tr });
 
-    expect(newTr).not.toBe(tr);
-    expect(newTr.doc).toEqualProsemirrorNode(doc(p('x')));
+    expect(tr.doc).toEqualProsemirrorNode(doc(p('x')));
   });
 
   it('removes nested inline nodes at specified position', () => {
     const {
       state: { tr },
     } = createEditor(doc(p('one', atomInline())));
-    const newTr = removeNodeAtPosition({ pos: 4, tr });
+    removeNodeAtPosition({ pos: 4, tr });
 
-    expect(newTr).not.toBe(tr);
-    expect(newTr.doc).toEqualProsemirrorNode(doc(p('one')));
+    expect(tr.doc).toEqualProsemirrorNode(doc(p('one')));
   });
 });
 
 describe('removeNodeBefore', () => {
-  it('returns the original transaction if there is no nodeBefore', () => {
+  it('does nothing if there is no nodeBefore', () => {
     const {
       state: { tr },
     } = createEditor(doc(p('<cursor>')));
-    const newTr = removeNodeBefore(tr);
+    const steps = tr.steps;
 
-    expect(tr).toBe(newTr);
+    removeNodeBefore(tr);
+    expect(steps).toBe(tr.steps);
   });
 
   it('supports removing tables', () => {
     const {
       state: { tr },
     } = createEditor(doc(p('one'), table(row(tdEmpty), row(tdEmpty)), '<cursor>', p('two')));
-    const newTr = removeNodeBefore(tr);
+    removeNodeBefore(tr);
 
-    expect(newTr).not.toBe(tr);
-    expect(newTr.doc).toEqualProsemirrorNode(doc(p('one'), p('two')));
+    expect(tr.doc).toEqualProsemirrorNode(doc(p('one'), p('two')));
   });
 
   it('supports removing blockquotes', () => {
     const {
       state: { tr },
     } = createEditor(doc(p('one'), blockquote(p('')), '<cursor>', p('two')));
-    const newTr = removeNodeBefore(tr);
+    removeNodeBefore(tr);
 
-    expect(newTr).not.toBe(tr);
-    expect(newTr.doc).toEqualProsemirrorNode(doc(p('one'), p('two')));
+    expect(tr.doc).toEqualProsemirrorNode(doc(p('one'), p('two')));
   });
 
   it('supports removing leaf nodes (atom)', () => {
     const {
       state: { tr },
     } = createEditor(doc(p('one'), atomBlock(), '<cursor>', p('two')));
-    const newTr = removeNodeBefore(tr);
+    removeNodeBefore(tr);
 
-    expect(newTr).not.toBe(tr);
-    expect(newTr.doc).toEqualProsemirrorNode(doc(p('one'), p('two')));
+    expect(tr.doc).toEqualProsemirrorNode(doc(p('one'), p('two')));
   });
 });
 
@@ -314,10 +310,8 @@ describe('transactionChanged', () => {
   it('returns true when the doc has changed', () => {
     const {
       state: { tr },
-      view,
     } = createEditor(doc(p('inline'), p('<start>aba<end>', 'awesome')));
-    const newTr = tr.deleteSelection();
-    view.dispatch(newTr);
+    tr.deleteSelection();
 
     expect(transactionChanged(tr)).toBeTrue();
   });

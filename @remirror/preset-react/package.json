@@ -26,7 +26,8 @@
     "@babel/runtime": "^7.10.2",
     "@remirror/extension-placeholder": "^0.0.0",
     "@remirror/extension-react-ssr": "^0.0.0",
-    "@remirror/react-utils": "^0.7.6"
+    "@remirror/react-utils": "^0.7.6",
+    "linaria": "^2.0.0-alpha.5"
   },
   "devDependencies": {
     "@remirror/core": "^0.11.0",

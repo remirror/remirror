@@ -1,5 +1,6 @@
 import {
   hasOwnProperty,
+  keys,
   MarkExtensionSpec,
   NodeExtensionSpec,
   object,
@@ -20,11 +21,7 @@ function getPossibleStandardName(key: string): string {
  */
 export function mapProps(props: Shape) {
   const transformedProps: Shape = object();
-  for (const key in props) {
-    if (!hasOwnProperty(props, key)) {
-      continue;
-    }
-
+  for (const key of keys(props)) {
     const name = getPossibleStandardName(key);
     transformedProps[name] = props[key];
 
@@ -40,7 +37,7 @@ export function mapProps(props: Shape) {
  *
  * @param specs - the prosemirror schema specs for each node / mark
  */
-export function gatherToDOM<Spec extends MarkExtensionSpec | NodeExtensionSpec>(
+export function gatherDomMethods<Spec extends MarkExtensionSpec | NodeExtensionSpec>(
   specs: Record<string, Spec>,
 ) {
   const result: Record<string, Spec['toDOM']> = object();

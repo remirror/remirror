@@ -59,3 +59,5 @@ export * from '@remirror/extension-code-block';
 export * from '@remirror/extension-heading';
 export * from '@remirror/extension-blockquote';
 export * from '@remirror/extension-link';
+export * from '@remirror/extension-italic';
+export * from '@remirror/extension-underline';

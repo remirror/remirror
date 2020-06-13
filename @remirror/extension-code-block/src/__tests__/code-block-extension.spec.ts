@@ -161,14 +161,14 @@ describe('plugin', () => {
     it('responds to space input rule', () => {
       const { state } = add(doc(p('<cursor>'))).insertText('```typescript abc');
 
-      expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('abc'), p()));
+      expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('abc')));
     });
 
     it('responds to empty space input rule using the default language', () => {
       const markupBlock = codeBlock({ language: 'markup' });
       const { state } = add(doc(p('<cursor>'))).insertText('``` abc');
 
-      expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('abc'), p()));
+      expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('abc')));
     });
 
     it('does not match invalid regex', () => {
@@ -181,14 +181,14 @@ describe('plugin', () => {
       const markupBlock = codeBlock({ language: 'markup' });
       const { state } = add(doc(p('<cursor>'))).insertText('```abcde abc');
 
-      expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('abc'), p()));
+      expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('abc')));
     });
 
     it('keeps alias language name when supported', () => {
       const htmlBlock = codeBlock({ language: 'html' });
       const { state } = add(doc(p('<cursor>'))).insertText('```html abc');
 
-      expect(state.doc).toEqualRemirrorDocument(doc(htmlBlock('abc'), p()));
+      expect(state.doc).toEqualRemirrorDocument(doc(htmlBlock('abc')));
     });
   });
 
@@ -209,7 +209,7 @@ describe('plugin', () => {
         .press('Enter')
         .insertText('abc');
 
-      expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('abc'), p()));
+      expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('abc')));
     });
 
     it('uses default language when no language provided', () => {
@@ -219,7 +219,7 @@ describe('plugin', () => {
         .press('Enter')
         .insertText('abc');
 
-      expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('abc'), p()));
+      expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('abc')));
     });
 
     it('uses default language when given an invalid language', () => {
@@ -229,7 +229,7 @@ describe('plugin', () => {
         .press('Enter')
         .insertText('abc');
 
-      expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('abc'), p()));
+      expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('abc')));
     });
 
     it('keeps alias language name when supported', () => {
@@ -239,7 +239,7 @@ describe('plugin', () => {
         .press('Enter')
         .insertText('abc');
 
-      expect(state.doc).toEqualRemirrorDocument(doc(htmlBlock('abc'), p()));
+      expect(state.doc).toEqualRemirrorDocument(doc(htmlBlock('abc')));
     });
   });
 });

@@ -1,16 +1,15 @@
 import React from 'react';
 import TestRenderer from 'react-test-renderer';
 
-import { EditorManager, NodeExtension, NodeExtensionSpec, NodeGroup } from '@remirror/core';
+import { NodeExtension, NodeExtensionSpec, NodeGroup } from '@remirror/core';
 import { Node as PMNode } from '@remirror/pm/model';
 import {
   BoldExtension,
   CodeBlockExtension,
-  DocExtension,
-  ParagraphExtension,
+  ItalicExtension,
   simpleJSON,
   testJSON,
-  TextExtension,
+  UnderlineExtension,
 } from '@remirror/test-fixtures';
 
 import { createReactManager } from '../../hooks';
@@ -37,7 +36,13 @@ class FooExtension extends NodeExtension {
   }
 }
 
-const manager = createReactManager([new CodeBlockExtension(), new FooExtension()]);
+const manager = createReactManager([
+  new CodeBlockExtension(),
+  new FooExtension(),
+  new BoldExtension(),
+  new ItalicExtension(),
+  new UnderlineExtension(),
+]);
 const { schema } = manager;
 const serializer = ReactSerializer.fromManager(manager);
 
@@ -45,17 +50,7 @@ test('ReactSerializer.fromManager', () => {
   expect(serializer).toBeInstanceOf(ReactSerializer);
   expect(serializer.nodes.paragraph).toBeFunction();
   expect(serializer.marks.bold).toBeFunction();
-
-  // fills in for a missing text
-  const altManager = EditorManager.create([
-    new DocExtension(),
-    new ParagraphExtension(),
-    new TextExtension(),
-    new BoldExtension(),
-    new CodeBlockExtension(),
-  ]);
-
-  expect(ReactSerializer.fromManager(altManager).nodes.text).toBeFunction();
+  expect(serializer.nodes.text).toBeFunction();
 });
 
 describe('ReactSerializer', () => {
@@ -63,15 +58,7 @@ describe('ReactSerializer', () => {
     it('serializes the node', () => {
       const node = PMNode.fromJSON(schema, simpleJSON);
 
-      expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element))
-        .toMatchInlineSnapshot(`
-        <p>
-          This is a node with${' '}
-          <strong>
-            bold text.
-          </strong>
-        </p>
-      `);
+      expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element)).toMatchSnapshot();
     });
 
     it('serializes a codeBlock node with nested array from `toDOM` call', () => {
@@ -87,40 +74,13 @@ describe('ReactSerializer', () => {
 
       const node = PMNode.fromJSON(schema, codeBlockJSON);
 
-      expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element))
-        .toMatchInlineSnapshot(`
-        <pre>
-          <code>
-            Hello
-          </code>
-        </pre>
-      `);
+      expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element)).toMatchSnapshot();
     });
 
     it('serializes the node with nested data', () => {
       const node = PMNode.fromJSON(schema, testJSON);
 
-      expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element))
-        .toMatchInlineSnapshot(`
-        <p>
-          This is a node with${' '}
-          <strong>
-            bold text and${' '}
-          </strong>
-          <strong>
-            <em>
-              italic bold and${' '}
-            </em>
-          </strong>
-          <strong>
-            <em>
-              <u>
-                underlined italic text
-              </u>
-            </em>
-          </strong>
-        </p>
-      `);
+      expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element)).toMatchSnapshot();
     });
 
     it('serializes a deeply nested custom node', () => {
@@ -210,9 +170,9 @@ describe('ReactSerializer.renderSpec', () => {
   it('supports wrapping an already created element', () => {
     expect(TestRenderer.create(ReactSerializer.renderSpec(['div', 0], <h1 />) as JSX.Element))
       .toMatchInlineSnapshot(`
-<div>
-  <h1 />
-</div>
-`);
+      <div>
+        <h1 />
+      </div>
+    `);
   });
 });

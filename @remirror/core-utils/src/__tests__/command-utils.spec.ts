@@ -50,7 +50,7 @@ describe('replaceText', () => {
     const from = doc(p('replace <start>me<end>'));
     const to = doc(p('replace ', atomInline()));
 
-    expect(replaceText({ appendText: '', type: schema.nodes.atomInline })).toTransformNode({
+    expect(replaceText({ appendText: '', type: schema.nodes.atomInline })).toTransform({
       from,
       to,
     });
@@ -59,7 +59,7 @@ describe('replaceText', () => {
   it('does not replace invalid content', () => {
     const from = doc(p('replace <start>me<end>'));
 
-    expect(replaceText({ appendText: '', type: schema.nodes.heading })).toTransformNode({ from });
+    expect(replaceText({ appendText: '', type: schema.nodes.heading })).toTransform({ from });
   });
 
   it('can specify from and to', () => {
@@ -73,7 +73,7 @@ describe('replaceText', () => {
         content: 'Content',
         range: { from: 8, to: 8 },
       }),
-    ).toTransformNode({
+    ).toTransform({
       from,
       to,
     });
@@ -85,7 +85,7 @@ describe('replaceText', () => {
 
     expect(
       replaceText({ appendText: ' ', type: schema.nodes.paragraph, content: 'Content' }),
-    ).toTransformNode({
+    ).toTransform({
       from,
       to,
     });

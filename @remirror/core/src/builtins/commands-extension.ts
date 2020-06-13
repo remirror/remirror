@@ -19,7 +19,12 @@ import {
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
 import { AnyCombinedUnion, ChainedFromCombined, CommandsFromCombined } from '../preset';
-import { CommandShape, ExtensionCommandFunction, ExtensionCommandReturn } from '../types';
+import {
+  CommandShape,
+  ExtensionCommandFunction,
+  ExtensionCommandReturn,
+  TransactionLifecycleMethod,
+} from '../types';
 
 /**
  * Generate chained and unchained commands for making changes to the editor.
@@ -38,6 +43,21 @@ export class CommandsExtension extends PlainExtension {
     return 'commands' as const;
   }
 
+  /**
+   * The current transaction which allows for making commands chainable.
+   */
+  get transaction(): Transaction {
+    const state = this.store.getState();
+
+    if (!this.#transaction || !this.#transaction.before.eq(state.doc)) {
+      this.#transaction = state.tr;
+    }
+
+    return this.#transaction;
+  }
+
+  #transaction?: Transaction;
+
   onCreate: CreateLifecycleMethod = () => {
     const { setExtensionStore, getStoreKey } = this.store;
 
@@ -54,6 +74,8 @@ export class CommandsExtension extends PlainExtension {
 
       return chain as any;
     });
+
+    setExtensionStore('getTransaction', () => this.transaction);
   };
 
   onView: ViewLifecycleMethod = (extensions, view) => {
@@ -96,10 +118,17 @@ export class CommandsExtension extends PlainExtension {
       commands[commandName].isEnabled = isEnabled;
     }
 
-    chained.run = () => view.dispatch(view.state.tr);
+    chained.run = () => view.dispatch(this.transaction);
 
     setStoreKey('commands', commands);
     setStoreKey('chain', chained as any);
+  };
+
+  /**
+   * Update the cached transaction whenever the state is updated.
+   */
+  onTransaction: TransactionLifecycleMethod = ({ state }) => {
+    this.#transaction = state.tr;
   };
 
   /**
@@ -155,6 +184,7 @@ export class CommandsExtension extends PlainExtension {
     return (...args: unknown[]) => {
       const { shouldDispatch = true, command } = parameter;
       const { view } = this.store;
+      const { state } = view;
 
       let dispatch: DispatchFunction | undefined;
 
@@ -165,7 +195,7 @@ export class CommandsExtension extends PlainExtension {
         view.focus();
       }
 
-      return command(...args)({ state: view.state, dispatch, view });
+      return command(...args)({ state, dispatch, view, tr: this.transaction });
     };
   }
 
@@ -180,13 +210,13 @@ export class CommandsExtension extends PlainExtension {
 
       /** Dispatch should do nothing here except check transaction */
       const dispatch: DispatchFunction = (transaction) => {
-        invariant(transaction === state.tr, {
+        invariant(transaction === this.transaction, {
           message:
-            'Chaining currently only supports methods which do not clone the transaction object.',
+            'Chaining currently only supports `CommandFunction` methods which do not use the `state.tr` property. Instead you should use the provided `tr`.',
         });
       };
 
-      command(...spread)({ state, dispatch, view });
+      command(...spread)({ state, dispatch, view, tr: this.transaction });
 
       return chained;
     };
@@ -353,6 +383,13 @@ declare global {
 
     interface ExtensionStore {
       /**
+       * Get the current transaction.
+       *
+       * This transaction makes chainable commands possible.
+       */
+      getTransaction: () => Transaction;
+
+      /**
        * A method to return the editor's available commands.
        */
       getCommands: <ExtensionUnion extends AnyExtension = AnyExtension>() => CommandsFromExtensions<
@@ -391,7 +428,7 @@ declare global {
        * })
        * ```
        */
-      getChain: <ExtensionUnion extends AnyExtension = any>() => ChainedFromExtensions<
+      getChain: <ExtensionUnion extends AnyExtension = AnyExtension>() => ChainedFromExtensions<
         CommandsExtension | ExtensionUnion
       >;
     }

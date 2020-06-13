@@ -72,7 +72,7 @@ export const prosemirrorMatchers = {
     const shouldChange = bool(to);
     const { pass, taggedDoc: actual } = apply(
       from,
-      (state, dispatch, view) => command({ state, dispatch, view }),
+      (state, dispatch, view) => command({ state, dispatch, view, tr: state.tr }),
       to,
     );
     const properties = { actual, expected, name: 'toTransformNode' };

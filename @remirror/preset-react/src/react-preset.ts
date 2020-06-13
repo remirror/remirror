@@ -1,3 +1,4 @@
+import { cx } from 'linaria';
 import { Children, cloneElement } from 'react';
 
 import {
@@ -48,8 +49,8 @@ export class ReactPreset extends Preset<ReactPresetOptions> {
      * Add a class and props to the root element if the document is empty.
      */
     extension.createSSRTransformer = () => {
-      return (element: JSX.Element) => {
-        const state = this.extensionStore.getState();
+      return (element: JSX.Element, state) => {
+        state = state ?? this.extensionStore.getState();
 
         const { emptyNodeClass, placeholder } = extension.options;
         const { children } = getElementProps(element);
@@ -62,11 +63,8 @@ export class ReactPreset extends Preset<ReactPresetOptions> {
           element,
           {},
           cloneElement(children, {
-            emptyNodeClass,
             placeholder,
-            className: isString(properties.className)
-              ? `${properties.className} ${emptyNodeClass}`
-              : emptyNodeClass,
+            className: cx(isString(properties.className) && properties.className, emptyNodeClass),
             'data-placeholder': placeholder,
           }),
         );

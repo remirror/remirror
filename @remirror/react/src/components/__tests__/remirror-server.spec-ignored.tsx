@@ -6,7 +6,7 @@ import React, { Fragment } from 'react';
 import { renderToString } from 'react-dom/server';
 
 import { EDITOR_CLASS_NAME } from '@remirror/core';
-import { createReactManager, docNodeSimpleJSON } from '@remirror/test-fixtures';
+import { BoldExtension, createReactManager, docNodeSimpleJSON } from '@remirror/test-fixtures';
 
 import { RenderEditor } from '..';
 
@@ -26,7 +26,7 @@ test('can render in a node server environment', () => {
       {...handlers}
       label={label}
       initialContent={docNodeSimpleJSON}
-      manager={createReactManager()}
+      manager={createReactManager({ extensions: [new BoldExtension()] })}
     >
       {mock}
     </RenderEditor>,
