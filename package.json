@@ -153,10 +153,6 @@
       "<rootDir>/@remirror/*/jest.config.js",
       "<rootDir>/packages/*/jest.config.js"
     ],
-    "reporters": [
-      "default",
-      "jest-github-reporter"
-    ],
     "testRunner": "jest-circus/runner",
     "watchPlugins": [
       "jest-watch-select-projects",
