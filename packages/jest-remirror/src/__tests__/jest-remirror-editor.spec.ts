@@ -114,14 +114,28 @@ class CustomExtension extends PlainExtension {
   };
 }
 
+function create() {
+  return renderEditor([new BoldExtension(), new CustomExtension()]);
+}
+
 describe('add', () => {
-  const {
+  let {
     view: { dom },
     schema,
     nodes: { doc, p },
     marks: { bold },
     add,
-  } = renderEditor([new BoldExtension(), new CustomExtension()]);
+  } = create();
+
+  beforeEach(() => {
+    ({
+      view: { dom },
+      schema,
+      nodes: { doc, p },
+      marks: { bold },
+      add,
+    } = create());
+  });
 
   it('overwrites the whole doc on each call', () => {
     const node = p('Hello');
@@ -130,11 +144,9 @@ describe('add', () => {
     const expectedTwo = toHTML({ node: nodeTwo, schema });
 
     add(doc(node));
-
     expect(dom).toContainHTML(expected);
 
     add(doc(nodeTwo));
-
     expect(dom).toContainHTML(expectedTwo);
     expect(dom).not.toContainHTML(expected);
   });

@@ -144,7 +144,7 @@ describe('nodeFactory', () => {
   });
 });
 
-const em = markFactory({ name: 'italic', schema, attrs: {} });
+const em = markFactory({ name: 'em', schema, attrs: {} });
 
 describe('markFactory', () => {
   it('returns a function', () => {

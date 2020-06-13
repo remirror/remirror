@@ -31,6 +31,7 @@ import {
   ProsemirrorNode,
   range,
   SchemaFromCombined,
+  Transaction,
 } from 'remirror/core';
 import { CorePreset } from 'remirror/preset/core';
 import { RenderEditor } from 'remirror/react';
@@ -136,6 +137,13 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    */
   get state(): EditorState<SchemaFromCombined<Combined>> {
     return this.view.state;
+  }
+
+  /**
+   * The editor state.
+   */
+  get tr(): Transaction<SchemaFromCombined<Combined>> {
+    return this.view.state.tr;
   }
 
   /**
@@ -260,7 +268,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
     this.#tags = tags;
 
     // Add the text to the dom
-    const tr = this.state.tr.replaceWith(0, this.doc.nodeSize - 2, content);
+    const tr = this.tr.replaceWith(0, this.doc.nodeSize - 2, content);
 
     tr.setMeta('addToHistory', false);
     this.view.dispatch(tr);
