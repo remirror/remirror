@@ -27,7 +27,7 @@ if (process.env.NODE_ENV !== 'production') {
       'This is an error which should not occur and is internal to the remirror codebase.',
     [ErrorConstant.MISSING_REQUIRED_EXTENSION]: 'Your editor is missing a required extension.',
     [ErrorConstant.MANAGER_PHASE_ERROR]:
-      'Called a method event at the wrong time. Please make sure getter functions are only called with within the scope of the returned functions. They should not be called in the outer scope of your method.',
+      'This occurs when accessing a method or property before it is available.',
     [ErrorConstant.NEW_EDITOR_MANAGER]:
       'No directly invoking the editor manager with `new`. Instead use one of the available static methods to create your instance.',
     [ErrorConstant.INVALID_PRESET_EXTENSION]:

@@ -58,7 +58,7 @@ describe('schema', () => {
 
     it('sets the extra attributes', () => {
       expect(schema.marks.link.spec.attrs).toEqual({
-        href: { default: null },
+        href: {},
         title: { default: null },
         custom: { default: 'failure' },
       });
@@ -77,7 +77,9 @@ describe('schema', () => {
       });
 
       expect(schema.marks.link.spec.attrs).toEqual({
-        href: { default: null },
+        custom: { default: 'failure' },
+        title: { default: null },
+        href: {},
       });
     });
 

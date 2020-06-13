@@ -35,11 +35,14 @@ interface UpdateMarkParameter extends Partial<RangeParameter>, Partial<Attribute
  * Update the selection with the provided MarkType.
  */
 export function updateMark(parameter: UpdateMarkParameter): CommandFunction {
-  return ({ state, dispatch }) => {
+  return ({ dispatch, tr }) => {
     const { type, attrs = object(), appendText, range } = parameter;
-    const { selection } = state;
-    const { tr } = state;
+    const { selection } = tr;
     const { from, to } = range ?? selection;
+
+    if (!dispatch) {
+      return true;
+    }
 
     tr.addMark(from, to, type.create(attrs));
 
@@ -47,10 +50,7 @@ export function updateMark(parameter: UpdateMarkParameter): CommandFunction {
       tr.insertText(appendText);
     }
 
-    if (dispatch) {
-      dispatch(tr);
-    }
-
+    dispatch(tr);
     return true;
   };
 }

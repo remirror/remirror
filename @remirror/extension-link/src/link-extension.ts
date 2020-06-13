@@ -48,9 +48,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
       group: MarkGroup.Link,
       attrs: {
         ...extra.defaults(),
-        href: {
-          default: null,
-        },
+        href: {},
       },
       inclusive: false,
       parseDOM: [
@@ -111,7 +109,12 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             return false;
           }
 
-          return updateMark({ type: this.type, attrs: attributes })({ state, dispatch, view });
+          return updateMark({ type: this.type, attrs: attributes })({
+            state,
+            dispatch,
+            view,
+            tr: this.store.getTransaction(),
+          });
         };
       },
 

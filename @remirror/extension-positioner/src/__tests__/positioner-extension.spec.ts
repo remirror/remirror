@@ -29,7 +29,10 @@ test('can position itself', () => {
       })
       .insertText('a')
       .callback(() => {
-        expect(onChange).toHaveBeenCalledWith({ active: false });
+        expect(onChange).toHaveBeenCalledWith({
+          active: false,
+          ...defaultPositioner.initialPosition,
+        });
       })
       .selectText(1, 5)
       .callback(() => {

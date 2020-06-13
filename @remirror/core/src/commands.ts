@@ -128,9 +128,7 @@ export function toggleMark(parameter: ToggleMarkParameter): CommandFunction {
     // Wrap dispatch with an automatic true return. This removes the need for
     // even more `return true` statements.
     const done = () => {
-      if (dispatch) {
-        dispatch(tr);
-      }
+      dispatch(tr);
 
       return true;
     };
