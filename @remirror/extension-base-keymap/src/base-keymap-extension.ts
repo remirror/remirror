@@ -134,11 +134,11 @@ export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
   protected onAddCustomHandler: AddCustomHandler<BaseKeymapOptions> = ({ keymap }) => {
     if (keymap) {
       this.extraKeyBindings = [...this.extraKeyBindings, keymap];
-      this.store?.rebuildKeymap?.();
+      this.store.rebuildKeymap?.();
 
       return () => {
         this.extraKeyBindings = this.extraKeyBindings.filter((binding) => binding !== keymap);
-        this.store?.rebuildKeymap?.();
+        this.store.rebuildKeymap?.();
       };
     }
 
