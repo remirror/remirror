@@ -181,8 +181,7 @@ export class PluginsExtension extends PlainExtension {
     original: ProsemirrorPlugin,
     replacement: ProsemirrorPlugin,
   ) => {
-    this.#plugins = this.#plugins.map((plugin) => (plugin === original ? replacement : original));
-
+    this.#plugins = this.#plugins.map((plugin) => (plugin === original ? replacement : plugin));
     this.store.setStoreKey('plugins', this.#plugins);
   };
 
@@ -213,10 +212,10 @@ export class PluginsExtension extends PlainExtension {
         '`reconfigureStatePlugins` should only be called after the view has been added to the manager.',
     });
 
-    const { state, updateState } = this.store.view;
-    const newState = state.reconfigure({ plugins: this.#plugins });
+    const { view } = this.store;
+    const newState = view.state.reconfigure({ plugins: this.#plugins });
 
-    updateState(newState);
+    view.updateState(newState);
   };
 }
 
