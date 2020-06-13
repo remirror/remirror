@@ -146,15 +146,15 @@ interface ToggleBlockItemParameter extends NodeTypeParameter, Partial<Attributes
 export const toggleBlockItem = ({
   type,
   toggleType,
-  attrs: attributes = object<ProsemirrorAttributes>(),
+  attrs,
 }: ToggleBlockItemParameter): ProsemirrorCommandFunction => (state, dispatch) => {
-  const isActive = isNodeActive({ state, type, attrs: attributes });
+  const isActive = isNodeActive({ state, type, attrs });
 
   if (isActive) {
     return setBlockType(toggleType)(state, dispatch);
   }
 
-  return setBlockType(type, attributes)(state, dispatch);
+  return setBlockType(type, attrs)(state, dispatch);
 };
 
 interface ReplaceTextParameter extends Partial<RangeParameter>, Partial<AttributesParameter> {

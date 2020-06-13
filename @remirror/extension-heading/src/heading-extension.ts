@@ -91,26 +91,14 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
        * Toggle the heading for the current block. If you don't provide the
        * level it will use the options.defaultLevel.
        */
-      toggleHeading: (attributes: HeadingExtensionAttributes = {}) => {
+      toggleHeading: (attrs: HeadingExtensionAttributes = {}) => {
         return convertCommand(
           toggleBlockItem({
             type: this.type,
             toggleType: this.store.schema.nodes.paragraph,
-            attrs: { attributes },
+            attrs,
           }),
         );
-      },
-    };
-  };
-
-  createHelpers = () => {
-    return {
-      /**
-       * Check if the heading is active. Can be specific by providing the
-       * heading level to check for.
-       */
-      isHeadingActive: (attributes?: HeadingExtensionAttributes) => {
-        return isNodeActive({ state: this.store.getState(), type: this.type, attrs: attributes });
       },
     };
   };

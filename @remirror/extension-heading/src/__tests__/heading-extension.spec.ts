@@ -107,12 +107,12 @@ describe('extension', () => {
       attributeNodes: { heading },
       add,
       nodes: { doc },
-      helpers,
+      active,
     } = create();
     const h5 = heading({ level: 5 });
     add(doc(h5('<cursor>Heading')));
 
-    expect(helpers.isHeadingActive({ level: 5 })).toBeTrue();
+    expect(active.heading({ level: 5 })).toBeTrue();
   });
 
   it('responds to keyboard shortcuts', () => {
