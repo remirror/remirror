@@ -12,9 +12,247 @@ env:
   PNPM_CACHE_FOLDER: .pnpm-store
 
 jobs:
-  build:
+  # Release the project if everything else passes
+  release:
+    needs: [lint, typecheck, unit_test, build_test, size_check, integration_tests]
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
 
+    steps:
+      - name: checkout code repository
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 0
+
+      - uses: actions/cache@v1
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: install pnpm
+        run: |
+          curl -L https://unpkg.com/@pnpm/self-installer | node
+          pnpm config set store-dir $PNPM_CACHE_FOLDER
+
+      - name: audit dependencies
+        run: pnpm audit --audit-level high
+
+      - name: install dependencies
+        run: pnpm install
+
+      - name: build project
+        run: pnpm run build
+
+      - name: create release pr or publish to npm
+        uses: changesets/action@master
+        with:
+          publish: pnpm run release
+          commit: 'chore: update versions'
+          title: 'chore: update versions'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  # Lint the project
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code repository
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 0
+
+      - uses: actions/cache@v1
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: install pnpm
+        run: |
+          curl -L https://unpkg.com/@pnpm/self-installer | node
+          pnpm config set store-dir $PNPM_CACHE_FOLDER
+
+      - name: audit dependencies
+        run: pnpm audit --audit-level high
+
+      - name: install dependencies
+        run: pnpm install
+
+      - name: lint files
+        run: pnpm run lint
+
+  # Typecheck the project
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code repository
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 0
+
+      - uses: actions/cache@v1
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: install pnpm
+        run: |
+          curl -L https://unpkg.com/@pnpm/self-installer | node
+          pnpm config set store-dir $PNPM_CACHE_FOLDER
+
+      - name: audit dependencies
+        run: pnpm audit --audit-level high
+
+      - name: install dependencies
+        run: pnpm install
+
+      - name: typecheck project
+        run: pnpm run typecheck
+
+  # Unit test and update coverage report
+  unit_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code repository
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 0
+
+      - uses: actions/cache@v1
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: install pnpm
+        run: |
+          curl -L https://unpkg.com/@pnpm/self-installer | node
+          pnpm config set store-dir $PNPM_CACHE_FOLDER
+
+      - name: audit dependencies
+        run: pnpm audit --audit-level high
+
+      - name: install dependencies
+        run: pnpm install
+
+      - name: run unit tests
+        run: pnpm run test
+
+      - name: publish code coverage report
+        uses: paambaati/codeclimate-action@v2.4.0
+        if: github.ref == 'refs/heads/master'
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          coverageCommand: 'echo Coverage'
+          debug: false
+
+  # Build the project and run tests on built files.
+  build_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code repository
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 0
+
+      - uses: actions/cache@v1
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: install pnpm
+        run: |
+          curl -L https://unpkg.com/@pnpm/self-installer | node
+          pnpm config set store-dir $PNPM_CACHE_FOLDER
+
+      - name: audit dependencies
+        run: pnpm audit --audit-level high
+
+      - name: install dependencies
+        run: pnpm install
+
+      - name: build project
+        run: pnpm run build
+
+      - name: run unit tests
+        run: pnpm run test
+
+  # Check that sizes are within their boundaries
+  size_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code repository
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 0
+
+      - uses: actions/cache@v1
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: install pnpm
+        run: |
+          curl -L https://unpkg.com/@pnpm/self-installer | node
+          pnpm config set store-dir $PNPM_CACHE_FOLDER
+
+      - name: audit dependencies
+        run: pnpm audit --audit-level high
+
+      - name: install dependencies
+        run: pnpm install
+
+      - name: build project
+        run: pnpm run build
+
+      - name: check sizes
+        run: pnpm run size
+
+  # Run integration tests with playwright
+  integration_tests:
+    runs-on: ubuntu-latest
     steps:
       # Required for the latest version of puppeteer
       - name: install libgbm
@@ -50,52 +288,8 @@ jobs:
       - name: install dependencies
         run: pnpm install
 
-      - name: lint files
-        run: pnpm run lint
-
-      - name: typecheck project
-        run: pnpm run typecheck
-
-      - name: run unit tests
-        # TODO turn tests back on
-        run: pnpm run test || true
-
-      - name: publish code coverage report
-        uses: paambaati/codeclimate-action@v2.4.0
-        if: github.ref == 'refs/heads/master'
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        with:
-          coverageCommand: 'echo Coverage'
-          debug: false
-
       - name: build project
         run: pnpm run build
-
-      - name: check sizes
-        run: pnpm run size
-
       # TODO turn tests back on
       # - name: integration tests
       #   run: pnpm run test:e2e
-
-      - name: create release pr or publish to npm
-        if: github.ref == 'refs/heads/master'
-        uses: changesets/action@master
-        with:
-          publish: pnpm run release
-          commit: 'chore: update versions' # The commit message to use. Default to `Version Packages`.
-          title: 'chore: update versions' # The pull request title. Default to `Version Packages`.
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: notify slack
-        uses: 8398a7/action-slack@v2
-        if: github.event.push && always() # Pick up events even if the job fails or is cancelled.
-        with:
-          status: ${{ job.status }}
-          author_name: Remirror GitHub CI
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

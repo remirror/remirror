@@ -36,17 +36,17 @@ jobs:
             displayName: 'build all project dependencies'
           - bash: pnpm run size
             displayName: 'check size limits'
-  # TODO tests are failing in build - investigate and fix.
-  # - ${{ if eq(parameters.name, 'Linux') }}:
-  #     - job: ${{ parameters.name }}BuildUnitTests
-  #       pool:
-  #         vmImage: ${{ parameters.vmImage }}
-  #       steps:
-  #         - template: pipeline-install.yml
-  #         - bash: pnpm run build
-  #           displayName: 'build all project dependencies'
-  #         - bash: pnpm run test:build
-  #           displayName: 'run unit tests against built code'
+
+  - ${{ if eq(parameters.name, 'Linux') }}:
+      - job: ${{ parameters.name }}BuildUnitTests
+        pool:
+          vmImage: ${{ parameters.vmImage }}
+        steps:
+          - template: pipeline-install.yml
+          - bash: pnpm run build
+            displayName: 'build all project dependencies'
+          - bash: pnpm run test:build
+            displayName: 'run unit tests against built code'
   # TODO turn tests back on after playwright rewrite.
   # - job: ${{ parameters.name }}ChromeIntegrationTests
   #   pool:
