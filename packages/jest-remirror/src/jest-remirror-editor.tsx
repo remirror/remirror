@@ -14,7 +14,6 @@ import {
 } from 'jest-prosemirror';
 import React from 'react';
 
-import { cellAround, CellSelection } from '@remirror/pm/tables';
 import {
   ActiveFromCombined,
   AnyCombinedUnion,

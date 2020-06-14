@@ -4,7 +4,6 @@ import {
   CustomHandlerKeyList,
   DefaultExtensionOptions,
   HandlerKeyList,
-  isNodeActive,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
