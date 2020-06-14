@@ -12,6 +12,7 @@ import {
   Handler,
   HandlerKeyList,
   isEmptyArray,
+  isNumber,
   isSelectionEmpty,
   isString,
   KeyBindingCommandFunction,
@@ -307,9 +308,9 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
     }
   }
 
-  private replace(replacement: string, index = 0): CommandFunction {
+  private replace(replacement: string, index?: number): CommandFunction {
     return ({ tr, dispatch }) => {
-      const result = this.#results[index];
+      const result = this.#results[isNumber(index) ? index : this.#activeIndex];
 
       if (!result) {
         return false;
@@ -321,9 +322,9 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
 
       const { from, to } = result;
 
-      tr.insertText(replacement, from, to);
-      const { find } = this.store.getChain();
-      find(this.#searchTerm).run();
+      dispatch(tr.insertText(replacement, from, to));
+      const { findNext } = this.store.getCommands();
+      findNext();
 
       return true;
     };
@@ -349,11 +350,15 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
   }
 
   private replaceAll(replacement: string): CommandFunction {
-    return ({ tr }) => {
+    return ({ tr, dispatch }) => {
       let offset: number | undefined;
 
       if (isEmptyArray(this.#results)) {
         return false;
+      }
+
+      if (!dispatch) {
+        return true;
       }
 
       this.#results.forEach(({ from, to }, index) => {
@@ -361,8 +366,10 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
         offset = this.rebaseNextResult({ replacement, index, lastOffset: offset });
       });
 
-      const { find } = this.store.getChain();
-      find(this.#searchTerm).run();
+      dispatch(tr);
+
+      const { find } = this.store.getCommands();
+      find(this.#searchTerm);
 
       return true;
     };

@@ -123,6 +123,30 @@ exports[`commands #find 3`] = `
 </div>
 `;
 
+exports[`commands #findNext, #replace 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  autofocus="false"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    welcomE
+  </p>
+  <p>
+    friEnd
+  </p>
+  <p>
+    goodbye
+  </p>
+  <p>
+    welcome friend
+  </p>
+</div>
+`;
+
 exports[`commands #replace 1`] = `
 <div
   aria-label=""
@@ -133,12 +157,7 @@ exports[`commands #replace 1`] = `
   role="textbox"
 >
   <p>
-    <span
-      class="search highlighted-search"
-    >
-      me
-    </span>
-    lcome
+    melcome
   </p>
   <p>
     friend
@@ -170,22 +189,13 @@ exports[`commands #replaceAll 1`] = `
     welcome
   </p>
   <p>
-    <span
-      class="search highlighted-search"
-    >
-      enemy
-    </span>
+    enemy
   </p>
   <p>
     hello
   </p>
   <p>
-    welcome 
-    <span
-      class="search"
-    >
-      enemy
-    </span>
+    welcome enemy
   </p>
 </div>
 `;
