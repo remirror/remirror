@@ -27,27 +27,13 @@ jobs:
             displayName: 'run unit tests across project'
 
   - ${{ if eq(parameters.name, 'Linux') }}:
-      - job: ${{ parameters.name }}Build
+      - job: ${{ parameters.name }}SizeChecks
         pool:
           vmImage: ${{ parameters.vmImage }}
         steps:
           - template: pipeline-install.yml
           - bash: pnpm run build
             displayName: 'build all project dependencies'
-          - publish: $(System.DefaultWorkingDirectory)/
-            condition: succeeded()
-            artifact: Build
-            displayName: create build artifact
-
-  - ${{ if eq(parameters.name, 'Linux') }}:
-      - job: ${{ parameters.name }}SizeChecks
-        pool:
-          vmImage: ${{ parameters.vmImage }}
-        dependsOn:
-          - LinuxBuild
-        steps:
-          - template: pipeline-install.yml
-          - template: pipeline-restore-build.yml
           - bash: pnpm run size
             displayName: 'check size limits'
 
@@ -55,19 +41,16 @@ jobs:
       - job: ${{ parameters.name }}BuildUnitTests
         pool:
           vmImage: ${{ parameters.vmImage }}
-        dependsOn:
-          - LinuxBuild
         steps:
           - template: pipeline-install.yml
-          - template: pipeline-restore-build.yml
+          - bash: pnpm run build
+            displayName: 'build all project dependencies'
           - bash: pnpm run test:build
             displayName: 'run unit tests against built code'
   # TODO turn tests back on soon.
   # - job: ${{ parameters.name }}ChromeIntegrationTests
   #   pool:
   #     vmImage: ${{ parameters.vmImage }}
-  #   dependsOn:
-  #     - LinuxBuild
   #   steps:
   #     - checkout: self
   #       lfs: true
@@ -77,7 +60,8 @@ jobs:
   #             -p
   #           displayName: 'increase file watch limit for linux only'
   #     - template: pipeline-install.yml
-  #     - template: pipeline-restore-build.yml
+  #     - bash: pnpm run build
+  #       displayName: 'build all project dependencies'
   #     - bash: pnpm run test:e2e
   #       displayName: 'nextjs integration tests'
   #       env:
