@@ -634,14 +634,14 @@ importers:
       react: ^16.13.1
   '@remirror/extension-search':
     dependencies:
-      '@babel/runtime': 7.10.2
+      '@babel/runtime': registry.npmjs.org/@babel/runtime/7.10.2
       escape-string-regexp: 4.0.0
       linaria: 2.0.0-alpha.5
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
     specifiers:
-      '@babel/runtime': ^7.10.0
+      '@babel/runtime': ^7.10.2
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
       escape-string-regexp: ^4.0.0
@@ -28578,3 +28578,21 @@ packages:
     dev: false
     resolution:
       integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==
+  registry.npmjs.org/@babel/runtime/7.10.2:
+    dependencies:
+      regenerator-runtime: registry.npmjs.org/regenerator-runtime/0.13.5
+    dev: false
+    name: '@babel/runtime'
+    resolution:
+      integrity: sha512-6sF3uQw2ivImfVIl62RZ7MXhO2tap69WeWK57vAaimT6AZbE4FbqjdEJIN1UqoD6wI6B+1n9UiagafH1sxjOtg==
+      registry: 'https://registry.yarnpkg.com/'
+      tarball: 'https://registry.npmjs.org/@babel/runtime/-/runtime-7.10.2.tgz'
+    version: 7.10.2
+  registry.npmjs.org/regenerator-runtime/0.13.5:
+    dev: false
+    name: regenerator-runtime
+    resolution:
+      integrity: sha512-ZS5w8CpKFinUzOwW3c83oPeVXoNsrLsaCoLtJvAClH135j/R77RuymhiSErhm2lKcwSCIpmvIWSbDkIfAqKQlA==
+      registry: 'https://registry.yarnpkg.com/'
+      tarball: 'https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.5.tgz'
+    version: 0.13.5
