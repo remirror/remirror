@@ -4,6 +4,7 @@ import { Keyboard } from 'test-keyboard';
 
 import { inputRules } from '@remirror/pm/inputrules';
 import { AllSelection, NodeSelection, TextSelection } from '@remirror/pm/state';
+import { cellAround, CellSelection } from '@remirror/pm/tables';
 import { DirectEditorProps, EditorView } from '@remirror/pm/view';
 import { isString, object, pick } from 'remirror/core/helpers';
 import {
@@ -22,13 +23,7 @@ import {
 import { findElementAtPosition, isElementDOMNode, isTextDOMNode } from 'remirror/core/utils';
 
 import { createEvents, EventType } from './jest-prosemirror-events';
-import {
-  createState,
-  p,
-  pm,
-  selectionFor,
-  taggedDocHasSelection as taggedDocumentHasSelection,
-} from './jest-prosemirror-nodes';
+import { createState, p, pm, selectionFor, taggedDocHasSelection } from './jest-prosemirror-nodes';
 import {
   TaggedDocParameter,
   TestEditorView,
@@ -204,6 +199,21 @@ export function dispatchNodeSelection<Schema extends EditorSchema = EditorSchema
   const { view, pos } = parameter;
   const { state } = view;
   const tr = state.tr.setSelection(NodeSelection.create(state.doc, pos));
+  view.dispatch(tr);
+}
+
+export function dispatchCellSelection<Schema extends EditorSchema = EditorSchema>(
+  parameter: DispatchNodeSelectionParameter<Schema>,
+) {
+  const { view, pos } = parameter;
+  const { state } = view;
+  const $anchor = cellAround(state.doc.resolve(pos));
+
+  if (!$anchor) {
+    return;
+  }
+
+  const tr = state.tr.setSelection(new CellSelection<Schema>($anchor) as any);
   view.dispatch(tr);
 }
 
@@ -535,8 +545,8 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    *
    * @param mod - the keyboard shortcut to type
    */
-  shortcut(module_: string) {
-    shortcut({ shortcut: module_, view: this.view });
+  shortcut(mod: string) {
+    shortcut({ shortcut: mod, view: this.view });
     return this;
   }
 
@@ -646,7 +656,7 @@ export function apply<Schema extends EditorSchema = EditorSchema>(
     pass = false;
   }
 
-  if (result && taggedDocumentHasSelection(result)) {
+  if (result && taggedDocHasSelection(result)) {
     pass = pm.eq(newState.selection, selectionFor(result));
     doc = result;
   }

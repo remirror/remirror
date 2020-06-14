@@ -1,5 +1,12 @@
 import { Preset } from '@remirror/core';
 
+import {
+  TableCellExtension,
+  TableExtension,
+  TableHeaderCell,
+  TableRowExtension,
+} from './table-extensions';
+
 /**
  * The table is packaged up as preset for simpler
  */
@@ -9,7 +16,12 @@ export class TablePreset extends Preset {
   }
 
   createExtensions() {
-    return [];
+    return [
+      new TableExtension(),
+      new TableRowExtension(),
+      new TableCellExtension(),
+      new TableHeaderCell(),
+    ];
   }
 
   protected onSetOptions(): void {}

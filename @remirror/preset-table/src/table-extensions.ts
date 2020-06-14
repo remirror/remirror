@@ -1,18 +1,9 @@
 import {
+  ApplyExtraAttributes,
   CommandFunction,
   CommandFunctionParameter,
   convertCommand,
-  EditorSchema,
-  includes,
   NodeExtension,
-  NodeExtensionSpec,
-  NodeGroup,
-  NodeType,
-  NodeTypeParameter,
-  object,
-  ProsemirrorNode,
-  SchemaParameter,
-  values,
 } from '@remirror/core';
 import { TextSelection } from '@remirror/pm/state';
 import {
@@ -33,22 +24,20 @@ import {
   toggleHeaderRow,
 } from '@remirror/pm/tables';
 
+import {
+  createTable,
+  createTableNodeSchema,
+  CreateTableParameter,
+  TableSchemaSpec,
+} from './table-utils';
+
 export class TableExtension extends NodeExtension {
   get name() {
-    return 'table';
+    return 'table' as const;
   }
 
-  createNodeSpec(): TableSchemaSpec {
-    return {
-      content: 'tableRow+',
-      tableRole: 'table',
-      isolating: true,
-      group: NodeGroup.Block,
-      parseDOM: [{ tag: 'table' }],
-      toDOM() {
-        return ['table', 0];
-      },
-    };
+  createNodeSpec(extra: ApplyExtraAttributes): TableSchemaSpec {
+    return createTableNodeSchema(extra).table;
   }
 
   /**
@@ -60,13 +49,6 @@ export class TableExtension extends NodeExtension {
 
   createCommands = () => {
     return {
-      tableAddColumnAfter: () => convertCommand(addColumnAfter),
-      tableAddColumnBefore: () => convertCommand(addColumnBefore),
-      tableAddRowAfter: () => convertCommand(addRowAfter),
-      tableAddRowBefore: () => convertCommand(addRowBefore),
-      tableDeleteColumn: () => convertCommand(deleteColumn),
-      tableDeleteRow: () => convertCommand(deleteRow),
-
       createTable: (
         parameter: Pick<CreateTableParameter, 'rowsCount' | 'columnsCount' | 'withHeaderRow'>,
       ): CommandFunction => ({ state, dispatch }) => {
@@ -95,7 +77,7 @@ export class TableExtension extends NodeExtension {
       addTableColumnAfter: () => convertCommand(addColumnAfter),
 
       /**
-       * Remove selected rows from the table.
+       * Remove selected column from the table.
        */
       deleteTableColumn: () => convertCommand(deleteColumn),
       addTableRowBefore: () => convertCommand(addRowBefore),
@@ -108,7 +90,8 @@ export class TableExtension extends NodeExtension {
       toggleTableHeaderColumn: () => convertCommand(toggleHeaderColumn),
       toggleTableHeaderRow: () => convertCommand(toggleHeaderRow),
       toggleTableHeaderCell: () => convertCommand(toggleHeaderCell),
-      setTableCellAttr: (name: string, value: any) => convertCommand(setCellAttr(name, value)),
+      setTableCellAttribute: (name: string, value: unknown) =>
+        convertCommand(setCellAttr(name, value)),
 
       /**
        * Fix all tables within the document.
@@ -123,15 +106,8 @@ export class TableRowExtension extends NodeExtension {
     return 'tableRow' as const;
   }
 
-  createNodeSpec(): TableSchemaSpec {
-    return {
-      content: 'tableCell+',
-      tableRole: 'row',
-      parseDOM: [{ tag: 'tr' }],
-      toDOM() {
-        return ['tr', 0];
-      },
-    };
+  createNodeSpec(extra: ApplyExtraAttributes): TableSchemaSpec {
+    return createTableNodeSchema(extra).tableRow;
   }
 }
 
@@ -140,17 +116,8 @@ export class TableCellExtension extends NodeExtension {
     return 'tableCell' as const;
   }
 
-  createNodeSpec(): TableSchemaSpec {
-    return {
-      content: 'inline*',
-      attrs: cellAttributes,
-      tableRole: 'cell',
-      isolating: true,
-      parseDOM: [{ tag: 'td' }, { tag: 'th' }],
-      toDOM() {
-        return ['td', 0];
-      },
-    };
+  createNodeSpec(extra: ApplyExtraAttributes): TableSchemaSpec {
+    return createTableNodeSchema(extra).tableCell;
   }
 }
 
@@ -159,60 +126,9 @@ export class TableHeaderCell extends NodeExtension {
     return 'tableHeader' as const;
   }
 
-  createNodeSpec(): TableSchemaSpec {
-    return {
-      content: 'inline*',
-      attrs: cellAttributes,
-      tableRole: 'header',
-      isolating: true,
-      parseDOM: [{ tag: 'th' }, { tag: 'th' }],
-      toDOM() {
-        return ['th', 0];
-      },
-    };
+  createNodeSpec(extra: ApplyExtraAttributes): TableSchemaSpec {
+    return createTableNodeSchema(extra).tableHeader;
   }
-}
-
-const cellAttributes = {
-  colspan: { default: 1 },
-  rowspan: { default: 1 },
-  colwidth: { default: null },
-};
-
-const TABLE_ROLES = ['table', 'row', 'cell', 'header'] as const;
-type TableRole = typeof TABLE_ROLES[number];
-
-export interface TableSchemaSpec extends NodeExtensionSpec {
-  tableRole: TableRole;
-}
-
-interface CreateTableParameter extends SchemaParameter {
-  /**
-   * Defines the number of rows to create with.
-   *
-   * @defaultValue 3
-   */
-  rowsCount?: number;
-
-  /**
-   * Defines the number of columns to create with.
-   *
-   * @defaultValue 3
-   */
-  columnsCount?: number;
-  /**
-   * When true the first row of the table will be a header row.
-   *
-   * @defaultValue true
-   */
-  withHeaderRow?: boolean;
-
-  /**
-   * Defines the content of each cell as a prosemirror node.
-   *
-   * @defaultValue undefined
-   */
-  cellContent?: ProsemirrorNode;
 }
 
 function fixTablesCommand({ state, dispatch }: CommandFunctionParameter) {
@@ -235,74 +151,4 @@ function toggleMergeCellCommand({ state, dispatch }: CommandFunctionParameter) {
   }
 
   return splitCell(state, dispatch);
-}
-
-/** Returns a map where keys are tableRoles and values are NodeTypes. */
-function tableNodeTypes(schema: EditorSchema): Record<string, NodeType> {
-  if (schema.cached.tableNodeTypes) {
-    return schema.cached.tableNodeTypes;
-  }
-
-  const roles: Record<TableRole, NodeType> = object();
-  schema.cached.tableNodeTypes = roles;
-
-  for (const nodeType of values(schema.nodes)) {
-    if (includes(TABLE_ROLES, nodeType.spec.tableRole)) {
-      roles[nodeType.spec.tableRole] = nodeType;
-    }
-  }
-
-  return roles;
-}
-
-interface CreateCellParameter extends NodeTypeParameter {
-  content?: ProsemirrorNode;
-}
-
-/**
- * Create a cell with the provided content.
- */
-function createCell(parameter: CreateCellParameter) {
-  const { content, type } = parameter;
-
-  if (content) {
-    return type.createChecked(null, content);
-  }
-
-  return type.createAndFill();
-}
-
-/**
- * Returns a table node of a given size.
- *
- * @remarks
- *
- * ```ts
- * const table = createTable({ schema: state.schema }); // 3x3 table node
- * dispatch(tr.replaceSelectionWith(table).scrollIntoView());
- * ```
- */
-function createTable(parameter: CreateTableParameter) {
-  const { schema, cellContent, columnsCount = 3, rowsCount = 3, withHeaderRow = true } = parameter;
-  const { cell: tableCell, header_cell: tableHeader, row: tableRow, table } = tableNodeTypes(
-    schema,
-  );
-
-  const cells: ProsemirrorNode[] = [];
-  const headerCells: ProsemirrorNode[] = [];
-  for (let ii = 0; ii < columnsCount; ii++) {
-    cells.push(createCell({ type: tableCell, content: cellContent }) as ProsemirrorNode);
-
-    if (withHeaderRow) {
-      headerCells.push(createCell({ type: tableHeader, content: cellContent }) as ProsemirrorNode);
-    }
-  }
-
-  const rows: ProsemirrorNode[] = [];
-  for (let ii = 0; ii < rowsCount; ii++) {
-    const rowNodes = withHeaderRow && ii === 0 ? headerCells : cells;
-    rows.push(tableRow.createChecked(null, rowNodes));
-  }
-
-  return table.createChecked(null, rows);
 }

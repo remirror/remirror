@@ -1,6 +1,7 @@
 import { render, RenderResult } from '@testing-library/react/pure';
 import {
   dispatchAllSelection,
+  dispatchCellSelection,
   dispatchNodeSelection,
   dispatchTextSelection,
   fireEventAtPosition,
@@ -13,6 +14,7 @@ import {
 } from 'jest-prosemirror';
 import React from 'react';
 
+import { cellAround, CellSelection } from '@remirror/pm/tables';
 import {
   ActiveFromCombined,
   AnyCombinedUnion,
@@ -263,7 +265,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    */
   readonly add = (taggedDocument: TaggedProsemirrorNode<SchemaFromCombined<Combined>>) => {
     const { content } = taggedDocument;
-    const { cursor, node, start, end, all, ...tags } = taggedDocument.tags;
+    const { cursor, node, start, end, all, anchor, ...tags } = taggedDocument.tags;
 
     this.#tags = tags;
 
@@ -291,6 +293,10 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
 
     if (all) {
       dispatchAllSelection(this.view);
+    }
+
+    if (anchor) {
+      dispatchCellSelection({ view: this.view, pos: anchor });
     }
 
     return this;
@@ -407,7 +413,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * view
    */
   readonly dispatchCommand = (command: CommandFunction) => {
-    command({ state: this.state, dispatch: this.view.dispatch, view: this.view });
+    command({ state: this.state, dispatch: this.view.dispatch, view: this.view, tr: this.tr });
 
     return this;
   };
