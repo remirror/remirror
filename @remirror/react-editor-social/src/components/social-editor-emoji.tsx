@@ -98,7 +98,7 @@ function useEmojiKeyBindings(parameter: EmojiHookParameter) {
       const activeIndex = indexFromArrowPress({
         direction,
         matchLength: list.length,
-        prevIndex: index,
+        previousIndex: index,
       });
 
       setState({ index: activeIndex });

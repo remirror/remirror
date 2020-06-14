@@ -79,7 +79,7 @@ export class PluginsExtension extends PlainExtension {
 
       // Assign the plugin key to the extension name.
       this.pluginKeys[extension.name] = key;
-      const getter = <State>() => getPluginState<State>(key, this.store.getStoreKey('view').state);
+      const getter = <State>() => getPluginState<State>(key, this.store.getState());
 
       extension.pluginKey = key;
       extension.getPluginState = getter;

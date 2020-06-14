@@ -16,7 +16,7 @@ import { lift, setBlockType, wrapIn } from '@remirror/pm/commands';
 import { liftListItem, wrapInList } from '@remirror/pm/schema-list';
 
 import { getMarkRange, isMarkType, isNodeType } from './dom-utils';
-import { findParentNode, isNodeActive, selectionEmpty } from './prosemirror-utils';
+import { findParentNode, isNodeActive, isSelectionEmpty } from './prosemirror-utils';
 
 interface UpdateMarkParameter extends Partial<RangeParameter>, Partial<AttributesParameter> {
   /**
@@ -267,7 +267,7 @@ export function removeMark(parameter: RemoveMarkParameter): ProsemirrorCommandFu
       ({ from, to } = range
         ? getMarkRange(state.doc.resolve(range.from), type) ||
           (isNumber(range.to) && getMarkRange(state.doc.resolve(range.to), type)) || { from, to }
-        : selectionEmpty(state)
+        : isSelectionEmpty(state)
         ? getMarkRange(state.selection.$anchor, type) || { from, to }
         : { from, to });
     }

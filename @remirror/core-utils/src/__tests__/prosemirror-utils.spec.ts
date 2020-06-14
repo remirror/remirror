@@ -29,13 +29,13 @@ import {
   findPositionOfNodeAfter,
   findPositionOfNodeBefore,
   findSelectedNodeOfType,
+  hasTransactionChanged,
   isNodeActive,
+  isSelectionEmpty,
   nodeEqualsType,
   removeNodeAtPosition,
   removeNodeBefore,
   schemaToJSON,
-  selectionEmpty,
-  transactionChanged,
 } from '../prosemirror-utils';
 
 describe('nodeEqualsType', () => {
@@ -276,7 +276,7 @@ describe('selectionEmpty', () => {
       state: { selection },
     } = createEditor(doc(p('inline'), p('<start>aba<end>', 'awesome')));
 
-    expect(selectionEmpty(selection)).toBeFalse();
+    expect(isSelectionEmpty(selection)).toBeFalse();
   });
 
   it('returns true when cursor is active', () => {
@@ -284,7 +284,7 @@ describe('selectionEmpty', () => {
       state: { selection },
     } = createEditor(doc(p('inline'), p('<cursor>aba')));
 
-    expect(selectionEmpty(selection)).toBeTrue();
+    expect(isSelectionEmpty(selection)).toBeTrue();
   });
 
   it('returns true when no cursor', () => {
@@ -292,7 +292,7 @@ describe('selectionEmpty', () => {
       state: { selection },
     } = createEditor(doc(p('inline'), p('aba')));
 
-    expect(selectionEmpty(selection)).toBeTrue();
+    expect(isSelectionEmpty(selection)).toBeTrue();
   });
 });
 
@@ -304,7 +304,7 @@ describe('transactionChanged', () => {
     } = createEditor(doc(p('inline'), p('<start>aba<end>', 'awesome')));
     view.dispatch(tr);
 
-    expect(transactionChanged(tr)).toBeFalse();
+    expect(hasTransactionChanged(tr)).toBeFalse();
   });
 
   it('returns true when the doc has changed', () => {
@@ -313,14 +313,14 @@ describe('transactionChanged', () => {
     } = createEditor(doc(p('inline'), p('<start>aba<end>', 'awesome')));
     tr.deleteSelection();
 
-    expect(transactionChanged(tr)).toBeTrue();
+    expect(hasTransactionChanged(tr)).toBeTrue();
   });
 
   it('returns true when cursor changes', () => {
     const { state } = createEditor(doc(p('inline'), p('aba<cursor>')));
     const tr = state.tr.setSelection(TextSelection.atStart(state.doc));
 
-    expect(transactionChanged(tr)).toBeTrue();
+    expect(hasTransactionChanged(tr)).toBeTrue();
   });
 });
 

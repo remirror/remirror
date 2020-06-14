@@ -4,8 +4,8 @@ import {
   EditorViewParameter,
   ElementParameter,
   isEmptyParagraphNode,
+  isSelectionEmpty,
   Position,
-  selectionEmpty,
   TransactionLifecycleParameter,
 } from '@remirror/core';
 
@@ -62,7 +62,7 @@ export const defaultPositioner: Positioner = {
       previousState.selection.eq(state.selection)
     );
   },
-  isActive: ({ state }) => !selectionEmpty(state),
+  isActive: ({ state }) => !isSelectionEmpty(state),
   getPosition({ element, view, state }) {
     return absoluteCoordinates({
       view,
@@ -79,7 +79,7 @@ export const floatingPositioner: Positioner = {
   ...defaultPositioner,
 
   isActive({ state }) {
-    return selectionEmpty(state) && isEmptyParagraphNode(state.selection.$anchor.parent);
+    return isSelectionEmpty(state) && isEmptyParagraphNode(state.selection.$anchor.parent);
   },
 
   getPosition({ view, element, state }) {
@@ -166,7 +166,7 @@ export const popupMenuPositioner: Positioner = {
   /**
    * Only active when the selection is empty (one character)
    */
-  isActive: ({ state }) => selectionEmpty(state),
+  isActive: ({ state }) => isSelectionEmpty(state),
   getPosition({ view, element, state }) {
     const parent = element.offsetParent;
 

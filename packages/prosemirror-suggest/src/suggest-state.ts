@@ -13,7 +13,7 @@ import {
   TextParameter,
   TransactionParameter,
 } from '@remirror/core-types';
-import { transactionChanged } from '@remirror/core-utils';
+import { hasTransactionChanged } from '@remirror/core-utils';
 
 import { ChangeReason, DEFAULT_SUGGESTER, ExitReason } from './suggest-constants';
 import { isInvalidSplitReason, isJumpReason, isValidMatch } from './suggest-predicates';
@@ -363,7 +363,7 @@ export class SuggestState {
   apply({ tr, newState }: TransactionParameter & CompareStateParameter) {
     const { exit } = this.handlerMatches;
 
-    if (!transactionChanged(tr) && !this.removed) {
+    if (!hasTransactionChanged(tr) && !this.removed) {
       return this;
     }
 

@@ -87,7 +87,7 @@ function useMentionKeyBindings(props: MentionSuggestionProps, state: UseMentionS
         const activeIndex = indexFromArrowPress({
           direction,
           matchLength: matches.length,
-          prevIndex: index,
+          previousIndex: index,
         });
 
         setState({ index: activeIndex, matcher: name });

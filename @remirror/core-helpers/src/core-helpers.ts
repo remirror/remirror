@@ -551,7 +551,11 @@ export function callIfDefined<Method extends AnyFunction>(
  *
  * @public
  */
-export function findMatches(text: string, regexp: RegExp): RegExpExecArray[] {
+export function findMatches(
+  text: string,
+  regexp: RegExp,
+  runWhile: (match: RegExpExecArray | null) => boolean = (match) => bool(match),
+): RegExpExecArray[] {
   const results: RegExpExecArray[] = [];
   const flags = regexp.flags;
   let match: RegExpExecArray | null;
@@ -562,10 +566,11 @@ export function findMatches(text: string, regexp: RegExp): RegExpExecArray[] {
 
   do {
     match = regexp.exec(text);
+
     if (match) {
       results.push(match);
     }
-  } while (match);
+  } while (runWhile(match));
 
   regexp.lastIndex = 0;
   return results;

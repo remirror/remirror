@@ -8,6 +8,7 @@ import {
   Handler,
   HandlerKeyList,
   isMarkActive,
+  isSelectionEmpty,
   isTextSelection,
   KeyBindings,
   MarkExtension,
@@ -16,7 +17,6 @@ import {
   markPasteRule,
   ProsemirrorAttributes,
   removeMark,
-  selectionEmpty,
   updateMark,
 } from '@remirror/core';
 import { TextSelection } from '@remirror/pm/state';
@@ -102,7 +102,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           const { selection } = state;
 
           if (
-            selectionEmpty(selection) ||
+            isSelectionEmpty(selection) ||
             (!isTextSelection(selection) &&
               !isMarkActive({ stateOrTransaction: state.tr, type: this.type }))
           ) {

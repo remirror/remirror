@@ -9,7 +9,7 @@ import {
   ResolvedPosParameter,
   TextParameter,
 } from '@remirror/core-types';
-import { selectionEmpty } from '@remirror/core-utils';
+import { isSelectionEmpty } from '@remirror/core-utils';
 
 import { ChangeReason, ExitReason } from './suggest-constants';
 import { createRegexFromSuggestion, regexToString } from './suggest-helpers';
@@ -252,7 +252,7 @@ const findExitReason = ({
 
   // Exit caused by a selection
   if (
-    !selectionEmpty(state) &&
+    !isSelectionEmpty(state) &&
     (selection.from <= match.range.from || selection.to >= match.range.end)
   ) {
     return { exit: createMatchWithReason({ match, reason: ExitReason.SelectionOutside }) };
@@ -380,7 +380,7 @@ export const findReason = ({
     return {
       change: createMatchWithReason({
         match: compare.next,
-        reason: selectionEmpty(state) ? ChangeReason.Move : ChangeReason.SelectionInside,
+        reason: isSelectionEmpty(state) ? ChangeReason.Move : ChangeReason.SelectionInside,
       }),
     };
   }

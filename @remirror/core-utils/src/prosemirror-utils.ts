@@ -497,7 +497,7 @@ export function removeNodeAfter(tr: Transaction) {
  *
  * @param value - the transaction selection or state
  */
-export function selectionEmpty(value: Transaction | EditorState | Selection) {
+export function isSelectionEmpty(value: Transaction | EditorState | Selection) {
   if (isSelection(value)) {
     return value.empty;
   }
@@ -513,9 +513,9 @@ export function selectionEmpty(value: Transaction | EditorState | Selection) {
  * Check to see if a transaction has changed either the document or the current
  * selection.
  *
- * @param params - the TransactionChangeParameter object
+ * @param tr - the transaction to check
  */
-export function transactionChanged(tr: Transaction) {
+export function hasTransactionChanged(tr: Transaction) {
   return tr.docChanged || tr.selectionSet;
 }
 

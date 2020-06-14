@@ -1,0 +1,191 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands #clearSearch 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  autofocus="false"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    welcome
+  </p>
+  <p>
+    friend
+  </p>
+  <p>
+    hello
+  </p>
+  <p>
+    welcome friend
+  </p>
+</div>
+`;
+
+exports[`commands #find 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  autofocus="false"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    <span
+      class="search highlighted-search"
+    >
+      welcome
+    </span>
+  </p>
+  <p>
+    friend
+  </p>
+  <p>
+    hello
+  </p>
+  <p>
+    <span
+      class="search"
+    >
+      welcome
+    </span>
+     friend
+  </p>
+</div>
+`;
+
+exports[`commands #find 2`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  autofocus="false"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    <span
+      class="search"
+    >
+      welcome
+    </span>
+  </p>
+  <p>
+    friend
+  </p>
+  <p>
+    hello
+  </p>
+  <p>
+    <span
+      class="search highlighted-search"
+    >
+      welcome
+    </span>
+     friend
+  </p>
+</div>
+`;
+
+exports[`commands #find 3`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  autofocus="false"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    <span
+      class="search highlighted-search"
+    >
+      welcome
+    </span>
+  </p>
+  <p>
+    friend
+  </p>
+  <p>
+    hello
+  </p>
+  <p>
+    <span
+      class="search"
+    >
+      welcome
+    </span>
+     friend
+  </p>
+</div>
+`;
+
+exports[`commands #replace 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  autofocus="false"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    <span
+      class="search highlighted-search"
+    >
+      me
+    </span>
+    lcome
+  </p>
+  <p>
+    friend
+  </p>
+  <p>
+    hello
+  </p>
+  <p>
+    <span
+      class="search"
+    >
+      we
+    </span>
+    lcome friend
+  </p>
+</div>
+`;
+
+exports[`commands #replaceAll 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  autofocus="false"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    welcome
+  </p>
+  <p>
+    <span
+      class="search highlighted-search"
+    >
+      enemy
+    </span>
+  </p>
+  <p>
+    hello
+  </p>
+  <p>
+    welcome 
+    <span
+      class="search"
+    >
+      enemy
+    </span>
+  </p>
+</div>
+`;
