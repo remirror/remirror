@@ -5,7 +5,7 @@ on:
   pull_request:
     types: [opened, synchronize]
     branches:
-      - master
+      - main
       - next # Temporarily enable
 
 env:
@@ -15,7 +15,7 @@ env:
 jobs:
   deploy_docs:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master' || github.event.pull_request
+    if: github.ref == 'refs/heads/main' || github.event.pull_request
 
     steps:
       - name: checkout code repository
@@ -55,7 +55,7 @@ jobs:
         uses: nwtgck/actions-netlify@develop
         with:
           publish-dir: './docs/public'
-          production-branch: master
+          production-branch: main
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message:
             'Deploy Docs from GitHub Actions - ${{ github.event.pull_request.title || github.ref }}'

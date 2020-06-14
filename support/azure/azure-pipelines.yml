@@ -19,17 +19,17 @@ schedules:
     displayName: daily midnight build
     branches:
       include:
-        - master
+        - main
         - next
     always: true
 
 # What triggers a new build
 trigger:
-  - master
+  - main
   - next
   - ci/*
 
 # The branches which cause a PR to trigger a new build
 pr:
-  - master
+  - main
   - next

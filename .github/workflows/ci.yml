@@ -2,9 +2,12 @@ name: Node CI
 
 on:
   push:
+    branches:
+      - main
+      - next
   pull_request:
     branches:
-      - master
+      - main
       - next
 
 env:
@@ -16,7 +19,7 @@ jobs:
   release:
     needs: [lint, typecheck, unit_test, build_test, size_check, integration_tests]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
 
     steps:
       - name: checkout code repository
@@ -51,7 +54,7 @@ jobs:
         run: pnpm run build
 
       - name: create release pr or publish to npm
-        uses: changesets/action@master
+        uses: changesets/action@main
         with:
           publish: pnpm run release
           commit: 'chore: update versions'
@@ -167,7 +170,7 @@ jobs:
 
       - name: publish code coverage report
         uses: paambaati/codeclimate-action@v2.4.0
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
