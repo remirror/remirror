@@ -102,11 +102,13 @@ export function transformExtensionOrPreset<Combined extends AnyCombinedUnion>(
 
   // Keep track of added constructors for uniqueness.
   const found = new WeakSet<AnyExtensionConstructor>();
+  const names = new Set<string>();
 
   // Remove extension duplicates and update the preset with the non duplicated
   // value.
   for (const extension of rawExtensions) {
     const key = extension.constructor;
+    const name = extension.name;
     const duplicates = duplicateMap.get(key);
 
     invariant(duplicates, {
@@ -114,11 +116,12 @@ export function transformExtensionOrPreset<Combined extends AnyCombinedUnion>(
       code: ErrorConstant.INTERNAL,
     });
 
-    if (found.has(key)) {
+    if (found.has(key) || names.has(name)) {
       continue;
     }
 
     found.add(key);
+    names.add(name);
     extensions.push(extension);
     extensionMap.set(key, extension);
 
