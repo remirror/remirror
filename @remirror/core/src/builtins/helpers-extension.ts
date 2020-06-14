@@ -88,8 +88,6 @@ export class HelpersExtension extends PlainExtension {
 
 declare global {
   namespace Remirror {
-    const _HELPERS: unique symbol;
-
     interface ManagerStore<Combined extends AnyCombinedUnion> {
       /**
        * The helpers provided by the extensions used.
@@ -153,7 +151,7 @@ declare global {
        * This pseudo property makes it easier to infer Generic types of this class.
        * @private
        */
-      [_HELPERS]: this['createHelpers'] extends AnyFunction
+      ['~H']: this['createHelpers'] extends AnyFunction
         ? ReturnType<this['createHelpers']>
         : EmptyShape;
     }

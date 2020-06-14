@@ -233,7 +233,6 @@ declare global {
      *
      * @internal
      */
-    const _OPTIONS: unique symbol;
 
     interface ValidOptionsExtender {
       DynamicAnnotation: DynamicAnnotation;

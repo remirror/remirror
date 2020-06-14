@@ -621,9 +621,7 @@ interface SettingsWithPrivacy extends Remirror.ManagerSettings {
   privacy?: symbol;
 }
 
-export type CombinedFromManager<
-  Manager extends AnyEditorManager
-> = Manager[typeof Remirror._COMBINED];
+export type CombinedFromManager<Manager extends AnyEditorManager> = Manager['~EP'];
 
 interface EditorManagerConstructor extends Function, Remirror.EditorManagerConstructor {
   fromObject: <ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>(
@@ -678,13 +676,11 @@ export interface EditorManager<Combined extends AnyCombinedUnion> {
    */
   ['~M']: GetMarkNameUnion<this['~E']>;
 
-  [Remirror._COMBINED]: Combined;
+  ['~EP']: Combined;
 }
 
 declare global {
   namespace Remirror {
-    const _COMBINED: unique symbol;
-
     /**
      * Extend this to add extra static methods to the
      * `EditorManagerConstructor`.

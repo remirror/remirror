@@ -93,9 +93,7 @@ export type NodeExtensionTags<NodeNames extends string = string> = Record<NodeGr
 /**
  * Get the static extension settings.
  */
-export type GetOptions<
-  Type extends { [Remirror._OPTIONS]: unknown }
-> = Type[typeof Remirror._OPTIONS];
+export type GetOptions<Type extends { ['~O']: unknown }> = Type['~O'];
 
 /**
  * Get the schema from an `EditorManager`.
@@ -105,9 +103,7 @@ export type GetSchema<Type extends { ['~Sch']: unknown }> = Type['~Sch'];
 /**
  * Get the commands from an `EditorManager`, `Extension` or `Preset`.
  */
-export type GetCommands<
-  Type extends { [Remirror._COMMANDS]: unknown }
-> = Type[typeof Remirror._COMMANDS];
+export type GetCommands<Type extends { ['~C']: unknown }> = Type['~C'];
 
 /**
  * Get the Extensions from an `EditorManager`, or `Preset`.
@@ -118,9 +114,7 @@ export type GetExtensions<Type extends { ['~E']: unknown }> = Type['~E'];
  * Get the helpers provided by an from an `EditorManager`, `Extension` or
  * `Preset`.
  */
-export type GetHelpers<
-  Type extends { [Remirror._HELPERS]: unknown }
-> = Type[typeof Remirror._HELPERS];
+export type GetHelpers<Type extends { ['~H']: unknown }> = Type['~H'];
 
 /**
  * Get the name of an extension.

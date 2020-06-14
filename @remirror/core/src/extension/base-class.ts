@@ -71,7 +71,7 @@ export abstract class BaseClass<
    * Not for usage. This is purely for types to make it easier to infer
    * the type of `Settings` on an extension instance.
    */
-  [Remirror._OPTIONS]: Options & DefaultStaticOptions;
+  ['~O']: Options & DefaultStaticOptions;
 
   /**
    * The identifier for the extension which can determine whether it is a node,

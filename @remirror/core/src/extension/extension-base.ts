@@ -783,8 +783,8 @@ declare global {
      */
     interface AnyExtensionOverrides extends AnyBaseClassOverrides {
       constructor: AnyExtensionConstructor;
-      [_COMMANDS]: ExtensionCommandReturn;
-      [_HELPERS]: ExtensionHelperReturn;
+      ['~C']: ExtensionCommandReturn;
+      ['~H']: ExtensionHelperReturn;
     }
   }
 }

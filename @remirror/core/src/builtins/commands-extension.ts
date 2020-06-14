@@ -256,8 +256,6 @@ const forbiddenNames = new Set(['run', 'chain']);
 
 declare global {
   namespace Remirror {
-    const _COMMANDS: unique symbol;
-
     interface ManagerStore<Combined extends AnyCombinedUnion> {
       /**
        * Enables the use of custom commands created by the extensions for
@@ -376,7 +374,7 @@ declare global {
        * class.
        * @private
        */
-      [_COMMANDS]: this['createCommands'] extends AnyFunction
+      ['~C']: this['createCommands'] extends AnyFunction
         ? ReturnType<this['createCommands']>
         : EmptyShape;
     }
