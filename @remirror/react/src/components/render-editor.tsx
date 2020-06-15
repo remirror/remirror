@@ -172,7 +172,7 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
    */
   updateManager() {
     // TODO add a way to reinitialize.
-    this.manager.addView(this.view);
+    this.manager.addView(this.view).ready();
   }
 
   /**
@@ -439,6 +439,8 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
     if (suppressHydrationWarning) {
       this.setState({ shouldRenderClient: true });
     }
+
+    this.manager.ready();
   }
 
   componentDidUpdate(

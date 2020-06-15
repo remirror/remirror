@@ -289,6 +289,11 @@ interface ExtensionLifecycleMethods {
   onView?: ViewLifecycleMethod;
 
   /**
+   * This is triggered by the view layer to notify remirror that the editor is now in the dom and fully mounted.
+   */
+  onReady?: () => void;
+
+  /**
    * Called when a transaction successfully updates the editor state.
    *
    * @remarks

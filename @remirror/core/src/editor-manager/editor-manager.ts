@@ -161,9 +161,16 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   #handlers: {
     create: CreateLifecycleMethod[];
     view: ViewLifecycleMethod[];
+    ready: Array<() => void>;
     transaction: TransactionLifecycleMethod[];
     destroy: DestroyLifecycleMethod[];
-  } = { transaction: [], view: [], create: [], destroy: [] };
+  } = {
+    create: [],
+    view: [],
+    ready: [],
+    transaction: [],
+    destroy: [],
+  };
 
   /**
    * Identifies this as a `Manager`.
@@ -273,7 +280,7 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
     this.#phase = ManagerPhase.Create;
 
     for (const handler of this.#handlers.create) {
-      handler(this.#extensions as readonly AnyExtension[]);
+      handler(this.#extensions);
     }
   }
 
@@ -287,9 +294,11 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
 
     for (const extension of this.#extensions) {
       extension.setStore(this.#extensionStore);
+      extension.onPrepare?.();
 
       const createHandler = extension.onCreate;
       const viewHandler = extension.onView;
+      const readyHandler = extension.onReady;
       const transactionHandler = extension.onTransaction;
       const destroyHandler = extension.onDestroy;
 
@@ -299,6 +308,10 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
 
       if (viewHandler) {
         this.#handlers.view.push(viewHandler);
+      }
+
+      if (readyHandler) {
+        this.#handlers.view.push(readyHandler);
       }
 
       if (transactionHandler) {
@@ -432,7 +445,21 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
       handler(this.#extensions as readonly AnyExtension[], view);
     }
 
+    return this;
+  }
+
+  /**
+   * This method should be called by the view layer to notify remirror that everything is ready to run.
+   */
+  ready() {
+    this.#phase = ManagerPhase.Ready;
+
+    for (const handler of this.#handlers.ready) {
+      handler();
+    }
+
     this.#phase = ManagerPhase.Runtime;
+    return this;
   }
 
   /* Public Methods */

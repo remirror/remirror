@@ -1,12 +1,18 @@
 import {
   CommandFunction,
   CreatePluginReturn,
-  CustomHandlerKeyList,
   DefaultExtensionOptions,
   EditorState,
+  EditorView,
+  FromToParameter,
+  Handler,
   HandlerKeyList,
+  hasTransactionChanged,
+  isDOMNode,
   isEmptyArray,
+  isEqual,
   isNumber,
+  isString,
   PlainExtension,
   Static,
   StaticKeyList,
@@ -27,15 +33,44 @@ export interface TrackChangesOptions {
    * @default `(message: string) => "Revert: '" + message + "'"`
    */
   revertMessage?: (message: string) => string;
+
+  /**
+   * A handler that is called whenever a tracked change is hovered over in the
+   * editor.
+   */
+  onMouseOverCommit?: Handler<(parameter: HandlerParameter) => void>;
+
+  /**
+   * A handler that is called whenever a tracked change was being hovered is no
+   * longer hovered.
+   */
+  onMouseLeaveCommit?: Handler<(parameter: HandlerParameter) => void>;
+
+  /**
+   * Called when the commit is part of the current text selection. Called with
+   * an array of possible selection.
+   */
+  onSelectCommits?: Handler<
+    (selections: HandlerParameter[], previousSelections?: HandlerParameter[]) => void
+  >;
+
+  /**
+   * Called when commits are deselected.
+   */
+  onDeselectCommits?: Handler<(selections: HandlerParameter[]) => void>;
 }
 
 /**
  * An extension for the remirror editor. CHANGE ME.
  */
 export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
-  static readonly staticKeys: StaticKeyList<TrackChangesOptions> = [];
-  static readonly handlerKeys: HandlerKeyList<TrackChangesOptions> = [];
-  static readonly customHandlerKeys: CustomHandlerKeyList<TrackChangesOptions> = [];
+  static readonly staticKeys: StaticKeyList<TrackChangesOptions> = ['blameMarkerClass'];
+  static readonly handlerKeys: HandlerKeyList<TrackChangesOptions> = [
+    'onMouseOverCommit',
+    'onMouseLeaveCommit',
+    'onSelectCommits',
+    'onDeselectCommits',
+  ];
 
   static readonly defaultOptions: DefaultExtensionOptions<TrackChangesOptions> = {
     blameMarkerClass: 'blame-marker',
@@ -45,6 +80,9 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
   get name() {
     return 'trackChanges' as const;
   }
+
+  #hovered?: HandlerParameter;
+  #selections?: HandlerParameter[];
 
   /**
    * Create the command for managing the commits in the document.
@@ -64,12 +102,12 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
       /**
        * Highlight the provided commit.
        */
-      highlightCommit: (commit: Commit) => this.highlightCommit(commit),
+      highlightCommit: (commit: Commit | CommitId) => this.highlightCommit(commit),
 
       /**
        * Remove the highlight from the commit.
        */
-      removeHighlightedCommit: (commit: Commit) => this.removeHighlightedCommit(commit),
+      removeHighlightedCommit: (commit: Commit | CommitId) => this.removeHighlightedCommit(commit),
     };
   };
 
@@ -96,20 +134,34 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
     return this.getPluginState<TrackChangesPluginState>().tracked.commits;
   }
 
+  private getIndexByName(name: 'first' | 'last') {
+    const length = this.getPluginState<TrackChangesPluginState>().tracked.commits.length;
+
+    switch (name) {
+      case 'first':
+        return 0;
+
+      default:
+        return length - 1;
+    }
+  }
+
   /**
    * Get the commit by it's index
    */
   private getCommit(id: CommitId) {
     const commits = this.getPluginState<TrackChangesPluginState>().tracked.commits;
 
-    switch (id) {
-      case 'first':
-        return commits[0];
-      case 'last':
-        return commits[commits.length - 1];
-      default:
-        return commits[id];
+    if (isString(id)) {
+      return commits[this.getIndexByName(name)];
     }
+
+    return commits[id];
+  }
+
+  private getCommitId(commit: Commit) {
+    const { tracked } = this.getPluginState<TrackChangesPluginState>();
+    return tracked.commits.indexOf(commit);
   }
 
   /**
@@ -126,6 +178,8 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
         },
 
         apply: (tr, pluginState: TrackChangesPluginState, _: EditorState, state: EditorState) => {
+          this.handleSelection(tr);
+
           return this.applyStateUpdates(tr, pluginState, state);
         },
       },
@@ -133,9 +187,113 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
         decorations: (state) => {
           return this.getPluginState<TrackChangesPluginState>(state).decorations;
         },
+        handleDOMEvents: {
+          mouseover: (view, event) => {
+            return this.handlerMouseOver(view, event);
+          },
+          mouseleave: (view, event) => {
+            return this.handleMouseLeave(view, event);
+          },
+        },
       },
     };
   };
+
+  /**
+   * Calls the selection handlers when the selection changes the number of
+   * commit spans covered.
+   */
+  private handleSelection(tr: Transaction) {
+    if (!hasTransactionChanged(tr)) {
+      return;
+    }
+
+    const { from, to } = tr.selection;
+    const { tracked } = this.getPluginState<TrackChangesPluginState>();
+    const selections: HandlerParameter[] = [];
+
+    for (const map of tracked.blameMap) {
+      const selectionIncludesSpan =
+        (map.from <= from && map.to >= from) || (map.from <= to && map.to >= to);
+
+      if (!selectionIncludesSpan || !isNumber(map.commit)) {
+        continue;
+      }
+
+      selections.push({ commit: this.getCommit(map.commit), from: map.from, to: map.to });
+    }
+
+    const selectionHasCommit = selections.length > 0;
+
+    // console.log(tr.doc.textContent, selections, this.#selections);
+
+    if (selectionHasCommit && !isEqual(selections, this.#selections)) {
+      this.options.onSelectCommits(selections, this.#selections);
+      this.#selections = selections;
+
+      return;
+    }
+
+    if (this.#selections) {
+      this.options.onDeselectCommits(this.#selections);
+      this.#selections = undefined;
+    }
+  }
+
+  /**
+   * Transform the view and event into a commit and span.
+   */
+  private getHandlerParameterFromEvent(
+    view: EditorView,
+    event: Event,
+  ): HandlerParameter | undefined {
+    if (!isDOMNode(event.target)) {
+      return;
+    }
+
+    const pos = view.posAtDOM(event.target, 0);
+    const { tracked } = this.getPluginState<TrackChangesPluginState>();
+    const span = tracked.blameMap.find((map) => map.from <= pos && map.to >= pos);
+
+    if (!span || !isNumber(span.commit)) {
+      return;
+    }
+
+    return { commit: this.getCommit(span.commit), from: span.from, to: span.to };
+  }
+
+  /**
+   * Capture the mouseover event and trigger the `onMouseOverCommit` handler
+   * when it is captured.
+   */
+  private handlerMouseOver(view: EditorView, event: Event) {
+    const parameter = this.getHandlerParameterFromEvent(view, event);
+
+    if (parameter) {
+      this.#hovered = parameter;
+      this.options.onMouseOverCommit(parameter);
+    }
+
+    return false;
+  }
+
+  /**
+   * Capture the mouseleave event and trigger the `onMouseLeaveCommit` handler.
+   */
+  private handleMouseLeave(view: EditorView, event: Event) {
+    if (!this.#hovered) {
+      return false;
+    }
+
+    const commit = this.getHandlerParameterFromEvent(view, event);
+
+    if (commit) {
+      this.#hovered = undefined;
+      this.options.onMouseLeaveCommit(commit);
+    }
+
+    return false;
+  }
 
   /**
    * Create the initial plugin state for the custom plugin.
@@ -166,6 +324,25 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
     };
   }
 
+  private createDecorationSet(
+    commits: number[],
+    pluginState: TrackChangesPluginState,
+    state: EditorState,
+  ): DecorationSet {
+    const { tracked } = pluginState;
+    const decorations: Decoration[] = [];
+
+    for (const { commit, from, to } of tracked.blameMap) {
+      if (!isNumber(commit) || !commits.includes(commit)) {
+        continue;
+      }
+
+      decorations.push(Decoration.inline(from, to, { class: this.options.blameMarkerClass }));
+    }
+
+    return DecorationSet.create(state.doc, decorations);
+  }
+
   /**
    * Apply updates to the highlight decorations.
    */
@@ -176,33 +353,28 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
   ): HighlightStateParameter {
     const { add, clear } = this.getMeta(tr);
 
-    if (add && pluginState.commit !== add) {
-      const { tracked } = pluginState;
-      const decorations: Decoration[] = [];
+    if (isNumber(add) && pluginState.commits && !pluginState.commits.includes(add)) {
+      const commits = [...pluginState.commits, add];
+      const decorations = this.createDecorationSet(commits, pluginState, state);
 
-      for (const { commit, from, to } of tracked.blameMap) {
-        if (!isNumber(commit) || tracked.commits[commit] !== add) {
-          continue;
-        }
-
-        decorations.push(Decoration.inline(from, to, { class: this.options.blameMarkerClass }));
-      }
-
-      return { decorations: DecorationSet.create(state.doc, decorations), commit: add };
+      return { decorations, commits };
     }
 
-    if (clear && pluginState.commit === clear) {
-      return { decorations: DecorationSet.empty, commit: undefined };
+    if (isNumber(clear) && pluginState.commits && pluginState.commits.includes(clear)) {
+      const commits = pluginState.commits.filter((commit) => commit !== clear);
+      const decorations = this.createDecorationSet(commits, pluginState, state);
+
+      return { decorations, commits };
     }
 
-    if (tr.docChanged && pluginState.commit) {
+    if (tr.docChanged && !isEmptyArray(pluginState.commits)) {
       return {
         decorations: pluginState.decorations.map(tr.mapping, tr.doc),
-        commit: pluginState.commit,
+        commits: pluginState.commits,
       };
     }
 
-    return { decorations: pluginState.decorations, commit: pluginState.commit };
+    return { decorations: pluginState.decorations, commits: pluginState.commits ?? [] };
   }
 
   /**
@@ -227,9 +399,17 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
     return { tracked };
   }
 
-  private highlightCommit(commit: Commit): CommandFunction {
+  private highlightCommit(commit: Commit | CommitId): CommandFunction {
     return (parameter) => {
       const { tr, dispatch } = parameter;
+
+      if (isString(commit)) {
+        commit = this.getIndexByName(commit);
+      }
+
+      if (!isNumber(commit)) {
+        commit = this.getCommitId(commit);
+      }
 
       if (dispatch) {
         dispatch(this.setMeta(tr, { add: commit }));
@@ -239,9 +419,17 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
     };
   }
 
-  private removeHighlightedCommit(commit: Commit): CommandFunction {
+  private removeHighlightedCommit(commit: Commit | CommitId): CommandFunction {
     return (parameter) => {
       const { tr, dispatch } = parameter;
+
+      if (isString(commit)) {
+        commit = this.getIndexByName(commit);
+      }
+
+      if (!isNumber(commit)) {
+        commit = this.getCommitId(commit);
+      }
 
       if (dispatch) {
         dispatch(this.setMeta(tr, { clear: commit }));
@@ -361,17 +549,24 @@ interface HighlightStateParameter {
   decorations: DecorationSet;
 
   /**
-   * The commit to be highlighted.
+   * The id's of the commits to be highlighted.
    */
-  commit?: Commit;
+  commits?: number[];
 }
 
 export interface TrackChangesPluginState extends TrackedStateParameter, HighlightStateParameter {}
 
 interface TrackChangesMeta {
   message?: string;
-  add?: Commit;
-  clear?: Commit;
+  add?: number;
+  clear?: number;
 }
 
 type CommitId = number | 'first' | 'last';
+
+export interface HandlerParameter extends FromToParameter {
+  /**
+   * The commit.
+   */
+  commit: Commit;
+}

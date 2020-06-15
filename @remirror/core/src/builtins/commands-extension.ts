@@ -37,7 +37,7 @@ import {
  * @builtin
  */
 export class CommandsExtension extends PlainExtension {
-  static readonly defaultPriority = ExtensionPriority.High;
+  static readonly defaultPriority = ExtensionPriority.Highest;
 
   get name() {
     return 'commands' as const;

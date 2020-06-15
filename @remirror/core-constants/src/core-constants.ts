@@ -329,6 +329,12 @@ export enum ManagerPhase {
   None,
 
   /**
+   * The phase where the manager is gathering methods to be called for each
+   * lifecycle phase from the extensions.
+   */
+  Prepare,
+
+  /**
    * When the extension manager is being created and the onCreate methods are
    * being called.
    *
@@ -337,12 +343,20 @@ export enum ManagerPhase {
   Create,
 
   /**
-   * When the view is being added and all onViewAdded methods are being called.
+   * When the view is being added and all `onView` lifecycle methods are being
+   * called. The view is typically added before the dom is ready for it.
    */
   EditorView,
 
   /**
-   * The phases of creating this manager are completed.
+   * The view layer has notified the EditorManager that the editor is fully
+   * mounted in the dom and ready.
+   */
+  Ready,
+
+  /**
+   * The phases of creating this manager are completed and `onTransaction` is
+   * called every time the state updates.
    */
   Runtime,
 
