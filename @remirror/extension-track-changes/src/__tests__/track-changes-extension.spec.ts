@@ -136,6 +136,6 @@ describe('handlers', () => {
     insertText(' not committed').jumpTo('end');
 
     // TODO this is broken
-    // expect(mocks.onDeselectCommits).toHaveBeenCalledTimes(1);
+    expect(mocks.onDeselectCommits).toHaveBeenCalledTimes(1);
   });
 });

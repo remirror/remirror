@@ -178,9 +178,10 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
         },
 
         apply: (tr, pluginState: TrackChangesPluginState, _: EditorState, state: EditorState) => {
-          this.handleSelection(tr);
+          const newState = this.applyStateUpdates(tr, pluginState, state);
+          this.handleSelection(tr, newState);
 
-          return this.applyStateUpdates(tr, pluginState, state);
+          return newState;
         },
       },
       props: {
@@ -203,20 +204,20 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
    * Calls the selection handlers when the selection changes the number of
    * commit spans covered.
    */
-  private handleSelection(tr: Transaction) {
+  private handleSelection(tr: Transaction, pluginState: TrackChangesPluginState) {
     if (!hasTransactionChanged(tr)) {
       return;
     }
 
     const { from, to } = tr.selection;
-    const { tracked } = this.getPluginState<TrackChangesPluginState>();
+    const { blameMap, commits } = pluginState.tracked;
     const selections: HandlerParameter[] = [];
 
-    for (const map of tracked.blameMap) {
+    for (const map of blameMap) {
       const selectionIncludesSpan =
         (map.from <= from && map.to >= from) || (map.from <= to && map.to >= to);
 
-      if (!selectionIncludesSpan || !isNumber(map.commit)) {
+      if (!selectionIncludesSpan || !isNumber(map.commit) || map.commit >= commits.length) {
         continue;
       }
 
@@ -224,8 +225,6 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
     }
 
     const selectionHasCommit = selections.length > 0;
-
-    // console.log(tr.doc.textContent, selections, this.#selections);
 
     if (selectionHasCommit && !isEqual(selections, this.#selections)) {
       this.options.onSelectCommits(selections, this.#selections);
