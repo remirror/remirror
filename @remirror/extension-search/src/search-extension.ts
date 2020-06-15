@@ -17,7 +17,6 @@ import {
   isString,
   KeyBindingCommandFunction,
   KeyBindings,
-  ManagerPhase,
   object,
   PlainExtension,
   ProsemirrorNode,
@@ -185,12 +184,8 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
       },
 
       props: {
-        decorations: () => {
-          if (this.store.phase >= ManagerPhase.EditorView) {
-            return this.getPluginState();
-          }
-
-          return DecorationSet.empty;
+        decorations: (state) => {
+          return this.getPluginState(state);
         },
       },
     };

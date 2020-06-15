@@ -1,7 +1,7 @@
 import matchSorter from 'match-sorter';
 import React, { useCallback, useMemo, useState } from 'react';
 
-import { isNotEmpty, startCase, take } from '@remirror/core';
+import { startCase, take } from '@remirror/core';
 import {
   ActiveTagData,
   ActiveUserData,
@@ -47,7 +47,7 @@ export const ExampleSocialEditor = (props: Partial<SocialEditorProps>) => {
 
   const userMatches: ActiveUserData[] = useMemo(
     () =>
-      mention && mention.name === 'at' && isNotEmpty(mention.query)
+      mention && mention.name === 'at' && mention.query
         ? take(
             matchSorter(userData, mention.query, { keys: ['username', 'displayName'] }),
             6,
@@ -58,7 +58,7 @@ export const ExampleSocialEditor = (props: Partial<SocialEditorProps>) => {
 
   const tagMatches: ActiveTagData[] = useMemo(
     () =>
-      mention && mention.name === 'tag' && isNotEmpty(mention.query)
+      mention && mention.name === 'tag' && mention.query
         ? take(matchSorter(fakeTags, mention.query), 6).map((tag, index) => ({
             tag,
             active: index === mention.index,

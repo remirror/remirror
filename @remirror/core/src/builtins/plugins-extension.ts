@@ -4,7 +4,7 @@ import { ErrorConstant, ExtensionPriority, ManagerPhase } from '@remirror/core-c
 import { invariant, isEmptyArray, object } from '@remirror/core-helpers';
 import { EditorSchema, ProsemirrorPlugin } from '@remirror/core-types';
 import { getPluginState } from '@remirror/core-utils';
-import { Plugin, PluginKey, PluginSpec } from '@remirror/pm/state';
+import { EditorState, Plugin, PluginKey, PluginSpec } from '@remirror/pm/state';
 
 import {
   AnyExtension,
@@ -79,10 +79,10 @@ export class PluginsExtension extends PlainExtension {
 
       // Assign the plugin key to the extension name.
       this.pluginKeys[extension.name] = key;
-      const getter = <State>() => getPluginState<State>(key, this.store.getState());
+      const getter = this.getPluginStateCreator(key, extension);
 
       extension.pluginKey = key;
-      extension.getPluginState = getter;
+      extension.constructor.prototype.getPluginState = getter;
 
       this.stateGetters.set(extension.name, getter);
       this.stateGetters.set(extension.constructor, getter);
@@ -104,6 +104,17 @@ export class PluginsExtension extends PlainExtension {
       extension.externalPlugins = externalPlugins;
     }
   }
+
+  private readonly getPluginStateCreator = (key: PluginKey, extension: AnyExtension) => <State>(
+    state?: EditorState,
+  ) => {
+    invariant(this.store.phase >= ManagerPhase.EditorView || state, {
+      code: ErrorConstant.MANAGER_PHASE_ERROR,
+      message: `The 'getPluginState' method of '${extension.constructor.name}' must be called with a current state if called before the 'view' has been added to the manager.`,
+    });
+
+    return getPluginState<State>(key, state ?? this.store.getState());
+  };
 
   /**
    * Add or replace a plugin.
@@ -327,8 +338,12 @@ declare global {
        *
        * This is only available after the initialize stage of the editor manager
        * lifecycle.
+       *
+       * If you would like to use it before that e.g. in the decorations prop of
+       * the `createPlugin` method, you can call it with a current state which
+       * will be used to retrieve the plugin state.
        */
-      getPluginState: <State>() => State;
+      getPluginState: <State>(state?: EditorState) => State;
 
       /**
        * The plugin key for custom plugin created by this extension. This only

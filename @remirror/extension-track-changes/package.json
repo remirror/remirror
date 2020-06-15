@@ -1,0 +1,39 @@
+{
+  "name": "@remirror/extension-track-changes",
+  "version": "0.0.0",
+  "description": "Track user changes in your remirror editor.",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-track-changes",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-track-changes",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/extension-track-changes.cjs.js",
+  "module": "dist/extension-track-changes.esm.js",
+  "types": "dist/extension-track-changes.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.10.2"
+  },
+  "devDependencies": {
+    "@remirror/core": "^0.11.0",
+    "@remirror/pm": "^0.0.0"
+  },
+  "peerDependencies": {
+    "@remirror/core": "^0.11.0",
+    "@remirror/pm": "^0.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "5 KB"
+  }
+}

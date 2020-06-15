@@ -666,6 +666,16 @@ importers:
       '@babel/runtime': ^7.10.2
       '@remirror/core': '*'
       '@remirror/pm': '*'
+  '@remirror/extension-track-changes':
+    dependencies:
+      '@babel/runtime': registry.npmjs.org/@babel/runtime/7.10.2
+    devDependencies:
+      '@remirror/core': 'link:../core'
+      '@remirror/pm': 'link:../pm'
+    specifiers:
+      '@babel/runtime': ^7.10.2
+      '@remirror/core': ^0.11.0
+      '@remirror/pm': ^0.0.0
   '@remirror/extension-trailing-node':
     dependencies:
       '@babel/runtime': 7.10.2

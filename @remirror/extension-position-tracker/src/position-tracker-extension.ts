@@ -5,7 +5,7 @@ import {
   DefaultExtensionOptions,
   getPluginMeta,
   HandlerKeyList,
-  isNotEmpty,
+  isEmptyArray,
   isNullOrUndefined,
   isNumber,
   isString,
@@ -118,7 +118,7 @@ export class PositionTrackerExtension extends PlainExtension<PositionTrackerOpti
         const decorations = this.getPluginState<DecorationSet>();
         const found = decorations.find(undefined, undefined, (spec) => spec.id === id);
 
-        return isNotEmpty(found.length) ? found[0].from : undefined;
+        return !isEmptyArray(found) ? found[0].from : undefined;
       },
 
       /**
