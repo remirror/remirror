@@ -1,16 +1,10 @@
 {
   "extends": "../support/tsconfig.base.json",
   "compilerOptions": {
-    "types": [
-      "jest",
-      "node",
-      "jest-extended",
-      "jest-environment-puppeteer",
-      "expect-puppeteer",
-      "puppeteer"
-    ],
+    "types": ["expect-playwright/global", "jest-playwright-preset", "jest", "jest-extended"],
     "declarationMap": false,
-    "declaration": false
+    "declaration": false,
+    "noEmit": true
   },
   "include": ["./", "patches.d.ts"]
 }

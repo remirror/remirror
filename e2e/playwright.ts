@@ -6,15 +6,14 @@ const {
   server: { server },
 } = require('./server.config');
 
-const { teardown: teardownPuppeteer } = require('jest-environment-puppeteer');
-const { setup: setupPuppeteer } = require('jest-environment-puppeteer');
+const { globalSetup, globalTeardown } = require('jest-playwright-preset');
 
 let serverSetupPromise: Promise<void> | undefined;
 
 export const destroyServer = async (globalConfig?: Config.GlobalConfig) => {
   serverSetupPromise = undefined;
   await teardown();
-  await teardownPuppeteer(globalConfig);
+  await globalTeardown(globalConfig);
 };
 
 export const setupServer = async (globalConfig: Config.GlobalConfig) => {
@@ -26,7 +25,7 @@ export const setupServer = async (globalConfig: Config.GlobalConfig) => {
     });
   });
 
-  await setupPuppeteer(globalConfig);
+  await globalSetup(globalConfig);
 };
 
 export const startServer = (globalConfig: Config.GlobalConfig) => {

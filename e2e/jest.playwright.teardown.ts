@@ -1,6 +1,6 @@
 import { Config } from '@jest/types';
 
-import { destroyServer } from './puppeteer';
+import { destroyServer } from './playwright';
 
 export default async (globalConfig: Config.GlobalConfig) => {
   if (!globalConfig.watchAll && !globalConfig.watch) {

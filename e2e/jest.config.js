@@ -31,7 +31,7 @@ module.exports = {
   preset: 'jest-puppeteer',
   watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
   setupFilesAfterEnv: [
-    'expect-puppeteer',
+    'expect-playwright',
     jestSupportDir('jest.framework.ts'),
     '<rootDir>/jest-setup.ts',
   ],

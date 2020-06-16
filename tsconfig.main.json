@@ -7,5 +7,5 @@
     "plugins": [{ "name": "typescript-snapshots-plugin" }]
   },
   "include": ["**/*.ts", "**/*.tsx", "../global.d.ts", "support/scripts/linaria.js"],
-  "exclude": ["**/dist/", "dist", "deprecated/**", "support/templates", "e2e"]
+  "exclude": ["**/dist/", "dist", "deprecated/**", "support/templates", "e2e", "examples/with-next"]
 }
