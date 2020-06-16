@@ -155,7 +155,8 @@
       "<rootDir>/packages/*/jest.config.js"
     ],
     "reporters": [
-      "default"
+      "default",
+      "jest-github-reporter"
     ],
     "testRunner": "jest-circus/runner",
     "watchPlugins": [
