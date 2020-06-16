@@ -3,6 +3,6 @@
   "module": "dist/remirror.esm.js",
   "types": "dist/remirror.cjs.d.ts",
   "preconstruct": {
-    "source": "../../src/react/utils"
+    "source": "../../src/extension/track-changes"
   }
 }

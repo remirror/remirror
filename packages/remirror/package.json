@@ -24,6 +24,7 @@
   "files": [
     "core",
     "dist",
+    "editor",
     "extension",
     "preset",
     "react"
@@ -61,8 +62,10 @@
     "@remirror/extension-position-tracker": "^0.0.0",
     "@remirror/extension-positioner": "^0.0.0",
     "@remirror/extension-react-ssr": "^0.0.0",
+    "@remirror/extension-search": "^0.0.0",
     "@remirror/extension-strike": "^0.0.0",
     "@remirror/extension-text": "^0.0.0",
+    "@remirror/extension-track-changes": "^0.0.0",
     "@remirror/extension-trailing-node": "^0.0.0",
     "@remirror/extension-underline": "^0.0.0",
     "@remirror/preset-core": "^0.0.0",
@@ -98,12 +101,13 @@
       "core/helpers",
       "core/types",
       "core/utils",
+      "editor/social",
       "extension/auto-link",
       "extension/base-keymap",
       "extension/blockquote",
       "extension/bold",
-      "extension/code",
       "extension/code-block",
+      "extension/code",
       "extension/collaboration",
       "extension/doc",
       "extension/drop-cursor",
@@ -123,8 +127,10 @@
       "extension/position-tracker",
       "extension/positioner",
       "extension/react-ssr",
+      "extension/search",
       "extension/strike",
       "extension/text",
+      "extension/track-changes",
       "extension/trailing-node",
       "extension/underline",
       "preset/core",
@@ -133,7 +139,6 @@
       "preset/react",
       "preset/table",
       "react",
-      "react/editor/social",
       "react/utils"
     ]
   }
