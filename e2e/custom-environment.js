@@ -1,6 +1,6 @@
-const PuppeteerEnvironment = require('jest-environment-puppeteer');
+const { PlaywrightEnvironment } = require('jest-playwright-preset');
 
-class CustomEnvironment extends PuppeteerEnvironment {
+class CustomEnvironment extends PlaywrightEnvironment {
   constructor(config) {
     super(config);
 

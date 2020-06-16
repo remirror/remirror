@@ -4,21 +4,26 @@ const {
   REMIRROR_E2E_BASIC,
 } = process.env;
 
+const browsers = REMIRROR_E2E_BROWSER.split(',');
+
 const basicRegex = 'basic\\.e2e\\.test\\.ts$';
 
 const noSSRRegex = REMIRROR_E2E_BASIC
   ? basicRegex
   : `.*\\.(e2e|${REMIRROR_E2E_SERVER})\\.test\\.ts$`;
 
-const getRegex = () => {
+function getRegex() {
   if (REMIRROR_E2E_BASIC) {
     return basicRegex;
   }
-  if (REMIRROR_E2E_BROWSER === 'firefox') {
+
+  if (browsers.includes('firefox')) {
     return noSSRRegex;
   }
+
   return `.*\\.(e2e|ssr|${REMIRROR_E2E_SERVER})\\.test\\.ts$`;
-};
+}
+
 const allTestRegex = getRegex();
 
 const servers = (exports.servers = {
@@ -52,8 +57,8 @@ const editors = (exports.editors = {
       content: 'http://localhost:3030/editor/social/content',
     },
     docs: {
-      empty: 'http://localhost:3030/showcase/social',
-      content: '',
+      empty: 'http://localhost:3030/testing/social',
+      content: 'http://localhost:3030/testing/social/content',
     },
   },
   wysiwyg: {
@@ -62,8 +67,8 @@ const editors = (exports.editors = {
       content: 'http://localhost:3030/editor/wysiwyg/content',
     },
     docs: {
-      empty: 'http://localhost:3030/showcase/wysiwyg',
-      content: '',
+      empty: 'http://localhost:3030/testing/wysiwyg',
+      content: 'http://localhost:3030/testing/wysiwy/content',
     },
   },
 });
