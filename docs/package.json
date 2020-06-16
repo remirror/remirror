@@ -20,7 +20,7 @@
     "@reach/router": "^1.3.3",
     "@remirror/playground": "^0.0.0",
     "@remirror/pm": "0.0.0",
-    "@remirror/react-showcase": "0.0.0",
+    "@remirror/showcase": "0.13.1",
     "@remirror/styles": "0.0.0",
     "@styled-system/edit": "^5.1.5",
     "@theme-ui/presets": "^0.3.0",

@@ -60,4 +60,3 @@ This is a breaking change to the structure of published npm packages.
 - Only use one entry file.
 - Remove declaration source mapping for declaration files
 - Remove the src directory from being published.
-- Bundle \*.d.ts file.

@@ -20,7 +20,7 @@ export class BundleCommand extends BaseCommand {
       ],
       [
         'Bundle an editor from an npm package. Make sure the editor supports being used within a webview. Not all of them do.',
-        '$0 create @remirror/react-editor-social',
+        '$0 create @remirror/editor-social',
       ],
     ],
   });

@@ -287,8 +287,8 @@
     "running": false
   },
   {
-    "name": "@remirror/react-editor-social",
-    "path": "@remirror/react-editor-social/dist/react-editor-social.esm.js",
+    "name": "@remirror/editor-social",
+    "path": "@remirror/editor-social/dist/editor-social.esm.js",
     "limit": "200 KB",
     "ignore": ["@remirror/pm", "@types/react", "@types/react-dom", "react", "react-dom"],
     "running": false

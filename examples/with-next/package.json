@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@preconstruct/next": "^1.0.1",
-    "@remirror/react-showcase": "^0.0.0",
+    "@remirror/showcase": "^0.13.1",
     "@remirror/styles": "^0.0.0",
     "next": "^9.4.4",
     "react": "^16.13.1",

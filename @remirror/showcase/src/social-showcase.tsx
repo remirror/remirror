@@ -9,7 +9,7 @@ import {
   SocialEditor,
   SocialEditorProps,
   UserData,
-} from '@remirror/react-editor-social';
+} from '@remirror/editor-social';
 
 import { fakeUsers } from './data/fake-users';
 

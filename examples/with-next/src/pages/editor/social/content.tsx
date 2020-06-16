@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { ExampleSocialEditor, SOCIAL_SHOWCASE_CONTENT } from '@remirror/react-showcase';
+import { ExampleSocialEditor, SOCIAL_SHOWCASE_CONTENT } from '@remirror/showcase';
 
 const SocialEditorWithContent: FC = () => (
   <ExampleSocialEditor

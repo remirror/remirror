@@ -35,6 +35,7 @@
     "@remirror/core-helpers": "^0.7.6",
     "@remirror/core-types": "^0.9.0",
     "@remirror/core-utils": "^0.8.0",
+    "@remirror/editor-social": "^0.13.1",
     "@remirror/extension-auto-link": "^0.0.0",
     "@remirror/extension-base-keymap": "^0.0.0",
     "@remirror/extension-blockquote": "^0.0.0",
@@ -70,7 +71,6 @@
     "@remirror/preset-react": "^0.0.0",
     "@remirror/preset-table": "^0.0.0",
     "@remirror/react": "^0.13.1",
-    "@remirror/react-editor-social": "^0.0.0",
     "@remirror/react-utils": "^0.7.6"
   },
   "devDependencies": {

@@ -34,7 +34,7 @@ The following code creates adds an `es` translation to your social editor.
 ```tsx
 import { i18n } from '@remirror/i18n';
 import es from '@remirror/i18n/es/messages';
-import { SocialEditor } from '@remirror/react-editor-social';
+import { SocialEditor } from '@remirror/editor-social';
 import { es as esPlurals } from 'make-plural/plurals';
 
 i18n.loadLocaleData('es', { plurals: esPlurals });

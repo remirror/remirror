@@ -1,1 +1,1 @@
-export * from '@remirror/react-editor-social';
+export * from '@remirror/editor-social';
