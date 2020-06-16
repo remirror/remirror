@@ -13,7 +13,7 @@
     "jest-puppeteer": "^4.4.0",
     "looks-same": "^7.2.3",
     "pptr-testing-library": "^0.6.0",
-    "puppeteer": "^3.3.0",
+    "puppeteer": "^4.0.0",
     "signal-exit": "^3.0.3",
     "test-keyboard": "^0.7.6"
   }
