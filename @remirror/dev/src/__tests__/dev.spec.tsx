@@ -4,7 +4,7 @@ import React from 'react';
 import { RemirrorProvider } from '@remirror/react';
 import { createBaseManager } from '@remirror/test-fixtures';
 
-import { ProsemirrorDevTools } from '../react-dev';
+import { ProsemirrorDevTools } from '../dev';
 
 beforeEach(() => {
   jest.spyOn(console, 'warn').mockImplementation(() => {});

@@ -1,17 +1,17 @@
 {
-  "name": "@remirror/react-dev",
-  "version": "0.11.0",
+  "name": "@remirror/dev",
+  "version": "0.13.2",
   "description": "Development utilities for remirror",
-  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/react-dev",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/react-dev",
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/dev",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/dev",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/react-dev.cjs.js",
-  "module": "dist/react-dev.esm.js",
-  "types": "dist/react-dev.cjs.d.ts",
+  "main": "dist/dev.cjs.js",
+  "module": "dist/dev.esm.js",
+  "types": "dist/dev.cjs.d.ts",
   "files": [
     "dist"
   ],
@@ -39,5 +39,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/react-dev.cjs.js"
+  "cjs": "lib/dist/dev.cjs.js"
 }

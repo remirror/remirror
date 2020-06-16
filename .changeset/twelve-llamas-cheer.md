@@ -1,5 +1,4 @@
 ---
-'@remirror/dev': major
 '@remirror/react-hooks': major
 '@remirror/react-portals': major
 ---

@@ -1,16 +1,16 @@
-# @remirror/react-dev
+# @remirror/dev
 
-[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/react-dev.svg?)](https://bundlephobia.com/result?p=@remirror/react-dev)
-[![npm](https://img.shields.io/npm/dm/@remirror/react-dev.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/react-dev)
+[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/dev.svg?)](https://bundlephobia.com/result?p=@remirror/dev)
+[![npm](https://img.shields.io/npm/dm/@remirror/dev.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/dev)
 
 Development tools to make life easier when building your editor.
 
 ## Installation
 
 ```bash
-yarn add @remirror/react-dev # yarn
-pnpm add @remirror/react-dev # pnpm
-npm install @remirror/react-dev # npm
+yarn add @remirror/dev # yarn
+pnpm add @remirror/dev # pnpm
+npm install @remirror/dev # npm
 ```
 
 ## Usage
@@ -19,13 +19,13 @@ For in depth usage with proper code example see the [docs](https://docs.remirror
 
 ### Prosemirror Dev Tools
 
-The following will render the react-development view in your editor. For more information on what's
-possible see the [docs][prosemirror-react-dev-tools].
+The following will render the development view in your editor. For more information on what's
+possible see the [docs][prosemirror-dev-tools].
 
 ```tsx
 import React from 'react';
 import { BoldExtension, ItalicExtension, UnderlineExtension } from '@remirror/core-extensions';
-import { ProsemirrorDevTools } from '@remirror/react-dev';
+import { ProsemirrorDevTools } from '@remirror/dev';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@remirror/react';
 
 const MyEditor = () => {
@@ -47,4 +47,4 @@ const MyEditor = () => {
 };
 ```
 
-[prosemirror-react-dev-tools]: https://github.com/d4rkr00t/prosemirror-react-dev-tools
+[prosemirror-dev-tools]: https://github.com/d4rkr00t/prosemirror-dev-tools
