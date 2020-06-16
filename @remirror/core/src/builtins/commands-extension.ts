@@ -23,7 +23,7 @@ import {
   CommandShape,
   ExtensionCommandFunction,
   ExtensionCommandReturn,
-  TransactionLifecycleMethod,
+  StateUpdateLifecycleMethod,
 } from '../types';
 
 /**
@@ -127,7 +127,7 @@ export class CommandsExtension extends PlainExtension {
   /**
    * Update the cached transaction whenever the state is updated.
    */
-  onTransaction: TransactionLifecycleMethod = ({ state }) => {
+  onStateUpdate: StateUpdateLifecycleMethod = ({ state }) => {
     this.#transaction = state.tr;
   };
 

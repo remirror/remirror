@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`basic functionality doesn't render the editor without \`children\` as a render prop 1`] = `[Function]`;

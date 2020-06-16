@@ -458,29 +458,12 @@ export interface UpdateStateParameter<Schema extends EditorSchema = any>
    * @defaultValue true
    */
   triggerOnChange?: boolean;
-
-  /**
-   * Called after the state has updated.
-   */
-  onUpdate?: () => void;
 }
 
 export interface EditorStateEventListenerParameter<
   Combined extends AnyCombinedUnion,
   Schema extends EditorSchema = any
 > extends Partial<CompareStateParameter<Schema>>, Pick<BaseListenerParameter<Combined>, 'tr'> {}
-
-export interface RemirrorState<Schema extends EditorSchema = any> {
-  /**
-   * The Prosemirror editor state
-   */
-  editor: CompareStateParameter<Schema>;
-  /**
-   * Used when suppressHydrationWarning is true to determine when it's okay to
-   * render the client content.
-   */
-  shouldRenderClient?: boolean;
-}
 
 export interface ListenerParameter<
   Combined extends AnyCombinedUnion,

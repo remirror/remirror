@@ -6,7 +6,7 @@ import {
   isEmptyParagraphNode,
   isSelectionEmpty,
   Position,
-  TransactionLifecycleParameter,
+  StateUpdateLifecycleParameter,
 } from '@remirror/core';
 
 export interface Positioner {
@@ -34,7 +34,7 @@ export interface Positioner {
    *
    * @param params
    */
-  hasChanged: (params: TransactionLifecycleParameter) => boolean;
+  hasChanged: (params: StateUpdateLifecycleParameter) => boolean;
 
   /**
    * Determines whether the positioner should be active
@@ -51,7 +51,7 @@ export interface Positioner {
 export interface GetPositionParameter
   extends EditorViewParameter,
     ElementParameter,
-    TransactionLifecycleParameter {}
+    StateUpdateLifecycleParameter {}
 
 export const defaultPositioner: Positioner = {
   initialPosition: { top: -99999, left: -99999, right: 99999, bottom: 99999 },

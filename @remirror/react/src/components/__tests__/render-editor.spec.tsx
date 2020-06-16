@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
@@ -37,7 +37,7 @@ test('should be called via a render prop', () => {
   expect(editorNode).toHaveAttribute('role', 'textbox');
 });
 
-test('can suppressHydrationWarning without breaking', () => {
+test('can `suppressHydrationWarning` without breaking', () => {
   const mock = jest.fn(() => <div />);
   const { getByLabelText } = render(
     <RenderEditor
@@ -71,17 +71,10 @@ describe('basic functionality', () => {
   });
 
   it("doesn't render the editor without `children` as a render prop", () => {
-    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
-
     expect(() =>
       // @ts-expect-error
       render(<RenderEditor label={label} manager={createReactManager()} />),
-    ).toThrowErrorMatchingInlineSnapshot(
-      `"The child argument to the Remirror component must be a function."`,
-    );
-    expect(spy).toHaveBeenCalledTimes(2);
-
-    spy.mockRestore();
+    ).toMatchSnapshot();
   });
 
   it('should allow text input and fire all handlers', () => {
@@ -90,6 +83,7 @@ describe('basic functionality', () => {
       setContent = value.setContent;
       return <div />;
     });
+
     const { getByLabelText } = render(
       <RenderEditor
         label={label}
@@ -101,7 +95,9 @@ describe('basic functionality', () => {
       </RenderEditor>,
     );
 
-    setContent(`<p>${textContent}</p>`, true);
+    act(() => {
+      setContent(`<p>${textContent}</p>`, true);
+    });
     const editorNode = getByLabelText(label);
 
     expect(handlers.onChange).toHaveBeenCalledTimes(1);
@@ -176,7 +172,7 @@ describe('focus', () => {
     content: [{ type: 'paragraph', content: [{ type: 'text', text: 'A sentence here' }] }],
   };
 
-  let props!: RemirrorContextProps<any>;
+  let context!: RemirrorContextProps<any>;
   let editorNode: HTMLElement;
 
   beforeEach(() => {
@@ -189,8 +185,8 @@ describe('focus', () => {
         initialContent={content}
         autoFocus={true}
       >
-        {(context) => {
-          props = context;
+        {(ctx) => {
+          context = ctx;
           return <div />;
         }}
       </RenderEditor>,
@@ -204,46 +200,58 @@ describe('focus', () => {
   });
 
   it('should do nothing when focusing on a focused editor without a new position', () => {
-    expect(props.state.newState.selection.from).toBe(1);
+    expect(context.state.newState.selection.from).toBe(1);
 
-    props.focus();
-    jest.runAllTimers();
+    act(() => {
+      context.focus();
+      jest.runAllTimers();
+    });
 
-    expect(props.state.newState.selection.from).toBe(1);
-    // TODO expect(props.view.hasFocus()).toBeTrue();
+    expect(context.state.newState.selection.from).toBe(1);
   });
 
   it('can focus on the end', () => {
     fireEvent.blur(editorNode);
-    props.focus('end');
-    jest.runAllTimers();
 
-    expect(props.state.newState.selection.from).toBe(16);
+    act(() => {
+      context.focus('end');
+      jest.runAllTimers();
+    });
+
+    expect(context.state.newState.selection.from).toBe(16);
   });
 
   it('can focus on the start even when already focused', () => {
-    props.focus('start');
-    jest.runAllTimers();
+    act(() => {
+      context.focus('start');
+      jest.runAllTimers();
+    });
 
-    expect(props.state.newState.selection.from).toBe(1);
+    expect(context.state.newState.selection.from).toBe(1);
   });
 
   it('can specify the exact position for the blurred editor', () => {
     fireEvent.blur(editorNode);
-    props.focus(10);
-    jest.runAllTimers();
+    act(() => {
+      context.focus(10);
+      jest.runAllTimers();
+    });
 
-    expect(props.state.newState.selection.from).toBe(10);
+    expect(context.state.newState.selection.from).toBe(10);
   });
 
   const expected = { from: 2, to: 5 };
 
   it('can specify the selection for the editor', () => {
     fireEvent.blur(editorNode);
-    props.focus(expected);
-    jest.runAllTimers();
+
+    act(() => {
+      context.focus(expected);
+      jest.runAllTimers();
+    });
+
     {
-      const { from, to } = props.state.newState.selection;
+      const { from, to } = context.state.newState.selection;
 
       expect({ from, to }).toEqual(expected);
     }
@@ -251,19 +259,26 @@ describe('focus', () => {
 
   it('restores the previous selection when focused without a parameter', () => {
     fireEvent.blur(editorNode);
-    props.focus(expected);
-    jest.runAllTimers();
+    act(() => {
+      context.focus(expected);
+      jest.runAllTimers();
+    });
+
     {
-      const { from, to } = props.state.newState.selection;
+      const { from, to } = context.state.newState.selection;
 
       expect({ from, to }).toEqual(expected);
     }
 
     fireEvent.blur(editorNode);
-    props.focus();
-    jest.runAllTimers();
+
+    act(() => {
+      context.focus();
+      jest.runAllTimers();
+    });
+
     {
-      const { from, to } = props.state.newState.selection;
+      const { from, to } = context.state.newState.selection;
 
       expect({ from, to }).toEqual(expected);
       // expect(props.view.hasFocus()).toBeTrue();
@@ -272,9 +287,12 @@ describe('focus', () => {
 
   it('should do nothing when passing `false`', () => {
     fireEvent.blur(editorNode);
-    props.focus(false);
-    jest.runAllTimers();
 
-    expect(props.state.newState.selection.from).toBe(1);
+    act(() => {
+      context.focus(false);
+      jest.runAllTimers();
+    });
+
+    expect(context.state.newState.selection.from).toBe(1);
   });
 });

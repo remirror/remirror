@@ -5,8 +5,8 @@ import {
   isString,
   PlainExtension,
   Position,
-  TransactionLifecycleMethod,
-  TransactionLifecycleParameter,
+  StateUpdateLifecycleMethod,
+  StateUpdateLifecycleParameter,
 } from '@remirror/core';
 
 import {
@@ -56,17 +56,17 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
     };
   };
 
-  onTransaction: TransactionLifecycleMethod = (update) => {
+  onStateUpdate: StateUpdateLifecycleMethod = (update) => {
     this.positionerHandler(update);
   };
 
-  private positionerHandler(update: TransactionLifecycleParameter) {
+  private positionerHandler(update: StateUpdateLifecycleParameter) {
     for (const handler of this.#positionerHandlerList) {
       this.calculatePositioner(handler, update);
     }
   }
 
-  private calculatePositioner(handler: PositionerHandler, update: TransactionLifecycleParameter) {
+  private calculatePositioner(handler: PositionerHandler, update: StateUpdateLifecycleParameter) {
     const { element, onChange, positioner } = handler;
     const { initialPosition, getPosition, hasChanged, isActive } = getPositioner(positioner);
 

@@ -29,7 +29,7 @@ import {
   GetNameUnion,
   MarkExtensionTags,
   NodeExtensionTags,
-  TransactionLifecycleMethod,
+  StateUpdateLifecycleMethod,
 } from '../types';
 import {
   AnyBaseClassOverrides,
@@ -251,7 +251,8 @@ export type DefaultExtensionOptions<Options extends ValidOptions> = DefaultOptio
  * - `onCreate`
  * - `onView`
  * - **runtime**
- * - `onTransaction` (repeats)
+ * - `onReady`
+ * - `onStateUpdate` (repeats for every update to the prosemirror editor state)
  * - `onDestroy` (end of life)
  */
 interface ExtensionLifecycleMethods {
@@ -301,7 +302,7 @@ interface ExtensionLifecycleMethods {
    * It should return a handler function which receives the state and the
    * transaction which created the new state. It also receives the view.
    */
-  onTransaction?: TransactionLifecycleMethod;
+  onStateUpdate?: StateUpdateLifecycleMethod;
 
   /**
    * Called when the extension is being destroyed.

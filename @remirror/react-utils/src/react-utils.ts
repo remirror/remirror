@@ -9,7 +9,8 @@ import React, {
   ReactNode,
 } from 'react';
 
-import { bool, isFunction, isObject, isString } from '@remirror/core-helpers';
+import { ErrorConstant } from '@remirror/core-constants';
+import { bool, invariant, isFunction, isObject, isString } from '@remirror/core-helpers';
 import { AnyFunction, UnknownShape } from '@remirror/core-types';
 
 export interface RemirrorComponentStaticProperties {
@@ -164,10 +165,12 @@ export const isRemirrorProvider = isRemirrorElementOfType(RemirrorType.EditorPro
  *
  * @param prop - the prop to test
  */
-export const propIsFunction = (prop: unknown): prop is AnyFunction => {
-  if (!isFunction(prop)) {
-    throw new Error('The child argument to the Remirror component must be a function.');
-  }
+export const propIsFunction = (value: unknown): value is AnyFunction => {
+  invariant(isFunction(value), {
+    code: ErrorConstant.INTERNAL,
+    message: 'The child argument to the Remirror component must be a function.',
+  });
+
   return true;
 };
 

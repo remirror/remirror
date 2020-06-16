@@ -14,9 +14,9 @@ import {
   PlainExtension,
   ProsemirrorAttributes,
   Shape,
+  StateUpdateLifecycleMethod,
   Static,
   Transaction,
-  TransactionLifecycleMethod,
   uniqueId,
 } from '@remirror/core';
 import { Step } from '@remirror/pm/transform';
@@ -88,7 +88,7 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
     return [plugin];
   };
 
-  onTransaction: TransactionLifecycleMethod = (parameter) => {
+  onStateUpdate: StateUpdateLifecycleMethod = (parameter) => {
     this.getSendableSteps(parameter.state);
   };
 

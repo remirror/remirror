@@ -41,8 +41,8 @@ import { privacySymbol } from '../privacy';
 import {
   GetConstructor,
   GetExtensions,
-  TransactionLifecycleMethod,
-  TransactionLifecycleParameter,
+  StateUpdateLifecycleMethod,
+  StateUpdateLifecycleParameter,
 } from '../types';
 import {
   ignoreFunctions,
@@ -162,7 +162,7 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
     create: CreateLifecycleMethod[];
     view: ViewLifecycleMethod[];
     ready: Array<() => void>;
-    transaction: TransactionLifecycleMethod[];
+    transaction: StateUpdateLifecycleMethod[];
     destroy: DestroyLifecycleMethod[];
   } = {
     create: [],
@@ -299,7 +299,7 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
       const createHandler = extension.onCreate;
       const viewHandler = extension.onView;
       const readyHandler = extension.onReady;
-      const transactionHandler = extension.onTransaction;
+      const transactionHandler = extension.onStateUpdate;
       const destroyHandler = extension.onDestroy;
 
       if (createHandler) {
@@ -529,7 +529,7 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
    *
    * An example usage of this is within the collaboration plugin.
    */
-  onTransaction(parameter: TransactionLifecycleParameter) {
+  onStateUpdate(parameter: StateUpdateLifecycleParameter) {
     this.#extensionStore.currentState = parameter.state;
     this.#extensionStore.previousState = parameter.previousState;
 

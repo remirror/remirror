@@ -11,7 +11,7 @@ import {
   GetFixedDynamic,
   GetPartialDynamic,
   ProsemirrorAttributes,
-  TransactionParameter,
+  Transaction,
   ValidOptions,
 } from '@remirror/core-types';
 
@@ -187,13 +187,27 @@ export interface CommandShape<Parameter extends any[] = []> {
   (...args: Parameter): void;
 }
 
-export interface TransactionLifecycleParameter extends TransactionParameter, EditorStateParameter {
+export interface StateUpdateLifecycleParameter extends EditorStateParameter {
   /**
    * The previous state.
    */
   previousState: EditorState;
+
+  /**
+   * The original transaction which caused this state update.
+   *
+   * This allows for inspecting the reason behind the state change.
+   * When undefined this means that the state was updated externally.
+   *
+   * If available:
+   * - Metadata on the transaction can be inspected. `tr.getMeta`
+   * - Was the change caused by added / removed content? `tr.docChanged`
+   * - Was ths change caused by an updated selection? `tr.selectionSet`
+   * - `tr.steps` can be inspected for further granularity.
+   */
+  tr?: Transaction;
 }
-export type TransactionLifecycleMethod = (parameter: TransactionLifecycleParameter) => void;
+export type StateUpdateLifecycleMethod = (parameter: StateUpdateLifecycleParameter) => void;
 
 export interface BaseExtensionOptions extends Remirror.BaseExtensionOptions {
   /**

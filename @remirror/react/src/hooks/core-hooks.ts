@@ -107,6 +107,8 @@ export const useStateWithCallback: UseStateWithCallback = <State>(
 
 export type PartialSetStateAction<State> = Partial<State> | ((prevState: State) => Partial<State>);
 
+export type DispatchPartial<State> = DispatchWithCallback<PartialSetStateAction<State>>;
+
 /**
  * A replication of the setState from class Components.
  *
@@ -133,11 +135,7 @@ export type PartialSetStateAction<State> = Partial<State> | ((prevState: State) 
  */
 export function useSetState<State extends object>(
   initialState: State | (() => State) = object<State>(),
-): readonly [
-  State,
-  DispatchWithCallback<PartialSetStateAction<State>>,
-  (callback?: () => void) => void,
-] {
+): readonly [State, DispatchPartial<State>, (callback?: () => void) => void] {
   const [state, setStateWithCallback] = useStateWithCallback<State>(
     isFunction(initialState) ? initialState() : initialState,
   );

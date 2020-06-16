@@ -1,15 +1,19 @@
 import { cx } from 'linaria';
-import React, { cloneElement, Fragment, PureComponent, ReactNode, Ref } from 'react';
+import React, { cloneElement, Fragment, ReactNode, Ref, useCallback, useRef } from 'react';
+import useEffectOnce from 'react-use/lib/useEffectOnce';
+import useSetState from 'react-use/lib/useSetState';
+import useUpdateEffect from 'react-use/lib/useUpdateEffect';
 
 import {
   AnyCombinedUnion,
   bool,
   clamp,
+  CompareStateParameter,
   EDITOR_CLASS_NAME,
   EditorManager,
+  EditorSchema,
   EditorView as EditorViewType,
   ErrorConstant,
-  fromHTML,
   FromToParameter,
   getDocument,
   invariant,
@@ -39,12 +43,12 @@ import {
   RemirrorType,
 } from '@remirror/react-utils';
 
+import { DispatchPartial, usePrevious } from '../hooks';
 import { PortalContainer } from '../portals';
 import { defaultProps } from '../react-constants';
 import {
   BaseListenerParameter,
   BaseProps,
-  DefaultReactCombined,
   EditorStateEventListenerParameter,
   FocusType,
   GetRootPropsConfig,
@@ -52,7 +56,6 @@ import {
   RefKeyRootProps,
   RemirrorContextProps,
   RemirrorEventListenerParameter,
-  RemirrorState,
   RemirrorStateListenerParameter,
   UpdateStateParameter,
 } from '../react-types';
@@ -76,41 +79,56 @@ export interface RenderEditorProps<Combined extends AnyCombinedUnion>
   children: RenderPropFunction<Combined>;
 }
 
-export class RenderEditor<Combined extends AnyCombinedUnion> extends PureComponent<
-  RenderEditorProps<Combined>,
-  RemirrorState<SchemaFromCombined<Combined>>
-> {
-  static defaultProps = defaultProps;
-
+export interface RenderEditorHooksProps<Combined extends AnyCombinedUnion>
+  extends BaseProps<Combined> {
   /**
-   * Sets a flag to be a static remirror
+   * The render prop that takes the injected remirror params and returns an
+   * element to render. The editor view is automatically attached to the DOM.
    */
-  static $$remirrorType = RemirrorType.Editor;
+  children: RenderPropFunction<Combined>;
+}
 
+interface RenderEditorState<Schema extends EditorSchema = any> {
   /**
-   * This is needed to manage the controlled component `value` prop and copy it
-   * to the components state for internal usage.
+   * The Prosemirror editor state
    */
-  static getDerivedStateFromProps(
-    properties: RenderEditorProps<DefaultReactCombined>,
-    state: RemirrorState,
-  ): RemirrorState | null {
-    const { onStateChange, value } = properties;
-    const {
-      editor: { newState },
-      ...rest
-    } = state;
+  editor: CompareStateParameter<Schema>;
+  /**
+   * Used when suppressHydrationWarning is true to determine when it's okay to
+   * render the client content.
+   */
+  shouldRenderClient?: boolean;
+}
 
-    if (onStateChange && value && value !== newState) {
-      return {
-        editor: { newState: value, oldState: newState },
-        ...rest,
-      };
-    }
+function createPropsWithDefaults<Combined extends AnyCombinedUnion>(
+  props: RenderEditorHooksProps<Combined>,
+): RenderEditorProps<Combined> {
+  return {
+    attributes: props.attributes ?? defaultProps.attributes,
+    editable: props.editable ?? defaultProps.editable,
+    fallbackContent: props.fallbackContent ?? defaultProps.fallbackContent,
+    initialContent: props.initialContent ?? defaultProps.initialContent,
+    insertPosition: props.insertPosition ?? defaultProps.insertPosition,
+    label: props.label ?? defaultProps.label,
+    onDispatchTransaction: props.onDispatchTransaction ?? defaultProps.onDispatchTransaction,
+    stringHandler: props.stringHandler ?? defaultProps.stringHandler,
+    usesBuiltInExtensions: props.usesBuiltInExtensions ?? defaultProps.usesBuiltInExtensions,
+    usesDefaultStyles: props.usesDefaultStyles ?? defaultProps.usesDefaultStyles,
+    children: props.children,
+    manager: props.manager,
+    autoFocus: props.autoFocus,
+    forceEnvironment: props.forceEnvironment,
+    onBlur: props.onBlur,
+    onChange: props.onChange,
+    onFirstRender: props.onFirstRender,
+    onFocus: props.onFocus,
+    onStateChange: props.onStateChange,
+    suppressHydrationWarning: props.suppressHydrationWarning,
+    value: props.value,
+  };
+}
 
-    return null;
-  }
-
+class InternalMethods<Combined extends AnyCombinedUnion> {
   /**
    * Stores the Prosemirror EditorView dom element.
    */
@@ -133,6 +151,29 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
    */
   private readonly portalContainer: PortalContainer = new PortalContainer();
 
+  #getProps: () => RenderEditorProps<Combined>;
+  #getState: () => RenderEditorState<SchemaFromCombined<Combined>>;
+  #getSetState: () => DispatchPartial<RenderEditorState<SchemaFromCombined<Combined>>>;
+
+  private get props(): RenderEditorProps<Combined> {
+    return this.#getProps();
+  }
+
+  private get state(): RenderEditorState<SchemaFromCombined<Combined>> {
+    return this.#getState();
+  }
+
+  private get setState(): DispatchPartial<RenderEditorState<SchemaFromCombined<Combined>>> {
+    return this.#getSetState();
+  }
+
+  /**
+   * Create the editor state from a remirror content type.
+   */
+  private createStateFromContent: (
+    content: RemirrorContentType,
+  ) => EditorState<SchemaFromCombined<Combined>>;
+
   /**
    * The document to use when rendering.
    */
@@ -151,17 +192,29 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
     called: false,
   };
 
-  constructor(properties: RenderEditorProps<Combined>) {
-    super(properties);
+  constructor(parameter: InternalMethodsConstructorParameter<Combined>) {
+    const { getProps, getState, getSetState, createStateFromContent } = parameter;
 
-    // Ensure that children is a render prop.
-    propIsFunction(properties.children);
+    this.#getProps = getProps;
+    this.#getState = getState;
+    this.#getSetState = getSetState;
+    this.createStateFromContent = createStateFromContent;
 
-    this.state = this.createInitialState();
+    propIsFunction(this.props.children);
 
-    // Create the ProsemirrorView and initialize our extension manager with it.
+    // Create the ProsemirrorView and initialize our editor manager with it.
     this.view = this.createView();
     this.manager.addView(this.view);
+  }
+
+  init(parameter: InternalMethodsConstructorParameter<Combined>) {
+    const { getProps, getState, createStateFromContent, getSetState } = parameter;
+    this.#getProps = getProps;
+    this.#getState = getState;
+    this.#getSetState = getSetState;
+    this.createStateFromContent = createStateFromContent;
+
+    return this;
   }
 
   /**
@@ -178,29 +231,7 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
   /**
    * Retrieve the editor state. This is passed through to the extension manager.
    */
-  private readonly getState = () =>
-    this.props.onStateChange && this.props.value ? this.props.value : this.view.state;
-
-  /**
-   * Create the initial React state which stores copies of the Prosemirror
-   * editor state. Our React state also keeps track of the previous active
-   * state.
-   *
-   * At this point both oldState and newState point to the same state object.
-   */
-  private createInitialState(): RemirrorState<SchemaFromCombined<Combined>> {
-    const { suppressHydrationWarning } = this.props;
-
-    const newState = this.createStateFromContent(this.props.initialContent);
-
-    return {
-      editor: {
-        newState,
-        oldState: newState,
-      },
-      shouldRenderClient: suppressHydrationWarning ? false : undefined,
-    };
-  }
+  private readonly getState = () => this.view.state;
 
   /**
    * Create the prosemirror editor view.
@@ -271,7 +302,7 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
    */
   private getAttributes(ssr?: false): Record<string, string>;
   private getAttributes(ssr: true): Shape;
-  private getAttributes(ssr = false) {
+  private getAttributes(ssr?: boolean) {
     const { attributes, autoFocus } = this.props;
     const propertyAttributes = isFunction(attributes)
       ? attributes(this.eventListenerParameter())
@@ -307,49 +338,10 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
     const previousState = this.getState();
     const state = previousState.apply(tr);
 
-    this.updateState({
-      tr,
-      state,
-      onUpdate: () => {
-        this.manager.onTransaction({ tr, state, previousState });
-      },
-    });
-  };
+    // TODO check for controlled component here.
 
-  /**
-   * This method manages state updates only when the `onStateChange` is passed
-   * into the editor. Since it's up to the user to provide state updates to the
-   * editor this method is called when the value prop has changed.
-   */
-  private readonly controlledUpdate = (state: EditorState<SchemaFromCombined<Combined>>) => {
-    const updateHandler = this.createUpdateStateHandler({ state });
-    this.view.updateState(state);
-    updateHandler();
-  };
-
-  /**
-   * Create the callback which is passed back to the setState handler.
-   */
-  private readonly createUpdateStateHandler = ({
-    state,
-    triggerOnChange,
-    onUpdate,
-    tr,
-  }: UpdateStateParameter<SchemaFromCombined<Combined>>) => (updatedState = state) => {
-    const { onChange } = this.props;
-
-    // No need to continue if triggerOnChange is `false`
-    if (!triggerOnChange) {
-      return;
-    }
-
-    if (onUpdate) {
-      onUpdate();
-    }
-
-    if (onChange) {
-      onChange(this.eventListenerParameter({ state: updatedState, tr }));
-    }
+    // Uncontrolled component
+    this.updateState({ state, tr });
   };
 
   /**
@@ -357,33 +349,20 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
    * directly setting the internal state via a `setState` call.
    */
   private updateState(parameter: UpdateStateParameter<SchemaFromCombined<Combined>>) {
-    const { state, triggerOnChange = true, onUpdate, tr } = parameter;
-    const { onStateChange } = this.props;
+    const { state, triggerOnChange = true, tr } = parameter;
 
-    const updateHandler = this.createUpdateStateHandler({ state, triggerOnChange, onUpdate });
+    // Update the internal prosemirror state. This happens before we update
+    // the component's copy of the state.
+    this.view.updateState(state);
 
-    // Check if this is a controlled component.
-    if (onStateChange) {
-      onStateChange(
-        this.editorStateEventListenerParameter({
-          oldState: this.state.editor.newState,
-          newState: state,
-          tr,
-        }),
-      );
-    } else {
-      // Update the internal prosemirror state. This happens before we update
-      // the component's copy of the state.
-      this.view.updateState(state);
+    const previousState = this.state.editor.newState;
+    this.setState({ editor: { newState: state, oldState: previousState } });
 
-      // This is not a controlled component so we need to manage firing of
-      // setState
-      this.setState(({ editor: { newState } }) => {
-        return { editor: { oldState: newState, newState: state } };
-        // Move update handler out from callback and directly after
-        // this.setState To prevent updates from only happening with stale data.
-      }, updateHandler);
+    if (triggerOnChange) {
+      this.props.onChange?.(this.eventListenerParameter({ state, tr }));
     }
+
+    this.manager.onStateUpdate({ previousState, state });
   }
 
   /**
@@ -429,11 +408,7 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
     this.view.dom.addEventListener('focus', this.onFocus);
   }
 
-  /**
-   * This is purely used to indicate to the component that this is a client
-   * environment when using the `suppressHydrationWarning` prop.
-   */
-  componentDidMount() {
+  onMount() {
     const { suppressHydrationWarning } = this.props;
 
     if (suppressHydrationWarning) {
@@ -443,44 +418,13 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
     this.manager.ready();
   }
 
-  componentDidUpdate(
-    { editable, manager: previousManager }: RenderEditorProps<Combined>,
-    previousState: RemirrorState<SchemaFromCombined<Combined>>,
-  ) {
+  onUpdate(previousEditable: boolean | undefined) {
     // Ensure that children is still a render prop
     propIsFunction(this.props.children);
 
     // Check whether the editable prop has been updated
-    if (this.props.editable !== editable && this.view && this.editorRef) {
+    if (this.props.editable !== previousEditable && this.view && this.editorRef) {
       this.view.setProps({ ...this.view.props, editable: () => this.props.editable });
-    }
-
-    // Check if the manager has changed
-    if (!previousManager.isEqual(this.props.manager)) {
-      this.updateManager();
-      this.view.setProps({ ...this.view.props, nodeViews: this.manager.store.nodeViews });
-
-      // The following converts the current content to HTML and then uses the
-      // new manager schema to convert it back into a ProsemirrorNode for
-      // compatibility with the new manager.
-      const htmlString = toHTML({
-        node: this.state.editor.newState.doc,
-        schema: previousManager.schema,
-      });
-      const newContent = fromHTML({
-        schema: this.manager.schema,
-        content: htmlString,
-        doc: this.doc,
-      });
-      this.setContent(newContent, true);
-    }
-
-    const { newState } = this.state.editor;
-
-    // Check if this is controlled component and run the post update handler
-    if (this.props.onStateChange && newState !== previousState.editor.newState) {
-      // The update was caused by an internal change
-      this.controlledUpdate(newState);
     }
   }
 
@@ -493,7 +437,7 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
    * - Destroys the state for each plugin
    * - Destroys the prosemirror view
    */
-  componentWillUnmount() {
+  onDestroy() {
     this.view.dom.removeEventListener('blur', this.onBlur);
     this.view.dom.removeEventListener('focus', this.onFocus);
 
@@ -512,19 +456,15 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
   /**
    * Listener for editor 'blur' events
    */
-  private readonly onBlur = (event: Event) => {
-    if (this.props.onBlur) {
-      this.props.onBlur(this.eventListenerParameter(), event);
-    }
+  onBlur = (event: Event) => {
+    this.props.onBlur?.(this.eventListenerParameter(), event);
   };
 
   /**
    * Listener for editor 'focus' events
    */
-  private readonly onFocus = (event: Event) => {
-    if (this.props.onFocus) {
-      this.props.onFocus(this.eventListenerParameter(), event);
-    }
+  onFocus = (event: Event) => {
+    this.props.onFocus?.(this.eventListenerParameter(), event);
   };
 
   /**
@@ -703,16 +643,6 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
   };
 
   /**
-   * Create the editor state from a remirror content type.
-   */
-  private readonly createStateFromContent = (
-    content: RemirrorContentType,
-  ): EditorState<SchemaFromCombined<Combined>> => {
-    const { stringHandler, fallbackContent: fallback } = this.props;
-    return this.manager.createState({ content, doc: this.doc, stringHandler, onError: fallback });
-  };
-
-  /**
    * Checks whether this is an SSR environment and returns a child array with
    * the SSR component
    *
@@ -809,3 +739,78 @@ export class RenderEditor<Combined extends AnyCombinedUnion> extends PureCompone
     return <Fragment>{this.renderReactElement()}</Fragment>;
   }
 }
+
+interface InternalMethodsConstructorParameter<Combined extends AnyCombinedUnion> {
+  getProps: () => RenderEditorProps<Combined>;
+  getState: () => RenderEditorState<SchemaFromCombined<Combined>>;
+  getSetState: () => DispatchPartial<RenderEditorState<SchemaFromCombined<Combined>>>;
+  createStateFromContent: (
+    content: RemirrorContentType,
+  ) => EditorState<SchemaFromCombined<Combined>>;
+}
+
+function useInternalMethods<Combined extends AnyCombinedUnion>(
+  parameter: InternalMethodsConstructorParameter<Combined>,
+) {
+  return useRef(new InternalMethods<Combined>(parameter)).current.init(parameter);
+}
+
+export const RenderEditor = <Combined extends AnyCombinedUnion>(
+  rawProps: RenderEditorHooksProps<Combined>,
+) => {
+  const props = createPropsWithDefaults<Combined>(rawProps);
+
+  const { stringHandler, fallbackContent, manager, forceEnvironment } = props;
+
+  const createStateFromContent = useCallback(
+    (content: RemirrorContentType): EditorState<SchemaFromCombined<Combined>> => {
+      return manager.createState({
+        content,
+        doc: getDocument(forceEnvironment),
+        stringHandler,
+        onError: fallbackContent,
+      });
+    },
+    [fallbackContent, forceEnvironment, manager, stringHandler],
+  );
+
+  const initialState = createStateFromContent(props.initialContent);
+  const [state, setState] = useSetState<RenderEditorState<SchemaFromCombined<Combined>>>({
+    editor: { newState: initialState, oldState: initialState },
+    shouldRenderClient: props.suppressHydrationWarning ? false : undefined,
+  });
+
+  const methods: InternalMethods<Combined> = useInternalMethods<Combined>({
+    getProps: () => props,
+    getState: () => state,
+    getSetState: () => setState,
+    createStateFromContent,
+  });
+
+  // // The following is used as an alternative to `getDerivedStateFromProps`
+  // // https://reactjs.org/docs/hooks-faq.html#how-do-i-implement-getderivedstatefromprops
+  // if (props.onStateChange && props.value && props.value !== state.editor.newState) {
+  //   setState({
+  //     editor: { newState: props.value, oldState: state.editor.newState },
+  //   });
+  // }
+
+  useEffectOnce(() => {
+    methods.onMount();
+
+    return () => methods.onDestroy();
+  });
+
+  const previousEditable = usePrevious(props.editable);
+
+  useUpdateEffect(() => {
+    methods.onUpdate(previousEditable);
+  }, [props, state]);
+
+  return methods.render();
+};
+
+/**
+ * Sets a flag to be a static remirror
+ */
+RenderEditor.remirrorType = RemirrorType.Editor;
