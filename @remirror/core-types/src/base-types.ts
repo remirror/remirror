@@ -191,11 +191,11 @@ export interface ObjectMark {
  * @remarks
  * This is used to represent the top level doc nodes content.
  */
-export interface ObjectNode {
+export interface RemirrorJSON {
   type: string;
   marks?: Array<ObjectMark | string>;
   text?: string;
-  content?: ObjectNode[];
+  content?: RemirrorJSON[];
   attrs?: Record<string, Literal | object>;
 }
 

@@ -1,6 +1,7 @@
 import { css, cx } from 'linaria';
 import { Type, useMultishift } from 'multishift';
 import React, { useCallback, useMemo } from 'react';
+import useSetState from 'react-use/lib/useSetState';
 
 import { isEmptyArray, isUndefined } from '@remirror/core';
 import {
@@ -16,7 +17,6 @@ import {
   PartialSetStateAction,
   useExtension,
   usePositioner,
-  useSetState,
 } from '@remirror/react';
 
 import {

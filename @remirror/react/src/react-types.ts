@@ -12,9 +12,9 @@ import {
   EditorStateParameter,
   EditorViewParameter,
   FromToParameter,
-  ObjectNode,
   ProsemirrorNode,
   RemirrorContentType,
+  RemirrorJSON,
   RenderEnvironment,
   SchemaFromCombined,
   Shape,
@@ -69,16 +69,15 @@ export interface BaseProps<Combined extends AnyCombinedUnion> extends StringHand
   initialContent?: RemirrorContentType;
 
   /**
+   * When onStateChange is defined this prop is used to set the next state value
+   * of the remirror editor.
+   *
+   * @remarks
+   *
    * If this exists the editor becomes a controlled component. Nothing will be
    * updated unless you explicitly set the value prop to the updated state.
    *
    * Without a deep understanding of Prosemirror this is not recommended.
-   */
-  onStateChange?: (params: RemirrorStateListenerParameter<Combined>) => void;
-
-  /**
-   * When onStateChange is defined this prop is used to set the next state value
-   * of the remirror editor.
    */
   value?: EditorState<SchemaFromCombined<Combined>> | null;
 
@@ -115,12 +114,6 @@ export interface BaseProps<Combined extends AnyCombinedUnion> extends StringHand
   onBlur?: (params: RemirrorEventListenerParameter<Combined>, event: Event) => void;
 
   /**
-   * Called on the first render when the prosemirror instance first becomes
-   * available
-   */
-  onFirstRender?: RemirrorEventListener<Combined>;
-
-  /**
    * Called on every change to the Prosemirror state.
    */
   onChange?: RemirrorEventListener<Combined>;
@@ -140,29 +133,6 @@ export interface BaseProps<Combined extends AnyCombinedUnion> extends StringHand
    * @defaultValue ''
    */
   label?: string;
-
-  /**
-   * Determines whether or not to use the built in extensions.
-   *
-   * @remarks
-   *
-   * Use this if you would like to take full control of all your extensions and
-   * have some understanding of the underlying Prosemirror internals.
-   *
-   * ```ts
-   * const builtInExtensions = [new DocExtension(), new TextExtension(), new ParagraphExtension()]
-   * ```
-   *
-   * @defaultValue true
-   */
-  usesBuiltInExtensions?: boolean;
-
-  /**
-   * Determine whether the editor should use default styles.
-   *
-   * @defaultValue true
-   */
-  usesDefaultStyles?: boolean;
 
   /**
    * Determine whether the Prosemirror view is inserted at the `start` or `end`
@@ -211,7 +181,7 @@ export interface BaseProps<Combined extends AnyCombinedUnion> extends StringHand
    *
    * @defaultValue EMPTY_PARAGRAPH_NODE
    */
-  fallbackContent?: ObjectNode | ProsemirrorNode;
+  fallbackContent?: RemirrorJSON | ProsemirrorNode;
 }
 
 export interface GetRootPropsConfig<RefKey extends string = 'ref'>
@@ -313,6 +283,7 @@ export interface RemirrorContextProps<Combined extends AnyCombinedUnion>
    * declare it as the editor root (where the editor is injected in the DOM).
    *
    * @remarks
+   *
    * By default remirror will add the prosemirror editor instance directly into
    * the first child element it receives. Using this method gives you full
    * control over where the editor should be injected.
@@ -350,11 +321,6 @@ export interface RemirrorContextProps<Combined extends AnyCombinedUnion>
   ) => RefKeyRootProps<RefKey>;
 
   /**
-   * The previous and next state
-   */
-  state: CompareStateParameter<SchemaFromCombined<Combined>>;
-
-  /**
    * Focus the editor at the `start` | `end` a specific position or at a valid range between `{ from, to }`
    */
   focus: (position?: FocusType) => void;
@@ -365,6 +331,11 @@ export interface RemirrorContextProps<Combined extends AnyCombinedUnion>
    * @internal
    */
   portalContainer: PortalContainer;
+
+  /**
+   * A getter function for the current editor state.
+   */
+  getState: () => EditorState<SchemaFromCombined<Combined>>;
 }
 
 export interface RemirrorGetterParameter {
@@ -385,13 +356,13 @@ export interface RemirrorGetterParameter {
    * Get the full JSON representation of the state (including the selection
    * information)
    */
-  getJSON: () => ObjectNode;
+  getJSON: () => RemirrorJSON;
 
   /**
    * Get a representation of the editor content as an ObjectNode which can be
    * used to set content for and editor.
    */
-  getObjectNode: () => ObjectNode;
+  getRemirrorJSON: () => RemirrorJSON;
 }
 
 export interface BaseListenerParameter<Combined extends AnyCombinedUnion>
@@ -424,11 +395,12 @@ export interface BaseListenerParameter<Combined extends AnyCombinedUnion>
 
 export interface RemirrorEventListenerParameter<Combined extends AnyCombinedUnion>
   extends EditorStateParameter<SchemaFromCombined<Combined>>,
-    BaseListenerParameter<Combined> {}
-
-export interface RemirrorStateListenerParameter<Combined extends AnyCombinedUnion>
-  extends CompareStateParameter<SchemaFromCombined<Combined>>,
     BaseListenerParameter<Combined> {
+  /**
+   * The previous state.
+   */
+  previousState: EditorState<SchemaFromCombined<Combined>>;
+
   /**
    * Manually create a new state object with the desired content.
    */

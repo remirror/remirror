@@ -1,12 +1,12 @@
 import React, { ComponentType, FC, Fragment } from 'react';
 
-import { isEmptyArray, isString, object, ObjectMark, ObjectNode } from '@remirror/core';
+import { isEmptyArray, isString, object, ObjectMark, RemirrorJSON } from '@remirror/core';
 
 /* Inspired by https://github.com/rexxars/react-prosemirror-document */
 
 type MarkMap = Partial<Record<string, string | ComponentType<any>>>;
 interface TextHandlerProps {
-  node: ObjectNode;
+  node: RemirrorJSON;
   markMap: MarkMap;
   skipUnknownMarks?: boolean;
 }
@@ -44,7 +44,7 @@ const TextHandler: FC<TextHandlerProps> = ({ node, ...props }) => {
 };
 
 const CodeBlock: FC<{
-  node: ObjectNode;
+  node: RemirrorJSON;
   markMap: MarkMap;
 }> = (props) => {
   const content = props.node.content;
@@ -103,11 +103,11 @@ export interface BaseRenderTreeProps {
 }
 
 export interface SubRenderTreeProps extends BaseRenderTreeProps {
-  node: ObjectNode;
+  node: RemirrorJSON;
 }
 
 export interface RenderTreeProps extends Partial<BaseRenderTreeProps> {
-  json: ObjectNode;
+  json: RemirrorJSON;
 }
 
 /**

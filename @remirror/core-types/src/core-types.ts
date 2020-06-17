@@ -13,7 +13,7 @@ import {
   ProsemirrorNode,
   Transaction,
 } from './alias-types';
-import { ObjectNode as RemirrorJSON, ProsemirrorAttributes, RegexTuple } from './base-types';
+import { ProsemirrorAttributes, RegexTuple, RemirrorJSON } from './base-types';
 import {
   EditorStateParameter,
   EditorViewParameter,

@@ -1,6 +1,7 @@
 import { cx } from 'linaria';
 import { Type, useMultishift } from 'multishift';
 import React, { ComponentType, useCallback, useMemo, useRef } from 'react';
+import useSetState from 'react-use/lib/useSetState';
 
 import { isEmptyArray } from '@remirror/core';
 import {
@@ -10,7 +11,7 @@ import {
   MentionKeyBinding,
 } from '@remirror/extension-mention';
 import { SuggestChangeHandlerParameter, SuggestKeyBindingParameter } from '@remirror/pm/suggest';
-import { useExtension, useI18n, useSetState } from '@remirror/react';
+import { useExtension, useI18n } from '@remirror/react';
 
 import { messages } from '../social-editor-messages';
 import {

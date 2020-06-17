@@ -19,7 +19,6 @@ import {
   FromToParameter,
   MarkTypeParameter,
   NodeMatch,
-  ObjectNode,
   PluginKey,
   Position,
   PositionParameter,
@@ -27,6 +26,7 @@ import {
   ProsemirrorNodeParameter,
   RegexTuple,
   RemirrorContentType,
+  RemirrorJSON,
   RenderEnvironment,
   ResolvedPos,
   SchemaParameter,
@@ -752,7 +752,7 @@ export const isDocNode = (node: ProsemirrorNode | null | undefined, schema?: Edi
  *
  * @public
  */
-export const isObjectNode = (value: unknown): value is ObjectNode =>
+export const isObjectNode = (value: unknown): value is RemirrorJSON =>
   isObject(value) && value.type === 'doc' && Array.isArray(value.content);
 
 export interface CreateDocumentNodeParameter
@@ -771,7 +771,7 @@ export interface CreateDocumentNodeParameter
 }
 
 export type CreateDocumentErrorHandler = (error: Error) => Fallback;
-export type Fallback = ObjectNode | ProsemirrorNode;
+export type Fallback = RemirrorJSON | ProsemirrorNode;
 export interface StringHandlerParameter {
   /**
    * A function which transforms a string into a prosemirror node.

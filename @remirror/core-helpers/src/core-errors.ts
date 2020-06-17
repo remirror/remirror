@@ -59,7 +59,8 @@ if (process.env.NODE_ENV !== 'production') {
       '`useRemirror` was called outside of the `remirror` context. It can only be used within an active remirror context created by the `<RemirrorProvider />`.',
     [ErrorConstant.REACT_GET_ROOT_PROPS]:
       '`getRootProps` has been called MULTIPLE times. It should only be called ONCE during render.',
-    [ErrorConstant.REACT_EDITOR_VIEW]: ' A problem occurred adding the editor view to the dom.',
+    [ErrorConstant.REACT_EDITOR_VIEW]: 'A problem occurred adding the editor view to the dom.',
+    [ErrorConstant.REACT_CONTROLLED]: 'There is a problem with your controlled editor setup.',
     [ErrorConstant.I18N_CONTEXT]: 'You called `useI18n()` outside of an `I18nProvider` context.',
   };
 }

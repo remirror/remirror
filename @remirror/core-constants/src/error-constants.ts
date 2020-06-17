@@ -123,7 +123,12 @@ export enum ErrorConstant {
   /**
    * A problem occurred adding the editor view to the dom.
    */
-  REACT_EDITOR_VIEW = 'RMR0201',
+  REACT_EDITOR_VIEW = 'RMR0202',
+
+  /**
+   * There is a problem with your controlled editor setup.
+   */
+  REACT_CONTROLLED = 'RMR0202',
 
   /**
    * There is something wrong with your i18n setup.
