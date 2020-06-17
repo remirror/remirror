@@ -148,10 +148,23 @@ export class CommandsExtension extends PlainExtension {
        * This is primarily intended for use within a chainable command chain.
        */
       customTransaction(transactionUpdater: (transaction: Transaction) => void): CommandFunction {
-        return ({ state, dispatch }) => {
+        return ({ tr, dispatch }) => {
           if (dispatch) {
-            transactionUpdater(state.tr);
-            dispatch(state.tr);
+            transactionUpdater(tr);
+            dispatch(tr);
+          }
+
+          return true;
+        };
+      },
+
+      /**
+       * Insert text into the dom at the current location.
+       */
+      insertText(text: string): CommandFunction {
+        return ({ tr, dispatch }) => {
+          if (dispatch) {
+            dispatch(tr.insertText(text));
           }
 
           return true;
@@ -166,9 +179,9 @@ export class CommandsExtension extends PlainExtension {
        * plugin state have updated.
        */
       emptyUpdate(): CommandFunction {
-        return ({ state, dispatch }) => {
+        return ({ tr, dispatch }) => {
           if (dispatch) {
-            dispatch(state.tr);
+            dispatch(tr);
           }
 
           return true;

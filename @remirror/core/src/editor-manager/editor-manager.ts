@@ -162,13 +162,13 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
     create: CreateLifecycleMethod[];
     view: ViewLifecycleMethod[];
     ready: Array<() => void>;
-    transaction: StateUpdateLifecycleMethod[];
+    update: StateUpdateLifecycleMethod[];
     destroy: DestroyLifecycleMethod[];
   } = {
     create: [],
     view: [],
     ready: [],
-    transaction: [],
+    update: [],
     destroy: [],
   };
 
@@ -311,11 +311,11 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
       }
 
       if (readyHandler) {
-        this.#handlers.view.push(readyHandler);
+        this.#handlers.ready.push(readyHandler);
       }
 
       if (transactionHandler) {
-        this.#handlers.transaction.push(transactionHandler);
+        this.#handlers.update.push(transactionHandler);
       }
 
       if (destroyHandler) {
@@ -346,7 +346,8 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   };
 
   /**
-   * A method to set values in the extension store which is made available to extension.
+   * A method to set values in the extension store which is made available to
+   * extension.
    *
    * **NOTE** This method should only be used in the `onCreate` extension method
    * or it will throw an error.
@@ -435,6 +436,11 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
    * @param view - the editor view
    */
   addView(view: EditorView<this['~Sch']>) {
+    invariant(this.#phase < ManagerPhase.EditorView, {
+      code: ErrorConstant.MANAGER_PHASE_ERROR,
+      message: 'A view has already been added to this manager. A view should only be added once.',
+    });
+
     // Update the lifecycle phase.
     this.#phase = ManagerPhase.EditorView;
 
@@ -449,7 +455,11 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   }
 
   /**
-   * This method should be called by the view layer to notify remirror that everything is ready to run.
+   * This method should be called by the view layer to notify remirror that
+   * everything is ready to run.
+   *
+   * This is useful in frameworks like `react` where the view is only attached
+   * to the dom once the component is mounted.
    */
   ready() {
     this.#phase = ManagerPhase.Ready;
@@ -542,16 +552,19 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
    * An example usage of this is within the collaboration plugin.
    */
   onStateUpdate(parameter: StateUpdateLifecycleParameter) {
+    this.#phase = ManagerPhase.Runtime;
+
     this.#extensionStore.currentState = parameter.state;
     this.#extensionStore.previousState = parameter.previousState;
 
-    for (const handler of this.#handlers.transaction) {
+    for (const handler of this.#handlers.update) {
       handler(parameter);
     }
   }
 
   /**
-   * Get the extension instance matching the provided constructor from the manager.
+   * Get the extension instance matching the provided constructor from the
+   * manager.
    *
    * This will throw an error if non existent.
    */
@@ -588,7 +601,8 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   /**
    * Recreate the manager.
    *
-   * What about the state stored in the extensions and presets these need to be recreated as well
+   * What about the state stored in the extensions and presets these need to be
+   * recreated as well
    */
   clone<ExtraCombined extends AnyCombinedUnion>(
     combined: ExtraCombined[],
@@ -652,8 +666,8 @@ export interface EditorManagerParameter<
 
 interface SettingsWithPrivacy extends Remirror.ManagerSettings {
   /**
-   * A symbol value that prevents the EditorManager constructor from being called
-   * directly.
+   * A symbol value that prevents the EditorManager constructor from being
+   * called directly.
    *
    * @internal
    */
@@ -698,8 +712,8 @@ export interface EditorManager<Combined extends AnyCombinedUnion> {
   /**
    * `NodeNames`
    *
-   * Type inference hack for node extension names.
-   * This is the only way I know to store types on a class.
+   * Type inference hack for node extension names. This is the only way I know
+   * to store types on a class.
    *
    * @internal
    */
@@ -708,8 +722,8 @@ export interface EditorManager<Combined extends AnyCombinedUnion> {
   /**
    * `MarkNames`
    *
-   * Type inference hack for mark extension names.
-   * This is the only way I know to store types on a class.
+   * Type inference hack for mark extension names. This is the only way I know
+   * to store types on a class.
    *
    * @internal
    */

@@ -4,6 +4,7 @@
   "homepage": "https://github.com/remirror/remirror",
   "repository": "https://github.com/remirror/remirror",
   "scripts": {
+    "browser:coverage": "browserslist --coverage",
     "build": "preconstruct build",
     "build:custom": "pnpm recursive run build:custom",
     "build:docs": "cd docs && pnpm run build",
@@ -205,6 +206,7 @@
     "babel-plugin-annotate-pure-calls": "^0.4.0",
     "babel-plugin-dev-expression": "^0.2.2",
     "babel-plugin-macros": "^2.8.0",
+    "browserlist": "^1.0.1",
     "case-anything": "^1.1.1",
     "cpy-cli": "^3.1.1",
     "cross-env": "^7.0.2",

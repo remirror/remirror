@@ -5,7 +5,7 @@ import { BaseProps } from './react-types';
 
 export const defaultProps = asDefaultProps<BaseProps<AnyCombinedUnion>>()({
   initialContent: EMPTY_PARAGRAPH_NODE,
-  fallbackContent: EMPTY_PARAGRAPH_NODE,
+  onError: EMPTY_PARAGRAPH_NODE,
   editable: true,
   attributes: {},
   label: '',

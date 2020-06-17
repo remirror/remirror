@@ -4,7 +4,7 @@ import React, { forwardRef, FunctionComponent, Ref, RefAttributes } from 'react'
 
 import { createReactManager } from '@remirror/test-fixtures';
 
-import { RenderEditor } from '..';
+import { RenderEditor } from '../render-editor';
 
 const mock = jest.fn();
 const CustomRoot: FunctionComponent<RefAttributes<HTMLDivElement>> = forwardRef((props, ref) => {

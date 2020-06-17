@@ -186,20 +186,6 @@ export interface ObjectMark {
 }
 
 /**
- * A JSON representation of the prosemirror Node.
- *
- * @remarks
- * This is used to represent the top level doc nodes content.
- */
-export interface RemirrorJSON {
-  type: string;
-  marks?: Array<ObjectMark | string>;
-  text?: string;
-  content?: RemirrorJSON[];
-  attrs?: Record<string, Literal | object>;
-}
-
-/**
  * Defines a position
  */
 export interface Position {

@@ -1,0 +1,63 @@
+# @remirror/dom
+
+> Use remirror directly in the dom.
+
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
+[![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)
+![MIT License][license]
+
+[version]: https://flat.badgen.net/npm/v/@remirror/dom
+[npm]: https://npmjs.com/package/@remirror/dom
+[license]: https://flat.badgen.net/badge/license/MIT/purple
+[size]: https://bundlephobia.com/result?p=@remirror/dom
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/dom
+[typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
+[downloads-badge]: https://badgen.net/npm/dw/@remirror/dom/red?icon=npm
+
+## Why
+
+You've heard great things about prosemirror and would like to use it in your app, but you're
+slightly intimidated by some of the moving parts. You don't really want to deal with Schema, Nodes,
+Marks, Plugins, Decorations. You just want an editor.
+
+This library provides an abstraction that might be right for you.
+
+The functionality of the prosemirror library is wrapped up into extensions which manage the work for
+you.
+
+## Installation
+
+```bash
+# yarn
+yarn add @remirror/dom @remirror/pm
+
+# pnpm
+pnpm add @remirror/dom @remirror/pm
+
+# npm
+npm install @remirror/dom @remirror/pm
+```
+
+## Usage
+
+The following code is a guide to get you started.
+
+```ts
+import { BoldExtension } from 'remirror/extension/bold';
+import { createRemirrorDOM, createEditorManager } from 'remirror/dom';
+
+const element = document.querySelector('#editor');
+const manager = createEditorManager([new BoldExtension()]);
+const editor = createRemirrorDOM({ manager, element });
+
+editor.addHandler('change', () => console.log('your editor has changed'));
+
+// Make selected text bold.
+editor.commands.toggleBold();
+```
+
+## Credits
+
+This package was bootstrapped with [monots].
+
+[monots]: https://github.com/monots/monots

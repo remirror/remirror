@@ -8,7 +8,7 @@ import { renderToString } from 'react-dom/server';
 import { EDITOR_CLASS_NAME } from '@remirror/core';
 import { BoldExtension, createReactManager, docNodeSimpleJSON } from '@remirror/test-fixtures';
 
-import { RenderEditor } from '..';
+import { RenderEditor } from '../render-editor';
 
 const label = 'Remirror editor';
 const handlers = {

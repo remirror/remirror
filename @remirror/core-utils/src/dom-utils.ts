@@ -777,7 +777,7 @@ export interface CreateDocumentNodeParameter
   selection?: FromToParameter;
 }
 
-export type CreateDocumentErrorHandler = (error: Error) => Fallback;
+export type CreateDocumentErrorHandler = (error?: Error) => Fallback;
 export type Fallback = RemirrorJSON | ProsemirrorNode;
 export interface StringHandlerParameter {
   /**
@@ -795,7 +795,7 @@ export interface StringHandlerParameter {
 interface CreateDocumentErrorHandlerParameter {
   onError: Fallback | CreateDocumentErrorHandler;
   schema: EditorSchema;
-  error: Error;
+  error?: Error;
 }
 
 function createDocumentErrorHandler(parameter: CreateDocumentErrorHandlerParameter) {

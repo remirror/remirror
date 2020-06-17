@@ -6,8 +6,8 @@ import { renderToString } from 'react-dom/server';
 import { AnyCombinedUnion, fromHTML } from '@remirror/core';
 import { createReactManager } from '@remirror/test-fixtures';
 
-import { RenderEditor } from '..';
 import { RemirrorContextProps } from '../../react-types';
+import { RenderEditor } from '../render-editor';
 
 const textContent = `This is editor text`;
 const label = 'Remirror editor';

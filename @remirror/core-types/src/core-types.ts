@@ -11,14 +11,36 @@ import {
   EditorView,
   Mark,
   ProsemirrorNode,
+  Selection,
   Transaction,
 } from './alias-types';
-import { ProsemirrorAttributes, RegexTuple, RemirrorJSON } from './base-types';
+import { Literal, ObjectMark, ProsemirrorAttributes, RegexTuple } from './base-types';
 import {
   EditorStateParameter,
   EditorViewParameter,
+  FromToParameter,
   TransactionParameter,
 } from './parameter-builders';
+
+/**
+ * A JSON representation of the prosemirror Node.
+ *
+ * @remarks
+ * This is used to represent the top level doc nodes content.
+ */
+export interface RemirrorJSON {
+  type: string;
+  marks?: Array<ObjectMark | string>;
+  text?: string;
+  content?: RemirrorJSON[];
+  attrs?: Record<string, Literal | object>;
+}
+
+export interface StateJSON {
+  [key: string]: unknown;
+  doc: RemirrorJSON;
+  selection: FromToParameter;
+}
 
 type GetAttributesFunction = (p: string[] | string) => ProsemirrorAttributes | undefined;
 
@@ -316,3 +338,13 @@ export type NodeViewMethod<View extends NodeView = NodeView> = (
 export interface RemirrorIdentifierShape {
   [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]: RemirrorIdentifier;
 }
+
+/**
+ * The type of arguments acceptable for a selection.
+ *
+ * - Can be a selection
+ * - A range of `{ from: number; to: number }`
+ * - A single position with a `number`
+ * - `'start' | 'end'`
+ */
+export type PrimitiveSelection = Selection | FromToParameter | number | 'start' | 'end';

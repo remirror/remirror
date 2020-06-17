@@ -4,9 +4,9 @@ import React, { FC, useState } from 'react';
 
 import { EditorState, fromHTML, SchemaFromCombined } from '@remirror/core';
 
-import { RenderEditor } from '..';
 import { createReactManager } from '../../hooks/editor-hooks';
 import { RemirrorContextProps } from '../../react-types';
+import { RenderEditor } from '../render-editor';
 
 const label = 'Remirror editor';
 
