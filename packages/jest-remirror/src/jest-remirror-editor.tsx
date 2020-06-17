@@ -1,4 +1,5 @@
-import { render, RenderResult } from '@testing-library/react/pure';
+import { prettyDOM } from '@testing-library/dom';
+import { render } from '@testing-library/react/pure';
 import {
   dispatchAllSelection,
   dispatchCellSelection,
@@ -18,6 +19,7 @@ import {
   ActiveFromCombined,
   AnyCombinedUnion,
   CommandFunction,
+  CommandFunctionParameter,
   CommandsFromCombined,
   EditorManager,
   EditorState,
@@ -62,7 +64,7 @@ export function renderEditor<Combined extends AnyCombinedUnion>(
 
   const manager = EditorManager.create([...combined, corePreset], settings);
 
-  const utils = render(
+  render(
     <RenderEditor {...props} manager={manager}>
       {(param) => {
         if (props?.children) {
@@ -74,7 +76,7 @@ export function renderEditor<Combined extends AnyCombinedUnion>(
     </RenderEditor>,
   );
 
-  return new RemirrorTestChain(manager, utils);
+  return RemirrorTestChain.create(manager);
 }
 
 /**
@@ -82,6 +84,10 @@ export function renderEditor<Combined extends AnyCombinedUnion>(
  * extensions and commands.
  */
 export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
+  static create<Combined extends AnyCombinedUnion>(manager: EditorManager<Combined>) {
+    return new RemirrorTestChain(manager);
+  }
+
   /** The editor manager */
   #manager: EditorManager<Combined>;
 
@@ -91,7 +97,6 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Utilities provided by `@testing-library/react`.
    */
-  readonly utils: RenderResult;
 
   /**
    * The nodes available for building the prosemirror document.
@@ -151,7 +156,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * The editor schema.
    */
   get schema() {
-    return this.state.schema;
+    return this.manager.schema;
   }
 
   /**
@@ -216,9 +221,8 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
     return this.#tags ?? {};
   }
 
-  constructor(manager: EditorManager<Combined>, utils: RenderResult) {
+  private constructor(manager: EditorManager<Combined>) {
     this.#manager = manager;
-    this.utils = utils;
 
     this.createDocBuilders();
   }
@@ -358,13 +362,11 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
     fn: (
       content: Pick<
         this,
-        'helpers' | 'commands' | 'end' | 'state' | 'tags' | 'start' | 'doc' | 'view' | 'utils'
+        'helpers' | 'commands' | 'end' | 'state' | 'tags' | 'start' | 'doc' | 'view'
       >,
     ) => void,
   ) => {
-    fn(
-      pick(this, ['helpers', 'commands', 'end', 'state', 'tags', 'start', 'doc', 'view', 'utils']),
-    );
+    fn(pick(this, ['helpers', 'commands', 'end', 'state', 'tags', 'start', 'doc', 'view']));
 
     return this;
   };
@@ -411,7 +413,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * @param command - the command function to run with the current state and
    * view
    */
-  readonly dispatchCommand = (command: CommandFunction) => {
+  readonly dispatchCommand = (command: (parameter: Required<CommandFunctionParameter>) => any) => {
     command({ state: this.state, dispatch: this.view.dispatch, view: this.view, tr: this.tr });
 
     return this;
@@ -474,7 +476,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * Logs the view to the dom for help debugging the html in your tests.
    */
   readonly debug = () => {
-    this.utils.debug(this.view.dom as HTMLElement);
+    console.log(prettyDOM(this.view.dom as HTMLElement));
     return this;
   };
 }

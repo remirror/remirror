@@ -15,7 +15,7 @@ import {
 } from '@remirror/core-helpers';
 import { EditorSchema, EditorView } from '@remirror/core-types';
 import { createDocumentNode, CreateDocumentNodeParameter } from '@remirror/core-utils';
-import { EditorState } from '@remirror/pm/state';
+import { EditorState, TextSelection } from '@remirror/pm/state';
 
 import { BuiltinPreset } from '../builtins';
 import {
@@ -468,20 +468,32 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
    * Create the editor state from content passed to this extension manager.
    */
   createState(parameter: Omit<CreateDocumentNodeParameter, 'schema'>) {
-    const { content, doc, stringHandler, onError: fallback } = parameter;
+    const { content, doc: docParameter, stringHandler, onError, selection } = parameter;
     const { schema, plugins } = this.store;
 
-    return EditorState.create({
+    const doc = createDocumentNode({
+      content,
+      doc: docParameter,
       schema,
-      doc: createDocumentNode({
-        content,
-        doc,
-        schema,
-        stringHandler,
-        onError: fallback,
-      }),
+      stringHandler,
+      onError,
+      selection,
+    });
+
+    const state = EditorState.create({
+      schema,
+      doc,
       plugins,
     });
+
+    if (selection) {
+      const tr = state.tr;
+      const { from, to } = selection;
+      tr.setSelection(TextSelection.create(doc, from, to));
+      return state.applyTransaction(tr).state;
+    }
+
+    return state;
   }
 
   /**
@@ -648,7 +660,7 @@ interface SettingsWithPrivacy extends Remirror.ManagerSettings {
   privacy?: symbol;
 }
 
-export type CombinedFromManager<Manager extends AnyEditorManager> = Manager['~EP'];
+export type GetCombined<Manager extends AnyEditorManager> = Manager['~EP'];
 
 interface EditorManagerConstructor extends Function, Remirror.EditorManagerConstructor {
   fromObject: <ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>(

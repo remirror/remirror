@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`throws an error when called multiple times during render 1`] = `
-" A problem occurred adding the editor view to the dom.
+"\`getRootProps\` has been called MULTIPLE times. It should only be called ONCE during render.
 
 For more information visit https://docs.remirror.org/errors#RMR0201"
 `;

@@ -3,6 +3,7 @@ import { ReactNode, Ref } from 'react';
 import {
   AnyCombinedUnion,
   AnyExtension,
+  AnyPreset,
   BuiltinPreset,
   CombinedUnion,
   CompareStateParameter,
@@ -42,7 +43,7 @@ export type FocusType = FromToParameter | number | 'start' | 'end' | boolean;
 
 export type DefaultReactCombined = CombinedUnion<
   AnyExtension,
-  CorePreset | ReactPreset | BuiltinPreset
+  CorePreset | ReactPreset | BuiltinPreset | AnyPreset
 >;
 
 export interface BaseProps<Combined extends AnyCombinedUnion> extends StringHandlerParameter {
@@ -177,7 +178,8 @@ export interface BaseProps<Combined extends AnyCombinedUnion> extends StringHand
   /**
    * The value to use for empty content.
    *
-   * This is the value used for an empty editor or when `resetContent` is called.
+   * This is the value used for an empty editor or when `resetContent` is
+   * called.
    *
    * @defaultValue EMPTY_PARAGRAPH_NODE
    */
@@ -264,7 +266,7 @@ export interface RemirrorContextProps<Combined extends AnyCombinedUnion>
    * @param triggerOnChange - whether onChange handlers should be triggered by
    * the update.
    */
-  clearContent: (triggerOnChange?: boolean) => void;
+  clearContent: (options?: TriggerChangeParameter) => void;
 
   /**
    * Replace all editor content with the new content.
@@ -273,10 +275,10 @@ export interface RemirrorContextProps<Combined extends AnyCombinedUnion>
    *
    * Allows for the editor content to be overridden by force.
    *
-   * @param triggerOnChange - whether onChange handlers should be triggered by
-   * the update.
+   * @param triggerOnChange - whether the `onChange` handler should be triggered
+   * by the update. Defaults to `false`
    */
-  setContent: (content: RemirrorContentType, triggerOnChange?: boolean) => void;
+  setContent: (content: RemirrorContentType, options?: TriggerChangeParameter) => void;
 
   /**
    * A function that returns props which should be spread on a react element and
@@ -288,8 +290,8 @@ export interface RemirrorContextProps<Combined extends AnyCombinedUnion>
    * the first child element it receives. Using this method gives you full
    * control over where the editor should be injected.
    *
-   * **IMPORTANT** In order to support SSR pre-rendering this should only be spread
-   * on a component with NO children.
+   * **IMPORTANT** In order to support SSR pre-rendering this should only be
+   * spread on a component with NO children.
    *
    * **Example with indirectly nested components**
    *
@@ -321,7 +323,8 @@ export interface RemirrorContextProps<Combined extends AnyCombinedUnion>
   ) => RefKeyRootProps<RefKey>;
 
   /**
-   * Focus the editor at the `start` | `end` a specific position or at a valid range between `{ from, to }`
+   * Focus the editor at the `start` | `end` a specific position or at a valid
+   * range between `{ from, to }`
    */
   focus: (position?: FocusType) => void;
 
@@ -371,8 +374,8 @@ export interface BaseListenerParameter<Combined extends AnyCombinedUnion>
   /**
    * The original transaction which caused this state update.
    *
-   * This allows for inspecting the reason behind the state change.
-   * When undefined this means that the state was updated externally.
+   * This allows for inspecting the reason behind the state change. When
+   * undefined this means that the state was updated externally.
    *
    * If available:
    * - Metadata on the transaction can be inspected. `tr.getMeta`
@@ -383,11 +386,11 @@ export interface BaseListenerParameter<Combined extends AnyCombinedUnion>
   tr?: Transaction<SchemaFromCombined<Combined>>;
 
   /**
-   * A shorthand way of checking whether the update was triggered by editor usage (internal) or
-   * overwriting the state.
+   * A shorthand way of checking whether the update was triggered by editor
+   * usage (internal) or overwriting the state.
    *
-   * - `true` The update was triggered by a change in the prosemirror doc or an update to the selection.
-   * In these cases `tr` will have a value.
+   * - `true` The update was triggered by a change in the prosemirror doc or an
+   *   update to the selection. In these cases `tr` will have a value.
    * - `false` The update was caused by a call to `setContent` or `resetContent`
    */
   internalUpdate: boolean;
@@ -396,6 +399,12 @@ export interface BaseListenerParameter<Combined extends AnyCombinedUnion>
 export interface RemirrorEventListenerParameter<Combined extends AnyCombinedUnion>
   extends EditorStateParameter<SchemaFromCombined<Combined>>,
     BaseListenerParameter<Combined> {
+  /**
+   * True when this is the first render of the editor. This applies when the
+   * editor is first attached to the DOM.
+   */
+  firstRender: boolean;
+
   /**
    * The previous state.
    */
@@ -406,6 +415,7 @@ export interface RemirrorEventListenerParameter<Combined extends AnyCombinedUnio
    */
   createStateFromContent: (
     content: RemirrorContentType,
+    selection?: FromToParameter,
   ) => EditorState<SchemaFromCombined<Combined>>;
 }
 
@@ -423,13 +433,16 @@ export interface PlaceholderConfig extends TextParameter {
 
 export interface UpdateStateParameter<Schema extends EditorSchema = any>
   extends Partial<TransactionParameter<Schema>>,
-    EditorStateParameter<Schema> {
+    EditorStateParameter<Schema>,
+    TriggerChangeParameter {}
+
+export interface TriggerChangeParameter {
   /**
    * Whether or not to trigger this as a change and call any handlers.
    *
    * @defaultValue true
    */
-  triggerOnChange?: boolean;
+  triggerChange?: boolean;
 }
 
 export interface EditorStateEventListenerParameter<

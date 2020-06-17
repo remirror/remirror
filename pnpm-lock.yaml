@@ -360,6 +360,18 @@ importers:
       prosemirror-dev-tools: ^3.0.0
       react: ^16.13.1
       react-dom: ^16.13.1
+  '@remirror/dom':
+    dependencies:
+      '@babel/runtime': 7.10.2
+      '@remirror/preset-core': 'link:../preset-core'
+    devDependencies:
+      '@remirror/core': 'link:../core'
+      '@remirror/pm': 'link:../pm'
+    specifiers:
+      '@babel/runtime': ^7.10.0
+      '@remirror/core': ^0.11.0
+      '@remirror/pm': ^0.0.0
+      '@remirror/preset-core': ^0.0.0
   '@remirror/editor-social':
     dependencies:
       '@babel/runtime': 7.10.2
@@ -375,6 +387,7 @@ importers:
       classnames: 2.2.6
       linaria: 2.0.0-alpha.5
       multishift: 'link:../../packages/multishift'
+      react-use: 15.2.5_react-dom@16.13.1+react@16.13.1
       type-fest: 0.15.1
     devDependencies:
       '@lingui/macro': 3.0.0-13
@@ -407,6 +420,7 @@ importers:
       multishift: ^0.7.7
       react: ^16.13.1
       react-dom: ^16.13.1
+      react-use: ^15.2.5
       type-fest: ^0.15.1
   '@remirror/extension-auto-link':
     dependencies:
@@ -1403,11 +1417,13 @@ importers:
     dependencies:
       '@babel/runtime': 7.10.2
       '@remirror/pm': 'link:../../@remirror/pm'
+      '@testing-library/dom': 7.16.1
       '@testing-library/react': 10.2.1_react-dom@16.13.1+react@16.13.1
       '@types/node': 14.0.13
       '@types/react': 16.9.36
       '@types/react-dom': 16.9.8
       '@types/sanitize-html': 1.23.2
+      '@types/testing-library__dom': 7.0.2
       '@types/testing-library__react': 10.0.1
       jest-prosemirror: 'link:../jest-prosemirror'
       jest-snapshot: 26.0.1
@@ -1419,11 +1435,13 @@ importers:
     specifiers:
       '@babel/runtime': ^7.10.2
       '@remirror/pm': ^0.0.0
+      '@testing-library/dom': ^7.16.1
       '@testing-library/react': ^10.2.1
       '@types/node': ^14.0.12
       '@types/react': ^16.9.35
       '@types/react-dom': ^16.9.8
       '@types/sanitize-html': ^1.23.0
+      '@types/testing-library__dom': ^7.0.2
       '@types/testing-library__react': ^10.0.1
       jest-prosemirror: ^0.8.3
       jest-snapshot: ^26.0.1
@@ -6961,6 +6979,17 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-vV0dBOuolgiujf7tD+GGGWTDJrtvj+lEtRUHPuEkG74TWKTm+zA/MZBlgAN6VtU/na4Vnimt5NWekXO1hduZkw==
+  /@testing-library/dom/7.16.1:
+    dependencies:
+      '@babel/runtime': 7.10.2
+      aria-query: 4.0.2
+      dom-accessibility-api: 0.4.5
+      pretty-format: 25.5.0
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-u0Ck7tjWDyCcGn+f77JbUHa7PqgFu62ohRxegj1/H5P3REKsM+2roCvcnWJjMSHvK354NAS/Pgi92E9z6cB7Sw==
   /@testing-library/jest-dom/5.10.0:
     dependencies:
       '@babel/runtime': 7.10.2

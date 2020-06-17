@@ -15,7 +15,6 @@ const handlers = {
   onChange: jest.fn(),
   onBlur: jest.fn(),
   onFocus: jest.fn(),
-  onFirstRender: jest.fn(),
 };
 
 test('should be called via a render prop', () => {
@@ -27,10 +26,10 @@ test('should be called via a render prop', () => {
   );
 
   expect(mock).toHaveBeenCalledWith(expect.any(Object));
-  expect(handlers.onFirstRender).toHaveBeenCalledWith(expect.any(Object));
-  expect(handlers.onFirstRender.mock.calls[0][0].getText()).toBe('');
-  expect(handlers.onFirstRender.mock.calls[0][0].getJSON().doc.type).toBe('doc');
-  expect(handlers.onFirstRender.mock.calls[0][0].getHTML().type).toBeUndefined();
+  expect(handlers.onChange).toHaveBeenCalledWith(expect.any(Object));
+  expect(handlers.onChange.mock.calls[0][0].getText()).toBe('');
+  expect(handlers.onChange.mock.calls[0][0].getJSON().doc.type).toBe('doc');
+  expect(handlers.onChange.mock.calls[0][0].getHTML().type).toBeUndefined();
 
   const editorNode = getByLabelText(label);
 
@@ -51,10 +50,10 @@ test('can `suppressHydrationWarning` without breaking', () => {
   );
 
   expect(mock).toHaveBeenCalledWith(expect.any(Object));
-  expect(handlers.onFirstRender).toHaveBeenCalledWith(expect.any(Object));
-  expect(handlers.onFirstRender.mock.calls[0][0].getText()).toBe('');
-  expect(handlers.onFirstRender.mock.calls[0][0].getJSON().doc.type).toBe('doc');
-  expect(handlers.onFirstRender.mock.calls[0][0].getHTML().type).toBeUndefined();
+  expect(handlers.onChange).toHaveBeenCalledWith(expect.any(Object));
+  expect(handlers.onChange.mock.calls[0][0].getText()).toBe('');
+  expect(handlers.onChange.mock.calls[0][0].getJSON().doc.type).toBe('doc');
+  expect(handlers.onChange.mock.calls[0][0].getHTML().type).toBeUndefined();
 
   const editorNode = getByLabelText(label);
 
@@ -96,12 +95,14 @@ describe('basic functionality', () => {
     );
 
     act(() => {
-      setContent(`<p>${textContent}</p>`, true);
+      setContent(`<p>${textContent}</p>`, { triggerChange: true });
     });
     const editorNode = getByLabelText(label);
 
-    expect(handlers.onChange).toHaveBeenCalledTimes(1);
-    expect(handlers.onFirstRender.mock.calls[0][0].getText()).toBe(textContent);
+    expect(handlers.onChange).toHaveBeenCalledTimes(2);
+    expect(handlers.onChange.mock.calls[0][0].getText()).toBe(textContent);
+    expect(handlers.onChange.mock.calls[0][0].firstRender).toBe(true);
+    expect(handlers.onChange.mock.calls[1][0].firstRender).toBe(false);
 
     fireEvent.blur(editorNode);
     expect(handlers.onBlur).toHaveBeenCalledTimes(1);
@@ -200,14 +201,14 @@ describe('focus', () => {
   });
 
   it('should do nothing when focusing on a focused editor without a new position', () => {
-    expect(context.state.newState.selection.from).toBe(1);
+    expect(context.getState().selection.from).toBe(1);
 
     act(() => {
       context.focus();
       jest.runAllTimers();
     });
 
-    expect(context.state.newState.selection.from).toBe(1);
+    expect(context.getState().selection.from).toBe(1);
   });
 
   it('can focus on the end', () => {
@@ -218,7 +219,7 @@ describe('focus', () => {
       jest.runAllTimers();
     });
 
-    expect(context.state.newState.selection.from).toBe(16);
+    expect(context.getState().selection.from).toBe(16);
   });
 
   it('can focus on the start even when already focused', () => {
@@ -227,7 +228,7 @@ describe('focus', () => {
       jest.runAllTimers();
     });
 
-    expect(context.state.newState.selection.from).toBe(1);
+    expect(context.getState().selection.from).toBe(1);
   });
 
   it('can specify the exact position for the blurred editor', () => {
@@ -237,7 +238,7 @@ describe('focus', () => {
       jest.runAllTimers();
     });
 
-    expect(context.state.newState.selection.from).toBe(10);
+    expect(context.getState().selection.from).toBe(10);
   });
 
   const expected = { from: 2, to: 5 };
@@ -251,7 +252,7 @@ describe('focus', () => {
     });
 
     {
-      const { from, to } = context.state.newState.selection;
+      const { from, to } = context.getState().selection;
 
       expect({ from, to }).toEqual(expected);
     }
@@ -265,7 +266,7 @@ describe('focus', () => {
     });
 
     {
-      const { from, to } = context.state.newState.selection;
+      const { from, to } = context.getState().selection;
 
       expect({ from, to }).toEqual(expected);
     }
@@ -278,7 +279,7 @@ describe('focus', () => {
     });
 
     {
-      const { from, to } = context.state.newState.selection;
+      const { from, to } = context.getState().selection;
 
       expect({ from, to }).toEqual(expected);
       // expect(props.view.hasFocus()).toBeTrue();
@@ -293,6 +294,6 @@ describe('focus', () => {
       jest.runAllTimers();
     });
 
-    expect(context.state.newState.selection.from).toBe(1);
+    expect(context.getState().selection.from).toBe(1);
   });
 });

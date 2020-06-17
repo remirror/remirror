@@ -768,6 +768,13 @@ export interface CreateDocumentNodeParameter
    * The fallback object node to use if unable to convert the value correctly
    */
   onError?: Fallback | CreateDocumentErrorHandler;
+
+  /**
+   * The selection that the user should have in the created node.
+   *
+   * TODO add `'start' | 'end' | number` for a better developer experience.
+   */
+  selection?: FromToParameter;
 }
 
 export type CreateDocumentErrorHandler = (error: Error) => Fallback;

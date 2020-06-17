@@ -63,6 +63,7 @@ import {
   RefKeyRootProps,
   RemirrorContextProps,
   RemirrorEventListenerParameter,
+  TriggerChangeParameter,
   UpdateStateParameter,
 } from '../react-types';
 import { createEditorView, RemirrorSSR } from '../ssr';
@@ -120,11 +121,6 @@ function createPropsWithDefaults<Combined extends AnyCombinedUnion>(
 
 class InternalMethods<Combined extends AnyCombinedUnion> {
   /**
-   * Stores the Prosemirror EditorView dom element.
-   */
-  #editorRef?: HTMLElement;
-
-  /**
    * The prosemirror EditorView.
    */
   readonly view: EditorView<SchemaFromCombined<Combined>>;
@@ -146,6 +142,16 @@ class InternalMethods<Combined extends AnyCombinedUnion> {
   #setShouldRenderClient: SetShouldRenderClient;
   #previousState: EditorState<SchemaFromCombined<Combined>> | undefined;
   readonly #initialEditorState: EditorState<SchemaFromCombined<Combined>>;
+
+  /**
+   * Stores the Prosemirror EditorView dom element.
+   */
+  #editorRef?: HTMLElement;
+
+  /**
+   * True when this is the first render.
+   */
+  #firstRender = true;
 
   private get props(): RenderEditorProps<Combined> {
     return this.#getProps();
@@ -173,6 +179,7 @@ class InternalMethods<Combined extends AnyCombinedUnion> {
    */
   private createStateFromContent: (
     content: RemirrorContentType,
+    selection?: FromToParameter,
   ) => EditorState<SchemaFromCombined<Combined>>;
 
   /**
@@ -364,7 +371,7 @@ class InternalMethods<Combined extends AnyCombinedUnion> {
    * directly setting the internal state via a `setState` call.
    */
   private updateState(parameter: UpdateStateParameter<SchemaFromCombined<Combined>>) {
-    const { state, triggerOnChange = true, tr } = parameter;
+    const { state, triggerChange = true, tr } = parameter;
 
     if (this.props.value) {
       const { onChange } = this.props;
@@ -375,10 +382,10 @@ class InternalMethods<Combined extends AnyCombinedUnion> {
           'You are required to provide the `onChange` handler when creating a controlled editor.',
       });
 
-      invariant(triggerOnChange, {
+      invariant(triggerChange, {
         code: ErrorConstant.REACT_CONTROLLED,
         message:
-          'Controlled editors do not support `clearContent` or `setContent`. Update the `value` prop instead.',
+          'Controlled editors do not support `clearContent` or `setContent` where triggerChange. Update the `value` prop instead.',
       });
 
       onChange(this.eventListenerParameter({ tr, state }));
@@ -389,11 +396,18 @@ class InternalMethods<Combined extends AnyCombinedUnion> {
     // the component's copy of the state.
     this.view.updateState(state);
 
-    if (triggerOnChange) {
+    if (triggerChange) {
       this.props.onChange?.(this.eventListenerParameter({ state, tr }));
     }
 
     this.manager.onStateUpdate({ previousState: this.previousState, state });
+  }
+
+  /**
+   * Update the controlled state when the value changes.
+   */
+  updateControlledState(state: EditorState<SchemaFromCombined<Combined>>) {
+    this.view.updateState(state);
   }
 
   /**
@@ -430,6 +444,8 @@ class InternalMethods<Combined extends AnyCombinedUnion> {
     if (onChange) {
       onChange(this.eventListenerParameter());
     }
+
+    this.#firstRender = false;
 
     this.view.dom.addEventListener('blur', this.onBlur);
     this.view.dom.addEventListener('focus', this.onFocus);
@@ -501,21 +517,24 @@ class InternalMethods<Combined extends AnyCombinedUnion> {
    * Sets the content of the editor.
    *
    * @param content
-   * @param triggerOnChange
+   * @param triggerChange
    */
-  private readonly setContent = (content: RemirrorContentType, triggerOnChange = false) => {
+  private readonly setContent = (
+    content: RemirrorContentType,
+    { triggerChange = false }: TriggerChangeParameter = {},
+  ) => {
     const state = this.createStateFromContent(content);
-    this.updateState({ state, triggerOnChange });
+    this.updateState({ state, triggerChange });
   };
 
   /**
    * Clear; the content of the editor (reset to the default empty node)
    *
-   * @param triggerOnChange - whether to notify the onChange handler that the
+   * @param triggerChange - whether to notify the onChange handler that the
    * content has been reset
    */
-  private readonly clearContent = (triggerOnChange = false) => {
-    this.setContent(this.props.fallbackContent, triggerOnChange);
+  private readonly clearContent = ({ triggerChange = false }: TriggerChangeParameter = {}) => {
+    this.setContent(this.props.fallbackContent, { triggerChange });
   };
 
   /**
@@ -544,7 +563,8 @@ class InternalMethods<Combined extends AnyCombinedUnion> {
     { state, tr }: ListenerParameter<Combined> = object(),
   ): RemirrorEventListenerParameter<Combined> {
     return {
-      ...this.baseListenerParameter({ tr }),
+      firstRender: this.#firstRender,
+      ...this.baseListenerParameter({ tr, state }),
       state: state ?? this.getState(),
       createStateFromContent: this.createStateFromContent,
       previousState: this.previousState,
@@ -785,11 +805,15 @@ export const RenderEditor = <Combined extends AnyCombinedUnion>(
   const isControlledEditor = useRef(bool(value)).current;
 
   const createStateFromContent = useCallback(
-    (content: RemirrorContentType): EditorState<SchemaFromCombined<Combined>> => {
+    (
+      content: RemirrorContentType,
+      selection?: FromToParameter,
+    ): EditorState<SchemaFromCombined<Combined>> => {
       return manager.createState({
         content,
         doc: getDocument(forceEnvironment),
         stringHandler,
+        selection,
         onError: fallbackContent,
       });
     },
@@ -836,7 +860,7 @@ export const RenderEditor = <Combined extends AnyCombinedUnion>(
         'This editor has been set up as a controlled editor and must always provide a `value` prop.',
     });
 
-    methods.view.updateState(value);
+    methods.updateControlledState(value);
   }, [isControlledEditor, value, methods]);
 
   // Return the rendered component
