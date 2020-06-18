@@ -38,8 +38,10 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
   'remirror/extension/position-tracker': require('remirror/extension/position-tracker'),
   'remirror/extension/positioner': require('remirror/extension/positioner'),
   'remirror/extension/react-ssr': require('remirror/extension/react-ssr'),
+  'remirror/extension/search': require('remirror/extension/search'),
   'remirror/extension/strike': require('remirror/extension/strike'),
   'remirror/extension/text': require('remirror/extension/text'),
+  'remirror/extension/track-changes': require('remirror/extension/track-changes'),
   'remirror/extension/trailing-node': require('remirror/extension/trailing-node'),
   'remirror/extension/underline': require('remirror/extension/underline'),
   'remirror/preset/core': require('remirror/preset/core'),
@@ -187,12 +189,20 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
     exports: ['ReactSSRExtension'],
   },
   {
+    moduleName: 'remirror/extension/search',
+    exports: ['SearchExtension', 'rotateHighlightedIndex'],
+  },
+  {
     moduleName: 'remirror/extension/strike',
     exports: ['StrikeExtension'],
   },
   {
     moduleName: 'remirror/extension/text',
     exports: ['TextExtension'],
+  },
+  {
+    moduleName: 'remirror/extension/track-changes',
+    exports: ['TrackChangesExtension'],
   },
   {
     moduleName: 'remirror/extension/trailing-node',
