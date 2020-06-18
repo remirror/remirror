@@ -2,7 +2,7 @@ import React, { FC, Fragment, useCallback, useMemo } from 'react';
 
 import { REQUIRED_MODULES } from './execute';
 import { isExtensionName, isPresetName } from './exports';
-import { CodeOptions, ModuleSpec, RemirrorModules } from './interfaces';
+import { CodeOptions, ModuleSpec, RemirrorModules, RemirrorModuleStatus } from './interfaces';
 
 export interface SimplePanelProps {
   options: CodeOptions;
@@ -61,6 +61,14 @@ const ExtensionOrPresetCheckbox: FC<ExtensionCheckboxProps> = function (props) {
   );
 };
 
+function stringTupleCompare(a: [string, string], b: [string, string]) {
+  let s1 = a[0].localeCompare(b[0]);
+  if (s1 !== 0) {
+    return s1;
+  }
+  return a[1].localeCompare(b[1]);
+}
+
 export const SimplePanel: FC<SimplePanelProps> = function (props) {
   const { options, setOptions, onAdvanced, modules, addModule, removeModule } = props;
 
@@ -84,87 +92,114 @@ export const SimplePanel: FC<SimplePanelProps> = function (props) {
   }, []);
   */
   //const modules = Object.keys(grouped).sort();
+
+  let coreLoading: boolean = false;
+  let coreErrors: [string, Error][] = [];
+  const coreExtensions: [string, string][] = [];
+  const corePresets: [string, string][] = [];
+  const externalModules: [string, RemirrorModuleStatus][] = [];
+  Object.keys(modules).forEach((moduleName) => {
+    const mod = modules[moduleName];
+    if (REQUIRED_MODULES.includes(moduleName)) {
+      if (mod.loading) {
+        coreLoading = true;
+      } else if (mod.error) {
+        coreErrors.push([moduleName, mod.error]);
+      } else {
+        Object.keys(mod.exports).forEach((exportName) => {
+          if (isExtensionName(exportName)) {
+            coreExtensions.push([moduleName, exportName]);
+          } else if (isPresetName(exportName)) {
+            corePresets.push([moduleName, exportName]);
+          } else {
+            /* NOOP */
+          }
+        });
+      }
+    } else {
+      externalModules.push([moduleName, mod]);
+    }
+  });
+
+  // Sort by extension name
+  coreExtensions.sort((a, b) => a[1].localeCompare(b[1]));
+  // Sort by extension name
+  corePresets.sort((a, b) => a[1].localeCompare(b[1]));
+
+  // Sort by module name
+  externalModules.sort((a, b) => a[0].localeCompare(b[0]));
+
   return (
     <div>
       <button onClick={onAdvanced}>Enter advanced mode</button>
 
+      {/* REMIRROR CORE */}
       <p>
-        <strong>Remirror core extensions</strong>{' '}
+        <strong>Remirror core</strong>{' '}
       </p>
-      {Object.keys(modules).map((moduleName) => {
-        if (!REQUIRED_MODULES.includes(moduleName)) {
-          return null;
-        }
-        const mod = modules[moduleName];
-        return mod.loading ? (
-          <em>Loading...</em>
-        ) : mod.error ? (
-          <em>An error occurred: {String(mod.error)}</em>
-        ) : (
-          Object.keys(mod.exports).map((exportName) =>
-            isExtensionName(exportName) ? (
-              <ExtensionOrPresetCheckbox
-                key={`${`${moduleName}|${exportName ?? 'default'}`}`}
-                spec={{ module: moduleName, export: exportName }}
-                options={options}
-                setOptions={setOptions}
-                hideModuleName
-                type='extension'
-              />
-            ) : null,
-          )
-        );
-      })}
 
-      <p>
-        <strong>Remirror core presets</strong>{' '}
-      </p>
-      {Object.keys(modules).map((moduleName) => {
-        if (!REQUIRED_MODULES.includes(moduleName)) {
-          return null;
-        }
-        const mod = modules[moduleName];
-        return mod.loading ? (
-          <em>Loading...</em>
-        ) : mod.error ? (
-          <em>An error occurred: {String(mod.error)}</em>
-        ) : (
-          Object.keys(mod.exports).map((exportName) =>
-            isPresetName(exportName) ? (
-              <ExtensionOrPresetCheckbox
-                key={`${`${moduleName}|${exportName ?? 'default'}`}`}
-                spec={{ module: moduleName, export: exportName }}
-                options={options}
-                setOptions={setOptions}
-                hideModuleName
-                type='preset'
-              />
-            ) : null,
-          )
-        );
-      })}
+      {/* loading */}
+      {coreLoading ? (
+        <p>
+          <em>Loading</em>
+        </p>
+      ) : null}
 
-      {Object.keys(modules).map((moduleName) => {
-        if (REQUIRED_MODULES.includes(moduleName)) {
-          return null;
-        }
-        const mod = modules[moduleName];
-        return (
-          <Fragment key={moduleName}>
+      {/* errors */}
+      {coreErrors.length
+        ? coreErrors.map(([moduleName, error]) => (
             <p>
-              <strong>{moduleName}</strong>{' '}
-              {!REQUIRED_MODULES.includes(moduleName) ? (
-                <button onClick={() => removeModule(moduleName)} title='remove'>
-                  -
-                </button>
-              ) : null}
+              Error loading <code>{moduleName}</code>: {error.message}
             </p>
-            {mod.loading ? (
-              <em>Loading...</em>
-            ) : mod.error ? (
-              <em>An error occurred: {String(mod.error)}</em>
-            ) : (
-              Object.keys(mod.exports).map((exportName) =>
+          ))
+        : null}
+
+      {/* extensions */}
+      {coreExtensions.map(([moduleName, exportName]) => (
+        <ExtensionOrPresetCheckbox
+          key={`${`${moduleName}|${exportName ?? 'default'}`}`}
+          spec={{ module: moduleName, export: exportName }}
+          options={options}
+          setOptions={setOptions}
+          hideModuleName
+          type='extension'
+        />
+      ))}
+
+      {/* TODO: some sensible divider */}
+      <div style={{ height: '1rem' }} />
+
+      {/* presets */}
+      {corePresets.map(([moduleName, exportName]) => (
+        <ExtensionOrPresetCheckbox
+          key={`${`${moduleName}|${exportName ?? 'default'}`}`}
+          spec={{ module: moduleName, export: exportName }}
+          options={options}
+          setOptions={setOptions}
+          hideModuleName
+          type='preset'
+        />
+      ))}
+
+      {/* THIRD-PARTY */}
+      {externalModules.map(([moduleName, mod]) => (
+        <Fragment key={moduleName}>
+          <p>
+            <strong>{moduleName}</strong>{' '}
+            {!REQUIRED_MODULES.includes(moduleName) ? (
+              <button onClick={() => removeModule(moduleName)} title='remove'>
+                -
+              </button>
+            ) : null}
+          </p>
+          {mod.loading ? (
+            <em>Loading...</em>
+          ) : mod.error ? (
+            <em>An error occurred: {String(mod.error)}</em>
+          ) : (
+            Object.keys(mod.exports)
+              .sort()
+              .map((exportName) =>
                 isExtensionName(exportName) ? (
                   <ExtensionOrPresetCheckbox
                     key={`${`${moduleName}|${exportName ?? 'default'}`}`}
@@ -185,10 +220,10 @@ export const SimplePanel: FC<SimplePanelProps> = function (props) {
                   />
                 ) : null,
               )
-            )}
-          </Fragment>
-        );
-      })}
+          )}
+        </Fragment>
+      ))}
+
       <p>
         <button onClick={onAddModule}>+ Add module</button>
       </p>
