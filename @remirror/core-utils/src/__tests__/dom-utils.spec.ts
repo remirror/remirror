@@ -23,7 +23,7 @@ import {
   canInsertNode,
   createDocumentNode,
   endPositionOfParent,
-  fromHTML,
+  fromHtml,
   getCursor,
   getMarkAttributes,
   getMarkRange,
@@ -42,7 +42,7 @@ import {
   nodeNameMatchesList,
   startPositionOfParent,
   toDom,
-  toHTML,
+  toHtml,
 } from '../dom-utils';
 
 describe('markActive', () => {
@@ -420,7 +420,7 @@ describe('createDocumentNode', () => {
       createDocumentNode({
         content: '<p>basic html</p>',
         schema: testSchema,
-        stringHandler: fromHTML,
+        stringHandler: fromHtml,
       })!.textContent,
     ).toContain('basic html');
   });
@@ -430,11 +430,11 @@ describe('toHTML', () => {
   const node = doc(p('hello'));
 
   it('transforms a doc to its inner html', () => {
-    expect(toHTML({ node, schema: testSchema })).toBe('<p>hello</p>');
+    expect(toHtml({ node, schema: testSchema })).toBe('<p>hello</p>');
   });
 
   it('allows for custom document to be passed in', () => {
-    expect(toHTML({ node, schema: testSchema, doc: document })).toBe('<p>hello</p>');
+    expect(toHtml({ node, schema: testSchema, doc: document })).toBe('<p>hello</p>');
   });
 });
 
@@ -454,12 +454,12 @@ describe('fromHTML', () => {
   const content = `<p>Hello</p>`;
 
   it('transform html into a prosemirror node', () => {
-    expect(fromHTML({ content, schema: testSchema })).toEqualProsemirrorNode(doc(p('Hello')));
+    expect(fromHtml({ content, schema: testSchema })).toEqualProsemirrorNode(doc(p('Hello')));
   });
 
   it('allows for custom document to be passed in', () => {
     expect(
-      fromHTML({ content, schema: testSchema, doc: domino.createDocument() }),
+      fromHtml({ content, schema: testSchema, doc: domino.createDocument() }),
     ).toEqualProsemirrorNode(doc(p('Hello')));
   });
 });

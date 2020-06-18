@@ -2,7 +2,7 @@ import { act, render } from '@testing-library/react';
 import { RemirrorTestChain } from 'jest-remirror';
 import React, { FC, useState } from 'react';
 
-import { EditorState, fromHTML, SchemaFromCombined } from '@remirror/core';
+import { EditorState, fromHtml, SchemaFromCombined } from '@remirror/core';
 
 import { createReactManager } from '../../hooks/editor-hooks';
 import { RemirrorContextProps } from '../../react-types';
@@ -19,7 +19,7 @@ function create() {
     chain,
     props: {
       label,
-      stringHandler: fromHTML,
+      stringHandler: fromHtml,
     },
   };
 }
@@ -30,7 +30,7 @@ describe('Remirror Controlled Component', () => {
 
     const value = manager.createState({
       content: '<p>This is the initial value</p>',
-      stringHandler: fromHTML,
+      stringHandler: fromHtml,
     });
     const onChange = jest.fn();
 
@@ -51,7 +51,7 @@ describe('Remirror Controlled Component', () => {
 
     const value = manager.createState({
       content: '<p>Not terrible</p>',
-      stringHandler: fromHTML,
+      stringHandler: fromHtml,
     });
     const onChange = jest.fn();
 
@@ -77,7 +77,7 @@ describe('Remirror Controlled Component', () => {
       const [value, setValue] = useState<EditorState>(
         manager.createState({
           content: '<p>some content</p>',
-          stringHandler: fromHTML,
+          stringHandler: fromHtml,
         }),
       );
 
@@ -117,7 +117,7 @@ describe('Remirror Controlled Component', () => {
       const [value, setValue] = useState<EditorState>(
         manager.createState({
           content: '<p>some content</p>',
-          stringHandler: fromHTML,
+          stringHandler: fromHtml,
         }),
       );
 
@@ -157,7 +157,7 @@ describe('Remirror Controlled Component', () => {
 
     const value = manager.createState({
       content: '<p>some content</p>',
-      stringHandler: fromHTML,
+      stringHandler: fromHtml,
     });
 
     let ctx: RemirrorContextProps<typeof manager['~EP']>;

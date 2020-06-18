@@ -6,7 +6,7 @@ import {
   HeadingExtension,
   LinkExtension,
 } from '@remirror/test-fixtures';
-import { PlainExtension, toHTML } from 'remirror/core';
+import { PlainExtension, toHtml } from 'remirror/core';
 
 import { renderEditor } from '../jest-remirror-editor';
 
@@ -56,8 +56,8 @@ test('can be configured with attribute node extensions', () => {
   const h2 = heading({ level: 2 });
   add(doc(h2(expected), h3(expected)));
 
-  expect(dom).toContainHTML(toHTML({ node: h3(expected), schema }));
-  expect(dom).toContainHTML(toHTML({ node: h2(expected), schema }));
+  expect(dom).toContainHTML(toHtml({ node: h3(expected), schema }));
+  expect(dom).toContainHTML(toHtml({ node: h2(expected), schema }));
 });
 
 test('can be configured with plain mark extensions', () => {
@@ -137,8 +137,8 @@ describe('add', () => {
   it('overwrites the whole doc on each call', () => {
     const node = p('Hello');
     const nodeTwo = p('Tolu');
-    const expected = toHTML({ node, schema });
-    const expectedTwo = toHTML({ node: nodeTwo, schema });
+    const expected = toHtml({ node, schema });
+    const expectedTwo = toHtml({ node: nodeTwo, schema });
 
     add(doc(node));
     expect(dom).toContainHTML(expected);
@@ -152,7 +152,7 @@ describe('add', () => {
     const node = p('New me');
     add(doc(p('Hello'))).overwrite(doc(node));
 
-    expect(dom).toContainHTML(toHTML({ node, schema }));
+    expect(dom).toContainHTML(toHtml({ node, schema }));
   });
 
   it('can insert text', () => {
@@ -166,7 +166,7 @@ describe('add', () => {
     const node = p(bold('Welcome'));
     add(doc(p('<start>Welcome<end>'))).shortcut('Mod-b');
 
-    expect(dom).toContainHTML(toHTML({ node, schema }));
+    expect(dom).toContainHTML(toHtml({ node, schema }));
   });
 
   it('can fire custom events', () => {
@@ -193,8 +193,8 @@ describe('add', () => {
   it('can replace text with nodes', () => {
     const node = p('Brilliant');
     const nodeTwo = p('Wonderful');
-    const expected = toHTML({ node, schema });
-    const expectedTwo = toHTML({ node: nodeTwo, schema });
+    const expected = toHtml({ node, schema });
+    const expectedTwo = toHtml({ node: nodeTwo, schema });
     add(doc(p('Today is a <start>sad<end> day'))).replace(node, nodeTwo);
 
     expect(dom).toContainHTML(expected);

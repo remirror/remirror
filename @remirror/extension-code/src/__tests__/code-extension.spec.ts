@@ -1,6 +1,6 @@
 import { pmBuild } from 'jest-prosemirror';
 
-import { fromHTML, toHTML } from '@remirror/core';
+import { fromHtml, toHtml } from '@remirror/core';
 import { createBaseManager, isExtensionValid } from '@remirror/test-fixtures';
 
 import { CodeExtension } from '..';
@@ -23,13 +23,13 @@ describe('schema', () => {
     const expected = 'Brilliant';
     const { p, code, schema } = codeTester();
 
-    expect(toHTML({ node: p(code(expected)), schema })).toBe(`<p><code>${expected}</code></p>`);
+    expect(toHtml({ node: p(code(expected)), schema })).toBe(`<p><code>${expected}</code></p>`);
   });
 
   it('it can parse content', () => {
     const { p, code, schema, doc } = codeTester();
     const parsedString = 'Test';
-    const node = fromHTML({
+    const node = fromHtml({
       content: `<p><code>${parsedString}</code></p>`,
       schema,
     });

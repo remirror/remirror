@@ -28,7 +28,7 @@ import {
   getDocument,
   isSelection,
   StringHandlerParameter,
-  toHTML,
+  toHtml,
 } from '@remirror/core-utils';
 import { TextSelection } from '@remirror/pm/state';
 
@@ -434,7 +434,7 @@ export abstract class EditorWrapper<
    * Retrieve the HTML from the `doc` prosemirror node
    */
   private readonly getHTML = (state?: EditorState<SchemaFromCombined<Combined>>) => () => {
-    return toHTML({
+    return toHtml({
       node: (state ?? this.getState()).doc,
       schema: this.manager.store.schema,
       doc: this.doc,

@@ -1,7 +1,7 @@
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
-import { entries, fromHTML, GetHandler, toHTML } from '@remirror/core';
+import { entries, fromHtml, GetHandler, toHtml } from '@remirror/core';
 import { SuggestExitHandlerParameter } from '@remirror/pm/suggest';
 import { createBaseManager } from '@remirror/test-fixtures';
 
@@ -19,7 +19,7 @@ describe('schema', () => {
   });
 
   it('creates the correct dom node', () => {
-    expect(toHTML({ node: p(mention(attributes.label)), schema })).toMatchInlineSnapshot(`
+    expect(toHtml({ node: p(mention(attributes.label)), schema })).toMatchInlineSnapshot(`
       <p>
         <a class="mention mention-testing"
            data-mention-id="test"
@@ -32,7 +32,7 @@ describe('schema', () => {
   });
 
   it('parses the dom structure and finds itself', () => {
-    const node = fromHTML({
+    const node = fromHtml({
       schema,
       content: `<a class="mention mention-at" data-mention-id="${attributes.id}" data-mention-name="${attributes.name}">${attributes.label}</a>`,
     });
@@ -58,7 +58,7 @@ describe('schema', () => {
     });
 
     it('parses the dom structure and finds itself with custom attributes', () => {
-      const node = fromHTML({
+      const node = fromHtml({
         schema,
         content: `<a class="mention mention-at" data-custom="${custom}" data-mention-id="${attributes.id}" data-mention-name="${attributes.name}">${attributes.label}</a>`,
       });

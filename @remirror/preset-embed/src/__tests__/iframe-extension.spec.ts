@@ -1,7 +1,7 @@
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
-import { fromHTML, toHTML } from '@remirror/core';
+import { fromHtml, toHtml } from '@remirror/core';
 import { createBaseManager, isExtensionValid } from '@remirror/test-fixtures';
 
 import { IframeExtension, IframeOptions } from '../iframe-extension';
@@ -26,7 +26,7 @@ describe('schema', () => {
   });
 
   it('creates the correct dom node', () => {
-    expect(toHTML({ node: doc(p(iframe())), schema })).toMatchInlineSnapshot(`
+    expect(toHtml({ node: doc(p(iframe())), schema })).toMatchInlineSnapshot(`
       <p>
         <iframe class="remirror-iframe remirror-iframe-custom"
                 src="https://awesome.com"
@@ -40,7 +40,7 @@ describe('schema', () => {
   });
 
   it('parses the dom structure and finds itself', () => {
-    const node = fromHTML({
+    const node = fromHtml({
       schema,
       content: `<iframe src="https://awesome.com" data-embed-type="custom" frameborder="0"></iframe>`,
     });

@@ -1,7 +1,7 @@
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
-import { fromHTML, toHTML } from '@remirror/core';
+import { fromHtml, toHtml } from '@remirror/core';
 import { createBaseManager } from '@remirror/test-fixtures';
 
 import { TablePreset } from '..';
@@ -30,11 +30,11 @@ describe('schema', () => {
     '<table><tbody><tr><th><p>Header</p></th><th><p>Header</p></th></tr><tr><td><p>A1</p></td><td><p>B1</p></td></tr><tr><td><p>A2</p></td><td><p>B2</p></td></tr><tr><td><p>A3</p></td><td><p>B3</p></td></tr></tbody></table>';
 
   it('outputs the correct html', () => {
-    expect(toHTML({ node, schema })).toBe(html);
+    expect(toHtml({ node, schema })).toBe(html);
   });
 
   it('parses from html', () => {
-    expect(fromHTML({ content: html, schema })).toEqualProsemirrorNode(doc(node));
+    expect(fromHtml({ content: html, schema })).toEqualProsemirrorNode(doc(node));
   });
 });
 

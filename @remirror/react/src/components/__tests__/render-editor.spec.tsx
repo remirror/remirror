@@ -3,7 +3,7 @@ import { axe } from 'jest-axe';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 
-import { AnyCombinedUnion, fromHTML } from '@remirror/core';
+import { AnyCombinedUnion, fromHtml } from '@remirror/core';
 import { createReactManager } from '@remirror/test-fixtures';
 
 import { RemirrorContextProps } from '../../react-types';
@@ -88,7 +88,7 @@ describe('basic functionality', () => {
         label={label}
         {...handlers}
         manager={createReactManager()}
-        stringHandler={fromHTML}
+        stringHandler={fromHtml}
       >
         {mock}
       </RenderEditor>,
@@ -137,7 +137,7 @@ describe('initialContent', () => {
         {...handlers}
         manager={createReactManager()}
         initialContent={'<p>Hello</p>'}
-        stringHandler={fromHTML}
+        stringHandler={fromHtml}
       >
         {() => <div />}
       </RenderEditor>,
