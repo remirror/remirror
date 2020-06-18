@@ -1,10 +1,10 @@
-import { useEffect, useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import {
-  RemirrorEventListener,
-  EditorState,
   EditorManager,
+  EditorState,
   EMPTY_PARAGRAPH_NODE,
+  RemirrorEventListener,
 } from 'remirror/core';
 
 declare global {
