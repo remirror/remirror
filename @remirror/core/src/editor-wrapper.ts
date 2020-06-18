@@ -204,7 +204,7 @@ export abstract class EditorWrapper<
       class: cx(ssr && 'Prosemirror', EDITOR_CLASS_NAME, managerAttributes?.class),
     };
 
-    return { ...defaultAttributes, ...propertyAttributes };
+    return { ...defaultAttributes, ...propertyAttributes } as Shape;
   }
 
   /**
