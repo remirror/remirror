@@ -49,7 +49,7 @@ export class ImageExtension extends NodeExtension {
         },
       ],
       toDOM: (node) => {
-        return ['img', { ...extra.dom(node.attrs), ...node.attrs }];
+        return ['img', { ...extra.dom(node), ...node.attrs }];
       },
     };
   }

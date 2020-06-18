@@ -4,7 +4,7 @@ import { renderEditor } from 'jest-remirror';
 import { fromHtml, toHtml } from '@remirror/core';
 import { createBaseManager, isExtensionValid } from '@remirror/test-fixtures';
 
-import { BlockquoteExtension } from '../..';
+import { BlockquoteExtension } from '..';
 
 test('is blockquote extension valid', () => {
   expect(isExtensionValid(BlockquoteExtension, {}));

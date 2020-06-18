@@ -26,7 +26,7 @@ class CustomExtension extends NodeExtension {
           getAttrs: (node) => extra.parse(node as HTMLElement),
         },
       ],
-      toDOM: (node) => ['p', extra.dom(node.attrs), 0],
+      toDOM: (node) => ['p', extra.dom(node), 0],
     };
   }
 }

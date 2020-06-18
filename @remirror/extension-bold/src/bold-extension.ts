@@ -71,7 +71,7 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
           return ['strong', { 'font-weight': weight.toString() }, 0];
         }
 
-        return ['strong', extra.dom(node.attrs), 0];
+        return ['strong', extra.dom(node), 0];
       },
     };
   }

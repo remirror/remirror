@@ -23,7 +23,7 @@ export class BulletListExtension extends NodeExtension {
       content: 'listItem+',
       group: NodeGroup.Block,
       parseDOM: [{ tag: 'ul', getAttrs: extra.parse }],
-      toDOM: (node) => ['ul', extra.dom(node.attrs), 0],
+      toDOM: (node) => ['ul', extra.dom(node), 0],
     };
   }
 

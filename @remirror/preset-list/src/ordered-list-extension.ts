@@ -44,7 +44,7 @@ export class OrderedListExtension extends NodeExtension {
         },
       ],
       toDOM: (node) => {
-        const extraAttributes = extra.dom(node.attrs);
+        const extraAttributes = extra.dom(node);
 
         return node.attrs.order === 1
           ? ['ol', extraAttributes, 0]

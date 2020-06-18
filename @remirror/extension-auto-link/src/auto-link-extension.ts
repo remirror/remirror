@@ -66,7 +66,7 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkOptions> {
         return [
           'a',
           {
-            ...extra.dom(node.attrs),
+            ...extra.dom(node),
             ...node.attrs,
             role: 'presentation',
           },

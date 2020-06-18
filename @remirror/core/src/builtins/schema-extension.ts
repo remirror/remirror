@@ -13,12 +13,15 @@ import {
   EditorSchema,
   ExtraAttributes,
   ExtraAttributesObject,
+  Mark,
   MarkExtensionSpec,
   NodeExtensionSpec,
+  NodeMarkOptions,
   ProsemirrorAttributes,
+  ProsemirrorNode,
   Static,
 } from '@remirror/core-types';
-import { isElementDomNode } from '@remirror/core-utils';
+import { isElementDomNode, isProsemirrorMark, isProsemirrorNode } from '@remirror/core-utils';
 import { Schema } from '@remirror/pm/model';
 
 import {
@@ -161,9 +164,7 @@ function createSpec<Type>(parameter: CreateSpecParameter<Type>): Type {
   });
 
   const parse = createParseDOM(extraAttributes, ignoreExtraAttributes);
-
   const dom = createToDOM(extraAttributes, ignoreExtraAttributes);
-
   const spec = createExtensionSpec({ defaults, parse, dom });
 
   invariant(ignoreExtraAttributes || defaultsCalled, {
@@ -255,7 +256,7 @@ function createParseDOM(extraAttributes: ExtraAttributes, shouldIgnore: boolean)
  * Create the `toDOM` method to be applied to the extension `createNodeSpec`.
  */
 function createToDOM(extraAttributes: ExtraAttributes, shouldIgnore: boolean) {
-  return (attributes: ProsemirrorAttributes) => {
+  return (item: ProsemirrorNode | Mark) => {
     const domAttributes: Record<string, string> = object();
 
     if (shouldIgnore) {
@@ -268,7 +269,7 @@ function createToDOM(extraAttributes: ExtraAttributes, shouldIgnore: boolean) {
       }
 
       if (isArray(value)) {
-        domAttributes[value[0]] = value[1] ?? (attributes[name] as string);
+        domAttributes[value[0]] = value[1] ?? (item.attrs[name] as string);
       }
     }
 
@@ -277,13 +278,13 @@ function createToDOM(extraAttributes: ExtraAttributes, shouldIgnore: boolean) {
 
       if (isNullOrUndefined(toDOM)) {
         const key = isString(parseDOM) ? parseDOM : name;
-        domAttributes[key] = attributes[name] as string;
+        domAttributes[key] = item.attrs[name] as string;
 
         continue;
       }
 
       if (isFunction(toDOM)) {
-        updateDomAttributes(toDOM(attributes), name);
+        updateDomAttributes(toDOM(item.attrs, getNodeMarkOptions(item)), name);
 
         continue;
       }
@@ -293,6 +294,21 @@ function createToDOM(extraAttributes: ExtraAttributes, shouldIgnore: boolean) {
 
     return domAttributes;
   };
+}
+
+/**
+ * Get the options object which applies should be used to obtain the node or mark type.
+ */
+function getNodeMarkOptions(item: ProsemirrorNode | Mark): NodeMarkOptions {
+  if (isProsemirrorNode(item)) {
+    return { node: item };
+  }
+
+  if (isProsemirrorMark(item)) {
+    return { mark: item };
+  }
+
+  return {};
 }
 
 declare global {

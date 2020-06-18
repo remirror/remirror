@@ -22,7 +22,7 @@ export class BlockquoteExtension extends NodeExtension {
       defining: true,
       draggable: false,
       parseDOM: [{ tag: 'blockquote', getAttrs: extra.parse, priority: 100 }],
-      toDOM: (node) => ['blockquote', extra.dom(node.attrs), 0],
+      toDOM: (node) => ['blockquote', extra.dom(node), 0],
     };
   }
 

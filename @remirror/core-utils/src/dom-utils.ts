@@ -92,8 +92,21 @@ export function isMarkType<Schema extends EditorSchema = EditorSchema>(
  */
 export function isProsemirrorNode<Schema extends EditorSchema = EditorSchema>(
   value: unknown,
-): value is PMNode<Schema> {
+): value is ProsemirrorNode<Schema> {
   return isObject(value) && value instanceof PMNode;
+}
+
+/**
+ * Checks to see if the passed value is a ProsemirrorMark
+ *
+ * @param value - the value to check
+ *
+ * @public
+ */
+export function isProsemirrorMark<Schema extends EditorSchema = EditorSchema>(
+  value: unknown,
+): value is Mark<Schema> {
+  return isObject(value) && value instanceof Mark;
 }
 
 /**

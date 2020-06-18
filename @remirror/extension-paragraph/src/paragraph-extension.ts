@@ -58,7 +58,7 @@ export class ParagraphExtension extends NodeExtension<ParagraphOptions> {
 
       toDOM: (node) => {
         const { align, indent, lineSpacing, id } = node.attrs as ParagraphExtensionAttributes;
-        const attributes: Record<string, string> = extra.dom(node.attrs);
+        const attributes: Record<string, string> = extra.dom(node);
         let style = '';
 
         if (align && align !== 'left') {

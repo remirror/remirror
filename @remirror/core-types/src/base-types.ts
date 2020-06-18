@@ -4,6 +4,8 @@ import { ConditionalExcept, ConditionalPick } from 'type-fest';
 
 import { AttributeSpec } from '@remirror/pm/model';
 
+import { Mark, ProsemirrorNode } from './alias-types';
+
 /**
  * An alternative to keyof that only extracts the string keys.
  */
@@ -231,7 +233,12 @@ export interface ExtraAttributesObject {
   toDOM?:
     | string
     | [string, string?]
-    | ((attrs: ProsemirrorAttributes) => string | [string, string?]);
+    | ((attrs: ProsemirrorAttributes, options: NodeMarkOptions) => string | [string, string?]);
+}
+
+export interface NodeMarkOptions {
+  node?: ProsemirrorNode;
+  mark?: Mark;
 }
 
 export interface ApplyExtraAttributes {
@@ -250,7 +257,7 @@ export interface ApplyExtraAttributes {
    * Take the node attributes and create the object of string attributes for
    * storage on the dom node.
    */
-  dom: (node: ProsemirrorAttributes) => Record<string, string>;
+  dom: (attrs: ProsemirrorNode | Mark) => Record<string, string>;
 }
 
 /**

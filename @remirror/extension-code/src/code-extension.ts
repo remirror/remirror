@@ -21,7 +21,7 @@ export class CodeExtension extends MarkExtension {
       attrs: extra.defaults(),
       group: MarkGroup.Code,
       parseDOM: [{ tag: 'code', getAttrs: extra.parse }],
-      toDOM: ({ attrs }) => ['code', extra.dom(attrs), 0],
+      toDOM: (mark) => ['code', extra.dom(mark), 0],
     };
   }
 

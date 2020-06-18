@@ -132,7 +132,7 @@ export function createTableNodeSchema(
       group: NodeGroup.Block,
       parseDOM: [{ tag: 'table', getAttrs: extra.parse }],
       toDOM(node) {
-        return ['table', ['tbody', extra.dom(node.attrs), 0]];
+        return ['table', ['tbody', extra.dom(node), 0]];
       },
     },
 
@@ -142,7 +142,7 @@ export function createTableNodeSchema(
       tableRole: 'row',
       parseDOM: [{ tag: 'tr', getAttrs: extra.parse }],
       toDOM(node) {
-        return ['tr', extra.dom(node.attrs), 0];
+        return ['tr', extra.dom(node), 0];
       },
     },
 
@@ -158,7 +158,7 @@ export function createTableNodeSchema(
         },
       ],
       toDOM(node) {
-        return ['td', { ...extra.dom(node.attrs), ...setCellAttrs(node) }, 0];
+        return ['td', { ...extra.dom(node), ...setCellAttrs(node) }, 0];
       },
     },
 
@@ -174,7 +174,7 @@ export function createTableNodeSchema(
         },
       ],
       toDOM(node) {
-        return ['th', { ...extra.dom(node.attrs), ...setCellAttrs(node) }, 0];
+        return ['th', { ...extra.dom(node), ...setCellAttrs(node) }, 0];
       },
     },
   };

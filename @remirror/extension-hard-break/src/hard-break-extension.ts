@@ -20,7 +20,7 @@ export class HardBreakExtension extends NodeExtension {
       group: 'inline',
       selectable: false,
       parseDOM: [{ tag: 'br', getAttrs: extra.parse }],
-      toDOM: (node) => ['br', extra.dom(node.attrs)],
+      toDOM: (node) => ['br', extra.dom(node)],
     };
   }
 

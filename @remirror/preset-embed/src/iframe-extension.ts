@@ -98,7 +98,7 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
         return [
           'iframe',
           {
-            ...extra.dom(node.attrs),
+            ...extra.dom(node),
             ...rest,
             class: cx(className, `${className}-${type as string}`),
             src,

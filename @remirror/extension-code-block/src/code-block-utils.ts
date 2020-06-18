@@ -271,7 +271,7 @@ export function codeBlockToDOM(
   toDOM: ApplyExtraAttributes['dom'],
 ): DOMOutputSpec {
   const { language, ...rest } = node.attrs as CodeBlockAttributes;
-  const attributes = { ...toDOM(node.attrs), ...rest, class: `language-${language}` };
+  const attributes = { ...toDOM(node), ...rest, class: `language-${language}` };
 
   return ['pre', attributes, ['code', { [dataAttribute]: language }, 0]];
 }

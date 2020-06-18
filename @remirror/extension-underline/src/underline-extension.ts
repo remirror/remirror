@@ -26,7 +26,7 @@ export class UnderlineExtension extends MarkExtension {
           getAttrs: (node) => (node === 'underline' ? {} : false),
         },
       ],
-      toDOM: ({ attrs }) => ['u', extra.dom(attrs), 0],
+      toDOM: (mark) => ['u', extra.dom(mark), 0],
     };
   }
 

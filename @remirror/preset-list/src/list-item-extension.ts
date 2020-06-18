@@ -22,7 +22,7 @@ export class ListItemExtension extends NodeExtension {
       defining: true,
       draggable: false,
       parseDOM: [{ tag: 'li', getAttrs: extra.parse }],
-      toDOM: (node) => ['li', extra.dom(node.attrs), 0],
+      toDOM: (node) => ['li', extra.dom(node), 0],
     };
   }
 

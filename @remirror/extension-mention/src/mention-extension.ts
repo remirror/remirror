@@ -172,7 +172,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
         return [
           this.options.mentionTag,
           {
-            ...extra.dom(node.attrs),
+            ...extra.dom(node),
             ...attributes,
             class: name ? `${mentionClassName} ${mentionClassName}-${name}` : mentionClassName,
             [dataAttributeId]: id,
