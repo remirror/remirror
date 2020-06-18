@@ -7,7 +7,6 @@ import {
   Preset,
 } from '@remirror/core';
 import { BaseKeymapExtension, BaseKeymapOptions } from '@remirror/extension-base-keymap';
-import { BidiExtension, BidiOptions } from '@remirror/extension-bidi';
 import { DocExtension, DocOptions } from '@remirror/extension-doc';
 import { HistoryExtension, HistoryOptions } from '@remirror/extension-history';
 import { ParagraphExtension, ParagraphOptions } from '@remirror/extension-paragraph';
@@ -22,8 +21,7 @@ export interface CorePresetOptions
     DocOptions,
     ParagraphOptions,
     PositionerOptions,
-    HistoryOptions,
-    BidiOptions {}
+    HistoryOptions {}
 
 export class CorePreset extends Preset<CorePresetOptions> {
   static defaultOptions: DefaultPresetOptions<CorePresetOptions> = {
@@ -31,7 +29,6 @@ export class CorePreset extends Preset<CorePresetOptions> {
     ...BaseKeymapExtension.defaultOptions,
     ...ParagraphExtension.defaultOptions,
     ...HistoryExtension.defaultOptions,
-    ...BidiExtension.defaultOptions,
   };
 
   static customHandlerKeys: CustomHandlerKeyList<CorePresetOptions> = [
@@ -93,7 +90,6 @@ export class CorePreset extends Preset<CorePresetOptions> {
       getDispatch,
       getState,
       newGroupDelay,
-      defaultDirection,
     } = this.options;
 
     return [
@@ -109,7 +105,6 @@ export class CorePreset extends Preset<CorePresetOptions> {
         undoInputRuleOnBackspace,
         priority: ExtensionPriority.Low,
       }),
-      new BidiExtension({ defaultDirection }),
     ];
   }
 }

@@ -132,7 +132,7 @@ export class SchemaExtension extends PlainExtension {
 /**
  * The extra identifiers that can be used.
  */
-export type Identifiers = 'nodes' | 'marks' | 'all' | string[];
+export type Identifiers = 'nodes' | 'marks' | 'all' | readonly string[];
 
 /**
  * The interface for adding extra attributes to multiple node and mark

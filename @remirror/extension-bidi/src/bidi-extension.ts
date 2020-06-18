@@ -1,11 +1,18 @@
 import direction from 'direction';
 
 import {
+  AttributesWithClass,
+  bool,
+  CreatePluginReturn,
   DefaultExtensionOptions,
-  ExtraAttributesObject,
-  ExtraSchemaAttributes,
+  findParentNode,
+  hasTransactionChanged,
+  IdentifierSchemaAttributes,
   isString,
+  OnSetOptionsParameter,
   PlainExtension,
+  SchemaAttributesObject,
+  Static,
 } from '@remirror/core';
 
 export interface BidiOptions {
@@ -13,35 +20,129 @@ export interface BidiOptions {
    * This is the direction that is used when the algorithm is not quite sure.
    */
   defaultDirection?: null | 'ltr' | 'rtl';
+
+  /**
+   * Whether or not the extension should automatically infer the direction as you type.
+   *
+   * @defaultValue `true`
+   */
+  autoUpdate?: boolean;
+
+  /**
+   * The names of the nodes to exclude.
+   *
+   * @defaultValue `[]`
+   */
+  excludeNodes?: Static<readonly string[]>;
 }
 
 /**
  * An extension which adds bidirectional text support to your editor.
- *
- * TODO add support for custom options. For example the default direction should be configuraable.
  */
 export class BidiExtension extends PlainExtension<BidiOptions> {
   static readonly defaultOptions: DefaultExtensionOptions<BidiOptions> = {
     defaultDirection: null,
+    autoUpdate: true,
+    excludeNodes: [],
   };
+
+  #ignoreNextUpdate = false;
 
   get name() {
     return 'bidi' as const;
   }
 
-  createExtraSchemaAttributes = (): ExtraSchemaAttributes[] => {
-    return [
-      {
-        identifiers: 'nodes',
-        attributes: { dir: this.dir() },
+  /**
+   * Add the bidi property to the
+   */
+  createAttributes = (): AttributesWithClass => {
+    if (this.options.defaultDirection) {
+      return {
+        dir: this.options.defaultDirection,
+      };
+    }
+
+    return {};
+  };
+
+  /**
+   * Add the dir to all the node types.
+   */
+  createSchemaAttributes = (): IdentifierSchemaAttributes[] => {
+    const identifiers = this.store.nodeNames.filter(
+      (name) => !this.options.excludeNodes.includes(name),
+    );
+
+    return [{ identifiers, attributes: { dir: this.dir() } }];
+  };
+
+  /**
+   * Create the plugin that ensures the node has the correct `dir` value on each
+   * state update.
+   */
+  createPlugin = (): CreatePluginReturn<boolean> => {
+    return {
+      state: {
+        init: () => false,
+        apply: (tr) => {
+          if (this.#ignoreNextUpdate) {
+            this.#ignoreNextUpdate = false;
+            return false;
+          }
+
+          return hasTransactionChanged(tr);
+        },
       },
-    ];
+      view: () => ({
+        update: () => {
+          const shouldUpdate = this.getPluginState<boolean>();
+          const state = this.store.getState();
+          const commands = this.store.getCommands();
+          const { autoUpdate, excludeNodes } = this.options;
+
+          if (!shouldUpdate || !autoUpdate) {
+            return;
+          }
+
+          const parent = findParentNode({
+            predicate: (node) =>
+              bool(node.isTextblock && node.textContent && !excludeNodes.includes(node.type.name)),
+            selection: state.selection,
+          });
+
+          if (!parent) {
+            return;
+          }
+
+          const { node, pos } = parent;
+
+          const currentDirection = node.attrs.dir;
+          const dir = this.getDirection(node.textContent);
+
+          if (currentDirection === dir) {
+            return;
+          }
+
+          this.#ignoreNextUpdate = true;
+          commands.updateNodeAttributes(pos, { ...node.attrs, dir });
+        },
+      }),
+      props: {},
+    };
+  };
+
+  protected onSetOptions = (parameter: OnSetOptionsParameter<BidiOptions>) => {
+    const { changes } = parameter;
+
+    if (changes.defaultDirection.changed) {
+      this.store.updateAttributes();
+    }
   };
 
   /**
    * Create the `SchemaAttributesObject`
    */
-  private dir(): ExtraAttributesObject {
+  private dir(): SchemaAttributesObject {
     return {
       default: this.options.defaultDirection,
       parseDOM: (element) => element.getAttribute('dir') ?? this.getDirection(element.textContent),
