@@ -1,41 +1,50 @@
-import { useEffect } from 'react';
+import { useCallback, useState } from 'react';
 
-import { useRemirror } from '@remirror/react';
+import {
+  AnyCombinedUnion,
+  EditorManager,
+  EditorState,
+  EditorView,
+  EMPTY_PARAGRAPH_NODE,
+  RemirrorEventListener,
+  RemirrorJSON,
+} from 'remirror/core';
 
 declare global {
   interface Window {
     REMIRROR_PLAYGROUND_PERSIST: {
-      previousManager: any;
-      lastKnownGoodState: any;
+      previousView: EditorView | null;
+      lastKnownGoodState: EditorState | null;
     };
   }
 }
 
 if (!window.REMIRROR_PLAYGROUND_PERSIST) {
-  window.REMIRROR_PLAYGROUND_PERSIST = { previousManager: null, lastKnownGoodState: null };
+  window.REMIRROR_PLAYGROUND_PERSIST = { previousView: null, lastKnownGoodState: null };
 }
 
 const PERSIST = window.REMIRROR_PLAYGROUND_PERSIST;
 
-PERSIST.previousManager = null;
+PERSIST.previousView = null;
 PERSIST.lastKnownGoodState = null;
 
-export function useRemirrorPlayground() {
-  const remirror = useRemirror();
-  const manager = remirror.manager;
-  const state = remirror.getState();
-  useEffect(() => {
-    if (manager !== PERSIST.previousManager) {
-      // The manager has changed - implies new code context
+export function useRemirrorPlayground(
+  extensionManager: EditorManager<AnyCombinedUnion>,
+): {
+  value: EditorState;
+  onChange: RemirrorEventListener<AnyCombinedUnion>;
+} {
+  const [value, setValue] = useState<EditorState>(
+    extensionManager.createState({
+      content: PERSIST.lastKnownGoodState
+        ? (PERSIST.lastKnownGoodState.doc.toJSON() as RemirrorJSON)
+        : EMPTY_PARAGRAPH_NODE,
+    }),
+  );
+  const onChange = useCallback<RemirrorEventListener<AnyCombinedUnion>>((event) => {
+    PERSIST.lastKnownGoodState = event.state;
+    setValue(event.state);
+  }, []);
 
-      PERSIST.previousManager = manager;
-      if (PERSIST.lastKnownGoodState) {
-        // RESTORE STATE
-        remirror.setContent(PERSIST.lastKnownGoodState.doc);
-      }
-    } else {
-      // STORE STATE
-      PERSIST.lastKnownGoodState = state;
-    }
-  }, [state, manager, remirror]);
+  return { value, onChange };
 }

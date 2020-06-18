@@ -110,7 +110,6 @@ const EXTENSIONS = [
 const SmallEditor: FC = () => {
   const { getRootProps${actions.length > 0 ? ', commands' : ''} } = useRemirror();
 
-  useRemirrorPlayground(); // Delete this line
 
   return (
     <div>
@@ -123,8 +122,14 @@ const SmallEditor: FC = () => {
 const SmallEditorWrapper = () => {
   const extensionManager = useManager(EXTENSIONS);
 
+  const { value, onChange } = useRemirrorPlayground(extensionManager); // Delete this line
+
   return (
-    <RemirrorProvider manager={extensionManager}>
+    <RemirrorProvider
+      manager={extensionManager}
+      value={value}
+      onChange={onChange}
+    >
       <SmallEditor />
     </RemirrorProvider>
   );
