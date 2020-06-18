@@ -2,7 +2,7 @@
   {
     "name": "@remirror/core",
     "path": "@remirror/core/dist/core.esm.js",
-    "limit": "70 KB",
+    "limit": "35 KB",
     "ignore": ["@remirror/pm"],
     "running": false
   },
@@ -16,217 +16,245 @@
   {
     "name": "@remirror/core-types",
     "path": "@remirror/core-types/dist/core-types.esm.js",
-    "limit": "1 KB",
+    "limit": "0 KB",
     "ignore": ["@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/core-utils",
     "path": "@remirror/core-utils/dist/core-utils.esm.js",
-    "limit": "50 KB",
+    "limit": "20 KB",
     "ignore": ["@remirror/pm"],
+    "running": false
+  },
+  {
+    "name": "@remirror/dom",
+    "path": "@remirror/dom/dist/dom.esm.js",
+    "limit": "5 KB",
+    "ignore": ["@remirror/core", "@remirror/pm"],
+    "running": false
+  },
+  {
+    "name": "@remirror/editor-social",
+    "path": "@remirror/editor-social/dist/editor-social.esm.js",
+    "limit": "200 KB",
+    "ignore": ["@remirror/pm", "@types/react", "@types/react-dom", "react", "react-dom"],
     "running": false
   },
   {
     "name": "@remirror/extension-auto-link",
     "path": "@remirror/extension-auto-link/dist/extension-auto-link.esm.js",
-    "limit": "90 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-base-keymap",
     "path": "@remirror/extension-base-keymap/dist/extension-base-keymap.esm.js",
-    "limit": "50 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-blockquote",
     "path": "@remirror/extension-blockquote/dist/extension-blockquote.esm.js",
-    "limit": "50 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-bold",
     "path": "@remirror/extension-bold/dist/extension-bold.esm.js",
-    "limit": "50 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-code",
     "path": "@remirror/extension-code/dist/extension-code.esm.js",
-    "limit": "50 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-code-block",
     "path": "@remirror/extension-code-block/dist/extension-code-block.esm.js",
-    "limit": "120 KB",
+    "limit": "20 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-collaboration",
     "path": "@remirror/extension-collaboration/dist/extension-collaboration.esm.js",
-    "limit": "90 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm", "prosemirror-collab"],
     "running": false
   },
   {
     "name": "@remirror/extension-doc",
     "path": "@remirror/extension-doc/dist/extension-doc.esm.js",
-    "limit": "50 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-drop-cursor",
     "path": "@remirror/extension-drop-cursor/dist/extension-drop-cursor.esm.js",
-    "limit": "90 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-emoji",
     "path": "@remirror/extension-emoji/dist/extension-emoji.esm.js",
-    "limit": "150 KB",
+    "limit": "60 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-epic-mode",
     "path": "@remirror/extension-epic-mode/dist/extension-epic-mode.esm.js",
-    "limit": "90 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-gap-cursor",
     "path": "@remirror/extension-gap-cursor/dist/extension-gap-cursor.esm.js",
-    "limit": "50 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-hard-break",
     "path": "@remirror/extension-hard-break/dist/extension-hard-break.esm.js",
-    "limit": "50 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-heading",
     "path": "@remirror/extension-heading/dist/extension-heading.esm.js",
-    "limit": "50 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-history",
     "path": "@remirror/extension-history/dist/extension-history.esm.js",
-    "limit": "50 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-horizontal-rule",
     "path": "@remirror/extension-horizontal-rule/dist/extension-horizontal-rule.esm.js",
-    "limit": "50 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-image",
     "path": "@remirror/extension-image/dist/extension-image.esm.js",
-    "limit": "120 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-italic",
     "path": "@remirror/extension-italic/dist/extension-italic.esm.js",
-    "limit": "50 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-link",
     "path": "@remirror/extension-link/dist/extension-link.esm.js",
-    "limit": "50 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-mention",
     "path": "@remirror/extension-mention/dist/extension-mention.esm.js",
-    "limit": "90 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-paragraph",
     "path": "@remirror/extension-paragraph/dist/extension-paragraph.esm.js",
-    "limit": "90 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-placeholder",
     "path": "@remirror/extension-placeholder/dist/extension-placeholder.esm.js",
-    "limit": "50 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-position-tracker",
     "path": "@remirror/extension-position-tracker/dist/extension-position-tracker.esm.js",
-    "limit": "50 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-positioner",
     "path": "@remirror/extension-positioner/dist/extension-positioner.esm.js",
-    "limit": "50 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-react-ssr",
     "path": "@remirror/extension-react-ssr/dist/extension-react-ssr.esm.js",
-    "limit": "50 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm", "@types/react", "react"],
+    "running": false
+  },
+  {
+    "name": "@remirror/extension-search",
+    "path": "@remirror/extension-search/dist/extension-search.esm.js",
+    "limit": "5 KB",
+    "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-strike",
     "path": "@remirror/extension-strike/dist/extension-strike.esm.js",
-    "limit": "50 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-text",
     "path": "@remirror/extension-text/dist/extension-text.esm.js",
-    "limit": "50 KB",
+    "limit": "5 KB",
+    "ignore": ["@remirror/core", "@remirror/pm"],
+    "running": false
+  },
+  {
+    "name": "@remirror/extension-track-changes",
+    "path": "@remirror/extension-track-changes/dist/extension-track-changes.esm.js",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-trailing-node",
     "path": "@remirror/extension-trailing-node/dist/extension-trailing-node.esm.js",
-    "limit": "50 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-underline",
     "path": "@remirror/extension-underline/dist/extension-underline.esm.js",
-    "limit": "50 KB",
+    "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
@@ -240,42 +268,42 @@
   {
     "name": "@remirror/preset-core",
     "path": "@remirror/preset-core/dist/preset-core.esm.js",
-    "limit": "50 KB",
+    "limit": "10 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/preset-embed",
     "path": "@remirror/preset-embed/dist/preset-embed.esm.js",
-    "limit": "50 KB",
+    "limit": "10 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/preset-list",
     "path": "@remirror/preset-list/dist/preset-list.esm.js",
-    "limit": "50 KB",
+    "limit": "10 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/preset-react",
     "path": "@remirror/preset-react/dist/preset-react.esm.js",
-    "limit": "50 KB",
+    "limit": "10 KB",
     "ignore": ["@remirror/core", "@remirror/pm", "@types/react", "react"],
     "running": false
   },
   {
     "name": "@remirror/preset-table",
     "path": "@remirror/preset-table/dist/preset-table.esm.js",
-    "limit": "120 KB",
+    "limit": "10 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/react",
     "path": "@remirror/react/dist/react.esm.js",
-    "limit": "140 KB",
+    "limit": "30 KB",
     "ignore": [
       "@remirror/core",
       "@remirror/pm",
@@ -287,17 +315,10 @@
     "running": false
   },
   {
-    "name": "@remirror/editor-social",
-    "path": "@remirror/editor-social/dist/editor-social.esm.js",
-    "limit": "200 KB",
-    "ignore": ["@remirror/pm", "@types/react", "@types/react-dom", "react", "react-dom"],
-    "running": false
-  },
-  {
     "name": "@remirror/react-utils",
     "path": "@remirror/react-utils/dist/react-utils.esm.js",
-    "limit": "15 KB",
-    "ignore": ["@emotion/core", "@types/react", "react"],
+    "limit": "5 KB",
+    "ignore": ["@types/react", "react"],
     "running": false
   },
   {
@@ -317,7 +338,7 @@
   {
     "name": "prosemirror-suggest",
     "path": "packages/prosemirror-suggest/dist/prosemirror-suggest.esm.js",
-    "limit": "90 KB",
+    "limit": "50 KB",
     "ignore": ["prosemirror-view"],
     "running": false
   },

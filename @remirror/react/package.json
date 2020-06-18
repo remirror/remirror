@@ -52,8 +52,7 @@
     "jest-axe": "^3.4.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-test-renderer": "^16.13.1",
-    "react-use": "^15.2.5"
+    "react-test-renderer": "^16.13.1"
   },
   "peerDependencies": {
     "@remirror/core": "^0.11.0",
