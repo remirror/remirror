@@ -52,7 +52,7 @@ importers:
       eslint-plugin-import: 2.21.2_eslint@7.2.0
       eslint-plugin-jest: 23.13.2_eslint@7.2.0+typescript@3.9.5
       eslint-plugin-jest-formatting: 1.2.0_eslint@7.2.0
-      eslint-plugin-jsx-a11y: 6.2.3_eslint@7.2.0
+      eslint-plugin-jsx-a11y: 6.3.0_eslint@7.2.0
       eslint-plugin-promise: 4.2.1
       eslint-plugin-react: 7.20.0_eslint@7.2.0
       eslint-plugin-react-hooks: 4.0.4_eslint@7.2.0
@@ -135,7 +135,7 @@ importers:
       eslint-plugin-import: ^2.21.1
       eslint-plugin-jest: ^23.13.2
       eslint-plugin-jest-formatting: ^1.2.0
-      eslint-plugin-jsx-a11y: ^6.2.3
+      eslint-plugin-jsx-a11y: ^6.3.0
       eslint-plugin-promise: ^4.2.1
       eslint-plugin-react: ^7.20.0
       eslint-plugin-react-hooks: ^4.0.4
@@ -344,7 +344,7 @@ importers:
       '@types/prosemirror-dev-tools': 2.1.0
       prosemirror-dev-tools: 3.0.0_react-dom@16.13.1+react@16.13.1
     devDependencies:
-      '@testing-library/react': 10.2.1_react-dom@16.13.1+react@16.13.1
+      '@testing-library/react': 10.3.0_react-dom@16.13.1+react@16.13.1
       '@types/react': 16.9.38
       '@types/react-dom': 16.9.8
       '@types/testing-library__react': 10.0.1
@@ -354,7 +354,7 @@ importers:
       '@babel/runtime': ^7.10.2
       '@remirror/pm': ^0.0.0
       '@remirror/react': ^0.13.1
-      '@testing-library/react': ^10.2.1
+      '@testing-library/react': ^10.3.0
       '@types/prosemirror-dev-tools': ^2.1.0
       '@types/react': ^16.9.35
       '@types/react-dom': ^16.9.8
@@ -395,7 +395,7 @@ importers:
     devDependencies:
       '@lingui/macro': 3.0.0-13
       '@remirror/pm': 'link:../pm'
-      '@testing-library/react': 10.2.1_react-dom@16.13.1+react@16.13.1
+      '@testing-library/react': 10.3.0_react-dom@16.13.1+react@16.13.1
       '@types/react': 16.9.38
       '@types/react-dom': 16.9.8
       '@types/testing-library__react': 10.0.1
@@ -413,7 +413,7 @@ importers:
       '@remirror/pm': ^0.0.0
       '@remirror/react': ^0.13.1
       '@remirror/react-utils': ^0.7.6
-      '@testing-library/react': ^10.2.1
+      '@testing-library/react': ^10.3.0
       '@types/classnames': ^2.2.10
       '@types/react': ^16.9.35
       '@types/react-dom': ^16.9.8
@@ -1004,7 +1004,7 @@ importers:
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
-      '@testing-library/react': 10.2.1_react-dom@16.13.1+react@16.13.1
+      '@testing-library/react': 10.3.0_react-dom@16.13.1+react@16.13.1
       '@testing-library/react-hooks': 3.3.0_1fb72ba09e79ce5bfd91e4d67e1015b7
       '@types/react': 16.9.38
       '@types/react-dom': 16.9.8
@@ -1024,7 +1024,7 @@ importers:
       '@remirror/preset-core': ^0.0.0
       '@remirror/preset-react': ^0.0.0
       '@remirror/react-utils': ^0.7.6
-      '@testing-library/react': ^10.2.1
+      '@testing-library/react': ^10.3.0
       '@testing-library/react-hooks': ^3.3.0
       '@types/hoist-non-react-statics': ^3.3.1
       '@types/min-document': ^2.19.0
@@ -1186,8 +1186,8 @@ importers:
       '@babel/runtime': 7.10.2
       '@emotion/core': 10.0.28_react@16.13.1
       '@emotion/styled': 10.0.27_c989b1aa057905c7a8b69bf973f55a19
-      '@mdx-js/mdx': 1.6.5
-      '@mdx-js/react': 1.6.5_react@16.13.1
+      '@mdx-js/mdx': 1.6.6
+      '@mdx-js/react': 1.6.6_react@16.13.1
       '@reach/router': 1.3.3_react-dom@16.13.1+react@16.13.1
       '@remirror/playground': 'link:../@remirror/playground'
       '@remirror/pm': 'link:../@remirror/pm'
@@ -1208,7 +1208,7 @@ importers:
       gatsby-plugin-google-analytics: 2.3.4_3d82075793d8a6fc4e9a94c420654c58
       gatsby-plugin-layout: 1.3.4
       gatsby-plugin-manifest: 2.4.11_gatsby@2.23.4
-      gatsby-plugin-mdx: 1.2.15_0110d14208bf670f088eda2bed9b2320
+      gatsby-plugin-mdx: 1.2.15_a223cd75e3ddd6da73b14a78dae1a829
       gatsby-plugin-netlify: 2.3.5_gatsby@2.23.4
       gatsby-plugin-pnpm: 1.2.5_gatsby@2.23.4
       gatsby-plugin-react-helmet: 3.3.4_gatsby@2.23.4+react-helmet@6.1.0
@@ -1261,8 +1261,8 @@ importers:
       '@babel/runtime': ^7.10.2
       '@emotion/core': ^10.0.28
       '@emotion/styled': ^10.0.27
-      '@mdx-js/mdx': ^1.6.5
-      '@mdx-js/react': ^1.6.5
+      '@mdx-js/mdx': ^1.6.6
+      '@mdx-js/react': ^1.6.6
       '@reach/router': ^1.3.3
       '@remirror/playground': ^0.0.0
       '@remirror/pm': 0.0.0
@@ -1434,7 +1434,7 @@ importers:
       '@babel/runtime': 7.10.2
       '@remirror/pm': 'link:../../@remirror/pm'
       '@testing-library/dom': 7.16.2
-      '@testing-library/react': 10.2.1_react-dom@16.13.1+react@16.13.1
+      '@testing-library/react': 10.3.0_react-dom@16.13.1+react@16.13.1
       '@types/node': 14.0.13
       '@types/react': 16.9.38
       '@types/react-dom': 16.9.8
@@ -1452,7 +1452,7 @@ importers:
       '@babel/runtime': ^7.10.2
       '@remirror/pm': ^0.0.0
       '@testing-library/dom': ^7.16.1
-      '@testing-library/react': ^10.2.1
+      '@testing-library/react': ^10.3.0
       '@types/node': ^14.0.12
       '@types/react': ^16.9.35
       '@types/react-dom': ^16.9.8
@@ -1484,7 +1484,7 @@ importers:
       react-use: 15.2.5_react@16.13.1
       w3c-keyname: 2.2.4
     devDependencies:
-      '@testing-library/react': 10.2.1_react@16.13.1
+      '@testing-library/react': 10.3.0_react@16.13.1
       '@types/react': 16.9.38
       '@types/testing-library__react': 10.0.1
       react: 16.13.1
@@ -1500,7 +1500,7 @@ importers:
       '@remirror/ui-icons': ^0.7.8
       '@remirror/ui-text': ^0.7.6
       '@seznam/compose-react-refs': ^1.0.4
-      '@testing-library/react': ^10.2.1
+      '@testing-library/react': ^10.3.0
       '@types/react': ^16.9.35
       '@types/testing-library__react': ^10.0.1
       a11y-status: ^0.0.0
@@ -2337,7 +2337,7 @@ packages:
   /@babel/plugin-proposal-object-rest-spread/7.9.6_@babel+core@7.9.6:
     dependencies:
       '@babel/core': 7.9.6
-      '@babel/helper-plugin-utils': 7.10.1
+      '@babel/helper-plugin-utils': 7.8.3
       '@babel/plugin-syntax-object-rest-spread': 7.8.3_@babel+core@7.9.6
       '@babel/plugin-transform-parameters': 7.10.1_@babel+core@7.9.6
     dev: false
@@ -6098,6 +6098,30 @@ packages:
     dev: false
     resolution:
       integrity: sha512-DC13eeEM0Dv9OD+UVhyB69BlV29d2eoAmfiR/XdgNl4R7YmRNEPGRD3QvGUdRUDxYdJBHauMz5ZIV507cNXXaA==
+  /@mdx-js/mdx/1.6.6:
+    dependencies:
+      '@babel/core': 7.9.6
+      '@babel/plugin-syntax-jsx': 7.8.3_@babel+core@7.9.6
+      '@babel/plugin-syntax-object-rest-spread': 7.8.3_@babel+core@7.9.6
+      '@mdx-js/util': 1.6.6
+      babel-plugin-apply-mdx-type-prop: 1.6.6_@babel+core@7.9.6
+      babel-plugin-extract-import-names: 1.6.6
+      camelcase-css: 2.0.1
+      detab: 2.0.3
+      hast-util-raw: 5.0.2
+      lodash.uniq: 4.5.0
+      mdast-util-to-hast: 9.1.0
+      remark-footnotes: 1.0.0
+      remark-mdx: 1.6.6
+      remark-parse: 8.0.2
+      remark-squeeze-paragraphs: 4.0.0
+      style-to-object: 0.3.0
+      unified: 9.0.0
+      unist-builder: 2.0.3
+      unist-util-visit: 2.0.2
+    dev: false
+    resolution:
+      integrity: sha512-Q1j/RtjNbRZRC/ciaOqQLplsJ9lb0jJhDSvkusmzCsCX+NZH7YTUvccWf7l6zKW1CAiofJfqZdZtXkeJUDZiMw==
   /@mdx-js/react/1.6.5_react@16.13.1:
     dependencies:
       react: 16.13.1
@@ -6106,6 +6130,14 @@ packages:
       react: ^16.9.0
     resolution:
       integrity: sha512-y1Yu9baw3KokFrs7g5RxHpJNSU4e1zk/5bAJX94yVATglG5HyAL0lYMySU8YzebXNE+fJJMCx9CuiQHy2ezoew==
+  /@mdx-js/react/1.6.6_react@16.13.1:
+    dependencies:
+      react: 16.13.1
+    dev: false
+    peerDependencies:
+      react: ^16.9.0
+    resolution:
+      integrity: sha512-zOOdNreHUNSFQ0dg3wYYg9sOGg2csf7Sk8JGBigeBq+4Xk4LO0QdycGAmgKNfeme+SyBV5LBIPjt1NNsScyWEQ==
   /@mdx-js/runtime/1.6.5_react@16.13.1:
     dependencies:
       '@mdx-js/mdx': 1.6.5
@@ -6123,6 +6155,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-ljr9hGQYW3kZY1NmQbmSe4yXvgq3KDRt0FMBOB5OaDWqi4X2WzEsp6SZ02KmVrieNW1cjWlj13pgvcf0towZPw==
+  /@mdx-js/util/1.6.6:
+    dev: false
+    resolution:
+      integrity: sha512-PKTHVgMHnK5p+kcMWWNnZuoR7O19VmHiOujmVcyN50hya7qIdDb5vvsYC+dwLxApEXiABhLozq0dlIwFeS3yjg==
   /@mikaelkristiansson/domready/1.0.10:
     dev: false
     resolution:
@@ -6872,7 +6908,7 @@ packages:
       react-test-renderer: '>=16.9.0'
     resolution:
       integrity: sha512-rE9geI1+HJ6jqXkzzJ6abREbeud6bLF8OmF+Vyc7gBoPwZAEVBYjbC1up5nNoVfYBhO5HUwdD4u9mTehAUeiyw==
-  /@testing-library/react/10.2.1_react-dom@16.13.1+react@16.13.1:
+  /@testing-library/react/10.3.0_react-dom@16.13.1+react@16.13.1:
     dependencies:
       '@babel/runtime': 7.10.2
       '@testing-library/dom': 7.16.2
@@ -6884,8 +6920,8 @@ packages:
       react: '*'
       react-dom: '*'
     resolution:
-      integrity: sha512-pv2jZhiZgN1/alz1aImhSasZAOPg3er2Kgcfg9fzuw7aKPLxVengqqR1n0CJANeErR1DqORauQaod+gGUgAJOQ==
-  /@testing-library/react/10.2.1_react@16.13.1:
+      integrity: sha512-Rhn5uJK6lYHWzlGVbK6uAvheAW8AUoFYxTLGdDxgsJDaK/PYy5drWfW/6YpMMOKMw+u6jHHl4MNHlt5qLHnm0Q==
+  /@testing-library/react/10.3.0_react@16.13.1:
     dependencies:
       '@babel/runtime': 7.10.2
       '@testing-library/dom': 7.16.2
@@ -6897,7 +6933,7 @@ packages:
       react: '*'
       react-dom: '*'
     resolution:
-      integrity: sha512-pv2jZhiZgN1/alz1aImhSasZAOPg3er2Kgcfg9fzuw7aKPLxVengqqR1n0CJANeErR1DqORauQaod+gGUgAJOQ==
+      integrity: sha512-Rhn5uJK6lYHWzlGVbK6uAvheAW8AUoFYxTLGdDxgsJDaK/PYy5drWfW/6YpMMOKMw+u6jHHl4MNHlt5qLHnm0Q==
   /@theme-ui/color-modes/0.3.1_react@16.13.1:
     dependencies:
       '@emotion/core': 10.0.28_react@16.13.1
@@ -8571,6 +8607,15 @@ packages:
       node: '>=6.0'
     resolution:
       integrity: sha512-S1G1V790fTaigUSM/Gd0NngzEfiMy9uTUfMyHhKhVyy4cH5O/eTuR01ydhGL0z4Za1PXFTRGH3qL8VhUQuEO5w==
+  /aria-query/4.2.0:
+    dependencies:
+      '@babel/runtime': 7.10.2
+      '@babel/runtime-corejs3': 7.10.2
+    dev: false
+    engines:
+      node: '>=6.0'
+    resolution:
+      integrity: sha512-tpVyXGt6gJVTVwCmu8qgBkDHhvtQ/es80y6J8ziybiwQU/x+LnCy+v8p9CWOTHv3i1BMnH5/IfzMpuTcFPCMQA==
   /arity-n/1.0.4:
     dev: false
     resolution:
@@ -8941,6 +8986,16 @@ packages:
       '@babel/core': ^7.0.0
     resolution:
       integrity: sha512-Bs2hv/bYFTJyhBqvsWOsceFyPXAhVM1gvwF8fIm6GeXYTQV+sY+qRR5TClamgr3OEsD8ZApmw+kxJSHgJggVyw==
+  /babel-plugin-apply-mdx-type-prop/1.6.6_@babel+core@7.9.6:
+    dependencies:
+      '@babel/core': 7.9.6
+      '@babel/helper-plugin-utils': 7.8.3
+      '@mdx-js/util': 1.6.6
+    dev: false
+    peerDependencies:
+      '@babel/core': ^7.0.0
+    resolution:
+      integrity: sha512-rUzVvkQa8/9M63OZT6qQQ1bS8P0ozhXp9e5uJ3RwRJF5Me7s4nZK5SYhyNHYc0BkAflWnCOGMP3oPQUfuyB8tg==
   /babel-plugin-dev-expression/0.2.2_@babel+core@7.10.2:
     dependencies:
       '@babel/core': 7.10.2
@@ -8974,6 +9029,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-rrNoCZ1DHMdy3vuihvkuO2AjE2DVFrI78e61W7eVsgpNTbG0KO1UESQwXMTlS3v1PMnlEJjdvoteRAkatEkWFQ==
+  /babel-plugin-extract-import-names/1.6.6:
+    dependencies:
+      '@babel/helper-plugin-utils': 7.8.3
+    dev: false
+    resolution:
+      integrity: sha512-UtMuiQJnhVPAGE2+pDe7Nc9NVEmDdqGTN74BtRALgH+7oag88RpxFLOSiA+u5mFkFg741wW9Ut5KiyJpksEj/g==
   /babel-plugin-istanbul/5.2.0:
     dependencies:
       '@babel/helper-plugin-utils': 7.10.1
@@ -12722,25 +12783,27 @@ packages:
       eslint: ^3 || ^4 || ^5 || ^6
     resolution:
       integrity: sha512-CawzfGt9w83tyuVekn0GDPU9ytYtxyxyFZ3aSWROmnRRFQFT2BiPJd7jvRdzNDi6oLWaS2asMeYSNMjWTV4eNg==
-  /eslint-plugin-jsx-a11y/6.2.3_eslint@7.2.0:
+  /eslint-plugin-jsx-a11y/6.3.0_eslint@7.2.0:
     dependencies:
       '@babel/runtime': 7.10.2
-      aria-query: 3.0.0
+      aria-query: 4.2.0
       array-includes: 3.1.1
       ast-types-flow: 0.0.7
+      axe-core: 3.5.5
       axobject-query: 2.1.2
       damerau-levenshtein: 1.0.6
-      emoji-regex: 7.0.3
+      emoji-regex: 9.0.0
       eslint: 7.2.0
       has: 1.0.3
       jsx-ast-utils: 2.4.1
+      language-tags: 1.0.5
     dev: false
     engines:
       node: '>=4.0'
     peerDependencies:
-      eslint: ^3 || ^4 || ^5 || ^6
+      eslint: ^3 || ^4 || ^5 || ^6 || ^7
     resolution:
-      integrity: sha512-CawzfGt9w83tyuVekn0GDPU9ytYtxyxyFZ3aSWROmnRRFQFT2BiPJd7jvRdzNDi6oLWaS2asMeYSNMjWTV4eNg==
+      integrity: sha512-tHSWX2jXlAaiI45YuEPi3KXJ7MihvQWUZMR9UNB4bUVYvAamwr6AwCm5dgOZOV2rC2qVMjBtjNshBE46n4IG6w==
   /eslint-plugin-promise/4.2.1:
     dev: false
     engines:
@@ -14319,7 +14382,7 @@ packages:
       gatsby: ^2.4.0
     resolution:
       integrity: sha512-IpgLRPxomeKPtGUMxXKxcS3QOvr1MwHB+D17Z31IedCUZZhthA3MTM6Ry+imKXqxXDXVBbsU6O6L5wJRmdWo9Q==
-  /gatsby-plugin-mdx/1.2.15_0110d14208bf670f088eda2bed9b2320:
+  /gatsby-plugin-mdx/1.2.15_a223cd75e3ddd6da73b14a78dae1a829:
     dependencies:
       '@babel/core': 7.10.2
       '@babel/generator': 7.10.2
@@ -14328,8 +14391,8 @@ packages:
       '@babel/preset-env': 7.10.2_@babel+core@7.10.2
       '@babel/preset-react': 7.10.1_@babel+core@7.10.2
       '@babel/types': 7.10.2
-      '@mdx-js/mdx': 1.6.5
-      '@mdx-js/react': 1.6.5_react@16.13.1
+      '@mdx-js/mdx': 1.6.6
+      '@mdx-js/react': 1.6.6_react@16.13.1
       camelcase-css: 2.0.1
       change-case: 3.1.0
       core-js: 2.6.11
@@ -18412,6 +18475,16 @@ packages:
     dev: false
     resolution:
       integrity: sha512-eYboRV94Vco725nKMlpkn3nV2+96p9c3gKXRsYqAJSswSENvBhN7n5L+uDhY58xQa0UukWsDMTGELzmD8Q+wTA==
+  /language-subtag-registry/0.3.20:
+    dev: false
+    resolution:
+      integrity: sha512-KPMwROklF4tEx283Xw0pNKtfTj1gZ4UByp4EsIFWLgBavJltF4TiYPc39k06zSTsLzxTVXXDSpbwaQXaFB4Qeg==
+  /language-tags/1.0.5:
+    dependencies:
+      language-subtag-registry: 0.3.20
+    dev: false
+    resolution:
+      integrity: sha1-0yHbxNowuovzAk4ED6XBRmH5GTo=
   /last-call-webpack-plugin/3.0.0:
     dependencies:
       lodash: 4.17.15
@@ -23380,6 +23453,19 @@ packages:
     dev: false
     resolution:
       integrity: sha512-zItwP3xcVQAEPJTHseFh+KZEyJ31+pbVJMOMzognqTuZ2zfzIR4Xrg0BAx6eo+paV4fHne/5vi2ugWtCeOaBRA==
+  /remark-mdx/1.6.6:
+    dependencies:
+      '@babel/core': 7.9.6
+      '@babel/helper-plugin-utils': 7.8.3
+      '@babel/plugin-proposal-object-rest-spread': 7.9.6_@babel+core@7.9.6
+      '@babel/plugin-syntax-jsx': 7.8.3_@babel+core@7.9.6
+      '@mdx-js/util': 1.6.6
+      is-alphabetical: 1.0.4
+      remark-parse: 8.0.2
+      unified: 9.0.0
+    dev: false
+    resolution:
+      integrity: sha512-BkR7SjP+3OvrCsWGlYy1tWEsZ8aQ86x+i7XWbW79g73Ws/cCaeVsEn0ZxAzzoTRH+PJWVU7Mbe64GdejEyKr2g==
   /remark-parse/1.1.0:
     dependencies:
       collapse-white-space: 1.0.6

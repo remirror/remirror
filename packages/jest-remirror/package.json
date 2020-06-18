@@ -25,7 +25,7 @@
     "@babel/runtime": "^7.10.2",
     "@remirror/pm": "^0.0.0",
     "@testing-library/dom": "^7.16.1",
-    "@testing-library/react": "^10.2.1",
+    "@testing-library/react": "^10.3.0",
     "@types/node": "^14.0.12",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
