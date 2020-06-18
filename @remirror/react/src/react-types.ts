@@ -24,6 +24,15 @@ export type DefaultReactCombined = CombinedUnion<
   CorePreset | ReactPreset | BuiltinPreset | AnyPreset
 >;
 
+/**
+ * Use this to build your own combined union type.
+ */
+export type ReactCombinedUnion<Combined extends AnyCombinedUnion> =
+  | CorePreset
+  | ReactPreset
+  | BuiltinPreset
+  | Combined;
+
 export interface BaseProps<Combined extends AnyCombinedUnion> extends EditorWrapperProps<Combined> {
   /**
    * Pass in the extension manager.
