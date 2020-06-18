@@ -100,6 +100,10 @@ export function makeCode(codeOptions: CodeOptions): string {
   const code = `\
 ${importLines.join('\n')}
 
+const EXTENSIONS = [
+  ${combinedList.join(',\n  ')}
+];
+
 /**
  * This component contains the editor and any toolbars/chrome it requires.
  */
@@ -117,9 +121,7 @@ const SmallEditor: FC = () => {
 };
 
 const SmallEditorWrapper = () => {
-  const extensionManager = useManager([
-    ${combinedList.join(',\n    ')}
-  ]);
+  const extensionManager = useManager(EXTENSIONS);
 
   return (
     <RemirrorProvider manager={extensionManager}>
