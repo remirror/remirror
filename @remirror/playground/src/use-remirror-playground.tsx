@@ -1,41 +1,46 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 
-import { useRemirror } from '@remirror/react';
+import {
+  RemirrorEventListener,
+  EditorState,
+  EditorManager,
+  EMPTY_PARAGRAPH_NODE,
+} from 'remirror/core';
 
 declare global {
   interface Window {
     REMIRROR_PLAYGROUND_PERSIST: {
-      previousManager: any;
+      previousView: any;
       lastKnownGoodState: any;
     };
   }
 }
 
 if (!window.REMIRROR_PLAYGROUND_PERSIST) {
-  window.REMIRROR_PLAYGROUND_PERSIST = { previousManager: null, lastKnownGoodState: null };
+  window.REMIRROR_PLAYGROUND_PERSIST = { previousView: null, lastKnownGoodState: null };
 }
 
 const PERSIST = window.REMIRROR_PLAYGROUND_PERSIST;
 
-PERSIST.previousManager = null;
+PERSIST.previousView = null;
 PERSIST.lastKnownGoodState = null;
 
-export function useRemirrorPlayground() {
-  const remirror = useRemirror();
-  const manager = remirror.manager;
-  const state = remirror.getState();
-  useEffect(() => {
-    if (manager !== PERSIST.previousManager) {
-      // The manager has changed - implies new code context
+export function useRemirrorPlayground(
+  extensionManager: EditorManager<any>,
+): {
+  value: EditorState;
+  onChange: RemirrorEventListener<any>;
+} {
+  const [value, setValue] = useState<EditorState>(
+    PERSIST.lastKnownGoodState ||
+      extensionManager.createState({
+        content: EMPTY_PARAGRAPH_NODE,
+      }),
+  );
+  const onChange = useCallback<RemirrorEventListener<any>>((event) => {
+    PERSIST.lastKnownGoodState = event.state;
+    setValue(event.state);
+  }, []);
 
-      PERSIST.previousManager = manager;
-      if (PERSIST.lastKnownGoodState) {
-        // RESTORE STATE
-        remirror.setContent(PERSIST.lastKnownGoodState.doc);
-      }
-    } else {
-      // STORE STATE
-      PERSIST.lastKnownGoodState = state;
-    }
-  }, [state, manager, remirror]);
+  return { value, onChange };
 }
