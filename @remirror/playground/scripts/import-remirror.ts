@@ -1,6 +1,6 @@
 import { promises as fsp } from 'fs';
 import { resolve } from 'path';
-import prettier from 'prettier';
+import * as prettier from 'prettier';
 
 async function scanImportsFrom<T extends RemirrorModuleMeta>(
   sourceDir: string,
