@@ -28,7 +28,6 @@
     "@remirror/core-utils": "^0.8.0",
     "linaria": "^2.0.0-alpha.5",
     "nanoevents": "^5.1.8",
-    "semver": "^7.3.2",
     "type-fest": "^0.15.1"
   },
   "devDependencies": {

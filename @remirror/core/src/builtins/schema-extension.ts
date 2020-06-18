@@ -25,6 +25,7 @@ import { isElementDomNode, isProsemirrorMark, isProsemirrorNode } from '@remirro
 import { Schema } from '@remirror/pm/model';
 
 import {
+  AnyExtension,
   CreateLifecycleMethod,
   GetMarkNameUnion,
   GetNodeNameUnion,
@@ -55,7 +56,12 @@ export class SchemaExtension extends PlainExtension {
     const { managerSettings } = this.store;
     const nodes: Record<string, NodeExtensionSpec> = object();
     const marks: Record<string, MarkExtensionSpec> = object();
-    const namedExtraAttributes = getManagerExtraAttributes(managerSettings);
+    const namedExtraAttributes = transformExtraAttributes({
+      settings: managerSettings,
+      gatheredExtraAttributes: this.gatherExtraAttributes(extensions),
+      nodeNames: this.store.nodeNames,
+      markNames: this.store.markNames,
+    });
 
     // Skip the for loop by setting the list to empty when extra attributes are disabled
 
@@ -104,7 +110,29 @@ export class SchemaExtension extends PlainExtension {
     this.store.setStoreKey('schema', schema);
     this.store.setExtensionStore('schema', schema);
   };
+
+  /**
+   * Gather all the extra attributes that have been added by extensions.
+   */
+  private gatherExtraAttributes(extensions: readonly AnyExtension[]) {
+    const extraSchemaAttributes: ExtraSchemaAttributes[] = [];
+
+    for (const extension of extensions) {
+      if (!extension.createExtraSchemaAttributes) {
+        continue;
+      }
+
+      extraSchemaAttributes.push(...extension.createExtraSchemaAttributes());
+    }
+
+    return extraSchemaAttributes;
+  }
 }
+
+/**
+ * The extra identifiers that can be used.
+ */
+export type Identifiers = 'nodes' | 'marks' | 'all' | string[];
 
 /**
  * The interface for adding extra attributes to multiple node and mark
@@ -113,8 +141,15 @@ export class SchemaExtension extends PlainExtension {
 export interface ExtraSchemaAttributes {
   /**
    * The nodes or marks to add extra attributes to.
+   *
+   * This can either be an array of the strings or the following specific
+   * identifiers:
+   *
+   * - 'nodes' for all nodes
+   * - 'marks' for all marks
+   * - 'all' for all extensions which touch the schema.
    */
-  identifiers: string[];
+  identifiers: Identifiers;
 
   /**
    * The attributes to be added.
@@ -124,24 +159,70 @@ export interface ExtraSchemaAttributes {
 
 type NamedExtraAttributes = Record<string, ExtraAttributes>;
 
+interface TransformExtraAttributesParameter {
+  settings: Remirror.ManagerSettings;
+  gatheredExtraAttributes: ExtraSchemaAttributes[];
+  nodeNames: readonly string[];
+  markNames: readonly string[];
+}
+
 /**
  * Get the extension extra attributes
  */
-function getManagerExtraAttributes(settings: Remirror.ManagerSettings) {
+function transformExtraAttributes({
+  settings,
+  gatheredExtraAttributes,
+  nodeNames,
+  markNames,
+}: TransformExtraAttributesParameter) {
   const extraAttributes: NamedExtraAttributes = object();
 
   if (settings.disableExtraAttributes) {
     return extraAttributes;
   }
 
-  for (const attributeGroup of settings.extraAttributes ?? []) {
-    for (const identifier of attributeGroup.identifiers) {
+  const extraSchemaAttributes: ExtraSchemaAttributes[] = [
+    ...gatheredExtraAttributes,
+    ...(settings.extraAttributes ?? []),
+  ];
+
+  for (const attributeGroup of extraSchemaAttributes ?? []) {
+    const identifiers = getIdentifiers({
+      identifiers: attributeGroup.identifiers,
+      nodeNames,
+      markNames,
+    });
+
+    for (const identifier of identifiers) {
       const currentValue = extraAttributes[identifier] ?? {};
       extraAttributes[identifier] = { ...currentValue, ...attributeGroup.attributes };
     }
   }
 
   return extraAttributes;
+}
+
+interface GetIdentifiersParameter {
+  identifiers: Identifiers;
+  nodeNames: readonly string[];
+  markNames: readonly string[];
+}
+
+function getIdentifiers(parameter: GetIdentifiersParameter): readonly string[] {
+  const { identifiers, nodeNames, markNames } = parameter;
+
+  if (isArray(identifiers)) {
+    return identifiers;
+  }
+
+  switch (identifiers) {
+    case 'nodes':
+      return nodeNames;
+    case 'marks':
+      return markNames;
+    default:
+      return [...nodeNames, ...markNames];
+  }
 }
 
 interface CreateSpecParameter<Type> {
@@ -313,6 +394,17 @@ function getNodeMarkOptions(item: ProsemirrorNode | Mark): NodeMarkOptions {
 
 declare global {
   namespace Remirror {
+    interface ExtensionCreatorMethods {
+      /**
+       * Allows the extension to create an extra attributes array that will be
+       * added to the extra attributes.
+       *
+       * For example the `@remirror/extension-bidi` adds a `dir` attribute to
+       * all node extensions which allows them to automatically infer whether
+       * the text direction should be right to left, or left to right.
+       */
+      createExtraSchemaAttributes?: () => ExtraSchemaAttributes[];
+    }
     interface BaseExtensionOptions {
       /**
        * Inject additional attributes into the defined mark / node schema. This can
@@ -353,10 +445,10 @@ declare global {
        *   extraAttributes: [
        *     {
        *       identifiers: ['blockquote', 'heading'],
-       *       attributes: ['id', 'alignment'],
+       *       attributes: { id: 'id', alignment: '0', },
        *     }, {
        *       identifiers: ['mention', 'codeBlock'],
-       *       attributes: ['user-id'],
+       *       attributes: { 'userId': { default: null } },
        *     },
        *   ]
        * };

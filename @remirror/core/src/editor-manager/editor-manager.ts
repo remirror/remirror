@@ -26,6 +26,9 @@ import {
   DestroyLifecycleMethod,
   GetMarkNameUnion,
   GetNodeNameUnion,
+  isMarkExtension,
+  isNodeExtension,
+  isPlainExtension,
   ManagerStoreKeys,
   ViewLifecycleMethod,
 } from '../extension';
@@ -296,6 +299,14 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
       preset.setExtensionStore(this.#extensionStore);
     }
 
+    const nodeNames: string[] = [];
+    const markNames: string[] = [];
+    const plainNames: string[] = [];
+
+    this.#extensionStore.nodeNames = nodeNames;
+    this.#extensionStore.markNames = markNames;
+    this.#extensionStore.plainNames = plainNames;
+
     for (const extension of this.#extensions) {
       extension.setStore(this.#extensionStore);
 
@@ -318,6 +329,18 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
 
       if (destroyHandler) {
         this.#handlers.destroy.push(destroyHandler);
+      }
+
+      if (isNodeExtension(extension)) {
+        nodeNames.push(extension.name);
+      }
+
+      if (isMarkExtension(extension)) {
+        markNames.push(extension.name);
+      }
+
+      if (isPlainExtension(extension)) {
+        plainNames.push(extension.name);
       }
     }
   }
@@ -805,6 +828,21 @@ declare global {
        * The settings passed to the manager.
        */
       readonly managerSettings: ManagerSettings;
+
+      /**
+       * The names of every node extension.
+       */
+      nodeNames: readonly string[];
+
+      /**
+       * The names of every mark extension.
+       */
+      markNames: readonly string[];
+
+      /**
+       * The names of every plain extension.
+       */
+      plainNames: readonly string[];
 
       /**
        * Get the value of a key from the manager store.
