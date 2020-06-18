@@ -1,10 +1,8 @@
-import { Except } from 'type-fest';
-
 import { ErrorConstant, ExtensionPriority, ManagerPhase } from '@remirror/core-constants';
 import { invariant, isEmptyArray, object } from '@remirror/core-helpers';
-import { EditorSchema, ProsemirrorPlugin } from '@remirror/core-types';
+import { ProsemirrorPlugin } from '@remirror/core-types';
 import { getPluginState } from '@remirror/core-utils';
-import { EditorState, Plugin, PluginKey, PluginSpec } from '@remirror/pm/state';
+import { EditorState, Plugin, PluginKey } from '@remirror/pm/state';
 
 import {
   AnyExtension,
@@ -13,7 +11,7 @@ import {
   PlainExtension,
 } from '../extension';
 import { AnyCombinedUnion, InferCombinedExtensions } from '../preset';
-import { GetNameUnion } from '../types';
+import { CreatePluginReturn, GetNameUnion } from '../types';
 
 /**
  * This extension allows others extension to add the `createPlugin` method using
@@ -229,12 +227,6 @@ export class PluginsExtension extends PlainExtension {
     view.updateState(newState);
   };
 }
-
-/**
- * An interface for creating custom plugins in your `remirror` editor.
- */
-export interface CreatePluginReturn<PluginState = any>
-  extends Except<PluginSpec<PluginState, EditorSchema>, 'key'> {}
 
 declare global {
   namespace Remirror {

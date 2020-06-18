@@ -1,10 +1,11 @@
 import { ErrorConstant, ExtensionPriority } from '@remirror/core-constants';
-import { entries, invariant, object } from '@remirror/core-helpers';
+import { entries, invariant, object, uniqueArray } from '@remirror/core-helpers';
 import {
   AnyFunction,
   CommandFunction,
   DispatchFunction,
   EmptyShape,
+  ProsemirrorAttributes,
   Transaction,
 } from '@remirror/core-types';
 
@@ -21,6 +22,7 @@ import { throwIfNameNotUnique } from '../helpers';
 import { AnyCombinedUnion, ChainedFromCombined, CommandsFromCombined } from '../preset';
 import {
   CommandShape,
+  CreatePluginReturn,
   ExtensionCommandFunction,
   ExtensionCommandReturn,
   StateUpdateLifecycleMethod,
@@ -59,22 +61,17 @@ export class CommandsExtension extends PlainExtension {
   #transaction?: Transaction;
 
   onCreate: CreateLifecycleMethod = () => {
-    const { setExtensionStore, getStoreKey } = this.store;
+    const { setExtensionStore, setStoreKey } = this.store;
 
-    setExtensionStore('getCommands', () => {
-      const commands = getStoreKey('commands');
-      invariant(commands, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
+    // Add the commands to the extension store
+    setExtensionStore('getCommands', this.getCommands);
+    setExtensionStore('getChain', this.getChain);
 
-      return commands as any;
-    });
+    // Support forced updates.
+    setExtensionStore('forceUpdate', this.forceUpdate);
+    setStoreKey('getForcedUpdates', this.getForcedUpdates);
 
-    setExtensionStore('getChain', () => {
-      const chain = getStoreKey('chain');
-      invariant(chain, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
-
-      return chain as any;
-    });
-
+    // Enable retrieval of the current transaction.
     setExtensionStore('getTransaction', () => this.transaction);
   };
 
@@ -178,7 +175,7 @@ export class CommandsExtension extends PlainExtension {
        * This can be used in extensions to when certain options that affect the
        * plugin state have updated.
        */
-      emptyUpdate(): CommandFunction {
+      emptyUpdate: (): CommandFunction => {
         return ({ tr, dispatch }) => {
           if (dispatch) {
             dispatch(tr);
@@ -187,8 +184,69 @@ export class CommandsExtension extends PlainExtension {
           return true;
         };
       },
+
+      /**
+       * Force an update of the specific
+       */
+      forceUpdate: (...keys: UpdatableViewProps[]): CommandFunction => {
+        return ({ tr, dispatch }) => {
+          if (dispatch) {
+            dispatch(this.forceUpdate(tr, ...keys));
+          }
+
+          return true;
+        };
+      },
+
+      /**
+       * Update the attributes for the node at the specified `pos` in the editor.
+       */
+      updateNodeAttributes: <Type extends object>(
+        pos: number,
+        attrs: ProsemirrorAttributes<Type>,
+      ): CommandFunction => {
+        return ({ tr, dispatch }) => {
+          if (dispatch) {
+            dispatch(tr.setNodeMarkup(pos, undefined, attrs));
+          }
+
+          return true;
+        };
+      },
     };
   };
+
+  /**
+   * This plugin is here only to keep track of the forced updates meta data.
+   */
+  createPlugin = (): CreatePluginReturn => {
+    return {};
+  };
+
+  /**
+   * A helper for forcing through updates in the view layer. The view layer can
+   * check for the meta data of the transaction with `manager.store.getForcedUpdate(tr)`. If that has a value then it should use the unique symbol to update the key.
+   */
+  private readonly forceUpdate = (tr: Transaction, ...keys: UpdatableViewProps[]): Transaction => {
+    this.setMeta(tr, ...keys);
+    return tr;
+  };
+
+  /**
+   * Checks if the codebase has requested for the transaction to cause a force update.
+   */
+  private readonly getForcedUpdates = (tr: Transaction): ForcedUpdateMeta => {
+    return this.getMeta(tr);
+  };
+
+  private getMeta(tr: Transaction): ForcedUpdateMeta {
+    return tr.getMeta(this.pluginKey) ?? [];
+  }
+
+  private setMeta(tr: Transaction, ...keys: UpdatableViewProps[]) {
+    const meta = this.getMeta(tr);
+    tr.setMeta(this.pluginKey, uniqueArray([...meta, ...keys]));
+  }
 
   /**
    * Create an unchained command method.
@@ -213,6 +271,30 @@ export class CommandsExtension extends PlainExtension {
   }
 
   /**
+   * Get the chainable commands.
+   */
+  private readonly getChain = <
+    ExtensionUnion extends AnyExtension = AnyExtension
+  >(): ChainedFromExtensions<CommandsExtension | ExtensionUnion> => {
+    const chain = this.store.getStoreKey('chain');
+    invariant(chain, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
+
+    return chain as ChainedFromExtensions<CommandsExtension | ExtensionUnion>;
+  };
+
+  /**
+   * Get the chainable commands.
+   */
+  private readonly getCommands = <
+    ExtensionUnion extends AnyExtension = AnyExtension
+  >(): CommandsFromExtensions<CommandsExtension | ExtensionUnion> => {
+    const chain = this.store.getStoreKey('commands');
+    invariant(chain, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
+
+    return chain as CommandsFromExtensions<CommandsExtension | ExtensionUnion>;
+  };
+
+  /**
    * Create a chained command method.
    */
   private chainedFactory(parameter: ChainedFactoryParameter) {
@@ -225,7 +307,7 @@ export class CommandsExtension extends PlainExtension {
       const dispatch: DispatchFunction = (transaction) => {
         invariant(transaction === this.transaction, {
           message:
-            'Chaining currently only supports `CommandFunction` methods which do not use the `state.tr` property. Instead you should use the provided `tr`.',
+            'Chaining currently only supports `CommandFunction` methods which do not use the `state.tr` property. Instead you should use the provided `tr` property.',
         });
       };
 
@@ -235,6 +317,12 @@ export class CommandsExtension extends PlainExtension {
     };
   }
 }
+
+/**
+ * Provides the list of Prosemirror EditorView props that should be updated/
+ */
+export type ForcedUpdateMeta = UpdatableViewProps[];
+export type UpdatableViewProps = 'attributes' | 'editable' | 'nodeViews';
 
 interface UnchainedFactoryParameter {
   /**
@@ -331,6 +419,21 @@ declare global {
        * The `run()` method ends the chain and dispatches the command.
        */
       chain: ChainedFromCombined<Combined>;
+
+      /**
+       * Check for a forced update in the transaction. This pulls the meta data
+       * from the transaction and if it is true then it was a forced update.
+       *
+       * ```ts
+       * const forcedUpdates = this.manager.store.getForcedUpdates(tr);
+       *
+       * if (forcedUpdates) {
+       *   // React updates when the state is updated.
+       *   setState({ key: Symbol() })
+       * }
+       * ```
+       */
+      getForcedUpdates: (tr: Transaction) => UpdatableViewProps[];
     }
 
     interface ExtensionCreatorMethods {
@@ -393,6 +496,12 @@ declare global {
     }
 
     interface ExtensionStore {
+      /**
+       * Updates the meta information of a transaction to cause that transaction
+       * to force through an update.
+       */
+      forceUpdate: (tr: Transaction, ...keys: UpdatableViewProps[]) => Transaction;
+
       /**
        * Get the current transaction.
        *

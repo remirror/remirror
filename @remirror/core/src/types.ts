@@ -1,3 +1,5 @@
+import { Except } from 'type-fest';
+
 import { ExtensionPriority, ExtensionTag, MarkGroup, NodeGroup } from '@remirror/core-constants';
 import {
   AnyConstructor,
@@ -14,6 +16,7 @@ import {
   Transaction,
   ValidOptions,
 } from '@remirror/core-types';
+import { PluginSpec } from '@remirror/pm/state';
 
 /**
  * This is the shape for both the preset and extension so that properties can be
@@ -331,3 +334,9 @@ declare global {
     interface BaseExtensionOptions {}
   }
 }
+
+/**
+ * An interface for creating custom plugins in your `remirror` editor.
+ */
+export interface CreatePluginReturn<PluginState = any>
+  extends Except<PluginSpec<PluginState, EditorSchema>, 'key'> {}

@@ -41,7 +41,7 @@ export class AttributesExtension extends PlainExtension {
     this.transformAttributes();
 
     if (triggerUpdate) {
-      this.store.getCommands().emptyUpdate();
+      this.store.getCommands().forceUpdate('attributes');
     }
   };
 
@@ -91,10 +91,15 @@ declare global {
 
     interface ExtensionStore {
       /**
-       * Triggers a recalculation of the attributes for each extension and
-       * notifies the parent UI once done.
+       * Triggers a recalculation of the `view.dom` attributes for each
+       * extension and notifies the parent UI once done.
        *
-       * This will also dispatch an update to the state automatically. However you can disable this by setting `triggerUpdate` to `false`.
+       * This will also dispatch an update to the state automatically. However
+       * you can disable this by setting `triggerUpdate` to `false`.
+       *
+       * By not triggering an update the new value may not be capture by the view layer, e.g. `React`.
+       *
+       * @param triggerUpdate - defaults to true
        */
       updateAttributes: (triggerUpdate?: boolean) => void;
     }

@@ -2,7 +2,7 @@ import { cx } from 'linaria';
 import { createNanoEvents, Unsubscribe } from 'nanoevents';
 
 import { EDITOR_CLASS_NAME, EMPTY_PARAGRAPH_NODE } from '@remirror/core-constants';
-import { bool, clamp, isFunction, isNumber, object, uniqueId } from '@remirror/core-helpers';
+import { bool, clamp, isFunction, isNumber, object, pick, uniqueId } from '@remirror/core-helpers';
 import {
   EditorSchema,
   EditorState,
@@ -31,7 +31,9 @@ import {
   toHtml,
 } from '@remirror/core-utils';
 import { TextSelection } from '@remirror/pm/state';
+import { DirectEditorProps } from '@remirror/pm/view';
 
+import { UpdatableViewProps } from './builtins';
 import { EditorManager } from './editor-manager';
 import { AnyCombinedUnion, SchemaFromCombined } from './preset/preset-types';
 
@@ -70,6 +72,17 @@ export abstract class EditorWrapper<
    * events without using props.
    */
   #events = createNanoEvents<Events<Combined>>();
+
+  /**
+   * The updatable view props.
+   */
+  protected get updatableViewProps(): UpdatableViewPropsObject {
+    return {
+      attributes: () => this.getAttributes(),
+      editable: () => this.props.editable ?? true,
+      nodeViews: this.manager.store.nodeViews,
+    };
+  }
 
   /**
    * The props passed in when creating or updating the `EditorWrapper` instance.
@@ -148,6 +161,15 @@ export abstract class EditorWrapper<
   ): EditorView<SchemaFromCombined<Combined>>;
 
   /**
+   * Update the view props.
+   */
+  protected updateViewProps(...keys: UpdatableViewProps[]) {
+    const props = pick(this.updatableViewProps, keys);
+
+    this.view.setProps({ ...this.view.props, ...props });
+  }
+
+  /**
    * This sets the attributes for the prosemirror dom node..
    */
   protected getAttributes(ssr?: false): Record<string, string>;
@@ -191,8 +213,11 @@ export abstract class EditorWrapper<
 
     this.#previousState = previousState;
 
-    // Uncontrolled component
+    // Use the abstract method to update the state.
     this.updateState({ state, tr });
+
+    // Update the view props when an update is requested
+    this.updateViewProps(...this.manager.store.getForcedUpdates(tr));
   };
 
   /**
@@ -805,3 +830,5 @@ interface Events<Combined extends AnyCombinedUnion> {
    */
   change: RemirrorEventListener<Combined>;
 }
+
+type UpdatableViewPropsObject = { [Key in UpdatableViewProps]: DirectEditorProps[Key] };
