@@ -184,6 +184,8 @@ export abstract class BaseClass<
       update,
     });
 
+    this.updateDynamicOptions(options);
+
     // Trigger the update handler so the extension can respond to any relevant property
     // updates.
     this.onSetOptions?.({
@@ -193,8 +195,6 @@ export abstract class BaseClass<
       pickChanged,
       initialOptions: this.#initialOptions,
     });
-
-    this.updateDynamicOptions(options);
   }
 
   /**
