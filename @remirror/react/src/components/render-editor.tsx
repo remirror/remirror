@@ -1,7 +1,6 @@
 import React, {
   cloneElement,
   Dispatch,
-  Fragment,
   ReactNode,
   Ref,
   SetStateAction,
@@ -456,7 +455,35 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
     );
   }
 
-  private renderReactElement() {
+  /**
+   * Clones the passed element when `getRootProps` hasn't yet been called.
+   *
+   * This method also supports rendering the children within a domless environment where necessary.
+   */
+  private renderClonedElement(
+    element: JSX.Element,
+    rootProperties?: GetRootPropsConfig<string> | boolean,
+  ) {
+    const { children, ...rest } = getElementProps(element);
+    const properties = isPlainObject(rootProperties) ? { ...rootProperties, ...rest } : rest;
+
+    return cloneElement(
+      element,
+      this.internalGetRootProps(properties, this.renderChildren(children)),
+    );
+  }
+
+  /**
+   * Reset the `getRootProps` called status.
+   */
+  private prepareRender() {
+    // Reset the status of roots props being called
+    this.rootPropsConfig.called = false;
+  }
+
+  render() {
+    this.prepareRender();
+
     const element: JSX.Element | null = this.props.children({
       ...this.remirrorContext,
     });
@@ -486,31 +513,6 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
         <div {...this.internalGetRootProps(undefined, this.renderChildren(element))} />
       );
     }
-  }
-
-  /**
-   * Clones the passed element when `getRootProps` hasn't yet been called.
-   *
-   * This method also supports rendering the children within a domless environment where necessary.
-   */
-  private renderClonedElement(
-    element: JSX.Element,
-    rootProperties?: GetRootPropsConfig<string> | boolean,
-  ) {
-    const { children, ...rest } = getElementProps(element);
-    const properties = isPlainObject(rootProperties) ? { ...rootProperties, ...rest } : rest;
-
-    return cloneElement(
-      element,
-      this.internalGetRootProps(properties, this.renderChildren(children)),
-    );
-  }
-
-  render() {
-    // Reset the status of roots props being called
-    this.rootPropsConfig.called = false;
-
-    return <Fragment>{this.renderReactElement()}</Fragment>;
   }
 }
 

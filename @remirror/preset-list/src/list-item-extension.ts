@@ -1,5 +1,5 @@
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   convertCommand,
   KeyBindings,
   NodeExtension,
@@ -15,7 +15,7 @@ export class ListItemExtension extends NodeExtension {
     return 'listItem' as const;
   }
 
-  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       attrs: extra.defaults(),
       content: 'paragraph block*',

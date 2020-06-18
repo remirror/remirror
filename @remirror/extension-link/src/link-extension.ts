@@ -1,5 +1,5 @@
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   CommandFunction,
   CreatePluginReturn,
   getMarkRange,
@@ -43,7 +43,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     };
   }
 
-  createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec {
+  createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
     return {
       group: MarkGroup.Link,
       attrs: {

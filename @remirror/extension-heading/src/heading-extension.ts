@@ -1,5 +1,5 @@
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   convertCommand,
   CustomHandlerKeyList,
   DefaultExtensionOptions,
@@ -57,7 +57,7 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
     return 'heading' as const;
   }
 
-  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       attrs: {
         ...extra.defaults(),

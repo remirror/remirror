@@ -1,5 +1,5 @@
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   DefaultExtensionOptions,
   NodeExtension,
   Static,
@@ -62,7 +62,7 @@ export class DocExtension extends NodeExtension<DocOptions> {
     return 'doc' as const;
   }
 
-  createNodeSpec(_: ApplyExtraAttributes) {
+  createNodeSpec(_: ApplySchemaAttributes) {
     return {
       content: this.options.content,
     };

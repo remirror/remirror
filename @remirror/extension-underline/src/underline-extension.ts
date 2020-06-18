@@ -1,5 +1,5 @@
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   convertCommand,
   MarkExtension,
   MarkExtensionSpec,
@@ -12,7 +12,7 @@ export class UnderlineExtension extends MarkExtension {
     return 'underline' as const;
   }
 
-  createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec {
+  createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
     return {
       attrs: extra.defaults(),
       group: MarkGroup.FontStyle,

@@ -1,5 +1,5 @@
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   EditorSchema,
   includes,
   NodeExtensionSpec,
@@ -113,7 +113,7 @@ function setCellAttrs(node: ProsemirrorNode) {
 //       A function to add the attribute's value to an attribute
 //       object that's used to render the cell's DOM.
 export function createTableNodeSchema(
-  extra: ApplyExtraAttributes,
+  extra: ApplySchemaAttributes,
 ): Record<'table' | 'tableRow' | 'tableCell' | 'tableHeader', TableSchemaSpec> {
   const cellAttrs = {
     ...extra.defaults(),

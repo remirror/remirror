@@ -8,7 +8,7 @@ import {
 } from '@remirror/core-constants';
 import { freeze, invariant, isIdentifierOfType, isRemirrorType } from '@remirror/core-helpers';
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   EditorSchema,
   EditorView,
   EmptyShape,
@@ -368,7 +368,7 @@ export abstract class MarkExtension<Options extends ValidOptions = EmptyShape> e
    * For more advanced requirements, it may be possible to create a `nodeView`
    * to manage the dom interactions.
    */
-  abstract createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec;
+  abstract createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec;
 }
 
 export interface MarkExtension<Options extends ValidOptions = EmptyShape>
@@ -446,7 +446,7 @@ export abstract class NodeExtension<Options extends ValidOptions = EmptyShape> e
    * The above example will have the `hole()` method call replaced with the
    * extra attributes.
    */
-  abstract createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec;
+  abstract createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec;
 }
 
 export interface NodeExtension<Options extends ValidOptions = EmptyShape>

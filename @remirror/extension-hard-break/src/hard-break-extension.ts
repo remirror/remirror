@@ -1,5 +1,5 @@
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   chainCommands,
   convertCommand,
   KeyBindings,
@@ -13,7 +13,7 @@ export class HardBreakExtension extends NodeExtension {
     return 'hardBreak' as const;
   }
 
-  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       attrs: extra.defaults(),
       inline: true,

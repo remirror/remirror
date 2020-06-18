@@ -1,5 +1,5 @@
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   CommandFunction,
   InputRule,
   NodeExtension,
@@ -16,7 +16,7 @@ export class HorizontalRuleExtension extends NodeExtension {
     return 'horizontalRule' as const;
   }
 
-  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       attrs: extra.defaults(),
       group: NodeGroup.Block,

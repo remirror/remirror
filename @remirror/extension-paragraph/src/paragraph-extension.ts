@@ -1,6 +1,6 @@
 import {
   ALIGN_PATTERN,
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   convertCommand,
   DefaultExtensionOptions,
   ExtensionTag,
@@ -34,7 +34,7 @@ export class ParagraphExtension extends NodeExtension<ParagraphOptions> {
 
   readonly extensionTags = [ExtensionTag.LastNodeCompatible] as const;
 
-  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       content: 'inline*',
       group: NodeGroup.Block,

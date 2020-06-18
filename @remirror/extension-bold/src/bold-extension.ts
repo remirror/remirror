@@ -1,7 +1,7 @@
 import { FontWeightProperty } from 'csstype';
 
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   CommandFunction,
   DefaultExtensionOptions,
   ExtensionTag,
@@ -39,7 +39,7 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
 
   readonly tags = [ExtensionTag.FormattingMark];
 
-  createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec {
+  createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
     return {
       attrs: extra.defaults(),
       group: MarkGroup.FontStyle,

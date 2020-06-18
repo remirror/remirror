@@ -204,7 +204,7 @@ export type ProsemirrorAttributes<Extra extends object = object> = Record<string
 
 export type AttributesWithClass = ProsemirrorAttributes & { class?: string };
 
-export interface ExtraAttributesObject {
+export interface SchemaAttributesObject {
   /**
    * The default value for the attr, if left undefined then this becomes a
    * required. and must be provided whenever a node or mark of a type that has
@@ -246,7 +246,7 @@ export interface NodeMarkOptions {
   mark?: Mark;
 }
 
-export interface ApplyExtraAttributes {
+export interface ApplySchemaAttributes {
   /**
    * A function which returns the object of defaults. Since this is for extra
    * attributes a default must be provided.
@@ -268,42 +268,11 @@ export interface ApplyExtraAttributes {
 /**
  * A mapping of the attribute name to it's default, getter and setter.
  */
-export type ExtraAttributes = Record<string, ExtraAttributesObject | string>;
+export type SchemaAttributes = Record<string, SchemaAttributesObject | string>;
 
 /**
  * A method that can pull all the extraAttributes from the provided dom node.
  */
-export type GetExtraAttributes = (domNode: Node | string) => Record<string, unknown>;
-
-interface CreateExtraAttributesParameter {
-  /**
-   * The fallback value to use for the extra attributes being created. Must be
-   * provided.
-   */
-  fallback?: string | null;
-}
-
-/**
- * A method that creates the `AttributeSpec` for prosemirror that can be added
- * to a node or mark extension to provide extra functionality and store more
- * information within the DOM and prosemirror state..
- *
- * @remarks
- *
- * ```ts
- * const schema = {
- *   attrs: {
- *      ...createExtraAttributes({ fallback: null }),
- *      href: {
- *       default: null,
- *     },
- *   },
- * }
- * ```
- */
-export type CreateExtraAttributes = (
-  params?: CreateExtraAttributesParameter,
-) => Record<string, AttributeSpec>;
 
 /**
  * The render environment which is either on the server (ssr) or in the dom.

@@ -1,7 +1,7 @@
 import refractor from 'refractor/core';
 
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   convertCommand,
   CreatePluginReturn,
   DefaultExtensionOptions,
@@ -61,7 +61,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
     this.registerLanguages();
   }
 
-  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       attrs: {
         ...extra.defaults(),

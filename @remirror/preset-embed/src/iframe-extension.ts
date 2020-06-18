@@ -2,7 +2,7 @@ import { cx } from 'linaria';
 import { parse, stringify } from 'tiny-querystring';
 
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   CommandFunction,
   CustomHandlerKeyList,
   DefaultExtensionOptions,
@@ -58,7 +58,7 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
     return 'iframe' as const;
   }
 
-  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     const { defaultSource } = this.options;
 
     return {

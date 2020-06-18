@@ -1,5 +1,5 @@
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   CommandFunction,
   KeyBindings,
   NodeExtension,
@@ -14,7 +14,7 @@ export class BlockquoteExtension extends NodeExtension {
     return 'blockquote' as const;
   }
 
-  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       attrs: extra.defaults(),
       content: 'block*',

@@ -1,5 +1,5 @@
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   convertCommand,
   KeyBindings,
   LEAF_NODE_REPLACING_CHARACTER,
@@ -16,7 +16,7 @@ export class CodeExtension extends MarkExtension {
     return 'code' as const;
   }
 
-  createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec {
+  createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
     return {
       attrs: extra.defaults(),
       group: MarkGroup.Code,

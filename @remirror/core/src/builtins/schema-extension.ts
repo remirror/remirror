@@ -9,16 +9,16 @@ import {
   object,
 } from '@remirror/core-helpers';
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   EditorSchema,
-  ExtraAttributes,
-  ExtraAttributesObject,
   Mark,
   MarkExtensionSpec,
   NodeExtensionSpec,
   NodeMarkOptions,
   ProsemirrorAttributes,
   ProsemirrorNode,
+  SchemaAttributes,
+  SchemaAttributesObject,
   Static,
 } from '@remirror/core-types';
 import { isElementDomNode, isProsemirrorMark, isProsemirrorNode } from '@remirror/core-utils';
@@ -58,7 +58,7 @@ export class SchemaExtension extends PlainExtension {
     const marks: Record<string, MarkExtensionSpec> = object();
     const namedExtraAttributes = transformExtraAttributes({
       settings: managerSettings,
-      gatheredExtraAttributes: this.gatherExtraAttributes(extensions),
+      gatheredSchemaAttributes: this.gatherExtraAttributes(extensions),
       nodeNames: this.store.nodeNames,
       markNames: this.store.markNames,
     });
@@ -115,14 +115,14 @@ export class SchemaExtension extends PlainExtension {
    * Gather all the extra attributes that have been added by extensions.
    */
   private gatherExtraAttributes(extensions: readonly AnyExtension[]) {
-    const extraSchemaAttributes: ExtraSchemaAttributes[] = [];
+    const extraSchemaAttributes: IdentifierSchemaAttributes[] = [];
 
     for (const extension of extensions) {
-      if (!extension.createExtraSchemaAttributes) {
+      if (!extension.createSchemaAttributes) {
         continue;
       }
 
-      extraSchemaAttributes.push(...extension.createExtraSchemaAttributes());
+      extraSchemaAttributes.push(...extension.createSchemaAttributes());
     }
 
     return extraSchemaAttributes;
@@ -138,7 +138,7 @@ export type Identifiers = 'nodes' | 'marks' | 'all' | string[];
  * The interface for adding extra attributes to multiple node and mark
  * extensions.
  */
-export interface ExtraSchemaAttributes {
+export interface IdentifierSchemaAttributes {
   /**
    * The nodes or marks to add extra attributes to.
    *
@@ -154,14 +154,14 @@ export interface ExtraSchemaAttributes {
   /**
    * The attributes to be added.
    */
-  attributes: ExtraAttributes;
+  attributes: SchemaAttributes;
 }
 
-type NamedExtraAttributes = Record<string, ExtraAttributes>;
+type NamedSchemaAttributes = Record<string, SchemaAttributes>;
 
-interface TransformExtraAttributesParameter {
+interface TransformSchemaAttributesParameter {
   settings: Remirror.ManagerSettings;
-  gatheredExtraAttributes: ExtraSchemaAttributes[];
+  gatheredSchemaAttributes: IdentifierSchemaAttributes[];
   nodeNames: readonly string[];
   markNames: readonly string[];
 }
@@ -171,17 +171,17 @@ interface TransformExtraAttributesParameter {
  */
 function transformExtraAttributes({
   settings,
-  gatheredExtraAttributes,
+  gatheredSchemaAttributes: gatheredExtraAttributes,
   nodeNames,
   markNames,
-}: TransformExtraAttributesParameter) {
-  const extraAttributes: NamedExtraAttributes = object();
+}: TransformSchemaAttributesParameter) {
+  const extraAttributes: NamedSchemaAttributes = object();
 
   if (settings.disableExtraAttributes) {
     return extraAttributes;
   }
 
-  const extraSchemaAttributes: ExtraSchemaAttributes[] = [
+  const extraSchemaAttributes: IdentifierSchemaAttributes[] = [
     ...gatheredExtraAttributes,
     ...(settings.extraAttributes ?? []),
   ];
@@ -226,8 +226,8 @@ function getIdentifiers(parameter: GetIdentifiersParameter): readonly string[] {
 }
 
 interface CreateSpecParameter<Type> {
-  createExtensionSpec: (extra: ApplyExtraAttributes) => Type;
-  extraAttributes: ExtraAttributes;
+  createExtensionSpec: (extra: ApplySchemaAttributes) => Type;
+  extraAttributes: SchemaAttributes;
   ignoreExtraAttributes: boolean;
   /**
    * The name for displaying in an error message (prefer the constructor name)
@@ -259,7 +259,7 @@ function createSpec<Type>(parameter: CreateSpecParameter<Type>): Type {
 /**
  * Get the value of the extra attribute as an object.
  */
-function getExtraAttributesObject(value: string | ExtraAttributesObject): ExtraAttributesObject {
+function getExtraAttributesObject(value: string | SchemaAttributesObject): SchemaAttributesObject {
   if (isString(value)) {
     return { default: value };
   }
@@ -276,7 +276,7 @@ function getExtraAttributesObject(value: string | ExtraAttributesObject): ExtraA
  * Create the `defaults()` method which is used for setting the property .
  */
 function createDefaults(
-  extraAttributes: ExtraAttributes,
+  extraAttributes: SchemaAttributes,
   shouldIgnore: boolean,
   onCalled: () => void,
 ) {
@@ -303,7 +303,7 @@ function createDefaults(
 /**
  * Create the parseDOM method to be applied to the extension `createNodeSpec`.
  */
-function createParseDOM(extraAttributes: ExtraAttributes, shouldIgnore: boolean) {
+function createParseDOM(extraAttributes: SchemaAttributes, shouldIgnore: boolean) {
   return (domNode: string | Node) => {
     const attributes: ProsemirrorAttributes = object();
     if (shouldIgnore) {
@@ -336,7 +336,7 @@ function createParseDOM(extraAttributes: ExtraAttributes, shouldIgnore: boolean)
 /**
  * Create the `toDOM` method to be applied to the extension `createNodeSpec`.
  */
-function createToDOM(extraAttributes: ExtraAttributes, shouldIgnore: boolean) {
+function createToDOM(extraAttributes: SchemaAttributes, shouldIgnore: boolean) {
   return (item: ProsemirrorNode | Mark) => {
     const domAttributes: Record<string, string> = object();
 
@@ -408,7 +408,7 @@ declare global {
        * all node extensions which allows them to automatically infer whether
        * the text direction should be right to left, or left to right.
        */
-      createExtraSchemaAttributes?: () => ExtraSchemaAttributes[];
+      createSchemaAttributes?: () => IdentifierSchemaAttributes[];
     }
     interface BaseExtensionOptions {
       /**
@@ -422,7 +422,7 @@ declare global {
        *
        * @defaultValue `{}`
        */
-      extraAttributes?: Static<ExtraAttributes>;
+      extraAttributes?: Static<SchemaAttributes>;
 
       /**
        * When true will disable extra attributes for this instance of the
@@ -461,7 +461,7 @@ declare global {
        * const manager = EditorManager.create([], { extraAttributes })
        * ```
        */
-      extraAttributes?: ExtraSchemaAttributes[];
+      extraAttributes?: IdentifierSchemaAttributes[];
 
       /**
        * Perhaps you don't need extra attributes at all in the editor. This

@@ -1,5 +1,5 @@
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   convertCommand,
   KeyBindings,
   MarkExtension,
@@ -15,7 +15,7 @@ export class StrikeExtension extends MarkExtension {
     return 'strike' as const;
   }
 
-  createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec {
+  createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
     return {
       attrs: extra.defaults(),
       group: MarkGroup.FontStyle,

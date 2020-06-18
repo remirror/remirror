@@ -1,7 +1,7 @@
 import { pmBuild } from 'jest-prosemirror';
 
 import { NodeGroup } from '@remirror/core-constants';
-import { ApplyExtraAttributes, NodeExtensionSpec } from '@remirror/core-types';
+import { ApplySchemaAttributes, NodeExtensionSpec } from '@remirror/core-types';
 import { fromHtml } from '@remirror/core-utils';
 import { createBaseManager } from '@remirror/test-fixtures';
 
@@ -12,7 +12,7 @@ class CustomExtension extends NodeExtension {
     return 'custom' as const;
   }
 
-  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       content: 'inline*',
       attrs: {

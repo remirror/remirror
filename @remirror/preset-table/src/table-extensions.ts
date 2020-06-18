@@ -1,5 +1,5 @@
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   CommandFunction,
   CommandFunctionParameter,
   convertCommand,
@@ -36,7 +36,7 @@ export class TableExtension extends NodeExtension {
     return 'table' as const;
   }
 
-  createNodeSpec(extra: ApplyExtraAttributes): TableSchemaSpec {
+  createNodeSpec(extra: ApplySchemaAttributes): TableSchemaSpec {
     return createTableNodeSchema(extra).table;
   }
 
@@ -106,7 +106,7 @@ export class TableRowExtension extends NodeExtension {
     return 'tableRow' as const;
   }
 
-  createNodeSpec(extra: ApplyExtraAttributes): TableSchemaSpec {
+  createNodeSpec(extra: ApplySchemaAttributes): TableSchemaSpec {
     return createTableNodeSchema(extra).tableRow;
   }
 }
@@ -116,7 +116,7 @@ export class TableCellExtension extends NodeExtension {
     return 'tableCell' as const;
   }
 
-  createNodeSpec(extra: ApplyExtraAttributes): TableSchemaSpec {
+  createNodeSpec(extra: ApplySchemaAttributes): TableSchemaSpec {
     return createTableNodeSchema(extra).tableCell;
   }
 }
@@ -126,7 +126,7 @@ export class TableHeaderCell extends NodeExtension {
     return 'tableHeader' as const;
   }
 
-  createNodeSpec(extra: ApplyExtraAttributes): TableSchemaSpec {
+  createNodeSpec(extra: ApplySchemaAttributes): TableSchemaSpec {
     return createTableNodeSchema(extra).tableHeader;
   }
 }

@@ -1,5 +1,5 @@
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   bool,
   Cast,
   CommandFunction,
@@ -25,7 +25,7 @@ export class ImageExtension extends NodeExtension {
     return 'image' as const;
   }
 
-  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       inline: true,
       attrs: {
@@ -251,7 +251,7 @@ function getImageAttributes({
   parse,
 }: {
   element: HTMLElement;
-  parse: ApplyExtraAttributes['parse'];
+  parse: ApplySchemaAttributes['parse'];
 }) {
   const { width, height } = getDimensions(element);
   const align = getAlignment(element);

@@ -1,6 +1,6 @@
 import {
   AddCustomHandler,
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   convertCommand,
   CustomHandlerKeyList,
   DefaultExtensionOptions,
@@ -125,7 +125,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     return;
   };
 
-  createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec {
+  createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
     const dataAttributeId = 'data-mention-id';
     const dataAttributeName = 'data-mention-name';
 

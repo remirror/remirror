@@ -1,7 +1,7 @@
 import refractor, { RefractorNode } from 'refractor/core';
 
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   bool,
   CommandFunction,
   DOMOutputSpec,
@@ -268,7 +268,7 @@ export function getLanguage(parameter: GetLanguageParameter): string {
  */
 export function codeBlockToDOM(
   node: ProsemirrorNode,
-  toDOM: ApplyExtraAttributes['dom'],
+  toDOM: ApplySchemaAttributes['dom'],
 ): DOMOutputSpec {
   const { language, ...rest } = node.attrs as CodeBlockAttributes;
   const attributes = { ...toDOM(node), ...rest, class: `language-${language}` };

@@ -1,5 +1,5 @@
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   convertCommand,
   KeyBindings,
   NodeExtension,
@@ -17,7 +17,7 @@ export class BulletListExtension extends NodeExtension {
     return 'bulletList' as const;
   }
 
-  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       attrs: extra.defaults(),
       content: 'listItem+',

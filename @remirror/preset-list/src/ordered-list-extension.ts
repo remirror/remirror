@@ -1,5 +1,5 @@
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   convertCommand,
   isElementDomNode,
   KeyBindings,
@@ -18,7 +18,7 @@ export class OrderedListExtension extends NodeExtension {
     return 'orderedList' as const;
   }
 
-  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       attrs: {
         ...extra.defaults(),

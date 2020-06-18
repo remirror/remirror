@@ -1,5 +1,5 @@
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   Cast,
   CreatePluginReturn,
   DefaultExtensionOptions,
@@ -43,7 +43,7 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkOptions> {
     return 'autoLink' as const;
   }
 
-  createMarkSpec(extra: ApplyExtraAttributes): MarkExtensionSpec {
+  createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
     return {
       attrs: {
         ...extra.defaults(),

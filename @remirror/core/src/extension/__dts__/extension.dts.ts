@@ -1,5 +1,5 @@
 import {
-  ApplyExtraAttributes,
+  ApplySchemaAttributes,
   CustomHandler,
   CustomHandlerKeyList,
   Handler,
@@ -97,7 +97,7 @@ class NodeExtensionWithDynamicOptions extends NodeExtension<WithDynamicOptions> 
     return 'nodeWithDynamicOptions' as const;
   }
 
-  createNodeSpec(extra: ApplyExtraAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {};
   }
 }
