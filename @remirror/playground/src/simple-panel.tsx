@@ -61,14 +61,6 @@ const ExtensionOrPresetCheckbox: FC<ExtensionCheckboxProps> = function (props) {
   );
 };
 
-function stringTupleCompare(a: [string, string], b: [string, string]) {
-  let s1 = a[0].localeCompare(b[0]);
-  if (s1 !== 0) {
-    return s1;
-  }
-  return a[1].localeCompare(b[1]);
-}
-
 export const SimplePanel: FC<SimplePanelProps> = function (props) {
   const { options, setOptions, onAdvanced, modules, addModule, removeModule } = props;
 
@@ -93,11 +85,11 @@ export const SimplePanel: FC<SimplePanelProps> = function (props) {
   */
   //const modules = Object.keys(grouped).sort();
 
-  let coreLoading: boolean = false;
-  let coreErrors: [string, Error][] = [];
-  const coreExtensions: [string, string][] = [];
-  const corePresets: [string, string][] = [];
-  const externalModules: [string, RemirrorModuleStatus][] = [];
+  let coreLoading = false;
+  const coreErrors: Array<[string, Error]> = [];
+  const coreExtensions: Array<[string, string]> = [];
+  const corePresets: Array<[string, string]> = [];
+  const externalModules: Array<[string, RemirrorModuleStatus]> = [];
   Object.keys(modules).forEach((moduleName) => {
     const mod = modules[moduleName];
     if (REQUIRED_MODULES.includes(moduleName)) {
@@ -146,9 +138,9 @@ export const SimplePanel: FC<SimplePanelProps> = function (props) {
       ) : null}
 
       {/* errors */}
-      {coreErrors.length
-        ? coreErrors.map(([moduleName, error]) => (
-            <p>
+      {coreErrors.length > 0
+        ? coreErrors.map(([moduleName, error], i) => (
+            <p key={i}>
               Error loading <code>{moduleName}</code>: {error.message}
             </p>
           ))
