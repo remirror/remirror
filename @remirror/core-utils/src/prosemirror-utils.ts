@@ -48,7 +48,7 @@ import {
   isNodeSelection,
   isResolvedPos,
   isSelection,
-  isTextDOMNode,
+  isTextDomNode,
   isTransaction,
 } from './dom-utils';
 
@@ -197,11 +197,11 @@ export function findElementAtPosition(position: number, view: EditorView): HTMLE
   const dom = view.domAtPos(position);
   const node = dom.node.childNodes[dom.offset];
 
-  if (isTextDOMNode(dom.node)) {
+  if (isTextDomNode(dom.node)) {
     return dom.node.parentNode as HTMLElement;
   }
 
-  if (isNullOrUndefined(node) || isTextDOMNode(node)) {
+  if (isNullOrUndefined(node) || isTextDomNode(node)) {
     return dom.node as HTMLElement;
   }
 

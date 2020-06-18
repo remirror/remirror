@@ -18,7 +18,7 @@ import {
   ProsemirrorAttributes,
   Static,
 } from '@remirror/core-types';
-import { isElementDOMNode } from '@remirror/core-utils';
+import { isElementDomNode } from '@remirror/core-utils';
 import { Schema } from '@remirror/pm/model';
 
 import {
@@ -230,7 +230,7 @@ function createParseDOM(extraAttributes: ExtraAttributes, shouldIgnore: boolean)
     for (const [name, config] of entries(extraAttributes)) {
       const { parseDOM, ...other } = getExtraAttributesObject(config);
 
-      if (!isElementDOMNode(domNode)) {
+      if (!isElementDomNode(domNode)) {
         continue;
       }
 

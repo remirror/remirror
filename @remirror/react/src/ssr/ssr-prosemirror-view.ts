@@ -5,7 +5,7 @@ import {
   EditorSchema,
   EditorState,
   RenderEnvironment,
-  shouldUseDOMEnvironment,
+  shouldUseDomEnvironment,
   Transaction,
 } from '@remirror/core';
 import { DirectEditorProps, EditorView } from '@remirror/pm/view';
@@ -83,7 +83,7 @@ export const createEditorView = <Schema extends EditorSchema = any>(
   props: DirectEditorProps<Schema>,
   forceEnvironment?: RenderEnvironment,
 ): EditorView<Schema> => {
-  const Constructor = shouldUseDOMEnvironment(forceEnvironment)
+  const Constructor = shouldUseDomEnvironment(forceEnvironment)
     ? EditorView
     : Cast<typeof EditorView>(EditorViewSSR);
   return new Constructor(place, props) as any;

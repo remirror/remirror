@@ -29,7 +29,7 @@ import {
   object,
   RemirrorContentType,
   SchemaFromCombined,
-  shouldUseDOMEnvironment,
+  shouldUseDomEnvironment,
   UpdateStateParameter,
 } from '@remirror/core';
 import { EditorState } from '@remirror/pm/state';
@@ -431,7 +431,7 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
     const children = isArray(child) ? child : [child];
 
     if (
-      shouldUseDOMEnvironment(forceEnvironment) &&
+      shouldUseDomEnvironment(forceEnvironment) &&
       (!suppressHydrationWarning || this.shouldRenderClient)
     ) {
       return children;

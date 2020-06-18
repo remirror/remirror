@@ -20,7 +20,7 @@ import {
   Shape,
   TextParameter,
 } from 'remirror/core/types';
-import { findElementAtPosition, isElementDOMNode, isTextDOMNode } from 'remirror/core/utils';
+import { findElementAtPosition, isElementDomNode, isTextDomNode } from 'remirror/core/utils';
 
 import { createEvents, EventType } from './jest-prosemirror-events';
 import { createState, p, pm, selectionFor, taggedDocHasSelection } from './jest-prosemirror-nodes';
@@ -668,9 +668,9 @@ export function apply<Schema extends EditorSchema = EditorSchema>(
  * Find the first text node with the provided string.
  */
 export function findTextNode(node: Node, text: string): Node | undefined {
-  if (isTextDOMNode(node)) {
+  if (isTextDomNode(node)) {
     return node;
-  } else if (isElementDOMNode(node)) {
+  } else if (isElementDomNode(node)) {
     for (let ch = node.firstChild; ch; ch = ch.nextSibling) {
       const found = findTextNode(ch, text);
       if (found) {

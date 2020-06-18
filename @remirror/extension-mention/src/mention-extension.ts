@@ -9,7 +9,7 @@ import {
   getMatchString,
   HandlerKeyList,
   invariant,
-  isElementDOMNode,
+  isElementDomNode,
   isMarkActive,
   MarkExtension,
   MarkExtensionSpec,
@@ -143,7 +143,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
         {
           tag: `${this.options.mentionTag}[${dataAttributeId}]`,
           getAttrs: (node) => {
-            if (!isElementDOMNode(node)) {
+            if (!isElementDomNode(node)) {
               return false;
             }
 

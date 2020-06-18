@@ -20,14 +20,14 @@ import { CorePreset } from '@remirror/preset-core';
 /**
  * Create an editor manager. It comes with the `CorePreset` already available.
  */
-export function createEditorManager<Combined extends AnyCombinedUnion>(
+export function createDomManager<Combined extends AnyCombinedUnion>(
   combined: Combined[],
   settings?: Remirror.ManagerSettings,
 ): EditorManager<CorePreset | BuiltinPreset | Combined> {
   return EditorManager.create([...combined, new CorePreset()], settings);
 }
 
-export interface DOMEditorWrapperProps<Combined extends AnyCombinedUnion>
+export interface DomEditorWrapperProps<Combined extends AnyCombinedUnion>
   extends EditorWrapperProps<Combined> {
   /**
    * Provide a container element. Which the editor will be appended to.
@@ -38,9 +38,9 @@ export interface DOMEditorWrapperProps<Combined extends AnyCombinedUnion>
 /**
  * Create the prosemirror editor for the dom environment.
  */
-export function createRemirrorDOM<Combined extends AnyCombinedUnion>(
-  props: DOMEditorWrapperProps<Combined>,
-): DOMEditorWrapperOutput<Combined> {
+export function createDomEditor<Combined extends AnyCombinedUnion>(
+  props: DomEditorWrapperProps<Combined>,
+): DomEditorWrapperOutput<Combined> {
   const { stringHandler, onError, manager, forceEnvironment, element } = props;
 
   function createStateFromContent(
@@ -58,7 +58,7 @@ export function createRemirrorDOM<Combined extends AnyCombinedUnion>(
 
   const fallback = isFunction(onError) ? onError() : onError ?? EMPTY_PARAGRAPH_NODE;
   const initialEditorState = createStateFromContent(props.initialContent ?? fallback);
-  const wrapper = new DOMEditorWrapper<Combined>({
+  const wrapper = new DomEditorWrapper<Combined>({
     createStateFromContent,
     getProps: () => props,
     initialEditorState,
@@ -70,7 +70,7 @@ export function createRemirrorDOM<Combined extends AnyCombinedUnion>(
   return wrapper.output;
 }
 
-interface DOMEditorWrapperOutput<Combined extends AnyCombinedUnion>
+interface DomEditorWrapperOutput<Combined extends AnyCombinedUnion>
   extends EditorWrapperOutput<Combined> {
   /**
    * Call this to cleanup the view.
@@ -81,9 +81,9 @@ interface DOMEditorWrapperOutput<Combined extends AnyCombinedUnion>
 /**
  * The helper class which makes integrating with the DOM easier.
  */
-class DOMEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrapper<
+class DomEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrapper<
   Combined,
-  DOMEditorWrapperProps<Combined>
+  DomEditorWrapperProps<Combined>
 > {
   /**
    * Create the prosemirror EditorView.

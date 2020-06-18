@@ -44,11 +44,11 @@ The following code is a guide to get you started.
 
 ```ts
 import { BoldExtension } from 'remirror/extension/bold';
-import { createRemirrorDOM, createEditorManager } from 'remirror/dom';
+import { createDomEditor, createDomManager } from 'remirror/dom';
 
 const element = document.querySelector('#editor');
-const manager = createEditorManager([new BoldExtension()]);
-const editor = createRemirrorDOM({ manager, element });
+const manager = createDomManager([new BoldExtension()]);
+const editor = createDomEditor({ manager, element });
 
 editor.addHandler('change', () => console.log('your editor has changed'));
 

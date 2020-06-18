@@ -34,7 +34,7 @@ import {
   SchemaFromCombined,
   Transaction,
 } from 'remirror/core';
-import { createEditorManager, createRemirrorDOM } from 'remirror/dom';
+import { createDomEditor, createDomManager } from 'remirror/dom';
 
 import { markFactory, nodeFactory } from './jest-remirror-builder';
 import {
@@ -60,10 +60,10 @@ export function renderEditor<Combined extends AnyCombinedUnion>(
   { settings, props, autoClean = true }: RenderEditorParameter<Combined> = object(),
 ) {
   const element = createElement(props?.element, autoClean);
-  const manager = createEditorManager([...combined], settings);
+  const manager = createDomManager([...combined], settings);
 
   // TODO add the editor to the remirror test chain
-  createRemirrorDOM({ ...props, element, manager });
+  createDomEditor({ ...props, element, manager });
 
   return RemirrorTestChain.create(manager);
 }

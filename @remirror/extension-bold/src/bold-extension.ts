@@ -7,7 +7,7 @@ import {
   ExtensionTag,
   FromToParameter,
   InputRule,
-  isElementDOMNode,
+  isElementDomNode,
   isString,
   MarkExtension,
   MarkExtensionSpec,
@@ -54,7 +54,7 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
         {
           tag: 'b',
           getAttrs: (node) =>
-            isElementDOMNode(node) && node.style.fontWeight !== 'normal'
+            isElementDomNode(node) && node.style.fontWeight !== 'normal'
               ? extra.parse(node)
               : false,
         },

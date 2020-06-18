@@ -9,7 +9,7 @@ import {
   findParentNodeOfType,
   GetAttributes,
   getMatchString,
-  isElementDOMNode,
+  isElementDomNode,
   isNodeActive,
   isTextSelection,
   KeyBindings,
@@ -79,13 +79,13 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
           tag: 'pre',
           preserveWhitespace: 'full',
           getAttrs: (node) => {
-            if (!isElementDOMNode(node)) {
+            if (!isElementDomNode(node)) {
               return false;
             }
 
             const codeElement = node.querySelector('code');
 
-            if (!isElementDOMNode(codeElement)) {
+            if (!isElementDomNode(codeElement)) {
               return false;
             }
 

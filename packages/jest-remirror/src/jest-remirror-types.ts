@@ -5,7 +5,7 @@ import {
   ProsemirrorAttributes,
   ProsemirrorNode,
 } from 'remirror/core';
-import { DOMEditorWrapperProps } from 'remirror/dom';
+import { DomEditorWrapperProps } from 'remirror/dom';
 
 export interface BaseFactoryParameter<Schema extends EditorSchema = EditorSchema>
   extends Partial<AttributesParameter> {
@@ -103,7 +103,7 @@ export type NodeWithoutAttributes<Names extends string> = {
 
 export interface RenderEditorParameter<Combined extends AnyCombinedUnion> {
   settings?: Remirror.ManagerSettings;
-  props?: Partial<Omit<DOMEditorWrapperProps<Combined>, 'manager'>>;
+  props?: Partial<Omit<DomEditorWrapperProps<Combined>, 'manager'>>;
 
   /**
    * Whether to automatically cleanup the dom once the test finishes.

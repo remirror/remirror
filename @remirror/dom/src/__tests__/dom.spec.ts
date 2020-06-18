@@ -1,12 +1,12 @@
 import { BoldExtension } from '@remirror/test-fixtures';
 
-import { createEditorManager, createRemirrorDOM } from '../dom';
+import { createDomEditor, createDomManager } from '../dom';
 
 test('can be added to the dom', () => {
   const element = document.createElement('div');
   document.body.append(element);
-  const manager = createEditorManager([new BoldExtension()]);
-  const editor = createRemirrorDOM({ manager, element });
+  const manager = createDomManager([new BoldExtension()]);
+  const editor = createDomEditor({ manager, element });
   const mock = jest.fn();
 
   editor.addHandler('change', mock);

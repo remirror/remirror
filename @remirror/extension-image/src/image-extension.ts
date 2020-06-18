@@ -6,7 +6,7 @@ import {
   CreatePluginReturn,
   CSS_ROTATE_PATTERN,
   EMPTY_CSS_VALUE,
-  isElementDOMNode,
+  isElementDomNode,
   NodeExtension,
   NodeExtensionSpec,
   ProsemirrorAttributes,
@@ -45,7 +45,7 @@ export class ImageExtension extends NodeExtension {
         {
           tag: 'img[src]',
           getAttrs: (element) =>
-            isElementDOMNode(element) ? getImageAttributes({ element, parse: extra.parse }) : {},
+            isElementDomNode(element) ? getImageAttributes({ element, parse: extra.parse }) : {},
         },
       ],
       toDOM: (node) => {
@@ -191,7 +191,7 @@ function getDimensions(element: HTMLElement) {
 function getRotation(element: HTMLElement) {
   const { parentElement } = element;
 
-  if (!isElementDOMNode(parentElement)) {
+  if (!isElementDomNode(parentElement)) {
     return null;
   }
 
@@ -215,7 +215,7 @@ function getRotation(element: HTMLElement) {
 function getCrop(element: HTMLElement) {
   const { parentElement } = element;
 
-  if (!isElementDOMNode(parentElement)) {
+  if (!isElementDomNode(parentElement)) {
     return null;
   }
 

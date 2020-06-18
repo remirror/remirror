@@ -495,7 +495,7 @@ export function getMatchString(match: string | string[], index = 0) {
  *
  * @public
  */
-export function isDOMNode(domNode: unknown): domNode is Node {
+export function isDomNode(domNode: unknown): domNode is Node {
   return isObject(Node)
     ? domNode instanceof Node
     : isObject(domNode) && isNumber(Cast(domNode).nodeType) && isString(Cast(domNode).nodeName);
@@ -508,8 +508,8 @@ export function isDOMNode(domNode: unknown): domNode is Node {
  *
  * @public
  */
-export function isElementDOMNode(domNode: unknown): domNode is HTMLElement {
-  return isDOMNode(domNode) && domNode.nodeType === Node.ELEMENT_NODE;
+export function isElementDomNode(domNode: unknown): domNode is HTMLElement {
+  return isDomNode(domNode) && domNode.nodeType === Node.ELEMENT_NODE;
 }
 
 /**
@@ -524,7 +524,7 @@ export function closestElement(
   domNode: Node | null | undefined,
   selector: string,
 ): HTMLElement | null {
-  if (!isElementDOMNode(domNode)) {
+  if (!isElementDomNode(domNode)) {
     return null;
   }
 
@@ -539,7 +539,7 @@ export function closestElement(
       return domNode;
     }
     domNode = (domNode.parentElement ?? domNode.parentNode) as HTMLElement;
-  } while (isElementDOMNode(domNode));
+  } while (isElementDomNode(domNode));
 
   return null;
 }
@@ -551,8 +551,8 @@ export function closestElement(
  *
  * @public
  */
-export function isTextDOMNode(domNode: unknown): domNode is Text {
-  return isDOMNode(domNode) && domNode.nodeType === Node.TEXT_NODE;
+export function isTextDomNode(domNode: unknown): domNode is Text {
+  return isDomNode(domNode) && domNode.nodeType === Node.TEXT_NODE;
 }
 
 interface GetOffsetParentParameter extends EditorViewParameter, ElementParameter {}
@@ -623,7 +623,7 @@ export function absoluteCoordinates(parameter: AbsoluteCoordinatesParameter): Pa
  * @param domNode - the dom node
  */
 export const getNearestNonTextNode = (domNode: Node) =>
-  isTextDOMNode(domNode) ? (domNode.parentNode as HTMLElement) : (domNode as HTMLElement);
+  isTextDomNode(domNode) ? (domNode.parentNode as HTMLElement) : (domNode as HTMLElement);
 
 /**
  * Checks whether the cursor is at the end of the state.doc
@@ -856,7 +856,7 @@ export function createDocumentNode(parameter: CreateDocumentNodeParameter): Pros
  * @param forceEnvironment - force a specific environment to override the
  * outcome
  */
-export function shouldUseDOMEnvironment(forceEnvironment?: RenderEnvironment) {
+export function shouldUseDomEnvironment(forceEnvironment?: RenderEnvironment) {
   return forceEnvironment === 'dom' || (environment.isBrowser && !forceEnvironment);
 }
 
@@ -866,7 +866,7 @@ export function shouldUseDOMEnvironment(forceEnvironment?: RenderEnvironment) {
  * @param forceEnvironment - force a specific environment
  */
 export function getDocument(forceEnvironment?: RenderEnvironment) {
-  return shouldUseDOMEnvironment(forceEnvironment) ? document : minDocument;
+  return shouldUseDomEnvironment(forceEnvironment) ? document : minDocument;
 }
 
 export interface CustomDocParameter {
@@ -881,7 +881,7 @@ export interface CustomDocParameter {
  *
  * @public
  */
-export function toDOM({ node, schema, doc }: FromNodeParameter): DocumentFragment {
+export function toDom({ node, schema, doc }: FromNodeParameter): DocumentFragment {
   const fragment = isDocNode(node, schema) ? node.content : Fragment.from(node);
   return DOMSerializer.fromSchema(schema).serializeFragment(fragment, { document: doc });
 }
@@ -900,7 +900,7 @@ interface FromNodeParameter
  */
 export function toHTML({ node, schema, doc = getDocument() }: FromNodeParameter) {
   const element = doc.createElement('div');
-  element.append(toDOM({ node, schema, doc }));
+  element.append(toDom({ node, schema, doc }));
 
   return element.innerHTML;
 }

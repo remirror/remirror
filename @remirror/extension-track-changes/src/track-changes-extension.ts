@@ -8,7 +8,7 @@ import {
   Handler,
   HandlerKeyList,
   hasTransactionChanged,
-  isDOMNode,
+  isDomNode,
   isEmptyArray,
   isEqual,
   isNumber,
@@ -246,7 +246,7 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
     view: EditorView,
     event: Event,
   ): HandlerParameter | undefined {
-    if (!isDOMNode(event.target)) {
+    if (!isDomNode(event.target)) {
       return;
     }
 

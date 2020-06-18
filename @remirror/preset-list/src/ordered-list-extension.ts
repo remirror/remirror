@@ -1,7 +1,7 @@
 import {
   ApplyExtraAttributes,
   convertCommand,
-  isElementDOMNode,
+  isElementDomNode,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
@@ -32,7 +32,7 @@ export class OrderedListExtension extends NodeExtension {
         {
           tag: 'ol',
           getAttrs: (node) => {
-            if (!isElementDOMNode(node)) {
+            if (!isElementDomNode(node)) {
               return {};
             }
 

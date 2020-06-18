@@ -31,17 +31,17 @@ import {
   getSelectedWord,
   isDocNode as isDocumentNode,
   isDocNodeEmpty as isDocumentNodeEmpty,
-  isElementDOMNode,
+  isElementDomNode,
   isMarkActive,
   isNodeSelection,
   isObjectNode,
   isProsemirrorNode,
   isSelection,
-  isTextDOMNode,
+  isTextDomNode,
   isTextSelection,
   nodeNameMatchesList,
   startPositionOfParent,
-  toDOM,
+  toDom,
   toHTML,
 } from '../dom-utils';
 
@@ -166,13 +166,13 @@ describe('isTextDOMNode', () => {
   it('returns true for text domNodes', () => {
     const node = document.createTextNode('Text node');
 
-    expect(isTextDOMNode(node)).toBeTrue();
+    expect(isTextDomNode(node)).toBeTrue();
   });
 
   it('returns false for non-text domNodes', () => {
     const node = document.createElement('div');
 
-    expect(isTextDOMNode(node)).toBeFalse();
+    expect(isTextDomNode(node)).toBeFalse();
   });
 });
 
@@ -180,13 +180,13 @@ describe('isElementDOMNode', () => {
   it('returns true for element domNodes', () => {
     const node = document.createElement('div');
 
-    expect(isElementDOMNode(node)).toBeTrue();
+    expect(isElementDomNode(node)).toBeTrue();
   });
 
   it('returns false for non-element domNodes', () => {
     const node = document.createTextNode('Text node');
 
-    expect(isElementDOMNode(node)).toBeFalse();
+    expect(isElementDomNode(node)).toBeFalse();
   });
 });
 
@@ -442,11 +442,11 @@ describe('toDOM', () => {
   const node = doc(p('hello'));
 
   it('transforms a doc into a documentFragment', () => {
-    expect(toDOM({ node, schema: testSchema })).toBeInstanceOf(DocumentFragment);
+    expect(toDom({ node, schema: testSchema })).toBeInstanceOf(DocumentFragment);
   });
 
   it('allows for custom document to be passed in', () => {
-    expect(toDOM({ node, schema: testSchema, doc: domino.createDocument() })).toBeTruthy();
+    expect(toDom({ node, schema: testSchema, doc: domino.createDocument() })).toBeTruthy();
   });
 });
 

@@ -4,8 +4,8 @@ import {
   Decoration,
   EDITOR_CLASS_NAME,
   EditorView,
-  isDOMNode,
-  isElementDOMNode,
+  isDomNode,
+  isElementDomNode,
   isFunction,
   isPlainObject,
   isString,
@@ -174,8 +174,8 @@ export class ReactNodeView<
         return document.createElement(domSpec);
       }
 
-      if (isDOMNode(domSpec)) {
-        if (!isElementDOMNode(domSpec)) {
+      if (isDomNode(domSpec)) {
+        if (!isElementDomNode(domSpec)) {
           throw new Error('Invalid HTML Element provided in the DOM Spec');
         }
         return domSpec;
@@ -250,7 +250,7 @@ export class ReactNodeView<
     if (toDOM) {
       const domSpec = toDOM(node);
 
-      if (isString(domSpec) || isDOMNode(domSpec)) {
+      if (isString(domSpec) || isDomNode(domSpec)) {
         return;
       }
 
