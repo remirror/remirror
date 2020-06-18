@@ -61,7 +61,7 @@ export const SocialEditor: FC<SocialEditorProps> = (props) => {
 
   return (
     <I18nProvider i18n={i18n} locale={locale}>
-      <RemirrorProvider manager={manager} childAsRoot={false}>
+      <RemirrorProvider {...props} manager={manager} childAsRoot={false}>
         <Editor {...props}>{children}</Editor>
       </RemirrorProvider>
     </I18nProvider>

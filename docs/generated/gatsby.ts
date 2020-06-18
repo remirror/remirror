@@ -2944,6 +2944,16 @@ type StringQueryOperatorInput = {
   readonly glob: Maybe<Scalars['String']>;
 };
 
+type EntryQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+type EntryQuery = { readonly mdx: Maybe<(
+    Pick<Mdx, 'id' | 'body' | 'timeToRead'>
+    & { readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'fullWidth' | 'title'>>, readonly wordCount: Maybe<Pick<MdxWordCount, 'paragraphs' | 'words' | 'sentences'>> }
+  )> };
+
 type GatsbyImageSharpFixedFragment = Pick<ImageSharpFixed, 'base64' | 'width' | 'height' | 'src' | 'srcSet'>;
 
 type GatsbyImageSharpFixed_tracedSVGFragment = Pick<ImageSharpFixed, 'tracedSVG' | 'width' | 'height' | 'src' | 'srcSet'>;
@@ -2993,16 +3003,6 @@ type GatsbyImageSharpSizes_withWebp_tracedSVGFragment = Pick<ImageSharpSizes, 't
 type GatsbyImageSharpSizes_noBase64Fragment = Pick<ImageSharpSizes, 'aspectRatio' | 'src' | 'srcSet' | 'sizes'>;
 
 type GatsbyImageSharpSizes_withWebp_noBase64Fragment = Pick<ImageSharpSizes, 'aspectRatio' | 'src' | 'srcSet' | 'srcWebp' | 'srcSetWebp' | 'sizes'>;
-
-type EntryQueryVariables = Exact<{
-  id: Scalars['String'];
-}>;
-
-
-type EntryQuery = { readonly mdx: Maybe<(
-    Pick<Mdx, 'id' | 'body' | 'timeToRead'>
-    & { readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'fullWidth' | 'title'>>, readonly wordCount: Maybe<Pick<MdxWordCount, 'paragraphs' | 'words' | 'sentences'>> }
-  )> };
 
 type PagesQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
