@@ -148,7 +148,7 @@ export type MakeRequired<Type extends object, Keys extends keyof Type> = Omit<Ty
  * Makes specified keys of an interface readonly.
  */
 export type MakeReadonly<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> &
-  { +readonly [Key in Keys]: Type[Key] };
+  { +readonly [Key in Keys]: NonNullable<Type[Key]> };
 
 /**
  * All the literal types

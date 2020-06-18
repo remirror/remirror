@@ -77,28 +77,28 @@ describe('extension', () => {
     const {
       attributeNodes: { heading },
       add,
-      utils: { baseElement },
+      view,
       nodes: { doc },
     } = create({ levels: [1, 2], defaultLevel: 2 });
     const h5 = heading({ level: 5 });
     add(doc(h5('Heading<cursor>')));
 
-    expect(baseElement).toContainHTML('<h2>Heading</h2>');
+    expect(view.dom).toContainHTML('<h2>Heading</h2>');
   });
 
   it('can toggle the heading', () => {
     const {
       add,
-      utils: { baseElement },
       nodes: { doc, p },
+      view,
     } = create();
 
     add(doc(p('Content<cursor>'))).callback(({ commands }) => {
       commands.toggleHeading({ level: 3 });
-      expect(baseElement).toContainHTML('<h3>Content</h3>');
+      expect(view.dom).toContainHTML('<h3>Content</h3>');
 
       commands.toggleHeading({ level: 3 });
-      expect(baseElement).toContainHTML('<p>Content</p>');
+      expect(view.dom).toContainHTML('<p>Content</p>');
     });
   });
 

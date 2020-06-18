@@ -325,7 +325,7 @@ export abstract class BaseClass<
   };
 
   /**
-   * Override this method if you want to set custom options on your extension.
+   * Override this method if you want to set custom handlers on your extension.
    *
    * This must return a dispose function.
    */

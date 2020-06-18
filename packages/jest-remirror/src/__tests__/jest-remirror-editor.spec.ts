@@ -13,12 +13,9 @@ import { renderEditor } from '../jest-remirror-editor';
 beforeEach(cleanup);
 
 test('renders an editor into the dom', () => {
-  const {
-    utils: { getByRole },
-  } = renderEditor([]);
-  const editor = getByRole('textbox');
+  const { view } = renderEditor([]);
 
-  expect(editor).toBeVisible();
+  expect(view.dom).toBeVisible();
 });
 
 test('add content', () => {

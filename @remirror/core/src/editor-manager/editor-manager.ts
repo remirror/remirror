@@ -436,10 +436,10 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
    * @param view - the editor view
    */
   addView(view: EditorView<this['~Sch']>) {
-    invariant(this.#phase < ManagerPhase.EditorView, {
-      code: ErrorConstant.MANAGER_PHASE_ERROR,
-      message: 'A view has already been added to this manager. A view should only be added once.',
-    });
+    // invariant(this.#phase < ManagerPhase.EditorView, {
+    //   code: ErrorConstant.MANAGER_PHASE_ERROR,
+    //   message: 'A view has already been added to this manager. A view should only be added once.',
+    // });
 
     // Update the lifecycle phase.
     this.#phase = ManagerPhase.EditorView;
@@ -676,20 +676,25 @@ interface SettingsWithPrivacy extends Remirror.ManagerSettings {
 
 export type GetCombined<Manager extends AnyEditorManager> = Manager['~EP'];
 
-interface EditorManagerConstructor extends Function, Remirror.EditorManagerConstructor {
-  fromObject: <ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>(
-    parameter: EditorManagerParameter<ExtensionUnion, PresetUnion>,
-  ) => EditorManager<ExtensionUnion | PresetUnion | BuiltinPreset>;
-  create: <Combined extends AnyCombinedUnion>(
-    combined: Combined,
-  ) => EditorManager<Combined | BuiltinPreset>;
+interface EditorManagerConstructor<Combined extends AnyCombinedUnion>
+  extends Function,
+    Remirror.EditorManagerConstructor {
+  fromObject: (
+    parameter: EditorManagerParameter<
+      InferCombinedExtensions<Combined>,
+      InferCombinedPresets<Combined>
+    >,
+  ) => EditorManager<
+    InferCombinedExtensions<Combined> | InferCombinedPresets<Combined> | BuiltinPreset
+  >;
+  create: (combined: Combined) => EditorManager<Combined | BuiltinPreset>;
 }
 
 export interface EditorManager<Combined extends AnyCombinedUnion> {
   /**
    * The constructor for the editor manager.
    */
-  constructor: EditorManagerConstructor;
+  constructor: EditorManagerConstructor<Combined>;
 
   /**
    * Pseudo property which is a small hack to store the type of the extension

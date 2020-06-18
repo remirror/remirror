@@ -74,8 +74,8 @@ export const SocialEditor: FC<SocialEditorProps> = (props) => {
 const Editor: FC<SocialEditorProps> = (props) => {
   const { children, characterLimit = 280 } = props;
 
-  const { getRootProps, state } = useRemirror();
-  const used = state.newState.doc.textContent.length;
+  const { getRootProps, getState } = useRemirror();
+  const used = getState().doc.textContent.length;
 
   return (
     <div>

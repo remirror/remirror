@@ -167,7 +167,7 @@ export abstract class EditorWrapper<
       role: 'textbox',
       ...focus,
       'aria-multiline': 'true',
-      ...(!this.props.editable ? { 'aria-readonly': 'true' } : {}),
+      ...(!(this.props.editable ?? true) ? { 'aria-readonly': 'true' } : {}),
       'aria-label': this.props.label ?? '',
       ...managerAttributes,
       class: cx(ssr && 'Prosemirror', EDITOR_CLASS_NAME, managerAttributes?.class),
@@ -512,7 +512,7 @@ export interface EditorWrapperProps<Combined extends AnyCombinedUnion>
    *
    * TODO - why does this only work as `any`.
    */
-  manager: EditorManager<Combined>;
+  manager: EditorManager<any>;
 
   /**
    * Set the starting value object of the editor.

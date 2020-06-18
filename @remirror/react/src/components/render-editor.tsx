@@ -250,16 +250,6 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
   }
 
   /**
-   * Reinitialize the Editor's manager when a new one is passed in via props.
-   *
-   * TODO evaluate if this is still needed.
-   */
-  updateManager() {
-    // TODO add a way to reinitialize.
-    this.manager.addView(this.view).ready();
-  }
-
-  /**
    * Create the prosemirror editor view.
    */
   protected createView(state: EditorState<SchemaFromCombined<Combined>>) {

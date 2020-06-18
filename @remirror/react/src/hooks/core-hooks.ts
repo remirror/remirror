@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import useSetState from 'react-use/lib/useSetState';
 import ResizeObserver from 'resize-observer-polyfill';
 
 /**
@@ -59,3 +60,12 @@ export function useMeasure<Ref extends HTMLElement = any>() {
 
   return [{ ref }, bounds] as const;
 }
+
+/**
+ * The `setState` type for the `useSetState` hook.
+ */
+export type PartialDispatch<Type extends object> = (
+  patch: Partial<Type> | ((prevState: Type) => Partial<Type>),
+) => void;
+
+export { useSetState };

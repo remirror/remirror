@@ -5,6 +5,7 @@
   "linked": [
     [
       "@remirror/core",
+      "@remirror/dom",
       "@remirror/core-constants",
       "@remirror/core-helpers",
       "@remirror/core-types",

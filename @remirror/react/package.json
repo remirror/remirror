@@ -32,8 +32,9 @@
     "hoist-non-react-statics": "^3.3.2",
     "linaria": "^2.0.0-alpha.5",
     "min-document": "^2.19.0",
-    "nanoevents": "^5.1.7",
+    "nanoevents": "^5.1.8",
     "nanoid": "^3.1.9",
+    "react-use": "^15.2.5",
     "resize-observer-polyfill": "^1.5.1",
     "type-fest": "^0.15.1",
     "use-deep-compare-effect": "^1.3.1"

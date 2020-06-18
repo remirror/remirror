@@ -1,7 +1,6 @@
 import { css, cx } from 'linaria';
 import { Type, useMultishift } from 'multishift';
 import React, { useCallback, useMemo } from 'react';
-import useSetState from 'react-use/lib/useSetState';
 
 import { isEmptyArray, isUndefined } from '@remirror/core';
 import {
@@ -12,12 +11,7 @@ import {
   EmojiSuggestionExitHandler,
   EmojiSuggestionKeyBindings,
 } from '@remirror/extension-emoji';
-import {
-  DispatchWithCallback,
-  PartialSetStateAction,
-  useExtension,
-  usePositioner,
-} from '@remirror/react';
+import { PartialDispatch, useExtension, usePositioner, useSetState } from '@remirror/react';
 
 import {
   emojiSuggestionsDropdownWrapperStyles,
@@ -35,13 +29,13 @@ interface EmojiState {
 const initialState: EmojiState = { list: [], hideSuggestions: false, index: 0 };
 
 interface EmojiHookParameter extends EmojiState {
-  setState: DispatchWithCallback<PartialSetStateAction<EmojiState>>;
+  setState: PartialDispatch<EmojiState>;
 }
 
 /**
  * A hook for managing changes in the emoji suggestions.
  */
-function useEmojiChangeHandler(setState: DispatchWithCallback<PartialSetStateAction<EmojiState>>) {
+function useEmojiChangeHandler(setState: PartialDispatch<EmojiState>) {
   const onChange: EmojiSuggestionChangeHandler = useCallback(
     (parameter) => {
       const { emojiMatches, command } = parameter;

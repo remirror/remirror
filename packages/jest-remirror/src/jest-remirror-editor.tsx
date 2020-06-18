@@ -1,5 +1,4 @@
 import { prettyDOM } from '@testing-library/dom';
-import { render } from '@testing-library/react/pure';
 import {
   dispatchAllSelection,
   dispatchCellSelection,
@@ -13,12 +12,10 @@ import {
   shortcut,
   TestEditorView,
 } from 'jest-prosemirror';
-import React from 'react';
 
 import {
   ActiveFromCombined,
   AnyCombinedUnion,
-  CommandFunction,
   CommandFunctionParameter,
   CommandsFromCombined,
   EditorManager,
@@ -26,6 +23,7 @@ import {
   GetMarkNameUnion,
   GetNodeNameUnion,
   HelpersFromCombined,
+  isFunction,
   isMarkExtension,
   isNodeExtension,
   object,
@@ -36,8 +34,7 @@ import {
   SchemaFromCombined,
   Transaction,
 } from 'remirror/core';
-import { CorePreset } from 'remirror/preset/core';
-import { RenderEditor } from 'remirror/react';
+import { createEditorManager, createRemirrorDOM } from 'remirror/dom';
 
 import { markFactory, nodeFactory } from './jest-remirror-builder';
 import {
@@ -51,6 +48,8 @@ import {
 } from './jest-remirror-types';
 import { replaceSelection } from './jest-remirror-utils';
 
+const elements = new Set<Element>();
+
 /**
  * Render the editor for test purposes.
  *
@@ -58,23 +57,13 @@ import { replaceSelection } from './jest-remirror-utils';
  */
 export function renderEditor<Combined extends AnyCombinedUnion>(
   combined: Combined[],
-  { settings, props }: RenderEditorParameter<Combined> = object(),
+  { settings, props, autoClean = true }: RenderEditorParameter<Combined> = object(),
 ) {
-  const corePreset = new CorePreset();
+  const element = createElement(props?.element, autoClean);
+  const manager = createEditorManager([...combined], settings);
 
-  const manager = EditorManager.create([...combined, corePreset], settings);
-
-  render(
-    <RenderEditor {...props} manager={manager}>
-      {(param) => {
-        if (props?.children) {
-          return props.children(param);
-        }
-
-        return <div />;
-      }}
-    </RenderEditor>,
-  );
+  // TODO add the editor to the remirror test chain
+  createRemirrorDOM({ ...props, element, manager });
 
   return RemirrorTestChain.create(manager);
 }
@@ -479,4 +468,56 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
     console.log(prettyDOM(this.view.dom as HTMLElement));
     return this;
   };
+
+  /**
+   * Cleanup the element from the dom. Use this if you decide against automatic
+   * cleanup after tests.
+   */
+  readonly cleanup = () => {
+    this.view.dom.parentElement?.remove();
+  };
+}
+
+function isInPage(node: Node) {
+  return node === document.body ? false : document.body.contains(node);
+}
+
+function createElement(element: Element | undefined, autoClean?: boolean) {
+  if (!element) {
+    element = document.createElement('div');
+  }
+
+  if (!isInPage(element)) {
+    document.body.append(element);
+  }
+
+  if (autoClean) {
+    elements.add(element);
+  }
+
+  return element;
+}
+
+function cleanup() {
+  for (const element of elements) {
+    if (element.parentNode === document.body) {
+      element.remove();
+    }
+
+    elements.delete(element);
+  }
+}
+
+if (isFunction(afterEach)) {
+  afterEach(() => {
+    cleanup();
+  });
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+} else if (isFunction(teardown)) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  teardown(() => {
+    cleanup();
+  });
 }
