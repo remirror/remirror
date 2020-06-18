@@ -43,7 +43,7 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
    */
   private dir(): ExtraAttributesObject {
     return {
-      default: null,
+      default: this.options.defaultDirection,
       parseDOM: (element) => element.getAttribute('dir') ?? this.getDirection(element.textContent),
       toDOM: (_, { node }) => {
         if (!node) {

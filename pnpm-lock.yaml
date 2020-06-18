@@ -907,6 +907,7 @@ importers:
     dependencies:
       '@babel/runtime': 7.10.2
       '@remirror/extension-base-keymap': 'link:../extension-base-keymap'
+      '@remirror/extension-bidi': 'link:../extension-bidi'
       '@remirror/extension-doc': 'link:../extension-doc'
       '@remirror/extension-history': 'link:../extension-history'
       '@remirror/extension-paragraph': 'link:../extension-paragraph'
@@ -919,6 +920,7 @@ importers:
       '@babel/runtime': ^7.10.2
       '@remirror/core': ^0.11.0
       '@remirror/extension-base-keymap': ^0.0.0
+      '@remirror/extension-bidi': ^0.0.0
       '@remirror/extension-doc': ^0.0.0
       '@remirror/extension-history': ^0.0.0
       '@remirror/extension-paragraph': ^0.0.0

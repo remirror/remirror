@@ -24,6 +24,7 @@
   "dependencies": {
     "@babel/runtime": "^7.10.2",
     "@remirror/extension-base-keymap": "^0.0.0",
+    "@remirror/extension-bidi": "^0.0.0",
     "@remirror/extension-doc": "^0.0.0",
     "@remirror/extension-history": "^0.0.0",
     "@remirror/extension-paragraph": "^0.0.0",
