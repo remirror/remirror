@@ -394,8 +394,6 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
     if (suppressHydrationWarning) {
       this.#setShouldRenderClient(true);
     }
-
-    this.manager.ready();
   }
 
   /**

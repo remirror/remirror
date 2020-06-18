@@ -65,8 +65,6 @@ export function createDomEditor<Combined extends AnyCombinedUnion>(
     element,
   });
 
-  manager.ready();
-
   return wrapper.output;
 }
 

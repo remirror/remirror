@@ -251,21 +251,10 @@ export type DefaultExtensionOptions<Options extends ValidOptions> = DefaultOptio
  * - `onCreate`
  * - `onView`
  * - **runtime**
- * - `onReady`
  * - `onStateUpdate` (repeats for every update to the prosemirror editor state)
  * - `onDestroy` (end of life)
  */
 interface ExtensionLifecycleMethods {
-  /**
-   * Called before the `extensionStore` is ready. No looping over extensions is
-   * available.
-   *
-   * This is currently used to update the manager settings. For example the
-   * formatting extension adds extra attributes to the manager settings so that
-   * all relevant formatting.
-   */
-  onPrepare?: () => void;
-
   /**
    * This handler is called when the extension manager is first created.
    *
@@ -288,11 +277,6 @@ interface ExtensionLifecycleMethods {
    * (e.g. React).
    */
   onView?: ViewLifecycleMethod;
-
-  /**
-   * This is triggered by the view layer to notify remirror that the editor is now in the dom and fully mounted.
-   */
-  onReady?: () => void;
 
   /**
    * Called when a transaction successfully updates the editor state.

@@ -206,6 +206,13 @@ export interface StateUpdateLifecycleParameter extends EditorStateParameter {
    * - `tr.steps` can be inspected for further granularity.
    */
   tr?: Transaction;
+
+  /**
+   * When true, this lets you know that it is the first state update to happen.
+   * This can be used to run an action that should only be run when the state is
+   * first available.
+   */
+  firstUpdate: boolean;
 }
 export type StateUpdateLifecycleMethod = (parameter: StateUpdateLifecycleParameter) => void;
 

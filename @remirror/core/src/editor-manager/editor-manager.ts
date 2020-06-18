@@ -156,18 +156,22 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   #combined: readonly Combined[];
 
   /**
+   * When true this identifies this as the first state update since the view was
+   * added to the editor.
+   */
+  #firstStateUpdate = true;
+
+  /**
    * Store the handlers that will be run when for each event method.
    */
   #handlers: {
     create: CreateLifecycleMethod[];
     view: ViewLifecycleMethod[];
-    ready: Array<() => void>;
     update: StateUpdateLifecycleMethod[];
     destroy: DestroyLifecycleMethod[];
   } = {
     create: [],
     view: [],
-    ready: [],
     update: [],
     destroy: [],
   };
@@ -294,12 +298,10 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
 
     for (const extension of this.#extensions) {
       extension.setStore(this.#extensionStore);
-      extension.onPrepare?.();
 
       const createHandler = extension.onCreate;
       const viewHandler = extension.onView;
-      const readyHandler = extension.onReady;
-      const transactionHandler = extension.onStateUpdate;
+      const stateUpdateHandler = extension.onStateUpdate;
       const destroyHandler = extension.onDestroy;
 
       if (createHandler) {
@@ -310,12 +312,8 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
         this.#handlers.view.push(viewHandler);
       }
 
-      if (readyHandler) {
-        this.#handlers.ready.push(readyHandler);
-      }
-
-      if (transactionHandler) {
-        this.#handlers.update.push(transactionHandler);
+      if (stateUpdateHandler) {
+        this.#handlers.update.push(stateUpdateHandler);
       }
 
       if (destroyHandler) {
@@ -436,10 +434,12 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
    * @param view - the editor view
    */
   addView(view: EditorView<this['~Sch']>) {
-    // invariant(this.#phase < ManagerPhase.EditorView, {
-    //   code: ErrorConstant.MANAGER_PHASE_ERROR,
-    //   message: 'A view has already been added to this manager. A view should only be added once.',
+    // invariant(this.#phase < ManagerPhase.EditorView, {code:
+    //   ErrorConstant.MANAGER_PHASE_ERROR, message: 'A view has already been
+    //   added to this manager. A view should only be added once.',
     // });
+
+    this.#firstStateUpdate = true;
 
     // Update the lifecycle phase.
     this.#phase = ManagerPhase.EditorView;
@@ -451,24 +451,6 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
       handler(this.#extensions as readonly AnyExtension[], view);
     }
 
-    return this;
-  }
-
-  /**
-   * This method should be called by the view layer to notify remirror that
-   * everything is ready to run.
-   *
-   * This is useful in frameworks like `react` where the view is only attached
-   * to the dom once the component is mounted.
-   */
-  ready() {
-    this.#phase = ManagerPhase.Ready;
-
-    for (const handler of this.#handlers.ready) {
-      handler();
-    }
-
-    this.#phase = ManagerPhase.Runtime;
     return this;
   }
 
@@ -546,19 +528,24 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   }
 
   /**
-   * A handler which allows the extension to respond to each transaction without
-   * needing to register a plugin.
+   * This method should be called by the view layer every time the state is
+   * updated.
    *
    * An example usage of this is within the collaboration plugin.
    */
-  onStateUpdate(parameter: StateUpdateLifecycleParameter) {
-    this.#phase = ManagerPhase.Runtime;
+  onStateUpdate(parameter: Omit<StateUpdateLifecycleParameter, 'firstUpdate'>) {
+    const firstUpdate = this.#firstStateUpdate;
 
     this.#extensionStore.currentState = parameter.state;
     this.#extensionStore.previousState = parameter.previousState;
 
+    if (this.#firstStateUpdate) {
+      this.#phase = ManagerPhase.Runtime;
+      this.#firstStateUpdate = false;
+    }
+
     for (const handler of this.#handlers.update) {
-      handler(parameter);
+      handler({ ...parameter, firstUpdate });
     }
   }
 
@@ -584,7 +571,8 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   }
 
   /**
-   * Get the preset from the editor.
+   * Get the requested preset from the manager. This will throw if the preset doesn't
+   * exist within this manager.
    */
   getPreset<PresetConstructor extends AnyPresetConstructor>(
     Constructor: PresetConstructor,
