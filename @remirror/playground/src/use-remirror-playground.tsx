@@ -1,17 +1,20 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import {
+  AnyCombinedUnion,
   EditorManager,
   EditorState,
+  EditorView,
   EMPTY_PARAGRAPH_NODE,
   RemirrorEventListener,
+  RemirrorJSON,
 } from 'remirror/core';
 
 declare global {
   interface Window {
     REMIRROR_PLAYGROUND_PERSIST: {
-      previousView: any;
-      lastKnownGoodState: any;
+      previousView: EditorView | null;
+      lastKnownGoodState: EditorState | null;
     };
   }
 }
@@ -26,18 +29,19 @@ PERSIST.previousView = null;
 PERSIST.lastKnownGoodState = null;
 
 export function useRemirrorPlayground(
-  extensionManager: EditorManager<any>,
+  extensionManager: EditorManager<AnyCombinedUnion>,
 ): {
   value: EditorState;
-  onChange: RemirrorEventListener<any>;
+  onChange: RemirrorEventListener<AnyCombinedUnion>;
 } {
   const [value, setValue] = useState<EditorState>(
-    PERSIST.lastKnownGoodState ||
-      extensionManager.createState({
-        content: EMPTY_PARAGRAPH_NODE,
-      }),
+    extensionManager.createState({
+      content: PERSIST.lastKnownGoodState
+        ? (PERSIST.lastKnownGoodState.doc.toJSON() as RemirrorJSON)
+        : EMPTY_PARAGRAPH_NODE,
+    }),
   );
-  const onChange = useCallback<RemirrorEventListener<any>>((event) => {
+  const onChange = useCallback<RemirrorEventListener<AnyCombinedUnion>>((event) => {
     PERSIST.lastKnownGoodState = event.state;
     setValue(event.state);
   }, []);
