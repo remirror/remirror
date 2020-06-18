@@ -226,14 +226,19 @@ export interface ExtraAttributesObject {
    *
    * This is called in the `toDOM` method.
    *
-   * If a string is set this will always be the constant value set in the dom.
-   * If a tuple with two items is set then the first `string` is the attribute
-   * to set in the dom and the second string is the value that will be stored.
+   * - If a string is set this will always be the constant value set in the dom.
+   * - If a tuple with two items is set then the first `string` is the attribute
+   *   to set in the dom and the second string is the value that will be stored.
+   *
+   * Return undefined from the function call to skip adding the attribute.
    */
   toDOM?:
     | string
     | [string, string?]
-    | ((attrs: ProsemirrorAttributes, options: NodeMarkOptions) => string | [string, string?]);
+    | ((
+        attrs: ProsemirrorAttributes,
+        options: NodeMarkOptions,
+      ) => string | [string, string?] | null | undefined);
 }
 
 export interface NodeMarkOptions {

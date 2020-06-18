@@ -344,7 +344,10 @@ function createToDOM(extraAttributes: ExtraAttributes, shouldIgnore: boolean) {
       return domAttributes;
     }
 
-    function updateDomAttributes(value: string | [string, string?], name: string) {
+    function updateDomAttributes(
+      value: string | [string, string?] | undefined | null,
+      name: string,
+    ) {
       if (isString(value)) {
         domAttributes[name] = value;
       }
@@ -352,6 +355,8 @@ function createToDOM(extraAttributes: ExtraAttributes, shouldIgnore: boolean) {
       if (isArray(value)) {
         domAttributes[value[0]] = value[1] ?? (item.attrs[name] as string);
       }
+
+      return;
     }
 
     for (const [name, config] of entries(extraAttributes)) {

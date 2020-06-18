@@ -446,6 +446,20 @@ importers:
       '@remirror/core': ^0.11.0
       '@remirror/pm': '*'
       map-obj: ^4.1.0
+  '@remirror/extension-bidi':
+    dependencies:
+      '@babel/runtime': registry.npmjs.org/@babel/runtime/7.10.2
+      '@types/direction': 1.0.0
+      direction: 1.0.4
+    devDependencies:
+      '@remirror/core': 'link:../core'
+      '@remirror/pm': 'link:../pm'
+    specifiers:
+      '@babel/runtime': ^7.10.2
+      '@remirror/core': ^0.11.0
+      '@remirror/pm': ^0.0.0
+      '@types/direction': ^1.0.0
+      direction: ^1.0.4
   '@remirror/extension-blockquote':
     dependencies:
       '@babel/runtime': 7.10.2
@@ -1538,6 +1552,7 @@ importers:
       '@remirror/editor-social': 'link:../../@remirror/editor-social'
       '@remirror/extension-auto-link': 'link:../../@remirror/extension-auto-link'
       '@remirror/extension-base-keymap': 'link:../../@remirror/extension-base-keymap'
+      '@remirror/extension-bidi': 'link:../../@remirror/extension-bidi'
       '@remirror/extension-blockquote': 'link:../../@remirror/extension-blockquote'
       '@remirror/extension-bold': 'link:../../@remirror/extension-bold'
       '@remirror/extension-code': 'link:../../@remirror/extension-code'
@@ -1591,6 +1606,7 @@ importers:
       '@remirror/editor-social': ^0.13.1
       '@remirror/extension-auto-link': ^0.0.0
       '@remirror/extension-base-keymap': ^0.0.0
+      '@remirror/extension-bidi': ^0.0.0
       '@remirror/extension-blockquote': ^0.0.0
       '@remirror/extension-bold': ^0.0.0
       '@remirror/extension-code': ^0.0.0
@@ -7141,6 +7157,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-orGL5LXERPYsLov6CWs3Fh6203+dXzJkR7OnddIr2514Hsecwc8xRpzCapshBbKFImCsvS/mk6+FWiN5LyZJAQ==
+  /@types/direction/1.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-et1wmqXm/5smJ8lTJfBnwD12/2Y7eVJLKbuaRT0h2xaKAoo1h8Dz2Io22GObDLFwxY1ddXRTLH3Gq5v44Fl/2w==
   /@types/emoji-regex/8.0.0:
     dev: false
     resolution:
@@ -11882,6 +11902,11 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==
+  /direction/1.0.4:
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-GYqKi1aH7PJXxdhTeZBFrg8vUBeKXi+cNprXsC1kpJcbcVnV9wBsrOu1cQEdG0WeQwlfHiy3XvnKfIrJ2R0NzQ==
   /dns-equal/1.0.0:
     dev: false
     resolution:
@@ -27870,3 +27895,21 @@ packages:
     dev: false
     resolution:
       integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==
+  registry.npmjs.org/@babel/runtime/7.10.2:
+    dependencies:
+      regenerator-runtime: registry.npmjs.org/regenerator-runtime/0.13.5
+    dev: false
+    name: '@babel/runtime'
+    resolution:
+      integrity: sha512-6sF3uQw2ivImfVIl62RZ7MXhO2tap69WeWK57vAaimT6AZbE4FbqjdEJIN1UqoD6wI6B+1n9UiagafH1sxjOtg==
+      registry: 'https://registry.yarnpkg.com/'
+      tarball: 'https://registry.npmjs.org/@babel/runtime/-/runtime-7.10.2.tgz'
+    version: 7.10.2
+  registry.npmjs.org/regenerator-runtime/0.13.5:
+    dev: false
+    name: regenerator-runtime
+    resolution:
+      integrity: sha512-ZS5w8CpKFinUzOwW3c83oPeVXoNsrLsaCoLtJvAClH135j/R77RuymhiSErhm2lKcwSCIpmvIWSbDkIfAqKQlA==
+      registry: 'https://registry.yarnpkg.com/'
+      tarball: 'https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.5.tgz'
+    version: 0.13.5
