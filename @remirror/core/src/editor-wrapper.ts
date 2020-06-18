@@ -2,7 +2,16 @@ import { cx } from 'linaria';
 import { createNanoEvents, Unsubscribe } from 'nanoevents';
 
 import { EDITOR_CLASS_NAME, EMPTY_PARAGRAPH_NODE } from '@remirror/core-constants';
-import { bool, clamp, isFunction, isNumber, object, pick, uniqueId } from '@remirror/core-helpers';
+import {
+  bool,
+  clamp,
+  isEmptyArray,
+  isFunction,
+  isNumber,
+  object,
+  pick,
+  uniqueId,
+} from '@remirror/core-helpers';
 import {
   EditorSchema,
   EditorState,
@@ -217,7 +226,11 @@ export abstract class EditorWrapper<
     this.updateState({ state, tr });
 
     // Update the view props when an update is requested
-    this.updateViewProps(...this.manager.store.getForcedUpdates(tr));
+    const forcedUpdates = this.manager.store.getForcedUpdates(tr);
+
+    if (!isEmptyArray(forcedUpdates)) {
+      this.updateViewProps(...this.manager.store.getForcedUpdates(tr));
+    }
   };
 
   /**

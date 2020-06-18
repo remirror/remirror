@@ -288,10 +288,10 @@ export class CommandsExtension extends PlainExtension {
   private readonly getCommands = <
     ExtensionUnion extends AnyExtension = AnyExtension
   >(): CommandsFromExtensions<CommandsExtension | ExtensionUnion> => {
-    const chain = this.store.getStoreKey('commands');
-    invariant(chain, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
+    const commands = this.store.getStoreKey('commands');
+    invariant(commands, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
 
-    return chain as CommandsFromExtensions<CommandsExtension | ExtensionUnion>;
+    return commands as CommandsFromExtensions<CommandsExtension | ExtensionUnion>;
   };
 
   /**
