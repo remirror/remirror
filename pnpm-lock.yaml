@@ -1335,26 +1335,26 @@ importers:
     dependencies:
       '@babel/runtime': 7.10.2
       '@remirror/core': 'link:../@remirror/core'
-      '@types/puppeteer': 3.0.0
       '@types/wait-on': 4.0.0
       expect-playwright: 0.2.4
       jest-dev-server: 4.4.0
       jest-playwright-preset: 0.2.5
       looks-same: 7.2.3
       playwright: 1.1.1
+      playwright-core: 1.1.1
       playwright-testing-library: 1.2.1_playwright@1.1.1
       signal-exit: 3.0.3
       test-keyboard: 'link:../packages/test-keyboard'
     specifiers:
       '@babel/runtime': ^7.10.2
       '@remirror/core': ^0.11.0
-      '@types/puppeteer': ^3.0.0
       '@types/wait-on': ^4.0.0
       expect-playwright: ^0.2.4
       jest-dev-server: ^4.4.0
       jest-playwright-preset: ^0.2.5
       looks-same: ^7.2.3
       playwright: ^1.1.1
+      playwright-core: ^1.1.1
       playwright-testing-library: ^1.2.1
       signal-exit: ^3.0.3
       test-keyboard: ^0.7.6
@@ -7492,12 +7492,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Hh8v2tpCEMaIesQuw7Y7Pz6imoC1T/bR5OlNGVtp944PZvctXiBvFRkQIb0YvZpt7vVkFzeq2kmR+7mnUfvWiw==
-  /@types/puppeteer/3.0.0:
-    dependencies:
-      '@types/node': 14.0.13
-    dev: false
-    resolution:
-      integrity: sha512-59+fkfHHXHzX5rgoXIMnZyzum7ZLx/Wc3fhsOduFThpTpKbzzdBHMZsrkKGLunimB4Ds/tI5lXTRLALK8Mmnhg==
   /@types/q/1.5.4:
     dev: false
     resolution:
@@ -21295,6 +21289,24 @@ packages:
     dev: false
     resolution:
       integrity: sha1-ZGx3ARiZhwtqCQPnXpl+jlHadGE=
+  /playwright-core/1.1.1:
+    dependencies:
+      debug: 4.1.1
+      extract-zip: 2.0.1
+      https-proxy-agent: 3.0.1
+      jpeg-js: 0.3.7
+      mime: 2.4.6
+      pngjs: 5.0.0
+      progress: 2.0.3
+      proxy-from-env: 1.1.0
+      rimraf: 3.0.2
+      ws: 6.2.1
+    dev: false
+    engines:
+      node: '>=10.15.0'
+    requiresBuild: true
+    resolution:
+      integrity: sha512-iO/oUSrv1WYIHepWGet63MnRhp71hSzVQES3T1dBRZod1/pzCLPeC4i+nci8wUEm/kLxPhcyAjCiSfdyTKMrqw==
   /playwright-testing-library/1.2.1_playwright@1.1.1:
     dependencies:
       '@testing-library/dom': 7.16.2
