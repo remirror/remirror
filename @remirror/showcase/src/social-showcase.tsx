@@ -3,8 +3,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 
 import { startCase, take } from '@remirror/core';
 import {
-  ActiveTagData,
-  ActiveUserData,
+  createSocialManager,
   MentionChangeParameter,
   SocialEditor,
   SocialEditorProps,
@@ -36,7 +35,7 @@ const userData: UserData[] = fakeUsers.results.map(
   }),
 );
 
-export { fakeUsers, fakeTags, userData };
+const manager = createSocialManager([]);
 
 export const ExampleSocialEditor = (props: Partial<SocialEditorProps>) => {
   const [mention, setMention] = useState<MentionChangeParameter>();
@@ -45,23 +44,22 @@ export const ExampleSocialEditor = (props: Partial<SocialEditorProps>) => {
     setMention(parameter);
   }, []);
 
-  const userMatches: ActiveUserData[] = useMemo(
+  const userMatches = useMemo(
     () =>
       mention && mention.name === 'at' && mention.query
         ? take(
             matchSorter(userData, mention.query, { keys: ['username', 'displayName'] }),
             6,
-          ).map((user, index) => ({ ...user, active: index === mention.index }))
+          ).map((user) => ({ ...user }))
         : [],
     [mention],
   );
 
-  const tagMatches: ActiveTagData[] = useMemo(
+  const tagMatches = useMemo(
     () =>
       mention && mention.name === 'tag' && mention.query
-        ? take(matchSorter(fakeTags, mention.query), 6).map((tag, index) => ({
+        ? take(matchSorter(fakeTags, mention.query), 6).map((tag) => ({
             tag,
-            active: index === mention.index,
           }))
         : [],
     [mention],
@@ -70,6 +68,7 @@ export const ExampleSocialEditor = (props: Partial<SocialEditorProps>) => {
   return (
     <SocialEditor
       {...props}
+      manager={manager}
       attributes={{ 'data-testid': 'editor-social' }}
       userData={userMatches}
       tagData={tagMatches}
@@ -142,3 +141,5 @@ export const SOCIAL_SHOWCASE_CONTENT = {
     },
   ],
 };
+
+export { fakeUsers, fakeTags, userData };

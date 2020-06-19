@@ -3,11 +3,12 @@ import React from 'react';
 
 import { docNodeBasicJSON } from '@remirror/test-fixtures';
 
-import { SocialEditor } from '..';
+import { createSocialManager, SocialEditor } from '..';
 
 test('should place the editor within the correct element', () => {
   const { getByTestId, getByRole } = render(
     <SocialEditor
+      manager={createSocialManager([])}
       userData={[]}
       tagData={[]}
       onMentionChange={jest.fn()}

@@ -1,6 +1,7 @@
 import {
   AddCustomHandler,
   ApplySchemaAttributes,
+  CommandFunction,
   convertCommand,
   CustomHandlerKeyList,
   DefaultExtensionOptions,
@@ -15,6 +16,7 @@ import {
   MarkExtensionSpec,
   MarkGroup,
   markPasteRule,
+  NON_BREAKING_SPACE_CHAR,
   noop,
   object,
   RangeParameter,
@@ -72,7 +74,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
   static readonly defaultOptions: DefaultExtensionOptions<MentionOptions> = {
     mentionTag: 'a' as const,
     matchers: [],
-    appendText: ' ',
+    appendText: NON_BREAKING_SPACE_CHAR,
     suggestTag: 'a' as const,
     noDecorations: false,
   };
@@ -258,9 +260,9 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
         createCommand: ({ match, reason, setMarkRemoved }) => {
           const { range, suggester } = match;
           const { name } = suggester;
-          const create = this.store.getCommands().createMention;
-          const update = this.store.getCommands().updateMention;
-          const remove = this.store.getCommands().removeMention;
+          const createMention = this.store.getCommands().createMention;
+          const updateMention = this.store.getCommands().updateMention;
+          const removeMention = this.store.getCommands().removeMention;
 
           const isActive = isMarkActive({
             from: range.from,
@@ -269,16 +271,17 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
             stateOrTransaction: this.store.getState(),
           });
 
-          const fn = isActive ? update : create;
+          const method = isActive ? updateMention : createMention;
           const isSplit = isSplitReason(reason);
           const isInvalid = isInvalidSplitReason(reason);
           const isRemoved = isRemovedReason(reason);
 
-          const removeCommand = () => {
+          const remove = () => {
             setMarkRemoved();
+
             try {
               // This might fail when a deletion has taken place.
-              isInvalid ? remove({ range }) : noop();
+              isInvalid ? removeMention({ range }) : noop();
             } catch {
               // This sometimes fails and it's best to ignore until more is
               // known about the impact. Please create an issue if this blocks
@@ -286,19 +289,17 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
             }
           };
 
-          const createCommand = ({
+          const update = ({
             replacementType = isSplit ? 'partial' : 'full',
             id = match.queryText[replacementType],
             label = match.matchText[replacementType],
-            appendText,
+            appendText = this.options.appendText,
             ...attributes
           }: SuggestionCommandAttributes) => {
-            // .run();
-            fn({ id, label, appendText, replacementType, name, range, ...attributes });
+            method({ id, label, appendText, replacementType, name, range, ...attributes });
           };
 
-          const command: MentionExtensionSuggestCommand =
-            isInvalid || isRemoved ? removeCommand : createCommand;
+          const command: MentionExtensionSuggestCommand = isInvalid || isRemoved ? remove : update;
 
           return command;
         },
@@ -310,7 +311,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
    * The factory method for mention commands to update and create new mentions.
    */
   private createMention({ shouldUpdate }: CreateMentionParameter) {
-    return (config: MentionExtensionAttributes) => {
+    return (config: MentionExtensionAttributes): CommandFunction => {
       invariant(isValidMentionAttributes(config), {
         message: 'Invalid configuration attributes passed to the MentionExtension command.',
       });
@@ -344,40 +345,42 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
         message: `Mentions matcher not found for name ${name}.`,
       });
 
-      const state = this.store.getState();
+      return (parameter) => {
+        const { tr } = parameter;
+        const { from, to } = range ?? tr.selection;
 
-      const { from, to } = range ?? state.selection;
-      const tr = this.store.getTransaction();
+        if (shouldUpdate) {
+          // Remove mark at previous position
+          let { oldFrom, oldTo } = { oldFrom: from, oldTo: range ? range.end : to };
+          const $oldTo = tr.doc.resolve(oldTo);
 
-      if (shouldUpdate) {
-        // Remove mark at previous position
-        let { oldFrom, oldTo } = { oldFrom: from, oldTo: range ? range.end : to };
-        const $oldTo = tr.doc.resolve(oldTo);
+          ({ from: oldFrom, to: oldTo } = getMarkRange($oldTo, this.type) || {
+            from: oldFrom,
+            to: oldTo,
+          });
 
-        ({ from: oldFrom, to: oldTo } = getMarkRange($oldTo, this.type) || {
-          from: oldFrom,
-          to: oldTo,
-        });
+          tr.removeMark(oldFrom, oldTo, this.type).setMeta('addToHistory', false);
 
-        tr.removeMark(oldFrom, oldTo, this.type).setMeta('addToHistory', false);
+          // Remove mark at current position
+          const $newTo = tr.selection.$from;
+          const { from: newFrom, to: newTo } = getMarkRange($newTo, this.type) || {
+            from: $newTo.pos,
+            to: $newTo.pos,
+          };
 
-        // Remove mark at current position
-        const $newTo = tr.selection.$from;
-        const { from: newFrom, to: newTo } = getMarkRange($newTo, this.type) || {
-          from: $newTo.pos,
-          to: $newTo.pos,
-        };
+          tr.removeMark(newFrom, newTo, this.type).setMeta('addToHistory', false);
+        }
 
-        tr.removeMark(newFrom, newTo, this.type).setMeta('addToHistory', false);
-      }
-
-      return replaceText({
-        type: this.type,
-        attrs: { ...attributes, name },
-        appendText: getAppendText(appendText, matcher.appendText),
-        range: range ? { from, to: replacementType === 'full' ? range.end || to : to } : undefined,
-        content: attributes.label,
-      });
+        return replaceText({
+          type: this.type,
+          attrs: { ...attributes, name },
+          appendText: getAppendText(appendText, matcher.appendText),
+          range: range
+            ? { from, to: replacementType === 'full' ? range.end || to : to }
+            : undefined,
+          content: attributes.label,
+        })(parameter);
+      };
     };
   }
 

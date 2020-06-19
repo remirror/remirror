@@ -197,7 +197,7 @@ function isChrome(minVersion = 0): boolean {
 export function replaceText(parameter: ReplaceTextParameter): CommandFunction {
   const { range, type, attrs = {}, appendText = '', content = '' } = parameter;
 
-  return ({ state, tr, dispatch, view }) => {
+  return ({ state, tr, dispatch }) => {
     const { schema, selection } = state;
     // const { $from, $to } = selection;
     const index = selection.$from.index();
@@ -221,7 +221,7 @@ export function replaceText(parameter: ReplaceTextParameter): CommandFunction {
       );
     }
 
-    /** Only append the text if when text is provided. */
+    // Only append the text if text is provided (ignore the empty string).
     if (appendText) {
       // TODO for some reason this only works when content follows current selection.
       tr.insertText(appendText);
@@ -230,7 +230,7 @@ export function replaceText(parameter: ReplaceTextParameter): CommandFunction {
     if (dispatch) {
       // A workaround for a chrome bug
       // https://github.com/ProseMirror/prosemirror/issues/710#issuecomment-338047650
-      if (isChrome(60) && dispatch === view?.dispatch) {
+      if (isChrome(60)) {
         document.getSelection()?.empty();
       }
 

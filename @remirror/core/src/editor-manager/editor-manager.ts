@@ -457,6 +457,10 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
    * @param view - the editor view
    */
   addView(view: EditorView<this['~Sch']>) {
+    if (this.#phase >= ManagerPhase.EditorView) {
+      // Do nothing since a view has already been added.
+      return this;
+    }
     // invariant(this.#phase < ManagerPhase.EditorView, {code:
     //   ErrorConstant.MANAGER_PHASE_ERROR, message: 'A view has already been
     //   added to this manager. A view should only be added once.',

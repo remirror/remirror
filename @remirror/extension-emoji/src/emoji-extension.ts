@@ -5,9 +5,10 @@ import {
   CommandFunction,
   CustomHandlerKeyList,
   DefaultExtensionOptions,
+  ErrorConstant,
   FromToParameter,
   HandlerKeyList,
-  isNullOrUndefined,
+  invariant,
   object,
   PlainExtension,
   plainInputRule,
@@ -105,7 +106,6 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
       ): CommandFunction => (parameter) => {
         const emoji = getEmojiByName(name);
         if (!emoji) {
-          console.warn('invalid emoji name passed into emoji insertion');
           return false;
         }
 
@@ -124,8 +124,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
       insertEmojiByObject: (
         emoji: EmojiObject,
         { from, to, skinVariation }: EmojiCommandOptions = object(),
-      ): CommandFunction => ({ state, dispatch }) => {
-        const { tr } = state;
+      ): CommandFunction => ({ tr, dispatch }) => {
         const emojiChar = skinVariation ? emoji.char + SKIN_VARIATIONS[skinVariation] : emoji.char;
         tr.insertText(emojiChar, from, to);
 
@@ -201,8 +200,6 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
    * configuration using `prosemirror-suggest`
    */
   createSuggestions = (): Suggestion => {
-    // const fn = debounce(100, sortEmojiMatches);
-
     return {
       noDecorations: true,
       invalidPrefixCharacters: escapeStringRegex(this.options.suggestionCharacter),
@@ -227,11 +224,10 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
         const create = getCommands().insertEmojiByObject;
 
         return (emoji, skinVariation) => {
-          if (isNullOrUndefined(emoji)) {
-            throw new Error(
-              'An emoji object is required when calling the emoji suggesters command',
-            );
-          }
+          invariant(emoji, {
+            message: 'An emoji object is required when calling the emoji suggesters command',
+            code: ErrorConstant.EXTENSION,
+          });
 
           const { from, end: to } = match.range;
           create(emoji, { skinVariation, from, to });

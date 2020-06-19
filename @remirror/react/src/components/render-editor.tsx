@@ -44,7 +44,6 @@ import {
 
 import { usePrevious } from '../hooks';
 import { PortalContainer } from '../portals';
-import { defaultProps } from '../react-constants';
 import {
   BaseProps,
   GetRootPropsConfig,
@@ -63,9 +62,8 @@ import { createEditorView, RemirrorSSR } from '../ssr';
  * application.
  */
 export const RenderEditor = <Combined extends AnyCombinedUnion>(
-  rawProps: RenderEditorProps<Combined>,
+  props: RenderEditorProps<Combined>,
 ) => {
-  const props = createPropsWithDefaults<Combined>(rawProps);
   const { stringHandler = defaultStringHandler, onError, manager, forceEnvironment, value } = props;
 
   // Cache whether this is a controlled editor.
@@ -157,30 +155,6 @@ export interface RenderEditorProps<Combined extends AnyCombinedUnion> extends Ba
    * element to render. The editor view is automatically attached to the DOM.
    */
   children: RenderPropFunction<Combined>;
-}
-
-function createPropsWithDefaults<Combined extends AnyCombinedUnion>(
-  props: RenderEditorProps<Combined>,
-): RenderEditorProps<Combined> {
-  return {
-    attributes: props.attributes ?? defaultProps.attributes,
-    editable: props.editable ?? defaultProps.editable,
-    onError: props.onError ?? defaultProps.onError,
-    initialContent: props.initialContent ?? defaultProps.initialContent,
-    insertPosition: props.insertPosition ?? defaultProps.insertPosition,
-    label: props.label ?? defaultProps.label,
-    onDispatchTransaction: props.onDispatchTransaction ?? defaultProps.onDispatchTransaction,
-    stringHandler: props.stringHandler ?? defaultProps.stringHandler,
-    children: props.children,
-    manager: props.manager,
-    autoFocus: props.autoFocus,
-    forceEnvironment: props.forceEnvironment,
-    onChange: props.onChange,
-    onFocus: props.onFocus,
-    onBlur: props.onBlur,
-    suppressHydrationWarning: props.suppressHydrationWarning,
-    value: props.value,
-  };
 }
 
 class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrapper<
