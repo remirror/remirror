@@ -15,20 +15,19 @@ import {
   AnyExtensionConstructor,
   AnyPresetConstructor,
   BuiltinPreset,
+  CustomHandlerMethod,
   Dispose,
   DynamicOptionsOfConstructor,
   EditorManager,
   ErrorConstant,
-  ExtensionConstructorParameter,
   invariant,
   isFunction,
   keys,
   OptionsOfConstructor,
-  PresetConstructorParameter,
 } from '@remirror/core';
-import { CustomHandlerMethod } from '@remirror/core/src/extension/base-class';
 import {
   getInitialPosition,
+  Positioner,
   PositionerChangeHandlerMethod,
   PositionerChangeHandlerParameter,
   PositionerExtension,
@@ -37,7 +36,6 @@ import {
 import { CorePreset } from '@remirror/preset-core';
 import { ReactPreset } from '@remirror/preset-react';
 
-import { Positioner } from '../../../../packages/remirror/node_modules/@remirror/extension-positioner/src';
 import { I18nContext, RemirrorContext } from '../react-contexts';
 import { I18nContextProps, RemirrorContextProps } from '../react-types';
 
@@ -106,80 +104,6 @@ export function useI18n(): I18nContextProps {
 export type UseRemirrorType<Combined extends AnyCombinedUnion> = () => RemirrorContextProps<
   Combined
 >;
-
-/**
- * A react hook for for creating an extension within the editor.
- *
- * @remarks
- *
- * This can be useful if you'd like to create your extensions and `EditorManager`
- * within a react component.
- *
- * @example
- *
- * ```ts
- * import { useCreateExtension, useCreatePreset } from 'remirror/react';
- * import { PresetCore } from 'remirror/preset-core';
- * import { BoldExtension } from 'remirror/extension-bold';
- *
- * const EditorWrapper = () => {
- *   const corePreset = useCreatePreset(PresetCore);
- *   const boldExtension = useCreateExtension(BoldExtension, { weight: 700 });
- *   const manager = useManager([corePreset, boldExtension]);
- *
- *   <RemirrorProvider >
- *     <MyEditor />
- *   </RemirrorProvider>;
- * }
- * ```
- *
- * You'll probably only need to work this way if you expect to dynamically
- * switch out the editor multiple times in apps like the
- * `@remirror/playground`.
- */
-export function useCreateExtension<Type extends AnyExtensionConstructor>(
-  Constructor: Type,
-  ...[options]: ExtensionConstructorParameter<OptionsOfConstructor<Type>>
-) {
-  return useMemo(() => new Constructor(options), [Constructor, options]) as InstanceType<Type>;
-}
-
-/**
- * A react hook for for creating a preset within the editor.
- *
- * @remarks
- *
- * This can be useful if you'd like to create your presets and `EditorManager`
- * within a react component.
- *
- * @example
- *
- * ```ts
- * import { useCreateExtension, useCreatePreset } from 'remirror/react';
- * import { PresetCore } from 'remirror/preset-core';
- * import { BoldExtension } from 'remirror/extension-bold';
- *
- * const EditorWrapper = () => {
- *   const corePreset = useCreatePreset(PresetCore);
- *   const boldExtension = useCreateExtension(BoldExtension, { weight: 700 });
- *   const manager = useManager({extension: [boldExtension], presets: [] });
- *
- *   <RemirrorProvider >
- *     <MyEditor />
- *   </RemirrorProvider>;
- * }
- * ```
- *
- * You'll probably only need to work this way if you expect to dynamically
- * switch out the editor multiple times in apps like the
- * `@remirror/playground`.
- */
-export function useCreatePreset<Type extends AnyPresetConstructor>(
-  Constructor: Type,
-  ...[settings]: PresetConstructorParameter<OptionsOfConstructor<Type>>
-) {
-  return useMemo(() => new Constructor(settings), [Constructor, settings]) as InstanceType<Type>;
-}
 
 /**
  * Dynamically update the properties of your extension via hooks. Provide the
