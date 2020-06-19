@@ -1,7 +1,5 @@
 import { SupportedCharacters } from 'test-keyboard';
 
-import { MakeOptional } from '@remirror/core';
-
 import { getBrowserName } from './test-environment';
 
 /**
@@ -76,7 +74,7 @@ export interface TypeParameter {
   delay?: number;
 }
 
-export interface PressParameter extends MakeOptional<TypeParameter, 'text'> {
+export interface PressParameter extends Pick<TypeParameter, 'delay'> {
   /**
    * The key to press.
    */
@@ -97,8 +95,8 @@ export interface PressParameter extends MakeOptional<TypeParameter, 'text'> {
  *
  * @return Promise resolving when key presses complete.
  */
-export const press = async ({ key, count = 1, delay = 50, text }: PressParameter) =>
-  promiseSequence(times(count, () => () => page.keyboard.press(key, { text, delay })));
+export const press = async ({ key, count = 1, delay = 10 }: PressParameter) =>
+  promiseSequence(times(count, () => () => page.keyboard.press(key, { delay })));
 
 /**
  * Wrapper around `page.keyboard.type` with default typing delay.

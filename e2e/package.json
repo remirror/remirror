@@ -7,13 +7,13 @@
   "dependencies": {
     "@babel/runtime": "^7.10.2",
     "@remirror/core": "^0.11.0",
-    "@types/puppeteer": "^3.0.0",
     "@types/wait-on": "^4.0.0",
     "expect-playwright": "^0.2.4",
     "jest-dev-server": "^4.4.0",
     "jest-playwright-preset": "^0.2.5",
     "looks-same": "^7.2.3",
     "playwright": "^1.1.1",
+    "playwright-core": "^1.1.1",
     "playwright-testing-library": "^1.2.1",
     "signal-exit": "^3.0.3",
     "test-keyboard": "^0.7.6"

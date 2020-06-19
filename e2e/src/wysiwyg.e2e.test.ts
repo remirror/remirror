@@ -1,5 +1,5 @@
-import { getDocument, queries } from 'pptr-testing-library';
-import { ElementHandle } from 'puppeteer';
+import { getDocument, queries } from 'playwright-testing-library';
+import { ElementHandle } from 'playwright-testing-library/dist/typedefs';
 
 import { mod, press, pressKeyWithModifier, selectAll, textContent } from './helpers';
 
@@ -31,28 +31,28 @@ describe('Wysiwyg Showcase', () => {
 
     it('creates a code block with ``` and space', async () => {
       await $editor.type(`\`\`\`ts ${text}`);
-      await expect($editor).toMatchElement('pre.language-ts > code', { text });
+      await expect($editor).toHaveText('pre.language-ts > code', text);
     });
 
     it('creates a code block with ``` and enter', async () => {
       await $editor.type('```ts');
       await press({ key: 'Enter' });
       await $editor.type(text);
-      await expect($editor).toMatchElement('pre.language-ts > code', { text });
+      await expect($editor).toHaveText('pre.language-ts > code', text);
     });
 
     it('deletes code without issue', async () => {
       await $editor.type(`\`\`\`md ${mdBlock}\nabcde`);
       await press({ key: 'Backspace', count: 5 });
       await $editor.type(text);
-      await expect($editor).toMatchElement('pre.language-md > code', { text });
+      await expect($editor).toHaveText('pre.language-md > code', text);
     });
 
     it('supports the keyboard shortcut for exiting the block', async () => {
       await $editor.type(`\`\`\`md ${mdBlock}`);
       await pressKeyWithModifier('Shift-Enter');
       await $editor.type('My paragraph');
-      await expect($editor).toMatchElement('p', { text: 'My paragraph' });
+      await expect($editor).toHaveText('p', 'My paragraph');
     });
 
     const unformatted = `function concatAwesome(str:    string){return "Awesome " + str}`;
@@ -95,7 +95,7 @@ describe('Wysiwyg Showcase', () => {
       await $editor.type(`\`\`\`ts ${unformatted}`);
       await press({ key: 'ArrowRight' });
       await $editor.type('Outside of the codeblock');
-      await expect($editor).toMatchElement('p', { text: 'Outside of the codeblock' });
+      await expect($editor).toHaveText('p', 'Outside of the codeblock');
     });
 
     it('can interact with shift enter #218', async () => {
@@ -130,14 +130,14 @@ describe('Wysiwyg Showcase', () => {
       await $editor.type('make me bold');
       await selectAll();
       await pressKeyWithModifier(mod('Primary', 'b'));
-      await expect($editor).toMatchElement('strong', { text: 'make me bold' });
+      await expect($editor).toHaveText('strong', 'make me bold');
     });
 
     it('keeps bold after the shortcut', async () => {
       await $editor.type('hello ');
       await pressKeyWithModifier(mod('Primary', 'b'));
       await $editor.type('friend');
-      await expect($editor).toMatchElement('strong', { text: 'friend' });
+      await expect($editor).toHaveText('strong', 'friend');
     });
   });
 

@@ -1,3 +1,5 @@
+import { Page } from 'playwright';
+
 import { imagesMatch } from './helpers';
 
 const tests = Object.entries(__SERVER__.urls).reduce(
@@ -7,13 +9,16 @@ const tests = Object.entries(__SERVER__.urls).reduce(
 );
 
 test.each(tests)('SSR %s - %s', async (_, __, url) => {
-  await page.setJavaScriptEnabled(false);
+  let page: Page;
+  page = await browser.newPage({ javaScriptEnabled: false });
   await page.goto(url);
-  const ssrImage = await page.screenshot({ encoding: 'binary' });
+  const ssrImage = await page.screenshot();
+  await page.close();
 
-  await page.setJavaScriptEnabled(true);
+  page = await browser.newPage({ javaScriptEnabled: true });
   await page.goto(url);
-  const domImage = await page.screenshot({ encoding: 'binary' });
+  const domImage = await page.screenshot();
+  await page.close();
 
   await expect(imagesMatch(ssrImage, domImage)).resolves.toBeTrue();
 });
