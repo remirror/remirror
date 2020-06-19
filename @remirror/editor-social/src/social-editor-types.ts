@@ -1,10 +1,6 @@
-import { Except } from 'type-fest';
-
-import { AnyExtension, AnyPreset } from '@remirror/core';
 import { AutoLinkExtension } from '@remirror/extension-auto-link';
 import { EmojiExtension } from '@remirror/extension-emoji';
-import { MentionExtension, MentionExtensionMatcher } from '@remirror/extension-mention';
-import { SuggestStateMatch } from '@remirror/pm/suggest';
+import { MentionExtension } from '@remirror/extension-mention';
 import { BaseReactCombinedUnion, I18nContextProps, RemirrorProviderProps } from '@remirror/react';
 
 export interface MentionChangeParameter extends BaseMentionState {
@@ -16,18 +12,8 @@ export interface MentionChangeParameter extends BaseMentionState {
 }
 
 export interface SocialEditorProps
-  extends Partial<RemirrorProviderProps<SocialCombinedUnion>>,
+  extends RemirrorProviderProps<SocialCombinedUnion>,
     Partial<I18nContextProps> {
-  /**
-   * Add extra extension to the editor.
-   */
-  extensions?: AnyExtension[];
-
-  /**
-   * Add extra presets to the editor.
-   */
-  presets?: AnyPreset[];
-
   /**
    * Display a typing hint that limits the number of characters to this number.
    * Defaults to 140, set to `null` to disable.
@@ -58,16 +44,6 @@ export interface SocialEditorProps
    * Called any time there is a change in the mention
    */
   onMentionChange: (params?: MentionChangeParameter) => void;
-
-  /**
-   * The matcher options for the `@` mention character.
-   */
-  atMatcherOptions?: Except<MentionExtensionMatcher, 'name' | 'char'>;
-
-  /**
-   * The matcher options for the `#` mention character/
-   */
-  tagMatcherOptions?: Except<MentionExtensionMatcher, 'name' | 'char'>;
 }
 
 interface BaseMentionState {
@@ -95,55 +71,6 @@ export interface TagData {
   href?: string;
   tag: string;
 }
-
-export interface ActiveUserData extends UserData {
-  active: boolean;
-}
-
-export interface ActiveTagData extends TagData {
-  active: boolean;
-}
-
-/**
- * A method for retrieving the most up to date mention data.
- */
-export type MentionGetter = () => SuggestStateMatch;
-
-export interface SetExitTriggeredInternallyParameter {
-  /**
-   * Identifies the command as an internal exit inducing command. Prevents a
-   * second onExit from being dispatched.
-   */
-  setExitTriggeredInternally: () => void;
-}
-
-export interface MentionGetterParameter {
-  /**
-   * Provides access to the most recent mention data.
-   */
-  getMention: MentionGetter;
-}
-
-export interface DataParameter<Data> {
-  /**
-   * A list of data items.
-   */
-  data: Data[];
-}
-
-export interface UserSuggestionsProps
-  extends MentionGetterParameter,
-    DataParameter<ActiveUserData>,
-    SetExitTriggeredInternallyParameter {}
-
-export interface TagSuggestionsProps
-  extends MentionGetterParameter,
-    DataParameter<ActiveTagData>,
-    SetExitTriggeredInternallyParameter {}
-
-export type DivProps = JSX.IntrinsicElements['div'];
-export type SpanProps = JSX.IntrinsicElements['span'];
-export type ImgProps = JSX.IntrinsicElements['img'];
 
 /**
  * The extensions used by the social editor.

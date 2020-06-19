@@ -21,4 +21,5 @@ export type {
   BaseClassConstructor,
   AddHandler,
   AddCustomHandler,
+  CustomHandlerMethod,
 } from './extension/base-class';

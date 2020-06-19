@@ -23,7 +23,7 @@ export interface RemirrorProviderProps<Combined extends AnyCombinedUnion>
   /**
    * The `RemirrorProvider` only supports **ONE** child element.
    */
-  children: ReactElement;
+  children?: ReactElement;
 
   /**
    * Sets the first child element as a the root (where the prosemirror editor

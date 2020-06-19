@@ -50,6 +50,11 @@ export const NULL_CHARACTER = '\0';
 export const ZERO_WIDTH_SPACE_CHAR = '\u200B';
 
 /**
+ * The non breaking space character.
+ */
+export const NON_BREAKING_SPACE_CHAR = '\u00A0';
+
+/**
  * A default empty object node. Useful for resetting the content of a
  * prosemirror document.
  */

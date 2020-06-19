@@ -1,16 +1,7 @@
 import { css } from 'linaria';
-import React, { FC, useMemo } from 'react';
+import React, { FC } from 'react';
 
-import { AutoLinkExtension } from '@remirror/extension-auto-link';
-import { EmojiExtension } from '@remirror/extension-emoji';
-import { MentionExtension } from '@remirror/extension-mention';
-import {
-  I18nProvider,
-  RemirrorProvider,
-  useCreateExtension,
-  useManager,
-  useRemirror,
-} from '@remirror/react';
+import { I18nProvider, RemirrorProvider, useRemirror } from '@remirror/react';
 
 import { SocialEditorProps } from '../social-editor-types';
 import { CharacterCountIndicator, CharacterCountWrapper } from './social-editor-character-count';
@@ -22,57 +13,37 @@ import { MentionSuggestions } from './social-editor-mentions';
  */
 export const SocialEditor: FC<SocialEditorProps> = (props) => {
   const {
-    extensions = [],
-    presets = [],
-    atMatcherOptions,
-    tagMatcherOptions,
     children,
     i18n,
     locale,
+    characterLimit,
+    tagData,
+    onMentionChange,
+    onUrlsChange,
+    userData,
+    manager,
+    ...rest
   } = props;
-  const mentionExtensionSettings = useMemo(
-    () => ({
-      matchers: [
-        { name: 'at', char: '@', appendText: ' ', ...atMatcherOptions },
-        { name: 'tag', char: '#', appendText: ' ', ...tagMatcherOptions },
-      ],
-    }),
-    [atMatcherOptions, tagMatcherOptions],
-  );
-
-  const mentionExtension = useCreateExtension(MentionExtension, mentionExtensionSettings);
-  const emojiExtension = useCreateExtension(
-    EmojiExtension,
-    useMemo(
-      () => ({
-        extraAttributes: { role: { default: 'presentation' } },
-      }),
-      [],
-    ),
-  );
-
-  const autoLinkExtension = useCreateExtension(AutoLinkExtension, { defaultProtocol: 'https:' });
-  const combined = useMemo(
-    () => [...extensions, ...presets, mentionExtension, emojiExtension, autoLinkExtension],
-    [autoLinkExtension, emojiExtension, extensions, mentionExtension, presets],
-  );
-
-  const manager = useManager(combined);
 
   return (
     <I18nProvider i18n={i18n} locale={locale}>
-      <RemirrorProvider {...props} manager={manager} childAsRoot={false}>
+      <RemirrorProvider {...rest} manager={manager} childAsRoot={false}>
         <Editor {...props}>{children}</Editor>
       </RemirrorProvider>
     </I18nProvider>
   );
 };
 
+type EditorProps = Pick<
+  SocialEditorProps,
+  'characterLimit' | 'tagData' | 'onMentionChange' | 'onUrlsChange' | 'userData'
+>;
+
 /**
  * The editing functionality within the Social Editor context.
  */
-const Editor: FC<SocialEditorProps> = (props) => {
-  const { children, characterLimit = 280 } = props;
+const Editor: FC<EditorProps> = (props) => {
+  const { children, characterLimit = 280, tagData, onMentionChange, userData } = props;
 
   const { getRootProps, getState } = useRemirror();
   const used = getState().doc.textContent.length;
@@ -89,11 +60,7 @@ const Editor: FC<SocialEditorProps> = (props) => {
         )}
         {children}
       </div>
-      <MentionSuggestions
-        tags={props.tagData}
-        users={props.userData}
-        onChange={props.onMentionChange}
-      />
+      <MentionSuggestions tags={tagData} users={userData} onChange={onMentionChange} />
     </div>
   );
 };

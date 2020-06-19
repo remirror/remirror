@@ -2,10 +2,12 @@ import { CustomHandler, Handler, ProsemirrorAttributes, Static } from '@remirror
 import {
   FromToEndParameter,
   SuggestChangeHandlerMethod,
+  SuggestChangeHandlerParameter,
   SuggestCharacterEntryMethod,
   SuggestExitHandlerMethod,
   Suggestion,
   SuggestKeyBindingMap,
+  SuggestKeyBindingParameter,
   SuggestReplacementType,
 } from '@remirror/pm/suggest';
 
@@ -96,6 +98,12 @@ export interface MentionOptions {
   /**
    * Text to append after the mention has been added.
    *
+   * **NOTE**: For some reason prosemirror seems to swallow up empty whitespace. You can get around this by using a non breaking space character '\u00A0'.
+   *
+   * ```ts
+   * import { NON_BREAKING_SPACE_CHAR } from '@remirror/core';
+   * ```
+   *
    * @defaultValue ''
    */
   appendText?: string;
@@ -174,7 +182,11 @@ export type SuggestionCommandAttributes = ProsemirrorAttributes<
  */
 export type MentionExtensionSuggestCommand = (attrs: SuggestionCommandAttributes) => void;
 export type MentionKeyBinding = SuggestKeyBindingMap<MentionExtensionSuggestCommand>;
+export type MentionKeyBindingParameter = SuggestKeyBindingParameter<MentionExtensionSuggestCommand>;
 export type MentionChangeHandlerMethod = SuggestChangeHandlerMethod<MentionExtensionSuggestCommand>;
+export type MentionChangeHandlerParameter = SuggestChangeHandlerParameter<
+  MentionExtensionSuggestCommand
+>;
 export type MentionExitHandlerMethod = SuggestExitHandlerMethod<MentionExtensionSuggestCommand>;
 export type MentionCharacterEntryMethod = SuggestCharacterEntryMethod<
   MentionExtensionSuggestCommand

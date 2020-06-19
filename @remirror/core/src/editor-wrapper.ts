@@ -51,11 +51,6 @@ export abstract class EditorWrapper<
   Props extends EditorWrapperProps<Combined>
 > {
   /**
-   * The prosemirror EditorView.
-   */
-  readonly view: EditorView<SchemaFromCombined<Combined>>;
-
-  /**
    * A unique ID for the editor which is also used as a key to pass into
    * `getRootProps`.
    */
@@ -123,6 +118,13 @@ export abstract class EditorWrapper<
   }
 
   /**
+   * The prosemirror EditorView.
+   */
+  protected get view(): EditorView<SchemaFromCombined<Combined>> {
+    return this.manager.view;
+  }
+
+  /**
    * The document to use when rendering.
    */
   protected get doc() {
@@ -133,6 +135,9 @@ export abstract class EditorWrapper<
     return this.#uid;
   }
 
+  readonly #manager: EditorManager<Combined>;
+  readonly #view: EditorView<SchemaFromCombined<Combined>>;
+
   constructor(parameter: EditorWrapperParameter<Combined, Props>) {
     const { getProps, createStateFromContent, initialEditorState, element } = parameter;
 
@@ -140,8 +145,10 @@ export abstract class EditorWrapper<
     this.createStateFromContent = createStateFromContent;
 
     // Create the ProsemirrorView and initialize our editor manager with it.
-    this.view = this.createView(initialEditorState, element);
-    this.manager.addView(this.view);
+    const view = this.createView(initialEditorState, element);
+    this.manager.addView(view);
+    this.#manager = this.manager;
+    this.#view = this.view;
   }
 
   /**
