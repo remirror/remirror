@@ -4,7 +4,7 @@ import {
   AnyCombinedUnion,
   bool,
   DOMOutputSpec,
-  EditorManager,
+  RemirrorManager,
   ErrorConstant,
   Fragment as ProsemirrorFragment,
   invariant,
@@ -79,7 +79,7 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
    *
    * @param manager
    */
-  static fromManager<Combined extends AnyCombinedUnion>(manager: EditorManager<Combined>) {
+  static fromManager<Combined extends AnyCombinedUnion>(manager: RemirrorManager<Combined>) {
     return new ReactSerializer(
       this.nodesFromManager(manager),
       this.marksFromManager(manager),
@@ -93,7 +93,7 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
    * @param manager
    */
   private static nodesFromManager<Combined extends AnyCombinedUnion>(
-    manager: EditorManager<Combined>,
+    manager: RemirrorManager<Combined>,
   ) {
     const result = gatherDomMethods(manager.nodes);
     if (!result.text) {
@@ -108,7 +108,7 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
    * @param manager
    */
   private static marksFromManager<Combined extends AnyCombinedUnion>(
-    manager: EditorManager<Combined>,
+    manager: RemirrorManager<Combined>,
   ) {
     return gatherDomMethods(manager.marks);
   }
@@ -121,7 +121,7 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
   constructor(
     nodes: Record<string, NodeToDOM>,
     marks: Record<string, MarkToDOM>,
-    manager: EditorManager<Combined>,
+    manager: RemirrorManager<Combined>,
   ) {
     this.nodes = nodes;
     this.marks = marks;

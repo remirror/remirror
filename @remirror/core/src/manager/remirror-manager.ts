@@ -50,7 +50,7 @@ import {
 import {
   ignoreFunctions,
   transformExtensionOrPreset as transformExtensionOrPresetList,
-} from './editor-manager-helpers';
+} from './remirror-manager-helpers';
 
 /**
  * The `Manager` has multiple hook phases which are able to hook into the
@@ -94,7 +94,7 @@ import {
  * manager.data.actions
  * ```
  */
-export class EditorManager<Combined extends AnyCombinedUnion> {
+export class RemirrorManager<Combined extends AnyCombinedUnion> {
   /**
    * A static method to create the editor manager from an object.
    */
@@ -102,10 +102,10 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
     extensions,
     presets,
     settings = {},
-  }: EditorManagerParameter<ExtensionUnion, PresetUnion>) {
+  }: RemirrorManagerParameter<ExtensionUnion, PresetUnion>) {
     const builtInPreset = new BuiltinPreset();
 
-    return new EditorManager<ExtensionUnion | PresetUnion | BuiltinPreset>(
+    return new RemirrorManager<ExtensionUnion | PresetUnion | BuiltinPreset>(
       [...extensions, ...presets, builtInPreset],
       { ...settings, privacy: privacySymbol },
     );
@@ -120,7 +120,7 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   ) {
     const builtInPreset = new BuiltinPreset();
 
-    return new EditorManager<Combined | BuiltinPreset>([...combined, builtInPreset], {
+    return new RemirrorManager<Combined | BuiltinPreset>([...combined, builtInPreset], {
       ...settings,
       privacy: privacySymbol,
     });
@@ -267,7 +267,7 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
     this.#combined = combined;
 
     invariant(privacy === privacySymbol, {
-      message: `The extension manager can only be invoked via one of it's static methods. e.g 'EditorManager.create([...extensions])'.`,
+      message: `The extension manager can only be invoked via one of it's static methods. e.g 'RemirrorManager.create([...extensions])'.`,
       code: ErrorConstant.NEW_EDITOR_MANAGER,
     });
 
@@ -528,7 +528,7 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
    * @param otherManager - the value to test against
    */
   isEqual(otherManager: unknown) {
-    if (!isEditorManager(otherManager)) {
+    if (!isRemirrorManager(otherManager)) {
       return false;
     }
 
@@ -622,10 +622,10 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   clone<ExtraCombined extends AnyCombinedUnion>(
     combined: ExtraCombined[],
     settings: Remirror.ManagerSettings = {},
-  ): EditorManager<Combined | ExtraCombined> {
+  ): RemirrorManager<Combined | ExtraCombined> {
     const currentCombined = this.#combined.map((e) => e.clone(e.initialOptions as any));
 
-    return EditorManager.create([...currentCombined, ...combined], settings) as EditorManager<
+    return RemirrorManager.create([...currentCombined, ...combined], settings) as RemirrorManager<
       Combined | ExtraCombined
     >;
   }
@@ -640,18 +640,18 @@ export class EditorManager<Combined extends AnyCombinedUnion> {
   }
 }
 
-export type AnyEditorManager = EditorManager<AnyCombinedUnion>;
+export type AnyRemirrorManager = RemirrorManager<AnyCombinedUnion>;
 
 /**
  * Checks to see whether the provided value is an `Manager`.
  *
  * @param value - the value to check
  */
-export function isEditorManager(value: unknown): value is AnyEditorManager {
+export function isRemirrorManager(value: unknown): value is AnyRemirrorManager {
   return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Manager);
 }
 
-export interface EditorManagerParameter<
+export interface RemirrorManagerParameter<
   ExtensionUnion extends AnyExtension,
   PresetUnion extends AnyPreset
 > {
@@ -681,7 +681,7 @@ export interface EditorManagerParameter<
 
 interface SettingsWithPrivacy extends Remirror.ManagerSettings {
   /**
-   * A symbol value that prevents the EditorManager constructor from being
+   * A symbol value that prevents the RemirrorManager constructor from being
    * called directly.
    *
    * @internal
@@ -689,27 +689,27 @@ interface SettingsWithPrivacy extends Remirror.ManagerSettings {
   privacy?: symbol;
 }
 
-export type GetCombined<Manager extends AnyEditorManager> = Manager['~EP'];
+export type GetCombined<Manager extends AnyRemirrorManager> = Manager['~EP'];
 
-interface EditorManagerConstructor<Combined extends AnyCombinedUnion>
+interface RemirrorManagerConstructor<Combined extends AnyCombinedUnion>
   extends Function,
-    Remirror.EditorManagerConstructor {
+    Remirror.RemirrorManagerConstructor {
   fromObject: (
-    parameter: EditorManagerParameter<
+    parameter: RemirrorManagerParameter<
       InferCombinedExtensions<Combined>,
       InferCombinedPresets<Combined>
     >,
-  ) => EditorManager<
+  ) => RemirrorManager<
     InferCombinedExtensions<Combined> | InferCombinedPresets<Combined> | BuiltinPreset
   >;
-  create: (combined: Combined) => EditorManager<Combined | BuiltinPreset>;
+  create: (combined: Combined) => RemirrorManager<Combined | BuiltinPreset>;
 }
 
-export interface EditorManager<Combined extends AnyCombinedUnion> {
+export interface RemirrorManager<Combined extends AnyCombinedUnion> {
   /**
    * The constructor for the editor manager.
    */
-  constructor: EditorManagerConstructor<Combined>;
+  constructor: RemirrorManagerConstructor<Combined>;
 
   /**
    * Pseudo property which is a small hack to store the type of the extension
@@ -756,9 +756,9 @@ declare global {
   namespace Remirror {
     /**
      * Extend this to add extra static methods to the
-     * `EditorManagerConstructor`.
+     * `RemirrorManagerConstructor`.
      */
-    interface EditorManagerConstructor {}
+    interface RemirrorManagerConstructor {}
 
     /**
      * Settings which can be passed into the manager.
@@ -814,7 +814,7 @@ declare global {
 
       /**
        * The view available to extensions once `addView` has been called on the
-       * `EditorManager` instance.
+       * `RemirrorManager` instance.
        */
       readonly view: EditorView<EditorSchema>;
 

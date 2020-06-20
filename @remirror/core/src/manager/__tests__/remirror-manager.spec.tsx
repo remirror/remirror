@@ -10,7 +10,7 @@ import { EditorView } from '@remirror/pm/view';
 import { CorePreset, createBaseManager } from '@remirror/test-fixtures';
 
 import { CreateLifecycleMethod, PlainExtension } from '../../extension';
-import { EditorManager, isEditorManager } from '../editor-manager';
+import { isRemirrorManager, RemirrorManager } from '../remirror-manager';
 
 describe('Manager', () => {
   let state: EditorState;
@@ -58,7 +58,7 @@ describe('Manager', () => {
   const bigExtension = new BigExtension({ priority: ExtensionPriority.Lowest + 1 });
   const corePreset = new CorePreset();
 
-  let manager = EditorManager.fromObject({
+  let manager = RemirrorManager.fromObject({
     extensions: [dummyExtension, bigExtension],
     presets: [corePreset],
   });
@@ -66,7 +66,7 @@ describe('Manager', () => {
   let view: EditorView;
 
   beforeEach(() => {
-    manager = EditorManager.fromObject({
+    manager = RemirrorManager.fromObject({
       extensions: [dummyExtension, bigExtension],
       presets: [new CorePreset({})],
     });
@@ -80,7 +80,7 @@ describe('Manager', () => {
 
   test('constructor is private', () => {
     // @ts-expect-error
-    expect(() => new EditorManager({})).toThrowError();
+    expect(() => new RemirrorManager({})).toThrowError();
   });
 
   test('commands', () => {
@@ -119,10 +119,10 @@ describe('Manager', () => {
   });
 
   test('isManager', () => {
-    expect(isEditorManager({})).toBeFalse();
-    expect(isEditorManager(null)).toBeFalse();
-    expect(isEditorManager(dummyExtension)).toBeFalse();
-    expect(isEditorManager(manager)).toBeTrue();
+    expect(isRemirrorManager({})).toBeFalse();
+    expect(isRemirrorManager(null)).toBeFalse();
+    expect(isRemirrorManager(dummyExtension)).toBeFalse();
+    expect(isRemirrorManager(manager)).toBeTrue();
   });
 
   describe('#isEqual', () => {
@@ -187,7 +187,7 @@ test('keymaps', () => {
     };
   }
 
-  const manager = EditorManager.fromObject({
+  const manager = RemirrorManager.fromObject({
     extensions: [new FirstExtension(), new SecondExtension(), new ThirdExtension()],
     presets: [new CorePreset()],
   });

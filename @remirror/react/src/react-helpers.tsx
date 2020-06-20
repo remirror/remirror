@@ -1,7 +1,7 @@
 import React, { ComponentType } from 'react';
 import { renderToString } from 'react-dom/server';
 
-import { AnyEditorManager, object, Shape } from '@remirror/core';
+import { AnyRemirrorManager, object, Shape } from '@remirror/core';
 
 import { useRemirror } from './hooks';
 
@@ -76,7 +76,7 @@ export function getManagerFromComponentTree({
   prop = 'children',
   extraProps = object<Shape>(),
 }: GetManagerFromComponentTreeParameter) {
-  return new Promise<AnyEditorManager>((resolve, reject) => {
+  return new Promise<AnyRemirrorManager>((resolve, reject) => {
     const ManagerRetriever = () => {
       const { manager } = useRemirror();
       resolve(manager);

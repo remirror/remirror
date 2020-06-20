@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { Except } from 'type-fest';
 
-import { AnyCombinedUnion, EditorManager } from '@remirror/core';
+import { AnyCombinedUnion, RemirrorManager } from '@remirror/core';
 import { AutoLinkExtension } from '@remirror/extension-auto-link';
 import { EmojiExtension } from '@remirror/extension-emoji';
 import { MentionExtension, MentionExtensionMatcher } from '@remirror/extension-mention';
@@ -34,7 +34,7 @@ export function createSocialManager<Combined extends AnyCombinedUnion>(
   combined: Combined[],
   options: CreateSocialManagerOptions = {},
   settings?: Remirror.ManagerSettings,
-): EditorManager<SocialCombinedUnion | Combined> {
+): RemirrorManager<SocialCombinedUnion | Combined> {
   const { atMatcherOptions, tagMatcherOptions } = options;
 
   const autoLinkExtension = new AutoLinkExtension({ defaultProtocol: 'https:' });
@@ -75,6 +75,6 @@ export function useSocialManager<Combined extends AnyCombinedUnion>(
   combined: Combined[],
   options: CreateSocialManagerOptions = {},
   settings?: Remirror.ManagerSettings,
-): EditorManager<SocialCombinedUnion | Combined> {
+): RemirrorManager<SocialCombinedUnion | Combined> {
   return useRef(createSocialManager(combined, options, settings)).current;
 }

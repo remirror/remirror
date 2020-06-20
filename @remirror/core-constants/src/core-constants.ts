@@ -337,7 +337,7 @@ export enum ManagerPhase {
    * When the extension manager is being created and the onCreate methods are
    * being called.
    *
-   * This happens within the EditorManager constructor.
+   * This happens within the RemirrorManager constructor.
    */
   Create,
 

@@ -18,7 +18,7 @@ import {
   CustomHandlerMethod,
   Dispose,
   DynamicOptionsOfConstructor,
-  EditorManager,
+  RemirrorManager,
   ErrorConstant,
   invariant,
   isFunction,
@@ -329,7 +329,7 @@ function useObjectCheck<Type extends object>(parameter: Type): Type {
 export function useManager<Combined extends AnyCombinedUnion>(
   combined: Combined[],
   settings: Remirror.ManagerSettings = {},
-): EditorManager<Combined | ReactPreset | CorePreset | BuiltinPreset> {
+): RemirrorManager<Combined | ReactPreset | CorePreset | BuiltinPreset> {
   return useRef(createReactManager(combined, settings)).current;
 }
 
@@ -424,6 +424,6 @@ export function usePositioner(
 export function createReactManager<Combined extends AnyCombinedUnion>(
   combined: Combined[],
   settings?: Remirror.ManagerSettings,
-): EditorManager<Combined | BuiltinPreset | ReactPreset | CorePreset> {
-  return EditorManager.create([...combined, new ReactPreset(), new CorePreset()], settings);
+): RemirrorManager<Combined | BuiltinPreset | ReactPreset | CorePreset> {
+  return RemirrorManager.create([...combined, new ReactPreset(), new CorePreset()], settings);
 }

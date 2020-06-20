@@ -99,22 +99,22 @@ export type NodeExtensionTags<NodeNames extends string = string> = Record<NodeGr
 export type GetOptions<Type extends { ['~O']: unknown }> = Type['~O'];
 
 /**
- * Get the schema from an `EditorManager`.
+ * Get the schema from a `RemirrorManager`.
  */
 export type GetSchema<Type extends { ['~Sch']: unknown }> = Type['~Sch'];
 
 /**
- * Get the commands from an `EditorManager`, `Extension` or `Preset`.
+ * Get the commands from a `RemirrorManager`, `Extension` or `Preset`.
  */
 export type GetCommands<Type extends { ['~C']: unknown }> = Type['~C'];
 
 /**
- * Get the Extensions from an `EditorManager`, or `Preset`.
+ * Get the Extensions from a `RemirrorManager`, or `Preset`.
  */
 export type GetExtensions<Type extends { ['~E']: unknown }> = Type['~E'];
 
 /**
- * Get the helpers provided by an from an `EditorManager`, `Extension` or
+ * Get the helpers provided by an from a `RemirrorManager`, `Extension` or
  * `Preset`.
  */
 export type GetHelpers<Type extends { ['~H']: unknown }> = Type['~H'];

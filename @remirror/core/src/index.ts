@@ -7,7 +7,7 @@ export * from '@remirror/core-helpers';
 
 export * from './builtins';
 export * from './extension';
-export * from './editor-manager';
+export * from './manager';
 export * from './editor-wrapper';
 export * from './preset';
 export * from './styles';

@@ -32,7 +32,7 @@ When added to your editor the auto link extension will automatically add links t
 pattern that matches the default regex.
 
 ```ts
-import { EditorManager, ExtensionPriority } from '@remirror/core';
+import { RemirrorManager, ExtensionPriority } from '@remirror/core';
 import { CorePreset } from '@remirror/preset-core';
 import { AutoLinkExtension } from '@remirror/extension-auto-link';
 
@@ -41,7 +41,7 @@ const autoLinkExtension = new AutoLinkExtension();
 const corePreset = new CorePreset();
 
 // Create the Editor Manager with the extension passed through.
-const manager = EditorManager.create([autoLinkExtension, corePreset]);
+const manager = RemirrorManager.create([autoLinkExtension, corePreset]);
 
 // Pass the dom element to the editor. If you are using `@remirror/react` this is done for you.
 const element = document.createElement('div');

@@ -43,7 +43,7 @@ import { TextSelection } from '@remirror/pm/state';
 import { DirectEditorProps } from '@remirror/pm/view';
 
 import { UpdatableViewProps } from './builtins';
-import { EditorManager } from './editor-manager';
+import { RemirrorManager } from './manager';
 import { AnyCombinedUnion, SchemaFromCombined } from './preset/preset-types';
 
 export abstract class EditorWrapper<
@@ -113,7 +113,7 @@ export abstract class EditorWrapper<
   /**
    * A utility for quickly retrieving the extension manager.
    */
-  protected get manager(): EditorManager<Combined> {
+  protected get manager(): RemirrorManager<Combined> {
     return this.props.manager;
   }
 
@@ -135,7 +135,7 @@ export abstract class EditorWrapper<
     return this.#uid;
   }
 
-  readonly #manager: EditorManager<Combined>;
+  readonly #manager: RemirrorManager<Combined>;
   readonly #view: EditorView<SchemaFromCombined<Combined>>;
 
   constructor(parameter: EditorWrapperParameter<Combined, Props>) {
@@ -557,7 +557,7 @@ export interface EditorWrapperProps<Combined extends AnyCombinedUnion>
    *
    * TODO - why does this only work as `any`.
    */
-  manager: EditorManager<any>;
+  manager: RemirrorManager<any>;
 
   /**
    * Set the starting value object of the editor.
@@ -676,7 +676,7 @@ export interface EditorWrapperOutput<Combined extends AnyCombinedUnion>
   /**
    * An instance of the extension manager
    */
-  manager: EditorManager<Combined>;
+  manager: RemirrorManager<Combined>;
 
   /**
    * Add event handlers to the remirror editor at runtime.

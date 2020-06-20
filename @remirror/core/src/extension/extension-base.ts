@@ -189,7 +189,7 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
    * }
    * ```
    *
-   * This should only be called by the `EditorManager`.
+   * This should only be called by the `RemirrorManager`.
    *
    * @internal
    * @nonVirtual

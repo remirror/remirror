@@ -233,7 +233,7 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
    * }
    * ```
    *
-   * This should only be called by the `EditorManager`.
+   * This should only be called by the `RemirrorManager`.
    *
    * @internal
    * @nonVirtual

@@ -35,7 +35,7 @@ The following code sample will create a limited editor and run the available com
 extension.
 
 ```ts
-import { EditorManager, ExtensionPriority } from '@remirror/core';
+import { RemirrorManager, ExtensionPriority } from '@remirror/core';
 import { CorePreset } from '@remirror/preset-core';
 import { EmojiExtension } from '@remirror/extension-emoji';
 
@@ -44,7 +44,7 @@ const emojiExtension = new EmojiExtension({ supportedLanguages: [typescript, jsx
 const corePreset = new CorePreset();
 
 // Create the Editor Manager with the codeBlock extension passed through.
-const manager = EditorManager.create([emojiExtension, corePreset]);
+const manager = RemirrorManager.create([emojiExtension, corePreset]);
 
 // Pass the dom element to the editor. If you are using `@remirror/react` or
 // other framework wrappers then this is handled for you.
