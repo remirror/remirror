@@ -54,6 +54,7 @@ jobs:
 
       - name: chrome integration test ${{ matrix.os }}
         run: cd e2e && pnpm run chromium
-
-      - name: webkit integration test ${{ matrix.os }}
-        run: cd e2e && pnpm run webkit
+      ## TODO turn back on once this is resolved : https://github.com/microsoft/playwright/issues/1081
+      ## https://github.com/microsoft/playwright-github-action
+      # - name: webkit integration test ${{ matrix.os }}
+      #   run: cd e2e && pnpm run webkit
