@@ -10,17 +10,10 @@
 
 <p align="center">
 
-<a href="https://dev.azure.com/remirror/remirror/_build/latest?definitionId=2&amp;branchName=master"><img src="https://dev.azure.com/remirror/remirror/_apis/build/status/remirror.remirror?branchName=master" alt="Azure DevOps builds" /></a>
-<a href="https://github.com/remirror/remirror/actions?query=workflow%3A%22Node+CI%22?branch=master"><img src="https://github.com/remirror/remirror/workflows/Node%20CI/badge.svg?branch=master" alt="GitHub Actions CI" /></a>
-<a href="https://codeclimate.com/github/remirror/remirror/test_coverage"><img src="https://api.codeclimate.com/v1/badges/f4d8dcd5c2228524a53a/test_coverage" /></a>
-<a href="https://github.com/remirror/remirror/commits/master"><img src="https://img.shields.io/github/commit-activity/m/remirror/remirror.svg?amp;logo=github" alt="GitHub commit activity"></a>
-<a href="https://github.com/remirror/remirror/commits/master"><img src="https://img.shields.io/github/last-commit/remirror/remirror.svg?amp;logo=github" alt="GitHub last commit" /></a>
-<a href="https://github.com/remirror/remirror/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc"><img src="https://img.shields.io/github/issues-raw/remirror/remirror.svg?amp;logo=github" alt="GitHub issues" /></a>
-<a href="https://github.com/remirror/remirror/pulls?q=is%3Apr+is%3Aopen+sort%3Aupdated-desc"><img src="https://img.shields.io/github/issues-pr/remirror/remirror.svg?amp;logo=github" alt="GitHub pull requests" /></a>
-<a href="https://github.com/remirror/remirror"><img src="https://img.shields.io/github/stars/remirror/remirror.svg?amp;logo=github" alt="GitHub stars" /></a>
-<a href="https://github.com/remirror/remirror/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/remirror.svg" alt="LICENSE" /></a>
-<a href="https://app.netlify.com/sites/remirror/deploys"><img src="https://api.netlify.com/api/v1/badges/f59cbf02-798f-45dd-a78c-93ec52b08d20/deploy-status" alt="Netlify Status" /></a>
-<a href="https://spectrum.chat/remirror"><img alt="Join the community on Spectrum" src="https://withspectrum.github.io/badge/badge.svg" /></a>
+<a href="https://github.com/remirror/remirror/actions?query=workflow%3A%22Node+CI%22?branch=next"><img src="https://github.com/remirror/remirror/workflows/Node%20CI/badge.svg?branch=next" alt="Build And Release" /></a>
+<a href="https://github.com/remirror/remirror/actions?query=workflow%3A%22Node+CI%22?branch=next"><img src="https://github.com/remirror/remirror/workflows/Deploy%20Docs/badge.svg?branch=next" alt="Deploy Docs" /></a>
+<a href="https://dev.azure.com/remirror/remirror/_build/latest?definitionId=2&amp;branchName=next"><img src="https://dev.azure.com/remirror/remirror/_apis/build/status/remirror.remirror?branchName=next" alt="Azure DevOps builds" /></a>
+<a href="https://github.com/remirror/remirror/commits/next"><img src="https://img.shields.io/github/commit-activity/m/remirror/remirror.svg?amp;logo=github" alt="GitHub commit activity"></a>
 
 </p>
 
@@ -28,7 +21,7 @@
 
 <div align="center">
   <div align="center">
-    <img width="600"  src="https://media.githubusercontent.com/media/remirror/remirror/master/support/assets/wysiwyg.png" alt="remirror" />
+    <img width="600"  src="https://media.githubusercontent.com/media/remirror/remirror/next/support/assets/wysiwyg.png" alt="remirror" />
   </div>
     <br />
 </div>
@@ -47,7 +40,6 @@ documentation is still being rewritten to capture the updated API.
 View our documentation website at https://docs.remirror.org/
 
 - [Introduction]
-  <!-- - [Installation] -->
 - [Getting started]
 
 <br />
@@ -96,7 +88,7 @@ import {
   MentionChangeParameter,
   SocialEditor,
   UserData,
-} from 'remirror/react/editor/social';
+} from 'remirror/editor/social';
 
 const tags = ['NeedsStylingSoon', 'LondonHits', 'Awesome'];
 
@@ -174,8 +166,8 @@ pnpm run stop:checks
 ### Built With
 
 - [Typescript]
-- [React]
 - [Prosemirror]
+- Love ❤️
 
 <br />
 
