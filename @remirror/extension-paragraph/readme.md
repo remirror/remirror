@@ -32,7 +32,7 @@ When added to your editor it will provide the `insertParagraph` which inserts a 
 editor.
 
 ```ts
-import { EditorManager, ExtensionPriority } from '@remirror/core';
+import { RemirrorManager, ExtensionPriority } from '@remirror/core';
 import { ParagraphExtension } from '@remirror/extension-paragraph';
 import { DocExtension } from '@remirror/extension-doc';
 import { TextExtension } from '@remirror/extension-text';
@@ -43,7 +43,7 @@ const docExtension = new DocExtension({ priority: ExtensionPriority.Low });
 const textExtension = new TextExtension({ priority: ExtensionPriority.Low });
 
 // Create the Editor Manager with the paragraph extension passed through.
-const manager = EditorManager.create([paragraphExtension, docExtension, textExtension]);
+const manager = RemirrorManager.create([paragraphExtension, docExtension, textExtension]);
 
 // Pass the dom element to the editor. If you are using `@remirror/react` this is done for you.
 const element = document.createElement('div');

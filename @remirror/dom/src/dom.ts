@@ -1,7 +1,7 @@
 import {
   AnyCombinedUnion,
   BuiltinPreset,
-  EditorManager,
+  RemirrorManager,
   EditorState,
   EditorWrapper,
   EditorWrapperOutput,
@@ -23,8 +23,8 @@ import { CorePreset } from '@remirror/preset-core';
 export function createDomManager<Combined extends AnyCombinedUnion>(
   combined: Combined[],
   settings?: Remirror.ManagerSettings,
-): EditorManager<CorePreset | BuiltinPreset | Combined> {
-  return EditorManager.create([...combined, new CorePreset()], settings);
+): RemirrorManager<CorePreset | BuiltinPreset | Combined> {
+  return RemirrorManager.create([...combined, new CorePreset()], settings);
 }
 
 export interface DomEditorWrapperProps<Combined extends AnyCombinedUnion>

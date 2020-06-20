@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
   AnyCombinedUnion,
-  EditorManager,
+  RemirrorManager,
   EditorStateParameter,
   SchemaFromCombined,
   Shape,
@@ -24,7 +24,7 @@ export interface RemirrorSSRProps<Combined extends AnyCombinedUnion>
   /**
    * The manager.
    */
-  manager: EditorManager<Combined>;
+  manager: RemirrorManager<Combined>;
 }
 
 /**

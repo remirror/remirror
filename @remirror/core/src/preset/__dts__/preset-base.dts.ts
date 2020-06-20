@@ -2,7 +2,7 @@ import { __INTERNAL_REMIRROR_IDENTIFIER_KEY__, RemirrorIdentifier } from '@remir
 import { Dynamic, Static } from '@remirror/core-types';
 import { ignoreUnused } from '@remirror/test-fixtures';
 
-import { EditorManager } from '../..';
+import { RemirrorManager } from '../..';
 import { PlainExtension } from '../../extension';
 import { OnSetOptionsParameter } from '../../types';
 import { AnyPreset, DefaultPresetOptions, Preset } from '../preset-base';
@@ -35,7 +35,7 @@ class MissingStaticOptionsPreset extends Preset<{ oops?: boolean }> {
   }
 }
 
-const manager = EditorManager.fromObject({
+const manager = RemirrorManager.fromObject({
   extensions: [],
   presets: [new MissingStaticOptionsPreset()],
 });

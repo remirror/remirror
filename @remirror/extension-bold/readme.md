@@ -32,7 +32,7 @@ When added to your editor it will provide the `toggleBold` command which makes t
 cursor / or at the provided position range bold.
 
 ```ts
-import { EditorManager, ExtensionPriority } from '@remirror/core';
+import { RemirrorManager, ExtensionPriority } from '@remirror/core';
 import { CorePreset } from '@remirror/preset-core';
 import { BoldExtension } from '@remirror/extension-bold';
 
@@ -41,7 +41,7 @@ const boldExtension = new BoldExtension({ weight: '500' });
 const corePreset = new CorePreset();
 
 // Create the Editor Manager with the bold extension passed through.
-const manager = EditorManager.create([boldExtension, corePreset]);
+const manager = RemirrorManager.create([boldExtension, corePreset]);
 
 // Pass the dom element to the editor. If you are using `@remirror/react` this is done for you.
 const element = document.createElement('div');

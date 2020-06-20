@@ -444,7 +444,7 @@ declare global {
        * An example is shown below.
        *
        * ```ts
-       * import { EditorManager } from 'remirror/core';
+       * import { RemirrorManager } from 'remirror/core';
        *
        * const managerSettings = {
        *   extraAttributes: [
@@ -458,7 +458,7 @@ declare global {
        *   ]
        * };
        *
-       * const manager = EditorManager.create([], { extraAttributes })
+       * const manager = RemirrorManager.create([], { extraAttributes })
        * ```
        */
       extraAttributes?: IdentifierSchemaAttributes[];

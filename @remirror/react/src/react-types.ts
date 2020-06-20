@@ -6,10 +6,10 @@ import {
   AnyPreset,
   BuiltinPreset,
   CombinedUnion,
-  EditorManager,
   EditorState,
   EditorWrapperOutput,
   EditorWrapperProps,
+  RemirrorManager,
   SchemaFromCombined,
   Shape,
 } from '@remirror/core';
@@ -42,7 +42,7 @@ export interface BaseProps<Combined extends AnyCombinedUnion> extends EditorWrap
    *
    * TODO - why does this only work as `any`.
    */
-  manager: EditorManager<any>;
+  manager: RemirrorManager<any>;
 
   /**
    * When onStateChange is defined this prop is used to set the next state value

@@ -31,14 +31,14 @@ npm install @remirror/preset-core # npm
 When added to your editor it will provide the required nodes, marks to your editor.
 
 ```ts
-import { EditorManager } from '@remirror/core';
+import { RemirrorManager } from '@remirror/core';
 import { CorePreset } from '@remirror/preset-core';
 
 // Create the preset
 const corePreset = new CorePreset({ rootContent: 'block*' });
 
 // Create the Editor Manager with the required preset.
-const manager = EditorManager.create([corePreset]);
+const manager = RemirrorManager.create([corePreset]);
 
 // Pass the dom element to the editor. If you are using `@remirror/react` this is done for you.
 const element = document.createElement('div');

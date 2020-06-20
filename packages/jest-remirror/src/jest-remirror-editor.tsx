@@ -18,7 +18,6 @@ import {
   AnyCombinedUnion,
   CommandFunctionParameter,
   CommandsFromCombined,
-  EditorManager,
   EditorState,
   GetMarkNameUnion,
   GetNodeNameUnion,
@@ -31,6 +30,7 @@ import {
   ProsemirrorAttributes,
   ProsemirrorNode,
   range,
+  RemirrorManager,
   SchemaFromCombined,
   Transaction,
 } from 'remirror/core';
@@ -73,12 +73,12 @@ export function renderEditor<Combined extends AnyCombinedUnion>(
  * extensions and commands.
  */
 export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
-  static create<Combined extends AnyCombinedUnion>(manager: EditorManager<Combined>) {
+  static create<Combined extends AnyCombinedUnion>(manager: RemirrorManager<Combined>) {
     return new RemirrorTestChain(manager);
   }
 
   /** The editor manager */
-  #manager: EditorManager<Combined>;
+  #manager: RemirrorManager<Combined>;
 
   /** Additional custom tags */
   #tags?: Tags;
@@ -116,7 +116,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Provide access to the editor manager.
    */
-  get manager(): EditorManager<Combined> {
+  get manager(): RemirrorManager<Combined> {
     return this.#manager;
   }
 
@@ -210,7 +210,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
     return this.#tags ?? {};
   }
 
-  private constructor(manager: EditorManager<Combined>) {
+  private constructor(manager: RemirrorManager<Combined>) {
     this.#manager = manager;
 
     this.createDocBuilders();

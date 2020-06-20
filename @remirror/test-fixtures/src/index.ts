@@ -6,8 +6,8 @@ import {
   AnyPreset,
   AnyPresetConstructor,
   BaseExtensionOptions,
-  EditorManager,
-  EditorManagerParameter,
+  RemirrorManager,
+  RemirrorManagerParameter,
   ErrorConstant,
   ExtensionConstructorParameter,
   invariant,
@@ -30,11 +30,11 @@ import { ReactPreset } from '@remirror/preset-react';
 export function createBaseManager<
   ExtensionUnion extends AnyExtension,
   PresetUnion extends AnyPreset
->(parameter: Partial<EditorManagerParameter<ExtensionUnion, PresetUnion>> = {}) {
+>(parameter: Partial<RemirrorManagerParameter<ExtensionUnion, PresetUnion>> = {}) {
   const { extensions = [], presets = [], settings } = parameter;
   const corePreset = new CorePreset();
 
-  return EditorManager.fromObject({
+  return RemirrorManager.fromObject({
     extensions,
     presets: [...presets, corePreset],
     settings,
@@ -49,12 +49,12 @@ export function createBaseManager<
 export function createReactManager<
   ExtensionUnion extends AnyExtension,
   PresetUnion extends AnyPreset
->(parameter: Partial<EditorManagerParameter<ExtensionUnion, PresetUnion>> = {}) {
+>(parameter: Partial<RemirrorManagerParameter<ExtensionUnion, PresetUnion>> = {}) {
   const { extensions = [], presets = [], settings } = parameter;
   const corePreset = new CorePreset();
   const reactPreset = new ReactPreset();
 
-  return EditorManager.fromObject({
+  return RemirrorManager.fromObject({
     extensions,
     presets: [...presets, corePreset, reactPreset],
     settings,

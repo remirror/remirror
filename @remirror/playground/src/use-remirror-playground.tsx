@@ -2,12 +2,12 @@ import { useCallback, useState } from 'react';
 
 import {
   AnyCombinedUnion,
-  EditorManager,
   EditorState,
   EditorView,
   EMPTY_PARAGRAPH_NODE,
   RemirrorEventListener,
   RemirrorJSON,
+  RemirrorManager,
 } from 'remirror/core';
 
 declare global {
@@ -29,7 +29,7 @@ PERSIST.previousView = null;
 PERSIST.lastKnownGoodState = null;
 
 export function useRemirrorPlayground(
-  extensionManager: EditorManager<AnyCombinedUnion>,
+  extensionManager: RemirrorManager<AnyCombinedUnion>,
 ): {
   value: EditorState;
   onChange: RemirrorEventListener<AnyCombinedUnion>;

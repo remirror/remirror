@@ -33,7 +33,7 @@ extension.
 import jsx from 'refractor/lang/jsx';
 import typescript from 'refractor/lang/typescript';
 
-import { EditorManager, ExtensionPriority } from '@remirror/core';
+import { RemirrorManager, ExtensionPriority } from '@remirror/core';
 import { CorePreset } from '@remirror/preset-core';
 import { CodeBlockExtension } from '@remirror/extension-code-block';
 
@@ -42,7 +42,7 @@ const codeBlockExtension = new CodeBlockExtension({ supportedLanguages: [typescr
 const corePreset = new CorePreset();
 
 // Create the Editor Manager with the codeBlock extension passed through.
-const manager = EditorManager.create([codeBlockExtension, corePreset]);
+const manager = RemirrorManager.create([codeBlockExtension, corePreset]);
 
 // Pass the dom element to the editor. If you are using `@remirror/react` or
 // other framework wrappers then this is handled for you.

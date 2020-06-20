@@ -1,14 +1,14 @@
 import { CorePreset, DocExtension, ParagraphExtension } from '@remirror/test-fixtures';
 
 import { BuiltinPreset } from '../../builtins';
-import { EditorManager } from '../editor-manager';
+import { RemirrorManager } from '../remirror-manager';
 
-const manager: EditorManager<
+const manager: RemirrorManager<
   ParagraphExtension | DocExtension | CorePreset | BuiltinPreset
-> = EditorManager.fromObject({
+> = RemirrorManager.fromObject({
   extensions: [new ParagraphExtension(), new DocExtension()],
   presets: [new CorePreset()],
 });
 
 // @ts-expect-error
-new EditorManager({ extensions: [], presets: [] });
+new RemirrorManager({ extensions: [], presets: [] });

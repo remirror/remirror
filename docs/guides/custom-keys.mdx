@@ -58,7 +58,7 @@ import { baseExtensions } from '@remirror/core-extensions';
 
 import { CustomKeymapExtension } from './custom-keymap-extension';
 
-const manager = EditorManager.create([
+const manager = RemirrorManager.create([
   ...baseExtensions,
   { priority: 1, extension: new CustomKeymapExtension({ override: true }) },
 ]);

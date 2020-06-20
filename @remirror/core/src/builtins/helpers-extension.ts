@@ -49,7 +49,7 @@ export class HelpersExtension extends PlainExtension {
   };
 
   /**
-   * Helpers are only available once the view has been added to `EditorManager`.
+   * Helpers are only available once the view has been added to `RemirrorManager`.
    */
   onView: ViewLifecycleMethod = (extensions) => {
     const helpers: Record<string, AnyFunction> = object();
