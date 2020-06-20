@@ -22,7 +22,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.2",
+    "@babel/runtime": "^7.10.3",
     "@remirror/core": "^0.11.0",
     "@remirror/core-extensions": "^0.13.1",
     "@remirror/dev": "^0.13.2",
@@ -38,7 +38,7 @@
     "prettier": "^2.0.5"
   },
   "devDependencies": {
-    "@types/react": "^16.9.35",
+    "@types/react": "^16.9.38",
     "react": "^16.13.1"
   },
   "peerDependencies": {

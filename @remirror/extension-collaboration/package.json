@@ -22,7 +22,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.2",
+    "@babel/runtime": "^7.10.3",
     "@types/prosemirror-collab": "^1.1.0"
   },
   "devDependencies": {
