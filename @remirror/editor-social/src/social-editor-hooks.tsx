@@ -46,6 +46,10 @@ export function createSocialManager<Combined extends AnyCombinedUnion>(
       { name: 'at', char: '@', appendText: ' ', ...atMatcherOptions },
       { name: 'tag', char: '#', appendText: ' ', ...tagMatcherOptions },
     ],
+    extraAttributes: {
+      href: { default: null },
+      role: 'presentation',
+    },
   });
 
   return createReactManager(

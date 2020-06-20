@@ -1,4 +1,4 @@
-const { PlaywrightEnvironment } = require('jest-playwright-preset');
+const PlaywrightEnvironment = require('jest-playwright-preset');
 
 class CustomEnvironment extends PlaywrightEnvironment {
   constructor(config) {

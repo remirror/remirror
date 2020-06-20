@@ -11,7 +11,7 @@ import {
   MentionKeyBinding,
   MentionKeyBindingParameter,
 } from '@remirror/extension-mention';
-import { PartialDispatch, useExtension, useI18n, useSetState } from '@remirror/react';
+import { useExtension, useI18n, useSetState } from '@remirror/react';
 
 import { messages } from '../social-editor-messages';
 import {
@@ -48,9 +48,7 @@ interface MentionState {
   command?: MentionExtensionSuggestCommand;
 }
 
-interface UseMentionState extends MentionState {
-  setState: PartialDispatch<MentionState>;
-}
+type UseMentionState = ReturnType<typeof useMentionState>;
 
 /**
  * This hook manages the keyboard interactions for the mention plugin.
@@ -104,7 +102,7 @@ function useMentionKeyBindings(props: MentionSuggestionProps, state: UseMentionS
        * Handle the enter key being pressed
        */
       Enter: (parameter) => {
-        const { suggester, command } = parameter;
+        const { suggester, command, ignoreNextExit } = parameter;
         const { char, name } = suggester;
         const { users, tags } = props;
 
@@ -119,6 +117,8 @@ function useMentionKeyBindings(props: MentionSuggestionProps, state: UseMentionS
           return false;
         }
 
+        ignoreNextExit();
+
         command({
           replacementType: 'full',
           id: id ?? label,
@@ -126,6 +126,8 @@ function useMentionKeyBindings(props: MentionSuggestionProps, state: UseMentionS
           role: 'presentation',
           href: href ?? `/${id ?? label}`,
         });
+
+        setState({ index: 0, matcher: undefined, command: undefined });
 
         return true;
       },
@@ -177,7 +179,7 @@ function useMentionHandlers(props: MentionSuggestionProps, state: UseMentionStat
    */
   const onChange = useCallback(
     (parameter: MentionChangeHandlerParameter) => {
-      const { queryText, suggester, command } = parameter;
+      const { queryText, suggester, command, ignoreNextExit } = parameter;
       const name = suggester.name as MatchName;
 
       if (name) {
@@ -190,7 +192,11 @@ function useMentionHandlers(props: MentionSuggestionProps, state: UseMentionStat
         index: 0,
         matcher: name,
         hideSuggestions: false,
-        command,
+        command: (parameter) => {
+          setState({ index: 0, matcher: undefined, command: undefined });
+          ignoreNextExit();
+          command(parameter);
+        },
       });
     },
     [props, setState, index],
@@ -199,10 +205,21 @@ function useMentionHandlers(props: MentionSuggestionProps, state: UseMentionStat
   /**
    * Called when the none of our configured matchers match
    */
-  const onExit: MentionExitHandlerMethod = useCallback(() => {
-    setState({ index: 0, matcher: undefined, command: undefined });
-    props.onChange();
-  }, [props, setState]);
+  const onExit: MentionExitHandlerMethod = useCallback(
+    (parameter) => {
+      const { queryText, command } = parameter;
+
+      command({
+        role: 'presentation',
+        href: `/${queryText.full}`,
+        appendText: '',
+      });
+
+      setState({ index: 0, matcher: undefined, command: undefined });
+      props.onChange();
+    },
+    [props, setState],
+  );
 
   // Add the handlers to the `MentionExtension`
   useExtension(
@@ -227,13 +244,34 @@ const initialMentionState = {
   command: undefined,
 };
 
-export const MentionSuggestions = (props: MentionSuggestionProps) => {
+function useMentionState() {
   const [state, setState] = useSetState<MentionState>(initialMentionState);
 
+  return useMemo(() => ({ ...state, setState }), [setState, state]);
+}
+
+export const MentionSuggestions = (props: MentionSuggestionProps) => {
+  const state = useMentionState();
+  const { focus } = useSocialRemirror();
   const { command, matcher, hideSuggestions, index } = state;
 
-  useMentionHandlers(props, { ...state, setState });
-  useMentionKeyBindings(props, { ...state, setState });
+  useMentionHandlers(props, state);
+  useMentionKeyBindings(props, state);
+
+  const createClickHandler = useCallback(
+    (id: string, label: string) => () => {
+      if (!command) {
+        return;
+      }
+
+      // Trigger the command
+      command({ id, label, replacementType: 'full' });
+
+      // Refocus the editor
+      focus();
+    },
+    [command, focus],
+  );
 
   if (!matcher || hideSuggestions || !command) {
     return null;
@@ -247,7 +285,7 @@ export const MentionSuggestions = (props: MentionSuggestionProps) => {
         getId={(item) => item.username}
         getLabel={(item) => `@${item.username}`}
         Component={UserMentionItem}
-        command={command}
+        createClickHandler={createClickHandler}
       />
     );
   }
@@ -259,7 +297,7 @@ export const MentionSuggestions = (props: MentionSuggestionProps) => {
       getId={(item) => item.tag}
       getLabel={(item) => `#${item.tag}`}
       Component={TagMentionItem}
-      command={command}
+      createClickHandler={createClickHandler}
     />
   );
 };
@@ -269,13 +307,12 @@ interface MentionDropdownProps<Item> {
   getId: (item: Item) => string;
   getLabel: (item: Item) => string;
   Component: ComponentType<{ item: Item }>;
-  command: MentionExtensionSuggestCommand;
+  createClickHandler: (id: string, label: string) => () => void;
   activeIndex: number;
 }
 
 function MentionDropdown<Item>(props: MentionDropdownProps<Item>) {
-  const { items, getId, getLabel, Component, command, activeIndex } = props;
-  const { focus } = useSocialRemirror();
+  const { items, getId, getLabel, Component, createClickHandler, activeIndex } = props;
 
   const { getMenuProps, getItemProps, itemHighlightedAtIndex, hoveredIndex } = useMultishift({
     highlightedIndexes: [activeIndex],
@@ -295,10 +332,7 @@ function MentionDropdown<Item>(props: MentionDropdownProps<Item>) {
           <span
             key={id}
             {...getItemProps({
-              onClick: () => {
-                command({ id, label, replacementType: 'full' });
-                focus();
-              },
+              onClick: createClickHandler(id, label),
               item: item,
               index: index,
               className: cx(

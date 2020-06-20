@@ -57,7 +57,7 @@
     "stop:checks": "rimraf ./.config.json",
     "test": "jest --verbose",
     "test:build": "cross-env TEST_BUILD=true jest --verbose --coverage=false",
-    "test:e2e": "jest --verbose --runInBand --config e2e/jest.config.js",
+    "test:e2e": "manypkg run e2e chromium",
     "test:e2e:debug": "cross-env REMIRROR_E2E_DEBUG=true run-s test:e2e",
     "test:e2e:ssr": "cross-env REMIRROR_E2E_SERVER=next run-s test:e2e",
     "test:e2e:ssr:watch": "pnpm run test:e2e:ssr -- --verbose=false --watch",

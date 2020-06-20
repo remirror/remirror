@@ -174,7 +174,13 @@ export interface MentionOptions {
  */
 
 export type SuggestionCommandAttributes = ProsemirrorAttributes<
-  Partial<Pick<MentionExtensionAttributes, 'id' | 'label' | 'appendText' | 'replacementType'>>
+  Partial<Pick<MentionExtensionAttributes, 'id' | 'label' | 'appendText' | 'replacementType'>> & {
+    /**
+     * Set this to true to skip the next `onExit` callback. This is useful when
+     * you manually call the
+     */
+    // ignoreNextExit?: boolean;
+  }
 >;
 
 /**

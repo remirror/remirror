@@ -1341,10 +1341,11 @@ importers:
       jest-dev-server: 4.4.0
       jest-playwright-preset: 0.2.5
       looks-same: 7.2.3
+      playwright: 1.1.1
       playwright-chromium: 1.1.1
       playwright-core: 1.1.1
       playwright-firefox: 1.1.1
-      playwright-testing-library: 1.2.1
+      playwright-testing-library: 1.2.1_playwright@1.1.1
       playwright-video: 2.2.0_playwright-core@1.1.1
       playwright-webkit: 1.1.1
       signal-exit: 3.0.3
@@ -1358,6 +1359,7 @@ importers:
       jest-dev-server: ^4.4.0
       jest-playwright-preset: ^0.2.5
       looks-same: ^7.2.3
+      playwright: ^1.1.1
       playwright-chromium: ^1.1.1
       playwright-core: ^1.1.1
       playwright-firefox: ^1.1.1
@@ -21276,9 +21278,10 @@ packages:
     requiresBuild: true
     resolution:
       integrity: sha512-YaRVNxGGfmuAgKD5XDK9vPD82UYYHv5qM1Qn5XwK8zXWhBdDcs+JgaNvW7NnOMefgFAhGy637HHLA1WZ+ajOIA==
-  /playwright-testing-library/1.2.1:
+  /playwright-testing-library/1.2.1_playwright@1.1.1:
     dependencies:
       '@testing-library/dom': 7.16.2
+      playwright: 1.1.1
       wait-for-expect: 3.0.2
     dev: false
     engines:
@@ -21319,6 +21322,24 @@ packages:
     requiresBuild: true
     resolution:
       integrity: sha512-fv1itK0rz6uqpO22M9CdRaqFyB6L0Y4S3OkWgSCuLLrmMIW4tmSLT1qukM4QXcHYQNdTIVvbtudITxEfIU5p4g==
+  /playwright/1.1.1:
+    dependencies:
+      debug: 4.1.1
+      extract-zip: 2.0.1
+      https-proxy-agent: 3.0.1
+      jpeg-js: 0.3.7
+      mime: 2.4.6
+      pngjs: 5.0.0
+      progress: 2.0.3
+      proxy-from-env: 1.1.0
+      rimraf: 3.0.2
+      ws: 6.2.1
+    dev: false
+    engines:
+      node: '>=10.15.0'
+    requiresBuild: true
+    resolution:
+      integrity: sha512-abAB/gFdMQueapllosYyEzeKyEu6x/83JykqxmUwSu2foGnLT7E4jPUvbJdOSEpzpDGxN01KmonyskcfXxfcpA==
   /please-upgrade-node/3.2.0:
     dependencies:
       semver-compare: 1.0.0

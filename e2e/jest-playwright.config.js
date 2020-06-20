@@ -16,7 +16,6 @@ module.exports = {
     headless: !debug,
     timeout: 120000,
     slowMo: debug ? 10 : undefined,
-    ...extraLaunchConfig,
   },
   browsers,
 };

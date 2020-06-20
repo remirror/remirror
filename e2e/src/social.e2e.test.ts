@@ -1,7 +1,7 @@
 import { getDocument, queries } from 'playwright-testing-library';
 import { ElementHandle } from 'playwright-testing-library/dist/typedefs';
 
-import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
+import { EDITOR_CLASS_SELECTOR, NON_BREAKING_SPACE_CHAR } from '@remirror/core';
 
 import {
   $innerHTML,
@@ -46,7 +46,7 @@ describe('Social Showcase', () => {
     it('should parse simple urls', async () => {
       await $editor.type('url.com');
       await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(`
-              <a href="http://url.com"
+              <a href="https://url.com"
                  role="presentation"
               >
                 url.com
@@ -54,7 +54,7 @@ describe('Social Showcase', () => {
             `);
       await press({ key: 'Backspace' });
       await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(`
-              <a href="http://url.co"
+              <a href="https://url.co"
                  role="presentation"
               >
                 url.co
@@ -65,7 +65,7 @@ describe('Social Showcase', () => {
 
       await type({ text: 'o.uk' });
       await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(`
-              <a href="http://url.co.uk"
+              <a href="https://url.co.uk"
                  role="presentation"
               >
                 url.co.uk
@@ -82,7 +82,7 @@ describe('Social Showcase', () => {
       await type({ text: 'split.com ' });
       await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(`
               this is the first
-              <a href="http://url.com"
+              <a href="https://url.com"
                  role="presentation"
               >
                 url.com
@@ -109,9 +109,9 @@ describe('Social Showcase', () => {
     });
 
     it('should not contain false positives', async () => {
-      await $editor.type('http://localhost:3000/ahttps://meowni.ca');
+      await $editor.type('https://localhost:3000/ahttps://meowni.ca');
       await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(
-        `http://localhost:3000/ahttps://meowni.ca`,
+        `https://localhost:3000/ahttps://meowni.ca`,
       );
     });
   });
@@ -144,14 +144,17 @@ describe('Social Showcase', () => {
         await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe('@ab');
       });
 
-      it('allows clicking on suggesters', async () => {
-        const selector = '.suggesters-item.active';
+      it('allows clicking on suggestions', async () => {
+        const selector = '.remirror-mention-suggestions-item.highlighted';
         await $editor.type('hello @alex');
+
         await page.click(selector);
         await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe(
           '@lazymeercat594',
         );
-        await expect(textContent(EDITOR_CLASS_SELECTOR)).resolves.toBe('hello @lazymeercat594 ');
+        await expect(textContent(EDITOR_CLASS_SELECTOR)).resolves.toBe(
+          `hello @lazymeercat594${NON_BREAKING_SPACE_CHAR}`,
+        );
       });
 
       it('allows arrowing between suggesters', async () => {
@@ -230,13 +233,15 @@ describe('Social Showcase', () => {
       });
 
       it('allows clicking on suggesters', async () => {
-        const selector = '.suggesters-item.active';
+        const selector = '.remirror-mention-suggestions-item.highlighted';
         await $editor.type('My #T');
         await page.click(selector);
         await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-tag'))).resolves.toBe(
           '#Tags',
         );
-        await expect(textContent(EDITOR_CLASS_SELECTOR)).resolves.toBe('My #Tags ');
+        await expect(textContent(EDITOR_CLASS_SELECTOR)).resolves.toBe(
+          `My #Tags${NON_BREAKING_SPACE_CHAR}`,
+        );
       });
     });
   });
@@ -248,8 +253,6 @@ describe('Social Showcase', () => {
       await expect(innerHtml(sel(EDITOR_CLASS_SELECTOR, 'p'))).resolves.toMatchInlineSnapshot(
         `"😀"`,
       );
-      //      , 'span[title=grinning]'))).resolves.toBeTruthy();
-      //    await expect(innerHtml(sel(EDITOR_CLASS_SELECTOR, 'span[data-emoji-native=😀]'))).resolves.toBeTruthy();
     });
 
     it('transforms emoticons', async () => {
@@ -287,7 +290,7 @@ describe('Social Showcase', () => {
               >
                 #awesome
               </a>
-              hello
+              &nbsp;hello
               <a href="/ab"
                  role="presentation"
                  class="mention mention-at"
@@ -296,8 +299,8 @@ describe('Social Showcase', () => {
               >
                 @ab
               </a>
-              😀
-              <a href="http://google.com"
+              &nbsp;😀
+              <a href="https://google.com"
                  role="presentation"
               >
                 google.com
@@ -309,10 +312,11 @@ describe('Social Showcase', () => {
       await $editor.type('😀google.com', { delay: 10 });
       await press({ key: 'Enter' });
       await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(`
-              <a href="http://😀google.com"
+              😀
+              <a href="https://google.com"
                  role="presentation"
               >
-                😀google.com
+                google.com
               </a>
             `);
     });
