@@ -134,7 +134,7 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
   protected get store() {
     invariant(this.#store, {
       code: ErrorConstant.MANAGER_PHASE_ERROR,
-      message: `An error ocurred while attempting to access the 'extension.store' when the Manager has not yet set created the lifecycle methods.`,
+      message: `An error occurred while attempting to access the 'extension.store' when the Manager has not yet set created the lifecycle methods.`,
     });
 
     return freeze(this.#store, { requireKeys: true });

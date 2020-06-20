@@ -4,7 +4,7 @@
     {
       "file": "%40remirror/extension-base-keymap/src/base-keymap-extension.ts",
       "line": 108,
-      "description": "Here the `BaseKeymapExtension` class is declared extending the `PlainExtension` with both settings and properties. \n\nExtensions can define both settings and properties. \n\nSettings are static and can't be changed during the lifecycle of the application. Settings generally apply to items that directly affect the schema, such as supported content. Changing this dynamically can cause things to break. \n\nProperties are dynamic and can be changed by the user during runtime. Typically all callbacks should be registered as properies and settings that the end user may want to tweak while using the editor can also be changed here."
+      "description": "Here the `BaseKeymapExtension` class is declared extending the `PlainExtension` with both settings and properties. \n\nExtensions can define both settings and properties. \n\nSettings are static and can't be changed during the lifecycle of the application. Settings generally apply to items that directly affect the schema, such as supported content. Changing this dynamically can cause things to break. \n\nProperties are dynamic and can be changed by the user during runtime. Typically all callbacks should be registered as properties and settings that the end user may want to tweak while using the editor can also be changed here."
     },
     {
       "file": "%40remirror/extension-base-keymap/src/base-keymap-extension.ts",
