@@ -5,8 +5,10 @@
   "description": "e2e tests",
   "repository": "https://github.com/remirror/remirror/tree/master/e2e",
   "scripts": {
-    "chromium": "jest --runInBand --verbose",
-    "chromium:watch": "jest --verbose --watch"
+    "chromium": "REMIRROR_E2E_BROWSER=chromium jest --runInBand --verbose",
+    "chromium:watch": "REMIRROR_E2E_BROWSER=chromium jest --verbose --watch",
+    "firefox": "REMIRROR_E2E_BROWSER=firefox jest --runInBand --verbose",
+    "webkit": "REMIRROR_E2E_BROWSER=webkit jest --runInBand --verbose"
   },
   "dependencies": {
     "@babel/runtime": "^7.10.3",

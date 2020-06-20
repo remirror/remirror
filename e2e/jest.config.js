@@ -9,7 +9,6 @@ const {
   globals,
   transform,
   testPathIgnorePatterns,
-  cacheDirectory,
   moduleNameMapper,
 } = config;
 
