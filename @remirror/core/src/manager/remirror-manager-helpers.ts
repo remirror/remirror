@@ -36,7 +36,7 @@ export interface TransformExtensionOrPreset<Combined extends AnyCombinedUnion> {
  *
  * @returns the list of extension instances sorted by priority
  */
-export function transformExtensionOrPreset<Combined extends AnyCombinedUnion>(
+export function transformCombinedUnion<Combined extends AnyCombinedUnion>(
   unionValues: readonly Combined[],
 ): TransformExtensionOrPreset<Combined> {
   type ExtensionUnion = InferCombinedExtensions<Combined>;
@@ -63,7 +63,7 @@ export function transformExtensionOrPreset<Combined extends AnyCombinedUnion>(
   /**
    * Adds the values to the duplicate map for checking duplicates.
    */
-  const updateDuplicateMap = (extension: ExtensionUnion, preset?: PresetUnion) => {
+  const updateExtensionDuplicates = (extension: ExtensionUnion, preset?: PresetUnion) => {
     const key = extension.constructor;
     const duplicate = duplicateMap.get(key);
     duplicateMap.set(key as never, duplicate ? [...duplicate, preset] : [preset]);
@@ -73,7 +73,7 @@ export function transformExtensionOrPreset<Combined extends AnyCombinedUnion>(
     // Update the extension list in this block
     if (isExtension<ExtensionUnion>(presetOrExtension)) {
       rawExtensions.push(presetOrExtension);
-      updateDuplicateMap(presetOrExtension);
+      updateExtensionDuplicates(presetOrExtension);
 
       continue;
     }
@@ -84,7 +84,7 @@ export function transformExtensionOrPreset<Combined extends AnyCombinedUnion>(
       presetMap.set(presetOrExtension.constructor, presetOrExtension);
 
       for (const extension of presetOrExtension.extensions) {
-        updateDuplicateMap(extension as ExtensionUnion, presetOrExtension);
+        updateExtensionDuplicates(extension as ExtensionUnion, presetOrExtension);
         rawExtensions.push(extension as ExtensionUnion);
       }
 
@@ -187,10 +187,12 @@ export function transformExtensionOrPreset<Combined extends AnyCombinedUnion>(
  */
 export function ignoreFunctions(value: Record<string, unknown>) {
   const newObject: Record<string, unknown> = object();
+
   for (const key of Object.keys(value)) {
     if (isFunction(value[key])) {
       continue;
     }
+
     newObject[key] = value[key];
   }
 

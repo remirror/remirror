@@ -18,12 +18,13 @@ import {
   CustomHandlerMethod,
   Dispose,
   DynamicOptionsOfConstructor,
-  RemirrorManager,
   ErrorConstant,
   invariant,
   isFunction,
+  isRemirrorManager,
   keys,
   OptionsOfConstructor,
+  RemirrorManager,
 } from '@remirror/core';
 import {
   getInitialPosition,
@@ -306,9 +307,9 @@ function useObjectCheck<Type extends object>(parameter: Type): Type {
  *
  * @remarks
  *
- * This might be helpful when creating tools like the `@remirror/playground`
- * which need to rerender the editor with different settings and can also
- * manager errors.
+ * The manager is a singleton and doesn't rerender for the lifetime of the
+ * component. This is intentional. However, it's something that can be addressed
+ * if it causes issues.
  *
  * ```tsx
  * import { useExtension } from '@remirror/react';
@@ -327,10 +328,16 @@ function useObjectCheck<Type extends object>(parameter: Type): Type {
  * ```
  */
 export function useManager<Combined extends AnyCombinedUnion>(
-  combined: Combined[],
+  managerOrCombined:
+    | Combined[]
+    | RemirrorManager<Combined | ReactPreset | CorePreset | BuiltinPreset>,
   settings: Remirror.ManagerSettings = {},
 ): RemirrorManager<Combined | ReactPreset | CorePreset | BuiltinPreset> {
-  return useRef(createReactManager(combined, settings)).current;
+  return useRef(
+    isRemirrorManager<Combined | ReactPreset | CorePreset | BuiltinPreset>(managerOrCombined)
+      ? managerOrCombined
+      : createReactManager(managerOrCombined, settings),
+  ).current;
 }
 
 export type BaseReactCombinedUnion = ReactPreset | CorePreset | BuiltinPreset;
@@ -422,8 +429,8 @@ export function usePositioner(
  * Create a react manager with all the default react presets and extensions.
  */
 export function createReactManager<Combined extends AnyCombinedUnion>(
-  combined: Combined[],
-  settings?: Remirror.ManagerSettings,
+  combined: readonly Combined[],
+  settings: Remirror.ManagerSettings = {},
 ): RemirrorManager<Combined | BuiltinPreset | ReactPreset | CorePreset> {
   return RemirrorManager.create([...combined, new ReactPreset(), new CorePreset()], settings);
 }

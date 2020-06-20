@@ -3,7 +3,6 @@ import React, { useCallback, useMemo, useState } from 'react';
 
 import { startCase, take } from '@remirror/core';
 import {
-  createSocialManager,
   MentionChangeParameter,
   SocialEditor,
   SocialEditorProps,
@@ -34,8 +33,6 @@ const userData: UserData[] = fakeUsers.results.map(
     href: `/u/${user.login.username}`,
   }),
 );
-
-const manager = createSocialManager([]);
 
 export const ExampleSocialEditor = (props: Partial<SocialEditorProps>) => {
   const [mention, setMention] = useState<MentionChangeParameter>();
@@ -68,7 +65,6 @@ export const ExampleSocialEditor = (props: Partial<SocialEditorProps>) => {
   return (
     <SocialEditor
       {...props}
-      manager={manager}
       attributes={{ 'data-testid': 'editor-social' }}
       userData={userMatches}
       tagData={tagMatches}

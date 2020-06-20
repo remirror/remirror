@@ -47,10 +47,7 @@ import {
   StateUpdateLifecycleMethod,
   StateUpdateLifecycleParameter,
 } from '../types';
-import {
-  ignoreFunctions,
-  transformExtensionOrPreset as transformExtensionOrPresetList,
-} from './remirror-manager-helpers';
+import { ignoreFunctions, transformCombinedUnion } from './remirror-manager-helpers';
 
 /**
  * The `Manager` has multiple hook phases which are able to hook into the
@@ -203,6 +200,13 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   }
 
   /**
+   * Get the original combined presets used to create this manager.
+   */
+  get combined() {
+    return freeze(this.#combined);
+  }
+
+  /**
    * Get the extension manager store which is accessible at initialization.
    */
   get store() {
@@ -271,9 +275,9 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
       code: ErrorConstant.NEW_EDITOR_MANAGER,
     });
 
-    const { extensions, extensionMap, presets, presetMap } = transformExtensionOrPresetList<
-      Combined
-    >(combined);
+    const { extensions, extensionMap, presets, presetMap } = transformCombinedUnion<Combined>(
+      combined,
+    );
 
     this.#extensions = freeze(extensions);
     this.#extensionMap = extensionMap;
@@ -616,8 +620,9 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   /**
    * Recreate the manager.
    *
-   * What about the state stored in the extensions and presets these need to be
-   * recreated as well
+   * TODO: Think about the following.
+   * - What about the state stored in the extensions and presets, does this need to be
+   * recreated as well?
    */
   clone<ExtraCombined extends AnyCombinedUnion>(
     combined: ExtraCombined[],
@@ -647,7 +652,9 @@ export type AnyRemirrorManager = RemirrorManager<AnyCombinedUnion>;
  *
  * @param value - the value to check
  */
-export function isRemirrorManager(value: unknown): value is AnyRemirrorManager {
+export function isRemirrorManager<Combined extends AnyCombinedUnion = AnyCombinedUnion>(
+  value: unknown,
+): value is RemirrorManager<Combined> {
   return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Manager);
 }
 

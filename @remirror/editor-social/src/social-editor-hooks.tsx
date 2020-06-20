@@ -1,7 +1,12 @@
 import { useRef } from 'react';
 import { Except } from 'type-fest';
 
-import { AnyCombinedUnion, RemirrorManager } from '@remirror/core';
+import {
+  AnyCombinedUnion,
+  ExtensionPriority,
+  isRemirrorManager,
+  RemirrorManager,
+} from '@remirror/core';
 import { AutoLinkExtension } from '@remirror/extension-auto-link';
 import { EmojiExtension } from '@remirror/extension-emoji';
 import { MentionExtension, MentionExtensionMatcher } from '@remirror/extension-mention';
@@ -31,15 +36,19 @@ export interface CreateSocialManagerOptions {
  * a long living piece of functionality that can be used everywhere.
  */
 export function createSocialManager<Combined extends AnyCombinedUnion>(
-  combined: Combined[],
+  combined: readonly Combined[],
   options: CreateSocialManagerOptions = {},
   settings?: Remirror.ManagerSettings,
 ): RemirrorManager<SocialCombinedUnion | Combined> {
   const { atMatcherOptions, tagMatcherOptions } = options;
 
-  const autoLinkExtension = new AutoLinkExtension({ defaultProtocol: 'https:' });
+  const autoLinkExtension = new AutoLinkExtension({
+    defaultProtocol: 'https:',
+    priority: ExtensionPriority.High,
+  });
   const emojiExtension = new EmojiExtension({
     extraAttributes: { role: { default: 'presentation' } },
+    priority: ExtensionPriority.High,
   });
   const mentionExtension = new MentionExtension({
     matchers: [
@@ -50,6 +59,7 @@ export function createSocialManager<Combined extends AnyCombinedUnion>(
       href: { default: null },
       role: 'presentation',
     },
+    priority: ExtensionPriority.High,
   });
 
   return createReactManager(
@@ -72,9 +82,13 @@ export function createSocialManager<Combined extends AnyCombinedUnion>(
  * configuration and then ignores everything else.
  */
 export function useSocialManager<Combined extends AnyCombinedUnion>(
-  combined: Combined[],
+  managerOrCombined: readonly Combined[] | RemirrorManager<Combined | SocialCombinedUnion>,
   options: CreateSocialManagerOptions = {},
   settings?: Remirror.ManagerSettings,
 ): RemirrorManager<SocialCombinedUnion | Combined> {
-  return useRef(createSocialManager(combined, options, settings)).current;
+  return useRef(
+    isRemirrorManager<Combined | SocialCombinedUnion>(managerOrCombined)
+      ? managerOrCombined
+      : createSocialManager(managerOrCombined, options, settings),
+  ).current;
 }

@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 
 import { I18nProvider, RemirrorProvider, useRemirror } from '@remirror/react';
 
+import { useSocialManager } from '../social-editor-hooks';
 import { SocialEditorProps } from '../social-editor-types';
 import { CharacterCountIndicator, CharacterCountWrapper } from './social-editor-character-count';
 import { EmojiSuggestions } from './social-editor-emoji';
@@ -21,9 +22,12 @@ export const SocialEditor: FC<SocialEditorProps> = (props) => {
     onMentionChange,
     onUrlsChange,
     userData,
-    manager,
+    combined,
+    manager: propsManager,
     ...rest
   } = props;
+
+  const manager = useSocialManager(propsManager ?? combined ?? []);
 
   return (
     <I18nProvider i18n={i18n} locale={locale}>

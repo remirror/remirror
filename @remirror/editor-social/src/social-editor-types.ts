@@ -1,3 +1,4 @@
+import { AnyCombinedUnion } from '@remirror/core';
 import { AutoLinkExtension } from '@remirror/extension-auto-link';
 import { EmojiExtension } from '@remirror/extension-emoji';
 import { MentionExtension } from '@remirror/extension-mention';
@@ -11,9 +12,13 @@ export interface MentionChangeParameter extends BaseMentionState {
   index: number;
 }
 
-export interface SocialEditorProps
-  extends RemirrorProviderProps<SocialCombinedUnion>,
+export interface SocialEditorProps<Combined extends AnyCombinedUnion = AnyCombinedUnion>
+  extends Partial<RemirrorProviderProps<SocialCombinedUnion>>,
     Partial<I18nContextProps> {
+  /**
+   * Provide additional extensions and presets to the editor.
+   */
+  combined?: readonly Combined[];
   /**
    * Display a typing hint that limits the number of characters to this number.
    * Defaults to 140, set to `null` to disable.
