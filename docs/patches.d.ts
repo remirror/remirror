@@ -145,7 +145,7 @@ declare module 'compass-vertical-rhythm' {
       roundToNearestHalfLine?: boolean;
 
       /**
-       * @defualt '2px'
+       * @default '2px'
        */
       minLinePadding?: string;
     }
