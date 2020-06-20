@@ -17,9 +17,9 @@ env:
 jobs:
   # Release the project if everything else passes
   release:
-    needs: [lint, typecheck, unit_test, build_test, size_check, integration_tests]
+    needs: [lint, typecheck, unit_test, build_test, size_check, integration_test]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/next'
 
     steps:
       - name: checkout code repository
@@ -45,7 +45,7 @@ jobs:
           pnpm config set store-dir $PNPM_CACHE_FOLDER
 
       - name: audit dependencies
-        run: pnpm audit --audit-level high
+        run: pnpm run audit
 
       - name: install dependencies
         run: pnpm install
@@ -90,7 +90,7 @@ jobs:
           pnpm config set store-dir $PNPM_CACHE_FOLDER
 
       - name: audit dependencies
-        run: pnpm audit --audit-level high
+        run: pnpm run audit
 
       - name: install dependencies
         run: pnpm install
@@ -125,7 +125,7 @@ jobs:
           pnpm config set store-dir $PNPM_CACHE_FOLDER
 
       - name: audit dependencies
-        run: pnpm audit --audit-level high
+        run: pnpm run audit
 
       - name: install dependencies
         run: pnpm install
@@ -160,7 +160,7 @@ jobs:
           pnpm config set store-dir $PNPM_CACHE_FOLDER
 
       - name: audit dependencies
-        run: pnpm audit --audit-level high
+        run: pnpm run audit
 
       - name: install dependencies
         run: pnpm install
@@ -204,7 +204,7 @@ jobs:
           pnpm config set store-dir $PNPM_CACHE_FOLDER
 
       - name: audit dependencies
-        run: pnpm audit --audit-level high
+        run: pnpm run audit
 
       - name: install dependencies
         run: pnpm install
@@ -242,7 +242,7 @@ jobs:
           pnpm config set store-dir $PNPM_CACHE_FOLDER
 
       - name: audit dependencies
-        run: pnpm audit --audit-level high
+        run: pnpm run audit
 
       - name: install dependencies
         run: pnpm install
@@ -254,15 +254,14 @@ jobs:
         run: pnpm run size
 
   # Run integration tests with playwright
-  integration_tests:
-    runs-on: ubuntu-latest
-    steps:
-      # Required for the latest version of puppeteer
-      - name: install libgbm
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libgbm-dev
+  integration_test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+      fail-fast: false
 
+    steps:
       - name: checkout code repository
         uses: actions/checkout@v1
         with:
@@ -281,18 +280,16 @@ jobs:
           node-version: 12
 
       - name: install pnpm
-        run: |
-          curl -L https://unpkg.com/@pnpm/self-installer | node
-          pnpm config set store-dir $PNPM_CACHE_FOLDER
+        run: npm install pnpm -g
 
       - name: audit dependencies
-        run: pnpm audit --audit-level high
+        run: pnpm run audit
 
       - name: install dependencies
         run: pnpm install
 
       - name: build project
         run: pnpm run build
-      # TODO turn tests back on
-      # - name: integration tests
-      #   run: pnpm run test:e2e
+
+      - name: chrome integration test ${{ matrix.os }}
+        run: cd e2e && pnpm run chromium
