@@ -8,7 +8,7 @@ title: Contributing
 
 ## Getting Started
 
-Fork [this respository][repo], clone your fork and add this repository as the upstream remote.
+Fork [this repository][repo], clone your fork and add this repository as the upstream remote.
 
 You will need to have `pnpm` installed so make sure you follow the installation
 [instructions](https://pnpm.js.org/en/installation).

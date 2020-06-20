@@ -521,7 +521,7 @@ export interface GetRemoveButtonOptions<Element extends HTMLElement = any, Item 
 export interface GetRemoveButtonReturn<Element extends HTMLElement = any>
   extends DetailedHTMLProps<HTMLAttributes<Element>, Element> {
   /**
-   * The aria role for the button. This can be overriden in the options.
+   * The aria role for the button. This can be overridden in the options.
    *
    * @defaultValue 'button'
    */

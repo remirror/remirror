@@ -114,8 +114,8 @@ function getPositionedRefractorNodes(parameter: NodeWithPosition) {
 /**
  * Creates a decoration set for the provided blocks
  */
-export function createDecorations(paramter: CreateDecorationsParameter): Decoration[] {
-  const { blocks, skipLast } = paramter;
+export function createDecorations(parameter: CreateDecorationsParameter): Decoration[] {
+  const { blocks, skipLast } = parameter;
   const decorations: Decoration[] = [];
 
   for (const block of blocks) {

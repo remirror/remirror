@@ -233,7 +233,7 @@ declare global {
        * Use this if the automatic componentization in ReactSerializer of the
        * `toDOM` method doesn't produce the expected results in SSR.
        *
-       * TODO move this into a seperate NodeExtension and MarkExtension based
+       * TODO move this into a separate NodeExtension and MarkExtension based
        * merged interface so that the props can be specified as `{ mark: Mark }`
        * or `{ node: ProsemirrorNode }`.
        */

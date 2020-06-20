@@ -73,7 +73,7 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
   protected get extensionStore() {
     invariant(this.#extensionStore, {
       code: ErrorConstant.MANAGER_PHASE_ERROR,
-      message: `An error ocurred while attempting to access the 'extension.store' when the Manager has not yet set upt the lifecycle methods.`,
+      message: `An error occurred while attempting to access the 'extension.store' when the Manager has not yet set upt the lifecycle methods.`,
     });
 
     return freeze(this.#extensionStore, { requireKeys: true });
