@@ -41,6 +41,8 @@ export class SuggestState {
     return new SuggestState(suggesters);
   }
 
+  #ignoreNextExit = false;
+
   /**
    * The suggesters that have been registered for the suggesters plugin.
    */
@@ -148,6 +150,7 @@ export class SuggestState {
       setMarkRemoved: this.setRemovedTrue,
       addIgnored: this.addIgnored,
       clearIgnored: this.clearIgnored,
+      ignoreNextExit: this.ignoreNextExit,
     });
   }
 
@@ -159,6 +162,7 @@ export class SuggestState {
       view: this.view,
       addIgnored: this.addIgnored,
       clearIgnored: this.clearIgnored,
+      ignoreNextExit: this.ignoreNextExit,
       command: this.getCommand(match),
       ...match,
     };
@@ -186,24 +190,36 @@ export class SuggestState {
       handlerMatches: { change, exit },
     } = this;
 
+    const shouldRunExit = (): boolean => {
+      if (this.#ignoreNextExit) {
+        this.#ignoreNextExit = false;
+        return false;
+      }
+
+      return true;
+    };
+
     // Cancel update when a suggestion isn't active
     if ((!change && !exit) || !isValidMatch(match)) {
       return;
     }
 
-    // Call Handlers When a jump happens run the action that involves the
+    // When a jump happens run the action that involves the
     // position that occurs later in the document. This is so that changes don't
     // affect previous positions.
     if (change && exit && isJumpReason({ change, exit })) {
       const exitParameters = this.createReasonParameter(exit);
       const changeParameters = this.createReasonParameter(change);
       const movedForwards = exit.range.from < change.range.from;
-      movedForwards
-        ? change.suggester.onChange(changeParameters)
-        : exit.suggester.onExit(exitParameters);
-      movedForwards
-        ? exit.suggester.onExit(exitParameters)
-        : change.suggester.onChange(changeParameters);
+
+      if (movedForwards) {
+        change.suggester.onChange(changeParameters);
+        shouldRunExit() && exit.suggester.onExit(exitParameters);
+      } else {
+        shouldRunExit() && exit.suggester.onExit(exitParameters);
+        change.suggester.onChange(changeParameters);
+      }
+
       this.removed = false;
       return;
     }
@@ -212,9 +228,10 @@ export class SuggestState {
       change.suggester.onChange(this.createReasonParameter(change));
     }
 
-    if (exit) {
+    if (exit && shouldRunExit()) {
       exit.suggester.onExit(this.createReasonParameter(exit));
       this.removed = false;
+
       if (isInvalidSplitReason(exit.reason)) {
         this.handlerMatches = object();
       }
@@ -243,6 +260,10 @@ export class SuggestState {
 
     this.ignored = ignored.remove(invalid);
   }
+
+  ignoreNextExit = () => {
+    this.#ignoreNextExit = true;
+  };
 
   /**
    * Ignores the match specified. Until the match is deleted no more `onChange`,

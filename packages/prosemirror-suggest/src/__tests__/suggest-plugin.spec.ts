@@ -181,16 +181,6 @@ describe('Suggest Ignore', () => {
       .callback(() => {
         expect(atHandlers.onExit).toHaveBeenCalledTimes(1);
         expect(tagHandlers.onExit).toHaveBeenCalledTimes(1);
-        // jest.clearAllMocks();
-        // clear.at('at');
       });
-    // .backspace(10)
-    // .callback(({ debug }) => {
-    //   debug();
-    //   expect(atHandlers.onChange).toHaveBeenCalledTimes(4);
-    //   expect(atHandlers.onExit).toHaveBeenCalledTimes(1);
-    //   expect(tagHandlers.onChange).toHaveBeenCalledTimes(4);
-    //   expect(tagHandlers.onExit).toHaveBeenCalledTimes(1);
-    // });
   });
 });

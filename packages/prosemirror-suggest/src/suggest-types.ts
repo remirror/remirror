@@ -273,6 +273,20 @@ export interface SuggestIgnoreParameter {
    * suggester. Otherwise remove **all** ignored decorations from the document.
    */
   clearIgnored: (name?: string) => void;
+
+  /**
+   * Use this method to skip the next `onExit` callback. This is useful when
+   * you manually call a command which applies the suggestion outside of the
+   * `onExit` callback. When that happens on exit will be called again by default
+   * and if you don't have the logic set up properly it will rerun your exit
+   * command. This can lead to mismatched transaction errors since the `onExit`
+   * handler is provided the last known value and this is no longer valid.
+   *
+   * This helper method can be applied to make life easier. Call it when running
+   * a command in a click handler or key binding and you don't have to worry
+   * about your exit handler being called with a mismatched transaction error.
+   */
+  ignoreNextExit: () => void;
 }
 
 /**
