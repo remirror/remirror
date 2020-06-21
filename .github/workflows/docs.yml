@@ -2,6 +2,9 @@ name: Deploy Docs
 
 on:
   push:
+    branches:
+      - main
+      - next
   pull_request:
     types: [opened, synchronize]
     branches:
