@@ -124,24 +124,6 @@ describe('Manager', () => {
     expect(isRemirrorManager(dummyExtension)).toBeFalse();
     expect(isRemirrorManager(manager)).toBeTrue();
   });
-
-  describe('#isEqual', () => {
-    it('should be equal for the same instance', () => {
-      expect(manager.isEqual(manager)).toBeTrue();
-    });
-
-    it('should be equal for different instances but identical otherwise', () => {
-      expect(createBaseManager().isEqual(createBaseManager())).toBeTrue();
-    });
-
-    it('should not be equal for different managers', () => {
-      expect(manager.isEqual(createBaseManager())).toBeFalse();
-    });
-
-    it('should not be equal for different objects', () => {
-      expect(manager.isEqual({})).toBeFalse();
-    });
-  });
 });
 
 test('keymaps', () => {

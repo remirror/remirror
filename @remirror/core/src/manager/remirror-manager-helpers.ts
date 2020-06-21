@@ -1,5 +1,5 @@
 import { ErrorConstant } from '@remirror/core-constants';
-import { invariant, isEmptyArray, isFunction, object, sort } from '@remirror/core-helpers';
+import { invariant, isEmptyArray, sort } from '@remirror/core-helpers';
 
 import { AnyExtensionConstructor, isExtension } from '../extension';
 import {
@@ -169,32 +169,4 @@ export function transformCombinedUnion<Combined extends AnyCombinedUnion>(
     presets,
     presetMap,
   };
-}
-
-/**
- * Takes in an object and removes all function values.
- *
- * @remarks
- *
- * This is useful for deep equality checks when functions need to be ignored.
- *
- * A current limitation is that it only dives one level deep. So objects with
- * nested object methods will retain those methods.
- *
- * @param value - an object which might contain methods
- *
- * @returns a new object without any of the functions defined
- */
-export function ignoreFunctions(value: Record<string, unknown>) {
-  const newObject: Record<string, unknown> = object();
-
-  for (const key of Object.keys(value)) {
-    if (isFunction(value[key])) {
-      continue;
-    }
-
-    newObject[key] = value[key];
-  }
-
-  return newObject;
 }

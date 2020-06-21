@@ -221,10 +221,10 @@ export class PluginsExtension extends PlainExtension {
         '`reconfigureStatePlugins` should only be called after the view has been added to the manager.',
     });
 
-    const { view } = this.store;
+    const { view, updateState } = this.store;
     const newState = view.state.reconfigure({ plugins: this.#plugins });
 
-    view.updateState(newState);
+    updateState(newState);
   };
 }
 

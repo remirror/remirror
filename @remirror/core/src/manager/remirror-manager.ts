@@ -7,7 +7,6 @@ import {
 import {
   freeze,
   invariant,
-  isEqual,
   isIdentifierOfType,
   isNullOrUndefined,
   isRemirrorType,
@@ -47,7 +46,7 @@ import {
   StateUpdateLifecycleMethod,
   StateUpdateLifecycleParameter,
 } from '../types';
-import { ignoreFunctions, transformCombinedUnion } from './remirror-manager-helpers';
+import { transformCombinedUnion } from './remirror-manager-helpers';
 
 /**
  * The `Manager` has multiple hook phases which are able to hook into the
@@ -406,31 +405,27 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
 
     Object.defineProperties(store, {
       extensions: {
-        get: () => {
-          return this.#extensions;
-        },
+        get: () => this.#extensions,
         enumerable: true,
       },
       phase: {
-        get: () => {
-          return this.#phase;
-        },
+        get: () => this.#phase,
         enumerable: true,
       },
       view: {
-        get: () => {
-          return this.view;
-        },
+        get: () => this.view,
         enumerable: true,
       },
       managerSettings: {
-        get: () => {
-          return freeze(this.#settings);
-        },
+        get: () => freeze(this.#settings),
         enumerable: true,
       },
       getState: {
         value: this.getState,
+        enumerable: true,
+      },
+      updateState: {
+        value: this.updateState,
         enumerable: true,
       },
     });
@@ -520,43 +515,15 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   }
 
   /**
-   * Checks whether two manager's are equal. Can be used to determine whether a
-   * change in props has caused anything to actually change and prevent a
-   * rerender.
-   *
-   * Managers are equal when
-   * - They have the same number of extensions
-   * - Same order of extensions
-   * - Each extension has the same options (ignoring methods)
-   *
-   * @param otherManager - the value to test against
+   * Update the state of the view and trigger the `onStateUpdate` lifecyle
+   * method as well.
    */
-  isEqual(otherManager: unknown) {
-    if (!isRemirrorManager(otherManager)) {
-      return false;
-    }
+  updateState = (state: EditorState<this['~Sch']>) => {
+    const previousState = this.getState();
 
-    const manager = otherManager;
-
-    if (this.extensions.length !== manager.extensions.length) {
-      return false;
-    }
-
-    for (let ii = 0; ii <= this.extensions.length - 1; ii++) {
-      const extension = this.extensions[ii];
-      const otherExtension = manager.extensions[ii];
-
-      if (
-        extension.constructor === otherExtension.constructor &&
-        isEqual(ignoreFunctions(extension.options), ignoreFunctions(otherExtension.options))
-      ) {
-        continue;
-      }
-      return false;
-    }
-
-    return true;
-  }
+    this.view.updateState(state);
+    this.onStateUpdate({ previousState, state });
+  };
 
   /**
    * This method should be called by the view layer every time the state is
@@ -818,6 +785,13 @@ declare global {
        * A helper method for retrieving the state of the editor
        */
       readonly getState: () => EditorState<EditorSchema>;
+
+      /**
+       * Allow extensions to trigger an update in the prosemirror state. This
+       * should only be used in rarely as it is easy to get
+       * in trouble without the necessary thought.
+       */
+      readonly updateState: (state: EditorState<EditorSchema>) => void;
 
       /**
        * The view available to extensions once `addView` has been called on the
