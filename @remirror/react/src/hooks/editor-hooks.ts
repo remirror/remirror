@@ -329,7 +329,7 @@ function useObjectCheck<Type extends object>(parameter: Type): Type {
  */
 export function useManager<Combined extends AnyCombinedUnion>(
   managerOrCombined:
-    | Combined[]
+    | readonly Combined[]
     | RemirrorManager<Combined | ReactPreset | CorePreset | BuiltinPreset>,
   settings: Remirror.ManagerSettings = {},
 ): RemirrorManager<Combined | ReactPreset | CorePreset | BuiltinPreset> {

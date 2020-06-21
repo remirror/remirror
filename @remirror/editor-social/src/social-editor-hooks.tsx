@@ -1,5 +1,4 @@
 import { useRef } from 'react';
-import { Except } from 'type-fest';
 
 import {
   AnyCombinedUnion,
@@ -9,26 +8,14 @@ import {
 } from '@remirror/core';
 import { AutoLinkExtension } from '@remirror/extension-auto-link';
 import { EmojiExtension } from '@remirror/extension-emoji';
-import { MentionExtension, MentionExtensionMatcher } from '@remirror/extension-mention';
+import { MentionExtension } from '@remirror/extension-mention';
 import { createReactManager } from '@remirror/react';
 
-import { SocialCombinedUnion } from './social-editor-types';
-
-export interface CreateSocialManagerOptions {
-  /**
-   * The matcher options for the `@` mention character.
-   */
-  atMatcherOptions?: Except<MentionExtensionMatcher, 'name' | 'char'>;
-
-  /**
-   * The matcher options for the `#` mention character/
-   */
-  tagMatcherOptions?: Except<MentionExtensionMatcher, 'name' | 'char'>;
-}
+import { CreateSocialManagerOptions, SocialCombinedUnion } from './social-editor-types';
 
 /**
  * Create a social remirror manager with all the default react presets and
- * extensions.
+ * required extensions.
  *
  * @remarks
  *

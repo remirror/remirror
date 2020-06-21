@@ -1,7 +1,9 @@
+import { Except } from 'type-fest';
+
 import { AnyCombinedUnion } from '@remirror/core';
 import { AutoLinkExtension } from '@remirror/extension-auto-link';
 import { EmojiExtension } from '@remirror/extension-emoji';
-import { MentionExtension } from '@remirror/extension-mention';
+import { MentionExtension, MentionExtensionMatcher } from '@remirror/extension-mention';
 import { BaseReactCombinedUnion, I18nContextProps, RemirrorProviderProps } from '@remirror/react';
 
 export interface MentionChangeParameter extends BaseMentionState {
@@ -12,13 +14,27 @@ export interface MentionChangeParameter extends BaseMentionState {
   index: number;
 }
 
-export interface SocialEditorProps<Combined extends AnyCombinedUnion = AnyCombinedUnion>
-  extends Partial<RemirrorProviderProps<SocialCombinedUnion>>,
+export interface CreateSocialManagerOptions {
+  /**
+   * The matcher options for the `@` mention character.
+   */
+  atMatcherOptions?: Except<MentionExtensionMatcher, 'name' | 'char'>;
+
+  /**
+   * The matcher options for the `#` mention character/
+   */
+  tagMatcherOptions?: Except<MentionExtensionMatcher, 'name' | 'char'>;
+}
+
+export interface SocialEditorProps<Combined extends AnyCombinedUnion = SocialCombinedUnion>
+  extends Partial<RemirrorProviderProps<Combined>>,
     Partial<I18nContextProps> {
   /**
-   * Provide additional extensions and presets to the editor.
+   * The social options used to create the initial manager when a manager is
+   * not provided.
    */
-  combined?: readonly Combined[];
+  socialOptions?: CreateSocialManagerOptions;
+
   /**
    * Display a typing hint that limits the number of characters to this number.
    * Defaults to 140, set to `null` to disable.

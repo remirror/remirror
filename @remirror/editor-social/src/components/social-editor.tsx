@@ -24,10 +24,12 @@ export const SocialEditor: FC<SocialEditorProps> = (props) => {
     userData,
     combined,
     manager: propsManager,
+    socialOptions,
+    settings,
     ...rest
   } = props;
 
-  const manager = useSocialManager(propsManager ?? combined ?? []);
+  const manager = useSocialManager(propsManager ?? combined ?? [], socialOptions, settings);
 
   return (
     <I18nProvider i18n={i18n} locale={locale}>

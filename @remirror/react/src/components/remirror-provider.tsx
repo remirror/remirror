@@ -1,9 +1,10 @@
 import React, { ProviderProps, ReactElement, ReactNode, useEffect } from 'react';
 
-import { AnyCombinedUnion } from '@remirror/core';
+import { AnyCombinedUnion, MakeOptional } from '@remirror/core';
 import { i18n as defaultI18n } from '@remirror/i18n';
 import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
 
+import { useManager } from '../hooks';
 import { RemirrorPortals } from '../portals';
 import { I18nContext, RemirrorContext } from '../react-contexts';
 import {
@@ -19,12 +20,27 @@ interface RemirrorContextProviderProps<Combined extends AnyCombinedUnion>
     Pick<RemirrorProviderProps<Combined>, 'childAsRoot'> {}
 
 export interface RemirrorProviderProps<Combined extends AnyCombinedUnion>
-  extends BaseProps<Combined> {
+  extends MakeOptional<BaseProps<Combined>, 'manager'> {
   /**
    * The `RemirrorProvider` only supports **ONE** child element. You can place
    * the child element in a fragment if needed.
    */
   children: ReactElement;
+
+  /**
+   * The presets and extensions that you would like to use to automatically
+   * create the manager.
+   *
+   * These extensions and presets can't be updated and are not dynamic. You
+   * should not change they during the component lifecycle as they are created
+   * once at the very start and never used again.
+   */
+  combined?: readonly Combined[];
+
+  /**
+   * The settings to provide to the `RemirrorManager`.
+   */
+  settings?: Remirror.ManagerSettings;
 
   /**
    * Sets the first child element as a the root (where the prosemirror editor
@@ -99,15 +115,16 @@ RemirrorContextProvider.defaultProps = {
 export const RemirrorProvider = <Combined extends AnyCombinedUnion>(
   props: RemirrorProviderProps<Combined>,
 ) => {
-  const { children, childAsRoot, ...rest } = props;
+  const { children, childAsRoot, manager: mgr, combined, settings, ...rest } = props;
+  const manager = useManager(mgr ?? combined ?? [], settings);
 
   return (
-    <RenderEditor {...rest}>
+    <RenderEditor {...rest} manager={manager}>
       {(value) => {
         return (
           <RemirrorContextProvider value={value} childAsRoot={childAsRoot}>
-            <RemirrorPortals portalContainer={value.portalContainer} />
             {oneChildOnly(children)}
+            <RemirrorPortals portalContainer={value.portalContainer} />
           </RemirrorContextProvider>
         );
       }}
