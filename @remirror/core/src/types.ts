@@ -197,6 +197,13 @@ export interface StateUpdateLifecycleParameter extends EditorStateParameter {
   previousState: EditorState;
 
   /**
+   * When true, this lets you know that it is the first state update to happen.
+   * This can be used to run an action that should only be run when the state is
+   * first available.
+   */
+  firstUpdate: boolean;
+
+  /**
    * The original transaction which caused this state update.
    *
    * This allows for inspecting the reason behind the state change.
@@ -211,11 +218,14 @@ export interface StateUpdateLifecycleParameter extends EditorStateParameter {
   tr?: Transaction;
 
   /**
-   * When true, this lets you know that it is the first state update to happen.
-   * This can be used to run an action that should only be run when the state is
-   * first available.
+   * When the state updates are not controlled and it was a transaction that
+   * caused the state to be updated this value captures all the transaction
+   * updates caused by prosemirror plugins hook state methods like
+   * `filterTransactions` and `appendTransactions`.
+   *
+   * This is for advanced users only, and I personally have never needed it.
    */
-  firstUpdate: boolean;
+  transactions?: Transaction[];
 }
 export type StateUpdateLifecycleMethod = (parameter: StateUpdateLifecycleParameter) => void;
 

@@ -287,7 +287,7 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
    * directly setting the internal state via a `setState` call.
    */
   protected updateState(parameter: UpdateStateParameter<SchemaFromCombined<Combined>>) {
-    const { state, triggerChange = true, tr } = parameter;
+    const { state, triggerChange = true, tr, transactions } = parameter;
 
     if (this.props.value) {
       const { onChange } = this.props;
@@ -316,7 +316,7 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
       this.onChange({ state, tr });
     }
 
-    this.manager.onStateUpdate({ previousState: this.previousState, state });
+    this.manager.onStateUpdate({ previousState: this.previousState, state, tr, transactions });
   }
 
   /**

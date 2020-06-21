@@ -225,12 +225,12 @@ export abstract class EditorWrapper<
     tr = this.props.onDispatchTransaction?.(tr, this.getState()) ?? tr;
 
     const previousState = this.getState();
-    const state = previousState.apply(tr);
+    const { state, transactions } = previousState.applyTransaction(tr);
 
     this.#previousState = previousState;
 
     // Use the abstract method to update the state.
-    this.updateState({ state, tr });
+    this.updateState({ state, tr, transactions });
 
     // Update the view props when an update is requested
     const forcedUpdates = this.manager.store.getForcedUpdates(tr);
@@ -819,7 +819,17 @@ export interface PlaceholderConfig extends TextParameter {
 export interface UpdateStateParameter<Schema extends EditorSchema = any>
   extends Partial<TransactionParameter<Schema>>,
     EditorStateParameter<Schema>,
-    TriggerChangeParameter {}
+    TriggerChangeParameter {
+  /**
+   * When the state updates are not controlled and it was a transaction that
+   * caused the state to be updated this value captures all the transaction
+   * updates caused by prosemirror plugins hook state methods like
+   * `filterTransactions` and `appendTransactions`.
+   *
+   * This is for advanced users only, and I personally have never needed it.
+   */
+  transactions?: Array<Transaction<Schema>>;
+}
 
 export interface TriggerChangeParameter {
   /**
