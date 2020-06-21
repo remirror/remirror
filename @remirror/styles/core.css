@@ -1,7 +1,7 @@
 /**
  * Styles extracted from: @remirror/core/src/styles.ts
  */
-.remirror-editor .ProseMirror {
+.remirror-editor.ProseMirror {
   position: relative;
   word-wrap: break-word;
   white-space: pre-wrap;
@@ -10,16 +10,16 @@
   font-variant-ligatures: none;
   font-feature-settings: 'liga' 0;
 }
-.remirror-editor .ProseMirror pre {
+.remirror-editor.ProseMirror pre {
   white-space: pre-wrap;
 }
-.remirror-editor .ProseMirror li {
+.remirror-editor.ProseMirror li {
   position: relative;
 }
-.remirror-editor .ProseMirror[contenteditable='false'] {
+.remirror-editor.ProseMirror[contenteditable='false'] {
   white-space: normal;
 }
-.remirror-editor .ProseMirror[contenteditable='true'] {
+.remirror-editor.ProseMirror[contenteditable='true'] {
   white-space: pre-wrap;
 }
 .remirror-editor .ProseMirror-hideselection {

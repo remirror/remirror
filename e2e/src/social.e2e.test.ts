@@ -1,7 +1,7 @@
 import { getDocument, queries } from 'playwright-testing-library';
 import { ElementHandle } from 'playwright-testing-library/dist/typedefs';
 
-import { EDITOR_CLASS_SELECTOR, NON_BREAKING_SPACE_CHAR } from '@remirror/core';
+import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
 
 import {
   $innerHTML,
@@ -152,9 +152,7 @@ describe('Social Showcase', () => {
         await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe(
           '@lazymeercat594',
         );
-        await expect(textContent(EDITOR_CLASS_SELECTOR)).resolves.toBe(
-          `hello @lazymeercat594${NON_BREAKING_SPACE_CHAR}`,
-        );
+        await expect(textContent(EDITOR_CLASS_SELECTOR)).resolves.toBe(`hello @lazymeercat594 `);
       });
 
       it('allows arrowing between suggesters', async () => {
@@ -239,9 +237,7 @@ describe('Social Showcase', () => {
         await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-tag'))).resolves.toBe(
           '#Tags',
         );
-        await expect(textContent(EDITOR_CLASS_SELECTOR)).resolves.toBe(
-          `My #Tags${NON_BREAKING_SPACE_CHAR}`,
-        );
+        await expect(textContent(EDITOR_CLASS_SELECTOR)).resolves.toBe(`My #Tags `);
       });
     });
   });

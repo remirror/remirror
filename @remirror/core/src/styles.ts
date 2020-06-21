@@ -1,7 +1,7 @@
 import { css } from 'linaria';
 
 export const editorStyles = css`
-  .ProseMirror {
+  &.ProseMirror {
     position: relative;
     word-wrap: break-word;
     white-space: pre-wrap;

@@ -16,7 +16,6 @@ import {
   MarkExtensionSpec,
   MarkGroup,
   markPasteRule,
-  NON_BREAKING_SPACE_CHAR,
   noop,
   object,
   RangeParameter,
@@ -74,7 +73,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
   static readonly defaultOptions: DefaultExtensionOptions<MentionOptions> = {
     mentionTag: 'a' as const,
     matchers: [],
-    appendText: NON_BREAKING_SPACE_CHAR,
+    appendText: ' ',
     suggestTag: 'a' as const,
     noDecorations: false,
   };
