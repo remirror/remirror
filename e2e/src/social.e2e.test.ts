@@ -286,7 +286,7 @@ describe('Social Showcase', () => {
               >
                 #awesome
               </a>
-              &nbsp;hello
+              hello
               <a href="/ab"
                  role="presentation"
                  class="mention mention-at"
@@ -295,7 +295,7 @@ describe('Social Showcase', () => {
               >
                 @ab
               </a>
-              &nbsp;😀
+              😀
               <a href="https://google.com"
                  role="presentation"
               >

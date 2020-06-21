@@ -293,3 +293,6 @@ jobs:
 
       - name: chrome integration test ${{ matrix.os }}
         run: cd e2e && pnpm run chromium
+
+      - name: firefox integration test ${{ matrix.os }}
+        run: cd e2e && pnpm run firefox
