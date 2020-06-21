@@ -2,7 +2,14 @@ import { act, render } from '@testing-library/react';
 import { RemirrorTestChain } from 'jest-remirror';
 import React, { FC, useState } from 'react';
 
-import { EditorState, fromHtml, SchemaFromCombined } from '@remirror/core';
+import {
+  AnyCombinedUnion,
+  EditorState,
+  fromHtml,
+  PlainExtension,
+  SchemaFromCombined,
+  StateUpdateLifecycleMethod,
+} from '@remirror/core';
 
 import { createReactManager } from '../../hooks/editor-hooks';
 import { RemirrorContextProps } from '../../react-types';
@@ -10,13 +17,15 @@ import { RenderEditor } from '../render-editor';
 
 const label = 'Remirror editor';
 
-function create() {
-  const manager = createReactManager([]);
+function create<Combined extends AnyCombinedUnion>(combined?: Combined[]) {
+  const manager = createReactManager(combined ?? []);
   const chain = RemirrorTestChain.create(manager);
 
   return {
     manager,
     chain,
+    doc: chain.nodes.doc,
+    p: chain.nodes.paragraph,
     props: {
       label,
       stringHandler: fromHtml,
@@ -179,5 +188,56 @@ describe('Remirror Controlled Component', () => {
 
     expect(() => ctx.setContent('<p>Error</p>')).toThrowErrorMatchingSnapshot();
     expect(() => ctx.clearContent()).toThrowErrorMatchingSnapshot();
+  });
+
+  it('notifies extensions of state updates via `manager.onStateUpdate`', () => {
+    const mock = jest.fn();
+
+    class UpdateExtension extends PlainExtension {
+      get name() {
+        return 'update' as const;
+      }
+
+      onStateUpdate: StateUpdateLifecycleMethod = mock;
+    }
+
+    const { manager, props, chain, doc, p } = create([new UpdateExtension()]);
+
+    const Component = () => {
+      const [value, setValue] = useState<EditorState>(
+        manager.createState({
+          content: doc(p('some content')),
+          stringHandler: fromHtml,
+        }),
+      );
+
+      return (
+        <RenderEditor
+          {...props}
+          value={value}
+          manager={manager}
+          onChange={(parameter) => {
+            const { firstRender, state } = parameter;
+
+            if (firstRender) {
+              return;
+            }
+
+            setValue(state);
+          }}
+        >
+          {() => <div />}
+        </RenderEditor>
+      );
+    };
+
+    render(<Component />);
+
+    act(() => {
+      chain.commands.insertText('First text update');
+    });
+
+    expect(mock).toHaveBeenCalledTimes(2);
+    expect(mock.mock.calls[1][0].state).toBe(chain.state);
   });
 });

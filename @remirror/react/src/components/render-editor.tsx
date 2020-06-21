@@ -320,10 +320,12 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
   }
 
   /**
-   * Update the controlled state when the value changes.
+   * Update the controlled state when the value changes and notify the extension
+   * of this update.
    */
   updateControlledState(state: EditorState<SchemaFromCombined<Combined>>) {
     this.view.updateState(state);
+    this.manager.onStateUpdate({ previousState: this.previousState, state });
   }
 
   /**
