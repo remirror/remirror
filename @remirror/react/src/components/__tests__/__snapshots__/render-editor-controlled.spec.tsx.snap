@@ -70,7 +70,7 @@ exports[`Remirror Controlled Component should set the initial value 1`] = `
 exports[`Remirror Controlled Component throws when using  \`setContent\` updates 1`] = `
 "There is a problem with your controlled editor setup.
 
-Controlled editors do not support \`clearContent\` or \`setContent\` where triggerChange. Update the \`value\` prop instead.
+Controlled editors do not support \`clearContent\` or \`setContent\` where \`triggerChange\` is \`true\`. Update the \`value\` prop instead.
 
 For more information visit https://docs.remirror.org/errors#RMR0202"
 `;
@@ -78,7 +78,7 @@ For more information visit https://docs.remirror.org/errors#RMR0202"
 exports[`Remirror Controlled Component throws when using  \`setContent\` updates 2`] = `
 "There is a problem with your controlled editor setup.
 
-Controlled editors do not support \`clearContent\` or \`setContent\` where triggerChange. Update the \`value\` prop instead.
+Controlled editors do not support \`clearContent\` or \`setContent\` where \`triggerChange\` is \`true\`. Update the \`value\` prop instead.
 
 For more information visit https://docs.remirror.org/errors#RMR0202"
 `;

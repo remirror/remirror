@@ -301,7 +301,7 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
       invariant(triggerChange, {
         code: ErrorConstant.REACT_CONTROLLED,
         message:
-          'Controlled editors do not support `clearContent` or `setContent` where triggerChange. Update the `value` prop instead.',
+          'Controlled editors do not support `clearContent` or `setContent` where `triggerChange` is `true`. Update the `value` prop instead.',
       });
 
       this.onChange({ state, tr });
