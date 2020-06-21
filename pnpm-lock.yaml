@@ -70,7 +70,7 @@ importers:
       jest-watch-select-projects: 2.0.0
       jest-watch-typeahead: 0.6.0_jest@26.0.1
       json.macro: 1.3.0_babel-plugin-macros@2.8.0
-      linaria: 2.0.0-alpha.5
+      linaria: 1.4.0-beta.10
       lint-staged: 10.2.11
       npm-run-all: 4.1.5
       prettier: 2.0.5
@@ -153,7 +153,7 @@ importers:
       jest-watch-select-projects: ^2.0.0
       jest-watch-typeahead: ^0.6.0
       json.macro: ^1.3.0
-      linaria: ^2.0.0-alpha.5
+      linaria: ^1.4.0-beta.10
       lint-staged: ^10.2.11
       npm-run-all: ^4.1.5
       prettier: ^2.0.5
@@ -247,7 +247,7 @@ importers:
       '@remirror/core-helpers': 'link:../core-helpers'
       '@remirror/core-types': 'link:../core-types'
       '@remirror/core-utils': 'link:../core-utils'
-      linaria: 2.0.0-alpha.5
+      linaria: 1.4.0-beta.10
       nanoevents: 5.1.8
       type-fest: 0.15.1
     devDependencies:
@@ -259,7 +259,7 @@ importers:
       '@remirror/core-types': ^0.9.0
       '@remirror/core-utils': ^0.8.0
       '@remirror/pm': ^0.0.0
-      linaria: ^2.0.0-alpha.5
+      linaria: ^1.4.0-beta.10
       nanoevents: ^5.1.8
       type-fest: ^0.15.1
   '@remirror/core-constants':
@@ -387,7 +387,7 @@ importers:
       '@remirror/react-utils': 'link:../react-utils'
       '@types/classnames': 2.2.10
       classnames: 2.2.6
-      linaria: 2.0.0-alpha.5
+      linaria: 1.4.0-beta.10
       multishift: 'link:../../packages/multishift'
       type-fest: 0.15.1
     devDependencies:
@@ -417,7 +417,7 @@ importers:
       '@types/react-dom': ^16.9.8
       '@types/testing-library__react': ^10.0.1
       classnames: ^2.2.6
-      linaria: ^2.0.0-alpha.5
+      linaria: ^1.4.0-beta.10
       multishift: ^0.7.7
       react: ^16.13.1
       react-dom: ^16.13.1
@@ -461,7 +461,7 @@ importers:
   '@remirror/extension-blockquote':
     dependencies:
       '@babel/runtime': 7.10.3
-      linaria: 2.0.0-alpha.5
+      linaria: 1.4.0-beta.10
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -469,7 +469,7 @@ importers:
       '@babel/runtime': ^7.10.3
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
-      linaria: ^2.0.0-alpha.5
+      linaria: ^1.4.0-beta.10
   '@remirror/extension-bold':
     dependencies:
       '@babel/runtime': 7.10.3
@@ -581,7 +581,7 @@ importers:
   '@remirror/extension-gap-cursor':
     dependencies:
       '@babel/runtime': 7.10.3
-      linaria: 2.0.0-alpha.5
+      linaria: 1.4.0-beta.10
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -589,7 +589,7 @@ importers:
       '@babel/runtime': ^7.10.3
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
-      linaria: ^2.0.0-alpha.5
+      linaria: ^1.4.0-beta.10
   '@remirror/extension-hard-break':
     dependencies:
       '@babel/runtime': 7.10.3
@@ -683,7 +683,7 @@ importers:
   '@remirror/extension-placeholder':
     dependencies:
       '@babel/runtime': 7.10.3
-      linaria: 2.0.0-alpha.5
+      linaria: 1.4.0-beta.10
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -691,7 +691,7 @@ importers:
       '@babel/runtime': ^7.10.3
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
-      linaria: ^2.0.0-alpha.5
+      linaria: ^1.4.0-beta.10
   '@remirror/extension-position-tracker':
     dependencies:
       '@babel/runtime': 7.10.3
@@ -732,7 +732,7 @@ importers:
     dependencies:
       '@babel/runtime': 7.10.3
       escape-string-regexp: 4.0.0
-      linaria: 2.0.0-alpha.5
+      linaria: 1.4.0-beta.10
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -741,7 +741,7 @@ importers:
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
       escape-string-regexp: ^4.0.0
-      linaria: ^2.0.0-alpha.5
+      linaria: ^1.4.0-beta.10
   '@remirror/extension-strike':
     dependencies:
       '@babel/runtime': 7.10.3
@@ -926,7 +926,7 @@ importers:
   '@remirror/preset-embed':
     dependencies:
       '@babel/runtime': 7.10.3
-      linaria: 2.0.0-alpha.5
+      linaria: 1.4.0-beta.10
       tiny-querystring: 0.0.2
     devDependencies:
       '@remirror/core': 'link:../core'
@@ -935,7 +935,7 @@ importers:
       '@babel/runtime': ^7.10.3
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
-      linaria: ^2.0.0-alpha.5
+      linaria: ^1.4.0-beta.10
       tiny-querystring: ^0.0.2
   '@remirror/preset-list':
     dependencies:
@@ -953,7 +953,7 @@ importers:
       '@remirror/extension-placeholder': 'link:../extension-placeholder'
       '@remirror/extension-react-ssr': 'link:../extension-react-ssr'
       '@remirror/react-utils': 'link:../react-utils'
-      linaria: 2.0.0-alpha.5
+      linaria: 1.4.0-beta.10
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -967,7 +967,7 @@ importers:
       '@remirror/pm': ^0.0.0
       '@remirror/react-utils': ^0.7.6
       '@types/react': ^16.9.38
-      linaria: ^2.0.0-alpha.5
+      linaria: ^1.4.0-beta.10
       react: ^16.13.1
   '@remirror/preset-table':
     dependencies:
@@ -991,7 +991,7 @@ importers:
       '@types/min-document': 2.19.0
       '@types/use-deep-compare-effect': 1.2.0
       hoist-non-react-statics: 3.3.2
-      linaria: 2.0.0-alpha.5
+      linaria: 1.4.0-beta.10
       min-document: 2.19.0
       nanoevents: 5.1.8
       nanoid: 3.1.10
@@ -1034,7 +1034,7 @@ importers:
       '@types/use-deep-compare-effect': ^1.2.0
       hoist-non-react-statics: ^3.3.2
       jest-axe: ^3.4.0
-      linaria: ^2.0.0-alpha.5
+      linaria: ^1.4.0-beta.10
       min-document: ^2.19.0
       nanoevents: ^5.1.8
       nanoid: ^3.1.10
@@ -1229,7 +1229,7 @@ importers:
       graphql-tag: 2.10.3_graphql@14.6.0
       graphql-tag-pluck: 0.8.7
       is-absolute-url: 3.0.3
-      linaria: 2.0.0-alpha.5
+      linaria: 1.4.0-beta.10
       prismjs: 1.20.0
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
@@ -1314,7 +1314,7 @@ importers:
       graphql-tag: ^2.10.3
       graphql-tag-pluck: ^0.8.7
       is-absolute-url: ^3.0.3
-      linaria: ^2.0.0-alpha.5
+      linaria: ^1.4.0-beta.10
       monaco-editor-webpack-plugin: ^1.9.0
       prismjs: ^1.20.0
       react: ^16.13.1
@@ -1670,7 +1670,7 @@ importers:
       globby: 11.0.1
       jest-axe: 3.4.0
       jest-diff: 26.0.1
-      linaria: 2.0.0-alpha.5
+      linaria: 1.4.0-beta.10
       lodash.groupby: 4.6.0
       lodash.isequal: 4.5.0
       react: 16.13.1
@@ -1687,7 +1687,7 @@ importers:
       globby: ^11.0.1
       jest-axe: ^3.4.0
       jest-diff: ^26.0.1
-      linaria: ^2.0.0-alpha.5
+      linaria: ^1.4.0-beta.10
       lodash.groupby: ^4.6.0
       lodash.isequal: ^4.5.0
       react: ^16.13.1
@@ -4853,11 +4853,7 @@ packages:
       camel-case: 4.1.1
       graphql-tools: 5.0.0
       lodash: 4.17.15
-    deprecated:
-      'GraphQL Toolkit is deprecated and merged into GraphQL Tools, so it will no longer get
-      updates. Use GraphQL Tools instead to stay up-to-date! Check out
-      https://www.graphql-tools.com/docs/migration-from-toolkit for migration and
-      https://the-guild.dev/blog/graphql-tools-v6 for new changes.'
+    deprecated: 'GraphQL Toolkit is deprecated and merged into GraphQL Tools, so it will no longer get updates. Use GraphQL Tools instead to stay up-to-date! Check out https://www.graphql-tools.com/docs/migration-from-toolkit for migration and https://the-guild.dev/blog/graphql-tools-v6 for new changes.'
     dev: false
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
@@ -4870,11 +4866,7 @@ packages:
       graphql: 14.6.0
       graphql-tools: 5.0.0_graphql@14.6.0
       lodash: 4.17.15
-    deprecated:
-      'GraphQL Toolkit is deprecated and merged into GraphQL Tools, so it will no longer get
-      updates. Use GraphQL Tools instead to stay up-to-date! Check out
-      https://www.graphql-tools.com/docs/migration-from-toolkit for migration and
-      https://the-guild.dev/blog/graphql-tools-v6 for new changes.'
+    deprecated: 'GraphQL Toolkit is deprecated and merged into GraphQL Tools, so it will no longer get updates. Use GraphQL Tools instead to stay up-to-date! Check out https://www.graphql-tools.com/docs/migration-from-toolkit for migration and https://the-guild.dev/blog/graphql-tools-v6 for new changes.'
     dev: false
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
@@ -7689,9 +7681,7 @@ packages:
   /@types/vfile-message/2.0.0:
     dependencies:
       vfile-message: 2.0.4
-    deprecated:
-      'This is a stub types definition. vfile-message provides its own type definitions, so you do
-      not need this installed.'
+    deprecated: 'This is a stub types definition. vfile-message provides its own type definitions, so you do not need this installed.'
     dev: false
     resolution:
       integrity: sha512-GpTIuDpb9u4zIO165fUy9+fXcULdD8HFRNli04GehoMVbeNq7D6OBnqSmg3lxZnC+UvgUhEWKxdKiwYUkGltIw==
@@ -10069,8 +10059,7 @@ packages:
       path-is-absolute: 1.0.1
       readdirp: 2.2.1
       upath: 1.2.0
-    deprecated:
-      Chokidar 2 will break on node v14+. Upgrade to chokidar 3 with 15x less dependencies.
+    deprecated: Chokidar 2 will break on node v14+. Upgrade to chokidar 3 with 15x less dependencies.
     dev: false
     optionalDependencies:
       fsevents: 1.2.13
@@ -10669,7 +10658,7 @@ packages:
       aproba: 1.2.0
       fs-write-stream-atomic: 1.0.10
       iferr: 0.1.5
-      mkdirp: 0.5.3
+      mkdirp: 0.5.5
       rimraf: 2.7.1
       run-queue: 1.0.3
     dev: false
@@ -10715,16 +10704,12 @@ packages:
     resolution:
       integrity: sha512-lacdXOimsiD0QyNf9BC/mxivNJ/ybBGJXQFKzRekp1WTHoVUWsUHEn+2T8GJAzzIhyOuXA+gOxCVN3l+5PLPUA==
   /core-js/1.2.7:
-    deprecated:
-      'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues.
-      Please, upgrade your dependencies to the actual version of core-js@3.'
+    deprecated: 'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.'
     dev: false
     resolution:
       integrity: sha1-ZSKUwUZR2yj6k70tX/KYOk8IxjY=
   /core-js/2.6.11:
-    deprecated:
-      'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues.
-      Please, upgrade your dependencies to the actual version of core-js@3.'
+    deprecated: 'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.'
     dev: false
     requiresBuild: true
     resolution:
@@ -14052,9 +14037,7 @@ packages:
     dependencies:
       bindings: 1.5.0
       nan: 2.14.1
-    deprecated:
-      fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents
-      2.
+    deprecated: fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents 2.
     dev: false
     engines:
       node: '>= 4.0'
@@ -15411,11 +15394,7 @@ packages:
       graphql: 14.6.0
       lodash: 4.17.15
       resolve-from: 4.0.0
-    deprecated:
-      'GraphQL Import has been deprecated and merged into GraphQL Tools, so it will no longer get
-      updates. Use GraphQL Tools instead to stay up-to-date! Check out
-      https://www.graphql-tools.com/docs/migration-from-import for migration and
-      https://the-guild.dev/blog/graphql-tools-v6 for new changes.'
+    deprecated: 'GraphQL Import has been deprecated and merged into GraphQL Tools, so it will no longer get updates. Use GraphQL Tools instead to stay up-to-date! Check out https://www.graphql-tools.com/docs/migration-from-import for migration and https://the-guild.dev/blog/graphql-tools-v6 for new changes.'
     dev: false
     engines:
       node: '>=4.0.0'
@@ -18309,7 +18288,7 @@ packages:
       node: '>= 0.8.0'
     resolution:
       integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==
-  /linaria/2.0.0-alpha.5:
+  /linaria/1.4.0-beta.10:
     dependencies:
       '@babel/core': 7.10.3
       '@babel/generator': 7.10.3
@@ -18323,6 +18302,7 @@ packages:
       '@babel/traverse': 7.10.3
       '@emotion/is-prop-valid': 0.7.3
       babel-plugin-transform-react-remove-prop-types: 0.4.24
+      core-js: 3.6.5
       cosmiconfig: 5.2.1
       debug: 4.1.1
       dedent: 0.7.0
@@ -18343,7 +18323,7 @@ packages:
     dev: false
     hasBin: true
     resolution:
-      integrity: sha512-W+PcPHcdjJ0VyBjrTnFgqc+R3eTNd3Bf4couvwo+5Yst7JaZh5ot4KYmOzP/AOjPZPlMUGhM4H4NQwyApFY2AQ==
+      integrity: sha512-VsUastJ3B3c+WRQD8cn9FMx6q/1xdAJZagJxvUBMsT3BrUG5WXADaCl3R8rls3GVnsmaLVR4ybYlPye1gLGJhA==
   /lines-and-columns/1.1.6:
     resolution:
       integrity: sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
@@ -19502,9 +19482,7 @@ packages:
   /mkdirp/0.5.3:
     dependencies:
       minimist: 1.2.5
-    deprecated:
-      Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the
-      API surface has changed to use Promises in 1.x.)
+    deprecated: Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the API surface has changed to use Promises in 1.x.)
     dev: false
     hasBin: true
     resolution:
@@ -19561,7 +19539,7 @@ packages:
       aproba: 1.2.0
       copy-concurrently: 1.0.5
       fs-write-stream-atomic: 1.0.10
-      mkdirp: 0.5.3
+      mkdirp: 0.5.5
       rimraf: 2.7.1
       run-queue: 1.0.3
     dev: false
@@ -26020,9 +25998,7 @@ packages:
     engines:
       node: '>= 6'
     peerDependencies:
-      typescript:
-        '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev ||
-        >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
+      typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
     resolution:
       integrity: sha512-kzeQ5B8H3w60nFY2g8cJIuH7JDpsALXySGtwGJ0p2LSjLgay3NdIpqq5SoOBe46bKDW2iq25irHCr8wjomUS2g==
   /tsutils/3.17.1_typescript@3.9.5:
@@ -26033,9 +26009,7 @@ packages:
     engines:
       node: '>= 6'
     peerDependencies:
-      typescript:
-        '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev ||
-        >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
+      typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
     resolution:
       integrity: sha512-kzeQ5B8H3w60nFY2g8cJIuH7JDpsALXySGtwGJ0p2LSjLgay3NdIpqq5SoOBe46bKDW2iq25irHCr8wjomUS2g==
   /tty-browserify/0.0.0:
@@ -27212,10 +27186,10 @@ packages:
       eslint-scope: 4.0.3
       json-parse-better-errors: 1.0.2
       loader-runner: 2.4.0
-      loader-utils: 1.2.3
+      loader-utils: 1.4.0
       memory-fs: 0.4.1
       micromatch: 3.1.10
-      mkdirp: 0.5.3
+      mkdirp: 0.5.5
       neo-async: 2.6.1
       node-libs-browser: 2.2.1
       schema-utils: 1.0.0
