@@ -54,7 +54,7 @@
     "@types/react": "^16.9.38",
     "@types/rimraf": "^3.0.0",
     "delay": "^4.3.0",
-    "ink-testing-library": "^1.0.3"
+    "ink-testing-library": "^2.0.0"
   },
   "engines": {
     "node": ">=8"
