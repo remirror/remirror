@@ -38,7 +38,15 @@
     "name": "@remirror/editor-social",
     "path": "@remirror/editor-social/dist/editor-social.esm.js",
     "limit": "200 KB",
-    "ignore": ["@remirror/pm", "@types/react", "@types/react-dom", "react", "react-dom"],
+    "ignore": [
+      "@remirror/core",
+      "@remirror/pm",
+      "@remirror/react",
+      "@types/react",
+      "@types/react-dom",
+      "react",
+      "react-dom"
+    ],
     "running": false
   },
   {
@@ -51,6 +59,13 @@
   {
     "name": "@remirror/extension-base-keymap",
     "path": "@remirror/extension-base-keymap/dist/extension-base-keymap.esm.js",
+    "limit": "5 KB",
+    "ignore": ["@remirror/core", "@remirror/pm"],
+    "running": false
+  },
+  {
+    "name": "@remirror/extension-bidi",
+    "path": "@remirror/extension-bidi/dist/extension-bidi.esm.js",
     "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
@@ -88,6 +103,13 @@
     "path": "@remirror/extension-collaboration/dist/extension-collaboration.esm.js",
     "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm", "prosemirror-collab"],
+    "running": false
+  },
+  {
+    "name": "@remirror/extension-diff",
+    "path": "@remirror/extension-diff/dist/extension-diff.esm.js",
+    "limit": "5 KB",
+    "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
@@ -233,13 +255,6 @@
   {
     "name": "@remirror/extension-text",
     "path": "@remirror/extension-text/dist/extension-text.esm.js",
-    "limit": "5 KB",
-    "ignore": ["@remirror/core", "@remirror/pm"],
-    "running": false
-  },
-  {
-    "name": "@remirror/extension-diff",
-    "path": "@remirror/extension-diff/dist/extension-diff.esm.js",
     "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
