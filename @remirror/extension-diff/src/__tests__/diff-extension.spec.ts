@@ -3,14 +3,14 @@ import { renderEditor } from 'jest-remirror';
 import { entries, GetHandler } from '@remirror/core';
 import { isExtensionValid } from '@remirror/test-fixtures';
 
-import { TrackChangesExtension, TrackChangesOptions } from '..';
+import { DiffExtension, DiffOptions } from '..';
 
 test('is valid', () => {
-  expect(isExtensionValid(TrackChangesExtension, {}));
+  expect(isExtensionValid(DiffExtension, {}));
 });
 
-function create(options?: TrackChangesOptions, handlers: GetHandler<TrackChangesOptions> = {}) {
-  const extension = new TrackChangesExtension(options);
+function create(options?: DiffOptions, handlers: GetHandler<DiffOptions> = {}) {
+  const extension = new DiffExtension(options);
   const {
     add,
     nodes: { p, doc },

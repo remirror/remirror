@@ -238,8 +238,8 @@
     "running": false
   },
   {
-    "name": "@remirror/extension-track-changes",
-    "path": "@remirror/extension-track-changes/dist/extension-track-changes.esm.js",
+    "name": "@remirror/extension-diff",
+    "path": "@remirror/extension-diff/dist/extension-diff.esm.js",
     "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false

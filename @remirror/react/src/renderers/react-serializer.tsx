@@ -4,7 +4,6 @@ import {
   AnyCombinedUnion,
   bool,
   DOMOutputSpec,
-  RemirrorManager,
   ErrorConstant,
   Fragment as ProsemirrorFragment,
   invariant,
@@ -16,6 +15,7 @@ import {
   NodeExtensionSpec,
   object,
   ProsemirrorNode,
+  RemirrorManager,
   Shape,
 } from '@remirror/core';
 

@@ -1,21 +1,21 @@
 {
-  "name": "@remirror/extension-track-changes",
+  "name": "@remirror/extension-diff",
   "version": "0.0.0",
-  "description": "Track user changes in your remirror editor.",
+  "description": "Track diffs between your json documents.",
   "keywords": [
     "remirror",
     "extension"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-track-changes",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-track-changes",
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-diff",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-diff",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-track-changes.cjs.js",
-  "module": "dist/extension-track-changes.esm.js",
-  "types": "dist/extension-track-changes.cjs.d.ts",
+  "main": "dist/extension-diff.cjs.js",
+  "module": "dist/extension-diff.esm.js",
+  "types": "dist/extension-diff.cjs.d.ts",
   "files": [
     "dist"
   ],

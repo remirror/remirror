@@ -762,7 +762,7 @@ importers:
       '@babel/runtime': ^7.10.3
       '@remirror/core': '*'
       '@remirror/pm': '*'
-  '@remirror/extension-track-changes':
+  '@remirror/extension-diff':
     dependencies:
       '@babel/runtime': 7.10.3
     devDependencies:
@@ -1589,7 +1589,7 @@ importers:
       '@remirror/extension-search': 'link:../../@remirror/extension-search'
       '@remirror/extension-strike': 'link:../../@remirror/extension-strike'
       '@remirror/extension-text': 'link:../../@remirror/extension-text'
-      '@remirror/extension-track-changes': 'link:../../@remirror/extension-track-changes'
+      '@remirror/extension-diff': 'link:../../@remirror/extension-diff'
       '@remirror/extension-trailing-node': 'link:../../@remirror/extension-trailing-node'
       '@remirror/extension-underline': 'link:../../@remirror/extension-underline'
       '@remirror/preset-core': 'link:../../@remirror/preset-core'
@@ -1643,7 +1643,7 @@ importers:
       '@remirror/extension-search': ^0.0.0
       '@remirror/extension-strike': ^0.0.0
       '@remirror/extension-text': ^0.0.0
-      '@remirror/extension-track-changes': ^0.0.0
+      '@remirror/extension-diff': ^0.0.0
       '@remirror/extension-trailing-node': ^0.0.0
       '@remirror/extension-underline': ^0.0.0
       '@remirror/pm': '*'

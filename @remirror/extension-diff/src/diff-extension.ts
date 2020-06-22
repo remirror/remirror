@@ -21,9 +21,9 @@ import {
 import { Mapping, StepMap } from '@remirror/pm/transform';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
 
-import { Commit, Span, TrackState } from './track-changes-utils';
+import { Commit, Span, TrackState } from './diff-utils';
 
-export interface TrackChangesOptions {
+export interface DiffOptions {
   /**
    * @default 'blame-marker';
    */
@@ -63,22 +63,22 @@ export interface TrackChangesOptions {
 /**
  * An extension for the remirror editor. CHANGE ME.
  */
-export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
-  static readonly staticKeys: StaticKeyList<TrackChangesOptions> = ['blameMarkerClass'];
-  static readonly handlerKeys: HandlerKeyList<TrackChangesOptions> = [
+export class DiffExtension extends PlainExtension<DiffOptions> {
+  static readonly staticKeys: StaticKeyList<DiffOptions> = ['blameMarkerClass'];
+  static readonly handlerKeys: HandlerKeyList<DiffOptions> = [
     'onMouseOverCommit',
     'onMouseLeaveCommit',
     'onSelectCommits',
     'onDeselectCommits',
   ];
 
-  static readonly defaultOptions: DefaultExtensionOptions<TrackChangesOptions> = {
+  static readonly defaultOptions: DefaultExtensionOptions<DiffOptions> = {
     blameMarkerClass: 'blame-marker',
     revertMessage: (message: string) => `Revert: '${message}'`,
   };
 
   get name() {
-    return 'trackChanges' as const;
+    return 'diff' as const;
   }
 
   #hovered?: HandlerParameter;
@@ -131,11 +131,11 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
    * Get the full list of tracked commit changes
    */
   private getCommits() {
-    return this.getPluginState<TrackChangesPluginState>().tracked.commits;
+    return this.getPluginState<DiffPluginState>().tracked.commits;
   }
 
   private getIndexByName(name: 'first' | 'last') {
-    const length = this.getPluginState<TrackChangesPluginState>().tracked.commits.length;
+    const length = this.getPluginState<DiffPluginState>().tracked.commits.length;
 
     switch (name) {
       case 'first':
@@ -150,7 +150,7 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
    * Get the commit by it's index
    */
   private getCommit(id: CommitId) {
-    const commits = this.getPluginState<TrackChangesPluginState>().tracked.commits;
+    const commits = this.getPluginState<DiffPluginState>().tracked.commits;
 
     if (isString(id)) {
       return commits[this.getIndexByName(name)];
@@ -160,7 +160,7 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
   }
 
   private getCommitId(commit: Commit) {
-    const { tracked } = this.getPluginState<TrackChangesPluginState>();
+    const { tracked } = this.getPluginState<DiffPluginState>();
     return tracked.commits.indexOf(commit);
   }
 
@@ -177,7 +177,7 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
           return this.createInitialState(state);
         },
 
-        apply: (tr, pluginState: TrackChangesPluginState, _: EditorState, state: EditorState) => {
+        apply: (tr, pluginState: DiffPluginState, _: EditorState, state: EditorState) => {
           const newState = this.applyStateUpdates(tr, pluginState, state);
           this.handleSelection(tr, newState);
 
@@ -186,7 +186,7 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
       },
       props: {
         decorations: (state) => {
-          return this.getPluginState<TrackChangesPluginState>(state).decorations;
+          return this.getPluginState<DiffPluginState>(state).decorations;
         },
         handleDOMEvents: {
           mouseover: (view, event) => {
@@ -204,7 +204,7 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
    * Calls the selection handlers when the selection changes the number of
    * commit spans covered.
    */
-  private handleSelection(tr: Transaction, pluginState: TrackChangesPluginState) {
+  private handleSelection(tr: Transaction, pluginState: DiffPluginState) {
     if (!hasTransactionChanged(tr)) {
       return;
     }
@@ -251,7 +251,7 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
     }
 
     const pos = view.posAtDOM(event.target, 0);
-    const { tracked } = this.getPluginState<TrackChangesPluginState>();
+    const { tracked } = this.getPluginState<DiffPluginState>();
     const span = tracked.blameMap.find((map) => map.from <= pos && map.to >= pos);
 
     if (!span || !isNumber(span.commit)) {
@@ -297,7 +297,7 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
   /**
    * Create the initial plugin state for the custom plugin.
    */
-  private createInitialState(state: EditorState): TrackChangesPluginState {
+  private createInitialState(state: EditorState): DiffPluginState {
     return {
       tracked: new TrackState({
         blameMap: [new Span({ from: 0, to: state.doc.content.size, commit: undefined })],
@@ -314,9 +314,9 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
    */
   private applyStateUpdates(
     tr: Transaction,
-    pluginState: TrackChangesPluginState,
+    pluginState: DiffPluginState,
     state: EditorState,
-  ): TrackChangesPluginState {
+  ): DiffPluginState {
     return {
       ...this.updateTracked(tr, pluginState),
       ...this.updateHighlights(tr, pluginState, state),
@@ -325,7 +325,7 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
 
   private createDecorationSet(
     commits: number[],
-    pluginState: TrackChangesPluginState,
+    pluginState: DiffPluginState,
     state: EditorState,
   ): DecorationSet {
     const { tracked } = pluginState;
@@ -347,7 +347,7 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
    */
   private updateHighlights(
     tr: Transaction,
-    pluginState: TrackChangesPluginState,
+    pluginState: DiffPluginState,
     state: EditorState,
   ): HighlightStateParameter {
     const { add, clear } = this.getMeta(tr);
@@ -463,7 +463,7 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
       commit = this.getCommit('last');
     }
 
-    const { tracked } = this.getPluginState<TrackChangesPluginState>(state);
+    const { tracked } = this.getPluginState<DiffPluginState>(state);
     const index = tracked.commits.indexOf(commit);
 
     // If this commit is not in the history, we can't revert it
@@ -520,14 +520,14 @@ export class TrackChangesExtension extends PlainExtension<TrackChangesOptions> {
   /**
    * Get the meta data for this custom plugin.
    */
-  private getMeta(tr: Transaction): TrackChangesMeta {
+  private getMeta(tr: Transaction): DiffMeta {
     return tr.getMeta(this.pluginKey) ?? {};
   }
 
   /**
    * Set the meta data for the plugin.
    */
-  private setMeta(tr: Transaction, meta: TrackChangesMeta): Transaction {
+  private setMeta(tr: Transaction, meta: DiffMeta): Transaction {
     tr.setMeta(this.pluginKey, { ...this.getMeta(tr), ...meta });
 
     return tr;
@@ -553,9 +553,9 @@ interface HighlightStateParameter {
   commits?: number[];
 }
 
-export interface TrackChangesPluginState extends TrackedStateParameter, HighlightStateParameter {}
+export interface DiffPluginState extends TrackedStateParameter, HighlightStateParameter {}
 
-interface TrackChangesMeta {
+interface DiffMeta {
   message?: string;
   add?: number;
   clear?: number;

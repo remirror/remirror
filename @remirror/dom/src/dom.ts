@@ -1,7 +1,6 @@
 import {
   AnyCombinedUnion,
   BuiltinPreset,
-  RemirrorManager,
   EditorState,
   EditorWrapper,
   EditorWrapperOutput,
@@ -11,6 +10,7 @@ import {
   getDocument,
   isFunction,
   RemirrorContentType,
+  RemirrorManager,
   SchemaFromCombined,
   UpdateStateParameter,
 } from '@remirror/core';

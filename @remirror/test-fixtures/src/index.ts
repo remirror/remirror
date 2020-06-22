@@ -6,8 +6,6 @@ import {
   AnyPreset,
   AnyPresetConstructor,
   BaseExtensionOptions,
-  RemirrorManager,
-  RemirrorManagerParameter,
   ErrorConstant,
   ExtensionConstructorParameter,
   invariant,
@@ -18,6 +16,8 @@ import {
   omit,
   OptionsOfConstructor,
   PresetConstructorParameter,
+  RemirrorManager,
+  RemirrorManagerParameter,
 } from '@remirror/core';
 import { CorePreset } from '@remirror/preset-core';
 import { ReactPreset } from '@remirror/preset-react';

@@ -2,8 +2,8 @@ import React from 'react';
 
 import {
   AnyCombinedUnion,
-  RemirrorManager,
   EditorStateParameter,
+  RemirrorManager,
   SchemaFromCombined,
   Shape,
 } from '@remirror/core';
