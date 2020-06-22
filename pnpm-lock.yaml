@@ -524,6 +524,16 @@ importers:
       '@remirror/pm': ^0.0.0
       '@types/prosemirror-collab': ^1.1.0
       prosemirror-collab: ^1.2.2
+  '@remirror/extension-diff':
+    dependencies:
+      '@babel/runtime': 7.10.3
+    devDependencies:
+      '@remirror/core': 'link:../core'
+      '@remirror/pm': 'link:../pm'
+    specifiers:
+      '@babel/runtime': ^7.10.3
+      '@remirror/core': ^0.11.0
+      '@remirror/pm': ^0.0.0
   '@remirror/extension-doc':
     dependencies:
       '@babel/runtime': 7.10.3
@@ -762,16 +772,6 @@ importers:
       '@babel/runtime': ^7.10.3
       '@remirror/core': '*'
       '@remirror/pm': '*'
-  '@remirror/extension-diff':
-    dependencies:
-      '@babel/runtime': 7.10.3
-    devDependencies:
-      '@remirror/core': 'link:../core'
-      '@remirror/pm': 'link:../pm'
-    specifiers:
-      '@babel/runtime': ^7.10.3
-      '@remirror/core': ^0.11.0
-      '@remirror/pm': ^0.0.0
   '@remirror/extension-trailing-node':
     dependencies:
       '@babel/runtime': 7.10.3
@@ -1412,6 +1412,10 @@ importers:
   packages/jest-prosemirror:
     dependencies:
       '@babel/runtime': 7.10.3
+      '@remirror/core-constants': 'link:../../@remirror/core-constants'
+      '@remirror/core-helpers': 'link:../../@remirror/core-helpers'
+      '@remirror/core-types': 'link:../../@remirror/core-types'
+      '@remirror/core-utils': 'link:../../@remirror/core-utils'
       '@remirror/pm': 'link:../../@remirror/pm'
       '@testing-library/dom': 7.16.2
       '@types/prosemirror-schema-basic': 1.0.1
@@ -1421,12 +1425,15 @@ importers:
       prosemirror-schema-basic: 1.1.2
       prosemirror-tables: 1.1.0
       prosemirror-test-builder: 1.0.3
-      remirror: 'link:../remirror'
       test-keyboard: 'link:../test-keyboard'
     devDependencies:
       jest: 26.0.1
     specifiers:
       '@babel/runtime': ^7.10.3
+      '@remirror/core-constants': ^0.7.4
+      '@remirror/core-helpers': ^0.7.6
+      '@remirror/core-types': ^0.9.0
+      '@remirror/core-utils': ^0.8.0
       '@remirror/pm': ^0.0.0
       '@testing-library/dom': ^7.16.2
       '@types/prosemirror-schema-basic': ^1.0.1
@@ -1437,7 +1444,6 @@ importers:
       prosemirror-schema-basic: ^1.1.2
       prosemirror-tables: ^1.1.0
       prosemirror-test-builder: ^1.0.3
-      remirror: ^0.13.1
       test-keyboard: ^0.7.6
   packages/jest-remirror:
     dependencies:
@@ -1568,6 +1574,7 @@ importers:
       '@remirror/extension-code': 'link:../../@remirror/extension-code'
       '@remirror/extension-code-block': 'link:../../@remirror/extension-code-block'
       '@remirror/extension-collaboration': 'link:../../@remirror/extension-collaboration'
+      '@remirror/extension-diff': 'link:../../@remirror/extension-diff'
       '@remirror/extension-doc': 'link:../../@remirror/extension-doc'
       '@remirror/extension-drop-cursor': 'link:../../@remirror/extension-drop-cursor'
       '@remirror/extension-emoji': 'link:../../@remirror/extension-emoji'
@@ -1589,7 +1596,6 @@ importers:
       '@remirror/extension-search': 'link:../../@remirror/extension-search'
       '@remirror/extension-strike': 'link:../../@remirror/extension-strike'
       '@remirror/extension-text': 'link:../../@remirror/extension-text'
-      '@remirror/extension-diff': 'link:../../@remirror/extension-diff'
       '@remirror/extension-trailing-node': 'link:../../@remirror/extension-trailing-node'
       '@remirror/extension-underline': 'link:../../@remirror/extension-underline'
       '@remirror/preset-core': 'link:../../@remirror/preset-core'
@@ -1622,6 +1628,7 @@ importers:
       '@remirror/extension-code': ^0.0.0
       '@remirror/extension-code-block': ^0.12.0
       '@remirror/extension-collaboration': ^0.13.2
+      '@remirror/extension-diff': ^0.0.0
       '@remirror/extension-doc': ^0.0.0
       '@remirror/extension-drop-cursor': ^0.11.0
       '@remirror/extension-emoji': ^0.11.0
@@ -1643,7 +1650,6 @@ importers:
       '@remirror/extension-search': ^0.0.0
       '@remirror/extension-strike': ^0.0.0
       '@remirror/extension-text': ^0.0.0
-      '@remirror/extension-diff': ^0.0.0
       '@remirror/extension-trailing-node': ^0.0.0
       '@remirror/extension-underline': ^0.0.0
       '@remirror/pm': '*'

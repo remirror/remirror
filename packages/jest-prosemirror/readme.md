@@ -103,10 +103,12 @@ desired way.
 ```ts
 import { doc, p, schema, strong } from 'jest-prosemirror';
 import { removeMark } from '@remirror/core-utils';
+
 test('remove the mark', () => {
   const type = schema.marks.bold;
   const from = doc(p(strong('<start>bold<end>')));
   const to = doc(p('bold'));
+
   expect(removeMark({ type })).toTransformNode({ from, to });
 });
 ```
@@ -124,11 +126,13 @@ they are the same.
 ```ts
 import { createEditor, doc, p } from 'jest-prosemirror';
 import { removeNodeAtPosition } from '@remirror/core-utils';
+
 test('remove block top level node at specified position', () => {
   const {
     state: { tr },
   } = createEditor(doc(p('x'), p('one')));
   const newTr = removeNodeAtPosition({ pos: 3, tr });
+
   expect(newTr).not.toBe(tr);
   expect(newTr.doc).toEqualProsemirrorNode(doc(p('x')));
 });
@@ -143,6 +147,7 @@ each step without the need for intermediate holding variables.
 
 ```ts
 import { createEditor, doc, p } from 'jest-remirror';
+import { suggest } from 'prosemirror-suggest';
 
 test('`keyBindings`', () => {
   const keyBindings = {
@@ -150,6 +155,7 @@ test('`keyBindings`', () => {
       params.command();
     }),
   };
+
   const plugin = suggest({
     char: '@',
     name: 'at',
@@ -254,7 +260,7 @@ position of the new selection.
 Type a keyboard shortcut - e.g. `Mod-Enter`.
 
 **NOTE** This only simulates the events. For example an `Mod-Enter` would run all enter key handlers
-but not actually create a new line.
+but not actually create a new line. I'd welcome a pull request to fix this shortcoming.
 
 **`mod`** - the keyboard shortcut to type
 
@@ -263,13 +269,13 @@ but not actually create a new line.
 Simulate a keypress which is run through the editor's key handlers.
 
 **NOTE** This only simulates the events. For example an `Enter` would run all enter key handlers but
-not actually create a new line.
+not actually create a new line. I'd welcome a pull request to fix this shortcoming.
 
 **`char`** - the character to type
 
 #### fire - `(params: Omit<FireEventAtPositionParameter<Schema>, 'view'>) => ReturnType<typeof createEditor>`
 
-Fire an event in the editor (very hit and miss).
+Fire an event in the editor. This api is not the most well tested and can be quite flakey.
 
 **`params`** - the fire event parameters
 

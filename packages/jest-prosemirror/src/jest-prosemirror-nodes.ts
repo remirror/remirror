@@ -4,6 +4,8 @@ import pm, {
   TaggedProsemirrorNode,
 } from 'prosemirror-test-builder';
 
+import { Cast, keys } from '@remirror/core-helpers';
+import { EditorSchema, Plugin } from '@remirror/core-types';
 import { GapCursor } from '@remirror/pm/gapcursor';
 import {
   AllSelection,
@@ -13,8 +15,6 @@ import {
   TextSelection,
 } from '@remirror/pm/state';
 import { cellAround, CellSelection } from '@remirror/pm/tables';
-import { Cast, keys } from 'remirror/core/helpers';
-import { EditorSchema, Plugin } from 'remirror/core/types';
 
 import { schema } from './jest-prosemirror-schema';
 import { TaggedDocParameter } from './jest-prosemirror-types';
