@@ -11,7 +11,7 @@
 <p align="center">
 
 <a href="https://github.com/remirror/remirror/actions?query=workflow%3A%22Node+CI%22?branch=next"><img src="https://github.com/remirror/remirror/workflows/Node%20CI/badge.svg?branch=next" alt="Build And Release" /></a>
-<a href="https://github.com/remirror/remirror/actions?query=workflow%3A%22Node+CI%22?branch=next"><img src="https://github.com/remirror/remirror/workflows/Deploy%20Docs/badge.svg?branch=next" alt="Deploy Docs" /></a>
+<a href="https://github.com/remirror/remirror/actions?query=workflow%3A%22Deploy+Docs%22?branch=next"><img src="https://github.com/remirror/remirror/workflows/Deploy%20Docs/badge.svg?branch=next" alt="Deploy Docs" /></a>
 <a href="https://dev.azure.com/remirror/remirror/_build/latest?definitionId=2&amp;branchName=next"><img src="https://dev.azure.com/remirror/remirror/_apis/build/status/remirror.remirror?branchName=next" alt="Azure DevOps builds" /></a>
 <a href="https://github.com/remirror/remirror/commits/next"><img src="https://img.shields.io/github/commit-activity/m/remirror/remirror.svg?amp;logo=github" alt="GitHub commit activity"></a>
 

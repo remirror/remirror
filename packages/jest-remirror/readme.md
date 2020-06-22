@@ -85,9 +85,8 @@ extensions:
 - have the intended effect on the HTML output
 - call the correct callbacks
 
-Under the hood `jest-remirror` leans heavily on `@testing-library/react` to render an instance of
-your test editor to the dom and provides a number of utilities exposed when calling the
-`renderEditor` method.
+Under the hood `jest-remirror` leans heavily on `@remirror/dom` to render an instance of your test
+editor to the dom and provides a number of utilities exposed when calling the `renderEditor` method.
 
 ## Example
 
@@ -100,6 +99,7 @@ test('emoticons replaced with emoji', () => {
     nodes: { p, doc },
     add,
   } = renderEditor({ plainNodes: [], others: [new EmojiExtension()] });
+
   add(doc(p('<cursor>')))
     .insertText(':-)')
     .callback((content) => {
