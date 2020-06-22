@@ -21,29 +21,17 @@ export default {
   useCustomProperties: true,
   initialColorMode: 'light',
   colors: {
-    text: '#000',
+    text: 'hsl(252, 10%, 30%)',
     background: '#fff',
-    primary: '#33e',
+    primary: '#7963d2',
     secondary: '#119',
     muted: '#f6f6f6',
     highlight: '#ffffcc',
     gray: '#777',
     purple: '#609',
-    modes: {
-      dark: {
-        text: '#fff',
-        background: '#060606',
-        primary: '#3cf',
-        secondary: '#e0f',
-        muted: '#191919',
-        highlight: '#ffffcc',
-        gray: '#999',
-        purple: '#c0f',
-      },
-    },
   },
   fonts: {
-    body: 'system-ui, sans-serif',
+    body: 'Rubik, system-ui, sans-serif',
     heading: 'inherit',
     monospace: 'Menlo, monospace',
   },
@@ -152,37 +140,5 @@ export default {
       borderBottom: '1px solid',
       borderColor: 'muted',
     },
-  },
-  prism: {
-    ...spreadObject(
-      ['.comment', '.prolog', '.doctype', '.cdata', '.punctuation', '.operator', '.entity', '.url'],
-      { color: 'gray' },
-    ),
-    '.comment': {
-      fontStyle: 'italic',
-    },
-    ...spreadObject(
-      [
-        '.property',
-        '.tag',
-        '.boolean',
-        '.number',
-        '.constant',
-        '.symbol',
-        '.deleted',
-        '.function',
-        '.class-name',
-        '.regex',
-        '.important',
-        '.variable',
-      ],
-      { color: 'purple' },
-    ),
-    ...spreadObject(['.atrule', '.attr-value', '.keyword'], {
-      color: 'primary',
-    }),
-    ...spreadObject(['.selector', '.attr-name', '.string', '.char', '.builtin', '.inserted'], {
-      color: 'secondary',
-    }),
   },
 };

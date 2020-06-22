@@ -3,7 +3,7 @@ import { jsx } from 'theme-ui';
 
 import { ButtonProps } from './button';
 
-const Burger = ({ size = '1em' }) => (
+const Burger = ({ size = '1.2em' }) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     width={size}
@@ -32,14 +32,13 @@ export const MenuButton = (props: ButtonProps) => (
       height: 32,
       p: 1,
       m: 0,
+      cursor: 'pointer',
       border: 0,
       appearance: 'none',
       ':focus': {
         outline: '2px solid',
       },
-      '@media screen and (min-width: 40em)': {
-        display: 'none',
-      },
+      display: ['block', 'none'],
     }}
   >
     <Burger />

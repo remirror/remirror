@@ -108,7 +108,6 @@ declare module '*.md' {
 
 declare module 'compass-vertical-rhythm' {
   import * as CSS from 'csstype';
-  import { ReactNode } from 'react';
 
   function VerticalRhythm(options: VerticalRhythm.RhythmOptions): VerticalRhythm.RhythmType;
 
@@ -490,3 +489,7 @@ declare module 'typography-theme-zacklive' {
   const theme: TypographyOptions;
   export default theme;
 }
+
+declare module 'remark-slug';
+declare module 'remark-emoji';
+declare module 'remark-unwrap-images';

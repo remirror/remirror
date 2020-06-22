@@ -1208,6 +1208,7 @@ importers:
       gatsby-plugin-manifest: 2.4.12_gatsby@2.23.6
       gatsby-plugin-mdx: 1.2.16_a223cd75e3ddd6da73b14a78dae1a829
       gatsby-plugin-netlify: 2.3.5_gatsby@2.23.6
+      gatsby-plugin-next-seo: 1.5.1_4734d0f6d8bbb4956ed868565b5b970f
       gatsby-plugin-pnpm: 1.2.5_gatsby@2.23.6
       gatsby-plugin-react-helmet: 3.3.4_gatsby@2.23.6+react-helmet@6.1.0
       gatsby-plugin-sass: 2.3.4_gatsby@2.23.6
@@ -1216,6 +1217,7 @@ importers:
       gatsby-plugin-theme-ui: 0.3.0_gatsby@2.23.6+theme-ui@0.3.1
       gatsby-plugin-typegen: 2.2.0_c8b1651181bc40d1a1026ed63bc710fb
       gatsby-plugin-typescript: 2.4.6_gatsby@2.23.6
+      gatsby-plugin-web-font-loader: 1.0.4
       gatsby-remark-copy-linked-files: 2.3.5_gatsby@2.23.6
       gatsby-remark-external-links: 0.0.4
       gatsby-remark-images: 3.3.11_6322d5624f6172ee6a4482a65c88ab3a
@@ -1234,6 +1236,7 @@ importers:
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
       react-helmet: 6.1.0_react@16.13.1
+      react-helmet-async: 1.0.6_react-dom@16.13.1+react@16.13.1
       react-live: 2.2.2_react-dom@16.13.1+react@16.13.1
       react-use: 15.3.0_react-dom@16.13.1+react@16.13.1
       remark-emoji: 2.1.0
@@ -1253,6 +1256,7 @@ importers:
       '@types/theme-ui': 0.3.4_react@16.13.1
       babel-plugin-transform-react-remove-prop-types: 0.4.24
       babel-preset-gatsby: 0.4.10
+      csstype: 2.6.10
       monaco-editor-webpack-plugin: 1.9.0
       type-fest: 0.15.1
     specifiers:
@@ -1284,6 +1288,7 @@ importers:
       babel-plugin-transform-react-remove-prop-types: ^0.4.24
       babel-preset-gatsby: ^0.4.10
       copy-text-to-clipboard: ^2.2.0
+      csstype: ^2.6.10
       emotion-theming: ^10.0.27
       gatsby: ^2.23.6
       gatsby-plugin-catch-links: ^2.3.5
@@ -1293,6 +1298,7 @@ importers:
       gatsby-plugin-manifest: ^2.4.12
       gatsby-plugin-mdx: ^1.2.16
       gatsby-plugin-netlify: ^2.3.5
+      gatsby-plugin-next-seo: ^1.5.1
       gatsby-plugin-pnpm: ^1.2.5
       gatsby-plugin-react-helmet: ^3.3.4
       gatsby-plugin-sass: ^2.3.4
@@ -1301,6 +1307,7 @@ importers:
       gatsby-plugin-theme-ui: ^0.3.0
       gatsby-plugin-typegen: ^2.2.0
       gatsby-plugin-typescript: ^2.4.6
+      gatsby-plugin-web-font-loader: ^1.0.4
       gatsby-remark-copy-linked-files: ^2.3.5
       gatsby-remark-external-links: ^0.0.4
       gatsby-remark-images: ^3.3.11
@@ -1320,6 +1327,7 @@ importers:
       react: ^16.13.1
       react-dom: ^16.13.1
       react-helmet: ^6.1.0
+      react-helmet-async: ^1.0.6
       react-live: ^2.2.2
       react-use: ^15.3.0
       remark-emoji: ^2.1.0
@@ -7507,6 +7515,12 @@ packages:
       '@types/react': 16.9.38
     resolution:
       integrity: sha512-ykkPQ+5nFknnlU6lDd947WbQ6TE3NNzbQAkInC2EKY1qeYdTKp7onFusmYZb+ityzx2YviqT6BXSu+LyWWJwcA==
+  /@types/react-helmet/5.0.16:
+    dependencies:
+      '@types/react': 16.9.38
+    dev: false
+    resolution:
+      integrity: sha512-++KMqwodVBg75hT2ZT4jobvDPi6iPUl/Lhrn0nP1XTcmFLtccaDb4FTAxzrj3egL7WQYTDnpHuPj52FSFkJqzA==
   /@types/react-helmet/6.0.0:
     dependencies:
       '@types/react': 16.9.38
@@ -14313,6 +14327,20 @@ packages:
       gatsby: ^2.0.0
     resolution:
       integrity: sha512-TVpK1f9qOu2gqFyGm5+D7o0EoUXhSkvK1fiwxpQ4b5g/h/HYn1PdL4zgqHPi4ebCsu+jH69RgQKIBLbcL1aJrQ==
+  /gatsby-plugin-next-seo/1.5.1_4734d0f6d8bbb4956ed868565b5b970f:
+    dependencies:
+      '@babel/runtime': 7.10.3
+      '@types/react-helmet': 5.0.16
+      gatsby: 2.23.6_182a89a932a127f01b9419cb9a9be4eb
+      react-helmet-async: 1.0.6_react-dom@16.13.1+react@16.13.1
+      schema-dts: 0.5.2
+      type-fest: 0.13.1
+    dev: false
+    peerDependencies:
+      gatsby: ^2
+      react-helmet-async: ^1
+    resolution:
+      integrity: sha512-oEMAqJTh7I4GiFTdd4v0ZR2NvYetahrY1Sz02aYG3yqVZgQjlNLAMwnMWpbb05J86AJAUzj1mHGCLLwApjJGag==
   /gatsby-plugin-page-creator/2.3.10_gatsby@2.23.6:
     dependencies:
       '@babel/runtime': 7.10.3
@@ -14459,6 +14487,13 @@ packages:
       gatsby: '*'
     resolution:
       integrity: sha512-RfI2/k5XHmyNHjKDZDEPha/TNoY0Wh6zeBteqmidoPsJ2GfeFhyyxFxuRak+wYpZqdMh/aVwaJoF9Q1OiS4woQ==
+  /gatsby-plugin-web-font-loader/1.0.4:
+    dependencies:
+      babel-runtime: 6.26.0
+      webfontloader: 1.6.28
+    dev: false
+    resolution:
+      integrity: sha512-3c39bX9CcsYJQFhhmTyjuMJSqpld2rX+HsTOxP9k1PKFR4Rvo3lpzBW4d1tVpmUesR8BNL6u9eHT7/XksS1iog==
   /gatsby-react-router-scroll/3.0.4_aafc5bd289033d3e9502d4bde63a35f3:
     dependencies:
       '@babel/runtime': 7.10.3
@@ -22695,6 +22730,21 @@ packages:
     dev: false
     resolution:
       integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
+  /react-helmet-async/1.0.6_react-dom@16.13.1+react@16.13.1:
+    dependencies:
+      '@babel/runtime': 7.10.3
+      invariant: 2.2.4
+      prop-types: 15.7.2
+      react: 16.13.1
+      react-dom: 16.13.1_react@16.13.1
+      react-fast-compare: 3.2.0
+      shallowequal: 1.1.0
+    dev: false
+    peerDependencies:
+      react: ^16.6.0
+      react-dom: ^16.6.0
+    resolution:
+      integrity: sha512-t+bhAI4NgxfEv8ez4r77cLfR4O4Z55E/FH2DT+uiE4U7yfWgAk7OAOi7IxHxuYEVLI26bqjZvlVCkpC5/5AoNA==
   /react-helmet/6.1.0_react@16.13.1:
     dependencies:
       object-assign: 4.1.1
@@ -23946,6 +23996,12 @@ packages:
       object-assign: 4.1.1
     resolution:
       integrity: sha512-n/zwRWRYSUj0/3g/otKDRPMh6qv2SYMWNq85IEa8iZyAv8od9zDYpGSnpBEjNgcMNq6Scbu5KfIPxNF72R/2EA==
+  /schema-dts/0.5.2:
+    dev: false
+    peerDependencies:
+      typescript: ^3.4.0
+    resolution:
+      integrity: sha512-+5hqt+jzvD/uMwxMnYEmnZpGO+gthtCzyflY0Niu2rNyJg4X6I5MOVYDvfFJiiqSWtYx2S1xE3KDNUf67I1yZw==
   /schema-utils/0.4.7:
     dependencies:
       ajv: 6.12.2
@@ -27041,6 +27097,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-2pdRlp6gJpOCg0oMMqwFF0axjk5D9WInc09RSYtqFgPXQ15+YKNQ7YnBBEqAL5jvmfH9WvoXDMb8DHwux7pIew==
+  /webfontloader/1.6.28:
+    dev: false
+    resolution:
+      integrity: sha1-23hhKSU8tujq5UwvsF+HCvZnW64=
   /webidl-conversions/4.0.2:
     dev: false
     resolution:

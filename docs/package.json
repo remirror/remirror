@@ -39,6 +39,7 @@
     "gatsby-plugin-manifest": "^2.4.12",
     "gatsby-plugin-mdx": "^1.2.16",
     "gatsby-plugin-netlify": "^2.3.5",
+    "gatsby-plugin-next-seo": "^1.5.1",
     "gatsby-plugin-pnpm": "^1.2.5",
     "gatsby-plugin-react-helmet": "^3.3.4",
     "gatsby-plugin-sass": "^2.3.4",
@@ -47,6 +48,7 @@
     "gatsby-plugin-theme-ui": "^0.3.0",
     "gatsby-plugin-typegen": "^2.2.0",
     "gatsby-plugin-typescript": "^2.4.6",
+    "gatsby-plugin-web-font-loader": "^1.0.4",
     "gatsby-remark-copy-linked-files": "^2.3.5",
     "gatsby-remark-external-links": "^0.0.4",
     "gatsby-remark-images": "^3.3.11",
@@ -65,6 +67,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",
+    "react-helmet-async": "^1.0.6",
     "react-live": "^2.2.2",
     "react-use": "^15.3.0",
     "remark-emoji": "^2.1.0",
@@ -85,6 +88,7 @@
     "@types/theme-ui": "^0.3.4",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "babel-preset-gatsby": "^0.4.10",
+    "csstype": "^2.6.10",
     "monaco-editor-webpack-plugin": "^1.9.0",
     "type-fest": "^0.15.1"
   }

@@ -1,13 +1,11 @@
 /** @jsx jsx */
 
 import { Dispatch, RefObject, SetStateAction } from 'react';
-import { Flex, jsx, useColorMode } from 'theme-ui';
+import { Flex, jsx } from 'theme-ui';
 
-import Button from './button';
+import Logo from './logo';
 import MenuButton from './menu-button';
 import NavLink from './nav-link';
-
-const modes = ['light', 'dark'];
 
 interface HeaderProps {
   menuOpen: boolean;
@@ -16,14 +14,6 @@ interface HeaderProps {
 }
 
 export const Header = ({ menuOpen, setMenuOpen, nav }: HeaderProps) => {
-  const [mode, setMode] = useColorMode();
-
-  const cycleMode = () => {
-    const modeIndex = modes.indexOf(mode);
-    const next = modes[(modeIndex + 1) % modes.length];
-    setMode(next);
-  };
-
   const onMenuClick = () => {
     setMenuOpen(!menuOpen);
 
@@ -40,31 +30,35 @@ export const Header = ({ menuOpen, setMenuOpen, nav }: HeaderProps) => {
 
   return (
     <Flex
-      as='header'
       sx={{
-        height: 64,
-        px: 3,
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        backgroundColor: 'primary',
+        justifyContent: 'center',
+        width: '100%',
       }}
     >
-      <Flex sx={{ alignItems: 'center' }}>
-        <MenuButton onClick={onMenuClick} />
-        <NavLink to='/'>Remirror</NavLink>
-      </Flex>
-      <Flex>
-        <NavLink href='/introduction'>Docs</NavLink>
-        <NavLink href='/api'>API</NavLink>
-        <NavLink href='/playground'>Playground</NavLink>
-        <NavLink href='https://github.com/remirror/remirror'>GitHub</NavLink>
-        <Button
-          sx={{
-            ml: 2,
-          }}
-          onClick={cycleMode}
-        >
-          {mode}
-        </Button>
+      <Flex
+        as='header'
+        sx={{
+          height: 64,
+          width: ['100%', '100%', '90%'],
+          maxWidth: 1000,
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          color: 'white',
+        }}
+      >
+        <Flex sx={{ alignItems: 'center' }}>
+          <NavLink to='/'>
+            <Logo size='3em' />
+          </NavLink>
+        </Flex>
+        <Flex sx={{}}>
+          <NavLink href='/introduction'>Documentation</NavLink>
+          <NavLink href='/api'>API</NavLink>
+          <NavLink href='/playground'>Playground</NavLink>
+          <NavLink href='https://github.com/remirror/remirror'>GitHub</NavLink>
+          <MenuButton onClick={onMenuClick} />
+        </Flex>
       </Flex>
     </Flex>
   );

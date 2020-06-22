@@ -3,12 +3,12 @@ import React from 'react';
 type SvgProps = JSX.IntrinsicElements['svg'];
 
 interface LogoProps extends SvgProps {
-  size?: number;
+  size?: number | string;
   type?: 'light' | 'dark';
 }
 
 export const Logo = (props: LogoProps) => {
-  const { size = 512, type = 'light', ...rest } = props;
+  const { size = 512, type = 'dark', ...rest } = props;
 
   switch (type) {
     case 'light':
@@ -18,8 +18,6 @@ export const Logo = (props: LogoProps) => {
           id='prefix__Layer_1'
           data-name='Layer 1'
           viewBox='0 0 450 450'
-          width={size}
-          height={size}
           overflow='visible'
         >
           <title>Remirror Logo</title>
@@ -34,7 +32,14 @@ export const Logo = (props: LogoProps) => {
 
     default:
       return (
-        <svg id='prefix__Layer_1' data-name='Layer 1' viewBox='0 0 450 450' {...props}>
+        <svg
+          id='prefix__Layer_1'
+          data-name='Layer 1'
+          viewBox='0 0 450 450'
+          width={size}
+          height={size}
+          {...rest}
+        >
           <title>Remirror Logo</title>
           <path fill='#7963d2' d='M0 0h450v450H0z' />
           <path opacity={0.15} fill='#fff' d='M50 68.33h172.46v313.35H50z' />

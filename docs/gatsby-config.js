@@ -1,4 +1,3 @@
-/** @type Required<import('type-fest').PackageJson> */
 const pkg = require('./package.json');
 
 const remarkPlugins = [
@@ -81,6 +80,30 @@ module.exports = {
         theme_color: `#7963d2`,
         // display: `standalone`,
         icon: `static/icon.svg`,
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-web-font-loader',
+      options: {
+        google: {
+          families: ['Rubik'],
+        },
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-next-seo',
+      options: {
+        openGraph: {
+          type: 'website',
+          locale: 'en_GB',
+          url: 'https://docs.remirror.org/',
+          site_name: 'Remirror',
+        },
+        // twitter: {
+        //   handle: '@handle',
+        //   site: '@site',
+        //   cardType: 'summary_large_image',
+        // },
       },
     },
     {
