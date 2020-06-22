@@ -17,7 +17,7 @@ env:
 jobs:
   # Release the project if everything else passes
   release:
-    needs: [lint, typecheck, unit_test, build_test, size_check, integration_test]
+    needs: [lint, typecheck, unit_test, build_test, size_check, chromium_e2e, firefox_e2e]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/next'
 
@@ -253,8 +253,8 @@ jobs:
       - name: check sizes
         run: pnpm run size
 
-  # Run integration tests with playwright
-  integration_test:
+  # Run chromium e2e tests with playwright
+  chromium_e2e:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -293,6 +293,44 @@ jobs:
 
       - name: chrome integration test ${{ matrix.os }}
         run: cd e2e && pnpm run chromium
+
+  # Run firefox e2e tests with playwright
+  firefox_e2e:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+      fail-fast: false
+
+    steps:
+      - name: checkout code repository
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 0
+
+      - uses: actions/cache@v1
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: install pnpm
+        run: npm install pnpm -g
+
+      - name: audit dependencies
+        run: pnpm run audit
+
+      - name: install dependencies
+        run: pnpm install
+
+      - name: build project
+        run: pnpm run build
 
       - name: firefox integration test ${{ matrix.os }}
         run: cd e2e && pnpm run firefox
