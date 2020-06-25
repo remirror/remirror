@@ -792,6 +792,16 @@ importers:
       '@babel/runtime': ^7.10.3
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
+  '@remirror/extension-yjs':
+    dependencies:
+      '@babel/runtime': 7.10.3
+    devDependencies:
+      '@remirror/core': 'link:../core'
+      '@remirror/pm': 'link:../pm'
+    specifiers:
+      '@babel/runtime': ^7.10.0
+      '@remirror/core': ^0.11.0
+      '@remirror/pm': ^0.0.0
   '@remirror/i18n':
     dependencies:
       '@babel/runtime': 7.10.3
@@ -1598,6 +1608,7 @@ importers:
       '@remirror/extension-text': 'link:../../@remirror/extension-text'
       '@remirror/extension-trailing-node': 'link:../../@remirror/extension-trailing-node'
       '@remirror/extension-underline': 'link:../../@remirror/extension-underline'
+      '@remirror/extension-yjs': 'link:../../@remirror/extension-yjs'
       '@remirror/preset-core': 'link:../../@remirror/preset-core'
       '@remirror/preset-embed': 'link:../../@remirror/preset-embed'
       '@remirror/preset-list': 'link:../../@remirror/preset-list'
@@ -1652,6 +1663,7 @@ importers:
       '@remirror/extension-text': ^0.0.0
       '@remirror/extension-trailing-node': ^0.0.0
       '@remirror/extension-underline': ^0.0.0
+      '@remirror/extension-yjs': ^0.0.0
       '@remirror/pm': '*'
       '@remirror/preset-core': ^0.0.0
       '@remirror/preset-embed': ^0.0.0
@@ -4867,11 +4879,7 @@ packages:
       camel-case: 4.1.1
       graphql-tools: 5.0.0
       lodash: 4.17.15
-    deprecated:
-      'GraphQL Toolkit is deprecated and merged into GraphQL Tools, so it will no longer get
-      updates. Use GraphQL Tools instead to stay up-to-date! Check out
-      https://www.graphql-tools.com/docs/migration-from-toolkit for migration and
-      https://the-guild.dev/blog/graphql-tools-v6 for new changes.'
+    deprecated: 'GraphQL Toolkit is deprecated and merged into GraphQL Tools, so it will no longer get updates. Use GraphQL Tools instead to stay up-to-date! Check out https://www.graphql-tools.com/docs/migration-from-toolkit for migration and https://the-guild.dev/blog/graphql-tools-v6 for new changes.'
     dev: false
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
@@ -4884,11 +4892,7 @@ packages:
       graphql: 14.6.0
       graphql-tools: 5.0.0_graphql@14.6.0
       lodash: 4.17.15
-    deprecated:
-      'GraphQL Toolkit is deprecated and merged into GraphQL Tools, so it will no longer get
-      updates. Use GraphQL Tools instead to stay up-to-date! Check out
-      https://www.graphql-tools.com/docs/migration-from-toolkit for migration and
-      https://the-guild.dev/blog/graphql-tools-v6 for new changes.'
+    deprecated: 'GraphQL Toolkit is deprecated and merged into GraphQL Tools, so it will no longer get updates. Use GraphQL Tools instead to stay up-to-date! Check out https://www.graphql-tools.com/docs/migration-from-toolkit for migration and https://the-guild.dev/blog/graphql-tools-v6 for new changes.'
     dev: false
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
@@ -7757,9 +7761,7 @@ packages:
   /@types/vfile-message/2.0.0:
     dependencies:
       vfile-message: 2.0.4
-    deprecated:
-      'This is a stub types definition. vfile-message provides its own type definitions, so you do
-      not need this installed.'
+    deprecated: 'This is a stub types definition. vfile-message provides its own type definitions, so you do not need this installed.'
     dev: false
     resolution:
       integrity: sha512-GpTIuDpb9u4zIO165fUy9+fXcULdD8HFRNli04GehoMVbeNq7D6OBnqSmg3lxZnC+UvgUhEWKxdKiwYUkGltIw==
@@ -10180,8 +10182,7 @@ packages:
       path-is-absolute: 1.0.1
       readdirp: 2.2.1
       upath: 1.2.0
-    deprecated:
-      Chokidar 2 will break on node v14+. Upgrade to chokidar 3 with 15x less dependencies.
+    deprecated: Chokidar 2 will break on node v14+. Upgrade to chokidar 3 with 15x less dependencies.
     dev: false
     optionalDependencies:
       fsevents: 1.2.13
@@ -10826,16 +10827,12 @@ packages:
     resolution:
       integrity: sha512-lacdXOimsiD0QyNf9BC/mxivNJ/ybBGJXQFKzRekp1WTHoVUWsUHEn+2T8GJAzzIhyOuXA+gOxCVN3l+5PLPUA==
   /core-js/1.2.7:
-    deprecated:
-      'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues.
-      Please, upgrade your dependencies to the actual version of core-js@3.'
+    deprecated: 'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.'
     dev: false
     resolution:
       integrity: sha1-ZSKUwUZR2yj6k70tX/KYOk8IxjY=
   /core-js/2.6.11:
-    deprecated:
-      'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues.
-      Please, upgrade your dependencies to the actual version of core-js@3.'
+    deprecated: 'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.'
     dev: false
     requiresBuild: true
     resolution:
@@ -14188,9 +14185,7 @@ packages:
     dependencies:
       bindings: 1.5.0
       nan: 2.14.1
-    deprecated:
-      fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents
-      2.
+    deprecated: fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents 2.
     dev: false
     engines:
       node: '>= 4.0'
@@ -15568,11 +15563,7 @@ packages:
       graphql: 14.6.0
       lodash: 4.17.15
       resolve-from: 4.0.0
-    deprecated:
-      'GraphQL Import has been deprecated and merged into GraphQL Tools, so it will no longer get
-      updates. Use GraphQL Tools instead to stay up-to-date! Check out
-      https://www.graphql-tools.com/docs/migration-from-import for migration and
-      https://the-guild.dev/blog/graphql-tools-v6 for new changes.'
+    deprecated: 'GraphQL Import has been deprecated and merged into GraphQL Tools, so it will no longer get updates. Use GraphQL Tools instead to stay up-to-date! Check out https://www.graphql-tools.com/docs/migration-from-import for migration and https://the-guild.dev/blog/graphql-tools-v6 for new changes.'
     dev: false
     engines:
       node: '>=4.0.0'
@@ -19702,9 +19693,7 @@ packages:
   /mkdirp/0.5.3:
     dependencies:
       minimist: 1.2.5
-    deprecated:
-      Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the
-      API surface has changed to use Promises in 1.x.)
+    deprecated: Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the API surface has changed to use Promises in 1.x.)
     dev: false
     hasBin: true
     resolution:
@@ -26324,9 +26313,7 @@ packages:
     engines:
       node: '>= 6'
     peerDependencies:
-      typescript:
-        '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev ||
-        >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
+      typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
     resolution:
       integrity: sha512-kzeQ5B8H3w60nFY2g8cJIuH7JDpsALXySGtwGJ0p2LSjLgay3NdIpqq5SoOBe46bKDW2iq25irHCr8wjomUS2g==
   /tsutils/3.17.1_typescript@3.9.5:
@@ -26337,9 +26324,7 @@ packages:
     engines:
       node: '>= 6'
     peerDependencies:
-      typescript:
-        '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev ||
-        >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
+      typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
     resolution:
       integrity: sha512-kzeQ5B8H3w60nFY2g8cJIuH7JDpsALXySGtwGJ0p2LSjLgay3NdIpqq5SoOBe46bKDW2iq25irHCr8wjomUS2g==
   /tty-browserify/0.0.0:

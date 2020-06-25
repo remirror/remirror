@@ -1,0 +1,43 @@
+{
+  "name": "@remirror/extension-yjs",
+  "version": "0.0.0",
+  "description": "Realtime collaboration with yjs",
+  "keywords": [
+    "remirror",
+    "extension",
+    "yjs",
+    "realtime",
+    "collaboration"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-yjs",
+  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/extension-yjs",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>",
+    "Benjie Gillam <code@benjiegillam.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/extension-yjs.cjs.js",
+  "module": "dist/extension-yjs.esm.js",
+  "types": "dist/extension-yjs.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.10.0"
+  },
+  "devDependencies": {
+    "@remirror/core": "^0.11.0",
+    "@remirror/pm": "^0.0.0"
+  },
+  "peerDependencies": {
+    "@remirror/core": "^0.11.0",
+    "@remirror/pm": "^0.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "5 KB"
+  }
+}
