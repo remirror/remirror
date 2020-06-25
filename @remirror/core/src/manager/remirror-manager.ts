@@ -176,6 +176,13 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   };
 
   /**
+   * Returns true if the manager has been destroyed.
+   */
+  get destroyed() {
+    return this.#phase === ManagerPhase.Destroy;
+  }
+
+  /**
    * Identifies this as a `Manager`.
    *
    * @internal
@@ -606,6 +613,8 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * Called when removing the manager and all preset and extensions.
    */
   destroy() {
+    this.#phase = ManagerPhase.Destroy;
+    // TODO: prevent `dispatchTransaction` from being called again
     for (const onDestroy of this.#handlers.destroy) {
       onDestroy(this.#extensions);
     }

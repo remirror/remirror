@@ -222,6 +222,10 @@ export abstract class EditorWrapper<
    * How does it work when transactions are dispatched one after the other.
    */
   protected readonly dispatchTransaction = (tr: Transaction) => {
+    if (this.manager.destroyed) {
+      // TODO: this should be made to never happen.
+      return;
+    }
     tr = this.props.onDispatchTransaction?.(tr, this.getState()) ?? tr;
 
     const previousState = this.getState();
