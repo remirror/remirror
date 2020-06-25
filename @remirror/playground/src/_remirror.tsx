@@ -15,11 +15,13 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
   // Auto-imported
   'remirror/extension/auto-link': require('remirror/extension/auto-link'),
   'remirror/extension/base-keymap': require('remirror/extension/base-keymap'),
+  'remirror/extension/bidi': require('remirror/extension/bidi'),
   'remirror/extension/blockquote': require('remirror/extension/blockquote'),
   'remirror/extension/bold': require('remirror/extension/bold'),
   'remirror/extension/code': require('remirror/extension/code'),
   'remirror/extension/code-block': require('remirror/extension/code-block'),
   'remirror/extension/collaboration': require('remirror/extension/collaboration'),
+  'remirror/extension/diff': require('remirror/extension/diff'),
   'remirror/extension/doc': require('remirror/extension/doc'),
   'remirror/extension/drop-cursor': require('remirror/extension/drop-cursor'),
   'remirror/extension/emoji': require('remirror/extension/emoji'),
@@ -41,9 +43,9 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
   'remirror/extension/search': require('remirror/extension/search'),
   'remirror/extension/strike': require('remirror/extension/strike'),
   'remirror/extension/text': require('remirror/extension/text'),
-  'remirror/extension/diff': require('remirror/extension/diff'),
   'remirror/extension/trailing-node': require('remirror/extension/trailing-node'),
   'remirror/extension/underline': require('remirror/extension/underline'),
+  'remirror/extension/yjs': require('remirror/extension/yjs'),
   'remirror/preset/core': require('remirror/preset/core'),
   'remirror/preset/embed': require('remirror/preset/embed'),
   'remirror/preset/list': require('remirror/preset/list'),
@@ -70,6 +72,10 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
     exports: ['BaseKeymapExtension'],
   },
   {
+    moduleName: 'remirror/extension/bidi',
+    exports: ['BidiExtension'],
+  },
+  {
     moduleName: 'remirror/extension/blockquote',
     exports: ['BlockquoteExtension'],
   },
@@ -88,6 +94,10 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
   {
     moduleName: 'remirror/extension/collaboration',
     exports: ['CollaborationExtension'],
+  },
+  {
+    moduleName: 'remirror/extension/diff',
+    exports: ['DiffExtension'],
   },
   {
     moduleName: 'remirror/extension/doc',
@@ -201,16 +211,16 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
     exports: ['TextExtension'],
   },
   {
-    moduleName: 'remirror/extension/diff',
-    exports: ['DiffExtension'],
-  },
-  {
     moduleName: 'remirror/extension/trailing-node',
     exports: ['TrailingNodeExtension'],
   },
   {
     moduleName: 'remirror/extension/underline',
     exports: ['UnderlineExtension'],
+  },
+  {
+    moduleName: 'remirror/extension/yjs',
+    exports: ['YjsExtension'],
   },
   {
     moduleName: 'remirror/preset/core',
