@@ -5,6 +5,7 @@ import {
   PlainExtension,
   StaticKeyList,
   convertCommand,
+  invariant,
 } from '@remirror/core';
 import { redo, undo, yCursorPlugin, ySyncPlugin, yUndoPlugin } from 'y-prosemirror';
 import { Doc } from 'yjs';
@@ -32,6 +33,7 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   static readonly staticKeys: StaticKeyList<YjsOptions> = [];
   static readonly handlerKeys: HandlerKeyList<YjsOptions> = [];
   static readonly customHandlerKeys: CustomHandlerKeyList<YjsOptions> = [];
+  private provider: YjsRealtimeProvider | null = null;
 
   static readonly defaultOptions: DefaultExtensionOptions<YjsOptions> = {
     // DEFINITELY OVERRIDE THIS!
@@ -52,8 +54,12 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
 
   createExternalPlugins = () => {
     const { getProvider } = this.options;
-    const provider = getProvider();
-    const ydoc: Doc = provider.doc;
+    if (!this.provider) {
+      this.provider = getProvider();
+    }
+    invariant(this.provider, { message: 'Provider should be set' });
+    const { provider } = this;
+    const ydoc = provider.doc;
     const type = ydoc.getXmlFragment('prosemirror');
     return [ySyncPlugin(type), yCursorPlugin(provider.awareness), yUndoPlugin()];
   };
