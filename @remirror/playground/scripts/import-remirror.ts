@@ -2,6 +2,10 @@ import { promises as fsp } from 'fs';
 import { resolve } from 'path';
 import * as prettier from 'prettier';
 
+/* We need to fake a browser environment */
+// @ts-ignore
+global.WebSocket = class {};
+
 async function scanImportsFrom<T extends RemirrorModuleMeta>(
   sourceDir: string,
   sourceModulePath: string,
@@ -93,6 +97,16 @@ export const INTERNAL_MODULES: Array<{ moduleName: string, exports: string[] }> 
 `;
 }
 
+function forceTermination() {
+  const timeout = global.setTimeout(() => {
+    console.log(
+      "Look, I'm just a script, and far be it for me to tell you your job, dear human, but it seems to me that something has been keeping me alive for the last 5,000,000 nanoseconds (which feels like an eternity to me) since I completed my task. Maybe something opened a network connection? Who knows. Either way, it doesn't seem right, so I'm going to go ahead and exit.",
+    );
+    process.exit(0);
+  }, 5000);
+  timeout.unref();
+}
+
 async function main() {
   // TODO: rewrite this to walk everything inside `packages/remirror`; ignore
   // `dist` and `src; populate `execute.ts`'s `knownRequires` and handle the
@@ -123,6 +137,7 @@ async function main() {
       ...(await prettier.resolveConfig(filepath)),
     }),
   );
+  forceTermination();
 }
 
 main().catch((error) => {
