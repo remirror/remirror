@@ -21,6 +21,7 @@ import { css } from 'linaria';
 interface YjsRealtimeProvider extends Observable<string> {
   doc: Doc;
   awareness: any;
+  disconnect: () => void;
 }
 
 export interface YjsOptions {
@@ -63,6 +64,10 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
     const ydoc = provider.doc;
     const type = ydoc.getXmlFragment('prosemirror');
     return [ySyncPlugin(type), yCursorPlugin(provider.awareness), yUndoPlugin()];
+  };
+
+  onDestroy = () => {
+    this.provider?.disconnect();
   };
 }
 
