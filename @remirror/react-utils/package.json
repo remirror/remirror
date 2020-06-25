@@ -28,7 +28,7 @@
     "@remirror/core-types": "^0.9.0"
   },
   "devDependencies": {
-    "@types/react": "^16.9.38",
+    "@types/react": "^16.9.41",
     "react": "^16.13.1"
   },
   "peerDependencies": {

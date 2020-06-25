@@ -31,7 +31,7 @@
   "devDependencies": {
     "@remirror/core": "^0.11.0",
     "@remirror/pm": "^0.0.0",
-    "@types/react": "^16.9.38",
+    "@types/react": "^16.9.41",
     "react": "^16.13.1"
   },
   "peerDependencies": {
