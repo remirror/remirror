@@ -1,5 +1,6 @@
 **/__image_snapshots__/*.* binary
 **/__image_snapshots__/*.* filter=lfs diff=lfs merge=lfs -text
+docs/generated/gatsby.ts binary
 
 *.png filter=lfs diff=lfs merge=lfs -text
 *.gif filter=lfs diff=lfs merge=lfs -text
