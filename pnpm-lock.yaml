@@ -795,6 +795,9 @@ importers:
   '@remirror/extension-yjs':
     dependencies:
       '@babel/runtime': 7.10.3
+      y-prosemirror: 0.3.5_yjs@13.2.0
+      y-webrtc: 10.1.5
+      yjs: 13.2.0
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -802,6 +805,9 @@ importers:
       '@babel/runtime': ^7.10.0
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
+      y-prosemirror: ^0.3.5
+      y-webrtc: ^10.1.5
+      yjs: ^13.2.0
   '@remirror/i18n':
     dependencies:
       '@babel/runtime': 7.10.3
@@ -15049,6 +15055,10 @@ packages:
       node: '>=6.9.0'
     resolution:
       integrity: sha512-r8EC6NO1sngH/zdD9fiRDLdcgnbayXah+mLgManTaIZJqEC1MZstmnox8KpnI2/fxQwrp5OpCOYWLp4rBl4Jcg==
+  /get-browser-rtc/1.0.2:
+    dev: false
+    resolution:
+      integrity: sha1-u81AyEUaftTvXDc7gWmkCd0dEdk=
   /get-caller-file/2.0.5:
     engines:
       node: 6.* || 8.* || >= 10.*
@@ -17401,6 +17411,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-YRrhrPFPXoH3KVB0coGf6XM1WKk=
+  /isomorphic.js/0.1.3:
+    dev: false
+    resolution:
+      integrity: sha512-pabBRLDwYefSsNS+qCazJ97o7P5xDTrNoxSYFTM09JlZTxPrOEPGKekwqUy3/Np4C4PHnVUXHYsZPOix0jELsA==
   /isstream/0.1.2:
     resolution:
       integrity: sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo=
@@ -18499,6 +18513,14 @@ packages:
       node: '>= 0.8.0'
     resolution:
       integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==
+  /lib0/0.2.30:
+    dependencies:
+      isomorphic.js: 0.1.3
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-Mp2SaW5uJwMD1atU/MJ7DGxGf5DBaokZGhByg9IYLCRfE+D+DeksjbnweaFvUoWrRpDCJLtg1jY8xENNICj5Mg==
   /linaria/1.4.0-beta.10:
     dependencies:
       '@babel/core': 7.10.3
@@ -22802,6 +22824,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-w7fLxIRCRT7U8Qu53jQnJyPkYZIaR4n5151KMfcJlO/A9397Wxb1amJvROTK6TOnp7PfoAmg/qXiNHI+08jRfA==
+  /queue-microtask/1.1.3:
+    dev: false
+    resolution:
+      integrity: sha512-zC1ZDLKFhZSa8vAdFbkOGouHcOUMgUAI/2/3on/KktpY+BaVqABkzDSsCSvJfmLbICOnrEuF9VIMezZf+T0mBA==
   /quick-lru/1.1.0:
     dev: false
     engines:
@@ -24578,6 +24604,16 @@ packages:
     dev: false
     resolution:
       integrity: sha512-eplWRfu6RTfoAzGl7I0+g06MvYauXaNpjeuhFiOYZO9hevnH54RkkStOkEevWwqBWfdzWNO9ocffbdtxFzBqXQ==
+  /simple-peer/9.7.2:
+    dependencies:
+      debug: 4.1.1
+      get-browser-rtc: 1.0.2
+      queue-microtask: 1.1.3
+      randombytes: 2.1.0
+      readable-stream: 3.6.0
+    dev: false
+    resolution:
+      integrity: sha512-xeMyxa9B4V0eA6mf17fVr8nm2QhAYFu+ZZv8zkSFFTjJETGF227CshwobrIYZuspJglMD63egcevQXGOrTIsuA==
   /simple-swizzle/0.2.2:
     dependencies:
       is-arrayish: 0.3.2
@@ -27878,6 +27914,38 @@ packages:
     dev: false
     resolution:
       integrity: sha512-amhCgCYQfhiQFvYjn6kvk4jmY1NXBn5MKdsS0jvxofmHFo77CBrXuV46NYeXACC3qTleugHYg7kNpeFnIA+R8Q==
+  /y-prosemirror/0.3.5_yjs@13.2.0:
+    dependencies:
+      lib0: 0.2.30
+      yjs: 13.2.0
+    dev: false
+    peerDependencies:
+      prosemirror-model: ^1.7.1
+      prosemirror-state: ^1.2.3
+      prosemirror-view: ^1.9.10
+      y-protocols: ^0.2.0
+      yjs: ^13.0.0
+    resolution:
+      integrity: sha512-kVayurgGA7J2AERo96sKA9rK01bKtlSe/HQyrmr3Cae05xqkSicbf8RwM4ceuwYfa9wTqGb4f4qqCmkrpg5NOQ==
+  /y-protocols/0.2.3:
+    dependencies:
+      lib0: 0.2.30
+    dev: false
+    resolution:
+      integrity: sha512-mJ838iW7XgMQqlv+9DtH7QyLqflZoy/VvaUWRIpwawee4mQiFJcEXazCmSYUHEbXIUuVNNc70FnuNSMWDC5vKQ==
+  /y-webrtc/10.1.5:
+    dependencies:
+      lib0: 0.2.30
+      simple-peer: 9.7.2
+      y-protocols: 0.2.3
+    dev: false
+    engines:
+      node: '>=10'
+    hasBin: true
+    optionalDependencies:
+      ws: 7.3.0
+    resolution:
+      integrity: sha512-KxYauxHPohuYXI7lLDlLeCeQdzSj56tdiVC1Z05i/OMtBppraVra9wwgRTs+038coA8XLeHByCR2YpasYT0JwA==
   /y18n/4.0.0:
     resolution:
       integrity: sha512-r9S/ZyXu/Xu9q1tYlpsLIsa3EeLXXk0VwlxqTcFRfg9EhMW+17kbt9G0NrgCmhGb5vT2hyhJZLfDGx+7+5Uj/w==
@@ -28000,6 +28068,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-AI4G2AlDIMNy28L47XagymyKxBk=
+  /yjs/13.2.0:
+    dependencies:
+      lib0: 0.2.30
+    dev: false
+    resolution:
+      integrity: sha512-0augWOespX5KC8de62GCR8WloZhAyBfEF3ZPDpjZlRs6yho7iFKqarpzxxJgmP8zA/pNJiV1EIpMezSxEdNdDw==
   /yn/3.1.1:
     dev: true
     engines:
