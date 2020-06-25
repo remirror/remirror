@@ -22,7 +22,7 @@ interface YjsRealtimeProvider extends Observable<string> {
 }
 
 export interface YjsOptions {
-  provider: YjsRealtimeProvider; // TODO
+  getProvider: () => YjsRealtimeProvider;
 }
 
 /**
@@ -35,7 +35,7 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
 
   static readonly defaultOptions: DefaultExtensionOptions<YjsOptions> = {
     // DEFINITELY OVERRIDE THIS!
-    provider: new WebrtcProvider('global', new Doc(), {}),
+    getProvider: () => new WebrtcProvider('global', new Doc(), {}),
   };
 
   get name() {
@@ -51,7 +51,8 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   };
 
   createExternalPlugins = () => {
-    const { provider } = this.options;
+    const { getProvider } = this.options;
+    const provider = getProvider();
     const ydoc: Doc = provider.doc;
     const type = ydoc.getXmlFragment('prosemirror');
     return [ySyncPlugin(type), yCursorPlugin(provider.awareness), yUndoPlugin()];
