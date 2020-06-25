@@ -1,6 +1,6 @@
 import * as crypto from 'crypto';
 import { languages } from 'monaco-editor';
-import React, { FC, useEffect, useMemo, useRef } from 'react';
+import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 
 // addImport('@remirror/react', 'RemirrorProvider');
@@ -197,28 +197,37 @@ export interface ExecuteProps {
   requires: string[];
 }
 
+function useDebouncedValue<T>(value: T): T {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  const debouncedUpdateTo = useMemo(
+    () =>
+      debounce(500, (value: T): void => {
+        setDebouncedValue(value);
+      }),
+    [],
+  );
+  debouncedUpdateTo(value);
+  return debouncedValue;
+}
+
 /**
  * Executes the given `code`, mounting the React component that it exported (via
  * `export default`) into the DOM. Is automatically debounced to prevent
  * over-fetching npm modules during typing.
  */
 export const Execute: FC<ExecuteProps> = function (props) {
-  const { code, requires } = props;
+  const { code: rawCode, requires: rawRequires } = props;
   const ref = useRef<HTMLDivElement | null>(null);
-  const debouncedRunCodeInDiv = useMemo(
-    () =>
-      debounce(500, false, (code: string, requires: string[]) => {
-        if (ref.current) {
-          const release = runCodeInDiv(ref.current, { code, requires });
-          return release;
-        }
-        return;
-      }),
-    [],
-  );
+  const code = useDebouncedValue(rawCode);
+  const requires = useDebouncedValue(rawRequires);
   useEffect(() => {
-    return debouncedRunCodeInDiv(code, requires);
-  }, [debouncedRunCodeInDiv, code, requires]);
+    if (ref.current) {
+      const release = runCodeInDiv(ref.current, { code, requires });
+      return () => {
+        release();
+      };
+    }
+  }, [code, requires]);
 
   return <div ref={ref} />;
 };
