@@ -6,6 +6,7 @@ import {
   useMemo,
   useRef,
   useState,
+  useEffect,
 } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 
@@ -302,6 +303,12 @@ function useObjectCheck<Type extends object>(parameter: Type): Type {
   return ref.current;
 }
 
+type ManagerOrCombined<Combined extends AnyCombinedUnion> =
+  | Combined
+  | ReactPreset
+  | CorePreset
+  | BuiltinPreset;
+
 /**
  * A hook for creating the editor manager directly in the react component.
  *
@@ -328,16 +335,26 @@ function useObjectCheck<Type extends object>(parameter: Type): Type {
  * ```
  */
 export function useManager<Combined extends AnyCombinedUnion>(
-  managerOrCombined:
-    | readonly Combined[]
-    | RemirrorManager<Combined | ReactPreset | CorePreset | BuiltinPreset>,
+  managerOrCombined: readonly Combined[] | RemirrorManager<ManagerOrCombined<Combined>>,
   settings: Remirror.ManagerSettings = {},
-): RemirrorManager<Combined | ReactPreset | CorePreset | BuiltinPreset> {
-  return useRef(
-    isRemirrorManager<Combined | ReactPreset | CorePreset | BuiltinPreset>(managerOrCombined)
+): RemirrorManager<ManagerOrCombined<Combined>> {
+  const ref = useRef(
+    isRemirrorManager<ManagerOrCombined<Combined>>(managerOrCombined)
       ? managerOrCombined
       : createReactManager(managerOrCombined, settings),
-  ).current;
+  );
+  const isNewManager = !isRemirrorManager<ManagerOrCombined<Combined>>(managerOrCombined);
+
+  useEffect(() => {
+    if (isNewManager) {
+      return () => {
+        ref.current.destroy();
+      };
+    }
+    return;
+  }, [isNewManager]);
+
+  return ref.current;
 }
 
 export type BaseReactCombinedUnion = ReactPreset | CorePreset | BuiltinPreset;
