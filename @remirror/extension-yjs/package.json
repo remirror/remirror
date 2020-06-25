@@ -25,6 +25,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.10.0",
+    "lib0": "^0.2.28",
     "y-prosemirror": "^0.3.5",
     "y-webrtc": "^10.1.5",
     "yjs": "^13.2.0"
