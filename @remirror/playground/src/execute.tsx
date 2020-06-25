@@ -218,8 +218,7 @@ function useDebouncedValue<T>(value: T): T {
 export const Execute: FC<ExecuteProps> = function (props) {
   const { code: rawCode, requires: rawRequires } = props;
   const ref = useRef<HTMLDivElement | null>(null);
-  const code = useDebouncedValue(rawCode);
-  const requires = useDebouncedValue(rawRequires);
+  const [code, requires] = useDebouncedValue([rawCode, rawRequires]);
   useEffect(() => {
     if (ref.current) {
       const release = runCodeInDiv(ref.current, { code, requires });
