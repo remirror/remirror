@@ -19,7 +19,6 @@
 '@remirror/playground': major
 '@remirror/pm': major
 '@remirror/preset-core': major
-'@remirror/react-dev': major
 '@remirror/react': major
 '@remirror/test-fixtures': major
 '@remirror/cli': major
