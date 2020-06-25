@@ -21,25 +21,37 @@ import { css } from 'linaria';
 interface YjsRealtimeProvider extends Observable<string> {
   doc: Doc;
   awareness: any;
-  disconnect: () => void;
+  destroy: () => void;
 }
 
-export interface YjsOptions {
-  getProvider: () => YjsRealtimeProvider;
+export interface YjsOptions<Provider extends YjsRealtimeProvider = YjsRealtimeProvider> {
+  provider: {
+    get: () => Provider;
+    release: (provider: Provider) => void;
+  };
 }
 
 /**
  * An extension for the remirror editor. CHANGE ME.
  */
-export class YjsExtension extends PlainExtension<YjsOptions> {
+export class YjsExtension<
+  Provider extends YjsRealtimeProvider = YjsRealtimeProvider
+> extends PlainExtension<YjsOptions<Provider>> {
   static readonly staticKeys: StaticKeyList<YjsOptions> = [];
   static readonly handlerKeys: HandlerKeyList<YjsOptions> = [];
   static readonly customHandlerKeys: CustomHandlerKeyList<YjsOptions> = [];
-  private provider: YjsRealtimeProvider | null = null;
+  private _provider: Provider | null = null;
+  private _releaseProvider: ((provider: Provider) => void) | null = null;
 
   static readonly defaultOptions: DefaultExtensionOptions<YjsOptions> = {
     // DEFINITELY OVERRIDE THIS!
-    getProvider: () => new WebrtcProvider('global', new Doc(), {}),
+    provider: {
+      get: () => new WebrtcProvider('global', new Doc(), {}),
+      release: (provider) => {
+        provider.destroy();
+        provider.doc.destroy();
+      },
+    },
   };
 
   get name() {
@@ -55,19 +67,22 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   };
 
   createExternalPlugins = () => {
-    const { getProvider } = this.options;
-    if (!this.provider) {
-      this.provider = getProvider();
+    const { provider: providerConfigThing } = this.options;
+    if (!this._provider) {
+      this._provider = providerConfigThing.get();
+      this._releaseProvider = providerConfigThing.release;
     }
-    invariant(this.provider, { message: 'Provider should be set' });
-    const { provider } = this;
+    const { _provider: provider } = this;
+    invariant(provider, { message: 'Provider should be set' });
     const ydoc = provider.doc;
     const type = ydoc.getXmlFragment('prosemirror');
     return [ySyncPlugin(type), yCursorPlugin(provider.awareness), yUndoPlugin()];
   };
 
   onDestroy = () => {
-    this.provider?.disconnect();
+    if (this._releaseProvider && this._provider) {
+      this._releaseProvider(this._provider);
+    }
   };
 }
 
