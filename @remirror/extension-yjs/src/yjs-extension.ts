@@ -48,8 +48,9 @@ export class YjsExtension<
     provider: {
       get: () => new WebrtcProvider('global', new Doc(), {}),
       release: (provider) => {
+        const doc = provider.doc;
         provider.destroy();
-        provider.doc.destroy();
+        doc.destroy();
       },
     },
   };
