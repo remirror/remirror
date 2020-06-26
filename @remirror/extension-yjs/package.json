@@ -10,11 +10,11 @@
     "collaboration"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-yjs",
-  "repository": "https://github.com/remirror/remirror/tree/next/@remirror/extension-yjs",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-yjs",
   "license": "MIT",
   "contributors": [
-    "Ifiok Jr. <ifiokotung@gmail.com>",
-    "Benjie Gillam <code@benjiegillam.com>"
+    "Benjie Gillam <code@benjiegillam.com>",
+    "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
   "main": "dist/extension-yjs.cjs.js",
@@ -24,7 +24,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.0",
+    "@babel/runtime": "^7.10.3",
     "lib0": "^0.2.28",
     "linaria": "^1.4.0-beta.10",
     "y-prosemirror": "^0.3.5",

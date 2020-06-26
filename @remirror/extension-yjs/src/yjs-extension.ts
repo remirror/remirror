@@ -1,17 +1,18 @@
+import { Observable } from 'lib0/observable';
+import { css } from 'linaria';
+import { redo, undo, yCursorPlugin, ySyncPlugin, yUndoPlugin } from 'y-prosemirror';
+import { WebrtcProvider } from 'y-webrtc';
+import { Doc } from 'yjs';
+
 import {
+  convertCommand,
   CustomHandlerKeyList,
   DefaultExtensionOptions,
   HandlerKeyList,
+  invariant,
   PlainExtension,
   StaticKeyList,
-  convertCommand,
-  invariant,
 } from '@remirror/core';
-import { redo, undo, yCursorPlugin, ySyncPlugin, yUndoPlugin } from 'y-prosemirror';
-import { Doc } from 'yjs';
-import { WebrtcProvider } from 'y-webrtc';
-import { Observable } from 'lib0/observable';
-import { css } from 'linaria';
 
 /**
  * yjs typings are very rough; so we define here the interface that we require

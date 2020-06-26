@@ -804,7 +804,7 @@ importers:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
     specifiers:
-      '@babel/runtime': ^7.10.0
+      '@babel/runtime': ^7.10.3
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
       lib0: ^0.2.28

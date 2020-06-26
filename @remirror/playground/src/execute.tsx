@@ -220,12 +220,14 @@ export const Execute: FC<ExecuteProps> = function (props) {
   const ref = useRef<HTMLDivElement | null>(null);
   const [code, requires] = useDebouncedValue([rawCode, rawRequires]);
   useEffect(() => {
-    if (ref.current) {
-      const release = runCodeInDiv(ref.current, { code, requires });
-      return () => {
-        release();
-      };
+    if (!ref.current) {
+      return;
     }
+
+    const release = runCodeInDiv(ref.current, { code, requires });
+    return () => {
+      release();
+    };
   }, [code, requires]);
 
   return <div ref={ref} />;

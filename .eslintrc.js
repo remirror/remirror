@@ -318,8 +318,9 @@ module.exports = {
       },
     },
     {
-      files: ['support/scripts/**', 'e2e/**'],
+      files: ['support/scripts/**', 'e2e/**', '@remirror/playground/scripts/**'],
       rules: {
+        '@typescript-eslint/ban-ts-comment': 'off',
         'unicorn/no-process-exit': 'off',
         'unicorn/no-unreadable-array-destructuring': 'off',
       },

@@ -3,10 +3,10 @@ import {
   RefCallback,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
-  useEffect,
 } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 
