@@ -6,11 +6,10 @@ import { Doc } from 'yjs';
 import {
   convertCommand,
   DefaultExtensionOptions,
-  PlainExtension,
-  isFunction,
-  Static,
   ExtensionPriority,
-  OnSetOptionsParameter,
+  isFunction,
+  PlainExtension,
+  Static,
 } from '@remirror/core';
 
 /**

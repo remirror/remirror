@@ -39,7 +39,7 @@ import { CorePreset } from '@remirror/preset-core';
 import { ReactPreset } from '@remirror/preset-react';
 
 import { I18nContext, RemirrorContext } from '../react-contexts';
-import { I18nContextProps, RemirrorContextProps } from '../react-types';
+import { I18nContextProps, ReactCombinedUnion, RemirrorContextProps } from '../react-types';
 
 /**
  * This provides access to the Remirror Editor context using hooks.
@@ -303,12 +303,6 @@ function useObjectCheck<Type extends object>(parameter: Type): Type {
   return ref.current;
 }
 
-type ManagerOrCombined<Combined extends AnyCombinedUnion> =
-  | Combined
-  | ReactPreset
-  | CorePreset
-  | BuiltinPreset;
-
 /**
  * A hook for creating the editor manager directly in the react component.
  *
@@ -335,26 +329,22 @@ type ManagerOrCombined<Combined extends AnyCombinedUnion> =
  * ```
  */
 export function useManager<Combined extends AnyCombinedUnion>(
-  managerOrCombined: readonly Combined[] | RemirrorManager<ManagerOrCombined<Combined>>,
+  managerOrCombined: readonly Combined[] | RemirrorManager<ReactCombinedUnion<Combined>>,
   settings: Remirror.ManagerSettings = {},
-): RemirrorManager<ManagerOrCombined<Combined>> {
-  const ref = useRef(
-    isRemirrorManager<ManagerOrCombined<Combined>>(managerOrCombined)
+): RemirrorManager<ReactCombinedUnion<Combined>> {
+  const manager = useRef(
+    isRemirrorManager<ReactCombinedUnion<Combined>>(managerOrCombined)
       ? managerOrCombined
       : createReactManager(managerOrCombined, settings),
-  );
-  const isNewManager = !isRemirrorManager<ManagerOrCombined<Combined>>(managerOrCombined);
+  ).current;
 
   useEffect(() => {
-    if (isNewManager) {
-      return () => {
-        ref.current.destroy();
-      };
-    }
-    return;
-  }, [isNewManager]);
+    return () => {
+      manager.destroy();
+    };
+  }, [manager]);
 
-  return ref.current;
+  return manager;
 }
 
 export type BaseReactCombinedUnion = ReactPreset | CorePreset | BuiltinPreset;

@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import {
   AnyCombinedUnion,
@@ -73,9 +73,17 @@ export function useSocialManager<Combined extends AnyCombinedUnion>(
   options: CreateSocialManagerOptions = {},
   settings?: Remirror.ManagerSettings,
 ): RemirrorManager<SocialCombinedUnion | Combined> {
-  return useRef(
+  const manager = useRef(
     isRemirrorManager<Combined | SocialCombinedUnion>(managerOrCombined)
       ? managerOrCombined
       : createSocialManager(managerOrCombined, options, settings),
   ).current;
+
+  useEffect(() => {
+    return () => {
+      manager.destroy();
+    };
+  }, [manager]);
+
+  return manager;
 }
