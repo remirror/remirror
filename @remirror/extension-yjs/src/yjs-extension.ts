@@ -5,12 +5,12 @@ import { Doc } from 'yjs';
 
 import {
   convertCommand,
-  CustomHandlerKeyList,
   DefaultExtensionOptions,
-  HandlerKeyList,
-  invariant,
   PlainExtension,
-  StaticKeyList,
+  isFunction,
+  Static,
+  ExtensionPriority,
+  OnSetOptionsParameter,
 } from '@remirror/core';
 
 /**
@@ -22,13 +22,21 @@ interface YjsRealtimeProvider {
   doc: Doc;
   awareness: any;
   destroy: () => void;
+  disconnect: () => void;
 }
 
 export interface YjsOptions<Provider extends YjsRealtimeProvider = YjsRealtimeProvider> {
-  provider: {
-    get: () => Provider;
-    release: (provider: Provider) => void;
-  };
+  /**
+   * Get the provider for this extension. There is an option to pass in a
+   * function for when setting this up in a non dom environment.
+   */
+  getProvider: Provider | (() => Provider);
+
+  /**
+   * Remove the active provider. This should only be set at initial construction
+   * of the editor.
+   */
+  destroyProvider: Static<(provider: Provider) => void>;
 }
 
 /**
@@ -37,21 +45,17 @@ export interface YjsOptions<Provider extends YjsRealtimeProvider = YjsRealtimePr
 export class YjsExtension<
   Provider extends YjsRealtimeProvider = YjsRealtimeProvider
 > extends PlainExtension<YjsOptions<Provider>> {
-  static readonly staticKeys: StaticKeyList<YjsOptions> = [];
-  static readonly handlerKeys: HandlerKeyList<YjsOptions> = [];
-  static readonly customHandlerKeys: CustomHandlerKeyList<YjsOptions> = [];
-  private _provider: Provider | null = null;
-  private _releaseProvider: ((provider: Provider) => void) | null = null;
-
+  static readonly defaultPriority = ExtensionPriority.High;
   static readonly defaultOptions: DefaultExtensionOptions<YjsOptions> = {
-    // DEFINITELY OVERRIDE THIS!
-    provider: {
-      get: () => new WebrtcProvider('global', new Doc(), {}),
-      release: (provider) => {
-        const doc = provider.doc;
-        provider.destroy();
-        doc.destroy();
-      },
+    // TODO remove y-webrtc dependency and this default option.
+    getProvider: () => new WebrtcProvider('global', new Doc(), {}),
+
+    // TODO remove this once better abstraction is available.
+    destroyProvider: (provider) => {
+      const { doc } = provider;
+      provider.disconnect();
+      provider.destroy();
+      doc.destroy();
     },
   };
 
@@ -59,6 +63,24 @@ export class YjsExtension<
     return 'yjs' as const;
   }
 
+  #provider?: Provider;
+
+  /**
+   * The provider that is being used for the editor.
+   */
+  get provider(): Provider {
+    const { getProvider } = this.options;
+
+    if (!this.#provider) {
+      this.#provider = isFunction(getProvider) ? getProvider() : getProvider;
+    }
+
+    return this.#provider;
+  }
+
+  /**
+   * Create the custom undo keymaps for the
+   */
   createKeymap = () => {
     return {
       'Mod-z': convertCommand(undo),
@@ -67,23 +89,24 @@ export class YjsExtension<
     };
   };
 
+  /**
+   * Create the yjs plugins.
+   */
   createExternalPlugins = () => {
-    const { provider: providerConfigThing } = this.options;
-    if (!this._provider) {
-      this._provider = providerConfigThing.get();
-      this._releaseProvider = providerConfigThing.release;
-    }
-    const { _provider: provider } = this;
-    invariant(provider, { message: 'Provider should be set' });
-    const ydoc = provider.doc;
-    const type = ydoc.getXmlFragment('prosemirror');
-    return [ySyncPlugin(type), yCursorPlugin(provider.awareness), yUndoPlugin()];
+    const yDoc = this.provider.doc;
+    const type = yDoc.getXmlFragment('prosemirror');
+    return [ySyncPlugin(type), yCursorPlugin(this.provider.awareness), yUndoPlugin()];
   };
 
+  /**
+   * Remove the provider from the manager.
+   */
   onDestroy = () => {
-    if (this._releaseProvider && this._provider) {
-      this._releaseProvider(this._provider);
+    if (!this.#provider) {
+      return;
     }
+
+    this.options.destroyProvider(this.#provider);
   };
 }
 
