@@ -274,6 +274,13 @@
     "running": false
   },
   {
+    "name": "@remirror/extension-yjs",
+    "path": "@remirror/extension-yjs/dist/extension-yjs.esm.js",
+    "limit": "115 KB",
+    "ignore": ["@remirror/core", "@remirror/pm"],
+    "running": false
+  },
+  {
     "name": "@remirror/i18n",
     "path": "@remirror/i18n/dist/i18n.esm.js",
     "limit": "50 KB",

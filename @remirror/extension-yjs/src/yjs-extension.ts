@@ -1,4 +1,3 @@
-import { Observable } from 'lib0/observable';
 import { css } from 'linaria';
 import { redo, undo, yCursorPlugin, ySyncPlugin, yUndoPlugin } from 'y-prosemirror';
 import { WebrtcProvider } from 'y-webrtc';
@@ -19,7 +18,7 @@ import {
  * (y-webrtc and y-websocket providers are both compatible with this interface;
  * no other providers have been checked).
  */
-interface YjsRealtimeProvider extends Observable<string> {
+interface YjsRealtimeProvider {
   doc: Doc;
   awareness: any;
   destroy: () => void;

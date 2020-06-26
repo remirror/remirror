@@ -795,7 +795,6 @@ importers:
   '@remirror/extension-yjs':
     dependencies:
       '@babel/runtime': 7.10.3
-      lib0: 0.2.30
       linaria: 1.4.0-beta.10
       y-prosemirror: 0.3.5_yjs@13.2.0
       y-webrtc: 10.1.5
@@ -807,7 +806,6 @@ importers:
       '@babel/runtime': ^7.10.3
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
-      lib0: ^0.2.28
       linaria: ^1.4.0-beta.10
       y-prosemirror: ^0.3.5
       y-webrtc: ^10.1.5
