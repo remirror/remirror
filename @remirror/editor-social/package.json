@@ -26,7 +26,7 @@
     "@remirror/react-utils": "^0.7.6",
     "@types/classnames": "^2.2.10",
     "classnames": "^2.2.6",
-    "linaria": "^1.4.0-beta.10",
+    "linaria": "^2.0.0-alpha.5",
     "multishift": "^0.7.7",
     "type-fest": "^0.15.1"
   },

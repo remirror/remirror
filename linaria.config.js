@@ -1,7 +1,9 @@
-const babelOptions = require('./support/babel/base.babel');
+const babelOptions = process.env.NODE_ENV === 'test' ? require('./babel.config') : undefined;
 const { kebabCase } = require('case-anything');
 
-/** @type import('linaria/lib/babel/types').StrictOptions */
+/**
+ * @type import('linaria/lib/babel/types').StrictOptions
+ */
 const config = {
   displayName: true,
   classNameSlug: (_hash, title) => {

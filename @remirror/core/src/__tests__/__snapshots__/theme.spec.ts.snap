@@ -138,9 +138,9 @@ exports[`theme 1`] = `
 --rmr-hue-orange-7: #f76707;
 --rmr-hue-orange-8: #e8590c;
 --rmr-hue-orange-9: #d9480f;
---rmr-font-main: system-ui, -apple-system, BlinkMacSystemFont, \\"Segoe UI\\", Roboto, \\"Helvetica Neue\\", sans-serif;
---rmr-font-heading: inherit;
---rmr-font-mono: Menlo, monospace;
+--rmr-font-family-default: system-ui, -apple-system, BlinkMacSystemFont, \\"Segoe UI\\", Roboto, \\"Helvetica Neue\\", sans-serif;
+--rmr-font-family-heading: inherit;
+--rmr-font-family-mono: Menlo, monospace;
 --rmr-font-size-0: 12px;
 --rmr-font-size-1: 14px;
 --rmr-font-size-2: 16px;
@@ -150,7 +150,7 @@ exports[`theme 1`] = `
 --rmr-font-size-6: 48px;
 --rmr-font-size-7: 64px;
 --rmr-font-size-8: 96px;
---rmr-font-size-default: ;
+--rmr-font-size-default: 16px;
 --rmr-space-1: 4px;
 --rmr-space-2: 8px;
 --rmr-space-3: 16px;
@@ -167,5 +167,5 @@ exports[`theme 1`] = `
 --rmr-letter-spacing-space: 1px;
 --rmr-letter-spacing-wide: 3px;
 --rmr-line-height-heading: 1.25em;
---rmr-line-height-main: 1.5em;"
+--rmr-line-height-default: 1.5em;"
 `;

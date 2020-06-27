@@ -41,6 +41,7 @@ importers:
       babel-plugin-annotate-pure-calls: 0.4.0_@babel+core@7.10.3
       babel-plugin-dev-expression: 0.2.2_@babel+core@7.10.3
       babel-plugin-macros: 2.8.0
+      babel-plugin-transform-react-remove-prop-types: 0.4.24
       browserslist: 4.12.2
       case-anything: 1.1.1
       cpy-cli: 3.1.1
@@ -71,7 +72,7 @@ importers:
       jest-watch-select-projects: 2.0.0
       jest-watch-typeahead: 0.6.0_jest@26.1.0
       json.macro: 1.3.0_babel-plugin-macros@2.8.0
-      linaria: 1.4.0-beta.10
+      linaria: 2.0.0-alpha.5
       lint-staged: 10.2.11
       npm-run-all: 4.1.5
       prettier: 2.0.5
@@ -125,6 +126,7 @@ importers:
       babel-plugin-annotate-pure-calls: ^0.4.0
       babel-plugin-dev-expression: ^0.2.2
       babel-plugin-macros: ^2.8.0
+      babel-plugin-transform-react-remove-prop-types: ^0.4.24
       browserslist: ^4.12.1
       case-anything: ^1.1.1
       cpy-cli: ^3.1.1
@@ -155,7 +157,7 @@ importers:
       jest-watch-select-projects: ^2.0.0
       jest-watch-typeahead: ^0.6.0
       json.macro: ^1.3.0
-      linaria: ^1.4.0-beta.10
+      linaria: ^2.0.0-alpha.5
       lint-staged: ^10.2.11
       npm-run-all: ^4.1.5
       prettier: ^2.0.5
@@ -250,7 +252,7 @@ importers:
       '@remirror/core-types': 'link:../core-types'
       '@remirror/core-utils': 'link:../core-utils'
       case-anything: 1.1.1
-      linaria: 1.4.0-beta.10
+      linaria: 2.0.0-alpha.5
       nanoevents: 5.1.8
       open-color: 1.7.0
       type-fest: 0.15.1
@@ -264,7 +266,7 @@ importers:
       '@remirror/core-utils': ^0.8.0
       '@remirror/pm': ^0.0.0
       case-anything: ^1.1.1
-      linaria: ^1.4.0-beta.10
+      linaria: ^2.0.0-alpha.5
       nanoevents: ^5.1.8
       open-color: ^1.7.0
       type-fest: ^0.15.1
@@ -389,7 +391,7 @@ importers:
       '@remirror/react-utils': 'link:../react-utils'
       '@types/classnames': 2.2.10
       classnames: 2.2.6
-      linaria: 1.4.0-beta.10
+      linaria: 2.0.0-alpha.5
       multishift: 'link:../../packages/multishift'
       type-fest: 0.15.1
     devDependencies:
@@ -419,7 +421,7 @@ importers:
       '@types/react': ^16.9.41
       '@types/react-dom': ^16.9.8
       classnames: ^2.2.6
-      linaria: ^1.4.0-beta.10
+      linaria: ^2.0.0-alpha.5
       multishift: ^0.7.7
       react: ^16.13.1
       react-dom: ^16.13.1
@@ -463,7 +465,7 @@ importers:
   '@remirror/extension-blockquote':
     dependencies:
       '@babel/runtime': 7.10.3
-      linaria: 1.4.0-beta.10
+      linaria: 2.0.0-alpha.5
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -471,7 +473,7 @@ importers:
       '@babel/runtime': ^7.10.3
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
-      linaria: ^1.4.0-beta.10
+      linaria: ^2.0.0-alpha.5
   '@remirror/extension-bold':
     dependencies:
       '@babel/runtime': 7.10.3
@@ -593,7 +595,7 @@ importers:
   '@remirror/extension-gap-cursor':
     dependencies:
       '@babel/runtime': 7.10.3
-      linaria: 1.4.0-beta.10
+      linaria: 2.0.0-alpha.5
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -601,7 +603,7 @@ importers:
       '@babel/runtime': ^7.10.3
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
-      linaria: ^1.4.0-beta.10
+      linaria: ^2.0.0-alpha.5
   '@remirror/extension-hard-break':
     dependencies:
       '@babel/runtime': 7.10.3
@@ -695,7 +697,7 @@ importers:
   '@remirror/extension-placeholder':
     dependencies:
       '@babel/runtime': 7.10.3
-      linaria: 1.4.0-beta.10
+      linaria: 2.0.0-alpha.5
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -703,7 +705,7 @@ importers:
       '@babel/runtime': ^7.10.3
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
-      linaria: ^1.4.0-beta.10
+      linaria: ^2.0.0-alpha.5
   '@remirror/extension-position-tracker':
     dependencies:
       '@babel/runtime': 7.10.3
@@ -744,7 +746,7 @@ importers:
     dependencies:
       '@babel/runtime': 7.10.3
       escape-string-regexp: 4.0.0
-      linaria: 1.4.0-beta.10
+      linaria: 2.0.0-alpha.5
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -753,7 +755,7 @@ importers:
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
       escape-string-regexp: ^4.0.0
-      linaria: ^1.4.0-beta.10
+      linaria: ^2.0.0-alpha.5
   '@remirror/extension-strike':
     dependencies:
       '@babel/runtime': 7.10.3
@@ -946,7 +948,7 @@ importers:
   '@remirror/preset-embed':
     dependencies:
       '@babel/runtime': 7.10.3
-      linaria: 1.4.0-beta.10
+      linaria: 2.0.0-alpha.5
       tiny-querystring: 0.0.2
     devDependencies:
       '@remirror/core': 'link:../core'
@@ -955,7 +957,7 @@ importers:
       '@babel/runtime': ^7.10.3
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
-      linaria: ^1.4.0-beta.10
+      linaria: ^2.0.0-alpha.5
       tiny-querystring: ^0.0.2
   '@remirror/preset-list':
     dependencies:
@@ -973,7 +975,7 @@ importers:
       '@remirror/extension-placeholder': 'link:../extension-placeholder'
       '@remirror/extension-react-ssr': 'link:../extension-react-ssr'
       '@remirror/react-utils': 'link:../react-utils'
-      linaria: 1.4.0-beta.10
+      linaria: 2.0.0-alpha.5
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -987,7 +989,7 @@ importers:
       '@remirror/pm': ^0.0.0
       '@remirror/react-utils': ^0.7.6
       '@types/react': ^16.9.41
-      linaria: ^1.4.0-beta.10
+      linaria: ^2.0.0-alpha.5
       react: ^16.13.1
   '@remirror/preset-table':
     dependencies:
@@ -1011,7 +1013,7 @@ importers:
       '@types/min-document': 2.19.0
       '@types/use-deep-compare-effect': 1.2.0
       hoist-non-react-statics: 3.3.2
-      linaria: 1.4.0-beta.10
+      linaria: 2.0.0-alpha.5
       min-document: 2.19.0
       nanoevents: 5.1.8
       nanoid: 3.1.10
@@ -1052,7 +1054,7 @@ importers:
       '@types/use-deep-compare-effect': ^1.2.0
       hoist-non-react-statics: ^3.3.2
       jest-axe: ^3.4.0
-      linaria: ^1.4.0-beta.10
+      linaria: ^2.0.0-alpha.5
       min-document: ^2.19.0
       nanoevents: ^5.1.8
       nanoid: ^3.1.10
@@ -1249,7 +1251,7 @@ importers:
       graphql-tag: 2.10.3_graphql@14.6.0
       graphql-tag-pluck: 0.8.7
       is-absolute-url: 3.0.3
-      linaria: 1.4.0-beta.10
+      linaria: 2.0.0-alpha.5
       prismjs: 1.20.0
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
@@ -1339,7 +1341,7 @@ importers:
       graphql-tag: ^2.10.3
       graphql-tag-pluck: ^0.8.7
       is-absolute-url: ^3.0.3
-      linaria: ^1.4.0-beta.10
+      linaria: ^2.0.0-alpha.5
       monaco-editor-webpack-plugin: ^1.9.0
       prismjs: ^1.20.0
       react: ^16.13.1
@@ -1694,7 +1696,7 @@ importers:
       globby: 11.0.1
       jest-axe: 3.4.0
       jest-diff: 26.1.0
-      linaria: 1.4.0-beta.10
+      linaria: 2.0.0-alpha.5
       lodash.groupby: 4.6.0
       lodash.isequal: 4.5.0
       postcss: 7.0.32
@@ -1715,7 +1717,7 @@ importers:
       globby: ^11.0.1
       jest-axe: ^3.4.0
       jest-diff: ^26.1.0
-      linaria: ^1.4.0-beta.10
+      linaria: ^2.0.0-alpha.5
       lodash.groupby: ^4.6.0
       lodash.isequal: ^4.5.0
       postcss: ^7.0.32
@@ -18895,6 +18897,41 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-VsUastJ3B3c+WRQD8cn9FMx6q/1xdAJZagJxvUBMsT3BrUG5WXADaCl3R8rls3GVnsmaLVR4ybYlPye1gLGJhA==
+  /linaria/2.0.0-alpha.5:
+    dependencies:
+      '@babel/core': 7.10.3
+      '@babel/generator': 7.10.3
+      '@babel/plugin-proposal-export-namespace-from': 7.10.1_@babel+core@7.10.3
+      '@babel/plugin-syntax-dynamic-import': 7.8.3_@babel+core@7.10.3
+      '@babel/plugin-transform-modules-commonjs': 7.10.1_@babel+core@7.10.3
+      '@babel/plugin-transform-runtime': 7.10.3_@babel+core@7.10.3
+      '@babel/plugin-transform-template-literals': 7.10.3_@babel+core@7.10.3
+      '@babel/register': 7.10.3_@babel+core@7.10.3
+      '@babel/template': 7.10.3
+      '@babel/traverse': 7.10.3
+      '@emotion/is-prop-valid': 0.7.3
+      babel-plugin-transform-react-remove-prop-types: 0.4.24
+      cosmiconfig: 5.2.1
+      debug: 4.1.1
+      dedent: 0.7.0
+      enhanced-resolve: 4.2.0
+      find-yarn-workspace-root: 1.2.1
+      glob: 7.1.6
+      loader-utils: 1.4.0
+      mkdirp: 0.5.5
+      normalize-path: 3.0.0
+      postcss: 7.0.32
+      react-is: 16.13.1
+      rollup-pluginutils: 2.8.2
+      source-map: 0.6.1
+      strip-ansi: 5.2.0
+      stylis: 3.5.4
+      webpack: 4.43.0_webpack@4.43.0
+      yargs: 13.3.2
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-W+PcPHcdjJ0VyBjrTnFgqc+R3eTNd3Bf4couvwo+5Yst7JaZh5ot4KYmOzP/AOjPZPlMUGhM4H4NQwyApFY2AQ==
   /lines-and-columns/1.1.6:
     resolution:
       integrity: sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=

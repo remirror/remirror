@@ -13,9 +13,16 @@ const ignore = [
 
 const basePreset = ['@babel/preset-react', 'linaria/babel'];
 
-const presets = [...basePreset, ['@babel/preset-env']];
+const presets = [
+  ...basePreset,
+  ['@babel/preset-env', {}, 'name-added-to-prevent-duplicate-with-linaria-plugin'],
+];
 
-const testBabelPresetEnv = ['@babel/preset-env', { targets: { node: '12' } }];
+const testBabelPresetEnv = [
+  '@babel/preset-env',
+  { targets: { node: '12' } },
+  'name-added-to-prevent-duplicate-with-linaria-plugin',
+];
 const nonTestEnv = { ignore, presets };
 
 module.exports = {
@@ -34,6 +41,7 @@ module.exports = {
   plugins: [
     'macros',
     ['@babel/plugin-transform-runtime', {}, 'name-added-to-prevent-duplicate-with-linaria-plugin'],
+    ['@babel/plugin-transform-template-literals', {}, 'no-clash'],
     '@babel/plugin-proposal-object-rest-spread',
     '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-proposal-nullish-coalescing-operator',
