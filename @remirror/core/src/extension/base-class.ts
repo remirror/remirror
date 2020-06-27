@@ -116,6 +116,10 @@ export abstract class BaseClass<
     return this.#options;
   }
 
+  /**
+   * The options that this instance was created with, merged with all the
+   * default options.
+   */
   get initialOptions() {
     return this.#initialOptions;
   }
@@ -172,6 +176,14 @@ export abstract class BaseClass<
    *   error since the schema hasn't been created yet.
    */
   protected init() {}
+
+  /**
+   * Clone the current instance with the provided options. If nothing is
+   * provided it uses the same initial options as the current instance.
+   */
+  abstract clone(
+    ...parameters: ConstructorParameter<Options, DefaultStaticOptions>
+  ): BaseClass<Options, DefaultStaticOptions>;
 
   /**
    * Update the properties with the provided partial value when changed.

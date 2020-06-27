@@ -89,7 +89,7 @@
     ]
   },
   "browserslist": [
-    "since 2018"
+    "since 2017"
   ],
   "prettier": {
     "bracketSpacing": true,

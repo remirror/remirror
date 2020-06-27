@@ -26,14 +26,14 @@ This document is for extension developers who wish to create their own extension
 - Packages should be named `remirror-preset-[NAME]`.
   - The name should be hyphen deliniated `remirror-preset-new-rules` to separate words.
 - Should export a named preset which uses the pascal version of the npm package name.
-  - `remirror-preset-custom` should export `CustomExtension`.
-  - `remirror-preset-new-rules` should export `NewRulesExtension`.
+  - `remirror-preset-custom` should export `CustomPreset`.
+  - `remirror-preset-new-rules` should export `NewRulesPreset`.
 - Presets that only support a specific framework should use the pattern
   `remirror-preset-[FRAMEWORK]-[NAME].
-  - `remirror-preset-react-toggle-button` and exports `ReactToggleButtonExtension`.
-  - `remirror-preset-angular-split` and exports `AngularSplitExtension`.
-- Presets which take options should export their options interface. The name should replace
-  `Extension` from the exported preset class with `Options`.
+  - `remirror-preset-react-toggle-button` and exports `ReactToggleButtonPreset`.
+  - `remirror-preset-angular-split` and exports `AngularSplitPreset`.
+- Presets which take options should export their options interface. The name should replace `Preset`
+  from the exported preset class with `Options`.
   - `remirror-preset-awesome` becomes `AwesomeOptions`.
 - Presets which also export extensions should follow the naming conventions highlighted in the
   extension section.
