@@ -345,7 +345,6 @@ importers:
       '@testing-library/react': 10.4.3_react-dom@16.13.1+react@16.13.1
       '@types/react': 16.9.41
       '@types/react-dom': 16.9.8
-      '@types/testing-library__react': 10.2.0_react-dom@16.13.1+react@16.13.1
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
     specifiers:
@@ -356,7 +355,6 @@ importers:
       '@types/prosemirror-dev-tools': ^2.1.0
       '@types/react': ^16.9.41
       '@types/react-dom': ^16.9.8
-      '@types/testing-library__react': ^10.2.0
       prosemirror-dev-tools: ^3.0.1
       react: ^16.13.1
       react-dom: ^16.13.1
@@ -396,7 +394,6 @@ importers:
       '@testing-library/react': 10.4.3_react-dom@16.13.1+react@16.13.1
       '@types/react': 16.9.41
       '@types/react-dom': 16.9.8
-      '@types/testing-library__react': 10.2.0_react-dom@16.13.1+react@16.13.1
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
     specifiers:
@@ -415,7 +412,6 @@ importers:
       '@types/classnames': ^2.2.10
       '@types/react': ^16.9.41
       '@types/react-dom': ^16.9.8
-      '@types/testing-library__react': ^10.2.0
       classnames: ^2.2.6
       linaria: ^1.4.0-beta.10
       multishift: ^0.7.7
@@ -1025,7 +1021,6 @@ importers:
       '@types/react': 16.9.41
       '@types/react-dom': 16.9.8
       '@types/react-test-renderer': 16.9.2
-      '@types/testing-library__react': 10.2.0_react-dom@16.13.1+react@16.13.1
       '@types/testing-library__react-hooks': 3.2.0
       jest-axe: 3.4.0
       react: 16.13.1
@@ -1047,7 +1042,6 @@ importers:
       '@types/react': ^16.9.41
       '@types/react-dom': ^16.9.8
       '@types/react-test-renderer': ^16.9.2
-      '@types/testing-library__react': ^10.2.0
       '@types/testing-library__react-hooks': ^3.2.0
       '@types/use-deep-compare-effect': ^1.2.0
       hoist-non-react-statics: ^3.3.2
@@ -1466,7 +1460,6 @@ importers:
       '@types/react-dom': 16.9.8
       '@types/sanitize-html': 1.23.2
       '@types/testing-library__dom': 7.5.0
-      '@types/testing-library__react': 10.2.0_react-dom@16.13.1+react@16.13.1
       jest-prosemirror: 'link:../jest-prosemirror'
       jest-snapshot: 26.1.0
       mutationobserver-shim: 0.3.7
@@ -1484,7 +1477,6 @@ importers:
       '@types/react-dom': ^16.9.8
       '@types/sanitize-html': ^1.23.2
       '@types/testing-library__dom': ^7.5.0
-      '@types/testing-library__react': ^10.2.0
       jest-prosemirror: ^0.8.3
       jest-snapshot: ^26.1.0
       mutationobserver-shim: ^0.3.7
@@ -1512,7 +1504,6 @@ importers:
     devDependencies:
       '@testing-library/react': 10.4.3_react@16.13.1
       '@types/react': 16.9.41
-      '@types/testing-library__react': 10.2.0_react@16.13.1
       react: 16.13.1
     specifiers:
       '@babel/runtime': ^7.10.3
@@ -1528,7 +1519,6 @@ importers:
       '@seznam/compose-react-refs': ^1.0.4
       '@testing-library/react': ^10.4.3
       '@types/react': ^16.9.41
-      '@types/testing-library__react': ^10.2.0
       a11y-status: ^0.0.0
       compute-scroll-into-view: ^1.0.14
       react: ^16.13.1
@@ -7802,25 +7792,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-dE8iMTuR5lzB+MqnxlzORlXzXyCL0EKfzH0w/lau20OpkHD37EaWjZDz0iNG8b71iEtxT4XKGmSKAGVEqk46mw==
-  /@types/testing-library__react/10.2.0_react-dom@16.13.1+react@16.13.1:
-    dependencies:
-      '@testing-library/react': 10.4.3_react-dom@16.13.1+react@16.13.1
-    deprecated: 'This is a stub types definition. testing-library__react provides its own type definitions, so you do not need this installed.'
-    peerDependencies:
-      react: '*'
-      react-dom: '*'
-    resolution:
-      integrity: sha512-KbU7qVfEwml8G5KFxM+xEfentAAVj/SOQSjW0+HqzjPE0cXpt0IpSamfX4jGYCImznDHgQcfXBPajS7HjLZduw==
-  /@types/testing-library__react/10.2.0_react@16.13.1:
-    dependencies:
-      '@testing-library/react': 10.4.3_react@16.13.1
-    deprecated: 'This is a stub types definition. testing-library__react provides its own type definitions, so you do not need this installed.'
-    dev: true
-    peerDependencies:
-      react: '*'
-      react-dom: '*'
-    resolution:
-      integrity: sha512-KbU7qVfEwml8G5KFxM+xEfentAAVj/SOQSjW0+HqzjPE0cXpt0IpSamfX4jGYCImznDHgQcfXBPajS7HjLZduw==
   /@types/theme-ui/0.3.4:
     dependencies:
       '@emotion/serialize': 0.11.16
