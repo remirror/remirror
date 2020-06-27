@@ -33,7 +33,7 @@ module.exports = {
   ],
   plugins: [
     'macros',
-    '@babel/plugin-transform-runtime',
+    ['@babel/plugin-transform-runtime', {}, 'name-added-to-prevent-duplicate-with-linaria-plugin'],
     '@babel/plugin-proposal-object-rest-spread',
     '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-proposal-nullish-coalescing-operator',

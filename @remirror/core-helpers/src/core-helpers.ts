@@ -896,26 +896,26 @@ export function sort<Type>(array: Type[], compareFn: (a: Type, b: Type) => numbe
  */
 export function get<Return = any>(
   path: string | Array<string | number>,
-  object_: any,
+  obj: any,
   fallback?: any,
 ): Return {
   if (!path || isEmptyArray(path)) {
-    return isUndefined(object_) ? fallback : object_;
+    return isUndefined(obj) ? fallback : obj;
   }
 
   if (isString(path)) {
     path = path.split('.');
   }
 
-  for (let ii = 0, length_ = path.length; ii < length_ && object_; ++ii) {
-    if (!isPlainObject(object_) && !isArray(object_)) {
+  for (let ii = 0, length_ = path.length; ii < length_ && obj; ++ii) {
+    if (!isPlainObject(obj) && !isArray(obj)) {
       return fallback;
     }
 
-    object_ = (object_ as any)[path[ii]];
+    obj = (obj as any)[path[ii]];
   }
 
-  return isUndefined(object_) ? fallback : object_;
+  return isUndefined(obj) ? fallback : obj;
 }
 
 function makeFunctionForUniqueBy<Item = any, Key = any>(value: string | Array<string | number>) {

@@ -159,3 +159,9 @@ export const I18nProvider = (props: I18nProviderProps) => {
 };
 
 I18nProvider.$$remirrorType = RemirrorType.I18nProvider;
+
+// export interface RemirrorThemeProviderProps {
+//   theme:
+// }
+
+// export const RemirrorThemeProvider = (props: RemirrorThemeProviderProps)

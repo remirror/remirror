@@ -500,7 +500,7 @@ const defaultOptions: BaseExtensionOptions = {
 } as BaseExtensionOptions;
 
 /**
- * Set the value for a key of the default settings.
+ * Mutate the default extension options.
  *
  * @remarks
  *

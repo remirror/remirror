@@ -182,6 +182,7 @@
     "@babel/plugin-proposal-private-methods": "^7.10.1",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.10.3",
+    "@babel/plugin-transform-template-literals": "^7.10.3",
     "@babel/plugin-transform-typescript": "^7.10.3",
     "@babel/preset-env": "^7.10.3",
     "@babel/preset-react": "^7.10.1",
