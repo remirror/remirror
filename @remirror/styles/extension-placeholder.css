@@ -1,6 +1,7 @@
 /**
  * Styles extracted from: @remirror/extension-placeholder/src/placeholder-extension.ts
  */
+
 .remirror-is-empty:first-of-type::before {
   position: absolute;
   color: #aaa;

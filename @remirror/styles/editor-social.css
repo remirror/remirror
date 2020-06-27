@@ -10,12 +10,15 @@
   white-space: nowrap;
   color: white;
 }
+
 .remirror-emoji-suggestions-item.hovered {
   background-color: hsl(205, 5%, 90%);
 }
+
 .remirror-emoji-suggestions-item.highlighted {
   background-color: hsl(205, 5%, 80%);
 }
+
 .remirror-emoji-suggestions-dropdown-wrapper {
   position: absolute;
   width: -webkit-max-content;
@@ -31,23 +34,12 @@
   max-height: 250px;
   overflow-y: scroll;
 }
+
 .remirror-mention-suggestions-dropdown-wrapper {
-  -webkit-align-items: stretch;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
   align-items: stretch;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
   flex-direction: column;
-  -webkit-flex-basis: auto;
-  -ms-flex-preferred-size: auto;
   flex-basis: auto;
-  -webkit-flex-shrink: 0px;
-  -ms-flex-negative: 0px;
   flex-shrink: 0px;
   margin: 4px;
   overflow: hidden;
@@ -55,56 +47,56 @@
   padding: 0px;
   box-shadow: hsla(205, 70%, 15%, 0.25) 0 4px 8px, hsla(205, 70%, 15%, 0.31) 0px 0px 1px;
   background-color: white;
-  border-border-bottom-left-radius: 8px;
-  border-border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
+
 .remirror-mention-suggestions-item {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
   flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   border-bottom: 1px solid rgb(230, 236, 240);
   padding: 7px 15px 6px 10px;
   font-size: 14px;
   color: white;
 }
+
 .remirror-mention-suggestions-item.highlighted {
   background-color: #e8f5fd;
 }
+
 .remirror-mention-suggestions-item:hover {
   background-color: #e8f5fd;
 }
+
 .remirror-mention-suggestions-item:hover span {
   color: #1da1f2;
 }
+
 .remirror-mention-suggestions-user-item-image {
   width: 32px;
   height: 32px;
   margin-right: 10px;
   border-radius: 50%;
 }
+
 .remirror-mention-suggestions-user-item-display-name {
   margin-right: 5px;
   color: #14171a;
   word-break: break-all;
   font-weight: bold;
 }
+
 .remirror-mention-suggestions-user-item-username {
   color: #657786;
 }
+
 .remirror-mention-suggestions-tag-item-tag {
   font-weight: bold;
   color: #66757f;
 }
+
 .remirror-mention-suggestions-tag-item-tag:hover {
-  -webkit-text-decoration: underline;
   text-decoration: underline;
   color: #1da1f2;
 }
@@ -117,31 +109,23 @@
   bottom: 0px;
   right: 0px;
   margin: 0 8px 10px 4px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
   justify-content: flex-end;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
 }
+
 .remirror-character-count-circle-background {
   stroke: #ccd6dd;
   fill: none;
 }
+
 .remirror-character-count-circle {
   fill: none;
 }
+
 .remirror-character-count-circle-wrapper {
   margin-bottom: -4px;
   overflow: visible;
-  -webkit-transform: rotate(-90deg);
-  -ms-transform: rotate(-90deg);
   transform: rotate(-90deg);
 }
 
@@ -151,6 +135,7 @@
 .remirror-emoji-suggestions-item-name {
   color: rgb(121, 129, 134);
 }
+
 .remirror-emoji-suggestions-item-char {
   font-size: 1.25em;
   padding-right: 5px;
@@ -160,16 +145,8 @@
  * Styles extracted from: @remirror/editor-social/src/components/social-editor.tsx
  */
 .remirror-social-editor .ProseMirror {
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
   flex-grow: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
   flex-direction: column;
   overflow-y: scroll;
   box-sizing: border-box;
@@ -188,20 +165,19 @@
   padding: 8px;
   padding-right: 40px;
 }
+
 .remirror-social-editor .ProseMirror p {
   margin: 0px;
-  -webkit-letter-spacing: 0.6px;
-  -moz-letter-spacing: 0.6px;
-  -ms-letter-spacing: 0.6px;
   letter-spacing: 0.6px;
   color: text;
 }
+
 .remirror-social-editor .ProseMirror a.mention {
   pointer-events: none;
   cursor: default;
 }
+
 .remirror-social-editor .ProseMirror a {
-  -webkit-text-decoration: none !important;
   text-decoration: none !important;
   color: #1da1f2;
 }
@@ -210,8 +186,9 @@
   box-shadow: focus;
 }
 .remirror-social-editor .ProseMirror .Prosemirror-selectednode {
-  background-color: $oc-gray-1;
+  background-color: grey;
 }
+
 .remirror-social-editor-wrapper {
   position: relative;
   height: 100%;

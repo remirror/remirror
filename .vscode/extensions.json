@@ -2,6 +2,7 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "vsls-contrib.codetour"
+    "vsls-contrib.codetour",
+    "stylelint.vscode-stylelint"
   ]
 }

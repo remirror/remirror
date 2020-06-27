@@ -8,6 +8,9 @@ const groupBy = require('lodash.groupby');
 const chalk = require('chalk');
 const { baseDir } = require('./helpers');
 const prettier = require('prettier');
+const autoprefixer = require('autoprefixer');
+const postcss = require('postcss');
+const precss = require('precss');
 
 /**
  * @param {string[]} paths
@@ -25,6 +28,10 @@ const files = globby.sync(['@remirror/*/src/**/*.{ts,tsx}'], {
     '*.d.ts',
   ],
 });
+
+/**
+ * Place all styles into the styles package.
+ */
 const outputDirectory = baseDir('@remirror/styles');
 
 /**
@@ -48,7 +55,10 @@ const groupedFiles = groupBy(files, (file) => {
 /** The `TS` files to check grouped by their package name */
 const groupedFileEntries = Object.entries(groupedFiles);
 
-/** @type string[] */
+/**
+ * All the styles grouped together.
+ * @type string[]
+ */
 const all = [];
 
 /** @type Record<string, string> */
@@ -66,6 +76,16 @@ async function addToOutput(name, contents) {
 }
 
 /**
+ * @param {string} css - the untransformed css text
+ * @param {string?} [from] - the path being transformed
+ * @param {string?} [to] - the output path for the transformation
+ */
+async function processCss(css, from, to) {
+  const result = await postcss([precss, autoprefixer]).process(css, { from, to });
+  return result.css;
+}
+
+/**
  * @param {string} name
  * @param {string[]} paths
  */
@@ -76,15 +96,17 @@ async function transformFilePaths(name, paths) {
 
   for (const filename of paths) {
     const fileContents = await fs.readFile(filename);
-    const { cssText } = transform(fileContents.toString(), {
+    const { cssText: rawCssText } = transform(fileContents.toString(), {
       filename,
       outputFilename,
-      preprocessor: 'stylis',
+      preprocessor: 'none',
     });
 
-    if (!cssText) {
+    if (!rawCssText) {
       continue;
     }
+
+    const cssText = await processCss(rawCssText);
 
     css.push(`/**\n * Styles extracted from: ${filename}\n */\n${cssText}`);
   }

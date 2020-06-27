@@ -43,8 +43,8 @@ export const mentionSuggestionsDropdownWrapperStyles = css`
   padding: 0px;
   box-shadow: hsla(205, 70%, 15%, 0.25) 0 4px 8px, hsla(205, 70%, 15%, 0.31) 0px 0px 1px;
   background-color: white;
-  border-border-bottom-left-radius: 8px;
-  border-border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 `;
 
 export const mentionSuggestionsItemStyles = css`

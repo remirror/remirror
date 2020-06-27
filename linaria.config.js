@@ -5,7 +5,7 @@ const { kebabCase } = require('case-anything');
 const config = {
   displayName: true,
   classNameSlug: (_hash, title) => {
-    return `remirror-${kebabCase(title.replace('Styles', ''))}`;
+    return `remirror-${kebabCase(title.replace(/Styles?/g, ''))}`;
   },
   babelOptions,
 };

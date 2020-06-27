@@ -46,7 +46,7 @@
     "is-logged-in": "npm whoami",
     "lint": "run-s lint:*",
     "lint:build": "preconstruct validate",
-    "lint:css": "stylelint **/*.ts **/.*.tsx",
+    "lint:css": "stylelint \"{@remirror,packages,docs,examples}/**/*.{ts,tsx}\"",
     "lint:es": "eslint -f github --ext=.tsx,.ts,.js .",
     "lint:prettier": "pnpm run run:prettier \"!**/CHANGELOG.md\" -- --check",
     "lint:repo": "manypkg check # off until package name for entry point works",

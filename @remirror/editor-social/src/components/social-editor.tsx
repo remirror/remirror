@@ -115,7 +115,7 @@ export const socialEditorStyles = css`
     }
 
     .Prosemirror-selectednode {
-      background-color: $oc-gray-1;
+      background-color: grey;
     }
   }
 `;

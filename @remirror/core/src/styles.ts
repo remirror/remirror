@@ -6,7 +6,6 @@ export const editorStyles = css`
     word-wrap: break-word;
     white-space: pre-wrap;
     white-space: break-spaces;
-    -webkit-font-variant-ligatures: none;
     font-variant-ligatures: none;
     font-feature-settings: 'liga' 0;
 

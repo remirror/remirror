@@ -104,13 +104,6 @@ const onCreateWebpackConfig = (parameter) => {
       exclude: (modulePath) =>
         /node_modules/.test(modulePath) && !/node_modules\/(@?remirror)/.test(modulePath),
     },
-    {
-      test: /\.tsx?$/,
-      loader: require.resolve('linaria/loader'),
-      options: {
-        sourceMap: process.env.NODE_ENV !== 'production',
-      },
-    },
   ];
 
   actions.replaceWebpackConfig(config);
