@@ -1031,6 +1031,24 @@ importers:
       '@types/react': ^16.9.41
       linaria: ^2.0.0-alpha.5
       react: ^16.13.1
+  '@remirror/preset-social':
+    dependencies:
+      '@babel/runtime': 7.10.3
+      '@remirror/extension-auto-link': 'link:../extension-auto-link'
+      '@remirror/extension-emoji': 'link:../extension-emoji'
+      '@remirror/extension-mention': 'link:../extension-mention'
+      type-fest: 0.16.0
+    devDependencies:
+      '@remirror/core': 'link:../core'
+      '@remirror/pm': 'link:../pm'
+    specifiers:
+      '@babel/runtime': ^7.10.3
+      '@remirror/core': ^0.11.0
+      '@remirror/extension-auto-link': ^0.0.0
+      '@remirror/extension-emoji': ^0.11.0
+      '@remirror/extension-mention': ^0.11.1
+      '@remirror/pm': ^0.0.0
+      type-fest: ^0.16.0
   '@remirror/preset-table':
     dependencies:
       '@babel/runtime': 7.10.3
@@ -1714,6 +1732,7 @@ importers:
       '@remirror/preset-embed': 'link:../../@remirror/preset-embed'
       '@remirror/preset-list': 'link:../../@remirror/preset-list'
       '@remirror/preset-react': 'link:../../@remirror/preset-react'
+      '@remirror/preset-social': 'link:../../@remirror/preset-social'
       '@remirror/preset-table': 'link:../../@remirror/preset-table'
       '@remirror/preset-wysiwyg': 'link:../../@remirror/preset-wysiwyg'
       '@remirror/react': 'link:../../@remirror/react'
@@ -1773,6 +1792,7 @@ importers:
       '@remirror/preset-embed': ^0.0.0
       '@remirror/preset-list': ^0.0.0
       '@remirror/preset-react': ^0.0.0
+      '@remirror/preset-social': ^0.0.0
       '@remirror/preset-table': ^0.0.0
       '@remirror/preset-wysiwyg': ^0.0.0
       '@remirror/react': ^0.13.1

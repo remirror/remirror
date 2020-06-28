@@ -1,0 +1,44 @@
+{
+  "name": "@remirror/preset-social",
+  "version": "0.0.0",
+  "description": "The preset for the social editor.",
+  "keywords": [
+    "remirror",
+    "preset",
+    "text-editor"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/preset-social",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/preset-social",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/preset-social.cjs.js",
+  "module": "dist/preset-social.esm.js",
+  "types": "dist/preset-social.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.10.3",
+    "@remirror/extension-auto-link": "^0.0.0",
+    "@remirror/extension-emoji": "^0.11.0",
+    "@remirror/extension-mention": "^0.11.1",
+    "type-fest": "^0.16.0"
+  },
+  "devDependencies": {
+    "@remirror/core": "^0.11.0",
+    "@remirror/pm": "^0.0.0"
+  },
+  "peerDependencies": {
+    "@remirror/core": "^0.11.0",
+    "@remirror/pm": "^0.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "10 KB"
+  }
+}

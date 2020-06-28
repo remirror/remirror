@@ -52,6 +52,7 @@
     "@remirror/preset-embed": "0.0.0",
     "@remirror/preset-list": "0.0.0",
     "@remirror/preset-react": "0.0.0",
+    "@remirror/preset-social": "0.0.0",
     "@remirror/preset-table": "0.0.0",
     "@remirror/preset-wysiwyg": "0.0.0",
     "@remirror/react": "0.13.1",
