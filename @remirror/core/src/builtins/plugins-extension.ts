@@ -154,10 +154,6 @@ export class PluginsExtension extends PlainExtension {
   };
 
   /**
-   * Ensure that all ssr transformers are run.
-   */
-
-  /**
    * Add the plugin specific properties and methods to the manager and extension store.
    */
   private updateExtensionStore() {
@@ -168,6 +164,7 @@ export class PluginsExtension extends PlainExtension {
     // Allow adding, replacing and removing plugins by other extensions.
     setExtensionStore('addPlugins', this.addPlugins);
     setExtensionStore('replacePlugin', this.replacePlugin);
+    setExtensionStore('addOrReplacePlugins', this.addOrReplacePlugins);
     setExtensionStore('updateExtensionPlugins', this.updateExtensionPlugins);
     setExtensionStore('reconfigureStatePlugins', this.reconfigureStatePlugins);
   }
@@ -271,6 +268,18 @@ declare global {
        * ```
        */
       addPlugins: (...plugins: ProsemirrorPlugin[]) => void;
+
+      /**
+       * Replace the previous plugins with new plugins.
+       *
+       * ```ts
+       * this.store.addOrReplacePlugins(this.createExternalPlugins(), this.externalPlugins);
+       * ```
+       */
+      addOrReplacePlugins: (
+        plugins: ProsemirrorPlugin[],
+        previousPlugins?: ProsemirrorPlugin[],
+      ) => void;
 
       /**
        * Reruns the `createPlugin` and `createExternalPlugins` methods of the

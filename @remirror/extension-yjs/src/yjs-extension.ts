@@ -4,10 +4,13 @@ import { WebrtcProvider } from 'y-webrtc';
 import { Doc } from 'yjs';
 
 import {
+  CommandFunction,
   convertCommand,
   DefaultExtensionOptions,
   ExtensionPriority,
   isFunction,
+  nonChainable,
+  OnSetOptionsParameter,
   PlainExtension,
   Static,
 } from '@remirror/core';
@@ -39,11 +42,10 @@ export interface YjsOptions<Provider extends YjsRealtimeProvider = YjsRealtimePr
 }
 
 /**
- * An extension for the remirror editor. CHANGE ME.
+ * The YJS extension is the recommended extension for creating a collaborative
+ * editor.
  */
-export class YjsExtension<
-  Provider extends YjsRealtimeProvider = YjsRealtimeProvider
-> extends PlainExtension<YjsOptions<Provider>> {
+export class YjsExtension extends PlainExtension<YjsOptions> {
   static readonly defaultPriority = ExtensionPriority.High;
   static readonly defaultOptions: DefaultExtensionOptions<YjsOptions> = {
     // TODO remove y-webrtc dependency and this default option.
@@ -62,12 +64,12 @@ export class YjsExtension<
     return 'yjs' as const;
   }
 
-  #provider?: Provider;
+  #provider?: YjsRealtimeProvider;
 
   /**
    * The provider that is being used for the editor.
    */
-  get provider(): Provider {
+  get provider(): YjsRealtimeProvider {
     const { getProvider } = this.options;
 
     if (!this.#provider) {
@@ -97,6 +99,35 @@ export class YjsExtension<
     return [ySyncPlugin(type), yCursorPlugin(this.provider.awareness), yUndoPlugin()];
   };
 
+  createCommands = () => {
+    return {
+      /**
+       * Undo within a collaborative editor.
+       */
+      yUndo: (): CommandFunction => nonChainable(convertCommand(undo)),
+
+      /**
+       * Redo, within a collaborative editor.
+       */
+      yRedo: (): CommandFunction => nonChainable(convertCommand(redo)),
+    };
+  };
+
+  /**
+   * This managers the updates of the collaboration provider.
+   */
+  onSetOptions(parameter: OnSetOptionsParameter<YjsOptions>) {
+    const { changes } = parameter;
+
+    if (changes.getProvider.changed) {
+      const previousPlugins = this.externalPlugins;
+      const newPlugins = (this.externalPlugins = this.createExternalPlugins());
+
+      this.store.addOrReplacePlugins(newPlugins, previousPlugins);
+      this.store.reconfigureStatePlugins();
+    }
+  }
+
   /**
    * Remove the provider from the manager.
    */
@@ -111,9 +142,9 @@ export class YjsExtension<
 
 /**
  * @remarks
- * This magic property is transformed by babel via linaria into CSS that will
- * be wrapped by the `.remirror-editor` class; when you edit it you must run
- * `yarn fix:css` to regenerate `@remirror/styles/all.css`.
+ * This magic property is transformed by babel via linaria into CSS that will be
+ * wrapped by the `.remirror-editor` class; when you edit it you must run `yarn
+ * fix:css` to regenerate `@remirror/styles/all.css`.
  */
 export const editorStyles = css`
   placeholder {
@@ -130,7 +161,8 @@ export const editorStyles = css`
   .ProseMirror img {
     max-width: 100px;
   }
-  /* this is a rough fix for the first cursor position when the first paragraph is empty */
+  /* this is a rough fix for the first cursor position when the first paragraph
+  is empty */
   .ProseMirror > .ProseMirror-yjs-cursor:first-child {
     margin-top: 16px;
   }
