@@ -4,5 +4,6 @@ module.exports = {
   ...config,
   displayName: {
     name: require('./package.json').name.replace('@remirror/', ''),
+    color: 'pink',
   },
 };
