@@ -62,7 +62,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
       ],
       toDOM: (node) => [
         'a',
-        { ...node.attrs, ...extra.dom(node), rel: 'noopener noreferrer nofollow' },
+        { ...extra.dom(node), ...node.attrs, rel: 'noopener noreferrer nofollow' },
         0,
       ],
     };
