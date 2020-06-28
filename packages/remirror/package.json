@@ -29,7 +29,8 @@
     "theme",
     "extension",
     "preset",
-    "react"
+    "react",
+    "styles"
   ],
   "dependencies": {
     "@babel/runtime": "^7.10.3",
@@ -80,6 +81,7 @@
     "@remirror/preset-table": "^0.0.0",
     "@remirror/react": "^0.13.1",
     "@remirror/react-utils": "^0.7.6",
+    "@remirror/styles": "^0.0.0",
     "@remirror/theme": "^0.0.0"
   },
   "devDependencies": {

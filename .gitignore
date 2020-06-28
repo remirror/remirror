@@ -80,10 +80,12 @@ jspm_packages/
 .DS_Store
 # End of https://www.gitignore.io/api/Node
 
+# Build files
 dist
 @remirror/**/lib
 deprecated/**/lib
 packages/**/lib
+packages/remirror/styles
 
 # We are using pnpm
 .yarn/

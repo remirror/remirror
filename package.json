@@ -7,6 +7,7 @@
     "audit": "pnpm audit --audit-level high",
     "browser:coverage": "browserslist --coverage",
     "build": "preconstruct build",
+    "postbuild": "cpy @remirror/styles/*.css packages/remirror/styles/",
     "build:custom": "pnpm recursive run build:custom",
     "build:docs": "cd docs && pnpm run build",
     "changeset": "changeset",
