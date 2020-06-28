@@ -31,7 +31,7 @@ export type RemirrorAtomType = DeepPartial<Remirror.Atom>;
  * Get the remirror variable from the keys to access it in the them object.
  */
 function getCustomPropertyName(keys: string[]) {
-  return `--rmr-${keys.map(kebabCase).join('-')}`;
+  return `--remirror-${keys.map(kebabCase).join('-')}`;
 }
 
 /**
