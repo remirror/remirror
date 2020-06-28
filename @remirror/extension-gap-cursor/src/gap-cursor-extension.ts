@@ -1,8 +1,6 @@
 import { isInstanceOf, PlainExtension } from '@remirror/core';
 import { GapCursor, gapCursor } from '@remirror/pm/gapcursor';
 
-export interface GapCursorOptions {}
-
 /**
  * Create a gap cursor plugin.
  *
@@ -19,7 +17,7 @@ export interface GapCursorOptions {}
  * import '@remirror/styles/extension-gap-cursor.css';
  * ```
  */
-export class GapCursorExtension extends PlainExtension<GapCursorOptions> {
+export class GapCursorExtension extends PlainExtension {
   get name() {
     return 'gapCursor' as const;
   }

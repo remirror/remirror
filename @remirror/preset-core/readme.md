@@ -50,8 +50,8 @@ manager.addView(element);
 // You now have a basic working editor.
 ```
 
-Granted, the above won't do much. It will allow you to type, and what else do you really need in an
-editor.
+Granted, the above won't do much. It will allow you to type, and what else do you really need from
+an editor.
 
 ## Credits
 

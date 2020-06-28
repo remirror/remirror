@@ -46,8 +46,7 @@ export class CorePreset extends Preset<CorePresetOptions> {
   protected onSetOptions(parameter: OnSetOptionsParameter<CorePresetOptions>) {
     const { pickChanged } = parameter;
 
-    const baseKeymapExtension = this.getExtension(BaseKeymapExtension);
-    baseKeymapExtension.setOptions(
+    this.getExtension(BaseKeymapExtension).setOptions(
       pickChanged([
         'defaultBindingMethod',
         'selectParentNodeOnEscape',
@@ -56,8 +55,9 @@ export class CorePreset extends Preset<CorePresetOptions> {
       ]),
     );
 
-    const paragraphExtension = this.getExtension(ParagraphExtension);
-    paragraphExtension.setOptions(pickChanged(['indentAttribute', 'indentLevels']));
+    this.getExtension(ParagraphExtension).setOptions(
+      pickChanged(['indentAttribute', 'indentLevels']),
+    );
   }
 
   protected onAddCustomHandler: AddCustomHandler<CorePresetOptions> = (parameter) => {
