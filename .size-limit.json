@@ -344,6 +344,13 @@
     "running": false
   },
   {
+    "name": "@remirror/theme",
+    "path": "@remirror/theme/dist/theme.esm.js",
+    "limit": "5 KB",
+    "ignore": [],
+    "running": false
+  },
+  {
     "name": "a11y-status",
     "path": "packages/a11y-status/dist/a11y-status.esm.js",
     "limit": "1 KB",

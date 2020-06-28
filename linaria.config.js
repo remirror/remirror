@@ -1,4 +1,3 @@
-const babelOptions = process.env.NODE_ENV === 'test' ? require('./babel.config') : undefined;
 const { kebabCase } = require('case-anything');
 
 /**
@@ -9,7 +8,17 @@ const config = {
   classNameSlug: (_hash, title) => {
     return `remirror-${kebabCase(title.replace(/Styles?/g, ''))}`;
   },
-  babelOptions,
+  babelOptions: require('./support/babel/base.babel'),
+  rules: [
+    {
+      action: require('linaria/evaluators').shaker,
+    },
+    {
+      action: 'ignore',
+      test: (modulePath) =>
+        /node_modules/.test(modulePath) && !/node_modules\/(@?remirror)/.test(modulePath),
+    },
+  ],
 };
 
 module.exports = config;

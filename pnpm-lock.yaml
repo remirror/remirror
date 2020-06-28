@@ -31,7 +31,6 @@ importers:
       '@types/jest': 26.0.3
       '@types/jest-axe': 3.2.2
       '@types/node': 14.0.14
-      '@types/testing-library__dom': 7.5.0
       '@types/testing-library__jest-dom': 5.9.1
       '@types/webpack': 4.41.18
       '@typescript-eslint/eslint-plugin': 3.4.0_15ebbbb8363c75064fc079244e83c2c7
@@ -116,7 +115,6 @@ importers:
       '@types/jest': ^26.0.3
       '@types/jest-axe': ^3.2.2
       '@types/node': ^14.0.14
-      '@types/testing-library__dom': ^7.5.0
       '@types/testing-library__jest-dom': ^5.9.1
       '@types/webpack': ^4.41.18
       '@typescript-eslint/eslint-plugin': ^3.4.0
@@ -251,10 +249,8 @@ importers:
       '@remirror/core-helpers': 'link:../core-helpers'
       '@remirror/core-types': 'link:../core-types'
       '@remirror/core-utils': 'link:../core-utils'
-      case-anything: 1.1.1
       linaria: 2.0.0-alpha.5
       nanoevents: 5.1.8
-      open-color: 1.7.0
       type-fest: 0.15.1
     devDependencies:
       '@remirror/pm': 'link:../pm'
@@ -265,10 +261,8 @@ importers:
       '@remirror/core-types': ^0.9.0
       '@remirror/core-utils': ^0.8.0
       '@remirror/pm': ^0.0.0
-      case-anything: ^1.1.1
       linaria: ^2.0.0-alpha.5
       nanoevents: ^5.1.8
-      open-color: ^1.7.0
       type-fest: ^0.15.1
   '@remirror/core-constants':
     dependencies:
@@ -1163,6 +1157,21 @@ importers:
       jest-diff: ^26.1.0
       min-document: ^2.19.0
       react: ^16.13.1
+  '@remirror/theme':
+    dependencies:
+      '@babel/runtime': 7.10.3
+      '@remirror/core-types': 'link:../core-types'
+      case-anything: 1.1.1
+      linaria: 2.0.0-alpha.5
+      open-color: 1.7.0
+      type-fest: 0.15.1
+    specifiers:
+      '@babel/runtime': ^7.10.3
+      '@remirror/core-types': ^0.9.0
+      case-anything: ^1.1.1
+      linaria: ^2.0.0-alpha.5
+      open-color: ^1.7.0
+      type-fest: ^0.15.1
   deprecated/core-extensions:
     specifiers: {}
   deprecated/editor-markdown:
@@ -1467,7 +1476,6 @@ importers:
       '@types/react': 16.9.41
       '@types/react-dom': 16.9.8
       '@types/sanitize-html': 1.23.2
-      '@types/testing-library__dom': 7.5.0
       jest-prosemirror: 'link:../jest-prosemirror'
       jest-snapshot: 26.1.0
       mutationobserver-shim: 0.3.7
@@ -1484,7 +1492,6 @@ importers:
       '@types/react': ^16.9.41
       '@types/react-dom': ^16.9.8
       '@types/sanitize-html': ^1.23.2
-      '@types/testing-library__dom': ^7.5.0
       jest-prosemirror: ^0.8.3
       jest-snapshot: ^26.1.0
       mutationobserver-shim: ^0.3.7
@@ -1614,6 +1621,7 @@ importers:
       '@remirror/preset-table': 'link:../../@remirror/preset-table'
       '@remirror/react': 'link:../../@remirror/react'
       '@remirror/react-utils': 'link:../../@remirror/react-utils'
+      '@remirror/theme': 'link:../../@remirror/theme'
     devDependencies:
       '@remirror/pm': 'link:../../@remirror/pm'
       '@types/react': 16.9.41
@@ -1670,6 +1678,7 @@ importers:
       '@remirror/preset-table': ^0.0.0
       '@remirror/react': ^0.13.1
       '@remirror/react-utils': ^0.7.6
+      '@remirror/theme': ^0.0.0
       '@types/react': ^16.9.41
       '@types/react-dom': ^16.9.8
       react: ^16.13.1
@@ -7780,13 +7789,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-W+bw9ds02rAQaMvaLYxAbJ6cvguW/iJXNT6lTssS1ps6QdrMKttqEAMEG/b5CR8TZl3/L7/lH0ZV5nNR1LXikA==
-  /@types/testing-library__dom/7.5.0:
-    dependencies:
-      '@testing-library/dom': 7.18.1
-    deprecated: 'This is a stub types definition. testing-library__dom provides its own type definitions, so you do not need this installed.'
-    dev: false
-    resolution:
-      integrity: sha512-mj1aH4cj3XUpMEgVpognma5kHVtbm6U6cHZmEFzCRiXPvKkuHrFr3+yXdGLXvfFRBaQIVshPGHI+hGTOJlhS/g==
   /@types/testing-library__jest-dom/5.9.1:
     dependencies:
       '@types/jest': 26.0.0

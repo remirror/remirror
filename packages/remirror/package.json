@@ -26,6 +26,7 @@
     "dist",
     "dom",
     "editor",
+    "theme",
     "extension",
     "preset",
     "react"
@@ -78,7 +79,8 @@
     "@remirror/preset-react": "^0.0.0",
     "@remirror/preset-table": "^0.0.0",
     "@remirror/react": "^0.13.1",
-    "@remirror/react-utils": "^0.7.6"
+    "@remirror/react-utils": "^0.7.6",
+    "@remirror/theme": "^0.0.0"
   },
   "devDependencies": {
     "@remirror/pm": "*",
@@ -160,7 +162,8 @@
       "preset/react",
       "preset/table",
       "react",
-      "react/utils"
+      "react/utils",
+      "theme"
     ]
   }
 }

@@ -478,7 +478,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
     this.#phase = ManagerPhase.EditorView;
 
     // Store the view.
-    this.#store.view = view as EditorView;
+    this.#store.view = view;
 
     for (const handler of this.#handlers.view) {
       handler(this.#extensions as readonly AnyExtension[], view);

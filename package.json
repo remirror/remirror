@@ -123,17 +123,15 @@
     "collectCoverage": true,
     "collectCoverageFrom": [
       "**/*.{ts,tsx}",
-      "!**/*.d.ts"
-    ],
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "\\.d.ts",
-      "/__mocks__/",
-      "/__tests__/",
-      "/__fixtures__/",
-      "/support/",
-      "/examples/",
-      "jest\\.*\\.ts"
+      "!**/*.d.ts",
+      "!**/theme-styles.ts",
+      "!**/styles.ts",
+      "!__mocks__/**",
+      "!__tests__/**",
+      "!__dts__/**",
+      "!__fixtures__/**",
+      "!support/**",
+      "!examples/**"
     ],
     "coverageReporters": [
       "json",
@@ -143,9 +141,7 @@
     ],
     "coverageThreshold": {
       "global": {
-        "functions": 50,
-        "lines": 50,
-        "statements": 50
+        "statements": 60
       }
     },
     "moduleFileExtensions": [
@@ -201,7 +197,6 @@
     "@types/jest": "^26.0.3",
     "@types/jest-axe": "^3.2.2",
     "@types/node": "^14.0.14",
-    "@types/testing-library__dom": "^7.5.0",
     "@types/testing-library__jest-dom": "^5.9.1",
     "@types/webpack": "^4.41.18",
     "@typescript-eslint/eslint-plugin": "^3.4.0",
