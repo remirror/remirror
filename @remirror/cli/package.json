@@ -40,7 +40,7 @@
     "react-use": "^15.3.0",
     "rimraf": "^3.0.2",
     "terminal-link": "^2.1.1",
-    "type-fest": "^0.15.1",
+    "type-fest": "^0.16.0",
     "update-notifier": "^4.1.0",
     "yup": "^0.29.1"
   },

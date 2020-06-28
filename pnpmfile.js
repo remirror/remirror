@@ -11,6 +11,7 @@ function readPackage(pkg) {
   const setDependency = createSetDependency(pkg);
 
   setDependency('graphql', '^14.6.0');
+  setDependency('@types/react', '^16.9.41');
 
   return pkg;
 }

@@ -18,7 +18,7 @@
   "dependencies": {
     "@babel/runtime": "^7.10.3",
     "@remirror/core-constants": "^0.7.4",
-    "type-fest": "^0.15.1"
+    "type-fest": "^0.16.0"
   },
   "devDependencies": {
     "@remirror/pm": "^0.0.0"

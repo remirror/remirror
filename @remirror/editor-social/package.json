@@ -28,7 +28,7 @@
     "classnames": "^2.2.6",
     "linaria": "^2.0.0-alpha.5",
     "multishift": "^0.7.7",
-    "type-fest": "^0.15.1"
+    "type-fest": "^0.16.0"
   },
   "devDependencies": {
     "@lingui/macro": "^3.0.0-13",

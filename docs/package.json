@@ -28,7 +28,6 @@
     "@theme-ui/sidenav": "^0.3.1",
     "@theme-ui/style-guide": "^0.3.0",
     "@theme-ui/typography": "^0.3.0",
-    "@types/webpack": "^4.41.18",
     "copy-text-to-clipboard": "^2.2.0",
     "emotion-theming": "^10.0.27",
     "gatsby": "^2.23.11",
@@ -86,10 +85,11 @@
     "@types/styled-system": "^5.1.9",
     "@types/styled-system__css": "^5.0.11",
     "@types/theme-ui": "^0.3.4",
+    "@types/webpack": "^4.41.18",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "babel-preset-gatsby": "^0.4.12",
     "csstype": "^2.6.10",
     "monaco-editor-webpack-plugin": "^1.9.0",
-    "type-fest": "^0.15.1"
+    "type-fest": "^0.16.0"
   }
 }

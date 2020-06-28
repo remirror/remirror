@@ -29,7 +29,7 @@
     "@babel/runtime": "^7.10.3",
     "@types/refractor": "^2.8.0",
     "refractor": "^3.0.0",
-    "type-fest": "^0.15.1"
+    "type-fest": "^0.16.0"
   },
   "devDependencies": {
     "@remirror/core": "^0.11.0",

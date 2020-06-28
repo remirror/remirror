@@ -26,7 +26,7 @@
     "case-anything": "^1.1.1",
     "linaria": "^2.0.0-alpha.5",
     "open-color": "^1.7.0",
-    "type-fest": "^0.15.1"
+    "type-fest": "^0.16.0"
   },
   "publishConfig": {
     "access": "public"
