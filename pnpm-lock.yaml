@@ -420,6 +420,52 @@ importers:
       react: ^16.13.1
       react-dom: ^16.13.1
       type-fest: ^0.16.0
+  '@remirror/editor-wysiwyg':
+    dependencies:
+      '@babel/runtime': 7.10.3
+      '@lingui/core': 3.0.0-13
+      '@remirror/extension-auto-link': 'link:../extension-auto-link'
+      '@remirror/extension-emoji': 'link:../extension-emoji'
+      '@remirror/extension-mention': 'link:../extension-mention'
+      '@remirror/i18n': 'link:../i18n'
+      '@remirror/react-utils': 'link:../react-utils'
+      '@types/classnames': 2.2.10
+      classnames: 2.2.6
+      linaria: 2.0.0-alpha.5
+      multishift: 'link:../../packages/multishift'
+      type-fest: 0.16.0
+    devDependencies:
+      '@lingui/macro': 3.0.0-13
+      '@remirror/core': 'link:../core'
+      '@remirror/pm': 'link:../pm'
+      '@remirror/react': 'link:../react'
+      '@testing-library/react': 10.4.3_react-dom@16.13.1+react@16.13.1
+      '@types/react': 16.9.41
+      '@types/react-dom': 16.9.8
+      react: 16.13.1
+      react-dom: 16.13.1_react@16.13.1
+    specifiers:
+      '@babel/runtime': ^7.10.3
+      '@lingui/core': ^3.0.0-13
+      '@lingui/macro': ^3.0.0-13
+      '@remirror/core': ^0.11.0
+      '@remirror/extension-auto-link': ^0.0.0
+      '@remirror/extension-emoji': ^0.11.0
+      '@remirror/extension-mention': ^0.11.1
+      '@remirror/i18n': ^0.0.0
+      '@remirror/pm': ^0.0.0
+      '@remirror/react': ^0.13.1
+      '@remirror/react-utils': ^0.7.6
+      '@testing-library/react': ^10.4.3
+      '@types/classnames': ^2.2.10
+      '@types/react': ^16.9.41
+      '@types/react-dom': ^16.9.8
+      classnames: ^2.2.6
+      linaria: ^2.0.0-alpha.5
+      multishift: ^0.7.7
+      react: ^16.13.1
+      react-dom: ^16.13.1
+      type-fest: ^0.16.0
   '@remirror/extension-auto-link':
     dependencies:
       '@babel/runtime': 7.10.3
