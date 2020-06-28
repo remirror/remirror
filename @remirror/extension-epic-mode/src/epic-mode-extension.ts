@@ -1,5 +1,6 @@
 import {
   CreatePluginReturn,
+  DefaultExtensionOptions,
   EditorView,
   PlainExtension,
   randomInt,
@@ -11,7 +12,7 @@ import { EpicModeOptions, Particle } from './epic-mode-types';
 
 export class EpicModeExtension extends PlainExtension<EpicModeOptions> {
   //
-  static readonly defaultProperties: Required<EpicModeOptions> = {
+  static readonly defaultOptions: DefaultExtensionOptions<EpicModeOptions> = {
     particleEffect: defaultEffect,
     getCanvasContainer: () => document.body,
     colors: VIBRANT_COLORS,
