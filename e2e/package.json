@@ -15,17 +15,12 @@
     "@remirror/core": "^0.11.0",
     "@types/wait-on": "^4.0.0",
     "expect-playwright": "^0.2.4",
-    "jest": "^26.0.1",
     "jest-dev-server": "^4.4.0",
     "jest-playwright-preset": "^1.0.0",
     "looks-same": "^7.2.3",
     "playwright": "^1.1.1",
-    "playwright-chromium": "^1.1.1",
     "playwright-core": "^1.1.1",
-    "playwright-firefox": "^1.1.1",
     "playwright-testing-library": "^1.2.1",
-    "playwright-video": "^2.2.0",
-    "playwright-webkit": "^1.1.1",
     "signal-exit": "^3.0.3",
     "test-keyboard": "^0.7.6"
   }
