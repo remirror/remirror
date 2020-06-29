@@ -94,16 +94,16 @@ export class CorePreset extends Preset<CorePresetOptions> {
 
     return [
       new HistoryExtension({ depth, getDispatch, getState, newGroupDelay }),
-      new DocExtension({ content, priority: ExtensionPriority.Low }),
-      new TextExtension({ priority: ExtensionPriority.Low }),
-      new ParagraphExtension({ priority: ExtensionPriority.Low, indentAttribute, indentLevels }),
+      new DocExtension({ content }),
+      new TextExtension(),
+      new ParagraphExtension({ indentAttribute, indentLevels }),
       new PositionerExtension(),
       new BaseKeymapExtension({
         defaultBindingMethod,
         excludeBaseKeymap,
         selectParentNodeOnEscape,
         undoInputRuleOnBackspace,
-        priority: ExtensionPriority.Low,
+        priority: ExtensionPriority.Lowest,
       }),
     ];
   }

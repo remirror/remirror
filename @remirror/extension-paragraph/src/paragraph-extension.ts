@@ -3,6 +3,7 @@ import {
   ApplySchemaAttributes,
   convertCommand,
   DefaultExtensionOptions,
+  ExtensionPriority,
   ExtensionTag,
   INDENT_ATTRIBUTE,
   INDENT_LEVELS,
@@ -27,6 +28,8 @@ export class ParagraphExtension extends NodeExtension<ParagraphOptions> {
     indentAttribute: INDENT_ATTRIBUTE,
     indentLevels: INDENT_LEVELS,
   };
+
+  static readonly defaultPriority = ExtensionPriority.Medium;
 
   get name() {
     return 'paragraph' as const;

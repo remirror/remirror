@@ -1,6 +1,6 @@
 import { pmBuild } from 'jest-prosemirror';
 
-import { NodeGroup } from '@remirror/core-constants';
+import { ExtensionPriority, NodeGroup } from '@remirror/core-constants';
 import { ApplySchemaAttributes, NodeExtensionSpec } from '@remirror/core-types';
 import { fromHtml } from '@remirror/core-utils';
 import { createBaseManager } from '@remirror/test-fixtures';
@@ -35,6 +35,7 @@ describe('extraAttributes', () => {
   const run = 'true';
   const title = 'awesome';
   const customExtension = new CustomExtension({
+    priority: ExtensionPriority.High,
     extraAttributes: {
       title: { default: null },
       run: { default: 'failure', parseDOM: (dom) => dom.getAttribute('data-run') },

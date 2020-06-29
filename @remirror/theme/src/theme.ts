@@ -1,9 +1,7 @@
 import { kebabCase } from 'case-anything';
 import colors from 'open-color';
 
-import { DeepPartial } from '@remirror/core-types';
-
-type DeepString<Type> = Type extends object ? { [K in keyof Type]: DeepString<Type[K]> } : string;
+import { DeepPartial, DeepString } from '@remirror/core-types';
 
 /**
  * Aliased name for the color type. It's just a string.

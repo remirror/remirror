@@ -1,4 +1,4 @@
-import { Preset } from '@remirror/core';
+import { ExtensionPriority, Preset } from '@remirror/core';
 
 import {
   TableCellExtension,
@@ -22,10 +22,10 @@ export class TablePreset extends Preset {
 
   createExtensions() {
     return [
-      new TableExtension(),
-      new TableRowExtension(),
-      new TableCellExtension(),
-      new TableHeaderCell(),
+      new TableExtension({ priority: ExtensionPriority.Low }),
+      new TableRowExtension({ priority: ExtensionPriority.Low }),
+      new TableCellExtension({ priority: ExtensionPriority.Low }),
+      new TableHeaderCell({ priority: ExtensionPriority.Low }),
     ];
   }
 

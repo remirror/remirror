@@ -1,6 +1,7 @@
 import {
   ApplySchemaAttributes,
   DefaultExtensionOptions,
+  ExtensionPriority,
   NodeExtension,
   Static,
 } from '@remirror/core';
@@ -55,6 +56,7 @@ export class DocExtension extends NodeExtension<DocOptions> {
   static readonly defaultOptions: DefaultExtensionOptions<DocOptions> = {
     content: 'block+',
   };
+  static readonly defaultPriority = ExtensionPriority.Medium;
 
   static readonly disableExtraAttributes = true;
 

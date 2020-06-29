@@ -42,16 +42,16 @@ function create() {
   return renderEditor([new TablePreset()]);
 }
 
-describe.skip('commands', () => {
+describe('commands', () => {
   const setup = () => {
     const {
       commands,
       view,
       add,
-      nodes: { doc, p, table, tableRow: row, tableCell: cell },
+      nodes: { doc, p, table, tableRow: row, tableCell: cell, tableHeader: header },
     } = create();
 
-    const build = (rows: string[][]) => {
+    const build = (...rows: string[][]) => {
       // Ensure that all rows have same length
       expect([...new Set(rows.map((row) => row.length))]).toHaveLength(1);
 
@@ -66,6 +66,7 @@ describe.skip('commands', () => {
       p,
       row,
       cell,
+      header,
       table,
       build,
     };
@@ -73,124 +74,75 @@ describe.skip('commands', () => {
 
   test('#addTableColumnAfter', () => {
     const { add, doc, commands, view, build } = setup();
-    const table = build([['A1<anchor>']]);
+    const table = build(['A1', 'B1<cursor>', 'C1'], ['A2', 'B2', 'C2']);
     add(doc(table));
     commands.addTableColumnAfter();
 
-    const expected = doc(build([['A1', '']]));
+    const expected = doc(build(['A1', 'B1', '', 'C1'], ['A2', 'B2', '', 'C2']));
     expect(view.state.doc).toEqualRemirrorDocument(expected);
   });
 
   test('#addTableColumnBefore', () => {
     const { add, doc, commands, view, build } = setup();
-    const table = build([
-      ['A1', 'B1', 'C1'],
-      ['A2', 'B2<cursor>', 'C2'],
-    ]);
+    const table = build(['A1', 'B1', 'C1'], ['A2', 'B2<cursor>', 'C2']);
     add(doc(table));
 
     commands.addTableColumnBefore();
 
     expect(view.state.doc).toEqualRemirrorDocument(
-      doc(
-        build([
-          ['A1', '', 'B1', 'C1'],
-          ['A2', '', 'B2', 'C2'],
-        ]),
-      ),
+      doc(build(['A1', '', 'B1', 'C1'], ['A2', '', 'B2', 'C2'])),
     );
   });
 
   test('#addTableRowAfter', () => {
     const { add, doc, commands, view, build } = setup();
-    const table = build([
-      ['A1<cursor>', 'B1'],
-      ['A2', 'B2'],
-    ]);
+    const table = build(['A1<cursor>', 'B1'], ['A2', 'B2']);
     add(doc(table));
 
     commands.addTableRowAfter();
 
     expect(view.state.doc).toEqualRemirrorDocument(
-      doc(
-        build([
-          ['A1', 'B1'],
-          ['', ''],
-          ['A2', 'B2'],
-        ]),
-      ),
+      doc(build(['A1', 'B1'], ['', ''], ['A2', 'B2'])),
     );
   });
 
   test('#addTableRowBefore', () => {
     const { add, doc, commands, view, build } = setup();
-    const table = build([
-      ['A1', 'B1<cursor>'],
-      ['A2', 'B2'],
-    ]);
+    const table = build(['A1', 'B1<cursor>'], ['A2', 'B2']);
     add(doc(table));
 
     commands.addTableRowBefore();
 
     expect(view.state.doc).toEqualRemirrorDocument(
-      doc(
-        build([
-          ['', ''],
-          ['A1', 'B1'],
-          ['A2', 'B2'],
-        ]),
-      ),
+      doc(build(['', ''], ['A1', 'B1'], ['A2', 'B2'])),
     );
   });
 
   test('#deleteTableColumn', () => {
     const { add, doc, commands, view, build } = setup();
-    const table = build([
-      ['A1', 'B1', 'C1'],
-      ['A2<cursor>', 'B2', 'C2'],
-    ]);
+    const table = build(['A1', 'B1', 'C1'], ['A2<cursor>', 'B2', 'C2']);
     add(doc(table));
 
     commands.deleteTableColumn();
 
-    expect(view.state.doc).toEqualRemirrorDocument(
-      doc(
-        build([
-          ['B1', 'C1'],
-          ['B2', 'C2'],
-        ]),
-      ),
-    );
+    expect(view.state.doc).toEqualRemirrorDocument(doc(build(['B1', 'C1'], ['B2', 'C2'])));
   });
 
   test('#deleteTableRow', () => {
     const { add, doc, commands, view, build } = setup();
-    const table = build([
-      ['A1', 'B1', 'C1'],
-      ['A2', 'B2<cursor>', 'C2'],
-      ['A3', 'B3', 'C3'],
-    ]);
+    const table = build(['A1', 'B1', 'C1'], ['A2', 'B2<cursor>', 'C2'], ['A3', 'B3', 'C3']);
     add(doc(table));
 
     commands.deleteTableRow();
 
     expect(view.state.doc).toEqualRemirrorDocument(
-      doc(
-        build([
-          ['A1', 'B1', 'C1'],
-          ['A3', 'B3', 'C3'],
-        ]),
-      ),
+      doc(build(['A1', 'B1', 'C1'], ['A3', 'B3', 'C3'])),
     );
   });
 
   test('#deleteTable', () => {
     const { add, doc, commands, view, build, p } = setup();
-    const table = build([
-      ['A1', 'B1', 'C1'],
-      ['A2', 'B2', 'C2'],
-      ['A3', 'B3<cursor>', 'C3'],
-    ]);
+    const table = build(['A1', 'B1', 'C1'], ['A2', 'B2', 'C2'], ['A3', 'B3<cursor>', 'C3']);
     add(doc(table));
 
     commands.deleteTable();

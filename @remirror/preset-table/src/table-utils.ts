@@ -182,7 +182,10 @@ export function createTableNodeSchema(
 
 const TABLE_ROLES = ['table', 'row', 'cell', 'header_cell'] as const;
 export type TableRole = typeof TABLE_ROLES[number];
-/** Returns a map where keys are tableRoles and values are NodeTypes. */
+
+/**
+ * Returns a map where keys are tableRoles and values are NodeTypes.
+ */
 function tableNodeTypes(schema: EditorSchema): Record<string, NodeType> {
   if (schema.cached.tableNodeTypes) {
     return schema.cached.tableNodeTypes;
@@ -214,6 +217,7 @@ function createCell(parameter: CreateCellParameter) {
 
   return type.createAndFill();
 }
+
 /**
  * Returns a table node of a given size.
  *

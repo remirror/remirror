@@ -11,6 +11,7 @@ import {
   addColumnBefore,
   addRowAfter,
   addRowBefore,
+  columnResizing,
   deleteColumn,
   deleteRow,
   deleteTable,
@@ -44,9 +45,12 @@ export class TableExtension extends NodeExtension {
    * Add the table plugins to the editor.
    */
   createExternalPlugins = () => {
-    return [tableEditing()];
+    return [tableEditing(), columnResizing({})];
   };
 
+  /**
+   * Create the commands that can be used for the table.
+   */
   createCommands = () => {
     return {
       createTable: (
@@ -69,7 +73,9 @@ export class TableExtension extends NodeExtension {
       /**
        * Command to add a column before the column with the selection.
        */
-      addTableColumnBefore: () => convertCommand(addColumnBefore),
+      addTableColumnBefore: () => {
+        return convertCommand(addColumnBefore);
+      },
 
       /**
        * Command to add a column after the column with the selection.

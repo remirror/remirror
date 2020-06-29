@@ -164,6 +164,13 @@ export type DeepPartial<Type> = Type extends object
   : Type;
 
 /**
+ * Converts every nested type to a string.
+ */
+export type DeepString<Type> = Type extends object
+  ? { [K in keyof Type]: DeepString<Type[K]> }
+  : string;
+
+/**
  * A tuple for use with the regex constructor.
  *
  * @remarks
