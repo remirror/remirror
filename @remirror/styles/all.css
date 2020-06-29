@@ -329,35 +329,7 @@
 /**
  * Styles extracted from: @remirror/extension-yjs/src/yjs-extension.ts
  */
-.remirror-editor placeholder {
-  display: inline;
-  border: 1px solid #ccc;
-  color: #ccc;
-}
-.remirror-editor placeholder:after {
-  content: '☁';
-  font-size: 200%;
-  line-height: 0.1;
-  font-weight: bold;
-}
-.remirror-editor .ProseMirror img {
-  max-width: 100px;
-}
-/* this is a rough fix for the first cursor position when the first paragraph
-  is empty */
-.remirror-editor .ProseMirror > .ProseMirror-yjs-cursor:first-child {
-  margin-top: 16px;
-}
-.remirror-editor .ProseMirror p:first-child,
-.remirror-editor .ProseMirror h1:first-child,
-.remirror-editor .ProseMirror h2:first-child,
-.remirror-editor .ProseMirror h3:first-child,
-.remirror-editor .ProseMirror h4:first-child,
-.remirror-editor .ProseMirror h5:first-child,
-.remirror-editor .ProseMirror h6:first-child {
-  margin-top: 16px;
-}
-.remirror-editor .ProseMirror-yjs-cursor {
+.remirror-editor .ProseMirror .ProseMirror-yjs-cursor {
   position: absolute;
   border-left: black;
   border-left-style: solid;
@@ -367,7 +339,8 @@
   word-break: normal;
   pointer-events: none;
 }
-.remirror-editor .ProseMirror-yjs-cursor > div {
+
+.remirror-editor .ProseMirror .ProseMirror-yjs-cursor > div {
   position: relative;
   top: -1.05em;
   font-size: 13px;
@@ -383,6 +356,18 @@
   color: white;
   padding-left: 2px;
   padding-right: 2px;
+}
+.remirror-editor .ProseMirror > .ProseMirror-yjs-cursor:first-child {
+  margin-top: 16px;
+}
+.remirror-editor .ProseMirror p:first-child,
+.remirror-editor .ProseMirror h1:first-child,
+.remirror-editor .ProseMirror h2:first-child,
+.remirror-editor .ProseMirror h3:first-child,
+.remirror-editor .ProseMirror h4:first-child,
+.remirror-editor .ProseMirror h5:first-child,
+.remirror-editor .ProseMirror h6:first-child {
+  margin-top: 16px;
 }
 .remirror-editor #y-functions {
   position: absolute;

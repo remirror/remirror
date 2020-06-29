@@ -147,64 +147,55 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
  * fix:css` to regenerate `@remirror/styles/all.css`.
  */
 export const editorStyles = css`
-  placeholder {
-    display: inline;
-    border: 1px solid #ccc;
-    color: #ccc;
+  .ProseMirror {
+    .ProseMirror-yjs-cursor {
+      position: absolute;
+      border-left: black;
+      border-left-style: solid;
+      border-left-width: 2px;
+      border-color: orange;
+      height: 1em;
+      word-break: normal;
+      pointer-events: none;
+
+      > div {
+        position: relative;
+        top: -1.05em;
+        font-size: 13px;
+        background-color: rgb(250, 129, 0);
+        font-family: serif;
+        font-style: normal;
+        font-weight: normal;
+        line-height: normal;
+        user-select: none;
+        color: white;
+        padding-left: 2px;
+        padding-right: 2px;
+      }
+    }
+
+    > .ProseMirror-yjs-cursor:first-child {
+      margin-top: 16px;
+    }
+
+    p:first-child,
+    h1:first-child,
+    h2:first-child,
+    h3:first-child,
+    h4:first-child,
+    h5:first-child,
+    h6:first-child {
+      margin-top: 16px;
+    }
   }
-  placeholder:after {
-    content: '☁';
-    font-size: 200%;
-    line-height: 0.1;
-    font-weight: bold;
-  }
-  .ProseMirror img {
-    max-width: 100px;
-  }
-  /* this is a rough fix for the first cursor position when the first paragraph
-  is empty */
-  .ProseMirror > .ProseMirror-yjs-cursor:first-child {
-    margin-top: 16px;
-  }
-  .ProseMirror p:first-child,
-  .ProseMirror h1:first-child,
-  .ProseMirror h2:first-child,
-  .ProseMirror h3:first-child,
-  .ProseMirror h4:first-child,
-  .ProseMirror h5:first-child,
-  .ProseMirror h6:first-child {
-    margin-top: 16px;
-  }
-  .ProseMirror-yjs-cursor {
-    position: absolute;
-    border-left: black;
-    border-left-style: solid;
-    border-left-width: 2px;
-    border-color: orange;
-    height: 1em;
-    word-break: normal;
-    pointer-events: none;
-  }
-  .ProseMirror-yjs-cursor > div {
-    position: relative;
-    top: -1.05em;
-    font-size: 13px;
-    background-color: rgb(250, 129, 0);
-    font-family: serif;
-    font-style: normal;
-    font-weight: normal;
-    line-height: normal;
-    user-select: none;
-    color: white;
-    padding-left: 2px;
-    padding-right: 2px;
-  }
+
   #y-functions {
     position: absolute;
     top: 20px;
     right: 20px;
-  }
-  #y-functions > * {
-    display: inline-block;
+
+    > * {
+      display: inline-block;
+    }
   }
 `;

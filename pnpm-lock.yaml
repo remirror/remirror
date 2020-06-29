@@ -839,7 +839,7 @@ importers:
   '@remirror/extension-yjs':
     dependencies:
       '@babel/runtime': 7.10.3
-      linaria: 1.4.0-beta.10
+      linaria: 2.0.0-alpha.5
       y-prosemirror: 0.3.5_yjs@13.2.0
       y-webrtc: 10.1.5
       yjs: 13.2.0
@@ -850,7 +850,7 @@ importers:
       '@babel/runtime': ^7.10.3
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
-      linaria: ^1.4.0-beta.10
+      linaria: ^2.0.0-alpha.5
       y-prosemirror: ^0.3.5
       y-webrtc: ^10.1.5
       yjs: ^13.2.0
@@ -18977,42 +18977,6 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-Mp2SaW5uJwMD1atU/MJ7DGxGf5DBaokZGhByg9IYLCRfE+D+DeksjbnweaFvUoWrRpDCJLtg1jY8xENNICj5Mg==
-  /linaria/1.4.0-beta.10:
-    dependencies:
-      '@babel/core': 7.10.3
-      '@babel/generator': 7.10.3
-      '@babel/plugin-proposal-export-namespace-from': 7.10.1_@babel+core@7.10.3
-      '@babel/plugin-syntax-dynamic-import': 7.8.3_@babel+core@7.10.3
-      '@babel/plugin-transform-modules-commonjs': 7.10.1_@babel+core@7.10.3
-      '@babel/plugin-transform-runtime': 7.10.3_@babel+core@7.10.3
-      '@babel/plugin-transform-template-literals': 7.10.3_@babel+core@7.10.3
-      '@babel/register': 7.10.3_@babel+core@7.10.3
-      '@babel/template': 7.10.3
-      '@babel/traverse': 7.10.3
-      '@emotion/is-prop-valid': 0.7.3
-      babel-plugin-transform-react-remove-prop-types: 0.4.24
-      core-js: 3.6.5
-      cosmiconfig: 5.2.1
-      debug: 4.1.1
-      dedent: 0.7.0
-      enhanced-resolve: 4.2.0
-      find-yarn-workspace-root: 1.2.1
-      glob: 7.1.6
-      loader-utils: 1.4.0
-      mkdirp: 0.5.5
-      normalize-path: 3.0.0
-      postcss: 7.0.32
-      react-is: 16.13.1
-      rollup-pluginutils: 2.8.2
-      source-map: 0.6.1
-      strip-ansi: 5.2.0
-      stylis: 3.5.4
-      webpack: 4.43.0_webpack@4.43.0
-      yargs: 13.3.2
-    dev: false
-    hasBin: true
-    resolution:
-      integrity: sha512-VsUastJ3B3c+WRQD8cn9FMx6q/1xdAJZagJxvUBMsT3BrUG5WXADaCl3R8rls3GVnsmaLVR4ybYlPye1gLGJhA==
   /linaria/2.0.0-alpha.5:
     dependencies:
       '@babel/core': 7.10.3
