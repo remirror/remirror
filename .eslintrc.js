@@ -1,6 +1,6 @@
 const { existsSync } = require('fs');
 
-const tsProjectOptions = { project: ['./tsconfig.lint.json'] };
+const tsProjectOptions = { project: ['./support/tsconfig.lint.json'] };
 
 const tsProjectRules = {
   '@typescript-eslint/prefer-readonly': 'warn',

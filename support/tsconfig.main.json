@@ -1,18 +1,11 @@
 {
-  "extends": "./support/tsconfig.base.json",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "types": ["node", "jest", "jest-extended", "jest-axe", "@testing-library/jest-dom"],
     "noEmit": true,
     "skipLibCheck": true, // TODO lingui has a broken type - open PR to fix it
     "plugins": [{ "name": "typescript-snapshots-plugin" }]
   },
-  "include": ["**/*.ts", "**/*.tsx", "../global.d.ts", "support/scripts/linaria.js"],
-  "exclude": [
-    "**/dist/",
-    "dist",
-    "deprecated/**",
-    "support/templates",
-    "support/e2e",
-    "examples/with-next"
-  ]
+  "include": ["../**/*.ts", "../**/*.tsx", "../global.d.ts", "scripts/linaria.js"],
+  "exclude": ["../**/dist/", "../dist", "templates", "e2e", "../examples/with-next"]
 }
