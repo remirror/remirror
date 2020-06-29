@@ -47,25 +47,3 @@ jobs:
             displayName: 'build all project dependencies'
           - bash: pnpm run test:build
             displayName: 'run unit tests against built code'
-  # TODO turn tests back on after playwright rewrite.
-  # - job: ${{ parameters.name }}ChromeIntegrationTests
-  #   pool:
-  #     vmImage: ${{ parameters.vmImage }}
-  #   steps:
-  #     - checkout: self
-  #       lfs: true
-  #     - ${{ if eq(parameters.name, 'Linux') }}:
-  #         - bash:
-  #             echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl
-  #             -p
-  #           displayName: 'increase file watch limit for linux only'
-  #     - template: pipeline-install.yml
-  #     - bash: pnpm run build
-  #       displayName: 'build all project dependencies'
-  #     - bash: pnpm run test:e2e
-  #       displayName: 'nextjs integration tests'
-  #       env:
-  #         REMIRROR_E2E_SERVER: next
-  #     - publish: $(System.DefaultWorkingDirectory)/e2e/__failed-diffs__
-  #       condition: failed()
-  #       artifact: ImageSnapshots

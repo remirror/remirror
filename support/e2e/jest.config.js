@@ -1,5 +1,5 @@
-const config = require('../support/jest/jest.config');
-const { jestSupportDir } = require('../support/jest/helpers');
+const config = require('../jest/jest.config');
+const { jestSupportDir } = require('../jest/helpers');
 const { server: __SERVER__ } = require('./server.config');
 
 const {

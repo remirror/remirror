@@ -1428,35 +1428,6 @@ importers:
       source-map-support: ^0.5.19
       theme-ui: ^0.3.1
       type-fest: ^0.16.0
-  e2e:
-    dependencies:
-      '@babel/runtime': 7.10.3
-      '@remirror/core': 'link:../@remirror/core'
-      '@types/wait-on': 4.0.0
-      expect-playwright: 0.2.4
-      jest: 26.1.0
-      jest-dev-server: 4.4.0
-      jest-playwright-preset: 1.1.0
-      looks-same: 7.2.3
-      playwright: 1.1.1
-      playwright-core: 1.1.1
-      playwright-testing-library: 1.2.1_playwright@1.1.1
-      signal-exit: 3.0.3
-      test-keyboard: 'link:../packages/test-keyboard'
-    specifiers:
-      '@babel/runtime': ^7.10.3
-      '@remirror/core': ^0.11.0
-      '@types/wait-on': ^4.0.0
-      expect-playwright: ^0.2.4
-      jest: ^26.1.0
-      jest-dev-server: ^4.4.0
-      jest-playwright-preset: ^1.1.0
-      looks-same: ^7.2.3
-      playwright: ^1.1.1
-      playwright-core: ^1.1.1
-      playwright-testing-library: ^1.2.1
-      signal-exit: ^3.0.3
-      test-keyboard: ^0.7.6
   examples/with-next:
     dependencies:
       '@preconstruct/next': 1.0.1
@@ -1821,6 +1792,35 @@ importers:
     specifiers: {}
   support/deprecated/ui-text:
     specifiers: {}
+  support/e2e:
+    dependencies:
+      '@babel/runtime': 7.10.3
+      '@remirror/core': 'link:../../@remirror/core'
+      '@types/wait-on': 4.0.0
+      expect-playwright: 0.2.4
+      jest: 26.1.0
+      jest-dev-server: 4.4.0
+      jest-playwright-preset: 1.1.0
+      looks-same: 7.2.3
+      playwright: 1.1.1
+      playwright-core: 1.1.1
+      playwright-testing-library: 1.2.1_playwright@1.1.1
+      signal-exit: 3.0.3
+      test-keyboard: 'link:../../packages/test-keyboard'
+    specifiers:
+      '@babel/runtime': ^7.10.3
+      '@remirror/core': ^0.11.0
+      '@types/wait-on': ^4.0.0
+      expect-playwright: ^0.2.4
+      jest: ^26.1.0
+      jest-dev-server: ^4.4.0
+      jest-playwright-preset: ^1.1.0
+      looks-same: ^7.2.3
+      playwright: ^1.1.1
+      playwright-core: ^1.1.1
+      playwright-testing-library: ^1.2.1
+      signal-exit: ^3.0.3
+      test-keyboard: ^0.7.6
 lockfileVersion: 5.1
 packages:
   /@ampproject/toolbox-core/2.5.1:
@@ -7030,17 +7030,6 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-XIB2XbzHTN6ieIjfIMV9hlVcfPU26s2vafYWQcZHWXHOxiaRZYEDKEwdl129Zyg50+foYV2jCgtrqSA6qNuNSA==
-  /@testing-library/dom/7.16.2:
-    dependencies:
-      '@babel/runtime': 7.10.3
-      aria-query: 4.2.2
-      dom-accessibility-api: 0.4.5
-      pretty-format: 25.5.0
-    dev: false
-    engines:
-      node: '>=10'
-    resolution:
-      integrity: sha512-4fT5l5L+5gfNhUZVCg0wnSszbRJ7A1ZHEz32v7OzH3mcY5lUsK++brI3IB2L9F5zO4kSDc2TRGEVa8v2hgl9vA==
   /@testing-library/dom/7.18.1:
     dependencies:
       '@babel/runtime': 7.10.3
@@ -8013,7 +8002,7 @@ packages:
       integrity: sha512-Dk/IDOPtOgubt/IaevIUbTgV7doaKkoorvOyYM2CMwuDyP89bekI7H4xLIwunNYiK9jhCkmc6pUrJk3cj2AB9w==
   /@types/yauzl/2.9.1:
     dependencies:
-      '@types/node': 14.0.13
+      '@types/node': 14.0.14
     dev: false
     optional: true
     resolution:
@@ -22061,7 +22050,7 @@ packages:
       integrity: sha512-iO/oUSrv1WYIHepWGet63MnRhp71hSzVQES3T1dBRZod1/pzCLPeC4i+nci8wUEm/kLxPhcyAjCiSfdyTKMrqw==
   /playwright-testing-library/1.2.1_playwright@1.1.1:
     dependencies:
-      '@testing-library/dom': 7.16.2
+      '@testing-library/dom': 7.18.1
       playwright: 1.1.1
       wait-for-expect: 3.0.2
     dev: false

@@ -296,7 +296,7 @@ jobs:
         run: pnpm run build
 
       - name: chrome integration test ${{ matrix.os }}
-        run: cd e2e && pnpm run chromium
+        run: cd support/e2e && pnpm run chromium
 
   # Run firefox e2e tests with playwright
   firefox_e2e:
@@ -337,4 +337,4 @@ jobs:
         run: pnpm run build
 
       - name: firefox integration test ${{ matrix.os }}
-        run: cd e2e && pnpm run firefox
+        run: cd support/e2e && pnpm run firefox

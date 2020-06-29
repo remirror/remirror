@@ -301,7 +301,7 @@ module.exports = {
         '@remirror/i18n/**/*.ts',
         'docs/**',
         'examples/**',
-        'e2e/**',
+        'support/e2e/**',
       ],
       rules: { 'import/no-default-export': 'off' },
     },
@@ -318,7 +318,7 @@ module.exports = {
       },
     },
     {
-      files: ['support/scripts/**', 'e2e/**', '@remirror/playground/scripts/**'],
+      files: ['support/scripts/**', 'support/e2e/**', '@remirror/playground/scripts/**'],
       rules: {
         '@typescript-eslint/ban-ts-comment': 'off',
         'unicorn/no-process-exit': 'off',
@@ -339,7 +339,7 @@ module.exports = {
       },
     },
     {
-      files: ['@remirror/playground/**', 'e2e/**'],
+      files: ['@remirror/playground/**', 'support/e2e/**'],
       rules: { '@typescript-eslint/no-var-requires': 'off' },
     },
   ],

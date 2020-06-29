@@ -142,7 +142,7 @@ docs/public/**
 docs/.cache/
 docs/.linaria-cache/
 *.tsbuildinfo
-e2e/__failed-diffs__
+support/e2e/__failed-diffs__
 cc-reporter
 
 # CI Pnpm cache
