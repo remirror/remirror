@@ -13,6 +13,7 @@
       "@remirror/dev",
       "@remirror/dom",
       "@remirror/editor-social",
+      "@remirror/editor-wysiwyg",
       "@remirror/extension-auto-link",
       "@remirror/extension-base-keymap",
       "@remirror/extension-bidi",
@@ -53,12 +54,15 @@
       "@remirror/preset-embed",
       "@remirror/preset-list",
       "@remirror/preset-react",
+      "@remirror/preset-social",
       "@remirror/preset-table",
+      "@remirror/preset-wysiwyg",
       "@remirror/react",
       "@remirror/react-utils",
       "@remirror/showcase",
       "@remirror/styles",
       "@remirror/test-fixtures",
+      "@remirror/theme",
       "remirror",
       "jest-remirror"
     ]
