@@ -5,7 +5,8 @@ on:
     branches:
       - main
       - next
-      - changeset-release/*
+      - changeset-release/main
+      - changeset-release/next
   pull_request:
     types: [opened, synchronize]
     branches:
