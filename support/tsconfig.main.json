@@ -6,6 +6,12 @@
     "skipLibCheck": true, // TODO lingui has a broken type - open PR to fix it
     "plugins": [{ "name": "typescript-snapshots-plugin" }]
   },
-  "include": ["../**/*.ts", "../**/*.tsx", "../global.d.ts", "scripts/linaria.js"],
+  "include": [
+    "../**/*.ts",
+    "../**/*.tsx",
+    "../global.d.ts",
+    "scripts/linaria.js",
+    "storybook/main.js"
+  ],
   "exclude": ["../**/dist/", "../dist", "templates", "e2e", "../examples/with-next"]
 }

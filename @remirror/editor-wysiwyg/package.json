@@ -11,7 +11,7 @@
   "sideEffects": false,
   "main": "dist/editor-wysiwyg.cjs.js",
   "module": "dist/editor-wysiwyg.esm.js",
-  "types": "dist/editor-social.cjs.d.ts",
+  "types": "dist/editor-wysiwyg.cjs.d.ts",
   "files": [
     "style",
     "dist"

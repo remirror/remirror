@@ -1,0 +1,27 @@
+{
+  "name": "@remirror/storybook",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The storybook configuration for the remirror project.",
+  "scripts": {
+    "build-storybook": "build-storybook -c ./",
+    "storybook": "start-storybook -p 6006 -c ./"
+  },
+  "dependencies": {
+    "@babel/core": "^7.10.3",
+    "@remirror/showcase": "^0.13.1",
+    "@storybook/addon-actions": "^5.3.19",
+    "@storybook/addon-links": "^5.3.19",
+    "@storybook/addons": "^5.3.19",
+    "@storybook/react": "^5.3.19",
+    "@types/react": "^16.9.41",
+    "@types/react-dom": "^16.9.8",
+    "babel-loader": "^8.1.0",
+    "linaria": "^2.0.0-alpha.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "remirror": "^0.13.1"
+  },
+  "devDependencies": {},
+  "repository": "https://github.com/remirror/remirror/tree/master/support/storybook"
+}

@@ -302,6 +302,8 @@ module.exports = {
         'docs/**',
         'examples/**',
         'support/e2e/**',
+        '**/__stories__',
+        '**/*.stories.tsx',
       ],
       rules: { 'import/no-default-export': 'off' },
     },

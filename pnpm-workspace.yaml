@@ -1,8 +1,9 @@
 packages:
   - '@remirror/*'
-  - 'packages/*'
-  - 'examples/*'
   - 'docs'
+  - 'examples/*'
+  - 'packages/*'
+  - 'support'
   - 'support/deprecated/*'
   - 'support/e2e'
-  - 'support'
+  - 'support/storybook'
