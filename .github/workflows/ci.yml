@@ -58,6 +58,7 @@ jobs:
         with:
           fetch-depth: 0
           publish: pnpm run release
+          version: pnpm run ci:version
           commit: 'chore: update versions'
           title: 'chore: update versions'
         env:
