@@ -8,7 +8,6 @@ import {
   useRef,
   useState,
 } from 'react';
-import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import {
   AddHandler,
@@ -40,6 +39,7 @@ import { ReactPreset } from '@remirror/preset-react';
 
 import { I18nContext, RemirrorContext } from '../react-contexts';
 import { I18nContextProps, ReactCombinedUnion, RemirrorContextProps } from '../react-types';
+import { useEffectWithWarning } from './core-hooks';
 
 /**
  * This provides access to the Remirror Editor context using hooks.
@@ -160,7 +160,7 @@ export function useExtension<Type extends AnyExtensionConstructor>(
   const extension = useMemo(() => manager.getExtension(Constructor), [Constructor, manager]);
 
   // Handle the case where it an options object passed in.
-  useDeepCompareEffect(() => {
+  useEffectWithWarning(() => {
     if (isFunction(optionsOrCallback)) {
       return;
     }
@@ -170,7 +170,7 @@ export function useExtension<Type extends AnyExtensionConstructor>(
 
   const memoizedDependencies = useObjectCheck(dependencies);
 
-  useDeepCompareEffect(() => {
+  useEffectWithWarning(() => {
     if (!isFunction(optionsOrCallback)) {
       return;
     }
@@ -234,7 +234,7 @@ export function usePreset<Type extends AnyPresetConstructor>(
 
   const preset = useMemo(() => manager.getPreset(Constructor), [Constructor, manager]);
 
-  useDeepCompareEffect(() => {
+  useEffectWithWarning(() => {
     if (isFunction(optionsOrCallback)) {
       return;
     }
@@ -244,7 +244,7 @@ export function usePreset<Type extends AnyPresetConstructor>(
 
   const memoizedDependencies = useObjectCheck(dependencies);
 
-  useDeepCompareEffect(() => {
+  useEffectWithWarning(() => {
     if (!isFunction(optionsOrCallback)) {
       return;
     }

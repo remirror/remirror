@@ -1,4 +1,5 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import isEqual from 'fast-deep-equal/react';
+import { DependencyList, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import useSetState from 'react-use/lib/useSetState';
 import ResizeObserver from 'resize-observer-polyfill';
 
@@ -68,4 +69,39 @@ export type PartialDispatch<Type extends object> = (
   patch: Partial<Type> | ((prevState: Type) => Partial<Type>),
 ) => void;
 
-export { useSetState };
+/**
+ * A `useEffect` function with a warning the provided dependencies are deeply
+ * equal.
+ */
+const useEffectWithWarning: typeof useEffect =
+  process.env.NODE_ENV === 'production'
+    ? useEffect
+    : (effect, deps) => {
+        const ref = useRef<DependencyList>();
+
+        let unnecessaryChange = false;
+
+        if (!ref.current) {
+          ref.current = deps;
+        }
+
+        if (!isEqual(deps, ref.current)) {
+          unnecessaryChange = true;
+          ref.current = deps;
+        }
+
+        const wrappedEffect = () => {
+          if (unnecessaryChange) {
+            console.warn(
+              'The dependencies passed into your useEffect are deeply equal, but an update has been triggered. Please consider `useMemo` to memoize your dependencies to prevent unwanted re-renders.',
+            );
+          }
+
+          return effect();
+        };
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        useEffect(wrappedEffect, deps);
+      };
+
+export { useEffectWithWarning, useSetState };

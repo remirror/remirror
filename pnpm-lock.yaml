@@ -54,7 +54,7 @@ importers:
       eslint-plugin-jest-formatting: 2.0.0_eslint@7.3.1
       eslint-plugin-jsx-a11y: 6.3.1_eslint@7.3.1
       eslint-plugin-promise: 4.2.1
-      eslint-plugin-react: 7.20.0_eslint@7.3.1
+      eslint-plugin-react: 7.20.1_eslint@7.3.1
       eslint-plugin-react-hooks: 4.0.4_eslint@7.3.1
       eslint-plugin-security: 1.4.0
       eslint-plugin-simple-import-sort: 5.0.3_eslint@7.3.1
@@ -137,7 +137,7 @@ importers:
       eslint-plugin-jest-formatting: ^2.0.0
       eslint-plugin-jsx-a11y: ^6.3.1
       eslint-plugin-promise: ^4.2.1
-      eslint-plugin-react: ^7.20.0
+      eslint-plugin-react: ^7.20.1
       eslint-plugin-react-hooks: ^4.0.4
       eslint-plugin-security: ^1.4.0
       eslint-plugin-simple-import-sort: ^5.0.3
@@ -277,7 +277,7 @@ importers:
       '@types/throttle-debounce': 2.1.0
       case-anything: 1.1.1
       deepmerge: 4.2.2
-      fast-deep-equal: 2.0.1
+      fast-deep-equal: 3.1.3
       make-error: 1.3.6
       nanoid: 3.1.10
       object.omit: 3.0.0
@@ -293,7 +293,7 @@ importers:
       '@types/throttle-debounce': ^2.1.0
       case-anything: ^1.1.1
       deepmerge: ^4.2.2
-      fast-deep-equal: ^2.0.1
+      fast-deep-equal: ^3.1.3
       make-error: ^1.3.6
       nanoid: ^3.1.10
       object.omit: ^3.0.0
@@ -917,9 +917,9 @@ importers:
       '@types/prosemirror-keymap': 1.0.2
       '@types/prosemirror-model': 1.7.2
       '@types/prosemirror-schema-list': 1.0.1
-      '@types/prosemirror-state': 1.2.4
+      '@types/prosemirror-state': 1.2.5
       '@types/prosemirror-transform': 1.1.1
-      '@types/prosemirror-view': 1.11.4
+      '@types/prosemirror-view': 1.11.5
       prosemirror-commands: 1.1.4
       prosemirror-dropcursor: 1.3.2
       prosemirror-gapcursor: 1.1.5
@@ -943,9 +943,9 @@ importers:
       '@types/prosemirror-keymap': ^1.0.2
       '@types/prosemirror-model': ^1.7.2
       '@types/prosemirror-schema-list': ^1.0.1
-      '@types/prosemirror-state': ^1.2.4
+      '@types/prosemirror-state': ^1.2.5
       '@types/prosemirror-transform': ^1.1.1
-      '@types/prosemirror-view': ^1.11.4
+      '@types/prosemirror-view': ^1.11.5
       prosemirror-commands: ^1.1.4
       prosemirror-dropcursor: ^1.3.2
       prosemirror-gapcursor: ^1.1.5
@@ -1118,6 +1118,7 @@ importers:
       '@types/hoist-non-react-statics': 3.3.1
       '@types/min-document': 2.19.0
       '@types/use-deep-compare-effect': 1.2.0
+      fast-deep-equal: 3.1.3
       hoist-non-react-statics: 3.3.2
       linaria: 2.0.0-alpha.5
       min-document: 2.19.0
@@ -1126,7 +1127,6 @@ importers:
       react-use: 15.3.0_react-dom@16.13.1+react@16.13.1
       resize-observer-polyfill: 1.5.1
       type-fest: 0.16.0
-      use-deep-compare-effect: 1.3.1_react@16.13.1
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -1158,6 +1158,7 @@ importers:
       '@types/react-test-renderer': ^16.9.2
       '@types/testing-library__react-hooks': ^3.2.0
       '@types/use-deep-compare-effect': ^1.2.0
+      fast-deep-equal: ^3.1.3
       hoist-non-react-statics: ^3.3.2
       jest-axe: ^3.4.0
       linaria: ^2.0.0-alpha.5
@@ -1170,7 +1171,6 @@ importers:
       react-use: ^15.3.0
       resize-observer-polyfill: ^1.5.1
       type-fest: ^0.16.0
-      use-deep-compare-effect: ^1.3.1
   '@remirror/react-utils':
     dependencies:
       '@babel/runtime': 7.10.3
@@ -1469,7 +1469,7 @@ importers:
       '@remirror/core-types': 'link:../../@remirror/core-types'
       '@remirror/core-utils': 'link:../../@remirror/core-utils'
       '@remirror/pm': 'link:../../@remirror/pm'
-      '@testing-library/dom': 7.18.1
+      '@testing-library/dom': 7.19.0
       '@types/prosemirror-schema-basic': 1.0.1
       '@types/prosemirror-test-builder': 1.0.1
       chalk: 4.1.0
@@ -1487,7 +1487,7 @@ importers:
       '@remirror/core-types': ^0.9.0
       '@remirror/core-utils': ^0.8.0
       '@remirror/pm': ^0.0.0
-      '@testing-library/dom': ^7.18.1
+      '@testing-library/dom': ^7.19.0
       '@types/prosemirror-schema-basic': ^1.0.1
       '@types/prosemirror-test-builder': ^1.0.1
       chalk: ^4.1.0
@@ -1501,7 +1501,7 @@ importers:
     dependencies:
       '@babel/runtime': 7.10.3
       '@remirror/pm': 'link:../../@remirror/pm'
-      '@testing-library/dom': 7.18.1
+      '@testing-library/dom': 7.19.0
       '@testing-library/react': 10.4.3_react-dom@16.13.1+react@16.13.1
       '@types/node': 14.0.14
       '@types/react': 16.9.41
@@ -1517,7 +1517,7 @@ importers:
     specifiers:
       '@babel/runtime': ^7.10.3
       '@remirror/pm': ^0.0.0
-      '@testing-library/dom': ^7.18.1
+      '@testing-library/dom': ^7.19.0
       '@testing-library/react': ^10.4.3
       '@types/node': ^14.0.14
       '@types/react': ^16.9.41
@@ -1567,8 +1567,8 @@ importers:
       '@remirror/core-utils': 'link:../../@remirror/core-utils'
       '@types/merge-descriptors': 1.0.1
       '@types/prosemirror-keymap': 1.0.2
-      '@types/prosemirror-state': 1.2.4
-      '@types/prosemirror-view': 1.11.4
+      '@types/prosemirror-state': 1.2.5
+      '@types/prosemirror-view': 1.11.5
       escape-string-regexp: 4.0.0
       merge-descriptors: 1.0.1
       prosemirror-keymap: 1.1.4
@@ -1583,8 +1583,8 @@ importers:
       '@remirror/core-utils': ^0.8.0
       '@types/merge-descriptors': 1.0.1
       '@types/prosemirror-keymap': ^1.0.2
-      '@types/prosemirror-state': ^1.2.4
-      '@types/prosemirror-view': ^1.11.4
+      '@types/prosemirror-state': ^1.2.5
+      '@types/prosemirror-view': ^1.11.5
       escape-string-regexp: ^4.0.0
       merge-descriptors: 1.0.1
       prosemirror-keymap: ^1.1.4
@@ -7040,6 +7040,17 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-tGq4KAFjaI7j375sMM1RRVleWA0viJWs/w69B+nyDkqYLNkhdTHdV6mGkspJlkn3PUfyBDi3rERDv4PA/LrpVA==
+  /@testing-library/dom/7.19.0:
+    dependencies:
+      '@babel/runtime': 7.10.3
+      aria-query: 4.2.2
+      dom-accessibility-api: 0.4.5
+      pretty-format: 25.5.0
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-t4sIYKGJ8vCi+fEP3f+lnvomvhofHK8xXxhrapiRS8tnP6la9woE+d9hjivviRkwvNFAOAYaN7REKnQf5XCGxg==
   /@testing-library/jest-dom/5.11.0:
     dependencies:
       '@babel/runtime': 7.10.3
@@ -7734,6 +7745,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Gch4THfZ9QNsRQ7myibU8cG99F3b8/3Gto083ZuutNG72E0VmS8yfQzA5ahbndr5GUIbmKyOD5LqKTBvx/M0qw==
+  /@types/prosemirror-state/1.2.5:
+    dependencies:
+      '@types/prosemirror-model': 1.7.2
+      '@types/prosemirror-transform': 1.1.1
+      '@types/prosemirror-view': 1.11.5
+    dev: false
+    resolution:
+      integrity: sha512-a5DxAifiF6vmdSJ5jsDMkpykUgUJUy+T5Q5hCjFOKJ4cfd3m3q1lsFKr7Bc4r91Qb7rfqyiKCMDnASS8LIHrKw==
   /@types/prosemirror-test-builder/1.0.1:
     dependencies:
       '@types/prosemirror-model': 1.7.2
@@ -7754,6 +7773,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Hh8v2tpCEMaIesQuw7Y7Pz6imoC1T/bR5OlNGVtp944PZvctXiBvFRkQIb0YvZpt7vVkFzeq2kmR+7mnUfvWiw==
+  /@types/prosemirror-view/1.11.5:
+    dependencies:
+      '@types/prosemirror-model': 1.7.2
+      '@types/prosemirror-state': 1.2.5
+      '@types/prosemirror-transform': 1.1.1
+    dev: false
+    resolution:
+      integrity: sha512-47EGOopq0bg7QFf71ADpUc2LyYDdQ5fepNH4UZ/5GX1MpLGFcWbgLiqmZGwjt6f2zMXCoM83DmmXrPAcCdCNjA==
   /@types/q/1.5.4:
     dev: false
     resolution:
@@ -12018,12 +12045,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-xmHIy4F3scKVwMsQ4WnVaS8bHOx0DmVwRywosKhaILI0ywMDWPtBSku2HNxRvF7jtwDRsoEwYQSfbxj8b7RlJQ==
-  /dequal/1.0.0:
-    dev: false
-    engines:
-      node: '>=6'
-    resolution:
-      integrity: sha512-/Nd1EQbQbI9UbSHrMiKZjFLrXSnU328iQdZKPQf78XQI6C+gutkFUeoHpG5J08Ioa6HeRbRNFpSIclh1xyG0mw==
   /des.js/1.0.1:
     dependencies:
       inherits: 2.0.4
@@ -13112,9 +13133,10 @@ packages:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7
     resolution:
       integrity: sha512-rqe1abd0vxMjmbPngo4NaYxTcR3Y4Hrmc/jg4T+sYz63yqlmJRknpEQfmWY+eDWPuMmix6iUIK+mv0zExjeLgA==
-  /eslint-plugin-react/7.20.0_eslint@7.3.1:
+  /eslint-plugin-react/7.20.1_eslint@7.3.1:
     dependencies:
       array-includes: 3.1.1
+      array.prototype.flatmap: 1.2.3
       doctrine: 2.1.0
       eslint: 7.3.1
       has: 1.0.3
@@ -13125,14 +13147,13 @@ packages:
       prop-types: 15.7.2
       resolve: 1.17.0
       string.prototype.matchall: 4.0.2
-      xregexp: 4.3.0
     dev: false
     engines:
       node: '>=4'
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7
     resolution:
-      integrity: sha512-rqe1abd0vxMjmbPngo4NaYxTcR3Y4Hrmc/jg4T+sYz63yqlmJRknpEQfmWY+eDWPuMmix6iUIK+mv0zExjeLgA==
+      integrity: sha512-HitovDhscMmu3uOod3aqZRdKURdXgmlkptEue958gJBmIJO9hvgO4uZyqsJ4+22WqJVP3CsTKfqWSuTlJL6b8w==
   /eslint-plugin-security/1.4.0:
     dependencies:
       safe-regex: 1.1.0
@@ -27875,20 +27896,6 @@ packages:
       react: '>= 16.8.0'
     resolution:
       integrity: sha512-AMikyJ9ldVvFVRND7AjgHJ3dBZXH2ygTM9bj4BwQzE9gfJfWA1wK+dXffV1WTOdOoCRngIxGWgZIzSkoLGBpbw==
-  /use-deep-compare-effect/1.3.1_react@16.13.1:
-    dependencies:
-      '@babel/runtime': 7.10.3
-      '@types/use-deep-compare-effect': 1.2.0
-      dequal: 1.0.0
-      react: 16.13.1
-    dev: false
-    engines:
-      node: '> 4'
-      npm: '> 3'
-    peerDependencies:
-      react: '>=16.12'
-    resolution:
-      integrity: sha512-ejL+Al+aeDyC9Sywx56ti4PtSwkf6BH27tEptMWF2cfO41/auG0nRRsArh6Vv5bUyBe3z7IyxmgQCK5nas70hg==
   /use-subscription/1.4.1_react@16.13.1:
     dependencies:
       object-assign: 4.1.1
