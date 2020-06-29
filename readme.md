@@ -176,8 +176,6 @@ pnpm run stop:checks
 Please read [contributing.md](docs/contributing.md) for details on our code of conduct, and the
 process for submitting pull requests.
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/remirror/remirror)
-
 <br />
 
 ### Versioning
