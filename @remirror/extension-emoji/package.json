@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.10.3",
-    "@remirror/react-node-view": "^0.7.6",
     "@types/emoji-regex": "^8.0.0",
     "@types/match-sorter": "^4.0.0",
     "emoji-regex": "^9.0.0",

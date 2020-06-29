@@ -1,0 +1,14 @@
+{
+  "name": "@remirror/react-ssr",
+  "version": "0.11.0",
+  "description": "ssr utilities for remirror",
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/react",
+  "repository": "https://github.com/remirror/remirror/tree/master/support/deprecated/react-ssr",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

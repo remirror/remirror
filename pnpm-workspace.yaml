@@ -2,7 +2,7 @@ packages:
   - '@remirror/*'
   - 'packages/*'
   - 'examples/*'
-  - 'deprecated/*'
+  - 'support/deprecated/*'
   - 'docs'
   - 'e2e'
   - 'support'

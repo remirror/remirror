@@ -601,7 +601,6 @@ importers:
   '@remirror/extension-emoji':
     dependencies:
       '@babel/runtime': 7.10.3
-      '@remirror/react-node-view': 'link:../../deprecated/react-node-view'
       '@types/emoji-regex': 8.0.0
       '@types/match-sorter': 4.0.0
       emoji-regex: 9.0.0
@@ -615,7 +614,6 @@ importers:
       '@babel/runtime': ^7.10.3
       '@remirror/core': ^0.11.0
       '@remirror/pm': ^0.0.0
-      '@remirror/react-node-view': ^0.7.6
       '@types/emoji-regex': ^8.0.0
       '@types/match-sorter': ^4.0.0
       emoji-regex: ^9.0.0
@@ -1195,14 +1193,8 @@ importers:
     dependencies:
       '@babel/runtime': 7.10.3
       '@remirror/core': 'link:../core'
-      '@remirror/core-extensions': 'link:../../deprecated/core-extensions'
-      '@remirror/dev': 'link:../dev'
-      '@remirror/editor-markdown': 'link:../../deprecated/editor-markdown'
       '@remirror/editor-social': 'link:../editor-social'
       '@remirror/extension-code-block': 'link:../extension-code-block'
-      '@remirror/extension-epic-mode': 'link:../extension-epic-mode'
-      '@remirror/react': 'link:../react'
-      '@remirror/ui-buttons': 'link:../../deprecated/ui-buttons'
       '@types/match-sorter': 4.0.0
       '@types/prettier': 2.0.1
       match-sorter: 4.1.0
@@ -1213,14 +1205,8 @@ importers:
     specifiers:
       '@babel/runtime': ^7.10.3
       '@remirror/core': ^0.11.0
-      '@remirror/core-extensions': ^0.13.1
-      '@remirror/dev': ^0.13.2
-      '@remirror/editor-markdown': ^0.13.1
       '@remirror/editor-social': ^0.13.1
       '@remirror/extension-code-block': ^0.12.0
-      '@remirror/extension-epic-mode': ^0.11.0
-      '@remirror/react': ^0.13.1
-      '@remirror/ui-buttons': ^0.7.7
       '@types/match-sorter': ^4.0.0
       '@types/prettier': ^2.0.1
       '@types/react': ^16.9.41
@@ -1288,40 +1274,6 @@ importers:
       linaria: ^2.0.0-alpha.5
       open-color: ^1.7.0
       type-fest: ^0.16.0
-  deprecated/core-extensions:
-    specifiers: {}
-  deprecated/editor-markdown:
-    specifiers: {}
-  deprecated/extension-enhanced-link:
-    specifiers: {}
-  deprecated/extension-tables:
-    specifiers: {}
-  deprecated/react-hooks:
-    specifiers: {}
-  deprecated/react-node-view:
-    specifiers: {}
-  deprecated/react-portals:
-    specifiers: {}
-  deprecated/react-renderer:
-    specifiers: {}
-  deprecated/react-ssr:
-    specifiers: {}
-  deprecated/ui:
-    specifiers: {}
-  deprecated/ui-a11y-status:
-    specifiers: {}
-  deprecated/ui-buttons:
-    specifiers: {}
-  deprecated/ui-dropdown:
-    specifiers: {}
-  deprecated/ui-icons:
-    specifiers: {}
-  deprecated/ui-menus:
-    specifiers: {}
-  deprecated/ui-modal:
-    specifiers: {}
-  deprecated/ui-text:
-    specifiers: {}
   docs:
     dependencies:
       '@babel/runtime': 7.10.3
@@ -1615,12 +1567,6 @@ importers:
       '@reach/auto-id': 0.10.5_react@16.13.1
       '@remirror/core-helpers': 'link:../../@remirror/core-helpers'
       '@remirror/core-types': 'link:../../@remirror/core-types'
-      '@remirror/react-hooks': 'link:../../deprecated/react-hooks'
-      '@remirror/react-utils': 'link:../../@remirror/react-utils'
-      '@remirror/ui': 'link:../../deprecated/ui'
-      '@remirror/ui-buttons': 'link:../../deprecated/ui-buttons'
-      '@remirror/ui-icons': 'link:../../deprecated/ui-icons'
-      '@remirror/ui-text': 'link:../../deprecated/ui-text'
       '@seznam/compose-react-refs': 1.0.4
       a11y-status: 'link:../a11y-status'
       compute-scroll-into-view: 1.0.14
@@ -1635,12 +1581,6 @@ importers:
       '@reach/auto-id': ^0.10.5
       '@remirror/core-helpers': ^0.7.6
       '@remirror/core-types': ^0.9.0
-      '@remirror/react-hooks': ^0.7.6
-      '@remirror/react-utils': ^0.7.6
-      '@remirror/ui': ^0.7.6
-      '@remirror/ui-buttons': ^0.7.7
-      '@remirror/ui-icons': ^0.7.8
-      '@remirror/ui-text': ^0.7.6
       '@seznam/compose-react-refs': ^1.0.4
       '@testing-library/react': ^10.4.3
       '@types/react': ^16.9.41
@@ -1849,6 +1789,40 @@ importers:
       react-dom: ^16.13.1
       remirror: ^0.13.1
       write-json-file: ^4.3.0
+  support/deprecated/core-extensions:
+    specifiers: {}
+  support/deprecated/editor-markdown:
+    specifiers: {}
+  support/deprecated/extension-enhanced-link:
+    specifiers: {}
+  support/deprecated/extension-tables:
+    specifiers: {}
+  support/deprecated/react-hooks:
+    specifiers: {}
+  support/deprecated/react-node-view:
+    specifiers: {}
+  support/deprecated/react-portals:
+    specifiers: {}
+  support/deprecated/react-renderer:
+    specifiers: {}
+  support/deprecated/react-ssr:
+    specifiers: {}
+  support/deprecated/ui:
+    specifiers: {}
+  support/deprecated/ui-a11y-status:
+    specifiers: {}
+  support/deprecated/ui-buttons:
+    specifiers: {}
+  support/deprecated/ui-dropdown:
+    specifiers: {}
+  support/deprecated/ui-icons:
+    specifiers: {}
+  support/deprecated/ui-menus:
+    specifiers: {}
+  support/deprecated/ui-modal:
+    specifiers: {}
+  support/deprecated/ui-text:
+    specifiers: {}
 lockfileVersion: 5.1
 packages:
   /@ampproject/toolbox-core/2.5.1:
