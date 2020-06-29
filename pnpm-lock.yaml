@@ -35,7 +35,6 @@ importers:
       '@types/webpack': 4.41.18
       '@typescript-eslint/eslint-plugin': 3.4.0_15ebbbb8363c75064fc079244e83c2c7
       '@typescript-eslint/parser': 3.4.0_eslint@7.3.1+typescript@3.9.5
-      all-contributors-cli: 6.16.0
       babel-jest: 26.1.0_@babel+core@7.10.3
       babel-plugin-annotate-pure-calls: 0.4.0_@babel+core@7.10.3
       babel-plugin-dev-expression: 0.2.2_@babel+core@7.10.3
@@ -119,7 +118,6 @@ importers:
       '@types/webpack': ^4.41.18
       '@typescript-eslint/eslint-plugin': ^3.4.0
       '@typescript-eslint/parser': ^3.4.0
-      all-contributors-cli: ^6.16.0
       babel-jest: ^26.1.0
       babel-plugin-annotate-pure-calls: ^0.4.0
       babel-plugin-dev-expression: ^0.2.2
@@ -8512,24 +8510,6 @@ packages:
       uri-js: 4.2.2
     resolution:
       integrity: sha512-k+V+hzjm5q/Mr8ef/1Y9goCmlsK4I6Sm74teeyGvFk1XrOsbsKLjEdrvny42CZ+a8sXbk8KWpY/bDwS+FLL2UQ==
-  /all-contributors-cli/6.16.0:
-    dependencies:
-      '@babel/runtime': 7.10.3
-      async: 3.2.0
-      chalk: 4.1.0
-      didyoumean: 1.2.1
-      inquirer: 7.2.0
-      json-fixer: 1.4.3
-      lodash: 4.17.15
-      pify: 5.0.0
-      request: 2.88.2
-      yargs: 15.3.1
-    dev: false
-    engines:
-      node: '>=4'
-    hasBin: true
-    resolution:
-      integrity: sha512-CHBqxhC31G3LY3gBiTl93+tVMI/QBfqqBf3/HN1T0O1WSVxx60JX9kvG+rsk7YRMaOqL/0yF6wV5cMtfL4gS7w==
   /ally.js/1.4.1:
     dependencies:
       css.escape: 1.5.1
@@ -12152,10 +12132,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-4C1y6ZP9PFE1CK/Pgks4Qf1WA4rzJOtR2RJ7mkDfiQRixDNrtCkZiWvwSKb0AN830Dp4cgb+VLLi8eVWv7cC6A==
-  /didyoumean/1.2.1:
-    dev: false
-    resolution:
-      integrity: sha1-6S7f2tplN9SE1zwBcv0eugxJdv8=
   /diff-match-patch/1.0.5:
     dev: false
     resolution:
@@ -18640,16 +18616,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-Wx85evx11ne96Lz8Dkfh+aPZqJg=
-  /json-fixer/1.4.3:
-    dependencies:
-      '@babel/runtime': 7.10.3
-      chalk: 4.1.0
-      pegjs: 0.10.0
-    dev: false
-    engines:
-      node: '>=10'
-    resolution:
-      integrity: sha512-tLDhn2T7YThbON9Sn+tcFwpwEPV5czzKmYBmBOW2hjry6xAkGduQeYgbzNqaLzCBkbbq9/nJGo8pjqvDwtV+xQ==
   /json-loader/0.5.7:
     dev: false
     resolution:
@@ -21952,13 +21918,6 @@ packages:
       node: '>=0.12'
     resolution:
       integrity: sha512-4Ejy1OPxi9f2tt1rRV7Go7zmfDQ+ZectEQz3VGUQhgq62HtIRPDyG/JtnwIxs6x3uNMwo2V7q1fMvKjb+Tnpqg==
-  /pegjs/0.10.0:
-    dev: false
-    engines:
-      node: '>=0.10'
-    hasBin: true
-    resolution:
-      integrity: sha1-z4uvrm7d/0tafvsYUmnqr0YQ3b0=
   /pend/1.2.0:
     dev: false
     resolution:
@@ -22004,12 +21963,6 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
-  /pify/5.0.0:
-    dev: false
-    engines:
-      node: '>=10'
-    resolution:
-      integrity: sha512-eW/gHNMlxdSP6dmG6uJip6FXN0EQBwm2clYYd8Wul42Cwu/DK8HEftzsapcNdYe2MfLiIwZqsDk2RDEsTE79hA==
   /pinkie-promise/2.0.1:
     dependencies:
       pinkie: 2.0.4
