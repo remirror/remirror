@@ -112,12 +112,12 @@ export function isPresetValid<Type extends AnyPresetConstructor>(
   Preset: Type,
   ...[options]: PresetConstructorParameter<OptionsOfConstructor<Type>>
 ) {
-  const extension = new Preset(options);
+  const preset = new Preset(options);
 
   const expectedOptions = { ...Preset.defaultOptions, ...options };
-  invariant(isEqual(extension.options, expectedOptions), {
+  invariant(isEqual(omit(preset.options, Preset.handlerKeys), expectedOptions), {
     message: `Invalid 'defaultOptions' for '${Preset.name}'\n\n${
-      diff(extension.options, expectedOptions) ?? ''
+      diff(preset.options, expectedOptions) ?? ''
     }\n`,
   });
 
