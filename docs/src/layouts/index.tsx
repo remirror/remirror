@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import '@remirror/styles/all.css';
+import 'remirror/styles/all.css';
 
 import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';

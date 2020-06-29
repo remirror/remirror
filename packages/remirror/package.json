@@ -83,7 +83,6 @@
     "@remirror/preset-wysiwyg": "^0.0.0",
     "@remirror/react": "^0.13.1",
     "@remirror/react-utils": "^0.7.6",
-    "@remirror/styles": "^0.0.0",
     "@remirror/theme": "^0.0.0"
   },
   "devDependencies": {

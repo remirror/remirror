@@ -1,4 +1,4 @@
-import '@remirror/styles/all.css';
+import 'remirror/styles/all.css';
 
 import App from 'next/app';
 import React from 'react';

@@ -425,9 +425,9 @@ importers:
       '@babel/runtime': 7.10.3
       '@lingui/core': 3.0.0-13
       '@remirror/extension-auto-link': 'link:../extension-auto-link'
-      '@remirror/extension-emoji': 'link:../extension-emoji'
-      '@remirror/extension-mention': 'link:../extension-mention'
       '@remirror/i18n': 'link:../i18n'
+      '@remirror/preset-social': 'link:../preset-social'
+      '@remirror/preset-wysiwyg': 'link:../preset-wysiwyg'
       '@remirror/react-utils': 'link:../react-utils'
       '@types/classnames': 2.2.10
       classnames: 2.2.6
@@ -450,10 +450,10 @@ importers:
       '@lingui/macro': ^3.0.0-13
       '@remirror/core': ^0.11.0
       '@remirror/extension-auto-link': ^0.0.0
-      '@remirror/extension-emoji': ^0.11.0
-      '@remirror/extension-mention': ^0.11.1
       '@remirror/i18n': ^0.0.0
       '@remirror/pm': ^0.0.0
+      '@remirror/preset-social': ^0.0.0
+      '@remirror/preset-wysiwyg': ^0.0.0
       '@remirror/react': ^0.13.1
       '@remirror/react-utils': ^0.7.6
       '@testing-library/react': ^10.4.3
@@ -1333,7 +1333,6 @@ importers:
       '@remirror/playground': 'link:../@remirror/playground'
       '@remirror/pm': 'link:../@remirror/pm'
       '@remirror/showcase': 'link:../@remirror/showcase'
-      '@remirror/styles': 'link:../@remirror/styles'
       '@styled-system/edit': 5.1.5_react@16.13.1
       '@theme-ui/presets': 0.3.0
       '@theme-ui/prism': 0.3.0_react@16.13.1+theme-ui@0.3.1
@@ -1412,7 +1411,6 @@ importers:
       '@remirror/playground': ^0.0.0
       '@remirror/pm': 0.0.0
       '@remirror/showcase': 0.13.1
-      '@remirror/styles': 0.0.0
       '@styled-system/edit': ^5.1.5
       '@theme-ui/presets': ^0.3.0
       '@theme-ui/prism': ^0.3.0
@@ -1513,7 +1511,6 @@ importers:
     dependencies:
       '@preconstruct/next': 1.0.1
       '@remirror/showcase': 'link:../../@remirror/showcase'
-      '@remirror/styles': 'link:../../@remirror/styles'
       next: 9.4.4_react-dom@16.13.1+react@16.13.1
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
@@ -1526,7 +1523,6 @@ importers:
     specifiers:
       '@preconstruct/next': ^1.0.1
       '@remirror/showcase': ^0.13.1
-      '@remirror/styles': ^0.0.0
       '@types/react': ^16.9.41
       '@types/react-dom': ^16.9.8
       '@types/refractor': ^2.8.0
@@ -1737,7 +1733,6 @@ importers:
       '@remirror/preset-wysiwyg': 'link:../../@remirror/preset-wysiwyg'
       '@remirror/react': 'link:../../@remirror/react'
       '@remirror/react-utils': 'link:../../@remirror/react-utils'
-      '@remirror/styles': 'link:../../@remirror/styles'
       '@remirror/theme': 'link:../../@remirror/theme'
     devDependencies:
       '@remirror/pm': 'link:../../@remirror/pm'
@@ -1797,7 +1792,6 @@ importers:
       '@remirror/preset-wysiwyg': ^0.0.0
       '@remirror/react': ^0.13.1
       '@remirror/react-utils': ^0.7.6
-      '@remirror/styles': ^0.0.0
       '@remirror/theme': ^0.0.0
       '@types/react': ^16.9.41
       '@types/react-dom': ^16.9.8

@@ -27,3 +27,5 @@ export function createWysiwygPresetList(parameter: CreateWysiwygPresetListParame
 
   return [new WysiwygPreset(wysiwyg), new ListPreset(), new EmbedPreset(embed)];
 }
+
+export type WysiwygPresetCombinedUnion = WysiwygPreset | ListPreset | EmbedPreset;
