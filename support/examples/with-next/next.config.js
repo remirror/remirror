@@ -4,7 +4,4 @@ module.exports = withPreconstruct({
   devIndicators: {
     autoPrerender: false,
   },
-  experimental: {
-    reactRefresh: false,
-  },
 });

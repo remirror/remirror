@@ -21,7 +21,7 @@
     "ci:version:repo": "unset CI && pnpm run fix:repo",
     "clean": "pnpm run if-clean git clean -- -fdx --exclude=.config.json --exclude=node_modules --exclude=**/node_modules",
     "clean:all": "git clean -fdX --exclude=.config.json ",
-    "clean:build": "rimraf @remirror/*/lib packages/*/lib docs/public docs/.cache .jest examples/with-next/.next {@remirror,packages}/*/*.tsbuildinfo",
+    "clean:build": "rimraf @remirror/*/lib packages/*/lib docs/public docs/.cache .jest support/examples/with-next/.next {@remirror,packages}/*/*.tsbuildinfo",
     "clean:modules": "git clean -fdX @remirror support docs packages",
     "css:build": "node support/scripts/linaria.js",
     "css:clean": "rimraf @remirror/styles/*.css packages/remirror/styles/*.css",

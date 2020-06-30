@@ -12,7 +12,7 @@ git clone git@github.com:remirror/remirror.git
 cd remirror
 pnpm install
 pnpm run build
-cd examples/with-next
+cd support/examples/with-next
 pnpm run dev
 ```
 

@@ -13,5 +13,5 @@
     "scripts/linaria.js",
     "storybook/main.js"
   ],
-  "exclude": ["../**/dist/", "../dist", "templates", "e2e", "../examples/with-next"]
+  "exclude": ["../**/dist/", "../dist", "templates", "e2e", "examples"]
 }
