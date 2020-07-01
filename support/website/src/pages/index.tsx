@@ -7,7 +7,7 @@ import React, { ReactElement } from 'react';
 
 import { isString } from 'remirror/core';
 
-import { ExternalIcon } from '../components/nav-link';
+import { ExternalIcon } from '../components/external-icon';
 import styles from './styles.module.css';
 
 const features = [
