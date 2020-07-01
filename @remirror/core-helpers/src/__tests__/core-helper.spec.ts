@@ -108,8 +108,11 @@ test('startCase', () => {
 });
 
 test('uniqueId', () => {
-  expect(uniqueId({ prefix: 'test' })).toInclude('test');
-  expect(uniqueId({ size: 10 })).toHaveLength(10);
+  jest.useFakeTimers('modern');
+  jest.setSystemTime(1593617844370);
+  expect(uniqueId()).toMatchInlineSnapshot(`"kc3ix2fn"`);
+  expect(uniqueId()).not.toBe(uniqueId());
+  expect(uniqueId('test')).toStartWith('test');
 });
 
 test('take', () => {

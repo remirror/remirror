@@ -1,6 +1,5 @@
 import deepmerge from 'deepmerge';
 import fastDeepEqual from 'fast-deep-equal';
-import { nanoid } from 'nanoid';
 import omit from 'object.omit';
 import pick from 'object.pick';
 import { Primitive } from 'type-fest';
@@ -674,14 +673,18 @@ interface UniqueIdParameter {
    * @defaultValue ''
    */
   prefix?: string;
-
-  /**
-   * The length of the generated ID for the unique id
-   *
-   * @defaultValue 21
-   */
-  size?: number;
 }
+
+/**
+ * Returns a number that is unique during the runtime of this code.
+ */
+function n() {
+  var time = Date.now();
+  var last = n.last || time;
+  return (n.last = time > last ? time : last + 1);
+}
+
+n.last = 0;
 
 /**
  * Generate a unique id
@@ -691,8 +694,8 @@ interface UniqueIdParameter {
  *
  * @public
  */
-export function uniqueId({ prefix = '', size }: UniqueIdParameter = { prefix: '' }) {
-  return `${prefix}${nanoid(size)}`;
+export function uniqueId(prefix = '') {
+  return `${prefix}${n().toString(36)}`;
 }
 
 /**

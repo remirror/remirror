@@ -34,7 +34,6 @@
     "linaria": "^2.0.0-alpha.5",
     "min-document": "^2.19.0",
     "nanoevents": "^5.1.8",
-    "nanoid": "^3.1.10",
     "react-use": "^15.3.2",
     "resize-observer-polyfill": "^1.5.1",
     "type-fest": "^0.16.0"

@@ -54,7 +54,7 @@ export abstract class EditorWrapper<
    * A unique ID for the editor which is also used as a key to pass into
    * `getRootProps`.
    */
-  readonly #uid = uniqueId({ size: 10 });
+  readonly #uid = uniqueId();
 
   /**
    * A method which enables retrieving the props from the editor.

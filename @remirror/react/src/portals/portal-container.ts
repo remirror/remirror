@@ -1,6 +1,6 @@
 import { createNanoEvents } from 'nanoevents';
-import { nanoid } from 'nanoid';
 import { ReactElement } from 'react';
+import { uniqueId } from '@remirror/core';
 
 export interface RenderParameter {
   /**
@@ -77,7 +77,7 @@ export class PortalContainer {
    */
   render({ render, container }: RenderMethodParameter) {
     const portal = this.portals.get(container);
-    const key = portal ? portal.key : nanoid();
+    const key = portal ? portal.key : uniqueId();
 
     this.portals.set(container, { render, key });
     this.update();
@@ -92,7 +92,7 @@ export class PortalContainer {
   forceUpdate() {
     this.portals.forEach(({ render }, container) => {
       // Assign the portal a new key so it is re-rendered
-      this.portals.set(container, { render, key: nanoid() });
+      this.portals.set(container, { render, key: uniqueId() });
     });
 
     this.update();
