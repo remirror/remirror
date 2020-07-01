@@ -25,7 +25,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.3",
+    "@babel/runtime": "^7.10.4",
     "@remirror/theme": "^0.0.0",
     "linaria": "^2.0.0-alpha.5"
   },

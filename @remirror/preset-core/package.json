@@ -22,7 +22,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.3",
+    "@babel/runtime": "^7.10.4",
     "@remirror/extension-base-keymap": "^0.0.0",
     "@remirror/extension-doc": "^0.0.0",
     "@remirror/extension-history": "^0.0.0",

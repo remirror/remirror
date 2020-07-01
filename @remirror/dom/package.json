@@ -20,7 +20,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.3",
+    "@babel/runtime": "^7.10.4",
     "@remirror/preset-core": "^0.0.0",
     "type-fest": "^0.16.0"
   },

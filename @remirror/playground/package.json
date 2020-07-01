@@ -21,9 +21,9 @@
     "import-remirror": "echo 'Be sure to run `pnpm run build` in root first!' && ts-node -O '{\"module\":\"commonjs\"}' --transpile-only ./scripts/import-remirror.ts"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.3",
-    "@babel/standalone": "^7.10.3",
-    "@babel/types": "^7.10.3",
+    "@babel/runtime": "^7.10.4",
+    "@babel/standalone": "^7.10.4",
+    "@babel/types": "^7.10.4",
     "@remirror/core": "^0.11.0",
     "@remirror/core-helpers": "^0.7.6",
     "@remirror/react": "^0.13.1",

@@ -9,7 +9,7 @@
     "storybook": "start-storybook -p 6006 -c ./"
   },
   "dependencies": {
-    "@babel/core": "^7.10.3",
+    "@babel/core": "^7.10.4",
     "@remirror/showcase": "^0.13.1",
     "@storybook/addon-actions": "^5.3.19",
     "@storybook/addon-links": "^5.3.19",
@@ -22,6 +22,5 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "remirror": "^0.13.1"
-  },
-  "devDependencies": {}
+  }
 }

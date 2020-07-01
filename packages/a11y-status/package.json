@@ -15,7 +15,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.3",
+    "@babel/runtime": "^7.10.4",
     "@types/throttle-debounce": "^2.1.0",
     "throttle-debounce": "^2.2.1"
   },

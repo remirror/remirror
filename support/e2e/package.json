@@ -11,7 +11,7 @@
     "webkit": "REMIRROR_E2E_BROWSER=webkit jest --runInBand --verbose"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.3",
+    "@babel/runtime": "^7.10.4",
     "@remirror/core": "^0.11.0",
     "@types/wait-on": "^4.0.0",
     "expect-playwright": "^0.2.4",
