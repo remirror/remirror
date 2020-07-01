@@ -226,6 +226,7 @@ export abstract class EditorWrapper<
       // TODO: this should be made to never happen.
       return;
     }
+
     tr = this.props.onDispatchTransaction?.(tr, this.getState()) ?? tr;
 
     const previousState = this.getState();

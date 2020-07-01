@@ -210,6 +210,7 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "browserslist": "^4.12.2",
     "case-anything": "^1.1.1",
+    "core-js": "^3.6.5",
     "cpy-cli": "^3.1.1",
     "cross-env": "^7.0.2",
     "eslint": "^7.3.1",
@@ -249,6 +250,7 @@
     "stylelint": "^13.6.1",
     "stylelint-config-recommended": "^3.0.0",
     "typescript": "^3.9.5",
+    "typescript-plugin-css-modules": "^2.3.0",
     "typescript-snapshots-plugin": "^1.7.0",
     "typescript-styled-plugin": "^0.15.0"
   },

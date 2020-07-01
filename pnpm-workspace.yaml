@@ -5,4 +5,5 @@ packages:
   - 'support/deprecated/*'
   - 'support/e2e'
   - 'support/storybook'
+  - 'support/website'
   - 'support/examples/*'

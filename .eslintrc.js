@@ -302,6 +302,7 @@ module.exports = {
         'docs/**',
         'examples/**',
         'support/e2e/**',
+        'support/website/**',
         '**/__stories__',
         '**/*.stories.tsx',
       ],

@@ -4,7 +4,10 @@
     "types": ["node", "jest", "jest-extended", "jest-axe", "@testing-library/jest-dom"],
     "noEmit": true,
     "skipLibCheck": true, // TODO lingui has a broken type - open PR to fix it
-    "plugins": [{ "name": "typescript-snapshots-plugin" }]
+    "plugins": [
+      { "name": "typescript-snapshots-plugin" },
+      { "name": "typescript-plugin-css-modules" }
+    ]
   },
   "include": [
     "../**/*.ts",
