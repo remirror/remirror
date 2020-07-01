@@ -16,8 +16,8 @@ const features = [
     imageUrl: 'img/banner-advanced.svg',
     description: (
       <>
-        Remirror is designed to cater to a wide range of use cases. It supports fully collaborative
-        editors, embedded content, social functionality and much more.
+        Designed to cater to a huge selection of use cases, supporting fully collaborative editors,
+        embedded content, social functionality and more.
       </>
     ),
   },
@@ -26,9 +26,8 @@ const features = [
     imageUrl: 'img/banner-multiplatform.svg',
     description: (
       <>
-        Remirror is designed to work on all platforms with a JavaScript runtime. Run the code on
-        your node server, on mobile devices, on desktop (via <code>electron</code>) and in the
-        browser. Support for <code>React Native</code> and WebViews is coming soon.
+        Designed to run on all JavaScript enabled platforms. Build apps for NodeJS, for mobile, for
+        desktop and for the browser.
       </>
     ),
   },
@@ -37,9 +36,8 @@ const features = [
     imageUrl: 'img/banner-multiframework.svg',
     description: (
       <>
-        Remirror is a multi-framework text editor. It supports <code>React</code>, the pure{' '}
-        <code>dom</code> at the moment but support is coming for <code>Angular</code>,{' '}
-        <code>Svelte</code> and <code>Ember</code>.
+        A multi-framework text editor. It supports <code>React</code>, the pure <code>dom</code> and
+        support is coming for <code>Angular</code>, <code>Svelte</code> and <code>Ember</code>.
       </>
     ),
   },
@@ -56,7 +54,7 @@ const Feature = (props: FeatureProps) => {
   const imgUrl = useBaseUrl(imageUrl);
 
   return (
-    <div className={clsx('card', styles.feature)}>
+    <div className={clsx('card', styles.feature, 'shadow--md')}>
       {imgUrl && (
         <div className='text--center'>
           <img className={styles.featureImage} src={imgUrl} alt={isString(title) ? title : ''} />

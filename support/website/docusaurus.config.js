@@ -12,7 +12,6 @@ module.exports = {
   themeConfig: {
     disableDarkMode: true,
     navbar: {
-      title: 'Remirror',
       logo: {
         alt: 'Remirror Logo',
         src: 'img/logo.svg',
@@ -22,9 +21,9 @@ module.exports = {
           to: 'docs/',
           activeBasePath: 'docs',
           label: 'Docs',
-          position: 'left',
+          position: 'right',
         },
-        { to: 'blog', label: 'Blog', position: 'left' },
+        { to: 'blog', label: 'Blog', position: 'right' },
         {
           href: 'https://github.com/remirror/remirror',
           label: 'GitHub',
