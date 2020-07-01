@@ -25,6 +25,39 @@ function babelConfig(api) {
         plugins: [
           [require.resolve('@babel/plugin-proposal-class-properties')],
           [require.resolve('@babel/plugin-proposal-private-methods')],
+          require.resolve('babel-plugin-macros'),
+
+          // Polyfills the runtime needed for async/await, generators, and friends
+          // https://babeljs.io/docs/en/babel-plugin-transform-runtime
+          [
+            require.resolve('@babel/plugin-transform-runtime'),
+            {
+              corejs: false,
+              helpers: true,
+              // By default, it assumes @babel/runtime@7.0.0. Since we use >7.0.0, better to
+              // explicitly specify the version so that it can reuse the helper better
+              // See https://github.com/babel/babel/issues/10261
+              version: require('@babel/runtime/package.json').version,
+              regenerator: true,
+              useESModules: true,
+              // Undocumented option that lets us encapsulate our runtime, ensuring
+              // the correct version is used
+              // https://github.com/babel/babel/blob/090c364a90fe73d36a30707fc612ce037bdbbb24/packages/babel-plugin-transform-runtime/src/index.js#L35-L42
+              absoluteRuntime: absoluteRuntimePath,
+            },
+          ],
+
+          // Adds syntax support for import()
+          isServer
+            ? require.resolve('babel-plugin-dynamic-import-node')
+            : require.resolve('@babel/plugin-syntax-dynamic-import'),
+
+          require.resolve('@babel/plugin-transform-template-literals'),
+          require.resolve('@babel/plugin-proposal-object-rest-spread'),
+          require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
+          require.resolve('@babel/plugin-proposal-optional-chaining'),
+          require.resolve('@babel/plugin-proposal-numeric-separator'),
+          [require.resolve('@babel/plugin-proposal-decorators'), { legacy: true }],
         ],
       },
     ],
@@ -53,52 +86,7 @@ function babelConfig(api) {
       require.resolve('@babel/preset-react'),
       require.resolve('linaria/babel'),
     ],
-    plugins: [
-      // [
-      //   require.resolve('babel-plugin-module-resolver'),
-      //   {
-      //     alias: {
-      //       '@remirror/showcase': '../../@remirror/showcase',
-      //       '@remirror/playground': '../../@remirror/playground',
-      //       remirror: '../../packages/remirror',
-      //     },
-      //     cwd: resolve(__dirname),
-      //   },
-      // ],
-
-      require.resolve('babel-plugin-macros'),
-
-      // Polyfills the runtime needed for async/await, generators, and friends
-      // https://babeljs.io/docs/en/babel-plugin-transform-runtime
-      [
-        require.resolve('@babel/plugin-transform-runtime'),
-        {
-          corejs: false,
-          helpers: true,
-          // By default, it assumes @babel/runtime@7.0.0. Since we use >7.0.0, better to
-          // explicitly specify the version so that it can reuse the helper better
-          // See https://github.com/babel/babel/issues/10261
-          version: require('@babel/runtime/package.json').version,
-          regenerator: true,
-          useESModules: true,
-          // Undocumented option that lets us encapsulate our runtime, ensuring
-          // the correct version is used
-          // https://github.com/babel/babel/blob/090c364a90fe73d36a30707fc612ce037bdbbb24/packages/babel-plugin-transform-runtime/src/index.js#L35-L42
-          absoluteRuntime: absoluteRuntimePath,
-        },
-      ],
-
-      // Adds syntax support for import()
-      isServer
-        ? require.resolve('babel-plugin-dynamic-import-node')
-        : require.resolve('@babel/plugin-syntax-dynamic-import'),
-
-      require.resolve('@babel/plugin-transform-template-literals'),
-      require.resolve('@babel/plugin-proposal-numeric-separator'),
-      [require.resolve('@babel/plugin-proposal-decorators'), { legacy: true }],
-      require.resolve('babel-plugin-annotate-pure-calls'),
-      require.resolve('babel-plugin-dev-expression'),
-    ],
+    plugins: [],
   };
 }
 
