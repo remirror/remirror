@@ -479,7 +479,6 @@ importers:
   '@remirror/extension-base-keymap':
     dependencies:
       '@babel/runtime': 7.10.3
-      map-obj: 4.1.0
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -487,7 +486,6 @@ importers:
       '@babel/runtime': ^7.10.3
       '@remirror/core': ^0.11.0
       '@remirror/pm': '*'
-      map-obj: ^4.1.0
   '@remirror/extension-bidi':
     dependencies:
       '@babel/runtime': 7.10.3
