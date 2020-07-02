@@ -122,54 +122,6 @@
       }
     ]
   },
-  "jest": {
-    "cacheDirectory": "<rootDir>/.jest",
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "**/*.{ts,tsx}",
-      "!**/*.d.ts",
-      "!**/theme-styles.ts",
-      "!**/styles.ts",
-      "!__mocks__/**",
-      "!__tests__/**",
-      "!__dts__/**",
-      "!__fixtures__/**",
-      "!support/**",
-      "!examples/**"
-    ],
-    "coverageReporters": [
-      "json",
-      "lcov",
-      "text-summary",
-      "clover"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "statements": 60
-      }
-    },
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json"
-    ],
-    "projects": [
-      "<rootDir>/packages/@remirror/*/jest.config.js",
-      "<rootDir>/packages/*/jest.config.js"
-    ],
-    "reporters": [
-      "default",
-      "jest-github-reporter"
-    ],
-    "testRunner": "jest-circus/runner",
-    "watchPlugins": [
-      "jest-watch-select-projects",
-      "jest-watch-typeahead/filename",
-      "jest-watch-typeahead/testname"
-    ]
-  },
   "dependencies": {
     "@babel/core": "^7.10.4",
     "@babel/parser": "^7.10.4",
@@ -238,7 +190,6 @@
     "jest-github-reporter": "^1.0.1",
     "jest-prosemirror": "^0.8.3",
     "jest-remirror": "^0.13.1",
-    "jest-watch-select-projects": "^2.0.0",
     "jest-watch-typeahead": "^0.6.0",
     "json.macro": "^1.3.0",
     "linaria": "^2.0.0-alpha.5",

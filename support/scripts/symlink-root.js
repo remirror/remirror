@@ -1,10 +1,19 @@
 const fs = require('fs');
-const { baseDir } = require('./helpers');
+const { resolve } = require('path');
 
 const targets = fs.readdirSync(baseDir('support', 'root')).map((filename) => ({
   original: baseDir('support', 'root', filename),
   target: baseDir(filename),
 }));
+
+/**
+ * Resolve a path relative to the base directory.
+ *
+ * @param {string[]} paths
+ */
+function baseDir(...paths) {
+  return resolve(__dirname, '../..', ...paths);
+}
 
 /**
  * Safely get the stats for a file.

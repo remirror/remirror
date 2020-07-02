@@ -30,6 +30,18 @@ import {
   TestEditorViewParameter,
 } from './jest-prosemirror-types';
 
+const cleanupItems = new Set<[TestEditorView, HTMLElement]>();
+
+afterEach(() => {
+  for (const [view, element] of cleanupItems) {
+    view.destroy();
+
+    if (element.parentNode) {
+      element.remove();
+    }
+  }
+});
+
 /**
  * Create a test prosemirror editor an pass back helper properties and methods.
  *
@@ -80,12 +92,7 @@ export function createEditor<Schema extends EditorSchema = EditorSchema>(
   const view = new EditorView<Schema>(place, { state, ...editorOptions }) as TestEditorView<Schema>;
 
   if (autoClean) {
-    afterEach(() => {
-      view.destroy();
-      if (place.parentNode) {
-        place.remove();
-      }
-    });
+    cleanupItems.add([view, place]);
   }
 
   return new ProsemirrorTestChain(view);

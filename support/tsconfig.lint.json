@@ -12,10 +12,5 @@
     "../**/.eslintrc.js",
     "../**/.babelrc.js"
   ],
-  "exclude": [
-    "../**/dist/",
-    "../**/public/",
-    "../**/.cache/",
-    "../**/.linaria-cache/"
-  ]
+  "exclude": ["../**/dist/", "../**/public/", "../**/.cache/", "../**/.linaria-cache/"]
 }
