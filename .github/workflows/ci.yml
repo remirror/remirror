@@ -217,7 +217,7 @@ jobs:
         run: pnpm run build
 
       - name: run unit tests
-        run: pnpm run test
+        run: pnpm run test:build
 
   # Check that sizes are within their boundaries
   size_check:

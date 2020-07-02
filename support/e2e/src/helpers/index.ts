@@ -117,5 +117,5 @@ function makeHtmlObject(htmlOrPromise: string | Promise<string>): Promise<HTMLOb
   return Promise.resolve(htmlOrPromise).then((html) => Promise.resolve({ _: 'HTML', html }));
 }
 
-export const $innerHTML = (selector: string) =>
+export const $innerHtml = (selector: string) =>
   makeHtmlObject(page.$eval(selector, (element) => element.innerHTML));
