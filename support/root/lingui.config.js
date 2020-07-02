@@ -1,3 +1,6 @@
+// This file has been copied from `support/root`.
+// TO EDIT update the `support/root` file and run `pnpm run update:root`.
+
 module.exports = {
   locales: ['en'],
   sourceLocale: 'en',

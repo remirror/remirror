@@ -1,3 +1,6 @@
+// This file has been copied from `support/root`.
+// TO EDIT update the `support/root` file and run `pnpm run update:root`.
+
 const tsProjectOptions = { project: ['./support/tsconfig.lint.json'] };
 
 const tsProjectRules = {

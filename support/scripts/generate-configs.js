@@ -2,8 +2,8 @@ const { join } = require('path');
 const { getAllDependencies, formatFiles, baseDir, getRelativePathFromJson } = require('./helpers');
 const writeJSON = require('write-json-file');
 
-const configs = {
-  sizeLimit: '.size-limit.json',
+const paths = {
+  sizeLimit: baseDir('support', 'root',  '.size-limit.json'),
 };
 
 const filesToPrettify = [];
@@ -19,10 +19,9 @@ const generateSizeLimitConfig = async () => {
       ignore: Object.keys(json.peerDependencies || {}),
       running: false,
     }));
-  const path = baseDir(configs.sizeLimit);
 
-  await writeJSON(path, sizes);
-  filesToPrettify.push(path);
+  await writeJSON(paths.sizeLimit, sizes);
+  filesToPrettify.push(paths.sizeLimit);
 };
 
 const run = async () => {

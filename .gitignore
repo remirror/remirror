@@ -143,15 +143,15 @@ cc-reporter
 .pnpm-store/
 
 ## Ignore root files
-.eslintignore
-.eslintrc.js
-.npmrc
-.size-limit.json
-.stylelintignore
-.stylelintrc.json
-babel.config.js
-globals.d.ts
-linaria.config.js
-lingui.config.js
-pnpmfile.js
-tsconfig.json
+/.eslintignore
+/.eslintrc.js
+/.npmrc
+/.size-limit.json
+/.stylelintignore
+/.stylelintrc.json
+/babel.config.js
+/globals.d.ts
+/linaria.config.js
+/lingui.config.js
+/pnpmfile.js
+/tsconfig.json
