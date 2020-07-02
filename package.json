@@ -39,7 +39,7 @@
     "if-clean": "node support/scripts/run-if-clean.js",
     "if-config": "node support/scripts/run-if-config.js",
     "if-not-ci": "node support/scripts/run-if-not-ci.js",
-    "preinstall": "pnpm run update:root && pnpm run check:pnpm",
+    "preinstall": "pnpm run symlink:root && pnpm run check:pnpm",
     "postinstall": "run-s build:dev css:copy",
     "intl": "run-s intl:extract intl:compile intl:build",
     "intl:build": "node @remirror/i18n/build-declaration.js",
@@ -63,12 +63,12 @@
     "start:checks": "cpy support/.config.sample.json ./ --rename=\".config.json\"",
     "stop:checks": "rimraf ./.config.json",
     "storybook": "manypkg run support/storybook storybook",
+    "symlink:root": "node support/scripts/symlink-root.js",
     "test": "jest --verbose",
     "test:build": "cross-env TEST_BUILD=true jest --verbose --coverage=false",
     "test:e2e": "manypkg run support/e2e chromium",
     "test:watch": "jest  --watch --verbose=false --coverage=false",
-    "typecheck": "tsc -b ./tsconfig.json",
-    "update:root": "node support/scripts/update-root.js"
+    "typecheck": "tsc -b ./tsconfig.json"
   },
   "husky": {
     "hooks": {

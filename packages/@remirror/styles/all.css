@@ -1,5 +1,5 @@
 /**
- * Styles extracted from: @remirror/core/src/styles.ts
+ * Styles extracted from: packages/@remirror/core/src/styles.ts
  */
 
 .remirror-editor.ProseMirror {
@@ -65,7 +65,7 @@
 }
 
 /**
- * Styles extracted from: @remirror/editor-social/src/social-editor-styles.ts
+ * Styles extracted from: packages/@remirror/editor-social/src/social-editor-styles.ts
  */
 .remirror-emoji-suggestions-item {
   padding: 8px;
@@ -168,7 +168,7 @@
 }
 
 /**
- * Styles extracted from: @remirror/editor-social/src/components/social-editor-character-count.tsx
+ * Styles extracted from: packages/@remirror/editor-social/src/components/social-editor-character-count.tsx
  */
 .remirror-character-count-wrapper {
   position: absolute;
@@ -196,7 +196,7 @@
 }
 
 /**
- * Styles extracted from: @remirror/editor-social/src/components/social-editor-emoji.tsx
+ * Styles extracted from: packages/@remirror/editor-social/src/components/social-editor-emoji.tsx
  */
 .remirror-emoji-suggestions-item-name {
   color: rgb(121, 129, 134);
@@ -208,7 +208,7 @@
 }
 
 /**
- * Styles extracted from: @remirror/editor-social/src/components/social-editor.tsx
+ * Styles extracted from: packages/@remirror/editor-social/src/components/social-editor.tsx
  */
 .remirror-social-editor .ProseMirror {
   flex-grow: 1;
@@ -261,7 +261,7 @@
 }
 
 /**
- * Styles extracted from: @remirror/extension-blockquote/src/styles.ts
+ * Styles extracted from: packages/@remirror/extension-blockquote/src/styles.ts
  */
 .remirror-editor blockquote {
   border-left: 2px solid #ddd;
@@ -275,7 +275,7 @@
 }
 
 /**
- * Styles extracted from: @remirror/extension-gap-cursor/src/styles.ts
+ * Styles extracted from: packages/@remirror/extension-gap-cursor/src/styles.ts
  */
 .remirror-editor {
   @-webkit-keyframes ProseMirror-cursor-blink {
@@ -314,7 +314,7 @@
 }
 
 /**
- * Styles extracted from: @remirror/extension-placeholder/src/placeholder-extension.ts
+ * Styles extracted from: packages/@remirror/extension-placeholder/src/placeholder-extension.ts
  */
 
 .remirror-is-empty:first-of-type::before {
@@ -327,7 +327,7 @@
 }
 
 /**
- * Styles extracted from: @remirror/extension-yjs/src/yjs-extension.ts
+ * Styles extracted from: packages/@remirror/extension-yjs/src/yjs-extension.ts
  */
 .remirror-editor .ProseMirror .ProseMirror-yjs-cursor {
   position: absolute;
@@ -379,7 +379,7 @@
 }
 
 /**
- * Styles extracted from: @remirror/preset-table/src/table-styles.ts
+ * Styles extracted from: packages/@remirror/preset-table/src/table-styles.ts
  */
 .remirror-editor .ProseMirror .tableWrapper {
   overflow-x: auto;
@@ -424,7 +424,7 @@
 }
 
 /**
- * Styles extracted from: @remirror/theme/src/theme-styles.ts
+ * Styles extracted from: packages/@remirror/theme/src/theme-styles.ts
  */
 .remirror-theme {
   --remirror-color-black: #000000;

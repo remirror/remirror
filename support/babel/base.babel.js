@@ -1,11 +1,8 @@
-const { SKIP_STORIES } = process.env;
-
 const ignore = [
   '**/__tests__',
   '**/__dts__',
   '**/__mocks__',
   '**/__fixtures__',
-  ...(SKIP_STORIES ? ['**/__stories__'] : []),
   '*.{test,spec}.{ts,tsx}',
   '**/*.d.ts',
   '*.d.ts',
@@ -39,7 +36,7 @@ module.exports = {
     },
   ],
   plugins: [
-    'macros',
+    'babel-plugin-macros',
     ['@babel/plugin-transform-runtime', {}, 'name-added-to-prevent-duplicate-with-linaria-preset'],
     ['@babel/plugin-transform-template-literals', {}, 'no-clash'],
     '@babel/plugin-proposal-object-rest-spread',
@@ -48,8 +45,8 @@ module.exports = {
     '@babel/plugin-proposal-optional-chaining',
     '@babel/plugin-proposal-numeric-separator',
     ['@babel/plugin-proposal-decorators', { legacy: true }],
-    'annotate-pure-calls',
-    'dev-expression',
+    'babel-plugin-annotate-pure-calls',
+    'babel-plugin-dev-expression',
   ],
   env: { production: nonTestEnv, development: nonTestEnv },
 };

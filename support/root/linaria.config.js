@@ -1,6 +1,3 @@
-// This file has been copied from `support/root`.
-// TO EDIT update the `support/root` file and run `pnpm run update:root`.
-
 const { kebabCase } = require('case-anything');
 
 /**
@@ -11,7 +8,7 @@ const config = {
   classNameSlug: (_hash, title) => {
     return `remirror-${kebabCase(title.replace(/Styles?/g, ''))}`;
   },
-  babelOptions: require('./support/babel/base.babel'),
+  babelOptions: require('../babel/base.babel'),
   rules: [
     {
       action: require('linaria/evaluators').shaker,

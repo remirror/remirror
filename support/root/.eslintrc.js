@@ -1,7 +1,4 @@
-// This file has been copied from `support/root`.
-// TO EDIT update the `support/root` file and run `pnpm run update:root`.
-
-const tsProjectOptions = { project: ['./support/tsconfig.lint.json'] };
+const tsProjectOptions = { project: [require.resolve('../tsconfig.lint.json')] };
 
 const tsProjectRules = {
   '@typescript-eslint/prefer-readonly': 'warn',
@@ -284,7 +281,7 @@ module.exports = {
       files: [
         '**/*.d.ts',
         '**/__mocks__/**',
-        '@remirror/i18n/**/*.ts',
+        'packages/@remirror/i18n/**/*.ts',
         'docs/**',
         'support/examples/**',
         'support/e2e/**',
@@ -308,7 +305,7 @@ module.exports = {
       },
     },
     {
-      files: ['support/scripts/**', 'support/e2e/**', '@remirror/playground/scripts/**'],
+      files: ['support/scripts/**', 'support/e2e/**', 'packages/@remirror/playground/scripts/**'],
       rules: {
         '@typescript-eslint/ban-ts-comment': 'off',
         'unicorn/no-process-exit': 'off',
@@ -316,7 +313,7 @@ module.exports = {
       },
     },
     {
-      files: ['@remirror/i18n/**/*.js'],
+      files: ['packages/@remirror/i18n/**/*.js'],
       rules: {
         'eslint-comments/disable-enable-pair': 'off',
         'eslint-comments/no-unlimited-disable': 'off',
@@ -325,7 +322,7 @@ module.exports = {
       },
     },
     {
-      files: ['@remirror/playground/**', 'support/e2e/**'],
+      files: ['packages/@remirror/playground/**', 'support/e2e/**'],
       rules: { '@typescript-eslint/no-var-requires': 'off' },
     },
   ],

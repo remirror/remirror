@@ -1,10 +1,14 @@
 {
-  // This file has been copied from `support/root`.
-  // TO EDIT update the `support/root` file and run `pnpm run update:root`.
   "files": [],
   "references": [
-    { "path": "../tsconfig.main.json" },
-    { "path": "../e2e/tsconfig.json" },
-    { "path": "../examples/with-next/tsconfig.json" }
+    {
+      "path": "../tsconfig.main.json"
+    },
+    {
+      "path": "../e2e/tsconfig.json"
+    },
+    {
+      "path": "../examples/with-next/tsconfig.json"
+    }
   ]
 }

@@ -15,7 +15,7 @@ const precss = require('precss');
 /**
  * @param {string[]} paths
  */
-const files = globby.sync(['@remirror/*/src/**/*.{ts,tsx}'], {
+const files = globby.sync(['packages/@remirror/*/src/**/*.{ts,tsx}'], {
   cwd: baseDir(),
   ignore: [
     '**/__tests__',
@@ -32,17 +32,18 @@ const files = globby.sync(['@remirror/*/src/**/*.{ts,tsx}'], {
 /**
  * Place all styles into the styles package.
  */
-const outputDirectory = baseDir('@remirror/styles');
+const outputDirectory = baseDir('packages/@remirror/styles');
 
 /**
  * Regex for grouping files together.
  */
-const groupingRegex = /^@remirror\/([\w-]+)\/.*/;
+const groupingRegex = /^packages\/@remirror\/([\w-]+)\/.*/;
 
 /**
  * The grouped files.
  */
 const groupedFiles = groupBy(files, (file) => {
+  console.log(file)
   const match = file.match(groupingRegex);
 
   if (!match || !match[1]) {

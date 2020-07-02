@@ -1,5 +1,5 @@
 /**
- * Styles extracted from: @remirror/preset-table/src/table-styles.ts
+ * Styles extracted from: packages/@remirror/preset-table/src/table-styles.ts
  */
 .remirror-editor .ProseMirror .tableWrapper {
   overflow-x: auto;
