@@ -27,7 +27,6 @@ export const SocialEditor: FC<SocialEditorProps> = (props) => {
     socialOptions,
     ...rest
   } = props;
-
   const socialManager = useSocialManager(manager ?? combined ?? [], socialOptions);
 
   return (
@@ -49,7 +48,6 @@ type EditorProps = Pick<
  */
 const Editor: FC<EditorProps> = (props) => {
   const { children, characterLimit = 280, tagData, onMentionChange, userData } = props;
-
   const { getRootProps, getState } = useRemirror();
   const used = getState().doc.textContent.length;
 

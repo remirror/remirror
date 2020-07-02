@@ -1,7 +1,10 @@
 import isEqual from 'fast-deep-equal/react';
 import { DependencyList, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import useSetState from 'react-use/lib/useSetState';
+import useUpdateEffect from 'react-use/lib/useUpdateEffect';
 import ResizeObserver from 'resize-observer-polyfill';
+
+import { useEffectOnce } from '../../../editor-social/node_modules/multishift/src/multishift-hooks';
 
 /**
  * Preserves the previous version of a provided value.
@@ -78,22 +81,35 @@ const useEffectWithWarning: typeof useEffect =
     ? useEffect
     : (effect, deps) => {
         const ref = useRef<DependencyList>();
+        const unnecessaryChange = useRef(0);
 
-        let unnecessaryChange = false;
+        useEffectOnce(() => {
+          ref.current = deps;
+        });
+
+        useUpdateEffect(() => {
+          if (!isEqual(deps, ref.current)) {
+            unnecessaryChange.current = 0;
+            ref.current = deps;
+            return;
+          }
+
+          unnecessaryChange.current += 1;
+        });
 
         if (!ref.current) {
           ref.current = deps;
         }
 
         if (!isEqual(deps, ref.current)) {
-          unnecessaryChange = true;
           ref.current = deps;
         }
 
         const wrappedEffect = () => {
-          if (unnecessaryChange) {
+          if (unnecessaryChange.current >= 2) {
             console.warn(
-              'The dependencies passed into your useEffect are deeply equal, but an update has been triggered. Please consider `useMemo` to memoize your dependencies to prevent unwanted re-renders.',
+              `The dependencies passed into your useEffect are deeply equal, but an update has been triggered ${unnecessaryChange.current} time(s). Please consider \`useMemo\` to memoize your dependencies to prevent unwanted re-renders.`,
+              deps,
             );
           }
 

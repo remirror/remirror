@@ -22,7 +22,6 @@ import {
   invariant,
   isFunction,
   isRemirrorManager,
-  keys,
   OptionsOfConstructor,
   RemirrorManager,
 } from '@remirror/core';
@@ -168,8 +167,6 @@ export function useExtension<Type extends AnyExtensionConstructor>(
     extension.setOptions(optionsOrCallback);
   }, [extension, optionsOrCallback]);
 
-  const memoizedDependencies = useObjectCheck(dependencies);
-
   useEffectWithWarning(() => {
     if (!isFunction(optionsOrCallback)) {
       return;
@@ -180,7 +177,7 @@ export function useExtension<Type extends AnyExtensionConstructor>(
       addCustomHandler: extension.addCustomHandler,
       extension,
     });
-  }, [extension, optionsOrCallback, memoizedDependencies]);
+  }, [extension, optionsOrCallback, ...dependencies]);
 }
 
 interface UseExtensionCallbackParameter<Type extends AnyExtensionConstructor> {
@@ -242,8 +239,6 @@ export function usePreset<Type extends AnyPresetConstructor>(
     preset.setOptions(optionsOrCallback);
   }, [preset, optionsOrCallback]);
 
-  const memoizedDependencies = useObjectCheck(dependencies);
-
   useEffectWithWarning(() => {
     if (!isFunction(optionsOrCallback)) {
       return;
@@ -254,15 +249,7 @@ export function usePreset<Type extends AnyPresetConstructor>(
       addCustomHandler: preset.addCustomHandler,
       preset,
     });
-  }, [preset, optionsOrCallback, memoizedDependencies]);
-}
-
-function arePropertiesEqual<Type extends object>(value: Type, compare?: Type) {
-  if (compare === undefined) {
-    return false;
-  }
-
-  return keys(value).every((key) => compare[key]);
+  }, [preset, optionsOrCallback, ...dependencies]);
 }
 
 interface UsePresetCallbackParameter<Type extends AnyPresetConstructor> {
@@ -289,19 +276,6 @@ interface UsePresetCallbackParameter<Type extends AnyPresetConstructor> {
 type UsePresetCallback<Type extends AnyPresetConstructor> = (
   parameter: UsePresetCallbackParameter<Type>,
 ) => Dispose | undefined;
-
-/**
- * Takes an object and checks if any of it's properties are different from previously
- */
-function useObjectCheck<Type extends object>(parameter: Type): Type {
-  const ref = useRef<Type>();
-
-  if (!ref.current || !arePropertiesEqual(parameter, ref.current)) {
-    ref.current = parameter;
-  }
-
-  return ref.current;
-}
 
 /**
  * A hook for creating the editor manager directly in the react component.
@@ -364,10 +338,6 @@ export type UsePositionerHookReturn = PositionerChangeHandlerParameter & {
  *
  * const MenuComponent: FC = () => {
  *
- *   const onChange = ({active, bottom, left}) => {
- *     re
- *   }
- *
  *   const {
  *     active,
  *     bottom,
@@ -412,20 +382,23 @@ export function usePositioner(
 
   useExtension(
     PositionerExtension,
-    (parameter) => {
-      if (!element) {
-        return;
-      }
+    useCallback(
+      (parameter) => {
+        if (!element) {
+          return;
+        }
 
-      const { addCustomHandler } = parameter;
-      const dispose = addCustomHandler('positionerHandler', {
-        element,
-        positioner,
-        onChange: onChangeHandler,
-      });
+        const { addCustomHandler } = parameter;
+        const dispose = addCustomHandler('positionerHandler', {
+          element,
+          positioner,
+          onChange: onChangeHandler,
+        });
 
-      return dispose;
-    },
+        return dispose;
+      },
+      [element, onChangeHandler, positioner],
+    ),
     [positioner, element],
   );
 

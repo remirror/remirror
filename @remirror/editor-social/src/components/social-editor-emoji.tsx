@@ -156,14 +156,22 @@ function useEmojiKeyBindings(parameter: EmojiHookParameter) {
   );
 }
 
-/**
- * The emoji suggestions component.
- */
-export const EmojiSuggestions = () => {
+function useEmojiState() {
   const [state, setState] = useSetState<EmojiState>(initialState);
+
+  return useMemo(() => ({ ...state, setState }), [setState, state]);
+}
+
+interface EmojiDropdownProps {
+  list: EmojiObject[];
+  command: EmojiSuggestCommand;
+  index: number;
+}
+
+const EmojiDropdown = (props: EmojiDropdownProps) => {
+  const { index, command, list } = props;
   const { focus } = useSocialRemirror();
   const { ref, top, left } = usePositioner('popupMenu');
-  const { hideSuggestions, index, list, command } = state;
 
   const { getMenuProps, getItemProps, itemHighlightedAtIndex, hoveredIndex } = useMultishift({
     highlightedIndexes: [index],
@@ -171,13 +179,6 @@ export const EmojiSuggestions = () => {
     items: list,
     isOpen: true,
   });
-
-  useEmojiChangeHandler(setState);
-  useEmojiKeyBindings({ ...state, setState });
-
-  if (hideSuggestions || !command) {
-    return null;
-  }
 
   return (
     <div
@@ -215,6 +216,22 @@ export const EmojiSuggestions = () => {
       })}
     </div>
   );
+};
+
+/**
+ * The emoji suggestions component.
+ */
+export const EmojiSuggestions = () => {
+  const { setState, hideSuggestions, index, list, command } = useEmojiState();
+
+  useEmojiChangeHandler(setState);
+  useEmojiKeyBindings({ hideSuggestions, index, list, command, setState });
+
+  if (hideSuggestions || !command) {
+    return null;
+  }
+
+  return <EmojiDropdown list={list} index={index} command={command} />;
 };
 
 const emojiSuggestionsItemName = css`
