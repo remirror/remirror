@@ -15,7 +15,10 @@
   "dependencies": {
     "@babel/runtime": "^7.10.4",
     "@docusaurus/core": "^2.0.0-alpha.58",
+    "@docusaurus/plugin-content-docs": "^2.0.0-alpha.58",
+    "@docusaurus/plugin-ideal-image": "^2.0.0-alpha.58",
     "@docusaurus/preset-classic": "^2.0.0-alpha.58",
+    "@docusaurus/theme-live-codeblock": "^2.0.0-alpha.58",
     "@mdx-js/react": "^1.6.6",
     "@remirror/playground": "^0.0.0",
     "@remirror/showcase": "^0.13.1",
@@ -23,6 +26,7 @@
     "core-js": "^3.6.5",
     "docusaurus": "^2.0.0-alpha.58",
     "is-absolute-url": "^3.0.3",
+    "prism-react-renderer": "^1.1.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "remirror": "^0.13.1"

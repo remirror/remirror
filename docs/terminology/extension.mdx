@@ -2,8 +2,6 @@
 title: Extension
 ---
 
-# Extension
-
 Extensions manage similar concerns. It allows for grouping items that affect:
 
 - How the editor displays certain content, i.e. **bold**, _italic_, **underline**.
@@ -18,42 +16,4 @@ There are three types of `Extension`.
   in the editor.
 - `MarkExtension` - For creating [Prosemirror marks](https://prosemirror.net/docs/ref/#model.Mark)
   in the editor.
-- `Extension` - For behaviour which doesn't need to be displayed in the DOM.
-
-#### Available extensions
-
-Import any single extension with:
-
-```
-import { FooBarExtension } from '@remirror/core-extensions';
-```
-
-##### Node extensions
-
-- BlockquoteExtension
-- BulletListExtension
-- CodeBlockExtension
-- HardBreakExtension
-- HeadingExtension
-- HorizontalRuleExtension
-- ImageExtension
-- ListItemExtension
-- OrderedListExtension
-
-##### Mark extensions
-
-- BoldExtension
-- CodeExtension
-- ItalicExtension
-- LinkExtension
-- StrikeExtension
-- UnderlineExtension
-
-##### Generic extensions
-
-- BaseKeymapExtension
-- CompositionExtension
-- HistoryExtension
-- NodeCursorExtension
-- PlaceholderExtension
-- SSRHelperExtension
+- `PlainExtension` - For behaviour which doesn't need to be displayed in the DOM.

@@ -4,7 +4,16 @@ title: RemirrorManager
 
 # RemirrorManager
 
-RemirrorManager is a React component that injects an `Manager` instance into the React context.
+The `RemirrorManager` is responsible for grouping together the `Extension`'s and `Preset`'s and
+providing their behaviour to your editor. It wraps the functionality by providing the following
+lifecycyle methods which are used by the view layers to manger the editor at run time.
+
+### `onCreate`
+
+This is called when the `RemirrorManager` is first created.
+
+:::note In the previous version of `remirror` the `RemirrorManager` referred to a `React` component.
+That was in the _before times_ of which we do not speak. :::
 
 ```tsx
 import React, { FC } from 'react';

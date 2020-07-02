@@ -2,10 +2,6 @@
 title: Contributing
 ---
 
-# Contributing
-
-<br />
-
 ## Getting Started
 
 Fork [this repository][repo], clone your fork and add this repository as the upstream remote.

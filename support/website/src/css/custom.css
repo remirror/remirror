@@ -23,7 +23,7 @@
 
   --ifm-navbar-height: 4rem;
   --ifm-navbar-link-color: white;
-  --ifm-menu-color: white;
+
   --ifm-navbar-background-color: var(--ifm-color-primary);
   --ifm-navbar-link-hover-color: white;
   --ifm-navbar-sidebar-width: 25vw;
@@ -110,6 +110,10 @@
         display: flex;
       }
     }
+  }
+
+  .navbar-sidebar {
+    --ifm-menu-color: white;
   }
 
   .navbar-sidebar__brand {

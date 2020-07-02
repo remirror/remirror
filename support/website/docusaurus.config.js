@@ -7,8 +7,8 @@ module.exports = {
   url: 'https://remirror.io',
   baseUrl: '/',
   favicon: 'img/favicon.png',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'remirror', // Usually your GitHub org/user name.
+  projectName: 'remirror', // Usually your repo name.
   themeConfig: {
     disableDarkMode: true,
     navbar: {
@@ -18,11 +18,12 @@ module.exports = {
       },
       links: [
         {
-          to: 'docs/',
+          to: 'docs/introduction',
           activeBasePath: 'docs',
           label: 'Docs',
           position: 'right',
         },
+        { to: 'playground', label: 'Playground', position: 'right' },
         { to: 'blog', label: 'Blog', position: 'right' },
         {
           href: 'https://github.com/remirror/remirror',
@@ -51,10 +52,6 @@ module.exports = {
           title: 'Community',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/remirror',
-            },
-            {
               label: 'Discord',
               href: 'https://discordapp.com/invite/remirror',
             },
@@ -78,7 +75,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} KickJump. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Ifiok Jr.`,
     },
   },
   presets: [
@@ -88,7 +85,6 @@ module.exports = {
         docs: {
           path: '../../docs',
           // It is recommended to set document id as docs home page (`docs/` path).
-          homePageId: 'index',
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl: 'https://github.com/remirror/remirror/edit/next/docs/',
         },
@@ -102,5 +98,9 @@ module.exports = {
       },
     ],
   ],
-  plugins: [path.join(__dirname, 'plugins/monaco-editor')],
+  plugins: [
+    path.join(__dirname, 'plugins/monaco-editor'),
+    require.resolve('@docusaurus/plugin-ideal-image'),
+  ],
+  themes: ['@docusaurus/theme-live-codeblock'],
 };

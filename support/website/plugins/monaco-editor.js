@@ -36,13 +36,20 @@ function monacoEditorPlugin(_context, _options) {
             continue;
           }
 
-          item.options.plugins = (loader) => {
+          item.options.plugins = () => {
             return [require('precss'), require('autoprefixer')];
           };
         }
       }
 
       return {
+        resolve: {
+          alias: {
+            // NOTE: This fixes an issue with `react-live` - remove once this PR
+            // is merged https://github.com/FormidableLabs/react-live/pull/193
+            'core-js/fn/object/assign': require.resolve('core-js/features/object/assign'),
+          },
+        },
         module: {
           rules: [
             {
