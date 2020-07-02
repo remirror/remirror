@@ -112,7 +112,8 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
   static readonly defaultPriority: ExtensionPriority = ExtensionPriority.Default;
 
   /**
-   * The priority level for this instance of the extension.
+   * The priority level for this instance of the extension. A higher value
+   * corresponds to a higher priority extension
    */
   get priority(): ExtensionPriority {
     return this.options.priority ?? this.constructor.defaultPriority;

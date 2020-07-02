@@ -279,58 +279,64 @@ export enum RemirrorIdentifier {
  *
  * @remarks
  *
- * Higher priority extension (lower number) will take precedence when there's a
- * class. For example if two extensions have the same name the higher priority
- * extension is the one that will be loaded.
+ * Higher priority extension (higher numberic value) will ensure the extension
+ * has a higher preference in your editor. In the case where you load two
+ * identical extensions into your editor (same name, or same constructor), the
+ * extension with the  higher priority is the one that will be loaded.
  *
- * The lower the numeric value the higher the priority. The priority can also be
- * passed a number but naming things in this `enum` should help provide some
+ * The higher the numeric value the higher the priority. The priority can also
+ * be passed a number but naming things in this `enum` should help provide some
  * context to the numbers.
+ *
+ * By default all extensions are created with a `ExtensionPriority.Default`.
  */
 export enum ExtensionPriority {
   /**
    * Use this **never** 😉
    */
-  Critical = 0,
+  Critical = 1_000_000,
 
   /**
    * A, like super duper, high priority.
    */
-  Highest = 10,
+  Highest = 100_000,
 
   /**
    * The highest priority level that should be used in a publicly shared
    * extension (to allow some wiggle room for downstream users overriding
    * priorities).
    */
-  High = 100,
+  High = 10_000,
 
   /**
    * A medium priority extension. This is typically all you need to take
    * priority over built in extensions.
    */
-  Medium = 1000,
+  Medium = 1_000,
 
   /**
    * This is the **default** priority for most extensions.
    */
-  Default = 5000,
+  Default = 100,
 
   /**
    * This is the **default** priority for builtin behavior changing extensions.
    */
-  Low = 10000,
+  Low = 10,
 
   /**
    * This is useful for extensions that exist to be overridden.
    */
-  Lowest = 100000,
+  Lowest = 0,
 }
 
 /**
  * Identifies the stage the extension manager is at.
  */
 export enum ManagerPhase {
+  /**
+   * The initial value for the manager phase.
+   */
   None,
 
   /**
