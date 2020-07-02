@@ -5,13 +5,11 @@ on:
     branches:
       - main
       - next
-      - changeset-release/main
-      - changeset-release/next
   pull_request:
     types: [opened, synchronize]
     branches:
       - main
-      - next # Temporarily enable
+      - next
 
 env:
   CI: true
@@ -60,11 +58,11 @@ jobs:
       - name: deploy docs
         uses: nwtgck/actions-netlify@develop
         with:
-          publish-dir: './docs/public'
-          production-branch: main
+          publish-dir: './support/website/build'
+          production-branch: next
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message:
             'Deploy Docs from GitHub Actions - ${{ github.event.pull_request.title || github.ref }}'
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_SITE_ID: ${{ secrets.NEXT_NETLIFY_SITE_ID }}
