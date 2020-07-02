@@ -249,7 +249,7 @@
     "snapshot-diff": "^0.8.1",
     "stylelint": "^13.6.1",
     "stylelint-config-recommended": "^3.0.0",
-    "typescript": "^3.9.5",
+    "typescript": "^3.9.6",
     "typescript-plugin-css-modules": "^2.3.0",
     "typescript-snapshots-plugin": "^1.7.0",
     "typescript-styled-plugin": "^0.15.0"

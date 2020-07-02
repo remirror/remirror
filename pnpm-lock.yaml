@@ -166,7 +166,7 @@ importers:
       snapshot-diff: ^0.8.1
       stylelint: ^13.6.1
       stylelint-config-recommended: ^3.0.0
-      typescript: ^3.9.5
+      typescript: ^3.9.6
       typescript-plugin-css-modules: ^2.3.0
       typescript-snapshots-plugin: ^1.7.0
       typescript-styled-plugin: ^0.15.0
@@ -525,7 +525,7 @@ importers:
       '@babel/runtime': ^7.10.4
       '@remirror/core': '*'
       '@remirror/pm': '*'
-      csstype: ^2.6.10
+      csstype: ^2.6.11
   '@remirror/extension-code':
     dependencies:
       '@babel/runtime': 7.10.4
@@ -1313,7 +1313,7 @@ importers:
       '@remirror/core-types': ^0.9.0
       '@remirror/core-utils': ^0.8.0
       '@remirror/pm': ^0.0.0
-      '@testing-library/dom': ^7.19.0
+      '@testing-library/dom': ^7.20.0
       '@types/prosemirror-schema-basic': ^1.0.1
       '@types/prosemirror-test-builder': ^1.0.1
       chalk: ^4.1.0
@@ -1343,7 +1343,7 @@ importers:
     specifiers:
       '@babel/runtime': ^7.10.4
       '@remirror/pm': ^0.0.0
-      '@testing-library/dom': ^7.19.0
+      '@testing-library/dom': ^7.20.0
       '@testing-library/react': ^10.4.3
       '@types/node': ^14.0.14
       '@types/react': ^16.9.41
@@ -1642,7 +1642,7 @@ importers:
       expect-playwright: ^0.2.4
       jest: ^26.1.0
       jest-dev-server: ^4.4.0
-      jest-playwright-preset: ^1.1.0
+      jest-playwright-preset: ^1.2.0
       looks-same: ^7.2.3
       playwright: ^1.1.1
       playwright-core: ^1.1.1
