@@ -39,12 +39,12 @@ module.exports = {
           title: 'Docs',
           items: [
             {
-              label: 'Style Guide',
-              to: 'docs/',
+              label: 'Introduction',
+              to: 'docs/introduction',
             },
             {
-              label: 'Second Doc',
-              to: 'docs/doc2/',
+              label: 'Installation',
+              to: 'docs/guide/installation',
             },
           ],
         },
@@ -53,11 +53,11 @@ module.exports = {
           items: [
             {
               label: 'Discord',
-              href: 'https://discordapp.com/invite/remirror',
+              href: 'https://discord.gg/C4cfrMK',
             },
             {
               label: 'Twitter',
-              href: 'https://twitter.com/remirrorio',
+              href: 'https://twitter.com/ifiokjr',
             },
           ],
         },

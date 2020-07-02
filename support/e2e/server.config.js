@@ -40,7 +40,7 @@ const servers = (exports.servers = {
 
   docs: {
     server: {
-      command: 'cd ../../docs && pnpm run start -- -p 3030',
+      command: 'cd ../website && pnpm run start -- -p 3030',
       port: 3030,
       usedPortAction: 'kill',
       launchTimeout: 120000,
