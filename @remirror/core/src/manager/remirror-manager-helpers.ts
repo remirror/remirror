@@ -38,6 +38,7 @@ export interface TransformExtensionOrPreset<Combined extends AnyCombinedUnion> {
  */
 export function transformCombinedUnion<Combined extends AnyCombinedUnion>(
   unionValues: readonly Combined[],
+  settings: Remirror.ManagerSettings,
 ): TransformExtensionOrPreset<Combined> {
   type ExtensionUnion = InferCombinedExtensions<Combined>;
   type ExtensionConstructor = GetConstructor<ExtensionUnion>;
@@ -72,6 +73,7 @@ export function transformCombinedUnion<Combined extends AnyCombinedUnion>(
   for (const presetOrExtension of unionValues) {
     // Update the extension list in this block
     if (isExtension<ExtensionUnion>(presetOrExtension)) {
+      presetOrExtension.setPriority(settings.priority?.[presetOrExtension.name]);
       rawExtensions.push(presetOrExtension);
       updateExtensionDuplicates(presetOrExtension);
 
@@ -84,6 +86,7 @@ export function transformCombinedUnion<Combined extends AnyCombinedUnion>(
       presetMap.set(presetOrExtension.constructor, presetOrExtension);
 
       for (const extension of presetOrExtension.extensions) {
+        extension.setPriority(settings.priority?.[extension.name]);
         updateExtensionDuplicates(extension as ExtensionUnion, presetOrExtension);
         rawExtensions.push(extension as ExtensionUnion);
       }

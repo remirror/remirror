@@ -19,7 +19,7 @@ import { GeneralExtensionTags, MarkExtensionTags, NodeExtensionTags } from '../t
  * @builtin
  */
 export class TagsExtension extends PlainExtension {
-  static readonly defaultPriority = ExtensionPriority.Critical;
+  static readonly defaultPriority = ExtensionPriority.Highest;
 
   get name() {
     return 'tags' as const;

@@ -55,20 +55,17 @@ describe('Manager', () => {
   }
 
   const dummyExtension = new DummyExtension({ priority: ExtensionPriority.Critical });
-  const bigExtension = new BigExtension({ priority: ExtensionPriority.Lowest + 1 });
+  const bigExtension = new BigExtension({ priority: ExtensionPriority.Lowest });
   const corePreset = new CorePreset();
 
-  let manager = RemirrorManager.fromObject({
-    extensions: [dummyExtension, bigExtension],
-    presets: [corePreset],
-  });
+  let manager = RemirrorManager.create([dummyExtension, bigExtension, corePreset]);
 
   let view: EditorView;
 
   beforeEach(() => {
     manager = RemirrorManager.fromObject({
       extensions: [dummyExtension, bigExtension],
-      presets: [new CorePreset({})],
+      presets: [new CorePreset()],
     });
     state = manager.createState({ content: EMPTY_PARAGRAPH_NODE });
     view = new EditorView(document.createElement('div'), {
@@ -105,8 +102,15 @@ describe('Manager', () => {
 
   describe('#properties', () => {
     it('should sort extensions by priority', () => {
-      expect(manager.extensions[0]).toEqual(dummyExtension);
-      expect(manager.extensions[manager.extensions.length - 1]).toEqual(bigExtension);
+      expect(manager.extensions[0].name).toBe('dummy');
+      expect(manager.extensions[manager.extensions.length - 1].name).toBe('big');
+    });
+
+    it('should allow overriding the priority', () => {
+      manager = manager.clone([], { priority: { dummy: ExtensionPriority.Lowest } });
+      expect(manager.extensions[0].name).not.toBe('dummy');
+      expect(manager.extensions[manager.extensions.length - 1].name).toBe('big');
+      expect(manager.extensions[manager.extensions.length - 2].name).toBe('dummy');
     });
 
     it('should provide the schema at instantiation', () => {
@@ -118,7 +122,7 @@ describe('Manager', () => {
     });
   });
 
-  test('isManager', () => {
+  it('isManager', () => {
     expect(isRemirrorManager({})).toBeFalse();
     expect(isRemirrorManager(null)).toBeFalse();
     expect(isRemirrorManager(dummyExtension)).toBeFalse();

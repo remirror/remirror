@@ -103,7 +103,7 @@ export class CorePreset extends Preset<CorePresetOptions> {
         excludeBaseKeymap,
         selectParentNodeOnEscape,
         undoInputRuleOnBackspace,
-        priority: ExtensionPriority.Lowest,
+        priority: ExtensionPriority.Low,
       }),
     ];
   }

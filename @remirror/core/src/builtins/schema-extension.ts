@@ -46,7 +46,7 @@ export class SchemaExtension extends PlainExtension {
   /**
    * Really this always needs to be the first extension to run.
    */
-  static defaultPriority: ExtensionPriority = ExtensionPriority.Critical;
+  static defaultPriority: ExtensionPriority = ExtensionPriority.Highest;
 
   get name() {
     return 'schema' as const;

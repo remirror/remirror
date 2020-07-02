@@ -112,11 +112,16 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
   static readonly defaultPriority: ExtensionPriority = ExtensionPriority.Default;
 
   /**
+   * Allows for the `RemirrorManager` or `Preset`'s to override the priority of an extension.
+   */
+  #priorityOverride?: ExtensionPriority;
+
+  /**
    * The priority level for this instance of the extension. A higher value
    * corresponds to a higher priority extension
    */
   get priority(): ExtensionPriority {
-    return this.options.priority ?? this.constructor.defaultPriority;
+    return this.#priorityOverride ?? this.options.priority ?? this.constructor.defaultPriority;
   }
 
   /**
@@ -204,10 +209,20 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
   }
 
   /**
-   * Clone an extension..
+   * Clone an extension.
    */
   clone(...parameters: ExtensionConstructorParameter<Options>) {
     return new this.constructor(...parameters);
+  }
+
+  /**
+   * Set the priority override for this extension. This is used in the
+   * `RemirrorManager` in order to override the priority of an extension.
+   *
+   * If you set the first parameter to `undefined` it will remove the priority override.
+   */
+  setPriority(priority: undefined | ExtensionPriority) {
+    this.#priorityOverride = priority;
   }
 }
 

@@ -1,6 +1,7 @@
 import {
   __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
   ErrorConstant,
+  ExtensionPriority,
   ManagerPhase,
   RemirrorIdentifier,
 } from '@remirror/core-constants';
@@ -283,6 +284,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
 
     const { extensions, extensionMap, presets, presetMap } = transformCombinedUnion<Combined>(
       combined,
+      settings,
     );
 
     this.#extensions = freeze(extensions);
@@ -747,6 +749,11 @@ declare global {
      * Settings which can be passed into the manager.
      */
     interface ManagerSettings {
+      /**
+       * Set the extension priority for extension's by their name.
+       */
+      priority?: Record<string, ExtensionPriority>;
+
       /**
        * An object which excludes certain functionality from all extensions
        * within the manager.
