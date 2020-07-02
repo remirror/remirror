@@ -19,6 +19,7 @@ env:
 jobs:
   # Release the project if everything else passes
   release:
+    timeout-minutes: 15
     needs: [lint, typecheck, unit_test, build_test, size_check, chromium_e2e, firefox_e2e]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/next'
@@ -69,6 +70,7 @@ jobs:
 
   # Lint the project
   lint:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
@@ -104,6 +106,7 @@ jobs:
 
   # Typecheck the project
   typecheck:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
@@ -139,6 +142,7 @@ jobs:
 
   # Unit test and update coverage report
   unit_test:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
@@ -183,6 +187,7 @@ jobs:
 
   # Build the project and run tests on built files.
   build_test:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
@@ -221,6 +226,7 @@ jobs:
 
   # Check that sizes are within their boundaries
   size_check:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
@@ -259,6 +265,7 @@ jobs:
 
   # Run chromium e2e tests with playwright
   chromium_e2e:
+    timeout-minutes: 15
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -300,6 +307,7 @@ jobs:
 
   # Run firefox e2e tests with playwright
   firefox_e2e:
+    timeout-minutes: 15
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
