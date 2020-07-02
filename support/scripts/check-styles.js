@@ -13,7 +13,7 @@ const isEqual = require('lodash.isequal');
 /**
  * @param {string[]} paths
  */
-const files = globby.sync(['@remirror/styles/*.css'], { cwd: baseDir() });
+const files = globby.sync(['packages/@remirror/styles/*.css'], { cwd: baseDir() });
 
 async function readFiles() {
   /** @type Record<string, string> */

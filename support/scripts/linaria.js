@@ -43,7 +43,6 @@ const groupingRegex = /^packages\/@remirror\/([\w-]+)\/.*/;
  * The grouped files.
  */
 const groupedFiles = groupBy(files, (file) => {
-  console.log(file);
   const match = file.match(groupingRegex);
 
   if (!match || !match[1]) {
