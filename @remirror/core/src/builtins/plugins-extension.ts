@@ -58,6 +58,9 @@ export class PluginsExtension extends PlainExtension {
     setExtensionStore('getPluginState', this.getStateByName);
   };
 
+  /**
+   * Get all the plugins from the extension.
+   */
   private extractExtensionPlugins(extension: AnyExtension) {
     const isNotPluginCreator = !extension.createPlugin && !extension.createExternalPlugins;
 

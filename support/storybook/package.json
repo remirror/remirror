@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "description": "The storybook configuration for the remirror project.",
+  "repository": "https://github.com/remirror/remirror/tree/master/support/storybook",
   "scripts": {
     "build-storybook": "build-storybook -c ./",
     "storybook": "start-storybook -p 6006 -c ./"
@@ -22,6 +23,5 @@
     "react-dom": "^16.13.1",
     "remirror": "^0.13.1"
   },
-  "devDependencies": {},
-  "repository": "https://github.com/remirror/remirror/tree/master/support/storybook"
+  "devDependencies": {}
 }

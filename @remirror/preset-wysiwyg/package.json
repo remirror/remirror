@@ -42,7 +42,8 @@
     "@remirror/extension-underline": "^0.0.0",
     "@remirror/preset-core": "^0.0.0",
     "@remirror/preset-embed": "^0.0.0",
-    "@remirror/preset-list": "^0.0.0"
+    "@remirror/preset-list": "^0.0.0",
+    "@remirror/preset-table": "^0.0.0"
   },
   "devDependencies": {
     "@remirror/core": "^0.11.0",

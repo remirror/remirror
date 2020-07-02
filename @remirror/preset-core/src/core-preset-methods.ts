@@ -11,16 +11,16 @@ export interface CreateCoreManagerOptions {
   /**
    * The manager settings.
    */
-  settings?: Remirror.ManagerSettings;
+  managerSettings?: Remirror.ManagerSettings;
 }
 
 /**
- * Create a core manager.
+ * Create a manager with the core preset already applied.
  */
 export function createCoreManager<Combined extends AnyCombinedUnion>(
   combined: readonly Combined[],
-  options: CreateCoreManagerOptions,
+  options: CreateCoreManagerOptions = {},
 ) {
-  const { core, settings } = options;
-  return RemirrorManager.create([...combined, new CorePreset(core)], settings);
+  const { core, managerSettings } = options;
+  return RemirrorManager.create([...combined, new CorePreset(core)], managerSettings);
 }

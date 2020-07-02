@@ -1,10 +1,13 @@
 import { Except } from 'type-fest';
 
 import { AnyCombinedUnion } from '@remirror/core';
-import { AutoLinkExtension } from '@remirror/extension-auto-link';
-import { EmojiExtension } from '@remirror/extension-emoji';
-import { MentionExtension, MentionExtensionMatcher } from '@remirror/extension-mention';
-import { BaseReactCombinedUnion, I18nContextProps, RemirrorProviderProps } from '@remirror/react';
+import { SocialOptions, SocialPreset } from '@remirror/preset-social';
+import {
+  BaseReactCombinedUnion,
+  CreateReactManagerOptions,
+  I18nContextProps,
+  RemirrorProviderProps,
+} from '@remirror/react';
 
 export interface MentionChangeParameter extends BaseMentionState {
   name: MatchName;
@@ -14,20 +17,18 @@ export interface MentionChangeParameter extends BaseMentionState {
   index: number;
 }
 
-export interface CreateSocialManagerOptions {
+export interface CreateSocialManagerOptions extends CreateReactManagerOptions {
   /**
-   * The matcher options for the `@` mention character.
+   * The social preset options.
    */
-  atMatcherOptions?: Except<MentionExtensionMatcher, 'name' | 'char'>;
-
-  /**
-   * The matcher options for the `#` mention character/
-   */
-  tagMatcherOptions?: Except<MentionExtensionMatcher, 'name' | 'char'>;
+  social?: SocialOptions;
 }
 
 export interface SocialEditorProps<Combined extends AnyCombinedUnion = SocialCombinedUnion>
-  extends Partial<RemirrorProviderProps<Combined>>,
+  extends Except<
+      Partial<RemirrorProviderProps<Combined>>,
+      'managerSettings' | 'reactPresetOptions' | 'corePresetOptions'
+    >,
     Partial<I18nContextProps> {
   /**
    * The social options used to create the initial manager when a manager is
@@ -98,8 +99,4 @@ export interface TagData {
  *
  * Using this as a generic value allows for better type inference in the editor.
  */
-export type SocialCombinedUnion =
-  | BaseReactCombinedUnion
-  | EmojiExtension
-  | AutoLinkExtension
-  | MentionExtension;
+export type SocialCombinedUnion = BaseReactCombinedUnion | SocialPreset;

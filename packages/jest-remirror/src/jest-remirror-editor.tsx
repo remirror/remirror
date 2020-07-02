@@ -57,10 +57,10 @@ const elements = new Set<Element>();
  */
 export function renderEditor<Combined extends AnyCombinedUnion>(
   combined: Combined[],
-  { settings, props, autoClean = true }: RenderEditorParameter<Combined> = object(),
+  { props, autoClean = true, ...options }: RenderEditorParameter<Combined> = object(),
 ) {
   const element = createElement(props?.element, autoClean);
-  const manager = createDomManager([...combined], settings);
+  const manager = createDomManager([...combined], options);
 
   // TODO add the editor to the remirror test chain
   createDomEditor({ ...props, element, manager });
@@ -451,8 +451,10 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * Insert text at the current starting point for the cursor. Text will be
    * typed out with keys each firing a keyboard event.
    *
-   * ! This doesn't currently support the use of tags and cursors. ! Also adding
-   * multiple strings which create nodes also creates an out of position error
+   * ! This doesn't currently support the use of tags and cursors.
+   *
+   * ! Adding multiple strings which create nodes creates an out of
+   * position error
    */
   insertText = (text: string) => {
     const { from } = this.state.selection;

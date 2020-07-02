@@ -34,8 +34,8 @@ import {
   PositionerExtension,
   StringPositioner,
 } from '@remirror/extension-positioner';
-import { CorePreset } from '@remirror/preset-core';
-import { ReactPreset } from '@remirror/preset-react';
+import { CorePreset, CreateCoreManagerOptions } from '@remirror/preset-core';
+import { ReactPreset, ReactPresetOptions } from '@remirror/preset-react';
 
 import { I18nContext, RemirrorContext } from '../react-contexts';
 import { I18nContextProps, ReactCombinedUnion, RemirrorContextProps } from '../react-types';
@@ -330,12 +330,12 @@ function useObjectCheck<Type extends object>(parameter: Type): Type {
  */
 export function useManager<Combined extends AnyCombinedUnion>(
   managerOrCombined: readonly Combined[] | RemirrorManager<ReactCombinedUnion<Combined>>,
-  settings: Remirror.ManagerSettings = {},
+  options: CreateReactManagerOptions = {},
 ): RemirrorManager<ReactCombinedUnion<Combined>> {
   const manager = useRef(
     isRemirrorManager<ReactCombinedUnion<Combined>>(managerOrCombined)
       ? managerOrCombined
-      : createReactManager(managerOrCombined, settings),
+      : createReactManager(managerOrCombined, options),
   ).current;
 
   useEffect(() => {
@@ -432,12 +432,24 @@ export function usePositioner(
   return { ...state, ref };
 }
 
+export interface CreateReactManagerOptions extends CreateCoreManagerOptions {
+  /**
+   * Options for the react preset.
+   */
+  react?: ReactPresetOptions;
+}
+
 /**
  * Create a react manager with all the default react presets and extensions.
  */
 export function createReactManager<Combined extends AnyCombinedUnion>(
   combined: readonly Combined[],
-  settings: Remirror.ManagerSettings = {},
+  options: CreateReactManagerOptions = {},
 ): RemirrorManager<Combined | BuiltinPreset | ReactPreset | CorePreset> {
-  return RemirrorManager.create([...combined, new ReactPreset(), new CorePreset()], settings);
+  const { managerSettings: settings, core, react } = options;
+
+  return RemirrorManager.create(
+    [...combined, new ReactPreset(react), new CorePreset(core)],
+    settings,
+  );
 }

@@ -25,7 +25,7 @@ exports[`social editor should support content 1`] = `
   <p>
     Awesome ❤️ 
     <a
-      href="https://website.co"
+      href="//website.co"
       role="presentation"
     >
       website.co

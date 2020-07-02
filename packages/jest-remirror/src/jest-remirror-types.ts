@@ -1,3 +1,4 @@
+import { CreateCoreManagerOptions } from '@remirror/test-fixtures';
 import {
   AnyCombinedUnion,
   AttributesParameter,
@@ -101,8 +102,8 @@ export type NodeWithoutAttributes<Names extends string> = {
   [P in Names]: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
 };
 
-export interface RenderEditorParameter<Combined extends AnyCombinedUnion> {
-  settings?: Remirror.ManagerSettings;
+export interface RenderEditorParameter<Combined extends AnyCombinedUnion>
+  extends CreateCoreManagerOptions {
   props?: Partial<Omit<DomEditorWrapperProps<Combined>, 'manager'>>;
 
   /**

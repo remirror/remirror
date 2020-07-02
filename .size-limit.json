@@ -50,6 +50,21 @@
     "running": false
   },
   {
+    "name": "@remirror/editor-wysiwyg",
+    "path": "@remirror/editor-wysiwyg/dist/editor-wysiwyg.esm.js",
+    "limit": "200 KB",
+    "ignore": [
+      "@remirror/core",
+      "@remirror/pm",
+      "@remirror/react",
+      "@types/react",
+      "@types/react-dom",
+      "react",
+      "react-dom"
+    ],
+    "running": false
+  },
+  {
     "name": "@remirror/extension-auto-link",
     "path": "@remirror/extension-auto-link/dist/extension-auto-link.esm.js",
     "limit": "5 KB",
@@ -316,9 +331,23 @@
     "running": false
   },
   {
+    "name": "@remirror/preset-social",
+    "path": "@remirror/preset-social/dist/preset-social.esm.js",
+    "limit": "10 KB",
+    "ignore": ["@remirror/core", "@remirror/pm"],
+    "running": false
+  },
+  {
     "name": "@remirror/preset-table",
     "path": "@remirror/preset-table/dist/preset-table.esm.js",
     "limit": "10 KB",
+    "ignore": ["@remirror/core", "@remirror/pm"],
+    "running": false
+  },
+  {
+    "name": "@remirror/preset-wysiwyg",
+    "path": "@remirror/preset-wysiwyg/dist/preset-wysiwyg.esm.js",
+    "limit": "130 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },

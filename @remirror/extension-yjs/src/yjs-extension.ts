@@ -119,6 +119,7 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   onSetOptions(parameter: OnSetOptionsParameter<YjsOptions>) {
     const { changes } = parameter;
 
+    // TODO move this into a new method in `plugins-extension`.
     if (changes.getProvider.changed) {
       const previousPlugins = this.externalPlugins;
       const newPlugins = (this.externalPlugins = this.createExternalPlugins());

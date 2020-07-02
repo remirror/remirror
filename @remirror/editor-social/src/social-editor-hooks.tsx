@@ -1,14 +1,7 @@
 import { useEffect, useRef } from 'react';
 
-import {
-  AnyCombinedUnion,
-  ExtensionPriority,
-  isRemirrorManager,
-  RemirrorManager,
-} from '@remirror/core';
-import { AutoLinkExtension } from '@remirror/extension-auto-link';
-import { EmojiExtension } from '@remirror/extension-emoji';
-import { MentionExtension } from '@remirror/extension-mention';
+import { AnyCombinedUnion, isRemirrorManager, RemirrorManager } from '@remirror/core';
+import { SocialPreset } from '@remirror/preset-social';
 import { createReactManager } from '@remirror/react';
 
 import { CreateSocialManagerOptions, SocialCombinedUnion } from './social-editor-types';
@@ -25,34 +18,21 @@ import { CreateSocialManagerOptions, SocialCombinedUnion } from './social-editor
 export function createSocialManager<Combined extends AnyCombinedUnion>(
   combined: readonly Combined[],
   options: CreateSocialManagerOptions = {},
-  settings?: Remirror.ManagerSettings,
 ): RemirrorManager<SocialCombinedUnion | Combined> {
-  const { atMatcherOptions, tagMatcherOptions } = options;
+  const { social, ...rest } = options;
+  const socialPreset = new SocialPreset(social);
 
-  const autoLinkExtension = new AutoLinkExtension({
-    defaultProtocol: 'https:',
-    priority: ExtensionPriority.High,
-  });
-  const emojiExtension = new EmojiExtension({
-    extraAttributes: { role: { default: 'presentation' } },
-    priority: ExtensionPriority.High,
-  });
-  const mentionExtension = new MentionExtension({
-    matchers: [
-      { name: 'at', char: '@', appendText: ' ', ...atMatcherOptions },
-      { name: 'tag', char: '#', appendText: ' ', ...tagMatcherOptions },
-    ],
-    extraAttributes: {
-      href: { default: null },
-      role: 'presentation',
+  return createReactManager([...combined, socialPreset], {
+    ...rest,
+    managerSettings: {
+      ...rest.managerSettings,
+      extraAttributes: [
+        { identifiers: ['mention', 'emoji'], attributes: { role: { default: 'presentation' } } },
+        { identifiers: ['mention'], attributes: { href: { default: null } } },
+        ...(rest.managerSettings?.extraAttributes ?? []),
+      ],
     },
-    priority: ExtensionPriority.High,
   });
-
-  return createReactManager(
-    [...combined, autoLinkExtension, emojiExtension, mentionExtension],
-    settings,
-  );
 }
 
 /**
@@ -71,12 +51,11 @@ export function createSocialManager<Combined extends AnyCombinedUnion>(
 export function useSocialManager<Combined extends AnyCombinedUnion>(
   managerOrCombined: readonly Combined[] | RemirrorManager<Combined | SocialCombinedUnion>,
   options: CreateSocialManagerOptions = {},
-  settings?: Remirror.ManagerSettings,
 ): RemirrorManager<SocialCombinedUnion | Combined> {
   const manager = useRef(
     isRemirrorManager<Combined | SocialCombinedUnion>(managerOrCombined)
       ? managerOrCombined
-      : createSocialManager(managerOrCombined, options, settings),
+      : createSocialManager(managerOrCombined, options),
   ).current;
 
   useEffect(() => {

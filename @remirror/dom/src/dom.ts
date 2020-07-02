@@ -15,16 +15,16 @@ import {
   UpdateStateParameter,
 } from '@remirror/core';
 import { EditorView } from '@remirror/pm/view';
-import { CorePreset } from '@remirror/preset-core';
+import { CorePreset, createCoreManager, CreateCoreManagerOptions } from '@remirror/preset-core';
 
 /**
  * Create an editor manager. It comes with the `CorePreset` already available.
  */
 export function createDomManager<Combined extends AnyCombinedUnion>(
   combined: Combined[],
-  settings?: Remirror.ManagerSettings,
+  options?: CreateCoreManagerOptions,
 ): RemirrorManager<CorePreset | BuiltinPreset | Combined> {
-  return RemirrorManager.create([...combined, new CorePreset()], settings);
+  return createCoreManager([...combined], options);
 }
 
 export interface DomEditorWrapperProps<Combined extends AnyCombinedUnion>

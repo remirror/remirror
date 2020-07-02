@@ -2,6 +2,8 @@ import React, { ProviderProps, ReactElement, ReactNode, useEffect } from 'react'
 
 import { AnyCombinedUnion, MakeOptional } from '@remirror/core';
 import { i18n as defaultI18n } from '@remirror/i18n';
+import { CorePresetOptions } from '@remirror/preset-core';
+import { ReactPresetOptions } from '@remirror/preset-react';
 import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
 
 import { useManager } from '../hooks';
@@ -33,14 +35,27 @@ export interface RemirrorProviderProps<Combined extends AnyCombinedUnion>
    *
    * These extensions and presets can't be updated and are not dynamic. You
    * should not change they during the component lifecycle as they are created
-   * once at the very start and never used again.
+   * once at the very start and never recreated.
    */
   combined?: readonly Combined[];
 
   /**
-   * The settings to provide to the `RemirrorManager`.
+   * The settings to provide to the `RemirrorManager`. This is only applied when
+   * no `manager` is provided.
    */
-  settings?: Remirror.ManagerSettings;
+  managerSettings?: Remirror.ManagerSettings;
+
+  /**
+   * The options used when creating the `ReactPreset`. This is only applied if
+   * you don't provide a manager.
+   */
+  reactPresetOptions?: ReactPresetOptions;
+
+  /**
+   * The options used when creating the `CorePreset`. This is only applied if
+   * you don't provide a manager.
+   */
+  corePresetOptions?: CorePresetOptions;
 
   /**
    * Sets the first child element as a the root (where the prosemirror editor
@@ -115,11 +130,24 @@ RemirrorContextProvider.defaultProps = {
 export const RemirrorProvider = <Combined extends AnyCombinedUnion>(
   props: RemirrorProviderProps<Combined>,
 ) => {
-  const { children, childAsRoot, manager: mgr, combined, settings, ...rest } = props;
-  const manager = useManager(mgr ?? combined ?? [], settings);
+  const {
+    children,
+    childAsRoot,
+    manager,
+    combined,
+    reactPresetOptions,
+    corePresetOptions,
+    managerSettings,
+    ...rest
+  } = props;
+  const reactManager = useManager(manager ?? combined ?? [], {
+    core: corePresetOptions,
+    react: reactPresetOptions,
+    managerSettings,
+  });
 
   return (
-    <RenderEditor {...rest} manager={manager}>
+    <RenderEditor {...rest} manager={reactManager}>
       {(value) => {
         return (
           <RemirrorContextProvider value={value} childAsRoot={childAsRoot}>

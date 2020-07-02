@@ -23,17 +23,16 @@ export const SocialEditor: FC<SocialEditorProps> = (props) => {
     onUrlsChange,
     userData,
     combined,
-    manager: propsManager,
+    manager,
     socialOptions,
-    settings,
     ...rest
   } = props;
 
-  const manager = useSocialManager(propsManager ?? combined ?? [], socialOptions, settings);
+  const socialManager = useSocialManager(manager ?? combined ?? [], socialOptions);
 
   return (
     <I18nProvider i18n={i18n} locale={locale}>
-      <RemirrorProvider {...rest} manager={manager} childAsRoot={false}>
+      <RemirrorProvider {...rest} manager={socialManager} childAsRoot={false}>
         <Editor {...props}>{children}</Editor>
       </RemirrorProvider>
     </I18nProvider>

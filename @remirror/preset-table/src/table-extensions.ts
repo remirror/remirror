@@ -3,7 +3,9 @@ import {
   CommandFunction,
   CommandFunctionParameter,
   convertCommand,
+  DefaultExtensionOptions,
   NodeExtension,
+  OnSetOptionsParameter,
 } from '@remirror/core';
 import { TextSelection } from '@remirror/pm/state';
 import {
@@ -32,7 +34,22 @@ import {
   TableSchemaSpec,
 } from './table-utils';
 
-export class TableExtension extends NodeExtension {
+export interface TableOptions {
+  /**
+   * When true the table will be resizable.
+   *
+   * @defaultValue `true`
+   */
+  resizable?: boolean;
+}
+
+let tablesEnabled = false;
+
+export class TableExtension extends NodeExtension<TableOptions> {
+  static defaultOptions: DefaultExtensionOptions<TableOptions> = {
+    resizable: true,
+  };
+
   get name() {
     return 'table' as const;
   }
@@ -53,6 +70,9 @@ export class TableExtension extends NodeExtension {
    */
   createCommands = () => {
     return {
+      /**
+       * Create a table in the editor at the current selection point.
+       */
       createTable: (
         parameter: Pick<CreateTableParameter, 'rowsCount' | 'columnsCount' | 'withHeaderRow'>,
       ): CommandFunction => ({ state, dispatch }) => {
@@ -71,6 +91,11 @@ export class TableExtension extends NodeExtension {
       },
 
       /**
+       * Delete the table.
+       */
+      deleteTable: () => convertCommand(deleteTable),
+
+      /**
        * Command to add a column before the column with the selection.
        */
       addTableColumnBefore: () => {
@@ -86,16 +111,55 @@ export class TableExtension extends NodeExtension {
        * Remove selected column from the table.
        */
       deleteTableColumn: () => convertCommand(deleteColumn),
+
+      /**
+       * Add a table row before the current selection.
+       */
       addTableRowBefore: () => convertCommand(addRowBefore),
+
+      /**
+       * Add a table row after the current selection.
+       */
       addTableRowAfter: () => convertCommand(addRowAfter),
+
+      /**
+       * Delete the table row at the current selection.
+       */
       deleteTableRow: () => convertCommand(deleteRow),
-      deleteTable: () => convertCommand(deleteTable),
+
+      /**
+       * Toggles between merging cells.
+       */
       toggleTableCellMerge: () => toggleMergeCellCommand,
+
+      /**
+       * Merge the table cells.
+       */
       mergeTableCells: () => convertCommand(mergeCells),
+
+      /**
+       * Split the merged cells into individual cells.
+       */
       splitTableCell: () => convertCommand(splitCell),
+
+      /**
+       * Toggles a column as the header column.
+       */
       toggleTableHeaderColumn: () => convertCommand(toggleHeaderColumn),
+
+      /**
+       * Toggles a row as a table header row.
+       */
       toggleTableHeaderRow: () => convertCommand(toggleHeaderRow),
+
+      /**
+       * Toggle a cell as a table header cell.
+       */
       toggleTableHeaderCell: () => convertCommand(toggleHeaderCell),
+
+      /**
+       * Set the attribute for a table cell.
+       */
       setTableCellAttribute: (name: string, value: unknown) =>
         convertCommand(setCellAttr(name, value)),
 
@@ -105,8 +169,44 @@ export class TableExtension extends NodeExtension {
       fixTables: () => fixTablesCommand,
     };
   };
+
+  createHelpers = () => {
+    return {
+      /**
+       * Enable table usage within the editor. This depends on the editor.
+       */
+      enableTableSupport: () => {
+        if (tablesEnabled) {
+          return;
+        }
+
+        document.execCommand('enableObjectResizing', false, 'false');
+        document.execCommand('enableInlineTableEditing', false, 'false');
+        tablesEnabled = true;
+      },
+    };
+  };
+
+  /**
+   * This managers the updates of the collaboration provider.
+   */
+  protected onSetOptions(parameter: OnSetOptionsParameter<TableOptions>) {
+    const { changes } = parameter;
+
+    // TODO move this into a new method in `plugins-extension`.
+    if (changes.resizable.changed) {
+      const previousPlugins = this.externalPlugins;
+      const newPlugins = (this.externalPlugins = this.createExternalPlugins());
+
+      this.store.addOrReplacePlugins(newPlugins, previousPlugins);
+      this.store.reconfigureStatePlugins();
+    }
+  }
 }
 
+/**
+ * The extension for a table row node.
+ */
 export class TableRowExtension extends NodeExtension {
   get name() {
     return 'tableRow' as const;
@@ -117,6 +217,9 @@ export class TableRowExtension extends NodeExtension {
   }
 }
 
+/**
+ * The extension for a table cell node.
+ */
 export class TableCellExtension extends NodeExtension {
   get name() {
     return 'tableCell' as const;
@@ -127,6 +230,9 @@ export class TableCellExtension extends NodeExtension {
   }
 }
 
+/**
+ * The extension for the table header node.
+ */
 export class TableHeaderCell extends NodeExtension {
   get name() {
     return 'tableHeader' as const;
