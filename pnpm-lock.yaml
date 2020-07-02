@@ -1628,7 +1628,7 @@ importers:
       expect-playwright: 0.2.4
       jest: 26.1.0
       jest-dev-server: 4.4.0
-      jest-playwright-preset: 1.2.0
+      jest-playwright-preset: 1.2.1
       looks-same: 7.2.3
       playwright: 1.1.1
       playwright-core: 1.1.1
@@ -1642,7 +1642,7 @@ importers:
       expect-playwright: ^0.2.4
       jest: ^26.1.0
       jest-dev-server: ^4.4.0
-      jest-playwright-preset: ^1.2.0
+      jest-playwright-preset: ^1.2.1
       looks-same: ^7.2.3
       playwright: ^1.1.1
       playwright-core: ^1.1.1
@@ -10713,6 +10713,13 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=
+  /decamelize/3.2.0:
+    dependencies:
+      xregexp: 4.3.0
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-4TgkVUsmmu7oCSyGBm5FvfMoACuoh9EOidm7V5/J2X2djAwwt57qb3F2KMP2ITqODTCSwb+YRV+0Zqrv18k/hw==
   /decimal.js/10.2.0:
     resolution:
       integrity: sha512-vDPw+rDgn3bZe1+F/pyEwb1oMG2XTlRVgAa6B4KccTEpYgF8w6eQllVbQcfIJnZyvzFtFpxnpGtx8dd7DJp/Rw==
@@ -15836,7 +15843,7 @@ packages:
       node: '>= 10.14.2'
     resolution:
       integrity: sha512-1Rm8EIJ3ZFA8yCIie92UbxZWj9SuVmUGcyhLHyAhY6WI3NIct38nVcfOPWhJteqSn8V8e3xOMha9Ojfazfpovw==
-  /jest-playwright-preset/1.2.0:
+  /jest-playwright-preset/1.2.1:
     dependencies:
       expect-playwright: 0.2.4
       jest-circus: 26.1.0
@@ -15847,7 +15854,7 @@ packages:
       uuid: 8.2.0
     dev: false
     resolution:
-      integrity: sha512-UNID/Alh9hZNnWcVn9EyEVPgqnY5TuriaqTJgRZwajbC2Ne3eos5KVoW7C88rw3A9UsEiUCc3QDHUblFT+vN6Q==
+      integrity: sha512-iMIpZgwtbZtRMSL+cui7iTrJ7bmVAlgBAdm1TEl7T7pGk+8gPW3b8ZxfgM4fAYNFVKmydHHJ0QyK/K0X/phW3Q==
   /jest-pnp-resolver/1.2.2_jest-resolve@26.1.0:
     dependencies:
       jest-resolve: 26.1.0_jest-resolve@26.1.0
@@ -15962,7 +15969,7 @@ packages:
       jest-validate: 26.1.0
       slash: 3.0.0
       strip-bom: 4.0.0
-      yargs: 15.3.1
+      yargs: 15.4.0
     engines:
       node: '>= 10.14.2'
     hasBin: true
@@ -18545,7 +18552,7 @@ packages:
       signal-exit: 3.0.3
       spawn-wrap: 2.0.0
       test-exclude: 6.0.0
-      yargs: 15.3.1
+      yargs: 15.4.0
     dev: false
     engines:
       node: '>=8.9'
@@ -26061,6 +26068,11 @@ packages:
   /xmlchars/2.2.0:
     resolution:
       integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==
+  /xregexp/4.3.0:
+    dependencies:
+      '@babel/runtime-corejs3': 7.10.4
+    resolution:
+      integrity: sha512-7jXDIFXh5yJ/orPn4SXjuVrWWoi4Cr8jfV1eHv9CixKSbU+jY4mxfrBwAuDvupPNKpMUY+FeIqsVw/JLT9+B8g==
   /xtend/4.0.2:
     dev: false
     engines:
@@ -26213,6 +26225,23 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-92O1HWEjw27sBfgmXiixJWT5hRBp2eobqXicLtPBIDBhYB+1HpwZlXmbW2luivBJHBzki+7VyCLRtAkScbTBQA==
+  /yargs/15.4.0:
+    dependencies:
+      cliui: 6.0.0
+      decamelize: 3.2.0
+      find-up: 4.1.0
+      get-caller-file: 2.0.5
+      require-directory: 2.1.1
+      require-main-filename: 2.0.0
+      set-blocking: 2.0.0
+      string-width: 4.2.0
+      which-module: 2.0.0
+      y18n: 4.0.0
+      yargs-parser: 18.1.3
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-D3fRFnZwLWp8jVAAhPZBsmeIHY8tTsb8ItV9KaAaopmC6wde2u6Yw29JBIZHXw14kgkRnYmDgmQU4FVMDlIsWw==
   /yargs/2.3.0:
     dependencies:
       wordwrap: 0.0.2
