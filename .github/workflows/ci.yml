@@ -41,7 +41,7 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 14
 
       - name: install pnpm
         run: |
@@ -89,7 +89,7 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 14
 
       - name: install pnpm
         run: |
@@ -126,7 +126,7 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 14
 
       - name: install pnpm
         run: |
@@ -163,7 +163,7 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 14
 
       - name: install pnpm
         run: |
@@ -192,6 +192,11 @@ jobs:
   build_test:
     timeout-minutes: 15
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x]
+      fail-fast: false
+
     steps:
       - name: checkout code repository
         uses: actions/checkout@v1
@@ -209,7 +214,7 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: ${{ matrix.node-version }}
 
       - name: install pnpm
         run: |
@@ -249,7 +254,7 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 14
 
       - name: install pnpm
         run: |
@@ -294,7 +299,7 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 14
 
       - name: install pnpm
         run: npm install pnpm -g
@@ -337,7 +342,7 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 14
 
       - name: install pnpm
         run: npm install pnpm -g

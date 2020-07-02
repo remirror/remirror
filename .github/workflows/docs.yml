@@ -38,7 +38,8 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          # Uses node 14 to allow nullish coalescing in `.js` files
+          node-version: 14
 
       - name: install pnpm
         run: |
