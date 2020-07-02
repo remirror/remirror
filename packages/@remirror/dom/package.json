@@ -1,0 +1,41 @@
+{
+  "name": "@remirror/dom",
+  "version": "0.0.0",
+  "description": "Use remirror directly in the dom.",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/dom",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/dom",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/dom.cjs.js",
+  "module": "dist/dom.esm.js",
+  "types": "dist/dom.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.10.4",
+    "@remirror/preset-core": "^0.0.0",
+    "type-fest": "^0.16.0"
+  },
+  "devDependencies": {
+    "@remirror/core": "^0.11.0",
+    "@remirror/pm": "^0.0.0"
+  },
+  "peerDependencies": {
+    "@remirror/core": "^0.11.0",
+    "@remirror/pm": "^0.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "5 KB"
+  }
+}

@@ -82,9 +82,6 @@ jspm_packages/
 
 # Build files
 dist
-@remirror/**/lib
-deprecated/**/lib
-packages/**/lib
 packages/remirror/styles
 
 # We are using pnpm
@@ -116,11 +113,8 @@ temp-*
 .ci
 .local.env
 
-# Only keep the workspace yarn.lock file
-@remirror/**/yarn.lock
-@apps/**/yarn.lock
-@cloud/**/yarn.lock
-dependencies/**/yarn.lock
+yarn.lock
+**/yarn.lock
 
 ./**/.vscode
 
@@ -147,3 +141,17 @@ cc-reporter
 
 # CI Pnpm cache
 .pnpm-store/
+
+## Ignore root files
+.eslintignore
+.eslintrc.js
+.npmrc
+.size-limit.json
+.stylelintignore
+.stylelintrc.json
+babel.config.js
+globals.d.ts
+linaria.config.js
+lingui.config.js
+pnpmfile.js
+tsconfig.json

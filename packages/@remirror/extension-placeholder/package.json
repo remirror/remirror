@@ -1,0 +1,41 @@
+{
+  "name": "@remirror/extension-placeholder",
+  "version": "0.0.0",
+  "description": "TEMPLATE_DESCRIPTION",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/extension-placeholder",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-placeholder",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/extension-placeholder.cjs.js",
+  "module": "dist/extension-placeholder.esm.js",
+  "types": "dist/extension-placeholder.cjs.d.ts",
+  "files": [
+    "dist",
+    "style"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.10.4",
+    "linaria": "^2.0.0-alpha.5"
+  },
+  "devDependencies": {
+    "@remirror/core": "^0.11.0",
+    "@remirror/pm": "^0.0.0"
+  },
+  "peerDependencies": {
+    "@remirror/core": "^0.11.0",
+    "@remirror/pm": "^0.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "5 KB"
+  }
+}

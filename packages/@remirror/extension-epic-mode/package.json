@@ -1,0 +1,44 @@
+{
+  "name": "@remirror/extension-epic-mode",
+  "version": "0.11.0",
+  "description": "Epic (power) mode extension for the remirror wysiwyg editor.",
+  "keywords": [
+    "remirror",
+    "remirror-extension",
+    "power mode",
+    "editor effects",
+    "epic typing",
+    "epic mode",
+    "editor"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/extension-epic-mode",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-epic-mode",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/extension-epic-mode.cjs.js",
+  "module": "dist/extension-epic-mode.esm.js",
+  "types": "dist/extension-epic-mode.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.10.4"
+  },
+  "devDependencies": {
+    "@remirror/core": "^0.11.0",
+    "@remirror/pm": "^0.0.0"
+  },
+  "peerDependencies": {
+    "@remirror/core": "^0.11.0",
+    "@remirror/pm": "^0.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "5 KB"
+  }
+}

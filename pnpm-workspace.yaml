@@ -1,5 +1,5 @@
 packages:
-  - '@remirror/*'
+  - 'packages/@remirror/*'
   - 'packages/*'
   - 'support'
   - 'support/deprecated/*'

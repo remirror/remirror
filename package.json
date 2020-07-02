@@ -25,7 +25,7 @@
     "clean:modules": "git clean -fdX @remirror support docs packages",
     "css:build": "node support/scripts/linaria.js",
     "css:clean": "rimraf @remirror/styles/*.css packages/remirror/styles/*.css",
-    "css:copy": "cpy @remirror/styles/*.css packages/remirror/styles/",
+    "css:copy": "cpy packages/@remirror/styles/*.css packages/remirror/styles/",
     "dev": "preconstruct watch",
     "docs": "cd support/website && pnpm run start",
     "fix": "run-s -c fix:*",
@@ -154,7 +154,7 @@
       "json"
     ],
     "projects": [
-      "<rootDir>/@remirror/*/jest.config.js",
+      "<rootDir>/packages/@remirror/*/jest.config.js",
       "<rootDir>/packages/*/jest.config.js"
     ],
     "reporters": [
@@ -260,8 +260,8 @@
   },
   "preconstruct": {
     "packages": [
-      "@remirror/*",
-      "!@remirror/styles",
+      "packages/@remirror/*",
+      "!packages/@remirror/styles",
       "packages/*"
     ]
   }

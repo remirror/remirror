@@ -1,0 +1,60 @@
+{
+  "name": "@remirror/editor-social",
+  "version": "0.13.1",
+  "description": "A configurable social editor.",
+  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/react-editor-social",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/editor-social",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/editor-social.cjs.js",
+  "module": "dist/editor-social.esm.js",
+  "types": "dist/editor-social.cjs.d.ts",
+  "files": [
+    "style",
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.10.4",
+    "@lingui/core": "^3.0.0-13",
+    "@remirror/extension-auto-link": "^0.0.0",
+    "@remirror/extension-emoji": "^0.11.0",
+    "@remirror/extension-mention": "^0.11.1",
+    "@remirror/i18n": "^0.0.0",
+    "@remirror/preset-social": "^0.0.0",
+    "@remirror/react-utils": "^0.7.6",
+    "@types/classnames": "^2.2.10",
+    "classnames": "^2.2.6",
+    "linaria": "^2.0.0-alpha.5",
+    "multishift": "^0.7.7",
+    "type-fest": "^0.16.0"
+  },
+  "devDependencies": {
+    "@lingui/macro": "^3.0.0-13",
+    "@remirror/core": "^0.11.0",
+    "@remirror/pm": "^0.0.0",
+    "@remirror/react": "^0.13.1",
+    "@testing-library/react": "^10.4.3",
+    "@types/react": "^16.9.41",
+    "@types/react-dom": "^16.9.8",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "peerDependencies": {
+    "@remirror/core": "^0.11.0",
+    "@remirror/pm": "^0.0.0",
+    "@remirror/react": "^0.13.1",
+    "@types/react": "^16.8.0",
+    "@types/react-dom": "^16.8.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "200 KB"
+  }
+}

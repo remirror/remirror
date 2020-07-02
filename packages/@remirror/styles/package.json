@@ -1,0 +1,19 @@
+{
+  "name": "@remirror/styles",
+  "version": "0.0.0",
+  "description": "Styles for every remirror package.",
+  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/styles",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/styles",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "types": "dist/styles.cjs.d.ts",
+  "files": [
+    "*.css"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

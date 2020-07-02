@@ -1,0 +1,43 @@
+{
+  "name": "@remirror/extension-base-keymap",
+  "version": "0.0.0",
+  "description": "Add familiar keyboard shortcuts to your beautiful remirror editor.",
+  "keywords": [
+    "remirror",
+    "extension",
+    "keymaps",
+    "keyboard",
+    "shortcut",
+    "productivity"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/extension-base-keymap",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-base-keymap",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/extension-base-keymap.cjs.js",
+  "module": "dist/extension-base-keymap.esm.js",
+  "types": "dist/extension-base-keymap.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.10.4"
+  },
+  "devDependencies": {
+    "@remirror/core": "^0.11.0",
+    "@remirror/pm": "*"
+  },
+  "peerDependencies": {
+    "@remirror/core": "^0.11.0",
+    "@remirror/pm": "0.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "5 KB"
+  }
+}

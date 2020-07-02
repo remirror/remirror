@@ -1,0 +1,41 @@
+{
+  "name": "@remirror/extension-positioner",
+  "version": "0.0.0",
+  "description": "Reposition your elements with every state update.",
+  "keywords": [
+    "remirror",
+    "extension",
+    "positioning",
+    "text-editor"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/extension-positioner",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-positioner",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/extension-positioner.cjs.js",
+  "module": "dist/extension-positioner.esm.js",
+  "types": "dist/extension-positioner.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.10.4"
+  },
+  "devDependencies": {
+    "@remirror/core": "*",
+    "@remirror/pm": "*"
+  },
+  "peerDependencies": {
+    "@remirror/core": "^0.11.0",
+    "@remirror/pm": "^0.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "5 KB"
+  }
+}

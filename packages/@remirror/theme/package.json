@@ -1,0 +1,37 @@
+{
+  "name": "@remirror/theme",
+  "version": "0.0.0",
+  "description": "The configurable theme for the remirror editor.",
+  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/theme",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/theme",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/theme.cjs.js",
+  "module": "dist/theme.esm.js",
+  "browser": {
+    "./dist/theme.cjs.js": "./dist/theme.browser.cjs.js",
+    "./dist/theme.esm.js": "./dist/theme.browser.esm.js"
+  },
+  "types": "dist/theme.cjs.d.ts",
+  "files": [
+    "style",
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.10.4",
+    "@remirror/core-types": "^0.9.0",
+    "case-anything": "^1.1.1",
+    "linaria": "^2.0.0-alpha.5",
+    "open-color": "^1.7.0",
+    "type-fest": "^0.16.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "5 KB"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "name": "@remirror/react",
+  "version": "0.13.1",
+  "description": "react utilities for remirror",
+  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/react",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/react",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/react.cjs.js",
+  "module": "dist/react.esm.js",
+  "browser": {
+    "./dist/react.cjs.js": "./dist/react.browser.cjs.js",
+    "./dist/react.esm.js": "./dist/react.browser.esm.js"
+  },
+  "types": "dist/react.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.10.4",
+    "@remirror/extension-positioner": "^0.0.0",
+    "@remirror/i18n": "^0.0.0",
+    "@remirror/preset-core": "^0.0.0",
+    "@remirror/preset-react": "^0.0.0",
+    "@remirror/react-utils": "^0.7.6",
+    "@types/hoist-non-react-statics": "^3.3.1",
+    "@types/min-document": "^2.19.0",
+    "@types/use-deep-compare-effect": "^1.2.0",
+    "fast-deep-equal": "^3.1.3",
+    "hoist-non-react-statics": "^3.3.2",
+    "linaria": "^2.0.0-alpha.5",
+    "min-document": "^2.19.0",
+    "nanoevents": "^5.1.8",
+    "react-use": "^15.3.2",
+    "resize-observer-polyfill": "^1.5.1",
+    "type-fest": "^0.16.0"
+  },
+  "devDependencies": {
+    "@remirror/core": "^0.11.0",
+    "@remirror/pm": "^0.0.0",
+    "@testing-library/react": "^10.4.3",
+    "@testing-library/react-hooks": "^3.3.0",
+    "@types/react": "^16.9.41",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-test-renderer": "^16.9.2",
+    "@types/testing-library__react-hooks": "^3.2.0",
+    "jest-axe": "^3.4.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-test-renderer": "^16.13.1"
+  },
+  "peerDependencies": {
+    "@remirror/core": "^0.11.0",
+    "@remirror/pm": "^0.0.0",
+    "@types/react": "^16.8.0",
+    "@types/react-dom": "^16.8.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "30 KB"
+  }
+}
