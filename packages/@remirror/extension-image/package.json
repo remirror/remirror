@@ -11,7 +11,7 @@
     "editor"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/extension-image",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-image",
+  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/extension-image",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

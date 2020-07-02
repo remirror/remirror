@@ -12,7 +12,7 @@
     "editor"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/extension-epic-mode",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-epic-mode",
+  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/extension-epic-mode",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

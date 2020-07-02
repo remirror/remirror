@@ -7,7 +7,7 @@
     "extension"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/extension-search",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-search",
+  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/extension-search",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

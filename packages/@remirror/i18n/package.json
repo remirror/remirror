@@ -7,7 +7,7 @@
     "extension"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/i18n",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/i18n",
+  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/i18n",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

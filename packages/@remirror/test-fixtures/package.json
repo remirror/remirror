@@ -3,7 +3,7 @@
   "version": "0.0.4",
   "private": true,
   "description": "Test fixtures for remirror unit tests",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/test-fixtures",
+  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/test-fixtures",
   "sideEffects": false,
   "main": "dist/test-fixtures.cjs.js",
   "module": "dist/test-fixtures.esm.js",

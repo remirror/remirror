@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "The configurable theme for the remirror editor.",
   "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/theme",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/theme",
+  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/theme",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

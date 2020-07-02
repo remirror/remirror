@@ -1,8 +1,8 @@
 import { useId } from '@reach/auto-id';
 import { setStatus } from 'a11y-status';
 import { DependencyList, EffectCallback, useEffect, useReducer, useRef } from 'react';
-import useShallowCompareEffect from 'react-use/lib/useShallowCompareEffect';
 import useEffectOnce from 'react-use/lib/useEffectOnce';
+import useShallowCompareEffect from 'react-use/lib/useShallowCompareEffect';
 
 import { isEmptyArray } from '@remirror/core-helpers';
 

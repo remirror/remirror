@@ -4,7 +4,7 @@
   "private": true,
   "description": "Remirror Playground",
   "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/playground",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/playground",
+  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/playground",
   "license": "MIT",
   "contributors": [
     "Benjie Gillam <code@benjiegillam.com>",

@@ -3,7 +3,7 @@ const { getAllDependencies, formatFiles, baseDir, getRelativePathFromJson } = re
 const writeJSON = require('write-json-file');
 
 const paths = {
-  sizeLimit: baseDir('support', 'root',  '.size-limit.json'),
+  sizeLimit: baseDir('support', 'root', '.size-limit.json'),
 };
 
 const filesToPrettify = [];

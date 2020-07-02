@@ -1,5 +1,4 @@
 import composeRefs from '@seznam/compose-react-refs';
-import useEffectOnce from 'react-use/lib/useEffectOnce';
 import {
   ChangeEvent,
   HTMLProps,
@@ -10,6 +9,7 @@ import {
   useMemo,
   useRef,
 } from 'react';
+import useEffectOnce from 'react-use/lib/useEffectOnce';
 
 import {
   bool,

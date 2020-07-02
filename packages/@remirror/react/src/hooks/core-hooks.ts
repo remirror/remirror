@@ -1,8 +1,8 @@
 import isEqual from 'fast-deep-equal/react';
 import { DependencyList, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import useEffectOnce from 'react-use/lib/useEffectOnce';
 import useSetState from 'react-use/lib/useSetState';
 import useUpdateEffect from 'react-use/lib/useUpdateEffect';
-import useEffectOnce from 'react-use/lib/useEffectOnce';
 import ResizeObserver from 'resize-observer-polyfill';
 
 /**

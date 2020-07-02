@@ -8,7 +8,7 @@
     "text-editor"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/preset-social",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/preset-social",
+  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/preset-social",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

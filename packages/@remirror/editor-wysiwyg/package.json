@@ -3,7 +3,7 @@
   "version": "0.13.1",
   "description": "The `remirror` what-you-see-is-what-you-get (wysiwyg) editing experience.",
   "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/editor-wysiwyg",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/editor-wysiwyg",
+  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/editor-wysiwyg",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

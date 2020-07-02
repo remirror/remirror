@@ -10,7 +10,7 @@
     "collaboration"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/extension-yjs",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-yjs",
+  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/extension-yjs",
   "license": "MIT",
   "contributors": [
     "Benjie Gillam <code@benjiegillam.com>",

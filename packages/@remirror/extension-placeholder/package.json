@@ -7,7 +7,7 @@
     "extension"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/extension-placeholder",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-placeholder",
+  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/extension-placeholder",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
