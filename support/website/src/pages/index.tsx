@@ -101,8 +101,8 @@ const Home = () => {
             <BannerHeader />
             <h4 className={clsx('hero__subtitle', styles.bottomSpacing)}>{siteConfig?.tagline}</h4>
             <div className={styles.buttons}>
-              <Link className={clsx(styles.getStarted)} to={useBaseUrl('docs/')}>
-                Get Started
+              <Link className={clsx(styles.getStarted)} to={useBaseUrl('docs/introduction')}>
+                Documentation
               </Link>
               <Link className={clsx(styles.getStarted)} href='https://github.com/remirror/remirror'>
                 GitHub <ExternalIcon />

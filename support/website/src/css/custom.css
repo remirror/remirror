@@ -26,7 +26,6 @@
 
   --ifm-navbar-background-color: var(--ifm-color-primary);
   --ifm-navbar-link-hover-color: white;
-  --ifm-navbar-sidebar-width: 25vw;
 
   --ifm-navbar-shadow: initial;
 }
@@ -113,10 +112,19 @@
   }
 
   .navbar-sidebar {
+    max-width: 300px;
     --ifm-menu-color: white;
   }
 
   .navbar-sidebar__brand {
     justify-content: center;
+  }
+}
+
+.menu {
+  .button--secondary:not(.button--outline) {
+    --ifm-button-background-color: white;
+
+    /* color: white; */
   }
 }
