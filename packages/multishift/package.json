@@ -12,7 +12,6 @@
   "module": "dist/multishift.esm.js",
   "types": "dist/multishift.cjs.d.ts",
   "files": [
-    "globals.d.ts",
     "dist"
   ],
   "dependencies": {

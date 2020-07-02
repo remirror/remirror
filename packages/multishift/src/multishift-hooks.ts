@@ -2,6 +2,7 @@ import { useId } from '@reach/auto-id';
 import { setStatus } from 'a11y-status';
 import { DependencyList, EffectCallback, useEffect, useReducer, useRef } from 'react';
 import useShallowCompareEffect from 'react-use/lib/useShallowCompareEffect';
+import useEffectOnce from 'react-use/lib/useEffectOnce';
 
 import { isEmptyArray } from '@remirror/core-helpers';
 
@@ -324,32 +325,6 @@ export function useEffectOnUpdate(effect: EffectCallback, dependencies: Dependen
       return effect();
     }
   }, [dependencies]);
-}
-
-/**
- * React lifecycle hook that runs an effect only once.
- *
- * @remarks
- *
- * ```ts
- * import {useEffectOnce} from 'react-use';
- *
- * const Demo = () => {
- *   useEffectOnce(() => {
- *     log('Running effect once on mount')
- *
- *     return () => {
- *       log('Running clean-up of effect on unmount')
- *     }
- *   });
- *
- *   return null;
- * };
- * ```
- */
-export function useEffectOnce(effect: EffectCallback) {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(effect, []);
 }
 
 /**
