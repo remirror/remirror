@@ -12,7 +12,6 @@ function readPackage(pkg) {
 
   setDependency('graphql', '^14.6.0');
   setDependency('@types/react', '^16.9.41');
-  setDependency('core-js', '^3.6.5');
   setDependency('@types/prosemirror-view', '^1.15.0');
 
   return pkg;
