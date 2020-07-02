@@ -177,7 +177,7 @@ jobs:
         run: pnpm install
 
       - name: run unit tests
-        run: pnpm run test -- --runInBand
+        run: pnpm run test
 
       - name: publish code coverage report
         uses: paambaati/codeclimate-action@v2.4.0
@@ -226,7 +226,7 @@ jobs:
         run: pnpm run build
 
       - name: run unit tests
-        run: pnpm run test:build -- --runInBand
+        run: pnpm run test:build
 
   # Check that sizes are within their boundaries
   size_check:

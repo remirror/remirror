@@ -23,7 +23,7 @@ jobs:
 
           # TODO turn tests back on soon.
           - bash: |
-              pnpm run test -- --runInBand
+              pnpm run test
             displayName: 'run unit tests across project'
 
   - ${{ if eq(parameters.name, 'Linux') }}:
@@ -45,5 +45,5 @@ jobs:
           - template: pipeline-install.yml
           - bash: pnpm run build
             displayName: 'build all project dependencies'
-          - bash: pnpm run test:build -- --runInBand
+          - bash: pnpm run test:build
             displayName: 'run unit tests against built code'
