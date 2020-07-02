@@ -1,5 +1,3 @@
-const { existsSync } = require('fs');
-
 const tsProjectOptions = { project: ['./support/tsconfig.lint.json'] };
 
 const tsProjectRules = {
@@ -15,20 +13,6 @@ const tsProjectRules = {
   ],
 };
 
-const schemaJsonFilePath = `${__dirname}/docs/.cache/caches/gatsby-plugin-typegen/schema.json`;
-const graphqlRules = existsSync(schemaJsonFilePath)
-  ? {
-      'graphql/template-strings': [
-        'error',
-        {
-          env: 'apollo',
-          schemaJsonFilepath: schemaJsonFilePath,
-          tagName: 'gql',
-        },
-      ],
-    }
-  : {};
-
 module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: [
@@ -40,7 +24,6 @@ module.exports = {
     'unicorn',
     'import',
     'jsx-a11y',
-    'graphql',
     'simple-import-sort',
     'eslint-comments',
     'security',
@@ -300,11 +283,12 @@ module.exports = {
         '**/__mocks__/**',
         '@remirror/i18n/**/*.ts',
         'docs/**',
-        'examples/**',
+        'support/examples/**',
         'support/e2e/**',
         'support/website/**',
         '**/__stories__',
         '**/*.stories.tsx',
+        '**/*.stories.ts',
       ],
       rules: { 'import/no-default-export': 'off' },
     },
@@ -327,10 +311,6 @@ module.exports = {
         'unicorn/no-process-exit': 'off',
         'unicorn/no-unreadable-array-destructuring': 'off',
       },
-    },
-    {
-      files: ['docs/**'],
-      rules: { ...graphqlRules },
     },
     {
       files: ['@remirror/i18n/**/*.js'],

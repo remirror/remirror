@@ -1749,8 +1749,8 @@ importers:
       is-absolute-url: ^3.0.3
       monaco-editor-webpack-plugin: ^1.9.0
       prism-react-renderer: ^1.1.1
-      react: ^16.8.4
-      react-dom: ^16.8.4
+      react: ^16.13.1
+      react-dom: ^16.13.1
       remirror: ^0.13.1
 lockfileVersion: 5.1
 packages:

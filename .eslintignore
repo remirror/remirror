@@ -28,3 +28,6 @@ lerna.json
 
 pnpm-lock.yaml
 .pnpm-store/
+
+support/website/.docusaurus
+support/website/build

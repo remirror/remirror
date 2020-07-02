@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "description": "Your friendly, world class editor toolkit.",
+  "repository": "https://github.com/remirror/remirror/tree/master/support/website",
   "scripts": {
     "build": "docusaurus build",
     "deploy": "docusaurus deploy",
@@ -27,8 +28,8 @@
     "docusaurus": "^2.0.0-alpha.58",
     "is-absolute-url": "^3.0.3",
     "prism-react-renderer": "^1.1.1",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "remirror": "^0.13.1"
   },
   "devDependencies": {

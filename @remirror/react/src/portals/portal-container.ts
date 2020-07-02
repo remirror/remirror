@@ -1,5 +1,6 @@
 import { createNanoEvents } from 'nanoevents';
 import { ReactElement } from 'react';
+
 import { uniqueId } from '@remirror/core';
 
 export interface RenderParameter {

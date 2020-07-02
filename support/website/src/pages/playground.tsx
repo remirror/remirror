@@ -1,6 +1,6 @@
+import Head from '@docusaurus/Head';
 import Layout from '@theme/Layout';
 import React from 'react';
-import Head from '@docusaurus/Head';
 
 import { Playground } from '@remirror/playground';
 

@@ -2,7 +2,7 @@
   "name": "with-next",
   "version": "0.0.8",
   "private": true,
-  "repository": "https://github.com/remirror/remirror/tree/master/examples/with-next",
+  "repository": "https://github.com/remirror/remirror/tree/master/support/examples/with-next",
   "scripts": {
     "build": "next build",
     "dev": "next",

@@ -666,21 +666,12 @@ export function startCase(string: string) {
     .replace(/(\s|^)(\w)/g, (_, $1: string, $2: string) => `${$1}${$2.toUpperCase()}`);
 }
 
-interface UniqueIdParameter {
-  /**
-   * The prefix for the unique id
-   *
-   * @defaultValue ''
-   */
-  prefix?: string;
-}
-
 /**
  * Returns a number that is unique during the runtime of this code.
  */
 function n() {
-  var time = Date.now();
-  var last = n.last || time;
+  const time = Date.now();
+  const last = n.last || time;
   return (n.last = time > last ? time : last + 1);
 }
 
