@@ -28,7 +28,7 @@ jobs:
           fetch-depth: 0
           lfs: true
 
-      - uses: actions/cache@v1
+      - uses: actions/cache@v2
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -39,6 +39,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12
+
       - name: install pnpm
         run: |
           curl -L https://unpkg.com/@pnpm/self-installer | node
