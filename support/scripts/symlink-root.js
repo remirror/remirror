@@ -1,10 +1,14 @@
 const fs = require('fs');
-const { resolve } = require('path');
+const { resolve, join } = require('path');
 
-const targets = fs.readdirSync(baseDir('support', 'root')).map((filename) => ({
-  original: baseDir('support', 'root', filename),
-  target: baseDir(filename),
-}));
+const targets = fs
+  .readdirSync(baseDir('support', 'root'))
+  // Exclude the `readme.md` file from being symlinked.
+  .filter((name) => !name.endsWith('readme.md'))
+  .map((filename) => ({
+    original: baseDir('support', 'root', filename),
+    target: baseDir(filename),
+  }));
 
 /**
  * Resolve a path relative to the base directory.
@@ -29,6 +33,38 @@ function getFileStatSync(target) {
 }
 
 /**
+ * Delete a file or folder recursively.
+ *
+ * @param {string} path
+ *
+ * @returns {void}
+ */
+function deletePath(path) {
+  const stat = getFileStatSync(path);
+
+  if (!stat) {
+    return;
+  }
+
+  if (stat.isFile()) {
+    console.log('deleting file', path);
+    fs.unlinkSync(path);
+  }
+
+  if (!stat.isDirectory()) {
+    return;
+  }
+
+  // Delete all nested paths
+  for (const file of fs.readdirSync(path)) {
+    deletePath(join(path, file));
+  }
+
+  // Delete the directory
+  fs.rmdirSync(path);
+}
+
+/**
  * Check that the path is linked to the target.
  *
  * @param {string} path
@@ -46,12 +82,16 @@ function isLinkedTo(path, target) {
 for (const { original, target } of targets) {
   const targetStat = getFileStatSync(target);
 
+  // Nothing to do since the path is linked correctly.
   if (isLinkedTo(target, original)) {
     continue;
   }
 
-  if (targetStat && targetStat.isSymbolicLink()) {
-    fs.unlinkSync(target);
+  // The file or directory exists but is not symlinked correctly. It should be
+  // deleted.
+  if (targetStat) {
+    console.log('deleting path', target);
+    deletePath(target);
   }
 
   fs.symlinkSync(original, target);

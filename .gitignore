@@ -155,3 +155,4 @@ cc-reporter
 /lingui.config.js
 /pnpmfile.js
 /jest.config.js
+/.vscode
