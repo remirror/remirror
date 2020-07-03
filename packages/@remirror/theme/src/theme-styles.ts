@@ -14,7 +14,7 @@ import {
  * These are the variable names
  */
 export const themeStyles = css`
-  ${createThemeVariables(defaultRemirrorTheme).cssString}
+  ${createThemeVariables(defaultRemirrorTheme).css}
 
   font-family: ${getTheme((t) => t.fontFamily.default)};
   line-height: ${getTheme((t) => t.lineHeight.default)};

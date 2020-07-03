@@ -1027,6 +1027,7 @@ importers:
       '@remirror/preset-core': 'link:../preset-core'
       '@remirror/preset-react': 'link:../preset-react'
       '@remirror/react-utils': 'link:../react-utils'
+      '@remirror/theme': 'link:../theme'
       '@types/hoist-non-react-statics': 3.3.1
       '@types/min-document': 2.19.0
       '@types/use-deep-compare-effect': 1.2.0
@@ -1060,6 +1061,7 @@ importers:
       '@remirror/preset-core': ^0.0.0
       '@remirror/preset-react': ^0.0.0
       '@remirror/react-utils': ^0.7.6
+      '@remirror/theme': ^0.0.0
       '@testing-library/react': ^10.4.3
       '@testing-library/react-hooks': ^3.3.0
       '@types/hoist-non-react-statics': ^3.3.1

@@ -24,6 +24,7 @@ import {
   invariant,
   isArray,
   isFunction,
+  isNullOrUndefined,
   isPlainObject,
   object,
   RemirrorContentType,
@@ -55,19 +56,21 @@ import { createEditorView, RemirrorSSR } from '../ssr';
 /**
  * The component responsible for rendering your prosemirror editor to the DOM.
  *
- * @internal
+ * @remarks
  *
  * This is an internal component and should only be used within the `remirror`
  * codebase. The `RemirrorProvider` is the only supported way for consuming the
  * application.
+ *
+ * @internal
  */
-export const RenderEditor = <Combined extends AnyCombinedUnion>(
-  props: RenderEditorProps<Combined>,
+export const ReactEditor = <Combined extends AnyCombinedUnion>(
+  props: ReactEditorProps<Combined>,
 ) => {
   const { stringHandler = defaultStringHandler, onError, manager, forceEnvironment, value } = props;
 
   // Cache whether this is a controlled editor.
-  const isControlledEditor = useRef(bool(value)).current;
+  const isControlled = bool(value);
 
   const createStateFromContent = useCallback(
     (
@@ -118,18 +121,19 @@ export const RenderEditor = <Combined extends AnyCombinedUnion>(
 
   // Handle controlled editor updates every time the value changes.
   useEffect(() => {
-    if (!isControlledEditor) {
+    invariant((value && isControlled) || (isNullOrUndefined(value) && !isControlled), {
+      code: ErrorConstant.REACT_CONTROLLED,
+      message: isControlled
+        ? 'You have attempted to switch from a controlled to an uncontrolled editor. Once you set up an editor as a controlled editor it must always provide a `value` prop.'
+        : 'You have provided a `value` prop to an uncontrolled editor. In order to set up your editor as controlled you must provide the `value` prop from the very first render.',
+    });
+
+    if (!value) {
       return;
     }
 
-    invariant(value, {
-      code: ErrorConstant.REACT_CONTROLLED,
-      message:
-        'This editor has been set up as a controlled editor and must always provide a `value` prop.',
-    });
-
     methods.updateControlledState(value);
-  }, [isControlledEditor, value, methods]);
+  }, [isControlled, value, methods]);
 
   // Return the rendered component
   return methods.render();
@@ -138,7 +142,7 @@ export const RenderEditor = <Combined extends AnyCombinedUnion>(
 /**
  * Sets a flag to be a static remirror
  */
-RenderEditor.remirrorType = RemirrorType.Editor;
+ReactEditor.remirrorType = RemirrorType.Editor;
 
 /**
  * A function that takes the injected remirror params and returns JSX to render.
@@ -149,7 +153,7 @@ type RenderPropFunction<Combined extends AnyCombinedUnion> = (
   params: RemirrorContextProps<Combined>,
 ) => JSX.Element;
 
-export interface RenderEditorProps<Combined extends AnyCombinedUnion> extends BaseProps<Combined> {
+export interface ReactEditorProps<Combined extends AnyCombinedUnion> extends BaseProps<Combined> {
   /**
    * The render prop that takes the injected remirror params and returns an
    * element to render. The editor view is automatically attached to the DOM.
@@ -159,7 +163,7 @@ export interface RenderEditorProps<Combined extends AnyCombinedUnion> extends Ba
 
 class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrapper<
   Combined,
-  RenderEditorProps<Combined>
+  ReactEditorProps<Combined>
 > {
   /**
    * The portal container which keeps track of all the React Portals containing
@@ -493,7 +497,7 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
 }
 
 interface ReactEditorWrapperParameter<Combined extends AnyCombinedUnion>
-  extends EditorWrapperParameter<Combined, RenderEditorProps<Combined>> {
+  extends EditorWrapperParameter<Combined, ReactEditorProps<Combined>> {
   getShouldRenderClient: () => boolean | undefined;
   setShouldRenderClient: SetShouldRenderClient;
 }

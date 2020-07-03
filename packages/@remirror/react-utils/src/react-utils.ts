@@ -51,6 +51,11 @@ export enum RemirrorType {
    * Marks the provider for i18n.
    */
   I18nProvider = 'i18n-provider',
+
+  /**
+   * Marks this as a provider for the remirror theme.
+   */
+  ThemeProvider = 'theme-provider',
 }
 
 /**

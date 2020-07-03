@@ -7,7 +7,7 @@ import { AnyCombinedUnion, fromHtml } from '@remirror/core';
 import { createReactManager } from '@remirror/test-fixtures';
 
 import { RemirrorContextProps } from '../../react-types';
-import { RenderEditor } from '../render-editor';
+import { ReactEditor } from '../react-editor';
 
 const textContent = `This is editor text`;
 const label = 'Remirror editor';
@@ -20,9 +20,9 @@ const handlers = {
 test('should be called via a render prop', () => {
   const mock = jest.fn(() => <div />);
   const { getByLabelText } = render(
-    <RenderEditor manager={createReactManager()} label={label} {...handlers}>
+    <ReactEditor manager={createReactManager()} label={label} {...handlers}>
       {mock}
-    </RenderEditor>,
+    </ReactEditor>,
   );
 
   expect(mock).toHaveBeenCalledWith(expect.any(Object));
@@ -39,14 +39,14 @@ test('should be called via a render prop', () => {
 test('can `suppressHydrationWarning` without breaking', () => {
   const mock = jest.fn(() => <div />);
   const { getByLabelText } = render(
-    <RenderEditor
+    <ReactEditor
       manager={createReactManager()}
       label={label}
       {...handlers}
       suppressHydrationWarning={true}
     >
       {mock}
-    </RenderEditor>,
+    </ReactEditor>,
   );
 
   expect(mock).toHaveBeenCalledWith(expect.any(Object));
@@ -63,7 +63,7 @@ test('can `suppressHydrationWarning` without breaking', () => {
 describe('basic functionality', () => {
   it('is accessible', async () => {
     const results = await axe(
-      renderToString(<RenderEditor manager={createReactManager()}>{() => <div />}</RenderEditor>),
+      renderToString(<ReactEditor manager={createReactManager()}>{() => <div />}</ReactEditor>),
     );
 
     expect(results).toHaveNoViolations();
@@ -72,7 +72,7 @@ describe('basic functionality', () => {
   it("doesn't render the editor without `children` as a render prop", () => {
     expect(() =>
       // @ts-expect-error
-      render(<RenderEditor label={label} manager={createReactManager()} />),
+      render(<ReactEditor label={label} manager={createReactManager()} />),
     ).toMatchSnapshot();
   });
 
@@ -84,14 +84,14 @@ describe('basic functionality', () => {
     });
 
     const { getByLabelText } = render(
-      <RenderEditor
+      <ReactEditor
         label={label}
         {...handlers}
         manager={createReactManager()}
         stringHandler={fromHtml}
       >
         {mock}
-      </RenderEditor>,
+      </ReactEditor>,
     );
 
     act(() => {
@@ -115,9 +115,9 @@ describe('basic functionality', () => {
     const mock = jest.fn(() => <div />);
     const manager = createReactManager();
     const El = ({ editable }: { editable: boolean }) => (
-      <RenderEditor editable={editable} label={label} manager={manager}>
+      <ReactEditor editable={editable} label={label} manager={manager}>
         {mock}
-      </RenderEditor>
+      </ReactEditor>
     );
     const { rerender, getByLabelText } = render(<El editable={true} />);
 
@@ -132,7 +132,7 @@ describe('basic functionality', () => {
 describe('initialContent', () => {
   it('should render with string content', () => {
     const { container } = render(
-      <RenderEditor
+      <ReactEditor
         label={label}
         {...handlers}
         manager={createReactManager()}
@@ -140,7 +140,7 @@ describe('initialContent', () => {
         stringHandler={fromHtml}
       >
         {() => <div />}
-      </RenderEditor>,
+      </ReactEditor>,
     );
 
     expect(container.innerHTML).toInclude('Hello');
@@ -153,14 +153,14 @@ describe('initialContent', () => {
     };
 
     const { container } = render(
-      <RenderEditor
+      <ReactEditor
         label={label}
         {...handlers}
         manager={createReactManager()}
         initialContent={content}
       >
         {() => <div />}
-      </RenderEditor>,
+      </ReactEditor>,
     );
 
     expect(container.innerHTML).toInclude('Hello');
@@ -179,7 +179,7 @@ describe('focus', () => {
   beforeEach(() => {
     jest.useFakeTimers();
     const { getByRole } = render(
-      <RenderEditor
+      <ReactEditor
         label={label}
         {...handlers}
         manager={createReactManager()}
@@ -190,7 +190,7 @@ describe('focus', () => {
           context = ctx;
           return <div />;
         }}
-      </RenderEditor>,
+      </ReactEditor>,
     );
 
     editorNode = getByRole('textbox');

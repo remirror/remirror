@@ -13,7 +13,7 @@ import {
 
 import { createReactManager } from '../../hooks/editor-hooks';
 import { RemirrorContextProps } from '../../react-types';
-import { RenderEditor } from '../render-editor';
+import { ReactEditor } from '../react-editor';
 
 const label = 'Remirror editor';
 
@@ -44,9 +44,9 @@ describe('Remirror Controlled Component', () => {
     const onChange = jest.fn();
 
     const { getByRole } = render(
-      <RenderEditor {...props} value={value} manager={manager} onChange={onChange}>
+      <ReactEditor {...props} value={value} manager={manager} onChange={onChange}>
         {() => <div />}
-      </RenderEditor>,
+      </ReactEditor>,
     );
 
     expect(getByRole('textbox')).toMatchSnapshot();
@@ -65,7 +65,7 @@ describe('Remirror Controlled Component', () => {
     const onChange = jest.fn();
 
     render(
-      <RenderEditor
+      <ReactEditor
         {...props}
         manager={manager}
         initialContent='<p>Terrible</p>'
@@ -73,7 +73,7 @@ describe('Remirror Controlled Component', () => {
         onChange={onChange}
       >
         {() => <div />}
-      </RenderEditor>,
+      </ReactEditor>,
     );
 
     expect(chain.view.dom).toMatchSnapshot();
@@ -91,7 +91,7 @@ describe('Remirror Controlled Component', () => {
       );
 
       return (
-        <RenderEditor
+        <ReactEditor
           {...props}
           value={value}
           manager={manager}
@@ -104,7 +104,7 @@ describe('Remirror Controlled Component', () => {
           }}
         >
           {() => <div />}
-        </RenderEditor>
+        </ReactEditor>
       );
     };
 
@@ -131,7 +131,7 @@ describe('Remirror Controlled Component', () => {
       );
 
       return (
-        <RenderEditor
+        <ReactEditor
           {...props}
           value={value}
           manager={manager}
@@ -146,7 +146,7 @@ describe('Remirror Controlled Component', () => {
           }}
         >
           {() => <div />}
-        </RenderEditor>
+        </ReactEditor>
       );
     };
 
@@ -175,12 +175,12 @@ describe('Remirror Controlled Component', () => {
       editorState: EditorState<SchemaFromCombined<typeof manager['~EP']>>;
     }> = ({ editorState }) => {
       return (
-        <RenderEditor {...props} value={editorState} manager={manager} onChange={jest.fn()}>
+        <ReactEditor {...props} value={editorState} manager={manager} onChange={jest.fn()}>
           {(context) => {
             ctx = context as any;
             return <div />;
           }}
-        </RenderEditor>
+        </ReactEditor>
       );
     };
 
@@ -212,7 +212,7 @@ describe('Remirror Controlled Component', () => {
       );
 
       return (
-        <RenderEditor
+        <ReactEditor
           {...props}
           value={value}
           manager={manager}
@@ -227,7 +227,7 @@ describe('Remirror Controlled Component', () => {
           }}
         >
           {() => <div />}
-        </RenderEditor>
+        </ReactEditor>
       );
     };
 

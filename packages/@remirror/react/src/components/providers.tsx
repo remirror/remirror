@@ -1,10 +1,18 @@
-import React, { ProviderProps, ReactElement, ReactNode, useEffect } from 'react';
+import React, {
+  CSSProperties,
+  ElementType,
+  ProviderProps,
+  ReactElement,
+  ReactNode,
+  useEffect,
+} from 'react';
 
 import { AnyCombinedUnion, MakeOptional } from '@remirror/core';
 import { i18n as defaultI18n } from '@remirror/i18n';
 import { CorePresetOptions } from '@remirror/preset-core';
 import { ReactPresetOptions } from '@remirror/preset-react';
 import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
+import { createThemeVariables, RemirrorThemeType } from '@remirror/theme';
 
 import { useManager } from '../hooks';
 import { RemirrorPortals } from '../portals';
@@ -15,7 +23,7 @@ import {
   I18nContextProps,
   RemirrorContextProps,
 } from '../react-types';
-import { RenderEditor } from './render-editor';
+import { ReactEditor } from './react-editor';
 
 interface RemirrorContextProviderProps<Combined extends AnyCombinedUnion>
   extends ProviderProps<RemirrorContextProps<Combined>>,
@@ -147,7 +155,7 @@ export const RemirrorProvider = <Combined extends AnyCombinedUnion>(
   });
 
   return (
-    <RenderEditor {...rest} manager={reactManager}>
+    <ReactEditor {...rest} manager={reactManager}>
       {(value) => {
         return (
           <RemirrorContextProvider value={value} childAsRoot={childAsRoot}>
@@ -156,7 +164,7 @@ export const RemirrorProvider = <Combined extends AnyCombinedUnion>(
           </RemirrorContextProvider>
         );
       }}
-    </RenderEditor>
+    </ReactEditor>
   );
 };
 
@@ -169,8 +177,8 @@ export interface I18nProviderProps extends Partial<I18nContextProps> {
 /**
  * A provider component for the remirror i18n helper library.
  *
- * This uses `@lingui/core` in the background. So please star the
- * repo when you have a moment.
+ * This uses `@lingui/core` in the background. So please star and support the
+ * project when you have a moment.
  */
 export const I18nProvider = (props: I18nProviderProps) => {
   const { i18n = defaultI18n, locale = 'en', supportedLocales, children } = props;
@@ -188,8 +196,32 @@ export const I18nProvider = (props: I18nProviderProps) => {
 
 I18nProvider.$$remirrorType = RemirrorType.I18nProvider;
 
-// export interface RemirrorThemeProviderProps {
-//   theme:
-// }
+export interface ThemeProviderProps {
+  /**
+   * The theme to customise the look and feel of your remirror editor.
+   */
+  theme: RemirrorThemeType;
 
-// export const RemirrorThemeProvider = (props: RemirrorThemeProviderProps)
+  /**
+   * The custom component to use for rendering this editor.
+   *
+   * @defaultValue 'div'
+   */
+  as?: ElementType<{ style?: CSSProperties }>;
+
+  children: ReactNode;
+}
+
+/**
+ * This the `ThemeProvider`. Wrap your editor with it to customise the theming
+ * of content within your editor.
+ *
+ * Please be aware that this wraps your component in an extra dom layer.
+ */
+export const ThemeProvider = (props: ThemeProviderProps) => {
+  const { theme, children, as: Component = 'div' } = props;
+
+  return <Component style={createThemeVariables(theme).styles}>{children}</Component>;
+};
+
+ThemeProvider.$$remirrorType = RemirrorType.ThemeProvider;

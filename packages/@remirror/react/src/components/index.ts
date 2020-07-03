@@ -1,1 +1,1 @@
-export * from './remirror-provider';
+export * from './providers';

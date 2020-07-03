@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 
 import { contextPropsShape, createReactManager, positionerShape } from '@remirror/test-fixtures';
 
-import { RemirrorProvider } from '../components/remirror-provider';
+import { RemirrorProvider } from '../components/providers';
 import { usePositioner, useRemirror } from '../hooks';
 
 test('useRemirror', () => {

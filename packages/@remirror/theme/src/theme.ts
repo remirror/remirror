@@ -225,6 +225,18 @@ export const defaultRemirrorAtoms: Remirror.Atom = {
   },
 };
 
+export interface CreateThemeVariablesReturn {
+  /**
+   * A css string of the variables.
+   */
+  css: string;
+
+  /**
+   * A styles object version of the created css.
+   */
+  styles: Record<string, string | number>;
+}
+
 /**
  * Create the theme variables from the provided theme.
  *
@@ -232,7 +244,7 @@ export const defaultRemirrorAtoms: Remirror.Atom = {
  * used in the `themeStyles` css. Babel can't resolve the imported functions in
  * development.
  */
-export function createThemeVariables(theme: RemirrorThemeType = {}) {
+export function createThemeVariables(theme: RemirrorThemeType = {}): CreateThemeVariablesReturn {
   const cssVariableString: string[] = [];
   const cssVariableObject: Record<string, string | number> = {};
 
@@ -259,7 +271,7 @@ export function createThemeVariables(theme: RemirrorThemeType = {}) {
     addCssVariable([key], value);
   }
 
-  return { cssString: cssVariableString.join('\n'), cssObject: cssVariableObject };
+  return { css: cssVariableString.join('\n'), styles: cssVariableObject };
 }
 
 /**
@@ -326,22 +338,22 @@ declare global {
     }
 
     interface ThemeShadowItem {
-      x: string;
-      y: string;
-      blur: string;
-      scale: string;
+      x: string | number;
+      y: string | number;
+      blur: string | number;
+      scale: string | number;
     }
 
     interface ThemeLineHeight {
-      default: string;
-      heading: string;
+      default: string | number;
+      heading: string | number;
     }
 
     interface ThemeLetterSpacing {
-      tight: string;
-      default: string;
-      loose: string;
-      wide: string;
+      tight: string | number;
+      default: string | number;
+      loose: string | number;
+      wide: string | number;
     }
 
     interface ThemeFontWeight {
@@ -357,27 +369,27 @@ declare global {
     }
 
     interface ThemeSpace {
-      1: string;
-      2: string;
-      3: string;
-      4: string;
-      5: string;
-      6: string;
-      7: string;
-      8: string;
+      1: string | number;
+      2: string | number;
+      3: string | number;
+      4: string | number;
+      5: string | number;
+      6: string | number;
+      7: string | number;
+      8: string | number;
     }
 
     interface ThemeFontSize {
-      0: string;
-      1: string;
-      2: string;
-      3: string;
-      4: string;
-      5: string;
-      6: string;
-      7: string;
-      8: string;
-      default: string;
+      0: string | number;
+      1: string | number;
+      2: string | number;
+      3: string | number;
+      4: string | number;
+      5: string | number;
+      6: string | number;
+      7: string | number;
+      8: string | number;
+      default: string | number;
     }
 
     interface ThemeColor {

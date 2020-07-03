@@ -8,7 +8,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { createReactManager, docNodeBasicJSON } from '@remirror/test-fixtures';
 
 import { useRemirror } from '../../hooks';
-import { RemirrorProvider } from '../remirror-provider';
+import { RemirrorProvider } from '../providers';
 
 test('RemirrorProvider', () => {
   const TestComponent = () => {

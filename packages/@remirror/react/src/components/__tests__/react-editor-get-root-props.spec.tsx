@@ -4,7 +4,7 @@ import React, { forwardRef, FunctionComponent, Ref, RefAttributes } from 'react'
 
 import { createReactManager } from '@remirror/test-fixtures';
 
-import { RenderEditor } from '../render-editor';
+import { ReactEditor } from '../react-editor';
 
 const mock = jest.fn();
 const CustomRoot: FunctionComponent<RefAttributes<HTMLDivElement>> = forwardRef((props, ref) => {
@@ -14,11 +14,11 @@ const CustomRoot: FunctionComponent<RefAttributes<HTMLDivElement>> = forwardRef(
 
 test('supports a custom root element', () => {
   render(
-    <RenderEditor manager={createReactManager()}>
+    <ReactEditor manager={createReactManager()}>
       {({ getRootProps }) => {
         return <CustomRoot {...getRootProps()} />;
       }}
-    </RenderEditor>,
+    </ReactEditor>,
   );
 
   expect(mock).toHaveBeenCalledWith(expect.any(Function));
@@ -31,11 +31,11 @@ test('supports a custom ref label and passed props through', () => {
   }
   const testProp = 'test';
   render(
-    <RenderEditor manager={createReactManager()}>
+    <ReactEditor manager={createReactManager()}>
       {({ getRootProps }) => {
         return <Cmp {...getRootProps({ refKey: 'customRef', testProp })} />;
       }}
-    </RenderEditor>,
+    </ReactEditor>,
   );
 
   expect(mock.mock.calls[0][0].customRef).toBeFunction();
@@ -46,14 +46,14 @@ test('throws an error when called multiple times during render', () => {
   expect.assertions(2);
 
   render(
-    <RenderEditor manager={createReactManager()}>
+    <ReactEditor manager={createReactManager()}>
       {({ getRootProps }) => {
         expect(() => getRootProps()).not.toThrow();
         expect(() => getRootProps()).toThrowErrorMatchingSnapshot();
 
         return <div />;
       }}
-    </RenderEditor>,
+    </ReactEditor>,
   );
 });
 
@@ -63,7 +63,7 @@ describe('nestedRootProps', () => {
   beforeEach(() => {
     result = render(
       <main>
-        <RenderEditor manager={createReactManager()} label='Editor'>
+        <ReactEditor manager={createReactManager()} label='Editor'>
           {({ getRootProps }) => {
             return (
               <div>
@@ -73,7 +73,7 @@ describe('nestedRootProps', () => {
               </div>
             );
           }}
-        </RenderEditor>
+        </ReactEditor>
       </main>,
     );
   });
