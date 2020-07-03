@@ -2,22 +2,23 @@
   "$schema": "https://unpkg.com/@changesets/config@1.3.0/schema.json",
   "changelog": "@changesets/cli/changelog",
   "ignore": [
-    "@remirror/test-fixtures",
-    "with-next",
     "@remirror/e2e",
-    "@remirror/internal-support",
-    "@remirror/storybook"
+    "@remirror/storybook",
+    "@remirror/support",
+    "@remirror/test-fixtures",
+    "@remirror/website",
+    "with-next"
   ],
   "updateInternalDependencies": "minor",
   "commit": false,
   "linked": [
     [
       "@remirror/cli",
-      "@remirror/core",
       "@remirror/core-constants",
       "@remirror/core-helpers",
       "@remirror/core-types",
       "@remirror/core-utils",
+      "@remirror/core",
       "@remirror/dev",
       "@remirror/dom",
       "@remirror/editor-social",
@@ -27,8 +28,8 @@
       "@remirror/extension-bidi",
       "@remirror/extension-blockquote",
       "@remirror/extension-bold",
-      "@remirror/extension-code",
       "@remirror/extension-code-block",
+      "@remirror/extension-code",
       "@remirror/extension-collaboration",
       "@remirror/extension-diff",
       "@remirror/extension-doc",
@@ -65,13 +66,13 @@
       "@remirror/preset-social",
       "@remirror/preset-table",
       "@remirror/preset-wysiwyg",
-      "@remirror/react",
       "@remirror/react-utils",
+      "@remirror/react",
       "@remirror/showcase",
       "@remirror/styles",
       "@remirror/theme",
-      "remirror",
-      "jest-remirror"
+      "jest-remirror",
+      "remirror"
     ]
   ],
   "access": "public",

@@ -20,7 +20,6 @@
 '@remirror/pm': major
 '@remirror/preset-core': major
 '@remirror/react': major
-'@remirror/test-fixtures': major
 '@remirror/cli': major
 '@remirror/core-extensions': major
 '@remirror/dev': major
@@ -42,8 +41,6 @@
 '@remirror/ui-modal': major
 '@remirror/ui-text': major
 '@remirror/ui': major
-'@remirror/docs': major
-'@remirror/e2e': major
 'jest-prosemirror': major
 'jest-remirror': major
 'multishift': major

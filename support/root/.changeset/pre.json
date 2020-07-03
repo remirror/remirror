@@ -59,7 +59,6 @@
     "@remirror/react-utils": "0.7.6",
     "@remirror/showcase": "0.13.1",
     "@remirror/styles": "0.0.0",
-    "@remirror/test-fixtures": "0.0.4",
     "@remirror/theme": "0.0.0",
     "@remirror/core-extensions": "0.13.1",
     "@remirror/editor-markdown": "0.13.1",
@@ -78,17 +77,13 @@
     "@remirror/ui-menus": "0.7.4",
     "@remirror/ui-modal": "0.7.5",
     "@remirror/ui-text": "0.7.6",
-    "@remirror/docs": "0.0.5",
-    "@remirror/e2e": "0.0.3",
-    "with-next": "0.0.8",
     "a11y-status": "0.0.0",
     "jest-prosemirror": "0.8.3",
     "jest-remirror": "0.13.1",
     "multishift": "0.7.7",
     "prosemirror-suggest": "0.7.6",
     "remirror": "0.13.1",
-    "test-keyboard": "0.7.6",
-    "@remirror/support": "0.0.0"
+    "test-keyboard": "0.7.6"
   },
   "changesets": []
 }

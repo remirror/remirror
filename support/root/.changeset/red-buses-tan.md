@@ -26,7 +26,6 @@
 '@remirror/react-utils': major
 '@remirror/react': major
 '@remirror/showcase': major
-'@remirror/test-fixtures': major
 '@remirror/ui-a11y-status': major
 '@remirror/ui': major
 'jest-prosemirror': major
