@@ -102,9 +102,9 @@ export function useI18n(): I18nContextProps {
  * }
  * ```
  */
-export type UseRemirrorType<Combined extends AnyCombinedUnion> = () => RemirrorContextProps<
-  Combined
->;
+export type UseRemirrorType<Combined extends AnyCombinedUnion> = <
+  Type extends AnyCombinedUnion
+>() => RemirrorContextProps<Combined | Type>;
 
 /**
  * Dynamically update the properties of your extension via hooks. Provide the
