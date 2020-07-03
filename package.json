@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "homepage": "https://remirror.io",
-  "repository": "https://github.com/remirror/remirror/tree/next",
+  "repository": "https://github.com/remirror/remirror",
   "scripts": {
     "audit": "pnpm audit --audit-level high",
     "browser:coverage": "browserslist --coverage",
@@ -49,7 +49,7 @@
     "lint:build": "preconstruct validate",
     "lint:css": "stylelint \"{@remirror,packages,docs,examples}/**/*.{ts,tsx}\"",
     "lint:es": "eslint -f github --ext=.tsx,.ts,.js .",
-    "lint:prettier": "pnpm run run:prettier \"!**/CHANGELOG.md\" -- --check",
+    "lint:prettier": "pnpm run run:prettier -- --check",
     "lint:repo": "manypkg check",
     "lint:styles": "node support/scripts/check-styles.js",
     "refresh": "pnpm run clean:all; pnpm install;",
