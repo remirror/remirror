@@ -157,3 +157,6 @@ cc-reporter
 /jest.config.js
 /.vscode
 /.changeset
+/.prettierrc
+/.huskyrc
+/.lintstagedrc

@@ -1,0 +1,6 @@
+{
+  "hooks": {
+    "pre-commit": "pnpm run if-config hooks.preCommit lint-staged",
+    "pre-push": "pnpm run if-config hooks.prePush \"pnpm run checks\""
+  }
+}

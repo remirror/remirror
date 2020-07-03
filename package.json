@@ -1,8 +1,8 @@
 {
   "name": "root",
   "private": true,
-  "homepage": "https://docs.remirror.org",
-  "repository": "https://github.com/remirror/remirror",
+  "homepage": "https://remirror.io",
+  "repository": "https://github.com/remirror/remirror/tree/next",
   "scripts": {
     "audit": "pnpm audit --audit-level high",
     "browser:coverage": "browserslist --coverage",
@@ -22,8 +22,7 @@
     "ci:version:repo": "unset CI && pnpm run fix:repo",
     "clean": "pnpm run if-clean git clean -- -fdx --exclude=.config.json --exclude=node_modules --exclude=**/node_modules",
     "clean:all": "git clean -fdX --exclude=.config.json ",
-    "clean:build": "rimraf @remirror/*/lib packages/*/lib docs/public docs/.cache .jest support/examples/with-next/.next {@remirror,packages}/*/*.tsbuildinfo",
-    "clean:modules": "git clean -fdX @remirror support docs packages",
+    "clean:modules": "git clean -fdX packages support",
     "css:build": "node support/scripts/linaria.js",
     "css:clean": "rimraf @remirror/styles/*.css packages/remirror/styles/*.css",
     "css:copy": "cpy packages/@remirror/styles/*.css packages/remirror/styles/",
@@ -54,7 +53,8 @@
     "lint:repo": "manypkg check",
     "lint:styles": "node support/scripts/check-styles.js",
     "md": "node support/scripts/md.js",
-    "refresh": "pnpm run clean:all; rm pnpm-lock.yaml; pnpm install;",
+    "refresh": "pnpm run clean:all; pnpm install;",
+    "reset": "pnpm run clean:all; rm pnpm-lock.yaml; pnpm install;",
     "prerelease": "pnpm run if-not-ci run-s checks:release",
     "release": "changeset publish",
     "repo:update": "pnpm update --latest --recursive -i",
@@ -70,58 +70,9 @@
     "test:watch": "jest  --watch --verbose=false --coverage=false",
     "typecheck": "tsc -b ./tsconfig.json"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pnpm run if-config hooks.preCommit lint-staged",
-      "pre-push": "pnpm run if-config hooks.prePush \"pnpm run checks\""
-    }
-  },
-  "lint-staged": {
-    "**/*.js": [
-      "prettier --write",
-      "eslint --fix"
-    ],
-    "*.{json,yml,yaml,md}": [
-      "prettier --write"
-    ],
-    "{@remirror,packages,docs,support,examples}/**/*.{ts,tsx,js}": [
-      "prettier --write",
-      "eslint --fix"
-    ],
-    "{@remirror,packages,examples}/**/*.spec.{ts,tsx}": [
-      "jest --coverage=false --bail --findRelatedTests"
-    ]
-  },
   "browserslist": [
     "since 2017"
   ],
-  "prettier": {
-    "bracketSpacing": true,
-    "endOfLine": "lf",
-    "jsxBracketSameLine": false,
-    "jsxSingleQuote": true,
-    "plugins": [
-      "./node_modules/prettier-plugin-packagejson"
-    ],
-    "printWidth": 100,
-    "proseWrap": "always",
-    "semi": true,
-    "singleQuote": true,
-    "tabWidth": 2,
-    "trailingComma": "all",
-    "useTabs": false,
-    "overrides": [
-      {
-        "files": [
-          ".github/**/*.md",
-          ".changeset/**/*.md"
-        ],
-        "options": {
-          "proseWrap": "never"
-        }
-      }
-    ]
-  },
   "dependencies": {
     "@babel/core": "^7.10.4",
     "@babel/parser": "^7.10.4",
@@ -213,9 +164,9 @@
   },
   "preconstruct": {
     "packages": [
+      "packages/*",
       "packages/@remirror/*",
-      "!packages/@remirror/styles",
-      "packages/*"
+      "!packages/@remirror/styles"
     ]
   }
 }
