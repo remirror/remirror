@@ -156,3 +156,4 @@ cc-reporter
 /pnpmfile.js
 /jest.config.js
 /.vscode
+/.changeset
