@@ -1,4 +1,4 @@
-# @remirror/editor-social
+# @remirror/react-social
 
 ## 0.13.1
 

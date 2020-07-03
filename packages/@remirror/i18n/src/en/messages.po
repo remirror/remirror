@@ -8,6 +8,6 @@ msgstr ""
 "Language: en\n"
 
 #. The alt text for the user mention avatar.
-#: @remirror/editor-social/src/messages.ts:2
+#: @remirror/react-social/src/messages.ts:2
 msgid "user.mention.avatar.alt"
 msgstr "Avatar for { name }"

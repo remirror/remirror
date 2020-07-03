@@ -1,5 +1,8 @@
 ---
 '@remirror/core-extensions': major
+'@remirror/editor-markdown': major
+'@remirror/editor-social': major
+'@remirror/editor-wysiwyg': major
 '@remirror/react-hooks': major
 '@remirror/react-node-view': major
 '@remirror/react-portals': major

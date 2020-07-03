@@ -1,0 +1,14 @@
+{
+  "name": "@remirror/editor-social",
+  "version": "0.13.1",
+  "description": "**DEPRECATED** - A social editor",
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/editor-social",
+  "repository": "https://github.com/remirror/remirror/tree/master/support/deprecated/editor-social",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

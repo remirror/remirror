@@ -48,7 +48,7 @@ View our documentation website at https://docs.remirror.org/
 
 - A11y focused and ARIA compatible.
 - **3** prebuilt editors, [markdown](./@remirror/editor-markdown),
-  [social](./@remirror/editor-social) and [wysiwyg](./@remirror/editor-wysiwyg).
+  [social](./@remirror/react-social) and [wysiwyg](./@remirror/react-wysiwyg).
 - Extensions available for adding your own flavour to your own custom editor editor.
 - Zero config support **Server Side Rendering (SSR)**.
 

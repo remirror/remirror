@@ -3,6 +3,6 @@
   "module": "dist/remirror.esm.js",
   "types": "dist/remirror.cjs.d.ts",
   "preconstruct": {
-    "source": "../../src/editor/social"
+    "source": "../../src/react/social"
   }
 }

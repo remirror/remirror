@@ -7,7 +7,7 @@ import {
   SocialEditor,
   SocialEditorProps,
   UserData,
-} from '@remirror/editor-social';
+} from '@remirror/react-social';
 
 import { fakeUsers } from './data/fake-users';
 
@@ -65,7 +65,7 @@ export const ExampleSocialEditor = (props: Partial<SocialEditorProps>) => {
   return (
     <SocialEditor
       {...props}
-      attributes={{ 'data-testid': 'editor-social' }}
+      attributes={{ 'data-testid': 'react-social' }}
       userData={userMatches}
       tagData={tagMatches}
       onMentionChange={onChange}

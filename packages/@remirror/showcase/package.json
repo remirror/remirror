@@ -24,8 +24,8 @@
   "dependencies": {
     "@babel/runtime": "^7.10.4",
     "@remirror/core": "^0.11.0",
-    "@remirror/editor-social": "^0.13.1",
     "@remirror/extension-code-block": "^0.12.0",
+    "@remirror/react-social": "^0.0.0",
     "@types/match-sorter": "^4.0.0",
     "@types/prettier": "^2.0.1",
     "match-sorter": "^4.1.0",

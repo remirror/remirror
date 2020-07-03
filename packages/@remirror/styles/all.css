@@ -65,7 +65,7 @@
 }
 
 /**
- * Styles extracted from: packages/@remirror/editor-social/src/social-editor-styles.ts
+ * Styles extracted from: packages/@remirror/react-social/src/social-editor-styles.ts
  */
 .remirror-emoji-suggestions-item {
   padding: 8px;
@@ -168,7 +168,7 @@
 }
 
 /**
- * Styles extracted from: packages/@remirror/editor-social/src/components/social-editor-character-count.tsx
+ * Styles extracted from: packages/@remirror/react-social/src/components/social-editor-character-count.tsx
  */
 .remirror-character-count-wrapper {
   position: absolute;
@@ -196,7 +196,7 @@
 }
 
 /**
- * Styles extracted from: packages/@remirror/editor-social/src/components/social-editor-emoji.tsx
+ * Styles extracted from: packages/@remirror/react-social/src/components/social-editor-emoji.tsx
  */
 .remirror-emoji-suggestions-item-name {
   color: rgb(121, 129, 134);
@@ -208,7 +208,7 @@
 }
 
 /**
- * Styles extracted from: packages/@remirror/editor-social/src/components/social-editor.tsx
+ * Styles extracted from: packages/@remirror/react-social/src/components/social-editor.tsx
  */
 .remirror-social-editor .ProseMirror {
   flex-grow: 1;

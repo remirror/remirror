@@ -1,4 +1,4 @@
-# @remirror/editor-wysiwyg
+# @remirror/react-wysiwyg
 
 > The `remirror` what-you-see-is-what-you-get (wysiwyg) editing experience.
 
@@ -6,25 +6,25 @@
 [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)
 ![MIT License][license]
 
-[version]: https://flat.badgen.net/npm/v/@remirror/editor-wysiwyg
-[npm]: https://npmjs.com/package/@remirror/editor-wysiwyg
+[version]: https://flat.badgen.net/npm/v/@remirror/react-wysiwyg
+[npm]: https://npmjs.com/package/@remirror/react-wysiwyg
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/editor-wysiwyg
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/editor-wysiwyg
+[size]: https://bundlephobia.com/result?p=@remirror/react-wysiwyg
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/react-wysiwyg
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
-[downloads-badge]: https://badgen.net/npm/dw/@remirror/editor-wysiwyg/red?icon=npm
+[downloads-badge]: https://badgen.net/npm/dw/@remirror/react-wysiwyg/red?icon=npm
 
 ## Installation
 
 ```bash
 # yarn
-yarn add @remirror/editor-wysiwyg @remirror/pm
+yarn add @remirror/react-wysiwyg @remirror/pm
 
 # pnpm
-pnpm add @remirror/editor-wysiwyg @remirror/pm
+pnpm add @remirror/react-wysiwyg @remirror/pm
 
 # npm
-npm install @remirror/editor-wysiwyg @remirror/pm
+npm install @remirror/react-wysiwyg @remirror/pm
 ```
 
 ## Usage

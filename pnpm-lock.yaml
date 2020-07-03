@@ -372,100 +372,6 @@ importers:
       '@remirror/pm': ^0.0.0
       '@remirror/preset-core': ^0.0.0
       type-fest: ^0.16.0
-  packages/@remirror/editor-social:
-    dependencies:
-      '@babel/runtime': 7.10.4
-      '@lingui/core': 3.0.0-13
-      '@remirror/extension-auto-link': 'link:../extension-auto-link'
-      '@remirror/extension-emoji': 'link:../extension-emoji'
-      '@remirror/extension-mention': 'link:../extension-mention'
-      '@remirror/i18n': 'link:../i18n'
-      '@remirror/preset-social': 'link:../preset-social'
-      '@remirror/react-utils': 'link:../react-utils'
-      '@types/classnames': 2.2.10
-      classnames: 2.2.6
-      linaria: 2.0.0-alpha.5
-      multishift: 'link:../../multishift'
-      type-fest: 0.16.0
-    devDependencies:
-      '@lingui/macro': 3.0.0-13
-      '@remirror/core': 'link:../core'
-      '@remirror/pm': 'link:../pm'
-      '@remirror/react': 'link:../react'
-      '@testing-library/react': 10.4.3_react-dom@16.13.1+react@16.13.1
-      '@types/react': 16.9.41
-      '@types/react-dom': 16.9.8
-      react: 16.13.1
-      react-dom: 16.13.1_react@16.13.1
-    specifiers:
-      '@babel/runtime': ^7.10.4
-      '@lingui/core': ^3.0.0-13
-      '@lingui/macro': ^3.0.0-13
-      '@remirror/core': ^0.11.0
-      '@remirror/extension-auto-link': ^0.0.0
-      '@remirror/extension-emoji': ^0.11.0
-      '@remirror/extension-mention': ^0.11.1
-      '@remirror/i18n': ^0.0.0
-      '@remirror/pm': ^0.0.0
-      '@remirror/preset-social': ^0.0.0
-      '@remirror/react': ^0.13.1
-      '@remirror/react-utils': ^0.7.6
-      '@testing-library/react': ^10.4.3
-      '@types/classnames': ^2.2.10
-      '@types/react': ^16.9.41
-      '@types/react-dom': ^16.9.8
-      classnames: ^2.2.6
-      linaria: ^2.0.0-alpha.5
-      multishift: ^0.7.7
-      react: ^16.13.1
-      react-dom: ^16.13.1
-      type-fest: ^0.16.0
-  packages/@remirror/editor-wysiwyg:
-    dependencies:
-      '@babel/runtime': 7.10.4
-      '@lingui/core': 3.0.0-13
-      '@remirror/extension-auto-link': 'link:../extension-auto-link'
-      '@remirror/i18n': 'link:../i18n'
-      '@remirror/preset-social': 'link:../preset-social'
-      '@remirror/preset-wysiwyg': 'link:../preset-wysiwyg'
-      '@remirror/react-utils': 'link:../react-utils'
-      '@types/classnames': 2.2.10
-      classnames: 2.2.6
-      linaria: 2.0.0-alpha.5
-      multishift: 'link:../../multishift'
-      type-fest: 0.16.0
-    devDependencies:
-      '@lingui/macro': 3.0.0-13
-      '@remirror/core': 'link:../core'
-      '@remirror/pm': 'link:../pm'
-      '@remirror/react': 'link:../react'
-      '@testing-library/react': 10.4.3_react-dom@16.13.1+react@16.13.1
-      '@types/react': 16.9.41
-      '@types/react-dom': 16.9.8
-      react: 16.13.1
-      react-dom: 16.13.1_react@16.13.1
-    specifiers:
-      '@babel/runtime': ^7.10.4
-      '@lingui/core': ^3.0.0-13
-      '@lingui/macro': ^3.0.0-13
-      '@remirror/core': ^0.11.0
-      '@remirror/extension-auto-link': ^0.0.0
-      '@remirror/i18n': ^0.0.0
-      '@remirror/pm': ^0.0.0
-      '@remirror/preset-social': ^0.0.0
-      '@remirror/preset-wysiwyg': ^0.0.0
-      '@remirror/react': ^0.13.1
-      '@remirror/react-utils': ^0.7.6
-      '@testing-library/react': ^10.4.3
-      '@types/classnames': ^2.2.10
-      '@types/react': ^16.9.41
-      '@types/react-dom': ^16.9.8
-      classnames: ^2.2.6
-      linaria: ^2.0.0-alpha.5
-      multishift: ^0.7.7
-      react: ^16.13.1
-      react-dom: ^16.13.1
-      type-fest: ^0.16.0
   packages/@remirror/extension-auto-link:
     dependencies:
       '@babel/runtime': 7.10.4
@@ -1175,6 +1081,54 @@ importers:
       react-use: ^15.3.2
       resize-observer-polyfill: ^1.5.1
       type-fest: ^0.16.0
+  packages/@remirror/react-social:
+    dependencies:
+      '@babel/runtime': 7.10.4
+      '@lingui/core': 3.0.0-13
+      '@remirror/extension-auto-link': 'link:../extension-auto-link'
+      '@remirror/extension-emoji': 'link:../extension-emoji'
+      '@remirror/extension-mention': 'link:../extension-mention'
+      '@remirror/i18n': 'link:../i18n'
+      '@remirror/preset-social': 'link:../preset-social'
+      '@remirror/react-utils': 'link:../react-utils'
+      '@types/classnames': 2.2.10
+      classnames: 2.2.6
+      linaria: 2.0.0-alpha.5
+      multishift: 'link:../../multishift'
+      type-fest: 0.16.0
+    devDependencies:
+      '@lingui/macro': 3.0.0-13
+      '@remirror/core': 'link:../core'
+      '@remirror/pm': 'link:../pm'
+      '@remirror/react': 'link:../react'
+      '@testing-library/react': 10.4.3_react-dom@16.13.1+react@16.13.1
+      '@types/react': 16.9.41
+      '@types/react-dom': 16.9.8
+      react: 16.13.1
+      react-dom: 16.13.1_react@16.13.1
+    specifiers:
+      '@babel/runtime': ^7.10.4
+      '@lingui/core': ^3.0.0-13
+      '@lingui/macro': ^3.0.0-13
+      '@remirror/core': ^0.11.0
+      '@remirror/extension-auto-link': ^0.0.0
+      '@remirror/extension-emoji': ^0.11.0
+      '@remirror/extension-mention': ^0.11.1
+      '@remirror/i18n': ^0.0.0
+      '@remirror/pm': ^0.0.0
+      '@remirror/preset-social': ^0.0.0
+      '@remirror/react': ^0.13.1
+      '@remirror/react-utils': ^0.7.6
+      '@testing-library/react': ^10.4.3
+      '@types/classnames': ^2.2.10
+      '@types/react': ^16.9.41
+      '@types/react-dom': ^16.9.8
+      classnames: ^2.2.6
+      linaria: ^2.0.0-alpha.5
+      multishift: ^0.7.7
+      react: ^16.13.1
+      react-dom: ^16.13.1
+      type-fest: ^0.16.0
   packages/@remirror/react-utils:
     dependencies:
       '@babel/runtime': 7.10.4
@@ -1191,12 +1145,58 @@ importers:
       '@remirror/core-types': ^0.9.0
       '@types/react': ^16.9.41
       react: ^16.13.1
+  packages/@remirror/react-wysiwyg:
+    dependencies:
+      '@babel/runtime': 7.10.4
+      '@lingui/core': 3.0.0-13
+      '@remirror/extension-auto-link': 'link:../extension-auto-link'
+      '@remirror/i18n': 'link:../i18n'
+      '@remirror/preset-social': 'link:../preset-social'
+      '@remirror/preset-wysiwyg': 'link:../preset-wysiwyg'
+      '@remirror/react-utils': 'link:../react-utils'
+      '@types/classnames': 2.2.10
+      classnames: 2.2.6
+      linaria: 2.0.0-alpha.5
+      multishift: 'link:../../multishift'
+      type-fest: 0.16.0
+    devDependencies:
+      '@lingui/macro': 3.0.0-13
+      '@remirror/core': 'link:../core'
+      '@remirror/pm': 'link:../pm'
+      '@remirror/react': 'link:../react'
+      '@testing-library/react': 10.4.3_react-dom@16.13.1+react@16.13.1
+      '@types/react': 16.9.41
+      '@types/react-dom': 16.9.8
+      react: 16.13.1
+      react-dom: 16.13.1_react@16.13.1
+    specifiers:
+      '@babel/runtime': ^7.10.4
+      '@lingui/core': ^3.0.0-13
+      '@lingui/macro': ^3.0.0-13
+      '@remirror/core': ^0.11.0
+      '@remirror/extension-auto-link': ^0.0.0
+      '@remirror/i18n': ^0.0.0
+      '@remirror/pm': ^0.0.0
+      '@remirror/preset-social': ^0.0.0
+      '@remirror/preset-wysiwyg': ^0.0.0
+      '@remirror/react': ^0.13.1
+      '@remirror/react-utils': ^0.7.6
+      '@testing-library/react': ^10.4.3
+      '@types/classnames': ^2.2.10
+      '@types/react': ^16.9.41
+      '@types/react-dom': ^16.9.8
+      classnames: ^2.2.6
+      linaria: ^2.0.0-alpha.5
+      multishift: ^0.7.7
+      react: ^16.13.1
+      react-dom: ^16.13.1
+      type-fest: ^0.16.0
   packages/@remirror/showcase:
     dependencies:
       '@babel/runtime': 7.10.4
       '@remirror/core': 'link:../core'
-      '@remirror/editor-social': 'link:../editor-social'
       '@remirror/extension-code-block': 'link:../extension-code-block'
+      '@remirror/react-social': 'link:../react-social'
       '@types/match-sorter': 4.0.0
       '@types/prettier': 2.0.1
       match-sorter: 4.1.0
@@ -1207,8 +1207,8 @@ importers:
     specifiers:
       '@babel/runtime': ^7.10.4
       '@remirror/core': ^0.11.0
-      '@remirror/editor-social': ^0.13.1
       '@remirror/extension-code-block': ^0.12.0
+      '@remirror/react-social': ^0.0.0
       '@types/match-sorter': ^4.0.0
       '@types/prettier': ^2.0.1
       '@types/react': ^16.9.41
@@ -1423,8 +1423,6 @@ importers:
       '@remirror/core-types': 'link:../@remirror/core-types'
       '@remirror/core-utils': 'link:../@remirror/core-utils'
       '@remirror/dom': 'link:../@remirror/dom'
-      '@remirror/editor-social': 'link:../@remirror/editor-social'
-      '@remirror/editor-wysiwyg': 'link:../@remirror/editor-wysiwyg'
       '@remirror/extension-auto-link': 'link:../@remirror/extension-auto-link'
       '@remirror/extension-base-keymap': 'link:../@remirror/extension-base-keymap'
       '@remirror/extension-bidi': 'link:../@remirror/extension-bidi'
@@ -1466,7 +1464,9 @@ importers:
       '@remirror/preset-table': 'link:../@remirror/preset-table'
       '@remirror/preset-wysiwyg': 'link:../@remirror/preset-wysiwyg'
       '@remirror/react': 'link:../@remirror/react'
+      '@remirror/react-social': 'link:../@remirror/react-social'
       '@remirror/react-utils': 'link:../@remirror/react-utils'
+      '@remirror/react-wysiwyg': 'link:../@remirror/react-wysiwyg'
       '@remirror/theme': 'link:../@remirror/theme'
     devDependencies:
       '@remirror/pm': 'link:../@remirror/pm'
@@ -1482,8 +1482,6 @@ importers:
       '@remirror/core-types': ^0.9.0
       '@remirror/core-utils': ^0.8.0
       '@remirror/dom': ^0.0.0
-      '@remirror/editor-social': ^0.13.1
-      '@remirror/editor-wysiwyg': ^0.13.1
       '@remirror/extension-auto-link': ^0.0.0
       '@remirror/extension-base-keymap': ^0.0.0
       '@remirror/extension-bidi': ^0.0.0
@@ -1526,7 +1524,9 @@ importers:
       '@remirror/preset-table': ^0.0.0
       '@remirror/preset-wysiwyg': ^0.0.0
       '@remirror/react': ^0.13.1
+      '@remirror/react-social': ^0.0.0
       '@remirror/react-utils': ^0.7.6
+      '@remirror/react-wysiwyg': ^0.0.0
       '@remirror/theme': ^0.0.0
       '@types/react': ^16.9.41
       '@types/react-dom': ^16.9.8
@@ -1587,6 +1587,10 @@ importers:
   support/deprecated/core-extensions:
     specifiers: {}
   support/deprecated/editor-markdown:
+    specifiers: {}
+  support/deprecated/editor-social:
+    specifiers: {}
+  support/deprecated/editor-wysiwyg:
     specifiers: {}
   support/deprecated/extension-enhanced-link:
     specifiers: {}
@@ -9384,7 +9388,8 @@ packages:
       path-is-absolute: 1.0.1
       readdirp: 2.2.1
       upath: 1.2.0
-    deprecated: Chokidar 2 will break on node v14+. Upgrade to chokidar 3 with 15x less dependencies.
+    deprecated:
+      Chokidar 2 will break on node v14+. Upgrade to chokidar 3 with 15x less dependencies.
     dev: false
     optionalDependencies:
       fsevents: 1.2.13
@@ -10008,12 +10013,16 @@ packages:
     resolution:
       integrity: sha512-lacdXOimsiD0QyNf9BC/mxivNJ/ybBGJXQFKzRekp1WTHoVUWsUHEn+2T8GJAzzIhyOuXA+gOxCVN3l+5PLPUA==
   /core-js/1.2.7:
-    deprecated: 'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.'
+    deprecated:
+      'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues.
+      Please, upgrade your dependencies to the actual version of core-js@3.'
     dev: false
     resolution:
       integrity: sha1-ZSKUwUZR2yj6k70tX/KYOk8IxjY=
   /core-js/2.6.11:
-    deprecated: 'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.'
+    deprecated:
+      'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues.
+      Please, upgrade your dependencies to the actual version of core-js@3.'
     dev: false
     requiresBuild: true
     resolution:
@@ -13162,7 +13171,9 @@ packages:
     dependencies:
       bindings: 1.5.0
       nan: 2.14.1
-    deprecated: fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents 2.
+    deprecated:
+      fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents
+      2.
     dev: false
     engines:
       node: '>= 4.0'
@@ -17799,14 +17810,18 @@ packages:
     resolution:
       integrity: sha512-gKLcREMhtuZRwRAfqP3RFW+TK4JqApVBtOIftVgjuABpAtpxhPGaDcfvbhNvD0B8iD1oUr/txX35NjcaY6Ns/A==
   /mkdirp/0.3.0:
-    deprecated: Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the API surface has changed to use Promises in 1.x.)
+    deprecated:
+      Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the
+      API surface has changed to use Promises in 1.x.)
     dev: false
     resolution:
       integrity: sha1-G79asbqCevI1dRQ0kEJkVfSB/h4=
   /mkdirp/0.5.3:
     dependencies:
       minimist: 1.2.5
-    deprecated: Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the API surface has changed to use Promises in 1.x.)
+    deprecated:
+      Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the
+      API surface has changed to use Promises in 1.x.)
     dev: false
     hasBin: true
     resolution:
@@ -19690,7 +19705,8 @@ packages:
     resolution:
       integrity: sha512-VwhC9MlhW7O5dg/z7k32dabcAFW1VI2+7fSe8cE/kXcfL7mVdoa5UxciYGW2sJU78ldDLT6+ROEKIZKFNTnUXQ==
   /popper.js/1.16.1:
-    deprecated: 'You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1'
+    deprecated:
+      'You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1'
     dev: false
     resolution:
       integrity: sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ==
@@ -24735,7 +24751,9 @@ packages:
     engines:
       node: '>= 6'
     peerDependencies:
-      typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
+      typescript:
+        '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev ||
+        >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
     resolution:
       integrity: sha512-kzeQ5B8H3w60nFY2g8cJIuH7JDpsALXySGtwGJ0p2LSjLgay3NdIpqq5SoOBe46bKDW2iq25irHCr8wjomUS2g==
   /tty-browserify/0.0.0:

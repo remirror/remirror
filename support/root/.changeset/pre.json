@@ -12,6 +12,8 @@
     "@remirror/dom": "0.0.0",
     "@remirror/editor-social": "0.13.1",
     "@remirror/editor-wysiwyg": "0.13.1",
+    "@remirror/react-social": "0.0.0",
+    "@remirror/react-wysiwyg": "0.0.0",
     "@remirror/extension-auto-link": "0.0.0",
     "@remirror/extension-base-keymap": "0.0.0",
     "@remirror/extension-bidi": "0.0.0",
