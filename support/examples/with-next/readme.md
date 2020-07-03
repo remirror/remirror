@@ -11,16 +11,10 @@ Clone the remirror repository, install the dependencies, and then change to this
 git clone git@github.com:remirror/remirror.git
 cd remirror
 pnpm install
-pnpm run build
+
 cd support/examples/with-next
 pnpm run dev
 ```
 
 After a few seconds you should receive a `[ ready ]` message, and a URL to open such as
 http://localhost:3000. You can use the links at the top to visit different examples:
-
-![Home page](screenshots/home.png)
-
-![Social](screenshots/social.png)
-
-![WYSIWYG](screenshots/wysiwyg.png)

@@ -1,4 +1,4 @@
-const config = require('../babel/base.babel');
+const config = require('../base.babel');
 
 module.exports = {
   ...config,

@@ -140,6 +140,45 @@ The following are some points to keep in mind while developing for this codebase
 - Choose simplicity over performance. Performance is abstract and it's often better to start with a
   simple implementation that can be made more performant, than something that's complex from day
   one.
+- Use `const` **Arrow Functions** when declaring components.
+
+```tsx
+const MyComponent = () => {
+  return <div />;
+};
+```
+
+- Use **Function Declarations** when creating top level functions.
+
+```ts
+// ✅ - GOOD
+function doSomething(something: string) {
+  return `Cannot do ${something}`;
+}
+
+// ❌ - BAD
+const doSomething = (something: string) => {
+  return `Cannot do ${something}`;
+};
+```
+
+<br />
+
+## Creating packages
+
+When creating your own extension or preset you can follow these steps.
+
+1. Copy `support/templates/extension-template` to `package/@remirror/extension-<name>`.
+2. Rename `template`, `Template` and `TEMPLATE` in the new package to `<name>`, `<Name>` and
+   `<NAME>`.
+3. Replace `TEMPLATE_DESCRIPTION` with a suitable description.
+4. Rename the files from `template-` to `<name>-`.
+5. (OPTIONAL) -Add your name and email as a contributor to the `package.json`.
+6. Add `packages/remirror/extension/<name>/package.json`.
+7. Add `packages/remirror/src/extension/<name>.ts`.
+8. Edit `packages/remirror/package.json` to add dependency and entrypoint.
+9. (OPTIONAL) - Edit `/.changeset/config.json` and add the package name to the linked array.
+10. Run `pnpm i` in root.
 
 <br />
 

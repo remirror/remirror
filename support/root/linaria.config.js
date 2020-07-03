@@ -8,7 +8,7 @@ const config = {
   classNameSlug: (_hash, title) => {
     return `remirror-${kebabCase(title.replace(/Styles?/g, ''))}`;
   },
-  babelOptions: require('../babel/base.babel'),
+  babelOptions: require('../base.babel'),
   rules: [
     {
       action: require('linaria/evaluators').shaker,
