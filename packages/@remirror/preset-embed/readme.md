@@ -20,13 +20,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/preset-embed @remirror/pm
+yarn add @remirror/preset-embed@next @remirror/pm@next
 
 # pnpm
-pnpm add @remirror/preset-embed @remirror/pm
+pnpm add @remirror/preset-embed@next @remirror/pm@next
 
 # npm
-npm install @remirror/preset-embed @remirror/pm
+npm install @remirror/preset-embed@next @remirror/pm@next
 ```
 
 <br />

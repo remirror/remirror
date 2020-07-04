@@ -95,8 +95,8 @@ View our documentation website at https://remirror.io/
 - Collaborative editing with [yjs](https://github.com/yjs/yjs).
 - Prebuilt editors [social](./@remirror/react-social) and [wysiwyg](./@remirror/react-wysiwyg) and a
   markdown option is coming soon.
-- 50+ extensions available to create your own brand of editor.
-- Zero config support for **Server Side Rendering (SSR)**.
+- 30+ extensions and 8 presets available to create your very own editor.
+- Zero configuration support for **Server Side Rendering (SSR)**.
 - Cross platform and cross-framework, with an Angular solution coming later this year.
 
 <br />

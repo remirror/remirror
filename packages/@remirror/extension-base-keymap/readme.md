@@ -19,9 +19,9 @@
 ## Installation
 
 ```bash
-yarn add @remirror/extension-base-keymap @remirror/pm # yarn
-pnpm add @remirror/extension-base-keymap @remirror/pm # pnpm
-npm install @remirror/extension-base-keymap @remirror/pm # npm
+yarn add @remirror/extension-base-keymap@next @remirror/pm@next # yarn
+pnpm add @remirror/extension-base-keymap@next @remirror/pm@next # pnpm
+npm install @remirror/extension-base-keymap@next @remirror/pm@next # npm
 ```
 
 <br />

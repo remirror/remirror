@@ -11,20 +11,15 @@ The following editor would add emoji characters as valid prefix characters when 
 in the editor.
 
 ```tsx
-import emojiRegex from 'emoji-regex';
 import { SocialEditor } from '@remirror/react-social';
 
 const Editor = (props) => (
   <SocialEditor
     {...props}
     attributes={{ 'data-testid': 'react-social' }}
-    userData={[]}
-    tagData={[]}
+    users={[]}
+    tags={[]}
     onMentionChange={onChange}
-    atMatcherOptions={{
-      // Adds emoji characters the the valid prefix characters.
-      validPrefixCharacters: `^([\\s\\0]|${emojiRegex().source})?$`,
-    }}
   />
 );
 ```
@@ -32,7 +27,7 @@ const Editor = (props) => (
 ### Installation
 
 ```bash
-yarn add @remirror/react-social # yarn
-pnpm add @remirror/react-social # pnpm
-npm install @remirror/react-social # npm
+yarn add @remirror/react-social@next @remirror/pm@next @remirror/react@next # yarn
+pnpm add @remirror/react-social@next @remirror/pm@next @remirror/react@next # pnpm
+npm install @remirror/react-social@next @remirror/pm@next @remirror/react@next # npm
 ```

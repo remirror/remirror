@@ -19,13 +19,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-bidi @remirror/pm
+yarn add @remirror/extension-bidi@next @remirror/pm@next
 
 # pnpm
-pnpm add @remirror/extension-bidi @remirror/pm
+pnpm add @remirror/extension-bidi@next @remirror/pm@next
 
 # npm
-npm install @remirror/extension-bidi @remirror/pm
+npm install @remirror/extension-bidi@next @remirror/pm@next
 ```
 
 ## Usage

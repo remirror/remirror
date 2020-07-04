@@ -18,13 +18,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-underline @remirror/pm
+yarn add @remirror/extension-underline@next @remirror/pm@next
 
 # pnpm
-pnpm add @remirror/extension-underline @remirror/pm
+pnpm add @remirror/extension-underline@next @remirror/pm@next
 
 # npm
-npm install @remirror/extension-underline @remirror/pm
+npm install @remirror/extension-underline@next @remirror/pm@next
 ```
 
 ## Usage

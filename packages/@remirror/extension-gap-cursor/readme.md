@@ -18,13 +18,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-gap-cursor @remirror/pm
+yarn add @remirror/extension-gap-cursor@next @remirror/pm@next
 
 # pnpm
-pnpm add @remirror/extension-gap-cursor @remirror/pm
+pnpm add @remirror/extension-gap-cursor@next @remirror/pm@next
 
 # npm
-npm install @remirror/extension-gap-cursor @remirror/pm
+npm install @remirror/extension-gap-cursor@next @remirror/pm@next
 ```
 
 ## Usage

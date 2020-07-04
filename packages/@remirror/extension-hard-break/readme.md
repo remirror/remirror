@@ -18,13 +18,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-hard-break @remirror/pm
+yarn add @remirror/extension-hard-break@next @remirror/pm@next
 
 # pnpm
-pnpm add @remirror/extension-hard-break @remirror/pm
+pnpm add @remirror/extension-hard-break@next @remirror/pm@next
 
 # npm
-npm install @remirror/extension-hard-break @remirror/pm
+npm install @remirror/extension-hard-break@next @remirror/pm@next
 ```
 
 ## Usage

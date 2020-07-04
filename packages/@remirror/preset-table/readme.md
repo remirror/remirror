@@ -6,9 +6,9 @@
 ## Installation
 
 ```bash
-yarn add @remirror/preset-table # yarn
-pnpm add @remirror/preset-table # pnpm
-npm install @remirror/preset-table # npm
+yarn add @remirror/preset-table@next @remirror/pm@next # yarn
+pnpm add @remirror/preset-table@next @remirror/pm@next # pnpm
+npm install @remirror/preset-table@next @remirror/pm@next # npm
 ```
 
 ```ts

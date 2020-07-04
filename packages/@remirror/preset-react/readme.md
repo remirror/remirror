@@ -20,13 +20,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/preset-react @remirror/pm
+yarn add @remirror/preset-react@next @remirror/pm@next
 
 # pnpm
-pnpm add @remirror/preset-react @remirror/pm
+pnpm add @remirror/preset-react@next @remirror/pm@next
 
 # npm
-npm install @remirror/preset-react @remirror/pm
+npm install @remirror/preset-react@next @remirror/pm@next
 ```
 
 <br />

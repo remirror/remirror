@@ -17,9 +17,9 @@
 ## Installation
 
 ```bash
-yarn add @remirror/extension-drop-cursor # yarn
-pnpm add @remirror/extension-drop-cursor # pnpm
-npm install @remirror/extension-drop-cursor # npm
+yarn add @remirror/extension-drop-cursor@next # yarn
+pnpm add @remirror/extension-drop-cursor@next # pnpm
+npm install @remirror/extension-drop-cursor@next # npm
 ```
 
 ## Usage

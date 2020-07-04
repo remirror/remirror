@@ -19,9 +19,9 @@
 ## Installation
 
 ```bash
-yarn add @remirror/extension-auto-link # yarn
-pnpm add @remirror/extension-auto-link # pnpm
-npm install @remirror/extension-auto-link # npm
+yarn add @remirror/extension-auto-link@next # yarn
+pnpm add @remirror/extension-auto-link@next # pnpm
+npm install @remirror/extension-auto-link@next # npm
 ```
 
 <br />

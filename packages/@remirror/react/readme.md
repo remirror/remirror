@@ -8,9 +8,9 @@ The react components for the remirror editor
 ## Installation
 
 ```bash
-yarn add @remirror/react # yarn
-pnpm add @remirror/react # pnpm
-npm install @remirror/react # npm
+yarn add @remirror/react@next @remirror/pm@next @remirror/react/@next # yarn
+pnpm add @remirror/react@next @remirror/pm@next @remirror/react/@next # pnpm
+npm install @remirror/react@next @remirror/pm@next @remirror/react/@next # npm
 ```
 
 ## Usage

@@ -19,9 +19,9 @@ can be used in your front-end code.
 ## Installation
 
 ```bash
-yarn add test-keyboard # yarn
-pnpm add test-keyboard # pnpm
-npm install test-keyboard # npm
+yarn add test-keyboard@next # yarn
+pnpm add test-keyboard@next # pnpm
+npm install test-keyboard@next # npm
 ```
 
 ## `Keyboard.create` - `(params: KeyboardConstructorParameter) => Keyboard`

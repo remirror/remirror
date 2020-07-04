@@ -1,5 +1,7 @@
 # @remirror/dom
 
+@next@next
+
 > Use remirror directly in the dom.
 
 [![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
@@ -29,13 +31,13 @@ you.
 
 ```bash
 # yarn
-yarn add @remirror/dom @remirror/pm
+yarn add @remirror/dom@next @remirror/pm@next
 
 # pnpm
-pnpm add @remirror/dom @remirror/pm
+pnpm add @remirror/dom@next @remirror/pm@next
 
 # npm
-npm install @remirror/dom @remirror/pm
+npm install @remirror/dom@next @remirror/pm@next
 ```
 
 ## Usage

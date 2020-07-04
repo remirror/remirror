@@ -8,7 +8,7 @@ Add mention and suggesters support to remirror.
 ## Installation
 
 ```bash
-yarn add @remirror/extension-mention # yarn
-pnpm add @remirror/extension-mention # pnpm
-npm install @remirror/extension-mention # npm
+yarn add @remirror/extension-mention@next @remirror/pm@next # yarn
+pnpm add @remirror/extension-mention@next @remirror/pm@next # pnpm
+npm install @remirror/extension-mention@next @remirror/pm@next # npm
 ```

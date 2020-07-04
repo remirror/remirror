@@ -19,9 +19,9 @@
 ## Installation
 
 ```bash
-yarn add @remirror/preset-core # yarn
-pnpm add @remirror/preset-core # pnpm
-npm install @remirror/preset-core # npm
+yarn add @remirror/preset-core@next # yarn
+pnpm add @remirror/preset-core@next # pnpm
+npm install @remirror/preset-core@next # npm
 ```
 
 <br />

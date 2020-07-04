@@ -19,13 +19,13 @@
 
 ```bash
 # Yarn
-yarn add @remirror/extension-react-ssr @remirror/pm
+yarn add @remirror/extension-react-ssr@next @remirror/pm@next
 
 # pnpm
-pnpm add @remirror/extension-react-ssr @remirror/pm
+pnpm add @remirror/extension-react-ssr@next @remirror/pm@next
 
 # npm
-npm install @remirror/extension-react-ssr @remirror/pm
+npm install @remirror/extension-react-ssr@next @remirror/pm@next
 ```
 
 There is a peer dependency on `@remirror/pm` since `@remirror/core` also depends on it.

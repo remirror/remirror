@@ -20,13 +20,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/preset-social @remirror/pm
+yarn add @remirror/preset-social@next @remirror/pm@next
 
 # pnpm
-pnpm add @remirror/preset-social @remirror/pm
+pnpm add @remirror/preset-social@next @remirror/pm@next
 
 # npm
-npm install @remirror/preset-social @remirror/pm
+npm install @remirror/preset-social@next @remirror/pm@next
 ```
 
 <br />

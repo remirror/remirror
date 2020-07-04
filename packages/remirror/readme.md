@@ -18,13 +18,13 @@
 
 ```bash
 # yarn
-yarn add remirror @remirror/pm
+yarn add remirror@next @remirror/pm@next
 
 # pnpm
-pnpm add remirror @remirror/pm
+pnpm add remirror@next @remirror/pm@next
 
 # npm
-npm install remirror @remirror/pm
+npm install remirror@next @remirror/pm@next
 ```
 
 ## Usage

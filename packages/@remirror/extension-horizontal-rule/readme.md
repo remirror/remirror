@@ -18,13 +18,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-horizontal-rule @remirror/pm
+yarn add @remirror/extension-horizontal-rule@next @remirror/pm@next
 
 # pnpm
-pnpm add @remirror/extension-horizontal-rule @remirror/pm
+pnpm add @remirror/extension-horizontal-rule@next @remirror/pm@next
 
 # npm
-npm install @remirror/extension-horizontal-rule @remirror/pm
+npm install @remirror/extension-horizontal-rule@next @remirror/pm@next
 ```
 
 ## Usage

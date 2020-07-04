@@ -18,13 +18,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-blockquote @remirror/pm
+yarn add @remirror/extension-blockquote@next @remirror/pm@next
 
 # pnpm
-pnpm add @remirror/extension-blockquote @remirror/pm
+pnpm add @remirror/extension-blockquote@next @remirror/pm@next
 
 # npm
-npm install @remirror/extension-blockquote @remirror/pm
+npm install @remirror/extension-blockquote@next @remirror/pm@next
 ```
 
 ## Usage

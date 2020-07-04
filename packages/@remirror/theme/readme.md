@@ -18,13 +18,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/theme
+yarn add @remirror/theme@next
 
 # pnpm
-pnpm add @remirror/theme
+pnpm add @remirror/theme@next
 
 # npm
-npm install @remirror/theme
+npm install @remirror/theme@next
 ```
 
 ## Credits

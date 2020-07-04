@@ -16,9 +16,9 @@ reader users of updates to the accessibility status of the UI.
 ## Installation
 
 ```bash
-yarn add a11y-status # yarn
-pnpm add a11y-status # pnpm
-npm install a11y-status # npm
+yarn add a11y-status@next # yarn
+pnpm add a11y-status@next # pnpm
+npm install a11y-status@next # npm
 ```
 
 Note that the `11` is the number eleven. `A-Eleven-Y` is a widely used shorthand for

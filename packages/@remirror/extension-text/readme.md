@@ -17,9 +17,9 @@
 ## Installation
 
 ```bash
-yarn add @remirror/extension-text # yarn
-pnpm add @remirror/extension-text # pnpm
-npm install @remirror/extension-text # npm
+yarn add @remirror/extension-text@next # yarn
+pnpm add @remirror/extension-text@next # pnpm
+npm install @remirror/extension-text@next # npm
 ```
 
 ## Usage

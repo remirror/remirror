@@ -18,13 +18,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/react-wysiwyg @remirror/pm
+yarn add @remirror/react-wysiwyg@next @remirror/pm@next @remirror/react@next
 
 # pnpm
-pnpm add @remirror/react-wysiwyg @remirror/pm
+pnpm add @remirror/react-wysiwyg@next @remirror/pm@next @remirror/react@next
 
 # npm
-npm install @remirror/react-wysiwyg @remirror/pm
+npm install @remirror/react-wysiwyg@next @remirror/pm@next @remirror/react@next
 ```
 
 ## Usage

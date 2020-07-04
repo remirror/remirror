@@ -20,13 +20,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/preset-wysiwyg @remirror/pm
+yarn add @remirror/preset-wysiwyg@next @remirror/pm@next
 
 # pnpm
-pnpm add @remirror/preset-wysiwyg @remirror/pm
+pnpm add @remirror/preset-wysiwyg@next @remirror/pm@next
 
 # npm
-npm install @remirror/preset-wysiwyg @remirror/pm
+npm install @remirror/preset-wysiwyg@next @remirror/pm@next
 ```
 
 <br />

@@ -18,13 +18,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-emoji @remirror/pm
+yarn add @remirror/extension-emoji@next @remirror/pm@next
 
 # pnpm
-pnpm add @remirror/extension-emoji @remirror/pm
+pnpm add @remirror/extension-emoji@next @remirror/pm@next
 
 # npm
-npm install @remirror/extension-emoji @remirror/pm
+npm install @remirror/extension-emoji@next @remirror/pm@next
 ```
 
 `@remirror/pm` is a peer dependency which must be installed with the project.

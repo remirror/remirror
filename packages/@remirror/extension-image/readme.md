@@ -17,9 +17,9 @@
 ## Installation
 
 ```bash
-yarn add @remirror/extension-image # yarn
-pnpm add @remirror/extension-image # pnpm
-npm install @remirror/extension-image # npm
+yarn add @remirror/extension-image@next @remirror/pm@next # yarn
+pnpm add @remirror/extension-image@next @remirror/pm@next # pnpm
+npm install @remirror/extension-image@next @remirror/pm@next # npm
 ```
 
 ## Usage
