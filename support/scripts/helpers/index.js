@@ -38,9 +38,23 @@ const formatFiles = async (path = '', silent = false) => {
   }
 };
 
+/**
+ * @typedef {import('@manypkg/get-packages').Package['packageJson'] & { location: string }} Package
+ */
+
+/**
+ * @type Promise<Package[]>
+ */
 let packages;
 
-const getAllDependencies = () => {
+/**
+ * Get all dependencies.
+ *
+ * @param {boolean} [excludeDeprecated=true] - when true exclude the
+ * deprecated packages
+ * @returns {Promise<Package[]>}
+ */
+const getAllDependencies = (excludeDeprecated = true) => {
   if (!packages) {
     packages = getPackages().then(({ packages }) => {
       if (!packages) {
@@ -48,7 +62,7 @@ const getAllDependencies = () => {
       }
 
       return packages
-        .filter((pkg) => !pkg.dir.includes('deprecated'))
+        .filter((pkg) => (excludeDeprecated ? !pkg.dir.includes('deprecated') : true))
         .map((pkg) => ({
           ...pkg.packageJson,
           location: pkg.dir,

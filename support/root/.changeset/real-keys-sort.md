@@ -1,8 +1,10 @@
 ---
+'@remirror/cli': major
 '@remirror/core-constants': major
 '@remirror/core-helpers': major
 '@remirror/core-types': major
 '@remirror/core': major
+'@remirror/dev': major
 '@remirror/extension-bold': major
 '@remirror/extension-code-block': major
 '@remirror/extension-collaboration': major
@@ -16,15 +18,10 @@
 '@remirror/extension-paragraph': major
 '@remirror/extension-tables': major
 '@remirror/extension-text': major
-'@remirror/playground': major
 '@remirror/pm': major
 '@remirror/preset-core': major
-'@remirror/react': major
-'@remirror/cli': major
-'@remirror/core-extensions': major
-'@remirror/dev': major
-'@remirror/react': major
 '@remirror/react-utils': major
+'@remirror/react': major
 '@remirror/showcase': major
 'jest-prosemirror': major
 'jest-remirror': major

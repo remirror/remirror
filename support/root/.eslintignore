@@ -8,10 +8,6 @@ node_modules
 .out
 public
 coverage
-docs/generated/*
-docs/.cache/
-docs/.linaria-cache/
-docs/gatsby-config.js
 
 .cache
 **/.next
@@ -19,10 +15,6 @@ lerna.json
 .vscode
 .yarn/**
 
-/support/api/**/*.md
-/support/api/**
-/docs/api/**/*.md
-/docs/api/**
 **/temp/**
 
 
