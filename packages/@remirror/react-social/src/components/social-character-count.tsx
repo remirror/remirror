@@ -1,7 +1,8 @@
 import { css } from 'linaria';
+import { styled } from 'linaria/react';
 import React, { FC } from 'react';
 
-export interface CharacterCountIndicatorProps {
+export interface SocialCharacterCountProps {
   /**
    * An object describing the total characters and characters remaining
    */
@@ -19,11 +20,7 @@ const colors = {
   plain: '#657786',
 };
 
-export const CharacterCountWrapper: FC = (props) => {
-  return <div {...props} className={characterCountWrapperStyles} />;
-};
-
-const CharacterCountIndicatorComponent: FC<CharacterCountIndicatorProps> = (props) => {
+export const SocialCharacterCount: FC<SocialCharacterCountProps> = (props) => {
   const {
     characters = { maximum: 280, used: 290 },
     size = 27,
@@ -110,9 +107,12 @@ const CharacterCountCircle: FC<CharacterCountCircleProps> = (props) => {
   );
 };
 
-export const CharacterCountIndicator = CharacterCountIndicatorComponent;
-
-const characterCountWrapperStyles = css`
+/**
+ * This component is used to wrap the social character count component and
+ * positions it absolutely relative to the first parent with a `position:
+ * relative`.
+ */
+export const SocialCharacterCountWrapper = styled.div`
   position: absolute;
   bottom: 0px;
   right: 0px;

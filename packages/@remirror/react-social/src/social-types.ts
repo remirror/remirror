@@ -1,3 +1,4 @@
+import { ElementType, ReactElement } from 'react';
 import { Except } from 'type-fest';
 
 import { AnyCombinedUnion } from '@remirror/core';
@@ -8,6 +9,7 @@ import {
   I18nContextProps,
   RemirrorProviderProps,
 } from '@remirror/react';
+import { RemirrorThemeType } from '@remirror/theme';
 
 export interface MentionChangeParameter extends BaseMentionState {
   name: MatchName;
@@ -24,15 +26,34 @@ export interface CreateSocialManagerOptions extends CreateReactManagerOptions {
   social?: SocialOptions;
 }
 
-export interface SocialEditorProps<Combined extends AnyCombinedUnion = SocialCombinedUnion>
+export interface SocialProviderProps<Combined extends AnyCombinedUnion = SocialCombinedUnion>
   extends Except<
       Partial<RemirrorProviderProps<Combined>>,
-      'managerSettings' | 'reactPresetOptions' | 'corePresetOptions'
+      'managerSettings' | 'reactPresetOptions' | 'corePresetOptions' | 'children'
     >,
     Partial<I18nContextProps> {
   /**
-   * The social options used to create the initial manager when a manager is
-   * not provided.
+   * Unlike the remirror provider you can provide any number of children to this component.
+   */
+  children: ReactElement | ReactElement[];
+
+  /**
+   * Provide a theme to use for the editor. When this is provided your
+   * editor will be wrapped in an extra wrapper component depending on the
+   * value of the `ThemeComponent`.
+   */
+  theme?: RemirrorThemeType;
+
+  /**
+   * The theme component used to render the `theme`.
+   *
+   * @defaultValue 'div'
+   */
+  ThemeComponent?: ElementType;
+
+  /**
+   * The social options used to create the initial manager when a manager is not
+   * provided.
    */
   socialOptions?: CreateSocialManagerOptions;
 
@@ -46,26 +67,6 @@ export interface SocialEditorProps<Combined extends AnyCombinedUnion = SocialCom
    * The message to show when the editor is empty.
    */
   placeholder?: string;
-
-  /**
-   * onUrlChange
-   */
-  onUrlsChange?: (params: { set: Set<string>; urls: string[] }) => void;
-
-  /**
-   * List of users
-   */
-  userData: UserData[];
-
-  /**
-   * List of tags
-   */
-  tagData: TagData[];
-
-  /**
-   * Called any time there is a change in the mention
-   */
-  onMentionChange: (params?: MentionChangeParameter) => void;
 }
 
 interface BaseMentionState {

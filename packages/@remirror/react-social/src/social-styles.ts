@@ -1,3 +1,4 @@
+// TODO create a module alias for this.
 import { css } from 'linaria';
 
 export const emojiSuggestionsItemStyles = css`
@@ -9,11 +10,11 @@ export const emojiSuggestionsItemStyles = css`
   white-space: nowrap;
   color: white;
   &.hovered {
-    background-color: hsl(205, 5%, 90%);
+    background-color: var(--remirror-hue-gray-2);
   }
 
   &.highlighted {
-    background-color: hsl(205, 5%, 80%);
+    background-color: var(--remirror-hue-gray-3);
   }
 `;
 

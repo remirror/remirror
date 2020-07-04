@@ -25,6 +25,7 @@
     "@remirror/i18n": "^0.0.0",
     "@remirror/preset-social": "^0.0.0",
     "@remirror/react-utils": "^0.7.6",
+    "@remirror/theme": "^0.0.0",
     "@types/classnames": "^2.2.10",
     "classnames": "^2.2.6",
     "linaria": "^2.0.0-alpha.5",
@@ -37,8 +38,10 @@
     "@remirror/pm": "^0.0.0",
     "@remirror/react": "^0.13.1",
     "@testing-library/react": "^10.4.3",
+    "@testing-library/react-hooks": "^3.3.0",
     "@types/react": "^16.9.41",
     "@types/react-dom": "^16.9.8",
+    "@types/testing-library__react-hooks": "^3.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },

@@ -5,7 +5,7 @@ import { startCase, take } from '@remirror/core';
 import {
   MentionChangeParameter,
   SocialEditor,
-  SocialEditorProps,
+  SocialProviderProps,
   UserData,
 } from '@remirror/react-social';
 
@@ -34,7 +34,7 @@ const userData: UserData[] = fakeUsers.results.map(
   }),
 );
 
-export const ExampleSocialEditor = (props: Partial<SocialEditorProps>) => {
+export const ExampleSocialEditor = (props: Partial<SocialProviderProps>) => {
   const [mention, setMention] = useState<MentionChangeParameter>();
 
   const onChange = useCallback((parameter?: MentionChangeParameter) => {
@@ -66,8 +66,8 @@ export const ExampleSocialEditor = (props: Partial<SocialEditorProps>) => {
     <SocialEditor
       {...props}
       attributes={{ 'data-testid': 'react-social' }}
-      userData={userMatches}
-      tagData={tagMatches}
+      users={userMatches}
+      tags={tagMatches}
       onMentionChange={onChange}
     />
   );

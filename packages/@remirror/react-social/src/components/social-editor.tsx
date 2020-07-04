@@ -1,74 +1,66 @@
-import { css } from 'linaria';
+import { styled } from 'linaria/react';
 import React, { FC } from 'react';
 
-import { I18nProvider, RemirrorProvider, useRemirror } from '@remirror/react';
+import { isNumber } from '@remirror/core';
+import { useRemirror } from '@remirror/react';
 
-import { useSocialManager } from '../social-editor-hooks';
-import { SocialEditorProps } from '../social-editor-types';
-import { CharacterCountIndicator, CharacterCountWrapper } from './social-editor-character-count';
-import { EmojiSuggestions } from './social-editor-emoji';
-import { MentionSuggestions } from './social-editor-mentions';
+import { SocialMentionProps } from '../hooks';
+import { SocialProviderProps } from '../social-types';
+import { SocialCharacterCount, SocialCharacterCountWrapper } from './social-character-count';
+import { SocialEmojiComponent } from './social-editor-emoji';
+import { SocialMentionComponent } from './social-editor-mentions';
+import { SocialProvider } from './social-provider';
+
+export interface SocialEditorProps extends Partial<SocialProviderProps>, SocialMentionProps {}
 
 /**
- * The social editor.
+ * A prebuilt `SocialEditor` which combines the building blocks for you to
+ * create an editor with minimal lines of code.
  */
-export const SocialEditor: FC<SocialEditorProps> = (props) => {
-  const {
-    children,
-    i18n,
-    locale,
-    characterLimit,
-    tagData,
-    onMentionChange,
-    onUrlsChange,
-    userData,
-    combined,
-    manager,
-    socialOptions,
-    ...rest
-  } = props;
-  const socialManager = useSocialManager(manager ?? combined ?? [], socialOptions);
+export const SocialEditor: FC<SocialEditorProps> = (props: SocialEditorProps) => {
+  const { children, characterLimit, tags, onMentionChange, users, ...providerProps } = props;
 
   return (
-    <I18nProvider i18n={i18n} locale={locale}>
-      <RemirrorProvider {...rest} manager={socialManager} childAsRoot={false}>
-        <Editor {...props}>{children}</Editor>
-      </RemirrorProvider>
-    </I18nProvider>
+    <SocialProvider {...providerProps}>
+      <SocialEditorWrapperComponent data-testid='remirror-editor'>
+        <TextEditor />
+        <SocialEmojiComponent />
+        <Indicator characterLimit={characterLimit} />
+        {children}
+      </SocialEditorWrapperComponent>
+      <SocialMentionComponent tags={tags} users={users} onMentionChange={onMentionChange} />
+    </SocialProvider>
   );
 };
-
-type EditorProps = Pick<
-  SocialEditorProps,
-  'characterLimit' | 'tagData' | 'onMentionChange' | 'onUrlsChange' | 'userData'
->;
 
 /**
  * The editing functionality within the Social Editor context.
  */
-const Editor: FC<EditorProps> = (props) => {
-  const { children, characterLimit = 280, tagData, onMentionChange, userData } = props;
-  const { getRootProps, getState } = useRemirror();
-  const used = getState().doc.textContent.length;
+const TextEditor = () => {
+  const { getRootProps } = useRemirror();
 
-  return (
-    <div>
-      <div className={socialEditorWrapperStyles} data-testid='remirror-editor'>
-        <div className={socialEditorStyles} {...getRootProps()} />
-        <EmojiSuggestions />
-        {characterLimit != null && (
-          <CharacterCountWrapper>
-            <CharacterCountIndicator characters={{ maximum: characterLimit, used }} />
-          </CharacterCountWrapper>
-        )}
-        {children}
-      </div>
-      <MentionSuggestions tags={tagData} users={userData} onChange={onMentionChange} />
-    </div>
-  );
+  return <SocialEditorComponent className={'shadow-center-2'} {...getRootProps()} />;
 };
 
-export const socialEditorStyles = css`
+interface IndicatorProps {
+  characterLimit?: number | null;
+}
+
+const Indicator = ({ characterLimit }: IndicatorProps) => {
+  const { getState } = useRemirror();
+  const used = getState().doc.textContent.length;
+
+  return isNumber(characterLimit) ? (
+    <SocialCharacterCountWrapper>
+      <SocialCharacterCount characters={{ maximum: characterLimit, used }} />
+    </SocialCharacterCountWrapper>
+  ) : null;
+};
+
+/**
+ * The component into which the prosemirror editor will be injected into.
+ */
+export const SocialEditorComponent = styled.div`
   .ProseMirror {
     flex-grow: 1;
     display: flex;
@@ -117,7 +109,7 @@ export const socialEditorStyles = css`
   }
 `;
 
-const socialEditorWrapperStyles = css`
+export const SocialEditorWrapperComponent = styled.div`
   position: relative;
   height: 100%;
 `;

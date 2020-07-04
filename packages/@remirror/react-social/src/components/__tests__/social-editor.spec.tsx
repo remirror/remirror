@@ -4,14 +4,14 @@ import React from 'react';
 
 import { docNodeBasicJSON } from '@remirror/test-fixtures';
 
-import { createSocialManager, SocialEditor } from '..';
+import { createSocialManager, SocialEditor } from '../..';
 
 describe('social editor', () => {
   it('should place the editor within the correct element', () => {
     const { getByTestId, getByRole } = render(
       <SocialEditor
-        userData={[]}
-        tagData={[]}
+        users={[]}
+        tags={[]}
         onMentionChange={jest.fn()}
         initialContent={docNodeBasicJSON}
       />,
@@ -30,8 +30,8 @@ describe('social editor', () => {
     render(
       <SocialEditor
         manager={manager}
-        userData={[]}
-        tagData={[]}
+        users={[]}
+        tags={[]}
         onMentionChange={jest.fn()}
         initialContent={docNodeBasicJSON}
       />,
