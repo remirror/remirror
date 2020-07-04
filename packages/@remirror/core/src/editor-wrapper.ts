@@ -141,13 +141,17 @@ export abstract class EditorWrapper<
     this.#getProps = getProps;
     this.createStateFromContent = createStateFromContent;
 
-    // Create the ProsemirrorView and initialize our editor manager with it.
-    const view = this.createView(initialEditorState, element);
-    this.manager.addView(view);
-
     // Add the getters
     this.#getExtension = this.manager.getExtension.bind(this.manager);
     this.#getPreset = this.manager.getPreset.bind(this.manager);
+
+    if (this.manager.view) {
+      return;
+    }
+
+    // Create the ProsemirrorView and initialize our editor manager with it.
+    const view = this.createView(initialEditorState, element);
+    this.manager.addView(view);
   }
 
   /**

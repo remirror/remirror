@@ -89,6 +89,11 @@ export interface BaseProps<Combined extends AnyCombinedUnion> extends EditorWrap
    * @defaultValue 'end'
    */
   insertPosition?: 'start' | 'end';
+
+  /**
+   * The placeholder to set for the editor.
+   */
+  placeholder?: string;
 }
 
 /**

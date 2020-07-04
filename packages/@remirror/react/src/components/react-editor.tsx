@@ -10,6 +10,7 @@ import React, {
   useState,
 } from 'react';
 import useEffectOnce from 'react-use/lib/useEffectOnce';
+import { useFirstMountState } from 'react-use/lib/useFirstMountState';
 import useUpdateEffect from 'react-use/lib/useUpdateEffect';
 
 import {
@@ -33,6 +34,7 @@ import {
   UpdateStateParameter,
 } from '@remirror/core';
 import { EditorState } from '@remirror/pm/state';
+import { ReactPreset } from '@remirror/preset-react';
 import {
   addKeyToElement,
   getElementProps,
@@ -71,6 +73,22 @@ export const ReactEditor = <Combined extends AnyCombinedUnion>(
 
   // Cache whether this is a controlled editor.
   const isControlled = bool(value);
+  const { placeholder } = props;
+  const isFirstMount = useFirstMountState();
+
+  // Update the placeholder on first render.
+  if (isFirstMount && !isNullOrUndefined(placeholder)) {
+    manager.getPreset(ReactPreset).setOptions({ placeholder });
+  }
+
+  // Keep the placeholder updated
+  useUpdateEffect(() => {
+    if (isNullOrUndefined(placeholder)) {
+      return;
+    }
+
+    manager.getPreset(ReactPreset).setOptions({ placeholder });
+  }, [placeholder, manager]);
 
   const createStateFromContent = useCallback(
     (
@@ -215,6 +233,12 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
     this.#setShouldRenderClient = setShouldRenderClient;
 
     propIsFunction(this.props.children);
+
+    if (this.manager.view) {
+      return;
+    }
+
+    this.manager.getPreset(ReactPreset).setOptions({ placeholder: this.props.placeholder ?? '' });
   }
 
   /**

@@ -441,6 +441,10 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
         value: this.updateState,
         enumerable: true,
       },
+      isMounted: {
+        value: this.isMounted,
+        enumerable: true,
+      },
     });
 
     store.getStoreKey = this.getStoreKey;
@@ -525,6 +529,13 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
 
     return state.applyTransaction(tr).state;
   }
+
+  /**
+   * Check to see if the manager is already mounted.
+   */
+  isMounted = () => {
+    return this.#phase >= ManagerPhase.EditorView;
+  };
 
   /**
    * Update the state of the view and trigger the `onStateUpdate` lifecyle
@@ -802,6 +813,11 @@ declare global {
        * The stage the manager is currently at.
        */
       readonly phase: ManagerPhase;
+
+      /**
+       * Return true when the editor view has been created.
+       */
+      readonly isMounted: () => boolean;
 
       /**
        * A helper method for retrieving the state of the editor

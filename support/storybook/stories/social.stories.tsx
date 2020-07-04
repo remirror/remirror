@@ -4,4 +4,6 @@ import { ExampleSocialEditor } from '@remirror/showcase';
 
 export default { title: 'Social Editor' };
 
-export const PlainSocialEditor = () => <ExampleSocialEditor autoFocus />;
+export const PlainSocialEditor = () => (
+  <ExampleSocialEditor autoFocus={true} placeholder='Get started here...' />
+);

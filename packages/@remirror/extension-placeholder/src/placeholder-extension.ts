@@ -7,6 +7,7 @@ import {
   getPluginState,
   HandlerKeyList,
   isDocNodeEmpty,
+  ManagerPhase,
   OnSetOptionsParameter,
   PlainExtension,
   Static,
@@ -95,7 +96,7 @@ export class PlaceholderExtension extends PlainExtension<PlaceholderOptions> {
   onSetOptions(parameter: OnSetOptionsParameter<PlaceholderOptions>) {
     const { changes } = parameter;
 
-    if (changes.placeholder) {
+    if (changes.placeholder && this.store.phase >= ManagerPhase.EditorView) {
       // update the attributes object
       this.store.updateAttributes();
     }
