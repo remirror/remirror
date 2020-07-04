@@ -2,16 +2,7 @@ import { cx } from 'linaria';
 import { createNanoEvents, Unsubscribe } from 'nanoevents';
 
 import { EDITOR_CLASS_NAME, EMPTY_PARAGRAPH_NODE } from '@remirror/core-constants';
-import {
-  bool,
-  clamp,
-  isEmptyArray,
-  isFunction,
-  isNumber,
-  object,
-  pick,
-  uniqueId,
-} from '@remirror/core-helpers';
+import { bool, isEmptyArray, isFunction, object, pick, uniqueId } from '@remirror/core-helpers';
 import {
   EditorSchema,
   EditorState,
@@ -35,7 +26,7 @@ import {
   CreateDocumentErrorHandler,
   Fallback,
   getDocument,
-  isSelection,
+  getTextSelection,
   StringHandlerParameter,
   toHtml,
 } from '@remirror/core-utils';
@@ -405,38 +396,11 @@ export abstract class EditorWrapper<
     const { selection, doc, tr } = this.getState();
     const { from = 0, to = from } = selection;
 
-    let pos: number | FromToParameter;
-
-    /** Ensure the selection is within the current document range */
-    const clampToDocument = (value: number) => clamp({ min: 0, max: doc.content.size, value });
-
-    if (isSelection(position)) {
-      this.dispatchSelection(tr, position);
-      return;
-    }
-
     if (position === undefined || position === true) {
-      pos = { from, to };
-    } else if (position === 'start') {
-      pos = 0;
-    } else if (position === 'end') {
-      pos = doc.nodeSize - 2;
-    } else {
-      pos = position;
+      position = { from, to };
     }
 
-    let newSelection: TextSelection;
-
-    if (isNumber(pos)) {
-      pos = clampToDocument(pos);
-      newSelection = TextSelection.near(doc.resolve(pos));
-    } else {
-      const start = clampToDocument(pos.from);
-      const end = clampToDocument(pos.to);
-      newSelection = TextSelection.create(doc, start, end);
-    }
-
-    this.dispatchSelection(tr, newSelection);
+    this.dispatchSelection(tr, getTextSelection(position, doc));
   };
 
   /**
@@ -574,7 +538,7 @@ export interface EditorWrapperProps<Combined extends AnyCombinedUnion>
    *
    * @defaultValue `{ type: 'doc', content: [{ type: 'paragraph' }] }`
    */
-  initialContent?: RemirrorContentType;
+  initialContent?: RemirrorContentType | [RemirrorContentType, PrimitiveSelection];
 
   /**
    * Adds attributes directly to the prosemirror element.

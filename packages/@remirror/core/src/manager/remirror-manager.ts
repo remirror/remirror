@@ -14,8 +14,12 @@ import {
   object,
 } from '@remirror/core-helpers';
 import { EditorSchema, EditorView } from '@remirror/core-types';
-import { createDocumentNode, CreateDocumentNodeParameter } from '@remirror/core-utils';
-import { EditorState, TextSelection } from '@remirror/pm/state';
+import {
+  createDocumentNode,
+  CreateDocumentNodeParameter,
+  getTextSelection,
+} from '@remirror/core-utils';
+import { EditorState } from '@remirror/pm/state';
 
 import { BuiltinPreset } from '../builtins';
 import {
@@ -513,14 +517,13 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
       plugins,
     });
 
-    if (selection) {
-      const tr = state.tr;
-      const { from, to } = selection;
-      tr.setSelection(TextSelection.create(doc, from, to));
-      return state.applyTransaction(tr).state;
+    if (!selection) {
+      return state;
     }
 
-    return state;
+    const tr = state.tr.setSelection(getTextSelection(selection, state.doc));
+
+    return state.applyTransaction(tr).state;
   }
 
   /**
@@ -571,7 +574,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
     // the manager.
     invariant(extension, {
       code: ErrorConstant.INVALID_MANAGER_EXTENSION,
-      message: `The ${Constructor.name} is not available in this manager.`,
+      message: `'${Constructor.name}' doesn't exist within this manager. Make sure it is properly added before attempting to use it.`,
     });
 
     return extension as InstanceType<ExtensionConstructor>;
@@ -588,7 +591,10 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
 
     // Throws an error if attempting to retrieve a preset which is not present
     // in the manager.
-    invariant(preset, { code: ErrorConstant.INVALID_MANAGER_PRESET });
+    invariant(preset, {
+      code: ErrorConstant.INVALID_MANAGER_PRESET,
+      message: `'${Constructor.name}' doesn't exist within this manager. Make sure it is properly added before attempting to use it.`,
+    });
 
     return preset as InstanceType<PresetConstructor>;
   }

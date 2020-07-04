@@ -4,6 +4,7 @@ import { EMPTY_NODE, EMPTY_PARAGRAPH_NODE } from '@remirror/core-constants';
 import {
   bool,
   Cast,
+  clamp,
   isFunction,
   isNullOrUndefined,
   isNumber,
@@ -22,6 +23,7 @@ import {
   PluginKey,
   Position,
   PositionParameter,
+  PrimitiveSelection,
   ProsemirrorNode,
   ProsemirrorNodeParameter,
   RegexTuple,
@@ -787,7 +789,45 @@ export interface CreateDocumentNodeParameter
    *
    * TODO add `'start' | 'end' | number` for a better developer experience.
    */
-  selection?: FromToParameter;
+  selection?: PrimitiveSelection;
+}
+
+/**
+ * Get a valid selection from the primitive selection.
+ */
+export function getTextSelection(
+  selection: PrimitiveSelection,
+  doc: ProsemirrorNode,
+): TextSelection {
+  const max = doc.nodeSize - 2;
+  const min = 0;
+  let pos: number | FromToParameter;
+
+  /** Ensure the selection is within the current document range */
+  const clampToDocument = (value: number) => clamp({ min, max, value });
+
+  if (isSelection(selection)) {
+    return selection;
+  }
+
+  if (selection === 'start') {
+    pos = min;
+  } else if (selection === 'end') {
+    pos = max;
+  } else {
+    pos = selection;
+  }
+
+  if (isNumber(pos)) {
+    pos = clampToDocument(pos);
+
+    return TextSelection.near(doc.resolve(pos));
+  }
+
+  const start = clampToDocument(pos.from);
+  const end = clampToDocument(pos.to);
+
+  return TextSelection.create(doc, start, end);
 }
 
 export type CreateDocumentErrorHandler = (error?: Error) => Fallback;

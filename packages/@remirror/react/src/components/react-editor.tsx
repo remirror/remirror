@@ -19,7 +19,6 @@ import {
   EditorWrapperParameter,
   EMPTY_PARAGRAPH_NODE,
   ErrorConstant,
-  FromToParameter,
   getDocument,
   invariant,
   isArray,
@@ -27,6 +26,7 @@ import {
   isNullOrUndefined,
   isPlainObject,
   object,
+  PrimitiveSelection,
   RemirrorContentType,
   SchemaFromCombined,
   shouldUseDomEnvironment,
@@ -75,7 +75,7 @@ export const ReactEditor = <Combined extends AnyCombinedUnion>(
   const createStateFromContent = useCallback(
     (
       content: RemirrorContentType,
-      selection?: FromToParameter,
+      selection?: PrimitiveSelection,
     ): EditorState<SchemaFromCombined<Combined>> => {
       return manager.createState({
         content,
@@ -89,9 +89,14 @@ export const ReactEditor = <Combined extends AnyCombinedUnion>(
   );
 
   const fallback = isFunction(onError) ? onError() : onError ?? EMPTY_PARAGRAPH_NODE;
+  const initialContentArgs = isArray(props.initialContent)
+    ? props.initialContent
+    : ([props.initialContent ?? fallback] as const);
+  const initialContent = initialContentArgs[0];
+  const initialSelection = initialContentArgs[1];
   const initialEditorState = bool(value)
     ? value
-    : createStateFromContent(props.initialContent ?? fallback);
+    : createStateFromContent(initialContent, initialSelection);
   const [shouldRenderClient, setShouldRenderClient] = useState<boolean | undefined>(
     props.suppressHydrationWarning ? false : undefined,
   );
