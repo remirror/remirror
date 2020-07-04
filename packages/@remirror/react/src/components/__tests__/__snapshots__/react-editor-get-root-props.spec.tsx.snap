@@ -3,5 +3,5 @@
 exports[`throws an error when called multiple times during render 1`] = `
 "\`getRootProps\` has been called MULTIPLE times. It should only be called ONCE during render.
 
-For more information visit https://docs.remirror.org/errors#RMR0201"
+For more information visit https://remirror.io/docs/errors#RMR0201"
 `;

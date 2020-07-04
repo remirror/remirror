@@ -5,13 +5,13 @@ exports[`freeze should freeze in development 1`] = `
 
 It seems you're trying to set the value of the property (a) on a frozen object. For your protection this object does not allow direct mutation.
 
-For more information visit https://docs.remirror.org/errors#RMR0005"
+For more information visit https://remirror.io/docs/errors#RMR0005"
 `;
 
 exports[`invariant should throw with a code 1`] = `
 "Command method names must be unique within the editor.
 
-For more information visit https://docs.remirror.org/errors#RMR0016"
+For more information visit https://remirror.io/docs/errors#RMR0016"
 `;
 
 exports[`invariant throws specific errors 1`] = `
@@ -19,5 +19,5 @@ exports[`invariant throws specific errors 1`] = `
 
 always falsy
 
-For more information visit https://docs.remirror.org/errors#RMR0003"
+For more information visit https://remirror.io/docs/errors#RMR0003"
 `;

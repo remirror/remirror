@@ -1,7 +1,7 @@
 <div align="center">
   <br />
   <div align="center">
-    <a href="https://docs.remirror.org"><img width="300" height="300" src="https://raw.githubusercontent.com/remirror/remirror/next/support/assets/logo-animated-light.svg?sanitize=true" alt="animated remirror logo" /></a>
+    <a href="https://remirror.io"><img width="300" height="300" src="https://raw.githubusercontent.com/remirror/remirror/next/support/assets/logo-animated-light.svg?sanitize=true" alt="animated remirror logo" /></a>
   </div>
     <br />
     <br />
@@ -37,7 +37,7 @@ documentation is still being rewritten to capture the updated API.
 
 ### Documentation
 
-View our documentation website at https://docs.remirror.org/
+View our documentation website at https://remirror.io/
 
 - [Introduction]
 - [Getting started]
@@ -189,9 +189,9 @@ This project uses [SemVer](http://semver.org/) for versioning. For the versions 
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-[introduction]: https://docs.remirror.org
-[installation]: https://docs.remirror.org/installation
-[getting started]: https://docs.remirror.org/guides/quickstart
+[introduction]: https://remirror.io/docs/introduction
+[installation]: https://remirror.io/docs/guide/installation
+[getting started]: https://remirror.io/guides/introduction
 [typescript]: https://github.com/microsoft/Typescript
 [react]: https://github.com/facebook/react
 [prosemirror]: https://prosemirror.net

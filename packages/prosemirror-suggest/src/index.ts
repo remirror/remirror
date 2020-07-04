@@ -121,7 +121,7 @@
  * `@remirror/extension-emoji` and the `@remirror/extension-mention` packages.
  *
  * The following examples are available for you to try out
- * [https://docs.remirror.org/showcase/social]
+ * [https://remirror.io/showcase/social]
  *
  * **Search emoji on `:` key**
  *

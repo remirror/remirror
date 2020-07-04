@@ -2,24 +2,19 @@
 const sidebarConfig = {
   main: {
     Remirror: ['introduction'],
-    Guides: [
-      'guide/installation',
-      'guide/hello-world',
-      'guide/priority',
-      'guide/react',
-      'guide/custom-keys',
+    Guides: ['guide/installation', 'guide/hello-world', 'guide/create-editor'],
+    Concepts: [
+      'concepts/extension',
+      'concepts/presets',
+      'concepts/remirror-manager',
+      'concepts/react-controlled-editor',
+      'concepts/priority',
+      'concepts/keymap',
     ],
-    Concepts: ['concepts/extension', 'concepts/presets', 'concepts/remirror-manager'],
     Showcase: ['showcase/social'],
-    Advanced: [
-      'advanced/creating-extensions',
-      'advanced/naming-conventions',
-      'advanced/react-controlled',
-    ],
-    API: ['api/index'],
-    Contribute: ['contributing', 'tooling'],
+    Advanced: ['advanced/creating-extensions', 'advanced/naming-conventions'],
+    Contribute: ['contributing', 'tooling', 'errors', 'changelog'],
   },
 };
 
-/** @type import(').DocsSidebar */
 module.exports = exports.default = sidebarConfig;

@@ -15,7 +15,7 @@ npm install @remirror/dev # npm
 
 ## Usage
 
-For in depth usage with proper code example see the [docs](https://docs.remirror.org)
+For in depth usage with proper code example see the [docs](https://remirror.io)
 
 ### Prosemirror Dev Tools
 

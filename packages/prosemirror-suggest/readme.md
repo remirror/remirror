@@ -117,7 +117,7 @@ You can see this example brought to life in the `remirror` codebase under the
 `@remirror/extension-emoji` and the `@remirror/extension-mention` packages.
 
 The following examples are available for you to try out on the
-[docs site](https://docs.remirror.org/showcase/social)
+[docs site](https://remirror.io/docs/showcase/social)
 
 **Search emoji on `:` key**
 

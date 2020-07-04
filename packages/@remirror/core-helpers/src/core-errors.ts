@@ -8,7 +8,7 @@ import { includes, isString, values } from './core-helpers';
  * Errors have their own URL which will be logged to the console for more easily
  * surfacing issues.
  */
-const ERROR_INFORMATION_URL = 'https://docs.remirror.org/errors';
+const ERROR_INFORMATION_URL = 'https://remirror.io/docs/errors';
 
 let errorMessageMap: Partial<Record<ErrorConstant, string>> = {};
 

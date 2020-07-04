@@ -3,7 +3,6 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import AnnouncementBar from '@theme/AnnouncementBar';
 import Footer from '@theme/Footer';
-import Layout from '@theme/Layout';
 import Navbar from '@theme/Navbar';
 import ThemeProvider from '@theme/ThemeProvider';
 import UserPreferencesProvider from '@theme/UserPreferencesProvider';
@@ -17,7 +16,7 @@ const PlaygroundPage = (props: any) => {
 
   const defaultImage = siteConfig?.themeConfig?.image;
 
-  const { children, title, noFooter, description, image, keywords, permalink, version } = props;
+  const { title, noFooter, description, image, keywords, permalink, version } = props;
   const metaTitle = title ? `${title} | ${siteTitle}` : siteTitle;
   const metaImage = image || defaultImage;
   const metaImageUrl = useBaseUrl(metaImage, { absolute: true });
@@ -31,18 +30,18 @@ const PlaygroundPage = (props: any) => {
             {/* TODO: Do not assume that it is in english language */}
             <html lang='en' />
             <script src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
-            {metaTitle && <title>{metaTitle}</title>}
-            {metaTitle && <meta property='og:title' content={metaTitle} />}
-            {favicon && <link rel='shortcut icon' href={faviconUrl} />}
-            {description && <meta name='description' content={description} />}
-            {description && <meta property='og:description' content={description} />}
-            {version && <meta name='docsearch:version' content={version} />}
-            {keywords && keywords.length && <meta name='keywords' content={keywords.join(',')} />}
-            {metaImage && <meta property='og:image' content={metaImageUrl} />}
-            {metaImage && <meta property='twitter:image' content={metaImageUrl} />}
-            {metaImage && <meta name='twitter:image:alt' content={`Image for ${metaTitle}`} />}
-            {permalink && <meta property='og:url' content={siteUrl + permalink} />}
-            {permalink && <link rel='canonical' href={siteUrl + permalink} />}
+            {metaTitle ?? <title>{metaTitle}</title>}
+            {metaTitle ?? <meta property='og:title' content={metaTitle} />}
+            {favicon ?? <link rel='shortcut icon' href={faviconUrl} />}
+            {description ?? <meta name='description' content={description} />}
+            {description ?? <meta property='og:description' content={description} />}
+            {version ?? <meta name='docsearch:version' content={version} />}
+            {keywords?.length ?? <meta name='keywords' content={keywords?.join(',')} />}
+            {metaImage ?? <meta property='og:image' content={metaImageUrl} />}
+            {metaImage ?? <meta property='twitter:image' content={metaImageUrl} />}
+            {metaImage ?? <meta name='twitter:image:alt' content={`Image for ${metaTitle}`} />}
+            {permalink ?? <meta property='og:url' content={siteUrl + permalink} />}
+            {permalink ?? <link rel='canonical' href={siteUrl + permalink} />}
             <meta name='twitter:card' content='summary_large_image' />
           </Head>
           <AnnouncementBar />

@@ -1,0 +1,198 @@
+---
+title: Errors
+---
+
+This page contains the documented errors that occur while using `remirror`. Currently the
+descriptions are very short and if you'd like to contribute to make them more comprehensive, then
+that would be very much appreciated. Edit this page to get started.
+
+## RMR0000
+
+> Production Error
+
+An error occurred in production and details are intentionally being hidden.
+
+## RMR0001
+
+> Unknown Error
+
+Sooo, this is embarassing. Something happened and we're not quite sure why. Your best course of
+action is to open an [issue](https://github.com/remirror/remirror/issues/new?template=bug_report.md)
+explaining what you're seeing.
+
+## RMR0002
+
+> Invalid Command Arguments
+
+The arguments passed to the command method were invalid. Check how you're calling all commands made
+available by the editor and make sure arguments are correct.
+
+## RMR0003
+
+> Custom Error
+
+This is a custom error possibly thrown by an external library. It's almost as hard to diagnose as
+the `Unknown Error`.
+
+## RMR0004
+
+> Core Helpers
+
+An error occurred in a function called from the `@remirror/core-helpers` library.
+
+## RMR0005
+
+> Mutation
+
+You have attempted to change a value that shouldn't be changed.
+
+## RMR0006
+
+> Internal
+
+This is an error which should not occur and is internal to the remirror codebase.
+
+## RMR0007
+
+> Missing Required Extension
+
+You're editor is missing a required extension.
+
+## RMR0008
+
+> Manager Phase Error
+
+Called a method event at the wrong time. Please make sure getter functions are only called with
+within the scope of the returned functions. They should not be called in the outer scope of your
+method.
+
+## RMR0009
+
+> New Editor Manager
+
+No directly invoking the editor manager with `new`. Instead use one of the static methods to create
+your instance.
+
+## RMR0010
+
+> Invalid Preset Extension
+
+The user requested an invalid extension from the preset. Please check the `createExtensions` return
+method is returning an extension with the defined constructor.
+
+## RMR0011
+
+> Invalid Manager Arguments
+
+Invalid value passed into `Manager constructor`. Only `Presets` and `Extensions` are supported.
+
+## RMR0012
+
+> Commands Called In Outer Scope
+
+The `commands` or `dispatch` method which is passed into the `create*` method should only be called
+within returned method since it relies on an active view (not present in the outer scope).
+
+## RMR0013
+
+> Helpers Called In Outer Scope
+
+The `helpers` method which is passed into the ``create\*` method should only be called within
+returned method since it relies on an active view (not present in the outer scope).
+
+## RMR0014
+
+> Invalid Manager Extension
+
+The user requested an invalid extension from the manager.
+
+## RMR0015
+
+> Invalid Manager Preset
+
+The user requested an invalid preset from the manager.
+
+## RMR0016
+
+> Duplicate Command Names
+
+Command method names must be unique within the editor.
+
+## RMR0017
+
+> Duplicate Helper Names
+
+Helper method names must be unique within the editor.
+
+## RMR0018
+
+> Non Chainable Command
+
+Attempted to chain a non chainable command.
+
+## RMR0019
+
+> Invalid Extension
+
+The provided extension is invalid.
+
+## RMR0020
+
+> Invalid Preset
+
+The provided preset is invalid.
+
+## RMR0050
+
+> Invalid Name
+
+An invalid name was used for the extension.
+
+## RMR0100
+
+> Extension
+
+An error occurred within an extension.
+
+## RMR0101
+
+> Extension Spec
+
+The spec was defined without calling the `defaults`, `parse` or `dom` methods.
+
+## RMR0102
+
+> Extension Extra Attributes
+
+Extra attributes must either be a string or an object.
+
+## RMR0200
+
+> React Provider Context
+
+`useRemirror` was called outside of the remirror context. It can only be used within an active
+remirror context created by the `<RemirrorProvider />`.
+
+## RMR0201
+
+> React Get Root Props
+
+`getRootProps` has been called MULTIPLE times. It should only be called ONCE during render.
+
+## RMR0202
+
+> React Editor View
+
+A problem occurred adding the editor view to the dom.
+
+## RMR0202
+
+> React Controlled
+
+There is a problem with your controlled editor setup.
+
+## RMR0300
+
+> I18N Context
+
+There is something wrong with your i18n setup.
