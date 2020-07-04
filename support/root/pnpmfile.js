@@ -11,6 +11,7 @@ function readPackage(pkg) {
   const setDependency = createSetDependency(pkg);
 
   setDependency('@types/react', '^16.9.41');
+  setDependency('wait-on', '^5.0.1');
   setDependency('@types/prosemirror-view', '^1.15.0');
 
   return pkg;
