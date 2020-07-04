@@ -33,11 +33,17 @@ import {
   PositionerExtension,
   StringPositioner,
 } from '@remirror/extension-positioner';
-import { CorePreset, CreateCoreManagerOptions } from '@remirror/preset-core';
-import { ReactPreset, ReactPresetOptions } from '@remirror/preset-react';
+import { CorePreset } from '@remirror/preset-core';
+import { ReactPreset } from '@remirror/preset-react';
 
 import { I18nContext, RemirrorContext } from '../react-contexts';
-import { I18nContextProps, ReactCombinedUnion, RemirrorContextProps } from '../react-types';
+import { createReactManager } from '../react-helpers';
+import {
+  CreateReactManagerOptions,
+  I18nContextProps,
+  ReactCombinedUnion,
+  RemirrorContextProps,
+} from '../react-types';
 import { useEffectWithWarning } from './core-hooks';
 
 /**
@@ -155,8 +161,8 @@ export function useExtension<Type extends AnyExtensionConstructor>(
   optionsOrCallback: DynamicOptionsOfConstructor<Type> | UseExtensionCallback<Type>,
   dependencies: DependencyList = [],
 ): void {
-  const { manager } = useRemirror();
-  const extension = useMemo(() => manager.getExtension(Constructor), [Constructor, manager]);
+  const { getExtension } = useRemirror();
+  const extension = useMemo(() => getExtension(Constructor), [Constructor, getExtension]);
 
   // Handle the case where it an options object passed in.
   useEffectWithWarning(() => {
@@ -206,7 +212,7 @@ interface UseExtensionCallbackParameter<Type extends AnyExtensionConstructor> {
   extension: InstanceType<Type>;
 }
 
-type UseExtensionCallback<Type extends AnyExtensionConstructor> = (
+export type UseExtensionCallback<Type extends AnyExtensionConstructor> = (
   parameter: UseExtensionCallbackParameter<Type>,
 ) => Dispose | undefined;
 
@@ -227,9 +233,9 @@ export function usePreset<Type extends AnyPresetConstructor>(
   optionsOrCallback: DynamicOptionsOfConstructor<Type> | UsePresetCallback<Type>,
   dependencies: DependencyList = [],
 ): void {
-  const { manager } = useRemirror();
+  const { getPreset } = useRemirror();
 
-  const preset = useMemo(() => manager.getPreset(Constructor), [Constructor, manager]);
+  const preset = useMemo(() => getPreset(Constructor), [Constructor, getPreset]);
 
   useEffectWithWarning(() => {
     if (isFunction(optionsOrCallback)) {
@@ -403,26 +409,4 @@ export function usePositioner(
   );
 
   return { ...state, ref };
-}
-
-export interface CreateReactManagerOptions extends CreateCoreManagerOptions {
-  /**
-   * Options for the react preset.
-   */
-  react?: ReactPresetOptions;
-}
-
-/**
- * Create a react manager with all the default react presets and extensions.
- */
-export function createReactManager<Combined extends AnyCombinedUnion>(
-  combined: readonly Combined[],
-  options: CreateReactManagerOptions = {},
-): RemirrorManager<Combined | BuiltinPreset | ReactPreset | CorePreset> {
-  const { managerSettings: settings, core, react } = options;
-
-  return RemirrorManager.create(
-    [...combined, new ReactPreset(react), new CorePreset(core)],
-    settings,
-  );
 }

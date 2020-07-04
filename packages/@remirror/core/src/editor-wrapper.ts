@@ -30,11 +30,12 @@ import {
   StringHandlerParameter,
   toHtml,
 } from '@remirror/core-utils';
-import { TextSelection } from '@remirror/pm/state';
 import { DirectEditorProps } from '@remirror/pm/view';
 
 import { UpdatableViewProps } from './builtins';
+import { AnyExtensionConstructor } from './extension';
 import { RemirrorManager } from './manager';
+import { AnyPresetConstructor } from './preset';
 import { AnyCombinedUnion, SchemaFromCombined } from './preset/preset-types';
 
 export abstract class EditorWrapper<
@@ -126,8 +127,13 @@ export abstract class EditorWrapper<
     return this.#uid;
   }
 
-  readonly #manager: RemirrorManager<Combined>;
-  readonly #view: EditorView<SchemaFromCombined<Combined>>;
+  readonly #getExtension: <ExtensionConstructor extends AnyExtensionConstructor>(
+    Constructor: ExtensionConstructor,
+  ) => InstanceType<ExtensionConstructor>;
+
+  readonly #getPreset: <PresetConstructor extends AnyPresetConstructor>(
+    Constructor: PresetConstructor,
+  ) => InstanceType<PresetConstructor>;
 
   constructor(parameter: EditorWrapperParameter<Combined, Props>) {
     const { getProps, createStateFromContent, initialEditorState, element } = parameter;
@@ -138,8 +144,10 @@ export abstract class EditorWrapper<
     // Create the ProsemirrorView and initialize our editor manager with it.
     const view = this.createView(initialEditorState, element);
     this.manager.addView(view);
-    this.#manager = this.manager;
-    this.#view = this.view;
+
+    // Add the getters
+    this.#getExtension = this.manager.getExtension.bind(this.manager);
+    this.#getPreset = this.manager.getPreset.bind(this.manager);
   }
 
   /**
@@ -427,6 +435,8 @@ export abstract class EditorWrapper<
 
       /* Getter Methods */
       getState: this.getState,
+      getExtension: this.#getExtension,
+      getPreset: this.#getPreset,
 
       /* Setter Methods */
       clearContent: this.clearContent,
@@ -691,6 +701,20 @@ export interface EditorWrapperOutput<Combined extends AnyCombinedUnion>
    * `view.state`.
    */
   getState: () => EditorState<SchemaFromCombined<Combined>>;
+
+  /**
+   * Get an extension by it's constructor.
+   */
+  getExtension: <ExtensionConstructor extends AnyExtensionConstructor>(
+    Constructor: ExtensionConstructor,
+  ) => InstanceType<ExtensionConstructor>;
+
+  /**
+   * Get an extension by it's constructor.
+   */
+  getPreset: <PresetConstructor extends AnyPresetConstructor>(
+    Constructor: PresetConstructor,
+  ) => InstanceType<PresetConstructor>;
 }
 
 export interface RemirrorGetterParameter {

@@ -11,7 +11,7 @@ import {
   StateUpdateLifecycleMethod,
 } from '@remirror/core';
 
-import { createReactManager } from '../../hooks/editor-hooks';
+import { createReactManager } from '../../react-helpers';
 import { RemirrorContextProps } from '../../react-types';
 import { ReactEditor } from '../react-editor';
 

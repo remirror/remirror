@@ -12,7 +12,7 @@ import {
   UnderlineExtension,
 } from '@remirror/test-fixtures';
 
-import { createReactManager } from '../../hooks';
+import { createReactManager } from '../../react-helpers';
 import { ReactSerializer } from '../react-serializer';
 
 class FooExtension extends NodeExtension {

@@ -14,8 +14,8 @@ import {
   Shape,
 } from '@remirror/core';
 import { I18n } from '@remirror/i18n';
-import { CorePreset } from '@remirror/preset-core';
-import { ReactPreset } from '@remirror/preset-react';
+import { CorePreset, CreateCoreManagerOptions } from '@remirror/preset-core';
+import { ReactPreset, ReactPresetOptions } from '@remirror/preset-react';
 
 import { PortalContainer } from './portals';
 
@@ -215,4 +215,14 @@ export interface RemirrorContextProps<Combined extends AnyCombinedUnion>
    * @internal
    */
   portalContainer: PortalContainer;
+}
+
+/**
+ * The options for the exported `createReactManager` method.
+ */
+export interface CreateReactManagerOptions extends CreateCoreManagerOptions {
+  /**
+   * Options for the react preset.
+   */
+  react?: ReactPresetOptions;
 }

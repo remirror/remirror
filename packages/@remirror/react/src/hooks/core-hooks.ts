@@ -96,16 +96,8 @@ const useEffectWithWarning: typeof useEffect =
           unnecessaryChange.current += 1;
         });
 
-        if (!ref.current) {
-          ref.current = deps;
-        }
-
-        if (!isEqual(deps, ref.current)) {
-          ref.current = deps;
-        }
-
         const wrappedEffect = () => {
-          if (unnecessaryChange.current >= 2) {
+          if (unnecessaryChange.current >= 1) {
             console.warn(
               `The dependencies passed into your useEffect are deeply equal, but an update has been triggered ${unnecessaryChange.current} time(s). Please consider \`useMemo\` to memoize your dependencies to prevent unwanted re-renders.`,
               deps,
