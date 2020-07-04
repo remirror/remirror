@@ -1,17 +1,15 @@
 import Head from '@docusaurus/Head';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import AnnouncementBar from '@theme/AnnouncementBar';
+import Footer from '@theme/Footer';
 import Layout from '@theme/Layout';
+import Navbar from '@theme/Navbar';
+import ThemeProvider from '@theme/ThemeProvider';
+import UserPreferencesProvider from '@theme/UserPreferencesProvider';
 import React from 'react';
 
 import { Playground } from '@remirror/playground';
-
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import useBaseUrl from '@docusaurus/useBaseUrl';
-
-import ThemeProvider from '@theme/ThemeProvider';
-import UserPreferencesProvider from '@theme/UserPreferencesProvider';
-import AnnouncementBar from '@theme/AnnouncementBar';
-import Navbar from '@theme/Navbar';
-import Footer from '@theme/Footer';
 
 const PlaygroundPage = (props: any) => {
   const { siteConfig } = useDocusaurusContext();
