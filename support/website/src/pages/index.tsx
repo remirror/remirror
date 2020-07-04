@@ -94,8 +94,8 @@ const Home = () => {
   const { siteConfig } = context;
 
   return (
-    <Layout>
-      <div className={styles.mainBackground}>
+    <div className={styles.mainBackground}>
+      <Layout className='asdfasdf'>
         <header className={clsx('hero', styles.heroBanner)}>
           <div className={clsx(styles.container)}>
             <BannerHeader />
@@ -121,8 +121,8 @@ const Home = () => {
           )}
           <BannerLaptop />
         </main>
-      </div>
-    </Layout>
+      </Layout>
+    </div>
   );
 };
 

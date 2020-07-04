@@ -4,13 +4,13 @@
   justify-content: center;
   padding-bottom: 2.5rem;
 
-  @media screen and (min-width: 996.0001px) {
+  @media screen and (min-width: 996px) {
     justify-content: flex-start;
   }
 }
 
 .main {
-  @media screen and (min-width: 996.0001px) {
+  @media screen and (min-width: 996px) {
     /* margin-top: 15vw; */
   }
 }
@@ -23,7 +23,7 @@
   padding: 2rem 1rem;
   width: 100%;
 
-  @media screen and (min-width: 996.0001px) {
+  @media screen and (min-width: 996px) {
     margin-top: 1vh;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 1rem;
@@ -36,7 +36,7 @@
   max-width: 500px;
   align-self: center;
 
-  @media screen and (min-width: 996.0001px) {
+  @media screen and (min-width: 996px) {
     max-width: 400px;
     min-height: 450px;
   }
@@ -65,7 +65,7 @@
 .featureImage {
   height: 200px;
 
-  @media screen and (min-width: 996.0001px) {
+  @media screen and (min-width: 996px) {
     height: initial;
     width: 200px;
   }
@@ -84,7 +84,7 @@
   width: 100%;
   align-items: center;
 
-  @media screen and (min-width: 996.0001px) {
+  @media screen and (min-width: 996px) {
     display: block;
     width: 90%;
   }
@@ -94,11 +94,19 @@
   position: relative;
   background-image: url('/img/background-mobile.svg');
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: 100vw;
+  width: 100vw;
+  background-position: 0 var(--ifm-navbar-height);
 
-  @media screen and (min-width: 996.0001px) {
+  @media screen and (min-width: 996px) {
     background-image: url('/img/background-desktop.svg');
     min-height: 80vw;
+  }
+
+  @media screen and (min-width: 1450px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }
 
@@ -117,7 +125,7 @@
     color: var(--ifm-color-white);
   }
 
-  @media screen and (min-width: 996.0001px) {
+  @media screen and (min-width: 996px) {
     text-align: initial;
     min-height: 65vh;
   }
@@ -127,7 +135,7 @@
   display: block;
   width: 60%;
 
-  @media screen and (min-width: 996.0001px) {
+  @media screen and (min-width: 996px) {
     display: none;
   }
 }
@@ -140,7 +148,7 @@
   z-index: 0;
   width: 25%;
 
-  @media screen and (min-width: 996.0001px) {
+  @media screen and (min-width: 996px) {
     display: block;
   }
 }
@@ -148,7 +156,7 @@
 .bannerHeader {
   width: 60%;
 
-  @media screen and (min-width: 996.0001px) {
+  @media screen and (min-width: 996px) {
     max-width: 650px;
   }
 }
@@ -156,7 +164,7 @@
 /* Break points */
 @media screen and (min-width: 40em) {
 }
-@media screen and (min-width: 996.0001px) {
+@media screen and (min-width: 996px) {
 }
 @media screen and (min-width: 64em) {
 }

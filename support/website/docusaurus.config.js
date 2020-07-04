@@ -23,7 +23,7 @@ module.exports = {
           label: 'Docs',
           position: 'right',
         },
-        { to: 'playground', label: 'Playground', position: 'right' },
+        // { to: 'playground', label: 'Playground', position: 'right' },
         { to: 'blog', label: 'Blog', position: 'right' },
         {
           href: 'https://github.com/remirror/remirror',
@@ -75,7 +75,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Ifiok Jr.`,
+      copyright: `Copyright © ${new Date().getFullYear()} KickJump Ltd.`,
     },
   },
   presets: [
@@ -103,4 +103,7 @@ module.exports = {
     require.resolve('@docusaurus/plugin-ideal-image'),
   ],
   themes: ['@docusaurus/theme-live-codeblock'],
+  stylesheets: [
+    'https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap',
+  ],
 };
