@@ -25,7 +25,7 @@
     "clean:all": "git clean -fdX --exclude=.config.json ",
     "clean:modules": "git clean -fdX packages support",
     "css:build": "node support/scripts/linaria.js",
-    "css:clean": "rimraf @remirror/styles/*.css packages/remirror/styles/*.css",
+    "css:clean": "rimraf packages/@remirror/styles/*.css packages/remirror/styles/*.css",
     "css:copy": "cpy packages/@remirror/styles/*.css packages/remirror/styles/",
     "dev": "preconstruct watch",
     "docs": "cd support/website && pnpm run start",
