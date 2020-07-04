@@ -10,13 +10,13 @@ project.
 
 ```bash
 # yarn
-yarn add remirror @remirror/pm
+yarn add remirror@next @remirror/pm@next
 
 # pnpm
-pnpm add remirror @remirror/pm
+pnpm add remirror@next @remirror/pm@next
 
 # npm
-npm install remirror @remirror/pm
+npm install remirror@next @remirror/pm@next
 ```
 
 You will also notice that you are also installing `@remirror/pm`. This is a peer dependency to all
@@ -55,10 +55,10 @@ don't plan on creating your own extensions or presets, you can ignore this requi
 Once installed you will be able to add the following code which creates an editor with the bold
 extension active. Clicking the button when text is selected will toggle between bold and not bold.
 
-```tsx live=true
+```tsx
 import React, { useCallback } from 'react';
 import { BoldExtension } from 'remirror/extension/bold';
-import { ReactProvider, useManager, useRemirror, useExtensionCreator } from 'remirror/react';
+import { RemirrorProvider, useManager, useRemirror, useExtensionCreator } from 'remirror/react';
 
 const Editor = () => {
   const { getRootProps, active, commands } = useRemirror();
@@ -82,9 +82,9 @@ const EditorWrapper = () => {
   const manager = useManager([boldExtension]);
 
   return (
-    <ReactProvider manager={manager}>
+    <RemirrorProvider manager={manager}>
       <Editor />
-    </ReactProvider>
+    </RemirrorProvider>
   );
 };
 ```

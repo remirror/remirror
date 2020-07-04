@@ -31,10 +31,10 @@ From the root directory use the following command to work on examples or the doc
 pnpm run docs
 ```
 
-Once the build completes (can take a minute the first time) navigate to http://localhost:8000 (or
+Once the build completes (can take a minute the first time) navigate to http://localhost:3000 (or
 another port if that one is already being used).
 
-The documentation is written using [gatsby] and all files and dependencies are available in the
+The documentation is written using [docusaurus] and all files and dependencies are available in the
 `/docs/` subdirectory. To add a new dependency, you will need to add it to `/docs/package.json` and
 not the top level package.json file. You can either do this by manually editing the
 `/docs/package.json` file or you use the following command.
@@ -249,29 +249,6 @@ This Code of Conduct is adapted from the [Contributor Covenant], version 1.4, av
 
 [contributor covenant]: http://contributor-covenant.org
 [version]: http://contributor-covenant.org/version/1/4/
-[gatsby]: https://www.gatsbyjs.org/
+[docusaurus]: https://v2.docusaurus.io/
 [repo]: https://github.com/remirror/remirror
 [husky]: https://github.com/typicode/husky
-
-### Being added as Contributor
-
-This project is using https://allcontributors.org/ so you will be added for your contribution.
-
-To do so from command line run the following commands.
-
-```bash
-# Add yourself where GITHUB_USERNAME is your username
-pnpm run contributors:add <GITHUB_USERNAME> doc,code
-
-# Update the readme.md
-pnpm run contributors:generate
-```
-
-You might need to rerun `pnpm run fix` to update the formatting of the readme.
-
-### Troubleshooting
-
-If you're getting errors like `ReferenceError: CodeBlockExtension is not defined` but you know
-you've imported it, it might be because you've not added it as a dependency to the relevant
-`package.json`. Rather than throwing an error in this case, rollup (?) seems to just drop the import
-statement but still persist the lines where the import is used.

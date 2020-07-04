@@ -30,6 +30,50 @@
 
 <br />
 
+### Motivation
+
+I started building remirror with a challenge to myself. Would it be possible to build an editor that
+combined great performance with ease of use? I wanted something that allowed developers like myself
+to fall in love and feel playful when working on what can be very complex code. The editor would
+needed to support plug and play features, whilst also providing room for customisation.
+
+I also wanted to give users of all frameworks, the ability to build an editor by picking and
+choosing their desired building blocks.
+
+In order to meet this goal, I settled on [ProseMirror](https://prosemirror.net/) as the core layer.
+The second decision was to base the structure of the editor on blocks of functionality called
+`Extensions`. Each extension would add a slice of beauty to the editor, allowing users to craft
+their masterpieces.
+
+In this latest version, I believe I'm starting to see these goals come to fruitions. Every single
+part of the editor can be controlled by extensions. For example, even the very core functionality
+(`Schema`) is managed by a
+[built in extensions](packages/@remirror/core/src/builtins/schema-extension.ts). There's is already
+a huge selection of extensions for users to choose from.
+
+And the new API is beautiful. For React, this comes with a slew of drop-in components and hooks.
+Many more are being worked on. It's almost magical how well it works.
+
+For example, to add a drop down emoji picker to your react editor.
+
+```tsx
+import React from 'react';
+import { SocialEmojiComponent, SocialProvider } from 'remirror/react/social';
+
+const Editor = () => {
+  return <SocialProvider><SocialEmojiComponent></SocialProvider>
+}
+
+```
+
+With this tiny snippet your editor now supports a really nice ui element. And it's all customisable
+with ordinary `css`. No more fighting against yet another `CSS-in-JS` library.
+
+There's so much more to come and I'm glad you're taking a look. I hope I can convince you to stick
+around.
+
+<br />
+
 ### Status
 
 This is the `next` version of remirror. It is undergoing heavy development at the moment and
@@ -47,10 +91,13 @@ View our documentation website at https://remirror.io/
 ### Features
 
 - A11y focused and ARIA compatible.
-- **3** prebuilt editors, [markdown](./@remirror/editor-markdown),
-  [social](./@remirror/react-social) and [wysiwyg](./@remirror/react-wysiwyg).
-- Extensions available for adding your own flavour to your own custom editor editor.
-- Zero config support **Server Side Rendering (SSR)**.
+- I18n support via [lingui](https://github.com/lingui/js-lingui).
+- Collaborative editing with [yjs](https://github.com/yjs/yjs).
+- Prebuilt editors [social](./@remirror/react-social) and [wysiwyg](./@remirror/react-wysiwyg) and a
+  markdown option is coming soon.
+- 50+ extensions available to create your own brand of editor.
+- Zero config support for **Server Side Rendering (SSR)**.
+- Cross platform and cross-framework, with an Angular solution coming later this year.
 
 <br />
 
@@ -66,99 +113,58 @@ View our documentation website at https://remirror.io/
 
 ![A gif showing mentions being suggested as the user types with editing supported](https://media.githubusercontent.com/media/ifiokjr/assets/master/remirror/repo-banner.gif 'A gif showing mentions being suggested as the user types with editing supported')
 
-To add this editor to your codebase, first install the required dependencies.
+To add this editor to your codebase, first install the required dependencies. Make sure to include
+the `@next` distribution tag to ensure you install the correct version.
 
 ```bash
 # yarn
-yarn add remirror @remirror/pm
+yarn add remirror@next @remirror/pm@next
 
 # pnpm
-pnpm add remirror @remirror/pm
+pnpm add remirror@next @remirror/pm@next
 
 # npm
-npm install remirror @remirror/pm
+npm install remirror@next @remirror/pm@next
 ```
 
 `@remirror/pm` is a peer dependency which manages all the prosemirror packages for you.
 
+## Usage
+
+Once installed you will be able to add the following code which creates an editor with the bold
+extension active. Clicking the button when text is selected will toggle between bold and not bold.
+
 ```tsx
-import {
-  ActiveTagData,
-  ActiveUserData,
-  MentionChangeParameter,
-  SocialEditor,
-  UserData,
-} from 'remirror/editor/social';
+import React, { useCallback } from 'react';
+import { BoldExtension } from 'remirror/extension/bold';
+import { RemirrorProvider, useManager, useRemirror, useExtensionCreator } from 'remirror/react';
 
-const tags = ['NeedsStylingSoon', 'LondonHits', 'Awesome'];
+const Editor = () => {
+  const { getRootProps, active, commands } = useRemirror();
 
-const users = [
-  {
-    avatarUrl: 'https://source.unsplash.com/random/100x100',
-    displayName: 'Tolu',
-    id: '1234',
-    username: 'tolu',
-    href: '/u/tolu',
-  },
-  {
-    avatarUrl: 'https://source.unsplash.com/random/100x100',
-    displayName: 'Timi',
-    id: '5678',
-    username: 'timi',
-    href: '/u/timi',
-  },
-];
-
-const MySocialEditor = () => {
-  const [mention, setMention] = useState<MentionChangeParameter>();
-
-  const onChange = useCallback((parameter?: MentionChangeParameter) => {
-    setMention(parameter);
-  }, []);
-
-  const userData: ActiveUserData[] = useMemo(
-    () =>
-      mention?.name === 'at' && (mention.query.length)
-        ? users.filter(user => user.username.includes(mention.query) : [],
-    [mention],
-  );
-
-  const tagData: ActiveTagData[] = useMemo(
-    () => mention?.name === 'tag' && mention.query.length ? tags.filter(tag => tag.includes(mention.query)) : [],
-    [mention],
-  );
+  const toggleBold = useCallback(() => {
+    commands.toggleBold();
+  }, [commands]);
 
   return (
-    <SocialEditor
-      {...props}
-      userData={userData}
-      tagData={tagData}
-      onMentionChange={onChange}
-    />
+    <div>
+      <div {...getRootProps()} />
+      <button onClick={toggleBold} style={{ fontWeight: active.bold() ? 'bold' : undefined }}>
+        Bold
+      </button>
+    </div>
   );
 };
-```
 
-### Testing
+const EditorWrapper = () => {
+  const manager = useManager([new BoldExtension()]);
 
-From the root of this repository run the following to trigger a full typecheck, linting and jest
-tests.
-
-```bash
-pnpm run checks
-```
-
-By default these checks are not run automatically. To enable automatic precommit and prepush hooks
-use the following command:
-
-```bash
-pnpm run start:checks
-```
-
-To stop per-commit / per-push checks run:
-
-```bash
-pnpm run stop:checks
+  return (
+    <RemirrorProvider manager={manager}>
+      <Editor />
+    </RemirrorProvider>
+  );
+};
 ```
 
 <br />
@@ -166,7 +172,7 @@ pnpm run stop:checks
 ### Built With
 
 - [Typescript]
-- [Prosemirror]
+- [ProseMirror]
 - Love ❤️
 
 <br />
@@ -187,7 +193,7 @@ This project uses [SemVer](http://semver.org/) for versioning. For the versions 
 
 ### License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
 [introduction]: https://remirror.io/docs/introduction
 [installation]: https://remirror.io/docs/guide/installation

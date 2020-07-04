@@ -21,7 +21,7 @@ import { SocialEditor } from 'react/social';
 This import gives you access to the social editor. Now let's wire it up with some junk data. In
 reality you'd be fetching this data from an API.
 
-```tsx live
+```tsx
 const allUsers: UserData[] = [
   {
     avatarUrl: 'https://api.adorable.io/avatars/100/tolu@adorable.io.png',
@@ -67,7 +67,7 @@ const allTags: TagData[] = [
 
 Now that the data is available let's use it.
 
-```tsx live
+```tsx
 let users = [];
 let tags = [];
 
@@ -94,4 +94,5 @@ function onMentionChange(parameter) {
 ```
 
 Try typing into the editor by using the `@` symbol for mentions and the `#` character for tags. You
-can also see how it works with `:` for emoji.
+can also see how it works with `:` for emoji. An example of the editor is available
+[here](/docs/showcase/social).
