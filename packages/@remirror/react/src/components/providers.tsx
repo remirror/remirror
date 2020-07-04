@@ -12,7 +12,7 @@ import { i18n as defaultI18n } from '@remirror/i18n';
 import { CorePresetOptions } from '@remirror/preset-core';
 import { ReactPresetOptions } from '@remirror/preset-react';
 import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
-import { createThemeVariables, RemirrorThemeType } from '@remirror/theme';
+import { createThemeVariables, RemirrorThemeType, themeStyles } from '@remirror/theme';
 
 import { useManager } from '../hooks';
 import { RemirrorPortals } from '../portals';
@@ -207,7 +207,7 @@ export interface ThemeProviderProps {
    *
    * @defaultValue 'div'
    */
-  as?: ElementType<{ style?: CSSProperties }>;
+  as?: ElementType<{ style?: CSSProperties; className?: string }>;
 
   children: ReactNode;
 }
@@ -221,7 +221,11 @@ export interface ThemeProviderProps {
 export const ThemeProvider = (props: ThemeProviderProps) => {
   const { theme, children, as: Component = 'div' } = props;
 
-  return <Component style={createThemeVariables(theme).styles}>{children}</Component>;
+  return (
+    <Component style={createThemeVariables(theme).styles} className={themeStyles}>
+      {children}
+    </Component>
+  );
 };
 
 ThemeProvider.$$remirrorType = RemirrorType.ThemeProvider;

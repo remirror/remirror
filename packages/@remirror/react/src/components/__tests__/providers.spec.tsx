@@ -40,7 +40,9 @@ describe('ThemeProvider', () => {
     );
 
     expect(container.innerHTML).toMatchInlineSnapshot(`
-      <div style="--remirror-color-background: red; --remirror-color-muted: orange; --remirror-font-size-default: 20;">
+      <div style="--remirror-color-background: red; --remirror-color-muted: orange; --remirror-font-size-default: 20;"
+           class="remirror-theme"
+      >
         Content
       </div>
     `);
@@ -57,7 +59,9 @@ describe('ThemeProvider', () => {
     );
 
     expect(container.innerHTML).toMatchInlineSnapshot(`
-      <span style="--remirror-color-background: red; --remirror-color-muted: orange; --remirror-font-size-default: 20;">
+      <span style="--remirror-color-background: red; --remirror-color-muted: orange; --remirror-font-size-default: 20;"
+            class="remirror-theme"
+      >
         Content
       </span>
     `);
