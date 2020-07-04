@@ -6,9 +6,10 @@ import {
   EditorWrapperOutput,
   EditorWrapperProps,
   EMPTY_PARAGRAPH_NODE,
-  FromToParameter,
   getDocument,
+  isArray,
   isFunction,
+  PrimitiveSelection,
   RemirrorContentType,
   RemirrorManager,
   SchemaFromCombined,
@@ -45,7 +46,7 @@ export function createDomEditor<Combined extends AnyCombinedUnion>(
 
   function createStateFromContent(
     content: RemirrorContentType,
-    selection?: FromToParameter,
+    selection?: PrimitiveSelection,
   ): EditorState<SchemaFromCombined<Combined>> {
     return manager.createState({
       content,
@@ -57,7 +58,14 @@ export function createDomEditor<Combined extends AnyCombinedUnion>(
   }
 
   const fallback = isFunction(onError) ? onError() : onError ?? EMPTY_PARAGRAPH_NODE;
-  const initialEditorState = createStateFromContent(props.initialContent ?? fallback);
+
+  const initialContentArgs = isArray(props.initialContent)
+    ? props.initialContent
+    : ([props.initialContent ?? fallback] as const);
+  const initialContent = initialContentArgs[0];
+  const initialSelection = initialContentArgs[1];
+  const initialEditorState = createStateFromContent(initialContent, initialSelection);
+
   const wrapper = new DomEditorWrapper<Combined>({
     createStateFromContent,
     getProps: () => props,
