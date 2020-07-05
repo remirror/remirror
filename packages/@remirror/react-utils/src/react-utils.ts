@@ -148,14 +148,6 @@ const isRemirrorElementOfType = (type: RemirrorType) => <Options extends object 
 export const isRemirrorContextProvider = isRemirrorElementOfType(RemirrorType.ContextProvider);
 
 /**
- * Checks if this is a RemirrorExtension type. These are used to configure the extensions that determine
- * the underlying behaviour of the editor.
- *
- * @param value - the value to check
- */
-export const isRemirrorExtension = isRemirrorElementOfType(RemirrorType.Extension);
-
-/**
  * Finds if this is a RemirrorProvider (which provides the RemirrorInjectedProps into the context);
  *
  * @param value - the value to check

@@ -5,7 +5,6 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from 'react';
 
@@ -332,26 +331,31 @@ export function useManager<Combined extends AnyCombinedUnion>(
     ? managerOrCombined
     : createReactManager(managerOrCombined, options);
 
-  const ref = useRef(nextManager);
+  const [manager, setManager] = useState(nextManager);
 
   useEffect(() => {
-    return ref.current.addHandler('destroy', () => {
-      ref.current = nextManager;
+    return manager.addHandler('destroy', () => {
+      setManager(nextManager);
     });
-  }, [ref.current, nextManager]);
+  }, [manager, nextManager]);
 
-  return ref.current;
+  return manager;
 }
 
 export type BaseReactCombinedUnion = ReactPreset | CorePreset | BuiltinPreset;
 
 export type UsePositionerHookReturn = PositionerChangeHandlerParameter & {
+  /**
+   * This ref must be applied to the component that is being positioned in order
+   * to correctly obtain the position data.
+   */
   ref: RefCallback<HTMLElement>;
 };
 
 /**
- * A shorthand tool for creating a positioner with the `PositionerExtension`
- * applied via .
+ * A shorthand tool for creating a positioner with the `PositionerExtension`.
+ *
+ * Must apply the ref to the component when called.
  *
  * @remarks
  *
@@ -359,15 +363,15 @@ export type UsePositionerHookReturn = PositionerChangeHandlerParameter & {
  * import { usePositioner } from '@remirror/react';
  *
  * const MenuComponent: FC = () => {
- *
  *   const {
+ *     ref,
  *     active,
  *     bottom,
- *     left
- * } = usePositioner({positioner });
+ *     left,
+ *   } = usePositioner('bubble');
  *
  *   return (
- *     <div style={{ bottom, left }}>
+ *     <div style={{ bottom, left }} ref={ref}>
  *       <MenuIcon {...options} />
  *     </div>
  *   );
