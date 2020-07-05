@@ -97,4 +97,6 @@ for (const { original, target } of targets) {
   fs.symlinkSync(original, target);
 }
 
-console.log('\n\u001B[32mSuccessfully symlinked the `support/root` files to the root directory.\n');
+console.log(
+  '\n\u001B[32mSuccessfully symlinked the `support/root` files to the root directory.\u001B[0m\n',
+);
