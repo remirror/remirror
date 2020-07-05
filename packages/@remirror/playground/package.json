@@ -1,6 +1,6 @@
 {
   "name": "@remirror/playground",
-  "version": "1.0.0-next.0",
+  "version": "1.0.0-next.1",
   "private": true,
   "description": "Remirror Playground",
   "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/playground",
@@ -24,15 +24,15 @@
     "@babel/runtime": "^7.10.4",
     "@babel/standalone": "^7.10.4",
     "@babel/types": "^7.10.4",
-    "@remirror/core": "^1.0.0-next.0",
-    "@remirror/core-helpers": "^1.0.0-next.0",
-    "@remirror/react": "^1.0.0-next.0",
+    "@remirror/core": "^1.0.0-next.1",
+    "@remirror/core-helpers": "^1.0.0-next.1",
+    "@remirror/react": "^1.0.0-next.1",
     "@types/babel__core": "^7.1.9",
     "@types/babel__standalone": "^7.1.2",
     "monaco-editor": "^0.20.0",
     "monaco-editor-webpack-plugin": "^1.9.0",
     "regenerator-runtime": "^0.13.5",
-    "remirror": "^1.0.0-next.0"
+    "remirror": "^1.0.0-next.1"
   },
   "devDependencies": {
     "@types/prettier": "^2.0.1",

@@ -1,5 +1,38 @@
 # @remirror/preset-wysiwyg
 
+## 1.0.0-next.1
+
+> 2020-07-05
+
+### Patch Changes
+
+- Fix missing dist files from previous publish.
+- Updated dependencies [undefined]
+  - @remirror/core@1.0.0-next.1
+  - @remirror/extension-bidi@1.0.0-next.1
+  - @remirror/extension-blockquote@1.0.0-next.1
+  - @remirror/extension-bold@1.0.0-next.1
+  - @remirror/extension-code@1.0.0-next.1
+  - @remirror/extension-code-block@1.0.0-next.1
+  - @remirror/extension-drop-cursor@1.0.0-next.1
+  - @remirror/extension-epic-mode@1.0.0-next.1
+  - @remirror/extension-gap-cursor@1.0.0-next.1
+  - @remirror/extension-hard-break@1.0.0-next.1
+  - @remirror/extension-heading@1.0.0-next.1
+  - @remirror/extension-horizontal-rule@1.0.0-next.1
+  - @remirror/extension-image@1.0.0-next.1
+  - @remirror/extension-italic@1.0.0-next.1
+  - @remirror/extension-link@1.0.0-next.1
+  - @remirror/extension-search@1.0.0-next.1
+  - @remirror/extension-strike@1.0.0-next.1
+  - @remirror/extension-trailing-node@1.0.0-next.1
+  - @remirror/extension-underline@1.0.0-next.1
+  - @remirror/pm@1.0.0-next.1
+  - @remirror/preset-core@1.0.0-next.1
+  - @remirror/preset-embed@1.0.0-next.1
+  - @remirror/preset-list@1.0.0-next.1
+  - @remirror/preset-table@1.0.0-next.1
+
 ## 1.0.0-next.0
 
 > 2020-07-05

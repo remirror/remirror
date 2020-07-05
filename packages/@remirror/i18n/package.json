@@ -1,6 +1,6 @@
 {
   "name": "@remirror/i18n",
-  "version": "1.0.0-next.0",
+  "version": "1.0.0-next.1",
   "description": "Supported internationalization and locales for the remirror editor.",
   "keywords": [
     "remirror",
@@ -24,14 +24,14 @@
   "dependencies": {
     "@babel/runtime": "^7.10.4",
     "@lingui/core": "^3.0.0-13",
-    "@remirror/core-helpers": "^1.0.0-next.0",
+    "@remirror/core-helpers": "^1.0.0-next.1",
     "make-plural": "^6.2.1"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.0-next.0"
+    "@remirror/pm": "^1.0.0-next.1"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.0-next.0"
+    "@remirror/pm": "^1.0.0-next.1"
   },
   "publishConfig": {
     "access": "public"

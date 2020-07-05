@@ -1,5 +1,17 @@
 # @remirror/showcase
 
+## 1.0.0-next.1
+
+> 2020-07-05
+
+### Patch Changes
+
+- Fix missing dist files from previous publish.
+- Updated dependencies [undefined]
+  - @remirror/core@1.0.0-next.1
+  - @remirror/extension-code-block@1.0.0-next.1
+  - @remirror/react-social@1.0.0-next.1
+
 ## 1.0.0-next.0
 
 > 2020-07-05
