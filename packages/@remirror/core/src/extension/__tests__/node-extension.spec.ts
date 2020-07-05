@@ -3,7 +3,7 @@ import { pmBuild } from 'jest-prosemirror';
 import { ExtensionPriority, NodeGroup } from '@remirror/core-constants';
 import { ApplySchemaAttributes, NodeExtensionSpec } from '@remirror/core-types';
 import { fromHtml } from '@remirror/core-utils';
-import { createBaseManager } from '@remirror/test-fixtures';
+import { createBaseManager } from '@remirror/testing';
 
 import { NodeExtension } from '..';
 

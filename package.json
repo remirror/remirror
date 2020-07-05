@@ -100,7 +100,7 @@
     "@manypkg/cli": "^0.14.0",
     "@manypkg/get-packages": "^1.1.0",
     "@preconstruct/cli": "^1.1.14",
-    "@remirror/test-fixtures": "^0.0.4",
+    "@remirror/testing": "^0.0.4",
     "@size-limit/preset-big-lib": "^4.5.2",
     "@testing-library/jest-dom": "^5.11.0",
     "@types/jest": "^26.0.3",

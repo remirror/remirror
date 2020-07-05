@@ -1,0 +1,8 @@
+{
+  "main": "dist/testing.cjs.js",
+  "module": "dist/testing.esm.js",
+  "types": "dist/testing.cjs.d.ts",
+  "preconstruct": {
+    "source": "../src/react"
+  }
+}

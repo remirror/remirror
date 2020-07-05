@@ -1,10 +1,10 @@
-import { act, fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 
 import { AnyCombinedUnion, fromHtml } from '@remirror/core';
-import { createReactManager } from '@remirror/test-fixtures';
+import { createReactManager } from '@remirror/testing';
+import { act, fireEvent, render } from '@remirror/testing/react';
 
 import { RemirrorContextProps } from '../../react-types';
 import { ReactEditor } from '../react-editor';

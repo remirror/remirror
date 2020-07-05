@@ -1,4 +1,4 @@
-import { isExtensionValid } from '@remirror/test-fixtures';
+import { isExtensionValid } from '@remirror/testing';
 
 import { CommandsExtension } from '..';
 

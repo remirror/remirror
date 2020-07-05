@@ -1,4 +1,4 @@
-import { isPresetValid } from '@remirror/test-fixtures';
+import { isPresetValid } from '@remirror/testing';
 
 import { WysiwygPreset } from '..';
 

@@ -1,6 +1,6 @@
 import { renderEditor } from 'jest-remirror';
 
-import { BlockquoteExtension, HeadingExtension, isExtensionValid } from '@remirror/test-fixtures';
+import { BlockquoteExtension, HeadingExtension, isExtensionValid } from '@remirror/testing';
 
 import { TrailingNodeExtension, TrailingNodeOptions } from '../trailing-node-extension';
 

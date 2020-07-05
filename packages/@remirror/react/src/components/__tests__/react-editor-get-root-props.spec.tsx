@@ -1,8 +1,8 @@
-import { render, RenderResult } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import React, { forwardRef, FunctionComponent, Ref, RefAttributes } from 'react';
 
-import { createReactManager } from '@remirror/test-fixtures';
+import { createReactManager } from '@remirror/testing';
+import { render, RenderResult } from '@remirror/testing/react';
 
 import { ReactEditor } from '../react-editor';
 

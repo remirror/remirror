@@ -1,7 +1,7 @@
 import { renderEditor } from 'jest-remirror';
 
 import { entries, GetHandler } from '@remirror/core';
-import { isExtensionValid } from '@remirror/test-fixtures';
+import { isExtensionValid } from '@remirror/testing';
 
 import { DiffExtension, DiffOptions } from '..';
 

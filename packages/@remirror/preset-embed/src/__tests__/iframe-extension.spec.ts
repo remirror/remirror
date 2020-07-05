@@ -2,7 +2,7 @@ import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
 import { fromHtml, toHtml } from '@remirror/core';
-import { createBaseManager, isExtensionValid } from '@remirror/test-fixtures';
+import { createBaseManager, isExtensionValid } from '@remirror/testing';
 
 import { IframeExtension, IframeOptions } from '../iframe-extension';
 

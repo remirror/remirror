@@ -10,7 +10,7 @@ import {
   simpleJSON,
   testJSON,
   UnderlineExtension,
-} from '@remirror/test-fixtures';
+} from '@remirror/testing';
 
 import { createReactManager } from '../../react-helpers';
 import { ReactSerializer } from '../react-serializer';

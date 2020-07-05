@@ -1,4 +1,3 @@
-import { act, render } from '@testing-library/react';
 import { RemirrorTestChain } from 'jest-remirror';
 import React, { FC, useState } from 'react';
 
@@ -10,6 +9,7 @@ import {
   SchemaFromCombined,
   StateUpdateLifecycleMethod,
 } from '@remirror/core';
+import { act, render } from '@remirror/testing/react';
 
 import { createReactManager } from '../../react-helpers';
 import { RemirrorContextProps } from '../../react-types';

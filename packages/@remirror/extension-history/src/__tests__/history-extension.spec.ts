@@ -1,7 +1,7 @@
 import { renderEditor } from 'jest-remirror';
 
 import { EditorState } from '@remirror/core';
-import { isExtensionValid } from '@remirror/test-fixtures';
+import { isExtensionValid } from '@remirror/testing';
 
 import { HistoryExtension } from '../history-extension';
 

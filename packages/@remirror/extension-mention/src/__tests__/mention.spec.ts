@@ -3,7 +3,7 @@ import { renderEditor } from 'jest-remirror';
 
 import { entries, fromHtml, GetHandler, toHtml } from '@remirror/core';
 import { SuggestExitHandlerParameter } from '@remirror/pm/suggest';
-import { createBaseManager } from '@remirror/test-fixtures';
+import { createBaseManager } from '@remirror/testing';
 
 import { MentionExtension, MentionExtensionSuggestCommand, MentionOptions } from '..';
 

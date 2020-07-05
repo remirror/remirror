@@ -1,7 +1,7 @@
-import { act, render } from '@testing-library/react';
 import React from 'react';
 
-import { createBaseManager } from '@remirror/test-fixtures';
+import { createBaseManager } from '@remirror/testing';
+import { act, render } from '@remirror/testing/react';
 
 import { PortalContainer, RemirrorPortals } from '..';
 import { RemirrorProvider } from '../../components';

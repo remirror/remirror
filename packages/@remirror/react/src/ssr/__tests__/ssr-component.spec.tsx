@@ -1,7 +1,7 @@
-import { render } from '@testing-library/react';
 import React from 'react';
 
-import { createReactManager, initialJson } from '@remirror/test-fixtures';
+import { createReactManager, initialJson } from '@remirror/testing';
+import { render } from '@remirror/testing/react';
 
 import { RemirrorSSR } from '..';
 

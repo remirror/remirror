@@ -2,7 +2,7 @@ import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
 import { fromHtml, toHtml } from '@remirror/core';
-import { createBaseManager } from '@remirror/test-fixtures';
+import { createBaseManager } from '@remirror/testing';
 
 import { TablePreset } from '..';
 

@@ -5,7 +5,7 @@
     "@remirror/e2e",
     "@remirror/storybook",
     "@remirror/support",
-    "@remirror/test-fixtures",
+    "@remirror/testing",
     "@remirror/website",
     "with-next"
   ],

@@ -1,6 +1,6 @@
 import { renderEditor } from 'jest-remirror';
 
-import { HeadingExtension, isExtensionValid } from '@remirror/test-fixtures';
+import { HeadingExtension, isExtensionValid } from '@remirror/testing';
 
 import { BidiExtension } from '..';
 

@@ -1,11 +1,10 @@
-import { cleanup } from '@testing-library/react';
-
 import {
   BlockquoteExtension,
   BoldExtension,
   HeadingExtension,
   LinkExtension,
-} from '@remirror/test-fixtures';
+} from '@remirror/testing';
+import { cleanup } from '@remirror/testing/react';
 import { PlainExtension, toHtml } from 'remirror/core';
 
 import { renderEditor } from '../jest-remirror-editor';

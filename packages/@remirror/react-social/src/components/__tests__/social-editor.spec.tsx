@@ -1,8 +1,8 @@
-import { act, render } from '@testing-library/react';
 import { RemirrorTestChain } from 'jest-remirror';
 import React from 'react';
 
-import { docNodeBasicJSON } from '@remirror/test-fixtures';
+import { docNodeBasicJSON } from '@remirror/testing';
+import { act, render } from '@remirror/testing/react';
 
 import { createSocialManager, SocialEditor } from '../..';
 

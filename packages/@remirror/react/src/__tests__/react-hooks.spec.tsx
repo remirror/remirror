@@ -1,7 +1,7 @@
-import { render } from '@testing-library/react';
 import React, { FC } from 'react';
 
-import { contextPropsShape, createReactManager, positionerShape } from '@remirror/test-fixtures';
+import { contextPropsShape, createReactManager, positionerShape } from '@remirror/testing';
+import { render } from '@remirror/testing/react';
 
 import { RemirrorProvider } from '../components/providers';
 import { usePositioner, useRemirror } from '../hooks';

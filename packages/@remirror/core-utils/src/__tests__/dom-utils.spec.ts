@@ -15,7 +15,7 @@ import {
 
 import { NodeMatch } from '@remirror/core-types';
 import { TextSelection } from '@remirror/pm/state';
-import { docNodeBasicJSON } from '@remirror/test-fixtures';
+import { docNodeBasicJSON } from '@remirror/testing';
 
 import {
   atDocEnd as atDocumentEnd,

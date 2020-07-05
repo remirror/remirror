@@ -1,6 +1,6 @@
 import { __INTERNAL_REMIRROR_IDENTIFIER_KEY__, RemirrorIdentifier } from '@remirror/core-constants';
 import { Dynamic, Static } from '@remirror/core-types';
-import { ignoreUnused } from '@remirror/test-fixtures';
+import { ignoreUnused } from '@remirror/testing';
 
 import { RemirrorManager } from '../..';
 import { PlainExtension } from '../../extension';

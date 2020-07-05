@@ -1,6 +1,6 @@
 import { renderEditor } from 'jest-remirror';
 
-import { isExtensionValid } from '@remirror/test-fixtures';
+import { isExtensionValid } from '@remirror/testing';
 
 import { PositionerExtension } from '../positioner-extension';
 import { defaultPositioner } from '../positioners';

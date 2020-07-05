@@ -1,8 +1,8 @@
-import { render } from '@testing-library/react';
 import React from 'react';
 
 import { MentionExtension } from '@remirror/extension-mention';
 import { SocialPreset } from '@remirror/preset-social';
+import { render } from '@remirror/testing/react';
 
 import { createSocialManager } from '../../social-utils';
 import { useSocialManager } from '../use-social';

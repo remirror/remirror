@@ -1,4 +1,4 @@
-import { CreateCoreManagerOptions } from '@remirror/test-fixtures';
+import { CreateCoreManagerOptions } from '@remirror/testing';
 import {
   AnyCombinedUnion,
   AttributesParameter,

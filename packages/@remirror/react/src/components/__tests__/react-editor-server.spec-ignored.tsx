@@ -6,7 +6,7 @@ import React, { Fragment } from 'react';
 import { renderToString } from 'react-dom/server';
 
 import { EDITOR_CLASS_NAME } from '@remirror/core';
-import { BoldExtension, createReactManager, docNodeSimpleJSON } from '@remirror/test-fixtures';
+import { BoldExtension, createReactManager, docNodeSimpleJSON } from '@remirror/testing';
 
 import { ReactEditor } from '../react-editor';
 

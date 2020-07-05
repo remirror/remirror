@@ -11,7 +11,7 @@ import typescript from 'refractor/lang/typescript';
 import yaml from 'refractor/lang/yaml';
 
 import { ExtensionPriority, fromHtml, object, toHtml } from '@remirror/core';
-import { createBaseManager, isExtensionValid } from '@remirror/test-fixtures';
+import { createBaseManager, isExtensionValid } from '@remirror/testing';
 
 import { CodeBlockExtension, CodeBlockOptions, FormatterParameter } from '..';
 import { getLanguage } from '../code-block-utils';

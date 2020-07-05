@@ -1,7 +1,7 @@
-import { render } from '@testing-library/react';
 import React, { FC } from 'react';
 
-import { createBaseManager, docNodeBasicJSON } from '@remirror/test-fixtures';
+import { createBaseManager, docNodeBasicJSON } from '@remirror/testing';
+import { render } from '@remirror/testing/react';
 
 import { useRemirror } from '../../hooks';
 import { RemirrorProvider, ThemeProvider } from '../providers';

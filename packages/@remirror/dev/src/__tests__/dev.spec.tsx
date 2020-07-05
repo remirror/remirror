@@ -1,8 +1,8 @@
-import { render } from '@testing-library/react';
 import React from 'react';
 
 import { RemirrorProvider } from '@remirror/react';
-import { createBaseManager } from '@remirror/test-fixtures';
+import { createBaseManager } from '@remirror/testing';
+import { render } from '@remirror/testing/react';
 
 import { ProsemirrorDevTools } from '../dev';
 

@@ -5,7 +5,7 @@
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-import { createReactManager, docNodeBasicJSON } from '@remirror/test-fixtures';
+import { createReactManager, docNodeBasicJSON } from '@remirror/testing';
 
 import { useRemirror } from '../../hooks';
 import { RemirrorProvider } from '../providers';

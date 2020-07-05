@@ -4,7 +4,7 @@
 
 import { EMPTY_PARAGRAPH_NODE } from '@remirror/core';
 import { EditorState } from '@remirror/pm/state';
-import { createBaseManager, minDocument } from '@remirror/test-fixtures';
+import { createBaseManager, minDocument } from '@remirror/testing';
 
 import { createEditorView, EditorViewSSR } from '../ssr-prosemirror-view';
 

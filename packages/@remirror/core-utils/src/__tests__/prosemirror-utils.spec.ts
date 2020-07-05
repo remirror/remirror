@@ -18,7 +18,7 @@ import {
 import { omit, pick } from '@remirror/core-helpers';
 import { Schema } from '@remirror/pm/model';
 import { NodeSelection, Selection, TextSelection } from '@remirror/pm/state';
-import { BoldExtension, createBaseManager } from '@remirror/test-fixtures';
+import { BoldExtension, createBaseManager } from '@remirror/testing';
 
 import {
   cloneTransaction,

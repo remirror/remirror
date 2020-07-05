@@ -1,4 +1,4 @@
-import { BoldExtension } from '@remirror/test-fixtures';
+import { BoldExtension } from '@remirror/testing';
 import { Cast } from 'remirror/core';
 
 import { renderEditor } from '../jest-remirror-editor';

@@ -1,6 +1,7 @@
-import { act, render } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import React from 'react';
+
+import { act, render } from '@remirror/testing/react';
 
 import {
   fakeResizeObserverPolyfill,

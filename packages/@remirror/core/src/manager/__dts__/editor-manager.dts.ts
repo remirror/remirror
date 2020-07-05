@@ -1,4 +1,4 @@
-import { CorePreset, DocExtension, ParagraphExtension } from '@remirror/test-fixtures';
+import { CorePreset, DocExtension, ParagraphExtension } from '@remirror/testing';
 
 import { BuiltinPreset } from '../../builtins';
 import { RemirrorManager } from '../remirror-manager';
