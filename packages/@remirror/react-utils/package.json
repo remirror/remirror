@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-utils",
-  "version": "1.0.0-next.1",
+  "version": "1.0.0-next.2",
   "description": "A small set of utilities for react components in remirror.",
   "keywords": [
     "react",
