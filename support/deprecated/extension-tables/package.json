@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-tables",
-  "version": "0.11.0",
+  "version": "1.0.0-next.0",
   "description": "DEPRECATED - This package is now deprecated.",
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/preset-table",
   "repository": "https://github.com/remirror/remirror/tree/master/support/deprecated/extension-tables",

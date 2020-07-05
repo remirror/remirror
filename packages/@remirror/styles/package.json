@@ -1,6 +1,6 @@
 {
   "name": "@remirror/styles",
-  "version": "0.0.0",
+  "version": "1.0.0-next.0",
   "description": "Styles for every remirror package.",
   "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/styles",
   "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/styles",

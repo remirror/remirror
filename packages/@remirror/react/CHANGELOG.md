@@ -1,5 +1,47 @@
 # @remirror/react
 
+## 1.0.0-next.0
+
+> 2020-07-05
+
+### Major Changes
+
+- The whole API for remirror has completely changed. These pre-release versions are a breaking
+  change across all packages. The best way to know what's changed is to read the documentaion on the
+  new documentation site `https://remirror.io`.
+- 28bd8bea: This is a breaking change to the structure of published npm packages.
+
+  - Move build directory from `lib` to `dist`
+  - Remove option for multiple entry points. It is no longer possible to import module from
+    '@remirror/core/lib/custom'
+  - Only use one entry file.
+  - Remove declaration source mapping for declaration files
+  - Remove the src directory from being published.
+
+- 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`.
+  If your code was importing any matching interface you will need to update the name.
+
+### Minor Changes
+
+- 09e990cb: Update `EditorManager` / `ExtensionManager` name to be \*\*`RemirrorManager`.
+
+### Patch Changes
+
+- Updated dependencies [undefined]
+- Updated dependencies [28bd8bea]
+- Updated dependencies [7b817ac2]
+- Updated dependencies [undefined]
+- Updated dependencies [09e990cb]
+  - @remirror/core@1.0.0-next.0
+  - @remirror/extension-placeholder@1.0.0-next.0
+  - @remirror/extension-positioner@1.0.0-next.0
+  - @remirror/i18n@1.0.0-next.0
+  - @remirror/pm@1.0.0-next.0
+  - @remirror/preset-core@1.0.0-next.0
+  - @remirror/preset-react@1.0.0-next.0
+  - @remirror/react-utils@1.0.0-next.0
+  - @remirror/theme@1.0.0-next.0
+
 ## 0.13.1
 
 ### Patch Changes

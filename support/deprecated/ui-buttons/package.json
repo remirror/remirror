@@ -1,6 +1,6 @@
 {
   "name": "@remirror/ui-buttons",
-  "version": "0.7.7",
+  "version": "1.0.0-next.0",
   "description": "DEPRECATED - ui-buttons utilities for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/ui-buttons",
   "repository": "https://github.com/remirror/remirror/tree/master/support/deprecated/ui-buttons",

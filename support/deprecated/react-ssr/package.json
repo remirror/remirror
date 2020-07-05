@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-ssr",
-  "version": "0.11.0",
+  "version": "1.0.0-next.0",
   "description": "ssr utilities for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/react",
   "repository": "https://github.com/remirror/remirror/tree/master/support/deprecated/react-ssr",

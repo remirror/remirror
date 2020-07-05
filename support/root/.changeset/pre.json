@@ -85,7 +85,34 @@
     "@remirror/ui-icons": "0.7.8",
     "@remirror/ui-menus": "0.7.4",
     "@remirror/ui-modal": "0.7.5",
-    "@remirror/ui-text": "0.7.6"
+    "@remirror/ui-text": "0.7.6",
+    "@remirror/test-fixtures": "0.0.4",
+    "@remirror/support": "0.0.0",
+    "@remirror/e2e": "0.0.3",
+    "with-next": "0.0.8",
+    "@remirror/storybook": "0.0.0",
+    "@remirror/website": "0.0.0"
   },
-  "changesets": []
+  "changesets": [
+    "eleven-papayas-poke",
+    "happy-olives-check",
+    "long-carrots-train",
+    "new-lobsters-whisper",
+    "purple-moons-cross",
+    "real-impalas-punch",
+    "real-keys-sort",
+    "red-buses-tan",
+    "shaggy-hotels-fix",
+    "sharp-insects-melt",
+    "sour-badgers-think",
+    "strange-houses-brake",
+    "stupid-panthers-exercise",
+    "thick-badgers-beg",
+    "thick-nails-drum",
+    "twelve-llamas-cheer",
+    "unlucky-dancers-confess",
+    "violet-insects-burn",
+    "witty-ghosts-travel",
+    "young-plants-help"
+  ]
 }

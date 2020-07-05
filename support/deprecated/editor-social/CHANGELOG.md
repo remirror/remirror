@@ -1,5 +1,16 @@
 # @remirror/react-social
 
+## 1.0.0-next.0
+
+> 2020-07-05
+
+### Major Changes
+
+- The whole API for remirror has completely changed. These pre-release versions are a breaking
+  change across all packages. The best way to know what's changed is to read the documentaion on the
+  new documentation site `https://remirror.io`.
+- b3153b4c: Deprecate unused packages in the latest version.
+
 ## 0.13.1
 
 ### Patch Changes

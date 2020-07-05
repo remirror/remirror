@@ -1,5 +1,13 @@
 # @remirror/ui-buttons
 
+## 1.0.0-next.0
+
+> 2020-07-05
+
+### Major Changes
+
+- b3153b4c: Deprecate unused packages in the latest version.
+
 ## 0.7.7
 
 ### Patch Changes

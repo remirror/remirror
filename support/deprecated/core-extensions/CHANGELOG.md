@@ -1,5 +1,20 @@
 # @remirror/core-extensions
 
+## 1.0.0-next.0
+
+> 2020-07-05
+
+### Major Changes
+
+- The whole API for remirror has completely changed. These pre-release versions are a breaking
+  change across all packages. The best way to know what's changed is to read the documentaion on the
+  new documentation site `https://remirror.io`.
+- 0bbe7270: Deprecate `@remirror/core-extensions` and remove the simple code block extension from
+  the repo.
+- b3153b4c: Deprecate unused packages in the latest version.
+- 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`.
+  If your code was importing any matching interface you will need to update the name.
+
 ## 0.13.1
 
 ### Patch Changes

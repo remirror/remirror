@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-emoji",
-  "version": "0.11.0",
+  "version": "1.0.0-next.0",
   "description": "Add flavor to your editor with emoji's that make the heart sing.",
   "keywords": [
     "remirror",
@@ -35,13 +35,13 @@
     "match-sorter": "^4.1.0"
   },
   "devDependencies": {
-    "@remirror/core": "^0.11.0",
-    "@remirror/pm": "^0.0.0",
+    "@remirror/core": "^1.0.0-next.0",
+    "@remirror/pm": "^1.0.0-next.0",
     "emojibase-data": "^5.0.1"
   },
   "peerDependencies": {
-    "@remirror/core": "^0.11.0",
-    "@remirror/pm": "^0.0.0"
+    "@remirror/core": "^1.0.0-next.0",
+    "@remirror/pm": "^1.0.0-next.0"
   },
   "publishConfig": {
     "access": "public"
