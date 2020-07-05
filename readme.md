@@ -32,8 +32,8 @@
 
 I started `remirror` as a challenge to myself. Would it be possible to build an editor that combined
 great performance with ease of use? I wanted something that allowed developers like myself to fall
-in love and feel playful even when working deeply complex concepts. The editor would need to combine
-plug-and-play features, with ample room for customisation.
+in love and feel playful even when working through deeply complex concepts. The editor would need to
+combine plug-and-play features, with ample room for customisation.
 
 I also wanted to give users of all frameworks, the ability to build an editor by picking and
 choosing their desired building blocks.
@@ -46,7 +46,7 @@ their masterpieces.
 In this latest version, I believe I'm starting to see these goals come to fruition. Every single
 part of the editor can be controlled by extensions. For example, the core (`Schema`) is managed by a
 [built-in extension](https://github.com/remirror/remirror/blob/next/packages/@remirror/core/src/builtins/schema-extension.ts).
-There's is already a huge selection of extensions for users to choose from.
+There's already a huge selection of extensions for users to choose from.
 
 And the new API is beautiful. For React, this comes with a slew of drop-in components and hooks.
 Many more are being worked on. It's almost magical how well it works.
