@@ -56,7 +56,6 @@
 '@remirror/react-wysiwyg': major
 '@remirror/showcase': major
 '@remirror/styles': major
-'@remirror/test-fixtures': major
 '@remirror/theme': major
 'a11y-status': major
 'jest-prosemirror': major
@@ -65,30 +64,12 @@
 'prosemirror-suggest': major
 'remirror': major
 'test-keyboard': major
-'@remirror/support': major
 '@remirror/core-extensions': major
 '@remirror/editor-markdown': major
 '@remirror/editor-social': major
 '@remirror/editor-wysiwyg': major
 '@remirror/extension-enhanced-link': major
 '@remirror/extension-tables': major
-'@remirror/react-hooks': major
-'@remirror/react-node-view': major
-'@remirror/react-portals': major
-'@remirror/react-renderer': major
-'@remirror/react-ssr': major
-'@remirror/ui-a11y-status': major
-'@remirror/ui-buttons': major
-'@remirror/ui-dropdown': major
-'@remirror/ui-icons': major
-'@remirror/ui-menus': major
-'@remirror/ui-modal': major
-'@remirror/ui-text': major
-'@remirror/ui': major
-'@remirror/e2e': major
-'with-next': major
-'@remirror/storybook': major
-'@remirror/website': major
 ---
 
 The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
