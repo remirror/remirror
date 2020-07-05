@@ -80,7 +80,7 @@ function createErrorMessage(code: ErrorConstant, extraMessage?: string) {
   const prefix = message ? `${message}\n\n` : '';
   const customMessage = extraMessage ? `${extraMessage}\n\n` : '';
 
-  return `${prefix}${customMessage}For more information visit ${ERROR_INFORMATION_URL}#${code}`;
+  return `${prefix}${customMessage}For more information visit ${ERROR_INFORMATION_URL}#${code.toLowerCase()}`;
 }
 
 /**
