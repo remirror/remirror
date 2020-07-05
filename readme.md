@@ -3,19 +3,16 @@
   <div align="center">
     <a href="https://remirror.io"><img width="300" height="300" src="https://raw.githubusercontent.com/remirror/remirror/next/support/assets/logo-animated-light.svg?sanitize=true" alt="animated remirror logo" /></a>
   </div>
-    <br />
-    <br />
-    <br />
+  <br />
+  <br />
+  <br />
+  <div align="center">
+    <a href="https://github.com/remirror/remirror/actions?query=workflow%3A%22Node+CI%22?branch=next"><img src="https://github.com/remirror/remirror/workflows/Node%20CI/badge.svg?branch=next" alt="Build And Release" /></a>
+    <a href="https://github.com/remirror/remirror/actions?query=workflow%3A%22Deploy+Docs%22?branch=next"><img src="https://github.com/remirror/remirror/workflows/Deploy%20Docs/badge.svg?branch=next" alt="Deploy Docs" /></a>
+    <a href="https://dev.azure.com/remirror/remirror/_build/latest?definitionId=2&amp;branchName=next"><img src="https://dev.azure.com/remirror/remirror/_apis/build/status/remirror.remirror?branchName=next" alt="Azure DevOps builds" /></a>
+    <a href="https://github.com/remirror/remirror/commits/next"><img src="https://img.shields.io/github/commit-activity/m/remirror/remirror.svg?amp;logo=github" alt="GitHub commit activity"></a>
+    </div>
 </div>
-
-<p align="center">
-
-<a href="https://github.com/remirror/remirror/actions?query=workflow%3A%22Node+CI%22?branch=next"><img src="https://github.com/remirror/remirror/workflows/Node%20CI/badge.svg?branch=next" alt="Build And Release" /></a>
-<a href="https://github.com/remirror/remirror/actions?query=workflow%3A%22Deploy+Docs%22?branch=next"><img src="https://github.com/remirror/remirror/workflows/Deploy%20Docs/badge.svg?branch=next" alt="Deploy Docs" /></a>
-<a href="https://dev.azure.com/remirror/remirror/_build/latest?definitionId=2&amp;branchName=next"><img src="https://dev.azure.com/remirror/remirror/_apis/build/status/remirror.remirror?branchName=next" alt="Azure DevOps builds" /></a>
-<a href="https://github.com/remirror/remirror/commits/next"><img src="https://img.shields.io/github/commit-activity/m/remirror/remirror.svg?amp;logo=github" alt="GitHub commit activity"></a>
-
-</p>
 
 <br />
 
@@ -32,29 +29,28 @@
 
 ### Motivation
 
-I started building remirror with a challenge to myself. Would it be possible to build an editor that
-combined great performance with ease of use? I wanted something that allowed developers like myself
-to fall in love and feel playful when working on what can be very complex code. The editor would
-needed to support plug and play features, whilst also providing room for customisation.
+I started `remirror` as a challenge to myself. Would it be possible to build an editor that combined
+great performance with ease of use? I wanted something that allowed developers like myself to fall
+in love and feel playful even when working deeply complex concepts. The editor would need to combine
+plug-and-play features, with ample room for customisation.
 
 I also wanted to give users of all frameworks, the ability to build an editor by picking and
 choosing their desired building blocks.
 
-In order to meet this goal, I settled on [ProseMirror](https://prosemirror.net/) as the core layer.
-The second decision was to base the structure of the editor on blocks of functionality called
+In order to meet my goals, I settled on [ProseMirror](https://prosemirror.net/) as the core editor
+layer. The second decision was to base the structure of the editor on blocks of functionality called
 `Extensions`. Each extension would add a slice of beauty to the editor, allowing users to craft
 their masterpieces.
 
-In this latest version, I believe I'm starting to see these goals come to fruitions. Every single
-part of the editor can be controlled by extensions. For example, even the very core functionality
-(`Schema`) is managed by a
-[built in extensions](packages/@remirror/core/src/builtins/schema-extension.ts). There's is already
-a huge selection of extensions for users to choose from.
+In this latest version, I believe I'm starting to see these goals come to fruition. Every single
+part of the editor can be controlled by extensions. For example, the core (`Schema`) is managed by a
+[built-in extension](https://github.com/remirror/remirror/blob/next/packages/@remirror/core/src/builtins/schema-extension.ts).
+There's is already a huge selection of extensions for users to choose from.
 
 And the new API is beautiful. For React, this comes with a slew of drop-in components and hooks.
 Many more are being worked on. It's almost magical how well it works.
 
-For example, to add a drop down emoji picker to your react editor.
+For example, to add a drop down emoji picker to your react editor the following code will suffice.
 
 ```tsx
 import React from 'react';
@@ -69,8 +65,22 @@ const Editor = () => {
 With this tiny snippet your editor now supports a really nice ui element. And it's all customisable
 with ordinary `css`. No more fighting against yet another `CSS-in-JS` library.
 
-There's so much more to come and I'm glad you're taking a look. I hope I can convince you to stick
-around.
+There's so much more to come and I'm glad you're taking a look. I hope `remirror` proves to be
+everything you need for your next text editor and more.
+
+This documentation is still a work in progress. It is being updated in parallel with the `next`
+branch and still has many iterations before it can be called ready.
+
+While reading through this codebase, if you find errors or would like to suggest improvements there
+are several options.
+
+- Open an issue in our [github repo](https://github.com/remirror/remirror/issues).
+- [Join our discord server](https://discord.gg/C4cfrMK) and discuss the problem with us.
+- Create a pull request with your proposed improvement by clicking the edit button on the relevant
+  page.
+- Move on, because deadlines are looming and life is too short.
+
+Whatever you decide I'm happy that you've taken the time to dive into the `remirror` project.
 
 <br />
 
@@ -111,7 +121,9 @@ View our documentation website at https://remirror.io/
 
 ### Editors
 
-![A gif showing mentions being suggested as the user types with editing supported](https://media.githubusercontent.com/media/ifiokjr/assets/master/remirror/repo-banner.gif 'A gif showing mentions being suggested as the user types with editing supported')
+![A gif showing mentions being suggested as the user types with editing supported](https://media.githubusercontent.com/media/ifiokjr/assets/master/remirror/repo-banner.gif 'A gif showing mentions being suggested as the user types with editing supported').
+
+You can see a guide on how to to add this exact editor to your codebase here.
 
 To add this editor to your codebase, first install the required dependencies. Make sure to include
 the `@next` distribution tag to ensure you install the correct version.

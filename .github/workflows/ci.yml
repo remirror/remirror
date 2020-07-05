@@ -5,8 +5,8 @@ on:
     branches:
       - main
       - next
-      - changeset-release/main
-      - changeset-release/next
+      - 'changeset-release/main'
+      - 'changeset-release/next'
   pull_request:
     branches:
       - main

@@ -4,16 +4,61 @@ title: Extension
 
 Extensions manage similar concerns. It allows for grouping items that affect:
 
-- How the editor displays certain content, i.e. **bold**, _italic_, **underline**.
-- Makes certain commands available e.g. `actions.bold()` to make selected text bold.
-- Check if a command is currently active or enabled e.g. `actions.bold.isActive()`.
+- How the editor displays certain content, i.e. **bold**, _italic_, <u>underline</u>.
+- Makes certain commands available e.g. `commands.toggleBold()` to toggle the bold formatting of the
+  currently selected text.
+- Check if a command can be run for the current selection `commands.undo.isEnabled()`.
+- Check if a mark is active at the current selection, `active.italic()`.
 - Register ProseMirror plugins, keymaps, input rules, paste rules, and custom nodeViews, which
   affect the behaviour of the editor.
 
 There are three types of `Extension`.
 
-- `NodeExtension` - For creating [Prosemirror nodes](https://prosemirror.net/docs/ref/#model.Node)
+- `NodeExtension` - For creating [ProseMirror nodes](https://prosemirror.net/docs/ref/#model.Node)
   in the editor.
-- `MarkExtension` - For creating [Prosemirror marks](https://prosemirror.net/docs/ref/#model.Mark)
+- `MarkExtension` - For creating [ProseMirror marks](https://prosemirror.net/docs/ref/#model.Mark)
   in the editor.
 - `PlainExtension` - For behaviour which doesn't need to be displayed in the DOM.
+
+## Lifecycle Methods
+
+Extensions are able to completely customise the behaviour of the editor via these lifecycle methods.
+Even core functionality like the creation of `Schema` is built via `Extensions`. This section
+outlines what you're working with in extensions.
+
+### `onCreate`
+
+```ts
+onCreate(extensions: readonly AnyExtension[]): void;
+```
+
+This handler is called when the `RemirrorManager` is first created. Since it is called as soon as
+the manager is some methods may not be available in the extension store. When accessing methods on
+`this.store` be shore to check when they become available in the lifecycle. It is recommende that
+you don't use this method unless absolutely required.
+
+### `onView`
+
+```ts
+onView( extensions: readonly AnyExtension[], view: EditorView<EditorSchema>): void
+```
+
+This event happens when the `EditorView` is first added by the ui layer. This is the lifecycle
+method where commands and editor helpers are added.
+
+### `onStateUpdate`
+
+```ts
+onStateUpdate(parameter: import('remirror/core').StateUpdateLifecycleParameter): void
+```
+
+This is called whenever a transaction successfully updates the `EditorState`. For controlled
+component this is called whenever the state value is updated.
+
+### `onDestroy`
+
+```ts
+onDestroy(extensions: readonly AnyExtension[]): void
+```
+
+This is called when the `RemirrorManager` is being destroyed.

@@ -2,17 +2,12 @@
 title: RemirrorManager
 ---
 
-The `RemirrorManager` is responsible for grouping together the `Extension`'s and `Preset`'s and
-providing their behaviour to your editor. It wraps the functionality by providing the following
-lifecycyle methods which are used by the view layers to manger the editor at run time.
-
-### `onCreate`
-
-This is called when the `RemirrorManager` is first created.
+The `RemirrorManager` brings together the required `Extension`'s and `Preset`'s to provide their
+behaviour to your editor. This is where `commands` and `helpers` are stored.
 
 :::note
 
 In the previous version of `remirror` the `RemirrorManager` referred to a `React` component. That
-was in the _before times_ of which we do not speak.
+was in the _before times_ of which we will no longer speak.
 
 :::

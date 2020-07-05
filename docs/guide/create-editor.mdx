@@ -8,20 +8,28 @@ Creating an editor consists of two steps.
    the extension manager.
 
 ```tsx
-import { useCorePreset, useFormattingPreset } from '@remirror/core-presets';
-import { RemirrorProvider, useManager } from '@remirror/react';
+import { CorePreset } from 'remirror/preset/core';
+import { RemirrorProvider, useManager } from 'remirror/react';
+import { BoldExtension } from 'remirror/extension/bold';
+import { ItalicExtension } from 'remirror/extension/italic';
+import { UnderlineExtension } from 'remirror/extension/underline';
 
-import { MyEditor } from './my-editor';
+import { Menu, TextEditor } from './my-editor';
 
 const EditorWrapper = () => {
-  const formattingPreset = useFormattingPreset();
-  const corePreset = useCorePreset();
-
-  const manager = useManager({ presets: [formattingPreset, corePreset] });
+  const manager = useManager([
+    new CorePreset(),
+    new BoldExtension(),
+    new ItalicExtension(),
+    new UnderlineExtension(),
+  ]);
 
   return (
     <RemirrorProvider manager={manager}>
-      <MyEditor />
+      <div>
+      <Menu>
+      <TextEditor>
+      </div>
     </RemirrorProvider>
   );
 };
@@ -31,29 +39,122 @@ const EditorWrapper = () => {
    dynamic props cursor position and more. This is where the editor specifis UI will live.
 
 ```tsx
-import { MouseEventHandler } from 'react';
-import { useFormattingPresetProps } from '@remirror/core-presets';
 import { useRemirror } from '@remirror/react';
 
-export const MyEditor = () => {
-  const { getRootProps, commands } = useRemirror();
+const Menu = () => {
+  const [activeCommands, setActiveCommands] = useState({
+    bold: false,
+    italic: false,
+    underline: false,
+  });
 
-  const onBold: MouseEventHandler<HTMLButtonElement> = (event) => {
-    event.preventDefault();
-    commands.bold();
-  };
-
-  const onItalic: MouseEventHandler<HTMLButtonElement> = (event) => {
-    event.preventDefault();
-    commands.italic();
-  };
+  const { getRootProps, commands, active } = useRemirror(() => {
+    setActiveCommands({
+      bold: active.bold(),
+      italic: active.italic(),
+      underline: active.underline(),
+    });
+  });
 
   return (
     <div>
-      <button onClick={onBold} />
-      <button onClick={onItalic} />
-      <div {...getRootProps} />
+      <button
+        onClick={() => commands.toggleBold()}
+        style={{ fontWeight: activeCommands.bold ? 'bold' : undefined }}
+      >
+        B
+      </button>
+      <button
+        onClick={() => commands.toggleItalic()}
+        style={{ fontWeight: activeCommands.italic ? 'bold' : undefined }}
+      >
+        I
+      </button>
+      <button
+        onClick={() => commands.toggleUnderline()}
+        style={{ fontWeight: activeCommands.underline ? 'bold' : undefined }}
+      >
+        U
+      </button>
     </div>
   );
 };
+
+export const TextEditor = () => {
+  const { getRootProps } = useRemirror();
+
+  return <div {...getRootProps()} />;
+};
+```
+
+`getRootProps` is used to inject the editor into a specific UI element. In the example above the
+root props are added to the div.
+
+```js live
+function example() {
+  function Menu() {
+    const [activeCommands, setActiveCommands] = useState({
+      bold: false,
+      italic: false,
+      underline: false,
+    });
+
+    const { getRootProps, commands, active } = useRemirror(() => {
+      setActiveCommands({
+        bold: active.bold(),
+        italic: active.italic(),
+        underline: active.underline(),
+      });
+    });
+
+    return (
+      <div>
+        <button
+          onClick={() => commands.toggleBold()}
+          style={{ fontWeight: activeCommands.bold ? 'bold' : undefined }}
+        >
+          B
+        </button>
+        <button
+          onClick={() => commands.toggleItalic()}
+          style={{ fontWeight: activeCommands.italic ? 'bold' : undefined }}
+        >
+          I
+        </button>
+        <button
+          onClick={() => commands.toggleUnderline()}
+          style={{ fontWeight: activeCommands.underline ? 'bold' : undefined }}
+        >
+          U
+        </button>
+      </div>
+    );
+  }
+
+  function TextEditor() {
+    const { getRootProps } = useRemirror();
+
+    return <div {...getRootProps()} />;
+  }
+
+  function EditorWrapper() {
+    const manager = useManager([
+      new CorePreset(),
+      new BoldExtension(),
+      new ItalicExtension(),
+      new UnderlineExtension(),
+    ]);
+
+    return (
+      <RemirrorProvider manager={manager}>
+        <div>
+          <Menu />
+          <TextEditor />
+        </div>
+      </RemirrorProvider>
+    );
+  }
+
+  return <EditorWrapper />;
+}
 ```

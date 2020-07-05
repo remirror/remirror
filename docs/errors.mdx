@@ -179,6 +179,100 @@ remirror context created by the `<RemirrorProvider />`.
 
 `getRootProps` has been called MULTIPLE times. It should only be called ONCE during render.
 
+This error happens because the `getRootProps` method is being used in a component that is rendered
+multiple times without updates from the react provider. The `getRootProps` method is responsible for
+collecting the react ref and appending the prosemirror text editor to it. If that's done multiple
+times per render then it has problems.
+
+To fix this you should move the component calling `getRootProps` to a part of the tree that is only
+rerendered when the `RemirrorProvider` is updated.
+
+For example the following would trigger this error.
+
+```tsx
+import React from 'react';
+import {RemirrorProvider, useManager} from 'remirror/react';
+import { CorePreset } from 'remirror/preset/core';
+import { BoldExtension } from 'remirror/extension/bold';
+
+const Internal = () => {
+  const [boldActive, setBoldActive] = useState(false);
+
+  const { getRootProps, commands, active } = useRemirror(() => {
+    setBoldActive(active.bold());
+  });
+
+  return (
+    <div>
+      <button
+        onClick={() => commands.toggleBold()}
+        style={{ fontWeight: activeCommands.bold ? 'bold' : undefined }}
+      >
+        B
+      </button>
+      <div {...getRootProps()} />
+    </div>
+  );
+}
+
+const Editor = () => {
+  const manager = useManager([new CorePreset(), new BoldExtension()]);
+
+  return <RemirrorProvider manager={manager}><Internal></ RemirrorProvider>
+}
+```
+
+The onChange handler being passed into the `useRemirror` hook means that every time the editor
+content changes there will be a `setBoldActive` called which re-renders the `Internal` component. As
+a result `getRootProps` is called multiple times.
+
+To fix this issue you need to move the getRootProps to a part of the state tree that only updates
+when the `RemirrorProvider` updates. There are several ways to do this and one of them is to split
+up the `Internal` component into two seperate components.
+
+The fixed code could look something like this.
+
+```tsx
+const Menu = () => {
+  const [boldActive, setBoldActive] = useState(false);
+  const { commands, active } = useRemirror(() => {
+    setBoldActive(active.bold());
+  });
+
+  return (
+    <>
+      <button
+        onClick={() => commands.toggleBold()}
+        style={{ fontWeight: activeCommands.bold ? 'bold' : undefined }}
+      >
+        B
+      </button>
+    </>
+  );
+};
+
+const TextEditor = () => {
+  const { getRootProps } = useRemirror();
+
+  return <div {...getRootProps()} />;
+};
+
+const Editor = () => {
+  const manager = useManager([new CorePreset(), new BoldExtension()]);
+
+  return (
+    <RemirrorProvider manager={manager}>
+      <div>
+        <Menu />
+        <TextEditor />
+      </div>
+    </RemirrorProvider>
+  );
+};
+```
+
+Now the `TextEditor` component is only updated when the `RemirrorProvider` is updated.
+
 ## RMR0202
 
 > React Editor View

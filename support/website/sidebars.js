@@ -2,7 +2,7 @@
 const sidebarConfig = {
   main: {
     Remirror: ['introduction'],
-    Guides: ['guide/installation', 'guide/hello-world', 'guide/create-editor'],
+    Guides: ['guide/installation', 'guide/hello-remirror', 'guide/create-editor'],
     Concepts: [
       'concepts/extension',
       'concepts/presets',
