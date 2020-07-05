@@ -4,7 +4,6 @@ import {
   getElementProps,
   isReactDOMElement,
   isReactFragment,
-  isRemirrorExtension,
   isRemirrorProvider,
   oneChildOnly,
   RemirrorFC,
@@ -39,16 +38,9 @@ test('isReactFragment', () => {
   expect(isReactFragment(<Custom />)).toBeFalse();
 });
 
-test('isRemirrorExtension', () => {
-  const Custom: RemirrorFC = () => <div />;
-  Custom.$$remirrorType = RemirrorType.Extension;
-
-  expect(isRemirrorExtension(<Custom />)).toBeTrue();
-});
-
 test('isRemirrorProvider', () => {
   const Custom: RemirrorFC = () => <div />;
-  Custom.$$remirrorType = RemirrorType.EditorProvider;
+  Custom.$$remirrorType = RemirrorType.Provider;
 
   expect(isRemirrorProvider(<Custom />)).toBeTrue();
 });

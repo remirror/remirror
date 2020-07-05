@@ -9,7 +9,6 @@ import { useSocialManager } from '../use-social';
 
 describe('useSocialManager', () => {
   it('passes down options', () => {
-    expect.assertions(2);
     const Component = () => {
       const manager = useSocialManager([], { social: { appendText: 'custom' } });
       expect(manager.getExtension(MentionExtension).options.appendText).toBe('custom');
@@ -22,8 +21,6 @@ describe('useSocialManager', () => {
   });
 
   it('can receive a manager', () => {
-    expect.assertions(1);
-
     const manager = createSocialManager([]);
 
     const Component = () => {

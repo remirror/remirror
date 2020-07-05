@@ -122,9 +122,9 @@ export function useI18n(): I18nContextProps {
  * }
  * ```
  */
-export type UseRemirrorType<Combined extends AnyCombinedUnion> = <
-  Type extends AnyCombinedUnion
->() => RemirrorContextProps<Combined | Type>;
+export type UseRemirrorType<Combined extends AnyCombinedUnion> = <Type extends AnyCombinedUnion>(
+  onChange?: RemirrorEventListener<Combined>,
+) => RemirrorContextProps<Combined | Type>;
 
 /**
  * Dynamically update the properties of your extension via hooks. Provide the
@@ -302,8 +302,10 @@ type UsePresetCallback<Type extends AnyPresetConstructor> = (
  *
  * @remarks
  *
- * The manager is a singleton and doesn't rerender for the lifetime of the
- * component. This is intentional. However, it's something that can be addressed
+ * The manager is a singleton and doesn't rerender until `manager.destroy()` is called.
+ * You should call this method in a `useEffect`
+ *
+ * This is intentional. However, it's something that can be addressed
  * if it causes issues.
  *
  * ```tsx
@@ -312,9 +314,7 @@ type UsePresetCallback<Type extends AnyPresetConstructor> = (
  * import { BoldExtension } from '@remirror/extension-bold';
  *
  * const EditorWrapper = () => {
- *   const corePreset = usePreset(PresetCore);
- *   const boldExtension = useExtension(BoldExtension);
- *   const manager = useManager({ extension: [boldExtension], presets: [] });
+ *   const manager = useManager([new BoldExtension(), new CorePreset()]);
  *
  *   <RemirrorProvider >
  *     <MyEditor />
@@ -326,19 +326,21 @@ export function useManager<Combined extends AnyCombinedUnion>(
   managerOrCombined: readonly Combined[] | RemirrorManager<ReactCombinedUnion<Combined>>,
   options: CreateReactManagerOptions = {},
 ): RemirrorManager<ReactCombinedUnion<Combined>> {
-  const manager = useRef(
-    isRemirrorManager<ReactCombinedUnion<Combined>>(managerOrCombined)
-      ? managerOrCombined
-      : createReactManager(managerOrCombined, options),
-  ).current;
+  // The manager value for the next update. It is only applied on the first
+  // render and when the previous manager has been destroyed.
+  const nextManager = isRemirrorManager<ReactCombinedUnion<Combined>>(managerOrCombined)
+    ? managerOrCombined
+    : createReactManager(managerOrCombined, options);
+
+  const ref = useRef(nextManager);
 
   useEffect(() => {
-    return () => {
-      manager.destroy();
-    };
-  }, [manager]);
+    return ref.current.addHandler('destroy', () => {
+      ref.current = nextManager;
+    });
+  }, [ref.current, nextManager]);
 
-  return manager;
+  return ref.current;
 }
 
 export type BaseReactCombinedUnion = ReactPreset | CorePreset | BuiltinPreset;

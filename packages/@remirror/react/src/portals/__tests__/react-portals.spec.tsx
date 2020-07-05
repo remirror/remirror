@@ -30,7 +30,6 @@ describe('RemirrorPortals', () => {
   });
 
   it('provides access to the `RemirrorProvider` context', () => {
-    expect.assertions(1);
     const manager = createBaseManager();
 
     const Component = () => {
@@ -54,8 +53,6 @@ describe('RemirrorPortals', () => {
   });
 
   it('removes the portal the when dom node is removed', () => {
-    expect.assertions(3);
-
     const portalContainer = new PortalContainer();
     const { queryByTestId } = render(<RemirrorPortals portalContainer={portalContainer} />);
 

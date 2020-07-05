@@ -35,12 +35,13 @@ export type RemirrorElement<Options extends object = any> = ReactElement & {
  * These are the constants used to determine whether an element is a remirror constant.
  */
 export enum RemirrorType {
-  Extension = 'extension',
   SSR = 'ssr',
-  EditorProvider = 'editor-provider',
   Editor = 'editor',
-  Manager = 'manager',
-  ManagerProvider = 'manager-provider',
+
+  /**
+   * The `RemirrorProvider` component.
+   */
+  Provider = 'provider',
 
   /**
    * Used to identify the ContextProviderWrapper
@@ -159,7 +160,7 @@ export const isRemirrorExtension = isRemirrorElementOfType(RemirrorType.Extensio
  *
  * @param value - the value to check
  */
-export const isRemirrorProvider = isRemirrorElementOfType(RemirrorType.EditorProvider);
+export const isRemirrorProvider = isRemirrorElementOfType(RemirrorType.Provider);
 
 /**
  * Will throw an error if the child provided is not a function.

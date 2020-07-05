@@ -5,7 +5,7 @@ exports[`commands createMention throws when invalid config passed into the comma
 
 Invalid configuration attributes passed to the MentionExtension command.
 
-For more information visit https://remirror.io/docs/errors#RMR0003"
+For more information visit https://remirror.io/docs/errors#rmr0003"
 `;
 
 exports[`commands createMention throws when invalid config passed into the command 2`] = `
@@ -13,7 +13,7 @@ exports[`commands createMention throws when invalid config passed into the comma
 
 Invalid configuration attributes passed to the MentionExtension command.
 
-For more information visit https://remirror.io/docs/errors#RMR0003"
+For more information visit https://remirror.io/docs/errors#rmr0003"
 `;
 
 exports[`commands createMention throws when invalid config passed into the command 3`] = `
@@ -21,7 +21,7 @@ exports[`commands createMention throws when invalid config passed into the comma
 
 Invalid configuration attributes passed to the MentionExtension command.
 
-For more information visit https://remirror.io/docs/errors#RMR0003"
+For more information visit https://remirror.io/docs/errors#rmr0003"
 `;
 
 exports[`commands createMention throws when invalid config passed into the command 4`] = `
@@ -29,7 +29,7 @@ exports[`commands createMention throws when invalid config passed into the comma
 
 Invalid configuration attributes passed to the MentionExtension command.
 
-For more information visit https://remirror.io/docs/errors#RMR0003"
+For more information visit https://remirror.io/docs/errors#rmr0003"
 `;
 
 exports[`commands createMention throws when invalid config passed into the command 5`] = `
@@ -37,7 +37,7 @@ exports[`commands createMention throws when invalid config passed into the comma
 
 The name 'invalid' specified for this command is invalid. Please choose from: [\\"tag\\",\\"at\\",\\"plus\\"].
 
-For more information visit https://remirror.io/docs/errors#RMR0100"
+For more information visit https://remirror.io/docs/errors#rmr0100"
 `;
 
 exports[`commands createMention throws when invalid config passed into the command 6`] = `
@@ -45,7 +45,7 @@ exports[`commands createMention throws when invalid config passed into the comma
 
 The MentionExtension command must specify a name since there are multiple matchers configured
 
-For more information visit https://remirror.io/docs/errors#RMR0100"
+For more information visit https://remirror.io/docs/errors#rmr0100"
 `;
 
 exports[`plugin supports deleting content 1`] = `

@@ -9,7 +9,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import useEffectOnce from 'react-use/lib/useEffectOnce';
 import { useFirstMountState } from 'react-use/lib/useFirstMountState';
 import useUpdateEffect from 'react-use/lib/useUpdateEffect';
 
@@ -129,18 +128,20 @@ export const ReactEditor = <Combined extends AnyCombinedUnion>(
   });
 
   // Handle the initial editor mount.
-  useEffectOnce(() => {
+  useEffect(() => {
     methods.onMount();
 
-    return () => methods.onDestroy();
-  });
+    return () => {
+      methods.onDestroy();
+    };
+  }, [methods]);
 
   const previousEditable = usePrevious(props.editable);
 
   // Handle editor updates
-  useUpdateEffect(() => {
+  useEffect(() => {
     methods.onUpdate(previousEditable);
-  }, [previousEditable]);
+  }, [previousEditable, methods]);
 
   // Handle controlled editor updates every time the value changes.
   useEffect(() => {
@@ -292,10 +293,10 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
   ): RefKeyRootProps<RefKey> => {
     // Ensure that this is the first time `getRootProps` is being called during
     // this render.
-    invariant(!this.rootPropsConfig.called, { code: ErrorConstant.REACT_GET_ROOT_PROPS });
+    // invariant(!this.rootPropsConfig.called, { code: ErrorConstant.REACT_GET_ROOT_PROPS });
     this.rootPropsConfig.called = true;
 
-    const { refKey: refKey = 'ref', ...config } = options ?? object<NonNullable<typeof options>>();
+    const { refKey: refKey = 'ref', ...config } = options ?? object<GetRootPropsConfig<RefKey>>();
 
     return {
       [refKey]: this.onRef,
@@ -485,13 +486,13 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
   /**
    * Reset the `getRootProps` called status.
    */
-  private prepareRender() {
+  private resetRender() {
     // Reset the status of roots props being called
     this.rootPropsConfig.called = false;
   }
 
   render() {
-    this.prepareRender();
+    this.resetRender();
 
     const element: JSX.Element | null = this.props.children({
       ...this.remirrorContext,
@@ -499,10 +500,12 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
 
     const { children, ...properties } = getElementProps(element);
 
+    let renderedElement: JSX.Element;
+
     if (this.rootPropsConfig.called) {
       // Simply return the element as this method can never actually be called
       // within an ssr environment
-      return element;
+      renderedElement = element;
     } else if (
       // When called by a provider `getRootProps` can't actually be called until
       // the jsx is generated. Check if this is being rendered via any remirror
@@ -512,16 +515,20 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
       isRemirrorProvider(element)
     ) {
       const { childAsRoot } = element.props;
-      return childAsRoot
+
+      renderedElement = childAsRoot
         ? React.cloneElement(element, properties, this.renderClonedElement(children, childAsRoot))
         : element;
     } else {
-      return isReactDOMElement(element) ? (
+      renderedElement = isReactDOMElement(element) ? (
         this.renderClonedElement(element)
       ) : (
         <div {...this.internalGetRootProps(undefined, this.renderChildren(element))} />
       );
     }
+
+    this.resetRender();
+    return renderedElement;
   }
 }
 

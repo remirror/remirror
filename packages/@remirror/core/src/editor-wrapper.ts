@@ -279,20 +279,10 @@ export abstract class EditorWrapper<
    *
    * - Removes listeners for the editor `blur` and `focus` events
    * - Destroys the state for each plugin
-   * - Destroys the prosemirror view
+   * - Destroys the manager which destroys the editor view.
    */
   onDestroy() {
-    const editorState = this.getState();
-
-    this.view.state.plugins.forEach((plugin) => {
-      const state = plugin.getState(editorState);
-      if (state?.destroy) {
-        state.destroy();
-      }
-    });
-
     this.removeFocusListeners();
-    this.view.destroy();
   }
 
   /**

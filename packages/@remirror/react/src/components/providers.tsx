@@ -168,7 +168,7 @@ export const RemirrorProvider = <Combined extends AnyCombinedUnion>(
   );
 };
 
-RemirrorProvider.$$remirrorType = RemirrorType.EditorProvider;
+RemirrorProvider.$$remirrorType = RemirrorType.Provider;
 
 export interface I18nProviderProps extends Partial<I18nContextProps> {
   children: ReactNode;

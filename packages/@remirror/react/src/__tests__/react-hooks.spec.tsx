@@ -7,8 +7,6 @@ import { RemirrorProvider } from '../components/providers';
 import { usePositioner, useRemirror } from '../hooks';
 
 test('useRemirror', () => {
-  expect.assertions(1);
-
   const HookComponent: FC = () => {
     const injectedProps = useRemirror();
 
@@ -25,8 +23,6 @@ test('useRemirror', () => {
 });
 
 test('usePositioner', () => {
-  expect.assertions(1);
-
   const HookComponent: FC = () => {
     const positionerProps = usePositioner('bubble');
 

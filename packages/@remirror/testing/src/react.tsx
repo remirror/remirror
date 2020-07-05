@@ -1,4 +1,4 @@
-import { render as originalRender, RenderOptions,RenderResult } from '@testing-library/react';
+import { render as originalRender, RenderOptions, RenderResult } from '@testing-library/react';
 import React, { StrictMode } from 'react';
 
 export * from '@testing-library/react';

@@ -114,17 +114,19 @@ describe('basic functionality', () => {
   it('changes when the editable prop changes', () => {
     const mock = jest.fn(() => <div />);
     const manager = createReactManager();
-    const El = ({ editable }: { editable: boolean }) => (
-      <ReactEditor editable={editable} label={label} manager={manager}>
-        {mock}
-      </ReactEditor>
-    );
-    const { rerender, getByLabelText } = render(<El editable={true} />);
 
+    const El = ({ editable }: { editable: boolean }) => {
+      return (
+        <ReactEditor editable={editable} label={label} manager={manager}>
+          {mock}
+        </ReactEditor>
+      );
+    };
+
+    const { rerender, getByLabelText } = render(<El editable={true} />);
     expect(getByLabelText(label)).toHaveAttribute('contenteditable', 'true');
 
     rerender(<El editable={false} />);
-
     expect(getByLabelText(label)).toHaveAttribute('contenteditable', 'false');
   });
 });

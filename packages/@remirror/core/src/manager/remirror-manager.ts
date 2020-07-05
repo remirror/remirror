@@ -1,3 +1,5 @@
+import { createNanoEvents, Unsubscribe } from 'nanoevents';
+
 import {
   __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
   ErrorConstant,
@@ -181,10 +183,23 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   };
 
   /**
+   * The event listener which allows consumers to subscribe to the different
+   * events without using props.
+   */
+  #events = createNanoEvents<ManagerEvents>();
+
+  /**
    * Returns true if the manager has been destroyed.
    */
   get destroyed() {
     return this.#phase === ManagerPhase.Destroy;
+  }
+
+  /**
+   * True when the view has been added to the UI layer and the editor is running.
+   */
+  get mounted() {
+    return this.#phase >= ManagerPhase.EditorView && this.#phase < ManagerPhase.Destroy;
   }
 
   /**
@@ -272,7 +287,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * the prosemirror editor.
    *
    * This should not be called directly if you want to use prioritized
-   * extensions. Instead use `Manager.create`.
+   * extensions. Instead use `RemirrorManager.create([])`.
    */
   private constructor(
     combined: readonly Combined[],
@@ -442,7 +457,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
         enumerable: true,
       },
       isMounted: {
-        value: this.isMounted,
+        value: () => this.mounted,
         enumerable: true,
       },
     });
@@ -531,11 +546,13 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   }
 
   /**
-   * Check to see if the manager is already mounted.
+   * Add a handler to the manager.
+   *
+   * Currently the only event that can be listend to is the `destroy` event.
    */
-  isMounted = () => {
-    return this.#phase >= ManagerPhase.EditorView;
-  };
+  addHandler<Key extends keyof ManagerEvents>(event: Key, cb: ManagerEvents[Key]): Unsubscribe {
+    return this.#events.on(event, cb);
+  }
 
   /**
    * Update the state of the view and trigger the `onStateUpdate` lifecyle
@@ -552,7 +569,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * This method should be called by the view layer every time the state is
    * updated.
    *
-   * An example usage of this is within the collaboration plugin.
+   * An example usage of this is within the collaboration extension.
    */
   onStateUpdate(parameter: Omit<StateUpdateLifecycleParameter, 'firstUpdate'>) {
     const firstUpdate = this.#firstStateUpdate;
@@ -611,14 +628,26 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   }
 
   /**
+   * Make a clone .
+   *
+   * TODO: Think about the following.
+   * - What about the state stored in the extensions and presets, does this need to be
+   * recreated as well?
+   */
+  clone(): RemirrorManager<Combined> {
+    const currentCombined = this.#combined.map((e) => e.clone(e.options));
+    return RemirrorManager.create(currentCombined, this.#settings);
+  }
+
+  /**
    * Recreate the manager.
    *
    * TODO: Think about the following.
    * - What about the state stored in the extensions and presets, does this need to be
    * recreated as well?
    */
-  clone<ExtraCombined extends AnyCombinedUnion>(
-    combined: ExtraCombined[],
+  recreate<ExtraCombined extends AnyCombinedUnion>(
+    combined: ExtraCombined[] = [],
     settings: Remirror.ManagerSettings = {},
   ): RemirrorManager<Combined | ExtraCombined> {
     const currentCombined = this.#combined.map((e) => e.clone(e.initialOptions as any));
@@ -629,17 +658,32 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   }
 
   /**
-   * Called when removing the manager and all preset and extensions.
+   * This method should be called to destroy the manager and remove the view. You have full control over this.
    */
   destroy() {
     this.#phase = ManagerPhase.Destroy;
+
+    for (const plugin of this.view?.state.plugins ?? []) {
+      plugin.getState(this.view.state)?.destroy?.();
+    }
+
     // TODO: prevent `dispatchTransaction` from being called again
     for (const onDestroy of this.#handlers.destroy) {
       onDestroy(this.#extensions);
     }
+
+    this.view?.destroy();
+
+    this.#events.emit('destroy');
   }
 }
 
+interface ManagerEvents {
+  /**
+   * An event listener which is called whenever the manager is destroyed.
+   */
+  destroy: () => void;
+}
 export type AnyRemirrorManager = RemirrorManager<AnyCombinedUnion>;
 
 /**

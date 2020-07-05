@@ -42,21 +42,6 @@ test('supports a custom ref label and passed props through', () => {
   expect(mock.mock.calls[0][0].testProp).toBe(testProp);
 });
 
-test('throws an error when called multiple times during render', () => {
-  expect.assertions(2);
-
-  render(
-    <ReactEditor manager={createReactManager()}>
-      {({ getRootProps }) => {
-        expect(() => getRootProps()).not.toThrow();
-        expect(() => getRootProps()).toThrowErrorMatchingSnapshot();
-
-        return <div />;
-      }}
-    </ReactEditor>,
-  );
-});
-
 describe('nestedRootProps', () => {
   let result: RenderResult;
 

@@ -107,7 +107,7 @@ describe('Manager', () => {
     });
 
     it('should allow overriding the priority', () => {
-      manager = manager.clone([], { priority: { dummy: ExtensionPriority.Lowest } });
+      manager = manager.recreate([], { priority: { dummy: ExtensionPriority.Lowest } });
       expect(manager.extensions[0].name).not.toBe('dummy');
       expect(manager.extensions[manager.extensions.length - 1].name).toBe('big');
       expect(manager.extensions[manager.extensions.length - 2].name).toBe('dummy');

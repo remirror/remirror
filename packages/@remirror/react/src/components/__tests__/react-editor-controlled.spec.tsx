@@ -76,7 +76,7 @@ describe('Remirror Controlled Component', () => {
       </ReactEditor>,
     );
 
-    expect(chain.view.dom).toMatchSnapshot();
+    expect(chain.dom).toMatchSnapshot();
   });
 
   it('responds to updates to the editor state', () => {
@@ -96,10 +96,6 @@ describe('Remirror Controlled Component', () => {
           value={value}
           manager={manager}
           onChange={(parameter) => {
-            if (parameter.firstRender) {
-              return;
-            }
-
             setValue(parameter.state);
           }}
         >
@@ -108,15 +104,13 @@ describe('Remirror Controlled Component', () => {
       );
     };
 
-    const { rerender } = render(<Component />);
+    render(<Component />);
 
     act(() => {
       chain.dispatchCommand(({ dispatch, tr }) => dispatch(tr.insertText('add more value ')));
     });
 
-    rerender(<Component />);
-
-    expect(chain.view.dom).toMatchSnapshot();
+    expect(chain.dom).toMatchSnapshot();
   });
 
   it('can override updates to the editor state', () => {
@@ -136,11 +130,7 @@ describe('Remirror Controlled Component', () => {
           value={value}
           manager={manager}
           onChange={(parameter) => {
-            const { firstRender, createStateFromContent, getText } = parameter;
-
-            if (firstRender) {
-              return;
-            }
+            const { createStateFromContent, getText } = parameter;
 
             setValue(createStateFromContent(`<p>Hello</p><p>${getText()}</p>`));
           }}
@@ -150,15 +140,13 @@ describe('Remirror Controlled Component', () => {
       );
     };
 
-    const { rerender } = render(<Component />);
+    render(<Component />);
 
     act(() => {
       chain.dispatchCommand(({ dispatch, tr }) => dispatch(tr.insertText('add more value ')));
     });
 
-    rerender(<Component />);
-
-    expect(chain.view.dom).toMatchSnapshot();
+    expect(chain.dom).toMatchSnapshot();
   });
 
   it('throws when using  `setContent` updates', () => {
@@ -217,11 +205,7 @@ describe('Remirror Controlled Component', () => {
           value={value}
           manager={manager}
           onChange={(parameter) => {
-            const { firstRender, state } = parameter;
-
-            if (firstRender) {
-              return;
-            }
+            const { state } = parameter;
 
             setValue(state);
           }}
