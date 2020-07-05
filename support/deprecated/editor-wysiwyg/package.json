@@ -1,6 +1,6 @@
 {
   "name": "@remirror/editor-wysiwyg",
-  "version": "0.13.1",
+  "version": "1.0.0-next.0",
   "description": "**DEPRECATED** - A wysiwyg editor",
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/editor-wysiwyg",
   "repository": "https://github.com/remirror/remirror/tree/master/support/deprecated/editor-wysiwyg",

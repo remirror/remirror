@@ -1,6 +1,6 @@
 {
   "name": "@remirror/theme",
-  "version": "0.0.0",
+  "version": "1.0.0-next.0",
   "description": "The configurable theme for the remirror editor.",
   "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/theme",
   "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/theme",
@@ -22,7 +22,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.10.4",
-    "@remirror/core-types": "^0.9.0",
+    "@remirror/core-types": "^1.0.0-next.0",
     "case-anything": "^1.1.1",
     "linaria": "^2.0.0-alpha.5",
     "open-color": "^1.7.0",

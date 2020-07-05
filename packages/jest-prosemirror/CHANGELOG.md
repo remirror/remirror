@@ -1,5 +1,44 @@
 # jest-prosemirror
 
+## 1.0.0-next.0
+
+> 2020-07-05
+
+### Major Changes
+
+- The whole API for remirror has completely changed. These pre-release versions are a breaking
+  change across all packages. The best way to know what's changed is to read the documentaion on the
+  new documentation site `https://remirror.io`.
+- 28bd8bea: This is a breaking change to the structure of published npm packages.
+
+  - Move build directory from `lib` to `dist`
+  - Remove option for multiple entry points. It is no longer possible to import module from
+    '@remirror/core/lib/custom'
+  - Only use one entry file.
+  - Remove declaration source mapping for declaration files
+  - Remove the src directory from being published.
+
+- 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`.
+  If your code was importing any matching interface you will need to update the name.
+- dd16d45d: Rewrite packages using the new API
+
+### Minor Changes
+
+- 8334294e: `jest-prosemirror` no longer relies on any react dependencies.
+- 9a699e80: Upgrade dependencies to use v26.0.0 of jest.
+
+### Patch Changes
+
+- Updated dependencies [undefined]
+- Updated dependencies [28bd8bea]
+- Updated dependencies [7b817ac2]
+  - @remirror/core-constants@1.0.0-next.0
+  - @remirror/core-helpers@1.0.0-next.0
+  - @remirror/core-types@1.0.0-next.0
+  - @remirror/core-utils@1.0.0-next.0
+  - @remirror/pm@1.0.0-next.0
+  - test-keyboard@1.0.0-next.0
+
 ## 0.8.3
 
 ### Patch Changes

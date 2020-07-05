@@ -1,5 +1,14 @@
 # @remirror/ui-a11y-status
 
+## 1.0.0-next.0
+
+> 2020-07-05
+
+### Major Changes
+
+- b3153b4c: Deprecate unused packages in the latest version.
+- 09d91abf: Rename `@remirror/ui-a11y-status` to `a11y-status`.
+
 ## 0.7.4
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @remirror/react-portals
 
+## 1.0.0-next.0
+
+> 2020-07-05
+
+### Major Changes
+
+- b3153b4c: Deprecate unused packages in the latest version.
+- 304db6ba: Deprecate packages and provide alternative installation instructions.
+
 ## 0.7.4
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-hooks",
-  "version": "0.7.6",
+  "version": "1.0.0-next.0",
   "description": "DEPRECATED - React hooks for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/react-hooks",
   "repository": "https://github.com/remirror/remirror/tree/master/support/deprecated/react-hooks",
