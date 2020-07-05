@@ -1,5 +1,6 @@
 variables:
   CI: 'true'
+  PNPM_VERSION: 5.2.6
   PNPM_CACHE_FOLDER: $(Pipeline.Workspace)/.pnpm-store
 
 jobs:
