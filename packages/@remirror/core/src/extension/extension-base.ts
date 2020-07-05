@@ -272,19 +272,14 @@ export type DefaultExtensionOptions<Options extends ValidOptions> = DefaultOptio
  */
 interface ExtensionLifecycleMethods {
   /**
-   * This handler is called when the extension manager is first created.
+   * This handler is called when the `RemirrorManager` is first created.
    *
-   * The outer scope of the `onCreate` is called as soon as the manager is
-   * created and some methods may not be available in the extension store. In
-   * order to account for that your `onCreate` should return an object with
-   * optional values of a
+   * @remarks
    *
-   * - `forEachExtension` - method that takes an extension as it first
-   *   parameter. It is called for each extension in the editor and is the most
-   *   performant way of handling looping through multiple extensions.
-   * - `afterExtensionLoop` - method with no parameters which is called after
-   *   the extensions have been looped through. This is where you are most
-   *   likely to do you work.
+   * Since it is called as soon as the manager is some methods may not be
+   * available in the extension store. When accessing methods on `this.store` be
+   * shore to check when they become available in the lifecycle. It is
+   * recommende that you don't use this method unless absolutely required.
    */
   onCreate?: CreateLifecycleMethod;
 
@@ -296,11 +291,6 @@ interface ExtensionLifecycleMethods {
 
   /**
    * Called when a transaction successfully updates the editor state.
-   *
-   * @remarks
-   *
-   * It should return a handler function which receives the state and the
-   * transaction which created the new state. It also receives the view.
    */
   onStateUpdate?: StateUpdateLifecycleMethod;
 

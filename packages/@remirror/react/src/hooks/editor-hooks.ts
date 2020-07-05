@@ -23,6 +23,7 @@ import {
   isFunction,
   isRemirrorManager,
   OptionsOfConstructor,
+  RemirrorEventListener,
   RemirrorManager,
 } from '@remirror/core';
 import {
@@ -47,7 +48,10 @@ import {
 import { useEffectWithWarning } from './core-hooks';
 
 /**
- * This provides access to the Remirror Editor context using hooks.
+ * This provides access to the Remirror context using hooks.
+ *
+ * The first argument which is optional can also be a change handler which is
+ * called every time the state updates.
  *
  * @remarks
  *
@@ -73,10 +77,20 @@ import { useEffectWithWarning } from './core-hooks';
  * }
  * ```
  */
-export function useRemirror<Combined extends AnyCombinedUnion>(): RemirrorContextProps<Combined> {
+export function useRemirror<Combined extends AnyCombinedUnion>(
+  onChange?: RemirrorEventListener<Combined>,
+): RemirrorContextProps<Combined> {
   const context = useContext(RemirrorContext);
 
   invariant(context, { code: ErrorConstant.REACT_PROVIDER_CONTEXT });
+
+  useEffect(() => {
+    if (!onChange) {
+      return;
+    }
+
+    return context.addHandler('change', onChange);
+  }, [onChange, context]);
 
   return context;
 }
