@@ -3,12 +3,10 @@ name: Deploy Docs
 on:
   push:
     branches:
-      - main
       - next
   pull_request:
     types: [opened, synchronize]
     branches:
-      - main
       - next
 
 env:
@@ -20,7 +18,7 @@ jobs:
   deploy_docs:
     timeout-minutes: 15
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.event.pull_request
+    if: github.ref == 'refs/heads/next' || github.event.pull_request
 
     steps:
       - name: checkout code repository
