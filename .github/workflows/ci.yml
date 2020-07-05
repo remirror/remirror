@@ -61,7 +61,8 @@ jobs:
       - name: create release pr or publish to npm
         uses: changesets/action@master
         with:
-          publish: pnpm run release
+          # Stick to manual releases for now. Swith this back on once issues are resolved.
+          # publish: pnpm run release
           version: pnpm run ci:version
           commit: 'chore: update versions'
           title: 'chore: update versions'
