@@ -160,3 +160,4 @@ cc-reporter
 /.prettierrc
 /.huskyrc
 /.lintstagedrc
+/docs/changelog.md

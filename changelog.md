@@ -1,16 +1,130 @@
----
-title: Changelog
----
+# Changelog
 
-This changelog is outdated but is a reflection of the changes captured before the project started
-using [`changesets`](https://github.com/atlassian/changesets) to manage releases.
+## 1.0.0-next.2
 
-## [Unreleased]
+> 2020-07-06
 
-### Removed
+### Minor Changes
 
-- `@remirror/core`: Remove deprecated `findNodeAtEndOfDoc` `findNodeAtStartOfDoc` which can be
-  replaced with `doc.firstChild` and `doc.lastChild`
+- Add support for `React.StrictMode`.
+
+  Previously, activating `StrictMode` would cause the components to render twice and break
+  functionality of `RemirrorProvider` due to an outdated check on whether `getRootProps` had been
+  called. This check has been removed since it isn't needed anymore.
+
+## 1.0.0-next.1
+
+> 2020-07-05
+
+### Patch Changes
+
+- Fix missing dist files from previous publish.
+
+## 1.0.0-next.0
+
+> 2020-07-05
+
+### Major Changes
+
+- The whole API for remirror has completely changed. These pre-release versions are a breaking
+  change across all packages. The best way to know what's changed is to read the documentaion on the
+  new documentation site `https://remirror.io`.
+- 28bd8bea: This is a breaking change to the structure of published npm packages.
+
+  - Move build directory from `lib` to `dist`
+  - Remove option for multiple entry points. It is no longer possible to import module from
+    '@remirror/core/lib/custom'
+  - Only use one entry file.
+  - Remove declaration source mapping for declaration files
+  - Remove the src directory from being published.
+
+- 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`.
+  If your code was importing any matching interface you will need to update the name.
+- 09e990cb: Update `EditorManager` / `ExtensionManager` name to be \*\*`RemirrorManager`.
+
+### Minor Changes
+
+- Previously the `useRemirror` hook only updated when the provider was updated. There are times when
+  you want to listen to specific changes from inside the editor.
+
+  The `useRemirror` hook now takes an optional `onChange` argument which is called on every change
+  to the editor state. With this you can react to updates in your editor and add some really cool
+  effects.
+
+## 0.11.0
+
+### Minor Changes
+
+- 026d4238: Add a `focus` method to the remirror editor context object. It allows focusing at a
+  provided position which can be `start`, `end`, a specific position or a range using the
+  `{from: number; to: number}` type signature.
+
+  To use this run
+
+  ```tsx
+  import { useRemirrorContext } from '@remirror/react';
+
+  const MyEditor = () => {
+    const { focus, getRootProps } = useRemirrorContext();
+
+    useEffect(() => {
+      focus('end'); // Autofocus to the end once
+    }, []);
+  };
+  return <div {...getRootProps()} />;
+  ```
+
+  Resolves the initial issue raised in #229.
+
+- 69d00c62: Add custom arguments to `autoFocus` props. The same arguments that can added to the
+  `focus()` context method can now be passed as a prop.
+
+- c2237aa0: Allow empty string default value for extraAttrs
+
+## 0.9.0
+
+### Minor Changes
+
+- 0300d01c: - Auto defined `isEnabled` via commands with `dispatch=undefined`.
+  - `HistoryExtension` now checks that whether `dispatch=undefined`.
+  - Remove `CommandStatusCheck`.
+  - Add new type `ExtensionIsActiveFunction` which doesn't take the command name.
+  - Remove `isEnabled` from `Extension` interface.
+
+## 0.8.1
+
+### Patch Changes
+
+- 2904ebfd: Fix problem with build outputting native classes which can't be extended when the build
+  process converts classes to their ES% function equivalent.
+
+## 0.8.0
+
+### Minor Changes
+
+- 24f83413: - Change the signature of `CommandFunction` to only accept one parameter which contains
+  `dispatch`, `view`, `state`.
+
+  - Create a new exported `ProsemirrorCommandFunction` type to describe the prosemirror commands
+    which are still used in the codebase.
+  - Rename `KeyboardBindings` to `KeyBindings`. Allow `CommandFunctionParams` to provide extra
+    parameters like `next` in the newly named `KeyBindings`.
+  - Create a new `KeyBindingCommandFunction` to describe the `Extension.keys()` return type. Update
+    the name of the `ExcludeOptions.keymaps` -> `ExcludeOptions.keys`.
+
+  **BREAKING CHANGE**
+
+- 24f83413: Improve the way `ExtensionManager` calls `Extension.keys` methods. Keys now use the new
+  api for CommandFunctions which provides a `next` method. This method allows for better control
+  when deciding whether or not to defer to the next keybinding in the chain.
+
+  To override, create a new keybinding with another extension. Make sure the extension is created
+  with a higher priority. The keybinding you create can either return true or false. By default if
+  it returns true, no other keybindings will run. However if it returns `false` all other
+  keybindings will be run until one returns `true`
+
+  `next` basically calls the every lower priority keybinding in the extensions list. It gives you
+  full control of how the bindings are called.
 
 ## [0.7.2] - 2019-12-10
 
@@ -19,6 +133,11 @@ using [`changesets`](https://github.com/atlassian/changesets) to manage releases
 - 🐛 **`@remirror/core`**: Fix bug in `isExtension` predicate test
   (https://github.com/remirror/remirror/pull/181).
 - Upgrade dependencies and add new command for unit testing built code.
+
+### Removed
+
+- `@remirror/core`: Remove deprecated `findNodeAtEndOfDoc` `findNodeAtStartOfDoc` which can be
+  replaced with `doc.firstChild` and `doc.lastChild`
 
 ## [0.7.1] - 2019-12-02
 
