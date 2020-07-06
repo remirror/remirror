@@ -10,7 +10,7 @@ const targets = fs
     target: baseDir(filename),
   }));
 
-targets.push({original: baseDir('changelog.md'), target: baseDir('docs', 'changelog.md')})
+targets.push({ original: baseDir('changelog.md'), target: baseDir('docs', 'changelog.md') });
 
 /**
  * Resolve a path relative to the base directory.
