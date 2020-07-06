@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: checkout code repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
           lfs: true
@@ -35,7 +35,7 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2-beta
         with:
           # Uses node 14 to allow nullish coalescing in `.js` files
           node-version: 14

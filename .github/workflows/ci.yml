@@ -23,11 +23,11 @@ jobs:
     timeout-minutes: 15
     needs: [lint, typecheck, unit_test, build_test, size_check, chromium_e2e, firefox_e2e]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/next'
+    if: github.ref == 'refs/heads/next' && github.repository == 'remirror/remirror'
 
     steps:
       - name: checkout code repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
           lfs: true
@@ -40,7 +40,7 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2-beta
         with:
           node-version: 14
 
@@ -61,8 +61,7 @@ jobs:
       - name: create release pr or publish to npm
         uses: changesets/action@master
         with:
-          # Stick to manual releases for now. Swith this back on once issues are resolved.
-          # publish: pnpm run release
+          publish: pnpm run release
           version: pnpm run ci:version
           commit: 'chore: update versions'
           title: 'chore: update versions'
@@ -76,7 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
           lfs: true
@@ -89,7 +88,7 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2-beta
         with:
           node-version: 14
 
@@ -113,7 +112,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
           lfs: true
@@ -126,7 +125,7 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2-beta
         with:
           node-version: 14
 
@@ -150,7 +149,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
           lfs: true
@@ -163,7 +162,7 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2-beta
         with:
           node-version: 14
 
@@ -201,7 +200,7 @@ jobs:
 
     steps:
       - name: checkout code repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
           lfs: true
@@ -214,7 +213,7 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2-beta
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -241,7 +240,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
           lfs: true
@@ -254,7 +253,7 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2-beta
         with:
           node-version: 14
 
@@ -286,7 +285,7 @@ jobs:
 
     steps:
       - name: checkout code repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
           lfs: true
@@ -299,7 +298,7 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2-beta
         with:
           node-version: 14
 
@@ -329,7 +328,7 @@ jobs:
 
     steps:
       - name: checkout code repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
           lfs: true
@@ -342,7 +341,7 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2-beta
         with:
           node-version: 14
 
