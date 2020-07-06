@@ -2,11 +2,11 @@
 
 ## 1.0.0-next.2
 
-> 2020-07-05
+> 2020-07-06
 
 ### Minor Changes
 
-- Add support for `React.StricMode`.
+- Add support for `React.StrictMode`.
 
   Previously, activating `StrictMode` would cause the components to render twice and break
   functionality of `RemirrorProvider` due to an outdated check on whether `getRootProps` had been

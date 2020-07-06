@@ -9,7 +9,6 @@
     "@remirror/website",
     "with-next"
   ],
-  "updateInternalDependencies": "minor",
   "commit": false,
   "linked": [
     [
