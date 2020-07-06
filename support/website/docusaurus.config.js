@@ -10,6 +10,8 @@ module.exports = {
   organizationName: 'remirror', // Usually your GitHub org/user name.
   projectName: 'remirror', // Usually your repo name.
   themeConfig: {
+    image:
+      'https://repository-images.githubusercontent.com/166780923/eb30b500-a97f-11ea-8508-32089c11e24c',
     disableDarkMode: true,
     navbar: {
       logo: {
