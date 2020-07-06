@@ -13,7 +13,7 @@ const sidebarConfig = {
     ],
     Showcase: ['showcase/social'],
     Advanced: ['advanced/creating-extensions', 'advanced/naming-conventions'],
-    Contribute: ['contributing', 'tooling', 'errors', 'changelog'],
+    Contribute: ['contributing', 'tooling', 'errors'],
   },
 };
 
