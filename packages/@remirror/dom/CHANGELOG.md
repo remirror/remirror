@@ -1,5 +1,15 @@
 # @remirror/dom
 
+## 1.0.0-next.2
+
+> 2020-07-05
+
+### Patch Changes
+
+- Updated dependencies [undefined]
+  - @remirror/core@1.0.0-next.2
+  - @remirror/preset-core@1.0.0-next.2
+
 ## 1.0.0-next.1
 
 > 2020-07-05

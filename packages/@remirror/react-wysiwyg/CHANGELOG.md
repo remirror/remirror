@@ -1,5 +1,19 @@
 # @remirror/react-wysiwyg
 
+## 1.0.0-next.2
+
+> 2020-07-05
+
+### Patch Changes
+
+- Updated dependencies [undefined]
+  - @remirror/core@1.0.0-next.2
+  - @remirror/react@1.0.0-next.2
+  - @remirror/react-utils@1.0.0-next.2
+  - @remirror/extension-auto-link@1.0.0-next.2
+  - @remirror/preset-social@1.0.0-next.2
+  - @remirror/preset-wysiwyg@1.0.0-next.2
+
 ## 1.0.0-next.1
 
 > 2020-07-05

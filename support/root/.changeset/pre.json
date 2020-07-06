@@ -94,6 +94,7 @@
     "@remirror/website": "0.0.0"
   },
   "changesets": [
+    "calm-chairs-obey",
     "eleven-papayas-poke",
     "happy-olives-check",
     "honest-apes-exist",
