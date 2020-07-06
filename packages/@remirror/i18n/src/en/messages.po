@@ -6,8 +6,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
 #. The alt text for the user mention avatar.
-#: @remirror/react-social/src/messages.ts:2
+#: packages/@remirror/react-social/src/social-messages.ts:2
 msgid "user.mention.avatar.alt"
 msgstr "Avatar for { name }"

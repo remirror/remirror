@@ -4,8 +4,8 @@ module.exports = {
   format: 'po',
   catalogs: [
     {
-      path: '<rootDir>/@remirror/i18n/src/{locale}/messages',
-      include: ['<rootDir>/@remirror/*/src'],
+      path: '<rootDir>/packages/@remirror/i18n/src/{locale}/messages',
+      include: ['<rootDir>/packages/@remirror/*/src'],
       exclude: ['**/node_modules/**'],
     },
   ],

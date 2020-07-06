@@ -42,7 +42,7 @@
     "preinstall": "pnpm run symlink:root && pnpm run check:pnpm",
     "postinstall": "run-s build:dev css:copy",
     "intl": "run-s intl:extract intl:compile intl:build",
-    "intl:build": "node @remirror/i18n/build-declaration.js",
+    "intl:build": "node packages/@remirror/i18n/build-declaration.js",
     "intl:compile": "lingui compile",
     "intl:extract": "lingui extract",
     "is-logged-in": "npm whoami",
