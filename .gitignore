@@ -160,4 +160,5 @@ cc-reporter
 /.prettierrc
 /.huskyrc
 /.lintstagedrc
+/tsconfig.json
 /docs/changelog.md
