@@ -79,6 +79,7 @@ export function initSelection<Schema extends EditorSchema = any>(
   taggedDoc: TaggedProsemirrorNode<Schema>,
 ) {
   const { cursor, node, start, end, anchor, all, gap } = taggedDoc.tag;
+
   if (all) {
     return new AllSelection<Schema>(taggedDoc);
   }
@@ -104,11 +105,13 @@ export function initSelection<Schema extends EditorSchema = any>(
   }
 
   const $anchor = resolveCell(taggedDoc, anchor);
+
   if ($anchor) {
     return Cast<Selection<Schema>>(
       new CellSelection<Schema>($anchor, resolveCell(taggedDoc, taggedDoc.tag.head) ?? undefined),
     );
   }
+
   return null;
 }
 

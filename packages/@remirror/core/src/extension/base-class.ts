@@ -290,6 +290,7 @@ export abstract class BaseClass<
    */
   private createDefaultHandlerOptions() {
     const methods = object<any>();
+
     for (const key of this.constructor.handlerKeys as HandlerKeyList<Options>) {
       methods[key] = (...args: any[]) => {
         this.#mappedHandlers[key].forEach((handler) =>

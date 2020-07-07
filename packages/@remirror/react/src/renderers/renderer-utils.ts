@@ -13,6 +13,7 @@ function getPossibleStandardName(key: string): string {
   if (!hasOwnProperty(possibleStandardNames, key)) {
     return key;
   }
+
   return possibleStandardNames[key] || key;
 }
 
@@ -21,6 +22,7 @@ function getPossibleStandardName(key: string): string {
  */
 export function mapProps(props: Shape) {
   const transformedProps: Shape = object();
+
   for (const key of keys(props)) {
     const name = getPossibleStandardName(key);
     transformedProps[name] = props[key];
@@ -29,6 +31,7 @@ export function mapProps(props: Shape) {
       transformedProps.suppressContentEditableWarning = true;
     }
   }
+
   return transformedProps;
 }
 

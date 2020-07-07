@@ -13,6 +13,7 @@ async function scanImportsFrom<T extends RemirrorModuleMeta>(
 ): Promise<{ [key: string]: T }> {
   const result: { [key: string]: T } = {};
   const folders = await fsp.readdir(sourceDir);
+
   for (const folder of folders) {
     const path = `${sourceDir}/${folder}`;
     const packageJson = require(`${path}/package.json`);
@@ -24,6 +25,7 @@ async function scanImportsFrom<T extends RemirrorModuleMeta>(
     };
     result[folder] = await callback(meta);
   }
+
   return result;
 }
 

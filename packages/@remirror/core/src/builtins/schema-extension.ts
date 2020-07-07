@@ -306,9 +306,11 @@ function createDefaults(
 function createParseDOM(extraAttributes: SchemaAttributes, shouldIgnore: boolean) {
   return (domNode: string | Node) => {
     const attributes: ProsemirrorAttributes = object();
+
     if (shouldIgnore) {
       return attributes;
     }
+
     for (const [name, config] of entries(extraAttributes)) {
       const { parseDOM, ...other } = getExtraAttributesObject(config);
 

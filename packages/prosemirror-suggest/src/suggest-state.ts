@@ -255,6 +255,7 @@ export class SuggestState {
       if (to - from !== spec.char.length) {
         return true;
       }
+
       return false;
     });
 
@@ -338,6 +339,7 @@ export class SuggestState {
       if (from !== range.from) {
         return false;
       }
+
       const shouldIgnore = spec.specific ? spec.name === name : true;
       return shouldIgnore;
     });

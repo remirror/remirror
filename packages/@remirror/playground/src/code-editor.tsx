@@ -45,6 +45,7 @@ const CodeEditor: FC<CodeEditorProps> = function (props) {
         myEditor.dispose();
       };
     }
+
     return;
   }, [model]);
 

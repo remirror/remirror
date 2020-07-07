@@ -39,6 +39,7 @@ function createMatchWithReason<Reason>(
     reason,
   };
 }
+
 /**
  * Checks to see if the text before the matching character is a valid prefix.
  *
@@ -399,6 +400,7 @@ export function findFromSuggestions({
   for (const suggester of suggesters) {
     try {
       const match = findMatch({ suggester, $pos });
+
       if (match) {
         return match;
       }

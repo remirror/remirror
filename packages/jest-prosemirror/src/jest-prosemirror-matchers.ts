@@ -23,6 +23,7 @@ export const prosemirrorMatchers = {
         pass: false,
       };
     }
+
     if (!bool(from)) {
       return {
         message: () =>
@@ -30,6 +31,7 @@ export const prosemirrorMatchers = {
         pass: false,
       };
     }
+
     const expected = to ? to : from;
     const shouldChange = bool(to);
     const { pass, taggedDoc: actual } = apply(from, command, to);
@@ -41,13 +43,13 @@ export const prosemirrorMatchers = {
         pass,
         message: transformsNodePassMessage(actual, expected, shouldChange),
       };
-    } else {
-      return {
-        ...properties,
-        pass,
-        message: transformsNodeFailMessage(actual, expected, shouldChange),
-      };
     }
+
+    return {
+      ...properties,
+      pass,
+      message: transformsNodeFailMessage(actual, expected, shouldChange),
+    };
   },
 
   toTransform(
@@ -61,6 +63,7 @@ export const prosemirrorMatchers = {
         pass: false,
       };
     }
+
     if (!bool(from)) {
       return {
         message: () =>
@@ -68,6 +71,7 @@ export const prosemirrorMatchers = {
         pass: false,
       };
     }
+
     const expected = to ? to : from;
     const shouldChange = bool(to);
     const { pass, taggedDoc: actual } = apply(
@@ -83,13 +87,13 @@ export const prosemirrorMatchers = {
         pass,
         message: transformsNodePassMessage(actual, expected, shouldChange),
       };
-    } else {
-      return {
-        ...properties,
-        pass,
-        message: transformsNodeFailMessage(actual, expected, shouldChange),
-      };
     }
+
+    return {
+      ...properties,
+      pass,
+      message: transformsNodeFailMessage(actual, expected, shouldChange),
+    };
   },
 
   toEqualProsemirrorNode(

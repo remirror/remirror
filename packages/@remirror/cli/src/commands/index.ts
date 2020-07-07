@@ -15,6 +15,7 @@ export class VersionCommand extends BaseCommand {
   @Command.Path('--version')
   public async execute() {
     const { version, name, stdout } = this.context;
+
     if (this.verbose) {
       stdout.write(
         `${name}: ${version}\nnode: ${process.version}\nos: ${process.platform} ${process.arch}}\n`,

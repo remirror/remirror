@@ -56,6 +56,7 @@ const cleanupStatus = debounce(500, () => {
  */
 export const setStatus = (status: string, doc?: Document) => {
   const div = getStatusDiv(doc);
+
   if (!status) {
     return;
   }

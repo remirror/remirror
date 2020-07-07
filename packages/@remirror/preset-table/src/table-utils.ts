@@ -202,9 +202,11 @@ function tableNodeTypes(schema: EditorSchema): Record<string, NodeType> {
 
   return roles;
 }
+
 interface CreateCellParameter extends NodeTypeParameter {
   content?: ProsemirrorNode;
 }
+
 /**
  * Create a cell with the provided content.
  */
@@ -236,6 +238,7 @@ export function createTable(parameter: CreateTableParameter) {
 
   const cells: ProsemirrorNode[] = [];
   const headerCells: ProsemirrorNode[] = [];
+
   for (let ii = 0; ii < columnsCount; ii++) {
     cells.push(createCell({ type: tableCell, content: cellContent }) as ProsemirrorNode);
 
@@ -245,6 +248,7 @@ export function createTable(parameter: CreateTableParameter) {
   }
 
   const rows: ProsemirrorNode[] = [];
+
   for (let ii = 0; ii < rowsCount; ii++) {
     const rowNodes = withHeaderRow && ii === 0 ? headerCells : cells;
     rows.push(tableRow.createChecked(null, rowNodes));

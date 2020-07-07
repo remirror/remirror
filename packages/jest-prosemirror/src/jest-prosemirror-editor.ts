@@ -541,6 +541,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
     } else {
       dispatchTextSelection({ view: this.view, start, end });
     }
+
     return this;
   }
 
@@ -680,10 +681,12 @@ export function findTextNode(node: Node, text: string): Node | undefined {
   } else if (isElementDomNode(node)) {
     for (let ch = node.firstChild; ch; ch = ch.nextSibling) {
       const found = findTextNode(ch, text);
+
       if (found) {
         return found;
       }
     }
   }
+
   return;
 }

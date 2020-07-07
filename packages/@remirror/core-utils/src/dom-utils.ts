@@ -247,6 +247,7 @@ export function isMarkActive<Schema extends EditorSchema = EditorSchema>(
  */
 export function canInsertNode(state: EditorState, type: NodeType) {
   const { $from } = state.selection;
+
   for (let depth = $from.depth; depth >= 0; depth--) {
     const index = $from.index(depth);
     try {
@@ -257,6 +258,7 @@ export function canInsertNode(state: EditorState, type: NodeType) {
       return false;
     }
   }
+
   return false;
 }
 
@@ -342,12 +344,14 @@ export function getMarkRange(
   }
 
   const mark = start.node.marks.find(({ type: markType }) => markType === type);
+
   if (!mark) {
     return false;
   }
 
   let startIndex = pmPosition.index();
   let startPos = pmPosition.start() + start.offset;
+
   while (startIndex > 0 && mark.isInSet(pmPosition.parent.child(startIndex - 1).marks)) {
     startIndex -= 1;
     startPos -= pmPosition.parent.child(startIndex).nodeSize;
@@ -553,6 +557,7 @@ export function closestElement(
     if (isFunction(domNode[matches]) && domNode[matches](selector)) {
       return domNode;
     }
+
     domNode = (domNode.parentElement ?? domNode.parentNode) as HTMLElement;
   } while (isElementDomNode(domNode));
 
@@ -728,10 +733,13 @@ export const nodeNameMatchesList = (
   nodeMatches: NodeMatch[],
 ): node is ProsemirrorNode => {
   let outcome = false;
+
   if (!node) {
     return outcome;
   }
+
   const name = node.type.name;
+
   for (const checker of nodeMatches) {
     outcome = isRegexTuple(checker)
       ? regexTest(checker, name)
@@ -743,6 +751,7 @@ export const nodeNameMatchesList = (
       return outcome;
     }
   }
+
   return outcome;
 };
 
@@ -853,6 +862,7 @@ interface CreateDocumentErrorHandlerParameter {
 
 function createDocumentErrorHandler(parameter: CreateDocumentErrorHandlerParameter) {
   const { onError, schema, error } = parameter;
+
   if (isFunction(onError)) {
     return createFallback(onError(error), schema);
   }

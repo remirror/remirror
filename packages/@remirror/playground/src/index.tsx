@@ -9,6 +9,7 @@ export const Playground: FC = () => {
     if (hasBabel) {
       return;
     }
+
     const checkForBabel = () => {
       if (typeof window['Babel'] !== 'undefined') {
         setHasBabel(true);

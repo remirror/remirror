@@ -186,8 +186,10 @@ export function sortEmojiMatches(query: string, maxResults = -1) {
  */
 export function populateFrequentlyUsed(names: NamesAndAliases[]): EmojiObject[] {
   const frequentlyUsed: EmojiObject[] = [];
+
   for (const name of names) {
     const emoji = getEmojiByName(name);
+
     if (emoji) {
       frequentlyUsed.push(emoji);
     }

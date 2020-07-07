@@ -35,6 +35,7 @@ function cleanse(moduleName: string, moduleExports: Exports): Exports {
 
   return cleansedExports;
 }
+
 const PRETTIER_SCRIPTS = [
   'https://unpkg.com/prettier@2.0.5/standalone.js',
   'https://unpkg.com/prettier@2.0.5/parser-typescript.js',
@@ -114,23 +115,30 @@ export const Playground: FC = () => {
   }, [handleFormat]);
   useEffect(() => {
     const loadedScripts: string[] = [];
+
     for (let i = 0, l = document.head.childNodes.length; i < l; i++) {
       const child = document.head.childNodes[i];
+
       if (child.nodeType === 1 && child.nodeName === 'SCRIPT') {
         const scriptEl = child as HTMLScriptElement;
+
         if (scriptEl.src) {
           loadedScripts.push(scriptEl.src);
         }
       }
     }
+
     const unlisten: Array<() => void> = [];
 
     const format = (e: Event) => {
       const element = e.target ? (e.target as HTMLScriptElement) : null;
+
       if (!element) {
         return;
       }
+
       loadedScripts.push(element.src);
+
       if (PRETTIER_SCRIPTS.every((script) => loadedScripts.includes(script))) {
         handleFormatRef.current();
       }

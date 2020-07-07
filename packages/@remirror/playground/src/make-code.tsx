@@ -24,12 +24,15 @@ export function makeCode(codeOptions: CodeOptions): string {
 
   function addImport(packageName: string, rawSpec: string | [string, string]) {
     const spec: [string, string] = typeof rawSpec === 'string' ? [rawSpec, rawSpec] : rawSpec;
+
     if (!imports[packageName]) {
       imports[packageName] = [];
     }
+
     const existing = imports[packageName].find(
       (oldSpec) => oldSpec[0] === spec[0] && oldSpec[1] === spec[1],
     );
+
     if (!existing) {
       imports[packageName].push(spec);
     }
@@ -64,35 +67,44 @@ export function makeCode(codeOptions: CodeOptions): string {
 
   const importLines = [];
   const modules = Object.keys(imports).sort();
+
   for (const moduleName of modules) {
     const importsFromModule = imports[moduleName];
     importsFromModule.sort((a, b) => a[0].localeCompare(b[0]));
     let defaultName: string | null = null;
     const namedImports: string[] = [];
+
     for (const [name, alias] of importsFromModule) {
       if (name === 'default') {
         if (defaultName) {
           throw new Error(`Cannot have two default imports from '${moduleName}'`);
         }
+
         defaultName = alias;
       } else {
         namedImports.push(name + (alias && alias !== name ? ` as ${alias}` : ''));
       }
     }
+
     const things: string[] = [];
+
     if (defaultName) {
       things.push(defaultName);
     }
+
     if (namedImports.length > 0) {
       things.push(`{\n  ${namedImports.join(',\n  ')}\n}`);
     }
+
     importLines.push(`import ${things.join(', ')} from '${moduleName}';`);
   }
 
   const actions: string[] = [];
+
   if (combinedNames.includes(`BoldExtension`)) {
     actions.push(`<button onClick={() => commands.toggleBold()}>bold</button>`);
   }
+
   if (combinedNames.includes(`ItalicExtension`)) {
     actions.push(`<button onClick={() => commands.toggleItalic()}>italic</button>`);
   }
@@ -137,12 +149,13 @@ const SmallEditorWrapper = () => {
 
 export default SmallEditorWrapper;
 `;
+
   if (window.prettier) {
     return window.prettier.format(code, {
       parser: 'typescript',
       plugins: (window as any).prettierPlugins,
     });
-  } else {
-    return code;
   }
+
+  return code;
 }

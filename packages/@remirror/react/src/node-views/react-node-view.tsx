@@ -170,6 +170,7 @@ export class ReactNodeView<
 
     if (toDOM) {
       const domSpec = toDOM(this.node);
+
       if (isString(domSpec)) {
         return document.createElement(domSpec);
       }
@@ -178,12 +179,14 @@ export class ReactNodeView<
         if (!isElementDomNode(domSpec)) {
           throw new Error('Invalid HTML Element provided in the DOM Spec');
         }
+
         return domSpec;
       }
 
       // Use the outer element string to render the dom node
       return document.createElement(domSpec[0]);
     }
+
     return this.node.isInline ? document.createElement('span') : document.createElement('div');
   }
 
@@ -247,6 +250,7 @@ export class ReactNodeView<
    */
   setDomAttributes(node: ProsemirrorNode, element: HTMLElement) {
     const { toDOM } = this.node.type.spec;
+
     if (toDOM) {
       const domSpec = toDOM(node);
 

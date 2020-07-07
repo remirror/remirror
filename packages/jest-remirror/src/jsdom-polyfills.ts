@@ -149,5 +149,6 @@ export const ignoreJSDOMWarnings = (val = true) => {
   if (!environment.isJSDOM) {
     return;
   }
+
   window.ignoreAllJSDOMWarnings = val;
 };

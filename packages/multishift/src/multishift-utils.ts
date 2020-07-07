@@ -314,6 +314,7 @@ export const getNextWrappingIndex = ({
   if (nextIndex < 0) {
     return circular ? size - 1 : 0;
   }
+
   if (nextIndex >= size) {
     return circular ? 0 : size - 1;
   }
@@ -365,10 +366,10 @@ export const getItemIndexesByJumpText = <Item = any>({
 
   if (newHighlightedIndex > -1) {
     return [newHighlightedIndex + startPosition];
-  } else {
-    const index = itemStrings.slice(0, startPosition).findIndex(finder);
-    return isValidIndex(index) ? [index] : [];
   }
+
+  const index = itemStrings.slice(0, startPosition).findIndex(finder);
+  return isValidIndex(index) ? [index] : [];
 };
 
 /**
@@ -432,9 +433,11 @@ export const getItemIndex = <Item = any>(index: number, item: Item, items: Item[
   if (index !== undefined) {
     return index;
   }
+
   if (items.length === 0) {
     return -1;
   }
+
   return items.indexOf(item);
 };
 
@@ -906,6 +909,7 @@ export const getChangesFromToggleButtonKeyDown = <Item = any>({
   state,
 }: CreateChangesFromKeyDownParameter<Item>): MultishiftStateProps<Item> => {
   const params = { state, getItemId };
+
   if (key === 'ArrowDown' || key === 'ArrowUp' || key === 'Enter' || key === 'Space') {
     const isNext = key === 'ArrowDown';
     const isPrev = key === 'ArrowUp';

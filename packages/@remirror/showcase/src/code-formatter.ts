@@ -69,6 +69,7 @@ function offsetIncrement(
       return 1;
     }
   }
+
   return 0;
 }
 

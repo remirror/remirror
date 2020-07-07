@@ -101,17 +101,20 @@ function bundle(moduleName: string, id: string): Promise<any> {
 export async function makeRequire(requires: string[]) {
   const tasks: Array<Promise<void>> = [];
   const modules: { [moduleName: string]: any } = {};
+
   for (const moduleName of requires) {
     if (IMPORT_CACHE[moduleName]) {
       modules[moduleName] = IMPORT_CACHE[moduleName];
     } else {
       const id = hash(moduleName);
+
       if (!fetchedModules[id]) {
         fetchedModules[id] = {
           name: moduleName,
           modulePromise: bundle(moduleName, id),
         };
       }
+
       tasks.push(
         fetchedModules[id].modulePromise.then((remoteModule) => {
           modules[moduleName] = remoteModule;
@@ -125,9 +128,9 @@ export async function makeRequire(requires: string[]) {
   return function require(moduleName: string) {
     if (modules[moduleName]) {
       return modules[moduleName];
-    } else {
-      throw new Error(`Could not require('${moduleName}')`);
     }
+
+    throw new Error(`Could not require('${moduleName}')`);
   };
 }
 
@@ -154,6 +157,7 @@ function runCodeInDiv(
     try {
       // First do the requires.
       const requireFn = await makeRequire(requires);
+
       if (!active) {
         return;
       }

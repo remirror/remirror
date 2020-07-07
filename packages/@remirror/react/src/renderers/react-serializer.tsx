@@ -49,6 +49,7 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
 
     if (isPlainObject(attributes) && !isArray(attributes)) {
       currentIndex = 2;
+
       for (const name in attributes) {
         if (attributes[name] != null) {
           props[name] = attributes[name];
@@ -96,9 +97,11 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
     manager: RemirrorManager<Combined>,
   ) {
     const result = gatherDomMethods(manager.nodes);
+
     if (!result.text) {
       result.text = (node) => (node.text ? node.text : '');
     }
+
     return result;
   }
 
@@ -168,6 +171,7 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
     if (node.content.childCount > 0) {
       children = this.serializeFragment(node.content);
     }
+
     return bool(Component) ? (
       <Component node={node}>{children}</Component>
     ) : (

@@ -30,6 +30,7 @@ export const imagesMatch = (image1: string | Buffer, image2: string | Buffer) =>
         resolve(equal);
         return;
       }
+
       const { diff, one, two } = getDiffPaths();
 
       mkdir(dirname(diff), { recursive: true })
@@ -50,6 +51,7 @@ export const imagesMatch = (image1: string | Buffer, image2: string | Buffer) =>
                 reject(new Error('Could not create diff after failing test'));
                 return;
               }
+
               reject(error ?? new Error(`Images do not match. Diff created at path ${diff}`));
             },
           );

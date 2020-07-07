@@ -138,6 +138,7 @@ export class EpicModePluginState {
     try {
       this.#isActive = false;
       this.canvas.remove();
+
       if (this.container.contains(this.canvas)) {
         this.canvas.remove();
       }
@@ -161,12 +162,14 @@ export class EpicModePluginState {
     this.canvas.style.left = `${window.scrollX}px`;
 
     const node = document.elementFromPoint(coords.left - 5, coords.top + 5);
+
     if (!node) {
       return;
     }
 
     const numParticles = randomInt(this.options.particleRange.min, this.options.particleRange.max);
     const textColor = getRGBComponents(node);
+
     for (let ii = 0; ii < numParticles; ii++) {
       const colorCode = this.options.colors[ii % this.options.colors.length];
       const r = Number.parseInt(colorCode.slice(1, 3), 16);
@@ -197,9 +200,11 @@ export class EpicModePluginState {
 
     // get the time past the previous frame
     const currentTime = new Date().getTime();
+
     if (!this.#lastTime) {
       this.#lastTime = currentTime;
     }
+
     const dt = (currentTime - this.#lastTime) / 1000;
     this.#lastTime = currentTime;
 
@@ -210,6 +215,7 @@ export class EpicModePluginState {
       const shakeY = randomInt(-magnitude, magnitude);
       (this.view.dom as HTMLElement).style.transform = `translate(${shakeX}px,${shakeY}px)`;
     }
+
     this.drawParticles();
     requestAnimationFrame(this.loop);
   };

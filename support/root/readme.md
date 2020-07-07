@@ -8,8 +8,8 @@ This readme file is ignored though.
 ## Why
 
 Personally I find it intimidating when I open an interesting project only to be bombarded with a
-long list of files in the root directory. I think this is an elegant solution way of
-avoiding that problem while retaining the functionality provided by these files.
+long list of files in the root directory. I think this is an elegant solution way of avoiding that
+problem while retaining the functionality provided by these files.
 
 By using symlinks we can continue editing and updating files in our usual way once the installation
 completes. Prior to installation the superfluous implementation is hidden.

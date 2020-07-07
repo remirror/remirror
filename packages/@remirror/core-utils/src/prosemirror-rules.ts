@@ -151,6 +151,7 @@ export const nodeInputRule = ({
       const $pos = tr.doc.resolve(start);
       tr.setSelection(new TextSelection($pos));
     }
+
     return tr;
   });
 };
@@ -182,6 +183,7 @@ export const plainInputRule = <Schema extends EditorSchema = EditorSchema>({
       const $pos = tr.doc.resolve(start);
       tr.setSelection(new TextSelection($pos));
     }
+
     return tr;
   });
 };

@@ -89,6 +89,7 @@ export class CodeBlockState {
       for (const step of steps) {
         step.getMap().forEach((oldStart, oldEnd) => {
           const to = from + node.nodeSize;
+
           if (
             posWithinRange({ from, to, pos: oldStart }) ||
             posWithinRange({ from, to, pos: oldEnd })

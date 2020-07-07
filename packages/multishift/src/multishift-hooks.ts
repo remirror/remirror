@@ -105,6 +105,7 @@ const defaultGetA11yStatusMessage = <Item = any>({
     if (resultCount === 0) {
       return 'No results are available';
     }
+
     return `${resultCount} result${
       resultCount === 1 ? ' is' : 's are'
     } available, use up and down arrow keys to navigate. Press Enter key to select.`;
@@ -201,6 +202,7 @@ export function useOuterEventListener<Item = any>(
       // if the target element or the activeElement is within a multishift node
       // then we don't want to reset multishift
       const contextWithinMultishift = targetWithinMultishift(event.target as Node);
+
       if (!contextWithinMultishift && isOpen.current) {
         outerMouseUp();
       }
@@ -223,6 +225,7 @@ export function useOuterEventListener<Item = any>(
 
     const onTouchEnd = (event: TouchEvent) => {
       const contextWithinMultishift = targetWithinMultishift(event.target as Node, false);
+
       if (!context.current.isTouchMove && !contextWithinMultishift && isOpen.current) {
         outerTouchEnd();
       }

@@ -34,6 +34,7 @@ class ExtensionWithoutStaticOptions extends PlainExtension {
     return 'withoutStaticOptions' as const;
   }
 }
+
 const extensionWithoutStaticOptions = new ExtensionWithoutStaticOptions();
 
 type AnyExtensionSupportsNoStaticOptions = typeof extensionWithoutStaticOptions extends AnyExtension
@@ -122,6 +123,7 @@ class InvalidDynamicOptionsExtension extends PlainExtension<{ oops: boolean }> {
 }
 
 function fn<Type extends AnyExtension>(extension: Type) {}
+
 fn(new InvalidDynamicOptionsExtension());
 
 const extensionWithDynamicOptions = new ExtensionWithDynamicOptions({ oops: true });

@@ -193,6 +193,7 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkOptions> {
         update: (view: EditorView, previousState: EditorState) => {
           const next = getUrlsFromState(view.state, this.type);
           const previous = getUrlsFromState(previousState, this.type);
+
           if (!areSetsEqual(next.set, previous.set)) {
             this.options.onUrlUpdate(next);
           }

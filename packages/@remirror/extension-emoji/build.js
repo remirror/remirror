@@ -50,9 +50,11 @@ const getStartCase = (category = '', name = '', firstKeyword = '') => {
   if (category === 'flags') {
     return `${name} flag`;
   }
+
   if (name.includes(firstKeyword)) {
     return name;
   }
+
   return `${name} ${firstKeyword}`;
 };
 

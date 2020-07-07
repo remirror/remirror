@@ -6,11 +6,13 @@ type NodePath<T = t.Node> = import('@babel/core').NodePath<T>;
 type BabelFileResult = import('@babel/core').BabelFileResult;
 
 let requires: string[] = [];
+
 function playgroundImports() {
   return {
     visitor: {
       CallExpression(path: NodePath<t.CallExpression>) {
         const { callee, arguments: args } = path.node;
+
         if (
           callee.type === 'Identifier' &&
           callee.name === 'require' &&

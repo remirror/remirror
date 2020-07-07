@@ -31,8 +31,8 @@ export const setupServer = async (globalConfig: Config.GlobalConfig) => {
 export const startServer = (globalConfig: Config.GlobalConfig) => {
   if (serverSetupPromise) {
     return serverSetupPromise;
-  } else {
-    serverSetupPromise = setupServer(globalConfig);
-    return serverSetupPromise;
   }
+
+  serverSetupPromise = setupServer(globalConfig);
+  return serverSetupPromise;
 };

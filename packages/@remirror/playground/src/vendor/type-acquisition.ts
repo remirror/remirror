@@ -149,6 +149,7 @@ const mapModuleNameToModule = (name: string) => {
   if (builtInNodeMods.has(name)) {
     return 'node';
   }
+
   return name;
 };
 
@@ -166,12 +167,14 @@ function absolute(base: string, relative: string) {
     if (element === '.') {
       continue;
     }
+
     if (element === '..') {
       stack.pop();
     } else {
       stack.push(element);
     }
   }
+
   return stack.join('/');
 }
 
@@ -194,9 +197,9 @@ const convertToModuleReferenceID = (
 
   if (isPackageRootImport) {
     return moduleDeclaration;
-  } else {
-    return `${outerModule}-${mapRelativePath(moduleDeclaration, currentPath)}`;
   }
+
+  return `${outerModule}-${mapRelativePath(moduleDeclaration, currentPath)}`;
 };
 
 /**
@@ -209,6 +212,7 @@ const addModuleToRuntime = async (mod: string, path: string, config: ATAConfig) 
   const dtsFileURL = isDeno ? path : unpkgURL(mod, path);
 
   const content = dtsCache[mod]?.[path] || (await getCachedDTSString(config, dtsFileURL));
+
   if (!content) {
     return errorMsg(`Could not get root d.ts file for the module '${mod}' at ${path}`, {});
   }
@@ -237,11 +241,13 @@ const getModuleAndRootDefTypePath = async (packageName: string, config: ATAConfi
   const url = moduleJSONURL(packageName);
 
   const response = await config.fetcher(url);
+
   if (!response.ok) {
     return errorMsg(`Could not get Algolia JSON for the module '${packageName}'`, response);
   }
 
   const responseJSON = await response.json();
+
   if (!responseJSON) {
     return errorMsg(
       `Could the Algolia JSON was un-parsable for the module '${packageName}'`,
@@ -254,6 +260,7 @@ const getModuleAndRootDefTypePath = async (packageName: string, config: ATAConfi
       `There were no types for '${packageName}' - will not try again in this session`,
     );
   }
+
   if (!responseJSON.types.ts) {
     return console.log(
       `There were no types for '${packageName}' - will not try again in this session`,
@@ -266,11 +273,13 @@ const getModuleAndRootDefTypePath = async (packageName: string, config: ATAConfi
     const modPackageURL = packageJSONURL(packageName);
 
     const response = await config.fetcher(modPackageURL);
+
     if (!response.ok) {
       return errorMsg(`Could not get Package JSON for the module '${packageName}'`, response);
     }
 
     const responseJSON = await response.json();
+
     if (!responseJSON) {
       return errorMsg(`Could not get Package JSON for the module '${packageName}'`, response);
     }
@@ -306,13 +315,14 @@ const getModuleAndRootDefTypePath = async (packageName: string, config: ATAConfi
       path: 'index.d.ts',
       packageJSON: responseJSON,
     };
-  } else {
-    throw "This shouldn't happen";
   }
+
+  throw "This shouldn't happen";
 };
 
 const getCachedDTSString = async (config: ATAConfig, url: string) => {
   const cached = localStorage.getItem(url);
+
   if (cached) {
     const [dateString, text] = cached.split('-=-^-=-');
     const cachedDate = new Date(dateString);
@@ -323,18 +333,20 @@ const getCachedDTSString = async (config: ATAConfig, url: string) => {
 
     if (now.getTime() - cachedDate.getTime() < cacheTimeout) {
       return lzstring.decompressFromUTF16(text);
-    } else {
-      console.log('Skipping cache for', url);
     }
+
+    console.log('Skipping cache for', url);
   }
 
   const response = await config.fetcher(url);
+
   if (!response.ok) {
     return errorMsg(`Could not get DTS response for the module at ${url}`, response);
   }
 
   // TODO: handle checking for a resolve to index.d.ts whens someone imports the folder
   const content = await response.text();
+
   if (!content) {
     return errorMsg(`Could not get text for DTS response at ${url}`, response);
   }
@@ -352,17 +364,22 @@ const getReferenceDependencies = async (
   config: ATAConfig,
 ) => {
   let match;
+
   if (sourceCode.indexOf('reference path') > 0) {
     // https://regex101.com/r/DaOegw/1
     const referencePathExtractionPattern = /<reference path="(.*)" \/>/gm;
+
     while ((match = referencePathExtractionPattern.exec(sourceCode)) !== null) {
       const relativePath = match[1];
+
       if (relativePath) {
         const newPath = mapRelativePath(relativePath, path);
+
         if (newPath) {
           const dtsRefURL = unpkgURL(mod, newPath);
 
           const dtsReferenceResponseText = await getCachedDTSString(config, dtsRefURL);
+
           if (!dtsReferenceResponseText) {
             return errorMsg(`Could not get root d.ts file for the module '${mod}' at ${path}`, {});
           }
@@ -427,6 +444,7 @@ const getDependenciesForModule = (
     }
 
     const moduleID = convertToModuleReferenceID(moduleName!, moduleToDownload, moduleName!);
+
     if (acquiredTypeDefs[moduleID] || acquiredTypeDefs[moduleID] === null) {
       return;
     }

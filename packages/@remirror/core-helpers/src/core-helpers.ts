@@ -161,6 +161,7 @@ function isOfType<Type>(type: string, test?: (value: Type) => boolean) {
     return test ? test(value as Type) : true;
   };
 }
+
 /**
  * Get the object type of passed in value. This avoids the reliance on
  * `instanceof` checks which are subject to cross frame issues as outlined in
@@ -611,9 +612,11 @@ export function cleanupOS(os: string, pattern?: string, label?: string) {
 export function isAndroidOS() {
   const ua = navigator.userAgent;
   const match = new RegExp('\\b' + 'Android' + '(?:/[\\d.]+|[ \\w.]*)', 'i').exec(ua);
+
   if (!match) {
     return false;
   }
+
   return cleanupOS(match[0], 'Android', 'Android').includes('Android');
 }
 
@@ -950,6 +953,7 @@ export function uniqueBy<Item = any, Key = any>(
 
   for (const item of list) {
     const value = getter(item);
+
     if (!found.has(value)) {
       found.add(value);
       unique.push(item);

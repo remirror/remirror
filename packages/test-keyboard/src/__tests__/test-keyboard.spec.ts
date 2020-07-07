@@ -160,6 +160,7 @@ describe('mod', () => {
       if (ev.key === char) {
         event = ev;
       }
+
       events.push([ev.type, ev.key]);
     };
 

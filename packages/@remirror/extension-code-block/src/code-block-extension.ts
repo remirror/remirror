@@ -278,6 +278,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
 
       Enter: ({ state, dispatch }) => {
         const { selection, tr } = state;
+
         if (!isTextSelection(selection) || !selection.$cursor) {
           return false;
         }

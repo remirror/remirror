@@ -268,6 +268,7 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
       }),
       onKeyDown: callAllEventHandlers(onKeyDown, (event) => {
         const key = getKeyName(event);
+
         if (includes(SPECIAL_INPUT_KEYS, key)) {
           actions.inputSpecialKeyDown(createKeyDownPayload(event, key, disabled.current));
           event.preventDefault();
@@ -280,6 +281,7 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
             isHTMLElement(document.activeElement) &&
             refs.comboBox.current &&
             refs.comboBox.current.contains(document.activeElement);
+
           if (!contextRef.current.isMouseDown && !multishiftActive) {
             actions.inputBlur();
           }
@@ -407,6 +409,7 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
         if (isInternalEvent(event)) {
           return;
         }
+
         const blurTarget = event.target; // Save blur target for comparison with activeElement later
         // Need setTimeout, so that when the user presses Tab, the activeElement
         // is the next focused element, not body element
@@ -459,6 +462,7 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
     } = options;
 
     const itemIndex = getItemIndex(index, item, items);
+
     if (!isValidIndex(itemIndex)) {
       throw new Error('Pass either item or item index in getItemProps!');
     }

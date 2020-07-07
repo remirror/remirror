@@ -46,12 +46,15 @@ export const flatten = ({ node, descend = true }: FlattenParameter): NodeWithPos
   if (!isProsemirrorNode(node)) {
     throw new Error('Invalid "node" parameter');
   }
+
   const result: NodeWithPosition[] = [];
   node.descendants((child, pos) => {
     result.push({ node: child, pos });
+
     if (!descend) {
       return false;
     }
+
     return;
   });
   return result;
@@ -75,6 +78,7 @@ export const findChildren = ({ node, predicate, descend }: FindChildrenParameter
   } else if (!isFunction(predicate)) {
     throw new Error('Invalid "predicate" parameter');
   }
+
   return flatten({ node, descend }).filter((child) => predicate(child.node));
 };
 

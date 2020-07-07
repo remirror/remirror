@@ -54,6 +54,7 @@ export class ReactPreset extends Preset<ReactPresetOptions> {
 
         const { emptyNodeClass, placeholder } = extension.options;
         const { children } = getElementProps(element);
+
         if (Children.count(children) > 1 || !isDocNodeEmpty(state.doc)) {
           return element;
         }

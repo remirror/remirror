@@ -128,6 +128,7 @@ test('prepends to the react element when insertPosition=start with getRootProps'
  */
 export const isAscending = (numbers: number[], strict = false) => {
   let current: number | null = null;
+
   for (const num of numbers) {
     if (current === null) {
       current = num;

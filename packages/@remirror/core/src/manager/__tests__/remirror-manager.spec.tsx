@@ -219,6 +219,7 @@ test('keymaps', () => {
 
 test('lifecycle', () => {
   expect.assertions(6);
+
   class LifecycleExtension extends PlainExtension {
     static defaultPriority = ExtensionPriority.Lowest;
 

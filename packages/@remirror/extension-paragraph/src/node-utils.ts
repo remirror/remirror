@@ -14,9 +14,11 @@ import {
  */
 export const convertToPt = (styleValue: string) => {
   const matches = styleValue.match(SIZE_PATTERN);
+
   if (!matches) {
     return 0;
   }
+
   let value = Number.parseFloat(matches[1]);
   const unit = matches[2];
 

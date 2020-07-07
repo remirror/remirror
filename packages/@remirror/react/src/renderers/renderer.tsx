@@ -48,6 +48,7 @@ const CodeBlock: FC<{
   markMap: MarkMap;
 }> = (props) => {
   const content = props.node.content;
+
   if (!content) {
     return null;
   }
@@ -133,6 +134,7 @@ export const RenderTree: FC<RenderTreeProps> = (props) => {
     if (!skipUnknownTypes) {
       throw new Error(`No handler for node type \`${json.type}\` registered`);
     }
+
     return null;
   }
 

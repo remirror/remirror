@@ -7,6 +7,7 @@ import { CommandContext } from './types';
  */
 export const notifyUpdate = (context: CommandContext) => {
   const { name, internal, version } = context;
+
   if (internal) {
     return;
   }

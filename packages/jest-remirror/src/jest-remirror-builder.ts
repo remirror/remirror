@@ -128,6 +128,7 @@ export function sequence(...content: TaggedContentItem[]) {
     if (isTagTracker(node)) {
       tags = { ...tags, ...offsetTags(node.tags, position) };
     }
+
     if (isTaggedProsemirrorNode(node)) {
       const thickness = node.isText ? 0 : 1;
       tags = { ...tags, ...offsetTags(node.tags, position + thickness) };
@@ -135,6 +136,7 @@ export function sequence(...content: TaggedContentItem[]) {
       nodes.push(node);
     }
   }
+
   return { nodes, tags };
 }
 

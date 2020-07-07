@@ -105,6 +105,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
         options: EmojiCommandOptions = object(),
       ): CommandFunction => (parameter) => {
         const emoji = getEmojiByName(name);
+
         if (!emoji) {
           return false;
         }

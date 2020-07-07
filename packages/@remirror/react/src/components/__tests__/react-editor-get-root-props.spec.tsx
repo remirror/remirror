@@ -29,6 +29,7 @@ test('supports a custom ref label and passed props through', () => {
     mock(props);
     return <div ref={props.customRef} />;
   }
+
   const testProp = 'test';
   render(
     <ReactEditor manager={createReactManager()}>

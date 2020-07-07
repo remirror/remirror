@@ -156,6 +156,7 @@ export class Keyboard {
         'This is not a supported character. For generic characters use the `keyboard.char` method instead',
       );
     }
+
     return this.char({ text, options, typing });
   }
 
@@ -254,12 +255,14 @@ export class Keyboard {
    */
   private fireAllEvents({ options, typing = false }: OptionsWithTypingParameter) {
     this.keyDown({ options });
+
     if (
       !includes(noKeyPress, options.key) ||
       (typing && isUSKeyboardCharacter(options.key) && usKeyboardLayout[options.key].text)
     ) {
       this.keyPress({ options });
     }
+
     if (!includes(noKeyUp, options.key)) {
       this.keyUp({ options });
     }
@@ -280,6 +283,7 @@ export class Keyboard {
     type: 'keydown' | 'keyup',
   ) {
     const event = type === 'keydown' ? this.keyDown : this.keyUp;
+
     if (shiftKey) {
       event({ options: { ...this.defaultOptions, ...cleanKey('Shift') } });
     }
@@ -312,6 +316,7 @@ export class Keyboard {
     if (!this.started) {
       this.start();
     }
+
     const event = createKeyboardEvent(type, { ...this.defaultOptions, ...options });
 
     const dispatch = () => {

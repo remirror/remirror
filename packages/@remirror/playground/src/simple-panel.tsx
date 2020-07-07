@@ -66,6 +66,7 @@ export const SimplePanel: FC<SimplePanelProps> = function (props) {
 
   const onAddModule = useCallback(() => {
     const moduleName = prompt('What module name do you wish to add?');
+
     if (moduleName) {
       addModule(moduleName);
     }
@@ -92,6 +93,7 @@ export const SimplePanel: FC<SimplePanelProps> = function (props) {
   const externalModules: Array<[string, RemirrorModuleStatus]> = [];
   Object.keys(modules).forEach((moduleName) => {
     const mod = modules[moduleName];
+
     if (REQUIRED_MODULES.includes(moduleName)) {
       if (mod.loading) {
         coreLoading = true;

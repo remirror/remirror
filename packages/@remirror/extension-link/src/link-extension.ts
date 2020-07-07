@@ -149,6 +149,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         handleClick: (view, pos) => {
           const { doc, tr } = view.state;
           const range = getMarkRange(doc.resolve(pos), this.type);
+
           if (!range) {
             return false;
           }
