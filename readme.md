@@ -28,7 +28,7 @@
 
 <br />
 
-### Motivation
+## Motivation
 
 I started `remirror` as a challenge to myself. Would it be possible to build an editor that combined
 great performance with ease of use? I wanted something that allowed developers like myself to fall
@@ -60,7 +60,6 @@ import { SocialEmojiComponent, SocialProvider } from 'remirror/react/social';
 const Editor = () => {
   return <SocialProvider><SocialEmojiComponent></SocialProvider>
 }
-
 ```
 
 With this tiny snippet your editor now supports a really nice ui element. And it's all customisable
@@ -69,14 +68,18 @@ with ordinary `css`. No more fighting against yet another `CSS-in-JS` library.
 There's so much more to come and I'm glad you're taking a look. I hope `remirror` proves to be
 everything you need for your next text editor and more.
 
-This documentation is still a work in progress. It is being updated in parallel with the `next`
-branch and still has many iterations before it can be called ready.
+<br />
 
-While reading through this codebase, if you find errors or would like to suggest improvements there
-are several options.
+## Status
+
+This is the `next` version of remirror. It is undergoing heavy development at the moment and
+documentation is still being rewritten to capture the updated API.
+
+While exploring this project, if you find errors or would like to suggest improvements there are
+several options.
 
 - Open an issue in our [github repo](https://github.com/remirror/remirror/issues).
-- [Join our discord server](https://discord.gg/C4cfrMK) and discuss the problem with us.
+- [Join our discord server](https://discord.gg/C4cfrMK) and discuss the problem with our community.
 - Create a pull request with your proposed improvement by clicking the edit button on the relevant
   page.
 - Move on, because deadlines are looming and life is too short.
@@ -85,21 +88,16 @@ Whatever you decide I'm happy that you've taken the time to dive into the `remir
 
 <br />
 
-### Status
+## Documentation
 
-This is the `next` version of remirror. It is undergoing heavy development at the moment and
-documentation is still being rewritten to capture the updated API.
-
-### Documentation
-
-View our documentation website at https://remirror.io/
+View our documentation website at https://remirror.io
 
 - [Introduction]
 - [Getting started]
 
 <br />
 
-### Features
+## Features
 
 - A11y focused and ARIA compatible.
 - I18n support via [lingui](https://github.com/lingui/js-lingui).
@@ -112,7 +110,7 @@ View our documentation website at https://remirror.io/
 
 <br />
 
-### Prerequisites
+## Prerequisites
 
 - [Typescript](https://www.typescriptlang.org/) `>= 3.9`
 - [React](https://reactjs.org/) `>= 16.9`
@@ -120,7 +118,7 @@ View our documentation website at https://remirror.io/
 
 <br />
 
-### Editors
+## Editors
 
 ![A gif showing mentions being suggested as the user types with editing supported](https://media.githubusercontent.com/media/ifiokjr/assets/master/remirror/repo-banner.gif 'A gif showing mentions being suggested as the user types with editing supported').
 
@@ -140,7 +138,7 @@ pnpm add remirror@next @remirror/pm@next
 npm install remirror@next @remirror/pm@next
 ```
 
-`@remirror/pm` is a peer dependency which manages all the prosemirror packages for you.
+`@remirror/pm` is a peer dependency which manages all the ProseMirror packages for you.
 
 ## Usage
 
@@ -182,7 +180,7 @@ const EditorWrapper = () => {
 
 <br />
 
-### Built With
+## Built With
 
 - [Typescript]
 - [ProseMirror]
@@ -190,21 +188,27 @@ const EditorWrapper = () => {
 
 <br />
 
-### Contributing
+## Contributing
 
 Please read [contributing.md](docs/contributing.md) for details on our code of conduct, and the
-process for submitting pull requests.
+process for submitting pull requests. It also outlines the project structure for help navigating
+your way around this codebase.
+
+You might also notice there are surprisingly few files in the root directory of this project. All
+the configuration files have been moved to the `support/root` directory and are symlinked to the
+root directory in a `preinstall` hook. For more information take a look at [folder](support/root)
+and [readme](support/root/readme.md).
 
 <br />
 
-### Versioning
+## Versioning
 
 This project uses [SemVer](http://semver.org/) for versioning. For the versions available, see the
 [tags on this repository](https://github.com/remirror/remirror/tags).
 
 <br />
 
-### License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 

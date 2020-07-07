@@ -4,8 +4,8 @@ title: Contributing
 
 Fork [this repository][repo], clone your fork and add this repository as the upstream remote.
 
-You will need to have `pnpm` installed so make sure you follow the installation
-[instructions](https://pnpm.js.org/en/installation).
+You will need to have [`pnpm`](https://pnpm.js.org) installed so make sure you follow the
+installation [instructions](https://pnpm.js.org/en/installation).
 
 ```bash
 git clone <<FORKED_REPO_URL>>
@@ -17,15 +17,36 @@ pnpm install
 git checkout -b BRANCH_NAME
 ```
 
-If you already have a previous version of the repository checked out then you will also need to make
-sure to clean your `node_modules` and run the following command before installation.
+If you already have a previous version of the repository checked out then make sure to clean your
+`node_modules` by running the following command before installation.
 
 ```bash
 pnpm clean:all
 pnpm install
+
+# An alternative which combines these to commands
+pnpm refresh
 ```
 
-From the root directory use the following command to work on examples or the documentation website.
+## Project Structure
+
+The number of files in the root directory is deliberately as minimal as possible. This is achieved
+by moving all configuration files to the `support/root` folder. Whenever you run `pnpm install`
+these files are symlinked to the root directory.
+
+- `.github` - The `GitHub` specific configuration for workflows, issue templates and pull request
+  templates.
+- `docs` - The documentation for this project. This is also used by the docusaurus website.
+- `packages` - The packages provided by remirror. Within this folder there are top level packages
+  like `remirror` and `jest-remirror` and also scope packages within the `@remirror/*` folder like
+  `@remirror/core`.
+- `support` - This is the package that provides the configuration files, the website, and many other
+  folders. Each directory includes a readme file that explains it's functionality. Take a
+  [look](https://github.com/remirror/remirror/tree/next/support).
+
+## Documentation
+
+From the root directory use the following command to launch the documentation site.
 
 ```bash
 pnpm docs
@@ -35,12 +56,12 @@ Once the build completes (can take a minute the first time) navigate to http://l
 another port if that one is already being used).
 
 The documentation is written using [docusaurus] and all files and dependencies are available in the
-`/docs/` subdirectory. To add a new dependency, you will need to add it to `/docs/package.json` and
-not the top level package.json file. You can either do this by manually editing the
-`/docs/package.json` file or you use the following command.
+`/support/website` subdirectory. To add a new dependency, you will need to add it to
+`/support/website/package.json` and not the top level package.json file. You can either do this by
+manually editing the `/support/website/package.json` file or you use the following command.
 
 ```bash
-cd docs
+cd support/website
 pnpm add <package>
 ```
 
@@ -65,7 +86,7 @@ Always create your tests inside of a `__tests__/` sub-folder.
 
 <br />
 
-## Gitflow
+## Using Git
 
 I recommend that while working on your code you commit early and often. You won't be judged. All
 worked submitted in a pull request (see following section) will be squashed into one commit before
@@ -93,18 +114,29 @@ pnpm stop:checks
 
 ## Development
 
-First, run `pnpm build` so the initial version of everything is built.
-
-After your first build, you can run `pnpm dev` to watch for changes and recompile as necessary.
-
 If you're modifying a package and import helpers from another packages in the monorepo, ensure that
 the other package is referenced in the referring package's `package.json` file.
 
-This project is using composite types and adding a new dependency to the project throws the build
-process since it's location has to explicitly be updated. Running `pnpm generate:json` will
-automatically update all your project references so that the build still works. (It basically
-creates all the project `tsconfig.prod.json` files for you as can be seen
-[here](https://github.com/remirror/remirror/blob/b096ed1dd3/support/scripts/generate-configs.js#L186-L228).)
+### General
+
+This project uses [`preconstruct`](https://github.com/preconstruct/preconstruct) to manage builds.
+Each time the project is installed `preconstruct dev` is run which automatically sets the dist
+folder with entry points mapping to the source files of the package. This is really useful for
+development and except for one exception when working on the playground is all you need.
+
+### Playground
+
+Working on the playground needs an extra step. The code being injected into the iframe needs to be
+pre-compiled and updates will fail for you if using `preconstruct dev`. The following command
+resolves this problem.
+
+```bash
+pnpm dev
+```
+
+When run this builds all packages and then watch for changes to rebuild as necessary. One issue with
+running this command is that you will lose any meaningful type checking. If you run `pnpm typecheck`
+and it fails with cryptic issues, it may be that you're still in the build state.
 
 <br />
 
@@ -131,12 +163,11 @@ rest of us.
 
 Over time this project has accumulated quite an active set of lint rules.
 
-The following are some points to keep in mind while developing for this codebase.
+The following are some personal preferences for coding style.
 
 - Functions with more than two arguments should condense these arguments into a parameter object.
-- TypeScript as a first class solution. Make the process as seamless as possible for the user. The
-  types should guide them as they develop providing inline documentation and auto suggestions for
-  using the API.
+- Comment everything. Even if the comment is just to say, `I have no idea what I'm doing`, there is
+  a lot of information in that comment.
 - Choose simplicity over performance. Performance is abstract and it's often better to start with a
   simple implementation that can be made more performant, than something that's complex from day
   one.
