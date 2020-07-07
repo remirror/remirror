@@ -1,12 +1,16 @@
 name: Node CI
 
 on:
+  schedule:
+    - '0 0 * * *'
+
   push:
     branches:
       - main
       - next
       - 'changeset-release/main'
       - 'changeset-release/next'
+
   pull_request:
     branches:
       - main
