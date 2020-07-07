@@ -223,8 +223,9 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
 
     // Built in eslint rules
-    'no-constant-condition': 'off',
+    'no-constant-condition': 'off', // To many false positives
     'no-empty': 'warn',
+    'no-else-return': 'warn',
     'no-useless-escape': 'warn',
     'default-case': 'warn',
     'prefer-template': 'warn',
@@ -239,6 +240,19 @@ module.exports = {
     eqeqeq: ['error', 'always', { null: 'ignore' }],
     'prefer-exponentiation-operator': 'error',
     'prefer-arrow-callback': ['error', { allowNamedFunctions: true }],
+    'padding-line-between-statements': [
+      'warn',
+      {
+        blankLine: 'always',
+        prev: '*',
+        next: ['if', 'switch', 'for', 'do', 'while', 'class', 'function'],
+      },
+      {
+        blankLine: 'always',
+        prev: ['if', 'switch', 'for', 'do', 'while', 'class', 'function'],
+        next: '*',
+      },
+    ],
   },
   overrides: [
     {
