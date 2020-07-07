@@ -27,7 +27,8 @@ jobs:
           fetch-depth: 0
           lfs: true
 
-      - uses: actions/cache@v2
+      - name: setup caching
+        uses: actions/cache@v2
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}

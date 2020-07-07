@@ -14,17 +14,15 @@ on:
 
 env:
   CI: true
-  PNPM_VERSION: 5.2.6
+  PNPM_VERSION: 5.2.9
   PNPM_CACHE_FOLDER: .pnpm-store
 
 jobs:
-  # Release the project if everything else passes
-  release:
+  # Update package versions from changesets.
+  version:
     timeout-minutes: 15
-    needs: [lint, typecheck, unit_test, build_test, size_check, chromium_e2e, firefox_e2e]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/next' && github.repository == 'remirror/remirror'
-
     steps:
       - name: checkout code repository
         uses: actions/checkout@v2
@@ -32,7 +30,8 @@ jobs:
           fetch-depth: 0
           lfs: true
 
-      - uses: actions/cache@v2
+      - name: setup caching
+        uses: actions/cache@v2
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -58,16 +57,14 @@ jobs:
       - name: build project
         run: pnpm run build
 
-      - name: create release pr or publish to npm
+      - name: create versions
         uses: changesets/action@master
         with:
-          publish: pnpm run release
           version: pnpm run ci:version
           commit: 'chore: update versions'
           title: 'chore: update versions'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   # Lint the project
   lint:
@@ -80,7 +77,8 @@ jobs:
           fetch-depth: 0
           lfs: true
 
-      - uses: actions/cache@v2
+      - name: setup caching
+        uses: actions/cache@v2
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -117,7 +115,8 @@ jobs:
           fetch-depth: 0
           lfs: true
 
-      - uses: actions/cache@v2
+      - name: setup caching
+        uses: actions/cache@v2
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -154,7 +153,8 @@ jobs:
           fetch-depth: 0
           lfs: true
 
-      - uses: actions/cache@v2
+      - name: setup caching
+        uses: actions/cache@v2
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -205,7 +205,8 @@ jobs:
           fetch-depth: 0
           lfs: true
 
-      - uses: actions/cache@v2
+      - name: setup caching
+        uses: actions/cache@v2
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -234,7 +235,7 @@ jobs:
       - name: run unit tests
         run: pnpm run test:build
 
-  # Check that sizes are within their boundaries
+  # Check that package sizes are within their boundaries
   size_check:
     timeout-minutes: 15
     runs-on: ubuntu-latest
@@ -245,7 +246,8 @@ jobs:
           fetch-depth: 0
           lfs: true
 
-      - uses: actions/cache@v2
+      - name: setup caching
+        uses: actions/cache@v2
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -290,7 +292,8 @@ jobs:
           fetch-depth: 0
           lfs: true
 
-      - uses: actions/cache@v2
+      - name: setup caching
+        uses: actions/cache@v2
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -333,7 +336,8 @@ jobs:
           fetch-depth: 0
           lfs: true
 
-      - uses: actions/cache@v2
+      - name: setup caching
+        uses: actions/cache@v2
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -359,3 +363,52 @@ jobs:
 
       - name: firefox integration test ${{ matrix.os }}
         run: cd support/e2e && pnpm run firefox
+
+  # Publish the public packages if all tests pass
+  publish:
+    timeout-minutes: 20
+    needs: [lint, typecheck, unit_test, build_test, size_check, chromium_e2e, firefox_e2e]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/next' && github.repository == 'remirror/remirror'
+
+    steps:
+      - name: checkout code repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: setup caching
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node.js
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14
+
+      - name: install pnpm
+        run: |
+          curl -L https://unpkg.com/@pnpm/self-installer | node
+          pnpm config set store-dir $PNPM_CACHE_FOLDER
+
+      - name: audit dependencies
+        run: pnpm run audit
+
+      - name: install dependencies
+        run: pnpm install
+
+      - name: build project
+        run: pnpm run build
+
+      - name: publish npm release
+        run: |
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > $HOME/.npmrc
+          pnpm run release
+          rm $HOME/.npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
