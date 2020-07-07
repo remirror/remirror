@@ -37,7 +37,8 @@ export class HelpersExtension extends PlainExtension {
   }
 
   /**
-   * Provide a method with access to the helpers for use in commands and helpers.
+   * Provide a method with access to the helpers for use in commands and
+   * helpers.
    */
   onCreate: CreateLifecycleMethod = () => {
     this.store.setExtensionStore('getHelpers', () => {
@@ -49,7 +50,8 @@ export class HelpersExtension extends PlainExtension {
   };
 
   /**
-   * Helpers are only available once the view has been added to `RemirrorManager`.
+   * Helpers are only available once the view has been added to
+   * `RemirrorManager`.
    */
   onView: ViewLifecycleMethod = (extensions) => {
     const helpers: Record<string, AnyFunction> = object();
@@ -84,6 +86,10 @@ export class HelpersExtension extends PlainExtension {
     this.store.setStoreKey('active', active);
     this.store.setStoreKey('helpers', helpers);
   };
+
+  createHelpers = () => {
+    return {};
+  };
 }
 
 declare global {
@@ -95,7 +101,8 @@ declare global {
       helpers: HelpersFromCombined<Combined>;
 
       /**
-       * Check which nodes and marks are active under the current user selection.
+       * Check which nodes and marks are active under the current user
+       * selection.
        *
        * ```ts
        * const { active } = manager.store;
@@ -148,7 +155,8 @@ declare global {
       /**
        * `ExtensionHelpers`
        *
-       * This pseudo property makes it easier to infer Generic types of this class.
+       * This pseudo property makes it easier to infer Generic types of this
+       * class.
        * @private
        */
       ['~H']: this['createHelpers'] extends AnyFunction

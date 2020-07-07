@@ -27,6 +27,7 @@ import {
   Fallback,
   getDocument,
   getTextSelection,
+  isElementDomNode,
   StringHandlerParameter,
   toHtml,
 } from '@remirror/core-utils';
@@ -366,8 +367,8 @@ export abstract class EditorWrapper<
   }
 
   /**
-   * Creates the parameters passed into all event listener handlers.
-   * e.g. `onChange`
+   * Creates the parameters passed into all event listener handlers. e.g.
+   * `onChange`
    */
   protected eventListenerParameter(
     parameter: ListenerParameter<Combined> = object(),
@@ -406,6 +407,24 @@ export abstract class EditorWrapper<
   };
 
   /**
+   * Remove the focus from the editor. If the editor is not focused it will do
+   * nothing.
+   */
+  protected readonly blur = () => {
+    const { dom } = this.view;
+
+    if (!this.view.hasFocus()) {
+      return;
+    }
+
+    if (!isElementDomNode(dom)) {
+      return;
+    }
+
+    dom.blur();
+  };
+
+  /**
    * Dispatch the text selection
    */
   private dispatchSelection(tr: Transaction, selection: Selection) {
@@ -438,6 +457,7 @@ export abstract class EditorWrapper<
 
       /* Helper Methods */
       focus: this.focus,
+      blur: this.blur,
     };
   }
 
@@ -689,6 +709,11 @@ export interface EditorWrapperOutput<Combined extends AnyCombinedUnion>
    * range between `{ from, to }`.
    */
   focus: (position?: FocusType) => void;
+
+  /**
+   * Blur the editor.
+   */
+  blur: () => void;
 
   /**
    * A getter function for the current editor state. It's a wrapper around
