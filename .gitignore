@@ -154,7 +154,7 @@ cc-reporter
 /lingui.config.js
 /jest.config.js
 /.vscode
-/.prettierrc
+/.prettierrc.js
 /.huskyrc
 /.lintstagedrc
 /tsconfig.json
