@@ -2,7 +2,7 @@
   "name": "@remirror/website",
   "version": "0.0.0",
   "private": true,
-  "description": "Your friendly, world class editor toolkit.",
+  "description": "Your friendly, world-class ProseMirror editor toolkit.",
   "repository": "https://github.com/remirror/remirror/tree/master/support/website",
   "scripts": {
     "build": "docusaurus build",
