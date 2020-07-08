@@ -21,14 +21,14 @@ If you already have a previous version of the repository checked out then you wi
 sure to clean your `node_modules` and run the following command before installation.
 
 ```bash
-pnpm run clean:all
+pnpm clean:all
 pnpm install
 ```
 
 From the root directory use the following command to work on examples or the documentation website.
 
 ```bash
-pnpm run docs
+pnpm docs
 ```
 
 Once the build completes (can take a minute the first time) navigate to http://localhost:3000 (or
@@ -51,9 +51,9 @@ pnpm add <package>
 Unit tests can be run with the following commands.
 
 ```bash
-pnpm run test # Unit Test
-pnpm run test:e2e # Unit + Integration Tests on chrome
-pnpm run test:watch # Test changed files since the last commit
+pnpm test # Unit Test
+pnpm test:e2e # Unit + Integration Tests on chrome
+pnpm test:watch # Test changed files since the last commit
 ```
 
 Always create your tests inside of a `__tests__/` sub-folder.
@@ -80,28 +80,28 @@ By default these checks are **not** run automatically. To enable automatic pre-c
 hooks use the following command:
 
 ```bash
-pnpm run start:checks
+pnpm start:checks
 ```
 
 To stop per-commit / per-push checks run:
 
 ```bash
-pnpm run stop:checks
+pnpm stop:checks
 ```
 
 <br />
 
 ## Development
 
-First, run `pnpm run build` so the initial version of everything is built.
+First, run `pnpm build` so the initial version of everything is built.
 
-After your first build, you can run `pnpm run dev` to watch for changes and recompile as necessary.
+After your first build, you can run `pnpm dev` to watch for changes and recompile as necessary.
 
 If you're modifying a package and import helpers from another packages in the monorepo, ensure that
 the other package is referenced in the referring package's `package.json` file.
 
 This project is using composite types and adding a new dependency to the project throws the build
-process since it's location has to explicitly be updated. Running `pnpm run generate:json` will
+process since it's location has to explicitly be updated. Running `pnpm generate:json` will
 automatically update all your project references so that the build still works. (It basically
 creates all the project `tsconfig.prod.json` files for you as can be seen
 [here](https://github.com/remirror/remirror/blob/b096ed1dd3/support/scripts/generate-configs.js#L186-L228).)

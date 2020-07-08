@@ -14,5 +14,5 @@ Run the following command to run build and run storybooks from either the root d
 directory.
 
 ```bash
-pnpm run storybook
+pnpm storybook
 ```

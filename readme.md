@@ -116,7 +116,7 @@ View our documentation website at https://remirror.io/
 
 - [Typescript](https://www.typescriptlang.org/) `>= 3.9`
 - [React](https://reactjs.org/) `>= 16.9`
-- [pnpm](https://pnpm.js.org/en/installation) `>= 5`
+- [pnpm](https://pnpm.js.org/en/installation) `>= 5.3`
 
 <br />
 

@@ -2,7 +2,7 @@ name: Node CI
 
 on:
   schedule:
-    - '0 0 * * *'
+    - cron: '0 0 * * *'
 
   push:
     branches:
@@ -18,7 +18,7 @@ on:
 
 env:
   CI: true
-  PNPM_VERSION: 5.2.9
+  PNPM_VERSION: 5.3.0
   PNPM_CACHE_FOLDER: .pnpm-store
 
 jobs:
@@ -53,18 +53,18 @@ jobs:
           pnpm config set store-dir $PNPM_CACHE_FOLDER
 
       - name: audit dependencies
-        run: pnpm run audit
+        run: pnpm audit
 
       - name: install dependencies
         run: pnpm install
 
       - name: build project
-        run: pnpm run build
+        run: pnpm build
 
       - name: create versions
         uses: changesets/action@master
         with:
-          version: pnpm run ci:version
+          version: pnpm ci:version
           commit: 'chore: update versions'
           title: 'chore: update versions'
         env:
@@ -100,13 +100,13 @@ jobs:
           pnpm config set store-dir $PNPM_CACHE_FOLDER
 
       - name: audit dependencies
-        run: pnpm run audit
+        run: pnpm audit
 
       - name: install dependencies
         run: pnpm install
 
       - name: lint files
-        run: pnpm run lint
+        run: pnpm lint
 
   # Typecheck the project
   typecheck:
@@ -138,13 +138,13 @@ jobs:
           pnpm config set store-dir $PNPM_CACHE_FOLDER
 
       - name: audit dependencies
-        run: pnpm run audit
+        run: pnpm audit
 
       - name: install dependencies
         run: pnpm install
 
       - name: typecheck project
-        run: pnpm run typecheck
+        run: pnpm typecheck
 
   # Unit test and update coverage report
   unit_test:
@@ -176,13 +176,13 @@ jobs:
           pnpm config set store-dir $PNPM_CACHE_FOLDER
 
       - name: audit dependencies
-        run: pnpm run audit
+        run: pnpm audit
 
       - name: install dependencies
         run: pnpm install
 
       - name: run unit tests
-        run: pnpm run test
+        run: pnpm test
 
       - name: publish code coverage report
         uses: paambaati/codeclimate-action@v2.4.0
@@ -228,16 +228,16 @@ jobs:
           pnpm config set store-dir $PNPM_CACHE_FOLDER
 
       - name: audit dependencies
-        run: pnpm run audit
+        run: pnpm audit
 
       - name: install dependencies
         run: pnpm install
 
       - name: build project
-        run: pnpm run build
+        run: pnpm build
 
       - name: run unit tests
-        run: pnpm run test:build
+        run: pnpm test:build
 
   # Check that package sizes are within their boundaries
   size_check:
@@ -269,16 +269,16 @@ jobs:
           pnpm config set store-dir $PNPM_CACHE_FOLDER
 
       - name: audit dependencies
-        run: pnpm run audit
+        run: pnpm audit
 
       - name: install dependencies
         run: pnpm install
 
       - name: build project
-        run: pnpm run build
+        run: pnpm build
 
       - name: check sizes
-        run: pnpm run size
+        run: pnpm size
 
   # Run chromium e2e tests with playwright
   chromium_e2e:
@@ -313,16 +313,16 @@ jobs:
         run: npm install pnpm -g
 
       - name: audit dependencies
-        run: pnpm run audit
+        run: pnpm audit
 
       - name: install dependencies
         run: pnpm install
 
       - name: build project
-        run: pnpm run build
+        run: pnpm build
 
       - name: chrome integration test ${{ matrix.os }}
-        run: cd support/e2e && pnpm run chromium
+        run: cd support/e2e && pnpm chromium
 
   # Run firefox e2e tests with playwright
   firefox_e2e:
@@ -357,16 +357,16 @@ jobs:
         run: npm install pnpm -g
 
       - name: audit dependencies
-        run: pnpm run audit
+        run: pnpm audit
 
       - name: install dependencies
         run: pnpm install
 
       - name: build project
-        run: pnpm run build
+        run: pnpm build
 
       - name: firefox integration test ${{ matrix.os }}
-        run: cd support/e2e && pnpm run firefox
+        run: cd support/e2e && pnpm firefox
 
   # Publish the public packages if all tests pass
   publish:
@@ -401,18 +401,18 @@ jobs:
           pnpm config set store-dir $PNPM_CACHE_FOLDER
 
       - name: audit dependencies
-        run: pnpm run audit
+        run: pnpm audit
 
       - name: install dependencies
         run: pnpm install
 
       - name: build project
-        run: pnpm run build
+        run: pnpm build
 
       - name: publish npm release
         run: |
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > $HOME/.npmrc
-          pnpm run release
+          pnpm release
           rm $HOME/.npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

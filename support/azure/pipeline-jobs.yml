@@ -9,9 +9,9 @@ jobs:
           vmImage: ${{ parameters.vmImage }}
         steps:
           - template: pipeline-install.yml
-          - bash: pnpm run lint
+          - bash: pnpm lint
             displayName: 'check all lint rules'
-          - bash: pnpm run typecheck
+          - bash: pnpm typecheck
             displayName: 'typecheck code and tests'
 
   - ${{ if eq(parameters.name, 'Linux') }}:
@@ -23,7 +23,7 @@ jobs:
 
           # TODO turn tests back on soon.
           - bash: |
-              pnpm run test
+              pnpm test
             displayName: 'run unit tests across project'
 
   - ${{ if eq(parameters.name, 'Linux') }}:
@@ -32,9 +32,9 @@ jobs:
           vmImage: ${{ parameters.vmImage }}
         steps:
           - template: pipeline-install.yml
-          - bash: pnpm run build
+          - bash: pnpm build
             displayName: 'build all project dependencies'
-          - bash: pnpm run size
+          - bash: pnpm size
             displayName: 'check size limits'
 
   - ${{ if eq(parameters.name, 'Linux') }}:
@@ -43,7 +43,7 @@ jobs:
           vmImage: ${{ parameters.vmImage }}
         steps:
           - template: pipeline-install.yml
-          - bash: pnpm run build
+          - bash: pnpm build
             displayName: 'build all project dependencies'
-          - bash: pnpm run test:build
+          - bash: pnpm test:build
             displayName: 'run unit tests against built code'

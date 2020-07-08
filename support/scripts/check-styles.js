@@ -70,7 +70,7 @@ async function run() {
     console.log(chalk`\n{green The generated {bold CSS} is valid for all files.}`);
   } catch (error) {
     console.log(error.message);
-    console.log(chalk`{bold.red Fix with:} {blue.italic pnpm run build:styles}`);
+    console.log(chalk`{bold.red Fix with:} {blue.italic pnpm fix:css}`);
     process.exit(1);
   }
 }

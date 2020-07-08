@@ -11,7 +11,7 @@ on:
 
 env:
   CI: true
-  PNPM_VERSION: 5.2.6
+  PNPM_VERSION: 5.3.0
   PNPM_CACHE_FOLDER: .pnpm-store
 
 jobs:
@@ -53,10 +53,10 @@ jobs:
         run: pnpm install
 
       - name: build project
-        run: pnpm run build
+        run: pnpm build
 
       - name: build docs
-        run: pnpm run build:docs
+        run: pnpm build:docs
 
       - name: deploy docs
         uses: nwtgck/actions-netlify@develop
