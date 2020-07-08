@@ -3,10 +3,13 @@ steps:
     inputs:
       versionSpec: '10.x'
     displayName: 'install node'
+
   - bash: curl -L https://unpkg.com/@pnpm/self-installer | node
     displayName: 'install pnpm'
+
   - bash: pnpm config set store-dir $PNPM_CACHE_FOLDER
     displayName: 'set pnpm cache location'
+
   - task: Cache@2
     inputs:
       key: 'pnpm | "$(Agent.OS)" | pnpm-lock.yaml'
@@ -15,7 +18,9 @@ steps:
         pnpm
       path: $(PNPM_CACHE_FOLDER)
     displayName: 'cache pnpm'
-  - bash: pnpm audit --audit-level high
-    displayName: 'audit dependencies'
+
+  # - bash: pnpm audit --audit-level high
+  #   displayName: 'audit dependencies'
+
   - bash: pnpm install
     displayName: 'install dependencies'

@@ -13,7 +13,7 @@
     "build:docs": "cd support/website && pnpm build",
     "changeset": "changeset",
     "check:pnpm": "node support/scripts/check-pnpm.js",
-    "checks": "run-s audit lint typecheck test",
+    "checks": "run-s lint typecheck test",
     "checks:ci": "run-s lint typecheck",
     "checks:release": "run-s checks build test:e2e",
     "ci:version": "run-s symlink:root ci:version:changeset ci:version:date ci:version:repo fix:prettier ci:version:install",
