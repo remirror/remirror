@@ -2,7 +2,7 @@ import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
 import { fromHtml, toHtml } from '@remirror/core';
-import { createBaseManager, isExtensionValid } from '@remirror/testing';
+import { createCoreManager, isExtensionValid } from '@remirror/testing';
 
 import { IframeExtension, IframeOptions } from '../iframe-extension';
 
@@ -15,10 +15,7 @@ function create(options?: IframeOptions) {
 }
 
 describe('schema', () => {
-  const { schema } = createBaseManager({
-    extensions: [new IframeExtension()],
-    presets: [],
-  });
+  const { schema } = createCoreManager([new IframeExtension()]);
   const attributes = { src: 'https://awesome.com' };
 
   const { iframe, p, doc } = pmBuild(schema, {

@@ -3,8 +3,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 
 import { AnyCombinedUnion, fromHtml } from '@remirror/core';
-import { createReactManager } from '@remirror/testing';
-import { act, fireEvent, render } from '@remirror/testing/react';
+import { act, createReactManager, fireEvent, render } from '@remirror/testing/react';
 
 import { RemirrorContextProps } from '../../react-types';
 import { ReactEditor } from '../react-editor';
@@ -20,7 +19,7 @@ const handlers = {
 test('should be called via a render prop', () => {
   const mock = jest.fn(() => <div />);
   const { getByLabelText } = render(
-    <ReactEditor manager={createReactManager()} label={label} {...handlers}>
+    <ReactEditor manager={createReactManager([])} label={label} {...handlers}>
       {mock}
     </ReactEditor>,
   );
@@ -40,7 +39,7 @@ test('can `suppressHydrationWarning` without breaking', () => {
   const mock = jest.fn(() => <div />);
   const { getByLabelText } = render(
     <ReactEditor
-      manager={createReactManager()}
+      manager={createReactManager([])}
       label={label}
       {...handlers}
       suppressHydrationWarning={true}
@@ -63,7 +62,7 @@ test('can `suppressHydrationWarning` without breaking', () => {
 describe('basic functionality', () => {
   it('is accessible', async () => {
     const results = await axe(
-      renderToString(<ReactEditor manager={createReactManager()}>{() => <div />}</ReactEditor>),
+      renderToString(<ReactEditor manager={createReactManager([])}>{() => <div />}</ReactEditor>),
     );
 
     expect(results).toHaveNoViolations();
@@ -72,7 +71,7 @@ describe('basic functionality', () => {
   it("doesn't render the editor without `children` as a render prop", () => {
     expect(() =>
       // @ts-expect-error
-      render(<ReactEditor label={label} manager={createReactManager()} />),
+      render(<ReactEditor label={label} manager={createReactManager([])} />),
     ).toMatchSnapshot();
   });
 
@@ -87,7 +86,7 @@ describe('basic functionality', () => {
       <ReactEditor
         label={label}
         {...handlers}
-        manager={createReactManager()}
+        manager={createReactManager([])}
         stringHandler={fromHtml}
       >
         {mock}
@@ -113,7 +112,7 @@ describe('basic functionality', () => {
 
   it('changes when the editable prop changes', () => {
     const mock = jest.fn(() => <div />);
-    const manager = createReactManager();
+    const manager = createReactManager([]);
 
     const El = ({ editable }: { editable: boolean }) => {
       return (
@@ -137,7 +136,7 @@ describe('initialContent', () => {
       <ReactEditor
         label={label}
         {...handlers}
-        manager={createReactManager()}
+        manager={createReactManager([])}
         initialContent={'<p>Hello</p>'}
         stringHandler={fromHtml}
       >
@@ -158,7 +157,7 @@ describe('initialContent', () => {
       <ReactEditor
         label={label}
         {...handlers}
-        manager={createReactManager()}
+        manager={createReactManager([])}
         initialContent={content}
       >
         {() => <div />}
@@ -184,7 +183,7 @@ describe('focus', () => {
       <ReactEditor
         label={label}
         {...handlers}
-        manager={createReactManager()}
+        manager={createReactManager([])}
         initialContent={content}
         autoFocus={true}
       >

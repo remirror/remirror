@@ -1,8 +1,7 @@
 import { axe } from 'jest-axe';
 import React, { forwardRef, FunctionComponent, Ref, RefAttributes } from 'react';
 
-import { createReactManager } from '@remirror/testing';
-import { render, RenderResult } from '@remirror/testing/react';
+import { createReactManager, render, RenderResult } from '@remirror/testing/react';
 
 import { ReactEditor } from '../react-editor';
 
@@ -14,7 +13,7 @@ const CustomRoot: FunctionComponent<RefAttributes<HTMLDivElement>> = forwardRef(
 
 test('supports a custom root element', () => {
   render(
-    <ReactEditor manager={createReactManager()}>
+    <ReactEditor manager={createReactManager([])}>
       {({ getRootProps }) => {
         return <CustomRoot {...getRootProps()} />;
       }}
@@ -32,7 +31,7 @@ test('supports a custom ref label and passed props through', () => {
 
   const testProp = 'test';
   render(
-    <ReactEditor manager={createReactManager()}>
+    <ReactEditor manager={createReactManager([])}>
       {({ getRootProps }) => {
         return <Cmp {...getRootProps({ refKey: 'customRef', testProp })} />;
       }}
@@ -49,7 +48,7 @@ describe('nestedRootProps', () => {
   beforeEach(() => {
     result = render(
       <main>
-        <ReactEditor manager={createReactManager()} label='Editor'>
+        <ReactEditor manager={createReactManager([])} label='Editor'>
           {({ getRootProps }) => {
             return (
               <div>

@@ -3,7 +3,7 @@ import { pmBuild } from 'jest-prosemirror';
 import { ExtensionPriority, NodeGroup } from '@remirror/core-constants';
 import { ApplySchemaAttributes, NodeExtensionSpec } from '@remirror/core-types';
 import { fromHtml } from '@remirror/core-utils';
-import { createBaseManager } from '@remirror/testing';
+import { createCoreManager } from '@remirror/testing';
 
 import { NodeExtension } from '..';
 
@@ -45,7 +45,7 @@ describe('extraAttributes', () => {
     },
   });
 
-  const { schema } = createBaseManager({ extensions: [customExtension], presets: [] });
+  const { schema } = createCoreManager([customExtension]);
   const { doc, custom, other } = pmBuild(schema, {
     custom: { nodeType: 'custom', run, title, crazy: 'yo' },
     other: { nodeType: 'custom', run, title, crazy: 'believe me' },
@@ -81,12 +81,9 @@ describe('extraAttributes', () => {
   });
 
   it('can `disableExtraAttributes`', () => {
-    const { schema } = createBaseManager({
-      extensions: [customExtension],
-      presets: [],
-      settings: { disableExtraAttributes: true },
+    const { schema } = createCoreManager([customExtension], {
+      managerSettings: { disableExtraAttributes: true },
     });
-
     expect(schema.nodes.custom.spec.attrs).toEqual({});
   });
 });

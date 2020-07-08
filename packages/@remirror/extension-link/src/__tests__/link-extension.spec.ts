@@ -2,7 +2,7 @@ import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
 import { fromHtml, GetHandler, toHtml } from '@remirror/core';
-import { createBaseManager, isExtensionValid } from '@remirror/testing';
+import { createCoreManager, isExtensionValid } from '@remirror/testing';
 
 import { LinkExtension, LinkOptions } from '..';
 
@@ -13,13 +13,13 @@ test('is valid', () => {
 const href = 'https://test.com';
 
 describe('schema', () => {
-  let { schema } = createBaseManager({ extensions: [new LinkExtension()] });
+  let { schema } = createCoreManager([new LinkExtension()]);
   let { a, doc, p } = pmBuild(schema, {
     a: { markType: 'link', href },
   });
 
   beforeEach(() => {
-    ({ schema } = createBaseManager({ extensions: [new LinkExtension()] }));
+    ({ schema } = createCoreManager([new LinkExtension()] );
     ({ a, doc, p } = pmBuild(schema, {
       a: { markType: 'link', href },
     }));
@@ -45,8 +45,7 @@ describe('schema', () => {
     const custom = 'true';
     const title = 'awesome';
 
-    const { schema } = createBaseManager({
-      extensions: [
+    const { schema } = createCoreManager([
         new LinkExtension({
           extraAttributes: {
             title: { default: null },
@@ -54,7 +53,7 @@ describe('schema', () => {
           },
         }),
       ],
-    });
+    );
 
     it('sets the extra attributes', () => {
       expect(schema.marks.link.spec.attrs).toEqual({
@@ -65,8 +64,7 @@ describe('schema', () => {
     });
 
     it('does not override the href', () => {
-      const { schema } = createBaseManager({
-        extensions: [
+      const { schema } = createCoreManager([
           new LinkExtension({
             extraAttributes: {
               title: { default: null },
@@ -74,7 +72,7 @@ describe('schema', () => {
             },
           }),
         ],
-      });
+      );
 
       expect(schema.marks.link.spec.attrs).toEqual({
         custom: { default: 'failure' },

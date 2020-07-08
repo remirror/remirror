@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
-import { contextPropsShape, createReactManager, positionerShape } from '@remirror/testing';
-import { render } from '@remirror/testing/react';
+import { contextPropsShape, positionerShape } from '@remirror/testing';
+import { createReactManager, render } from '@remirror/testing/react';
 
 import { RemirrorProvider } from '../components/providers';
 import { usePositioner, useRemirror } from '../hooks';
@@ -16,7 +16,7 @@ test('useRemirror', () => {
   };
 
   render(
-    <RemirrorProvider manager={createReactManager()}>
+    <RemirrorProvider manager={createReactManager([])}>
       <HookComponent />
     </RemirrorProvider>,
   );
@@ -32,7 +32,7 @@ test('usePositioner', () => {
   };
 
   render(
-    <RemirrorProvider manager={createReactManager()}>
+    <RemirrorProvider manager={createReactManager([])}>
       <HookComponent />
     </RemirrorProvider>,
   );

@@ -3,15 +3,14 @@ import { renderEditor } from 'jest-remirror';
 
 import { entries, fromHtml, GetHandler, toHtml } from '@remirror/core';
 import { SuggestExitHandlerParameter } from '@remirror/pm/suggest';
-import { createBaseManager } from '@remirror/testing';
+import { createCoreManager } from '@remirror/testing';
 
 import { MentionExtension, MentionExtensionSuggestCommand, MentionOptions } from '..';
 
 describe('schema', () => {
-  const { schema } = createBaseManager({
-    extensions: [new MentionExtension({ matchers: [{ char: '@', name: 'at' }] })],
-    presets: [],
-  });
+  const { schema } = createCoreManager([
+    new MentionExtension({ matchers: [{ char: '@', name: 'at' }] }),
+  ]);
   const attributes = { id: 'test', label: '@test', name: 'testing' };
 
   const { mention, p, doc } = pmBuild(schema, {
@@ -43,15 +42,12 @@ describe('schema', () => {
 
   describe('extraAttributes', () => {
     const custom = 'test';
-    const { schema } = createBaseManager({
-      extensions: [
-        new MentionExtension({
-          matchers: [],
-          extraAttributes: { 'data-custom': { default: null } },
-        }),
-      ],
-      presets: [],
-    });
+    const { schema } = createCoreManager([
+      new MentionExtension({
+        matchers: [],
+        extraAttributes: { 'data-custom': { default: null } },
+      }),
+    ]);
 
     const { doc, p, mention } = pmBuild(schema, {
       mention: { markType: 'mention', ['data-custom']: custom, ...attributes },

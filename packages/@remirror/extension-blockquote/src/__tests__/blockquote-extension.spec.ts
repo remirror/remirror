@@ -2,7 +2,7 @@ import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
 import { fromHtml, toHtml } from '@remirror/core';
-import { createBaseManager, isExtensionValid } from '@remirror/testing';
+import { createCoreManager, isExtensionValid } from '@remirror/testing';
 
 import { BlockquoteExtension } from '..';
 
@@ -11,10 +11,7 @@ test('is blockquote extension valid', () => {
 });
 
 describe('schema', () => {
-  const { schema } = createBaseManager({
-    extensions: [new BlockquoteExtension()],
-    presets: [],
-  });
+  const { schema } = createCoreManager([new BlockquoteExtension()]);
 
   const { blockquote, doc, p } = pmBuild(schema, {});
 
@@ -37,11 +34,9 @@ describe('schema', () => {
 });
 
 test('supports extra attributes', () => {
-  const { schema } = createBaseManager({
-    extensions: [new BlockquoteExtension({ extraAttributes: { 'data-custom': 'hello-world' } })],
-    presets: [],
-  });
-
+  const { schema } = createCoreManager([
+    new BlockquoteExtension({ extraAttributes: { 'data-custom': 'hello-world' } }),
+  ]);
   const { blockquote, p } = pmBuild(schema, {});
 
   expect(toHtml({ node: blockquote(p('friend!')), schema })).toMatchInlineSnapshot(`

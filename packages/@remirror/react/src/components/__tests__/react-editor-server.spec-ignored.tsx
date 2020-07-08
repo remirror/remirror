@@ -6,7 +6,8 @@ import React, { Fragment } from 'react';
 import { renderToString } from 'react-dom/server';
 
 import { EDITOR_CLASS_NAME } from '@remirror/core';
-import { BoldExtension, createReactManager, docNodeSimpleJSON } from '@remirror/testing';
+import { BoldExtension, docNodeSimpleJSON } from '@remirror/testing';
+import { createReactManager } from '@remirror/testing/react';
 
 import { ReactEditor } from '../react-editor';
 
@@ -26,7 +27,7 @@ test('can render in a node server environment', () => {
       {...handlers}
       label={label}
       initialContent={docNodeSimpleJSON}
-      manager={createReactManager({ extensions: [new BoldExtension()] })}
+      manager={createReactManager([new BoldExtension()])}
     >
       {mock}
     </ReactEditor>,
@@ -44,7 +45,7 @@ test('can render with a non-dom top level node', () => {
       {...handlers}
       label={label}
       initialContent={docNodeSimpleJSON}
-      manager={createReactManager()}
+      manager={createReactManager([])}
     >
       {() => <Fragment />}
     </ReactEditor>,
@@ -64,7 +65,7 @@ test('appends to the react element by default with getRootProps', () => {
       {...handlers}
       label={label}
       initialContent={docNodeSimpleJSON}
-      manager={createReactManager()}
+      manager={createReactManager([])}
     >
       {({ getRootProps }) => (
         <div>
@@ -99,7 +100,7 @@ test('prepends to the react element when insertPosition=start with getRootProps'
       {...handlers}
       label={label}
       initialContent={docNodeSimpleJSON}
-      manager={createReactManager()}
+      manager={createReactManager([])}
       insertPosition='start'
     >
       {({ getRootProps }) => (

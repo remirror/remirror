@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { RemirrorProvider } from '@remirror/react';
-import { createBaseManager } from '@remirror/testing';
+import { createCoreManager } from '@remirror/testing';
 import { render } from '@remirror/testing/react';
 
 import { ProsemirrorDevTools } from '../dev';
@@ -12,7 +12,7 @@ beforeEach(() => {
 
 test('it supports <ProsemirrorDevTools />', () => {
   const { baseElement } = render(
-    <RemirrorProvider manager={createBaseManager()}>
+    <RemirrorProvider manager={createCoreManager([])}>
       <ProsemirrorDevTools />
     </RemirrorProvider>,
   );
@@ -25,13 +25,13 @@ test('it unmounts <ProsemirrorDevTools />', () => {
   const Component = ({ dev }: { dev: boolean }) => (dev ? <ProsemirrorDevTools /> : <div />);
 
   const { baseElement, rerender } = render(
-    <RemirrorProvider manager={createBaseManager()}>
+    <RemirrorProvider manager={createCoreManager([])}>
       <Component dev={true} />
     </RemirrorProvider>,
   );
 
   rerender(
-    <RemirrorProvider manager={createBaseManager()}>
+    <RemirrorProvider manager={createCoreManager([])}>
       <Component dev={false} />
     </RemirrorProvider>,
   );

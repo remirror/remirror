@@ -11,7 +11,7 @@ import typescript from 'refractor/lang/typescript';
 import yaml from 'refractor/lang/yaml';
 
 import { ExtensionPriority, fromHtml, object, toHtml } from '@remirror/core';
-import { createBaseManager, isExtensionValid } from '@remirror/testing';
+import { createCoreManager, isExtensionValid } from '@remirror/testing';
 
 import { CodeBlockExtension, CodeBlockOptions, FormatterParameter } from '..';
 import { getLanguage } from '../code-block-utils';
@@ -21,12 +21,11 @@ test('is code block extension valid', () => {
 });
 
 describe('schema', () => {
-  const { schema } = createBaseManager({
-    extensions: [new CodeBlockExtension({ priority: ExtensionPriority.High })],
-  });
+  const { schema } = createCoreManager([
+    new CodeBlockExtension({ priority: ExtensionPriority.High }),
+  ]);
   const attributes = { language: 'typescript' };
   const content = 'unchanged without decorations';
-
   const { codeBlock, doc } = pmBuild(schema, {
     codeBlock: { nodeType: 'codeBlock', ...attributes },
   });

@@ -2,7 +2,7 @@ import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
 import { fromHtml, toHtml } from '@remirror/core';
-import { BoldExtension, createBaseManager, isExtensionValid } from '@remirror/testing';
+import { BoldExtension, createCoreManager, isExtensionValid } from '@remirror/testing';
 
 import { HeadingExtension, HeadingOptions } from '../heading-extension';
 
@@ -11,7 +11,7 @@ test('is valid', () => {
 });
 
 describe('schema', () => {
-  const { schema } = createBaseManager({ extensions: [new HeadingExtension()] });
+  const { schema } = createCoreManager([new HeadingExtension()]);
   const { h1, h2, h3, doc } = pmBuild(schema, {
     h1: { nodeType: 'heading' },
     h2: { nodeType: 'heading', level: 2 },
@@ -35,16 +35,14 @@ describe('schema', () => {
   });
 
   describe('extraAttributes', () => {
-    const { schema } = createBaseManager({
-      extensions: [
-        new HeadingExtension({
-          extraAttributes: {
-            title: { default: null },
-            custom: { default: 'failure', parseDOM: 'data-custom' },
-          },
-        }),
-      ],
-    });
+    const { schema } = createCoreManager([
+      new HeadingExtension({
+        extraAttributes: {
+          title: { default: null },
+          custom: { default: 'failure', parseDOM: 'data-custom' },
+        },
+      }),
+    ]);
 
     it('sets the extra attributes', () => {
       expect(schema.nodes.heading.spec.attrs).toEqual({
@@ -55,11 +53,9 @@ describe('schema', () => {
     });
 
     it('does not override the built in attributes', () => {
-      const { schema } = createBaseManager({
-        extensions: [
-          new HeadingExtension({ extraAttributes: { level: { default: 'should not appear' } } }),
-        ],
-      });
+      const { schema } = createCoreManager([
+        new HeadingExtension({ extraAttributes: { level: { default: 'should not appear' } } }),
+      ]);
 
       expect(schema.nodes.heading.spec.attrs).toEqual({
         level: { default: 1 },

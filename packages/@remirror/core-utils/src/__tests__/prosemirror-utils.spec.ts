@@ -18,7 +18,7 @@ import {
 import { omit, pick } from '@remirror/core-helpers';
 import { Schema } from '@remirror/pm/model';
 import { NodeSelection, Selection, TextSelection } from '@remirror/pm/state';
-import { BoldExtension, createBaseManager } from '@remirror/testing';
+import { BoldExtension, createCoreManager } from '@remirror/testing';
 
 import {
   cloneTransaction,
@@ -525,7 +525,7 @@ describe('findNodeAt...', () => {
 });
 
 test('schemaToJSON', () => {
-  const { nodes, marks } = createBaseManager({ extensions: [new BoldExtension()] });
+  const { nodes, marks } = createCoreManager([new BoldExtension()]);
 
   const testSchema = new Schema({
     nodes: pick(nodes, ['doc', 'paragraph', 'text']),

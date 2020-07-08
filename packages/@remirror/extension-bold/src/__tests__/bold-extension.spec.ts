@@ -2,7 +2,7 @@ import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
 import { fromHtml, toHtml } from '@remirror/core';
-import { createBaseManager, isExtensionValid } from '@remirror/testing';
+import { createCoreManager, isExtensionValid } from '@remirror/testing';
 
 import { BoldExtension, BoldOptions } from '../..';
 
@@ -11,11 +11,7 @@ test('is bold extension valid', () => {
 });
 
 describe('schema', () => {
-  const { schema } = createBaseManager({
-    extensions: [new BoldExtension()],
-    presets: [],
-  });
-
+  const { schema } = createCoreManager([new BoldExtension()]);
   const { bold, p, doc } = pmBuild(schema, {
     bold: { markType: 'bold' },
   });
@@ -54,11 +50,9 @@ describe('schema', () => {
 });
 
 test('supports extra attributes', () => {
-  const { schema } = createBaseManager({
-    extensions: [new BoldExtension({ extraAttributes: { 'data-custom': 'hello-world' } })],
-    presets: [],
-  });
-
+  const { schema } = createCoreManager([
+    new BoldExtension({ extraAttributes: { 'data-custom': 'hello-world' } }),
+  ]);
   const { bold, p } = pmBuild(schema, {
     bold: { markType: 'bold' },
   });
@@ -74,8 +68,7 @@ test('supports extra attributes', () => {
 });
 
 function create(options?: BoldOptions) {
-  const boldExtension = new BoldExtension(options);
-  return renderEditor([boldExtension]);
+  return renderEditor([new BoldExtension(options)]);
 }
 
 test('inputRules', () => {

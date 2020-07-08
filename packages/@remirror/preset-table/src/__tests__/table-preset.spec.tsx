@@ -2,15 +2,12 @@ import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
 import { fromHtml, toHtml } from '@remirror/core';
-import { createBaseManager } from '@remirror/testing';
+import { createCoreManager } from '@remirror/testing';
 
 import { TablePreset } from '..';
 
 describe('schema', () => {
-  const { schema } = createBaseManager({
-    extensions: [],
-    presets: [new TablePreset()],
-  });
+  const { schema } = createCoreManager([new TablePreset()]);
 
   const { doc, table, tableRow, tableCell, tableHeader, p } = pmBuild(schema, {
     table: { nodeType: 'table' },

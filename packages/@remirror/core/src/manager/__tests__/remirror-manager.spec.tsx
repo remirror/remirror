@@ -7,7 +7,7 @@ import {
   ProsemirrorAttributes,
 } from '@remirror/core-types';
 import { EditorView } from '@remirror/pm/view';
-import { CorePreset, createBaseManager } from '@remirror/testing';
+import { CorePreset, createCoreManager } from '@remirror/testing';
 
 import { CreateLifecycleMethod, PlainExtension } from '../../extension';
 import { isRemirrorManager, RemirrorManager } from '../remirror-manager';
@@ -114,7 +114,7 @@ describe('Manager', () => {
     });
 
     it('should provide the schema at instantiation', () => {
-      expect(createBaseManager().schema).toBeTruthy();
+      expect(createCoreManager([]).schema).toBeTruthy();
     });
 
     it('should provide access to `attributes`', () => {
@@ -238,6 +238,5 @@ test('lifecycle', () => {
   }
 
   const extension = new LifecycleExtension();
-
-  createBaseManager({ extensions: [extension], presets: [] });
+  createCoreManager([extension]);
 });
