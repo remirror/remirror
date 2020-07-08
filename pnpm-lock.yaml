@@ -30,7 +30,7 @@ importers:
       '@testing-library/jest-dom': 5.11.0
       '@types/jest': 26.0.4
       '@types/jest-axe': 3.2.2
-      '@types/node': 14.0.20
+      '@types/node': 14.0.22
       '@types/testing-library__jest-dom': 5.9.1
       '@types/webpack': 4.41.21
       '@typescript-eslint/eslint-plugin': 3.6.0_1c51ade106368f8db1c65fa08c9a96ed
@@ -56,7 +56,7 @@ importers:
       eslint-plugin-jsx-a11y: 6.3.1_eslint@7.4.0
       eslint-plugin-promise: 4.2.1
       eslint-plugin-react: 7.20.3_eslint@7.4.0
-      eslint-plugin-react-hooks: 4.0.6_eslint@7.4.0
+      eslint-plugin-react-hooks: 4.0.7_eslint@7.4.0
       eslint-plugin-security: 1.4.0
       eslint-plugin-simple-import-sort: 5.0.3_eslint@7.4.0
       eslint-plugin-sonarjs: 0.5.0_eslint@7.4.0
@@ -180,7 +180,7 @@ importers:
       clipanion: 2.4.2
       dargs: 7.0.0
       figures: 3.2.0
-      ink: 2.7.1_e24372b37dddbbb73a3a9a7c87f51f44
+      ink: 2.7.1_77c7d81bfb5b7bc8faa474a6693448b2
       ink-link: 1.1.0_ink@2.7.1+react@16.13.1
       ink-multi-select: 1.1.2
       ink-spinner: 3.1.0_ink@2.7.1+react@16.13.1
@@ -200,9 +200,9 @@ importers:
       '@types/ink-spinner': 3.0.0
       '@types/ink-testing-library': 1.0.1
       '@types/jsesc': 2.5.1
-      '@types/node': 14.0.20
+      '@types/node': 14.0.22
       '@types/parcel-bundler': 1.12.1
-      '@types/react': 16.9.41
+      '@types/react': 16.9.42
       '@types/rimraf': 3.0.0
       delay: 4.3.0
       ink-testing-library: 2.0.0
@@ -319,7 +319,7 @@ importers:
       '@remirror/core-helpers': 'link:../core-helpers'
       '@remirror/core-types': 'link:../core-types'
       '@types/min-document': 2.19.0
-      '@types/node': 14.0.20
+      '@types/node': 14.0.22
       min-document: 2.19.0
     devDependencies:
       '@remirror/pm': 'link:../pm'
@@ -343,7 +343,7 @@ importers:
       prosemirror-dev-tools: 3.0.2_react-dom@16.13.1+react@16.13.1
     devDependencies:
       '@testing-library/react': 10.4.5_react-dom@16.13.1+react@16.13.1
-      '@types/react': 16.9.41
+      '@types/react': 16.9.42
       '@types/react-dom': 16.9.8
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
@@ -668,6 +668,22 @@ importers:
       '@babel/runtime': ^7.10.4
       '@remirror/core': 1.0.0-next.3
       '@remirror/pm': 1.0.0-next.3
+  packages/@remirror/extension-react-component:
+    dependencies:
+      '@babel/runtime': 7.10.4
+      '@remirror/react-utils': 'link:../react-utils'
+    devDependencies:
+      '@remirror/core': 'link:../core'
+      '@remirror/pm': 'link:../pm'
+      '@types/react': 16.9.42
+      react: 16.13.1
+    specifiers:
+      '@babel/runtime': ^7.10.4
+      '@remirror/core': ^1.0.0-next.2
+      '@remirror/pm': ^1.0.0-next.1
+      '@remirror/react-utils': ^1.0.0-next.1
+      '@types/react': ^16.9.41
+      react: ^16.13.1
   packages/@remirror/extension-react-ssr:
     dependencies:
       '@babel/runtime': 7.10.4
@@ -675,7 +691,7 @@ importers:
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
-      '@types/react': 16.9.41
+      '@types/react': 16.9.42
       react: 16.13.1
     specifiers:
       '@babel/runtime': ^7.10.4
@@ -786,7 +802,7 @@ importers:
       remirror: 'link:../../remirror'
     devDependencies:
       '@types/prettier': 2.0.2
-      '@types/react': 16.9.41
+      '@types/react': 16.9.42
       '@types/react-dom': 16.9.8
       prettier: 2.0.5
       react: 16.13.1
@@ -815,7 +831,7 @@ importers:
   packages/@remirror/pm:
     dependencies:
       '@babel/runtime': 7.10.4
-      '@types/prosemirror-commands': 1.0.2
+      '@types/prosemirror-commands': 1.0.3
       '@types/prosemirror-dropcursor': 1.0.0
       '@types/prosemirror-gapcursor': 1.0.1
       '@types/prosemirror-history': 1.0.1
@@ -915,18 +931,20 @@ importers:
     dependencies:
       '@babel/runtime': 7.10.4
       '@remirror/extension-placeholder': 'link:../extension-placeholder'
+      '@remirror/extension-react-component': 'link:../extension-react-component'
       '@remirror/extension-react-ssr': 'link:../extension-react-ssr'
       '@remirror/react-utils': 'link:../react-utils'
       linaria: 2.0.0-alpha.5
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
-      '@types/react': 16.9.41
+      '@types/react': 16.9.42
       react: 16.13.1
     specifiers:
       '@babel/runtime': ^7.10.4
       '@remirror/core': ^1.0.0-next.3
       '@remirror/extension-placeholder': ^1.0.0-next.3
+      '@remirror/extension-react-component': ^0.0.0
       '@remirror/extension-react-ssr': ^1.0.0-next.3
       '@remirror/pm': ^1.0.0-next.3
       '@remirror/react-utils': ^1.0.0-next.2
@@ -1036,7 +1054,6 @@ importers:
       hoist-non-react-statics: 3.3.2
       linaria: 2.0.0-alpha.5
       min-document: 2.19.0
-      nanoevents: 5.1.8
       react-use: 15.3.2_react-dom@16.13.1+react@16.13.1
       resize-observer-polyfill: 1.5.1
       type-fest: 0.16.0
@@ -1045,7 +1062,7 @@ importers:
       '@remirror/pm': 'link:../pm'
       '@testing-library/react': 10.4.5_react-dom@16.13.1+react@16.13.1
       '@testing-library/react-hooks': 3.3.0_1fb72ba09e79ce5bfd91e4d67e1015b7
-      '@types/react': 16.9.41
+      '@types/react': 16.9.42
       '@types/react-dom': 16.9.8
       '@types/react-test-renderer': 16.9.2
       '@types/testing-library__react-hooks': 3.2.0
@@ -1078,7 +1095,6 @@ importers:
       jest-axe: ^3.4.0
       linaria: ^2.0.0-alpha.5
       min-document: ^2.19.0
-      nanoevents: ^5.1.8
       react: ^16.13.1
       react-dom: ^16.13.1
       react-test-renderer: ^16.13.1
@@ -1108,7 +1124,7 @@ importers:
       '@remirror/react': 'link:../react'
       '@testing-library/react': 10.4.5_react-dom@16.13.1+react@16.13.1
       '@testing-library/react-hooks': 3.3.0_react@16.13.1
-      '@types/react': 16.9.41
+      '@types/react': 16.9.42
       '@types/react-dom': 16.9.8
       '@types/testing-library__react-hooks': 3.2.0
       react: 16.13.1
@@ -1145,16 +1161,22 @@ importers:
       '@remirror/core-constants': 'link:../core-constants'
       '@remirror/core-helpers': 'link:../core-helpers'
       '@remirror/core-types': 'link:../core-types'
+      nanoevents: 5.1.8
     devDependencies:
-      '@types/react': 16.9.41
+      '@types/react': 16.9.42
+      '@types/react-dom': 16.9.8
       react: 16.13.1
+      react-dom: 16.13.1
     specifiers:
       '@babel/runtime': ^7.10.4
       '@remirror/core-constants': ^1.0.0-next.1
       '@remirror/core-helpers': ^1.0.0-next.1
       '@remirror/core-types': ^1.0.0-next.1
       '@types/react': ^16.9.41
+      '@types/react-dom': ^16.9.8
+      nanoevents: ^5.1.8
       react: ^16.13.1
+      react-dom: ^16.13.1
   packages/@remirror/react-wysiwyg:
     dependencies:
       '@babel/runtime': 7.10.4
@@ -1175,7 +1197,7 @@ importers:
       '@remirror/pm': 'link:../pm'
       '@remirror/react': 'link:../react'
       '@testing-library/react': 10.4.5_react-dom@16.13.1+react@16.13.1
-      '@types/react': 16.9.41
+      '@types/react': 16.9.42
       '@types/react-dom': 16.9.8
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
@@ -1212,7 +1234,7 @@ importers:
       match-sorter: 4.1.0
       prettier: 2.0.5
     devDependencies:
-      '@types/react': 16.9.41
+      '@types/react': 16.9.42
       react: 16.13.1
     specifiers:
       '@babel/runtime': ^7.10.4
@@ -1244,12 +1266,13 @@ importers:
       '@remirror/pm': 'link:../pm'
       '@remirror/preset-core': 'link:../preset-core'
       '@remirror/preset-react': 'link:../preset-react'
+      '@remirror/react': 'link:../react'
       '@testing-library/react': 10.4.5_react@16.13.1
       '@types/min-document': 2.19.0
       jest-diff: 26.1.0
       min-document: 2.19.0
     devDependencies:
-      '@types/react': 16.9.41
+      '@types/react': 16.9.42
       react: 16.13.1
     specifiers:
       '@babel/runtime': ^7.10.4
@@ -1267,6 +1290,7 @@ importers:
       '@remirror/pm': ^1.0.0-next.3
       '@remirror/preset-core': ^1.0.0-next.3
       '@remirror/preset-react': ^1.0.0-next.3
+      '@remirror/react': ^1.0.0-next.3
       '@testing-library/react': ^10.4.5
       '@types/min-document': ^2.19.0
       '@types/react': ^16.9.41
@@ -1339,8 +1363,8 @@ importers:
       '@remirror/pm': 'link:../@remirror/pm'
       '@testing-library/dom': 7.20.0
       '@testing-library/react': 10.4.5_react-dom@16.13.1+react@16.13.1
-      '@types/node': 14.0.20
-      '@types/react': 16.9.41
+      '@types/node': 14.0.22
+      '@types/react': 16.9.42
       '@types/react-dom': 16.9.8
       '@types/sanitize-html': 1.23.3
       jest-prosemirror: 'link:../jest-prosemirror'
@@ -1379,7 +1403,7 @@ importers:
       w3c-keyname: 2.2.4
     devDependencies:
       '@testing-library/react': 10.4.5_react@16.13.1
-      '@types/react': 16.9.41
+      '@types/react': 16.9.42
       react: 16.13.1
     specifiers:
       '@babel/runtime': ^7.10.4
@@ -1461,6 +1485,7 @@ importers:
       '@remirror/extension-placeholder': 'link:../@remirror/extension-placeholder'
       '@remirror/extension-position-tracker': 'link:../@remirror/extension-position-tracker'
       '@remirror/extension-positioner': 'link:../@remirror/extension-positioner'
+      '@remirror/extension-react-component': 'link:../@remirror/extension-react-component'
       '@remirror/extension-react-ssr': 'link:../@remirror/extension-react-ssr'
       '@remirror/extension-search': 'link:../@remirror/extension-search'
       '@remirror/extension-strike': 'link:../@remirror/extension-strike'
@@ -1482,7 +1507,7 @@ importers:
       '@remirror/theme': 'link:../@remirror/theme'
     devDependencies:
       '@remirror/pm': 'link:../@remirror/pm'
-      '@types/react': 16.9.41
+      '@types/react': 16.9.42
       '@types/react-dom': 16.9.8
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
@@ -1491,8 +1516,8 @@ importers:
       '@remirror/core': ^1.0.0-next.3
       '@remirror/core-constants': ^1.0.0-next.1
       '@remirror/core-helpers': ^1.0.0-next.1
-      '@remirror/core-types': ^1.0.0-next.3
-      '@remirror/core-utils': ^1.0.0-next.3
+      '@remirror/core-types': ^1.0.0-next.1
+      '@remirror/core-utils': ^1.0.0-next.1
       '@remirror/dom': ^1.0.0-next.3
       '@remirror/extension-auto-link': ^1.0.0-next.3
       '@remirror/extension-base-keymap': ^1.0.0-next.3
@@ -1520,6 +1545,7 @@ importers:
       '@remirror/extension-placeholder': ^1.0.0-next.3
       '@remirror/extension-position-tracker': ^1.0.0-next.3
       '@remirror/extension-positioner': ^1.0.0-next.3
+      '@remirror/extension-react-component': ^0.0.0
       '@remirror/extension-react-ssr': ^1.0.0-next.3
       '@remirror/extension-search': ^1.0.0-next.3
       '@remirror/extension-strike': ^1.0.0-next.3
@@ -1537,7 +1563,7 @@ importers:
       '@remirror/preset-wysiwyg': ^1.0.0-next.3
       '@remirror/react': ^1.0.0-next.3
       '@remirror/react-social': ^1.0.0-next.3
-      '@remirror/react-utils': ^1.0.0-next.1
+      '@remirror/react-utils': ^1.0.0-next.2
       '@remirror/react-wysiwyg': ^1.0.0-next.3
       '@remirror/theme': ^1.0.0-next.1
       '@types/react': ^16.9.41
@@ -1560,7 +1586,7 @@ importers:
       '@types/lodash.groupby': 4.6.6
       '@types/prettier': 2.0.2
       '@types/rimraf': 3.0.0
-      autoprefixer: 9.8.4
+      autoprefixer: 9.8.5
       chalk: 4.1.0
       diffable-html: 4.0.0
       globby: 11.0.1
@@ -1673,7 +1699,7 @@ importers:
       refractor: 3.0.0
       remirror: 'link:../../../packages/remirror'
     devDependencies:
-      '@types/react': 16.9.41
+      '@types/react': 16.9.42
       '@types/react-dom': 16.9.8
       '@types/refractor': 2.8.0
     specifiers:
@@ -1691,11 +1717,11 @@ importers:
     dependencies:
       '@babel/core': 7.10.4
       '@remirror/showcase': 'link:../../packages/@remirror/showcase'
-      '@storybook/addon-actions': 5.3.19_601862a32b07162e5ad79ea00b3eb0e0
+      '@storybook/addon-actions': 5.3.19_d77c18e5ab4fa088efe5b7fb3a6d75dc
       '@storybook/addon-links': 5.3.19_react-dom@16.13.1+react@16.13.1
       '@storybook/addons': 5.3.19_react-dom@16.13.1
-      '@storybook/react': 5.3.19_17f7369a6c7af29c3b4cc6607f4c9c8d
-      '@types/react': 16.9.41
+      '@storybook/react': 5.3.19_7c1e352f20d1422cfcd50e2f3198fe68
+      '@types/react': 16.9.42
       '@types/react-dom': 16.9.8
       babel-loader: 8.1.0_@babel+core@7.10.4
       linaria: 2.0.0-alpha.5
@@ -1738,7 +1764,7 @@ importers:
     devDependencies:
       '@docusaurus/module-type-aliases': 2.0.0-alpha.58
       '@docusaurus/types': 2.0.0-alpha.58
-      '@types/react': 16.9.41
+      '@types/react': 16.9.42
       '@types/react-dom': 16.9.8
       babel-plugin-dynamic-import-node: 2.3.3
       monaco-editor-webpack-plugin: 1.9.0
@@ -5742,12 +5768,12 @@ packages:
       typescript: '*'
     resolution:
       integrity: sha512-Uw2ZgEM81RaHE9UjDGrjHyLLA1ngpWTNWU1wJmXpGHXq4F8I1wV5rLdAzWZO8F137LhK66hpYoaAk0y2w/wy2w==
-  /@storybook/addon-actions/5.3.19_601862a32b07162e5ad79ea00b3eb0e0:
+  /@storybook/addon-actions/5.3.19_d77c18e5ab4fa088efe5b7fb3a6d75dc:
     dependencies:
       '@storybook/addons': 5.3.19_react-dom@16.13.1
       '@storybook/api': 5.3.19_react-dom@16.13.1
       '@storybook/client-api': 5.3.19_react-dom@16.13.1
-      '@storybook/components': 5.3.19_@types+react@16.9.41
+      '@storybook/components': 5.3.19_@types+react@16.9.42
       '@storybook/core-events': 5.3.19
       '@storybook/theming': 5.3.19_react-dom@16.13.1+react@16.13.1
       core-js: 3.6.5
@@ -5944,7 +5970,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-nHftT9Ow71YgAd2/tsu79kwKk30mPuE0sGRRUHZVyCRciGFQweKNOS/6xi2Aq+WwBNNjPKNlbgxwRt1yKe1Vkg==
-  /@storybook/components/5.3.19_@types+react@16.9.41:
+  /@storybook/components/5.3.19_@types+react@16.9.42:
     dependencies:
       '@storybook/client-logger': 5.3.19
       '@storybook/theming': 5.3.19_react-dom@16.13.1+react@16.13.1
@@ -5960,7 +5986,7 @@ packages:
       prop-types: 15.7.2
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
-      react-focus-lock: 2.4.0_e24372b37dddbbb73a3a9a7c87f51f44
+      react-focus-lock: 2.4.0_77c7d81bfb5b7bc8faa474a6693448b2
       react-helmet-async: 1.0.6_react-dom@16.13.1+react@16.13.1
       react-popper-tooltip: 2.11.1_react-dom@16.13.1+react@16.13.1
       react-syntax-highlighter: 11.0.2_react@16.13.1
@@ -5978,7 +6004,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-lh78ySqMS7pDdMJAQAe35d1I/I4yPTqp09Cq0YIYOxx9BQZhah4DZTV1QIZt22H5p2lPb5MWLkWSxBaexZnz8A==
-  /@storybook/core/5.3.19_17f7369a6c7af29c3b4cc6607f4c9c8d:
+  /@storybook/core/5.3.19_7c1e352f20d1422cfcd50e2f3198fe68:
     dependencies:
       '@babel/core': 7.10.4
       '@babel/plugin-proposal-class-properties': 7.10.4_@babel+core@7.10.4
@@ -5995,7 +6021,7 @@ packages:
       '@storybook/node-logger': 5.3.19
       '@storybook/router': 5.3.19_react-dom@16.13.1+react@16.13.1
       '@storybook/theming': 5.3.19_react-dom@16.13.1+react@16.13.1
-      '@storybook/ui': 5.3.19_@types+react@16.9.41
+      '@storybook/ui': 5.3.19_@types+react@16.9.42
       airbnb-js-shims: 2.2.1
       ansi-to-html: 0.6.14
       autoprefixer: 9.8.4
@@ -6083,14 +6109,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-hKshig/u5Nj9fWy0OsyU04yqCxr0A9pydOHIassr4fpLAaePIN2YvqCqE2V+TxQHjZUnowSSIhbXrGt0DI5q2A==
-  /@storybook/react/5.3.19_17f7369a6c7af29c3b4cc6607f4c9c8d:
+  /@storybook/react/5.3.19_7c1e352f20d1422cfcd50e2f3198fe68:
     dependencies:
       '@babel/core': 7.10.4
       '@babel/plugin-transform-react-constant-elements': 7.10.4_@babel+core@7.10.4
       '@babel/preset-flow': 7.10.4_@babel+core@7.10.4
       '@babel/preset-react': 7.10.4_@babel+core@7.10.4
       '@storybook/addons': 5.3.19_58e8c6dda46ed174a9ab196ecc0674a2
-      '@storybook/core': 5.3.19_17f7369a6c7af29c3b4cc6607f4c9c8d
+      '@storybook/core': 5.3.19_7c1e352f20d1422cfcd50e2f3198fe68
       '@storybook/node-logger': 5.3.19
       '@svgr/webpack': 4.3.3
       '@types/webpack-env': 1.15.2
@@ -6163,14 +6189,14 @@ packages:
       react-dom: '*'
     resolution:
       integrity: sha512-ecG+Rq3hc1GOzKHamYnD4wZ0PEP9nNg0mXbC3RhbxfHj+pMMCWWmx9B2Uu75SL1PTT8WcfkFO0hU/0IO84Pzlg==
-  /@storybook/ui/5.3.19_@types+react@16.9.41:
+  /@storybook/ui/5.3.19_@types+react@16.9.42:
     dependencies:
       '@emotion/core': 10.0.28_react@16.13.1
       '@storybook/addons': 5.3.19_58e8c6dda46ed174a9ab196ecc0674a2
       '@storybook/api': 5.3.19_58e8c6dda46ed174a9ab196ecc0674a2
       '@storybook/channels': 5.3.19
       '@storybook/client-logger': 5.3.19
-      '@storybook/components': 5.3.19_@types+react@16.9.41
+      '@storybook/components': 5.3.19_@types+react@16.9.42
       '@storybook/core-events': 5.3.19
       '@storybook/router': 5.3.19_react-dom@16.13.1+react@16.13.1
       '@storybook/theming': 5.3.19_react-dom@16.13.1+react@16.13.1
@@ -6810,6 +6836,9 @@ packages:
   /@types/node/14.0.20:
     resolution:
       integrity: sha512-MRn/NP3dee8yL5QhbSA6riuwkS+UOcsPUMOIOG3KMUQpuor/2TopdRBu8QaaB4fGU+gz/bzyDWt0FtUbeJ8H1A==
+  /@types/node/14.0.22:
+    resolution:
+      integrity: sha512-emeGcJvdiZ4Z3ohbmw93E/64jRzUHAItSHt8nF7M4TGgQTiWqFVGB8KNpLGFmUHmHLvjvBgFwVlqNcq+VuGv9g==
   /@types/normalize-package-data/2.4.0:
     resolution:
       integrity: sha512-f5j5b/Gf71L+dbqxIpQ4Z2WlmI/mPJ0fOkGGmFgtb6sAu97EPczzbS3/tJKxmcYDj55OX6ssqwDAWOHIYDRDGA==
@@ -6863,6 +6892,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-ADqycOY+J+pGzr1UMVX/3g9v+d18ZV6ConNDtkpuJ1Xunjjl+kEIv6Uds8MiIc17Caw12LLUcz/N1myxPMKgkA==
+  /@types/prosemirror-commands/1.0.3:
+    dependencies:
+      '@types/prosemirror-model': 1.7.2
+      '@types/prosemirror-state': 1.2.5
+      '@types/prosemirror-view': 1.15.0
+    dev: false
+    resolution:
+      integrity: sha512-AjFCJqBvAhQ4gOzXPgUcnEZwu4jd7se7ani3dYAv8p4L+cWEPD6Pshrpp5uJDI5/pzvNXLWQ/4c2Qk4h9IML1w==
   /@types/prosemirror-dev-tools/2.1.0:
     dependencies:
       '@types/prosemirror-state': 1.2.5
@@ -6974,7 +7011,7 @@ packages:
       integrity: sha512-h0NbqXN/tJuBY/xggZSej1SKQEstbHO7J/omt1tYoFGmj3YXOodZKbbqD4mNDh7zvEGYd7YFrac1LTtAr3xsYQ==
   /@types/react-dom/16.9.8:
     dependencies:
-      '@types/react': 16.9.41
+      '@types/react': 16.9.42
     resolution:
       integrity: sha512-ykkPQ+5nFknnlU6lDd947WbQ6TE3NNzbQAkInC2EKY1qeYdTKp7onFusmYZb+ityzx2YviqT6BXSu+LyWWJwcA==
   /@types/react-syntax-highlighter/11.0.4:
@@ -7001,6 +7038,12 @@ packages:
       csstype: 2.6.11
     resolution:
       integrity: sha512-6cFei7F7L4wwuM+IND/Q2cV1koQUvJ8iSV+Gwn0c3kvABZ691g7sp3hfEQHOUBJtccl1gPi+EyNjMIl9nGA0ug==
+  /@types/react/16.9.42:
+    dependencies:
+      '@types/prop-types': 15.7.3
+      csstype: 2.6.11
+    resolution:
+      integrity: sha512-iGy6HwfVfotqJ+PfRZ4eqPHPP5NdPZgQlr0lTs8EfkODRBV9cYy8QMKcC9qPCe1JrESC1Im6SrCFR6tQgg74ag==
   /@types/refractor/2.8.0:
     dependencies:
       '@types/prismjs': 1.16.1
@@ -8084,6 +8127,19 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-84aYfXlpUe45lvmS+HoAWKCkirI/sw4JK0/bTeeqgHYco3dcsOn0NqdejISjptsYwNji/21dnkDri9PsYKk89A==
+  /autoprefixer/9.8.5:
+    dependencies:
+      browserslist: 4.13.0
+      caniuse-lite: 1.0.30001097
+      colorette: 1.2.1
+      normalize-range: 0.1.2
+      num2fraction: 1.2.2
+      postcss: 7.0.32
+      postcss-value-parser: 4.1.0
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-C2p5KkumJlsTHoNv9w31NrBRgXhf6eCMteJuHZi2xhkgC+5Vm40MEtCKPhc0qdgAOhox0YPy1SQHTAky05UoKg==
   /await-to-js/2.1.1:
     dev: false
     engines:
@@ -11949,7 +12005,7 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-VoM09vT7bfA7D+upt+FjeBO5eHIJQBUWki1aPvB+vbNiHS3+oGIJGIeyBtKQTME6UPXXy3vV07OL1tHd3ANuDw==
-  /eslint-plugin-react-hooks/4.0.6_eslint@7.4.0:
+  /eslint-plugin-react-hooks/4.0.7_eslint@7.4.0:
     dependencies:
       eslint: 7.4.0
     dev: false
@@ -11958,7 +12014,7 @@ packages:
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
     resolution:
-      integrity: sha512-RDrsUR/BjwCECcWS+5bc7mWiU/M1IOizKt40Zuei5mn0Eydubiooh87aSCiZ/BGMSUF7P8AqyMEqQL0RsAihmw==
+      integrity: sha512-5PuW2OMHQyMLr/+MqTluYN3/NeJJ1RuvmEp5TR9Xl2gXKxvcusUZuMz8XBUtbELNaiRYWs693LQs0cljKuuHRQ==
   /eslint-plugin-react/7.20.3_eslint@7.4.0:
     dependencies:
       array-includes: 3.1.1
@@ -14619,7 +14675,7 @@ packages:
       integrity: sha512-RZY5huIKCMRWDUqZlEi72f/lmXKMvuszcMBduliQ3nnWbx9X/ZBQO7DijMEYS9EhHBb2qacRUMtC7svLwe0lcw==
   /ink-link/1.1.0_ink@2.7.1+react@16.13.1:
     dependencies:
-      ink: 2.7.1_e24372b37dddbbb73a3a9a7c87f51f44
+      ink: 2.7.1_77c7d81bfb5b7bc8faa474a6693448b2
       prop-types: 15.7.2
       react: 16.13.1
       terminal-link: 2.1.1
@@ -14645,7 +14701,7 @@ packages:
   /ink-spinner/3.1.0_ink@2.7.1+react@16.13.1:
     dependencies:
       cli-spinners: 1.3.1
-      ink: 2.7.1_e24372b37dddbbb73a3a9a7c87f51f44
+      ink: 2.7.1_77c7d81bfb5b7bc8faa474a6693448b2
       prop-types: 15.7.2
       react: 16.13.1
     dev: false
@@ -14665,9 +14721,9 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-BwOqxXedU7nuJekcSoA6HZrzQK/cOk8Uz+ciyV+UDVDrwdsLasAFxpfAXMfoVJV8rDgVmvTAowUE+xl0AbYyug==
-  /ink/2.7.1_e24372b37dddbbb73a3a9a7c87f51f44:
+  /ink/2.7.1_77c7d81bfb5b7bc8faa474a6693448b2:
     dependencies:
-      '@types/react': 16.9.41
+      '@types/react': 16.9.42
       ansi-escapes: 4.3.1
       arrify: 2.0.1
       auto-bind: 4.0.0
@@ -21463,6 +21519,17 @@ packages:
       react: '>=0.13.0'
     resolution:
       integrity: sha1-5yfcdVCztzEWY13LnA4E0Lev4Xw=
+  /react-dom/16.13.1:
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      prop-types: 15.7.2
+      scheduler: 0.19.1
+    dev: true
+    peerDependencies:
+      react: ^16.13.1
+    resolution:
+      integrity: sha512-81PIMmVLnCNLO/fFOQxdQkvEq/+Hfpv24XNJfpyZhTRfO0QcmQIF/PgCa1zCOj2w1hrn12MFLyaJ/G0+Mxtfag==
   /react-dom/16.13.1_react@16.13.1:
     dependencies:
       loose-envify: 1.4.0
@@ -21489,14 +21556,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
-  /react-focus-lock/2.4.0_e24372b37dddbbb73a3a9a7c87f51f44:
+  /react-focus-lock/2.4.0_77c7d81bfb5b7bc8faa474a6693448b2:
     dependencies:
       '@babel/runtime': 7.10.4
       focus-lock: 0.7.0
       prop-types: 15.7.2
       react: 16.13.1
       react-clientside-effect: 1.2.2_react@16.13.1
-      use-callback-ref: 1.2.4_e24372b37dddbbb73a3a9a7c87f51f44
+      use-callback-ref: 1.2.4_77c7d81bfb5b7bc8faa474a6693448b2
       use-sidecar: 1.0.2_react@16.13.1
     dev: false
     peerDependencies:
@@ -25301,9 +25368,9 @@ packages:
     dev: false
     resolution:
       integrity: sha1-ODjpfPxgUh63PFJajlW/3Z4uKPE=
-  /use-callback-ref/1.2.4_e24372b37dddbbb73a3a9a7c87f51f44:
+  /use-callback-ref/1.2.4_77c7d81bfb5b7bc8faa474a6693448b2:
     dependencies:
-      '@types/react': 16.9.41
+      '@types/react': 16.9.42
       react: 16.13.1
     dev: false
     engines:

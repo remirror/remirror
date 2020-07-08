@@ -128,7 +128,12 @@ export enum ErrorConstant {
   /**
    * There is a problem with your controlled editor setup.
    */
-  REACT_CONTROLLED = 'RMR0202',
+  REACT_CONTROLLED = 'RMR0203',
+
+  /**
+   * Something went wrong with your custom ReactNodeView Component.
+   */
+  REACT_NODE_VIEW = 'RMR0204',
 
   /**
    * There is something wrong with your i18n setup.

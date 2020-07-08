@@ -17,7 +17,7 @@ import { AnyCombinedUnion } from '../preset';
  * @builtin
  */
 export class NodeViewsExtension extends PlainExtension {
-  static readonly defaultPriority = ExtensionPriority.High;
+  static readonly defaultPriority = ExtensionPriority.Default;
 
   get name() {
     return 'nodeView' as const;

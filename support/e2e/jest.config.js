@@ -38,4 +38,8 @@ module.exports = {
   globalTeardown: './jest.playwright.teardown.ts',
   testEnvironment: './custom-environment.js',
   testRunner: 'jest-circus/runner',
+  displayName: {
+    name: 'remirror:e2e',
+    color: 'purple',
+  },
 };

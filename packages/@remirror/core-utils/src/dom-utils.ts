@@ -357,9 +357,7 @@ export function getMarkRange(
     startPos -= pmPosition.parent.child(startIndex).nodeSize;
   }
 
-  const endPos = startPos + start.node.nodeSize;
-
-  return { from: startPos, to: endPos };
+  return { from: startPos, to: startPos + start.node.nodeSize };
 }
 
 /**
@@ -374,8 +372,7 @@ export function getMarkRange(
  * @public
  */
 export function getTextContentFromSlice(slice: Slice) {
-  const node = slice.content.firstChild;
-  return node ? node.textContent : '';
+  return slice.content.firstChild?.textContent ?? '';
 }
 
 /**

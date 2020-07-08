@@ -10,3 +10,11 @@ export function render(
 
 export { cleanup, act, fireEvent } from '@testing-library/react';
 export type { RenderResult };
+export {
+  useRemirror,
+  RemirrorProvider,
+  useManager,
+  useExtension,
+  usePreset,
+  createReactManager,
+} from '@remirror/react';

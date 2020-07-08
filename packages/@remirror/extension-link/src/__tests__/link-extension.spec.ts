@@ -19,7 +19,7 @@ describe('schema', () => {
   });
 
   beforeEach(() => {
-    ({ schema } = createCoreManager([new LinkExtension()] );
+    ({ schema } = createCoreManager([new LinkExtension()]));
     ({ a, doc, p } = pmBuild(schema, {
       a: { markType: 'link', href },
     }));
@@ -46,14 +46,13 @@ describe('schema', () => {
     const title = 'awesome';
 
     const { schema } = createCoreManager([
-        new LinkExtension({
-          extraAttributes: {
-            title: { default: null },
-            custom: { default: 'failure', parseDOM: 'data-custom' },
-          },
-        }),
-      ],
-    );
+      new LinkExtension({
+        extraAttributes: {
+          title: { default: null },
+          custom: { default: 'failure', parseDOM: 'data-custom' },
+        },
+      }),
+    ]);
 
     it('sets the extra attributes', () => {
       expect(schema.marks.link.spec.attrs).toEqual({
@@ -65,14 +64,13 @@ describe('schema', () => {
 
     it('does not override the href', () => {
       const { schema } = createCoreManager([
-          new LinkExtension({
-            extraAttributes: {
-              title: { default: null },
-              custom: { default: 'failure', parseDOM: 'data-custom' },
-            },
-          }),
-        ],
-      );
+        new LinkExtension({
+          extraAttributes: {
+            title: { default: null },
+            custom: { default: 'failure', parseDOM: 'data-custom' },
+          },
+        }),
+      ]);
 
       expect(schema.marks.link.spec.attrs).toEqual({
         custom: { default: 'failure' },

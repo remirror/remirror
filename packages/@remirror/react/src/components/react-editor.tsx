@@ -45,7 +45,6 @@ import {
 } from '@remirror/react-utils';
 
 import { usePrevious } from '../hooks';
-import { PortalContainer } from '../portals';
 import {
   BaseProps,
   GetRootPropsConfig,
@@ -189,12 +188,6 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
   Combined,
   ReactEditorProps<Combined>
 > {
-  /**
-   * The portal container which keeps track of all the React Portals containing
-   * custom prosemirror NodeViews.
-   */
-  readonly #portalContainer: PortalContainer = new PortalContainer();
-
   /**
    * Whether to render the client immediately.
    */
@@ -422,7 +415,7 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
     return {
       ...this.editorWrapperOutput,
       getRootProps: this.getRootProps,
-      portalContainer: this.#portalContainer,
+      portalContainer: this.manager.store.portalContainer,
     };
   }
 

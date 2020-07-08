@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
-import { createCoreManager, docNodeBasicJSON } from '@remirror/testing';
-import { render } from '@remirror/testing/react';
+import { docNodeBasicJSON } from '@remirror/testing';
+import { createReactManager, render } from '@remirror/testing/react';
 
 import { useRemirror } from '../../hooks';
 import { RemirrorProvider, ThemeProvider } from '../providers';
@@ -16,7 +16,7 @@ test('RemirrorProvider', () => {
     );
   };
 
-  const manager = createCoreManager([]);
+  const manager = createReactManager([]);
 
   const { getByRole, getByTestId } = render(
     <RemirrorProvider initialContent={docNodeBasicJSON} manager={manager}>

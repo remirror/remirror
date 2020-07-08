@@ -11,11 +11,10 @@ import { AnyCombinedUnion, MakeOptional } from '@remirror/core';
 import { i18n as defaultI18n } from '@remirror/i18n';
 import { CorePresetOptions } from '@remirror/preset-core';
 import { ReactPresetOptions } from '@remirror/preset-react';
-import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
+import { oneChildOnly, RemirrorPortals, RemirrorType } from '@remirror/react-utils';
 import { createThemeVariables, RemirrorThemeType, themeStyles } from '@remirror/theme';
 
 import { useManager } from '../hooks';
-import { RemirrorPortals } from '../portals';
 import { I18nContext, RemirrorContext } from '../react-contexts';
 import {
   BaseProps,

@@ -9,6 +9,7 @@ import {
   Preset,
 } from '@remirror/core';
 import { PlaceholderExtension, PlaceholderOptions } from '@remirror/extension-placeholder';
+import { ReactComponentExtension } from '@remirror/extension-react-component';
 import { ReactSSRExtension, ReactSSROptions } from '@remirror/extension-react-ssr';
 import { getElementProps } from '@remirror/react-utils';
 
@@ -41,7 +42,9 @@ export class ReactPreset extends Preset<ReactPresetOptions> {
     const placeholderExtension = new PlaceholderExtension({ emptyNodeClass, placeholder });
     this.addSSRToPlaceholder(placeholderExtension);
 
-    return [new ReactSSRExtension({ transformers }), placeholderExtension];
+    const reactComponentExtension = new ReactComponentExtension();
+
+    return [new ReactSSRExtension({ transformers }), placeholderExtension, reactComponentExtension];
   }
 
   private addSSRToPlaceholder(extension: PlaceholderExtension) {

@@ -1,9 +1,7 @@
 import diff from 'jest-diff';
 
 import {
-  AnyExtension,
   AnyExtensionConstructor,
-  AnyPreset,
   AnyPresetConstructor,
   BaseExtensionOptions,
   ErrorConstant,
@@ -16,50 +14,7 @@ import {
   omit,
   OptionsOfConstructor,
   PresetConstructorParameter,
-  RemirrorManager,
-  RemirrorManagerParameter,
 } from '@remirror/core';
-import { CorePreset } from '@remirror/preset-core';
-import { ReactPreset } from '@remirror/preset-react';
-
-/**
- * A manager used for testing with the preset core already applied.
- *
- * TODO refactor to use combined array as parameter.
- */
-export function createBaseManager<
-  ExtensionUnion extends AnyExtension,
-  PresetUnion extends AnyPreset
->(parameter: Partial<RemirrorManagerParameter<ExtensionUnion, PresetUnion>> = {}) {
-  const { extensions = [], presets = [], settings } = parameter;
-  const corePreset = new CorePreset();
-
-  return RemirrorManager.fromObject({
-    extensions,
-    presets: [...presets, corePreset],
-    settings,
-  });
-}
-
-/**
- * A manager for use to test `@remirror/react`.
- *
- * TODO refactor to use combined array as parameter.
- */
-export function createReactManager<
-  ExtensionUnion extends AnyExtension,
-  PresetUnion extends AnyPreset
->(parameter: Partial<RemirrorManagerParameter<ExtensionUnion, PresetUnion>> = {}) {
-  const { extensions = [], presets = [], settings } = parameter;
-  const corePreset = new CorePreset();
-  const reactPreset = new ReactPreset();
-
-  return RemirrorManager.fromObject({
-    extensions,
-    presets: [...presets, corePreset, reactPreset],
-    settings,
-  });
-}
 
 export const initialJson = {
   type: 'doc',

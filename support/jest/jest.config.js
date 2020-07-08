@@ -23,4 +23,9 @@ module.exports = {
     jestSupportDir('jest.framework.dom.ts'),
   ],
   cacheDirectory: baseDir('.jest', TEST_BUILD ? 'build' : 'aliased'),
+  errorOnDeprecated: true,
+  displayName: {
+    name: 'remirror:unit',
+    color: 'blue',
+  },
 };

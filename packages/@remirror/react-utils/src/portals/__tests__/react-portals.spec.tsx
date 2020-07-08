@@ -1,11 +1,14 @@
 import React from 'react';
 
-import { createBaseManager } from '@remirror/testing';
-import { act, render } from '@remirror/testing/react';
+import {
+  act,
+  createReactManager,
+  RemirrorProvider,
+  render,
+  useRemirror,
+} from '@remirror/testing/react';
 
 import { PortalContainer, RemirrorPortals } from '..';
-import { RemirrorProvider } from '../../components';
-import { useRemirror } from '../../hooks';
 
 describe('RemirrorPortals', () => {
   const container = document.createElement('span');
@@ -22,7 +25,7 @@ describe('RemirrorPortals', () => {
 
     act(() => {
       document.body.append(container);
-      portalContainer.render({ render: mockRender, container });
+      portalContainer.render({ Component: mockRender, container });
     });
 
     expect(getByTestId('test')).toBeTruthy();
@@ -30,7 +33,7 @@ describe('RemirrorPortals', () => {
   });
 
   it('provides access to the `RemirrorProvider` context', () => {
-    const manager = createBaseManager();
+    const manager = createReactManager([]);
 
     const Component = () => {
       const context = useRemirror();
@@ -48,7 +51,7 @@ describe('RemirrorPortals', () => {
 
     act(() => {
       document.body.append(container);
-      portalContainer.render({ render: Component, container });
+      portalContainer.render({ Component, container });
     });
   });
 
@@ -58,7 +61,7 @@ describe('RemirrorPortals', () => {
 
     act(() => {
       document.body.append(container);
-      portalContainer.render({ render: () => <div data-testid='test' />, container });
+      portalContainer.render({ Component: () => <div data-testid='test' />, container });
     });
 
     expect(queryByTestId('test')).toBeTruthy();

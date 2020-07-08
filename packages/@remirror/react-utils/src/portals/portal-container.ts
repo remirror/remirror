@@ -1,13 +1,13 @@
 import { createNanoEvents } from 'nanoevents';
-import { ReactElement } from 'react';
+import { FunctionComponent } from 'react';
 
-import { uniqueId } from '@remirror/core';
+import { uniqueId } from '@remirror/core-helpers';
 
 export interface RenderParameter {
   /**
    * Renders a JSX element.
    */
-  render: () => ReactElement;
+  Component: FunctionComponent;
 }
 
 export interface MountedPortal extends RenderParameter {
@@ -76,11 +76,11 @@ export class PortalContainer {
   /**
    * Responsible for registering a new portal by rendering the react element into the provided container.
    */
-  render({ render, container }: RenderMethodParameter) {
+  render({ Component, container }: RenderMethodParameter) {
     const portal = this.portals.get(container);
     const key = portal ? portal.key : uniqueId();
 
-    this.portals.set(container, { render, key });
+    this.portals.set(container, { Component, key });
     this.update();
   }
 
@@ -91,9 +91,9 @@ export class PortalContainer {
    * Decoration where there is no destroy method.
    */
   forceUpdate() {
-    this.portals.forEach(({ render }, container) => {
+    this.portals.forEach(({ Component }, container) => {
       // Assign the portal a new key so it is re-rendered
-      this.portals.set(container, { render, key: uniqueId() });
+      this.portals.set(container, { Component, key: uniqueId() });
     });
 
     this.update();

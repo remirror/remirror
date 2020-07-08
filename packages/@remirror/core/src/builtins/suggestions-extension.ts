@@ -16,7 +16,7 @@ import { PlainExtension } from '../extension';
  * @builtin
  */
 export class SuggestionsExtension extends PlainExtension {
-  static readonly defaultPriority = ExtensionPriority.High;
+  static readonly defaultPriority = ExtensionPriority.Default;
 
   get name() {
     return 'suggestions' as const;

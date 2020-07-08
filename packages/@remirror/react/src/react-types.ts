@@ -16,8 +16,7 @@ import {
 import { I18n } from '@remirror/i18n';
 import { CorePreset, CreateCoreManagerOptions } from '@remirror/preset-core';
 import { ReactPreset, ReactPresetOptions } from '@remirror/preset-react';
-
-import { PortalContainer } from './portals';
+import { PortalContainer } from '@remirror/react-utils';
 
 export type DefaultReactCombined = CombinedUnion<
   AnyExtension,

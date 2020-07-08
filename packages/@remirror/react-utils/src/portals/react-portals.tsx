@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { Fragment, FunctionComponent, useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { PortalContainer, PortalMap } from './portal-container';
@@ -32,8 +32,8 @@ export const RemirrorPortals = ({ portalContainer }: RemirrorPortalsProps) => {
   }, [onPortalChange, portalContainer]);
 
   return (
-    <Fragment>
-      {state.map(([container, { render: Component, key }]) => (
+    <>
+      {state.map(([container, { Component, key }]) => (
         <Fragment key={key}>
           {createPortal(
             <Portal
@@ -45,7 +45,7 @@ export const RemirrorPortals = ({ portalContainer }: RemirrorPortalsProps) => {
           )}
         </Fragment>
       ))}
-    </Fragment>
+    </>
   );
 };
 
@@ -58,7 +58,7 @@ export interface PortalProps extends RemirrorPortalsProps {
   /**
    * The plain component to render.
    */
-  Component: () => ReactElement;
+  Component: FunctionComponent<object>;
 }
 
 /**
@@ -66,7 +66,9 @@ export interface PortalProps extends RemirrorPortalsProps {
  * RemirrorPortals component. It is responsible for cleanup when the container
  * is removed from the DOM.
  */
-const Portal = ({ portalContainer, container, Component }: PortalProps) => {
+const Portal = (props: PortalProps) => {
+  const { portalContainer, container, Component } = props;
+
   useEffect(() => {
     /**
      * Remove the portal container entry when this portal is unmounted.

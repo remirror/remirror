@@ -17,9 +17,9 @@ lerna.json
 
 **/temp/**
 
-
 pnpm-lock.yaml
 .pnpm-store/
+support/root/pnpm-lock.yaml
 
 support/website/.docusaurus
 support/website/build

@@ -11,7 +11,7 @@ import { CreateLifecycleMethod, PlainExtension } from '../extension';
  * @builtin
  */
 export class PasteRulesExtension extends PlainExtension {
-  static readonly defaultPriority = ExtensionPriority.High;
+  static readonly defaultPriority = ExtensionPriority.Default;
 
   get name() {
     return 'pasteRules' as const;

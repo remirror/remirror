@@ -3,6 +3,6 @@
   "module": "dist/remirror.esm.js",
   "types": "dist/remirror.cjs.d.ts",
   "preconstruct": {
-    "source": "../../src/extension/react-component"
+    "source": "../../src/extension/react-ssr"
   }
 }

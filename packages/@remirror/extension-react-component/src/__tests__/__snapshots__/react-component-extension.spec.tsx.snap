@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NodeViews are created with content 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  aria-placeholder=""
+  autofocus="false"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <nav>
+    <p
+      custom="awesome"
+    >
+      <span>
+        content hello world
+      </span>
+    </p>
+  </nav>
+</div>
+`;
+
+exports[`NodeViews are created without content 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  aria-placeholder=""
+  autofocus="false"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <nav>
+    <div>
+      Ignore content
+    </div>
+  </nav>
+</div>
+`;
