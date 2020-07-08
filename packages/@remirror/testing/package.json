@@ -28,7 +28,7 @@
     "@remirror/pm": "^1.0.0-next.1",
     "@remirror/preset-core": "^1.0.0-next.2",
     "@remirror/preset-react": "^1.0.0-next.2",
-    "@testing-library/react": "^10.4.3",
+    "@testing-library/react": "^10.4.4",
     "@types/min-document": "^2.19.0",
     "jest-diff": "^26.1.0",
     "min-document": "^2.19.0"

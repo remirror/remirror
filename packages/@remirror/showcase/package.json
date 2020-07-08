@@ -27,7 +27,7 @@
     "@remirror/extension-code-block": "^1.0.0-next.1",
     "@remirror/react-social": "^1.0.0-next.1",
     "@types/match-sorter": "^4.0.0",
-    "@types/prettier": "^2.0.1",
+    "@types/prettier": "^2.0.2",
     "match-sorter": "^4.1.0",
     "prettier": "^2.0.5"
   },
