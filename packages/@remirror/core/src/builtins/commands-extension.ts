@@ -5,6 +5,7 @@ import {
   CommandFunction,
   DispatchFunction,
   EmptyShape,
+  FromToParameter,
   ProsemirrorAttributes,
   Transaction,
 } from '@remirror/core-types';
@@ -162,6 +163,21 @@ export class CommandsExtension extends PlainExtension {
         return ({ tr, dispatch }) => {
           if (dispatch) {
             dispatch(tr.insertText(text));
+          }
+
+          return true;
+        };
+      },
+
+      /**
+       * Delete the provided range or current selection.
+       */
+      delete(range?: FromToParameter): CommandFunction {
+        return ({ tr, dispatch }) => {
+          const { from, to } = range ?? tr.selection;
+
+          if (dispatch) {
+            dispatch(tr.delete(from, to));
           }
 
           return true;
