@@ -52,8 +52,8 @@ jobs:
           curl -L https://unpkg.com/@pnpm/self-installer | node
           pnpm config set store-dir $PNPM_CACHE_FOLDER
 
-      # - name: audit dependencies
-      #   run: pnpm audit
+      - name: audit dependencies
+        run: pnpm audit --audit-level high
 
       - name: install dependencies
         run: pnpm install
@@ -99,8 +99,8 @@ jobs:
           curl -L https://unpkg.com/@pnpm/self-installer | node
           pnpm config set store-dir $PNPM_CACHE_FOLDER
 
-      # - name: audit dependencies
-      #   run: pnpm audit
+      - name: audit dependencies
+        run: pnpm audit --audit-level high
 
       - name: install dependencies
         run: pnpm install
@@ -137,8 +137,8 @@ jobs:
           curl -L https://unpkg.com/@pnpm/self-installer | node
           pnpm config set store-dir $PNPM_CACHE_FOLDER
 
-      # - name: audit dependencies
-      #   run: pnpm audit
+      - name: audit dependencies
+        run: pnpm audit --audit-level high
 
       - name: install dependencies
         run: pnpm install
@@ -175,8 +175,8 @@ jobs:
           curl -L https://unpkg.com/@pnpm/self-installer | node
           pnpm config set store-dir $PNPM_CACHE_FOLDER
 
-      # - name: audit dependencies
-      #   run: pnpm audit
+      - name: audit dependencies
+        run: pnpm audit --audit-level high
 
       - name: install dependencies
         run: pnpm install
@@ -227,8 +227,8 @@ jobs:
           curl -L https://unpkg.com/@pnpm/self-installer | node
           pnpm config set store-dir $PNPM_CACHE_FOLDER
 
-      # - name: audit dependencies
-      #   run: pnpm audit
+      - name: audit dependencies
+        run: pnpm audit --audit-level high
 
       - name: install dependencies
         run: pnpm install
@@ -268,8 +268,8 @@ jobs:
           curl -L https://unpkg.com/@pnpm/self-installer | node
           pnpm config set store-dir $PNPM_CACHE_FOLDER
 
-      # - name: audit dependencies
-      #   run: pnpm audit
+      - name: audit dependencies
+        run: pnpm audit --audit-level high
 
       - name: install dependencies
         run: pnpm install
@@ -312,8 +312,8 @@ jobs:
       - name: install pnpm
         run: npm install pnpm -g
 
-      # - name: audit dependencies
-      #   run: pnpm audit
+      - name: audit dependencies
+        run: pnpm audit --audit-level high
 
       - name: install dependencies
         run: pnpm install
@@ -356,8 +356,8 @@ jobs:
       - name: install pnpm
         run: npm install pnpm -g
 
-      # - name: audit dependencies
-      #   run: pnpm audit
+      - name: audit dependencies
+        run: pnpm audit --audit-level high
 
       - name: install dependencies
         run: pnpm install
@@ -400,8 +400,8 @@ jobs:
           curl -L https://unpkg.com/@pnpm/self-installer | node
           pnpm config set store-dir $PNPM_CACHE_FOLDER
 
-      # - name: audit dependencies
-      #   run: pnpm audit
+      - name: audit dependencies
+        run: pnpm audit --audit-level high
 
       - name: install dependencies
         run: pnpm install
