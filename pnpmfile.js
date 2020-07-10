@@ -11,7 +11,6 @@ function readPackage(pkg) {
   const setDependency = createSetDependency(pkg);
 
   setDependency('__NA__', '>=0');
-
   return pkg;
 }
 

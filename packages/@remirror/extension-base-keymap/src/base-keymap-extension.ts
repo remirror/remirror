@@ -13,6 +13,7 @@ import {
   object,
   OnSetOptionsParameter,
   PlainExtension,
+  ProsemirrorCommandFunction,
 } from '@remirror/core';
 import {
   baseKeymap,
@@ -174,14 +175,14 @@ export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
     // Only add the base keymap if it is **NOT** excluded.
     if (!excludeBaseKeymap) {
       for (const [key, value] of entries(baseKeymap)) {
-        this.baseKeyBindings[key] = convertCommand(value);
+        this.baseKeyBindings[key] = convertCommand(value as ProsemirrorCommandFunction);
       }
     }
 
     // Automatically remove the input rule when the option is set to true.
     if (undoInputRuleOnBackspace) {
       this.baseKeyBindings.Backspace = convertCommand(
-        pmChainCommands(undoInputRule, baseKeymap.Backspace),
+        pmChainCommands(undoInputRule, baseKeymap.Backspace as ProsemirrorCommandFunction),
       );
     }
 
