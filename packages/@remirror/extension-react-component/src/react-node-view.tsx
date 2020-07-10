@@ -186,6 +186,9 @@ export class ReactNodeView implements NodeView {
     return document.createElement(domSpec[0]);
   }
 
+  /**
+   * The element that will contain the content for this element.
+   */
   createContentDom(): HTMLElement | undefined {
     if (this.#node.isLeaf) {
       return;
@@ -198,7 +201,10 @@ export class ReactNodeView implements NodeView {
       return;
     }
 
-    return document.createElement(this.#options.defaultContentNode);
+    const element = document.createElement(this.#options.defaultContentNode);
+    element.setAttribute('contenteditable', `${this.#view.editable}`);
+
+    return element;
   }
 
   /**

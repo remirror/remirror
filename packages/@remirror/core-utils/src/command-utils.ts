@@ -92,42 +92,42 @@ function isList(node: ProsemirrorNode, schema: EditorSchema) {
  *
  * @public
  */
-export const toggleList = (type: NodeType, itemType: NodeType): ProsemirrorCommandFunction => (
-  state,
-  dispatch,
-) => {
-  const { schema, selection } = state;
-  const { $from, $to } = selection;
-  const range = $from.blockRange($to);
+export function toggleList(type: NodeType, itemType: NodeType): CommandFunction {
+  return (parameter) => {
+    const { state, dispatch, tr } = parameter;
+    const { schema } = state;
+    const { selection } = tr;
+    const { $from, $to } = selection;
+    const range = $from.blockRange($to);
 
-  if (!range) {
-    return false;
-  }
-
-  const parentList = findParentNode({
-    predicate: (node) => isList(node, schema),
-    selection,
-  });
-
-  if (range.depth >= 1 && parentList && range.depth - parentList.depth <= 1) {
-    if (parentList.node.type === type) {
-      return liftListItem(itemType)(state, dispatch);
+    if (!range) {
+      return false;
     }
 
-    if (isList(parentList.node, schema) && type.validContent(parentList.node.content)) {
-      const { tr } = state;
-      tr.setNodeMarkup(parentList.pos, type);
+    const parentList = findParentNode({
+      predicate: (node) => isList(node, schema),
+      selection,
+    });
 
-      if (dispatch) {
-        dispatch(tr);
+    if (range.depth >= 1 && parentList && range.depth - parentList.depth <= 1) {
+      if (parentList.node.type === type) {
+        return liftListItem(itemType)(state, dispatch);
       }
 
-      return true;
-    }
-  }
+      if (isList(parentList.node, schema) && type.validContent(parentList.node.content)) {
+        tr.setNodeMarkup(parentList.pos, type);
 
-  return wrapInList(type)(state, dispatch);
-};
+        if (dispatch) {
+          dispatch(tr);
+        }
+
+        return true;
+      }
+    }
+
+    return wrapInList(type)(state, dispatch);
+  };
+}
 
 interface ToggleBlockItemParameter extends NodeTypeParameter, Partial<AttributesParameter> {
   /**

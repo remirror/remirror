@@ -40,6 +40,6 @@
     "access": "public"
   },
   "meta": {
-    "sizeLimit": "5 KB"
+    "sizeLimit": "10 KB"
   }
 }

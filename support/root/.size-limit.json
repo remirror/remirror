@@ -35,36 +35,6 @@
     "running": false
   },
   {
-    "name": "@remirror/react-social",
-    "path": "packages/@remirror/react-social/dist/react-social.esm.js",
-    "limit": "200 KB",
-    "ignore": [
-      "@remirror/core",
-      "@remirror/pm",
-      "@remirror/react",
-      "@types/react",
-      "@types/react-dom",
-      "react",
-      "react-dom"
-    ],
-    "running": false
-  },
-  {
-    "name": "@remirror/react-wysiwyg",
-    "path": "packages/@remirror/react-wysiwyg/dist/react-wysiwyg.esm.js",
-    "limit": "200 KB",
-    "ignore": [
-      "@remirror/core",
-      "@remirror/pm",
-      "@remirror/react",
-      "@types/react",
-      "@types/react-dom",
-      "react",
-      "react-dom"
-    ],
-    "running": false
-  },
-  {
     "name": "@remirror/extension-auto-link",
     "path": "packages/@remirror/extension-auto-link/dist/extension-auto-link.esm.js",
     "limit": "5 KB",
@@ -247,6 +217,13 @@
     "running": false
   },
   {
+    "name": "@remirror/extension-react-component",
+    "path": "packages/@remirror/extension-react-component/dist/extension-react-component.esm.js",
+    "limit": "10 KB",
+    "ignore": ["@remirror/core", "@remirror/pm", "@types/react", "react"],
+    "running": false
+  },
+  {
     "name": "@remirror/extension-react-ssr",
     "path": "packages/@remirror/extension-react-ssr/dist/extension-react-ssr.esm.js",
     "limit": "5 KB",
@@ -326,8 +303,15 @@
   {
     "name": "@remirror/preset-react",
     "path": "packages/@remirror/preset-react/dist/preset-react.esm.js",
-    "limit": "10 KB",
+    "limit": "20 KB",
     "ignore": ["@remirror/core", "@remirror/pm", "@types/react", "react"],
+    "running": false
+  },
+  {
+    "name": "@remirror/preset-react-checkbox",
+    "path": "packages/@remirror/preset-react-checkbox/dist/preset-template.esm.js",
+    "limit": "10 KB",
+    "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
@@ -366,10 +350,40 @@
     "running": false
   },
   {
+    "name": "@remirror/react-social",
+    "path": "packages/@remirror/react-social/dist/react-social.esm.js",
+    "limit": "200 KB",
+    "ignore": [
+      "@remirror/core",
+      "@remirror/pm",
+      "@remirror/react",
+      "@types/react",
+      "@types/react-dom",
+      "react",
+      "react-dom"
+    ],
+    "running": false
+  },
+  {
     "name": "@remirror/react-utils",
     "path": "packages/@remirror/react-utils/dist/react-utils.esm.js",
     "limit": "5 KB",
-    "ignore": ["@types/react", "react"],
+    "ignore": ["@types/react", "@types/react-dom", "react", "react-dom"],
+    "running": false
+  },
+  {
+    "name": "@remirror/react-wysiwyg",
+    "path": "packages/@remirror/react-wysiwyg/dist/react-wysiwyg.esm.js",
+    "limit": "200 KB",
+    "ignore": [
+      "@remirror/core",
+      "@remirror/pm",
+      "@remirror/react",
+      "@types/react",
+      "@types/react-dom",
+      "react",
+      "react-dom"
+    ],
     "running": false
   },
   {

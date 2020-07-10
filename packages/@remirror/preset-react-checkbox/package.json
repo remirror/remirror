@@ -1,0 +1,40 @@
+{
+  "name": "@remirror/preset-react-checkbox",
+  "version": "0.0.0",
+  "description": "A remirror checkbox rendered with react.",
+  "keywords": [
+    "remirror",
+    "preset",
+    "text-editor"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/preset-react-checkbox",
+  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/preset-react-checkbox",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/preset-react-checkbox.cjs.js",
+  "module": "dist/preset-react-checkbox.esm.js",
+  "types": "dist/preset-react-checkbox.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.10.4"
+  },
+  "devDependencies": {
+    "@remirror/core": "^1.0.0-next.2",
+    "@remirror/pm": "^1.0.0-next.1"
+  },
+  "peerDependencies": {
+    "@remirror/core": "*",
+    "@remirror/pm": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "10 KB"
+  }
+}

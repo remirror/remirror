@@ -1,6 +1,5 @@
 import {
   ApplySchemaAttributes,
-  convertCommand,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
@@ -32,14 +31,13 @@ export class BulletListExtension extends NodeExtension {
       /**
        * Toggle the bullet list.
        */
-      toggleBulletList: () =>
-        convertCommand(toggleList(this.type, this.store.schema.nodes.listItem)),
+      toggleBulletList: () => toggleList(this.type, this.store.schema.nodes.listItem),
     };
   };
 
   createKeymap = (): KeyBindings => {
     return {
-      'Shift-Ctrl-8': convertCommand(toggleList(this.type, this.store.schema.nodes.listItem)),
+      'Shift-Ctrl-8': toggleList(this.type, this.store.schema.nodes.listItem),
     };
   };
 

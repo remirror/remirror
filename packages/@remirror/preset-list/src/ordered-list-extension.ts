@@ -1,6 +1,5 @@
 import {
   ApplySchemaAttributes,
-  convertCommand,
   isElementDomNode,
   KeyBindings,
   NodeExtension,
@@ -58,14 +57,13 @@ export class OrderedListExtension extends NodeExtension {
       /**
        * Toggle the ordered list for the current selection.
        */
-      toggleOrderedList: () =>
-        convertCommand(toggleList(this.type, this.store.schema.nodes.listItem)),
+      toggleOrderedList: () => toggleList(this.type, this.store.schema.nodes.listItem),
     };
   };
 
   createKeymap = (): KeyBindings => {
     return {
-      'Shift-Ctrl-9': convertCommand(toggleList(this.type, this.store.schema.nodes.listItem)),
+      'Shift-Ctrl-9': toggleList(this.type, this.store.schema.nodes.listItem),
     };
   };
 

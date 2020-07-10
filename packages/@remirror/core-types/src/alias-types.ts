@@ -48,7 +48,9 @@ export type ProsemirrorNode<Schema extends EditorSchema = any> = PMNode<Schema>;
 export type ProsemirrorPlugin<PluginState = any> = PMPlugin<PluginState, EditorSchema>;
 export type MarkType<Schema extends EditorSchema = any> = PMMarkType<Schema>;
 export type NodeType<Schema extends EditorSchema = any> = PMNodeType<Schema>;
-export type EditorState<Schema extends EditorSchema = any> = Readonly<PMEditorState<Schema>>;
+export type EditorState<Schema extends EditorSchema = EditorSchema> = Readonly<
+  PMEditorState<Schema>
+>;
 export type Slice<Schema extends EditorSchema = any> = PMSlice<Schema>;
 export type Decoration = PMDecoration;
 export type Mapping = PMMapping;
