@@ -5,7 +5,7 @@ exports[`commands #clearSearch 1`] = `
   aria-label=""
   aria-multiline="true"
   autofocus="false"
-  class="ProseMirror remirror-editor"
+  class="ProseMirror remirror-editor ProseMirror-focused"
   contenteditable="true"
   role="textbox"
 >
@@ -29,7 +29,7 @@ exports[`commands #find 1`] = `
   aria-label=""
   aria-multiline="true"
   autofocus="false"
-  class="ProseMirror remirror-editor"
+  class="ProseMirror remirror-editor ProseMirror-focused"
   contenteditable="true"
   role="textbox"
 >
@@ -62,7 +62,7 @@ exports[`commands #find 2`] = `
   aria-label=""
   aria-multiline="true"
   autofocus="false"
-  class="ProseMirror remirror-editor"
+  class="ProseMirror remirror-editor ProseMirror-focused"
   contenteditable="true"
   role="textbox"
 >
@@ -95,7 +95,7 @@ exports[`commands #find 3`] = `
   aria-label=""
   aria-multiline="true"
   autofocus="false"
-  class="ProseMirror remirror-editor"
+  class="ProseMirror remirror-editor ProseMirror-focused"
   contenteditable="true"
   role="textbox"
 >
@@ -128,7 +128,7 @@ exports[`commands #findNext, #replace 1`] = `
   aria-label=""
   aria-multiline="true"
   autofocus="false"
-  class="ProseMirror remirror-editor"
+  class="ProseMirror remirror-editor ProseMirror-focused"
   contenteditable="true"
   role="textbox"
 >
@@ -152,7 +152,7 @@ exports[`commands #replace 1`] = `
   aria-label=""
   aria-multiline="true"
   autofocus="false"
-  class="ProseMirror remirror-editor"
+  class="ProseMirror remirror-editor ProseMirror-focused"
   contenteditable="true"
   role="textbox"
 >
@@ -181,7 +181,7 @@ exports[`commands #replaceAll 1`] = `
   aria-label=""
   aria-multiline="true"
   autofocus="false"
-  class="ProseMirror remirror-editor"
+  class="ProseMirror remirror-editor ProseMirror-focused"
   contenteditable="true"
   role="textbox"
 >

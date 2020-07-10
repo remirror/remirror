@@ -28,7 +28,7 @@ exports[`options can make use of \`excludedNodes\` 1`] = `
   aria-label=""
   aria-multiline="true"
   autofocus="false"
-  class="ProseMirror remirror-editor"
+  class="ProseMirror remirror-editor ProseMirror-focused"
   contenteditable="true"
   role="textbox"
 >
@@ -63,7 +63,7 @@ exports[`options can turn off \`autoUpdate\` 2`] = `
   aria-label=""
   aria-multiline="true"
   autofocus="false"
-  class="ProseMirror remirror-editor"
+  class="ProseMirror remirror-editor ProseMirror-focused"
   contenteditable="true"
   role="textbox"
 >
@@ -106,7 +106,7 @@ exports[`updates the direction based on typing 1`] = `
   aria-label=""
   aria-multiline="true"
   autofocus="false"
-  class="ProseMirror remirror-editor"
+  class="ProseMirror remirror-editor ProseMirror-focused"
   contenteditable="true"
   role="textbox"
 >
@@ -123,7 +123,7 @@ exports[`updates the direction based on typing 2`] = `
   aria-label=""
   aria-multiline="true"
   autofocus="false"
-  class="ProseMirror remirror-editor"
+  class="ProseMirror remirror-editor ProseMirror-focused"
   contenteditable="true"
   role="textbox"
 >
@@ -140,7 +140,7 @@ exports[`updates to the default direction affect the attributes 1`] = `
   aria-label=""
   aria-multiline="true"
   autofocus="false"
-  class="ProseMirror remirror-editor"
+  class="ProseMirror remirror-editor ProseMirror-focused"
   contenteditable="true"
   dir="rtl"
   role="textbox"
