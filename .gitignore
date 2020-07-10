@@ -145,7 +145,6 @@ cc-reporter
 ## Ignore root files
 /.eslintignore
 /.eslintrc.js
-/.npmrc
 /.size-limit.json
 /.stylelintignore
 /.stylelintrc.json
@@ -153,12 +152,13 @@ cc-reporter
 /globals.d.ts
 /linaria.config.js
 /lingui.config.js
-/pnpmfile.js
 /jest.config.js
 /.vscode
-/.changeset
 /.prettierrc
 /.huskyrc
 /.lintstagedrc
 /tsconfig.json
 /docs/changelog.md
+# /.npmrc
+# /.changeset
+# /pnpmfile.js
