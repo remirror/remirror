@@ -13,5 +13,5 @@
     "noEmit": true,
     "skipLibCheck": true // TODO jest-playwright-preset has a broken type
   },
-  "include": ["./", "patches.d.ts", "../jest-playwright.config.js"]
+  "include": ["./", "patches.d.ts"]
 }

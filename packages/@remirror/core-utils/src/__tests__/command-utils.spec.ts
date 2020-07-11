@@ -154,7 +154,7 @@ describe('toggleList', () => {
     const from = doc(p('make <cursor>list'));
     const to = doc(ul(li(p('make list'))));
 
-    expect(toggleList(schema.nodes.bulletList, schema.nodes.listItem)).toTransformNode({
+    expect(toggleList(schema.nodes.bulletList, schema.nodes.listItem)).toTransform({
       from,
       to,
     });
@@ -164,7 +164,7 @@ describe('toggleList', () => {
     const from = doc(ul(li(p('make <cursor>list'))));
     const to = doc(p('make list'));
 
-    expect(toggleList(schema.nodes.bulletList, schema.nodes.listItem)).toTransformNode({
+    expect(toggleList(schema.nodes.bulletList, schema.nodes.listItem)).toTransform({
       from,
       to,
     });
@@ -174,7 +174,7 @@ describe('toggleList', () => {
     const from = doc(ol(li(p('make <cursor>list'))));
     const to = doc(ul(li(p('make list'))));
 
-    expect(toggleList(schema.nodes.bulletList, schema.nodes.listItem)).toTransformNode({
+    expect(toggleList(schema.nodes.bulletList, schema.nodes.listItem)).toTransform({
       from,
       to,
     });
@@ -186,7 +186,7 @@ describe('toggleList', () => {
     const toNested = ul(li('1.1'), li(p('1.2')), li(p('1.3')));
     const to = doc(ol(li(p('1'), toNested), li(p('2'))));
 
-    expect(toggleList(schema.nodes.bulletList, schema.nodes.listItem)).toTransformNode({
+    expect(toggleList(schema.nodes.bulletList, schema.nodes.listItem)).toTransform({
       from,
       to,
     });

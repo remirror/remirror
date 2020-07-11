@@ -8,10 +8,11 @@ import React, {
 } from 'react';
 
 import { AnyCombinedUnion, MakeOptional } from '@remirror/core';
+import { RemirrorPortals } from '@remirror/extension-react-component';
 import { i18n as defaultI18n } from '@remirror/i18n';
 import { CorePresetOptions } from '@remirror/preset-core';
 import { ReactPresetOptions } from '@remirror/preset-react';
-import { oneChildOnly, RemirrorPortals, RemirrorType } from '@remirror/react-utils';
+import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
 import { createThemeVariables, RemirrorThemeType, themeStyles } from '@remirror/theme';
 
 import { useManager } from '../hooks';

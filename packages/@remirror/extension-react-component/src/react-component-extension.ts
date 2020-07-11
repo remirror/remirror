@@ -11,13 +11,13 @@ import {
   PlainExtension,
   StaticKeyList,
 } from '@remirror/core';
-import { PortalContainer } from '@remirror/react-utils';
 
 import {
   NodeViewComponentProps,
   ReactComponentEnvironment,
   ReactComponentOptions,
 } from './node-view-types';
+import { PortalContainer } from './portals';
 import { ReactNodeView } from './react-node-view';
 
 /**

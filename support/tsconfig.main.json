@@ -10,11 +10,11 @@
     ]
   },
   "include": [
-    "../**/*.ts",
-    "../**/*.tsx",
+    "../packages/**/*.ts",
+    "../packages/**/*.tsx",
     "../global.d.ts",
     "scripts/linaria.js",
-    "storybook/main.js"
+    "storybook/"
   ],
-  "exclude": ["../**/dist/", "../dist", "templates", "e2e", "examples"]
+  "exclude": ["../**/dist/", "../dist", "templates", "e2e", "examples", "**/node_modules/"]
 }

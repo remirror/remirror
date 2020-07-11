@@ -20,8 +20,3 @@ declare const __VERSION__: string;
  * development build.
  */
 declare const __DEV__: boolean;
-
-declare module 'tiny-querystring' {
-  export function parse(queryString: string): Record<string, unknown>;
-  export function stringify(object: Record<string, unknown>): string;
-}

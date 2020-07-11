@@ -22,7 +22,6 @@ import {
   ProsemirrorNode,
   SELECTED_NODE_CLASS_NAME,
 } from '@remirror/core';
-import { PortalContainer } from '@remirror/react-utils';
 
 import {
   CreateNodeViewParameter,
@@ -30,6 +29,7 @@ import {
   ReactComponentOptions,
   ReactNodeViewParameter,
 } from './node-view-types';
+import { PortalContainer } from './portals';
 
 export class ReactNodeView implements NodeView {
   /**

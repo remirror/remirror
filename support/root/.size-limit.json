@@ -220,7 +220,14 @@
     "name": "@remirror/extension-react-component",
     "path": "packages/@remirror/extension-react-component/dist/extension-react-component.esm.js",
     "limit": "10 KB",
-    "ignore": ["@remirror/core", "@remirror/pm", "@types/react", "react"],
+    "ignore": [
+      "@remirror/core",
+      "@remirror/pm",
+      "@types/react",
+      "@types/react-dom",
+      "react",
+      "react-dom"
+    ],
     "running": false
   },
   {
@@ -304,12 +311,19 @@
     "name": "@remirror/preset-react",
     "path": "packages/@remirror/preset-react/dist/preset-react.esm.js",
     "limit": "20 KB",
-    "ignore": ["@remirror/core", "@remirror/pm", "@types/react", "react"],
+    "ignore": [
+      "@remirror/core",
+      "@remirror/pm",
+      "@types/react",
+      "@types/react-dom",
+      "react",
+      "react-dom"
+    ],
     "running": false
   },
   {
     "name": "@remirror/preset-react-checkbox",
-    "path": "packages/@remirror/preset-react-checkbox/dist/preset-template.esm.js",
+    "path": "packages/@remirror/preset-react-checkbox/dist/preset-react-checkbox.esm.js",
     "limit": "10 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
@@ -368,7 +382,7 @@
     "name": "@remirror/react-utils",
     "path": "packages/@remirror/react-utils/dist/react-utils.esm.js",
     "limit": "5 KB",
-    "ignore": ["@types/react", "@types/react-dom", "react", "react-dom"],
+    "ignore": ["@types/react", "react"],
     "running": false
   },
   {

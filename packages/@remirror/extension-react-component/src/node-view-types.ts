@@ -10,7 +10,8 @@ import {
   Static,
   ValidOptions,
 } from '@remirror/core';
-import { PortalContainer } from '@remirror/react-utils';
+
+import { PortalContainer } from './portals';
 
 export type ReactComponentEnvironment = 'ssr' | 'dom' | 'both';
 
