@@ -2,7 +2,6 @@ import {
   AddCustomHandler,
   ApplySchemaAttributes,
   CommandFunction,
-  convertCommand,
   CustomHandlerKeyList,
   DefaultExtensionOptions,
   ErrorConstant,
@@ -200,9 +199,8 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
       /**
        * Remove the mention(s) at the current selection or provided range.
        */
-      removeMention: ({ range }: Partial<RangeParameter> = object()) => {
-        return convertCommand(removeMark({ type: this.type, expand: true, range }));
-      },
+      removeMention: ({ range }: Partial<RangeParameter> = object()) =>
+        removeMark({ type: this.type, expand: true, range }),
     };
   };
 

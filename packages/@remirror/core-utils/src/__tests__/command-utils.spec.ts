@@ -16,29 +16,29 @@ describe('removeMark', () => {
     const from = doc(p(strong('<start>bold<end>')));
     const to = doc(p('bold'));
 
-    expect(removeMark({ type })).toTransformNode({ from, to });
+    expect(removeMark({ type })).toTransform({ from, to });
   });
 
   it('leaves mark untouched when `expand` is `false`', () => {
     const from = doc(p(strong('bo<cursor>ld')));
 
-    expect(removeMark({ type })).toTransformNode({ from });
+    expect(removeMark({ type })).toTransform({ from });
   });
 
   it('removes mark when `expand` is `true`', () => {
     const from = doc(p(strong('bo<cursor>ld')));
     const to = doc(p('bold'));
 
-    expect(removeMark({ type, expand: true })).toTransformNode({ from, to });
+    expect(removeMark({ type, expand: true })).toTransform({ from, to });
   });
 
   it('removes the mark from a custom range', () => {
     const from = doc(p('start ', strong('bold'), ' and not<cursor>'));
     const to = doc(p('start bold and not'));
 
-    expect(removeMark({ type, range: { from: 7, to: 11 } })).toTransformNode({ from, to });
-    expect(removeMark({ type, range: { from: 8 }, expand: true })).toTransformNode({ from, to });
-    expect(removeMark({ type, range: { from: 3, to: 7 }, expand: true })).toTransformNode({
+    expect(removeMark({ type, range: { from: 7, to: 11 } })).toTransform({ from, to });
+    expect(removeMark({ type, range: { from: 8 }, expand: true })).toTransform({ from, to });
+    expect(removeMark({ type, range: { from: 3, to: 7 }, expand: true })).toTransform({
       from,
       to,
     });

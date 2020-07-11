@@ -251,24 +251,24 @@ interface RemoveMarkParameter extends MarkTypeParameter, Partial<RangeParameter<
 }
 
 /**
- * Removes a mark from the current selection or provided from to
+ * Removes a mark from the current selection or provided range.
  *
  * @param params - the destructured params
  *
  * @public
  */
-export function removeMark(parameter: RemoveMarkParameter): ProsemirrorCommandFunction {
-  return (state, dispatch) => {
+export function removeMark(parameter: RemoveMarkParameter): CommandFunction {
+  return ({ dispatch, tr }) => {
     const { type, expand = false, range } = parameter;
-    const { selection, tr } = state;
+    const { selection } = tr;
     let { from, to } = range ?? selection;
 
     if (expand) {
       ({ from, to } = range
-        ? getMarkRange(state.doc.resolve(range.from), type) ||
-          (isNumber(range.to) && getMarkRange(state.doc.resolve(range.to), type)) || { from, to }
-        : isSelectionEmpty(state)
-        ? getMarkRange(state.selection.$anchor, type) || { from, to }
+        ? getMarkRange(tr.doc.resolve(range.from), type) ||
+          (isNumber(range.to) && getMarkRange(tr.doc.resolve(range.to), type)) || { from, to }
+        : isSelectionEmpty(tr)
+        ? getMarkRange(selection.$anchor, type) || { from, to }
         : { from, to });
     }
 

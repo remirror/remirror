@@ -122,12 +122,14 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
        * Remove the link at the current selection
        */
       removeLink: (): CommandFunction => {
-        return ({ state, dispatch, view }) => {
-          if (!isMarkActive({ stateOrTransaction: state.tr, type: this.type })) {
+        return (parameter) => {
+          const { tr } = parameter;
+
+          if (!isMarkActive({ stateOrTransaction: tr, type: this.type })) {
             return false;
           }
 
-          return removeMark({ type: this.type, expand: true })(state, dispatch, view);
+          return removeMark({ type: this.type, expand: true })(parameter);
         };
       },
     };
