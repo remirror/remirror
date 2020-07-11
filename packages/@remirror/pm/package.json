@@ -27,7 +27,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.10.4",
-    "@types/prosemirror-commands": "^1.0.2",
+    "@types/prosemirror-commands": "^1.0.3",
     "@types/prosemirror-dropcursor": "^1.0.0",
     "@types/prosemirror-gapcursor": "^1.0.1",
     "@types/prosemirror-history": "^1.0.1",
