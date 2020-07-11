@@ -3,8 +3,8 @@
   "version": "1.0.0-next.1",
   "private": true,
   "description": "Remirror Playground",
-  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/playground",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/playground",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/playground",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/playground",
   "license": "MIT",
   "contributors": [
     "Benjie Gillam <code@benjiegillam.com>",

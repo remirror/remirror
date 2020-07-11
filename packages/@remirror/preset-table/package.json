@@ -10,8 +10,8 @@
     "prosemirror",
     "table editing"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/preset-table",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/preset-table",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/preset-table",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/preset-table",
   "license": "MIT",
   "contributors": [
     "Ocavue <ocavue@gmail.com>",

@@ -2,8 +2,8 @@
   "name": "@remirror/core-helpers",
   "version": "1.0.0-next.1",
   "description": "Provide helper functions for the remirror codebase, kinda like a tiny lodash",
-  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/core-helpers",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/core-helpers",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/core-helpers",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/core-helpers",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

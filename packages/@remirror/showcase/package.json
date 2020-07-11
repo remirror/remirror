@@ -8,8 +8,8 @@
     "text editor",
     "wysiwyg"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/showcase",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/showcase",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/showcase",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/showcase",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

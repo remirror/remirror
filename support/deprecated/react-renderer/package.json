@@ -2,8 +2,8 @@
   "name": "@remirror/react-renderer",
   "version": "1.0.0-next.0",
   "description": "renderer-react utilities for remirror",
-  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/react",
-  "repository": "https://github.com/remirror/remirror/tree/master/support/deprecated/react-renderer",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/support/deprecated/react-renderer",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/support/deprecated/react-renderer",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

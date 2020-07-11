@@ -6,8 +6,8 @@
     "remirror",
     "extension"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/extension-strike",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/extension-strike",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-strike",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-strike",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

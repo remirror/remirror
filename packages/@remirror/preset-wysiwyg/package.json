@@ -7,8 +7,8 @@
     "preset",
     "text-editor"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/preset-wysiwyg",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/preset-wysiwyg",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/preset-wysiwyg",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/preset-wysiwyg",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

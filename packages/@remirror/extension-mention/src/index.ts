@@ -18,7 +18,7 @@
  * ## Installation
  *
  * After completing the installation of the the `remirror` environment as shown
- * in the [docs](https://remirror.io/install) run the following command.
+ * in the [docs](https://remirror.io/docs/guide/installation) run the following command.
  *
  * ```bash
  * yarn add @remirror/extension-mention # yarn

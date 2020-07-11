@@ -13,4 +13,4 @@ about: Create a report to help us improve
 
 ## Checklist
 
-- [ ] I have read the [**contributing**](https://github.com/remirror/remirror/blob/canary/docs/contributing.md) document.
+- [ ] I have read the [**contributing**](https://github.com/remirror/remirror/blob/HEAD/docs/contributing.md) document.

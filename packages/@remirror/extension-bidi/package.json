@@ -6,8 +6,8 @@
     "remirror",
     "extension"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/extension-bidi",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/extension-bidi",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-bidi",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-bidi",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
