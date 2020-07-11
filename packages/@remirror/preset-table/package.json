@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-table",
-  "version": "1.0.0-next.2",
+  "version": "1.0.0-next.3",
   "description": "A table a day keeps the doctor away. Remirror and play keeps the bad times at bay.",
   "keywords": [
     "remirror",
@@ -30,12 +30,12 @@
     "linaria": "^2.0.0-alpha.5"
   },
   "devDependencies": {
-    "@remirror/core": "^1.0.0-next.2",
-    "@remirror/pm": "^1.0.0-next.1"
+    "@remirror/core": "^1.0.0-next.3",
+    "@remirror/pm": "^1.0.0-next.3"
   },
   "peerDependencies": {
-    "@remirror/core": "^1.0.0-next.2",
-    "@remirror/pm": "^1.0.0-next.1"
+    "@remirror/core": "^1.0.0-next.3",
+    "@remirror/pm": "^1.0.0-next.3"
   },
   "publishConfig": {
     "access": "public"

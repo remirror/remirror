@@ -1,5 +1,16 @@
 # @remirror/core
 
+## 1.0.0-next.3
+
+> 2020-07-11
+
+### Patch Changes
+
+- Updated dependencies [e90bc748]
+  - @remirror/pm@1.0.0-next.3
+  - @remirror/core-types@1.0.0-next.3
+  - @remirror/core-utils@1.0.0-next.3
+
 ## 1.0.0-next.2
 
 > 2020-07-06

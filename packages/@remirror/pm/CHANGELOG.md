@@ -1,5 +1,13 @@
 # @remirror/pm
 
+## 1.0.0-next.3
+
+> 2020-07-11
+
+### Patch Changes
+
+- e90bc748: Update prosemirror dependencies to latest versions.
+
 ## 1.0.0-next.1
 
 > 2020-07-05
