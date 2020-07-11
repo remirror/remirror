@@ -1,6 +1,14 @@
 # Changelog
 
-## 1.0.0-next.2
+## [1.0.0-next.3]
+
+> 2020-07-11
+
+### Patch Changes
+
+- `@remirror/pm` - Update prosemirror dependencies to latest versions.
+
+## [1.0.0-next.2]
 
 > 2020-07-06
 
@@ -12,7 +20,7 @@
   functionality of `RemirrorProvider` due to an outdated check on whether `getRootProps` had been
   called. This check has been removed since it isn't needed anymore.
 
-## 1.0.0-next.1
+## [1.0.0-next.1]
 
 > 2020-07-05
 
@@ -51,7 +59,7 @@
   to the editor state. With this you can react to updates in your editor and add some really cool
   effects.
 
-## 0.11.0
+## [0.11.0]
 
 ### Minor Changes
 
@@ -81,7 +89,7 @@
 
 - c2237aa0: Allow empty string default value for extraAttrs
 
-## 0.9.0
+## [0.9.0]
 
 ### Minor Changes
 
@@ -91,14 +99,14 @@
   - Add new type `ExtensionIsActiveFunction` which doesn't take the command name.
   - Remove `isEnabled` from `Extension` interface.
 
-## 0.8.1
+## [0.8.1]
 
 ### Patch Changes
 
 - 2904ebfd: Fix problem with build outputting native classes which can't be extended when the build
   process converts classes to their ES% function equivalent.
 
-## 0.8.0
+## [0.8.0]
 
 ### Minor Changes
 
@@ -482,7 +490,16 @@ believe they'll be worthwhile.
 - Fixes missing TypeScript definitions #77.
 - Fixes crash when rendering a ReactNodeView in NextJS #75.
 
-[unreleased]: https://github.com/remirror/remirror/compare/0.7.2...HEAD
+[unreleased]: https://github.com/remirror/remirror/compare/v1.0.0-next.3...HEAD
+[1.0.0-next.3]: https://github.com/remirror/remirror/compare/v1.0.0-next.2...v1.0.0-next.3
+[1.0.0-next.2]:
+  https://github.com/remirror/remirror/compare/@remirror/core@1.0.0-next.1...v1.0.0-next.2
+[1.0.0-next.1]:
+  https://github.com/remirror/remirror/compare/@remirror/core@0.11.0...@remirror/core@1.0.0-next.1
+[0.11.0]: https://github.com/remirror/remirror/compare/@remirror/core@0.9.0...@remirror/core@0.11.0
+[0.9.0]: https://github.com/remirror/remirror/compare/@remirror/core@0.8.1...@remirror/core@0.9.0
+[0.8.1]: https://github.com/remirror/remirror/compare/@remirror/core@0.8.0...@remirror/core@0.8.1
+[0.8.0]: https://github.com/remirror/remirror/compare/v0.7.2...@remirror/core@0.8.0
 [0.7.2]: https://github.com/remirror/remirror/compare/v0.7.1...0.7.2
 [0.7.1]: https://github.com/remirror/remirror/compare/v0.7.0...0.7.1
 [0.7.0]: https://github.com/remirror/remirror/compare/v0.6.5...0.7.0
