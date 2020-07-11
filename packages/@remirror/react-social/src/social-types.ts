@@ -62,11 +62,6 @@ export interface SocialProviderProps<Combined extends AnyCombinedUnion = SocialC
    * Defaults to 140, set to `null` to disable.
    */
   characterLimit?: number | null;
-
-  /**
-   * The message to show when the editor is empty.
-   */
-  placeholder?: string;
 }
 
 interface BaseMentionState {

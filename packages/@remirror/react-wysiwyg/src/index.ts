@@ -1,2 +1,2 @@
-export * from './wysiwyg-editor';
-export * from './wysiwyg-editor-types';
+export * from './components';
+export * from './wysiwyg-types';

@@ -1200,6 +1200,7 @@ importers:
       '@remirror/preset-social': 'link:../preset-social'
       '@remirror/preset-wysiwyg': 'link:../preset-wysiwyg'
       '@remirror/react-utils': 'link:../react-utils'
+      '@remirror/theme': 'link:../theme'
       '@types/classnames': 2.2.10
       classnames: 2.2.6
       linaria: 2.0.0-alpha.5
@@ -1227,6 +1228,7 @@ importers:
       '@remirror/preset-wysiwyg': ^1.0.0-next.3
       '@remirror/react': ^1.0.0-next.3
       '@remirror/react-utils': ^1.0.0-next.2
+      '@remirror/theme': ^1.0.0-next.1
       '@testing-library/react': ^10.4.5
       '@types/classnames': ^2.2.10
       '@types/react': ^16.9.43
