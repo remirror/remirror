@@ -11,7 +11,7 @@ import { BoldExtension, BoldOptions } from '@remirror/extension-bold';
 import { CodeExtension } from '@remirror/extension-code';
 import { CodeBlockExtension, CodeBlockOptions } from '@remirror/extension-code-block';
 import { DropCursorExtension, DropCursorOptions } from '@remirror/extension-drop-cursor';
-import { EpicModeExtension, EpicModeOptions } from '@remirror/extension-epic-mode';
+import { EpicModeExtension } from '@remirror/extension-epic-mode';
 import { GapCursorExtension } from '@remirror/extension-gap-cursor';
 import { HardBreakExtension } from '@remirror/extension-hard-break';
 import { HeadingExtension, HeadingOptions } from '@remirror/extension-heading';
@@ -29,7 +29,6 @@ export interface WysiwygOptions
     BoldOptions,
     CodeBlockOptions,
     DropCursorOptions,
-    EpicModeOptions,
     HeadingOptions,
     LinkOptions,
     SearchOptions,
@@ -59,7 +58,6 @@ export class WysiwygPreset extends Preset<WysiwygOptions> {
     ...SearchExtension.defaultOptions,
     ...TrailingNodeExtension.defaultOptions,
     ...HeadingExtension.defaultOptions,
-    ...EpicModeExtension.defaultOptions,
   };
 
   get name() {
@@ -96,17 +94,6 @@ export class WysiwygPreset extends Preset<WysiwygOptions> {
       'inlineWidth',
     ]);
     this.getExtension(DropCursorExtension).setOptions(dropCursorOptions);
-
-    const epicModeOptions = pickChanged([
-      'active',
-      'colors',
-      'getCanvasContainer',
-      'particleEffect',
-      'particleRange',
-      'shakeIntensity',
-      'shakeTime',
-    ]);
-    this.getExtension(EpicModeExtension).setOptions(epicModeOptions);
 
     const searchOptions = pickChanged([
       'alwaysSearch',
@@ -190,24 +177,7 @@ export class WysiwygPreset extends Preset<WysiwygOptions> {
     dropCursorExtension.addHandler('onDestroy', this.options.onDestroy);
     dropCursorExtension.addHandler('onInit', this.options.onInit);
 
-    const {
-      active,
-      colors,
-      getCanvasContainer,
-      particleEffect,
-      particleRange,
-      shakeIntensity,
-      shakeTime,
-    } = this.options;
-    const epicModeExtension = new EpicModeExtension({
-      active,
-      colors,
-      getCanvasContainer,
-      particleEffect,
-      particleRange,
-      shakeIntensity,
-      shakeTime,
-    });
+    const epicModeExtension = new EpicModeExtension({ active: false });
 
     const { defaultLevel, levels } = this.options;
     const headingExtension = new HeadingExtension({ defaultLevel, levels });

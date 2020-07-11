@@ -89,7 +89,6 @@ export class EpicModePluginState {
   #shakeTimeMax = 0;
   #lastTime = 0;
   #particles: Particle[] = [];
-  #isActive = false;
   private view!: EditorView;
 
   constructor(extension: EpicModeExtension) {
@@ -127,7 +126,6 @@ export class EpicModePluginState {
 
     this.ctx = ctx;
     this.container.append(this.canvas);
-    this.#isActive = true;
     this.loop();
 
     return this;
@@ -136,7 +134,6 @@ export class EpicModePluginState {
   destroy() {
     // Wrapped in try catch for support of hot module reloading during development
     try {
-      this.#isActive = false;
       this.canvas.remove();
 
       if (this.container.contains(this.canvas)) {
@@ -148,6 +145,8 @@ export class EpicModePluginState {
   }
 
   shake = () => {
+    console.log(this.options.active);
+
     if (this.options.active) {
       this.#shakeTime = this.#shakeTimeMax = this.options.shakeTime;
     }
@@ -192,7 +191,7 @@ export class EpicModePluginState {
    * Runs through the animation loop
    */
   loop = () => {
-    if (!this.#isActive) {
+    if (!this.options.active) {
       return;
     }
 
