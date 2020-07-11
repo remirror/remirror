@@ -1,5 +1,61 @@
 # remirror
 
+## 1.0.0-next.3
+
+> 2020-07-11
+
+### Patch Changes
+
+- Updated dependencies [e90bc748]
+  - @remirror/pm@1.0.0-next.3
+  - @remirror/core@1.0.0-next.3
+  - @remirror/core-types@1.0.0-next.3
+  - @remirror/core-utils@1.0.0-next.3
+  - @remirror/dom@1.0.0-next.3
+  - @remirror/extension-auto-link@1.0.0-next.3
+  - @remirror/extension-base-keymap@1.0.0-next.3
+  - @remirror/extension-bidi@1.0.0-next.3
+  - @remirror/extension-blockquote@1.0.0-next.3
+  - @remirror/extension-bold@1.0.0-next.3
+  - @remirror/extension-code@1.0.0-next.3
+  - @remirror/extension-code-block@1.0.0-next.3
+  - @remirror/extension-collaboration@1.0.0-next.3
+  - @remirror/extension-diff@1.0.0-next.3
+  - @remirror/extension-doc@1.0.0-next.3
+  - @remirror/extension-drop-cursor@1.0.0-next.3
+  - @remirror/extension-emoji@1.0.0-next.3
+  - @remirror/extension-epic-mode@1.0.0-next.3
+  - @remirror/extension-gap-cursor@1.0.0-next.3
+  - @remirror/extension-hard-break@1.0.0-next.3
+  - @remirror/extension-heading@1.0.0-next.3
+  - @remirror/extension-history@1.0.0-next.3
+  - @remirror/extension-horizontal-rule@1.0.0-next.3
+  - @remirror/extension-image@1.0.0-next.3
+  - @remirror/extension-italic@1.0.0-next.3
+  - @remirror/extension-link@1.0.0-next.3
+  - @remirror/extension-mention@1.0.0-next.3
+  - @remirror/extension-paragraph@1.0.0-next.3
+  - @remirror/extension-placeholder@1.0.0-next.3
+  - @remirror/extension-position-tracker@1.0.0-next.3
+  - @remirror/extension-positioner@1.0.0-next.3
+  - @remirror/extension-react-ssr@1.0.0-next.3
+  - @remirror/extension-search@1.0.0-next.3
+  - @remirror/extension-strike@1.0.0-next.3
+  - @remirror/extension-text@1.0.0-next.3
+  - @remirror/extension-trailing-node@1.0.0-next.3
+  - @remirror/extension-underline@1.0.0-next.3
+  - @remirror/extension-yjs@1.0.0-next.3
+  - @remirror/preset-core@1.0.0-next.3
+  - @remirror/preset-embed@1.0.0-next.3
+  - @remirror/preset-list@1.0.0-next.3
+  - @remirror/preset-react@1.0.0-next.3
+  - @remirror/preset-social@1.0.0-next.3
+  - @remirror/preset-table@1.0.0-next.3
+  - @remirror/preset-wysiwyg@1.0.0-next.3
+  - @remirror/react@1.0.0-next.3
+  - @remirror/react-social@1.0.0-next.3
+  - @remirror/react-wysiwyg@1.0.0-next.3
+
 ## 1.0.0-next.1
 
 > 2020-07-05
