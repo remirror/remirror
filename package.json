@@ -163,6 +163,9 @@
     "node": ">=12",
     "pnpm": "^5.3.0"
   },
+  "manypkg": {
+    "defaultBranch": "HEAD"
+  },
   "preconstruct": {
     "packages": [
       "packages/*",
