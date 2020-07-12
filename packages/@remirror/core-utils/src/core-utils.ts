@@ -485,6 +485,7 @@ export function setPluginMeta<Meta>(
 ): Transaction {
   return tr.setMeta(key, data);
 }
+
 /**
  * Get matching string from a list or single value
  *
@@ -639,32 +640,36 @@ export function absoluteCoordinates(parameter: AbsoluteCoordinatesParameter): Pa
  *
  * @param domNode - the dom node
  */
-export const getNearestNonTextNode = (domNode: Node) =>
-  isTextDomNode(domNode) ? (domNode.parentNode as HTMLElement) : (domNode as HTMLElement);
+export function getNearestNonTextNode(domNode: Node) {
+  return isTextDomNode(domNode) ? (domNode.parentNode as HTMLElement) : (domNode as HTMLElement);
+}
 
 /**
  * Checks whether the cursor is at the end of the state.doc
  *
  * @param state - the editor state
  */
-export const atDocEnd = (state: EditorState): boolean =>
-  state.doc.nodeSize - state.selection.$to.pos - 2 === state.selection.$to.depth;
+export function atDocEnd(state: EditorState): boolean {
+  return state.doc.nodeSize - state.selection.$to.pos - 2 === state.selection.$to.depth;
+}
 
 /**
  * Checks whether the cursor is at the beginning of the state.doc
  *
  * @param state - the editor state
  */
-export const atDocStart = (state: EditorState): boolean =>
-  state.selection.$from.pos === state.selection.$from.depth;
+export function atDocStart(state: EditorState): boolean {
+  return state.selection.$from.pos === state.selection.$from.depth;
+}
 
 /**
  * Get the start position of the parent of the current resolve position
  *
  * @param pmPosition - the resolved prosemirror position
  */
-export const startPositionOfParent = (pmPosition: ResolvedPos): number =>
-  pmPosition.start(pmPosition.depth);
+export function startPositionOfParent(pmPosition: ResolvedPos): number {
+  return pmPosition.start(pmPosition.depth);
+}
 
 /**
  * Get the end position of the parent of the current resolve position
@@ -673,8 +678,9 @@ export const startPositionOfParent = (pmPosition: ResolvedPos): number =>
  *
  * @public
  */
-export const endPositionOfParent = (pmPosition: ResolvedPos): number =>
-  pmPosition.end(pmPosition.depth) + 1;
+export function endPositionOfParent(pmPosition: ResolvedPos): number {
+  return pmPosition.end(pmPosition.depth) + 1;
+}
 
 /**
  * Retrieve the current position of the cursor
@@ -684,8 +690,9 @@ export const endPositionOfParent = (pmPosition: ResolvedPos): number =>
  *
  * @public
  */
-export const getCursor = (selection: Selection): ResolvedPos | null | undefined =>
-  isTextSelection(selection) ? selection.$cursor : undefined;
+export function getCursor(selection: Selection): ResolvedPos | null | undefined {
+  return isTextSelection(selection) ? selection.$cursor : undefined;
+}
 
 /**
  * Checks to see whether a nodeMatch checker is a tuple
@@ -698,8 +705,9 @@ export const getCursor = (selection: Selection): ResolvedPos | null | undefined 
  *
  * @public
  */
-const isRegexTuple = (nodeMatch: NodeMatch): nodeMatch is RegexTuple =>
-  Array.isArray(nodeMatch) && nodeMatch.length > 0 && nodeMatch.length <= 2;
+function isRegexTuple(nodeMatch: NodeMatch): nodeMatch is RegexTuple {
+  return Array.isArray(nodeMatch) && nodeMatch.length > 0 && nodeMatch.length <= 2;
+}
 
 /**
  * Test the passed in regexp tuple
@@ -709,26 +717,26 @@ const isRegexTuple = (nodeMatch: NodeMatch): nodeMatch is RegexTuple =>
  *
  * @public
  */
-const regexTest = (tuple: RegexTuple, value: string) => {
+function regexTest(tuple: RegexTuple, value: string) {
   const regex = new RegExp(...tuple);
   return regex.test(value);
-};
+}
 
 /**
  * Checks to see whether the name of the passed node matches anything in the
  * list provided.
  *
  * @param node - the prosemirror node
- * @param nodeMatches - the node matches array
+ * @param nodeMatches - the list of possible matching nodes
  * @returns true if the node name is a match to any of the items in the
  * nodeMatches array
  *
  * @public
  */
-export const nodeNameMatchesList = (
+export function nodeNameMatchesList(
   node: ProsemirrorNode | null | undefined,
   nodeMatches: NodeMatch[],
-): node is ProsemirrorNode => {
+): node is ProsemirrorNode {
   let outcome = false;
 
   if (!node) {
@@ -750,7 +758,7 @@ export const nodeNameMatchesList = (
   }
 
   return outcome;
-};
+}
 
 /**
  * Checks whether a Prosemirror node is the top level `doc` node
@@ -760,11 +768,11 @@ export const nodeNameMatchesList = (
  *
  * @public
  */
-export const isDocNode = (node: ProsemirrorNode | null | undefined, schema?: EditorSchema) => {
+export function isDocNode(node: ProsemirrorNode | null | undefined, schema?: EditorSchema) {
   return (
     isProsemirrorNode(node) && (schema ? node.type === schema.nodes.doc : node.type.name === 'doc')
   );
-};
+}
 
 /**
  * Checks whether the passed in JSON is a valid object node
@@ -773,8 +781,9 @@ export const isDocNode = (node: ProsemirrorNode | null | undefined, schema?: Edi
  *
  * @public
  */
-export const isObjectNode = (value: unknown): value is RemirrorJSON =>
-  isObject(value) && value.type === 'doc' && Array.isArray(value.content);
+export function isObjectNode(value: unknown): value is RemirrorJSON {
+  return isObject(value) && value.type === 'doc' && Array.isArray(value.content);
+}
 
 export interface CreateDocumentNodeParameter
   extends SchemaParameter,

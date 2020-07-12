@@ -15,7 +15,7 @@ import {
 import { lift, setBlockType, wrapIn } from '@remirror/pm/commands';
 import { liftListItem, wrapInList } from '@remirror/pm/schema-list';
 
-import { getMarkRange, isMarkType, isNodeType } from './dom-utils';
+import { getMarkRange, isMarkType, isNodeType } from './core-utils';
 import { findParentNode, isNodeActive, isSelectionEmpty } from './prosemirror-utils';
 
 interface UpdateMarkParameter extends Partial<RangeParameter>, Partial<AttributesParameter> {
@@ -84,6 +84,7 @@ function isList(node: ProsemirrorNode, schema: EditorSchema) {
  * Toggles a list item.
  *
  * @remarks
+ *
  * When the provided list wrapper is inactive (e.g. ul) then wrap the list with
  * this type. When it is active then remove the selected line from the list.
  *
@@ -143,19 +144,18 @@ interface ToggleBlockItemParameter extends NodeTypeParameter, Partial<Attributes
  *
  * @public
  */
-export const toggleBlockItem = ({
-  type,
-  toggleType,
-  attrs,
-}: ToggleBlockItemParameter): ProsemirrorCommandFunction => (state, dispatch) => {
-  const isActive = isNodeActive({ state, type, attrs });
+export function toggleBlockItem(parameter: ToggleBlockItemParameter): CommandFunction {
+  return ({ state, dispatch }) => {
+    const { type, toggleType, attrs } = parameter;
+    const isActive = isNodeActive({ state, type, attrs });
 
-  if (isActive) {
-    return setBlockType(toggleType)(state, dispatch);
-  }
+    if (isActive) {
+      return setBlockType(toggleType)(state, dispatch);
+    }
 
-  return setBlockType(type, attrs)(state, dispatch);
-};
+    return setBlockType(type, attrs)(state, dispatch);
+  };
+}
 
 interface ReplaceTextParameter extends Partial<RangeParameter>, Partial<AttributesParameter> {
   /**
@@ -287,6 +287,6 @@ export function removeMark(parameter: RemoveMarkParameter): CommandFunction {
  *
  * @remarks
  *
- * This is typically to represent the default _do nothing_ action.
+ * This is typically used to represent a default _do nothing_ action.
  */
 export const emptyCommandFunction: ProsemirrorCommandFunction = () => false;

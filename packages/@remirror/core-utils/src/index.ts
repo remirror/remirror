@@ -1,5 +1,5 @@
 export * from './command-utils';
-export * from './dom-utils';
+export * from './core-utils';
 export * from './keyboard-utils';
 export * from './prosemirror-node-utils';
 export * from './prosemirror-rules';

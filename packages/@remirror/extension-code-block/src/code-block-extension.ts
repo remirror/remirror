@@ -113,13 +113,11 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
        * remove the code block altogether.
        */
       toggleCodeBlock: (attributes: Partial<CodeBlockAttributes>) =>
-        convertCommand(
-          toggleBlockItem({
-            type: this.type,
-            toggleType: this.store.schema.nodes[this.options.toggleName],
-            attrs: { language: this.options.defaultLanguage, ...attributes },
-          }),
-        ),
+        toggleBlockItem({
+          type: this.type,
+          toggleType: this.store.schema.nodes[this.options.toggleName],
+          attrs: { language: this.options.defaultLanguage, ...attributes },
+        }),
 
       /**
        * Creates a code at the current position.

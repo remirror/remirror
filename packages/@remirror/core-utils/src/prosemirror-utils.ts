@@ -50,7 +50,7 @@ import {
   isSelection,
   isTextDomNode,
   isTransaction,
-} from './dom-utils';
+} from './core-utils';
 
 interface NodeEqualsTypeParameter<Schema extends EditorSchema = any>
   extends NodeTypesParameter<Schema>,

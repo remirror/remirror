@@ -90,15 +90,12 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
        * Toggle the heading for the current block. If you don't provide the
        * level it will use the options.defaultLevel.
        */
-      toggleHeading: (attrs: HeadingExtensionAttributes = {}) => {
-        return convertCommand(
-          toggleBlockItem({
-            type: this.type,
-            toggleType: this.store.schema.nodes.paragraph,
-            attrs,
-          }),
-        );
-      },
+      toggleHeading: (attrs: HeadingExtensionAttributes = {}) =>
+        toggleBlockItem({
+          type: this.type,
+          toggleType: this.store.schema.nodes.paragraph,
+          attrs,
+        }),
     };
   };
 

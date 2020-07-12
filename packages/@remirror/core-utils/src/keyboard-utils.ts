@@ -55,7 +55,9 @@ export type ModifierKeys = keyof typeof Modifier;
 /**
  * Returns true if this is an apple environment either on the server or the client.
  */
-export const isApple = () => environment.isApple;
+export function isApple() {
+  return environment.isApple;
+}
 
 /**
  * Create a consistent cross platform modifier string pattern.
@@ -73,7 +75,7 @@ export const isApple = () => environment.isApple;
  * @param key - the key to press with the modifier. e.g. `Space` | `Enter`
  * @param [isApple] - a method which returns true when this is an apple device.
  */
-export const mod = (modifier: ModifierKeys, key: string, isMacFn = isApple) => {
+export function mod(modifier: ModifierKeys, key: string, isMacFn = isApple) {
   switch (modifier) {
     case 'Primary':
       return `${Modifier[modifier](isMacFn()).join('-')}-${key}`;
@@ -99,4 +101,4 @@ export const mod = (modifier: ModifierKeys, key: string, isMacFn = isApple) => {
     default:
       throw new Error('Invalid modifier name passed in');
   }
-};
+}

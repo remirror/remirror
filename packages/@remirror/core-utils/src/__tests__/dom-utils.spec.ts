@@ -43,7 +43,7 @@ import {
   startPositionOfParent,
   toDom,
   toHtml,
-} from '../dom-utils';
+} from '../core-utils';
 
 describe('markActive', () => {
   it('shows active when within an active region', () => {

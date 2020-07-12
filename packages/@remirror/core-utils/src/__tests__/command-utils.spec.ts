@@ -126,7 +126,7 @@ describe('toggleBlockItem', () => {
         toggleType: schema.nodes.paragraph,
         attrs: { level: 1 },
       }),
-    ).toTransformNode({
+    ).toTransform({
       from,
       to,
     });
@@ -142,7 +142,7 @@ describe('toggleBlockItem', () => {
         toggleType: schema.nodes.paragraph,
         attrs: { level: 1 },
       }),
-    ).toTransformNode({
+    ).toTransform({
       from,
       to,
     });

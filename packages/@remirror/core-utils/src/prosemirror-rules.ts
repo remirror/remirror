@@ -1,6 +1,5 @@
 import { findMatches, isFunction, isNullOrUndefined } from '@remirror/core-helpers';
 import {
-  EditorSchema,
   GetAttributesParameter,
   MarkTypeParameter,
   NodeTypeParameter,
@@ -47,7 +46,8 @@ interface MarkInputRuleParameter
  * - Support for node paste rules
  * - Support for pasting different kinds of content.
  */
-export const markPasteRule = ({ regexp, type, getAttributes }: MarkInputRuleParameter) => {
+export function markPasteRule(parameter: MarkInputRuleParameter) {
+  const { regexp, type, getAttributes } = parameter;
   const handler = (fragment: Fragment) => {
     const nodes: ProsemirrorNode[] = [];
 
@@ -91,20 +91,17 @@ export const markPasteRule = ({ regexp, type, getAttributes }: MarkInputRulePara
       transformPasted: (slice) => new Slice(handler(slice.content), slice.openStart, slice.openEnd),
     },
   });
-};
+}
 
 /**
  * Creates an input rule based on the provided regex for the provided mark type
  */
-export const markInputRule = ({
-  regexp,
-  type,
-  getAttributes: getAttributes,
-}: MarkInputRuleParameter) => {
+export function markInputRule(parameter: MarkInputRuleParameter) {
+  const { regexp, type, getAttributes } = parameter;
+
   return new InputRule(regexp, (state, match, start, end) => {
     const { tr } = state;
     const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
-
     let markEnd = end;
 
     if (match[1]) {
@@ -130,17 +127,14 @@ export const markInputRule = ({
         .removeStoredMark(type)
     );
   });
-};
+}
 
 /**
  * Creates an node input rule based on the provided regex for the provided node type
  */
-export const nodeInputRule = ({
-  regexp,
-  type,
-  getAttributes: getAttributes,
-  updateSelection = false,
-}: NodeInputRuleParameter) => {
+export function nodeInputRule(parameter: NodeInputRuleParameter) {
+  const { regexp, type, getAttributes, updateSelection = false } = parameter;
+
   return new InputRule(regexp, (state, match, start, end) => {
     const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
     const { tr } = state;
@@ -154,17 +148,15 @@ export const nodeInputRule = ({
 
     return tr;
   });
-};
+}
 
 /**
  * Creates an node input rule based on the provided regex for the provided node type
  */
-export const plainInputRule = <Schema extends EditorSchema = EditorSchema>({
-  regexp,
-  transformMatch,
-  updateSelection = false,
-}: PlainInputRuleParameter) => {
-  return new InputRule<Schema>(regexp, (state, match, start, end) => {
+export function plainInputRule(parameter: PlainInputRuleParameter) {
+  const { regexp, transformMatch, updateSelection = false } = parameter;
+
+  return new InputRule(regexp, (state, match, start, end) => {
     const value = transformMatch(match);
 
     if (isNullOrUndefined(value)) {
@@ -176,7 +168,7 @@ export const plainInputRule = <Schema extends EditorSchema = EditorSchema>({
     if (value === '') {
       tr.delete(start, end);
     } else {
-      tr.replaceWith(start, end, state.schema.text(value) as ProsemirrorNode<Schema>);
+      tr.replaceWith(start, end, state.schema.text(value));
     }
 
     if (updateSelection) {
@@ -186,4 +178,4 @@ export const plainInputRule = <Schema extends EditorSchema = EditorSchema>({
 
     return tr;
   });
-};
+}
