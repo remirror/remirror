@@ -3,7 +3,7 @@
   "version": "0.0.3",
   "private": true,
   "description": "e2e tests",
-  "repository": "https://github.com/remirror/remirror/tree/master/support/e2e",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/support/e2e",
   "scripts": {
     "chromium": "REMIRROR_E2E_BROWSER=chromium jest --runInBand --verbose",
     "chromium:watch": "REMIRROR_E2E_BROWSER=chromium jest --verbose --watch",

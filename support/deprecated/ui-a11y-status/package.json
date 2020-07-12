@@ -2,8 +2,8 @@
   "name": "@remirror/ui-a11y-status",
   "version": "1.0.0-next.0",
   "description": "DEPRECATED - Create a singleton live region for a11y status updates",
-  "homepage": "https://github.com/remirror/remirror/tree/next/packages/a11y-status",
-  "repository": "https://github.com/remirror/remirror/tree/master/support/deprecated/ui-a11y-status",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/support/deprecated/ui-a11y-status",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/support/deprecated/ui-a11y-status",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

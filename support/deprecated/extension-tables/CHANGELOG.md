@@ -29,7 +29,7 @@
 - 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`.
   If your code was importing any matching interface you will need to update the name.
 - 304db6ba: This package is now deprecated. It has been replaced with
-  [`@remirror/preset-table`](https://github.com/remirror/remirror/tree/next/@remirror/preset-tables).
+  [`@remirror/preset-table`](https://www.npmjs.com/package/@remirror/preset-table).
 
   You can still install older versions, but no new releases are planned.
 

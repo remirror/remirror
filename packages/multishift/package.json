@@ -2,8 +2,8 @@
   "name": "multishift",
   "version": "1.0.0-next.1",
   "description": "A repurposed downshift for internal use within remirror",
-  "homepage": "https://github.com/remirror/remirror/tree/next/packages/multishift",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/multishift",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/multishift",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/multishift",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

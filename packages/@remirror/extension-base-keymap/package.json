@@ -10,8 +10,8 @@
     "shortcut",
     "productivity"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/extension-base-keymap",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/extension-base-keymap",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-base-keymap",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-base-keymap",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

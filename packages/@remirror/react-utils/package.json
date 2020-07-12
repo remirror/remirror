@@ -8,8 +8,8 @@
     "remirror",
     "prosemirror"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/react-utils",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/react-utils",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react-utils",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react-utils",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

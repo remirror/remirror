@@ -2,8 +2,8 @@
   "name": "@remirror/styles",
   "version": "1.0.0-next.1",
   "description": "Styles for every remirror package.",
-  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/styles",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/styles",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/styles",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/styles",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

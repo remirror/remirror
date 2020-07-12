@@ -6,8 +6,8 @@
     "remirror",
     "extension"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/extension-blockquote",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/extension-blockquote",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-blockquote",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-blockquote",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

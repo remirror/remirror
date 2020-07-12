@@ -1,8 +1,8 @@
 {
   "name": "@remirror/extension-enhanced-link",
   "version": "1.0.0-next.1",
-  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-auto-link",
-  "repository": "https://github.com/remirror/remirror/tree/master/support/deprecated/extension-enhanced-link",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/support/deprecated/extension-enhanced-link",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/support/deprecated/extension-enhanced-link",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

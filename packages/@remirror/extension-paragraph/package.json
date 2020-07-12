@@ -8,8 +8,8 @@
     "paragraph",
     "text-editor"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/extension-paragraph",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/extension-paragraph",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-paragraph",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-paragraph",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

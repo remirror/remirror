@@ -9,8 +9,8 @@
     "prosemirror",
     "text-editor"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/preset-react",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/preset-react",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/preset-react",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/preset-react",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

@@ -6,8 +6,8 @@
     "remirror",
     "extension"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/next/packages/@remirror/extension-underline",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/extension-underline",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-underline",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-underline",
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
