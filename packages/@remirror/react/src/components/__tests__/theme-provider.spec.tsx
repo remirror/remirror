@@ -1,33 +1,8 @@
-import React, { FC } from 'react';
+import React from 'react';
 
-import { docNodeBasicJSON } from '@remirror/testing';
-import { createReactManager, render } from '@remirror/testing/react';
+import { render } from '@remirror/testing/react';
 
-import { useRemirror } from '../../hooks';
-import { RemirrorProvider, ThemeProvider } from '../providers';
-
-test('RemirrorProvider', () => {
-  const TestComponent: FC = () => {
-    const { getRootProps } = useRemirror();
-    return (
-      <div>
-        <div data-testid='target' {...getRootProps()} />
-      </div>
-    );
-  };
-
-  const manager = createReactManager([]);
-
-  const { getByRole, getByTestId } = render(
-    <RemirrorProvider initialContent={docNodeBasicJSON} manager={manager}>
-      <TestComponent />
-    </RemirrorProvider>,
-  );
-  const target = getByTestId('target');
-  const editor = getByRole('textbox');
-
-  expect(target).toContainElement(editor);
-});
+import { ThemeProvider } from '../providers';
 
 describe('ThemeProvider', () => {
   it('should render', () => {

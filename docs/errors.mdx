@@ -178,14 +178,15 @@ Extra attributes must either be a string or an object.
 
 > React Provider Context
 
-`useRemirror` was called outside of the remirror context. It can only be used within an active
-remirror context created by the `<RemirrorProvider />`.
+**`useRemirror` was called outside of the remirror context. It can only be used within an active
+remirror context created by the `<RemirrorProvider />`.**
 
 ### RMR0201
 
 > React Get Root Props
 
-`getRootProps` has been called MULTIPLE times. It should only be called ONCE during render.
+`getRootProps` has been attached to the DOM more than once. It should only be attached to the DOM
+**once** per editor.
 
 This error happens because the `getRootProps` method is being used in a component that is rendered
 multiple times without updates from the react provider. The `getRootProps` method is responsible for

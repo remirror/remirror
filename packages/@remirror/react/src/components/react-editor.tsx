@@ -216,6 +216,7 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
    */
   private rootPropsConfig = {
     called: false,
+    mounts: 0,
   };
 
   constructor(parameter: ReactEditorWrapperParameter<Combined>) {
@@ -285,7 +286,7 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
     children?: ReactNode,
   ): RefKeyRootProps<RefKey> => {
     // Ensure that this is the first time `getRootProps` is being called during
-    // this render.
+    // this commit phase of the .
     // invariant(!this.rootPropsConfig.called, { code: ErrorConstant.REACT_GET_ROOT_PROPS });
     this.rootPropsConfig.called = true;
 
@@ -303,10 +304,19 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
    * Stores the Prosemirror editor dom instance for this component using `refs`
    */
   private readonly onRef: Ref<HTMLElement> = (element) => {
-    if (element) {
-      this.#editorRef = element;
-      this.onRefLoad();
+    if (!element) {
+      return;
     }
+
+    this.rootPropsConfig.mounts += 1;
+
+    invariant(this.rootPropsConfig.mounts <= 1, {
+      code: ErrorConstant.REACT_GET_ROOT_PROPS,
+      message: `Called ${this.rootPropsConfig.mounts} times`,
+    });
+
+    this.#editorRef = element;
+    this.onRefLoad();
   };
 
   /**
@@ -482,6 +492,7 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
   private resetRender() {
     // Reset the status of roots props being called
     this.rootPropsConfig.called = false;
+    this.rootPropsConfig.mounts = 0;
   }
 
   render() {
