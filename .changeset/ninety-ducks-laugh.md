@@ -56,7 +56,6 @@
 '@remirror/react-wysiwyg': patch
 '@remirror/showcase': patch
 '@remirror/styles': patch
-'@remirror/testing': patch
 '@remirror/theme': patch
 'a11y-status': patch
 'jest-prosemirror': patch
@@ -65,7 +64,6 @@
 'prosemirror-suggest': patch
 'remirror': patch
 'test-keyboard': patch
-'@remirror/support': patch
 '@remirror/core-extensions': patch
 '@remirror/editor-markdown': patch
 '@remirror/editor-social': patch
@@ -85,10 +83,6 @@
 '@remirror/ui-modal': patch
 '@remirror/ui-text': patch
 '@remirror/ui': patch
-'@remirror/e2e': patch
-'with-next': patch
-'@remirror/storybook': patch
-'@remirror/website': patch
 ---
 
 Update repository and website field to point to HEAD rather than a specific branch.
