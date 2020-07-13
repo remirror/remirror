@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+
 const BG_COLOR = '#e0dbf5';
 
 export const Container: FC = function ({ children }) {

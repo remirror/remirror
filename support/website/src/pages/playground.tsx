@@ -6,11 +6,12 @@ import Footer from '@theme/Footer';
 import Navbar from '@theme/Navbar';
 import ThemeProvider from '@theme/ThemeProvider';
 import UserPreferencesProvider from '@theme/UserPreferencesProvider';
+import clsx from 'clsx';
 import React from 'react';
-import styles from './playground.module.css';
 
 import { Playground } from '@remirror/playground';
-import clsx from 'clsx';
+
+import styles from './playground.module.css';
 
 const PlaygroundPage = (props: any) => {
   const { siteConfig } = useDocusaurusContext();

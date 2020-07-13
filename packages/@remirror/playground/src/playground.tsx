@@ -249,10 +249,10 @@ const copy = (text: string) => {
   textarea.style.top = '0';
   textarea.style.left = '-10000px';
   textarea.style.opacity = '0.0001';
-  document.body.appendChild(textarea);
+  document.body.append(textarea);
   textarea.value = text;
   textarea.select();
   textarea.setSelectionRange(0, 999999);
   document.execCommand('copy');
-  document.body.removeChild(textarea);
+  textarea.remove();
 };
