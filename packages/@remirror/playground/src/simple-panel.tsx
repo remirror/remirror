@@ -124,9 +124,7 @@ export const SimplePanel: FC<SimplePanelProps> = function (props) {
   externalModules.sort((a, b) => a[0].localeCompare(b[0]));
 
   return (
-    <div>
-      <button onClick={onAdvanced}>Switch to advanced mode</button>
-
+    <div style={{ padding: '1rem' }}>
       {/* REMIRROR CORE */}
       <p>
         <strong>Remirror core</strong>{' '}

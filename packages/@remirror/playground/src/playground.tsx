@@ -181,26 +181,41 @@ export const Playground: FC = () => {
   return (
     <Container>
       <Main>
-        <Panel flex='0 0 16rem' overflow>
-          {advanced ? (
-            <div>
-              <button onClick={handleToggleAdvanced}>Enter simple mode</button>
-            </div>
-          ) : (
-            <SimplePanel
-              options={options}
-              setOptions={setOptions}
-              modules={modules}
-              addModule={addModule}
-              removeModule={removeModule}
-              onAdvanced={handleToggleAdvanced}
-            />
-          )}
-        </Panel>
-        <Divide />
+        {advanced ? null : (
+          <>
+            <Panel flex='0 0 18rem' overflow>
+              <SimplePanel
+                options={options}
+                setOptions={setOptions}
+                modules={modules}
+                addModule={addModule}
+                removeModule={removeModule}
+                onAdvanced={handleToggleAdvanced}
+              />
+            </Panel>
+            <Divide />
+          </>
+        )}
         <Panel vertical>
           <ErrorBoundary>
-            <CodeEditor value={code} onChange={setValue} readOnly={!advanced} />
+            <div
+              style={{
+                flex: '1',
+                overflow: 'hidden',
+                backgroundColor: 'white',
+                display: 'flex',
+                position: 'relative',
+              }}
+            >
+              <CodeEditor value={code} onChange={setValue} readOnly={!advanced} />
+              <div style={{ position: 'absolute', bottom: '1rem', right: '2rem' }}>
+                {advanced ? (
+                  <button onClick={handleToggleAdvanced}>Enter simple mode</button>
+                ) : (
+                  <button onClick={handleToggleAdvanced}>Enter advanced mode</button>
+                )}
+              </div>
+            </div>
           </ErrorBoundary>
           <Divide />
           <ErrorBoundary>

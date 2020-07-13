@@ -51,7 +51,7 @@ export function compile(
        * **MUST NOT** have their `@babel/preset-` or `@babel/plugin-` prefixes
        * otherwise they WILL NOT WORK.
        */
-      presets: ['react', 'env', 'typescript'],
+      presets: ['react', ['env', { useBuiltIns: false }], 'typescript'],
       plugins: [
         ['transform-runtime'],
         ['proposal-object-rest-spread'],
