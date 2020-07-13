@@ -42,9 +42,10 @@ jobs:
           node-version: 14
 
       - name: install pnpm
-        run: |
-          curl -L https://unpkg.com/@pnpm/self-installer | node
-          pnpm config set store-dir $PNPM_CACHE_FOLDER
+        run: curl -L https://unpkg.com/@pnpm/self-installer | node
+
+      - name: setup pnpm config
+        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
 
       - name: audit dependencies
         run: pnpm audit --audit-level high
