@@ -915,6 +915,87 @@ export function get<Return = any>(
   return isUndefined(obj) ? fallback : obj;
 }
 
+function setPropInternal<Type extends object = any>(
+  path: Array<string | number>,
+  obj: any,
+  value: any,
+  index: number,
+): Type {
+  if (path.length === index) {
+    return value;
+  }
+
+  // Create things as we go down if they don't exist
+  obj = obj || {};
+
+  const key = path[index];
+  return setClone(obj, key, setPropInternal(path, obj[key], value, ++index));
+}
+
+function setClone(obj: any, key: string | number, value: any) {
+  const newObj = clone(obj);
+  newObj[key] = value;
+  return newObj;
+}
+
+/**
+ * Set the value of a given path for the provided object. Does not mutate the
+ * original object.
+ */
+export function set(path: number | string | Array<string | number>, obj: Shape, value: unknown) {
+  if (isNumber(path)) {
+    return setClone(obj, path, value);
+  }
+
+  if (isString(path)) {
+    path = path.split('.');
+  }
+
+  return setPropInternal(path, obj, value, 0);
+}
+
+/**
+ * Unset the value of a given path within an object.
+ */
+export function unset(path: Array<string | number>, obj: Shape) {
+  const newObj = clone(obj);
+  let value = newObj;
+
+  for (const [index, key] of path.entries()) {
+    const shouldDelete = index >= path.length - 1;
+    let item = value[key];
+
+    if (shouldDelete) {
+      if (isArray(value)) {
+        const indexKey = Number.parseInt(key.toString(), 10);
+
+        if (isNumber(indexKey)) {
+          value.splice(indexKey, 1);
+        }
+      } else {
+        Reflect.deleteProperty(value, key);
+      }
+
+      return newObj;
+    }
+
+    if (isPrimitive(item)) {
+      return newObj;
+    }
+
+    if (isArray(item)) {
+      item = [...item];
+    } else {
+      item = { ...item };
+    }
+
+    value[key] = item;
+    value = item;
+  }
+
+  return newObj;
+}
+
 function makeFunctionForUniqueBy<Item = any, Key = any>(value: string | Array<string | number>) {
   return (item: Item) => {
     return get<Key>(value, item);

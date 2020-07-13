@@ -3,6 +3,7 @@ import {
   bool,
   Cast,
   clamp,
+  isEmptyArray,
   isFunction,
   isNullOrUndefined,
   isNumber,
@@ -10,6 +11,7 @@ import {
   isString,
   keys,
   RemirrorError,
+  unset,
 } from '@remirror/core-helpers';
 import type {
   EditorSchema,
@@ -1001,4 +1003,170 @@ export function areSchemaCompatible(schemaA: EditorSchema, schemaB: EditorSchema
   }
 
   return true;
+}
+
+/**
+ * A description of an invalid content block (representing a node or a mark).
+ */
+export interface InvalidContentBlock {
+  /**
+   * The type of content that is invalid.
+   */
+  type: 'mark' | 'node';
+
+  /**
+   * The name of the node or mark that is invalid.
+   */
+  name: string;
+
+  /**
+   * The json path to the invalid part of the `RemirrorJSON` object.
+   */
+  path: Array<string | number>;
+
+  /**
+   * Whether this block already has an invalid parent node. Invalid
+   * blocks are displayed from the deepest content outward. By checking whether
+   * a parent has already been identified as invalid you can choose to only
+   * transform the root invalid node.
+   */
+  invalidParentNode: boolean;
+
+  /**
+   * Whether this block has any invalid wrapping marks.
+   */
+  invalidParentMark: boolean;
+}
+
+/**
+ * Transform invalid content to
+ */
+export type InvalidContentTransformer = (
+  json: RemirrorJSON,
+  blocks: InvalidContentBlock[],
+) => RemirrorJSON;
+
+/**
+ * Valid transformation strategies.
+ */
+type Transformer = InvalidContentTransformer | 'remove';
+
+const transformers: Record<'remove', InvalidContentTransformer> = {
+  remove(json, blocks) {
+    let newJSON = json;
+
+    for (const block of blocks) {
+      if (block.invalidParentNode) {
+        continue;
+      }
+
+      newJSON = unset(block.path, newJSON) as RemirrorJSON;
+    }
+
+    return newJSON;
+  },
+};
+
+/**
+ * Checks for invalid JSON against the schema.
+ *
+ * TODO this currently only checks that the schema types exist. Eventually check
+ * that the content is valid also.
+ *
+ * For example what if content is empty after invalid nodes are removed. This
+ * would still cause an issue for the top level node.
+ */
+export function transformInvalidJSON(
+  json: RemirrorJSON,
+  schema: EditorSchema,
+  transformer: Transformer,
+) {
+  const validMarks = new Set(keys(schema.marks));
+  const validNodes = new Set(keys(schema.nodes));
+  const invalidContent = getInvalidContent({ json, path: [], validNodes, validMarks });
+
+  if (isString(transformer)) {
+    transformer = transformers[transformer];
+  }
+
+  if (!isEmptyArray(invalidContent)) {
+    return transformer(json, invalidContent);
+  }
+
+  return json;
+}
+
+interface GetInvalidContentParameter {
+  json: RemirrorJSON;
+  validMarks: Set<string>;
+  validNodes: Set<string>;
+  path?: string[];
+  invalidParentNode?: boolean;
+  invalidParentMark?: boolean;
+}
+
+/**
+ * Get the invalid content from the `RemirrorJSON`.
+ */
+function getInvalidContent(parameter: GetInvalidContentParameter): InvalidContentBlock[] {
+  const { json, validMarks, validNodes, path = [] } = parameter;
+  const valid = { validMarks, validNodes };
+  const invalidNodes: InvalidContentBlock[] = [];
+  const { type, marks, content } = json;
+  let { invalidParentMark = false, invalidParentNode = false } = parameter;
+
+  if (marks) {
+    const invalidMarks: InvalidContentBlock[] = [];
+
+    for (const [index, mark] of marks.entries()) {
+      const name = isString(mark) ? mark : mark.type;
+
+      if (validMarks.has(name)) {
+        continue;
+      }
+
+      invalidMarks.unshift({
+        name,
+        path: [...path, 'marks', `${index}`],
+        type: 'mark',
+        invalidParentMark,
+        invalidParentNode,
+      });
+
+      invalidParentMark = true;
+    }
+
+    invalidNodes.push(...invalidMarks);
+  }
+
+  if (!validNodes.has(type)) {
+    invalidNodes.push({
+      name: type,
+      type: 'node',
+      path,
+      invalidParentMark,
+      invalidParentNode,
+    });
+    invalidParentNode = true;
+  }
+
+  if (content) {
+    const invalidContent: InvalidContentBlock[] = [];
+
+    for (const [index, value] of content.entries()) {
+      invalidContent.unshift(
+        ...getInvalidContent({
+          ...valid,
+          json: value,
+          path: [...path, 'content', `${index}`],
+          invalidParentMark,
+          invalidParentNode,
+        }),
+      );
+    }
+
+    invalidNodes.unshift(...invalidContent);
+  }
+
+  return invalidNodes;
 }

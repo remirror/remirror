@@ -46,6 +46,7 @@ import {
   uniqueArray,
   uniqueBy,
   uniqueId,
+  unset,
   values,
   within,
 } from '../core-helpers';
@@ -359,6 +360,46 @@ test('get', () => {
   expect(get(['nested', 0, 'fake'], obj)).toBeUndefined();
 
   expect(get(['nested', 0, 'fake'], obj, 'fallback')).toBe('fallback');
+});
+
+test('unset', () => {
+  const obj = { a: 'a', b: 'b', nested: [{ awesome: true }] };
+
+  {
+    const value = unset(['unknown'], obj);
+    expect(value).toEqual(obj);
+    expect(value).not.toBe(obj);
+  }
+
+  {
+    const value = unset(['a'], obj);
+    expect(value).toEqual({ b: 'b', nested: [{ awesome: true }] });
+    expect(value).not.toBe(obj);
+  }
+
+  {
+    const value = unset(['nested'], obj);
+    expect(unset(['nested'], obj)).toEqual({ a: 'a', b: 'b' });
+    expect(value).not.toBe(obj);
+  }
+
+  {
+    const value = unset(['nested', 0], obj);
+    expect(unset(['nested', 0], obj)).toEqual({ a: 'a', b: 'b', nested: [] });
+    expect(value).not.toBe(obj);
+  }
+
+  {
+    const value = unset(['nested', 'invalid'], obj);
+    expect(unset(['nested', 'invalid'], obj)).toEqual(obj);
+    expect(value).not.toBe(obj);
+  }
+
+  {
+    const value = unset(['nested', '0'], obj);
+    expect(unset(['nested', '0'], obj)).toEqual({ a: 'a', b: 'b', nested: [] });
+    expect(value).not.toBe(obj);
+  }
 });
 
 test('deepMerge', () => {
