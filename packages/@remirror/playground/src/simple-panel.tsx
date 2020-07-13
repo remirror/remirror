@@ -125,7 +125,7 @@ export const SimplePanel: FC<SimplePanelProps> = function (props) {
 
   return (
     <div>
-      <button onClick={onAdvanced}>Enter advanced mode</button>
+      <button onClick={onAdvanced}>Switch to advanced mode</button>
 
       {/* REMIRROR CORE */}
       <p>

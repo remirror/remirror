@@ -47,7 +47,14 @@ const PlaygroundPage = (props: any) => {
           <AnnouncementBar />
           <Navbar />
           <Head></Head>
-          <div className='custom-main-wrapper'>
+          <div
+            className='custom-main-wrapper'
+            style={{
+              /* TODO: move this to CSS, make sensible */
+              position: 'relative',
+              height: 'calc(100vh - 17rem + 3px)',
+            }}
+          >
             <Playground />
           </div>
           {!noFooter && <Footer />}

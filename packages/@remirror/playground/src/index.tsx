@@ -66,6 +66,7 @@ const Loading: FC<{ hasBabel: boolean }> = ({ hasBabel }) => {
   return (
     <div
       style={{
+        height: '100%',
         display: 'flex',
         maxWidth: '50rem',
         margin: '0 auto',
