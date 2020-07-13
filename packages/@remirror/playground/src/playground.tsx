@@ -5,7 +5,7 @@ import { ErrorBoundary } from './error-boundary';
 import { makeRequire, REQUIRED_MODULES } from './execute';
 import { CodeOptions, Exports, RemirrorModules } from './interfaces';
 import { makeCode } from './make-code';
-import { Container, Divide, Header, Main, Panel } from './primitives';
+import { Container, Divide, Main, Panel } from './primitives';
 import { SimplePanel } from './simple-panel';
 import { Viewer } from './viewer';
 
@@ -42,11 +42,9 @@ const PRETTIER_SCRIPTS = [
 ];
 
 export const Playground: FC = () => {
-  console.log('Playground pre hooks');
   const [value, setValue] = useState('// Add some code here\n');
   const [advanced, setAdvanced] = useState(false);
   const [modules, setModules] = useState<RemirrorModules>({});
-  console.log('Playground post hooks');
   const addModule = useCallback((moduleName: string) => {
     setModules((oldModules) => ({
       ...oldModules,
@@ -182,9 +180,8 @@ export const Playground: FC = () => {
   const code = advanced ? value : makeCode(options);
   return (
     <Container>
-      <Header>Playground</Header>
       <Main>
-        <Panel flex='0 0 16rem'>
+        <Panel flex='0 0 16rem' overflow>
           {advanced ? (
             <div>
               <button onClick={handleToggleAdvanced}>Enter simple mode</button>

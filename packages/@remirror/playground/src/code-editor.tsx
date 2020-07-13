@@ -86,7 +86,7 @@ const CodeEditor: FC<CodeEditorProps> = function (props) {
     });
   }, [model, onChange]);
 
-  return <div style={{ flex: '1', overflow: 'hidden', backgroundColor: '#f3f' }} ref={ref} />;
+  return <div style={{ flex: '1', overflow: 'hidden', backgroundColor: 'white' }} ref={ref} />;
 };
 
 export default CodeEditor;
