@@ -1,3 +1,5 @@
+import assert from 'assert';
+import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 
 import CodeEditor from './code-editor';
@@ -8,8 +10,6 @@ import { makeCode } from './make-code';
 import { Container, Divide, Main, Panel } from './primitives';
 import { SimplePanel } from './simple-panel';
 import { Viewer } from './viewer';
-import { decompressFromEncodedURIComponent, compressToEncodedURIComponent } from 'lz-string';
-import assert from 'assert';
 
 export { useRemirrorPlayground } from './use-remirror-playground';
 
@@ -191,24 +191,27 @@ export const Playground: FC = () => {
   }, [code]);
 
   const windowHash = window.location.hash;
-  let ourHash = useRef('');
-  let [readyToSetUrlHash, setReadyToSetUrlHash] = useState(false);
+  const ourHash = useRef('');
+  const [readyToSetUrlHash, setReadyToSetUrlHash] = useState(false);
   useEffect(() => {
     if (windowHash && ourHash.current !== windowHash) {
       ourHash.current = windowHash;
       const parts = windowHash.replace(/^#+/, '').split('&');
       const part = parts.find((p) => p.startsWith('o/'));
+
       if (part) {
         try {
-          const state = decode(part.substr(2));
+          const state = decode(part.slice(2));
           console.log('Restoring state');
           console.dir(state);
           assert(typeof state === 'object' && state, 'Expected state to be an object');
           assert(typeof state.m === 'number', 'Expected mode to be a number');
+
           if (state.m === 0) {
             /* basic mode */
             setAdvanced(false);
             setOptions({ extensions: state.e, presets: state.p });
+
             if (Array.isArray(state.a)) {
               state.a.forEach((moduleName: string) => addModule(moduleName));
             }
@@ -219,22 +222,25 @@ export const Playground: FC = () => {
             setAdvanced(true);
             setValue(code);
           }
-        } catch (e) {
-          console.error(part.substr(2));
+        } catch (error) {
+          console.error(part.slice(2));
           console.error('Failed to parse above state; failed with following error:');
-          console.error(e);
+          console.error(error);
         }
       }
     }
+
     setReadyToSetUrlHash(true);
-  }, [windowHash]);
+  }, [windowHash, addModule]);
 
   useEffect(() => {
     if (!readyToSetUrlHash) {
       /* Premature, we may not have finished reading it yet */
       return;
     }
+
     let state;
+
     if (!advanced) {
       state = {
         m: 0,
@@ -248,8 +254,10 @@ export const Playground: FC = () => {
         c: value,
       };
     }
+
     const encoded = encode(state);
     const hash = `#o/${encoded}`;
+
     if (hash !== ourHash.current) {
       ourHash.current = hash;
       window.location.hash = hash;
@@ -330,9 +338,11 @@ const copy = (text: string) => {
  */
 function decode(data: string) {
   const json = decompressFromEncodedURIComponent(data);
+
   if (!json) {
     throw new Error('Failed to decode');
   }
+
   const obj = JSON.parse(json);
   return obj;
 }
