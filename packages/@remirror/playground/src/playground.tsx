@@ -8,6 +8,8 @@ import { makeCode } from './make-code';
 import { Container, Divide, Main, Panel } from './primitives';
 import { SimplePanel } from './simple-panel';
 import { Viewer } from './viewer';
+import { decompressFromEncodedURIComponent, compressToEncodedURIComponent } from 'lz-string';
+import assert from 'assert';
 
 export { useRemirrorPlayground } from './use-remirror-playground';
 
@@ -188,6 +190,72 @@ export const Playground: FC = () => {
     }, 2000);
   }, [code]);
 
+  const windowHash = window.location.hash;
+  let ourHash = useRef('');
+  let [readyToSetUrlHash, setReadyToSetUrlHash] = useState(false);
+  useEffect(() => {
+    if (windowHash && ourHash.current !== windowHash) {
+      ourHash.current = windowHash;
+      const parts = windowHash.replace(/^#+/, '').split('&');
+      const part = parts.find((p) => p.startsWith('o/'));
+      if (part) {
+        try {
+          const state = decode(part.substr(2));
+          console.log('Restoring state');
+          console.dir(state);
+          assert(typeof state === 'object' && state, 'Expected state to be an object');
+          assert(typeof state.m === 'number', 'Expected mode to be a number');
+          if (state.m === 0) {
+            /* basic mode */
+            setAdvanced(false);
+            setOptions({ extensions: state.e, presets: state.p });
+            if (Array.isArray(state.a)) {
+              state.a.forEach((moduleName: string) => addModule(moduleName));
+            }
+          } else if (state.m === 1) {
+            /* advanced mode */
+            assert(typeof state.c === 'string', 'Expected code to be a string');
+            const code = state.c;
+            setAdvanced(true);
+            setValue(code);
+          }
+        } catch (e) {
+          console.error(part.substr(2));
+          console.error('Failed to parse above state; failed with following error:');
+          console.error(e);
+        }
+      }
+    }
+    setReadyToSetUrlHash(true);
+  }, [windowHash]);
+
+  useEffect(() => {
+    if (!readyToSetUrlHash) {
+      /* Premature, we may not have finished reading it yet */
+      return;
+    }
+    let state;
+    if (!advanced) {
+      state = {
+        m: 0,
+        a: Object.keys(modules).filter((n) => !REQUIRED_MODULES.includes(n)),
+        e: options.extensions,
+        p: options.presets,
+      };
+    } else {
+      state = {
+        m: 1,
+        c: value,
+      };
+    }
+    const encoded = encode(state);
+    const hash = `o/${encoded}`;
+    if (hash !== ourHash.current) {
+      ourHash.current = hash;
+      window.location.hash = hash;
+    }
+  }, [advanced, value, options, modules, readyToSetUrlHash]);
+
   return (
     <Container>
       <Main>
@@ -256,3 +324,24 @@ const copy = (text: string) => {
   document.execCommand('copy');
   textarea.remove();
 };
+
+/**
+ * Decodes a URL component string to POJO.
+ */
+function decode(data: string) {
+  const json = decompressFromEncodedURIComponent(data);
+  if (!json) {
+    throw new Error('Failed to decode');
+  }
+  const obj = JSON.parse(json);
+  return obj;
+}
+
+/**
+ * Encodes a POJO to a URL component string
+ */
+function encode(obj: object): string {
+  const json = JSON.stringify(obj);
+  const data = compressToEncodedURIComponent(json);
+  return data;
+}
