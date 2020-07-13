@@ -53,6 +53,7 @@ const PlaygroundPage = (props: any) => {
               /* TODO: move this to CSS, make sensible */
               position: 'relative',
               height: 'calc(100vh - 17rem + 3px)',
+              minHeight: '400px',
             }}
           >
             <Playground />
