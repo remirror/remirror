@@ -234,5 +234,5 @@ export const Execute: FC<ExecuteProps> = function (props) {
     };
   }, [code, requires]);
 
-  return <div ref={ref} />;
+  return <div ref={ref} style={{ height: '100%' }} />;
 };
