@@ -126,6 +126,13 @@ export const SimplePanel: FC<SimplePanelProps> = function (props) {
   return (
     <div style={{ padding: '1rem' }}>
       {/* REMIRROR CORE */}
+      <p style={{ fontSize: '0.8rem' }}>
+        ⚠️ Remirror Playground is <em>highly experimental;</em> we've released it in this very early
+        state because it's a useful tool... when it works.{' '}
+        <a href='https://github.com/remirror/remirror/issues/new?template=bug_report.md'>
+          Report a bug.
+        </a>
+      </p>
       <p>
         <strong>Remirror core</strong>{' '}
       </p>
