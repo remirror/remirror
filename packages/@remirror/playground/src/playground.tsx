@@ -178,6 +178,16 @@ export const Playground: FC = () => {
   }, [advanced, options]);
 
   const code = advanced ? value : makeCode(options);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = useCallback(() => {
+    copy(code);
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
+  }, [code]);
+
   return (
     <Container>
       <Main>
@@ -210,10 +220,13 @@ export const Playground: FC = () => {
               <CodeEditor value={code} onChange={setValue} readOnly={!advanced} />
               <div style={{ position: 'absolute', bottom: '1rem', right: '2rem' }}>
                 {advanced ? (
-                  <button onClick={handleToggleAdvanced}>Enter simple mode</button>
+                  <button onClick={handleToggleAdvanced}>☑️ Enter simple mode</button>
                 ) : (
-                  <button onClick={handleToggleAdvanced}>Enter advanced mode</button>
+                  <button onClick={handleToggleAdvanced}>🤓 Enter advanced mode</button>
                 )}
+                <button onClick={handleCopy} style={{ marginLeft: '0.5rem' }}>
+                  📋 {copied ? 'Copied code!' : 'Copy code'}
+                </button>
               </div>
             </div>
           </ErrorBoundary>
@@ -225,4 +238,19 @@ export const Playground: FC = () => {
       </Main>
     </Container>
   );
+};
+
+/** Copies text to the clipboard */
+const copy = (text: string) => {
+  const textarea = document.createElement('textarea');
+  textarea.style.position = 'absolute';
+  textarea.style.top = '0';
+  textarea.style.left = '-10000px';
+  textarea.style.opacity = '0.0001';
+  document.body.appendChild(textarea);
+  textarea.value = text;
+  textarea.select();
+  textarea.setSelectionRange(0, 999999);
+  document.execCommand('copy');
+  document.body.removeChild(textarea);
 };
