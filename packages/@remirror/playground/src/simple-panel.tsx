@@ -62,10 +62,10 @@ const ExtensionOrPresetCheckbox: FC<ExtensionCheckboxProps> = function (props) {
 };
 
 export const SimplePanel: FC<SimplePanelProps> = function (props) {
-  const { options, setOptions, onAdvanced, modules, addModule, removeModule } = props;
+  const { options, setOptions, modules, addModule, removeModule } = props;
 
   const onAddModule = useCallback(() => {
-    const moduleName = prompt('What module name do you wish to add?');
+    const moduleName = prompt('Enter the name of the npm module you want to import:');
 
     if (moduleName) {
       addModule(moduleName);
