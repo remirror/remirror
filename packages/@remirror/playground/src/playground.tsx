@@ -249,7 +249,7 @@ export const Playground: FC = () => {
       };
     }
     const encoded = encode(state);
-    const hash = `o/${encoded}`;
+    const hash = `#o/${encoded}`;
     if (hash !== ourHash.current) {
       ourHash.current = hash;
       window.location.hash = hash;
