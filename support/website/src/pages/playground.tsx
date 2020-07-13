@@ -7,8 +7,10 @@ import Navbar from '@theme/Navbar';
 import ThemeProvider from '@theme/ThemeProvider';
 import UserPreferencesProvider from '@theme/UserPreferencesProvider';
 import React from 'react';
+import styles from './playground.module.css';
 
 import { Playground } from '@remirror/playground';
+import clsx from 'clsx';
 
 const PlaygroundPage = (props: any) => {
   const { siteConfig } = useDocusaurusContext();
@@ -23,7 +25,7 @@ const PlaygroundPage = (props: any) => {
   const faviconUrl = useBaseUrl(favicon);
 
   return (
-    <div className='playground'>
+    <div className={clsx('playground', styles.playground)}>
       <ThemeProvider>
         <UserPreferencesProvider>
           <Head>

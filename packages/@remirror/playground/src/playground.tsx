@@ -232,7 +232,9 @@ export const Playground: FC = () => {
           </ErrorBoundary>
           <Divide />
           <ErrorBoundary>
-            <Viewer options={options} code={code} />
+            <div style={{ padding: '1rem', flex: '0 0 10rem', overflow: 'auto' }}>
+              <Viewer options={options} code={code} />
+            </div>
           </ErrorBoundary>
         </Panel>
       </Main>
