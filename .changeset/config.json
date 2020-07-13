@@ -60,6 +60,7 @@
       "@remirror/preset-core",
       "@remirror/preset-embed",
       "@remirror/preset-list",
+      "@remirror/preset-react-checkbox",
       "@remirror/preset-react",
       "@remirror/preset-social",
       "@remirror/preset-table",
