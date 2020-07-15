@@ -233,13 +233,13 @@ export class TableCellExtension extends NodeExtension {
 /**
  * The extension for the table header node.
  */
-export class TableHeaderCell extends NodeExtension {
+export class TableHeaderCellExtension extends NodeExtension {
   get name() {
-    return 'tableHeader' as const;
+    return 'tableHeaderCell' as const;
   }
 
   createNodeSpec(extra: ApplySchemaAttributes): TableSchemaSpec {
-    return createTableNodeSchema(extra).tableHeader;
+    return createTableNodeSchema(extra).tableHeaderCell;
   }
 }
 

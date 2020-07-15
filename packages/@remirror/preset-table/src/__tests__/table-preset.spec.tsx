@@ -9,15 +9,15 @@ import { TablePreset } from '..';
 describe('schema', () => {
   const { schema } = createCoreManager([new TablePreset()]);
 
-  const { doc, table, tableRow, tableCell, tableHeader, p } = pmBuild(schema, {
+  const { doc, table, tableRow, tableCell, tableHeaderCell, p } = pmBuild(schema, {
     table: { nodeType: 'table' },
     tableRow: { nodeType: 'tableRow' },
     tableCell: { nodeType: 'tableCell' },
-    tableHeader: { nodeType: 'tableHeader' },
+    tableHeaderCell: { nodeType: 'tableHeaderCell' },
   });
 
   const node = table(
-    tableRow(tableHeader(p('Header')), tableHeader(p('Header'))),
+    tableRow(tableHeaderCell(p('Header')), tableHeaderCell(p('Header'))),
     tableRow(tableCell(p('A1')), tableCell(p('B1'))),
     tableRow(tableCell(p('A2')), tableCell(p('B2'))),
     tableRow(tableCell(p('A3')), tableCell(p('B3'))),
@@ -45,7 +45,7 @@ describe('commands', () => {
       commands,
       view,
       add,
-      nodes: { doc, p, table, tableRow: row, tableCell: cell, tableHeader: header },
+      nodes: { doc, p, table, tableRow: row, tableCell: cell, tableHeaderCell: header },
     } = create();
 
     const build = (...rows: string[][]) => {

@@ -225,7 +225,7 @@ export const {
   h5,
   h6,
   table_cell: tableCell,
-  table_header: tableHeader,
+  table_header: tableHeaderCell,
   table_row: tableRow,
   code_block: codeBlock,
   hard_break: hardBreak,

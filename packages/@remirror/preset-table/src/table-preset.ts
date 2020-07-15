@@ -8,7 +8,7 @@ import {
 import {
   TableCellExtension,
   TableExtension,
-  TableHeaderCell,
+  TableHeaderCellExtension,
   TableOptions,
   TableRowExtension,
 } from './table-extensions';
@@ -34,7 +34,7 @@ export class TablePreset extends Preset<TableOptions> {
       new TableExtension({ priority: ExtensionPriority.Low, resizable: this.options.resizable }),
       new TableRowExtension({ priority: ExtensionPriority.Low }),
       new TableCellExtension({ priority: ExtensionPriority.Low }),
-      new TableHeaderCell({ priority: ExtensionPriority.Low }),
+      new TableHeaderCellExtension({ priority: ExtensionPriority.Low }),
     ];
   }
 
