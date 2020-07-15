@@ -25,7 +25,7 @@ module.exports = {
           label: 'Docs',
           position: 'right',
         },
-        // { to: 'playground', label: 'Playground', position: 'right' },
+        { to: 'playground', label: 'Playground', position: 'right' },
         { to: 'blog', label: 'Blog', position: 'right' },
         {
           href: 'https://github.com/remirror/remirror',
