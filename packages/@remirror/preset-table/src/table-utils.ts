@@ -114,7 +114,7 @@ function setCellAttrs(node: ProsemirrorNode) {
 //       object that's used to render the cell's DOM.
 export function createTableNodeSchema(
   extra: ApplySchemaAttributes,
-): Record<'table' | 'tableRow' | 'tableCell' | 'tableHeader', TableSchemaSpec> {
+): Record<'table' | 'tableRow' | 'tableCell' | 'tableHeaderCell', TableSchemaSpec> {
   const cellAttrs = {
     ...extra.defaults(),
     colspan: { default: 1 },
@@ -138,7 +138,7 @@ export function createTableNodeSchema(
 
     tableRow: {
       attrs: extra.defaults(),
-      content: '(tableCell | tableHeader)*',
+      content: '(tableCell | tableHeaderCell)*',
       tableRole: 'row',
       parseDOM: [{ tag: 'tr', getAttrs: extra.parse }],
       toDOM(node) {
@@ -162,7 +162,7 @@ export function createTableNodeSchema(
       },
     },
 
-    tableHeader: {
+    tableHeaderCell: {
       content: `${NodeGroup.Block}+`,
       attrs: cellAttrs,
       tableRole: 'header_cell',
@@ -232,7 +232,7 @@ function createCell(parameter: CreateCellParameter) {
  */
 export function createTable(parameter: CreateTableParameter) {
   const { schema, cellContent, columnsCount = 3, rowsCount = 3, withHeaderRow = true } = parameter;
-  const { cell: tableCell, header_cell: tableHeader, row: tableRow, table } = tableNodeTypes(
+  const { cell: tableCell, header_cell: tableHeaderCell, row: tableRow, table } = tableNodeTypes(
     schema,
   );
 
@@ -243,7 +243,9 @@ export function createTable(parameter: CreateTableParameter) {
     cells.push(createCell({ type: tableCell, content: cellContent }) as ProsemirrorNode);
 
     if (withHeaderRow) {
-      headerCells.push(createCell({ type: tableHeader, content: cellContent }) as ProsemirrorNode);
+      headerCells.push(
+        createCell({ type: tableHeaderCell, content: cellContent }) as ProsemirrorNode,
+      );
     }
   }
 

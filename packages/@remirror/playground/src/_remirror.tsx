@@ -243,7 +243,7 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
     exports: [
       'TableCellExtension',
       'TableExtension',
-      'TableHeaderCell',
+      'TableHeaderCellExtension',
       'TablePreset',
       'TableRowExtension',
     ],
