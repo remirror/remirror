@@ -16,7 +16,7 @@ export const Viewer: FC<ViewerProps> = function (props) {
   const { code: compiledCode, error, requires } = result;
 
   return (
-    <div style={{ flex: '1 0 0', overflow: 'auto' }}>
+    <div>
       {!error && typeof compiledCode === 'string' ? (
         <Execute code={compiledCode} requires={requires} />
       ) : (

@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
 
+const BG_COLOR = '#e0dbf5';
+
 export const Container: FC = function ({ children }) {
   return (
     <div
@@ -17,26 +19,19 @@ export const Container: FC = function ({ children }) {
   );
 };
 
-export const Header: FC = function ({ children }) {
-  return (
-    <div style={{ flex: '0 0 3rem', borderBottom: '1px solid black', background: '#aaa' }}>
-      {children}
-    </div>
-  );
-};
-
 export const Main: FC = function ({ children }) {
   return (
-    <div style={{ flex: '1', display: 'flex', backgroundColor: '#ddd', overflow: 'hidden' }}>
+    <div style={{ flex: '1', display: 'flex', backgroundColor: BG_COLOR, overflow: 'hidden' }}>
       {children}
     </div>
   );
 };
 
-export const Panel: FC<{ flex?: string; vertical?: boolean }> = function ({
+export const Panel: FC<{ flex?: string; vertical?: boolean; overflow?: boolean }> = function ({
   children,
   flex = '1 0 0',
   vertical,
+  overflow = false,
 }) {
   return (
     <div
@@ -45,7 +40,7 @@ export const Panel: FC<{ flex?: string; vertical?: boolean }> = function ({
         flex,
         display: 'flex',
         flexDirection: vertical ? 'column' : 'row',
-        overflow: 'hidden',
+        overflow: overflow ? 'auto' : 'hidden',
       }}
     >
       {children}

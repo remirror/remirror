@@ -6,9 +6,12 @@ import Footer from '@theme/Footer';
 import Navbar from '@theme/Navbar';
 import ThemeProvider from '@theme/ThemeProvider';
 import UserPreferencesProvider from '@theme/UserPreferencesProvider';
+import clsx from 'clsx';
 import React from 'react';
 
 import { Playground } from '@remirror/playground';
+
+import styles from './playground.module.css';
 
 const PlaygroundPage = (props: any) => {
   const { siteConfig } = useDocusaurusContext();
@@ -23,7 +26,7 @@ const PlaygroundPage = (props: any) => {
   const faviconUrl = useBaseUrl(favicon);
 
   return (
-    <div className='playground'>
+    <div className={clsx('playground', styles.playground)}>
       <ThemeProvider>
         <UserPreferencesProvider>
           <Head>
@@ -47,7 +50,15 @@ const PlaygroundPage = (props: any) => {
           <AnnouncementBar />
           <Navbar />
           <Head></Head>
-          <div className='custom-main-wrapper'>
+          <div
+            className='custom-main-wrapper'
+            style={{
+              /* TODO: move this to CSS, make sensible */
+              position: 'relative',
+              height: 'calc(100vh - 17rem + 3px)',
+              minHeight: '400px',
+            }}
+          >
             <Playground />
           </div>
           {!noFooter && <Footer />}

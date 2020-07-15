@@ -5,7 +5,7 @@ import { ErrorBoundary } from './error-boundary';
 import { makeRequire, REQUIRED_MODULES } from './execute';
 import { CodeOptions, Exports, RemirrorModules } from './interfaces';
 import { makeCode } from './make-code';
-import { Container, Divide, Header, Main, Panel } from './primitives';
+import { Container, Divide, Main, Panel } from './primitives';
 import { SimplePanel } from './simple-panel';
 import { Viewer } from './viewer';
 
@@ -42,11 +42,9 @@ const PRETTIER_SCRIPTS = [
 ];
 
 export const Playground: FC = () => {
-  console.log('Playground pre hooks');
   const [value, setValue] = useState('// Add some code here\n');
   const [advanced, setAdvanced] = useState(false);
   const [modules, setModules] = useState<RemirrorModules>({});
-  console.log('Playground post hooks');
   const addModule = useCallback((moduleName: string) => {
     setModules((oldModules) => ({
       ...oldModules,
@@ -180,37 +178,81 @@ export const Playground: FC = () => {
   }, [advanced, options]);
 
   const code = advanced ? value : makeCode(options);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = useCallback(() => {
+    copy(code);
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
+  }, [code]);
+
   return (
     <Container>
-      <Header>Playground</Header>
       <Main>
-        <Panel flex='0 0 16rem'>
-          {advanced ? (
-            <div>
-              <button onClick={handleToggleAdvanced}>Enter simple mode</button>
-            </div>
-          ) : (
-            <SimplePanel
-              options={options}
-              setOptions={setOptions}
-              modules={modules}
-              addModule={addModule}
-              removeModule={removeModule}
-              onAdvanced={handleToggleAdvanced}
-            />
-          )}
-        </Panel>
-        <Divide />
+        {advanced ? null : (
+          <>
+            <Panel flex='0 0 18rem' overflow>
+              <SimplePanel
+                options={options}
+                setOptions={setOptions}
+                modules={modules}
+                addModule={addModule}
+                removeModule={removeModule}
+                onAdvanced={handleToggleAdvanced}
+              />
+            </Panel>
+            <Divide />
+          </>
+        )}
         <Panel vertical>
           <ErrorBoundary>
-            <CodeEditor value={code} onChange={setValue} readOnly={!advanced} />
+            <div
+              style={{
+                flex: '1',
+                overflow: 'hidden',
+                backgroundColor: 'white',
+                display: 'flex',
+                position: 'relative',
+              }}
+            >
+              <CodeEditor value={code} onChange={setValue} readOnly={!advanced} />
+              <div style={{ position: 'absolute', bottom: '1rem', right: '2rem' }}>
+                {advanced ? (
+                  <button onClick={handleToggleAdvanced}>☑️ Enter simple mode</button>
+                ) : (
+                  <button onClick={handleToggleAdvanced}>🤓 Enter advanced mode</button>
+                )}
+                <button onClick={handleCopy} style={{ marginLeft: '0.5rem' }}>
+                  📋 {copied ? 'Copied code!' : 'Copy code'}
+                </button>
+              </div>
+            </div>
           </ErrorBoundary>
           <Divide />
           <ErrorBoundary>
-            <Viewer options={options} code={code} />
+            <div style={{ padding: '1rem', flex: '0 0 10rem', overflow: 'auto' }}>
+              <Viewer options={options} code={code} />
+            </div>
           </ErrorBoundary>
         </Panel>
       </Main>
     </Container>
   );
+};
+
+/** Copies text to the clipboard */
+const copy = (text: string) => {
+  const textarea = document.createElement('textarea');
+  textarea.style.position = 'absolute';
+  textarea.style.top = '0';
+  textarea.style.left = '-10000px';
+  textarea.style.opacity = '0.0001';
+  document.body.append(textarea);
+  textarea.value = text;
+  textarea.select();
+  textarea.setSelectionRange(0, 999999);
+  document.execCommand('copy');
+  textarea.remove();
 };

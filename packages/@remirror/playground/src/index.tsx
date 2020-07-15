@@ -33,12 +33,63 @@ export const Playground: FC = () => {
     });
   }, [hasBabel]);
 
-  return Component ? (
-    <Component />
-  ) : hasBabel ? (
-    <p>Loading monaco editor...</p>
-  ) : (
-    <p>Waiting for babel...</p>
+  return Component ? <Component /> : <Loading hasBabel={hasBabel} />;
+};
+
+const Loading: FC<{ hasBabel: boolean }> = ({ hasBabel }) => {
+  const [numberOfDots, setNumberOfDots] = useState(3);
+  useEffect(() => {
+    const dotsPlusPlus = () => {
+      setNumberOfDots((dots) => (dots > 2 ? 0 : dots + 1));
+    };
+    const interval = setInterval(dotsPlusPlus, 300);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  const show = {};
+  const hide = { visibility: 'hidden' };
+
+  const dots = [
+    <span key={1} style={numberOfDots >= 1 ? show : hide}>
+      .
+    </span>,
+    <span key={2} style={numberOfDots >= 2 ? show : hide}>
+      .
+    </span>,
+    <span key={3} style={numberOfDots >= 3 ? show : hide}>
+      .
+    </span>,
+  ];
+
+  return (
+    <div
+      style={{
+        height: '100%',
+        display: 'flex',
+        maxWidth: '50rem',
+        margin: '0 auto',
+        padding: '2rem',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+      }}
+    >
+      <div style={{ flex: '0 0 300px' }}>
+        <img
+          width='300'
+          height='300'
+          src='https://raw.githubusercontent.com/remirror/remirror/next/support/assets/logo-animated-light.svg?sanitize=true'
+          alt='animated remirror logo'
+        />
+      </div>
+      <div style={{ flex: '1 0 16rem', padding: '0 0 0 2rem', textAlign: 'center' }}>
+        Loading {!hasBabel ? 'babel' : 'monaco'}
+        {dots}
+      </div>
+    </div>
   );
 };
 
