@@ -6,9 +6,6 @@
 *                                                                              *
 \******************************************************************************/
 
-// Remirror custom imports
-import { RemirrorProvider, useExtension, useManager, useRemirror } from '@remirror/react';
-
 import { useRemirrorPlayground } from './use-remirror-playground';
 
 export const IMPORT_CACHE: { [moduleName: string]: any } = {

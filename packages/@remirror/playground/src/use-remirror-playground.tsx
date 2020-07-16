@@ -61,7 +61,7 @@ export function useRemirrorPlayground(
       setValue(state);
     });
     return unlisten;
-  }, [playground]);
+  }, [playground, extensionManager]);
 
   return { value, onChange };
 }

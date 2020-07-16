@@ -3,7 +3,7 @@ import { EventEmitter } from 'events';
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
 import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { EditorSchema, EditorState } from 'remirror/core';
+import { EditorState } from 'remirror/core';
 
 import CodeEditor from './code-editor';
 import { PlaygroundContext, PlaygroundContextObject } from './context';
@@ -250,7 +250,7 @@ export const Playground: FC = () => {
         // TODO: indicate JSON error
       }
     },
-    [eventEmitter],
+    [eventEmitter, setPlaygroundState],
   );
 
   const [textareaIsFocussed, setTextareaIsFocussed] = useState(false);
