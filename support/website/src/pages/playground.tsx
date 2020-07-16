@@ -33,6 +33,8 @@ const PlaygroundPage = (props: any) => {
             {/* TODO: Do not assume that it is in english language */}
             <html lang='en' />
             <script src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
+            <script src='https://unpkg.com/prettier@2.0.5/standalone.js'></script>
+            <script src='https://unpkg.com/prettier@2.0.5/parser-typescript.js'></script>
             {metaTitle ?? <title>{metaTitle}</title>}
             {metaTitle ?? <meta property='og:title' content={metaTitle} />}
             {favicon ?? <link rel='shortcut icon' href={faviconUrl} />}

@@ -4,6 +4,8 @@ export const Playground: FC = () => {
   const [Component, setPlayground] = useState<FC | null>(null);
 
   const [hasBabel, setHasBabel] = useState(false);
+  const [hasPrettier, setHasPrettier] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     if (hasBabel) {
@@ -23,20 +25,47 @@ export const Playground: FC = () => {
   }, [hasBabel]);
 
   useEffect(() => {
-    if (!hasBabel) {
+    if (hasPrettier) {
       return;
     }
 
-    import('./playground').then((playground) => {
-      // This has to be a function, otherwise React breaks (not unexpectedly)
-      setPlayground(() => playground.Playground);
-    });
-  }, [hasBabel]);
+    const checkForBabel = () => {
+      if (typeof window['prettier'] !== 'undefined') {
+        setHasPrettier(true);
+      }
+    };
+    const int = setInterval(checkForBabel, 100);
 
-  return Component ? <Component /> : <Loading hasBabel={hasBabel} />;
+    return () => {
+      clearInterval(int);
+    };
+  }, [hasPrettier]);
+
+  useEffect(() => {
+    if (!hasBabel || !hasPrettier) {
+      return;
+    }
+
+    import('./playground')
+      .then((playground) => {
+        // This has to be a function, otherwise React breaks (not unexpectedly)
+        setPlayground(() => playground.Playground);
+      })
+      .catch((error_) => setError(error_));
+  }, [hasBabel, hasPrettier]);
+
+  return Component ? (
+    <Component />
+  ) : (
+    <Loading hasBabel={hasBabel} hasPrettier={hasPrettier} error={error} />
+  );
 };
 
-const Loading: FC<{ hasBabel: boolean }> = ({ hasBabel }) => {
+const Loading: FC<{ hasBabel: boolean; hasPrettier: boolean; error: Error | null }> = ({
+  error,
+  hasBabel,
+  hasPrettier,
+}) => {
   const [numberOfDots, setNumberOfDots] = useState(3);
   useEffect(() => {
     const dotsPlusPlus = () => {
@@ -85,9 +114,32 @@ const Loading: FC<{ hasBabel: boolean }> = ({ hasBabel }) => {
           alt='animated remirror logo'
         />
       </div>
-      <div style={{ flex: '1 0 16rem', padding: '0 0 0 2rem', textAlign: 'center' }}>
-        Loading {!hasBabel ? 'babel' : 'monaco'}
-        {dots}
+      <div
+        style={{
+          flex: '1 0 16rem',
+          padding: '0 0 1rem 2rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+        }}
+      >
+        {error ? (
+          <div>
+            An error occurred, please refresh the page and try again. Details: {error.message}
+          </div>
+        ) : (
+          <>
+            <div style={{ textAlign: 'center' }}>Loading{dots}</div>
+            <div>
+              Babel: {!hasBabel ? '🏃' : '👍'}
+              <br />
+              Prettier: {!hasPrettier ? '🏃' : '👍'}
+              <br />
+              Playground: {!hasBabel || !hasPrettier ? '✋' : '🏃'}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
