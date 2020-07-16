@@ -2,8 +2,8 @@ import assert from 'assert';
 import { EventEmitter } from 'events';
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
 import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { debounce } from '@remirror/core-helpers';
 
+import { debounce } from '@remirror/core-helpers';
 import { EditorState } from 'remirror/core';
 
 import CodeEditor from './code-editor';
@@ -141,7 +141,7 @@ export const Playground: FC = () => {
   const debouncedValueToSet = useDebouncedValue(value);
   useEffect(() => {
     setDebouncedValue(debouncedValueToSet);
-  }, []);
+  }, [debouncedValueToSet]);
 
   const code = useMemo(() => (advanced ? debouncedValue : makeCode(options)), [
     advanced,
