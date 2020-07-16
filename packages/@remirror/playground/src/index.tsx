@@ -103,15 +103,24 @@ const Loading: FC<{ hasBabel: boolean; hasPrettier: boolean }> = ({ hasBabel, ha
           alt='animated remirror logo'
         />
       </div>
-      <div style={{ flex: '1 0 16rem', padding: '0 0 0 2rem', textAlign: 'center' }}>
-        Loading{dots}
-        <br />
-        Babel: {!hasBabel ? '🤔' : '👍'}
-        <br />
-        Prettier: {!hasPrettier ? '🤔' : '👍'}
-        <br />
-        Playground: {!hasBabel || !hasPrettier ? '😴' : '🤔'}
-        <br />
+      <div
+        style={{
+          flex: '1 0 16rem',
+          padding: '0 0 1rem 2rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+        }}
+      >
+        <div style={{ textAlign: 'center' }}>Loading{dots}</div>
+        <div>
+          Babel: {!hasBabel ? '🏃' : '👍'}
+          <br />
+          Prettier: {!hasPrettier ? '🏃' : '👍'}
+          <br />
+          Playground: {!hasBabel || !hasPrettier ? '✋' : '🏃'}
+        </div>
       </div>
     </div>
   );
