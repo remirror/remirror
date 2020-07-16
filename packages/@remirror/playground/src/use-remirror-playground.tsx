@@ -50,7 +50,16 @@ export function useRemirrorPlayground(
 
   useEffect(() => {
     playground.setContent(value);
-  }, [value]);
+  }, [playground, value]);
+  useEffect(() => {
+    const unlisten = playground.onContentChange((json) => {
+      const state = extensionManager.createState({
+        content: json,
+      });
+      setValue(state);
+    });
+    return unlisten;
+  }, [playground]);
 
   return { value, onChange };
 }

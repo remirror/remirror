@@ -1,6 +1,7 @@
 import assert from 'assert';
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
 import React, { FC, useCallback, useEffect, useRef, useState, useMemo } from 'react';
+import { EventEmitter } from 'events';
 
 import CodeEditor from './code-editor';
 import { ErrorBoundary } from './error-boundary';
@@ -10,7 +11,7 @@ import { makeCode } from './make-code';
 import { Container, Divide, Main, Panel } from './primitives';
 import { SimplePanel } from './simple-panel';
 import { Viewer } from './viewer';
-import { PlaygroundContext } from './context';
+import { PlaygroundContext, PlaygroundContextObject } from './context';
 import { EditorState, EditorSchema } from 'remirror/core';
 
 export { useRemirrorPlayground } from './use-remirror-playground';
@@ -45,9 +46,6 @@ export const Playground: FC = () => {
   const [contentValue, setContentValue] = useState<Readonly<EditorState<EditorSchema>> | null>(
     null,
   );
-  const updateContent = useCallback(() => {
-    // TODO
-  }, []);
   const [advanced, setAdvanced] = useState(false);
   const [modules, setModules] = useState<RemirrorModules>({});
   const addModule = useCallback((moduleName: string) => {
@@ -210,13 +208,33 @@ export const Playground: FC = () => {
     }
   }, [advanced, value, options, modules, readyToSetUrlHash]);
 
-  const playground = useMemo(() => {
-    return {
+  const { playground, eventEmitter } = useMemo((): {
+    playground: PlaygroundContextObject;
+    eventEmitter: EventEmitter;
+  } => {
+    const eventEmitter = new EventEmitter();
+    const playground: PlaygroundContextObject = {
       setContent: (state: Readonly<EditorState<EditorSchema>>) => {
         setContentValue(state);
       },
+      onContentChange: (callback) => {
+        eventEmitter.on('change', callback);
+        return () => {
+          eventEmitter.removeListener('change', callback);
+        };
+      },
     };
+    return { playground, eventEmitter };
   }, [setContentValue]);
+
+  const updateContent = useCallback<React.ChangeEventHandler<HTMLTextAreaElement>>(
+    (e) => {
+      const text = e.target.value;
+      const json = JSON.parse(text);
+      eventEmitter.emit('change', json);
+    },
+    [eventEmitter],
+  );
 
   return (
     <PlaygroundContext.Provider value={playground}>
@@ -272,7 +290,7 @@ export const Playground: FC = () => {
               <ErrorBoundary>
                 <div style={{ overflow: 'auto', flex: '1' }}>
                   <textarea
-                    value={contentValue ? JSON.stringify(contentValue.toJSON(), null, 2) : ''}
+                    value={contentValue ? JSON.stringify(contentValue.doc.toJSON(), null, 2) : ''}
                     onChange={updateContent}
                     style={{
                       width: '100%',
