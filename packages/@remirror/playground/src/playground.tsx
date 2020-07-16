@@ -1,9 +1,12 @@
 import assert from 'assert';
-import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
-import React, { FC, useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import { EventEmitter } from 'events';
+import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
+import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
+import { EditorSchema, EditorState } from 'remirror/core';
 
 import CodeEditor from './code-editor';
+import { PlaygroundContext, PlaygroundContextObject } from './context';
 import { ErrorBoundary } from './error-boundary';
 import { makeRequire, REQUIRED_MODULES } from './execute';
 import { CodeOptions, Exports, RemirrorModules } from './interfaces';
@@ -11,8 +14,6 @@ import { makeCode } from './make-code';
 import { Container, Divide, Main, Panel } from './primitives';
 import { SimplePanel } from './simple-panel';
 import { Viewer } from './viewer';
-import { PlaygroundContext, PlaygroundContextObject } from './context';
-import { EditorState, EditorSchema } from 'remirror/core';
 
 export { useRemirrorPlayground } from './use-remirror-playground';
 
@@ -43,9 +44,7 @@ function cleanse(moduleName: string, moduleExports: Exports): Exports {
 
 export const Playground: FC = () => {
   const [value, setValue] = useState('// Add some code here\n');
-  const [contentValue, setContentValue] = useState<Readonly<EditorState<EditorSchema>> | null>(
-    null,
-  );
+  const [contentValue, setContentValue] = useState<Readonly<EditorState> | null>(null);
   const [advanced, setAdvanced] = useState(false);
   const [modules, setModules] = useState<RemirrorModules>({});
   const addModule = useCallback((moduleName: string) => {
@@ -199,6 +198,7 @@ export const Playground: FC = () => {
         c: value,
       };
     }
+
     return state;
   }, [advanced, value, options, modules]);
 
@@ -225,7 +225,7 @@ export const Playground: FC = () => {
   } => {
     const eventEmitter = new EventEmitter();
     const playground: PlaygroundContextObject = {
-      setContent: (state: Readonly<EditorState<EditorSchema>>) => {
+      setContent: (state: Readonly<EditorState>) => {
         setContentValue(state);
       },
       onContentChange: (callback) => {
@@ -246,7 +246,7 @@ export const Playground: FC = () => {
         const json = JSON.parse(text);
         setPlaygroundState(json.playground);
         eventEmitter.emit('change', json.doc);
-      } catch (e) {
+      } catch {
         // TODO: indicate JSON error
       }
     },

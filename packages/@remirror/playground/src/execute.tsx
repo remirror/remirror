@@ -1,6 +1,6 @@
 import * as crypto from 'crypto';
 import { languages } from 'monaco-editor';
-import React, { FC, useEffect, useMemo, useRef, useState, useContext } from 'react';
+import React, { FC, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 
 // addImport('@remirror/react', 'RemirrorProvider');
@@ -9,12 +9,12 @@ import { render, unmountComponentAtNode } from 'react-dom';
 import { debounce } from '@remirror/core-helpers';
 
 import { IMPORT_CACHE, INTERNAL_MODULES } from './_remirror';
+import { PlaygroundContext, PlaygroundContextObject } from './context';
 // import * as remirrorCoreExtensions from '@remirror/core-extensions';
 //import * as remirrorReact from '@remirror/react';
 //import * as remirror from 'remirror';
 import { ErrorBoundary } from './error-boundary';
 import { acquiredTypeDefs, dtsCache } from './vendor/type-acquisition';
-import { PlaygroundContext, PlaygroundContextObject } from './context';
 
 // Start with these and cannot remove them
 export const REQUIRED_MODULES = INTERNAL_MODULES.map((mod) => mod.moduleName);

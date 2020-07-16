@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect, useContext } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import {
   AnyCombinedUnion,
@@ -9,6 +9,7 @@ import {
   RemirrorJSON,
   RemirrorManager,
 } from 'remirror/core';
+
 import { PlaygroundContext } from './context';
 
 declare global {
