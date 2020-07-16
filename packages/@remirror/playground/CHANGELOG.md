@@ -1,5 +1,22 @@
 # @remirror/playground
 
+## 1.0.0-next.4
+
+> 2020-07-16
+
+### Patch Changes
+
+- 5d5970ae: Update repository and website field to point to HEAD rather than a specific branch.
+- Updated dependencies [64edeec2]
+- Updated dependencies [e1a1b6ec]
+- Updated dependencies [9f495078]
+- Updated dependencies [5d5970ae]
+- Updated dependencies [64edeec2]
+  - @remirror/core@1.0.0-next.4
+  - @remirror/react@1.0.0-next.4
+  - @remirror/core-helpers@1.0.0-next.4
+  - remirror@1.0.0-next.4
+
 ## 1.0.0-next.1
 
 > 2020-07-05

@@ -1,5 +1,16 @@
 # @remirror/i18n
 
+## 1.0.0-next.4
+
+> 2020-07-16
+
+### Patch Changes
+
+- 5d5970ae: Update repository and website field to point to HEAD rather than a specific branch.
+- Updated dependencies [5d5970ae]
+  - @remirror/core-helpers@1.0.0-next.4
+  - @remirror/pm@1.0.0-next.4
+
 ## 1.0.0-next.3
 
 > 2020-07-11

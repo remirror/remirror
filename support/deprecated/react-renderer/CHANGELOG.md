@@ -1,5 +1,13 @@
 # @remirror/react-renderer
 
+## 1.0.0-next.1
+
+> 2020-07-16
+
+### Patch Changes
+
+- 5d5970ae: Update repository and website field to point to HEAD rather than a specific branch.
+
 ## 1.0.0-next.0
 
 > 2020-07-05

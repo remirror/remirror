@@ -1,5 +1,21 @@
 # @remirror/extension-tables
 
+## 1.0.0-next.4
+
+> 2020-07-16
+
+### Patch Changes
+
+- 2d74596b: Rename class name from `TableHeaderCell` to `TableHeaderCellExtension`. Raname node name
+  from `tableHeader` to `tableHeaderCell`.
+- 5d5970ae: Update repository and website field to point to HEAD rather than a specific branch.
+- Updated dependencies [64edeec2]
+- Updated dependencies [9f495078]
+- Updated dependencies [5d5970ae]
+  - @remirror/core@1.0.0-next.4
+  - @remirror/pm@1.0.0-next.4
+  - @remirror/theme@1.0.0-next.4
+
 ## 1.0.0-next.3
 
 > 2020-07-11

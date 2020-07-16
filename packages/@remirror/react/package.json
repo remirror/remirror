@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react",
-  "version": "1.0.0-next.3",
+  "version": "1.0.0-next.4",
   "description": "react utilities for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react",
@@ -21,14 +21,14 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.10.4",
-    "@remirror/extension-placeholder": "^1.0.0-next.3",
-    "@remirror/extension-positioner": "^1.0.0-next.3",
-    "@remirror/extension-react-component": "^0.0.0",
-    "@remirror/i18n": "^1.0.0-next.3",
-    "@remirror/preset-core": "^1.0.0-next.3",
-    "@remirror/preset-react": "^1.0.0-next.3",
-    "@remirror/react-utils": "^1.0.0-next.2",
-    "@remirror/theme": "^1.0.0-next.1",
+    "@remirror/extension-placeholder": "^1.0.0-next.4",
+    "@remirror/extension-positioner": "^1.0.0-next.4",
+    "@remirror/extension-react-component": "^1.0.0-next.4",
+    "@remirror/i18n": "^1.0.0-next.4",
+    "@remirror/preset-core": "^1.0.0-next.4",
+    "@remirror/preset-react": "^1.0.0-next.4",
+    "@remirror/react-utils": "^1.0.0-next.4",
+    "@remirror/theme": "^1.0.0-next.4",
     "@types/hoist-non-react-statics": "^3.3.1",
     "@types/min-document": "^2.19.0",
     "@types/use-deep-compare-effect": "^1.2.0",
@@ -41,8 +41,8 @@
     "type-fest": "^0.16.0"
   },
   "devDependencies": {
-    "@remirror/core": "^1.0.0-next.3",
-    "@remirror/pm": "^1.0.0-next.3",
+    "@remirror/core": "^1.0.0-next.4",
+    "@remirror/pm": "^1.0.0-next.4",
     "@testing-library/react": "^10.4.5",
     "@testing-library/react-hooks": "^3.3.0",
     "@types/react": "^16.9.43",
@@ -55,8 +55,8 @@
     "react-test-renderer": "^16.13.1"
   },
   "peerDependencies": {
-    "@remirror/core": "^1.0.0-next.3",
-    "@remirror/pm": "^1.0.0-next.3",
+    "@remirror/core": "^1.0.0-next.4",
+    "@remirror/pm": "^1.0.0-next.4",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "react": "^16.8.0",
