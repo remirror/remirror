@@ -58,7 +58,7 @@ extension active. Clicking the button when text is selected will toggle between 
 ```tsx
 import React, { useCallback } from 'react';
 import { BoldExtension } from 'remirror/extension/bold';
-import { RemirrorProvider, useManager, useRemirror, useExtensionCreator } from 'remirror/react';
+import { RemirrorProvider, useManager, useRemirror } from 'remirror/react';
 
 const Editor = () => {
   const { getRootProps, active, commands } = useRemirror();
@@ -78,7 +78,7 @@ const Editor = () => {
 };
 
 const EditorWrapper = () => {
-  const boldExtension = useExtensionCreator(BoldExtension);
+  const boldExtension = new BoldExtension();
   const manager = useManager([boldExtension]);
 
   return (
