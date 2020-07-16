@@ -5,6 +5,7 @@ export const Playground: FC = () => {
 
   const [hasBabel, setHasBabel] = useState(false);
   const [hasPrettier, setHasPrettier] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     if (hasBabel) {
@@ -45,16 +46,26 @@ export const Playground: FC = () => {
       return;
     }
 
-    import('./playground').then((playground) => {
-      // This has to be a function, otherwise React breaks (not unexpectedly)
-      setPlayground(() => playground.Playground);
-    });
+    import('./playground')
+      .then((playground) => {
+        // This has to be a function, otherwise React breaks (not unexpectedly)
+        setPlayground(() => playground.Playground);
+      })
+      .catch((e) => setError(e));
   }, [hasBabel, hasPrettier]);
 
-  return Component ? <Component /> : <Loading hasBabel={hasBabel} hasPrettier={hasPrettier} />;
+  return Component ? (
+    <Component />
+  ) : (
+    <Loading hasBabel={hasBabel} hasPrettier={hasPrettier} error={error} />
+  );
 };
 
-const Loading: FC<{ hasBabel: boolean; hasPrettier: boolean }> = ({ hasBabel, hasPrettier }) => {
+const Loading: FC<{ hasBabel: boolean; hasPrettier: boolean; error: Error | null }> = ({
+  error,
+  hasBabel,
+  hasPrettier,
+}) => {
   const [numberOfDots, setNumberOfDots] = useState(3);
   useEffect(() => {
     const dotsPlusPlus = () => {
@@ -113,14 +124,22 @@ const Loading: FC<{ hasBabel: boolean; hasPrettier: boolean }> = ({ hasBabel, ha
           flexDirection: 'column',
         }}
       >
-        <div style={{ textAlign: 'center' }}>Loading{dots}</div>
-        <div>
-          Babel: {!hasBabel ? '🏃' : '👍'}
-          <br />
-          Prettier: {!hasPrettier ? '🏃' : '👍'}
-          <br />
-          Playground: {!hasBabel || !hasPrettier ? '✋' : '🏃'}
-        </div>
+        {error ? (
+          <div>
+            An error occurred, please refresh the page and try again. Details: {error.message}
+          </div>
+        ) : (
+          <>
+            <div style={{ textAlign: 'center' }}>Loading{dots}</div>
+            <div>
+              Babel: {!hasBabel ? '🏃' : '👍'}
+              <br />
+              Prettier: {!hasPrettier ? '🏃' : '👍'}
+              <br />
+              Playground: {!hasBabel || !hasPrettier ? '✋' : '🏃'}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
