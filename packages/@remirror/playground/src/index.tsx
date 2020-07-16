@@ -4,6 +4,7 @@ export const Playground: FC = () => {
   const [Component, setPlayground] = useState<FC | null>(null);
 
   const [hasBabel, setHasBabel] = useState(false);
+  const [hasPrettier, setHasPrettier] = useState(false);
 
   useEffect(() => {
     if (hasBabel) {
@@ -23,7 +24,24 @@ export const Playground: FC = () => {
   }, [hasBabel]);
 
   useEffect(() => {
-    if (!hasBabel) {
+    if (hasPrettier) {
+      return;
+    }
+
+    const checkForBabel = () => {
+      if (typeof window['prettier'] !== 'undefined') {
+        setHasPrettier(true);
+      }
+    };
+    const int = setInterval(checkForBabel, 100);
+
+    return () => {
+      clearInterval(int);
+    };
+  }, [hasPrettier]);
+
+  useEffect(() => {
+    if (!hasBabel || !hasPrettier) {
       return;
     }
 
@@ -31,12 +49,12 @@ export const Playground: FC = () => {
       // This has to be a function, otherwise React breaks (not unexpectedly)
       setPlayground(() => playground.Playground);
     });
-  }, [hasBabel]);
+  }, [hasBabel, hasPrettier]);
 
-  return Component ? <Component /> : <Loading hasBabel={hasBabel} />;
+  return Component ? <Component /> : <Loading hasBabel={hasBabel} hasPrettier={hasPrettier} />;
 };
 
-const Loading: FC<{ hasBabel: boolean }> = ({ hasBabel }) => {
+const Loading: FC<{ hasBabel: boolean; hasPrettier: boolean }> = ({ hasBabel, hasPrettier }) => {
   const [numberOfDots, setNumberOfDots] = useState(3);
   useEffect(() => {
     const dotsPlusPlus = () => {
@@ -86,8 +104,14 @@ const Loading: FC<{ hasBabel: boolean }> = ({ hasBabel }) => {
         />
       </div>
       <div style={{ flex: '1 0 16rem', padding: '0 0 0 2rem', textAlign: 'center' }}>
-        Loading {!hasBabel ? 'babel' : 'monaco'}
-        {dots}
+        Loading{dots}
+        <br />
+        Babel: {!hasBabel ? '🤔' : '👍'}
+        <br />
+        Prettier: {!hasPrettier ? '🤔' : '👍'}
+        <br />
+        Playground: {!hasBabel || !hasPrettier ? '😴' : '🤔'}
+        <br />
       </div>
     </div>
   );
