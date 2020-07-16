@@ -1,5 +1,41 @@
 # @remirror/preset-wysiwyg
 
+## 1.0.0-next.4
+
+> 2020-07-16
+
+### Patch Changes
+
+- 5d5970ae: Update repository and website field to point to HEAD rather than a specific branch.
+- Updated dependencies [64edeec2]
+- Updated dependencies [9f495078]
+- Updated dependencies [2d74596b]
+- Updated dependencies [5d5970ae]
+  - @remirror/core@1.0.0-next.4
+  - @remirror/preset-table@1.0.0-next.4
+  - @remirror/extension-bidi@1.0.0-next.4
+  - @remirror/extension-blockquote@1.0.0-next.4
+  - @remirror/extension-bold@1.0.0-next.4
+  - @remirror/extension-code@1.0.0-next.4
+  - @remirror/extension-code-block@1.0.0-next.4
+  - @remirror/extension-drop-cursor@1.0.0-next.4
+  - @remirror/extension-epic-mode@1.0.0-next.4
+  - @remirror/extension-gap-cursor@1.0.0-next.4
+  - @remirror/extension-hard-break@1.0.0-next.4
+  - @remirror/extension-heading@1.0.0-next.4
+  - @remirror/extension-horizontal-rule@1.0.0-next.4
+  - @remirror/extension-image@1.0.0-next.4
+  - @remirror/extension-italic@1.0.0-next.4
+  - @remirror/extension-link@1.0.0-next.4
+  - @remirror/extension-search@1.0.0-next.4
+  - @remirror/extension-strike@1.0.0-next.4
+  - @remirror/extension-trailing-node@1.0.0-next.4
+  - @remirror/extension-underline@1.0.0-next.4
+  - @remirror/pm@1.0.0-next.4
+  - @remirror/preset-core@1.0.0-next.4
+  - @remirror/preset-embed@1.0.0-next.4
+  - @remirror/preset-list@1.0.0-next.4
+
 ## 1.0.0-next.3
 
 > 2020-07-11

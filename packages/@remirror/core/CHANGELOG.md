@@ -1,5 +1,26 @@
 # @remirror/core
 
+## 1.0.0-next.4
+
+> 2020-07-16
+
+### Minor Changes
+
+- 64edeec2: Add blur method to the editor context which is used in the `@remirror/react` and
+  `@remirror/dom` libraries.
+- 9f495078: Move `suppressHydrationWarning` prop from core to to react editor. It makes no sense for
+  it to be in core since it only impacts the react editor.
+
+### Patch Changes
+
+- 5d5970ae: Update repository and website field to point to HEAD rather than a specific branch.
+- Updated dependencies [5d5970ae]
+  - @remirror/core-constants@1.0.0-next.4
+  - @remirror/core-helpers@1.0.0-next.4
+  - @remirror/core-types@1.0.0-next.4
+  - @remirror/core-utils@1.0.0-next.4
+  - @remirror/pm@1.0.0-next.4
+
 ## 1.0.0-next.3
 
 > 2020-07-11

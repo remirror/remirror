@@ -1,5 +1,46 @@
 # @remirror/react
 
+## 1.0.0-next.4
+
+> 2020-07-16
+
+### Major Changes
+
+- 64edeec2: Add a new extension package `@remirror/extension-react-component` for creating
+  ProseMirror `NodeView`'s from React components.
+
+  - Move `ReactPortal` implementation from `@remirror/react` to `@remirror/react-utils` for usage in
+    other parts of the application.
+  - Move `ReactNodeView` into new package `@remirror/extension-react-component`.
+  - Rename `ReactNodeView.createNodeView` to `ReactNodeView.create`.
+
+  The new package adds the `ReactComponent` property to the extension interface. An extension with a
+  component attached will use it to override the automatic DOM representation with a ProseMirror
+  `NodeView`.
+
+### Patch Changes
+
+- e1a1b6ec: Prevent multiple editors being attached with a single Provider. This error flags you
+  when you are attaching `getRootProps` to the dom in multiple placeswithin a single editor
+  instance. This can help prevent unwanted behaviour.
+- 9f495078: Move `suppressHydrationWarning` prop from core to to react editor. It makes no sense for
+  it to be in core since it only impacts the react editor.
+- 5d5970ae: Update repository and website field to point to HEAD rather than a specific branch.
+- Updated dependencies [64edeec2]
+- Updated dependencies [9f495078]
+- Updated dependencies [5d5970ae]
+- Updated dependencies [64edeec2]
+  - @remirror/core@1.0.0-next.4
+  - @remirror/extension-placeholder@1.0.0-next.4
+  - @remirror/extension-positioner@1.0.0-next.4
+  - @remirror/i18n@1.0.0-next.4
+  - @remirror/pm@1.0.0-next.4
+  - @remirror/preset-core@1.0.0-next.4
+  - @remirror/preset-react@1.0.0-next.4
+  - @remirror/react-utils@1.0.0-next.4
+  - @remirror/theme@1.0.0-next.4
+  - @remirror/extension-react-component@1.0.0-next.4
+
 ## 1.0.0-next.3
 
 > 2020-07-11

@@ -1,5 +1,17 @@
 # jest-remirror
 
+## 1.0.0-next.4
+
+> 2020-07-16
+
+### Patch Changes
+
+- 5d5970ae: Update repository and website field to point to HEAD rather than a specific branch.
+- Updated dependencies [5d5970ae]
+  - @remirror/pm@1.0.0-next.4
+  - jest-prosemirror@1.0.0-next.2
+  - remirror@1.0.0-next.4
+
 ## 1.0.0-next.1
 
 > 2020-07-05
