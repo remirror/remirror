@@ -208,6 +208,7 @@ export const Playground: FC = () => {
     }
   }, [advanced, value, options, modules, readyToSetUrlHash]);
 
+  const [textareaValue, setTextareaValue] = useState('');
   const { playground, eventEmitter } = useMemo((): {
     playground: PlaygroundContextObject;
     eventEmitter: EventEmitter;
@@ -230,11 +231,24 @@ export const Playground: FC = () => {
   const updateContent = useCallback<React.ChangeEventHandler<HTMLTextAreaElement>>(
     (e) => {
       const text = e.target.value;
-      const json = JSON.parse(text);
-      eventEmitter.emit('change', json);
+      setTextareaValue(text);
+      try {
+        const json = JSON.parse(text);
+        eventEmitter.emit('change', json);
+      } catch (e) {
+        // TODO: indicate JSON error
+      }
     },
     [eventEmitter],
   );
+
+  const [textareaIsFocussed, setTextareaIsFocussed] = useState(false);
+
+  useEffect(() => {
+    if (!textareaIsFocussed) {
+      setTextareaValue(contentValue ? JSON.stringify(contentValue.doc.toJSON(), null, 2) : '');
+    }
+  }, [contentValue, textareaIsFocussed]);
 
   return (
     <PlaygroundContext.Provider value={playground}>
@@ -290,8 +304,10 @@ export const Playground: FC = () => {
               <ErrorBoundary>
                 <div style={{ overflow: 'auto', flex: '1' }}>
                   <textarea
-                    value={contentValue ? JSON.stringify(contentValue.doc.toJSON(), null, 2) : ''}
+                    value={textareaValue}
                     onChange={updateContent}
+                    onFocus={() => setTextareaIsFocussed(true)}
+                    onBlur={() => setTextareaIsFocussed(false)}
                     style={{
                       width: '100%',
                       height: '100%',
