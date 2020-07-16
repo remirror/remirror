@@ -137,6 +137,31 @@ export const Playground: FC = () => {
   const windowHash = window.location.hash;
   const ourHash = useRef('');
   const [readyToSetUrlHash, setReadyToSetUrlHash] = useState(false);
+  const setPlaygroundState = useCallback(
+    (state) => {
+      console.log('Restoring state');
+      console.dir(state);
+      assert(typeof state === 'object' && state, 'Expected state to be an object');
+      assert(typeof state.m === 'number', 'Expected mode to be a number');
+
+      if (state.m === 0) {
+        /* basic mode */
+        setAdvanced(false);
+        setOptions({ extensions: state.e, presets: state.p });
+
+        if (Array.isArray(state.a)) {
+          state.a.forEach((moduleName: string) => addModule(moduleName));
+        }
+      } else if (state.m === 1) {
+        /* advanced mode */
+        assert(typeof state.c === 'string', 'Expected code to be a string');
+        const code = state.c;
+        setAdvanced(true);
+        setValue(code);
+      }
+    },
+    [addModule],
+  );
   useEffect(() => {
     if (windowHash && ourHash.current !== windowHash) {
       ourHash.current = windowHash;
@@ -146,26 +171,7 @@ export const Playground: FC = () => {
       if (part) {
         try {
           const state = decode(part.slice(2));
-          console.log('Restoring state');
-          console.dir(state);
-          assert(typeof state === 'object' && state, 'Expected state to be an object');
-          assert(typeof state.m === 'number', 'Expected mode to be a number');
-
-          if (state.m === 0) {
-            /* basic mode */
-            setAdvanced(false);
-            setOptions({ extensions: state.e, presets: state.p });
-
-            if (Array.isArray(state.a)) {
-              state.a.forEach((moduleName: string) => addModule(moduleName));
-            }
-          } else if (state.m === 1) {
-            /* advanced mode */
-            assert(typeof state.c === 'string', 'Expected code to be a string');
-            const code = state.c;
-            setAdvanced(true);
-            setValue(code);
-          }
+          setPlaygroundState(state);
         } catch (error) {
           console.error(part.slice(2));
           console.error('Failed to parse above state; failed with following error:');
@@ -175,14 +181,9 @@ export const Playground: FC = () => {
     }
 
     setReadyToSetUrlHash(true);
-  }, [windowHash, addModule]);
+  }, [windowHash, setPlaygroundState]);
 
-  useEffect(() => {
-    if (!readyToSetUrlHash) {
-      /* Premature, we may not have finished reading it yet */
-      return;
-    }
-
+  const getPlaygroundState = useCallback(() => {
     let state;
 
     if (!advanced) {
@@ -198,7 +199,16 @@ export const Playground: FC = () => {
         c: value,
       };
     }
+    return state;
+  }, [advanced, value, options, modules]);
 
+  useEffect(() => {
+    if (!readyToSetUrlHash) {
+      /* Premature, we may not have finished reading it yet */
+      return;
+    }
+
+    const state = getPlaygroundState();
     const encoded = encode(state);
     const hash = `#o/${encoded}`;
 
@@ -206,7 +216,7 @@ export const Playground: FC = () => {
       ourHash.current = hash;
       window.location.hash = hash;
     }
-  }, [advanced, value, options, modules, readyToSetUrlHash]);
+  }, [readyToSetUrlHash, getPlaygroundState]);
 
   const [textareaValue, setTextareaValue] = useState('');
   const { playground, eventEmitter } = useMemo((): {
@@ -234,7 +244,8 @@ export const Playground: FC = () => {
       setTextareaValue(text);
       try {
         const json = JSON.parse(text);
-        eventEmitter.emit('change', json);
+        setPlaygroundState(json.playground);
+        eventEmitter.emit('change', json.doc);
       } catch (e) {
         // TODO: indicate JSON error
       }
@@ -246,9 +257,16 @@ export const Playground: FC = () => {
 
   useEffect(() => {
     if (!textareaIsFocussed) {
-      setTextareaValue(contentValue ? JSON.stringify(contentValue.doc.toJSON(), null, 2) : '');
+      const doc = contentValue ? contentValue.doc.toJSON() : null;
+      const playgroundState = doc
+        ? {
+            doc,
+            playground: getPlaygroundState(),
+          }
+        : null;
+      setTextareaValue(playgroundState ? JSON.stringify(playgroundState, null, 2) : '');
     }
-  }, [contentValue, textareaIsFocussed]);
+  }, [contentValue, textareaIsFocussed, getPlaygroundState]);
 
   return (
     <PlaygroundContext.Provider value={playground}>

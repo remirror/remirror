@@ -56,6 +56,7 @@ export function useRemirrorPlayground(
       const state = extensionManager.createState({
         content: json,
       });
+      PERSIST.lastKnownGoodState = state;
       setValue(state);
     });
     return unlisten;
