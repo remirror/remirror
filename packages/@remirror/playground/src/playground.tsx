@@ -128,8 +128,8 @@ export const Playground: FC = () => {
       )
     ) {
       if (!advanced) {
-        setAdvanced(true);
         setValue(makeCode(options));
+        setAdvanced(true);
       } else {
         setAdvanced(false);
       }
@@ -328,7 +328,11 @@ export const Playground: FC = () => {
                   position: 'relative',
                 }}
               >
-                <CodeEditor value={code} onChange={setValue} readOnly={!advanced} />
+                <CodeEditor
+                  value={advanced ? value : code}
+                  onChange={setValue}
+                  readOnly={!advanced}
+                />
                 <div style={{ position: 'absolute', bottom: '1rem', right: '2rem' }}>
                   {advanced ? (
                     <button onClick={handleToggleAdvanced}>☑️ Enter simple mode</button>
