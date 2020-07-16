@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect, useContext } from 'react';
 
 import {
   AnyCombinedUnion,
@@ -9,6 +9,7 @@ import {
   RemirrorJSON,
   RemirrorManager,
 } from 'remirror/core';
+import { PlaygroundContext } from './context';
 
 declare global {
   interface Window {
@@ -34,6 +35,7 @@ export function useRemirrorPlayground(
   value: EditorState;
   onChange: RemirrorEventListener<AnyCombinedUnion>;
 } {
+  const playground = useContext(PlaygroundContext);
   const [value, setValue] = useState<EditorState>(
     extensionManager.createState({
       content: PERSIST.lastKnownGoodState
@@ -45,6 +47,10 @@ export function useRemirrorPlayground(
     PERSIST.lastKnownGoodState = event.state;
     setValue(event.state);
   }, []);
+
+  useEffect(() => {
+    playground.setContent(value);
+  }, [value]);
 
   return { value, onChange };
 }

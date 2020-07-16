@@ -1,6 +1,6 @@
 import assert from 'assert';
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState, useMemo } from 'react';
 
 import CodeEditor from './code-editor';
 import { ErrorBoundary } from './error-boundary';
@@ -10,6 +10,8 @@ import { makeCode } from './make-code';
 import { Container, Divide, Main, Panel } from './primitives';
 import { SimplePanel } from './simple-panel';
 import { Viewer } from './viewer';
+import { PlaygroundContext } from './context';
+import { EditorState, EditorSchema } from 'remirror/core';
 
 export { useRemirrorPlayground } from './use-remirror-playground';
 
@@ -40,6 +42,12 @@ function cleanse(moduleName: string, moduleExports: Exports): Exports {
 
 export const Playground: FC = () => {
   const [value, setValue] = useState('// Add some code here\n');
+  const [contentValue, setContentValue] = useState<Readonly<EditorState<EditorSchema>> | null>(
+    null,
+  );
+  const updateContent = useCallback(() => {
+    // TODO
+  }, []);
   const [advanced, setAdvanced] = useState(false);
   const [modules, setModules] = useState<RemirrorModules>({});
   const addModule = useCallback((moduleName: string) => {
@@ -202,57 +210,86 @@ export const Playground: FC = () => {
     }
   }, [advanced, value, options, modules, readyToSetUrlHash]);
 
+  const playground = useMemo(() => {
+    return {
+      setContent: (state: Readonly<EditorState<EditorSchema>>) => {
+        setContentValue(state);
+      },
+    };
+  }, [setContentValue]);
+
   return (
-    <Container>
-      <Main>
-        {advanced ? null : (
-          <>
-            <Panel flex='0 0 18rem' overflow>
-              <SimplePanel
-                options={options}
-                setOptions={setOptions}
-                modules={modules}
-                addModule={addModule}
-                removeModule={removeModule}
-                onAdvanced={handleToggleAdvanced}
-              />
-            </Panel>
-            <Divide />
-          </>
-        )}
-        <Panel vertical>
-          <ErrorBoundary>
-            <div
-              style={{
-                flex: '1',
-                overflow: 'hidden',
-                backgroundColor: 'white',
-                display: 'flex',
-                position: 'relative',
-              }}
-            >
-              <CodeEditor value={code} onChange={setValue} readOnly={!advanced} />
-              <div style={{ position: 'absolute', bottom: '1rem', right: '2rem' }}>
-                {advanced ? (
-                  <button onClick={handleToggleAdvanced}>☑️ Enter simple mode</button>
-                ) : (
-                  <button onClick={handleToggleAdvanced}>🤓 Enter advanced mode</button>
-                )}
-                <button onClick={handleCopy} style={{ marginLeft: '0.5rem' }}>
-                  📋 {copied ? 'Copied code!' : 'Copy code'}
-                </button>
+    <PlaygroundContext.Provider value={playground}>
+      <Container>
+        <Main>
+          {advanced ? null : (
+            <>
+              <Panel flex='0 0 18rem' overflow>
+                <SimplePanel
+                  options={options}
+                  setOptions={setOptions}
+                  modules={modules}
+                  addModule={addModule}
+                  removeModule={removeModule}
+                  onAdvanced={handleToggleAdvanced}
+                />
+              </Panel>
+              <Divide />
+            </>
+          )}
+          <Panel vertical>
+            <ErrorBoundary>
+              <div
+                style={{
+                  flex: '3 0 0',
+                  overflow: 'hidden',
+                  backgroundColor: 'white',
+                  display: 'flex',
+                  position: 'relative',
+                }}
+              >
+                <CodeEditor value={code} onChange={setValue} readOnly={!advanced} />
+                <div style={{ position: 'absolute', bottom: '1rem', right: '2rem' }}>
+                  {advanced ? (
+                    <button onClick={handleToggleAdvanced}>☑️ Enter simple mode</button>
+                  ) : (
+                    <button onClick={handleToggleAdvanced}>🤓 Enter advanced mode</button>
+                  )}
+                  <button onClick={handleCopy} style={{ marginLeft: '0.5rem' }}>
+                    📋 {copied ? 'Copied code!' : 'Copy code'}
+                  </button>
+                </div>
               </div>
+            </ErrorBoundary>
+            <Divide />
+            <div style={{ flex: '2 0 0', display: 'flex', width: '100%' }}>
+              <ErrorBoundary>
+                <div style={{ padding: '1rem', overflow: 'auto', flex: '1' }}>
+                  <Viewer options={options} code={code} />
+                </div>
+              </ErrorBoundary>
+              <Divide />
+              <ErrorBoundary>
+                <div style={{ overflow: 'auto', flex: '1' }}>
+                  <textarea
+                    value={contentValue ? JSON.stringify(contentValue.toJSON(), null, 2) : ''}
+                    onChange={updateContent}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      border: 0,
+                      outline: 0,
+                      margin: 0,
+                      padding: 0,
+                    }}
+                  />
+                </div>
+              </ErrorBoundary>
             </div>
-          </ErrorBoundary>
-          <Divide />
-          <ErrorBoundary>
-            <div style={{ padding: '1rem', flex: '0 0 10rem', overflow: 'auto' }}>
-              <Viewer options={options} code={code} />
-            </div>
-          </ErrorBoundary>
-        </Panel>
-      </Main>
-    </Container>
+          </Panel>
+        </Main>
+      </Container>
+    </PlaygroundContext.Provider>
   );
 };
 
