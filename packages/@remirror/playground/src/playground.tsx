@@ -38,11 +38,6 @@ function cleanse(moduleName: string, moduleExports: Exports): Exports {
   return cleansedExports;
 }
 
-const PRETTIER_SCRIPTS = [
-  'https://unpkg.com/prettier@2.0.5/standalone.js',
-  'https://unpkg.com/prettier@2.0.5/parser-typescript.js',
-];
-
 export const Playground: FC = () => {
   const [value, setValue] = useState('// Add some code here\n');
   const [advanced, setAdvanced] = useState(false);
@@ -104,63 +99,6 @@ export const Playground: FC = () => {
     ],
     presets: [],
   } as CodeOptions);
-
-  // Load prettier for formatting
-  const handleFormat = useCallback(() => {
-    setValue(makeCode(options));
-  }, [options]);
-  const handleFormatRef = useRef(handleFormat);
-  useEffect(() => {
-    handleFormatRef.current = handleFormat;
-  }, [handleFormat]);
-  useEffect(() => {
-    const loadedScripts: string[] = [];
-
-    for (let i = 0, l = document.head.childNodes.length; i < l; i++) {
-      const child = document.head.childNodes[i];
-
-      if (child.nodeType === 1 && child.nodeName === 'SCRIPT') {
-        const scriptEl = child as HTMLScriptElement;
-
-        if (scriptEl.src) {
-          loadedScripts.push(scriptEl.src);
-        }
-      }
-    }
-
-    const unlisten: Array<() => void> = [];
-
-    const format = (e: Event) => {
-      const element = e.target ? (e.target as HTMLScriptElement) : null;
-
-      if (!element) {
-        return;
-      }
-
-      loadedScripts.push(element.src);
-
-      if (PRETTIER_SCRIPTS.every((script) => loadedScripts.includes(script))) {
-        handleFormatRef.current();
-      }
-    };
-
-    PRETTIER_SCRIPTS.forEach((script) => {
-      if (!loadedScripts.includes(script)) {
-        const scriptEl = document.createElement('script');
-        scriptEl.addEventListener('load', format, false);
-        unlisten.push(() => {
-          scriptEl.removeEventListener('load', format, false);
-        });
-        scriptEl.src = script;
-        document.head.append(scriptEl);
-      }
-    });
-    return () => {
-      for (const cb of unlisten) {
-        cb();
-      }
-    };
-  }, []);
 
   const handleToggleAdvanced = useCallback(() => {
     if (
