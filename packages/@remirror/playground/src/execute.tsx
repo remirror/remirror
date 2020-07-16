@@ -1,6 +1,6 @@
 import * as crypto from 'crypto';
 import { languages } from 'monaco-editor';
-import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
+import React, { FC, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 
 // addImport('@remirror/react', 'RemirrorProvider');
@@ -9,6 +9,7 @@ import { render, unmountComponentAtNode } from 'react-dom';
 import { debounce } from '@remirror/core-helpers';
 
 import { IMPORT_CACHE, INTERNAL_MODULES } from './_remirror';
+import { PlaygroundContext, PlaygroundContextObject } from './context';
 // import * as remirrorCoreExtensions from '@remirror/core-extensions';
 //import * as remirrorReact from '@remirror/react';
 //import * as remirror from 'remirror';
@@ -150,7 +151,11 @@ function runCode(code: string, requireFn: (mod: string) => any) {
 
 function runCodeInDiv(
   div: HTMLDivElement,
-  { code, requires }: { code: string; requires: string[] },
+  {
+    code,
+    requires,
+    playground,
+  }: { code: string; requires: string[]; playground: PlaygroundContextObject },
 ) {
   let active = true;
   (async function doIt() {
@@ -169,7 +174,9 @@ function runCodeInDiv(
       // Then mount the React element into the div
       render(
         <ErrorBoundary>
-          <Component />
+          <PlaygroundContext.Provider value={playground}>
+            <Component />
+          </PlaygroundContext.Provider>
         </ErrorBoundary>,
         div,
       );
@@ -223,16 +230,17 @@ export const Execute: FC<ExecuteProps> = function (props) {
   const { code: rawCode, requires: rawRequires } = props;
   const ref = useRef<HTMLDivElement | null>(null);
   const [code, requires] = useDebouncedValue([rawCode, rawRequires]);
+  const playground = useContext(PlaygroundContext);
   useEffect(() => {
     if (!ref.current) {
       return;
     }
 
-    const release = runCodeInDiv(ref.current, { code, requires });
+    const release = runCodeInDiv(ref.current, { code, requires, playground });
     return () => {
       release();
     };
-  }, [code, requires]);
+  }, [code, requires, playground]);
 
   return <div ref={ref} style={{ height: '100%' }} />;
 };

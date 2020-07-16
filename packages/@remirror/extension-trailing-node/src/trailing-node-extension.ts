@@ -101,7 +101,7 @@ export class TrailingNodeExtension extends PlainExtension<TrailingNodeOptions> {
           update: (view) => {
             const { state, dispatch } = view;
             const { doc } = state;
-            const shouldInsertNodeAtEnd = this.getPluginState<boolean>();
+            const shouldInsertNodeAtEnd = this.getPluginState<boolean>(state);
             const endPosition = doc.content.size;
 
             if (!shouldInsertNodeAtEnd) {

@@ -6,9 +6,6 @@
 *                                                                              *
 \******************************************************************************/
 
-// Remirror custom imports
-import { RemirrorProvider, useExtension, useManager, useRemirror } from '@remirror/react';
-
 import { useRemirrorPlayground } from './use-remirror-playground';
 
 export const IMPORT_CACHE: { [moduleName: string]: any } = {
@@ -54,11 +51,13 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
 
   // Manual-imported
   remirror: require('remirror'),
-  'remirror/react': { RemirrorProvider, useManager, useExtension, useRemirror },
+  'remirror/react': require('remirror/react'),
   '@remirror/playground': { useRemirrorPlayground },
 
   // External dependencies
   '@babel/runtime/helpers/interopRequireDefault': require('@babel/runtime/helpers/interopRequireDefault'),
+  '@babel/runtime/helpers/interopRequireWildcard': require('@babel/runtime/helpers/interopRequireWildcard'),
+  '@babel/runtime/helpers/slicedToArray': require('@babel/runtime/helpers/slicedToArray'),
   react: require('react'),
 };
 

@@ -1,8 +1,12 @@
 import assert from 'assert';
+import { EventEmitter } from 'events';
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
+import { EditorState } from 'remirror/core';
 
 import CodeEditor from './code-editor';
+import { PlaygroundContext, PlaygroundContextObject } from './context';
 import { ErrorBoundary } from './error-boundary';
 import { makeRequire, REQUIRED_MODULES } from './execute';
 import { CodeOptions, Exports, RemirrorModules } from './interfaces';
@@ -40,6 +44,7 @@ function cleanse(moduleName: string, moduleExports: Exports): Exports {
 
 export const Playground: FC = () => {
   const [value, setValue] = useState('// Add some code here\n');
+  const [contentValue, setContentValue] = useState<Readonly<EditorState> | null>(null);
   const [advanced, setAdvanced] = useState(false);
   const [modules, setModules] = useState<RemirrorModules>({});
   const addModule = useCallback((moduleName: string) => {
@@ -131,6 +136,31 @@ export const Playground: FC = () => {
   const windowHash = window.location.hash;
   const ourHash = useRef('');
   const [readyToSetUrlHash, setReadyToSetUrlHash] = useState(false);
+  const setPlaygroundState = useCallback(
+    (state) => {
+      console.log('Restoring state');
+      console.dir(state);
+      assert(typeof state === 'object' && state, 'Expected state to be an object');
+      assert(typeof state.m === 'number', 'Expected mode to be a number');
+
+      if (state.m === 0) {
+        /* basic mode */
+        setAdvanced(false);
+        setOptions({ extensions: state.e, presets: state.p });
+
+        if (Array.isArray(state.a)) {
+          state.a.forEach((moduleName: string) => addModule(moduleName));
+        }
+      } else if (state.m === 1) {
+        /* advanced mode */
+        assert(typeof state.c === 'string', 'Expected code to be a string');
+        const code = state.c;
+        setAdvanced(true);
+        setValue(code);
+      }
+    },
+    [addModule],
+  );
   useEffect(() => {
     if (windowHash && ourHash.current !== windowHash) {
       ourHash.current = windowHash;
@@ -140,26 +170,7 @@ export const Playground: FC = () => {
       if (part) {
         try {
           const state = decode(part.slice(2));
-          console.log('Restoring state');
-          console.dir(state);
-          assert(typeof state === 'object' && state, 'Expected state to be an object');
-          assert(typeof state.m === 'number', 'Expected mode to be a number');
-
-          if (state.m === 0) {
-            /* basic mode */
-            setAdvanced(false);
-            setOptions({ extensions: state.e, presets: state.p });
-
-            if (Array.isArray(state.a)) {
-              state.a.forEach((moduleName: string) => addModule(moduleName));
-            }
-          } else if (state.m === 1) {
-            /* advanced mode */
-            assert(typeof state.c === 'string', 'Expected code to be a string');
-            const code = state.c;
-            setAdvanced(true);
-            setValue(code);
-          }
+          setPlaygroundState(state);
         } catch (error) {
           console.error(part.slice(2));
           console.error('Failed to parse above state; failed with following error:');
@@ -169,14 +180,9 @@ export const Playground: FC = () => {
     }
 
     setReadyToSetUrlHash(true);
-  }, [windowHash, addModule]);
+  }, [windowHash, setPlaygroundState]);
 
-  useEffect(() => {
-    if (!readyToSetUrlHash) {
-      /* Premature, we may not have finished reading it yet */
-      return;
-    }
-
+  const getPlaygroundState = useCallback(() => {
     let state;
 
     if (!advanced) {
@@ -193,6 +199,16 @@ export const Playground: FC = () => {
       };
     }
 
+    return state;
+  }, [advanced, value, options, modules]);
+
+  useEffect(() => {
+    if (!readyToSetUrlHash) {
+      /* Premature, we may not have finished reading it yet */
+      return;
+    }
+
+    const state = getPlaygroundState();
     const encoded = encode(state);
     const hash = `#o/${encoded}`;
 
@@ -200,59 +216,132 @@ export const Playground: FC = () => {
       ourHash.current = hash;
       window.location.hash = hash;
     }
-  }, [advanced, value, options, modules, readyToSetUrlHash]);
+  }, [readyToSetUrlHash, getPlaygroundState]);
+
+  const [textareaValue, setTextareaValue] = useState('');
+  const { playground, eventEmitter } = useMemo((): {
+    playground: PlaygroundContextObject;
+    eventEmitter: EventEmitter;
+  } => {
+    const eventEmitter = new EventEmitter();
+    const playground: PlaygroundContextObject = {
+      setContent: (state: Readonly<EditorState>) => {
+        setContentValue(state);
+      },
+      onContentChange: (callback) => {
+        eventEmitter.on('change', callback);
+        return () => {
+          eventEmitter.removeListener('change', callback);
+        };
+      },
+    };
+    return { playground, eventEmitter };
+  }, [setContentValue]);
+
+  const updateContent = useCallback<React.ChangeEventHandler<HTMLTextAreaElement>>(
+    (e) => {
+      const text = e.target.value;
+      setTextareaValue(text);
+      try {
+        const json = JSON.parse(text);
+        setPlaygroundState(json.playground);
+        eventEmitter.emit('change', json.doc);
+      } catch {
+        // TODO: indicate JSON error
+      }
+    },
+    [eventEmitter, setPlaygroundState],
+  );
+
+  const [textareaIsFocussed, setTextareaIsFocussed] = useState(false);
+
+  useEffect(() => {
+    if (!textareaIsFocussed) {
+      const doc = contentValue ? contentValue.doc.toJSON() : null;
+      const playgroundState = doc
+        ? {
+            doc,
+            playground: getPlaygroundState(),
+          }
+        : null;
+      setTextareaValue(playgroundState ? JSON.stringify(playgroundState, null, 2) : '');
+    }
+  }, [contentValue, textareaIsFocussed, getPlaygroundState]);
 
   return (
-    <Container>
-      <Main>
-        {advanced ? null : (
-          <>
-            <Panel flex='0 0 18rem' overflow>
-              <SimplePanel
-                options={options}
-                setOptions={setOptions}
-                modules={modules}
-                addModule={addModule}
-                removeModule={removeModule}
-                onAdvanced={handleToggleAdvanced}
-              />
-            </Panel>
-            <Divide />
-          </>
-        )}
-        <Panel vertical>
-          <ErrorBoundary>
-            <div
-              style={{
-                flex: '1',
-                overflow: 'hidden',
-                backgroundColor: 'white',
-                display: 'flex',
-                position: 'relative',
-              }}
-            >
-              <CodeEditor value={code} onChange={setValue} readOnly={!advanced} />
-              <div style={{ position: 'absolute', bottom: '1rem', right: '2rem' }}>
-                {advanced ? (
-                  <button onClick={handleToggleAdvanced}>☑️ Enter simple mode</button>
-                ) : (
-                  <button onClick={handleToggleAdvanced}>🤓 Enter advanced mode</button>
-                )}
-                <button onClick={handleCopy} style={{ marginLeft: '0.5rem' }}>
-                  📋 {copied ? 'Copied code!' : 'Copy code'}
-                </button>
+    <PlaygroundContext.Provider value={playground}>
+      <Container>
+        <Main>
+          {advanced ? null : (
+            <>
+              <Panel flex='0 0 18rem' overflow>
+                <SimplePanel
+                  options={options}
+                  setOptions={setOptions}
+                  modules={modules}
+                  addModule={addModule}
+                  removeModule={removeModule}
+                  onAdvanced={handleToggleAdvanced}
+                />
+              </Panel>
+              <Divide />
+            </>
+          )}
+          <Panel vertical>
+            <ErrorBoundary>
+              <div
+                style={{
+                  flex: '3 0 0',
+                  overflow: 'hidden',
+                  backgroundColor: 'white',
+                  display: 'flex',
+                  position: 'relative',
+                }}
+              >
+                <CodeEditor value={code} onChange={setValue} readOnly={!advanced} />
+                <div style={{ position: 'absolute', bottom: '1rem', right: '2rem' }}>
+                  {advanced ? (
+                    <button onClick={handleToggleAdvanced}>☑️ Enter simple mode</button>
+                  ) : (
+                    <button onClick={handleToggleAdvanced}>🤓 Enter advanced mode</button>
+                  )}
+                  <button onClick={handleCopy} style={{ marginLeft: '0.5rem' }}>
+                    📋 {copied ? 'Copied code!' : 'Copy code'}
+                  </button>
+                </div>
               </div>
+            </ErrorBoundary>
+            <Divide />
+            <div style={{ flex: '2 0 0', display: 'flex', width: '100%' }}>
+              <ErrorBoundary>
+                <div style={{ padding: '1rem', overflow: 'auto', flex: '1' }}>
+                  <Viewer options={options} code={code} />
+                </div>
+              </ErrorBoundary>
+              <Divide />
+              <ErrorBoundary>
+                <div style={{ overflow: 'auto', flex: '1' }}>
+                  <textarea
+                    value={textareaValue}
+                    onChange={updateContent}
+                    onFocus={() => setTextareaIsFocussed(true)}
+                    onBlur={() => setTextareaIsFocussed(false)}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      border: 0,
+                      outline: 0,
+                      margin: 0,
+                      padding: 0,
+                    }}
+                  />
+                </div>
+              </ErrorBoundary>
             </div>
-          </ErrorBoundary>
-          <Divide />
-          <ErrorBoundary>
-            <div style={{ padding: '1rem', flex: '0 0 10rem', overflow: 'auto' }}>
-              <Viewer options={options} code={code} />
-            </div>
-          </ErrorBoundary>
-        </Panel>
-      </Main>
-    </Container>
+          </Panel>
+        </Main>
+      </Container>
+    </PlaygroundContext.Provider>
   );
 };
 
