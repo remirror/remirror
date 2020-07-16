@@ -2,6 +2,7 @@ import assert from 'assert';
 import { EventEmitter } from 'events';
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
 import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { debounce } from '@remirror/core-helpers';
 
 import { EditorState } from 'remirror/core';
 
@@ -40,6 +41,19 @@ function cleanse(moduleName: string, moduleExports: Exports): Exports {
   */
 
   return cleansedExports;
+}
+
+function useDebouncedValue<T>(value: T): T {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  const debouncedUpdateTo = useMemo(
+    () =>
+      debounce(500, (value: T): void => {
+        setDebouncedValue(value);
+      }),
+    [],
+  );
+  debouncedUpdateTo(value);
+  return debouncedValue;
 }
 
 export const Playground: FC = () => {
@@ -122,7 +136,18 @@ export const Playground: FC = () => {
     }
   }, [advanced, options]);
 
-  const code = advanced ? value : makeCode(options);
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  const debouncedValueToSet = useDebouncedValue(value);
+  useEffect(() => {
+    setDebouncedValue(debouncedValueToSet);
+  }, []);
+
+  const code = useMemo(() => (advanced ? debouncedValue : makeCode(options)), [
+    advanced,
+    debouncedValue,
+    options,
+  ]);
   const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(() => {
@@ -136,6 +161,7 @@ export const Playground: FC = () => {
   const windowHash = window.location.hash;
   const ourHash = useRef('');
   const [readyToSetUrlHash, setReadyToSetUrlHash] = useState(false);
+
   const setPlaygroundState = useCallback(
     (state) => {
       console.log('Restoring state');
@@ -157,6 +183,7 @@ export const Playground: FC = () => {
         const code = state.c;
         setAdvanced(true);
         setValue(code);
+        setDebouncedValue(code);
       }
     },
     [addModule],
@@ -245,7 +272,10 @@ export const Playground: FC = () => {
       try {
         const json = JSON.parse(text);
         setPlaygroundState(json.playground);
-        eventEmitter.emit('change', json.doc);
+        setTimeout(() => {
+          // Trigger the change after a re-render
+          eventEmitter.emit('change', json.doc);
+        }, 0);
       } catch {
         // TODO: indicate JSON error
       }
@@ -312,7 +342,7 @@ export const Playground: FC = () => {
               </div>
             </ErrorBoundary>
             <Divide />
-            <div style={{ flex: '2 0 0', display: 'flex', width: '100%' }}>
+            <div style={{ flex: '2 0 0', display: 'flex', width: '100%', height: 0 }}>
               <ErrorBoundary>
                 <div style={{ padding: '1rem', overflow: 'auto', flex: '1' }}>
                   <Viewer options={options} code={code} />
