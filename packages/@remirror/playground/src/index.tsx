@@ -51,7 +51,7 @@ export const Playground: FC = () => {
         // This has to be a function, otherwise React breaks (not unexpectedly)
         setPlayground(() => playground.Playground);
       })
-      .catch((e) => setError(e));
+      .catch((error_) => setError(error_));
   }, [hasBabel, hasPrettier]);
 
   return Component ? (
