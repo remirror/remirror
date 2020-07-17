@@ -17,7 +17,8 @@
   },
   "types": "dist/react.cjs.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "renderers"
   ],
   "dependencies": {
     "@babel/runtime": "^7.10.4",
@@ -67,5 +68,11 @@
   },
   "meta": {
     "sizeLimit": "30 KB"
+  },
+  "preconstruct": {
+    "entrypoints": [
+      ".",
+      "renderers"
+    ]
   }
 }

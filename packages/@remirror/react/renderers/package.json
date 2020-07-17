@@ -1,0 +1,12 @@
+{
+  "main": "dist/react.cjs.js",
+  "module": "dist/react.esm.js",
+  "browser": {
+    "./dist/react.cjs.js": "./dist/react.browser.cjs.js",
+    "./dist/react.esm.js": "./dist/react.browser.esm.js"
+  },
+  "types": "dist/remirror.cjs.d.ts",
+  "preconstruct": {
+    "source": "../src/renderers/index"
+  }
+}
