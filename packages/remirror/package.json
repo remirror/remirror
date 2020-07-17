@@ -1,6 +1,6 @@
 {
   "name": "remirror",
-  "version": "1.0.0-next.4",
+  "version": "1.0.0-next.5",
   "description": "One editing package to rule them all, one editing package to find them.",
   "keywords": [
     "prosemirror",
@@ -61,7 +61,7 @@
     "@remirror/extension-italic": "^1.0.0-next.4",
     "@remirror/extension-link": "^1.0.0-next.4",
     "@remirror/extension-mention": "^1.0.0-next.4",
-    "@remirror/extension-paragraph": "^1.0.0-next.4",
+    "@remirror/extension-paragraph": "^1.0.0-next.5",
     "@remirror/extension-placeholder": "^1.0.0-next.4",
     "@remirror/extension-position-tracker": "^1.0.0-next.4",
     "@remirror/extension-positioner": "^1.0.0-next.4",
@@ -80,10 +80,10 @@
     "@remirror/preset-social": "^1.0.0-next.4",
     "@remirror/preset-table": "^1.0.0-next.4",
     "@remirror/preset-wysiwyg": "^1.0.0-next.4",
-    "@remirror/react": "^1.0.0-next.4",
-    "@remirror/react-social": "^1.0.0-next.4",
+    "@remirror/react": "^1.0.0-next.5",
+    "@remirror/react-social": "^1.0.0-next.5",
     "@remirror/react-utils": "^1.0.0-next.4",
-    "@remirror/react-wysiwyg": "^1.0.0-next.4",
+    "@remirror/react-wysiwyg": "^1.0.0-next.5",
     "@remirror/theme": "^1.0.0-next.4"
   },
   "devDependencies": {

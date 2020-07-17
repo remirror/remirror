@@ -1,5 +1,14 @@
 # @remirror/react
 
+## 1.0.0-next.5
+
+> 2020-07-17
+
+### Minor Changes
+
+- 4628d342: Add new entry point `@remirror/react/renderers`. It provides utilities for rendering the
+  editor directly from the exported json.
+
 ## 1.0.0-next.4
 
 > 2020-07-16

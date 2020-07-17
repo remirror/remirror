@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react",
-  "version": "1.0.0-next.4",
+  "version": "1.0.0-next.5",
   "description": "react utilities for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react",

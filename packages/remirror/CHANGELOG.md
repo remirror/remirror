@@ -1,5 +1,20 @@
 # remirror
 
+## 1.0.0-next.5
+
+> 2020-07-17
+
+### Patch Changes
+
+- d186b75a: Correct the incorrect `remirror/react/ssr` and `remirror/react/component` exports. They
+  were incorrectly referencing each other.
+- Updated dependencies [4628d342]
+- Updated dependencies [e9286ed9]
+  - @remirror/react@1.0.0-next.5
+  - @remirror/extension-paragraph@1.0.0-next.5
+  - @remirror/react-social@1.0.0-next.5
+  - @remirror/react-wysiwyg@1.0.0-next.5
+
 ## 1.0.0-next.4
 
 > 2020-07-16

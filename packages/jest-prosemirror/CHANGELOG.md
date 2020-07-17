@@ -1,5 +1,15 @@
 # jest-prosemirror
 
+## 1.0.0-next.3
+
+> 2020-07-17
+
+### Patch Changes
+
+- 5ebf2827: Fix broken `jest-prosemirror/environment` import and `jest-remirror/environment` for
+  automatic setup. Also enable the `jest-prosemirror/serializer` to correctly serialize the
+  prosemirror content.
+
 ## 1.0.0-next.2
 
 > 2020-07-16

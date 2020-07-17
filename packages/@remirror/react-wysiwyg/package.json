@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-wysiwyg",
-  "version": "1.0.0-next.4",
+  "version": "1.0.0-next.5",
   "description": "The `remirror` what-you-see-is-what-you-get (wysiwyg) editing experience.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react-wysiwyg",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react-wysiwyg",
@@ -35,7 +35,7 @@
     "@lingui/macro": "^3.0.0-13",
     "@remirror/core": "^1.0.0-next.4",
     "@remirror/pm": "^1.0.0-next.4",
-    "@remirror/react": "^1.0.0-next.4",
+    "@remirror/react": "^1.0.0-next.5",
     "@testing-library/react": "^10.4.5",
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
@@ -45,7 +45,7 @@
   "peerDependencies": {
     "@remirror/core": "^1.0.0-next.4",
     "@remirror/pm": "^1.0.0-next.4",
-    "@remirror/react": "^1.0.0-next.4",
+    "@remirror/react": "^1.0.0-next.5",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "react": "^16.8.0",
