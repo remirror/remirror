@@ -21,20 +21,19 @@ class TestExtension extends NodeExtension<{ useContent: boolean }> {
   }
 
   createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
+    const toDOM: NodeExtensionSpec['toDOM'] = this.options.useContent
+      ? (node) => ['span', extra.dom(node), 0]
+      : undefined;
+
     return {
       attrs: {
         ...extra.defaults(),
         custom: { default: 'custom' },
       },
       content: 'inline*',
-      group: NodeGroup.Block,
-      toDOM: (node) => {
-        if (this.options.useContent) {
-          return ['nav', extra.dom(node), 0];
-        }
 
-        return ['nav', extra.dom(node)];
-      },
+      group: NodeGroup.Block,
+      toDOM,
     };
   }
 
@@ -113,4 +112,49 @@ test('node views can be created from commands', () => {
   });
 
   expect(chain.dom).toMatchSnapshot();
+});
+
+test('simple commands', () => {
+  const chain = RemirrorTestChain.create(
+    createReactManager([new ReactComponentExtension(), new TestExtension({ useContent: true })]),
+  );
+
+  render(
+    <RemirrorProvider manager={chain.manager}>
+      <div />
+    </RemirrorProvider>,
+  );
+
+  const { doc, p } = chain.nodes;
+
+  act(() => {
+    chain.add(doc(p('<cursor>'))).commands.toggleCustomBlock();
+    chain.insertText('add');
+  });
+
+  expect(chain.dom).toMatchInlineSnapshot(`
+    <div
+      aria-label=""
+      aria-multiline="true"
+      aria-placeholder=""
+      autofocus="false"
+      class="ProseMirror remirror-editor ProseMirror-focused"
+      contenteditable="true"
+      role="textbox"
+    >
+      <nav
+        class=""
+      >
+        <p
+          custom="custom"
+        >
+          <span
+            contenteditable="true"
+          >
+            add
+          </span>
+        </p>
+      </nav>
+    </div>
+  `);
 });

@@ -91,12 +91,9 @@ export class PortalContainer {
    * Decoration where there is no destroy method.
    */
   forceUpdate() {
-    this.portals.forEach(({ Component }, container) => {
-      // Assign the portal a new key so it is re-rendered
+    for (const [container, { Component }] of this.portals) {
       this.portals.set(container, { Component, key: uniqueId() });
-    });
-
-    this.update();
+    }
   }
 
   /**

@@ -1,7 +1,7 @@
-import React, { Fragment, FunctionComponent, useCallback, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import type { PortalContainer, PortalMap } from './portal-container';
+import type { PortalContainer, PortalMap, RenderMethodParameter } from './portal-container';
 
 export interface RemirrorPortalsProps {
   /**
@@ -18,6 +18,7 @@ export interface RemirrorPortalsProps {
  */
 export const RemirrorPortals = ({ portalContainer }: RemirrorPortalsProps) => {
   const [state, setState] = useState([...portalContainer.portals.entries()]);
+  const firstRender = useRef(true);
 
   /**
    * Update the state whenever the portal is updated.
@@ -26,40 +27,36 @@ export const RemirrorPortals = ({ portalContainer }: RemirrorPortalsProps) => {
     setState([...portalMap.entries()]);
   }, []);
 
+  // Dispose of all portals
   useEffect(() => {
     // Auto disposed when the component un-mounts
     return portalContainer.on(onPortalChange);
-  }, [onPortalChange, portalContainer]);
+  }, [portalContainer, onPortalChange]);
+
+  // Force update for each render except the first.
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+
+    portalContainer.forceUpdate();
+  });
 
   return (
     <>
-      {state.map(([container, { Component, key }]) => (
-        <Fragment key={key}>
-          {createPortal(
-            <Portal
-              container={container}
-              Component={Component}
-              portalContainer={portalContainer}
-            />,
-            container,
-          )}
-        </Fragment>
-      ))}
+      {state.map(([container, { Component, key }]) =>
+        createPortal(
+          <Portal container={container} Component={Component} portalContainer={portalContainer} />,
+          container,
+          key,
+        ),
+      )}
     </>
   );
 };
 
-export interface PortalProps extends RemirrorPortalsProps {
-  /**
-   * Holds the element that this portal is being rendered into.
-   */
-  container: HTMLElement;
-
-  /**
-   * The plain component to render.
-   */
-  Component: FunctionComponent<object>;
-}
+export interface PortalProps extends RemirrorPortalsProps, RenderMethodParameter {}
 
 /**
  * This is the component rendered by the createPortal method within the
@@ -68,6 +65,7 @@ export interface PortalProps extends RemirrorPortalsProps {
  */
 const Portal = (props: PortalProps) => {
   const { portalContainer, container, Component } = props;
+  const name = Component.displayName;
 
   useEffect(() => {
     /**
@@ -75,9 +73,10 @@ const Portal = (props: PortalProps) => {
      * Portals are unmounted when their host container is removed from the dom.
      */
     return () => {
+      console.log('removing', name);
       portalContainer.remove(container);
     };
-  }, [container, portalContainer]);
+  }, [container, portalContainer, name]);
 
   return <Component />;
 };

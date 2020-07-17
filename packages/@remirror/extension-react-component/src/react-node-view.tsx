@@ -1,4 +1,5 @@
-import React, { FunctionComponent, RefCallback } from 'react';
+import React, { FunctionComponent, RefCallback, useEffect } from 'react';
+import { render, unmountComponentAtNode, unstable_renderSubtreeIntoContainer } from 'react-dom';
 
 import {
   AnyExtension,
@@ -7,9 +8,7 @@ import {
   entries,
   ErrorConstant,
   GetFixed,
-  includes,
   invariant,
-  isArray,
   isDomNode,
   isElementDomNode,
   isFunction,
@@ -22,6 +21,7 @@ import {
   ProsemirrorNode,
   SELECTED_NODE_CLASS_NAME,
 } from '@remirror/core';
+import { DOMSerializer } from '@remirror/pm/model';
 
 import type {
   CreateNodeViewParameter,
@@ -94,7 +94,12 @@ export class ReactNodeView implements NodeView {
     return this.#selected;
   }
 
-  #contentDOM?: HTMLElement | undefined;
+  #contentDOM?: Node | undefined;
+
+  /**
+   * The wrapper for the content dom. Created from the node spec `toDOM` method.
+   */
+  #contentDOMWrapper?: HTMLElement | undefined;
 
   /**
    * The DOM node that should hold the node's content. Only meaningful if the
@@ -103,7 +108,7 @@ export class ReactNodeView implements NodeView {
    * the node's children into it. When it is not present, the node view itself
    * is responsible for rendering (or deciding not to render) its child nodes.
    */
-  public get contentDOM(): HTMLElement | undefined {
+  public get contentDOM(): Node | undefined {
     return this.#contentDOM;
   }
 
@@ -140,7 +145,16 @@ export class ReactNodeView implements NodeView {
     this.#getPosition = getPosition;
     this.#options = options;
     this.#dom = this.createDom();
-    this.#contentDOM = this.createContentDom();
+
+    const { contentDOM, wrapper } = this.createContentDom() ?? {};
+
+    this.#contentDOM = contentDOM ?? undefined;
+    this.#contentDOMWrapper = wrapper;
+    console.log({ contentDOM, wrapper, dom: this.#dom });
+
+    if (this.#contentDOMWrapper) {
+      this.#dom.append(this.#contentDOMWrapper);
+    }
 
     this.setDomAttributes(this.#node, this.#dom);
     this.Component.displayName = extension.constructor.name.replace('Extension', 'NodeView');
@@ -152,64 +166,63 @@ export class ReactNodeView implements NodeView {
    * Render the react component into the dom.
    */
   private renderComponent() {
-    this.#portalContainer.render({ Component: this.Component, container: this.#dom });
+    // this.#portalContainer.render({
+    //   Component: this.Component,
+    //   container: this.#dom,
+    // });
   }
 
   /**
    * Create the dom element which will hold the react component.
    */
-  createDom(): HTMLElement {
-    const { toDOM } = this.#node.type.spec;
+  private createDom(): HTMLElement {
     const { defaultBlockNode, defaultInlineNode } = this.#options;
+    const element = this.#node.isInline
+      ? document.createElement(defaultInlineNode)
+      : document.createElement(defaultBlockNode);
 
-    if (!toDOM) {
-      return this.#node.isInline
-        ? document.createElement(defaultInlineNode)
-        : document.createElement(defaultBlockNode);
-    }
+    // Prosemirror breaks down when it encounters multiple nested empty
+    // elements. This class prevents this from happening.
+    element.classList.add(`${this.#node.type.name}-node-view-wrapper`);
 
-    const domSpec = toDOM(this.#node);
-
-    if (isString(domSpec)) {
-      return document.createElement(domSpec);
-    }
-
-    if (isDomNode(domSpec)) {
-      if (!isElementDomNode(domSpec)) {
-        throw new Error('Invalid HTML Element provided in the DOM Spec');
-      }
-
-      return domSpec;
-    }
-
-    // Use the outer element string to render the dom node
-    return document.createElement(domSpec[0]);
+    return element;
   }
 
   /**
    * The element that will contain the content for this element.
    */
-  createContentDom(): HTMLElement | undefined {
+  private createContentDom(): { wrapper: HTMLElement; contentDOM?: Node | null } | undefined {
     if (this.#node.isLeaf) {
       return;
     }
 
     const domSpec = this.#node.type.spec.toDOM?.(this.#node);
 
-    // If no content hole included return undefined.
-    if (!(isArray(domSpec) && includes(domSpec, 0))) {
+    // Only allow content if a domSpec exists which is used to render the content.
+    if (!domSpec) {
       return;
     }
 
-    const element = document.createElement(this.#options.defaultContentNode);
-    element.setAttribute('contenteditable', `${this.#view.editable}`);
+    const { contentDOM, dom } = DOMSerializer.renderSpec(document, domSpec);
+    let wrapper: HTMLElement;
 
-    // This is needed so that the content dom has a parent node on first
-    // creation. It will be overridden once the ref is attached.
-    // TODO it's important to verify potential bugs from this.
-    this.#dom.append(element);
+    if (!isElementDomNode(dom)) {
+      return;
+    }
 
-    return element;
+    wrapper = dom;
+
+    if (dom === contentDOM) {
+      wrapper = document.createElement('span');
+      wrapper.classList.add(`${this.#node.type.name}-node-view-content-wrapper`);
+      wrapper.append(contentDOM);
+    }
+
+    if (isElementDomNode(contentDOM)) {
+      // contentDOM.setAttribute('contenteditable', `${this.#view.editable}`);
+    }
+
+    return { wrapper, contentDOM };
   }
 
   /**
@@ -223,14 +236,16 @@ export class ReactNodeView implements NodeView {
       return;
     }
 
-    invariant(this.#contentDOM, {
+    invariant(this.#contentDOMWrapper, {
       code: ErrorConstant.REACT_NODE_VIEW,
       message: `You have applied a ref to a nodeView provided by '${
         this.#extension.constructor.name
       }' which doesn't support content.`,
     });
 
-    node.append(this.#contentDOM);
+    console.log('attaching the content to react ref');
+
+    node.append(this.#contentDOMWrapper);
   };
 
   /**
@@ -240,6 +255,15 @@ export class ReactNodeView implements NodeView {
    */
   private readonly Component: FunctionComponent = () => {
     const { ReactComponent } = this.#extension;
+
+    // // eslint-disable-next-line react-hooks/rules-of-hooks
+    // useEffect(() => {
+    //   return () => {
+    //     if (this.#contentDOM) {
+    //       document.createDocumentFragment().append(this.#contentDOM);
+    //     }
+    //   };
+    // }, []);
 
     invariant(ReactComponent, {
       code: ErrorConstant.REACT_NODE_VIEW,
@@ -354,19 +378,33 @@ export class ReactNodeView implements NodeView {
    * This is called whenever the node is being destroyed.
    */
   destroy() {
+    console.log('destroying');
+    // if (!this.#dom) {
+    //   return;
+    // }
+
     this.#portalContainer.remove(this.#dom);
+    // this.#dom = undefined;
+    // this.#contentDOM = undefined;
   }
 
   ignoreMutation(mutation: IgnoreMutationParameter) {
+    console.log(this.#contentDOMWrapper?.parentNode);
+
     if (mutation.type === 'selection') {
       return false;
     }
 
-    if (!this.contentDOM) {
+    if (!this.#contentDOMWrapper) {
       return true;
     }
 
-    return !this.contentDOM.contains(mutation.target);
+    // if (!this.#contentDOMWrapper.parentNode) {
+    //   this.#portalContainer.remove(this.#dom);
+    //   document.createDocumentFragment().append(this.#contentDOMWrapper);
+    // }
+
+    return !this.#contentDOMWrapper.contains(mutation.target);
   }
 }
 
