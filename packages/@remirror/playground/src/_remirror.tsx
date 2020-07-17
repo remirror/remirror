@@ -36,6 +36,7 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
   'remirror/extension/placeholder': require('remirror/extension/placeholder'),
   'remirror/extension/position-tracker': require('remirror/extension/position-tracker'),
   'remirror/extension/positioner': require('remirror/extension/positioner'),
+  'remirror/extension/react-component': require('remirror/extension/react-component'),
   'remirror/extension/react-ssr': require('remirror/extension/react-ssr'),
   'remirror/extension/search': require('remirror/extension/search'),
   'remirror/extension/strike': require('remirror/extension/strike'),
@@ -47,17 +48,40 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
   'remirror/preset/embed': require('remirror/preset/embed'),
   'remirror/preset/list': require('remirror/preset/list'),
   'remirror/preset/react': require('remirror/preset/react'),
+  'remirror/preset/social': require('remirror/preset/social'),
   'remirror/preset/table': require('remirror/preset/table'),
+  'remirror/preset/wysiwyg': require('remirror/preset/wysiwyg'),
 
   // Manual-imported
   remirror: require('remirror'),
+  'remirror/core': require('remirror/core'),
   'remirror/react': require('remirror/react'),
   '@remirror/playground': { useRemirrorPlayground },
+  '@remirror/pm/commands': require('@remirror/pm/commands'),
+  '@remirror/pm/dropcursor': require('@remirror/pm/dropcursor'),
+  '@remirror/pm/gapcursor': require('@remirror/pm/gapcursor'),
+  '@remirror/pm/history': require('@remirror/pm/history'),
+  '@remirror/pm/inputrules': require('@remirror/pm/inputrules'),
+  '@remirror/pm/keymap': require('@remirror/pm/keymap'),
+  '@remirror/pm/model': require('@remirror/pm/model'),
+  '@remirror/pm/schema-list': require('@remirror/pm/schema-list'),
+  '@remirror/pm/state': require('@remirror/pm/state'),
+  '@remirror/pm/suggest': require('@remirror/pm/suggest'),
+  '@remirror/pm/tables': require('@remirror/pm/tables'),
+  '@remirror/pm/transform': require('@remirror/pm/transform'),
+  '@remirror/pm/view': require('@remirror/pm/view'),
 
   // External dependencies
   '@babel/runtime/helpers/interopRequireDefault': require('@babel/runtime/helpers/interopRequireDefault'),
   '@babel/runtime/helpers/interopRequireWildcard': require('@babel/runtime/helpers/interopRequireWildcard'),
   '@babel/runtime/helpers/slicedToArray': require('@babel/runtime/helpers/slicedToArray'),
+  '@babel/runtime/helpers/createClass': require('@babel/runtime/helpers/createClass'),
+  '@babel/runtime/helpers/possibleConstructorReturn': require('@babel/runtime/helpers/possibleConstructorReturn'),
+  '@babel/runtime/helpers/extends': require('@babel/runtime/helpers/extends'),
+  '@babel/runtime/helpers/assertThisInitialized': require('@babel/runtime/helpers/assertThisInitialized'),
+  '@babel/runtime/helpers/classCallCheck': require('@babel/runtime/helpers/classCallCheck'),
+  '@babel/runtime/helpers/inherits': require('@babel/runtime/helpers/inherits'),
+  '@babel/runtime/helpers/defineProperty': require('@babel/runtime/helpers/defineProperty'),
   react: require('react'),
 };
 
@@ -194,6 +218,10 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
     ],
   },
   {
+    moduleName: 'remirror/extension/react-component',
+    exports: ['PortalContainer', 'ReactComponentExtension', 'RemirrorPortals'],
+  },
+  {
     moduleName: 'remirror/extension/react-ssr',
     exports: ['ReactSSRExtension'],
   },
@@ -219,11 +247,11 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
   },
   {
     moduleName: 'remirror/extension/yjs',
-    exports: ['YjsExtension'],
+    exports: ['YjsExtension', 'editorStyles'],
   },
   {
     moduleName: 'remirror/preset/core',
-    exports: ['CorePreset'],
+    exports: ['CorePreset', 'createCoreManager'],
   },
   {
     moduleName: 'remirror/preset/embed',
@@ -238,6 +266,10 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
     exports: ['ReactPreset'],
   },
   {
+    moduleName: 'remirror/preset/social',
+    exports: ['SocialPreset'],
+  },
+  {
     moduleName: 'remirror/preset/table',
     exports: [
       'TableCellExtension',
@@ -245,6 +277,18 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
       'TableHeaderCellExtension',
       'TablePreset',
       'TableRowExtension',
+    ],
+  },
+  {
+    moduleName: 'remirror/preset/wysiwyg',
+    exports: [
+      'EmbedOptions',
+      'EmbedPreset',
+      'ListPreset',
+      'TableOptions',
+      'TablePreset',
+      'WysiwygPreset',
+      'createWysiwygPresetList',
     ],
   },
 ];

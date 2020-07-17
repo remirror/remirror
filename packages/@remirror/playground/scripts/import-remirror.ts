@@ -23,6 +23,7 @@ async function scanImportsFrom<T extends RemirrorModuleMeta>(
       name: `${sourceModulePath}/${folder}`,
       exports: Object.keys(mod),
     };
+
     result[folder] = await callback(meta);
   }
 
@@ -80,13 +81,34 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
 
   // Manual-imported
   remirror: require('remirror'),
+  'remirror/core': require('remirror/core'),
   'remirror/react': require('remirror/react'),
   '@remirror/playground': { useRemirrorPlayground },
+  '@remirror/pm/commands': require('@remirror/pm/commands'),
+  '@remirror/pm/dropcursor': require('@remirror/pm/dropcursor'),
+  '@remirror/pm/gapcursor': require('@remirror/pm/gapcursor'),
+  '@remirror/pm/history': require('@remirror/pm/history'),
+  '@remirror/pm/inputrules': require('@remirror/pm/inputrules'),
+  '@remirror/pm/keymap': require('@remirror/pm/keymap'),
+  '@remirror/pm/model': require('@remirror/pm/model'),
+  '@remirror/pm/schema-list': require('@remirror/pm/schema-list'),
+  '@remirror/pm/state': require('@remirror/pm/state'),
+  '@remirror/pm/suggest': require('@remirror/pm/suggest'),
+  '@remirror/pm/tables': require('@remirror/pm/tables'),
+  '@remirror/pm/transform': require('@remirror/pm/transform'),
+  '@remirror/pm/view': require('@remirror/pm/view'),
 
   // External dependencies
   '@babel/runtime/helpers/interopRequireDefault': require('@babel/runtime/helpers/interopRequireDefault'),
   '@babel/runtime/helpers/interopRequireWildcard': require('@babel/runtime/helpers/interopRequireWildcard'),
   '@babel/runtime/helpers/slicedToArray': require('@babel/runtime/helpers/slicedToArray'),
+  '@babel/runtime/helpers/createClass': require('@babel/runtime/helpers/createClass'),
+  '@babel/runtime/helpers/possibleConstructorReturn': require('@babel/runtime/helpers/possibleConstructorReturn'),
+  '@babel/runtime/helpers/extends': require('@babel/runtime/helpers/extends'),
+  '@babel/runtime/helpers/assertThisInitialized': require('@babel/runtime/helpers/assertThisInitialized'),
+  '@babel/runtime/helpers/classCallCheck': require('@babel/runtime/helpers/classCallCheck'),
+  '@babel/runtime/helpers/inherits': require('@babel/runtime/helpers/inherits'),
+  '@babel/runtime/helpers/defineProperty': require('@babel/runtime/helpers/defineProperty'),
   react: require('react'),
 };
 
@@ -113,12 +135,12 @@ async function main() {
   // `dist` and `src; populate `execute.ts`'s `knownRequires` and handle the
   // TypeScript definitions.
   const extensions = await scanImportsFrom(
-    `${__dirname}/../../../packages/remirror/extension`,
+    `${__dirname}/../../../remirror/extension`,
     'remirror/extension',
     importExtension,
   );
   const presets = await scanImportsFrom(
-    `${__dirname}/../../../packages/remirror/preset`,
+    `${__dirname}/../../../remirror/preset`,
     'remirror/preset',
     importPreset,
   );
