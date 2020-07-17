@@ -21,6 +21,6 @@
     "linaria": "^2.0.0-alpha.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "remirror": "^1.0.0-next.4"
+    "remirror": "^1.0.0-next.5"
   }
 }

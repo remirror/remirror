@@ -1,5 +1,14 @@
 # @remirror/react-social
 
+## 1.0.0-next.5
+
+> 2020-07-17
+
+### Patch Changes
+
+- Updated dependencies [4628d342]
+  - @remirror/react@1.0.0-next.5
+
 ## 1.0.0-next.4
 
 > 2020-07-16

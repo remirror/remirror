@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-paragraph",
-  "version": "1.0.0-next.4",
+  "version": "1.0.0-next.5",
   "description": "Group your words into paragraphs and render each statement a harmonious symphony.",
   "keywords": [
     "remirror",

@@ -1,5 +1,14 @@
 # @remirror/extension-paragraph
 
+## 1.0.0-next.5
+
+> 2020-07-17
+
+### Major Changes
+
+- e9286ed9: Remove attrs from paragraph node. Allow users to provide their own custom attributes
+  when needed.
+
 ## 1.0.0-next.4
 
 > 2020-07-16

@@ -1166,7 +1166,7 @@ importers:
       '@remirror/i18n': ^1.0.0-next.4
       '@remirror/pm': ^1.0.0-next.4
       '@remirror/preset-social': ^1.0.0-next.4
-      '@remirror/react': ^1.0.0-next.4
+      '@remirror/react': ^1.0.0-next.5
       '@remirror/react-utils': ^1.0.0-next.4
       '@remirror/theme': ^1.0.0-next.4
       '@testing-library/react': ^10.4.5
@@ -1232,7 +1232,7 @@ importers:
       '@remirror/pm': ^1.0.0-next.4
       '@remirror/preset-social': ^1.0.0-next.4
       '@remirror/preset-wysiwyg': ^1.0.0-next.4
-      '@remirror/react': ^1.0.0-next.4
+      '@remirror/react': ^1.0.0-next.5
       '@remirror/react-utils': ^1.0.0-next.4
       '@remirror/theme': ^1.0.0-next.4
       '@testing-library/react': ^10.4.5
@@ -1306,13 +1306,13 @@ importers:
       '@remirror/extension-heading': ^1.0.0-next.4
       '@remirror/extension-italic': ^1.0.0-next.4
       '@remirror/extension-link': ^1.0.0-next.4
-      '@remirror/extension-paragraph': ^1.0.0-next.4
+      '@remirror/extension-paragraph': ^1.0.0-next.5
       '@remirror/extension-text': ^1.0.0-next.4
       '@remirror/extension-underline': ^1.0.0-next.4
       '@remirror/pm': ^1.0.0-next.4
       '@remirror/preset-core': ^1.0.0-next.4
       '@remirror/preset-react': ^1.0.0-next.4
-      '@remirror/react': ^1.0.0-next.4
+      '@remirror/react': ^1.0.0-next.5
       '@testing-library/react': ^10.4.5
       '@types/min-document': ^2.19.0
       '@types/react': ^16.9.43
@@ -1405,12 +1405,12 @@ importers:
       '@types/react': ^16.9.43
       '@types/react-dom': ^16.9.8
       '@types/sanitize-html': ^1.23.3
-      jest-prosemirror: ^1.0.0-next.2
+      jest-prosemirror: ^1.0.0-next.3
       jest-snapshot: ^26.1.0
       mutationobserver-shim: ^0.3.7
       react: ^16.13.1
       react-dom: ^16.13.1
-      remirror: ^1.0.0-next.4
+      remirror: ^1.0.0-next.5
       sanitize-html: ^1.27.0
   packages/multishift:
     dependencies:
@@ -1563,7 +1563,7 @@ importers:
       '@remirror/extension-italic': ^1.0.0-next.4
       '@remirror/extension-link': ^1.0.0-next.4
       '@remirror/extension-mention': ^1.0.0-next.4
-      '@remirror/extension-paragraph': ^1.0.0-next.4
+      '@remirror/extension-paragraph': ^1.0.0-next.5
       '@remirror/extension-placeholder': ^1.0.0-next.4
       '@remirror/extension-position-tracker': ^1.0.0-next.4
       '@remirror/extension-positioner': ^1.0.0-next.4
@@ -1583,10 +1583,10 @@ importers:
       '@remirror/preset-social': ^1.0.0-next.4
       '@remirror/preset-table': ^1.0.0-next.4
       '@remirror/preset-wysiwyg': ^1.0.0-next.4
-      '@remirror/react': ^1.0.0-next.4
-      '@remirror/react-social': ^1.0.0-next.4
+      '@remirror/react': ^1.0.0-next.5
+      '@remirror/react-social': ^1.0.0-next.5
       '@remirror/react-utils': ^1.0.0-next.4
-      '@remirror/react-wysiwyg': ^1.0.0-next.4
+      '@remirror/react-wysiwyg': ^1.0.0-next.5
       '@remirror/theme': ^1.0.0-next.4
       '@types/react': ^16.9.43
       '@types/react-dom': ^16.9.8
@@ -1642,7 +1642,7 @@ importers:
       precss: ^4.0.0
       react: ^16.13.1
       react-dom: ^16.13.1
-      remirror: ^1.0.0-next.4
+      remirror: ^1.0.0-next.5
       write-json-file: ^4.3.0
   support/deprecated/core-extensions:
     specifiers: {}
@@ -1734,7 +1734,7 @@ importers:
       react: ^16.13.1
       react-dom: ^16.13.1
       refractor: ^3.0.0
-      remirror: ^1.0.0-next.4
+      remirror: ^1.0.0-next.5
   support/storybook:
     dependencies:
       '@babel/core': 7.10.4
@@ -1763,7 +1763,7 @@ importers:
       linaria: ^2.0.0-alpha.5
       react: ^16.13.1
       react-dom: ^16.13.1
-      remirror: ^1.0.0-next.4
+      remirror: ^1.0.0-next.5
   support/website:
     dependencies:
       '@babel/runtime': 7.10.4
@@ -1813,7 +1813,7 @@ importers:
       prism-react-renderer: ^1.1.1
       react: ^16.13.1
       react-dom: ^16.13.1
-      remirror: ^1.0.0-next.4
+      remirror: ^1.0.0-next.5
 lockfileVersion: 5.1
 packages:
   /@ampproject/toolbox-core/2.5.4:
