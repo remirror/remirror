@@ -58,8 +58,12 @@ import React from 'react';
 import { SocialEmojiComponent, SocialProvider } from 'remirror/react/social';
 
 const Editor = () => {
-  return <SocialProvider><SocialEmojiComponent></SocialProvider>
-}
+  return (
+    <SocialProvider>
+      <SocialEmojiComponent />
+    </SocialProvider>
+  );
+};
 ```
 
 With this tiny snippet your editor now supports a really nice ui element. And it's all customisable
