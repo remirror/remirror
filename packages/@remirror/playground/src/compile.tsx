@@ -51,14 +51,16 @@ export function compile(
        * **MUST NOT** have their `@babel/preset-` or `@babel/plugin-` prefixes
        * otherwise they WILL NOT WORK.
        */
-      presets: ['react', ['env', { useBuiltIns: false }], 'typescript'],
+      presets: ['react', ['env', { useBuiltIns: false, targets: 'since 2017' }], 'typescript'],
       plugins: [
         ['transform-runtime'],
         ['proposal-object-rest-spread'],
-        //'syntax-dynamic-import',
+        // 'syntax-dynamic-import',
         'proposal-nullish-coalescing-operator',
         'proposal-optional-chaining',
         'playgroundImports',
+        'proposal-class-properties',
+        'proposal-private-methods',
       ],
     });
   } catch (error_) {
