@@ -53,13 +53,7 @@ Prosemirror node: {
   "type": "doc",
   "content": [
     {
-      "type": "paragraph",
-      "attrs": {
-        "align": null,
-        "id": null,
-        "indent": 0,
-        "lineSpacing": null
-      }
+      "type": "paragraph"
     }
   ]
 }

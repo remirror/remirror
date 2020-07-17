@@ -28,20 +28,7 @@ Object {
       "content": "block+",
     },
     "paragraph": Object {
-      "attrs": Object {
-        "align": Object {
-          "default": null,
-        },
-        "id": Object {
-          "default": null,
-        },
-        "indent": Object {
-          "default": 0,
-        },
-        "lineSpacing": Object {
-          "default": null,
-        },
-      },
+      "attrs": Object {},
       "content": "inline*",
       "draggable": false,
       "group": "block",
