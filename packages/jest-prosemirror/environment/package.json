@@ -3,6 +3,6 @@
   "module": "dist/jest-prosemirror.esm.js",
   "types": "dist/jest-prosemirror.cjs.d.ts",
   "preconstruct": {
-    "source": "../src/jest-prosemirror-environment"
+    "source": "../src/environment"
   }
 }

@@ -3,6 +3,6 @@
   "module": "dist/jest-remirror.esm.js",
   "types": "dist/jest-remirror.cjs.d.ts",
   "preconstruct": {
-    "source": "../src/jest-remirror-environment"
+    "source": "../src/environment"
   }
 }
