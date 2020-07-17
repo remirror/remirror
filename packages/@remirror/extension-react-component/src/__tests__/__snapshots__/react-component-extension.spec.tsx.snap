@@ -41,3 +41,34 @@ exports[`NodeViews are created without content 1`] = `
   </nav>
 </div>
 `;
+
+exports[`node views can be created from commands 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  aria-placeholder=""
+  autofocus="false"
+  class="ProseMirror remirror-editor ProseMirror-focused"
+  contenteditable="true"
+  role="textbox"
+>
+  <p
+    class=""
+  >
+    contenthello world
+
+    <br />
+  </p>
+  <nav>
+    <p
+      custom="custom"
+    >
+      <span
+        contenteditable="true"
+      >
+        asdf
+      </span>
+    </p>
+  </nav>
+</div>
+`;

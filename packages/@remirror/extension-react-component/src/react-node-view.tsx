@@ -204,6 +204,11 @@ export class ReactNodeView implements NodeView {
     const element = document.createElement(this.#options.defaultContentNode);
     element.setAttribute('contenteditable', `${this.#view.editable}`);
 
+    // This is needed so that the content dom has a parent node on first
+    // creation. It will be overridden once the ref is attached.
+    // TODO it's important to verify potential bugs from this.
+    this.#dom.append(element);
+
     return element;
   }
 
