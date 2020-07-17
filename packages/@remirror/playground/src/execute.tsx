@@ -17,12 +17,14 @@ import { acquiredTypeDefs, dtsCache } from './vendor/type-acquisition';
 // Start with these and cannot remove them
 export const REQUIRED_MODULES = INTERNAL_MODULES.map((mod) => mod.moduleName);
 
-const tsOptions = {
+const tsOptions: languages.typescript.CompilerOptions = {
   // Maybe need to do manual syntax highlighting like found here:
   // http://demo.rekit.org/element/src%2Ffeatures%2Feditor%2Fworkers%2FsyntaxHighlighter.js/code
-
   jsx: languages.typescript.JsxEmit.React,
+  esModuleInterop: true,
+  allowSyntheticDefaultImports: true,
 };
+
 languages.typescript.typescriptDefaults.setCompilerOptions(tsOptions);
 languages.typescript.javascriptDefaults.setCompilerOptions(tsOptions);
 

@@ -797,6 +797,7 @@ importers:
       '@babel/types': 7.10.4
       '@remirror/core': 'link:../core'
       '@remirror/core-helpers': 'link:../core-helpers'
+      '@remirror/pm': 'link:../pm'
       '@remirror/react': 'link:../react'
       '@types/babel__core': 7.1.9
       '@types/babel__standalone': 7.1.2
@@ -820,6 +821,7 @@ importers:
       '@babel/types': ^7.10.4
       '@remirror/core': ^1.0.0-next.4
       '@remirror/core-helpers': ^1.0.0-next.4
+      '@remirror/pm': ^1.0.0-next.4
       '@remirror/react': ^1.0.0-next.4
       '@types/babel__core': ^7.1.9
       '@types/babel__standalone': ^7.1.2
