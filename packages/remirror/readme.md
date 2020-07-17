@@ -36,27 +36,25 @@ The following creates a dom based remirror editor.
 
 ```ts
 import { SocialPreset } from 'remirror/preset/social';
-import { RemirrorProvider, useRemirror, useCreateManager, useCreatePreset, usePreset } from 'remirror/react';
+import { SocialEmojiComponent } from 'remirror/react/social';
+import { RemirrorProvider, useRemirror, useManager } from 'remirror/react';
 
 const EditorWrapper = () => {
-  const socialPreset = useCreatePreset(SocialPreset, {})
-  const manager = useCreateManager([socialPreset]);
+  const socialPreset = new SocialPreset();
+  const manager = useManager([socialPreset]);
 
   return (
     <RemirrorProvider manager={manager}>
-      <Editor />
+      <div>
+        <SocialEmojiComponent />
+        <Editor />
+      <div/>
     </RemirrorProvider>
   )
 }
 
 const Editor = () => {
   const { getRootProps } = useRemirror();
-
-  const usePreset(SocialPreset, ({addHandler}) => {
-    const dispose = addHandler('mentionOnChange', () => {
-      // Do something
-    });
-  });
 
   return <div {...getRootProps()}>
 }

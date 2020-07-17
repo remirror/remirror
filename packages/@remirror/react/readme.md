@@ -35,15 +35,13 @@ import {
   createReactManager,
   ReactCombinedUnion,
   useManager,
-  useCreateExtension,
-  useCreatePreset,
 } from 'remirror/react';
 
 type Combined = ReactCombinedUnion<ListPreset | BoldExtension>;
 
 const EditorWrapper = () => {
-  const boldExtension = useCreateExtension(BoldExtension);
-  const listPreset = useCreatePreset(ListPreset);
+  const boldExtension = new BoldExtension();
+  const listPreset = new ListPreset();
   const manager = useManager<Combined>([boldExtension, listPreset]);
 
   const initialValue = manager.createState({
