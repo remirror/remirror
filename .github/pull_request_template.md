@@ -9,7 +9,7 @@
 - [ ] I have read the [**contributing**](https://github.com/remirror/remirror/blob/master/docs/contributing.md) document.
 - [ ] My code follows the code style of this project and `pnpm fix` completed successfully.
 - [ ] I have updated the documentation where necessary.
-- [ ] New code is unit tested and all current tests pass when running `pnpm test` .
+- [ ] New code is unit tested and all current tests pass when running `pnpm test`.
 
 ## Screenshots
 

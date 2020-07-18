@@ -112,7 +112,6 @@ export function getElementProps<Type = UnknownShape>(
  * });
  * ```
  */
-// eslint-disable-next-line unicorn/consistent-function-scoping
 export const asDefaultProps = <Props extends object>() => <DefaultProps extends Partial<Props>>(
   props: DefaultProps,
 ): DefaultProps => props;

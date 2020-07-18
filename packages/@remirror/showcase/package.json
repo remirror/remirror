@@ -22,13 +22,13 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.4",
+    "@babel/runtime": "^7.10.5",
     "@remirror/core": "^1.0.0-next.4",
     "@remirror/extension-code-block": "^1.0.0-next.4",
     "@remirror/react-social": "^1.0.0-next.4",
     "@types/match-sorter": "^4.0.0",
     "@types/prettier": "^2.0.2",
-    "match-sorter": "^4.1.0",
+    "match-sorter": "^4.2.0",
     "prettier": "^2.0.5"
   },
   "devDependencies": {

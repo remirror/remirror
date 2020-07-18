@@ -22,7 +22,7 @@ async function readFile(filePath) {
 /**
  * Get the release date
  *
- * @param {string} [date=new Date()] - The date to use
+ * @param {Date} [date] - the date to use
  */
 function getDate(date = new Date()) {
   return `${date.getFullYear()}-${(date.getMonth() + 1)
@@ -45,6 +45,9 @@ function hasFileChanged(filePath) {
   return !!execSync(`git --no-pager diff --name-only ${filePath}`).toString().trim();
 }
 
+/**
+ * Add dates to all updated changelog files.
+ */
 async function run() {
   const packages = await getAllDependencies(false);
 
