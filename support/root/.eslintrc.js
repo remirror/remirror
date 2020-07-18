@@ -67,6 +67,8 @@ module.exports = {
     'eslint-comments/no-unused-disable': 'error',
 
     'unicorn/no-fn-reference-in-iterator': 'off',
+    'unicorn/no-object-as-default-parameter': 'off',
+    'unicorn/consistent-function-scoping': 'off',
     'unicorn/no-nested-ternary': 'off',
     'unicorn/prevent-abbreviations': 'off', // Too aggressive.
     'unicorn/filename-case': ['error', { case: 'kebabCase' }],
