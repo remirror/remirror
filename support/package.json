@@ -15,7 +15,7 @@
     "chalk": "^4.1.0",
     "diffable-html": "^4.0.0",
     "globby": "^11.0.1",
-    "jest-axe": "^3.4.0",
+    "jest-axe": "^3.5.0",
     "jest-diff": "^26.1.0",
     "linaria": "^2.0.0-alpha.5",
     "lodash.groupby": "^4.6.0",

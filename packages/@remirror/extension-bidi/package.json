@@ -20,7 +20,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.4",
+    "@babel/runtime": "^7.10.5",
     "@types/direction": "^1.0.0",
     "direction": "^1.0.4"
   },

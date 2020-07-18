@@ -14,13 +14,13 @@
     "since 2017"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.4",
+    "@babel/runtime": "^7.10.5",
     "@docusaurus/core": "^2.0.0-alpha.58",
     "@docusaurus/plugin-content-docs": "^2.0.0-alpha.58",
     "@docusaurus/plugin-ideal-image": "^2.0.0-alpha.58",
     "@docusaurus/preset-classic": "^2.0.0-alpha.58",
     "@docusaurus/theme-live-codeblock": "^2.0.0-alpha.58",
-    "@mdx-js/react": "^1.6.6",
+    "@mdx-js/react": "^1.6.11",
     "@remirror/playground": "^1.0.0-next.4",
     "@remirror/showcase": "^1.0.0-next.4",
     "clsx": "^1.1.1",

@@ -27,12 +27,12 @@
     "build:custom": "node ./build.js"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.4",
+    "@babel/runtime": "^7.10.5",
     "@types/emoji-regex": "^8.0.0",
     "@types/match-sorter": "^4.0.0",
     "emoji-regex": "^9.0.0",
     "escape-string-regexp": "^4.0.0",
-    "match-sorter": "^4.1.0"
+    "match-sorter": "^4.2.0"
   },
   "devDependencies": {
     "@remirror/core": "^1.0.0-next.4",
