@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import sanitizeHtml from 'sanitize-html';
 
-import { environment, isFunction, noop } from 'remirror/core';
+import { environment, isFunction, noop } from '@remirror/core';
 
 /**
  * Polyfill DOMElement.innerText because JSDOM lacks support for it.
