@@ -1,6 +1,6 @@
 {
   "name": "jest-remirror",
-  "version": "1.0.0-next.5",
+  "version": "1.0.0-next.6",
   "description": "A text editor for react built with prosemirror",
   "keywords": [
     "prosemirror",

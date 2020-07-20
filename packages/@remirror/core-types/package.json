@@ -1,6 +1,6 @@
 {
   "name": "@remirror/core-types",
-  "version": "1.0.0-next.4",
+  "version": "1.0.0-next.6",
   "description": "Provides the core TS types for use throughout the remirror codebase",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/core-types",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/core-types",
@@ -17,7 +17,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.10.5",
-    "@remirror/core-constants": "^1.0.0-next.4",
+    "@remirror/core-constants": "^1.0.0-next.6",
     "type-fest": "^0.16.0"
   },
   "devDependencies": {

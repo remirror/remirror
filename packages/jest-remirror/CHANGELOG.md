@@ -1,5 +1,13 @@
 # jest-remirror
 
+## 1.0.0-next.6
+
+> 2020-07-20
+
+### Patch Changes
+
+- cf4656a6: Remove `remirror` from the dependencies of `jest-remirror`
+
 ## 1.0.0-next.5
 
 > 2020-07-17

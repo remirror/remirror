@@ -1,5 +1,16 @@
 # @remirror/core-helpers
 
+## 1.0.0-next.6
+
+> 2020-07-20
+
+### Patch Changes
+
+- e06a3623: Upgrade package dependencies.
+- Updated dependencies [e06a3623]
+  - @remirror/core-constants@1.0.0-next.6
+  - @remirror/core-types@1.0.0-next.6
+
 ## 1.0.0-next.4
 
 > 2020-07-16
