@@ -1,6 +1,6 @@
 import { schema } from 'jest-prosemirror';
 
-import { clone, keys } from 'remirror/core';
+import { clone, keys } from '@remirror/core';
 
 import { markFactory, nodeFactory, sequence, text } from '../jest-remirror-builder';
 import { TagTracker } from '../jest-remirror-types';

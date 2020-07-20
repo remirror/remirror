@@ -1,5 +1,5 @@
+import { Cast } from '@remirror/core';
 import { BoldExtension } from '@remirror/testing';
-import { Cast } from 'remirror/core';
 
 import { renderEditor } from '../jest-remirror-editor';
 

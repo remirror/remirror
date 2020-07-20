@@ -1,4 +1,4 @@
-import { EditorState, isEditorState, isProsemirrorNode, ProsemirrorNode } from 'remirror/core';
+import { EditorState, isEditorState, isProsemirrorNode, ProsemirrorNode } from '@remirror/core';
 
 import { TaggedProsemirrorNode } from './jest-remirror-types';
 

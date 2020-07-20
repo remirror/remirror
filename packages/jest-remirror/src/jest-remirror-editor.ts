@@ -33,8 +33,8 @@ import {
   RemirrorManager,
   SchemaFromCombined,
   Transaction,
-} from 'remirror/core';
-import { createDomEditor, createDomManager } from 'remirror/dom';
+} from '@remirror/core';
+import { createDomEditor, createDomManager } from '@remirror/dom';
 
 import { markFactory, nodeFactory } from './jest-remirror-builder';
 import {
