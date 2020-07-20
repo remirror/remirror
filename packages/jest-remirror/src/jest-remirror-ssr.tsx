@@ -1,8 +1,8 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 
-import { AnyCombinedUnion, object } from 'remirror/core';
-import { createReactManager, CreateReactManagerOptions, RemirrorProvider } from 'remirror/react';
+import { AnyCombinedUnion, object } from '@remirror/core';
+import { createReactManager, CreateReactManagerOptions, RemirrorProvider } from '@remirror/react';
 
 import { RenderEditorParameter } from './jest-remirror-types';
 

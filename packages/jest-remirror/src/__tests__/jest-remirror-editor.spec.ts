@@ -1,3 +1,4 @@
+import { PlainExtension, toHtml } from '@remirror/core';
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -5,7 +6,6 @@ import {
   LinkExtension,
 } from '@remirror/testing';
 import { cleanup } from '@remirror/testing/react';
-import { PlainExtension, toHtml } from 'remirror/core';
 
 import { renderEditor } from '../jest-remirror-editor';
 
