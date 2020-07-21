@@ -70,6 +70,37 @@ describe('useSocialMention', () => {
     `);
   });
 
+  it('should not trap the cursor in the mention', () => {
+    const { chain, Wrapper, getTags, getUsers, onChange } = createChain();
+
+    renderHook(
+      () => useSocialMention({ users: getUsers(), tags: getTags(), onMentionChange: onChange }),
+      {
+        wrapper: Wrapper,
+      },
+    );
+
+    acts([
+      () => {
+        chain.insertText('@a').selectText(1).insertText('ab ');
+      },
+    ]);
+
+    expect(chain.innerHTML).toMatchInlineSnapshot(`
+      <p>
+        ab Initial content
+        <a role="presentation"
+           href="/a"
+           class="mention mention-at"
+           data-mention-id="a"
+           data-mention-name="at"
+        >
+          @a
+        </a>
+      </p>
+    `);
+  });
+
   it('should clear suggestions when the `Escape` key is pressed', () => {
     const { chain, Wrapper, getTags, getUsers, onChange } = createChain();
 

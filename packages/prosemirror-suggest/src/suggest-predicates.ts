@@ -1,4 +1,4 @@
-import { bool, isString } from '@remirror/core-helpers';
+import { bool, includes, isString } from '@remirror/core-helpers';
 import { SelectionParameter } from '@remirror/core-types';
 
 import { ChangeReason, ExitReason } from './suggest-constants';
@@ -51,6 +51,22 @@ export const isExitReason = (value: unknown): value is ExitReason =>
   isString(value) && Object.values(ExitReason).includes(value as ExitReason);
 export const isChangeReason = (value: unknown): value is ChangeReason =>
   isString(value) && Object.values(ChangeReason).includes(value as ChangeReason);
+
+/**
+ * An exit which is caused by a changed in the selection and no other change in the document.
+ */
+export function isSelectionExitReason(value: unknown) {
+  return includes(
+    [
+      ExitReason.MoveEnd,
+      ExitReason.MoveStart,
+      ExitReason.SelectionOutside,
+      ExitReason.JumpForward,
+      ExitReason.JumpBackward,
+    ],
+    value,
+  );
+}
 
 /**
  * Checks that the reason passed is a split reason. This typically means that we

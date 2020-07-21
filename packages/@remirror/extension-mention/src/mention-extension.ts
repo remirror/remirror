@@ -27,6 +27,7 @@ import {
   getRegexPrefix,
   isInvalidSplitReason,
   isRemovedReason,
+  isSelectionExitReason,
   isSplitReason,
   regexToString,
   SuggestCharacterEntryMethod,
@@ -260,7 +261,6 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
           const createMention = this.store.getCommands().createMention;
           const updateMention = this.store.getCommands().updateMention;
           const removeMention = this.store.getCommands().removeMention;
-
           const isActive = isMarkActive({
             from: range.from,
             to: range.end,
@@ -272,6 +272,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
           const isSplit = isSplitReason(reason);
           const isInvalid = isInvalidSplitReason(reason);
           const isRemoved = isRemovedReason(reason);
+          const isSelectionExit = isSelectionExitReason(reason);
 
           const remove = () => {
             setMarkRemoved();
@@ -293,7 +294,16 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
             appendText = this.options.appendText,
             ...attributes
           }: SuggestionCommandAttributes) => {
-            method({ id, label, appendText, replacementType, name, range, ...attributes });
+            method({
+              id,
+              label,
+              appendText,
+              replacementType,
+              name,
+              range,
+              keepSelection: isSelectionExit,
+              ...attributes,
+            });
           };
 
           const command: MentionExtensionSuggestCommand = isInvalid || isRemoved ? remove : update;
@@ -308,12 +318,12 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
    * The factory method for mention commands to update and create new mentions.
    */
   private createMention({ shouldUpdate }: CreateMentionParameter) {
-    return (config: MentionExtensionAttributes): CommandFunction => {
+    return (config: MentionExtensionAttributes & { keepSelection?: boolean }): CommandFunction => {
       invariant(isValidMentionAttributes(config), {
         message: 'Invalid configuration attributes passed to the MentionExtension command.',
       });
 
-      const { range, appendText, replacementType, ...attributes } = config;
+      const { range, appendText, replacementType, keepSelection, ...attributes } = config;
       let name = attributes.name;
 
       if (!name) {
@@ -369,6 +379,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
         }
 
         return replaceText({
+          keepSelection,
           type: this.type,
           attrs: { ...attributes, name },
           appendText: getAppendText(appendText, matcher.appendText),

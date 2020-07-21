@@ -76,3 +76,17 @@ exports[`Social Showcase Links should parse simple urls 3`] = `
   url.co.uk
 </a>
 `;
+
+exports[`Social Showcase Mentions @ should not trap the arrow keys 1`] = `
+<p class>
+  12
+  <a role="presentation"
+     href="/a"
+     class="mention mention-at"
+     data-mention-id="a"
+     data-mention-name="at"
+  >
+    @a
+  </a>
+</p>
+`;
