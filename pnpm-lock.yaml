@@ -1777,6 +1777,7 @@ importers:
       '@docusaurus/preset-classic': 2.0.0-alpha.58_7ba835cdfcd941260fa6ae402e96cd88
       '@docusaurus/theme-live-codeblock': 2.0.0-alpha.58_7ba835cdfcd941260fa6ae402e96cd88
       '@mdx-js/react': 1.6.11_react@16.13.1
+      '@remirror/dev': 'link:../../packages/@remirror/dev'
       '@remirror/playground': 'link:../../packages/@remirror/playground'
       '@remirror/showcase': 'link:../../packages/@remirror/showcase'
       clsx: 1.1.1
@@ -1804,6 +1805,7 @@ importers:
       '@docusaurus/theme-live-codeblock': ^2.0.0-alpha.58
       '@docusaurus/types': ^2.0.0-alpha.58
       '@mdx-js/react': ^1.6.11
+      '@remirror/dev': ^1.0.0-next.4
       '@remirror/playground': ^1.0.0-next.4
       '@remirror/showcase': ^1.0.0-next.4
       '@types/react': ^16.9.43

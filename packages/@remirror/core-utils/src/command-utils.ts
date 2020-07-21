@@ -3,6 +3,7 @@ import {
   AttributesParameter,
   CommandFunction,
   EditorSchema,
+  EditorView,
   MarkType,
   MarkTypeParameter,
   NodeType,
@@ -11,9 +12,11 @@ import {
   ProsemirrorCommandFunction,
   ProsemirrorNode,
   RangeParameter,
+  Transaction,
 } from '@remirror/core-types';
 import { lift, setBlockType, wrapIn } from '@remirror/pm/commands';
 import { liftListItem, wrapInList } from '@remirror/pm/schema-list';
+import { TextSelection } from '@remirror/pm/state';
 
 import { getMarkRange, isMarkType, isNodeType } from './core-utils';
 import { findParentNode, isNodeActive, isSelectionEmpty } from './prosemirror-utils';
@@ -173,6 +176,11 @@ interface ReplaceTextParameter extends Partial<RangeParameter>, Partial<Attribut
    * The content type to be inserted in place of the range / selection.
    */
   type?: NodeType | MarkType;
+
+  /**
+   * Whether to keep the original selection after the replacement.
+   */
+  keepSelection?: boolean;
 }
 
 /**
@@ -187,6 +195,17 @@ function isChrome(minVersion = 0): boolean {
   return parsedAgent ? Number.parseInt(parsedAgent[2], 10) >= minVersion : false;
 }
 
+function keepSelectionTransaction(view: EditorView, tr: Transaction) {
+  let { from } = view.state.selection;
+
+  for (const step of tr.steps) {
+    const map = step.getMap();
+    from = map.map(from);
+  }
+
+  tr.setSelection(new TextSelection(tr.doc.resolve(from)));
+}
+
 /**
  * Replaces text with an optional appended string at the end
  *
@@ -195,11 +214,18 @@ function isChrome(minVersion = 0): boolean {
  * @public
  */
 export function replaceText(parameter: ReplaceTextParameter): CommandFunction {
-  const { range, type, attrs = {}, appendText = '', content = '' } = parameter;
+  const {
+    range,
+    type,
+    attrs = {},
+    appendText = '',
+    content = '',
+    keepSelection = false,
+  } = parameter;
 
-  return ({ state, tr, dispatch }) => {
-    const { schema, selection } = state;
-    // const { $from, $to } = selection;
+  return ({ state, tr, dispatch, view }) => {
+    const schema = state.schema;
+    const selection = tr.selection;
     const index = selection.$from.index();
     const { from, to } = range ?? selection;
 
@@ -225,6 +251,10 @@ export function replaceText(parameter: ReplaceTextParameter): CommandFunction {
     if (appendText) {
       // TODO for some reason this only works when content follows current selection.
       tr.insertText(appendText);
+    }
+
+    if (keepSelection && view) {
+      keepSelectionTransaction(view, tr);
     }
 
     if (dispatch) {

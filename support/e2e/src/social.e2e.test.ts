@@ -96,6 +96,23 @@ describe('Social Showcase', () => {
         );
       });
 
+      it('should not trap the arrow keys', async () => {
+        await $editor.type('@a');
+        await press({ key: 'ArrowLeft', count: 2 });
+
+        await $editor.type('12 ');
+        await expect($editor.innerHTML()).resolves.toMatchSnapshot();
+      });
+
+      it('should not revert the mention', async () => {
+        const selector = sel(EDITOR_CLASS_SELECTOR, '.mention-at');
+        await $editor.type('@a ');
+        await press({ key: 'ArrowLeft' });
+
+        await $editor.type(' ');
+        await expect(textContent(selector)).resolves.toBe('@a');
+      });
+
       it('should accept selections onEnter', async () => {
         const selector = sel(EDITOR_CLASS_SELECTOR, '.mention-at');
 

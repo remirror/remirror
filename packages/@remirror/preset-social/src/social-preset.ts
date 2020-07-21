@@ -149,6 +149,6 @@ export class SocialPreset extends Preset<SocialOptions> {
     mentionExtension.addHandler('onChange', this.options.onChange);
     mentionExtension.addHandler('onExit', this.options.onExit);
 
-    return [autoLinkExtension, emojiExtension, mentionExtension];
+    return [emojiExtension, mentionExtension, autoLinkExtension];
   }
 }
