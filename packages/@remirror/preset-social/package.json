@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-social",
-  "version": "1.0.0-next.4",
+  "version": "1.0.0-next.8",
   "description": "The preset for the social editor.",
   "keywords": [
     "remirror",
@@ -22,9 +22,9 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.10.5",
-    "@remirror/extension-auto-link": "^1.0.0-next.4",
+    "@remirror/extension-auto-link": "^1.0.0-next.8",
     "@remirror/extension-emoji": "^1.0.0-next.4",
-    "@remirror/extension-mention": "^1.0.0-next.4",
+    "@remirror/extension-mention": "^1.0.0-next.8",
     "type-fest": "^0.16.0"
   },
   "devDependencies": {
