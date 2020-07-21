@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-social",
-  "version": "1.0.0-next.7",
+  "version": "1.0.0-next.8",
   "description": "A configurable social editor.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react-social",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react-social",
@@ -19,11 +19,11 @@
   "dependencies": {
     "@babel/runtime": "^7.10.5",
     "@lingui/core": "^3.0.0-13",
-    "@remirror/extension-auto-link": "^1.0.0-next.4",
+    "@remirror/extension-auto-link": "^1.0.0-next.8",
     "@remirror/extension-emoji": "^1.0.0-next.4",
-    "@remirror/extension-mention": "^1.0.0-next.4",
+    "@remirror/extension-mention": "^1.0.0-next.8",
     "@remirror/i18n": "^1.0.0-next.4",
-    "@remirror/preset-social": "^1.0.0-next.4",
+    "@remirror/preset-social": "^1.0.0-next.8",
     "@remirror/react-utils": "^1.0.0-next.4",
     "@remirror/theme": "^1.0.0-next.4",
     "@types/classnames": "^2.2.10",

@@ -988,9 +988,9 @@ importers:
     specifiers:
       '@babel/runtime': ^7.10.5
       '@remirror/core': ^1.0.0-next.4
-      '@remirror/extension-auto-link': ^1.0.0-next.4
+      '@remirror/extension-auto-link': ^1.0.0-next.8
       '@remirror/extension-emoji': ^1.0.0-next.4
-      '@remirror/extension-mention': ^1.0.0-next.4
+      '@remirror/extension-mention': ^1.0.0-next.8
       '@remirror/pm': ^1.0.0-next.4
       type-fest: ^0.16.0
   packages/@remirror/preset-table:
@@ -1160,12 +1160,12 @@ importers:
       '@lingui/core': ^3.0.0-13
       '@lingui/macro': ^3.0.0-13
       '@remirror/core': ^1.0.0-next.4
-      '@remirror/extension-auto-link': ^1.0.0-next.4
+      '@remirror/extension-auto-link': ^1.0.0-next.8
       '@remirror/extension-emoji': ^1.0.0-next.4
-      '@remirror/extension-mention': ^1.0.0-next.4
+      '@remirror/extension-mention': ^1.0.0-next.8
       '@remirror/i18n': ^1.0.0-next.4
       '@remirror/pm': ^1.0.0-next.4
-      '@remirror/preset-social': ^1.0.0-next.4
+      '@remirror/preset-social': ^1.0.0-next.8
       '@remirror/react': ^1.0.0-next.7
       '@remirror/react-utils': ^1.0.0-next.4
       '@remirror/theme': ^1.0.0-next.4
@@ -1466,7 +1466,7 @@ importers:
       '@remirror/core-constants': ^1.0.0-next.4
       '@remirror/core-helpers': ^1.0.0-next.4
       '@remirror/core-types': ^1.0.0-next.4
-      '@remirror/core-utils': ^1.0.0-next.4
+      '@remirror/core-utils': ^1.0.0-next.8
       '@types/merge-descriptors': 1.0.1
       '@types/prosemirror-keymap': ^1.0.3
       '@types/prosemirror-state': ^1.2.5
