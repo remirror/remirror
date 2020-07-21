@@ -60,6 +60,11 @@ export abstract class EditorWrapper<
   #previousState: EditorState<SchemaFromCombined<Combined>> | undefined;
 
   /**
+   * A previous state that can be overridden by the framework implementation.
+   */
+  protected previousStateOverride?: EditorState<SchemaFromCombined<Combined>>;
+
+  /**
    * True when this is the first render.
    */
   #firstRender = true;
@@ -84,7 +89,7 @@ export abstract class EditorWrapper<
   /**
    * The props passed in when creating or updating the `EditorWrapper` instance.
    */
-  protected get props(): Props {
+  get props(): Props {
     return this.#getProps();
   }
 
@@ -94,7 +99,7 @@ export abstract class EditorWrapper<
    * current state will always be equal.
    */
   protected get previousState(): EditorState<SchemaFromCombined<Combined>> {
-    return this.#previousState ?? this.view.state;
+    return this.previousStateOverride ?? this.#previousState ?? this.view.state;
   }
 
   /**
@@ -168,7 +173,7 @@ export abstract class EditorWrapper<
   }
 
   /**
-   * Retrieve the editor state. This is passed through to the extension manager.
+   * Retrieve the editor state.
    */
   protected readonly getState = () => this.view.state;
 

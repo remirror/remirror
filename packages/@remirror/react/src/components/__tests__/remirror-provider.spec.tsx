@@ -32,6 +32,7 @@ test('`RemirrorProvider`', () => {
 test('multiple `getRootProps` applied to dom throw an error', () => {
   const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
   const manager = createReactManager([]);
+
   const TestComponent: FC = () => {
     const { getRootProps } = useRemirror();
 

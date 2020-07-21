@@ -335,7 +335,7 @@ export function useManager<Combined extends AnyCombinedUnion>(
 
   useEffect(() => {
     return manager.addHandler('destroy', () => {
-      setManager(nextManager);
+      setManager(nextManager.clone());
     });
   }, [manager, nextManager]);
 

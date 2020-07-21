@@ -69,8 +69,6 @@ export const ReactEditor = <Combined extends AnyCombinedUnion>(
 ) => {
   const { stringHandler = defaultStringHandler, onError, manager, forceEnvironment, value } = props;
 
-  // Cache whether this is a controlled editor.
-  const isControlled = bool(value);
   const { placeholder } = props;
   const isFirstMount = useFirstMountState();
 
@@ -142,21 +140,7 @@ export const ReactEditor = <Combined extends AnyCombinedUnion>(
     methods.onUpdate(previousEditable);
   }, [previousEditable, methods]);
 
-  // Handle controlled editor updates every time the value changes.
-  useEffect(() => {
-    invariant((value && isControlled) || (isNullOrUndefined(value) && !isControlled), {
-      code: ErrorConstant.REACT_CONTROLLED,
-      message: isControlled
-        ? 'You have attempted to switch from a controlled to an uncontrolled editor. Once you set up an editor as a controlled editor it must always provide a `value` prop.'
-        : 'You have provided a `value` prop to an uncontrolled editor. In order to set up your editor as controlled you must provide the `value` prop from the very first render.',
-    });
-
-    if (!value) {
-      return;
-    }
-
-    methods.updateControlledState(value);
-  }, [isControlled, value, methods]);
+  useControlledEditor(methods);
 
   // Return the rendered component
   return methods.render();
@@ -366,6 +350,10 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
           'Controlled editors do not support `clearContent` or `setContent` where `triggerChange` is `true`. Update the `value` prop instead.',
       });
 
+      if (!this.previousStateOverride) {
+        this.previousStateOverride = this.getState();
+      }
+
       this.onChange({ state, tr });
       return;
     }
@@ -385,9 +373,16 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
    * Update the controlled state when the value changes and notify the extension
    * of this update.
    */
-  updateControlledState(state: EditorState<SchemaFromCombined<Combined>>) {
+  updateControlledState(
+    state: EditorState<SchemaFromCombined<Combined>>,
+    previousState?: EditorState<SchemaFromCombined<Combined>>,
+  ) {
+    this.previousStateOverride = previousState;
+
     this.view.updateState(state);
     this.manager.onStateUpdate({ previousState: this.previousState, state });
+
+    this.previousStateOverride = undefined;
   }
 
   /**
@@ -589,4 +584,36 @@ function defaultStringHandler(): never {
     message:
       'No valid string handler. In order to pass in `string` as `initialContent` to the remirror editor you must provide a valid stringHandler prop',
   });
+}
+
+/**
+ * A hook which manages the controlled updates for the editor.
+ */
+function useControlledEditor<Combined extends AnyCombinedUnion>(
+  methods: ReactEditorWrapper<Combined>,
+) {
+  const { value } = methods.props;
+
+  // Cache whether this is a controlled editor.
+  const isControlled = useRef(bool(value)).current;
+  const previousValue = usePrevious(value);
+
+  // Handle controlled editor updates every time the value changes.
+  useEffect(() => {
+    // Check if the update is valid based on current value.
+    const validUpdate = value ? isControlled === true : isControlled === false;
+
+    invariant(validUpdate, {
+      code: ErrorConstant.REACT_CONTROLLED,
+      message: isControlled
+        ? 'You have attempted to switch from a controlled to an uncontrolled editor. Once you set up an editor as a controlled editor it must always provide a `value` prop.'
+        : 'You have provided a `value` prop to an uncontrolled editor. In order to set up your editor as controlled you must provide the `value` prop from the very first render.',
+    });
+
+    if (!value) {
+      return;
+    }
+
+    methods.updateControlledState(value, previousValue ?? undefined);
+  }, [isControlled, value, methods, previousValue]);
 }

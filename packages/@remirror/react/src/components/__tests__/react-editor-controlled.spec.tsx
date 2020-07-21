@@ -33,6 +33,16 @@ function create<Combined extends AnyCombinedUnion>(combined?: Combined[]) {
   };
 }
 
+let errorSpy = jest.spyOn(console, 'error');
+
+beforeEach(() => {
+  errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+});
+
+afterEach(() => {
+  errorSpy.mockRestore();
+});
+
 describe('Remirror Controlled Component', () => {
   it('should set the initial value', () => {
     const { manager, props } = create();
@@ -178,6 +188,68 @@ describe('Remirror Controlled Component', () => {
     expect(() => ctx.clearContent()).toThrowErrorMatchingSnapshot();
   });
 
+  it('throws when switching from controlled to non-controlled', () => {
+    const { manager, props } = create();
+
+    const value = manager.createState({
+      content: '<p>some content</p>',
+      stringHandler: fromHtml,
+    });
+
+    const set = jest.fn();
+
+    const Component = () => {
+      const [state, setState] = useState(value);
+      set.mockImplementation(setState);
+
+      return (
+        <ReactEditor {...props} value={state} manager={manager} onChange={jest.fn()}>
+          {() => <div />}
+        </ReactEditor>
+      );
+    };
+
+    render(<Component />);
+
+    expect(() =>
+      act(() => {
+        set();
+      }),
+    ).toThrowErrorMatchingSnapshot();
+    expect(errorSpy).toHaveBeenCalled();
+  });
+
+  it('throws when switching from non-controlled to controlled', () => {
+    const { manager, props } = create();
+
+    const value = manager.createState({
+      content: '<p>some content</p>',
+      stringHandler: fromHtml,
+    });
+
+    const set = jest.fn();
+
+    const Component = () => {
+      const [state, setState] = useState();
+      set.mockImplementation(setState);
+
+      return (
+        <ReactEditor {...props} value={state} manager={manager} onChange={jest.fn()}>
+          {() => <div />}
+        </ReactEditor>
+      );
+    };
+
+    render(<Component />);
+
+    expect(() =>
+      act(() => {
+        set(value);
+      }),
+    ).toThrowErrorMatchingSnapshot();
+    expect(errorSpy).toHaveBeenCalled();
+  });
+
   it('notifies extensions of state updates via `manager.onStateUpdate`', () => {
     const mock = jest.fn();
 
@@ -222,6 +294,10 @@ describe('Remirror Controlled Component', () => {
     });
 
     expect(mock).toHaveBeenCalledTimes(2);
-    expect(mock.mock.calls[1][0].state).toBe(chain.state);
+
+    const { state, previousState } = mock.mock.calls[1][0];
+
+    expect(state).toBe(chain.state);
+    expect(state).not.toBe(previousState);
   });
 });
