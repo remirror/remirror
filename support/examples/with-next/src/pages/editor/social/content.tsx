@@ -9,6 +9,5 @@ const SocialEditorWithContent: FC = () => (
     characterLimit={280}
   />
 );
-SocialEditorWithContent.displayName = 'SocialEditorWithContent';
 
 export default SocialEditorWithContent;

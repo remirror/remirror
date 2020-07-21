@@ -32,7 +32,7 @@ declare global {
   }
 
   type RemirrorTestServers = 'next' | 'docs';
-  type RemirrorTestEditors = 'social' | 'wysiwyg' | 'epic';
+  type RemirrorTestEditors = 'social' | 'wysiwyg' | 'epic' | 'positioner';
   type SupportedBrowserName = 'firefox' | 'chromium' | 'webkit';
 }
 

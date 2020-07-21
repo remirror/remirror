@@ -51,6 +51,11 @@ const servers = (exports.servers = {
 });
 
 const editors = (exports.editors = {
+  positioner: {
+    next: {
+      empty: 'http://localhost:3030/editor/positioner',
+    },
+  },
   social: {
     next: {
       empty: 'http://localhost:3030/editor/social',

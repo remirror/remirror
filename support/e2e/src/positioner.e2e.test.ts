@@ -1,0 +1,40 @@
+import { getDocument, queries } from 'playwright-testing-library';
+import { ElementHandle } from 'playwright-testing-library/dist/typedefs';
+
+import { selectAll } from './helpers';
+
+const { getByRole, getByTestId, getByText } = queries;
+const path = __SERVER__.urls.positioner.empty;
+
+describe('Positioner', () => {
+  let $document: ElementHandle;
+  let $editor: ElementHandle;
+
+  beforeEach(async () => {
+    await page.goto(path);
+    $document = await getDocument(page);
+    $editor = await getByRole($document, 'textbox');
+  });
+
+  describe('Bubble menu', () => {
+    it('should show the bubble menu', async () => {
+      await $editor.focus();
+      await $editor.type('This is text');
+      await expect($editor.innerHTML()).resolves.toMatchSnapshot();
+      const $bubbleMenu = await getByTestId($document, 'bubble-menu');
+      await expect($bubbleMenu.getAttribute('style')).resolves.toBe(
+        'bottom:99999px;left:-99999px;position:absolute',
+      );
+
+      await selectAll();
+      const $visibleBubbleMenu = await getByTestId($document, 'bubble-menu');
+      const newStyles = await $visibleBubbleMenu.getAttribute('style');
+      expect(newStyles).not.toInclude('99999px');
+
+      const $boldButton = await getByText($document, 'Bold');
+      await $boldButton.click();
+
+      await expect($editor.innerHTML()).resolves.toMatchSnapshot();
+    });
+  });
+});

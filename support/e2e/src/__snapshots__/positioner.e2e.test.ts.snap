@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Positioner Bubble menu should show the bubble menu 1`] = `
+<p class>
+  This is text
+</p>
+`;
+
+exports[`Positioner Bubble menu should show the bubble menu 2`] = `
+<p class>
+  <strong>
+    This is text
+  </strong>
+</p>
+`;
