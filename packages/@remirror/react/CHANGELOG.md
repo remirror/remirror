@@ -1,5 +1,15 @@
 # @remirror/react
 
+## 1.0.0-next.7
+
+> 2020-07-21
+
+### Patch Changes
+
+- 6c5a93c8: Fix a bug where the previous state was always equal to the updated state for controlled
+  editors. This caused problems with functionality that relies on comparing state values e.g.
+  `PositionerExtension`.
+
 ## 1.0.0-next.5
 
 > 2020-07-17

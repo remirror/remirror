@@ -1,5 +1,14 @@
 # @remirror/react-wysiwyg
 
+## 1.0.0-next.7
+
+> 2020-07-21
+
+### Patch Changes
+
+- Updated dependencies [6c5a93c8]
+  - @remirror/react@1.0.0-next.7
+
 ## 1.0.0-next.5
 
 > 2020-07-17
