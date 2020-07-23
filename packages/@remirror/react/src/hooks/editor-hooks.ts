@@ -54,15 +54,15 @@ import { useEffectWithWarning } from './core-hooks';
  *
  * @remarks
  *
- * The following example takes the position props from
+ * The following example applies the root props to the div.
  * ```ts
  * import { RemirrorProvider, useRemirror } from 'remirror';
  *
  * const HooksComponent = (props) => {
  *   // This pulls the remirror props out from the context.
- *   const { getPositionerProps } = useRemirror();
+ *   const { getRootProps } = useRemirror();
  *
- *   return <Menu {...getPositionerProps()} />;
+ *   return <div {...getRootProps()} />;
  * }
  *
  * class App extends Component {
@@ -75,21 +75,81 @@ import { useEffectWithWarning } from './core-hooks';
  *   }
  * }
  * ```
+ *
+ * For performance reasons `useRemirror` does not automatically trigger a
+ * rerender on every editor update. This allows for you use it in component
+ * which don't need to track the latest editor state, without suffering a
+ * performance penalty.
+ *
+ * However if you do want to track whether a command is enabled at the current
+ * selection or whether a certain formatting mark (bold) is active at the
+ * current selection you can pass through an optional parameter.
+ *
+ * ```
+ * const { active, commands } = useRemirror({ autoUpdate: true });
+ *
+ * return (
+ *   <button style={{ fontWeight: active.bold() ? 'bold' : undefined }}>
+ *     B
+ *   <button>
+ * )
+ * ```
+ *
+ * The above example keep track of whether the current selection is bold on
+ * every update to the editor. Updates can be document changes and selection
+ * changes.
+ *
+ * For more control you can also use a handler function as the first parameter
+ * to selectively rerender as you see fit.
+ *
+ * ```
+ * const { active, commands } = useRemirror(() => {
+ *   if (active.bold() === boldActive) {
+ *     return;
+ *   }
+ *
+ *   setBoldActive(active.bold());
+ * });
+ *
+ * const [boldActive, setBoldActive] = useState(active.bold());
+ *
+ * return (
+ *   <button style={{ fontWeight: boldActive ? 'bold' : undefined }}>
+ *     B
+ *   <button>
+ * )
+ * ```
+ *
+ * In this case the component only re-renders when the bold formatting is no
+ * longer active.
  */
 export function useRemirror<Combined extends AnyCombinedUnion>(
-  onChange?: RemirrorEventListener<Combined>,
+  handler?: RemirrorEventListener<Combined> | { autoUpdate: boolean },
 ): RemirrorContextProps<Combined> {
   const context = useContext(RemirrorContext);
+  const [, setState] = useState({});
 
   invariant(context, { code: ErrorConstant.REACT_PROVIDER_CONTEXT });
 
   useEffect(() => {
-    if (!onChange) {
+    let updateHandler = handler;
+
+    if (!updateHandler) {
       return;
     }
 
-    return context.addHandler('change', onChange);
-  }, [onChange, context]);
+    if (!isFunction(updateHandler)) {
+      const { autoUpdate } = updateHandler;
+
+      updateHandler = autoUpdate ? () => setState({}) : undefined;
+    }
+
+    if (!isFunction(updateHandler)) {
+      return;
+    }
+
+    return context.addHandler('updated', updateHandler);
+  }, [handler, context]);
 
   return context;
 }

@@ -155,16 +155,15 @@ import { BoldExtension } from 'remirror/extension/bold';
 import { RemirrorProvider, useManager, useRemirror, useExtensionCreator } from 'remirror/react';
 
 const Editor = () => {
-  const { getRootProps, active, commands } = useRemirror();
-
-  const toggleBold = useCallback(() => {
-    commands.toggleBold();
-  }, [commands]);
+  const { getRootProps, active, commands } = useRemirror({ autoUpdate: true });
 
   return (
     <div>
       <div {...getRootProps()} />
-      <button onClick={toggleBold} style={{ fontWeight: active.bold() ? 'bold' : undefined }}>
+      <button
+        onClick={() => commands.toggleBold()}
+        style={{ fontWeight: active.bold() ? 'bold' : undefined }}
+      >
         Bold
       </button>
     </div>

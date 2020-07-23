@@ -207,9 +207,7 @@ import { BoldExtension } from 'remirror/extension/bold';
 const Editor = () => {
   const [boldActive, setBoldActive] = useState(false);
 
-  const { getRootProps, commands, active } = useRemirror(() => {
-    setBoldActive(active.bold());
-  });
+  const { getRootProps, commands, active } = useRemirror({ autoUpdate: true });
 
   return (
     <div>
@@ -247,16 +245,13 @@ The fixed code could look something like this.
 
 ```tsx
 const Menu = () => {
-  const [boldActive, setBoldActive] = useState(false);
-  const { commands, active } = useRemirror(() => {
-    setBoldActive(active.bold());
-  });
+  const { commands, active } = useRemirror({ autoUpdate: true });
 
   return (
     <>
       <button
         onClick={() => commands.toggleBold()}
-        style={{ fontWeight: activeCommands.bold ? 'bold' : undefined }}
+        style={{ fontWeight: active.bold() ? 'bold' : undefined }}
       >
         B
       </button>

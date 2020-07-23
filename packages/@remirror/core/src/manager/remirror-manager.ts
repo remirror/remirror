@@ -558,7 +558,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * Update the state of the view and trigger the `onStateUpdate` lifecyle
    * method as well.
    */
-  updateState = (state: EditorState<this['~Sch']>) => {
+  private readonly updateState = (state: EditorState<this['~Sch']>) => {
     const previousState = this.getState();
 
     this.view.updateState(state);
@@ -582,9 +582,13 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
       this.#firstStateUpdate = false;
     }
 
+    const parameterWithUpdate = { ...parameter, firstUpdate };
+
     for (const handler of this.#handlers.update) {
-      handler({ ...parameter, firstUpdate });
+      handler(parameterWithUpdate);
     }
+
+    this.#events.emit('stateUpdate', parameterWithUpdate);
   }
 
   /**
@@ -678,12 +682,18 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   }
 }
 
-interface ManagerEvents {
+export interface ManagerEvents {
+  /**
+   * Called when the state is updated.
+   */
+  stateUpdate: (parameter: StateUpdateLifecycleParameter) => void;
+
   /**
    * An event listener which is called whenever the manager is destroyed.
    */
   destroy: () => void;
 }
+
 export type AnyRemirrorManager = RemirrorManager<AnyCombinedUnion>;
 
 /**

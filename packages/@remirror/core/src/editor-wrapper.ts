@@ -35,7 +35,7 @@ import { DirectEditorProps } from '@remirror/pm/view';
 
 import { UpdatableViewProps } from './builtins';
 import { AnyExtensionConstructor } from './extension';
-import { RemirrorManager } from './manager';
+import { ManagerEvents, RemirrorManager } from './manager';
 import { AnyPresetConstructor } from './preset';
 import { AnyCombinedUnion, SchemaFromCombined } from './preset/preset-types';
 
@@ -73,7 +73,12 @@ export abstract class EditorWrapper<
    * The event listener which allows consumers to subscribe to the different
    * events without using props.
    */
-  #events = createNanoEvents<Events<Combined>>();
+  #events = createNanoEvents<EditorWrapperEvents<Combined>>();
+
+  /**
+   * Array of disposal methods.
+   */
+  #disposers: Unsubscribe[] = [];
 
   /**
    * The updatable view props.
@@ -158,6 +163,30 @@ export abstract class EditorWrapper<
     // Create the ProsemirrorView and initialize our editor manager with it.
     const view = this.createView(initialEditorState, element);
     this.manager.addView(view);
+
+    this.setupEvents();
+  }
+
+  /**
+   * Setup the manager event listeners which are disposed of when the manager is
+   * destroyed.
+   */
+  private setupEvents() {
+    const disposeStateUpdate = this.manager.addHandler('stateUpdate', ({ state, tr }) => {
+      return this.#events.emit('updated', this.eventListenerParameter({ state, tr }));
+    });
+
+    const disposeDestroy = this.manager.addHandler('destroy', () => {
+      this.#events.emit('destroy');
+
+      for (const dispose of this.#disposers) {
+        dispose();
+      }
+
+      this.#disposers = [];
+    });
+
+    this.#disposers.push(disposeStateUpdate, disposeDestroy);
   }
 
   /**
@@ -176,6 +205,11 @@ export abstract class EditorWrapper<
    * Retrieve the editor state.
    */
   protected readonly getState = () => this.view.state;
+
+  /**
+   * Retrieve the previous editor state.
+   */
+  protected readonly getPreviousState = () => this.previousState;
 
   /**
    * Create the prosemirror editor view.
@@ -294,11 +328,8 @@ export abstract class EditorWrapper<
   /**
    * Use this method in the `onUpdate` event to run all change handlers.
    */
-  readonly onChange = ({ tr, state }: ListenerParameter<Combined> = object()) => {
-    const parameter = this.eventListenerParameter({ tr, state });
-
-    this.props.onChange?.(parameter);
-    this.#events.emit('change', parameter);
+  readonly onChange = (parameter: ListenerParameter<Combined> = object()) => {
+    this.props.onChange?.(this.eventListenerParameter(parameter));
 
     if (this.#firstRender) {
       this.#firstRender = false;
@@ -453,6 +484,7 @@ export abstract class EditorWrapper<
 
       /* Getter Methods */
       getState: this.getState,
+      getPreviousState: this.getPreviousState,
       getExtension: this.#getExtension,
       getPreset: this.#getPreset,
 
@@ -654,9 +686,9 @@ export interface EditorWrapperOutput<Combined extends AnyCombinedUnion>
   /**
    * Add event handlers to the remirror editor at runtime.
    */
-  addHandler: <Key extends keyof Events<Combined>>(
+  addHandler: <Key extends keyof EditorWrapperEvents<Combined>>(
     event: Key,
-    cb: Events<Combined>[Key],
+    cb: EditorWrapperEvents<Combined>[Key],
   ) => Unsubscribe;
 
   /**
@@ -700,6 +732,12 @@ export interface EditorWrapperOutput<Combined extends AnyCombinedUnion>
    * `view.state`.
    */
   getState: () => EditorState<SchemaFromCombined<Combined>>;
+
+  /**
+   * A getter function for the previous prosemirror editor state. It can be used
+   * to check what's changed between states.
+   */
+  getPreviousState: () => EditorState<SchemaFromCombined<Combined>>;
 
   /**
    * Get an extension by it's constructor.
@@ -836,7 +874,8 @@ export interface ListenerParameter<Combined extends AnyCombinedUnion>
   extends Partial<EditorStateParameter<SchemaFromCombined<Combined>>>,
     Partial<TransactionParameter<SchemaFromCombined<Combined>>> {}
 
-interface Events<Combined extends AnyCombinedUnion> {
+interface EditorWrapperEvents<Combined extends AnyCombinedUnion>
+  extends Pick<ManagerEvents, 'destroy'> {
   /**
    * An event listener which is called whenever the editor gains focus.
    */
@@ -848,9 +887,12 @@ interface Events<Combined extends AnyCombinedUnion> {
   blur: (params: RemirrorEventListenerParameter<Combined>, event: Event) => void;
 
   /**
-   * Called on every change to the Prosemirror state.
+   * Called on every state update after the state has been applied to the editor.
+   *
+   * This should be used to track the current editor state and check if commands
+   * are enabled.
    */
-  change: RemirrorEventListener<Combined>;
+  updated: RemirrorEventListener<Combined>;
 }
 
 type UpdatableViewPropsObject = { [Key in UpdatableViewProps]: DirectEditorProps[Key] };

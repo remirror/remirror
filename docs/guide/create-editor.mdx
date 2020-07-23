@@ -42,37 +42,25 @@ const EditorWrapper = () => {
 import { useRemirror } from '@remirror/react';
 
 const Menu = () => {
-  const [activeCommands, setActiveCommands] = useState({
-    bold: false,
-    italic: false,
-    underline: false,
-  });
-
-  const { getRootProps, commands, active } = useRemirror(() => {
-    setActiveCommands({
-      bold: active.bold(),
-      italic: active.italic(),
-      underline: active.underline(),
-    });
-  });
+  const { getRootProps, commands, active } = useRemirror({ autoUpdate: true });
 
   return (
     <div>
       <button
         onClick={() => commands.toggleBold()}
-        style={{ fontWeight: activeCommands.bold ? 'bold' : undefined }}
+        style={{ fontWeight: active.bold() ? 'bold' : undefined }}
       >
         B
       </button>
       <button
         onClick={() => commands.toggleItalic()}
-        style={{ fontWeight: activeCommands.italic ? 'bold' : undefined }}
+        style={{ fontWeight: active.italic() ? 'bold' : undefined }}
       >
         I
       </button>
       <button
         onClick={() => commands.toggleUnderline()}
-        style={{ fontWeight: activeCommands.underline ? 'bold' : undefined }}
+        style={{ fontWeight: active.underline() ? 'bold' : undefined }}
       >
         U
       </button>
@@ -93,37 +81,25 @@ root props are added to the div.
 ```js live
 function example() {
   function Menu() {
-    const [activeCommands, setActiveCommands] = useState({
-      bold: false,
-      italic: false,
-      underline: false,
-    });
-
-    const { getRootProps, commands, active } = useRemirror(() => {
-      setActiveCommands({
-        bold: active.bold(),
-        italic: active.italic(),
-        underline: active.underline(),
-      });
-    });
+    const { getRootProps, commands, active } = useRemirror({ autoUpdate: true });
 
     return (
       <div>
         <button
           onClick={() => commands.toggleBold()}
-          style={{ fontWeight: activeCommands.bold ? 'bold' : undefined }}
+          style={{ fontWeight: active.bold() ? 'bold' : undefined }}
         >
           B
         </button>
         <button
           onClick={() => commands.toggleItalic()}
-          style={{ fontWeight: activeCommands.italic ? 'bold' : undefined }}
+          style={{ fontWeight: active.italic() ? 'bold' : undefined }}
         >
           I
         </button>
         <button
           onClick={() => commands.toggleUnderline()}
-          style={{ fontWeight: activeCommands.underline ? 'bold' : undefined }}
+          style={{ fontWeight: active.underline() ? 'bold' : undefined }}
         >
           U
         </button>

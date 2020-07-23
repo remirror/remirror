@@ -9,7 +9,7 @@ test('can be added to the dom', () => {
   const editor = createDomEditor({ manager, element });
   const mock = jest.fn();
 
-  editor.addHandler('change', mock);
+  editor.addHandler('updated', mock);
   editor.commands.insertText('Hello test');
 
   // Make selected text bold.

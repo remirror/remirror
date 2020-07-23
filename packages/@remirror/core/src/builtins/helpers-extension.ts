@@ -143,7 +143,7 @@ declare global {
        * import { useRemirror } from '@remirror/react';
        *
        * const MyEditor = () => {
-       *   const { helpers } = useRemirror();
+       *   const { helpers } = useRemirror({ autoUpdate: true });
        *
        *   return helpers.beautiful.checkBeautyLevel() > 50
        *     ? (<span>😍</span>)
