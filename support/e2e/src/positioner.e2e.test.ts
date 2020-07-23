@@ -19,7 +19,7 @@ describe('Positioner', () => {
   describe('Bubble menu', () => {
     it('should show the bubble menu', async () => {
       await $editor.focus();
-      await $editor.type('This is text');
+      await $editor.type('This is text', { delay: 10 });
       await expect($editor.innerHTML()).resolves.toMatchSnapshot();
       const $bubbleMenu = await getByTestId($document, 'bubble-menu');
       await expect($bubbleMenu.getAttribute('style')).resolves.toBe(

@@ -105,7 +105,6 @@ export const type = async ({ text, delay = 10 }: TypeParameter) =>
   page.keyboard.type(text, { delay });
 
 export * from './modifier-keys';
-
 export * from './images';
 
 interface HTMLObject {

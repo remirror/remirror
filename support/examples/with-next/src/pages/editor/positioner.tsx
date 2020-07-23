@@ -17,21 +17,9 @@ const EXTENSIONS = [
 ];
 
 function Menu() {
-  const [activeCommands, setActiveCommands] = useState({
-    bold: false,
-    italic: false,
-    underline: false,
+  const { commands, active } = useRemirror<BoldExtension | ItalicExtension | UnderlineExtension>({
+    autoUpdate: true,
   });
-
-  const { commands, active } = useRemirror<BoldExtension | ItalicExtension | UnderlineExtension>(
-    () => {
-      setActiveCommands({
-        bold: active.bold(),
-        italic: active.italic(),
-        underline: active.underline(),
-      });
-    },
-  );
 
   // The use positioner hook allows for tracking the current selection in the editor.
   const { bottom, left, ref } = usePositioner('bubble');
@@ -40,20 +28,20 @@ function Menu() {
     <div ref={ref} style={{ bottom, left, position: 'absolute' }} data-testid='bubble-menu'>
       <button
         onClick={() => commands.toggleBold()}
-        style={{ fontWeight: activeCommands.bold ? 'bold' : undefined }}
+        style={{ fontWeight: active.bold() ? 'bold' : undefined }}
         data-testid='bubble-menu-bold'
       >
         Bold
       </button>
       <button
         onClick={() => commands.toggleItalic()}
-        style={{ fontWeight: activeCommands.italic ? 'bold' : undefined }}
+        style={{ fontWeight: active.italic() ? 'bold' : undefined }}
       >
         Italic
       </button>
       <button
         onClick={() => commands.toggleUnderline()}
-        style={{ fontWeight: activeCommands.underline ? 'bold' : undefined }}
+        style={{ fontWeight: active.underline() ? 'bold' : undefined }}
       >
         Underline
       </button>
