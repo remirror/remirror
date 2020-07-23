@@ -7,7 +7,7 @@ import { renderToString } from 'react-dom/server';
 
 import { EDITOR_CLASS_NAME } from '@remirror/core';
 import { BoldExtension, docNodeSimpleJSON } from '@remirror/testing';
-import { createReactManager } from '@remirror/testing/react';
+import { createReactManager, RemirrorProvider, useRemirror } from '@remirror/testing/react';
 
 import { ReactEditor } from '../react-editor';
 
@@ -20,8 +20,7 @@ const handlers = {
 };
 
 test('can render in a node server environment', () => {
-  const Component = 'span';
-  const mock = jest.fn(() => <Component />);
+  const mock = jest.fn(() => <span />);
   const reactString = renderToString(
     <ReactEditor
       {...handlers}
@@ -36,50 +35,101 @@ test('can render in a node server environment', () => {
   expect(mock).toHaveBeenCalledWith(expect.any(Object));
   expect(handlers.onFirstRender).not.toHaveBeenCalledWith();
   expect(reactString).toInclude('This is a node with');
-  expect(reactString).toInclude(`<${Component}`);
+  expect(reactString).toInclude(`<span`);
 });
 
-test('can render with a non-dom top level node', () => {
+test('still renders content with a non-dom top level node', () => {
   const reactString = renderToString(
     <ReactEditor
       {...handlers}
       label={label}
       initialContent={docNodeSimpleJSON}
-      manager={createReactManager([])}
+      manager={createReactManager([new BoldExtension()])}
     >
       {() => <Fragment />}
     </ReactEditor>,
   );
 
-  expect(reactString).toInclude('This is a node with');
-  expect(reactString).toInclude('<div role="textbox"');
+  expect(reactString).toMatchInlineSnapshot(`
+    <div data-reactroot>
+      <div role="textbox"
+           aria-multiline="true"
+           aria-label="Remirror editor"
+           aria-placeholder
+           class="Prosemirror remirror-editor"
+           contenteditable="true"
+      >
+        <p>
+          This is a node with
+          <strong>
+            bold text.
+          </strong>
+        </p>
+      </div>
+    </div>
+  `);
 });
 
 const wrapperId = 'ROOT';
 const finalId = 'INNER123';
 const outerId = 'OUTER123';
 
-test('appends to the react element by default with getRootProps', () => {
+test('appends to the react element by default with `getRootProps`', () => {
+  const Component = () => {
+    const { getRootProps } = useRemirror();
+
+    return <div {...getRootProps()} data-testid={wrapperId} />;
+  };
+
   const reactString = renderToString(
-    <ReactEditor
+    <RemirrorProvider
       {...handlers}
       label={label}
       initialContent={docNodeSimpleJSON}
-      manager={createReactManager([])}
+      manager={createReactManager([new BoldExtension()])}
     >
-      {({ getRootProps }) => (
-        <div>
-          <div data-testid={outerId}>
-            <p>Awesome</p>
-          </div>
-          <div {...getRootProps()} data-testid={wrapperId} />
-          <div data-testid={finalId}>
-            <p>inside the editor</p>
-          </div>
+      <div>
+        <div data-testid={outerId}>
+          <p>Awesome</p>
         </div>
-      )}
-    </ReactEditor>,
+        <Component />
+        <div data-testid={finalId}>
+          <p>inside the editor</p>
+        </div>
+      </div>
+    </RemirrorProvider>,
   );
+
+  expect(reactString).toMatchInlineSnapshot(`
+    <div>
+      <div data-testid="OUTER123">
+        <p>
+          Awesome
+        </p>
+      </div>
+      <div data-testid="ROOT">
+        <div role="textbox"
+             aria-multiline="true"
+             aria-label="Remirror editor"
+             aria-placeholder
+             class="Prosemirror remirror-editor"
+             contenteditable="true"
+        >
+          <p>
+            This is a node with
+            <strong>
+              bold text.
+            </strong>
+          </p>
+        </div>
+      </div>
+      <div data-testid="INNER123">
+        <p>
+          inside the editor
+        </p>
+      </div>
+    </div>
+  `);
 
   expect(reactString).toInclude('This is a node with');
 

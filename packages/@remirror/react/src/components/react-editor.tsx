@@ -225,7 +225,7 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
    */
   private rootPropsConfig = {
     called: false,
-    mounts: 0,
+    count: 0,
   };
 
   constructor(parameter: ReactEditorWrapperParameter<Combined>) {
@@ -317,11 +317,11 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
       return;
     }
 
-    this.rootPropsConfig.mounts += 1;
+    this.rootPropsConfig.count += 1;
 
-    invariant(this.rootPropsConfig.mounts <= 1, {
+    invariant(this.rootPropsConfig.count <= 1, {
       code: ErrorConstant.REACT_GET_ROOT_PROPS,
-      message: `Called ${this.rootPropsConfig.mounts} times`,
+      message: `Called ${this.rootPropsConfig.count} times`,
     });
 
     this.#editorRef = element;
@@ -497,12 +497,18 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
     element: JSX.Element,
     rootProperties?: GetRootPropsConfig<string> | boolean,
   ) {
-    const { children, ...rest } = getElementProps(element);
+    const [editorElement, ...other] = isArray(element) ? element : [element, null];
+    const { children, ...rest } = getElementProps(editorElement);
     const properties = isPlainObject(rootProperties) ? { ...rootProperties, ...rest } : rest;
 
-    return cloneElement(
-      element,
-      this.internalGetRootProps(properties, this.renderChildren(children)),
+    return (
+      <>
+        {cloneElement(
+          editorElement,
+          this.internalGetRootProps(properties, this.renderChildren(children)),
+        )}
+        {[...other]}
+      </>
     );
   }
 
@@ -512,7 +518,7 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
   private resetRender() {
     // Reset the status of roots props being called
     this.rootPropsConfig.called = false;
-    this.rootPropsConfig.mounts = 0;
+    this.rootPropsConfig.count = 0;
   }
 
   render() {
@@ -523,7 +529,6 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
     });
 
     const { children, ...properties } = getElementProps(element);
-
     let renderedElement: JSX.Element;
 
     if (this.rootPropsConfig.called) {
@@ -541,7 +546,7 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
       const { childAsRoot } = element.props;
 
       renderedElement = childAsRoot
-        ? React.cloneElement(element, properties, this.renderClonedElement(children, childAsRoot))
+        ? cloneElement(element, properties, this.renderClonedElement(children, childAsRoot))
         : element;
     } else {
       renderedElement = isReactDOMElement(element) ? (
