@@ -9,6 +9,7 @@
     "@remirror/website",
     "with-next"
   ],
+  "updateInternalDependencies": "patch",
   "commit": false,
   "linked": [
     [
