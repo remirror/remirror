@@ -1,5 +1,14 @@
 # @remirror/extension-paragraph
 
+## 1.0.0-next.9
+
+> 2020-07-23
+
+### Patch Changes
+
+- Updated dependencies [02fdafff]
+  - @remirror/core@1.0.0-next.9
+
 ## 1.0.0-next.5
 
 > 2020-07-17
