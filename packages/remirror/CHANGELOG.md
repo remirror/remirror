@@ -1,5 +1,84 @@
 # remirror
 
+## 1.0.0-next.9
+
+> 2020-07-23
+
+### Patch Changes
+
+- 02fdafff: - Rename `change` event to `updated`. `updated` is called with the
+  `EventListenerParameter`.
+
+  - Add new manager `stateUpdate` to the `editorWrapper`
+  - Add `autoUpdate` option to `useRemirror` hook from `@remirror/react` which means that the
+    context object returned by the hook is always up to date with the latest editor state. It will
+    also cause the component to rerender so be careful to only use it when necessary.
+
+  ```tsx
+  const { active, commands } = useRemirror({ autoUpdate: true });
+
+  return (
+    <button
+      onClick={() => commands.toggleBold}
+      style={{ fontWeight: active.bold() ? 'bold' : undefined }}
+    >
+      B
+    </button>
+  );
+  ```
+
+  - Fix broken `onChangeHandler` parameter for the use `useRemirror` hook.
+
+- b332942b: Fix broken SSR and add unit tests back.
+- Updated dependencies [02fdafff]
+- Updated dependencies [b332942b]
+  - @remirror/react@1.0.0-next.9
+  - @remirror/core@1.0.0-next.9
+  - @remirror/dom@1.0.0-next.9
+  - @remirror/react-social@1.0.0-next.9
+  - @remirror/react-wysiwyg@1.0.0-next.9
+  - @remirror/extension-auto-link@1.0.0-next.9
+  - @remirror/extension-base-keymap@1.0.0-next.9
+  - @remirror/extension-bidi@1.0.0-next.9
+  - @remirror/extension-blockquote@1.0.0-next.9
+  - @remirror/extension-bold@1.0.0-next.9
+  - @remirror/extension-code@1.0.0-next.9
+  - @remirror/extension-code-block@1.0.0-next.9
+  - @remirror/extension-collaboration@1.0.0-next.9
+  - @remirror/extension-diff@1.0.0-next.9
+  - @remirror/extension-doc@1.0.0-next.9
+  - @remirror/extension-drop-cursor@1.0.0-next.9
+  - @remirror/extension-emoji@1.0.0-next.9
+  - @remirror/extension-epic-mode@1.0.0-next.9
+  - @remirror/extension-gap-cursor@1.0.0-next.9
+  - @remirror/extension-hard-break@1.0.0-next.9
+  - @remirror/extension-heading@1.0.0-next.9
+  - @remirror/extension-history@1.0.0-next.9
+  - @remirror/extension-horizontal-rule@1.0.0-next.9
+  - @remirror/extension-image@1.0.0-next.9
+  - @remirror/extension-italic@1.0.0-next.9
+  - @remirror/extension-link@1.0.0-next.9
+  - @remirror/extension-mention@1.0.0-next.9
+  - @remirror/extension-paragraph@1.0.0-next.9
+  - @remirror/extension-placeholder@1.0.0-next.9
+  - @remirror/extension-position-tracker@1.0.0-next.9
+  - @remirror/extension-positioner@1.0.0-next.9
+  - @remirror/extension-react-component@1.0.0-next.9
+  - @remirror/extension-react-ssr@1.0.0-next.9
+  - @remirror/extension-search@1.0.0-next.9
+  - @remirror/extension-strike@1.0.0-next.9
+  - @remirror/extension-text@1.0.0-next.9
+  - @remirror/extension-trailing-node@1.0.0-next.9
+  - @remirror/extension-underline@1.0.0-next.9
+  - @remirror/extension-yjs@1.0.0-next.9
+  - @remirror/preset-core@1.0.0-next.9
+  - @remirror/preset-embed@1.0.0-next.9
+  - @remirror/preset-list@1.0.0-next.9
+  - @remirror/preset-react@1.0.0-next.9
+  - @remirror/preset-social@1.0.0-next.9
+  - @remirror/preset-table@1.0.0-next.9
+  - @remirror/preset-wysiwyg@1.0.0-next.9
+
 ## 1.0.0-next.5
 
 > 2020-07-17
