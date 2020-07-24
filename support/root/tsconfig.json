@@ -1,14 +1,9 @@
 {
   "files": [],
   "references": [
-    {
-      "path": "./support/tsconfig.main.json"
-    },
-    {
-      "path": "./support/e2e/tsconfig.json"
-    },
-    {
-      "path": "./support/examples/with-next/tsconfig.json"
-    }
+    { "path": "./support/tsconfig.main.json" },
+    { "path": "./support/e2e/tsconfig.json" },
+    { "path": "./support/storybook/tsconfig.json" },
+    { "path": "./support/examples/with-next/tsconfig.json" }
   ]
 }

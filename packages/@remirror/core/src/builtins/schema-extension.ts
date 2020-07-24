@@ -7,6 +7,7 @@ import {
   isNullOrUndefined,
   isString,
   object,
+  toString,
 } from '@remirror/core-helpers';
 import {
   ApplySchemaAttributes,
@@ -59,7 +60,8 @@ export class SchemaExtension extends PlainExtension {
       markNames: this.store.markNames,
     });
 
-    // Skip the for loop by setting the list to empty when extra attributes are disabled
+    // Skip the for loop by setting the list to empty when extra attributes are
+    // disabled
 
     for (const extension of this.store.extensions) {
       const currentAttributes = namedExtraAttributes[extension.name] ?? object();
@@ -261,7 +263,7 @@ function getExtraAttributesObject(value: string | SchemaAttributesObject): Schem
   }
 
   invariant(value, {
-    message: `${value} is not supported`,
+    message: `${toString(value)} is not supported`,
     code: ErrorConstant.EXTENSION_EXTRA_ATTRIBUTES,
   });
 
@@ -269,7 +271,7 @@ function getExtraAttributesObject(value: string | SchemaAttributesObject): Schem
 }
 
 /**
- * Create the `defaults()` method which is used for setting the property .
+ * Create the `defaults()` method which is used for setting the property.
  */
 function createDefaults(
   extraAttributes: SchemaAttributes,
@@ -381,7 +383,8 @@ function createToDOM(extraAttributes: SchemaAttributes, shouldIgnore: boolean) {
 }
 
 /**
- * Get the options object which applies should be used to obtain the node or mark type.
+ * Get the options object which applies should be used to obtain the node or
+ * mark type.
  */
 function getNodeMarkOptions(item: ProsemirrorNode | Mark): NodeMarkOptions {
   if (isProsemirrorNode(item)) {
@@ -410,8 +413,8 @@ declare global {
     }
     interface BaseExtensionOptions {
       /**
-       * Inject additional attributes into the defined mark / node schema. This can
-       * only be used for `NodeExtensions` and `MarkExtensions`.
+       * Inject additional attributes into the defined mark / node schema. This
+       * can only be used for `NodeExtensions` and `MarkExtensions`.
        *
        * @remarks
        *

@@ -1,0 +1,53 @@
+{
+  "name": "@remirror/react-hooks",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The `remirror` what-you-see-is-what-you-get (wysiwyg) editing experience.",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react-hooks",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react-hooks",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/react-hooks.cjs.js",
+  "module": "dist/react-hooks.esm.js",
+  "types": "dist/react-hooks.cjs.d.ts",
+  "files": [
+    "style",
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.10.5",
+    "@remirror/extension-auto-link": "^1.0.0-next.4",
+    "@remirror/extension-mention": "^1.0.0-next.4",
+    "@remirror/i18n": "^1.0.0-next.4",
+    "@remirror/react-utils": "^1.0.0-next.4",
+    "type-fest": "^0.16.0"
+  },
+  "devDependencies": {
+    "@remirror/core": "^1.0.0-next.4",
+    "@remirror/pm": "^1.0.0-next.4",
+    "@remirror/react": "^1.0.0-next.7",
+    "@testing-library/react": "^10.4.7",
+    "@types/react": "^16.9.43",
+    "@types/react-dom": "^16.9.8",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "peerDependencies": {
+    "@remirror/core": "^1.0.0-next.4",
+    "@remirror/pm": "^1.0.0-next.4",
+    "@remirror/react": "^1.0.0-next.7",
+    "@types/react": "^16.8.0",
+    "@types/react-dom": "^16.8.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "200 KB"
+  }
+}

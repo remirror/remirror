@@ -1159,6 +1159,70 @@ importers:
       react-use: ^15.3.3
       resize-observer-polyfill: ^1.5.1
       type-fest: ^0.16.0
+  packages/@remirror/react-components:
+    dependencies:
+      '@babel/runtime': 7.10.5
+      '@lingui/core': 3.0.0-13
+      linaria: 2.0.0-alpha.5
+      multishift: 'link:../../multishift'
+      type-fest: 0.16.0
+    devDependencies:
+      '@lingui/macro': 3.0.0-13
+      '@remirror/core': 'link:../core'
+      '@remirror/pm': 'link:../pm'
+      '@remirror/react': 'link:../react'
+      '@testing-library/react': 10.4.7_react-dom@16.13.1+react@16.13.1
+      '@types/react': 16.9.43
+      '@types/react-dom': 16.9.8
+      react: 16.13.1
+      react-dom: 16.13.1_react@16.13.1
+    specifiers:
+      '@babel/runtime': ^7.10.5
+      '@lingui/core': ^3.0.0-13
+      '@lingui/macro': ^3.0.0-13
+      '@remirror/core': ^1.0.0-next.4
+      '@remirror/pm': ^1.0.0-next.4
+      '@remirror/react': ^1.0.0-next.7
+      '@testing-library/react': ^10.4.7
+      '@types/react': ^16.9.43
+      '@types/react-dom': ^16.9.8
+      linaria: ^2.0.0-alpha.5
+      multishift: ^1.0.0-next.2
+      react: ^16.13.1
+      react-dom: ^16.13.1
+      type-fest: ^0.16.0
+  packages/@remirror/react-hooks:
+    dependencies:
+      '@babel/runtime': 7.10.5
+      '@remirror/extension-auto-link': 'link:../extension-auto-link'
+      '@remirror/extension-mention': 'link:../extension-mention'
+      '@remirror/i18n': 'link:../i18n'
+      '@remirror/react-utils': 'link:../react-utils'
+      type-fest: 0.16.0
+    devDependencies:
+      '@remirror/core': 'link:../core'
+      '@remirror/pm': 'link:../pm'
+      '@remirror/react': 'link:../react'
+      '@testing-library/react': 10.4.7_react-dom@16.13.1+react@16.13.1
+      '@types/react': 16.9.43
+      '@types/react-dom': 16.9.8
+      react: 16.13.1
+      react-dom: 16.13.1_react@16.13.1
+    specifiers:
+      '@babel/runtime': ^7.10.5
+      '@remirror/core': ^1.0.0-next.4
+      '@remirror/extension-auto-link': ^1.0.0-next.4
+      '@remirror/extension-mention': ^1.0.0-next.4
+      '@remirror/i18n': ^1.0.0-next.4
+      '@remirror/pm': ^1.0.0-next.4
+      '@remirror/react': ^1.0.0-next.7
+      '@remirror/react-utils': ^1.0.0-next.4
+      '@testing-library/react': ^10.4.7
+      '@types/react': ^16.9.43
+      '@types/react-dom': ^16.9.8
+      react: ^16.13.1
+      react-dom: ^16.13.1
+      type-fest: ^0.16.0
   packages/@remirror/react-social:
     dependencies:
       '@babel/runtime': 7.10.5
