@@ -5,7 +5,7 @@
     "./dist/react.cjs.js": "./dist/react.browser.cjs.js",
     "./dist/react.esm.js": "./dist/react.browser.esm.js"
   },
-  "types": "dist/remirror.cjs.d.ts",
+  "types": "dist/react.cjs.d.ts",
   "preconstruct": {
     "source": "../src/renderers/index"
   }
