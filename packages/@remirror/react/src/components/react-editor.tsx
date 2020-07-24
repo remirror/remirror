@@ -576,7 +576,17 @@ type SetShouldRenderClient = Dispatch<SetStateAction<boolean | undefined>>;
 function useEditorWrapper<Combined extends AnyCombinedUnion>(
   parameter: ReactEditorWrapperParameter<Combined>,
 ) {
-  return useRef(new ReactEditorWrapper<Combined>(parameter)).current.update(parameter);
+  const isFirstMount = useFirstMountState();
+  const reactEditorWrapper = useRef(
+    isFirstMount ? new ReactEditorWrapper<Combined>(parameter) : null,
+  ).current?.update(parameter);
+
+  invariant(reactEditorWrapper, {
+    message: 'Problem with `useEditorWrapper` hook.',
+    code: ErrorConstant.INTERNAL,
+  });
+
+  return reactEditorWrapper;
 }
 
 /**

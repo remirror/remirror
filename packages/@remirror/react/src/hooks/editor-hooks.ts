@@ -5,6 +5,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 
@@ -21,7 +22,6 @@ import {
   invariant,
   isFunction,
   isPlainObject,
-  isRemirrorManager,
   OptionsOfConstructor,
   RemirrorEventListener,
   RemirrorManager,
@@ -384,22 +384,29 @@ type UsePresetCallback<Type extends AnyPresetConstructor> = (
  * ```
  */
 export function useManager<Combined extends AnyCombinedUnion>(
-  managerOrCombined: readonly Combined[] | RemirrorManager<ReactCombinedUnion<Combined>>,
+  combined: readonly Combined[] | RemirrorManager<ReactCombinedUnion<Combined>>,
   options: CreateReactManagerOptions = {},
 ): RemirrorManager<ReactCombinedUnion<Combined>> {
-  // The manager value for the next update. It is only applied on the first
-  // render and when the previous manager has been destroyed.
-  const nextManager = isRemirrorManager<ReactCombinedUnion<Combined>>(managerOrCombined)
-    ? managerOrCombined
-    : createReactManager(managerOrCombined, options);
+  const combinedRef = useRef(combined);
+  const optionsRef = useRef(options);
 
-  const [manager, setManager] = useState(nextManager);
+  // The initial manager which will never be updated.
+  const initialManager = useMemo(() => {
+    return createReactManager(combinedRef.current, optionsRef.current);
+  }, []);
+
+  const [manager, setManager] = useState(initialManager);
+
+  combinedRef.current = combined;
+  optionsRef.current = options;
 
   useEffect(() => {
     return manager.addHandler('destroy', () => {
-      setManager(nextManager.clone());
+      // `clone` is used to ensure that that any stale extensions are
+      // reinitialized.
+      setManager(createReactManager(combinedRef.current, optionsRef.current).clone());
     });
-  }, [manager, nextManager]);
+  }, [manager, initialManager]);
 
   return manager;
 }
