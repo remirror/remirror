@@ -1,6 +1,6 @@
 import { Page } from 'playwright';
 
-import { imagesMatch } from './helpers';
+import { goto, imagesMatch } from './helpers';
 
 const tests = Object.entries(__SERVER__.urls).reduce(
   (acc, [editorName, urls]) =>
@@ -11,12 +11,12 @@ const tests = Object.entries(__SERVER__.urls).reduce(
 test.each(tests)('SSR %s - %s', async (_, __, url) => {
   let page: Page;
   page = await browser.newPage({ javaScriptEnabled: false });
-  await page.goto(url);
+  await goto(url);
   const ssrImage = await page.screenshot();
   await page.close();
 
   page = await browser.newPage({ javaScriptEnabled: true });
-  await page.goto(url);
+  await goto(url);
   const domImage = await page.screenshot();
   await page.close();
 

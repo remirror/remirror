@@ -6,11 +6,15 @@ import { kebabCase } from '@remirror/core';
 
 const { mkdir, writeFile } = promises;
 
-const tempDir = (...paths: string[]) => resolve(__dirname, '../..', '__failed-diffs__', ...paths);
+function tempDir(...paths: string[]) {
+  return resolve(__dirname, '../..', '__failed-diffs__', ...paths);
+}
 
-const toPng = (name: string) => (!name.endsWith('.png') ? `${name}.png` : name);
+function toPng(name: string) {
+  return !name.endsWith('.png') ? `${name}.png` : name;
+}
 
-const getDiffPaths = () => {
+function getDiffPaths() {
   const testName = kebabCase(jestCircus.currentTestName.toLowerCase());
 
   return {
@@ -18,12 +22,12 @@ const getDiffPaths = () => {
     one: tempDir(toPng(`${testName}_1`)),
     two: tempDir(toPng(`${testName}_2`)),
   };
-};
+}
 
 /**
  * Checks that two images are matching
  */
-export const imagesMatch = (image1: string | Buffer, image2: string | Buffer) => {
+export function imagesMatch(image1: string | Buffer, image2: string | Buffer) {
   return new Promise((resolve, reject) => {
     looksSame(image1, image2, { ignoreCaret: true }, (error, { equal }) => {
       if (equal) {
@@ -58,4 +62,4 @@ export const imagesMatch = (image1: string | Buffer, image2: string | Buffer) =>
         });
     });
   });
-};
+}

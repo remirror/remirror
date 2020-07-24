@@ -1,7 +1,7 @@
 import { getDocument, queries } from 'playwright-testing-library';
 import { ElementHandle } from 'playwright-testing-library/dist/typedefs';
 
-import { selectAll } from './helpers';
+import { goto, selectAll } from './helpers';
 
 const { getByRole, getByTestId, getByText } = queries;
 const path = __SERVER__.urls.positioner.empty;
@@ -11,7 +11,7 @@ describe('Positioner', () => {
   let $editor: ElementHandle;
 
   beforeEach(async () => {
-    await page.goto(path);
+    await goto(path);
     $document = await getDocument(page);
     $editor = await getByRole($document, 'textbox');
   });

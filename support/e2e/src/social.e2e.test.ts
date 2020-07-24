@@ -5,6 +5,7 @@ import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
 
 import {
   $innerHtml,
+  goto,
   innerHtml,
   outerHtml,
   press,
@@ -24,7 +25,7 @@ describe('Social Showcase', () => {
   let $editor: ElementHandle;
 
   beforeEach(async () => {
-    await page.goto(path);
+    await goto(path);
     $document = await getDocument(page);
     $editor = await getByRole($document, 'textbox');
   });

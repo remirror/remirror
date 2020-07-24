@@ -1,7 +1,7 @@
 import { getDocument, queries } from 'playwright-testing-library';
 import { ElementHandle } from 'playwright-testing-library/dist/typedefs';
 
-import { mod, press, pressKeyWithModifier, selectAll, textContent } from './helpers';
+import { goto, mod, press, pressKeyWithModifier, selectAll, textContent } from './helpers';
 
 const { getByRole } = queries;
 const path = __SERVER__.urls.wysiwyg.empty;
@@ -11,7 +11,7 @@ describe('Wysiwyg Showcase', () => {
   let $editor: ElementHandle;
 
   beforeEach(async () => {
-    await page.goto(path);
+    await goto(path);
     $document = await getDocument(page);
     $editor = await getByRole($document, 'textbox');
   });

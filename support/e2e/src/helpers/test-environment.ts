@@ -23,7 +23,7 @@ declare global {
       REMIRROR_E2E_BROWSER?: SupportedBrowserName;
       REMIRROR_E2E_SERVER?: string;
       REMIRROR_E2E_DEBUG?: string;
-      REMIRROR_E2E_DOCKER?: string;
+      REMIRROR_E2E_COVERAGE?: string;
       /**
        * When set only run the most basic of tests.
        */

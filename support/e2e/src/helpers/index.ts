@@ -5,10 +5,10 @@ import { getBrowserName } from './test-environment';
 /**
  * Clear the editor via triple click and delete
  */
-export const clearEditor = async (selector: string) => {
+export async function clearEditor(selector: string) {
   await page.click(selector, { clickCount: 3 });
   await page.keyboard.press('Backspace');
-};
+}
 
 /**
  * Create a selector
@@ -18,20 +18,23 @@ export const sel = (...selectors: string[]) => selectors.join(' ');
 /**
  * Obtain the inner HTML
  */
-export const innerHtml = async (selector: string) =>
-  page.$eval(selector, (element) => element.innerHTML);
+export function innerHtml(selector: string) {
+  return page.$eval(selector, (element) => element.innerHTML);
+}
 
 /**
  * Retrieve the text content from the editor
  */
-export const textContent = async (selector: string) =>
-  page.$eval(selector, (element) => element.textContent);
+export function textContent(selector: string) {
+  return page.$eval(selector, (element) => element.textContent);
+}
 
 /**
  * Retrieve the outerHTML from the editor
  */
-export const outerHtml = async (selector: string) =>
-  page.$eval(selector, (element) => element.outerHTML);
+export function outerHtml(selector: string) {
+  return page.$eval(selector, (element) => element.outerHTML);
+}
 
 /**
  * Skips the test on Firefox.
@@ -44,10 +47,11 @@ export const skipTestOnFirefox = getBrowserName() === 'firefox' ? test.skip : te
  * @param length - the length of the created array
  * @param fn - the transformer function called with the index position
  */
-const times = <GType = number>(length: number, fn?: (index: number) => GType): GType[] =>
-  Array.from<unknown, GType>({ length }, (_, index) =>
-    fn ? fn(index) : ((index as unknown) as GType),
+function times<Type = number>(length: number, fn?: (index: number) => Type): Type[] {
+  return Array.from<unknown, Type>({ length }, (_, index) =>
+    fn ? fn(index) : ((index as unknown) as Type),
   );
+}
 
 /* Taken from https://github.com/WordPress/gutenberg/blob/5bbda3656a530616a7a78c0a101d6ec2d8fa6a7a/packages/e2e-test-utils/src/press-key-times.js */
 
@@ -59,8 +63,9 @@ const times = <GType = number>(length: number, fn?: (index: number) => GType): G
  *
  * @return Promise resolving once all in the sequence complete.
  */
-const promiseSequence = async (sequence: Array<() => Promise<void>>) =>
-  sequence.reduce((current, next) => current.then(next), Promise.resolve());
+async function promiseSequence(sequence: Array<() => Promise<void>>) {
+  return sequence.reduce((current, next) => current.then(next), Promise.resolve());
+}
 
 export interface TypeParameter {
   /**
@@ -95,14 +100,16 @@ export interface PressParameter extends Pick<TypeParameter, 'delay'> {
  *
  * @return Promise resolving when key presses complete.
  */
-export const press = async ({ key, count = 1, delay = 10 }: PressParameter) =>
-  promiseSequence(times(count, () => () => page.keyboard.press(key, { delay })));
+export async function press({ key, count = 1, delay = 10 }: PressParameter) {
+  return promiseSequence(times(count, () => () => page.keyboard.press(key, { delay })));
+}
 
 /**
  * Wrapper around `page.keyboard.type` with default typing delay.
  */
-export const type = async ({ text, delay = 10 }: TypeParameter) =>
-  page.keyboard.type(text, { delay });
+export async function type({ text, delay = 10 }: TypeParameter) {
+  return page.keyboard.type(text, { delay });
+}
 
 export * from './modifier-keys';
 export * from './images';
@@ -112,9 +119,17 @@ interface HTMLObject {
   html: string;
 }
 
-function makeHtmlObject(htmlOrPromise: string | Promise<string>): Promise<HTMLObject> {
-  return Promise.resolve(htmlOrPromise).then((html) => Promise.resolve({ _: 'HTML', html }));
+async function makeHtmlObject(htmlOrPromise: string | Promise<string>): Promise<HTMLObject> {
+  return await Promise.resolve({ _: 'HTML', html: await Promise.resolve(htmlOrPromise) });
 }
 
-export const $innerHtml = (selector: string) =>
-  makeHtmlObject(page.$eval(selector, (element) => element.innerHTML));
+export function $innerHtml(selector: string) {
+  return makeHtmlObject(page.$eval(selector, (element) => element.innerHTML));
+}
+
+/**
+ * Navigate to a page with an increased timeout from default.
+ */
+export async function goto(url: string) {
+  return page.goto(url, { timeout: 60_000 });
+}
