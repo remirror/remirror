@@ -49,7 +49,7 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   static readonly defaultPriority = ExtensionPriority.High;
   static readonly defaultOptions: DefaultExtensionOptions<YjsOptions> = {
     // TODO remove y-webrtc dependency and this default option.
-    getProvider: () => new WebrtcProvider('global', new Doc(), {}),
+    getProvider: () => new WebrtcProvider('global', new Doc(), {} as any),
 
     // TODO remove this once better abstraction is available.
     destroyProvider: (provider) => {

@@ -28,7 +28,6 @@ module.exports = {
 This will automatically
 
 - inject the required JSDOM polyfills
-- ensure that `@testing-library/react` cleans up the DOM after each test
 - Add the jest assertions `toEqualRemirrorDocument` and `toMatchRemirrorSnapshot`.
 
 If you are using typescript then add this to your `tsconfig.json` file for global type support.

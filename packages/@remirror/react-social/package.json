@@ -38,10 +38,10 @@
     "@remirror/pm": "^1.0.0-next.4",
     "@remirror/react": "^1.0.0-next.9",
     "@testing-library/react": "^10.4.7",
-    "@testing-library/react-hooks": "^3.3.0",
+    "@testing-library/react-hooks": "^3.4.1",
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
-    "@types/testing-library__react-hooks": "^3.2.0",
+    "@types/testing-library__react-hooks": "^3.3.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },

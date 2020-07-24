@@ -90,10 +90,6 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   #tags?: Tags;
 
   /**
-   * Utilities provided by `@testing-library/react`.
-   */
-
-  /**
    * The nodes available for building the prosemirror document.
    */
   readonly nodes: Omit<NodeWithoutAttributes<this['manager']['~N'] | 'p'>, 'text'> = object();
