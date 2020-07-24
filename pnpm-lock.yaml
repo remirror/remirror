@@ -1600,6 +1600,9 @@ importers:
       '@remirror/core-types': ^1.0.0-next.4
   support:
     dependencies:
+      '@changesets/pre': 1.0.5
+      '@changesets/read': 0.4.6
+      '@changesets/types': 3.1.0
       '@remirror/pm': 'link:../packages/@remirror/pm'
       '@types/autoprefixer': 9.7.2
       '@types/lodash.groupby': 4.6.6
@@ -1621,6 +1624,9 @@ importers:
       remirror: 'link:../packages/remirror'
       write-json-file: 4.3.0
     specifiers:
+      '@changesets/pre': ^1.0.5
+      '@changesets/read': ^0.4.6
+      '@changesets/types': ^3.1.0
       '@remirror/pm': 1.0.0-next.4
       '@types/autoprefixer': ^9.7.2
       '@types/lodash.groupby': ^4.6.6
