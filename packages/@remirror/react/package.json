@@ -25,6 +25,7 @@
     "@remirror/extension-placeholder": "^1.0.0-next.9",
     "@remirror/extension-positioner": "^1.0.0-next.9",
     "@remirror/extension-react-component": "^1.0.0-next.9",
+    "@remirror/extension-react-ssr": "^1.0.0-next.9",
     "@remirror/i18n": "^1.0.0-next.4",
     "@remirror/preset-core": "^1.0.0-next.9",
     "@remirror/preset-react": "^1.0.0-next.9",

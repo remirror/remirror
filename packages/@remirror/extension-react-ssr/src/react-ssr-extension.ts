@@ -11,6 +11,7 @@ import {
   Shape,
   Static,
 } from '@remirror/core';
+import { NodeViewComponentProps } from '@remirror/extension-react-component';
 import { getElementProps, isReactDOMElement, isReactFragment } from '@remirror/react-utils';
 
 export interface ReactSSROptions {
@@ -54,8 +55,7 @@ export class ReactSSRExtension extends PlainExtension<ReactSSROptions> {
   }
 
   onCreate: CreateLifecycleMethod = (extensions) => {
-    const components: Record<string, ComponentType<any>> = object();
-
+    const components: Record<string, ManagerStoreReactComponent> = object();
     const ssrTransformers: Array<() => SSRTransformer> = [];
 
     const ssrTransformer: SSRTransformer = (initialElement, state) => {
@@ -71,10 +71,22 @@ export class ReactSSRExtension extends PlainExtension<ReactSSROptions> {
     for (const extension of extensions) {
       if (
         !this.store.managerSettings.exclude?.reactSSR &&
-        extension.createSSRComponent &&
+        extension.ReactComponent &&
+        extension.reactComponentEnvironment !== 'dom' &&
         !extension.options.exclude?.reactSSR
       ) {
-        components[extension.name] = extension.createSSRComponent();
+        components[extension.name] = {
+          Component: extension.ReactComponent,
+          props: {
+            decorations: [],
+            environment: 'ssr',
+            forwardRef: () => {},
+            getPosition: () => 0,
+            options: extension.options,
+            selected: false,
+            updateAttributes: () => {},
+          },
+        };
       }
 
       if (extension.createSSRTransformer && !extension.options.exclude?.reactSSR) {
@@ -178,6 +190,11 @@ function injectBrIntoEmptyParagraphs(element: JSX.Element) {
   });
 }
 
+export interface ManagerStoreReactComponent {
+  Component: ComponentType<NodeViewComponentProps>;
+  props: Omit<NodeViewComponentProps, 'node' | 'view'>;
+}
+
 declare global {
   namespace Remirror {
     interface ExcludeOptions {
@@ -199,7 +216,7 @@ declare global {
       /**
        * Components for ssr transformations.
        */
-      components: Record<string, ComponentType<any>>;
+      components: Record<string, ManagerStoreReactComponent>;
     }
 
     interface ExtensionCreatorMethods {
@@ -225,19 +242,6 @@ declare global {
        * document first loads on the browser.
        */
       createSSRTransformer?: () => SSRTransformer;
-
-      /**
-       * A function that returns the component that will be used to render in
-       * SSR.
-       *
-       * Use this if the automatic componentization in ReactSerializer of the
-       * `toDOM` method doesn't produce the expected results in SSR.
-       *
-       * TODO move this into a separate NodeExtension and MarkExtension based
-       * merged interface so that the props can be specified as `{ mark: Mark }`
-       * or `{ node: ProsemirrorNode }`.
-       */
-      createSSRComponent?: () => ComponentType<any>;
     }
   }
 }

@@ -1,9 +1,9 @@
-import React, { ComponentType, createElement, Fragment, ReactNode } from 'react';
+import React, { createElement, Fragment, ReactNode } from 'react';
 
 import {
   AnyCombinedUnion,
-  bool,
   DOMOutputSpec,
+  EditorView,
   ErrorConstant,
   Fragment as ProsemirrorFragment,
   invariant,
@@ -18,6 +18,7 @@ import {
   RemirrorManager,
   Shape,
 } from '@remirror/core';
+import type { ManagerStoreReactComponent } from '@remirror/extension-react-ssr';
 
 import { gatherDomMethods, mapProps } from './renderer-utils';
 
@@ -119,7 +120,8 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
   nodes: Record<string, NodeToDOM>;
   marks: Record<string, MarkToDOM>;
 
-  readonly #components: Record<string, ComponentType<any>>;
+  readonly #components: Record<string, ManagerStoreReactComponent>;
+  readonly #view: EditorView;
 
   constructor(
     nodes: Record<string, NodeToDOM>,
@@ -129,6 +131,7 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
     this.nodes = nodes;
     this.marks = marks;
     this.#components = manager.store.components ?? object();
+    this.#view = manager.view;
   }
 
   /**
@@ -163,7 +166,7 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
    * @param node
    */
   serializeNode(node: ProsemirrorNode): ReactNode {
-    const Component = this.#components[node.type.name];
+    const managerStoreComponent = this.#components[node.type.name];
     const toDOM = this.nodes[node.type.name];
 
     let children: ReactNode;
@@ -172,11 +175,17 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
       children = this.serializeFragment(node.content);
     }
 
-    return bool(Component) ? (
-      <Component node={node}>{children}</Component>
-    ) : (
-      toDOM && ReactSerializer.renderSpec(toDOM(node), children)
-    );
+    if (managerStoreComponent) {
+      const { Component, props } = managerStoreComponent;
+
+      return (
+        <Component {...props} node={node} view={this.#view}>
+          {children}
+        </Component>
+      );
+    }
+
+    return toDOM && ReactSerializer.renderSpec(toDOM(node), children);
   }
 
   /**
@@ -188,12 +197,8 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
    */
   serializeMark(mark: Mark, inline: boolean, wrappedElement: ReactNode): ReactNode {
     const toDOM = this.marks[mark.type.name];
-    const Component = this.#components[mark.type.name];
 
-    return bool(Component) ? (
-      <Component mark={mark}>{wrappedElement}</Component>
-    ) : (
-      toDOM && ReactSerializer.renderSpec(toDOM(mark, inline), wrappedElement)
-    );
+    // TODO add support for mark components if requested by community
+    return toDOM && ReactSerializer.renderSpec(toDOM(mark, inline), wrappedElement);
   }
 }

@@ -143,10 +143,22 @@ declare global {
     }
 
     interface BaseExtension {
+      /**
+       * Set the supported environments for this component. By default it is set
+       * to use `both`.
+       */
       reactComponentEnvironment?: ReactComponentEnvironment;
 
       /**
-       * The component that will be rendered as a node view and dom element..
+       * The component that will be rendered as a node view and dom element. Can
+       * also be used to render in SSR.
+       *
+       * Use this if the automatic componentization in ReactSerializer of the
+       * `toDOM` method doesn't produce the expected results in SSR.
+       *
+       * TODO move this into a separate NodeExtension and MarkExtension based
+       * merged interface so that the props can be specified as `{ mark: Mark }`
+       * or `{ node: ProsemirrorNode }`.
        */
       ReactComponent?: ComponentType<NodeViewComponentProps>;
     }

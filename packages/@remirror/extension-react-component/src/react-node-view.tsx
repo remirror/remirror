@@ -243,6 +243,7 @@ export class ReactNodeView implements NodeView {
 
     return (
       <ReactComponent
+        environment='dom'
         updateAttributes={this.updateAttributes}
         selected={this.selected}
         view={this.#view}

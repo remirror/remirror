@@ -7,6 +7,7 @@ import {
   GetFixed,
   NodeWithAttributesParameter,
   ProsemirrorAttributes,
+  RenderEnvironment,
   Static,
   ValidOptions,
 } from '@remirror/core';
@@ -49,6 +50,12 @@ export interface ReactComponentOptions {
 }
 
 export interface NodeViewComponentProps extends EditorViewParameter, NodeWithAttributesParameter {
+  /**
+   * - `ssr` - when this is not being rendered in the dom.
+   * - `dom` - when rendering in the browser
+   */
+  environment: RenderEnvironment;
+
   /**
    * Provides the position of the node view in the prosemirror document
    */
