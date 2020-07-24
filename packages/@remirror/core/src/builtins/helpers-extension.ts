@@ -115,6 +115,17 @@ declare global {
 
     interface ExtensionCreatorMethods {
       /**
+       * `ExtensionHelpers`
+       *
+       * This pseudo property makes it easier to infer Generic types of this
+       * class.
+       * @private
+       */
+      ['~H']: this['createHelpers'] extends AnyFunction
+        ? ReturnType<this['createHelpers']>
+        : EmptyShape;
+
+      /**
        * A helper method is a function that takes in arguments and returns a
        * value depicting the state of the editor specific to this extension.
        *
@@ -151,17 +162,7 @@ declare global {
        * };
        * ```
        */
-      createHelpers?: () => ExtensionHelperReturn;
-      /**
-       * `ExtensionHelpers`
-       *
-       * This pseudo property makes it easier to infer Generic types of this
-       * class.
-       * @private
-       */
-      ['~H']: this['createHelpers'] extends AnyFunction
-        ? ReturnType<this['createHelpers']>
-        : EmptyShape;
+      createHelpers?(): ExtensionHelperReturn;
     }
 
     interface ExtensionStore {

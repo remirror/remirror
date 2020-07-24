@@ -91,7 +91,7 @@ declare global {
        *
        * @alpha
        */
-      createNodeViews?: () => NodeViewMethod | Record<string, NodeViewMethod>;
+      createNodeViews?(): NodeViewMethod | Record<string, NodeViewMethod>;
     }
   }
 }

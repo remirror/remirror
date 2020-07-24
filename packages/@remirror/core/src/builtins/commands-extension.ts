@@ -454,6 +454,17 @@ declare global {
 
     interface ExtensionCreatorMethods {
       /**
+       * `ExtensionCommands`
+       *
+       * This pseudo property makes it easier to infer Generic types of this
+       * class.
+       * @private
+       */
+      ['~C']: this['createCommands'] extends AnyFunction
+        ? ReturnType<this['createCommands']>
+        : EmptyShape;
+
+      /**
        * Create and register commands for that can be called within the editor.
        *
        * These are typically used to create menu's actions and as a direct
@@ -497,18 +508,7 @@ declare global {
        *
        * @param parameter - schema parameter with type included
        */
-      createCommands?: () => ExtensionCommandReturn;
-
-      /**
-       * `ExtensionCommands`
-       *
-       * This pseudo property makes it easier to infer Generic types of this
-       * class.
-       * @private
-       */
-      ['~C']: this['createCommands'] extends AnyFunction
-        ? ReturnType<this['createCommands']>
-        : EmptyShape;
+      createCommands?(): ExtensionCommandReturn;
     }
 
     interface ExtensionStore {

@@ -71,7 +71,7 @@ declare global {
        * functionality. They can support `@` mentions, `#` tagging, `/` special
        * command keys which trigger an actions menu and much more.
        */
-      createSuggestions?: () => Suggestion[] | Suggestion;
+      createSuggestions?(): Suggestion[] | Suggestion;
     }
   }
 }

@@ -109,7 +109,7 @@ declare global {
        *
        * @param parameter - schema parameter with type included
        */
-      createKeymap?: () => KeyBindings;
+      createKeymap?(): KeyBindings;
     }
   }
 }

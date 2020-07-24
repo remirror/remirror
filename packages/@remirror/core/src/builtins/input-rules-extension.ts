@@ -103,7 +103,7 @@ declare global {
        *
        * @param parameter - schema parameter with type included
        */
-      createInputRules?: () => InputRule[];
+      createInputRules?(): InputRule[];
     }
   }
 }

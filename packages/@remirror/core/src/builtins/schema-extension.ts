@@ -408,9 +408,9 @@ declare global {
        *
        * For example the `@remirror/extension-bidi` adds a `dir` attribute to
        * all node extensions which allows them to automatically infer whether
-       * the text direction should be right to left, or left to right.
+       * the text direction should be right-to-left, or left-to-right.
        */
-      createSchemaAttributes?: () => IdentifierSchemaAttributes[];
+      createSchemaAttributes?(): IdentifierSchemaAttributes[];
     }
     interface BaseExtensionOptions {
       /**

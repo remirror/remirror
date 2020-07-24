@@ -9,7 +9,6 @@ import {
   EditorState,
   EditorStateParameter,
   GetDynamic,
-  GetFixed,
   GetFixedDynamic,
   GetPartialDynamic,
   ProsemirrorAttributes,
@@ -17,25 +16,6 @@ import {
   ValidOptions,
 } from '@remirror/core-types';
 import { PluginSpec } from '@remirror/pm/state';
-
-/**
- * This is the shape for both the preset and extension so that properties can be
- * set with an identical interface.
- *
- * @typeParam Properties - The properties used by the object.
- */
-export interface OptionsSetter<Options extends ValidOptions>
-  extends ReadonlyOptionsParameter<Options> {
-  /**
-   * Reset the options object to the initial values.
-   */
-  resetOptions: () => void;
-
-  /**
-   * Set the properties to the newly defined values.
-   */
-  setOptions: (properties: GetPartialDynamic<Options>) => void;
-}
 
 type Changes<Type> =
   | {
@@ -250,13 +230,6 @@ export interface BaseExtensionOptions extends Remirror.BaseExtensionOptions {
 }
 
 export interface ExcludeOptions extends Partial<Remirror.ExcludeOptions> {}
-
-interface ReadonlyOptionsParameter<Options extends ValidOptions> {
-  /**
-   * The readonly value for the options.
-   */
-  readonly options: GetFixed<Options>;
-}
 
 /**
  * @internal

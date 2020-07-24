@@ -70,11 +70,11 @@ export class PlaceholderExtension extends PlainExtension<PlaceholderOptions> {
     return 'placeholder' as const;
   }
 
-  createAttributes = () => {
+  createAttributes() {
     return { 'aria-placeholder': this.options.placeholder };
-  };
+  }
 
-  createPlugin = (): CreatePluginReturn => {
+  createPlugin(): CreatePluginReturn {
     return {
       state: {
         init: (_, state): PlaceholderPluginState => ({
@@ -91,7 +91,7 @@ export class PlaceholderExtension extends PlainExtension<PlaceholderOptions> {
         },
       },
     };
-  };
+  }
 
   onSetOptions(parameter: OnSetOptionsParameter<PlaceholderOptions>) {
     const { changes } = parameter;

@@ -199,7 +199,7 @@ module.exports = {
       'warn',
       { default: ['signature', 'static-field', 'static-method', 'field', 'constructor', 'method'] },
     ],
-    '@typescript-eslint/method-signature-style': 'error',
+    '@typescript-eslint/method-signature-style': 'warn',
     '@typescript-eslint/prefer-function-type': 'error',
     '@typescript-eslint/no-unused-vars-experimental': [
       'error',
@@ -340,6 +340,15 @@ module.exports = {
     {
       files: ['packages/@remirror/playground/**', 'support/e2e/**'],
       rules: { '@typescript-eslint/no-var-requires': 'off' },
+    },
+    {
+      files: [
+        '**/*extension.ts',
+        '**/*extension.tsx',
+        'packages/@remirror/core/src/manager/remirror-manager.ts',
+        'packages/@remirror/core/src/extension/extension-base.ts',
+      ],
+      rules: { '@typescript-eslint/method-signature-style': 'off' },
     },
   ],
 };

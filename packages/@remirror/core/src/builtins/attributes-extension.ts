@@ -127,7 +127,7 @@ declare global {
        *
        * @alpha
        */
-      createAttributes?: () => AttributesWithClass;
+      createAttributes?(): AttributesWithClass;
     }
   }
 }

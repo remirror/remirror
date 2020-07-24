@@ -62,7 +62,7 @@ declare global {
        *
        * TODO - The paste plugin is currently switched off.
        */
-      createPasteRules?: () => ProsemirrorPlugin[];
+      createPasteRules?(): ProsemirrorPlugin[];
     }
   }
 }

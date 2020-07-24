@@ -4,12 +4,13 @@ import { EMPTY_PARAGRAPH_NODE, ExtensionPriority, ExtensionTag } from '@remirror
 import {
   EditorState,
   KeyBindingCommandFunction,
+  NodeExtensionSpec,
   ProsemirrorAttributes,
 } from '@remirror/core-types';
 import { EditorView } from '@remirror/pm/view';
 import { CorePreset, createCoreManager } from '@remirror/testing';
 
-import { CreateLifecycleMethod, PlainExtension } from '../../extension';
+import { CreateLifecycleMethod, NodeExtension, PlainExtension } from '../../extension';
 import { isRemirrorManager, RemirrorManager } from '../remirror-manager';
 
 describe('Manager', () => {
@@ -25,33 +26,35 @@ describe('Manager', () => {
     }
     readonly extensionTags = ['simple', ExtensionTag.LastNodeCompatible];
 
-    createCommands = () => {
+    createCommands() {
       return { dummy: mock };
-    };
+    }
 
-    createHelpers = () => {
+    createHelpers() {
       return {
         getInformation,
       };
-    };
+    }
 
-    createAttributes = () => {
+    createAttributes() {
       return {
         class: 'custom',
       };
-    };
+    }
   }
 
-  class BigExtension extends PlainExtension {
+  class BigExtension extends NodeExtension {
+    static disableExtraAttributes = true;
+
     get name() {
       return 'big' as const;
     }
 
-    createNodeSpec = () => {
+    createNodeSpec(): NodeExtensionSpec {
       return {
         toDOM: () => ['h1', 0],
       };
-    };
+    }
   }
 
   const dummyExtension = new DummyExtension({ priority: ExtensionPriority.Critical });

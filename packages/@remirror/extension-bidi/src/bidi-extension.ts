@@ -53,9 +53,9 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
   }
 
   /**
-   * Add the bidi property to the
+   * Add the bidi property to the editor attributes.
    */
-  createAttributes = (): AttributesWithClass => {
+  createAttributes(): AttributesWithClass {
     if (this.options.defaultDirection) {
       return {
         dir: this.options.defaultDirection,
@@ -63,7 +63,7 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
     }
 
     return {};
-  };
+  }
 
   /**
    * Add the dir to all the node types.
@@ -131,13 +131,13 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
     };
   };
 
-  protected onSetOptions = (parameter: OnSetOptionsParameter<BidiOptions>) => {
+  protected onSetOptions(parameter: OnSetOptionsParameter<BidiOptions>) {
     const { changes } = parameter;
 
     if (changes.defaultDirection.changed) {
       this.store.updateAttributes();
     }
-  };
+  }
 
   /**
    * Create the `SchemaAttributesObject`

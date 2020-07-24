@@ -330,26 +330,6 @@ declare global {
 
     interface BaseExtension {
       /**
-       * Retrieve the state of the custom plugin for this extension. This will
-       * throw an error if the extension doesn't have a valid `createPlugin`
-       * method.
-       *
-       * @remarks
-       *
-       * ```ts
-       * const pluginState = this.getPluginState();
-       * ```
-       *
-       * This is only available after the initialize stage of the editor manager
-       * lifecycle.
-       *
-       * If you would like to use it before that e.g. in the decorations prop of
-       * the `createPlugin` method, you can call it with a current state which
-       * will be used to retrieve the plugin state.
-       */
-      getPluginState: <State>(state?: EditorState) => State;
-
-      /**
        * The plugin key for custom plugin created by this extension. This only
        * exists when there is a valid `createPlugin` method on the extension.
        *
@@ -371,6 +351,26 @@ declare global {
        * The external plugins created by the `createExternalPlugins` method.
        */
       externalPlugins: Plugin[];
+
+      /**
+       * Retrieve the state of the custom plugin for this extension. This will
+       * throw an error if the extension doesn't have a valid `createPlugin`
+       * method.
+       *
+       * @remarks
+       *
+       * ```ts
+       * const pluginState = this.getPluginState();
+       * ```
+       *
+       * This is only available after the initialize stage of the editor manager
+       * lifecycle.
+       *
+       * If you would like to use it before that e.g. in the decorations prop of
+       * the `createPlugin` method, you can call it with a current state which
+       * will be used to retrieve the plugin state.
+       */
+      getPluginState: <State>(state?: EditorState) => State;
     }
 
     interface ExtensionCreatorMethods {
@@ -418,7 +418,7 @@ declare global {
        * in the outer scope of the `createPlugin` function or you will get
        * errors..
        */
-      createPlugin?: () => CreatePluginReturn;
+      createPlugin?(): CreatePluginReturn;
 
       /**
        * Register third party plugins when this extension is placed into the
@@ -430,7 +430,7 @@ declare global {
        * creator method allows you to return a list of plugins you'd like to
        * support.
        */
-      createExternalPlugins?: () => ProsemirrorPlugin[];
+      createExternalPlugins?(): ProsemirrorPlugin[];
     }
   }
 }

@@ -761,18 +761,18 @@ interface SettingsWithPrivacy extends Remirror.ManagerSettings {
 export type GetCombined<Manager extends AnyRemirrorManager> = Manager['~EP'];
 
 interface RemirrorManagerConstructor extends Function, Remirror.RemirrorManagerConstructor {
-  fromObject: <Combined extends AnyCombinedUnion>(
+  fromObject<Combined extends AnyCombinedUnion>(
     parameter: RemirrorManagerParameter<
       InferCombinedExtensions<Combined>,
       InferCombinedPresets<Combined>
     >,
-  ) => RemirrorManager<
+  ): RemirrorManager<
     InferCombinedExtensions<Combined> | InferCombinedPresets<Combined> | BuiltinPreset
   >;
-  create: <Combined extends AnyCombinedUnion>(
+  create<Combined extends AnyCombinedUnion>(
     combined: Combined[],
     settings?: Remirror.ManagerSettings,
-  ) => RemirrorManager<Combined | BuiltinPreset>;
+  ): RemirrorManager<Combined | BuiltinPreset>;
 }
 
 export interface RemirrorManager<Combined extends AnyCombinedUnion> {
@@ -883,23 +883,6 @@ declare global {
       readonly phase: ManagerPhase;
 
       /**
-       * Return true when the editor view has been created.
-       */
-      readonly isMounted: () => boolean;
-
-      /**
-       * A helper method for retrieving the state of the editor
-       */
-      readonly getState: () => EditorState<EditorSchema>;
-
-      /**
-       * Allow extensions to trigger an update in the prosemirror state. This
-       * should only be used in rarely as it is easy to get
-       * in trouble without the necessary thought.
-       */
-      readonly updateState: (state: EditorState<EditorSchema>) => void;
-
-      /**
        * The view available to extensions once `addView` has been called on the
        * `RemirrorManager` instance.
        */
@@ -934,6 +917,23 @@ declare global {
        * The names of every plain extension.
        */
       plainNames: readonly string[];
+
+      /**
+       * Return true when the editor view has been created.
+       */
+      readonly isMounted: () => boolean;
+
+      /**
+       * A helper method for retrieving the state of the editor
+       */
+      readonly getState: () => EditorState<EditorSchema>;
+
+      /**
+       * Allow extensions to trigger an update in the prosemirror state. This
+       * should only be used in rarely as it is easy to get
+       * in trouble without the necessary thought.
+       */
+      readonly updateState: (state: EditorState<EditorSchema>) => void;
 
       /**
        * Get the value of a key from the manager store.
