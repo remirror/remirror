@@ -20,6 +20,7 @@ import {
   ErrorConstant,
   invariant,
   isFunction,
+  isPlainObject,
   isRemirrorManager,
   OptionsOfConstructor,
   RemirrorEventListener,
@@ -44,7 +45,7 @@ import {
   ReactCombinedUnion,
   RemirrorContextProps,
 } from '../react-types';
-import { useEffectWithWarning } from './core-hooks';
+import { useEffectWithWarning, useForceUpdate } from './core-hooks';
 
 /**
  * This provides access to the Remirror context using hooks.
@@ -127,8 +128,9 @@ export function useRemirror<Combined extends AnyCombinedUnion>(
   handler?: RemirrorEventListener<Combined> | { autoUpdate: boolean },
 ): RemirrorContextProps<Combined> {
   const context = useContext(RemirrorContext);
-  const [, setState] = useState({});
+  const forceUpdate = useForceUpdate();
 
+  // Throw an error if context doesn't exist.
   invariant(context, { code: ErrorConstant.REACT_PROVIDER_CONTEXT });
 
   useEffect(() => {
@@ -138,10 +140,9 @@ export function useRemirror<Combined extends AnyCombinedUnion>(
       return;
     }
 
-    if (!isFunction(updateHandler)) {
+    if (isPlainObject(updateHandler)) {
       const { autoUpdate } = updateHandler;
-
-      updateHandler = autoUpdate ? () => setState({}) : undefined;
+      updateHandler = autoUpdate ? () => forceUpdate() : undefined;
     }
 
     if (!isFunction(updateHandler)) {
@@ -149,7 +150,7 @@ export function useRemirror<Combined extends AnyCombinedUnion>(
     }
 
     return context.addHandler('updated', updateHandler);
-  }, [handler, context]);
+  }, [handler, context, forceUpdate]);
 
   return context;
 }
@@ -157,6 +158,7 @@ export function useRemirror<Combined extends AnyCombinedUnion>(
 export function useI18n(): I18nContextProps {
   const context = useContext(I18nContext);
 
+  // Throw an error if no context exists.
   invariant(context, { code: ErrorConstant.I18N_CONTEXT });
 
   return context;
@@ -176,13 +178,13 @@ export function useI18n(): I18nContextProps {
  * const Editor = () => {
  *   const { commands } = useSocialRemirror();
  *
- *   // All commands are autocompleted for you.
+ *   // All available commands are shown with intellisense. Command click to goto the implementation.
  *   commands.toggleBold();
  * }
  * ```
  */
 export type UseRemirrorType<Combined extends AnyCombinedUnion> = <Type extends AnyCombinedUnion>(
-  onChange?: RemirrorEventListener<Combined>,
+  handler?: RemirrorEventListener<Combined> | { autoUpdate: boolean },
 ) => RemirrorContextProps<Combined | Type>;
 
 /**

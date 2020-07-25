@@ -1,9 +1,26 @@
 import isEqual from 'fast-deep-equal/react';
-import { DependencyList, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { DependencyList, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import useEffectOnce from 'react-use/lib/useEffectOnce';
 import useSetState from 'react-use/lib/useSetState';
 import useUpdateEffect from 'react-use/lib/useUpdateEffect';
 import ResizeObserver from 'resize-observer-polyfill';
+
+import { object } from '@remirror/core';
+
+/**
+ * Returning a new object reference guarantees that a before-and-after
+ * equivalence check will always be false, resulting in a re-render, even when
+ * multiple calls to forceUpdate are batched.
+ */
+export function useForceUpdate() {
+  const [, setState] = useState(object());
+
+  const forceUpdate = useCallback((): void => {
+    setState(object());
+  }, []);
+
+  return forceUpdate;
+}
 
 /**
  * Preserves the previous version of a provided value.
