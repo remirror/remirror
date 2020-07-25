@@ -132,13 +132,13 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   /**
    * Remove the provider from the manager.
    */
-  onDestroy = () => {
+  onDestroy() {
     if (!this.#provider) {
       return;
     }
 
     this.options.destroyProvider(this.#provider);
-  };
+  }
 }
 
 /**

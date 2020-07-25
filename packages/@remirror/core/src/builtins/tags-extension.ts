@@ -3,7 +3,6 @@ import { isUndefined, object } from '@remirror/core-helpers';
 
 import {
   AnyExtension,
-  CreateLifecycleMethod,
   ExtensionTags,
   isMarkExtension,
   isNodeExtension,
@@ -37,16 +36,16 @@ export class TagsExtension extends PlainExtension {
     };
   }
 
-  onCreate: CreateLifecycleMethod = (extensions) => {
+  onCreate() {
     this.resetTags();
 
-    for (const extension of extensions) {
+    for (const extension of this.store.extensions) {
       this.updateTagForExtension(extension);
     }
 
     this.store.setStoreKey('tags', this.combinedTags);
     this.store.setExtensionStore('tags', this.combinedTags);
-  };
+  }
 
   private resetTags() {
     this.#generalTags = {

@@ -4,12 +4,7 @@ import { ProsemirrorPlugin } from '@remirror/core-types';
 import { getPluginState } from '@remirror/core-utils';
 import { EditorState, Plugin, PluginKey } from '@remirror/pm/state';
 
-import {
-  AnyExtension,
-  AnyExtensionConstructor,
-  CreateLifecycleMethod,
-  PlainExtension,
-} from '../extension';
+import { AnyExtension, AnyExtensionConstructor, PlainExtension } from '../extension';
 import { AnyCombinedUnion, InferCombinedExtensions } from '../preset';
 import { CreatePluginReturn, GetNameUnion } from '../types';
 
@@ -45,18 +40,18 @@ export class PluginsExtension extends PlainExtension {
 
   // Here set the plugins keys and state getters for retrieving plugin state.
   // These methods are later used.
-  onCreate: CreateLifecycleMethod = (extensions) => {
+  onCreate() {
     const { setStoreKey, setExtensionStore } = this.store;
     this.updateExtensionStore();
 
-    for (const extension of extensions) {
+    for (const extension of this.store.extensions) {
       this.extractExtensionPlugins(extension);
     }
 
     setStoreKey('pluginKeys', this.pluginKeys);
     setStoreKey('getPluginState', this.getStateByName);
     setExtensionStore('getPluginState', this.getStateByName);
-  };
+  }
 
   /**
    * Get all the plugins from the extension.

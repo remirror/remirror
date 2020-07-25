@@ -2,7 +2,7 @@ import { ExtensionPriority } from '@remirror/core-constants';
 import { bool, object } from '@remirror/core-helpers';
 import { AttributesWithClass } from '@remirror/core-types';
 
-import { CreateLifecycleMethod, PlainExtension } from '../extension';
+import { PlainExtension } from '../extension';
 import { AnyCombinedUnion } from '../preset';
 
 /**
@@ -32,10 +32,10 @@ export class AttributesExtension extends PlainExtension {
    *
    * @internal
    */
-  onCreate: CreateLifecycleMethod = () => {
+  onCreate() {
     this.transformAttributes();
     this.store.setExtensionStore('updateAttributes', this.updateAttributes);
-  };
+  }
 
   private readonly updateAttributes = (triggerUpdate = true) => {
     this.transformAttributes();

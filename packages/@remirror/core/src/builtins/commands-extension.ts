@@ -4,20 +4,20 @@ import {
   AnyFunction,
   CommandFunction,
   DispatchFunction,
+  EditorSchema,
   EmptyShape,
   FromToParameter,
   ProsemirrorAttributes,
   Transaction,
 } from '@remirror/core-types';
+import { EditorView } from '@remirror/pm/view';
 
 import {
   AnyExtension,
   ChainedCommandRunParameter,
   ChainedFromExtensions,
   CommandsFromExtensions,
-  CreateLifecycleMethod,
   PlainExtension,
-  ViewLifecycleMethod,
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
 import { AnyCombinedUnion, ChainedFromCombined, CommandsFromCombined } from '../preset';
@@ -26,7 +26,7 @@ import {
   CreatePluginReturn,
   ExtensionCommandFunction,
   ExtensionCommandReturn,
-  StateUpdateLifecycleMethod,
+  StateUpdateLifecycleParameter,
 } from '../types';
 
 /**
@@ -61,7 +61,7 @@ export class CommandsExtension extends PlainExtension {
 
   #transaction?: Transaction;
 
-  onCreate: CreateLifecycleMethod = () => {
+  onCreate() {
     const { setExtensionStore, setStoreKey } = this.store;
 
     // Add the commands to the extension store
@@ -74,9 +74,9 @@ export class CommandsExtension extends PlainExtension {
 
     // Enable retrieval of the current transaction.
     setExtensionStore('getTransaction', () => this.transaction);
-  };
+  }
 
-  onView: ViewLifecycleMethod = (extensions, view) => {
+  onView(view: EditorView<EditorSchema>) {
     const commands: Record<string, CommandShape> = object();
     const names = new Set<string>();
     const chained: Record<string, any> & ChainedCommandRunParameter = object();
@@ -85,7 +85,7 @@ export class CommandsExtension extends PlainExtension {
       { command: AnyFunction; isEnabled: AnyFunction; name: string }
     > = object();
 
-    for (const extension of extensions) {
+    for (const extension of this.store.extensions) {
       if (!extension.createCommands) {
         continue;
       }
@@ -120,14 +120,14 @@ export class CommandsExtension extends PlainExtension {
 
     setStoreKey('commands', commands);
     setStoreKey('chain', chained as any);
-  };
+  }
 
   /**
    * Update the cached transaction whenever the state is updated.
    */
-  onStateUpdate: StateUpdateLifecycleMethod = ({ state }) => {
+  onStateUpdate({ state }: StateUpdateLifecycleParameter) {
     this.#transaction = state.tr;
-  };
+  }
 
   /**
    * Create the default commands available to all extensions.

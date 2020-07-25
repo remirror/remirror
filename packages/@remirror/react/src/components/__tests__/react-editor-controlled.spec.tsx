@@ -7,7 +7,7 @@ import {
   fromHtml,
   PlainExtension,
   SchemaFromCombined,
-  StateUpdateLifecycleMethod,
+  StateUpdateLifecycleParameter,
 } from '@remirror/core';
 import { act, render } from '@remirror/testing/react';
 
@@ -258,7 +258,7 @@ describe('Remirror Controlled Component', () => {
         return 'update' as const;
       }
 
-      onStateUpdate: StateUpdateLifecycleMethod = mock;
+      onStateUpdate: (update: StateUpdateLifecycleParameter) => void = mock;
     }
 
     const { manager, props, chain, doc, p } = create([new UpdateExtension()]);

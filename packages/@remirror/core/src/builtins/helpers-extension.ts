@@ -5,12 +5,10 @@ import { isMarkActive, isNodeActive } from '@remirror/core-utils';
 
 import {
   AnyExtension,
-  CreateLifecycleMethod,
   HelpersFromExtensions,
   isMarkExtension,
   isNodeExtension,
   PlainExtension,
-  ViewLifecycleMethod,
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
 import { ActiveFromCombined, AnyCombinedUnion, HelpersFromCombined } from '../preset';
@@ -40,25 +38,25 @@ export class HelpersExtension extends PlainExtension {
    * Provide a method with access to the helpers for use in commands and
    * helpers.
    */
-  onCreate: CreateLifecycleMethod = () => {
+  onCreate() {
     this.store.setExtensionStore('getHelpers', () => {
       const helpers = this.store.getStoreKey('helpers');
       invariant(helpers, { code: ErrorConstant.HELPERS_CALLED_IN_OUTER_SCOPE });
 
       return helpers as any;
     });
-  };
+  }
 
   /**
    * Helpers are only available once the view has been added to
    * `RemirrorManager`.
    */
-  onView: ViewLifecycleMethod = (extensions) => {
+  onView() {
     const helpers: Record<string, AnyFunction> = object();
     const active: Record<string, AnyFunction> = object();
     const names = new Set<string>();
 
-    for (const extension of extensions) {
+    for (const extension of this.store.extensions) {
       if (isNodeExtension(extension)) {
         active[extension.name] = (attrs?: ProsemirrorAttributes) => {
           return isNodeActive({ state: this.store.getState(), type: extension.type, attrs });
@@ -85,7 +83,7 @@ export class HelpersExtension extends PlainExtension {
 
     this.store.setStoreKey('active', active);
     this.store.setStoreKey('helpers', helpers);
-  };
+  }
 
   createHelpers = () => {
     return {};

@@ -5,7 +5,6 @@ import {
   isString,
   PlainExtension,
   Position,
-  StateUpdateLifecycleMethod,
   StateUpdateLifecycleParameter,
 } from '@remirror/core';
 
@@ -56,9 +55,9 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
     };
   };
 
-  onStateUpdate: StateUpdateLifecycleMethod = (update) => {
+  onStateUpdate(update: StateUpdateLifecycleParameter) {
     this.positionerHandler(update);
-  };
+  }
 
   private positionerHandler(update: StateUpdateLifecycleParameter) {
     for (const handler of this.#positionerHandlerList) {

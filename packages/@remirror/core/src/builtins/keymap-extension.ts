@@ -3,7 +3,7 @@ import { KeyBindings, ProsemirrorPlugin } from '@remirror/core-types';
 import { mergeProsemirrorKeyBindings } from '@remirror/core-utils';
 import { keymap } from '@remirror/pm/keymap';
 
-import { CreateLifecycleMethod, PlainExtension } from '../extension';
+import { PlainExtension } from '../extension';
 
 /**
  * This extension allows others extension to use the `createKeymaps` method.
@@ -27,11 +27,11 @@ export class KeymapExtension extends PlainExtension {
   /**
    * This adds the `createKeymap` method functionality to all extensions.
    */
-  onCreate: CreateLifecycleMethod = () => {
+  onCreate() {
     this.store.setExtensionStore('rebuildKeymap', this.rebuildKeymap);
     this.loopExtensions();
     this.store.addPlugins(this.keymap);
-  };
+  }
 
   /**
    * Updates the stored keymap plugin on this extension.

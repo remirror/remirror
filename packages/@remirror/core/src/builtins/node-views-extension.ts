@@ -2,7 +2,7 @@ import { ExtensionPriority } from '@remirror/core-constants';
 import { isFunction, object } from '@remirror/core-helpers';
 import { NodeViewMethod } from '@remirror/core-types';
 
-import { CreateLifecycleMethod, PlainExtension } from '../extension';
+import { PlainExtension } from '../extension';
 import { AnyCombinedUnion } from '../preset';
 
 /**
@@ -26,7 +26,7 @@ export class NodeViewsExtension extends PlainExtension {
   /**
    * Ensure that all SSR transformers are run.
    */
-  onCreate: CreateLifecycleMethod = () => {
+  onCreate() {
     const nodeViewList: Array<Record<string, NodeViewMethod>> = [];
     const nodeViews: Record<string, NodeViewMethod> = object();
 
@@ -54,7 +54,7 @@ export class NodeViewsExtension extends PlainExtension {
     }
 
     this.store.setStoreKey('nodeViews', nodeViews);
-  };
+  }
 }
 
 declare global {

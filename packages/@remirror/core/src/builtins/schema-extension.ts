@@ -26,7 +26,6 @@ import { Schema } from '@remirror/pm/model';
 
 import {
   AnyExtension,
-  CreateLifecycleMethod,
   GetMarkNameUnion,
   GetNodeNameUnion,
   isMarkExtension,
@@ -52,20 +51,20 @@ export class SchemaExtension extends PlainExtension {
     return 'schema' as const;
   }
 
-  onCreate: CreateLifecycleMethod = (extensions) => {
+  onCreate() {
     const { managerSettings } = this.store;
     const nodes: Record<string, NodeExtensionSpec> = object();
     const marks: Record<string, MarkExtensionSpec> = object();
     const namedExtraAttributes = transformExtraAttributes({
       settings: managerSettings,
-      gatheredSchemaAttributes: this.gatherExtraAttributes(extensions),
+      gatheredSchemaAttributes: this.gatherExtraAttributes(this.store.extensions),
       nodeNames: this.store.nodeNames,
       markNames: this.store.markNames,
     });
 
     // Skip the for loop by setting the list to empty when extra attributes are disabled
 
-    for (const extension of extensions) {
+    for (const extension of this.store.extensions) {
       const currentAttributes = namedExtraAttributes[extension.name] ?? object();
 
       namedExtraAttributes[extension.name] = {
@@ -109,7 +108,7 @@ export class SchemaExtension extends PlainExtension {
     this.store.setStoreKey('marks', marks);
     this.store.setStoreKey('schema', schema);
     this.store.setExtensionStore('schema', schema);
-  };
+  }
 
   /**
    * Gather all the extra attributes that have been added by extensions.

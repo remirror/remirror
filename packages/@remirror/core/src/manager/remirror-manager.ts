@@ -29,15 +29,12 @@ import {
   AnyExtension,
   AnyExtensionConstructor,
   AnyManagerStore,
-  CreateLifecycleMethod,
-  DestroyLifecycleMethod,
   GetMarkNameUnion,
   GetNodeNameUnion,
   isMarkExtension,
   isNodeExtension,
   isPlainExtension,
   ManagerStoreKeys,
-  ViewLifecycleMethod,
 } from '../extension';
 import {
   AnyCombinedUnion,
@@ -48,12 +45,7 @@ import {
   SchemaFromCombined,
 } from '../preset';
 import { privacySymbol } from '../privacy';
-import {
-  GetConstructor,
-  GetExtensions,
-  StateUpdateLifecycleMethod,
-  StateUpdateLifecycleParameter,
-} from '../types';
+import { GetConstructor, GetExtensions, StateUpdateLifecycleParameter } from '../types';
 import { transformCombinedUnion } from './remirror-manager-helpers';
 
 /**
@@ -170,10 +162,10 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * Store the handlers that will be run when for each event method.
    */
   #handlers: {
-    create: CreateLifecycleMethod[];
-    view: ViewLifecycleMethod[];
-    update: StateUpdateLifecycleMethod[];
-    destroy: DestroyLifecycleMethod[];
+    create: Array<() => void>;
+    view: Array<(view: EditorView<EditorSchema>) => void>;
+    update: Array<(param: StateUpdateLifecycleParameter) => void>;
+    destroy: Array<() => void>;
   } = {
     create: [],
     view: [],
@@ -317,7 +309,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
     this.#phase = ManagerPhase.Create;
 
     for (const handler of this.#handlers.create) {
-      handler(this.#extensions);
+      handler();
     }
   }
 
@@ -346,19 +338,19 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
       const destroyHandler = extension.onDestroy;
 
       if (createHandler) {
-        this.#handlers.create.push(createHandler);
+        this.#handlers.create.push(createHandler.bind(extension));
       }
 
       if (viewHandler) {
-        this.#handlers.view.push(viewHandler);
+        this.#handlers.view.push(viewHandler.bind(extension));
       }
 
       if (stateUpdateHandler) {
-        this.#handlers.update.push(stateUpdateHandler);
+        this.#handlers.update.push(stateUpdateHandler.bind(extension));
       }
 
       if (destroyHandler) {
-        this.#handlers.destroy.push(destroyHandler);
+        this.#handlers.destroy.push(destroyHandler.bind(extension));
       }
 
       if (isNodeExtension(extension)) {
@@ -505,7 +497,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
     this.#store.view = view;
 
     for (const handler of this.#handlers.view) {
-      handler(this.#extensions as readonly AnyExtension[], view);
+      handler(view);
     }
 
     return this;
@@ -672,7 +664,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
 
     // TODO: prevent `dispatchTransaction` from being called again
     for (const onDestroy of this.#handlers.destroy) {
-      onDestroy(this.#extensions);
+      onDestroy();
     }
 
     this.view?.destroy();

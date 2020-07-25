@@ -207,7 +207,6 @@ export interface StateUpdateLifecycleParameter extends EditorStateParameter {
    */
   transactions?: Transaction[];
 }
-export type StateUpdateLifecycleMethod = (parameter: StateUpdateLifecycleParameter) => void;
 
 export interface BaseExtensionOptions extends Remirror.BaseExtensionOptions {
   /**

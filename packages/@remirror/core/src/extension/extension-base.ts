@@ -29,7 +29,7 @@ import {
   GetNameUnion,
   MarkExtensionTags,
   NodeExtensionTags,
-  StateUpdateLifecycleMethod,
+  StateUpdateLifecycleParameter,
 } from '../types';
 import {
   AnyBaseClassOverrides,
@@ -281,23 +281,23 @@ interface ExtensionLifecycleMethods {
    * shore to check when they become available in the lifecycle. It is
    * recommende that you don't use this method unless absolutely required.
    */
-  onCreate?: CreateLifecycleMethod;
+  onCreate?(): void;
 
   /**
    * This event happens when the view is first received from the view layer
    * (e.g. React).
    */
-  onView?: ViewLifecycleMethod;
+  onView?(view: EditorView<EditorSchema>): void;
 
   /**
    * Called when a transaction successfully updates the editor state.
    */
-  onStateUpdate?: StateUpdateLifecycleMethod;
+  onStateUpdate?(parameter: StateUpdateLifecycleParameter): void;
 
   /**
    * Called when the extension is being destroyed.
    */
-  onDestroy?: DestroyLifecycleMethod;
+  onDestroy?(): void;
 }
 
 /**
@@ -705,13 +705,6 @@ export type SchemaFromExtensionUnion<ExtensionUnion extends AnyExtension> = Edit
 
 export type AnyManagerStore = Remirror.ManagerStore<any>;
 export type ManagerStoreKeys = keyof Remirror.ManagerStore<any>;
-
-export type CreateLifecycleMethod = (extensions: readonly AnyExtension[]) => void;
-export type ViewLifecycleMethod = (
-  extensions: readonly AnyExtension[],
-  view: EditorView<EditorSchema>,
-) => void;
-export type DestroyLifecycleMethod = (extensions: readonly AnyExtension[]) => void;
 
 declare global {
   /**

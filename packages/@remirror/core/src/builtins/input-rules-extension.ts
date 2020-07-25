@@ -2,7 +2,7 @@ import { ExtensionPriority } from '@remirror/core-constants';
 import { InputRule, inputRules } from '@remirror/pm/inputrules';
 import { Plugin } from '@remirror/pm/state';
 
-import { CreateLifecycleMethod, PlainExtension } from '../extension';
+import { PlainExtension } from '../extension';
 
 /**
  * This extension allows others extension to add the `createInputRules` method
@@ -27,12 +27,12 @@ export class InputRulesExtension extends PlainExtension {
   /**
    * Ensure that all ssr transformers are run.
    */
-  onCreate: CreateLifecycleMethod = () => {
+  onCreate() {
     this.store.setExtensionStore('rebuildInputRules', this.rebuildInputRules);
     this.loopExtensions();
 
     this.store.addPlugins(this.inputRulesPlugin);
-  };
+  }
 
   private loopExtensions() {
     const rules: InputRule[] = [];

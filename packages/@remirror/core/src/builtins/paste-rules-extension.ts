@@ -1,7 +1,7 @@
 import { ExtensionPriority } from '@remirror/core-constants';
 import { ProsemirrorPlugin } from '@remirror/core-types';
 
-import { CreateLifecycleMethod, PlainExtension } from '../extension';
+import { PlainExtension } from '../extension';
 
 /**
  * This extension allows others extension to add the `createPasteRules` method
@@ -20,10 +20,10 @@ export class PasteRulesExtension extends PlainExtension {
   /**
    * Ensure that all ssr transformers are run.
    */
-  onCreate: CreateLifecycleMethod = (extensions) => {
+  onCreate() {
     const pasteRules: ProsemirrorPlugin[] = [];
 
-    for (const extension of extensions) {
+    for (const extension of this.store.extensions) {
       if (
         // managerSettings excluded this from running
         this.store.managerSettings.exclude?.pasteRules ||
@@ -40,7 +40,7 @@ export class PasteRulesExtension extends PlainExtension {
 
     // TODO rewrite so this is all one plugin
     this.store.addPlugins(...pasteRules);
-  };
+  }
 }
 
 declare global {

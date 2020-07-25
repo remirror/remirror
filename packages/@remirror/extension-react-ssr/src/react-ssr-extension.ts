@@ -2,7 +2,6 @@ import { Children, cloneElement, ComponentType, createElement, JSXElementConstru
 
 import {
   AnyCombinedUnion,
-  CreateLifecycleMethod,
   EditorState,
   ExtensionPriority,
   isArray,
@@ -54,7 +53,7 @@ export class ReactSSRExtension extends PlainExtension<ReactSSROptions> {
     return 'reactSSR' as const;
   }
 
-  onCreate: CreateLifecycleMethod = (extensions) => {
+  onCreate() {
     const components: Record<string, ManagerStoreReactComponent> = object();
     const ssrTransformers: Array<() => SSRTransformer> = [];
 
@@ -68,7 +67,7 @@ export class ReactSSRExtension extends PlainExtension<ReactSSROptions> {
       return element;
     };
 
-    for (const extension of extensions) {
+    for (const extension of this.store.extensions) {
       if (
         !this.store.managerSettings.exclude?.reactSSR &&
         extension.ReactComponent &&
@@ -96,7 +95,7 @@ export class ReactSSRExtension extends PlainExtension<ReactSSROptions> {
 
     this.store.setStoreKey('components', components);
     this.store.setStoreKey('ssrTransformer', ssrTransformer);
-  };
+  }
 
   /**
    * A function that takes in the initial automatically produced JSX by the

@@ -10,7 +10,7 @@ import {
 import { EditorView } from '@remirror/pm/view';
 import { CorePreset, createCoreManager } from '@remirror/testing';
 
-import { CreateLifecycleMethod, NodeExtension, PlainExtension } from '../../extension';
+import { NodeExtension, PlainExtension } from '../../extension';
 import { isRemirrorManager, RemirrorManager } from '../remirror-manager';
 
 describe('Manager', () => {
@@ -230,14 +230,14 @@ test('lifecycle', () => {
       return 'test' as const;
     }
 
-    onCreate: CreateLifecycleMethod = () => {
+    onCreate() {
       expect(this.store.setExtensionStore).toBeFunction();
       expect(this.store.setStoreKey).toBeFunction();
       expect(this.store.getStoreKey).toBeFunction();
       expect(this.store.addPlugins).toBeFunction();
       expect(this.store.tags).toBeTruthy();
       expect(this.store.schema).toBeTruthy();
-    };
+    }
   }
 
   const extension = new LifecycleExtension();

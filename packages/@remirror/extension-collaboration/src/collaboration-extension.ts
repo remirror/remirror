@@ -14,7 +14,7 @@ import {
   PlainExtension,
   ProsemirrorAttributes,
   Shape,
-  StateUpdateLifecycleMethod,
+  StateUpdateLifecycleParameter,
   Static,
   Transaction,
   uniqueId,
@@ -88,9 +88,9 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
     return [plugin];
   };
 
-  onStateUpdate: StateUpdateLifecycleMethod = (parameter) => {
+  onStateUpdate(parameter: StateUpdateLifecycleParameter) {
     this.getSendableSteps(parameter.state);
-  };
+  }
 
   /**
    * This passes the sendable steps into the `onSendableReceived` handler defined in the
