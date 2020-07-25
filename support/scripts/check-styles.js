@@ -7,8 +7,24 @@ const fs = require('fs').promises;
 const globby = require('globby');
 const chalk = require('chalk');
 const { baseDir } = require('./helpers');
-const { getOutput } = require('./linaria');
+const { getOutput, writeOutput } = require('./linaria');
 const isEqual = require('lodash.isequal');
+const { relative } = require('path');
+const cpy = require('cpy');
+const rimraf = require('util').promisify(require('rimraf'));
+
+const [, , ...args] = process.argv;
+const shouldFix = args.includes('--fix');
+
+const diffOptions = {
+  contextLines: 1,
+  expand: false,
+  aAnnotation: 'Original',
+  aColor: chalk.red,
+  bAnnotation: 'Generated',
+  bColor: chalk.green,
+  includeChangeCounts: true,
+};
 
 /**
  * @param {string[]} paths
@@ -30,7 +46,9 @@ async function readFiles() {
  * @param {Record<string, string>} output
  */
 function orderOutputKeys(output) {
-  return Object.keys(output).sort();
+  return Object.keys(output)
+    .sort()
+    .map((name) => relative(process.cwd(), name));
 }
 
 /**
@@ -46,19 +64,39 @@ function checkOutput(actual, expected) {
 
   if (!isEqual(actualKeys, expectedKeys)) {
     throw new Error(
-      chalk`\n{yellow The generated CSS has not been updated}\n\n${
-        diff(actualKeys, expectedKeys) || ''
+      chalk`\n{yellow The generated files are not identical to the original files.}\n\n${
+        diff(actualKeys, expectedKeys, diffOptions) || ''
       }\n`,
     );
   }
 
-  if (!isEqual(actual, expected)) {
-    throw new Error(
-      chalk`\n{yellow The generated file contents have changed for the files.}\n\n${
-        diff(actual, expected) || ''
-      }\n`,
+  /** @type {string[]} */
+  const errorMessages = [];
+
+  for (const [name, actualContents] of Object.entries(actual)) {
+    const expectedContents = expected[name];
+    const relativeName = relative(process.cwd(), name);
+
+    if (isEqual(actualContents, expectedContents)) {
+      continue;
+    }
+
+    errorMessages.push(
+      chalk`{grey ${relativeName}}\n${diff(actualContents, expected[name], diffOptions)}`,
     );
   }
+
+  if (errorMessages.length > 0) {
+    throw new Error(
+      chalk`\n{bold.yellow The generated CSS file contents differ from current content.}\n\n${errorMessages.join(
+        '\n\n',
+      )}\n`,
+    );
+  }
+}
+
+async function cleanCss() {
+  await rimraf('packages/@remirror/styles/*.css packages/remirror/styles/*.css');
 }
 
 async function run() {
@@ -68,11 +106,21 @@ async function run() {
   try {
     checkOutput(actualOutput, expectedOutput);
     console.log(chalk`\n{green The generated {bold CSS} is valid for all files.}`);
+    return;
   } catch (error) {
     console.log(error.message);
-    console.log(chalk`{bold.red Fix with:} {blue.italic pnpm fix:css}`);
-    process.exit(1);
   }
+
+  if (shouldFix) {
+    await cleanCss();
+    await writeOutput();
+    await cpy(['packages/@remirror/styles/*.css'], 'packages/remirror/styles/');
+
+    return;
+  }
+
+  console.log(chalk`\n{bold.red To fix this issue run:} {blue.italic pnpm fix:css}\n`);
+  process.exit(1);
 }
 
 run();

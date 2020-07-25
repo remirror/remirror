@@ -153,13 +153,5 @@ async function writeOutput() {
   console.log(chalk`{green Successfully extracted {bold ${entries.length}} CSS files.}`);
 }
 
-async function run() {
-  await processFiles();
-  await writeOutput();
-}
-
-if (!module.parent) {
-  run().then(() => process.exit());
-}
-
 exports.getOutput = processFiles;
+exports.writeOutput = writeOutput;

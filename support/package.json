@@ -16,6 +16,7 @@
     "@types/rimraf": "^3.0.0",
     "autoprefixer": "^9.8.5",
     "chalk": "^4.1.0",
+    "cpy": "^8.1.0",
     "diffable-html": "^4.0.0",
     "globby": "^11.0.1",
     "jest-axe": "^3.5.0",
