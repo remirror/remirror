@@ -2,11 +2,58 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { RemirrorTestChain } from 'jest-remirror';
 import React, { FC } from 'react';
 
+import { AnyRemirrorManager } from '@remirror/core';
+import { ReactPreset } from '@remirror/preset-react';
 import { BoldExtension } from '@remirror/testing';
+import { act as renderAct, nonStrictRender } from '@remirror/testing/react';
 
 import { RemirrorProvider } from '../../components';
 import { createReactManager } from '../../react-helpers';
-import { useRemirror } from '../editor-hooks';
+import { useManager, useRemirror } from '../editor-hooks';
+
+jest.mock('@remirror/preset-react', () => {
+  const actual = jest.requireActual('@remirror/preset-react');
+  return {
+    ...actual,
+    ReactPreset: jest.fn().mockImplementation((...args: any[]) => new actual.ReactPreset(...args)),
+  };
+});
+
+describe('useManager', () => {
+  it('does not recreate the react preset for every rerender', () => {
+    const Component = (_: { options?: object }) => {
+      useManager([], {});
+
+      return null;
+    };
+
+    const { rerender } = nonStrictRender(<Component />);
+    rerender(<Component options={{}} />);
+    rerender(<Component options={{}} />);
+
+    expect(ReactPreset).toHaveBeenCalledTimes(1);
+  });
+
+  it('rerenders when the manager is destroyed', () => {
+    let manager: AnyRemirrorManager;
+    const Component = (_: { options?: object }) => {
+      manager = useManager([], {});
+
+      return null;
+    };
+
+    const { rerender } = nonStrictRender(<Component />);
+
+    rerender(<Component options={{}} />);
+    rerender(<Component options={{}} />);
+
+    renderAct(() => manager.destroy());
+    expect(ReactPreset).toHaveBeenCalledTimes(2);
+
+    rerender(<Component options={{}} />);
+    expect(ReactPreset).toHaveBeenCalledTimes(2);
+  });
+});
 
 describe('useRemirror', () => {
   it('returns the provider context', () => {

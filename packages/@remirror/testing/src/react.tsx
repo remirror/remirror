@@ -8,7 +8,7 @@ export function render(
   return originalRender(<StrictMode>{ui}</StrictMode>, options);
 }
 
-export { cleanup, act, fireEvent } from '@testing-library/react';
+export { cleanup, act, fireEvent, render as nonStrictRender } from '@testing-library/react';
 export type { RenderResult };
 export {
   useRemirror,
