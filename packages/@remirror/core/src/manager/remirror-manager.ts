@@ -9,13 +9,14 @@ import {
 } from '@remirror/core-constants';
 import {
   freeze,
+  getArray,
   invariant,
   isIdentifierOfType,
   isNullOrUndefined,
   isRemirrorType,
   object,
 } from '@remirror/core-helpers';
-import { EditorSchema, EditorView } from '@remirror/core-types';
+import { EditorSchema, EditorView, Replace } from '@remirror/core-types';
 import {
   createDocumentNode,
   CreateDocumentNodeParameter,
@@ -99,6 +100,21 @@ import { transformCombinedUnion } from './remirror-manager-helpers';
  */
 export class RemirrorManager<Combined extends AnyCombinedUnion> {
   /**
+   * The main static method for creating a manager.
+   */
+  static create<Combined extends AnyCombinedUnion>(
+    combined: Combined[] | (() => Combined[]),
+    settings: Remirror.ManagerSettings = {},
+  ) {
+    const builtInPreset = new BuiltinPreset();
+
+    return new RemirrorManager<Combined | BuiltinPreset>([...getArray(combined), builtInPreset], {
+      ...settings,
+      privacy: privacySymbol,
+    });
+  }
+
+  /**
    * A static method to create the editor manager from an object.
    */
   static fromObject<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>({
@@ -106,27 +122,10 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
     presets,
     settings = {},
   }: RemirrorManagerParameter<ExtensionUnion, PresetUnion>) {
-    const builtInPreset = new BuiltinPreset();
-
-    return new RemirrorManager<ExtensionUnion | PresetUnion | BuiltinPreset>(
-      [...extensions, ...presets, builtInPreset],
-      { ...settings, privacy: privacySymbol },
+    return RemirrorManager.create<ExtensionUnion | PresetUnion>(
+      [...extensions, ...presets],
+      settings,
     );
-  }
-
-  /**
-   * The main static method for creating a manager.
-   */
-  static create<Combined extends AnyCombinedUnion>(
-    combined: Combined[],
-    settings: Remirror.ManagerSettings = {},
-  ) {
-    const builtInPreset = new BuiltinPreset();
-
-    return new RemirrorManager<Combined | BuiltinPreset>([...combined, builtInPreset], {
-      ...settings,
-      privacy: privacySymbol,
-    });
   }
 
   /**
@@ -694,7 +693,21 @@ export interface ManagerEvents {
   destroy: () => void;
 }
 
-export type AnyRemirrorManager = RemirrorManager<AnyCombinedUnion>;
+export type AnyRemirrorManager = Replace<
+  RemirrorManager<AnyCombinedUnion>,
+  {
+    clone: () => AnyRemirrorManager;
+    store: Replace<Remirror.ManagerStore<any>, { chain: any }>;
+    ['~E']: AnyExtension;
+    ['~P']: AnyPreset;
+    ['~Sch']: EditorSchema;
+    ['~N']: string;
+    ['~M']: string;
+    ['~EP']: AnyCombinedUnion;
+    view: EditorView;
+    addView: (view: EditorView) => void;
+  }
+>;
 
 /**
  * Checks to see whether the provided value is an `Manager`.
@@ -747,10 +760,8 @@ interface SettingsWithPrivacy extends Remirror.ManagerSettings {
 
 export type GetCombined<Manager extends AnyRemirrorManager> = Manager['~EP'];
 
-interface RemirrorManagerConstructor<Combined extends AnyCombinedUnion>
-  extends Function,
-    Remirror.RemirrorManagerConstructor {
-  fromObject: (
+interface RemirrorManagerConstructor extends Function, Remirror.RemirrorManagerConstructor {
+  fromObject: <Combined extends AnyCombinedUnion>(
     parameter: RemirrorManagerParameter<
       InferCombinedExtensions<Combined>,
       InferCombinedPresets<Combined>
@@ -758,14 +769,17 @@ interface RemirrorManagerConstructor<Combined extends AnyCombinedUnion>
   ) => RemirrorManager<
     InferCombinedExtensions<Combined> | InferCombinedPresets<Combined> | BuiltinPreset
   >;
-  create: (combined: Combined) => RemirrorManager<Combined | BuiltinPreset>;
+  create: <Combined extends AnyCombinedUnion>(
+    combined: Combined[],
+    settings?: Remirror.ManagerSettings,
+  ) => RemirrorManager<Combined | BuiltinPreset>;
 }
 
 export interface RemirrorManager<Combined extends AnyCombinedUnion> {
   /**
    * The constructor for the editor manager.
    */
-  constructor: RemirrorManagerConstructor<Combined>;
+  constructor: RemirrorManagerConstructor;
 
   /**
    * Pseudo property which is a small hack to store the type of the extension

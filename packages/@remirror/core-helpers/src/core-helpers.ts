@@ -1013,6 +1013,18 @@ export function hasOwnProperty<Obj extends object, Property extends string | num
   return Object.prototype.hasOwnProperty.call(object_, key);
 }
 
+/**
+ * Helper for getting an array which can be passed in as a argument-less
+ * function.
+ */
+export function getArray<Type>(value: Type[] | (() => Type[])): Type[] {
+  if (isFunction(value)) {
+    return value();
+  }
+
+  return value;
+}
+
 // Forwarded exports
 
 export {
