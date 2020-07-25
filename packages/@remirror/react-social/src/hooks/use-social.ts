@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useMemo } from 'react';
 
-import { AnyCombinedUnion, isRemirrorManager, RemirrorManager } from '@remirror/core';
-import { useRemirror, UseRemirrorType } from '@remirror/react';
+import { AnyCombinedUnion, RemirrorManager } from '@remirror/core';
+import { useManager, useRemirror, UseRemirrorType } from '@remirror/react';
 
 import { CreateSocialManagerOptions, SocialCombinedUnion } from '../social-types';
-import { createSocialManager } from '../social-utils';
+import { socialManagerArgs } from '../social-utils';
 
 /**
  * A wrapper around the `createSocialManager` function for creating a manager
@@ -20,22 +20,14 @@ import { createSocialManager } from '../social-utils';
  * configuration and then ignores everything else.
  */
 export function useSocialManager<Combined extends AnyCombinedUnion>(
-  managerOrCombined: readonly Combined[] | RemirrorManager<Combined | SocialCombinedUnion>,
+  combined: Combined[] | (() => Combined[]) | RemirrorManager<Combined | SocialCombinedUnion>,
   options: CreateSocialManagerOptions = {},
 ): RemirrorManager<SocialCombinedUnion | Combined> {
-  const manager = useRef(
-    isRemirrorManager<Combined | SocialCombinedUnion>(managerOrCombined)
-      ? managerOrCombined
-      : createSocialManager(managerOrCombined, options),
-  ).current;
+  const args = useMemo(() => {
+    return socialManagerArgs(combined, options);
+  }, [combined, options]);
 
-  useEffect(() => {
-    return () => {
-      manager.destroy();
-    };
-  }, [manager]);
-
-  return manager;
+  return useManager(...args);
 }
 
 /**

@@ -2,13 +2,15 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { RemirrorTestChain } from 'jest-remirror';
 import React, { FC } from 'react';
 
+import { createReactManager } from '@remirror/testing/react';
+
 import { SocialProvider } from '../../components/social-provider';
-import { createSocialManager } from '../../social-utils';
+import { socialManagerArgs } from '../../social-utils';
 import { useSocialRemirror } from '../use-social';
 import { useSocialEmoji } from '../use-social-emoji';
 
 function createChain() {
-  const manager = createSocialManager([]);
+  const manager = createReactManager(...socialManagerArgs([]));
   const chain = RemirrorTestChain.create(manager);
   const { doc, p } = chain.nodes;
 

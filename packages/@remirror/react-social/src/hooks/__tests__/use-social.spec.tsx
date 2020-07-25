@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import { MentionExtension } from '@remirror/extension-mention';
 import { SocialPreset } from '@remirror/preset-social';
-import { render } from '@remirror/testing/react';
+import { createReactManager, render } from '@remirror/testing/react';
 
-import { createSocialManager } from '../../social-utils';
+import { socialManagerArgs } from '../../social-utils';
 import { useSocialManager } from '../use-social';
+
+jest.mock('../../social-utils.ts', () => {
+  const actual = jest.requireActual('../../social-utils.ts');
+  return { ...actual, socialManagerArgs: jest.fn(actual.socialManagerArgs) };
+});
 
 describe('useSocialManager', () => {
   it('passes down options', () => {
@@ -21,7 +26,7 @@ describe('useSocialManager', () => {
   });
 
   it('can receive a manager', () => {
-    const manager = createSocialManager([]);
+    const manager = createReactManager(...socialManagerArgs([]));
 
     const Component = () => {
       const socialManager = useSocialManager(manager);
@@ -31,5 +36,70 @@ describe('useSocialManager', () => {
     };
 
     render(<Component />);
+  });
+
+  it('only calls `createSocialManagerArgument when props change', () => {
+    const rerenderMock = jest.fn();
+
+    const Component = (props: { options?: object; combined?: [] }) => {
+      const { options, combined } = props;
+      const optionsRef = useRef({});
+      const combinedRef = useRef([]);
+
+      useSocialManager(
+        combined ? combined : combinedRef.current,
+        options ? options : optionsRef.current,
+      );
+      rerenderMock();
+
+      return null;
+    };
+
+    const { rerender } = render(
+      <div>
+        <Component combined={[]} options={{}} />
+      </div>,
+    );
+    jest.clearAllMocks();
+
+    let updates: Array<[[]?, object?]> = [
+      [undefined, undefined],
+      [undefined, undefined],
+      [undefined, undefined],
+      [undefined, undefined],
+    ];
+
+    updates.forEach(([combined, options]) =>
+      rerender(
+        <div style={{}}>
+          <Component combined={combined} options={options} />
+        </div>,
+      ),
+    );
+
+    expect(rerenderMock).toHaveBeenCalledTimes(4);
+    expect(socialManagerArgs).toHaveBeenCalledTimes(1);
+
+    jest.clearAllMocks();
+
+    updates = [
+      [[], {}],
+      [[], {}],
+      [undefined, undefined],
+      [undefined, undefined],
+      [undefined, undefined],
+      [undefined, undefined],
+    ];
+
+    updates.forEach(([combined, options]) =>
+      rerender(
+        <div style={{}}>
+          <Component combined={combined} options={options} />
+        </div>,
+      ),
+    );
+
+    expect(rerenderMock).toHaveBeenCalledTimes(6);
+    expect(socialManagerArgs).toHaveBeenCalledTimes(3);
   });
 });

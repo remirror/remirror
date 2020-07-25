@@ -2,9 +2,9 @@ import { RemirrorTestChain } from 'jest-remirror';
 import React from 'react';
 
 import { docNodeBasicJSON } from '@remirror/testing';
-import { act, render } from '@remirror/testing/react';
+import { act, createReactManager, render } from '@remirror/testing/react';
 
-import { createSocialManager, SocialEditor } from '../..';
+import { SocialEditor, socialManagerArgs } from '../..';
 
 describe('social editor', () => {
   it('should place the editor within the correct element', () => {
@@ -24,7 +24,7 @@ describe('social editor', () => {
   });
 
   it('should support content', () => {
-    const manager = createSocialManager([]);
+    const manager = createReactManager(...socialManagerArgs([]));
     const chain = RemirrorTestChain.create(manager);
 
     render(

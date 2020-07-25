@@ -3,10 +3,11 @@ import { RemirrorTestChain } from 'jest-remirror';
 import React, { FC } from 'react';
 
 import { NON_BREAKING_SPACE_CHAR } from '@remirror/core';
+import { createReactManager } from '@remirror/react';
 
 import { SocialProvider } from '../../components/social-provider';
 import { MentionChangeParameter, TagData, UserData } from '../../social-types';
-import { createSocialManager } from '../../social-utils';
+import { socialManagerArgs } from '../../social-utils';
 import { useSocialRemirror } from '../use-social';
 import { useSocialMention } from '../use-social-mention';
 
@@ -200,7 +201,7 @@ describe('useSocialMention', () => {
 });
 
 function createChain() {
-  const manager = createSocialManager([]);
+  const manager = createReactManager(...socialManagerArgs([]));
   const chain = RemirrorTestChain.create(manager);
   const { doc, p } = chain.nodes;
 

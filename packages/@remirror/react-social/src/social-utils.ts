@@ -1,6 +1,6 @@
-import { AnyCombinedUnion, RemirrorManager } from '@remirror/core';
+import { AnyCombinedUnion, getArray, isRemirrorManager, RemirrorManager } from '@remirror/core';
 import { SocialPreset } from '@remirror/preset-social';
-import { createReactManager } from '@remirror/react';
+import { CreateReactManagerOptions } from '@remirror/react';
 
 import { CreateSocialManagerOptions, SocialCombinedUnion, TagData, UserData } from './social-types';
 
@@ -43,32 +43,36 @@ export const indexFromArrowPress = (parameter: IndexFromArrowPressParameter) => 
 };
 
 /**
- * Create a social remirror manager with all the default react presets and
- * required extensions.
- *
- * @remarks
- *
- * This is the recommended way to use the social editor. The remirror manager is
- * a long living piece of functionality that can be used everywhere.
+ * Create the args which should be passed to the `useManager` hook or the
+ * `createReactManager` function.
  */
-export function createSocialManager<Combined extends AnyCombinedUnion>(
-  combined: readonly Combined[],
+export function socialManagerArgs<Combined extends AnyCombinedUnion>(
+  combined: Combined[] | (() => Combined[]) | RemirrorManager<Combined | SocialCombinedUnion>,
   options: CreateSocialManagerOptions = {},
-): RemirrorManager<SocialCombinedUnion | Combined> {
+): [
+  RemirrorManager<Combined | SocialCombinedUnion> | (() => Array<SocialPreset | Combined>),
+  CreateReactManagerOptions?,
+] {
   const { social, ...rest } = options;
-  const socialPreset = new SocialPreset(social);
 
-  return createReactManager([...combined, socialPreset], {
-    ...rest,
-    managerSettings: {
-      ...rest.managerSettings,
-      extraAttributes: [
-        { identifiers: ['mention', 'emoji'], attributes: { role: { default: 'presentation' } } },
-        { identifiers: ['mention'], attributes: { href: { default: null } } },
-        ...(rest.managerSettings?.extraAttributes ?? []),
-      ],
+  if (isRemirrorManager<Combined | SocialCombinedUnion>(combined)) {
+    return [combined];
+  }
+
+  return [
+    () => [...getArray(combined), new SocialPreset(social)],
+    {
+      ...rest,
+      managerSettings: {
+        ...rest.managerSettings,
+        extraAttributes: [
+          { identifiers: ['mention', 'emoji'], attributes: { role: { default: 'presentation' } } },
+          { identifiers: ['mention'], attributes: { href: { default: null } } },
+          ...(rest.managerSettings?.extraAttributes ?? []),
+        ],
+      },
     },
-  });
+  ];
 }
 
 interface GetMentionLabelParameter {
