@@ -20,6 +20,30 @@ export function getSuggestPluginState<Schema extends EditorSchema = any>(
 }
 
 /**
+ * Add a new suggester or replace it if the name already exists in the existing
+ * configuration.
+ *
+ * Will return a function for disposing of the added suggester.
+ */
+export function addSuggester<Schema extends EditorSchema = any>(
+  state: EditorState<Schema>,
+  suggester: Suggestion,
+) {
+  return getSuggestPluginState(state).addSuggester(suggester);
+}
+
+/**
+ * Remove a suggester if it exists. Pass in the name or the full suggester
+ * object.
+ */
+export function removeSuggester<Schema extends EditorSchema = any>(
+  state: EditorState<Schema>,
+  suggester: Suggestion | string,
+) {
+  return getSuggestPluginState(state).removeSuggester(suggester);
+}
+
+/**
  * This creates a suggestion plugin with all the suggesters provided.
  *
  * @remarks

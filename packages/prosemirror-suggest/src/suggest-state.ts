@@ -2,7 +2,7 @@ import mergeDescriptors from 'merge-descriptors';
 import { Transaction } from 'prosemirror-state';
 import { Decoration, DecorationSet, EditorView } from 'prosemirror-view';
 
-import { bool, isFunction, object } from '@remirror/core-helpers';
+import { bool, isFunction, isString, object } from '@remirror/core-helpers';
 import {
   CompareStateParameter,
   EditorSchema,
@@ -46,7 +46,7 @@ export class SuggestState {
   /**
    * The suggesters that have been registered for the suggesters plugin.
    */
-  private readonly suggesters: Array<Required<Suggestion>>;
+  #suggesters: Array<Required<Suggestion>>;
 
   /**
    * Keeps track of the current state.
@@ -104,23 +104,8 @@ export class SuggestState {
    * prioritized.
    */
   constructor(suggesters: Suggestion[]) {
-    const names: string[] = [];
-    this.suggesters = suggesters.map((suggester) => {
-      if (names.includes(suggester.name)) {
-        throw new Error(
-          `A suggester already exists with the name '${suggester.name}'. The name provided must be unique.`,
-        );
-      }
-
-      const clone = { ...DEFAULT_SUGGESTER, ...suggester };
-
-      // Preserve any descriptors (getters and setters)
-      mergeDescriptors(clone, suggester);
-
-      names.push(suggester.name);
-
-      return clone;
-    });
+    const mapper = createSuggesterMapper();
+    this.#suggesters = suggesters.map(mapper);
   }
 
   /**
@@ -278,7 +263,7 @@ export class SuggestState {
    */
   addIgnored = ({ from, char, name, specific = false }: AddIgnoredParameter) => {
     const to = from + char.length;
-    const suggester = this.suggesters.find((value) => value.name === name);
+    const suggester = this.#suggesters.find((value) => value.name === name);
 
     if (!suggester) {
       throw new Error(`No suggester exists for the name provided: ${name}`);
@@ -358,11 +343,37 @@ export class SuggestState {
    * Update the next state value.
    */
   private updateReasons({ $pos, state }: UpdateReasonsParameter) {
-    const match = findFromSuggestions({ suggesters: this.suggesters, $pos });
+    const match = findFromSuggestions({ suggesters: this.#suggesters, $pos });
     this.next = match && this.shouldIgnoreMatch(match) ? undefined : match;
 
     // Store the matches with reasons
     this.handlerMatches = findReason({ next: this.next, prev: this.prev, state, $pos });
+  }
+
+  /**
+   * Add a new suggest or replace it if it already exists.
+   */
+  addSuggester(suggester: Suggestion) {
+    const previous = this.#suggesters.find((item) => item.name === suggester.name);
+    const mapper = createSuggesterMapper();
+
+    if (previous) {
+      this.#suggesters = this.#suggesters.map((item) =>
+        item === previous ? mapper(suggester) : item,
+      );
+    } else {
+      this.#suggesters = [...this.#suggesters, mapper(suggester)];
+    }
+
+    return () => this.removeSuggester(suggester.name);
+  }
+
+  /**
+   * Remove a suggester if it exists.
+   */
+  removeSuggester(suggester: Suggestion | string): void {
+    const name = isString(suggester) ? suggester : suggester.name;
+    this.#suggesters = this.#suggesters.filter((item) => item.name !== name);
   }
 
   /**
@@ -503,3 +514,23 @@ interface UpdateReasonsParameter<Schema extends EditorSchema = any>
 export interface SuggestStateApplyParameter<Schema extends EditorSchema = any>
   extends TransactionParameter<Schema>,
     CompareStateParameter<Schema> {}
+
+function createSuggesterMapper() {
+  const names = new Set<string>();
+
+  return (suggestion: Suggestion) => {
+    if (names.has(suggestion.name)) {
+      throw new Error(
+        `A suggestion already exists with the name '${suggestion.name}'. The name provided must be unique.`,
+      );
+    }
+
+    const clone = { ...DEFAULT_SUGGESTER, ...suggestion };
+
+    // Preserve any descriptors (getters and setters)
+    mergeDescriptors(clone, suggestion);
+
+    names.add(suggestion.name);
+    return clone;
+  };
+}
