@@ -3,6 +3,7 @@ import { Children, cloneElement } from 'react';
 
 import {
   isDocNodeEmpty,
+  isEmptyArray,
   isString,
   OnSetOptionsParameter,
   Preset,
@@ -31,11 +32,12 @@ export class ReactPreset extends Preset<ReactPresetOptions> {
    * No properties are defined so this can be ignored.
    */
   protected onSetOptions(parameter: OnSetOptionsParameter<ReactPresetOptions>) {
-    const { changes } = parameter;
+    const { pickChanged } = parameter;
 
-    if (changes.placeholder.changed) {
-      const placeholderExtension = this.getExtension(PlaceholderExtension);
-      placeholderExtension.setOptions({ placeholder: changes.placeholder.value });
+    const placeholderOptions = pickChanged(['emptyNodeClass', 'placeholder']);
+
+    if (!isEmptyArray(placeholderOptions)) {
+      this.getExtension(PlaceholderExtension).setOptions(placeholderOptions);
     }
   }
 

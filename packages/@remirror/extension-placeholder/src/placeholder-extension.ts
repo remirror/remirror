@@ -89,7 +89,7 @@ export class PlaceholderExtension extends PlainExtension<PlaceholderOptions> {
   onSetOptions(parameter: OnSetOptionsParameter<PlaceholderOptions>) {
     const { changes } = parameter;
 
-    if (changes.placeholder && this.store.phase >= ManagerPhase.EditorView) {
+    if (changes.placeholder.changed && this.store.phase >= ManagerPhase.EditorView) {
       // update the attributes object
       this.store.updateAttributes();
     }
