@@ -468,7 +468,7 @@ describe('nodeActive', () => {
 
   it('matches nodes by specified attributes', () => {
     const { state, schema: sch } = createEditor(
-      doc(p('Something', h2('is <cursor> heading'), 'here')),
+      doc(p('Something'), h2('level <cursor> heading'), p('here')),
     );
 
     expect(isNodeActive({ state, type: sch.nodes.heading, attrs: { level: 1 } })).toBeFalse();
