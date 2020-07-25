@@ -24,6 +24,7 @@
     "clean": "pnpm if-clean git clean -- -fdx --exclude=.config.json --exclude=node_modules --exclude=**/node_modules",
     "clean:all": "git clean -fdX --exclude='.config.json'",
     "clean:modules": "git clean -fdX packages support",
+    "css:copy": "cpy packages/@remirror/styles/*.css packages/remirror/styles/",
     "dev": "preconstruct watch",
     "docs": "cd support/website && pnpm start",
     "fix": "run-s -c fix:*",
