@@ -19,8 +19,8 @@ steps:
       path: $(PNPM_CACHE_FOLDER)
     displayName: 'cache pnpm'
 
-  - bash: pnpm audit --audit-level high
-    displayName: 'audit dependencies'
+  # - bash: pnpm audit --audit-level high
+  #   displayName: 'audit dependencies'
 
   - bash: pnpm install
     displayName: 'install dependencies'
