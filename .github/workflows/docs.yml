@@ -47,8 +47,8 @@ jobs:
       - name: setup pnpm config
         run: pnpm config set store-dir $PNPM_CACHE_FOLDER
 
-      # - name: audit dependencies
-      #   run: pnpm audit --audit-level high
+      - name: audit dependencies
+        run: pnpm audit --audit-level high
 
       - name: install dependencies
         run: pnpm install
