@@ -2,6 +2,6 @@ import { isExtensionValid } from '@remirror/testing';
 
 import { ImageExtension } from '../..';
 
-test('is image extension valid', () => {
-  expect(isExtensionValid(ImageExtension));
+test('`ImageExtension`: is valid', () => {
+  expect(isExtensionValid(ImageExtension)).toBeTrue();
 });

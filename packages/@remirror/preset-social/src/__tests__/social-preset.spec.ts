@@ -8,8 +8,8 @@ import { isPresetValid } from '@remirror/testing';
 
 import { SocialPreset } from '..';
 
-test('is valid', () => {
-  expect(isPresetValid(SocialPreset, { matchers: [] }));
+test('`SocialPreset`: is valid', () => {
+  expect(isPresetValid(SocialPreset, { matchers: [] })).toBeTrue();
 });
 
 test('can override extensions', () => {

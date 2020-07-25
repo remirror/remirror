@@ -2,6 +2,6 @@ import { isExtensionValid } from '@remirror/testing';
 
 import { CollaborationExtension } from '..';
 
-test('is collaboration extension valid', () => {
-  isExtensionValid(CollaborationExtension, { clientID: 'abc' });
+test('`CollaborationExtension`: is valid', () => {
+  expect(isExtensionValid(CollaborationExtension, { clientID: 'abc' })).toBeTrue();
 });

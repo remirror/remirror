@@ -61,7 +61,7 @@ export class TrailingNodeExtension extends PlainExtension<TrailingNodeOptions> {
   protected onSetOptions(parameter: OnSetOptionsParameter<TrailingNodeOptions>) {
     const { changes } = parameter;
 
-    if (changes.disableTags || changes.ignoredNodes || changes.nodeName) {
+    if (changes.disableTags.changed || changes.ignoredNodes.changed || changes.nodeName.changed) {
       this.store.updateExtensionPlugins(this);
       this.store.reconfigureStatePlugins();
     }

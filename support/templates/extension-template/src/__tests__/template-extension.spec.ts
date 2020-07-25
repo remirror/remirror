@@ -2,6 +2,6 @@ import { isExtensionValid } from '@remirror/testing';
 
 import { TemplateExtension } from '..';
 
-test('is valid', () => {
-  expect(isExtensionValid(TemplateExtension, {}));
+test('`TemplateExtension`: is valid', () => {
+  expect(isExtensionValid(TemplateExtension)).toBeTrue();
 });

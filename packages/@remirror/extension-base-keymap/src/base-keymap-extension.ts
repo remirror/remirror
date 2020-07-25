@@ -153,10 +153,10 @@ export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
     let shouldReconfigureBindings = false;
 
     if (
-      changes.defaultBindingMethod ||
-      changes.excludeBaseKeymap ||
-      changes.selectParentNodeOnEscape ||
-      changes.undoInputRuleOnBackspace
+      changes.defaultBindingMethod.changed ||
+      changes.excludeBaseKeymap.changed ||
+      changes.selectParentNodeOnEscape.changed ||
+      changes.undoInputRuleOnBackspace.changed
     ) {
       shouldReconfigureBindings = true;
     }

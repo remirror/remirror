@@ -2,6 +2,6 @@ import { isExtensionValid } from '@remirror/testing';
 
 import { SuggestionsExtension } from '..';
 
-test('is suggestions extension valid', () => {
-  expect(isExtensionValid(SuggestionsExtension, {}));
+test('`SuggestionsExtension`: is valid', () => {
+  expect(isExtensionValid(SuggestionsExtension)).toBeTrue();
 });

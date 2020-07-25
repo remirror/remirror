@@ -8,8 +8,8 @@ import { act, createReactManager, RemirrorProvider, render } from '@remirror/tes
 import { ReactComponentExtension } from '..';
 import { NodeViewComponentProps } from '../node-view-types';
 
-test('is valid', () => {
-  expect(isExtensionValid(ReactComponentExtension, {}));
+test('`ReactComponentExtension`: is valid', () => {
+  expect(isExtensionValid(ReactComponentExtension)).toBeTrue();
 });
 
 class TestExtension extends NodeExtension<{ useContent: boolean }> {

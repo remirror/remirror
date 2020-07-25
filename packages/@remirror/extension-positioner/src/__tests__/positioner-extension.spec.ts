@@ -5,8 +5,8 @@ import { isExtensionValid } from '@remirror/testing';
 import { PositionerExtension } from '../positioner-extension';
 import { defaultPositioner } from '../positioners';
 
-test('is positioner extension valid', () => {
-  expect(isExtensionValid(PositionerExtension));
+test('`PositionerExtension`: is valid', () => {
+  expect(isExtensionValid(PositionerExtension)).toBeTrue();
 });
 
 test('can position itself', () => {

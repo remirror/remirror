@@ -4,8 +4,8 @@ import { HeadingExtension, isExtensionValid } from '@remirror/testing';
 
 import { BidiExtension } from '..';
 
-test('is valid', () => {
-  expect(isExtensionValid(BidiExtension, {}));
+test('`BidiExtension`: is valid', () => {
+  expect(isExtensionValid(BidiExtension)).toBeTrue();
 });
 
 test('captures the direction of each node', () => {

@@ -1,4 +1,4 @@
-import { OnSetOptionsParameter, Preset, presetDecorator } from '@remirror/core';
+import { isEmptyObject, OnSetOptionsParameter, Preset, presetDecorator } from '@remirror/core';
 import { BidiExtension, BidiOptions } from '@remirror/extension-bidi';
 import { BlockquoteExtension } from '@remirror/extension-blockquote';
 import { BoldExtension, BoldOptions } from '@remirror/extension-bold';
@@ -55,10 +55,8 @@ export class WysiwygPreset extends Preset<WysiwygOptions> {
 
   protected onSetOptions(parameter: OnSetOptionsParameter<WysiwygOptions>) {
     const { pickChanged } = parameter;
-
+    const trailingNodeOptions = pickChanged(['disableTags', 'ignoredNodes', 'nodeName']);
     const bidiOptions = pickChanged(['defaultDirection', 'autoUpdate']);
-    this.getExtension(BidiExtension).setOptions(bidiOptions);
-
     const codeBlockOptions = pickChanged([
       'defaultLanguage',
       'formatter',
@@ -67,11 +65,7 @@ export class WysiwygPreset extends Preset<WysiwygOptions> {
       'supportedLanguages',
       'keyboardShortcut',
     ]);
-    this.getExtension(CodeBlockExtension).setOptions(codeBlockOptions);
-
     const dropCursorOptions = pickChanged(['color', 'width']);
-    this.getExtension(DropCursorExtension).setOptions(dropCursorOptions);
-
     const searchOptions = pickChanged([
       'alwaysSearch',
       'autoSelectNext',
@@ -82,10 +76,26 @@ export class WysiwygPreset extends Preset<WysiwygOptions> {
       'searchForwardShortcut',
       'searchBackwardShortcut',
     ]);
-    this.getExtension(SearchExtension).setOptions(searchOptions);
 
-    const trailingNodeOptions = pickChanged(['disableTags', 'ignoredNodes', 'nodeName']);
-    this.getExtension(TrailingNodeExtension).setOptions(trailingNodeOptions);
+    if (!isEmptyObject(bidiOptions)) {
+      this.getExtension(BidiExtension).setOptions(bidiOptions);
+    }
+
+    if (!isEmptyObject(codeBlockOptions)) {
+      this.getExtension(CodeBlockExtension).setOptions(codeBlockOptions);
+    }
+
+    if (!isEmptyObject(dropCursorOptions)) {
+      this.getExtension(DropCursorExtension).setOptions(dropCursorOptions);
+    }
+
+    if (!isEmptyObject(searchOptions)) {
+      this.getExtension(SearchExtension).setOptions(searchOptions);
+    }
+
+    if (!isEmptyObject(trailingNodeOptions)) {
+      this.getExtension(TrailingNodeExtension).setOptions(trailingNodeOptions);
+    }
   }
 
   createExtensions() {

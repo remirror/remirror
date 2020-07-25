@@ -5,8 +5,8 @@ import { createCoreManager, isExtensionValid } from '@remirror/testing';
 
 import { CodeExtension } from '..';
 
-test('is valid', () => {
-  expect(isExtensionValid(CodeExtension, {}));
+test('`CodeExtension`: is valid', () => {
+  expect(isExtensionValid(CodeExtension)).toBeTrue();
 });
 
 describe('schema', () => {

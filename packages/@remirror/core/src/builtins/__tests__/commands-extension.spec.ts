@@ -4,8 +4,8 @@ import { BoldExtension, isExtensionValid, ItalicExtension } from '@remirror/test
 
 import { CommandsExtension } from '..';
 
-test('is commands extension valid', () => {
-  expect(isExtensionValid(CommandsExtension, {}));
+test('`CommandsExtension`: is valid', () => {
+  expect(isExtensionValid(CommandsExtension)).toBeTrue();
 });
 
 test('can call multiple commands', () => {

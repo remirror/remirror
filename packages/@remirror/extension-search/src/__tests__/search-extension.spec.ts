@@ -4,8 +4,8 @@ import { isExtensionValid } from '@remirror/testing';
 
 import { SearchExtension, SearchOptions } from '..';
 
-test('is valid', () => {
-  expect(isExtensionValid(SearchExtension, {}));
+test('`SearchExtension`: is valid', () => {
+  expect(isExtensionValid(SearchExtension)).toBeTrue();
 });
 
 function create(options?: SearchOptions) {

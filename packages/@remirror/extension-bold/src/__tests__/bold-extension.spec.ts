@@ -6,8 +6,8 @@ import { createCoreManager, isExtensionValid } from '@remirror/testing';
 
 import { BoldExtension, BoldOptions } from '../..';
 
-test('is bold extension valid', () => {
-  expect(isExtensionValid(BoldExtension, {}));
+test('`BoldExtension`: is valid', () => {
+  expect(isExtensionValid(BoldExtension)).toBeTrue();
 });
 
 describe('schema', () => {

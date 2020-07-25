@@ -4,8 +4,8 @@ import { BlockquoteExtension, HeadingExtension, isExtensionValid } from '@remirr
 
 import { TrailingNodeExtension, TrailingNodeOptions } from '../trailing-node-extension';
 
-test('is valid', () => {
-  expect(isExtensionValid(TrailingNodeExtension, {}));
+test('`TrailingNodeExtension`: is valid', () => {
+  expect(isExtensionValid(TrailingNodeExtension)).toBeTrue();
 });
 
 function create(params?: Partial<TrailingNodeOptions>) {

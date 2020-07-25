@@ -2,6 +2,6 @@ import { isPresetValid } from '@remirror/testing';
 
 import { CheckboxPreset } from '..';
 
-test('is valid', () => {
-  expect(isPresetValid(CheckboxPreset, {}));
+test('`CheckboxPreset`: is valid', () => {
+  expect(isPresetValid(CheckboxPreset)).toBeTrue();
 });

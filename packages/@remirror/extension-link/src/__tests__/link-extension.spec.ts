@@ -6,8 +6,8 @@ import { createCoreManager, isExtensionValid } from '@remirror/testing';
 
 import { LinkExtension, LinkOptions } from '..';
 
-test('is valid', () => {
-  expect(isExtensionValid(LinkExtension, {}));
+test('`LinkExtension`: is valid', () => {
+  expect(isExtensionValid(LinkExtension)).toBeTrue();
 });
 
 const href = 'https://test.com';

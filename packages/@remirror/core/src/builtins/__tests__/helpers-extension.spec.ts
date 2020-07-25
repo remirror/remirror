@@ -4,8 +4,8 @@ import { HeadingExtension, isExtensionValid } from '@remirror/testing';
 
 import { HelpersExtension } from '..';
 
-test('is helpers extension valid', () => {
-  expect(isExtensionValid(HelpersExtension, {}));
+test('`HelpersExtension`: is valid', () => {
+  expect(isExtensionValid(HelpersExtension)).toBeTrue();
 });
 
 describe('active', () => {

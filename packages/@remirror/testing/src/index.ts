@@ -9,6 +9,8 @@ import {
   invariant,
   isEqual,
   isFunction,
+  isMarkExtension,
+  isNodeExtension,
   mutateDefaultExtensionOptions,
   object,
   omit,
@@ -23,6 +25,10 @@ export const initialJson = {
   ],
 };
 
+function emptyObject() {
+  return {};
+}
+
 /**
  * Validate the shape of your extension.
  */
@@ -31,6 +37,19 @@ export function isExtensionValid<Type extends AnyExtensionConstructor>(
   ...[options]: ExtensionConstructorParameter<OptionsOfConstructor<Type>>
 ) {
   const extension = new Extension(options);
+
+  expect(extension.name).toBeString();
+  expect(() => extension.setOptions({})).not.toThrow();
+
+  if (isNodeExtension(extension)) {
+    expect(
+      extension.createNodeSpec({ defaults: emptyObject, dom: emptyObject, parse: emptyObject }),
+    ).toBeObject();
+  } else if (isMarkExtension(extension)) {
+    expect(
+      extension.createMarkSpec({ defaults: emptyObject, dom: emptyObject, parse: emptyObject }),
+    ).toBeObject();
+  }
 
   let defaultOptions: BaseExtensionOptions = object();
 
@@ -69,7 +88,11 @@ export function isPresetValid<Type extends AnyPresetConstructor>(
 ) {
   const preset = new Preset(options);
 
+  expect(preset.name).toBeString();
+  expect(() => preset.setOptions({})).not.toThrow();
+
   const expectedOptions = { ...Preset.defaultOptions, ...options };
+
   invariant(isEqual(omit(preset.options, Preset.handlerKeys), expectedOptions), {
     message: `Invalid 'defaultOptions' for '${Preset.name}'\n\n${
       diff(preset.options, expectedOptions) ?? ''

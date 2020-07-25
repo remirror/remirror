@@ -4,8 +4,8 @@ import { isExtensionValid } from '@remirror/testing';
 
 import { BaseKeymapExtension } from '../..';
 
-test('is base keymap extension valid', () => {
-  expect(isExtensionValid(BaseKeymapExtension));
+test('`BaseKeymapExtension`: is valid', () => {
+  expect(isExtensionValid(BaseKeymapExtension)).toBeTrue();
 });
 
 test('supports custom keymaps', () => {

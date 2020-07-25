@@ -6,8 +6,8 @@ import { createCoreManager, isExtensionValid } from '@remirror/testing';
 
 import { IframeExtension, IframeOptions } from '../iframe-extension';
 
-test('is valid', () => {
-  expect(isExtensionValid(IframeExtension));
+test('`IframeExtension`: is valid', () => {
+  expect(isExtensionValid(IframeExtension)).toBeTrue();
 });
 
 function create(options?: IframeOptions) {

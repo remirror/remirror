@@ -6,8 +6,8 @@ import { BoldExtension, createCoreManager, isExtensionValid } from '@remirror/te
 
 import { HeadingExtension, HeadingOptions } from '../heading-extension';
 
-test('is valid', () => {
-  expect(isExtensionValid(HeadingExtension, {}));
+test('`HeadingExtension`: is valid', () => {
+  expect(isExtensionValid(HeadingExtension)).toBeTrue();
 });
 
 describe('schema', () => {

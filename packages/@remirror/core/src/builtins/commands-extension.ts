@@ -230,7 +230,8 @@ export class CommandsExtension extends PlainExtension {
       },
 
       /**
-       * Update the attributes for the node at the specified `pos` in the editor.
+       * Update the attributes for the node at the specified `pos` in the
+       * editor.
        */
       updateNodeAttributes: <Type extends object>(
         pos: number,
@@ -256,7 +257,9 @@ export class CommandsExtension extends PlainExtension {
 
   /**
    * A helper for forcing through updates in the view layer. The view layer can
-   * check for the meta data of the transaction with `manager.store.getForcedUpdate(tr)`. If that has a value then it should use the unique symbol to update the key.
+   * check for the meta data of the transaction with
+   * `manager.store.getForcedUpdate(tr)`. If that has a value then it should use
+   * the unique symbol to update the key.
    */
   private readonly forceUpdate = (tr: Transaction, ...keys: UpdatableViewProps[]): Transaction => {
     this.setMeta(tr, ...keys);
@@ -264,7 +267,8 @@ export class CommandsExtension extends PlainExtension {
   };
 
   /**
-   * Checks if the codebase has requested for the transaction to cause a force update.
+   * Checks if the codebase has requested for the transaction to cause a force
+   * update.
    */
   private readonly getForcedUpdates = (tr: Transaction): ForcedUpdateMeta => {
     return this.getMeta(tr);

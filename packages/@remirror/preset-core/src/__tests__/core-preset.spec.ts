@@ -2,6 +2,6 @@ import { isPresetValid } from '@remirror/testing';
 
 import { CorePreset } from '../..';
 
-test('is valid', () => {
-  expect(isPresetValid(CorePreset, {}));
+test('`CorePreset`: is valid', () => {
+  expect(isPresetValid(CorePreset)).toBeTrue();
 });

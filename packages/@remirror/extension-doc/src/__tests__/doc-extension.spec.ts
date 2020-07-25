@@ -2,6 +2,6 @@ import { isExtensionValid } from '@remirror/testing';
 
 import { DocExtension } from '../..';
 
-test('is doc extension valid', () => {
-  expect(isExtensionValid(DocExtension));
+test('`DocExtension`: is valid', () => {
+  expect(isExtensionValid(DocExtension)).toBeTrue();
 });

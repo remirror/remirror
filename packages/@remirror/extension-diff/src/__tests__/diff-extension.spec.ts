@@ -5,8 +5,8 @@ import { isExtensionValid } from '@remirror/testing';
 
 import { DiffExtension, DiffOptions } from '..';
 
-test('is valid', () => {
-  expect(isExtensionValid(DiffExtension, {}));
+test('`DiffExtension`: is valid', () => {
+  expect(isExtensionValid(DiffExtension)).toBeTrue();
 });
 
 function create(options?: DiffOptions, handlers: GetHandler<DiffOptions> = {}) {

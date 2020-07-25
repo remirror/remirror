@@ -2,6 +2,6 @@ import { isExtensionValid } from '@remirror/testing';
 
 import { ItalicExtension } from '..';
 
-test('is valid', () => {
-  expect(isExtensionValid(ItalicExtension, {}));
+test('`ItalicExtension`: is valid', () => {
+  expect(isExtensionValid(ItalicExtension)).toBeTrue();
 });

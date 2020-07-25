@@ -16,8 +16,8 @@ import { createCoreManager, isExtensionValid } from '@remirror/testing';
 import { CodeBlockExtension, CodeBlockOptions, FormatterParameter } from '..';
 import { getLanguage } from '../code-block-utils';
 
-test('is code block extension valid', () => {
-  isExtensionValid(CodeBlockExtension);
+test('`CodeBlockExtension`: is valid', () => {
+  expect(isExtensionValid(CodeBlockExtension)).toBeTrue();
 });
 
 describe('schema', () => {

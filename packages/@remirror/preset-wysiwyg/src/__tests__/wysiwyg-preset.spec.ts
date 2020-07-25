@@ -2,6 +2,6 @@ import { isPresetValid } from '@remirror/testing';
 
 import { WysiwygPreset } from '..';
 
-test('is valid', () => {
-  expect(isPresetValid(WysiwygPreset, {}));
+test('`WysiwygPreset`: is valid', () => {
+  expect(isPresetValid(WysiwygPreset)).toBeTrue();
 });

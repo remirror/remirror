@@ -1,6 +1,7 @@
 import {
   AddCustomHandler,
   ExtensionPriority,
+  isEmptyObject,
   OnSetOptionsParameter,
   Preset,
   presetDecorator,
@@ -79,15 +80,16 @@ export class CorePreset extends Preset<CorePresetOptions> {
    */
   protected onSetOptions(parameter: OnSetOptionsParameter<CorePresetOptions>) {
     const { pickChanged } = parameter;
+    const changedBaseKeymapOptions = pickChanged([
+      'defaultBindingMethod',
+      'selectParentNodeOnEscape',
+      'excludeBaseKeymap',
+      'undoInputRuleOnBackspace',
+    ]);
 
-    this.getExtension(BaseKeymapExtension).setOptions(
-      pickChanged([
-        'defaultBindingMethod',
-        'selectParentNodeOnEscape',
-        'excludeBaseKeymap',
-        'undoInputRuleOnBackspace',
-      ]),
-    );
+    if (!isEmptyObject(changedBaseKeymapOptions)) {
+      this.getExtension(BaseKeymapExtension).setOptions(changedBaseKeymapOptions);
+    }
   }
 
   protected onAddCustomHandler: AddCustomHandler<CorePresetOptions> = (parameter) => {

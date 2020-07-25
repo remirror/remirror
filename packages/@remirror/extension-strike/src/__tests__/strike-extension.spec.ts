@@ -2,6 +2,6 @@ import { isExtensionValid } from '@remirror/testing';
 
 import { StrikeExtension } from '..';
 
-test('is valid', () => {
-  expect(isExtensionValid(StrikeExtension, {}));
+test('`StrikeExtension`: is valid', () => {
+  expect(isExtensionValid(StrikeExtension)).toBeTrue();
 });

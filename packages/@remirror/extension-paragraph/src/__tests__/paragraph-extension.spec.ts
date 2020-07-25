@@ -2,6 +2,6 @@ import { isExtensionValid } from '@remirror/testing';
 
 import { ParagraphExtension } from '../..';
 
-test('is valid', () => {
-  expect(isExtensionValid(ParagraphExtension, {}));
+test('`ParagraphExtension`: is valid', () => {
+  expect(isExtensionValid(ParagraphExtension)).toBeTrue();
 });

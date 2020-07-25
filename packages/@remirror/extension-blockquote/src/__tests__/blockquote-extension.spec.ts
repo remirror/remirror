@@ -6,8 +6,8 @@ import { createCoreManager, isExtensionValid } from '@remirror/testing';
 
 import { BlockquoteExtension } from '..';
 
-test('is blockquote extension valid', () => {
-  expect(isExtensionValid(BlockquoteExtension, {}));
+test('`BlockquoteExtension`: is valid', () => {
+  expect(isExtensionValid(BlockquoteExtension)).toBeTrue();
 });
 
 describe('schema', () => {
