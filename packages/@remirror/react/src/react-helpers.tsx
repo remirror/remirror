@@ -1,6 +1,7 @@
 import {
   AnyCombinedUnion,
   BuiltinPreset,
+  getArray,
   isRemirrorManager,
   RemirrorManager,
 } from '@remirror/core';
@@ -14,7 +15,8 @@ import { CreateReactManagerOptions } from './react-types';
  */
 export function createReactManager<Combined extends AnyCombinedUnion>(
   combined:
-    | readonly Combined[]
+    | Combined[]
+    | (() => Combined[])
     | RemirrorManager<Combined | BuiltinPreset | ReactPreset | CorePreset>,
   options: CreateReactManagerOptions = {},
 ): RemirrorManager<Combined | BuiltinPreset | ReactPreset | CorePreset> {
@@ -25,7 +27,7 @@ export function createReactManager<Combined extends AnyCombinedUnion>(
   }
 
   return RemirrorManager.create(
-    [...combined, new ReactPreset(react), new CorePreset(core)],
+    () => [...getArray(combined), new ReactPreset(react), new CorePreset(core)],
     settings,
   );
 }

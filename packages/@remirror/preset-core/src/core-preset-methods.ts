@@ -1,4 +1,4 @@
-import { AnyCombinedUnion, RemirrorManager } from '@remirror/core';
+import { AnyCombinedUnion, getArray, RemirrorManager } from '@remirror/core';
 
 import { CorePreset, CorePresetOptions } from './core-preset';
 
@@ -18,9 +18,13 @@ export interface CreateCoreManagerOptions {
  * Create a manager with the core preset already applied.
  */
 export function createCoreManager<Combined extends AnyCombinedUnion>(
-  combined: readonly Combined[],
+  combined: Combined[] | (() => Combined[]),
   options: CreateCoreManagerOptions = {},
 ) {
   const { core, managerSettings } = options;
-  return RemirrorManager.create([...combined, new CorePreset(core)], managerSettings);
+
+  return RemirrorManager.create(
+    () => [...getArray(combined), new CorePreset(core)],
+    managerSettings,
+  );
 }

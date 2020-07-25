@@ -45,7 +45,7 @@ export interface RemirrorProviderProps<Combined extends AnyCombinedUnion>
    * should not change they during the component lifecycle as they are created
    * once at the very start and never recreated.
    */
-  combined?: readonly Combined[];
+  combined?: Combined[];
 
   /**
    * The settings to provide to the `RemirrorManager`. This is only applied when

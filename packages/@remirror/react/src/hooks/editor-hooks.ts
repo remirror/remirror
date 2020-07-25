@@ -384,7 +384,7 @@ type UsePresetCallback<Type extends AnyPresetConstructor> = (
  * ```
  */
 export function useManager<Combined extends AnyCombinedUnion>(
-  combined: readonly Combined[] | RemirrorManager<ReactCombinedUnion<Combined>>,
+  combined: Combined[] | (() => Combined[]) | RemirrorManager<ReactCombinedUnion<Combined>>,
   options: CreateReactManagerOptions = {},
 ): RemirrorManager<ReactCombinedUnion<Combined>> {
   const combinedRef = useRef(combined);
