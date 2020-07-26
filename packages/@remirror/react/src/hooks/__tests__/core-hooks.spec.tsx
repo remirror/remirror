@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import React from 'react';
 
-import { act, render } from '@remirror/testing/react';
+import { act, strictRender } from '@remirror/testing/react';
 
 import {
   fakeResizeObserverPolyfill,
@@ -39,7 +39,7 @@ test('useMeasure', () => {
     );
   };
 
-  const { getByTestId, rerender } = render(<Component />);
+  const { getByTestId, rerender } = strictRender(<Component />);
   const el = getByTestId('test');
 
   expect(fakeResizeObserverPolyfill.observe).toHaveBeenCalledWith(el);

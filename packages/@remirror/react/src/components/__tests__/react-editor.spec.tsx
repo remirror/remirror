@@ -3,7 +3,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 
 import { AnyCombinedUnion, fromHtml } from '@remirror/core';
-import { act, createReactManager, fireEvent, render } from '@remirror/testing/react';
+import { act, createReactManager, fireEvent, strictRender } from '@remirror/testing/react';
 
 import { RemirrorContextProps } from '../../react-types';
 import { ReactEditor } from '../react-editor';
@@ -18,7 +18,7 @@ const handlers = {
 
 test('should be called via a render prop', () => {
   const mock = jest.fn(() => <div />);
-  const { getByLabelText } = render(
+  const { getByLabelText } = strictRender(
     <ReactEditor manager={createReactManager([])} label={label} {...handlers}>
       {mock}
     </ReactEditor>,
@@ -37,7 +37,7 @@ test('should be called via a render prop', () => {
 
 test('can `suppressHydrationWarning` without breaking', () => {
   const mock = jest.fn(() => <div />);
-  const { getByLabelText } = render(
+  const { getByLabelText } = strictRender(
     <ReactEditor
       manager={createReactManager([])}
       label={label}
@@ -71,7 +71,7 @@ describe('basic functionality', () => {
   it("doesn't render the editor without `children` as a render prop", () => {
     expect(() =>
       // @ts-expect-error
-      render(<ReactEditor label={label} manager={createReactManager([])} />),
+      strictRender(<ReactEditor label={label} manager={createReactManager([])} />),
     ).toMatchSnapshot();
   });
 
@@ -82,7 +82,7 @@ describe('basic functionality', () => {
       return <div />;
     });
 
-    const { getByLabelText } = render(
+    const { getByLabelText } = strictRender(
       <ReactEditor
         label={label}
         {...handlers}
@@ -122,7 +122,7 @@ describe('basic functionality', () => {
       );
     };
 
-    const { rerender, getByLabelText } = render(<El editable={true} />);
+    const { rerender, getByLabelText } = strictRender(<El editable={true} />);
     expect(getByLabelText(label)).toHaveAttribute('contenteditable', 'true');
 
     rerender(<El editable={false} />);
@@ -132,7 +132,7 @@ describe('basic functionality', () => {
 
 describe('initialContent', () => {
   it('should render with string content', () => {
-    const { container } = render(
+    const { container } = strictRender(
       <ReactEditor
         label={label}
         {...handlers}
@@ -153,7 +153,7 @@ describe('initialContent', () => {
       content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Hello' }] }],
     };
 
-    const { container } = render(
+    const { container } = strictRender(
       <ReactEditor
         label={label}
         {...handlers}
@@ -179,7 +179,7 @@ describe('focus', () => {
 
   beforeEach(() => {
     jest.useFakeTimers();
-    const { getByRole } = render(
+    const { getByRole } = strictRender(
       <ReactEditor
         label={label}
         {...handlers}

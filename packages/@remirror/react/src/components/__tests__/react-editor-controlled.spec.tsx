@@ -10,7 +10,7 @@ import {
   StateUpdateLifecycleParameter,
 } from '@remirror/core';
 import { BoldExtension, ItalicExtension } from '@remirror/testing';
-import { act, fireEvent, render } from '@remirror/testing/react';
+import { act, fireEvent, strictRender } from '@remirror/testing/react';
 
 import { useRemirror } from '../../hooks';
 import { createReactManager } from '../../react-helpers';
@@ -56,7 +56,7 @@ describe('Remirror Controlled Component', () => {
     });
     const onChange = jest.fn();
 
-    const { getByRole } = render(
+    const { getByRole } = strictRender(
       <ReactEditor {...props} value={value} manager={manager} onChange={onChange}>
         {() => <div />}
       </ReactEditor>,
@@ -77,7 +77,7 @@ describe('Remirror Controlled Component', () => {
     });
     const onChange = jest.fn();
 
-    render(
+    strictRender(
       <ReactEditor
         {...props}
         manager={manager}
@@ -117,7 +117,7 @@ describe('Remirror Controlled Component', () => {
       );
     };
 
-    render(<Component />);
+    strictRender(<Component />);
 
     act(() => {
       chain.dispatchCommand(({ dispatch, tr }) => dispatch(tr.insertText('add more value ')));
@@ -153,7 +153,7 @@ describe('Remirror Controlled Component', () => {
       );
     };
 
-    render(<Component />);
+    strictRender(<Component />);
 
     act(() => {
       chain.dispatchCommand(({ dispatch, tr }) => dispatch(tr.insertText('add more value ')));
@@ -185,7 +185,7 @@ describe('Remirror Controlled Component', () => {
       );
     };
 
-    render(<Component editorState={value} />);
+    strictRender(<Component editorState={value} />);
 
     expect(() => ctx.setContent('<p>Error</p>')).toThrowErrorMatchingSnapshot();
     expect(() => ctx.clearContent()).toThrowErrorMatchingSnapshot();
@@ -212,7 +212,7 @@ describe('Remirror Controlled Component', () => {
       );
     };
 
-    render(<Component />);
+    strictRender(<Component />);
 
     expect(() =>
       act(() => {
@@ -243,7 +243,7 @@ describe('Remirror Controlled Component', () => {
       );
     };
 
-    render(<Component />);
+    strictRender(<Component />);
 
     expect(() =>
       act(() => {
@@ -290,7 +290,7 @@ describe('Remirror Controlled Component', () => {
       );
     };
 
-    render(<Component />);
+    strictRender(<Component />);
 
     act(() => {
       chain.commands.insertText('First text update');
@@ -348,7 +348,7 @@ test('can run multiple commands', () => {
     );
   };
 
-  const { getByRole } = render(<Component />);
+  const { getByRole } = strictRender(<Component />);
 
   act(() => {
     chain.commands.insertText('This');
@@ -408,7 +408,7 @@ test('NOTE: this test is to show that synchronous state updates only shows the m
     );
   };
 
-  const { getByRole } = render(<Component />);
+  const { getByRole } = strictRender(<Component />);
 
   act(() => {
     fireEvent.click(getByRole('button'));

@@ -4,7 +4,7 @@ import {
   act,
   createReactManager,
   RemirrorProvider,
-  render,
+  strictRender,
   useRemirror,
 } from '@remirror/testing/react';
 
@@ -20,7 +20,7 @@ describe('RemirrorPortals', () => {
 
   it('should update on render', () => {
     const portalContainer = new PortalContainer();
-    const { getByTestId } = render(<RemirrorPortals portalContainer={portalContainer} />);
+    const { getByTestId } = strictRender(<RemirrorPortals portalContainer={portalContainer} />);
     const mockRender = jest.fn(() => <div data-testid='test' />);
 
     act(() => {
@@ -43,7 +43,7 @@ describe('RemirrorPortals', () => {
     };
 
     const portalContainer = new PortalContainer();
-    render(
+    strictRender(
       <RemirrorProvider manager={manager}>
         <RemirrorPortals portalContainer={portalContainer} />
       </RemirrorProvider>,
@@ -57,7 +57,7 @@ describe('RemirrorPortals', () => {
 
   it('removes the portal the when dom node is removed', () => {
     const portalContainer = new PortalContainer();
-    const { queryByTestId } = render(<RemirrorPortals portalContainer={portalContainer} />);
+    const { queryByTestId } = strictRender(<RemirrorPortals portalContainer={portalContainer} />);
 
     act(() => {
       document.body.append(container);

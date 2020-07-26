@@ -5,7 +5,7 @@ import React, { FC } from 'react';
 import { AnyRemirrorManager } from '@remirror/core';
 import { ReactPreset } from '@remirror/preset-react';
 import { BoldExtension } from '@remirror/testing';
-import { act as renderAct, nonStrictRender } from '@remirror/testing/react';
+import { act as renderAct, render } from '@remirror/testing/react';
 
 import { RemirrorProvider } from '../../components';
 import { createReactManager } from '../../react-helpers';
@@ -27,7 +27,7 @@ describe('useManager', () => {
       return null;
     };
 
-    const { rerender } = nonStrictRender(<Component />);
+    const { rerender } = render(<Component />);
     rerender(<Component options={{}} />);
     rerender(<Component options={{}} />);
 
@@ -42,7 +42,7 @@ describe('useManager', () => {
       return null;
     };
 
-    const { rerender } = nonStrictRender(<Component />);
+    const { rerender } = render(<Component />);
 
     rerender(<Component options={{}} />);
     rerender(<Component options={{}} />);

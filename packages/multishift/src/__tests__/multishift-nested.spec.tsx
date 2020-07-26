@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { fireEvent, render } from '@remirror/testing/react';
+import { fireEvent, strictRender } from '@remirror/testing/react';
 
 import { useMultishift } from '../multishift';
 
@@ -63,7 +63,7 @@ const Component = ({ multiple }: { multiple: boolean }) => {
 };
 
 test('it supports arrow keys when the button contains the menu', () => {
-  const { getByText, getByRole } = render(<Component multiple={true} />);
+  const { getByText, getByRole } = strictRender(<Component multiple={true} />);
   const button = getByRole('button');
   const menu = getByRole('listbox');
   fireEvent.focus(button);

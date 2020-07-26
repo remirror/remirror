@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { fireEvent, render } from '@remirror/testing/react';
+import { fireEvent, strictRender } from '@remirror/testing/react';
 
 import { useMultishift } from '../multishift';
 
@@ -61,7 +61,7 @@ const Component = ({ multiple }: { multiple: boolean }) => {
 };
 
 test('uncontrolled editor with multiple selection enabled', () => {
-  const { getByTestId, getByRole, getByText, getAllByTestId } = render(
+  const { getByTestId, getByRole, getByText, getAllByTestId } = strictRender(
     <Component multiple={true} />,
   );
 
@@ -107,7 +107,7 @@ test('uncontrolled editor with multiple selection enabled', () => {
 });
 
 test('shift click highlights the element', () => {
-  const { getByRole, getByText } = render(<Component multiple={true} />);
+  const { getByRole, getByText } = strictRender(<Component multiple={true} />);
 
   const button = getByRole('button');
   fireEvent.click(button);
@@ -128,7 +128,7 @@ test('shift click highlights the element', () => {
 });
 
 test('ctrl click highlights an individual element', () => {
-  const { getByRole, getByText } = render(<Component multiple={true} />);
+  const { getByRole, getByText } = strictRender(<Component multiple={true} />);
 
   const button = getByRole('button');
   fireEvent.click(button);
@@ -146,7 +146,7 @@ test('ctrl click highlights an individual element', () => {
 });
 
 test('ctrl click toggles the highlight for an individual element', () => {
-  const { getByRole, getByText } = render(<Component multiple={true} />);
+  const { getByRole, getByText } = strictRender(<Component multiple={true} />);
 
   const button = getByRole('button');
   fireEvent.click(button);
@@ -170,7 +170,7 @@ test('ctrl click toggles the highlight for an individual element', () => {
 });
 
 test('it combines ctrl and shift click highlights an individual element', () => {
-  const { getByRole, getByText } = render(<Component multiple={true} />);
+  const { getByRole, getByText } = strictRender(<Component multiple={true} />);
 
   const button = getByRole('button');
   fireEvent.click(button);
@@ -193,7 +193,7 @@ test('it combines ctrl and shift click highlights an individual element', () => 
 });
 
 test('after selection shift click creates a new highlight group including index', () => {
-  const { getByRole, getByText } = render(<Component multiple={true} />);
+  const { getByRole, getByText } = strictRender(<Component multiple={true} />);
 
   const button = getByRole('button');
   fireEvent.click(button);
@@ -211,7 +211,7 @@ test('after selection shift click creates a new highlight group including index'
 });
 
 test('it supports arrow keys', () => {
-  const { getByText, getByRole } = render(<Component multiple={false} />);
+  const { getByText, getByRole } = strictRender(<Component multiple={false} />);
   const button = getByRole('button');
   const menu = getByRole('listbox');
   fireEvent.focus(button);
@@ -250,7 +250,7 @@ test('it supports arrow keys', () => {
 });
 
 test('it supports multi highlight arrow keys', () => {
-  const { getByText, getByRole, getByTestId } = render(<Component multiple={true} />);
+  const { getByText, getByRole, getByTestId } = strictRender(<Component multiple={true} />);
   const button = getByRole('button');
   const menu = getByRole('listbox');
   fireEvent.focus(button);

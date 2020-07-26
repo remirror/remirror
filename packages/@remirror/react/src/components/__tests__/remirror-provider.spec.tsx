@@ -2,7 +2,7 @@ import { RemirrorTestChain } from 'jest-remirror';
 import React, { FC } from 'react';
 
 import { BoldExtension, docNodeBasicJSON, ItalicExtension } from '@remirror/testing';
-import { createReactManager, fireEvent, render } from '@remirror/testing/react';
+import { createReactManager, fireEvent, strictRender } from '@remirror/testing/react';
 
 import { useRemirror } from '../../hooks';
 import { RemirrorProvider } from '../providers';
@@ -19,7 +19,7 @@ test('`RemirrorProvider`', () => {
 
   const manager = createReactManager([]);
 
-  const { getByRole, getByTestId } = render(
+  const { getByRole, getByTestId } = strictRender(
     <RemirrorProvider initialContent={docNodeBasicJSON} manager={manager}>
       <TestComponent />
     </RemirrorProvider>,
@@ -46,7 +46,7 @@ test('multiple `getRootProps` applied to dom throw an error', () => {
   };
 
   expect(() =>
-    render(
+    strictRender(
       <RemirrorProvider manager={manager}>
         <TestComponent />
       </RemirrorProvider>,
@@ -76,7 +76,7 @@ test('can run multiple transaction based commands', () => {
   const manager = createReactManager([new BoldExtension(), new ItalicExtension()]);
   const chain = RemirrorTestChain.create(manager);
 
-  const { getByRole } = render(
+  const { getByRole } = strictRender(
     <RemirrorProvider initialContent={docNodeBasicJSON} manager={manager}>
       <TestComponent />
     </RemirrorProvider>,
@@ -111,7 +111,7 @@ test('can run multiple synchronous non chainable commands', () => {
   const manager = createReactManager([]);
   const chain = RemirrorTestChain.create(manager);
 
-  const { getByRole } = render(
+  const { getByRole } = strictRender(
     <RemirrorProvider initialContent={docNodeBasicJSON} manager={manager}>
       <TestComponent />
     </RemirrorProvider>,

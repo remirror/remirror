@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { initialJson } from '@remirror/testing';
-import { createReactManager, render } from '@remirror/testing/react';
+import { createReactManager, strictRender } from '@remirror/testing/react';
 
 import { RemirrorSSR } from '..';
 
@@ -9,7 +9,7 @@ test('should render the ssr component', () => {
   const manager = createReactManager([]);
   const state = manager.createState({ content: initialJson });
 
-  const { container } = render(
+  const { container } = strictRender(
     <RemirrorSSR
       editable={true}
       attributes={{

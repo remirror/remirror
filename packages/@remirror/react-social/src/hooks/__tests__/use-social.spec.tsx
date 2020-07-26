@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 
 import { MentionExtension } from '@remirror/extension-mention';
 import { SocialPreset } from '@remirror/preset-social';
-import { createReactManager, render } from '@remirror/testing/react';
+import { createReactManager, strictRender } from '@remirror/testing/react';
 
 import { socialManagerArgs } from '../../social-utils';
 import { useSocialManager } from '../use-social';
@@ -22,7 +22,7 @@ describe('useSocialManager', () => {
       return null;
     };
 
-    render(<Component />);
+    strictRender(<Component />);
   });
 
   it('can receive a manager', () => {
@@ -35,7 +35,7 @@ describe('useSocialManager', () => {
       return null;
     };
 
-    render(<Component />);
+    strictRender(<Component />);
   });
 
   it('only calls `createSocialManagerArgument when props change', () => {
@@ -55,7 +55,7 @@ describe('useSocialManager', () => {
       return null;
     };
 
-    const { rerender } = render(
+    const { rerender } = strictRender(
       <div>
         <Component combined={[]} options={{}} />
       </div>,

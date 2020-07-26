@@ -3,7 +3,7 @@ import React, { ComponentType } from 'react';
 
 import { ApplySchemaAttributes, NodeExtension, NodeExtensionSpec, NodeGroup } from '@remirror/core';
 import { isExtensionValid } from '@remirror/testing';
-import { act, createReactManager, RemirrorProvider, render } from '@remirror/testing/react';
+import { act, createReactManager, RemirrorProvider, strictRender } from '@remirror/testing/react';
 
 import { ReactComponentExtension } from '..';
 import { NodeViewComponentProps } from '../node-view-types';
@@ -43,7 +43,7 @@ test('NodeViews are created with content', () => {
     createReactManager([new ReactComponentExtension(), new TestExtension({ useContent: true })]),
   );
 
-  render(
+  strictRender(
     <RemirrorProvider manager={chain.manager}>
       <div />
     </RemirrorProvider>,
@@ -67,7 +67,7 @@ test('NodeViews are created without content', () => {
     createReactManager([new ReactComponentExtension(), new TestExtension({ useContent: false })]),
   );
 
-  render(
+  strictRender(
     <RemirrorProvider manager={chain.manager}>
       <div />
     </RemirrorProvider>,
