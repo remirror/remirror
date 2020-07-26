@@ -1,5 +1,15 @@
 # @remirror/core
 
+## 1.0.0-next.10
+
+> 2020-07-26
+
+### Minor Changes
+
+- 6468058a: `RemirrorManager.create` can now accept a function to which returns an array of
+  extensions and presets. This lazy creation allows for optimizations to be made elsewhere in the
+  codebase.
+
 ## 1.0.0-next.9
 
 > 2020-07-23

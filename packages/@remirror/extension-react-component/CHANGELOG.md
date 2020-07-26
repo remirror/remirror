@@ -1,5 +1,21 @@
 # @remirror/extension-react-component
 
+## 1.0.0-next.10
+
+> 2020-07-26
+
+### Minor Changes
+
+- e554ce8c: - Use `ReactComponent` for SSR.
+  - Add `environment to`NodeViewComponentProps`.
+  - Export `NodeViewComponentProps` from `@remirror/extension-react-component`.
+  - Refactor `manager.store.components` to use `ManagerStoreReactComponent` interface.
+
+### Patch Changes
+
+- Updated dependencies [6468058a]
+  - @remirror/core@1.0.0-next.10
+
 ## 1.0.0-next.9
 
 > 2020-07-23

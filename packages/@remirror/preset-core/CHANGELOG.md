@@ -1,5 +1,30 @@
 # @remirror/preset-core
 
+## 1.0.0-next.10
+
+> 2020-07-26
+
+### Minor Changes
+
+- 3702a83a: Remove requirement for `readonly` arrays when passing a list of extensions / presets to
+  manager creators.
+
+  - **`@remirror/react`** - Add support for a function as the first parameter to the `useManager`
+    hook and `createReactManager` function.
+  - **`@remirror/preset-core`** - Add support for a function as the first parameter to the
+    `createCoreManager` function.
+
+### Patch Changes
+
+- Updated dependencies [6468058a]
+  - @remirror/core@1.0.0-next.10
+  - @remirror/extension-base-keymap@1.0.0-next.10
+  - @remirror/extension-doc@1.0.0-next.10
+  - @remirror/extension-history@1.0.0-next.10
+  - @remirror/extension-paragraph@1.0.0-next.10
+  - @remirror/extension-positioner@1.0.0-next.10
+  - @remirror/extension-text@1.0.0-next.10
+
 ## 1.0.0-next.9
 
 > 2020-07-23

@@ -1,5 +1,19 @@
 # jest-remirror
 
+## 1.0.0-next.10
+
+> 2020-07-26
+
+### Major Changes
+
+- 9b132f23: Remove `renderEditorString` method for testing SSR editors.
+
+### Patch Changes
+
+- Updated dependencies [6468058a]
+  - @remirror/core@1.0.0-next.10
+  - @remirror/dom@1.0.0-next.10
+
 ## 1.0.0-next.6
 
 > 2020-07-20

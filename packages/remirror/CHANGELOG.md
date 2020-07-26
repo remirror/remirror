@@ -1,5 +1,68 @@
 # remirror
 
+## 1.0.0-next.10
+
+> 2020-07-26
+
+### Minor Changes
+
+- 65efac96: Add entrypoint for `remirror/react/renderers`.
+
+### Patch Changes
+
+- Updated dependencies [6468058a]
+- Updated dependencies [76d1df83]
+- Updated dependencies [3702a83a]
+- Updated dependencies [e554ce8c]
+- Updated dependencies [5539bc32]
+- Updated dependencies [16a683f3]
+  - @remirror/core@1.0.0-next.10
+  - @remirror/react@1.0.0-next.10
+  - @remirror/preset-core@1.0.0-next.10
+  - @remirror/extension-react-component@1.0.0-next.10
+  - @remirror/extension-react-ssr@1.0.0-next.10
+  - @remirror/preset-wysiwyg@1.0.0-next.10
+  - @remirror/react-social@1.0.0-next.10
+  - @remirror/dom@1.0.0-next.10
+  - @remirror/extension-auto-link@1.0.0-next.10
+  - @remirror/extension-base-keymap@1.0.0-next.10
+  - @remirror/extension-bidi@1.0.0-next.10
+  - @remirror/extension-blockquote@1.0.0-next.10
+  - @remirror/extension-bold@1.0.0-next.10
+  - @remirror/extension-code@1.0.0-next.10
+  - @remirror/extension-code-block@1.0.0-next.10
+  - @remirror/extension-collaboration@1.0.0-next.10
+  - @remirror/extension-diff@1.0.0-next.10
+  - @remirror/extension-doc@1.0.0-next.10
+  - @remirror/extension-drop-cursor@1.0.0-next.10
+  - @remirror/extension-emoji@1.0.0-next.10
+  - @remirror/extension-epic-mode@1.0.0-next.10
+  - @remirror/extension-gap-cursor@1.0.0-next.10
+  - @remirror/extension-hard-break@1.0.0-next.10
+  - @remirror/extension-heading@1.0.0-next.10
+  - @remirror/extension-history@1.0.0-next.10
+  - @remirror/extension-horizontal-rule@1.0.0-next.10
+  - @remirror/extension-image@1.0.0-next.10
+  - @remirror/extension-italic@1.0.0-next.10
+  - @remirror/extension-link@1.0.0-next.10
+  - @remirror/extension-mention@1.0.0-next.10
+  - @remirror/extension-paragraph@1.0.0-next.10
+  - @remirror/extension-placeholder@1.0.0-next.10
+  - @remirror/extension-position-tracker@1.0.0-next.10
+  - @remirror/extension-positioner@1.0.0-next.10
+  - @remirror/extension-search@1.0.0-next.10
+  - @remirror/extension-strike@1.0.0-next.10
+  - @remirror/extension-text@1.0.0-next.10
+  - @remirror/extension-trailing-node@1.0.0-next.10
+  - @remirror/extension-underline@1.0.0-next.10
+  - @remirror/extension-yjs@1.0.0-next.10
+  - @remirror/preset-embed@1.0.0-next.10
+  - @remirror/preset-list@1.0.0-next.10
+  - @remirror/preset-react@1.0.0-next.10
+  - @remirror/preset-social@1.0.0-next.10
+  - @remirror/preset-table@1.0.0-next.10
+  - @remirror/react-wysiwyg@1.0.0-next.10
+
 ## 1.0.0-next.9
 
 > 2020-07-23

@@ -1,5 +1,13 @@
 # test-keyboard
 
+## 1.0.0-next.4
+
+> 2020-07-26
+
+### Patch Changes
+
+- 3e75081a: Fix accidental local publish of `test-keyboard` package.
+
 ## 1.0.0-next.2
 
 > 2020-07-16

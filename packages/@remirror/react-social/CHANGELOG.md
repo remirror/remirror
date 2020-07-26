@@ -1,5 +1,29 @@
 # @remirror/react-social
 
+## 1.0.0-next.10
+
+> 2020-07-26
+
+### Major Changes
+
+- 16a683f3: Reduce the number of rerenders for the social manager.
+
+  BREAKING CHANGE: The package no longer exports a `createSocialManager` and instead provides a
+  `socialManagerArgs` which can be passed into the `useManager` hook.
+
+### Patch Changes
+
+- Updated dependencies [6468058a]
+- Updated dependencies [76d1df83]
+- Updated dependencies [3702a83a]
+- Updated dependencies [e554ce8c]
+  - @remirror/core@1.0.0-next.10
+  - @remirror/react@1.0.0-next.10
+  - @remirror/extension-auto-link@1.0.0-next.10
+  - @remirror/extension-emoji@1.0.0-next.10
+  - @remirror/extension-mention@1.0.0-next.10
+  - @remirror/preset-social@1.0.0-next.10
+
 ## 1.0.0-next.9
 
 > 2020-07-23
