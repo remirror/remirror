@@ -1,5 +1,19 @@
 # @remirror/preset-social
 
+## 1.0.0-next.11
+
+> 2020-07-26
+
+### Patch Changes
+
+- 21a9650c: Rename `getArray` to `getLazyArray`. Also bump the version of `@remirror/core-helpers`
+  to make sure it is released.
+- Updated dependencies [54461006]
+  - @remirror/core@1.0.0-next.11
+  - @remirror/extension-auto-link@1.0.0-next.11
+  - @remirror/extension-emoji@1.0.0-next.11
+  - @remirror/extension-mention@1.0.0-next.11
+
 ## 1.0.0-next.10
 
 > 2020-07-26

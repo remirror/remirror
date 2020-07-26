@@ -1,5 +1,15 @@
 # @remirror/dom
 
+## 1.0.0-next.11
+
+> 2020-07-26
+
+### Patch Changes
+
+- Updated dependencies [54461006]
+  - @remirror/core@1.0.0-next.11
+  - @remirror/preset-core@1.0.0-next.11
+
 ## 1.0.0-next.10
 
 > 2020-07-26

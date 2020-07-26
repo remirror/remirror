@@ -1,5 +1,35 @@
 # @remirror/extension-horizontal-rule
 
+## 1.0.0-next.11
+
+> 2020-07-26
+
+### Patch Changes
+
+- 54461006: Remove the first parameter `extensions` from the lifecycle methods `onCreate`, `onView`
+  and `onDestroy`.
+
+  Switch to using method signatures for extension class methods as discussed in #360. The following
+  methods have been affected:
+
+  ```
+  onCreate
+  onView
+  onStateUpdate
+  onDestroy
+  createAttributes
+  createCommands
+  createPlugin
+  createExternalPlugins
+  createSuggestions
+  createHelpers
+  fromObject
+  onSetOptions
+  ```
+
+- Updated dependencies [54461006]
+  - @remirror/core@1.0.0-next.11
+
 ## 1.0.0-next.10
 
 > 2020-07-26
