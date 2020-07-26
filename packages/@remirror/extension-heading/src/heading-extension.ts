@@ -84,7 +84,7 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
     };
   }
 
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Toggle the heading for the current block. If you don't provide the
@@ -97,7 +97,7 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
           attrs,
         }),
     };
-  };
+  }
 
   createKeymap = (): KeyBindings => {
     const keys: KeyBindings = object();

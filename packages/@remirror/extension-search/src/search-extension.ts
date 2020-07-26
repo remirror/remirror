@@ -122,7 +122,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
     return 'search' as const;
   }
 
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Find a search term in the editor. If no search term is provided it
@@ -155,7 +155,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
        */
       clearSearch: () => this.clear(),
     };
-  };
+  }
 
   /**
    * This plugin is responsible for adding something decorations to the

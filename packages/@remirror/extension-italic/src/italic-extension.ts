@@ -35,14 +35,14 @@ export class ItalicExtension extends MarkExtension {
     };
   };
 
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Toggle the italic formatting on the selected text.
        */
       toggleItalic: () => convertCommand(toggleMark(this.type)),
     };
-  };
+  }
 
   createInputRules = () => {
     return [markInputRule({ regexp: /(?:^|[^*_])[*_]([^*_]+)[*_]$/, type: this.type })];

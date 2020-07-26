@@ -36,12 +36,12 @@ export class UnderlineExtension extends MarkExtension {
     };
   };
 
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Toggle the underline formatting of the selected text.
        */
       toggleUnderline: () => convertCommand(toggleMark(this.type)),
     };
-  };
+  }
 }

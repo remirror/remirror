@@ -11,7 +11,7 @@ class FirstExtension extends PlainExtension {
     return 'first' as const;
   }
 
-  createCommands = () => {
+  createCommands() {
     return {
       free(title?: string) {
         return () => false;
@@ -21,7 +21,7 @@ class FirstExtension extends PlainExtension {
         return () => true;
       },
     };
-  };
+  }
 }
 
 class SecondExtension extends PlainExtension<{ option: boolean }> {
@@ -29,13 +29,13 @@ class SecondExtension extends PlainExtension<{ option: boolean }> {
     return 'second' as const;
   }
 
-  createCommands = () => {
+  createCommands() {
     return {
       fun: (value: { key?: boolean }) => {
         return () => false;
       },
     };
-  };
+  }
 }
 
 class ThirdExtension extends PlainExtension {
@@ -43,13 +43,13 @@ class ThirdExtension extends PlainExtension {
     return 'third' as const;
   }
 
-  createCommands = () => {
+  createCommands() {
     return {
       notChainable: (value: string) => {
         return nonChainable(() => false);
       },
     };
-  };
+  }
 }
 
 type Chainable = ChainedFromExtensions<FirstExtension | SecondExtension | ThirdExtension>;

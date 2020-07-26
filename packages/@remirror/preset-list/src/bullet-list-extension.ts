@@ -26,14 +26,14 @@ export class BulletListExtension extends NodeExtension {
     };
   }
 
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Toggle the bullet list.
        */
       toggleBulletList: () => toggleList(this.type, this.store.schema.nodes.listItem),
     };
-  };
+  }
 
   createKeymap = (): KeyBindings => {
     return {

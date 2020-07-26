@@ -54,7 +54,7 @@ export class ImageExtension extends NodeExtension {
     };
   }
 
-  createCommands = () => {
+  createCommands() {
     return {
       insertImage: (
         attributes: ProsemirrorAttributes<ImageExtensionAttributes>,
@@ -71,7 +71,7 @@ export class ImageExtension extends NodeExtension {
         return true;
       },
     };
-  };
+  }
 
   createPlugin = (): CreatePluginReturn => {
     return {

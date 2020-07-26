@@ -98,7 +98,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
     };
   }
 
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Call this method to toggle the code block.
@@ -166,7 +166,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
         })(parameter);
       },
     };
-  };
+  }
 
   /**
    * Create an input rule that listens converts the code fence into a code block

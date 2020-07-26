@@ -99,7 +99,7 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
     return [ySyncPlugin(type), yCursorPlugin(this.provider.awareness), yUndoPlugin()];
   };
 
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Undo within a collaborative editor.
@@ -111,7 +111,7 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
        */
       yRedo: (): CommandFunction => nonChainable(convertCommand(redo)),
     };
-  };
+  }
 
   /**
    * This managers the updates of the collaboration provider.

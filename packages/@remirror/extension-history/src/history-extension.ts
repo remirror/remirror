@@ -140,7 +140,7 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
   /**
    * Provide the undo and redo commands.
    */
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Undo the last action that occurred. This can be overridden by
@@ -165,5 +165,5 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
        */
       redo: () => this.wrapMethod(redo),
     };
-  };
+  }
 }

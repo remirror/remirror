@@ -92,7 +92,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     };
   };
 
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Create or update the link if it doesn't currently exist at the current selection.
@@ -133,7 +133,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         };
       },
     };
-  };
+  }
 
   createPasteRules = () => {
     return [

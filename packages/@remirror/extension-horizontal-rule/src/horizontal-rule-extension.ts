@@ -25,7 +25,7 @@ export class HorizontalRuleExtension extends NodeExtension {
     };
   }
 
-  createCommands = () => {
+  createCommands() {
     return {
       horizontalRule: (): CommandFunction => ({ state, dispatch }) => {
         if (dispatch) {
@@ -35,7 +35,7 @@ export class HorizontalRuleExtension extends NodeExtension {
         return true;
       },
     };
-  };
+  }
 
   createInputRules = (): InputRule[] => {
     return [nodeInputRule({ regexp: /^(?:---|___\s|\*\*\*\s)$/, type: this.type })];

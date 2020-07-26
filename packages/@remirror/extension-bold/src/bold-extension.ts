@@ -86,7 +86,7 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
     return [markInputRule({ regexp: /(?:\*\*|__)([^*_]+)(?:\*\*|__)$/, type: this.type })];
   };
 
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Toggle the bold styling on and off. Remove the formatting if any
@@ -124,5 +124,5 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
         return true;
       },
     };
-  };
+  }
 }

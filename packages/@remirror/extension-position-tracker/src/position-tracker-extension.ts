@@ -159,7 +159,7 @@ export class PositionTrackerExtension extends PlainExtension<PositionTrackerOpti
     };
   };
 
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Command to dispatch a transaction adding the tracker position to be tracked.
@@ -179,7 +179,7 @@ export class PositionTrackerExtension extends PlainExtension<PositionTrackerOpti
        */
       clearPositionTrackers: this.#commandFactory<void>('clearPositionTrackers'),
     };
-  };
+  }
 
   createPlugin = (): CreatePluginReturn<DecorationSet> => {
     const name = this.name;

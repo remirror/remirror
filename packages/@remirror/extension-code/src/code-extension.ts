@@ -31,14 +31,14 @@ export class CodeExtension extends MarkExtension {
     };
   };
 
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Toggle the current selection as a code mark.
        */
       toggleCode: () => convertCommand(toggleMark(this.type)),
     };
-  };
+  }
 
   createInputRules = () => {
     return [

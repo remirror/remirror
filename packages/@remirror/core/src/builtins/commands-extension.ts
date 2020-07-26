@@ -132,7 +132,7 @@ export class CommandsExtension extends PlainExtension {
   /**
    * Create the default commands available to all extensions.
    */
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Create a custom transaction.
@@ -230,7 +230,7 @@ export class CommandsExtension extends PlainExtension {
         };
       },
     };
-  };
+  }
 
   /**
    * This plugin is here only to keep track of the forced updates meta data.

@@ -60,13 +60,13 @@ export class ParagraphExtension extends NodeExtension<ParagraphOptions> {
   /**
    * Provides the commands that this extension uses.
    */
-  createCommands = () => {
+  createCommands() {
     return {
       createParagraph: (attributes: ParagraphExtensionAttributes) => {
         return convertCommand(setBlockType(this.type, attributes));
       },
     };
-  };
+  }
 }
 
 export interface ParagraphOptions {

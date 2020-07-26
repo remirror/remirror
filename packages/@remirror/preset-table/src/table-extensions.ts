@@ -68,7 +68,7 @@ export class TableExtension extends NodeExtension<TableOptions> {
   /**
    * Create the commands that can be used for the table.
    */
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Create a table in the editor at the current selection point.
@@ -168,7 +168,7 @@ export class TableExtension extends NodeExtension<TableOptions> {
        */
       fixTables: () => fixTablesCommand,
     };
-  };
+  }
 
   createHelpers = () => {
     return {

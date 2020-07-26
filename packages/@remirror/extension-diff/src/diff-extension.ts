@@ -87,7 +87,7 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
   /**
    * Create the command for managing the commits in the document.
    */
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Attach a commit message to the recent change.
@@ -109,7 +109,7 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
        */
       removeHighlightedCommit: (commit: Commit | CommitId) => this.removeHighlightedCommit(commit),
     };
-  };
+  }
 
   createHelpers = () => {
     return {

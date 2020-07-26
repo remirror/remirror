@@ -43,7 +43,7 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
     this.getSendableSteps = debounce(this.options.debounceMs, this.getSendableSteps);
   }
 
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Send a collaboration update.
@@ -75,7 +75,7 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
         return true;
       },
     };
-  };
+  }
 
   createExternalPlugins = () => {
     const { version, clientID } = this.options;

@@ -185,7 +185,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     };
   }
 
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Create a new mention
@@ -203,7 +203,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
       removeMention: ({ range }: Partial<RangeParameter> = object()) =>
         removeMark({ type: this.type, expand: true, range }),
     };
-  };
+  }
 
   createPasteRules = () => {
     return this.options.matchers.map((matcher) => {

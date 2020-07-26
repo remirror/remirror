@@ -89,7 +89,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
     ];
   };
 
-  createCommands = () => {
+  createCommands() {
     const commands = {
       /**
        * Insert an emoji into the document at the requested location by name
@@ -153,7 +153,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
     };
 
     return commands;
-  };
+  }
 
   createHelpers = () => {
     return {

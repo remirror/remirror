@@ -114,7 +114,7 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
   /**
    * Provides the commands for the iFrame extension.
    */
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Add a custom iFrame to the editor.
@@ -136,7 +136,7 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
        */
       updateYouTubeVideo: this.updateYouTubeVideo,
     };
-  };
+  }
 
   /**
    * Creates the command for adding an iFrame to the editor.

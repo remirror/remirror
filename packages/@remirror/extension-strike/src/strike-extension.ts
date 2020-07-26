@@ -47,14 +47,14 @@ export class StrikeExtension extends MarkExtension {
     };
   };
 
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Toggle the strike through formatting annotation.
        */
       toggleStrike: () => convertCommand(toggleMark(this.type)),
     };
-  };
+  }
 
   createInputRules = () => {
     return [markInputRule({ regexp: /~([^~]+)~$/, type: this.type })];

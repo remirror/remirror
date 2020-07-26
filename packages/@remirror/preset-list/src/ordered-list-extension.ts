@@ -52,14 +52,14 @@ export class OrderedListExtension extends NodeExtension {
     };
   }
 
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Toggle the ordered list for the current selection.
        */
       toggleOrderedList: () => toggleList(this.type, this.store.schema.nodes.listItem),
     };
-  };
+  }
 
   createKeymap = (): KeyBindings => {
     return {

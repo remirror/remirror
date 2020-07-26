@@ -26,7 +26,7 @@ export class BlockquoteExtension extends NodeExtension {
     };
   }
 
-  createCommands = () => {
+  createCommands() {
     return {
       /**
        * Toggle the blockquote at the current selection.
@@ -40,7 +40,7 @@ export class BlockquoteExtension extends NodeExtension {
        */
       toggleBlockquote: (): CommandFunction => toggleWrap(this.type),
     };
-  };
+  }
 
   createKeymap = (): KeyBindings => {
     return {
