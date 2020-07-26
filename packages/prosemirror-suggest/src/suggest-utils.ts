@@ -9,16 +9,16 @@ import {
   ResolvedPosParameter,
   TextParameter,
 } from '@remirror/core-types';
-import { isSelectionEmpty } from '@remirror/core-utils';
 
 import { ChangeReason, ExitReason } from './suggest-constants';
-import { createRegexFromSuggestion, regexToString } from './suggest-helpers';
+import { createRegexFromSuggester, regexToString } from './suggest-helpers';
 import { isChange, isEntry, isExit, isJump, isMove } from './suggest-predicates';
 import {
   CompareMatchParameter,
+  DocChangedParameter,
   ReasonParameter,
-  Suggestion,
-  SuggestionParameter,
+  Suggester,
+  SuggesterParameter,
   SuggestKeyBindingMap,
   SuggestKeyBindingParameter,
   SuggestReasonMap,
@@ -26,12 +26,12 @@ import {
   SuggestStateMatchParameter,
 } from './suggest-types';
 
+type CreateMatchWithReasonParameter<Reason> = SuggestStateMatchParameter & ReasonParameter<Reason>;
+
 /**
  * Small utility method for creating a match with the reason property available.
  */
-function createMatchWithReason<Reason>(
-  parameter: SuggestStateMatchParameter & ReasonParameter<Reason>,
-) {
+function createMatchWithReason<Reason>(parameter: CreateMatchWithReasonParameter<Reason>) {
   const { match, reason } = parameter;
 
   return {
@@ -40,19 +40,20 @@ function createMatchWithReason<Reason>(
   };
 }
 
+type IsPrefixValidOptions = Pick<
+  Required<Suggester>,
+  'invalidPrefixCharacters' | 'validPrefixCharacters'
+>;
+
 /**
  * Checks to see if the text before the matching character is a valid prefix.
  *
  * @param prefix - the prefix to test
  * @param params - an object with the regex testing values
  */
-const isPrefixValid = (
-  prefix: string,
-  {
-    invalidPrefixCharacters,
-    validPrefixCharacters,
-  }: Pick<Required<Suggestion>, 'invalidPrefixCharacters' | 'validPrefixCharacters'>,
-) => {
+function isPrefixValid(prefix: string, options: IsPrefixValidOptions) {
+  const { invalidPrefixCharacters, validPrefixCharacters } = options;
+
   if (!isUndefined(invalidPrefixCharacters)) {
     const regex = new RegExp(regexToString(invalidPrefixCharacters));
     return !regex.test(prefix);
@@ -62,18 +63,19 @@ const isPrefixValid = (
     const regex = new RegExp(regexToString(validPrefixCharacters));
     return regex.test(prefix);
   }
-};
+}
 
 /**
  * Find the position of a mention for a given selection and character
  *
  * @param params
  */
-const findPosition = ({ text, regexp, $pos, char, suggester }: FindPositionParameter) => {
-  let position: SuggestStateMatch | undefined;
-
+function findPosition(parameter: FindPositionParameter) {
+  const { text, regexp, $pos, char, suggester } = parameter;
   const cursor = $pos.pos; // The current cursor position
   const start = $pos.start(); // The starting position for matches
+
+  let position: SuggestStateMatch | undefined;
 
   findMatches(text, regexp).forEach((match) => {
     // Check the character before the current match to ensure it is not one of
@@ -106,20 +108,20 @@ const findPosition = ({ text, regexp, $pos, char, suggester }: FindPositionParam
     }
   });
   return position;
-};
+}
+
+type FindMatchParameter = ResolvedPosParameter & SuggesterParameter;
 
 /**
- * Checks if any matches exist at the current selection for so that the
- * suggesters be activated or deactivated.
+ * Checks if any matches exist at the current selection so that the
+ * suggesters can be activated or deactivated.
  */
-function findMatch({
-  $pos,
-  suggester,
-}: ResolvedPosParameter & SuggestionParameter): SuggestStateMatch | undefined {
+function findMatch(parameter: FindMatchParameter): SuggestStateMatch | undefined {
+  const { $pos, suggester } = parameter;
   const { char, name, startOfLine, supportedCharacters, matchOffset } = suggester;
 
   // Create the regular expression to match the text against
-  const regexp = createRegexFromSuggestion({ char, matchOffset, startOfLine, supportedCharacters });
+  const regexp = createRegexFromSuggester({ char, matchOffset, startOfLine, supportedCharacters });
 
   // All the text in the current node
   const text = $pos.doc.textBetween($pos.before(), $pos.end(), NULL_CHARACTER, NULL_CHARACTER);
@@ -135,6 +137,8 @@ function findMatch({
   });
 }
 
+type RecheckMatchParameter = SuggestStateMatchParameter & EditorStateParameter;
+
 /**
  * Checks the provided match and generates a new match. This is useful for
  * determining the kind of change that has happened.
@@ -142,9 +146,10 @@ function findMatch({
  * If the match still exists and it is different then it's likely a split has
  * occurred.
  */
-const recheckMatch = ({ state, match }: SuggestStateMatchParameter & EditorStateParameter) => {
+function recheckMatch(parameter: RecheckMatchParameter) {
+  const { state, match } = parameter;
   try {
-    // Wrapped in try catch because it's possible for everything to be deleted
+    // Wrapped in try/catch because it's possible for everything to be deleted
     // and the doc.resolve will fail.
     return findMatch({
       $pos: state.doc.resolve(match.range.to),
@@ -153,7 +158,10 @@ const recheckMatch = ({ state, match }: SuggestStateMatchParameter & EditorState
   } catch {
     return;
   }
-};
+}
+
+type CreateInsertReasonParameter = MakeOptional<CompareMatchParameter, 'next'> &
+  EditorStateParameter;
 
 /**
  * Check whether the insert action occurred at the end, in the middle or caused
@@ -162,11 +170,9 @@ const recheckMatch = ({ state, match }: SuggestStateMatchParameter & EditorState
  * Prev refers to the original previous and next refers to the updated version
  * after the split
  */
-const createInsertReason = ({
-  prev,
-  next,
-  state,
-}: MakeOptional<CompareMatchParameter, 'next'> & EditorStateParameter): SuggestReasonMap => {
+function createInsertReason(parameter: CreateInsertReasonParameter): SuggestReasonMap {
+  const { prev, next, state } = parameter;
+
   // Has the text been removed? TODO how to tests for deletions mid document?
   if (!next && prev.range.from >= state.doc.nodeSize) {
     return {
@@ -198,16 +204,15 @@ const createInsertReason = ({
   }
 
   return {};
-};
+}
+
+type FindJumpReasonParameter = CompareMatchParameter & EditorStateParameter;
 
 /**
  * Find the reason for the Jump
  */
-const findJumpReason = ({
-  prev,
-  next,
-  state,
-}: CompareMatchParameter & EditorStateParameter): SuggestReasonMap => {
+function findJumpReason(parameter: FindJumpReasonParameter): SuggestReasonMap {
+  const { prev, next, state } = parameter;
   const value: SuggestReasonMap = object();
 
   const updatedPrevious = recheckMatch({ state, match: prev });
@@ -230,7 +235,11 @@ const findJumpReason = ({
     exit: exit ?? createMatchWithReason({ match: prev, reason: ExitReason.JumpBackward }),
     change: createMatchWithReason({ match: next, reason: ChangeReason.JumpBackward }),
   };
-};
+}
+
+type FindExitReasonParameter = SuggestStateMatchParameter &
+  EditorStateParameter &
+  ResolvedPosParameter;
 
 /**
  * Find the reason for the exit.
@@ -238,11 +247,8 @@ const findJumpReason = ({
  * This provides some context and helps sets up a helper command with sane
  * defaults.
  */
-const findExitReason = ({
-  match,
-  state,
-  $pos,
-}: SuggestStateMatchParameter & EditorStateParameter & ResolvedPosParameter) => {
+function findExitReason(parameter: FindExitReasonParameter) {
+  const { match, state, $pos } = parameter;
   const { selection } = state;
   const updatedPrevious = recheckMatch({ match, state });
 
@@ -253,7 +259,7 @@ const findExitReason = ({
 
   // Exit caused by a selection
   if (
-    !isSelectionEmpty(state) &&
+    !state.selection.empty &&
     (selection.from <= match.range.from || selection.to >= match.range.end)
   ) {
     return { exit: createMatchWithReason({ match, reason: ExitReason.SelectionOutside }) };
@@ -270,7 +276,7 @@ const findExitReason = ({
   }
 
   return {};
-};
+}
 
 interface TransformKeyBindingsParameter {
   /**
@@ -281,7 +287,7 @@ interface TransformKeyBindingsParameter {
   /**
    * The param object which is passed into each method.
    */
-  suggestionParameter: SuggestKeyBindingParameter;
+  suggestParameter: SuggestKeyBindingParameter;
 }
 
 /**
@@ -291,11 +297,11 @@ interface TransformKeyBindingsParameter {
 export function transformKeyBindings(
   parameter: TransformKeyBindingsParameter,
 ): Record<string, ProsemirrorCommandFunction> {
-  const { bindings, suggestionParameter } = parameter;
+  const { bindings, suggestParameter } = parameter;
   const transformed: Record<string, ProsemirrorCommandFunction> = object();
 
   for (const [key, binding] of entries(bindings)) {
-    transformed[key] = () => bool(binding(suggestionParameter));
+    transformed[key] = () => bool(binding(suggestParameter));
   }
 
   return transformed;
@@ -312,25 +318,25 @@ export function transformKeyBindings(
  */
 export function runKeyBindings(
   bindings: SuggestKeyBindingMap,
-  suggestionParameter: SuggestKeyBindingParameter,
+  suggestParameter: SuggestKeyBindingParameter,
 ) {
-  return keydownHandler(transformKeyBindings({ bindings, suggestionParameter }))(
-    suggestionParameter.view,
-    suggestionParameter.event,
+  return keydownHandler(transformKeyBindings({ bindings, suggestParameter }))(
+    suggestParameter.view,
+    suggestParameter.event,
   );
 }
 
-interface FindFromSuggestionsParameter extends ResolvedPosParameter {
+interface FindFromSuggestersParameter extends ResolvedPosParameter, DocChangedParameter {
   /**
    * The matchers to search through.
    */
-  suggesters: Array<Required<Suggestion>>;
+  suggesters: Array<Required<Suggester>>;
 }
 
 interface FindPositionParameter
-  extends Pick<Suggestion, 'name' | 'char'>,
+  extends Pick<Suggester, 'name' | 'char'>,
     TextParameter,
-    SuggestionParameter,
+    SuggesterParameter,
     ResolvedPosParameter {
   /**
    * The regexp to use
@@ -338,18 +344,16 @@ interface FindPositionParameter
   regexp: RegExp;
 }
 
+type FindReasonParameter = EditorStateParameter &
+  ResolvedPosParameter &
+  Partial<CompareMatchParameter>;
+
 /**
  * Creates an array of the actions taken based on the current prev and next
  * state field
  */
-export const findReason = ({
-  prev,
-  next,
-  state,
-  $pos,
-}: EditorStateParameter &
-  ResolvedPosParameter &
-  Partial<CompareMatchParameter>): SuggestReasonMap => {
+export function findReason(parameter: FindReasonParameter): SuggestReasonMap {
+  const { prev, next, state, $pos } = parameter;
   const value: SuggestReasonMap = object();
 
   if (!prev && !next) {
@@ -381,21 +385,22 @@ export const findReason = ({
     return {
       change: createMatchWithReason({
         match: compare.next,
-        reason: isSelectionEmpty(state) ? ChangeReason.Move : ChangeReason.SelectionInside,
+        reason: state.selection.empty ? ChangeReason.Move : ChangeReason.SelectionInside,
       }),
     };
   }
 
   return value;
-};
+}
 
 /**
  * Find a match for the provided matchers
  */
-export function findFromSuggestions({
-  suggesters,
-  $pos,
-}: FindFromSuggestionsParameter): SuggestStateMatch | undefined {
+export function findFromSuggesters(
+  parameter: FindFromSuggestersParameter,
+): SuggestStateMatch | undefined {
+  const { suggesters, $pos } = parameter;
+
   // Find the first match and break when done
   for (const suggester of suggesters) {
     try {

@@ -8,17 +8,17 @@ import {
 import { ChangeReason, ExitReason } from './suggest-constants';
 
 /**
- * This `Suggestion` interface defines all the options required to create a
+ * This `Suggester` interface defines all the options required to create a
  * suggestion within your editor.
  *
  * @remarks
  *
  * The options are passed to the {@link suggest} method which uses them.
  *
- * @typeParam Command - the command method a {@link Suggestion} makes available
+ * @typeParam Command - the command method a {@link Suggester} makes available
  * to its handlers.
  */
-export interface Suggestion<Command extends AnyFunction<void> = AnyFunction<void>> {
+export interface Suggester<Command extends AnyFunction<void> = AnyFunction<void>> {
   /**
    * The activation character(s) to match against.
    *
@@ -30,7 +30,7 @@ export interface Suggestion<Command extends AnyFunction<void> = AnyFunction<void
    *
    * The character does not have to be unique amongst the suggesters and the
    * eventually matched suggester will depend on the order in which the
-   * suggestions are added to the plugin.
+   * suggesters are added to the plugin.
    */
   char: string;
 
@@ -54,7 +54,7 @@ export interface Suggestion<Command extends AnyFunction<void> = AnyFunction<void
   startOfLine?: boolean;
 
   /**
-   * A regex containing all supported characters when within a suggestion.
+   * A regex containing all supported characters when within an active suggester.
    *
    * @defaultValue `/[\w\d_]+/`
    */
@@ -65,7 +65,7 @@ export interface Suggestion<Command extends AnyFunction<void> = AnyFunction<void
    *
    * @remarks
    *
-   * This will be used when {@link Suggestion.invalidPrefixCharacters} is not
+   * This will be used when {@link Suggester.invalidPrefixCharacters} is not
    * provided.
    *
    * @defaultValue `/^[\s\0]?$/` - translation: only space and zero width
@@ -111,8 +111,7 @@ export interface Suggestion<Command extends AnyFunction<void> = AnyFunction<void
   appendText?: string;
 
   /**
-   * Class name to use for the decoration (while the suggestion is still being
-   * written)
+   * Class name to use for the decoration while the suggester is active.
    *
    * @defaultValue 'suggest'
    */
@@ -126,26 +125,26 @@ export interface Suggestion<Command extends AnyFunction<void> = AnyFunction<void
   suggestTag?: string;
 
   /**
-   * Set a class for the ignored suggestion decoration.
+   * Set a class for the ignored suggester decoration.
    *
    * @defaultValue ''
    */
   ignoredClassName?: string;
 
   /**
-   * Set a tag for the ignored suggestion decoration.
+   * Set a tag for the ignored suggester decoration.
    *
    * @defaultValue 'span'
    */
   ignoredTag?: string;
 
   /**
-   * When true, decorations are not created when this mention is being edited..
+   * When true, decorations are not created when this mention is being edited.
    */
   noDecorations?: boolean;
 
   /**
-   * Called whenever a suggestion becomes active or changes in any way.
+   * Called whenever a suggester becomes active or changes in any way.
    *
    * @remarks
    *
@@ -157,7 +156,7 @@ export interface Suggestion<Command extends AnyFunction<void> = AnyFunction<void
   onChange?: SuggestChangeHandlerMethod<Command>;
 
   /**
-   * Called whenever a suggestion is exited with the pre-exit match value.
+   * Called whenever a suggester is exited with the pre-exit match value.
    *
    * @remarks
    *
@@ -200,7 +199,7 @@ export interface Suggestion<Command extends AnyFunction<void> = AnyFunction<void
    * @remarks
    *
    * Suggested actions are useful for developing plugins and extensions which
-   * provide useful defaults for managing the suggestion lifecycle.
+   * provide useful defaults based on changes happening to the suggester.
    */
   createCommand?: (parameter: CreateSuggestCommandParameter) => Command;
 }
@@ -226,7 +225,7 @@ export interface AddIgnoredParameter extends RemoveIgnoredParameter {
  * The parameters needed for the {@link SuggestIgnoreParameter.removeIgnored}
  * action method available to the suggest plugin handlers.
  */
-export interface RemoveIgnoredParameter extends Pick<Suggestion, 'char' | 'name'> {
+export interface RemoveIgnoredParameter extends Pick<Suggester, 'char' | 'name'> {
   /**
    * The starting point of the match that should be ignored.
    */
@@ -235,7 +234,7 @@ export interface RemoveIgnoredParameter extends Pick<Suggestion, 'char' | 'name'
 
 /**
  * A parameter builder interface describing the ignore methods available to the
- * {@link Suggestion} handlers.
+ * {@link Suggester} handlers.
  */
 export interface SuggestIgnoreParameter {
   /**
@@ -261,7 +260,7 @@ export interface SuggestIgnoreParameter {
    * ```ts
    * const suggester = {
    *   onExit: ({ addIgnored, range: { from }, suggester: { char, name } }: SuggestExitHandlerParameter) => {
-   *     addIgnored({ from, char, name }); // Ignore this suggestion
+   *     addIgnored({ from, char, name }); // Ignore this suggester
    *   },
    * }
    * ```
@@ -275,12 +274,16 @@ export interface SuggestIgnoreParameter {
   clearIgnored: (name?: string) => void;
 
   /**
-   * Use this method to skip the next `onExit` callback. This is useful when
-   * you manually call a command which applies the suggestion outside of the
-   * `onExit` callback. When that happens on exit will be called again by default
-   * and if you don't have the logic set up properly it will rerun your exit
-   * command. This can lead to mismatched transaction errors since the `onExit`
-   * handler is provided the last known value and this is no longer valid.
+   * Use this method to skip the next `onExit` callback.
+   *
+   * @remarks
+   *
+   * This is useful when you manually call a command which applies the
+   * suggestion outside of the `onExit` callback. When that happens `onExit`
+   * will still be triggered and if you don't have the logic set
+   * up properly it will rerun your exit command. This can lead to mismatched
+   * transaction errors since the `onExit` handler is provided the last active
+   * range and query and these values no longer valid.
    *
    * This helper method can be applied to make life easier. Call it when running
    * a command in a click handler or key binding and you don't have to worry
@@ -329,11 +332,11 @@ export interface FromToEndParameter extends FromToParameter {
  * Describes the properties of a match which includes range and the text as well
  * as information of the suggester that created the match.
  *
- * @typeParam Command - the command method a {@link Suggestion} makes available
+ * @typeParam Command - the command method a {@link Suggester} makes available
  * to its handlers.
  */
 export interface SuggestStateMatch<Command extends AnyFunction<void> = AnyFunction<void>>
-  extends SuggestionParameter<Command> {
+  extends SuggesterParameter<Command> {
   /**
    * Range of current match; for example `@foo|bar` (where | is the cursor)
    * - `from` is the start (= 0)
@@ -356,6 +359,18 @@ export interface SuggestStateMatch<Command extends AnyFunction<void> = AnyFuncti
    * `'@awesome'`.
    */
   matchText: MatchValue;
+}
+
+export interface DocChangedParameter {
+  /**
+   * - `true` when there was a changed in the editor content.
+   * - `false` when only the selection changed.
+   *
+   * TODO currently unused. Should be used to differentiate between a cursor
+   * exit using the keyboard navigation and a document update change typing
+   * invalid character, space, etc...
+   */
+  docChanged: boolean;
 }
 
 /**
@@ -418,7 +433,7 @@ export interface SuggestCallbackParameter<Command extends AnyFunction<void> = An
     SuggestIgnoreParameter {}
 
 /**
- * The parameters required by the {@link Suggestion.onKeyDown}.
+ * The parameters required by the {@link Suggester.onKeyDown}.
  *
  * @remarks
  *
@@ -457,9 +472,9 @@ export interface ReasonParameter<Reason = ExitReason | ChangeReason> {
 }
 
 /**
- * The parameters passed to the {@link Suggestion.onChange} method.
+ * The parameters passed to the {@link Suggester.onChange} method.
  *
- * @typeParam Command - the command method a {@link Suggestion} makes available
+ * @typeParam Command - the command method a {@link Suggester} makes available
  * to its handlers.
  */
 export interface SuggestChangeHandlerParameter<
@@ -471,9 +486,9 @@ export type SuggestChangeHandlerMethod<Command extends AnyFunction<void> = AnyFu
 ) => void;
 
 /**
- * The parameters passed to the {@link Suggestion.onExit} method.
+ * The parameters passed to the {@link Suggester.onExit} method.
  *
- * @typeParam Command - the command method a {@link Suggestion} makes available
+ * @typeParam Command - the command method a {@link Suggester} makes available
  * to its handlers.
  */
 export interface SuggestExitHandlerParameter<Command extends AnyFunction<void> = AnyFunction<void>>
@@ -485,9 +500,9 @@ export type SuggestExitHandlerMethod<Command extends AnyFunction<void> = AnyFunc
 ) => void;
 
 /**
- * The parameters passed to the {@link Suggestion.onCharacterEntry} method.
+ * The parameters passed to the {@link Suggester.onCharacterEntry} method.
  *
- * @typeParam Command - the command method a {@link Suggestion} makes available
+ * @typeParam Command - the command method a {@link Suggester} makes available
  * to its handlers.
  */
 export interface SuggestCharacterEntryParameter<
@@ -508,7 +523,7 @@ export type SuggestCharacterEntryMethod<Command extends AnyFunction<void> = AnyF
  * - {@link SuggestMarkParameter}
  * - {@link KeyboardEventParameter}
  *
- * @typeParam Command - the command method a {@link Suggestion} makes available
+ * @typeParam Command - the command method a {@link Suggester} makes available
  * to its handlers.
  */
 export interface SuggestKeyBindingParameter<Command extends AnyFunction<void> = AnyFunction<void>>
@@ -524,7 +539,7 @@ export interface SuggestKeyBindingParameter<Command extends AnyFunction<void> = 
  * Return true to prevent any further bubbling of the key event and to stop
  * other handlers from also processing the event.
  *
- * @typeParam Command - the command method a {@link Suggestion} makes available
+ * @typeParam Command - the command method a {@link Suggester} makes available
  * to its handlers.
  */
 export type SuggestKeyBinding<Command extends AnyFunction<void> = AnyFunction<void>> = (
@@ -532,9 +547,9 @@ export type SuggestKeyBinding<Command extends AnyFunction<void> = AnyFunction<vo
 ) => boolean | void;
 
 /**
- * The keybindings shape for the {@link Suggestion.keyBindings} property.
+ * The keybindings shape for the {@link Suggester.keyBindings} property.
  *
- * @typeParam Command - the command method a {@link Suggestion} makes available
+ * @typeParam Command - the command method a {@link Suggester} makes available
  * to its handlers.
  */
 export type SuggestKeyBindingMap<Command extends AnyFunction<void> = AnyFunction<void>> = Partial<
@@ -548,7 +563,7 @@ export type SuggestKeyBindingMap<Command extends AnyFunction<void> = AnyFunction
 /**
  * A parameter builder interface which adds the command property.
  *
- * @typeParam Command - the command method a {@link Suggestion} makes available
+ * @typeParam Command - the command method a {@link Suggester} makes available
  * to its handlers.
  */
 export interface SuggestCommandParameter<Command extends AnyFunction<void> = AnyFunction<void>> {
@@ -559,11 +574,11 @@ export interface SuggestCommandParameter<Command extends AnyFunction<void> = Any
   command: Command;
 }
 
-export interface SuggestionParameter<Command extends AnyFunction<void> = AnyFunction<void>> {
+export interface SuggesterParameter<Command extends AnyFunction<void> = AnyFunction<void>> {
   /**
    * The suggester to use for finding matches.
    */
-  suggester: Required<Suggestion<Command>>;
+  suggester: Required<Suggester<Command>>;
 }
 
 export interface SuggestStateMatchReason<Reason>
@@ -591,7 +606,7 @@ export interface SuggestReasonMap {
  *
  * @remarks
  *
- * This is used to build parameters for {@link Suggestion} handler methods.
+ * This is used to build parameters for {@link Suggester} handler methods.
  *
  * @typeParam Reason - Whether this is change or an exit reason.
  */

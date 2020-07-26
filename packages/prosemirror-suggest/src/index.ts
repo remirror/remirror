@@ -34,9 +34,9 @@
  *
  * ## Getting Started
  *
- * `prosemirror-suggest` uses configuration objects called `Suggestion`'s to
+ * `prosemirror-suggest` uses configuration objects called `Suggester`'s to
  * define the behaviour of the suggesters you create. By calling the exported
- * `suggest` method with all required `Suggestion`'s the functionality is added
+ * `suggest` method with all required `Suggester`'s the functionality is added
  * to the editor in one plugin.
  *
  * In the following example we're creating an emoji suggestion plugin that
@@ -44,14 +44,14 @@
  * emojis based on the query typed so far.
  *
  * ```ts
- * import { Suggestion, suggest } from 'prosemirror-suggest';
+ * import { Suggester, suggest } from 'prosemirror-suggest';
  *
  * const maxResults = 10;
  * let selectedIndex = 0;
  * let emojiList: string[] = [];
  * let showSuggestions = false;
  *
- * const suggestEmojis: Suggestion = {
+ * const suggestEmojis: Suggester = {
  *   // By default decorations are used to highlight the currently matched
  *   // suggestion in the dom.
  *   // In this example we don't need decorations (in fact they cause problems when the
@@ -109,11 +109,11 @@
  * };
  *
  *  // Create the plugin with the above configuration. It also supports multiple plugins being added.
- * const suggestionPlugin = suggest(suggestEmojis);
+ * const suggestPlugin = suggest(suggestEmojis);
  *
  *  // Include the plugin in the created editor state.
  * const state = EditorState.create({schema,
- *   plugins: [suggestionPlugin],
+ *   plugins: [suggestPlugin],
  * });
  * ```
  *

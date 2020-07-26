@@ -1,10 +1,9 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
 
 import { EditorSchema, EditorState } from '@remirror/core-types';
-import { getPluginState } from '@remirror/core-utils';
 
 import { SuggestState } from './suggest-state';
-import { Suggestion } from './suggest-types';
+import { Suggester } from './suggest-types';
 
 const suggestPluginKey = new PluginKey('suggest');
 
@@ -13,10 +12,8 @@ const suggestPluginKey = new PluginKey('suggest');
  *
  * @param state - the editor state.
  */
-export function getSuggestPluginState<Schema extends EditorSchema = any>(
-  state: EditorState<Schema>,
-) {
-  return getPluginState<SuggestState>(suggestPluginKey, state);
+export function getSuggestPluginState(state: EditorState): SuggestState {
+  return suggestPluginKey.getState(state);
 }
 
 /**
@@ -27,7 +24,7 @@ export function getSuggestPluginState<Schema extends EditorSchema = any>(
  */
 export function addSuggester<Schema extends EditorSchema = any>(
   state: EditorState<Schema>,
-  suggester: Suggestion,
+  suggester: Suggester,
 ) {
   return getSuggestPluginState(state).addSuggester(suggester);
 }
@@ -38,29 +35,29 @@ export function addSuggester<Schema extends EditorSchema = any>(
  */
 export function removeSuggester<Schema extends EditorSchema = any>(
   state: EditorState<Schema>,
-  suggester: Suggestion | string,
+  suggester: Suggester | string,
 ) {
   return getSuggestPluginState(state).removeSuggester(suggester);
 }
 
 /**
- * This creates a suggestion plugin with all the suggesters provided.
+ * This creates a suggest plugin with all the suggesters provided.
  *
  * @remarks
  *
- * In the following example we're creating an emoji suggestion plugin that
+ * In the following example we're creating an emoji suggest plugin that
  * responds to the colon character with a query and presents a list of matching
  * emojis based on the query typed so far.
  *
  * ```ts
- * import { Suggestion, suggest } from 'prosemirror-suggest';
+ * import { Suggester, suggest } from 'prosemirror-suggest';
  *
  * const maxResults = 10;
  * let selectedIndex = 0;
  * let emojiList: string[] = [];
  * let showSuggestions = false;
  *
- * const suggestEmojis: Suggestion = {
+ * const suggestEmojis: Suggester = {
  *   // By default decorations are used to highlight the currently matched
  *   // suggestion in the dom.
  *   // In this example we don't need decorations (in fact they cause problems when the
@@ -118,11 +115,11 @@ export function removeSuggester<Schema extends EditorSchema = any>(
  * };
  *
  *  // Create the plugin with the above configuration. It also supports multiple plugins being added.
- * const suggestionPlugin = suggest(suggestEmojis);
+ * const suggesterPlugin = suggest(suggestEmojis);
  *
  *  // Include the plugin in the created editor state.
  * const state = EditorState.create({schema,
- *   plugins: [suggestionPlugin],
+ *   plugins: [suggesterPlugin],
  * });
  * ```
  *
@@ -132,13 +129,13 @@ export function removeSuggester<Schema extends EditorSchema = any>(
  * - `const plugin = suggest(two, one, three)` - Here `two` will be checked
  *   first, then `one` and then `three`.
  *
- * Only one suggestion can match at any given time. The order and specificity of
- * the regex parameters help determines which suggestion will be active.
+ * Only one suggester can match at any given time. The order and specificity of
+ * the regex parameters help determines which suggester will be active.
  *
  * @param suggesters - a list of suggesters in the order they should be
  * evaluated.
  */
-export function suggest<Schema extends EditorSchema = any>(...suggesters: Suggestion[]) {
+export function suggest<Schema extends EditorSchema = any>(...suggesters: Suggester[]) {
   const pluginState = SuggestState.create(suggesters);
 
   return new Plugin<SuggestState, Schema>({
@@ -162,7 +159,7 @@ export function suggest<Schema extends EditorSchema = any>(...suggesters: Sugges
     },
 
     props: {
-      // Call the keydown hook if suggestion is active.
+      // Call the keydown hook if suggester is active.
       handleKeyDown: (_, event) => {
         return pluginState.handleKeyDown(event);
       },

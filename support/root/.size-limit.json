@@ -364,6 +364,36 @@
     "running": false
   },
   {
+    "name": "@remirror/react-components",
+    "path": "packages/@remirror/react-components/dist/react-components.esm.js",
+    "limit": "200 KB",
+    "ignore": [
+      "@remirror/core",
+      "@remirror/pm",
+      "@remirror/react",
+      "@types/react",
+      "@types/react-dom",
+      "react",
+      "react-dom"
+    ],
+    "running": false
+  },
+  {
+    "name": "@remirror/react-hooks",
+    "path": "packages/@remirror/react-hooks/dist/react-hooks.esm.js",
+    "limit": "200 KB",
+    "ignore": [
+      "@remirror/core",
+      "@remirror/pm",
+      "@remirror/react",
+      "@types/react",
+      "@types/react-dom",
+      "react",
+      "react-dom"
+    ],
+    "running": false
+  },
+  {
     "name": "@remirror/react-social",
     "path": "packages/@remirror/react-social/dist/react-social.esm.js",
     "limit": "200 KB",
@@ -424,8 +454,15 @@
   {
     "name": "prosemirror-suggest",
     "path": "packages/prosemirror-suggest/dist/prosemirror-suggest.esm.js",
-    "limit": "50 KB",
-    "ignore": ["prosemirror-view"],
+    "limit": "10 KB",
+    "ignore": [
+      "@types/prosemirror-keymap",
+      "@types/prosemirror-state",
+      "@types/prosemirror-view",
+      "prosemirror-keymap",
+      "prosemirror-state",
+      "prosemirror-view"
+    ],
     "running": false
   },
   {

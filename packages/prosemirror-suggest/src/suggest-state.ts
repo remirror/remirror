@@ -13,7 +13,6 @@ import {
   TextParameter,
   TransactionParameter,
 } from '@remirror/core-types';
-import { hasTransactionChanged } from '@remirror/core-utils';
 
 import { ChangeReason, DEFAULT_SUGGESTER, ExitReason } from './suggest-constants';
 import { isInvalidSplitReason, isJumpReason, isValidMatch } from './suggest-predicates';
@@ -22,46 +21,54 @@ import {
   CompareMatchParameter,
   RemoveIgnoredParameter,
   SuggestCallbackParameter,
-  Suggestion,
+  Suggester,
   SuggestKeyBindingParameter,
   SuggestReasonMap,
   SuggestStateMatch,
   SuggestStateMatchReason,
 } from './suggest-types';
-import { findFromSuggestions, findReason, runKeyBindings } from './suggest-utils';
+import { findFromSuggesters, findReason, runKeyBindings } from './suggest-utils';
 
 /**
- * The suggestion state which manages the list of suggesters.
+ * The `prosemirror-suggest` state which manages the list of suggesters.
  */
 export class SuggestState {
   /**
    * Create an instance of the SuggestState class.
    */
-  static create(suggesters: Suggestion[]) {
+  static create(suggesters: Suggester[]) {
     return new SuggestState(suggesters);
   }
 
+  /**
+   * True when the doc changed in the most recently applied transaction.
+   */
+  #docChanged = false;
+
+  /**
+   * Whether the next exit should be ignored.
+   */
   #ignoreNextExit = false;
 
   /**
    * The suggesters that have been registered for the suggesters plugin.
    */
-  #suggesters: Array<Required<Suggestion>>;
+  #suggesters: Array<Required<Suggester>>;
 
   /**
    * Keeps track of the current state.
    */
-  private next?: Readonly<SuggestStateMatch>;
+  #next?: Readonly<SuggestStateMatch>;
 
   /**
    * Holds onto the previous active state.
    */
-  private prev?: Readonly<SuggestStateMatch>;
+  #prev?: Readonly<SuggestStateMatch>;
 
   /**
    * The handler matches which are passed into `onChange` / `onExit` handlers.
    */
-  private handlerMatches: SuggestReasonMap = object();
+  #handlerMatches: SuggestReasonMap = object();
 
   /**
    * Holds a copy of the view
@@ -71,7 +78,7 @@ export class SuggestState {
   /**
    * The set of ignored decorations
    */
-  private ignored = DecorationSet.empty;
+  #ignored = DecorationSet.empty;
 
   /**
    * Lets us know whether the most recent change was to remove a mention.
@@ -81,13 +88,17 @@ export class SuggestState {
    * in the apply step check that a removal has happened and reset the
    * `handlerMatches` to prevent an infinite loop.
    */
-  private removed = false;
+  #removed = false;
 
   /**
-   * Returns the current active suggestion state field if one exists
+   * Returns the current active suggester state field if one exists
    */
   get match(): Readonly<SuggestStateMatch> | undefined {
-    return this.next ? this.next : this.prev && this.handlerMatches.exit ? this.prev : undefined;
+    return this.#next
+      ? this.#next
+      : this.#prev && this.#handlerMatches.exit
+      ? this.#prev
+      : undefined;
   }
 
   /**
@@ -103,7 +114,7 @@ export class SuggestState {
    * `regex` and the order in which they are passed in. Earlier suggesters are
    * prioritized.
    */
-  constructor(suggesters: Suggestion[]) {
+  constructor(suggesters: Suggester[]) {
     const mapper = createSuggesterMapper();
     this.#suggesters = suggesters.map(mapper);
   }
@@ -121,7 +132,7 @@ export class SuggestState {
    * `createCommand` option.
    */
   private readonly setRemovedTrue = () => {
-    this.removed = true;
+    this.#removed = true;
   };
 
   /**
@@ -167,24 +178,25 @@ export class SuggestState {
   }
 
   /**
+   * Check whether the exit callback is valid at this time.
+   */
+  private shouldRunExit(): boolean {
+    if (this.#ignoreNextExit) {
+      this.#ignoreNextExit = false;
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
    * Manages the view updates.
    */
-  private readonly onViewUpdate = () => {
-    const {
-      match,
-      handlerMatches: { change, exit },
-    } = this;
+  private onViewUpdate() {
+    const { change, exit } = this.#handlerMatches;
+    const match = this.match;
 
-    const shouldRunExit = (): boolean => {
-      if (this.#ignoreNextExit) {
-        this.#ignoreNextExit = false;
-        return false;
-      }
-
-      return true;
-    };
-
-    // Cancel update when a suggestion isn't active
+    // Cancel update when a suggester isn't active
     if ((!change && !exit) || !isValidMatch(match)) {
       return;
     }
@@ -199,13 +211,13 @@ export class SuggestState {
 
       if (movedForwards) {
         change.suggester.onChange(changeParameters);
-        shouldRunExit() && exit.suggester.onExit(exitParameters);
+        this.shouldRunExit() && exit.suggester.onExit(exitParameters);
       } else {
-        shouldRunExit() && exit.suggester.onExit(exitParameters);
+        this.shouldRunExit() && exit.suggester.onExit(exitParameters);
         change.suggester.onChange(changeParameters);
       }
 
-      this.removed = false;
+      this.#removed = false;
       return;
     }
 
@@ -213,15 +225,15 @@ export class SuggestState {
       change.suggester.onChange(this.createReasonParameter(change));
     }
 
-    if (exit && shouldRunExit()) {
+    if (exit && this.shouldRunExit()) {
       exit.suggester.onExit(this.createReasonParameter(exit));
-      this.removed = false;
+      this.#removed = false;
 
       if (isInvalidSplitReason(exit.reason)) {
-        this.handlerMatches = object();
+        this.#handlerMatches = object();
       }
     }
-  };
+  }
 
   /**
    * Update the current ignored decorations based on the latest changes to the
@@ -229,7 +241,7 @@ export class SuggestState {
    */
   private mapIgnoredDecorations(tr: Transaction) {
     // Map over and update the ignored decorations.
-    const ignored = this.ignored.map(tr.mapping, tr.doc);
+    const ignored = this.#ignored.map(tr.mapping, tr.doc);
     const decorations = ignored.find();
 
     // For suggesters with multiple characters it is possible for a `paste` or
@@ -244,7 +256,7 @@ export class SuggestState {
       return false;
     });
 
-    this.ignored = ignored.remove(invalid);
+    this.#ignored = ignored.remove(invalid);
   }
 
   ignoreNextExit = () => {
@@ -278,7 +290,7 @@ export class SuggestState {
       { char, name, specific },
     );
 
-    this.ignored = this.ignored.add(this.view.state.doc, [decoration]);
+    this.#ignored = this.#ignored.add(this.view.state.doc, [decoration]);
   };
 
   /**
@@ -290,14 +302,14 @@ export class SuggestState {
    * character.
    */
   removeIgnored = ({ from, char, name }: RemoveIgnoredParameter) => {
-    const decorations = this.ignored.find(from, from + char.length);
+    const decorations = this.#ignored.find(from, from + char.length);
     const decoration = decorations[0];
 
     if (!bool(decoration) || decoration.spec.name !== name) {
       return;
     }
 
-    this.ignored = this.ignored.remove([decoration]);
+    this.#ignored = this.#ignored.remove([decoration]);
   };
 
   /**
@@ -306,19 +318,19 @@ export class SuggestState {
    */
   clearIgnored = (name?: string) => {
     if (name) {
-      const decorations = this.ignored.find();
+      const decorations = this.#ignored.find();
       const decorationsToClear = decorations.filter(({ spec }) => {
         return spec.name === name;
       });
 
-      this.ignored = this.ignored.remove(decorationsToClear);
+      this.#ignored = this.#ignored.remove(decorationsToClear);
     } else {
-      this.ignored = DecorationSet.empty;
+      this.#ignored = DecorationSet.empty;
     }
   };
 
   private shouldIgnoreMatch({ range, suggester: { name } }: SuggestStateMatch) {
-    const decorations = this.ignored.find();
+    const decorations = this.#ignored.find();
 
     return decorations.some(({ spec, from }) => {
       if (from !== range.from) {
@@ -334,26 +346,30 @@ export class SuggestState {
    * Reset the state.
    */
   private resetState() {
-    this.handlerMatches = object();
-    this.next = undefined;
-    this.removed = false;
+    this.#handlerMatches = object();
+    this.#next = undefined;
+    this.#removed = false;
   }
 
   /**
    * Update the next state value.
    */
-  private updateReasons({ $pos, state }: UpdateReasonsParameter) {
-    const match = findFromSuggestions({ suggesters: this.#suggesters, $pos });
-    this.next = match && this.shouldIgnoreMatch(match) ? undefined : match;
+  private updateReasons(parameter: UpdateReasonsParameter) {
+    const { $pos, state } = parameter;
+    const docChanged = this.#docChanged;
+    const match = findFromSuggesters({ suggesters: this.#suggesters, $pos, docChanged });
+
+    // Track the next match if not being ignored.
+    this.#next = match && this.shouldIgnoreMatch(match) ? undefined : match;
 
     // Store the matches with reasons
-    this.handlerMatches = findReason({ next: this.next, prev: this.prev, state, $pos });
+    this.#handlerMatches = findReason({ next: this.#next, prev: this.#prev, state, $pos });
   }
 
   /**
    * Add a new suggest or replace it if it already exists.
    */
-  addSuggester(suggester: Suggestion) {
+  addSuggester(suggester: Suggester) {
     const previous = this.#suggesters.find((item) => item.name === suggester.name);
     const mapper = createSuggesterMapper();
 
@@ -371,7 +387,7 @@ export class SuggestState {
   /**
    * Remove a suggester if it exists.
    */
-  removeSuggester(suggester: Suggestion | string): void {
+  removeSuggester(suggester: Suggester | string): void {
     const name = isString(suggester) ? suggester : suggester.name;
     this.#suggesters = this.#suggesters.filter((item) => item.name !== name);
   }
@@ -381,7 +397,7 @@ export class SuggestState {
    */
   viewHandler() {
     return {
-      update: this.onViewUpdate,
+      update: this.onViewUpdate.bind(this),
     };
   }
 
@@ -395,20 +411,23 @@ export class SuggestState {
    * @param - params
    */
   apply({ tr, newState }: TransactionParameter & CompareStateParameter) {
-    const { exit } = this.handlerMatches;
+    const { exit } = this.#handlerMatches;
+    const transactionHasChanged = tr.docChanged || tr.selectionSet;
 
-    if (!hasTransactionChanged(tr) && !this.removed) {
+    if (!transactionHasChanged && !this.#removed) {
       return this;
     }
 
+    this.#docChanged = tr.docChanged;
     this.mapIgnoredDecorations(tr);
 
-    // If the previous run was an exit reset the suggestion matches
+    // If the previous run was an exit, reset the suggester matches.
     if (exit) {
       this.resetState();
     }
 
-    this.prev = this.next;
+    // Track the previous match.
+    this.#prev = this.#next;
 
     // Match against the current selection position
     this.updateReasons({ $pos: tr.selection.$from, state: newState });
@@ -467,27 +486,25 @@ export class SuggestState {
     const match = this.match;
 
     if (!isValidMatch(match)) {
-      return this.ignored;
+      return this.#ignored;
     }
 
     if (match.suggester.noDecorations) {
-      return this.ignored;
+      return this.#ignored;
     }
 
     const {
       range,
-      suggester: { name, suggestTag: decorationsTag, suggestClassName: suggestionClassName },
+      suggester: { name, suggestTag, suggestClassName },
     } = match;
     const { from, end } = range;
 
     return this.shouldIgnoreMatch(match)
-      ? this.ignored
-      : this.ignored.add(state.doc, [
+      ? this.#ignored
+      : this.#ignored.add(state.doc, [
           Decoration.inline(from, end, {
-            nodeName: decorationsTag,
-            class: name
-              ? `${suggestionClassName} ${suggestionClassName}-${name}`
-              : suggestionClassName,
+            nodeName: suggestTag,
+            class: name ? `${suggestClassName} ${suggestClassName}-${name}` : suggestClassName,
           }),
         ]);
   }
@@ -518,19 +535,19 @@ export interface SuggestStateApplyParameter<Schema extends EditorSchema = any>
 function createSuggesterMapper() {
   const names = new Set<string>();
 
-  return (suggestion: Suggestion) => {
-    if (names.has(suggestion.name)) {
+  return (suggester: Suggester) => {
+    if (names.has(suggester.name)) {
       throw new Error(
-        `A suggestion already exists with the name '${suggestion.name}'. The name provided must be unique.`,
+        `A suggester already exists with the name '${suggester.name}'. The name provided must be unique.`,
       );
     }
 
-    const clone = { ...DEFAULT_SUGGESTER, ...suggestion };
+    const clone = { ...DEFAULT_SUGGESTER, ...suggester };
 
     // Preserve any descriptors (getters and setters)
-    mergeDescriptors(clone, suggestion);
+    mergeDescriptors(clone, suggester);
 
-    names.add(suggestion.name);
+    names.add(suggester.name);
     return clone;
   };
 }

@@ -20,26 +20,41 @@
     "@remirror/core-constants": "^1.0.0-next.13",
     "@remirror/core-helpers": "^1.0.0-next.13",
     "@remirror/core-types": "^1.0.0-next.13",
-    "@remirror/core-utils": "^1.0.0-next.15",
     "@types/merge-descriptors": "1.0.1",
+    "escape-string-regexp": "^4.0.0",
+    "merge-descriptors": "1.0.1"
+  },
+  "devDependencies": {
     "@types/prosemirror-keymap": "^1.0.3",
     "@types/prosemirror-state": "^1.2.5",
     "@types/prosemirror-view": "^1.15.0",
-    "escape-string-regexp": "^4.0.0",
-    "merge-descriptors": "1.0.1",
     "prosemirror-keymap": "^1.1.4",
-    "prosemirror-state": "^1.3.3"
-  },
-  "devDependencies": {
+    "prosemirror-state": "^1.3.3",
     "prosemirror-view": "^1.15.2"
   },
   "peerDependencies": {
+    "@types/prosemirror-keymap": "^1.0.3",
+    "@types/prosemirror-state": "^1.2.5",
+    "@types/prosemirror-view": "^1.15.0",
+    "prosemirror-keymap": "^1.1.4",
+    "prosemirror-state": "^1.3.3",
     "prosemirror-view": "^1.14.9"
+  },
+  "peerDependenciesMeta": {
+    "@types/prosemirror-keymap": {
+      "optional": true
+    },
+    "@types/prosemirror-state": {
+      "optional": true
+    },
+    "@types/prosemirror-view": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "access": "public"
   },
   "meta": {
-    "sizeLimit": "50 KB"
+    "sizeLimit": "10 KB"
   }
 }
