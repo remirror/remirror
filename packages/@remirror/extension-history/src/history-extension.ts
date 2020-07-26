@@ -131,11 +131,11 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
   /**
    * Bring the `prosemirror-history` plugin with options set on this extension.
    */
-  createExternalPlugins = () => {
+  createExternalPlugins() {
     const { depth, newGroupDelay } = this.options;
 
     return [history({ depth, newGroupDelay })];
-  };
+  }
 
   /**
    * Provide the undo and redo commands.

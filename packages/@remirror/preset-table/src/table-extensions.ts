@@ -61,9 +61,9 @@ export class TableExtension extends NodeExtension<TableOptions> {
   /**
    * Add the table plugins to the editor.
    */
-  createExternalPlugins = () => {
+  createExternalPlugins() {
     return [tableEditing(), columnResizing({})];
-  };
+  }
 
   /**
    * Create the commands that can be used for the table.

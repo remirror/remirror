@@ -93,11 +93,11 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   /**
    * Create the yjs plugins.
    */
-  createExternalPlugins = () => {
+  createExternalPlugins() {
     const yDoc = this.provider.doc;
     const type = yDoc.getXmlFragment('prosemirror');
     return [ySyncPlugin(type), yCursorPlugin(this.provider.awareness), yUndoPlugin()];
-  };
+  }
 
   createCommands() {
     return {

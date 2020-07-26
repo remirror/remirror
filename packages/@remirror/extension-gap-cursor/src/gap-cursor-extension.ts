@@ -22,9 +22,9 @@ export class GapCursorExtension extends PlainExtension {
     return 'gapCursor' as const;
   }
 
-  createExternalPlugins = () => {
+  createExternalPlugins() {
     return [gapCursor()];
-  };
+  }
 }
 
 /**

@@ -77,7 +77,7 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
     };
   }
 
-  createExternalPlugins = () => {
+  createExternalPlugins() {
     const { version, clientID } = this.options;
 
     const plugin = collab({
@@ -86,7 +86,7 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
     });
 
     return [plugin];
-  };
+  }
 
   onStateUpdate(parameter: StateUpdateLifecycleParameter) {
     this.getSendableSteps(parameter.state);
