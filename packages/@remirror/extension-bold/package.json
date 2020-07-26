@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-bold",
-  "version": "1.0.0-next.10",
+  "version": "1.0.0-next.11",
   "description": "Make your text bold. Make it courageous.",
   "keywords": [
     "remirror",
@@ -26,11 +26,11 @@
     "csstype": "^2.6.11"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.10",
+    "@remirror/core": "1.0.0-next.11",
     "@remirror/pm": "1.0.0-next.4"
   },
   "peerDependencies": {
-    "@remirror/core": "^1.0.0-next.10",
+    "@remirror/core": "^1.0.0-next.11",
     "@remirror/pm": "1.0.0-next.4"
   },
   "publishConfig": {

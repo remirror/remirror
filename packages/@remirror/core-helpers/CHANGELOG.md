@@ -1,5 +1,14 @@
 # @remirror/core-helpers
 
+## 1.0.0-next.11
+
+> 2020-07-26
+
+### Major Changes
+
+- 21a9650c: Rename `getArray` to `getLazyArray`. Also bump the version of `@remirror/core-helpers`
+  to make sure it is released.
+
 ## 1.0.0-next.6
 
 > 2020-07-20
