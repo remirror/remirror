@@ -181,7 +181,7 @@ export class PositionTrackerExtension extends PlainExtension<PositionTrackerOpti
     };
   }
 
-  createPlugin = (): CreatePluginReturn<DecorationSet> => {
+  createPlugin(): CreatePluginReturn<DecorationSet> {
     const name = this.name;
 
     return {
@@ -235,7 +235,7 @@ export class PositionTrackerExtension extends PlainExtension<PositionTrackerOpti
         },
       },
     };
-  };
+  }
 }
 
 export interface PositionTrackerExtensionMeta {

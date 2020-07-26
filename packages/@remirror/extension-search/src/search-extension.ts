@@ -160,7 +160,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
   /**
    * This plugin is responsible for adding something decorations to the
    */
-  createPlugin = (): CreatePluginReturn => {
+  createPlugin(): CreatePluginReturn {
     return {
       state: {
         init() {
@@ -189,7 +189,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
         },
       },
     };
-  };
+  }
 
   /**
    * Create the keymap for this extension.

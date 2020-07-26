@@ -145,7 +145,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     ];
   };
 
-  createPlugin = (): CreatePluginReturn => {
+  createPlugin(): CreatePluginReturn {
     return {
       props: {
         handleClick: (view, pos) => {
@@ -165,5 +165,5 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         },
       },
     };
-  };
+  }
 }

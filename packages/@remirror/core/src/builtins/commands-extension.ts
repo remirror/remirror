@@ -235,9 +235,9 @@ export class CommandsExtension extends PlainExtension {
   /**
    * This plugin is here only to keep track of the forced updates meta data.
    */
-  createPlugin = (): CreatePluginReturn => {
+  createPlugin(): CreatePluginReturn {
     return {};
-  };
+  }
 
   /**
    * A helper for forcing through updates in the view layer. The view layer can

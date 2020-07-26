@@ -77,7 +77,7 @@ export class TrailingNodeExtension extends PlainExtension<TrailingNodeOptions> {
    * Create the paragraph plugin which can check the end of the document and
    * insert a new node.
    */
-  createPlugin = (): CreatePluginReturn<boolean> => {
+  createPlugin(): CreatePluginReturn<boolean> {
     const { tags, schema } = this.store;
     const { disableTags, ignoredNodes, nodeName } = this.options;
 
@@ -127,5 +127,5 @@ export class TrailingNodeExtension extends PlainExtension<TrailingNodeOptions> {
         },
       },
     };
-  };
+  }
 }

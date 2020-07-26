@@ -170,7 +170,7 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
    * This has been adapted from the prosemirror website demo.
    * https://github.com/ProseMirror/website/blob/master/example/track/index.js
    */
-  createPlugin = (): CreatePluginReturn => {
+  createPlugin(): CreatePluginReturn {
     return {
       state: {
         init: (_, state) => {
@@ -198,7 +198,7 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
         },
       },
     };
-  };
+  }
 
   /**
    * Calls the selection handlers when the selection changes the number of

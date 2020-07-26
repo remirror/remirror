@@ -99,7 +99,7 @@ class CustomExtension extends PlainExtension {
     return 'custom' as const;
   }
 
-  createPlugin = () => {
+  createPlugin() {
     return {
       props: {
         handleTripleClick: tripleClickMock,
@@ -107,7 +107,7 @@ class CustomExtension extends PlainExtension {
         handleClick: clickMock,
       },
     };
-  };
+  }
 }
 
 function create() {

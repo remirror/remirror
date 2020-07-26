@@ -91,7 +91,7 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkOptions> {
     ];
   };
 
-  createPlugin = (): CreatePluginReturn => {
+  createPlugin(): CreatePluginReturn {
     return {
       state: {
         init: () => {
@@ -201,7 +201,7 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkOptions> {
         },
       }),
     };
-  };
+  }
 }
 
 export interface UrlUpdateHandlerParameter {

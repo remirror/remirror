@@ -26,7 +26,7 @@ export class EpicModeExtension extends PlainExtension<EpicModeOptions> {
     return 'epicMode' as const;
   }
 
-  createPlugin = (): CreatePluginReturn<EpicModePluginState> => {
+  createPlugin(): CreatePluginReturn<EpicModePluginState> {
     const pluginState = new EpicModePluginState(this);
 
     return {
@@ -56,7 +56,7 @@ export class EpicModeExtension extends PlainExtension<EpicModeOptions> {
         };
       },
     };
-  };
+  }
 }
 
 function getRGBComponents(node: Element) {

@@ -73,7 +73,7 @@ export class ImageExtension extends NodeExtension {
     };
   }
 
-  createPlugin = (): CreatePluginReturn => {
+  createPlugin(): CreatePluginReturn {
     return {
       props: {
         handleDOMEvents: {
@@ -118,7 +118,7 @@ export class ImageExtension extends NodeExtension {
         },
       },
     };
-  };
+  }
 }
 
 export interface ImageExtensionAttributes {

@@ -156,7 +156,7 @@ export class DropCursorExtension extends PlainExtension<DropCursorOptions> {
   /**
    * Use the dropCursor plugin with provided options.
    */
-  createPlugin = (): CreatePluginReturn<DropCursorState> => {
+  createPlugin(): CreatePluginReturn<DropCursorState> {
     const dropCursorState = new DropCursorState(this);
 
     return {
@@ -190,7 +190,7 @@ export class DropCursorExtension extends PlainExtension<DropCursorOptions> {
         },
       },
     };
-  };
+  }
 }
 
 /**

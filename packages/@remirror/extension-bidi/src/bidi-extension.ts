@@ -80,7 +80,7 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
    * Create the plugin that ensures the node has the correct `dir` value on each
    * state update.
    */
-  createPlugin = (): CreatePluginReturn<boolean> => {
+  createPlugin(): CreatePluginReturn<boolean> {
     return {
       state: {
         init: () => false,
@@ -129,7 +129,7 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
       }),
       props: {},
     };
-  };
+  }
 
   protected onSetOptions(parameter: OnSetOptionsParameter<BidiOptions>) {
     const { changes } = parameter;
