@@ -9,7 +9,7 @@ import {
 } from '@remirror/core-constants';
 import {
   freeze,
-  getArray,
+  getLazyArray,
   invariant,
   isIdentifierOfType,
   isNullOrUndefined,
@@ -100,10 +100,13 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   ) {
     const builtInPreset = new BuiltinPreset();
 
-    return new RemirrorManager<Combined | BuiltinPreset>([...getArray(combined), builtInPreset], {
-      ...settings,
-      privacy: privacySymbol,
-    });
+    return new RemirrorManager<Combined | BuiltinPreset>(
+      [...getLazyArray(combined), builtInPreset],
+      {
+        ...settings,
+        privacy: privacySymbol,
+      },
+    );
   }
 
   /**

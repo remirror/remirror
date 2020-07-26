@@ -1,4 +1,4 @@
-import { AnyCombinedUnion, getArray, isRemirrorManager, RemirrorManager } from '@remirror/core';
+import { AnyCombinedUnion, getLazyArray, isRemirrorManager, RemirrorManager } from '@remirror/core';
 import { SocialPreset } from '@remirror/preset-social';
 import { CreateReactManagerOptions } from '@remirror/react';
 
@@ -60,7 +60,7 @@ export function socialManagerArgs<Combined extends AnyCombinedUnion>(
   }
 
   return [
-    () => [...getArray(combined), new SocialPreset(social)],
+    () => [...getLazyArray(combined), new SocialPreset(social)],
     {
       ...rest,
       managerSettings: {

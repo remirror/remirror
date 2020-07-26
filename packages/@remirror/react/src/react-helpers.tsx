@@ -1,7 +1,7 @@
 import {
   AnyCombinedUnion,
   BuiltinPreset,
-  getArray,
+  getLazyArray,
   isRemirrorManager,
   RemirrorManager,
 } from '@remirror/core';
@@ -27,7 +27,7 @@ export function createReactManager<Combined extends AnyCombinedUnion>(
   }
 
   return RemirrorManager.create(
-    () => [...getArray(combined), new ReactPreset(react), new CorePreset(core)],
+    () => [...getLazyArray(combined), new ReactPreset(react), new CorePreset(core)],
     settings,
   );
 }

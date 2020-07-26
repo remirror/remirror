@@ -1,4 +1,4 @@
-import { AnyCombinedUnion, getArray, RemirrorManager } from '@remirror/core';
+import { AnyCombinedUnion, getLazyArray, RemirrorManager } from '@remirror/core';
 
 import { CorePreset, CorePresetOptions } from './core-preset';
 
@@ -24,7 +24,7 @@ export function createCoreManager<Combined extends AnyCombinedUnion>(
   const { core, managerSettings } = options;
 
   return RemirrorManager.create(
-    () => [...getArray(combined), new CorePreset(core)],
+    () => [...getLazyArray(combined), new CorePreset(core)],
     managerSettings,
   );
 }

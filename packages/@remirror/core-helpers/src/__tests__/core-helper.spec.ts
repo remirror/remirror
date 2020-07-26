@@ -9,6 +9,7 @@ import {
   flattenArray,
   format,
   get,
+  getLazyArray,
   hasOwnProperty,
   isBoolean,
   isDate,
@@ -438,4 +439,9 @@ test('hasOwnProperty', () => {
 
   expect(hasOwnProperty(noProto, 'a')).toBeTrue();
   expect(hasOwnProperty(noProto, 'b')).toBeFalse();
+});
+
+test('getLazyArray', () => {
+  expect(getLazyArray(['a'])).toEqual(['a']);
+  expect(getLazyArray(() => ['a'])).toEqual(['a']);
 });
