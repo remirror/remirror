@@ -52,7 +52,7 @@ export class PositionTrackerExtension extends PlainExtension<PositionTrackerOpti
     return 'positionTracker' as const;
   }
 
-  createHelpers = () => {
+  createHelpers() {
     const helpers = {
       /**
        * Add a tracker position with the specified params to the transaction and return the transaction.
@@ -140,7 +140,7 @@ export class PositionTrackerExtension extends PlainExtension<PositionTrackerOpti
     };
 
     return helpers;
-  };
+  }
 
   #commandFactory = <Parameter>(helperName: string) => {
     return (parameter: Parameter): CommandFunction => ({ dispatch }) => {

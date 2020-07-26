@@ -155,7 +155,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
     return commands;
   }
 
-  createHelpers = () => {
+  createHelpers() {
     return {
       /**
        * Update the emoji which are displayed to the user when the query is not
@@ -165,7 +165,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
         this.frequentlyUsed = populateFrequentlyUsed(names);
       },
     };
-  };
+  }
 
   protected onAddCustomHandler: AddCustomHandler<EmojiOptions> = (parameter) => {
     const { keyBindings: keyBindings } = parameter;

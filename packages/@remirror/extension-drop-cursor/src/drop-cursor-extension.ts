@@ -142,7 +142,7 @@ export class DropCursorExtension extends PlainExtension<DropCursorOptions> {
     return 'dropCursor' as const;
   }
 
-  createHelpers = () => {
+  createHelpers() {
     return {
       /**
        * Check if the anything is currently being dragged over the editor.
@@ -151,7 +151,7 @@ export class DropCursorExtension extends PlainExtension<DropCursorOptions> {
         return this.store.getPluginState<DropCursorState>(this.name).isDragging();
       },
     };
-  };
+  }
 
   /**
    * Use the dropCursor plugin with provided options.

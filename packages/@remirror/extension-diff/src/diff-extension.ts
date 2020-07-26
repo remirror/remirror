@@ -111,7 +111,7 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
     };
   }
 
-  createHelpers = () => {
+  createHelpers() {
     return {
       /**
        * Get the full list of commits in the history.
@@ -125,7 +125,7 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
        */
       getCommit: (id: CommitId) => this.getCommit(id),
     };
-  };
+  }
 
   /**
    * Get the full list of tracked commit changes

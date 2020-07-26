@@ -85,9 +85,9 @@ export class HelpersExtension extends PlainExtension {
     this.store.setStoreKey('helpers', helpers);
   }
 
-  createHelpers = () => {
+  createHelpers() {
     return {};
-  };
+  }
 }
 
 declare global {

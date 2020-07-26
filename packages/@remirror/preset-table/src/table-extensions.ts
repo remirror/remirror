@@ -170,7 +170,7 @@ export class TableExtension extends NodeExtension<TableOptions> {
     };
   }
 
-  createHelpers = () => {
+  createHelpers() {
     return {
       /**
        * Enable table usage within the editor. This depends on the editor.
@@ -185,7 +185,7 @@ export class TableExtension extends NodeExtension<TableOptions> {
         tablesEnabled = true;
       },
     };
-  };
+  }
 
   /**
    * This managers the updates of the collaboration provider.
