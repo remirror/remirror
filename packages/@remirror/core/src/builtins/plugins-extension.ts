@@ -385,26 +385,28 @@ declare global {
        *     return 'me' as const;
        *   }
        *
-       *   createPlugin: (): ExtensionPluginSpec => ({
-       *     props: {
-       *       handleKeyDown: keydownHandler({
-       *         Backspace: handler,
-       *         'Mod-Backspace': handler,
-       *         Delete: handler,
-       *         'Mod-Delete': handler,
-       *         'Ctrl-h': handler,
-       *         'Alt-Backspace': handler,
-       *         'Ctrl-d': handler,
-       *         'Ctrl-Alt-Backspace': handler,
-       *         'Alt-Delete': handler,
-       *         'Alt-d': handler,
-       *       }),
-       *       decorations() {
-       *         pluginState.setDeleted(false);
-       *         return pluginState.decorationSet;
+       *   createPlugin (): ExtensionPluginSpec {
+       *     return  {
+       *       props: {
+       *         handleKeyDown: keydownHandler({
+       *           Backspace: handler,
+       *           'Mod-Backspace': handler,
+       *           Delete: handler,
+       *           'Mod-Delete': handler,
+       *           'Ctrl-h': handler,
+       *           'Alt-Backspace': handler,
+       *           'Ctrl-d': handler,
+       *           'Ctrl-Alt-Backspace': handler,
+       *           'Alt-Delete': handler,
+       *           'Alt-d': handler,
+       *         }),
+       *         decorations() {
+       *           pluginState.setDeleted(false);
+       *           return pluginState.decorationSet;
+       *         },
        *       },
-       *     },
-       *   })
+       *     }
+       *   }
        * }
        * ```
        *

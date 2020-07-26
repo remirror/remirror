@@ -483,7 +483,7 @@ declare global {
        * const MyExtension = ExtensionFactory.plain({
        *   name: 'myExtension',
        *   version: '1.0.0',
-       *   createCommands: () => {
+       *   createCommands() {
        *     return {
        *       haveFun() {
        *         return ({ state, dispatch }) => {
