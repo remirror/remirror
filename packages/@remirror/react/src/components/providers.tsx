@@ -10,8 +10,6 @@ import React, {
 import { AnyCombinedUnion, MakeOptional } from '@remirror/core';
 import { RemirrorPortals } from '@remirror/extension-react-component';
 import { i18n as defaultI18n } from '@remirror/i18n';
-import { CorePresetOptions } from '@remirror/preset-core';
-import { ReactPresetOptions } from '@remirror/preset-react';
 import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
 import { createThemeVariables, RemirrorThemeType, themeStyles } from '@remirror/theme';
 
@@ -19,6 +17,7 @@ import { useManager } from '../hooks';
 import { I18nContext, RemirrorContext } from '../react-contexts';
 import {
   BaseProps,
+  CreateReactManagerOptions,
   GetRootPropsConfig,
   I18nContextProps,
   RemirrorContextProps,
@@ -48,22 +47,10 @@ export interface RemirrorProviderProps<Combined extends AnyCombinedUnion>
   combined?: Combined[];
 
   /**
-   * The settings to provide to the `RemirrorManager`. This is only applied when
-   * no `manager` is provided.
+   * The settings to provide to the `RemirrorManager`, `ReactPreset` and
+   * `CorePreset`. This is only applied when no `manager` is provided.
    */
-  managerSettings?: Remirror.ManagerSettings;
-
-  /**
-   * The options used when creating the `ReactPreset`. This is only applied if
-   * you don't provide a manager.
-   */
-  reactPresetOptions?: ReactPresetOptions;
-
-  /**
-   * The options used when creating the `CorePreset`. This is only applied if
-   * you don't provide a manager.
-   */
-  corePresetOptions?: CorePresetOptions;
+  settings?: CreateReactManagerOptions;
 
   /**
    * Sets the first child element as a the root (where the prosemirror editor
@@ -138,21 +125,8 @@ RemirrorContextProvider.defaultProps = {
 export const RemirrorProvider = <Combined extends AnyCombinedUnion>(
   props: RemirrorProviderProps<Combined>,
 ) => {
-  const {
-    children,
-    childAsRoot,
-    manager,
-    combined,
-    reactPresetOptions,
-    corePresetOptions,
-    managerSettings,
-    ...rest
-  } = props;
-  const reactManager = useManager(manager ?? combined ?? [], {
-    core: corePresetOptions,
-    react: reactPresetOptions,
-    managerSettings,
-  });
+  const { children, childAsRoot, manager, combined, settings, ...rest } = props;
+  const reactManager = useManager(manager ?? combined ?? [], settings);
 
   return (
     <ReactEditor {...rest} manager={reactManager}>

@@ -9,6 +9,7 @@ import {
   EditorState,
   EditorWrapperOutput,
   EditorWrapperProps,
+  GetStaticAndDynamic,
   RemirrorManager,
   SchemaFromCombined,
   Shape,
@@ -228,5 +229,5 @@ export interface CreateReactManagerOptions extends CreateCoreManagerOptions {
   /**
    * Options for the react preset.
    */
-  react?: ReactPresetOptions;
+  react?: GetStaticAndDynamic<ReactPresetOptions>;
 }

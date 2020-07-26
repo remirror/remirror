@@ -63,14 +63,11 @@ export function socialManagerArgs<Combined extends AnyCombinedUnion>(
     () => [...getLazyArray(combined), new SocialPreset(social)],
     {
       ...rest,
-      managerSettings: {
-        ...rest.managerSettings,
-        extraAttributes: [
-          { identifiers: ['mention', 'emoji'], attributes: { role: { default: 'presentation' } } },
-          { identifiers: ['mention'], attributes: { href: { default: null } } },
-          ...(rest.managerSettings?.extraAttributes ?? []),
-        ],
-      },
+      extraAttributes: [
+        { identifiers: ['mention', 'emoji'], attributes: { role: { default: 'presentation' } } },
+        { identifiers: ['mention'], attributes: { href: { default: null } } },
+        ...(rest.extraAttributes ?? []),
+      ],
     },
   ];
 }

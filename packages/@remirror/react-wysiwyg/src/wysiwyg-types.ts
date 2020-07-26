@@ -3,7 +3,7 @@ import { Except } from 'type-fest';
 
 import { AnyCombinedUnion } from '@remirror/core';
 import {
-  CreateWysiwygPresetListParameter,
+  CreateWysiwygPresetListOptions,
   WysiwygPresetCombinedUnion,
 } from '@remirror/preset-wysiwyg';
 import {
@@ -18,13 +18,10 @@ export type WysiwygCombinedUnion = BaseReactCombinedUnion | WysiwygPresetCombine
 
 export interface CreateWysiwygManagerOptions
   extends CreateReactManagerOptions,
-    CreateWysiwygPresetListParameter {}
+    CreateWysiwygPresetListOptions {}
 
 export interface WysiwygProviderProps<Combined extends AnyCombinedUnion = WysiwygCombinedUnion>
-  extends Except<
-      Partial<RemirrorProviderProps<Combined>>,
-      'managerSettings' | 'reactPresetOptions' | 'corePresetOptions' | 'children'
-    >,
+  extends Except<Partial<RemirrorProviderProps<Combined>>, 'settings' | 'children'>,
     Partial<I18nContextProps> {
   /**
    * Unlike the remirror provider you can provide any number of children to this component.
@@ -49,5 +46,5 @@ export interface WysiwygProviderProps<Combined extends AnyCombinedUnion = Wysiwy
    * The wysiwyg options used to create the initial manager when a manager is not
    * provided.
    */
-  wysiwygOptions?: CreateWysiwygManagerOptions;
+  settings?: CreateWysiwygManagerOptions;
 }

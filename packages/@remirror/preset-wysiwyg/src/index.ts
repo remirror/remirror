@@ -7,4 +7,3 @@ export { TablePreset } from '@remirror/preset-table';
 export type { TableOptions } from '@remirror/preset-table';
 
 export * from './wysiwyg-preset';
-export * from './wysiwyg-preset-methods';

@@ -82,8 +82,9 @@ describe('extraAttributes', () => {
 
   it('can `disableExtraAttributes`', () => {
     const { schema } = createCoreManager([customExtension], {
-      managerSettings: { disableExtraAttributes: true },
+      disableExtraAttributes: true,
     });
+
     expect(schema.nodes.custom.spec.attrs).toEqual({});
   });
 });

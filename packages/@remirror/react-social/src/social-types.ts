@@ -1,7 +1,7 @@
 import { ElementType, ReactElement } from 'react';
 import { Except } from 'type-fest';
 
-import { AnyCombinedUnion } from '@remirror/core';
+import { AnyCombinedUnion, GetStaticAndDynamic } from '@remirror/core';
 import { SocialOptions, SocialPreset } from '@remirror/preset-social';
 import {
   BaseReactCombinedUnion,
@@ -23,14 +23,11 @@ export interface CreateSocialManagerOptions extends CreateReactManagerOptions {
   /**
    * The social preset options.
    */
-  social?: SocialOptions;
+  social?: GetStaticAndDynamic<SocialOptions>;
 }
 
 export interface SocialProviderProps<Combined extends AnyCombinedUnion = SocialCombinedUnion>
-  extends Except<
-      Partial<RemirrorProviderProps<Combined>>,
-      'managerSettings' | 'reactPresetOptions' | 'corePresetOptions' | 'children'
-    >,
+  extends Except<Partial<RemirrorProviderProps<Combined>>, 'settings' | 'children'>,
     Partial<I18nContextProps> {
   /**
    * Unlike the remirror provider you can provide any number of children to this component.
@@ -55,7 +52,7 @@ export interface SocialProviderProps<Combined extends AnyCombinedUnion = SocialC
    * The social options used to create the initial manager when a manager is not
    * provided.
    */
-  socialOptions?: CreateSocialManagerOptions;
+  settings?: CreateSocialManagerOptions;
 
   /**
    * Display a typing hint that limits the number of characters to this number.

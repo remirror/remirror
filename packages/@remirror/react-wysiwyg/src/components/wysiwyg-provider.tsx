@@ -19,10 +19,10 @@ export const WysiwygProvider: FC<WysiwygProviderProps> = (props) => {
     locale,
     combined,
     manager,
-    wysiwygOptions,
+    settings,
     ...rest
   } = props;
-  const wysiwygManager = useWysiwygManager(manager ?? combined ?? [], wysiwygOptions);
+  const wysiwygManager = useWysiwygManager(manager ?? combined ?? [], settings);
 
   // Check that the wysiwyg manager includes the required WysiwygPreset
   wysiwygManager.getPreset(WysiwygPreset);

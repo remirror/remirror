@@ -1,4 +1,10 @@
-import { isEmptyObject, OnSetOptionsParameter, Preset, presetDecorator } from '@remirror/core';
+import {
+  GetStaticAndDynamic,
+  isEmptyObject,
+  OnSetOptionsParameter,
+  Preset,
+  presetDecorator,
+} from '@remirror/core';
 import { BidiExtension, BidiOptions } from '@remirror/extension-bidi';
 import { BlockquoteExtension } from '@remirror/extension-blockquote';
 import { BoldExtension, BoldOptions } from '@remirror/extension-bold';
@@ -17,6 +23,9 @@ import { SearchExtension, SearchOptions } from '@remirror/extension-search';
 import { StrikeExtension } from '@remirror/extension-strike';
 import { TrailingNodeExtension, TrailingNodeOptions } from '@remirror/extension-trailing-node';
 import { UnderlineExtension } from '@remirror/extension-underline';
+import { EmbedOptions, EmbedPreset } from '@remirror/preset-embed';
+import { ListPreset } from '@remirror/preset-list';
+import { TableOptions, TablePreset } from '@remirror/preset-table';
 
 export interface WysiwygOptions
   extends BidiOptions,
@@ -206,3 +215,42 @@ export class WysiwygPreset extends Preset<WysiwygOptions> {
     ];
   }
 }
+
+/**
+ * The parameter for creating a list of presets needed to use the wysiwyg preset
+ * to the full.
+ */
+export interface CreateWysiwygPresetListOptions {
+  /**
+   * The options for the wysiwyg preset.
+   */
+  wysiwyg?: GetStaticAndDynamic<WysiwygOptions>;
+
+  /**
+   * The options for the embed preset.
+   */
+  embed?: GetStaticAndDynamic<EmbedOptions>;
+
+  /**
+   * The options for the table preset.
+   */
+  table?: GetStaticAndDynamic<TableOptions>;
+}
+
+/**
+ * Create the wysiwyg preset and also apply the other presets as well.
+ */
+export function createWysiwygPresetList(
+  options: CreateWysiwygPresetListOptions,
+): WysiwygPresetCombinedUnion[] {
+  const { wysiwyg, embed, table } = options;
+
+  return [
+    new WysiwygPreset(wysiwyg),
+    new ListPreset(),
+    new EmbedPreset(embed),
+    new TablePreset(table),
+  ];
+}
+
+export type WysiwygPresetCombinedUnion = WysiwygPreset | ListPreset | EmbedPreset | TablePreset;

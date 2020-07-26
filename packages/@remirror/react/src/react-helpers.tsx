@@ -20,7 +20,7 @@ export function createReactManager<Combined extends AnyCombinedUnion>(
     | RemirrorManager<Combined | BuiltinPreset | ReactPreset | CorePreset>,
   options: CreateReactManagerOptions = {},
 ): RemirrorManager<Combined | BuiltinPreset | ReactPreset | CorePreset> {
-  const { managerSettings: settings, core, react } = options;
+  const { core, react, ...settings } = options;
 
   if (isRemirrorManager<Combined | BuiltinPreset | ReactPreset | CorePreset>(combined)) {
     return combined;

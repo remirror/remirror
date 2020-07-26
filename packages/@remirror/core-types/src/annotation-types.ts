@@ -168,6 +168,11 @@ export type GetCustomHandler<Options extends Shape> = ConditionalPick<
   Partial<ConditionalPick<PickPartial<Options>, CustomHandlerAnnotation>>;
 
 /**
+ * Options excluding the handlers.
+ */
+export type GetStaticAndDynamic<Options extends Shape> = GetDynamic<Options> & GetStatic<Options>;
+
+/**
  * This constrains the valid options that can be passed into your extensions or presets.
  */
 export interface ValidOptions {

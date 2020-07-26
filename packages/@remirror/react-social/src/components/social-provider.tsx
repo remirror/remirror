@@ -20,10 +20,10 @@ export const SocialProvider: FC<SocialProviderProps> = (props) => {
     characterLimit,
     combined,
     manager,
-    socialOptions,
+    settings,
     ...rest
   } = props;
-  const socialManager = useSocialManager(manager ?? combined ?? [], socialOptions);
+  const socialManager = useSocialManager(manager ?? combined ?? [], settings);
 
   // Check that the social manager includes the required SocialPreset
   socialManager.getPreset(SocialPreset);
