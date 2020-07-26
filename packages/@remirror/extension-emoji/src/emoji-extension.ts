@@ -11,7 +11,7 @@ import {
   PlainExtension,
   plainInputRule,
 } from '@remirror/core';
-import { Suggestion } from '@remirror/pm/suggest';
+import { Suggester } from '@remirror/pm/suggest';
 
 import {
   EmojiObject,
@@ -198,7 +198,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
    * Emojis can be selected via `:` the colon key (by default). This sets the
    * configuration using `prosemirror-suggest`
    */
-  createSuggestions(): Suggestion {
+  createSuggesters(): Suggester {
     return {
       noDecorations: true,
       invalidPrefixCharacters: `${escapeStringRegex(this.options.suggestionCharacter)}|\\w`,

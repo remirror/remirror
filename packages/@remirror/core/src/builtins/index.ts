@@ -8,5 +8,5 @@ export * from './node-views-extension';
 export * from './paste-rules-extension';
 export * from './plugins-extension';
 export * from './schema-extension';
-export * from './suggestions-extension';
+export * from './suggester-extension';
 export * from './tags-extension';

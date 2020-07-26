@@ -4,8 +4,8 @@ import {
   SuggestChangeHandlerMethod,
   SuggestChangeHandlerParameter,
   SuggestCharacterEntryMethod,
+  Suggester,
   SuggestExitHandlerMethod,
-  Suggestion,
   SuggestKeyBindingMap,
   SuggestKeyBindingParameter,
   SuggestReplacementType,
@@ -63,7 +63,7 @@ export type MentionExtensionAttributes = ProsemirrorAttributes<
  */
 export interface MentionExtensionMatcher
   extends Pick<
-    Suggestion,
+    Suggester,
     | 'char'
     | 'name'
     | 'startOfLine'

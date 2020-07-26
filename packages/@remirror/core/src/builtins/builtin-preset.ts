@@ -1,3 +1,6 @@
+import { GetStaticAndDynamic } from '@remirror/core-types';
+
+import { AddCustomHandler } from '../extension/base-class';
 import { Preset } from '../preset';
 import { AttributesExtension } from './attributes-extension';
 import { CommandsExtension } from './commands-extension';
@@ -8,7 +11,7 @@ import { NodeViewsExtension } from './node-views-extension';
 import { PasteRulesExtension } from './paste-rules-extension';
 import { PluginsExtension } from './plugins-extension';
 import { SchemaExtension } from './schema-extension';
-import { SuggestionsExtension } from './suggestions-extension';
+import { SuggesterExtension, SuggesterOptions } from './suggester-extension';
 import { TagsExtension } from './tags-extension';
 
 /** A list of all the builtIn extensions. */
@@ -20,11 +23,13 @@ export const builtInExtensions = [
   InputRulesExtension,
   PasteRulesExtension,
   NodeViewsExtension,
-  SuggestionsExtension,
+  SuggesterExtension,
   CommandsExtension,
   HelpersExtension,
   KeymapExtension,
 ] as const;
+
+export interface BuiltinOptions extends SuggesterOptions {}
 
 /**
  * Provides all the builtin extensions to the editor.
@@ -38,7 +43,7 @@ export const builtInExtensions = [
  *
  * @builtin
  */
-export class BuiltinPreset extends Preset {
+export class BuiltinPreset extends Preset<BuiltinOptions> {
   get name() {
     return 'builtin' as const;
   }
@@ -47,7 +52,26 @@ export class BuiltinPreset extends Preset {
     return;
   }
 
+  protected onAddCustomHandler: AddCustomHandler<BuiltinOptions> = ({ suggester }) => {
+    if (!suggester) {
+      return;
+    }
+
+    return this.getExtension(SuggesterExtension).addCustomHandler('suggester', suggester);
+  };
+
   createExtensions() {
     return builtInExtensions.map((Extension) => new Extension());
+  }
+}
+
+declare global {
+  namespace Remirror {
+    interface ManagerSettings {
+      /**
+       * The options that can be passed into the built in options.
+       */
+      builtin?: GetStaticAndDynamic<BuiltinOptions>;
+    }
   }
 }

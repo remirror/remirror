@@ -28,7 +28,7 @@ import {
   isSplitReason,
   regexToString,
   SuggestCharacterEntryMethod,
-  Suggestion,
+  Suggester,
 } from '@remirror/pm/suggest';
 
 import {
@@ -223,8 +223,8 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     });
   }
 
-  createSuggestions() {
-    return this.options.matchers.map<Suggestion<MentionExtensionSuggestCommand>>((matcher) => {
+  createSuggesters() {
+    return this.options.matchers.map<Suggester<MentionExtensionSuggestCommand>>((matcher) => {
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const extension = this;
 
