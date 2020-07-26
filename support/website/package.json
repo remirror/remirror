@@ -31,7 +31,7 @@
     "prism-react-renderer": "^1.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "remirror": "^1.0.0-next.9"
+    "remirror": "^1.0.0-next.10"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^2.0.0-alpha.58",

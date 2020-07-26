@@ -1,5 +1,41 @@
 # @remirror/react
 
+## 1.0.0-next.10
+
+> 2020-07-26
+
+### Minor Changes
+
+- 3702a83a: Remove requirement for `readonly` arrays when passing a list of extensions / presets to
+  manager creators.
+
+  - **`@remirror/react`** - Add support for a function as the first parameter to the `useManager`
+    hook and `createReactManager` function.
+  - **`@remirror/preset-core`** - Add support for a function as the first parameter to the
+    `createCoreManager` function.
+
+- e554ce8c: - Use `ReactComponent` for SSR.
+  - Add `environment to`NodeViewComponentProps`.
+  - Export `NodeViewComponentProps` from `@remirror/extension-react-component`.
+  - Refactor `manager.store.components` to use `ManagerStoreReactComponent` interface.
+
+### Patch Changes
+
+- 76d1df83: - Prevent `createReactManager` being called on every render.
+  - Accept a `manager` as a parameter for ``createReactManager`
+  - Improve internal performance of components by caching the `ReactEditorWrapper` after the first
+    render.
+- Updated dependencies [6468058a]
+- Updated dependencies [3702a83a]
+- Updated dependencies [e554ce8c]
+  - @remirror/core@1.0.0-next.10
+  - @remirror/preset-core@1.0.0-next.10
+  - @remirror/extension-react-component@1.0.0-next.10
+  - @remirror/extension-react-ssr@1.0.0-next.10
+  - @remirror/extension-placeholder@1.0.0-next.10
+  - @remirror/extension-positioner@1.0.0-next.10
+  - @remirror/preset-react@1.0.0-next.10
+
 ## 1.0.0-next.9
 
 > 2020-07-23

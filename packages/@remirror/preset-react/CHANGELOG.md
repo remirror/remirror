@@ -1,5 +1,18 @@
 # @remirror/preset-react
 
+## 1.0.0-next.10
+
+> 2020-07-26
+
+### Patch Changes
+
+- Updated dependencies [6468058a]
+- Updated dependencies [e554ce8c]
+  - @remirror/core@1.0.0-next.10
+  - @remirror/extension-react-component@1.0.0-next.10
+  - @remirror/extension-react-ssr@1.0.0-next.10
+  - @remirror/extension-placeholder@1.0.0-next.10
+
 ## 1.0.0-next.9
 
 > 2020-07-23

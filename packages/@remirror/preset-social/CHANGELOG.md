@@ -1,5 +1,17 @@
 # @remirror/preset-social
 
+## 1.0.0-next.10
+
+> 2020-07-26
+
+### Patch Changes
+
+- Updated dependencies [6468058a]
+  - @remirror/core@1.0.0-next.10
+  - @remirror/extension-auto-link@1.0.0-next.10
+  - @remirror/extension-emoji@1.0.0-next.10
+  - @remirror/extension-mention@1.0.0-next.10
+
 ## 1.0.0-next.9
 
 > 2020-07-23
