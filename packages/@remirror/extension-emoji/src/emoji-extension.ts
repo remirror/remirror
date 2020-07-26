@@ -200,7 +200,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
    * Emojis can be selected via `:` the colon key (by default). This sets the
    * configuration using `prosemirror-suggest`
    */
-  createSuggestions = (): Suggestion => {
+  createSuggestions(): Suggestion {
     return {
       noDecorations: true,
       invalidPrefixCharacters: escapeStringRegex(this.options.suggestionCharacter),
@@ -235,7 +235,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
         };
       },
     };
-  };
+  }
 }
 
 export interface EmojiCommandOptions extends Partial<FromToParameter> {
