@@ -254,8 +254,8 @@ export function useExtension<Type extends AnyExtensionConstructor>(
     }
 
     return optionsOrCallback({
-      addHandler: extension.addHandler,
-      addCustomHandler: extension.addCustomHandler,
+      addHandler: extension.addHandler.bind(extension),
+      addCustomHandler: extension.addCustomHandler.bind(extension),
       extension,
     });
   }, [extension, optionsOrCallback, ...dependencies]);
@@ -326,8 +326,8 @@ export function usePreset<Type extends AnyPresetConstructor>(
     }
 
     return optionsOrCallback({
-      addHandler: preset.addHandler,
-      addCustomHandler: preset.addCustomHandler,
+      addHandler: preset.addHandler.bind(preset),
+      addCustomHandler: preset.addCustomHandler.bind(preset),
       preset,
     });
   }, [preset, optionsOrCallback, ...dependencies]);

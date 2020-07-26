@@ -377,7 +377,10 @@ export abstract class BaseClass<
    *
    * @nonVirtual
    */
-  addHandler: AddHandler<Options> = (key, method) => {
+  addHandler<Key extends keyof GetHandler<Options>>(
+    key: Key,
+    method: GetHandler<Options>[Key],
+  ): Dispose {
     this.#mappedHandlers[key].push(method);
 
     // Return a method for disposing of the handler.
@@ -385,18 +388,18 @@ export abstract class BaseClass<
       (this.#mappedHandlers[key] = this.#mappedHandlers[key].filter(
         (handler) => handler !== method,
       ));
-  };
+  }
 
   /**
    * A method that can be used to add a custom handler. It is up to the
    * extension creator to manage the handlers and dispose methods.
    */
-  addCustomHandler = <Key extends keyof GetCustomHandler<Options>>(
+  addCustomHandler<Key extends keyof GetCustomHandler<Options>>(
     key: Key,
     value: Required<GetCustomHandler<Options>>[Key],
-  ): Dispose => {
+  ): Dispose {
     return this.onAddCustomHandler?.({ [key]: value } as any) ?? noop;
-  };
+  }
 
   /**
    * Override this method if you want to set custom handlers on your extension.
