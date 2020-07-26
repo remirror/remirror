@@ -1,6 +1,10 @@
-export { EmbedPreset, EmbedOptions } from '@remirror/preset-embed';
+export { EmbedPreset } from '@remirror/preset-embed';
+export type { EmbedOptions } from '@remirror/preset-embed';
+
 export { ListPreset } from '@remirror/preset-list';
-export { TablePreset, TableOptions } from '@remirror/preset-table';
+
+export { TablePreset } from '@remirror/preset-table';
+export type { TableOptions } from '@remirror/preset-table';
 
 export * from './wysiwyg-preset';
 export * from './wysiwyg-preset-methods';
