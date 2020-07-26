@@ -1,17 +1,14 @@
 import {
   AddCustomHandler,
   AnyCombinedUnion,
-  ExtensionPriority,
   getLazyArray,
   GetStaticAndDynamic,
-  isEmptyObject,
   OnSetOptionsParameter,
   Preset,
   presetDecorator,
   RemirrorManager,
   Static,
 } from '@remirror/core';
-import { BaseKeymapExtension, BaseKeymapOptions } from '@remirror/extension-base-keymap';
 import { DocExtension, DocOptions } from '@remirror/extension-doc';
 import { EventsExtension } from '@remirror/extension-events';
 import { GapCursorExtension } from '@remirror/extension-gap-cursor';
@@ -23,11 +20,7 @@ import { TextExtension } from '@remirror/extension-text';
 /**
  * The options for the core preset.
  */
-export interface CorePresetOptions
-  extends BaseKeymapOptions,
-    DocOptions,
-    PositionerOptions,
-    HistoryOptions {
+export interface CorePresetOptions extends DocOptions, PositionerOptions, HistoryOptions {
   /**
    * You can exclude one or multiple extensions from CorePreset by passing their
    * extension names in `excludeExtensions`.
@@ -45,7 +38,6 @@ export interface CorePresetOptions
       | 'positioner'
       | 'history'
       | 'gapCursor'
-      | 'baseKeymap'
       | 'events'
     >
   >;
@@ -65,12 +57,11 @@ export interface CorePresetOptions
 @presetDecorator<CorePresetOptions>({
   defaultOptions: {
     ...DocExtension.defaultOptions,
-    ...BaseKeymapExtension.defaultOptions,
     ...ParagraphExtension.defaultOptions,
     ...HistoryExtension.defaultOptions,
     excludeExtensions: [],
   },
-  customHandlerKeys: ['keymap', 'positionerHandler'],
+  customHandlerKeys: ['positionerHandler'],
   handlerKeys: ['onRedo', 'onUndo'],
   staticKeys: ['content', 'depth', 'newGroupDelay', 'excludeExtensions'],
 })
@@ -83,25 +74,11 @@ export class CorePreset extends Preset<CorePresetOptions> {
    * No properties are defined so this can be ignored.
    */
   protected onSetOptions(parameter: OnSetOptionsParameter<CorePresetOptions>) {
-    const { pickChanged } = parameter;
-    const changedBaseKeymapOptions = pickChanged([
-      'defaultBindingMethod',
-      'selectParentNodeOnEscape',
-      'excludeBaseKeymap',
-      'undoInputRuleOnBackspace',
-    ]);
-
-    if (!isEmptyObject(changedBaseKeymapOptions)) {
-      this.getExtension(BaseKeymapExtension).setOptions(changedBaseKeymapOptions);
-    }
+    return;
   }
 
-  protected onAddCustomHandler: AddCustomHandler<CorePresetOptions> = (parameter) => {
-    const { keymap, positionerHandler } = parameter;
-
-    if (keymap) {
-      return this.getExtension(BaseKeymapExtension).addCustomHandler('keymap', keymap);
-    }
+  protected onAddCustomHandler: AddCustomHandler<CorePresetOptions> = (handlers) => {
+    const { positionerHandler } = handlers;
 
     if (positionerHandler) {
       return this.getExtension(PositionerExtension).addCustomHandler(
@@ -114,18 +91,7 @@ export class CorePreset extends Preset<CorePresetOptions> {
   };
 
   createExtensions() {
-    const {
-      content,
-      defaultBindingMethod,
-      excludeBaseKeymap,
-      selectParentNodeOnEscape,
-      undoInputRuleOnBackspace,
-      depth,
-      getDispatch,
-      getState,
-      newGroupDelay,
-      excludeExtensions,
-    } = this.options;
+const { content, depth, getDispatch, getState, newGroupDelay, excludeExtensions } = this.options;
 
     type ExcludeExtensionKey = typeof excludeExtensions[number];
     const excludeMap: Partial<Record<ExcludeExtensionKey, boolean>> = {};
@@ -142,7 +108,6 @@ export class CorePreset extends Preset<CorePresetOptions> {
       | ParagraphExtension
       | PositionerExtension
       | EventsExtension
-      | BaseKeymapExtension;
 
     const coreExtensions: CoreExtension[] = [];
 
@@ -172,18 +137,6 @@ export class CorePreset extends Preset<CorePresetOptions> {
 
     if (!excludeMap['positioner']) {
       coreExtensions.push(new PositionerExtension());
-    }
-
-    if (!excludeMap['baseKeymap']) {
-      coreExtensions.push(
-        new BaseKeymapExtension({
-          defaultBindingMethod,
-          excludeBaseKeymap,
-          selectParentNodeOnEscape,
-          undoInputRuleOnBackspace,
-          priority: ExtensionPriority.Low,
-        }),
-      );
     }
 
     if (!excludeMap['gapCursor']) {

@@ -98,10 +98,8 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
     combined: Combined[] | (() => Combined[]),
     settings: Remirror.ManagerSettings = {},
   ) {
-    const builtInPreset = new BuiltinPreset();
-
     return new RemirrorManager<Combined | BuiltinPreset>(
-      [...getLazyArray(combined), builtInPreset],
+      [...getLazyArray(combined), new BuiltinPreset(settings.builtin)],
       {
         ...settings,
         privacy: privacySymbol,

@@ -24,8 +24,4 @@ module.exports = {
   ],
   cacheDirectory: baseDir('.jest', TEST_BUILD ? 'build' : 'aliased'),
   errorOnDeprecated: true,
-  displayName: {
-    name: 'remirror:unit',
-    color: 'blue',
-  },
 };

@@ -1,10 +1,75 @@
 import { ExtensionPriority } from '@remirror/core-constants';
-import { KeyBindings, ProsemirrorPlugin } from '@remirror/core-types';
-import { mergeProsemirrorKeyBindings } from '@remirror/core-utils';
+import { entries, object } from '@remirror/core-helpers';
+import { CustomHandler, KeyBindings, ProsemirrorPlugin } from '@remirror/core-types';
+import {
+  convertCommand,
+  mergeKeyBindings,
+  mergeProsemirrorKeyBindings,
+} from '@remirror/core-utils';
+import {
+  baseKeymap,
+  chainCommands as pmChainCommands,
+  selectParentNode,
+} from '@remirror/pm/commands';
+import { undoInputRule } from '@remirror/pm/inputrules';
 import { keymap } from '@remirror/pm/keymap';
 
 import { extensionDecorator } from '../decorators';
 import { PlainExtension } from '../extension';
+import { AddCustomHandler } from '../extension/base-class';
+import { OnSetOptionsParameter } from '../types';
+
+export interface KeymapOptions {
+  /**
+   * Determines whether a backspace after an input rule has been applied should
+   * reverse the effect of the input rule.
+   *
+   * @defaultValue `true`
+   */
+  undoInputRuleOnBackspace?: boolean;
+
+  /**
+   * Determines whether the escape key selects the current node.
+   *
+   * @defaultValue `false`
+   */
+  selectParentNodeOnEscape?: boolean;
+
+  /**
+   * When true will exclude the default prosemirror keymap.
+   *
+   * @remarks
+   *
+   * You might want to set this to true if you want to fully customise the
+   * keyboard mappings for your editor. Otherwise it is advisable to leave it
+   * unchanged.
+   *
+   * @default `false`
+   */
+  excludeBaseKeymap?: boolean;
+
+  /**
+   * The implementation for the extra keybindings added to the settings.
+   *
+   * @remarks
+   *
+   * This allows for you to add extra key mappings which will be checked before
+   * the default keymaps, if they return false then the default keymaps are
+   * still checked.
+   *
+   * No key mappings are removed in this process.
+   *
+   * ```ts
+   * const extension = BaseKeymapExtension.create({ keymap: {
+   *   Enter({ state, dispatch }) {
+   *     //... Logic
+   *     return true;
+   *   },
+   * }});
+   * ```
+   */
+  keymap?: CustomHandler<KeyBindings>;
+}
 
 /**
  * This extension allows others extension to use the `createKeymaps` method.
@@ -14,13 +79,34 @@ import { PlainExtension } from '../extension';
  * Keymaps are the way of controlling how the editor responds to a
  * keypress and different key combinations.
  *
+ * Without this extension most of the shortcuts and behaviors we have come to
+ * expect from text editors would not be provided.
+ *
  * @builtin
  */
-@extensionDecorator({ defaultPriority: ExtensionPriority.Low })
-export class KeymapExtension extends PlainExtension {
+@extensionDecorator<KeymapOptions>({
+  defaultPriority: ExtensionPriority.Low,
+  defaultOptions: {
+    undoInputRuleOnBackspace: true,
+    selectParentNodeOnEscape: false,
+    excludeBaseKeymap: false,
+  },
+  customHandlerKeys: ['keymap'],
+})
+export class KeymapExtension extends PlainExtension<KeymapOptions> {
   get name() {
     return 'keymap' as const;
   }
+
+  /**
+   * The base keybinding which will be generated from the provided properties.
+   */
+  private baseKeyBindings: KeyBindings = object();
+
+  /**
+   * The custom keybindings added
+   */
+  private extraKeyBindings: KeyBindings[] = [];
 
   private keymap!: ProsemirrorPlugin;
 
@@ -73,6 +159,83 @@ export class KeymapExtension extends PlainExtension {
     this.store.replacePlugin(previousKeymap, this.keymap);
     this.store.reconfigureStatePlugins();
   };
+
+  /**
+   * Create the base keymap and merge it with any custom keymaps provided by the
+   * user as CustomOptions.
+   */
+  createKeymap = () => {
+    this.createBaseKeymap();
+
+    return this.buildKeymap();
+  };
+
+  /**
+   * TODO think about the case where bindings are being disposed and then added
+   * in a different position in the `extraKeyBindings` array.
+   */
+  protected onAddCustomHandler: AddCustomHandler<KeymapOptions> = ({ keymap }) => {
+    if (!keymap) {
+      return;
+    }
+
+    this.extraKeyBindings = [...this.extraKeyBindings, keymap];
+    this.store.rebuildKeymap?.();
+
+    return () => {
+      this.extraKeyBindings = this.extraKeyBindings.filter((binding) => binding !== keymap);
+      this.store.rebuildKeymap?.();
+    };
+  };
+
+  /**
+   * Handle changes in the dynamic properties.
+   */
+  protected onSetOptions(parameter: OnSetOptionsParameter<KeymapOptions>) {
+    const { changes } = parameter;
+    let shouldReconfigureBindings = false;
+
+    if (
+      changes.excludeBaseKeymap.changed ||
+      changes.selectParentNodeOnEscape.changed ||
+      changes.undoInputRuleOnBackspace.changed
+    ) {
+      shouldReconfigureBindings = true;
+    }
+
+    if (shouldReconfigureBindings) {
+      this.store?.rebuildKeymap?.();
+    }
+  }
+
+  private createBaseKeymap() {
+    const { selectParentNodeOnEscape, undoInputRuleOnBackspace, excludeBaseKeymap } = this.options;
+
+    this.baseKeyBindings = object();
+
+    // Only add the base keymap if it is **NOT** excluded.
+    if (!excludeBaseKeymap) {
+      for (const [key, value] of entries(baseKeymap)) {
+        this.baseKeyBindings[key] = convertCommand(value);
+      }
+    }
+
+    // Automatically remove the input rule when the option is set to true.
+    if (undoInputRuleOnBackspace) {
+      this.baseKeyBindings.Backspace = convertCommand(
+        pmChainCommands(undoInputRule, baseKeymap.Backspace),
+      );
+    }
+
+    // Allow escape to select the parent node when set to true.
+    if (selectParentNodeOnEscape) {
+      this.baseKeyBindings.Escape = convertCommand(selectParentNode);
+    }
+  }
+
+  private buildKeymap() {
+    return mergeKeyBindings([...this.extraKeyBindings, this.baseKeyBindings]);
+  }
 }
 
 declare global {

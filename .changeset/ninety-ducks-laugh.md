@@ -8,7 +8,6 @@
 '@remirror/dev': patch
 '@remirror/dom': patch
 '@remirror/extension-auto-link': patch
-'@remirror/extension-base-keymap': patch
 '@remirror/extension-bidi': patch
 '@remirror/extension-blockquote': patch
 '@remirror/extension-bold': patch

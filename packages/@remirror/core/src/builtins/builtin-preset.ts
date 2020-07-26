@@ -1,12 +1,14 @@
+import { isEmptyObject, noop, pick } from '@remirror/core-helpers';
 import { GetStaticAndDynamic } from '@remirror/core-types';
 
 import { AddCustomHandler } from '../extension/base-class';
 import { Preset } from '../preset';
+import { OnSetOptionsParameter } from '../types';
 import { AttributesExtension } from './attributes-extension';
 import { CommandsExtension } from './commands-extension';
 import { HelpersExtension } from './helpers-extension';
 import { InputRulesExtension } from './input-rules-extension';
-import { KeymapExtension } from './keymap-extension';
+import { KeymapExtension, KeymapOptions } from './keymap-extension';
 import { NodeViewsExtension } from './node-views-extension';
 import { PasteRulesExtension } from './paste-rules-extension';
 import { PluginsExtension } from './plugins-extension';
@@ -14,22 +16,7 @@ import { SchemaExtension } from './schema-extension';
 import { SuggesterExtension, SuggesterOptions } from './suggester-extension';
 import { TagsExtension } from './tags-extension';
 
-/** A list of all the builtIn extensions. */
-export const builtInExtensions = [
-  SchemaExtension,
-  TagsExtension,
-  AttributesExtension,
-  PluginsExtension,
-  InputRulesExtension,
-  PasteRulesExtension,
-  NodeViewsExtension,
-  SuggesterExtension,
-  CommandsExtension,
-  HelpersExtension,
-  KeymapExtension,
-] as const;
-
-export interface BuiltinOptions extends SuggesterOptions {}
+export interface BuiltinOptions extends SuggesterOptions, KeymapOptions {}
 
 /**
  * Provides all the builtin extensions to the editor.
@@ -48,20 +35,53 @@ export class BuiltinPreset extends Preset<BuiltinOptions> {
     return 'builtin' as const;
   }
 
-  protected onSetOptions(): void {
-    return;
+  protected onSetOptions(parameter: OnSetOptionsParameter<BuiltinOptions>): void {
+    const { pickChanged } = parameter;
+    const changedKeymapOptions = pickChanged([
+      'selectParentNodeOnEscape',
+      'excludeBaseKeymap',
+      'undoInputRuleOnBackspace',
+    ]);
+
+    if (!isEmptyObject(changedKeymapOptions)) {
+      this.getExtension(KeymapExtension).setOptions(changedKeymapOptions);
+    }
   }
 
-  protected onAddCustomHandler: AddCustomHandler<BuiltinOptions> = ({ suggester }) => {
-    if (!suggester) {
-      return;
+  protected onAddCustomHandler: AddCustomHandler<BuiltinOptions> = (handlers) => {
+    const { suggester, keymap } = handlers;
+
+    if (suggester) {
+      return this.getExtension(SuggesterExtension).addCustomHandler('suggester', suggester);
     }
 
-    return this.getExtension(SuggesterExtension).addCustomHandler('suggester', suggester);
+    if (keymap) {
+      return this.getExtension(KeymapExtension).addCustomHandler('keymap', keymap);
+    }
+
+    return noop;
   };
 
   createExtensions() {
-    return builtInExtensions.map((Extension) => new Extension());
+    const keymapOptions = pick(this.options, [
+      'excludeBaseKeymap',
+      'selectParentNodeOnEscape',
+      'undoInputRuleOnBackspace',
+    ]);
+
+    return [
+      new SchemaExtension(),
+      new TagsExtension(),
+      new AttributesExtension(),
+      new PluginsExtension(),
+      new InputRulesExtension(),
+      new PasteRulesExtension(),
+      new NodeViewsExtension(),
+      new SuggesterExtension(),
+      new CommandsExtension(),
+      new HelpersExtension(),
+      new KeymapExtension(keymapOptions),
+    ];
   }
 }
 

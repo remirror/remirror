@@ -54,7 +54,7 @@ export function getChangedOptions<Options extends ValidOptions>(
     for (const key of keys) {
       const item = changes[key];
 
-      if (item.changed) {
+      if (item?.changed) {
         picked[key] = item.value;
       }
     }

@@ -23,7 +23,6 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.10.5",
-    "@remirror/extension-base-keymap": "^1.0.0-next.15",
     "@remirror/extension-doc": "^1.0.0-next.15",
     "@remirror/extension-events": "^1.0.0-next.15",
     "@remirror/extension-gap-cursor": "^1.0.0-next.15",

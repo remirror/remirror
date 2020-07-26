@@ -8,7 +8,6 @@
 '@remirror/dev': major
 '@remirror/dom': major
 '@remirror/extension-auto-link': major
-'@remirror/extension-base-keymap': major
 '@remirror/extension-bidi': major
 '@remirror/extension-blockquote': major
 '@remirror/extension-bold': major
