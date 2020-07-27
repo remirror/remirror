@@ -20,7 +20,7 @@
     "ci:version:changeset": "changeset version",
     "ci:version:date": "node support/scripts/changelog-dates.js",
     "ci:version:install": "unset CI && pnpm install --frozen-lockfile=false",
-    "ci:version:repo": "unset CI && pnpm fix:repo",
+    "ci:version:repo": "unset CI && run-s fix:repo update:workspace",
     "clean": "pnpm if-clean git clean -- -fdx --exclude=.config.json --exclude=node_modules --exclude=**/node_modules",
     "clean:all": "git clean -fdX --exclude='.config.json'",
     "clean:modules": "git clean -fdX packages support",
@@ -69,7 +69,8 @@
     "test:build": "cross-env TEST_BUILD=true jest --verbose --coverage=false",
     "test:e2e": "manypkg run support/e2e chromium",
     "test:watch": "jest  --watch --verbose=false --coverage=false",
-    "typecheck": "tsc -b ./tsconfig.json"
+    "typecheck": "tsc -b ./tsconfig.json",
+    "update:workspace": "pnpm up -r --workspace \"@remirror/*\""
   },
   "browserslist": [
     "since 2017"
