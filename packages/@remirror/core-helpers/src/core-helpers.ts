@@ -8,7 +8,6 @@ import { __INTERNAL_REMIRROR_IDENTIFIER_KEY__, RemirrorIdentifier } from '@remir
 import {
   AnyConstructor,
   AnyFunction,
-  EmptyShape,
   Nullable,
   Predicate,
   RemirrorIdentifierShape,
@@ -439,7 +438,7 @@ export function isSet(value: unknown): value is Set<unknown> {
  *
  * @public
  */
-export function isEmptyObject(value: unknown): value is EmptyShape {
+export function isEmptyObject(value: unknown) {
   return isObject(value) && !isMap(value) && !isSet(value) && Object.keys(value).length === 0;
 }
 
@@ -455,7 +454,7 @@ export const isArray = Array.isArray;
  *
  * @public
  */
-export function isEmptyArray(value: unknown): value is never[] {
+export function isEmptyArray(value: unknown) {
   return isArray(value) && value.length === 0;
 }
 
