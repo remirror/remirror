@@ -2,7 +2,7 @@ import {
   CreatePluginReturn,
   entries,
   extensionDecorator,
-  nodeEqualsType,
+  isNodeOfType,
   OnSetOptionsParameter,
   PlainExtension,
   uniqueArray,
@@ -109,7 +109,7 @@ export class TrailingNodeExtension extends PlainExtension<TrailingNodeOptions> {
       state: {
         init: (_, state) => {
           const node = state.tr.doc.lastChild;
-          return nodeEqualsType({ node, types });
+          return isNodeOfType({ node, types });
         },
         apply: (tr, state) => {
           if (!tr.docChanged) {
@@ -117,7 +117,7 @@ export class TrailingNodeExtension extends PlainExtension<TrailingNodeOptions> {
           }
 
           const node = tr.doc.lastChild;
-          return nodeEqualsType({ node, types });
+          return isNodeOfType({ node, types });
         },
       },
     };

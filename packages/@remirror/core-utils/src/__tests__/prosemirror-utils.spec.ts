@@ -32,22 +32,22 @@ import {
   findSelectedNodeOfType,
   hasTransactionChanged,
   isNodeActive,
+  isNodeOfType,
   isSelectionEmpty,
-  nodeEqualsType,
   removeNodeAtPosition,
   removeNodeBefore,
   schemaToJSON,
 } from '../prosemirror-utils';
 
-describe('nodeEqualsType', () => {
+describe('isNodeOfType', () => {
   it('matches with a singular nodeType', () => {
-    expect(nodeEqualsType({ types: schema.nodes.paragraph, node: p() })).toBeTrue();
+    expect(isNodeOfType({ types: schema.nodes.paragraph, node: p() })).toBeTrue();
   });
 
   it('matches with an array of nodeTypes', () => {
     const { paragraph, blockquote: bq } = schema.nodes;
 
-    expect(nodeEqualsType({ types: [paragraph, bq], node: blockquote() })).toBeTrue();
+    expect(isNodeOfType({ types: [paragraph, bq], node: blockquote() })).toBeTrue();
   });
 });
 

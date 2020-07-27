@@ -2,7 +2,7 @@ import {
   CompareStateParameter,
   EditorState,
   findChildrenByNode,
-  nodeEqualsType,
+  isNodeOfType,
   NodeExtension,
   NodeType,
   NodeWithPosition,
@@ -176,7 +176,7 @@ export class CodeBlockState {
   private manageDecorationSet({ previous, current, tr }: ManageDecorationSetParameter) {
     // Update the previous first although this could be buggy when deleting (possibly)
     if (
-      nodeEqualsType({ types: this.#type, node: previous.node }) &&
+      isNodeOfType({ types: this.#type, node: previous.node }) &&
       !previous.node.eq(current.node)
     ) {
       this.updateDecorationSet({ nodeInfo: previous, tr });

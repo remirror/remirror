@@ -156,7 +156,7 @@ export interface NodeTypesParameter<Schema extends EditorSchema = EditorSchema> 
   /**
    * The prosemirror node types to use.
    */
-  types: NodeType<Schema> | Array<NodeType<Schema>>;
+  types: NodeType<Schema> | string | Array<NodeType<Schema> | string>;
 }
 
 /**

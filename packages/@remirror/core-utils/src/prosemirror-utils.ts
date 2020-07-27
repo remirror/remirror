@@ -3,6 +3,7 @@ import {
   bool,
   entries,
   invariant,
+  isArray,
   isEmptyArray,
   isEmptyObject,
   isNullOrUndefined,
@@ -39,7 +40,7 @@ import {
   Transaction,
   TransactionParameter,
 } from '@remirror/core-types';
-import { MarkSpec, NodeSpec } from '@remirror/pm/model';
+import { MarkSpec, NodeSpec, NodeType } from '@remirror/pm/model';
 import { Selection as PMSelection } from '@remirror/pm/state';
 
 import {
@@ -58,11 +59,24 @@ interface NodeEqualsTypeParameter<Schema extends EditorSchema = any>
 /**
  * Checks if the type a given `node` has a given `nodeType`.
  */
-export function nodeEqualsType<Schema extends EditorSchema = any>(
+export function isNodeOfType<Schema extends EditorSchema = any>(
   parameter: NodeEqualsTypeParameter<Schema>,
 ) {
   const { types, node } = parameter;
-  return node ? (Array.isArray(types) && types.includes(node.type)) || node.type === types : false;
+
+  if (!node) {
+    return false;
+  }
+
+  const matches = (type: NodeType | string) => {
+    return type === node.type || type === node.type.name;
+  };
+
+  if (isArray(types)) {
+    return types.some(matches);
+  }
+
+  return matches(types);
 }
 
 interface MarkEqualsTypeParameter<Schema extends EditorSchema = any>
@@ -292,7 +306,7 @@ export function findParentNodeOfType(
 ): FindProsemirrorNodeResult | undefined {
   const { types, selection } = parameter;
 
-  return findParentNode({ predicate: (node) => nodeEqualsType({ types, node }), selection });
+  return findParentNode({ predicate: (node) => isNodeOfType({ types, node }), selection });
 }
 
 /**
@@ -389,7 +403,7 @@ export function findSelectedNodeOfType<Schema extends EditorSchema = any>(
 ): FindSelectedNodeOfType<Schema> | undefined {
   const { types, selection } = parameter;
 
-  if (!isNodeSelection(selection) || !nodeEqualsType({ types, node: selection.node })) {
+  if (!isNodeSelection(selection) || !isNodeOfType({ types, node: selection.node })) {
     return;
   }
 

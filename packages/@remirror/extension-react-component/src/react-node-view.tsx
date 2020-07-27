@@ -13,9 +13,9 @@ import {
   isDomNode,
   isElementDomNode,
   isFunction,
+  isNodeOfType,
   isPlainObject,
   isString,
-  nodeEqualsType,
   NodeView,
   NodeWithAttributes,
   ProsemirrorAttributes,
@@ -276,7 +276,7 @@ export class ReactNodeView implements NodeView {
    * Update the prosemirror node.
    */
   update(node: ProsemirrorNode, decorations: Decoration[]) {
-    if (!nodeEqualsType({ types: this.#node.type, node })) {
+    if (!isNodeOfType({ types: this.#node.type, node })) {
       return false;
     }
 

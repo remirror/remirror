@@ -10,10 +10,10 @@ import {
   getMatchString,
   isElementDomNode,
   isNodeActive,
+  isNodeOfType,
   isTextSelection,
   KeyBindings,
   mod,
-  nodeEqualsType,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
@@ -212,7 +212,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
         // Check to ensure that this is the correct node.
         const { node } = findNodeAtSelection(selection);
 
-        if (!nodeEqualsType({ node, types: this.type })) {
+        if (!isNodeOfType({ node, types: this.type })) {
           return false;
         }
 
