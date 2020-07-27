@@ -526,14 +526,14 @@ interface IsNodeActiveParameter
 
 /**
  * Checks whether the node type passed in is active within the region. Used by
- * extensions to implement the `#active` method.
+ * extensions to implement the `active` method.
  *
  * To ignore `attrs` just leave the attrs object empty or undefined.
  *
  * @param params - the destructured node active parameters
  */
 export function isNodeActive(parameter: IsNodeActiveParameter) {
-  const { state, type, attrs } = parameter;
+  const { state, type, attrs = {} } = parameter;
 
   const { selection } = state;
   const predicate = (node: ProsemirrorNode) => node.type === type;
@@ -545,7 +545,7 @@ export function isNodeActive(parameter: IsNodeActiveParameter) {
     return bool(parent);
   }
 
-  return parent.node.hasMarkup(type, attrs);
+  return parent.node.hasMarkup(type, { ...parent.node.attrs, ...attrs });
 }
 
 export interface SchemaJSON<Nodes extends string = string, Marks extends string = string> {

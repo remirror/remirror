@@ -14,11 +14,12 @@ import {
   tdEmpty,
   tr as row,
 } from 'jest-prosemirror';
+import { renderEditor } from 'jest-remirror';
 
 import { omit, pick } from '@remirror/core-helpers';
 import { Schema } from '@remirror/pm/model';
 import { NodeSelection, Selection, TextSelection } from '@remirror/pm/state';
-import { BoldExtension, createCoreManager } from '@remirror/testing';
+import { BoldExtension, createCoreManager, HeadingExtension } from '@remirror/testing';
 
 import {
   cloneTransaction,
@@ -473,6 +474,24 @@ describe('nodeActive', () => {
 
     expect(isNodeActive({ state, type: sch.nodes.heading, attrs: { level: 1 } })).toBeFalse();
     expect(isNodeActive({ state, type: sch.nodes.heading, attrs: { level: 2 } })).toBeTrue();
+  });
+
+  it('matches partial attributes', () => {
+    const { nodes, add, attributeNodes } = renderEditor([
+      new HeadingExtension({ extraAttributes: { custom: { default: 'custom' } } }),
+    ]);
+
+    const { doc, p } = nodes;
+    const hCustom = attributeNodes.heading({ custom: 'test', level: 2 });
+    const { state, schema } = add(
+      doc(p('Something'), hCustom('level <cursor> heading'), p('here')),
+    );
+    const type = schema.nodes.heading;
+
+    expect(isNodeActive({ state, type, attrs: { level: 1 } })).toBeFalse();
+    expect(isNodeActive({ state, type, attrs: { level: 2 } })).toBeTrue();
+    expect(isNodeActive({ state, type, attrs: { level: 2, custom: 'test' } })).toBeTrue();
+    expect(isNodeActive({ state, type, attrs: { level: 2, custom: 'no' } })).toBeFalse();
   });
 });
 
