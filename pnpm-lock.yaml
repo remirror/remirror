@@ -31,7 +31,7 @@ importers:
       '@types/jest': 26.0.7
       '@types/jest-axe': 3.5.0
       '@types/node': 14.0.26
-      '@types/testing-library__jest-dom': 5.9.1
+      '@types/testing-library__jest-dom': 5.9.2
       '@types/webpack': 4.41.21
       '@typescript-eslint/eslint-plugin': 3.7.1_6426e42c89f0c157ed209e0bfffbcf90
       '@typescript-eslint/parser': 3.7.1_eslint@7.5.0+typescript@3.9.7
@@ -71,7 +71,7 @@ importers:
       jest-remirror: 'link:packages/jest-remirror'
       jest-watch-typeahead: 0.6.0_jest@26.1.0
       json.macro: 1.3.0_babel-plugin-macros@2.8.0
-      linaria: 2.0.0-alpha.5
+      linaria: 2.0.0-rc.0
       lint-staged: 10.2.11
       npm-run-all: 4.1.5
       nyc: 15.1.0
@@ -117,7 +117,7 @@ importers:
       '@types/jest': ^26.0.6
       '@types/jest-axe': ^3.5.0
       '@types/node': ^14.0.26
-      '@types/testing-library__jest-dom': ^5.9.1
+      '@types/testing-library__jest-dom': ^5.9.2
       '@types/webpack': ^4.41.21
       '@typescript-eslint/eslint-plugin': ^3.7.1
       '@typescript-eslint/parser': ^3.7.1
@@ -157,7 +157,7 @@ importers:
       jest-remirror: ^1.0.0-next.0
       jest-watch-typeahead: ^0.6.0
       json.macro: ^1.3.0
-      linaria: ^2.0.0-alpha.5
+      linaria: ^2.0.0-rc.0
       lint-staged: ^10.2.11
       npm-run-all: ^4.1.5
       nyc: ^15.1.0
@@ -251,7 +251,7 @@ importers:
       '@remirror/core-helpers': 'link:../core-helpers'
       '@remirror/core-types': 'link:../core-types'
       '@remirror/core-utils': 'link:../core-utils'
-      linaria: 2.0.0-alpha.5
+      linaria: 2.0.0-rc.0
       nanoevents: 5.1.8
       type-fest: 0.16.0
     devDependencies:
@@ -263,7 +263,7 @@ importers:
       '@remirror/core-types': ^1.0.0-next.6
       '@remirror/core-utils': ^1.0.0-next.12
       '@remirror/pm': ^1.0.0-next.4
-      linaria: ^2.0.0-alpha.5
+      linaria: ^2.0.0-rc.0
       nanoevents: ^5.1.8
       type-fest: ^0.16.0
   packages/@remirror/core-constants:
@@ -411,7 +411,7 @@ importers:
   packages/@remirror/extension-blockquote:
     dependencies:
       '@babel/runtime': 7.10.5
-      linaria: 2.0.0-alpha.5
+      linaria: 2.0.0-rc.0
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -419,7 +419,7 @@ importers:
       '@babel/runtime': ^7.10.5
       '@remirror/core': ^1.0.0-next.12
       '@remirror/pm': ^1.0.0-next.4
-      linaria: ^2.0.0-alpha.5
+      linaria: ^2.0.0-rc.0
   packages/@remirror/extension-bold:
     dependencies:
       '@babel/runtime': 7.10.5
@@ -539,7 +539,7 @@ importers:
   packages/@remirror/extension-gap-cursor:
     dependencies:
       '@babel/runtime': 7.10.5
-      linaria: 2.0.0-alpha.5
+      linaria: 2.0.0-rc.0
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -547,7 +547,7 @@ importers:
       '@babel/runtime': ^7.10.5
       '@remirror/core': ^1.0.0-next.12
       '@remirror/pm': ^1.0.0-next.4
-      linaria: ^2.0.0-alpha.5
+      linaria: ^2.0.0-rc.0
   packages/@remirror/extension-hard-break:
     dependencies:
       '@babel/runtime': 7.10.5
@@ -641,7 +641,7 @@ importers:
   packages/@remirror/extension-placeholder:
     dependencies:
       '@babel/runtime': 7.10.5
-      linaria: 2.0.0-alpha.5
+      linaria: 2.0.0-rc.0
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -649,7 +649,7 @@ importers:
       '@babel/runtime': ^7.10.5
       '@remirror/core': ^1.0.0-next.12
       '@remirror/pm': ^1.0.0-next.4
-      linaria: ^2.0.0-alpha.5
+      linaria: ^2.0.0-rc.0
   packages/@remirror/extension-position-tracker:
     dependencies:
       '@babel/runtime': 7.10.5
@@ -712,7 +712,7 @@ importers:
     dependencies:
       '@babel/runtime': 7.10.5
       escape-string-regexp: 4.0.0
-      linaria: 2.0.0-alpha.5
+      linaria: 2.0.0-rc.0
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -721,7 +721,7 @@ importers:
       '@remirror/core': ^1.0.0-next.12
       '@remirror/pm': ^1.0.0-next.4
       escape-string-regexp: ^4.0.0
-      linaria: ^2.0.0-alpha.5
+      linaria: ^2.0.0-rc.0
   packages/@remirror/extension-strike:
     dependencies:
       '@babel/runtime': 7.10.5
@@ -765,7 +765,7 @@ importers:
   packages/@remirror/extension-yjs:
     dependencies:
       '@babel/runtime': 7.10.5
-      linaria: 2.0.0-alpha.5
+      linaria: 2.0.0-rc.0
       y-prosemirror: 0.3.5_yjs@13.3.0
       y-webrtc: 10.1.6
       yjs: 13.3.0
@@ -776,7 +776,7 @@ importers:
       '@babel/runtime': ^7.10.5
       '@remirror/core': ^1.0.0-next.12
       '@remirror/pm': ^1.0.0-next.4
-      linaria: ^2.0.0-alpha.5
+      linaria: ^2.0.0-rc.0
       y-prosemirror: ^0.3.5
       y-webrtc: ^10.1.6
       yjs: ^13.3.0
@@ -922,7 +922,7 @@ importers:
   packages/@remirror/preset-embed:
     dependencies:
       '@babel/runtime': 7.10.5
-      linaria: 2.0.0-alpha.5
+      linaria: 2.0.0-rc.0
       tiny-querystring: 0.0.2
     devDependencies:
       '@remirror/core': 'link:../core'
@@ -931,7 +931,7 @@ importers:
       '@babel/runtime': ^7.10.5
       '@remirror/core': ^1.0.0-next.12
       '@remirror/pm': ^1.0.0-next.4
-      linaria: ^2.0.0-alpha.5
+      linaria: ^2.0.0-rc.0
       tiny-querystring: ^0.0.2
   packages/@remirror/preset-list:
     dependencies:
@@ -950,7 +950,7 @@ importers:
       '@remirror/extension-react-component': 'link:../extension-react-component'
       '@remirror/extension-react-ssr': 'link:../extension-react-ssr'
       '@remirror/react-utils': 'link:../react-utils'
-      linaria: 2.0.0-alpha.5
+      linaria: 2.0.0-rc.0
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -968,7 +968,7 @@ importers:
       '@remirror/react-utils': ^1.0.0-next.4
       '@types/react': ^16.9.43
       '@types/react-dom': ^16.9.8
-      linaria: ^2.0.0-alpha.5
+      linaria: ^2.0.0-rc.0
       react: ^16.13.1
       react-dom: ^16.13.1
   packages/@remirror/preset-react-checkbox:
@@ -1003,7 +1003,7 @@ importers:
     dependencies:
       '@babel/runtime': 7.10.5
       '@remirror/theme': 'link:../theme'
-      linaria: 2.0.0-alpha.5
+      linaria: 2.0.0-rc.0
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -1012,7 +1012,7 @@ importers:
       '@remirror/core': ^1.0.0-next.12
       '@remirror/pm': ^1.0.0-next.4
       '@remirror/theme': ^1.0.0-next.4
-      linaria: ^2.0.0-alpha.5
+      linaria: ^2.0.0-rc.0
   packages/@remirror/preset-wysiwyg:
     dependencies:
       '@babel/runtime': 7.10.5
@@ -1084,7 +1084,7 @@ importers:
       '@types/use-deep-compare-effect': 1.2.0
       fast-deep-equal: 3.1.3
       hoist-non-react-statics: 3.3.2
-      linaria: 2.0.0-alpha.5
+      linaria: 2.0.0-rc.0
       min-document: 2.19.0
       react-use: 15.3.3_react-dom@16.13.1+react@16.13.1
       resize-observer-polyfill: 1.5.1
@@ -1127,7 +1127,7 @@ importers:
       fast-deep-equal: ^3.1.3
       hoist-non-react-statics: ^3.3.2
       jest-axe: ^3.5.0
-      linaria: ^2.0.0-alpha.5
+      linaria: ^2.0.0-rc.0
       min-document: ^2.19.0
       react: ^16.13.1
       react-dom: ^16.13.1
@@ -1148,7 +1148,7 @@ importers:
       '@remirror/theme': 'link:../theme'
       '@types/classnames': 2.2.10
       classnames: 2.2.6
-      linaria: 2.0.0-alpha.5
+      linaria: 2.0.0-rc.0
       multishift: 'link:../../multishift'
       type-fest: 0.16.0
     devDependencies:
@@ -1184,7 +1184,7 @@ importers:
       '@types/react-dom': ^16.9.8
       '@types/testing-library__react-hooks': ^3.4.0
       classnames: ^2.2.6
-      linaria: ^2.0.0-alpha.5
+      linaria: ^2.0.0-rc.0
       multishift: ^1.0.0-next.2
       react: ^16.13.1
       react-dom: ^16.13.1
@@ -1217,7 +1217,7 @@ importers:
       '@remirror/theme': 'link:../theme'
       '@types/classnames': 2.2.10
       classnames: 2.2.6
-      linaria: 2.0.0-alpha.5
+      linaria: 2.0.0-rc.0
       multishift: 'link:../../multishift'
       type-fest: 0.16.0
     devDependencies:
@@ -1248,7 +1248,7 @@ importers:
       '@types/react': ^16.9.43
       '@types/react-dom': ^16.9.8
       classnames: ^2.2.6
-      linaria: ^2.0.0-alpha.5
+      linaria: ^2.0.0-rc.0
       multishift: ^1.0.0-next.2
       react: ^16.13.1
       react-dom: ^16.13.1
@@ -1332,14 +1332,14 @@ importers:
       '@babel/runtime': 7.10.5
       '@remirror/core-types': 'link:../core-types'
       case-anything: 1.1.1
-      linaria: 2.0.0-alpha.5
+      linaria: 2.0.0-rc.0
       open-color: 1.7.0
       type-fest: 0.16.0
     specifiers:
       '@babel/runtime': ^7.10.5
       '@remirror/core-types': ^1.0.0-next.6
       case-anything: ^1.1.1
-      linaria: ^2.0.0-alpha.5
+      linaria: ^2.0.0-rc.0
       open-color: ^1.7.0
       type-fest: ^0.16.0
   packages/a11y-status:
@@ -1621,7 +1621,7 @@ importers:
       globby: 11.0.1
       jest-axe: 3.5.0
       jest-diff: 26.1.0
-      linaria: 2.0.0-alpha.5
+      linaria: 2.0.0-rc.0
       lodash.groupby: 4.6.0
       lodash.isequal: 4.5.0
       postcss: 7.0.32
@@ -1646,7 +1646,7 @@ importers:
       globby: ^11.0.1
       jest-axe: ^3.5.0
       jest-diff: ^26.1.0
-      linaria: ^2.0.0-alpha.5
+      linaria: ^2.0.0-rc.0
       lodash.groupby: ^4.6.0
       lodash.isequal: ^4.5.0
       postcss: ^7.0.32
@@ -1726,7 +1726,7 @@ importers:
     dependencies:
       '@preconstruct/next': 1.0.1
       '@remirror/showcase': 'link:../../../packages/@remirror/showcase'
-      next: 9.5.0_react-dom@16.13.1+react@16.13.1
+      next: 9.4.4_react-dom@16.13.1+react@16.13.1
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
       refractor: 3.0.0
@@ -1741,7 +1741,7 @@ importers:
       '@types/react': ^16.9.43
       '@types/react-dom': ^16.9.8
       '@types/refractor': ^2.8.0
-      next: ^9.5.0
+      next: 9.4.4
       react: ^16.13.1
       react-dom: ^16.13.1
       refractor: ^3.0.0
@@ -1757,7 +1757,7 @@ importers:
       '@types/react': 16.9.43
       '@types/react-dom': 16.9.8
       babel-loader: 8.1.0_@babel+core@7.10.5
-      linaria: 2.0.0-alpha.5
+      linaria: 2.0.0-rc.0
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
       remirror: 'link:../../packages/remirror'
@@ -1771,7 +1771,7 @@ importers:
       '@types/react': ^16.9.43
       '@types/react-dom': ^16.9.8
       babel-loader: ^8.1.0
-      linaria: ^2.0.0-alpha.5
+      linaria: ^2.0.0-rc.0
       react: ^16.13.1
       react-dom: ^16.13.1
       remirror: ^1.0.0-next.10
@@ -1836,25 +1836,20 @@ packages:
     dev: false
     resolution:
       integrity: sha512-KjHyR0XpQyloTu59IaatU2NCGT5zOhWJtVXQ4Uj/NUaRriN6LlJlzHBxtXmPIb0YHETdD63ITtDvqZizZPYFag==
-  /@ampproject/toolbox-optimizer/2.5.3:
+  /@ampproject/toolbox-optimizer/2.4.0:
     dependencies:
       '@ampproject/toolbox-core': 2.5.4
       '@ampproject/toolbox-runtime-version': 2.5.4
       '@ampproject/toolbox-script-csp': 2.5.4
       '@ampproject/toolbox-validator-rules': 2.5.4
-      abort-controller: 3.0.0
-      cross-fetch: 3.0.4
       cssnano: 4.1.10
-      dom-serializer: 1.0.1
       domhandler: 3.0.0
       domutils: 2.1.0
       htmlparser2: 4.1.0
       lru-cache: 5.1.1
-      node-fetch: 2.6.0
       normalize-html-whitespace: 1.0.0
-      postcss: 7.0.32
       postcss-safe-parser: 4.0.2
-      terser: 4.7.0
+      terser: 4.6.13
     dev: false
     peerDependencies:
       jimp: '*'
@@ -1866,7 +1861,7 @@ packages:
         optional: true
     requiresBuild: true
     resolution:
-      integrity: sha512-D6j7nU02sLRaW+ZKd1UNyUESu9GVLhVrtGHQ/rORj87ZJS5s0DCpoIDbq1slKQDCDHl7RknQ3A6CVm14ihXV2A==
+      integrity: sha512-Bmb+eMF9/VB3H0qPdZy0V5yPSkWe5RwuGbXiMxzqYdJgmMat+NL75EtozQnlpa0uBlESnOGe7bMojm/SA1ImrA==
   /@ampproject/toolbox-runtime-version/2.5.4:
     dependencies:
       '@ampproject/toolbox-core': 2.5.4
@@ -1938,13 +1933,13 @@ packages:
       integrity: sha512-O34LQooYVDXPl7QWCdW9p4NR+QlzOr7xShPPJz8GsuCU3/8ua/wqTr7gmnxXv+WBESiGU/G5s16i6tUvHkNb+w==
   /@babel/core/7.7.7:
     dependencies:
-      '@babel/code-frame': 7.8.3
+      '@babel/code-frame': 7.10.4
       '@babel/generator': 7.10.5
       '@babel/helpers': 7.10.4
       '@babel/parser': 7.10.5
       '@babel/template': 7.10.4
       '@babel/traverse': 7.10.5
-      '@babel/types': 7.9.6
+      '@babel/types': 7.10.5
       convert-source-map: 1.7.0
       debug: 4.1.1
       json5: 2.1.3
@@ -2310,6 +2305,16 @@ packages:
       '@babel/core': ^7.0.0-0
     resolution:
       integrity: sha512-wq5n1M3ZUlHl9sqT2ok1T2/MTt6AXE0e1Lz4WzWBr95LsAZ5qDXe4KnFuauYyEyLiohvXFMdbsOTMyLZs91Zlw==
+  /@babel/plugin-proposal-nullish-coalescing-operator/7.10.4_@babel+core@7.7.7:
+    dependencies:
+      '@babel/core': 7.7.7
+      '@babel/helper-plugin-utils': 7.10.4
+      '@babel/plugin-syntax-nullish-coalescing-operator': 7.8.3_@babel+core@7.7.7
+    dev: false
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    resolution:
+      integrity: sha512-wq5n1M3ZUlHl9sqT2ok1T2/MTt6AXE0e1Lz4WzWBr95LsAZ5qDXe4KnFuauYyEyLiohvXFMdbsOTMyLZs91Zlw==
   /@babel/plugin-proposal-nullish-coalescing-operator/7.8.3_@babel+core@7.7.7:
     dependencies:
       '@babel/core': 7.7.7
@@ -2325,6 +2330,16 @@ packages:
       '@babel/core': 7.10.5
       '@babel/helper-plugin-utils': 7.10.4
       '@babel/plugin-syntax-numeric-separator': 7.10.4_@babel+core@7.10.5
+    dev: false
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    resolution:
+      integrity: sha512-73/G7QoRoeNkLZFxsoCCvlg4ezE4eM+57PnOqgaPOozd5myfj7p0muD1mRVJvbUWbOzD+q3No2bWbaKy+DJ8DA==
+  /@babel/plugin-proposal-numeric-separator/7.10.4_@babel+core@7.7.7:
+    dependencies:
+      '@babel/core': 7.7.7
+      '@babel/helper-plugin-utils': 7.10.4
+      '@babel/plugin-syntax-numeric-separator': 7.10.4_@babel+core@7.7.7
     dev: false
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -2346,6 +2361,17 @@ packages:
       '@babel/helper-plugin-utils': 7.10.4
       '@babel/plugin-syntax-object-rest-spread': 7.8.3_@babel+core@7.10.5
       '@babel/plugin-transform-parameters': 7.10.5_@babel+core@7.10.5
+    dev: false
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    resolution:
+      integrity: sha512-6vh4SqRuLLarjgeOf4EaROJAHjvu9Gl+/346PbDH9yWbJyfnJ/ah3jmYKYtswEyCoWZiidvVHjHshd4WgjB9BA==
+  /@babel/plugin-proposal-object-rest-spread/7.10.4_@babel+core@7.7.7:
+    dependencies:
+      '@babel/core': 7.7.7
+      '@babel/helper-plugin-utils': 7.10.4
+      '@babel/plugin-syntax-object-rest-spread': 7.8.3_@babel+core@7.7.7
+      '@babel/plugin-transform-parameters': 7.10.5_@babel+core@7.7.7
     dev: false
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -2387,6 +2413,16 @@ packages:
       '@babel/core': 7.10.5
       '@babel/helper-plugin-utils': 7.10.4
       '@babel/plugin-syntax-optional-chaining': 7.8.3_@babel+core@7.10.5
+    dev: false
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    resolution:
+      integrity: sha512-ZIhQIEeavTgouyMSdZRap4VPPHqJJ3NEs2cuHs5p0erH+iz6khB0qfgU8g7UuJkG88+fBMy23ZiU+nuHvekJeQ==
+  /@babel/plugin-proposal-optional-chaining/7.10.4_@babel+core@7.7.7:
+    dependencies:
+      '@babel/core': 7.7.7
+      '@babel/helper-plugin-utils': 7.10.4
+      '@babel/plugin-syntax-optional-chaining': 7.8.3_@babel+core@7.7.7
     dev: false
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -3015,6 +3051,18 @@ packages:
       '@babel/core': ^7.0.0-0
     resolution:
       integrity: sha512-Xj7Uq5o80HDLlW64rVfDBhao6OX89HKUmb+9vWYaLXBZOma4gA6tw4Ni1O5qVDoZWUV0fxMYA0aYzOawz0l+1w==
+  /@babel/plugin-transform-modules-commonjs/7.10.4_@babel+core@7.7.7:
+    dependencies:
+      '@babel/core': 7.7.7
+      '@babel/helper-module-transforms': 7.10.5
+      '@babel/helper-plugin-utils': 7.10.4
+      '@babel/helper-simple-access': 7.10.4
+      babel-plugin-dynamic-import-node: 2.3.3
+    dev: false
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    resolution:
+      integrity: sha512-Xj7Uq5o80HDLlW64rVfDBhao6OX89HKUmb+9vWYaLXBZOma4gA6tw4Ni1O5qVDoZWUV0fxMYA0aYzOawz0l+1w==
   /@babel/plugin-transform-modules-commonjs/7.9.6_@babel+core@7.7.7:
     dependencies:
       '@babel/core': 7.7.7
@@ -3582,11 +3630,11 @@ packages:
       '@babel/plugin-proposal-async-generator-functions': 7.10.5_@babel+core@7.7.7
       '@babel/plugin-proposal-dynamic-import': 7.10.4_@babel+core@7.7.7
       '@babel/plugin-proposal-json-strings': 7.10.4_@babel+core@7.7.7
-      '@babel/plugin-proposal-nullish-coalescing-operator': 7.8.3_@babel+core@7.7.7
-      '@babel/plugin-proposal-numeric-separator': 7.8.3_@babel+core@7.7.7
-      '@babel/plugin-proposal-object-rest-spread': 7.9.6_@babel+core@7.7.7
+      '@babel/plugin-proposal-nullish-coalescing-operator': 7.10.4_@babel+core@7.7.7
+      '@babel/plugin-proposal-numeric-separator': 7.10.4_@babel+core@7.7.7
+      '@babel/plugin-proposal-object-rest-spread': 7.10.4_@babel+core@7.7.7
       '@babel/plugin-proposal-optional-catch-binding': 7.10.4_@babel+core@7.7.7
-      '@babel/plugin-proposal-optional-chaining': 7.9.0_@babel+core@7.7.7
+      '@babel/plugin-proposal-optional-chaining': 7.10.4_@babel+core@7.7.7
       '@babel/plugin-proposal-unicode-property-regex': 7.10.4_@babel+core@7.7.7
       '@babel/plugin-syntax-async-generators': 7.8.4_@babel+core@7.7.7
       '@babel/plugin-syntax-dynamic-import': 7.8.3_@babel+core@7.7.7
@@ -3612,7 +3660,7 @@ packages:
       '@babel/plugin-transform-literals': 7.10.4_@babel+core@7.7.7
       '@babel/plugin-transform-member-expression-literals': 7.10.4_@babel+core@7.7.7
       '@babel/plugin-transform-modules-amd': 7.10.5_@babel+core@7.7.7
-      '@babel/plugin-transform-modules-commonjs': 7.9.6_@babel+core@7.7.7
+      '@babel/plugin-transform-modules-commonjs': 7.10.4_@babel+core@7.7.7
       '@babel/plugin-transform-modules-systemjs': 7.10.5_@babel+core@7.7.7
       '@babel/plugin-transform-modules-umd': 7.10.4_@babel+core@7.7.7
       '@babel/plugin-transform-named-capturing-groups-regex': 7.10.4_@babel+core@7.7.7
@@ -3629,7 +3677,7 @@ packages:
       '@babel/plugin-transform-typeof-symbol': 7.10.4_@babel+core@7.7.7
       '@babel/plugin-transform-unicode-regex': 7.10.4_@babel+core@7.7.7
       '@babel/preset-modules': 0.1.3_@babel+core@7.7.7
-      '@babel/types': 7.9.6
+      '@babel/types': 7.10.5
       browserslist: 4.13.0
       core-js-compat: 3.6.5
       invariant: 2.2.4
@@ -4642,9 +4690,7 @@ packages:
       '@hapi/bourne': 1.3.2
       '@hapi/hoek': 8.5.1
       '@hapi/topo': 3.1.6
-    deprecated:
-      "joi is leaving the @hapi organization and moving back to 'joi'
-      (https://github.com/sideway/joi/issues/2411)"
+    deprecated: 'joi is leaving the @hapi organization and moving back to ''joi'' (https://github.com/sideway/joi/issues/2411)'
     dev: false
     resolution:
       integrity: sha512-entf8ZMOK8sc+8YfeOlM8pCfg3b5+WZIKBfUaaJT8UsjAAPjartzxIYm3TIbjvA4u+u++KbcXD38k682nVHDAQ==
@@ -4655,9 +4701,7 @@ packages:
       '@hapi/hoek': 9.0.4
       '@hapi/pinpoint': 2.0.0
       '@hapi/topo': 5.0.0
-    deprecated:
-      "joi is leaving the @hapi organization and moving back to 'joi'
-      (https://github.com/sideway/joi/issues/2411)"
+    deprecated: 'joi is leaving the @hapi organization and moving back to ''joi'' (https://github.com/sideway/joi/issues/2411)'
     dev: false
     resolution:
       integrity: sha512-p4DKeZAoeZW4g3u7ZeRo+vCDuSDgSvtsB/NpfjXEHTUjSeINAi/RrVOWiVQ1isaoLzMvFEhe8n5065mQq1AdQg==
@@ -5224,7 +5268,7 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-bPHp6Ji8b41szTOcaP63VlnbbO5Ny6dwAATtY6JTjh5N2OLrb5Qk/Th5cRkRQhkWCt+EJsYrNB0MiL+Gpn6e3g==
-  /@next/react-dev-overlay/9.5.0_43adfc13b8d03792739ba9bbd2d0be53:
+  /@next/react-dev-overlay/9.4.4_react-dom@16.13.1+react@16.13.1:
     dependencies:
       '@babel/code-frame': 7.8.3
       ally.js: 1.4.1
@@ -5238,24 +5282,22 @@ packages:
       source-map: 0.8.0-beta.0
       stacktrace-parser: 0.1.10
       strip-ansi: 6.0.0
-      webpack: 4.44.0_webpack@4.44.0
     dev: false
     peerDependencies:
       react: ^16.9.0
       react-dom: ^16.9.0
-      webpack: ^4 || ^5
     resolution:
-      integrity: sha512-Ds+sQnyeYWq07QIJ7bbYE6WI6ZdPSa+3S+cysvdy0zLLaHemp/Ew8OteXvgNtZYo9OGYBbngxHVUORDcQHaCng==
-  /@next/react-refresh-utils/9.5.0_7f5b97e02057958b07b23defc2d7409e:
+      integrity: sha512-UUAa8RbH7BeWDPCkagIkR4sUsyvTPlEdFrPZ9kGjf2+p8HkLHpcVY7y+XRnNvJQs4PsAF0Plh20FBz7t54U2iQ==
+  /@next/react-refresh-utils/9.4.4_fd8093f90ae2e7e229f846ec0d2fc400:
     dependencies:
       react-refresh: 0.8.3
-      webpack: 4.44.0_webpack@4.44.0
+      webpack: 4.43.0_webpack@4.43.0
     dev: false
     peerDependencies:
       react-refresh: 0.8.3
-      webpack: ^4 || ^5
+      webpack: ^4
     resolution:
-      integrity: sha512-YaLBsyAQuEDTyzEuTzg/VwwSqpfNkJ5fiQNIBSGY+UmSpg1+1OHIyMRURzLKO1K7ad3w6kZ+ykgGcMLToR33EQ==
+      integrity: sha512-9nKENeWRI6kQk44TbeqleIVtNLfcS3klVUepzl/ZCqzR5Bi06uqBCD277hdVvG/wL1pxA+R/pgJQLqnF5E2wPQ==
   /@nodelib/fs.scandir/2.1.3:
     dependencies:
       '@nodelib/fs.stat': 2.0.3
@@ -7083,6 +7125,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-yYn5EKHO3MPEMSOrcAb1dLWY+68CG29LiXKsWmmpVHqoP5+ZRiAVLyUHvPNrO2dABDdUGZvavMsaGpWNjM6N2g==
+  /@types/testing-library__jest-dom/5.9.2:
+    dependencies:
+      '@types/jest': 26.0.7
+    dev: false
+    resolution:
+      integrity: sha512-K7nUSpH/5i8i0NagTJ+uFUDRueDlnMNhJtMjMwTGPPSqyImbWC/hgKPDCKt6Phu2iMJg2kWqlax+Ucj2DKMwpA==
   /@types/testing-library__react-hooks/3.3.0:
     dependencies:
       '@types/react': 16.9.43
@@ -7460,14 +7508,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
-  /abort-controller/3.0.0:
-    dependencies:
-      event-target-shim: 5.0.1
-    dev: false
-    engines:
-      node: '>=6.5'
-    resolution:
-      integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==
   /accepts/1.3.7:
     dependencies:
       mime-types: 2.1.27
@@ -7623,14 +7663,6 @@ packages:
       ajv: '>=5.0.0'
     resolution:
       integrity: sha512-DCRfO/4nQ+89p/RK43i8Ezd41EqdGIU4ld7nGF8OQ14oc/we5rEntLCUa7+jrn3nn83BosfwZA0wb4pon2o8iQ==
-  /ajv-keywords/3.5.1_ajv@6.12.3:
-    dependencies:
-      ajv: 6.12.3
-    dev: false
-    peerDependencies:
-      ajv: ^6.9.1
-    resolution:
-      integrity: sha512-KWcq3xN8fDjSB+IMoh2VaXVhRI0BBGxoYp3rx7Pkb6z0cFjYR9Q9l4yZqqals0/zsioCmocC5H6UvsGD4MoIBA==
   /ajv-keywords/3.5.2_ajv@6.12.3:
     dependencies:
       ajv: 6.12.3
@@ -8956,6 +8988,16 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-TpfK0TDgv71dzuTsEAlQiHeWQ/tiPqgNZVdv046fvNtBZrjbv2O3TsWCDU0AWGJJKCF/KsjNdLzR9hXOsh/CfA==
+  /browserslist/4.12.0:
+    dependencies:
+      caniuse-lite: 1.0.30001107
+      electron-to-chromium: 1.3.505
+      node-releases: 1.1.60
+      pkg-up: 2.0.0
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-UH2GkcEDSI0k/lRkuDSzFl9ZZ87skSy9w2XAn1MsZnL+4c4rqbBd3e82UWHbYDpztABrPBhZsTEeuxVfHppqDg==
   /browserslist/4.13.0:
     dependencies:
       caniuse-lite: 1.0.30001105
@@ -9120,7 +9162,7 @@ packages:
       minipass-collect: 1.0.2
       minipass-flush: 1.0.5
       minipass-pipeline: 1.2.3
-      mkdirp: 0.5.3
+      mkdirp: 0.5.5
       move-concurrently: 1.0.1
       p-map: 3.0.0
       promise-inflight: 1.0.1
@@ -9468,8 +9510,7 @@ packages:
       path-is-absolute: 1.0.1
       readdirp: 2.2.1
       upath: 1.2.0
-    deprecated:
-      Chokidar 2 will break on node v14+. Upgrade to chokidar 3 with 15x less dependencies.
+    deprecated: Chokidar 2 will break on node v14+. Upgrade to chokidar 3 with 15x less dependencies.
     dev: false
     optionalDependencies:
       fsevents: 1.2.13
@@ -10036,7 +10077,7 @@ packages:
       aproba: 1.2.0
       fs-write-stream-atomic: 1.0.10
       iferr: 0.1.5
-      mkdirp: 0.5.3
+      mkdirp: 0.5.5
       rimraf: 2.7.1
       run-queue: 1.0.3
     dev: false
@@ -10093,16 +10134,12 @@ packages:
     resolution:
       integrity: sha512-lacdXOimsiD0QyNf9BC/mxivNJ/ybBGJXQFKzRekp1WTHoVUWsUHEn+2T8GJAzzIhyOuXA+gOxCVN3l+5PLPUA==
   /core-js/1.2.7:
-    deprecated:
-      'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues.
-      Please, upgrade your dependencies to the actual version of core-js@3.'
+    deprecated: 'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.'
     dev: false
     resolution:
       integrity: sha1-ZSKUwUZR2yj6k70tX/KYOk8IxjY=
   /core-js/2.6.11:
-    deprecated:
-      'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues.
-      Please, upgrade your dependencies to the actual version of core-js@3.'
+    deprecated: 'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.'
     dev: false
     requiresBuild: true
     resolution:
@@ -10274,13 +10311,6 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-KZP/bMEOJEDCkDQAyRhu3RL2ZO/SUVrxQVI0G3YEQ+OLbRA3c6zgixe8Mq8a/z7+HKlNEjo8oiLUs8iRijY2Rw==
-  /cross-fetch/3.0.4:
-    dependencies:
-      node-fetch: 2.6.0
-      whatwg-fetch: 3.0.0
-    dev: false
-    resolution:
-      integrity: sha512-MSHgpjQqgbT/94D4CyADeNoYh52zMkCX4pcJvPP5WqPsLFMKjr2TCMg381ox5qI0ii2dPwaLx/00477knXqXVw==
   /cross-fetch/3.0.5:
     dependencies:
       node-fetch: 2.6.0
@@ -10395,7 +10425,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-PJF0SpJT+WdbVVt0AOYp9C8GnuruRlL/UFW7932nLWmFLQTaWEzTBQEx7/hn4BuV+WON75iAViSUJLiU3PKbpA==
-  /css-loader/3.5.3_webpack@4.44.0:
+  /css-loader/3.5.3_webpack@4.43.0:
     dependencies:
       camelcase: 5.3.1
       cssesc: 3.0.0
@@ -10408,9 +10438,9 @@ packages:
       postcss-modules-scope: 2.2.0
       postcss-modules-values: 3.0.0
       postcss-value-parser: 4.1.0
-      schema-utils: 2.6.6
+      schema-utils: 2.7.0
       semver: 6.3.0
-      webpack: 4.44.0_webpack@4.44.0
+      webpack: 4.43.0_webpack@4.43.0
     dev: false
     engines:
       node: '>= 8.9.0'
@@ -10600,19 +10630,6 @@ packages:
       node: '>=6.9.0'
     resolution:
       integrity: sha512-x0YHHx2h6p0fCl1zY9L9roD7rnlltugGu7zXSKQx6k2rYw0Hi3IqxcoAGF7u9Q5w1nt7vK0ulxV8Lo+EvllGsA==
-  /cssnano-preset-simple/1.1.4:
-    dependencies:
-      postcss: 7.0.32
-    dev: false
-    resolution:
-      integrity: sha512-EYKDo65W+AxMViUijv/hvhbEnxUjmu3V7omcH1MatPOwjRLrAgVArUOE8wTUyc1ePFEtvV8oCT4/QSRJDorm/A==
-  /cssnano-simple/1.0.5:
-    dependencies:
-      cssnano-preset-simple: 1.1.4
-      postcss: 7.0.32
-    dev: false
-    resolution:
-      integrity: sha512-NJjx2Er1C3pa75v1GwMKm0w6xAp1GsW2Ql1As4CWPNFxTgYFN5e8wblYeHfna13sANAhyIdSIPqKJjBO4CU5Eg==
   /cssnano-util-get-arguments/4.0.0:
     dev: false
     engines:
@@ -11343,14 +11360,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-2/xPb3ORsQ42nHYiSunXkDjPLBaEj/xTwUO4B7XCZQTRk7EBtTOPaygh10YAAh2OI1Qrp6NWfpAhzswj0ydt9g==
-  /dom-serializer/1.0.1:
-    dependencies:
-      domelementtype: 2.0.1
-      domhandler: 3.0.0
-      entities: 2.0.3
-    dev: false
-    resolution:
-      integrity: sha512-1Aj1Qy3YLbdslkI75QEOfdp9TkQ3o8LRISAzxOibjBs/xWwr1WxZFOQphFkZuepHFGo+kB8e5FVJSS0faAJ4Rw==
   /dom-walk/0.1.2:
     dev: false
     resolution:
@@ -12293,12 +12302,6 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha512-npGsebJejyjMRnLdFu+T/97dnigqIU0Ov3IGrZ8ygd1v7RL1vGkEKtvyWZobqUH1AQgKlg0Yqqe2BtMA9/QZLw==
-  /event-target-shim/5.0.1:
-    dev: false
-    engines:
-      node: '>=6'
-    resolution:
-      integrity: sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
   /eventemitter3/3.1.2:
     dev: false
     resolution:
@@ -13279,9 +13282,7 @@ packages:
     dependencies:
       bindings: 1.5.0
       nan: 2.14.1
-    deprecated:
-      fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents
-      2.
+    deprecated: fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents 2.
     dev: false
     engines:
       node: '>= 4.0'
@@ -16732,7 +16733,7 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-cHHKhHTojtvFSsthTk+CKuD17jMHIxuZxYpTzXj9TeQLPNoGNDPl6ax+J6eFETVe3ZvPMh3V0nGfJgGo6QgSvA==
-  /linaria/2.0.0-alpha.5:
+  /linaria/2.0.0-rc.0:
     dependencies:
       '@babel/core': 7.10.5
       '@babel/generator': 7.10.5
@@ -16761,12 +16762,12 @@ packages:
       source-map: 0.6.1
       strip-ansi: 5.2.0
       stylis: 3.5.4
-      webpack: 4.43.0_webpack@4.43.0
+      webpack: 4.44.0_webpack@4.44.0
       yargs: 13.3.2
     dev: false
     hasBin: true
     resolution:
-      integrity: sha512-W+PcPHcdjJ0VyBjrTnFgqc+R3eTNd3Bf4couvwo+5Yst7JaZh5ot4KYmOzP/AOjPZPlMUGhM4H4NQwyApFY2AQ==
+      integrity: sha512-MMYaMdbe+VleiQAlnuLYwUqJr9d2ROtrCDPwcu8KuKsilach2nu0x6MsalqAwQRp8VQ9supK19b23CNUbZO9Jw==
   /lines-and-columns/1.1.6:
     resolution:
       integrity: sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
@@ -17813,12 +17814,12 @@ packages:
       webpack: ^4.4.0
     resolution:
       integrity: sha512-RQIw6+7utTYn8DBGsf/LpRgZCJMpZt+kuawJ/fju0KiOL6nAaTBNmCJwS7HtwSCXfS47gCkmtBFS7HdsquhdxQ==
-  /mini-css-extract-plugin/0.8.0_webpack@4.44.0:
+  /mini-css-extract-plugin/0.8.0_webpack@4.43.0:
     dependencies:
       loader-utils: 1.4.0
       normalize-url: 1.9.1
       schema-utils: 1.0.0
-      webpack: 4.44.0_webpack@4.44.0
+      webpack: 4.43.0_webpack@4.43.0
       webpack-sources: 1.4.3
     dev: false
     engines:
@@ -17962,18 +17963,14 @@ packages:
     resolution:
       integrity: sha512-gKLcREMhtuZRwRAfqP3RFW+TK4JqApVBtOIftVgjuABpAtpxhPGaDcfvbhNvD0B8iD1oUr/txX35NjcaY6Ns/A==
   /mkdirp/0.3.0:
-    deprecated:
-      Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the
-      API surface has changed to use Promises in 1.x.)
+    deprecated: Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the API surface has changed to use Promises in 1.x.)
     dev: false
     resolution:
       integrity: sha1-G79asbqCevI1dRQ0kEJkVfSB/h4=
   /mkdirp/0.5.3:
     dependencies:
       minimist: 1.2.5
-    deprecated:
-      Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the
-      API surface has changed to use Promises in 1.x.)
+    deprecated: Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the API surface has changed to use Promises in 1.x.)
     dev: false
     hasBin: true
     resolution:
@@ -18020,7 +18017,7 @@ packages:
       aproba: 1.2.0
       copy-concurrently: 1.0.5
       fs-write-stream-atomic: 1.0.10
-      mkdirp: 0.5.3
+      mkdirp: 0.5.5
       rimraf: 2.7.1
       run-queue: 1.0.3
     dev: false
@@ -18146,12 +18143,12 @@ packages:
     optional: true
     resolution:
       integrity: sha512-9nRjinI9bmz+S7dgNtf4A70+/vPhnd+2krGpy4SUlADuOuSa24IDkNaZ+R/QT1wQ6S8jBdi6wE7fLekFZNfUpQ==
-  /native-url/0.3.4:
+  /native-url/0.3.1:
     dependencies:
       querystring: 0.2.0
     dev: false
     resolution:
-      integrity: sha512-6iM8R99ze45ivyH8vybJ7X0yekIcPf5GgLV5K0ENCbmRcaRIDoj37BC8iLEmaaBfqqb8enuZ5p0uhY+lVAbAcA==
+      integrity: sha512-VL0XRW8nNBdSpxqZCbLJKrLHmIMn82FZ8pJzriJgyBmErjdEtrUX6eZAJbtHjlkMooEWUV+EtJ0D5tOP3+1Piw==
   /natural-compare/1.4.0:
     resolution:
       integrity: sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
@@ -18177,9 +18174,9 @@ packages:
     dev: false
     resolution:
       integrity: sha1-yobR/ogoFpsBICCOPchCS524NCw=
-  /next/9.5.0_react-dom@16.13.1+react@16.13.1:
+  /next/9.4.4_react-dom@16.13.1+react@16.13.1:
     dependencies:
-      '@ampproject/toolbox-optimizer': 2.5.3
+      '@ampproject/toolbox-optimizer': 2.4.0
       '@babel/code-frame': 7.8.3
       '@babel/core': 7.7.7
       '@babel/plugin-proposal-class-properties': 7.8.3_@babel+core@7.7.7
@@ -18197,25 +18194,25 @@ packages:
       '@babel/preset-typescript': 7.9.0_@babel+core@7.7.7
       '@babel/runtime': 7.9.6
       '@babel/types': 7.9.6
-      '@next/react-dev-overlay': 9.5.0_43adfc13b8d03792739ba9bbd2d0be53
-      '@next/react-refresh-utils': 9.5.0_7f5b97e02057958b07b23defc2d7409e
+      '@next/react-dev-overlay': 9.4.4_react-dom@16.13.1+react@16.13.1
+      '@next/react-refresh-utils': 9.4.4_fd8093f90ae2e7e229f846ec0d2fc400
       babel-plugin-syntax-jsx: 6.18.0
       babel-plugin-transform-define: 2.0.0
       babel-plugin-transform-react-remove-prop-types: 0.4.24
-      browserslist: 4.13.0
+      browserslist: 4.12.0
       cacache: 13.0.1
       chokidar: 2.1.8
-      css-loader: 3.5.3_webpack@4.44.0
-      cssnano-simple: 1.0.5
+      css-loader: 3.5.3_webpack@4.43.0
       find-cache-dir: 3.3.1
+      fork-ts-checker-webpack-plugin: 3.1.1
       jest-worker: 24.9.0
       loader-utils: 2.0.0
-      mini-css-extract-plugin: 0.8.0_webpack@4.44.0
+      mini-css-extract-plugin: 0.8.0_webpack@4.43.0
       mkdirp: 0.5.3
-      native-url: 0.3.4
+      native-url: 0.3.1
       neo-async: 2.6.1
       pnp-webpack-plugin: 1.6.4
-      postcss: 7.0.32
+      postcss: 7.0.29
       prop-types: 15.7.2
       prop-types-exact: 1.2.0
       react: 16.13.1
@@ -18223,14 +18220,14 @@ packages:
       react-is: 16.13.1
       react-refresh: 0.8.3
       resolve-url-loader: 3.1.1
-      sass-loader: 8.0.2_webpack@4.44.0
+      sass-loader: 8.0.2_webpack@4.43.0
       schema-utils: 2.6.6
-      style-loader: 1.2.1_webpack@4.44.0
+      style-loader: 1.2.1_webpack@4.43.0
       styled-jsx: 3.3.0_react@16.13.1
       use-subscription: 1.4.1_react@16.13.1
       watchpack: 2.0.0-beta.13
       web-vitals: 0.2.1
-      webpack: 4.44.0_webpack@4.44.0
+      webpack: 4.43.0_webpack@4.43.0
       webpack-sources: 1.4.3
     dev: false
     engines:
@@ -18240,7 +18237,7 @@ packages:
       react: ^16.6.0
       react-dom: ^16.6.0
     resolution:
-      integrity: sha512-kb6QnrbMyS/h4bvryZSQKgRqLtFVL2NZQed4jxrFZ15yxtwdsSCf5+LNfS7bcpVxh7HeD5Ddwh55l9+nOGkEBQ==
+      integrity: sha512-ZT8bU2SAv5jkFQ+y8py+Rl5RJRJ6DnZDS+VUnB1cIscmtmUhDi7LYED7pYm4MCKkYhPbEEM1Lbpo7fnoZJGWNQ==
   /nice-try/1.0.5:
     resolution:
       integrity: sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
@@ -19883,8 +19880,7 @@ packages:
     resolution:
       integrity: sha512-VwhC9MlhW7O5dg/z7k32dabcAFW1VI2+7fSe8cE/kXcfL7mVdoa5UxciYGW2sJU78ldDLT6+ROEKIZKFNTnUXQ==
   /popper.js/1.16.1:
-    deprecated:
-      'You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1'
+    deprecated: 'You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1'
     dev: false
     resolution:
       integrity: sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ==
@@ -22516,9 +22512,7 @@ packages:
       request-promise-core: 1.1.4_request@2.88.2
       stealthy-require: 1.1.1
       tough-cookie: 2.5.0
-    deprecated:
-      'request-promise-native has been deprecated because it extends the now deprecated request
-      package, see https://github.com/request/request/issues/3142'
+    deprecated: 'request-promise-native has been deprecated because it extends the now deprecated request package, see https://github.com/request/request/issues/3142'
     engines:
       node: '>=0.12.0'
     peerDependencies:
@@ -22845,14 +22839,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-C+N7E+7ikYaLHdb9lEkQaFOgmj+9ddZ311Ixs/QsBsoLD411/vdLweiFyGqrswUVgLqagOS5NCDxcEPH7trObQ==
-  /sass-loader/8.0.2_webpack@4.44.0:
+  /sass-loader/8.0.2_webpack@4.43.0:
     dependencies:
       clone-deep: 4.0.1
       loader-utils: 1.4.0
-      neo-async: 2.6.1
-      schema-utils: 2.6.6
+      neo-async: 2.6.2
+      schema-utils: 2.7.0
       semver: 6.3.0
-      webpack: 4.44.0_webpack@4.44.0
+      webpack: 4.43.0_webpack@4.43.0
     dev: false
     engines:
       node: '>= 8.9.0'
@@ -22915,7 +22909,7 @@ packages:
     dependencies:
       ajv: 6.12.3
       ajv-errors: 1.0.1_ajv@6.12.3
-      ajv-keywords: 3.5.1_ajv@6.12.3
+      ajv-keywords: 3.5.2_ajv@6.12.3
     dev: false
     engines:
       node: '>= 4'
@@ -22934,7 +22928,7 @@ packages:
     dependencies:
       '@types/json-schema': 7.0.5
       ajv: 6.12.3
-      ajv-keywords: 3.5.1_ajv@6.12.3
+      ajv-keywords: 3.5.2_ajv@6.12.3
     dev: false
     engines:
       node: '>= 8.9.0'
@@ -24131,20 +24125,8 @@ packages:
   /style-loader/1.2.1_webpack@4.43.0:
     dependencies:
       loader-utils: 2.0.0
-      schema-utils: 2.6.6
+      schema-utils: 2.7.0
       webpack: 4.43.0_webpack@4.43.0
-    dev: false
-    engines:
-      node: '>= 8.9.0'
-    peerDependencies:
-      webpack: ^4.0.0 || ^5.0.0
-    resolution:
-      integrity: sha512-ByHSTQvHLkWE9Ir5+lGbVOXhxX10fbprhLvdg96wedFZb4NDekDPxVKv5Fwmio+QcMlkkNfuK+5W1peQ5CUhZg==
-  /style-loader/1.2.1_webpack@4.44.0:
-    dependencies:
-      loader-utils: 2.0.0
-      schema-utils: 2.6.6
-      webpack: 4.44.0_webpack@4.44.0
     dev: false
     engines:
       node: '>= 8.9.0'
@@ -24361,7 +24343,7 @@ packages:
       css-tree: 1.0.0-alpha.37
       csso: 4.0.3
       js-yaml: 3.14.0
-      mkdirp: 0.5.3
+      mkdirp: 0.5.5
       object.values: 1.1.1
       sax: 1.2.4
       stable: 0.1.8
@@ -24589,7 +24571,7 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-/FQzzPJmCpjAH9Xvk2paiWrFq+5M6aVOf+2KRbwhByISDX/EujxsK+BAvrhb6H+2rtrLCHK9N01wO014vrIwVQ==
-  /terser/4.7.0:
+  /terser/4.6.13:
     dependencies:
       commander: 2.20.3
       source-map: 0.6.1
@@ -24599,7 +24581,7 @@ packages:
       node: '>=6.0.0'
     hasBin: true
     resolution:
-      integrity: sha512-Lfb0RiZcjRDXCC3OSHJpEkxJ9Qeqs6mp2v4jf2MHfy8vGERmVDuvjXdd/EnP5Deme5F2yBRBymKmKHCBg2echw==
+      integrity: sha512-wMvqukYgVpQlymbnNbabVZbtM6PN63AzqexpwJL8tbh/mRT9LE5o+ruVduAGL7D6Fpjl+Q+06U5I9Ul82odAhw==
   /terser/4.8.0:
     dependencies:
       commander: 2.20.3
@@ -24988,9 +24970,7 @@ packages:
     engines:
       node: '>= 6'
     peerDependencies:
-      typescript:
-        '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev ||
-        >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
+      typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
     resolution:
       integrity: sha512-kzeQ5B8H3w60nFY2g8cJIuH7JDpsALXySGtwGJ0p2LSjLgay3NdIpqq5SoOBe46bKDW2iq25irHCr8wjomUS2g==
   /tty-browserify/0.0.0:
@@ -25822,20 +25802,10 @@ packages:
     optional: true
     resolution:
       integrity: sha512-9TyfOyN/zLUbA288wZ8IsMZ+6cbzvsNyEzSBp6e/zkifi6xxbl8SmQ/CxQq32k8NNqrdVEVUVSEf56L4rQ/ZxA==
-  /watchpack/1.7.2:
-    dependencies:
-      graceful-fs: 4.2.4
-      neo-async: 2.6.2
-    dev: false
-    optionalDependencies:
-      chokidar: 3.4.1
-      watchpack-chokidar2: 2.0.0
-    resolution:
-      integrity: sha512-ymVbbQP40MFTp+cNMvpyBpBtygHnPzPkHqoIwRRj/0B8KhqQwV8LaKjtbaxF2lK4vl8zN9wCxS46IFCU5K4W0g==
   /watchpack/1.7.4:
     dependencies:
       graceful-fs: 4.2.4
-      neo-async: 2.6.1
+      neo-async: 2.6.2
     dev: false
     optionalDependencies:
       chokidar: 3.4.1
@@ -26014,7 +25984,7 @@ packages:
       '@webassemblyjs/wasm-parser': 1.9.0
       acorn: 6.4.1
       ajv: 6.12.3
-      ajv-keywords: 3.5.1_ajv@6.12.3
+      ajv-keywords: 3.5.2_ajv@6.12.3
       chrome-trace-event: 1.0.2
       enhanced-resolve: 4.3.0
       eslint-scope: 4.0.3
@@ -26029,7 +25999,7 @@ packages:
       schema-utils: 1.0.0
       tapable: 1.1.3
       terser-webpack-plugin: 1.4.4_webpack@4.43.0
-      watchpack: 1.7.2
+      watchpack: 1.7.4
       webpack-sources: 1.4.3
     dev: false
     engines:
@@ -26056,8 +26026,8 @@ packages:
       loader-utils: 1.4.0
       memory-fs: 0.4.1
       micromatch: 3.1.10
-      mkdirp: 0.5.3
-      neo-async: 2.6.1
+      mkdirp: 0.5.5
+      neo-async: 2.6.2
       node-libs-browser: 2.2.1
       schema-utils: 1.0.0
       tapable: 1.1.3
@@ -26132,10 +26102,6 @@ packages:
       iconv-lite: 0.4.24
     resolution:
       integrity: sha512-b5lim54JOPN9HtzvK9HFXvBma/rnfFeqsic0hSpjtDbVxR3dJKLc+KB4V6GgiGOvl7CY/KNh8rxSo9DKQrnUEw==
-  /whatwg-fetch/3.0.0:
-    dev: false
-    resolution:
-      integrity: sha512-9GSJUgz1D4MfyKU7KRqwOjXCXTqWdFNvEr7eUBYchQiVc744mqK/MzXPNR2WsPkmkOa4ywfg8C2n8h+13Bey1Q==
   /whatwg-fetch/3.2.0:
     dev: false
     resolution:
