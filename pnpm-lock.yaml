@@ -900,6 +900,7 @@ importers:
       '@babel/runtime': 7.10.5
       '@remirror/extension-base-keymap': 'link:../extension-base-keymap'
       '@remirror/extension-doc': 'link:../extension-doc'
+      '@remirror/extension-gap-cursor': 'link:../extension-gap-cursor'
       '@remirror/extension-history': 'link:../extension-history'
       '@remirror/extension-paragraph': 'link:../extension-paragraph'
       '@remirror/extension-positioner': 'link:../extension-positioner'
@@ -912,6 +913,7 @@ importers:
       '@remirror/core': ^1.0.0-next.12
       '@remirror/extension-base-keymap': ^1.0.0-next.12
       '@remirror/extension-doc': ^1.0.0-next.12
+      '@remirror/extension-gap-cursor': ^1.0.0-next.12
       '@remirror/extension-history': ^1.0.0-next.12
       '@remirror/extension-paragraph': ^1.0.0-next.12
       '@remirror/extension-positioner': ^1.0.0-next.12
