@@ -1,5 +1,20 @@
 # @remirror/react-social
 
+## 1.0.0-next.12
+
+> 2020-07-28
+
+### Patch Changes
+
+- Updated dependencies [19b3595f]
+- Updated dependencies [d8aa2432]
+  - @remirror/core@1.0.0-next.12
+  - @remirror/extension-auto-link@1.0.0-next.12
+  - @remirror/extension-emoji@1.0.0-next.12
+  - @remirror/extension-mention@1.0.0-next.12
+  - @remirror/preset-social@1.0.0-next.12
+  - @remirror/react@1.0.0-next.12
+
 ## 1.0.0-next.11
 
 > 2020-07-26

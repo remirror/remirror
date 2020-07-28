@@ -1,5 +1,13 @@
 # @remirror/core-helpers
 
+## 1.0.0-next.12
+
+> 2020-07-28
+
+### Minor Changes
+
+- d8aa2432: Remove type guard from `isEmptyArray` and `isEmptyObject` as they were incorrect.
+
 ## 1.0.0-next.11
 
 > 2020-07-26
