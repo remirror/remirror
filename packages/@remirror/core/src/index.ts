@@ -16,8 +16,8 @@ export * from './types';
 // TODO move to a new package.
 export * from './commands';
 
-export { extensionDecorator } from './decorators';
-export type { ExtensionDecoratorOptions } from './decorators';
+export { extensionDecorator, presetDecorator } from './decorators';
+export type { ExtensionDecoratorOptions, PresetDecoratorOptions } from './decorators';
 
 export type {
   BaseClass,

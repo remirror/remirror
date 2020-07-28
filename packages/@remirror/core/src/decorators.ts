@@ -19,6 +19,7 @@ import {
   DefaultExtensionOptions,
   ExtensionConstructor,
 } from './extension';
+import { AnyPresetConstructor, DefaultPresetOptions, PresetConstructor } from './preset';
 
 interface DefaultOptionsParameter<Options extends Shape = EmptyShape> {
   /**
@@ -29,7 +30,9 @@ interface DefaultOptionsParameter<Options extends Shape = EmptyShape> {
    * @defaultValue `{}`
    */
   defaultOptions: DefaultExtensionOptions<Options>;
+}
 
+interface DefaultPriorityParameter {
   /**
    * The default priority for this extension.
    *
@@ -56,11 +59,14 @@ interface CustomHandlerKeysParameter<Options extends Shape = EmptyShape> {
   customHandlerKeys: CustomHandlerKeyList<Options>;
 }
 
-export type ExtensionDecoratorOptions<Options extends Shape = EmptyShape> = IfHasRequiredProperties<
-  DefaultExtensionOptions<Options>,
-  DefaultOptionsParameter<Options>,
-  Partial<DefaultOptionsParameter<Options>>
-> &
+export type ExtensionDecoratorOptions<
+  Options extends Shape = EmptyShape
+> = DefaultPriorityParameter &
+  IfHasRequiredProperties<
+    DefaultExtensionOptions<Options>,
+    DefaultOptionsParameter<Options>,
+    Partial<DefaultOptionsParameter<Options>>
+  > &
   IfEmpty<GetStatic<Options>, Partial<StaticKeysParameter<Options>>, StaticKeysParameter<Options>> &
   IfEmpty<
     GetHandler<Options>,
@@ -72,12 +78,12 @@ export type ExtensionDecoratorOptions<Options extends Shape = EmptyShape> = IfHa
     Partial<CustomHandlerKeysParameter<Options>>,
     CustomHandlerKeysParameter<Options>
   > &
-  Partial<Remirror.StaticExtensionOptions> & { defaultPriority?: ExtensionPriority };
+  Partial<Remirror.StaticExtensionOptions>;
 
 /**
  * A decorator for the remirror extension.
  *
- * This adds the static properties required for the running of the app.
+ * This adds static properties to the extension constructor.
  */
 export function extensionDecorator<Options extends Shape = EmptyShape>(
   options: ExtensionDecoratorOptions<Options>,
@@ -113,6 +119,48 @@ export function extensionDecorator<Options extends Shape = EmptyShape>(
 
       Constructor[key] = value;
     }
+
+    return Cast<Type>(Constructor);
+  };
+}
+
+export type PresetDecoratorOptions<Options extends Shape = EmptyShape> = IfHasRequiredProperties<
+  DefaultPresetOptions<Options>,
+  DefaultOptionsParameter<Options>,
+  Partial<DefaultOptionsParameter<Options>>
+> &
+  IfEmpty<GetStatic<Options>, Partial<StaticKeysParameter<Options>>, StaticKeysParameter<Options>> &
+  IfEmpty<
+    GetHandler<Options>,
+    Partial<HandlerKeysParameter<Options>>,
+    HandlerKeysParameter<Options>
+  > &
+  IfEmpty<
+    GetCustomHandler<Options>,
+    Partial<CustomHandlerKeysParameter<Options>>,
+    CustomHandlerKeysParameter<Options>
+  >;
+
+/**
+ * A decorator for the remirror preset.
+ *
+ * This adds static properties to the preset constructor.
+ */
+export function presetDecorator<Options extends Shape = EmptyShape>(
+  options: PresetDecoratorOptions<Options>,
+) {
+  return <Type extends AnyPresetConstructor>(ReadonlyConstructor: Type) => {
+    const { defaultOptions, customHandlerKeys, handlerKeys, staticKeys } = options;
+
+    const Constructor = Cast<Writeable<PresetConstructor<Options>>>(ReadonlyConstructor);
+
+    if (defaultOptions) {
+      Constructor.defaultOptions = defaultOptions;
+    }
+
+    Constructor.staticKeys = staticKeys ?? [];
+    Constructor.handlerKeys = handlerKeys ?? [];
+    Constructor.customHandlerKeys = customHandlerKeys ?? [];
 
     return Cast<Type>(Constructor);
   };
