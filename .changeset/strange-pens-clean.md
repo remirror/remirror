@@ -1,5 +1,5 @@
 ---
-"@remirror/extension-epic-mode": patch
+'@remirror/extension-epic-mode': patch
 ---
 
 Remove console.log statement.
