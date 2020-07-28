@@ -26,7 +26,7 @@ export class HardBreakExtension extends NodeExtension {
     };
   }
 
-  createKeymap = (): KeyBindings => {
+  createKeymap(): KeyBindings {
     const command = chainCommands(convertCommand(exitCode), ({ state, dispatch }) => {
       if (dispatch) {
         dispatch(state.tr.replaceSelectionWith(this.type.create()).scrollIntoView());
@@ -39,5 +39,5 @@ export class HardBreakExtension extends NodeExtension {
       'Mod-Enter': command,
       'Shift-Enter': command,
     };
-  };
+  }
 }

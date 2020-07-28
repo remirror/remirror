@@ -65,7 +65,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
   /**
    * Manage input rules for emoticons.
    */
-  createInputRules = () => {
+  createInputRules() {
     return [
       // Emoticons
       plainInputRule({
@@ -85,7 +85,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
         },
       }),
     ];
-  };
+  }
 
   createCommands() {
     const commands = {

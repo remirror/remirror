@@ -121,11 +121,11 @@ export class BaseKeymapExtension extends PlainExtension<BaseKeymapOptions> {
    * Create the base keymap and merge it with any custom keymaps provided by the
    * user as CustomOptions.
    */
-  createKeymap = () => {
+  createKeymap() {
     this.createBaseKeymap();
 
     return this.buildKeymap();
-  };
+  }
 
   /**
    * TODO think about the case where bindings are being disposed and then added

@@ -63,13 +63,13 @@ export class OrderedListExtension extends NodeExtension {
     };
   }
 
-  createKeymap = (): KeyBindings => {
+  createKeymap(): KeyBindings {
     return {
       'Shift-Ctrl-9': toggleList(this.type, this.store.schema.nodes.listItem),
     };
-  };
+  }
 
-  createInputRules = () => {
+  createInputRules() {
     return [
       wrappingInputRule(
         /^(\d+)\.\s$/,
@@ -78,5 +78,5 @@ export class OrderedListExtension extends NodeExtension {
         (match, node) => node.childCount + (node.attrs.order as number) === +match[1],
       ),
     ];
-  };
+  }
 }

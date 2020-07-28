@@ -145,11 +145,11 @@ test('keymaps', () => {
       return 'first' as const;
     }
 
-    createKeymap = () => {
+    createKeymap() {
       return {
         Enter: mocks.firstEnter,
       };
-    };
+    }
   }
 
   class SecondExtension extends PlainExtension {
@@ -157,11 +157,11 @@ test('keymaps', () => {
       return 'second' as const;
     }
 
-    createKeymap = () => {
+    createKeymap() {
       return {
         Enter: mocks.secondEnter,
       };
-    };
+    }
   }
 
   class ThirdExtension extends PlainExtension {
@@ -169,11 +169,11 @@ test('keymaps', () => {
       return 'third' as const;
     }
 
-    createKeymap = () => {
+    createKeymap() {
       return {
         Enter: mocks.thirdEnter,
       };
-    };
+    }
   }
 
   const manager = RemirrorManager.fromObject({

@@ -199,7 +199,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     };
   }
 
-  createPasteRules = () => {
+  createPasteRules() {
     return this.options.matchers.map((matcher) => {
       const { startOfLine, char, supportedCharacters, name } = {
         ...DEFAULT_MATCHER,
@@ -221,7 +221,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
         }),
       });
     });
-  };
+  }
 
   createSuggestions() {
     return this.options.matchers.map<Suggestion<MentionExtensionSuggestCommand>>((matcher) => {

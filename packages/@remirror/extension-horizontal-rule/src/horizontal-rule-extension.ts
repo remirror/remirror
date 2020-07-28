@@ -39,7 +39,7 @@ export class HorizontalRuleExtension extends NodeExtension {
     };
   }
 
-  createInputRules = (): InputRule[] => {
+  createInputRules(): InputRule[] {
     return [nodeInputRule({ regexp: /^(?:---|___\s|\*\*\*\s)$/, type: this.type })];
-  };
+  }
 }

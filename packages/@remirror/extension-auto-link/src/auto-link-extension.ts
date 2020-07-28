@@ -78,7 +78,7 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkOptions> {
     };
   }
 
-  createPasteRules = () => {
+  createPasteRules() {
     return [
       markPasteRule({
         regexp: this.options.urlRegex,
@@ -90,7 +90,7 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkOptions> {
         },
       }),
     ];
-  };
+  }
 
   createPlugin(): CreatePluginReturn {
     return {

@@ -30,11 +30,11 @@ export class CodeExtension extends MarkExtension {
     };
   }
 
-  createKeymap = (): KeyBindings => {
+  createKeymap(): KeyBindings {
     return {
       'Mod-`': convertCommand(toggleMark(this.type)),
     };
-  };
+  }
 
   createCommands() {
     return {
@@ -45,16 +45,16 @@ export class CodeExtension extends MarkExtension {
     };
   }
 
-  createInputRules = () => {
+  createInputRules() {
     return [
       markInputRule({
         regexp: new RegExp(`(?:\`)([^\`${LEAF_NODE_REPLACING_CHARACTER}]+)(?:\`)$`),
         type: this.type,
       }),
     ];
-  };
+  }
 
-  createPasteRules = () => {
+  createPasteRules() {
     return [markPasteRule({ regexp: /`([^`]+)`/g, type: this.type })];
-  };
+  }
 }

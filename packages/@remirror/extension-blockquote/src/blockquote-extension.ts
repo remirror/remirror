@@ -47,13 +47,13 @@ export class BlockquoteExtension extends NodeExtension {
     };
   }
 
-  createKeymap = (): KeyBindings => {
+  createKeymap(): KeyBindings {
     return {
       'Ctrl->': toggleWrap(this.type),
     };
-  };
+  }
 
-  createInputRules = () => {
+  createInputRules() {
     return [wrappingInputRule(/^\s*>\s$/, this.type)];
-  };
+  }
 }

@@ -94,18 +94,18 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
     };
   }
 
-  createKeymap = (): KeyBindings => {
+  createKeymap() {
     const keys: KeyBindings = object();
 
     this.options.levels.forEach((level) => {
       keys[`Shift-Ctrl-${level}`] = convertCommand(setBlockType(this.type, { level }));
     });
     return keys;
-  };
+  }
 
-  createInputRules = () => {
+  createInputRules() {
     return this.options.levels.map((level) =>
       textblockTypeInputRule(new RegExp(`^(#{1,${level}})\\s$`), this.type, () => ({ level })),
     );
-  };
+  }
 }

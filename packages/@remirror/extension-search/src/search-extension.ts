@@ -192,7 +192,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
   /**
    * Create the keymap for this extension.
    */
-  createKeymap = (): KeyBindings => {
+  createKeymap() {
     const { searchBackwardShortcut, searchForwardShortcut, clearOnEscape } = this.options;
     const bindings: KeyBindings = object();
 
@@ -218,7 +218,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
     }
 
     return bindings;
-  };
+  }
 
   private createSearchKeyBinding(direction: SearchDirection): KeyBindingCommandFunction {
     return ({ state }) => {

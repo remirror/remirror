@@ -31,11 +31,11 @@ export class ItalicExtension extends MarkExtension {
     };
   }
 
-  createKeymap = (): KeyBindings => {
+  createKeymap(): KeyBindings {
     return {
       'Mod-i': convertCommand(toggleMark(this.type)),
     };
-  };
+  }
 
   createCommands() {
     return {
@@ -46,11 +46,11 @@ export class ItalicExtension extends MarkExtension {
     };
   }
 
-  createInputRules = () => {
+  createInputRules() {
     return [markInputRule({ regexp: /(?:^|[^*_])[*_]([^*_]+)[*_]$/, type: this.type })];
-  };
+  }
 
-  createPasteRules = () => {
+  createPasteRules() {
     return [markPasteRule({ regexp: /(?:^|[^*_])[*_]([^*_]+)[*_]/g, type: this.type })];
-  };
+  }
 }

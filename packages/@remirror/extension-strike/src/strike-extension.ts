@@ -43,11 +43,11 @@ export class StrikeExtension extends MarkExtension {
     };
   }
 
-  createKeymap = (): KeyBindings => {
+  createKeymap(): KeyBindings {
     return {
       'Mod-d': convertCommand(toggleMark(this.type)),
     };
-  };
+  }
 
   createCommands() {
     return {
@@ -58,11 +58,11 @@ export class StrikeExtension extends MarkExtension {
     };
   }
 
-  createInputRules = () => {
+  createInputRules() {
     return [markInputRule({ regexp: /~([^~]+)~$/, type: this.type })];
-  };
+  }
 
-  createPasteRules = () => {
+  createPasteRules() {
     return [markPasteRule({ regexp: /~([^~]+)~/g, type: this.type })];
-  };
+  }
 }

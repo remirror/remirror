@@ -32,11 +32,11 @@ export class UnderlineExtension extends MarkExtension {
     };
   }
 
-  createKeymap = () => {
+  createKeymap() {
     return {
       'Mod-u': convertCommand(toggleMark(this.type)),
     };
-  };
+  }
 
   createCommands() {
     return {
