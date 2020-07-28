@@ -4,6 +4,7 @@ import { ProsemirrorPlugin } from '@remirror/core-types';
 import { getPluginState } from '@remirror/core-utils';
 import { EditorState, Plugin, PluginKey } from '@remirror/pm/state';
 
+import { extensionDecorator } from '../decorators';
 import { AnyExtension, AnyExtensionConstructor, PlainExtension } from '../extension';
 import { AnyCombinedUnion, InferCombinedExtensions } from '../preset';
 import { CreatePluginReturn, GetNameUnion } from '../types';
@@ -19,9 +20,8 @@ import { CreatePluginReturn, GetNameUnion } from '../types';
  *
  * @builtin
  */
+@extensionDecorator({ defaultPriority: ExtensionPriority.Highest })
 export class PluginsExtension extends PlainExtension {
-  static readonly defaultPriority = ExtensionPriority.Highest;
-
   get name() {
     return 'plugins' as const;
   }

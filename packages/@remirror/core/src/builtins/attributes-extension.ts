@@ -1,4 +1,3 @@
-import { ExtensionPriority } from '@remirror/core-constants';
 import { bool, object } from '@remirror/core-helpers';
 import { AttributesWithClass } from '@remirror/core-types';
 
@@ -18,8 +17,6 @@ import { AnyCombinedUnion } from '../preset';
  * @builtin
  */
 export class AttributesExtension extends PlainExtension {
-  static readonly defaultPriority = ExtensionPriority.Default;
-
   get name() {
     return 'attributes' as const;
   }

@@ -1,4 +1,3 @@
-import { ExtensionPriority } from '@remirror/core-constants';
 import { isFunction, object } from '@remirror/core-helpers';
 import { NodeViewMethod } from '@remirror/core-types';
 
@@ -17,8 +16,6 @@ import { AnyCombinedUnion } from '../preset';
  * @builtin
  */
 export class NodeViewsExtension extends PlainExtension {
-  static readonly defaultPriority = ExtensionPriority.Default;
-
   get name() {
     return 'nodeView' as const;
   }

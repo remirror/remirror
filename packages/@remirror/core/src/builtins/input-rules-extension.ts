@@ -2,6 +2,7 @@ import { ExtensionPriority } from '@remirror/core-constants';
 import { InputRule, inputRules } from '@remirror/pm/inputrules';
 import { Plugin } from '@remirror/pm/state';
 
+import { extensionDecorator } from '../decorators';
 import { PlainExtension } from '../extension';
 
 /**
@@ -15,9 +16,8 @@ import { PlainExtension } from '../extension';
  *
  * @builtin
  */
+@extensionDecorator({ defaultPriority: ExtensionPriority.High })
 export class InputRulesExtension extends PlainExtension {
-  static readonly defaultPriority = ExtensionPriority.High;
-
   get name() {
     return 'inputRules' as const;
   }

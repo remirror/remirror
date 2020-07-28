@@ -1,4 +1,3 @@
-import { ExtensionPriority } from '@remirror/core-constants';
 import { isArray } from '@remirror/core-helpers';
 import { suggest, Suggestion } from '@remirror/pm/suggest';
 
@@ -16,8 +15,6 @@ import { PlainExtension } from '../extension';
  * @builtin
  */
 export class SuggestionsExtension extends PlainExtension {
-  static readonly defaultPriority = ExtensionPriority.Default;
-
   get name() {
     return 'suggestions' as const;
   }

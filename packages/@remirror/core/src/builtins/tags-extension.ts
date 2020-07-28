@@ -1,6 +1,7 @@
 import { ExtensionPriority, ExtensionTag, MarkGroup, NodeGroup } from '@remirror/core-constants';
 import { isUndefined, object } from '@remirror/core-helpers';
 
+import { extensionDecorator } from '../decorators';
 import {
   AnyExtension,
   ExtensionTags,
@@ -17,9 +18,8 @@ import { GeneralExtensionTags, MarkExtensionTags, NodeExtensionTags } from '../t
  *
  * @builtin
  */
+@extensionDecorator({ defaultPriority: ExtensionPriority.Highest })
 export class TagsExtension extends PlainExtension {
-  static readonly defaultPriority = ExtensionPriority.Highest;
-
   get name() {
     return 'tags' as const;
   }

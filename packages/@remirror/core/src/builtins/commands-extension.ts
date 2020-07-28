@@ -12,6 +12,7 @@ import {
 } from '@remirror/core-types';
 import { EditorView } from '@remirror/pm/view';
 
+import { extensionDecorator } from '../decorators';
 import {
   AnyExtension,
   ChainedCommandRunParameter,
@@ -39,9 +40,8 @@ import {
  *
  * @builtin
  */
+@extensionDecorator({ defaultPriority: ExtensionPriority.Highest })
 export class CommandsExtension extends PlainExtension {
-  static readonly defaultPriority = ExtensionPriority.Highest;
-
   get name() {
     return 'commands' as const;
   }

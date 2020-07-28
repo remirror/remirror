@@ -24,6 +24,7 @@ import {
 import { isElementDomNode, isProsemirrorMark, isProsemirrorNode } from '@remirror/core-utils';
 import { Schema } from '@remirror/pm/model';
 
+import { extensionDecorator } from '../decorators';
 import {
   AnyExtension,
   GetMarkNameUnion,
@@ -41,12 +42,8 @@ import { AnyCombinedUnion, InferCombinedExtensions } from '../preset';
  *
  * @builtin
  */
+@extensionDecorator({ defaultPriority: ExtensionPriority.Highest })
 export class SchemaExtension extends PlainExtension {
-  /**
-   * Really this always needs to be the first extension to run.
-   */
-  static defaultPriority: ExtensionPriority = ExtensionPriority.Highest;
-
   get name() {
     return 'schema' as const;
   }

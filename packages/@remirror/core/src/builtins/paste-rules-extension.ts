@@ -1,4 +1,3 @@
-import { ExtensionPriority } from '@remirror/core-constants';
 import { ProsemirrorPlugin } from '@remirror/core-types';
 
 import { PlainExtension } from '../extension';
@@ -11,8 +10,6 @@ import { PlainExtension } from '../extension';
  * @builtin
  */
 export class PasteRulesExtension extends PlainExtension {
-  static readonly defaultPriority = ExtensionPriority.Default;
-
   get name() {
     return 'pasteRules' as const;
   }

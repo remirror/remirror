@@ -3,6 +3,7 @@ import { KeyBindings, ProsemirrorPlugin } from '@remirror/core-types';
 import { mergeProsemirrorKeyBindings } from '@remirror/core-utils';
 import { keymap } from '@remirror/pm/keymap';
 
+import { extensionDecorator } from '../decorators';
 import { PlainExtension } from '../extension';
 
 /**
@@ -15,9 +16,8 @@ import { PlainExtension } from '../extension';
  *
  * @builtin
  */
+@extensionDecorator({ defaultPriority: ExtensionPriority.Low })
 export class KeymapExtension extends PlainExtension {
-  static readonly defaultPriority = ExtensionPriority.Low;
-
   get name() {
     return 'keymap' as const;
   }

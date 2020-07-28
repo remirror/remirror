@@ -3,6 +3,7 @@ import { entries, invariant, object } from '@remirror/core-helpers';
 import { AnyFunction, EmptyShape, ProsemirrorAttributes } from '@remirror/core-types';
 import { isMarkActive, isNodeActive } from '@remirror/core-utils';
 
+import { extensionDecorator } from '../decorators';
 import {
   AnyExtension,
   HelpersFromExtensions,
@@ -27,9 +28,8 @@ import { ExtensionHelperReturn } from '../types';
  *
  * @builtin
  */
+@extensionDecorator({ defaultPriority: ExtensionPriority.High })
 export class HelpersExtension extends PlainExtension {
-  static readonly defaultPriority = ExtensionPriority.High;
-
   get name() {
     return 'helpers' as const;
   }
