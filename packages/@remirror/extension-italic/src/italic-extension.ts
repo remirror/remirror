@@ -31,11 +31,11 @@ export class ItalicExtension extends MarkExtension {
     };
   }
 
-  createKeymap = (): KeyBindings => {
+  createKeymap(): KeyBindings {
     return {
       'Mod-i': convertCommand(toggleMark(this.type)),
     };
-  };
+  }
 
   createCommands() {
     return {

@@ -205,7 +205,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
   /**
    * Create specific keyboard bindings for the code block.
    */
-  createKeymap = (): KeyBindings => {
+  createKeymap(): KeyBindings {
     return {
       Tab: ({ state, dispatch }) => {
         const { selection, tr, schema } = state;
@@ -337,7 +337,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
         return enabled;
       },
     };
-  };
+  }
 
   /**
    * Create the custom code block plugin which handles the delete key amongst other things.

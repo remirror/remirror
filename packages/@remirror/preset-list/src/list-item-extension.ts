@@ -28,11 +28,11 @@ export class ListItemExtension extends NodeExtension {
     };
   }
 
-  createKeymap = (): KeyBindings => {
+  createKeymap(): KeyBindings {
     return {
       Enter: convertCommand(splitListItem(this.type)),
       Tab: convertCommand(sinkListItem(this.type)),
       'Shift-Tab': convertCommand(liftListItem(this.type)),
     };
-  };
+  }
 }

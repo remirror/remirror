@@ -43,11 +43,11 @@ export class StrikeExtension extends MarkExtension {
     };
   }
 
-  createKeymap = (): KeyBindings => {
+  createKeymap(): KeyBindings {
     return {
       'Mod-d': convertCommand(toggleMark(this.type)),
     };
-  };
+  }
 
   createCommands() {
     return {

@@ -63,11 +63,11 @@ export class OrderedListExtension extends NodeExtension {
     };
   }
 
-  createKeymap = (): KeyBindings => {
+  createKeymap(): KeyBindings {
     return {
       'Shift-Ctrl-9': toggleList(this.type, this.store.schema.nodes.listItem),
     };
-  };
+  }
 
   createInputRules() {
     return [

@@ -37,11 +37,11 @@ export class BulletListExtension extends NodeExtension {
     };
   }
 
-  createKeymap = (): KeyBindings => {
+  createKeymap(): KeyBindings {
     return {
       'Shift-Ctrl-8': toggleList(this.type, this.store.schema.nodes.listItem),
     };
-  };
+  }
 
   createInputRules() {
     return [wrappingInputRule(/^\s*([*+-])\s$/, this.type)];

@@ -30,11 +30,11 @@ export class CodeExtension extends MarkExtension {
     };
   }
 
-  createKeymap = (): KeyBindings => {
+  createKeymap(): KeyBindings {
     return {
       'Mod-`': convertCommand(toggleMark(this.type)),
     };
-  };
+  }
 
   createCommands() {
     return {

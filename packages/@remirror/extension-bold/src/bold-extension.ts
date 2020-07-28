@@ -76,11 +76,11 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
     };
   }
 
-  createKeymap = () => {
+  createKeymap() {
     return {
       'Mod-b': toggleMark({ type: this.type }),
     };
-  };
+  }
 
   createInputRules(): InputRule[] {
     return [markInputRule({ regexp: /(?:\*\*|__)([^*_]+)(?:\*\*|__)$/, type: this.type })];

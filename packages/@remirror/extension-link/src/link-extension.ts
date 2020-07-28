@@ -69,7 +69,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     };
   }
 
-  createKeymap = (): KeyBindings => {
+  createKeymap(): KeyBindings {
     return {
       'Mod-k': ({ state, dispatch }) => {
         // if the selection is empty, expand it
@@ -91,7 +91,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         return true;
       },
     };
-  };
+  }
 
   createCommands() {
     return {

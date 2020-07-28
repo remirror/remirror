@@ -84,13 +84,13 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   /**
    * Create the custom undo keymaps for the
    */
-  createKeymap = () => {
+  createKeymap() {
     return {
       'Mod-z': convertCommand(undo),
       'Mod-y': convertCommand(redo),
       'Mod-Shift-z': convertCommand(redo),
     };
-  };
+  }
 
   /**
    * Create the yjs plugins.
