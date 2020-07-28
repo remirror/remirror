@@ -145,8 +145,6 @@ export class EpicModePluginState {
   }
 
   shake = () => {
-    console.log(this.options.active);
-
     if (this.options.active) {
       this.#shakeTime = this.#shakeTimeMax = this.options.shakeTime;
     }
