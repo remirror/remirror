@@ -23,8 +23,6 @@ function babelConfig(api) {
       {
         test: /\.[jt]sx?$/,
         plugins: [
-          [require.resolve('@babel/plugin-proposal-class-properties')],
-          [require.resolve('@babel/plugin-proposal-private-methods')],
           require.resolve('babel-plugin-macros'),
 
           // Polyfills the runtime needed for async/await, generators, and friends
@@ -58,6 +56,8 @@ function babelConfig(api) {
           require.resolve('@babel/plugin-proposal-optional-chaining'),
           require.resolve('@babel/plugin-proposal-numeric-separator'),
           [require.resolve('@babel/plugin-proposal-decorators'), { legacy: true }],
+          [require.resolve('@babel/plugin-proposal-class-properties')],
+          [require.resolve('@babel/plugin-proposal-private-methods')],
         ],
       },
     ],
