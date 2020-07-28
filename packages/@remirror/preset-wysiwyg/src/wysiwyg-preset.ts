@@ -46,7 +46,7 @@ export interface WysiwygOptions
     'searchClass',
     'weight',
   ],
-  handlerKeys: ['onActivateLink', 'onDestroy', 'onInit', 'onSearch'],
+  handlerKeys: ['onActivateLink', 'onSearch'],
 })
 export class WysiwygPreset extends Preset<WysiwygOptions> {
   get name() {
@@ -69,19 +69,7 @@ export class WysiwygPreset extends Preset<WysiwygOptions> {
     ]);
     this.getExtension(CodeBlockExtension).setOptions(codeBlockOptions);
 
-    const dropCursorOptions = pickChanged([
-      'afterBlockClassName',
-      'afterInlineClassName',
-      'beforeBlockClassName',
-      'beforeInlineClassName',
-      'blockClassName',
-      'blockHeight',
-      'blockWidth',
-      'color',
-      'inlineClassName',
-      'inlineSpacing',
-      'inlineWidth',
-    ]);
+    const dropCursorOptions = pickChanged(['color', 'width']);
     this.getExtension(DropCursorExtension).setOptions(dropCursorOptions);
 
     const searchOptions = pickChanged([
@@ -137,34 +125,11 @@ export class WysiwygPreset extends Preset<WysiwygOptions> {
       keyboardShortcut,
     });
 
-    const {
-      afterBlockClassName,
-      afterInlineClassName,
-      beforeBlockClassName,
-      beforeInlineClassName,
-      blockClassName,
-      blockHeight,
-      blockWidth,
-      color,
-      inlineClassName,
-      inlineSpacing,
-      inlineWidth,
-    } = this.options;
+    const { color, width } = this.options;
     const dropCursorExtension = new DropCursorExtension({
-      afterBlockClassName,
-      afterInlineClassName,
-      beforeBlockClassName,
-      beforeInlineClassName,
-      blockClassName,
-      blockHeight,
-      blockWidth,
       color,
-      inlineClassName,
-      inlineSpacing,
-      inlineWidth,
+      width,
     });
-    dropCursorExtension.addHandler('onDestroy', this.options.onDestroy);
-    dropCursorExtension.addHandler('onInit', this.options.onInit);
 
     const epicModeExtension = new EpicModeExtension({ active: false });
 
