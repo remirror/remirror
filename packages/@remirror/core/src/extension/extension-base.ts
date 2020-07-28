@@ -631,8 +631,9 @@ export function isMarkExtension<Type extends AnyMarkExtension = AnyMarkExtension
   return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.MarkExtension);
 }
 
-interface ExtensionConstructor<Options extends ValidOptions = EmptyShape>
-  extends BaseClassConstructor<Options, BaseExtensionOptions> {
+export interface ExtensionConstructor<Options extends ValidOptions = EmptyShape>
+  extends BaseClassConstructor<Options, BaseExtensionOptions>,
+    Partial<Remirror.StaticExtensionOptions> {
   new (...parameters: ExtensionConstructorParameter<Options>): Extension<Options>;
 
   /**
@@ -641,13 +642,6 @@ interface ExtensionConstructor<Options extends ValidOptions = EmptyShape>
    * @defaultValue `ExtensionPriority.Default`
    */
   readonly defaultPriority: ExtensionPriority;
-
-  /**
-   * When true will disable extra attributes for all instances of this extension.
-   *
-   * @defaultValue `false`
-   */
-  readonly disableExtraAttributes?: boolean;
 }
 
 /**

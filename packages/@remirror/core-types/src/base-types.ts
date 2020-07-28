@@ -126,6 +126,11 @@ export type PartialWithRequiredKeys<Type extends object, Keys extends keyof Type
   Required<Pick<Type, Keys>>;
 
 /**
+ * Remove all readonly modifiers from the provided type.
+ */
+export type Writeable<Type> = { -readonly [Key in keyof Type]: Type[Key] };
+
+/**
  * Makes specified keys of an interface optional while the rest stay the same.
  */
 export type MakeOptional<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> &

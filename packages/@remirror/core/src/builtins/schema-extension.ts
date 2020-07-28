@@ -518,5 +518,14 @@ declare global {
        */
       schema: EditorSchema;
     }
+
+    interface StaticExtensionOptions {
+      /**
+       * When true will disable extra attributes for all instances of this extension.
+       *
+       * @defaultValue `false`
+       */
+      readonly disableExtraAttributes?: boolean;
+    }
   }
 }

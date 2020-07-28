@@ -7,6 +7,7 @@ import {
   PickPartial,
   RemoveFlavoring,
   Shape,
+  StringKey,
 } from './base-types';
 
 type StaticAnnotation = Flavoring<'StaticAnnotation'>;
@@ -216,10 +217,10 @@ export type GetConstructorParameter<Options extends ValidOptions> = GetStatic<Op
  */
 export type Dispose = () => void;
 
-export type HandlerKey<Options extends ValidOptions> = keyof GetHandler<Options>;
-export type StaticKey<Options extends ValidOptions> = keyof GetStatic<Options>;
-export type DynamicKey<Options extends ValidOptions> = keyof GetDynamic<Options>;
-export type CustomHandlerKey<Options extends ValidOptions> = keyof GetCustomHandler<Options>;
+export type HandlerKey<Options extends ValidOptions> = StringKey<GetHandler<Options>>;
+export type StaticKey<Options extends ValidOptions> = StringKey<GetStatic<Options>>;
+export type DynamicKey<Options extends ValidOptions> = StringKey<GetDynamic<Options>>;
+export type CustomHandlerKey<Options extends ValidOptions> = StringKey<GetCustomHandler<Options>>;
 export type HandlerKeyList<Options extends ValidOptions> = Array<HandlerKey<Options>>;
 export type StaticKeyList<Options extends ValidOptions> = Array<StaticKey<Options>>;
 export type DynamicKeyList<Options extends ValidOptions> = Array<DynamicKey<Options>>;
