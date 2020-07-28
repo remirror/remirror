@@ -29,8 +29,8 @@
     "@remirror/pm": "^1.0.0-next.4"
   },
   "peerDependencies": {
-    "@remirror/core": "*",
-    "@remirror/pm": "*"
+    "@remirror/core": "^1.0.0-next.12",
+    "@remirror/pm": "^1.0.0-next.4"
   },
   "publishConfig": {
     "access": "public"
