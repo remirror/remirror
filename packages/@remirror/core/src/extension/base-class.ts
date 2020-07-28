@@ -9,7 +9,9 @@ import {
   deepMerge,
   invariant,
   isArray,
+  isEmptyArray,
   isPlainObject,
+  keys,
   noop,
   object,
   omit,
@@ -130,6 +132,11 @@ export abstract class BaseClass<
   readonly #initialOptions: GetFixed<Options> & DefaultStaticOptions;
 
   /**
+   * All the dynamic keys supported by this extension.
+   */
+  readonly #dynamicKeys: string[];
+
+  /**
    * Private instance of the extension options.
    */
   #options: GetFixed<Options> & DefaultStaticOptions;
@@ -155,6 +162,8 @@ export abstract class BaseClass<
       options ?? object(),
       this.createDefaultHandlerOptions(),
     );
+
+    this.#dynamicKeys = this.getDynamicKeys();
 
     // Triggers the `init` options update for this extension.
     this.init();
@@ -186,10 +195,60 @@ export abstract class BaseClass<
   ): BaseClass<Options, DefaultStaticOptions>;
 
   /**
+   * Get the dynamic keys for this extension.
+   */
+  private getDynamicKeys(): string[] {
+    const dynamicKeys: string[] = [];
+    const { customHandlerKeys, handlerKeys, staticKeys } = this.constructor;
+
+    for (const key of keys(this.#options)) {
+      if (
+        staticKeys.includes(key) ||
+        handlerKeys.includes(key) ||
+        customHandlerKeys.includes(key)
+      ) {
+        continue;
+      }
+
+      dynamicKeys.push(key);
+    }
+
+    return dynamicKeys;
+  }
+
+  /**
+   * Throw an error if non dynamic keys are updated.
+   */
+  private ensureAllKeysAreDynamic(update: GetPartialDynamic<Options>) {
+    if (process.env.NODE_ENV === 'production') {
+      return;
+    }
+
+    const invalid: string[] = [];
+
+    for (const key of keys(update)) {
+      if (this.#dynamicKeys.includes(key)) {
+        continue;
+      }
+
+      invalid.push(key);
+    }
+
+    invariant(isEmptyArray(invalid), {
+      code: ErrorConstant.INVALID_SET_EXTENSION_OPTIONS,
+      message: `Invalid properties passed into the 'setOptions()' method: ${JSON.stringify(
+        invalid,
+      )}.`,
+    });
+  }
+
+  /**
    * Update the properties with the provided partial value when changed.
    */
   setOptions(update: GetPartialDynamic<Options>) {
     const previousOptions = this.getDynamicOptions();
+
+    this.ensureAllKeysAreDynamic(update);
 
     const { changes, options, pickChanged } = getChangedOptions({
       previousOptions,

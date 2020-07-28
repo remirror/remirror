@@ -29,6 +29,11 @@ describe('@extensionDecorator', () => {
     expect(TestExtension.handlerKeys).toEqual(['onChange']);
     expect(TestExtension.customHandlerKeys).toEqual(['keyBindings']);
     expect(TestExtension.defaultOptions).toEqual({ backgroundColor: 'red', color: 'pink' });
+
+    const testExtension = new TestExtension({ type: 'awesome' });
+
+    // @ts-expect-error
+    expect(() => testExtension.setOptions({ type: 'not-awesome' })).toThrowError();
   });
 
   it('can decorate an extension as a function call', () => {
@@ -49,5 +54,10 @@ describe('@extensionDecorator', () => {
     expect(TestExtension.handlerKeys).toEqual(['onChange']);
     expect(TestExtension.customHandlerKeys).toEqual(['keyBindings']);
     expect(TestExtension.defaultOptions).toEqual({ backgroundColor: 'red', color: 'pink' });
+
+    const testExtension = new TestExtension({ type: 'awesome' });
+
+    // @ts-expect-error
+    expect(() => testExtension.setOptions({ type: 'not-awesome' })).toThrowError();
   });
 });

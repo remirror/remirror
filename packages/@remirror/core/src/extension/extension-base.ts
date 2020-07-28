@@ -279,7 +279,7 @@ interface ExtensionLifecycleMethods {
    * Since it is called as soon as the manager is some methods may not be
    * available in the extension store. When accessing methods on `this.store` be
    * shore to check when they become available in the lifecycle. It is
-   * recommende that you don't use this method unless absolutely required.
+   * recommended that you don't use this method unless absolutely required.
    */
   onCreate?(): void;
 

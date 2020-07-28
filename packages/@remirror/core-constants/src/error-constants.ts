@@ -110,6 +110,9 @@ export enum ErrorConstant {
   /** Extra attributes must either be a string or an object. */
   EXTENSION_EXTRA_ATTRIBUTES = 'RMR0102',
 
+  /** A call to `extension.setOptions` was made with invalid keys. */
+  INVALID_SET_EXTENSION_OPTIONS = 'RMR0103',
+
   /**
    * `useRemirror` was called outside of the remirror context. It can only be used
    * within an active remirror context created by the `<RemirrorProvider />`.

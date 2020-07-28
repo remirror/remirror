@@ -55,6 +55,8 @@ if (process.env.NODE_ENV !== 'production') {
       'The spec was defined without calling the `defaults`, `parse` or `dom` methods.',
     [ErrorConstant.EXTENSION_EXTRA_ATTRIBUTES]:
       'Extra attributes must either be a string or an object.',
+    [ErrorConstant.INVALID_SET_EXTENSION_OPTIONS]:
+      'A call to `extension.setOptions` was made with invalid keys.',
     [ErrorConstant.REACT_PROVIDER_CONTEXT]:
       '`useRemirror` was called outside of the `remirror` context. It can only be used within an active remirror context created by the `<RemirrorProvider />`.',
     [ErrorConstant.REACT_GET_ROOT_PROPS]:
