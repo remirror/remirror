@@ -51,13 +51,6 @@ document.body.appendChild(element);
 manager.addView(element);
 ```
 
-### Alternatives
-
-There are presets which contain this extension and can help make setup process for you editor less
-verbose.
-
-- `@remirror/preset-formatting`
-
 <br />
 
 ## Credits
