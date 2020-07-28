@@ -38,7 +38,7 @@
     "hoist-non-react-statics": "^3.3.2",
     "linaria": "^2.0.0-alpha.5",
     "min-document": "^2.19.0",
-    "react-use": "^15.3.2",
+    "react-use": "^15.3.3",
     "resize-observer-polyfill": "^1.5.1",
     "type-fest": "^0.16.0"
   },
@@ -50,7 +50,7 @@
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
     "@types/react-test-renderer": "^16.9.2",
-    "@types/testing-library__react-hooks": "^3.3.0",
+    "@types/testing-library__react-hooks": "^3.4.0",
     "jest-axe": "^3.5.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

@@ -22,7 +22,7 @@
     "@seznam/compose-react-refs": "^1.0.4",
     "a11y-status": "^1.0.0-next.2",
     "compute-scroll-into-view": "^1.0.14",
-    "react-use": "^15.3.2",
+    "react-use": "^15.3.3",
     "w3c-keyname": "^2.2.4"
   },
   "devDependencies": {
