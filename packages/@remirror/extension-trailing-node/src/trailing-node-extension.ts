@@ -1,13 +1,10 @@
 import {
   CreatePluginReturn,
-  CustomHandlerKeyList,
-  DefaultExtensionOptions,
   entries,
-  HandlerKeyList,
+  extensionDecorator,
   nodeEqualsType,
   OnSetOptionsParameter,
   PlainExtension,
-  StaticKeyList,
   uniqueArray,
 } from '@remirror/core';
 
@@ -45,17 +42,14 @@ export interface TrailingNodeOptions {
  * This ensures there's always space to select the position afterward.
  *
  */
-export class TrailingNodeExtension extends PlainExtension<TrailingNodeOptions> {
-  static readonly staticKeys: StaticKeyList<TrailingNodeOptions> = [];
-  static readonly handlerKeys: HandlerKeyList<TrailingNodeOptions> = [];
-  static readonly customHandlerKeys: CustomHandlerKeyList<TrailingNodeOptions> = [];
-
-  static readonly defaultOptions: DefaultExtensionOptions<TrailingNodeOptions> = {
+@extensionDecorator<TrailingNodeOptions>({
+  defaultOptions: {
     ignoredNodes: [],
     disableTags: false,
     nodeName: 'paragraph',
-  };
-
+  },
+})
+export class TrailingNodeExtension extends PlainExtension<TrailingNodeOptions> {
   get name() {
     return 'trailingNode' as const;
   }

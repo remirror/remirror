@@ -1,7 +1,7 @@
 import {
   AddCustomHandler,
   CustomHandler,
-  DefaultExtensionOptions,
+  extensionDecorator,
   isString,
   PlainExtension,
   Position,
@@ -26,16 +26,15 @@ export interface PositionerOptions {
 }
 
 /**
- * This is the default parent node. It is required in the Prosemirror Schema and
- * a representation of the `doc` is required as the top level node in all
- * editors.
+ * This is the positioner extension which is used to track the positions of
+ * different parts of your editor.
  *
- * @required
- * @core
+ * For example, you can track the cursor or all visible paragraph nodes.
  */
+@extensionDecorator<PositionerOptions>({
+  customHandlerKeys: ['positionerHandler'],
+})
 export class PositionerExtension extends PlainExtension<PositionerOptions> {
-  static defaultOptions: DefaultExtensionOptions<PositionerOptions> = {};
-
   get name() {
     return 'positioner' as const;
   }

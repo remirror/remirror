@@ -4,7 +4,7 @@ import {
   ApplySchemaAttributes,
   convertCommand,
   CreatePluginReturn,
-  DefaultExtensionOptions,
+  extensionDecorator,
   findNodeAtSelection,
   findParentNodeOfType,
   GetAttributes,
@@ -39,8 +39,8 @@ import {
   updateNodeAttributes,
 } from './code-block-utils';
 
-export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
-  static readonly defaultOptions: DefaultExtensionOptions<CodeBlockOptions> = {
+@extensionDecorator<CodeBlockOptions>({
+  defaultOptions: {
     supportedLanguages: [],
     keyboardShortcut: mod('ShiftAlt', 'f'),
     toggleName: 'paragraph',
@@ -48,8 +48,9 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
     formatter: () => undefined,
     syntaxTheme: 'atomDark',
     defaultLanguage: 'markup',
-  };
-
+  },
+})
+export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
   get name() {
     return 'codeBlock' as const;
   }

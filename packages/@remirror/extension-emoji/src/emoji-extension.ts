@@ -3,11 +3,9 @@ import escapeStringRegex from 'escape-string-regexp';
 import {
   AddCustomHandler,
   CommandFunction,
-  CustomHandlerKeyList,
-  DefaultExtensionOptions,
   ErrorConstant,
+  extensionDecorator,
   FromToParameter,
-  HandlerKeyList,
   invariant,
   object,
   PlainExtension,
@@ -32,16 +30,16 @@ import {
   sortEmojiMatches,
 } from './emoji-utils';
 
-export class EmojiExtension extends PlainExtension<EmojiOptions> {
-  static readonly defaultOptions: DefaultExtensionOptions<EmojiOptions> = {
+@extensionDecorator<EmojiOptions>({
+  defaultOptions: {
     defaultEmoji: DEFAULT_FREQUENTLY_USED,
     suggestionCharacter: ':',
     maxResults: 20,
-  };
-
-  static readonly customHandlerKeys: CustomHandlerKeyList<EmojiOptions> = ['keyBindings'];
-  static readonly handlerKeys: HandlerKeyList<EmojiOptions> = ['onChange', 'onExit'];
-
+  },
+  handlerKeys: ['onChange', 'onExit'],
+  customHandlerKeys: ['keyBindings'],
+})
+export class EmojiExtension extends PlainExtension<EmojiOptions> {
   /**
    * The name is dynamically generated based on the passed in type.
    */

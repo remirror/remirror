@@ -3,6 +3,7 @@ import { Children, cloneElement, ComponentType, createElement, JSXElementConstru
 import {
   AnyCombinedUnion,
   EditorState,
+  extensionDecorator,
   ExtensionPriority,
   isArray,
   object,
@@ -42,13 +43,14 @@ export interface ReactSSROptions {
  * The transformations can also serve as a guideline when creating your own
  * SSRTransforms. However in most cases the defaults should be sufficient.
  */
-export class ReactSSRExtension extends PlainExtension<ReactSSROptions> {
-  static readonly defaultPriority = ExtensionPriority.High;
-
-  static readonly defaultOptions: Required<ReactSSROptions> = {
+@extensionDecorator<ReactSSROptions>({
+  defaultOptions: {
     transformers: [injectBrIntoEmptyParagraphs],
-  };
-
+  },
+  defaultPriority: ExtensionPriority.High,
+  staticKeys: ['transformers'],
+})
+export class ReactSSRExtension extends PlainExtension<ReactSSROptions> {
   get name() {
     return 'reactSSR' as const;
   }

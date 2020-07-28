@@ -3,7 +3,7 @@ import { FontWeightProperty } from 'csstype';
 import {
   ApplySchemaAttributes,
   CommandFunction,
-  DefaultExtensionOptions,
+  extensionDecorator,
   ExtensionTag,
   FromToParameter,
   InputRule,
@@ -28,11 +28,11 @@ export interface BoldOptions {
  * When added to your editor it will provide the `bold` command which makes the text under the cursor /
  * or at the provided position range bold.
  */
+@extensionDecorator<BoldOptions>({
+  defaultOptions: { weight: undefined },
+  staticKeys: ['weight'],
+})
 export class BoldExtension extends MarkExtension<BoldOptions> {
-  static readonly defaultOptions: DefaultExtensionOptions<BoldOptions> = {
-    weight: undefined,
-  };
-
   get name() {
     return 'bold' as const;
   }

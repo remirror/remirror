@@ -3,7 +3,7 @@ import {
   CommandFunction,
   CommandFunctionParameter,
   convertCommand,
-  DefaultExtensionOptions,
+  extensionDecorator,
   NodeExtension,
   OnSetOptionsParameter,
 } from '@remirror/core';
@@ -45,11 +45,12 @@ export interface TableOptions {
 
 let tablesEnabled = false;
 
-export class TableExtension extends NodeExtension<TableOptions> {
-  static defaultOptions: DefaultExtensionOptions<TableOptions> = {
+@extensionDecorator<TableOptions>({
+  defaultOptions: {
     resizable: true,
-  };
-
+  },
+})
+export class TableExtension extends NodeExtension<TableOptions> {
   get name() {
     return 'table' as const;
   }
@@ -207,6 +208,7 @@ export class TableExtension extends NodeExtension<TableOptions> {
 /**
  * The extension for a table row node.
  */
+@extensionDecorator({})
 export class TableRowExtension extends NodeExtension {
   get name() {
     return 'tableRow' as const;
@@ -220,6 +222,7 @@ export class TableRowExtension extends NodeExtension {
 /**
  * The extension for a table cell node.
  */
+@extensionDecorator({})
 export class TableCellExtension extends NodeExtension {
   get name() {
     return 'tableCell' as const;
@@ -233,6 +236,7 @@ export class TableCellExtension extends NodeExtension {
 /**
  * The extension for the table header node.
  */
+@extensionDecorator({})
 export class TableHeaderCellExtension extends NodeExtension {
   get name() {
     return 'tableHeaderCell' as const;

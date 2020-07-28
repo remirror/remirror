@@ -1,25 +1,14 @@
-import {
-  CustomHandlerKeyList,
-  DefaultPresetOptions,
-  HandlerKeyList,
-  OnSetOptionsParameter,
-  Preset,
-  StaticKeyList,
-} from '@remirror/core';
+import { OnSetOptionsParameter, Preset, presetDecorator } from '@remirror/core';
 
 import { IframeExtension, IframeOptions } from './iframe-extension';
 
 export interface EmbedOptions extends IframeOptions {}
 
+@presetDecorator<EmbedOptions>({
+  defaultOptions: IframeExtension.defaultOptions,
+  staticKeys: ['class', 'defaultSource'],
+})
 export class EmbedPreset extends Preset<EmbedOptions> {
-  static readonly staticKeys: StaticKeyList<EmbedOptions> = [];
-  static readonly handlerKeys: HandlerKeyList<EmbedOptions> = [];
-  static readonly customHandlerKeys: CustomHandlerKeyList<EmbedOptions> = [];
-
-  static readonly defaultOptions: DefaultPresetOptions<EmbedOptions> = {
-    ...IframeExtension.defaultOptions,
-  };
-
   get name() {
     return 'embed' as const;
   }

@@ -3,9 +3,9 @@ import { collab, getVersion, receiveTransaction, sendableSteps } from 'prosemirr
 import {
   CommandFunction,
   debounce,
-  DefaultExtensionOptions,
   EditorSchema,
   EditorState,
+  extensionDecorator,
   Handler,
   HandlerKeyList,
   invariant,
@@ -26,13 +26,16 @@ import { Step } from '@remirror/pm/transform';
  *
  * Once a central server is created the collaboration extension is good.
  */
-export class CollaborationExtension extends PlainExtension<CollaborationOptions> {
-  static readonly defaultOptions: DefaultExtensionOptions<CollaborationOptions> = {
+@extensionDecorator<CollaborationOptions>({
+  defaultOptions: {
     version: 0,
     clientID: uniqueId(),
     debounceMs: 250,
-  };
-
+  },
+  staticKeys: ['clientID', 'debounceMs', 'version'],
+  handlerKeys: ['onSendableReceived'],
+})
+export class CollaborationExtension extends PlainExtension<CollaborationOptions> {
   static readonly handlerKeys: HandlerKeyList<CollaborationOptions> = ['onSendableReceived'];
 
   get name() {

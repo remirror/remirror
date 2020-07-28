@@ -1,6 +1,6 @@
 import {
   ApplySchemaAttributes,
-  DefaultExtensionOptions,
+  extensionDecorator,
   ExtensionPriority,
   NodeExtension,
   Static,
@@ -52,10 +52,14 @@ export interface DocOptions {
  * @required
  * @core
  */
-export class DocExtension extends NodeExtension<DocOptions> {
-  static readonly defaultOptions: DefaultExtensionOptions<DocOptions> = {
+@extensionDecorator<DocOptions>({
+  defaultOptions: {
     content: 'block+',
-  };
+  },
+  defaultPriority: ExtensionPriority.Medium,
+  staticKeys: ['content'],
+})
+export class DocExtension extends NodeExtension<DocOptions> {
   static readonly defaultPriority = ExtensionPriority.Medium;
 
   static readonly disableExtraAttributes = true;

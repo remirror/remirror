@@ -1,12 +1,14 @@
 import {
   ApplySchemaAttributes,
   convertCommand,
+  extensionDecorator,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
 } from '@remirror/core';
 import { toggleMark } from '@remirror/pm/commands';
 
+@extensionDecorator({})
 export class UnderlineExtension extends MarkExtension {
   get name() {
     return 'underline' as const;

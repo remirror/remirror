@@ -1,9 +1,7 @@
 import {
   ApplySchemaAttributes,
   convertCommand,
-  CustomHandlerKeyList,
-  DefaultExtensionOptions,
-  HandlerKeyList,
+  extensionDecorator,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
@@ -12,7 +10,6 @@ import {
   ProsemirrorAttributes,
   ProsemirrorNode,
   Static,
-  StaticKeyList,
   toggleBlockItem,
 } from '@remirror/core';
 import { setBlockType } from '@remirror/pm/commands';
@@ -43,16 +40,14 @@ export type HeadingExtensionAttributes = ProsemirrorAttributes<{
 
 export interface HeadingOptions {}
 
-export class HeadingExtension extends NodeExtension<HeadingOptions> {
-  static readonly staticKeys: StaticKeyList<HeadingOptions> = [];
-  static readonly handlerKeys: HandlerKeyList<HeadingOptions> = [];
-  static readonly customHandlerKeys: CustomHandlerKeyList<HeadingOptions> = [];
-
-  static readonly defaultOptions: DefaultExtensionOptions<HeadingOptions> = {
+@extensionDecorator<HeadingOptions>({
+  defaultOptions: {
     levels: [1, 2, 3, 4, 5, 6],
     defaultLevel: 1,
-  };
-
+  },
+  staticKeys: ['defaultLevel', 'levels'],
+})
+export class HeadingExtension extends NodeExtension<HeadingOptions> {
   get name() {
     return 'heading' as const;
   }

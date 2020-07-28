@@ -1,12 +1,11 @@
 import {
   CommandFunction,
   CreatePluginReturn,
-  DefaultExtensionOptions,
   EditorState,
   EditorView,
+  extensionDecorator,
   FromToParameter,
   Handler,
-  HandlerKeyList,
   hasTransactionChanged,
   isDomNode,
   isEmptyArray,
@@ -15,7 +14,6 @@ import {
   isString,
   PlainExtension,
   Static,
-  StaticKeyList,
   Transaction,
 } from '@remirror/core';
 import { Mapping, StepMap } from '@remirror/pm/transform';
@@ -63,20 +61,15 @@ export interface DiffOptions {
 /**
  * An extension for the remirror editor. CHANGE ME.
  */
-export class DiffExtension extends PlainExtension<DiffOptions> {
-  static readonly staticKeys: StaticKeyList<DiffOptions> = ['blameMarkerClass'];
-  static readonly handlerKeys: HandlerKeyList<DiffOptions> = [
-    'onMouseOverCommit',
-    'onMouseLeaveCommit',
-    'onSelectCommits',
-    'onDeselectCommits',
-  ];
-
-  static readonly defaultOptions: DefaultExtensionOptions<DiffOptions> = {
+@extensionDecorator<DiffOptions>({
+  defaultOptions: {
     blameMarkerClass: 'blame-marker',
     revertMessage: (message: string) => `Revert: '${message}'`,
-  };
-
+  },
+  staticKeys: ['blameMarkerClass'],
+  handlerKeys: ['onMouseOverCommit', 'onMouseLeaveCommit', 'onSelectCommits', 'onDeselectCommits'],
+})
+export class DiffExtension extends PlainExtension<DiffOptions> {
   get name() {
     return 'diff' as const;
   }

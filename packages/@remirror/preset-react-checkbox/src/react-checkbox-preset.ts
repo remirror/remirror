@@ -1,20 +1,9 @@
-import {
-  CustomHandlerKeyList,
-  DefaultPresetOptions,
-  HandlerKeyList,
-  OnSetOptionsParameter,
-  Preset,
-  StaticKeyList,
-} from '@remirror/core';
+import { OnSetOptionsParameter, Preset, presetDecorator } from '@remirror/core';
 
 export interface CheckboxOptions {}
 
+@presetDecorator<CheckboxOptions>({})
 export class CheckboxPreset extends Preset<CheckboxOptions> {
-  static readonly staticKeys: StaticKeyList<CheckboxOptions> = [];
-  static readonly handlerKeys: HandlerKeyList<CheckboxOptions> = [];
-  static readonly customHandlerKeys: CustomHandlerKeyList<CheckboxOptions> = [];
-  static readonly defaultOptions: DefaultPresetOptions<CheckboxOptions> = {};
-
   get name() {
     return 'reactCheckbox' as const;
   }

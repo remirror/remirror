@@ -1,6 +1,7 @@
 import {
   ApplySchemaAttributes,
   convertCommand,
+  extensionDecorator,
   KeyBindings,
   LEAF_NODE_REPLACING_CHARACTER,
   MarkExtension,
@@ -11,6 +12,10 @@ import {
 } from '@remirror/core';
 import { toggleMark } from '@remirror/pm/commands';
 
+/**
+ * Add a `code` mark to the editor. This is used to mark inline text as a code snippet.
+ */
+@extensionDecorator({})
 export class CodeExtension extends MarkExtension {
   get name() {
     return 'code' as const;

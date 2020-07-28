@@ -1,5 +1,6 @@
 import {
   ApplySchemaAttributes,
+  extensionDecorator,
   isElementDomNode,
   KeyBindings,
   NodeExtension,
@@ -12,6 +13,7 @@ import { wrappingInputRule } from '@remirror/pm/inputrules';
 /**
  * Creates the list for the ordered list.
  */
+@extensionDecorator({})
 export class OrderedListExtension extends NodeExtension {
   get name() {
     return 'orderedList' as const;

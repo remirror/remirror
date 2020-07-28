@@ -1,4 +1,4 @@
-import { ExtensionPriority, NodeExtension, NodeGroup } from '@remirror/core';
+import { extensionDecorator, ExtensionPriority, NodeExtension, NodeGroup } from '@remirror/core';
 
 /**
  * The default text passed into the prosemirror schema.
@@ -7,10 +7,11 @@ import { ExtensionPriority, NodeExtension, NodeGroup } from '@remirror/core';
  *
  * @core
  */
+@extensionDecorator({
+  disableExtraAttributes: true,
+  defaultPriority: ExtensionPriority.Medium,
+})
 export class TextExtension extends NodeExtension {
-  static readonly disableExtraAttributes = true;
-  static readonly defaultPriority = ExtensionPriority.Medium;
-
   get name() {
     return 'text' as const;
   }

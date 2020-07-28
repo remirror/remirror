@@ -1,6 +1,7 @@
 import {
   ApplySchemaAttributes,
   CommandFunction,
+  extensionDecorator,
   InputRule,
   NodeExtension,
   NodeExtensionSpec,
@@ -11,6 +12,7 @@ import {
 /**
  * An extension for the remirror editor. CHANGE ME.
  */
+@extensionDecorator({})
 export class HorizontalRuleExtension extends NodeExtension {
   get name() {
     return 'horizontalRule' as const;

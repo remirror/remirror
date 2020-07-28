@@ -6,6 +6,7 @@ import {
   CreatePluginReturn,
   CSS_ROTATE_PATTERN,
   EMPTY_CSS_VALUE,
+  extensionDecorator,
   isElementDomNode,
   NodeExtension,
   NodeExtensionSpec,
@@ -20,6 +21,7 @@ import { ResolvedPos } from '@remirror/pm/model';
  * - Captions https://glitch.com/edit/#!/pet-figcaption?path=index.js%3A27%3A1 into a preset
  * - Resizable https://glitch.com/edit/#!/toothsome-shoemaker?path=index.js%3A1%3A0
  */
+@extensionDecorator({})
 export class ImageExtension extends NodeExtension {
   get name() {
     return 'image' as const;

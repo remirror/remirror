@@ -2,14 +2,11 @@ import { ComponentType } from 'react';
 
 import {
   AnyCombinedUnion,
-  CustomHandlerKeyList,
-  DefaultExtensionOptions,
-  HandlerKeyList,
+  extensionDecorator,
   isNodeExtension,
   NodeViewMethod,
   object,
   PlainExtension,
-  StaticKeyList,
 } from '@remirror/core';
 
 import {
@@ -70,18 +67,16 @@ import { ReactNodeView } from './react-node-view';
  * I'm currently improving the API in the next branch and I'll update docs on
  * how it should be used once done.
  */
-export class ReactComponentExtension extends PlainExtension<ReactComponentOptions> {
-  static readonly staticKeys: StaticKeyList<ReactComponentOptions> = [];
-  static readonly handlerKeys: HandlerKeyList<ReactComponentOptions> = [];
-  static readonly customHandlerKeys: CustomHandlerKeyList<ReactComponentOptions> = [];
-
-  static readonly defaultOptions: DefaultExtensionOptions<ReactComponentOptions> = {
+@extensionDecorator<ReactComponentOptions>({
+  defaultOptions: {
     defaultBlockNode: 'div',
     defaultInlineNode: 'span',
     defaultContentNode: 'span',
     defaultEnvironment: 'both',
-  };
-
+  },
+  staticKeys: ['defaultEnvironment'],
+})
+export class ReactComponentExtension extends PlainExtension<ReactComponentOptions> {
   /**
    * The portal container which keeps track of all the React Portals containing
    * custom prosemirror NodeViews.

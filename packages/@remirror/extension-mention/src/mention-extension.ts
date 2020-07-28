@@ -2,12 +2,10 @@ import {
   AddCustomHandler,
   ApplySchemaAttributes,
   CommandFunction,
-  CustomHandlerKeyList,
-  DefaultExtensionOptions,
   ErrorConstant,
+  extensionDecorator,
   getMarkRange,
   getMatchString,
-  HandlerKeyList,
   invariant,
   isElementDomNode,
   isMarkActive,
@@ -20,7 +18,6 @@ import {
   RangeParameter,
   removeMark,
   replaceText,
-  StaticKeyList,
 } from '@remirror/core';
 import {
   escapeChar,
@@ -69,22 +66,19 @@ import {
  * remirror I'm hoping to reduce the cognitive strain required to set up
  * mentions in your own editor.
  */
-export class MentionExtension extends MarkExtension<MentionOptions> {
-  static readonly defaultOptions: DefaultExtensionOptions<MentionOptions> = {
+@extensionDecorator<MentionOptions>({
+  defaultOptions: {
     mentionTag: 'a' as const,
     matchers: [],
     appendText: ' ',
     suggestTag: 'a' as const,
     noDecorations: false,
-  };
-
-  static readonly staticKeys: StaticKeyList<MentionOptions> = ['matchers', 'mentionTag'];
-  static readonly handlerKeys: HandlerKeyList<MentionOptions> = ['onChange', 'onExit'];
-  static readonly customHandlerKeys: CustomHandlerKeyList<MentionOptions> = [
-    'keyBindings',
-    'onCharacterEntry',
-  ];
-
+  },
+  handlerKeys: ['onChange', 'onExit'],
+  staticKeys: ['matchers', 'mentionTag'],
+  customHandlerKeys: ['keyBindings', 'onCharacterEntry'],
+})
+export class MentionExtension extends MarkExtension<MentionOptions> {
   get name() {
     return 'mention' as const;
   }

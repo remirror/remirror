@@ -4,10 +4,8 @@ import { parse, stringify } from 'tiny-querystring';
 import {
   ApplySchemaAttributes,
   CommandFunction,
-  CustomHandlerKeyList,
-  DefaultExtensionOptions,
+  extensionDecorator,
   findSelectedNodeOfType,
-  HandlerKeyList,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
@@ -15,7 +13,6 @@ import {
   ProsemirrorAttributes,
   Shape,
   Static,
-  StaticKeyList,
 } from '@remirror/core';
 
 export interface IframeOptions {
@@ -44,16 +41,14 @@ export type IframeAttributes = ProsemirrorAttributes<{
 /**
  * An extension for the remirror editor.
  */
-export class IframeExtension extends NodeExtension<IframeOptions> {
-  static readonly staticKeys: StaticKeyList<IframeOptions> = [];
-  static readonly handlerKeys: HandlerKeyList<IframeOptions> = [];
-  static readonly customHandlerKeys: CustomHandlerKeyList<IframeOptions> = [];
-
-  static readonly defaultOptions: DefaultExtensionOptions<IframeOptions> = {
+@extensionDecorator<IframeOptions>({
+  defaultOptions: {
     defaultSource: '',
     class: 'remirror-iframe',
-  };
-
+  },
+  staticKeys: ['class', 'class'],
+})
+export class IframeExtension extends NodeExtension<IframeOptions> {
   get name() {
     return 'iframe' as const;
   }

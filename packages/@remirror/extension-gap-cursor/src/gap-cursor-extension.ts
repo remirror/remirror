@@ -1,4 +1,4 @@
-import { isInstanceOf, PlainExtension } from '@remirror/core';
+import { extensionDecorator, isInstanceOf, PlainExtension } from '@remirror/core';
 import { GapCursor, gapCursor } from '@remirror/pm/gapcursor';
 
 /**
@@ -17,6 +17,7 @@ import { GapCursor, gapCursor } from '@remirror/pm/gapcursor';
  * import '@remirror/styles/extension-gap-cursor.css';
  * ```
  */
+@extensionDecorator({})
 export class GapCursorExtension extends PlainExtension {
   get name() {
     return 'gapCursor' as const;

@@ -51,8 +51,10 @@ export abstract class BaseClass<
 > {
   /**
    * The default options for this extension.
+   *
+   * TODO see if this can be cast to something other than any and allow composition.
    */
-  static readonly defaultOptions = {};
+  static readonly defaultOptions: any = {};
 
   /**
    * The static keys for this class.

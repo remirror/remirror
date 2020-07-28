@@ -1,7 +1,7 @@
 import {
   CreatePluginReturn,
-  DefaultExtensionOptions,
   EditorView,
+  extensionDecorator,
   PlainExtension,
   randomInt,
   throttle,
@@ -10,9 +10,8 @@ import {
 import { defaultEffect, PARTICLE_NUM_RANGE, VIBRANT_COLORS } from './epic-mode-effects';
 import { EpicModeOptions, Particle } from './epic-mode-types';
 
-export class EpicModeExtension extends PlainExtension<EpicModeOptions> {
-  //
-  static readonly defaultOptions: DefaultExtensionOptions<EpicModeOptions> = {
+@extensionDecorator<EpicModeOptions>({
+  defaultOptions: {
     particleEffect: defaultEffect,
     getCanvasContainer: () => document.body,
     colors: VIBRANT_COLORS,
@@ -20,8 +19,9 @@ export class EpicModeExtension extends PlainExtension<EpicModeOptions> {
     active: true,
     shakeTime: 0.3,
     shakeIntensity: 5,
-  };
-
+  },
+})
+export class EpicModeExtension extends PlainExtension<EpicModeOptions> {
   get name() {
     return 'epicMode' as const;
   }

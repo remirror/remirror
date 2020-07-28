@@ -1,17 +1,15 @@
 import {
   CommandFunction,
-  DefaultExtensionOptions,
   DispatchFunction,
   EditorState,
   environment,
+  extensionDecorator,
   Handler,
-  HandlerKeyList,
   isFunction,
   KeyBindings,
   PlainExtension,
   ProsemirrorCommandFunction,
   Static,
-  StaticKeyList,
 } from '@remirror/core';
 import { history, redo, undo } from '@remirror/pm/history';
 
@@ -75,17 +73,17 @@ export interface HistoryOptions {
  *
  * @builtin
  */
-export class HistoryExtension extends PlainExtension<HistoryOptions> {
-  static readonly staticKeys: StaticKeyList<HistoryOptions> = ['depth', 'newGroupDelay'];
-  static readonly handlerKeys: HandlerKeyList<HistoryOptions> = ['onRedo', 'onUndo'];
-
-  static readonly defaultOptions: DefaultExtensionOptions<HistoryOptions> = {
+@extensionDecorator<HistoryOptions>({
+  defaultOptions: {
     depth: 100,
     newGroupDelay: 500,
     getDispatch: null,
     getState: null,
-  };
-
+  },
+  staticKeys: ['depth', 'newGroupDelay'],
+  handlerKeys: ['onRedo', 'onUndo'],
+})
+export class HistoryExtension extends PlainExtension<HistoryOptions> {
   get name() {
     return 'history' as const;
   }

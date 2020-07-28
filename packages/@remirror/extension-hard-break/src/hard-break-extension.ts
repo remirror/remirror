@@ -2,12 +2,14 @@ import {
   ApplySchemaAttributes,
   chainCommands,
   convertCommand,
+  extensionDecorator,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
 } from '@remirror/core';
 import { exitCode } from '@remirror/pm/commands';
 
+@extensionDecorator({})
 export class HardBreakExtension extends NodeExtension {
   get name() {
     return 'hardBreak' as const;

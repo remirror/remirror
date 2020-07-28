@@ -1,41 +1,59 @@
 import {
   AddCustomHandler,
-  CustomHandlerKeyList,
-  DefaultPresetOptions,
   ExtensionPriority,
   OnSetOptionsParameter,
   Preset,
+  presetDecorator,
+  Static,
 } from '@remirror/core';
 import { BaseKeymapExtension, BaseKeymapOptions } from '@remirror/extension-base-keymap';
 import { DocExtension, DocOptions } from '@remirror/extension-doc';
 import { HistoryExtension, HistoryOptions } from '@remirror/extension-history';
-import { ParagraphExtension, ParagraphOptions } from '@remirror/extension-paragraph';
+import { ParagraphExtension } from '@remirror/extension-paragraph';
 import { PositionerExtension, PositionerOptions } from '@remirror/extension-positioner';
 import { TextExtension } from '@remirror/extension-text';
 
 /**
- * The static settings for the core preset.
+ * The options for the core preset.
  */
 export interface CorePresetOptions
   extends BaseKeymapOptions,
     DocOptions,
-    ParagraphOptions,
     PositionerOptions,
-    HistoryOptions {}
+    HistoryOptions {
+  /**
+   * When using the `yjs` extension it is important to exclude the history
+   * extension to prevent issues with collaborative editing mode.
+   *
+   * @defaultValue `false`
+   */
+  excludeHistory?: Static<boolean>;
+}
 
-export class CorePreset extends Preset<CorePresetOptions> {
-  static defaultOptions: DefaultPresetOptions<CorePresetOptions> = {
+/**
+ * The core preset is included by default in framework code like `remirror/react`.
+ *
+ * It comes with the the following extensions.
+ *
+ * - `HistoryExtension` - for undo and redo functionality
+ * - `DocExtension` - provides the top level prosemirror node.
+ * - `TextExtension` - provides the prosemirror text node
+ * - `ParagraphExtension` - provides the prosemirror paragraph node
+ * - `PositionerExtension` - allows for creating  the extension.
+ */
+@presetDecorator<CorePresetOptions>({
+  defaultOptions: {
     ...DocExtension.defaultOptions,
     ...BaseKeymapExtension.defaultOptions,
     ...ParagraphExtension.defaultOptions,
     ...HistoryExtension.defaultOptions,
-  };
-
-  static customHandlerKeys: CustomHandlerKeyList<CorePresetOptions> = [
-    'keymap',
-    'positionerHandler',
-  ];
-
+    excludeHistory: false,
+  },
+  customHandlerKeys: ['keymap', 'positionerHandler'],
+  handlerKeys: ['onRedo', 'onUndo'],
+  staticKeys: ['content', 'depth', 'newGroupDelay', 'excludeHistory'],
+})
+export class CorePreset extends Preset<CorePresetOptions> {
   get name() {
     return 'core' as const;
   }
@@ -53,10 +71,6 @@ export class CorePreset extends Preset<CorePresetOptions> {
         'excludeBaseKeymap',
         'undoInputRuleOnBackspace',
       ]),
-    );
-
-    this.getExtension(ParagraphExtension).setOptions(
-      pickChanged(['indentAttribute', 'indentLevels']),
     );
   }
 
@@ -82,8 +96,6 @@ export class CorePreset extends Preset<CorePresetOptions> {
       content,
       defaultBindingMethod,
       excludeBaseKeymap,
-      indentAttribute,
-      indentLevels,
       selectParentNodeOnEscape,
       undoInputRuleOnBackspace,
       depth,
@@ -92,19 +104,40 @@ export class CorePreset extends Preset<CorePresetOptions> {
       newGroupDelay,
     } = this.options;
 
+    const docExtension = new DocExtension({ content });
+    const textExtension = new TextExtension();
+    const paragraphExtension = new ParagraphExtension();
+    const positionerExtension = new PositionerExtension();
+    const baseKeymapExtension = new BaseKeymapExtension({
+      defaultBindingMethod,
+      excludeBaseKeymap,
+      selectParentNodeOnEscape,
+      undoInputRuleOnBackspace,
+      priority: ExtensionPriority.Low,
+    });
+
+    const withHistoryExtension: HistoryExtension[] = [];
+
+    if (!this.options.excludeHistory) {
+      const historyExtension = new HistoryExtension({
+        depth,
+        getDispatch,
+        getState,
+        newGroupDelay,
+      });
+      historyExtension.addHandler('onRedo', this.options.onRedo);
+      historyExtension.addHandler('onUndo', this.options.onUndo);
+
+      withHistoryExtension.push(historyExtension);
+    }
+
     return [
-      new HistoryExtension({ depth, getDispatch, getState, newGroupDelay }),
-      new DocExtension({ content }),
-      new TextExtension(),
-      new ParagraphExtension({ indentAttribute, indentLevels }),
-      new PositionerExtension(),
-      new BaseKeymapExtension({
-        defaultBindingMethod,
-        excludeBaseKeymap,
-        selectParentNodeOnEscape,
-        undoInputRuleOnBackspace,
-        priority: ExtensionPriority.Low,
-      }),
+      ...withHistoryExtension,
+      docExtension,
+      textExtension,
+      paragraphExtension,
+      positionerExtension,
+      baseKeymapExtension,
     ];
   }
 }

@@ -4,7 +4,7 @@ import {
   AttributesWithClass,
   bool,
   CreatePluginReturn,
-  DefaultExtensionOptions,
+  extensionDecorator,
   findParentNode,
   hasTransactionChanged,
   IdentifierSchemaAttributes,
@@ -37,20 +37,21 @@ export interface BidiOptions {
 }
 
 /**
- * An extension which adds bidirectional text support to your editor.
+ * An extension which adds bi-directional text support to your editor.
  */
+@extensionDecorator<BidiOptions>({
+  defaultOptions: { defaultDirection: null, autoUpdate: true, excludeNodes: [] },
+  staticKeys: ['excludeNodes'],
+})
 export class BidiExtension extends PlainExtension<BidiOptions> {
-  static readonly defaultOptions: DefaultExtensionOptions<BidiOptions> = {
-    defaultDirection: null,
-    autoUpdate: true,
-    excludeNodes: [],
-  };
-
-  #ignoreNextUpdate = false;
-
   get name() {
     return 'bidi' as const;
   }
+
+  /**
+   * Whether to ignore next updated.
+   */
+  #ignoreNextUpdate = false;
 
   /**
    * Add the bidi property to the editor attributes.
@@ -66,7 +67,7 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
   }
 
   /**
-   * Add the dir to all the node types.
+   * Add the `dir` to all the node types.
    */
   createSchemaAttributes = (): IdentifierSchemaAttributes[] => {
     const identifiers = this.store.nodeNames.filter(

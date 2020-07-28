@@ -1,12 +1,9 @@
 import {
   ApplySchemaAttributes,
   convertCommand,
-  DefaultExtensionOptions,
+  extensionDecorator,
   ExtensionPriority,
   ExtensionTag,
-  INDENT_ATTRIBUTE,
-  INDENT_LEVELS,
-  IndentLevels,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
@@ -20,14 +17,10 @@ import { setBlockType } from '@remirror/pm/commands';
  *
  * @core
  */
-export class ParagraphExtension extends NodeExtension<ParagraphOptions> {
-  static readonly defaultOptions: DefaultExtensionOptions<ParagraphOptions> = {
-    indentAttribute: INDENT_ATTRIBUTE,
-    indentLevels: INDENT_LEVELS,
-  };
-
-  static readonly defaultPriority = ExtensionPriority.Medium;
-
+@extensionDecorator({
+  defaultPriority: ExtensionPriority.Medium,
+})
+export class ParagraphExtension extends NodeExtension {
   get name() {
     return 'paragraph' as const;
   }
@@ -62,51 +55,13 @@ export class ParagraphExtension extends NodeExtension<ParagraphOptions> {
    */
   createCommands() {
     return {
-      createParagraph: (attributes: ParagraphExtensionAttributes) => {
+      createParagraph: (attributes: ProsemirrorAttributes) => {
         return convertCommand(setBlockType(this.type, attributes));
       },
     };
   }
 }
 
-export interface ParagraphOptions {
-  /**
-   * The attribute to use to store the value of the current indentation level.
-   */
-  indentAttribute?: string;
-
-  /**
-   * The levels of indentation supported - should be a tuple with the lowest value first and
-   * the max indent last.
-   *
-   * @defaultValue `[0,7]`
-   */
-  indentLevels?: IndentLevels;
-}
-
 /**
  * The possible values for text alignment.
  */
-export type TextAlignment = 'left' | 'right' | 'center' | 'justify';
-
-export type ParagraphExtensionAttributes = ProsemirrorAttributes<{
-  /**
-   * The alignment of the text
-   */
-  align?: TextAlignment | null;
-
-  /**
-   * The indentation number.
-   */
-  indent?: number | null;
-
-  /**
-   * The line spacing for the paragraph.
-   */
-  lineSpacing?: string | null;
-
-  /**
-   * The element id (rarely used).
-   */
-  id?: string | null;
-}>;

@@ -2,11 +2,11 @@ import { cx } from 'linaria';
 import { Children, cloneElement } from 'react';
 
 import {
-  DefaultPresetOptions,
   isDocNodeEmpty,
   isString,
   OnSetOptionsParameter,
   Preset,
+  presetDecorator,
 } from '@remirror/core';
 import { PlaceholderExtension, PlaceholderOptions } from '@remirror/extension-placeholder';
 import { ReactComponentExtension } from '@remirror/extension-react-component';
@@ -15,12 +15,14 @@ import { getElementProps } from '@remirror/react-utils';
 
 export interface ReactPresetOptions extends ReactSSROptions, PlaceholderOptions {}
 
-export class ReactPreset extends Preset<ReactPresetOptions> {
-  static defaultOptions: DefaultPresetOptions<ReactPresetOptions> = {
+@presetDecorator<ReactPresetOptions>({
+  defaultOptions: {
     ...ReactSSRExtension.defaultOptions,
     ...PlaceholderExtension.defaultOptions,
-  };
-
+  },
+  staticKeys: ['transformers'],
+})
+export class ReactPreset extends Preset<ReactPresetOptions> {
   get name() {
     return 'react' as const;
   }

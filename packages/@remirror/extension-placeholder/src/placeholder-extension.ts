@@ -2,16 +2,12 @@ import { css } from 'linaria';
 
 import {
   CreatePluginReturn,
-  CustomHandlerKeyList,
-  DefaultExtensionOptions,
+  extensionDecorator,
   getPluginState,
-  HandlerKeyList,
   isDocNodeEmpty,
   ManagerPhase,
   OnSetOptionsParameter,
   PlainExtension,
-  Static,
-  StaticKeyList,
   Transaction,
 } from '@remirror/core';
 import { EditorState } from '@remirror/pm/state';
@@ -46,7 +42,7 @@ export interface PlaceholderOptions {
    * The class to decorate the empty top level node with. If you change this
    * then you will also need to apply your own styles.
    */
-  emptyNodeClass?: Static<string>;
+  emptyNodeClass?: string;
 }
 
 export interface PlaceholderPluginState extends Required<PlaceholderOptions> {
@@ -56,16 +52,13 @@ export interface PlaceholderPluginState extends Required<PlaceholderOptions> {
 /**
  * An extension for the remirror editor. CHANGE ME.
  */
-export class PlaceholderExtension extends PlainExtension<PlaceholderOptions> {
-  static readonly staticKeys: StaticKeyList<PlaceholderOptions> = ['emptyNodeClass'];
-  static readonly handlerKeys: HandlerKeyList<PlaceholderOptions> = [];
-  static readonly customHandlerKeys: CustomHandlerKeyList<PlaceholderOptions> = [];
-
-  static readonly defaultOptions: DefaultExtensionOptions<PlaceholderOptions> = {
+@extensionDecorator<PlaceholderOptions>({
+  defaultOptions: {
     emptyNodeClass: EMPTY_NODE_CLASS_NAME,
     placeholder: '',
-  };
-
+  },
+})
+export class PlaceholderExtension extends PlainExtension<PlaceholderOptions> {
   get name() {
     return 'placeholder' as const;
   }

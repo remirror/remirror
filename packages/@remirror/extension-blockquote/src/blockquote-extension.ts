@@ -1,6 +1,7 @@
 import {
   ApplySchemaAttributes,
   CommandFunction,
+  extensionDecorator,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
@@ -9,6 +10,10 @@ import {
 } from '@remirror/core';
 import { wrappingInputRule } from '@remirror/pm/inputrules';
 
+/**
+ * Adds a blockquote to the editor.
+ */
+@extensionDecorator({})
 export class BlockquoteExtension extends NodeExtension {
   get name() {
     return 'blockquote' as const;

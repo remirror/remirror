@@ -1,10 +1,8 @@
 import {
   CommandFunction,
   CreatePluginReturn,
-  CustomHandlerKeyList,
-  DefaultExtensionOptions,
+  extensionDecorator,
   getPluginMeta,
-  HandlerKeyList,
   isEmptyArray,
   isNullOrUndefined,
   isNumber,
@@ -12,7 +10,7 @@ import {
   object,
   PlainExtension,
   PosParameter,
-  StaticKeyList,
+  Static,
   Transaction,
 } from '@remirror/core';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
@@ -23,14 +21,14 @@ export interface PositionTrackerOptions {
    *
    * '@defaultValue 'remirror-tracker-position'
    */
-  class?: string;
+  class?: Static<string>;
 
   /**
    * The default element that is used for all trackers.
    *
    * @defaultValue 'tracker'
    */
-  element?: string;
+  element?: Static<string>;
 }
 
 const CLEAR = Symbol('CLEAR');
@@ -38,16 +36,14 @@ const CLEAR = Symbol('CLEAR');
 /**
  * An extension for the remirror editor. CHANGE ME.
  */
-export class PositionTrackerExtension extends PlainExtension<PositionTrackerOptions> {
-  static readonly staticKeys: StaticKeyList<PositionTrackerOptions> = [];
-  static readonly handlerKeys: HandlerKeyList<PositionTrackerOptions> = [];
-  static readonly customHandlerKeys: CustomHandlerKeyList<PositionTrackerOptions> = [];
-
-  static readonly defaultOptions: DefaultExtensionOptions<PositionTrackerOptions> = {
+@extensionDecorator<PositionTrackerOptions>({
+  defaultOptions: {
     class: 'remirror-tracker-position',
     element: 'tracker',
-  };
-
+  },
+  staticKeys: ['class', 'element'],
+})
+export class PositionTrackerExtension extends PlainExtension<PositionTrackerOptions> {
   get name() {
     return 'positionTracker' as const;
   }

@@ -1,6 +1,7 @@
 import {
   ApplySchemaAttributes,
   convertCommand,
+  extensionDecorator,
   KeyBindings,
   MarkExtension,
   MarkExtensionSpec,
@@ -10,6 +11,7 @@ import {
 } from '@remirror/core';
 import { toggleMark } from '@remirror/pm/commands';
 
+@extensionDecorator({})
 export class StrikeExtension extends MarkExtension {
   get name() {
     return 'strike' as const;

@@ -1,6 +1,7 @@
 import {
   ApplySchemaAttributes,
   convertCommand,
+  extensionDecorator,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
@@ -10,6 +11,7 @@ import { liftListItem, sinkListItem, splitListItem } from '@remirror/pm/schema-l
 /**
  * Creates the node for a list item.
  */
+@extensionDecorator({})
 export class ListItemExtension extends NodeExtension {
   get name() {
     return 'listItem' as const;

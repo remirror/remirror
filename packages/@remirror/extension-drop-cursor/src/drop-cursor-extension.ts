@@ -1,8 +1,8 @@
 import {
   bool,
   CreatePluginReturn,
-  DefaultExtensionOptions,
   EditorView,
+  extensionDecorator,
   findPositionOfNodeAfter,
   findPositionOfNodeBefore,
   Handler,
@@ -121,8 +121,8 @@ export interface DropCursorOptions {
  * A drop cursor plugin which adds a decoration at the active drop location. The
  * decoration has a class and can be styled however you want.
  */
-export class DropCursorExtension extends PlainExtension<DropCursorOptions> {
-  static defaultOptions: DefaultExtensionOptions<DropCursorOptions> = {
+@extensionDecorator<DropCursorOptions>({
+  defaultOptions: {
     inlineWidth: '2px',
     inlineSpacing: '10px',
     blockWidth: '100%',
@@ -134,10 +134,10 @@ export class DropCursorExtension extends PlainExtension<DropCursorOptions> {
     inlineClassName: 'remirror-drop-cursor-inline',
     beforeInlineClassName: 'remirror-drop-cursor-before-inline',
     afterInlineClassName: 'remirror-drop-cursor-after-inline',
-  };
-
-  static readonly handlerKeys = ['onInit', 'onDestroy'];
-
+  },
+  handlerKeys: ['onInit', 'onDestroy'],
+})
+export class DropCursorExtension extends PlainExtension<DropCursorOptions> {
   get name() {
     return 'dropCursor' as const;
   }

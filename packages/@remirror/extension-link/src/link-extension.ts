@@ -2,11 +2,11 @@ import {
   ApplySchemaAttributes,
   CommandFunction,
   CreatePluginReturn,
+  extensionDecorator,
   getMarkRange,
   getMatchString,
   getSelectedWord,
   Handler,
-  HandlerKeyList,
   isMarkActive,
   isSelectionEmpty,
   isTextSelection,
@@ -30,9 +30,10 @@ export interface LinkOptions {
 
 export type LinkExtensionCommands = 'updateLink' | 'removeLink';
 
+@extensionDecorator<LinkOptions>({
+  handlerKeys: ['onActivateLink'],
+})
 export class LinkExtension extends MarkExtension<LinkOptions> {
-  static readonly handlerKeys: HandlerKeyList<LinkOptions> = ['onActivateLink'];
-
   get name() {
     return 'link' as const;
   }

@@ -2,16 +2,15 @@ import {
   ApplySchemaAttributes,
   Cast,
   CreatePluginReturn,
-  DefaultExtensionOptions,
   EditorState,
   EditorStateParameter,
   EditorView,
+  extensionDecorator,
   ExtensionPriority,
   findMatches,
   FromToParameter,
   getMatchString,
   Handler,
-  HandlerKeyList,
   LEAF_NODE_REPLACING_CHARACTER,
   Mark,
   markEqualsType,
@@ -30,16 +29,18 @@ import { ReplaceStep } from '@remirror/pm/transform';
  * An auto complete auto decorated linker. This is more aggressive than the
  * `@remirror/extension-link` in that it wraps any url like string as a mark.
  *
- * It's inspired by the behavior of several social sites like `twitter`.
+ * It's inspired by the behavior of social sites like `twitter`.
  */
-export class AutoLinkExtension extends MarkExtension<AutoLinkOptions> {
-  static readonly defaultPriority = ExtensionPriority.Low;
-  static readonly defaultOptions: DefaultExtensionOptions<AutoLinkOptions> = {
+@extensionDecorator<AutoLinkOptions>({
+  defaultOptions: {
     urlRegex: /((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/.*)?)/gi,
     defaultProtocol: '',
-  };
-  static readonly handlerKeys: HandlerKeyList<AutoLinkOptions> = ['onUrlUpdate'];
-
+  },
+  defaultPriority: ExtensionPriority.Low,
+  handlerKeys: ['onUrlUpdate'],
+  staticKeys: ['urlRegex'],
+})
+export class AutoLinkExtension extends MarkExtension<AutoLinkOptions> {
   get name() {
     return 'autoLink' as const;
   }

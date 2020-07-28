@@ -2,14 +2,11 @@ import { Except } from 'type-fest';
 
 import {
   AddCustomHandler,
-  CustomHandlerKeyList,
-  DefaultPresetOptions,
   ExtensionPriority,
-  HandlerKeyList,
   OnSetOptionsParameter,
   Preset,
+  presetDecorator,
   Static,
-  StaticKeyList,
 } from '@remirror/core';
 import { AutoLinkExtension, AutoLinkOptions } from '@remirror/extension-auto-link';
 import { EmojiExtension, EmojiOptions } from '@remirror/extension-emoji';
@@ -38,30 +35,20 @@ export interface SocialOptions
   tagMatcherOptions?: Static<Except<MentionExtensionMatcher, 'name' | 'char'>>;
 }
 
-export class SocialPreset extends Preset<SocialOptions> {
-  static readonly staticKeys: StaticKeyList<SocialOptions> = ['matchers', 'mentionTag', 'urlRegex'];
-  static readonly handlerKeys: HandlerKeyList<SocialOptions> = [
-    'onChange',
-    'onChangeEmoji',
-    'onExit',
-    'onExitEmoji',
-    'onUrlUpdate',
-  ];
-  static readonly customHandlerKeys: CustomHandlerKeyList<SocialOptions> = [
-    'keyBindings',
-    'keyBindingsEmoji',
-    'onCharacterEntry',
-  ];
-
-  static readonly defaultOptions: DefaultPresetOptions<SocialOptions> = {
+@presetDecorator<SocialOptions>({
+  defaultOptions: {
     ...AutoLinkExtension.defaultOptions,
     ...MentionExtension.defaultOptions,
     ...EmojiExtension.defaultOptions,
     matchers: [],
     atMatcherOptions: {},
     tagMatcherOptions: {},
-  };
-
+  },
+  customHandlerKeys: ['keyBindings', 'keyBindingsEmoji', 'onCharacterEntry'],
+  handlerKeys: ['onChange', 'onChangeEmoji', 'onUrlUpdate', 'onExitEmoji', 'onExit'],
+  staticKeys: ['matchers', 'mentionTag', 'urlRegex', 'atMatcherOptions', 'tagMatcherOptions'],
+})
+export class SocialPreset extends Preset<SocialOptions> {
   get name() {
     return 'social' as const;
   }

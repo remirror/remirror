@@ -4,13 +4,12 @@ import { cx } from 'linaria';
 import {
   CommandFunction,
   CreatePluginReturn,
-  DefaultExtensionOptions,
   DispatchFunction,
+  extensionDecorator,
   findMatches,
   FromToParameter,
   getSelectedWord,
   Handler,
-  HandlerKeyList,
   isEmptyArray,
   isNumber,
   isSelectionEmpty,
@@ -21,7 +20,6 @@ import {
   PlainExtension,
   ProsemirrorNode,
   Static,
-  StaticKeyList,
   Transaction,
 } from '@remirror/core';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
@@ -94,13 +92,10 @@ export interface SearchOptions {
 export type SearchDirection = 'next' | 'previous';
 
 /**
- * An extension for the remirror editor. CHANGE ME.
+ * This extension add search functionality to your editor.
  */
-export class SearchExtension extends PlainExtension<SearchOptions> {
-  static readonly staticKeys: StaticKeyList<SearchOptions> = ['highlightedClass', 'searchClass'];
-  static readonly handlerKeys: HandlerKeyList<SearchOptions> = ['onSearch'];
-
-  static readonly defaultOptions: DefaultExtensionOptions<SearchOptions> = {
+@extensionDecorator<SearchOptions>({
+  defaultOptions: {
     autoSelectNext: true,
     searchClass: 'search',
     highlightedClass: 'highlighted-search',
@@ -111,16 +106,19 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
     searchForwardShortcut: 'Mod-f',
     searchBackwardShortcut: 'Mod-Shift-f',
     clearOnEscape: true,
-  };
+  },
+  handlerKeys: ['onSearch'],
+  staticKeys: ['highlightedClass', 'searchClass'],
+})
+export class SearchExtension extends PlainExtension<SearchOptions> {
+  get name() {
+    return 'search' as const;
+  }
 
   #updating = false;
   #searchTerm?: string;
   #results: FromToParameter[] = [];
   #activeIndex = 0;
-
-  get name() {
-    return 'search' as const;
-  }
 
   createCommands() {
     return {

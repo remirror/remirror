@@ -6,7 +6,7 @@ import { Doc } from 'yjs';
 import {
   CommandFunction,
   convertCommand,
-  DefaultExtensionOptions,
+  extensionDecorator,
   ExtensionPriority,
   isFunction,
   nonChainable,
@@ -45,9 +45,8 @@ export interface YjsOptions<Provider extends YjsRealtimeProvider = YjsRealtimePr
  * The YJS extension is the recommended extension for creating a collaborative
  * editor.
  */
-export class YjsExtension extends PlainExtension<YjsOptions> {
-  static readonly defaultPriority = ExtensionPriority.High;
-  static readonly defaultOptions: DefaultExtensionOptions<YjsOptions> = {
+@extensionDecorator<YjsOptions>({
+  defaultOptions: {
     // TODO remove y-webrtc dependency and this default option.
     getProvider: () => new WebrtcProvider('global', new Doc(), {} as any),
 
@@ -58,8 +57,11 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
       provider.destroy();
       doc.destroy();
     },
-  };
-
+  },
+  defaultPriority: ExtensionPriority.High,
+  staticKeys: ['destroyProvider'],
+})
+export class YjsExtension extends PlainExtension<YjsOptions> {
   get name() {
     return 'yjs' as const;
   }

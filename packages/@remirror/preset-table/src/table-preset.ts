@@ -1,9 +1,4 @@
-import {
-  DefaultPresetOptions,
-  ExtensionPriority,
-  OnSetOptionsParameter,
-  Preset,
-} from '@remirror/core';
+import { ExtensionPriority, OnSetOptionsParameter, Preset, presetDecorator } from '@remirror/core';
 
 import {
   TableCellExtension,
@@ -16,11 +11,10 @@ import {
 /**
  * The table is packaged up as preset for simpler consumption.
  */
+@presetDecorator<TableOptions>({
+  defaultOptions: TableExtension.defaultOptions,
+})
 export class TablePreset extends Preset<TableOptions> {
-  static readonly defaultOptions: DefaultPresetOptions<TableOptions> = {
-    ...TableExtension.defaultOptions,
-  };
-
   get name() {
     return 'table' as const;
   }

@@ -1,10 +1,4 @@
-import {
-  DefaultPresetOptions,
-  HandlerKeyList,
-  OnSetOptionsParameter,
-  Preset,
-  StaticKeyList,
-} from '@remirror/core';
+import { OnSetOptionsParameter, Preset, presetDecorator } from '@remirror/core';
 import { BidiExtension, BidiOptions } from '@remirror/extension-bidi';
 import { BlockquoteExtension } from '@remirror/extension-blockquote';
 import { BoldExtension, BoldOptions } from '@remirror/extension-bold';
@@ -34,23 +28,8 @@ export interface WysiwygOptions
     SearchOptions,
     TrailingNodeOptions {}
 
-export class WysiwygPreset extends Preset<WysiwygOptions> {
-  static readonly staticKeys: StaticKeyList<WysiwygOptions> = [
-    'defaultLevel',
-    'excludeNodes',
-    'highlightedClass',
-    'levels',
-    'searchClass',
-    'weight',
-  ];
-  static readonly handlerKeys: HandlerKeyList<WysiwygOptions> = [
-    'onActivateLink',
-    'onDestroy',
-    'onInit',
-    'onSearch',
-  ];
-
-  static readonly defaultOptions: DefaultPresetOptions<WysiwygOptions> = {
+@presetDecorator<WysiwygOptions>({
+  defaultOptions: {
     ...BidiExtension.defaultOptions,
     ...BoldExtension.defaultOptions,
     ...CodeBlockExtension.defaultOptions,
@@ -58,8 +37,18 @@ export class WysiwygPreset extends Preset<WysiwygOptions> {
     ...SearchExtension.defaultOptions,
     ...TrailingNodeExtension.defaultOptions,
     ...HeadingExtension.defaultOptions,
-  };
-
+  },
+  staticKeys: [
+    'defaultLevel',
+    'excludeNodes',
+    'highlightedClass',
+    'levels',
+    'searchClass',
+    'weight',
+  ],
+  handlerKeys: ['onActivateLink', 'onDestroy', 'onInit', 'onSearch'],
+})
+export class WysiwygPreset extends Preset<WysiwygOptions> {
   get name() {
     return 'wysiwyg' as const;
   }
