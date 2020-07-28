@@ -50,7 +50,7 @@ export class ItalicExtension extends MarkExtension {
     return [markInputRule({ regexp: /(?:^|[^*_])[*_]([^*_]+)[*_]$/, type: this.type })];
   }
 
-  createPasteRules = () => {
+  createPasteRules() {
     return [markPasteRule({ regexp: /(?:^|[^*_])[*_]([^*_]+)[*_]/g, type: this.type })];
-  };
+  }
 }

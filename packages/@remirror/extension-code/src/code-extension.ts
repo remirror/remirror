@@ -54,7 +54,7 @@ export class CodeExtension extends MarkExtension {
     ];
   }
 
-  createPasteRules = () => {
+  createPasteRules() {
     return [markPasteRule({ regexp: /`([^`]+)`/g, type: this.type })];
-  };
+  }
 }

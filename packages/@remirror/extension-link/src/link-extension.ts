@@ -136,7 +136,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     };
   }
 
-  createPasteRules = () => {
+  createPasteRules() {
     return [
       markPasteRule({
         regexp: /https?:\/\/(www\.)?[\w#%+.:=@~-]{2,256}\.[a-z]{2,6}\b([\w#%&+./:=?@~-]*)/g,
@@ -144,7 +144,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         getAttributes: (url) => ({ href: getMatchString(url) }),
       }),
     ];
-  };
+  }
 
   createPlugin(): CreatePluginReturn {
     return {
