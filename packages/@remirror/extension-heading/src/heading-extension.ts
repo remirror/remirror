@@ -103,9 +103,9 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
     return keys;
   };
 
-  createInputRules = () => {
+  createInputRules() {
     return this.options.levels.map((level) =>
       textblockTypeInputRule(new RegExp(`^(#{1,${level}})\\s$`), this.type, () => ({ level })),
     );
-  };
+  }
 }

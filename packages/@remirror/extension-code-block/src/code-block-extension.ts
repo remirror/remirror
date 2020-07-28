@@ -173,7 +173,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
    * Create an input rule that listens converts the code fence into a code block
    * when typing triple back tick followed by a space.
    */
-  createInputRules = () => {
+  createInputRules() {
     const regexp = /^```([\dA-Za-z]*) $/;
     const getAttributes: GetAttributes = (match) => {
       const language = getLanguage({
@@ -192,7 +192,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
         getAttributes: getAttributes,
       }),
     ];
-  };
+  }
 
   protected onSetOptions(parameter: OnSetOptionsParameter<CodeBlockOptions>) {
     const { changes } = parameter;

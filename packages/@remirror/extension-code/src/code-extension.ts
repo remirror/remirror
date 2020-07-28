@@ -45,14 +45,14 @@ export class CodeExtension extends MarkExtension {
     };
   }
 
-  createInputRules = () => {
+  createInputRules() {
     return [
       markInputRule({
         regexp: new RegExp(`(?:\`)([^\`${LEAF_NODE_REPLACING_CHARACTER}]+)(?:\`)$`),
         type: this.type,
       }),
     ];
-  };
+  }
 
   createPasteRules = () => {
     return [markPasteRule({ regexp: /`([^`]+)`/g, type: this.type })];

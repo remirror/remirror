@@ -82,9 +82,9 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
     };
   };
 
-  createInputRules = (): InputRule[] => {
+  createInputRules(): InputRule[] {
     return [markInputRule({ regexp: /(?:\*\*|__)([^*_]+)(?:\*\*|__)$/, type: this.type })];
-  };
+  }
 
   createCommands() {
     return {

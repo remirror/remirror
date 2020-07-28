@@ -43,7 +43,7 @@ export class BulletListExtension extends NodeExtension {
     };
   };
 
-  createInputRules = () => {
+  createInputRules() {
     return [wrappingInputRule(/^\s*([*+-])\s$/, this.type)];
-  };
+  }
 }

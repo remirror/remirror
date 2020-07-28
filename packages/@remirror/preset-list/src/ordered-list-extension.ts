@@ -69,7 +69,7 @@ export class OrderedListExtension extends NodeExtension {
     };
   };
 
-  createInputRules = () => {
+  createInputRules() {
     return [
       wrappingInputRule(
         /^(\d+)\.\s$/,
@@ -78,5 +78,5 @@ export class OrderedListExtension extends NodeExtension {
         (match, node) => node.childCount + (node.attrs.order as number) === +match[1],
       ),
     ];
-  };
+  }
 }
