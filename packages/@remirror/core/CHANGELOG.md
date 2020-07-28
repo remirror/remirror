@@ -1,5 +1,21 @@
 # @remirror/core
 
+## 1.0.0-next.12
+
+> 2020-07-28
+
+### Minor Changes
+
+- 19b3595f: `isNodeActive` now matches partial attribute objects. Fixes #385.
+- d8aa2432: Remove type guard from `isEmptyArray` and `isEmptyObject` as they were incorrect.
+
+### Patch Changes
+
+- Updated dependencies [19b3595f]
+- Updated dependencies [d8aa2432]
+  - @remirror/core-utils@1.0.0-next.12
+  - @remirror/core-helpers@1.0.0-next.12
+
 ## 1.0.0-next.11
 
 > 2020-07-26

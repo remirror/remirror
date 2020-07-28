@@ -1,5 +1,16 @@
 # @remirror/extension-react-ssr
 
+## 1.0.0-next.12
+
+> 2020-07-28
+
+### Patch Changes
+
+- Updated dependencies [19b3595f]
+- Updated dependencies [d8aa2432]
+  - @remirror/core@1.0.0-next.12
+  - @remirror/extension-react-component@1.0.0-next.12
+
 ## 1.0.0-next.11
 
 > 2020-07-26

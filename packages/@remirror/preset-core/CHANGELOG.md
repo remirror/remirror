@@ -1,5 +1,21 @@
 # @remirror/preset-core
 
+## 1.0.0-next.12
+
+> 2020-07-28
+
+### Patch Changes
+
+- Updated dependencies [19b3595f]
+- Updated dependencies [d8aa2432]
+  - @remirror/core@1.0.0-next.12
+  - @remirror/extension-base-keymap@1.0.0-next.12
+  - @remirror/extension-doc@1.0.0-next.12
+  - @remirror/extension-history@1.0.0-next.12
+  - @remirror/extension-paragraph@1.0.0-next.12
+  - @remirror/extension-positioner@1.0.0-next.12
+  - @remirror/extension-text@1.0.0-next.12
+
 ## 1.0.0-next.11
 
 > 2020-07-26

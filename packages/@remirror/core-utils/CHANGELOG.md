@@ -1,5 +1,18 @@
 # @remirror/core-utils
 
+## 1.0.0-next.12
+
+> 2020-07-28
+
+### Minor Changes
+
+- 19b3595f: `isNodeActive` now matches partial attribute objects. Fixes #385.
+
+### Patch Changes
+
+- Updated dependencies [d8aa2432]
+  - @remirror/core-helpers@1.0.0-next.12
+
 ## 1.0.0-next.8
 
 > 2020-07-21
