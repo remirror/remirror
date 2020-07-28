@@ -57,13 +57,6 @@ manager.commands.toggleBold();
 manager.commands.toggleBold({ from: 1, to: 7 });
 ```
 
-### Alternatives
-
-There are presets which contain this extension and can help make setup process for you editor less
-verbose.
-
-- `@remirror/preset-formatting`
-
 <br />
 
 ## Credits

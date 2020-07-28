@@ -62,7 +62,6 @@ There are several presets which contain this extension and make the installation
 verbose. AS a result you probably won't ever need to manage it directly.
 
 - `@remirror/preset-core`
-- `@remirror/preset-formatting`
 
 <br />
 
