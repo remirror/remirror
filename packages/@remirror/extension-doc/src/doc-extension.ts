@@ -58,12 +58,9 @@ export interface DocOptions {
   },
   defaultPriority: ExtensionPriority.Medium,
   staticKeys: ['content'],
+  disableExtraAttributes: true,
 })
 export class DocExtension extends NodeExtension<DocOptions> {
-  static readonly defaultPriority = ExtensionPriority.Medium;
-
-  static readonly disableExtraAttributes = true;
-
   get name() {
     return 'doc' as const;
   }

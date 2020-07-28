@@ -91,14 +91,17 @@ export type Dynamic<Type> = Type & DynamicAnnotation;
  * to automate this.
  *
  * ```ts
- * import { PlainExtension } from 'remirror/core';
+ * import { PlainExtension, extensionDecorator } from 'remirror/core';
  * interface CustomOptions {
  *   simple: boolean; // Automatically a dynamic property
  *   onChange: Handler<(value: string) => void>;
  * }
  *
+ * @extensionDecorator({ handlerKeys: ['onChange'] })
  * class CustomExtension extends PlainExtension<CustomOptions> {
- *   static readonly handlerKeys = ['onChange'];
+ *   get name() {
+ *     return 'custom' as const;
+ *   }
  * }
  *
  * // No prompt to include the `onChange` handler due to the annotation.

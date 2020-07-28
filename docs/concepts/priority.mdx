@@ -28,15 +28,16 @@ Now your customExtension will have a priority level that's higher than other ext
 run prior to other extensions.
 
 If you have full control of the extension you can also set the `defaultPriority` as a static
-property to achieve the same effect.
+property with the `extension.
 
 ```ts
-import { Extension, ExtensionPriority } from 'remirror/core';
+import { Extension, ExtensionPriority, extensionDecorator } from 'remirror/core';
 
-class CustomExtension extends Extension {
+@extensionDecorator({
   // Now every custom extension created will have a `High` priority than default.
-  static readonly defaultPriority = ExtensionPriority.High;
-
+  defaultPriority: ExtensionPriority.High,
+})
+class CustomExtension extends Extension {
   get name() {
     return 'custom' as const;
   }

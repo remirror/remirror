@@ -21,17 +21,14 @@ The `next` method allows full control beyond the return value. It allows both ca
 priority key bindings regardless of whether true or false has been called.
 
 ```tsx
-import { BaseExtensionOptions, Extension, KeyBindings } from '@remirror/core';
+import { BaseExtensionOptions, Extension, KeyBindings, extensionDecorator } from '@remirror/core';
 
 interface CustomKeymapExtensionOptions {
   override?: boolean;
 }
 
+@extensionDecorator({ defaultOptions: { override: false } })
 export class CustomKeymapExtension extends Extension<CustomKeymapExtensionOptions> {
-  static readonly defaultOptions = {
-    override: false,
-  };
-
   get name() {
     return 'customKeymap' as const;
   }

@@ -7,7 +7,6 @@ import {
   EditorState,
   extensionDecorator,
   Handler,
-  HandlerKeyList,
   invariant,
   isArray,
   isNumber,
@@ -36,8 +35,6 @@ import { Step } from '@remirror/pm/transform';
   handlerKeys: ['onSendableReceived'],
 })
 export class CollaborationExtension extends PlainExtension<CollaborationOptions> {
-  static readonly handlerKeys: HandlerKeyList<CollaborationOptions> = ['onSendableReceived'];
-
   get name() {
     return 'collaboration';
   }
