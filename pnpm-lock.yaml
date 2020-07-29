@@ -1270,7 +1270,7 @@ importers:
       '@babel/runtime': ^7.10.5
       '@remirror/core': ^1.0.0-next.13
       '@remirror/extension-code-block': ^1.0.0-next.13
-      '@remirror/react-social': ^1.0.0-next.13
+      '@remirror/react-social': ^1.0.0-next.14
       '@types/match-sorter': ^4.0.0
       '@types/prettier': ^2.0.2
       '@types/react': ^16.9.43
@@ -1587,7 +1587,7 @@ importers:
       '@remirror/preset-table': ^1.0.0-next.13
       '@remirror/preset-wysiwyg': ^1.0.0-next.13
       '@remirror/react': ^1.0.0-next.13
-      '@remirror/react-social': ^1.0.0-next.13
+      '@remirror/react-social': ^1.0.0-next.14
       '@remirror/react-utils': ^1.0.0-next.4
       '@remirror/react-wysiwyg': ^1.0.0-next.13
       '@remirror/theme': ^1.0.0-next.4
