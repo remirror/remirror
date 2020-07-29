@@ -22,7 +22,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.10.5",
-    "@remirror/core-types": "^1.0.0-next.6",
+    "@remirror/core-types": "^1.0.0-next.13",
     "case-anything": "^1.1.1",
     "linaria": "^2.0.0-rc.0",
     "open-color": "^1.7.0",

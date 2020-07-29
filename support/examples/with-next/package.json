@@ -16,7 +16,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "refractor": "^3.0.0",
-    "remirror": "^1.0.0-next.10"
+    "remirror": "^1.0.0-next.13"
   },
   "devDependencies": {
     "@types/react": "^16.9.43",

@@ -1,5 +1,22 @@
 # @remirror/dom
 
+## 1.0.0-next.13
+
+> 2020-07-29
+
+### Patch Changes
+
+- Updated dependencies [d877adb3]
+- Updated dependencies [38941404]
+- Updated dependencies [cc5c1c1c]
+- Updated dependencies [e45706e5]
+- Updated dependencies [02704d42]
+- Updated dependencies [f3155b5f]
+- Updated dependencies [4571a447]
+- Updated dependencies [92342ab0]
+  - @remirror/core@1.0.0-next.13
+  - @remirror/preset-core@1.0.0-next.13
+
 ## 1.0.0-next.12
 
 > 2020-07-28

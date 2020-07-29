@@ -1,5 +1,15 @@
 # @remirror/cli
 
+## 1.0.0-next.13
+
+> 2020-07-29
+
+### Patch Changes
+
+- 4030b506: For some reason `changesets` is not picking up updates to the depedencies of `remirror`.
+- Updated dependencies [92342ab0]
+  - @remirror/core-helpers@1.0.0-next.13
+
 ## 1.0.0-next.4
 
 > 2020-07-16

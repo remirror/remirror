@@ -1,5 +1,18 @@
 # @remirror/core-helpers
 
+## 1.0.0-next.13
+
+> 2020-07-29
+
+### Patch Changes
+
+- 92342ab0: Throw error in `Preset` and `Extension` when attempting to update a non-dynamic option
+  at runtime.
+- Updated dependencies [e45706e5]
+- Updated dependencies [92342ab0]
+  - @remirror/core-types@1.0.0-next.13
+  - @remirror/core-constants@1.0.0-next.13
+
 ## 1.0.0-next.12
 
 > 2020-07-28

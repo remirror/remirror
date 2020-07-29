@@ -1,5 +1,111 @@
 # @remirror/core
 
+## 1.0.0-next.13
+
+> 2020-07-29
+
+### Major Changes
+
+- 92342ab0: Throw error in `Preset` and `Extension` when attempting to update a non-dynamic option
+  at runtime.
+
+### Minor Changes
+
+- e45706e5: Add new `extensionDecorator` function which augments the static properties of an
+  `Extension` constructor when used as a decorator.
+
+  The following code will add a decorator to the extension.
+
+  ```ts
+  import { PlainExtension, ExtensionPriority, extensionDecorator } from 'remirror/core';
+
+  interface ExampleOptions {
+    color?: string;
+
+    /**
+     * This option is annotated as a handler and needs a static property.
+     **/
+    onChange?: Handler<() => void>;
+  }
+
+  @extensionDecorator<ExampleOptions>({
+    defaultOptions: { color: 'red' },
+    defaultPriority: ExtensionPriority.Lowest,
+    handlerKeys: ['onChange'],
+  })
+  class ExampleExtension extends PlainExtension<ExampleOptions> {
+    get name() {
+      return 'example' as const;
+    }
+  }
+  ```
+
+  The extension decorator updates the static properties of the extension. If you prefer not to use
+  decorators it can also be called as a function. The `Extension` constructor is mutated by the
+  function call and does not need to be returned.
+
+  ```ts
+  extensionDecorator({ defaultSettings: { color: 'red' } })(ExampleExtension);
+  ```
+
+- f3155b5f: Add new `presetDecorator` function which augments the static properties of an `Preset`
+  constructor when used as a decorator.
+
+  The following code will add a decorator to the preset.
+
+  ```ts
+  import { Preset presetDecorator } from 'remirror/core';
+
+  interface ExampleOptions {
+    color?: string;
+
+    /**
+     * This option is annotated as a handler and needs a static property.
+     **/
+    onChange?: Handler<() => void>;
+  }
+
+  @presetDecorator<ExampleOptions>({
+    defaultOptions: { color: 'red' },
+    handlerKeys: ['onChange'],
+  })
+  class ExamplePreset extends Preset<ExampleOptions> {
+    get name() {
+      return 'example' as const;
+    }
+  }
+  ```
+
+  The preset decorator updates the static properties of the preset. If you prefer not to use
+  decorators it can also be called as a function. The `Preset` constructor is mutated by the
+  function call and does not need to be returned.
+
+  ```ts
+  presetDecorator({ defaultSettings: { color: 'red' }, handlerKeys: ['onChange'] })(ExamplePreset);
+  ```
+
+- 4571a447: Use methods for `addHandler` and `addCustomHandler`
+
+  `@remirror/react` - Bind `addHandler` and `addCustomHandler` for `Preset` and `Extension` hooks.
+
+### Patch Changes
+
+- d877adb3: Switch to using method signatures for extension class methods as discussed in #360. The
+  following methods have been affected:
+
+  ```
+  createKeymap
+  createInputRules
+  createPasteRules
+  ```
+
+- cc5c1c1c: Remove static properties and use the `@extensionDecorator` instead.
+- Updated dependencies [e45706e5]
+- Updated dependencies [92342ab0]
+  - @remirror/core-types@1.0.0-next.13
+  - @remirror/core-constants@1.0.0-next.13
+  - @remirror/core-helpers@1.0.0-next.13
+
 ## 1.0.0-next.12
 
 > 2020-07-28

@@ -1,5 +1,14 @@
 # @remirror/core-constants
 
+## 1.0.0-next.13
+
+> 2020-07-29
+
+### Patch Changes
+
+- 92342ab0: Throw error in `Preset` and `Extension` when attempting to update a non-dynamic option
+  at runtime.
+
 ## 1.0.0-next.6
 
 > 2020-07-20

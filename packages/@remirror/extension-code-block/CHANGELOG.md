@@ -1,5 +1,30 @@
 # @remirror/extension-code-block
 
+## 1.0.0-next.13
+
+> 2020-07-29
+
+### Patch Changes
+
+- d877adb3: Switch to using method signatures for extension class methods as discussed in #360. The
+  following methods have been affected:
+
+  ```
+  createKeymap
+  createInputRules
+  createPasteRules
+  ```
+
+- 38941404: Switch from static properties to using the `@extensionDecorator` and `@presetDecorator`
+  instead.
+- Updated dependencies [d877adb3]
+- Updated dependencies [cc5c1c1c]
+- Updated dependencies [e45706e5]
+- Updated dependencies [f3155b5f]
+- Updated dependencies [4571a447]
+- Updated dependencies [92342ab0]
+  - @remirror/core@1.0.0-next.13
+
 ## 1.0.0-next.12
 
 > 2020-07-28

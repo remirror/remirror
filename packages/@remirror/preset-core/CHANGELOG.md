@@ -1,5 +1,34 @@
 # @remirror/preset-core
 
+## 1.0.0-next.13
+
+> 2020-07-29
+
+### Minor Changes
+
+- 02704d42: Add `GapCursorExtension` to the `CorePreset`.
+
+### Patch Changes
+
+- 38941404: Switch from static properties to using the `@extensionDecorator` and `@presetDecorator`
+  instead.
+- Updated dependencies [d877adb3]
+- Updated dependencies [38941404]
+- Updated dependencies [cc5c1c1c]
+- Updated dependencies [e45706e5]
+- Updated dependencies [38941404]
+- Updated dependencies [f3155b5f]
+- Updated dependencies [4571a447]
+- Updated dependencies [92342ab0]
+  - @remirror/core@1.0.0-next.13
+  - @remirror/extension-base-keymap@1.0.0-next.13
+  - @remirror/extension-history@1.0.0-next.13
+  - @remirror/extension-doc@1.0.0-next.13
+  - @remirror/extension-gap-cursor@1.0.0-next.13
+  - @remirror/extension-paragraph@1.0.0-next.13
+  - @remirror/extension-positioner@1.0.0-next.13
+  - @remirror/extension-text@1.0.0-next.13
+
 ## 1.0.0-next.12
 
 > 2020-07-28
