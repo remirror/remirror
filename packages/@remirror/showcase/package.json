@@ -25,7 +25,7 @@
     "@babel/runtime": "^7.10.5",
     "@remirror/core": "^1.0.0-next.13",
     "@remirror/extension-code-block": "^1.0.0-next.13",
-    "@remirror/react-social": "^1.0.0-next.13",
+    "@remirror/react-social": "^1.0.0-next.14",
     "@types/match-sorter": "^4.0.0",
     "@types/prettier": "^2.0.2",
     "match-sorter": "^4.2.0",

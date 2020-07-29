@@ -1,5 +1,16 @@
 # @remirror/react-social
 
+## 1.0.0-next.14
+
+> 2020-07-29
+
+### Patch Changes
+
+- 90f64408: Show immediate suggestions for the emoji picker in the social editor. Also add the
+  character indicator default and update the value for each state update.
+
+  Closes #403
+
 ## 1.0.0-next.13
 
 > 2020-07-29
