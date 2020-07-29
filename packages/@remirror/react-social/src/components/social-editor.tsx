@@ -18,7 +18,7 @@ export interface SocialEditorProps extends Partial<SocialProviderProps>, SocialM
  * create an editor with minimal lines of code.
  */
 export const SocialEditor: FC<SocialEditorProps> = (props: SocialEditorProps) => {
-  const { children, characterLimit, tags, onMentionChange, users, ...providerProps } = props;
+  const { children, characterLimit = 140, tags, onMentionChange, users, ...providerProps } = props;
 
   return (
     <SocialProvider {...providerProps}>
@@ -47,7 +47,7 @@ interface IndicatorProps {
 }
 
 const Indicator = ({ characterLimit }: IndicatorProps) => {
-  const { getState } = useRemirror();
+  const { getState } = useRemirror({ autoUpdate: true });
   const used = getState().doc.textContent.length;
 
   return isNumber(characterLimit) ? (

@@ -11,7 +11,7 @@ import {
   emojiSuggestionsItemStyles,
 } from '../social-styles';
 
-const EmojiDropdown = (props: Required<SocialEmojiState>) => {
+const EmojiDropdown = (props: SocialEmojiState) => {
   const { index, command, list } = props;
   const { focus } = useSocialRemirror();
   const { ref, top, left } = usePositioner('popupMenu');
@@ -32,31 +32,32 @@ const EmojiDropdown = (props: Required<SocialEmojiState>) => {
         left,
       }}
     >
-      {list.map((emoji, index) => {
-        const isHighlighted = itemHighlightedAtIndex(index);
-        const isHovered = index === hoveredIndex;
-        return (
-          <div
-            key={emoji.name}
-            className={cx(
-              emojiSuggestionsItemStyles,
-              isHighlighted && 'highlighted',
-              isHovered && 'hovered',
-            )}
-            {...getItemProps({
-              onClick: () => {
-                command(emoji);
-                focus();
-              },
-              item: emoji,
-              index,
-            })}
-          >
-            <span className={emojiSuggestionsItemChar}>{emoji.char}</span>
-            <span className={emojiSuggestionsItemName}>:{emoji.name}:</span>
-          </div>
-        );
-      })}
+      {command &&
+        list.map((emoji, index) => {
+          const isHighlighted = itemHighlightedAtIndex(index);
+          const isHovered = index === hoveredIndex;
+          return (
+            <div
+              key={emoji.name}
+              className={cx(
+                emojiSuggestionsItemStyles,
+                isHighlighted && 'highlighted',
+                isHovered && 'hovered',
+              )}
+              {...getItemProps({
+                onClick: () => {
+                  command(emoji);
+                  focus();
+                },
+                item: emoji,
+                index,
+              })}
+            >
+              <span className={emojiSuggestionsItemChar}>{emoji.char}</span>
+              <span className={emojiSuggestionsItemName}>:{emoji.name}:</span>
+            </div>
+          );
+        })}
     </div>
   );
 };
@@ -66,10 +67,6 @@ const EmojiDropdown = (props: Required<SocialEmojiState>) => {
  */
 export const SocialEmojiComponent = () => {
   const { index, list, command } = useSocialEmoji();
-
-  if (!command) {
-    return null;
-  }
 
   return <EmojiDropdown list={list} index={index} command={command} />;
 };
