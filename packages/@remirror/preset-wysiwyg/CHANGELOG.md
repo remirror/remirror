@@ -1,5 +1,47 @@
 # @remirror/preset-wysiwyg
 
+## 1.0.0-next.13
+
+> 2020-07-29
+
+### Patch Changes
+
+- 38941404: Switch from static properties to using the `@extensionDecorator` and `@presetDecorator`
+  instead.
+- Updated dependencies [d877adb3]
+- Updated dependencies [38941404]
+- Updated dependencies [cc5c1c1c]
+- Updated dependencies [e45706e5]
+- Updated dependencies [38941404]
+- Updated dependencies [3fbb2325]
+- Updated dependencies [02704d42]
+- Updated dependencies [f3155b5f]
+- Updated dependencies [4571a447]
+- Updated dependencies [92342ab0]
+  - @remirror/core@1.0.0-next.13
+  - @remirror/extension-blockquote@1.0.0-next.13
+  - @remirror/extension-bold@1.0.0-next.13
+  - @remirror/extension-code@1.0.0-next.13
+  - @remirror/extension-code-block@1.0.0-next.13
+  - @remirror/extension-hard-break@1.0.0-next.13
+  - @remirror/extension-heading@1.0.0-next.13
+  - @remirror/extension-horizontal-rule@1.0.0-next.13
+  - @remirror/extension-italic@1.0.0-next.13
+  - @remirror/extension-link@1.0.0-next.13
+  - @remirror/extension-search@1.0.0-next.13
+  - @remirror/extension-strike@1.0.0-next.13
+  - @remirror/extension-underline@1.0.0-next.13
+  - @remirror/preset-list@1.0.0-next.13
+  - @remirror/extension-bidi@1.0.0-next.13
+  - @remirror/extension-drop-cursor@1.0.0-next.13
+  - @remirror/extension-epic-mode@1.0.0-next.13
+  - @remirror/extension-gap-cursor@1.0.0-next.13
+  - @remirror/extension-image@1.0.0-next.13
+  - @remirror/extension-trailing-node@1.0.0-next.13
+  - @remirror/preset-core@1.0.0-next.13
+  - @remirror/preset-embed@1.0.0-next.13
+  - @remirror/preset-table@1.0.0-next.13
+
 ## 1.0.0-next.12
 
 > 2020-07-28

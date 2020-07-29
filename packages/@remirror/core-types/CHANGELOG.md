@@ -1,5 +1,51 @@
 # @remirror/core-types
 
+## 1.0.0-next.13
+
+> 2020-07-29
+
+### Patch Changes
+
+- e45706e5: Add new `extensionDecorator` function which augments the static properties of an
+  `Extension` constructor when used as a decorator.
+
+  The following code will add a decorator to the extension.
+
+  ```ts
+  import { PlainExtension, ExtensionPriority, extensionDecorator } from 'remirror/core';
+
+  interface ExampleOptions {
+    color?: string;
+
+    /**
+     * This option is annotated as a handler and needs a static property.
+     **/
+    onChange?: Handler<() => void>;
+  }
+
+  @extensionDecorator<ExampleOptions>({
+    defaultOptions: { color: 'red' },
+    defaultPriority: ExtensionPriority.Lowest,
+    handlerKeys: ['onChange'],
+  })
+  class ExampleExtension extends PlainExtension<ExampleOptions> {
+    get name() {
+      return 'example' as const;
+    }
+  }
+  ```
+
+  The extension decorator updates the static properties of the extension. If you prefer not to use
+  decorators it can also be called as a function. The `Extension` constructor is mutated by the
+  function call and does not need to be returned.
+
+  ```ts
+  extensionDecorator({ defaultSettings: { color: 'red' } })(ExampleExtension);
+  ```
+
+- Updated dependencies [92342ab0]
+  - @remirror/core-constants@1.0.0-next.13
+
 ## 1.0.0-next.6
 
 > 2020-07-20
