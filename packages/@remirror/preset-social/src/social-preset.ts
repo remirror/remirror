@@ -93,7 +93,7 @@ export class SocialPreset extends Preset<SocialOptions> {
     const autoLinkExtension = new AutoLinkExtension({
       defaultProtocol,
       urlRegex,
-      priority: ExtensionPriority.Medium,
+      priority: ExtensionPriority.Lowest,
     });
     autoLinkExtension.addHandler('onUrlUpdate', this.options.onUrlUpdate);
 
@@ -102,7 +102,6 @@ export class SocialPreset extends Preset<SocialOptions> {
       defaultEmoji,
       maxResults,
       suggestionCharacter,
-      priority: ExtensionPriority.Medium,
       extraAttributes: { role: { default: 'presentation' } },
     });
     emojiExtension.addHandler('onChange', this.options.onChangeEmoji);
@@ -127,7 +126,6 @@ export class SocialPreset extends Preset<SocialOptions> {
       mentionTag,
       noDecorations,
       suggestTag,
-      priority: ExtensionPriority.Medium,
       extraAttributes: {
         href: { default: null },
         role: 'presentation',
