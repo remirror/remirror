@@ -137,6 +137,23 @@ describe('suggestions', () => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('😃👍')));
       });
   });
+
+  it('does not suggest emoji mid-word', () => {
+    const {
+      nodes: { doc, p },
+      add,
+    } = create();
+
+    add(doc(p('a<cursor>')))
+      .insertText(':')
+      .callback(() => {
+        expect(onChange).not.toHaveBeenCalled();
+      })
+      .press('Enter')
+      .callback((content) => {
+        expect(content.state.doc).toEqualRemirrorDocument(doc(p('a:'), p('')));
+      });
+  });
 });
 
 describe('commands', () => {
@@ -170,13 +187,11 @@ describe('commands', () => {
     add(doc(p('<cursor>')))
       .callback(({ commands, view }) => {
         commands.insertEmojiByName('heart');
-
         expect(view.state.doc).toEqualRemirrorDocument(doc(p('❤️')));
       })
       .overwrite(doc(p('abcde')))
       .callback(({ commands, view }) => {
         commands.insertEmojiByName('heart', { from: 3, to: 4 });
-
         expect(view.state.doc).toEqualRemirrorDocument(doc(p('ab❤️de')));
       });
   });

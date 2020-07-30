@@ -201,7 +201,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
   createSuggestions(): Suggestion {
     return {
       noDecorations: true,
-      invalidPrefixCharacters: escapeStringRegex(this.options.suggestionCharacter),
+      invalidPrefixCharacters: `${escapeStringRegex(this.options.suggestionCharacter)}|\\w`,
       char: this.options.suggestionCharacter,
       name: this.name,
       appendText: '',
