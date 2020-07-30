@@ -1,3 +1,4 @@
+import { fireEvent } from '@testing-library/dom';
 import { act, renderHook } from '@testing-library/react-hooks';
 import { RemirrorTestChain } from 'jest-remirror';
 import React, { FC } from 'react';
@@ -10,6 +11,8 @@ import { MentionChangeParameter, TagData, UserData } from '../../social-types';
 import { socialManagerArgs } from '../../social-utils';
 import { useSocialRemirror } from '../use-social';
 import { useSocialMention } from '../use-social-mention';
+
+jest.useFakeTimers();
 
 describe('useSocialMention', () => {
   it('should respond to mention changes', () => {
@@ -26,6 +29,7 @@ describe('useSocialMention', () => {
       index: 0,
       matcher: undefined,
       command: undefined,
+      show: true,
     });
 
     act(() => {
@@ -34,6 +38,40 @@ describe('useSocialMention', () => {
 
     expect(result.current.command).toBeFunction();
     expect(getUsers().length > 0).toBeTrue();
+  });
+
+  it('should `show: false` when losing focus', () => {
+    const { chain, Wrapper, getTags, getUsers, onChange } = createChain();
+    const { result } = renderHook(
+      () => useSocialMention({ users: getUsers(), tags: getTags(), onMentionChange: onChange }),
+      {
+        wrapper: Wrapper,
+      },
+    );
+
+    act(() => {
+      fireEvent.blur(chain.dom);
+      jest.runAllTimers();
+    });
+
+    expect(result.current).toEqual({
+      index: 0,
+      matcher: undefined,
+      command: undefined,
+      show: false,
+    });
+
+    act(() => {
+      fireEvent.focus(chain.dom);
+      jest.runAllTimers();
+    });
+
+    expect(result.current).toEqual({
+      index: 0,
+      matcher: undefined,
+      command: undefined,
+      show: true,
+    });
   });
 
   it('should correctly add the mention when the command is called', () => {
@@ -125,6 +163,7 @@ describe('useSocialMention', () => {
       index: 0,
       matcher: undefined,
       command: undefined,
+      show: true,
     });
   });
 

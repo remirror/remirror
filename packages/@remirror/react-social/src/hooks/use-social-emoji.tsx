@@ -12,6 +12,7 @@ import {
 import { PartialDispatch, useExtension, useSetState } from '@remirror/react';
 
 import { indexFromArrowPress } from '../social-utils';
+import { useEditorEvents } from './use-editor-events';
 
 export interface SocialEmojiState {
   /**
@@ -34,9 +35,17 @@ export interface SocialEmojiState {
    * @default undefined
    */
   command?: EmojiSuggestCommand;
+
+  /**
+   * Whether the mention popup should show if available. This can be used to
+   * hide the pop when the editor loses focus.
+   *
+   * @defaultValue `true`
+   */
+  show: boolean;
 }
 
-const initialState: SocialEmojiState = { list: [], command: undefined, index: 0 };
+const initialState: SocialEmojiState = { list: [], command: undefined, index: 0, show: true };
 
 interface EmojiHookParameter extends SocialEmojiState {
   setState: PartialDispatch<SocialEmojiState>;
@@ -59,11 +68,7 @@ function useEmojiChangeHandler(setState: PartialDispatch<SocialEmojiState>) {
   );
 
   const onExit: EmojiSuggestionExitHandler = useCallback(() => {
-    setState({
-      list: [],
-      index: 0,
-      command: undefined,
-    });
+    setState(initialState);
   }, [setState]);
 
   useExtension(
@@ -177,6 +182,24 @@ function useEmojiState() {
  */
 export function useSocialEmoji(): SocialEmojiState {
   const state = useEmojiState();
+  const { setState } = state;
+
+  useEditorEvents(
+    'blur',
+    useCallback(() => {
+      setState({ show: false });
+
+      return false;
+    }, [setState]),
+  );
+
+  useEditorEvents(
+    'focus',
+    useCallback(() => {
+      setState({ show: true });
+      return false;
+    }, [setState]),
+  );
 
   useEmojiChangeHandler(state.setState);
   useEmojiKeyBindings(state);

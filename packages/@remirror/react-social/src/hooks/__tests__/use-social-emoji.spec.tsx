@@ -1,3 +1,4 @@
+import { fireEvent } from '@testing-library/dom';
 import { act, renderHook } from '@testing-library/react-hooks';
 import { RemirrorTestChain } from 'jest-remirror';
 import React, { FC } from 'react';
@@ -8,6 +9,8 @@ import { SocialProvider } from '../../components/social-provider';
 import { socialManagerArgs } from '../../social-utils';
 import { useSocialRemirror } from '../use-social';
 import { useSocialEmoji } from '../use-social-emoji';
+
+jest.useFakeTimers();
 
 function createChain() {
   const manager = createReactManager(...socialManagerArgs([]));
@@ -54,6 +57,7 @@ describe('useSocialEmoji', () => {
       list: [],
       command: undefined,
       index: 0,
+      show: true,
     });
 
     act(() => {
@@ -62,6 +66,37 @@ describe('useSocialEmoji', () => {
 
     expect(result.current.command).toBeFunction();
     expect(result.current.list.length > 0).toBeTrue();
+  });
+
+  it('should `show: false` when losing focus', () => {
+    const { chain, Wrapper } = createChain();
+    const { result } = renderHook(() => useSocialEmoji(), {
+      wrapper: Wrapper,
+    });
+
+    act(() => {
+      fireEvent.blur(chain.dom);
+      jest.runAllTimers();
+    });
+
+    expect(result.current).toEqual({
+      list: [],
+      command: undefined,
+      index: 0,
+      show: false,
+    });
+
+    act(() => {
+      fireEvent.focus(chain.dom);
+      jest.runAllTimers();
+    });
+
+    expect(result.current).toEqual({
+      list: [],
+      command: undefined,
+      index: 0,
+      show: true,
+    });
   });
 
   it('should correctly add the emoji when the command is called', () => {
@@ -105,6 +140,7 @@ describe('useSocialEmoji', () => {
       list: [],
       command: undefined,
       index: 0,
+      show: true,
     });
   });
 

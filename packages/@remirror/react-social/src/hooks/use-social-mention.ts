@@ -13,6 +13,7 @@ import { useExtension, useSetState } from '@remirror/react';
 
 import { MatchName, MentionChangeParameter, TagData, UserData } from '../social-types';
 import { getMentionLabel, indexFromArrowPress } from '../social-utils';
+import { useEditorEvents } from './use-editor-events';
 
 export interface SocialMentionProps {
   /**
@@ -52,6 +53,14 @@ export interface SocialMentionState {
    * @default undefined
    */
   command?: MentionExtensionSuggestCommand;
+
+  /**
+   * Whether the mention popup should show if available. This can be used to
+   * hide the pop when the editor loses focus.
+   *
+   * @defaultValue `true`
+   */
+  show: boolean;
 }
 
 type UseMentionState = ReturnType<typeof useMentionState>;
@@ -215,7 +224,7 @@ function useMentionHandlers(props: SocialMentionProps, state: UseMentionState) {
         appendText: '',
       });
 
-      setState({ index: 0, matcher: undefined, command: undefined });
+      setState(initialMentionState);
       props.onMentionChange();
     },
     [props, setState],
@@ -241,6 +250,7 @@ const initialMentionState: SocialMentionState = {
   index: 0,
   matcher: undefined,
   command: undefined,
+  show: true,
 };
 
 function useMentionState() {
@@ -251,12 +261,29 @@ function useMentionState() {
 
 /**
  * A hook that provides the state for social mentions that responds to
- * keybindings and keypresses from the user. This is used by the
+ * keybindings and key-presses from the user. This is used by the
  * `SocialMentionDropdown` component and can be used by you for a customised
  * component.
  */
 export function useSocialMention(props: SocialMentionProps): SocialMentionState {
   const state = useMentionState();
+  const { setState } = state;
+
+  useEditorEvents(
+    'blur',
+    useCallback(() => {
+      setState({ show: false });
+      return false;
+    }, [setState]),
+  );
+
+  useEditorEvents(
+    'focus',
+    useCallback(() => {
+      setState({ show: true });
+      return false;
+    }, [setState]),
+  );
 
   useMentionHandlers(props, state);
   useMentionKeyBindings(props, state);
