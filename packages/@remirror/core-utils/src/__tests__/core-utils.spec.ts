@@ -12,12 +12,20 @@ import {
   table,
   tableRow,
 } from 'jest-prosemirror';
+import { renderEditor } from 'jest-remirror';
 
 import { NodeMatch } from '@remirror/core-types';
 import { TextSelection } from '@remirror/pm/state';
-import { docNodeBasicJSON } from '@remirror/testing';
+import {
+  BlockquoteExtension,
+  BoldExtension,
+  docNodeBasicJSON,
+  HeadingExtension,
+  ItalicExtension,
+} from '@remirror/testing';
 
 import {
+  areSchemaCompatible,
   atDocEnd as atDocumentEnd,
   atDocStart as atDocumentStart,
   canInsertNode,
@@ -28,15 +36,17 @@ import {
   getMarkAttributes,
   getMarkRange,
   getNearestNonTextNode,
+  getRemirrorJSON,
   getSelectedWord,
   isDocNode as isDocumentNode,
   isDocNodeEmpty as isDocumentNodeEmpty,
   isElementDomNode,
   isMarkActive,
   isNodeSelection,
-  isObjectNode,
   isProsemirrorNode,
+  isRemirrorJSON,
   isSelection,
+  isStateEqual,
   isTextDomNode,
   isTextSelection,
   nodeNameMatchesList,
@@ -387,18 +397,18 @@ describe('isDocNode', () => {
   });
 });
 
-describe('isObjectNode', () => {
+describe('isRemirrorJSON', () => {
   it('returns true for doc objects', () => {
-    expect(isObjectNode({ type: 'doc', content: [{ type: 'paragraph' }] })).toBeTrue();
+    expect(isRemirrorJSON({ type: 'doc', content: [{ type: 'paragraph' }] })).toBeTrue();
   });
 
   it('returns false for non-doc nodes', () => {
-    expect(isObjectNode({ type: 'paragraph' })).toBeFalse();
+    expect(isRemirrorJSON({ type: 'paragraph' })).toBeFalse();
   });
 
   it('return false when doc node missing content array', () => {
-    expect(isObjectNode({ type: 'doc' })).toBeFalse();
-    expect(isObjectNode({ type: 'doc', content: {} })).toBeFalse();
+    expect(isRemirrorJSON({ type: 'doc' })).toBeFalse();
+    expect(isRemirrorJSON({ type: 'doc', content: {} })).toBeFalse();
   });
 });
 
@@ -461,5 +471,78 @@ describe('fromHTML', () => {
     expect(
       fromHtml({ content, schema: testSchema, doc: domino.createDocument() }),
     ).toEqualProsemirrorNode(doc(p('Hello')));
+  });
+});
+
+test('getRemirrorJSON', () => {
+  const { state } = createEditor(doc(p('Hello')));
+
+  expect(getRemirrorJSON(state)).toEqual({
+    type: 'doc',
+    content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Hello' }] }],
+  });
+});
+
+describe('isStateEqual', () => {
+  it('matches identical states', () => {
+    const { state } = createEditor(doc(p('Hello')));
+    expect(isStateEqual(state, state)).toBeTrue();
+  });
+
+  it('ignores selection by default', () => {
+    const { state: a } = createEditor(doc(p('<cursor>Hello')));
+    const { state: b } = createEditor(doc(p('Hello<cursor>')));
+    expect(isStateEqual(a, b)).toBeTrue();
+  });
+
+  it('can fail for different selection', () => {
+    const { state: a } = createEditor(doc(p('<cursor>Hello')));
+    const { state: b } = createEditor(doc(p('Hello<cursor>')));
+    expect(isStateEqual(a, b, { checkSelection: true })).toBeFalse();
+  });
+
+  it('returns false with non identical schema', () => {
+    const a = renderEditor([]);
+    const b = renderEditor([]);
+    a.add(a.nodes.doc(a.nodes.p('Hello')));
+    b.add(b.nodes.doc(b.nodes.p('Hello')));
+    expect(isStateEqual(a.state, b.state)).toBeFalse();
+  });
+});
+
+describe('areSchemaCompatible', () => {
+  it('is true for identical schema', () => {
+    const { schema } = renderEditor([]);
+    expect(areSchemaCompatible(schema, schema)).toBe(true);
+  });
+
+  it('is true for similar schema', () => {
+    const { schema: a } = renderEditor([]);
+    const { schema: b } = renderEditor([]);
+    expect(areSchemaCompatible(a, b)).toBe(true);
+  });
+
+  it('is false for schemas with different mark lengths', () => {
+    const { schema: a } = renderEditor([new BoldExtension()]);
+    const { schema: b } = renderEditor([]);
+    expect(areSchemaCompatible(a, b)).toBe(false);
+  });
+
+  it('is false schemas with different marks', () => {
+    const { schema: a } = renderEditor([new BoldExtension()]);
+    const { schema: b } = renderEditor([new ItalicExtension()]);
+    expect(areSchemaCompatible(a, b)).toBe(false);
+  });
+
+  it('is false schemas with different node lengths', () => {
+    const { schema: a } = renderEditor([new BlockquoteExtension()]);
+    const { schema: b } = renderEditor([]);
+    expect(areSchemaCompatible(a, b)).toBe(false);
+  });
+
+  it('is false schemas with different nodes', () => {
+    const { schema: a } = renderEditor([new BlockquoteExtension()]);
+    const { schema: b } = renderEditor([new HeadingExtension()]);
+    expect(areSchemaCompatible(a, b)).toBe(false);
   });
 });

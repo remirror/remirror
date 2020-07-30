@@ -10,6 +10,7 @@ import {
   isNumber,
   isObject,
   isString,
+  keys,
   RemirrorError,
 } from '@remirror/core-helpers';
 import {
@@ -781,7 +782,7 @@ export function isDocNode(node: ProsemirrorNode | null | undefined, schema?: Edi
  *
  * @public
  */
-export function isObjectNode(value: unknown): value is RemirrorJSON {
+export function isRemirrorJSON(value: unknown): value is RemirrorJSON {
   return isObject(value) && value.type === 'doc' && Array.isArray(value.content);
 }
 
@@ -899,7 +900,7 @@ export function createDocumentNode(parameter: CreateDocumentNodeParameter): Pros
     return content;
   }
 
-  if (isObjectNode(content)) {
+  if (isRemirrorJSON(content)) {
     try {
       return schema.nodeFromJSON(content);
     } catch (error) {
@@ -992,4 +993,80 @@ export function fromHtml(parameter: FromStringParameter): ProsemirrorNode {
   element.innerHTML = content.trim();
 
   return DOMParser.fromSchema(schema).parse(element);
+}
+
+/**
+ * A wrapper around `state.doc.toJSON` which returns the state as a
+ * `RemirrorJSON` object.
+ */
+export function getRemirrorJSON(state: EditorState) {
+  return state.doc.toJSON() as RemirrorJSON;
+}
+
+interface IsStateEqualOptions {
+  /**
+   * Whether to compare the selection of the two states.
+   *
+   * @defaultValue `false`
+   */
+  checkSelection?: boolean;
+}
+
+/**
+ * Check if two states are equal.
+ */
+export function isStateEqual(
+  stateA: EditorState,
+  stateB: EditorState,
+  options: IsStateEqualOptions = {},
+) {
+  if (stateA === stateB) {
+    return true;
+  }
+
+  if (!stateA.doc.eq(stateB.doc)) {
+    return false;
+  }
+
+  if (options.checkSelection && !stateA.selection.eq(stateB.selection)) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ * Check that the nodes and marks present on schemaA are also present on schemaB.
+ */
+export function areSchemaCompatible(schemaA: EditorSchema, schemaB: EditorSchema) {
+  if (schemaA === schemaB) {
+    return true;
+  }
+
+  const marksA = keys(schemaA.marks);
+  const marksB = keys(schemaB.marks);
+  const nodesA = keys(schemaA.nodes);
+  const nodesB = keys(schemaB.nodes);
+
+  if (marksA.length !== marksB.length || nodesA.length !== nodesB.length) {
+    return false;
+  }
+
+  for (const mark of marksA) {
+    // No reverse check needed since we know the keys are unique and the lengths
+    // are identical.
+    if (!marksB.includes(mark)) {
+      return false;
+    }
+  }
+
+  for (const node of nodesA) {
+    // No reverse check needed since we know the keys are unique and the lengths
+    // are identical.
+    if (!nodesB.includes(node)) {
+      return false;
+    }
+  }
+
+  return true;
 }
