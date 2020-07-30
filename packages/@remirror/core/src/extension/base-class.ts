@@ -45,6 +45,8 @@ interface BaseClassConstructorParameter<DefaultStaticOptions extends Shape = Emp
   defaultOptions: DefaultStaticOptions;
 }
 
+const IGNORE = '__IGNORE__';
+
 export abstract class BaseClass<
   Options extends ValidOptions = EmptyShape,
   DefaultStaticOptions extends Shape = EmptyShape
@@ -65,6 +67,13 @@ export abstract class BaseClass<
    * The event handler keys.
    */
   static readonly handlerKeys: string[] = [];
+
+  /**
+   * Customize the way the handler should behave.
+   */
+  static handlerKeyOptions: Partial<
+    Record<string, HandlerKeyOptions> & { __ALL__?: HandlerKeyOptions }
+  > = {};
 
   /**
    * The custom keys.
@@ -354,9 +363,29 @@ export abstract class BaseClass<
 
     for (const key of this.constructor.handlerKeys as HandlerKeyList<Options>) {
       methods[key] = (...args: any[]) => {
-        this.#mappedHandlers[key].forEach((handler) =>
-          ((handler as unknown) as AnyFunction)(...args),
-        );
+        let returnValue: unknown;
+
+        for (const handler of this.#mappedHandlers[key]) {
+          returnValue = ((handler as unknown) as AnyFunction)(...args);
+          const { handlerKeyOptions } = this.constructor;
+          const { __ALL__ } = handlerKeyOptions;
+          const customization = handlerKeyOptions[key];
+
+          // Check if the method should cause an early return, based on the
+          // return value.
+          if (
+            (__ALL__ &&
+              __ALL__.earlyReturnValue !== IGNORE &&
+              returnValue === __ALL__.earlyReturnValue) ||
+            (customization &&
+              customization.earlyReturnValue !== IGNORE &&
+              returnValue === customization.earlyReturnValue)
+          ) {
+            return returnValue;
+          }
+        }
+
+        return returnValue;
       };
     }
 
@@ -435,6 +464,15 @@ export type AddHandlers<Options extends ValidOptions> = (
   parameter: Partial<GetHandler<Options>>,
 ) => Dispose;
 
+export interface HandlerKeyOptions {
+  /**
+   * When this value is encountered the handler will exit early.
+   *
+   * Set the value to `'__IGNORE__'` to ignore it
+   */
+  earlyReturnValue?: unknown;
+}
+
 export interface BaseClass<
   Options extends ValidOptions,
   DefaultStaticOptions extends Shape = EmptyShape
@@ -495,6 +533,13 @@ export interface BaseClassConstructor<
    * work is done for you.
    */
   readonly handlerKeys: string[];
+
+  /**
+   * Customize the way the handler should behave.
+   */
+  readonly handlerKeyOptions: Partial<
+    Record<string, HandlerKeyOptions> & { __ALL__?: HandlerKeyOptions }
+  >;
 
   /**
    * A list of the custom keys in the extension or preset options.

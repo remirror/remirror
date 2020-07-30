@@ -6,6 +6,7 @@ import {
   GetCustomHandler,
   GetHandler,
   GetStatic,
+  HandlerKey,
   HandlerKeyList,
   IfEmpty,
   IfHasRequiredProperties,
@@ -19,6 +20,7 @@ import {
   DefaultExtensionOptions,
   ExtensionConstructor,
 } from './extension';
+import { HandlerKeyOptions } from './extension/base-class';
 import { AnyPresetConstructor, DefaultPresetOptions, PresetConstructor } from './preset';
 
 interface DefaultOptionsParameter<Options extends Shape = EmptyShape> {
@@ -53,6 +55,11 @@ interface HandlerKeysParameter<Options extends Shape = EmptyShape> {
    * The list of all keys which are event handlers.
    */
   handlerKeys: HandlerKeyList<Options>;
+
+  /**
+   * Customize how the handler should work.
+   */
+  handlerKeyOptions?: Partial<Record<HandlerKey<Options> | '__ALL__', HandlerKeyOptions>>;
 }
 
 interface CustomHandlerKeysParameter<Options extends Shape = EmptyShape> {
@@ -95,6 +102,7 @@ export function extensionDecorator<Options extends Shape = EmptyShape>(
       handlerKeys,
       staticKeys,
       defaultPriority,
+      handlerKeyOptions,
       ...rest
     } = options;
 
@@ -106,6 +114,10 @@ export function extensionDecorator<Options extends Shape = EmptyShape>(
 
     if (defaultPriority) {
       Constructor.defaultPriority = defaultPriority;
+    }
+
+    if (handlerKeyOptions) {
+      Constructor.handlerKeyOptions = handlerKeyOptions;
     }
 
     Constructor.staticKeys = staticKeys ?? [];
