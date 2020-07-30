@@ -6,7 +6,7 @@ paste it into the relevant packages folder.
 
 When creating your own extension or preset you can follow these steps.
 
-1. Copy `support/templates/extension-template` to `package/@remirror/extension-<name>`.
+1. Copy `support/templates/extension-template` to `packages/@remirror/extension-<name>`.
 2. Rename `template`, `Template` and `TEMPLATE` in the new package to `<name>`, `<Name>` and
    `<NAME>`.
 3. Replace `TEMPLATE_DESCRIPTION` with a suitable description.
