@@ -24,6 +24,10 @@ export const editorStyles = css`
     &[contenteditable='true'] {
       white-space: pre-wrap;
     }
+
+    hr {
+      border-color: #2e2e2e;
+    }
   }
 
   .ProseMirror-hideselection {

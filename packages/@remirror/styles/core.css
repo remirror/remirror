@@ -27,6 +27,10 @@
   white-space: pre-wrap;
 }
 
+.remirror-editor.ProseMirror hr {
+  border-color: #2e2e2e;
+}
+
 .remirror-editor .ProseMirror-hideselection *::-moz-selection {
   background: transparent;
 }
