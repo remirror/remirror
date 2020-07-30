@@ -1,6 +1,6 @@
 import { cx } from 'linaria';
 import { Type, useMultishift } from 'multishift';
-import React, { ComponentType, useCallback } from 'react';
+import React, { ComponentType, useCallback, useState } from 'react';
 
 import { useI18n } from '@remirror/react';
 
@@ -26,7 +26,8 @@ import { TagData, UserData } from '../social-types';
 export const SocialMentionComponent = (props: SocialMentionProps) => {
   const state = useSocialMention(props);
   const { focus } = useSocialRemirror();
-  const { command, matcher, index } = state;
+  const { command, matcher, index, show } = state;
+  const [isClicking, setIsClicking] = useState(false);
 
   const createClickHandler = useCallback(
     (id: string, label: string) => () => {
@@ -43,13 +44,19 @@ export const SocialMentionComponent = (props: SocialMentionProps) => {
     [command, focus],
   );
 
-  if (!matcher || !command) {
+  const onMouseDown = useCallback(() => {
+    setIsClicking(true);
+    setTimeout(() => setIsClicking(false), 2000);
+  }, []);
+
+  if (!matcher || !command || !(show || isClicking)) {
     return null;
   }
 
   if (matcher === 'at') {
     return (
       <MentionDropdown
+        onMouseDown={onMouseDown}
         activeIndex={index}
         items={props.users}
         getId={(item) => item.username}
@@ -62,6 +69,7 @@ export const SocialMentionComponent = (props: SocialMentionProps) => {
 
   return (
     <MentionDropdown
+      onMouseDown={onMouseDown}
       activeIndex={index}
       items={props.tags}
       getId={(item) => item.tag}
@@ -73,6 +81,7 @@ export const SocialMentionComponent = (props: SocialMentionProps) => {
 };
 
 interface MentionDropdownProps<Item> {
+  onMouseDown: () => void;
   items: Item[];
   getId: (item: Item) => string;
   getLabel: (item: Item) => string;
@@ -82,7 +91,7 @@ interface MentionDropdownProps<Item> {
 }
 
 function MentionDropdown<Item>(props: MentionDropdownProps<Item>) {
-  const { items, getId, getLabel, Component, createClickHandler, activeIndex } = props;
+  const { items, getId, getLabel, Component, createClickHandler, activeIndex, onMouseDown } = props;
 
   const { getMenuProps, getItemProps, itemHighlightedAtIndex, hoveredIndex } = useMultishift({
     highlightedIndexes: [activeIndex],
@@ -92,7 +101,7 @@ function MentionDropdown<Item>(props: MentionDropdownProps<Item>) {
   });
 
   return (
-    <div className={mentionSuggestionsDropdownWrapperStyles} {...getMenuProps()}>
+    <div className={mentionSuggestionsDropdownWrapperStyles} {...getMenuProps({ onMouseDown })}>
       {items.map((item, index) => {
         const isHighlighted = itemHighlightedAtIndex(index);
         const id = getId(item);

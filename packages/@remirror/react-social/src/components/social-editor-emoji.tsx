@@ -1,6 +1,6 @@
 import { css, cx } from 'linaria';
 import { Type, useMultishift } from 'multishift';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { usePositioner } from '@remirror/react';
 
@@ -12,9 +12,10 @@ import {
 } from '../social-styles';
 
 const EmojiDropdown = (props: SocialEmojiState) => {
-  const { index, command, list } = props;
+  const { index, command, list, show } = props;
   const { focus } = useSocialRemirror();
   const { ref, top, left } = usePositioner('popupMenu');
+  const [isClicking, setIsClicking] = useState(false);
 
   const { getMenuProps, getItemProps, itemHighlightedAtIndex, hoveredIndex } = useMultishift({
     highlightedIndexes: [index],
@@ -23,16 +24,22 @@ const EmojiDropdown = (props: SocialEmojiState) => {
     isOpen: true,
   });
 
+  const onMouseDown = useCallback(() => {
+    setIsClicking(true);
+    setTimeout(() => setIsClicking(false), 2000);
+  }, []);
+
   return (
     <div
-      {...getMenuProps({ ref })}
+      {...getMenuProps({ ref, onMouseDown })}
       className={emojiSuggestionsDropdownWrapperStyles}
       style={{
         top: top + 10,
         left,
       }}
     >
-      {command &&
+      {(show || isClicking) &&
+        command &&
         list.map((emoji, index) => {
           const isHighlighted = itemHighlightedAtIndex(index);
           const isHovered = index === hoveredIndex;
@@ -66,9 +73,9 @@ const EmojiDropdown = (props: SocialEmojiState) => {
  * This component renders the emoji suggestion dropdown for the user.
  */
 export const SocialEmojiComponent = () => {
-  const { index, list, command } = useSocialEmoji();
+  const { index, list, command, show } = useSocialEmoji();
 
-  return <EmojiDropdown list={list} index={index} command={command} />;
+  return <EmojiDropdown list={list} index={index} command={command} show={show} />;
 };
 
 const emojiSuggestionsItemName = css`
