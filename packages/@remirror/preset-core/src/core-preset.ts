@@ -24,12 +24,26 @@ export interface CorePresetOptions
     PositionerOptions,
     HistoryOptions {
   /**
+   * You can exclude one or multiple extensions from CorePreset by passing their
+   * extension names in `excludeExtensions`.
+   *
    * When using the `yjs` extension it is important to exclude the history
    * extension to prevent issues with collaborative editing mode.
    *
-   * @defaultValue `false`
+   * @defaultValue `[]`
    */
-  excludeHistory?: Static<boolean>;
+  excludeExtensions?: Static<
+    Array<
+      | 'doc'
+      | 'paragraph'
+      | 'text'
+      | 'positioner'
+      | 'history'
+      | 'gapCursor'
+      | 'baseKeymap'
+      | 'events'
+    >
+  >;
 }
 
 /**
@@ -49,11 +63,11 @@ export interface CorePresetOptions
     ...BaseKeymapExtension.defaultOptions,
     ...ParagraphExtension.defaultOptions,
     ...HistoryExtension.defaultOptions,
-    excludeHistory: false,
+    excludeExtensions: [],
   },
   customHandlerKeys: ['keymap', 'positionerHandler'],
   handlerKeys: ['onRedo', 'onUndo'],
-  staticKeys: ['content', 'depth', 'newGroupDelay', 'excludeHistory'],
+  staticKeys: ['content', 'depth', 'newGroupDelay', 'excludeExtensions'],
 })
 export class CorePreset extends Preset<CorePresetOptions> {
   get name() {
@@ -104,25 +118,29 @@ export class CorePreset extends Preset<CorePresetOptions> {
       getDispatch,
       getState,
       newGroupDelay,
+      excludeExtensions,
     } = this.options;
 
-    const eventsExtension = new EventsExtension();
-    const gapCursorExtension = new GapCursorExtension();
-    const docExtension = new DocExtension({ content });
-    const textExtension = new TextExtension();
-    const paragraphExtension = new ParagraphExtension();
-    const positionerExtension = new PositionerExtension();
-    const baseKeymapExtension = new BaseKeymapExtension({
-      defaultBindingMethod,
-      excludeBaseKeymap,
-      selectParentNodeOnEscape,
-      undoInputRuleOnBackspace,
-      priority: ExtensionPriority.Low,
-    });
+    type ExcludeExtensionKey = typeof excludeExtensions[number];
+    const excludeMap: Partial<Record<ExcludeExtensionKey, boolean>> = {};
 
-    const withHistoryExtension: HistoryExtension[] = [];
+    for (const name of excludeExtensions || []) {
+      excludeMap[name] = true;
+    }
 
-    if (!this.options.excludeHistory) {
+    type CoreExtension =
+      | HistoryExtension
+      | GapCursorExtension
+      | DocExtension
+      | TextExtension
+      | ParagraphExtension
+      | PositionerExtension
+      | EventsExtension
+      | BaseKeymapExtension;
+
+    const coreExtensions: CoreExtension[] = [];
+
+    if (!excludeMap['history']) {
       const historyExtension = new HistoryExtension({
         depth,
         getDispatch,
@@ -131,19 +149,45 @@ export class CorePreset extends Preset<CorePresetOptions> {
       });
       historyExtension.addHandler('onRedo', this.options.onRedo);
       historyExtension.addHandler('onUndo', this.options.onUndo);
-
-      withHistoryExtension.push(historyExtension);
+      coreExtensions.push(historyExtension);
     }
 
-    return [
-      ...withHistoryExtension,
-      docExtension,
-      textExtension,
-      paragraphExtension,
-      positionerExtension,
-      baseKeymapExtension,
-      gapCursorExtension,
-      eventsExtension,
-    ];
+    if (!excludeMap['doc']) {
+      coreExtensions.push(new DocExtension({ content }));
+    }
+
+    if (!excludeMap['text']) {
+      coreExtensions.push(new TextExtension());
+    }
+
+    if (!excludeMap['paragraph']) {
+      coreExtensions.push(new ParagraphExtension());
+    }
+
+    if (!excludeMap['positioner']) {
+      coreExtensions.push(new PositionerExtension());
+    }
+
+    if (!excludeMap['baseKeymap']) {
+      coreExtensions.push(
+        new BaseKeymapExtension({
+          defaultBindingMethod,
+          excludeBaseKeymap,
+          selectParentNodeOnEscape,
+          undoInputRuleOnBackspace,
+          priority: ExtensionPriority.Low,
+        }),
+      );
+    }
+
+    if (!excludeMap['gapCursor']) {
+      coreExtensions.push(new GapCursorExtension());
+    }
+
+    if (!excludeMap['events']) {
+      coreExtensions.push(new EventsExtension());
+    }
+
+    return coreExtensions;
   }
 }
