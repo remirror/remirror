@@ -536,6 +536,18 @@ importers:
       '@babel/runtime': ^7.10.5
       '@remirror/core': ^1.0.0-next.13
       '@remirror/pm': ^1.0.0-next.4
+  packages/@remirror/extension-events:
+    dependencies:
+      '@babel/runtime': 7.10.5
+    devDependencies:
+      '@remirror/core': 'link:../core'
+      '@remirror/pm': 'link:../pm'
+      '@testing-library/dom': 7.21.6
+    specifiers:
+      '@babel/runtime': ^7.10.5
+      '@remirror/core': ^1.0.0-next.13
+      '@remirror/pm': ^1.0.0-next.4
+      '@testing-library/dom': ^7.21.6
   packages/@remirror/extension-gap-cursor:
     dependencies:
       '@babel/runtime': 7.10.5
@@ -900,6 +912,7 @@ importers:
       '@babel/runtime': 7.10.5
       '@remirror/extension-base-keymap': 'link:../extension-base-keymap'
       '@remirror/extension-doc': 'link:../extension-doc'
+      '@remirror/extension-events': 'link:../extension-events'
       '@remirror/extension-gap-cursor': 'link:../extension-gap-cursor'
       '@remirror/extension-history': 'link:../extension-history'
       '@remirror/extension-paragraph': 'link:../extension-paragraph'
@@ -913,6 +926,7 @@ importers:
       '@remirror/core': ^1.0.0-next.13
       '@remirror/extension-base-keymap': ^1.0.0-next.13
       '@remirror/extension-doc': ^1.0.0-next.13
+      '@remirror/extension-events': ^0.0.0
       '@remirror/extension-gap-cursor': ^1.0.0-next.13
       '@remirror/extension-history': ^1.0.0-next.13
       '@remirror/extension-paragraph': ^1.0.0-next.13
@@ -1359,7 +1373,7 @@ importers:
       '@remirror/core-types': 'link:../@remirror/core-types'
       '@remirror/core-utils': 'link:../@remirror/core-utils'
       '@remirror/pm': 'link:../@remirror/pm'
-      '@testing-library/dom': 7.21.5
+      '@testing-library/dom': 7.21.6
       '@types/prosemirror-schema-basic': 1.0.1
       '@types/prosemirror-test-builder': 1.0.1
       chalk: 4.1.0
@@ -1377,7 +1391,7 @@ importers:
       '@remirror/core-types': ^1.0.0-next.13
       '@remirror/core-utils': ^1.0.0-next.12
       '@remirror/pm': ^1.0.0-next.4
-      '@testing-library/dom': ^7.21.5
+      '@testing-library/dom': ^7.21.6
       '@types/prosemirror-schema-basic': ^1.0.1
       '@types/prosemirror-test-builder': ^1.0.1
       chalk: ^4.1.0
@@ -1393,7 +1407,7 @@ importers:
       '@remirror/core': 'link:../@remirror/core'
       '@remirror/dom': 'link:../@remirror/dom'
       '@remirror/pm': 'link:../@remirror/pm'
-      '@testing-library/dom': 7.21.5
+      '@testing-library/dom': 7.21.6
       '@types/node': 14.0.26
       '@types/sanitize-html': 1.23.3
       jest-prosemirror: 'link:../jest-prosemirror'
@@ -1407,7 +1421,7 @@ importers:
       '@remirror/core': ^1.0.0-next.13
       '@remirror/dom': ^1.0.0-next.13
       '@remirror/pm': ^1.0.0-next.4
-      '@testing-library/dom': ^7.21.5
+      '@testing-library/dom': ^7.21.6
       '@types/node': ^14.0.26
       '@types/sanitize-html': ^1.23.3
       jest: ^26.1.0
@@ -1497,6 +1511,7 @@ importers:
       '@remirror/extension-drop-cursor': 'link:../@remirror/extension-drop-cursor'
       '@remirror/extension-emoji': 'link:../@remirror/extension-emoji'
       '@remirror/extension-epic-mode': 'link:../@remirror/extension-epic-mode'
+      '@remirror/extension-events': 'link:../@remirror/extension-events'
       '@remirror/extension-gap-cursor': 'link:../@remirror/extension-gap-cursor'
       '@remirror/extension-hard-break': 'link:../@remirror/extension-hard-break'
       '@remirror/extension-heading': 'link:../@remirror/extension-heading'
@@ -1557,6 +1572,7 @@ importers:
       '@remirror/extension-drop-cursor': ^1.0.0-next.13
       '@remirror/extension-emoji': ^1.0.0-next.13
       '@remirror/extension-epic-mode': ^1.0.0-next.13
+      '@remirror/extension-events': ^0.0.0
       '@remirror/extension-gap-cursor': ^1.0.0-next.13
       '@remirror/extension-hard-break': ^1.0.0-next.13
       '@remirror/extension-heading': ^1.0.0-next.13
@@ -6526,18 +6542,17 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-IXjKRTAH31nQ+mx6q3IPw85RTLul8VlWBm1rxURoxDt7JI0HPlAAfbtrKTdeq83XYCYO7HSHogyV+OsD+6FX0Q==
-  /@testing-library/dom/7.21.5:
+  /@testing-library/dom/7.21.6:
     dependencies:
       '@babel/runtime': 7.10.5
       '@types/aria-query': 4.2.0
       aria-query: 4.2.2
       dom-accessibility-api: 0.4.6
       pretty-format: 25.5.0
-    dev: false
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-zZqC5T/9Upjs0/3hyrYNpGxw75dr/bLLD27pUdb3WWJ50JHwutvnQ1FJNHbVth9f2hLzEnh7hBdZ9pD++8pJ8g==
+      integrity: sha512-Xj6AMM9Xb24NSeann91fmXFuyJEzZ1lpVgiaPiy/KY2pNX9y4OeDrEm2ZYZt6mfZgFSGZW0eEWpF7YfcvRq5LQ==
   /@testing-library/jest-dom/5.11.1:
     dependencies:
       '@babel/runtime': 7.10.5

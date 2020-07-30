@@ -8,6 +8,7 @@ import {
 } from '@remirror/core';
 import { BaseKeymapExtension, BaseKeymapOptions } from '@remirror/extension-base-keymap';
 import { DocExtension, DocOptions } from '@remirror/extension-doc';
+import { EventsExtension } from '@remirror/extension-events';
 import { GapCursorExtension } from '@remirror/extension-gap-cursor';
 import { HistoryExtension, HistoryOptions } from '@remirror/extension-history';
 import { ParagraphExtension } from '@remirror/extension-paragraph';
@@ -105,6 +106,7 @@ export class CorePreset extends Preset<CorePresetOptions> {
       newGroupDelay,
     } = this.options;
 
+    const eventsExtension = new EventsExtension();
     const gapCursorExtension = new GapCursorExtension();
     const docExtension = new DocExtension({ content });
     const textExtension = new TextExtension();
@@ -141,6 +143,7 @@ export class CorePreset extends Preset<CorePresetOptions> {
       positionerExtension,
       baseKeymapExtension,
       gapCursorExtension,
+      eventsExtension,
     ];
   }
 }

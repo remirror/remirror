@@ -1,0 +1,40 @@
+{
+  "name": "@remirror/extension-events",
+  "version": "0.0.0",
+  "description": "Manage your remirror editor dom events.",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/support/eventss/extension-events",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-events",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/extension-events.cjs.js",
+  "module": "dist/extension-events.esm.js",
+  "types": "dist/extension-events.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.10.5"
+  },
+  "devDependencies": {
+    "@remirror/core": "^1.0.0-next.13",
+    "@remirror/pm": "^1.0.0-next.4",
+    "@testing-library/dom": "^7.21.6"
+  },
+  "peerDependencies": {
+    "@remirror/core": "^1.0.0-next.13",
+    "@remirror/pm": "^1.0.0-next.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "5 KB"
+  }
+}

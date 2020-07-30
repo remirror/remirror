@@ -34,6 +34,7 @@
       "@remirror/extension-drop-cursor",
       "@remirror/extension-emoji",
       "@remirror/extension-epic-mode",
+      "@remirror/extension-events",
       "@remirror/extension-gap-cursor",
       "@remirror/extension-hard-break",
       "@remirror/extension-heading",
