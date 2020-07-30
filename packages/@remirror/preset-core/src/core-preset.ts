@@ -124,7 +124,7 @@ export class CorePreset extends Preset<CorePresetOptions> {
     type ExcludeExtensionKey = typeof excludeExtensions[number];
     const excludeMap: Partial<Record<ExcludeExtensionKey, boolean>> = {};
 
-    for (const name of excludeExtensions || []) {
+    for (const name of excludeExtensions ?? []) {
       excludeMap[name] = true;
     }
 
