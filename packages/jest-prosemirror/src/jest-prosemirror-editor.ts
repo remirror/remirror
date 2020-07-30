@@ -86,13 +86,16 @@ export function createEditor<Schema extends EditorSchema = EditorSchema>(
   options: CreateEditorOptions = object(),
 ) {
   const { plugins = [], rules = [], autoClean = true, ...editorOptions } = options;
-  const place = document.createElement('div');
-  document.body.append(place);
+  const element = document.createElement('div');
   const state = createState(taggedDocument, [...plugins, inputRules({ rules })]);
-  const view = new EditorView<Schema>(place, { state, ...editorOptions }) as TestEditorView<Schema>;
+  const view = new EditorView<Schema>(element, { state, ...editorOptions }) as TestEditorView<
+    Schema
+  >;
+
+  document.body.append(element);
 
   if (autoClean) {
-    cleanupItems.add([view, place]);
+    cleanupItems.add([view, element]);
   }
 
   return new ProsemirrorTestChain(view);
