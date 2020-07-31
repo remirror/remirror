@@ -61,7 +61,7 @@ export interface CorePresetOptions extends DocOptions, PositionerOptions, Histor
     ...HistoryExtension.defaultOptions,
     excludeExtensions: [],
   },
-  customHandlerKeys: ['positionerHandler'],
+  customHandlerKeys: ['positioner'],
   handlerKeys: ['onRedo', 'onUndo'],
   staticKeys: ['content', 'depth', 'newGroupDelay', 'excludeExtensions'],
 })
@@ -73,18 +73,13 @@ export class CorePreset extends Preset<CorePresetOptions> {
   /**
    * No properties are defined so this can be ignored.
    */
-  protected onSetOptions(parameter: OnSetOptionsParameter<CorePresetOptions>) {
-    return;
-  }
+  protected onSetOptions(_: OnSetOptionsParameter<CorePresetOptions>) {}
 
   protected onAddCustomHandler: AddCustomHandler<CorePresetOptions> = (handlers) => {
-    const { positionerHandler } = handlers;
+    const { positioner } = handlers;
 
-    if (positionerHandler) {
-      return this.getExtension(PositionerExtension).addCustomHandler(
-        'positionerHandler',
-        positionerHandler,
-      );
+    if (positioner) {
+      return this.getExtension(PositionerExtension).addCustomHandler('positioner', positioner);
     }
 
     return;

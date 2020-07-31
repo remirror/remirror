@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 
-import { contextPropsShape, positionerShape } from '@remirror/testing';
+import { contextPropsShape } from '@remirror/testing';
 import { createReactManager, strictRender } from '@remirror/testing/react';
 
 import { RemirrorProvider } from '../components/providers';
-import { usePositioner, useRemirror } from '../hooks';
+import { useMultiPositioner, usePositioner, useRemirror } from '../hooks';
 
 test('useRemirror', () => {
   const HookComponent: FC = () => {
@@ -22,11 +22,13 @@ test('useRemirror', () => {
   );
 });
 
-test('usePositioner', () => {
+test('`usePositioner` default values', () => {
   const HookComponent: FC = () => {
     const positionerProps = usePositioner('bubble');
+    const positioners = useMultiPositioner('bubble');
 
-    expect(positionerProps).toMatchObject(positionerShape);
+    expect(positionerProps).toEqual({});
+    expect(positioners).toEqual([]);
 
     return <div />;
   };

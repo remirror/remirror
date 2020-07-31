@@ -675,6 +675,7 @@ importers:
   packages/@remirror/extension-positioner:
     dependencies:
       '@babel/runtime': 7.10.5
+      nanoevents: 5.1.8
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -682,6 +683,7 @@ importers:
       '@babel/runtime': ^7.10.5
       '@remirror/core': 1.0.0-next.15
       '@remirror/pm': 1.0.0-next.4
+      nanoevents: ^5.1.8
   packages/@remirror/extension-react-component:
     dependencies:
       '@babel/runtime': 7.10.5
@@ -1174,7 +1176,7 @@ importers:
       '@testing-library/react': ^10.4.7
       '@types/react': ^16.9.43
       '@types/react-dom': ^16.9.8
-      linaria: ^2.0.0-alpha.5
+      linaria: ^2.0.0-rc.0
       multishift: ^1.0.0-next.2
       react: ^16.13.1
       react-dom: ^16.13.1
@@ -1182,32 +1184,34 @@ importers:
   packages/@remirror/react-hooks:
     dependencies:
       '@babel/runtime': 7.10.5
-      '@remirror/extension-auto-link': 'link:../extension-auto-link'
-      '@remirror/extension-mention': 'link:../extension-mention'
       '@remirror/i18n': 'link:../i18n'
       '@remirror/react-utils': 'link:../react-utils'
       type-fest: 0.16.0
     devDependencies:
       '@remirror/core': 'link:../core'
+      '@remirror/extension-auto-link': 'link:../extension-auto-link'
+      '@remirror/extension-mention': 'link:../extension-mention'
       '@remirror/pm': 'link:../pm'
       '@remirror/react': 'link:../react'
-      '@testing-library/react': 10.4.7_react-dom@16.13.1+react@16.13.1
+      '@testing-library/react-hooks': 3.4.1_react@16.13.1
       '@types/react': 16.9.43
       '@types/react-dom': 16.9.8
+      '@types/testing-library__react-hooks': 3.4.0
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
     specifiers:
       '@babel/runtime': ^7.10.5
-      '@remirror/core': ^1.0.0-next.4
-      '@remirror/extension-auto-link': ^1.0.0-next.4
-      '@remirror/extension-mention': ^1.0.0-next.4
+      '@remirror/core': ^1.0.0-next.12
+      '@remirror/extension-auto-link': ^1.0.0-next.12
+      '@remirror/extension-mention': ^1.0.0-next.12
       '@remirror/i18n': ^1.0.0-next.4
       '@remirror/pm': ^1.0.0-next.4
-      '@remirror/react': ^1.0.0-next.7
+      '@remirror/react': ^1.0.0-next.12
       '@remirror/react-utils': ^1.0.0-next.4
-      '@testing-library/react': ^10.4.7
+      '@testing-library/react-hooks': ^3.4.1
       '@types/react': ^16.9.43
       '@types/react-dom': ^16.9.8
+      '@types/testing-library__react-hooks': ^3.3.0
       react: ^16.13.1
       react-dom: ^16.13.1
       type-fest: ^0.16.0
@@ -1234,7 +1238,6 @@ importers:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
       '@remirror/react': 'link:../react'
-      '@testing-library/react': 10.4.7_react-dom@16.13.1+react@16.13.1
       '@testing-library/react-hooks': 3.4.1_react@16.13.1
       '@types/react': 16.9.43
       '@types/react-dom': 16.9.8
@@ -1257,7 +1260,6 @@ importers:
       '@remirror/react-utils': ^1.0.0-next.4
       '@remirror/theme': ^1.0.0-next.4
       '@testing-library/dom': ^7.21.6
-      '@testing-library/react': ^10.4.7
       '@testing-library/react-hooks': ^3.4.1
       '@types/classnames': ^2.2.10
       '@types/react': ^16.9.43

@@ -46,20 +46,23 @@ interface FlattenParameter extends OptionalProsemirrorNodeParameter, Partial<Des
 export function flatten(parameter: FlattenParameter): NodeWithPosition[] {
   const { node, descend = true } = parameter;
 
-  if (!isProsemirrorNode(node)) {
-    throw new Error('Invalid "node" parameter');
-  }
+  invariant(isProsemirrorNode(node), {
+    code: ErrorConstant.INTERNAL,
+    message: 'Invalid "node" parameter".',
+  });
 
   const result: NodeWithPosition[] = [];
+
   node.descendants((child, pos) => {
     result.push({ node: child, pos });
 
     if (!descend) {
-      return false;
+      return false; // Prevent diving into descendants.
     }
 
     return;
   });
+
   return result;
 }
 

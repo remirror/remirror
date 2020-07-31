@@ -10,8 +10,3 @@ export const contextPropsShape = {
   setContent: expect.any(Function),
   getRootProps: expect.any(Function),
 };
-
-export const positionerShape = {
-  active: expect.any(Boolean),
-  ref: expect.any(Function),
-};

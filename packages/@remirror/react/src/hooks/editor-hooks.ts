@@ -27,12 +27,13 @@ import {
   RemirrorManager,
 } from '@remirror/core';
 import {
-  getInitialPosition,
+  ElementsAddedParameter,
+  emptyVirtualPosition,
+  getPositioner,
   Positioner,
-  PositionerChangeHandlerMethod,
-  PositionerChangeHandlerParameter,
   PositionerExtension,
   StringPositioner,
+  VirtualPosition,
 } from '@remirror/extension-positioner';
 import { CorePreset } from '@remirror/preset-core';
 import { ReactPreset } from '@remirror/preset-react';
@@ -413,31 +414,32 @@ export function useManager<Combined extends AnyCombinedUnion>(
 
 export type BaseReactCombinedUnion = ReactPreset | CorePreset | BuiltinPreset;
 
-export type UsePositionerHookReturn = PositionerChangeHandlerParameter & {
+export interface UsePositionerHookReturn extends VirtualPosition {
   /**
    * This ref must be applied to the component that is being positioned in order
    * to correctly obtain the position data.
    */
   ref: RefCallback<HTMLElement>;
-};
+
+  element?: HTMLElement;
+  key: string;
+}
 
 /**
- * A shorthand tool for creating a positioner with the `PositionerExtension`.
+ * A hook for creating a positioner with the `PositionerExtension`. When an
+ * active position exists for the provided positioner it will return an object
+ * with the `ref`, `top`, `left`, `bottom`, `right` properties.
  *
- * Must apply the ref to the component when called.
  *
  * @remarks
  *
+ * Must apply the ref to the component when called.
+ *
  * ```ts
- * import { usePositioner } from '@remirror/react';
+ * import { usePositioner } from 'remirror/react';
  *
  * const MenuComponent: FC = () => {
- *   const {
- *     ref,
- *     active,
- *     bottom,
- *     left,
- *   } = usePositioner('bubble');
+ *   const positions = usePositioner('bubble');
  *
  *   return (
  *     <div style={{ bottom, left }} ref={ref}>
@@ -446,56 +448,113 @@ export type UsePositionerHookReturn = PositionerChangeHandlerParameter & {
  *   );
  * }
  *
- * <RemirrorProvider extensions={[]}>
- *   <MenuComponent />
- * </RemirrorProvider>
+ * const Wrapper = () => (
+ *   <RemirrorProvider extensions={[]}>
+ *     <MenuComponent />
+ *   </RemirrorProvider>
+ * )
  * ```
  */
 export function usePositioner(
   positioner: Positioner | StringPositioner,
-  onChange?: PositionerChangeHandlerMethod,
-): UsePositionerHookReturn {
-  const [element, setElement] = useState<HTMLElement>();
-  const [state, setState] = useState<PositionerChangeHandlerParameter>({
-    ...getInitialPosition(positioner),
-    active: false,
-  });
+): Partial<UsePositionerHookReturn> {
+  const positions = useMultiPositioner(positioner);
 
-  const ref: RefCallback<HTMLElement> = useCallback((instance) => {
-    if (instance) {
-      setElement(instance);
-    }
-  }, []);
+  if (positions.length > 0) {
+    return positions[0];
+  }
 
-  const onChangeHandler: PositionerChangeHandlerMethod = useCallback(
-    (parameter) => {
-      setState(parameter);
-      onChange?.(parameter);
-    },
-    [onChange],
-  );
+  return {};
+}
+
+/**
+ * A positioner for your editor. This returns an array of active positions and
+ * is useful for tracking the positions of multiple items in the editor.
+ *
+ * ```ts
+ * import { Positioner } from 'remirror/extension/positioner
+ * import { useMultiPositioner } from 'remirror/react';
+ *
+ * const positioner = Positioner.create({
+ *   ...config, // custom config
+ * })
+ *
+ * const MenuComponent: FC = () => {
+ *   const positions = usePositioner(positioner);
+ *
+ *   return (
+ *     <>
+ *       {
+ *         positions.map(({ ref, bottom, left, key }) => (
+ *           <div style={{ bottom, left }} ref={ref} key={key}>
+ *             <MenuIcon {...options} />
+ *           </div>
+ *         )
+ *       }
+ *     </>
+ *   )
+ * }
+ * ```
+ */
+export function useMultiPositioner(
+  positioner: Positioner | StringPositioner,
+): UsePositionerHookReturn[] {
+  interface CollectElementRef {
+    ref: RefCallback<HTMLElement>;
+    id: string;
+  }
+
+  const [state, setState] = useState<ElementsAddedParameter[]>([]);
+  const memoizedPositioner = useMemo(() => getPositioner(positioner), [positioner]);
+  const [collectRefs, setCollectRefs] = useState<CollectElementRef[]>([]);
 
   useExtension(
     PositionerExtension,
     useCallback(
       (parameter) => {
-        if (!element) {
-          return;
-        }
-
         const { addCustomHandler } = parameter;
-        const dispose = addCustomHandler('positionerHandler', {
-          element,
-          positioner,
-          onChange: onChangeHandler,
-        });
-
-        return dispose;
+        return addCustomHandler('positioner', memoizedPositioner);
       },
-      [element, onChangeHandler, positioner],
+      [memoizedPositioner],
     ),
-    [positioner, element],
+    [],
   );
 
-  return { ...state, ref };
+  // Add the positioner update handlers.
+  useEffect(() => {
+    const disposeUpdate = memoizedPositioner.addListener('update', (parameter) => {
+      const items: CollectElementRef[] = [];
+
+      for (const { id, setElement } of parameter) {
+        const ref: RefCallback<HTMLElement> = (element) => {
+          if (!element) {
+            return;
+          }
+
+          setElement(element);
+        };
+
+        items.push({ id, ref });
+      }
+
+      setCollectRefs(items);
+    });
+
+    const disposeElementsAdded = memoizedPositioner.addListener('done', (parameter) => {
+      setState(parameter);
+    });
+
+    return () => {
+      disposeUpdate();
+      disposeElementsAdded();
+    };
+  }, [memoizedPositioner]);
+
+  return collectRefs.map(({ ref, id: key }, index) => {
+    const { element, position } = state[index] ?? {};
+    const virtualPosition = { ...emptyVirtualPosition, ...position };
+    const virtualNode = memoizedPositioner.getVirtualNode(virtualPosition);
+
+    return { ref, element, key, virtualNode, ...position };
+  });
 }

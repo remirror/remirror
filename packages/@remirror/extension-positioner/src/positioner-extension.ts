@@ -1,19 +1,23 @@
 import {
   AddCustomHandler,
+  CreatePluginReturn,
   CustomHandler,
+  debounce,
   extensionDecorator,
   isString,
   PlainExtension,
-  Position,
   StateUpdateLifecycleParameter,
+  Static,
 } from '@remirror/core';
 
 import {
-  bubblePositioner,
-  defaultPositioner,
-  floatingPositioner,
-  popupMenuPositioner,
+  BasePositionerParameter,
+  centeredSelectionPositioner,
+  cursorPopupPositioner,
+  floatingSelectionPositioner,
   Positioner,
+  PositionerUpdateEvent,
+  SetActiveElement,
 } from './positioners';
 
 export interface PositionerOptions {
@@ -22,7 +26,19 @@ export interface PositionerOptions {
    * to changes in the positioner output. This is a custom handler and should be
    * amended with `addCustomHandler`.
    */
-  positionerHandler?: CustomHandler<PositionerHandler>;
+  positioner?: CustomHandler<Positioner>;
+
+  /**
+   * The `ms` to debounce scroll events.
+   *
+   * @defaultValue `50`
+   */
+  scrollDebounce?: Static<number>;
+}
+
+interface TriggerUpdateParameter {
+  event: PositionerUpdateEvent;
+  firstUpdate: boolean;
 }
 
 /**
@@ -32,69 +48,93 @@ export interface PositionerOptions {
  * For example, you can track the cursor or all visible paragraph nodes.
  */
 @extensionDecorator<PositionerOptions>({
-  customHandlerKeys: ['positionerHandler'],
+  defaultOptions: { scrollDebounce: 50 },
+  customHandlerKeys: ['positioner'],
+  staticKeys: ['scrollDebounce'],
 })
 export class PositionerExtension extends PlainExtension<PositionerOptions> {
   get name() {
     return 'positioner' as const;
   }
 
-  #positionerHandlerList: PositionerHandler[] = [];
+  #positioners: Positioner[] = [];
 
-  protected onAddCustomHandler: AddCustomHandler<PositionerOptions> = ({ positionerHandler }) => {
-    if (!positionerHandler) {
+  protected onAddCustomHandler: AddCustomHandler<PositionerOptions> = ({ positioner }) => {
+    if (!positioner) {
       return;
     }
 
-    this.#positionerHandlerList = [...this.#positionerHandlerList, positionerHandler];
+    this.#positioners = [...this.#positioners, positioner];
     return () => {
-      this.#positionerHandlerList = this.#positionerHandlerList.filter(
-        (handler) => handler !== positionerHandler,
-      );
+      this.#positioners = this.#positioners.filter((handler) => handler !== positioner);
     };
   };
 
-  onStateUpdate(update: StateUpdateLifecycleParameter) {
-    this.positionerHandler(update);
+  protected init() {
+    this.onScroll = debounce(this.options.scrollDebounce, this.onScroll.bind(this));
   }
 
-  private positionerHandler(update: StateUpdateLifecycleParameter) {
-    for (const handler of this.#positionerHandlerList) {
-      this.calculatePositioner(handler, update);
+  private getParameter({ event, firstUpdate }: TriggerUpdateParameter) {
+    const state = this.store.getState();
+    const previousState = this.store.previousState ?? state;
+
+    return {
+      event,
+      firstUpdate,
+      previousState,
+      state,
+      scrollTop: this.store.view.dom.scrollTop,
+    };
+  }
+
+  onScroll() {
+    const parameter = this.getParameter({ event: 'scroll', firstUpdate: false });
+    this.positioner(parameter);
+  }
+
+  createPlugin(): CreatePluginReturn {
+    return {
+      props: {
+        handleDOMEvents: {
+          scroll: () => {
+            this.onScroll();
+            return false;
+          },
+        },
+      },
+    };
+  }
+
+  onStateUpdate(update: StateUpdateLifecycleParameter) {
+    this.positioner({
+      ...update,
+      event: 'state',
+      scrollTop: this.store.view.dom.scrollTop,
+      firstUpdate: false,
+    });
+  }
+
+  private positioner(update: BasePositionerParameter) {
+    for (const positioner of this.#positioners) {
+      this.triggerPositioner(positioner, update);
     }
   }
 
-  private calculatePositioner(handler: PositionerHandler, update: StateUpdateLifecycleParameter) {
-    const { element, onChange, positioner } = handler;
-    const { initialPosition, getPosition, hasChanged, isActive } = getPositioner(positioner);
-
-    // Nothing has changed so return without calling on change.
-    if (!hasChanged(update)) {
+  private triggerPositioner(positioner: Positioner, update: BasePositionerParameter) {
+    if (!positioner.hasChanged(update)) {
+      // Nothing has changed so return without calling the change handler.
       return;
     }
 
-    const parameters = { element, view: this.store.view, ...update };
-
-    const active = isActive(parameters);
-
-    if (!active) {
-      onChange({ ...initialPosition, active });
-    } else {
-      onChange({ ...initialPosition, ...getPosition(parameters), active });
-    }
+    positioner.onActiveChanged({ ...update, view: this.store.view });
   }
 }
 
 export interface PositionerHandler {
   /**
-   * The HTML element to calculate a position for.
-   */
-  element: HTMLElement;
-
-  /**
    * The positioner to use for calculating the relative position.
    */
-  positioner: Positioner | StringPositioner;
+  positioner: Positioner;
 
   /**
    * Method to call when there is a change in the position.
@@ -102,33 +142,23 @@ export interface PositionerHandler {
   onChange: PositionerChangeHandlerMethod;
 }
 
-export type PositionerChangeHandlerMethod = (position: PositionerChangeHandlerParameter) => void;
-
-export interface PositionerChangeHandlerParameter extends Position {
-  /**
-   * When true this is an active positioner. When false the positions default to
-   * the default positioner values.
-   */
-  active: boolean;
-}
+export type PositionerChangeHandlerMethod = (elementSetters: SetActiveElement[]) => void;
 
 const positioners = {
-  bubble: bubblePositioner,
-  floating: floatingPositioner,
-  popupMenu: popupMenuPositioner,
-  default: defaultPositioner,
+  bubble: centeredSelectionPositioner,
+  centeredSelection: centeredSelectionPositioner,
+  floating: floatingSelectionPositioner,
+  floatingSelection: floatingSelectionPositioner,
+  popup: cursorPopupPositioner,
+  cursor: cursorPopupPositioner,
 };
 
-function getPositioner(positioner: StringPositioner | Positioner): Positioner {
+export function getPositioner(positioner: StringPositioner | Positioner): Positioner {
   if (isString(positioner)) {
     return positioners[positioner];
   }
 
   return positioner;
-}
-
-export function getInitialPosition(positioner: StringPositioner | Positioner) {
-  return getPositioner(positioner).initialPosition;
 }
 
 export type StringPositioner = keyof typeof positioners;

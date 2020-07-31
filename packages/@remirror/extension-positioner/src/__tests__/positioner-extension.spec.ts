@@ -3,43 +3,82 @@ import { renderEditor } from 'jest-remirror';
 import { isExtensionValid } from '@remirror/testing';
 
 import { PositionerExtension } from '../positioner-extension';
-import { defaultPositioner } from '../positioners';
+import { centeredSelectionPositioner, cursorPopupPositioner } from '../positioners';
 
 test('`PositionerExtension`: is valid', () => {
   expect(isExtensionValid(PositionerExtension)).toBeTrue();
 });
 
-test('can position itself', () => {
-  const positioner = new PositionerExtension();
+test('`cursorPopupPositioner` can position itself', () => {
+  const positionerExtension = new PositionerExtension();
   const {
     add,
     nodes: { p, doc },
-  } = renderEditor([positioner]);
+  } = renderEditor([positionerExtension]);
 
-  const onChange = jest.fn();
+  const cursorElement = document.createElement('div');
+  document.body.append(cursorElement);
+  const cursorMock = {
+    onUpdate: jest.fn((items) => items?.[0]?.setElement(cursorElement)),
+    onDone: jest.fn(),
+  };
 
   expect(
     add(doc(p('hello <cursor>')))
       .callback(() => {
-        positioner.addCustomHandler('positionerHandler', {
-          onChange,
-          element: document.createElement('div'),
-          positioner: 'default',
-        });
+        positionerExtension.addCustomHandler('positioner', cursorPopupPositioner);
+        cursorPopupPositioner.addListener('update', cursorMock.onUpdate);
+        cursorPopupPositioner.addListener('done', cursorMock.onDone);
       })
       .insertText('a')
       .callback(() => {
-        expect(onChange).toHaveBeenCalledWith({
-          active: false,
-          ...defaultPositioner.initialPosition,
-        });
+        expect(cursorMock.onUpdate).toHaveBeenCalledWith([
+          { setElement: expect.any(Function), id: expect.any(String) },
+        ]);
+        expect(cursorMock.onDone).toHaveBeenCalledWith([
+          { position: expect.any(Object), element: cursorElement, id: '0' },
+        ]);
       })
       .selectText(1, 5)
       .callback(() => {
-        expect(onChange).toHaveBeenCalledWith({
-          active: true,
-          ...defaultPositioner.initialPosition,
-        });
+        expect(cursorMock.onUpdate).toHaveBeenCalledWith([]);
+      }),
+  );
+});
+
+test('`centeredSelectionPositioner` can position itself', () => {
+  const positionerExtension = new PositionerExtension();
+  const {
+    add,
+    nodes: { p, doc },
+  } = renderEditor([positionerExtension]);
+
+  const centeredElement = document.createElement('div');
+  document.body.append(centeredElement);
+  const centeredMock = {
+    onUpdate: jest.fn((items) => items?.[0]?.setElement(centeredElement)),
+    onDone: jest.fn(),
+  };
+
+  expect(
+    add(doc(p('hello <cursor>')))
+      .callback(() => {
+        positionerExtension.addCustomHandler('positioner', centeredSelectionPositioner);
+        centeredSelectionPositioner.addListener('update', centeredMock.onUpdate);
+        centeredSelectionPositioner.addListener('done', centeredMock.onDone);
+      })
+      .insertText('a')
+      .callback(() => {
+        expect(centeredMock.onUpdate).toHaveBeenCalledWith([]);
+      })
+      .selectText(1, 5)
+      .callback(() => {
+        expect(centeredMock.onUpdate).toHaveBeenCalledWith([
+          { setElement: expect.any(Function), id: '0' },
+        ]);
+        expect(centeredMock.onDone).toHaveBeenCalledWith([
+          { position: expect.any(Object), element: centeredElement, id: '0' },
+        ]);
       }),
   );
 });
