@@ -374,6 +374,16 @@ importers:
       '@remirror/pm': ^1.0.0-next.4
       '@remirror/preset-core': ^1.0.0-next.15
       type-fest: ^0.16.0
+  packages/@remirror/extension-annotation:
+    dependencies:
+      '@babel/runtime': 7.10.5
+    devDependencies:
+      '@remirror/core': 'link:../core'
+      '@remirror/pm': 'link:../pm'
+    specifiers:
+      '@babel/runtime': ^7.10.5
+      '@remirror/core': ^1.0.0-next.15
+      '@remirror/pm': ^1.0.0-next.4
   packages/@remirror/extension-auto-link:
     dependencies:
       '@babel/runtime': 7.10.5
@@ -1504,6 +1514,7 @@ importers:
       '@remirror/core-types': 'link:../@remirror/core-types'
       '@remirror/core-utils': 'link:../@remirror/core-utils'
       '@remirror/dom': 'link:../@remirror/dom'
+      '@remirror/extension-annotation': 'link:../@remirror/extension-annotation'
       '@remirror/extension-auto-link': 'link:../@remirror/extension-auto-link'
       '@remirror/extension-base-keymap': 'link:../@remirror/extension-base-keymap'
       '@remirror/extension-bidi': 'link:../@remirror/extension-bidi'
@@ -1565,6 +1576,7 @@ importers:
       '@remirror/core-types': ^1.0.0-next.13
       '@remirror/core-utils': ^1.0.0-next.15
       '@remirror/dom': ^1.0.0-next.15
+      '@remirror/extension-annotation': ^0.0.0
       '@remirror/extension-auto-link': ^1.0.0-next.15
       '@remirror/extension-base-keymap': ^1.0.0-next.15
       '@remirror/extension-bidi': ^1.0.0-next.15
