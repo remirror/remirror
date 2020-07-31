@@ -10,11 +10,7 @@ test('is valid', () => {
 });
 
 function create(options?: AnnotationOptions) {
-  const extension = new AnnotationExtension(options);
-  const editor = renderEditor([extension]);
-  return Object.assign(editor, {
-    extension,
-  });
+  return renderEditor([new AnnotationExtension(options)]);
 }
 
 describe('commands', () => {
@@ -132,20 +128,19 @@ describe('styling', () => {
   });
 });
 
-describe('getters', () => {
+describe('helpers', () => {
   it('#getAnnotations', () => {
     const {
       add,
-      extension,
+      helpers,
       nodes: { p, doc },
       commands,
-      view,
     } = create();
 
     add(doc(p('<start>Hello<end>')));
     commands.addAnnotation({ id: '1' });
 
-    expect(extension.getAnnotations(view.state)).toEqual([
+    expect(helpers.getAnnotations()).toEqual([
       {
         id: '1',
         from: 1,
@@ -158,16 +153,15 @@ describe('getters', () => {
   it('#getAnnotationsAt', () => {
     const {
       add,
-      extension,
+      helpers,
       nodes: { p, doc },
       commands,
-      view,
     } = create();
 
     add(doc(p('An <start>important<end> note')));
     commands.addAnnotation({ id: '1' });
 
-    expect(extension.getAnnotationsAt(view.state, 5)).toEqual([
+    expect(helpers.getAnnotationsAt(5)).toEqual([
       {
         id: '1',
         from: 4,
@@ -180,16 +174,15 @@ describe('getters', () => {
   it('#getAnnotationsAt (unannotated)', () => {
     const {
       add,
-      extension,
+      helpers,
       nodes: { p, doc },
       commands,
-      view,
     } = create();
 
     add(doc(p('An <start>important<end> note')));
     commands.addAnnotation({ id: '1' });
 
-    expect(extension.getAnnotationsAt(view.state, 2)).toEqual([]);
+    expect(helpers.getAnnotationsAt(2)).toEqual([]);
   });
 });
 
@@ -198,18 +191,17 @@ describe('custom annotation type', () => {
     tag: string;
   }
 
-  const extension = new AnnotationExtension<MyAnnotation>();
   const {
     add,
+    helpers,
     nodes: { p, doc },
     commands,
-    view,
-  } = renderEditor([extension]);
+  } = renderEditor([new AnnotationExtension<MyAnnotation>()]);
 
   add(doc(p('<start>Hello<end>')));
   commands.addAnnotation({ id: '1', tag: 'tag' });
 
-  expect(extension.getAnnotations(view.state)).toEqual([
+  expect(helpers.getAnnotations()).toEqual([
     {
       id: '1',
       from: 1,

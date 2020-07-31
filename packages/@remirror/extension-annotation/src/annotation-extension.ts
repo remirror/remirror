@@ -162,36 +162,40 @@ export class AnnotationExtension<A extends Annotation = Annotation> extends Plai
     };
   }
 
-  /**
-   * @returns all annotations in the editor
-   */
-  getAnnotations(state: EditorState): A[] {
-    const decorations: DecorationSet = this.getPluginState();
-    return decorations.find().map((decoration) =>
-      toAnnotation({
-        state,
-        decoration,
-      }),
-    );
-  }
-
-  /**
-   * @returns all annotations at a specific position in the editor
-   */
-  getAnnotationsAt(state: EditorState, pos: number): A[] {
-    const decorations: DecorationSet = this.getPluginState();
-    return (
-      decorations
-        .find()
-        // Only consider decorations that are at the requested position
-        .filter((d) => d.from <= pos && d.to >= pos)
-        // Convert into annotations (external interface)
-        .map((decoration) =>
-          toAnnotation({
-            state,
+  createHelpers() {
+    return {
+      /**
+       * @returns all annotations in the editor
+       */
+      getAnnotations: () => {
+        const decorations: DecorationSet = this.getPluginState();
+        return decorations.find().map((decoration) =>
+          toAnnotation<A>({
+            state: this.store.getState(),
             decoration,
           }),
-        )
-    );
+        );
+      },
+
+      /**
+       * @returns all annotations at a specific position in the editor
+       */
+      getAnnotationsAt: (pos: number) => {
+        const decorations: DecorationSet = this.getPluginState();
+        return (
+          decorations
+            .find()
+            // Only consider decorations that are at the requested position
+            .filter((d) => d.from <= pos && d.to >= pos)
+            // Convert into annotations (external interface)
+            .map((decoration) =>
+              toAnnotation<A>({
+                state: this.store.getState(),
+                decoration,
+              }),
+            )
+        );
+      },
+    };
   }
 }
