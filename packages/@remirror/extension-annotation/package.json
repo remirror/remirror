@@ -20,15 +20,15 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.0"
+    "@babel/runtime": "^7.10.5"
   },
   "devDependencies": {
-    "@remirror/core": "*",
-    "@remirror/pm": "*"
+    "@remirror/core": "^1.0.0-next.15",
+    "@remirror/pm": "^1.0.0-next.4"
   },
   "peerDependencies": {
-    "@remirror/core": "*",
-    "@remirror/pm": "*"
+    "@remirror/core": "^1.0.0-next.15",
+    "@remirror/pm": "^1.0.0-next.4"
   },
   "publishConfig": {
     "access": "public"
