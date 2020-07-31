@@ -16,7 +16,6 @@ import {
   CommandFunction,
   EditorSchema,
   EditorState,
-  EditorStateParameter,
   EditorView,
   EmptyShape,
   Fragment,
@@ -519,10 +518,12 @@ export function hasTransactionChanged(tr: Transaction) {
   return tr.docChanged || tr.selectionSet;
 }
 
-interface IsNodeActiveParameter
-  extends EditorStateParameter,
-    NodeTypeParameter,
-    Partial<AttributesParameter> {}
+interface IsNodeActiveParameter extends NodeTypeParameter, Partial<AttributesParameter> {
+  /**
+   * State or transaction parameter.
+   */
+  state: EditorState | Transaction;
+}
 
 /**
  * Checks whether the node type passed in is active within the region. Used by

@@ -2,7 +2,6 @@ import refractor from 'refractor/core';
 
 import {
   ApplySchemaAttributes,
-  convertCommand,
   CreatePluginReturn,
   extensionDecorator,
   findNodeAtSelection,
@@ -23,9 +22,9 @@ import {
   PosParameter,
   removeNodeAtPosition,
   replaceNodeAtPosition,
+  setBlockType,
   toggleBlockItem,
 } from '@remirror/core';
-import { setBlockType } from '@remirror/pm/commands';
 import { keydownHandler } from '@remirror/pm/keymap';
 import { TextSelection } from '@remirror/pm/state';
 
@@ -128,7 +127,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
        * ```
        */
       createCodeBlock: (attributes: CodeBlockAttributes) => {
-        return convertCommand(setBlockType(this.type, attributes));
+        return setBlockType(this.type, attributes);
       },
 
       /**

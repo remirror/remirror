@@ -2,6 +2,7 @@ import { invariant, isNumber, object } from '@remirror/core-helpers';
 import {
   AttributesParameter,
   CommandFunction,
+  CommandFunctionParameter,
   EditorSchema,
   EditorView,
   MarkType,
@@ -14,9 +15,9 @@ import {
   RangeParameter,
   Transaction,
 } from '@remirror/core-types';
-import { lift, setBlockType, wrapIn } from '@remirror/pm/commands';
 import { liftListItem, wrapInList } from '@remirror/pm/schema-list';
 import { TextSelection } from '@remirror/pm/state';
+import { findWrapping, liftTarget } from '@remirror/pm/transform';
 
 import { getMarkRange, isMarkType, isNodeType } from './core-utils';
 import { findParentNode, isNodeActive, isSelectionEmpty } from './prosemirror-utils';
@@ -59,6 +60,46 @@ export function updateMark(parameter: UpdateMarkParameter): CommandFunction {
 }
 
 /**
+ * Lift the selected block, or the closest ancestor block of the selection that
+ * can be lifted, out of its parent node.
+ *
+ * Adapted from
+ * https://github.com/ProseMirror/prosemirror-commands/blob/3126d5c625953ba590c5d3a0db7f1009f46f1571/src/commands.js#L212-L221
+ */
+export function lift({ tr, dispatch }: Pick<CommandFunctionParameter, 'tr' | 'dispatch'>) {
+  const { $from, $to } = tr.selection;
+  const range = $from.blockRange($to);
+  const target = range && liftTarget(range);
+
+  if (!isNumber(target) || !range) {
+    return false;
+  }
+
+  dispatch?.(tr.lift(range, target).scrollIntoView());
+
+  return true;
+}
+
+/**
+ * Wrap the selection in a node of the given type with the given attributes.
+ */
+export function wrapIn(type: NodeType, attrs: ProsemirrorAttributes): CommandFunction {
+  return function ({ tr, dispatch }) {
+    const { $from, $to } = tr.selection;
+    const range = $from.blockRange($to);
+    const wrapping = range && findWrapping(range, type, attrs);
+
+    if (!wrapping || !range) {
+      return false;
+    }
+
+    dispatch?.(tr.wrap(range, wrapping).scrollIntoView());
+
+    return true;
+  };
+}
+
+/**
  * Toggle between wrapping an inactive node with the provided node type, and
  * lifting it up into it's parent.
  *
@@ -68,17 +109,63 @@ export function updateMark(parameter: UpdateMarkParameter): CommandFunction {
  * @public
  */
 export function toggleWrap(type: NodeType, attrs: ProsemirrorAttributes = {}): CommandFunction {
-  return ({ state, dispatch }) => {
-    const isActive = isNodeActive({ state, type });
+  return (parameter) => {
+    const { tr } = parameter;
+    const isActive = isNodeActive({ state: tr, type });
 
     if (isActive) {
-      return lift(state, dispatch);
+      return lift(parameter);
     }
 
-    return wrapIn(type, attrs)(state, dispatch);
+    return wrapIn(type, attrs)(parameter);
   };
 }
 
+/**
+ * Returns a command that tries to set the selected textblocks to the
+ * given node type with the given attributes.
+ */
+export function setBlockType(type: NodeType, attrs?: ProsemirrorAttributes): CommandFunction {
+  return function ({ tr, dispatch }) {
+    const { from, to } = tr.selection;
+    let applicable = false;
+
+    tr.doc.nodesBetween(from, to, (node, pos) => {
+      if (applicable) {
+        return false;
+      }
+
+      if (!node.isTextblock || node.hasMarkup(type, attrs)) {
+        return;
+      }
+
+      if (node.type === type) {
+        applicable = true;
+        return;
+      }
+
+      const $pos = tr.doc.resolve(pos);
+      const index = $pos.index();
+
+      applicable = $pos.parent.canReplaceWith(index, index + 1, type);
+      return;
+    });
+
+    if (!applicable) {
+      return false;
+    }
+
+    if (dispatch) {
+      dispatch(tr.setBlockType(from, to, type, attrs).scrollIntoView());
+    }
+
+    return true;
+  };
+}
+
+/**
+ * TODO make this more inclusive of custom user list types.
+ */
 function isList(node: ProsemirrorNode, schema: EditorSchema) {
   return node.type === schema.nodes.bulletList || node.type === schema.nodes.orderedList;
 }
@@ -147,16 +234,17 @@ interface ToggleBlockItemParameter extends NodeTypeParameter, Partial<Attributes
  *
  * @public
  */
-export function toggleBlockItem(parameter: ToggleBlockItemParameter): CommandFunction {
-  return ({ state, dispatch }) => {
-    const { type, toggleType, attrs } = parameter;
-    const isActive = isNodeActive({ state, type, attrs });
+export function toggleBlockItem(toggleParameter: ToggleBlockItemParameter): CommandFunction {
+  return (parameter) => {
+    const { tr } = parameter;
+    const { type, toggleType, attrs } = toggleParameter;
+    const isActive = isNodeActive({ state: tr, type, attrs });
 
     if (isActive) {
-      return setBlockType(toggleType)(state, dispatch);
+      return setBlockType(toggleType)(parameter);
     }
 
-    return setBlockType(type, attrs)(state, dispatch);
+    return setBlockType(type, attrs)(parameter);
   };
 }
 

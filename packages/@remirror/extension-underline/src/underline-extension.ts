@@ -1,12 +1,11 @@
 import {
   ApplySchemaAttributes,
-  convertCommand,
   extensionDecorator,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
+  toggleMark,
 } from '@remirror/core';
-import { toggleMark } from '@remirror/pm/commands';
 
 @extensionDecorator({})
 export class UnderlineExtension extends MarkExtension {
@@ -34,7 +33,7 @@ export class UnderlineExtension extends MarkExtension {
 
   createKeymap() {
     return {
-      'Mod-u': convertCommand(toggleMark(this.type)),
+      'Mod-u': toggleMark({ type: this.type }),
     };
   }
 
@@ -43,7 +42,7 @@ export class UnderlineExtension extends MarkExtension {
       /**
        * Toggle the underline formatting of the selected text.
        */
-      toggleUnderline: () => convertCommand(toggleMark(this.type)),
+      toggleUnderline: () => toggleMark({ type: this.type }),
     };
   }
 }

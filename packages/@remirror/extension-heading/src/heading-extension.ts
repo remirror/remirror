@@ -1,6 +1,5 @@
 import {
   ApplySchemaAttributes,
-  convertCommand,
   extensionDecorator,
   KeyBindings,
   NodeExtension,
@@ -9,10 +8,10 @@ import {
   object,
   ProsemirrorAttributes,
   ProsemirrorNode,
+  setBlockType,
   Static,
   toggleBlockItem,
 } from '@remirror/core';
-import { setBlockType } from '@remirror/pm/commands';
 import { textblockTypeInputRule } from '@remirror/pm/inputrules';
 
 export interface HeadingOptions {
@@ -98,7 +97,7 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
     const keys: KeyBindings = object();
 
     this.options.levels.forEach((level) => {
-      keys[`Shift-Ctrl-${level}`] = convertCommand(setBlockType(this.type, { level }));
+      keys[`Shift-Ctrl-${level}`] = setBlockType(this.type, { level });
     });
     return keys;
   }

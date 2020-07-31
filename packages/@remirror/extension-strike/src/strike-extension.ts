@@ -1,16 +1,20 @@
 import {
   ApplySchemaAttributes,
-  convertCommand,
   extensionDecorator,
+  InputRule,
   KeyBindings,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
   markInputRule,
   markPasteRule,
+  Plugin,
+  toggleMark,
 } from '@remirror/core';
-import { toggleMark } from '@remirror/pm/commands';
 
+/**
+ * The extension for adding strike-through marks to the editor.
+ */
 @extensionDecorator({})
 export class StrikeExtension extends MarkExtension {
   get name() {
@@ -45,7 +49,7 @@ export class StrikeExtension extends MarkExtension {
 
   createKeymap(): KeyBindings {
     return {
-      'Mod-d': convertCommand(toggleMark(this.type)),
+      'Mod-d': toggleMark({ type: this.type }),
     };
   }
 
@@ -54,15 +58,15 @@ export class StrikeExtension extends MarkExtension {
       /**
        * Toggle the strike through formatting annotation.
        */
-      toggleStrike: () => convertCommand(toggleMark(this.type)),
+      toggleStrike: () => toggleMark({ type: this.type }),
     };
   }
 
-  createInputRules() {
+  createInputRules(): InputRule[] {
     return [markInputRule({ regexp: /~([^~]+)~$/, type: this.type })];
   }
 
-  createPasteRules() {
+  createPasteRules(): Plugin[] {
     return [markPasteRule({ regexp: /~([^~]+)~/g, type: this.type })];
   }
 }

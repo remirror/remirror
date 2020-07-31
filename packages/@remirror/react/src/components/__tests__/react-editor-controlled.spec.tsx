@@ -9,10 +9,13 @@ import {
   SchemaFromCombined,
   StateUpdateLifecycleParameter,
 } from '@remirror/core';
-import { act, render } from '@remirror/testing/react';
+import { BoldExtension, ItalicExtension } from '@remirror/testing';
+import { act, fireEvent, render } from '@remirror/testing/react';
 
+import { useRemirror } from '../../hooks';
 import { createReactManager } from '../../react-helpers';
 import { RemirrorContextProps } from '../../react-types';
+import { RemirrorProvider } from '../providers';
 import { ReactEditor } from '../react-editor';
 
 const label = 'Remirror editor';
@@ -300,4 +303,116 @@ describe('Remirror Controlled Component', () => {
     expect(state).toBe(chain.state);
     expect(state).not.toBe(previousState);
   });
+});
+
+test('can run multiple commands', () => {
+  const { manager, props, chain, doc, p } = create([new BoldExtension(), new ItalicExtension()]);
+  const { bold, italic } = chain.marks;
+
+  const InnerComponent: FC = () => {
+    const { getRootProps, commands } = useRemirror<BoldExtension | ItalicExtension>();
+
+    return (
+      <div>
+        <div data-testid='target' {...getRootProps()} />
+        <button
+          onClick={() => {
+            commands.toggleBold();
+            commands.toggleItalic();
+          }}
+        />
+      </div>
+    );
+  };
+
+  const Component = () => {
+    const [value, setValue] = useState<EditorState>(
+      manager.createState({
+        content: '',
+        stringHandler: fromHtml,
+      }),
+    );
+
+    return (
+      <RemirrorProvider
+        {...props}
+        value={value}
+        manager={manager}
+        onChange={(parameter) => {
+          const { state } = parameter;
+          setValue(state);
+        }}
+      >
+        <InnerComponent />
+      </RemirrorProvider>
+    );
+  };
+
+  const { getByRole } = render(<Component />);
+
+  act(() => {
+    chain.commands.insertText('This');
+  });
+
+  act(() => {
+    chain.selectText('all');
+  });
+
+  act(() => {
+    fireEvent.click(getByRole('button'));
+  });
+
+  expect(chain.state.doc).toEqualRemirrorDocument(doc(p(bold(italic('This')))));
+});
+
+test('NOTE: this test is to show that synchronous state updates only shows the most recent state update', () => {
+  const { manager, props, chain, doc, p } = create([]);
+
+  const InnerComponent: FC = () => {
+    const { getRootProps, view } = useRemirror();
+
+    return (
+      <div>
+        <div data-testid='target' {...getRootProps()} />
+        <button
+          onClick={() => {
+            // TWO UPDATES
+            view.dispatch(view.state.tr.insertText('a'));
+            view.dispatch(view.state.tr.insertText('b'));
+          }}
+        />
+      </div>
+    );
+  };
+
+  const Component = () => {
+    const [value, setValue] = useState<EditorState>(
+      manager.createState({
+        content: '',
+        stringHandler: fromHtml,
+      }),
+    );
+
+    return (
+      <RemirrorProvider
+        {...props}
+        value={value}
+        manager={manager}
+        onChange={(parameter) => {
+          const { state } = parameter;
+          setValue(state);
+        }}
+      >
+        <InnerComponent />
+      </RemirrorProvider>
+    );
+  };
+
+  const { getByRole } = render(<Component />);
+
+  act(() => {
+    fireEvent.click(getByRole('button'));
+  });
+
+  expect(chain.state.doc).toEqualRemirrorDocument(doc(p('b')));
 });

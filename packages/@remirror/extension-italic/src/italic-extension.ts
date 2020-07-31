@@ -1,15 +1,17 @@
 import {
   ApplySchemaAttributes,
-  convertCommand,
   extensionDecorator,
+  FromToParameter,
+  InputRule,
   KeyBindings,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
   markInputRule,
   markPasteRule,
+  Plugin,
+  toggleMark,
 } from '@remirror/core';
-import { toggleMark } from '@remirror/pm/commands';
 
 @extensionDecorator({})
 export class ItalicExtension extends MarkExtension {
@@ -33,7 +35,7 @@ export class ItalicExtension extends MarkExtension {
 
   createKeymap(): KeyBindings {
     return {
-      'Mod-i': convertCommand(toggleMark(this.type)),
+      'Mod-i': toggleMark({ type: this.type }),
     };
   }
 
@@ -42,15 +44,15 @@ export class ItalicExtension extends MarkExtension {
       /**
        * Toggle the italic formatting on the selected text.
        */
-      toggleItalic: () => convertCommand(toggleMark(this.type)),
+      toggleItalic: (range?: FromToParameter) => toggleMark({ type: this.type, range }),
     };
   }
 
-  createInputRules() {
+  createInputRules(): InputRule[] {
     return [markInputRule({ regexp: /(?:^|[^*_])[*_]([^*_]+)[*_]$/, type: this.type })];
   }
 
-  createPasteRules() {
+  createPasteRules(): Plugin[] {
     return [markPasteRule({ regexp: /(?:^|[^*_])[*_]([^*_]+)[*_]/g, type: this.type })];
   }
 }

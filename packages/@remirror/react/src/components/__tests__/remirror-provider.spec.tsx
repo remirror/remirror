@@ -1,7 +1,8 @@
+import { RemirrorTestChain } from 'jest-remirror';
 import React, { FC } from 'react';
 
-import { docNodeBasicJSON } from '@remirror/testing';
-import { createReactManager, render } from '@remirror/testing/react';
+import { BoldExtension, docNodeBasicJSON, ItalicExtension } from '@remirror/testing';
+import { createReactManager, fireEvent, render } from '@remirror/testing/react';
 
 import { useRemirror } from '../../hooks';
 import { RemirrorProvider } from '../providers';
@@ -53,4 +54,73 @@ test('multiple `getRootProps` applied to dom throw an error', () => {
   ).toThrowErrorMatchingSnapshot();
 
   spy.mockRestore();
+});
+
+test('can run multiple transaction based commands', () => {
+  const TestComponent: FC = () => {
+    const { getRootProps, commands } = useRemirror<BoldExtension | ItalicExtension>();
+
+    return (
+      <div>
+        <div data-testid='target' {...getRootProps()} />
+        <button
+          onClick={() => {
+            commands.toggleBold();
+            commands.toggleItalic();
+          }}
+        />
+      </div>
+    );
+  };
+
+  const manager = createReactManager([new BoldExtension(), new ItalicExtension()]);
+  const chain = RemirrorTestChain.create(manager);
+
+  const { getByRole } = render(
+    <RemirrorProvider initialContent={docNodeBasicJSON} manager={manager}>
+      <TestComponent />
+    </RemirrorProvider>,
+  );
+
+  const { p, doc } = chain.nodes;
+  const { bold, italic } = chain.marks;
+
+  chain.add(doc(p('<start>This<end>')));
+  fireEvent.click(getByRole('button'));
+
+  expect(chain.state.doc).toEqualRemirrorDocument(doc(p(bold(italic('This')))));
+});
+
+test('can run multiple synchronous non chainable commands', () => {
+  const TestComponent: FC = () => {
+    const { getRootProps, view } = useRemirror<BoldExtension | ItalicExtension>();
+
+    return (
+      <div>
+        <div data-testid='target' {...getRootProps()} />
+        <button
+          onClick={() => {
+            view.dispatch(view.state.tr.insertText('a'));
+            view.dispatch(view.state.tr.insertText('b'));
+          }}
+        />
+      </div>
+    );
+  };
+
+  const manager = createReactManager([]);
+  const chain = RemirrorTestChain.create(manager);
+
+  const { getByRole } = render(
+    <RemirrorProvider initialContent={docNodeBasicJSON} manager={manager}>
+      <TestComponent />
+    </RemirrorProvider>,
+  );
+
+  const { p, doc } = chain.nodes;
+
+  chain.add(doc(p('')));
+  fireEvent.click(getByRole('button'));
+
+  expect(chain.state.doc).toEqualRemirrorDocument(doc(p('ab')));
 });

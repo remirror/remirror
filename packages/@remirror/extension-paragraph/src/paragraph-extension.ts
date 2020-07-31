@@ -1,6 +1,5 @@
 import {
   ApplySchemaAttributes,
-  convertCommand,
   extensionDecorator,
   ExtensionPriority,
   ExtensionTag,
@@ -8,8 +7,8 @@ import {
   NodeExtensionSpec,
   NodeGroup,
   ProsemirrorAttributes,
+  setBlockType,
 } from '@remirror/core';
-import { setBlockType } from '@remirror/pm/commands';
 
 /**
  * The paragraph is one of the essential building blocks for a prosemirror
@@ -56,12 +55,8 @@ export class ParagraphExtension extends NodeExtension {
   createCommands() {
     return {
       createParagraph: (attributes: ProsemirrorAttributes) => {
-        return convertCommand(setBlockType(this.type, attributes));
+        return setBlockType(this.type, attributes);
       },
     };
   }
 }
-
-/**
- * The possible values for text alignment.
- */

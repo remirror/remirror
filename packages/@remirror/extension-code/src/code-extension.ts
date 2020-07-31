@@ -1,7 +1,7 @@
 import {
   ApplySchemaAttributes,
-  convertCommand,
   extensionDecorator,
+  InputRule,
   KeyBindings,
   LEAF_NODE_REPLACING_CHARACTER,
   MarkExtension,
@@ -9,8 +9,9 @@ import {
   MarkGroup,
   markInputRule,
   markPasteRule,
+  Plugin,
+  toggleMark,
 } from '@remirror/core';
-import { toggleMark } from '@remirror/pm/commands';
 
 /**
  * Add a `code` mark to the editor. This is used to mark inline text as a code snippet.
@@ -32,7 +33,7 @@ export class CodeExtension extends MarkExtension {
 
   createKeymap(): KeyBindings {
     return {
-      'Mod-`': convertCommand(toggleMark(this.type)),
+      'Mod-`': toggleMark({ type: this.type }),
     };
   }
 
@@ -41,11 +42,11 @@ export class CodeExtension extends MarkExtension {
       /**
        * Toggle the current selection as a code mark.
        */
-      toggleCode: () => convertCommand(toggleMark(this.type)),
+      toggleCode: () => toggleMark({ type: this.type }),
     };
   }
 
-  createInputRules() {
+  createInputRules(): InputRule[] {
     return [
       markInputRule({
         regexp: new RegExp(`(?:\`)([^\`${LEAF_NODE_REPLACING_CHARACTER}]+)(?:\`)$`),
@@ -54,7 +55,7 @@ export class CodeExtension extends MarkExtension {
     ];
   }
 
-  createPasteRules() {
+  createPasteRules(): Plugin[] {
     return [markPasteRule({ regexp: /`([^`]+)`/g, type: this.type })];
   }
 }
