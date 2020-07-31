@@ -1,14 +1,20 @@
 import { isArray } from '@remirror/core-helpers';
 import { CustomHandler } from '@remirror/core-types';
-import { addSuggester, suggest, Suggester } from '@remirror/pm/suggest';
+import {
+  addSuggester,
+  getSuggestPluginState,
+  suggest,
+  Suggester,
+  SuggestState,
+} from '@remirror/pm/suggest';
 
 import { extensionDecorator } from '../decorators';
 import { PlainExtension } from '../extension';
 import { AddCustomHandler } from '../extension/base-class';
 
-export interface SuggesterOptions {
+export interface SuggestOptions {
   /**
-   * The ability to add a suggester
+   * The custom handler which enables adding `suggesters`.
    */
   suggester: CustomHandler<Suggester>;
 }
@@ -24,8 +30,8 @@ export interface SuggesterOptions {
  *
  * @builtin
  */
-@extensionDecorator<SuggesterOptions>({ customHandlerKeys: ['suggester'] })
-export class SuggesterExtension extends PlainExtension<SuggesterOptions> {
+@extensionDecorator<SuggestOptions>({ customHandlerKeys: ['suggester'] })
+export class SuggestExtension extends PlainExtension<SuggestOptions> {
   get name() {
     return 'suggestions' as const;
   }
@@ -56,7 +62,7 @@ export class SuggesterExtension extends PlainExtension<SuggesterOptions> {
     this.store.addPlugins(suggest(...suggesters));
   };
 
-  onAddCustomHandler: AddCustomHandler<SuggesterOptions> = ({ suggester }) => {
+  onAddCustomHandler: AddCustomHandler<SuggestOptions> = ({ suggester }) => {
     if (!suggester) {
       return;
     }
@@ -65,6 +71,34 @@ export class SuggesterExtension extends PlainExtension<SuggesterOptions> {
     // method.
     return addSuggester(this.store.getState(), suggester);
   };
+
+  createHelpers() {
+    return {
+      /**
+       * Get the suggest plugin state.
+       */
+      getSuggestPluginState: () => this.getSuggestPluginState(),
+
+      /**
+       * Get some helpful methods from the SuggestPluginState.
+       */
+      getSuggestPluginHelpers: () => {
+        const {
+          addIgnored,
+          clearIgnored,
+          removeIgnored,
+          ignoreNextExit,
+          setMarkRemoved,
+        } = this.getSuggestPluginState();
+
+        return { addIgnored, clearIgnored, removeIgnored, ignoreNextExit, setMarkRemoved };
+      },
+    };
+  }
+
+  private getSuggestPluginState(): SuggestState {
+    return getSuggestPluginState(this.store.getState());
+  }
 }
 
 declare global {

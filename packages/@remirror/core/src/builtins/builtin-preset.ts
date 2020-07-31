@@ -13,10 +13,10 @@ import { NodeViewsExtension } from './node-views-extension';
 import { PasteRulesExtension } from './paste-rules-extension';
 import { PluginsExtension } from './plugins-extension';
 import { SchemaExtension } from './schema-extension';
-import { SuggesterExtension, SuggesterOptions } from './suggester-extension';
+import { SuggestExtension, SuggestOptions } from './suggest-extension';
 import { TagsExtension } from './tags-extension';
 
-export interface BuiltinOptions extends SuggesterOptions, KeymapOptions {}
+export interface BuiltinOptions extends SuggestOptions, KeymapOptions {}
 
 /**
  * Provides all the builtin extensions to the editor.
@@ -52,7 +52,7 @@ export class BuiltinPreset extends Preset<BuiltinOptions> {
     const { suggester, keymap } = handlers;
 
     if (suggester) {
-      return this.getExtension(SuggesterExtension).addCustomHandler('suggester', suggester);
+      return this.getExtension(SuggestExtension).addCustomHandler('suggester', suggester);
     }
 
     if (keymap) {
@@ -77,7 +77,7 @@ export class BuiltinPreset extends Preset<BuiltinOptions> {
       new InputRulesExtension(),
       new PasteRulesExtension(),
       new NodeViewsExtension(),
-      new SuggesterExtension(),
+      new SuggestExtension(),
       new CommandsExtension(),
       new HelpersExtension(),
       new KeymapExtension(keymapOptions),
