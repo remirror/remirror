@@ -6,7 +6,7 @@ import {
   ProsemirrorNode,
 } from '@remirror/core';
 import { DomEditorWrapperProps } from '@remirror/dom';
-import { CreateCoreManagerOptions } from '@remirror/testing';
+import { CreateCoreManagerOptions } from '@remirror/preset-core';
 
 export interface BaseFactoryParameter<Schema extends EditorSchema = EditorSchema>
   extends Partial<AttributesParameter> {
