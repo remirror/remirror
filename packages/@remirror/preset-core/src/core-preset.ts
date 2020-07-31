@@ -31,15 +31,7 @@ export interface CorePresetOptions extends DocOptions, PositionerOptions, Histor
    * @defaultValue `[]`
    */
   excludeExtensions?: Static<
-    Array<
-      | 'doc'
-      | 'paragraph'
-      | 'text'
-      | 'positioner'
-      | 'history'
-      | 'gapCursor'
-      | 'events'
-    >
+    Array<'doc' | 'paragraph' | 'text' | 'positioner' | 'history' | 'gapCursor' | 'events'>
   >;
 }
 
@@ -86,7 +78,14 @@ export class CorePreset extends Preset<CorePresetOptions> {
   };
 
   createExtensions() {
-const { content, depth, getDispatch, getState, newGroupDelay, excludeExtensions } = this.options;
+    const {
+      content,
+      depth,
+      getDispatch,
+      getState,
+      newGroupDelay,
+      excludeExtensions,
+    } = this.options;
 
     type ExcludeExtensionKey = typeof excludeExtensions[number];
     const excludeMap: Partial<Record<ExcludeExtensionKey, boolean>> = {};
@@ -102,7 +101,7 @@ const { content, depth, getDispatch, getState, newGroupDelay, excludeExtensions 
       | TextExtension
       | ParagraphExtension
       | PositionerExtension
-      | EventsExtension
+      | EventsExtension;
 
     const coreExtensions: CoreExtension[] = [];
 
