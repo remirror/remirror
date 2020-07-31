@@ -1,5 +1,24 @@
 # @remirror/preset-social
 
+## 1.0.0-next.15
+
+> 2020-07-31
+
+### Patch Changes
+
+- 9d708c03: Reduce the `AutoLinkExtension` priority and remove priority override for the mention and
+  emoji extensions.
+- Updated dependencies [cdc5b801]
+- Updated dependencies [0dd4d621]
+- Updated dependencies [44516da4]
+- Updated dependencies [e5ea0c84]
+- Updated dependencies [a404f5a1]
+- Updated dependencies [6c3b278b]
+  - @remirror/core@1.0.0-next.15
+  - @remirror/extension-emoji@1.0.0-next.15
+  - @remirror/extension-auto-link@1.0.0-next.15
+  - @remirror/extension-mention@1.0.0-next.15
+
 ## 1.0.0-next.13
 
 > 2020-07-29

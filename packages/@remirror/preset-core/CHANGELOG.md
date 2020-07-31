@@ -1,5 +1,53 @@
 # @remirror/preset-core
 
+## 1.0.0-next.15
+
+> 2020-07-31
+
+### Minor Changes
+
+- f91dcab1: 🎉 New extension `@remirror/extension-events`.
+
+  This extension adds handlers for the events happening within the remirror editor. The extension is
+  part of the `CorePreset` but it doesn't make it's handlers available to the preset. In order to
+  use the handlers you will need direct access to the `EventsExtension`.
+
+  ```ts
+  import { EventsExtension } from 'remirror/extension-events';
+  import { useExtension } from 'remirror/react';
+
+  const Editor = () => {
+    useExtension(
+      EventsExtension,
+      ({ addHandler }) => {
+        addHandler('focus', () => log('focused'));
+      },
+      [],
+    );
+  };
+  ```
+
+  To begin with the only events added are `focus` and `blur`.
+
+### Patch Changes
+
+- Updated dependencies [cdc5b801]
+- Updated dependencies [44516da4]
+- Updated dependencies [e5ea0c84]
+- Updated dependencies [a404f5a1]
+- Updated dependencies [6c3b278b]
+- Updated dependencies [7477b935]
+- Updated dependencies [f91dcab1]
+  - @remirror/core@1.0.0-next.15
+  - @remirror/extension-paragraph@1.0.0-next.15
+  - @remirror/extension-history@1.0.0-next.15
+  - @remirror/extension-events@1.0.0-next.15
+  - @remirror/extension-base-keymap@1.0.0-next.15
+  - @remirror/extension-doc@1.0.0-next.15
+  - @remirror/extension-gap-cursor@1.0.0-next.15
+  - @remirror/extension-positioner@1.0.0-next.15
+  - @remirror/extension-text@1.0.0-next.15
+
 ## 1.0.0-next.13
 
 > 2020-07-29

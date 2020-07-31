@@ -1,5 +1,44 @@
 # @remirror/preset-wysiwyg
 
+## 1.0.0-next.15
+
+> 2020-07-31
+
+### Patch Changes
+
+- Updated dependencies [cdc5b801]
+- Updated dependencies [0ff4fd5c]
+- Updated dependencies [44516da4]
+- Updated dependencies [e5ea0c84]
+- Updated dependencies [a404f5a1]
+- Updated dependencies [e3d937f0]
+- Updated dependencies [6c3b278b]
+- Updated dependencies [08e51078]
+- Updated dependencies [f91dcab1]
+  - @remirror/core@1.0.0-next.15
+  - @remirror/extension-horizontal-rule@1.0.0-next.15
+  - @remirror/extension-code@1.0.0-next.15
+  - @remirror/extension-code-block@1.0.0-next.15
+  - @remirror/extension-heading@1.0.0-next.15
+  - @remirror/extension-italic@1.0.0-next.15
+  - @remirror/extension-strike@1.0.0-next.15
+  - @remirror/extension-underline@1.0.0-next.15
+  - @remirror/extension-bold@1.0.0-next.15
+  - @remirror/extension-hard-break@1.0.0-next.15
+  - @remirror/preset-core@1.0.0-next.15
+  - @remirror/extension-bidi@1.0.0-next.15
+  - @remirror/extension-blockquote@1.0.0-next.15
+  - @remirror/extension-drop-cursor@1.0.0-next.15
+  - @remirror/extension-epic-mode@1.0.0-next.15
+  - @remirror/extension-gap-cursor@1.0.0-next.15
+  - @remirror/extension-image@1.0.0-next.15
+  - @remirror/extension-link@1.0.0-next.15
+  - @remirror/extension-search@1.0.0-next.15
+  - @remirror/extension-trailing-node@1.0.0-next.15
+  - @remirror/preset-embed@1.0.0-next.15
+  - @remirror/preset-list@1.0.0-next.15
+  - @remirror/preset-table@1.0.0-next.15
+
 ## 1.0.0-next.13
 
 > 2020-07-29

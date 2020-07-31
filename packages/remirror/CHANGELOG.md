@@ -1,5 +1,145 @@
 # remirror
 
+## 1.0.0-next.15
+
+> 2020-07-31
+
+### Major Changes
+
+- cdc5b801: Add three new helpers to `@remirror/core-utils` / `@remirror/core`: `isStateEqual`,
+  `areSchemaCompatible` and `getRemirrorJSON`.
+
+  BREAKING: 💥 Rename `getObjectNode` to `getRemirrorJSON`.
+
+- 0ff4fd5c: Default to inserting a new paragraph node after the `HorizontalRuleExtension`.
+
+  BREAKING: 💥 Rename `horizonalRule` command to `insertHorizontalRule`.
+
+  Add a new option `insertionNode` to the `HorizontalRuleExtension` which sets the default node to
+  automatically append after insertion.
+
+  Update the css styles for the default `hr` tag.
+
+  Closes #417
+
+### Minor Changes
+
+- 44516da4: Support `chained` commands and multiple command updates in controlled editors.
+
+  Fixes #418
+
+- e5ea0c84: Add support for `Handler` options with custom return values and early returns.
+
+  Previously handlers would ignore any return values. Now a handler will honour the return value.
+  The earlyReturn value can be specified in the static options using the `extensionDecorator`.
+  Currently it only supports primitives. Support for a function to check the return value will be
+  added later.
+
+- 08e51078: Add `insertHardBreak` command.
+
+  Add inline documentation instructing developers to use the `TrailingNodeExtension` when using
+  `hardBreak` to exit a `codeBlock`.
+
+- f91dcab1: 🎉 New extension `@remirror/extension-events`.
+
+  This extension adds handlers for the events happening within the remirror editor. The extension is
+  part of the `CorePreset` but it doesn't make it's handlers available to the preset. In order to
+  use the handlers you will need direct access to the `EventsExtension`.
+
+  ```ts
+  import { EventsExtension } from 'remirror/extension-events';
+  import { useExtension } from 'remirror/react';
+
+  const Editor = () => {
+    useExtension(
+      EventsExtension,
+      ({ addHandler }) => {
+        addHandler('focus', () => log('focused'));
+      },
+      [],
+    );
+  };
+  ```
+
+  To begin with the only events added are `focus` and `blur`.
+
+### Patch Changes
+
+- 0dd4d621: Prevent mid word emoji matches on colon press.
+- 273d0a71: Hide social popups when the editor is blurred.
+- 9d708c03: Reduce the `AutoLinkExtension` priority and remove priority override for the mention and
+  emoji extensions.
+- a404f5a1: Add the option `excludeExtensions` to `CorePreset`'s `constructor` to exclude any
+  extensions.
+
+  Remove the option `excludeHistory` from `CorePreset`'s `constructor`.
+
+- e3d937f0: Support chaining for `setBold` and `removeBold` commands.
+- 6c3b278b: Make sure the `transaction` has all the latest updates if changed between
+  `onStateUpdate` events. This allows chaining to be supported properly.
+- 7477b935: Use `NonChainableCommandFunction` annotation to indicate commands are not chainable.
+- Updated dependencies [cdc5b801]
+- Updated dependencies [0dd4d621]
+- Updated dependencies [0ff4fd5c]
+- Updated dependencies [273d0a71]
+- Updated dependencies [44516da4]
+- Updated dependencies [9d708c03]
+- Updated dependencies [e5ea0c84]
+- Updated dependencies [a404f5a1]
+- Updated dependencies [e3d937f0]
+- Updated dependencies [6c3b278b]
+- Updated dependencies [7477b935]
+- Updated dependencies [08e51078]
+- Updated dependencies [f91dcab1]
+  - @remirror/core-utils@1.0.0-next.15
+  - @remirror/core@1.0.0-next.15
+  - @remirror/extension-emoji@1.0.0-next.15
+  - @remirror/extension-horizontal-rule@1.0.0-next.15
+  - @remirror/react-social@1.0.0-next.15
+  - @remirror/extension-code@1.0.0-next.15
+  - @remirror/extension-code-block@1.0.0-next.15
+  - @remirror/extension-heading@1.0.0-next.15
+  - @remirror/extension-italic@1.0.0-next.15
+  - @remirror/extension-paragraph@1.0.0-next.15
+  - @remirror/extension-strike@1.0.0-next.15
+  - @remirror/extension-underline@1.0.0-next.15
+  - @remirror/preset-social@1.0.0-next.15
+  - @remirror/extension-bold@1.0.0-next.15
+  - @remirror/extension-history@1.0.0-next.15
+  - @remirror/extension-yjs@1.0.0-next.15
+  - @remirror/extension-hard-break@1.0.0-next.15
+  - @remirror/extension-events@1.0.0-next.15
+  - @remirror/preset-core@1.0.0-next.15
+  - @remirror/dom@1.0.0-next.15
+  - @remirror/extension-auto-link@1.0.0-next.15
+  - @remirror/extension-base-keymap@1.0.0-next.15
+  - @remirror/extension-bidi@1.0.0-next.15
+  - @remirror/extension-blockquote@1.0.0-next.15
+  - @remirror/extension-collaboration@1.0.0-next.15
+  - @remirror/extension-diff@1.0.0-next.15
+  - @remirror/extension-doc@1.0.0-next.15
+  - @remirror/extension-drop-cursor@1.0.0-next.15
+  - @remirror/extension-epic-mode@1.0.0-next.15
+  - @remirror/extension-gap-cursor@1.0.0-next.15
+  - @remirror/extension-image@1.0.0-next.15
+  - @remirror/extension-link@1.0.0-next.15
+  - @remirror/extension-mention@1.0.0-next.15
+  - @remirror/extension-placeholder@1.0.0-next.15
+  - @remirror/extension-position-tracker@1.0.0-next.15
+  - @remirror/extension-positioner@1.0.0-next.15
+  - @remirror/extension-react-component@1.0.0-next.15
+  - @remirror/extension-react-ssr@1.0.0-next.15
+  - @remirror/extension-search@1.0.0-next.15
+  - @remirror/extension-text@1.0.0-next.15
+  - @remirror/extension-trailing-node@1.0.0-next.15
+  - @remirror/preset-embed@1.0.0-next.15
+  - @remirror/preset-list@1.0.0-next.15
+  - @remirror/preset-react@1.0.0-next.15
+  - @remirror/preset-table@1.0.0-next.15
+  - @remirror/preset-wysiwyg@1.0.0-next.15
+  - @remirror/react@1.0.0-next.15
+  - @remirror/react-wysiwyg@1.0.0-next.15
+
 ## 1.0.0-next.13
 
 > 2020-07-29
