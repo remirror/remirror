@@ -42,13 +42,6 @@
     "running": false
   },
   {
-    "name": "@remirror/extension-base-keymap",
-    "path": "packages/@remirror/extension-base-keymap/dist/extension-base-keymap.esm.js",
-    "limit": "5 KB",
-    "ignore": ["@remirror/core", "@remirror/pm"],
-    "running": false
-  },
-  {
     "name": "@remirror/extension-bidi",
     "path": "packages/@remirror/extension-bidi/dist/extension-bidi.esm.js",
     "limit": "5 KB",
@@ -121,6 +114,13 @@
   {
     "name": "@remirror/extension-epic-mode",
     "path": "packages/@remirror/extension-epic-mode/dist/extension-epic-mode.esm.js",
+    "limit": "5 KB",
+    "ignore": ["@remirror/core", "@remirror/pm"],
+    "running": false
+  },
+  {
+    "name": "@remirror/extension-events",
+    "path": "packages/@remirror/extension-events/dist/extension-events.esm.js",
     "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
@@ -384,6 +384,8 @@
     "limit": "200 KB",
     "ignore": [
       "@remirror/core",
+      "@remirror/extension-auto-link",
+      "@remirror/extension-mention",
       "@remirror/pm",
       "@remirror/react",
       "@types/react",

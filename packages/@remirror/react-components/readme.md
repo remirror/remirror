@@ -1,6 +1,6 @@
 # @remirror/react-components
 
-> The `remirror` what-you-see-is-what-you-get (wysiwyg) editing experience.
+> A selection of core react components for your remirror editor.
 
 [![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
 [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)

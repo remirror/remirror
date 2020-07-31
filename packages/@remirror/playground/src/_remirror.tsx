@@ -11,7 +11,6 @@ import { useRemirrorPlayground } from './use-remirror-playground';
 export const IMPORT_CACHE: { [moduleName: string]: any } = {
   // Auto-imported
   'remirror/extension/auto-link': require('remirror/extension/auto-link'),
-  'remirror/extension/base-keymap': require('remirror/extension/base-keymap'),
   'remirror/extension/bidi': require('remirror/extension/bidi'),
   'remirror/extension/blockquote': require('remirror/extension/blockquote'),
   'remirror/extension/bold': require('remirror/extension/bold'),
@@ -23,6 +22,7 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
   'remirror/extension/drop-cursor': require('remirror/extension/drop-cursor'),
   'remirror/extension/emoji': require('remirror/extension/emoji'),
   'remirror/extension/epic-mode': require('remirror/extension/epic-mode'),
+  'remirror/extension/events': require('remirror/extension/events'),
   'remirror/extension/gap-cursor': require('remirror/extension/gap-cursor'),
   'remirror/extension/hard-break': require('remirror/extension/hard-break'),
   'remirror/extension/heading': require('remirror/extension/heading'),
@@ -91,10 +91,6 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
     exports: ['AutoLinkExtension'],
   },
   {
-    moduleName: 'remirror/extension/base-keymap',
-    exports: ['BaseKeymapExtension'],
-  },
-  {
     moduleName: 'remirror/extension/bidi',
     exports: ['BidiExtension'],
   },
@@ -159,6 +155,10 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
     exports: ['COLORS', 'EpicModeExtension', 'defaultEffect', 'heartEffect', 'spawningEffect'],
   },
   {
+    moduleName: 'remirror/extension/events',
+    exports: ['EventsExtension'],
+  },
+  {
     moduleName: 'remirror/extension/gap-cursor',
     exports: ['GapCursorExtension', 'editorStyles', 'isGapCursorSelection'],
   },
@@ -210,11 +210,13 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
     moduleName: 'remirror/extension/positioner',
     exports: [
       'PositionerExtension',
-      'bubblePositioner',
-      'defaultPositioner',
-      'floatingPositioner',
-      'getInitialPosition',
-      'popupMenuPositioner',
+      'centeredSelectionPositioner',
+      'emptyVirtualPosition',
+      'floatingSelectionPositioner',
+      'getPositioner',
+      'hasStateChanged',
+      'isEmptyBlockNode',
+      'noSelectionPopupMenu',
     ],
   },
   {
@@ -282,10 +284,8 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
   {
     moduleName: 'remirror/preset/wysiwyg',
     exports: [
-      'EmbedOptions',
       'EmbedPreset',
       'ListPreset',
-      'TableOptions',
       'TablePreset',
       'WysiwygPreset',
       'createWysiwygPresetList',

@@ -1,6 +1,6 @@
 # @remirror/react-hooks
 
-> The `remirror` what-you-see-is-what-you-get (wysiwyg) editing experience.
+> A selection of core react hooks for your editor.
 
 [![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
 [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)

@@ -138,6 +138,7 @@
       "extension/drop-cursor",
       "extension/emoji",
       "extension/epic-mode",
+      "extension/events",
       "extension/gap-cursor",
       "extension/hard-break",
       "extension/heading",

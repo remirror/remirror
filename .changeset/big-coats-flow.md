@@ -1,7 +1,6 @@
 ---
 '@remirror/core': patch
 '@remirror/extension-auto-link': patch
-'@remirror/extension-base-keymap': patch
 '@remirror/extension-blockquote': patch
 '@remirror/extension-bold': patch
 '@remirror/extension-code': patch
