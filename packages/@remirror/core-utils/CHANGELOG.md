@@ -1,5 +1,22 @@
 # @remirror/core-utils
 
+## 1.0.0-next.15
+
+> 2020-07-31
+
+### Major Changes
+
+- cdc5b801: Add three new helpers to `@remirror/core-utils` / `@remirror/core`: `isStateEqual`,
+  `areSchemaCompatible` and `getRemirrorJSON`.
+
+  BREAKING: 💥 Rename `getObjectNode` to `getRemirrorJSON`.
+
+### Minor Changes
+
+- 44516da4: Support `chained` commands and multiple command updates in controlled editors.
+
+  Fixes #418
+
 ## 1.0.0-next.12
 
 > 2020-07-28

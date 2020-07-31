@@ -1,5 +1,19 @@
 # @remirror/extension-yjs
 
+## 1.0.0-next.15
+
+> 2020-07-31
+
+### Patch Changes
+
+- 7477b935: Use `NonChainableCommandFunction` annotation to indicate commands are not chainable.
+- Updated dependencies [cdc5b801]
+- Updated dependencies [44516da4]
+- Updated dependencies [e5ea0c84]
+- Updated dependencies [a404f5a1]
+- Updated dependencies [6c3b278b]
+  - @remirror/core@1.0.0-next.15
+
 ## 1.0.0-next.13
 
 > 2020-07-29

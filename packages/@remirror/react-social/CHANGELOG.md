@@ -1,5 +1,31 @@
 # @remirror/react-social
 
+## 1.0.0-next.15
+
+> 2020-07-31
+
+### Minor Changes
+
+- 273d0a71: Hide social popups when the editor is blurred.
+
+### Patch Changes
+
+- Updated dependencies [cdc5b801]
+- Updated dependencies [0dd4d621]
+- Updated dependencies [44516da4]
+- Updated dependencies [9d708c03]
+- Updated dependencies [e5ea0c84]
+- Updated dependencies [a404f5a1]
+- Updated dependencies [6c3b278b]
+- Updated dependencies [f91dcab1]
+  - @remirror/core@1.0.0-next.15
+  - @remirror/extension-emoji@1.0.0-next.15
+  - @remirror/preset-social@1.0.0-next.15
+  - @remirror/extension-events@1.0.0-next.15
+  - @remirror/extension-auto-link@1.0.0-next.15
+  - @remirror/extension-mention@1.0.0-next.15
+  - @remirror/react@1.0.0-next.15
+
 ## 1.0.0-next.14
 
 > 2020-07-29

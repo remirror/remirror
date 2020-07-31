@@ -1,5 +1,43 @@
 # @remirror/core
 
+## 1.0.0-next.15
+
+> 2020-07-31
+
+### Major Changes
+
+- cdc5b801: Add three new helpers to `@remirror/core-utils` / `@remirror/core`: `isStateEqual`,
+  `areSchemaCompatible` and `getRemirrorJSON`.
+
+  BREAKING: 💥 Rename `getObjectNode` to `getRemirrorJSON`.
+
+- a404f5a1: Add the option `excludeExtensions` to `CorePreset`'s `constructor` to exclude any
+  extensions.
+
+  Remove the option `excludeHistory` from `CorePreset`'s `constructor`.
+
+### Minor Changes
+
+- 44516da4: Support `chained` commands and multiple command updates in controlled editors.
+
+  Fixes #418
+
+- e5ea0c84: Add support for `Handler` options with custom return values and early returns.
+
+  Previously handlers would ignore any return values. Now a handler will honour the return value.
+  The earlyReturn value can be specified in the static options using the `extensionDecorator`.
+  Currently it only supports primitives. Support for a function to check the return value will be
+  added later.
+
+- 6c3b278b: Make sure the `transaction` has all the latest updates if changed between
+  `onStateUpdate` events. This allows chaining to be supported properly.
+
+### Patch Changes
+
+- Updated dependencies [cdc5b801]
+- Updated dependencies [44516da4]
+  - @remirror/core-utils@1.0.0-next.15
+
 ## 1.0.0-next.13
 
 > 2020-07-29

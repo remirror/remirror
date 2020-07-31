@@ -1,5 +1,25 @@
 # @remirror/extension-hard-break
 
+## 1.0.0-next.15
+
+> 2020-07-31
+
+### Minor Changes
+
+- 08e51078: Add `insertHardBreak` command.
+
+  Add inline documentation instructing developers to use the `TrailingNodeExtension` when using
+  `hardBreak` to exit a `codeBlock`.
+
+### Patch Changes
+
+- Updated dependencies [cdc5b801]
+- Updated dependencies [44516da4]
+- Updated dependencies [e5ea0c84]
+- Updated dependencies [a404f5a1]
+- Updated dependencies [6c3b278b]
+  - @remirror/core@1.0.0-next.15
+
 ## 1.0.0-next.13
 
 > 2020-07-29

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-wysiwyg",
-  "version": "1.0.0-next.13",
+  "version": "1.0.0-next.15",
   "description": "The `remirror` what-you-see-is-what-you-get (wysiwyg) editing experience.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react-wysiwyg",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react-wysiwyg",
@@ -19,10 +19,10 @@
   "dependencies": {
     "@babel/runtime": "^7.10.5",
     "@lingui/core": "^3.0.0-13",
-    "@remirror/extension-auto-link": "^1.0.0-next.13",
+    "@remirror/extension-auto-link": "^1.0.0-next.15",
     "@remirror/i18n": "^1.0.0-next.4",
-    "@remirror/preset-social": "^1.0.0-next.13",
-    "@remirror/preset-wysiwyg": "^1.0.0-next.13",
+    "@remirror/preset-social": "^1.0.0-next.15",
+    "@remirror/preset-wysiwyg": "^1.0.0-next.15",
     "@remirror/react-utils": "^1.0.0-next.4",
     "@remirror/theme": "^1.0.0-next.4",
     "@types/classnames": "^2.2.10",
@@ -33,9 +33,9 @@
   },
   "devDependencies": {
     "@lingui/macro": "^3.0.0-13",
-    "@remirror/core": "^1.0.0-next.13",
+    "@remirror/core": "^1.0.0-next.15",
     "@remirror/pm": "^1.0.0-next.4",
-    "@remirror/react": "^1.0.0-next.13",
+    "@remirror/react": "^1.0.0-next.15",
     "@testing-library/react": "^10.4.7",
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
@@ -43,9 +43,9 @@
     "react-dom": "^16.13.1"
   },
   "peerDependencies": {
-    "@remirror/core": "^1.0.0-next.13",
+    "@remirror/core": "^1.0.0-next.15",
     "@remirror/pm": "^1.0.0-next.4",
-    "@remirror/react": "^1.0.0-next.13",
+    "@remirror/react": "^1.0.0-next.15",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "react": "^16.8.0",

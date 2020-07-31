@@ -1,5 +1,27 @@
 # jest-remirror
 
+## 1.0.0-next.15
+
+> 2020-07-31
+
+### Minor Changes
+
+- 843c18e7: Add `chain` method to `RemirrorTestChain` and update select text to receive `all` for
+  selecting all text.
+
+### Patch Changes
+
+- 9de09793: Fix the dependencies.
+- Updated dependencies [cdc5b801]
+- Updated dependencies [44516da4]
+- Updated dependencies [e5ea0c84]
+- Updated dependencies [a404f5a1]
+- Updated dependencies [6c3b278b]
+- Updated dependencies [f91dcab1]
+  - @remirror/core@1.0.0-next.15
+  - @remirror/preset-core@1.0.0-next.15
+  - @remirror/dom@1.0.0-next.15
+
 ## 1.0.0-next.10
 
 > 2020-07-26
