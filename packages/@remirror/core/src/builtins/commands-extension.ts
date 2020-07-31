@@ -1,5 +1,5 @@
 import { ErrorConstant, ExtensionPriority } from '@remirror/core-constants';
-import { entries, invariant, object, uniqueArray } from '@remirror/core-helpers';
+import { entries, invariant, isEmptyArray, object, uniqueArray } from '@remirror/core-helpers';
 import {
   AnyFunction,
   CommandFunction,
@@ -52,8 +52,23 @@ export class CommandsExtension extends PlainExtension {
   get transaction(): Transaction {
     const state = this.store.getState();
 
-    if (!this.#transaction || !this.#transaction.before.eq(state.doc)) {
+    if (!this.#transaction) {
       this.#transaction = state.tr;
+    }
+
+    const isValid = this.#transaction.before.eq(state.doc);
+    const hasSteps = !isEmptyArray(this.#transaction.steps);
+
+    if (!isValid) {
+      const tr = state.tr;
+
+      if (hasSteps) {
+        for (const step of this.#transaction.steps) {
+          tr.step(step);
+        }
+      }
+
+      this.#transaction = tr;
     }
 
     return this.#transaction;
