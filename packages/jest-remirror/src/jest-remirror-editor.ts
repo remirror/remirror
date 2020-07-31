@@ -16,6 +16,7 @@ import {
 import {
   ActiveFromCombined,
   AnyCombinedUnion,
+  ChainedFromCombined,
   CommandFunctionParameter,
   CommandsFromCombined,
   EditorState,
@@ -164,6 +165,15 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    */
   get commands(): CommandsFromCombined<Combined> {
     return this.#manager.store.commands;
+  }
+
+  /**
+   * The chainable commands available in the editor. When updating the content of the
+   * TestEditor make sure not to use a stale copy of the actions otherwise it
+   * will throw errors due to using an outdated state.
+   */
+  get chain(): ChainedFromCombined<Combined> {
+    return this.#manager.store.chain;
   }
 
   /**
@@ -329,12 +339,16 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Selects the text between the provided start and end.
    */
-  readonly selectText = (start: number, end?: number) => {
-    dispatchTextSelection({
-      view: this.view,
-      start,
-      end: end && start <= end ? end : this.doc.resolve(start).end(),
-    });
+  readonly selectText = (start: number | 'all', end?: number) => {
+    if (start === 'all') {
+      dispatchAllSelection(this.view);
+    } else {
+      dispatchTextSelection({
+        view: this.view,
+        start,
+        end: end && start <= end ? end : this.doc.resolve(start).end(),
+      });
+    }
 
     return this;
   };
@@ -391,7 +405,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * it calls the paste handler `transformPaste` and that is all.
    *
    * @param content - The text or node to paste into the document at the current
-   * selection.
+   * —ion.
    */
   readonly paste = (content: TaggedProsemirrorNode | string) => {
     pasteContent({ view: this.view, content });
