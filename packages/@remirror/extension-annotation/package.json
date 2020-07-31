@@ -7,7 +7,7 @@
     "extension"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/core",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/core",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-annotation",
   "license": "MIT",
   "contributors": [
     "Ronny Roeller <ronny@nextapp.co>"
