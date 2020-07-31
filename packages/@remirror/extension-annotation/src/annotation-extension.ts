@@ -166,7 +166,7 @@ export class AnnotationExtension<A extends Annotation = Annotation> extends Plai
    * @returns all annotations in the editor
    */
   getAnnotations(state: EditorState): A[] {
-    const decorations: DecorationSet = this.getPluginState(state);
+    const decorations: DecorationSet = this.getPluginState();
     return decorations.find().map((decoration) =>
       toAnnotation({
         state,
@@ -179,7 +179,7 @@ export class AnnotationExtension<A extends Annotation = Annotation> extends Plai
    * @returns all annotations at a specific position in the editor
    */
   getAnnotationsAt(state: EditorState, pos: number): A[] {
-    const decorations: DecorationSet = this.getPluginState(state);
+    const decorations: DecorationSet = this.getPluginState();
     return (
       decorations
         .find()

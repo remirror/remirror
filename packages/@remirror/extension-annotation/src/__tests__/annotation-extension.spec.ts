@@ -10,7 +10,11 @@ test('is valid', () => {
 });
 
 function create(options?: AnnotationOptions) {
-  return renderEditor([new AnnotationExtension(options)]);
+  const extension = new AnnotationExtension(options);
+  const editor = renderEditor([extension]);
+  return Object.assign(editor, {
+    extension,
+  });
 }
 
 describe('commands', () => {
@@ -129,15 +133,15 @@ describe('styling', () => {
 });
 
 describe('getters', () => {
-  const extension = new AnnotationExtension();
-  const {
-    add,
-    nodes: { p, doc },
-    commands,
-    view,
-  } = renderEditor([extension]);
+  it('#getAnnotations', () => {
+    const {
+      add,
+      extension,
+      nodes: { p, doc },
+      commands,
+      view,
+    } = create();
 
-  it.skip('#getAnnotations', () => {
     add(doc(p('<start>Hello<end>')));
     commands.addAnnotation({ id: '1' });
 
@@ -145,27 +149,43 @@ describe('getters', () => {
       {
         id: '1',
         from: 1,
-        to: 5,
+        to: 6,
         text: 'Hello',
       },
     ]);
   });
 
-  it.skip('#getAnnotationsAt', () => {
+  it('#getAnnotationsAt', () => {
+    const {
+      add,
+      extension,
+      nodes: { p, doc },
+      commands,
+      view,
+    } = create();
+
     add(doc(p('An <start>important<end> note')));
     commands.addAnnotation({ id: '1' });
 
     expect(extension.getAnnotationsAt(view.state, 5)).toEqual([
       {
         id: '1',
-        from: 3,
+        from: 4,
         to: 13,
         text: 'important',
       },
     ]);
   });
 
-  it.skip('#getAnnotationsAt (unannotated)', () => {
+  it('#getAnnotationsAt (unannotated)', () => {
+    const {
+      add,
+      extension,
+      nodes: { p, doc },
+      commands,
+      view,
+    } = create();
+
     add(doc(p('An <start>important<end> note')));
     commands.addAnnotation({ id: '1' });
 
@@ -186,18 +206,16 @@ describe('custom annotation type', () => {
     view,
   } = renderEditor([extension]);
 
-  it.skip('#getAnnotations', () => {
-    add(doc(p('<start>Hello<end>')));
-    commands.addAnnotation({ id: '1', tag: 'tag' });
+  add(doc(p('<start>Hello<end>')));
+  commands.addAnnotation({ id: '1', tag: 'tag' });
 
-    expect(extension.getAnnotations(view.state)).toEqual([
-      {
-        id: '1',
-        from: 1,
-        to: 5,
-        tag: 'tag',
-        text: 'Hello',
-      },
-    ]);
-  });
+  expect(extension.getAnnotations(view.state)).toEqual([
+    {
+      id: '1',
+      from: 1,
+      to: 6,
+      tag: 'tag',
+      text: 'Hello',
+    },
+  ]);
 });
