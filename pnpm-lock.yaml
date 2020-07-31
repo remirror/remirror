@@ -1196,7 +1196,7 @@ importers:
       '@testing-library/react-hooks': 3.4.1_react@16.13.1
       '@types/react': 16.9.43
       '@types/react-dom': 16.9.8
-      '@types/testing-library__react-hooks': 3.4.0
+      '@types/testing-library__react-hooks': registry.npmjs.org/@types/testing-library__react-hooks/3.4.0
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
     specifiers:
@@ -1211,7 +1211,7 @@ importers:
       '@testing-library/react-hooks': ^3.4.1
       '@types/react': ^16.9.43
       '@types/react-dom': ^16.9.8
-      '@types/testing-library__react-hooks': ^3.3.0
+      '@types/testing-library__react-hooks': ^3.4.0
       react: ^16.13.1
       react-dom: ^16.13.1
       type-fest: ^0.16.0
@@ -1752,8 +1752,6 @@ importers:
   support/deprecated/extension-enhanced-link:
     specifiers: {}
   support/deprecated/extension-tables:
-    specifiers: {}
-  support/deprecated/react-hooks:
     specifiers: {}
   support/deprecated/react-node-view:
     specifiers: {}
@@ -26695,6 +26693,45 @@ packages:
       registry: 'https://registry.yarnpkg.com/'
       tarball: 'https://registry.npmjs.org/@types/istanbul-reports/-/istanbul-reports-1.1.2.tgz'
     version: 1.1.2
+  registry.npmjs.org/@types/prop-types/15.7.3:
+    dev: true
+    name: '@types/prop-types'
+    resolution:
+      integrity: sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
+      registry: 'https://registry.yarnpkg.com/'
+      tarball: 'https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.3.tgz'
+    version: 15.7.3
+  registry.npmjs.org/@types/react-test-renderer/16.9.2:
+    dependencies:
+      '@types/react': registry.npmjs.org/@types/react/16.9.43
+    dev: true
+    name: '@types/react-test-renderer'
+    resolution:
+      integrity: sha512-4eJr1JFLIAlWhzDkBCkhrOIWOvOxcCAfQh+jiKg7l/nNZcCIL2MHl2dZhogIFKyHzedVWHaVP1Yydq/Ruu4agw==
+      registry: 'https://registry.yarnpkg.com/'
+      tarball: 'https://registry.npmjs.org/@types/react-test-renderer/-/react-test-renderer-16.9.2.tgz'
+    version: 16.9.2
+  registry.npmjs.org/@types/react/16.9.43:
+    dependencies:
+      '@types/prop-types': registry.npmjs.org/@types/prop-types/15.7.3
+      csstype: registry.npmjs.org/csstype/2.6.11
+    dev: true
+    name: '@types/react'
+    resolution:
+      integrity: sha512-PxshAFcnJqIWYpJbLPriClH53Z2WlJcVZE+NP2etUtWQs2s7yIMj3/LDKZT/5CHJ/F62iyjVCDu2H3jHEXIxSg==
+      registry: 'https://registry.yarnpkg.com/'
+      tarball: 'https://registry.npmjs.org/@types/react/-/react-16.9.43.tgz'
+    version: 16.9.43
+  registry.npmjs.org/@types/testing-library__react-hooks/3.4.0:
+    dependencies:
+      '@types/react-test-renderer': registry.npmjs.org/@types/react-test-renderer/16.9.2
+    dev: true
+    name: '@types/testing-library__react-hooks'
+    resolution:
+      integrity: sha512-QYLZipqt1hpwYsBU63Ssa557v5wWbncqL36No59LI7W3nCMYKrLWTnYGn2griZ6v/3n5nKXNYkTeYpqPHY7Ukg==
+      registry: 'https://registry.yarnpkg.com/'
+      tarball: 'https://registry.npmjs.org/@types/testing-library__react-hooks/-/testing-library__react-hooks-3.4.0.tgz'
+    version: 3.4.0
   registry.npmjs.org/@types/yargs-parser/15.0.0:
     dev: false
     name: '@types/yargs-parser'
@@ -26791,6 +26828,14 @@ packages:
       registry: 'https://registry.yarnpkg.com/'
       tarball: 'https://registry.npmjs.org/core-js-pure/-/core-js-pure-3.6.5.tgz'
     version: 3.6.5
+  registry.npmjs.org/csstype/2.6.11:
+    dev: true
+    name: csstype
+    resolution:
+      integrity: sha512-l8YyEC9NBkSm783PFTvh0FmJy7s5pFKrDp49ZL7zBGX3fWkO+N4EEyan1qqp8cwPLDcD0OSdyY6hAMoxp34JFw==
+      registry: 'https://registry.yarnpkg.com/'
+      tarball: 'https://registry.npmjs.org/csstype/-/csstype-2.6.11.tgz'
+    version: 2.6.11
   registry.npmjs.org/dom-accessibility-api/0.4.6:
     dev: false
     name: dom-accessibility-api

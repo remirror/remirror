@@ -1,117 +1,44 @@
 # @remirror/react-hooks
 
-## 1.0.0-next.7
-
-> 2020-07-21
-
-### Patch Changes
-
-- Updated dependencies [6c5a93c8]
-  - @remirror/react@1.0.0-next.7
-
-## 1.0.0-next.5
-
-> 2020-07-17
-
-### Patch Changes
-
-- Updated dependencies [4628d342]
-  - @remirror/react@1.0.0-next.5
-
-## 1.0.0-next.4
+## 1.0.0-next.1
 
 > 2020-07-16
 
 ### Patch Changes
 
 - 5d5970ae: Update repository and website field to point to HEAD rather than a specific branch.
-- Updated dependencies [64edeec2]
-- Updated dependencies [e1a1b6ec]
-- Updated dependencies [9f495078]
-- Updated dependencies [5d5970ae]
-- Updated dependencies [64edeec2]
-  - @remirror/core@1.0.0-next.4
-  - @remirror/react@1.0.0-next.4
-  - @remirror/extension-auto-link@1.0.0-next.4
-  - @remirror/i18n@1.0.0-next.4
-  - @remirror/pm@1.0.0-next.4
-  - @remirror/preset-social@1.0.0-next.4
-  - @remirror/preset-wysiwyg@1.0.0-next.4
-  - @remirror/react-utils@1.0.0-next.4
-  - @remirror/theme@1.0.0-next.4
-  - multishift@1.0.0-next.2
 
-## 1.0.0-next.3
-
-> 2020-07-11
+## 0.7.6
 
 ### Patch Changes
 
-- Updated dependencies [e90bc748]
-  - @remirror/pm@1.0.0-next.3
-  - @remirror/core@1.0.0-next.3
-  - @remirror/extension-auto-link@1.0.0-next.3
-  - @remirror/i18n@1.0.0-next.3
-  - @remirror/preset-social@1.0.0-next.3
-  - @remirror/preset-wysiwyg@1.0.0-next.3
-  - @remirror/react@1.0.0-next.3
+- Updated dependencies [0300d01c]
+  - @remirror/core-types@0.9.0
+  - @remirror/core-helpers@0.7.6
 
-## 1.0.0-next.2
-
-> 2020-07-06
+## 0.7.5
 
 ### Patch Changes
 
-- Updated dependencies [undefined]
-  - @remirror/core@1.0.0-next.2
-  - @remirror/react@1.0.0-next.2
-  - @remirror/react-utils@1.0.0-next.2
-  - @remirror/extension-auto-link@1.0.0-next.2
-  - @remirror/preset-social@1.0.0-next.2
-  - @remirror/preset-wysiwyg@1.0.0-next.2
+- Updated dependencies [24f83413]
+  - @remirror/core-types@0.8.0
+  - @remirror/core-helpers@0.7.5
 
-## 1.0.0-next.1
-
-> 2020-07-05
+## 0.7.4
 
 ### Patch Changes
 
-- Fix missing dist files from previous publish.
-- Updated dependencies [undefined]
-  - @remirror/core@1.0.0-next.1
-  - @remirror/extension-auto-link@1.0.0-next.1
-  - @remirror/i18n@1.0.0-next.1
-  - @remirror/pm@1.0.0-next.1
-  - @remirror/preset-social@1.0.0-next.1
-  - @remirror/preset-wysiwyg@1.0.0-next.1
-  - @remirror/react@1.0.0-next.1
-  - @remirror/react-utils@1.0.0-next.1
-  - multishift@1.0.0-next.1
+- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub
+  organisation.
+- Updated dependencies [7380e18f]
+  - @remirror/core-helpers@0.7.4
+  - @remirror/core-types@0.7.4
 
-## 1.0.0-next.0
-
-> 2020-07-05
-
-### Major Changes
-
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+## 0.7.3
 
 ### Patch Changes
 
-- Updated dependencies [undefined]
-- Updated dependencies [28bd8bea]
-- Updated dependencies [7b817ac2]
-- Updated dependencies [undefined]
-- Updated dependencies [09e990cb]
-- Updated dependencies [141c7864]
-  - @remirror/core@1.0.0-next.0
-  - @remirror/extension-auto-link@1.0.0-next.0
-  - @remirror/i18n@1.0.0-next.0
-  - @remirror/pm@1.0.0-next.0
-  - @remirror/preset-social@1.0.0-next.0
-  - @remirror/preset-wysiwyg@1.0.0-next.0
-  - @remirror/react@1.0.0-next.0
-  - @remirror/react-utils@1.0.0-next.0
-  - multishift@1.0.0-next.0
+- 5f85c0de: Bump a new version to test out the changeset API.
+- Updated dependencies [5f85c0de]
+  - @remirror/core-helpers@0.7.3
+  - @remirror/core-types@0.7.3
