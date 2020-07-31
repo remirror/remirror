@@ -2,7 +2,7 @@ import { renderEditor } from 'jest-remirror';
 
 import { isExtensionValid } from '@remirror/testing';
 
-import { AnnotationExtension } from '..';
+import { Annotation, AnnotationExtension } from '..';
 import { AnnotationOptions } from '../types';
 
 test('is valid', () => {
@@ -151,7 +151,53 @@ describe('getters', () => {
     ]);
   });
 
-  // #getAnnotationsAt (where there are annotations)
-  // #getAnnotationsAt (where there aren't annotations)
-  // Keep fields from custom annotation type
+  it.skip('#getAnnotationsAt', () => {
+    add(doc(p('An <start>important<end> note')));
+    commands.addAnnotation({ id: '1' });
+
+    expect(extension.getAnnotationsAt(view.state, 5)).toEqual([
+      {
+        id: '1',
+        from: 3,
+        to: 13,
+        text: 'important',
+      },
+    ]);
+  });
+
+  it.skip('#getAnnotationsAt (unannotated)', () => {
+    add(doc(p('An <start>important<end> note')));
+    commands.addAnnotation({ id: '1' });
+
+    expect(extension.getAnnotationsAt(view.state, 2)).toEqual([]);
+  });
+});
+
+describe('custom annotation type', () => {
+  interface MyAnnotation extends Annotation {
+    tag: string;
+  }
+
+  const extension = new AnnotationExtension<MyAnnotation>();
+  const {
+    add,
+    nodes: { p, doc },
+    commands,
+    view,
+  } = renderEditor([extension]);
+
+  it.skip('#getAnnotations', () => {
+    add(doc(p('<start>Hello<end>')));
+    commands.addAnnotation({ id: '1', tag: 'tag' });
+
+    expect(extension.getAnnotations(view.state)).toEqual([
+      {
+        id: '1',
+        from: 1,
+        to: 5,
+        tag: 'tag',
+        text: 'Hello',
+      },
+    ]);
+  });
 });
