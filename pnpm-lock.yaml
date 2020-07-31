@@ -1411,6 +1411,7 @@ importers:
       '@remirror/core': 'link:../@remirror/core'
       '@remirror/dom': 'link:../@remirror/dom'
       '@remirror/pm': 'link:../@remirror/pm'
+      '@remirror/preset-core': 'link:../@remirror/preset-core'
       '@testing-library/dom': 7.21.6
       '@types/node': 14.0.26
       '@types/sanitize-html': 1.23.3
@@ -1425,6 +1426,7 @@ importers:
       '@remirror/core': ^1.0.0-next.13
       '@remirror/dom': ^1.0.0-next.13
       '@remirror/pm': ^1.0.0-next.4
+      '@remirror/preset-core': ^1.0.0-next.13
       '@testing-library/dom': ^7.21.6
       '@types/node': ^14.0.26
       '@types/sanitize-html': ^1.23.3
