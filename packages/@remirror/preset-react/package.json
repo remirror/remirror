@@ -23,7 +23,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.5",
+    "@babel/runtime": "^7.11.0",
     "@remirror/extension-placeholder": "^1.0.0-next.15",
     "@remirror/extension-react-component": "^1.0.0-next.15",
     "@remirror/extension-react-ssr": "^1.0.0-next.15",
@@ -33,7 +33,7 @@
   "devDependencies": {
     "@remirror/core": "^1.0.0-next.15",
     "@remirror/pm": "^1.0.0-next.4",
-    "@types/react": "^16.9.43",
+    "@types/react": "^16.9.44",
     "@types/react-dom": "^16.9.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"

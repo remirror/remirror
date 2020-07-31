@@ -21,7 +21,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.5",
+    "@babel/runtime": "^7.11.0",
     "@remirror/extension-bidi": "^1.0.0-next.15",
     "@remirror/extension-blockquote": "^1.0.0-next.15",
     "@remirror/extension-bold": "^1.0.0-next.15",

@@ -22,8 +22,8 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.5",
-    "csstype": "^2.6.11"
+    "@babel/runtime": "^7.11.0",
+    "csstype": "^2.6.13"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.15",

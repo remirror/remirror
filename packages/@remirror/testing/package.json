@@ -13,7 +13,7 @@
     "react"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.5",
+    "@babel/runtime": "^7.11.0",
     "@remirror/core": "^1.0.0-next.15",
     "@remirror/extension-blockquote": "^1.0.0-next.15",
     "@remirror/extension-bold": "^1.0.0-next.15",
@@ -31,11 +31,11 @@
     "@remirror/react": "^1.0.0-next.15",
     "@testing-library/react": "^10.4.7",
     "@types/min-document": "^2.19.0",
-    "jest-diff": "^26.1.0",
+    "jest-diff": "^26.2.0",
     "min-document": "^2.19.0"
   },
   "devDependencies": {
-    "@types/react": "^16.9.43",
+    "@types/react": "^16.9.44",
     "react": "^16.13.1"
   },
   "peerDependencies": {
