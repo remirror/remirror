@@ -7,6 +7,7 @@ import {
   Handler,
   isFunction,
   KeyBindings,
+  nonChainable,
   PlainExtension,
   ProsemirrorCommandFunction,
   Static,
@@ -152,7 +153,7 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
        * tr.setMeta(pluginKey, { addToHistory: false })
        * ```
        */
-      undo: () => this.wrapMethod(undo),
+      undo: () => nonChainable(this.wrapMethod(undo)),
 
       /**
        * Redo an action that was in the undo stack.
@@ -161,7 +162,7 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
        * actions.redo()
        * ```
        */
-      redo: () => this.wrapMethod(redo),
+      redo: () => nonChainable(this.wrapMethod(redo)),
     };
   }
 }

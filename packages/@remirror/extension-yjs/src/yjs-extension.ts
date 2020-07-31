@@ -9,7 +9,6 @@ import {
   extensionDecorator,
   ExtensionPriority,
   isFunction,
-  nonChainable,
   OnSetOptionsParameter,
   PlainExtension,
   Static,
@@ -106,12 +105,12 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
       /**
        * Undo within a collaborative editor.
        */
-      yUndo: (): CommandFunction => nonChainable(convertCommand(undo)),
+      yUndo: (): CommandFunction => convertCommand(undo),
 
       /**
        * Redo, within a collaborative editor.
        */
-      yRedo: (): CommandFunction => nonChainable(convertCommand(redo)),
+      yRedo: (): CommandFunction => convertCommand(redo),
     };
   }
 
