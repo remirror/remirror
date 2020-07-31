@@ -1,9 +1,8 @@
 import { renderEditor } from 'jest-remirror';
 
-import { isExtensionValid } from '@remirror/testing';
+import { BuiltinPreset, isExtensionValid } from '@remirror/testing';
 
 import { KeymapExtension } from '..';
-import { BuiltinPreset } from '../builtin-preset';
 
 test('`KeymapExtension`: is valid', () => {
   expect(isExtensionValid(KeymapExtension)).toBeTrue();

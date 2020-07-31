@@ -106,6 +106,7 @@ export { diff };
 
 export { default as minDocument } from 'min-document';
 
+export { BuiltinPreset } from '@remirror/core';
 export * from '@remirror/preset-core';
 export * from '@remirror/extension-doc';
 export * from '@remirror/extension-text';
