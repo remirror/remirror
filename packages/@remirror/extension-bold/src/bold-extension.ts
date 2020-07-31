@@ -102,10 +102,8 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
        * TODO add selection support.
        * TODO add check to see that provided range is valid.
        */
-      setBold: (range: FromToParameter): CommandFunction => ({ state, dispatch }) => {
-        if (dispatch) {
-          dispatch(state.tr.addMark(range?.from, range?.to, this.type.create()));
-        }
+      setBold: (range: FromToParameter): CommandFunction => ({ tr, dispatch }) => {
+        dispatch?.(tr.addMark(range?.from, range?.to, this.type.create()));
 
         return true;
       },
@@ -116,10 +114,8 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
        * TODO add selection support.
        * TODO add check that the provided range is valid.
        */
-      removeBold: (range: FromToParameter): CommandFunction => ({ state, dispatch }) => {
-        if (dispatch) {
-          dispatch(state.tr.removeMark(range?.from, range?.to, this.type));
-        }
+      removeBold: (range: FromToParameter): CommandFunction => ({ tr, dispatch }) => {
+        dispatch?.(tr.removeMark(range?.from, range?.to, this.type));
 
         return true;
       },
