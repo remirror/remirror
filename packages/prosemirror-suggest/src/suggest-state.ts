@@ -82,13 +82,22 @@ export class SuggestState {
 
   /**
    * Lets us know whether the most recent change was to remove a mention.
+   */
+  #removed = false;
+
+  /**
+   * True when the most recent change was to remove a mention.
+   *
+   * @remarks
    *
    * This is needed because sometimes removing a prosemirror `Mark` has no
    * effect. Hence we need to keep track of whether it's removed and then later
    * in the apply step check that a removal has happened and reset the
    * `handlerMatches` to prevent an infinite loop.
    */
-  #removed = false;
+  get removed() {
+    return this.#removed;
+  }
 
   /**
    * Returns the current active suggester state field if one exists
@@ -131,7 +140,7 @@ export class SuggestState {
    * Sets the removed property to be true. This is passed as a property to the
    * `createCommand` option.
    */
-  private readonly setRemovedTrue = () => {
+  readonly setMarkRemoved = () => {
     this.#removed = true;
   };
 
@@ -143,7 +152,7 @@ export class SuggestState {
       match,
       reason,
       view: this.view,
-      setMarkRemoved: this.setRemovedTrue,
+      setMarkRemoved: this.setMarkRemoved,
       addIgnored: this.addIgnored,
       clearIgnored: this.clearIgnored,
       ignoreNextExit: this.ignoreNextExit,
@@ -259,7 +268,7 @@ export class SuggestState {
     this.#ignored = ignored.remove(invalid);
   }
 
-  ignoreNextExit = () => {
+  readonly ignoreNextExit = () => {
     this.#ignoreNextExit = true;
   };
 
@@ -273,7 +282,7 @@ export class SuggestState {
    * All we need to ignore is the match character. This means that any further
    * matches from the activation character will be ignored.
    */
-  addIgnored = ({ from, char, name, specific = false }: AddIgnoredParameter) => {
+  readonly addIgnored = ({ from, char, name, specific = false }: AddIgnoredParameter) => {
     const to = from + char.length;
     const suggester = this.#suggesters.find((value) => value.name === name);
 
@@ -301,7 +310,7 @@ export class SuggestState {
    * After this point event handlers will begin to be called again for match
    * character.
    */
-  removeIgnored = ({ from, char, name }: RemoveIgnoredParameter) => {
+  readonly removeIgnored = ({ from, char, name }: RemoveIgnoredParameter) => {
     const decorations = this.#ignored.find(from, from + char.length);
     const decoration = decorations[0];
 
@@ -316,7 +325,7 @@ export class SuggestState {
    * Removes all the ignored decorations so that suggesters can active their
    * handlers anywhere in the document.
    */
-  clearIgnored = (name?: string) => {
+  readonly clearIgnored = (name?: string) => {
     if (name) {
       const decorations = this.#ignored.find();
       const decorationsToClear = decorations.filter(({ spec }) => {
@@ -450,7 +459,7 @@ export class SuggestState {
     const { keyBindings } = match.suggester;
     const parameter: SuggestKeyBindingParameter = {
       event,
-      setMarkRemoved: this.setRemovedTrue,
+      setMarkRemoved: this.setMarkRemoved,
       ...this.createParameter(match),
     };
 

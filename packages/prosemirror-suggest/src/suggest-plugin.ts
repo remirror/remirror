@@ -177,3 +177,5 @@ export function suggest<Schema extends EditorSchema = any>(...suggesters: Sugges
     },
   });
 }
+
+export type { SuggestState };
