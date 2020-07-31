@@ -1,7 +1,7 @@
 import { createEditor, doc, p } from 'jest-prosemirror';
 
 import { ExitReason } from '../suggest-constants';
-import { suggest } from '../suggest-plugin';
+import { addSuggester, suggest } from '../suggest-plugin';
 import { SuggestExitHandlerParameter, SuggestKeyBindingParameter } from '../suggest-types';
 
 describe('Suggest Handlers', () => {
@@ -183,4 +183,42 @@ describe('Suggest Ignore', () => {
         expect(tagHandlers.onExit).toHaveBeenCalledTimes(1);
       });
   });
+});
+
+test('addSuggester', () => {
+  const handlers = {
+    onExit: jest.fn(),
+    onChange: jest.fn(),
+  };
+
+  const plugin = suggest();
+  const editor = createEditor(doc(p('<cursor>')), { plugins: [plugin] });
+
+  const remove = addSuggester(editor.view.state, {
+    char: '@',
+    name: 'at',
+    ...handlers,
+    matchOffset: 0,
+  });
+
+  editor
+    .insertText('@')
+    .callback(() => {
+      expect(handlers.onChange).toHaveBeenCalledTimes(1);
+    })
+    .insertText('suggest ');
+
+  expect(handlers.onExit).toHaveBeenCalledTimes(1);
+  remove();
+
+  jest.clearAllMocks();
+
+  editor
+    .insertText('@')
+    .callback(() => {
+      expect(handlers.onChange).not.toHaveBeenCalled();
+    })
+    .insertText('suggest ');
+
+  expect(handlers.onExit).not.toHaveBeenCalled();
 });
