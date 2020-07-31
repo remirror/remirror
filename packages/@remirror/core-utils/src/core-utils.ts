@@ -16,14 +16,11 @@ import {
 import {
   EditorSchema,
   EditorState,
-  EditorViewParameter,
   ElementParameter,
   FromToParameter,
   MarkTypeParameter,
   NodeMatch,
   PluginKey,
-  Position,
-  PositionParameter,
   PrimitiveSelection,
   ProsemirrorNode,
   ProsemirrorNodeParameter,
@@ -282,20 +279,6 @@ export function isDocNodeEmpty(node: ProsemirrorNode) {
     !nodeChild.childCount &&
     nodeChild.nodeSize === 2 &&
     (isNullOrUndefined(nodeChild.marks) || nodeChild.marks.length === 0)
-  );
-}
-
-/**
- * Checks if the current node a paragraph node and empty
- *
- * @param node - the prosemirror node
- *
- * @public
- */
-export function isEmptyParagraphNode(node: ProsemirrorNode | null | undefined) {
-  return (
-    !isProsemirrorNode(node) ||
-    (node.type.name === 'paragraph' && !node.textContent && !node.childCount)
   );
 }
 
@@ -574,12 +557,6 @@ export function isTextDomNode(domNode: unknown): domNode is Text {
   return isDomNode(domNode) && domNode.nodeType === Node.TEXT_NODE;
 }
 
-interface GetOffsetParentParameter extends EditorViewParameter, ElementParameter {}
-
-export function getOffsetParent({ view, element }: GetOffsetParentParameter): Element | null {
-  return isNullOrUndefined(element) ? (view.dom as HTMLElement).offsetParent : element.offsetParent;
-}
-
 /**
  * Retrieve the line height from a an element
  *
@@ -587,53 +564,6 @@ export function getOffsetParent({ view, element }: GetOffsetParentParameter): El
  */
 export function getLineHeight({ element }: ElementParameter) {
   return Number.parseFloat(window.getComputedStyle(element).lineHeight || '');
-}
-
-interface AbsoluteCoordinatesParameter
-  extends EditorViewParameter,
-    ElementParameter,
-    PositionParameter {
-  /**
-   * The height offset of the parent
-   */
-  cursorHeight?: number;
-}
-
-/**
- * Retrieve the absolute coordinates
- *
- * @remarks
- *
- * We need to translate the co-ordinates because `coordsAtPos` returns
- * co-ordinates relative to `window`. And, also need to adjust the cursor
- * container height. (0, 0)
- *
- * ```
- * +--------------------- [window] ---------------------+
- * |   (left, top) +-------- [Offset Parent] --------+  |
- * | {coordsAtPos} | [Cursor]   <- cursorHeight      |  |
- * |               | [FloatingToolbar]               |  |
- * ```
- *
- * @param params - see {@link AbsoluteCoordinatesParameter}.
- */
-export function absoluteCoordinates(parameter: AbsoluteCoordinatesParameter): Partial<Position> {
-  const { view, element, position, cursorHeight = getLineHeight({ element }) } = parameter;
-
-  const offsetParent = getOffsetParent({ view, element });
-
-  if (!offsetParent) {
-    return {};
-  }
-
-  const box = offsetParent.getBoundingClientRect();
-
-  return {
-    left: position.left - box.left,
-    right: position.right - box.left,
-    top: position.top - (box.top - cursorHeight) + offsetParent.scrollTop,
-    bottom: box.height - (position.top - (box.top - cursorHeight) - offsetParent.scrollTop),
-  };
 }
 
 /**
