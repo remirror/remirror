@@ -35,12 +35,12 @@ import {
   StringPositioner,
   VirtualPosition,
 } from '@remirror/extension-positioner';
-import { CorePreset } from '@remirror/preset-core';
-import { ReactPreset } from '@remirror/preset-react';
+import type { CorePreset } from '@remirror/preset-core';
+import type { ReactPreset } from '@remirror/preset-react';
 
 import { I18nContext, RemirrorContext } from '../react-contexts';
 import { createReactManager } from '../react-helpers';
-import {
+import type {
   CreateReactManagerOptions,
   I18nContextProps,
   ReactCombinedUnion,

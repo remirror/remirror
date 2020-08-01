@@ -10,7 +10,7 @@ import {
   SchemaParameter,
   values,
 } from '@remirror/core';
-import { Node as ProsemirrorNode } from '@remirror/pm/model';
+import type { Node as ProsemirrorNode } from '@remirror/pm/model';
 
 export interface TableSchemaSpec extends NodeExtensionSpec {
   tableRole: TableRole;

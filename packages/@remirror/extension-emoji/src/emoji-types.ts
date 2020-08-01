@@ -1,13 +1,13 @@
-import { CustomHandler, Handler } from '@remirror/core';
-import {
+import type { CustomHandler, Handler } from '@remirror/core';
+import type {
   SuggestChangeHandlerParameter,
   SuggestExitHandlerParameter,
   SuggestKeyBindingMap,
 } from '@remirror/pm/suggest';
 
-import AliasData from './data/aliases';
-import CategoryData from './data/categories';
-import EmojiData from './data/emojis';
+import type AliasData from './data/aliases';
+import type CategoryData from './data/categories';
+import type EmojiData from './data/emojis';
 
 export type Names = keyof typeof EmojiData;
 export type AliasNames = keyof typeof AliasData;

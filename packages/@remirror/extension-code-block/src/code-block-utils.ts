@@ -25,7 +25,7 @@ import {
 import { TextSelection } from '@remirror/pm/state';
 import { Decoration } from '@remirror/pm/view';
 
-import { CodeBlockAttributes, CodeBlockOptions, FormattedContent } from './code-block-types';
+import type { CodeBlockAttributes, CodeBlockOptions, FormattedContent } from './code-block-types';
 
 export const dataAttribute = 'data-code-block-language';
 

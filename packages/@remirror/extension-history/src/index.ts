@@ -1,1 +1,2 @@
-export * from './history-extension';
+export type { HistoryOptions } from './history-extension';
+export { HistoryExtension } from './history-extension';

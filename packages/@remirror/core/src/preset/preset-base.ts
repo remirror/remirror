@@ -10,9 +10,9 @@ import {
   isRemirrorType,
   uniqueBy,
 } from '@remirror/core-helpers';
-import { EmptyShape, Replace, Shape, ValidOptions } from '@remirror/core-types';
+import type { EmptyShape, Replace, Shape, ValidOptions } from '@remirror/core-types';
 
-import { AnyExtension, AnyExtensionConstructor } from '../extension';
+import type { AnyExtension, AnyExtensionConstructor } from '../extension';
 import {
   AnyBaseClassOverrides,
   BaseClass,
@@ -21,7 +21,7 @@ import {
   DefaultOptions,
   isValidConstructor,
 } from '../extension/base-class';
-import { OnSetOptionsParameter } from '../types';
+import type { OnSetOptionsParameter } from '../types';
 
 /**
  * A preset is our way of bundling similar extensions with unified options and
@@ -356,7 +356,7 @@ export function isPresetConstructor<Type extends AnyPresetConstructor = AnyPrese
  * Checks that the preset has a valid constructor with the `defaultOptions` and
  * `defaultOptions` defined as static properties.
  */
-export function isValidPresetConstructor(
+function isValidPresetConstructor(
   Constructor: unknown,
 ): asserts Constructor is AnyExtensionConstructor {
   const code = ErrorConstant.INVALID_PRESET;

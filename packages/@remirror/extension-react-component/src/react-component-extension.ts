@@ -1,4 +1,4 @@
-import { ComponentType } from 'react';
+import type { ComponentType } from 'react';
 
 import {
   AnyCombinedUnion,
@@ -9,7 +9,7 @@ import {
   PlainExtension,
 } from '@remirror/core';
 
-import {
+import type {
   NodeViewComponentProps,
   ReactComponentEnvironment,
   ReactComponentOptions,

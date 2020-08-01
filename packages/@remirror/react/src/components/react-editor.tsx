@@ -32,7 +32,7 @@ import {
   shouldUseDomEnvironment,
   UpdateStateParameter,
 } from '@remirror/core';
-import { EditorState } from '@remirror/pm/state';
+import type { EditorState } from '@remirror/pm/state';
 import { ReactPreset } from '@remirror/preset-react';
 import {
   addKeyToElement,
@@ -45,7 +45,7 @@ import {
 } from '@remirror/react-utils';
 
 import { usePrevious } from '../hooks';
-import {
+import type {
   BaseProps,
   GetRootPropsConfig,
   RefKeyRootProps,

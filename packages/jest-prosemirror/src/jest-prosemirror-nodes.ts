@@ -5,7 +5,7 @@ import pm, {
 } from 'prosemirror-test-builder';
 
 import { Cast, keys } from '@remirror/core-helpers';
-import { EditorSchema, Plugin } from '@remirror/core-types';
+import type { EditorSchema, Plugin } from '@remirror/core-types';
 import { GapCursor } from '@remirror/pm/gapcursor';
 import {
   AllSelection,
@@ -17,7 +17,7 @@ import {
 import { cellAround, CellSelection } from '@remirror/pm/tables';
 
 import { schema } from './jest-prosemirror-schema';
-import { TaggedDocParameter } from './jest-prosemirror-types';
+import type { TaggedDocParameter } from './jest-prosemirror-types';
 
 /**
  * Table specific cell resolution

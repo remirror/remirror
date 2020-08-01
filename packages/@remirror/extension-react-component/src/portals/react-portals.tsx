@@ -1,7 +1,7 @@
 import React, { Fragment, FunctionComponent, useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { PortalContainer, PortalMap } from './portal-container';
+import type { PortalContainer, PortalMap } from './portal-container';
 
 export interface RemirrorPortalsProps {
   /**

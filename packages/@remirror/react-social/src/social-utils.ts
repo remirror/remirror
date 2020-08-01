@@ -1,8 +1,13 @@
 import { AnyCombinedUnion, getLazyArray, isRemirrorManager, RemirrorManager } from '@remirror/core';
 import { SocialPreset } from '@remirror/preset-social';
-import { CreateReactManagerOptions } from '@remirror/react';
+import type { CreateReactManagerOptions } from '@remirror/react';
 
-import { CreateSocialManagerOptions, SocialCombinedUnion, TagData, UserData } from './social-types';
+import type {
+  CreateSocialManagerOptions,
+  SocialCombinedUnion,
+  TagData,
+  UserData,
+} from './social-types';
 
 export function mapToActiveIndex<Item extends object>(
   items: Item[],

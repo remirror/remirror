@@ -1,1 +1,1 @@
-export * from './code-extension';
+export { CodeExtension } from './code-extension';

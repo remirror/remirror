@@ -1,7 +1,7 @@
 import { createEditor, doc, p } from 'jest-prosemirror';
 
 import { EMPTY_PARAGRAPH_NODE, ExtensionPriority, ExtensionTag } from '@remirror/core-constants';
-import {
+import type {
   EditorState,
   KeyBindingCommandFunction,
   NodeExtensionSpec,

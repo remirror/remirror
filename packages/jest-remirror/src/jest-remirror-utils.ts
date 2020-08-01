@@ -1,9 +1,9 @@
-import { TestEditorViewParameter } from 'jest-prosemirror';
+import type { TestEditorViewParameter } from 'jest-prosemirror';
 
 import { isObject, isProsemirrorNode, SchemaParameter } from '@remirror/core';
 
 import { coerce, offsetTags } from './jest-remirror-builder';
-import { TaggedProsemirrorNode, Tags } from './jest-remirror-types';
+import type { TaggedProsemirrorNode, Tags } from './jest-remirror-types';
 
 interface ProcessTextParameter extends SchemaParameter {
   /**

@@ -1,1 +1,2 @@
-export * from './events-extension';
+export type { EventsOptions } from './events-extension';
+export { EventsExtension } from './events-extension';

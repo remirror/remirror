@@ -1,1 +1,1 @@
-export * from './italic-extension';
+export { ItalicExtension } from './italic-extension';

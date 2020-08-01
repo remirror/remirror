@@ -145,8 +145,61 @@
  * @packageDocumentation
  */
 
-export * from './suggest-plugin';
-export * from './suggest-types';
-export * from './suggest-constants';
-export * from './suggest-predicates';
-export * from './suggest-helpers';
+export type { SuggestState } from './suggest-plugin';
+export { addSuggester, getSuggestPluginState, removeSuggester, suggest } from './suggest-plugin';
+export type {
+  AddIgnoredParameter,
+  CompareMatchParameter,
+  CreateSuggestCommandParameter,
+  DocChangedParameter,
+  FromToEndParameter,
+  KeyboardEventParameter,
+  MatchValue,
+  OnKeyDownParameter,
+  ReasonMatchParameter,
+  ReasonParameter,
+  RemoveIgnoredParameter,
+  SuggestCallbackParameter,
+  SuggestChangeHandlerMethod,
+  SuggestChangeHandlerParameter,
+  SuggestCharacterEntryMethod,
+  SuggestCharacterEntryParameter,
+  SuggestCommandParameter,
+  SuggestExitHandlerMethod,
+  SuggestExitHandlerParameter,
+  SuggestIgnoreParameter,
+  SuggestKeyBinding,
+  SuggestKeyBindingMap,
+  SuggestKeyBindingParameter,
+  SuggestMarkParameter,
+  SuggestReasonMap,
+  SuggestReplacementType,
+  SuggestStateMatch,
+  SuggestStateMatchParameter,
+  SuggestStateMatchReason,
+  Suggester,
+  SuggesterParameter,
+} from './suggest-types';
+export { ChangeReason, ExitReason, DEFAULT_SUGGESTER } from './suggest-constants';
+export {
+  isChange,
+  isChangeReason,
+  isEntry,
+  isExit,
+  isExitReason,
+  isInvalidSplitReason,
+  isJump,
+  isJumpReason,
+  isMove,
+  isRemovedReason,
+  isSelectionExitReason,
+  isSplitReason,
+  isValidMatch,
+  selectionOutsideMatch,
+} from './suggest-predicates';
+export {
+  createRegexFromSuggester,
+  escapeChar,
+  getRegexPrefix,
+  regexToString,
+} from './suggest-helpers';

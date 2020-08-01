@@ -7,7 +7,7 @@ import { NON_BREAKING_SPACE_CHAR } from '@remirror/core';
 import { createReactManager } from '@remirror/react';
 
 import { SocialProvider } from '../../components/social-provider';
-import { MentionChangeParameter, TagData, UserData } from '../../social-types';
+import type { MentionChangeParameter, TagData, UserData } from '../../social-types';
 import { socialManagerArgs } from '../../social-utils';
 import { useSocialRemirror } from '../use-social';
 import { useSocialMention } from '../use-social-mention';

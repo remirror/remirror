@@ -1,7 +1,7 @@
-import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
+import type { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 
 import { bool } from '@remirror/core-helpers';
-import {
+import type {
   CommandFunction,
   ProsemirrorCommandFunction,
   ProsemirrorNode as _ProsemirrorNode,
@@ -9,7 +9,7 @@ import {
 
 import { apply } from './jest-prosemirror-editor';
 import { transformsNodeFailMessage, transformsNodePassMessage } from './jest-prosemirror-messages';
-import { CommandTransformation } from './jest-prosemirror-types';
+import type { CommandTransformation } from './jest-prosemirror-types';
 
 export const prosemirrorMatchers = {
   toTransformNode(

@@ -1,4 +1,4 @@
-import { BaseContext } from 'clipanion';
+import type { BaseContext } from 'clipanion';
 
 export interface CommandContext extends BaseContext {
   /**

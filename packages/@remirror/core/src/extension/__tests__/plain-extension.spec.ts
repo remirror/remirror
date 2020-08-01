@@ -1,4 +1,4 @@
-import { Handler } from '@remirror/core-types';
+import type { Handler } from '@remirror/core-types';
 
 import { extensionDecorator } from '../../decorators';
 import { PlainExtension } from '../extension-base';

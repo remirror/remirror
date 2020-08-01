@@ -1,8 +1,8 @@
 import { bool, object } from '@remirror/core-helpers';
-import { AttributesWithClass } from '@remirror/core-types';
+import type { AttributesWithClass } from '@remirror/core-types';
 
 import { PlainExtension } from '../extension';
-import { AnyCombinedUnion } from '../preset';
+import type { AnyCombinedUnion } from '../preset';
 
 /**
  * This extension allows others extension to add the `createAttributes` method

@@ -2,7 +2,7 @@ import { Cli } from 'clipanion';
 import { getVersion, loadPackageJson } from 'json.macro';
 
 import { BundleCommand, HelpCommand, VersionCommand } from './commands';
-import { CommandContext } from './types';
+import type { CommandContext } from './types';
 
 const version = getVersion();
 const description = loadPackageJson('description') ?? '';

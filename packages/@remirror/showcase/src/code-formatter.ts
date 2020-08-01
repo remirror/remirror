@@ -4,14 +4,14 @@
  * A formatter for code which can be used with `@remirror/extension-code-block`
  */
 
-import { BuiltInParserName, CursorOptions, CursorResult } from 'prettier';
+import type { BuiltInParserName, CursorOptions, CursorResult } from 'prettier';
 import babelPlugin from 'prettier/parser-babel';
 import htmlPlugin from 'prettier/parser-html';
 import markdownPlugin from 'prettier/parser-markdown';
 import typescriptPlugin from 'prettier/parser-typescript';
 import { formatWithCursor } from 'prettier/standalone';
 
-import { FormattedContent, FormatterParameter } from '@remirror/extension-code-block';
+import type { FormattedContent, FormatterParameter } from '@remirror/extension-code-block';
 
 const plugins = [babelPlugin, htmlPlugin, typescriptPlugin, markdownPlugin];
 const options: Partial<CursorOptions> = {

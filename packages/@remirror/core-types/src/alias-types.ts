@@ -1,5 +1,5 @@
-import { InputRule as PMInputRule } from '@remirror/pm/inputrules';
-import {
+import type { InputRule as PMInputRule } from '@remirror/pm/inputrules';
+import type {
   Fragment as PMFragment,
   Mark as PMMark,
   MarkType as PMMarkType,
@@ -9,15 +9,15 @@ import {
   Schema as PMSchema,
   Slice as PMSlice,
 } from '@remirror/pm/model';
-import {
+import type {
   EditorState as PMEditorState,
   Plugin as PMPlugin,
   PluginKey as PMPluginKey,
   Selection as PMSelection,
   Transaction as PMTransaction,
 } from '@remirror/pm/state';
-import { Mapping as PMMapping } from '@remirror/pm/transform';
-import {
+import type { Mapping as PMMapping } from '@remirror/pm/transform';
+import type {
   Decoration as PMDecoration,
   DecorationSet as PMDecorationSet,
   EditorView as PMEditorView,

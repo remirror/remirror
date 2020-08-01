@@ -4,7 +4,7 @@ import { SocialPreset } from '@remirror/preset-social';
 import { I18nProvider, RemirrorProvider, ThemeProvider } from '@remirror/react';
 
 import { useSocialManager } from '../hooks';
-import { SocialProviderProps } from '../social-types';
+import type { SocialProviderProps } from '../social-types';
 
 /**
  * A social editor provider with provides the required context to get started

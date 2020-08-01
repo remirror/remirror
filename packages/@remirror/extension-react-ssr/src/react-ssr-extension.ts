@@ -11,7 +11,7 @@ import {
   Shape,
   Static,
 } from '@remirror/core';
-import { NodeViewComponentProps } from '@remirror/extension-react-component';
+import type { NodeViewComponentProps } from '@remirror/extension-react-component';
 import { getElementProps, isReactDOMElement, isReactFragment } from '@remirror/react-utils';
 
 export interface ReactSSROptions {

@@ -2,10 +2,10 @@ import type {
   __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
   RemirrorIdentifier,
 } from '@remirror/core-constants';
-import { MarkSpec, NodeSpec } from '@remirror/pm/model';
-import { Decoration, NodeView } from '@remirror/pm/view';
+import type { MarkSpec, NodeSpec } from '@remirror/pm/model';
+import type { Decoration, NodeView } from '@remirror/pm/view';
 
-import {
+import type {
   EditorSchema,
   EditorState,
   EditorView,
@@ -14,8 +14,8 @@ import {
   Selection,
   Transaction,
 } from './alias-types';
-import { Literal, ObjectMark, ProsemirrorAttributes, RegexTuple } from './base-types';
-import {
+import type { Literal, ObjectMark, ProsemirrorAttributes, RegexTuple } from './base-types';
+import type {
   EditorStateParameter,
   EditorViewParameter,
   FromToParameter,

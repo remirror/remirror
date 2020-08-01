@@ -2,7 +2,7 @@ import escapeStringRegex from 'escape-string-regexp';
 
 import { isRegExp } from '@remirror/core-helpers';
 
-import { Suggester } from './suggest-types';
+import type { Suggester } from './suggest-types';
 
 export const escapeChar = (char: string) => escapeStringRegex(char);
 

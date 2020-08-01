@@ -1,1 +1,1 @@
-export * from './underline-extension';
+export { UnderlineExtension } from './underline-extension';

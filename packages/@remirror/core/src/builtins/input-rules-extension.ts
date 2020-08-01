@@ -1,6 +1,6 @@
 import { ExtensionPriority } from '@remirror/core-constants';
 import { InputRule, inputRules } from '@remirror/pm/inputrules';
-import { Plugin } from '@remirror/pm/state';
+import type { Plugin } from '@remirror/pm/state';
 
 import { extensionDecorator } from '../decorators';
 import { PlainExtension } from '../extension';

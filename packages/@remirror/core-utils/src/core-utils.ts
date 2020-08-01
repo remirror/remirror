@@ -13,7 +13,7 @@ import {
   keys,
   RemirrorError,
 } from '@remirror/core-helpers';
-import {
+import type {
   EditorSchema,
   EditorState,
   ElementParameter,
@@ -869,7 +869,7 @@ export function getDocument(forceEnvironment?: RenderEnvironment) {
   return shouldUseDomEnvironment(forceEnvironment) ? document : minDocument;
 }
 
-export interface CustomDocParameter {
+interface CustomDocParameter {
   /** The custom document to use (allows for ssr rendering) */
   doc: Document;
 }

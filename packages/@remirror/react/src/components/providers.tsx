@@ -7,15 +7,16 @@ import React, {
   useEffect,
 } from 'react';
 
-import { AnyCombinedUnion, MakeOptional } from '@remirror/core';
+import type { AnyCombinedUnion, MakeOptional } from '@remirror/core';
 import { RemirrorPortals } from '@remirror/extension-react-component';
 import { i18n as defaultI18n } from '@remirror/i18n';
 import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
-import { createThemeVariables, RemirrorThemeType, themeStyles } from '@remirror/theme';
+import type { RemirrorThemeType } from '@remirror/theme';
+import { createThemeVariables, themeStyles } from '@remirror/theme';
 
 import { useManager } from '../hooks';
 import { I18nContext, RemirrorContext } from '../react-contexts';
-import {
+import type {
   BaseProps,
   CreateReactManagerOptions,
   GetRootPropsConfig,

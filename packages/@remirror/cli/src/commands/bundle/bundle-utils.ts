@@ -8,7 +8,7 @@ import util from 'util';
 
 import { bool, uniqueId } from '@remirror/core-helpers';
 
-import { BundleCommandShape, BundleMethodReturn } from './bundle-types';
+import type { BundleCommandShape, BundleMethodReturn } from './bundle-types';
 
 const REMIRROR_ID = '__remirror';
 

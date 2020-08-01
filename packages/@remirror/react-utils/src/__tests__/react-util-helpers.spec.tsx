@@ -6,7 +6,6 @@ import {
   isReactFragment,
   isRemirrorProvider,
   oneChildOnly,
-  RemirrorFC,
   RemirrorType,
 } from '../react-utils';
 
@@ -39,7 +38,7 @@ test('isReactFragment', () => {
 });
 
 test('isRemirrorProvider', () => {
-  const Custom: RemirrorFC = () => <div />;
+  const Custom = () => <div />;
   Custom.$$remirrorType = RemirrorType.Provider;
 
   expect(isRemirrorProvider(<Custom />)).toBeTrue();

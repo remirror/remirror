@@ -1,5 +1,5 @@
 import { createNanoEvents } from 'nanoevents';
-import { FunctionComponent } from 'react';
+import type { FunctionComponent } from 'react';
 
 import { uniqueId } from '@remirror/core';
 

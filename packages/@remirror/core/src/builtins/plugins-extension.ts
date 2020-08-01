@@ -1,13 +1,13 @@
 import { ErrorConstant, ExtensionPriority, ManagerPhase } from '@remirror/core-constants';
 import { invariant, isEmptyArray, object } from '@remirror/core-helpers';
-import { ProsemirrorPlugin } from '@remirror/core-types';
+import type { ProsemirrorPlugin } from '@remirror/core-types';
 import { getPluginState } from '@remirror/core-utils';
 import { EditorState, Plugin, PluginKey } from '@remirror/pm/state';
 
 import { extensionDecorator } from '../decorators';
 import { AnyExtension, AnyExtensionConstructor, PlainExtension } from '../extension';
-import { AnyCombinedUnion, InferCombinedExtensions } from '../preset';
-import { CreatePluginReturn, GetNameUnion } from '../types';
+import type { AnyCombinedUnion, InferCombinedExtensions } from '../preset';
+import type { CreatePluginReturn, GetNameUnion } from '../types';
 
 /**
  * This extension allows others extension to add the `createPlugin` method using

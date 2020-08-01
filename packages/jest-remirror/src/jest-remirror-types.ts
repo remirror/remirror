@@ -1,12 +1,12 @@
-import {
+import type {
   AnyCombinedUnion,
   AttributesParameter,
   EditorSchema,
   ProsemirrorAttributes,
   ProsemirrorNode,
 } from '@remirror/core';
-import { DomEditorWrapperProps } from '@remirror/dom';
-import { CreateCoreManagerOptions } from '@remirror/preset-core';
+import type { DomEditorWrapperProps } from '@remirror/dom';
+import type { CreateCoreManagerOptions } from '@remirror/preset-core';
 
 export interface BaseFactoryParameter<Schema extends EditorSchema = EditorSchema>
   extends Partial<AttributesParameter> {

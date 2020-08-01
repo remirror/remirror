@@ -1,4 +1,4 @@
-import { CodeOptions } from './interfaces';
+import type { CodeOptions } from './interfaces';
 
 function nameify(str: string): string {
   const base = str

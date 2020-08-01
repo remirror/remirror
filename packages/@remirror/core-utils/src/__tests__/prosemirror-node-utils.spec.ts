@@ -13,25 +13,25 @@ import {
 import { bool } from '@remirror/core-helpers';
 
 import {
-  contains,
+  containsNodesOfType,
   findBlockNodes,
   findChildren,
   findChildrenByAttribute,
   findChildrenByMark,
   findChildrenByNode,
   findTextNodes,
-  flatten,
+  flattenNodeDescendants,
 } from '../prosemirror-node-utils';
 
 describe('flatten', () => {
   it('should throw an error if `node` param is missing', () => {
-    expect(flatten).toThrow();
+    expect(flattenNodeDescendants).toThrow();
   });
 
   describe('when `descend` param = `false`', () => {
     it('should flatten a given node a single level deep', () => {
       const { state } = createEditor(doc(table(row(tdEmpty), row(tdEmpty), row(tdEmpty))));
-      const result = flatten({ node: state.doc.firstChild, descend: false });
+      const result = flattenNodeDescendants({ node: state.doc.firstChild, descend: false });
 
       expect(result.length).toEqual(3);
 
@@ -46,7 +46,7 @@ describe('flatten', () => {
   describe('when `descend` param is missing (defaults to `true`)', () => {
     it('should deep flatten a given node', () => {
       const { state } = createEditor(doc(table(row(tdEmpty), row(tdEmpty), row(tdEmpty))));
-      const result = flatten({ node: state.doc.firstChild });
+      const result = flattenNodeDescendants({ node: state.doc.firstChild });
 
       expect(result.length).toEqual(9);
     });
@@ -199,14 +199,14 @@ describe('findChildrenByMark', () => {
 describe('contains', () => {
   it('should return `false` if a given `node` does not contain nodes of a given `nodeType`', () => {
     const { state } = createEditor(doc(p('')));
-    const result = contains({ node: state.doc, type: state.schema.nodes.table });
+    const result = containsNodesOfType({ node: state.doc, type: state.schema.nodes.table });
 
     expect(result).toBe(false);
   });
 
   it('should return `true` if a given `node` contains nodes of a given `nodeType`', () => {
     const { state } = createEditor(doc(p('')));
-    const result = contains({ node: state.doc, type: state.schema.nodes.paragraph });
+    const result = containsNodesOfType({ node: state.doc, type: state.schema.nodes.paragraph });
 
     expect(result).toBe(true);
   });

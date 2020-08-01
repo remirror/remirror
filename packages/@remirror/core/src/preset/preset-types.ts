@@ -1,6 +1,6 @@
-import { ProsemirrorAttributes } from '@remirror/core-types';
+import type { ProsemirrorAttributes } from '@remirror/core-types';
 
-import {
+import type {
   AnyExtension,
   ChainedFromExtensions,
   CommandsFromExtensions,
@@ -9,8 +9,8 @@ import {
   HelpersFromExtensions,
   SchemaFromExtensionUnion,
 } from '../extension';
-import { GetExtensions } from '../types';
-import { AnyPreset } from './preset-base';
+import type { GetExtensions } from '../types';
+import type { AnyPreset } from './preset-base';
 
 export interface PresetParameter<PresetUnion extends AnyPreset> {
   preset: PresetUnion;

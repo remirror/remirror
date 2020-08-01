@@ -1,10 +1,10 @@
-import { UnionToIntersection } from 'type-fest';
+import type { UnionToIntersection } from 'type-fest';
 
-import { AnyFunction, StringKey } from '@remirror/core-types';
-import { NonChainableCommandFunction } from '@remirror/core-utils';
+import type { AnyFunction, StringKey } from '@remirror/core-types';
+import type { NonChainableCommandFunction } from '@remirror/core-utils';
 
-import { CommandShape, GetCommands, GetHelpers } from '../types';
-import { AnyExtension } from './extension-base';
+import type { CommandShape, GetCommands, GetHelpers } from '../types';
+import type { AnyExtension } from './extension-base';
 
 export interface ExtensionListParameter<ExtensionUnion extends AnyExtension = AnyExtension> {
   /**

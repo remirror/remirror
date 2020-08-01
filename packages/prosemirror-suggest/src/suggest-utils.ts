@@ -2,7 +2,7 @@ import { keydownHandler } from 'prosemirror-keymap';
 
 import { NULL_CHARACTER } from '@remirror/core-constants';
 import { bool, entries, findMatches, isUndefined, object } from '@remirror/core-helpers';
-import {
+import type {
   EditorStateParameter,
   MakeOptional,
   ProsemirrorCommandFunction,
@@ -13,7 +13,7 @@ import {
 import { ChangeReason, ExitReason } from './suggest-constants';
 import { createRegexFromSuggester, regexToString } from './suggest-helpers';
 import { isChange, isEntry, isExit, isJump, isMove } from './suggest-predicates';
-import {
+import type {
   CompareMatchParameter,
   DocChangedParameter,
   ReasonParameter,

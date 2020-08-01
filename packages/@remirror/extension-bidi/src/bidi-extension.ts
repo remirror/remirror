@@ -1,18 +1,20 @@
 import direction from 'direction';
 
-import {
+import type {
   AttributesWithClass,
-  bool,
   CreatePluginReturn,
+  IdentifierSchemaAttributes,
+  OnSetOptionsParameter,
+  SchemaAttributesObject,
+  Static,
+} from '@remirror/core';
+import {
+  bool,
   extensionDecorator,
   findParentNode,
   hasTransactionChanged,
-  IdentifierSchemaAttributes,
   isString,
-  OnSetOptionsParameter,
   PlainExtension,
-  SchemaAttributesObject,
-  Static,
 } from '@remirror/core';
 
 export interface BidiOptions {

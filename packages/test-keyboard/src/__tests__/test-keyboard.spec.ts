@@ -1,6 +1,6 @@
 import { Keyboard } from '../test-keyboard';
-import { KeyboardEventName } from '../test-keyboard-types';
-import { SupportedCharacters } from '../us-keyboard-layout';
+import type { KeyboardEventName } from '../test-keyboard-types';
+import type { SupportedCharacters } from '../us-keyboard-layout';
 
 let target: HTMLDivElement;
 let keyboard: Keyboard;

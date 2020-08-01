@@ -1,7 +1,7 @@
-import { EditorState } from '@remirror/core';
+import type { EditorState } from '@remirror/core';
 import { Decoration } from '@remirror/pm/view';
 
-import { Annotation, AnnotationData } from './types';
+import type { Annotation, AnnotationData } from './types';
 
 interface ToDecorationOptions<A extends Annotation> {
   from: number;

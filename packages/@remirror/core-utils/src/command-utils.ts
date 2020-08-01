@@ -1,5 +1,5 @@
 import { invariant, isNumber, object } from '@remirror/core-helpers';
-import {
+import type {
   AttributesParameter,
   CommandFunction,
   CommandFunctionParameter,

@@ -1,8 +1,7 @@
 import escapeStringRegex from 'escape-string-regexp';
 
+import type { AddCustomHandler, CommandFunction } from '@remirror/core';
 import {
-  AddCustomHandler,
-  CommandFunction,
   ErrorConstant,
   extensionDecorator,
   FromToParameter,
@@ -11,9 +10,9 @@ import {
   PlainExtension,
   plainInputRule,
 } from '@remirror/core';
-import { Suggester } from '@remirror/pm/suggest';
+import type { Suggester } from '@remirror/pm/suggest';
 
-import {
+import type {
   EmojiObject,
   EmojiOptions,
   EmojiSuggestionKeyBindings,

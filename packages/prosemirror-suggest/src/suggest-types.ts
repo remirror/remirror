@@ -1,11 +1,11 @@
-import {
+import type {
   AnyFunction,
   EditorViewParameter,
   FromToParameter,
   TextParameter,
 } from '@remirror/core-types';
 
-import { ChangeReason, ExitReason } from './suggest-constants';
+import type { ChangeReason, ExitReason } from './suggest-constants';
 
 /**
  * This `Suggester` interface defines all the options required to create a

@@ -1,5 +1,5 @@
 import { bool } from '@remirror/core-helpers';
-import {
+import type {
   AttributesParameter,
   CommandFunction,
   DocParameter,
@@ -9,8 +9,8 @@ import {
   TransactionParameter,
 } from '@remirror/core-types';
 import { isMarkActive, isTextSelection } from '@remirror/core-utils';
-import { ResolvedPos } from '@remirror/pm/model';
-import { Selection, SelectionRange, TextSelection } from '@remirror/pm/state';
+import type { ResolvedPos } from '@remirror/pm/model';
+import type { Selection, SelectionRange, TextSelection } from '@remirror/pm/state';
 
 /**
  * Check if the active selection has a cursor available.

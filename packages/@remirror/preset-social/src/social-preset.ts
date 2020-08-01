@@ -1,4 +1,4 @@
-import { Except } from 'type-fest';
+import type { Except } from 'type-fest';
 
 import {
   AddCustomHandler,

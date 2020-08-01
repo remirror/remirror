@@ -1,19 +1,21 @@
-import {
+import type {
   AnyCombinedUnion,
   BuiltinPreset,
   EditorState,
-  EditorWrapper,
   EditorWrapperOutput,
   EditorWrapperProps,
+  PrimitiveSelection,
+  RemirrorContentType,
+  SchemaFromCombined,
+  UpdateStateParameter,
+} from '@remirror/core';
+import {
+  EditorWrapper,
   EMPTY_PARAGRAPH_NODE,
   getDocument,
   isArray,
   isFunction,
-  PrimitiveSelection,
-  RemirrorContentType,
   RemirrorManager,
-  SchemaFromCombined,
-  UpdateStateParameter,
 } from '@remirror/core';
 import { EditorView } from '@remirror/pm/view';
 import { CorePreset, createCoreManager, CreateCoreManagerOptions } from '@remirror/preset-core';

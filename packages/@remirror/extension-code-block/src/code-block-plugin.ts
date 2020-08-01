@@ -10,10 +10,10 @@ import {
   Transaction,
   TransactionParameter,
 } from '@remirror/core';
-import { Step } from '@remirror/pm/transform';
+import type { Step } from '@remirror/pm/transform';
 import { DecorationSet } from '@remirror/pm/view';
 
-import { CodeBlockOptions } from './code-block-types';
+import type { CodeBlockOptions } from './code-block-types';
 import {
   createDecorations,
   getNodeInformationFromState,

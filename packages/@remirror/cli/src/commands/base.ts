@@ -1,9 +1,9 @@
 import { Command } from 'clipanion';
 import dargs from 'dargs';
 import { isAbsolute, resolve } from 'path';
-import { ConditionalPick } from 'type-fest';
+import type { ConditionalPick } from 'type-fest';
 
-import { BaseCommandProps, CommandContext } from '../types';
+import type { BaseCommandProps, CommandContext } from '../types';
 
 export abstract class BaseCommand extends Command<CommandContext> implements BaseCommandProps {
   /**

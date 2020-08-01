@@ -1,10 +1,10 @@
 import { __INTERNAL_REMIRROR_IDENTIFIER_KEY__, RemirrorIdentifier } from '@remirror/core-constants';
-import { Dynamic, Static } from '@remirror/core-types';
+import type { Dynamic, Static } from '@remirror/core-types';
 import { ignoreUnused } from '@remirror/testing';
 
 import { RemirrorManager } from '../..';
 import { PlainExtension } from '../../extension';
-import { OnSetOptionsParameter } from '../../types';
+import type { OnSetOptionsParameter } from '../../types';
 import { AnyPreset, DefaultPresetOptions, Preset } from '../preset-base';
 
 // @ts-expect-error

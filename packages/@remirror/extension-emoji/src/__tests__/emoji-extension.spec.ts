@@ -1,10 +1,10 @@
 import { renderEditor } from 'jest-remirror';
 
 import { object } from '@remirror/core';
-import { SuggestKeyBindingParameter } from '@remirror/pm/suggest';
+import type { SuggestKeyBindingParameter } from '@remirror/pm/suggest';
 
 import { EmojiExtension } from '../emoji-extension';
-import {
+import type {
   EmojiObject,
   EmojiOptions,
   EmojiSuggestCommand,

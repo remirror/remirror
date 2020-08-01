@@ -1,9 +1,9 @@
 import mergeDescriptors from 'merge-descriptors';
-import { Transaction } from 'prosemirror-state';
+import type { Transaction } from 'prosemirror-state';
 import { Decoration, DecorationSet, EditorView } from 'prosemirror-view';
 
 import { bool, isFunction, isString, object } from '@remirror/core-helpers';
-import {
+import type {
   CompareStateParameter,
   EditorSchema,
   EditorState,
@@ -16,7 +16,7 @@ import {
 
 import { ChangeReason, DEFAULT_SUGGESTER, ExitReason } from './suggest-constants';
 import { isInvalidSplitReason, isJumpReason, isValidMatch } from './suggest-predicates';
-import {
+import type {
   AddIgnoredParameter,
   CompareMatchParameter,
   RemoveIgnoredParameter,

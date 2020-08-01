@@ -1,15 +1,15 @@
-import { ElementType, ReactElement } from 'react';
-import { Except } from 'type-fest';
+import type { ElementType, ReactElement } from 'react';
+import type { Except } from 'type-fest';
 
-import { AnyCombinedUnion, GetStaticAndDynamic } from '@remirror/core';
-import { SocialOptions, SocialPreset } from '@remirror/preset-social';
-import {
+import type { AnyCombinedUnion, GetStaticAndDynamic } from '@remirror/core';
+import type { SocialOptions, SocialPreset } from '@remirror/preset-social';
+import type {
   BaseReactCombinedUnion,
   CreateReactManagerOptions,
   I18nContextProps,
   RemirrorProviderProps,
 } from '@remirror/react';
-import { RemirrorThemeType } from '@remirror/theme';
+import type { RemirrorThemeType } from '@remirror/theme';
 
 export interface MentionChangeParameter extends BaseMentionState {
   name: MatchName;

@@ -4,13 +4,13 @@ import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from
 import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { debounce } from '@remirror/core-helpers';
-import { EditorState } from 'remirror/core';
+import type { EditorState } from 'remirror/core';
 
 import CodeEditor from './code-editor';
 import { PlaygroundContext, PlaygroundContextObject } from './context';
 import { ErrorBoundary } from './error-boundary';
 import { makeRequire, REQUIRED_MODULES } from './execute';
-import { CodeOptions, Exports, RemirrorModules } from './interfaces';
+import type { CodeOptions, Exports, RemirrorModules } from './interfaces';
 import { makeCode } from './make-code';
 import { Container, Divide, Main, Panel } from './primitives';
 import { SimplePanel } from './simple-panel';

@@ -1,7 +1,7 @@
-import { RefractorSyntax } from 'refractor/core';
-import { LiteralUnion } from 'type-fest';
+import type { RefractorSyntax } from 'refractor/core';
+import type { LiteralUnion } from 'type-fest';
 
-import { ProsemirrorAttributes } from '@remirror/core';
+import type { ProsemirrorAttributes } from '@remirror/core';
 
 /**
  * The default supported syntax themes.

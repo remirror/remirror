@@ -1,13 +1,14 @@
 import { useId } from '@reach/auto-id';
 import { setStatus } from 'a11y-status';
-import { DependencyList, EffectCallback, useEffect, useReducer, useRef } from 'react';
+import type { DependencyList, EffectCallback } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import useEffectOnce from 'react-use/lib/useEffectOnce';
 import useShallowCompareEffect from 'react-use/lib/useShallowCompareEffect';
 
 import { isEmptyArray } from '@remirror/core-helpers';
 
 import { multishiftReducer } from './multishift-reducer';
-import {
+import type {
   A11yStatusMessageParameter,
   GetA11yStatusMessage,
   ItemsToString,

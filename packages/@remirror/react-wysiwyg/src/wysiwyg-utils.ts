@@ -1,8 +1,8 @@
-import { AnyCombinedUnion, RemirrorManager } from '@remirror/core';
+import type { AnyCombinedUnion, RemirrorManager } from '@remirror/core';
 import { createWysiwygPresetList } from '@remirror/preset-wysiwyg';
 import { createReactManager } from '@remirror/react';
 
-import { CreateWysiwygManagerOptions, WysiwygCombinedUnion } from './wysiwyg-types';
+import type { CreateWysiwygManagerOptions, WysiwygCombinedUnion } from './wysiwyg-types';
 
 /**
  * Create a wysiwyg remirror manager with all the default react presets and

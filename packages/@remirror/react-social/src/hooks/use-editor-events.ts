@@ -1,4 +1,4 @@
-import { GetHandler, StringKey } from '@remirror/core';
+import type { GetHandler, StringKey } from '@remirror/core';
 import { EventsExtension, EventsOptions } from '@remirror/extension-events';
 import { useExtension } from '@remirror/react';
 

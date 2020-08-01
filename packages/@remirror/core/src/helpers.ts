@@ -1,8 +1,8 @@
 import { ErrorConstant } from '@remirror/core-constants';
 import { freeze, invariant, keys, object } from '@remirror/core-helpers';
-import { GetFixedDynamic, GetPartialDynamic, ValidOptions } from '@remirror/core-types';
+import type { GetFixedDynamic, GetPartialDynamic, ValidOptions } from '@remirror/core-types';
 
-import { GetChangeOptionsReturn, PickChanged } from './types';
+import type { GetChangeOptionsReturn, PickChanged } from './types';
 
 export interface GetChangedOptionsParameter<Options extends ValidOptions> {
   /**

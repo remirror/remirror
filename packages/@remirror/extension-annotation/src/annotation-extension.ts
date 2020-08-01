@@ -5,7 +5,7 @@ import {
   ExtensionPriority,
   PlainExtension,
 } from '@remirror/core';
-import { EditorState } from '@remirror/pm/state';
+import type { EditorState } from '@remirror/pm/state';
 import { DecorationSet } from '@remirror/pm/view';
 
 import {
@@ -14,7 +14,7 @@ import {
   RemoveAnnotationsAction,
   SetAnnotationsAction,
 } from './actions';
-import { Annotation, AnnotationData, AnnotationOptions } from './types';
+import type { Annotation, AnnotationData, AnnotationOptions } from './types';
 import { toAnnotation, toDecoration } from './utils';
 
 /**

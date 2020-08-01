@@ -5,7 +5,7 @@ import { renderToString } from 'react-dom/server';
 import { AnyCombinedUnion, fromHtml } from '@remirror/core';
 import { act, createReactManager, fireEvent, strictRender } from '@remirror/testing/react';
 
-import { RemirrorContextProps } from '../../react-types';
+import type { RemirrorContextProps } from '../../react-types';
 import { ReactEditor } from '../react-editor';
 
 const textContent = `This is editor text`;

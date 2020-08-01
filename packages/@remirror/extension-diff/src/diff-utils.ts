@@ -1,5 +1,5 @@
 import { isEmptyArray } from '@remirror/core';
-import { Step, StepMap, Transform } from '@remirror/pm/transform';
+import type { Step, StepMap, Transform } from '@remirror/pm/transform';
 
 interface SpanConstructorParameter {
   from: number;

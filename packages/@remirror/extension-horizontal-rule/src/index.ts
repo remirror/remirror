@@ -1,1 +1,2 @@
-export * from './horizontal-rule-extension';
+export type { HorizontalRuleOptions } from './horizontal-rule-extension';
+export { HorizontalRuleExtension } from './horizontal-rule-extension';

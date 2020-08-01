@@ -1,8 +1,6 @@
 import React, {
   Children,
-  ComponentClass,
   ComponentType,
-  FC,
   Fragment,
   isValidElement as isValidReactElement,
   ReactElement,
@@ -11,7 +9,7 @@ import React, {
 
 import { ErrorConstant } from '@remirror/core-constants';
 import { bool, invariant, isFunction, isObject, isString } from '@remirror/core-helpers';
-import { AnyFunction, UnknownShape } from '@remirror/core-types';
+import type { AnyFunction, UnknownShape } from '@remirror/core-types';
 
 export interface RemirrorComponentStaticProperties {
   /**
@@ -19,11 +17,6 @@ export interface RemirrorComponentStaticProperties {
    */
   $$remirrorType: RemirrorType;
 }
-
-export type RemirrorFC<Props extends object = object> = FC<Props> &
-  RemirrorComponentStaticProperties;
-export type RemirrorComponentClass<Props extends object = object> = ComponentClass<Props> &
-  RemirrorComponentStaticProperties;
 
 export type RemirrorComponentType<Props extends object = object> = ComponentType<Props> &
   RemirrorComponentStaticProperties;

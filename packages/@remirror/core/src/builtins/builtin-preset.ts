@@ -1,9 +1,9 @@
 import { isEmptyObject, noop, pick } from '@remirror/core-helpers';
-import { GetStaticAndDynamic } from '@remirror/core-types';
+import type { GetStaticAndDynamic } from '@remirror/core-types';
 
-import { AddCustomHandler } from '../extension/base-class';
+import type { AddCustomHandler } from '../extension/base-class';
 import { Preset } from '../preset';
-import { OnSetOptionsParameter } from '../types';
+import type { OnSetOptionsParameter } from '../types';
 import { AttributesExtension } from './attributes-extension';
 import { CommandsExtension } from './commands-extension';
 import { HelpersExtension } from './helpers-extension';

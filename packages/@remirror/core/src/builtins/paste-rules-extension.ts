@@ -1,4 +1,4 @@
-import { ProsemirrorPlugin } from '@remirror/core-types';
+import type { ProsemirrorPlugin } from '@remirror/core-types';
 
 import { PlainExtension } from '../extension';
 

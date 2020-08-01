@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { AnyCombinedUnion, isRemirrorManager, RemirrorManager } from '@remirror/core';
 import { useRemirror, UseRemirrorType } from '@remirror/react';
 
-import { CreateWysiwygManagerOptions, WysiwygCombinedUnion } from './wysiwyg-types';
+import type { CreateWysiwygManagerOptions, WysiwygCombinedUnion } from './wysiwyg-types';
 import { createWysiwygManager } from './wysiwyg-utils';
 
 /**

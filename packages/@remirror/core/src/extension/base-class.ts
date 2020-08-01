@@ -16,7 +16,7 @@ import {
   object,
   omit,
 } from '@remirror/core-helpers';
-import {
+import type {
   AnyFunction,
   Dispose,
   EmptyShape,
@@ -37,7 +37,7 @@ import {
 } from '@remirror/core-types';
 
 import { getChangedOptions } from '../helpers';
-import { OnSetOptionsParameter } from '../types';
+import type { OnSetOptionsParameter } from '../types';
 
 interface BaseClassConstructorParameter<DefaultStaticOptions extends Shape = EmptyShape> {
   validator: (Constructor: unknown, code: ErrorConstant) => void;

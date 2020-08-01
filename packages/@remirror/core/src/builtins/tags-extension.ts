@@ -9,8 +9,8 @@ import {
   isNodeExtension,
   PlainExtension,
 } from '../extension';
-import { AnyCombinedUnion, InferCombinedExtensions } from '../preset';
-import { GeneralExtensionTags, MarkExtensionTags, NodeExtensionTags } from '../types';
+import type { AnyCombinedUnion, InferCombinedExtensions } from '../preset';
+import type { GeneralExtensionTags, MarkExtensionTags, NodeExtensionTags } from '../types';
 
 /**
  * Create the extension tags which are passed into each extensions method to

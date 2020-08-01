@@ -16,7 +16,7 @@ import {
   isRemirrorType,
   object,
 } from '@remirror/core-helpers';
-import { EditorSchema, EditorView, Replace } from '@remirror/core-types';
+import type { EditorSchema, EditorView, Replace } from '@remirror/core-types';
 import {
   createDocumentNode,
   CreateDocumentNodeParameter,
@@ -36,7 +36,7 @@ import {
   isPlainExtension,
   ManagerStoreKeys,
 } from '../extension';
-import {
+import type {
   AnyCombinedUnion,
   AnyPreset,
   AnyPresetConstructor,
@@ -45,7 +45,7 @@ import {
   SchemaFromCombined,
 } from '../preset';
 import { privacySymbol } from '../privacy';
-import { GetConstructor, GetExtensions, StateUpdateLifecycleParameter } from '../types';
+import type { GetConstructor, GetExtensions, StateUpdateLifecycleParameter } from '../types';
 import { transformCombinedUnion } from './remirror-manager-helpers';
 
 /**

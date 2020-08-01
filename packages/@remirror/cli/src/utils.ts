@@ -1,6 +1,6 @@
 import updateNotifier from 'update-notifier';
 
-import { CommandContext } from './types';
+import type { CommandContext } from './types';
 
 /**
  * Notify the user of available updates to the CLI.

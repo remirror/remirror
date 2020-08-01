@@ -1,7 +1,7 @@
 import { isEmptyArray, object } from '@remirror/core-helpers';
 
 import { MultishiftActionTypes } from './multishift-constants';
-import {
+import type {
   MultishiftProps,
   MultishiftRootActions,
   MultishiftState,

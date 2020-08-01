@@ -1,7 +1,7 @@
 import { kebabCase } from 'case-anything';
 import colors from 'open-color';
 
-import { DeepPartial, DeepString } from '@remirror/core-types';
+import type { DeepPartial, DeepString } from '@remirror/core-types';
 
 /**
  * Aliased name for the color type. It's just a string.

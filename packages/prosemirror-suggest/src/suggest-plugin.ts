@@ -1,9 +1,9 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
 
-import { EditorSchema, EditorState } from '@remirror/core-types';
+import type { EditorSchema, EditorState } from '@remirror/core-types';
 
 import { SuggestState } from './suggest-state';
-import { Suggester } from './suggest-types';
+import type { Suggester } from './suggest-types';
 
 const suggestPluginKey = new PluginKey('suggest');
 

@@ -1,5 +1,5 @@
-import { CustomHandler, Handler, ProsemirrorAttributes, Static } from '@remirror/core';
-import {
+import type { CustomHandler, Handler, ProsemirrorAttributes, Static } from '@remirror/core';
+import type {
   FromToEndParameter,
   SuggestChangeHandlerMethod,
   SuggestChangeHandlerParameter,

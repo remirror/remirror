@@ -1,8 +1,11 @@
 export interface AnnotationOptions {
   /**
-   * Classname set for all annotation. Set this option to use a custom
-   * style for annotation.
-   * Note that you can style additionally individual annotations via
+   * Class name to set for all annotations.
+   *
+   * @remarks
+   *
+   * Set this option to use a custom style for
+   * annotation. Note that you can style additionally individual annotations via
    * Annotation.className.
    */
   annotationClassName?: string;

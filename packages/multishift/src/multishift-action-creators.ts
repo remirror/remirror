@@ -1,5 +1,5 @@
 import { MultishiftActionTypes } from './multishift-constants';
-import {
+import type {
   CreateMultishiftAction,
   ItemClickPayload,
   MultishiftStateProps,

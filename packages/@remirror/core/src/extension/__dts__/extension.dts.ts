@@ -1,4 +1,4 @@
-import {
+import type {
   ApplySchemaAttributes,
   CustomHandler,
   CustomHandlerKeyList,
@@ -17,7 +17,7 @@ import {
   NodeExtensionSpec,
   PlainExtension,
 } from '../../..';
-import { AddCustomHandler } from '../base-class';
+import type { AddCustomHandler } from '../base-class';
 
 const anyExtensionTester = <ExtensionUnion extends AnyExtension>(extension: ExtensionUnion) => {};
 const anyNodeExtensionTester = <ExtensionUnion extends AnyNodeExtension>(

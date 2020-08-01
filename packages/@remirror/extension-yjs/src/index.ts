@@ -1,1 +1,2 @@
-export * from './yjs-extension';
+export type { YjsOptions } from './yjs-extension';
+export { YjsExtension } from './yjs-extension';

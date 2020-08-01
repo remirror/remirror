@@ -26,11 +26,6 @@ export const MAX_INDENT_LEVEL = 7;
 export const INDENT_ATTRIBUTE = 'data-indent';
 
 /**
- * Values which can safely be ignored when styling nodes.
- */
-export const EMPTY_CSS_VALUE = new Set(['', '0%', '0pt', '0px']);
-
-/**
  * The default line spacing values.
  */
 export const LINE_SPACING_VALUES = [
@@ -66,5 +61,3 @@ export const PT_TO_PIXEL_RATIO = 1.33;
  * The default font sizes for the editor.
  */
 export const FONT_PT_SIZES = [8, 9, 10, 11, 12, 14, 18, 24, 30, 36, 48, 60, 72, 90];
-
-export const CSS_ROTATE_PATTERN = /rotate\(([\d.]+)rad\)/i;

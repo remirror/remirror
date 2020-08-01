@@ -2,7 +2,7 @@ import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
 import { entries, fromHtml, GetHandler, toHtml } from '@remirror/core';
-import { SuggestExitHandlerParameter } from '@remirror/pm/suggest';
+import type { SuggestExitHandlerParameter } from '@remirror/pm/suggest';
 import { createCoreManager } from '@remirror/testing';
 
 import { MentionExtension, MentionExtensionSuggestCommand, MentionOptions } from '..';

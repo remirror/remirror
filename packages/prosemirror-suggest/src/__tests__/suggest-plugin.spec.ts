@@ -2,7 +2,7 @@ import { createEditor, doc, p } from 'jest-prosemirror';
 
 import { ExitReason } from '../suggest-constants';
 import { addSuggester, suggest } from '../suggest-plugin';
-import { SuggestExitHandlerParameter, SuggestKeyBindingParameter } from '../suggest-types';
+import type { SuggestExitHandlerParameter, SuggestKeyBindingParameter } from '../suggest-types';
 
 describe('Suggest Handlers', () => {
   it('should call `onChange`, `onExit` and `createCommand` handlers', () => {

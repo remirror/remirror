@@ -10,11 +10,11 @@
   ],
   "sideEffects": true,
   "main": "dist/cli.cjs.js",
-  "module": "dist/cli.esm.js",
   "bin": {
-    "remirror": "cli.js"
+    "remirror": "cli/dist/cli.cjs.js"
   },
   "files": [
+    "cli",
     "dist"
   ],
   "dependencies": {
@@ -63,6 +63,9 @@
     "access": "public"
   },
   "preconstruct": {
-    "source": "src/cli.ts"
+    "entrypoints": [
+      ".",
+      "cli"
+    ]
   }
 }

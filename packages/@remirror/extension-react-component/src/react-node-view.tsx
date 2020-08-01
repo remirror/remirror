@@ -23,13 +23,13 @@ import {
   SELECTED_NODE_CLASS_NAME,
 } from '@remirror/core';
 
-import {
+import type {
   CreateNodeViewParameter,
   GetPosition,
   ReactComponentOptions,
   ReactNodeViewParameter,
 } from './node-view-types';
-import { PortalContainer } from './portals';
+import type { PortalContainer } from './portals';
 
 export class ReactNodeView implements NodeView {
   /**

@@ -1,17 +1,17 @@
 import { useCallback, useMemo } from 'react';
 
 import { isEmptyArray, omit } from '@remirror/core';
-import {
+import type {
   MentionChangeHandlerParameter,
   MentionExitHandlerMethod,
-  MentionExtension,
   MentionExtensionSuggestCommand,
   MentionKeyBinding,
   MentionKeyBindingParameter,
 } from '@remirror/extension-mention';
+import { MentionExtension } from '@remirror/extension-mention';
 import { useExtension, useSetState } from '@remirror/react';
 
-import { MatchName, MentionChangeParameter, TagData, UserData } from '../social-types';
+import type { MatchName, MentionChangeParameter, TagData, UserData } from '../social-types';
 import { getMentionLabel, indexFromArrowPress } from '../social-utils';
 import { useEditorEvents } from './use-editor-events';
 

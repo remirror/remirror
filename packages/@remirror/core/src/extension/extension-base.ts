@@ -7,7 +7,7 @@ import {
   RemirrorIdentifier,
 } from '@remirror/core-constants';
 import { freeze, invariant, isIdentifierOfType, isRemirrorType } from '@remirror/core-helpers';
-import {
+import type {
   ApplySchemaAttributes,
   EditorSchema,
   EditorView,
@@ -21,7 +21,7 @@ import {
   ValidOptions,
 } from '@remirror/core-types';
 
-import {
+import type {
   BaseExtensionOptions,
   ExtensionCommandReturn,
   ExtensionHelperReturn,

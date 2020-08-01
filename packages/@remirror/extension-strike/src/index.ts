@@ -1,1 +1,1 @@
-export * from './strike-extension';
+export { StrikeExtension } from './strike-extension';

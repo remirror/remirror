@@ -1,7 +1,12 @@
-import { Except } from 'type-fest';
+import type { Except } from 'type-fest';
 
-import { ExtensionPriority, ExtensionTag, MarkGroup, NodeGroup } from '@remirror/core-constants';
-import {
+import type {
+  ExtensionPriority,
+  ExtensionTag,
+  MarkGroup,
+  NodeGroup,
+} from '@remirror/core-constants';
+import type {
   AnyConstructor,
   AnyFunction,
   CommandFunction,
@@ -15,7 +20,7 @@ import {
   Transaction,
   ValidOptions,
 } from '@remirror/core-types';
-import { PluginSpec } from '@remirror/pm/state';
+import type { PluginSpec } from '@remirror/pm/state';
 
 type Changes<Type> =
   | {

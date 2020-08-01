@@ -38,7 +38,7 @@ import {
 import { createDomEditor, createDomManager } from '@remirror/dom';
 
 import { markFactory, nodeFactory } from './jest-remirror-builder';
-import {
+import type {
   MarkWithAttributes,
   MarkWithoutAttributes,
   NodeWithAttributes,

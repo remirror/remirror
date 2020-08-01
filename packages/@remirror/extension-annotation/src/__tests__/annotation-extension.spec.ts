@@ -3,7 +3,7 @@ import { renderEditor } from 'jest-remirror';
 import { isExtensionValid } from '@remirror/testing';
 
 import { Annotation, AnnotationExtension } from '..';
-import { AnnotationOptions } from '../types';
+import type { AnnotationOptions } from '../types';
 
 test('is valid', () => {
   expect(isExtensionValid(AnnotationExtension, {}));

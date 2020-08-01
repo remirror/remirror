@@ -8,7 +8,7 @@ import {
   InferCombinedPresets,
   isPreset,
 } from '../preset';
-import { GetConstructor } from '../types';
+import type { GetConstructor } from '../types';
 
 export interface TransformExtensionOrPreset<Combined extends AnyCombinedUnion> {
   extensions: Array<InferCombinedExtensions<Combined>>;

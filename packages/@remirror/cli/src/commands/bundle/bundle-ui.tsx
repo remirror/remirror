@@ -7,7 +7,7 @@ import useSetState from 'react-use/lib/useSetState';
 
 import { isNumber } from '@remirror/core-helpers';
 
-import { BundleEditorProps } from './bundle-types';
+import type { BundleEditorProps } from './bundle-types';
 
 enum Step {
   Bundle,

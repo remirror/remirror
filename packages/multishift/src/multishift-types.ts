@@ -1,4 +1,4 @@
-import {
+import type {
   DetailedHTMLProps,
   Dispatch,
   HTMLAttributes,
@@ -8,7 +8,7 @@ import {
   Ref,
 } from 'react';
 
-import { DropdownType, SpecialKey } from './multishift-constants';
+import type { DropdownType, SpecialKey } from './multishift-constants';
 
 export interface MultishiftState<Item = any> {
   /**

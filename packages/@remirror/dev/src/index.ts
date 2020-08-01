@@ -1,1 +1,1 @@
-export * from './dev';
+export { ProsemirrorDevTools } from './dev';

@@ -28,8 +28,6 @@ export interface LinkOptions {
   onActivateLink?: Handler<(selectedText: string) => void>;
 }
 
-export type LinkExtensionCommands = 'updateLink' | 'removeLink';
-
 @extensionDecorator<LinkOptions>({
   handlerKeys: ['onActivateLink'],
 })

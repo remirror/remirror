@@ -1,6 +1,6 @@
-import { RefCallback } from 'react';
+import type { RefCallback } from 'react';
 
-import {
+import type {
   AnyExtension,
   Decoration,
   EditorViewParameter,
@@ -12,7 +12,7 @@ import {
   ValidOptions,
 } from '@remirror/core';
 
-import { PortalContainer } from './portals';
+import type { PortalContainer } from './portals';
 
 export type ReactComponentEnvironment = 'ssr' | 'dom' | 'both';
 

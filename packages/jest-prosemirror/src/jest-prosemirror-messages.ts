@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import { matcherHint, printExpected, printReceived } from 'jest-matcher-utils';
-import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
+import type { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 
 import { selectionFor } from './jest-prosemirror-nodes';
 

@@ -1,1 +1,1 @@
-export * from './hard-break-extension';
+export { HardBreakExtension } from './hard-break-extension';

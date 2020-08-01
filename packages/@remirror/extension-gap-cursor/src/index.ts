@@ -1,2 +1,1 @@
-export * from './gap-cursor-extension';
-export * from './styles';
+export { GapCursorExtension, isGapCursorSelection } from './gap-cursor-extension';

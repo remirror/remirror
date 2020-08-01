@@ -8,7 +8,7 @@ import {
 import { CorePreset } from '@remirror/preset-core';
 import { ReactPreset } from '@remirror/preset-react';
 
-import { CreateReactManagerOptions } from './react-types';
+import type { CreateReactManagerOptions } from './react-types';
 
 /**
  * Create a react manager with all the default react presets and extensions.

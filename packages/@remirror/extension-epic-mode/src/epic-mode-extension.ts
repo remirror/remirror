@@ -1,14 +1,8 @@
-import {
-  CreatePluginReturn,
-  EditorView,
-  extensionDecorator,
-  PlainExtension,
-  randomInt,
-  throttle,
-} from '@remirror/core';
+import type { CreatePluginReturn, EditorView } from '@remirror/core';
+import { extensionDecorator, PlainExtension, randomInt, throttle } from '@remirror/core';
 
 import { defaultEffect, PARTICLE_NUM_RANGE, VIBRANT_COLORS } from './epic-mode-effects';
-import { EpicModeOptions, Particle } from './epic-mode-types';
+import type { EpicModeOptions, Particle } from './epic-mode-types';
 
 @extensionDecorator<EpicModeOptions>({
   defaultOptions: {

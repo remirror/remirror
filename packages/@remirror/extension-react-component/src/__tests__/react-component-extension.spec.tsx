@@ -6,7 +6,7 @@ import { isExtensionValid } from '@remirror/testing';
 import { act, createReactManager, RemirrorProvider, strictRender } from '@remirror/testing/react';
 
 import { ReactComponentExtension } from '..';
-import { NodeViewComponentProps } from '../node-view-types';
+import type { NodeViewComponentProps } from '../node-view-types';
 
 test('`ReactComponentExtension`: is valid', () => {
   expect(isExtensionValid(ReactComponentExtension)).toBeTrue();

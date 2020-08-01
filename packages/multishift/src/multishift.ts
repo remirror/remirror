@@ -37,7 +37,7 @@ import {
   useSetA11y,
   useTimeouts,
 } from './multishift-hooks';
-import {
+import type {
   AllMultishiftDispatchActions,
   GetComboBoxPropsOptions,
   GetComboBoxPropsReturn,

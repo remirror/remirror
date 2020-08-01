@@ -1,10 +1,10 @@
-import { Cast, object } from '@remirror/core-helpers';
-import { CommandFunction } from '@remirror/core-types';
+import { object } from '@remirror/core-helpers';
+import type { CommandFunction } from '@remirror/core-types';
 import { nonChainable } from '@remirror/core-utils';
 
 import { ChainedFromExtensions, PlainExtension } from '..';
-import { AnyExtension } from '../extension-base';
-import { CommandsFromExtensions } from '../extension-types';
+import type { AnyExtension } from '../extension-base';
+import type { CommandsFromExtensions } from '../extension-types';
 
 class FirstExtension extends PlainExtension {
   get name() {

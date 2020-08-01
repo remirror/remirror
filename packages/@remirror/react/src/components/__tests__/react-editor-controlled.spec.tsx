@@ -14,7 +14,7 @@ import { act, fireEvent, strictRender } from '@remirror/testing/react';
 
 import { useRemirror } from '../../hooks';
 import { createReactManager } from '../../react-helpers';
-import { RemirrorContextProps } from '../../react-types';
+import type { RemirrorContextProps } from '../../react-types';
 import { RemirrorProvider } from '../providers';
 import { ReactEditor } from '../react-editor';
 

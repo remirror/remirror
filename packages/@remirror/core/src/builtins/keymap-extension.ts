@@ -1,6 +1,6 @@
 import { ExtensionPriority } from '@remirror/core-constants';
 import { entries, object } from '@remirror/core-helpers';
-import { CustomHandler, KeyBindings, ProsemirrorPlugin } from '@remirror/core-types';
+import type { CustomHandler, KeyBindings, ProsemirrorPlugin } from '@remirror/core-types';
 import {
   convertCommand,
   mergeKeyBindings,
@@ -16,8 +16,8 @@ import { keymap } from '@remirror/pm/keymap';
 
 import { extensionDecorator } from '../decorators';
 import { PlainExtension } from '../extension';
-import { AddCustomHandler } from '../extension/base-class';
-import { OnSetOptionsParameter } from '../types';
+import type { AddCustomHandler } from '../extension/base-class';
+import type { OnSetOptionsParameter } from '../types';
 
 export interface KeymapOptions {
   /**

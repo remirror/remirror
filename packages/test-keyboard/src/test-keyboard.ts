@@ -1,6 +1,6 @@
 import { includes, object, take } from '@remirror/core-helpers';
 
-import {
+import type {
   KeyboardConstructorParameter,
   KeyboardEventName,
   ModifierInformation,

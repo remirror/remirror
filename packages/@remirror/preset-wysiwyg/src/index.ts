@@ -6,4 +6,9 @@ export { ListPreset } from '@remirror/preset-list';
 export { TablePreset } from '@remirror/preset-table';
 export type { TableOptions } from '@remirror/preset-table';
 
-export * from './wysiwyg-preset';
+export type {
+  CreateWysiwygPresetListOptions,
+  WysiwygOptions,
+  WysiwygPresetCombinedUnion,
+} from './wysiwyg-preset';
+export { WysiwygPreset, createWysiwygPresetList } from './wysiwyg-preset';

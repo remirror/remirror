@@ -15,7 +15,7 @@ import {
   mentionSuggestionsUserItemImageStyles,
   mentionSuggestionsUserItemUsernameStyles,
 } from '../social-styles';
-import { TagData, UserData } from '../social-types';
+import type { TagData, UserData } from '../social-types';
 
 /**
  * The social mention component.

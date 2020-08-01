@@ -1,6 +1,6 @@
 import { ErrorConstant, ExtensionPriority } from '@remirror/core-constants';
 import { entries, invariant, object } from '@remirror/core-helpers';
-import { AnyFunction, EmptyShape, ProsemirrorAttributes } from '@remirror/core-types';
+import type { AnyFunction, EmptyShape, ProsemirrorAttributes } from '@remirror/core-types';
 import { isMarkActive, isNodeActive } from '@remirror/core-utils';
 
 import { extensionDecorator } from '../decorators';
@@ -12,8 +12,8 @@ import {
   PlainExtension,
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
-import { ActiveFromCombined, AnyCombinedUnion, HelpersFromCombined } from '../preset';
-import { ExtensionHelperReturn } from '../types';
+import type { ActiveFromCombined, AnyCombinedUnion, HelpersFromCombined } from '../preset';
+import type { ExtensionHelperReturn } from '../types';
 
 /**
  * Helpers are custom methods that can provide extra functionality to the

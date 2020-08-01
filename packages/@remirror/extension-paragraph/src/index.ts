@@ -1,1 +1,1 @@
-export * from './paragraph-extension';
+export { ParagraphExtension } from './paragraph-extension';

@@ -2,7 +2,7 @@ import React, { FC, useMemo } from 'react';
 
 import { compile } from './compile';
 import { Execute } from './execute';
-import { CodeOptions } from './interfaces';
+import type { CodeOptions } from './interfaces';
 
 export interface ViewerProps {
   options: CodeOptions;

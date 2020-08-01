@@ -4,15 +4,19 @@ import {
   Cast,
   CommandFunction,
   CreatePluginReturn,
-  CSS_ROTATE_PATTERN,
-  EMPTY_CSS_VALUE,
   extensionDecorator,
   isElementDomNode,
   NodeExtension,
   NodeExtensionSpec,
   ProsemirrorAttributes,
 } from '@remirror/core';
-import { ResolvedPos } from '@remirror/pm/model';
+import type { ResolvedPos } from '@remirror/pm/model';
+
+/**
+ * Values which can safely be ignored when styling nodes.
+ */
+const EMPTY_CSS_VALUE = new Set(['', '0%', '0pt', '0px']);
+const CSS_ROTATE_PATTERN = /rotate\(([\d.]+)rad\)/i;
 
 /**
  * The image extension for placing images into your editor.

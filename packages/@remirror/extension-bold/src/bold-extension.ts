@@ -1,5 +1,3 @@
-import { FontWeightProperty } from 'csstype';
-
 import {
   ApplySchemaAttributes,
   CommandFunction,
@@ -16,6 +14,18 @@ import {
   Static,
   toggleMark,
 } from '@remirror/core';
+
+type FontWeightProperty =
+  | '-moz-initial'
+  | 'inherit'
+  | 'initial'
+  | 'revert'
+  | 'unset'
+  | 'bold'
+  | 'normal'
+  | 'bolder'
+  | 'lighter'
+  | number;
 
 export interface BoldOptions {
   /**

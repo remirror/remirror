@@ -1,6 +1,6 @@
 import { CorePreset, DocExtension, ParagraphExtension } from '@remirror/testing';
 
-import { BuiltinPreset } from '../../builtins';
+import type { BuiltinPreset } from '../../builtins';
 import { RemirrorManager } from '../remirror-manager';
 
 const manager: RemirrorManager<

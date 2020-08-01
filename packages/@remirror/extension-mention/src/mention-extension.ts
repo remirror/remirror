@@ -19,6 +19,7 @@ import {
   removeMark,
   replaceText,
 } from '@remirror/core';
+import type { SuggestCharacterEntryMethod, Suggester } from '@remirror/pm/suggest';
 import {
   escapeChar,
   getRegexPrefix,
@@ -27,11 +28,9 @@ import {
   isSelectionExitReason,
   isSplitReason,
   regexToString,
-  SuggestCharacterEntryMethod,
-  Suggester,
 } from '@remirror/pm/suggest';
 
-import {
+import type {
   MentionCharacterEntryMethod,
   MentionExtensionAttributes,
   MentionExtensionSuggestCommand,

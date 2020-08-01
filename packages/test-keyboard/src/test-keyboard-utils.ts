@@ -1,7 +1,7 @@
 import { omit } from '@remirror/core-helpers';
-import { Shape } from '@remirror/core-types';
+import type { Shape } from '@remirror/core-types';
 
-import { KeyboardEventName, ModifierInformation } from './test-keyboard-types';
+import type { KeyboardEventName, ModifierInformation } from './test-keyboard-types';
 import { SupportedCharacters, usKeyboardLayout } from './us-keyboard-layout';
 
 /**

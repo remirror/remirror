@@ -10,7 +10,7 @@ import {
   PlainExtension,
   Transaction,
 } from '@remirror/core';
-import { EditorState } from '@remirror/pm/state';
+import type { EditorState } from '@remirror/pm/state';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
 
 const isEmptyStyles = css`

@@ -1,6 +1,6 @@
 import { ErrorConstant, ExtensionPriority } from '@remirror/core-constants';
 import { entries, invariant, isEmptyArray, object, uniqueArray } from '@remirror/core-helpers';
-import {
+import type {
   AnyFunction,
   CommandFunction,
   DispatchFunction,
@@ -10,7 +10,7 @@ import {
   ProsemirrorAttributes,
   Transaction,
 } from '@remirror/core-types';
-import { EditorView } from '@remirror/pm/view';
+import type { EditorView } from '@remirror/pm/view';
 
 import { extensionDecorator } from '../decorators';
 import {
@@ -21,8 +21,8 @@ import {
   PlainExtension,
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
-import { AnyCombinedUnion, ChainedFromCombined, CommandsFromCombined } from '../preset';
-import {
+import type { AnyCombinedUnion, ChainedFromCombined, CommandsFromCombined } from '../preset';
+import type {
   CommandShape,
   CreatePluginReturn,
   ExtensionCommandFunction,

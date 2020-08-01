@@ -1,18 +1,18 @@
-import { ElementType, ReactElement } from 'react';
-import { Except } from 'type-fest';
+import type { ElementType, ReactElement } from 'react';
+import type { Except } from 'type-fest';
 
-import { AnyCombinedUnion } from '@remirror/core';
-import {
+import type { AnyCombinedUnion } from '@remirror/core';
+import type {
   CreateWysiwygPresetListOptions,
   WysiwygPresetCombinedUnion,
 } from '@remirror/preset-wysiwyg';
-import {
+import type {
   BaseReactCombinedUnion,
   CreateReactManagerOptions,
   I18nContextProps,
   RemirrorProviderProps,
 } from '@remirror/react';
-import { RemirrorThemeType } from '@remirror/theme';
+import type { RemirrorThemeType } from '@remirror/theme';
 
 export type WysiwygCombinedUnion = BaseReactCombinedUnion | WysiwygPresetCombinedUnion;
 

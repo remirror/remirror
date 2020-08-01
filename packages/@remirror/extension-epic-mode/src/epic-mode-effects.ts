@@ -1,6 +1,6 @@
 import { randomInt } from '@remirror/core';
 
-import { ParticleEffect } from './epic-mode-types';
+import type { ParticleEffect } from './epic-mode-types';
 
 export const COLORS = [
   '#1f77b4',

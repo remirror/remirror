@@ -1,6 +1,6 @@
-import { Static, StaticKeyList } from '@remirror/core-types';
+import type { Static, StaticKeyList } from '@remirror/core-types';
 
-import { OnSetOptionsParameter } from '../..';
+import type { OnSetOptionsParameter } from '../..';
 import { PlainExtension } from '../../extension';
 import { DefaultPresetOptions, Preset } from '../preset-base';
 

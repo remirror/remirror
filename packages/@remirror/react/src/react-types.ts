@@ -1,6 +1,6 @@
-import { ReactNode, Ref } from 'react';
+import type { ReactNode, Ref } from 'react';
 
-import {
+import type {
   AnyCombinedUnion,
   AnyExtension,
   AnyPreset,
@@ -14,10 +14,10 @@ import {
   SchemaFromCombined,
   Shape,
 } from '@remirror/core';
-import { PortalContainer } from '@remirror/extension-react-component';
-import { I18n } from '@remirror/i18n';
-import { CorePreset, CreateCoreManagerOptions } from '@remirror/preset-core';
-import { ReactPreset, ReactPresetOptions } from '@remirror/preset-react';
+import type { PortalContainer } from '@remirror/extension-react-component';
+import type { I18n } from '@remirror/i18n';
+import type { CorePreset, CreateCoreManagerOptions } from '@remirror/preset-core';
+import type { ReactPreset, ReactPresetOptions } from '@remirror/preset-react';
 
 export type DefaultReactCombined = CombinedUnion<
   AnyExtension,

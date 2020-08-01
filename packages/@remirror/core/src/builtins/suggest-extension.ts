@@ -1,5 +1,5 @@
 import { isArray } from '@remirror/core-helpers';
-import { CustomHandler } from '@remirror/core-types';
+import type { CustomHandler } from '@remirror/core-types';
 import {
   addSuggester,
   getSuggestPluginState,
@@ -10,7 +10,7 @@ import {
 
 import { extensionDecorator } from '../decorators';
 import { PlainExtension } from '../extension';
-import { AddCustomHandler } from '../extension/base-class';
+import type { AddCustomHandler } from '../extension/base-class';
 
 export interface SuggestOptions {
   /**

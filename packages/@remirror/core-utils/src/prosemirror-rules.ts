@@ -1,5 +1,5 @@
 import { findMatches, isFunction, isNullOrUndefined } from '@remirror/core-helpers';
-import {
+import type {
   GetAttributesParameter,
   MarkTypeParameter,
   NodeTypeParameter,

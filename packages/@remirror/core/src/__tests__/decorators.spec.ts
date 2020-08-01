@@ -1,10 +1,10 @@
-import { CustomHandler, Dynamic, Handler, Static } from '@remirror/core-types';
+import type { CustomHandler, Dynamic, Handler, Static } from '@remirror/core-types';
 
 import { extensionDecorator } from '..';
 import { presetDecorator } from '../decorators';
 import { PlainExtension } from '../extension';
 import { Preset } from '../preset';
-import { OnSetOptionsParameter } from '../types';
+import type { OnSetOptionsParameter } from '../types';
 
 interface GeneralOptions {
   type: Static<'awesome' | 'not-awesome'>;

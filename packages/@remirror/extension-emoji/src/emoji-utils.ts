@@ -16,7 +16,7 @@ import {
 
 import aliasObject from './data/aliases';
 import rawEmojiObject from './data/emojis';
-import {
+import type {
   AliasNames,
   EmojiObject,
   EmojiObjectRecord,

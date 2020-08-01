@@ -9,7 +9,7 @@ import {
   object,
   toString,
 } from '@remirror/core-helpers';
-import {
+import type {
   ApplySchemaAttributes,
   EditorSchema,
   Mark,
@@ -35,7 +35,7 @@ import {
   PlainExtension,
   SchemaFromExtensionUnion,
 } from '../extension';
-import { AnyCombinedUnion, InferCombinedExtensions } from '../preset';
+import type { AnyCombinedUnion, InferCombinedExtensions } from '../preset';
 
 /**
  * This extension creates the schema and provides extra attributes as defined in

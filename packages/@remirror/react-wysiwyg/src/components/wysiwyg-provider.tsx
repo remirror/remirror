@@ -4,7 +4,7 @@ import { WysiwygPreset } from '@remirror/preset-wysiwyg';
 import { I18nProvider, RemirrorProvider, ThemeProvider } from '@remirror/react';
 
 import { useWysiwygManager } from '../hooks';
-import { WysiwygProviderProps } from '../wysiwyg-types';
+import type { WysiwygProviderProps } from '../wysiwyg-types';
 
 /**
  * A wysiwyg editor provider with provides the required context to get started

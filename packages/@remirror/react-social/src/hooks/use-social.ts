@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 
-import { AnyCombinedUnion, RemirrorManager } from '@remirror/core';
+import type { AnyCombinedUnion, RemirrorManager } from '@remirror/core';
 import { useManager, useRemirror, UseRemirrorType } from '@remirror/react';
 
-import { CreateSocialManagerOptions, SocialCombinedUnion } from '../social-types';
+import type { CreateSocialManagerOptions, SocialCombinedUnion } from '../social-types';
 import { socialManagerArgs } from '../social-utils';
 
 /**

@@ -1,6 +1,6 @@
 import { ErrorConstant } from '@remirror/core-constants';
 import { bool, invariant, isFunction } from '@remirror/core-helpers';
-import {
+import type {
   MarkTypeParameter,
   NodeTypeParameter,
   OptionalProsemirrorNodeParameter,
@@ -37,13 +37,14 @@ interface FlattenParameter extends OptionalProsemirrorNodeParameter, Partial<Des
  * Flattens descendants of a given `node`.
  *
  * @remarks
+ *
  * It doesn't descend into a node when descend argument is `false` (defaults to `true`).
  *
  * ```ts
  * const children = flatten(node);
  * ```
  */
-export function flatten(parameter: FlattenParameter): NodeWithPosition[] {
+export function flattenNodeDescendants(parameter: FlattenParameter): NodeWithPosition[] {
   const { node, descend = true } = parameter;
 
   invariant(isProsemirrorNode(node), {
@@ -90,7 +91,7 @@ export function findChildren(parameter: FindChildrenParameter) {
     message: 'Invalid "predicate" parameter passed to "findChildren".',
   });
 
-  return flatten({ node, descend }).filter((child) => predicate(child.node));
+  return flattenNodeDescendants({ node, descend }).filter((child) => predicate(child.node));
 }
 
 function findNodeByPredicate({ predicate }: NodePredicateParameter) {
@@ -125,6 +126,7 @@ export const findInlineNodes = findNodeByPredicate({ predicate: (child) => child
  * Returns block descendants of a given `node`.
  *
  * @remarks
+ *
  * It doesn't descend into a node when descend argument is `false` (defaults to `true`).
  *
  * ```ts
@@ -144,6 +146,7 @@ interface FindChildrenByAttrParameter extends FlattenParameter {
  * Iterates over descendants of a given `node`, returning child nodes predicate returns truthy for.
  *
  * @remarks
+ *
  * It doesn't descend into a node when descend argument is `false` (defaults to `true`).
  *
  * ```ts
@@ -161,6 +164,7 @@ interface FindChildrenByNodeParameter extends FlattenParameter, NodeTypeParamete
  * Iterates over descendants of a given `node`, returning child nodes of a given nodeType.
  *
  * @remarks
+ *
  * It doesn't descend into a node when descend argument is `false` (defaults to `true`).
  *
  * ```ts
@@ -178,6 +182,7 @@ interface FindChildrenByMarkParameter extends FlattenParameter, MarkTypeParamete
  * Iterates over descendants of a given `node`, returning child nodes that have a mark of a given markType.
  *
  * @remarks
+ *
  * It doesn't descend into a `node` when descend argument is `false` (defaults to `true`).
  *
  * ```ts
@@ -192,16 +197,17 @@ export function findChildrenByMark(paramter: FindChildrenByMarkParameter) {
 interface ContainsParameter extends ProsemirrorNodeParameter, NodeTypeParameter {}
 
 /**
- * Returns `true` if a given node contains nodes of a given `nodeType`
+ * Returns `true` if a given node contains nodes of a given `nodeType`.
  *
  * @remarks
- * ```ts
- * if (contains(panel, schema.nodes.listItem)) {
  *
+ * ```ts
+ * if (containsNodesOfType({ node: panel, type: schema.nodes.listItem })) {
+ *   log('contained')
  * }
  * ```
  */
-export function contains(parameter: ContainsParameter) {
+export function containsNodesOfType(parameter: ContainsParameter) {
   const { node, type } = parameter;
   return findChildrenByNode({ node, type }).length > 0;
 }

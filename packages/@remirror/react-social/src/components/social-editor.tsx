@@ -4,8 +4,8 @@ import React, { FC } from 'react';
 import { isNumber } from '@remirror/core';
 import { useRemirror } from '@remirror/react';
 
-import { SocialMentionProps } from '../hooks';
-import { SocialProviderProps } from '../social-types';
+import type { SocialMentionProps } from '../hooks';
+import type { SocialProviderProps } from '../social-types';
 import { SocialCharacterCount, SocialCharacterCountWrapper } from './social-character-count';
 import { SocialEmojiComponent } from './social-editor-emoji';
 import { SocialMentionComponent } from './social-editor-mentions';

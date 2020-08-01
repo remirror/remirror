@@ -10,7 +10,7 @@ import {
   keys,
   object,
 } from '@remirror/core-helpers';
-import {
+import type {
   AnyFunction,
   AttributesParameter,
   Brand,
@@ -40,7 +40,7 @@ import {
   Transaction,
   TransactionParameter,
 } from '@remirror/core-types';
-import { MarkSpec, NodeSpec, NodeType } from '@remirror/pm/model';
+import type { MarkSpec, NodeSpec, NodeType } from '@remirror/pm/model';
 import { Selection as PMSelection } from '@remirror/pm/state';
 
 import {

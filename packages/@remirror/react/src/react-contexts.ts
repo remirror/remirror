@@ -2,7 +2,7 @@ import { createContext } from 'react';
 
 import { i18n } from '@remirror/i18n';
 
-import { I18nContextProps, RemirrorContextProps } from './react-types';
+import type { I18nContextProps, RemirrorContextProps } from './react-types';
 
 /**
  * Creates a ReactContext for the Remirror editor

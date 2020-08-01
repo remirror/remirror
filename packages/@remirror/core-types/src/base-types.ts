@@ -1,8 +1,8 @@
 /* Utility Types */
 
-import { ConditionalExcept, ConditionalPick } from 'type-fest';
+import type { ConditionalExcept, ConditionalPick } from 'type-fest';
 
-import { Mark, ProsemirrorNode } from './alias-types';
+import type { Mark, ProsemirrorNode } from './alias-types';
 
 /**
  * An alternative to keyof that only extracts the string keys.

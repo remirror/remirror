@@ -1,6 +1,6 @@
-import { ConditionalExcept, ConditionalPick } from 'type-fest';
+import type { ConditionalExcept, ConditionalPick } from 'type-fest';
 
-import {
+import type {
   AnyFunction,
   Flavoring,
   FlipPartialAndRequired,

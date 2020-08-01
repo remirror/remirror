@@ -1,9 +1,9 @@
 import { fireEvent, prettyDOM } from '@testing-library/dom';
-import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
+import type { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 import { Keyboard } from 'test-keyboard';
 
 import { isString, object, pick } from '@remirror/core-helpers';
-import {
+import type {
   EditorSchema,
   EditorState,
   EditorStateParameter,
@@ -24,7 +24,7 @@ import { DirectEditorProps, EditorView } from '@remirror/pm/view';
 
 import { createEvents, EventType } from './jest-prosemirror-events';
 import { createState, p, pm, selectionFor, taggedDocHasSelection } from './jest-prosemirror-nodes';
-import {
+import type {
   TaggedDocParameter,
   TestEditorView,
   TestEditorViewParameter,

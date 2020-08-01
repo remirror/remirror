@@ -1,8 +1,8 @@
 import { bool, includes, isString } from '@remirror/core-helpers';
-import { SelectionParameter } from '@remirror/core-types';
+import type { SelectionParameter } from '@remirror/core-types';
 
 import { ChangeReason, ExitReason } from './suggest-constants';
-import {
+import type {
   CompareMatchParameter,
   SuggestReasonMap,
   SuggestStateMatch,

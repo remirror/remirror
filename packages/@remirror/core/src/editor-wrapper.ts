@@ -3,7 +3,7 @@ import { createNanoEvents, Unsubscribe } from 'nanoevents';
 
 import { EDITOR_CLASS_NAME, EMPTY_PARAGRAPH_NODE } from '@remirror/core-constants';
 import { bool, isEmptyArray, isFunction, object, pick, uniqueId } from '@remirror/core-helpers';
-import {
+import type {
   EditorSchema,
   EditorState,
   EditorStateParameter,
@@ -31,13 +31,13 @@ import {
   StringHandlerParameter,
   toHtml,
 } from '@remirror/core-utils';
-import { DirectEditorProps } from '@remirror/pm/view';
+import type { DirectEditorProps } from '@remirror/pm/view';
 
-import { UpdatableViewProps } from './builtins';
-import { AnyExtensionConstructor } from './extension';
-import { ManagerEvents, RemirrorManager } from './manager';
-import { AnyPresetConstructor } from './preset';
-import { AnyCombinedUnion, SchemaFromCombined } from './preset/preset-types';
+import type { UpdatableViewProps } from './builtins';
+import type { AnyExtensionConstructor } from './extension';
+import type { ManagerEvents, RemirrorManager } from './manager';
+import type { AnyPresetConstructor } from './preset';
+import type { AnyCombinedUnion, SchemaFromCombined } from './preset/preset-types';
 
 export abstract class EditorWrapper<
   Combined extends AnyCombinedUnion,

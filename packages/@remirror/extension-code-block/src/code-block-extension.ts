@@ -29,7 +29,7 @@ import { keydownHandler } from '@remirror/pm/keymap';
 import { TextSelection } from '@remirror/pm/state';
 
 import { CodeBlockState } from './code-block-plugin';
-import { CodeBlockAttributes, CodeBlockOptions } from './code-block-types';
+import type { CodeBlockAttributes, CodeBlockOptions } from './code-block-types';
 import {
   codeBlockToDOM,
   dataAttribute,

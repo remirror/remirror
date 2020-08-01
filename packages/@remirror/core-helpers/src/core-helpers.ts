@@ -2,10 +2,11 @@ import deepmerge from 'deepmerge';
 import fastDeepEqual from 'fast-deep-equal';
 import omit from 'object.omit';
 import pick from 'object.pick';
-import { Primitive } from 'type-fest';
+import type { Primitive } from 'type-fest';
 
-import { __INTERNAL_REMIRROR_IDENTIFIER_KEY__, RemirrorIdentifier } from '@remirror/core-constants';
-import {
+import type { RemirrorIdentifier } from '@remirror/core-constants';
+import { __INTERNAL_REMIRROR_IDENTIFIER_KEY__ } from '@remirror/core-constants';
+import type {
   AnyConstructor,
   AnyFunction,
   Nullable,

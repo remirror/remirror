@@ -1,6 +1,6 @@
-import { ExtensionPriority } from '@remirror/core-constants';
+import type { ExtensionPriority } from '@remirror/core-constants';
 import { Cast, entries } from '@remirror/core-helpers';
-import {
+import type {
   CustomHandlerKeyList,
   EmptyShape,
   GetCustomHandler,
@@ -15,13 +15,13 @@ import {
   Writeable,
 } from '@remirror/core-types';
 
-import {
+import type {
   AnyExtensionConstructor,
   DefaultExtensionOptions,
   ExtensionConstructor,
 } from './extension';
-import { HandlerKeyOptions } from './extension/base-class';
-import { AnyPresetConstructor, DefaultPresetOptions, PresetConstructor } from './preset';
+import type { HandlerKeyOptions } from './extension/base-class';
+import type { AnyPresetConstructor, DefaultPresetOptions, PresetConstructor } from './preset';
 
 interface DefaultOptionsParameter<Options extends Shape = EmptyShape> {
   /**

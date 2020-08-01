@@ -31,5 +31,18 @@
  * @packageDocumentation
  */
 
-export * from './mention-extension';
-export * from './mention-types';
+export { MentionExtension } from './mention-extension';
+export type {
+  MentionChangeHandlerMethod,
+  MentionChangeHandlerParameter,
+  MentionCharacterEntryMethod,
+  MentionExitHandlerMethod,
+  MentionExtensionAttributes,
+  MentionExtensionMatcher,
+  MentionExtensionSuggestCommand,
+  MentionKeyBinding,
+  MentionKeyBindingParameter,
+  MentionOptions,
+  OptionalMentionExtensionParameter,
+  SuggestionCommandAttributes,
+} from './mention-types';

@@ -1,8 +1,8 @@
 import { isFunction, object } from '@remirror/core-helpers';
-import { NodeViewMethod } from '@remirror/core-types';
+import type { NodeViewMethod } from '@remirror/core-types';
 
 import { PlainExtension } from '../extension';
-import { AnyCombinedUnion } from '../preset';
+import type { AnyCombinedUnion } from '../preset';
 
 /**
  * This extension allows others extension to add the `createNodeView` method

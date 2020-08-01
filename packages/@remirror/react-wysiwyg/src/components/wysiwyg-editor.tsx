@@ -2,7 +2,7 @@ import { styled } from 'linaria/react';
 import React, { FC } from 'react';
 
 import { useWysiwygRemirror } from '../hooks';
-import { WysiwygProviderProps } from '../wysiwyg-types';
+import type { WysiwygProviderProps } from '../wysiwyg-types';
 import { WysiwygProvider } from './wysiwyg-provider';
 
 export interface WysiwygEditorProps extends Partial<WysiwygProviderProps> {}

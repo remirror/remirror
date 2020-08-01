@@ -14,8 +14,8 @@ import {
 } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
-import { NodeMatch } from '@remirror/core-types';
-import { TextSelection } from '@remirror/pm/state';
+import type { NodeMatch } from '@remirror/core-types';
+import type { TextSelection } from '@remirror/pm/state';
 import {
   BlockquoteExtension,
   BoldExtension,

@@ -1,4 +1,4 @@
-import {
+import type {
   EditorSchema,
   EditorState,
   EditorView,
@@ -10,7 +10,7 @@ import {
   Selection,
   Transaction,
 } from './alias-types';
-import { MakeOptional, Position, ProsemirrorAttributes } from './base-types';
+import type { MakeOptional, Position, ProsemirrorAttributes } from './base-types';
 
 /**
  * A parameter builder interface containing the `view` property.

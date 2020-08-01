@@ -1,7 +1,7 @@
-import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
+import type { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 
-import { EditorSchema } from '@remirror/core-types';
-import { EditorView } from '@remirror/pm/view';
+import type { EditorSchema } from '@remirror/core-types';
+import type { EditorView } from '@remirror/pm/view';
 
 /**
  * Tests that a command run transform the nodes from one state to another.

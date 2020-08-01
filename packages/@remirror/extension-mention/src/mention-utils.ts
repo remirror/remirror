@@ -1,7 +1,7 @@
 import { bool, isPlainObject, isString, pick } from '@remirror/core';
 import { DEFAULT_SUGGESTER } from '@remirror/pm/suggest';
 
-import { MentionExtensionAttributes, MentionExtensionMatcher } from './mention-types';
+import type { MentionExtensionAttributes, MentionExtensionMatcher } from './mention-types';
 
 /**
  * The default matcher to use when none is provided in options
