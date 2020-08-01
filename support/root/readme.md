@@ -27,13 +27,13 @@ completes. Prior to installation the superfluous implementation is hidden.
   this file is ignored by default. To turn it on run the following command from the root directory.
 
 ```bash
-pnpm start:checks
+pnpm checks:enable
 ```
 
 And to turn it back off again.
 
 ```bash
-pnpm stop:checks
+pnpm checks:disable
 ```
 
 - `.lintagedrc` - Runs on every commit (see previous point) to make sure files are linted,

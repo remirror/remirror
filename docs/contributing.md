@@ -101,13 +101,13 @@ By default these checks are **not** run automatically. To enable automatic pre-c
 hooks use the following command:
 
 ```bash
-pnpm start:checks
+pnpm checks:enable
 ```
 
 To stop per-commit / per-push checks run:
 
 ```bash
-pnpm stop:checks
+pnpm checks:disable
 ```
 
 <br />
