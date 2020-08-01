@@ -1,5 +1,14 @@
 # @remirror/extension-base-keymap
 
+## 1.0.0-next.14
+
+> 2020-08-01
+
+### Major Changes
+
+- be9a9c17: Deprecated - this functionality is now one of the `builtin` extensions. Everything
+  should work as before if you're on the latest version of `remirror`.
+
 ## 1.0.0-next.15
 
 > 2020-07-31

@@ -1,5 +1,165 @@
 # remirror
 
+## 1.0.0-next.16
+
+> 2020-08-01
+
+### Major Changes
+
+- e518ef1d: Rewrite the positioner extension with a new API for creating positioners.
+
+  Positioners now return an array of `VirtualPositions` or an empty array if no positions extension.
+
+  `@remirror/react` - Add `useMultiPositioner`. `@remirror/react` - Add `virtualNode` property for
+  compatibility with `popper-react`
+
+  An example of creating a new positioner with the new api is below.
+
+  ```ts
+  import { Positioner, Coords, hasStateChanged } from '@remirror/extension-positioner';
+
+  export const cursorPopupPositioner = Positioner.create<Coords>({
+    hasChanged: hasStateChanged,
+
+    /**
+     * Only active when the selection is empty (one character)
+     */
+    getActive: (parameter) => {
+      const { state, view } = parameter;
+
+      if (!state.selection.empty) {
+        return [];
+      }
+
+      return [view.coordsAtPos(state.selection.from)];
+    },
+
+    getPosition(parameter) {
+      const { element, data: cursor } = parameter;
+      const parent = element.offsetParent;
+
+      if (!parent) {
+        return emptyVirtualPosition;
+      }
+
+      // The box in which the bubble menu is positioned, to use as an anchor
+      const parentBox = parent.getBoundingClientRect();
+
+      // The popup menu element
+      const elementBox = element.getBoundingClientRect();
+
+      const calculatedLeft = cursor.left - parentBox.left;
+      const calculatedRight = parentBox.right - cursor.right;
+
+      const bottom = Math.trunc(cursor.bottom - parentBox.top);
+      const top = Math.trunc(cursor.top - parentBox.top);
+      const rect = new DOMRect(cursor.left, cursor.top, 0, cursor.bottom - cursor.top);
+      const left =
+        calculatedLeft + elementBox.width > parentBox.width
+          ? calculatedLeft - elementBox.width
+          : calculatedLeft;
+      const right =
+        calculatedRight + elementBox.width > parentBox.width
+          ? calculatedRight - elementBox.width
+          : calculatedRight;
+
+      return { rect, right, left, bottom, top };
+    },
+  });
+  ```
+
+- be9a9c17: Move all keymap functionality to `KeymapExtension` from `@remirror/core`. Remove all
+  references to `@remirror/extension-base-keymap`.
+
+### Minor Changes
+
+- 206c1405: Extension to annotate content in your editor
+- f032db7e: Remove `isEmptyParagraphNode` and `absoluteCoordinates` exports from
+  `@remirror/core-utils`.
+- 2592b7b3: Allow runtime updates of `PlaceholderExtension` `emptyNodeClass` option.
+
+### Patch Changes
+
+- a7037832: Use exact versions for `@remirror` package `dependencies` and `peerDepedencies`.
+
+  Closes #435
+
+- dcccc5fc: Add browser entrypoint to packages and shrink bundle size.
+- 231f664b: Upgrade dependencies.
+- 6c6d524e: Remove use of `export *` for better tree shaking.
+
+  Closes #406
+
+- Updated dependencies [6528323e]
+- Updated dependencies [206c1405]
+- Updated dependencies [f032db7e]
+- Updated dependencies [a7037832]
+- Updated dependencies [6e8b749a]
+- Updated dependencies [dcccc5fc]
+- Updated dependencies [231f664b]
+- Updated dependencies [982a6b15]
+- Updated dependencies [6c6d524e]
+- Updated dependencies [6c6d524e]
+- Updated dependencies [e518ef1d]
+- Updated dependencies [be9a9c17]
+- Updated dependencies [1918da2c]
+- Updated dependencies [2592b7b3]
+- Updated dependencies [720c9b43]
+  - @remirror/preset-core@1.0.0-next.16
+  - @remirror/preset-wysiwyg@1.0.0-next.16
+  - @remirror/react@1.0.0-next.16
+  - @remirror/react-social@1.0.0-next.16
+  - @remirror/core-types@1.0.0-next.16
+  - @remirror/react-wysiwyg@1.0.0-next.16
+  - @remirror/extension-annotation@1.0.0-next.16
+  - @remirror/core-utils@1.0.0-next.16
+  - @remirror/core@1.0.0-next.16
+  - @remirror/core-constants@1.0.0-next.16
+  - @remirror/core-helpers@1.0.0-next.16
+  - @remirror/dom@1.0.0-next.16
+  - @remirror/extension-auto-link@1.0.0-next.16
+  - @remirror/extension-bidi@1.0.0-next.16
+  - @remirror/extension-blockquote@1.0.0-next.16
+  - @remirror/extension-bold@1.0.0-next.16
+  - @remirror/extension-code@1.0.0-next.16
+  - @remirror/extension-code-block@1.0.0-next.16
+  - @remirror/extension-collaboration@1.0.0-next.16
+  - @remirror/extension-diff@1.0.0-next.16
+  - @remirror/extension-doc@1.0.0-next.16
+  - @remirror/extension-drop-cursor@1.0.0-next.16
+  - @remirror/extension-emoji@1.0.0-next.16
+  - @remirror/extension-epic-mode@1.0.0-next.16
+  - @remirror/extension-events@1.0.0-next.16
+  - @remirror/extension-gap-cursor@1.0.0-next.16
+  - @remirror/extension-hard-break@1.0.0-next.16
+  - @remirror/extension-heading@1.0.0-next.16
+  - @remirror/extension-history@1.0.0-next.16
+  - @remirror/extension-horizontal-rule@1.0.0-next.16
+  - @remirror/extension-image@1.0.0-next.16
+  - @remirror/extension-italic@1.0.0-next.16
+  - @remirror/extension-link@1.0.0-next.16
+  - @remirror/extension-mention@1.0.0-next.16
+  - @remirror/extension-paragraph@1.0.0-next.16
+  - @remirror/extension-placeholder@1.0.0-next.16
+  - @remirror/extension-position-tracker@1.0.0-next.16
+  - @remirror/extension-positioner@1.0.0-next.16
+  - @remirror/extension-react-component@1.0.0-next.16
+  - @remirror/extension-react-ssr@1.0.0-next.16
+  - @remirror/extension-search@1.0.0-next.16
+  - @remirror/extension-strike@1.0.0-next.16
+  - @remirror/extension-text@1.0.0-next.16
+  - @remirror/extension-trailing-node@1.0.0-next.16
+  - @remirror/extension-underline@1.0.0-next.16
+  - @remirror/extension-yjs@1.0.0-next.16
+  - @remirror/pm@1.0.0-next.16
+  - @remirror/preset-embed@1.0.0-next.16
+  - @remirror/preset-list@1.0.0-next.16
+  - @remirror/preset-react@1.0.0-next.16
+  - @remirror/preset-social@1.0.0-next.16
+  - @remirror/preset-table@1.0.0-next.16
+  - @remirror/react-utils@1.0.0-next.16
+  - @remirror/theme@1.0.0-next.16
+
 ## 1.0.0-next.15
 
 > 2020-07-31

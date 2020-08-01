@@ -1,5 +1,66 @@
 # jest-remirror
 
+## 1.0.0-next.16
+
+> 2020-08-01
+
+### Major Changes
+
+- 6c6d524e: **Breaking Changes** 💥
+
+  Rename `contains` to `containsNodesOfType`.
+
+  Make `isValidPresetConstructor` internal only.
+
+  Remove `EMPTY_CSS_VALUE`, `CSS_ROTATE_PATTERN` from `@remirror/core-constants`.
+
+  Remove method:
+  `clean() | coerce() | fragment() | markFactory() | nodeFactory() | offsetTags() | sequence() | slice() | text() | isTaggedNode() | replaceSelection()`
+  and type:
+  `BaseFactoryParameter | MarkWithAttributes | MarkWithoutAttributes | NodeWithAttributes | NodeWithoutAttributes | TagTracker | TaggedContent | TaggedContentItem | TaggedContentWithText | Tags`
+  exports from `jest-remirror`.
+
+  Remove `SPECIAL_INPUT_KEYS | SPECIAL_KEYS | SPECIAL_MENU_KEYS | SPECIAL_TOGGLE_BUTTON_KEYS` from
+  `multishift`.
+
+### Minor Changes
+
+- 720c9b43: Add validity check function exports to `jest-remirror`.
+
+  - `presetValidityTest` for testing your `Preset`.
+  - `extensionValidityTest` for testing your `Extension`.
+
+### Patch Changes
+
+- a7037832: Use exact versions for `@remirror` package `dependencies` and `peerDepedencies`.
+
+  Closes #435
+
+- 68c524ee: Remove ESModule build which is not supported by jest.
+- 231f664b: Upgrade dependencies.
+- 6c6d524e: Remove use of `export *` for better tree shaking.
+
+  Closes #406
+
+- Updated dependencies [6528323e]
+- Updated dependencies [f032db7e]
+- Updated dependencies [a7037832]
+- Updated dependencies [68c524ee]
+- Updated dependencies [6e8b749a]
+- Updated dependencies [dcccc5fc]
+- Updated dependencies [231f664b]
+- Updated dependencies [982a6b15]
+- Updated dependencies [6c6d524e]
+- Updated dependencies [6c6d524e]
+- Updated dependencies [e518ef1d]
+- Updated dependencies [be9a9c17]
+- Updated dependencies [720c9b43]
+  - @remirror/preset-core@1.0.0-next.16
+  - @remirror/core@1.0.0-next.16
+  - @remirror/dom@1.0.0-next.16
+  - @remirror/pm@1.0.0-next.16
+  - jest-prosemirror@1.0.0-next.4
+
 ## 1.0.0-next.15
 
 > 2020-07-31

@@ -1,5 +1,21 @@
 # a11y-status
 
+## 1.0.0-next.3
+
+> 2020-08-01
+
+### Patch Changes
+
+- a7037832: Use exact versions for `@remirror` package `dependencies` and `peerDepedencies`.
+
+  Closes #435
+
+- dcccc5fc: Add browser entrypoint to packages and shrink bundle size.
+- 231f664b: Upgrade dependencies.
+- 6c6d524e: Remove use of `export *` for better tree shaking.
+
+  Closes #406
+
 ## 1.0.0-next.2
 
 > 2020-07-16

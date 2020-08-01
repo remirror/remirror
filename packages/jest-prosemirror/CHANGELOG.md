@@ -1,5 +1,36 @@
 # jest-prosemirror
 
+## 1.0.0-next.4
+
+> 2020-08-01
+
+### Patch Changes
+
+- a7037832: Use exact versions for `@remirror` package `dependencies` and `peerDepedencies`.
+
+  Closes #435
+
+- 68c524ee: Remove ESModule build which is not supported by jest.
+- 231f664b: Upgrade dependencies.
+- 6c6d524e: Remove use of `export *` for better tree shaking.
+
+  Closes #406
+
+- Updated dependencies [6528323e]
+- Updated dependencies [f032db7e]
+- Updated dependencies [a7037832]
+- Updated dependencies [6e8b749a]
+- Updated dependencies [dcccc5fc]
+- Updated dependencies [231f664b]
+- Updated dependencies [6c6d524e]
+- Updated dependencies [6c6d524e]
+  - @remirror/core-types@1.0.0-next.16
+  - @remirror/core-utils@1.0.0-next.16
+  - @remirror/core-constants@1.0.0-next.16
+  - @remirror/core-helpers@1.0.0-next.16
+  - @remirror/pm@1.0.0-next.16
+  - test-keyboard@1.0.0-next.5
+
 ## 1.0.0-next.3
 
 > 2020-07-17

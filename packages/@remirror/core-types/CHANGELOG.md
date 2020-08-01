@@ -1,5 +1,67 @@
 # @remirror/core-types
 
+## 1.0.0-next.16
+
+> 2020-08-01
+
+### Major Changes
+
+- 6c6d524e: **Breaking Changes** 💥
+
+  Rename `contains` to `containsNodesOfType`.
+
+  Make `isValidPresetConstructor` internal only.
+
+  Remove `EMPTY_CSS_VALUE`, `CSS_ROTATE_PATTERN` from `@remirror/core-constants`.
+
+  Remove method:
+  `clean() | coerce() | fragment() | markFactory() | nodeFactory() | offsetTags() | sequence() | slice() | text() | isTaggedNode() | replaceSelection()`
+  and type:
+  `BaseFactoryParameter | MarkWithAttributes | MarkWithoutAttributes | NodeWithAttributes | NodeWithoutAttributes | TagTracker | TaggedContent | TaggedContentItem | TaggedContentWithText | Tags`
+  exports from `jest-remirror`.
+
+  Remove `SPECIAL_INPUT_KEYS | SPECIAL_KEYS | SPECIAL_MENU_KEYS | SPECIAL_TOGGLE_BUTTON_KEYS` from
+  `multishift`.
+
+### Minor Changes
+
+- 6528323e: **Breaking:** `@remirror/preset-core` -`CreateCoreManagerOptions` now extends
+  `Remirror.ManagerSettings`.
+
+  **Breaking:** `@remirror/preset-wysiwyg` - Rename `CreateWysiwygPresetListParameter` to
+  **`CreateWysiwygPresetListOptions`**. Also it now extends `Remirror.ManagerSettings`.
+  **Breaking:**`@remirror/react` - `CreateReactManagerOptions` now extends
+  `Remirror.ManagerSettings`. **Breaking:** `@remirror/react-social` - `CreateSocialManagerOptions`
+  now extends `Remirror.ManagerSettings`.
+
+  **Breaking:** `@remirror/react`, `@remirror/react-social`, `@remirror/react-wysiwyg` now uses a
+  `settings` property for manager settings.
+
+  `@remirror/core-types` - Add `GetStaticAndDynamic<Options>` helper for extracting options from
+  extension. Apply it to the packages mentioned above.
+
+  - `@remirror/react-wysiwyg` - Update imports from `@remirror/preset-wysiwyg`.
+
+### Patch Changes
+
+- a7037832: Use exact versions for `@remirror` package `dependencies` and `peerDepedencies`.
+
+  Closes #435
+
+- dcccc5fc: Add browser entrypoint to packages and shrink bundle size.
+- 231f664b: Upgrade dependencies.
+- 6c6d524e: Remove use of `export *` for better tree shaking.
+
+  Closes #406
+
+- Updated dependencies [a7037832]
+- Updated dependencies [dcccc5fc]
+- Updated dependencies [231f664b]
+- Updated dependencies [6c6d524e]
+- Updated dependencies [6c6d524e]
+  - @remirror/core-constants@1.0.0-next.16
+  - @remirror/pm@1.0.0-next.16
+
 ## 1.0.0-next.13
 
 > 2020-07-29
