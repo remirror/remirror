@@ -1,5 +1,31 @@
 # @remirror/pm
 
+## 1.0.0-next.16
+
+> 2020-08-01
+
+### Patch Changes
+
+- a7037832: Use exact versions for `@remirror` package `dependencies` and `peerDepedencies`.
+
+  Closes #435
+
+- dcccc5fc: Add browser entrypoint to packages and shrink bundle size.
+- 231f664b: Upgrade dependencies.
+- 6c6d524e: Remove use of `export *` for better tree shaking.
+
+  Closes #406
+
+- Updated dependencies [a7037832]
+- Updated dependencies [068d2e07]
+- Updated dependencies [4463d117]
+- Updated dependencies [dcccc5fc]
+- Updated dependencies [231f664b]
+- Updated dependencies [4eb56ecd]
+- Updated dependencies [6c6d524e]
+- Updated dependencies [6c6d524e]
+  - prosemirror-suggest@1.0.0-next.4
+
 ## 1.0.0-next.4
 
 > 2020-07-16

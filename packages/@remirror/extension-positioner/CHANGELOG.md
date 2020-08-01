@@ -1,5 +1,98 @@
 # @remirror/extension-positioner
 
+## 1.0.0-next.16
+
+> 2020-08-01
+
+### Major Changes
+
+- e518ef1d: Rewrite the positioner extension with a new API for creating positioners.
+
+  Positioners now return an array of `VirtualPositions` or an empty array if no positions extension.
+
+  `@remirror/react` - Add `useMultiPositioner`. `@remirror/react` - Add `virtualNode` property for
+  compatibility with `popper-react`
+
+  An example of creating a new positioner with the new api is below.
+
+  ```ts
+  import { Positioner, Coords, hasStateChanged } from '@remirror/extension-positioner';
+
+  export const cursorPopupPositioner = Positioner.create<Coords>({
+    hasChanged: hasStateChanged,
+
+    /**
+     * Only active when the selection is empty (one character)
+     */
+    getActive: (parameter) => {
+      const { state, view } = parameter;
+
+      if (!state.selection.empty) {
+        return [];
+      }
+
+      return [view.coordsAtPos(state.selection.from)];
+    },
+
+    getPosition(parameter) {
+      const { element, data: cursor } = parameter;
+      const parent = element.offsetParent;
+
+      if (!parent) {
+        return emptyVirtualPosition;
+      }
+
+      // The box in which the bubble menu is positioned, to use as an anchor
+      const parentBox = parent.getBoundingClientRect();
+
+      // The popup menu element
+      const elementBox = element.getBoundingClientRect();
+
+      const calculatedLeft = cursor.left - parentBox.left;
+      const calculatedRight = parentBox.right - cursor.right;
+
+      const bottom = Math.trunc(cursor.bottom - parentBox.top);
+      const top = Math.trunc(cursor.top - parentBox.top);
+      const rect = new DOMRect(cursor.left, cursor.top, 0, cursor.bottom - cursor.top);
+      const left =
+        calculatedLeft + elementBox.width > parentBox.width
+          ? calculatedLeft - elementBox.width
+          : calculatedLeft;
+      const right =
+        calculatedRight + elementBox.width > parentBox.width
+          ? calculatedRight - elementBox.width
+          : calculatedRight;
+
+      return { rect, right, left, bottom, top };
+    },
+  });
+  ```
+
+### Patch Changes
+
+- a7037832: Use exact versions for `@remirror` package `dependencies` and `peerDepedencies`.
+
+  Closes #435
+
+- dcccc5fc: Add browser entrypoint to packages and shrink bundle size.
+- 231f664b: Upgrade dependencies.
+- 6c6d524e: Remove use of `export *` for better tree shaking.
+
+  Closes #406
+
+- Updated dependencies [f032db7e]
+- Updated dependencies [a7037832]
+- Updated dependencies [6e8b749a]
+- Updated dependencies [dcccc5fc]
+- Updated dependencies [231f664b]
+- Updated dependencies [982a6b15]
+- Updated dependencies [6c6d524e]
+- Updated dependencies [6c6d524e]
+- Updated dependencies [be9a9c17]
+- Updated dependencies [720c9b43]
+  - @remirror/core@1.0.0-next.16
+  - @remirror/pm@1.0.0-next.16
+
 ## 1.0.0-next.15
 
 > 2020-07-31

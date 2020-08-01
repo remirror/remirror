@@ -1,5 +1,40 @@
 # @remirror/core-constants
 
+## 1.0.0-next.16
+
+> 2020-08-01
+
+### Major Changes
+
+- 6c6d524e: **Breaking Changes** 💥
+
+  Rename `contains` to `containsNodesOfType`.
+
+  Make `isValidPresetConstructor` internal only.
+
+  Remove `EMPTY_CSS_VALUE`, `CSS_ROTATE_PATTERN` from `@remirror/core-constants`.
+
+  Remove method:
+  `clean() | coerce() | fragment() | markFactory() | nodeFactory() | offsetTags() | sequence() | slice() | text() | isTaggedNode() | replaceSelection()`
+  and type:
+  `BaseFactoryParameter | MarkWithAttributes | MarkWithoutAttributes | NodeWithAttributes | NodeWithoutAttributes | TagTracker | TaggedContent | TaggedContentItem | TaggedContentWithText | Tags`
+  exports from `jest-remirror`.
+
+  Remove `SPECIAL_INPUT_KEYS | SPECIAL_KEYS | SPECIAL_MENU_KEYS | SPECIAL_TOGGLE_BUTTON_KEYS` from
+  `multishift`.
+
+### Patch Changes
+
+- a7037832: Use exact versions for `@remirror` package `dependencies` and `peerDepedencies`.
+
+  Closes #435
+
+- dcccc5fc: Add browser entrypoint to packages and shrink bundle size.
+- 231f664b: Upgrade dependencies.
+- 6c6d524e: Remove use of `export *` for better tree shaking.
+
+  Closes #406
+
 ## 1.0.0-next.13
 
 > 2020-07-29

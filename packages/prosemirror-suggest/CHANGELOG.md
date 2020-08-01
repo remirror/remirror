@@ -1,5 +1,74 @@
 # prosemirror-suggest
 
+## 1.0.0-next.4
+
+> 2020-08-01
+
+### Major Changes
+
+- 4463d117: **Rename `Suggestion` to `Suggester`**
+
+  The name `Suggestion` implies something offered to a user. For example typing `@a` offers a
+  suggestion to tag a certain username. Using `Suggestion` as the name for the configuration object
+  is confusing. Going forward `Suggester` will be used as the name of the configuration object.
+
+  The `Suggester` configures the editor to behave in a desired way so that it can provide
+  suggestions to end users.
+
+  **Make `prosemirror-state` and `prosemirror-keymap` peerDependencies.**
+
+  Make all `@type/*` peer dependencies optional.
+
+  Remove `@remirror/core-utils` from dependencies to avoid bloating the size.
+
+- 6c6d524e: **Breaking Changes** 💥
+
+  Rename `contains` to `containsNodesOfType`.
+
+  Make `isValidPresetConstructor` internal only.
+
+  Remove `EMPTY_CSS_VALUE`, `CSS_ROTATE_PATTERN` from `@remirror/core-constants`.
+
+  Remove method:
+  `clean() | coerce() | fragment() | markFactory() | nodeFactory() | offsetTags() | sequence() | slice() | text() | isTaggedNode() | replaceSelection()`
+  and type:
+  `BaseFactoryParameter | MarkWithAttributes | MarkWithoutAttributes | NodeWithAttributes | NodeWithoutAttributes | TagTracker | TaggedContent | TaggedContentItem | TaggedContentWithText | Tags`
+  exports from `jest-remirror`.
+
+  Remove `SPECIAL_INPUT_KEYS | SPECIAL_KEYS | SPECIAL_MENU_KEYS | SPECIAL_TOGGLE_BUTTON_KEYS` from
+  `multishift`.
+
+### Minor Changes
+
+- 068d2e07: Allow runtime additions to the `prosemirror-suggest` plugin.
+
+  You can now add suggester configurations to active suggest plugin instances. The name is used as
+  an identifier and identical names will automatically be replaced.
+
+- 4eb56ecd: Make `removed` and `setMarkRemoved()` methods public on `SuggestState`.
+
+### Patch Changes
+
+- a7037832: Use exact versions for `@remirror` package `dependencies` and `peerDepedencies`.
+
+  Closes #435
+
+- dcccc5fc: Add browser entrypoint to packages and shrink bundle size.
+- 231f664b: Upgrade dependencies.
+- 6c6d524e: Remove use of `export *` for better tree shaking.
+
+  Closes #406
+
+- Updated dependencies [6528323e]
+- Updated dependencies [a7037832]
+- Updated dependencies [dcccc5fc]
+- Updated dependencies [231f664b]
+- Updated dependencies [6c6d524e]
+- Updated dependencies [6c6d524e]
+  - @remirror/core-types@1.0.0-next.16
+  - @remirror/core-constants@1.0.0-next.16
+  - @remirror/core-helpers@1.0.0-next.16
+
 ## 1.0.0-next.3
 
 > 2020-07-21

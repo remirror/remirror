@@ -1,5 +1,78 @@
 # @remirror/preset-wysiwyg
 
+## 1.0.0-next.16
+
+> 2020-08-01
+
+### Major Changes
+
+- 6528323e: **Breaking:** `@remirror/preset-core` -`CreateCoreManagerOptions` now extends
+  `Remirror.ManagerSettings`.
+
+  **Breaking:** `@remirror/preset-wysiwyg` - Rename `CreateWysiwygPresetListParameter` to
+  **`CreateWysiwygPresetListOptions`**. Also it now extends `Remirror.ManagerSettings`.
+  **Breaking:**`@remirror/react` - `CreateReactManagerOptions` now extends
+  `Remirror.ManagerSettings`. **Breaking:** `@remirror/react-social` - `CreateSocialManagerOptions`
+  now extends `Remirror.ManagerSettings`.
+
+  **Breaking:** `@remirror/react`, `@remirror/react-social`, `@remirror/react-wysiwyg` now uses a
+  `settings` property for manager settings.
+
+  `@remirror/core-types` - Add `GetStaticAndDynamic<Options>` helper for extracting options from
+  extension. Apply it to the packages mentioned above.
+
+  - `@remirror/react-wysiwyg` - Update imports from `@remirror/preset-wysiwyg`.
+
+### Patch Changes
+
+- a7037832: Use exact versions for `@remirror` package `dependencies` and `peerDepedencies`.
+
+  Closes #435
+
+- dcccc5fc: Add browser entrypoint to packages and shrink bundle size.
+- 231f664b: Upgrade dependencies.
+- 6c6d524e: Remove use of `export *` for better tree shaking.
+
+  Closes #406
+
+- Updated dependencies [6528323e]
+- Updated dependencies [f032db7e]
+- Updated dependencies [a7037832]
+- Updated dependencies [6e8b749a]
+- Updated dependencies [dcccc5fc]
+- Updated dependencies [231f664b]
+- Updated dependencies [982a6b15]
+- Updated dependencies [6c6d524e]
+- Updated dependencies [6c6d524e]
+- Updated dependencies [e518ef1d]
+- Updated dependencies [be9a9c17]
+- Updated dependencies [1918da2c]
+- Updated dependencies [720c9b43]
+  - @remirror/preset-core@1.0.0-next.16
+  - @remirror/core@1.0.0-next.16
+  - @remirror/extension-bidi@1.0.0-next.16
+  - @remirror/extension-blockquote@1.0.0-next.16
+  - @remirror/extension-bold@1.0.0-next.16
+  - @remirror/extension-code@1.0.0-next.16
+  - @remirror/extension-code-block@1.0.0-next.16
+  - @remirror/extension-drop-cursor@1.0.0-next.16
+  - @remirror/extension-epic-mode@1.0.0-next.16
+  - @remirror/extension-gap-cursor@1.0.0-next.16
+  - @remirror/extension-hard-break@1.0.0-next.16
+  - @remirror/extension-heading@1.0.0-next.16
+  - @remirror/extension-horizontal-rule@1.0.0-next.16
+  - @remirror/extension-image@1.0.0-next.16
+  - @remirror/extension-italic@1.0.0-next.16
+  - @remirror/extension-link@1.0.0-next.16
+  - @remirror/extension-search@1.0.0-next.16
+  - @remirror/extension-strike@1.0.0-next.16
+  - @remirror/extension-trailing-node@1.0.0-next.16
+  - @remirror/extension-underline@1.0.0-next.16
+  - @remirror/pm@1.0.0-next.16
+  - @remirror/preset-embed@1.0.0-next.16
+  - @remirror/preset-list@1.0.0-next.16
+  - @remirror/preset-table@1.0.0-next.16
+
 ## 1.0.0-next.15
 
 > 2020-07-31
