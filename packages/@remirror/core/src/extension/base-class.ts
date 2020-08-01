@@ -130,6 +130,13 @@ export abstract class BaseClass<
   }
 
   /**
+   * Get the dynamic keys for this extension.
+   */
+  get dynamicKeys() {
+    return this.#dynamicKeys;
+  }
+
+  /**
    * The options that this instance was created with, merged with all the
    * default options.
    */
