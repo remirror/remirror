@@ -33,7 +33,7 @@
     "@remirror/pm": "1.0.0-next.4"
   },
   "peerDependencies": {
-    "@remirror/core": "^1.0.0-next.15",
+    "@remirror/core": "1.0.0-next.15",
     "@remirror/pm": "1.0.0-next.4"
   },
   "publishConfig": {

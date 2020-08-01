@@ -30,18 +30,18 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.11.0",
-    "@remirror/extension-react-component": "^1.0.0-next.15",
-    "@remirror/react-utils": "^1.0.0-next.4"
+    "@remirror/extension-react-component": "1.0.0-next.15",
+    "@remirror/react-utils": "1.0.0-next.4"
   },
   "devDependencies": {
-    "@remirror/core": "^1.0.0-next.15",
-    "@remirror/pm": "^1.0.0-next.4",
+    "@remirror/core": "1.0.0-next.15",
+    "@remirror/pm": "1.0.0-next.4",
     "@types/react": "^16.9.44",
     "react": "^16.13.1"
   },
   "peerDependencies": {
-    "@remirror/core": "^1.0.0-next.15",
-    "@remirror/pm": "^1.0.0-next.4",
+    "@remirror/core": "1.0.0-next.15",
+    "@remirror/pm": "1.0.0-next.4",
     "@types/react": "^16.8.0",
     "react": "^16.8.0"
   },

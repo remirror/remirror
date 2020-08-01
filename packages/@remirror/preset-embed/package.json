@@ -30,12 +30,12 @@
     "tiny-querystring": "^0.0.2"
   },
   "devDependencies": {
-    "@remirror/core": "^1.0.0-next.15",
-    "@remirror/pm": "^1.0.0-next.4"
+    "@remirror/core": "1.0.0-next.15",
+    "@remirror/pm": "1.0.0-next.4"
   },
   "peerDependencies": {
-    "@remirror/core": "^1.0.0-next.15",
-    "@remirror/pm": "^1.0.0-next.4"
+    "@remirror/core": "1.0.0-next.15",
+    "@remirror/pm": "1.0.0-next.4"
   },
   "publishConfig": {
     "access": "public"
