@@ -15,7 +15,6 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "main": "dist/jest-remirror.cjs.js",
-  "module": "dist/jest-remirror.esm.js",
   "types": "dist/jest-remirror.cjs.d.ts",
   "files": [
     "dist",
