@@ -1,5 +1,5 @@
 import figures from 'figures';
-import { Box, Color, render, Text } from 'ink';
+import { Box, render, Text } from 'ink';
 import Spinner from 'ink-spinner';
 import ms from 'ms';
 import React, { FC, useEffect } from 'react';
@@ -69,21 +69,21 @@ const LoadingLine: FC<BundleEditorState & { value: Step }> = ({ step, error, val
 
   const getElement = () => {
     if (error) {
-      return <Color red={true}>{figures.cross}</Color>;
+      return <Text color='red'>{figures.cross}</Text>;
     }
 
     if (step === value) {
       return <Spinner />;
     }
 
-    return <Color green={true}>{figures.tick}</Color>;
+    return <Text color='green'>{figures.tick}</Text>;
   };
 
   return (
     <Box height={1}>
       <Box paddingRight={2}>{getElement()}</Box>
       <Text>
-        <Color grey={true}>{children}</Color>
+        <Text color='grey'>{children}</Text>
       </Text>
     </Box>
   );
@@ -112,18 +112,18 @@ export const BundleEditor = ({ verbose, ...props }: BundleEditorProps) => {
       {completed && (
         <>
           <Box height={1} paddingLeft={3} marginY={1}>
-            <Color green={true} bold={true}>
+            <Text color='green' bold={true}>
               {messaging[Step.Complete]}
-            </Color>
+            </Text>
           </Box>
         </>
       )}
       {isNumber(duration) && verbose && (
         <Box height={1} paddingBottom={2}>
           <Box paddingRight={2}>
-            <Color blue={true}>{figures.info}</Color>
+            <Text color='red'>{figures.info}</Text>
           </Box>
-          <Color>Duration: {ms(duration)}</Color>
+          <Text>Duration: {ms(duration)}</Text>
         </Box>
       )}
     </>

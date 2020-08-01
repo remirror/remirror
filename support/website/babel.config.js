@@ -2,6 +2,7 @@ const { dirname } = require('path');
 
 /**
  * @param {import('@babel/core').ConfigAPI} api
+ * @returns {import('@babel/core').TransformOptions}
  */
 function babelConfig(api) {
   const caller = api.caller((caller) =>
@@ -74,7 +75,7 @@ function babelConfig(api) {
         : [
             require.resolve('@babel/preset-env'),
             {
-              useBuiltIns: 'usage',
+              useBuiltIns: 'entry',
               loose: true,
               corejs: { version: '3.6', proposals: true },
               // Do not transform modules to CJS

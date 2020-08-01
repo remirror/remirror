@@ -12,13 +12,13 @@ module.exports = {
   themeConfig: {
     image:
       'https://repository-images.githubusercontent.com/166780923/eb30b500-a97f-11ea-8508-32089c11e24c',
-    disableDarkMode: true,
+    colorMode: { disableSwitch: true },
     navbar: {
       logo: {
         alt: 'Remirror Logo',
         src: 'img/logo.svg',
       },
-      links: [
+      items: [
         {
           to: 'docs/introduction',
           activeBasePath: 'docs',
@@ -74,10 +74,17 @@ module.exports = {
               label: 'GitHub',
               href: 'https://github.com/remirror/remirror',
             },
+            {
+              html: `
+                <a href="https://www.netlify.com" target="_blank" rel="noreferrer noopener" aria-label="Hosted with Netlify">
+                  <img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg" alt="Hosted with Netlify" />
+                </a>
+              `,
+            },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} KickJump Ltd.`,
+      copyright: `Copyright © ${new Date().getFullYear()} KickJump Ltd. Built with Docusaurus`,
     },
   },
   presets: [
@@ -86,9 +93,8 @@ module.exports = {
       {
         docs: {
           path: '../../docs',
-          // It is recommended to set document id as docs home page (`docs/` path).
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/remirror/remirror/edit/next/docs/',
+          editUrl: 'https://github.com/remirror/remirror/edit/next/support/website/',
         },
         blog: {
           showReadingTime: true,
