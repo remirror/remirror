@@ -11,6 +11,10 @@
   "sideEffects": false,
   "main": "dist/core-constants.cjs.js",
   "module": "dist/core-constants.esm.js",
+  "browser": {
+    "./dist/core-constants.cjs.js": "./dist/core-constants.browser.cjs.js",
+    "./dist/core-constants.esm.js": "./dist/core-constants.browser.esm.js"
+  },
   "types": "dist/core-constants.cjs.d.ts",
   "files": [
     "dist"

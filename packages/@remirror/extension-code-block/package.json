@@ -20,6 +20,10 @@
   "sideEffects": false,
   "main": "dist/extension-code-block.cjs.js",
   "module": "dist/extension-code-block.esm.js",
+  "browser": {
+    "./dist/extension-code-block.cjs.js": "./dist/extension-code-block.browser.cjs.js",
+    "./dist/extension-code-block.esm.js": "./dist/extension-code-block.browser.esm.js"
+  },
   "types": "dist/extension-code-block.cjs.d.ts",
   "files": [
     "themes",

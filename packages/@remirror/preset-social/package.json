@@ -16,6 +16,10 @@
   "sideEffects": false,
   "main": "dist/preset-social.cjs.js",
   "module": "dist/preset-social.esm.js",
+  "browser": {
+    "./dist/preset-social.cjs.js": "./dist/preset-social.browser.cjs.js",
+    "./dist/preset-social.esm.js": "./dist/preset-social.browser.esm.js"
+  },
   "types": "dist/preset-social.cjs.d.ts",
   "files": [
     "dist"

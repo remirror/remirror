@@ -17,6 +17,10 @@
   "sideEffects": false,
   "main": "dist/extension-bold.cjs.js",
   "module": "dist/extension-bold.esm.js",
+  "browser": {
+    "./dist/extension-bold.cjs.js": "./dist/extension-bold.browser.cjs.js",
+    "./dist/extension-bold.esm.js": "./dist/extension-bold.browser.esm.js"
+  },
   "types": "dist/extension-bold.cjs.d.ts",
   "files": [
     "dist"

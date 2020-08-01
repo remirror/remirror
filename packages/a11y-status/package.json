@@ -10,6 +10,10 @@
   ],
   "main": "dist/a11y-status.cjs.js",
   "module": "dist/a11y-status.esm.js",
+  "browser": {
+    "./dist/a11y-status.cjs.js": "./dist/a11y-status.browser.cjs.js",
+    "./dist/a11y-status.esm.js": "./dist/a11y-status.browser.esm.js"
+  },
   "types": "dist/a11y-status.cjs.d.ts",
   "files": [
     "dist"

@@ -1,5 +1,3 @@
-import minDocument from 'min-document';
-
 import { EMPTY_NODE, EMPTY_PARAGRAPH_NODE } from '@remirror/core-constants';
 import {
   bool,
@@ -866,7 +864,11 @@ export function shouldUseDomEnvironment(forceEnvironment?: RenderEnvironment) {
  * @param forceEnvironment - force a specific environment
  */
 export function getDocument(forceEnvironment?: RenderEnvironment) {
-  return shouldUseDomEnvironment(forceEnvironment) ? document : minDocument;
+  if (typeof document !== 'undefined') {
+    return document;
+  }
+
+  return shouldUseDomEnvironment(forceEnvironment) ? document : require('min-document');
 }
 
 interface CustomDocParameter {

@@ -18,6 +18,10 @@
   "sideEffects": false,
   "main": "dist/extension-drop-cursor.cjs.js",
   "module": "dist/extension-drop-cursor.esm.js",
+  "browser": {
+    "./dist/extension-drop-cursor.cjs.js": "./dist/extension-drop-cursor.browser.cjs.js",
+    "./dist/extension-drop-cursor.esm.js": "./dist/extension-drop-cursor.browser.esm.js"
+  },
   "types": "dist/extension-drop-cursor.cjs.d.ts",
   "files": [
     "dist"

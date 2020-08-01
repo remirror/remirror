@@ -11,6 +11,10 @@
   "sideEffects": false,
   "main": "dist/dev.cjs.js",
   "module": "dist/dev.esm.js",
+  "browser": {
+    "./dist/dev.cjs.js": "./dist/dev.browser.cjs.js",
+    "./dist/dev.esm.js": "./dist/dev.browser.esm.js"
+  },
   "types": "dist/dev.cjs.d.ts",
   "files": [
     "dist"

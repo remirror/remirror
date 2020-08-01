@@ -17,6 +17,10 @@
   "sideEffects": false,
   "main": "dist/react-utils.cjs.js",
   "module": "dist/react-utils.esm.js",
+  "browser": {
+    "./dist/react-utils.cjs.js": "./dist/react-utils.browser.cjs.js",
+    "./dist/react-utils.esm.js": "./dist/react-utils.browser.esm.js"
+  },
   "types": "dist/react-utils.cjs.d.ts",
   "files": [
     "dist"

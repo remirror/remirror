@@ -15,6 +15,10 @@
   "sideEffects": false,
   "main": "dist/extension-horizontal-rule.cjs.js",
   "module": "dist/extension-horizontal-rule.esm.js",
+  "browser": {
+    "./dist/extension-horizontal-rule.cjs.js": "./dist/extension-horizontal-rule.browser.cjs.js",
+    "./dist/extension-horizontal-rule.esm.js": "./dist/extension-horizontal-rule.browser.esm.js"
+  },
   "types": "dist/extension-horizontal-rule.cjs.d.ts",
   "files": [
     "dist"

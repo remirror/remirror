@@ -15,6 +15,10 @@
   "sideEffects": false,
   "main": "dist/extension-strike.cjs.js",
   "module": "dist/extension-strike.esm.js",
+  "browser": {
+    "./dist/extension-strike.cjs.js": "./dist/extension-strike.browser.cjs.js",
+    "./dist/extension-strike.esm.js": "./dist/extension-strike.browser.esm.js"
+  },
   "types": "dist/extension-strike.cjs.d.ts",
   "files": [
     "dist"

@@ -15,6 +15,7 @@
   "sideEffects": false,
   "main": "dist/extension-template.cjs.js",
   "module": "dist/extension-template.esm.js",
+  "browser": {},
   "types": "dist/extension-template.cjs.d.ts",
   "files": [
     "dist"

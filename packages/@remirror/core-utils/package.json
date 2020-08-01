@@ -11,6 +11,10 @@
   "sideEffects": false,
   "main": "dist/core-utils.cjs.js",
   "module": "dist/core-utils.esm.js",
+  "browser": {
+    "./dist/core-utils.cjs.js": "./dist/core-utils.browser.cjs.js",
+    "./dist/core-utils.esm.js": "./dist/core-utils.browser.esm.js"
+  },
   "types": "dist/core-utils.cjs.d.ts",
   "files": [
     "dist"

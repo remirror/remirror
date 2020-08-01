@@ -15,6 +15,10 @@
   "sideEffects": false,
   "main": "dist/extension-position-tracker.cjs.js",
   "module": "dist/extension-position-tracker.esm.js",
+  "browser": {
+    "./dist/extension-position-tracker.cjs.js": "./dist/extension-position-tracker.browser.cjs.js",
+    "./dist/extension-position-tracker.esm.js": "./dist/extension-position-tracker.browser.esm.js"
+  },
   "types": "dist/extension-position-tracker.cjs.d.ts",
   "files": [
     "dist"

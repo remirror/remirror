@@ -15,6 +15,10 @@
   "sideEffects": false,
   "main": "dist/extension-heading.cjs.js",
   "module": "dist/extension-heading.esm.js",
+  "browser": {
+    "./dist/extension-heading.cjs.js": "./dist/extension-heading.browser.cjs.js",
+    "./dist/extension-heading.esm.js": "./dist/extension-heading.browser.esm.js"
+  },
   "types": "dist/extension-heading.cjs.d.ts",
   "files": [
     "dist"

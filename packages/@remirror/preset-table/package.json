@@ -20,6 +20,10 @@
   "sideEffects": false,
   "main": "dist/preset-table.cjs.js",
   "module": "dist/preset-table.esm.js",
+  "browser": {
+    "./dist/preset-table.cjs.js": "./dist/preset-table.browser.cjs.js",
+    "./dist/preset-table.esm.js": "./dist/preset-table.browser.esm.js"
+  },
   "types": "dist/preset-table.cjs.d.ts",
   "files": [
     "dist"

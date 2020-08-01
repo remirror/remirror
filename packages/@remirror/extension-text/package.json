@@ -17,6 +17,10 @@
   "sideEffects": false,
   "main": "dist/extension-text.cjs.js",
   "module": "dist/extension-text.esm.js",
+  "browser": {
+    "./dist/extension-text.cjs.js": "./dist/extension-text.browser.cjs.js",
+    "./dist/extension-text.esm.js": "./dist/extension-text.browser.esm.js"
+  },
   "types": "dist/extension-text.cjs.d.ts",
   "files": [
     "dist"

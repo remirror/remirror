@@ -1,9 +1,8 @@
-import minDocument from 'min-document';
-
 import {
   Cast,
   EditorSchema,
   EditorState,
+  getDocument,
   RenderEnvironment,
   shouldUseDomEnvironment,
   Transaction,
@@ -23,7 +22,8 @@ export class EditorViewSSR<Schema extends EditorSchema = any> {
     place: Node | ((p: Node) => void) | { mount: Node } | undefined,
     props: DirectEditorProps<Schema>,
   ) {
-    const doc = minDocument;
+    const doc = getDocument('ssr');
+
     this.root = doc;
     this.dom = doc.createElement('div');
     this.state = props.state;

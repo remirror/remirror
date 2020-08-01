@@ -17,6 +17,10 @@
   "sideEffects": false,
   "main": "dist/extension-collaboration.cjs.js",
   "module": "dist/extension-collaboration.esm.js",
+  "browser": {
+    "./dist/extension-collaboration.cjs.js": "./dist/extension-collaboration.browser.cjs.js",
+    "./dist/extension-collaboration.esm.js": "./dist/extension-collaboration.browser.esm.js"
+  },
   "types": "dist/extension-collaboration.cjs.d.ts",
   "files": [
     "dist"

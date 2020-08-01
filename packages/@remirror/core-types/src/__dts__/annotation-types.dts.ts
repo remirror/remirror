@@ -67,6 +67,3 @@ const failedCustom: GetCustomHandler<MixedOptions> = { onChange() {} };
 type FailedHandler1 = Handler<object>;
 // @ts-expect-error
 type FailedHandler3 = Handler<AnyConstructor>;
-
-// // @ts-expect-error
-// type FailedHandler2 = Handler<() => number>;

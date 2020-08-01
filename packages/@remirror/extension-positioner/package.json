@@ -17,6 +17,10 @@
   "sideEffects": false,
   "main": "dist/extension-positioner.cjs.js",
   "module": "dist/extension-positioner.esm.js",
+  "browser": {
+    "./dist/extension-positioner.cjs.js": "./dist/extension-positioner.browser.cjs.js",
+    "./dist/extension-positioner.esm.js": "./dist/extension-positioner.browser.esm.js"
+  },
   "types": "dist/extension-positioner.cjs.d.ts",
   "files": [
     "dist"

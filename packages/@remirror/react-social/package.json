@@ -11,6 +11,10 @@
   "sideEffects": false,
   "main": "dist/react-social.cjs.js",
   "module": "dist/react-social.esm.js",
+  "browser": {
+    "./dist/react-social.cjs.js": "./dist/react-social.browser.cjs.js",
+    "./dist/react-social.esm.js": "./dist/react-social.browser.esm.js"
+  },
   "types": "dist/react-social.cjs.d.ts",
   "files": [
     "style",

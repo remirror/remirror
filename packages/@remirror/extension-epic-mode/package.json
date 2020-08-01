@@ -20,6 +20,10 @@
   "sideEffects": false,
   "main": "dist/extension-epic-mode.cjs.js",
   "module": "dist/extension-epic-mode.esm.js",
+  "browser": {
+    "./dist/extension-epic-mode.cjs.js": "./dist/extension-epic-mode.browser.cjs.js",
+    "./dist/extension-epic-mode.esm.js": "./dist/extension-epic-mode.browser.esm.js"
+  },
   "types": "dist/extension-epic-mode.cjs.d.ts",
   "files": [
     "dist"

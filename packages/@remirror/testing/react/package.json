@@ -1,6 +1,10 @@
 {
   "main": "dist/testing.cjs.js",
   "module": "dist/testing.esm.js",
+  "browser": {
+    "./dist/testing.cjs.js": "./dist/testing.browser.cjs.js",
+    "./dist/testing.esm.js": "./dist/testing.browser.esm.js"
+  },
   "types": "dist/testing.cjs.d.ts",
   "preconstruct": {
     "source": "../src/react"

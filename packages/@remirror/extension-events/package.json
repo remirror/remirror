@@ -15,6 +15,10 @@
   "sideEffects": false,
   "main": "dist/extension-events.cjs.js",
   "module": "dist/extension-events.esm.js",
+  "browser": {
+    "./dist/extension-events.cjs.js": "./dist/extension-events.browser.cjs.js",
+    "./dist/extension-events.esm.js": "./dist/extension-events.browser.esm.js"
+  },
   "types": "dist/extension-events.cjs.d.ts",
   "files": [
     "dist"

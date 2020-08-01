@@ -15,6 +15,11 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "main": "dist/jest-prosemirror.cjs.js",
+  "module": "dist/jest-prosemirror.esm.js",
+  "browser": {
+    "./dist/jest-prosemirror.cjs.js": "./dist/jest-prosemirror.browser.cjs.js",
+    "./dist/jest-prosemirror.esm.js": "./dist/jest-prosemirror.browser.esm.js"
+  },
   "types": "dist/jest-prosemirror.cjs.d.ts",
   "files": [
     "dist",

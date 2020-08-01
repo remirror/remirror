@@ -19,6 +19,10 @@
   "sideEffects": false,
   "main": "dist/extension-image.cjs.js",
   "module": "dist/extension-image.esm.js",
+  "browser": {
+    "./dist/extension-image.cjs.js": "./dist/extension-image.browser.cjs.js",
+    "./dist/extension-image.esm.js": "./dist/extension-image.browser.esm.js"
+  },
   "types": "dist/extension-image.cjs.d.ts",
   "files": [
     "dist"

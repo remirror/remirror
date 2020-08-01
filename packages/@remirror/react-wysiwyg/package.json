@@ -11,6 +11,10 @@
   "sideEffects": false,
   "main": "dist/react-wysiwyg.cjs.js",
   "module": "dist/react-wysiwyg.esm.js",
+  "browser": {
+    "./dist/react-wysiwyg.cjs.js": "./dist/react-wysiwyg.browser.cjs.js",
+    "./dist/react-wysiwyg.esm.js": "./dist/react-wysiwyg.browser.esm.js"
+  },
   "types": "dist/react-wysiwyg.cjs.d.ts",
   "files": [
     "style",

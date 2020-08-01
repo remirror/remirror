@@ -17,6 +17,10 @@
   "sideEffects": false,
   "main": "dist/extension-paragraph.cjs.js",
   "module": "dist/extension-paragraph.esm.js",
+  "browser": {
+    "./dist/extension-paragraph.cjs.js": "./dist/extension-paragraph.browser.cjs.js",
+    "./dist/extension-paragraph.esm.js": "./dist/extension-paragraph.browser.esm.js"
+  },
   "types": "dist/extension-paragraph.cjs.d.ts",
   "files": [
     "dist"

@@ -15,6 +15,10 @@
   "sideEffects": false,
   "main": "dist/extension-hard-break.cjs.js",
   "module": "dist/extension-hard-break.esm.js",
+  "browser": {
+    "./dist/extension-hard-break.cjs.js": "./dist/extension-hard-break.browser.cjs.js",
+    "./dist/extension-hard-break.esm.js": "./dist/extension-hard-break.browser.esm.js"
+  },
   "types": "dist/extension-hard-break.cjs.d.ts",
   "files": [
     "dist"

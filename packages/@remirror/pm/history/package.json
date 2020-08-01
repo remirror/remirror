@@ -1,6 +1,10 @@
 {
   "main": "dist/pm.cjs.js",
   "module": "dist/pm.esm.js",
+  "browser": {
+    "./dist/pm.cjs.js": "./dist/pm.browser.cjs.js",
+    "./dist/pm.esm.js": "./dist/pm.browser.esm.js"
+  },
   "types": "dist/pm.cjs.d.ts",
   "preconstruct": {
     "source": "../src/history"

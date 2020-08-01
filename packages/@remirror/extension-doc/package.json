@@ -18,6 +18,10 @@
   "sideEffects": false,
   "main": "dist/extension-doc.cjs.js",
   "module": "dist/extension-doc.esm.js",
+  "browser": {
+    "./dist/extension-doc.cjs.js": "./dist/extension-doc.browser.cjs.js",
+    "./dist/extension-doc.esm.js": "./dist/extension-doc.browser.esm.js"
+  },
   "types": "dist/extension-doc.cjs.d.ts",
   "files": [
     "dist"

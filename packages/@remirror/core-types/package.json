@@ -10,7 +10,6 @@
   ],
   "sideEffects": false,
   "main": "dist/core-types.cjs.js",
-  "module": "dist/core-types.esm.js",
   "types": "dist/core-types.cjs.d.ts",
   "files": [
     "dist"

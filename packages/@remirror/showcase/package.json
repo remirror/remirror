@@ -17,6 +17,10 @@
   "sideEffects": false,
   "main": "dist/showcase.cjs.js",
   "module": "dist/showcase.esm.js",
+  "browser": {
+    "./dist/showcase.cjs.js": "./dist/showcase.browser.cjs.js",
+    "./dist/showcase.esm.js": "./dist/showcase.browser.esm.js"
+  },
   "types": "dist/showcase.cjs.d.ts",
   "files": [
     "dist"

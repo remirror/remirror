@@ -15,6 +15,10 @@
   "sideEffects": false,
   "main": "dist/extension-search.cjs.js",
   "module": "dist/extension-search.esm.js",
+  "browser": {
+    "./dist/extension-search.cjs.js": "./dist/extension-search.browser.cjs.js",
+    "./dist/extension-search.esm.js": "./dist/extension-search.browser.esm.js"
+  },
   "types": "dist/extension-search.cjs.d.ts",
   "files": [
     "dist"

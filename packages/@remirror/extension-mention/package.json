@@ -11,6 +11,10 @@
   "sideEffects": false,
   "main": "dist/extension-mention.cjs.js",
   "module": "dist/extension-mention.esm.js",
+  "browser": {
+    "./dist/extension-mention.cjs.js": "./dist/extension-mention.browser.cjs.js",
+    "./dist/extension-mention.esm.js": "./dist/extension-mention.browser.esm.js"
+  },
   "types": "dist/extension-mention.cjs.d.ts",
   "files": [
     "dist"

@@ -15,6 +15,10 @@
   "sideEffects": false,
   "main": "dist/extension-annotation.cjs.js",
   "module": "dist/extension-annotation.esm.js",
+  "browser": {
+    "./dist/extension-annotation.cjs.js": "./dist/extension-annotation.browser.cjs.js",
+    "./dist/extension-annotation.esm.js": "./dist/extension-annotation.browser.esm.js"
+  },
   "types": "dist/extension-annotation.cjs.d.ts",
   "files": [
     "dist"

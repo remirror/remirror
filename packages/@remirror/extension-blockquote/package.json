@@ -15,6 +15,10 @@
   "sideEffects": false,
   "main": "dist/extension-blockquote.cjs.js",
   "module": "dist/extension-blockquote.esm.js",
+  "browser": {
+    "./dist/extension-blockquote.cjs.js": "./dist/extension-blockquote.browser.cjs.js",
+    "./dist/extension-blockquote.esm.js": "./dist/extension-blockquote.browser.esm.js"
+  },
   "types": "dist/extension-blockquote.cjs.d.ts",
   "files": [
     "dist"

@@ -17,6 +17,10 @@
   "sideEffects": false,
   "main": "dist/preset-core.cjs.js",
   "module": "dist/preset-core.esm.js",
+  "browser": {
+    "./dist/preset-core.cjs.js": "./dist/preset-core.browser.cjs.js",
+    "./dist/preset-core.esm.js": "./dist/preset-core.browser.esm.js"
+  },
   "types": "dist/preset-core.cjs.d.ts",
   "files": [
     "dist"

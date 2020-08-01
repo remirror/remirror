@@ -15,6 +15,10 @@
   "sideEffects": false,
   "main": "dist/extension-italic.cjs.js",
   "module": "dist/extension-italic.esm.js",
+  "browser": {
+    "./dist/extension-italic.cjs.js": "./dist/extension-italic.browser.cjs.js",
+    "./dist/extension-italic.esm.js": "./dist/extension-italic.browser.esm.js"
+  },
   "types": "dist/extension-italic.cjs.d.ts",
   "files": [
     "dist"

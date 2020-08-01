@@ -19,6 +19,10 @@
   "sideEffects": false,
   "main": "dist/extension-emoji.cjs.js",
   "module": "dist/extension-emoji.esm.js",
+  "browser": {
+    "./dist/extension-emoji.cjs.js": "./dist/extension-emoji.browser.cjs.js",
+    "./dist/extension-emoji.esm.js": "./dist/extension-emoji.browser.esm.js"
+  },
   "types": "dist/extension-emoji.cjs.d.ts",
   "files": [
     "dist"

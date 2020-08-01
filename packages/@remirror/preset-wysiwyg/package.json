@@ -16,6 +16,10 @@
   "sideEffects": false,
   "main": "dist/preset-wysiwyg.cjs.js",
   "module": "dist/preset-wysiwyg.esm.js",
+  "browser": {
+    "./dist/preset-wysiwyg.cjs.js": "./dist/preset-wysiwyg.browser.cjs.js",
+    "./dist/preset-wysiwyg.esm.js": "./dist/preset-wysiwyg.browser.esm.js"
+  },
   "types": "dist/preset-wysiwyg.cjs.d.ts",
   "files": [
     "dist"

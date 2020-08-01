@@ -12,6 +12,10 @@
   "sideEffects": false,
   "main": "dist/react-components.cjs.js",
   "module": "dist/react-components.esm.js",
+  "browser": {
+    "./dist/react-components.cjs.js": "./dist/react-components.browser.cjs.js",
+    "./dist/react-components.esm.js": "./dist/react-components.browser.esm.js"
+  },
   "types": "dist/react-components.cjs.d.ts",
   "files": [
     "style",

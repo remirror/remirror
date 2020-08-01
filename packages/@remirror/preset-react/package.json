@@ -18,6 +18,10 @@
   "sideEffects": false,
   "main": "dist/preset-react.cjs.js",
   "module": "dist/preset-react.esm.js",
+  "browser": {
+    "./dist/preset-react.cjs.js": "./dist/preset-react.browser.cjs.js",
+    "./dist/preset-react.esm.js": "./dist/preset-react.browser.esm.js"
+  },
   "types": "dist/preset-react.cjs.d.ts",
   "files": [
     "dist"

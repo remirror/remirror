@@ -15,6 +15,10 @@
   "sideEffects": false,
   "main": "dist/extension-history.cjs.js",
   "module": "dist/extension-history.esm.js",
+  "browser": {
+    "./dist/extension-history.cjs.js": "./dist/extension-history.browser.cjs.js",
+    "./dist/extension-history.esm.js": "./dist/extension-history.browser.esm.js"
+  },
   "types": "dist/extension-history.cjs.d.ts",
   "files": [
     "dist"

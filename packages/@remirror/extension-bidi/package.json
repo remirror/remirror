@@ -15,6 +15,10 @@
   "sideEffects": false,
   "main": "dist/extension-bidi.cjs.js",
   "module": "dist/extension-bidi.esm.js",
+  "browser": {
+    "./dist/extension-bidi.cjs.js": "./dist/extension-bidi.browser.cjs.js",
+    "./dist/extension-bidi.esm.js": "./dist/extension-bidi.browser.esm.js"
+  },
   "types": "dist/extension-bidi.cjs.d.ts",
   "files": [
     "dist"

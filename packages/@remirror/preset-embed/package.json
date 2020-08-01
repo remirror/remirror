@@ -16,6 +16,10 @@
   "sideEffects": false,
   "main": "dist/preset-embed.cjs.js",
   "module": "dist/preset-embed.esm.js",
+  "browser": {
+    "./dist/preset-embed.cjs.js": "./dist/preset-embed.browser.cjs.js",
+    "./dist/preset-embed.esm.js": "./dist/preset-embed.browser.esm.js"
+  },
   "types": "dist/preset-embed.cjs.d.ts",
   "files": [
     "dist"

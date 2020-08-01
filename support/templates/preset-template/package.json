@@ -16,6 +16,7 @@
   "sideEffects": false,
   "main": "dist/preset-template.cjs.js",
   "module": "dist/preset-template.esm.js",
+  "browser": {},
   "types": "dist/preset-template.cjs.d.ts",
   "files": [
     "dist"

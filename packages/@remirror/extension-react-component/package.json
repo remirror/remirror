@@ -16,6 +16,10 @@
   "sideEffects": false,
   "main": "dist/extension-react-component.cjs.js",
   "module": "dist/extension-react-component.esm.js",
+  "browser": {
+    "./dist/extension-react-component.cjs.js": "./dist/extension-react-component.browser.cjs.js",
+    "./dist/extension-react-component.esm.js": "./dist/extension-react-component.browser.esm.js"
+  },
   "types": "dist/extension-react-component.cjs.d.ts",
   "files": [
     "dist"

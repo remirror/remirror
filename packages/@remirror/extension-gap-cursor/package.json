@@ -15,6 +15,10 @@
   "sideEffects": false,
   "main": "dist/extension-gap-cursor.cjs.js",
   "module": "dist/extension-gap-cursor.esm.js",
+  "browser": {
+    "./dist/extension-gap-cursor.cjs.js": "./dist/extension-gap-cursor.browser.cjs.js",
+    "./dist/extension-gap-cursor.esm.js": "./dist/extension-gap-cursor.browser.esm.js"
+  },
   "types": "dist/extension-gap-cursor.cjs.d.ts",
   "files": [
     "dist"

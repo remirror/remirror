@@ -11,6 +11,10 @@
   "sideEffects": false,
   "main": "dist/core-helpers.cjs.js",
   "module": "dist/core-helpers.esm.js",
+  "browser": {
+    "./dist/core-helpers.cjs.js": "./dist/core-helpers.browser.cjs.js",
+    "./dist/core-helpers.esm.js": "./dist/core-helpers.browser.esm.js"
+  },
   "types": "dist/core-helpers.cjs.d.ts",
   "files": [
     "dist"

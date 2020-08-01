@@ -15,6 +15,10 @@
   "sideEffects": false,
   "main": "dist/dom.cjs.js",
   "module": "dist/dom.esm.js",
+  "browser": {
+    "./dist/dom.cjs.js": "./dist/dom.browser.cjs.js",
+    "./dist/dom.esm.js": "./dist/dom.browser.esm.js"
+  },
   "types": "dist/dom.cjs.d.ts",
   "files": [
     "dist"

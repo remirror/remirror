@@ -15,6 +15,10 @@
   "sideEffects": false,
   "main": "dist/extension-code.cjs.js",
   "module": "dist/extension-code.esm.js",
+  "browser": {
+    "./dist/extension-code.cjs.js": "./dist/extension-code.browser.cjs.js",
+    "./dist/extension-code.esm.js": "./dist/extension-code.browser.esm.js"
+  },
   "types": "dist/extension-code.cjs.d.ts",
   "files": [
     "dist"

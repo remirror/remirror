@@ -17,6 +17,10 @@
   "sideEffects": false,
   "main": "dist/preset-react-checkbox.cjs.js",
   "module": "dist/preset-react-checkbox.esm.js",
+  "browser": {
+    "./dist/preset-react-checkbox.cjs.js": "./dist/preset-react-checkbox.browser.cjs.js",
+    "./dist/preset-react-checkbox.esm.js": "./dist/preset-react-checkbox.browser.esm.js"
+  },
   "types": "dist/preset-react-checkbox.cjs.d.ts",
   "files": [
     "dist"

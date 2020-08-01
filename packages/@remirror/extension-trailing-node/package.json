@@ -15,6 +15,10 @@
   "sideEffects": false,
   "main": "dist/extension-trailing-node.cjs.js",
   "module": "dist/extension-trailing-node.esm.js",
+  "browser": {
+    "./dist/extension-trailing-node.cjs.js": "./dist/extension-trailing-node.browser.cjs.js",
+    "./dist/extension-trailing-node.esm.js": "./dist/extension-trailing-node.browser.esm.js"
+  },
   "types": "dist/extension-trailing-node.cjs.d.ts",
   "files": [
     "dist"

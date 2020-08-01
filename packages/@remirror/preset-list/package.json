@@ -16,6 +16,10 @@
   "sideEffects": false,
   "main": "dist/preset-list.cjs.js",
   "module": "dist/preset-list.esm.js",
+  "browser": {
+    "./dist/preset-list.cjs.js": "./dist/preset-list.browser.cjs.js",
+    "./dist/preset-list.esm.js": "./dist/preset-list.browser.esm.js"
+  },
   "types": "dist/preset-list.cjs.d.ts",
   "files": [
     "dist"

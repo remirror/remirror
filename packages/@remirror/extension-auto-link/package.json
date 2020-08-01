@@ -18,6 +18,10 @@
   "sideEffects": false,
   "main": "dist/extension-auto-link.cjs.js",
   "module": "dist/extension-auto-link.esm.js",
+  "browser": {
+    "./dist/extension-auto-link.cjs.js": "./dist/extension-auto-link.browser.cjs.js",
+    "./dist/extension-auto-link.esm.js": "./dist/extension-auto-link.browser.esm.js"
+  },
   "types": "dist/extension-auto-link.cjs.d.ts",
   "files": [
     "dist"

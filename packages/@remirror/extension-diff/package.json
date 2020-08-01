@@ -15,6 +15,10 @@
   "sideEffects": false,
   "main": "dist/extension-diff.cjs.js",
   "module": "dist/extension-diff.esm.js",
+  "browser": {
+    "./dist/extension-diff.cjs.js": "./dist/extension-diff.browser.cjs.js",
+    "./dist/extension-diff.esm.js": "./dist/extension-diff.browser.esm.js"
+  },
   "types": "dist/extension-diff.cjs.d.ts",
   "files": [
     "dist"

@@ -12,11 +12,14 @@ const generateSizeLimitConfig = async () => {
   const packages = await getAllDependencies();
   const sizes = packages
     .filter((pkg) => pkg.module && pkg.meta && pkg.meta.sizeLimit)
-    .map((json) => ({
-      name: json.name,
-      path: join(getRelativePathFromJson(json), json.module),
-      limit: json.meta.sizeLimit,
-      ignore: Object.keys(json.peerDependencies || {}),
+    .map((pkg) => ({
+      name: pkg.name,
+      path: join(
+        getRelativePathFromJson(pkg),
+        (pkg.browser && pkg.browser[`./${pkg.module}`]) || pkg.module,
+      ),
+      limit: pkg.meta.sizeLimit,
+      ignore: Object.keys(pkg.peerDependencies || {}),
       running: false,
     }));
 
