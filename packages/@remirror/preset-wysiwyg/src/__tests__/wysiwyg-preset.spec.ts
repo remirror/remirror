@@ -1,7 +1,5 @@
-import { isPresetValid } from '@remirror/testing';
+import { presetValidityTest } from 'jest-remirror';
 
 import { WysiwygPreset } from '..';
 
-test('`WysiwygPreset`: is valid', () => {
-  expect(isPresetValid(WysiwygPreset)).toBeTrue();
-});
+presetValidityTest(WysiwygPreset);

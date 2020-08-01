@@ -1,7 +1,5 @@
-import { isExtensionValid } from '@remirror/testing';
+import { extensionValidityTest } from 'jest-remirror';
 
 import { ImageExtension } from '../..';
 
-test('`ImageExtension`: is valid', () => {
-  expect(isExtensionValid(ImageExtension)).toBeTrue();
-});
+extensionValidityTest(ImageExtension);

@@ -1,16 +1,13 @@
-import { RemirrorTestChain } from 'jest-remirror';
+import { extensionValidityTest, RemirrorTestChain } from 'jest-remirror';
 import React, { ComponentType } from 'react';
 
 import { ApplySchemaAttributes, NodeExtension, NodeExtensionSpec, NodeGroup } from '@remirror/core';
-import { isExtensionValid } from '@remirror/testing';
 import { act, createReactManager, RemirrorProvider, strictRender } from '@remirror/testing/react';
 
 import { ReactComponentExtension } from '..';
 import type { NodeViewComponentProps } from '../node-view-types';
 
-test('`ReactComponentExtension`: is valid', () => {
-  expect(isExtensionValid(ReactComponentExtension)).toBeTrue();
-});
+extensionValidityTest(ReactComponentExtension);
 
 class TestExtension extends NodeExtension<{ useContent: boolean }> {
   createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {

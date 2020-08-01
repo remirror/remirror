@@ -1,7 +1,5 @@
-import { isExtensionValid } from '@remirror/testing';
+import { extensionValidityTest } from 'jest-remirror';
 
 import { TagsExtension } from '..';
 
-test('`TagsExtension`: is valid', () => {
-  expect(isExtensionValid(TagsExtension)).toBeTrue();
-});
+extensionValidityTest(TagsExtension);

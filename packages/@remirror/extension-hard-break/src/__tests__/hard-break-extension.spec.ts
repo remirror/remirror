@@ -1,13 +1,10 @@
-import { renderEditor } from 'jest-remirror';
+import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
 import { isTextSelection } from '@remirror/core';
-import { isExtensionValid } from '@remirror/testing';
 
 import { HardBreakExtension } from '..';
 
-test('`HardBreakExtension`: is valid', () => {
-  expect(isExtensionValid(HardBreakExtension)).toBeTrue();
-});
+extensionValidityTest(HardBreakExtension);
 
 describe('commands', () => {
   it('insertHardBreak', () => {

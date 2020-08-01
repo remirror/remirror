@@ -1,7 +1,5 @@
-import { isPresetValid } from '@remirror/testing';
+import { presetValidityTest } from 'jest-remirror';
 
 import { CheckboxPreset } from '..';
 
-test('`CheckboxPreset`: is valid', () => {
-  expect(isPresetValid(CheckboxPreset)).toBeTrue();
-});
+presetValidityTest(CheckboxPreset);

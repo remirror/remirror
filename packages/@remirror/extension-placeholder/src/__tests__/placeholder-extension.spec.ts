@@ -1,7 +1,5 @@
-import { isExtensionValid } from '@remirror/testing';
+import { extensionValidityTest } from 'jest-remirror';
 
 import { PlaceholderExtension } from '../placeholder-extension';
 
-test('`PlaceholderExtension`: is valid', () => {
-  expect(isExtensionValid(PlaceholderExtension)).toBeTrue();
-});
+extensionValidityTest(PlaceholderExtension);

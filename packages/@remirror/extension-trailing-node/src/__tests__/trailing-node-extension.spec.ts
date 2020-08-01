@@ -1,12 +1,10 @@
-import { renderEditor } from 'jest-remirror';
+import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
-import { BlockquoteExtension, HeadingExtension, isExtensionValid } from '@remirror/testing';
+import { BlockquoteExtension, HeadingExtension } from '@remirror/testing';
 
 import { TrailingNodeExtension, TrailingNodeOptions } from '../trailing-node-extension';
 
-test('`TrailingNodeExtension`: is valid', () => {
-  expect(isExtensionValid(TrailingNodeExtension)).toBeTrue();
-});
+extensionValidityTest(TrailingNodeExtension);
 
 function create(params?: Partial<TrailingNodeOptions>) {
   const {

@@ -1,7 +1,5 @@
-import { isExtensionValid } from '@remirror/testing';
+import { extensionValidityTest } from 'jest-remirror';
 
 import { PasteRulesExtension } from '..';
 
-test('`PasteRulesExtension`: is valid', () => {
-  expect(isExtensionValid(PasteRulesExtension)).toBeTrue();
-});
+extensionValidityTest(PasteRulesExtension);

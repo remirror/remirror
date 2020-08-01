@@ -1,13 +1,10 @@
-import { renderEditor } from 'jest-remirror';
+import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
 import type { EditorState } from '@remirror/core';
-import { isExtensionValid } from '@remirror/testing';
 
 import { HistoryExtension } from '../history-extension';
 
-test('`HistoryExtension`: is valid', () => {
-  expect(isExtensionValid(HistoryExtension)).toBeTrue();
-});
+extensionValidityTest(HistoryExtension);
 
 describe('commands', () => {
   const create = () => renderEditor([new HistoryExtension()]);

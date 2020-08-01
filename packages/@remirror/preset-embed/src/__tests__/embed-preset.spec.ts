@@ -1,7 +1,5 @@
-import { isPresetValid } from '@remirror/testing';
+import { presetValidityTest } from 'jest-remirror';
 
 import { EmbedPreset } from '../..';
 
-test('`EmbedPreset`: is valid', () => {
-  expect(isPresetValid(EmbedPreset)).toBeTrue();
-});
+presetValidityTest(EmbedPreset);

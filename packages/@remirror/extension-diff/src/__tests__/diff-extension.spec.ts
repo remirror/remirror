@@ -1,13 +1,10 @@
-import { renderEditor } from 'jest-remirror';
+import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
 import { entries, GetHandler } from '@remirror/core';
-import { isExtensionValid } from '@remirror/testing';
 
 import { DiffExtension, DiffOptions } from '..';
 
-test('`DiffExtension`: is valid', () => {
-  expect(isExtensionValid(DiffExtension)).toBeTrue();
-});
+extensionValidityTest(DiffExtension);
 
 function create(options?: DiffOptions, handlers: GetHandler<DiffOptions> = {}) {
   const extension = new DiffExtension(options);

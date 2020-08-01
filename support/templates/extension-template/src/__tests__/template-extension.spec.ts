@@ -1,7 +1,5 @@
-import { isExtensionValid } from '@remirror/testing';
+import { extensionValidityTest } from 'jest-remirror';
 
 import { TemplateExtension } from '..';
 
-test('`TemplateExtension`: is valid', () => {
-  expect(isExtensionValid(TemplateExtension)).toBeTrue();
-});
+extensionValidityTest(TemplateExtension);

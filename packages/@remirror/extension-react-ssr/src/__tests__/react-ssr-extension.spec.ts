@@ -1,7 +1,5 @@
-import { isExtensionValid } from '@remirror/testing';
+import { extensionValidityTest } from 'jest-remirror';
 
 import { ReactSSRExtension } from '../..';
 
-test('`ReactSSRExtension`: is valid', () => {
-  expect(isExtensionValid(ReactSSRExtension)).toBeTrue();
-});
+extensionValidityTest(ReactSSRExtension);

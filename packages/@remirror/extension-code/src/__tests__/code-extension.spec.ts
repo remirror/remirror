@@ -1,13 +1,12 @@
 import { pmBuild } from 'jest-prosemirror';
+import { extensionValidityTest } from 'jest-remirror';
 
 import { fromHtml, toHtml } from '@remirror/core';
-import { createCoreManager, isExtensionValid } from '@remirror/testing';
+import { createCoreManager } from '@remirror/testing';
 
 import { CodeExtension } from '..';
 
-test('`CodeExtension`: is valid', () => {
-  expect(isExtensionValid(CodeExtension)).toBeTrue();
-});
+extensionValidityTest(CodeExtension);
 
 describe('schema', () => {
   const codeTester = () => {

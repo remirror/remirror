@@ -1,7 +1,5 @@
-import { isExtensionValid } from '@remirror/testing';
+import { extensionValidityTest } from 'jest-remirror';
 
 import { CollaborationExtension } from '..';
 
-test('`CollaborationExtension`: is valid', () => {
-  expect(isExtensionValid(CollaborationExtension, { clientID: 'abc' })).toBeTrue();
-});
+extensionValidityTest(CollaborationExtension, { clientID: 'abc' });

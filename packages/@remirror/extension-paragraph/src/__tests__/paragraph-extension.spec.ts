@@ -1,7 +1,5 @@
-import { isExtensionValid } from '@remirror/testing';
+import { extensionValidityTest } from 'jest-remirror';
 
 import { ParagraphExtension } from '../..';
 
-test('`ParagraphExtension`: is valid', () => {
-  expect(isExtensionValid(ParagraphExtension)).toBeTrue();
-});
+extensionValidityTest(ParagraphExtension);

@@ -1,12 +1,10 @@
-import { renderEditor } from 'jest-remirror';
+import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
-import { BoldExtension, isExtensionValid, ItalicExtension } from '@remirror/testing';
+import { BoldExtension, ItalicExtension } from '@remirror/testing';
 
 import { CommandsExtension } from '..';
 
-test('`CommandsExtension`: is valid', () => {
-  expect(isExtensionValid(CommandsExtension)).toBeTrue();
-});
+extensionValidityTest(CommandsExtension);
 
 test('can call multiple commands', () => {
   const editor = renderEditor([new BoldExtension(), new ItalicExtension()]);

@@ -1,12 +1,10 @@
-import { renderEditor } from 'jest-remirror';
+import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
-import { HeadingExtension, isExtensionValid } from '@remirror/testing';
+import { HeadingExtension } from '@remirror/testing';
 
 import { BidiExtension } from '..';
 
-test('`BidiExtension`: is valid', () => {
-  expect(isExtensionValid(BidiExtension)).toBeTrue();
-});
+extensionValidityTest(BidiExtension);
 
 test('captures the direction of each node', () => {
   const {

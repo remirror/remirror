@@ -1,13 +1,9 @@
-import { renderEditor } from 'jest-remirror';
-
-import { isExtensionValid } from '@remirror/testing';
+import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
 import { PositionerExtension } from '../positioner-extension';
 import { centeredSelectionPositioner, cursorPopupPositioner } from '../positioners';
 
-test('`PositionerExtension`: is valid', () => {
-  expect(isExtensionValid(PositionerExtension)).toBeTrue();
-});
+extensionValidityTest(PositionerExtension);
 
 test('`cursorPopupPositioner` can position itself', () => {
   const positionerExtension = new PositionerExtension();

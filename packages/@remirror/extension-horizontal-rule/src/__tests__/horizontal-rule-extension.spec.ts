@@ -1,13 +1,10 @@
-import { renderEditor } from 'jest-remirror';
+import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
 import { isNodeSelection, isTextSelection } from '@remirror/core';
-import { isExtensionValid } from '@remirror/testing';
 
 import { HorizontalRuleExtension } from '..';
 
-test('`HorizontalRuleExtension`: is valid', () => {
-  expect(isExtensionValid(HorizontalRuleExtension)).toBeTrue();
-});
+extensionValidityTest(HorizontalRuleExtension);
 
 describe('insertHorizontalRule', () => {
   it('adds a trailing node by default', () => {

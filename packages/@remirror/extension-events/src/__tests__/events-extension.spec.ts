@@ -1,13 +1,9 @@
 import { fireEvent } from '@testing-library/dom';
-import { renderEditor } from 'jest-remirror';
-
-import { isExtensionValid } from '@remirror/testing';
+import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
 import { EventsExtension } from '..';
 
-test('`EventsExtension`: is valid', () => {
-  expect(isExtensionValid(EventsExtension, {}));
-});
+extensionValidityTest(EventsExtension);
 
 describe('events', () => {
   it('responds to editor `focus` events', () => {

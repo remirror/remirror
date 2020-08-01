@@ -1,7 +1,5 @@
-import { isExtensionValid } from '@remirror/testing';
+import { extensionValidityTest } from 'jest-remirror';
 
 import { UnderlineExtension } from '..';
 
-test('`UnderlineExtension`: is valid', () => {
-  expect(isExtensionValid(UnderlineExtension)).toBeTrue();
-});
+extensionValidityTest(UnderlineExtension);

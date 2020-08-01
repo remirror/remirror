@@ -1,12 +1,10 @@
-import { renderEditor } from 'jest-remirror';
+import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
-import { HeadingExtension, isExtensionValid } from '@remirror/testing';
+import { HeadingExtension } from '@remirror/testing';
 
 import { HelpersExtension } from '..';
 
-test('`HelpersExtension`: is valid', () => {
-  expect(isExtensionValid(HelpersExtension)).toBeTrue();
-});
+extensionValidityTest(HelpersExtension);
 
 describe('active', () => {
   it('should recognise active nodes by attrs', () => {

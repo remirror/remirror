@@ -1,14 +1,12 @@
 import { pmBuild } from 'jest-prosemirror';
-import { renderEditor } from 'jest-remirror';
+import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
 import { fromHtml, toHtml } from '@remirror/core';
-import { createCoreManager, isExtensionValid } from '@remirror/testing';
+import { createCoreManager } from '@remirror/testing';
 
 import { BoldExtension, BoldOptions } from '../..';
 
-test('`BoldExtension`: is valid', () => {
-  expect(isExtensionValid(BoldExtension)).toBeTrue();
-});
+extensionValidityTest(BoldExtension);
 
 describe('schema', () => {
   const { schema } = createCoreManager([new BoldExtension()]);

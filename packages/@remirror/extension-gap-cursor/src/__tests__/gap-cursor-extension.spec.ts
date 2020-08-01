@@ -1,7 +1,5 @@
-import { isExtensionValid } from '@remirror/testing';
+import { extensionValidityTest } from 'jest-remirror';
 
 import { GapCursorExtension } from '../..';
 
-test('`GapCursorExtension`: is valid', () => {
-  expect(isExtensionValid(GapCursorExtension)).toBeTrue();
-});
+extensionValidityTest(GapCursorExtension);

@@ -1,14 +1,12 @@
 import { pmBuild } from 'jest-prosemirror';
-import { renderEditor } from 'jest-remirror';
+import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
 import { fromHtml, toHtml } from '@remirror/core';
-import { createCoreManager, isExtensionValid } from '@remirror/testing';
+import { createCoreManager } from '@remirror/testing';
 
 import { IframeExtension, IframeOptions } from '../iframe-extension';
 
-test('`IframeExtension`: is valid', () => {
-  expect(isExtensionValid(IframeExtension)).toBeTrue();
-});
+extensionValidityTest(IframeExtension);
 
 function create(options?: IframeOptions) {
   return renderEditor([new IframeExtension(options)]);

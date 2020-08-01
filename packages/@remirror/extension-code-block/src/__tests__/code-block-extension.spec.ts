@@ -1,5 +1,5 @@
 import { pmBuild } from 'jest-prosemirror';
-import { renderEditor } from 'jest-remirror';
+import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import typescriptPlugin from 'prettier/parser-typescript';
 import { formatWithCursor } from 'prettier/standalone';
 import refractor from 'refractor/core';
@@ -11,14 +11,12 @@ import typescript from 'refractor/lang/typescript';
 import yaml from 'refractor/lang/yaml';
 
 import { ExtensionPriority, fromHtml, object, toHtml } from '@remirror/core';
-import { createCoreManager, isExtensionValid } from '@remirror/testing';
+import { createCoreManager } from '@remirror/testing';
 
 import { CodeBlockExtension, CodeBlockOptions, FormatterParameter } from '..';
 import { getLanguage } from '../code-block-utils';
 
-test('`CodeBlockExtension`: is valid', () => {
-  expect(isExtensionValid(CodeBlockExtension)).toBeTrue();
-});
+extensionValidityTest(CodeBlockExtension);
 
 describe('schema', () => {
   const { schema } = createCoreManager([

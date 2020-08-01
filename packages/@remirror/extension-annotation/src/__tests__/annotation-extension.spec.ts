@@ -1,13 +1,9 @@
-import { renderEditor } from 'jest-remirror';
-
-import { isExtensionValid } from '@remirror/testing';
+import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
 import { Annotation, AnnotationExtension } from '..';
 import type { AnnotationOptions } from '../types';
 
-test('is valid', () => {
-  expect(isExtensionValid(AnnotationExtension, {}));
-});
+extensionValidityTest(AnnotationExtension);
 
 function create(options?: AnnotationOptions) {
   return renderEditor([new AnnotationExtension(options)]);

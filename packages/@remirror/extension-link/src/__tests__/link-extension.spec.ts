@@ -1,14 +1,12 @@
 import { pmBuild } from 'jest-prosemirror';
-import { renderEditor } from 'jest-remirror';
+import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
 import { fromHtml, GetHandler, toHtml } from '@remirror/core';
-import { createCoreManager, isExtensionValid } from '@remirror/testing';
+import { createCoreManager } from '@remirror/testing';
 
 import { LinkExtension, LinkOptions } from '..';
 
-test('`LinkExtension`: is valid', () => {
-  expect(isExtensionValid(LinkExtension)).toBeTrue();
-});
+extensionValidityTest(LinkExtension);
 
 const href = 'https://test.com';
 

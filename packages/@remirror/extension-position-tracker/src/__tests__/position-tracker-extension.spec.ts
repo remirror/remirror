@@ -1,7 +1,5 @@
-import { isExtensionValid } from '@remirror/testing';
+import { extensionValidityTest } from 'jest-remirror';
 
 import { PositionTrackerExtension } from '../..';
 
-test('`PositionTrackerExtension`: is valid', () => {
-  expect(isExtensionValid(PositionTrackerExtension)).toBeTrue();
-});
+extensionValidityTest(PositionTrackerExtension);

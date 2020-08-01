@@ -1,7 +1,5 @@
-import { isExtensionValid } from '@remirror/testing';
+import { extensionValidityTest } from 'jest-remirror';
 
 import { EpicModeExtension } from '../..';
 
-test('`EpicModeExtension`: is valid', () => {
-  expect(isExtensionValid(EpicModeExtension)).toBeTrue();
-});
+extensionValidityTest(EpicModeExtension);

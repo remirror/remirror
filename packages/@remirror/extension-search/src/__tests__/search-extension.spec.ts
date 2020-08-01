@@ -1,12 +1,8 @@
-import { renderEditor } from 'jest-remirror';
-
-import { isExtensionValid } from '@remirror/testing';
+import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
 import { SearchExtension, SearchOptions } from '..';
 
-test('`SearchExtension`: is valid', () => {
-  expect(isExtensionValid(SearchExtension)).toBeTrue();
-});
+extensionValidityTest(SearchExtension);
 
 function create(options?: SearchOptions) {
   const {

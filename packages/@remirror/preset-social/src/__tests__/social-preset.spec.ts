@@ -1,16 +1,13 @@
-import { renderEditor } from 'jest-remirror';
+import { presetValidityTest, renderEditor } from 'jest-remirror';
 
 import { ExtensionPriority } from '@remirror/core';
 import { AutoLinkExtension } from '@remirror/extension-auto-link';
 import { EmojiExtension } from '@remirror/extension-emoji';
 import { MentionExtension } from '@remirror/extension-mention';
-import { isPresetValid } from '@remirror/testing';
 
 import { SocialPreset } from '..';
 
-test('`SocialPreset`: is valid', () => {
-  expect(isPresetValid(SocialPreset, { matchers: [] })).toBeTrue();
-});
+presetValidityTest(SocialPreset, { matchers: [] });
 
 test('can override extensions', () => {
   const autoLinkExtension = new AutoLinkExtension({ defaultProtocol: 'https:' });

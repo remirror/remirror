@@ -1,7 +1,5 @@
-import { isExtensionValid } from '@remirror/testing';
+import { extensionValidityTest } from 'jest-remirror';
 
 import { InputRulesExtension } from '..';
 
-test('`InputRulesExtension`: is valid', () => {
-  expect(isExtensionValid(InputRulesExtension)).toBeTrue();
-});
+extensionValidityTest(InputRulesExtension);

@@ -1,12 +1,10 @@
-import { renderEditor } from 'jest-remirror';
+import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
-import { BuiltinPreset, isExtensionValid } from '@remirror/testing';
+import { BuiltinPreset } from '@remirror/testing';
 
 import { KeymapExtension } from '..';
 
-test('`KeymapExtension`: is valid', () => {
-  expect(isExtensionValid(KeymapExtension)).toBeTrue();
-});
+extensionValidityTest(KeymapExtension);
 
 test('supports custom keymaps', () => {
   const mock = jest.fn();

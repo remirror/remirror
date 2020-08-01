@@ -1,14 +1,12 @@
 import { pmBuild } from 'jest-prosemirror';
-import { renderEditor } from 'jest-remirror';
+import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
 import { fromHtml, toHtml } from '@remirror/core';
-import { createCoreManager, isExtensionValid } from '@remirror/testing';
+import { createCoreManager } from '@remirror/testing';
 
 import { BlockquoteExtension } from '..';
 
-test('`BlockquoteExtension`: is valid', () => {
-  expect(isExtensionValid(BlockquoteExtension)).toBeTrue();
-});
+extensionValidityTest(BlockquoteExtension);
 
 describe('schema', () => {
   const { schema } = createCoreManager([new BlockquoteExtension()]);
