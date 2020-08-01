@@ -65,15 +65,15 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
       draggable: false,
       parseDOM: this.options.levels.map((level) => ({
         tag: `h${level}`,
-        attrs: { level },
+        getAttrs: (element) => ({ ...extra.parse(element), level }),
       })),
       toDOM: (node: ProsemirrorNode) => {
         if (!this.options.levels.includes(node.attrs.level)) {
           // Use the first level available
-          return [`h${this.options.defaultLevel}`, 0];
+          return [`h${this.options.defaultLevel}`, extra.dom(node), 0];
         }
 
-        return [`h${node.attrs.level as string}`, 0];
+        return [`h${node.attrs.level as string}`, extra.dom(node), 0];
       },
     };
   }
