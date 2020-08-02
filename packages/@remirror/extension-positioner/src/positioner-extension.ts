@@ -10,14 +10,16 @@ import {
   Static,
 } from '@remirror/core';
 
-import {
+import type {
   BasePositionerParameter,
-  centeredSelectionPositioner,
-  cursorPopupPositioner,
-  floatingSelectionPositioner,
   Positioner,
   PositionerUpdateEvent,
   SetActiveElement,
+} from './positioner';
+import {
+  centeredSelectionPositioner,
+  cursorPopupPositioner,
+  floatingSelectionPositioner,
 } from './positioners';
 
 export interface PositionerOptions {
@@ -116,6 +118,12 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
 
   private positioner(update: BasePositionerParameter) {
     for (const positioner of this.#positioners) {
+      const eventIsNotSupported = !positioner.events.includes(update.event);
+
+      if (eventIsNotSupported) {
+        continue;
+      }
+
       this.triggerPositioner(positioner, update);
     }
   }

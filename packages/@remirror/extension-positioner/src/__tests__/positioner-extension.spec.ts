@@ -1,7 +1,6 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
-import { PositionerExtension } from '../positioner-extension';
-import { centeredSelectionPositioner, cursorPopupPositioner } from '../positioners';
+import { centeredSelectionPositioner, cursorPopupPositioner, PositionerExtension } from '../..';
 
 extensionValidityTest(PositionerExtension);
 
