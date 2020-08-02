@@ -30,26 +30,15 @@
 
 ## Motivation
 
-I started `remirror` as a challenge to myself. Would it be possible to build an editor that combined
-great performance with ease of use? I wanted something that allowed developers like myself to fall
-in love and feel playful even when working through deeply complex concepts. The editor would need to
-combine plug-and-play features, with ample room for customisation.
+I started `remirror` as a challenge to myself. Would it be possible to build an editor that combined great performance with ease of use? I wanted something that allowed developers like myself to fall in love and feel playful even when working through deeply complex concepts. The editor would need to combine plug-and-play features, with ample room for customisation.
 
-I also wanted to give users of all frameworks, the ability to build an editor by picking and
-choosing their desired building blocks.
+I also wanted to give users of all frameworks, the ability to build an editor by picking and choosing their desired building blocks.
 
-In order to meet my goals, I settled on [ProseMirror](https://prosemirror.net/) as the core editor
-layer. The second decision was to base the structure of the editor on blocks of functionality called
-`Extensions`. Each extension would add a slice of beauty to the editor, allowing users to craft
-their masterpieces.
+In order to meet my goals, I settled on [ProseMirror](https://prosemirror.net/) as the core editor layer. The second decision was to base the structure of the editor on blocks of functionality called `Extensions`. Each extension would add a slice of beauty to the editor, allowing users to craft their masterpieces.
 
-In this latest version, I believe I'm starting to see these goals come to fruition. Every single
-part of the editor can be controlled by extensions. For example, the core (`Schema`) is managed by a
-[built-in extension](https://github.com/remirror/remirror/blob/next/packages/@remirror/core/src/builtins/schema-extension.ts).
-There's already a huge selection of extensions for users to choose from.
+In this latest version, I believe I'm starting to see these goals come to fruition. Every single part of the editor can be controlled by extensions. For example, the core (`Schema`) is managed by a [built-in extension](https://github.com/remirror/remirror/blob/next/packages/@remirror/core/src/builtins/schema-extension.ts). There's already a huge selection of extensions for users to choose from.
 
-And the new API is beautiful. For React, this comes with a slew of drop-in components and hooks.
-Many more are being worked on. It's almost magical how well it works.
+And the new API is beautiful. For React, this comes with a slew of drop-in components and hooks. Many more are being worked on. It's almost magical how well it works.
 
 For example, to add a drop down emoji picker to your react editor the following code will suffice.
 
@@ -66,26 +55,21 @@ const Editor = () => {
 };
 ```
 
-With this tiny snippet your editor now supports a really nice ui element. And it's all customisable
-with ordinary `css`. No more fighting against yet another `CSS-in-JS` library.
+With this tiny snippet your editor now supports a really nice ui element. And it's all customisable with ordinary `css`. No more fighting against yet another `CSS-in-JS` library.
 
-There's so much more to come and I'm glad you're taking a look. I hope `remirror` proves to be
-everything you need for your next text editor and more.
+There's so much more to come and I'm glad you're taking a look. I hope `remirror` proves to be everything you need for your next text editor and more.
 
 <br />
 
 ## Status
 
-This is the `next` version of remirror. It is undergoing heavy development at the moment and
-documentation is still being rewritten to capture the updated API.
+This is the `next` version of remirror. It is undergoing heavy development at the moment and documentation is still being rewritten to capture the updated API.
 
-While exploring this project, if you find errors or would like to suggest improvements there are
-several options.
+While exploring this project, if you find errors or would like to suggest improvements there are several options.
 
 - Open an issue in our [github repo](https://github.com/remirror/remirror/issues).
 - [Join our discord server](https://discord.gg/C4cfrMK) and discuss the problem with our community.
-- Create a pull request with your proposed improvement by clicking the edit button on the relevant
-  page.
+- Create a pull request with your proposed improvement by clicking the edit button on the relevant page.
 - Move on, because deadlines are looming and life is too short.
 
 Whatever you decide I'm happy that you've taken the time to dive into the `remirror` project.
@@ -106,8 +90,7 @@ View our documentation website at https://remirror.io
 - A11y focused and ARIA compatible.
 - I18n support via [lingui](https://github.com/lingui/js-lingui).
 - Collaborative editing with [yjs](https://github.com/yjs/yjs).
-- Prebuilt editors [social](./@remirror/react-social) and [wysiwyg](./@remirror/react-wysiwyg) and a
-  markdown option is coming soon.
+- Prebuilt editors [social](./@remirror/react-social) and [wysiwyg](./@remirror/react-wysiwyg) and a markdown option is coming soon.
 - 30+ extensions and 8 presets available to create your very own editor.
 - Zero configuration support for **Server Side Rendering (SSR)**.
 - Cross platform and cross-framework, with an Angular solution coming later this year.
@@ -128,8 +111,7 @@ View our documentation website at https://remirror.io
 
 You can see a guide on how to to add this exact editor to your codebase here.
 
-To add this editor to your codebase, first install the required dependencies. Make sure to include
-the `@next` distribution tag to ensure you install the correct version.
+To add this editor to your codebase, first install the required dependencies. Make sure to include the `@next` distribution tag to ensure you install the correct version.
 
 ```bash
 # yarn
@@ -146,8 +128,7 @@ npm install remirror@next @remirror/pm@next
 
 ## Usage
 
-Once installed you will be able to add the following code which creates an editor with the bold
-extension active. Clicking the button when text is selected will toggle between bold and not bold.
+Once installed you will be able to add the following code which creates an editor with the bold extension active. Clicking the button when text is selected will toggle between bold and not bold.
 
 ```tsx
 import React, { useCallback } from 'react';
@@ -193,21 +174,15 @@ const EditorWrapper = () => {
 
 ## Contributing
 
-Please read [contributing.md](docs/contributing.md) for details on our code of conduct, and the
-process for submitting pull requests. It also outlines the project structure for help navigating
-your way around this codebase.
+Please read [contributing.md](docs/contributing.md) for details on our code of conduct, and the process for submitting pull requests. It also outlines the project structure for help navigating your way around this codebase.
 
-You might also notice there are surprisingly few files in the root directory of this project. All
-the configuration files have been moved to the `support/root` directory and are symlinked to the
-root directory in a `preinstall` hook. For more information take a look at [folder](support/root)
-and [readme](support/root/readme.md).
+You might also notice there are surprisingly few files in the root directory of this project. All the configuration files have been moved to the `support/root` directory and are symlinked to the root directory in a `preinstall` hook. For more information take a look at [folder](support/root) and [readme](support/root/readme.md).
 
 <br />
 
 ## Versioning
 
-This project uses [SemVer](http://semver.org/) for versioning. For the versions available, see the
-[tags on this repository](https://github.com/remirror/remirror/tags).
+This project uses [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/remirror/remirror/tags).
 
 <br />
 
