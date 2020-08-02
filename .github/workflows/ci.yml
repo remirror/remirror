@@ -17,7 +17,6 @@ on:
       - next
 
 env:
-  CI: true
   PNPM_VERSION: 5.3.0
   PNPM_CACHE_FOLDER: .pnpm-store
 
