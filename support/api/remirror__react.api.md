@@ -254,18 +254,21 @@ export function useMeasure<Ref extends HTMLElement = any>(): readonly [{
 }, DOMRectReadOnlyLike];
 
 // @public
-export function useMultiPositioner(positioner: Positioner | StringPositioner): UsePositionerHookReturn[];
-
-// @public
-export function usePositioner(positioner: Positioner | StringPositioner): Partial<UsePositionerHookReturn>;
+export function useMultiPositioner(positioner: Positioner | StringPositioner): UseMultiPositionerReturn[];
 
 // @public (undocumented)
-export interface UsePositionerHookReturn extends VirtualPosition {
-    // (undocumented)
+export interface UseMultiPositionerReturn extends VirtualPosition {
     element?: HTMLElement;
-    // (undocumented)
     key: string;
     ref: RefCallback<HTMLElement>;
+}
+
+// @public
+export function usePositioner(positioner: Positioner | StringPositioner): UsePositionerReturn;
+
+// @public (undocumented)
+export interface UsePositionerReturn extends Partial<UseMultiPositionerReturn> {
+    active: boolean;
 }
 
 // @public

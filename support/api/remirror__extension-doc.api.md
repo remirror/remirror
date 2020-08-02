@@ -12,7 +12,7 @@ import { Static } from '@remirror/core';
 export class DocExtension extends NodeExtension<DocOptions> {
     // (undocumented)
     createNodeSpec(_: ApplySchemaAttributes): {
-        content: Static<string>;
+        content: string & import("@remirror/core").Flavoring<"StaticAnnotation">;
     };
     // (undocumented)
     get name(): "doc";

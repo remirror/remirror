@@ -12,18 +12,47 @@ import { EditorStateParameter } from '@remirror/core';
 import { EditorViewParameter } from '@remirror/core';
 import { ElementParameter } from '@remirror/core';
 import { PlainExtension } from '@remirror/core';
-import { Position as Position_2 } from '@remirror/core';
 import { ProsemirrorNode } from '@remirror/core';
 import { StateUpdateLifecycleParameter } from '@remirror/core';
 import { Static } from '@remirror/core';
 import { TransactionParameter } from '@remirror/core';
 import { Unsubscribe } from 'nanoevents';
 
+// @public (undocumented)
+export interface BasePositioner<Data> {
+    events?: PositionerUpdateEvent[];
+    getActive: (parameter: GetActiveParameter) => Data[];
+    getID?: (data: Data, index: number) => string;
+    getPosition: (parameter: GetPositionParameter<Data>) => VirtualPosition;
+    hasChanged: (parameter: BasePositionerParameter) => boolean;
+}
+
+// @public (undocumented)
+export interface BasePositionerParameter extends StateUpdateLifecycleParameter {
+    event: PositionerUpdateEvent;
+    scrollTop: number;
+}
+
 // @public
 export const centeredSelectionPositioner: Positioner<{
     start: Coords;
     end: Coords;
 }>;
+
+// @public (undocumented)
+export interface Coords {
+    // (undocumented)
+    bottom: number;
+    // (undocumented)
+    left: number;
+    // (undocumented)
+    right: number;
+    // (undocumented)
+    top: number;
+}
+
+// @public
+export const cursorPopupPositioner: Positioner<Coords>;
 
 // @public (undocumented)
 export interface ElementsAddedParameter {
@@ -42,6 +71,10 @@ export const emptyVirtualPosition: VirtualPosition;
 export const floatingSelectionPositioner: Positioner<Coords>;
 
 // @public (undocumented)
+export interface GetActiveParameter extends EditorViewParameter, BasePositionerParameter {
+}
+
+// @public (undocumented)
 export function getPositioner(positioner: StringPositioner | Positioner): Positioner;
 
 // @public (undocumented)
@@ -56,15 +89,14 @@ export function hasStateChanged(parameter: HasChangedParameter): boolean;
 export function isEmptyBlockNode(node: ProsemirrorNode | null | undefined): boolean;
 
 // @public
-export const noSelectionPopupMenu: Positioner<Coords>;
-
-// @public
 export class Positioner<Data = any> {
     readonly addListener: <Key extends "done" | "update">(event: Key, cb: PositionerEvents[Key]) => Unsubscribe;
     // (undocumented)
+    get basePositioner(): BasePositioner<Data>;
     static create<Data>(parameter: BasePositioner<Data>): Positioner<Data>;
     // (undocumented)
     readonly events: PositionerUpdateEvent[];
+    static fromPositioner<Data>(positioner: Positioner, base: Partial<BasePositioner<Data>>): Positioner<any>;
     getID(data: Data, index: number): string;
     getVirtualNode(position: VirtualPosition): VirtualNode;
     // (undocumented)
@@ -103,6 +135,15 @@ export interface PositionerOptions {
     scrollDebounce?: Static<number>;
 }
 
+// @public
+export type PositionerUpdateEvent = 'scroll' | 'state';
+
+// @public (undocumented)
+export interface SetActiveElement {
+    id: string;
+    setElement: (element: HTMLElement) => void;
+}
+
 // @public (undocumented)
 export type StringPositioner = keyof typeof positioners;
 
@@ -113,7 +154,7 @@ export interface VirtualNode {
 }
 
 // @public (undocumented)
-export interface VirtualPosition extends Partial<Position_2> {
+export interface VirtualPosition extends Partial<Coords> {
     rect: DOMRect;
 }
 
