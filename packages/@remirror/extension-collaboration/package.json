@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-collaboration",
-  "version": "1.0.0-next.16",
+  "version": "1.0.0-next.17",
   "description": "Add collaboration to your remirror editor.",
   "keywords": [
     "remirror",
@@ -30,12 +30,12 @@
     "@types/prosemirror-collab": "^1.1.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.16",
+    "@remirror/core": "1.0.0-next.17",
     "@remirror/pm": "1.0.0-next.16",
     "prosemirror-collab": "^1.2.2"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.16",
+    "@remirror/core": "1.0.0-next.17",
     "@remirror/pm": "1.0.0-next.16",
     "prosemirror-collab": "^1.2.2"
   },

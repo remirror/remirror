@@ -1,5 +1,13 @@
 # @remirror/core
 
+## 1.0.0-next.17
+
+> 2020-08-02
+
+### Patch Changes
+
+- 898c62e0: Export `BuiltinOptions` interface from `@remirror/core`.
+
 ## 1.0.0-next.16
 
 > 2020-08-01
