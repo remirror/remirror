@@ -14,8 +14,9 @@ import {
 const EmojiDropdown = (props: SocialEmojiState) => {
   const { index, command, list, show } = props;
   const { focus } = useSocialRemirror();
-  const { ref, bottom, left } = usePositioner('popup');
+  const { ref, active, bottom, left } = usePositioner('popup');
   const [isClicking, setIsClicking] = useState(false);
+  const shouldShowPopup = (show || isClicking) && command && active;
 
   const { getMenuProps, getItemProps, itemHighlightedAtIndex, hoveredIndex } = useMultishift({
     highlightedIndexes: [index],
@@ -38,11 +39,11 @@ const EmojiDropdown = (props: SocialEmojiState) => {
         left: left,
       }}
     >
-      {(show || isClicking) &&
-        command &&
+      {shouldShowPopup &&
         list.map((emoji, index) => {
           const isHighlighted = itemHighlightedAtIndex(index);
           const isHovered = index === hoveredIndex;
+
           return (
             <div
               key={emoji.name}
@@ -53,7 +54,7 @@ const EmojiDropdown = (props: SocialEmojiState) => {
               )}
               {...getItemProps({
                 onClick: () => {
-                  command(emoji);
+                  command?.(emoji);
                   focus();
                 },
                 item: emoji,

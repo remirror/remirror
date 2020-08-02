@@ -414,15 +414,29 @@ export function useManager<Combined extends AnyCombinedUnion>(
 
 export type BaseReactCombinedUnion = ReactPreset | CorePreset | BuiltinPreset;
 
-export interface UsePositionerHookReturn extends VirtualPosition {
+export interface UseMultiPositionerReturn extends VirtualPosition {
   /**
    * This ref must be applied to the component that is being positioned in order
    * to correctly obtain the position data.
    */
   ref: RefCallback<HTMLElement>;
 
+  /**
+   * The element that that the ref has found.
+   */
   element?: HTMLElement;
+
+  /**
+   * A key to uniquely identify this positioner.
+   */
   key: string;
+}
+
+export interface UsePositionerReturn extends Partial<UseMultiPositionerReturn> {
+  /**
+   * When `true`, the position is active and the pop should be displayed.
+   */
+  active: boolean;
 }
 
 /**
@@ -455,16 +469,14 @@ export interface UsePositionerHookReturn extends VirtualPosition {
  * )
  * ```
  */
-export function usePositioner(
-  positioner: Positioner | StringPositioner,
-): Partial<UsePositionerHookReturn> {
+export function usePositioner(positioner: Positioner | StringPositioner): UsePositionerReturn {
   const positions = useMultiPositioner(positioner);
 
   if (positions.length > 0) {
-    return positions[0];
+    return { ...positions[0], active: true };
   }
 
-  return {};
+  return { active: false };
 }
 
 /**
@@ -498,7 +510,7 @@ export function usePositioner(
  */
 export function useMultiPositioner(
   positioner: Positioner | StringPositioner,
-): UsePositionerHookReturn[] {
+): UseMultiPositionerReturn[] {
   interface CollectElementRef {
     ref: RefCallback<HTMLElement>;
     id: string;

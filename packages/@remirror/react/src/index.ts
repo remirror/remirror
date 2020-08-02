@@ -6,7 +6,8 @@ export type {
   DOMRectReadOnlyLike,
   PartialDispatch,
   UseExtensionCallback,
-  UsePositionerHookReturn,
+  UsePositionerReturn,
+  UseMultiPositionerReturn,
   UseRemirrorType,
 } from './hooks';
 export {
