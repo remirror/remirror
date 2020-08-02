@@ -1,4 +1,4 @@
-import { Circus } from '@jest/types';
+import type { Circus } from '@jest/types';
 
 const { CI } = process.env;
 

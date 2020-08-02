@@ -1,4 +1,4 @@
-import { Config } from '@jest/types';
+import type { Config } from '@jest/types';
 import { setup, teardown } from 'jest-dev-server';
 import onExit from 'signal-exit';
 

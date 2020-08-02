@@ -1,4 +1,4 @@
-import { SupportedCharacters } from 'test-keyboard';
+import type { SupportedCharacters } from 'test-keyboard';
 
 import { getBrowserName } from './test-environment';
 

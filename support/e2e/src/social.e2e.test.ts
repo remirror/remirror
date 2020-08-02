@@ -1,5 +1,5 @@
 import { getDocument, queries } from 'playwright-testing-library';
-import { ElementHandle } from 'playwright-testing-library/dist/typedefs';
+import type { ElementHandle } from 'playwright-testing-library/dist/typedefs';
 
 import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
 

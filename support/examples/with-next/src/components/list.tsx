@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
-import { User } from '../interfaces';
+import type { User } from '../interfaces';
 import ListItem from './list-item';
 
 interface Props {
