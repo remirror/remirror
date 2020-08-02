@@ -119,6 +119,7 @@ async function runApiExtractor() {
 }
 
 const patchFilePath = require.resolve('@microsoft/api-extractor/lib/analyzer/ExportAnalyzer.js');
+console.log(patchFilePath);
 let originalContent = '';
 
 async function patchFile() {
@@ -133,6 +134,7 @@ async function patchFile() {
   }
 
   originalContent = content;
+  console.log('patching file');
   await fs.writeFile(patchFilePath, updatedContent);
 }
 
@@ -142,6 +144,7 @@ async function restoreFile() {
   }
 
   await fs.writeFile(patchFilePath, originalContent);
+  console.log('restored file');
 }
 
 async function run() {
