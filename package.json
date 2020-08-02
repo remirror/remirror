@@ -4,6 +4,8 @@
   "homepage": "https://remirror.io",
   "repository": "https://github.com/remirror/remirror",
   "scripts": {
+    "api": "node support/scripts/extract-api.js",
+    "api:fix": "node support/scripts/extract-api.js --fix",
     "audit": "pnpm audit --audit-level high",
     "browser:coverage": "browserslist --coverage",
     "build": "preconstruct build",

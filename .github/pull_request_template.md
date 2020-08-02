@@ -8,8 +8,9 @@
 
 - [ ] I have read the [**contributing**](https://github.com/remirror/remirror/blob/HEAD/docs/contributing.md) document.
 - [ ] My code follows the code style of this project and `pnpm fix` completed successfully.
-- [ ] I have updated the documentation where necessary.
-- [ ] New code is unit tested and all current tests pass when running `pnpm test`.
+- [ ] I have made sure the API is up to date by running `pnpm build` followed by `pnpm api:fix`.
+- [ ] I have created a changeset which captures all API changes with `pnpm changeset`.
+- [ ] I have unit tested my additions and checked that all previous tests pass when running `pnpm test`.
 
 ### Screenshots
 

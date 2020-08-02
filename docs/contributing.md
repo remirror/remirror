@@ -151,8 +151,23 @@ and it fails with cryptic issues, it may be that you're still in the build state
 Once your work is complete you'll want to create a Pull Request to share all that goodness with the
 rest of us.
 
+If you've made changes which ammend the API's of any package you should run the following commands
+before pushing your work.
+
+```bash
+pnpm install # Make sure dependencies are up to date.
+pnpm build # Needed so that the api update can use the declaration files.
+pnpm api:fix # Update the API.
+```
+
+Changes to the API should be accompanied by a changeset which can be generate using this command.
+
+```bash
+pnpm changeset
+```
+
 1. Create a [pull request](https://help.github.com/en/articles/creating-a-pull-request) using the
-   github interface. The template will automatically populate for you.
+   GitHub interface. The template will automatically populate for you.
 2. Add a description and reference the issue this pull request addresses where applicable. The
    description will be used as the body of the git commit message since all pull request are
    squashed down into one commit before merging.
@@ -215,7 +230,12 @@ When creating your own extension or preset you can follow these steps.
 7. Add `packages/remirror/src/extension/<name>.ts`.
 8. Edit `packages/remirror/package.json` to add dependency and entrypoint.
 9. (OPTIONAL) - Edit `/.changeset/config.json` and add the package name to the linked array.
-10. Run `pnpm i` in root.
+10. Run the following commands:
+
+- `pnpm fix:repo` - to update the peer dependency versions.
+- `pnpm install` - to install everything properly.
+- `pnpm build` - to make sure the build works.
+- `pnpm api:fix` - to add the api signature for this file to the `support api folder`.
 
 <br />
 

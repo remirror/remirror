@@ -162,3 +162,7 @@ cc-reporter
 # /.npmrc
 # /.changeset
 # /pnpmfile.js
+
+
+# Api
+support/api/temp

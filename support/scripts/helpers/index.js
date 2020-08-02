@@ -52,6 +52,7 @@ let packages;
  *
  * @param {boolean} [excludeDeprecated=true] - when true exclude the
  * deprecated packages
+ *
  * @returns {Promise<Package[]>}
  */
 const getAllDependencies = (excludeDeprecated = true) => {

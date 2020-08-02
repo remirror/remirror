@@ -9,7 +9,6 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "types": "dist/styles.cjs.d.ts",
   "files": [
     "*.css"
   ],

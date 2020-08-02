@@ -236,6 +236,47 @@ jobs:
       - name: check sizes
         run: pnpm size
 
+  # Check that all api changes have been captured in the `support/api` folder.
+  api_check:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: setup caching
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node.js
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14
+
+      - name: install pnpm
+        run: npm install pnpm@5.4.6 -g
+
+      - name: setup pnpm config
+        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
+
+      - name: audit dependencies
+        run: pnpm audit --audit-level high
+
+      - name: install dependencies
+        run: pnpm install
+
+      - name: build project
+        run: pnpm build
+
+      - name: check api
+        run: pnpm api
+
   # Run chromium e2e tests with playwright
   chromium_e2e:
     timeout-minutes: 15

@@ -1,12 +1,7 @@
 import { isArray } from '@remirror/core-helpers';
 import type { CustomHandler } from '@remirror/core-types';
-import {
-  addSuggester,
-  getSuggestPluginState,
-  suggest,
-  Suggester,
-  SuggestState,
-} from '@remirror/pm/suggest';
+import type { Suggester, SuggestState } from '@remirror/pm/suggest';
+import { addSuggester, getSuggestPluginState, suggest } from '@remirror/pm/suggest';
 
 import { extensionDecorator } from '../decorators';
 import { PlainExtension } from '../extension';

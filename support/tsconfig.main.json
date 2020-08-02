@@ -3,7 +3,6 @@
   "compilerOptions": {
     "types": ["node", "jest", "jest-extended", "jest-axe", "@testing-library/jest-dom"],
     "noEmit": true,
-    "importsNotUsedAsValues": "error",
     "isolatedModules": true,
     "skipLibCheck": true, // TODO lingui has a broken type - open PR to fix it
     "plugins": [
