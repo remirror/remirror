@@ -1,5 +1,19 @@
 # @remirror/react-wysiwyg
 
+## 1.0.0-next.17
+
+> 2020-08-02
+
+### Patch Changes
+
+- Updated dependencies [4498814f]
+- Updated dependencies [898c62e0]
+  - @remirror/react@1.0.0-next.17
+  - @remirror/core@1.0.0-next.17
+  - @remirror/extension-auto-link@1.0.0-next.17
+  - @remirror/preset-social@1.0.0-next.17
+  - @remirror/preset-wysiwyg@1.0.0-next.17
+
 ## 1.0.0-next.16
 
 > 2020-08-01

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-gap-cursor",
-  "version": "1.0.0-next.16",
+  "version": "1.0.0-next.17",
   "description": "Enable cursors for difficult to reach parts of the document.",
   "keywords": [
     "remirror",
@@ -28,11 +28,11 @@
     "linaria": "^2.0.0-rc.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.16",
+    "@remirror/core": "1.0.0-next.17",
     "@remirror/pm": "1.0.0-next.16"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.16",
+    "@remirror/core": "1.0.0-next.17",
     "@remirror/pm": "1.0.0-next.16"
   },
   "publishConfig": {

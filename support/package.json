@@ -28,7 +28,7 @@
     "precss": "^4.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "remirror": "1.0.0-next.16",
+    "remirror": "1.0.0-next.17",
     "write-json-file": "^4.3.0"
   }
 }

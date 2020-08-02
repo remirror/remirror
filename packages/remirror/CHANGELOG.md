@@ -1,5 +1,76 @@
 # remirror
 
+## 1.0.0-next.17
+
+> 2020-08-02
+
+### Patch Changes
+
+- 4498814f: Rename `UsePositionerHookReturn` and `UseMultiPositionerHookReturn` to
+  `UsePositionerReturn` and `UseMultiPositionerReturn`.
+
+  - Add `active: boolean` property to `UsePositionerHookReturn`.
+  - Fix the floating emoji menu for the social editor and showcase. Now hidden when text selection
+    spans multiple characters.
+
+- 338746fa: Pin `@remirror/extension-annotation` version.
+- 2d72ca94: Export `Positioner` as a value.
+
+  - Enable creating a positioner from another positioner with `Positioner.fromPositioner`
+
+  Closes #441
+
+- Updated dependencies [4498814f]
+- Updated dependencies [2d72ca94]
+- Updated dependencies [898c62e0]
+  - @remirror/react@1.0.0-next.17
+  - @remirror/react-social@1.0.0-next.17
+  - @remirror/extension-positioner@1.0.0-next.17
+  - @remirror/core@1.0.0-next.17
+  - @remirror/react-wysiwyg@1.0.0-next.17
+  - @remirror/preset-core@1.0.0-next.17
+  - @remirror/dom@1.0.0-next.17
+  - @remirror/extension-annotation@1.0.0-next.17
+  - @remirror/extension-auto-link@1.0.0-next.17
+  - @remirror/extension-bidi@1.0.0-next.17
+  - @remirror/extension-blockquote@1.0.0-next.17
+  - @remirror/extension-bold@1.0.0-next.17
+  - @remirror/extension-code@1.0.0-next.17
+  - @remirror/extension-code-block@1.0.0-next.17
+  - @remirror/extension-collaboration@1.0.0-next.17
+  - @remirror/extension-diff@1.0.0-next.17
+  - @remirror/extension-doc@1.0.0-next.17
+  - @remirror/extension-drop-cursor@1.0.0-next.17
+  - @remirror/extension-emoji@1.0.0-next.17
+  - @remirror/extension-epic-mode@1.0.0-next.17
+  - @remirror/extension-events@1.0.0-next.17
+  - @remirror/extension-gap-cursor@1.0.0-next.17
+  - @remirror/extension-hard-break@1.0.0-next.17
+  - @remirror/extension-heading@1.0.0-next.17
+  - @remirror/extension-history@1.0.0-next.17
+  - @remirror/extension-horizontal-rule@1.0.0-next.17
+  - @remirror/extension-image@1.0.0-next.17
+  - @remirror/extension-italic@1.0.0-next.17
+  - @remirror/extension-link@1.0.0-next.17
+  - @remirror/extension-mention@1.0.0-next.17
+  - @remirror/extension-paragraph@1.0.0-next.17
+  - @remirror/extension-placeholder@1.0.0-next.17
+  - @remirror/extension-position-tracker@1.0.0-next.17
+  - @remirror/extension-react-component@1.0.0-next.17
+  - @remirror/extension-react-ssr@1.0.0-next.17
+  - @remirror/extension-search@1.0.0-next.17
+  - @remirror/extension-strike@1.0.0-next.17
+  - @remirror/extension-text@1.0.0-next.17
+  - @remirror/extension-trailing-node@1.0.0-next.17
+  - @remirror/extension-underline@1.0.0-next.17
+  - @remirror/extension-yjs@1.0.0-next.17
+  - @remirror/preset-embed@1.0.0-next.17
+  - @remirror/preset-list@1.0.0-next.17
+  - @remirror/preset-react@1.0.0-next.17
+  - @remirror/preset-social@1.0.0-next.17
+  - @remirror/preset-table@1.0.0-next.17
+  - @remirror/preset-wysiwyg@1.0.0-next.17
+
 ## 1.0.0-next.16
 
 > 2020-08-01

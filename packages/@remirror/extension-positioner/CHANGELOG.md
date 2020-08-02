@@ -1,5 +1,22 @@
 # @remirror/extension-positioner
 
+## 1.0.0-next.17
+
+> 2020-08-02
+
+### Minor Changes
+
+- 2d72ca94: Export `Positioner` as a value.
+
+  - Enable creating a positioner from another positioner with `Positioner.fromPositioner`
+
+  Closes #441
+
+### Patch Changes
+
+- Updated dependencies [898c62e0]
+  - @remirror/core@1.0.0-next.17
+
 ## 1.0.0-next.16
 
 > 2020-08-01

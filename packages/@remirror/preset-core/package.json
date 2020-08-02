@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-core",
-  "version": "1.0.0-next.16",
+  "version": "1.0.0-next.17",
   "description": "The core preset providing the functionality you need and want.",
   "keywords": [
     "remirror",
@@ -27,20 +27,20 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.11.0",
-    "@remirror/extension-doc": "1.0.0-next.16",
-    "@remirror/extension-events": "1.0.0-next.16",
-    "@remirror/extension-gap-cursor": "1.0.0-next.16",
-    "@remirror/extension-history": "1.0.0-next.16",
-    "@remirror/extension-paragraph": "1.0.0-next.16",
-    "@remirror/extension-positioner": "1.0.0-next.16",
-    "@remirror/extension-text": "1.0.0-next.16"
+    "@remirror/extension-doc": "1.0.0-next.17",
+    "@remirror/extension-events": "1.0.0-next.17",
+    "@remirror/extension-gap-cursor": "1.0.0-next.17",
+    "@remirror/extension-history": "1.0.0-next.17",
+    "@remirror/extension-paragraph": "1.0.0-next.17",
+    "@remirror/extension-positioner": "1.0.0-next.17",
+    "@remirror/extension-text": "1.0.0-next.17"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.16",
+    "@remirror/core": "1.0.0-next.17",
     "@remirror/pm": "1.0.0-next.16"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.16",
+    "@remirror/core": "1.0.0-next.17",
     "@remirror/pm": "1.0.0-next.16"
   },
   "publishConfig": {

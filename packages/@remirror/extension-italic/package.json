@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-italic",
-  "version": "1.0.0-next.16",
+  "version": "1.0.0-next.17",
   "description": "Adds italic formatting to your text editor.",
   "keywords": [
     "remirror",
@@ -27,11 +27,11 @@
     "@babel/runtime": "^7.11.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.16",
+    "@remirror/core": "1.0.0-next.17",
     "@remirror/pm": "1.0.0-next.16"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.16",
+    "@remirror/core": "1.0.0-next.17",
     "@remirror/pm": "1.0.0-next.16"
   },
   "publishConfig": {

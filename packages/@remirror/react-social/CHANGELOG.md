@@ -1,5 +1,28 @@
 # @remirror/react-social
 
+## 1.0.0-next.17
+
+> 2020-08-02
+
+### Patch Changes
+
+- 4498814f: Rename `UsePositionerHookReturn` and `UseMultiPositionerHookReturn` to
+  `UsePositionerReturn` and `UseMultiPositionerReturn`.
+
+  - Add `active: boolean` property to `UsePositionerHookReturn`.
+  - Fix the floating emoji menu for the social editor and showcase. Now hidden when text selection
+    spans multiple characters.
+
+- Updated dependencies [4498814f]
+- Updated dependencies [898c62e0]
+  - @remirror/react@1.0.0-next.17
+  - @remirror/core@1.0.0-next.17
+  - @remirror/extension-auto-link@1.0.0-next.17
+  - @remirror/extension-emoji@1.0.0-next.17
+  - @remirror/extension-events@1.0.0-next.17
+  - @remirror/extension-mention@1.0.0-next.17
+  - @remirror/preset-social@1.0.0-next.17
+
 ## 1.0.0-next.16
 
 > 2020-08-01

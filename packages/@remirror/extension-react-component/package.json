@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-react-component",
-  "version": "1.0.0-next.16",
+  "version": "1.0.0-next.17",
   "description": "Create prosemirror node views from your react components",
   "keywords": [
     "remirror",
@@ -29,7 +29,7 @@
     "nanoevents": "^5.1.8"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.16",
+    "@remirror/core": "1.0.0-next.17",
     "@remirror/pm": "1.0.0-next.16",
     "@types/react": "^16.9.44",
     "@types/react-dom": "^16.9.8",
@@ -37,7 +37,7 @@
     "react-dom": "^16.13.1"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.16",
+    "@remirror/core": "1.0.0-next.17",
     "@remirror/pm": "1.0.0-next.16",
     "@types/react": "^16.9.41",
     "@types/react-dom": "^16.9.8",
