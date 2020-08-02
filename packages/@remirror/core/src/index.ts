@@ -4,9 +4,11 @@ export * from '@remirror/core-types';
 export * from '@remirror/core-utils';
 
 export type {
-  ForcedUpdateMeta,
-  Identifiers,
+  BuiltinOptions,
   IdentifierSchemaAttributes,
+  Identifiers,
+  KeymapOptions,
+  SuggestOptions,
   UpdatableViewProps,
 } from './builtins';
 export {
