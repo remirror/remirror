@@ -10,8 +10,6 @@ on:
       - next
 
 env:
-  CI: true
-  PNPM_VERSION: 5.3.0
   PNPM_CACHE_FOLDER: .pnpm-store
 
 jobs:
@@ -42,7 +40,7 @@ jobs:
           node-version: 14
 
       - name: install pnpm
-        run: npm install pnpm@5.4.6 -g
+        run: npm install pnpm@5.4.9 -g
 
       - name: setup pnpm config
         run: pnpm config set store-dir $PNPM_CACHE_FOLDER
