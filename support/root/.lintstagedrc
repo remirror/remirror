@@ -3,7 +3,7 @@
     "prettier --write",
     "eslint --fix"
   ],
-  "*.{json,yml,yaml,md,mdx}": [
+  "!(support/api/**)*.{json,yml,yaml,md,mdx}": [
     "prettier --write"
   ],
   "{packages,support}/**/*.{ts,tsx,js}": [
