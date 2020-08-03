@@ -1,6 +1,6 @@
 {
   "name": "@remirror/playground",
-  "version": "1.0.0-next.17",
+  "version": "1.0.0-next.18",
   "private": true,
   "description": "Remirror Playground",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/playground",
@@ -35,7 +35,7 @@
     "monaco-editor": "^0.20.0",
     "monaco-editor-webpack-plugin": "^1.9.0",
     "regenerator-runtime": "^0.13.7",
-    "remirror": "1.0.0-next.17"
+    "remirror": "1.0.0-next.18"
   },
   "devDependencies": {
     "@types/prettier": "^2.0.2",

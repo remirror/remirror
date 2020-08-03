@@ -164,7 +164,7 @@ importers:
       nyc: ^15.1.0
       prettier: ^2.0.5
       prettier-plugin-packagejson: ^2.2.5
-      remirror: 1.0.0-next.17
+      remirror: 1.0.0-next.18
       rimraf: ^3.0.2
       size-limit: ^4.5.5
       snapshot-diff: ^0.8.1
@@ -854,7 +854,7 @@ importers:
       react: ^16.13.1
       react-dom: ^16.13.1
       regenerator-runtime: ^0.13.7
-      remirror: 1.0.0-next.17
+      remirror: 1.0.0-next.18
       ts-node: ^8.10.2
   packages/@remirror/pm:
     dependencies:
@@ -1737,7 +1737,7 @@ importers:
       precss: ^4.0.0
       react: ^16.13.1
       react-dom: ^16.13.1
-      remirror: 1.0.0-next.17
+      remirror: 1.0.0-next.18
       write-json-file: ^4.3.0
   support/deprecated/core-extensions:
     specifiers: {}
@@ -1829,7 +1829,7 @@ importers:
       react: ^16.13.1
       react-dom: ^16.13.1
       refractor: ^3.0.0
-      remirror: 1.0.0-next.17
+      remirror: 1.0.0-next.18
   support/storybook:
     dependencies:
       '@babel/core': 7.11.0
@@ -1858,7 +1858,7 @@ importers:
       linaria: ^2.0.0-rc.0
       react: ^16.13.1
       react-dom: ^16.13.1
-      remirror: 1.0.0-next.17
+      remirror: 1.0.0-next.18
   support/website:
     dependencies:
       '@babel/runtime': 7.11.0
@@ -1897,7 +1897,7 @@ importers:
       '@docusaurus/types': ^2.0.0-alpha.60
       '@mdx-js/react': ^1.6.16
       '@remirror/dev': 1.0.0-next.17
-      '@remirror/playground': 1.0.0-next.17
+      '@remirror/playground': 1.0.0-next.18
       '@remirror/showcase': 1.0.0-next.17
       '@types/react': ^16.9.44
       '@types/react-dom': ^16.9.8
@@ -1910,7 +1910,7 @@ importers:
       prism-react-renderer: ^1.1.1
       react: ^16.13.1
       react-dom: ^16.13.1
-      remirror: 1.0.0-next.17
+      remirror: 1.0.0-next.18
 lockfileVersion: 5.1
 packages:
   /@algolia/cache-browser-local-storage/4.3.1:

@@ -1,5 +1,13 @@
 # remirror
 
+## 1.0.0-next.18
+
+> 2020-08-03
+
+### Patch Changes
+
+- 2059da35: Fix broken entry point `remirror/extension/annotation` from `remirror`.
+
 ## 1.0.0-next.17
 
 > 2020-08-02
