@@ -13,6 +13,7 @@ import {
   AddAnnotationAction,
   RemoveAnnotationsAction,
   SetAnnotationsAction,
+  UpdateAnnotationAction,
 } from './actions';
 import type { Annotation, AnnotationData, AnnotationOptions } from './types';
 import { toAnnotation, toDecoration } from './utils';
@@ -65,6 +66,32 @@ export class AnnotationExtension<A extends Annotation = Annotation> extends Plai
               annotationClassName: this.options.annotationClassName,
             });
             return newDecorationSet.add(tr.doc, [decoration]);
+          }
+
+          if (actionType === ActionType.UPDATE_ANNOTATION) {
+            const updateAction = action as UpdateAnnotationAction<A>;
+            const found = newDecorationSet.find(
+              undefined,
+              undefined,
+              (spec) => updateAction.annotationId === spec.annotation.id,
+            );
+
+            if (found.length !== 1) {
+              throw new Error(
+                `Expected exactly one match for annotation ID "${
+                  updateAction.annotationId
+                }" but got: ${JSON.stringify(found)}`,
+              );
+            }
+
+            const match = found[0];
+            const updatedDecoration = toDecoration({
+              from: match.from,
+              to: match.to,
+              annotationData: updateAction.annotationData,
+              annotationClassName: this.options.annotationClassName,
+            });
+            return newDecorationSet.remove(found).add(tr.doc, [updatedDecoration]);
           }
 
           if (actionType === ActionType.REMOVE_ANNOTATIONS) {
@@ -121,6 +148,30 @@ export class AnnotationExtension<A extends Annotation = Annotation> extends Plai
             type: ActionType.ADD_ANNOTATION,
             from: sel.from,
             to: sel.to,
+            annotationData,
+          };
+          dispatch(state.tr.setMeta(AnnotationExtension.name, action));
+        }
+
+        return true;
+      },
+
+      /**
+       * Updates an existing annotation with a new value
+       */
+      updateAnnotation: (
+        id: string,
+        annotationDataWithoutId: Omit<AnnotationData<A>, 'id'>,
+      ): CommandFunction => ({ state, dispatch }) => {
+        if (dispatch) {
+          const annotationData = {
+            ...annotationDataWithoutId,
+            id,
+          } as AnnotationData<A>;
+
+          const action: UpdateAnnotationAction<A> = {
+            type: ActionType.UPDATE_ANNOTATION,
+            annotationId: id,
             annotationData,
           };
           dispatch(state.tr.setMeta(AnnotationExtension.name, action));

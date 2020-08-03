@@ -32,6 +32,38 @@ describe('commands', () => {
         `);
   });
 
+  it('#updateAnnotation', () => {
+    const id = '1';
+
+    add(doc(p('An <start>important<end> note')));
+    commands.addAnnotation({ id });
+
+    // Pre-condition
+    expect(view.dom.innerHTML).toMatchInlineSnapshot(`
+          <p>
+            An
+            <span class="annotation">
+              important
+            </span>
+            note
+          </p>
+        `);
+
+    commands.updateAnnotation(id, {
+      className: 'updated',
+    });
+
+    expect(view.dom.innerHTML).toMatchInlineSnapshot(`
+          <p>
+            An
+            <span class="annotation updated">
+              important
+            </span>
+            note
+          </p>
+        `);
+  });
+
   it('#setAnnotations', () => {
     add(doc(p('An important note')));
     commands.setAnnotations([
