@@ -1,7 +1,10 @@
 {
   "main": "dist/remirror.cjs.js",
   "module": "dist/remirror.esm.js",
-  "browser": {},
+  "browser": {
+    "./dist/remirror.cjs.js": "./dist/remirror.browser.cjs.js",
+    "./dist/remirror.esm.js": "./dist/remirror.browser.esm.js"
+  },
   "types": "dist/remirror.cjs.d.ts",
   "preconstruct": {
     "source": "../../src/extension/annotation"

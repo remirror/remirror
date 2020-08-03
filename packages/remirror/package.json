@@ -131,6 +131,7 @@
       "core/types",
       "core/utils",
       "dom",
+      "extension/annotation",
       "extension/auto-link",
       "extension/blockquote",
       "extension/bold",
