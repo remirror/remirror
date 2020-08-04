@@ -20,7 +20,7 @@ export interface SuggestOptions {
 }
 
 /**
- * This extension allows others extension to add the `createSuggestion` method
+ * This extension allows others extension to add the `createSuggesters` method
  * for adding the prosemirror-suggest functionality to your editor.
  *
  * @remarks
