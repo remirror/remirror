@@ -1,5 +1,14 @@
 # remirror
 
+## 1.0.0-next.19
+
+> 2020-08-04
+
+### Patch Changes
+
+- Updated dependencies [2db38fec]
+  - @remirror/extension-annotation@1.0.0-next.19
+
 ## 1.0.0-next.18
 
 > 2020-08-03

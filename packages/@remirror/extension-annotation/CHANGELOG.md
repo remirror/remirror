@@ -1,5 +1,13 @@
 # @remirror/extension-annotation
 
+## 1.0.0-next.19
+
+> 2020-08-04
+
+### Minor Changes
+
+- 2db38fec: Allow updating existing annotations
+
 ## 1.0.0-next.17
 
 > 2020-08-02

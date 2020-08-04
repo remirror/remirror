@@ -1,6 +1,6 @@
 {
   "name": "remirror",
-  "version": "1.0.0-next.18",
+  "version": "1.0.0-next.19",
   "description": "One editing package to rule them all, one editing package to find them.",
   "keywords": [
     "prosemirror",
@@ -43,7 +43,7 @@
     "@remirror/core-types": "1.0.0-next.16",
     "@remirror/core-utils": "1.0.0-next.16",
     "@remirror/dom": "1.0.0-next.17",
-    "@remirror/extension-annotation": "1.0.0-next.17",
+    "@remirror/extension-annotation": "1.0.0-next.19",
     "@remirror/extension-auto-link": "1.0.0-next.17",
     "@remirror/extension-bidi": "1.0.0-next.17",
     "@remirror/extension-blockquote": "1.0.0-next.17",
