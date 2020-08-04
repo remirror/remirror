@@ -22,7 +22,7 @@
     "@docusaurus/theme-live-codeblock": "^2.0.0-alpha.60",
     "@mdx-js/react": "^1.6.16",
     "@remirror/dev": "1.0.0-next.17",
-    "@remirror/playground": "1.0.0-next.18",
+    "@remirror/playground": "1.0.0-next.19",
     "@remirror/showcase": "1.0.0-next.17",
     "clsx": "^1.1.1",
     "core-js": "^3.6.5",
@@ -31,7 +31,7 @@
     "prism-react-renderer": "^1.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "remirror": "1.0.0-next.18"
+    "remirror": "1.0.0-next.19"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^2.0.0-alpha.60",
