@@ -25,8 +25,9 @@ module.exports = {
           label: 'Docs',
           position: 'right',
         },
-        { to: 'playground', label: 'Playground', position: 'right' },
-        { to: 'blog', label: 'Blog', position: 'right' },
+        { to: '/playground', label: 'Playground', position: 'right' },
+        { to: '/blog', label: 'Blog', position: 'right' },
+        { to: '/chat', label: 'Chat', position: 'right' },
         {
           href: 'https://github.com/remirror/remirror',
           label: 'GitHub',
@@ -53,27 +54,15 @@ module.exports = {
         {
           title: 'Community',
           items: [
-            {
-              label: 'Discord',
-              href: 'https://discord.gg/C4cfrMK',
-            },
-            {
-              label: 'Twitter',
-              href: 'https://twitter.com/ifiokjr',
-            },
+            { label: 'Discord', to: '/chat' },
+            { label: 'Twitter', href: 'https://twitter.com/ifiokjr' },
           ],
         },
         {
           title: 'More',
           items: [
-            {
-              label: 'Blog',
-              to: 'blog',
-            },
-            {
-              label: 'GitHub',
-              href: 'https://github.com/remirror/remirror',
-            },
+            { label: 'Blog', to: 'blog' },
+            { label: 'GitHub', href: 'https://github.com/remirror/remirror' },
             {
               html: `
                 <a href="https://www.netlify.com" target="_blank" rel="noreferrer noopener" aria-label="Hosted with Netlify">

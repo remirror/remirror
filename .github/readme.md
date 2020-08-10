@@ -11,7 +11,7 @@
     <a href="https://github.com/remirror/remirror/actions?query=workflow%3A%22Deploy+Docs%22?branch=next"><img src="https://github.com/remirror/remirror/workflows/Deploy%20Docs/badge.svg?branch=next" alt="Deploy Docs" /></a>
     <a href="https://dev.azure.com/remirror/remirror/_build/latest?definitionId=2&amp;branchName=next"><img src="https://dev.azure.com/remirror/remirror/_apis/build/status/remirror.remirror?branchName=next" alt="Azure DevOps builds" /></a>
     <a href="https://github.com/remirror/remirror/commits/next"><img src="https://img.shields.io/github/commit-activity/m/remirror/remirror.svg?amp;logo=github" alt="GitHub commit activity"></a>
-    <a href="https://discord.gg/C4cfrMK"><img alt="Discord" src="https://img.shields.io/discord/726035064831344711" alt="Join our discord server"></a>
+    <a href="https://remirror.io/chat"><img alt="Discord" src="https://img.shields.io/discord/726035064831344711" alt="Join our discord server"></a>
     </div>
 </div>
 
@@ -68,7 +68,7 @@ This is the `next` version of remirror. It is undergoing heavy development at th
 While exploring this project, if you find errors or would like to suggest improvements there are several options.
 
 - Open an issue in our [github repo](https://github.com/remirror/remirror/issues).
-- [Join our discord server](https://discord.gg/C4cfrMK) and discuss the problem with our community.
+- [Join our discord server](https://remirror.io/chat) and discuss the problem with our community.
 - Create a pull request with your proposed improvement by clicking the edit button on the relevant page.
 - Move on, because deadlines are looming and life is too short.
 

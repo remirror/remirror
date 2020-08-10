@@ -43,6 +43,9 @@ function monacoEditorPlugin(_context, _options) {
       }
 
       return {
+        node: {
+          fs: 'empty',
+        },
         module: {
           rules: [
             {

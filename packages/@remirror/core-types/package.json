@@ -10,6 +10,11 @@
   ],
   "sideEffects": false,
   "main": "dist/core-types.cjs.js",
+  "module": "dist/core-types.esm.js",
+  "browser": {
+    "./dist/core-types.cjs.js": "./dist/core-types.browser.cjs.js",
+    "./dist/core-types.esm.js": "./dist/core-types.browser.esm.js"
+  },
   "types": "dist/core-types.cjs.d.ts",
   "files": [
     "dist"

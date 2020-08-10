@@ -10,7 +10,7 @@
     "postbuild": "run-s css:copy",
     "build:custom": "pnpm recursive run build:custom",
     "build:dev": "preconstruct dev",
-    "build:docs": "cd support/website && pnpm build",
+    "build:docs": "cd support/website && pnpm build && cp ./_redirects ./build/_redirects",
     "changeset": "changeset",
     "check:pnpm": "node support/scripts/check-pnpm.js",
     "checks": "run-s lint typecheck test",
