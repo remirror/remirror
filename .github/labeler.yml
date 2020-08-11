@@ -1,0 +1,45 @@
+# Documentation is available here https://github.com/actions/labeler
+
+'type: support':
+  - any: ['support/**/*', '!support/e2e/**']
+  - all: ['!support/jest/*', '!support/e2e/**']
+
+'type: ci':
+  - any: ['.github/**/*', 'support/azure/**/*', '!.github/ISSUE_TEMPLATE/**', '!.github/**/*.md']
+
+'test: unit':
+  - any: ['**/*.spec.{ts,tsx}']
+
+'test: e2e':
+  - any: ['**/*.e2e.test.{ts,tsx}', 'support/e2e/**/*']
+
+'package: jest-prosemirror':
+  - any: ['packages/jest-prosemirror/**/*']
+
+'package: jest-remirror':
+  - any: ['packages/jest-remirror/**/*']
+
+'package: prosemirror-suggest':
+  - any: ['packages/prosemirror-suggest/**/*']
+
+'package: multishift':
+  - any: ['packages/multishift/**/*']
+
+'package: remirror':
+  - any: ['packages/remirror/**/*', 'packages/@remirror/**/*']
+  - all: ['packages/@remirror/cli/**/*', '!packages/@remirror/playground/**/*']
+
+'framework: react':
+  - any: ['packages/@remirror/*react*/**/*']
+
+'framework: dom':
+  - any: ['packages/@remirror/*dom*/**/*']
+
+'package: @remirror/cli':
+  - any: ['packages/@remirror/cli/**/*']
+
+'type: playground':
+  - any: ['packages/@remirror/playground/**/*', 'support/website/src/pages/playground.tsx']
+
+'type: documentation':
+  - any: ['docs/**/*', '**/readme.md']
