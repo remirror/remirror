@@ -16,8 +16,7 @@ import {
 } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
-import { omit, pick } from '@remirror/core-helpers';
-import { Schema } from '@remirror/pm/model';
+import { omit } from '@remirror/core-helpers';
 import { NodeSelection, Selection, TextSelection } from '@remirror/pm/state';
 import { BoldExtension, createCoreManager, HeadingExtension } from '@remirror/testing';
 
@@ -544,12 +543,5 @@ describe('findNodeAt...', () => {
 });
 
 test('schemaToJSON', () => {
-  const { nodes, marks } = createCoreManager([new BoldExtension()]);
-
-  const testSchema = new Schema({
-    nodes: pick(nodes, ['doc', 'paragraph', 'text']),
-    marks: pick(marks, ['bold']),
-  });
-
-  expect(schemaToJSON(testSchema)).toMatchSnapshot();
+  expect(schemaToJSON(createCoreManager([new BoldExtension()]).schema)).toMatchSnapshot();
 });

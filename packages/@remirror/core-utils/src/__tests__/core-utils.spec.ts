@@ -26,8 +26,8 @@ import {
 
 import {
   areSchemaCompatible,
-  atDocEnd as atDocumentEnd,
-  atDocStart as atDocumentStart,
+  atDocEnd,
+  atDocStart,
   canInsertNode,
   createDocumentNode,
   endPositionOfParent,
@@ -38,8 +38,8 @@ import {
   getNearestNonTextNode,
   getRemirrorJSON,
   getSelectedWord,
-  isDocNode as isDocumentNode,
-  isDocNodeEmpty as isDocumentNodeEmpty,
+  isDocNode,
+  isDocNodeEmpty,
   isElementDomNode,
   isMarkActive,
   isNodeSelection,
@@ -131,15 +131,15 @@ describe('canInsertNode', () => {
 
 describe('isDocNodeEmpty', () => {
   it('returns true for a doc with an empty paragraph', () => {
-    expect(isDocumentNodeEmpty(doc(p()))).toBeTrue();
+    expect(isDocNodeEmpty(doc(p()))).toBeTrue();
   });
 
   it('returns false for a doc with nothing inside', () => {
-    expect(isDocumentNodeEmpty(doc())).toBeFalse();
+    expect(isDocNodeEmpty(doc())).toBeFalse();
   });
 
   it('returns false for a doc with content', () => {
-    expect(isDocumentNodeEmpty(doc(p(blockquote('quote this...'))))).toBeFalse();
+    expect(isDocNodeEmpty(doc(p(blockquote('quote this...'))))).toBeFalse();
   });
 });
 
@@ -296,25 +296,25 @@ describe('atDocEnd', () => {
   it('returns true at the end of the document', () => {
     const { state } = createEditor(doc(p('Something<cursor>')));
 
-    expect(atDocumentEnd(state)).toBeTrue();
+    expect(atDocEnd(state)).toBeTrue();
   });
 
   it('returns false when no selection', () => {
     const { state } = createEditor(doc(p('Something')));
 
-    expect(atDocumentEnd(state)).toBeFalse();
+    expect(atDocEnd(state)).toBeFalse();
   });
 
   it('returns true for a node selection', () => {
     const { state } = createEditor(doc(p('<node>Something')));
 
-    expect(atDocumentEnd(state)).toBeTrue();
+    expect(atDocEnd(state)).toBeTrue();
   });
 
   it('returns true for full selection', () => {
     const { state } = createEditor(doc(p('<all>Something')));
 
-    expect(atDocumentEnd(state)).toBeTrue();
+    expect(atDocEnd(state)).toBeTrue();
   });
 });
 
@@ -322,19 +322,19 @@ describe('atDocStart', () => {
   it('returns true at the start of the document', () => {
     const { state } = createEditor(doc(p('<cursor>Something')));
 
-    expect(atDocumentStart(state)).toBeTrue();
+    expect(atDocStart(state)).toBeTrue();
   });
 
   it('returns true for full selection', () => {
     const { state } = createEditor(doc(p('Some<all>thing')));
 
-    expect(atDocumentStart(state)).toBeTrue();
+    expect(atDocStart(state)).toBeTrue();
   });
 
   it('returns false elsewhere', () => {
     const { state } = createEditor(doc(p('Someth<cursor>ing')));
 
-    expect(atDocumentStart(state)).toBeFalse();
+    expect(atDocStart(state)).toBeFalse();
   });
 });
 
@@ -386,14 +386,14 @@ describe('nodeNameMatchesList', () => {
 
 describe('isDocNode', () => {
   it('returns true for doc nodes', () => {
-    expect(isDocumentNode(doc(), testSchema)).toBeTrue();
-    expect(isDocumentNode(doc())).toBeTrue();
+    expect(isDocNode(doc(), testSchema)).toBeTrue();
+    expect(isDocNode(doc())).toBeTrue();
   });
 
   it('returns false for non-doc nodes', () => {
-    expect(isDocumentNode(p())).toBeFalse();
+    expect(isDocNode(p())).toBeFalse();
     // @ts-expect-error
-    expect(isDocumentNode()).toBeFalse();
+    expect(isDocNode()).toBeFalse();
   });
 });
 

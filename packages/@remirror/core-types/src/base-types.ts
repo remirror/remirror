@@ -276,7 +276,8 @@ export interface ApplySchemaAttributes {
 }
 
 /**
- * A mapping of the attribute name to it's default, getter and setter.
+ * A mapping of the attribute name to it's default, getter and setter. If the
+ * value is set to a string then it will be resolved as the `default`.
  */
 export type SchemaAttributes = Record<string, SchemaAttributesObject | string>;
 
