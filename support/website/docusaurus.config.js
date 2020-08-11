@@ -75,6 +75,7 @@ module.exports = {
       ],
       copyright: `Copyright © ${new Date().getFullYear()} KickJump Ltd. Built with Docusaurus`,
     },
+    googleAnalytics: { trackingID: 'UA-135738542-1', anonymizeIP: true },
   },
   presets: [
     [
