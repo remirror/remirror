@@ -1,0 +1,16 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: Ask a question
+    url: https://github.com/remirror/remirror/discussions/new
+    about: Ask questions and discuss with other community members.
+
+  - name: Create a feature request
+    url: https://github.com/remirror/remirror/discussions/new
+    about:
+      Suggest your ideas for this project. Discussions with high interest and positive feedback are
+      added to the product roadmap.
+
+  - name: Showcase your product
+    url: https://github.com/remirror/remirror/discussions/new
+    about: Showcase what you've been building with `remirror`.
