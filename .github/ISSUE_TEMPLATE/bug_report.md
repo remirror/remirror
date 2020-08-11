@@ -3,14 +3,14 @@ name: Bug report
 about: Create a report to help us improve
 ---
 
-## Description
+### Description
 
 <!--- Provide a more detailed introduction to the issue itself, and why you consider it to be a bug -->
 
-## Possible Fix
+### Possible Fix
 
 <!--- Not obligatory, but suggest a fix or reason for the bug -->
 
-## Checklist
+### Checklist
 
 - [ ] I have read the [**contributing**](https://github.com/remirror/remirror/blob/HEAD/docs/contributing.md) document.

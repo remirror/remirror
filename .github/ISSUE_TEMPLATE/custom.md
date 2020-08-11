@@ -3,6 +3,6 @@ name: Custom issue template
 about: Describe this issue template's purpose here.
 ---
 
-## Checklist
+### Checklist
 
-- [ ] I have read the [**contributing**](https://github.com/remirror/remirror/blob/master/docs/contributing.md) document.
+- [ ] I have read the [**contributing**](https://github.com/remirror/remirror/blob/HEAD/docs/contributing.md) document.
