@@ -35,11 +35,11 @@
     "@remirror/react": "1.0.0-next.17",
     "@testing-library/react": "^10.4.7",
     "@types/min-document": "^2.19.0",
-    "jest-diff": "^26.2.0",
+    "jest-diff": "^26.3.0",
     "min-document": "^2.19.0"
   },
   "devDependencies": {
-    "@types/react": "^16.9.44",
+    "@types/react": "^16.9.46",
     "react": "^16.13.1"
   },
   "peerDependencies": {

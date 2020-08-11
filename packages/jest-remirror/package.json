@@ -26,16 +26,16 @@
     "@remirror/dom": "1.0.0-next.17",
     "@remirror/pm": "1.0.0-next.16",
     "@remirror/preset-core": "1.0.0-next.17",
-    "@testing-library/dom": "^7.21.7",
+    "@testing-library/dom": "^7.22.1",
     "@types/node": "^14.0.27",
     "@types/sanitize-html": "^1.23.3",
     "jest-prosemirror": "1.0.0-next.4",
-    "jest-snapshot": "^26.2.2",
+    "jest-snapshot": "^26.3.0",
     "mutationobserver-shim": "^0.3.7",
     "sanitize-html": "^1.27.2"
   },
   "devDependencies": {
-    "jest": "^26.2.2"
+    "jest": "^26.3.0"
   },
   "peerDependencies": {
     "jest": ">= 24"

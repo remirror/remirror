@@ -33,18 +33,18 @@
     "@remirror/core-types": "1.0.0-next.16",
     "@remirror/core-utils": "1.0.0-next.16",
     "@remirror/pm": "1.0.0-next.16",
-    "@testing-library/dom": "^7.21.7",
+    "@testing-library/dom": "^7.22.1",
     "@types/prosemirror-schema-basic": "^1.0.1",
     "@types/prosemirror-test-builder": "^1.0.1",
     "chalk": "^4.1.0",
-    "jest-matcher-utils": "^26.2.0",
+    "jest-matcher-utils": "^26.3.0",
     "prosemirror-schema-basic": "^1.1.2",
     "prosemirror-tables": "^1.1.1",
     "prosemirror-test-builder": "^1.0.3",
     "test-keyboard": "1.0.0-next.5"
   },
   "devDependencies": {
-    "jest": "^26.2.2"
+    "jest": "^26.3.0"
   },
   "peerDependencies": {
     "jest": ">= 24"

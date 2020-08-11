@@ -15,11 +15,11 @@
     "next": "9.4.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "refractor": "^3.0.0",
+    "refractor": "^3.1.0",
     "remirror": "1.0.0-next.19"
   },
   "devDependencies": {
-    "@types/react": "^16.9.44",
+    "@types/react": "^16.9.46",
     "@types/react-dom": "^16.9.8",
     "@types/refractor": "^2.8.0"
   }
