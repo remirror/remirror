@@ -98,8 +98,6 @@ export interface Suggester<Command extends AnyFunction<void> = AnyFunction<void>
    * - `matchOffset: 2` matches `'@ab'` but not `'@a'` or `'@'`
    * - `matchOffset: 3` matches `'@abc'` but not `'@ab'` or `'@a'` or `'@'`
    * - And so on...
-   *
-   * @defaultValue 0
    */
   matchOffset?: number;
 
