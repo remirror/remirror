@@ -30,17 +30,15 @@
 
 ## Motivation
 
-I started `remirror` as a challenge to myself. Would it be possible to build an editor that combined great performance with ease of use? I wanted something that allowed developers like myself to fall in love and feel playful even when working through deeply complex concepts. The editor would need to combine plug-and-play features, with ample room for customisation.
+`remirror` was started as a personal challenge. Would it be possible to build an editor that combined great performance with ease of use? It was also important to give users of all frameworks, the ability to build an editor by picking and choosing their desired building blocks.
 
-I also wanted to give users of all frameworks, the ability to build an editor by picking and choosing their desired building blocks.
+In order to meet these goals, [ProseMirror](https://prosemirror.net/) was picked as the core editor layer. The second decision was to base the structure of the editor on blocks of functionality called `Extensions`. Each extension would add a slice of beauty to the editor, allowing users to craft their masterpieces.
 
-In order to meet my goals, I settled on [ProseMirror](https://prosemirror.net/) as the core editor layer. The second decision was to base the structure of the editor on blocks of functionality called `Extensions`. Each extension would add a slice of beauty to the editor, allowing users to craft their masterpieces.
+In the latest version, some of the initial goals of `remirror` are bearing fruit. Every single part of the editor can be controlled by extensions. For example, the core (`Schema`) is managed by a [built-in extension](https://github.com/remirror/remirror/blob/next/packages/@remirror/core/src/builtins/schema-extension.ts).
 
-In this latest version, I believe I'm starting to see these goals come to fruition. Every single part of the editor can be controlled by extensions. For example, the core (`Schema`) is managed by a [built-in extension](https://github.com/remirror/remirror/blob/next/packages/@remirror/core/src/builtins/schema-extension.ts). There's already a huge selection of extensions for users to choose from.
+And the new API is so much better. For React, this comes with a bunch of drop-in components and hooks. Many more are being worked on.
 
-And the new API is beautiful. For React, this comes with a slew of drop-in components and hooks. Many more are being worked on. It's almost magical how well it works.
-
-For example, to add a drop down emoji picker to your react editor the following code will suffice.
+To add a drop down emoji picker to your react editor the following code will suffice.
 
 ```tsx
 import React from 'react';
@@ -55,9 +53,9 @@ const Editor = () => {
 };
 ```
 
-With this tiny snippet your editor now supports a really nice ui element. And it's all customisable with ordinary `css`. No more fighting against yet another `CSS-in-JS` library.
+With this tiny snippet your editor now supports a really nice ui element. And it's all customisable with ordinary `css`. No more fighting against a `CSS-in-JS` library as in previous versions.
 
-There's so much more to come and I'm glad you're taking a look. I hope `remirror` proves to be everything you need for your next text editor and more.
+There's so much more to come and I'm glad you're taking a look. I hope `remirror` proves to be everything you need for your next text editor project.
 
 <br />
 
@@ -174,9 +172,13 @@ const EditorWrapper = () => {
 
 ## Contributing
 
-Please read [contributing.md](docs/contributing.md) for details on our code of conduct, and the process for submitting pull requests. It also outlines the project structure for help navigating your way around this codebase.
+Please read our [contribution guide] for details on our code of conduct, and the process for submitting pull requests. It also outlines the project structure so you can find help when navigating your way around the codebase.
+
+In addition each folder in this codebase a readme describing why it exists.
 
 You might also notice there are surprisingly few files in the root directory of this project. All the configuration files have been moved to the `support/root` directory and are symlinked to the root directory in a `preinstall` hook. For more information take a look at [folder](support/root) and [readme](support/root/readme.md).
+
+Finally you can keep track on what's being worked on via the [projects].
 
 <br />
 
@@ -191,6 +193,8 @@ This project uses [SemVer](http://semver.org/) for versioning. For the versions 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
 [introduction]: https://remirror.io/docs/introduction
+[contribution guide]: https://remirror.io/docs/contributing
+[projects]: https://remirror.io/projects
 [installation]: https://remirror.io/docs/guide/installation
 [typescript]: https://github.com/microsoft/Typescript
 [react]: https://github.com/facebook/react
