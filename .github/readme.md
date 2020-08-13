@@ -7,8 +7,9 @@
   <br />
   <br />
   <div align="center">
-    <a href="https://github.com/remirror/remirror/actions?query=workflow:ci?branch=next"><img src="https://github.com/remirror/remirror/workflows/ci/badge.svg?branch=next" alt="Continuous integration badge for github actions" /></a>
-    <a href="https://github.com/remirror/remirror/actions?query=workflow:docs?branch=next"><img src="https://github.com/remirror/remirror/workflows/docs/badge.svg?branch=next" alt="Badge outline whether documentation deployed successfully" /></a>
+    <a href="https://github.com/remirror/remirror/actions?query=workflow:ci"><img src="https://github.com/remirror/remirror/workflows/ci/badge.svg?branch=next" alt="Continuous integration badge for github actions" /></a>
+    <a href="https://github.com/remirror/remirror/actions?query=workflow:docs"><img src="https://github.com/remirror/remirror/workflows/docs/badge.svg?branch=next" alt="Badge outline whether documentation deployed successfully" /></a>
+    <a href="https://codeclimate.com/github/remirror/remirror/maintainability"><img src="https://api.codeclimate.com/v1/badges/f4d8dcd5c2228524a53a/maintainability" alt="Project maintainability" /></a>
     <a href="https://codeclimate.com/github/remirror/remirror/test_coverage"><img src="https://api.codeclimate.com/v1/badges/f4d8dcd5c2228524a53a/test_coverage" alt="Code coverage" /></a>
     <a href="https://remirror.io/chat"><img alt="Discord" src="https://img.shields.io/discord/726035064831344711" alt="Join our discord server"></a>
     </div>

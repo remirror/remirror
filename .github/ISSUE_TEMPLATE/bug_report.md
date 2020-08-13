@@ -1,17 +1,29 @@
 ---
-name: Bug report
-about: Create a report to improve remirror
-labels: "type: bug :beetle:", "status: needs verification :mag:"
+name: 🐞Report a bug
+about: Found something broken? Let us know! If it's not yet reproducible, please `Ask a question` instead.
+labels: 'type: bug :beetle:'
 ---
 
-### Description
+### Summary
 
-<!--- Provide a more detailed introduction to the issue itself, and why you consider it to be a bug -->
+<!-- A brief summary of the problem. -->
 
-### Possible Fix
+### Steps to reproduce
 
-<!--- Not obligatory, but suggest a fix or reason for the bug -->
+<!-- All bug reports should include detailed steps to reproduce -->
 
-### Checklist
+### Expected results
 
-- [ ] I have read the [**contributing**](https://github.com/remirror/remirror/blob/HEAD/docs/contributing.md) document.
+<!-- Outline what you expected to see -->
+
+### Actual results
+
+<!-- Outline the actual results -->
+
+### Additional context
+
+<!-- Optionally provide additional context such as browser version / device etc... -->
+
+### Possible Solution
+
+<!--- Optionally suggest a fix or reason for the bug -->
