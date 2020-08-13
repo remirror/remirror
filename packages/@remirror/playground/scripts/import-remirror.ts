@@ -83,6 +83,8 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
   remirror: require('remirror'),
   'remirror/core': require('remirror/core'),
   'remirror/react': require('remirror/react'),
+  'remirror/react/social': require('remirror/react/social'),
+  'remirror/react/wysiwyg': require('remirror/react/wysiwyg'),
   '@remirror/playground': { useRemirrorPlayground },
   '@remirror/pm/commands': require('@remirror/pm/commands'),
   '@remirror/pm/dropcursor': require('@remirror/pm/dropcursor'),

@@ -10,6 +10,7 @@ import { useRemirrorPlayground } from './use-remirror-playground';
 
 export const IMPORT_CACHE: { [moduleName: string]: any } = {
   // Auto-imported
+  'remirror/extension/annotation': require('remirror/extension/annotation'),
   'remirror/extension/auto-link': require('remirror/extension/auto-link'),
   'remirror/extension/bidi': require('remirror/extension/bidi'),
   'remirror/extension/blockquote': require('remirror/extension/blockquote'),
@@ -56,6 +57,8 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
   remirror: require('remirror'),
   'remirror/core': require('remirror/core'),
   'remirror/react': require('remirror/react'),
+  'remirror/react/social': require('remirror/react/social'),
+  'remirror/react/wysiwyg': require('remirror/react/wysiwyg'),
   '@remirror/playground': { useRemirrorPlayground },
   '@remirror/pm/commands': require('@remirror/pm/commands'),
   '@remirror/pm/dropcursor': require('@remirror/pm/dropcursor'),
@@ -86,6 +89,10 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
 };
 
 export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> = [
+  {
+    moduleName: 'remirror/extension/annotation',
+    exports: ['AnnotationExtension'],
+  },
   {
     moduleName: 'remirror/extension/auto-link',
     exports: ['AutoLinkExtension'],
@@ -128,27 +135,7 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
   },
   {
     moduleName: 'remirror/extension/emoji',
-    exports: [
-      'DEFAULT_FREQUENTLY_USED',
-      'EMOTICONS',
-      'EmojiExtension',
-      'SKIN_VARIATIONS',
-      'aliasToName',
-      'emojiCategories',
-      'emojiList',
-      'emojiNames',
-      'emoticonRegex',
-      'getEmojiByName',
-      'getEmojiFromEmoticon',
-      'getHexadecimalsFromEmoji',
-      'isEmojiAliasName',
-      'isEmojiName',
-      'isValidEmojiName',
-      'isValidEmojiObject',
-      'isValidSkinVariation',
-      'populateFrequentlyUsed',
-      'sortEmojiMatches',
-    ],
+    exports: ['DEFAULT_FREQUENTLY_USED', 'EmojiExtension'],
   },
   {
     moduleName: 'remirror/extension/epic-mode',
@@ -160,7 +147,7 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
   },
   {
     moduleName: 'remirror/extension/gap-cursor',
-    exports: ['GapCursorExtension', 'editorStyles', 'isGapCursorSelection'],
+    exports: ['GapCursorExtension', 'isGapCursorSelection'],
   },
   {
     moduleName: 'remirror/extension/hard-break',
@@ -209,14 +196,15 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
   {
     moduleName: 'remirror/extension/positioner',
     exports: [
+      'Positioner',
       'PositionerExtension',
       'centeredSelectionPositioner',
+      'cursorPopupPositioner',
       'emptyVirtualPosition',
       'floatingSelectionPositioner',
       'getPositioner',
       'hasStateChanged',
       'isEmptyBlockNode',
-      'noSelectionPopupMenu',
     ],
   },
   {
@@ -249,7 +237,7 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
   },
   {
     moduleName: 'remirror/extension/yjs',
-    exports: ['YjsExtension', 'editorStyles'],
+    exports: ['YjsExtension'],
   },
   {
     moduleName: 'remirror/preset/core',
