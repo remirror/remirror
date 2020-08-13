@@ -1,5 +1,5 @@
 ---
-name: 🐞Report a bug
+name: 🐞 Report a bug
 about: Found something broken? Let us know! If it's not yet reproducible, please `Ask a question` instead.
 labels: 'type: bug :beetle:'
 ---
