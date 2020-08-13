@@ -1,45 +1,59 @@
 # Documentation is available here https://github.com/actions/labeler
 
-'type: support':
-  - any: ['support/**/*', '!support/e2e/**']
-  - all: ['!support/jest/*', '!support/e2e/**']
+'type: support :books:':
+  - any:
+      [
+        'support/**/*',
+        '!support/e2e/**',
+        '!support/actions/**',
+        '!support/azure/**',
+        '!support/deprecated/**',
+      ]
 
-'type: ci':
+'type: deprecation :wastebasket:':
+  - any: ['support/deprecated/**/*']
+
+'type: ci :evergreen_tree:':
   - any: ['.github/**/*', 'support/azure/**/*', '!.github/ISSUE_TEMPLATE/**', '!.github/**/*.md']
 
-'test: unit':
+'test: unit :white_check_mark:':
   - any: ['**/*.spec.{ts,tsx}']
 
-'test: e2e':
+'test: e2e :heavy_check_mark:':
   - any: ['**/*.e2e.test.{ts,tsx}', 'support/e2e/**/*']
 
-'package: jest-prosemirror':
+'package: jest-prosemirror :performing_arts:':
   - any: ['packages/jest-prosemirror/**/*']
 
-'package: jest-remirror':
+'package: jest-remirror :black_joker:':
   - any: ['packages/jest-remirror/**/*']
 
-'package: prosemirror-suggest':
+'package: prosemirror-suggest :bulb:':
   - any: ['packages/prosemirror-suggest/**/*']
 
-'package: multishift':
+'package: multishift :arrow_down_small:	':
   - any: ['packages/multishift/**/*']
 
-'package: remirror':
-  - any: ['packages/remirror/**/*', 'packages/@remirror/**/*']
-  - all: ['packages/@remirror/cli/**/*', '!packages/@remirror/playground/**/*']
+'package: remirror :purple_circle:':
+  - any:
+      [
+        'packages/remirror/**/*',
+        'packages/@remirror/**/*',
+        '!packages/@remirror/playground/**/*',
+        '!packages/@remirror/cli/**/*',
+      ]
 
-'framework: react':
+'framework: react :atom_symbol:':
   - any: ['packages/@remirror/*react*/**/*']
 
-'framework: dom':
+'framework: dom :globe_with_meridians:':
   - any: ['packages/@remirror/*dom*/**/*']
 
-'package: @remirror/cli':
+'package: @remirror/cli :pager:':
   - any: ['packages/@remirror/cli/**/*']
 
-'type: playground':
+'type: playground :joystick:':
   - any: ['packages/@remirror/playground/**/*', 'support/website/src/pages/playground.tsx']
 
-'type: documentation':
+'type: docs :pencil:':
   - any: ['docs/**/*', '**/readme.md']

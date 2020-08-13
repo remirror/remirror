@@ -42,7 +42,7 @@ these files are symlinked to the root directory.
   `@remirror/core`.
 - `support` - This is the package that provides the configuration files, the website, and many other
   folders. Each directory includes a readme file that explains it's functionality. Take a
-  [look](https://github.com/remirror/remirror/tree/next/support).
+  [look](https://github.com/remirror/remirror/tree/HEAD/support).
 
 ## Documentation
 

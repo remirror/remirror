@@ -7,10 +7,9 @@
   <br />
   <br />
   <div align="center">
-    <a href="https://github.com/remirror/remirror/actions?query=workflow%3A%22Node+CI%22?branch=next"><img src="https://github.com/remirror/remirror/workflows/Node%20CI/badge.svg?branch=next" alt="Build And Release" /></a>
-    <a href="https://github.com/remirror/remirror/actions?query=workflow%3A%22Deploy+Docs%22?branch=next"><img src="https://github.com/remirror/remirror/workflows/Deploy%20Docs/badge.svg?branch=next" alt="Deploy Docs" /></a>
-    <a href="https://dev.azure.com/remirror/remirror/_build/latest?definitionId=2&amp;branchName=next"><img src="https://dev.azure.com/remirror/remirror/_apis/build/status/remirror.remirror?branchName=next" alt="Azure DevOps builds" /></a>
-    <a href="https://github.com/remirror/remirror/commits/next"><img src="https://img.shields.io/github/commit-activity/m/remirror/remirror.svg?amp;logo=github" alt="GitHub commit activity"></a>
+    <a href="https://github.com/remirror/remirror/actions?query=workflow:ci?branch=next"><img src="https://github.com/remirror/remirror/workflows/ci/badge.svg?branch=next" alt="Continuous integration badge for github actions" /></a>
+    <a href="https://github.com/remirror/remirror/actions?query=workflow:docs?branch=next"><img src="https://github.com/remirror/remirror/workflows/docs/badge.svg?branch=next" alt="Badge outline whether documentation deployed successfully" /></a>
+    <a href="https://codeclimate.com/github/remirror/remirror/test_coverage"><img src="https://api.codeclimate.com/v1/badges/f4d8dcd5c2228524a53a/test_coverage" alt="Code coverage" /></a>
     <a href="https://remirror.io/chat"><img alt="Discord" src="https://img.shields.io/discord/726035064831344711" alt="Join our discord server"></a>
     </div>
 </div>
@@ -34,7 +33,7 @@
 
 In order to meet these goals, [ProseMirror](https://prosemirror.net/) was picked as the core editor layer. The second decision was to base the structure of the editor on blocks of functionality called `Extensions`. Each extension would add a slice of beauty to the editor, allowing users to craft their masterpieces.
 
-In the latest version, some of the initial goals of `remirror` are bearing fruit. Every single part of the editor can be controlled by extensions. For example, the core (`Schema`) is managed by a [built-in extension](https://github.com/remirror/remirror/blob/next/packages/@remirror/core/src/builtins/schema-extension.ts).
+In the latest version, some of the initial goals of `remirror` are bearing fruit. Every single part of the editor can be controlled by extensions. For example, the core (`Schema`) is managed by a [built-in extension](https://github.com/remirror/remirror/blob/HEAD/packages/@remirror/core/src/builtins/schema-extension.ts).
 
 And the new API is so much better. For React, this comes with a bunch of drop-in components and hooks. Many more are being worked on.
 

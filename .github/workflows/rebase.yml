@@ -1,4 +1,4 @@
-name: Automatic Rebase
+name: rebase pr
 
 on:
   issue_comment:
