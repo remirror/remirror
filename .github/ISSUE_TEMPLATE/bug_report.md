@@ -1,6 +1,7 @@
 ---
 name: Bug report
 about: Create a report to improve remirror
+labels: "type: bug :beetle:", "status: needs verification :mag:"
 ---
 
 ### Description
