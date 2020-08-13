@@ -21,7 +21,7 @@
     "@babel/runtime": "^7.11.0",
     "@remirror/core-helpers": "1.0.0-next.16",
     "@types/ms": "^0.7.31",
-    "@types/update-notifier": "^4.1.0",
+    "@types/update-notifier": "^4.1.1",
     "@types/yup": "^0.29.3",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.4.0",

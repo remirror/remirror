@@ -35,7 +35,7 @@
     "@remirror/react": "1.0.0-next.17",
     "@testing-library/react": "^10.4.7",
     "@types/min-document": "^2.19.0",
-    "jest-diff": "^26.3.0",
+    "jest-diff": "^26.4.0",
     "min-document": "^2.19.0"
   },
   "devDependencies": {
