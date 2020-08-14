@@ -18,7 +18,7 @@ export type {
   StringHandlerParameter,
 } from './core-utils';
 export {
-  areSchemaCompatible,
+  areSchemasCompatible as areSchemaCompatible,
   atDocEnd,
   atDocStart,
   canInsertNode,
