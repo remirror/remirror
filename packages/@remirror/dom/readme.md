@@ -52,7 +52,7 @@ const element = document.querySelector('#editor');
 const manager = createDomManager([new BoldExtension()]);
 const editor = createDomEditor({ manager, element });
 
-editor.addHandler('change', () => console.log('your editor has changed'));
+editor.addHandler('change', () => log('your editor has changed'));
 
 // Make selected text bold.
 editor.commands.toggleBold();

@@ -212,7 +212,7 @@ describe('focus', () => {
     expect(context.getState().selection.from).toBe(1);
   });
 
-  it('can focus on the end', () => {
+  it('can focus on the `end`', () => {
     fireEvent.blur(editorNode);
 
     act(() => {
@@ -223,7 +223,19 @@ describe('focus', () => {
     expect(context.getState().selection.from).toBe(16);
   });
 
-  it('can focus on the start even when already focused', () => {
+  it('can focus on `all`', () => {
+    fireEvent.blur(editorNode);
+
+    act(() => {
+      context.focus('all');
+      jest.runAllTimers();
+    });
+
+    expect(context.getState().selection.from).toBe(0);
+    expect(context.getState().selection.to).toBe(17);
+  });
+
+  it('can focus on the `start` even when already focused', () => {
     act(() => {
       context.focus('start');
       jest.runAllTimers();
