@@ -1,5 +1,26 @@
 # @remirror/core-types
 
+## 1.0.0-next.20
+
+> 2020-08-14
+
+### Minor Changes
+
+- 8f9eb16c: Enable `all` selection when setting initial content and focusing on the editor.
+
+  ```tsx
+  import { useRemirror } from 'remirror/react';
+
+  const { focus } = useRemirror();
+  focus('all');
+  ```
+
+### Patch Changes
+
+- Updated dependencies [770e3d4a]
+- Updated dependencies [92653907]
+  - @remirror/pm@1.0.0-next.20
+
 ## 1.0.0-next.16
 
 > 2020-08-01

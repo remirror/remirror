@@ -1,5 +1,37 @@
 # @remirror/core-utils
 
+## 1.0.0-next.20
+
+> 2020-08-14
+
+### Major Changes
+
+- 6d7edc85: Rename `areSchemaCompatible` to `areSchemasCompatible`.
+
+  Closes #500
+
+### Minor Changes
+
+- 8f9eb16c: Enable `all` selection when setting initial content and focusing on the editor.
+
+  ```tsx
+  import { useRemirror } from 'remirror/react';
+
+  const { focus } = useRemirror();
+  focus('all');
+  ```
+
+### Patch Changes
+
+- 7c603a5e: Ensure the `markInputRule` doesn't reactivate previous marks when rules are nested and
+  activated consecutively. Closes #505
+- Updated dependencies [8f9eb16c]
+- Updated dependencies [770e3d4a]
+- Updated dependencies [92653907]
+  - @remirror/core-types@1.0.0-next.20
+  - @remirror/core-helpers@1.0.0-next.20
+  - @remirror/pm@1.0.0-next.20
+
 ## 1.0.0-next.16
 
 > 2020-08-01

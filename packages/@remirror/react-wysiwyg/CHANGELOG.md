@@ -1,5 +1,25 @@
 # @remirror/react-wysiwyg
 
+## 1.0.0-next.20
+
+> 2020-08-14
+
+### Patch Changes
+
+- Updated dependencies [95697fbd]
+- Updated dependencies [770e3d4a]
+- Updated dependencies [92653907]
+  - @remirror/react@1.0.0-next.20
+  - @remirror/pm@1.0.0-next.20
+  - @remirror/core@1.0.0-next.20
+  - @remirror/react-utils@1.0.0-next.20
+  - @remirror/theme@1.0.0-next.20
+  - multishift@0.7.8-next.4
+  - @remirror/i18n@1.0.0-next.20
+  - @remirror/preset-wysiwyg@1.0.0-next.20
+  - @remirror/extension-auto-link@1.0.0-next.20
+  - @remirror/preset-social@1.0.0-next.20
+
 ## 1.0.0-next.17
 
 > 2020-08-02

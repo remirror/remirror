@@ -1,5 +1,26 @@
 # @remirror/react
 
+## 1.0.0-next.20
+
+> 2020-08-14
+
+### Patch Changes
+
+- 95697fbd: Fix the controlled editor when used in `StrictMode`. Closes #482
+- Updated dependencies [770e3d4a]
+- Updated dependencies [92653907]
+  - @remirror/pm@1.0.0-next.20
+  - @remirror/core@1.0.0-next.20
+  - @remirror/react-utils@1.0.0-next.20
+  - @remirror/theme@1.0.0-next.20
+  - @remirror/i18n@1.0.0-next.20
+  - @remirror/extension-placeholder@1.0.0-next.20
+  - @remirror/extension-positioner@1.0.0-next.20
+  - @remirror/extension-react-component@1.0.0-next.20
+  - @remirror/extension-react-ssr@1.0.0-next.20
+  - @remirror/preset-core@1.0.0-next.20
+  - @remirror/preset-react@1.0.0-next.20
+
 ## 1.0.0-next.17
 
 > 2020-08-02

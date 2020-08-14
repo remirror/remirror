@@ -1,5 +1,15 @@
 # @remirror/core-helpers
 
+## 1.0.0-next.20
+
+> 2020-08-14
+
+### Patch Changes
+
+- 770e3d4a: Update package dependencies.
+- Updated dependencies [8f9eb16c]
+  - @remirror/core-types@1.0.0-next.20
+
 ## 1.0.0-next.16
 
 > 2020-08-01

@@ -1,5 +1,19 @@
 # prosemirror-suggest
 
+## 1.0.0-next.5
+
+> 2020-08-14
+
+### Patch Changes
+
+- 48cce3a0: Remove misleading documentation. The matchOffset field isn't defaulted to zero for
+  MentionExtension.
+- 770e3d4a: Update package dependencies.
+- Updated dependencies [8f9eb16c]
+- Updated dependencies [770e3d4a]
+  - @remirror/core-types@1.0.0-next.20
+  - @remirror/core-helpers@1.0.0-next.20
+
 ## 1.0.0-next.4
 
 > 2020-08-01

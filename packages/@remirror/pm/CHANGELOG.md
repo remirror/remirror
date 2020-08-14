@@ -1,5 +1,17 @@
 # @remirror/pm
 
+## 1.0.0-next.20
+
+> 2020-08-14
+
+### Patch Changes
+
+- 770e3d4a: Update package dependencies.
+- 92653907: Upgrade package dependencies.
+- Updated dependencies [48cce3a0]
+- Updated dependencies [770e3d4a]
+  - prosemirror-suggest@1.0.0-next.5
+
 ## 1.0.0-next.16
 
 > 2020-08-01

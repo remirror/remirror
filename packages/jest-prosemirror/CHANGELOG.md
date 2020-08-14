@@ -1,5 +1,24 @@
 # jest-prosemirror
 
+## 1.0.0-next.5
+
+> 2020-08-14
+
+### Patch Changes
+
+- 770e3d4a: Update package dependencies.
+- 92653907: Upgrade package dependencies.
+- Updated dependencies [6d7edc85]
+- Updated dependencies [8f9eb16c]
+- Updated dependencies [770e3d4a]
+- Updated dependencies [7c603a5e]
+- Updated dependencies [92653907]
+  - @remirror/core-utils@1.0.0-next.20
+  - @remirror/core-types@1.0.0-next.20
+  - @remirror/core-helpers@1.0.0-next.20
+  - @remirror/pm@1.0.0-next.20
+  - test-keyboard@0.7.7-next.6
+
 ## 1.0.0-next.4
 
 > 2020-08-01
