@@ -1,70 +1,84 @@
 # Documentation is available here https://github.com/actions/labeler
 
 'type: support :books:':
-  - support/**/*
-  - '!support/e2e/**'
-  - '!support/actions/**'
-  - '!support/azure/**'
-  - '!support/deprecated/**'
+  - any:
+      [
+        'support/**/*',
+        '!support/e2e/**',
+        '!support/actions/**',
+        '!support/azure/**',
+        '!support/deprecated/**',
+      ]
 
 'type: deprecation :wastebasket:':
-  - support/deprecated/**/*
+  - any: ['support/deprecated/**/*']
 
 'type: ci :evergreen_tree:':
-  - .github/**/*
-  - support/azure/**/*
-  - '!.github/ISSUE_TEMPLATE/**'
-  - '!.github/**/*.md'
+  - any: ['.github/**/*', 'support/azure/**/*', '!.github/ISSUE_TEMPLATE/**', '!.github/**/*.md']
 
 'package: jest-prosemirror :performing_arts:':
-  - packages/jest-prosemirror/**/*.{ts,tsx,json}
-  - '!**/*.spec.{ts,tsx}'
+  - any:
+      [
+        'packages/jest-prosemirror/**/*.{ts,tsx,json}',
+        '!packages/jest-prosemirror/**/*.spec.{ts,tsx}',
+      ]
 
 'package: jest-remirror :black_joker:':
-  - packages/jest-remirror/**/*.{ts,tsx,json}
-  - '!**/*.spec.{ts,tsx}'
+  - any: ['packages/jest-remirror/**/*.{ts,tsx,json}', '!packages/jest-remirror/**/*.spec.{ts,tsx}']
 
 'package: prosemirror-suggest :bulb:':
-  - packages/prosemirror-suggest/**/*.{ts,tsx,json}
-  - '!**/*.spec.{ts,tsx}'
+  - any:
+      [
+        'packages/prosemirror-suggest/**/*.{ts,tsx,json}',
+        '!packages/prosemirror-suggest/**/*.spec.{ts,tsx}',
+      ]
 
 'package: multishift :arrow_down_small:':
-  - packages/multishift/**/*.{ts,tsx,json}
-  - '!**/*.spec.{ts,tsx}'
+  - any: ['packages/multishift/**/*.{ts,tsx,json}', '!packages/multishift/**/*.spec.{ts,tsx}']
 
 'package: remirror :purple_circle:':
-  - packages/remirror/**/*.{ts,tsx,json}
-  - packages/@remirror/**/*.{ts,tsx,json}
-  - '!packages/@remirror/playground/**/*'
-  - '!packages/@remirror/cli/**/*'
-  - '!**/*.spec.{ts,tsx}'
+  - any:
+      [
+        'packages/remirror/**/*.{ts,tsx,json}',
+        'packages/@remirror/**/*.{ts,tsx,json}',
+        '!packages/@remirror/playground/**/*',
+        '!packages/@remirror/cli/**/*',
+        '!packages/remirror/**/*.spec.{ts,tsx}',
+        '!packages/@remirror/**/*.spec.{ts,tsx}',
+      ]
 
 'framework: react :atom_symbol:':
-  - packages/@remirror/*react*/**/*.{ts,tsx,json}
-  - '!**/*.spec.{ts,tsx}'
+  - any:
+      [
+        'packages/@remirror/*react*/**/*.{ts,tsx,json}',
+        '!packages/@remirror/*react*/**/*.spec.{ts,tsx}',
+      ]
 
 'framework: dom :globe_with_meridians:':
-  - packages/@remirror/*dom*/**/*.{ts,tsx,json}
-  - '!**/*.spec.{ts,tsx}'
+  - any:
+      [
+        'packages/@remirror/*dom*/**/*.{ts,tsx,json}',
+        '!packages/@remirror/*dom*/**/*.spec.{ts,tsx}',
+      ]
 
 'package: @remirror/cli :pager:':
-  - packages/@remirror/cli/**/*.{ts,tsx,json}
+  - any: ['packages/@remirror/cli/**/*.{ts,tsx,json}', '!packages/@remirror/cli/**/*.spec.{ts,tsx}']
 
 'type: playground :joystick:':
-  - packages/@remirror/playground/**/*.{ts,tsx,json}
-  - support/website/src/pages/playground.tsx
+  - any:
+      [
+        'packages/@remirror/playground/**/*.{ts,tsx,json}',
+        'support/website/src/pages/playground.tsx',
+      ]
 
 'type: docs :pencil:':
-  - docs/**/*
-  - '**/readme.md'
+  - any: ['docs/**/*', '**/readme.md']
 
 'type: changeset :butterfly:':
-  - '.changeset/**/*'
+  - any: ['.changeset/**/*']
 
 'test: unit :white_check_mark:':
-  - '**/*.spec.{ts,tsx}'
+  - any: ['**/*.spec.{ts,tsx}']
 
 'test: e2e :heavy_check_mark:':
-  - '**/*.e2e.test.{ts,tsx}'
-  - packages/**/*.snap
-  - support/e2e/**/*.{ts,tsx,json,snap}
+  - any: ['**/*.e2e.test.{ts,tsx}', 'packages/**/*.snap', 'support/e2e/**/*.{ts,tsx,json,snap}']
