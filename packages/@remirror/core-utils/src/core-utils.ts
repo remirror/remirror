@@ -975,7 +975,7 @@ export function isStateEqual(
 /**
  * Check that the nodes and marks present on schemaA are also present on schemaB.
  */
-export function areSchemaCompatible(schemaA: EditorSchema, schemaB: EditorSchema) {
+export function areSchemasCompatible(schemaA: EditorSchema, schemaB: EditorSchema) {
   if (schemaA === schemaB) {
     return true;
   }

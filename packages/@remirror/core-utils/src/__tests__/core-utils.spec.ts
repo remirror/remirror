@@ -25,7 +25,7 @@ import {
 } from '@remirror/testing';
 
 import {
-  areSchemaCompatible,
+  areSchemasCompatible,
   atDocEnd,
   atDocStart,
   canInsertNode,
@@ -510,39 +510,39 @@ describe('isStateEqual', () => {
   });
 });
 
-describe('areSchemaCompatible', () => {
+describe('areSchemasCompatible', () => {
   it('is true for identical schema', () => {
     const { schema } = renderEditor([]);
-    expect(areSchemaCompatible(schema, schema)).toBe(true);
+    expect(areSchemasCompatible(schema, schema)).toBe(true);
   });
 
   it('is true for similar schema', () => {
     const { schema: a } = renderEditor([]);
     const { schema: b } = renderEditor([]);
-    expect(areSchemaCompatible(a, b)).toBe(true);
+    expect(areSchemasCompatible(a, b)).toBe(true);
   });
 
   it('is false for schemas with different mark lengths', () => {
     const { schema: a } = renderEditor([new BoldExtension()]);
     const { schema: b } = renderEditor([]);
-    expect(areSchemaCompatible(a, b)).toBe(false);
+    expect(areSchemasCompatible(a, b)).toBe(false);
   });
 
   it('is false schemas with different marks', () => {
     const { schema: a } = renderEditor([new BoldExtension()]);
     const { schema: b } = renderEditor([new ItalicExtension()]);
-    expect(areSchemaCompatible(a, b)).toBe(false);
+    expect(areSchemasCompatible(a, b)).toBe(false);
   });
 
   it('is false schemas with different node lengths', () => {
     const { schema: a } = renderEditor([new BlockquoteExtension()]);
     const { schema: b } = renderEditor([]);
-    expect(areSchemaCompatible(a, b)).toBe(false);
+    expect(areSchemasCompatible(a, b)).toBe(false);
   });
 
   it('is false schemas with different nodes', () => {
     const { schema: a } = renderEditor([new BlockquoteExtension()]);
     const { schema: b } = renderEditor([new HeadingExtension()]);
-    expect(areSchemaCompatible(a, b)).toBe(false);
+    expect(areSchemasCompatible(a, b)).toBe(false);
   });
 });
