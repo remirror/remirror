@@ -39,12 +39,10 @@
 'package: remirror :purple_circle:':
   - any:
       [
-        'packages/remirror/**/*.{ts,tsx,json}',
-        'packages/@remirror/**/*.{ts,tsx,json}',
+        'packages/{remirror,@remirror}/**/*.{ts,tsx,json}',
         '!packages/@remirror/playground/**/*',
         '!packages/@remirror/cli/**/*',
-        '!packages/remirror/**/*.spec.{ts,tsx}',
-        '!packages/@remirror/**/*.spec.{ts,tsx}',
+        '**/*.spec.{ts,tsx}',
       ]
 
 'framework: react :atom_symbol:':
@@ -72,7 +70,7 @@
       ]
 
 'type: docs :pencil:':
-  - any: ['docs/**/*', '**/readme.md']
+  - any: ['docs/**/*', '**/readme.{md,mdx}']
 
 'type: changeset :butterfly:':
   - any: ['.changeset/**/*']
