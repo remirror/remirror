@@ -521,12 +521,13 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
     this.rootPropsConfig.count = 0;
   }
 
+  /**
+   * Create the react element which renders the text editor.
+   */
   render() {
     this.resetRender();
 
-    const element: JSX.Element | null = this.props.children({
-      ...this.remirrorContext,
-    });
+    const element: JSX.Element | null = this.props.children(this.remirrorContext);
 
     const { children, ...properties } = getElementProps(element);
     let renderedElement: JSX.Element;
@@ -561,6 +562,9 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
   }
 }
 
+/**
+ * The parameter that is passed into the ReactEditorWrapper.
+ */
 interface ReactEditorWrapperParameter<Combined extends AnyCombinedUnion>
   extends EditorWrapperParameter<Combined, ReactEditorProps<Combined>> {
   getShouldRenderClient: () => boolean | undefined;
@@ -613,22 +617,19 @@ function useControlledEditor<Combined extends AnyCombinedUnion>(
   const isControlled = useRef(bool(value)).current;
   const previousValue = usePrevious(value);
 
-  // Handle controlled editor updates every time the value changes.
-  useEffect(() => {
-    // Check if the update is valid based on current value.
-    const validUpdate = value ? isControlled === true : isControlled === false;
+  // Check if the update is valid based on current value.
+  const validUpdate = value ? isControlled === true : isControlled === false;
 
-    invariant(validUpdate, {
-      code: ErrorConstant.REACT_CONTROLLED,
-      message: isControlled
-        ? 'You have attempted to switch from a controlled to an uncontrolled editor. Once you set up an editor as a controlled editor it must always provide a `value` prop.'
-        : 'You have provided a `value` prop to an uncontrolled editor. In order to set up your editor as controlled you must provide the `value` prop from the very first render.',
-    });
+  invariant(validUpdate, {
+    code: ErrorConstant.REACT_CONTROLLED,
+    message: isControlled
+      ? 'You have attempted to switch from a controlled to an uncontrolled editor. Once you set up an editor as a controlled editor it must always provide a `value` prop.'
+      : 'You have provided a `value` prop to an uncontrolled editor. In order to set up your editor as controlled you must provide the `value` prop from the very first render.',
+  });
 
-    if (!value) {
-      return;
-    }
+  if (!value || value === previousValue) {
+    return;
+  }
 
-    methods.updateControlledState(value, previousValue ?? undefined);
-  }, [isControlled, value, methods, previousValue]);
+  methods.updateControlledState(value, previousValue ?? undefined);
 }

@@ -3,16 +3,18 @@ import React, { FC, useState } from 'react';
 
 import {
   AnyCombinedUnion,
+  AnyExtension,
   EditorState,
   fromHtml,
   PlainExtension,
+  RemirrorEventListener,
   SchemaFromCombined,
   StateUpdateLifecycleParameter,
 } from '@remirror/core';
 import { BoldExtension, ItalicExtension } from '@remirror/testing';
 import { act, fireEvent, strictRender } from '@remirror/testing/react';
 
-import { useRemirror } from '../../hooks';
+import { useManager, useRemirror } from '../../hooks';
 import { createReactManager } from '../../react-helpers';
 import type { RemirrorContextProps } from '../../react-types';
 import { RemirrorProvider } from '../providers';
@@ -296,9 +298,9 @@ describe('Remirror Controlled Component', () => {
       chain.commands.insertText('First text update');
     });
 
-    expect(mock).toHaveBeenCalledTimes(2);
+    expect(mock).toHaveBeenCalledTimes(4);
 
-    const { state, previousState } = mock.mock.calls[1][0];
+    const { state, previousState } = mock.mock.calls[3][0];
 
     expect(state).toBe(chain.state);
     expect(state).not.toBe(previousState);
@@ -365,7 +367,7 @@ test('can run multiple commands', () => {
   expect(chain.state.doc).toEqualRemirrorDocument(doc(p(bold(italic('This')))));
 });
 
-test('NOTE: this test is to show that synchronous state updates only shows the most recent state update', () => {
+test('NOTE: this test is to show that synchronous state updates only show the most recent state update', () => {
   const { manager, props, chain, doc, p } = create([]);
 
   const InnerComponent: FC = () => {
@@ -415,4 +417,61 @@ test('NOTE: this test is to show that synchronous state updates only shows the m
   });
 
   expect(chain.state.doc).toEqualRemirrorDocument(doc(p('b')));
+});
+
+test('support for rendering a nested controlled editor in strict mode', () => {
+  const chain = RemirrorTestChain.create(createReactManager(() => [new BoldExtension()]));
+
+  const Component = () => {
+    const manager = useManager(chain.manager);
+
+    const [value, setValue] = useState(
+      manager.createState({
+        content: '<p>test</p>',
+        selection: 'all',
+        stringHandler: fromHtml,
+      }),
+    );
+
+    const onChange: RemirrorEventListener<AnyExtension> = ({ state }) => {
+      setValue(state);
+    };
+
+    return (
+      <RemirrorProvider manager={manager} onChange={onChange} value={value}>
+        <div id='1'>
+          <TextEditor />
+        </div>
+      </RemirrorProvider>
+    );
+  };
+
+  const TextEditor = () => {
+    const { getRootProps, active, commands } = useRemirror<BoldExtension>({ autoUpdate: true });
+
+    return (
+      <>
+        <div {...getRootProps()} />
+        <button
+          onClick={() => commands.toggleBold()}
+          style={{ fontWeight: active.bold() ? 'bold' : undefined }}
+        />
+      </>
+    );
+  };
+
+  const { getByRole } = strictRender(<Component />);
+  const button = getByRole('button');
+
+  act(() => {
+    fireEvent.click(button);
+  });
+
+  expect(button).toHaveStyle('font-weight: bold');
+
+  act(() => {
+    fireEvent.click(getByRole('button'));
+  });
+
+  expect(button).not.toHaveStyle('font-weight: bold');
 });
