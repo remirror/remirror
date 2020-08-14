@@ -45,6 +45,7 @@ import {
   Slice,
 } from '@remirror/pm/model';
 import {
+  AllSelection,
   EditorState as PMEditorState,
   NodeSelection,
   Plugin,
@@ -752,6 +753,10 @@ export function getTextSelection(
 
   if (isSelection(selection)) {
     return selection;
+  }
+
+  if (selection === 'all') {
+    return new AllSelection(doc);
   }
 
   if (selection === 'start') {

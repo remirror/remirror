@@ -347,4 +347,4 @@ export interface RemirrorIdentifierShape {
  * - A single position with a `number`
  * - `'start' | 'end'`
  */
-export type PrimitiveSelection = Selection | FromToParameter | number | 'start' | 'end';
+export type PrimitiveSelection = Selection | FromToParameter | number | 'start' | 'end' | 'all';
