@@ -1,6 +1,7 @@
 import { findMatches, isFunction, isNullOrUndefined } from '@remirror/core-helpers';
 import type {
   GetAttributesParameter,
+  Mark,
   MarkTypeParameter,
   NodeTypeParameter,
   ProsemirrorNode,
@@ -103,11 +104,13 @@ export function markInputRule(parameter: MarkInputRuleParameter) {
     const { tr } = state;
     const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
     let markEnd = end;
+    let initialStoredMarks: Mark[] = [];
 
     if (match[1]) {
       const startSpaces = match[0].search(/\S/);
       const textStart = start + match[0].indexOf(match[1]);
       const textEnd = textStart + match[1].length;
+      initialStoredMarks = tr.storedMarks ?? [];
 
       if (textEnd < end) {
         tr.delete(textEnd, end);
@@ -124,7 +127,7 @@ export function markInputRule(parameter: MarkInputRuleParameter) {
       tr
         .addMark(start, markEnd, type.create(attributes))
         // Make sure not to continue with any ongoing marks
-        .removeStoredMark(type)
+        .setStoredMarks(initialStoredMarks)
     );
   });
 }
