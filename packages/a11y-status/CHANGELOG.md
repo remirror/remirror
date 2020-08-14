@@ -1,5 +1,13 @@
 # a11y-status
 
+## 1.0.0-next.4
+
+> 2020-08-14
+
+### Patch Changes
+
+- 770e3d4a: Update package dependencies.
+
 ## 1.0.0-next.3
 
 > 2020-08-01

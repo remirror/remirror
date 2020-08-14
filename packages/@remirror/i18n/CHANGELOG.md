@@ -1,5 +1,16 @@
 # @remirror/i18n
 
+## 1.0.0-next.20
+
+> 2020-08-14
+
+### Patch Changes
+
+- Updated dependencies [770e3d4a]
+- Updated dependencies [92653907]
+  - @remirror/core-helpers@1.0.0-next.20
+  - @remirror/pm@1.0.0-next.20
+
 ## 1.0.0-next.16
 
 > 2020-08-01

@@ -1,5 +1,21 @@
 # jest-remirror
 
+## 1.0.0-next.20
+
+> 2020-08-14
+
+### Patch Changes
+
+- 770e3d4a: Update package dependencies.
+- 92653907: Upgrade package dependencies.
+- Updated dependencies [770e3d4a]
+- Updated dependencies [92653907]
+  - @remirror/pm@1.0.0-next.20
+  - jest-prosemirror@1.0.0-next.5
+  - @remirror/core@1.0.0-next.20
+  - @remirror/dom@1.0.0-next.20
+  - @remirror/preset-core@1.0.0-next.20
+
 ## 1.0.0-next.17
 
 > 2020-08-02

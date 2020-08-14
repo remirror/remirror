@@ -1,5 +1,17 @@
 # multishift
 
+## 0.7.8-next.4
+
+> 2020-08-14
+
+### Patch Changes
+
+- Updated dependencies [8f9eb16c]
+- Updated dependencies [770e3d4a]
+  - @remirror/core-types@1.0.0-next.20
+  - @remirror/core-helpers@1.0.0-next.20
+  - a11y-status@1.0.0-next.4
+
 ## 1.0.0-next.3
 
 > 2020-08-01

@@ -1,5 +1,16 @@
 # @remirror/extension-react-component
 
+## 1.0.0-next.20
+
+> 2020-08-14
+
+### Patch Changes
+
+- Updated dependencies [770e3d4a]
+- Updated dependencies [92653907]
+  - @remirror/pm@1.0.0-next.20
+  - @remirror/core@1.0.0-next.20
+
 ## 1.0.0-next.17
 
 > 2020-08-02

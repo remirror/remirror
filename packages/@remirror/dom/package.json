@@ -1,6 +1,6 @@
 {
   "name": "@remirror/dom",
-  "version": "1.0.0-next.17",
+  "version": "1.0.0-next.20",
   "description": "Use remirror directly in the dom.",
   "keywords": [
     "remirror",
@@ -25,16 +25,16 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.11.0",
-    "@remirror/preset-core": "1.0.0-next.17",
+    "@remirror/preset-core": "1.0.0-next.20",
     "type-fest": "^0.16.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.17",
-    "@remirror/pm": "1.0.0-next.16"
+    "@remirror/core": "1.0.0-next.20",
+    "@remirror/pm": "1.0.0-next.20"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.17",
-    "@remirror/pm": "1.0.0-next.16"
+    "@remirror/core": "1.0.0-next.20",
+    "@remirror/pm": "1.0.0-next.20"
   },
   "publishConfig": {
     "access": "public"
