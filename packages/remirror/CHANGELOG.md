@@ -4,8 +4,29 @@
 
 > 2020-08-14
 
+### Major Changes
+
+- 6d7edc85: Rename `areSchemaCompatible` to `areSchemasCompatible`.
+
+### Minor Changes
+
+- Fix the controlled editor when used in `StrictMode`.
+
+- 8f9eb16c: Enable `all` selection when setting initial content and focusing on the editor.
+
+  ```tsx
+  import { useRemirror } from 'remirror/react';
+
+  const { focus } = useRemirror();
+  focus('all');
+  ```
+
 ### Patch Changes
 
+- 7c603a5e: Ensure the `markInputRule` doesn't reactivate previous marks when rules are nested and
+  activated consecutively.
+- 48cce3a0: Remove misleading documentation. The matchOffset field isn't defaulted to zero for
+  MentionExtension.
 - Updated dependencies [95697fbd]
 - Updated dependencies [6d7edc85]
 - Updated dependencies [8f9eb16c]

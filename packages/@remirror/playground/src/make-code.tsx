@@ -112,7 +112,7 @@ export function makeCode(codeOptions: CodeOptions): string {
   const code = `\
 ${importLines.join('\n')}
 
-const EXTENSIONS = [
+const EXTENSIONS = () => [
   ${combinedList.join(',\n  ')}
 ];
 
