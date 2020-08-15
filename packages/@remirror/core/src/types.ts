@@ -136,7 +136,7 @@ export type DynamicOptionsOfConstructor<Constructor extends AnyConstructor> = Ge
  */
 export interface ExtensionStore extends Remirror.ExtensionStore {}
 
-export type ExtensionCommandFunction = (...args: any[]) => CommandFunction<EditorSchema>;
+export type ExtensionCommandFunction = (...args: any[]) => CommandFunction;
 
 /**
  * The return signature for an extensions command method.

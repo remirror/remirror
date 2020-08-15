@@ -138,7 +138,7 @@ export type ProsemirrorCommandFunction<Schema extends EditorSchema = any> = (
  * @see {@link ProsemirrorCommandFunction}
  */
 export type CommandFunction<
-  Schema extends EditorSchema = any,
+  Schema extends EditorSchema = EditorSchema,
   ExtraParameter extends object = object
 > = (params: CommandFunctionParameter<Schema> & ExtraParameter) => boolean;
 

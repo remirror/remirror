@@ -24,5 +24,4 @@ export * from '@remirror/extension-link';
 export * from '@remirror/extension-italic';
 export * from '@remirror/extension-underline';
 export * from './object-nodes';
-export * from './object-shapes';
 export * from './typecheck';
