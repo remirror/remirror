@@ -1,4 +1,4 @@
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import { promises as fsp } from 'fs';
 import { resolve } from 'path';
 import * as prettier from 'prettier';
@@ -7,7 +7,7 @@ import * as prettier from 'prettier';
 // @ts-ignore
 global.WebSocket = class {};
 
-console.log(chalk`{grey {bold Updating } playground imports }`);
+console.log(chalk`{grey Updating playground imports... }\n`);
 
 async function scanImportsFrom<T extends RemirrorModuleMeta>(
   sourceDir: string,
@@ -135,7 +135,7 @@ function forceTermination() {
   }, 5000);
 
   timeout.unref();
-  console.log(chalk`{green Successfully created playground imports}`);
+  console.log(chalk`{green Successfully created playground imports}\n`);
 }
 
 async function main() {

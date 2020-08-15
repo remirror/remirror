@@ -7,7 +7,7 @@
     "audit": "pnpm audit --audit-level high",
     "browser:coverage": "browserslist --coverage",
     "build": "preconstruct build",
-    "postbuild": "run-s css:copy playground:imports",
+    "postbuild": "run-s css:copy",
     "build:custom": "pnpm recursive run build:custom",
     "build:dev": "preconstruct dev",
     "build:docs": "cd support/website && pnpm build && cp ./_redirects ./build/_redirects",
@@ -70,7 +70,7 @@
     "test:build": "cross-env TEST_BUILD=true jest --verbose --coverage=false",
     "test:e2e": "manypkg run support/e2e chromium",
     "test:watch": "jest  --watch --verbose=false --coverage=false",
-    "ts": "ts-node -O '{\"module\":\"commonjs\"}' --transpile-only",
+    "ts": "ts-node -P support/tsconfig.base.json -O '{\"module\":\"commonjs\"}' --transpile-only",
     "typecheck": "tsc -b ./tsconfig.json",
     "update:workspace": "pnpm up -r --workspace \"@remirror/*\""
   },
