@@ -227,10 +227,13 @@ export type KeyBindingCommandFunction<Schema extends EditorSchema = any> = Comma
  * proceeding (lower priority) extension. The act of calling the `next` method
  * will prevent the default flow from executing.
  */
-export type KeyBindings<Schema extends EditorSchema = EditorSchema> = Record<
-  string,
-  KeyBindingCommandFunction<Schema>
->;
+export type KeyBindings<Schema extends EditorSchema = EditorSchema> = Partial<
+  Record<
+    'Enter' | 'ArrowDown' | 'ArrowUp' | 'ArrowLeft' | 'ArrowRight' | 'Esc' | 'Delete' | 'Backspace',
+    KeyBindingCommandFunction<Schema>
+  >
+> &
+  Record<string, KeyBindingCommandFunction<Schema>>;
 
 export type ProsemirrorKeyBindings<Schema extends EditorSchema = EditorSchema> = Record<
   string,

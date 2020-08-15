@@ -23,6 +23,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.11.0",
+    "@remirror/extension-positioner": "1.0.0-next.26",
     "@remirror/i18n": "1.0.0-next.26",
     "@remirror/react-utils": "1.0.0-next.26",
     "type-fest": "^0.16.0"
