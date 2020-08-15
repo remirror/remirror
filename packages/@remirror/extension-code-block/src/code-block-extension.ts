@@ -174,6 +174,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
    */
   createInputRules() {
     const regexp = /^```([\dA-Za-z]*) $/;
+
     const getAttributes: GetAttributes = (match) => {
       const language = getLanguage({
         language: getMatchString(match, 1),
@@ -187,7 +188,10 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
       nodeInputRule({
         regexp,
         type: this.type,
-        updateSelection: true,
+        beforeDispatch: ({ tr, start }) => {
+          const $pos = tr.doc.resolve(start);
+          tr.setSelection(new TextSelection($pos));
+        },
         getAttributes: getAttributes,
       }),
     ];
