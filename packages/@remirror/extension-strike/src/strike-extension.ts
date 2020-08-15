@@ -63,7 +63,7 @@ export class StrikeExtension extends MarkExtension {
   }
 
   createInputRules(): InputRule[] {
-    return [markInputRule({ regexp: /~([^~]+)~$/, type: this.type })];
+    return [markInputRule({ regexp: /~([^~]+)~$/, type: this.type, ignoreWhitespace: true })];
   }
 
   createPasteRules(): Plugin[] {

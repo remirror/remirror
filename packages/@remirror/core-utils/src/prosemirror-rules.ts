@@ -66,7 +66,17 @@ interface MarkInputRuleParameter
   extends Partial<GetAttributesParameter>,
     RegExpParameter,
     MarkTypeParameter,
-    BaseInputRuleParameter {}
+    BaseInputRuleParameter {
+  /**
+   * Ignore the match when all characters in the capture group are whitespace.
+   *
+   * This helps stop situations from occurring where the a capture group matches
+   * but you don't want an update if it's all whitespace.
+   *
+   * @defaultValue `false`
+   */
+  ignoreWhitespace?: boolean;
+}
 
 /**
  * Creates a paste rule based on the provided regex for the provided mark type.
@@ -127,18 +137,23 @@ export function markPasteRule(parameter: MarkInputRuleParameter) {
  * Creates an input rule based on the provided regex for the provided mark type.
  */
 export function markInputRule(parameter: MarkInputRuleParameter) {
-  const { regexp, type, getAttributes, beforeDispatch: beforeDispatch } = parameter;
+  const { regexp, type, getAttributes, ignoreWhitespace = false, beforeDispatch } = parameter;
 
   return new InputRule(regexp, (state, match, start, end) => {
     const { tr } = state;
     const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
     let markEnd = end;
     let initialStoredMarks: Mark[] = [];
+    const captureGroup = match[1];
 
-    if (match[1]) {
+    if (ignoreWhitespace && captureGroup?.trim() === '') {
+      return null;
+    }
+
+    if (captureGroup) {
       const startSpaces = match[0].search(/\S/);
-      const textStart = start + match[0].indexOf(match[1]);
-      const textEnd = textStart + match[1].length;
+      const textStart = start + match[0].indexOf(captureGroup);
+      const textEnd = textStart + captureGroup.length;
       initialStoredMarks = tr.storedMarks ?? [];
 
       if (textEnd < end) {
@@ -149,7 +164,7 @@ export function markInputRule(parameter: MarkInputRuleParameter) {
         tr.delete(start + startSpaces, textStart);
       }
 
-      markEnd = start + startSpaces + match[1].length;
+      markEnd = start + startSpaces + captureGroup.length;
     }
 
     tr.addMark(start, markEnd, type.create(attributes));
@@ -173,7 +188,7 @@ export function markInputRule(parameter: MarkInputRuleParameter) {
  * found with a sequence of characters.
  */
 export function nodeInputRule(parameter: NodeInputRuleParameter) {
-  const { regexp, type, getAttributes, beforeDispatch: beforeDispatch } = parameter;
+  const { regexp, type, getAttributes, beforeDispatch } = parameter;
 
   return new InputRule(regexp, (state, match, start, end) => {
     const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
@@ -192,7 +207,7 @@ export function nodeInputRule(parameter: NodeInputRuleParameter) {
  * in the `@remirror/extension-emoji` when it is setup to use plain text.
  */
 export function plainInputRule(parameter: PlainInputRuleParameter) {
-  const { regexp, transformMatch, beforeDispatch: beforeDispatch } = parameter;
+  const { regexp, transformMatch, beforeDispatch } = parameter;
 
   return new InputRule(regexp, (state, match, start, end) => {
     const value = transformMatch(match);

@@ -69,20 +69,30 @@ function create(options?: BoldOptions) {
   return renderEditor([new BoldExtension(options)]);
 }
 
-test('inputRules', () => {
+describe('inputRules', () => {
   const {
     add,
     nodes: { p, doc },
     marks: { bold },
   } = create();
 
-  add(doc(p('Start<cursor>')))
-    .insertText(' **bold me** for input rule match')
-    .callback((content) => {
-      expect(content.state.doc).toEqualRemirrorDocument(
-        doc(p('Start ', bold('bold me'), ' for input rule match')),
-      );
-    });
+  it('should match input rule', () => {
+    add(doc(p('Start<cursor>')))
+      .insertText(' **bold me** for input rule match')
+      .callback((content) => {
+        expect(content.state.doc).toEqualRemirrorDocument(
+          doc(p('Start ', bold('bold me'), ' for input rule match')),
+        );
+      });
+  });
+
+  it('should ignore whitespace', () => {
+    add(doc(p('<cursor>')))
+      .insertText('** **\n   **')
+      .callback((content) => {
+        expect(content.state.doc).toEqualRemirrorDocument(doc(p('** **\n'), p('   **')));
+      });
+  });
 });
 
 test('options', () => {

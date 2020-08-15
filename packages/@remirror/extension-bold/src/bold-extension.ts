@@ -93,7 +93,13 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
   }
 
   createInputRules(): InputRule[] {
-    return [markInputRule({ regexp: /(?:\*\*|__)([^*_]+)(?:\*\*|__)$/, type: this.type })];
+    return [
+      markInputRule({
+        regexp: /(?:\*\*|__)([^*_]+)(?:\*\*|__)$/,
+        type: this.type,
+        ignoreWhitespace: true,
+      }),
+    ];
   }
 
   createCommands() {
