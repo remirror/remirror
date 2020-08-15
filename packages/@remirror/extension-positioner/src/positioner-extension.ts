@@ -150,6 +150,10 @@ export interface PositionerHandler {
   onChange: PositionerChangeHandlerMethod;
 }
 
+/**
+ * This type is used for setting elements which are associated with the relevant
+ * positioner. Once teh
+ */
 export type PositionerChangeHandlerMethod = (elementSetters: SetActiveElement[]) => void;
 
 const positioners = {
@@ -161,6 +165,10 @@ const positioners = {
   cursor: cursorPopupPositioner,
 };
 
+/**
+ * This is a helper method for getting the positioner. The parameter can either
+ * be a named positioner or a positioner that you've created for the purpose.
+ */
 export function getPositioner(positioner: StringPositioner | Positioner): Positioner {
   if (isString(positioner)) {
     return positioners[positioner];

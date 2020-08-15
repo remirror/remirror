@@ -3,11 +3,15 @@ import { isSelectionEmpty } from '@remirror/core';
 import { Coords, Positioner, VirtualPosition } from './positioner';
 import { hasStateChanged, isEmptyBlockNode } from './positioner-utils';
 
-const emptyRect = {
+export const emptyCoords: Coords = {
   top: -999_999,
   left: -999_999,
-  right: -999_999,
-  bottom: -999_999,
+  right: 999_999,
+  bottom: 999_999,
+};
+
+const emptyRect = {
+  ...emptyCoords,
   height: 0,
   width: 0,
   x: -999_999,

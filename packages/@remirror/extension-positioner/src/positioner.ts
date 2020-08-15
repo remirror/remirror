@@ -144,7 +144,8 @@ interface PositionerEvents {
  * editor. Typically you will use it to get the position of the cursor.
  *
  * But you can be more ambitious and get the position all the active nodes of a
- * certain type. Or all visible nodes of a given time.
+ * certain type. Or all visible nodes of a certain type in the editor, updated
+ * as it scrolls.
  *
  * The positions returned have a rect which is the viewport position.
  *
@@ -162,8 +163,9 @@ export class Positioner<Data = any> {
 
   /**
    * Create a positioner from an existing positioner.
+   *
+   * This is useful when you want to modify parts of the positioner.
    */
-
   static fromPositioner<Data>(positioner: Positioner, base: Partial<BasePositioner<Data>>) {
     return Positioner.create({ ...positioner.basePositioner, ...base });
   }

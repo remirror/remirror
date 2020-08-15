@@ -2,6 +2,7 @@ import { RemirrorTestChain } from 'jest-remirror';
 import React, { FC } from 'react';
 
 import { RemirrorManager } from '@remirror/core';
+import { emptyCoords, emptyVirtualPosition } from '@remirror/extension-positioner';
 import { EditorView } from '@remirror/pm/view';
 import { act, createReactManager, render, strictRender } from '@remirror/testing/react';
 
@@ -91,7 +92,7 @@ test('`usePositioner` default values', () => {
     const positionerProps = usePositioner('bubble');
     const positioners = useMultiPositioner('bubble');
 
-    expect(positionerProps).toEqual({ active: false });
+    expect(positionerProps).toEqual({ active: false, ...emptyCoords, ...emptyVirtualPosition });
     expect(positioners).toEqual([]);
 
     return <div />;

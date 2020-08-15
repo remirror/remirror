@@ -22,12 +22,15 @@ describe('Positioner', () => {
       await $editor.type('This is text', { delay: 20 });
       await expect($editor.innerHTML()).resolves.toMatchSnapshot();
       const $bubbleMenu = await getByTestId($document, 'bubble-menu');
-      await expect($bubbleMenu.getAttribute('style')).resolves.toBe('position:absolute');
+      await expect($bubbleMenu.getAttribute('style')).resolves.toBe(
+        'bottom:999999px;left:-999999px;position:absolute',
+      );
 
       await selectAll();
       const $visibleBubbleMenu = await getByTestId($document, 'bubble-menu');
       const newStyles = await $visibleBubbleMenu.getAttribute('style');
       expect(newStyles).toInclude('bottom');
+      expect(newStyles).not.toInclude('999999px');
       expect(newStyles).toInclude('left');
 
       const $boldButton = await getByText($document, 'Bold');

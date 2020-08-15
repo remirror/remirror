@@ -28,6 +28,7 @@ import {
 } from '@remirror/core';
 import {
   ElementsAddedParameter,
+  emptyCoords,
   emptyVirtualPosition,
   getPositioner,
   Positioner,
@@ -444,6 +445,9 @@ export interface UsePositionerReturn extends Partial<UseMultiPositionerReturn> {
  * active position exists for the provided positioner it will return an object
  * with the `ref`, `top`, `left`, `bottom`, `right` properties.
  *
+ * @param isActive - Set this to a boolean to override whether the positioner is
+ * active. `true` leaves the behaviour unchanged.
+ *
  *
  * @remarks
  *
@@ -469,14 +473,17 @@ export interface UsePositionerReturn extends Partial<UseMultiPositionerReturn> {
  * )
  * ```
  */
-export function usePositioner(positioner: Positioner | StringPositioner): UsePositionerReturn {
+export function usePositioner(
+  positioner: Positioner | StringPositioner,
+  isActive = true,
+): UsePositionerReturn {
   const positions = useMultiPositioner(positioner);
 
-  if (positions.length > 0) {
+  if (positions.length > 0 && isActive) {
     return { ...positions[0], active: true };
   }
 
-  return { active: false };
+  return { ...emptyVirtualPosition, ...emptyCoords, active: false };
 }
 
 /**
