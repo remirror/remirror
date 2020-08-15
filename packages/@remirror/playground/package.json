@@ -41,10 +41,10 @@
     "@types/prettier": "^2.0.2",
     "@types/react": "^16.9.46",
     "@types/react-dom": "^16.9.8",
+    "chalk": "^4.1.0",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "ts-node": "^8.10.2"
+    "react-dom": "^16.13.1"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",

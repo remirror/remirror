@@ -21,7 +21,7 @@
     "looks-same": "^7.2.3",
     "playwright": "^1.2.1",
     "playwright-core": "^1.2.1",
-    "playwright-testing-library": "^2.2.0",
+    "playwright-testing-library": "^2.4.0",
     "signal-exit": "^3.0.3",
     "test-keyboard": "0.7.7-next.6"
   }

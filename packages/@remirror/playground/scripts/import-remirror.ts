@@ -1,3 +1,4 @@
+import * as chalk from 'chalk';
 import { promises as fsp } from 'fs';
 import { resolve } from 'path';
 import * as prettier from 'prettier';
@@ -5,6 +6,8 @@ import * as prettier from 'prettier';
 /* We need to fake a browser environment */
 // @ts-ignore
 global.WebSocket = class {};
+
+console.log(chalk`{grey {bold Updating } playground imports }`);
 
 async function scanImportsFrom<T extends RemirrorModuleMeta>(
   sourceDir: string,
@@ -79,12 +82,13 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
   // Auto-imported
   ${imports.join(',\n  ')},
 
-  // Manual-imported
+  // Manually -imported
   remirror: require('remirror'),
   'remirror/core': require('remirror/core'),
   'remirror/react': require('remirror/react'),
   'remirror/react/social': require('remirror/react/social'),
   'remirror/react/wysiwyg': require('remirror/react/wysiwyg'),
+  '@remirror/dev': require('@remirror/dev'),
   '@remirror/playground': { useRemirrorPlayground },
   '@remirror/pm/commands': require('@remirror/pm/commands'),
   '@remirror/pm/dropcursor': require('@remirror/pm/dropcursor'),
@@ -125,11 +129,13 @@ export const INTERNAL_MODULES: Array<{ moduleName: string, exports: string[] }> 
 function forceTermination() {
   const timeout = global.setTimeout(() => {
     console.log(
-      "Look, I'm just a script, and far be it for me to tell you your job, dear human, but it seems to me that something has been keeping me alive for the last 5,000,000 nanoseconds (which feels like an eternity to me) since I completed my task. Maybe something opened a network connection? Who knows. Either way, it doesn't seem right, so I'm going to go ahead and exit.",
+      chalk`{yellow Look, I'm just a script, and far be it for me to tell you your job, dear human, but it seems to me that something has been keeping me alive for the last 5,000,000 nanoseconds (which feels like an eternity to me) since I completed my task. Maybe something opened a network connection? Who knows. Either way, it doesn't seem right, so I'm going to go ahead and exit. }`,
     );
     process.exit(0);
   }, 5000);
+
   timeout.unref();
+  console.log(chalk`{green Successfully created playground imports}`);
 }
 
 async function main() {
@@ -150,7 +156,6 @@ async function main() {
     extensions,
     presets,
   };
-  console.dir(everything, { depth: 6 });
   const code = template(everything);
   // TODO: prettier
   const filepath = `${__dirname}/../src/_remirror.tsx`;

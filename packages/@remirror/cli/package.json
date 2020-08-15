@@ -22,7 +22,7 @@
     "@remirror/core-helpers": "1.0.0-next.20",
     "@types/ms": "^0.7.31",
     "@types/update-notifier": "^4.1.1",
-    "@types/yup": "^0.29.3",
+    "@types/yup": "^0.29.5",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.4.0",
     "clipanion": "^2.4.4",
