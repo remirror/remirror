@@ -11,6 +11,7 @@ export { hasStateChanged, isEmptyBlockNode } from './positioner-utils';
 export {
   centeredSelectionPositioner,
   cursorPopupPositioner,
+  emptyCoords,
   emptyVirtualPosition,
   floatingSelectionPositioner,
 } from './positioners';

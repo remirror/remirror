@@ -2,6 +2,7 @@ import { css, cx } from 'linaria';
 import { Type, useMultishift } from 'multishift';
 import React, { useCallback, useState } from 'react';
 
+import { bool, isEmptyArray } from '@remirror/core';
 import { usePositioner } from '@remirror/react';
 
 import { useSocialRemirror } from '../hooks';
@@ -14,9 +15,11 @@ import {
 const EmojiDropdown = (props: SocialEmojiState) => {
   const { index, command, list, show } = props;
   const { focus } = useSocialRemirror();
-  const { ref, active, bottom, left } = usePositioner('popup');
   const [isClicking, setIsClicking] = useState(false);
-  const shouldShowPopup = (show || isClicking) && command && active;
+  const { ref, active, bottom, left } = usePositioner(
+    'popup',
+    bool((show || isClicking) && command && !isEmptyArray(list)),
+  );
 
   const { getMenuProps, getItemProps, itemHighlightedAtIndex, hoveredIndex } = useMultishift({
     highlightedIndexes: [index],
@@ -39,7 +42,7 @@ const EmojiDropdown = (props: SocialEmojiState) => {
         left: left,
       }}
     >
-      {shouldShowPopup &&
+      {active &&
         list.map((emoji, index) => {
           const isHighlighted = itemHighlightedAtIndex(index);
           const isHovered = index === hoveredIndex;
