@@ -510,17 +510,9 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * Create the editor state from content passed to this extension manager.
    */
   createState(parameter: Omit<CreateDocumentNodeParameter, 'schema'>) {
-    const { content, doc: docParameter, stringHandler, onError, selection } = parameter;
+    const { content, doc: d, stringHandler, onError, selection } = parameter;
     const { schema, plugins } = this.store;
-
-    const doc = createDocumentNode({
-      content,
-      doc: docParameter,
-      schema,
-      stringHandler,
-      onError,
-      selection,
-    });
+    const doc = createDocumentNode({ content, doc: d, schema, stringHandler, onError, selection });
 
     const state = EditorState.create({
       schema,

@@ -39,6 +39,13 @@ import type { ManagerEvents, RemirrorManager } from './manager';
 import type { AnyPresetConstructor } from './preset';
 import type { AnyCombinedUnion, SchemaFromCombined } from './preset/preset-types';
 
+/**
+ * This is the `EditorWrapper` it is new in the `1.0.0-next` versions and is a
+ * helper class which should be extended when implementing `Remirror` into your
+ * desired framework.
+ *
+ * TODO - Think of a better name than `EditorWrapper`.
+ */
 export abstract class EditorWrapper<
   Combined extends AnyCombinedUnion,
   Props extends EditorWrapperProps<Combined>
@@ -71,12 +78,17 @@ export abstract class EditorWrapper<
 
   /**
    * The event listener which allows consumers to subscribe to the different
-   * events without using props.
+   * events taking place in the editor. Events currently supported are:
+   *
+   * - `destroy`
+   * - `focus`
+   * - `blur`
+   * - `updated`
    */
   #events = createNanoEvents<EditorWrapperEvents<Combined>>();
 
   /**
-   * Array of disposal methods.
+   * An array of event listener disposers.
    */
   #disposers: Unsubscribe[] = [];
 
@@ -134,14 +146,26 @@ export abstract class EditorWrapper<
     return getDocument(this.props.forceEnvironment);
   }
 
+  /**
+   * A unique id for the editor. Can be used to differentiate between editors.
+   *
+   * Please note that this ID is only locally unique, it should not be used as a
+   * database key.
+   */
   protected get uid() {
     return this.#uid;
   }
 
+  /**
+   * Allows retrieval of the desired extension by its constructor.
+   */
   readonly #getExtension: <ExtensionConstructor extends AnyExtensionConstructor>(
     Constructor: ExtensionConstructor,
   ) => InstanceType<ExtensionConstructor>;
 
+  /**
+   * Allows retrieval of the desired preset by its constructor.
+   */
   readonly #getPreset: <PresetConstructor extends AnyPresetConstructor>(
     Constructor: PresetConstructor,
   ) => InstanceType<PresetConstructor>;
@@ -152,9 +176,12 @@ export abstract class EditorWrapper<
     this.#getProps = getProps;
     this.createStateFromContent = createStateFromContent;
 
-    // Add the getters
+    // Store the getter methods for extensions and presets.
     this.#getExtension = this.manager.getExtension.bind(this.manager);
     this.#getPreset = this.manager.getPreset.bind(this.manager);
+
+    // Setup the event listeners
+    this.setupEvents();
 
     if (this.manager.view) {
       return;
@@ -163,15 +190,19 @@ export abstract class EditorWrapper<
     // Create the ProsemirrorView and initialize our editor manager with it.
     const view = this.createView(initialEditorState, element);
     this.manager.addView(view);
-
-    this.setupEvents();
   }
+
+  #hasSetupEvents = false;
 
   /**
    * Setup the manager event listeners which are disposed of when the manager is
    * destroyed.
    */
   private setupEvents() {
+    if (this.#hasSetupEvents) {
+      return;
+    }
+
     const disposeStateUpdate = this.manager.addHandler('stateUpdate', ({ state, tr }) => {
       return this.#events.emit('updated', this.eventListenerParameter({ state, tr }));
     });
@@ -186,12 +217,17 @@ export abstract class EditorWrapper<
       this.#disposers = [];
     });
 
+    this.#hasSetupEvents = true;
     this.#disposers.push(disposeStateUpdate, disposeDestroy);
   }
 
   /**
    * Update the constructor props passed in. Useful for frameworks like react
-   * where props are constantly changing.
+   * where props are constantly changing and when using hooks function closures
+   * can become stale.
+   *
+   * You can call the update method with the new `props` to update the internal
+   * state of this instance.
    */
   update(parameter: EditorWrapperParameter<Combined, Props>) {
     const { getProps, createStateFromContent } = parameter;
@@ -229,17 +265,20 @@ export abstract class EditorWrapper<
   }
 
   /**
-   * This sets the attributes for the prosemirror dom node..
+   * This sets the attributes for the prosemirror dom node.
    */
   protected getAttributes(ssr?: false): Record<string, string>;
   protected getAttributes(ssr: true): Shape;
   protected getAttributes(ssr?: boolean) {
     const { attributes, autoFocus } = this.props;
-    const propertyAttributes = isFunction(attributes)
+    const managerAttributes = this.manager.store?.attributes;
+
+    // The attributes which were passed in as props.
+    const propAttributes = isFunction(attributes)
       ? attributes(this.eventListenerParameter())
       : attributes;
 
-    const managerAttributes = this.manager.store?.attributes;
+    // Whether or not the editor is focused.
     const focus = ssr
       ? { autoFocus: bool(autoFocus) }
       : { autofocus: autoFocus ? 'true' : 'false' };
@@ -254,7 +293,7 @@ export abstract class EditorWrapper<
       class: cx(ssr && 'Prosemirror', EDITOR_CLASS_NAME, managerAttributes?.class),
     };
 
-    return { ...defaultAttributes, ...propertyAttributes } as Shape;
+    return { ...defaultAttributes, ...propAttributes } as Shape;
   }
 
   /**
@@ -297,7 +336,10 @@ export abstract class EditorWrapper<
   ): void;
 
   /**
-   * Add `onBlur` and `onFocus` listeners.
+   * Adds `onBlur` and `onFocus` listeners.
+   *
+   * When extending this class make sure to call this method once
+   * `ProsemirrorView` has been added to the dom.
    */
   protected addFocusListeners() {
     this.view.dom.addEventListener('blur', this.onBlur);
@@ -306,6 +348,8 @@ export abstract class EditorWrapper<
 
   /**
    * Remove `onBlur` and `onFocus` listeners.
+   *
+   * When extending this class in your framework, make sure to call this just before the view is destroyed.
    */
   protected removeFocusListeners() {
     this.view.dom.removeEventListener('blur', this.onBlur);

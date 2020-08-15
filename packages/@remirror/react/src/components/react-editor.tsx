@@ -355,6 +355,7 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
       }
 
       this.onChange({ state, tr });
+
       return;
     }
 
@@ -363,6 +364,7 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
     this.view.updateState(state);
 
     if (triggerChange) {
+      // Update the `onChange` handler before notifying the manager but only when a change should be triggered.
       this.onChange({ state, tr });
     }
 
