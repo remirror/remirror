@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-code",
-  "version": "1.0.0-next.20",
+  "version": "1.0.0-next.21",
   "description": "Adds the inline code `mark` to your text editor.",
   "keywords": [
     "remirror",
@@ -27,12 +27,12 @@
     "@babel/runtime": "^7.11.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.20",
-    "@remirror/pm": "1.0.0-next.20"
+    "@remirror/core": "1.0.0-next.21",
+    "@remirror/pm": "1.0.0-next.21"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.20",
-    "@remirror/pm": "1.0.0-next.20"
+    "@remirror/core": "1.0.0-next.21",
+    "@remirror/pm": "1.0.0-next.21"
   },
   "publishConfig": {
     "access": "public"

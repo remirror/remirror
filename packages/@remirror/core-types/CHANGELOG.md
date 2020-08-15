@@ -1,5 +1,20 @@
 # @remirror/core-types
 
+## 1.0.0-next.21
+
+> 2020-08-15
+
+### Patch Changes
+
+- 3673a0f0: Fix #518 caused by the way the `EditorWrapper` was setting up listeners to events from
+  the `RemirrorManager`. Previously the failure became apparent when used in an uncontrolled editor
+  in `StrictMode`.
+
+  Set the default `CommandFunction` type parameter to be `EditorSchema` for better code completion
+  when creating an extension.
+
+  - @remirror/pm@1.0.0-next.21
+
 ## 1.0.0-next.20
 
 > 2020-08-14

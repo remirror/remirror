@@ -1,5 +1,54 @@
 # @remirror/core
 
+## 1.0.0-next.21
+
+> 2020-08-15
+
+### Major Changes
+
+- 8c34030e: 💥 Remove property `updateSelection` from the `nodeInputRule`, `markInputRule` and
+  `plainInputRule` functions. You should use the new `beforeDispatch` method instead.
+
+  Add new `beforeDispatch` method to the `nodeInputRule`, `markInputRule` and `plainInputRule`
+  parameter. This method allows users to add extra steps to the transaction after a matching input
+  rule has been run and just before it is dispatched.
+
+  ```ts
+  import { nodeInputRule } from 'remirror/core';
+
+  nodeInputRule({
+    type,
+    regexp: /abc/,
+    beforeDispatch: ({ tr }) => tr.insertText('hello'),
+  });
+  ```
+
+### Minor Changes
+
+- baf3f56d: Add `ignoreWhitespace` option to `markInputRule` for ignoring a matching input rule if
+  the capture groups is only whitespace. Apply to all wrapping input rules for `MarkExtension`'s in
+  the `project`.
+
+  Fix #506 `ItalicExtension` issue with input rule being greedy and capturing one preceding
+  character when activated within a text block.
+
+### Patch Changes
+
+- 3673a0f0: Fix #518 caused by the way the `EditorWrapper` was setting up listeners to events from
+  the `RemirrorManager`. Previously the failure became apparent when used in an uncontrolled editor
+  in `StrictMode`.
+
+  Set the default `CommandFunction` type parameter to be `EditorSchema` for better code completion
+  when creating an extension.
+
+- Updated dependencies [3673a0f0]
+- Updated dependencies [8c34030e]
+- Updated dependencies [baf3f56d]
+  - @remirror/core-types@1.0.0-next.21
+  - @remirror/core-utils@1.0.0-next.21
+  - @remirror/core-helpers@1.0.0-next.21
+  - @remirror/pm@1.0.0-next.21
+
 ## 1.0.0-next.20
 
 > 2020-08-14

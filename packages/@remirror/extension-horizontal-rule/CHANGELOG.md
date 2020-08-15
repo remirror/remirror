@@ -1,5 +1,19 @@
 # @remirror/extension-horizontal-rule
 
+## 1.0.0-next.21
+
+> 2020-08-15
+
+### Patch Changes
+
+- 8c34030e: Fix uneccessary lines being added to the editor when creating a new horizontal line with
+  the commands or input rules. Closes #451.
+- Updated dependencies [3673a0f0]
+- Updated dependencies [8c34030e]
+- Updated dependencies [baf3f56d]
+  - @remirror/core@1.0.0-next.21
+  - @remirror/pm@1.0.0-next.21
+
 ## 1.0.0-next.20
 
 > 2020-08-14
