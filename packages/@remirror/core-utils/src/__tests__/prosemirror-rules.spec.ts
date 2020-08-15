@@ -48,6 +48,7 @@ describe('markInputRule', () => {
       regexp: /~([^~]+)~$/,
       type: testSchema.marks.strong,
       getAttributes: getAttributes,
+      beforeDispatch: ({ tr }) => tr.insertText(' '),
     });
     const {
       state: { selection },
@@ -60,7 +61,7 @@ describe('markInputRule', () => {
       f(...parameters);
     });
 
-    expect(view.state.doc).toEqualProsemirrorNode(doc(p(strong('Hello'))));
+    expect(view.state.doc).toEqualProsemirrorNode(doc(p(strong('Hello'), ' ')));
     expect(getAttributes).toHaveBeenCalledWith(expect.arrayContaining(['~Hello~', 'Hello']));
   });
 
@@ -95,7 +96,7 @@ describe('nodeInputRule', () => {
     const {
       state: { selection },
       view,
-    } = createEditor(doc(p('~Hello<cursor>')), { rules: [rule] });
+    } = createEditor(doc(p(), p('~Hello<cursor>')), { rules: [rule] });
     const { from, to } = selection;
     const parameters = [view, from, to, '~'];
 
@@ -103,7 +104,7 @@ describe('nodeInputRule', () => {
       f(...parameters);
     });
 
-    expect(view.state.doc).toEqualProsemirrorNode(doc(horizontalRule()));
+    expect(view.state.doc).toEqualProsemirrorNode(doc(p(), horizontalRule()));
     expect(getAttributes).toHaveBeenCalledWith(expect.arrayContaining(['~Hello~', 'Hello']));
   });
 
@@ -146,6 +147,27 @@ describe('plainInputRule', () => {
     });
 
     expect(view.state.doc).toEqualProsemirrorNode(doc(p('ABC')));
+  });
+
+  it('should support `beforeDispatch`', () => {
+    const rule = plainInputRule({
+      regexp: /abc$/,
+      transformMatch: (value) => value[0].toUpperCase(),
+      beforeDispatch: ({ tr }) => tr.insertText(' '),
+    });
+
+    const {
+      state: { selection },
+      view,
+    } = createEditor(doc(p('ab<cursor>')), { rules: [rule] });
+    const { from, to } = selection;
+    const parameters = [view, from, to, 'c'];
+
+    view.someProp('handleTextInput', (f) => {
+      f(...parameters);
+    });
+
+    expect(view.state.doc).toEqualProsemirrorNode(doc(p('ABC ')));
   });
 
   it('should work with partial matches', () => {

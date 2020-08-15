@@ -275,9 +275,9 @@ interface ReplaceTextParameter extends Partial<RangeParameter>, Partial<Attribut
  * Taken from https://stackoverflow.com/a/4900484
  *
  * Check that the browser is chrome. Supports passing a minimum version to check
- * that it is a greater than or equal version.
+ * that it is a greater than or equal to this version.
  */
-function isChrome(minVersion = 0): boolean {
+export function isChrome(minVersion = 0): boolean {
   const parsedAgent = navigator.userAgent.match(/Chrom(e|ium)\/(\d+)\./);
 
   return parsedAgent ? Number.parseInt(parsedAgent[2], 10) >= minVersion : false;

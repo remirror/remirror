@@ -9,6 +9,7 @@ import {
   NodeExtensionSpec,
   NodeGroup,
   nodeInputRule,
+  Transaction,
 } from '@remirror/core';
 import { TextSelection } from '@remirror/pm/state';
 
@@ -47,9 +48,21 @@ export class HorizontalRuleExtension extends NodeExtension<HorizontalRuleOptions
     return {
       /**
        * Inserts a horizontal line into the editor.
+       *
+       * @remarks
+       *
+       * TODO: There is currently a bug in Chrome where if the editor is not
+       * focused at the point that this is called, the selection jumps to before
+       * the first insertion when you start typing. It doesn't happen in Firefox
+       * or Safari.
        */
       insertHorizontalRule: (): CommandFunction => (parameter) => {
-        const { tr, dispatch, state } = parameter;
+        const { tr, dispatch } = parameter;
+        const initialParent = tr.selection.$anchor.parent;
+
+        if (initialParent.type.name === 'doc' || initialParent.isAtom || initialParent.isLeaf) {
+          return false;
+        }
 
         if (!dispatch) {
           return true;
@@ -58,24 +71,7 @@ export class HorizontalRuleExtension extends NodeExtension<HorizontalRuleOptions
         // Create the horizontal rule.
         tr.replaceSelectionWith(this.type.create());
 
-        const pos = tr.selection.$anchor.pos + 1;
-        const { insertionNode } = this.options;
-        const nodes = state.schema.nodes;
-
-        if (insertionNode) {
-          const type = nodes[insertionNode];
-
-          invariant(type, {
-            code: ErrorConstant.EXTENSION,
-            message: `'${insertionNode}' node provided as the insertionNode to the '${HorizontalRuleExtension.name}' does not exist.`,
-          });
-
-          // Insert the new node and set the selection inside that node.
-          tr.insert(pos, state.schema.nodes[insertionNode].create()).setSelection(
-            TextSelection.create(tr.doc, pos),
-          );
-        }
-
+        this.updateTransaction(tr);
         dispatch(tr.scrollIntoView());
 
         return true;
@@ -84,6 +80,41 @@ export class HorizontalRuleExtension extends NodeExtension<HorizontalRuleOptions
   }
 
   createInputRules(): InputRule[] {
-    return [nodeInputRule({ regexp: /^(?:---|___\s|\*\*\*\s)$/, type: this.type })];
+    return [
+      nodeInputRule({
+        regexp: /^(?:---|___\s|\*\*\*\s)$/,
+        type: this.type,
+        beforeDispatch: ({ tr }) => {
+          this.updateTransaction(tr);
+        },
+      }),
+    ];
+  }
+
+  /**
+   * Updates the transaction after a `horizontalRule` has been inserted.
+   */
+  private updateTransaction(tr: Transaction): void {
+    const pos = tr.selection.$anchor.pos + 1;
+    const { insertionNode } = this.options;
+    const nodes = this.store.schema.nodes;
+
+    if (!insertionNode) {
+      return;
+    }
+
+    const type = nodes[insertionNode];
+
+    invariant(type, {
+      code: ErrorConstant.EXTENSION,
+      message: `'${insertionNode}' node provided as the insertionNode to the '${HorizontalRuleExtension.name}' does not exist.`,
+    });
+
+    // Insert the new node
+    const node = type.create();
+    tr.insert(pos, node);
+
+    // Set the new selection to be inside the inserted node.
+    tr.setSelection(TextSelection.create(tr.doc, pos + 1));
   }
 }

@@ -1,5 +1,6 @@
 export {
   emptyCommandFunction,
+  isChrome,
   lift,
   removeMark,
   replaceText,
