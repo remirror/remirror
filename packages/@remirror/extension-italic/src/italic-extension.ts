@@ -49,10 +49,24 @@ export class ItalicExtension extends MarkExtension {
   }
 
   createInputRules(): InputRule[] {
-    return [markInputRule({ regexp: /(?:^|[^*_])[*_]([^*_]+)[*_]$/, type: this.type })];
+    return [
+      markInputRule({
+        regexp: /(?<=(?:^|[^*]))\*([^*]+)\*/,
+        type: this.type,
+        ignoreWhitespace: true,
+      }),
+      markInputRule({
+        regexp: /(?<=(?:^|[^_]))_([^_]+)_/,
+        type: this.type,
+        ignoreWhitespace: true,
+      }),
+    ];
   }
 
   createPasteRules(): Plugin[] {
-    return [markPasteRule({ regexp: /(?:^|[^*_])[*_]([^*_]+)[*_]/g, type: this.type })];
+    return [
+      markPasteRule({ regexp: /_([^_]+)_/g, type: this.type }),
+      markPasteRule({ regexp: /\*([^*]+)\*/g, type: this.type }),
+    ];
   }
 }

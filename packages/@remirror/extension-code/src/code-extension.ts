@@ -51,6 +51,7 @@ export class CodeExtension extends MarkExtension {
       markInputRule({
         regexp: new RegExp(`(?:\`)([^\`${LEAF_NODE_REPLACING_CHARACTER}]+)(?:\`)$`),
         type: this.type,
+        ignoreWhitespace: true,
       }),
     ];
   }
