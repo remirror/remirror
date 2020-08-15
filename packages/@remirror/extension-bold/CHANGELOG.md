@@ -1,5 +1,24 @@
 # @remirror/extension-bold
 
+## 1.0.0-next.21
+
+> 2020-08-15
+
+### Patch Changes
+
+- baf3f56d: Add `ignoreWhitespace` option to `markInputRule` for ignoring a matching input rule if
+  the capture groups is only whitespace. Apply to all wrapping input rules for `MarkExtension`'s in
+  the `project`.
+
+  Fix #506 `ItalicExtension` issue with input rule being greedy and capturing one preceding
+  character when activated within a text block.
+
+- Updated dependencies [3673a0f0]
+- Updated dependencies [8c34030e]
+- Updated dependencies [baf3f56d]
+  - @remirror/core@1.0.0-next.21
+  - @remirror/pm@1.0.0-next.21
+
 ## 1.0.0-next.20
 
 > 2020-08-14

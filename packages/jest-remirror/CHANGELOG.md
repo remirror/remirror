@@ -1,5 +1,20 @@
 # jest-remirror
 
+## 1.0.0-next.21
+
+> 2020-08-15
+
+### Patch Changes
+
+- Updated dependencies [3673a0f0]
+- Updated dependencies [8c34030e]
+- Updated dependencies [baf3f56d]
+  - @remirror/core@1.0.0-next.21
+  - @remirror/dom@1.0.0-next.21
+  - @remirror/preset-core@1.0.0-next.21
+  - jest-prosemirror@0.8.4-next.6
+  - @remirror/pm@1.0.0-next.21
+
 ## 1.0.0-next.20
 
 > 2020-08-14

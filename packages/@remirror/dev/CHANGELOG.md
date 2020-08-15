@@ -1,5 +1,14 @@
 # @remirror/dev
 
+## 1.0.0-next.21
+
+> 2020-08-15
+
+### Patch Changes
+
+- @remirror/react@1.0.0-next.21
+- @remirror/pm@1.0.0-next.21
+
 ## 1.0.0-next.20
 
 > 2020-08-14
