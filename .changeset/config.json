@@ -67,15 +67,20 @@
       "@remirror/preset-social",
       "@remirror/preset-table",
       "@remirror/preset-wysiwyg",
-      "@remirror/react-utils",
       "@remirror/react-social",
+      "@remirror/react-utils",
       "@remirror/react-wysiwyg",
       "@remirror/react",
       "@remirror/showcase",
       "@remirror/styles",
       "@remirror/theme",
+      "a11y-status",
+      "jest-prosemirror",
       "jest-remirror",
-      "remirror"
+      "multishift",
+      "prosemirror-suggest",
+      "remirror",
+      "test-keyboard"
     ]
   ],
   "access": "public",
