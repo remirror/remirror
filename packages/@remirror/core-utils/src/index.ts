@@ -41,6 +41,7 @@ export {
   getSelectedWord,
   getTextContentFromSlice,
   getTextSelection,
+  isAllSelection,
   isDocNode,
   isDocNodeEmpty,
   isDomNode,

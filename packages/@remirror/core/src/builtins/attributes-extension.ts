@@ -1,5 +1,5 @@
 import { bool, object } from '@remirror/core-helpers';
-import type { AttributesWithClass } from '@remirror/core-types';
+import type { ProsemirrorAttributes } from '@remirror/core-types';
 
 import { PlainExtension } from '../extension';
 import type { AnyCombinedUnion } from '../preset';
@@ -21,8 +21,8 @@ export class AttributesExtension extends PlainExtension {
     return 'attributes' as const;
   }
 
-  #attributeList: AttributesWithClass[] = [];
-  #attributeObject: AttributesWithClass = object();
+  #attributeList: ProsemirrorAttributes[] = [];
+  #attributeObject: ProsemirrorAttributes = object();
 
   /**
    * Create the attributes object on initialization.
@@ -83,7 +83,7 @@ declare global {
       /**
        * The attributes to be added to the prosemirror editor.
        */
-      attributes: AttributesWithClass;
+      attributes: ProsemirrorAttributes;
     }
 
     interface ExtensionStore {
@@ -124,7 +124,7 @@ declare global {
        *
        * @alpha
        */
-      createAttributes?(): AttributesWithClass;
+      createAttributes?(): ProsemirrorAttributes;
     }
   }
 }

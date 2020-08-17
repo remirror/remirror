@@ -210,9 +210,20 @@ export interface Position {
 /**
  * Used for attributes which can be added to prosemirror nodes and marks.
  */
-export type ProsemirrorAttributes<Extra extends object = object> = Record<string, unknown> & Extra;
+export type ProsemirrorAttributes<Extra extends object = object> = Record<string, unknown> &
+  Extra & {
+    /**
+     * The class is a preserved attribute name.
+     */
+    class?: string;
+  };
 
-export type AttributesWithClass = ProsemirrorAttributes & { class?: string };
+export type NodeAttributes<Extra extends object = object> = ProsemirrorAttributes<
+  Remirror.ExtraNodeAttributes & Extra
+>;
+export type MarkAttributes<Extra extends object = object> = ProsemirrorAttributes<
+  Remirror.ExtraMarkAttributes & Extra
+>;
 
 export interface SchemaAttributesObject {
   /**
@@ -420,3 +431,17 @@ export type Replace<Type, Replacements extends Shape> = Omit<Type, keyof Replace
 export type NonNullableShape<Type extends object> = {
   [Key in keyof Type]: NonNullable<Type[Key]>;
 };
+
+declare global {
+  namespace Remirror {
+    /**
+     * Define globally available extra node attributes here.
+     */
+    interface ExtraNodeAttributes {}
+
+    /**
+     * Define globally available extra mark attributes here.
+     */
+    interface ExtraMarkAttributes {}
+  }
+}

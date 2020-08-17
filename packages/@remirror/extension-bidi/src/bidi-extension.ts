@@ -1,9 +1,9 @@
 import direction from 'direction';
 
 import type {
-  AttributesWithClass,
   CreatePluginReturn,
   IdentifierSchemaAttributes,
+  NodeAttributes,
   OnSetOptionsParameter,
   SchemaAttributesObject,
   Static,
@@ -56,9 +56,9 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
   #ignoreNextUpdate = false;
 
   /**
-   * Add the bidi property to the editor attributes.
+   * Add the bidi property to the top level editor attributes `doc`.
    */
-  createAttributes(): AttributesWithClass {
+  createAttributes(): NodeAttributes {
     if (this.options.defaultDirection) {
       return {
         dir: this.options.defaultDirection,
@@ -69,7 +69,7 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
   }
 
   /**
-   * Add the `dir` to all the node types.
+   * Add the `dir` to all the inner node types.
    */
   createSchemaAttributes = (): IdentifierSchemaAttributes[] => {
     const identifiers = this.store.nodeNames.filter(
@@ -178,5 +178,16 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
     }
 
     return dir;
+  }
+}
+
+declare global {
+  namespace Remirror {
+    interface ExtraNodeAttributes {
+      /**
+       * This attribute grants control over bidirectional language support.
+       */
+      dir?: 'ltr' | 'rtl';
+    }
   }
 }

@@ -148,7 +148,7 @@ export function isEditorSchema<Nodes extends string = string, Marks extends stri
 }
 
 /**
- * Predicate checking whether the selection is a TextSelection
+ * Predicate checking whether the selection is a `TextSelection`.
  *
  * @param value - the value to check
  *
@@ -158,6 +158,19 @@ export function isTextSelection<Schema extends EditorSchema = EditorSchema>(
   value: unknown,
 ): value is TextSelection<Schema> {
   return isObject(value) && value instanceof TextSelection;
+}
+
+/**
+ * Predicate checking whether the selection is an `AllSelection`.
+ *
+ * @param value - the value to check
+ *
+ * @public
+ */
+export function isAllSelection<Schema extends EditorSchema = EditorSchema>(
+  value: unknown,
+): value is AllSelection<Schema> {
+  return isObject(value) && value instanceof AllSelection;
 }
 
 /**

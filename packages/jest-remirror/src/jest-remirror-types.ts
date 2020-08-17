@@ -2,7 +2,8 @@ import type {
   AnyCombinedUnion,
   AttributesParameter,
   EditorSchema,
-  ProsemirrorAttributes,
+  MarkAttributes,
+  NodeAttributes,
   ProsemirrorNode,
 } from '@remirror/core';
 import type { DomEditorWrapperProps } from '@remirror/dom';
@@ -84,13 +85,13 @@ export interface TaggedProsemirrorNode<Schema extends EditorSchema = EditorSchem
 
 export type MarkWithAttributes<Names extends string> = {
   [P in Names]: (
-    attrs?: ProsemirrorAttributes,
+    attrs?: MarkAttributes,
   ) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode[];
 };
 
 export type NodeWithAttributes<Names extends string> = {
   [P in Names]: (
-    attrs?: ProsemirrorAttributes,
+    attrs?: NodeAttributes,
   ) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
 };
 

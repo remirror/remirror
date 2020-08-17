@@ -10,7 +10,13 @@ import type {
   Selection,
   Transaction,
 } from './alias-types';
-import type { MakeOptional, Position, ProsemirrorAttributes } from './base-types';
+import type {
+  MakeOptional,
+  MarkAttributes,
+  NodeAttributes,
+  Position,
+  ProsemirrorAttributes,
+} from './base-types';
 
 /**
  * A parameter builder interface containing the `view` property.
@@ -131,6 +137,26 @@ export interface AttributesParameter {
 }
 
 /**
+ * A parameter builder interface containing the `attrs` property.
+ */
+export interface NodeAttributesParameter {
+  /**
+   * An object describing the attrs for a prosemirror node
+   */
+  attrs: NodeAttributes;
+}
+
+/**
+ * This interface contains the default mark attributes.
+ */
+export interface MarkAttributesParameter {
+  /**
+   * An object describing the attrs for a mark.
+   */
+  attrs: MarkAttributes;
+}
+
+/**
  * A parameter builder interface containing the node `type` property.
  *
  * @typeParam Schema - the underlying editor schema.
@@ -196,18 +222,27 @@ export interface ProsemirrorNodeParameter<Schema extends EditorSchema = EditorSc
 }
 
 export type NodeWithAttributes<
-  NodeAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
+  Attributes extends NodeAttributes = NodeAttributes
 > = ProsemirrorNode & {
-  attrs: NodeAttributes;
+  attrs: Attributes;
 };
 
-export interface NodeWithAttributesParameter<
-  NodeAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
-> {
+export interface NodeWithAttributesParameter<Attributes extends NodeAttributes = NodeAttributes> {
   /**
    * A prosemirror node with a specific shape for `node.attrs`
    */
-  node: NodeWithAttributes<NodeAttributes>;
+  node: NodeWithAttributes<Attributes>;
+}
+
+export type MarkWithAttributes<Attributes extends MarkAttributes = MarkAttributes> = Mark & {
+  attrs: Attributes;
+};
+
+export interface MarkWithAttributesParameter<Attributes extends MarkAttributes = MarkAttributes> {
+  /**
+   * A mark with a specific shape for `node.attrs`
+   */
+  mark: MarkWithAttributes<Attributes>;
 }
 
 export interface DocParameter {

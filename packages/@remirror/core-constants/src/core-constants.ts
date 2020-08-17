@@ -84,6 +84,7 @@ export enum MarkGroup {
    * Mark group for font styling (e.g. bold, italic, underline, superscript).
    */
   FontStyle = 'fontStyle',
+
   /**
    * Mark groups for links.
    */
