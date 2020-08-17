@@ -5,7 +5,6 @@ export {
   EMPTY_PARAGRAPH_NODE,
   ExtensionPriority,
   ExtensionTag,
-  ExtensionType,
   LEAF_NODE_REPLACING_CHARACTER,
   ManagerPhase,
   MarkGroup,

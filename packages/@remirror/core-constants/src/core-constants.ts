@@ -132,26 +132,6 @@ export enum NodeGroup {
 }
 
 /**
- * Defines the type of the extension.
- */
-export enum ExtensionType {
-  /**
-   * Identifies a NodeExtension.
-   */
-  Node = 'node',
-
-  /**
-   * Identifies a MarkExtension
-   */
-  Mark = 'mark',
-
-  /**
-   * Identifies a PlainExtension
-   */
-  Plain = 'plain',
-}
-
-/**
  * These are the default supported tag strings which help categorize different
  * behaviors that extensions can exhibit.
  *
