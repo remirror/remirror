@@ -3,11 +3,14 @@ import { EditorState, isEditorState, isProsemirrorNode, ProsemirrorNode } from '
 import type { TaggedProsemirrorNode } from './jest-remirror-types';
 
 export const remirrorMatchers: jest.ExpectExtendMap = {
-  toContainRemirrorDocument(state: EditorState, expected: TaggedProsemirrorNode) {
-    if (!isProsemirrorNode(expected)) {
+  toContainRemirrorDocument(state: EditorState, value: TaggedProsemirrorNode) {
+    const actual = state?.toJSON?.();
+    const expected = value?.toJSON?.();
+
+    if (!isProsemirrorNode(value)) {
       return {
         pass: false,
-        actual: state,
+        actual,
         expected,
         name: 'toContainRemirrorDocument',
         message: () => 'The expected value should be an instance of ProsemirrorNode.',
@@ -17,38 +20,38 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
     if (!isEditorState(state)) {
       return {
         pass: false,
-        actual: state,
+        actual,
         expected,
         name: 'toContainRemirrorDocument',
         message: () => 'Expected the value passed in to be an EditorState',
       };
     }
 
-    if (expected.type.schema !== state.schema) {
+    if (value.type.schema !== state.schema) {
       return {
         pass: false,
-        actual: state,
+        actual,
         expected,
         name: 'toContainRemirrorDocument',
         message: () => 'Expected both values to be using the same schema.',
       };
     }
 
-    const pass = this.equals(state.doc.content.child(0).toJSON(), expected.toJSON());
+    const pass = this.equals(state.doc.content.child(0).toJSON(), value.toJSON());
     const message = pass
       ? () =>
           `${this.utils.matcherHint('.not.toContainRemirrorDocument')}\n\n` +
           `Expected JSON value of document to not contain:\n  ${this.utils.printExpected(
-            expected,
+            value,
           )}\n` +
           `Actual JSON:\n  ${this.utils.printReceived(state.doc.content.child(0))}`
       : () => {
-          const diffString = this.utils.diff(expected, state.doc.content.child(0), {
+          const diffString = this.utils.diff(value, state.doc.content.child(0), {
             expand: this.expand,
           });
           return (
             `${this.utils.matcherHint('.toContainRemirrorDocument')}\n\n` +
-            `Expected JSON value of document to contain:\n${this.utils.printExpected(expected)}\n` +
+            `Expected JSON value of document to contain:\n${this.utils.printExpected(value)}\n` +
             `Actual JSON:\n  ${this.utils.printReceived(state.doc.content.child(0))}` +
             `${diffString ? `\n\nDifference:\n\n${diffString}` : ''}`
           );
@@ -56,58 +59,51 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
 
     return {
       pass,
-      actual: state,
+      actual,
       expected,
       message,
       name: 'toContainRemirrorDocument',
     };
   },
 
-  toEqualRemirrorDocument(actual: ProsemirrorNode, expected: TaggedProsemirrorNode) {
-    // Because schema is created dynamically, expected value is a function (schema) => PMNode;
-    // That's why this magic is necessary. It simplifies writing assertions, so
-    // instead of expect(doc).toEqualRemirrorDocument(doc(p())(schema)) we can just do:
-    // expect(doc).toEqualRemirrorDocument(doc(p())).
+  toEqualRemirrorDocument(doc: ProsemirrorNode, value: TaggedProsemirrorNode) {
+    const actual = doc?.toJSON?.();
+    const expected = value?.toJSON?.();
 
-    // Also it fixes issues that happens sometimes when actual schema and expected schema
-    // are different objects, making this case impossible by always using actual schema to create expected node.
-
-    if (!isProsemirrorNode(expected) || !isProsemirrorNode(actual)) {
+    if (!isProsemirrorNode(value) || !isProsemirrorNode(doc)) {
       return {
         pass: false,
         actual,
-        expected,
+        expected: value,
         name: 'toEqualRemirrorDocument',
         message: () => 'Expected both values to be instance of prosemirror-model Node.',
       };
     }
 
-    if (expected.type.schema !== actual.type.schema) {
+    if (value.type.schema !== doc.type.schema) {
       return {
         pass: false,
         actual,
-        expected,
+        expected: value,
         name: 'toEqualRemirrorDocument',
         message: () => 'Expected both values to be using the same schema.',
       };
     }
 
-    const pass = this.equals(actual.toJSON(), expected.toJSON());
+    const pass = this.equals(doc.toJSON(), value.toJSON());
     const message = pass
       ? () =>
           `${this.utils.matcherHint('.not.toEqualRemirrorDocument')}\n\n` +
-          `Expected JSON value of document to not equal:\n  ${this.utils.printExpected(
-            expected,
-          )}\n` +
-          `Actual JSON:\n  ${this.utils.printReceived(actual)}`
+          `Expected JSON value of document to not equal:\n  ${this.utils.printExpected(value)}\n` +
+          `Actual JSON:\n  ${this.utils.printReceived(doc)}`
       : () => {
-          const diffString = this.utils.diff(expected, actual, {
+          const diffString = this.utils.diff(value, doc, {
             expand: this.expand,
           });
           return (
             `${this.utils.matcherHint('.toEqualRemirrorDocument')}\n\n` +
-            `Expected JSON value of document to equal:\n${this.utils.printExpected(expected)}\n` +
-            `Actual JSON:\n  ${this.utils.printReceived(actual)}` +
+            `Expected JSON value of document to equal:\n${this.utils.printExpected(value)}\n` +
+            `Actual JSON:\n  ${this.utils.printReceived(doc)}` +
             `${diffString ? `\n\nDifference:\n\n${diffString}` : ''}`
           );
         };

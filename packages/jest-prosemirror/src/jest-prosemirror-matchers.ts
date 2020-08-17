@@ -35,7 +35,11 @@ export const prosemirrorMatchers = {
     const expected = to ? to : from;
     const shouldChange = bool(to);
     const { pass, taggedDoc: actual } = apply(from, command, to);
-    const properties = { actual, expected, name: 'toTransformNode' };
+    const properties = {
+      actual: actual.toJSON(),
+      expected: expected.toJSON(),
+      name: 'toTransformNode',
+    };
 
     if (pass) {
       return {
