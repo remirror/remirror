@@ -12,6 +12,7 @@ import yaml from 'refractor/lang/yaml';
 
 import { ExtensionPriority, fromHtml, object, toHtml } from '@remirror/core';
 import { createCoreManager } from '@remirror/testing';
+import { HardBreakExtension } from 'remirror/extension/hard-break';
 
 import { CodeBlockExtension, CodeBlockOptions, FormatterParameter } from '..';
 import { getLanguage } from '../code-block-utils';
@@ -57,14 +58,17 @@ describe('constructor', () => {
 const supportedLanguages = [typescript, javascript, markdown, tsx];
 
 const create = (options: CodeBlockOptions = object()) =>
-  renderEditor([new CodeBlockExtension({ ...options, supportedLanguages })]);
+  renderEditor([
+    new CodeBlockExtension({ ...options, supportedLanguages }),
+    new HardBreakExtension(),
+  ]);
 
 describe('plugin', () => {
   const {
     view,
     add,
     attributeNodes: { codeBlock },
-    nodes: { doc, p },
+    nodes: { doc, p, hardBreak: br },
   } = create();
 
   const { dom } = view;
@@ -237,6 +241,15 @@ describe('plugin', () => {
         .insertText('abc');
 
       expect(state.doc).toEqualRemirrorDocument(doc(htmlBlock('abc')));
+    });
+
+    it('should not coexist with `hardBreak`', () => {
+      const { state } = add(doc(p('Hello', br(), '<cursor>')))
+        .insertText('```')
+        .press('Enter')
+        .insertText('abc');
+
+      expect(state.doc).toEqualRemirrorDocument(doc(p('Hello', br(), '```'), p('abc')));
     });
   });
 });

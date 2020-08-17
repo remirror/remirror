@@ -234,16 +234,14 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
         return true;
       },
 
-      Backspace: ({ state, dispatch }) => {
-        const { selection } = state;
+      Backspace: ({ dispatch, tr, state }) => {
+        const { selection } = tr;
 
         // If the selection is not empty, return false and let other extension
         // (ie: BaseKeymapExtension) to do the deleting operation.
         if (!selection.empty) {
           return false;
         }
-
-        const tr = state.tr;
 
         // Check that this is the correct node.
         const parent = findParentNodeOfType({ types: this.type, selection });
@@ -278,33 +276,35 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
         return true;
       },
 
-      Enter: ({ state, dispatch }) => {
-        const { selection, tr } = state;
+      Enter: ({ dispatch, tr }) => {
+        const { selection } = tr;
 
         if (!isTextSelection(selection) || !selection.$cursor) {
           return false;
         }
 
-        const { nodeBefore } = selection.$from;
+        const { nodeBefore, parent } = selection.$from;
 
-        if (!nodeBefore || !nodeBefore.isText) {
+        if (!nodeBefore || !nodeBefore.isText || !parent.type.isTextblock) {
           return false;
         }
 
         const regex = /^```([A-Za-z]*)?$/;
         const { text } = nodeBefore;
+        const { textContent } = parent;
 
         if (!text) {
           return false;
         }
 
-        const matches = text.match(regex);
+        const matchesNodeBefore = text.match(regex);
+        const matchesParent = textContent.match(regex);
 
-        if (!matches) {
+        if (!matchesNodeBefore || !matchesParent) {
           return false;
         }
 
-        const [, lang] = matches;
+        const [, lang] = matchesNodeBefore;
 
         const language = getLanguage({
           language: lang,
@@ -324,10 +324,10 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
 
         return true;
       },
-      [this.options.keyboardShortcut]: ({ state }) => {
+      [this.options.keyboardShortcut]: ({ tr }) => {
         const commands = this.store.getCommands();
 
-        if (!isNodeActive({ type: this.type, state })) {
+        if (!isNodeActive({ type: this.type, state: tr })) {
           return false;
         }
 
