@@ -1,5 +1,27 @@
 # jest-prosemirror
 
+## 1.0.0-next.22
+
+> 2020-08-17
+
+### Major Changes
+
+- 113560bb: Required temporary fix to resolve issue with unlinked packages in prerelease mode. See
+  the [issue](https://github.com/atlassian/changesets/issues/442) for more details.
+
+### Patch Changes
+
+- 65638a1c: Fix cyclic JSON error when tests when tests failed.
+- Updated dependencies [9ab1d0f3]
+- Updated dependencies [45d82746]
+- Updated dependencies [113560bb]
+  - @remirror/core-constants@1.0.0-next.22
+  - @remirror/core-types@1.0.0-next.22
+  - @remirror/core-utils@1.0.0-next.22
+  - test-keyboard@1.0.0-next.22
+  - @remirror/core-helpers@1.0.0-next.22
+  - @remirror/pm@1.0.0-next.22
+
 ## 0.8.4-next.6
 
 > 2020-08-15

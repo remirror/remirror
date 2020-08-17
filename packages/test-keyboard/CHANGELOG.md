@@ -1,5 +1,20 @@
 # test-keyboard
 
+## 1.0.0-next.22
+
+> 2020-08-17
+
+### Major Changes
+
+- 113560bb: Required temporary fix to resolve issue with unlinked packages in prerelease mode. See
+  the [issue](https://github.com/atlassian/changesets/issues/442) for more details.
+
+### Patch Changes
+
+- Updated dependencies [45d82746]
+  - @remirror/core-types@1.0.0-next.22
+  - @remirror/core-helpers@1.0.0-next.22
+
 ## 0.7.7-next.7
 
 > 2020-08-15

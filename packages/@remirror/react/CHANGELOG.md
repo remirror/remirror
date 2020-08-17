@@ -1,5 +1,35 @@
 # @remirror/react
 
+## 1.0.0-next.22
+
+> 2020-08-17
+
+### Minor Changes
+
+- d300c5f0: Fix #516 with social emoji popup when scroll bars are visible.
+
+  Export `emptyCoords` object from `@remirror/extension-positioner`.
+
+  Add second parameter to `usePositioner` hook which can override when a positioner should be set to
+  active.
+
+### Patch Changes
+
+- Updated dependencies [9ab1d0f3]
+- Updated dependencies [45d82746]
+- Updated dependencies [d300c5f0]
+  - @remirror/core@1.0.0-next.22
+  - @remirror/extension-positioner@1.0.0-next.22
+  - @remirror/extension-placeholder@1.0.0-next.22
+  - @remirror/extension-react-component@1.0.0-next.22
+  - @remirror/extension-react-ssr@1.0.0-next.22
+  - @remirror/preset-core@1.0.0-next.22
+  - @remirror/preset-react@1.0.0-next.22
+  - @remirror/react-utils@1.0.0-next.22
+  - @remirror/theme@1.0.0-next.22
+  - @remirror/pm@1.0.0-next.22
+  - @remirror/i18n@1.0.0-next.22
+
 ## 1.0.0-next.21
 
 > 2020-08-15

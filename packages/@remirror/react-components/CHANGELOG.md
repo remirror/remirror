@@ -1,5 +1,20 @@
 # @remirror/react-components
 
+## 1.0.0-next.4
+
+> 2020-08-17
+
+### Patch Changes
+
+- Updated dependencies [9ab1d0f3]
+- Updated dependencies [45d82746]
+- Updated dependencies [d300c5f0]
+- Updated dependencies [113560bb]
+  - @remirror/core@1.0.0-next.22
+  - @remirror/react@1.0.0-next.22
+  - multishift@1.0.0-next.22
+  - @remirror/pm@1.0.0-next.22
+
 ## 1.0.0-next.3
 
 > 2020-08-15
