@@ -118,7 +118,7 @@ export class WysiwygPreset extends Preset<WysiwygOptions> {
     const blockquoteExtension = new BlockquoteExtension();
     const codeExtension = new CodeExtension();
 
-    const linkExtension = new LinkExtension();
+    const linkExtension = new LinkExtension({ selectTextOnClick: this.options.selectTextOnClick });
     linkExtension.addHandler('onActivateLink', this.options.onActivateLink);
 
     const { autoUpdate, defaultDirection, excludeNodes } = this.options;

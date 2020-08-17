@@ -3,19 +3,21 @@ import {
   CommandFunction,
   CreatePluginReturn,
   extensionDecorator,
+  FromToParameter,
   getMarkRange,
   getMatchString,
   getSelectedWord,
   Handler,
+  isAllSelection,
   isMarkActive,
   isSelectionEmpty,
   isTextSelection,
   KeyBindings,
+  MarkAttributes,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
   markPasteRule,
-  ProsemirrorAttributes,
   removeMark,
   updateMark,
 } from '@remirror/core';
@@ -26,9 +28,22 @@ export interface LinkOptions {
    * Called when the user activates the keyboard shortcut.
    */
   onActivateLink?: Handler<(selectedText: string) => void>;
+
+  /**
+   * Whether whether to select the text of the full active link when clicked.
+   */
+  selectTextOnClick?: boolean;
 }
 
+export type LinkAttributes = MarkAttributes<{
+  /**
+   * The link which is required property for the link mark.
+   */
+  href: string;
+}>;
+
 @extensionDecorator<LinkOptions>({
+  defaultOptions: { selectTextOnClick: false },
   handlerKeys: ['onActivateLink'],
 })
 export class LinkExtension extends MarkExtension<LinkOptions> {
@@ -50,6 +65,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         href: {},
       },
       inclusive: false,
+      spanning: false,
       parseDOM: [
         {
           tag: 'a[href]',
@@ -94,26 +110,23 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
   createCommands() {
     return {
       /**
-       * Create or update the link if it doesn't currently exist at the current selection.
+       * Create or update the link if it doesn't currently exist at the current
+       * selection or provided range.
        */
-      updateLink: (attributes: ProsemirrorAttributes): CommandFunction => {
-        return ({ state, dispatch, view }) => {
-          const { selection } = state;
+      updateLink: (attrs: LinkAttributes, range?: FromToParameter): CommandFunction => {
+        return (parameter) => {
+          const { tr } = parameter;
+          const { selection } = tr;
+          const selectionIsValid =
+            (isTextSelection(selection) && !isSelectionEmpty(tr.selection)) ||
+            isAllSelection(selection) ||
+            isMarkActive({ stateOrTransaction: tr, type: this.type });
 
-          if (
-            isSelectionEmpty(selection) ||
-            (!isTextSelection(selection) &&
-              !isMarkActive({ stateOrTransaction: state.tr, type: this.type }))
-          ) {
+          if (!selectionIsValid && !range) {
             return false;
           }
 
-          return updateMark({ type: this.type, attrs: attributes })({
-            state,
-            dispatch,
-            view,
-            tr: this.store.getTransaction(),
-          });
+          return updateMark({ type: this.type, attrs, range })(parameter);
         };
       },
 
@@ -148,6 +161,10 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     return {
       props: {
         handleClick: (view, pos) => {
+          if (!this.options.selectTextOnClick) {
+            return false;
+          }
+
           const { doc, tr } = view.state;
           const range = getMarkRange(doc.resolve(pos), this.type);
 

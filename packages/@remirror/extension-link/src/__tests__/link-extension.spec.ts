@@ -1,7 +1,7 @@
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
-import { fromHtml, GetHandler, toHtml } from '@remirror/core';
+import { fromHtml, toHtml } from '@remirror/core';
 import { createCoreManager } from '@remirror/testing';
 
 import { LinkExtension, LinkOptions } from '..';
@@ -94,11 +94,11 @@ describe('schema', () => {
   });
 });
 
-function create(handlers?: GetHandler<LinkOptions>) {
-  const linkExtension = new LinkExtension();
+function create(options: LinkOptions = {}) {
+  const linkExtension = new LinkExtension({ selectTextOnClick: options.selectTextOnClick });
 
-  if (handlers) {
-    linkExtension.addHandler('onActivateLink', handlers.onActivateLink);
+  if (options.onActivateLink) {
+    linkExtension.addHandler('onActivateLink', options.onActivateLink);
   }
 
   return renderEditor([linkExtension]);
@@ -115,7 +115,7 @@ describe('commands', () => {
   } = create();
 
   describe('.removeLink', () => {
-    describe('command', () => {
+    describe('()', () => {
       it('removes links when selection is wrapped', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('<start>A link<end>'))));
@@ -172,8 +172,8 @@ describe('commands', () => {
     });
   });
 
-  describe('.updateLink', () => {
-    describe('command', () => {
+  describe('updateLink', () => {
+    describe('()', () => {
       it('creates a link for the selection', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph <start>A link<end>')));
@@ -210,35 +210,13 @@ describe('commands', () => {
 
         expect(view.state).toContainRemirrorDocument(p(testLink('1 2 3')));
       });
-    });
 
-    describe('.active', () => {
-      it('is not active when not selected', () => {
+      it('can select all and create a link', () => {
         const testLink = link({ href });
-        add(doc(p('Paragraph<cursor> ', testLink('A link'))));
+        add(doc(p('<all>', '1', ' ', '2', ' ', '3')));
+        commands.updateLink({ href });
 
-        expect(active.link()).toBeFalse();
-      });
-
-      it('is active with selection wrapped', () => {
-        const testLink = link({ href });
-        add(doc(p('Paragraph ', testLink('<start>A link<end>'))));
-
-        expect(active.link()).toBeTrue();
-      });
-
-      it('is active with cursor within link', () => {
-        const testLink = link({ href });
-        add(doc(p('Paragraph ', testLink('A <cursor>link'))));
-
-        expect(active.link()).toBeTrue();
-      });
-
-      it('is active with selection of multiple nodes', () => {
-        const testLink = link({ href });
-        add(doc(p('<all>Paragraph ', testLink('A link'))));
-
-        expect(active.link()).toBeTrue();
+        expect(view.state).toContainRemirrorDocument(p(testLink('1 2 3')));
       });
     });
 
@@ -260,6 +238,36 @@ describe('commands', () => {
 
         expect(commands.updateLink.isEnabled()).toBeFalse();
       });
+    });
+  });
+
+  describe('active()', () => {
+    it('is not active when not selected', () => {
+      const testLink = link({ href });
+      add(doc(p('Paragraph<cursor> ', testLink('A link'))));
+
+      expect(active.link()).toBeFalse();
+    });
+
+    it('is active with selection wrapped', () => {
+      const testLink = link({ href });
+      add(doc(p('Paragraph ', testLink('<start>A link<end>'))));
+
+      expect(active.link()).toBeTrue();
+    });
+
+    it('is active with cursor within link', () => {
+      const testLink = link({ href });
+      add(doc(p('Paragraph ', testLink('A <cursor>link'))));
+
+      expect(active.link()).toBeTrue();
+    });
+
+    it('is active with selection of multiple nodes', () => {
+      const testLink = link({ href });
+      add(doc(p('<all>Paragraph ', testLink('A link'))));
+
+      expect(active.link()).toBeTrue();
     });
   });
 });
@@ -296,7 +304,7 @@ describe('plugin', () => {
       add,
       attributeMarks: { link },
       nodes: { doc, p },
-    } = create();
+    } = create({ selectTextOnClick: true });
     const testLink = link({ href });
 
     add(doc(p(testLink('Li<cursor>nk'))))
