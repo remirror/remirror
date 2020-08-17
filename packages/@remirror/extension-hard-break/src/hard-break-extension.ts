@@ -4,9 +4,11 @@ import {
   CommandFunction,
   convertCommand,
   extensionDecorator,
+  ExtensionPriority,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
+  NodeGroup,
 } from '@remirror/core';
 import { exitCode } from '@remirror/pm/commands';
 
@@ -21,17 +23,21 @@ import { exitCode } from '@remirror/pm/commands';
  * doc, you should add the `TrailingNodeExtension` which automatically appends a
  * paragraph node to the last node..
  */
-@extensionDecorator({})
+@extensionDecorator({
+  defaultPriority: ExtensionPriority.Low,
+})
 export class HardBreakExtension extends NodeExtension {
   get name() {
     return 'hardBreak' as const;
   }
 
+  tags = [NodeGroup.Inline];
+
   createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       attrs: extra.defaults(),
       inline: true,
-      group: 'inline',
+      group: NodeGroup.Inline,
       selectable: false,
       parseDOM: [{ tag: 'br', getAttrs: extra.parse }],
       toDOM: (node) => ['br', extra.dom(node)],

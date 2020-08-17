@@ -25,8 +25,9 @@ export interface BuiltinOptions extends SuggestOptions, KeymapOptions {}
  *
  * This is used automatically and (at the time of writing) can't be removed from
  * the editor. If you feel that there's a compelling reason to override these
- * extensions feel free to open an [issue
- * here](https://github.com/remirror/remirror/issues) and it can be addressed.
+ * extensions feel free to create a [discussion
+ * here](https://github.com/remirror/remirror/discussions/category_choices) and
+ * it can be addressed.
  *
  * @builtin
  */
