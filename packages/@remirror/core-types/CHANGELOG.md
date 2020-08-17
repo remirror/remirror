@@ -1,5 +1,24 @@
 # @remirror/core-types
 
+## 1.0.0-next.22
+
+> 2020-08-17
+
+### Major Changes
+
+- 45d82746: 💥 Remove `AttributesWithClass`.
+
+  🚀 Add `NodeAttributes` and `MarkAttributes` exports which can be extended in the
+  `Remirror.ExtraNodeAttributes` and `Remirror.ExtraMarkAttributes`.
+
+  🚀 Add `isAllSelection` which checks if the user has selected everything in the active editor.
+
+### Patch Changes
+
+- Updated dependencies [9ab1d0f3]
+  - @remirror/core-constants@1.0.0-next.22
+  - @remirror/pm@1.0.0-next.22
+
 ## 1.0.0-next.21
 
 > 2020-08-15

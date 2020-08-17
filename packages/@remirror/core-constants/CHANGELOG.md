@@ -1,5 +1,13 @@
 # @remirror/core-constants
 
+## 1.0.0-next.22
+
+> 2020-08-17
+
+### Major Changes
+
+- 9ab1d0f3: Remove `ExtensionType` enum which is no longer used.
+
 ## 1.0.0-next.16
 
 > 2020-08-01

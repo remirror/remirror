@@ -1,5 +1,48 @@
 # @remirror/preset-wysiwyg
 
+## 1.0.0-next.22
+
+> 2020-08-17
+
+### Minor Changes
+
+- 21c5807e: Fix issue #298 where selecting all content meant a link couldn't be added afterward.
+
+  💥 Add `selectTextOnClick` and default to `false`. Previously the whole link would be selected
+  when clicking on a link. Now it's configurable.
+
+### Patch Changes
+
+- Updated dependencies [9ab1d0f3]
+- Updated dependencies [8ccbd07b]
+- Updated dependencies [45d82746]
+- Updated dependencies [21c5807e]
+- Updated dependencies [f0377808]
+  - @remirror/core@1.0.0-next.22
+  - @remirror/extension-hard-break@1.0.0-next.22
+  - @remirror/extension-bidi@1.0.0-next.22
+  - @remirror/extension-link@1.0.0-next.22
+  - @remirror/extension-code-block@1.0.0-next.22
+  - @remirror/extension-blockquote@1.0.0-next.22
+  - @remirror/extension-bold@1.0.0-next.22
+  - @remirror/extension-code@1.0.0-next.22
+  - @remirror/extension-drop-cursor@1.0.0-next.22
+  - @remirror/extension-epic-mode@1.0.0-next.22
+  - @remirror/extension-gap-cursor@1.0.0-next.22
+  - @remirror/extension-heading@1.0.0-next.22
+  - @remirror/extension-horizontal-rule@1.0.0-next.22
+  - @remirror/extension-image@1.0.0-next.22
+  - @remirror/extension-italic@1.0.0-next.22
+  - @remirror/extension-search@1.0.0-next.22
+  - @remirror/extension-strike@1.0.0-next.22
+  - @remirror/extension-trailing-node@1.0.0-next.22
+  - @remirror/extension-underline@1.0.0-next.22
+  - @remirror/preset-core@1.0.0-next.22
+  - @remirror/preset-embed@1.0.0-next.22
+  - @remirror/preset-list@1.0.0-next.22
+  - @remirror/preset-table@1.0.0-next.22
+  - @remirror/pm@1.0.0-next.22
+
 ## 1.0.0-next.21
 
 > 2020-08-15

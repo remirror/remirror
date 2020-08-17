@@ -1,5 +1,18 @@
 # @remirror/extension-code-block
 
+## 1.0.0-next.22
+
+> 2020-08-17
+
+### Patch Changes
+
+- f0377808: Fix #503 by preventing the `codeBlock` being created when the `Enter` key is pressed in
+  a non-empty parent textblock.
+- Updated dependencies [9ab1d0f3]
+- Updated dependencies [45d82746]
+  - @remirror/core@1.0.0-next.22
+  - @remirror/pm@1.0.0-next.22
+
 ## 1.0.0-next.21
 
 > 2020-08-15

@@ -1,5 +1,29 @@
 # jest-remirror
 
+## 1.0.0-next.22
+
+> 2020-08-17
+
+### Patch Changes
+
+- 65638a1c: Fix cyclic JSON error when tests when tests failed.
+- 45d82746: 💥 Remove `AttributesWithClass`.
+
+  🚀 Add `NodeAttributes` and `MarkAttributes` exports which can be extended in the
+  `Remirror.ExtraNodeAttributes` and `Remirror.ExtraMarkAttributes`.
+
+  🚀 Add `isAllSelection` which checks if the user has selected everything in the active editor.
+
+- Updated dependencies [9ab1d0f3]
+- Updated dependencies [65638a1c]
+- Updated dependencies [45d82746]
+- Updated dependencies [113560bb]
+  - @remirror/core@1.0.0-next.22
+  - jest-prosemirror@1.0.0-next.22
+  - @remirror/dom@1.0.0-next.22
+  - @remirror/preset-core@1.0.0-next.22
+  - @remirror/pm@1.0.0-next.22
+
 ## 1.0.0-next.21
 
 > 2020-08-15

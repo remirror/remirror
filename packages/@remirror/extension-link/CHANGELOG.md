@@ -1,5 +1,23 @@
 # @remirror/extension-link
 
+## 1.0.0-next.22
+
+> 2020-08-17
+
+### Major Changes
+
+- 21c5807e: Fix issue #298 where selecting all content meant a link couldn't be added afterward.
+
+  💥 Add `selectTextOnClick` and default to `false`. Previously the whole link would be selected
+  when clicking on a link. Now it's configurable.
+
+### Patch Changes
+
+- Updated dependencies [9ab1d0f3]
+- Updated dependencies [45d82746]
+  - @remirror/core@1.0.0-next.22
+  - @remirror/pm@1.0.0-next.22
+
 ## 1.0.0-next.21
 
 > 2020-08-15
