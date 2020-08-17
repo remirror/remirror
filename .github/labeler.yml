@@ -62,6 +62,13 @@
 'package: @remirror/cli :pager:':
   - any: ['packages/@remirror/cli/**/*.{ts,tsx,json}', '!packages/@remirror/cli/**/*.spec.{ts,tsx}']
 
+'type: ui :nail_care:':
+  - any:
+      [
+        'packages/@remirror/{styles,theme,react-components}/**/*.{ts,tsx,json,css}',
+        '!**/*.spec.{ts,tsx}',
+      ]
+
 'type: playground :joystick:':
   - any:
       [
