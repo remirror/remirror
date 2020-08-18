@@ -477,7 +477,7 @@ test('support for rendering a nested controlled editor in strict mode', () => {
 });
 
 describe('onChange', () => {
-  const chain = RemirrorTestChain.create(createReactManager(() => [new BoldExtension()]));
+  const chain = RemirrorTestChain.create(createReactManager(() => []));
   const mock = jest.fn();
 
   const Component = () => {
@@ -504,7 +504,7 @@ describe('onChange', () => {
   };
 
   const TextEditor = () => {
-    const { getRootProps } = useRemirror<BoldExtension>();
+    const { getRootProps } = useRemirror();
 
     return (
       <>
@@ -512,6 +512,10 @@ describe('onChange', () => {
       </>
     );
   };
+
+  beforeEach(() => {
+    mock.mockClear();
+  });
 
   it('updates values', () => {
     render(<Component />);

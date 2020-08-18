@@ -14,7 +14,6 @@ import {
   useManager,
   useRemirror,
 } from '@remirror/testing/react';
-import { BoldExtension } from 'remirror/extension/bold';
 
 import type { RemirrorContextProps } from '../../react-types';
 import { ReactEditor } from '../react-editor';
@@ -323,7 +322,7 @@ describe('focus', () => {
 });
 
 describe('onChange', () => {
-  const chain = RemirrorTestChain.create(createReactManager(() => [new BoldExtension()]));
+  const chain = RemirrorTestChain.create(createReactManager(() => []));
   const mock = jest.fn();
 
   const Component = () => {
@@ -344,7 +343,7 @@ describe('onChange', () => {
   };
 
   const TextEditor = () => {
-    const { getRootProps } = useRemirror<BoldExtension>();
+    const { getRootProps } = useRemirror();
 
     return (
       <>
@@ -352,6 +351,10 @@ describe('onChange', () => {
       </>
     );
   };
+
+  beforeEach(() => {
+    mock.mockClear();
+  });
 
   it('updates values', () => {
     render(<Component />);
