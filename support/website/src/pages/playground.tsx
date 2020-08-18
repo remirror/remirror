@@ -15,12 +15,9 @@ import styles from './playground.module.css';
 
 const PlaygroundPage = (props: any) => {
   const { siteConfig } = useDocusaurusContext();
-  const { favicon, title: siteTitle, url: siteUrl } = siteConfig!;
-
+  const { favicon, url: siteUrl } = siteConfig!;
   const defaultImage = siteConfig?.themeConfig?.image;
-
-  const { title, noFooter, description, image, keywords, permalink, version } = props;
-  const metaTitle = title ? `${title} | ${siteTitle}` : siteTitle;
+  const { noFooter, description, image, keywords, permalink, version } = props;
   const metaImage = image || defaultImage;
   const metaImageUrl = useBaseUrl(metaImage, { absolute: true });
   const faviconUrl = useBaseUrl(favicon);
@@ -30,13 +27,13 @@ const PlaygroundPage = (props: any) => {
       <ThemeProvider>
         <UserPreferencesProvider>
           <Head>
-            {/* TODO: Do not assume that it is in english language */}
+            {/* TODO: Do not assume that it is in english language site */}
             <html lang='en' />
             <script src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
             <script src='https://unpkg.com/prettier@2.0.5/standalone.js'></script>
             <script src='https://unpkg.com/prettier@2.0.5/parser-typescript.js'></script>
-            {metaTitle ?? <title>{metaTitle}</title>}
-            {metaTitle ?? <meta property='og:title' content={metaTitle} />}
+            <title>Remirror Playground</title>
+            <meta property='og:title' content='Remirror Playground' />
             {favicon ?? <link rel='shortcut icon' href={faviconUrl} />}
             {description ?? <meta name='description' content={description} />}
             {description ?? <meta property='og:description' content={description} />}
@@ -44,7 +41,7 @@ const PlaygroundPage = (props: any) => {
             {keywords?.length ?? <meta name='keywords' content={keywords?.join(',')} />}
             {metaImage ?? <meta property='og:image' content={metaImageUrl} />}
             {metaImage ?? <meta property='twitter:image' content={metaImageUrl} />}
-            {metaImage ?? <meta name='twitter:image:alt' content={`Image for ${metaTitle}`} />}
+            {metaImage ?? <meta name='twitter:image:alt' content='Image for Remirror Playground' />}
             {permalink ?? <meta property='og:url' content={siteUrl + permalink} />}
             {permalink ?? <link rel='canonical' href={siteUrl + permalink} />}
             <meta name='twitter:card' content='summary_large_image' />
