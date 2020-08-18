@@ -12,7 +12,7 @@ import {
   StateUpdateLifecycleParameter,
 } from '@remirror/core';
 import { BoldExtension, ItalicExtension } from '@remirror/testing';
-import { act, fireEvent, strictRender } from '@remirror/testing/react';
+import { act, fireEvent, render, strictRender } from '@remirror/testing/react';
 
 import { useManager, useRemirror } from '../../hooks';
 import { createReactManager } from '../../react-helpers';
@@ -474,4 +474,68 @@ test('support for rendering a nested controlled editor in strict mode', () => {
   });
 
   expect(button).not.toHaveStyle('font-weight: bold');
+});
+
+describe('onChange', () => {
+  const chain = RemirrorTestChain.create(createReactManager(() => [new BoldExtension()]));
+  const mock = jest.fn();
+
+  const Component = () => {
+    const manager = useManager(chain.manager);
+
+    const [value, setValue] = useState(
+      manager.createState({
+        content: '<p>A</p>',
+        selection: 'end',
+        stringHandler: fromHtml,
+      }),
+    );
+
+    const onChange: RemirrorEventListener<AnyExtension> = ({ state }) => {
+      setValue(state);
+      mock(value.doc.textContent);
+    };
+
+    return (
+      <RemirrorProvider manager={manager} onChange={onChange} value={value}>
+        <TextEditor />
+      </RemirrorProvider>
+    );
+  };
+
+  const TextEditor = () => {
+    const { getRootProps } = useRemirror<BoldExtension>();
+
+    return (
+      <>
+        <div {...getRootProps()} />
+      </>
+    );
+  };
+
+  it('updates values', () => {
+    render(<Component />);
+
+    for (const char of 'mazing!') {
+      act(() => {
+        chain.insertText(char);
+      });
+    }
+
+    expect(mock).toHaveBeenCalledTimes(8);
+    expect(mock).toHaveBeenLastCalledWith('Amazing');
+  });
+
+  it('updates values in `StrictMode`', () => {
+    strictRender(<Component />);
+
+    for (const char of 'mazing!') {
+      act(() => {
+        chain.insertText(char);
+      });
+    }
+
+    expect(mock).toHaveBeenCalledTimes(8);
+    expect(mock).toHaveBeenLastCalledWith('Amazing');
+  });
 });

@@ -6,6 +6,7 @@ import React, {
   SetStateAction,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -124,7 +125,6 @@ export const ReactEditor = <Combined extends AnyCombinedUnion>(
     getShouldRenderClient: () => shouldRenderClient,
   });
 
-  // Handle the initial editor mount.
   useEffect(() => {
     methods.onMount();
 
@@ -239,6 +239,13 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
     propIsFunction(this.props.children);
 
     if (this.manager.view) {
+      this.manager.view.setProps({
+        state: this.manager.view.state,
+        dispatchTransaction: this.dispatchTransaction,
+        attributes: () => this.getAttributes(),
+        editable: () => this.props.editable ?? true,
+      });
+
       return;
     }
 
@@ -459,7 +466,6 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
    */
   private renderChildren(child: ReactNode) {
     const { forceEnvironment, insertPosition = 'end', suppressHydrationWarning } = this.props;
-
     const children = isArray(child) ? child : [child];
 
     if (
@@ -582,17 +588,26 @@ type SetShouldRenderClient = Dispatch<SetStateAction<boolean | undefined>>;
 function useEditorWrapper<Combined extends AnyCombinedUnion>(
   parameter: ReactEditorWrapperParameter<Combined>,
 ) {
-  const isFirstMount = useFirstMountState();
-  const reactEditorWrapper = useRef(
-    isFirstMount ? new ReactEditorWrapper<Combined>(parameter) : null,
-  ).current?.update(parameter);
+  const parameterRef = useRef(parameter);
+  parameterRef.current = parameter;
 
-  invariant(reactEditorWrapper, {
-    message: 'Problem with `useEditorWrapper` hook.',
-    code: ErrorConstant.INTERNAL,
-  });
+  // The initial editor wrapper should only be recreated when the manager is
+  // destroyed.
+  const initialEditorWrapper = useMemo(() => {
+    return new ReactEditorWrapper<Combined>(parameterRef.current);
+  }, []);
 
-  return reactEditorWrapper;
+  const [editorWrapper, setEditorWrapper] = useState(initialEditorWrapper);
+
+  editorWrapper.update(parameter);
+
+  useEffect(() => {
+    editorWrapper.props.manager.addHandler('destroy', () => {
+      setEditorWrapper(new ReactEditorWrapper<Combined>(parameterRef.current));
+    });
+  }, [initialEditorWrapper, editorWrapper.props.manager]);
+
+  return editorWrapper;
 }
 
 /**

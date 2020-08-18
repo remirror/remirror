@@ -1,9 +1,20 @@
 import { axe } from 'jest-axe';
-import React from 'react';
+import { RemirrorTestChain } from 'jest-remirror';
+import React, { useState } from 'react';
 import { renderToString } from 'react-dom/server';
 
 import { AnyCombinedUnion, fromHtml } from '@remirror/core';
-import { act, createReactManager, fireEvent, strictRender } from '@remirror/testing/react';
+import {
+  act,
+  createReactManager,
+  fireEvent,
+  RemirrorProvider,
+  render,
+  strictRender,
+  useManager,
+  useRemirror,
+} from '@remirror/testing/react';
+import { BoldExtension } from 'remirror/extension/bold';
 
 import type { RemirrorContextProps } from '../../react-types';
 import { ReactEditor } from '../react-editor';
@@ -308,5 +319,63 @@ describe('focus', () => {
     });
 
     expect(context.getState().selection.from).toBe(1);
+  });
+});
+
+describe('onChange', () => {
+  const chain = RemirrorTestChain.create(createReactManager(() => [new BoldExtension()]));
+  const mock = jest.fn();
+
+  const Component = () => {
+    const manager = useManager(chain.manager);
+
+    const [state, setState] = useState(0);
+
+    const onChange = () => {
+      setState((value) => value + 1);
+      mock(state);
+    };
+
+    return (
+      <RemirrorProvider manager={manager} onChange={onChange}>
+        <TextEditor />
+      </RemirrorProvider>
+    );
+  };
+
+  const TextEditor = () => {
+    const { getRootProps } = useRemirror<BoldExtension>();
+
+    return (
+      <>
+        <div {...getRootProps()} />
+      </>
+    );
+  };
+
+  it('updates values', () => {
+    render(<Component />);
+
+    for (const char of 'mazing!') {
+      act(() => {
+        chain.insertText(char);
+      });
+    }
+
+    expect(mock).toHaveBeenCalledTimes(8);
+    expect(mock).toHaveBeenLastCalledWith(7);
+  });
+
+  it('updates values in `StrictMode`', () => {
+    strictRender(<Component />);
+
+    for (const char of 'mazing!') {
+      act(() => {
+        chain.insertText(char);
+      });
+    }
+
+    expect(mock).toHaveBeenCalledTimes(8);
+    expect(mock).toHaveBeenLastCalledWith(7);
   });
 });
