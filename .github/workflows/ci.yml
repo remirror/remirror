@@ -1,11 +1,10 @@
-name: Node CI
+name: 0.x ci
 
 on:
   push:
   pull_request:
     branches:
-      - master
-      - next
+      - 0.x
 
 env:
   CI: true
@@ -54,7 +53,7 @@ jobs:
 
       - name: publish code coverage report
         uses: paambaati/codeclimate-action@v2.4.0
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/0.x'
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
@@ -71,20 +70,10 @@ jobs:
         run: yarn test:e2e
 
       - name: create release pr or publish to npm
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/0.x'
         uses: changesets/action@master
         with:
           publish: yarn release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: notify slack
-        uses: 8398a7/action-slack@v2
-        if: github.event.push && always() # Pick up events even if the job fails or is cancelled.
-        with:
-          status: ${{ job.status }}
-          author_name: Remirror GitHub CI
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
