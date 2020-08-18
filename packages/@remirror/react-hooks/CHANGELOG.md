@@ -1,5 +1,14 @@
 # @remirror/react-hooks
 
+## 1.0.0-next.7
+
+> 2020-08-18
+
+### Patch Changes
+
+- Updated dependencies [d505ebc1]
+  - @remirror/react@1.0.0-next.23
+
 ## 1.0.0-next.6
 
 > 2020-08-17

@@ -1,5 +1,15 @@
 # @remirror/playground
 
+## 1.0.0-next.23
+
+> 2020-08-18
+
+### Patch Changes
+
+- Updated dependencies [d505ebc1]
+  - @remirror/react@1.0.0-next.23
+  - remirror@1.0.0-next.23
+
 ## 1.0.0-next.22
 
 > 2020-08-17

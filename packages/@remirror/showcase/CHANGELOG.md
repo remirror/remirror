@@ -1,5 +1,13 @@
 # @remirror/showcase
 
+## 1.0.0-next.23
+
+> 2020-08-18
+
+### Patch Changes
+
+- @remirror/react-social@1.0.0-next.23
+
 ## 1.0.0-next.22
 
 > 2020-08-17

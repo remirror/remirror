@@ -21,9 +21,9 @@
     "@docusaurus/preset-classic": "2.0.0-alpha.61",
     "@docusaurus/theme-live-codeblock": "2.0.0-alpha.61",
     "@mdx-js/react": "^1.6.16",
-    "@remirror/dev": "1.0.0-next.22",
-    "@remirror/playground": "1.0.0-next.22",
-    "@remirror/showcase": "1.0.0-next.22",
+    "@remirror/dev": "1.0.0-next.23",
+    "@remirror/playground": "1.0.0-next.23",
+    "@remirror/showcase": "1.0.0-next.23",
     "clsx": "^1.1.1",
     "core-js": "^3.6.5",
     "docusaurus": "2.0.0-alpha.61",
@@ -31,7 +31,7 @@
     "prism-react-renderer": "^1.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "remirror": "1.0.0-next.22"
+    "remirror": "1.0.0-next.23"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "2.0.0-alpha.61",
