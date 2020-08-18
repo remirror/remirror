@@ -4,6 +4,7 @@
   - any:
       [
         'support/**/*',
+        '!support/website/src/pages/playground.tsx',
         '!support/e2e/**',
         '!support/actions/**',
         '!support/azure/**',
@@ -14,7 +15,14 @@
   - any: ['support/deprecated/**/*']
 
 'type: ci :evergreen_tree:':
-  - any: ['.github/**/*', 'support/azure/**/*', '!.github/ISSUE_TEMPLATE/**', '!.github/**/*.md']
+  - any:
+      [
+        '.github/**/*',
+        'support/azure/**/*',
+        '!.github/ISSUE_TEMPLATE/**',
+        '!.github/**/*.md',
+        '.devcontainer/**',
+      ]
 
 'package: jest-prosemirror :performing_arts:':
   - any:
