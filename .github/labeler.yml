@@ -1,16 +1,5 @@
 # Documentation is available here https://github.com/actions/labeler
 
-'type: support :books:':
-  - any:
-      [
-        'support/**/*',
-        '!support/website/src/pages/playground.tsx',
-        '!support/e2e/**',
-        '!support/actions/**',
-        '!support/azure/**',
-        '!support/deprecated/**',
-      ]
-
 'type: deprecation :wastebasket:':
   - any: ['support/deprecated/**/*']
 
@@ -85,7 +74,7 @@
       ]
 
 'type: docs :pencil:':
-  - any: ['docs/**/*', '**/readme.{md,mdx}']
+  - any: ['docs/**/*.{md.mdx}', '**/readme.{md,mdx}']
 
 'type: changeset :butterfly:':
   - any: ['.changeset/**/*']
@@ -95,3 +84,14 @@
 
 'test: e2e :heavy_check_mark:':
   - any: ['**/*.e2e.test.{ts,tsx}', 'packages/**/*.snap', 'support/e2e/**/*.{ts,tsx,json,snap}']
+
+'type: support :books:':
+  - any:
+      [
+        'support/**/*',
+        '!support/website/src/pages/playground.tsx',
+        '!support/e2e/**',
+        '!support/actions/**',
+        '!support/azure/**',
+        '!support/deprecated/**',
+      ]
