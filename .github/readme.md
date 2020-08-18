@@ -192,7 +192,7 @@ This project uses [SemVer](http://semver.org/) for versioning. For the versions 
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
-[introduction]: https://remirror.io/docs/introduction
+[introduction]: https://remirror.io/docs
 [contribution guide]: https://remirror.io/docs/contributing
 [projects]: https://remirror.io/projects
 [installation]: https://remirror.io/docs/guide/installation

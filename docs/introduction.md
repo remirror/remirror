@@ -1,5 +1,8 @@
 ---
+id: introduction
 title: Introduction
+description: Welcome to the remirror documentation.
+slug: '/'
 ---
 
 ## Motivation
@@ -67,14 +70,14 @@ This guide is targeted at the following audidence.
 Regardless of where you stand, I have endeavoured to make it approachable and interesting for a
 whole range of developers.
 
-If a section is about to become difficult I've done my best to make it obvious that this is not a
+If a section is becoming difficult this guide will endeavour to make it obvious that this is not a
 easy.
 
 <br />
 
-:::caution
+:::note
 
-Labels will be used to identify advanced areas for extension developers and contributors.
+Labels will be used to identify areas which may be more advanced.
 
 :::
 
@@ -83,7 +86,7 @@ Labels will be used to identify advanced areas for extension developers and cont
 ### Expected knowledge
 
 This guide assumes that you're familiar with JavaScript and have some understanding of `React`. If
-you're brand new to programming or JavaScript I would encourage you to look into other resources
-before attempting to read through this. Of course, don't let me stop you from doing what you want.
-Joy is a wonderful commodity and if you find any comfort while reading this documentation, then by
-all means, craft your own beautiful unique path.
+you're brand new to programming or JavaScript then many would encourage you to look into other
+resources before attempting to read through this. I say, don't let that stop you from doing what you
+want. Joy is a wonderful commodity and if you find any comfort while reading this documentation,
+then by all means, craft your own beautiful unique path.
