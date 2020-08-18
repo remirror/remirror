@@ -1,5 +1,18 @@
 # remirror
 
+## 1.0.0-next.23
+
+> 2020-08-18
+
+### Patch Changes
+
+- d505ebc1: Fixes #555 `onChange` callback not being updated when using a controlled editor in
+  `StrictMode`.
+- Updated dependencies [d505ebc1]
+  - @remirror/react@1.0.0-next.23
+  - @remirror/react-social@1.0.0-next.23
+  - @remirror/react-wysiwyg@1.0.0-next.23
+
 ## 1.0.0-next.22
 
 > 2020-08-17
