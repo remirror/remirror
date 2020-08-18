@@ -1,19 +1,16 @@
-name: Netlify deploy docs
+name: 0.x docs
 
 on:
   push:
   pull_request:
     types: [opened, synchronize]
     branches:
-      - master
-
-env:
-  CI: true
+      - 0.x
 
 jobs:
   deploy_docs:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master' || github.event.pull_request
+    if: github.ref == 'refs/heads/0.x' || github.event.pull_request
 
     steps:
       - name: checkout code repository
@@ -54,7 +51,7 @@ jobs:
         uses: nwtgck/actions-netlify@develop
         with:
           publish-dir: "./docs/public"
-          production-branch: master
+          production-branch: 0.x
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: "Deploy Docs from GitHub Actions - ${{ github.event.pull_request.title || github.ref }}"
         env:

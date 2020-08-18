@@ -31,7 +31,8 @@ expect.addSnapshotSerializer({
     const trimmed = object.trim();
     return trimmed.length > 2 && trimmed.startsWith('<') && trimmed.endsWith('>');
   },
-  print: val => {
+
+  serialize: val => {
     return toDiffableHtml(val).trim();
   },
 });
@@ -45,7 +46,7 @@ interface PuppeteerHtml {
 
 expect.addSnapshotSerializer({
   test: val => val?._ === 'HTML',
-  print(val: PuppeteerHtml) {
+  serialize(val: PuppeteerHtml) {
     return toDiffableHtml(val.html).trim();
   },
 });
