@@ -44,17 +44,10 @@ jobs:
         with:
           node-version: 14
 
-      - name: install pnpm
-        run: npm install pnpm@5.4.9 -g
-
-      - name: setup pnpm config
-        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
-
-      - name: audit dependencies
-        run: pnpm audit --audit-level high
-
-      - name: install dependencies
-        run: pnpm install
+      - name: install and audit
+        uses: ./.github/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: build project
         run: pnpm build
@@ -91,17 +84,10 @@ jobs:
         with:
           node-version: 14
 
-      - name: install pnpm
-        run: npm install pnpm@5.4.9 -g
-
-      - name: setup pnpm config
-        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
-
-      - name: audit dependencies
-        run: pnpm audit --audit-level high
-
-      - name: install dependencies
-        run: pnpm install
+      - name: install and audit
+        uses: ./.github/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: lint files
         run: pnpm lint
@@ -129,17 +115,10 @@ jobs:
         with:
           node-version: 14
 
-      - name: install pnpm
-        run: npm install pnpm@5.4.9 -g
-
-      - name: setup pnpm config
-        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
-
-      - name: audit dependencies
-        run: pnpm audit --audit-level high
-
-      - name: install dependencies
-        run: pnpm install
+      - name: install and audit
+        uses: ./.github/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: typecheck project
         run: pnpm typecheck
@@ -167,17 +146,10 @@ jobs:
         with:
           node-version: 14
 
-      - name: install pnpm
-        run: npm install pnpm@5.4.9 -g
-
-      - name: setup pnpm config
-        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
-
-      - name: audit dependencies
-        run: pnpm audit --audit-level high
-
-      - name: install dependencies
-        run: pnpm install
+      - name: install and audit
+        uses: ./.github/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: run unit tests
         run: pnpm test
@@ -219,17 +191,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: install pnpm
-        run: npm install pnpm@5.4.9 -g
-
-      - name: setup pnpm config
-        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
-
-      - name: audit dependencies
-        run: pnpm audit --audit-level high
-
-      - name: install dependencies
-        run: pnpm install
+      - name: install and audit
+        uses: ./.github/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: build project
         run: pnpm build
@@ -260,17 +225,10 @@ jobs:
         with:
           node-version: 14
 
-      - name: install pnpm
-        run: npm install pnpm@5.4.9 -g
-
-      - name: setup pnpm config
-        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
-
-      - name: audit dependencies
-        run: pnpm audit --audit-level high
-
-      - name: install dependencies
-        run: pnpm install
+      - name: install and audit
+        uses: ./.github/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: build project
         run: pnpm build
@@ -306,17 +264,10 @@ jobs:
         with:
           node-version: 14
 
-      - name: install pnpm
-        run: npm install pnpm@5.4.9 -g
-
-      - name: setup pnpm config
-        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
-
-      - name: audit dependencies
-        run: pnpm audit --audit-level high
-
-      - name: install dependencies
-        run: pnpm install
+      - name: install and audit
+        uses: ./.github/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: build project
         run: pnpm build
@@ -352,17 +303,10 @@ jobs:
         with:
           node-version: 14
 
-      - name: install pnpm
-        run: npm install pnpm@5.4.9 -g
-
-      - name: setup pnpm config
-        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
-
-      - name: audit dependencies
-        run: pnpm audit --audit-level high
-
-      - name: install dependencies
-        run: pnpm install
+      - name: install and audit
+        uses: ./.github/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: build project
         run: pnpm build
@@ -396,17 +340,10 @@ jobs:
         with:
           node-version: 14
 
-      - name: install pnpm
-        run: npm install pnpm@5.4.9 -g
-
-      - name: setup pnpm config
-        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
-
-      - name: audit dependencies
-        run: pnpm audit --audit-level high
-
-      - name: install dependencies
-        run: pnpm install
+      - name: install and audit
+        uses: ./.github/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: build project
         run: pnpm build
