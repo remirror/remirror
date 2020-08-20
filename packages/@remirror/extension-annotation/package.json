@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.22",
-    "@remirror/extension-positioner": "*",
+    "@remirror/extension-positioner": "1.0.0-next.22",
     "@remirror/pm": "1.0.0-next.22"
   },
   "peerDependencies": {
