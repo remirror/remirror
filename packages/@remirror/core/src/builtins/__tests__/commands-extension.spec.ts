@@ -46,7 +46,7 @@ test('clears range selection', () => {
   expect(commands.clearRangeSelection()).toBeTrue();
 
   expect(editor.state.selection.to).toBe(editor.state.selection.from);
-  expect(editor.state.doc).toEqualRemirrorDocument(doc(p('')));
+  expect(editor.state.doc).toEqualRemirrorDocument(doc(p(text)));
 });
 
 test('rejects clearing range selection if there is none', () => {
