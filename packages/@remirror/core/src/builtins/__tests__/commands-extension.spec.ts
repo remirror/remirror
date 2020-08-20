@@ -30,3 +30,30 @@ test('can chain commands', () => {
 
   expect(editor.state.doc).toEqualRemirrorDocument(doc(p(bold(italic('my content')))));
 });
+
+test('clears range selection', () => {
+  const text = 'my content';
+
+  const editor = renderEditor([]);
+  const { doc, p } = editor.nodes;
+  const { commands } = editor;
+
+  editor.add(doc(p(`<start>${text}<end>`)));
+
+  // Pre-condition: range selection covers complete text
+  expect(editor.state.selection.to).toBe(editor.state.selection.from + text.length);
+
+  expect(commands.clearRangeSelection()).toBeTrue();
+
+  expect(editor.state.selection.to).toBe(editor.state.selection.from);
+});
+
+test('rejects clearing range selection if there is none', () => {
+  const editor = renderEditor([]);
+  const { doc, p } = editor.nodes;
+  const { commands } = editor;
+
+  editor.add(doc(p('my content')));
+
+  expect(commands.clearRangeSelection()).toBeFalse();
+});
