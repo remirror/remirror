@@ -84,6 +84,12 @@ Always create your tests inside of a `__tests__/` sub-folder.
 - Unit tests: `*.spec.ts(x)`
 - Integration tests: `*.e2e.test.ts` within the `/e2e` folder
 
+Unit tests can be run limited to a specific package, e.g. for `extension-bold`:
+
+```bash
+pnpm test extension-bold
+```
+
 <br />
 
 ## Using Git
