@@ -1,5 +1,14 @@
 # @remirror/extension-gap-cursor
 
+## 1.0.0-next.24
+
+> 2020-08-20
+
+### Patch Changes
+
+- Updated dependencies [65a7ea24]
+  - @remirror/core@1.0.0-next.24
+
 ## 1.0.0-next.22
 
 > 2020-08-17

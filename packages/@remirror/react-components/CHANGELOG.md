@@ -1,5 +1,15 @@
 # @remirror/react-components
 
+## 1.0.0-next.6
+
+> 2020-08-20
+
+### Patch Changes
+
+- Updated dependencies [65a7ea24]
+  - @remirror/core@1.0.0-next.24
+  - @remirror/react@1.0.0-next.24
+
 ## 1.0.0-next.5
 
 > 2020-08-18

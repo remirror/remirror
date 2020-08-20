@@ -1,5 +1,13 @@
 # @remirror/core
 
+## 1.0.0-next.24
+
+> 2020-08-20
+
+### Minor Changes
+
+- 65a7ea24: Add command to clear current range selection
+
 ## 1.0.0-next.22
 
 > 2020-08-17
