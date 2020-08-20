@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-placeholder",
-  "version": "1.0.0-next.22",
+  "version": "1.0.0-next.24",
   "description": "TEMPLATE_DESCRIPTION",
   "keywords": [
     "remirror",
@@ -29,11 +29,11 @@
     "linaria": "^2.0.0-rc.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.22",
+    "@remirror/core": "1.0.0-next.24",
     "@remirror/pm": "1.0.0-next.22"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.22",
+    "@remirror/core": "1.0.0-next.24",
     "@remirror/pm": "1.0.0-next.22"
   },
   "publishConfig": {
