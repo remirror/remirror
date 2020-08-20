@@ -3,7 +3,7 @@ import {
   emptyVirtualPosition,
   hasStateChanged,
   Positioner,
-} from 'remirror/extension/positioner';
+} from '@remirror/extension-positioner';
 
 import type { Annotation } from './types';
 
