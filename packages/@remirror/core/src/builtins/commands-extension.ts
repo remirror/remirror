@@ -10,6 +10,7 @@ import type {
   ProsemirrorAttributes,
   Transaction,
 } from '@remirror/core-types';
+import { TextSelection } from '@remirror/pm/state';
 import type { EditorView } from '@remirror/pm/view';
 
 import { extensionDecorator } from '../decorators';
@@ -240,6 +241,26 @@ export class CommandsExtension extends PlainExtension {
         return ({ tr, dispatch }) => {
           if (dispatch) {
             dispatch(tr.setNodeMarkup(pos, undefined, attrs));
+          }
+
+          return true;
+        };
+      },
+
+      /**
+       * Fire an update to remove the current range selection. The cursor will
+       * be placed at the beginning of the current range selection.
+       */
+      clearRangeSelection: (): CommandFunction => {
+        return ({ tr, dispatch }) => {
+          const { selection } = tr;
+
+          if (selection.empty) {
+            return false;
+          }
+
+          if (dispatch) {
+            dispatch(tr.setSelection(TextSelection.create(tr.doc, tr.selection.from)));
           }
 
           return true;
