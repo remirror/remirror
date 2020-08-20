@@ -388,7 +388,7 @@ importers:
     specifiers:
       '@babel/runtime': ^7.11.0
       '@remirror/core': 1.0.0-next.22
-      '@remirror/extension-positioner': '*'
+      '@remirror/extension-positioner': 1.0.0-next.22
       '@remirror/pm': 1.0.0-next.22
   packages/@remirror/extension-auto-link:
     dependencies:
