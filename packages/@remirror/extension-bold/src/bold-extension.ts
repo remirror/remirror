@@ -43,13 +43,13 @@ export interface BoldOptions {
   staticKeys: ['weight'],
 })
 export class BoldExtension extends MarkExtension<BoldOptions> {
-  get name() {
+  override get name() {
     return 'bold' as const;
   }
 
-  readonly tags = [ExtensionTag.FormattingMark];
+  override readonly tags = [ExtensionTag.FormattingMark];
 
-  createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
+  override createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
     return {
       attrs: extra.defaults(),
       group: MarkGroup.FontStyle,
@@ -86,13 +86,13 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
     };
   }
 
-  createKeymap() {
+  override createKeymap() {
     return {
       'Mod-b': toggleMark({ type: this.type }),
     };
   }
 
-  createInputRules(): InputRule[] {
+  override createInputRules(): InputRule[] {
     return [
       markInputRule({
         regexp: /(?:\*\*|__)([^*_]+)(?:\*\*|__)$/,
@@ -102,7 +102,7 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
     ];
   }
 
-  createCommands() {
+  override createCommands() {
     return {
       /**
        * Toggle the bold styling on and off. Remove the formatting if any
@@ -138,3 +138,4 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
     };
   }
 }
+

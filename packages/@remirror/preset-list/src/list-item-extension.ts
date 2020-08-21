@@ -13,11 +13,12 @@ import { liftListItem, sinkListItem, splitListItem } from '@remirror/pm/schema-l
  */
 @extensionDecorator({})
 export class ListItemExtension extends NodeExtension {
-  get name() {
+  override get name() {
     return 'listItem' as const;
   }
 
-  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
+
+  override createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       attrs: extra.defaults(),
       content: 'paragraph block*',
@@ -28,7 +29,7 @@ export class ListItemExtension extends NodeExtension {
     };
   }
 
-  createKeymap(): KeyBindings {
+  override createKeymap(): KeyBindings {
     return {
       Enter: convertCommand(splitListItem(this.type)),
       Tab: convertCommand(sinkListItem(this.type)),
