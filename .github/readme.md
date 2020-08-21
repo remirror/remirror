@@ -97,9 +97,9 @@ View our documentation website at https://remirror.io
 
 ## Prerequisites
 
-- [Typescript](https://www.typescriptlang.org/) `>= 3.9`
+- [Typescript](https://www.typescriptlang.org/) `>= 4`
 - [React](https://reactjs.org/) `>= 16.9`
-- [pnpm](https://pnpm.js.org/en/installation) `>= 5.3`
+- [pnpm](https://pnpm.js.org/en/installation) `>= 5.5`
 
 <br />
 
