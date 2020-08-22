@@ -87,8 +87,8 @@ export type Dynamic<Type> = Type & DynamicAnnotation;
  *
  * To automate the creation of handler code you will also need to set the
  * `handlerKeys` static property for your `Extension` or `Preset` to be an array
- * with the keys you've annotated as a handler. An **eslint** rule will be created
- * to automate this.
+ * with the keys you've annotated as a handler. An **eslint** rule will be
+ * created to automate this.
  *
  * ```ts
  * import { PlainExtension, extensionDecorator } from 'remirror/core';
@@ -97,18 +97,15 @@ export type Dynamic<Type> = Type & DynamicAnnotation;
  *   onChange: Handler<(value: string) => void>;
  * }
  *
- * @extensionDecorator({ handlerKeys: ['onChange'] })
- * class CustomExtension extends PlainExtension<CustomOptions> {
- *   get name() {
- *     return 'custom' as const;
+ * @extensionDecorator({ handlerKeys: ['onChange'] }) class CustomExtension
+ * extends PlainExtension<CustomOptions> {get name() {return 'custom' as const;
  *   }
  * }
  *
- * // No prompt to include the `onChange` handler due to the annotation.
- * const extension = new CustomExtension({simple: false});
+ * // No prompt to include the `onChange` handler due to the annotation. const
+ * extension = new CustomExtension({simple: false});
  *
- * const dispose = extension.addHandlers('onChange', (value) => {
- *   sideEffect();
+ * const dispose = extension.addHandlers('onChange', (value) => {sideEffect();
  * });
  *
  * // Later
@@ -127,8 +124,8 @@ export type Handler<Type extends AnyFunction<void>> = Type & HandlerAnnotation;
  * annotation allows you to accept functions or objects which return non void
  * values and set upt the handler for yourself.
  *
- * For custom handlers the `option`s value is meaningless and can only be changed
- * through the `addCustomHandler` method.
+ * For custom handlers the `option`s value is meaningless and can only be
+ * changed through the `addCustomHandler` method.
  */
 export type CustomHandler<Type> = Type & CustomHandlerAnnotation;
 
@@ -173,11 +170,11 @@ export type GetCustomHandler<Options extends Shape> = ConditionalPick<
 export type GetStaticAndDynamic<Options extends Shape> = GetDynamic<Options> & GetStatic<Options>;
 
 /**
- * This constrains the valid options that can be passed into your extensions or presets.
+ * This constrains the valid options that can be passed into your extensions or
+ * presets.
  */
 export interface ValidOptions {
   [option: string]: any;
-  // [option: string]: Remirror.ValidOptionsExtender[keyof Remirror.ValidOptionsExtender];
 }
 
 // The following types can be used to wrap your interface / type and produce a
@@ -237,12 +234,13 @@ export type CustomHandlerKeyList<Options extends ValidOptions> = Array<CustomHan
 declare global {
   namespace Remirror {
     /**
-     * A fake symbol for storing types on classes and interfaces that can be
-     * used for simpler inference.
+     * The interface which defines the valid annotations that can be used as
+     * part of options.
      *
-     * @internal
+     * @remarks
+     * This is used purely for type inference and is not likely to be needed in
+     * your codebase.
      */
-
     interface ValidOptionsExtender {
       DynamicAnnotation: DynamicAnnotation;
       HandlerAnnotation: HandlerAnnotation;

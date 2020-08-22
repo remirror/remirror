@@ -61,6 +61,7 @@ const SmallEditor = () => {
     </div>
   );
 };
+
 const SmallEditorWrapper = () => {
   const extensionManager = useManager(EXTENSIONS);
   const [value, setValue] = useState(
