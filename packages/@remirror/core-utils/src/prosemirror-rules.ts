@@ -62,6 +62,28 @@ export interface PlainInputRuleParameter extends RegExpParameter, BaseInputRuleP
   transformMatch: (match: string[]) => string | null | undefined;
 }
 
+export interface UpdateCaptureTextParameter {
+  /**
+   * The first capture group from the matching input rule.
+   */
+  captureGroup: string;
+
+  /**
+   * The text of the full match which was received.
+   */
+  fullMatch: string;
+
+  /**
+   * The starting position of the match relative to the `doc`.
+   */
+  start: number;
+
+  /**
+   * The end position of the match relative to the `doc`.
+   */
+  end: number;
+}
+
 interface MarkInputRuleParameter
   extends Partial<GetAttributesParameter>,
     RegExpParameter,
@@ -76,6 +98,30 @@ interface MarkInputRuleParameter
    * @defaultValue `false`
    */
   ignoreWhitespace?: boolean;
+
+  /**
+   * Update the capture group. This is needed sometimes because lookbehind regex
+   * don't work in some browsers and can't be transpiled or polyfilled. This
+   * method allows the developer to update the details of the matching input
+   * rule details before it is acted on.
+   *
+   * The capture group refers to the first match within the matching bracket.
+   *
+   * ```ts
+   * abc.match(/ab(c)/) => ['abc', 'a']
+   * ```
+   *
+   * In the above example the capture group is the first index so in this case
+   * the captured text would be `a`.
+   *
+   * @param captured - All the details about the capture to allow for full
+   * customisation.
+   * @returns updated details or undefined to leave unchanged.
+   *
+   * See https://github.com/remirror/remirror/issues/574#issuecomment-678700121
+   * for more context.
+   */
+  updateCaptured?: (captured: UpdateCaptureTextParameter) => Partial<UpdateCaptureTextParameter>;
 }
 
 /**
@@ -137,22 +183,44 @@ export function markPasteRule(parameter: MarkInputRuleParameter) {
  * Creates an input rule based on the provided regex for the provided mark type.
  */
 export function markInputRule(parameter: MarkInputRuleParameter) {
-  const { regexp, type, getAttributes, ignoreWhitespace = false, beforeDispatch } = parameter;
+  const {
+    regexp,
+    type,
+    getAttributes,
+    ignoreWhitespace = false,
+    beforeDispatch,
+    updateCaptured,
+  } = parameter;
 
   return new InputRule(regexp, (state, match, start, end) => {
     const { tr } = state;
+
+    // These are the attributes which are added to the mark and they can be
+    // obtained from the match if a function is provided.
     const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
+
+    // Update the internal values with the user provided method.
+    const details =
+      updateCaptured?.({ captureGroup: match[1], fullMatch: match[0], start, end }) ?? {};
+
+    // Store the updated values or the original.
+    const captureGroup = details.captureGroup ?? match[1];
+    const fullMatch = details.fullMatch ?? match[0];
+    start = details.start ?? start;
+    end = details.end ?? end;
+
     let markEnd = end;
     let initialStoredMarks: Mark[] = [];
-    const captureGroup = match[1];
 
+    // This helps prevent matches which are only whitespace from triggering an
+    // update.
     if (ignoreWhitespace && captureGroup?.trim() === '') {
       return null;
     }
 
     if (captureGroup) {
-      const startSpaces = match[0].search(/\S/);
-      const textStart = start + match[0].indexOf(captureGroup);
+      const startSpaces = fullMatch.search(/\S/);
+      const textStart = start + fullMatch.indexOf(captureGroup);
       const textEnd = textStart + captureGroup.length;
       initialStoredMarks = tr.storedMarks ?? [];
 
@@ -169,7 +237,9 @@ export function markInputRule(parameter: MarkInputRuleParameter) {
 
     tr.addMark(start, markEnd, type.create(attributes));
 
-    // Make sure not to continue with any ongoing marks
+    // Make sure not to reactivate any marks which had previously been
+    // deactivated. By keeping track of the initial stored marks we are able to
+    // discard any unintended consequences of deleting text and adding it again.
     tr.setStoredMarks(initialStoredMarks);
 
     // Allow the caller of this method to update the transaction before it is
