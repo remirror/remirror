@@ -58,3 +58,17 @@ test('rejects clearing range selection if there is none', () => {
 
   expect(commands.clearRangeSelection()).toBeFalse();
 });
+
+test('it can insert a range of text', () => {
+  const editor = renderEditor([]);
+  const { doc, p } = editor.nodes;
+
+  editor.add(doc(p('my <cursor>content')));
+  editor.commands.insertText('awesome ');
+
+  expect(editor.doc).toEqualProsemirrorNode(doc(p('my awesome content')));
+
+  editor.commands.insertText('all ', { from: 1 });
+
+  expect(editor.doc).toEqualProsemirrorNode(doc(p('all my awesome content')));
+});

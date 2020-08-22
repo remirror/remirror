@@ -173,12 +173,14 @@ export class CommandsExtension extends PlainExtension {
       },
 
       /**
-       * Insert text into the dom at the current location.
+       * Insert text into the dom at the current location by default.
        */
-      insertText(text: string): CommandFunction {
+      insertText(text: string, range?: Partial<FromToParameter>): CommandFunction {
         return ({ tr, dispatch }) => {
+          const { from, to } = range ?? tr.selection;
+
           if (dispatch) {
-            dispatch(tr.insertText(text));
+            dispatch(tr.insertText(text, from, to));
           }
 
           return true;
