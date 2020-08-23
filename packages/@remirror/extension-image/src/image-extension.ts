@@ -5,6 +5,7 @@ import {
   CommandFunction,
   CreatePluginReturn,
   extensionDecorator,
+  ExtensionTag,
   isElementDomNode,
   NodeExtension,
   NodeExtensionSpec,
@@ -31,6 +32,8 @@ export class ImageExtension extends NodeExtension {
     return 'image' as const;
   }
 
+  readonly tags = [ExtensionTag.InlineNode];
+
   createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       inline: true,
@@ -45,7 +48,6 @@ export class ImageExtension extends NodeExtension {
         src: { default: null },
         title: { default: '' },
       },
-      group: 'inline',
       draggable: true,
       parseDOM: [
         {

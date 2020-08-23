@@ -4,6 +4,7 @@ import {
   CommandFunction,
   ErrorConstant,
   extensionDecorator,
+  ExtensionTag,
   getMarkRange,
   getMatchString,
   invariant,
@@ -11,10 +12,10 @@ import {
   isMarkActive,
   MarkExtension,
   MarkExtensionSpec,
-  MarkGroup,
   markPasteRule,
   noop,
   object,
+  Plugin,
   RangeParameter,
   removeMark,
   replaceText,
@@ -82,6 +83,11 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     return 'mention' as const;
   }
 
+  /**
+   * Tag this as a behavior influencing mark.
+   */
+  readonly tags = [ExtensionTag.Behavior];
+
   private characterEntryMethods: Array<
     SuggestCharacterEntryMethod<MentionExtensionSuggestCommand>
   > = [];
@@ -92,32 +98,6 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
    * The compiled keybindings.
    */
   private keyBindings: MentionKeyBinding = {};
-
-  protected onAddCustomHandler: AddCustomHandler<MentionOptions> = (parameter) => {
-    const { keyBindings, onCharacterEntry } = parameter;
-
-    if (keyBindings) {
-      this.keyBindingsList = [...this.keyBindingsList, keyBindings];
-      this.updateKeyBindings();
-
-      return () => {
-        this.keyBindingsList = this.keyBindingsList.filter((binding) => binding !== keyBindings);
-        this.updateKeyBindings();
-      };
-    }
-
-    if (onCharacterEntry) {
-      this.characterEntryMethods = [...this.characterEntryMethods, onCharacterEntry];
-
-      return () => {
-        this.characterEntryMethods = this.characterEntryMethods.filter(
-          (method) => method !== onCharacterEntry,
-        );
-      };
-    }
-
-    return;
-  };
 
   createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
     const dataAttributeId = 'data-mention-id';
@@ -130,7 +110,6 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
         label: {},
         name: {},
       },
-      group: MarkGroup.Behavior,
       excludes: '_',
       inclusive: false,
       parseDOM: [
@@ -178,6 +157,32 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     };
   }
 
+  protected onAddCustomHandler: AddCustomHandler<MentionOptions> = (parameter) => {
+    const { keyBindings, onCharacterEntry } = parameter;
+
+    if (keyBindings) {
+      this.keyBindingsList = [...this.keyBindingsList, keyBindings];
+      this.updateKeyBindings();
+
+      return () => {
+        this.keyBindingsList = this.keyBindingsList.filter((binding) => binding !== keyBindings);
+        this.updateKeyBindings();
+      };
+    }
+
+    if (onCharacterEntry) {
+      this.characterEntryMethods = [...this.characterEntryMethods, onCharacterEntry];
+
+      return () => {
+        this.characterEntryMethods = this.characterEntryMethods.filter(
+          (method) => method !== onCharacterEntry,
+        );
+      };
+    }
+
+    return;
+  };
+
   createCommands() {
     return {
       /**
@@ -198,7 +203,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     };
   }
 
-  createPasteRules() {
+  createPasteRules(): Plugin[] {
     return this.options.matchers.map((matcher) => {
       const { startOfLine, char, supportedCharacters, name } = {
         ...DEFAULT_MATCHER,
@@ -222,7 +227,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     });
   }
 
-  createSuggesters() {
+  createSuggesters(): Array<Suggester<MentionExtensionSuggestCommand>> {
     return this.options.matchers.map<Suggester<MentionExtensionSuggestCommand>>((matcher) => {
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const extension = this;

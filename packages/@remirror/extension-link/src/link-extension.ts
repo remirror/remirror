@@ -3,6 +3,7 @@ import {
   CommandFunction,
   CreatePluginReturn,
   extensionDecorator,
+  ExtensionTag,
   FromToParameter,
   getMarkRange,
   getMatchString,
@@ -16,7 +17,6 @@ import {
   MarkAttributes,
   MarkExtension,
   MarkExtensionSpec,
-  MarkGroup,
   markPasteRule,
   removeMark,
   updateMark,
@@ -51,15 +51,10 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     return 'link' as const;
   }
 
-  get defaultOptions() {
-    return {
-      activationHandler: () => false,
-    };
-  }
+  readonly tags = [ExtensionTag.Link];
 
   createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
     return {
-      group: MarkGroup.Link,
       attrs: {
         ...extra.defaults(),
         href: {},

@@ -1,11 +1,6 @@
 import type { Except } from 'type-fest';
 
-import type {
-  ExtensionPriority,
-  ExtensionTag,
-  MarkGroup,
-  NodeGroup,
-} from '@remirror/core-constants';
+import type { ExtensionPriority } from '@remirror/core-constants';
 import type {
   AnyConstructor,
   AnyFunction,
@@ -55,28 +50,6 @@ type Changes<Type> =
 export type ChangedOptions<Options extends ValidOptions> = {
   [Key in keyof GetDynamic<Options>]: Changes<GetDynamic<Options>[Key]>;
 };
-
-/**
- * The tag names that apply to any extension whether plain, node or mark. These
- * are mostly used for nodes and marks the main difference is they are added to
- * the `tags` parameter of the extension rather than within the schema.
- */
-export type GeneralExtensionTags<Names extends string = string> = Record<ExtensionTag, Names[]> &
-  Record<string, undefined | Names[]>;
-
-/**
- * Provides the different mark groups which are defined in the mark extension
- * specification.
- */
-export type MarkExtensionTags<MarkNames extends string = string> = Record<MarkGroup, MarkNames[]> &
-  Record<string, undefined | MarkNames[]>;
-
-/**
- * Provides an object of the different node groups `block` and `inline` which
- * are defined in the node extension specification.
- */
-export type NodeExtensionTags<NodeNames extends string = string> = Record<NodeGroup, NodeNames[]> &
-  Record<string, undefined | NodeNames[]>;
 
 /**
  * Get the static extension settings.

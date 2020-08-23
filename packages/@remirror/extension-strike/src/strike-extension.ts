@@ -1,11 +1,11 @@
 import {
   ApplySchemaAttributes,
   extensionDecorator,
+  ExtensionTag,
   InputRule,
   KeyBindings,
   MarkExtension,
   MarkExtensionSpec,
-  MarkGroup,
   markInputRule,
   markPasteRule,
   Plugin,
@@ -21,10 +21,11 @@ export class StrikeExtension extends MarkExtension {
     return 'strike' as const;
   }
 
+  readonly tags = [ExtensionTag.FontStyle];
+
   createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
     return {
       attrs: extra.defaults(),
-      group: MarkGroup.FontStyle,
       parseDOM: [
         {
           tag: 's',

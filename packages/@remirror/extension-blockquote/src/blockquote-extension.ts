@@ -2,10 +2,11 @@ import {
   ApplySchemaAttributes,
   CommandFunction,
   extensionDecorator,
+  ExtensionTag,
+  InputRule,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
-  NodeGroup,
   toggleWrap,
 } from '@remirror/core';
 import { wrappingInputRule } from '@remirror/pm/inputrules';
@@ -19,11 +20,12 @@ export class BlockquoteExtension extends NodeExtension {
     return 'blockquote' as const;
   }
 
+  readonly tags = [ExtensionTag.BlockNode];
+
   createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       attrs: extra.defaults(),
       content: 'block*',
-      group: NodeGroup.Block,
       defining: true,
       draggable: false,
       parseDOM: [{ tag: 'blockquote', getAttrs: extra.parse, priority: 100 }],
@@ -53,7 +55,7 @@ export class BlockquoteExtension extends NodeExtension {
     };
   }
 
-  createInputRules() {
+  createInputRules(): InputRule[] {
     return [wrappingInputRule(/^\s*>\s$/, this.type)];
   }
 }

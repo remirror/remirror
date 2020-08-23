@@ -1,9 +1,9 @@
 import {
   ApplySchemaAttributes,
   EditorSchema,
+  ExtensionTag,
   includes,
   NodeExtensionSpec,
-  NodeGroup,
   NodeType,
   NodeTypeParameter,
   object,
@@ -82,36 +82,9 @@ function setCellAttrs(node: ProsemirrorNode) {
   return attrs;
 }
 
-// :: (Object) → Object
-//
-// This function creates a set of [node
-// specs](http://prosemirror.net/docs/ref/#model.SchemaSpec.nodes) for
-// `table`, `table_row`, and `table_cell` nodes types as used by this
-// module. The result can then be added to the set of nodes when
-// creating a a schema.
-//
-//   options::- The following options are understood:
-//
-//     tableGroup:: ?string
-//     A group name (something like `"block"`) to add to the table
-//     node type.
-//
-//     cellContent:: string
-//     The content expression for table cells.
-//
-//     cellAttributes:: ?Object
-//     Additional attributes to add to cells. Maps attribute names to
-//     objects with the following properties:
-//
-//       default:: any
-//       The attribute's default value.
-//
-//       getFromDOM:: ?(dom.Node) → any
-//       A function to read the attribute's value from a DOM node.
-//
-//       setDOMAttr:: ?(value: any, attrs: Object)
-//       A function to add the attribute's value to an attribute
-//       object that's used to render the cell's DOM.
+/**
+ * This function creates the base for the tableNode ProseMirror specs.
+ */
 export function createTableNodeSchema(
   extra: ApplySchemaAttributes,
 ): Record<'table' | 'tableRow' | 'tableCell' | 'tableHeaderCell', TableSchemaSpec> {
@@ -129,7 +102,6 @@ export function createTableNodeSchema(
       content: 'tableRow+',
       tableRole: 'table',
       isolating: true,
-      group: NodeGroup.Block,
       parseDOM: [{ tag: 'table', getAttrs: extra.parse }],
       toDOM(node) {
         return ['table', ['tbody', extra.dom(node), 0]];
@@ -147,7 +119,7 @@ export function createTableNodeSchema(
     },
 
     tableCell: {
-      content: `${NodeGroup.Block}+`,
+      content: `${ExtensionTag.BlockNode}+`,
       attrs: cellAttrs,
       tableRole: 'cell',
       isolating: true,
@@ -163,7 +135,7 @@ export function createTableNodeSchema(
     },
 
     tableHeaderCell: {
-      content: `${NodeGroup.Block}+`,
+      content: `${ExtensionTag.BlockNode}+`,
       attrs: cellAttrs,
       tableRole: 'header_cell',
       isolating: true,

@@ -4,6 +4,7 @@ import {
   CommandFunctionParameter,
   convertCommand,
   extensionDecorator,
+  ExtensionTag,
   NodeExtension,
   OnSetOptionsParameter,
 } from '@remirror/core';
@@ -54,6 +55,8 @@ export class TableExtension extends NodeExtension<TableOptions> {
   get name() {
     return 'table' as const;
   }
+
+  readonly tags = [ExtensionTag.BlockNode];
 
   createNodeSpec(extra: ApplySchemaAttributes): TableSchemaSpec {
     return createTableNodeSchema(extra).table;

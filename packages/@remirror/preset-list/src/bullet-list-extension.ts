@@ -1,10 +1,10 @@
 import {
   ApplySchemaAttributes,
   extensionDecorator,
+  ExtensionTag,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
-  NodeGroup,
   toggleList,
 } from '@remirror/core';
 import { wrappingInputRule } from '@remirror/pm/inputrules';
@@ -18,11 +18,12 @@ export class BulletListExtension extends NodeExtension {
     return 'bulletList' as const;
   }
 
+  readonly tags = [ExtensionTag.BlockNode, ExtensionTag.ListContainerNode];
+
   createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       attrs: extra.defaults(),
       content: 'listItem+',
-      group: NodeGroup.Block,
       parseDOM: [{ tag: 'ul', getAttrs: extra.parse }],
       toDOM: (node) => ['ul', extra.dom(node), 0],
     };

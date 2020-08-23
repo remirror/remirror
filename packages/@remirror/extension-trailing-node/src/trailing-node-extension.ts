@@ -58,7 +58,7 @@ export class TrailingNodeExtension extends PlainExtension<TrailingNodeOptions> {
    * Whenever the options are changed make sure to update the plugin with the
    * new values and trigger a state update.
    */
-  protected onSetOptions(parameter: OnSetOptionsParameter<TrailingNodeOptions>) {
+  protected onSetOptions(parameter: OnSetOptionsParameter<TrailingNodeOptions>): void {
     const { changes } = parameter;
 
     if (changes.disableTags.changed || changes.ignoredNodes.changed || changes.nodeName.changed) {
@@ -78,7 +78,7 @@ export class TrailingNodeExtension extends PlainExtension<TrailingNodeOptions> {
     // The names of the nodes for which this rule should not be applied.
     const notAfter: string[] = disableTags
       ? uniqueArray([...ignoredNodes, nodeName])
-      : uniqueArray([...ignoredNodes, ...tags.general.lastNodeCompatible, nodeName]);
+      : uniqueArray([...ignoredNodes, ...tags.lastNodeCompatible, nodeName]);
 
     // The node that will be inserted when the criteria match.
     const type = this.store.schema.nodes[nodeName];

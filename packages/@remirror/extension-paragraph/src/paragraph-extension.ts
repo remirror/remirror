@@ -5,7 +5,6 @@ import {
   ExtensionTag,
   NodeExtension,
   NodeExtensionSpec,
-  NodeGroup,
   ProsemirrorAttributes,
   setBlockType,
 } from '@remirror/core';
@@ -24,12 +23,11 @@ export class ParagraphExtension extends NodeExtension {
     return 'paragraph' as const;
   }
 
-  readonly extensionTags = [ExtensionTag.LastNodeCompatible] as const;
+  readonly tags = [ExtensionTag.LastNodeCompatible, ExtensionTag.BlockNode];
 
   createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       content: 'inline*',
-      group: NodeGroup.Block,
       attrs: {
         ...extra.defaults(),
       },

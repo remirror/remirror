@@ -1,7 +1,7 @@
 import React from 'react';
 import TestRenderer from 'react-test-renderer';
 
-import { NodeExtension, NodeExtensionSpec, NodeGroup } from '@remirror/core';
+import { ExtensionTag, NodeExtension, NodeExtensionSpec } from '@remirror/core';
 import { Node as PMNode } from '@remirror/pm/model';
 import {
   BoldExtension,
@@ -21,10 +21,12 @@ class FooExtension extends NodeExtension {
   get name() {
     return 'foo' as const;
   }
+
+  readonly tags = [ExtensionTag.BlockNode];
+
   createNodeSpec(): NodeExtensionSpec {
     return {
       content: 'block*',
-      group: NodeGroup.Block,
 
       toDOM: () => {
         const attributes = {
