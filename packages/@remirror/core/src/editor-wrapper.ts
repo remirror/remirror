@@ -1,8 +1,16 @@
 import { cx } from 'linaria';
 import { createNanoEvents, Unsubscribe } from 'nanoevents';
 
-import { EDITOR_CLASS_NAME, EMPTY_PARAGRAPH_NODE } from '@remirror/core-constants';
-import { bool, isEmptyArray, isFunction, object, pick, uniqueId } from '@remirror/core-helpers';
+import { EDITOR_CLASS_NAME, EMPTY_PARAGRAPH_NODE, ErrorConstant } from '@remirror/core-constants';
+import {
+  bool,
+  invariant,
+  isEmptyArray,
+  isFunction,
+  object,
+  pick,
+  uniqueId,
+} from '@remirror/core-helpers';
 import type {
   EditorSchema,
   EditorState,
@@ -91,6 +99,12 @@ export abstract class EditorWrapper<
    * An array of event listener disposers.
    */
   #disposers: Unsubscribe[] = [];
+
+  /**
+   * Tracks whether events have been setup for this instance of the
+   * `EditorWrapper` yet.
+   */
+  #hasSetupEvents = false;
 
   /**
    * The updatable view props.
@@ -192,8 +206,6 @@ export abstract class EditorWrapper<
     this.manager.addView(view);
   }
 
-  #hasSetupEvents = false;
-
   /**
    * Setup the manager event listeners which are disposed of when the manager is
    * destroyed.
@@ -258,7 +270,7 @@ export abstract class EditorWrapper<
   /**
    * Update the view props.
    */
-  protected updateViewProps(...keys: UpdatableViewProps[]) {
+  protected updateViewProps(...keys: UpdatableViewProps[]): void {
     const props = pick(this.updatableViewProps, keys);
 
     this.view.setProps({ ...this.view.props, ...props });
@@ -269,7 +281,7 @@ export abstract class EditorWrapper<
    */
   protected getAttributes(ssr?: false): Record<string, string>;
   protected getAttributes(ssr: true): Shape;
-  protected getAttributes(ssr?: boolean) {
+  protected getAttributes(ssr?: boolean): Shape {
     const { attributes, autoFocus } = this.props;
     const managerAttributes = this.manager.store?.attributes;
 
@@ -303,11 +315,13 @@ export abstract class EditorWrapper<
    * @internalremarks
    * How does it work when transactions are dispatched one after the other.
    */
-  protected readonly dispatchTransaction = (tr: Transaction) => {
-    if (this.manager.destroyed) {
-      // TODO: this should be made to never happen.
-      return;
-    }
+  protected readonly dispatchTransaction = (tr: Transaction): void => {
+    // This should never happen, but it may have slipped through in the certain places.
+    invariant(!this.manager.destroyed, {
+      code: ErrorConstant.MANAGER_PHASE_ERROR,
+      message:
+        'A transaction was dispatched to a manager that has already been destroyed. Please check your set up, or open an issue.',
+    });
 
     tr = this.props.onDispatchTransaction?.(tr, this.getState()) ?? tr;
 
@@ -341,7 +355,7 @@ export abstract class EditorWrapper<
    * When extending this class make sure to call this method once
    * `ProsemirrorView` has been added to the dom.
    */
-  protected addFocusListeners() {
+  protected addFocusListeners(): void {
     this.view.dom.addEventListener('blur', this.onBlur);
     this.view.dom.addEventListener('focus', this.onFocus);
   }
@@ -351,7 +365,7 @@ export abstract class EditorWrapper<
    *
    * When extending this class in your framework, make sure to call this just before the view is destroyed.
    */
-  protected removeFocusListeners() {
+  protected removeFocusListeners(): void {
     this.view.dom.removeEventListener('blur', this.onBlur);
     this.view.dom.removeEventListener('focus', this.onFocus);
   }
@@ -365,14 +379,14 @@ export abstract class EditorWrapper<
    * - Destroys the state for each plugin
    * - Destroys the manager which destroys the editor view.
    */
-  onDestroy() {
+  onDestroy(): void {
     this.removeFocusListeners();
   }
 
   /**
    * Use this method in the `onUpdate` event to run all change handlers.
    */
-  readonly onChange = (parameter: ListenerParameter<Combined> = object()) => {
+  readonly onChange = (parameter: ListenerParameter<Combined> = object()): void => {
     this.props.onChange?.(this.eventListenerParameter(parameter));
 
     if (this.#firstRender) {
@@ -467,7 +481,7 @@ export abstract class EditorWrapper<
   /**
    * Set the focus for the editor.
    */
-  protected readonly focus = (position?: FocusType) => {
+  protected readonly focus = (position?: FocusType): void => {
     if (position === false) {
       return;
     }
@@ -490,7 +504,7 @@ export abstract class EditorWrapper<
    * Remove the focus from the editor. If the editor is not focused it will do
    * nothing.
    */
-  protected readonly blur = () => {
+  protected readonly blur = (): void => {
     const { dom } = this.view;
 
     if (!this.view.hasFocus()) {

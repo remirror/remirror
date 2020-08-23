@@ -190,7 +190,7 @@ export type DeepString<Type> = Type extends object
 export type RegexTuple = [string, string?];
 
 /**
- * A JSON representation of a prosemirror Mark
+ * A JSON representation of a prosemirror Mark.
  */
 export interface ObjectMark {
   type: string;
@@ -198,7 +198,7 @@ export interface ObjectMark {
 }
 
 /**
- * Defines a position
+ * Defines a position.
  */
 export interface Position {
   top: number;
@@ -225,13 +225,36 @@ export type MarkAttributes<Extra extends object = object> = ProsemirrorAttribute
   Remirror.ExtraMarkAttributes & Extra
 >;
 
+/**
+ * A dynamic attributes creator. This is used to create attributes that are
+ * dynamically set when a node is first added to the dom.
+ */
+export type DynamicAttributeCreator = (nodeOrMark: ProsemirrorNode | Mark) => string;
+
+/**
+ * The configuration object for adding extra attributes to the node or mark in
+ * the editor schema.
+ *
+ * Please note that using this will alter the schema, so changes here can cause
+ * breaking changes for users if not managed carefully.
+ *
+ * TODO #462 is being added to support migrations so that breaking changes can
+ * be handled automatically.
+ */
 export interface SchemaAttributesObject {
   /**
-   * The default value for the attr, if left undefined then this becomes a
-   * required. and must be provided whenever a node or mark of a type that has
-   * them is created.
+   * The default value for the attribute being added, if set to `null` then the
+   * initial value for any nodes is not required.
+   *
+   * If set to `undefined` then a value must be provided whenever a node or mark
+   * that has this extra attribute is created. ProseMirror will throw if the
+   * value isn't required. Make sure you know what you're doing before setting
+   * it to undefined as it could cause unintended errors.
+   *
+   * This can also be a function which enables dynamically setting the attribute
+   * based on the value returned.
    */
-  default: string | null;
+  default: string | null | DynamicAttributeCreator;
 
   /**
    * A function used to extract the attribute from the dom and must be applied
@@ -272,7 +295,7 @@ export interface ApplySchemaAttributes {
    * A function which returns the object of defaults. Since this is for extra
    * attributes a default must be provided.
    */
-  defaults: () => Record<string, { default: string | null }>;
+  defaults: () => Record<string, { default?: string | null }>;
 
   /**
    * Read a value from the dome and convert it into prosemirror attributes.
@@ -283,14 +306,19 @@ export interface ApplySchemaAttributes {
    * Take the node attributes and create the object of string attributes for
    * storage on the dom node.
    */
-  dom: (attrs: ProsemirrorNode | Mark) => Record<string, string>;
+  dom: (nodeOrMark: ProsemirrorNode | Mark) => Record<string, string>;
 }
 
 /**
  * A mapping of the attribute name to it's default, getter and setter. If the
  * value is set to a string then it will be resolved as the `default`.
+ *
+ * If it is set to a function then it will be a dynamic node or mark.
  */
-export type SchemaAttributes = Record<string, SchemaAttributesObject | string>;
+export type SchemaAttributes = Record<
+  string,
+  SchemaAttributesObject | string | DynamicAttributeCreator
+>;
 
 /**
  * A method that can pull all the extraAttributes from the provided dom node.

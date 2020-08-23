@@ -171,8 +171,9 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
   };
 
   /**
-   * TODO think about the case where bindings are being disposed and then added
-   * in a different position in the `extraKeyBindings` array.
+   * @internalremarks Think about the case where bindings are disposed of and then
+   * added in a different position in the `extraKeyBindings` array. This is
+   * especially pertinent when using hooks.
    */
   protected onAddCustomHandler: AddCustomHandler<KeymapOptions> = ({ keymap }) => {
     if (!keymap) {
