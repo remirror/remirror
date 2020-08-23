@@ -1,5 +1,23 @@
 # @remirror/extension-link
 
+## 1.0.0-next.25
+
+> 2020-08-23
+
+### Minor Changes
+
+- 3f2625bf: Add a new mark input rule parameter property, `updateCaptured` which allows the
+  developer to tweak the details of the captured detail rule. This provides a workaround for the a
+  lack of support for the `lookbehind` regex in **Safari** and other browsers.
+
+  Fixes #574.
+
+### Patch Changes
+
+- Updated dependencies [e37d64de]
+- Updated dependencies [3f2625bf]
+  - @remirror/core@1.0.0-next.25
+
 ## 1.0.0-next.24
 
 > 2020-08-20
