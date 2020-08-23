@@ -7,7 +7,6 @@ import {
   isEmptyArray,
   isEmptyObject,
   isNullOrUndefined,
-  keys,
   object,
 } from '@remirror/core-helpers';
 import type {
@@ -61,7 +60,7 @@ interface NodeEqualsTypeParameter<Schema extends EditorSchema = any>
  */
 export function isNodeOfType<Schema extends EditorSchema = any>(
   parameter: NodeEqualsTypeParameter<Schema>,
-) {
+): boolean {
   const { types, node } = parameter;
 
   if (!node) {
@@ -106,8 +105,6 @@ interface MarkEqualsTypeParameter<Schema extends EditorSchema = any>
  * changes to the original state transaction.
  *
  * @param tr - the prosemirror transaction
- *
- * @public
  */
 export function cloneTransaction(tr: Transaction): Transaction {
   return Object.assign(Object.create(tr), tr).setTime(Date.now());
@@ -144,7 +141,7 @@ export function applyClonedTransaction(parameter: ApplyClonedTransactionParamete
  */
 export function markEqualsType<Schema extends EditorSchema = any>(
   parameter: MarkEqualsTypeParameter<Schema>,
-) {
+): boolean {
   const { types, mark } = parameter;
   return mark ? (Array.isArray(types) && types.includes(mark.type)) || mark.type === types : false;
 }
@@ -157,10 +154,8 @@ interface RemoveNodeAtPositionParameter extends TransactionParameter, PosParamet
  * the node.
  *
  * @param position - the prosemirror position
- *
- * @public
  */
-export function removeNodeAtPosition({ pos, tr }: RemoveNodeAtPositionParameter) {
+export function removeNodeAtPosition({ pos, tr }: RemoveNodeAtPositionParameter): Transaction {
   const node = tr.doc.nodeAt(pos);
 
   if (node) {
@@ -177,7 +172,11 @@ interface ReplaceNodeAtPositionParameter extends RemoveNodeAtPositionParameter {
 /**
  * Replaces the node at the provided position with the provided content.
  */
-export function replaceNodeAtPosition({ pos, tr, content }: ReplaceNodeAtPositionParameter) {
+export function replaceNodeAtPosition({
+  pos,
+  tr,
+  content,
+}: ReplaceNodeAtPositionParameter): Transaction {
   const node = tr.doc.nodeAt(pos);
 
   if (node) {
@@ -203,8 +202,6 @@ export function replaceNodeAtPosition({ pos, tr, content }: ReplaceNodeAtPositio
  *
  * @param position - the prosemirror position
  * @param view - the editor view
- *
- * @public
  */
 export function findElementAtPosition(position: number, view: EditorView): HTMLElement {
   const dom = view.domAtPos(position);
@@ -360,10 +357,8 @@ export function findPositionOfNodeBefore<Schema extends EditorSchema = any>(
  * ```
  *
  * @param tr
- *
- * @public
  */
-export function removeNodeBefore(tr: Transaction) {
+export function removeNodeBefore(tr: Transaction): Transaction {
   const result = findPositionOfNodeBefore(tr.selection);
 
   if (result) {
@@ -492,10 +487,8 @@ export function findPositionOfNodeAfter<Schema extends EditorSchema = any>(
  * ```
  *
  * @param tr
- *
- * @public
  */
-export function removeNodeAfter(tr: Transaction) {
+export function removeNodeAfter(tr: Transaction): Transaction {
   const result = findPositionOfNodeAfter(tr.selection);
 
   if (result) {
@@ -510,7 +503,7 @@ export function removeNodeAfter(tr: Transaction) {
  *
  * @param value - the transaction selection or state
  */
-export function isSelectionEmpty(value: Transaction | EditorState | Selection) {
+export function isSelectionEmpty(value: Transaction | EditorState | Selection): boolean {
   if (isSelection(value)) {
     return value.empty;
   }
@@ -528,7 +521,7 @@ export function isSelectionEmpty(value: Transaction | EditorState | Selection) {
  *
  * @param tr - the transaction to check
  */
-export function hasTransactionChanged(tr: Transaction) {
+export function hasTransactionChanged(tr: Transaction): boolean {
   return tr.docChanged || tr.selectionSet;
 }
 
@@ -547,7 +540,7 @@ interface IsNodeActiveParameter extends NodeTypeParameter, Partial<AttributesPar
  *
  * @param params - the destructured node active parameters
  */
-export function isNodeActive(parameter: IsNodeActiveParameter) {
+export function isNodeActive(parameter: IsNodeActiveParameter): boolean {
   const { state, type, attrs = {} } = parameter;
 
   const { selection } = state;
@@ -563,13 +556,23 @@ export function isNodeActive(parameter: IsNodeActiveParameter) {
   return parent.node.hasMarkup(type, { ...parent.node.attrs, ...attrs });
 }
 
+/**
+ * The ProseMirror `Schema` as a JSON object.
+ */
 export interface SchemaJSON<Nodes extends string = string, Marks extends string = string> {
+  /**
+   * The nodes of the schema.
+   */
   nodes: Record<Nodes, NodeSpec>;
+
+  /**
+   * The marks within the schema.
+   */
   marks: Record<Marks, MarkSpec>;
 }
 
 /**
- * Converts a schema to a simple json compatible object.
+ * Converts a `schema` to a JSON compatible object.
  */
 export function schemaToJSON<Nodes extends string = string, Marks extends string = string>(
   schema: EditorSchema<Nodes, Marks>,
@@ -592,8 +595,8 @@ export function schemaToJSON<Nodes extends string = string, Marks extends string
 }
 
 /**
- * Wraps the default {@link ProsemirrorCommandFunction} and makes it compatible
- * with the default **remirror** {@link CommandFunction} call signature.
+ * Wraps the default [[ProsemirrorCommandFunction]] and makes it compatible with
+ * the default **remirror** [[CommandFunction]] call signature.
  *
  * By default this is non chainable since it uses the `state.tr` rather than the
  * accumulated `tr` property passed into all command functions.
@@ -655,7 +658,7 @@ export function chainCommands<Schema extends EditorSchema = any, Extra extends o
 }
 
 /**
- * Chains together keybindings, allowing for the sme key binding to be used
+ * Chains together keybindings, allowing for the same key binding to be used
  * across multiple extensions without overriding behavior.
  *
  * @remarks
@@ -683,6 +686,7 @@ export function chainKeyBindingCommands(
      * method has been called.
      */
     const createNext = (...nextCommands: KeyBindingCommandFunction[]): (() => boolean) => () => {
+      // If there are no commands then this can be ignored and continued.
       if (isEmptyArray(nextCommands)) {
         return false;
       }
@@ -710,28 +714,75 @@ export function chainKeyBindingCommands(
       return exitEarly;
     }
 
-    // Continue on through the chain of commands.
+    // Continue to the next function in the chain of commands.
     return next();
   };
 }
 
+/**
+ * Used to merge key bindings together in a sensible way. Identical key bindings
+ * likely have the same key. as a result a naive merge would result in the
+ * binding added later in the merge being the only one the editor sees.
+ *
+ * This creator is used to create a merge that steps from the highest priority
+ * to the lowest priority giving each keybinding in the chain an opportunity to
+ * be run, and defer to the next command in the chain or choose not to.
+ *
+ * - It is used to create the [[`mergeKeyBindings`]] function helper.
+ * - It is used to create the [[`mergeProsemirrorKeyBindings`]] function helper.
+ *
+ * @typeParam [Schema] - the schema that is being used to create this command.
+ * @typeParam [Type] - the mapper type signature which is what the `mapper`
+ * param transforms the [[`KeyBindingCommandFunction`]]  into.
+ *
+ * @param extensionKeymaps - the list of extension keymaps similar to the
+ * following:
+ *   ```ts
+ *     [{ Enter: () => false}, { Escape: () => true }, { Enter: () => true }]
+ *   ```
+ * @param mapper - used to convert the [[`KeyBindingCommandFunction`]] into a
+ * function with a different signature. It's application can be seen in
+ * [[`mergeKeyBindings`]] and [[`mergeProsemirrorKeyBindings`]].
+ *
+ */
 function mergeKeyBindingCreator<
-  Schema extends EditorSchema = any,
-  Type extends AnyFunction = KeyBindingCommandFunction<Schema>
+  Schema extends EditorSchema = EditorSchema,
+  Mapper extends AnyFunction = KeyBindingCommandFunction<Schema>
 >(
   extensionKeymaps: Array<KeyBindings<Schema>>,
-  mapper: (command: KeyBindingCommandFunction) => Type,
-): Record<string, Type> {
+  mapper: (command: KeyBindingCommandFunction) => Mapper,
+): Record<string, Mapper> {
+  // Keep track of the previous commands as we loop through the `extensionKeymaps`.
   const previousCommandsMap = new Map<string, KeyBindingCommandFunction[]>();
-  const mappedCommands: Record<string, Type> = object();
 
+  // This is the combined mapping of commands. Essentially this function turns
+  // the `extensionKeymaps` array into a single object `extensionKeymap` which
+  // composes each function to give full control to the developer.
+  const mappedCommands: Record<string, Mapper> = object();
+
+  // Outer loop iterates over each object keybinding.
   for (const extensionKeymap of extensionKeymaps) {
-    for (const key of keys(extensionKeymap)) {
+    // Inner loop checks each keybinding on the keybinding object. `key` refers
+    // to the name of the keyboard combination, like `Shift-Enter` or
+    // `Cmd-Escape`.
+    for (const [key, newCommand] of entries(extensionKeymap)) {
+      // Get the previous commands for this key if it already exists
       const previousCommands: KeyBindingCommandFunction[] = previousCommandsMap.get(key) ?? [];
-      const commands = [...previousCommands, extensionKeymap[key]];
+
+      // Update the commands array. This will be added to the
+      // `previousCommandsMap` to track the current keyboard combination.
+      const commands = [...previousCommands, newCommand];
+
+      // Chain the keyboard binding so that you have all the niceties, like
+      // being able to call `next` to run the remaining commands in the chain.
       const command = chainKeyBindingCommands(...commands);
+
+      // Update the previous commands with the new commands that are now being used.
       previousCommandsMap.set(key, commands);
 
+      // Store a copy of the mapped commands. If this was the last time this
+      // loop ran, then this is the command that would be called when a users
+      // enters the keyboard combination specified by the `key` in this context.
       mappedCommands[key] = mapper(command);
     }
   }
@@ -741,13 +792,13 @@ function mergeKeyBindingCreator<
 
 /**
  * This merges an array of keybindings into one keybinding with the priority
- * given to the items earlier in the array. `index: 0` has priority over `index: 1`
- * which has priority over `index: 2` and so on.
+ * given to the items earlier in the array. `index: 0` has priority over `index:
+ * 1` which has priority over `index: 2` and so on.
  *
  * This is for use on remirror keybindings. See `mergeProsemirrorKeyBindings`
  * for transforming the methods into `ProsemirrorCommandFunction`'s.
  */
-export function mergeKeyBindings<Schema extends EditorSchema = any>(
+export function mergeKeyBindings<Schema extends EditorSchema = EditorSchema>(
   extensionKeymaps: Array<KeyBindings<Schema>>,
 ): KeyBindings<Schema> {
   return mergeKeyBindingCreator(extensionKeymaps, (command) => command);
@@ -755,14 +806,19 @@ export function mergeKeyBindings<Schema extends EditorSchema = any>(
 
 /**
  * This merges an array of keybindings into one keybinding with the priority
- * given to the items earlier in the array. `index: 0` has priority over `index: 1`
- * which has priority over `index: 2` and so on.
+ * given to the items earlier in the array. `index: 0` has priority over `index:
+ * 1` which has priority over `index: 2` and so on.
+ *
+ * This supports the [[ProsemirrorCommandFunction]] type signature where the
+ * `state`, `dispatch` and `view` are passed as separate arguments.
  */
-export function mergeProsemirrorKeyBindings<Schema extends EditorSchema = any>(
+export function mergeProsemirrorKeyBindings<Schema extends EditorSchema = EditorSchema>(
   extensionKeymaps: Array<KeyBindings<Schema>>,
 ): ProsemirrorKeyBindings<Schema> {
   return mergeKeyBindingCreator(
     extensionKeymaps,
+    // Convert the command to have a signature of the
+    // [[`ProsemirrorCommandFunction`]].
     (command): ProsemirrorCommandFunction => (state, dispatch, view) => {
       return command({ state, dispatch, view, tr: state.tr, next: () => false });
     },

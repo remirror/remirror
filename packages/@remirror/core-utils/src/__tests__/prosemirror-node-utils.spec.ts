@@ -23,7 +23,7 @@ import {
   flattenNodeDescendants,
 } from '../prosemirror-node-utils';
 
-describe('flatten', () => {
+describe('DEPRECATED flatten', () => {
   it('should throw an error if `node` param is missing', () => {
     expect(flattenNodeDescendants).toThrow();
   });
@@ -58,7 +58,7 @@ describe('findChildren', () => {
     const { state } = createEditor(doc(table(row(tdEmpty), row(tdEmpty), row(tdEmpty))));
     const result = findChildren({
       node: state.doc.firstChild,
-      predicate: (node) => node.type === state.schema.nodes.paragraph,
+      predicate: (child) => child.node.type === state.schema.nodes.paragraph,
     });
 
     expect(result.length).toEqual(3);
@@ -68,11 +68,29 @@ describe('findChildren', () => {
     });
   });
 
+  it('should perform the provided action for truthy matches', () => {
+    const mock = jest.fn();
+    const { state } = createEditor(doc(table(row(tdEmpty), row(tdEmpty), row(tdEmpty))));
+
+    findChildren({
+      node: state.doc.firstChild,
+      predicate: (child) => child.node.type === state.schema.nodes.paragraph,
+      action: mock,
+    });
+
+    expect(mock).toHaveBeenCalledTimes(3);
+
+    mock.mock.calls.forEach(([item]) => {
+      expect(item.node.type.name).toEqual('paragraph');
+    });
+  });
+
   it('should return an empty array if `predicate` returns falsy', () => {
     const { state } = createEditor(doc(table(row(tdEmpty))));
+
     const result = findChildren({
       node: state.doc.firstChild,
-      predicate: (node) => node.type === state.schema.nodes.atomInline,
+      predicate: (child) => child.node.type === state.schema.nodes.atomInline,
     });
 
     expect(result.length).toEqual(0);

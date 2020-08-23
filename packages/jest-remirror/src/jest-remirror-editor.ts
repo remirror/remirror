@@ -16,6 +16,7 @@ import {
 import {
   ActiveFromCombined,
   AnyCombinedUnion,
+  BuiltinPreset,
   ChainedFromCombined,
   CommandFunctionParameter,
   CommandsFromCombined,
@@ -36,6 +37,7 @@ import {
   Transaction,
 } from '@remirror/core';
 import { createDomEditor, createDomManager } from '@remirror/dom';
+import type { CorePreset } from '@remirror/preset-core';
 
 import { markFactory, nodeFactory } from './jest-remirror-builder';
 import type {
@@ -65,7 +67,7 @@ const elements = new Set<Element>();
 export function renderEditor<Combined extends AnyCombinedUnion>(
   combined: Combined[],
   { props, autoClean = true, ...options }: RenderEditorParameter<Combined> = object(),
-) {
+): RemirrorTestChain<Combined | CorePreset | BuiltinPreset> {
   const element = createElement(props?.element, autoClean);
   const manager = createDomManager([...combined], options);
 
@@ -80,7 +82,13 @@ export function renderEditor<Combined extends AnyCombinedUnion>(
  * extensions and commands.
  */
 export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
-  static create<Combined extends AnyCombinedUnion>(manager: RemirrorManager<Combined>) {
+  /**
+   * A static method for creating the test helpers when testing your remirror
+   * models.
+   */
+  static create<Combined extends AnyCombinedUnion>(
+    manager: RemirrorManager<Combined>,
+  ): RemirrorTestChain<Combined> {
     return new RemirrorTestChain(manager);
   }
 
@@ -147,7 +155,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * The editor schema.
    */
-  get schema() {
+  get schema(): SchemaFromCombined<Combined> {
     return this.manager.schema;
   }
 
@@ -281,7 +289,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *
    * If content already exists it will be overwritten.
    */
-  readonly add = (taggedDocument: TaggedProsemirrorNode<SchemaFromCombined<Combined>>) => {
+  readonly add = (taggedDocument: TaggedProsemirrorNode<SchemaFromCombined<Combined>>): this => {
     const { content } = taggedDocument;
     const { cursor, node, start, end, all, anchor, ...tags } = taggedDocument.tags;
 
@@ -323,14 +331,16 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Alias for add.
    */
-  readonly overwrite = (taggedDocument: TaggedProsemirrorNode<SchemaFromCombined<Combined>>) => {
+  readonly overwrite = (
+    taggedDocument: TaggedProsemirrorNode<SchemaFromCombined<Combined>>,
+  ): this => {
     return this.add(taggedDocument);
   };
 
   /**
    * Updates the tags.
    */
-  readonly update = (tags?: Tags) => {
+  readonly update = (tags?: Tags): this => {
     this.#tags = { ...this.tags, ...tags };
 
     return this;
@@ -339,7 +349,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Selects the text between the provided start and end.
    */
-  readonly selectText = (start: number | 'all', end?: number) => {
+  readonly selectText = (start: number | 'all', end?: number): this => {
     if (start === 'all') {
       dispatchAllSelection(this.view);
     } else {
@@ -384,7 +394,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
         'helpers' | 'commands' | 'end' | 'state' | 'tags' | 'start' | 'doc' | 'view'
       >,
     ) => void,
-  ) => {
+  ): this => {
     fn(pick(this, ['helpers', 'commands', 'end', 'state', 'tags', 'start', 'doc', 'view']));
 
     return this;
@@ -395,7 +405,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *
    * @param shortcut
    */
-  readonly shortcut = (text: string) => {
+  readonly shortcut = (text: string): this => {
     shortcut({ shortcut: text, view: this.view });
     return this;
   };
@@ -407,7 +417,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * @param content - The text or node to paste into the document at the current
    * —ion.
    */
-  readonly paste = (content: TaggedProsemirrorNode | string) => {
+  readonly paste = (content: TaggedProsemirrorNode | string): this => {
     pasteContent({ view: this.view, content });
     return this;
   };
@@ -417,7 +427,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *
    * @param key - the key to press (or string representing a key)
    */
-  readonly press = (char: string, times = 1) => {
+  readonly press = (char: string, times = 1): this => {
     for (const _ of range(times)) {
       press({ char, view: this.view });
     }
@@ -432,7 +442,9 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * @param command - the command function to run with the current state and
    * view
    */
-  readonly dispatchCommand = (command: (parameter: Required<CommandFunctionParameter>) => any) => {
+  readonly dispatchCommand = (
+    command: (parameter: Required<CommandFunctionParameter>) => any,
+  ): this => {
     command({ state: this.state, dispatch: this.view.dispatch, view: this.view, tr: this.tr });
 
     return this;
@@ -443,7 +455,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *
    * @param shortcut - the shortcut to type
    */
-  readonly fire = (parameters: FireParameter) => {
+  readonly fire = (parameters: FireParameter): this => {
     fireEventAtPosition({ view: this.view, ...parameters });
 
     return this;
@@ -452,7 +464,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Set selection in the document to a certain position
    */
-  readonly jumpTo = (pos: 'start' | 'end' | number, endPos?: number) => {
+  readonly jumpTo = (pos: 'start' | 'end' | number, endPos?: number): this => {
     if (pos === 'start') {
       dispatchTextSelection({ view: this.view, start: 1 });
       return this;
@@ -472,7 +484,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *
    * This should be used to add new content to the dom.
    */
-  readonly replace = (...replacement: string[] | TaggedProsemirrorNode[]) => {
+  readonly replace = (...replacement: string[] | TaggedProsemirrorNode[]): this => {
     replaceSelection({ view: this.view, content: replacement });
     return this;
   };
@@ -486,7 +498,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * ! Adding multiple strings which create nodes creates an out of
    * position error
    */
-  insertText = (text: string) => {
+  insertText = (text: string): this => {
     const { from } = this.state.selection;
 
     insertText({ start: from, text, view: this.view });
@@ -496,7 +508,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Logs the view to the dom for help debugging the html in your tests.
    */
-  readonly debug = () => {
+  readonly debug = (): this => {
     console.log(prettyDOM(this.view.dom as HTMLElement));
     return this;
   };
@@ -505,7 +517,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * Cleanup the element from the dom. Use this if you decide against automatic
    * cleanup after tests.
    */
-  readonly cleanup = () => {
+  readonly cleanup = (): void => {
     this.view.dom.parentElement?.remove();
   };
 }

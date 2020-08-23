@@ -318,39 +318,44 @@ export function getMarkAttributes(state: EditorState, type: MarkType) {
 }
 
 /**
- * Retrieve the start and end position of a mark
+ * Retrieve the `start` and `end` position of a mark. The `$pos` value should be
+ * calculated via `tr.doc.resolve(number)`.
  *
  * @remarks
  *
- * @param pmPosition - the resolved prosemirror position
+ * @param $pos - the resolved ProseMirror position
  * @param type - the mark type
  */
-export function getMarkRange(
-  pmPosition: ResolvedPos | null = null,
-  type: MarkType | null | undefined = null,
-): FromToParameter | false {
-  if (!pmPosition || !type) {
+export function getMarkRange($pos: ResolvedPos, type: MarkType): FromToParameter | false {
+  // Nothing can be done if neither the position or the type have been provided.
+  if (!$pos || !type) {
     return false;
   }
 
-  const start = pmPosition.parent.childAfter(pmPosition.parentOffset);
+  // Get the start position of the current that the `$pos` value was calculated
+  // for.
+  const start = $pos.parent.childAfter($pos.parentOffset);
 
+  // If the position provided was incorrect and no node exists for this start
+  // position exit early.
   if (!start.node) {
     return false;
   }
 
+  // Find the mark if it exists.
   const mark = start.node.marks.find(({ type: markType }) => markType === type);
 
+  // If the mark wasn't found then no range can be calculated. Exit early.
   if (!mark) {
     return false;
   }
 
-  let startIndex = pmPosition.index();
-  let startPos = pmPosition.start() + start.offset;
+  let startIndex = $pos.index();
+  let startPos = $pos.start() + start.offset;
 
-  while (startIndex > 0 && mark.isInSet(pmPosition.parent.child(startIndex - 1).marks)) {
+  while (startIndex > 0 && mark.isInSet($pos.parent.child(startIndex - 1).marks)) {
     startIndex -= 1;
-    startPos -= pmPosition.parent.child(startIndex).nodeSize;
+    startPos -= $pos.parent.child(startIndex).nodeSize;
   }
 
   return { from: startPos, to: startPos + start.node.nodeSize };

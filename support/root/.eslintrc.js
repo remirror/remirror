@@ -191,7 +191,17 @@ module.exports = {
         },
       },
     ],
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
+
+    // @todo Set `explicit-module-boundary-types` lint rule to `error` once all
+    // issues are resolve @block All exported methods that are exposed to end
+    // users should be explicitly typed. It makes for better readability when
+    // contributing since inference requires more work to determine the return
+    // types, and also it forces deliberate planning.
+    '@typescript-eslint/explicit-module-boundary-types': [
+      'warn',
+      { allowedNames: ['name', 'createHelpers', 'createCommands'] },
+    ],
+
     // Turning off as it leads to code with bad patterns, where implementation
     // details are placed before the actual meaningful code.
     '@typescript-eslint/no-use-before-define': ['off', { typedefs: false }],

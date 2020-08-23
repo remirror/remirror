@@ -65,6 +65,7 @@ export type {
   DeepPartial,
   DeepString,
   Diff,
+  DynamicAttributeCreator,
   EmptyShape,
   Flavor,
   Flavoring,
