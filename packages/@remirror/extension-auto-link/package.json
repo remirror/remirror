@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-auto-link",
-  "version": "1.0.0-next.24",
+  "version": "1.0.0-next.25",
   "description": "Automatic linking for url like matches in your editor. Great for social experiences.",
   "keywords": [
     "remirror",
@@ -30,11 +30,11 @@
     "@babel/runtime": "^7.11.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.24",
+    "@remirror/core": "1.0.0-next.25",
     "@remirror/pm": "1.0.0-next.22"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.24",
+    "@remirror/core": "1.0.0-next.25",
     "@remirror/pm": "1.0.0-next.22"
   },
   "publishConfig": {

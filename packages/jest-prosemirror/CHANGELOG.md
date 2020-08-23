@@ -1,5 +1,14 @@
 # jest-prosemirror
 
+## 1.0.0-next.25
+
+> 2020-08-23
+
+### Patch Changes
+
+- Updated dependencies [3f2625bf]
+  - @remirror/core-utils@1.0.0-next.25
+
 ## 1.0.0-next.22
 
 > 2020-08-17
