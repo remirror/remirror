@@ -1,12 +1,12 @@
 import {
   ApplySchemaAttributes,
   extensionDecorator,
+  ExtensionTag,
   FromToParameter,
   InputRule,
   KeyBindings,
   MarkExtension,
   MarkExtensionSpec,
-  MarkGroup,
   markInputRule,
   markPasteRule,
   Plugin,
@@ -19,11 +19,12 @@ export class ItalicExtension extends MarkExtension {
     return 'italic' as const;
   }
 
+  readonly tags = [ExtensionTag.FontStyle];
+
   createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
     return {
       attrs: extra.defaults(),
 
-      group: MarkGroup.FontStyle,
       parseDOM: [
         { tag: 'i', getAttrs: extra.parse },
         { tag: 'em', getAttrs: extra.parse },

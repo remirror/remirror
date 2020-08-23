@@ -1,6 +1,6 @@
 import { pmBuild } from 'jest-prosemirror';
 
-import { ExtensionPriority, NodeGroup } from '@remirror/core-constants';
+import { ExtensionPriority, ExtensionTag } from '@remirror/core-constants';
 import type { ApplySchemaAttributes, NodeExtensionSpec } from '@remirror/core-types';
 import { fromHtml } from '@remirror/core-utils';
 import { createCoreManager } from '@remirror/testing';
@@ -12,13 +12,14 @@ class CustomExtension extends NodeExtension {
     return 'custom' as const;
   }
 
+  readonly tags = [ExtensionTag.BlockNode];
+
   createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       content: 'inline*',
       attrs: {
         ...extra.defaults(),
       },
-      group: NodeGroup.Block,
       draggable: false,
       parseDOM: [
         {

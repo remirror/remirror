@@ -1,4 +1,4 @@
-import { ErrorConstant, ExtensionPriority } from '@remirror/core-constants';
+import { ErrorConstant, ExtensionPriority, ExtensionTagType } from '@remirror/core-constants';
 import {
   entries,
   invariant,
@@ -165,6 +165,7 @@ export class SchemaExtension extends PlainExtension {
           extraAttributes: namedExtraAttributes[extension.name],
           ignoreExtraAttributes,
           name: extension.constructor.name,
+          tags: extension.tags ?? [],
         });
 
         // Store the node spec on the extension for future reference.
@@ -190,6 +191,7 @@ export class SchemaExtension extends PlainExtension {
           extraAttributes: namedExtraAttributes[extension.name],
           ignoreExtraAttributes,
           name: extension.constructor.name,
+          tags: extension.tags ?? [],
         });
 
         // Store the mark spec on the extension for future reference.
@@ -347,7 +349,8 @@ export class SchemaExtension extends PlainExtension {
           continue;
         }
 
-        // Use the position to calculate the range range of the current mark.
+        // Use the starting position of the node to calculate the range range of
+        // the current mark.
         const range = getMarkRange(tr.doc.resolve(pos), type);
 
         if (!range) {
@@ -519,7 +522,7 @@ function getIdentifiers(parameter: GetIdentifiersParameter): readonly string[] {
   }
 }
 
-interface CreateSpecParameter<Type> {
+interface CreateSpecParameter<Type extends { group?: string | null }> {
   /**
    * The node or mark creating function.
    */
@@ -542,9 +545,15 @@ interface CreateSpecParameter<Type> {
    * thrown if extra attributes are not applied correctly.
    */
   name: string;
+
+  /**
+   * The tags that were used to create this extension. These are added to the
+   * node and mark groups.
+   */
+  tags: ExtensionTagType[];
 }
 
-interface CreateSpecReturn<Type> {
+interface CreateSpecReturn<Type extends { group?: string | null }> {
   /** The created spec. */
   spec: Type;
 
@@ -558,8 +567,10 @@ interface CreateSpecReturn<Type> {
  * @typeParam Type - either a [[Mark]] or a [[ProsemirrorNode]]
  * @param parameter - the options object [[CreateSpecParameter]]
  */
-function createSpec<Type>(parameter: CreateSpecParameter<Type>): CreateSpecReturn<Type> {
-  const { createExtensionSpec, extraAttributes, ignoreExtraAttributes, name } = parameter;
+function createSpec<Type extends { group?: string | null }>(
+  parameter: CreateSpecParameter<Type>,
+): CreateSpecReturn<Type> {
+  const { createExtensionSpec, extraAttributes, ignoreExtraAttributes, name, tags } = parameter;
 
   // Keep track of the dynamic attributes which are a part of this spec.
   const dynamic: Record<string, DynamicAttributeCreator> = object();
@@ -593,6 +604,9 @@ function createSpec<Type>(parameter: CreateSpecParameter<Type>): CreateSpecRetur
     code: ErrorConstant.EXTENSION_SPEC,
     message: `When creating a node specification you must call the 'defaults', and parse, and 'dom' methods. To avoid this error you can set the static property 'disableExtraAttributes' of '${name}' to 'true'.`,
   });
+
+  // Add the tags to the group of the created spec.
+  spec.group = [...(spec.group?.split(' ') ?? []), ...tags].join(' ') || undefined;
 
   return { spec, dynamic };
 }

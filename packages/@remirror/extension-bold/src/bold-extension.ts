@@ -9,7 +9,6 @@ import {
   isString,
   MarkExtension,
   MarkExtensionSpec,
-  MarkGroup,
   markInputRule,
   Static,
   toggleMark,
@@ -47,12 +46,11 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
     return 'bold' as const;
   }
 
-  readonly tags = [ExtensionTag.FormattingMark];
+  readonly tags = [ExtensionTag.FormattingMark, ExtensionTag.FontStyle];
 
   createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
     return {
       attrs: extra.defaults(),
-      group: MarkGroup.FontStyle,
       parseDOM: [
         {
           tag: 'strong',

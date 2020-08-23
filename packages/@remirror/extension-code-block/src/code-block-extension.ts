@@ -4,6 +4,7 @@ import {
   ApplySchemaAttributes,
   CreatePluginReturn,
   extensionDecorator,
+  ExtensionTag,
   findNodeAtSelection,
   findParentNodeOfType,
   GetAttributes,
@@ -16,7 +17,6 @@ import {
   mod,
   NodeExtension,
   NodeExtensionSpec,
-  NodeGroup,
   nodeInputRule,
   OnSetOptionsParameter,
   PosParameter,
@@ -54,6 +54,8 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
     return 'codeBlock' as const;
   }
 
+  readonly tags = [ExtensionTag.BlockNode, ExtensionTag.Code];
+
   /**
    * Add the languages to the environment if they have not yet been added.
    */
@@ -69,7 +71,6 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
       },
       content: 'text*',
       marks: '',
-      group: NodeGroup.Block,
       code: true,
       defining: true,
       isolating: true,

@@ -73,11 +73,162 @@ export const EMPTY_NODE = {
 };
 
 /**
+ * The type for the extension tags..
+ */
+export type ExtensionTags = Remirror.ExtensionTags & typeof BaseExtensionTag;
+
+/**
+ * A method for updating the extension tags.
+ *
+ * ```tsx
+ * import { ExtensionTag, mutateTag } from 'remirror/core';
+ *
+ * mutateTag((tag) => {
+ *   tag.SuperCustom = 'superCustom';
+ * });
+ *
+ * declare global {
+ *   namespace Remirror {
+ *     interface ExtensionTag {
+ *       SuperCustom: 'superCustom';
+ *     }
+ *   }
+ * }
+ *
+ *
+ * console.log(ExtensionTag.SuperCustom); // This is fine ✅
+ * console.log(ExtensionTag.NotDefined); // This will throw ❌
+ * ```
+ */
+export function mutateTag(mutator: (Tag: ExtensionTags) => void): void {
+  mutator(BaseExtensionTag);
+}
+
+const BaseExtensionTag = {
+  /**
+   * Describes a node that can be used as the last node of a document and
+   * doesn't need to have anything else rendered after itself.
+   *
+   * @remarks
+   *
+   * e.g. `paragraph`
+   */
+  LastNodeCompatible: 'lastNodeCompatible',
+
+  /**
+   * A mark that is used to change the formatting of the node it wraps.
+   *
+   * @remarks
+   *
+   * e.g. `bold`, `italic`
+   */
+  FormattingMark: 'formattingMark',
+
+  /**
+   * A node that formats text in a non-standard way.
+   *
+   * @remarks
+   *
+   * e.g. `codeBlock`, `heading`, `blockquote`
+   */
+  FormattingNode: 'formattingNode',
+
+  /**
+   * Identifies a node which has problems with cursor navigation.
+   *
+   * @remarks
+   *
+   * When this tag is added to an extension this will be picked up by
+   * behavioural extensions such as the NodeCursorExtension which makes hard to
+   * reach nodes reachable using keyboard arrows.
+   */
+  NodeCursor: 'nodeCursor',
+
+  /**
+   * Mark group for font styling (e.g. bold, italic, underline, superscript).
+   */
+  FontStyle: 'fontStyle',
+
+  /**
+   * Mark groups for links.
+   */
+  Link: 'link',
+
+  /**
+   * Mark groups for colors (text-color, background-color, etc).
+   */
+  Color: 'color',
+
+  /**
+   * Mark group for alignment.
+   */
+  Alignment: 'alignment',
+
+  /**
+   * Mark group for indentation.
+   */
+  Indentation: 'indentation',
+
+  /**
+   * Extension which affect the behaviour of the content. Can be nodes marks or
+   * plain.
+   */
+  Behavior: 'behavior',
+
+  /**
+   * Marks which store code.
+   */
+  Code: 'code',
+
+  /**
+   * Whether this node is an inline node.
+   *
+   * - `text` is an inline node, but `paragraph` is a block node.
+   */
+  InlineNode: 'inline',
+
+  /**
+   * This is a node that can contain list items.
+   */
+  ListContainerNode: 'listContainer',
+
+  /**
+   * Tags the extension as a list item node which can be contained by
+   * [[`ExtensionTag.ListNode`]].
+   */
+  ListItemNode: 'listItemNode',
+
+  /**
+   * Sets this as a block level node.
+   */
+  BlockNode: 'block',
+} as const;
+
+/**
+ * These are the default supported tag strings which help categorize different
+ * behaviors that extensions can exhibit.
+ *
+ * @remarks
+ *
+ * Any extension can register itself with multiple such behaviors and these
+ * categorizations can be used by other extensions when running commands and
+ * updating the document.
+ */
+export const ExtensionTag = BaseExtensionTag as ExtensionTags;
+
+/**
+ * The string values which can be used as extension tags.
+ */
+export type ExtensionTagType = ExtensionTags[keyof ExtensionTags];
+
+/**
  * Marks are categorized into different groups. One motivation for this was to
  * allow the `code` mark to exclude other marks, without needing to explicitly
  * name them. Explicit naming requires the named mark to exist in the schema.
  * This is undesirable because we want to construct different schemas that have
  * different sets of nodes/marks.
+ *
+ * @deprecated use `ExtensionTag` instead
  */
 export enum MarkGroup {
   /**
@@ -116,6 +267,9 @@ export enum MarkGroup {
   Code = 'code',
 }
 
+/**
+ * @deprecated use `ExtensionTag` instead
+ */
 export enum NodeGroup {
   /**
    * Whether this node is an inline node.
@@ -130,57 +284,6 @@ export enum NodeGroup {
    * Sets this as a block level node.
    */
   Block = 'block',
-}
-
-/**
- * These are the default supported tag strings which help categorize different
- * behaviors that extensions can exhibit.
- *
- * @remarks
- *
- * Any extension can register itself with multiple such behaviors and these
- * categorizations can be used by other extensions when running commands and
- * updating the document.
- */
-export enum ExtensionTag {
-  /**
-   * Describes a node that can be used as the last node of a document and
-   * doesn't need to have anything else rendered after itself.
-   *
-   * @remarks
-   *
-   * e.g. `paragraph`
-   */
-  LastNodeCompatible = 'lastNodeCompatible',
-
-  /**
-   * A mark that is used to change the formatting of the node it wraps.
-   *
-   * @remarks
-   *
-   * e.g. `bold`, `italic`
-   */
-  FormattingMark = 'formattingMark',
-
-  /**
-   * A node that formats text in a non-standard way.
-   *
-   * @remarks
-   *
-   * e.g. `codeBlock`, `heading`, `blockquote`
-   */
-  FormattingNode = 'formattingNode',
-
-  /**
-   * Identifies a node which has problems with cursor navigation.
-   *
-   * @remarks
-   *
-   * When this tag is added to an extension this will be picked up by
-   * behavioural extensions such as the NodeCursorExtension which makes hard to
-   * reach nodes reachable using keyboard arrows.
-   */
-  NodeCursor = 'nodeCursor',
 }
 
 /**
@@ -346,4 +449,14 @@ export enum ManagerPhase {
    * TODO not currently implemented
    */
   Destroy,
+}
+
+declare global {
+  namespace Remirror {
+    /**
+     * This interface is for extending the default `ExtensionTag`'s in your
+     * codebase with full type checking support.
+     */
+    interface ExtensionTags {}
+  }
 }

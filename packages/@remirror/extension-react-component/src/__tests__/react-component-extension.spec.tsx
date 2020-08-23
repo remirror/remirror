@@ -1,7 +1,12 @@
 import { extensionValidityTest, RemirrorTestChain } from 'jest-remirror';
 import React, { ComponentType } from 'react';
 
-import { ApplySchemaAttributes, NodeExtension, NodeExtensionSpec, NodeGroup } from '@remirror/core';
+import {
+  ApplySchemaAttributes,
+  ExtensionTag,
+  NodeExtension,
+  NodeExtensionSpec,
+} from '@remirror/core';
 import { act, createReactManager, RemirrorProvider, strictRender } from '@remirror/testing/react';
 
 import { ReactComponentExtension } from '..';
@@ -10,6 +15,12 @@ import type { NodeViewComponentProps } from '../node-view-types';
 extensionValidityTest(ReactComponentExtension);
 
 class TestExtension extends NodeExtension<{ useContent: boolean }> {
+  get name(): string {
+    return 'test' as const;
+  }
+
+  readonly tags = [ExtensionTag.BlockNode];
+
   createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       attrs: {
@@ -17,13 +28,8 @@ class TestExtension extends NodeExtension<{ useContent: boolean }> {
         custom: { default: 'custom' },
       },
       content: 'inline*',
-      group: NodeGroup.Block,
       toDOM: (node) => ['nav', extra.dom(node), 0],
     };
-  }
-
-  get name(): string {
-    return 'test' as const;
   }
 
   ReactComponent: ComponentType<NodeViewComponentProps> = ({ node, forwardRef }) => {

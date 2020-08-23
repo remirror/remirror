@@ -1,9 +1,9 @@
 import {
   ApplySchemaAttributes,
   extensionDecorator,
+  ExtensionTag,
   MarkExtension,
   MarkExtensionSpec,
-  MarkGroup,
   toggleMark,
 } from '@remirror/core';
 
@@ -13,10 +13,11 @@ export class UnderlineExtension extends MarkExtension {
     return 'underline' as const;
   }
 
+  readonly tags = [ExtensionTag.FontStyle];
+
   createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
     return {
       attrs: extra.defaults(),
-      group: MarkGroup.FontStyle,
       parseDOM: [
         {
           tag: 'u',

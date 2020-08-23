@@ -5,7 +5,7 @@ Object {
   "marks": Object {
     "bold": Object {
       "attrs": Object {},
-      "group": "fontStyle",
+      "group": "formattingMark fontStyle",
       "parseDOM": Array [
         Object {
           "getAttrs": [Function],
@@ -26,12 +26,13 @@ Object {
   "nodes": Object {
     "doc": Object {
       "content": "block+",
+      "group": undefined,
     },
     "paragraph": Object {
       "attrs": Object {},
       "content": "inline*",
       "draggable": false,
-      "group": "block",
+      "group": "lastNodeCompatible block",
       "parseDOM": Array [
         Object {
           "getAttrs": [Function],

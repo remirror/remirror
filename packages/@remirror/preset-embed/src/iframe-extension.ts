@@ -5,10 +5,10 @@ import {
   ApplySchemaAttributes,
   CommandFunction,
   extensionDecorator,
+  ExtensionTag,
   findSelectedNodeOfType,
   NodeExtension,
   NodeExtensionSpec,
-  NodeGroup,
   object,
   ProsemirrorAttributes,
   Shape,
@@ -53,6 +53,8 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
     return 'iframe' as const;
   }
 
+  readonly tags = [ExtensionTag.BlockNode];
+
   createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     const { defaultSource } = this.options;
 
@@ -66,7 +68,6 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
         width: { default: null },
         height: { default: null },
       },
-      group: NodeGroup.Block,
       selectable: false,
       parseDOM: [
         {

@@ -1,12 +1,12 @@
 import {
   ApplySchemaAttributes,
   extensionDecorator,
+  ExtensionTag,
   InputRule,
   KeyBindings,
   LEAF_NODE_REPLACING_CHARACTER,
   MarkExtension,
   MarkExtensionSpec,
-  MarkGroup,
   markInputRule,
   markPasteRule,
   Plugin,
@@ -22,10 +22,11 @@ export class CodeExtension extends MarkExtension {
     return 'code' as const;
   }
 
+  readonly tags = [ExtensionTag.Code];
+
   createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
     return {
       attrs: extra.defaults(),
-      group: MarkGroup.Code,
       parseDOM: [{ tag: 'code', getAttrs: extra.parse }],
       toDOM: (mark) => ['code', extra.dom(mark), 0],
     };

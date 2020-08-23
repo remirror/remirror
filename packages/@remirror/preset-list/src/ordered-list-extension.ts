@@ -1,11 +1,11 @@
 import {
   ApplySchemaAttributes,
   extensionDecorator,
+  ExtensionTag,
   isElementDomNode,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
-  NodeGroup,
   toggleList,
 } from '@remirror/core';
 import { wrappingInputRule } from '@remirror/pm/inputrules';
@@ -19,6 +19,8 @@ export class OrderedListExtension extends NodeExtension {
     return 'orderedList' as const;
   }
 
+  readonly tags = [ExtensionTag.BlockNode, ExtensionTag.ListContainerNode];
+
   createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       attrs: {
@@ -28,7 +30,6 @@ export class OrderedListExtension extends NodeExtension {
         },
       },
       content: 'listItem+',
-      group: NodeGroup.Block,
       parseDOM: [
         {
           tag: 'ol',

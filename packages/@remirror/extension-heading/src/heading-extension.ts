@@ -1,10 +1,11 @@
 import {
   ApplySchemaAttributes,
   extensionDecorator,
+  ExtensionTag,
+  InputRule,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
-  NodeGroup,
   object,
   ProsemirrorAttributes,
   ProsemirrorNode,
@@ -51,6 +52,8 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
     return 'heading' as const;
   }
 
+  readonly tags = [ExtensionTag.BlockNode];
+
   createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       attrs: {
@@ -60,7 +63,6 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
         },
       },
       content: 'inline*',
-      group: NodeGroup.Block,
       defining: true,
       draggable: false,
       parseDOM: this.options.levels.map((level) => ({
@@ -93,7 +95,7 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
     };
   }
 
-  createKeymap() {
+  createKeymap(): KeyBindings {
     const keys: KeyBindings = object();
 
     this.options.levels.forEach((level) => {
@@ -102,7 +104,7 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
     return keys;
   }
 
-  createInputRules() {
+  createInputRules(): InputRule[] {
     return this.options.levels.map((level) =>
       textblockTypeInputRule(new RegExp(`^(#{1,${level}})\\s$`), this.type, () => ({ level })),
     );

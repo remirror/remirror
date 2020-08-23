@@ -63,6 +63,15 @@ export class BuiltinPreset extends Preset<BuiltinOptions> {
     return noop;
   };
 
+  /**
+   * The order of these extension are important.
+   *
+   * - [[TagsExtension]] is places first because it provides tagging which is
+   *   used by the schema extension.
+   * - [[SchemeExtension]] goes next because it's super important to the editor
+   *   functionality and needs to run before everything else which might depend
+   *   on it.
+   */
   createExtensions() {
     const keymapOptions = pick(this.options, [
       'excludeBaseKeymap',
@@ -71,8 +80,9 @@ export class BuiltinPreset extends Preset<BuiltinOptions> {
     ]);
 
     return [
-      new SchemaExtension(),
+      // The order of these extension is important.
       new TagsExtension(),
+      new SchemaExtension(),
       new AttributesExtension(),
       new PluginsExtension(),
       new InputRulesExtension(),

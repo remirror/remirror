@@ -25,10 +25,7 @@ import type {
   BaseExtensionOptions,
   ExtensionCommandReturn,
   ExtensionHelperReturn,
-  GeneralExtensionTags,
   GetNameUnion,
-  MarkExtensionTags,
-  NodeExtensionTags,
   StateUpdateLifecycleParameter,
 } from '../types';
 import {
@@ -642,29 +639,6 @@ export interface ExtensionConstructor<Options extends ValidOptions = EmptyShape>
    * @defaultValue `ExtensionPriority.Default`
    */
   readonly defaultPriority: ExtensionPriority;
-}
-
-/**
- * The shape of the tag data stored by the extension manager.
- *
- * This data can be used by other extensions to dynamically determine which
- * nodes should affected by commands / plugins / keys etc...
- */
-export interface ExtensionTags<ExtensionUnion extends AnyExtension> {
-  /**
-   * All the node extension tags.
-   */
-  node: NodeExtensionTags<GetNodeNameUnion<ExtensionUnion>>;
-
-  /**
-   * All the mar extension tags.
-   */
-  mark: MarkExtensionTags<GetMarkNameUnion<ExtensionUnion>>;
-
-  /**
-   * All the general extension tags.
-   */
-  general: GeneralExtensionTags<GetNameUnion<ExtensionUnion>>;
 }
 
 /**

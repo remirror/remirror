@@ -5,10 +5,10 @@ import {
   convertCommand,
   extensionDecorator,
   ExtensionPriority,
+  ExtensionTag,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
-  NodeGroup,
 } from '@remirror/core';
 import { exitCode } from '@remirror/pm/commands';
 
@@ -31,13 +31,12 @@ export class HardBreakExtension extends NodeExtension {
     return 'hardBreak' as const;
   }
 
-  tags = [NodeGroup.Inline];
+  tags = [ExtensionTag.InlineNode];
 
   createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       attrs: extra.defaults(),
       inline: true,
-      group: NodeGroup.Inline,
       selectable: false,
       parseDOM: [{ tag: 'br', getAttrs: extra.parse }],
       toDOM: (node) => ['br', extra.dom(node)],

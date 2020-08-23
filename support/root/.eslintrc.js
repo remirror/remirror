@@ -199,7 +199,7 @@ module.exports = {
     // types, and also it forces deliberate planning.
     '@typescript-eslint/explicit-module-boundary-types': [
       'warn',
-      { allowedNames: ['name', 'createHelpers', 'createCommands'] },
+      { allowedNames: ['name', 'createHelpers', 'createCommands', 'createExtensions'] },
     ],
 
     // Turning off as it leads to code with bad patterns, where implementation

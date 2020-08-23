@@ -2,6 +2,7 @@ import {
   ApplySchemaAttributes,
   convertCommand,
   extensionDecorator,
+  ExtensionTag,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
@@ -16,6 +17,8 @@ export class ListItemExtension extends NodeExtension {
   get name() {
     return 'listItem' as const;
   }
+
+  readonly tags = [ExtensionTag.ListItemNode];
 
   createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {

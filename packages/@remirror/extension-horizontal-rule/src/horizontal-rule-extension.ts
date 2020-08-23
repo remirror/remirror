@@ -3,11 +3,11 @@ import {
   CommandFunction,
   ErrorConstant,
   extensionDecorator,
+  ExtensionTag,
   InputRule,
   invariant,
   NodeExtension,
   NodeExtensionSpec,
-  NodeGroup,
   nodeInputRule,
   Transaction,
 } from '@remirror/core';
@@ -35,10 +35,11 @@ export class HorizontalRuleExtension extends NodeExtension<HorizontalRuleOptions
     return 'horizontalRule' as const;
   }
 
+  readonly tags = [ExtensionTag.BlockNode];
+
   createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       attrs: extra.defaults(),
-      group: NodeGroup.Block,
       parseDOM: [{ tag: 'hr', getAttrs: extra.parse }],
       toDOM: (node) => ['hr', extra.dom(node)],
     };

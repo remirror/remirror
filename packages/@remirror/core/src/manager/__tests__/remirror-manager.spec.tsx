@@ -24,7 +24,7 @@ describe('Manager', () => {
     get name() {
       return 'dummy' as const;
     }
-    readonly extensionTags = ['simple', ExtensionTag.LastNodeCompatible];
+    readonly tags = [ExtensionTag.Behavior, ExtensionTag.LastNodeCompatible];
 
     createCommands() {
       return { dummy: mock };

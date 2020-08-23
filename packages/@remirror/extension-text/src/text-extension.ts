@@ -1,4 +1,4 @@
-import { extensionDecorator, ExtensionPriority, NodeExtension, NodeGroup } from '@remirror/core';
+import { extensionDecorator, ExtensionPriority, ExtensionTag, NodeExtension } from '@remirror/core';
 
 /**
  * The default text passed into the prosemirror schema.
@@ -16,7 +16,9 @@ export class TextExtension extends NodeExtension {
     return 'text' as const;
   }
 
+  readonly tags = [ExtensionTag.InlineNode];
+
   createNodeSpec() {
-    return { group: NodeGroup.Inline };
+    return {};
   }
 }
