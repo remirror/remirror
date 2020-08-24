@@ -73,7 +73,6 @@ export {
   take,
   throttle,
   toString,
-  trim,
   uniqueArray,
   uniqueBy,
   uniqueId,

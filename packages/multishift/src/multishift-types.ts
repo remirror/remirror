@@ -531,7 +531,8 @@ export interface GetRemoveButtonReturn<Element extends HTMLElement = any>
 export interface GetComboBoxPropsOptions<
   Element extends HTMLElement = any,
   RefKey extends string = 'ref'
-> extends RefParameter<RefKey>, HTMLProps<Element> {}
+> extends RefParameter<RefKey>,
+    HTMLProps<Element> {}
 
 export type GetComboBoxPropsReturn<
   Element extends HTMLElement = any,
@@ -551,7 +552,8 @@ export type GetComboBoxPropsReturn<
 export interface GetPropsWithRefOptions<
   Element extends HTMLElement = any,
   RefKey extends string = 'ref'
-> extends RefParameter<RefKey>, HTMLProps<Element> {
+> extends RefParameter<RefKey>,
+    HTMLProps<Element> {
   /**
    * Determine whether or not the item can be highlighted and selected.
    */

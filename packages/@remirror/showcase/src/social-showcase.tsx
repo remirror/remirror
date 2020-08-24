@@ -1,5 +1,5 @@
 import matchSorter from 'match-sorter';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { FC, useCallback, useMemo, useState } from 'react';
 
 import { startCase, take } from '@remirror/core';
 import {
@@ -34,7 +34,7 @@ const userData: UserData[] = fakeUsers.results.map(
   }),
 );
 
-export const ExampleSocialEditor = (props: Partial<SocialProviderProps>) => {
+export const ExampleSocialEditor: FC<Partial<SocialProviderProps>> = (props) => {
   const [mention, setMention] = useState<MentionChangeParameter>();
 
   const onChange = useCallback((parameter?: MentionChangeParameter) => {

@@ -1731,6 +1731,7 @@ importers:
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
       remirror: 'link:../packages/remirror'
+      type-fest: 0.16.0
       write-json-file: 4.3.0
     specifiers:
       '@changesets/pre': ^1.0.5
@@ -1756,6 +1757,7 @@ importers:
       react: ^16.13.1
       react-dom: ^16.13.1
       remirror: 1.0.0-next.27
+      type-fest: ^0.16.0
       write-json-file: ^4.3.0
   support/deprecated/core-extensions:
     specifiers: {}
@@ -17001,6 +17003,7 @@ packages:
     resolution:
       integrity: sha512-hk/69oAeaIzchq/v3lS50PXuzn5O2ynldopMC+SWBql7J2WtdptfB9dy8Y7+Og5rPkTCpn83zTiO8FMcqlXJ/g==
   /jsondiffpatch/0.4.1:
+    bundledDependencies: []
     dependencies:
       chalk: 2.4.2
       diff-match-patch: 1.0.5

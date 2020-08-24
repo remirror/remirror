@@ -129,7 +129,6 @@ secret.json
 
 .env
 *.env
-
 .out
 
 docs/public/**
@@ -139,7 +138,7 @@ docs/.linaria-cache/
 support/e2e/__failed-diffs__
 cc-reporter
 
-# CI Pnpm cache
+# CI `pnpm` cache
 .pnpm-store/
 
 ## Ignore root files
@@ -157,8 +156,9 @@ cc-reporter
 /.prettierrc.js
 /.huskyrc
 /.lintstagedrc
+
+## Ignore tsconfig files.
 /tsconfig.json
-/docs/changelog.md
-# /.npmrc
-# /.changeset
-# /pnpmfile.js
+/tsconfig.lint.json
+/tsconfig.references.json
+/packages/**/tsconfig.json

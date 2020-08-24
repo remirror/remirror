@@ -28,8 +28,3 @@ declare module '@docusaurus/useDocusaurusContext' {
 
   export default function useDocusaurusContext(): DocusaurusContext;
 }
-
-declare module '*.module.css' {
-  const classes: { [key: string]: string };
-  export default classes;
-}

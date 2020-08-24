@@ -14,6 +14,13 @@
     "running": false
   },
   {
+    "name": "@remirror/core-types",
+    "path": "packages/@remirror/core-types/dist/core-types.browser.esm.js",
+    "limit": "0 KB",
+    "ignore": ["@remirror/pm"],
+    "running": false
+  },
+  {
     "name": "@remirror/core-utils",
     "path": "packages/@remirror/core-utils/dist/core-utils.browser.esm.js",
     "limit": "20 KB",
@@ -31,7 +38,7 @@
     "name": "@remirror/extension-annotation",
     "path": "packages/@remirror/extension-annotation/dist/extension-annotation.browser.esm.js",
     "limit": "5 KB",
-    "ignore": ["@remirror/core", "@remirror/pm"],
+    "ignore": ["@remirror/core", "@remirror/extension-positioner", "@remirror/pm"],
     "running": false
   },
   {

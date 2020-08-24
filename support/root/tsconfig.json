@@ -1,9 +1,21 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./support/tsconfig.main.json" },
-    { "path": "./support/e2e/tsconfig.json" },
-    { "path": "./support/storybook/tsconfig.json" },
-    { "path": "./support/examples/with-next/tsconfig.json" }
-  ]
+  "extends": "./support/tsconfig.base.json",
+  "compilerOptions": {
+    "types": [
+      "node",
+      "jest",
+      "jest-extended",
+      "jest-axe",
+      "@testing-library/jest-dom",
+      "snapshot-diff"
+    ],
+    "noEmit": true,
+    "importsNotUsedAsValues": "error",
+    "skipLibCheck": true,
+    "plugins": [
+      { "name": "typescript-snapshots-plugin" },
+      { "name": "typescript-plugin-css-modules" }
+    ]
+  },
+  "include": ["packages/**/src", "global.d.ts"]
 }

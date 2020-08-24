@@ -42,7 +42,6 @@ import {
   sort,
   startCase,
   take,
-  trim,
   uniqueArray,
   uniqueBy,
   uniqueId,
@@ -92,10 +91,6 @@ test('format', () => {
 
 test('capitalize', () => {
   expect(capitalize('test')).toBe('Test');
-});
-
-test('trim', () => {
-  expect(trim(' test    ')).toBe('test');
 });
 
 test('randomInt', () => {
