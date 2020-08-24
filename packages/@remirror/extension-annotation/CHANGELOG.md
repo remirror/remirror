@@ -1,5 +1,17 @@
 # @remirror/extension-annotation
 
+## 1.0.0-next.26
+
+> 2020-08-24
+
+### Patch Changes
+
+- Updated dependencies [a2bc3bfb]
+- Updated dependencies [147d0f2a]
+  - @remirror/core@1.0.0-next.26
+  - @remirror/extension-positioner@1.0.0-next.26
+  - @remirror/pm@1.0.0-next.26
+
 ## 1.0.0-next.25
 
 > 2020-08-23

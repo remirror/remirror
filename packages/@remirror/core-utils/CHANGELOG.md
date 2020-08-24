@@ -1,5 +1,35 @@
 # @remirror/core-utils
 
+## 1.0.0-next.26
+
+> 2020-08-24
+
+### Minor Changes
+
+- 147d0f2a: 🚀 Now featuring support for `DynamicExtraAttributes` as mentioned in
+  [#387](https://github.com/remirror/remirror/issues/387).
+
+  - Also add support for `action` method being passed to `findChildren`, `findTextNodes`,
+    `findInlineNodes`, `findBlockNodes`, `findChildrenByAttribute`, `findChildrenByNode`,
+    `findChildrenByMark` and `containsNodesOfType`.
+  - Deprecate `flattenNodeDescendants`. `findChildren` is now the preferred method and automatically
+    flattens the returned output.
+
+### Patch Changes
+
+- a2bc3bfb: Support for extending the `ExtensionTag` with your own custom types and names to close
+  #465. Deprecates `NodeGroup` and `MarkGroup` which will be removed in a future version.
+
+  - A small breaking change removes some related type exports from `@remirror/core`.
+  - Add the ability to `mutateTag` for creating custom tags in custom extensions.
+  - Update several to use `tags` as a replacement for the spec group.
+
+- Updated dependencies [a2bc3bfb]
+  - @remirror/core-constants@1.0.0-next.26
+  - @remirror/core-helpers@1.0.0-next.26
+  - @remirror/core-types@1.0.0-next.26
+  - @remirror/pm@1.0.0-next.26
+
 ## 1.0.0-next.25
 
 > 2020-08-23

@@ -1,5 +1,13 @@
 # @remirror/pm
 
+## 1.0.0-next.26
+
+> 2020-08-24
+
+### Patch Changes
+
+- prosemirror-suggest@1.0.0-next.26
+
 ## 1.0.0-next.22
 
 > 2020-08-17

@@ -1,5 +1,13 @@
 # @remirror/cli
 
+## 1.0.0-next.26
+
+> 2020-08-24
+
+### Patch Changes
+
+- @remirror/core-helpers@1.0.0-next.26
+
 ## 1.0.0-next.22
 
 > 2020-08-17

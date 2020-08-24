@@ -1,5 +1,21 @@
 # @remirror/react-hooks
 
+## 1.0.0-next.10
+
+> 2020-08-24
+
+### Patch Changes
+
+- Updated dependencies [a2bc3bfb]
+- Updated dependencies [147d0f2a]
+  - @remirror/core@1.0.0-next.26
+  - @remirror/extension-mention@1.0.0-next.26
+  - @remirror/extension-auto-link@1.0.0-next.26
+  - @remirror/react@1.0.0-next.26
+  - @remirror/react-utils@1.0.0-next.26
+  - @remirror/i18n@1.0.0-next.26
+  - @remirror/pm@1.0.0-next.26
+
 ## 1.0.0-next.9
 
 > 2020-08-23
