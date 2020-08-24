@@ -20,13 +20,20 @@ Get started in the usual way.
 
 ```tsx
 import React from 'react';
-import { RemirrorProvider, useRemirror, createReactManager } from 'remirror/react';
+import { RemirrorProvider, useRemirror, useManager } from 'remirror/react';
 import { BoldExtension } from 'remirror/extension/bold';
 
-const manager = createReactManager([new BoldExtension()]);
+// This is a function that returns the list of extensions and presets we want to
+// use. It's helpful to set up this way since the template can be reused
+// multiple times in your app.
+const extensionTemplate = () => [new BoldExtension()];
 
+// Adds the `RemirrorProvider` which is responsible for wrapping the editor with
+// the context and state of the rendered editor.
 const EditorWrapper = () => {
-  // This will be changed
+  // A convenient hooks for creating the manager in a react editor.
+  const manager = useManager(extensionTemplate);
+
   return (
     <RemirrorProvider manager={manager}>
       <Editor />
@@ -50,22 +57,26 @@ the `RemirrorProvider`.
 ```tsx
 // Add the `useState` hook to keep track of the state.
 import React, { useState } from 'react';
-import { RemirrorProvider, useRemirror, createReactManager } from 'remirror/react';
+import { RemirrorProvider, useRemirror, useManager } from 'remirror/react';
 import { BoldExtension } from 'remirror/extension/bold';
 
-// Add the `fromHtml` string handler import so that the initial state can be a html string.
+// Add the `fromHtml` string handler import so that the initial state can be a
+// html string.
 import { fromHtml } from 'remirror/core';
 
-const manager = createReactManager([new BoldExtension()]);
+const extensionTemplate = () => [new BoldExtension()];
 
 const EditorWrapper = () => {
-  // Create the initial value for the manager.
-  const initialValue = manager.createState({
-    content: '<p>This is the initial value</p>',
-    stringHandler: fromHtml,
-  });
+  const manager = useManager(extensionTemplate);
 
-  const [value, setValue] = useState(initialValue);
+  // Store the editor value in a state variable.
+  const [value, setValue] = useState(() =>
+    // Use the `remirror` manager to create the state.
+    manager.createState({
+      content: '<p>This is the initial value</p>',
+      stringHandler: fromHtml,
+    }),
+  );
 
   // Add the value and change handler to the editor.
   return (
@@ -98,12 +109,14 @@ into the editor whenever the user types any content.
 
 ```tsx
 const EditorWrapper = () => {
-  const initialValue = manager.createState({
-    content: '<p>This is the initial value</p>',
-    stringHandler: fromHtml,
-  });
+  const manager = useManager(extensionTemplate);
 
-  const [value, setValue] = useState(initialValue);
+  const [value, setValue] = useState(() =>
+    manager.createState({
+      content: '<p>This is the initial value</p>',
+      stringHandler: fromHtml,
+    }),
+  );
 
   return (
     <RemirrorProvider

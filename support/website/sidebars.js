@@ -4,7 +4,7 @@ const sidebarConfig = {
     {
       type: 'category',
       label: 'Remirror',
-      items: ['introduction', 'contributing', 'tooling', 'errors', 'projects'],
+      items: ['introduction', 'contributing', 'tooling', 'errors', 'projects', 'faq'],
     },
     {
       type: 'category',
@@ -20,6 +20,7 @@ const sidebarConfig = {
         'concepts/presets',
         'concepts/remirror-manager',
         'concepts/react-controlled-editor',
+        'concepts/react-refs',
         'concepts/priority',
         'concepts/keymap',
       ],
