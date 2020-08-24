@@ -1,5 +1,18 @@
 # @remirror/core-constants
 
+## 1.0.0-next.26
+
+> 2020-08-24
+
+### Minor Changes
+
+- a2bc3bfb: Support for extending the `ExtensionTag` with your own custom types and names to close
+  #465. Deprecates `NodeGroup` and `MarkGroup` which will be removed in a future version.
+
+  - A small breaking change removes some related type exports from `@remirror/core`.
+  - Add the ability to `mutateTag` for creating custom tags in custom extensions.
+  - Update several to use `tags` as a replacement for the spec group.
+
 ## 1.0.0-next.22
 
 > 2020-08-17

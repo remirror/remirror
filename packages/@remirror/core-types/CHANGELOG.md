@@ -1,5 +1,15 @@
 # @remirror/core-types
 
+## 1.0.0-next.26
+
+> 2020-08-24
+
+### Patch Changes
+
+- Updated dependencies [a2bc3bfb]
+  - @remirror/core-constants@1.0.0-next.26
+  - @remirror/pm@1.0.0-next.26
+
 ## 1.0.0-next.22
 
 > 2020-08-17

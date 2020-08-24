@@ -1,5 +1,17 @@
 # @remirror/showcase
 
+## 1.0.0-next.26
+
+> 2020-08-24
+
+### Patch Changes
+
+- Updated dependencies [a2bc3bfb]
+- Updated dependencies [147d0f2a]
+  - @remirror/core@1.0.0-next.26
+  - @remirror/extension-code-block@1.0.0-next.26
+  - @remirror/react-social@1.0.0-next.26
+
 ## 1.0.0-next.25
 
 > 2020-08-23

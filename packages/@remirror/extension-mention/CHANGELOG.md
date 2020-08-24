@@ -1,5 +1,23 @@
 # @remirror/extension-mention
 
+## 1.0.0-next.26
+
+> 2020-08-24
+
+### Patch Changes
+
+- a2bc3bfb: Support for extending the `ExtensionTag` with your own custom types and names to close
+  #465. Deprecates `NodeGroup` and `MarkGroup` which will be removed in a future version.
+
+  - A small breaking change removes some related type exports from `@remirror/core`.
+  - Add the ability to `mutateTag` for creating custom tags in custom extensions.
+  - Update several to use `tags` as a replacement for the spec group.
+
+- Updated dependencies [a2bc3bfb]
+- Updated dependencies [147d0f2a]
+  - @remirror/core@1.0.0-next.26
+  - @remirror/pm@1.0.0-next.26
+
 ## 1.0.0-next.25
 
 > 2020-08-23
