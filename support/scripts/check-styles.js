@@ -7,11 +7,9 @@ const fs = require('fs').promises;
 const globby = require('globby');
 const chalk = require('chalk');
 const { baseDir } = require('./helpers');
-const { getOutput, writeOutput } = require('./linaria');
+const { getOutput, writeOutput, removeGeneratedFiles, copyFilesToRemirror } = require('./linaria');
 const isEqual = require('lodash.isequal');
 const { relative } = require('path');
-const cpy = require('cpy');
-const rimraf = require('util').promisify(require('rimraf'));
 
 const [, , ...args] = process.argv;
 const shouldFix = args.includes('--fix');
@@ -95,16 +93,12 @@ function checkOutput(actual, expected) {
   }
 }
 
-async function cleanCss() {
-  await rimraf('packages/@remirror/styles/*.css packages/remirror/styles/*.css');
-}
-
 async function run() {
   const actualOutput = await readFiles();
-  const expectedOutput = await getOutput();
+  const { css, ts } = await getOutput();
 
   try {
-    checkOutput(actualOutput, expectedOutput);
+    checkOutput(actualOutput, css);
     console.log(chalk`\n{green The generated {bold CSS} is valid for all files.}`);
     return;
   } catch (error) {
@@ -112,9 +106,10 @@ async function run() {
   }
 
   if (shouldFix) {
-    await cleanCss();
-    await writeOutput();
-    await cpy(['packages/@remirror/styles/*.css'], 'packages/remirror/styles/');
+    await removeGeneratedFiles();
+    await writeOutput(css);
+    await writeOutput(ts);
+    await copyFilesToRemirror();
 
     return;
   }

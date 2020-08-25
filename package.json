@@ -176,8 +176,7 @@
   "preconstruct": {
     "packages": [
       "packages/*",
-      "packages/@remirror/*",
-      "!packages/@remirror/styles"
+      "packages/@remirror/*"
     ]
   }
 }

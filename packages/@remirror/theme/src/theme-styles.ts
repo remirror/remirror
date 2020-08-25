@@ -1,12 +1,6 @@
 import { css } from 'linaria';
 
-import {
-  createAtomClasses,
-  createThemeVariables,
-  defaultRemirrorAtoms,
-  defaultRemirrorTheme,
-  getTheme,
-} from './theme';
+import { createThemeVariables, defaultRemirrorTheme, getTheme } from './theme';
 
 /**
  * The class name for adding theme styles to the remirror editor.
@@ -55,6 +49,4 @@ export const themeStyles = css`
   h6 {
     font-size: ${getTheme((t) => t.fontSize[0])};
   }
-
-  ${createAtomClasses(defaultRemirrorAtoms)}
 `;
