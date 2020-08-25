@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-wysiwyg",
-  "version": "1.0.0-next.26",
+  "version": "1.0.0-next.27",
   "description": "The preset for your wysiwyg editor.",
   "keywords": [
     "remirror",
@@ -47,7 +47,7 @@
     "@remirror/preset-core": "1.0.0-next.26",
     "@remirror/preset-embed": "1.0.0-next.26",
     "@remirror/preset-list": "1.0.0-next.26",
-    "@remirror/preset-table": "1.0.0-next.26"
+    "@remirror/preset-table": "1.0.0-next.27"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.26",

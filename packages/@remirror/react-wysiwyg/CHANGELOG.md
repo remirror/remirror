@@ -1,5 +1,16 @@
 # @remirror/react-wysiwyg
 
+## 1.0.0-next.27
+
+> 2020-08-25
+
+### Patch Changes
+
+- Updated dependencies [a7436f03]
+  - @remirror/theme@1.0.0-next.27
+  - @remirror/react@1.0.0-next.27
+  - @remirror/preset-wysiwyg@1.0.0-next.27
+
 ## 1.0.0-next.26
 
 > 2020-08-24
