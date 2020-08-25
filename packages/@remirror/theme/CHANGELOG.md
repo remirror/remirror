@@ -1,5 +1,19 @@
 # @remirror/theme
 
+## 1.0.0-next.27
+
+> 2020-08-25
+
+### Major Changes
+
+- a7436f03: 🎉 Add support for consuming styles with `styled-components` and `emotion` as requested
+  by a sponsor - [#550](https://github.com/remirror/remirror/issues/550).
+
+  💥 BREAKING CHANGE - Remove exports from `@remirror/theme`.
+
+  - ❌ `createAtomClasses`
+  - ❌ `defaultRemirrorAtoms`
+
 ## 1.0.0-next.26
 
 > 2020-08-24

@@ -1,5 +1,13 @@
 # @remirror/react-components
 
+## 1.0.0-next.9
+
+> 2020-08-25
+
+### Patch Changes
+
+- @remirror/react@1.0.0-next.27
+
 ## 1.0.0-next.8
 
 > 2020-08-24
