@@ -55,9 +55,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "meta": {
-    "sizeLimit": "250 KB"
-  },
   "preconstruct": {
     "entrypoints": [
       "commands",

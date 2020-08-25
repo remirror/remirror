@@ -66,7 +66,7 @@ const elements = new Set<Element>();
  */
 export function renderEditor<Combined extends AnyCombinedUnion>(
   combined: Combined[],
-  { props, autoClean = true, ...options }: RenderEditorParameter<Combined> = object(),
+  { props, autoClean, ...options }: RenderEditorParameter<Combined> = object(),
 ): RemirrorTestChain<Combined | CorePreset | BuiltinPreset> {
   const element = createElement(props?.element, autoClean);
   const manager = createDomManager([...combined], options);
@@ -522,19 +522,37 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   };
 }
 
+/**
+ * Checks whether the provided node is in the page. Used by `createElement`.
+ */
 function isInPage(node: Node) {
   return node === document.body ? false : document.body.contains(node);
 }
 
-function createElement(element: Element | undefined, autoClean?: boolean) {
+/**
+ * Create an element in a way that can be tracked for easier cleanup after
+ * tests.
+ *
+ * @param element - the element to create or undefined if the element should be
+ * created by this function. When left undefined the element defaults to a
+ * `div`.
+ * @param autoClean - Whether to automatically cleanup this element after the
+ * test. Defaults to `true`.
+ */
+function createElement(element: Element | undefined, autoClean = true): Element {
   if (!element) {
+    // Default to using a `div` when no element provided.
     element = document.createElement('div');
   }
 
+  // Make sure the element hasn't been previously added to the document body
+  // adding it.
   if (!isInPage(element)) {
     document.body.append(element);
   }
 
+  // Auto clean works by tracking elements in a `Set` and at the end of a test
+  // all elements that are included will be deleted.
   if (autoClean) {
     elements.add(element);
   }
@@ -542,6 +560,9 @@ function createElement(element: Element | undefined, autoClean?: boolean) {
   return element;
 }
 
+/**
+ * Removes all the element added during the test, which where marked for
+ */
 function cleanup() {
   for (const element of elements) {
     if (element.parentNode === document.body) {
@@ -552,16 +573,11 @@ function cleanup() {
   }
 }
 
+// Cleanup the created elements after each test.
 if (isFunction(afterEach)) {
+  // In a jest environment this should always be true (and this is the only
+  // environment supported by `jest-remirror`).
   afterEach(() => {
-    cleanup();
-  });
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-} else if (isFunction(teardown)) {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  teardown(() => {
     cleanup();
   });
 }

@@ -171,31 +171,7 @@ Object {
 --remirror-letter-spacing-loose: 1px;
 --remirror-letter-spacing-wide: 3px;
 --remirror-line-height-heading: 1.25em;
---remirror-line-height-default: 1.5em;
---remirror-shadow-0-x: 0;
---remirror-shadow-0-y: 0;
---remirror-shadow-0-blur: 1px;
---remirror-shadow-0-scale: 0;
---remirror-shadow-1-x: 1px;
---remirror-shadow-1-y: 1px;
---remirror-shadow-1-blur: 1px;
---remirror-shadow-1-scale: 0;
---remirror-shadow-2-x: 3px;
---remirror-shadow-2-y: 3px;
---remirror-shadow-2-blur: 4px;
---remirror-shadow-2-scale: 0;
---remirror-shadow-3-x: 8px;
---remirror-shadow-3-y: 8px;
---remirror-shadow-3-blur: 10px;
---remirror-shadow-3-scale: 0;
---remirror-shadow-4-x: 18px;
---remirror-shadow-4-y: 18px;
---remirror-shadow-4-blur: 18px;
---remirror-shadow-4-scale: 0;
---remirror-shadow-5-x: 26px;
---remirror-shadow-5-y: 26px;
---remirror-shadow-5-blur: 26px;
---remirror-shadow-5-scale: 0;",
+--remirror-line-height-default: 1.5em;",
   "styles": Object {
     "--remirror-color-background": "#ffffff",
     "--remirror-color-black": "#000000",
@@ -359,30 +335,6 @@ Object {
     "--remirror-letter-spacing-wide": "3px",
     "--remirror-line-height-default": "1.5em",
     "--remirror-line-height-heading": "1.25em",
-    "--remirror-shadow-0-blur": "1px",
-    "--remirror-shadow-0-scale": "0",
-    "--remirror-shadow-0-x": "0",
-    "--remirror-shadow-0-y": "0",
-    "--remirror-shadow-1-blur": "1px",
-    "--remirror-shadow-1-scale": "0",
-    "--remirror-shadow-1-x": "1px",
-    "--remirror-shadow-1-y": "1px",
-    "--remirror-shadow-2-blur": "4px",
-    "--remirror-shadow-2-scale": "0",
-    "--remirror-shadow-2-x": "3px",
-    "--remirror-shadow-2-y": "3px",
-    "--remirror-shadow-3-blur": "10px",
-    "--remirror-shadow-3-scale": "0",
-    "--remirror-shadow-3-x": "8px",
-    "--remirror-shadow-3-y": "8px",
-    "--remirror-shadow-4-blur": "18px",
-    "--remirror-shadow-4-scale": "0",
-    "--remirror-shadow-4-x": "18px",
-    "--remirror-shadow-4-y": "18px",
-    "--remirror-shadow-5-blur": "26px",
-    "--remirror-shadow-5-scale": "0",
-    "--remirror-shadow-5-x": "26px",
-    "--remirror-shadow-5-y": "26px",
     "--remirror-space-1": "4px",
     "--remirror-space-2": "8px",
     "--remirror-space-3": "16px",

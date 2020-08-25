@@ -11,9 +11,54 @@
   "sideEffects": false,
   "types": "dist/styles.cjs.d.ts",
   "files": [
-    "*.css"
+    "*.css",
+    "dist",
+    "emotion",
+    "styled-components",
+    "dom"
   ],
+  "dependencies": {
+    "@babel/runtime": "^7.11.0"
+  },
+  "devDependencies": {
+    "@emotion/core": "^10.0.35",
+    "@emotion/styled": "^10.0.27",
+    "@types/styled-components": "^5.1.2",
+    "emotion": "^10.0.27",
+    "styled-components": "^5.1.1"
+  },
+  "peerDependencies": {
+    "@emotion/core": "^10",
+    "@emotion/styled": "^10",
+    "@types/styled-components": "^5",
+    "emotion": "^10",
+    "styled-components": "^5"
+  },
+  "peerDependenciesMeta": {
+    "@emotion/core": {
+      "optional": true
+    },
+    "@emotion/styled": {
+      "optional": true
+    },
+    "@types/styled-components": {
+      "optional": true
+    },
+    "emotion": {
+      "optional": true
+    },
+    "styled-components": {
+      "optional": true
+    }
+  },
   "publishConfig": {
     "access": "public"
+  },
+  "preconstruct": {
+    "entrypoints": [
+      "emotion",
+      "styled-components",
+      "dom"
+    ]
   }
 }

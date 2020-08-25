@@ -154,75 +154,6 @@ export const defaultRemirrorTheme: Remirror.Theme = {
     heading: '1.25em',
     default: '1.5em',
   },
-  shadow: {
-    0: { x: '0', y: '0', blur: '1px', scale: '0' },
-    1: { x: '1px', y: '1px', blur: '1px', scale: '0' },
-    2: { x: '3px', y: '3px', blur: '4px', scale: '0' },
-    3: { x: '8px', y: '8px', blur: '10px', scale: '0' },
-    4: { x: '18px', y: '18px', blur: '18px', scale: '0' },
-    5: { x: '26px', y: '26px', blur: '26px', scale: '0' },
-  },
-};
-
-/**
- * Negate a css variable.
- */
-function negate(cssVariable: string) {
-  return `calc(-1 * ${cssVariable})`;
-}
-
-const shadow1Color = getTheme((t) => t.color.shadow1);
-const shadow2Color = getTheme((t) => t.color.shadow2);
-const shadow3Color = getTheme((t) => t.color.shadow3);
-const shadow0 = `${getTheme((t) => t.shadow[0].x)} ${getTheme((t) => t.shadow[0].y)} ${getTheme(
-  (t) => t.shadow[0].blur,
-)} ${getTheme((t) => t.shadow[0].scale)}`;
-
-/**
- * Calculate the shadow to be used.
- */
-function getShadow(
-  variant: keyof Remirror.Theme['shadow'],
-  position: 'x' | 'y' | '-' = '-',
-  negative = false,
-) {
-  const get: typeof getTheme = (fn) => (negative ? negate(getTheme(fn)) : getTheme(fn));
-  const x = position === 'x' ? get((t) => t.shadow[variant].x) : '0';
-  const y = position === 'y' ? get((t) => t.shadow[variant].y) : '0';
-  const blur = getTheme((t) => t.shadow[variant].blur);
-  const scale = getTheme((t) => t.shadow[variant].scale);
-
-  return `${x} ${y} ${blur} ${scale}`;
-}
-
-export const defaultRemirrorAtoms: Remirror.Atom = {
-  shadow: {
-    bottom1: [`box-shadow: ${shadow0} ${shadow1Color}, ${getShadow(1, 'y')} ${shadow1Color}`],
-    bottom2: [`box-shadow: ${shadow0} ${shadow1Color}, ${getShadow(2, 'y')} ${shadow2Color}`],
-    bottom3: [`box-shadow: ${shadow0} ${shadow1Color}, ${getShadow(3, 'y')} ${shadow2Color}`],
-    bottom4: [`box-shadow: ${shadow0} ${shadow2Color}, ${getShadow(4, 'y')} ${shadow3Color}`],
-    bottom5: [`box-shadow: ${shadow0} ${shadow2Color}, ${getShadow(5, 'y')} ${shadow3Color}`],
-    top1: [`box-shadow: ${shadow0} ${shadow1Color}, ${getShadow(1, 'y', true)} ${shadow1Color}`],
-    top2: [`box-shadow: ${shadow0} ${shadow1Color}, ${getShadow(2, 'y', true)} ${shadow2Color}`],
-    top3: [`box-shadow: ${shadow0} ${shadow1Color}, ${getShadow(3, 'y', true)} ${shadow2Color}`],
-    top4: [`box-shadow: ${shadow0} ${shadow2Color}, ${getShadow(4, 'y', true)} ${shadow3Color}`],
-    top5: [`box-shadow: ${shadow0} ${shadow2Color}, ${getShadow(5, 'y', true)} ${shadow3Color}`],
-    center1: [`box-shadow: ${getShadow(1, '-')} ${shadow1Color}`],
-    center2: [`box-shadow: ${getShadow(2, '-')} ${shadow2Color}`],
-    center3: [`box-shadow: ${getShadow(3, '-')} ${shadow2Color}`],
-    center4: [`box-shadow: ${getShadow(4, '-')} ${shadow3Color}`],
-    center5: [`box-shadow: ${getShadow(5, '-')} ${shadow3Color}`],
-    right1: [`box-shadow: ${getShadow(1, 'x')} ${shadow1Color}`],
-    right2: [`box-shadow: ${getShadow(2, 'x')} ${shadow2Color}`],
-    right3: [`box-shadow: ${getShadow(3, 'x')} ${shadow2Color}`],
-    right4: [`box-shadow: ${getShadow(4, 'x')} ${shadow3Color}`],
-    right5: [`box-shadow: ${getShadow(5, 'x')} ${shadow3Color}`],
-    left1: [`box-shadow: ${getShadow(1, 'x', true)} ${shadow1Color}`],
-    left2: [`box-shadow: ${getShadow(2, 'x', true)} ${shadow2Color}`],
-    left3: [`box-shadow: ${getShadow(3, 'x', true)} ${shadow2Color}`],
-    left4: [`box-shadow: ${getShadow(4, 'x', true)} ${shadow3Color}`],
-    left5: [`box-shadow: ${getShadow(5, 'x', true)} ${shadow3Color}`],
-  },
 };
 
 export interface CreateThemeVariablesReturn {
@@ -274,41 +205,6 @@ export function createThemeVariables(theme: RemirrorThemeType = {}): CreateTheme
   return { css: cssVariableString.join('\n'), styles: cssVariableObject };
 }
 
-/**
- * Create the atom classes that can be used within the remirror editor.
- */
-export function createAtomClasses(atom: RemirrorAtomType = {}) {
-  const atomClasses: string[] = [];
-
-  function addAtomClass(keys: string[], value: unknown) {
-    if (typeof value === 'string') {
-      atomClasses.push(`.${keys.map(kebabCase).join('-')} {${value}}`);
-
-      return;
-    }
-
-    if (Array.isArray(value)) {
-      atomClasses.push(`.${keys.map(kebabCase).join('-')} {${value.join(';')}}`);
-
-      return;
-    }
-
-    if (typeof value !== 'object' || !value) {
-      return;
-    }
-
-    for (const [key, v] of Object.entries(value)) {
-      addAtomClass([...keys, key], v);
-    }
-  }
-
-  for (const [key, value] of Object.entries(atom)) {
-    addAtomClass([key], value);
-  }
-
-  return atomClasses.join('\n');
-}
-
 declare global {
   namespace Remirror {
     /**
@@ -325,7 +221,6 @@ declare global {
       space: ThemeSpace;
       lineHeight: ThemeLineHeight;
       letterSpacing: ThemeLetterSpacing;
-      shadow: ThemeShadow;
     }
 
     interface ThemeShadow {

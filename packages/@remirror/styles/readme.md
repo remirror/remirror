@@ -27,7 +27,15 @@ pnpm add @remirror/styles@next
 npm install @remirror/styles@next
 ```
 
+Depending on how you want to consume the styles there are some peer dependencies that might be
+required. Any additional packages are listed in their relevant section.
+
 ## Usage
+
+The styles for this package can be used with plain css, the dom using `emotion`, react using
+`@emotion/styled` and `styled-components`.
+
+### CSS
 
 After installation you can select the css files that you need for your project.
 
@@ -42,14 +50,91 @@ Or if your build system allows it.
 import '@remirror/styles/core.css';
 ```
 
-If you're not worried about bundle size you can also import all styles.
+If you're not worried about bundle size you can also import all styles for all the extensions and
+packages.
 
 ```ts
 import '@remirror/styles/all.css';
 ```
+
+### DOM
+
+Install the addition required dependency.
+
+```bash
+# yarn
+yarn add emotion
+
+# pnpm
+pnpm add emotion
+
+# npm
+npm install emotion
+```
+
+This is useful when using the pure dom to control styles.
+
+```ts
+import { createDomManager, createDomEditor } from 'remirror/dom';
+import { BoldExtension } from 'remirror/extension/bold';
+import { addStylesToElement, allStyles } from 'remirror/styles/dom';
+
+const manager = createDomManager(() => [new BoldExtension()]);
+const wrapperElement = document.createElement('div');
+const editor = createDomEditor({ manager, element: wrapperElement });
+
+addStylesToElement(wrapperElement, allStyles); // Styles added to element.
+```
+
+The above snippet will add all styles to the element and all elements it contains.
+
+### `styled-component`
+
+This is designed to be used in a react app that already consumes styled components and the
+components can be used to wrap your editor, providing automatically scoped styles.
+
+Make sure you have `styled-components` installed. And then import either the styled css or the
+styled component.
+
+```tsx
+import { coreStyledCss, CoreStyledComponent } from '@remirror/styles/styled-components';
+import { MyEditor } from './my-editor';
+
+export const StyledWrapper = () => (
+  <CoreStyledComponent>
+    <MyEditor />
+  </CoreStyledComponent>
+);
+```
+
+The above will provide the styles to your editor component and since it is a styled component you
+can use the `as` prop to define it as you wish.
+
+### `@emotion/styled`
+
+This is designed to be used in a react app that already consumes uses `@emotion/core` and
+`@emotion/styled`. Make sure both of these are installed before getting started
+
+```tsx
+import { coreStyledCss, CoreStyledComponent } from '@remirror/styles/emotion';
+import { MyEditor } from './my-editor';
+
+export const StyledWrapper = () => (
+  <CoreStyledComponent>
+    <MyEditor />
+  </CoreStyledComponent>
+);
+```
+
+This is very similar to the `styled-components` entry point and will provide the styles to your
+editor component.
 
 ## Credits
 
 This package was bootstrapped with [monots].
 
 [monots]: https://github.com/monots/monots
+
+```
+
+```
