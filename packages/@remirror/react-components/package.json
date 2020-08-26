@@ -24,7 +24,7 @@
   "dependencies": {
     "@babel/runtime": "^7.11.0",
     "@lingui/core": "^3.0.0-13",
-    "linaria": "^2.0.0-rc.0",
+    "linaria": "^2.0.0-rc.1",
     "multishift": "1.0.0-next.26",
     "type-fest": "^0.16.0"
   },
@@ -33,8 +33,8 @@
     "@remirror/core": "1.0.0-next.26",
     "@remirror/pm": "1.0.0-next.26",
     "@remirror/react": "1.0.0-next.27",
-    "@testing-library/react": "^10.4.7",
-    "@types/react": "^16.9.46",
+    "@testing-library/react": "^10.4.9",
+    "@types/react": "^16.9.47",
     "@types/react-dom": "^16.9.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"

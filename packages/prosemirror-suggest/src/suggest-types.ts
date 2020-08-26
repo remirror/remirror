@@ -477,7 +477,8 @@ export interface ReasonParameter<Reason = ExitReason | ChangeReason> {
  */
 export interface SuggestChangeHandlerParameter<
   Command extends AnyFunction<void> = AnyFunction<void>
-> extends SuggestCallbackParameter<Command>, ReasonParameter<ChangeReason> {}
+> extends SuggestCallbackParameter<Command>,
+    ReasonParameter<ChangeReason> {}
 
 export type SuggestChangeHandlerMethod<Command extends AnyFunction<void> = AnyFunction<void>> = (
   parameter: SuggestChangeHandlerParameter<Command>,
@@ -505,7 +506,9 @@ export type SuggestExitHandlerMethod<Command extends AnyFunction<void> = AnyFunc
  */
 export interface SuggestCharacterEntryParameter<
   Command extends AnyFunction<void> = AnyFunction<void>
-> extends SuggestCallbackParameter<Command>, FromToParameter, TextParameter {}
+> extends SuggestCallbackParameter<Command>,
+    FromToParameter,
+    TextParameter {}
 
 export type SuggestCharacterEntryMethod<Command extends AnyFunction<void> = AnyFunction<void>> = (
   parameter: SuggestCharacterEntryParameter<Command>,

@@ -20,8 +20,8 @@
     "diffable-html": "^4.0.0",
     "globby": "^11.0.1",
     "jest-axe": "^3.5.0",
-    "jest-diff": "^26.4.0",
-    "linaria": "^2.0.0-rc.0",
+    "jest-diff": "^26.4.2",
+    "linaria": "^2.0.0-rc.1",
     "lodash.groupby": "^4.6.0",
     "lodash.isequal": "^4.5.0",
     "postcss": "^7.0.32",
@@ -29,6 +29,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "remirror": "1.0.0-next.27",
+    "type-fest": "^0.16.0",
     "write-json-file": "^4.3.0"
   }
 }

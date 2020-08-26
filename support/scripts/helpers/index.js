@@ -39,7 +39,8 @@ const formatFiles = async (path = '', silent = false) => {
 };
 
 /**
- * @typedef {import('@manypkg/get-packages').Package['packageJson'] & { location: string }} Package
+ * @typedef {import('@manypkg/get-packages').Package['packageJson'] & {
+ * location: string }} Package
  */
 
 /**
@@ -50,8 +51,8 @@ let packages;
 /**
  * Get all dependencies.
  *
- * @param {boolean} [excludeDeprecated=true] - when true exclude the
- * deprecated packages
+ * @param {boolean} [excludeDeprecated=true] - when true exclude the deprecated
+ * packages
  * @returns {Promise<Package[]>}
  */
 const getAllDependencies = (excludeDeprecated = true) => {
@@ -76,22 +77,36 @@ const getAllDependencies = (excludeDeprecated = true) => {
 /**
  * Get all the packages that can be used as dependencies within the project.
  * These are identified by having a types field in the package.json.
+ *
+ * @param {boolean} [relative] - when set to true this will return the paths as
+ * relative to the root directory. Defaults to `false`.
  */
-const getDependencyPackageMap = async (relative = false) => {
+const getTypedPackagesWithPath = async (relative = false) => {
+  // Load all the packages within this repository.
   const packages = await getAllDependencies();
+
+  // Get the packages which have a `types` field.
   const tsPackages = packages.filter((pkg) => pkg.types);
-  return tsPackages.reduce(
-    (acc, json) => ({
-      ...acc,
-      [json.name]: relative ? getRelativePathFromJson(json) : json.location,
-    }),
-    {},
-  );
+
+  /**
+   * The typed packages to be returned.
+   *
+   * @type {Record<string, string>}
+   */
+  const typedPackages = {};
+
+  // Loop through the typed packages and store the name as a key and path
+  // (either relative or absolute) as the value.
+  for (const pkg of tsPackages) {
+    typedPackages[pkg.name] = relative ? getRelativePathFromJson(pkg) : pkg.location;
+  }
+
+  return typedPackages;
 };
 
 module.exports = {
   getAllDependencies,
-  getDependencyPackageMap,
+  getTypedPackagesWithPath,
   formatFiles,
   baseDir,
   getRelativePathFromJson,

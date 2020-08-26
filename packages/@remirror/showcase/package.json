@@ -33,10 +33,10 @@
     "@types/match-sorter": "^4.0.0",
     "@types/prettier": "^2.0.2",
     "match-sorter": "^4.2.0",
-    "prettier": "^2.0.5"
+    "prettier": "^2.1.1"
   },
   "devDependencies": {
-    "@types/react": "^16.9.46",
+    "@types/react": "^16.9.47",
     "react": "^16.13.1"
   },
   "peerDependencies": {

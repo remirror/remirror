@@ -3,6 +3,7 @@
   "compilerOptions": {
     "allowJs": true,
     "checkJs": true,
+    "skipLibCheck": true,
     "lib": ["dom", "esnext"],
     "jsx": "react",
     "plugins": [{ "name": "typescript-plugin-css-modules" }]
