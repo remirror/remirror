@@ -39,10 +39,10 @@
   },
   "devDependencies": {
     "@types/prettier": "^2.0.2",
-    "@types/react": "^16.9.46",
+    "@types/react": "^16.9.47",
     "@types/react-dom": "^16.9.8",
     "chalk": "^4.1.0",
-    "prettier": "^2.0.5",
+    "prettier": "^2.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },

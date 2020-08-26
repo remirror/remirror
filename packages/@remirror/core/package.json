@@ -26,7 +26,7 @@
     "@remirror/core-helpers": "1.0.0-next.26",
     "@remirror/core-types": "1.0.0-next.26",
     "@remirror/core-utils": "1.0.0-next.26",
-    "linaria": "^2.0.0-rc.0",
+    "linaria": "^2.0.0-rc.1",
     "nanoevents": "^5.1.8",
     "type-fest": "^0.16.0"
   },
