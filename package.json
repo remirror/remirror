@@ -97,6 +97,7 @@
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
     "@babel/runtime": "^7.11.0",
+    "@changesets/changelog-github": "^0.2.7",
     "@changesets/cli": "^2.9.2",
     "@jest/types": "^26.3.0",
     "@lingui/cli": "^3.0.0-13",

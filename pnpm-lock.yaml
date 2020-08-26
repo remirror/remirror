@@ -17,6 +17,7 @@ importers:
       '@babel/preset-env': 7.11.0_@babel+core@7.11.4
       '@babel/preset-react': 7.10.4_@babel+core@7.11.4
       '@babel/runtime': 7.11.2
+      '@changesets/changelog-github': 0.2.7
       '@changesets/cli': 2.10.1
       '@jest/types': 26.3.0
       '@lingui/cli': 3.0.0-13_531e989b66bcd1260183002bceccdc92
@@ -105,6 +106,7 @@ importers:
       '@babel/preset-env': ^7.11.0
       '@babel/preset-react': ^7.10.4
       '@babel/runtime': ^7.11.0
+      '@changesets/changelog-github': ^0.2.7
       '@changesets/cli': ^2.9.2
       '@jest/types': ^26.3.0
       '@lingui/cli': ^3.0.0-13
@@ -4181,6 +4183,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-TvcqUhNhKoqwE+L8dFtcwwAmos4+fqwmSkOWP3TSjw7K/inz2wjC46bA7IFtbx2hrwEq1iG0RCweQZTS2vrx1w==
+  /@changesets/changelog-github/0.2.7:
+    dependencies:
+      '@changesets/get-github-info': 0.4.4
+      '@changesets/types': 3.1.1
+      dotenv: 8.2.0
+    dev: false
+    resolution:
+      integrity: sha512-bWK8IADPYsiSiyORNpVLbmdo7J7A4LktmzUowtIivslP03UW5f/YBDzGub7N0+BVdVmZrqvyWzAIKmpGVkEICg==
   /@changesets/cli/2.10.1:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -4244,6 +4254,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-cTbySXwSv9yWp4Pp5R/b5Qv23wJgFaFCqUbsI3IJ2pyPl0vMaODAZS8NI1nNK2XSxGIg1tw+dWNSR4PlrKBSVQ==
+  /@changesets/get-github-info/0.4.4:
+    dependencies:
+      dataloader: 1.4.0
+      node-fetch: 2.6.0
+    dev: false
+    resolution:
+      integrity: sha512-WoVdRBQXLvJVg3jsMc0+aB8WAFzSGOG45HSo2ep46ixq5lBjM2D51MbgtSYHRGFGvYuAUu6kAfnVmoZYCZFsKQ==
   /@changesets/get-release-plan/2.0.0:
     dependencies:
       '@babel/runtime': 7.11.2
