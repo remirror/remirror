@@ -319,9 +319,6 @@ export class CommandsExtension extends PlainExtension {
 
       if (shouldDispatch) {
         dispatch = view.dispatch;
-
-        // TODO make this be configurable?
-        view.focus();
       }
 
       return command(...args)({ state, dispatch, view, tr: this.transaction });

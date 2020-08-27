@@ -21,7 +21,7 @@ test('can be added to the dom', () => {
       aria-label=""
       aria-multiline="true"
       autofocus="false"
-      class="ProseMirror remirror-editor ProseMirror-focused"
+      class="ProseMirror remirror-editor"
       contenteditable="true"
       role="textbox"
     >
