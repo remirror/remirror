@@ -684,7 +684,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
     const extensionsAndPresets: Array<AnyExtensionConstructor | AnyPresetConstructor> = [];
 
     for (const item of this.combined) {
-      names.push(item.name, item.constructor.name);
+      names.push(item.name);
       extensionsAndPresets.push(item.constructor);
     }
 

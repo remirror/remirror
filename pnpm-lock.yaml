@@ -38,7 +38,6 @@ importers:
       '@typescript-eslint/parser': 3.10.1_eslint@7.7.0+typescript@4.0.2
       babel-jest: 26.3.0_@babel+core@7.11.4
       babel-plugin-annotate-pure-calls: 0.4.0_@babel+core@7.11.4
-      babel-plugin-dev-expression: 0.2.2_@babel+core@7.11.4
       babel-plugin-istanbul: 6.0.0
       babel-plugin-macros: 2.8.0
       babel-plugin-transform-react-remove-prop-types: 0.4.24
@@ -127,7 +126,6 @@ importers:
       '@typescript-eslint/parser': ^3.10.1
       babel-jest: ^26.3.0
       babel-plugin-annotate-pure-calls: ^0.4.0
-      babel-plugin-dev-expression: ^0.2.2
       babel-plugin-istanbul: ^6.0.0
       babel-plugin-macros: ^2.8.0
       babel-plugin-transform-react-remove-prop-types: ^0.4.24
@@ -8651,14 +8649,6 @@ packages:
       '@babel/core': ^7.10.5
     resolution:
       integrity: sha512-hjUd24Yhnr5NKtHpC2mcRBGjC6RUKGzSzjN9g5SdjT4WpL/JDlpmjyBf7vWsJJSXFvMIbzRyxF4lT9ukwOnj/w==
-  /babel-plugin-dev-expression/0.2.2_@babel+core@7.11.4:
-    dependencies:
-      '@babel/core': 7.11.4
-    dev: false
-    peerDependencies:
-      '@babel/core': ^7.0.0
-    resolution:
-      integrity: sha512-y32lfBif+c2FIh5dwGfcc/IfX5aw/Bru7Du7W2n17sJE/GJGAsmIk5DPW/8JOoeKpXW5evJfJOvRq5xkiS6vng==
   /babel-plugin-dynamic-import-node/2.3.3:
     dependencies:
       object.assign: 4.1.0

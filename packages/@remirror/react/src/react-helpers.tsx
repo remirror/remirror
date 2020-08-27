@@ -21,7 +21,8 @@ export function createReactManager<Combined extends AnyCombinedUnion>(
   const { core, react, ...settings } = options;
 
   if (isRemirrorManager<ReactCombinedUnion<Combined>>(combined)) {
-    invariant(combined.includes(['ReactPreset', 'CorePreset']), {
+    console.log(combined);
+    invariant(combined.includes(['react', 'core']), {
       code: ErrorConstant.INVALID_MANAGER_EXTENSION,
       message:
         "The extensions and presets provided to the manager don't include the `CorePreset` or the `ReactPreset`. Please either create a manager which includes both, or use the `useManager` hook / `createReact` function.",
