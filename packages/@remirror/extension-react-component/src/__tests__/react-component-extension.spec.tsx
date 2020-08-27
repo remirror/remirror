@@ -143,7 +143,6 @@ test('simple commands', () => {
       aria-label=""
       aria-multiline="true"
       aria-placeholder=""
-      autofocus="false"
       class="ProseMirror remirror-editor"
       contenteditable="true"
       role="textbox"

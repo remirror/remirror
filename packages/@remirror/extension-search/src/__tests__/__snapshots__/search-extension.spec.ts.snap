@@ -4,7 +4,6 @@ exports[`commands #clearSearch 1`] = `
 <div
   aria-label=""
   aria-multiline="true"
-  autofocus="false"
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
@@ -28,7 +27,6 @@ exports[`commands #find 1`] = `
 <div
   aria-label=""
   aria-multiline="true"
-  autofocus="false"
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
@@ -61,7 +59,6 @@ exports[`commands #find 2`] = `
 <div
   aria-label=""
   aria-multiline="true"
-  autofocus="false"
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
@@ -94,7 +91,6 @@ exports[`commands #find 3`] = `
 <div
   aria-label=""
   aria-multiline="true"
-  autofocus="false"
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
@@ -127,7 +123,6 @@ exports[`commands #findNext, #replace 1`] = `
 <div
   aria-label=""
   aria-multiline="true"
-  autofocus="false"
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
@@ -151,7 +146,6 @@ exports[`commands #replace 1`] = `
 <div
   aria-label=""
   aria-multiline="true"
-  autofocus="false"
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
@@ -180,7 +174,6 @@ exports[`commands #replaceAll 1`] = `
 <div
   aria-label=""
   aria-multiline="true"
-  autofocus="false"
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"

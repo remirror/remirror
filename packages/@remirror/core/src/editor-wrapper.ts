@@ -3,10 +3,10 @@ import { createNanoEvents, Unsubscribe } from 'nanoevents';
 
 import { EDITOR_CLASS_NAME, EMPTY_PARAGRAPH_NODE, ErrorConstant } from '@remirror/core-constants';
 import {
-  bool,
   invariant,
   isEmptyArray,
   isFunction,
+  isNumber,
   object,
   pick,
   uniqueId,
@@ -241,7 +241,7 @@ export abstract class EditorWrapper<
    * You can call the update method with the new `props` to update the internal
    * state of this instance.
    */
-  update(parameter: EditorWrapperParameter<Combined, Props>) {
+  update(parameter: EditorWrapperParameter<Combined, Props>): this {
     const { getProps, createStateFromContent } = parameter;
     this.#getProps = getProps;
     this.createStateFromContent = createStateFromContent;
@@ -252,12 +252,13 @@ export abstract class EditorWrapper<
   /**
    * Retrieve the editor state.
    */
-  protected readonly getState = () => this.view.state;
+  protected readonly getState = (): EditorState<SchemaFromCombined<Combined>> => this.view.state;
 
   /**
    * Retrieve the previous editor state.
    */
-  protected readonly getPreviousState = () => this.previousState;
+  protected readonly getPreviousState = (): EditorState<SchemaFromCombined<Combined>> =>
+    this.previousState;
 
   /**
    * Create the prosemirror editor view.
@@ -291,9 +292,15 @@ export abstract class EditorWrapper<
       : attributes;
 
     // Whether or not the editor is focused.
-    const focus = ssr
-      ? { autoFocus: bool(autoFocus) }
-      : { autofocus: autoFocus ? 'true' : 'false' };
+    let focus: Shape = {};
+
+    // In Chrome 84 when autofocus is set to any value including `"false"` it
+    // will actually trigger the autofocus. This check makes sure there is no
+    // `autofocus` attribute attached unless `autoFocus` is expressly a truthy
+    // value.
+    if (autoFocus || isNumber(autoFocus)) {
+      focus = ssr ? { autoFocus: true } : { autofocus: 'true' };
+    }
 
     const defaultAttributes = {
       role: 'textbox',
@@ -527,7 +534,13 @@ export abstract class EditorWrapper<
     this.view.dispatch(transaction);
 
     // Wait for the next event loop to set the focus.
-    requestAnimationFrame(() => this.view.focus());
+    requestAnimationFrame(() => {
+      this.view.focus();
+      // This has to be called again in order for Safari to scroll into view
+      // after the focus. Perhaps there's a better way though or maybe place
+      // behind a flag.
+      this.view.dispatch(this.view.state.tr.scrollIntoView());
+    });
   }
 
   get editorWrapperOutput(): EditorWrapperOutput<Combined> {

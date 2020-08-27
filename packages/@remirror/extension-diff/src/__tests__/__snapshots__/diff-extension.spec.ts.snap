@@ -4,7 +4,6 @@ exports[`#highlightCommit can highlight and remove highlights from commits 1`] =
 <div
   aria-label=""
   aria-multiline="true"
-  autofocus="false"
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
@@ -25,7 +24,6 @@ exports[`#highlightCommit can highlight and remove highlights from commits 2`] =
 <div
   aria-label=""
   aria-multiline="true"
-  autofocus="false"
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
@@ -50,7 +48,6 @@ exports[`#highlightCommit can highlight and remove highlights from commits 3`] =
 <div
   aria-label=""
   aria-multiline="true"
-  autofocus="false"
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"

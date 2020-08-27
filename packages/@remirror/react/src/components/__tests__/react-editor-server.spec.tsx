@@ -172,12 +172,46 @@ test('prepends to the react element when insertPosition=start with getRootProps'
   expect(isAscending([indexOfInjectedSSRComponent, indexOfInnerDiv, indexOfOuter])).toBeTrue();
 });
 
+test('autoFocus', () => {
+  const reactString = renderToString(
+    <ReactEditor
+      {...handlers}
+      label={label}
+      autoFocus={true}
+      initialContent={docNodeSimpleJSON}
+      manager={createReactManager([new BoldExtension()])}
+    >
+      {() => <Fragment />}
+    </ReactEditor>,
+  );
+
+  expect(reactString).toMatchInlineSnapshot(`
+    <div>
+      <div role="textbox"
+           autofocus
+           aria-multiline="true"
+           aria-label="Remirror editor"
+           aria-placeholder
+           class="Prosemirror remirror-editor"
+           contenteditable="true"
+      >
+        <p>
+          This is a node with
+          <strong>
+            bold text.
+          </strong>
+        </p>
+      </div>
+    </div>
+  `);
+});
+
 /**
  * Check that the numbers passed in are of ascending order.
  *
  * @param numbers - the array of numbers to test
  */
-export const isAscending = (numbers: number[], strict = false) => {
+function isAscending(numbers: number[], strict = false) {
   let current: number | null = null;
 
   for (const num of numbers) {
@@ -191,4 +225,4 @@ export const isAscending = (numbers: number[], strict = false) => {
   }
 
   return true;
-};
+}
