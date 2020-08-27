@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-wysiwyg",
-  "version": "1.0.0-next.27",
+  "version": "1.0.0-next.28",
   "description": "The preset for your wysiwyg editor.",
   "keywords": [
     "remirror",
@@ -26,36 +26,36 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.11.0",
-    "@remirror/extension-bidi": "1.0.0-next.26",
-    "@remirror/extension-blockquote": "1.0.0-next.26",
-    "@remirror/extension-bold": "1.0.0-next.26",
-    "@remirror/extension-code": "1.0.0-next.26",
-    "@remirror/extension-code-block": "1.0.0-next.26",
-    "@remirror/extension-drop-cursor": "1.0.0-next.26",
-    "@remirror/extension-epic-mode": "1.0.0-next.26",
-    "@remirror/extension-gap-cursor": "1.0.0-next.26",
-    "@remirror/extension-hard-break": "1.0.0-next.26",
-    "@remirror/extension-heading": "1.0.0-next.26",
-    "@remirror/extension-horizontal-rule": "1.0.0-next.26",
-    "@remirror/extension-image": "1.0.0-next.26",
-    "@remirror/extension-italic": "1.0.0-next.26",
-    "@remirror/extension-link": "1.0.0-next.26",
-    "@remirror/extension-search": "1.0.0-next.26",
-    "@remirror/extension-strike": "1.0.0-next.26",
-    "@remirror/extension-trailing-node": "1.0.0-next.26",
-    "@remirror/extension-underline": "1.0.0-next.26",
-    "@remirror/preset-core": "1.0.0-next.26",
-    "@remirror/preset-embed": "1.0.0-next.26",
-    "@remirror/preset-list": "1.0.0-next.26",
-    "@remirror/preset-table": "1.0.0-next.27"
+    "@remirror/extension-bidi": "1.0.0-next.28",
+    "@remirror/extension-blockquote": "1.0.0-next.28",
+    "@remirror/extension-bold": "1.0.0-next.28",
+    "@remirror/extension-code": "1.0.0-next.28",
+    "@remirror/extension-code-block": "1.0.0-next.28",
+    "@remirror/extension-drop-cursor": "1.0.0-next.28",
+    "@remirror/extension-epic-mode": "1.0.0-next.28",
+    "@remirror/extension-gap-cursor": "1.0.0-next.28",
+    "@remirror/extension-hard-break": "1.0.0-next.28",
+    "@remirror/extension-heading": "1.0.0-next.28",
+    "@remirror/extension-horizontal-rule": "1.0.0-next.28",
+    "@remirror/extension-image": "1.0.0-next.28",
+    "@remirror/extension-italic": "1.0.0-next.28",
+    "@remirror/extension-link": "1.0.0-next.28",
+    "@remirror/extension-search": "1.0.0-next.28",
+    "@remirror/extension-strike": "1.0.0-next.28",
+    "@remirror/extension-trailing-node": "1.0.0-next.28",
+    "@remirror/extension-underline": "1.0.0-next.28",
+    "@remirror/preset-core": "1.0.0-next.28",
+    "@remirror/preset-embed": "1.0.0-next.28",
+    "@remirror/preset-list": "1.0.0-next.28",
+    "@remirror/preset-table": "1.0.0-next.28"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.26",
-    "@remirror/pm": "1.0.0-next.26"
+    "@remirror/core": "1.0.0-next.28",
+    "@remirror/pm": "1.0.0-next.28"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.26",
-    "@remirror/pm": "1.0.0-next.26"
+    "@remirror/core": "1.0.0-next.28",
+    "@remirror/pm": "1.0.0-next.28"
   },
   "publishConfig": {
     "access": "public"

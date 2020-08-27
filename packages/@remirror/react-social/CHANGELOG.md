@@ -1,5 +1,33 @@
 # @remirror/react-social
 
+## 1.0.0-next.28
+
+> 2020-08-27
+
+### Patch Changes
+
+- [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448)
+  [#585](https://github.com/remirror/remirror/pull/585) Thanks
+  [@ifiokjr](https://github.com/ifiokjr)! - Upgrade dependencies and `linaria`.
+
+- Updated dependencies
+  [[`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47),
+  [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448),
+  [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d),
+  [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)]:
+  - @remirror/core@1.0.0-next.28
+  - @remirror/pm@1.0.0-next.28
+  - @remirror/react@1.0.0-next.28
+  - multishift@1.0.0-next.28
+  - @remirror/extension-auto-link@1.0.0-next.28
+  - @remirror/extension-emoji@1.0.0-next.28
+  - @remirror/extension-events@1.0.0-next.28
+  - @remirror/extension-mention@1.0.0-next.28
+  - @remirror/preset-social@1.0.0-next.28
+  - @remirror/i18n@1.0.0-next.28
+  - @remirror/react-utils@1.0.0-next.28
+  - @remirror/theme@1.0.0-next.28
+
 ## 1.0.0-next.27
 
 > 2020-08-25
