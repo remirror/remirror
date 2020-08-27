@@ -2,12 +2,8 @@ import matchSorter from 'match-sorter';
 import React, { FC, useCallback, useMemo, useState } from 'react';
 
 import { startCase, take } from '@remirror/core';
-import {
-  MentionChangeParameter,
-  SocialEditor,
-  SocialProviderProps,
-  UserData,
-} from '@remirror/react-social';
+import type { UseMentionExitHandler } from '@remirror/react-hooks/use-mention';
+import { MentionChangeParameter, SocialEditor, SocialProviderProps } from '@remirror/react-social';
 
 import { fakeUsers } from './data/fake-users';
 
@@ -22,53 +18,54 @@ const fakeTags = [
   'NeedsStylingSoon',
   'LondonHits',
   'MCM',
-];
+].map((tag) => ({
+  label: `#${tag}`,
+  href: `/tag/${tag}`,
+  id: tag,
+  tag,
+}));
 
-const userData: UserData[] = fakeUsers.results.map(
-  (user): UserData => ({
-    avatarUrl: user.picture.thumbnail,
-    displayName: startCase(`${user.name.first} ${user.name.last}`),
-    id: user.login.uuid,
-    username: user.login.username,
-    href: `/u/${user.login.username}`,
-  }),
-);
+const userData = fakeUsers.results.map((user) => ({
+  avatarUrl: user.picture.thumbnail,
+  displayName: startCase(`${user.name.first} ${user.name.last}`),
+  id: user.login.uuid,
+  label: `@${user.login.username}`,
+  username: user.login.username,
+  href: `/u/${user.login.username}`,
+}));
 
 export const ExampleSocialEditor: FC<Partial<SocialProviderProps>> = (props) => {
-  const [mention, setMention] = useState<MentionChangeParameter>();
+  const [mention, setMention] = useState<MentionChangeParameter | null>(null);
 
-  const onChange = useCallback((parameter?: MentionChangeParameter) => {
+  const onChange = useCallback((parameter: MentionChangeParameter | null) => {
     setMention(parameter);
   }, []);
 
-  const userMatches = useMemo(
-    () =>
-      mention && mention.name === 'at' && mention.query
-        ? take(
-            matchSorter(userData, mention.query, { keys: ['username', 'displayName'] }),
-            6,
-          ).map((user) => ({ ...user }))
-        : [],
-    [mention],
-  );
+  const onExit: UseMentionExitHandler = useCallback(({ query }, command) => {
+    command({ href: `/${query.full}` });
+  }, []);
 
-  const tagMatches = useMemo(
-    () =>
-      mention && mention.name === 'tag' && mention.query
-        ? take(matchSorter(fakeTags, mention.query), 6).map((tag) => ({
-            tag,
-          }))
-        : [],
-    [mention],
-  );
+  const items = useMemo(() => {
+    if (mention?.name === 'at' && mention.query) {
+      return (
+        take(matchSorter(userData, mention.query, { keys: ['username', 'displayName'] }), 6) ?? []
+      );
+    }
+
+    if (mention?.name === 'tag' && mention.query) {
+      return take(matchSorter(fakeTags, mention.query), 6) ?? [];
+    }
+
+    return [];
+  }, [mention]);
 
   return (
     <SocialEditor
       {...props}
       attributes={{ 'data-testid': 'react-social' }}
-      users={userMatches}
-      tags={tagMatches}
+      items={items}
       onMentionChange={onChange}
+      onExit={onExit}
     />
   );
 };

@@ -28,9 +28,3 @@ npm install @remirror/react-wysiwyg@next @remirror/pm@next @remirror/react@next
 ## Usage
 
 More documentation to come.
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

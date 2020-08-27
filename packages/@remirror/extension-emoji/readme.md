@@ -56,9 +56,3 @@ manager.store.commands.suggestEmoji(); // Inserts the suggestion activation char
 
 manager.store.helpers.updateFrequentlyUsed(['heart', '+1', 'smile']);
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

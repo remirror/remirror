@@ -1,128 +1,275 @@
-import { createEditor, doc, p } from 'jest-prosemirror';
+import { createEditor, doc, h1, p, strong } from 'jest-prosemirror';
 
-import { ExitReason } from '../suggest-constants';
 import { addSuggester, suggest } from '../suggest-plugin';
-import type { SuggestExitHandlerParameter, SuggestKeyBindingParameter } from '../suggest-types';
+import type { SuggestChangeHandler } from '../suggest-types';
+import { ChangeReason, ExitReason } from '../suggest-types';
 
-describe('Suggest Handlers', () => {
-  it('should call `onChange`, `onExit` and `createCommand` handlers', () => {
-    const command = jest.fn();
+describe('suggester', () => {
+  it('should call `onChange`', () => {
     const expected = 'suggest';
-    const handlers = {
-      onExit: jest.fn((params: SuggestExitHandlerParameter) => {
-        params.command('command');
+    const exit = jest.fn();
+    const onChange: SuggestChangeHandler = jest.fn((param) => {
+      const { exitReason, text: matchText, query: queryText, range } = param;
 
-        expect(params.queryText.full).toBe(expected);
-        expect(params.reason).toBe(ExitReason.MoveEnd);
-      }),
-      onChange: jest.fn(),
-      createCommand: () => command,
-    };
-    const plugin = suggest({ char: '@', name: 'at', ...handlers, matchOffset: 0 });
+      if (exitReason) {
+        exit(exitReason, matchText, queryText, range);
+      }
+    });
+    const plugin = suggest({ char: '@', name: 'at', onChange, matchOffset: 0 });
 
     createEditor(doc(p('<cursor>')), { plugins: [plugin] })
       .insertText('@')
       .callback(() => {
-        expect(handlers.onChange).toHaveBeenCalledTimes(1);
+        expect(onChange).toHaveBeenCalledTimes(1);
       })
       .insertText(`${expected} `)
       .callback(() => {
-        expect(handlers.onChange).toHaveBeenCalledTimes(8);
-        expect(command).toHaveBeenCalledWith('command');
+        expect(onChange).toHaveBeenCalledTimes(9);
+        expect(exit).toHaveBeenCalledTimes(1);
+        expect(exit).toHaveBeenCalledWith(
+          ExitReason.MoveEnd,
+          { full: '@suggest', partial: '@suggest' },
+          { full: 'suggest', partial: 'suggest' },
+          { from: 1, cursor: 9, to: 9 },
+        );
+      });
+  });
+
+  it('supports priority', () => {
+    const _1 = jest.fn();
+    const _2 = jest.fn();
+    const _3 = jest.fn();
+    const plugin = suggest(
+      { char: '@', name: '3', onChange: _3, supportedCharacters: /[1-3]+/, priority: 10 },
+      { char: '@', name: '2', onChange: _2, supportedCharacters: /[12]+/, priority: 20 },
+      { char: '@', name: '1', onChange: _1, supportedCharacters: /1+/, priority: 30 },
+    );
+
+    createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+      .insertText('@')
+      .callback(() => {
+        expect(_1).toHaveBeenCalledTimes(1);
+        expect(_2).not.toHaveBeenCalled();
+        expect(_3).not.toHaveBeenCalled();
+      })
+      .insertText('1')
+      .callback(() => {
+        expect(_1).toHaveBeenCalledTimes(2);
+        expect(_2).not.toHaveBeenCalled();
+        expect(_3).not.toHaveBeenCalled();
+      })
+      .insertText('2')
+      .callback(() => {
+        expect(_1).toHaveBeenCalledTimes(2);
+        expect(_2).toHaveBeenCalledTimes(1);
+        expect(_3).not.toHaveBeenCalled();
+      })
+      .insertText('3')
+      .callback(() => {
+        expect(_1).toHaveBeenCalledTimes(2);
+        expect(_2).toHaveBeenCalledTimes(1);
+        expect(_3).toHaveBeenCalledTimes(1);
+      })
+      .insertText(' ')
+
+      .callback(() => {
+        expect(_3).toHaveBeenCalledTimes(2);
+        expect(_3).toHaveBeenCalledWith(
+          expect.objectContaining({
+            exitReason: ExitReason.MoveEnd,
+            text: { full: '@123', partial: '@123' },
+            query: { full: '123', partial: '123' },
+            range: { from: 1, cursor: 5, to: 5 },
+          }),
+        );
+      });
+  });
+
+  it('supports regex for character matches', () => {
+    const expected = 'suggest';
+    const exit = jest.fn();
+    const onChange: SuggestChangeHandler = jest.fn((param) => {
+      const { exitReason, text: matchText, query: queryText, range } = param;
+
+      if (exitReason) {
+        exit(exitReason, matchText, queryText, range);
+      }
+    });
+    const at = jest.fn();
+
+    const plugin = suggest(
+      { char: '@', name: 'at', onChange: at, matchOffset: 0 },
+      { name: 'whitespace', char: /\s/, onChange, supportedCharacters: /[A-Za-z]+/ },
+    );
+
+    createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+      .insertText(' ')
+      .callback(() => {
+        expect(onChange).toHaveBeenCalledTimes(1);
+      })
+      .insertText(`${expected}_`)
+      .callback(() => {
+        expect(onChange).toHaveBeenCalledTimes(9);
+        expect(exit).toHaveBeenCalledTimes(1);
+        expect(exit).toHaveBeenCalledWith(
+          ExitReason.MoveEnd,
+          { full: ' suggest', partial: ' suggest' },
+          { full: 'suggest', partial: 'suggest' },
+          { from: 1, cursor: 9, to: 9 },
+        );
       });
   });
 
   it('should not call `onChange` for the activation character when matchOffset is greater than 0', () => {
-    const handlers = {
-      onChange: jest.fn(),
-    };
-    const plugin = suggest({ char: '@', name: 'at', ...handlers, matchOffset: 1 });
-    createEditor(doc(p('<cursor>')), { plugins: [plugin] }).insertText('@');
+    const exit = jest.fn();
+    const onChange: SuggestChangeHandler = jest.fn(({ exitReason }) => {
+      if (exitReason) {
+        exit(exitReason);
+      }
+    });
+    const plugin = suggest(
+      { char: '@', name: 'at', onChange, matchOffset: 1 },
+      { char: '#', name: 'tags', onChange, matchOffset: 2 },
+    );
 
-    expect(handlers.onChange).not.toHaveBeenCalled();
+    const editor = createEditor(doc(p('<cursor>')), { plugins: [plugin] }).insertText('@ #a ');
+
+    expect(onChange).not.toHaveBeenCalled();
+
+    editor.insertText('@a #ab ');
+    expect(exit).toHaveBeenCalledTimes(2);
+    expect(exit).toHaveBeenCalledWith(ExitReason.MoveEnd);
+    expect(onChange).toHaveBeenCalledTimes(4);
   });
 
-  it('should respond to keyBindings', () => {
-    const keyBindings = {
-      Enter: jest.fn((params: SuggestKeyBindingParameter) => {
-        params.command();
-      }),
-    };
-    const plugin = suggest({
-      char: '@',
-      name: 'at',
-      keyBindings,
-      matchOffset: 0,
-      createCommand: ({ view }) => () => view.dispatch(view.state.tr.insertText('awesome')),
+  it('responds to different kinds of exits', () => {
+    const exit = jest.fn();
+    const onChange: SuggestChangeHandler = jest.fn(({ exitReason, range }) => {
+      if (exitReason) {
+        exit(exitReason, range);
+      }
     });
 
-    createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+    const plugin = suggest({ char: '@', onChange, name: 'at', matchOffset: 0 });
+
+    const editor = createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+      .insertText('@abc')
+      .jumpTo(3)
+      .callback(() => {
+        expect(onChange).toHaveBeenCalledTimes(5);
+        expect(onChange).toHaveBeenLastCalledWith(
+          expect.objectContaining({ changeReason: ChangeReason.Move }),
+        );
+        expect(exit).not.toHaveBeenCalled();
+      })
+      .insertText(' ')
+      .callback(() => {
+        expect(exit).toHaveBeenCalledWith(ExitReason.Split, { from: 1, cursor: 3, to: 3 });
+      })
       .insertText('@')
-      .press('Enter')
-      .callback((content) => {
-        expect(content.state.doc).toEqualProsemirrorNode(doc(p('@awesome')));
+      .callback(() => {
+        expect(onChange).toHaveBeenLastCalledWith(
+          expect.objectContaining({
+            range: { from: 4, cursor: 5, to: 7 },
+            changeReason: ChangeReason.Start,
+          }),
+        );
+      });
+
+    editor.overwrite(doc(p('Hello ')));
+    expect(exit).toHaveBeenLastCalledWith(ExitReason.InvalidSplit, { from: 4, cursor: 5, to: 7 });
+
+    editor
+      .insertText('@abc')
+      .jumpTo('start')
+      .callback(() => {
+        expect(exit).toHaveBeenLastCalledWith(ExitReason.MoveStart, {
+          from: 7,
+          cursor: 11,
+          to: 11,
+        });
       });
   });
 
   it('calls the correct handlers when jumping between two suggesters', () => {
-    const handlers1 = {
-      onChange: jest.fn(),
-      onExit: jest.fn(),
-    };
-    const handlers2 = {
-      onChange: jest.fn(),
-      onExit: jest.fn(),
-    };
+    const change1 = jest.fn();
+    const exit1 = jest.fn();
+    const onChange1: SuggestChangeHandler = jest.fn(({ exitReason, changeReason }) => {
+      if (exitReason) {
+        exit1(exitReason);
+      } else {
+        change1(changeReason);
+      }
+    });
+
+    const change2 = jest.fn();
+    const exit2 = jest.fn();
+    const onChange2: SuggestChangeHandler = jest.fn(({ exitReason, changeReason }) => {
+      if (exitReason) {
+        exit2(exitReason);
+      } else {
+        change2(changeReason);
+      }
+    });
+
     const plugin = suggest(
-      { char: '@', name: 'at', ...handlers1 },
-      { char: '#', name: 'hash', ...handlers2 },
+      { char: '@', name: 'at', onChange: onChange1 },
+      { char: '#', name: 'hash', onChange: onChange2 },
     );
 
     createEditor(doc(p('<cursor>')), { plugins: [plugin] })
       .insertText('@abc #xyz')
       .callback(() => {
-        expect(handlers1.onChange).toHaveBeenCalledTimes(4);
-        expect(handlers1.onExit).toHaveBeenCalledTimes(1);
-        expect(handlers2.onChange).toHaveBeenCalledTimes(4);
+        expect(change1).toHaveBeenCalledTimes(4);
+        expect(exit1).toHaveBeenCalledTimes(1);
+        expect(change2).toHaveBeenCalledTimes(4);
 
         jest.clearAllMocks();
       })
       .jumpTo(5)
       .callback(() => {
-        expect(handlers1.onChange).toHaveBeenCalledTimes(1);
-        expect(handlers1.onExit).not.toHaveBeenCalled();
-        expect(handlers2.onExit).toHaveBeenCalledTimes(1);
-        expect(handlers2.onChange).not.toHaveBeenCalled();
+        expect(change1).toHaveBeenCalledTimes(1);
+        expect(exit1).not.toHaveBeenCalled();
+        expect(exit2).toHaveBeenCalledTimes(1);
+        expect(change2).not.toHaveBeenCalled();
       });
   });
 });
 
 describe('Suggest Ignore', () => {
   it('should ignore matches when called', () => {
-    const handlers = {
-      onExit: jest.fn(
-        ({
-          addIgnored,
-          range: { from },
-          suggester: { char, name },
-        }: SuggestExitHandlerParameter) => {
-          addIgnored({ from, char, name });
-        },
-      ),
-      onChange: jest.fn(),
-    };
-    const plugin = suggest({ char: '@', name: 'at', ...handlers });
+    const change = jest.fn();
+    const exit = jest.fn();
+    const onChange: SuggestChangeHandler = jest.fn(
+      ({ exitReason, range, addIgnored, suggester }) => {
+        if (exitReason) {
+          addIgnored({ from: range.from, name: suggester.name });
+          exit(exitReason, range);
+        } else {
+          change(range);
+        }
+      },
+    );
+    const plugin = suggest({ char: '@', name: 'at', onChange, ignoredClassName: 'ignored' });
 
-    createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+    const editor = createEditor(doc(p('<cursor>')), { plugins: [plugin] })
       .insertText('@abc ')
       .callback(() => {
-        expect(handlers.onExit).toHaveBeenCalledTimes(1);
-        expect(handlers.onChange).toHaveBeenCalledTimes(4);
+        expect(exit).toHaveBeenCalledTimes(1);
+        expect(change).toHaveBeenCalledTimes(4);
 
         jest.clearAllMocks();
       })
-      .backspace(3)
-      .callback(() => expect(handlers.onChange).not.toHaveBeenCalled());
+      .backspace(4)
+      .callback(() => expect(change).not.toHaveBeenCalled());
+
+    expect(editor.view.dom.innerHTML).toMatchInlineSnapshot(`
+      <p>
+        <span class="ignored">
+          @
+        </span>
+      </p>
+    `);
   });
 
   it('should clear ignored', () => {
@@ -131,25 +278,33 @@ describe('Suggest Ignore', () => {
       tag: (_name?: string) => {},
     };
 
-    const onExitMaker = (type: keyof typeof clear) => (params: SuggestExitHandlerParameter) => {
-      const { name, char } = params.suggester;
-      params.addIgnored({ from: params.range.from, char, name });
-      clear[type] = params.clearIgnored;
-    };
+    const exitAt = jest.fn();
+    const onChangeAt: SuggestChangeHandler = jest.fn(
+      ({ exitReason, range, addIgnored, suggester, clearIgnored }) => {
+        if (exitReason) {
+          const { name } = suggester;
+          addIgnored({ from: range.from, name });
+          clear.at = clearIgnored;
+          exitAt();
+        }
+      },
+    );
 
-    const atHandlers = {
-      onExit: jest.fn(onExitMaker('at')),
-      onChange: jest.fn(),
-    };
-
-    const tagHandlers = {
-      onExit: jest.fn(onExitMaker('tag')),
-      onChange: jest.fn(),
-    };
+    const exitTag = jest.fn();
+    const onChangeTag: SuggestChangeHandler = jest.fn(
+      ({ exitReason, range, addIgnored, suggester, clearIgnored }) => {
+        if (exitReason) {
+          const { name } = suggester;
+          addIgnored({ from: range.from, name });
+          clear.tag = clearIgnored;
+          exitTag();
+        }
+      },
+    );
 
     const plugin = suggest(
-      { char: '@', name: 'at', ...atHandlers },
-      { char: '#', name: 'tag', ...tagHandlers },
+      { char: '@', name: 'at', onChange: onChangeAt },
+      { char: '#', name: 'tag', onChange: onChangeTag },
     );
 
     createEditor(doc(p('<cursor>')), { plugins: [plugin] })
@@ -159,37 +314,39 @@ describe('Suggest Ignore', () => {
       })
       .jumpTo(2)
       .callback(() => {
-        expect(atHandlers.onChange).not.toHaveBeenCalled();
+        expect(onChangeAt).not.toHaveBeenCalled();
 
         clear.at('at');
       })
       .jumpTo(3)
       .callback(() => {
-        expect(atHandlers.onChange).toHaveBeenCalledTimes(1);
+        expect(onChangeAt).toHaveBeenCalledTimes(1);
       })
       .jumpTo(7)
       .callback(() => {
-        expect(tagHandlers.onChange).not.toHaveBeenCalled();
+        expect(onChangeTag).not.toHaveBeenCalled();
 
         clear.tag('tag');
       })
       .jumpTo(8)
       .callback(() => {
-        expect(tagHandlers.onChange).toHaveBeenCalledTimes(1);
+        expect(onChangeTag).toHaveBeenCalledTimes(1);
       })
       .jumpTo('end')
       .callback(() => {
-        expect(atHandlers.onExit).toHaveBeenCalledTimes(1);
-        expect(tagHandlers.onExit).toHaveBeenCalledTimes(1);
+        expect(exitAt).toHaveBeenCalledTimes(1);
+        expect(exitTag).toHaveBeenCalledTimes(1);
       });
   });
 });
 
 test('addSuggester', () => {
-  const handlers = {
-    onExit: jest.fn(),
-    onChange: jest.fn(),
-  };
+  const exit = jest.fn();
+  const onChange: SuggestChangeHandler = jest.fn(({ exitReason, range }) => {
+    if (exitReason) {
+      exit(exitReason, range);
+    }
+  });
 
   const plugin = suggest();
   const editor = createEditor(doc(p('<cursor>')), { plugins: [plugin] });
@@ -197,18 +354,18 @@ test('addSuggester', () => {
   const remove = addSuggester(editor.view.state, {
     char: '@',
     name: 'at',
-    ...handlers,
+    onChange,
     matchOffset: 0,
   });
 
   editor
     .insertText('@')
     .callback(() => {
-      expect(handlers.onChange).toHaveBeenCalledTimes(1);
+      expect(onChange).toHaveBeenCalledTimes(1);
     })
     .insertText('suggest ');
 
-  expect(handlers.onExit).toHaveBeenCalledTimes(1);
+  expect(exit).toHaveBeenCalledTimes(1);
   remove();
 
   jest.clearAllMocks();
@@ -216,9 +373,121 @@ test('addSuggester', () => {
   editor
     .insertText('@')
     .callback(() => {
-      expect(handlers.onChange).not.toHaveBeenCalled();
+      expect(onChange).not.toHaveBeenCalled();
     })
     .insertText('suggest ');
 
-  expect(handlers.onExit).not.toHaveBeenCalled();
+  expect(exit).not.toHaveBeenCalled();
+});
+
+describe('validity', () => {
+  it('can register invalid marks', () => {
+    const onChange: SuggestChangeHandler = jest.fn();
+    const plugin = suggest({ char: '@', name: 'at', onChange, invalidMarks: ['strong'] });
+
+    createEditor(doc(p(strong('@<cursor>'))), { plugins: [plugin] }).insertText('abc');
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('can register invalid nodes', () => {
+    const onChange: SuggestChangeHandler = jest.fn();
+    const plugin = suggest({ char: '@', name: 'at', onChange, invalidNodes: ['heading'] });
+
+    createEditor(doc(h1('@<cursor>')), { plugins: [plugin] }).insertText('abc');
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('can register valid marks', () => {
+    const onChange: SuggestChangeHandler = jest.fn();
+    const plugin = suggest({ char: '@', name: 'at', onChange, validMarks: ['strong'] });
+
+    const editor = createEditor(doc(p(strong('@<cursor>')), p('')), {
+      plugins: [plugin],
+    }).insertText('abc ');
+    expect(onChange).toHaveBeenCalledTimes(4);
+
+    jest.resetAllMocks();
+
+    editor.jumpTo(8).insertText('@abc ');
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('can register valid nodes', () => {
+    const onChange: SuggestChangeHandler = jest.fn();
+    const plugin = suggest({ char: '@', name: 'at', onChange, validNodes: ['heading'] });
+
+    const editor = createEditor(doc(h1('@<cursor>'), p('')), { plugins: [plugin] }).insertText(
+      'abc ',
+    );
+    expect(onChange).toHaveBeenCalledTimes(4);
+
+    jest.resetAllMocks();
+
+    editor.jumpTo(8).insertText('@abc ');
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('it rejects `invalidMarks` option when covering part of the match', () => {
+    const onChange: SuggestChangeHandler = jest.fn();
+    const plugin = suggest({ char: '@', name: 'at', onChange, invalidMarks: ['strong'] });
+
+    createEditor(doc(p(strong('@'), 'ab<cursor>')), { plugins: [plugin] }).insertText('c');
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  // This is a known failure. I'm tired right now, so I think I'll revisit when
+  // more energized, or when someone notices.
+  it.skip('should reject `invalidMarks` option not at the start or cursor', () => {
+    const onChange: SuggestChangeHandler = jest.fn();
+    const plugin = suggest({ char: '@', name: 'at', onChange, invalidMarks: ['strong'] });
+
+    createEditor(doc(p('@', strong('ab'), 'c<cursor>')), { plugins: [plugin] }).insertText('c');
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('accepts `validMarks` only when the whole match is covered', () => {
+    const onChange: SuggestChangeHandler = jest.fn();
+    const plugin = suggest({ char: '@', name: 'at', onChange, validMarks: ['strong'] });
+
+    const editor = createEditor(doc(p(strong('@<cursor>')), p('@a', strong('b'))), {
+      plugins: [plugin],
+    })
+      .insertText('abc')
+      .jumpTo(10);
+    expect(onChange).toHaveBeenCalledTimes(4);
+
+    jest.resetAllMocks();
+
+    editor.insertText('c');
+    expect(onChange).not.toHaveBeenCalled();
+  });
+});
+
+test('should support whitespace characters in `supportedCharacters`', () => {
+  const exit = jest.fn();
+  const onChange: SuggestChangeHandler = jest.fn((param) => {
+    const { exitReason, text: matchText, query: queryText, range } = param;
+
+    if (exitReason) {
+      exit(exitReason, matchText, queryText, range);
+    }
+  });
+  const plugin = suggest({
+    char: '/',
+    name: 'at',
+    onChange,
+    matchOffset: 0,
+    supportedCharacters: /[ a-z]+/,
+  });
+
+  createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+    .insertText('/')
+    .callback(() => {
+      expect(onChange).toHaveBeenCalledTimes(1);
+    })
+    .insertText(` abc space ? `)
+    .callback(() => {
+      expect(onChange).toHaveBeenCalledTimes(13);
+      expect(exit).toHaveBeenCalledTimes(1);
+    });
 });

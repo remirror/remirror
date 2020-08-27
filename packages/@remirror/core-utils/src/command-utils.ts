@@ -4,7 +4,7 @@ import type {
   CommandFunction,
   CommandFunctionParameter,
   EditorSchema,
-  EditorView,
+  EditorState,
   MarkType,
   MarkTypeParameter,
   NodeType,
@@ -26,7 +26,7 @@ interface UpdateMarkParameter extends Partial<RangeParameter>, Partial<Attribute
   /**
    * The text to append.
    *
-   * @defaultValue '''
+   * @default '''
    */
   appendText?: string;
 
@@ -44,17 +44,10 @@ export function updateMark(parameter: UpdateMarkParameter): CommandFunction {
     const { selection } = tr;
     const { from, to } = range ?? selection;
 
-    if (!dispatch) {
-      return true;
-    }
+    dispatch?.(
+      tr.addMark(from, to, type.create(attrs)) && appendText ? tr.insertText(appendText) : tr,
+    );
 
-    tr.addMark(from, to, type.create(attrs));
-
-    if (appendText) {
-      tr.insertText(appendText);
-    }
-
-    dispatch(tr);
     return true;
   };
 }
@@ -66,7 +59,7 @@ export function updateMark(parameter: UpdateMarkParameter): CommandFunction {
  * Adapted from
  * https://github.com/ProseMirror/prosemirror-commands/blob/3126d5c625953ba590c5d3a0db7f1009f46f1571/src/commands.js#L212-L221
  */
-export function lift({ tr, dispatch }: Pick<CommandFunctionParameter, 'tr' | 'dispatch'>) {
+export function lift({ tr, dispatch }: Pick<CommandFunctionParameter, 'tr' | 'dispatch'>): boolean {
   const { $from, $to } = tr.selection;
   const range = $from.blockRange($to);
   const target = range && liftTarget(range);
@@ -252,7 +245,7 @@ interface ReplaceTextParameter extends Partial<RangeParameter>, Partial<Attribut
   /**
    * The text to append.
    *
-   * @defaultValue '''
+   * @default '''
    */
   appendText?: string;
   /**
@@ -283,15 +276,27 @@ export function isChrome(minVersion = 0): boolean {
   return parsedAgent ? Number.parseInt(parsedAgent[2], 10) >= minVersion : false;
 }
 
-function keepSelectionTransaction(view: EditorView, tr: Transaction) {
-  let { from } = view.state.selection;
+/**
+ * Checks the selection for the current state and updates the active transaction
+ * to use this mapped transaction.
+ *
+ * @param state - the editor state before any updates
+ * @param tr - the transaction which has been updated and may have impacted the
+ * selection.
+ */
+function preserveSelection(state: EditorState, tr: Transaction) {
+  // Get the previous cursor selection.
+  let { anchor } = state.selection;
 
+  // Map this cursor selection through each of the steps that have happened in
+  // the transaction.
   for (const step of tr.steps) {
     const map = step.getMap();
-    from = map.map(from);
+    anchor = map.map(anchor);
   }
 
-  tr.setSelection(new TextSelection(tr.doc.resolve(from)));
+  // Update the transaction with the new text selection.
+  tr.setSelection(new TextSelection(tr.doc.resolve(anchor)));
 }
 
 /**
@@ -311,7 +316,7 @@ export function replaceText(parameter: ReplaceTextParameter): CommandFunction {
     keepSelection = false,
   } = parameter;
 
-  return ({ state, tr, dispatch, view }) => {
+  return ({ state, tr, dispatch }) => {
     const schema = state.schema;
     const selection = tr.selection;
     const index = selection.$from.index();
@@ -337,12 +342,11 @@ export function replaceText(parameter: ReplaceTextParameter): CommandFunction {
 
     // Only append the text if text is provided (ignore the empty string).
     if (appendText) {
-      // TODO for some reason this only works when content follows current selection.
       tr.insertText(appendText);
     }
 
-    if (keepSelection && view) {
-      keepSelectionTransaction(view, tr);
+    if (keepSelection) {
+      preserveSelection(state, tr);
     }
 
     if (dispatch) {
@@ -363,7 +367,7 @@ interface RemoveMarkParameter extends MarkTypeParameter, Partial<RangeParameter<
   /**
    * Whether to expand empty selections to the current mark range
    *
-   * @defaultValue `false`
+   * @default false
    */
   expand?: boolean;
 }

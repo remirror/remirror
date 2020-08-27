@@ -33,7 +33,7 @@ import {
   isProsemirrorNode,
   NodeWithPosition,
 } from '@remirror/core-utils';
-import { Schema } from '@remirror/pm/model';
+import { MarkSpec, NodeSpec, Schema } from '@remirror/pm/model';
 
 import { extensionDecorator } from '../decorators';
 import {
@@ -118,18 +118,26 @@ export class SchemaExtension extends PlainExtension {
    * This method is responsible for creating, configuring and adding the
    * `schema` to the editor. `Schema` is a special type in ProseMirror editors
    * and with `remirror` it's all just handled for you.
-   *
-   * TODO: Add support for using a custom schema #460
    */
   onCreate(): void {
     const { managerSettings } = this.store;
 
+    // The user can override the whole schema creation process by providing
+    // their own version. In that case we can exit early.
+    if (managerSettings.schema) {
+      const { nodes, marks } = getSpecFromSchema(managerSettings.schema);
+      this.addSchema(managerSettings.schema, nodes, marks);
+
+      // Exit early! 🙌
+      return;
+    }
+
     // This nodes object is built up for each extension and then at the end it
     // will be passed to the `Schema` constructor to create a new `schema`.
-    const nodes: Record<string, NodeExtensionSpec> = object();
+    const nodes: Record<string, NodeSpec> = object();
 
     // Similar to the `nodes` object above this is passed to the `Schema`.
-    const marks: Record<string, MarkExtensionSpec> = object();
+    const marks: Record<string, MarkSpec> = object();
 
     // Get the named extra attributes from the manager. This allows each extra
     // attribute group added to the manager to be applied to the individual
@@ -173,7 +181,7 @@ export class SchemaExtension extends PlainExtension {
 
         // Add the spec to the nodes object which is used to create the schema
         // with the same name as the extension name.
-        nodes[extension.name] = spec;
+        nodes[extension.name] = spec as NodeSpec;
 
         // Keep track of the dynamic attributes. The `extension.name` is the
         // same name of the `NodeType` and is used by the plugin in this
@@ -199,7 +207,7 @@ export class SchemaExtension extends PlainExtension {
 
         // Add the spec to the `marks` object which is used to create the schema
         // with the same name as the extension name.
-        marks[extension.name] = spec;
+        marks[extension.name] = spec as MarkSpec;
         this.#dynamicAttributes.marks[extension.name] = dynamic;
       }
     }
@@ -207,15 +215,12 @@ export class SchemaExtension extends PlainExtension {
     // Create the schema from the gathered nodes and marks.
     const schema = new Schema({ nodes, marks });
 
-    // Store the `nodes`, `marks` and `schema` on the manager store. For example
-    // the `schema` can be accessed via `manager.store.schema`.
-    this.store.setStoreKey('nodes', nodes);
-    this.store.setStoreKey('marks', marks);
-    this.store.setStoreKey('schema', schema);
-
-    // Add the schema to the extension store, so that all extension from this
-    // point have access to the schema via `this.store.schema`.
-    this.store.setExtensionStore('schema', schema);
+    // Add the schema and nodes marks to the store.
+    this.addSchema(
+      schema,
+      nodes as Record<string, NodeExtensionSpec>,
+      marks as Record<string, MarkExtensionSpec>,
+    );
   }
 
   /**
@@ -273,6 +278,25 @@ export class SchemaExtension extends PlainExtension {
         return tr.steps.length > 0 ? tr : null;
       },
     };
+  }
+
+  /**
+   * Add the schema and nodes to the manager and extension store.
+   */
+  private addSchema(
+    schema: EditorSchema,
+    nodes: Record<string, NodeExtensionSpec>,
+    marks: Record<string, MarkExtensionSpec>,
+  ) {
+    // Store the `nodes`, `marks` and `schema` on the manager store. For example
+    // the `schema` can be accessed via `manager.store.schema`.
+    this.store.setStoreKey('nodes', nodes);
+    this.store.setStoreKey('marks', marks);
+    this.store.setStoreKey('schema', schema);
+
+    // Add the schema to the extension store, so that all extension from this
+    // point have access to the schema via `this.store.schema`.
+    this.store.setExtensionStore('schema', schema);
   }
 
   /**
@@ -782,6 +806,22 @@ function getNodeMarkOptions(item: ProsemirrorNode | Mark): NodeMarkOptions {
   return {};
 }
 
+/**
+ * Get the mark and node specs from provided schema.
+ *
+ * This is used when the user provides their own custom schema.
+ */
+function getSpecFromSchema(schema: EditorSchema) {
+  const nodes = entries(schema.nodes)
+    .map(([name, type]) => [name, type.spec as NodeExtensionSpec] as const)
+    .reduce((acc, [name, spec]) => ({ ...acc, [name]: spec }), {});
+  const marks = entries(schema.marks)
+    .map(([name, type]) => [name, type.spec as MarkExtensionSpec] as const)
+    .reduce((acc, [name, spec]) => ({ ...acc, [name]: spec }), {});
+
+  return { nodes, marks };
+}
+
 declare global {
   namespace Remirror {
     interface ExtensionCreatorMethods {
@@ -805,7 +845,7 @@ declare global {
        * Sometimes you need to add additional attributes to a node or mark. This
        * property enables this without needing to create a new extension.
        *
-       * @defaultValue `{}`
+       * @default {}
        */
       extraAttributes?: Static<SchemaAttributes>;
 
@@ -813,7 +853,7 @@ declare global {
        * When true will disable extra attributes for this instance of the
        * extension.
        *
-       * @defaultValue `undefined`
+       * @default undefined
        */
       disableExtraAttributes?: Static<boolean>;
     }
@@ -852,9 +892,23 @@ declare global {
        * Perhaps you don't need extra attributes at all in the editor. This
        * allows you to disable extra attributes when set to true.
        *
-       * @defaultValue undefined
+       * @default undefined
        */
       disableExtraAttributes?: boolean;
+
+      /**
+       * Setting this to a value will override the default behaviour of the
+       * `RemirrorManager`. It overrides the created schema and ignores the
+       * specs created by all extensions within your editor.
+       *
+       * @remarks
+       *
+       * This is an advanced option and should only be used in cases where there
+       * is a deeper understanding of `Prosemirror`. By setting this, please
+       * note that a lot of functionality just won't work which is powered by
+       * the `extraAttributes`.
+       */
+      schema?: EditorSchema;
     }
 
     interface ManagerStore<Combined extends AnyCombinedUnion> {
@@ -906,7 +960,7 @@ declare global {
        * When true will disable extra attributes for all instances of this
        * extension.
        *
-       * @defaultValue `false`
+       * @default false
        */
       readonly disableExtraAttributes?: boolean;
     }

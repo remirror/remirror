@@ -9,8 +9,10 @@ import {
   extensionDecorator,
   ExtensionPriority,
   isFunction,
+  KeyBindings,
   OnSetOptionsParameter,
   PlainExtension,
+  ProsemirrorPlugin,
   Static,
 } from '@remirror/core';
 
@@ -83,7 +85,7 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   /**
    * Create the custom undo keymaps for the
    */
-  createKeymap() {
+  createKeymap(): KeyBindings {
     return {
       'Mod-z': convertCommand(undo),
       'Mod-y': convertCommand(redo),
@@ -94,7 +96,7 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   /**
    * Create the yjs plugins.
    */
-  createExternalPlugins() {
+  createExternalPlugins(): ProsemirrorPlugin[] {
     const yDoc = this.provider.doc;
     const type = yDoc.getXmlFragment('prosemirror');
     return [ySyncPlugin(type), yCursorPlugin(this.provider.awareness), yUndoPlugin()];
@@ -117,7 +119,7 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   /**
    * This managers the updates of the collaboration provider.
    */
-  onSetOptions(parameter: OnSetOptionsParameter<YjsOptions>) {
+  onSetOptions(parameter: OnSetOptionsParameter<YjsOptions>): void {
     const { changes } = parameter;
 
     // TODO move this into a new method in `plugins-extension`.
@@ -133,7 +135,7 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   /**
    * Remove the provider from the manager.
    */
-  onDestroy() {
+  onDestroy(): void {
     if (!this.#provider) {
       return;
     }

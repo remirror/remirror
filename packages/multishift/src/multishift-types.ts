@@ -16,7 +16,7 @@ export interface MultishiftState<Item = any> {
    *
    * When `multiple` selection is enabled this can contain more than one item.
    *
-   * @defaultValue []
+   * @default []
    */
   selectedItems: Item[];
 
@@ -25,21 +25,21 @@ export interface MultishiftState<Item = any> {
    *
    * It allows the implementation of quick jump to item functionality.
    *
-   * @defaultValue ''
+   * @default ''
    */
   jumpText: string;
 
   /**
    * Determines whether or not the menu items should be displayed.
    *
-   * @defaultValue false
+   * @default false
    */
   isOpen: boolean;
 
   /**
    * This tracks the input value when filtering the items to insert.
    *
-   * @defaultValue ''
+   * @default ''
    */
   inputValue: string;
 
@@ -53,28 +53,28 @@ export interface MultishiftState<Item = any> {
    * - Click and drag - drag over multiple items to select each one
    * - ArrowKey shift - Select multiple highlighted items
    *
-   * @defaultValue []
+   * @default []
    */
   highlightedIndexes: number[];
 
   /**
    * Marks the position as the starting point for a new highlighted group.
    *
-   * @defaultValue -1
+   * @default -1
    */
   highlightedGroupStartIndex: number;
 
   /**
    * Marks the position as the end point for a new highlighted group.
    *
-   * @defaultValue undefined
+   * @default undefined
    */
   highlightedGroupEndIndex: number | undefined;
 
   /**
    * Marks the index of the currently hovered item.
    *
-   * @defaultValue -1
+   * @default -1
    */
   hoveredIndex: number;
 }
@@ -331,7 +331,7 @@ export interface MultishiftBehaviorProps {
    * - When `vertical` the `ArrowUp` and `ArrowDown` keyDown handlers are used.
    * - When `horizontal` the `ArrowLeft` and `ArrowRight` handlers are used.
    *
-   * @defaultValue 'vertical'
+   * @default 'vertical'
    */
   direction?: 'horizontal' | 'vertical';
 
@@ -344,7 +344,7 @@ export interface MultishiftBehaviorProps {
   /**
    * When true will automatically selected the higlightedIndexes on blur.
    *
-   * @defaultValue true
+   * @default true
    */
   autoSelectOnBlur?: boolean;
 
@@ -366,7 +366,7 @@ export interface MultishiftBehaviorProps {
   /**
    * Set a custom message to render for the duration provided by the timeout.
    *
-   * @defaultValue ''
+   * @default ''
    */
   customA11yStatusMessage?: string;
 
@@ -374,7 +374,7 @@ export interface MultishiftBehaviorProps {
    * When true will include the hovered index in the next selection (whether on
    * blur) or active selection.
    *
-   * @defaultValue false
+   * @default false
    */
   includeHoveredIndexInSelection?: boolean;
 }
@@ -523,7 +523,7 @@ export interface GetRemoveButtonReturn<Element extends HTMLElement = any>
   /**
    * The aria role for the button. This can be overridden in the options.
    *
-   * @defaultValue 'button'
+   * @default 'button'
    */
   role: string;
 }
@@ -540,7 +540,7 @@ export type GetComboBoxPropsReturn<
 > = DetailedHTMLProps<HTMLAttributes<Element>, Element> &
   { [P in RefKey]: Ref<any> } & {
     /**
-     * @defaultValue 'combobox'
+     * @default 'combobox'
      */
     role: string;
     'aria-expanded': boolean;
@@ -918,7 +918,7 @@ export interface RefParameter<RefKey extends string = 'ref'> {
    * A custom ref key which allows a reference to be obtained from non standard
    * components.
    *
-   * @defaultValue 'ref'
+   * @default 'ref'
    */
   refKey?: RefKey;
 }

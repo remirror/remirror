@@ -33,7 +33,7 @@ export interface PositionerOptions {
   /**
    * The `ms` to debounce scroll events.
    *
-   * @defaultValue `50`
+   * @default 50
    */
   scrollDebounce?: Static<number>;
 }

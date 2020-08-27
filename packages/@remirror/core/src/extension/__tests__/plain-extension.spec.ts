@@ -1,4 +1,5 @@
 import type { Handler } from '@remirror/core-types';
+import { BoldExtension } from '@remirror/testing';
 
 import { extensionDecorator } from '../../decorators';
 import { PlainExtension } from '../extension-base';
@@ -18,7 +19,14 @@ class TestExtension extends PlainExtension<TestOptions> {
   }
 }
 
-describe('handlers', () => {
+test('isOfType', () => {
+  const extension = new TestExtension();
+
+  expect(extension.isOfType(TestExtension)).toBeTrue();
+  expect(extension.isOfType(BoldExtension)).toBeFalse();
+});
+
+describe('Handlers', () => {
   it('supports simple handlers', () => {
     const testExtension = new TestExtension();
     const changeHandler = jest.fn(() => {});

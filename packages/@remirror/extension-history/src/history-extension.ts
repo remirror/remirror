@@ -10,6 +10,7 @@ import {
   nonChainable,
   PlainExtension,
   ProsemirrorCommandFunction,
+  ProsemirrorPlugin,
   Static,
 } from '@remirror/core';
 import { history, redo, undo } from '@remirror/pm/history';
@@ -19,7 +20,7 @@ export interface HistoryOptions {
    * The amount of history events that are collected before the
    * oldest events are discarded.
    *
-   * @defaultValue 100
+   * @default 100
    */
   depth?: Static<number | null>;
 
@@ -27,7 +28,7 @@ export interface HistoryOptions {
    * The delay (ms) between changes after which a new group should be
    * started. Note that when changes aren't adjacent, a new group is always started.
    *
-   * @defaultValue 500
+   * @default 500
    */
   newGroupDelay?: Static<number | null>;
 
@@ -130,7 +131,7 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
   /**
    * Bring the `prosemirror-history` plugin with options set on this extension.
    */
-  createExternalPlugins() {
+  createExternalPlugins(): ProsemirrorPlugin[] {
     const { depth, newGroupDelay } = this.options;
 
     return [history({ depth, newGroupDelay })];
@@ -153,7 +154,7 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
        * tr.setMeta(pluginKey, { addToHistory: false })
        * ```
        */
-      undo: () => nonChainable(this.wrapMethod(undo)),
+      undo: () => nonChainable(this.wrapMethod(undo, this.options.onUndo)),
 
       /**
        * Redo an action that was in the undo stack.
@@ -162,7 +163,7 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
        * actions.redo()
        * ```
        */
-      redo: () => nonChainable(this.wrapMethod(redo)),
+      redo: () => nonChainable(this.wrapMethod(redo, this.options.onRedo)),
     };
   }
 }

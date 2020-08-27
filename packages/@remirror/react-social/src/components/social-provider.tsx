@@ -3,8 +3,8 @@ import React, { FC } from 'react';
 import { SocialPreset } from '@remirror/preset-social';
 import { I18nProvider, RemirrorProvider, ThemeProvider } from '@remirror/react';
 
-import { useSocialManager } from '../hooks';
 import type { SocialProviderProps } from '../social-types';
+import { useSocialManager } from '../use-social';
 
 /**
  * A social editor provider with provides the required context to get started

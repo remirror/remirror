@@ -34,9 +34,3 @@ import { TrailingNodeExtension } from '@remirror/extension-trailing-node';
 
 const extension = new TrailingNodeExtension();
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

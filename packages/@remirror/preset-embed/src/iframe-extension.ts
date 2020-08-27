@@ -24,7 +24,7 @@ export interface IframeOptions {
   /**
    * The class to add to the iframe.
    *
-   * @defaultValue 'remirror-iframe'
+   * @default 'remirror-iframe'
    */
   class?: Static<string>;
 }
@@ -192,20 +192,21 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
 
 interface CreateYouTubeIframeParameter {
   /**
-   * The video id (dQw4w9WgXcQ) or full link (https://www.youtube.com/watch?v=dQw4w9WgXcQ).
+   * The video id (dQw4w9WgXcQ) or full link
+   * (https://www.youtube.com/watch?v=dQw4w9WgXcQ).
    */
   video: string;
 
   /**
    * The number os seconds in to start at.
-   * @defaultValue `0`
+   * @default 0
    */
   startAt?: number;
 
   /**
    * When true will show the player controls.
    *
-   * @defaultValue `true`
+   * @default true
    */
   showControls?: boolean;
 
@@ -214,7 +215,7 @@ interface CreateYouTubeIframeParameter {
    * won't store information about visitors on your website unless they play the
    * video._
    *
-   * @defaultValue `true`
+   * @default true
    */
   enhancedPrivacy?: boolean;
 }

@@ -39,7 +39,7 @@ export interface TableOptions {
   /**
    * When true the table will be resizable.
    *
-   * @defaultValue `true`
+   * @default true
    */
   resizable?: boolean;
 }

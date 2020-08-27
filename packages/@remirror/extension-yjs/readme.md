@@ -34,9 +34,3 @@ import { YjsExtension } from '@remirror/extension-yjs';
 
 const extension = new YjsExtension();
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

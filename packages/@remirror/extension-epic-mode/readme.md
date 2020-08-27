@@ -60,9 +60,3 @@ const InternalEditor = () => {
   return <div />;
 };
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

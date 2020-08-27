@@ -34,15 +34,12 @@ import {
 import { EditorState } from '@remirror/pm/state';
 
 import { BuiltinPreset, CombinedTags } from '../builtins';
-import {
+import type {
   AnyExtension,
   AnyExtensionConstructor,
   AnyManagerStore,
   GetMarkNameUnion,
   GetNodeNameUnion,
-  isMarkExtension,
-  isNodeExtension,
-  isPlainExtension,
   ManagerStoreKeys,
   SchemaFromExtensionUnion,
 } from '../extension';
@@ -61,7 +58,7 @@ import type {
   GetNameUnion,
   StateUpdateLifecycleParameter,
 } from '../types';
-import { transformCombinedUnion } from './remirror-manager-helpers';
+import { extractLifecycleMethods, transformCombinedUnion } from './remirror-manager-helpers';
 
 /**
  * The `Manager` has multiple hook phases which are able to hook into the
@@ -336,53 +333,27 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * Loops through all extensions to set up the lifecycle handlers.
    */
   private setupLifecycleHandlers(): void {
+    const store = this.#extensionStore;
+    const handlers = this.#handlers;
+
+    // Add the extension store to presets so they are able to handle it
+    // properly.
     for (const preset of this.#presets) {
-      preset.setExtensionStore(this.#extensionStore);
+      preset.setExtensionStore(store);
     }
 
     const nodeNames: string[] = [];
     const markNames: string[] = [];
     const plainNames: string[] = [];
 
-    this.#extensionStore.nodeNames = nodeNames;
-    this.#extensionStore.markNames = markNames;
-    this.#extensionStore.plainNames = plainNames;
+    // The names are stored as readonly arrays - which is the reason for not
+    // just saying `store.nodeNames = []`.
+    store.nodeNames = nodeNames;
+    store.markNames = markNames;
+    store.plainNames = plainNames;
 
     for (const extension of this.#extensions) {
-      extension.setStore(this.#extensionStore);
-
-      const createHandler = extension.onCreate;
-      const viewHandler = extension.onView;
-      const stateUpdateHandler = extension.onStateUpdate;
-      const destroyHandler = extension.onDestroy;
-
-      if (createHandler) {
-        this.#handlers.create.push(createHandler.bind(extension));
-      }
-
-      if (viewHandler) {
-        this.#handlers.view.push(viewHandler.bind(extension));
-      }
-
-      if (stateUpdateHandler) {
-        this.#handlers.update.push(stateUpdateHandler.bind(extension));
-      }
-
-      if (destroyHandler) {
-        this.#handlers.destroy.push(destroyHandler.bind(extension));
-      }
-
-      if (isNodeExtension(extension)) {
-        nodeNames.push(extension.name);
-      }
-
-      if (isMarkExtension(extension)) {
-        markNames.push(extension.name);
-      }
-
-      if (isPlainExtension(extension)) {
-        plainNames.push(extension.name);
-      }
+      extractLifecycleMethods({ extension, nodeNames, markNames, plainNames, handlers, store });
     }
   }
 
@@ -438,7 +409,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   /**
    * Create the initial store.
    */
-  private createExtensionStore() {
+  private createExtensionStore(): Remirror.ExtensionStore {
     const store: Remirror.ExtensionStore = object();
 
     Object.defineProperties(store, {

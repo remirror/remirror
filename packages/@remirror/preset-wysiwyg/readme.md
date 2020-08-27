@@ -41,9 +41,3 @@ import { WysiwygPreset } from '@remirror/preset-wysiwyg';
 // Create the preset
 const preset = new WysiwygPreset();
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

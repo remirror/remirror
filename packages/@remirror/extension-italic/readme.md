@@ -34,9 +34,3 @@ import { ItalicExtension } from '@remirror/extension-italic';
 
 const extension = new ItalicExtension();
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

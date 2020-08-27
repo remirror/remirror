@@ -28,9 +28,3 @@ npm install @remirror/extension-doc@next @remirror/pm@next
 ## Usage
 
 This is one of the **core** extensions and is included by default via `@remirror/preset-core`.
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

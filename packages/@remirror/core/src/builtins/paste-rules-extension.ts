@@ -46,7 +46,7 @@ declare global {
       /**
        * Whether to exclude the extension's pasteRules
        *
-       * @defaultValue `undefined`
+       * @default undefined
        */
       pasteRules?: boolean;
     }

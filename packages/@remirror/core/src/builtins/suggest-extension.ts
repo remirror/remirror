@@ -77,26 +77,26 @@ export class SuggestExtension extends PlainExtension<SuggestOptions> {
       /**
        * Get the suggest plugin state.
        */
-      getSuggestPluginState: () => this.getSuggestPluginState(),
+      getSuggestState: () => this.getState(),
 
       /**
        * Get some helpful methods from the SuggestPluginState.
        */
-      getSuggestPluginHelpers: () => {
+      getSuggestMethods: () => {
         const {
           addIgnored,
           clearIgnored,
           removeIgnored,
           ignoreNextExit,
           setMarkRemoved,
-        } = this.getSuggestPluginState();
+        } = this.getState();
 
         return { addIgnored, clearIgnored, removeIgnored, ignoreNextExit, setMarkRemoved };
       },
     };
   }
 
-  private getSuggestPluginState(): SuggestState {
+  private getState(): SuggestState {
     return getSuggestPluginState(this.store.getState());
   }
 }
@@ -108,15 +108,16 @@ declare global {
        * Whether to exclude the suggesters plugin configuration for the
        * extension.
        *
-       * @defaultValue `undefined`
+       * @default undefined
        */
       suggesters?: boolean;
     }
 
     interface ExtensionCreatorMethods {
       /**
-       * Create suggesters which respond to character key combinations within
-       * the editor instance.
+       * Create suggesters which respond to an activation `char` or regex
+       * pattern within the editor instance. The onChange handler provided is
+       * called with the data around the matching text.
        *
        * @remarks
        *
@@ -125,6 +126,10 @@ declare global {
        * command keys which trigger action menus and much more.
        */
       createSuggesters?(): Suggester[] | Suggester;
+    }
+
+    interface BuiltinHelpers {
+      suggest: SuggestExtension;
     }
   }
 }

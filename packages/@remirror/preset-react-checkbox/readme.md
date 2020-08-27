@@ -39,9 +39,3 @@ import { CheckboxPreset } from '@remirror/preset-react-checkbox';
 // Create the preset
 const preset = new CheckboxPreset();
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

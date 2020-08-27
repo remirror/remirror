@@ -5,7 +5,7 @@ import { isArray, isObject } from './core-helpers';
 
 /**
  * A freeze method for objects that only runs in development. Helps prevent code
- * that shouldn't be mutated from being mutated while developing.
+ * that shouldn't be mutated from being mutated during development.
  *
  * @remarks
  *
@@ -49,7 +49,7 @@ interface FreezeOptions {
   /**
    * Whether the key that is being accessed should exist on the target object.
    *
-   * @defaultValue undefined
+   * @default undefined
    */
   requireKeys?: boolean;
 }

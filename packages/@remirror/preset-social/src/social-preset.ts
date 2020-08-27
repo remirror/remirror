@@ -1,7 +1,6 @@
 import type { Except } from 'type-fest';
 
 import {
-  AddCustomHandler,
   ExtensionPriority,
   OnSetOptionsParameter,
   Preset,
@@ -18,11 +17,9 @@ import {
 
 export interface SocialOptions
   extends AutoLinkOptions,
-    Except<EmojiOptions, 'onChange' | 'onExit' | 'keyBindings'>,
+    Except<EmojiOptions, 'onChange'>,
     Partial<MentionOptions> {
   onChangeEmoji?: EmojiOptions['onChange'];
-  onExitEmoji?: EmojiOptions['onExit'];
-  keyBindingsEmoji?: EmojiOptions['keyBindings'];
 
   /**
    * The matcher options for the `@` mention character.
@@ -44,8 +41,7 @@ export interface SocialOptions
     atMatcherOptions: {},
     tagMatcherOptions: {},
   },
-  customHandlerKeys: ['keyBindings', 'keyBindingsEmoji', 'onCharacterEntry'],
-  handlerKeys: ['onChange', 'onChangeEmoji', 'onUrlUpdate', 'onExitEmoji', 'onExit'],
+  handlerKeys: ['onChange', 'onChangeEmoji', 'onUrlUpdate'],
   staticKeys: ['matchers', 'mentionTag', 'urlRegex', 'atMatcherOptions', 'tagMatcherOptions'],
 })
 export class SocialPreset extends Preset<SocialOptions> {
@@ -53,40 +49,15 @@ export class SocialPreset extends Preset<SocialOptions> {
     return 'social' as const;
   }
 
-  protected onSetOptions(parameter: OnSetOptionsParameter<SocialOptions>) {
+  protected onSetOptions(parameter: OnSetOptionsParameter<SocialOptions>): void {
     const { pickChanged } = parameter;
 
     this.getExtension(MentionExtension).setOptions(
-      pickChanged(['suggestTag', 'appendText', 'noDecorations']),
+      pickChanged(['suggestTag', 'appendText', 'disableDecorations']),
     );
     this.getExtension(EmojiExtension).setOptions(pickChanged(['defaultEmoji', 'maxResults']));
     this.getExtension(AutoLinkExtension).setOptions(pickChanged(['defaultProtocol']));
   }
-
-  onAddCustomHandler: AddCustomHandler<SocialOptions> = (parameter) => {
-    if (parameter.keyBindings) {
-      return this.getExtension(MentionExtension).addCustomHandler(
-        'keyBindings',
-        parameter.keyBindings,
-      );
-    }
-
-    if (parameter.onCharacterEntry) {
-      return this.getExtension(MentionExtension).addCustomHandler(
-        'onCharacterEntry',
-        parameter.onCharacterEntry,
-      );
-    }
-
-    if (parameter.keyBindingsEmoji) {
-      return this.getExtension(EmojiExtension).addCustomHandler(
-        'keyBindings',
-        parameter.keyBindingsEmoji,
-      );
-    }
-
-    return;
-  };
 
   createExtensions() {
     const { defaultProtocol, urlRegex } = this.options;
@@ -105,13 +76,12 @@ export class SocialPreset extends Preset<SocialOptions> {
       extraAttributes: { role: { default: 'presentation' } },
     });
     emojiExtension.addHandler('onChange', this.options.onChangeEmoji);
-    emojiExtension.addHandler('onExit', this.options.onExitEmoji);
 
     const {
       matchers,
       appendText,
       mentionTag,
-      noDecorations,
+      disableDecorations: noDecorations,
       suggestTag,
       atMatcherOptions,
       tagMatcherOptions,
@@ -124,7 +94,7 @@ export class SocialPreset extends Preset<SocialOptions> {
       ],
       appendText,
       mentionTag,
-      noDecorations,
+      disableDecorations: noDecorations,
       suggestTag,
       extraAttributes: {
         href: { default: null },
@@ -132,7 +102,6 @@ export class SocialPreset extends Preset<SocialOptions> {
       },
     });
     mentionExtension.addHandler('onChange', this.options.onChange);
-    mentionExtension.addHandler('onExit', this.options.onExit);
 
     return [emojiExtension, mentionExtension, autoLinkExtension];
   }

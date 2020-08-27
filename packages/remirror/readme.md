@@ -56,9 +56,3 @@ const Editor = () => {
   return <div {...getRootProps()}>
 }
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

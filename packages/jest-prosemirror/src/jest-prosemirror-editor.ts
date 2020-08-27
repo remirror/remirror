@@ -145,12 +145,12 @@ export interface InsertTextParameter<Schema extends EditorSchema = EditorSchema>
 export function insertText<Schema extends EditorSchema = EditorSchema>(
   parameter: InsertTextParameter<Schema>,
 ): void {
-  const { view, text, start: from } = parameter;
+  const { view, text, start } = parameter;
   const keys = Keyboard.create({
     target: view.dom,
   }).start();
 
-  let pos = from;
+  let pos = start;
 
   text.split('').forEach((character) => {
     keys.char({ text: character, typing: true });
@@ -261,7 +261,7 @@ interface BackspaceParameter<Schema extends EditorSchema = EditorSchema>
   /**
    * The number of times to activate backspace.
    *
-   * @defaultValue 1
+   * @default 1
    */
   times?: number;
 }
@@ -401,20 +401,20 @@ export interface CreateEditorOptions extends Omit<DirectEditorProps, 'state'> {
    * Whether to auto remove the editor from the dom after each test. It is
    * advisable to leave this unchanged.
    *
-   * @defaultValue true
+   * @default true
    */
   autoClean?: boolean;
   /**
    * The plugins that the test editor should use.
    *
-   * @defaultValue `[]`
+   * @default []
    */
   plugins?: ProsemirrorPlugin[];
 
   /**
    * The input rules that the test editor should use.
    *
-   * @defaultValue `[]`
+   * @default []
    */
   rules?: InputRule[];
 }

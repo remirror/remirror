@@ -119,12 +119,6 @@ export const StyledWrapper = () => (
 
 This is very similar to the `styled-components` entry point and will provide the styles to your editor component.
 
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots
-
 ```
 
 ```

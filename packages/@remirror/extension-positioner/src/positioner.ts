@@ -87,7 +87,7 @@ export interface BasePositioner<Data> {
    * - `state` - updates when the prosemirror state is updated - default.
    * - `scroll` - updates when the editor is scrolled (debounced)
    *
-   * @defaultValue `['state']`
+   * @default ['state']
    */
   events?: PositionerUpdateEvent[];
 }

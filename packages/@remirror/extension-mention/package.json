@@ -20,7 +20,8 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.11.0"
+    "@babel/runtime": "^7.11.0",
+    "escape-string-regexp": "^4.0.0"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.29",

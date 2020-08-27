@@ -55,9 +55,3 @@ manager.commands.toggleBold({ from: 1, to: 7 });
 ```
 
 <br />
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

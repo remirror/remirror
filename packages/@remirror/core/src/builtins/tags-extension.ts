@@ -129,7 +129,7 @@ declare global {
       /**
        * Whether to exclude the tags plugin for this extension.
        *
-       * @defaultValue `undefined`
+       * @default undefined
        */
       tags?: boolean;
     }

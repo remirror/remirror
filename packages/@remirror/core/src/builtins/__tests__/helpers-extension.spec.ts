@@ -7,7 +7,7 @@ import { HelpersExtension } from '..';
 extensionValidityTest(HelpersExtension);
 
 describe('active', () => {
-  it('should recognise active nodes by attrs', () => {
+  it('should recognize active nodes by attrs', () => {
     const {
       add,
       nodes: { p, doc },

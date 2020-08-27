@@ -1,82 +1,137 @@
 import {
-  AddCustomHandler,
   ApplySchemaAttributes,
+  bool,
   CommandFunction,
   ErrorConstant,
   extensionDecorator,
   ExtensionTag,
   getMarkRange,
   getMatchString,
+  Handler,
   invariant,
   isElementDomNode,
   isMarkActive,
+  isPlainObject,
+  isString,
+  MarkAttributes,
   MarkExtension,
   MarkExtensionSpec,
   markPasteRule,
-  noop,
-  object,
+  pick,
+  ProsemirrorAttributes,
   ProsemirrorPlugin,
   RangeParameter,
   removeMark,
   replaceText,
+  Static,
 } from '@remirror/core';
-import type { SuggestCharacterEntryMethod, Suggester } from '@remirror/pm/suggest';
 import {
-  escapeChar,
-  getRegexPrefix,
+  createRegexFromSuggester,
+  DEFAULT_SUGGESTER,
   isInvalidSplitReason,
   isRemovedReason,
   isSelectionExitReason,
   isSplitReason,
-  regexToString,
+  MatchValue,
+  RangeWithCursor,
+  SuggestChangeHandlerParameter,
+  Suggester,
 } from '@remirror/pm/suggest';
 
-import type {
-  MentionCharacterEntryMethod,
-  MentionExtensionAttributes,
-  MentionExtensionSuggestCommand,
-  MentionKeyBinding,
-  MentionOptions,
-  SuggestionCommandAttributes,
-} from './mention-types';
-import {
-  DEFAULT_MATCHER,
-  getAppendText,
-  getMatcher,
-  isValidMentionAttributes,
-} from './mention-utils';
+/**
+ * The static settings passed into a mention
+ */
+export interface MentionOptions
+  extends Pick<
+    Suggester,
+    'invalidNodes' | 'validNodes' | 'invalidMarks' | 'validMarks' | 'isValidPosition'
+  > {
+  /**
+   * Provide a custom tag for the mention
+   */
+  mentionTag?: Static<string>;
+
+  /**
+   * Provide the custom matchers that will be used to match mention text in the
+   * editor.
+   */
+  matchers: Static<MentionExtensionMatcher[]>;
+
+  /**
+   * Text to append after the mention has been added.
+   *
+   * **NOTE**: If you're using whitespace characters but it doesn't seem to work
+   * for you make sure you're using the css provided in `@remirror/styles`.
+   *
+   * The `white-space: pre-wrap;` is what allows editors to add space characters
+   * at the end of a section.
+   *
+   * @default ''
+   */
+  appendText?: string;
+
+  /**
+   * Tag for the prosemirror decoration which wraps an active match.
+   *
+   * @default 'span'
+   */
+  suggestTag?: string;
+
+  /**
+   * When true, decorations are not created when this mention is first being
+   * created or edited.
+   */
+  disableDecorations?: boolean;
+
+  /**
+   * Called whenever a suggestion becomes active or changes in any way.
+   *
+   * @remarks
+   *
+   * It receives a parameters object with the `reason` for the change for more
+   * granular control.
+   *
+   * The second parameter is a function that can be called to handle exits
+   * automatically. This is useful if you're mention can be any possible value,
+   * e.g. a `#hashtag`. Call it with the optional attributes to automatically
+   * create a mention.
+   *
+   * @default () => void
+   */
+  onChange?: Handler<MentionChangeHandler>;
+}
 
 /**
  * The mention extension wraps mentions as a prosemirror mark. It allows for
- * very fluid and flexible social experiences to be built up.
+ * fluid social experiences to be built. The implementation was inspired by the
+ * way twitter and similar social sites allows mentions to be edited after
+ * they've been created.
  *
  * @remarks
  *
  * Mentions have the following features
- * - An activation character you define.
+ * - An activation character or regex pattern which you define.
  * - A min number of characters before mentions are suggested
- * - Ability to exclude matching character
+ * - Ability to exclude matching character.
  * - Ability to wrap content in a decoration which excludes mentions from being
  *   suggested.
- * - Decorations for in progress mentions
- * - Keybindings for handling arrow keys and other more exotic commands.
- *
- * Please note, there is still a lot of work required in your view layer when
- * creating a mention and it's not at trivial (I found it quite difficult). With
- * remirror I'm hoping to reduce the cognitive strain required to set up
- * mentions in your own editor.
+ * - Decorations for in-progress mentions
  */
 @extensionDecorator<MentionOptions>({
   defaultOptions: {
     mentionTag: 'a' as const,
     matchers: [],
-    appendText: ' ',
+    appendText: '',
     suggestTag: 'a' as const,
-    noDecorations: false,
+    disableDecorations: false,
+    invalidMarks: [],
+    invalidNodes: [],
+    isValidPosition: () => true,
+    validMarks: null,
+    validNodes: null,
   },
-  handlerKeys: ['onChange', 'onExit'],
+  handlerKeys: ['onChange'],
   staticKeys: ['matchers', 'mentionTag'],
-  customHandlerKeys: ['keyBindings', 'onCharacterEntry'],
 })
 export class MentionExtension extends MarkExtension<MentionOptions> {
   get name() {
@@ -87,17 +142,6 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
    * Tag this as a behavior influencing mark.
    */
   readonly tags = [ExtensionTag.Behavior];
-
-  private characterEntryMethods: Array<
-    SuggestCharacterEntryMethod<MentionExtensionSuggestCommand>
-  > = [];
-
-  private keyBindingsList: MentionKeyBinding[] = [];
-
-  /**
-   * The compiled keybindings.
-   */
-  private keyBindings: MentionKeyBinding = {};
 
   createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
     const dataAttributeId = 'data-mention-id';
@@ -115,19 +159,19 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
       parseDOM: [
         {
           tag: `${this.options.mentionTag}[${dataAttributeId}]`,
-          getAttrs: (node) => {
-            if (!isElementDomNode(node)) {
+          getAttrs: (element) => {
+            if (!isElementDomNode(element)) {
               return false;
             }
 
-            const id = node.getAttribute(dataAttributeId);
-            const name = node.getAttribute(dataAttributeName);
-            const label = node.textContent;
-            return { ...extra.parse(node), id, label, name };
+            const id = element.getAttribute(dataAttributeId);
+            const name = element.getAttribute(dataAttributeName);
+            const label = element.textContent;
+            return { ...extra.parse(element), id, label, name };
           },
         },
       ],
-      toDOM: (node) => {
+      toDOM: (mark) => {
         const {
           label: _,
           id,
@@ -135,7 +179,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
           replacementType,
           range,
           ...attributes
-        } = node.attrs as Required<MentionExtensionAttributes>;
+        } = mark.attrs as Required<NamedMentionExtensionAttributes>;
         const matcher = this.options.matchers.find((matcher) => matcher.name === name);
 
         const mentionClassName = matcher
@@ -145,7 +189,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
         return [
           this.options.mentionTag,
           {
-            ...extra.dom(node),
+            ...extra.dom(mark),
             ...attributes,
             class: name ? `${mentionClassName} ${mentionClassName}-${name}` : mentionClassName,
             [dataAttributeId]: id,
@@ -157,61 +201,122 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     };
   }
 
-  protected onAddCustomHandler: AddCustomHandler<MentionOptions> = (parameter) => {
-    const { keyBindings, onCharacterEntry } = parameter;
-
-    if (keyBindings) {
-      this.keyBindingsList = [...this.keyBindingsList, keyBindings];
-      this.updateKeyBindings();
-
-      return () => {
-        this.keyBindingsList = this.keyBindingsList.filter((binding) => binding !== keyBindings);
-        this.updateKeyBindings();
-      };
-    }
-
-    if (onCharacterEntry) {
-      this.characterEntryMethods = [...this.characterEntryMethods, onCharacterEntry];
-
-      return () => {
-        this.characterEntryMethods = this.characterEntryMethods.filter(
-          (method) => method !== onCharacterEntry,
-        );
-      };
-    }
-
-    return;
-  };
-
   createCommands() {
-    return {
+    const commands = {
+      /**
+       * This is the command which can be called from the `onChange` handler to
+       * automatically handle exits for you. It decides whether a mention should
+       * be updated, removed or created and also handles invalid splits.
+       *
+       * It does nothing for changes and only acts when an exit occurred.
+       *
+       * @param handler - the parameter that was passed through to the `onChange`
+       * handler.
+       * @param attrs - the options which set the values that will be used (in
+       * case you want to override the defaults).
+       */
+      mentionExitHandler: (
+        handler: SuggestChangeHandlerParameter,
+        attrs: MentionChangeHandlerCommandAttributes = {},
+      ): CommandFunction => (parameter) => {
+        const reason = handler.exitReason ?? handler.changeReason;
+
+        // Get boolean flags of the reason for this exit.
+        const isInvalid = isInvalidSplitReason(reason);
+        const isRemoved = isRemovedReason(reason);
+
+        if (isInvalid || isRemoved) {
+          handler.setMarkRemoved();
+
+          try {
+            // This might fail when a deletion has taken place.
+            return isInvalid && commands.removeMention({ range: handler.range })(parameter);
+          } catch {
+            // This happens when removing the mention failed. If you select the
+            // whole document and delete while there are mentions active then
+            // this catch block will activate. It's not harmful, just prevents
+            // you seeing `RangeError: Position X out of range`. I'll leave it
+            // like this until more is known about the impact. Please create an
+            // issue if this blocks you in some way.
+            //
+            // TODO test if this still fails.
+            return true;
+          }
+        }
+
+        const { tr } = parameter;
+        const { range, text, query, name } = handler;
+        const { from, to } = range;
+
+        // Check whether the mention marks is currently active at the provided
+        // for the command.
+        const isActive = isMarkActive({ from, to, type: this.type, trState: tr });
+
+        // Use the correct command, either update when currently active or
+        // create when not active.
+        const command = isActive ? commands.updateMention : commands.createMention;
+
+        // Destructure the `attrs` and using the defaults.
+        const {
+          replacementType = isSplitReason(reason) ? 'partial' : 'full',
+          id = query[replacementType],
+          label = text[replacementType],
+          appendText = this.options.appendText,
+          ...rest
+        } = attrs;
+
+        // Make sure to preserve the selection, if the reason for the exit was a
+        // cursor movement and not due to text being added to the document.
+        const keepSelection = isSelectionExitReason(reason);
+
+        return command({
+          name,
+          id,
+          label,
+          appendText,
+          replacementType,
+          range,
+          keepSelection,
+          ...rest,
+        })(parameter);
+      },
       /**
        * Create a new mention
        */
-      createMention: this.createMention({ shouldUpdate: false }),
+      createMention: this.createMention(false),
 
       /**
        * Update an existing mention.
        */
-      updateMention: this.createMention({ shouldUpdate: true }),
+      updateMention: this.createMention(true),
 
       /**
        * Remove the mention(s) at the current selection or provided range.
        */
-      removeMention: ({ range }: Partial<RangeParameter> = object()) =>
+      removeMention: ({ range }: Partial<RangeParameter> = {}) =>
         removeMark({ type: this.type, expand: true, range }),
     };
+
+    return commands;
   }
 
   createPasteRules(): ProsemirrorPlugin[] {
     return this.options.matchers.map((matcher) => {
-      const { startOfLine, char, supportedCharacters, name } = {
+      const { startOfLine, char, supportedCharacters, name, matchOffset } = {
         ...DEFAULT_MATCHER,
         ...matcher,
       };
 
       const regexp = new RegExp(
-        `(${getRegexPrefix(startOfLine)}${escapeChar(char)}${regexToString(supportedCharacters)})`,
+        `(${
+          createRegexFromSuggester({
+            char,
+            matchOffset,
+            startOfLine,
+            supportedCharacters,
+            captureChar: true,
+          }).source
+        })`,
         'g',
       );
 
@@ -219,7 +324,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
         regexp,
         type: this.type,
         getAttributes: (string) => ({
-          id: getMatchString(string.slice(char.length, string.length)),
+          id: getMatchString(string.slice(string[2].length, string.length)),
           label: getMatchString(string),
           name,
         }),
@@ -227,86 +332,33 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     });
   }
 
-  createSuggesters(): Array<Suggester<MentionExtensionSuggestCommand>> {
-    return this.options.matchers.map<Suggester<MentionExtensionSuggestCommand>>((matcher) => {
-      // eslint-disable-next-line @typescript-eslint/no-this-alias
-      const extension = this;
+  /**
+   * Create the suggesters from the matchers that were passed into the editor.
+   */
+  createSuggesters(): Suggester[] {
+    const options = pick(this.options, [
+      'invalidMarks',
+      'invalidNodes',
+      'isValidPosition',
+      'validMarks',
+      'validNodes',
+      'suggestTag',
+      'disableDecorations',
+    ]);
 
+    return this.options.matchers.map<Suggester>((matcher) => {
       return {
         ...DEFAULT_MATCHER,
+        ...options,
         ...matcher,
+        onChange: (parameter) => {
+          const { mentionExitHandler } = this.store.getCommands();
 
-        // The following properties are provided as getter so that the
-        // prosemirror-suggest plugin always references the latest version of
-        // the suggestion. This is not a good idea and should be fixed in a
-        // better way soon.
-        get noDecorations() {
-          return extension.options.noDecorations;
-        },
+          function command(attrs: MentionChangeHandlerCommandAttributes = {}) {
+            mentionExitHandler(parameter, attrs);
+          }
 
-        get suggestTag() {
-          return extension.options.suggestTag;
-        },
-
-        keyBindings: () => this.keyBindings,
-        onCharacterEntry: this.onCharacterEntry,
-        onChange: this.options.onChange,
-        onExit: this.options.onExit,
-
-        createCommand: ({ match, reason, setMarkRemoved }) => {
-          const { range, suggester } = match;
-          const { name } = suggester;
-          const createMention = this.store.getCommands().createMention;
-          const updateMention = this.store.getCommands().updateMention;
-          const removeMention = this.store.getCommands().removeMention;
-          const isActive = isMarkActive({
-            from: range.from,
-            to: range.end,
-            type: this.type,
-            trState: this.store.getState(),
-          });
-
-          const method = isActive ? updateMention : createMention;
-          const isSplit = isSplitReason(reason);
-          const isInvalid = isInvalidSplitReason(reason);
-          const isRemoved = isRemovedReason(reason);
-          const isSelectionExit = isSelectionExitReason(reason);
-
-          const remove = () => {
-            setMarkRemoved();
-
-            try {
-              // This might fail when a deletion has taken place.
-              isInvalid ? removeMention({ range }) : noop();
-            } catch {
-              // This sometimes fails and it's best to ignore until more is
-              // known about the impact. Please create an issue if this blocks
-              // you in some way.
-            }
-          };
-
-          const update = ({
-            replacementType = isSplit ? 'partial' : 'full',
-            id = match.queryText[replacementType],
-            label = match.matchText[replacementType],
-            appendText = this.options.appendText,
-            ...attributes
-          }: SuggestionCommandAttributes) => {
-            method({
-              id,
-              label,
-              appendText,
-              replacementType,
-              name,
-              range,
-              keepSelection: isSelectionExit,
-              ...attributes,
-            });
-          };
-
-          const command: MentionExtensionSuggestCommand = isInvalid || isRemoved ? remove : update;
-
-          return command;
+          this.options.onChange(parameter, command);
         },
       };
     });
@@ -315,8 +367,8 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
   /**
    * The factory method for mention commands to update and create new mentions.
    */
-  private createMention({ shouldUpdate }: CreateMentionParameter) {
-    return (config: MentionExtensionAttributes & { keepSelection?: boolean }): CommandFunction => {
+  private createMention(shouldUpdate: boolean) {
+    return (config: NamedMentionExtensionAttributes & KeepSelectionParameter): CommandFunction => {
       invariant(isValidMentionAttributes(config), {
         message: 'Invalid configuration attributes passed to the MentionExtension command.',
       });
@@ -352,11 +404,14 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
 
       return (parameter) => {
         const { tr } = parameter;
-        const { from, to } = range ?? tr.selection;
+        const { from, to } = {
+          from: range?.from ?? tr.selection.from,
+          to: range?.cursor ?? tr.selection.to,
+        };
 
         if (shouldUpdate) {
           // Remove mark at previous position
-          let { oldFrom, oldTo } = { oldFrom: from, oldTo: range ? range.end : to };
+          let { oldFrom, oldTo } = { oldFrom: from, oldTo: range ? range.to : to };
           const $oldTo = tr.doc.resolve(oldTo);
 
           ({ from: oldFrom, to: oldTo } = getMarkRange($oldTo, this.type) || {
@@ -381,47 +436,176 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
           type: this.type,
           attrs: { ...attributes, name },
           appendText: getAppendText(appendText, matcher.appendText),
-          range: range
-            ? { from, to: replacementType === 'full' ? range.end || to : to }
-            : undefined,
+          range: range ? { from, to: replacementType === 'full' ? range.to || to : to } : undefined,
           content: attributes.label,
         })(parameter);
       };
     };
   }
-
-  /**
-   * Create the `onCharacterEntry` method.
-   */
-  private readonly onCharacterEntry = (
-    parameter: Parameters<MentionCharacterEntryMethod>[0],
-  ): boolean => {
-    for (const method of this.characterEntryMethods) {
-      if (method(parameter)) {
-        return true;
-      }
-    }
-
-    return false;
-  };
-
-  /**
-   * For now a dumb merge for the key binding command. Later entries are given priority over earlier entries.
-   */
-  private updateKeyBindings() {
-    let newBindings: MentionKeyBinding = object();
-
-    for (const binding of this.keyBindingsList) {
-      newBindings = { ...newBindings, ...binding };
-    }
-
-    this.keyBindings = newBindings;
-  }
 }
 
-interface CreateMentionParameter {
+export interface OptionalMentionExtensionParameter {
   /**
-   * Whether the mention command should handle updates.
+   * The text to append to the replacement.
+   *
+   * @default ''
    */
-  shouldUpdate: boolean;
+  appendText?: string;
+
+  /**
+   * The range of the requested selection.
+   */
+  range?: RangeWithCursor;
+
+  /**
+   * Whether to replace the whole match (`full`) or just the part up until the
+   * cursor (`partial`).
+   */
+  replacementType?: keyof MatchValue;
+}
+
+interface KeepSelectionParameter {
+  /**
+   * Whether to preserve the original selection after the replacement has
+   * occurred.
+   */
+  keepSelection?: boolean;
+}
+
+/**
+ * The attrs that will be added to the node. ID and label are plucked and used
+ * while attributes like href and role can be assigned as desired.
+ */
+export type MentionExtensionAttributes = MarkAttributes<
+  OptionalMentionExtensionParameter & {
+    /**
+     * A unique identifier for the suggesters node
+     */
+    id: string;
+
+    /**
+     * The text to be placed within the suggesters node
+     */
+    label: string;
+  }
+>;
+
+export type NamedMentionExtensionAttributes = MentionChangeHandlerCommandAttributes & {
+  /**
+   * The identifying name for the active matcher. This is stored as an
+   * attribute on the HTML that will be produced
+   */
+  name: string;
+};
+
+/**
+ * The options for the matchers which can be created by this extension.
+ */
+export interface MentionExtensionMatcher
+  extends Pick<
+    Suggester,
+    | 'char'
+    | 'name'
+    | 'startOfLine'
+    | 'supportedCharacters'
+    | 'validPrefixCharacters'
+    | 'invalidPrefixCharacters'
+    | 'matchOffset'
+    | 'suggestClassName'
+  > {
+  /**
+   * Provide customs class names for the completed mention
+   */
+  mentionClassName?: string;
+
+  /**
+   * Text to append after the suggestion has been added.
+   *
+   * @default ''
+   */
+  appendText?: string;
+}
+
+export type MentionChangeHandlerCommand = (attrs?: MentionChangeHandlerCommandAttributes) => void;
+
+/**
+ * A handler that will be called whenever the the active matchers are updated or
+ * exited. The second argument which is the exit command is a function which is
+ * only available when the matching suggester has been exited.
+ */
+export type MentionChangeHandler = (
+  handlerState: SuggestChangeHandlerParameter,
+  command: (attrs?: MentionChangeHandlerCommandAttributes) => void,
+) => void;
+
+/**
+ * The dynamic properties used to change the behavior of the mentions created.
+ */
+export type MentionChangeHandlerCommandAttributes = ProsemirrorAttributes<
+  Partial<Pick<MentionExtensionAttributes, 'appendText' | 'replacementType'>> & {
+    /**
+     * The ID to apply the mention.
+     *
+     * @default query.full
+     */
+    id?: string;
+
+    /**
+     * The text that is displayed within the mention bounds.
+     *
+     * @default text.full
+     */
+    label?: string;
+  }
+>;
+
+/**
+ * The default matcher to use when none is provided in options
+ */
+const DEFAULT_MATCHER = {
+  ...pick(DEFAULT_SUGGESTER, [
+    'startOfLine',
+    'supportedCharacters',
+    'validPrefixCharacters',
+    'invalidPrefixCharacters',
+    'suggestClassName',
+  ]),
+  appendText: '',
+  matchOffset: 1,
+  mentionClassName: 'mention',
+};
+
+/**
+ * Check that the attributes exist and are valid for the mention update command
+ * method.
+ */
+function isValidMentionAttributes(attributes: unknown): attributes is MentionExtensionAttributes {
+  return bool(attributes && isPlainObject(attributes) && attributes.id && attributes.label);
+}
+
+/**
+ * Gets the matcher from the list of matchers if it exists.
+ *
+ * @param name - the name of the matcher to find
+ * @param matchers - the list of matchers to search through
+ */
+function getMatcher(name: string, matchers: MentionExtensionMatcher[]) {
+  const matcher = matchers.find((matcher) => matcher.name === name);
+  return matcher ? { ...DEFAULT_MATCHER, ...matcher } : undefined;
+}
+
+/**
+ * Get the append text value which needs to be handled carefully since it can
+ * also be an empty string.
+ */
+function getAppendText(preferred: string | undefined, fallback: string | undefined) {
+  if (isString(preferred)) {
+    return preferred;
+  }
+
+  if (isString(fallback)) {
+    return fallback;
+  }
+
+  return DEFAULT_MATCHER.appendText;
 }

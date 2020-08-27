@@ -4,21 +4,30 @@ import React, { FC } from 'react';
 import { isNumber } from '@remirror/core';
 import { useRemirror } from '@remirror/react';
 
-import type { SocialMentionProps } from '../hooks';
 import type { SocialProviderProps } from '../social-types';
 import { SocialCharacterCount, SocialCharacterCountWrapper } from './social-character-count';
 import { SocialEmojiComponent } from './social-editor-emoji';
-import { SocialMentionComponent } from './social-editor-mentions';
+import { SocialMentionComponent, SocialMentionComponentProps } from './social-editor-mentions';
 import { SocialProvider } from './social-provider';
 
-export interface SocialEditorProps extends Partial<SocialProviderProps>, SocialMentionProps {}
+export interface SocialEditorProps
+  extends Partial<SocialProviderProps>,
+    SocialMentionComponentProps {}
 
 /**
  * A prebuilt `SocialEditor` which combines the building blocks for you to
  * create an editor with minimal lines of code.
  */
 export const SocialEditor: FC<SocialEditorProps> = (props: SocialEditorProps) => {
-  const { children, characterLimit = 140, tags, onMentionChange, users, ...providerProps } = props;
+  const {
+    children,
+    characterLimit = 140,
+    items,
+    onExit,
+    ignoreMatchesOnEscape,
+    onMentionChange,
+    ...providerProps
+  } = props;
 
   return (
     <SocialProvider {...providerProps}>
@@ -28,7 +37,12 @@ export const SocialEditor: FC<SocialEditorProps> = (props: SocialEditorProps) =>
         <Indicator characterLimit={characterLimit} />
         {children}
       </SocialEditorWrapperComponent>
-      <SocialMentionComponent tags={tags} users={users} onMentionChange={onMentionChange} />
+      <SocialMentionComponent
+        items={items}
+        onExit={onExit}
+        ignoreMatchesOnEscape={ignoreMatchesOnEscape}
+        onMentionChange={onMentionChange}
+      />
     </SocialProvider>
   );
 };

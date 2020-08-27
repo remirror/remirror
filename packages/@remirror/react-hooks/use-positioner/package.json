@@ -1,0 +1,11 @@
+{
+  "main": "dist/react-hooks.cjs.js",
+  "module": "dist/react-hooks.esm.js",
+  "browser": {
+    "./dist/react-hooks.cjs.js": "./dist/react-hooks.browser.cjs.js",
+    "./dist/react-hooks.esm.js": "./dist/react-hooks.browser.esm.js"
+  },
+  "preconstruct": {
+    "source": "../src/use-positioner.ts"
+  }
+}

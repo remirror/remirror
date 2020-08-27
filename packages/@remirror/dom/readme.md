@@ -52,9 +52,3 @@ editor.addHandler('change', () => log('your editor has changed'));
 // Make selected text bold.
 editor.commands.toggleBold();
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

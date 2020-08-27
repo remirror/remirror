@@ -19,7 +19,7 @@ export interface ReactSsrOptions {
    * The transformers that will be automatically used in the editor for properly
    * rendering ssr.
    *
-   * @defaultValue `DEFAULT_TRANSFORMATIONS`
+   * @default 'DEFAULT_TRANSFORMATIONS'
    */
   transformers?: Static<SSRTransformer[]>;
 }
@@ -122,8 +122,10 @@ export type SSRTransformer = (element: JSX.Element, state?: EditorState) => JSX.
  * @remarks
  * A utility method for the SSR JSX
  *
- * @param element - the element to transform which must be from the JSX received in `ssrTransformer`
- * @param transformChildElements - receives the nested elements and props and transforms them into another JSX.Element
+ * @param element - the element to transform which must be from the JSX received
+ * in `ssrTransformer`
+ * @param transformChildElements - receives the nested elements and props and
+ * transforms them into another JSX.Element
  */
 function cloneSSRElement(
   element: JSX.Element,
@@ -201,7 +203,7 @@ declare global {
       /**
        * Whether to use the SSR component when not in a DOM environment
        *
-       * @defaultValue `undefined`
+       * @default undefined
        */
       reactSSR?: boolean;
     }
@@ -229,14 +231,14 @@ declare global {
        *
        * Some extensions add decorations to the ProsemirrorView based on their
        * state. These decorations can touch any node or mark and it would be
-       * very difficult to model this without transforming the complete
-       * produced JSX element.
+       * very difficult to model this without transforming the complete produced
+       * JSX element.
        *
        * An example is that all empty paragraphs in prosemirror automatically
        * have a `<br />` tag injected into them during runtime. The
-       * ReactSSRSerializer which transform the `toDOM` method output for paragraph
-       * tags `[p, 0]` into JSX `<p />` has no way of knowing about this. That
-       * is where this creator method can help. We can transform the
+       * ReactSSRSerializer which transform the `toDOM` method output for
+       * paragraph tags `[p, 0]` into JSX `<p />` has no way of knowing about
+       * this. That is where this creator method can help. We can transform the
        * automatically generated JSX and inject `<br />` tags for the initial
        * server render. That way there is no jump or layout adjustment when the
        * document first loads on the browser.

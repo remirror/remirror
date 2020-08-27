@@ -33,16 +33,12 @@
 
 export { MentionExtension } from './mention-extension';
 export type {
-  MentionChangeHandlerMethod,
-  MentionChangeHandlerParameter,
-  MentionCharacterEntryMethod,
-  MentionExitHandlerMethod,
+  MentionChangeHandler,
+  MentionChangeHandlerCommand,
+  MentionChangeHandlerCommandAttributes,
   MentionExtensionAttributes,
   MentionExtensionMatcher,
-  MentionExtensionSuggestCommand,
-  MentionKeyBinding,
-  MentionKeyBindingParameter,
   MentionOptions,
+  NamedMentionExtensionAttributes,
   OptionalMentionExtensionParameter,
-  SuggestionCommandAttributes,
-} from './mention-types';
+} from './mention-extension';

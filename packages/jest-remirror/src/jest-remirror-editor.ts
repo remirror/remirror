@@ -1,5 +1,6 @@
 import { prettyDOM } from '@testing-library/dom';
 import {
+  backspace,
   dispatchAllSelection,
   dispatchCellSelection,
   dispatchNodeSelection,
@@ -23,12 +24,14 @@ import {
   EditorState,
   GetMarkNameUnion,
   GetNodeNameUnion,
+  getTextSelection,
   HelpersFromCombined,
   isFunction,
   isMarkExtension,
   isNodeExtension,
   object,
   pick,
+  PrimitiveSelection,
   ProsemirrorAttributes,
   ProsemirrorNode,
   range,
@@ -109,16 +112,31 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   readonly marks: MarkWithoutAttributes<this['manager']['~M']> = object();
 
   /**
-   * The nodes available for building the prosemirror document as a function
-   * that accepts custom attributes.
+   * This is similar to the `node` except that each function returned here is
+   * able to receive custom attributes.
+   *
+   * ```ts
+   * import { HeadingExtension } from 'remirror/extension/heading';
+   *
+   * const editor = renderEditor([new HeadingExtension()])
+   * const { heading } = editor.attributeNodes;
+   *
+   * heading({ level: 4, id: '1223' })('My custom heading');
+   * ```
+   *
+   * This attaches the attributes `level` and `id` to the `heading` node and the
+   * content `My custom heading` and would be rendered to HTML as:
+   * ```html
+   * <h4 id="1224">My custom heading</h4>
+   * ```
    *
    * Use this when testing nodes that can take custom attributes.
    */
   readonly attributeNodes: Omit<NodeWithAttributes<this['manager']['~N']>, 'text'> = object();
 
   /**
-   * The marks available for building the prosemirror document as a function
-   * that accepts custom attributes.
+   * This is very similar to the `attributeNodes` except for marks which can
+   * need to provide custom attributes.
    *
    * Use this when testing marks that can take custom attributes.
    */
@@ -134,7 +152,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * The editor view.
    */
-  get view(): TestEditorView {
+  get view(): TestEditorView<SchemaFromCombined<Combined>> {
     return this.#manager.view as TestEditorView<SchemaFromCombined<Combined>>;
   }
 
@@ -349,16 +367,11 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Selects the text between the provided start and end.
    */
-  readonly selectText = (start: number | 'all', end?: number): this => {
-    if (start === 'all') {
-      dispatchAllSelection(this.view);
-    } else {
-      dispatchTextSelection({
-        view: this.view,
-        start,
-        end: end && start <= end ? end : this.doc.resolve(start).end(),
-      });
-    }
+  readonly selectText = (selection: PrimitiveSelection): this => {
+    const tr = this.tr;
+    const textSelection = getTextSelection(selection, tr.doc);
+
+    this.view.dispatch(tr.setSelection(textSelection));
 
     return this;
   };
@@ -436,6 +449,15 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   };
 
   /**
+   * Simulates a backspace keypress and deletes text backwards.
+   */
+  backspace(times?: number): this {
+    backspace({ view: this.view, times });
+
+    return this;
+  }
+
+  /**
    * Takes any command as an input and dispatches it within the document
    * context.
    *
@@ -500,7 +522,6 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    */
   insertText = (text: string): this => {
     const { from } = this.state.selection;
-
     insertText({ start: from, text, view: this.view });
     return this;
   };
@@ -508,8 +529,8 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Logs the view to the dom for help debugging the html in your tests.
    */
-  readonly debug = (): this => {
-    console.log(prettyDOM(this.view.dom as HTMLElement));
+  readonly debug = (element = this.view.dom): this => {
+    console.log(prettyDOM(element));
     return this;
   };
 

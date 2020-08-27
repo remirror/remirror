@@ -11,8 +11,16 @@ import type {
 } from '@remirror/react';
 import type { RemirrorThemeType } from '@remirror/theme';
 
-export interface MentionChangeParameter extends BaseMentionState {
-  name: MatchName;
+export interface MentionChangeParameter {
+  /**
+   * The currently matched query which can be used to search and populate data.
+   */
+  query: string;
+
+  /**
+   * The name of the matching suggester.
+   */
+  name: string;
   /**
    * The currently active matching index
    */
@@ -44,7 +52,7 @@ export interface SocialProviderProps<Combined extends AnyCombinedUnion = SocialC
   /**
    * The theme component used to render the `theme`.
    *
-   * @defaultValue 'div'
+   * @default 'div'
    */
   ThemeComponent?: ElementType;
 
@@ -59,32 +67,6 @@ export interface SocialProviderProps<Combined extends AnyCombinedUnion = SocialC
    * Defaults to 140, set to `null` to disable.
    */
   characterLimit?: number | null;
-}
-
-interface BaseMentionState {
-  /**
-   * The currently matched query which can be used to search and populate data.
-   */
-  query: string;
-}
-
-/**
- * The possible active suggestion names.
- */
-export type MatchName = 'at' | 'tag';
-
-export interface UserData {
-  id?: string;
-  href?: string;
-  username: string;
-  displayName: string;
-  avatarUrl: string;
-}
-
-export interface TagData {
-  id?: string;
-  href?: string;
-  tag: string;
 }
 
 /**

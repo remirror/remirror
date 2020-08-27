@@ -44,9 +44,3 @@ document.body.appendChild(element);
 // Add the view to the editor manager.
 manager.addView(element);
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

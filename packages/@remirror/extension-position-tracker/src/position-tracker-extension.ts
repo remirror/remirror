@@ -18,14 +18,14 @@ export interface PositionTrackerOptions {
   /**
    * The className that is added to all tracker positions
    *
-   * '@defaultValue 'remirror-tracker-position'
+   * '@default 'remirror-tracker-position'
    */
   class?: Static<string>;
 
   /**
    * The default element that is used for all trackers.
    *
-   * @defaultValue 'tracker'
+   * @default 'tracker'
    */
   element?: Static<string>;
 }
@@ -247,14 +247,14 @@ interface AddPositionTrackerParameter
    * A custom class name to use for the tracker position. All the trackers
    * will automatically be given the class name `remirror-tracker-position`
    *
-   * @defaultValue ''
+   * @default ''
    */
   className?: string;
 
   /**
    * A custom html element or string for a created element tag name.
    *
-   * @defaultValue 'tracker'
+   * @default 'tracker'
    */
   element?: string | HTMLElement;
 }

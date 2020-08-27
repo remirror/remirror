@@ -1,30 +1,33 @@
 import { css, cx } from 'linaria';
 import { Type, useMultishift } from 'multishift';
-import React, { useCallback, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 
-import { bool, isEmptyArray } from '@remirror/core';
+import { isEmptyArray } from '@remirror/core';
 import { usePositioner } from '@remirror/react';
+import { useEditorFocus } from '@remirror/react-hooks/use-editor-focus';
+import { useEmoji } from '@remirror/react-hooks/use-emoji';
 
-import { useSocialRemirror } from '../hooks';
-import { SocialEmojiState, useSocialEmoji } from '../hooks/use-social-emoji';
 import {
   emojiSuggestionsDropdownWrapperStyles,
   emojiSuggestionsItemStyles,
 } from '../social-styles';
 
-const EmojiDropdown = (props: SocialEmojiState) => {
-  const { index, command, list, show } = props;
-  const { focus } = useSocialRemirror();
+/**
+ * This component renders the emoji suggestion dropdown for the user.
+ */
+export const SocialEmojiComponent: FC = () => {
+  const state = useEmoji();
+  const [isFocused, focus] = useEditorFocus();
   const [isClicking, setIsClicking] = useState(false);
   const { ref, active, bottom, left } = usePositioner(
     'popup',
-    bool((show || isClicking) && command && !isEmptyArray(list)),
+    !!((isFocused || isClicking) && state && !isEmptyArray(state.list)),
   );
 
   const { getMenuProps, getItemProps, itemHighlightedAtIndex, hoveredIndex } = useMultishift({
-    highlightedIndexes: [index],
+    highlightedIndexes: [state?.index ?? 0],
     type: Type.ControlledMenu,
-    items: list,
+    items: state?.list ?? [],
     isOpen: true,
   });
 
@@ -43,7 +46,7 @@ const EmojiDropdown = (props: SocialEmojiState) => {
       }}
     >
       {active &&
-        list.map((emoji, index) => {
+        (state?.list ?? []).map((emoji, index) => {
           const isHighlighted = itemHighlightedAtIndex(index);
           const isHovered = index === hoveredIndex;
 
@@ -57,7 +60,7 @@ const EmojiDropdown = (props: SocialEmojiState) => {
               )}
               {...getItemProps({
                 onClick: () => {
-                  command?.(emoji);
+                  state?.command(emoji);
                   focus();
                 },
                 item: emoji,
@@ -71,15 +74,6 @@ const EmojiDropdown = (props: SocialEmojiState) => {
         })}
     </div>
   );
-};
-
-/**
- * This component renders the emoji suggestion dropdown for the user.
- */
-export const SocialEmojiComponent = () => {
-  const { index, list, command, show } = useSocialEmoji();
-
-  return <EmojiDropdown list={list} index={index} command={command} show={show} />;
 };
 
 const emojiSuggestionsItemName = css`

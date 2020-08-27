@@ -39,9 +39,3 @@ import { ListPreset } from '@remirror/preset-list';
 // Create the preset
 const preset = new ListPreset();
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

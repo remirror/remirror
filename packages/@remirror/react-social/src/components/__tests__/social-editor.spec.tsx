@@ -9,12 +9,7 @@ import { SocialEditor, socialManagerArgs } from '../..';
 describe('social editor', () => {
   it('should place the editor within the correct element', () => {
     const { getByTestId, getByRole } = strictRender(
-      <SocialEditor
-        users={[]}
-        tags={[]}
-        onMentionChange={jest.fn()}
-        initialContent={docNodeBasicJSON}
-      />,
+      <SocialEditor items={[]} onMentionChange={jest.fn()} initialContent={docNodeBasicJSON} />,
     );
 
     const editor = getByRole('textbox');
@@ -30,8 +25,7 @@ describe('social editor', () => {
     strictRender(
       <SocialEditor
         manager={manager}
-        users={[]}
-        tags={[]}
+        items={[]}
         onMentionChange={jest.fn()}
         initialContent={docNodeBasicJSON}
       />,

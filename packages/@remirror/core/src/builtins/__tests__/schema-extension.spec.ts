@@ -1,3 +1,4 @@
+import { schema } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
 import { BlockquoteExtension } from 'remirror/extension/blockquote';
@@ -48,4 +49,42 @@ describe('dynamic schema attributes', () => {
     expect(mark.paragraph).toHaveBeenCalledTimes(4);
     expect(outerHtml).toMatchDiffSnapshot(editor.dom.outerHTML);
   });
+});
+
+test('custom schema', () => {
+  const editor = renderEditor([], { schema });
+
+  expect(editor.schema).toBe(schema);
+  expect(Object.keys(editor.manager.nodes)).toMatchInlineSnapshot(`
+    Array [
+      "doc",
+      "orderedList",
+      "bulletList",
+      "listItem",
+      "paragraph",
+      "text",
+      "horizontalRule",
+      "atomInline",
+      "atomBlock",
+      "atomContainer",
+      "containerWithRestrictedContent",
+      "table",
+      "table_row",
+      "table_cell",
+      "table_header",
+      "blockquote",
+      "heading",
+      "code_block",
+      "hard_break",
+      "image",
+    ]
+  `);
+  expect(Object.keys(editor.manager.marks)).toMatchInlineSnapshot(`
+    Array [
+      "link",
+      "em",
+      "strong",
+      "code",
+    ]
+  `);
 });

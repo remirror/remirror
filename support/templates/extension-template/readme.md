@@ -34,9 +34,3 @@ import { TemplateExtension } from '@remirror/extension-template';
 
 const extension = new TemplateExtension();
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

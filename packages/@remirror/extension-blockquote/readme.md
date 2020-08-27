@@ -34,9 +34,3 @@ import { BlockquoteExtension } from '@remirror/extension-blockquote';
 
 const extension = new BlockquoteExtension();
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

@@ -45,9 +45,3 @@ const dispose = extension.addCustomHandler({
 // Later in the app
 dispose(); // Remove the positioner.
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

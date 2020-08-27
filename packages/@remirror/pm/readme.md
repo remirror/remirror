@@ -22,9 +22,9 @@ npm install @remirror/pm@next # npm
 
 ## Usage
 
-This bundles up the prosemirror libraries into one package to make development and consumption of the remirror codebase simpler. Since the prosemirror libraries all provide es modules then tree shaking with rollup and webpack means that the compiled code only picks out what is used.
+This bundles up the prosemirror libraries into one package to make development and consumption of the remirror codebase simpler. All prosemirror libraries are available as **es-modules** which makes tree shaking with rollup, webpack and other build tools possible.
 
-This library is a required peer dependency when using remirror in your codebase. While you may never need to use it directly, the following code is an example of how you could potentially consume it.
+This library is a required peer dependency when using remirror in your codebase. You might never need to use it directly, but in case you do, here's a snippet of how to do so.
 
 ```ts
 import { View } from '@remirror/pm/view';
@@ -34,11 +34,3 @@ import { Suggest } from '@remirror/pm/suggest';
 // Top level (not recommended).
 import { Node, Mark } from '@remirror/pm';
 ```
-
-And that is'
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

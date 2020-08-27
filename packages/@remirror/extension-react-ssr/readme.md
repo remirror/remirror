@@ -30,9 +30,3 @@ There is a peer dependency on `@remirror/pm` since `@remirror/core` also depends
 ## Usage
 
 This is one of the **core react** extensions and is included by default via `@remirror/preset-react`.
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

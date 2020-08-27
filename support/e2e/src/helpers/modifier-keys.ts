@@ -197,7 +197,7 @@ interface GetModifiersParameter {
   /**
    * Whether to treat this as a mac
    *
-   * @defaultValue `false`
+   * @default false
    */
   isMac?: boolean;
 }

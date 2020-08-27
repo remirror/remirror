@@ -88,7 +88,7 @@ export interface PressParameter extends Pick<TypeParameter, 'delay'> {
   /**
    * The number of times the key should be pressed.
    *
-   * @defaultValue 1
+   * @default 1
    */
   count?: number;
 }

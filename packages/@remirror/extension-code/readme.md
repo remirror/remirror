@@ -34,9 +34,3 @@ import { CodeExtension } from '@remirror/extension-code';
 
 const extension = new CodeExtension();
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots
