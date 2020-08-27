@@ -214,7 +214,7 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
   },
   {
     moduleName: 'remirror/extension/react-ssr',
-    exports: ['ReactSSRExtension'],
+    exports: ['ReactSsrExtension'],
   },
   {
     moduleName: 'remirror/extension/search',

@@ -27,11 +27,12 @@ import { renderEditor } from './jest-remirror-editor';
 export function extensionValidityTest<Type extends AnyExtensionConstructor>(
   Extension: Type,
   ...[options]: ExtensionConstructorParameter<OptionsOfConstructor<Type>>
-) {
+): void {
   describe(`\`${Extension.name}\``, () => {
     it(`has the right properties`, () => {
+      expect(Extension.name.endsWith('Extension'));
       const extension = new Extension(options);
-      expect(extension.name).toBeString();
+      expect(extension.name).toBe(Extension.instanceName);
 
       expect(() => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -136,8 +137,9 @@ export function presetValidityTest<Type extends AnyPresetConstructor>(
 ) {
   describe(`\`${Preset.name}\``, () => {
     it(`has the right properties`, () => {
+      expect(Preset.name.endsWith('Presets'));
       const preset = new Preset(options);
-      expect(preset.name).toBeString();
+      expect(preset.name).toBe(Preset.instanceName);
 
       expect(() => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment

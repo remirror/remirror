@@ -10,10 +10,12 @@ import {
 import {
   freeze,
   getLazyArray,
+  includes,
   invariant,
   isIdentifierOfType,
   isNullOrUndefined,
   isRemirrorType,
+  isString,
   object,
 } from '@remirror/core-helpers';
 import type { EditorSchema, EditorView, Replace } from '@remirror/core-types';
@@ -188,7 +190,8 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   }
 
   /**
-   * True when the view has been added to the UI layer and the editor is running.
+   * True when the view has been added to the UI layer and the editor is
+   * running.
    */
   get mounted() {
     return this.#phase >= ManagerPhase.EditorView && this.#phase < ManagerPhase.Destroy;
@@ -597,8 +600,8 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   }
 
   /**
-   * Get the requested preset from the manager. This will throw if the preset doesn't
-   * exist within this manager.
+   * Get the requested preset from the manager. This will throw if the preset
+   * doesn't exist within this manager.
    */
   getPreset<PresetConstructor extends AnyPresetConstructor>(
     Constructor: PresetConstructor,
@@ -619,8 +622,8 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * Make a clone .
    *
    * TODO: Think about the following.
-   * - What about the state stored in the extensions and presets, does this need to be
-   * recreated as well?
+   * - What about the state stored in the extensions and presets, does this need
+   *   to be recreated as well?
    */
   clone(): RemirrorManager<Combined> {
     const currentCombined = this.#combined.map((e) => e.clone(e.options));
@@ -631,8 +634,8 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * Recreate the manager.
    *
    * TODO: Think about the following.
-   * - What about the state stored in the extensions and presets, does this need to be
-   * recreated as well?
+   * - What about the state stored in the extensions and presets, does this need
+   *   to be recreated as well?
    */
   recreate<ExtraCombined extends AnyCombinedUnion>(
     combined: ExtraCombined[] = [],
@@ -646,9 +649,10 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   }
 
   /**
-   * This method should be called to destroy the manager and remove the view. You have full control over this.
+   * This method should be called to destroy the manager and remove the view.
+   * You have full control over this.
    */
-  destroy() {
+  destroy(): void {
     this.#phase = ManagerPhase.Destroy;
 
     for (const plugin of this.view?.state.plugins ?? []) {
@@ -663,6 +667,30 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
     this.view?.destroy();
 
     this.#events.emit('destroy');
+  }
+  /**
+   * Check whether the manager includes the names or constructors provided for
+   * the preset and extensions.
+   *
+   * Returns true if all are included, returns false otherwise.
+   */
+  includes(
+    mustIncludeList: Array<AnyExtensionConstructor | AnyPresetConstructor | string>,
+  ): boolean {
+    // Searches can be made by either the name of the extension / preset or the
+    // names of the constructor. We gather the values to check in separate
+    // arrays
+    const names: string[] = [];
+    const extensionsAndPresets: Array<AnyExtensionConstructor | AnyPresetConstructor> = [];
+
+    for (const item of this.combined) {
+      names.push(item.name, item.constructor.name);
+      extensionsAndPresets.push(item.constructor);
+    }
+
+    return mustIncludeList.every((item) =>
+      isString(item) ? includes(names, item) : includes(extensionsAndPresets, item),
+    );
   }
 }
 
@@ -695,14 +723,30 @@ export type AnyRemirrorManager = Replace<
 >;
 
 /**
- * Checks to see whether the provided value is an `Manager`.
+ * Checks to see whether the provided value is a `RemirrorManager` instance.
+ *
+ * An optional parameter `mustIncludeList` is available if you want to check
+ * that the manager includes all the listed extensions.
  *
  * @param value - the value to check
+ * @param mustIncludeList - an array of presets and extension the manager must
+ * include to pass the test. The identifier can either be the Extension / Preset
+ * name e.g. `bold`, or the Extension / Preset constructor `BoldExtension`
  */
 export function isRemirrorManager<Combined extends AnyCombinedUnion = AnyCombinedUnion>(
   value: unknown,
+  mustIncludeList?: Array<AnyExtensionConstructor | AnyPresetConstructor | string>,
 ): value is RemirrorManager<Combined> {
-  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Manager);
+  if (!isRemirrorType(value) || !isIdentifierOfType(value, RemirrorIdentifier.Manager)) {
+    return false;
+  }
+
+  // We can return true since there are no other checks to make.
+  if (!mustIncludeList) {
+    return true;
+  }
+
+  return (value as AnyRemirrorManager).includes(mustIncludeList);
 }
 
 export interface RemirrorManagerParameter<
@@ -915,8 +959,8 @@ declare global {
 
       /**
        * Allow extensions to trigger an update in the prosemirror state. This
-       * should only be used in rarely as it is easy to get
-       * in trouble without the necessary thought.
+       * should only be used in rarely as it is easy to get in trouble without
+       * the necessary thought.
        */
       readonly updateState: (state: EditorState<EditorSchema>) => void;
 

@@ -18,7 +18,7 @@ export {
   HelpersExtension,
   InputRulesExtension,
   KeymapExtension,
-  NodeViewsExtension,
+  NodeViewExtension as NodeViewsExtension,
   PasteRulesExtension,
   PluginsExtension,
   SchemaExtension,

@@ -33,7 +33,7 @@ export interface SuggestOptions {
 @extensionDecorator<SuggestOptions>({ customHandlerKeys: ['suggester'] })
 export class SuggestExtension extends PlainExtension<SuggestOptions> {
   get name() {
-    return 'suggestions' as const;
+    return 'suggest' as const;
   }
 
   /**

@@ -15,7 +15,7 @@ import type { AnyCombinedUnion } from '../preset';
  *
  * @builtin
  */
-export class NodeViewsExtension extends PlainExtension {
+export class NodeViewExtension extends PlainExtension {
   get name() {
     return 'nodeView' as const;
   }
@@ -23,7 +23,7 @@ export class NodeViewsExtension extends PlainExtension {
   /**
    * Ensure that all SSR transformers are run.
    */
-  onCreate() {
+  onCreate(): void {
     const nodeViewList: Array<Record<string, NodeViewMethod>> = [];
     const nodeViews: Record<string, NodeViewMethod> = object();
 

@@ -1,12 +1,13 @@
+import composeRefs from '@seznam/compose-react-refs';
 import React, {
   cloneElement,
   Dispatch,
+  ReactElement,
   ReactNode,
   Ref,
   SetStateAction,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -33,6 +34,7 @@ import {
   shouldUseDomEnvironment,
   UpdateStateParameter,
 } from '@remirror/core';
+import { RemirrorPortals, usePortals } from '@remirror/extension-react-component';
 import type { EditorState } from '@remirror/pm/state';
 import { ReactPreset } from '@remirror/preset-react';
 import {
@@ -67,9 +69,8 @@ import { createEditorView, RemirrorSSR } from '../ssr';
  */
 export const ReactEditor = <Combined extends AnyCombinedUnion>(
   props: ReactEditorProps<Combined>,
-) => {
+): ReactElement<ReactEditorProps<Combined>> => {
   const { stringHandler = defaultStringHandler, onError, manager, forceEnvironment, value } = props;
-
   const { placeholder } = props;
   const isFirstMount = useFirstMountState();
 
@@ -140,10 +141,20 @@ export const ReactEditor = <Combined extends AnyCombinedUnion>(
     methods.onUpdate(previousEditable);
   }, [previousEditable, methods]);
 
+  // Handle the controlled editor usage.
   useControlledEditor(methods);
 
-  // Return the rendered component
-  return methods.render();
+  // Subscribe to updates from the [[`PortalContainer`]]
+  const portals = usePortals(methods.remirrorContext.portalContainer);
+
+  // Return the rendered component and the portals for custom node views and
+  // decorations
+  return (
+    <>
+      {methods.render()}
+      <RemirrorPortals portals={portals} context={methods.remirrorContext} />
+    </>
+  );
 };
 
 /**
@@ -306,10 +317,11 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
     // invariant(!this.rootPropsConfig.called, { code: ErrorConstant.REACT_GET_ROOT_PROPS });
     this.rootPropsConfig.called = true;
 
-    const { refKey: refKey = 'ref', ...config } = options ?? object<GetRootPropsConfig<RefKey>>();
+    const { refKey: refKey = 'ref', ref, ...config } =
+      options ?? object<GetRootPropsConfig<RefKey>>();
 
     return {
-      [refKey]: this.onRef,
+      [refKey]: composeRefs(ref as Ref<HTMLElement>, this.onRef),
       key: this.uid,
       ...config,
       children: children ?? this.renderChildren(null),
@@ -530,7 +542,9 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
   }
 
   /**
-   * Create the react element which renders the text editor.
+   * Create the react element which renders the text editor. This render method
+   * also provides the `RemirrorPortals` which are used to render custom
+   * component based node views.
    */
   render() {
     this.resetRender();
@@ -566,6 +580,7 @@ class ReactEditorWrapper<Combined extends AnyCombinedUnion> extends EditorWrappe
     }
 
     this.resetRender();
+
     return renderedElement;
   }
 }
@@ -591,13 +606,9 @@ function useEditorWrapper<Combined extends AnyCombinedUnion>(
   const parameterRef = useRef(parameter);
   parameterRef.current = parameter;
 
-  // The initial editor wrapper should only be recreated when the manager is
-  // destroyed.
-  const initialEditorWrapper = useMemo(() => {
-    return new ReactEditorWrapper<Combined>(parameterRef.current);
-  }, []);
-
-  const [editorWrapper, setEditorWrapper] = useState(initialEditorWrapper);
+  const [editorWrapper, setEditorWrapper] = useState(
+    () => new ReactEditorWrapper<Combined>(parameterRef.current),
+  );
 
   editorWrapper.update(parameter);
 
@@ -605,7 +616,7 @@ function useEditorWrapper<Combined extends AnyCombinedUnion>(
     editorWrapper.props.manager.addHandler('destroy', () => {
       setEditorWrapper(new ReactEditorWrapper<Combined>(parameterRef.current));
     });
-  }, [initialEditorWrapper, editorWrapper.props.manager]);
+  }, [editorWrapper.props.manager]);
 
   return editorWrapper;
 }
@@ -648,5 +659,20 @@ function useControlledEditor<Combined extends AnyCombinedUnion>(
     return;
   }
 
+  // **NOTE:** This is required for controlled updates to work properly (to the
+  // best of my knowledge). If, for example, we try `useEffect` instead
+  // controlled updates are asynchronous and there can be mismatched
+  // transactions caused by React's state representation being one step behind
+  // ProseMirror.
+  //
+  // One issue that I'm bumping into right now while working on the
+  // `ReactNodeView` is that when the `view.updateState()` causes a rerender in
+  // a sub-component it triggers the warning - 'Cannot update a component [`X`]
+  // while rendering a different component [`ReactEditor`]'.
+  //
+  // This is because rendering one component should not attempt to update the
+  // state of a different component while rendering. NodeView are called as soon
+  // as `view.updateState` is called and since the NodeView implementation
+  // relies has an event listener.
   methods.updateControlledState(value, previousValue ?? undefined);
 }

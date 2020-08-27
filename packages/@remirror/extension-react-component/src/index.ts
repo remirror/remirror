@@ -9,11 +9,10 @@ export type {
   MountedPortal,
   PortalList,
   PortalMap,
-  PortalProps,
   RemirrorPortalsProps,
   RenderMethodParameter,
   RenderParameter,
 } from './portals';
-export { PortalContainer, RemirrorPortals } from './portals';
+export { PortalContainer, RemirrorPortals, usePortalContext, usePortals } from './portals';
 
 export { ReactComponentExtension } from './react-component-extension';

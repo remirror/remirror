@@ -1,42 +1,48 @@
-import React, { FunctionComponent, RefCallback } from 'react';
+import React, { ComponentType, FunctionComponent, RefCallback } from 'react';
 
 import {
-  AnyExtension,
   Decoration,
   EditorView,
   entries,
   ErrorConstant,
   GetFixed,
-  includes,
   invariant,
-  isArray,
   isDomNode,
   isElementDomNode,
   isFunction,
   isNodeOfType,
   isPlainObject,
   isString,
+  kebabCase,
   NodeView,
   NodeWithAttributes,
+  pascalCase,
   ProsemirrorAttributes,
   ProsemirrorNode,
   SELECTED_NODE_CLASS_NAME,
 } from '@remirror/core';
+import { DOMSerializer } from '@remirror/pm/model';
 
 import type {
   CreateNodeViewParameter,
   GetPosition,
+  NodeViewComponentProps,
   ReactComponentOptions,
   ReactNodeViewParameter,
 } from './node-view-types';
 import type { PortalContainer } from './portals';
 
+/**
+ * This is the node view rapper that makes
+ */
 export class ReactNodeView implements NodeView {
   /**
-   * A shorthand method for creating the ReactNodeView
+   * A shorthand method for creating the `ReactNodeView`.
    */
-  static create(parameter: CreateNodeViewParameter) {
-    const { portalContainer, extension, options } = parameter;
+  static create(
+    parameter: CreateNodeViewParameter,
+  ): (node: NodeWithAttributes, view: EditorView, getPosition: GetPosition) => NodeView {
+    const { portalContainer, ReactComponent, options } = parameter;
 
     return (node: NodeWithAttributes, view: EditorView, getPosition: GetPosition) =>
       new ReactNodeView({
@@ -45,7 +51,7 @@ export class ReactNodeView implements NodeView {
         view,
         getPosition,
         portalContainer,
-        extension,
+        ReactComponent,
       });
   }
 
@@ -71,9 +77,9 @@ export class ReactNodeView implements NodeView {
   readonly #portalContainer: PortalContainer;
 
   /**
-   * The options that were passed into the extension that created this nodeView
+   * The extension responsible for creating this NodeView.
    */
-  readonly #extension: AnyExtension;
+  readonly #Component: ComponentType<NodeViewComponentProps>;
 
   /**
    * Method for retrieving the position of the current nodeView
@@ -90,20 +96,27 @@ export class ReactNodeView implements NodeView {
   /**
    * Whether or not the node is currently selected.
    */
-  public get selected() {
+  public get selected(): boolean {
     return this.#selected;
   }
 
-  #contentDOM?: HTMLElement | undefined;
+  #contentDOM?: Node | undefined;
 
   /**
-   * The DOM node that should hold the node's content. Only meaningful if the
-   * node view also defines a `dom` property and if its node type is not a leaf
-   * node type. When this is present, ProseMirror will take care of rendering
-   * the node's children into it. When it is not present, the node view itself
-   * is responsible for rendering (or deciding not to render) its child nodes.
+   * The wrapper for the content dom. Created from the node spec `toDOM` method.
    */
-  public get contentDOM(): HTMLElement | undefined {
+  #contentDOMWrapper?: HTMLElement | undefined;
+
+  /**
+   * The DOM node that should hold the node's content.
+   *
+   * This is only meaningful if the NodeView is not a leaf type and it can
+   * accept content. When these criteria are met, `ProseMirror` will take care of
+   * rendering the node's children into it.
+   *
+   * In order to make use of this in a
+   */
+  public get contentDOM(): Node | undefined {
     return this.#contentDOM;
   }
 
@@ -113,7 +126,7 @@ export class ReactNodeView implements NodeView {
    * Provides readonly access to the dom element. The dom is automatically for
    * react components.
    */
-  get dom() {
+  get dom(): HTMLElement {
     return this.#dom;
   }
 
@@ -125,7 +138,7 @@ export class ReactNodeView implements NodeView {
     node,
     portalContainer,
     view,
-    extension,
+    ReactComponent,
     options,
   }: ReactNodeViewParameter) {
     invariant(isFunction(getPosition), {
@@ -136,14 +149,22 @@ export class ReactNodeView implements NodeView {
     this.#node = node;
     this.#view = view;
     this.#portalContainer = portalContainer;
-    this.#extension = extension;
+    this.#Component = ReactComponent;
     this.#getPosition = getPosition;
     this.#options = options;
     this.#dom = this.createDom();
-    this.#contentDOM = this.createContentDom();
+
+    const { contentDOM, wrapper } = this.createContentDom() ?? {};
+
+    this.#contentDOM = contentDOM ?? undefined;
+    this.#contentDOMWrapper = wrapper;
+
+    if (this.#contentDOMWrapper) {
+      this.#dom.append(this.#contentDOMWrapper);
+    }
 
     this.setDomAttributes(this.#node, this.#dom);
-    this.Component.displayName = extension.constructor.name.replace('Extension', 'NodeView');
+    this.Component.displayName = pascalCase(`${this.#node.type.name}NodeView`);
 
     this.renderComponent();
   }
@@ -152,59 +173,69 @@ export class ReactNodeView implements NodeView {
    * Render the react component into the dom.
    */
   private renderComponent() {
-    this.#portalContainer.render({ Component: this.Component, container: this.#dom });
+    this.#portalContainer.render({
+      Component: this.Component,
+      container: this.#dom,
+    });
   }
 
   /**
    * Create the dom element which will hold the react component.
    */
-  createDom(): HTMLElement {
-    const { toDOM } = this.#node.type.spec;
+  private createDom(): HTMLElement {
     const { defaultBlockNode, defaultInlineNode } = this.#options;
+    const element: HTMLElement = this.#node.isInline
+      ? document.createElement(defaultInlineNode as keyof HTMLElementTagNameMap)
+      : document.createElement(defaultBlockNode as keyof HTMLElementTagNameMap);
 
-    if (!toDOM) {
-      return this.#node.isInline
-        ? document.createElement(defaultInlineNode)
-        : document.createElement(defaultBlockNode);
-    }
+    // Prosemirror breaks down when it encounters multiple nested empty
+    // elements. This class prevents this from happening.
+    element.classList.add(`${kebabCase(this.#node.type.name)}-node-view-wrapper`);
 
-    const domSpec = toDOM(this.#node);
-
-    if (isString(domSpec)) {
-      return document.createElement(domSpec);
-    }
-
-    if (isDomNode(domSpec)) {
-      if (!isElementDomNode(domSpec)) {
-        throw new Error('Invalid HTML Element provided in the DOM Spec');
-      }
-
-      return domSpec;
-    }
-
-    // Use the outer element string to render the dom node
-    return document.createElement(domSpec[0]);
+    return element;
   }
 
   /**
    * The element that will contain the content for this element.
    */
-  createContentDom(): HTMLElement | undefined {
+  private createContentDom(): { wrapper: HTMLElement; contentDOM?: Node | null } | undefined {
     if (this.#node.isLeaf) {
       return;
     }
 
     const domSpec = this.#node.type.spec.toDOM?.(this.#node);
 
-    // If no content hole included return undefined.
-    if (!(isArray(domSpec) && includes(domSpec, 0))) {
+    // Only allow content if a domSpec exists which is used to render the content.
+    if (!domSpec) {
       return;
     }
 
-    const element = document.createElement(this.#options.defaultContentNode);
-    element.setAttribute('contenteditable', `${this.#view.editable}`);
+    // Let `ProseMirror` interpret the domSpec returned by `toDOM` to provide
+    // the dom and `contentDOM`.
+    const { contentDOM, dom } = DOMSerializer.renderSpec(document, domSpec);
 
-    return element;
+    // The content dom needs a wrapper node in react since the dom element which
+    // it renders inside isn't immediately mounted.
+    let wrapper: HTMLElement;
+
+    if (!isElementDomNode(dom)) {
+      return;
+    }
+
+    // Default to setting the wrapper to a different element.
+    wrapper = dom;
+
+    if (dom === contentDOM) {
+      wrapper = document.createElement('span');
+      wrapper.classList.add(`${kebabCase(this.#node.type.name)}-node-view-content-wrapper`);
+      wrapper.append(contentDOM);
+    }
+
+    if (isElementDomNode(contentDOM)) {
+      // contentDOM.setAttribute('contenteditable', `${this.#view.editable}`);
+    }
+
+    return { wrapper, contentDOM };
   }
 
   /**
@@ -218,14 +249,14 @@ export class ReactNodeView implements NodeView {
       return;
     }
 
-    invariant(this.#contentDOM, {
+    invariant(this.#contentDOMWrapper, {
       code: ErrorConstant.REACT_NODE_VIEW,
-      message: `You have applied a ref to a nodeView provided by '${
-        this.#extension.constructor.name
+      message: `You have applied a ref to a node view provided for '${
+        this.#node.type.name
       }' which doesn't support content.`,
     });
 
-    node.append(this.#contentDOM);
+    node.append(this.#contentDOMWrapper);
   };
 
   /**
@@ -234,11 +265,13 @@ export class ReactNodeView implements NodeView {
    * This method is passed into the HTML element.
    */
   private readonly Component: FunctionComponent = () => {
-    const { ReactComponent } = this.#extension;
+    const ReactComponent = this.#Component;
 
     invariant(ReactComponent, {
       code: ErrorConstant.REACT_NODE_VIEW,
-      message: "The extension used to create this node view doesn't have a valid ReactComponent",
+      message: `The custom react node view provided for ${
+        this.#node.type.name
+      } doesn't have a valid ReactComponent`,
     });
 
     return (
@@ -250,7 +283,6 @@ export class ReactNodeView implements NodeView {
         getPosition={this.#getPosition}
         node={this.#node}
         forwardRef={this.#forwardRef}
-        options={this.#extension.options as any}
         decorations={this.#decorations}
       />
     );
@@ -273,9 +305,9 @@ export class ReactNodeView implements NodeView {
   };
 
   /**
-   * Update the prosemirror node.
+   * This is called whenever the node is called.
    */
-  update(node: ProsemirrorNode, decorations: Decoration[]) {
+  update(node: ProsemirrorNode, decorations: Decoration[]): boolean {
     if (!isNodeOfType({ types: this.#node.type, node })) {
       return false;
     }
@@ -290,6 +322,7 @@ export class ReactNodeView implements NodeView {
 
     this.#node = node as NodeWithAttributes;
     this.#decorations = decorations;
+
     this.renderComponent();
 
     return true;
@@ -300,7 +333,7 @@ export class ReactNodeView implements NodeView {
    *
    * @param node The Prosemirror Node from which to source the attributes
    */
-  setDomAttributes(node: ProsemirrorNode, element: HTMLElement) {
+  setDomAttributes(node: ProsemirrorNode, element: HTMLElement): void {
     const { toDOM } = this.#node.type.spec;
     let attributes = node.attrs;
 
@@ -324,7 +357,7 @@ export class ReactNodeView implements NodeView {
   /**
    * Marks the node as being selected.
    */
-  selectNode() {
+  selectNode(): void {
     this.#selected = true;
 
     if (this.#dom) {
@@ -334,8 +367,10 @@ export class ReactNodeView implements NodeView {
     this.renderComponent();
   }
 
-  // Remove selected node marking from this node.
-  deselectNode() {
+  /**
+   * Remove the selected node markings from this component.
+   */
+  deselectNode(): void {
     this.#selected = false;
 
     if (this.#dom) {
@@ -348,20 +383,23 @@ export class ReactNodeView implements NodeView {
   /**
    * This is called whenever the node is being destroyed.
    */
-  destroy() {
+  destroy(): void {
     this.#portalContainer.remove(this.#dom);
   }
 
-  ignoreMutation(mutation: IgnoreMutationParameter) {
+  /**
+   * The handler which decides when mutations should be ignored.
+   */
+  ignoreMutation(mutation: IgnoreMutationParameter): boolean {
     if (mutation.type === 'selection') {
       return false;
     }
 
-    if (!this.contentDOM) {
+    if (!this.#contentDOMWrapper) {
       return true;
     }
 
-    return !this.contentDOM.contains(mutation.target);
+    return !this.#contentDOMWrapper.contains(mutation.target);
   }
 }
 

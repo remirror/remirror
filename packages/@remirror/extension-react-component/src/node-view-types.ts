@@ -1,15 +1,14 @@
-import type { RefCallback } from 'react';
+import type { ComponentType, RefCallback } from 'react';
 
 import type {
-  AnyExtension,
   Decoration,
+  Dynamic,
   EditorViewParameter,
   GetFixed,
   NodeWithAttributesParameter,
   ProsemirrorAttributes,
   RenderEnvironment,
   Static,
-  ValidOptions,
 } from '@remirror/core';
 
 import type { PortalContainer } from './portals';
@@ -24,7 +23,7 @@ export interface ReactComponentOptions {
    *
    * @staticOption
    */
-  defaultBlockNode?: keyof HTMLElementTagNameMap;
+  defaultBlockNode?: Static<keyof HTMLElementTagNameMap>;
 
   /**
    * The default main inline node (for inline content).
@@ -32,7 +31,7 @@ export interface ReactComponentOptions {
    * @defaultValue `span`
    * @staticOption
    */
-  defaultInlineNode?: keyof HTMLElementTagNameMap;
+  defaultInlineNode?: Static<keyof HTMLElementTagNameMap>;
 
   /**
    * The default content node to use.
@@ -40,13 +39,24 @@ export interface ReactComponentOptions {
    * @defaultValue `span`
    * @staticOption
    */
-  defaultContentNode?: keyof HTMLElementTagNameMap;
+  defaultContentNode?: Static<keyof HTMLElementTagNameMap>;
 
   /**
    * Whether to render as a nodeView, as an ssr component or in both
    * environments.
    */
   defaultEnvironment?: Static<ReactComponentEnvironment>;
+
+  /**
+   * Override any valid schema node with your own custom components
+   *
+   * ```ts
+   * {
+   *   paragraph: ({ forwardRef }) => <p style={{ backgroundColor: 'pink' }} ref={forwardRef} />,
+   * }
+   * ```
+   */
+  nodeViewComponents?: Dynamic<Record<string, ComponentType<NodeViewComponentProps>>>;
 }
 
 export interface NodeViewComponentProps extends EditorViewParameter, NodeWithAttributesParameter {
@@ -62,12 +72,13 @@ export interface NodeViewComponentProps extends EditorViewParameter, NodeWithAtt
   getPosition: GetPosition;
 
   /**
-   * A ref method which should be used by the component to pass the dom
-   * reference of the react element back to the node view. This is used as the
-   * dom the content will be rendered into.
+   * A ref callback which should be used by the component to pass the dom
+   * reference of the react element back to the node view. This is used as
+   * container where the content within which the content will be placed.
    *
-   * You can use it if you want to `ProseMirror` to manage the rendering of
-   * inner content. Otherwise you can ignore it.
+   * This **must** be used in your component otherwise the editor has no
+   * understanding of where to render the node content and defaults to placing
+   * it within the provided element created by the `toDOM` method.
    */
   forwardRef: RefCallback<HTMLElement>;
 
@@ -78,18 +89,15 @@ export interface NodeViewComponentProps extends EditorViewParameter, NodeWithAtt
 
   /**
    * Update the attributes for the target node.
+   *
+   * This should be called in the `useEffect` hook to prevent excessive renders.
    */
   updateAttributes: (attrs: ProsemirrorAttributes) => void;
 
   /**
-   * The decorations which are currently applied to the nodeView.
+   * The decorations which are currently applied to the ReactNodeView.
    */
   decorations: Decoration[];
-
-  /**
-   * The current extension options
-   */
-  options: ValidOptions;
 }
 
 /**
@@ -115,9 +123,9 @@ export interface CreateNodeViewParameter {
   portalContainer: PortalContainer;
 
   /**
-   * The extension that this component uses.
+   * The react component that will be added to the DOM.
    */
-  extension: AnyExtension;
+  ReactComponent: ComponentType<NodeViewComponentProps>;
 
   /**
    * The options passed through to the react extension component.

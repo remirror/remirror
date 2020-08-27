@@ -14,7 +14,7 @@ import {
 import type { NodeViewComponentProps } from '@remirror/extension-react-component';
 import { getElementProps, isReactDOMElement, isReactFragment } from '@remirror/react-utils';
 
-export interface ReactSSROptions {
+export interface ReactSsrOptions {
   /**
    * The transformers that will be automatically used in the editor for properly
    * rendering ssr.
@@ -43,19 +43,19 @@ export interface ReactSSROptions {
  * The transformations can also serve as a guideline when creating your own
  * SSRTransforms. However in most cases the defaults should be sufficient.
  */
-@extensionDecorator<ReactSSROptions>({
+@extensionDecorator<ReactSsrOptions>({
   defaultOptions: {
     transformers: [injectBrIntoEmptyParagraphs],
   },
   defaultPriority: ExtensionPriority.High,
   staticKeys: ['transformers'],
 })
-export class ReactSSRExtension extends PlainExtension<ReactSSROptions> {
+export class ReactSsrExtension extends PlainExtension<ReactSsrOptions> {
   get name() {
-    return 'reactSSR' as const;
+    return 'reactSsr' as const;
   }
 
-  onCreate() {
+  onCreate(): void {
     const components: Record<string, ManagerStoreReactComponent> = object();
     const ssrTransformers: Array<() => SSRTransformer> = [];
 
@@ -83,7 +83,6 @@ export class ReactSSRExtension extends PlainExtension<ReactSSROptions> {
             environment: 'ssr',
             forwardRef: () => {},
             getPosition: () => 0,
-            options: extension.options,
             selected: false,
             updateAttributes: () => {},
           },
@@ -104,7 +103,7 @@ export class ReactSSRExtension extends PlainExtension<ReactSSROptions> {
    * ReactSSRSerializer and transforms it into and element that is consistent
    * between the browser and the server.
    */
-  createSSRTransformer = () => (initialElement: JSX.Element) => {
+  createSSRTransformer = () => (initialElement: JSX.Element): JSX.Element => {
     let element: JSX.Element = initialElement;
 
     for (const transformer of this.options.transformers) {

@@ -51,7 +51,7 @@ test('still renders content with a non-dom top level node', () => {
   );
 
   expect(reactString).toMatchInlineSnapshot(`
-    <div data-reactroot>
+    <div>
       <div role="textbox"
            aria-multiline="true"
            aria-label="Remirror editor"
