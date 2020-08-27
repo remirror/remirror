@@ -6,17 +6,11 @@
 
 ### Major Changes
 
-- [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d)
-  [#591](https://github.com/remirror/remirror/pull/591) Thanks
-  [@ifiokjr](https://github.com/ifiokjr)! - Add support for nested content within `ReactComponent`
-  node views. Also support adding multiple components to the manager via the `nodeViewComponents`
-  setting. Currently `ReactNodeView` components must be defined at initialization, and marks are not
-  supported.
+- [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d) [#591](https://github.com/remirror/remirror/pull/591) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add support for nested content within `ReactComponent` node views. Also support adding multiple components to the manager via the `nodeViewComponents` setting. Currently `ReactNodeView` components must be defined at initialization, and marks are not supported.
 
   - Also enforce minimum required extensions for the manager passed to the `RemirrorProvider`.
   - Some general cleanup and refactoring.
-  - Add support for composing refs when using `getRootProps`. Now you can add your own ref to the
-    `getRootProps({ ref })` function call which will be populated at the same time.
+  - Add support for composing refs when using `getRootProps`. Now you can add your own ref to the `getRootProps({ ref })` function call which will be populated at the same time.
   - Test the names of `Extension`'s and `Preset`'s in with `extensionValidityTest`.
   - **BREAKING CHANGES** 💥
     - Rename: `ReactSSRExtension` => `ReactSsrExtension`
@@ -27,22 +21,13 @@
 
 ### Patch Changes
 
-- [`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47)
-  [#595](https://github.com/remirror/remirror/pull/595) Thanks
-  [@ifiokjr](https://github.com/ifiokjr)! - Fix a bug on `Chrome` which caused the autofocus="false"
-  to trigger the autofocus action. Now `autofocus` being falsey removes the attribute from the dom.
+- [`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47) [#595](https://github.com/remirror/remirror/pull/595) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix a bug on `Chrome` which caused the autofocus="false" to trigger the autofocus action. Now `autofocus` being falsey removes the attribute from the dom.
 
-* [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448)
-  [#585](https://github.com/remirror/remirror/pull/585) Thanks
-  [@ifiokjr](https://github.com/ifiokjr)! - Upgrade dependencies and `linaria`.
+* [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448) [#585](https://github.com/remirror/remirror/pull/585) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Upgrade dependencies and `linaria`.
 
-- [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)
-  [#593](https://github.com/remirror/remirror/pull/593) Thanks
-  [@ifiokjr](https://github.com/ifiokjr)! - Fix issue with focusing the editor after every command.
+- [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a) [#593](https://github.com/remirror/remirror/pull/593) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix issue with focusing the editor after every command.
 
-- Updated dependencies
-  [[`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448),
-  [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448)]:
+- Updated dependencies [[`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448), [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448)]:
   - @remirror/pm@1.0.0-next.28
   - @remirror/core-helpers@1.0.0-next.28
   - @remirror/core-types@1.0.0-next.28
@@ -54,8 +39,7 @@
 
 ### Major Changes
 
-- a2bc3bfb: Support for extending the `ExtensionTag` with your own custom types and names to close
-  #465. Deprecates `NodeGroup` and `MarkGroup` which will be removed in a future version.
+- a2bc3bfb: Support for extending the `ExtensionTag` with your own custom types and names to close #465. Deprecates `NodeGroup` and `MarkGroup` which will be removed in a future version.
 
   - A small breaking change removes some related type exports from `@remirror/core`.
   - Add the ability to `mutateTag` for creating custom tags in custom extensions.
@@ -63,14 +47,10 @@
 
 ### Minor Changes
 
-- 147d0f2a: 🚀 Now featuring support for `DynamicExtraAttributes` as mentioned in
-  [#387](https://github.com/remirror/remirror/issues/387).
+- 147d0f2a: 🚀 Now featuring support for `DynamicExtraAttributes` as mentioned in [#387](https://github.com/remirror/remirror/issues/387).
 
-  - Also add support for `action` method being passed to `findChildren`, `findTextNodes`,
-    `findInlineNodes`, `findBlockNodes`, `findChildrenByAttribute`, `findChildrenByNode`,
-    `findChildrenByMark` and `containsNodesOfType`.
-  - Deprecate `flattenNodeDescendants`. `findChildren` is now the preferred method and automatically
-    flattens the returned output.
+  - Also add support for `action` method being passed to `findChildren`, `findTextNodes`, `findInlineNodes`, `findBlockNodes`, `findChildrenByAttribute`, `findChildrenByNode`, `findChildrenByMark` and `containsNodesOfType`.
+  - Deprecate `flattenNodeDescendants`. `findChildren` is now the preferred method and automatically flattens the returned output.
 
 ### Patch Changes
 
@@ -89,9 +69,7 @@
 ### Minor Changes
 
 - e37d64de: Add range parameter to `commands.insertText`. Closes #327.
-- 3f2625bf: Add a new mark input rule parameter property, `updateCaptured` which allows the
-  developer to tweak the details of the captured detail rule. This provides a workaround for the a
-  lack of support for the `lookbehind` regex in **Safari** and other browsers.
+- 3f2625bf: Add a new mark input rule parameter property, `updateCaptured` which allows the developer to tweak the details of the captured detail rule. This provides a workaround for the a lack of support for the `lookbehind` regex in **Safari** and other browsers.
 
   Fixes #574.
 
@@ -117,8 +95,7 @@
 - 9ab1d0f3: Remove `ExtensionType` enum which is no longer used.
 - 45d82746: 💥 Remove `AttributesWithClass`.
 
-  🚀 Add `NodeAttributes` and `MarkAttributes` exports which can be extended in the
-  `Remirror.ExtraNodeAttributes` and `Remirror.ExtraMarkAttributes`.
+  🚀 Add `NodeAttributes` and `MarkAttributes` exports which can be extended in the `Remirror.ExtraNodeAttributes` and `Remirror.ExtraMarkAttributes`.
 
   🚀 Add `isAllSelection` which checks if the user has selected everything in the active editor.
 
@@ -138,12 +115,9 @@
 
 ### Major Changes
 
-- 8c34030e: 💥 Remove property `updateSelection` from the `nodeInputRule`, `markInputRule` and
-  `plainInputRule` functions. You should use the new `beforeDispatch` method instead.
+- 8c34030e: 💥 Remove property `updateSelection` from the `nodeInputRule`, `markInputRule` and `plainInputRule` functions. You should use the new `beforeDispatch` method instead.
 
-  Add new `beforeDispatch` method to the `nodeInputRule`, `markInputRule` and `plainInputRule`
-  parameter. This method allows users to add extra steps to the transaction after a matching input
-  rule has been run and just before it is dispatched.
+  Add new `beforeDispatch` method to the `nodeInputRule`, `markInputRule` and `plainInputRule` parameter. This method allows users to add extra steps to the transaction after a matching input rule has been run and just before it is dispatched.
 
   ```ts
   import { nodeInputRule } from 'remirror/core';
@@ -157,21 +131,15 @@
 
 ### Minor Changes
 
-- baf3f56d: Add `ignoreWhitespace` option to `markInputRule` for ignoring a matching input rule if
-  the capture groups is only whitespace. Apply to all wrapping input rules for `MarkExtension`'s in
-  the `project`.
+- baf3f56d: Add `ignoreWhitespace` option to `markInputRule` for ignoring a matching input rule if the capture groups is only whitespace. Apply to all wrapping input rules for `MarkExtension`'s in the `project`.
 
-  Fix #506 `ItalicExtension` issue with input rule being greedy and capturing one preceding
-  character when activated within a text block.
+  Fix #506 `ItalicExtension` issue with input rule being greedy and capturing one preceding character when activated within a text block.
 
 ### Patch Changes
 
-- 3673a0f0: Fix #518 caused by the way the `EditorWrapper` was setting up listeners to events from
-  the `RemirrorManager`. Previously the failure became apparent when used in an uncontrolled editor
-  in `StrictMode`.
+- 3673a0f0: Fix #518 caused by the way the `EditorWrapper` was setting up listeners to events from the `RemirrorManager`. Previously the failure became apparent when used in an uncontrolled editor in `StrictMode`.
 
-  Set the default `CommandFunction` type parameter to be `EditorSchema` for better code completion
-  when creating an extension.
+  Set the default `CommandFunction` type parameter to be `EditorSchema` for better code completion when creating an extension.
 
 - Updated dependencies [3673a0f0]
 - Updated dependencies [8c34030e]
@@ -211,11 +179,9 @@
 
 ### Major Changes
 
-- f032db7e: Remove `isEmptyParagraphNode` and `absoluteCoordinates` exports from
-  `@remirror/core-utils`.
+- f032db7e: Remove `isEmptyParagraphNode` and `absoluteCoordinates` exports from `@remirror/core-utils`.
 - 6e8b749a: Rename `nodeEqualsType` to `isNodeOfType`.
-- 982a6b15: **BREAKING:**: rename `createSuggestions` to `createSuggesters` to keep in line with the
-  update from `prosemirror-suggest`.
+- 982a6b15: **BREAKING:**: rename `createSuggestions` to `createSuggesters` to keep in line with the update from `prosemirror-suggest`.
 
   **BREAKING:** `@remirror-core` - rename `SuggestionsExtension` to `SuggestExtension`
 
@@ -229,19 +195,13 @@
 
   Remove `EMPTY_CSS_VALUE`, `CSS_ROTATE_PATTERN` from `@remirror/core-constants`.
 
-  Remove method:
-  `clean() | coerce() | fragment() | markFactory() | nodeFactory() | offsetTags() | sequence() | slice() | text() | isTaggedNode() | replaceSelection()`
-  and type:
-  `BaseFactoryParameter | MarkWithAttributes | MarkWithoutAttributes | NodeWithAttributes | NodeWithoutAttributes | TagTracker | TaggedContent | TaggedContentItem | TaggedContentWithText | Tags`
-  exports from `jest-remirror`.
+  Remove method: `clean() | coerce() | fragment() | markFactory() | nodeFactory() | offsetTags() | sequence() | slice() | text() | isTaggedNode() | replaceSelection()` and type: `BaseFactoryParameter | MarkWithAttributes | MarkWithoutAttributes | NodeWithAttributes | NodeWithoutAttributes | TagTracker | TaggedContent | TaggedContentItem | TaggedContentWithText | Tags` exports from `jest-remirror`.
 
-  Remove `SPECIAL_INPUT_KEYS | SPECIAL_KEYS | SPECIAL_MENU_KEYS | SPECIAL_TOGGLE_BUTTON_KEYS` from
-  `multishift`.
+  Remove `SPECIAL_INPUT_KEYS | SPECIAL_KEYS | SPECIAL_MENU_KEYS | SPECIAL_TOGGLE_BUTTON_KEYS` from `multishift`.
 
 ### Minor Changes
 
-- be9a9c17: Move all keymap functionality to `KeymapExtension` from `@remirror/core`. Remove all
-  references to `@remirror/extension-base-keymap`.
+- be9a9c17: Move all keymap functionality to `KeymapExtension` from `@remirror/core`. Remove all references to `@remirror/extension-base-keymap`.
 - 720c9b43: Public `dynamicKeys` property now available on `Extension`'s and `Preset`'s.
 
 ### Patch Changes
@@ -276,13 +236,11 @@
 
 ### Major Changes
 
-- cdc5b801: Add three new helpers to `@remirror/core-utils` / `@remirror/core`: `isStateEqual`,
-  `areSchemaCompatible` and `getRemirrorJSON`.
+- cdc5b801: Add three new helpers to `@remirror/core-utils` / `@remirror/core`: `isStateEqual`, `areSchemaCompatible` and `getRemirrorJSON`.
 
   BREAKING: 💥 Rename `getObjectNode` to `getRemirrorJSON`.
 
-- a404f5a1: Add the option `excludeExtensions` to `CorePreset`'s `constructor` to exclude any
-  extensions.
+- a404f5a1: Add the option `excludeExtensions` to `CorePreset`'s `constructor` to exclude any extensions.
 
   Remove the option `excludeHistory` from `CorePreset`'s `constructor`.
 
@@ -294,13 +252,9 @@
 
 - e5ea0c84: Add support for `Handler` options with custom return values and early returns.
 
-  Previously handlers would ignore any return values. Now a handler will honour the return value.
-  The earlyReturn value can be specified in the static options using the `extensionDecorator`.
-  Currently it only supports primitives. Support for a function to check the return value will be
-  added later.
+  Previously handlers would ignore any return values. Now a handler will honour the return value. The earlyReturn value can be specified in the static options using the `extensionDecorator`. Currently it only supports primitives. Support for a function to check the return value will be added later.
 
-- 6c3b278b: Make sure the `transaction` has all the latest updates if changed between
-  `onStateUpdate` events. This allows chaining to be supported properly.
+- 6c3b278b: Make sure the `transaction` has all the latest updates if changed between `onStateUpdate` events. This allows chaining to be supported properly.
 
 ### Patch Changes
 
@@ -314,13 +268,11 @@
 
 ### Major Changes
 
-- 92342ab0: Throw error in `Preset` and `Extension` when attempting to update a non-dynamic option
-  at runtime.
+- 92342ab0: Throw error in `Preset` and `Extension` when attempting to update a non-dynamic option at runtime.
 
 ### Minor Changes
 
-- e45706e5: Add new `extensionDecorator` function which augments the static properties of an
-  `Extension` constructor when used as a decorator.
+- e45706e5: Add new `extensionDecorator` function which augments the static properties of an `Extension` constructor when used as a decorator.
 
   The following code will add a decorator to the extension.
 
@@ -348,16 +300,13 @@
   }
   ```
 
-  The extension decorator updates the static properties of the extension. If you prefer not to use
-  decorators it can also be called as a function. The `Extension` constructor is mutated by the
-  function call and does not need to be returned.
+  The extension decorator updates the static properties of the extension. If you prefer not to use decorators it can also be called as a function. The `Extension` constructor is mutated by the function call and does not need to be returned.
 
   ```ts
   extensionDecorator({ defaultSettings: { color: 'red' } })(ExampleExtension);
   ```
 
-- f3155b5f: Add new `presetDecorator` function which augments the static properties of an `Preset`
-  constructor when used as a decorator.
+- f3155b5f: Add new `presetDecorator` function which augments the static properties of an `Preset` constructor when used as a decorator.
 
   The following code will add a decorator to the preset.
 
@@ -384,9 +333,7 @@
   }
   ```
 
-  The preset decorator updates the static properties of the preset. If you prefer not to use
-  decorators it can also be called as a function. The `Preset` constructor is mutated by the
-  function call and does not need to be returned.
+  The preset decorator updates the static properties of the preset. If you prefer not to use decorators it can also be called as a function. The `Preset` constructor is mutated by the function call and does not need to be returned.
 
   ```ts
   presetDecorator({ defaultSettings: { color: 'red' }, handlerKeys: ['onChange'] })(ExamplePreset);
@@ -398,8 +345,7 @@
 
 ### Patch Changes
 
-- d877adb3: Switch to using method signatures for extension class methods as discussed in #360. The
-  following methods have been affected:
+- d877adb3: Switch to using method signatures for extension class methods as discussed in #360. The following methods have been affected:
 
   ```
   createKeymap
@@ -436,11 +382,9 @@
 
 ### Minor Changes
 
-- 54461006: Remove the first parameter `extensions` from the lifecycle methods `onCreate`, `onView`
-  and `onDestroy`.
+- 54461006: Remove the first parameter `extensions` from the lifecycle methods `onCreate`, `onView` and `onDestroy`.
 
-  Switch to using method signatures for extension class methods as discussed in #360. The following
-  methods have been affected:
+  Switch to using method signatures for extension class methods as discussed in #360. The following methods have been affected:
 
   ```
   onCreate
@@ -468,9 +412,7 @@
 
 ### Minor Changes
 
-- 6468058a: `RemirrorManager.create` can now accept a function to which returns an array of
-  extensions and presets. This lazy creation allows for optimizations to be made elsewhere in the
-  codebase.
+- 6468058a: `RemirrorManager.create` can now accept a function to which returns an array of extensions and presets. This lazy creation allows for optimizations to be made elsewhere in the codebase.
 
 ## 1.0.0-next.9
 
@@ -478,13 +420,10 @@
 
 ### Major Changes
 
-- 02fdafff: - Rename `change` event to `updated`. `updated` is called with the
-  `EventListenerParameter`.
+- 02fdafff: - Rename `change` event to `updated`. `updated` is called with the `EventListenerParameter`.
 
   - Add new manager `stateUpdate` to the `editorWrapper`
-  - Add `autoUpdate` option to `useRemirror` hook from `@remirror/react` which means that the
-    context object returned by the hook is always up to date with the latest editor state. It will
-    also cause the component to rerender so be careful to only use it when necessary.
+  - Add `autoUpdate` option to `useRemirror` hook from `@remirror/react` which means that the context object returned by the hook is always up to date with the latest editor state. It will also cause the component to rerender so be careful to only use it when necessary.
 
   ```tsx
   const { active, commands } = useRemirror({ autoUpdate: true });
@@ -507,10 +446,8 @@
 
 ### Minor Changes
 
-- 64edeec2: Add blur method to the editor context which is used in the `@remirror/react` and
-  `@remirror/dom` libraries.
-- 9f495078: Move `suppressHydrationWarning` prop from core to to react editor. It makes no sense for
-  it to be in core since it only impacts the react editor.
+- 64edeec2: Add blur method to the editor context which is used in the `@remirror/react` and `@remirror/dom` libraries.
+- 9f495078: Move `suppressHydrationWarning` prop from core to to react editor. It makes no sense for it to be in core since it only impacts the react editor.
 
 ### Patch Changes
 
@@ -541,9 +478,7 @@
 
 - Add support for `React.StrictMode`.
 
-  Previously, activating `StrictMode` would cause the components to render twice and break
-  functionality of `RemirrorProvider` due to an outdated check on whether `getRootProps` had been
-  called. This check has been removed since it isn't needed anymore.
+  Previously, activating `StrictMode` would cause the components to render twice and break functionality of `RemirrorProvider` due to an outdated check on whether `getRootProps` had been called. This check has been removed since it isn't needed anymore.
 
 ## 1.0.0-next.1
 
@@ -565,30 +500,23 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
 - 28bd8bea: This is a breaking change to the structure of published npm packages.
 
   - Move build directory from `lib` to `dist`
-  - Remove option for multiple entry points. It is no longer possible to import module from
-    '@remirror/core/lib/custom'
+  - Remove option for multiple entry points. It is no longer possible to import module from '@remirror/core/lib/custom'
   - Only use one entry file.
   - Remove declaration source mapping for declaration files
   - Remove the src directory from being published.
 
-- 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`.
-  If your code was importing any matching interface you will need to update the name.
+- 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`. If your code was importing any matching interface you will need to update the name.
 - 09e990cb: Update `EditorManager` / `ExtensionManager` name to be \*\*`RemirrorManager`.
 
 ### Minor Changes
 
-- Previously the `useRemirror` hook only updated when the provider was updated. There are times when
-  you want to listen to specific changes from inside the editor.
+- Previously the `useRemirror` hook only updated when the provider was updated. There are times when you want to listen to specific changes from inside the editor.
 
-  The `useRemirror` hook now takes an optional `onChange` argument which is called on every change
-  to the editor state. With this you can react to updates in your editor and add some really cool
-  effects.
+  The `useRemirror` hook now takes an optional `onChange` argument which is called on every change to the editor state. With this you can react to updates in your editor and add some really cool effects.
 
 ### Patch Changes
 
@@ -630,36 +558,25 @@
 
 ### Patch Changes
 
-- 2904ebfd: Fix problem with build outputting native classes which can't be extended when the build
-  process converts classes to their ES% function equivalent.
+- 2904ebfd: Fix problem with build outputting native classes which can't be extended when the build process converts classes to their ES% function equivalent.
 
 ## 0.8.0
 
 ### Minor Changes
 
-- 24f83413: - Change the signature of `CommandFunction` to only accept one parameter which contains
-  `dispatch`, `view`, `state`.
+- 24f83413: - Change the signature of `CommandFunction` to only accept one parameter which contains `dispatch`, `view`, `state`.
 
-  - Create a new exported `ProsemirrorCommandFunction` type to describe the prosemirror commands
-    which are still used in the codebase.
-  - Rename `KeyboardBindings` to `KeyBindings`. Allow `CommandFunctionParams` to provide extra
-    parameters like `next` in the newly named `KeyBindings`.
-  - Create a new `KeyBindingCommandFunction` to describe the `Extension.keys()` return type. Update
-    the name of the `ExcludeOptions.keymaps` -> `ExcludeOptions.keys`.
+  - Create a new exported `ProsemirrorCommandFunction` type to describe the prosemirror commands which are still used in the codebase.
+  - Rename `KeyboardBindings` to `KeyBindings`. Allow `CommandFunctionParams` to provide extra parameters like `next` in the newly named `KeyBindings`.
+  - Create a new `KeyBindingCommandFunction` to describe the `Extension.keys()` return type. Update the name of the `ExcludeOptions.keymaps` -> `ExcludeOptions.keys`.
 
   **BREAKING CHANGE**
 
-- 24f83413: Improve the way `ExtensionManager` calls `Extension.keys` methods. Keys now use the new
-  api for CommandFunctions which provides a `next` method. This method allows for better control
-  when deciding whether or not to defer to the next keybinding in the chain.
+- 24f83413: Improve the way `ExtensionManager` calls `Extension.keys` methods. Keys now use the new api for CommandFunctions which provides a `next` method. This method allows for better control when deciding whether or not to defer to the next keybinding in the chain.
 
-  To override, create a new keybinding with another extension. Make sure the extension is created
-  with a higher priority. The keybinding you create can either return true or false. By default if
-  it returns true, no other keybindings will run. However if it returns `false` all other
-  keybindings will be run until one returns `true`
+  To override, create a new keybinding with another extension. Make sure the extension is created with a higher priority. The keybinding you create can either return true or false. By default if it returns true, no other keybindings will run. However if it returns `false` all other keybindings will be run until one returns `true`
 
-  `next` basically calls the every lower priority keybinding in the extensions list. It gives you
-  full control of how the bindings are called.
+  `next` basically calls the every lower priority keybinding in the extensions list. It gives you full control of how the bindings are called.
 
 ### Patch Changes
 
@@ -673,8 +590,7 @@
 
 ### Patch Changes
 
-- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub
-  organisation.
+- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub organisation.
 - Updated dependencies [7380e18f]
   - @remirror/core-constants@0.7.4
   - @remirror/core-helpers@0.7.4

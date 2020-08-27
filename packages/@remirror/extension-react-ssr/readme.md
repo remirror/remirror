@@ -1,11 +1,8 @@
 # @remirror/extension-react-ssr
 
-> If server side support is important to you, then this is perfect for your remirror editor in
-> react.
+> If server side support is important to you, then this is perfect for your remirror editor in react.
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
-[![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)
-![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
 
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-react-ssr
 [npm]: https://npmjs.com/package/@remirror/extension-react-ssr
@@ -32,8 +29,7 @@ There is a peer dependency on `@remirror/pm` since `@remirror/core` also depends
 
 ## Usage
 
-This is one of the **core react** extensions and is included by default via
-`@remirror/preset-react`.
+This is one of the **core react** extensions and is included by default via `@remirror/preset-react`.
 
 ## Credits
 

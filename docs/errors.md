@@ -2,9 +2,7 @@
 title: Errors
 ---
 
-This page contains the documented errors that occur while using `remirror`. Currently the
-descriptions are very short and if you'd like to contribute to make them more comprehensive, then
-that would be very much appreciated. Edit this page to get started.
+This page contains the documented errors that occur while using `remirror`. Currently the descriptions are very short and if you'd like to contribute to make them more comprehensive, then that would be very much appreciated. Edit this page to get started.
 
 <br />
 
@@ -22,23 +20,19 @@ An error occurred in production and details are intentionally being hidden.
 
 > Unknown Error
 
-Sooo, this is embarassing. Something happened and we're not quite sure why. Your best course of
-action is to open an [issue](https://github.com/remirror/remirror/issues/new?template=bug_report.md)
-explaining what you're seeing.
+Sooo, this is embarassing. Something happened and we're not quite sure why. Your best course of action is to open an [issue](https://github.com/remirror/remirror/issues/new?template=bug_report.md) explaining what you're seeing.
 
 ### RMR0002
 
 > Invalid Command Arguments
 
-The arguments passed to the command method were invalid. Check how you're calling all commands made
-available by the editor and make sure arguments are correct.
+The arguments passed to the command method were invalid. Check how you're calling all commands made available by the editor and make sure arguments are correct.
 
 ### RMR0003
 
 > Custom Error
 
-This is a custom error possibly thrown by an external library. It's almost as hard to diagnose as
-the `Unknown Error`.
+This is a custom error possibly thrown by an external library. It's almost as hard to diagnose as the `Unknown Error`.
 
 ### RMR0004
 
@@ -68,23 +62,19 @@ You're editor is missing a required extension.
 
 > Manager Phase Error
 
-Called a method event at the wrong time. Please make sure getter functions are only called with
-within the scope of the returned functions. They should not be called in the outer scope of your
-method.
+Called a method event at the wrong time. Please make sure getter functions are only called with within the scope of the returned functions. They should not be called in the outer scope of your method.
 
 ### RMR0009
 
 > New Editor Manager
 
-No directly invoking the editor manager with `new`. Instead use one of the static methods to create
-your instance.
+No directly invoking the editor manager with `new`. Instead use one of the static methods to create your instance.
 
 ### RMR0010
 
 > Invalid Preset Extension
 
-The user requested an invalid extension from the preset. Please check the `createExtensions` return
-method is returning an extension with the defined constructor.
+The user requested an invalid extension from the preset. Please check the `createExtensions` return method is returning an extension with the defined constructor.
 
 ### RMR0011
 
@@ -96,15 +86,13 @@ Invalid value passed into `Manager constructor`. Only `Presets` and `Extensions`
 
 > Commands Called In Outer Scope
 
-The `commands` or `dispatch` method which is passed into the `create*` method should only be called
-within returned method since it relies on an active view (not present in the outer scope).
+The `commands` or `dispatch` method which is passed into the `create*` method should only be called within returned method since it relies on an active view (not present in the outer scope).
 
 ### RMR0013
 
 > Helpers Called In Outer Scope
 
-The `helpers` method which is passed into the ``create\*` method should only be called within
-returned method since it relies on an active view (not present in the outer scope).
+The `helpers` method which is passed into the ``create\*` method should only be called within returned method since it relies on an active view (not present in the outer scope).
 
 ### RMR0014
 
@@ -188,23 +176,17 @@ A call to `extension.setOptions()` was made with invalid keys.
 
 > React Provider Context
 
-**`useRemirror` was called outside of the remirror context. It can only be used within an active
-remirror context created by the `<RemirrorProvider />`.**
+**`useRemirror` was called outside of the remirror context. It can only be used within an active remirror context created by the `<RemirrorProvider />`.**
 
 ### RMR0201
 
 > React Get Root Props
 
-`getRootProps` has been attached to the DOM more than once. It should only be attached to the DOM
-**once** per editor.
+`getRootProps` has been attached to the DOM more than once. It should only be attached to the DOM **once** per editor.
 
-This error happens because the `getRootProps` method is being used in a component that is rendered
-multiple times without updates from the react provider. The `getRootProps` method is responsible for
-collecting obtaining the HTMLElement via the `ref` prop and appending the prosemirror text editor to
-it. If that's done multiple times per render then it has problems.
+This error happens because the `getRootProps` method is being used in a component that is rendered multiple times without updates from the react provider. The `getRootProps` method is responsible for collecting obtaining the HTMLElement via the `ref` prop and appending the prosemirror text editor to it. If that's done multiple times per render then it has problems.
 
-To fix this you should move the component calling `getRootProps` to a part of the tree that is only
-rerendered when the `RemirrorProvider` is updated.
+To fix this you should move the component calling `getRootProps` to a part of the tree that is only rerendered when the `RemirrorProvider` is updated.
 
 For example the following would trigger this error.
 
@@ -243,13 +225,9 @@ const EditorWrapper = () => {
 };
 ```
 
-The onChange handler being passed into the `useRemirror` hook means that every time the editor
-content changes there will be a `setBoldActive` called which re-renders the `Internal` component. As
-a result `getRootProps` is called multiple times.
+The onChange handler being passed into the `useRemirror` hook means that every time the editor content changes there will be a `setBoldActive` called which re-renders the `Internal` component. As a result `getRootProps` is called multiple times.
 
-To fix this issue you need to move the getRootProps to a part of the tree that only updates when the
-`RemirrorProvider` updates. There are several ways to do this and one of them is to split up the
-`Internal` component into two seperate components.
+To fix this issue you need to move the getRootProps to a part of the tree that only updates when the `RemirrorProvider` updates. There are several ways to do this and one of them is to split up the `Internal` component into two seperate components.
 
 The fixed code could look something like this.
 

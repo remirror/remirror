@@ -22,9 +22,7 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
 - b3153b4c: Deprecate unused packages in the latest version.
 
 ## 0.13.1
@@ -86,8 +84,7 @@
 
 ### Patch Changes
 
-- db20a731: Populate the Wysiwyg's `<LinkInput />` component with the current href to resolve the
-  issue #111
+- db20a731: Populate the Wysiwyg's `<LinkInput />` component with the current href to resolve the issue #111
 - Updated dependencies [24f83413]
 - Updated dependencies [24f83413]
 - Updated dependencies [47493cc2]
@@ -106,13 +103,11 @@
 
 ### Minor Changes
 
-- 9e66324a: Make internal `@remirror/editor-wysiwyg` components public. The components exported are
-  unstable and may change at any time.
+- 9e66324a: Make internal `@remirror/editor-wysiwyg` components public. The components exported are unstable and may change at any time.
 
 ### Patch Changes
 
-- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub
-  organisation.
+- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub organisation.
 - Updated dependencies [10419145]
 - Updated dependencies [7380e18f]
   - @remirror/core-extensions@0.7.4

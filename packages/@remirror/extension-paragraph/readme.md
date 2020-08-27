@@ -2,9 +2,7 @@
 
 > Group your words into paragraphs and render each statement a harmonious symphony.
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
-[![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)
-![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
 
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-paragraph
 [npm]: https://npmjs.com/package/@remirror/extension-paragraph
@@ -28,8 +26,7 @@ npm install @remirror/extension-paragraph@next @remirror/pm@next # npm
 
 ## Usage
 
-When added to your editor it will provide the `insertParagraph` which inserts a paragraph into the
-editor.
+When added to your editor it will provide the `insertParagraph` which inserts a paragraph into the editor.
 
 ```ts
 import { RemirrorManager, ExtensionPriority } from '@remirror/core';
@@ -58,8 +55,7 @@ manager.commands.insertParagraph();
 
 ### Alternatives
 
-There are several presets which contain this extension and make the installation process less
-verbose. AS a result you probably won't ever need to manage it directly.
+There are several presets which contain this extension and make the installation process less verbose. AS a result you probably won't ever need to manage it directly.
 
 - `@remirror/preset-core`
 

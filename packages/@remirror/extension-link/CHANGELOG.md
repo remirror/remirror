@@ -6,11 +6,7 @@
 
 ### Patch Changes
 
-- Updated dependencies
-  [[`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47),
-  [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448),
-  [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d),
-  [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)]:
+- Updated dependencies [[`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47), [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448), [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d), [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)]:
   - @remirror/core@1.0.0-next.28
   - @remirror/pm@1.0.0-next.28
 
@@ -20,8 +16,7 @@
 
 ### Patch Changes
 
-- a2bc3bfb: Support for extending the `ExtensionTag` with your own custom types and names to close
-  #465. Deprecates `NodeGroup` and `MarkGroup` which will be removed in a future version.
+- a2bc3bfb: Support for extending the `ExtensionTag` with your own custom types and names to close #465. Deprecates `NodeGroup` and `MarkGroup` which will be removed in a future version.
 
   - A small breaking change removes some related type exports from `@remirror/core`.
   - Add the ability to `mutateTag` for creating custom tags in custom extensions.
@@ -38,9 +33,7 @@
 
 ### Minor Changes
 
-- 3f2625bf: Add a new mark input rule parameter property, `updateCaptured` which allows the
-  developer to tweak the details of the captured detail rule. This provides a workaround for the a
-  lack of support for the `lookbehind` regex in **Safari** and other browsers.
+- 3f2625bf: Add a new mark input rule parameter property, `updateCaptured` which allows the developer to tweak the details of the captured detail rule. This provides a workaround for the a lack of support for the `lookbehind` regex in **Safari** and other browsers.
 
   Fixes #574.
 
@@ -67,8 +60,7 @@
 
 - 21c5807e: Fix issue #298 where selecting all content meant a link couldn't be added afterward.
 
-  💥 Add `selectTextOnClick` and default to `false`. Previously the whole link would be selected
-  when clicking on a link. Now it's configurable.
+  💥 Add `selectTextOnClick` and default to `false`. Previously the whole link would be selected when clicking on a link. Now it's configurable.
 
 ### Patch Changes
 
@@ -157,8 +149,7 @@
 
 ### Patch Changes
 
-- d877adb3: Switch to using method signatures for extension class methods as discussed in #360. The
-  following methods have been affected:
+- d877adb3: Switch to using method signatures for extension class methods as discussed in #360. The following methods have been affected:
 
   ```
   createKeymap
@@ -166,8 +157,7 @@
   createPasteRules
   ```
 
-- 38941404: Switch from static properties to using the `@extensionDecorator` and `@presetDecorator`
-  instead.
+- 38941404: Switch from static properties to using the `@extensionDecorator` and `@presetDecorator` instead.
 - Updated dependencies [d877adb3]
 - Updated dependencies [cc5c1c1c]
 - Updated dependencies [e45706e5]
@@ -192,11 +182,9 @@
 
 ### Patch Changes
 
-- 54461006: Remove the first parameter `extensions` from the lifecycle methods `onCreate`, `onView`
-  and `onDestroy`.
+- 54461006: Remove the first parameter `extensions` from the lifecycle methods `onCreate`, `onView` and `onDestroy`.
 
-  Switch to using method signatures for extension class methods as discussed in #360. The following
-  methods have been affected:
+  Switch to using method signatures for extension class methods as discussed in #360. The following methods have been affected:
 
   ```
   onCreate
@@ -283,9 +271,7 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
 
 ### Patch Changes
 

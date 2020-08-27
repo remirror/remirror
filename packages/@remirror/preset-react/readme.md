@@ -2,9 +2,7 @@
 
 > The core preset providing the functionality you need and want.
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
-[![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)
-![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
 
 [version]: https://flat.badgen.net/npm/v/@remirror/preset-react
 [npm]: https://npmjs.com/package/@remirror/preset-react
@@ -62,8 +60,7 @@ manager.addView(element);
 // You now have a basic working editor.
 ```
 
-Granted, the above won't do much. It will allow you to type, and what else do you really need in an
-editor.
+Granted, the above won't do much. It will allow you to type, and what else do you really need in an editor.
 
 ## Credits
 

@@ -6,9 +6,7 @@
 
 ### Patch Changes
 
-- Updated dependencies
-  [[`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448),
-  [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448)]:
+- Updated dependencies [[`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448), [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448)]:
   - @remirror/pm@1.0.0-next.28
   - @remirror/core-helpers@1.0.0-next.28
 
@@ -111,9 +109,7 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
 
 ### Patch Changes
 

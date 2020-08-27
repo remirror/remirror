@@ -2,9 +2,7 @@
 
 > The `remirror` what-you-see-is-what-you-get (wysiwyg) editing experience.
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
-[![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)
-![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
 
 [version]: https://flat.badgen.net/npm/v/@remirror/react-wysiwyg
 [npm]: https://npmjs.com/package/@remirror/react-wysiwyg

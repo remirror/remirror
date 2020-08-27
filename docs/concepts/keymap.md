@@ -4,21 +4,17 @@ title: Keymaps
 
 :::note
 
-Parts of this document are for more advanced user cases and you probably won't ever need to use
-them.
+Parts of this document are for more advanced user cases and you probably won't ever need to use them.
 
 :::
 
-Keymaps allow users to use shortcuts to manipulate the text in their editor. `Cmd-b` is an example
-for setting the selected text to be **bold**.
+Keymaps allow users to use shortcuts to manipulate the text in their editor. `Cmd-b` is an example for setting the selected text to be **bold**.
 
 In a sufficiently large
 
-The following is an example where the enter key can be customised to ignore all lower priority
-`Enter` key bindings.
+The following is an example where the enter key can be customised to ignore all lower priority `Enter` key bindings.
 
-The `next` method allows full control beyond the return value. It allows both calling all lower
-priority key bindings regardless of whether true or false has been called.
+The `next` method allows full control beyond the return value. It allows both calling all lower priority key bindings regardless of whether true or false has been called.
 
 ```tsx
 import { BaseExtensionOptions, Extension, KeyBindings, extensionDecorator } from '@remirror/core';
@@ -69,8 +65,6 @@ import { CustomKeymapExtension } from './custom-keymap-extension';
 const manager = RemirrorManager.create([new CustomKeymapExtension({ override: true })]);
 ```
 
-This manager can now be used to create an editor where the baseKeymap for the `Enter` key is
-overridden.
+This manager can now be used to create an editor where the baseKeymap for the `Enter` key is overridden.
 
-If override is set to `false`, the keybinding will defer to lower priority keybindings while still
-allowing the behaviour you want for the extension.
+If override is set to `false`, the keybinding will defer to lower priority keybindings while still allowing the behaviour you want for the extension.

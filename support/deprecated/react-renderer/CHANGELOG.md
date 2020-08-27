@@ -15,8 +15,7 @@
 ### Major Changes
 
 - b3153b4c: Deprecate unused packages in the latest version.
-- 5fc78bd0: This package is **deprecated** and it's functionality is included by default with the
-  `@remirror/react` package.
+- 5fc78bd0: This package is **deprecated** and it's functionality is included by default with the `@remirror/react` package.
 
   It is now accessible with the following installation.
 
@@ -59,8 +58,7 @@
 
 ### Patch Changes
 
-- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub
-  organisation.
+- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub organisation.
 - Updated dependencies [7380e18f]
   - @remirror/core@0.7.4
   - @remirror/react-utils@0.7.4

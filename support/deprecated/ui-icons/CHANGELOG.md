@@ -44,8 +44,7 @@
 
 ### Patch Changes
 
-- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub
-  organisation.
+- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub organisation.
 - Updated dependencies [7380e18f]
   - @remirror/core-helpers@0.7.4
   - @remirror/core-types@0.7.4
@@ -55,8 +54,7 @@
 
 ### Patch Changes
 
-- ade2ed1b: **Fix** the missing exports from the `@remirror/ui-icons` library. Now exporting
-  `ImagesRegularIcon` and `ImagesSolidIcon`.
+- ade2ed1b: **Fix** the missing exports from the `@remirror/ui-icons` library. Now exporting `ImagesRegularIcon` and `ImagesSolidIcon`.
 
 ## 0.7.3
 

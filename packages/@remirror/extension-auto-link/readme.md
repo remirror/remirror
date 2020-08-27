@@ -2,9 +2,7 @@
 
 > Automatic linking for url like matches in your editor. Great for social experiences.
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
-[![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)
-![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
 
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-auto-link
 [npm]: https://npmjs.com/package/@remirror/extension-auto-link
@@ -28,8 +26,7 @@ npm install @remirror/extension-auto-link@next # npm
 
 ## Usage
 
-When added to your editor the auto link extension will automatically add links to any url like
-pattern that matches the default regex.
+When added to your editor the auto link extension will automatically add links to any url like pattern that matches the default regex.
 
 ```ts
 import { RemirrorManager, ExtensionPriority } from '@remirror/core';

@@ -2,9 +2,7 @@
 
 > Make your text bold. Make it courageous.
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
-[![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)
-![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
 
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-bold
 [npm]: https://npmjs.com/package/@remirror/extension-bold
@@ -28,8 +26,7 @@ npm install @remirror/extension-bold@next @remirror/pm@next # npm
 
 ## Usage
 
-When added to your editor it will provide the `toggleBold` command which makes the text under the
-cursor / or at the provided position range bold.
+When added to your editor it will provide the `toggleBold` command which makes the text under the cursor / or at the provided position range bold.
 
 ```ts
 import { RemirrorManager, ExtensionPriority } from '@remirror/core';

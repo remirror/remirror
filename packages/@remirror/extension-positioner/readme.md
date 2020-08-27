@@ -2,9 +2,7 @@
 
 > Reposition your elements with every state update.
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
-[![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)
-![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
 
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-positioner
 [npm]: https://npmjs.com/package/@remirror/extension-positioner
@@ -29,8 +27,7 @@ npm install @remirror/extension-positioner@next @remirror/pm@next
 
 ## Usage
 
-An extension for tracking the position of the provided element relative to the prosemirror editor.
-Can be used to find the top / left position in order to position the element as a hover menu.
+An extension for tracking the position of the provided element relative to the prosemirror editor. Can be used to find the top / left position in order to position the element as a hover menu.
 
 ```ts
 import { PositionerExtension } from '@remirror/extension-positioner';

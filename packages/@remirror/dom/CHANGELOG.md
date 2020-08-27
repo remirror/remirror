@@ -6,11 +6,7 @@
 
 ### Patch Changes
 
-- Updated dependencies
-  [[`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47),
-  [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448),
-  [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d),
-  [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)]:
+- Updated dependencies [[`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47), [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448), [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d), [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)]:
   - @remirror/core@1.0.0-next.28
   - @remirror/pm@1.0.0-next.28
   - @remirror/preset-core@1.0.0-next.28
@@ -197,13 +193,10 @@
 
 ### Patch Changes
 
-- 02fdafff: - Rename `change` event to `updated`. `updated` is called with the
-  `EventListenerParameter`.
+- 02fdafff: - Rename `change` event to `updated`. `updated` is called with the `EventListenerParameter`.
 
   - Add new manager `stateUpdate` to the `editorWrapper`
-  - Add `autoUpdate` option to `useRemirror` hook from `@remirror/react` which means that the
-    context object returned by the hook is always up to date with the latest editor state. It will
-    also cause the component to rerender so be careful to only use it when necessary.
+  - Add `autoUpdate` option to `useRemirror` hook from `@remirror/react` which means that the context object returned by the hook is always up to date with the latest editor state. It will also cause the component to rerender so be careful to only use it when necessary.
 
   ```tsx
   const { active, commands } = useRemirror({ autoUpdate: true });
@@ -277,9 +270,7 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
 
 ### Patch Changes
 

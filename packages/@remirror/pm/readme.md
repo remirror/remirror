@@ -2,9 +2,7 @@
 
 > All the bundled prosemirror dependencies which are required for the remirror core libraries.
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
-[![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)
-![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
 
 [version]: https://flat.badgen.net/npm/v/@remirror/pm
 [npm]: https://npmjs.com/package/@remirror/pm
@@ -24,12 +22,9 @@ npm install @remirror/pm@next # npm
 
 ## Usage
 
-This bundles up the prosemirror libraries into one package to make development and consumption of
-the remirror codebase simpler. Since the prosemirror libraries all provide es modules then tree
-shaking with rollup and webpack means that the compiled code only picks out what is used.
+This bundles up the prosemirror libraries into one package to make development and consumption of the remirror codebase simpler. Since the prosemirror libraries all provide es modules then tree shaking with rollup and webpack means that the compiled code only picks out what is used.
 
-This library is a required peer dependency when using remirror in your codebase. While you may never
-need to use it directly, the following code is an example of how you could potentially consume it.
+This library is a required peer dependency when using remirror in your codebase. While you may never need to use it directly, the following code is an example of how you could potentially consume it.
 
 ```ts
 import { View } from '@remirror/pm/view';

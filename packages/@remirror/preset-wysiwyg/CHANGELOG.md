@@ -6,11 +6,7 @@
 
 ### Patch Changes
 
-- Updated dependencies
-  [[`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47),
-  [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448),
-  [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d),
-  [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)]:
+- Updated dependencies [[`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47), [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448), [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d), [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)]:
   - @remirror/core@1.0.0-next.28
   - @remirror/extension-blockquote@1.0.0-next.28
   - @remirror/extension-gap-cursor@1.0.0-next.28
@@ -148,8 +144,7 @@
 
 - 21c5807e: Fix issue #298 where selecting all content meant a link couldn't be added afterward.
 
-  💥 Add `selectTextOnClick` and default to `false`. Previously the whole link would be selected
-  when clicking on a link. Now it's configurable.
+  💥 Add `selectTextOnClick` and default to `false`. Previously the whole link would be selected when clicking on a link. Now it's configurable.
 
 ### Patch Changes
 
@@ -288,20 +283,13 @@
 
 ### Major Changes
 
-- 6528323e: **Breaking:** `@remirror/preset-core` -`CreateCoreManagerOptions` now extends
-  `Remirror.ManagerSettings`.
+- 6528323e: **Breaking:** `@remirror/preset-core` -`CreateCoreManagerOptions` now extends `Remirror.ManagerSettings`.
 
-  **Breaking:** `@remirror/preset-wysiwyg` - Rename `CreateWysiwygPresetListParameter` to
-  **`CreateWysiwygPresetListOptions`**. Also it now extends `Remirror.ManagerSettings`.
-  **Breaking:**`@remirror/react` - `CreateReactManagerOptions` now extends
-  `Remirror.ManagerSettings`. **Breaking:** `@remirror/react-social` - `CreateSocialManagerOptions`
-  now extends `Remirror.ManagerSettings`.
+  **Breaking:** `@remirror/preset-wysiwyg` - Rename `CreateWysiwygPresetListParameter` to **`CreateWysiwygPresetListOptions`**. Also it now extends `Remirror.ManagerSettings`. **Breaking:**`@remirror/react` - `CreateReactManagerOptions` now extends `Remirror.ManagerSettings`. **Breaking:** `@remirror/react-social` - `CreateSocialManagerOptions` now extends `Remirror.ManagerSettings`.
 
-  **Breaking:** `@remirror/react`, `@remirror/react-social`, `@remirror/react-wysiwyg` now uses a
-  `settings` property for manager settings.
+  **Breaking:** `@remirror/react`, `@remirror/react-social`, `@remirror/react-wysiwyg` now uses a `settings` property for manager settings.
 
-  `@remirror/core-types` - Add `GetStaticAndDynamic<Options>` helper for extracting options from
-  extension. Apply it to the packages mentioned above.
+  `@remirror/core-types` - Add `GetStaticAndDynamic<Options>` helper for extracting options from extension. Apply it to the packages mentioned above.
 
   - `@remirror/react-wysiwyg` - Update imports from `@remirror/preset-wysiwyg`.
 
@@ -400,8 +388,7 @@
 
 ### Patch Changes
 
-- 38941404: Switch from static properties to using the `@extensionDecorator` and `@presetDecorator`
-  instead.
+- 38941404: Switch from static properties to using the `@extensionDecorator` and `@presetDecorator` instead.
 - Updated dependencies [d877adb3]
 - Updated dependencies [38941404]
 - Updated dependencies [cc5c1c1c]
@@ -702,9 +689,7 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
 
 ### Patch Changes
 

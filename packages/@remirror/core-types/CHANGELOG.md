@@ -6,8 +6,7 @@
 
 ### Patch Changes
 
-- Updated dependencies
-  [[`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448)]:
+- Updated dependencies [[`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448)]:
   - @remirror/pm@1.0.0-next.28
 
 ## 1.0.0-next.26
@@ -28,8 +27,7 @@
 
 - 45d82746: 💥 Remove `AttributesWithClass`.
 
-  🚀 Add `NodeAttributes` and `MarkAttributes` exports which can be extended in the
-  `Remirror.ExtraNodeAttributes` and `Remirror.ExtraMarkAttributes`.
+  🚀 Add `NodeAttributes` and `MarkAttributes` exports which can be extended in the `Remirror.ExtraNodeAttributes` and `Remirror.ExtraMarkAttributes`.
 
   🚀 Add `isAllSelection` which checks if the user has selected everything in the active editor.
 
@@ -45,12 +43,9 @@
 
 ### Patch Changes
 
-- 3673a0f0: Fix #518 caused by the way the `EditorWrapper` was setting up listeners to events from
-  the `RemirrorManager`. Previously the failure became apparent when used in an uncontrolled editor
-  in `StrictMode`.
+- 3673a0f0: Fix #518 caused by the way the `EditorWrapper` was setting up listeners to events from the `RemirrorManager`. Previously the failure became apparent when used in an uncontrolled editor in `StrictMode`.
 
-  Set the default `CommandFunction` type parameter to be `EditorSchema` for better code completion
-  when creating an extension.
+  Set the default `CommandFunction` type parameter to be `EditorSchema` for better code completion when creating an extension.
 
   - @remirror/pm@1.0.0-next.21
 
@@ -89,31 +84,19 @@
 
   Remove `EMPTY_CSS_VALUE`, `CSS_ROTATE_PATTERN` from `@remirror/core-constants`.
 
-  Remove method:
-  `clean() | coerce() | fragment() | markFactory() | nodeFactory() | offsetTags() | sequence() | slice() | text() | isTaggedNode() | replaceSelection()`
-  and type:
-  `BaseFactoryParameter | MarkWithAttributes | MarkWithoutAttributes | NodeWithAttributes | NodeWithoutAttributes | TagTracker | TaggedContent | TaggedContentItem | TaggedContentWithText | Tags`
-  exports from `jest-remirror`.
+  Remove method: `clean() | coerce() | fragment() | markFactory() | nodeFactory() | offsetTags() | sequence() | slice() | text() | isTaggedNode() | replaceSelection()` and type: `BaseFactoryParameter | MarkWithAttributes | MarkWithoutAttributes | NodeWithAttributes | NodeWithoutAttributes | TagTracker | TaggedContent | TaggedContentItem | TaggedContentWithText | Tags` exports from `jest-remirror`.
 
-  Remove `SPECIAL_INPUT_KEYS | SPECIAL_KEYS | SPECIAL_MENU_KEYS | SPECIAL_TOGGLE_BUTTON_KEYS` from
-  `multishift`.
+  Remove `SPECIAL_INPUT_KEYS | SPECIAL_KEYS | SPECIAL_MENU_KEYS | SPECIAL_TOGGLE_BUTTON_KEYS` from `multishift`.
 
 ### Minor Changes
 
-- 6528323e: **Breaking:** `@remirror/preset-core` -`CreateCoreManagerOptions` now extends
-  `Remirror.ManagerSettings`.
+- 6528323e: **Breaking:** `@remirror/preset-core` -`CreateCoreManagerOptions` now extends `Remirror.ManagerSettings`.
 
-  **Breaking:** `@remirror/preset-wysiwyg` - Rename `CreateWysiwygPresetListParameter` to
-  **`CreateWysiwygPresetListOptions`**. Also it now extends `Remirror.ManagerSettings`.
-  **Breaking:**`@remirror/react` - `CreateReactManagerOptions` now extends
-  `Remirror.ManagerSettings`. **Breaking:** `@remirror/react-social` - `CreateSocialManagerOptions`
-  now extends `Remirror.ManagerSettings`.
+  **Breaking:** `@remirror/preset-wysiwyg` - Rename `CreateWysiwygPresetListParameter` to **`CreateWysiwygPresetListOptions`**. Also it now extends `Remirror.ManagerSettings`. **Breaking:**`@remirror/react` - `CreateReactManagerOptions` now extends `Remirror.ManagerSettings`. **Breaking:** `@remirror/react-social` - `CreateSocialManagerOptions` now extends `Remirror.ManagerSettings`.
 
-  **Breaking:** `@remirror/react`, `@remirror/react-social`, `@remirror/react-wysiwyg` now uses a
-  `settings` property for manager settings.
+  **Breaking:** `@remirror/react`, `@remirror/react-social`, `@remirror/react-wysiwyg` now uses a `settings` property for manager settings.
 
-  `@remirror/core-types` - Add `GetStaticAndDynamic<Options>` helper for extracting options from
-  extension. Apply it to the packages mentioned above.
+  `@remirror/core-types` - Add `GetStaticAndDynamic<Options>` helper for extracting options from extension. Apply it to the packages mentioned above.
 
   - `@remirror/react-wysiwyg` - Update imports from `@remirror/preset-wysiwyg`.
 
@@ -143,8 +126,7 @@
 
 ### Patch Changes
 
-- e45706e5: Add new `extensionDecorator` function which augments the static properties of an
-  `Extension` constructor when used as a decorator.
+- e45706e5: Add new `extensionDecorator` function which augments the static properties of an `Extension` constructor when used as a decorator.
 
   The following code will add a decorator to the extension.
 
@@ -172,9 +154,7 @@
   }
   ```
 
-  The extension decorator updates the static properties of the extension. If you prefer not to use
-  decorators it can also be called as a function. The `Extension` constructor is mutated by the
-  function call and does not need to be returned.
+  The extension decorator updates the static properties of the extension. If you prefer not to use decorators it can also be called as a function. The `Extension` constructor is mutated by the function call and does not need to be returned.
 
   ```ts
   extensionDecorator({ defaultSettings: { color: 'red' } })(ExampleExtension);
@@ -230,20 +210,16 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
 - 28bd8bea: This is a breaking change to the structure of published npm packages.
 
   - Move build directory from `lib` to `dist`
-  - Remove option for multiple entry points. It is no longer possible to import module from
-    '@remirror/core/lib/custom'
+  - Remove option for multiple entry points. It is no longer possible to import module from '@remirror/core/lib/custom'
   - Only use one entry file.
   - Remove declaration source mapping for declaration files
   - Remove the src directory from being published.
 
-- 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`.
-  If your code was importing any matching interface you will need to update the name.
+- 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`. If your code was importing any matching interface you will need to update the name.
 
 ### Patch Changes
 
@@ -267,15 +243,11 @@
 
 ### Minor Changes
 
-- 24f83413: - Change the signature of `CommandFunction` to only accept one parameter which contains
-  `dispatch`, `view`, `state`.
+- 24f83413: - Change the signature of `CommandFunction` to only accept one parameter which contains `dispatch`, `view`, `state`.
 
-  - Create a new exported `ProsemirrorCommandFunction` type to describe the prosemirror commands
-    which are still used in the codebase.
-  - Rename `KeyboardBindings` to `KeyBindings`. Allow `CommandFunctionParams` to provide extra
-    parameters like `next` in the newly named `KeyBindings`.
-  - Create a new `KeyBindingCommandFunction` to describe the `Extension.keys()` return type. Update
-    the name of the `ExcludeOptions.keymaps` -> `ExcludeOptions.keys`.
+  - Create a new exported `ProsemirrorCommandFunction` type to describe the prosemirror commands which are still used in the codebase.
+  - Rename `KeyboardBindings` to `KeyBindings`. Allow `CommandFunctionParams` to provide extra parameters like `next` in the newly named `KeyBindings`.
+  - Create a new `KeyBindingCommandFunction` to describe the `Extension.keys()` return type. Update the name of the `ExcludeOptions.keymaps` -> `ExcludeOptions.keys`.
 
   **BREAKING CHANGE**
 
@@ -283,8 +255,7 @@
 
 ### Patch Changes
 
-- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub
-  organisation.
+- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub organisation.
 - Updated dependencies [7380e18f]
   - @remirror/core-constants@0.7.4
   - @remirror/react-portals@0.7.4

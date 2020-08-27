@@ -6,17 +6,11 @@
 
 ### Minor Changes
 
-- [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d)
-  [#591](https://github.com/remirror/remirror/pull/591) Thanks
-  [@ifiokjr](https://github.com/ifiokjr)! - Add support for nested content within `ReactComponent`
-  node views. Also support adding multiple components to the manager via the `nodeViewComponents`
-  setting. Currently `ReactNodeView` components must be defined at initialization, and marks are not
-  supported.
+- [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d) [#591](https://github.com/remirror/remirror/pull/591) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add support for nested content within `ReactComponent` node views. Also support adding multiple components to the manager via the `nodeViewComponents` setting. Currently `ReactNodeView` components must be defined at initialization, and marks are not supported.
 
   - Also enforce minimum required extensions for the manager passed to the `RemirrorProvider`.
   - Some general cleanup and refactoring.
-  - Add support for composing refs when using `getRootProps`. Now you can add your own ref to the
-    `getRootProps({ ref })` function call which will be populated at the same time.
+  - Add support for composing refs when using `getRootProps`. Now you can add your own ref to the `getRootProps({ ref })` function call which will be populated at the same time.
   - Test the names of `Extension`'s and `Preset`'s in with `extensionValidityTest`.
   - **BREAKING CHANGES** 💥
     - Rename: `ReactSSRExtension` => `ReactSsrExtension`
@@ -27,15 +21,9 @@
 
 ### Patch Changes
 
-- [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448)
-  [#585](https://github.com/remirror/remirror/pull/585) Thanks
-  [@ifiokjr](https://github.com/ifiokjr)! - Upgrade dependencies and `linaria`.
+- [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448) [#585](https://github.com/remirror/remirror/pull/585) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Upgrade dependencies and `linaria`.
 
-- Updated dependencies
-  [[`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47),
-  [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448),
-  [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d),
-  [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)]:
+- Updated dependencies [[`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47), [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448), [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d), [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)]:
   - @remirror/core@1.0.0-next.28
   - @remirror/extension-placeholder@1.0.0-next.28
   - @remirror/pm@1.0.0-next.28
@@ -114,8 +102,7 @@
 
 ### Patch Changes
 
-- d505ebc1: Fixes #555 `onChange` callback not being updated when using a controlled editor in
-  `StrictMode`.
+- d505ebc1: Fixes #555 `onChange` callback not being updated when using a controlled editor in `StrictMode`.
 
 ## 1.0.0-next.22
 
@@ -127,8 +114,7 @@
 
   Export `emptyCoords` object from `@remirror/extension-positioner`.
 
-  Add second parameter to `usePositioner` hook which can override when a positioner should be set to
-  active.
+  Add second parameter to `usePositioner` hook which can override when a positioner should be set to active.
 
 ### Patch Changes
 
@@ -195,12 +181,10 @@
 
 ### Major Changes
 
-- 4498814f: Rename `UsePositionerHookReturn` and `UseMultiPositionerHookReturn` to
-  `UsePositionerReturn` and `UseMultiPositionerReturn`.
+- 4498814f: Rename `UsePositionerHookReturn` and `UseMultiPositionerHookReturn` to `UsePositionerReturn` and `UseMultiPositionerReturn`.
 
   - Add `active: boolean` property to `UsePositionerHookReturn`.
-  - Fix the floating emoji menu for the social editor and showcase. Now hidden when text selection
-    spans multiple characters.
+  - Fix the floating emoji menu for the social editor and showcase. Now hidden when text selection spans multiple characters.
 
 ### Patch Changes
 
@@ -220,20 +204,13 @@
 
 ### Major Changes
 
-- 6528323e: **Breaking:** `@remirror/preset-core` -`CreateCoreManagerOptions` now extends
-  `Remirror.ManagerSettings`.
+- 6528323e: **Breaking:** `@remirror/preset-core` -`CreateCoreManagerOptions` now extends `Remirror.ManagerSettings`.
 
-  **Breaking:** `@remirror/preset-wysiwyg` - Rename `CreateWysiwygPresetListParameter` to
-  **`CreateWysiwygPresetListOptions`**. Also it now extends `Remirror.ManagerSettings`.
-  **Breaking:**`@remirror/react` - `CreateReactManagerOptions` now extends
-  `Remirror.ManagerSettings`. **Breaking:** `@remirror/react-social` - `CreateSocialManagerOptions`
-  now extends `Remirror.ManagerSettings`.
+  **Breaking:** `@remirror/preset-wysiwyg` - Rename `CreateWysiwygPresetListParameter` to **`CreateWysiwygPresetListOptions`**. Also it now extends `Remirror.ManagerSettings`. **Breaking:**`@remirror/react` - `CreateReactManagerOptions` now extends `Remirror.ManagerSettings`. **Breaking:** `@remirror/react-social` - `CreateSocialManagerOptions` now extends `Remirror.ManagerSettings`.
 
-  **Breaking:** `@remirror/react`, `@remirror/react-social`, `@remirror/react-wysiwyg` now uses a
-  `settings` property for manager settings.
+  **Breaking:** `@remirror/react`, `@remirror/react-social`, `@remirror/react-wysiwyg` now uses a `settings` property for manager settings.
 
-  `@remirror/core-types` - Add `GetStaticAndDynamic<Options>` helper for extracting options from
-  extension. Apply it to the packages mentioned above.
+  `@remirror/core-types` - Add `GetStaticAndDynamic<Options>` helper for extracting options from extension. Apply it to the packages mentioned above.
 
   - `@remirror/react-wysiwyg` - Update imports from `@remirror/preset-wysiwyg`.
 
@@ -241,8 +218,7 @@
 
   Positioners now return an array of `VirtualPositions` or an empty array if no positions extension.
 
-  `@remirror/react` - Add `useMultiPositioner`. `@remirror/react` - Add `virtualNode` property for
-  compatibility with `popper-react`
+  `@remirror/react` - Add `useMultiPositioner`. `@remirror/react` - Add `virtualNode` property for compatibility with `popper-react`
 
   An example of creating a new positioner with the new api is below.
 
@@ -405,8 +381,7 @@
 
 ### Patch Changes
 
-- 21a9650c: Rename `getArray` to `getLazyArray`. Also bump the version of `@remirror/core-helpers`
-  to make sure it is released.
+- 21a9650c: Rename `getArray` to `getLazyArray`. Also bump the version of `@remirror/core-helpers` to make sure it is released.
 - Updated dependencies [54461006]
   - @remirror/core@1.0.0-next.11
   - @remirror/extension-placeholder@1.0.0-next.11
@@ -422,13 +397,10 @@
 
 ### Minor Changes
 
-- 3702a83a: Remove requirement for `readonly` arrays when passing a list of extensions / presets to
-  manager creators.
+- 3702a83a: Remove requirement for `readonly` arrays when passing a list of extensions / presets to manager creators.
 
-  - **`@remirror/react`** - Add support for a function as the first parameter to the `useManager`
-    hook and `createReactManager` function.
-  - **`@remirror/preset-core`** - Add support for a function as the first parameter to the
-    `createCoreManager` function.
+  - **`@remirror/react`** - Add support for a function as the first parameter to the `useManager` hook and `createReactManager` function.
+  - **`@remirror/preset-core`** - Add support for a function as the first parameter to the `createCoreManager` function.
 
 - e554ce8c: - Use `ReactComponent` for SSR.
   - Add `environment to`NodeViewComponentProps`.
@@ -439,8 +411,7 @@
 
 - 76d1df83: - Prevent `createReactManager` being called on every render.
   - Accept a `manager` as a parameter for ``createReactManager`
-  - Improve internal performance of components by caching the `ReactEditorWrapper` after the first
-    render.
+  - Improve internal performance of components by caching the `ReactEditorWrapper` after the first render.
 - Updated dependencies [6468058a]
 - Updated dependencies [3702a83a]
 - Updated dependencies [e554ce8c]
@@ -458,13 +429,10 @@
 
 ### Minor Changes
 
-- 02fdafff: - Rename `change` event to `updated`. `updated` is called with the
-  `EventListenerParameter`.
+- 02fdafff: - Rename `change` event to `updated`. `updated` is called with the `EventListenerParameter`.
 
   - Add new manager `stateUpdate` to the `editorWrapper`
-  - Add `autoUpdate` option to `useRemirror` hook from `@remirror/react` which means that the
-    context object returned by the hook is always up to date with the latest editor state. It will
-    also cause the component to rerender so be careful to only use it when necessary.
+  - Add `autoUpdate` option to `useRemirror` hook from `@remirror/react` which means that the context object returned by the hook is always up to date with the latest editor state. It will also cause the component to rerender so be careful to only use it when necessary.
 
   ```tsx
   const { active, commands } = useRemirror({ autoUpdate: true });
@@ -498,9 +466,7 @@
 
 ### Patch Changes
 
-- 6c5a93c8: Fix a bug where the previous state was always equal to the updated state for controlled
-  editors. This caused problems with functionality that relies on comparing state values e.g.
-  `PositionerExtension`.
+- 6c5a93c8: Fix a bug where the previous state was always equal to the updated state for controlled editors. This caused problems with functionality that relies on comparing state values e.g. `PositionerExtension`.
 
 ## 1.0.0-next.5
 
@@ -508,8 +474,7 @@
 
 ### Minor Changes
 
-- 4628d342: Add new entry point `@remirror/react/renderers`. It provides utilities for rendering the
-  editor directly from the exported json.
+- 4628d342: Add new entry point `@remirror/react/renderers`. It provides utilities for rendering the editor directly from the exported json.
 
 ## 1.0.0-next.4
 
@@ -517,25 +482,18 @@
 
 ### Major Changes
 
-- 64edeec2: Add a new extension package `@remirror/extension-react-component` for creating
-  ProseMirror `NodeView`'s from React components.
+- 64edeec2: Add a new extension package `@remirror/extension-react-component` for creating ProseMirror `NodeView`'s from React components.
 
-  - Move `ReactPortal` implementation from `@remirror/react` to `@remirror/react-utils` for usage in
-    other parts of the application.
+  - Move `ReactPortal` implementation from `@remirror/react` to `@remirror/react-utils` for usage in other parts of the application.
   - Move `ReactNodeView` into new package `@remirror/extension-react-component`.
   - Rename `ReactNodeView.createNodeView` to `ReactNodeView.create`.
 
-  The new package adds the `ReactComponent` property to the extension interface. An extension with a
-  component attached will use it to override the automatic DOM representation with a ProseMirror
-  `NodeView`.
+  The new package adds the `ReactComponent` property to the extension interface. An extension with a component attached will use it to override the automatic DOM representation with a ProseMirror `NodeView`.
 
 ### Patch Changes
 
-- e1a1b6ec: Prevent multiple editors being attached with a single Provider. This error flags you
-  when you are attaching `getRootProps` to the dom in multiple placeswithin a single editor
-  instance. This can help prevent unwanted behaviour.
-- 9f495078: Move `suppressHydrationWarning` prop from core to to react editor. It makes no sense for
-  it to be in core since it only impacts the react editor.
+- e1a1b6ec: Prevent multiple editors being attached with a single Provider. This error flags you when you are attaching `getRootProps` to the dom in multiple placeswithin a single editor instance. This can help prevent unwanted behaviour.
+- 9f495078: Move `suppressHydrationWarning` prop from core to to react editor. It makes no sense for it to be in core since it only impacts the react editor.
 - 5d5970ae: Update repository and website field to point to HEAD rather than a specific branch.
 - Updated dependencies [64edeec2]
 - Updated dependencies [9f495078]
@@ -575,9 +533,7 @@
 
 - Add support for `React.StrictMode`.
 
-  Previously, activating `StrictMode` would cause the components to render twice and break
-  functionality of `RemirrorProvider` due to an outdated check on whether `getRootProps` had been
-  called. This check has been removed since it isn't needed anymore.
+  Previously, activating `StrictMode` would cause the components to render twice and break functionality of `RemirrorProvider` due to an outdated check on whether `getRootProps` had been called. This check has been removed since it isn't needed anymore.
 
 ### Patch Changes
 
@@ -613,20 +569,16 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
 - 28bd8bea: This is a breaking change to the structure of published npm packages.
 
   - Move build directory from `lib` to `dist`
-  - Remove option for multiple entry points. It is no longer possible to import module from
-    '@remirror/core/lib/custom'
+  - Remove option for multiple entry points. It is no longer possible to import module from '@remirror/core/lib/custom'
   - Only use one entry file.
   - Remove declaration source mapping for declaration files
   - Remove the src directory from being published.
 
-- 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`.
-  If your code was importing any matching interface you will need to update the name.
+- 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`. If your code was importing any matching interface you will need to update the name.
 
 ### Minor Changes
 
@@ -660,9 +612,7 @@
 
 ### Minor Changes
 
-- 026d4238: Add a `focus` method to the remirror editor context object. It allows focusing at a
-  provided position which can be `start`, `end`, a specific position or a range using the
-  `{from: number; to: number}` type signature.
+- 026d4238: Add a `focus` method to the remirror editor context object. It allows focusing at a provided position which can be `start`, `end`, a specific position or a range using the `{from: number; to: number}` type signature.
 
   To use this run
 
@@ -681,8 +631,7 @@
 
   Resolves the initial issue raised in #229.
 
-- 69d00c62: Add custom arguments to `autoFocus` props. The same arguments that can added to the
-  `focus()` context method can now be passed as a prop.
+- 69d00c62: Add custom arguments to `autoFocus` props. The same arguments that can added to the `focus()` context method can now be passed as a prop.
 
 ### Patch Changes
 
@@ -718,8 +667,7 @@
 
 ### Patch Changes
 
-- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub
-  organisation.
+- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub organisation.
 - Updated dependencies [10419145]
 - Updated dependencies [7380e18f]
   - @remirror/core-extensions@0.7.4

@@ -6,9 +6,7 @@
 
 ### Patch Changes
 
-- Updated dependencies
-  [[`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448),
-  [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448)]:
+- Updated dependencies [[`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448), [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448)]:
   - @remirror/pm@1.0.0-next.28
   - @remirror/core-helpers@1.0.0-next.28
   - @remirror/core-types@1.0.0-next.28
@@ -45,8 +43,7 @@
 
 ### Major Changes
 
-- 113560bb: Required temporary fix to resolve issue with unlinked packages in prerelease mode. See
-  the [issue](https://github.com/atlassian/changesets/issues/442) for more details.
+- 113560bb: Required temporary fix to resolve issue with unlinked packages in prerelease mode. See the [issue](https://github.com/atlassian/changesets/issues/442) for more details.
 
 ### Patch Changes
 
@@ -132,9 +129,7 @@
 
 ### Patch Changes
 
-- 5ebf2827: Fix broken `jest-prosemirror/environment` import and `jest-remirror/environment` for
-  automatic setup. Also enable the `jest-prosemirror/serializer` to correctly serialize the
-  prosemirror content.
+- 5ebf2827: Fix broken `jest-prosemirror/environment` import and `jest-remirror/environment` for automatic setup. Also enable the `jest-prosemirror/serializer` to correctly serialize the prosemirror content.
 
 ## 1.0.0-next.2
 
@@ -172,20 +167,16 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
 - 28bd8bea: This is a breaking change to the structure of published npm packages.
 
   - Move build directory from `lib` to `dist`
-  - Remove option for multiple entry points. It is no longer possible to import module from
-    '@remirror/core/lib/custom'
+  - Remove option for multiple entry points. It is no longer possible to import module from '@remirror/core/lib/custom'
   - Only use one entry file.
   - Remove declaration source mapping for declaration files
   - Remove the src directory from being published.
 
-- 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`.
-  If your code was importing any matching interface you will need to update the name.
+- 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`. If your code was importing any matching interface you will need to update the name.
 - dd16d45d: Rewrite packages using the new API
 
 ### Minor Changes
@@ -233,9 +224,7 @@
 
 ### Minor Changes
 
-- 24f83413: Create a new class `ProsemirrorTestChain` for chaining the return from `createEditor`.
-  Previously it was manually chained with a function. The plan is to extend this class within the
-  `jest-remirror` codebase.
+- 24f83413: Create a new class `ProsemirrorTestChain` for chaining the return from `createEditor`. Previously it was manually chained with a function. The plan is to extend this class within the `jest-remirror` codebase.
 
 ### Patch Changes
 
@@ -249,8 +238,7 @@
 
 ### Patch Changes
 
-- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub
-  organisation.
+- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub organisation.
 - Updated dependencies [7380e18f]
   - @remirror/core-constants@0.7.4
   - @remirror/core-helpers@0.7.4

@@ -1,7 +1,6 @@
 # @remirror/react
 
-[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/react.svg?)](https://bundlephobia.com/result?p=@remirror/react)
-[![npm](https://img.shields.io/npm/dm/@remirror/react.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/react)
+[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/react.svg?)](https://bundlephobia.com/result?p=@remirror/react) [![npm](https://img.shields.io/npm/dm/@remirror/react.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/react)
 
 The react components for the remirror editor
 
@@ -19,11 +18,9 @@ For in depth usage with proper code example see the [docs](https://remirror.io).
 
 ### Controlled Editor
 
-The following example converts all the content to text and appends a list item to the end of every
-editor after every edit.
+The following example converts all the content to text and appends a list item to the end of every editor after every edit.
 
-Don't do this, as it would actually be a terrible user experience. But it shows what can be done. A
-more meaningful example will be created soon.
+Don't do this, as it would actually be a terrible user experience. But it shows what can be done. A more meaningful example will be created soon.
 
 ```ts
 import React, { useCallback } from 'react';

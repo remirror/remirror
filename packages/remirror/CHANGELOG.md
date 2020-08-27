@@ -6,16 +6,9 @@
 
 ### Patch Changes
 
-- [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448)
-  [#585](https://github.com/remirror/remirror/pull/585) Thanks
-  [@ifiokjr](https://github.com/ifiokjr)! - Upgrade dependencies and `linaria`.
+- [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448) [#585](https://github.com/remirror/remirror/pull/585) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Upgrade dependencies and `linaria`.
 
-- Updated dependencies
-  [[`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47),
-  [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448),
-  [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448),
-  [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d),
-  [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)]:
+- Updated dependencies [[`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47), [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448), [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448), [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d), [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)]:
   - @remirror/core@1.0.0-next.28
   - @remirror/extension-blockquote@1.0.0-next.28
   - @remirror/extension-gap-cursor@1.0.0-next.28
@@ -76,8 +69,7 @@
 
 ### Minor Changes
 
-- a7436f03: 🎉 Add support for consuming styles with `styled-components` and `emotion` as requested
-  by a sponsor - [#550](https://github.com/remirror/remirror/issues/550).
+- a7436f03: 🎉 Add support for consuming styles with `styled-components` and `emotion` as requested by a sponsor - [#550](https://github.com/remirror/remirror/issues/550).
 
   💥 BREAKING CHANGE - Remove exports from `@remirror/theme`.
 
@@ -276,8 +268,7 @@
 
 ### Patch Changes
 
-- d505ebc1: Fixes #555 `onChange` callback not being updated when using a controlled editor in
-  `StrictMode`.
+- d505ebc1: Fixes #555 `onChange` callback not being updated when using a controlled editor in `StrictMode`.
 - Updated dependencies [d505ebc1]
   - @remirror/react@1.0.0-next.23
   - @remirror/react-social@1.0.0-next.23
@@ -437,10 +428,8 @@
 
 ### Patch Changes
 
-- 7c603a5e: Ensure the `markInputRule` doesn't reactivate previous marks when rules are nested and
-  activated consecutively.
-- 48cce3a0: Remove misleading documentation. The matchOffset field isn't defaulted to zero for
-  MentionExtension.
+- 7c603a5e: Ensure the `markInputRule` doesn't reactivate previous marks when rules are nested and activated consecutively.
+- 48cce3a0: Remove misleading documentation. The matchOffset field isn't defaulted to zero for MentionExtension.
 - Updated dependencies [95697fbd]
 - Updated dependencies [6d7edc85]
 - Updated dependencies [8f9eb16c]
@@ -524,12 +513,10 @@
 
 ### Patch Changes
 
-- 4498814f: Rename `UsePositionerHookReturn` and `UseMultiPositionerHookReturn` to
-  `UsePositionerReturn` and `UseMultiPositionerReturn`.
+- 4498814f: Rename `UsePositionerHookReturn` and `UseMultiPositionerHookReturn` to `UsePositionerReturn` and `UseMultiPositionerReturn`.
 
   - Add `active: boolean` property to `UsePositionerHookReturn`.
-  - Fix the floating emoji menu for the social editor and showcase. Now hidden when text selection
-    spans multiple characters.
+  - Fix the floating emoji menu for the social editor and showcase. Now hidden when text selection spans multiple characters.
 
 - 338746fa: Pin `@remirror/extension-annotation` version.
 - 2d72ca94: Export `Positioner` as a value.
@@ -599,8 +586,7 @@
 
   Positioners now return an array of `VirtualPositions` or an empty array if no positions extension.
 
-  `@remirror/react` - Add `useMultiPositioner`. `@remirror/react` - Add `virtualNode` property for
-  compatibility with `popper-react`
+  `@remirror/react` - Add `useMultiPositioner`. `@remirror/react` - Add `virtualNode` property for compatibility with `popper-react`
 
   An example of creating a new positioner with the new api is below.
 
@@ -657,14 +643,12 @@
   });
   ```
 
-- be9a9c17: Move all keymap functionality to `KeymapExtension` from `@remirror/core`. Remove all
-  references to `@remirror/extension-base-keymap`.
+- be9a9c17: Move all keymap functionality to `KeymapExtension` from `@remirror/core`. Remove all references to `@remirror/extension-base-keymap`.
 
 ### Minor Changes
 
 - 206c1405: Extension to annotate content in your editor
-- f032db7e: Remove `isEmptyParagraphNode` and `absoluteCoordinates` exports from
-  `@remirror/core-utils`.
+- f032db7e: Remove `isEmptyParagraphNode` and `absoluteCoordinates` exports from `@remirror/core-utils`.
 - 2592b7b3: Allow runtime updates of `PlaceholderExtension` `emptyNodeClass` option.
 
 ### Patch Changes
@@ -755,8 +739,7 @@
 
 ### Major Changes
 
-- cdc5b801: Add three new helpers to `@remirror/core-utils` / `@remirror/core`: `isStateEqual`,
-  `areSchemaCompatible` and `getRemirrorJSON`.
+- cdc5b801: Add three new helpers to `@remirror/core-utils` / `@remirror/core`: `isStateEqual`, `areSchemaCompatible` and `getRemirrorJSON`.
 
   BREAKING: 💥 Rename `getObjectNode` to `getRemirrorJSON`.
 
@@ -764,8 +747,7 @@
 
   BREAKING: 💥 Rename `horizonalRule` command to `insertHorizontalRule`.
 
-  Add a new option `insertionNode` to the `HorizontalRuleExtension` which sets the default node to
-  automatically append after insertion.
+  Add a new option `insertionNode` to the `HorizontalRuleExtension` which sets the default node to automatically append after insertion.
 
   Update the css styles for the default `hr` tag.
 
@@ -779,21 +761,15 @@
 
 - e5ea0c84: Add support for `Handler` options with custom return values and early returns.
 
-  Previously handlers would ignore any return values. Now a handler will honour the return value.
-  The earlyReturn value can be specified in the static options using the `extensionDecorator`.
-  Currently it only supports primitives. Support for a function to check the return value will be
-  added later.
+  Previously handlers would ignore any return values. Now a handler will honour the return value. The earlyReturn value can be specified in the static options using the `extensionDecorator`. Currently it only supports primitives. Support for a function to check the return value will be added later.
 
 - 08e51078: Add `insertHardBreak` command.
 
-  Add inline documentation instructing developers to use the `TrailingNodeExtension` when using
-  `hardBreak` to exit a `codeBlock`.
+  Add inline documentation instructing developers to use the `TrailingNodeExtension` when using `hardBreak` to exit a `codeBlock`.
 
 - f91dcab1: 🎉 New extension `@remirror/extension-events`.
 
-  This extension adds handlers for the events happening within the remirror editor. The extension is
-  part of the `CorePreset` but it doesn't make it's handlers available to the preset. In order to
-  use the handlers you will need direct access to the `EventsExtension`.
+  This extension adds handlers for the events happening within the remirror editor. The extension is part of the `CorePreset` but it doesn't make it's handlers available to the preset. In order to use the handlers you will need direct access to the `EventsExtension`.
 
   ```ts
   import { EventsExtension } from 'remirror/extension-events';
@@ -816,16 +792,13 @@
 
 - 0dd4d621: Prevent mid word emoji matches on colon press.
 - 273d0a71: Hide social popups when the editor is blurred.
-- 9d708c03: Reduce the `AutoLinkExtension` priority and remove priority override for the mention and
-  emoji extensions.
-- a404f5a1: Add the option `excludeExtensions` to `CorePreset`'s `constructor` to exclude any
-  extensions.
+- 9d708c03: Reduce the `AutoLinkExtension` priority and remove priority override for the mention and emoji extensions.
+- a404f5a1: Add the option `excludeExtensions` to `CorePreset`'s `constructor` to exclude any extensions.
 
   Remove the option `excludeHistory` from `CorePreset`'s `constructor`.
 
 - e3d937f0: Support chaining for `setBold` and `removeBold` commands.
-- 6c3b278b: Make sure the `transaction` has all the latest updates if changed between
-  `onStateUpdate` events. This allows chaining to be supported properly.
+- 6c3b278b: Make sure the `transaction` has all the latest updates if changed between `onStateUpdate` events. This allows chaining to be supported properly.
 - 7477b935: Use `NonChainableCommandFunction` annotation to indicate commands are not chainable.
 - Updated dependencies [cdc5b801]
 - Updated dependencies [0dd4d621]
@@ -1028,13 +1001,10 @@
 
 ### Patch Changes
 
-- 02fdafff: - Rename `change` event to `updated`. `updated` is called with the
-  `EventListenerParameter`.
+- 02fdafff: - Rename `change` event to `updated`. `updated` is called with the `EventListenerParameter`.
 
   - Add new manager `stateUpdate` to the `editorWrapper`
-  - Add `autoUpdate` option to `useRemirror` hook from `@remirror/react` which means that the
-    context object returned by the hook is always up to date with the latest editor state. It will
-    also cause the component to rerender so be careful to only use it when necessary.
+  - Add `autoUpdate` option to `useRemirror` hook from `@remirror/react` which means that the context object returned by the hook is always up to date with the latest editor state. It will also cause the component to rerender so be careful to only use it when necessary.
 
   ```tsx
   const { active, commands } = useRemirror({ autoUpdate: true });
@@ -1107,8 +1077,7 @@
 
 ### Patch Changes
 
-- d186b75a: Correct the incorrect `remirror/react/ssr` and `remirror/react/component` exports. They
-  were incorrectly referencing each other.
+- d186b75a: Correct the incorrect `remirror/react/ssr` and `remirror/react/component` exports. They were incorrectly referencing each other.
 - Updated dependencies [4628d342]
 - Updated dependencies [e9286ed9]
   - @remirror/react@1.0.0-next.5
@@ -1306,25 +1275,20 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
 - 28bd8bea: This is a breaking change to the structure of published npm packages.
 
   - Move build directory from `lib` to `dist`
-  - Remove option for multiple entry points. It is no longer possible to import module from
-    '@remirror/core/lib/custom'
+  - Remove option for multiple entry points. It is no longer possible to import module from '@remirror/core/lib/custom'
   - Only use one entry file.
   - Remove declaration source mapping for declaration files
   - Remove the src directory from being published.
 
-- 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`.
-  If your code was importing any matching interface you will need to update the name.
+- 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`. If your code was importing any matching interface you will need to update the name.
 
 ### Minor Changes
 
-- 8334294e: Make `react`, `react-dom` and their `@type` counterparts optional peer depedencies. This
-  means users will no longer receive a warning if they install the package without react.
+- 8334294e: Make `react`, `react-dom` and their `@type` counterparts optional peer depedencies. This means users will no longer receive a warning if they install the package without react.
 
 ### Patch Changes
 
@@ -1429,8 +1393,7 @@
 
 ### Patch Changes
 
-- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub
-  organisation.
+- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub organisation.
 - Updated dependencies [10419145]
 - Updated dependencies [7380e18f]
   - @remirror/core-extensions@0.7.4

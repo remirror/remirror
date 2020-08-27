@@ -6,8 +6,7 @@
 
 ### Patch Changes
 
-- Updated dependencies
-  [[`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448)]:
+- Updated dependencies [[`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448)]:
   - @remirror/core-helpers@1.0.0-next.28
   - @remirror/core-types@1.0.0-next.28
 
@@ -28,8 +27,7 @@
 
 ### Major Changes
 
-- 113560bb: Required temporary fix to resolve issue with unlinked packages in prerelease mode. See
-  the [issue](https://github.com/atlassian/changesets/issues/442) for more details.
+- 113560bb: Required temporary fix to resolve issue with unlinked packages in prerelease mode. See the [issue](https://github.com/atlassian/changesets/issues/442) for more details.
 
 ### Patch Changes
 
@@ -55,8 +53,7 @@
 
 ### Patch Changes
 
-- 48cce3a0: Remove misleading documentation. The matchOffset field isn't defaulted to zero for
-  MentionExtension.
+- 48cce3a0: Remove misleading documentation. The matchOffset field isn't defaulted to zero for MentionExtension.
 - 770e3d4a: Update package dependencies.
 - Updated dependencies [8f9eb16c]
 - Updated dependencies [770e3d4a]
@@ -71,12 +68,9 @@
 
 - 4463d117: **Rename `Suggestion` to `Suggester`**
 
-  The name `Suggestion` implies something offered to a user. For example typing `@a` offers a
-  suggestion to tag a certain username. Using `Suggestion` as the name for the configuration object
-  is confusing. Going forward `Suggester` will be used as the name of the configuration object.
+  The name `Suggestion` implies something offered to a user. For example typing `@a` offers a suggestion to tag a certain username. Using `Suggestion` as the name for the configuration object is confusing. Going forward `Suggester` will be used as the name of the configuration object.
 
-  The `Suggester` configures the editor to behave in a desired way so that it can provide
-  suggestions to end users.
+  The `Suggester` configures the editor to behave in a desired way so that it can provide suggestions to end users.
 
   **Make `prosemirror-state` and `prosemirror-keymap` peerDependencies.**
 
@@ -92,21 +86,15 @@
 
   Remove `EMPTY_CSS_VALUE`, `CSS_ROTATE_PATTERN` from `@remirror/core-constants`.
 
-  Remove method:
-  `clean() | coerce() | fragment() | markFactory() | nodeFactory() | offsetTags() | sequence() | slice() | text() | isTaggedNode() | replaceSelection()`
-  and type:
-  `BaseFactoryParameter | MarkWithAttributes | MarkWithoutAttributes | NodeWithAttributes | NodeWithoutAttributes | TagTracker | TaggedContent | TaggedContentItem | TaggedContentWithText | Tags`
-  exports from `jest-remirror`.
+  Remove method: `clean() | coerce() | fragment() | markFactory() | nodeFactory() | offsetTags() | sequence() | slice() | text() | isTaggedNode() | replaceSelection()` and type: `BaseFactoryParameter | MarkWithAttributes | MarkWithoutAttributes | NodeWithAttributes | NodeWithoutAttributes | TagTracker | TaggedContent | TaggedContentItem | TaggedContentWithText | Tags` exports from `jest-remirror`.
 
-  Remove `SPECIAL_INPUT_KEYS | SPECIAL_KEYS | SPECIAL_MENU_KEYS | SPECIAL_TOGGLE_BUTTON_KEYS` from
-  `multishift`.
+  Remove `SPECIAL_INPUT_KEYS | SPECIAL_KEYS | SPECIAL_MENU_KEYS | SPECIAL_TOGGLE_BUTTON_KEYS` from `multishift`.
 
 ### Minor Changes
 
 - 068d2e07: Allow runtime additions to the `prosemirror-suggest` plugin.
 
-  You can now add suggester configurations to active suggest plugin instances. The name is used as
-  an identifier and identical names will automatically be replaced.
+  You can now add suggester configurations to active suggest plugin instances. The name is used as an identifier and identical names will automatically be replaced.
 
 - 4eb56ecd: Make `removed` and `setMarkRemoved()` methods public on `SuggestState`.
 
@@ -140,11 +128,9 @@
 
 - a93c83bd: - Add `keepSelection` property to the `replaceText` command function.
   - Prevent mentions from trapping the cursor when arrowing left and right through the mention.
-  - Set low priority for `AutoLinkExtension` to prevent `appendTransaction` interfering with
-    mentions.
+  - Set low priority for `AutoLinkExtension` to prevent `appendTransaction` interfering with mentions.
   - Update extension order in the `SocialPreset`
-  - `prosemirror-suggest` - New export `isSelectionExitReason` which let's the user know if the exit
-    was due to a selection change or a character entry.
+  - `prosemirror-suggest` - New export `isSelectionExitReason` which let's the user know if the exit was due to a selection change or a character entry.
 
 ### Patch Changes
 
@@ -183,20 +169,16 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
 - 28bd8bea: This is a breaking change to the structure of published npm packages.
 
   - Move build directory from `lib` to `dist`
-  - Remove option for multiple entry points. It is no longer possible to import module from
-    '@remirror/core/lib/custom'
+  - Remove option for multiple entry points. It is no longer possible to import module from '@remirror/core/lib/custom'
   - Only use one entry file.
   - Remove declaration source mapping for declaration files
   - Remove the src directory from being published.
 
-- 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`.
-  If your code was importing any matching interface you will need to update the name.
+- 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`. If your code was importing any matching interface you will need to update the name.
 - f212b90a: Rename the `Suggester` interface to a more understandable name of `Suggestion`.
 
   So change this:
@@ -213,8 +195,7 @@
 
 ### Minor Changes
 
-- 968cdc4d: Add `ignoreNext` exit method to prosemirror suggest which enables ignoring one exit when
-  the suggestion has already been applied outside of the `prosemirror-suggest` `command` helper.
+- 968cdc4d: Add `ignoreNext` exit method to prosemirror suggest which enables ignoring one exit when the suggestion has already been applied outside of the `prosemirror-suggest` `command` helper.
 
 ### Patch Changes
 
@@ -249,8 +230,7 @@
 
 ### Patch Changes
 
-- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub
-  organisation.
+- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub organisation.
 - Updated dependencies [7380e18f]
   - @remirror/core-constants@0.7.4
   - @remirror/core-helpers@0.7.4

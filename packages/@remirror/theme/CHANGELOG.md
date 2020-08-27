@@ -15,8 +15,7 @@
 
 ### Major Changes
 
-- a7436f03: 🎉 Add support for consuming styles with `styled-components` and `emotion` as requested
-  by a sponsor - [#550](https://github.com/remirror/remirror/issues/550).
+- a7436f03: 🎉 Add support for consuming styles with `styled-components` and `emotion` as requested by a sponsor - [#550](https://github.com/remirror/remirror/issues/550).
 
   💥 BREAKING CHANGE - Remove exports from `@remirror/theme`.
 
@@ -108,9 +107,7 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
 
 ### Patch Changes
 

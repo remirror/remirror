@@ -4,9 +4,7 @@
 
 > Use remirror directly in the dom.
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
-[![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)
-![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
 
 [version]: https://flat.badgen.net/npm/v/@remirror/dom
 [npm]: https://npmjs.com/package/@remirror/dom
@@ -18,14 +16,11 @@
 
 ## Why
 
-You've heard great things about prosemirror and would like to use it in your app, but you're
-slightly intimidated by some of the moving parts. You don't really want to deal with Schema, Nodes,
-Marks, Plugins, Decorations. You just want an editor.
+You've heard great things about prosemirror and would like to use it in your app, but you're slightly intimidated by some of the moving parts. You don't really want to deal with Schema, Nodes, Marks, Plugins, Decorations. You just want an editor.
 
 This library provides an abstraction that might be right for you.
 
-The functionality of the prosemirror library is wrapped up into extensions which manage the work for
-you.
+The functionality of the prosemirror library is wrapped up into extensions which manage the work for you.
 
 ## Installation
 

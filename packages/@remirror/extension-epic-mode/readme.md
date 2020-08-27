@@ -2,9 +2,7 @@
 
 > Epic (power) mode extension for the remirror wysiwyg editor.
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
-[![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)
-![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
 
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-epic-mode
 [npm]: https://npmjs.com/package/@remirror/extension-epic-mode
@@ -24,8 +22,7 @@ npm install @remirror/extension-epic-mode@next # npm
 
 ## Usage
 
-The following code sample will create a limited editor and run the available commands from this
-extension.
+The following code sample will create a limited editor and run the available commands from this extension.
 
 ```ts
 import { RemirrorManager, ExtensionPriority } from '@remirror/core';

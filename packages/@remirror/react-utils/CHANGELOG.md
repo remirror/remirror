@@ -6,8 +6,7 @@
 
 ### Patch Changes
 
-- Updated dependencies
-  [[`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448)]:
+- Updated dependencies [[`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448)]:
   - @remirror/core-helpers@1.0.0-next.28
   - @remirror/core-types@1.0.0-next.28
 
@@ -87,17 +86,13 @@
 
 ### Minor Changes
 
-- 64edeec2: Add a new extension package `@remirror/extension-react-component` for creating
-  ProseMirror `NodeView`'s from React components.
+- 64edeec2: Add a new extension package `@remirror/extension-react-component` for creating ProseMirror `NodeView`'s from React components.
 
-  - Move `ReactPortal` implementation from `@remirror/react` to `@remirror/react-utils` for usage in
-    other parts of the application.
+  - Move `ReactPortal` implementation from `@remirror/react` to `@remirror/react-utils` for usage in other parts of the application.
   - Move `ReactNodeView` into new package `@remirror/extension-react-component`.
   - Rename `ReactNodeView.createNodeView` to `ReactNodeView.create`.
 
-  The new package adds the `ReactComponent` property to the extension interface. An extension with a
-  component attached will use it to override the automatic DOM representation with a ProseMirror
-  `NodeView`.
+  The new package adds the `ReactComponent` property to the extension interface. An extension with a component attached will use it to override the automatic DOM representation with a ProseMirror `NodeView`.
 
 ### Patch Changes
 
@@ -115,9 +110,7 @@
 
 - Add support for `React.StrictMode`.
 
-  Previously, activating `StrictMode` would cause the components to render twice and break
-  functionality of `RemirrorProvider` due to an outdated check on whether `getRootProps` had been
-  called. This check has been removed since it isn't needed anymore.
+  Previously, activating `StrictMode` would cause the components to render twice and break functionality of `RemirrorProvider` due to an outdated check on whether `getRootProps` had been called. This check has been removed since it isn't needed anymore.
 
 ## 1.0.0-next.1
 
@@ -137,20 +130,16 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
 - 28bd8bea: This is a breaking change to the structure of published npm packages.
 
   - Move build directory from `lib` to `dist`
-  - Remove option for multiple entry points. It is no longer possible to import module from
-    '@remirror/core/lib/custom'
+  - Remove option for multiple entry points. It is no longer possible to import module from '@remirror/core/lib/custom'
   - Only use one entry file.
   - Remove declaration source mapping for declaration files
   - Remove the src directory from being published.
 
-- 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`.
-  If your code was importing any matching interface you will need to update the name.
+- 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`. If your code was importing any matching interface you will need to update the name.
 
 ### Patch Changes
 
@@ -181,8 +170,7 @@
 
 ### Patch Changes
 
-- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub
-  organisation.
+- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub organisation.
 - Updated dependencies [7380e18f]
   - @remirror/core-helpers@0.7.4
   - @remirror/core-types@0.7.4

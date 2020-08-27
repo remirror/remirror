@@ -2,9 +2,7 @@
 
 > Enable cursors for difficult to reach parts of the document.
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
-[![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)
-![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
 
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-gap-cursor
 [npm]: https://npmjs.com/package/@remirror/extension-gap-cursor
@@ -37,9 +35,7 @@ import { GapCursorExtension } from '@remirror/extension-gap-cursor';
 const extension = new GapCursorExtension();
 ```
 
-When enabled, this will capture clicks near and arrow-key-motion past places that don't have a
-normally selectable position nearby, and create a gap cursor selection for them. The cursor is drawn
-as an element with class `ProseMirror-gapcursor`.
+When enabled, this will capture clicks near and arrow-key-motion past places that don't have a normally selectable position nearby, and create a gap cursor selection for them. The cursor is drawn as an element with class `ProseMirror-gapcursor`.
 
 Make sure to import the styles as shown below.
 

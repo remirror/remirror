@@ -4,11 +4,9 @@ title: React Refs
 
 ## Extract context as a `ref`
 
-In order to access the context properties of your editor from externally the following snippet
-should work.
+In order to access the context properties of your editor from externally the following snippet should work.
 
-It makes use of the less well known `useImperativeHandle` to attach the context from the editor to
-the `ref` within a forward ref component.
+It makes use of the less well known `useImperativeHandle` to attach the context from the editor to the `ref` within a forward ref component.
 
 ```tsx
 import { forwardRef, useImperativeHandle, FC } from 'react';

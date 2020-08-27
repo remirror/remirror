@@ -6,8 +6,7 @@
 
 ### Major Changes
 
-- be9a9c17: Deprecated - this functionality is now one of the `builtin` extensions. Everything
-  should work as before if you're on the latest version of `remirror`.
+- be9a9c17: Deprecated - this functionality is now one of the `builtin` extensions. Everything should work as before if you're on the latest version of `remirror`.
 
 ## 1.0.0-next.15
 
@@ -28,8 +27,7 @@
 
 ### Patch Changes
 
-- d877adb3: Switch to using method signatures for extension class methods as discussed in #360. The
-  following methods have been affected:
+- d877adb3: Switch to using method signatures for extension class methods as discussed in #360. The following methods have been affected:
 
   ```
   createKeymap
@@ -131,9 +129,7 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
 
 ### Patch Changes
 

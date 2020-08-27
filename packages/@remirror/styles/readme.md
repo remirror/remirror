@@ -2,9 +2,7 @@
 
 > Styles for every remirror package.
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
-[![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)
-![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
 
 [version]: https://flat.badgen.net/npm/v/@remirror/styles
 [npm]: https://npmjs.com/package/@remirror/styles
@@ -27,13 +25,11 @@ pnpm add @remirror/styles@next
 npm install @remirror/styles@next
 ```
 
-Depending on how you want to consume the styles there are some peer dependencies that might be
-required. Any additional packages are listed in their relevant section.
+Depending on how you want to consume the styles there are some peer dependencies that might be required. Any additional packages are listed in their relevant section.
 
 ## Usage
 
-The styles for this package can be used with plain css, the dom using `emotion`, react using
-`@emotion/styled` and `styled-components`.
+The styles for this package can be used with plain css, the dom using `emotion`, react using `@emotion/styled` and `styled-components`.
 
 ### CSS
 
@@ -50,8 +46,7 @@ Or if your build system allows it.
 import '@remirror/styles/core.css';
 ```
 
-If you're not worried about bundle size you can also import all styles for all the extensions and
-packages.
+If you're not worried about bundle size you can also import all styles for all the extensions and packages.
 
 ```ts
 import '@remirror/styles/all.css';
@@ -90,11 +85,9 @@ The above snippet will add all styles to the element and all elements it contain
 
 ### `styled-component`
 
-This is designed to be used in a react app that already consumes styled components and the
-components can be used to wrap your editor, providing automatically scoped styles.
+This is designed to be used in a react app that already consumes styled components and the components can be used to wrap your editor, providing automatically scoped styles.
 
-Make sure you have `styled-components` installed. And then import either the styled css or the
-styled component.
+Make sure you have `styled-components` installed. And then import either the styled css or the styled component.
 
 ```tsx
 import { coreStyledCss, CoreStyledComponent } from '@remirror/styles/styled-components';
@@ -107,13 +100,11 @@ export const StyledWrapper = () => (
 );
 ```
 
-The above will provide the styles to your editor component and since it is a styled component you
-can use the `as` prop to define it as you wish.
+The above will provide the styles to your editor component and since it is a styled component you can use the `as` prop to define it as you wish.
 
 ### `@emotion/styled`
 
-This is designed to be used in a react app that already consumes uses `@emotion/core` and
-`@emotion/styled`. Make sure both of these are installed before getting started
+This is designed to be used in a react app that already consumes uses `@emotion/core` and `@emotion/styled`. Make sure both of these are installed before getting started
 
 ```tsx
 import { coreStyledCss, CoreStyledComponent } from '@remirror/styles/emotion';
@@ -126,8 +117,7 @@ export const StyledWrapper = () => (
 );
 ```
 
-This is very similar to the `styled-components` entry point and will provide the styles to your
-editor component.
+This is very similar to the `styled-components` entry point and will provide the styles to your editor component.
 
 ## Credits
 

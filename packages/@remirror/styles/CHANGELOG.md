@@ -6,8 +6,7 @@
 
 ### Minor Changes
 
-- a7436f03: 🎉 Add support for consuming styles with `styled-components` and `emotion` as requested
-  by a sponsor - [#550](https://github.com/remirror/remirror/issues/550).
+- a7436f03: 🎉 Add support for consuming styles with `styled-components` and `emotion` as requested by a sponsor - [#550](https://github.com/remirror/remirror/issues/550).
 
   💥 BREAKING CHANGE - Remove exports from `@remirror/theme`.
 
@@ -24,8 +23,7 @@
 
   BREAKING: 💥 Rename `horizonalRule` command to `insertHorizontalRule`.
 
-  Add a new option `insertionNode` to the `HorizontalRuleExtension` which sets the default node to
-  automatically append after insertion.
+  Add a new option `insertionNode` to the `HorizontalRuleExtension` which sets the default node to automatically append after insertion.
 
   Update the css styles for the default `hr` tag.
 
@@ -53,6 +51,4 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.

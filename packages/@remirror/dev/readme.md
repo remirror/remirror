@@ -1,7 +1,6 @@
 # @remirror/dev
 
-[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/dev.svg?)](https://bundlephobia.com/result?p=@remirror/dev)
-[![npm](https://img.shields.io/npm/dm/@remirror/dev.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/dev)
+[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/dev.svg?)](https://bundlephobia.com/result?p=@remirror/dev) [![npm](https://img.shields.io/npm/dm/@remirror/dev.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/dev)
 
 Development tools to make life easier when building your editor.
 
@@ -19,8 +18,7 @@ For in depth usage with proper code example see the [docs](https://remirror.io)
 
 ### Prosemirror Dev Tools
 
-The following will render the development view in your editor. For more information on what's
-possible see the [docs][prosemirror-dev-tools].
+The following will render the development view in your editor. For more information on what's possible see the [docs][prosemirror-dev-tools].
 
 ```tsx
 import React from 'react';

@@ -6,15 +6,9 @@
 
 ### Patch Changes
 
-- [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448)
-  [#585](https://github.com/remirror/remirror/pull/585) Thanks
-  [@ifiokjr](https://github.com/ifiokjr)! - Upgrade dependencies and `linaria`.
+- [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448) [#585](https://github.com/remirror/remirror/pull/585) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Upgrade dependencies and `linaria`.
 
-- Updated dependencies
-  [[`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47),
-  [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448),
-  [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d),
-  [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)]:
+- Updated dependencies [[`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47), [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448), [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d), [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)]:
   - @remirror/core@1.0.0-next.28
   - @remirror/pm@1.0.0-next.28
   - @remirror/react@1.0.0-next.28
@@ -109,8 +103,7 @@
 
   Export `emptyCoords` object from `@remirror/extension-positioner`.
 
-  Add second parameter to `usePositioner` hook which can override when a positioner should be set to
-  active.
+  Add second parameter to `usePositioner` hook which can override when a positioner should be set to active.
 
 - Updated dependencies [9ab1d0f3]
 - Updated dependencies [45d82746]
@@ -179,12 +172,10 @@
 
 ### Patch Changes
 
-- 4498814f: Rename `UsePositionerHookReturn` and `UseMultiPositionerHookReturn` to
-  `UsePositionerReturn` and `UseMultiPositionerReturn`.
+- 4498814f: Rename `UsePositionerHookReturn` and `UseMultiPositionerHookReturn` to `UsePositionerReturn` and `UseMultiPositionerReturn`.
 
   - Add `active: boolean` property to `UsePositionerHookReturn`.
-  - Fix the floating emoji menu for the social editor and showcase. Now hidden when text selection
-    spans multiple characters.
+  - Fix the floating emoji menu for the social editor and showcase. Now hidden when text selection spans multiple characters.
 
 - Updated dependencies [4498814f]
 - Updated dependencies [898c62e0]
@@ -202,20 +193,13 @@
 
 ### Major Changes
 
-- 6528323e: **Breaking:** `@remirror/preset-core` -`CreateCoreManagerOptions` now extends
-  `Remirror.ManagerSettings`.
+- 6528323e: **Breaking:** `@remirror/preset-core` -`CreateCoreManagerOptions` now extends `Remirror.ManagerSettings`.
 
-  **Breaking:** `@remirror/preset-wysiwyg` - Rename `CreateWysiwygPresetListParameter` to
-  **`CreateWysiwygPresetListOptions`**. Also it now extends `Remirror.ManagerSettings`.
-  **Breaking:**`@remirror/react` - `CreateReactManagerOptions` now extends
-  `Remirror.ManagerSettings`. **Breaking:** `@remirror/react-social` - `CreateSocialManagerOptions`
-  now extends `Remirror.ManagerSettings`.
+  **Breaking:** `@remirror/preset-wysiwyg` - Rename `CreateWysiwygPresetListParameter` to **`CreateWysiwygPresetListOptions`**. Also it now extends `Remirror.ManagerSettings`. **Breaking:**`@remirror/react` - `CreateReactManagerOptions` now extends `Remirror.ManagerSettings`. **Breaking:** `@remirror/react-social` - `CreateSocialManagerOptions` now extends `Remirror.ManagerSettings`.
 
-  **Breaking:** `@remirror/react`, `@remirror/react-social`, `@remirror/react-wysiwyg` now uses a
-  `settings` property for manager settings.
+  **Breaking:** `@remirror/react`, `@remirror/react-social`, `@remirror/react-wysiwyg` now uses a `settings` property for manager settings.
 
-  `@remirror/core-types` - Add `GetStaticAndDynamic<Options>` helper for extracting options from
-  extension. Apply it to the packages mentioned above.
+  `@remirror/core-types` - Add `GetStaticAndDynamic<Options>` helper for extracting options from extension. Apply it to the packages mentioned above.
 
   - `@remirror/react-wysiwyg` - Update imports from `@remirror/preset-wysiwyg`.
 
@@ -288,8 +272,7 @@
 
 ### Patch Changes
 
-- 90f64408: Show immediate suggestions for the emoji picker in the social editor. Also add the
-  character indicator default and update the value for each state update.
+- 90f64408: Show immediate suggestions for the emoji picker in the social editor. Also add the character indicator default and update the value for each state update.
 
   Closes #403
 
@@ -334,8 +317,7 @@
 
 ### Patch Changes
 
-- 21a9650c: Rename `getArray` to `getLazyArray`. Also bump the version of `@remirror/core-helpers`
-  to make sure it is released.
+- 21a9650c: Rename `getArray` to `getLazyArray`. Also bump the version of `@remirror/core-helpers` to make sure it is released.
 - Updated dependencies [54461006]
 - Updated dependencies [21a9650c]
   - @remirror/core@1.0.0-next.11
@@ -353,8 +335,7 @@
 
 - 16a683f3: Reduce the number of rerenders for the social manager.
 
-  BREAKING CHANGE: The package no longer exports a `createSocialManager` and instead provides a
-  `socialManagerArgs` which can be passed into the `useManager` hook.
+  BREAKING CHANGE: The package no longer exports a `createSocialManager` and instead provides a `socialManagerArgs` which can be passed into the `useManager` hook.
 
 ### Patch Changes
 
@@ -392,11 +373,9 @@
 
 - a93c83bd: - Add `keepSelection` property to the `replaceText` command function.
   - Prevent mentions from trapping the cursor when arrowing left and right through the mention.
-  - Set low priority for `AutoLinkExtension` to prevent `appendTransaction` interfering with
-    mentions.
+  - Set low priority for `AutoLinkExtension` to prevent `appendTransaction` interfering with mentions.
   - Update extension order in the `SocialPreset`
-  - `prosemirror-suggest` - New export `isSelectionExitReason` which let's the user know if the exit
-    was due to a selection change or a character entry.
+  - `prosemirror-suggest` - New export `isSelectionExitReason` which let's the user know if the exit was due to a selection change or a character entry.
 - Updated dependencies [a93c83bd]
   - @remirror/extension-auto-link@1.0.0-next.8
   - @remirror/extension-mention@1.0.0-next.8
@@ -468,9 +447,7 @@
 
 - Add support for `React.StrictMode`.
 
-  Previously, activating `StrictMode` would cause the components to render twice and break
-  functionality of `RemirrorProvider` due to an outdated check on whether `getRootProps` had been
-  called. This check has been removed since it isn't needed anymore.
+  Previously, activating `StrictMode` would cause the components to render twice and break functionality of `RemirrorProvider` due to an outdated check on whether `getRootProps` had been called. This check has been removed since it isn't needed anymore.
 
 ### Patch Changes
 
@@ -509,9 +486,7 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
 
 ### Patch Changes
 

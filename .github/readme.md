@@ -79,7 +79,8 @@ Whatever you decide I'm happy that you've taken the time to dive into the `remir
 View our documentation website at https://remirror.io
 
 - [Introduction]
-- [Getting started]
+- [Create an editor](https://remirror.io/docs/guide/create-editor)
+- [Extensions](https://remirror.io/docs/concepts/extension)
 
 <br />
 

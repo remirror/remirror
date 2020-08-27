@@ -2,9 +2,7 @@
 
 > A cursor for the ages. Drag and drop content in your editor with class.
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
-[![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)
-![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
 
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-drop-cursor
 [npm]: https://npmjs.com/package/@remirror/extension-drop-cursor
@@ -24,8 +22,7 @@ npm install @remirror/extension-drop-cursor@next # npm
 
 ## Usage
 
-The following code sample will create a limited editor and run the available commands from this
-extension.
+The following code sample will create a limited editor and run the available commands from this extension.
 
 ```ts
 import { RemirrorManager, ExtensionPriority } from '@remirror/core';

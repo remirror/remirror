@@ -6,11 +6,7 @@
 
 ### Patch Changes
 
-- Updated dependencies
-  [[`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47),
-  [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448),
-  [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d),
-  [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)]:
+- Updated dependencies [[`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47), [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448), [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d), [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)]:
   - @remirror/core@1.0.0-next.28
   - @remirror/extension-gap-cursor@1.0.0-next.28
   - @remirror/pm@1.0.0-next.28
@@ -151,20 +147,13 @@
 
 ### Major Changes
 
-- 6528323e: **Breaking:** `@remirror/preset-core` -`CreateCoreManagerOptions` now extends
-  `Remirror.ManagerSettings`.
+- 6528323e: **Breaking:** `@remirror/preset-core` -`CreateCoreManagerOptions` now extends `Remirror.ManagerSettings`.
 
-  **Breaking:** `@remirror/preset-wysiwyg` - Rename `CreateWysiwygPresetListParameter` to
-  **`CreateWysiwygPresetListOptions`**. Also it now extends `Remirror.ManagerSettings`.
-  **Breaking:**`@remirror/react` - `CreateReactManagerOptions` now extends
-  `Remirror.ManagerSettings`. **Breaking:** `@remirror/react-social` - `CreateSocialManagerOptions`
-  now extends `Remirror.ManagerSettings`.
+  **Breaking:** `@remirror/preset-wysiwyg` - Rename `CreateWysiwygPresetListParameter` to **`CreateWysiwygPresetListOptions`**. Also it now extends `Remirror.ManagerSettings`. **Breaking:**`@remirror/react` - `CreateReactManagerOptions` now extends `Remirror.ManagerSettings`. **Breaking:** `@remirror/react-social` - `CreateSocialManagerOptions` now extends `Remirror.ManagerSettings`.
 
-  **Breaking:** `@remirror/react`, `@remirror/react-social`, `@remirror/react-wysiwyg` now uses a
-  `settings` property for manager settings.
+  **Breaking:** `@remirror/react`, `@remirror/react-social`, `@remirror/react-wysiwyg` now uses a `settings` property for manager settings.
 
-  `@remirror/core-types` - Add `GetStaticAndDynamic<Options>` helper for extracting options from
-  extension. Apply it to the packages mentioned above.
+  `@remirror/core-types` - Add `GetStaticAndDynamic<Options>` helper for extracting options from extension. Apply it to the packages mentioned above.
 
   - `@remirror/react-wysiwyg` - Update imports from `@remirror/preset-wysiwyg`.
 
@@ -172,8 +161,7 @@
 
   Positioners now return an array of `VirtualPositions` or an empty array if no positions extension.
 
-  `@remirror/react` - Add `useMultiPositioner`. `@remirror/react` - Add `virtualNode` property for
-  compatibility with `popper-react`
+  `@remirror/react` - Add `useMultiPositioner`. `@remirror/react` - Add `virtualNode` property for compatibility with `popper-react`
 
   An example of creating a new positioner with the new api is below.
 
@@ -242,8 +230,7 @@
 
   Closes #406
 
-- be9a9c17: Move all keymap functionality to `KeymapExtension` from `@remirror/core`. Remove all
-  references to `@remirror/extension-base-keymap`.
+- be9a9c17: Move all keymap functionality to `KeymapExtension` from `@remirror/core`. Remove all references to `@remirror/extension-base-keymap`.
 - Updated dependencies [f032db7e]
 - Updated dependencies [a7037832]
 - Updated dependencies [6e8b749a]
@@ -273,9 +260,7 @@
 
 - f91dcab1: 🎉 New extension `@remirror/extension-events`.
 
-  This extension adds handlers for the events happening within the remirror editor. The extension is
-  part of the `CorePreset` but it doesn't make it's handlers available to the preset. In order to
-  use the handlers you will need direct access to the `EventsExtension`.
+  This extension adds handlers for the events happening within the remirror editor. The extension is part of the `CorePreset` but it doesn't make it's handlers available to the preset. In order to use the handlers you will need direct access to the `EventsExtension`.
 
   ```ts
   import { EventsExtension } from 'remirror/extension-events';
@@ -323,8 +308,7 @@
 
 ### Patch Changes
 
-- 38941404: Switch from static properties to using the `@extensionDecorator` and `@presetDecorator`
-  instead.
+- 38941404: Switch from static properties to using the `@extensionDecorator` and `@presetDecorator` instead.
 - Updated dependencies [d877adb3]
 - Updated dependencies [38941404]
 - Updated dependencies [cc5c1c1c]
@@ -379,13 +363,10 @@
 
 ### Minor Changes
 
-- 3702a83a: Remove requirement for `readonly` arrays when passing a list of extensions / presets to
-  manager creators.
+- 3702a83a: Remove requirement for `readonly` arrays when passing a list of extensions / presets to manager creators.
 
-  - **`@remirror/react`** - Add support for a function as the first parameter to the `useManager`
-    hook and `createReactManager` function.
-  - **`@remirror/preset-core`** - Add support for a function as the first parameter to the
-    `createCoreManager` function.
+  - **`@remirror/react`** - Add support for a function as the first parameter to the `useManager` hook and `createReactManager` function.
+  - **`@remirror/preset-core`** - Add support for a function as the first parameter to the `createCoreManager` function.
 
 ### Patch Changes
 
@@ -486,14 +467,11 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
 - 28bd8bea: This is a breaking change to the structure of published npm packages.
 
   - Move build directory from `lib` to `dist`
-  - Remove option for multiple entry points. It is no longer possible to import module from
-    '@remirror/core/lib/custom'
+  - Remove option for multiple entry points. It is no longer possible to import module from '@remirror/core/lib/custom'
   - Only use one entry file.
   - Remove declaration source mapping for declaration files
   - Remove the src directory from being published.

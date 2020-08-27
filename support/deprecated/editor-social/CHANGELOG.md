@@ -22,9 +22,7 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
 - b3153b4c: Deprecate unused packages in the latest version.
 
 ## 0.13.1
@@ -54,9 +52,7 @@
 
 ### Minor Changes
 
-- 23d599fc: Enable options to be passed into the social editor `@remirror/extension-mention`
-  matchers via `atMatcherOptions` and `tagMatcherOptions`. This allows for more powerful
-  configuration of the mentions within the social editor.
+- 23d599fc: Enable options to be passed into the social editor `@remirror/extension-mention` matchers via `atMatcherOptions` and `tagMatcherOptions`. This allows for more powerful configuration of the mentions within the social editor.
 
 ### Patch Changes
 
@@ -100,8 +96,7 @@
 
 ### Patch Changes
 
-- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub
-  organisation.
+- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub organisation.
 - Updated dependencies [10419145]
 - Updated dependencies [7380e18f]
   - @remirror/core-extensions@0.7.4

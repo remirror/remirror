@@ -22,21 +22,16 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
-- 0bbe7270: Deprecate `@remirror/core-extensions` and remove the simple code block extension from
-  the repo.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
+- 0bbe7270: Deprecate `@remirror/core-extensions` and remove the simple code block extension from the repo.
 - b3153b4c: Deprecate unused packages in the latest version.
-- 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`.
-  If your code was importing any matching interface you will need to update the name.
+- 7b817ac2: Rename all types and interfaces postfixed with `Params` to use the postfix `Parameter`. If your code was importing any matching interface you will need to update the name.
 
 ## 0.13.1
 
 ### Patch Changes
 
-- 4dbb7461: Prevent the link selection from selecting word on click if there is already a selection.
-  Fixes #278.
+- 4dbb7461: Prevent the link selection from selecting word on click if there is already a selection. Fixes #278.
 
 ## 0.11.1
 
@@ -86,10 +81,8 @@
 
 ### Patch Changes
 
-- 10419145: Make all built-in extensions' `keys()` return a `KeyboardBindings` object instead of a
-  specific object (#206)
-- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub
-  organisation.
+- 10419145: Make all built-in extensions' `keys()` return a `KeyboardBindings` object instead of a specific object (#206)
+- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub organisation.
 - Updated dependencies [7380e18f]
   - @remirror/core-constants@0.7.4
   - @remirror/core-helpers@0.7.4

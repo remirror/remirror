@@ -4,8 +4,7 @@ title: Contributing
 
 Fork [this repository][repo], clone your fork and add this repository as the upstream remote.
 
-You will need to have [`pnpm`](https://pnpm.js.org) installed so make sure you follow the
-installation [instructions](https://pnpm.js.org/en/installation).
+You will need to have [`pnpm`](https://pnpm.js.org) installed so make sure you follow the installation [instructions](https://pnpm.js.org/en/installation).
 
 ```bash
 git clone <<FORKED_REPO_URL>>
@@ -17,8 +16,7 @@ pnpm install
 git checkout -b BRANCH_NAME
 ```
 
-If you already have a previous version of the repository checked out then make sure to clean your
-`node_modules` by running the following command before installation.
+If you already have a previous version of the repository checked out then make sure to clean your `node_modules` by running the following command before installation.
 
 ```bash
 pnpm clean:all
@@ -30,19 +28,12 @@ pnpm refresh
 
 ## Project Structure
 
-The number of files in the root directory is deliberately as minimal as possible. This is achieved
-by moving all configuration files to the `support/root` folder. Whenever you run `pnpm install`
-these files are symlinked to the root directory.
+The number of files in the root directory is deliberately as minimal as possible. This is achieved by moving all configuration files to the `support/root` folder. Whenever you run `pnpm install` these files are symlinked to the root directory.
 
-- `.github` - The `GitHub` specific configuration for workflows, issue templates and pull request
-  templates.
+- `.github` - The `GitHub` specific configuration for workflows, issue templates and pull request templates.
 - `docs` - The documentation for this project. This is also used by the docusaurus website.
-- `packages` - The packages provided by remirror. Within this folder there are top level packages
-  like `remirror` and `jest-remirror` and also scope packages within the `@remirror/*` folder like
-  `@remirror/core`.
-- `support` - This is the package that provides the configuration files, the website, and many other
-  folders. Each directory includes a readme file that explains it's functionality. Take a
-  [look](https://github.com/remirror/remirror/tree/HEAD/support).
+- `packages` - The packages provided by remirror. Within this folder there are top level packages like `remirror` and `jest-remirror` and also scope packages within the `@remirror/*` folder like `@remirror/core`.
+- `support` - This is the package that provides the configuration files, the website, and many other folders. Each directory includes a readme file that explains it's functionality. Take a [look](https://github.com/remirror/remirror/tree/HEAD/support).
 
 ## Documentation
 
@@ -52,13 +43,9 @@ From the root directory use the following command to launch the documentation si
 pnpm docs
 ```
 
-Once the build completes (can take a minute the first time) navigate to http://localhost:3000 (or
-another port if that one is already being used).
+Once the build completes (can take a minute the first time) navigate to http://localhost:3000 (or another port if that one is already being used).
 
-The documentation is written using [docusaurus] and all files and dependencies are available in the
-`/support/website` subdirectory. To add a new dependency, you will need to add it to
-`/support/website/package.json` and not the top level package.json file. You can either do this by
-manually editing the `/support/website/package.json` file or you use the following command.
+The documentation is written using [docusaurus] and all files and dependencies are available in the `/support/website` subdirectory. To add a new dependency, you will need to add it to `/support/website/package.json` and not the top level package.json file. You can either do this by manually editing the `/support/website/package.json` file or you use the following command.
 
 ```bash
 cd support/website
@@ -94,17 +81,14 @@ pnpm test extension-bold
 
 ## Using Git
 
-I recommend that while working on your code you commit early and often. You won't be judged. All
-worked submitted in a pull request (see following section) will be squashed into one commit before
-merging (unless it makes sense to keep the commits as separate items).
+I recommend that while working on your code you commit early and often. You won't be judged. All worked submitted in a pull request (see following section) will be squashed into one commit before merging (unless it makes sense to keep the commits as separate items).
 
 `remirror` has built in [husky] support for git hooks
 
 - Before each commit (lint and test changed files)
 - Before each push (lint, typecheck and test)
 
-By default these checks are **not** run automatically. To enable automatic pre-commit and pre-push
-hooks use the following command:
+By default these checks are **not** run automatically. To enable automatic pre-commit and pre-push hooks use the following command:
 
 ```bash
 pnpm checks:enable
@@ -120,47 +104,32 @@ pnpm checks:disable
 
 ## Development
 
-If you're modifying a package and import helpers from another packages in the monorepo, ensure that
-the other package is referenced in the referring package's `package.json` file.
+If you're modifying a package and import helpers from another packages in the monorepo, ensure that the other package is referenced in the referring package's `package.json` file.
 
 ### General
 
-This project uses [`preconstruct`](https://github.com/preconstruct/preconstruct) to manage builds.
-Each time the project is installed `preconstruct dev` is run which automatically sets the dist
-folder with entry points mapping to the source files of the package. This is really useful for
-development and except for one exception when working on the playground is all you need.
+This project uses [`preconstruct`](https://github.com/preconstruct/preconstruct) to manage builds. Each time the project is installed `preconstruct dev` is run which automatically sets the dist folder with entry points mapping to the source files of the package. This is really useful for development and except for one exception when working on the playground is all you need.
 
 ### Playground
 
-Working on the playground needs an extra step. The code being injected into the iframe needs to be
-pre-compiled and updates will fail for you if using `preconstruct dev`. The following command
-resolves this problem.
+Working on the playground needs an extra step. The code being injected into the iframe needs to be pre-compiled and updates will fail for you if using `preconstruct dev`. The following command resolves this problem.
 
 ```bash
 pnpm dev
 ```
 
-When run this builds all packages and then watch for changes to rebuild as necessary. One issue with
-running this command is that you will lose any meaningful type checking. If you run `pnpm typecheck`
-and it fails with cryptic issues, it may be that you're still in the build state.
+When run this builds all packages and then watch for changes to rebuild as necessary. One issue with running this command is that you will lose any meaningful type checking. If you run `pnpm typecheck` and it fails with cryptic issues, it may be that you're still in the build state.
 
 <br />
 
 ## Pull Request (PR) Process
 
-Once your work is complete you'll want to create a Pull Request to share all that goodness with the
-rest of us.
+Once your work is complete you'll want to create a Pull Request to share all that goodness with the rest of us.
 
-1. Create a [pull request](https://help.github.com/en/articles/creating-a-pull-request) using the
-   github interface. The template will automatically populate for you.
-2. Add a description and reference the issue this pull request addresses where applicable. The
-   description will be used as the body of the git commit message since all pull request are
-   squashed down into one commit before merging.
-3. Tick off all relevant check boxes by placing an x between the square brackets i.e. `[ ]` to
-   `[x]`.
-4. Please add a screenshot where the change is related to the user interface or design. It makes it
-   so much easier to grasp the intentions of your work. You can use your favourite GIF screenshare
-   tool for creating animated screenshots.
+1. Create a [pull request](https://help.github.com/en/articles/creating-a-pull-request) using the github interface. The template will automatically populate for you.
+2. Add a description and reference the issue this pull request addresses where applicable. The description will be used as the body of the git commit message since all pull request are squashed down into one commit before merging.
+3. Tick off all relevant check boxes by placing an x between the square brackets i.e. `[ ]` to `[x]`.
+4. Please add a screenshot where the change is related to the user interface or design. It makes it so much easier to grasp the intentions of your work. You can use your favourite GIF screenshare tool for creating animated screenshots.
 5. Once submitted the PR will be addressed at our earliest convenience.
 
 <br />
@@ -172,11 +141,8 @@ Over time this project has accumulated quite an active set of lint rules.
 The following are some personal preferences for coding style.
 
 - Functions with more than two arguments should condense these arguments into a parameter object.
-- Comment everything. Even if the comment is just to say, `I have no idea what I'm doing`, there is
-  a lot of information in that comment.
-- Choose simplicity over performance. Performance is abstract and it's often better to start with a
-  simple implementation that can be made more performant, than something that's complex from day
-  one.
+- Comment everything. Even if the comment is just to say, `I have no idea what I'm doing`, there is a lot of information in that comment.
+- Choose simplicity over performance. Performance is abstract and it's often better to start with a simple implementation that can be made more performant, than something that's complex from day one.
 - Use `const` **Arrow Functions** when declaring components.
 
 ```tsx
@@ -206,8 +172,7 @@ const doSomething = (something: string) => {
 When creating your own extension or preset you can follow these steps.
 
 1. Copy `support/templates/extension-template` to `packages/@remirror/extension-<name>`.
-2. Rename `template`, `Template` and `TEMPLATE` in the new package to `<name>`, `<Name>` and
-   `<NAME>`.
+2. Rename `template`, `Template` and `TEMPLATE` in the new package to `<name>`, `<Name>` and `<NAME>`.
 3. Replace `TEMPLATE_DESCRIPTION` with a suitable description.
 4. Rename the files from `template-` to `<name>-`.
 5. (OPTIONAL) -Add your name and email as a contributor to the `package.json`.
@@ -225,10 +190,7 @@ When creating your own extension or preset you can follow these steps.
 
 ### Our Pledge
 
-In the interest of fostering an open and welcoming environment, we as contributors and maintainers
-pledge to making participation in our project and our community a harassment-free experience for
-everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level
-of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
+In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
 ### Our Standards
 
@@ -245,44 +207,28 @@ Examples of unacceptable behavior by participants include:
 - The use of sexualized language or imagery and unwelcome sexual attention or advances
 - Trolling, insulting/derogatory comments, and personal or political attacks
 - Public or private harassment
-- Publishing others' private information, such as a physical or electronic address, without explicit
-  permission
+- Publishing others' private information, such as a physical or electronic address, without explicit permission
 - Other conduct which could reasonably be considered inappropriate in a professional setting
 
 ### Our Responsibilities
 
-Project maintainers are responsible for clarifying the standards of acceptable behavior and are
-expected to take appropriate and fair corrective action in response to any instances of unacceptable
-behavior.
+Project maintainers are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.
 
-Project maintainers have the right and responsibility to remove, edit, or reject comments, commits,
-code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or
-to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate,
-threatening, offensive, or harmful.
+Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.
 
 ### Scope
 
-This Code of Conduct applies both within project spaces and in public spaces when an individual is
-representing the project or its community. Examples of representing a project or community include
-using an official project e-mail address, posting via an official social media account, or acting as
-an appointed representative at an online or offline event. Representation of a project may be
-further defined and clarified by project maintainers.
+This Code of Conduct applies both within project spaces and in public spaces when an individual is representing the project or its community. Examples of representing a project or community include using an official project e-mail address, posting via an official social media account, or acting as an appointed representative at an online or offline event. Representation of a project may be further defined and clarified by project maintainers.
 
 ### Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting
-the project team at help@kickjump.co. All complaints will be reviewed and investigated and will
-result in a response that is deemed necessary and appropriate to the circumstances. The project team
-is obligated to maintain confidentiality with regard to the reporter of an incident. Further details
-of specific enforcement policies may be posted separately.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at help@kickjump.co. All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident. Further details of specific enforcement policies may be posted separately.
 
-Project maintainers who do not follow or enforce the Code of Conduct in good faith may face
-temporary or permanent repercussions as determined by other members of the project's leadership.
+Project maintainers who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other members of the project's leadership.
 
 ### Attribution
 
-This Code of Conduct is adapted from the [Contributor Covenant], version 1.4, available at
-[http://contributor-covenant.org/version/1/4][version]
+This Code of Conduct is adapted from the [Contributor Covenant], version 1.4, available at [http://contributor-covenant.org/version/1/4][version]
 
 [contributor covenant]: http://contributor-covenant.org
 [version]: http://contributor-covenant.org/version/1/4/

@@ -6,11 +6,7 @@
 
 ### Patch Changes
 
-- Updated dependencies
-  [[`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47),
-  [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448),
-  [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d),
-  [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)]:
+- Updated dependencies [[`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47), [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448), [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d), [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)]:
   - @remirror/core@1.0.0-next.28
   - @remirror/pm@1.0.0-next.28
   - @remirror/extension-auto-link@1.0.0-next.28
@@ -149,8 +145,7 @@
 
 ### Patch Changes
 
-- 9d708c03: Reduce the `AutoLinkExtension` priority and remove priority override for the mention and
-  emoji extensions.
+- 9d708c03: Reduce the `AutoLinkExtension` priority and remove priority override for the mention and emoji extensions.
 - Updated dependencies [cdc5b801]
 - Updated dependencies [0dd4d621]
 - Updated dependencies [44516da4]
@@ -168,8 +163,7 @@
 
 ### Patch Changes
 
-- 38941404: Switch from static properties to using the `@extensionDecorator` and `@presetDecorator`
-  instead.
+- 38941404: Switch from static properties to using the `@extensionDecorator` and `@presetDecorator` instead.
 - Updated dependencies [d877adb3]
 - Updated dependencies [38941404]
 - Updated dependencies [cc5c1c1c]
@@ -201,8 +195,7 @@
 
 ### Patch Changes
 
-- 21a9650c: Rename `getArray` to `getLazyArray`. Also bump the version of `@remirror/core-helpers`
-  to make sure it is released.
+- 21a9650c: Rename `getArray` to `getLazyArray`. Also bump the version of `@remirror/core-helpers` to make sure it is released.
 - Updated dependencies [54461006]
   - @remirror/core@1.0.0-next.11
   - @remirror/extension-auto-link@1.0.0-next.11
@@ -241,11 +234,9 @@
 
 - a93c83bd: - Add `keepSelection` property to the `replaceText` command function.
   - Prevent mentions from trapping the cursor when arrowing left and right through the mention.
-  - Set low priority for `AutoLinkExtension` to prevent `appendTransaction` interfering with
-    mentions.
+  - Set low priority for `AutoLinkExtension` to prevent `appendTransaction` interfering with mentions.
   - Update extension order in the `SocialPreset`
-  - `prosemirror-suggest` - New export `isSelectionExitReason` which let's the user know if the exit
-    was due to a selection change or a character entry.
+  - `prosemirror-suggest` - New export `isSelectionExitReason` which let's the user know if the exit was due to a selection change or a character entry.
 - Updated dependencies [a93c83bd]
   - @remirror/extension-auto-link@1.0.0-next.8
   - @remirror/extension-mention@1.0.0-next.8
@@ -311,9 +302,7 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
 
 ### Patch Changes
 

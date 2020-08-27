@@ -6,11 +6,7 @@
 
 ### Patch Changes
 
-- Updated dependencies
-  [[`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47),
-  [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448),
-  [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d),
-  [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)]:
+- Updated dependencies [[`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47), [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448), [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d), [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)]:
   - @remirror/core@1.0.0-next.28
   - @remirror/pm@1.0.0-next.28
 
@@ -20,8 +16,7 @@
 
 ### Patch Changes
 
-- a2bc3bfb: Support for extending the `ExtensionTag` with your own custom types and names to close
-  #465. Deprecates `NodeGroup` and `MarkGroup` which will be removed in a future version.
+- a2bc3bfb: Support for extending the `ExtensionTag` with your own custom types and names to close #465. Deprecates `NodeGroup` and `MarkGroup` which will be removed in a future version.
 
   - A small breaking change removes some related type exports from `@remirror/core`.
   - Add the ability to `mutateTag` for creating custom tags in custom extensions.
@@ -152,8 +147,7 @@
 
 ### Patch Changes
 
-- 38941404: Switch from static properties to using the `@extensionDecorator` and `@presetDecorator`
-  instead.
+- 38941404: Switch from static properties to using the `@extensionDecorator` and `@presetDecorator` instead.
 - Updated dependencies [d877adb3]
 - Updated dependencies [cc5c1c1c]
 - Updated dependencies [e45706e5]
@@ -178,11 +172,9 @@
 
 ### Patch Changes
 
-- 54461006: Remove the first parameter `extensions` from the lifecycle methods `onCreate`, `onView`
-  and `onDestroy`.
+- 54461006: Remove the first parameter `extensions` from the lifecycle methods `onCreate`, `onView` and `onDestroy`.
 
-  Switch to using method signatures for extension class methods as discussed in #360. The following
-  methods have been affected:
+  Switch to using method signatures for extension class methods as discussed in #360. The following methods have been affected:
 
   ```
   onCreate
@@ -226,8 +218,7 @@
 
 ### Major Changes
 
-- e9286ed9: Remove attrs from paragraph node. Allow users to provide their own custom attributes
-  when needed.
+- e9286ed9: Remove attrs from paragraph node. Allow users to provide their own custom attributes when needed.
 
 ## 1.0.0-next.4
 
@@ -278,14 +269,11 @@
 
 ### Major Changes
 
-- The whole API for remirror has completely changed. These pre-release versions are a breaking
-  change across all packages. The best way to know what's changed is to read the documentaion on the
-  new documentation site `https://remirror.io`.
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
 - 28bd8bea: This is a breaking change to the structure of published npm packages.
 
   - Move build directory from `lib` to `dist`
-  - Remove option for multiple entry points. It is no longer possible to import module from
-    '@remirror/core/lib/custom'
+  - Remove option for multiple entry points. It is no longer possible to import module from '@remirror/core/lib/custom'
   - Only use one entry file.
   - Remove declaration source mapping for declaration files
   - Remove the src directory from being published.

@@ -8,10 +8,7 @@ There are three extension types.
 - Node Extensions
 - Mark Extensions
 
-The node and mark extensions get their name from the underlying prosemirror implementation. If you
-have time it's not a bad idea to peruse though the
-[prosemirror documentation](https://prosemirror.net/docs/guide/). The ending will really surprise
-you.
+The node and mark extensions get their name from the underlying prosemirror implementation. If you have time it's not a bad idea to peruse though the [prosemirror documentation](https://prosemirror.net/docs/guide/). The ending will really surprise you.
 
 Naming conventions for npm packages
 
