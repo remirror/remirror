@@ -10,18 +10,29 @@ import {
   presetDecorator,
 } from '@remirror/core';
 import { PlaceholderExtension, PlaceholderOptions } from '@remirror/extension-placeholder';
-import { ReactComponentExtension } from '@remirror/extension-react-component';
-import { ReactSSRExtension, ReactSSROptions } from '@remirror/extension-react-ssr';
+import {
+  ReactComponentExtension,
+  ReactComponentOptions,
+} from '@remirror/extension-react-component';
+import { ReactSsrExtension, ReactSsrOptions } from '@remirror/extension-react-ssr';
 import { getElementProps } from '@remirror/react-utils';
 
-export interface ReactPresetOptions extends ReactSSROptions, PlaceholderOptions {}
+export interface ReactPresetOptions
+  extends ReactSsrOptions,
+    PlaceholderOptions,
+    ReactComponentOptions {}
 
+/**
+ * This is the `ReactPreset which is required when using the `React` framework
+ * with **remirror**.
+ */
 @presetDecorator<ReactPresetOptions>({
   defaultOptions: {
-    ...ReactSSRExtension.defaultOptions,
+    ...ReactSsrExtension.defaultOptions,
     ...PlaceholderExtension.defaultOptions,
+    ...ReactComponentExtension.defaultOptions,
   },
-  staticKeys: ['transformers'],
+  staticKeys: ['transformers', 'defaultEnvironment'],
 })
 export class ReactPreset extends Preset<ReactPresetOptions> {
   get name() {
@@ -31,7 +42,7 @@ export class ReactPreset extends Preset<ReactPresetOptions> {
   /**
    * No properties are defined so this can be ignored.
    */
-  protected onSetOptions(parameter: OnSetOptionsParameter<ReactPresetOptions>) {
+  protected onSetOptions(parameter: OnSetOptionsParameter<ReactPresetOptions>): void {
     const { pickChanged } = parameter;
 
     const placeholderOptions = pickChanged(['emptyNodeClass', 'placeholder']);
@@ -42,15 +53,35 @@ export class ReactPreset extends Preset<ReactPresetOptions> {
   }
 
   createExtensions() {
-    const { transformers, emptyNodeClass, placeholder } = this.options;
+    const {
+      transformers,
+      emptyNodeClass,
+      placeholder,
+      defaultBlockNode,
+      defaultContentNode,
+      defaultEnvironment,
+      defaultInlineNode,
+      nodeViewComponents,
+    } = this.options;
     const placeholderExtension = new PlaceholderExtension({ emptyNodeClass, placeholder });
     this.addSSRToPlaceholder(placeholderExtension);
 
-    const reactComponentExtension = new ReactComponentExtension();
+    const reactComponentExtension = new ReactComponentExtension({
+      defaultBlockNode,
+      defaultContentNode,
+      defaultEnvironment,
+      defaultInlineNode,
+      nodeViewComponents,
+    });
 
-    return [new ReactSSRExtension({ transformers }), placeholderExtension, reactComponentExtension];
+    return [new ReactSsrExtension({ transformers }), placeholderExtension, reactComponentExtension];
   }
 
+  /**
+   * This method updates the `PlaceholderExtension` instance to add SSR support.
+   *
+   * It is called when creating extensions.
+   */
   private addSSRToPlaceholder(extension: PlaceholderExtension) {
     /**
      * Add a class and props to the root element if the document is empty.

@@ -290,8 +290,12 @@ export class CommandsExtension extends PlainExtension {
   };
 
   /**
-   * Checks if the codebase has requested for the transaction to cause a force
-   * update.
+   * Checks if the transaction has meta data which requires a forced update.
+   * This can be used for updating:
+   *
+   * - `nodeViews`
+   * - `editable` status of the editor
+   * - `attributes` - for the top level node
    */
   private readonly getForcedUpdates = (tr: Transaction): ForcedUpdateMeta => {
     return this.getMeta(tr);

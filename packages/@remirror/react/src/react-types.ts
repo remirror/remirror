@@ -3,9 +3,7 @@ import type { ReactNode, Ref } from 'react';
 import type {
   AnyCombinedUnion,
   AnyExtension,
-  AnyPreset,
   BuiltinPreset,
-  CombinedUnion,
   EditorState,
   EditorWrapperOutput,
   EditorWrapperProps,
@@ -19,10 +17,7 @@ import type { I18n } from '@remirror/i18n';
 import type { CorePreset, CreateCoreManagerOptions } from '@remirror/preset-core';
 import type { ReactPreset, ReactPresetOptions } from '@remirror/preset-react';
 
-export type DefaultReactCombined = CombinedUnion<
-  AnyExtension,
-  CorePreset | ReactPreset | BuiltinPreset | AnyPreset
->;
+export type DefaultReactCombined = ReactCombinedUnion<AnyExtension>;
 
 /**
  * Use this to build your own combined union type.
@@ -101,7 +96,13 @@ export interface BaseProps<Combined extends AnyCombinedUnion> extends EditorWrap
  */
 export interface GetRootPropsConfig<RefKey extends string = 'ref'>
   extends RefParameter<RefKey>,
-    Shape {}
+    Shape {
+  /**
+   * Allows for composing the refs together. If you have a ref you would
+   * also like to add to the main element then just add it here.
+   */
+  ref?: Ref<HTMLElement>;
+}
 
 /**
  * The react ref key props for the `getRootProps` method.

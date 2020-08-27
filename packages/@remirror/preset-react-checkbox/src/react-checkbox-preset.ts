@@ -5,7 +5,7 @@ export interface CheckboxOptions {}
 @presetDecorator<CheckboxOptions>({})
 export class CheckboxPreset extends Preset<CheckboxOptions> {
   get name() {
-    return 'reactCheckbox' as const;
+    return 'checkbox' as const;
   }
 
   protected onSetOptions(_: OnSetOptionsParameter<CheckboxOptions>) {}

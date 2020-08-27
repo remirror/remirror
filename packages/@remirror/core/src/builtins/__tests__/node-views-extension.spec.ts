@@ -1,5 +1,5 @@
 import { extensionValidityTest } from 'jest-remirror';
 
-import { NodeViewsExtension } from '..';
+import { NodeViewExtension } from '..';
 
-extensionValidityTest(NodeViewsExtension);
+extensionValidityTest(NodeViewExtension);

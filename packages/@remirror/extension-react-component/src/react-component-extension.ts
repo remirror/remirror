@@ -2,6 +2,7 @@ import type { ComponentType } from 'react';
 
 import {
   AnyCombinedUnion,
+  entries,
   extensionDecorator,
   isNodeExtension,
   NodeViewMethod,
@@ -18,16 +19,17 @@ import { PortalContainer } from './portals';
 import { ReactNodeView } from './react-node-view';
 
 /**
- * The extension transforms the `Component` property on extensions into a
+ * The extension transforms the `ReactComponent` property on extensions into the
+ * following:
  *
- * - Valid nodeView wrapped in a wrapper dom element
- * - A valid SSR component.
+ * - a valid `NodeView` wrapped dom element
+ * - a valid `SSR` component.
  *
  * Currently this only support nodes. Support will be added for marks later.
  *
  * @remarks
  *
- * When creating a nodeView using the component property the `toDOM` method
+ * When creating a NodeView using the component property the `toDOM` method
  * returned by the `createNodeSpec` methods needs to be in the following format.
  *
  * - `string` - e.g. `div`. This will be used as the wrapper tag name. .
@@ -42,30 +44,28 @@ import { ReactNodeView } from './react-node-view';
  *
  * ### Caveats
  *
- * It's not possible not to have the nesting in `React` due to this issue
- * https://github.com/facebook/react/issues/12227. Also, it's unlikely that any
- * changes will be made in ProseMirror, which makes a lot of sense
+ * It's not possible to create a node view without nested dom element in `react`
+ * due to this issue https://github.com/facebook/react/issues/12227. It's
+ * unlikely that this limitation will be changed any time soon
  * https://github.com/ProseMirror/prosemirror/issues/803
  *
- * NodeViews have a `dom` node which is the top element. For paragraphs this
- * would be the `p` tag and for text this is a `TEXT` node. NodeView's  also
- * have a `contentDOM` property which is where any content from ProseMirror is
- * injected.
+ * NodeViews have a `dom` node which is used as the main wrapper element. For
+ * paragraphs this would be the `p` tag and for text this is a `TEXT` node.
+ * NodeView's  also have a `contentDOM` property which is where any content from
+ * ProseMirror is injected.
  *
  * The difficulty in integration is that the dom node and the content dom node
  * of the `NodeView` are consumed synchronously by ProseMirror. However, react
- * requires a ref to determine where the node has been mounted and this is done
- * asynchronously. As a result it's not possible provide the `dom` node or
- * `contentDOM` to ProseMirror while using react.
+ * requires a ref to capture the dom node which corresponds to the mounted
+ * component. This is done asynchronously. As a result it's not possible to
+ * provide the `dom` node or `contentDOM` to ProseMirror while using react.
  *
- * The only way around this, is to create both the top level dom node and the
- * content dom manually in the NodeView and provide a ref to the component which
- * should be attached to the part of the tree where content should be rendered
- * to. Once the React ref is available asynchronously the `contentDOM` can be
- * appended to it.
- *
- * I'm currently improving the API in the next branch and I'll update docs on
- * how it should be used once done.
+ * The only way around this is to create both the top level `dom` element and
+ * the `contentDOM` element manually in the NodeView and provide a `forwardRef`
+ * prop to the component. This prop must be attached to the part of the tree
+ * where content should be rendered to. Once the React ref is available the
+ * `forwardRef` prop appends the `contentDOM` to the element where `forwardRef`
+ * was attached.
  */
 @extensionDecorator<ReactComponentOptions>({
   defaultOptions: {
@@ -73,6 +73,7 @@ import { ReactNodeView } from './react-node-view';
     defaultInlineNode: 'span',
     defaultContentNode: 'span',
     defaultEnvironment: 'both',
+    nodeViewComponents: {},
   },
   staticKeys: ['defaultEnvironment'],
 })
@@ -84,20 +85,25 @@ export class ReactComponentExtension extends PlainExtension<ReactComponentOption
   readonly #portalContainer: PortalContainer = new PortalContainer();
 
   get name() {
-    return 'reactNodeView' as const;
+    return 'reactComponent' as const;
   }
 
   /**
    * Add the portal container to the manager store. This can be used by the
    * `ReactEditor` to manage the portals.
    */
-  onCreate = () => {
+  onCreate(): void {
     this.store.setStoreKey('portalContainer', this.#portalContainer);
-  };
+  }
 
-  createNodeViews = (): Record<string, NodeViewMethod> => {
+  /**
+   * Create the node views from the custom
+   */
+  createNodeViews(): Record<string, NodeViewMethod> {
     const nodeViews: Record<string, NodeViewMethod> = object();
+    const managerComponents = this.store.managerSettings.nodeViewComponents ?? {};
 
+    // Loop through the extension to pick out the ones with custom components.
     for (const extension of this.store.extensions) {
       if (
         !extension.ReactComponent ||
@@ -109,13 +115,24 @@ export class ReactComponentExtension extends PlainExtension<ReactComponentOption
 
       nodeViews[extension.name] = ReactNodeView.create({
         options: this.options,
-        extension,
+        ReactComponent: extension.ReactComponent,
+        portalContainer: this.#portalContainer,
+      });
+    }
+
+    const namedComponents = entries({ ...this.options.nodeViewComponents, ...managerComponents });
+
+    // Add the custom react components from the extension settings and manager setting.
+    for (const [name, ReactComponent] of namedComponents) {
+      nodeViews[name] = ReactNodeView.create({
+        options: this.options,
+        ReactComponent,
         portalContainer: this.#portalContainer,
       });
     }
 
     return nodeViews;
-  };
+  }
 }
 
 declare global {
@@ -156,6 +173,19 @@ declare global {
        * or `{ node: ProsemirrorNode }`.
        */
       ReactComponent?: ComponentType<NodeViewComponentProps>;
+    }
+
+    interface ManagerSettings {
+      /**
+       * Override editor nodes with custom components..
+       *
+       * ```ts
+       * {
+       *   paragraph: ({ forwardRef }) => <p style={{ backgroundColor: 'pink' }} ref={forwardRef} />,
+       * }
+       * ```
+       */
+      nodeViewComponents?: Record<string, ComponentType<NodeViewComponentProps>>;
     }
   }
 }

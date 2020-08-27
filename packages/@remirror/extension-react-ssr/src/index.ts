@@ -1,6 +1,6 @@
 export type {
   ManagerStoreReactComponent,
-  ReactSSROptions,
+  ReactSsrOptions,
   SSRTransformer,
 } from './react-ssr-extension';
-export { ReactSSRExtension } from './react-ssr-extension';
+export { ReactSsrExtension } from './react-ssr-extension';

@@ -6,8 +6,15 @@ import {
   ExtensionTag,
   NodeExtension,
   NodeExtensionSpec,
+  setBlockType,
 } from '@remirror/core';
-import { act, createReactManager, RemirrorProvider, strictRender } from '@remirror/testing/react';
+import {
+  act,
+  createReactManager,
+  RemirrorProvider,
+  render,
+  strictRender,
+} from '@remirror/testing/react';
 
 import { ReactComponentExtension } from '..';
 import type { NodeViewComponentProps } from '../node-view-types';
@@ -22,15 +29,25 @@ class TestExtension extends NodeExtension<{ useContent: boolean }> {
   readonly tags = [ExtensionTag.BlockNode];
 
   createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
+    const toDOM: NodeExtensionSpec['toDOM'] = this.options.useContent
+      ? (node) => ['span', extra.dom(node), 0]
+      : undefined;
+
     return {
       attrs: {
         ...extra.defaults(),
         custom: { default: 'custom' },
       },
       content: 'inline*',
-      toDOM: (node) => ['nav', extra.dom(node), 0],
+      toDOM,
     };
   }
+
+  createCommands = () => {
+    return {
+      toggleCustomBlock: () => setBlockType(this.type, {}),
+    };
+  };
 
   ReactComponent: ComponentType<NodeViewComponentProps> = ({ node, forwardRef }) => {
     if (this.options.useContent) {
@@ -51,18 +68,14 @@ test('NodeViews are created with content', () => {
       <div />
     </RemirrorProvider>,
   );
-  const {
-    add,
-    dom,
-    nodes: { doc },
-    attributeNodes: { test },
-  } = chain;
+  const { doc } = chain.nodes;
+  const { test } = chain.attributeNodes;
 
   act(() => {
-    add(doc(test({ custom: 'awesome' })('content<cursor>'))).insertText(' hello world');
+    chain.add(doc(test({ custom: 'awesome' })('content<cursor>'))).insertText(' hello world');
   });
 
-  expect(dom).toMatchSnapshot();
+  expect(chain.dom).toMatchSnapshot();
 });
 
 test('NodeViews are created without content', () => {
@@ -76,16 +89,80 @@ test('NodeViews are created without content', () => {
     </RemirrorProvider>,
   );
 
-  const {
-    add,
-    dom,
-    nodes: { doc },
-    attributeNodes: { test },
-  } = chain;
+  const { doc } = chain.nodes;
+  const { test } = chain.attributeNodes;
 
   act(() => {
-    add(doc(test({ custom: 'awesome' })('content<cursor>'))).insertText('hello world');
+    chain.add(doc(test({ custom: 'awesome' })('content<cursor>'))).insertText('hello world');
   });
 
-  expect(dom).toMatchSnapshot();
+  expect(chain.dom).toMatchSnapshot();
+});
+
+test('node views can be created from commands', () => {
+  const chain = RemirrorTestChain.create(
+    createReactManager([new ReactComponentExtension(), new TestExtension({ useContent: true })]),
+  );
+
+  strictRender(
+    <RemirrorProvider manager={chain.manager}>
+      <div />
+    </RemirrorProvider>,
+  );
+
+  const { doc, p } = chain.nodes;
+
+  act(() => {
+    chain.add(doc(p('content<cursor>'))).insertText('hello world\nasdf');
+    chain.commands.toggleCustomBlock();
+  });
+
+  expect(chain.dom).toMatchSnapshot();
+});
+
+test('simple commands', () => {
+  const chain = RemirrorTestChain.create(
+    createReactManager([new ReactComponentExtension(), new TestExtension({ useContent: true })]),
+  );
+
+  render(
+    <RemirrorProvider manager={chain.manager}>
+      <div />
+    </RemirrorProvider>,
+  );
+
+  const { doc, p } = chain.nodes;
+
+  act(() => {
+    chain.add(doc(p('<cursor>'))).commands.toggleCustomBlock();
+    chain.insertText('add');
+  });
+
+  expect(chain.dom).toMatchInlineSnapshot(`
+    <div
+      aria-label=""
+      aria-multiline="true"
+      aria-placeholder=""
+      autofocus="false"
+      class="ProseMirror remirror-editor"
+      contenteditable="true"
+      role="textbox"
+    >
+      <div
+        class="test-node-view-wrapper"
+      >
+        <p
+          custom="custom"
+        >
+          <span
+            class="test-node-view-content-wrapper"
+          >
+            <span>
+              add
+            </span>
+          </span>
+        </p>
+      </div>
+    </div>
+  `);
 });

@@ -1,16 +1,17 @@
+import type { ReactChild, ReactFragment } from 'react';
 import React, {
   CSSProperties,
   ElementType,
   ProviderProps,
   ReactElement,
   ReactNode,
+  ReactPortal,
   useEffect,
 } from 'react';
 
 import type { AnyCombinedUnion, MakeOptional } from '@remirror/core';
-import { RemirrorPortals } from '@remirror/extension-react-component';
 import { i18n as defaultI18n } from '@remirror/i18n';
-import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
+import { RemirrorType } from '@remirror/react-utils';
 import type { RemirrorThemeType } from '@remirror/theme';
 import { createThemeVariables, themeStyles } from '@remirror/theme';
 
@@ -35,7 +36,7 @@ export interface RemirrorProviderProps<Combined extends AnyCombinedUnion>
    * The `RemirrorProvider` only supports **ONE** child element. You can place
    * the child element in a fragment if needed.
    */
-  children: ReactElement;
+  children: ReactChild | ReactFragment | ReactPortal;
 
   /**
    * The presets and extensions that you would like to use to automatically
@@ -125,17 +126,15 @@ RemirrorContextProvider.defaultProps = {
  */
 export const RemirrorProvider = <Combined extends AnyCombinedUnion>(
   props: RemirrorProviderProps<Combined>,
-) => {
+): ReactElement<RemirrorProviderProps<Combined>> => {
   const { children, childAsRoot, manager, combined, settings, ...rest } = props;
-  const reactManager = useManager(manager ?? combined ?? [], settings);
 
   return (
-    <ReactEditor {...rest} manager={reactManager}>
+    <ReactEditor {...rest} manager={useManager(manager ?? combined ?? [], settings)}>
       {(value) => {
         return (
           <RemirrorContextProvider value={value} childAsRoot={childAsRoot}>
-            {oneChildOnly(children)}
-            <RemirrorPortals portalContainer={value.portalContainer} />
+            {children}
           </RemirrorContextProvider>
         );
       }}
@@ -155,7 +154,7 @@ export interface I18nProviderProps extends Partial<I18nContextProps> {
  * This uses `@lingui/core` in the background. So please star and support the
  * project when you have a moment.
  */
-export const I18nProvider = (props: I18nProviderProps) => {
+export const I18nProvider = (props: I18nProviderProps): ReactElement<I18nProviderProps> => {
   const { i18n = defaultI18n, locale = 'en', supportedLocales, children } = props;
 
   useEffect(() => {
@@ -193,7 +192,7 @@ export interface ThemeProviderProps {
  *
  * Please be aware that this wraps your component in an extra dom layer.
  */
-export const ThemeProvider = (props: ThemeProviderProps) => {
+export const ThemeProvider = (props: ThemeProviderProps): ReactElement<ThemeProviderProps> => {
   const { theme, children, as: Component = 'div' } = props;
 
   return (

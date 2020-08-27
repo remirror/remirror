@@ -1,4 +1,4 @@
-import enLocale from '../en';
+import enLocale from '../../en';
 
 test('locales can be imported', () => {
   expect(enLocale.messages).toMatchInlineSnapshot(`

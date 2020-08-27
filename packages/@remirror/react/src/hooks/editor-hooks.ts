@@ -36,6 +36,7 @@ import {
   StringPositioner,
   VirtualPosition,
 } from '@remirror/extension-positioner';
+import { usePortalContext } from '@remirror/extension-react-component';
 import type { CorePreset } from '@remirror/preset-core';
 import type { ReactPreset } from '@remirror/preset-react';
 
@@ -129,19 +130,34 @@ import { useEffectWithWarning, useForceUpdate } from './core-hooks';
 export function useRemirror<Combined extends AnyCombinedUnion>(
   handler?: RemirrorEventListener<Combined> | { autoUpdate: boolean },
 ): RemirrorContextProps<Combined> {
-  const context = useContext(RemirrorContext);
+  // This is not null when rendering within the `RemirrorProvider`. The majority
+  // of times this is called, this will be the case.
+  const editorContext = useContext(RemirrorContext) as RemirrorContextProps<Combined> | null;
+
+  // This is not null when rendering within the `PortalContext` for custom node
+  // views and custom decorations.
+  const portalContext = usePortalContext() as RemirrorContextProps<Combined> | null;
+
+  // A helper for forcing an update of the state.
   const forceUpdate = useForceUpdate();
+
+  // Pick the correct context to use.
+  const context = editorContext ?? portalContext;
 
   // Throw an error if context doesn't exist.
   invariant(context, { code: ErrorConstant.REACT_PROVIDER_CONTEXT });
 
+  // This hook sets the correct update frequency. By default this hook never
+  // updates.
   useEffect(() => {
     let updateHandler = handler;
 
+    // Default state, do nothing.
     if (!updateHandler) {
       return;
     }
 
+    // Use the `forceUpdate` handler when `autoUpdate` is true.
     if (isPlainObject(updateHandler)) {
       const { autoUpdate } = updateHandler;
       updateHandler = autoUpdate ? () => forceUpdate() : undefined;
@@ -151,6 +167,8 @@ export function useRemirror<Combined extends AnyCombinedUnion>(
       return;
     }
 
+    // Add the update handler which will update this hook every time the editor
+    // is updated.
     return context.addHandler('updated', updateHandler);
   }, [handler, context, forceUpdate]);
 
@@ -351,7 +369,8 @@ interface UsePresetCallbackParameter<Type extends AnyPresetConstructor> {
   addCustomHandler: CustomHandlerMethod<OptionsOfConstructor<Type>>;
 
   /**
-   * An instance of the preset. This should only be needed in advanced situations.
+   * An instance of the preset. This should only be needed in advanced
+   * situations.
    */
   preset: InstanceType<Type>;
 }
@@ -365,11 +384,11 @@ type UsePresetCallback<Type extends AnyPresetConstructor> = (
  *
  * @remarks
  *
- * The manager is a singleton and doesn't rerender until `manager.destroy()` is called.
- * You should call this method in a `useEffect`
+ * The manager is a singleton and doesn't rerender until `manager.destroy()` is
+ * called. You should call this method in a `useEffect`
  *
- * This is intentional. However, it's something that can be addressed
- * if it causes issues.
+ * This is intentional. However, it's something that can be addressed if it
+ * causes issues.
  *
  * ```tsx
  * import { useExtension } from '@remirror/react';
@@ -389,26 +408,26 @@ export function useManager<Combined extends AnyCombinedUnion>(
   combined: Combined[] | (() => Combined[]) | RemirrorManager<ReactCombinedUnion<Combined>>,
   options: CreateReactManagerOptions = {},
 ): RemirrorManager<ReactCombinedUnion<Combined>> {
+  // Store the value in refs so that they can be used in the `useEffect` hook
+  // without being passed as dependencies.
   const combinedRef = useRef(combined);
   const optionsRef = useRef(options);
 
-  // The initial manager which will never be updated.
-  const initialManager = useMemo(() => {
-    return createReactManager(combinedRef.current, optionsRef.current);
-  }, []);
+  const [manager, setManager] = useState(() => createReactManager(combined, options));
 
-  const [manager, setManager] = useState(initialManager);
-
+  // Keep the parameter refs up to date with the latest value.
   combinedRef.current = combined;
   optionsRef.current = options;
 
+  // Add a manager destroyed listener to only cleanup the manager when it is
+  // destroyed.
   useEffect(() => {
     return manager.addHandler('destroy', () => {
       // `clone` is used to ensure that that any stale extensions are
       // reinitialized.
-      setManager(createReactManager(combinedRef.current, optionsRef.current).clone());
+      setManager(() => createReactManager(combinedRef.current, optionsRef.current).clone());
     });
-  }, [manager, initialManager]);
+  }, [manager]);
 
   return manager;
 }

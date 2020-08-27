@@ -1,83 +1,69 @@
-import React, { Fragment, FunctionComponent, useCallback, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import type { PortalContainer, PortalMap } from './portal-container';
+import type { AnyCombinedUnion, EditorWrapperOutput } from 'remirror/core';
 
-export interface RemirrorPortalsProps {
+import type { MountedPortal, PortalContainer, PortalMap } from './portal-container';
+
+export interface RemirrorPortalsProps<Combined extends AnyCombinedUnion> {
   /**
-   * Holds all the portals currently being rendered by the application.
+   * An array of tuples holding all the element containers for node view
+   * portals.
    */
-  portalContainer: PortalContainer;
+  portals: Array<[HTMLElement, MountedPortal]>;
+
+  context: EditorWrapperOutput<Combined>;
 }
 
 /**
  * The component that places all the portals into the DOM.
  *
- * Portals can be created by NodeView and also the static
- * widget method on Decorations.
+ * Portals can currently be created by a [[`ReactNodeView`]] and coming soon
+ * both the [[`ReactMarkView`]] and [[`ReactDecoration`]].
  */
-export const RemirrorPortals = ({ portalContainer }: RemirrorPortalsProps) => {
-  const [state, setState] = useState([...portalContainer.portals.entries()]);
-
-  /**
-   * Update the state whenever the portal is updated.
-   */
-  const onPortalChange = useCallback((portalMap: PortalMap) => {
-    setState([...portalMap.entries()]);
-  }, []);
-
-  useEffect(() => {
-    // Auto disposed when the component un-mounts
-    return portalContainer.on(onPortalChange);
-  }, [onPortalChange, portalContainer]);
-
+export const RemirrorPortals = <Combined extends AnyCombinedUnion>(
+  props: RemirrorPortalsProps<Combined>,
+): JSX.Element => {
+  const { context, portals } = props;
   return (
-    <>
-      {state.map(([container, { Component, key }]) => (
-        <Fragment key={key}>
-          {createPortal(
-            <Portal
-              container={container}
-              Component={Component}
-              portalContainer={portalContainer}
-            />,
-            container,
-          )}
-        </Fragment>
-      ))}
-    </>
+    <EditorContext.Provider value={context}>
+      {portals.map(([container, { Component, key }]) =>
+        createPortal(<Component />, container, key),
+      )}
+    </EditorContext.Provider>
   );
 };
 
-export interface PortalProps extends RemirrorPortalsProps {
-  /**
-   * Holds the element that this portal is being rendered into.
-   */
-  container: HTMLElement;
+/**
+ * A hook which subscribes to updates from the portal container.
+ *
+ * This is should used in the `ReactEditor` component and the value should be
+ * passed through to the `RemirrorPortals` component.
+ */
+export function usePortals(portalContainer: PortalContainer): Array<[HTMLElement, MountedPortal]> {
+  const [portals, setPortals] = useState(() => [...portalContainer.portals.entries()]);
 
-  /**
-   * The plain component to render.
-   */
-  Component: FunctionComponent<object>;
+  // Dispose of all portals.
+  useEffect(() => {
+    // Auto disposed when the component un-mounts.
+    return portalContainer.on((portalMap: PortalMap) => {
+      setPortals([...portalMap.entries()]);
+    });
+  }, [portalContainer]);
+
+  return portals;
 }
 
 /**
- * This is the component rendered by the createPortal method within the
- * RemirrorPortals component. It is responsible for cleanup when the container
- * is removed from the DOM.
+ * Get the current remirror context when using a portal.
  */
-const Portal = (props: PortalProps) => {
-  const { portalContainer, container, Component } = props;
+export function usePortalContext<Combined extends AnyCombinedUnion>(): EditorWrapperOutput<
+  Combined
+> {
+  return useContext(EditorContext) as EditorWrapperOutput<Combined>;
+}
 
-  useEffect(() => {
-    /**
-     * Remove the portal container entry when this portal is unmounted.
-     * Portals are unmounted when their host container is removed from the dom.
-     */
-    return () => {
-      portalContainer.remove(container);
-    };
-  }, [container, portalContainer]);
-
-  return <Component />;
-};
+/**
+ * Allows elemenent inside the portals to consume the provided contenxt
+ */
+const EditorContext = createContext<EditorWrapperOutput<any> | null>(null);

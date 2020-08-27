@@ -156,7 +156,7 @@ export abstract class EditorWrapper<
   /**
    * The document to use when rendering.
    */
-  protected get doc() {
+  protected get doc(): Document {
     return getDocument(this.props.forceEnvironment);
   }
 
@@ -166,7 +166,7 @@ export abstract class EditorWrapper<
    * Please note that this ID is only locally unique, it should not be used as a
    * database key.
    */
-  protected get uid() {
+  protected get uid(): string {
     return this.#uid;
   }
 

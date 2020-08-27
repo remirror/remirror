@@ -129,7 +129,11 @@ describe('Manager', () => {
     expect(isRemirrorManager({})).toBeFalse();
     expect(isRemirrorManager(null)).toBeFalse();
     expect(isRemirrorManager(dummyExtension)).toBeFalse();
+    expect(isRemirrorManager(manager, ['dummy', 'biggest'])).toBeFalse();
+    expect(isRemirrorManager(manager, [class A extends DummyExtension {}])).toBeFalse();
     expect(isRemirrorManager(manager)).toBeTrue();
+    expect(isRemirrorManager(manager, [DummyExtension, CorePreset])).toBeTrue();
+    expect(isRemirrorManager(manager, ['dummy', 'big'])).toBeTrue();
   });
 });
 

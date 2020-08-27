@@ -1,5 +1,5 @@
 import { extensionValidityTest } from 'jest-remirror';
 
-import { ReactSSRExtension } from '../..';
+import { ReactSsrExtension } from '../..';
 
-extensionValidityTest(ReactSSRExtension);
+extensionValidityTest(ReactSsrExtension);

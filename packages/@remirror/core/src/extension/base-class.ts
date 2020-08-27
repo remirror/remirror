@@ -6,6 +6,7 @@ import {
   RemirrorIdentifier,
 } from '@remirror/core-constants';
 import {
+  camelCase,
   deepMerge,
   invariant,
   isArray,
@@ -81,14 +82,35 @@ export abstract class BaseClass<
   static readonly customHandlerKeys: string[] = [];
 
   /**
-   * Not for usage. This is purely for types to make it easier to infer
-   * the type of `Settings` on an extension instance.
+   * Get the instance name of the instance from the constructor.
+   *
+   * - `'CorePreset'` => `'core'`
+   * - `'AwesomeNodeExtension'` => `'awesomeNode'`
+   *
+   * The solution was adapted from https://stackoverflow.com/a/7888303/2172153.
+   */
+  static get instanceName(): string {
+    // Make sure to camelCase the string (so that the first letter is
+    // lowercase). `'BoldExtension'` => `'boldExtension'`
+    return camelCase(
+      this.name
+        // Split by capitals `'boldExtension'` => `['bold', 'Extension']`.
+        .split(/(?=[A-Z])/)
+        // Drop the last index. `['bold', 'Extension']` => `['bold']`.
+        .slice(0, -1)
+        // Rejoin the word `['bold']` => `'bold'`.
+        .join(''),
+    );
+  }
+
+  /**
+   * This is not for external use. It is purely here for TypeScript inference of
+   * the generic `Options` type parameter.
    */
   ['~O']: Options & DefaultStaticOptions;
 
   /**
-   * The identifier for the extension which can determine whether it is a node,
-   * mark or plain extension.
+   * This identifies this as a `Remirror` object. .
    * @internal
    */
   abstract readonly [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]: RemirrorIdentifier;
@@ -125,14 +147,14 @@ export abstract class BaseClass<
    * - `Handlers` - can only be set during the runtime.
    * - `ObjectHandlers` - Can only be set during the runtime of the extension.
    */
-  get options() {
+  get options(): GetFixed<Options> & DefaultStaticOptions {
     return this.#options;
   }
 
   /**
    * Get the dynamic keys for this extension.
    */
-  get dynamicKeys() {
+  get dynamicKeys(): string[] {
     return this.#dynamicKeys;
   }
 
@@ -140,7 +162,7 @@ export abstract class BaseClass<
    * The options that this instance was created with, merged with all the
    * default options.
    */
-  get initialOptions() {
+  get initialOptions(): GetFixed<Options> & DefaultStaticOptions {
     return this.#initialOptions;
   }
 
@@ -202,7 +224,7 @@ export abstract class BaseClass<
    * - `this.type` in `NodeExtension` and `MarkExtension` will also throw an
    *   error since the schema hasn't been created yet.
    */
-  protected init() {}
+  protected init(): void {}
 
   /**
    * Clone the current instance with the provided options. If nothing is
@@ -263,7 +285,7 @@ export abstract class BaseClass<
   /**
    * Update the properties with the provided partial value when changed.
    */
-  setOptions(update: GetPartialDynamic<Options>) {
+  setOptions(update: GetPartialDynamic<Options>): void {
     const previousOptions = this.getDynamicOptions();
 
     this.ensureAllKeysAreDynamic(update);
@@ -291,7 +313,7 @@ export abstract class BaseClass<
    *
    * @nonVirtual
    */
-  resetOptions() {
+  resetOptions(): void {
     const previousOptions = this.getDynamicOptions();
     const { changes, options, pickChanged } = getChangedOptions<Options>({
       previousOptions,
@@ -552,6 +574,14 @@ export interface BaseClassConstructor<
    * A list of the custom keys in the extension or preset options.
    */
   readonly customHandlerKeys: string[];
+
+  /**
+   * The instance name when instantiated.
+   *
+   * - `'CorePreset'` => `'core'`
+   * - `'AwesomeNodeExtension'` => `'awesomeNode'`
+   */
+  readonly instanceName: string;
 }
 
 export type AnyBaseClassConstructor = Replace<

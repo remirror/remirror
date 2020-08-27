@@ -1,4 +1,4 @@
-import { createNanoEvents } from 'nanoevents';
+import { createNanoEvents, Unsubscribe } from 'nanoevents';
 import type { FunctionComponent } from 'react';
 
 import { uniqueId } from '@remirror/core';
@@ -32,8 +32,8 @@ export type PortalList = ReadonlyArray<[HTMLElement, MountedPortal]>;
 export type PortalMap = Map<HTMLElement, MountedPortal>;
 
 /**
- * The node view portal container keeps track of all the portals which have been added by react to render
- * the node views in the editor.
+ * The node view portal container keeps track of all the portals which have been
+ * added by react to render the node views in the editor.
  */
 export class PortalContainer {
   /**
@@ -45,20 +45,20 @@ export class PortalContainer {
    * The event listener which allows consumers to subscribe to when a new portal
    * is added / deleted via the updated event.
    */
-  events = createNanoEvents<Events>();
+  #events = createNanoEvents<Events>();
 
   /**
    * Event handler for subscribing to update events from the portalContainer.
    */
-  on = (callback: (portalMap: PortalMap) => void) => {
-    return this.events.on('update', callback);
+  on = (callback: (portalMap: PortalMap) => void): Unsubscribe => {
+    return this.#events.on('update', callback);
   };
 
   /**
    * Subscribe to one event before automatically unbinding.
    */
-  once = (callback: (portalMap: PortalMap) => void) => {
-    const unbind = this.events.on('update', (portalMap) => {
+  once = (callback: (portalMap: PortalMap) => void): Unsubscribe => {
+    const unbind = this.#events.on('update', (portalMap) => {
       unbind();
       callback(portalMap);
     });
@@ -70,13 +70,14 @@ export class PortalContainer {
    * Trigger an update in all subscribers.
    */
   private update() {
-    this.events.emit('update', this.portals);
+    this.#events.emit('update', this.portals);
   }
 
   /**
-   * Responsible for registering a new portal by rendering the react element into the provided container.
+   * Responsible for registering a new portal by rendering the react element
+   * into the provided container.
    */
-  render({ Component, container }: RenderMethodParameter) {
+  render({ Component, container }: RenderMethodParameter): void {
     const portal = this.portals.get(container);
     const key = portal ? portal.key : uniqueId();
 
@@ -90,20 +91,20 @@ export class PortalContainer {
    * Delete all orphaned containers (deleted from the DOM). This is useful for
    * Decoration where there is no destroy method.
    */
-  forceUpdate() {
-    this.portals.forEach(({ Component }, container) => {
-      // Assign the portal a new key so it is re-rendered
+  forceUpdate(): void {
+    for (const [container, { Component }] of this.portals) {
       this.portals.set(container, { Component, key: uniqueId() });
-    });
-
-    this.update();
+    }
   }
 
   /**
    * Deletes the portal within the container.
    */
-  remove(container: HTMLElement) {
+  remove(container: HTMLElement): void {
+    // Remove the portal which was being wrapped in the provided container.
     this.portals.delete(container);
+
+    // Trigger an update
     this.update();
   }
 }
