@@ -1,5 +1,17 @@
 # @remirror/dev
 
+## 1.0.0-next.28
+
+> 2020-08-27
+
+### Patch Changes
+
+- Updated dependencies
+  [[`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448),
+  [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d)]:
+  - @remirror/pm@1.0.0-next.28
+  - @remirror/react@1.0.0-next.28
+
 ## 1.0.0-next.27
 
 > 2020-08-25

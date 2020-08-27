@@ -1,5 +1,18 @@
 # @remirror/pm
 
+## 1.0.0-next.28
+
+> 2020-08-27
+
+### Patch Changes
+
+- [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448)
+  [#585](https://github.com/remirror/remirror/pull/585) Thanks
+  [@ifiokjr](https://github.com/ifiokjr)! - Upgrade dependencies and `linaria`.
+
+- Updated dependencies []:
+  - prosemirror-suggest@1.0.0-next.28
+
 ## 1.0.0-next.26
 
 > 2020-08-24

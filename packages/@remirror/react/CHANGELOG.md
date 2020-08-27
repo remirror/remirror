@@ -1,5 +1,53 @@
 # @remirror/react
 
+## 1.0.0-next.28
+
+> 2020-08-27
+
+### Minor Changes
+
+- [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d)
+  [#591](https://github.com/remirror/remirror/pull/591) Thanks
+  [@ifiokjr](https://github.com/ifiokjr)! - Add support for nested content within `ReactComponent`
+  node views. Also support adding multiple components to the manager via the `nodeViewComponents`
+  setting. Currently `ReactNodeView` components must be defined at initialization, and marks are not
+  supported.
+
+  - Also enforce minimum required extensions for the manager passed to the `RemirrorProvider`.
+  - Some general cleanup and refactoring.
+  - Add support for composing refs when using `getRootProps`. Now you can add your own ref to the
+    `getRootProps({ ref })` function call which will be populated at the same time.
+  - Test the names of `Extension`'s and `Preset`'s in with `extensionValidityTest`.
+  - **BREAKING CHANGES** 💥
+    - Rename: `ReactSSRExtension` => `ReactSsrExtension`
+    - Rename: `ReactComponentExtension.name` from `reactNodeView` => `reactComponent`.
+    - Rename: `NodeViewsExtension` => `NodeViewExtension`
+    - Rename: `NodeViewsExtension` => `NodeViewExtension`
+    - Rename: `SuggestExtension.name` from `suggestions` => `suggest`
+
+### Patch Changes
+
+- [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448)
+  [#585](https://github.com/remirror/remirror/pull/585) Thanks
+  [@ifiokjr](https://github.com/ifiokjr)! - Upgrade dependencies and `linaria`.
+
+- Updated dependencies
+  [[`c0dce043`](https://github.com/remirror/remirror/commit/c0dce0433780e1ddb8b21384eef4b67ae1f74e47),
+  [`d5bbeb4e`](https://github.com/remirror/remirror/commit/d5bbeb4e8e193e695838207706a04f7739cc1448),
+  [`0400fbc8`](https://github.com/remirror/remirror/commit/0400fbc8a5f97441f70528f7d6c6f11d560b381d),
+  [`d23a0434`](https://github.com/remirror/remirror/commit/d23a0434c49ecd5bbaccffd9b8d8c42bc626219a)]:
+  - @remirror/core@1.0.0-next.28
+  - @remirror/extension-placeholder@1.0.0-next.28
+  - @remirror/pm@1.0.0-next.28
+  - @remirror/preset-react@1.0.0-next.28
+  - @remirror/extension-react-component@1.0.0-next.28
+  - @remirror/extension-react-ssr@1.0.0-next.28
+  - @remirror/extension-positioner@1.0.0-next.28
+  - @remirror/preset-core@1.0.0-next.28
+  - @remirror/i18n@1.0.0-next.28
+  - @remirror/react-utils@1.0.0-next.28
+  - @remirror/theme@1.0.0-next.28
+
 ## 1.0.0-next.27
 
 > 2020-08-25
