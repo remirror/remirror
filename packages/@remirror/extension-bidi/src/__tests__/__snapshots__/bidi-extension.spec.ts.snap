@@ -4,7 +4,6 @@ exports[`captures the direction of each node 1`] = `
 <div
   aria-label=""
   aria-multiline="true"
-  autofocus="false"
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
@@ -27,7 +26,6 @@ exports[`options can make use of \`excludedNodes\` 1`] = `
 <div
   aria-label=""
   aria-multiline="true"
-  autofocus="false"
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
@@ -47,7 +45,6 @@ exports[`options can turn off \`autoUpdate\` 1`] = `
 <div
   aria-label=""
   aria-multiline="true"
-  autofocus="false"
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
@@ -62,7 +59,6 @@ exports[`options can turn off \`autoUpdate\` 2`] = `
 <div
   aria-label=""
   aria-multiline="true"
-  autofocus="false"
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
@@ -79,7 +75,6 @@ exports[`options respects the \`defaultDirection\` option 1`] = `
 <div
   aria-label=""
   aria-multiline="true"
-  autofocus="false"
   class="ProseMirror remirror-editor"
   contenteditable="true"
   dir="rtl"
@@ -105,7 +100,6 @@ exports[`updates the direction based on typing 1`] = `
 <div
   aria-label=""
   aria-multiline="true"
-  autofocus="false"
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
@@ -122,7 +116,6 @@ exports[`updates the direction based on typing 2`] = `
 <div
   aria-label=""
   aria-multiline="true"
-  autofocus="false"
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
@@ -139,7 +132,6 @@ exports[`updates to the default direction affect the attributes 1`] = `
 <div
   aria-label=""
   aria-multiline="true"
-  autofocus="false"
   class="ProseMirror remirror-editor"
   contenteditable="true"
   dir="rtl"

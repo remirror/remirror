@@ -20,7 +20,6 @@ test('can be added to the dom', () => {
     <div
       aria-label=""
       aria-multiline="true"
-      autofocus="false"
       class="ProseMirror remirror-editor"
       contenteditable="true"
       role="textbox"
