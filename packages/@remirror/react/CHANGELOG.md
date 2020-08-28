@@ -1,5 +1,13 @@
 # @remirror/react
 
+## 1.0.0-next.30
+
+> 2020-08-28
+
+### Patch Changes
+
+- [`de0ba243`](https://github.com/remirror/remirror/commit/de0ba2436729f2fbd3bc8531b0e5fd01d3f34210) [#603](https://github.com/remirror/remirror/pull/603) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Remove requirement for `CorePreset` and `ReactPreset` when using the `React` framework.
+
 ## 1.0.0-next.29
 
 > 2020-08-28

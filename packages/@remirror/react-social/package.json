@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-social",
-  "version": "1.0.0-next.29",
+  "version": "1.0.0-next.30",
   "description": "A configurable social editor.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react-social",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react-social",
@@ -41,7 +41,7 @@
     "@lingui/macro": "^3.0.0-13",
     "@remirror/core": "1.0.0-next.29",
     "@remirror/pm": "1.0.0-next.28",
-    "@remirror/react": "1.0.0-next.29",
+    "@remirror/react": "1.0.0-next.30",
     "@testing-library/dom": "^7.23.0",
     "@testing-library/react-hooks": "^3.4.1",
     "@types/react": "^16.9.47",
@@ -53,7 +53,7 @@
   "peerDependencies": {
     "@remirror/core": "1.0.0-next.29",
     "@remirror/pm": "1.0.0-next.28",
-    "@remirror/react": "1.0.0-next.29",
+    "@remirror/react": "1.0.0-next.30",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "react": "^16.8.0",
