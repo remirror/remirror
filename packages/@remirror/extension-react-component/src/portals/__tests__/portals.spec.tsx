@@ -2,7 +2,7 @@ import React from 'react';
 
 import { act, strictRender, useRemirror } from '@remirror/testing/react';
 
-import { PortalContainer, RemirrorPortals, usePortals } from '..';
+import { PortalContainer, RemirrorPortals, usePortals } from '../../..';
 
 test('PortalContainer', () => {
   const portalContainer = new PortalContainer();
