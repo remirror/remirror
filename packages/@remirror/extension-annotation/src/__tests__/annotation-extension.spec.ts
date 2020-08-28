@@ -92,8 +92,7 @@ describe('commands', () => {
     add(doc(p('An <start>important<end> note')));
     commands.addAnnotation({ id });
     // Pre-condition
-    expect(view.dom.innerHTML).toMatchInlineSnapshot(
-      `
+    expect(view.dom.innerHTML).toMatchInlineSnapshot(`
           <p>
             An
             <span class="annotation">
@@ -101,8 +100,7 @@ describe('commands', () => {
             </span>
             note
           </p>
-        `,
-    );
+        `);
 
     commands.removeAnnotations([id]);
 
@@ -214,28 +212,61 @@ describe('helpers', () => {
   });
 });
 
-describe('custom annotation type', () => {
+describe('custom annotations', () => {
   interface MyAnnotation extends Annotation {
     tag: string;
   }
 
-  const {
-    add,
-    helpers,
-    nodes: { p, doc },
-    commands,
-  } = renderEditor([new AnnotationExtension<MyAnnotation>()]);
+  it('should support custom annotations', () => {
+    const {
+      add,
+      helpers,
+      nodes: { p, doc },
+      commands,
+    } = renderEditor([new AnnotationExtension<MyAnnotation>()]);
 
-  add(doc(p('<start>Hello<end>')));
-  commands.addAnnotation({ id: '1', tag: 'tag' });
+    add(doc(p('<start>Hello<end>')));
+    commands.addAnnotation({ id: '1', tag: 'tag' });
 
-  expect(helpers.getAnnotations()).toEqual([
-    {
-      id: '1',
-      from: 1,
-      to: 6,
-      tag: 'tag',
-      text: 'Hello',
-    },
-  ]);
+    expect(helpers.getAnnotations()).toEqual([
+      {
+        id: '1',
+        from: 1,
+        to: 6,
+        tag: 'tag',
+        text: 'Hello',
+      },
+    ]);
+  });
+
+  it('should support overlapping custom annotations', () => {
+    const {
+      dom,
+      selectText,
+      add,
+      nodes: { p, doc },
+      commands,
+    } = renderEditor([new AnnotationExtension<MyAnnotation>()]);
+
+    add(doc(p('<start>Hello<end> my friend')));
+
+    commands.addAnnotation({ id: '1', tag: 'tag' });
+    selectText(5, 14);
+    commands.addAnnotation({ id: '2', tag: 'awesome', className: 'custom' });
+
+    expect(dom.innerHTML).toMatchInlineSnapshot(`
+      <p>
+        <span class="annotation">
+          Hell
+        </span>
+        <span class="annotation custom">
+          o
+        </span>
+        <span class="annotation custom">
+          my frie
+        </span>
+        nd
+      </p>
+    `);
+  });
 });
