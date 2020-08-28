@@ -1,11 +1,4 @@
-import {
-  AnyCombinedUnion,
-  ErrorConstant,
-  getLazyArray,
-  invariant,
-  isRemirrorManager,
-  RemirrorManager,
-} from '@remirror/core';
+import { AnyCombinedUnion, getLazyArray, isRemirrorManager, RemirrorManager } from '@remirror/core';
 import { CorePreset } from '@remirror/preset-core';
 import { ReactPreset } from '@remirror/preset-react';
 
@@ -21,12 +14,6 @@ export function createReactManager<Combined extends AnyCombinedUnion>(
   const { core, react, ...settings } = options;
 
   if (isRemirrorManager<ReactCombinedUnion<Combined>>(combined)) {
-    invariant(combined.includes(['ReactPreset', 'CorePreset']), {
-      code: ErrorConstant.INVALID_MANAGER_EXTENSION,
-      message:
-        "The extensions and presets provided to the manager don't include the `CorePreset` or the `ReactPreset`. Please either create a manager which includes both, or use the `useManager` hook / `createReact` function.",
-    });
-
     return combined;
   }
 
