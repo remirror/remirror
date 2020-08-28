@@ -1,5 +1,16 @@
 # remirror
 
+## 1.0.0-next.30
+
+> 2020-08-28
+
+### Patch Changes
+
+- Updated dependencies [[`de0ba243`](https://github.com/remirror/remirror/commit/de0ba2436729f2fbd3bc8531b0e5fd01d3f34210)]:
+  - @remirror/react@1.0.0-next.30
+  - @remirror/react-social@1.0.0-next.30
+  - @remirror/react-wysiwyg@1.0.0-next.30
+
 ## 1.0.0-next.29
 
 > 2020-08-28

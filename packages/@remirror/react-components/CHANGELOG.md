@@ -1,5 +1,14 @@
 # @remirror/react-components
 
+## 1.0.0-next.12
+
+> 2020-08-28
+
+### Patch Changes
+
+- Updated dependencies [[`de0ba243`](https://github.com/remirror/remirror/commit/de0ba2436729f2fbd3bc8531b0e5fd01d3f34210)]:
+  - @remirror/react@1.0.0-next.30
+
 ## 1.0.0-next.11
 
 > 2020-08-28

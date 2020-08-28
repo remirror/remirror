@@ -1,5 +1,14 @@
 # @remirror/showcase
 
+## 1.0.0-next.30
+
+> 2020-08-28
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/react-social@1.0.0-next.30
+
 ## 1.0.0-next.29
 
 > 2020-08-28

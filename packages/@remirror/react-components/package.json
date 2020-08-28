@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-components",
-  "version": "1.0.0-next.11",
+  "version": "1.0.0-next.12",
   "private": true,
   "description": "The `remirror` what-you-see-is-what-you-get (wysiwyg) editing experience.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react-components",
@@ -32,7 +32,7 @@
     "@lingui/macro": "^3.0.0-13",
     "@remirror/core": "1.0.0-next.29",
     "@remirror/pm": "1.0.0-next.28",
-    "@remirror/react": "1.0.0-next.29",
+    "@remirror/react": "1.0.0-next.30",
     "@testing-library/react": "^10.4.9",
     "@types/react": "^16.9.47",
     "@types/react-dom": "^16.9.8",
@@ -42,7 +42,7 @@
   "peerDependencies": {
     "@remirror/core": "1.0.0-next.29",
     "@remirror/pm": "1.0.0-next.28",
-    "@remirror/react": "1.0.0-next.29",
+    "@remirror/react": "1.0.0-next.30",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "react": "^16.8.0",
