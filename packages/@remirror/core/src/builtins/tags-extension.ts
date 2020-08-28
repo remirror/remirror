@@ -74,7 +74,7 @@ export class TagsExtension extends PlainExtension {
     for (const tag of extension.tags) {
       invariant(isExtensionTag(tag), {
         code: ErrorConstant.EXTENSION,
-        message: `The tag provided by the extension: ${extension.constructor.name} is not supported by the editor. To add new tags you can use the 'mutateTag' method.`,
+        message: `The tag provided by the extension: ${extension.constructorName} is not supported by the editor. To add new tags you can use the 'mutateTag' method.`,
       });
       // Add tags to the combined tags stored here.
       this.#combinedTags[tag].push(extension.name);

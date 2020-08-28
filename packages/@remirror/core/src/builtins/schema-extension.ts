@@ -164,7 +164,7 @@ export class SchemaExtension extends PlainExtension {
           createExtensionSpec: (extra) => extension.createNodeSpec(extra),
           extraAttributes: namedExtraAttributes[extension.name],
           ignoreExtraAttributes,
-          name: extension.constructor.name,
+          name: extension.constructorName,
           tags: extension.tags ?? [],
         });
 
@@ -190,7 +190,7 @@ export class SchemaExtension extends PlainExtension {
           createExtensionSpec: (extra) => extension.createMarkSpec(extra),
           extraAttributes: namedExtraAttributes[extension.name],
           ignoreExtraAttributes,
-          name: extension.constructor.name,
+          name: extension.constructorName,
           tags: extension.tags ?? [],
         });
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { act, strictRender, useRemirror } from '@remirror/testing/react';
 
-import { PortalContainer, RemirrorPortals, usePortals } from '..';
+import { PortalContainer, RemirrorPortals, usePortals } from '../../..';
 
 test('PortalContainer', () => {
   const portalContainer = new PortalContainer();
@@ -52,8 +52,7 @@ test('usePortals', () => {
   expect(mock).toHaveBeenLastCalledWith([]);
 });
 
-// Skipping for now - passes locally but not on the CI
-test.skip('access to context via `useRemirror`', () => {
+test('access to context via `useRemirror`', () => {
   expect.assertions(1);
 
   const container = document.createElement('span');

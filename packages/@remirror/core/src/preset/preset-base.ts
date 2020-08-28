@@ -8,6 +8,7 @@ import {
   invariant,
   isIdentifierOfType,
   isRemirrorType,
+  pascalCase,
   uniqueBy,
 } from '@remirror/core-helpers';
 import type { EmptyShape, Replace, Shape, ValidOptions } from '@remirror/core-types';
@@ -24,8 +25,11 @@ import {
 import type { OnSetOptionsParameter } from '../types';
 
 /**
- * A preset is our way of bundling similar extensions with unified options and
- * dynamic properties.
+ * A `Preset` is one way of bundling together similar extensions with unified
+ * options and dynamic properties.
+ *
+ * It can also set new options which dynamically update multiple options for
+ * different extensions.
  */
 export abstract class Preset<Options extends ValidOptions = EmptyShape> extends BaseClass<
   Options,
@@ -41,25 +45,32 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
    *
    * @internal
    */
-  static get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
-    return RemirrorIdentifier.PresetConstructor as const;
+  static get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__](): RemirrorIdentifier.PresetConstructor {
+    return RemirrorIdentifier.PresetConstructor;
   }
+
   /**
    * The remirror identifier key.
    *
    * @internal
    */
-  get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
-    return RemirrorIdentifier.Preset as const;
+  get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__](): RemirrorIdentifier.Preset {
+    return RemirrorIdentifier.Preset;
   }
 
   /**
-   * The `camelCased` name of the preset.
+   * The list of extensions added to the editor by this `Preset`.
    */
-  abstract readonly name: string;
-
-  get extensions() {
+  get extensions(): Array<this['~E']> {
     return this.#extensions;
+  }
+
+  /**
+   * The name that the constructor should have, which doesn't get mangled in
+   * production builds.
+   */
+  get constructorName(): string {
+    return `${pascalCase(this.name)}Preset`;
   }
 
   /**
@@ -70,10 +81,10 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
    * received the extension. As a result trying to access the store during
    * `init` and `constructor` will result in a runtime error.
    */
-  protected get extensionStore() {
+  protected get extensionStore(): Remirror.ExtensionStore {
     invariant(this.#extensionStore, {
       code: ErrorConstant.MANAGER_PHASE_ERROR,
-      message: `An error occurred while attempting to access the 'extension.store' when the Manager has not yet set upt the lifecycle methods.`,
+      message: `An error occurred while attempting to access the 'preset.extensionStore' before the \`RemirrorManager\` has run through it's lifecycle methods.`,
     });
 
     return freeze(this.#extensionStore, { requireKeys: true });
@@ -90,7 +101,7 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
   #extensionStore?: Remirror.ExtensionStore;
 
   /**
-   * Private list of extension stored in within this preset.
+   * Private list of extension stored within this [[`Preset`]].
    */
   #extensions: Array<this['~E']>;
 
@@ -238,7 +249,7 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
    * @internal
    * @nonVirtual
    */
-  setExtensionStore(store: Remirror.ExtensionStore) {
+  setExtensionStore(store: Remirror.ExtensionStore): void {
     if (this.#extensionStore) {
       return;
     }
@@ -249,7 +260,7 @@ export abstract class Preset<Options extends ValidOptions = EmptyShape> extends 
   /**
    * Clone a preset.
    */
-  clone(...parameters: PresetConstructorParameter<Options>) {
+  clone(...parameters: PresetConstructorParameter<Options>): Preset<Options> {
     return new this.constructor(...parameters);
   }
 }

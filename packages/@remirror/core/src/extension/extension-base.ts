@@ -6,7 +6,13 @@ import {
   ExtensionPriority,
   RemirrorIdentifier,
 } from '@remirror/core-constants';
-import { freeze, invariant, isIdentifierOfType, isRemirrorType } from '@remirror/core-helpers';
+import {
+  freeze,
+  invariant,
+  isIdentifierOfType,
+  isRemirrorType,
+  pascalCase,
+} from '@remirror/core-helpers';
 import type {
   ApplySchemaAttributes,
   EditorSchema,
@@ -122,6 +128,14 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
   }
 
   /**
+   * The name that the constructor should have, which doesn't get mangled in
+   * production.
+   */
+  get constructorName(): string {
+    return `${pascalCase(this.name)}Extension`;
+  }
+
+  /**
    * The store is a property that's internal to extension. It include important
    * items like the `view` and `schema` that are added by the extension manager
    * and also the lifecycle extension methods.
@@ -134,7 +148,7 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
    * check the inline documentation to know when a certain property is useable
    * in your extension.
    */
-  protected get store() {
+  protected get store(): Remirror.ExtensionStore {
     invariant(this.#store, {
       code: ErrorConstant.MANAGER_PHASE_ERROR,
       message: `An error occurred while attempting to access the 'extension.store' when the Manager has not yet set created the lifecycle methods.`,
