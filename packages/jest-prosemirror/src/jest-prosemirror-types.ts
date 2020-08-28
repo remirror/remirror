@@ -7,7 +7,7 @@ import type { EditorView } from '@remirror/pm/view';
  * Tests that a command run transform the nodes from one state to another.
  * The second state is optional if nothing has changed.
  */
-export interface CommandTransformation<Schema extends EditorSchema = any> {
+export interface CommandTransformation<Schema extends EditorSchema = EditorSchema> {
   /**
    * The initial prosemirror node.
    *
@@ -34,21 +34,22 @@ export interface CommandTransformation<Schema extends EditorSchema = any> {
   to?: TaggedProsemirrorNode<Schema>;
 }
 
-export interface TaggedDocParameter<Schema extends EditorSchema = any> {
+export interface TaggedDocParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * A tagged ProsemirrorNode which can hold cursor information from the passed in text.
    */
   taggedDoc: TaggedProsemirrorNode<Schema>;
 }
 
-export interface TestEditorView<Schema extends EditorSchema = any> extends EditorView<Schema> {
+export interface TestEditorView<Schema extends EditorSchema = EditorSchema>
+  extends EditorView<Schema> {
   dispatchEvent: (event: string | CustomEvent | { type: string }) => void;
   domObserver: {
     flush: () => void;
   };
 }
 
-export interface TestEditorViewParameter<Schema extends EditorSchema = any> {
+export interface TestEditorViewParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * An instance of the test editor view which allows for dispatching events
    * and also containers TaggedProsemirrorNodes

@@ -1,10 +1,11 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
 
-import type { EditorSchema, EditorState } from '@remirror/core-types';
+import type { Dispose, EditorSchema, EditorState } from '@remirror/core-types';
 
 import { SuggestState } from './suggest-state';
 import type { Suggester } from './suggest-types';
 
+// This key is stored to provide access to the plugin state.
 const suggestPluginKey = new PluginKey('suggest');
 
 /**
@@ -22,10 +23,10 @@ export function getSuggestPluginState(state: EditorState): SuggestState {
  *
  * Will return a function for disposing of the added suggester.
  */
-export function addSuggester<Schema extends EditorSchema = any>(
+export function addSuggester<Schema extends EditorSchema = EditorSchema>(
   state: EditorState<Schema>,
   suggester: Suggester,
-) {
+): Dispose {
   return getSuggestPluginState(state).addSuggester(suggester);
 }
 
@@ -33,10 +34,10 @@ export function addSuggester<Schema extends EditorSchema = any>(
  * Remove a suggester if it exists. Pass in the name or the full suggester
  * object.
  */
-export function removeSuggester<Schema extends EditorSchema = any>(
+export function removeSuggester<Schema extends EditorSchema = EditorSchema>(
   state: EditorState<Schema>,
   suggester: Suggester | string,
-) {
+): void {
   return getSuggestPluginState(state).removeSuggester(suggester);
 }
 
@@ -135,7 +136,10 @@ export function removeSuggester<Schema extends EditorSchema = any>(
  * @param suggesters - a list of suggesters in the order they should be
  * evaluated.
  */
-export function suggest<Schema extends EditorSchema = any>(...suggesters: Suggester[]) {
+export function suggest<Schema extends EditorSchema = EditorSchema>(
+  ...suggesters: Suggester[]
+): Plugin<SuggestState, Schema> {
+  // Create the initial plugin state for the suggesters.
   const pluginState = SuggestState.create(suggesters);
 
   return new Plugin<SuggestState, Schema>({

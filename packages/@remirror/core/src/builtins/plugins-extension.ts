@@ -1,7 +1,6 @@
 import { ErrorConstant, ExtensionPriority, ManagerPhase } from '@remirror/core-constants';
 import { invariant, isEmptyArray, object } from '@remirror/core-helpers';
 import type { ProsemirrorPlugin } from '@remirror/core-types';
-import { getPluginState } from '@remirror/core-utils';
 import { EditorState, Plugin, PluginKey } from '@remirror/pm/state';
 
 import { extensionDecorator } from '../decorators';
@@ -40,7 +39,7 @@ export class PluginsExtension extends PlainExtension {
 
   // Here set the plugins keys and state getters for retrieving plugin state.
   // These methods are later used.
-  onCreate() {
+  onCreate(): void {
     const { setStoreKey, setExtensionStore } = this.store;
     this.updateExtensionStore();
 
@@ -103,13 +102,13 @@ export class PluginsExtension extends PlainExtension {
 
   private readonly getPluginStateCreator = (key: PluginKey, extension: AnyExtension) => <State>(
     state?: EditorState,
-  ) => {
+  ): State => {
     invariant(this.store.phase >= ManagerPhase.EditorView || state, {
       code: ErrorConstant.MANAGER_PHASE_ERROR,
       message: `The 'getPluginState' method of '${extension.constructorName}' must be called with a current state if called before the 'view' has been added to the manager.`,
     });
 
-    return getPluginState<State>(key, state ?? this.store.getState());
+    return key.getState(state ?? this.store.getState());
   };
 
   /**

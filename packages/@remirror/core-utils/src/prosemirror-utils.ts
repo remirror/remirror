@@ -51,14 +51,14 @@ import {
   isTransaction,
 } from './core-utils';
 
-interface NodeEqualsTypeParameter<Schema extends EditorSchema = any>
+interface NodeEqualsTypeParameter<Schema extends EditorSchema = EditorSchema>
   extends NodeTypesParameter<Schema>,
     OptionalProsemirrorNodeParameter<Schema> {}
 
 /**
  * Checks if the type a given `node` has a given `nodeType`.
  */
-export function isNodeOfType<Schema extends EditorSchema = any>(
+export function isNodeOfType<Schema extends EditorSchema = EditorSchema>(
   parameter: NodeEqualsTypeParameter<Schema>,
 ): boolean {
   const { types, node } = parameter;
@@ -78,7 +78,7 @@ export function isNodeOfType<Schema extends EditorSchema = any>(
   return matches(types);
 }
 
-interface MarkEqualsTypeParameter<Schema extends EditorSchema = any>
+interface MarkEqualsTypeParameter<Schema extends EditorSchema = EditorSchema>
   extends MarkTypesParameter<Schema>,
     OptionalMarkParameter<Schema> {}
 
@@ -139,7 +139,7 @@ export function applyClonedTransaction(parameter: ApplyClonedTransactionParamete
 /**
  * Checks if the type a given `node` has a given `nodeType`.
  */
-export function markEqualsType<Schema extends EditorSchema = any>(
+export function markEqualsType<Schema extends EditorSchema = EditorSchema>(
   parameter: MarkEqualsTypeParameter<Schema>,
 ): boolean {
   const { types, mark } = parameter;
@@ -203,7 +203,10 @@ export function replaceNodeAtPosition({
  * @param position - the prosemirror position
  * @param view - the editor view
  */
-export function findElementAtPosition(position: number, view: EditorView): HTMLElement {
+export function findElementAtPosition<Schema extends EditorSchema = EditorSchema>(
+  position: number,
+  view: EditorView<Schema>,
+): HTMLElement {
   const dom = view.domAtPos(position);
   const node = dom.node.childNodes[dom.offset];
 
@@ -315,7 +318,7 @@ export function findParentNodeOfType(
  *
  * @param selection - the prosemirror selection
  */
-export function findPositionOfNodeBefore<Schema extends EditorSchema = any>(
+export function findPositionOfNodeBefore<Schema extends EditorSchema = EditorSchema>(
   value: Selection<Schema> | ResolvedPos<Schema> | EditorState<Schema> | Transaction<Schema>,
 ): FindProsemirrorNodeResult | undefined {
   const $pos = isResolvedPos(value)
@@ -368,11 +371,11 @@ export function removeNodeBefore(tr: Transaction): Transaction {
   return tr;
 }
 
-interface FindSelectedNodeOfTypeParameter<Schema extends EditorSchema = any>
+interface FindSelectedNodeOfTypeParameter<Schema extends EditorSchema = EditorSchema>
   extends NodeTypesParameter<Schema>,
     SelectionParameter<Schema> {}
 
-export interface FindSelectedNodeOfType<Schema extends EditorSchema = any>
+export interface FindSelectedNodeOfType<Schema extends EditorSchema = EditorSchema>
   extends FindProsemirrorNodeResult<Schema> {
   /**
    * The depth of the returned node.
@@ -393,7 +396,7 @@ export interface FindSelectedNodeOfType<Schema extends EditorSchema = any>
  * });
  * ```
  */
-export function findSelectedNodeOfType<Schema extends EditorSchema = any>(
+export function findSelectedNodeOfType<Schema extends EditorSchema = EditorSchema>(
   parameter: FindSelectedNodeOfTypeParameter<Schema>,
 ): FindSelectedNodeOfType<Schema> | undefined {
   const { types, selection } = parameter;
@@ -411,7 +414,7 @@ export function findSelectedNodeOfType<Schema extends EditorSchema = any>(
   };
 }
 
-export interface FindProsemirrorNodeResult<Schema extends EditorSchema = any>
+export interface FindProsemirrorNodeResult<Schema extends EditorSchema = EditorSchema>
   extends ProsemirrorNodeParameter<Schema> {
   /**
    * The start position of the node.
@@ -446,7 +449,7 @@ interface FindParentNodeParameter extends SelectionParameter, PredicateParameter
  *
  * @param selection - the prosemirror selection
  */
-export function findPositionOfNodeAfter<Schema extends EditorSchema = any>(
+export function findPositionOfNodeAfter<Schema extends EditorSchema = EditorSchema>(
   value: Selection<Schema> | ResolvedPos<Schema> | EditorState<Schema>,
 ): FindProsemirrorNodeResult | undefined {
   const $pos = isResolvedPos(value)
@@ -601,9 +604,10 @@ export function schemaToJSON<Nodes extends string = string, Marks extends string
  * By default this is non chainable since it uses the `state.tr` rather than the
  * accumulated `tr` property passed into all command functions.
  */
-export function convertCommand<Schema extends EditorSchema = any, Extra extends Shape = EmptyShape>(
-  commandFunction: ProsemirrorCommandFunction<Schema>,
-): NonChainableCommandFunction<Schema, Extra> {
+export function convertCommand<
+  Schema extends EditorSchema = EditorSchema,
+  Extra extends Shape = EmptyShape
+>(commandFunction: ProsemirrorCommandFunction<Schema>): NonChainableCommandFunction<Schema, Extra> {
   return nonChainable(({ state, dispatch, view }) => commandFunction(state, dispatch, view));
 }
 
@@ -612,7 +616,7 @@ export function convertCommand<Schema extends EditorSchema = any, Extra extends 
  * inferred chainable commands.
  */
 export type NonChainableCommandFunction<
-  Schema extends EditorSchema = any,
+  Schema extends EditorSchema = EditorSchema,
   Extra extends Shape = EmptyShape
 > = Brand<CommandFunction<Schema, Extra>, 'non-chainable'>;
 
@@ -626,9 +630,10 @@ export type NonChainableCommandFunction<
  * const command = nonChainable(({ state, dispatch }) => {...});
  * ```
  */
-export function nonChainable<Schema extends EditorSchema = any, Extra extends Shape = EmptyShape>(
-  commandFunction: CommandFunction<Schema, Extra>,
-): NonChainableCommandFunction<Schema, Extra> {
+export function nonChainable<
+  Schema extends EditorSchema = EditorSchema,
+  Extra extends Shape = EmptyShape
+>(commandFunction: CommandFunction<Schema, Extra>): NonChainableCommandFunction<Schema, Extra> {
   return ((parameter) => {
     invariant(parameter.dispatch === undefined || parameter.dispatch === parameter.view?.dispatch, {
       code: ErrorConstant.NON_CHAINABLE_COMMAND,
@@ -643,9 +648,10 @@ export function nonChainable<Schema extends EditorSchema = any, Extra extends Sh
  * multiple commands to be chained together and runs until one of them returns
  * true.
  */
-export function chainCommands<Schema extends EditorSchema = any, Extra extends object = object>(
-  ...commands: Array<CommandFunction<Schema, Extra>>
-): CommandFunction<Schema, Extra> {
+export function chainCommands<
+  Schema extends EditorSchema = EditorSchema,
+  Extra extends object = object
+>(...commands: Array<CommandFunction<Schema, Extra>>): CommandFunction<Schema, Extra> {
   return ({ state, dispatch, view, tr, ...rest }) => {
     for (const element of commands) {
       if (element({ state, dispatch, view, tr, ...(rest as Extra) })) {
@@ -666,9 +672,9 @@ export function chainCommands<Schema extends EditorSchema = any, Extra extends o
  * When `next` is called it hands over full control of the keybindings to the
  * function that invokes it.
  */
-export function chainKeyBindingCommands(
-  ...commands: KeyBindingCommandFunction[]
-): KeyBindingCommandFunction {
+export function chainKeyBindingCommands<Schema extends EditorSchema = EditorSchema>(
+  ...commands: Array<KeyBindingCommandFunction<Schema>>
+): KeyBindingCommandFunction<Schema> {
   return (parameters) => {
     // When no commands are passed just ignore and continue.
     if (isEmptyArray(commands)) {
@@ -685,7 +691,9 @@ export function chainKeyBindingCommands(
      * Create the next function call. Updates the outer closure when the next
      * method has been called.
      */
-    const createNext = (...nextCommands: KeyBindingCommandFunction[]): (() => boolean) => () => {
+    const createNext = (
+      ...nextCommands: Array<KeyBindingCommandFunction<Schema>>
+    ): (() => boolean) => () => {
       // If there are no commands then this can be ignored and continued.
       if (isEmptyArray(nextCommands)) {
         return false;
@@ -750,10 +758,10 @@ function mergeKeyBindingCreator<
   Mapper extends AnyFunction = KeyBindingCommandFunction<Schema>
 >(
   extensionKeymaps: Array<KeyBindings<Schema>>,
-  mapper: (command: KeyBindingCommandFunction) => Mapper,
+  mapper: (command: KeyBindingCommandFunction<Schema>) => Mapper,
 ): Record<string, Mapper> {
   // Keep track of the previous commands as we loop through the `extensionKeymaps`.
-  const previousCommandsMap = new Map<string, KeyBindingCommandFunction[]>();
+  const previousCommandsMap = new Map<string, Array<KeyBindingCommandFunction<Schema>>>();
 
   // This is the combined mapping of commands. Essentially this function turns
   // the `extensionKeymaps` array into a single object `extensionKeymap` which
@@ -767,7 +775,8 @@ function mergeKeyBindingCreator<
     // `Cmd-Escape`.
     for (const [key, newCommand] of entries(extensionKeymap)) {
       // Get the previous commands for this key if it already exists
-      const previousCommands: KeyBindingCommandFunction[] = previousCommandsMap.get(key) ?? [];
+      const previousCommands: Array<KeyBindingCommandFunction<Schema>> =
+        previousCommandsMap.get(key) ?? [];
 
       // Update the commands array. This will be added to the
       // `previousCommandsMap` to track the current keyboard combination.
@@ -819,7 +828,7 @@ export function mergeProsemirrorKeyBindings<Schema extends EditorSchema = Editor
     extensionKeymaps,
     // Convert the command to have a signature of the
     // [[`ProsemirrorCommandFunction`]].
-    (command): ProsemirrorCommandFunction => (state, dispatch, view) => {
+    (command): ProsemirrorCommandFunction<Schema> => (state, dispatch, view) => {
       return command({ state, dispatch, view, tr: state.tr, next: () => false });
     },
   );

@@ -391,9 +391,9 @@ type UsePresetCallback<Type extends AnyPresetConstructor> = (
  * causes issues.
  *
  * ```tsx
- * import { useExtension } from '@remirror/react';
- * import { PresetCore } from '@remirror/preset-core';
- * import { BoldExtension } from '@remirror/extension-bold';
+ * import { useExtension } from 'remirror/react';
+ * import { PresetCore } from 'remirror/preset-core';
+ * import { BoldExtension } from 'remirror/extension-bold';
  *
  * const EditorWrapper = () => {
  *   const manager = useManager([new BoldExtension(), new CorePreset()]);

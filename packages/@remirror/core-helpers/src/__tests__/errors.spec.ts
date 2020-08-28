@@ -1,6 +1,7 @@
 import { ErrorConstant } from '@remirror/core-constants';
+import { hideConsoleError } from '@remirror/testing';
 
-import { invariant } from '..';
+import { invariant, RemirrorError } from '../..';
 import { freeze } from '../freeze';
 
 const env = process.env.NODE_ENV;
@@ -33,6 +34,13 @@ describe('freeze', () => {
 });
 
 describe('invariant', () => {
+  it('logs to the console when called', () => {
+    const spy = hideConsoleError(true);
+    RemirrorError.create({ message: 'should log' }).logError();
+
+    expect(spy).toHaveBeenCalled();
+  });
+
   it('throws specific errors', () => {
     expect(() => invariant(false, { message: 'always falsy' })).toThrowErrorMatchingSnapshot();
   });
@@ -52,6 +60,6 @@ describe('invariant', () => {
 
     expect(() =>
       invariant(false, { code: ErrorConstant.DUPLICATE_COMMAND_NAMES, message: 'Never shown' }),
-    ).toThrowError('Production error. No details available.');
+    ).toThrowErrorMatchingSnapshot();
   });
 });

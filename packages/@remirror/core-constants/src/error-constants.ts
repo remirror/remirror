@@ -98,6 +98,9 @@ export enum ErrorConstant {
   /** The provided preset is invalid. */
   INVALID_PRESET = 'RMR0020',
 
+  /** The content provided to the editor is not supported. */
+  INVALID_CONTENT = 'RMR0021',
+
   /** An invalid name was used for the extension. */
   INVALID_NAME = 'RMR0050',
 

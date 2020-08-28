@@ -19,12 +19,10 @@ import {
   bool,
   EditorWrapper,
   EditorWrapperParameter,
-  EMPTY_PARAGRAPH_NODE,
   ErrorConstant,
   getDocument,
   invariant,
   isArray,
-  isFunction,
   isNullOrUndefined,
   isPlainObject,
   object,
@@ -104,12 +102,10 @@ export const ReactEditor = <Combined extends AnyCombinedUnion>(
     [onError, forceEnvironment, manager, stringHandler],
   );
 
-  const fallback = isFunction(onError) ? onError() : onError ?? EMPTY_PARAGRAPH_NODE;
-  const initialContentArgs = isArray(props.initialContent)
+  const fallback = manager.createEmptyDoc();
+  const [initialContent, initialSelection] = isArray(props.initialContent)
     ? props.initialContent
     : ([props.initialContent ?? fallback] as const);
-  const initialContent = initialContentArgs[0];
-  const initialSelection = initialContentArgs[1];
   const initialEditorState = bool(value)
     ? value
     : createStateFromContent(initialContent, initialSelection);

@@ -65,7 +65,7 @@ export class HelpersExtension extends PlainExtension {
 
       if (isMarkExtension(extension)) {
         active[extension.name] = () => {
-          return isMarkActive({ stateOrTransaction: this.store.getState(), type: extension.type });
+          return isMarkActive({ trState: this.store.getState(), type: extension.type });
         };
       }
 

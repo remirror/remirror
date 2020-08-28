@@ -50,17 +50,17 @@ export interface SchemaParameter<Nodes extends string = string, Marks extends st
  */
 export interface EditorStateParameter<Schema extends EditorSchema = EditorSchema> {
   /**
-   * A snapshot of the prosemirror editor state
+   * A snapshot of the prosemirror editor state.
    */
   state: EditorState<Schema>;
 }
 
-export interface StateOrTransactionParameter<Schema extends EditorSchema = EditorSchema> {
+export interface TrStateParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * The shared types between a state and a transaction. Allows for commands to
    * operate on either a state object or a transaction object.
    */
-  stateOrTransaction: EditorState<Schema> | Transaction<Schema>;
+  trState: EditorState<Schema> | Transaction<Schema>;
 }
 
 /**

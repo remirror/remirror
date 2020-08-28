@@ -2,7 +2,6 @@ import {
   CommandFunction,
   CreatePluginReturn,
   extensionDecorator,
-  getPluginMeta,
   isEmptyArray,
   isNullOrUndefined,
   isNumber,
@@ -55,11 +54,9 @@ export class PositionTrackerExtension extends PlainExtension<PositionTrackerOpti
        *
        * It is up to you to dispatch the transaction or you can just use the commands.
        */
-      addPositionTracker: (parameter: AddPositionTrackerParameter, tr?: Transaction) => {
+      addPositionTracker: (parameter: AddPositionTrackerParameter, tr: Transaction) => {
         const { id, pos } = parameter;
         const existingPosition = helpers.findPositionTracker(id);
-
-        tr = tr ?? this.store.getState().tr;
 
         if (existingPosition) {
           return;
@@ -75,11 +72,9 @@ export class PositionTrackerExtension extends PlainExtension<PositionTrackerOpti
        *
        * This should be used to cleanup once the position is no longer needed.
        */
-      removePositionTracker: (parameter: RemovePositionTrackerParameter, tr?: Transaction) => {
+      removePositionTracker: (parameter: RemovePositionTrackerParameter, tr: Transaction) => {
         const { id } = parameter;
         const existingPosition = helpers.findPositionTracker(id);
-
-        tr = tr ?? this.store.getState().tr;
 
         if (!existingPosition) {
           return;
@@ -93,10 +88,8 @@ export class PositionTrackerExtension extends PlainExtension<PositionTrackerOpti
        *
        * Otherwise it returns undefined.
        */
-      clearPositionTrackers: (tr?: Transaction) => {
+      clearPositionTrackers: (tr: Transaction) => {
         const positionTrackerState = this.getPluginState();
-
-        tr = tr ?? this.store.getState().tr;
 
         if (positionTrackerState === DecorationSet.empty) {
           return;
@@ -139,16 +132,16 @@ export class PositionTrackerExtension extends PlainExtension<PositionTrackerOpti
   }
 
   #commandFactory = <Parameter>(helperName: string) => {
-    return (parameter: Parameter): CommandFunction => ({ dispatch }) => {
+    return (parameter: Parameter): CommandFunction => ({ dispatch, tr }) => {
       const helper = this.store.getHelpers()[helperName];
-      const tr: Transaction = helper(parameter);
+      const newTr = helper(parameter, tr);
 
-      if (!tr) {
+      if (!newTr) {
         return false;
       }
 
       if (dispatch) {
-        dispatch(tr);
+        dispatch(newTr);
       }
 
       return true;
@@ -190,7 +183,7 @@ export class PositionTrackerExtension extends PlainExtension<PositionTrackerOpti
           decorationSet = decorationSet.map(tr.mapping, tr.doc);
 
           // Get tracker updates from the meta data
-          const tracker = getPluginMeta<PositionTrackerExtensionMeta>(this.pluginKey, tr);
+          const tracker: PositionTrackerExtensionMeta = tr.getMeta(this.pluginKey);
 
           if (isNullOrUndefined(tracker)) {
             return decorationSet;

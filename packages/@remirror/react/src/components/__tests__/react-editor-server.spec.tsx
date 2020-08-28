@@ -150,7 +150,7 @@ test('prepends to the react element when insertPosition=start with getRootProps'
       {...handlers}
       label={label}
       initialContent={docNodeSimpleJSON}
-      manager={createReactManager([])}
+      manager={createReactManager(() => [new BoldExtension()])}
       insertPosition='start'
     >
       {({ getRootProps }) => (

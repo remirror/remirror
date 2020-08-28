@@ -14,7 +14,7 @@ import type {
   Selection,
   Transaction,
 } from './alias-types';
-import type { Literal, ObjectMark, ProsemirrorAttributes, RegexTuple } from './base-types';
+import type { Literal, ObjectMark, ProsemirrorAttributes } from './base-types';
 import type {
   EditorStateParameter,
   EditorViewParameter,
@@ -70,28 +70,20 @@ export interface GetAttributesParameter {
  *
  * @typeParam Schema - the underlying editor schema.
  */
-export type RemirrorContentType<Schema extends EditorSchema = any> =
+export type RemirrorContentType<Schema extends EditorSchema = EditorSchema> =
   | string
   | RemirrorJSON
   | ProsemirrorNode<Schema>
   | EditorState<Schema>;
 
 /**
- * Utility type for matching the name of a node to via a string or function.
- *
- * @typeParam Schema - the underlying editor schema.
- */
-export type NodeMatch<Schema extends EditorSchema = any> =
-  | string
-  | ((name: string, node: ProsemirrorNode<Schema>) => boolean)
-  | RegexTuple;
-
-/**
  * Used to apply the Prosemirror transaction to the current {@link EditorState}.
  *
  * @typeParam Schema - the underlying editor schema.
  */
-export type DispatchFunction<Schema extends EditorSchema = any> = (tr: Transaction<Schema>) => void;
+export type DispatchFunction<Schema extends EditorSchema = EditorSchema> = (
+  tr: Transaction<Schema>,
+) => void;
 
 /**
  * This is the type signature for commands within the prosemirror editor.
@@ -107,7 +99,7 @@ export type DispatchFunction<Schema extends EditorSchema = any> = (tr: Transacti
  *
  * @typeParam Schema - the underlying editor schema.
  */
-export type ProsemirrorCommandFunction<Schema extends EditorSchema = any> = (
+export type ProsemirrorCommandFunction<Schema extends EditorSchema = EditorSchema> = (
   state: EditorState<Schema>,
   dispatch: DispatchFunction<Schema> | undefined,
   view: EditorView<Schema> | undefined,
@@ -154,7 +146,7 @@ export type CommandFunction<
  * method to the command function which captures the updated `transaction` and
  * passes it onto the next chainable command.
  */
-export type ChainedCommandFunction<Schema extends EditorSchema = any> = (
+export type ChainedCommandFunction<Schema extends EditorSchema = EditorSchema> = (
   transaction: TransactionParameter<Schema>,
 ) => void;
 
@@ -163,7 +155,7 @@ export type ChainedCommandFunction<Schema extends EditorSchema = any> = (
  *
  * @typeParam Schema - the underlying editor schema.
  */
-export interface CommandFunctionParameter<Schema extends EditorSchema = any>
+export interface CommandFunctionParameter<Schema extends EditorSchema = EditorSchema>
   extends Partial<EditorViewParameter<Schema>>,
     EditorStateParameter<Schema>,
     TransactionParameter<Schema> {
@@ -179,7 +171,7 @@ export interface CommandFunctionParameter<Schema extends EditorSchema = any>
   dispatch?: DispatchFunction<Schema>;
 }
 
-export interface NextParameter<Schema extends EditorSchema = any>
+export interface NextParameter<Schema extends EditorSchema = EditorSchema>
   extends CommandFunctionParameter<Schema> {
   /**
    * A method to run the next (lower priority) command in the chain of
@@ -203,7 +195,7 @@ export interface NextParameter<Schema extends EditorSchema = any>
 /**
  * The command function passed to any of the keybindings.
  */
-export type KeyBindingCommandFunction<Schema extends EditorSchema = any> = CommandFunction<
+export type KeyBindingCommandFunction<Schema extends EditorSchema = EditorSchema> = CommandFunction<
   Schema,
   NextParameter<Schema>
 >;

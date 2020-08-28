@@ -9,14 +9,7 @@ import type {
   SchemaFromCombined,
   UpdateStateParameter,
 } from '@remirror/core';
-import {
-  EditorWrapper,
-  EMPTY_PARAGRAPH_NODE,
-  getDocument,
-  isArray,
-  isFunction,
-  RemirrorManager,
-} from '@remirror/core';
+import { EditorWrapper, getDocument, isArray, RemirrorManager } from '@remirror/core';
 import { EditorView } from '@remirror/pm/view';
 import { CorePreset, createCoreManager, CreateCoreManagerOptions } from '@remirror/preset-core';
 
@@ -59,13 +52,12 @@ export function createDomEditor<Combined extends AnyCombinedUnion>(
     });
   }
 
-  const fallback = isFunction(onError) ? onError() : onError ?? EMPTY_PARAGRAPH_NODE;
+  // Create an empty document.
+  const fallback = manager.createEmptyDoc();
 
-  const initialContentArgs = isArray(props.initialContent)
+  const [initialContent, initialSelection] = isArray(props.initialContent)
     ? props.initialContent
     : ([props.initialContent ?? fallback] as const);
-  const initialContent = initialContentArgs[0];
-  const initialSelection = initialContentArgs[1];
   const initialEditorState = createStateFromContent(initialContent, initialSelection);
 
   const wrapper = new DomEditorWrapper<Combined>({

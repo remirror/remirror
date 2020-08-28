@@ -11,20 +11,11 @@
     <a href="https://github.com/remirror/remirror/actions?query=workflow:docs"><img src="https://github.com/remirror/remirror/workflows/docs/badge.svg?branch=next" alt="Badge outline whether documentation deployed successfully" /></a>
     <a href="https://codeclimate.com/github/remirror/remirror/maintainability"><img src="https://api.codeclimate.com/v1/badges/f4d8dcd5c2228524a53a/maintainability" alt="Project maintainability" /></a>
     <a href="https://codeclimate.com/github/remirror/remirror/test_coverage"><img src="https://api.codeclimate.com/v1/badges/f4d8dcd5c2228524a53a/test_coverage" alt="Code coverage" /></a>
-    <a href="https://remirror.io/chat"><img alt="Discord" src="https://img.shields.io/discord/726035064831344711" alt="Join our discord server"></a>
+    <a href="https://remirror.io/chat"><img alt="Discord" src="https://img.shields.io/discord/726035064831344711" alt="Join our discord server" /></a>
     </div>
 </div>
 
-<br />
-
-<div align="center">
-  <div align="center">
-    <img width="600"  src="https://media.githubusercontent.com/media/remirror/remirror/next/support/assets/wysiwyg.png" alt="remirror" />
-  </div>
-    <br />
-</div>
-
-> Remirror is a toolkit for building accessible editors which run on the web and desktop.
+> `remirror` is a toolkit for building accessible editors which run on the web and desktop.
 
 <br />
 
@@ -32,11 +23,11 @@
 
 `remirror` was started as a personal challenge. Would it be possible to build an editor that combined great performance with ease of use? It was also important to give users of all frameworks, the ability to build an editor by picking and choosing their desired building blocks.
 
-In order to meet these goals, [ProseMirror](https://prosemirror.net/) was picked as the core editor layer. The second decision was to base the structure of the editor on blocks of functionality called `Extensions`. Each extension would add a slice of beauty to the editor, allowing users to craft their masterpieces.
+In order to meet these goals, [ProseMirror][prosemirror] was picked as the core editor layer. The second decision was to base the structure of the editor on blocks of functionality called `Extensions`. Each extension would add a slice of beauty to the editor, allowing users to craft their masterpieces.
 
 In the latest version, some of the initial goals of `remirror` are bearing fruit. Every single part of the editor can be controlled by extensions. For example, the core (`Schema`) is managed by a [built-in extension](https://github.com/remirror/remirror/blob/HEAD/packages/@remirror/core/src/builtins/schema-extension.ts).
 
-And the new API is so much better. For React, this comes with a bunch of drop-in components and hooks. Many more are being worked on.
+And the API has improved a lot. For React, this comes with a bunch of drop-in components and hooks. Many more are being worked on.
 
 To add a drop down emoji picker to your react editor the following code will suffice.
 
@@ -70,13 +61,13 @@ While exploring this project, if you find errors or would like to suggest improv
 - Create a pull request with your proposed improvement by clicking the edit button on the relevant page.
 - Move on, because deadlines are looming and life is too short.
 
-Whatever you decide I'm happy that you've taken the time to dive into the `remirror` project.
+Whatever you decide thanks for giving a chance to the `remirror` project.
 
 <br />
 
 ## Documentation
 
-View our documentation website at https://remirror.io
+View our documentation website [**here**][introduction].
 
 - [Introduction]
 - [Create an editor](https://remirror.io/docs/guide/create-editor)
@@ -160,14 +151,6 @@ const EditorWrapper = () => {
   );
 };
 ```
-
-<br />
-
-## Built With
-
-- [Typescript]
-- [ProseMirror]
-- Love ❤️
 
 <br />
 

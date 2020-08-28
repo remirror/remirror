@@ -12,7 +12,7 @@ import { DirectEditorProps, EditorView } from '@remirror/pm/view';
 /**
  * A mock editor view used only when prosemirror is running on the server
  */
-export class EditorViewSSR<Schema extends EditorSchema = any> {
+export class EditorViewSSR<Schema extends EditorSchema = EditorSchema> {
   state: EditorState;
   dom: Element;
   dragging = null;
@@ -78,7 +78,7 @@ export class EditorViewSSR<Schema extends EditorSchema = any> {
  * @param props
  * @param forceEnvironment
  */
-export const createEditorView = <Schema extends EditorSchema = any>(
+export const createEditorView = <Schema extends EditorSchema = EditorSchema>(
   place: Node | ((p: Node) => void) | { mount: Node } | undefined,
   props: DirectEditorProps<Schema>,
   forceEnvironment?: RenderEnvironment,

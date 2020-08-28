@@ -65,6 +65,7 @@ export {
   randomFloat,
   randomInt,
   range,
+  set,
   shallowClone,
   snakeCase,
   sort,
@@ -76,6 +77,7 @@ export {
   uniqueArray,
   uniqueBy,
   uniqueId,
+  unset,
   values,
   within,
 } from './core-helpers';

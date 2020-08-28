@@ -5,8 +5,8 @@ import { ErrorConstant } from '@remirror/core-constants';
 import { includes, isString, values } from './core-helpers';
 
 /**
- * Errors have their own URL which will be logged to the console for more easily
- * surfacing issues.
+ * Errors have their own URL which will be logged to the console for simpler
+ * debugging.
  */
 const ERROR_INFORMATION_URL = 'https://remirror.io/docs/errors';
 
@@ -15,7 +15,8 @@ let errorMessageMap: Partial<Record<ErrorConstant, string>> = {};
 // This will be removed in a production environment.
 if (process.env.NODE_ENV !== 'production') {
   errorMessageMap = {
-    [ErrorConstant.PROD]: 'Production error. No details available.',
+    [ErrorConstant.PROD]:
+      'An error occurred with the `Remirror` setup in production. Any details are purposefully being withheld.',
     [ErrorConstant.UNKNOWN]: "An error occurred but we're not quite sure why. 🧐",
     [ErrorConstant.INVALID_COMMAND_ARGUMENTS]:
       'The arguments passed to the command method were invalid.',
@@ -48,6 +49,7 @@ if (process.env.NODE_ENV !== 'production') {
     [ErrorConstant.NON_CHAINABLE_COMMAND]: 'Attempted to chain a non chainable command.',
     [ErrorConstant.INVALID_EXTENSION]: 'The provided extension is invalid.',
     [ErrorConstant.INVALID_PRESET]: 'The provided preset is invalid.',
+    [ErrorConstant.INVALID_CONTENT]: 'The content provided to the editor is not supported.',
     [ErrorConstant.INVALID_NAME]: 'An invalid name was used for the extension.',
     [ErrorConstant.EXTENSION]:
       'An error occurred within an extension. More details should be made available.',
@@ -75,7 +77,7 @@ function isErrorConstant(code: unknown): code is ErrorConstant {
 }
 
 /**
- * Create an error message from the provided code.
+ * Create an error message from the provided error code.
  */
 function createErrorMessage(code: ErrorConstant, extraMessage?: string) {
   const message = errorMessageMap[code];
@@ -98,7 +100,7 @@ export class RemirrorError extends BaseError {
   /**
    * A shorthand way of creating an error message.
    */
-  static create(options: RemirrorErrorOptions = {}) {
+  static create(options: RemirrorErrorOptions = {}): RemirrorError {
     return new RemirrorError(options);
   }
 
@@ -108,21 +110,35 @@ export class RemirrorError extends BaseError {
   errorCode: ErrorConstant;
 
   /**
+   * The link to read more about the error online.
+   */
+  url: string;
+
+  /**
    * The constructor is intentionally kept private to prevent being extended from.
    */
   private constructor({ code, message }: RemirrorErrorOptions = {}) {
     let errorCode: ErrorConstant;
 
     if (isErrorConstant(code)) {
-      // If this is a internal code then use the internal error message.
-      super(createErrorMessage(code, message));
       errorCode = code;
+      super(createErrorMessage(errorCode, message));
     } else {
       errorCode = ErrorConstant.CUSTOM;
       super(createErrorMessage(errorCode, message));
     }
 
     this.errorCode = errorCode;
+    this.url = `${ERROR_INFORMATION_URL}#${errorCode.toLowerCase()}`;
+  }
+
+  /**
+   * Log the error message and return the instance of the error.
+   */
+  logError(): this {
+    // Log the error.
+    console.error(this.message);
+    return this;
   }
 }
 
@@ -137,12 +153,12 @@ export function invariant(condition: unknown, options: RemirrorErrorOptions): as
 
   // When not in 'DEV' strip the message but still throw
   if (process.env.NODE_ENV === 'production') {
-    throw RemirrorError.create({ code: ErrorConstant.PROD });
+    throw RemirrorError.create({ code: ErrorConstant.PROD }).logError();
   }
 
   // When not in production we allow the message to pass through
-  // **This block will be removed in production builds**
-  throw RemirrorError.create(options);
+  // **This is never called in production builds.**
+  throw RemirrorError.create(options).logError();
 }
 
 /**

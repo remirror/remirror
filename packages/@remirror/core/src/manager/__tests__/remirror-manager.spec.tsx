@@ -8,7 +8,7 @@ import type {
   ProsemirrorAttributes,
 } from '@remirror/core-types';
 import { EditorView } from '@remirror/pm/view';
-import { CorePreset, createCoreManager } from '@remirror/testing';
+import { CorePreset, createCoreManager, HeadingExtension } from '@remirror/testing';
 
 import { NodeExtension, PlainExtension } from '../../extension';
 import { isRemirrorManager, RemirrorManager } from '../remirror-manager';
@@ -246,4 +246,41 @@ test('lifecycle', () => {
 
   const extension = new LifecycleExtension();
   createCoreManager([extension]);
+});
+
+describe('createEmptyDoc', () => {
+  it('can create an empty doc', () => {
+    const manager = RemirrorManager.create([new CorePreset()]);
+
+    expect(manager.createEmptyDoc().toJSON()).toMatchInlineSnapshot(`
+    Object {
+      "content": Array [
+        Object {
+          "type": "paragraph",
+        },
+      ],
+      "type": "doc",
+    }
+  `);
+  });
+
+  it('creates an empty doc with alternative content', () => {
+    const headingManager = RemirrorManager.create([
+      new CorePreset({ content: 'heading+' }),
+      new HeadingExtension(),
+    ]);
+    expect(headingManager.createEmptyDoc()).toMatchInlineSnapshot(`
+      Prosemirror node: {
+        "type": "doc",
+        "content": [
+          {
+            "type": "heading",
+            "attrs": {
+              "level": 1
+            }
+          }
+        ]
+      }
+    `);
+  });
 });
