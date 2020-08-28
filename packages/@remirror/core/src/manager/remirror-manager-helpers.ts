@@ -25,12 +25,11 @@ export interface TransformExtensionOrPreset<Combined extends AnyCombinedUnion> {
 
 /**
  * Transforms the unsorted array of presets and extension into presets and
- * sorted extensions. Handles uniqueness of extensions and automatically pulling
- * throwing an error when required extensions are missing.
+ * sorted extensions. Handles uniqueness of extensions and automatically throws
+ * an error when required extensions are missing.
  *
- * TODO Add a check for requiredExtensions and inject them automatically TODO
- * Currently matching by constructor - what if different versions exist in the
- * same app...
+ * @internalremarks Currently matching by constructor - what if different
+ * versions exist in the same app
  *
  * @param unionValues - the extensions to transform as well as their priorities
  *
@@ -151,7 +150,7 @@ export function transformCombinedUnion<Combined extends AnyCombinedUnion>(
     }
   };
 
-  // Throw if any required extension missing.
+  // Throw if any required extensions are missing.
   for (const extension of extensions) {
     findMissingExtensions(extension);
   }

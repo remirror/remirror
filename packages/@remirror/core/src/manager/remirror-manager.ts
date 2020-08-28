@@ -619,11 +619,10 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   }
 
   /**
-   * Make a clone .
+   * Make a clone of the manager.
    *
-   * TODO: Think about the following.
-   * - What about the state stored in the extensions and presets, does this need
-   *   to be recreated as well?
+   * @internalremarks What about the state stored in the extensions and presets,
+   * does this need to be recreated as well?
    */
   clone(): RemirrorManager<Combined> {
     const currentCombined = this.#combined.map((e) => e.clone(e.options));
@@ -632,10 +631,6 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
 
   /**
    * Recreate the manager.
-   *
-   * TODO: Think about the following.
-   * - What about the state stored in the extensions and presets, does this need
-   *   to be recreated as well?
    */
   recreate<ExtraCombined extends AnyCombinedUnion>(
     combined: ExtraCombined[] = [],
@@ -650,7 +645,6 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
 
   /**
    * This method should be called to destroy the manager and remove the view.
-   * You have full control over this.
    */
   destroy(): void {
     this.#phase = ManagerPhase.Destroy;
@@ -668,6 +662,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
 
     this.#events.emit('destroy');
   }
+
   /**
    * Check whether the manager includes the names or constructors provided for
    * the preset and extensions.
@@ -684,7 +679,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
     const extensionsAndPresets: Array<AnyExtensionConstructor | AnyPresetConstructor> = [];
 
     for (const item of this.combined) {
-      names.push(item.name, item.constructor.name);
+      names.push(item.name, item.constructorName);
       extensionsAndPresets.push(item.constructor);
     }
 

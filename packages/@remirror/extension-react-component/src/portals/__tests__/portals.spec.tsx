@@ -52,8 +52,7 @@ test('usePortals', () => {
   expect(mock).toHaveBeenLastCalledWith([]);
 });
 
-// Skipping for now - passes locally but not on the CI
-test.skip('access to context via `useRemirror`', () => {
+test('access to context via `useRemirror`', () => {
   expect.assertions(1);
 
   const container = document.createElement('span');

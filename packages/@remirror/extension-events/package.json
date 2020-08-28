@@ -29,7 +29,7 @@
   "devDependencies": {
     "@remirror/core": "1.0.0-next.28",
     "@remirror/pm": "1.0.0-next.28",
-    "@testing-library/dom": "^7.22.6"
+    "@testing-library/dom": "^7.23.0"
   },
   "peerDependencies": {
     "@remirror/core": "1.0.0-next.28",

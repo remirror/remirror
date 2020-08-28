@@ -106,7 +106,7 @@ export class PluginsExtension extends PlainExtension {
   ) => {
     invariant(this.store.phase >= ManagerPhase.EditorView || state, {
       code: ErrorConstant.MANAGER_PHASE_ERROR,
-      message: `The 'getPluginState' method of '${extension.constructor.name}' must be called with a current state if called before the 'view' has been added to the manager.`,
+      message: `The 'getPluginState' method of '${extension.constructorName}' must be called with a current state if called before the 'view' has been added to the manager.`,
     });
 
     return getPluginState<State>(key, state ?? this.store.getState());
