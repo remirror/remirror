@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-search",
-  "version": "1.0.0-next.28",
+  "version": "1.0.0-next.29",
   "description": "Find all of your favourite things in the remirror editor.",
   "keywords": [
     "remirror",
@@ -29,11 +29,11 @@
     "linaria": "^2.0.0-rc.1"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.28",
+    "@remirror/core": "1.0.0-next.29",
     "@remirror/pm": "1.0.0-next.28"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.28",
+    "@remirror/core": "1.0.0-next.29",
     "@remirror/pm": "1.0.0-next.28"
   },
   "publishConfig": {

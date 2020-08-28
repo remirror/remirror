@@ -1,5 +1,36 @@
 # @remirror/preset-wysiwyg
 
+## 1.0.0-next.29
+
+> 2020-08-28
+
+### Patch Changes
+
+- Updated dependencies [[`05446a62`](https://github.com/remirror/remirror/commit/05446a62d4f1d1cf3c940b2766a7ea5f66a77ebf)]:
+  - @remirror/core@1.0.0-next.29
+  - @remirror/extension-bidi@1.0.0-next.29
+  - @remirror/extension-blockquote@1.0.0-next.29
+  - @remirror/extension-bold@1.0.0-next.29
+  - @remirror/extension-code@1.0.0-next.29
+  - @remirror/extension-code-block@1.0.0-next.29
+  - @remirror/extension-drop-cursor@1.0.0-next.29
+  - @remirror/extension-epic-mode@1.0.0-next.29
+  - @remirror/extension-gap-cursor@1.0.0-next.29
+  - @remirror/extension-hard-break@1.0.0-next.29
+  - @remirror/extension-heading@1.0.0-next.29
+  - @remirror/extension-horizontal-rule@1.0.0-next.29
+  - @remirror/extension-image@1.0.0-next.29
+  - @remirror/extension-italic@1.0.0-next.29
+  - @remirror/extension-link@1.0.0-next.29
+  - @remirror/extension-search@1.0.0-next.29
+  - @remirror/extension-strike@1.0.0-next.29
+  - @remirror/extension-trailing-node@1.0.0-next.29
+  - @remirror/extension-underline@1.0.0-next.29
+  - @remirror/preset-core@1.0.0-next.29
+  - @remirror/preset-embed@1.0.0-next.29
+  - @remirror/preset-list@1.0.0-next.29
+  - @remirror/preset-table@1.0.0-next.29
+
 ## 1.0.0-next.28
 
 > 2020-08-27
