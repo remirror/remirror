@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.11.0",
-    "@remirror/showcase": "1.0.0-next.28",
+    "@remirror/showcase": "1.0.0-next.29",
     "@storybook/addon-actions": "^6.0.20",
     "@storybook/addon-links": "^6.0.20",
     "@storybook/addons": "^6.0.20",
@@ -21,6 +21,6 @@
     "linaria": "^2.0.0-rc.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "remirror": "1.0.0-next.28"
+    "remirror": "1.0.0-next.29"
   }
 }

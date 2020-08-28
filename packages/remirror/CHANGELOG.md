@@ -1,5 +1,61 @@
 # remirror
 
+## 1.0.0-next.29
+
+> 2020-08-28
+
+### Patch Changes
+
+- Updated dependencies [[`05446a62`](https://github.com/remirror/remirror/commit/05446a62d4f1d1cf3c940b2766a7ea5f66a77ebf)]:
+  - @remirror/core@1.0.0-next.29
+  - @remirror/react@1.0.0-next.29
+  - @remirror/core-utils@1.0.0-next.29
+  - @remirror/dom@1.0.0-next.29
+  - @remirror/extension-annotation@1.0.0-next.29
+  - @remirror/extension-auto-link@1.0.0-next.29
+  - @remirror/extension-bidi@1.0.0-next.29
+  - @remirror/extension-blockquote@1.0.0-next.29
+  - @remirror/extension-bold@1.0.0-next.29
+  - @remirror/extension-code@1.0.0-next.29
+  - @remirror/extension-code-block@1.0.0-next.29
+  - @remirror/extension-collaboration@1.0.0-next.29
+  - @remirror/extension-diff@1.0.0-next.29
+  - @remirror/extension-doc@1.0.0-next.29
+  - @remirror/extension-drop-cursor@1.0.0-next.29
+  - @remirror/extension-emoji@1.0.0-next.29
+  - @remirror/extension-epic-mode@1.0.0-next.29
+  - @remirror/extension-events@1.0.0-next.29
+  - @remirror/extension-gap-cursor@1.0.0-next.29
+  - @remirror/extension-hard-break@1.0.0-next.29
+  - @remirror/extension-heading@1.0.0-next.29
+  - @remirror/extension-history@1.0.0-next.29
+  - @remirror/extension-horizontal-rule@1.0.0-next.29
+  - @remirror/extension-image@1.0.0-next.29
+  - @remirror/extension-italic@1.0.0-next.29
+  - @remirror/extension-link@1.0.0-next.29
+  - @remirror/extension-mention@1.0.0-next.29
+  - @remirror/extension-paragraph@1.0.0-next.29
+  - @remirror/extension-placeholder@1.0.0-next.29
+  - @remirror/extension-position-tracker@1.0.0-next.29
+  - @remirror/extension-positioner@1.0.0-next.29
+  - @remirror/extension-react-component@1.0.0-next.29
+  - @remirror/extension-react-ssr@1.0.0-next.29
+  - @remirror/extension-search@1.0.0-next.29
+  - @remirror/extension-strike@1.0.0-next.29
+  - @remirror/extension-text@1.0.0-next.29
+  - @remirror/extension-trailing-node@1.0.0-next.29
+  - @remirror/extension-underline@1.0.0-next.29
+  - @remirror/extension-yjs@1.0.0-next.29
+  - @remirror/preset-core@1.0.0-next.29
+  - @remirror/preset-embed@1.0.0-next.29
+  - @remirror/preset-list@1.0.0-next.29
+  - @remirror/preset-react@1.0.0-next.29
+  - @remirror/preset-social@1.0.0-next.29
+  - @remirror/preset-table@1.0.0-next.29
+  - @remirror/preset-wysiwyg@1.0.0-next.29
+  - @remirror/react-social@1.0.0-next.29
+  - @remirror/react-wysiwyg@1.0.0-next.29
+
 ## 1.0.0-next.28
 
 > 2020-08-27

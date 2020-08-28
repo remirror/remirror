@@ -1,5 +1,24 @@
 # @remirror/react
 
+## 1.0.0-next.29
+
+> 2020-08-28
+
+### Patch Changes
+
+- [`05446a62`](https://github.com/remirror/remirror/commit/05446a62d4f1d1cf3c940b2766a7ea5f66a77ebf) [#598](https://github.com/remirror/remirror/pull/598) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix the broken build in production caused by comparing the mangled `Constructor.name` to an expected value.
+
+  - Make `@types/node` an optional peer dependency of `@remirror/core-utils`.
+
+- Updated dependencies [[`05446a62`](https://github.com/remirror/remirror/commit/05446a62d4f1d1cf3c940b2766a7ea5f66a77ebf)]:
+  - @remirror/core@1.0.0-next.29
+  - @remirror/extension-placeholder@1.0.0-next.29
+  - @remirror/extension-positioner@1.0.0-next.29
+  - @remirror/extension-react-component@1.0.0-next.29
+  - @remirror/extension-react-ssr@1.0.0-next.29
+  - @remirror/preset-core@1.0.0-next.29
+  - @remirror/preset-react@1.0.0-next.29
+
 ## 1.0.0-next.28
 
 > 2020-08-27
