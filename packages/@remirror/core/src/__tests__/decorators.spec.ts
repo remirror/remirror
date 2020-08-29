@@ -1,10 +1,14 @@
 import type { CustomHandler, Dynamic, Handler, Static } from '@remirror/core-types';
+import { hideConsoleError } from '@remirror/testing';
 
 import { extensionDecorator } from '..';
 import { presetDecorator } from '../decorators';
 import { PlainExtension } from '../extension';
 import { Preset } from '../preset';
 import type { OnSetOptionsParameter } from '../types';
+
+// Hides console messages
+hideConsoleError(true);
 
 interface GeneralOptions {
   type: Static<'awesome' | 'not-awesome'>;

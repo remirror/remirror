@@ -18,7 +18,14 @@ import {
   isString,
   object,
 } from '@remirror/core-helpers';
-import type { EditorSchema, EditorView, Replace } from '@remirror/core-types';
+import type {
+  EditorSchema,
+  EditorView,
+  MarkExtensionSpec,
+  NodeExtensionSpec,
+  ProsemirrorNode,
+  Replace,
+} from '@remirror/core-types';
 import {
   createDocumentNode,
   CreateDocumentNodeParameter,
@@ -26,7 +33,7 @@ import {
 } from '@remirror/core-utils';
 import { EditorState } from '@remirror/pm/state';
 
-import { BuiltinPreset } from '../builtins';
+import { BuiltinPreset, CombinedTags } from '../builtins';
 import {
   AnyExtension,
   AnyExtensionConstructor,
@@ -37,6 +44,7 @@ import {
   isNodeExtension,
   isPlainExtension,
   ManagerStoreKeys,
+  SchemaFromExtensionUnion,
 } from '../extension';
 import type {
   AnyCombinedUnion,
@@ -47,7 +55,12 @@ import type {
   SchemaFromCombined,
 } from '../preset';
 import { privacySymbol } from '../privacy';
-import type { GetConstructor, GetExtensions, StateUpdateLifecycleParameter } from '../types';
+import type {
+  GetConstructor,
+  GetExtensions,
+  GetNameUnion,
+  StateUpdateLifecycleParameter,
+} from '../types';
 import { transformCombinedUnion } from './remirror-manager-helpers';
 
 /**
@@ -99,7 +112,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   static create<Combined extends AnyCombinedUnion>(
     combined: Combined[] | (() => Combined[]),
     settings: Remirror.ManagerSettings = {},
-  ) {
+  ): RemirrorManager<Combined | BuiltinPreset> {
     return new RemirrorManager<Combined | BuiltinPreset>(
       [...getLazyArray(combined), new BuiltinPreset(settings.builtin)],
       {
@@ -116,7 +129,9 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
     extensions,
     presets,
     settings = {},
-  }: RemirrorManagerParameter<ExtensionUnion, PresetUnion>) {
+  }: RemirrorManagerParameter<ExtensionUnion, PresetUnion>): RemirrorManager<
+    ExtensionUnion | PresetUnion | BuiltinPreset
+  > {
     return RemirrorManager.create<ExtensionUnion | PresetUnion>(
       [...extensions, ...presets],
       settings,
@@ -166,7 +181,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    */
   #handlers: {
     create: Array<() => void>;
-    view: Array<(view: EditorView<EditorSchema>) => void>;
+    view: Array<(view: EditorView) => void>;
     update: Array<(param: StateUpdateLifecycleParameter) => void>;
     destroy: Array<() => void>;
   } = {
@@ -185,7 +200,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   /**
    * Returns true if the manager has been destroyed.
    */
-  get destroyed() {
+  get destroyed(): boolean {
     return this.#phase === ManagerPhase.Destroy;
   }
 
@@ -193,7 +208,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * True when the view has been added to the UI layer and the editor is
    * running.
    */
-  get mounted() {
+  get mounted(): boolean {
     return this.#phase >= ManagerPhase.EditorView && this.#phase < ManagerPhase.Destroy;
   }
 
@@ -202,8 +217,8 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    *
    * @internal
    */
-  get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
-    return RemirrorIdentifier.Manager as const;
+  get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__](): RemirrorIdentifier.Manager {
+    return RemirrorIdentifier.Manager;
   }
 
   /**
@@ -216,35 +231,35 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   /**
    * The preset stored by this manager
    */
-  get presets() {
+  get presets(): ReadonlyArray<this['~P']> {
     return this.#presets;
   }
 
   /**
    * Get the original combined presets used to create this manager.
    */
-  get combined() {
+  get combined(): readonly Combined[] {
     return freeze(this.#combined);
   }
 
   /**
    * Get the extension manager store which is accessible at initialization.
    */
-  get store() {
+  get store(): Remirror.ManagerStore<Combined> {
     return freeze(this.#store);
   }
 
   /**
    * Returns the stored nodes
    */
-  get nodes() {
+  get nodes(): Record<GetNodeNameUnion<InferCombinedExtensions<Combined>>, NodeExtensionSpec> {
     return this.#store.nodes;
   }
 
   /**
    * Returns the store marks.
    */
-  get marks() {
+  get marks(): Record<GetMarkNameUnion<InferCombinedExtensions<Combined>>, MarkExtensionSpec> {
     return this.#store.marks;
   }
 
@@ -252,28 +267,28 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * A shorthand method for retrieving the schema for this extension manager
    * from the data.
    */
-  get schema() {
+  get schema(): SchemaFromExtensionUnion<InferCombinedExtensions<Combined>> {
     return this.#store.schema;
   }
 
   /**
    * A shorthand getter for retrieving the tags from the extension manager.
    */
-  get extensionTags() {
+  get extensionTags(): Readonly<CombinedTags<GetNameUnion<Combined>>> {
     return this.#store.tags;
   }
 
   /**
    * A shorthand way of retrieving the editor view.
    */
-  get view() {
+  get view(): EditorView<SchemaFromCombined<Combined>> {
     return this.#store.view;
   }
 
   /**
    * Retrieve the settings used when creating the manager.
    */
-  get settings() {
+  get settings(): Remirror.ManagerSettings {
     return this.#settings;
   }
 
@@ -320,7 +335,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   /**
    * Loops through all extensions to set up the lifecycle handlers.
    */
-  private setupLifecycleHandlers() {
+  private setupLifecycleHandlers(): void {
     for (const preset of this.#presets) {
       preset.setExtensionStore(this.#extensionStore);
     }
@@ -482,7 +497,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    *
    * @param view - the editor view
    */
-  addView(view: EditorView<this['~Sch']>) {
+  addView(view: EditorView<this['~Sch']>): this {
     if (this.#phase >= ManagerPhase.EditorView) {
       // Do nothing since a view has already been added.
       return this;
@@ -510,9 +525,26 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   /* Public Methods */
 
   /**
+   * Create an empty document for the editor based on the current schema.
+   */
+  createEmptyDoc(): ProsemirrorNode<SchemaFromCombined<Combined>> {
+    const doc = this.schema.nodes.doc.createAndFill();
+
+    // Make sure the `doc` was created.
+    invariant(doc, {
+      code: ErrorConstant.INVALID_CONTENT,
+      message: `An empty node could not be created due to an invalid schema.`,
+    });
+
+    return doc;
+  }
+
+  /**
    * Create the editor state from content passed to this extension manager.
    */
-  createState(parameter: Omit<CreateDocumentNodeParameter, 'schema'>) {
+  createState(
+    parameter: Omit<CreateDocumentNodeParameter, 'schema'>,
+  ): EditorState<SchemaFromCombined<Combined>> {
     const { content, doc: d, stringHandler, onError, selection } = parameter;
     const { schema, plugins } = this.store;
     const doc = createDocumentNode({ content, doc: d, schema, stringHandler, onError, selection });
@@ -558,7 +590,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    *
    * An example usage of this is within the collaboration extension.
    */
-  onStateUpdate(parameter: Omit<StateUpdateLifecycleParameter, 'firstUpdate'>) {
+  onStateUpdate(parameter: Omit<StateUpdateLifecycleParameter, 'firstUpdate'>): void {
     const firstUpdate = this.#firstStateUpdate;
 
     this.#extensionStore.currentState = parameter.state;
@@ -910,7 +942,7 @@ declare global {
        * The view available to extensions once `addView` has been called on the
        * `RemirrorManager` instance.
        */
-      readonly view: EditorView<EditorSchema>;
+      readonly view: EditorView;
 
       /**
        * The latest state.

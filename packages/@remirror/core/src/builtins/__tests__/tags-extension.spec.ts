@@ -1,5 +1,6 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
+import { hideConsoleError } from '@remirror/testing';
 import {
   ApplySchemaAttributes,
   extensionDecorator,
@@ -9,6 +10,9 @@ import {
 } from 'remirror/core';
 
 import { TagsExtension } from '..';
+
+// Hides console messages
+hideConsoleError(true);
 
 extensionValidityTest(TagsExtension);
 

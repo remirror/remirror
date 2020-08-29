@@ -9,7 +9,7 @@ import {
   MarkExtensionSpec,
   markInputRule,
   markPasteRule,
-  Plugin,
+  ProsemirrorPlugin,
   toggleMark,
 } from '@remirror/core';
 
@@ -57,7 +57,7 @@ export class CodeExtension extends MarkExtension {
     ];
   }
 
-  createPasteRules(): Plugin[] {
+  createPasteRules(): ProsemirrorPlugin[] {
     return [markPasteRule({ regexp: /`([^`]+)`/g, type: this.type })];
   }
 }

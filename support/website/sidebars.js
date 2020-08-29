@@ -23,6 +23,7 @@ const sidebarConfig = {
         'concepts/react-refs',
         'concepts/priority',
         'concepts/keymap',
+        'concepts/error-handling',
       ],
     },
     { type: 'category', label: 'Showcase', items: ['showcase/social'] },

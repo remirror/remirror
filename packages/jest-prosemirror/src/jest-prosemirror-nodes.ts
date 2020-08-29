@@ -5,7 +5,7 @@ import pm, {
 } from 'prosemirror-test-builder';
 
 import { Cast, keys } from '@remirror/core-helpers';
-import type { EditorSchema, Plugin } from '@remirror/core-types';
+import type { EditorSchema, ProsemirrorPlugin } from '@remirror/core-types';
 import { GapCursor } from '@remirror/pm/gapcursor';
 import {
   AllSelection,
@@ -33,7 +33,7 @@ function resolveCell(taggedDoc: TaggedProsemirrorNode, tag?: number) {
   return cellAround(taggedDoc.resolve(tag));
 }
 
-interface CreateTextSelectionParameter<Schema extends EditorSchema = any>
+interface CreateTextSelectionParameter<Schema extends EditorSchema = EditorSchema>
   extends TaggedDocParameter<Schema> {
   start: number;
   end?: number;
@@ -47,7 +47,7 @@ interface CreateTextSelectionParameter<Schema extends EditorSchema = any>
  * @param param.start
  * @param param.end
  */
-function createTextSelection<Schema extends EditorSchema = any>({
+function createTextSelection<Schema extends EditorSchema = EditorSchema>({
   taggedDoc,
   start,
   end,
@@ -75,7 +75,7 @@ export function taggedDocHasSelection(taggedDoc: TaggedProsemirrorNode) {
  *
  * @param taggedDoc
  */
-export function initSelection<Schema extends EditorSchema = any>(
+export function initSelection<Schema extends EditorSchema = EditorSchema>(
   taggedDoc: TaggedProsemirrorNode<Schema>,
 ) {
   const { cursor, node, start, end, anchor, all, gap } = taggedDoc.tag;
@@ -120,7 +120,7 @@ export function initSelection<Schema extends EditorSchema = any>(
  *
  * @param taggedDoc
  */
-export function selectionFor<Schema extends EditorSchema = any>(
+export function selectionFor<Schema extends EditorSchema = EditorSchema>(
   taggedDoc: TaggedProsemirrorNode<Schema>,
 ): Selection<Schema> {
   return initSelection(taggedDoc) ?? Selection.atStart(taggedDoc);
@@ -131,9 +131,9 @@ export function selectionFor<Schema extends EditorSchema = any>(
  *
  * @param taggedDoc
  */
-export function createState<Schema extends EditorSchema = any>(
+export function createState<Schema extends EditorSchema = EditorSchema>(
   taggedDoc: TaggedProsemirrorNode<Schema>,
-  plugins: Plugin[] = [],
+  plugins: ProsemirrorPlugin[] = [],
 ): EditorState<Schema> {
   return EditorState.create({
     doc: taggedDoc,

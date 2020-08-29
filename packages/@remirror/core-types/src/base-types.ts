@@ -176,20 +176,6 @@ export type DeepString<Type> = Type extends object
   : string;
 
 /**
- * A tuple for use with the regex constructor.
- *
- * @remarks
- *
- * Can be spread as parameters for the `RegExp` constructor
- *
- * ```ts
- * const params: RegExpTuple = ['\\/awesome', 'gi']
- * const regexp = new RegExp(...params);
- * ```
- */
-export type RegexTuple = [string, string?];
-
-/**
  * A JSON representation of a prosemirror Mark.
  */
 export interface ObjectMark {

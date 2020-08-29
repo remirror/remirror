@@ -477,7 +477,7 @@ test('support for rendering a nested controlled editor in strict mode', () => {
 });
 
 describe('onChange', () => {
-  const chain = RemirrorTestChain.create(createReactManager(() => []));
+  const chain = RemirrorTestChain.create(createReactManager([]));
   const mock = jest.fn();
 
   const Component = () => {

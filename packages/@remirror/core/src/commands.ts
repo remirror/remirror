@@ -15,13 +15,13 @@ import type { Selection, SelectionRange, TextSelection } from '@remirror/pm/stat
 /**
  * Check if the active selection has a cursor available.
  */
-function selectionHasCursor<Schema extends EditorSchema = any>(
+function selectionHasCursor<Schema extends EditorSchema = EditorSchema>(
   selection: Selection,
 ): selection is TextSelection<Schema> & { $cursor: ResolvedPos<Schema> } {
   return isTextSelection(selection) ? bool(selection.$cursor) : false;
 }
 
-interface MarkAppliesParameter<Schema extends EditorSchema = any>
+interface MarkAppliesParameter<Schema extends EditorSchema = EditorSchema>
   extends DocParameter,
     MarkTypeParameter<Schema> {
   ranges: Array<SelectionRange<Schema>>;
@@ -78,7 +78,7 @@ function toggleActiveMarkSelection(parameter: ToggleActiveMarkSelectionParameter
   }
 }
 
-export interface ToggleMarkParameter<Schema extends EditorSchema = any>
+export interface ToggleMarkParameter<Schema extends EditorSchema = EditorSchema>
   extends MarkTypeParameter<Schema>,
     Partial<AttributesParameter>,
     Partial<RangeParameter> {}
@@ -134,7 +134,7 @@ export function toggleMark(parameter: ToggleMarkParameter): CommandFunction {
     };
 
     if (range) {
-      isMarkActive({ stateOrTransaction: tr, type, ...range })
+      isMarkActive({ trState: tr, type, ...range })
         ? tr.removeMark(range.from, range.to, type)
         : tr.addMark(range.from, range.to, type.create(attrs));
 

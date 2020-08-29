@@ -8,7 +8,7 @@ import {
   MarkExtensionSpec,
   markInputRule,
   markPasteRule,
-  Plugin,
+  ProsemirrorPlugin,
   toggleMark,
 } from '@remirror/core';
 
@@ -67,7 +67,7 @@ export class StrikeExtension extends MarkExtension {
     return [markInputRule({ regexp: /~([^~]+)~$/, type: this.type, ignoreWhitespace: true })];
   }
 
-  createPasteRules(): Plugin[] {
+  createPasteRules(): ProsemirrorPlugin[] {
     return [markPasteRule({ regexp: /~([^~]+)~/g, type: this.type })];
   }
 }

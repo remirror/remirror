@@ -3,11 +3,11 @@ import { css } from 'linaria';
 import {
   CreatePluginReturn,
   extensionDecorator,
-  getPluginState,
   isDocNodeEmpty,
   ManagerPhase,
   OnSetOptionsParameter,
   PlainExtension,
+  ProsemirrorAttributes,
   Transaction,
 } from '@remirror/core';
 import type { EditorState } from '@remirror/pm/state';
@@ -63,7 +63,7 @@ export class PlaceholderExtension extends PlainExtension<PlaceholderOptions> {
     return 'placeholder' as const;
   }
 
-  createAttributes() {
+  createAttributes(): ProsemirrorAttributes {
     return { 'aria-placeholder': this.options.placeholder };
   }
 
@@ -86,7 +86,7 @@ export class PlaceholderExtension extends PlainExtension<PlaceholderOptions> {
     };
   }
 
-  onSetOptions(parameter: OnSetOptionsParameter<PlaceholderOptions>) {
+  onSetOptions(parameter: OnSetOptionsParameter<PlaceholderOptions>): void {
     const { changes } = parameter;
 
     if (changes.placeholder.changed && this.store.phase >= ManagerPhase.EditorView) {
@@ -132,13 +132,13 @@ function applyState({ pluginState, extension, tr, state }: ApplyStateParameter) 
 }
 
 /**
- * Creates a decoration set from the passed through state
+ * Creates a decoration set from the passed through state.
  *
  * @param params.extension
  * @param params.state
  */
 function createDecorationSet({ extension, state }: SharedParameter) {
-  const { empty } = getPluginState<PlaceholderPluginState>(extension.pluginKey, state);
+  const { empty } = extension.pluginKey.getState(state) as PlaceholderPluginState;
   const { emptyNodeClass, placeholder } = extension.options;
 
   if (!empty) {

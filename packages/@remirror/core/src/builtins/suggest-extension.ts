@@ -39,7 +39,7 @@ export class SuggestExtension extends PlainExtension<SuggestOptions> {
   /**
    * Ensure that all ssr transformers are run.
    */
-  onCreate = () => {
+  onCreate(): void {
     const suggesters: Suggester[] = [];
 
     for (const extension of this.store.extensions) {
@@ -60,7 +60,7 @@ export class SuggestExtension extends PlainExtension<SuggestOptions> {
     }
 
     this.store.addPlugins(suggest(...suggesters));
-  };
+  }
 
   onAddCustomHandler: AddCustomHandler<SuggestOptions> = ({ suggester }) => {
     if (!suggester) {

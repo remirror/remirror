@@ -5,16 +5,13 @@ import {
   createEditor,
   doc,
   em,
-  hardBreak,
   p,
   pm,
   schema as testSchema,
-  table,
   tableRow,
 } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
-import type { NodeMatch } from '@remirror/core-types';
 import type { TextSelection } from '@remirror/pm/state';
 import {
   BlockquoteExtension,
@@ -26,6 +23,7 @@ import {
 
 import {
   areSchemasCompatible,
+  areStatesEqual,
   atDocEnd,
   atDocStart,
   canInsertNode,
@@ -33,9 +31,10 @@ import {
   endPositionOfParent,
   fromHtml,
   getCursor,
+  getInvalidContent,
   getMarkAttributes,
   getMarkRange,
-  getNearestNonTextNode,
+  getNearestNonTextElement,
   getRemirrorJSON,
   getSelectedWord,
   isDocNode,
@@ -46,10 +45,8 @@ import {
   isProsemirrorNode,
   isRemirrorJSON,
   isSelection,
-  isStateEqual,
   isTextDomNode,
   isTextSelection,
-  nodeNameMatchesList,
   startPositionOfParent,
   toDom,
   toHtml,
@@ -59,19 +56,19 @@ describe('markActive', () => {
   it('shows active when within an active region', () => {
     const { state, schema } = createEditor(doc(p('Something', em('is <cursor>italic'), ' here')));
 
-    expect(isMarkActive({ stateOrTransaction: state, type: schema.marks.em })).toBeTrue();
+    expect(isMarkActive({ trState: state, type: schema.marks.em })).toBeTrue();
   });
 
   it('returns false when not within an active region', () => {
     const { state, schema } = createEditor(doc(p('Something<cursor>', em('is italic'), ' here')));
 
-    expect(isMarkActive({ stateOrTransaction: state, type: schema.marks.em })).toBeFalse();
+    expect(isMarkActive({ trState: state, type: schema.marks.em })).toBeFalse();
   });
 
   it('returns false with no selection', () => {
     const { state, schema } = createEditor(doc(p(' ', em('italic'))));
 
-    expect(isMarkActive({ stateOrTransaction: state, type: schema.marks.em })).toBeFalse();
+    expect(isMarkActive({ trState: state, type: schema.marks.em })).toBeFalse();
   });
 
   it('returns true when surrounding an active region', () => {
@@ -79,7 +76,7 @@ describe('markActive', () => {
       doc(p('Something<start>', em('is italic'), '<end> here')),
     );
 
-    expect(isMarkActive({ stateOrTransaction: state, type: schema.marks.em })).toBeTrue();
+    expect(isMarkActive({ trState: state, type: schema.marks.em })).toBeTrue();
   });
 
   it('can override from and to', () => {
@@ -87,25 +84,19 @@ describe('markActive', () => {
       doc(p('<start>Something<end>', em('is italic'), ' here')),
     );
 
-    expect(
-      isMarkActive({ stateOrTransaction: state, type: schema.marks.em, from: 11, to: 20 }),
-    ).toBeTrue();
+    expect(isMarkActive({ trState: state, type: schema.marks.em, from: 11, to: 20 })).toBeTrue();
   });
 
   it('is false when empty document with from and to specified', () => {
     const { state, schema } = createEditor(doc(p('')));
 
-    expect(
-      isMarkActive({ stateOrTransaction: state, type: schema.marks.em, from: 11, to: 20 }),
-    ).toBeFalse();
+    expect(isMarkActive({ trState: state, type: schema.marks.em, from: 11, to: 20 })).toBeFalse();
   });
 
   it('is false when from and to specified in empty node', () => {
     const { state, schema } = createEditor(doc(p(em('is italic')), p('')));
 
-    expect(
-      isMarkActive({ stateOrTransaction: state, type: schema.marks.em, from: 11, to: 20 }),
-    ).toBeFalse();
+    expect(isMarkActive({ trState: state, type: schema.marks.em, from: 11, to: 20 })).toBeFalse();
   });
 });
 
@@ -165,10 +156,10 @@ describe('getMarkAttributes', () => {
     expect(getMarkAttributes(state, schema.marks.link)).toEqual(attributes);
   });
 
-  it('returns an empty object when mark not found', () => {
+  it('returns false when mark not found', () => {
     const { state, schema } = createEditor(doc(p('a link', em('linked <cursor>here'))));
 
-    expect(getMarkAttributes(state, schema.marks.link)).toEqual({});
+    expect(getMarkAttributes(state, schema.marks.link)).toBeFalse();
   });
 });
 
@@ -225,8 +216,8 @@ test('getNearestNonTextNode', () => {
   const text = document.createTextNode('hello');
   div.append(text);
 
-  expect(getNearestNonTextNode(text)).toBe(div);
-  expect(getNearestNonTextNode(div)).toBe(div);
+  expect(getNearestNonTextElement(text)).toBe(div);
+  expect(getNearestNonTextElement(div)).toBe(div);
 });
 
 describe('selections', () => {
@@ -366,24 +357,6 @@ describe('getCursor', () => {
   });
 });
 
-describe('nodeNameMatchesList', () => {
-  const matchers: NodeMatch[] = ['paragraph', (name) => name === 'blockquote', ['table', 'gi']];
-
-  it('returns true when it successfully matches', () => {
-    expect(nodeNameMatchesList(p(), matchers)).toBeTrue();
-    expect(nodeNameMatchesList(blockquote(), matchers)).toBeTrue();
-    expect(nodeNameMatchesList(table(), matchers)).toBeTrue();
-  });
-
-  it('returns false when no match found', () => {
-    expect(nodeNameMatchesList(hardBreak(), matchers)).toBeFalse();
-  });
-
-  it('returns false no node passed in', () => {
-    expect(nodeNameMatchesList(undefined, matchers)).toBeFalse();
-  });
-});
-
 describe('isDocNode', () => {
   it('returns true for doc nodes', () => {
     expect(isDocNode(doc(), testSchema)).toBeTrue();
@@ -486,19 +459,19 @@ test('getRemirrorJSON', () => {
 describe('isStateEqual', () => {
   it('matches identical states', () => {
     const { state } = createEditor(doc(p('Hello')));
-    expect(isStateEqual(state, state)).toBeTrue();
+    expect(areStatesEqual(state, state)).toBeTrue();
   });
 
   it('ignores selection by default', () => {
     const { state: a } = createEditor(doc(p('<cursor>Hello')));
     const { state: b } = createEditor(doc(p('Hello<cursor>')));
-    expect(isStateEqual(a, b)).toBeTrue();
+    expect(areStatesEqual(a, b)).toBeTrue();
   });
 
   it('can fail for different selection', () => {
     const { state: a } = createEditor(doc(p('<cursor>Hello')));
     const { state: b } = createEditor(doc(p('Hello<cursor>')));
-    expect(isStateEqual(a, b, { checkSelection: true })).toBeFalse();
+    expect(areStatesEqual(a, b, { checkSelection: true })).toBeFalse();
   });
 
   it('returns false with non identical schema', () => {
@@ -506,7 +479,7 @@ describe('isStateEqual', () => {
     const b = renderEditor([]);
     a.add(a.nodes.doc(a.nodes.p('Hello')));
     b.add(b.nodes.doc(b.nodes.p('Hello')));
-    expect(isStateEqual(a.state, b.state)).toBeFalse();
+    expect(areStatesEqual(a.state, b.state)).toBeFalse();
   });
 });
 
@@ -544,5 +517,114 @@ describe('areSchemasCompatible', () => {
     const { schema: a } = renderEditor([new BlockquoteExtension()]);
     const { schema: b } = renderEditor([new HeadingExtension()]);
     expect(areSchemasCompatible(a, b)).toBe(false);
+  });
+});
+
+describe('getInvalidContent', () => {
+  const validJSON = {
+    type: 'doc',
+    content: [
+      {
+        type: 'paragraph',
+        content: [
+          { type: 'text', text: 'This is the content ' },
+          {
+            type: 'text',
+            marks: [{ type: 'em' }, { type: 'strong' }],
+            text: 'That is strong and italic',
+          },
+        ],
+      },
+    ],
+  };
+
+  const invalidJSONMarks = {
+    type: 'doc',
+    content: [
+      {
+        type: 'paragraph',
+        content: [
+          { type: 'text', text: 'This is the content ' },
+          {
+            type: 'text',
+            marks: [
+              { type: 'em', attrs: { href: '//test.com' } },
+              { type: 'invalid' },
+              { type: 'strong' },
+              { type: 'asdf' },
+            ],
+            text: 'That is strong and italic',
+          },
+        ],
+      },
+    ],
+  };
+
+  const invalidJSONNode = {
+    type: 'doc',
+    content: [
+      {
+        type: 'invalid',
+        content: [
+          { type: 'text', text: 'This is the content ' },
+          {
+            type: 'text',
+            marks: [{ type: 'em' }, { type: 'strong' }],
+            text: 'That is strong and italic',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        content: [
+          {
+            type: 'invalid',
+            content: [{ type: 'text', marks: [{ type: 'em' }], text: 'asdf' }],
+          },
+        ],
+      },
+    ],
+  };
+
+  it('returns a transformer which passes for valid json', () => {
+    expect(getInvalidContent({ json: validJSON, schema: testSchema }).invalidContent).toHaveLength(
+      0,
+    );
+  });
+
+  it('`transformers.remove` removes invalid nodes', () => {
+    const { invalidContent, transformers } = getInvalidContent({
+      json: invalidJSONNode,
+      schema: testSchema,
+    });
+
+    expect(transformers.remove(invalidJSONNode, invalidContent)).toEqual({
+      type: 'doc',
+      content: [{ type: 'paragraph', content: [] }],
+    });
+  });
+
+  it('`transformers.remove` removes invalid marks', () => {
+    const { invalidContent, transformers } = getInvalidContent({
+      json: invalidJSONMarks,
+      schema: testSchema,
+    });
+
+    expect(transformers.remove(invalidJSONMarks, invalidContent)).toEqual({
+      type: 'doc',
+      content: [
+        {
+          type: 'paragraph',
+          content: [
+            { type: 'text', text: 'This is the content ' },
+            {
+              type: 'text',
+              marks: [{ type: 'em', attrs: { href: '//test.com' } }, { type: 'strong' }],
+              text: 'That is strong and italic',
+            },
+          ],
+        },
+      ],
+    });
   });
 });

@@ -115,7 +115,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           const selectionIsValid =
             (isTextSelection(selection) && !isSelectionEmpty(tr.selection)) ||
             isAllSelection(selection) ||
-            isMarkActive({ stateOrTransaction: tr, type: this.type });
+            isMarkActive({ trState: tr, type: this.type });
 
           if (!selectionIsValid && !range) {
             return false;
@@ -132,7 +132,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         return (parameter) => {
           const { tr } = parameter;
 
-          if (!isMarkActive({ stateOrTransaction: tr, type: this.type })) {
+          if (!isMarkActive({ trState: tr, type: this.type })) {
             return false;
           }
 

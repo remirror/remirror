@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 
+import type { LiteralUnion } from 'type-fest';
+
 import {
   __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
   ErrorConstant,
@@ -211,7 +213,7 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
    * @internal
    * @nonVirtual
    */
-  setStore(store: Remirror.ExtensionStore) {
+  setStore(store: Remirror.ExtensionStore): void {
     if (this.#store) {
       return;
     }
@@ -222,7 +224,7 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
   /**
    * Clone an extension.
    */
-  clone(...parameters: ExtensionConstructorParameter<Options>) {
+  clone(...parameters: ExtensionConstructorParameter<Options>): Extension<Options> {
     return new this.constructor(...parameters);
   }
 
@@ -232,7 +234,7 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
    *
    * If you set the first parameter to `undefined` it will remove the priority override.
    */
-  setPriority(priority: undefined | ExtensionPriority) {
+  setPriority(priority: undefined | ExtensionPriority): void {
     this.#priorityOverride = priority;
   }
 }
@@ -298,7 +300,7 @@ interface ExtensionLifecycleMethods {
    * This event happens when the view is first received from the view layer
    * (e.g. React).
    */
-  onView?(view: EditorView<EditorSchema>): void;
+  onView?(view: EditorView): void;
 
   /**
    * Called when a transaction successfully updates the editor state.
@@ -320,12 +322,12 @@ interface ExtensionLifecycleMethods {
 export abstract class PlainExtension<Options extends ValidOptions = EmptyShape> extends Extension<
   Options
 > {
-  static get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
-    return RemirrorIdentifier.PlainExtensionConstructor as const;
+  static get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__](): RemirrorIdentifier.PlainExtensionConstructor {
+    return RemirrorIdentifier.PlainExtensionConstructor;
   }
 
-  get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
-    return RemirrorIdentifier.PlainExtension as const;
+  get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__](): RemirrorIdentifier.PlainExtension {
+    return RemirrorIdentifier.PlainExtension;
   }
 }
 
@@ -342,8 +344,8 @@ export abstract class PlainExtension<Options extends ValidOptions = EmptyShape> 
 export abstract class MarkExtension<Options extends ValidOptions = EmptyShape> extends Extension<
   Options
 > {
-  static get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
-    return RemirrorIdentifier.MarkExtensionConstructor as const;
+  static get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__](): RemirrorIdentifier.MarkExtensionConstructor {
+    return RemirrorIdentifier.MarkExtensionConstructor;
   }
 
   /**
@@ -351,8 +353,8 @@ export abstract class MarkExtension<Options extends ValidOptions = EmptyShape> e
    */
   static readonly disableExtraAttributes: boolean = false;
 
-  get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
-    return RemirrorIdentifier.MarkExtension as const;
+  get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__](): RemirrorIdentifier.MarkExtension {
+    return RemirrorIdentifier.MarkExtension;
   }
 
   /**
@@ -403,8 +405,8 @@ export interface MarkExtension<Options extends ValidOptions = EmptyShape>
 export abstract class NodeExtension<Options extends ValidOptions = EmptyShape> extends Extension<
   Options
 > {
-  static get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
-    return RemirrorIdentifier.NodeExtensionConstructor as const;
+  static get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__](): RemirrorIdentifier.NodeExtensionConstructor {
+    return RemirrorIdentifier.NodeExtensionConstructor;
   }
 
   /**
@@ -412,7 +414,7 @@ export abstract class NodeExtension<Options extends ValidOptions = EmptyShape> e
    */
   static readonly disableExtraAttributes: boolean = false;
 
-  get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__]() {
+  get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__](): RemirrorIdentifier.NodeExtension {
     return RemirrorIdentifier.NodeExtension as const;
   }
 
@@ -681,8 +683,8 @@ export type GetNodeNameUnion<
  * Gets the editor schema from an extension union.
  */
 export type SchemaFromExtensionUnion<ExtensionUnion extends AnyExtension> = EditorSchema<
-  GetNodeNameUnion<ExtensionUnion>,
-  GetMarkNameUnion<ExtensionUnion>
+  LiteralUnion<GetNodeNameUnion<ExtensionUnion>, string>,
+  LiteralUnion<GetMarkNameUnion<ExtensionUnion>, string>
 >;
 
 export type AnyManagerStore = Remirror.ManagerStore<any>;

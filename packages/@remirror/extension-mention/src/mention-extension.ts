@@ -15,7 +15,7 @@ import {
   markPasteRule,
   noop,
   object,
-  Plugin,
+  ProsemirrorPlugin,
   RangeParameter,
   removeMark,
   replaceText,
@@ -203,7 +203,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     };
   }
 
-  createPasteRules(): Plugin[] {
+  createPasteRules(): ProsemirrorPlugin[] {
     return this.options.matchers.map((matcher) => {
       const { startOfLine, char, supportedCharacters, name } = {
         ...DEFAULT_MATCHER,
@@ -263,7 +263,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
             from: range.from,
             to: range.end,
             type: this.type,
-            stateOrTransaction: this.store.getState(),
+            trState: this.store.getState(),
           });
 
           const method = isActive ? updateMention : createMention;

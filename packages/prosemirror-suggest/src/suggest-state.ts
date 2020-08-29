@@ -520,7 +520,7 @@ export class SuggestState {
 }
 
 interface HandleTextInputParameter extends FromToParameter, TextParameter {}
-interface UpdateReasonsParameter<Schema extends EditorSchema = any>
+interface UpdateReasonsParameter<Schema extends EditorSchema = EditorSchema>
   extends EditorStateParameter<Schema>,
     ResolvedPosParameter<Schema>,
     Partial<CompareMatchParameter> {}
@@ -537,7 +537,7 @@ interface UpdateReasonsParameter<Schema extends EditorSchema = any>
  *
  * @typeParam Schema - the underlying editor schema.
  */
-export interface SuggestStateApplyParameter<Schema extends EditorSchema = any>
+export interface SuggestStateApplyParameter<Schema extends EditorSchema = EditorSchema>
   extends TransactionParameter<Schema>,
     CompareStateParameter<Schema> {}
 

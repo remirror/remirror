@@ -8,17 +8,17 @@ import type {
   EditorState,
   EditorStateParameter,
   InputRule,
-  Plugin,
   PosParameter,
   ProsemirrorCommandFunction,
   ProsemirrorNode,
+  ProsemirrorPlugin,
   SelectionParameter,
   Shape,
   TextParameter,
 } from '@remirror/core-types';
 import { findElementAtPosition, isElementDomNode, isTextDomNode } from '@remirror/core-utils';
 import { inputRules } from '@remirror/pm/inputrules';
-import { AllSelection, NodeSelection, TextSelection } from '@remirror/pm/state';
+import { AllSelection, NodeSelection, Selection, TextSelection } from '@remirror/pm/state';
 import { cellAround, CellSelection } from '@remirror/pm/tables';
 import { DirectEditorProps, EditorView } from '@remirror/pm/view';
 
@@ -30,7 +30,7 @@ import type {
   TestEditorViewParameter,
 } from './jest-prosemirror-types';
 
-const cleanupItems = new Set<[TestEditorView, HTMLElement]>();
+const cleanupItems = new Set<[TestEditorView<any>, HTMLElement]>();
 
 afterEach(() => {
   for (const [view, element] of cleanupItems) {
@@ -84,7 +84,7 @@ afterEach(() => {
 export function createEditor<Schema extends EditorSchema = EditorSchema>(
   taggedDocument: TaggedProsemirrorNode<Schema>,
   options: CreateEditorOptions = object(),
-) {
+): ProsemirrorTestChain<Schema> {
   const { plugins = [], rules = [], autoClean = true, ...editorOptions } = options;
   const element = document.createElement('div');
   const state = createState(taggedDocument, [...plugins, inputRules({ rules })]);
@@ -104,7 +104,9 @@ export function createEditor<Schema extends EditorSchema = EditorSchema>(
 /**
  * Flushes the dom
  */
-export function flush(view: TestEditorView) {
+export function flush<Schema extends EditorSchema = EditorSchema>(
+  view: TestEditorView<Schema>,
+): void {
   view.domObserver.flush();
 }
 
@@ -114,7 +116,7 @@ export function flush(view: TestEditorView) {
 export function pasteContent<Schema extends EditorSchema = EditorSchema>(
   parameter: TestEditorViewParameter<Schema> &
     TestEditorViewParameter<Schema> & { content: ProsemirrorNode | string },
-) {
+): void {
   const { view, content } = parameter;
   let slice = isString(content)
     ? p(content).slice(0)
@@ -142,7 +144,7 @@ export interface InsertTextParameter<Schema extends EditorSchema = EditorSchema>
  */
 export function insertText<Schema extends EditorSchema = EditorSchema>(
   parameter: InsertTextParameter<Schema>,
-) {
+): void {
   const { view, text, start: from } = parameter;
   const keys = Keyboard.create({
     target: view.dom,
@@ -178,7 +180,7 @@ interface DispatchTextSelectionParameter<Schema extends EditorSchema = EditorSch
  */
 export function dispatchTextSelection<Schema extends EditorSchema = EditorSchema>(
   parameter: DispatchTextSelectionParameter<Schema>,
-) {
+): void {
   const { view, start, end } = parameter;
   const { state } = view;
   const tr = state.tr.setSelection(TextSelection.create(state.doc, start, end));
@@ -191,7 +193,7 @@ export function dispatchTextSelection<Schema extends EditorSchema = EditorSchema
  */
 export function dispatchAllSelection<Schema extends EditorSchema = EditorSchema>(
   view: TestEditorView<Schema>,
-) {
+): void {
   const { tr, doc } = view.state;
   view.dispatch(tr.setSelection(new AllSelection(doc)));
 }
@@ -205,7 +207,7 @@ interface DispatchNodeSelectionParameter<Schema extends EditorSchema = EditorSch
  */
 export function dispatchNodeSelection<Schema extends EditorSchema = EditorSchema>(
   parameter: DispatchNodeSelectionParameter<Schema>,
-) {
+): void {
   const { view, pos } = parameter;
   const { state } = view;
   const tr = state.tr.setSelection(NodeSelection.create(state.doc, pos));
@@ -214,7 +216,7 @@ export function dispatchNodeSelection<Schema extends EditorSchema = EditorSchema
 
 export function dispatchCellSelection<Schema extends EditorSchema = EditorSchema>(
   parameter: DispatchNodeSelectionParameter<Schema>,
-) {
+): void {
   const { view, pos } = parameter;
   const { state } = view;
   const $anchor = cellAround(state.doc.resolve(pos));
@@ -240,7 +242,7 @@ interface PressParameter<Schema extends EditorSchema = EditorSchema>
  */
 export function press<Schema extends EditorSchema = EditorSchema>(
   parameter: PressParameter<Schema>,
-) {
+): void {
   const { view, char } = parameter;
   Keyboard.create({
     target: view.dom,
@@ -269,7 +271,7 @@ interface BackspaceParameter<Schema extends EditorSchema = EditorSchema>
  */
 export function backspace<Schema extends EditorSchema = EditorSchema>(
   parameter: BackspaceParameter<Schema>,
-) {
+): void {
   const { view, times = 1 } = parameter;
   const { selection, tr } = view.state;
   const { from, empty } = selection;
@@ -301,7 +303,7 @@ interface KeyboardShortcutParameter<Schema extends EditorSchema = EditorSchema>
  */
 export function shortcut<Schema extends EditorSchema = EditorSchema>(
   parameter: KeyboardShortcutParameter<Schema>,
-) {
+): void {
   const { view, shortcut: text } = parameter;
 
   Keyboard.create({
@@ -343,7 +345,7 @@ interface FireEventAtPositionParameter<Schema extends EditorSchema = EditorSchem
  */
 export function fireEventAtPosition<Schema extends EditorSchema = EditorSchema>(
   parameter: FireEventAtPositionParameter<Schema>,
-) {
+): void {
   const {
     view,
     event,
@@ -407,7 +409,7 @@ export interface CreateEditorOptions extends Omit<DirectEditorProps, 'state'> {
    *
    * @defaultValue `[]`
    */
-  plugins?: Plugin[];
+  plugins?: ProsemirrorPlugin[];
 
   /**
    * The input rules that the test editor should use.
@@ -426,7 +428,9 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
   /**
    * A static helper utility for creating new TestReturn values.
    */
-  static of<Schema extends EditorSchema = EditorSchema>(view: TestEditorView<Schema>) {
+  static of<Schema extends EditorSchema = EditorSchema>(
+    view: TestEditorView<Schema>,
+  ): ProsemirrorTestChain<Schema> {
     return new ProsemirrorTestChain(view);
   }
 
@@ -459,21 +463,21 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
   /**
    * The prosemirror selection.
    */
-  get selection() {
+  get selection(): Selection<Schema> {
     return this.state.selection;
   }
 
   /**
    * The start of the current selection.
    */
-  get start() {
+  get start(): number {
     return this.state.selection.from;
   }
 
   /**
    * The end of the current selection.
    */
-  get end() {
+  get end(): number {
     return this.state.selection.to;
   }
 
@@ -486,7 +490,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    *
    * @param newDoc - the new content to use
    */
-  overwrite(newDocument: TaggedProsemirrorNode<Schema>) {
+  overwrite(newDocument: TaggedProsemirrorNode<Schema>): this {
     const tr = this.state.tr.replaceWith(0, this.view.state.doc.nodeSize - 2, newDocument);
     tr.setMeta('addToHistory', false);
     this.view.dispatch(tr);
@@ -514,7 +518,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    *
    * @param command - the command function to run
    */
-  command(command: ProsemirrorCommandFunction) {
+  command(command: ProsemirrorCommandFunction<Schema>): this {
     command(this.state, this.view.dispatch, this.view);
     return this;
   }
@@ -524,7 +528,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    *
    * @param text - the text to insert
    */
-  insertText(text: string) {
+  insertText(text: string): this {
     const { from } = this.selection;
     insertText({ start: from, text, view: this.view });
     return this;
@@ -536,7 +540,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    * @param start - a number position or the shorthand 'start' | 'end'
    * @param [end] - the option end position of the new selection
    */
-  jumpTo(start: 'start' | 'end' | number, end?: number) {
+  jumpTo(start: 'start' | 'end' | number, end?: number): this {
     if (start === 'start') {
       dispatchTextSelection({ view: this.view, start: 1 });
     } else if (start === 'end') {
@@ -556,7 +560,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    *
    * @param mod - the keyboard shortcut to type
    */
-  shortcut(mod: string) {
+  shortcut(mod: string): this {
     shortcut({ shortcut: mod, view: this.view });
     return this;
   }
@@ -569,7 +573,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    *
    * @param char - the character to type
    */
-  press(char: string) {
+  press(char: string): this {
     press({ char, view: this.view });
     return this;
   }
@@ -577,7 +581,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
   /**
    * Simulates a backspace keypress and deletes text backwards.
    */
-  backspace(times?: number) {
+  backspace(times?: number): this {
     backspace({ view: this.view, times });
     return this;
   }
@@ -585,7 +589,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
   /**
    * Logs to the dom for help debugging your tests.
    */
-  debug = () => {
+  debug = (): this => {
     console.log(prettyDOM(this.view.dom as HTMLElement));
     return this;
   };
@@ -595,7 +599,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    *
    * @param params - the fire event parameters
    */
-  fire(parameters: Omit<FireEventAtPositionParameter<Schema>, 'view'>) {
+  fire(parameters: Omit<FireEventAtPositionParameter<Schema>, 'view'>): this {
     fireEventAtPosition({ view: this.view, ...parameters });
     return this;
   }
@@ -605,7 +609,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    * `schema` and `selection` properties and allows for easier testing of the
    * current state of the editor.
    */
-  callback(fn: (content: ReturnValueCallbackParameter<Schema>) => void) {
+  callback(fn: (content: ReturnValueCallbackParameter<Schema>) => void): this {
     fn(pick(this, ['start', 'end', 'state', 'view', 'schema', 'selection', 'doc', 'debug']));
     return this;
   }
@@ -616,7 +620,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    * TODO - this is overly simplistic and doesn't fully express what prosemirror
    * can do so will need to be improved.
    */
-  paste(content: ProsemirrorNode | string) {
+  paste(content: ProsemirrorNode | string): this {
     pasteContent({ view: this.view, content });
     return this;
   }

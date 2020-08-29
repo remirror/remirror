@@ -30,27 +30,24 @@ export type EditorSchema<Nodes extends string = string, Marks extends string = s
   Nodes,
   Marks
 >;
-export type EditorView<Schema extends EditorSchema = any> = PMEditorView<Schema>;
-export type Selection<Schema extends EditorSchema = any> = PMSelection<Schema>;
-export type DecorationSet<Schema extends EditorSchema = any> = PMDecorationSet<Schema>;
-export type Transaction<Schema extends EditorSchema = any> = PMTransaction<Schema>;
-export type PluginKey<PluginState = any> = PMPluginKey<PluginState, EditorSchema>;
-export type Plugin<PluginState = any, Schema extends EditorSchema = any> = PMPlugin<
-  PluginState,
-  Schema
->;
-export type Mark<Schema extends EditorSchema = any> = PMMark<Schema>;
-export type ResolvedPos<Schema extends EditorSchema = any> = PMResolvedPos<Schema>;
-export type InputRule<Schema extends EditorSchema = any> = PMInputRule<Schema>;
-export type Fragment<Schema extends EditorSchema = any> = PMFragment<Schema>;
-export type NodeView<Schema extends EditorSchema = any> = PMNodeView<Schema>;
-export type ProsemirrorNode<Schema extends EditorSchema = any> = PMNode<Schema>;
+export type EditorView<Schema extends EditorSchema = EditorSchema> = PMEditorView<Schema>;
+export type Selection<Schema extends EditorSchema = EditorSchema> = PMSelection<Schema>;
+export type DecorationSet<Schema extends EditorSchema = EditorSchema> = PMDecorationSet<Schema>;
+export type Transaction<Schema extends EditorSchema = EditorSchema> = PMTransaction<Schema>;
+export type PluginKey<PluginState = EditorSchema> = PMPluginKey<PluginState, EditorSchema>;
+
+export type Mark<Schema extends EditorSchema = EditorSchema> = PMMark<Schema>;
+export type ResolvedPos<Schema extends EditorSchema = EditorSchema> = PMResolvedPos<Schema>;
+export type InputRule<Schema extends EditorSchema = EditorSchema> = PMInputRule<Schema>;
+export type Fragment<Schema extends EditorSchema = EditorSchema> = PMFragment<Schema>;
+export type NodeView<Schema extends EditorSchema = EditorSchema> = PMNodeView<Schema>;
+export type ProsemirrorNode<Schema extends EditorSchema = EditorSchema> = PMNode<Schema>;
 export type ProsemirrorPlugin<PluginState = any> = PMPlugin<PluginState, EditorSchema>;
-export type MarkType<Schema extends EditorSchema = any> = PMMarkType<Schema>;
-export type NodeType<Schema extends EditorSchema = any> = PMNodeType<Schema>;
+export type MarkType<Schema extends EditorSchema = EditorSchema> = PMMarkType<Schema>;
+export type NodeType<Schema extends EditorSchema = EditorSchema> = PMNodeType<Schema>;
 export type EditorState<Schema extends EditorSchema = EditorSchema> = Readonly<
   PMEditorState<Schema>
 >;
-export type Slice<Schema extends EditorSchema = any> = PMSlice<Schema>;
+export type Slice<Schema extends EditorSchema = EditorSchema> = PMSlice<Schema>;
 export type Decoration = PMDecoration;
 export type Mapping = PMMapping;

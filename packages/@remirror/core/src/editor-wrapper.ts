@@ -1,7 +1,7 @@
 import { cx } from 'linaria';
 import { createNanoEvents, Unsubscribe } from 'nanoevents';
 
-import { EDITOR_CLASS_NAME, EMPTY_PARAGRAPH_NODE, ErrorConstant } from '@remirror/core-constants';
+import { EDITOR_CLASS_NAME, ErrorConstant } from '@remirror/core-constants';
 import {
   invariant,
   isEmptyArray,
@@ -31,14 +31,13 @@ import type {
   TransactionTransformer,
 } from '@remirror/core-types';
 import {
-  CreateDocumentErrorHandler,
-  Fallback,
   getDocument,
   getTextSelection,
   isElementDomNode,
   StringHandlerParameter,
   toHtml,
 } from '@remirror/core-utils';
+import type { InvalidContentHandler } from '@remirror/core-utils/src/core-utils';
 import type { DirectEditorProps } from '@remirror/pm/view';
 
 import type { UpdatableViewProps } from './builtins';
@@ -442,10 +441,7 @@ export abstract class EditorWrapper<
    * content has been reset
    */
   private readonly clearContent = ({ triggerChange = false }: TriggerChangeParameter = {}) => {
-    const { onError } = this.props;
-    const content = isFunction(onError) ? onError() : onError ?? EMPTY_PARAGRAPH_NODE;
-
-    this.setContent(content, { triggerChange });
+    this.setContent(this.manager.createEmptyDoc(), { triggerChange });
   };
 
   /**
@@ -733,14 +729,9 @@ export interface EditorWrapperProps<Combined extends AnyCombinedUnion>
   forceEnvironment?: RenderEnvironment;
 
   /**
-   * The value to use for empty content, or content with an error.
-   *
-   * This is the value used for an empty editor or when `resetContent` is
-   * called.
-   *
-   * @defaultValue `EMPTY_PARAGRAPH_NODE`
+   * This is called when the editor has invalid content.
    */
-  onError?: Fallback | CreateDocumentErrorHandler;
+  onError?: InvalidContentHandler;
 }
 
 /**
@@ -917,7 +908,7 @@ export interface PlaceholderConfig extends TextParameter {
   className: string;
 }
 
-export interface UpdateStateParameter<Schema extends EditorSchema = any>
+export interface UpdateStateParameter<Schema extends EditorSchema = EditorSchema>
   extends Partial<TransactionParameter<Schema>>,
     EditorStateParameter<Schema>,
     TriggerChangeParameter {
