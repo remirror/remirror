@@ -2,7 +2,6 @@
 '@remirror/core': major
 '@remirror/core-helpers': major
 '@remirror/core-utils': major
-'@remirror/core-utils': major
 'remirror': major
 ---
 
