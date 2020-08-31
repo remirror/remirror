@@ -9,9 +9,11 @@ Use the installation instruction outlined below, depending on the package manage
 ```bash
 yarn add remirror@next @remirror/pm@next
 ```
+
 ```bash
 pnpm add remirror@next @remirror/pm@next
 ```
+
 ```bash
 npm install remirror@next @remirror/pm@next
 ```

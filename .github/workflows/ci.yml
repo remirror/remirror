@@ -49,7 +49,7 @@ jobs:
 
       - name: check versions are valid
         if: github.event.pull_request
-        run: pnpm ci:version:changeset
+        run: pnpm ci:version:check
 
       - name: create versions
         uses: changesets/action@master
