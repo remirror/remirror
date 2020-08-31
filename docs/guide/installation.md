@@ -7,13 +7,14 @@ Rather than installing multiple scoped packages, the `remirror` package is a gat
 Use the installation instruction outlined below, depending on the package manager used in your project.
 
 ```bash
-# yarn
 yarn add remirror@next @remirror/pm@next
+```
 
-# pnpm
+```bash
 pnpm add remirror@next @remirror/pm@next
+```
 
-# npm
+```bash
 npm install remirror@next @remirror/pm@next
 ```
 
