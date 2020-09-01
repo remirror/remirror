@@ -22,14 +22,14 @@ describe('commands', () => {
     commands.addAnnotation({ id: '1' });
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-          <p>
-            An
-            <span class="annotation">
-              important
-            </span>
-            note
-          </p>
-        `);
+      <p>
+        An
+        <span class="selection annotation">
+          important
+        </span>
+        note
+      </p>
+    `);
   });
 
   it('#updateAnnotation', () => {
@@ -40,28 +40,28 @@ describe('commands', () => {
 
     // Pre-condition
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-          <p>
-            An
-            <span class="annotation">
-              important
-            </span>
-            note
-          </p>
-        `);
+      <p>
+        An
+        <span class="selection annotation">
+          important
+        </span>
+        note
+      </p>
+    `);
 
     commands.updateAnnotation(id, {
       className: 'updated',
     });
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-          <p>
-            An
-            <span class="annotation updated">
-              important
-            </span>
-            note
-          </p>
-        `);
+      <p>
+        An
+        <span class="selection annotation updated">
+          important
+        </span>
+        note
+      </p>
+    `);
   });
 
   it('#setAnnotations', () => {
@@ -93,22 +93,26 @@ describe('commands', () => {
     commands.addAnnotation({ id });
     // Pre-condition
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-          <p>
-            An
-            <span class="annotation">
-              important
-            </span>
-            note
-          </p>
-        `);
+      <p>
+        An
+        <span class="selection annotation">
+          important
+        </span>
+        note
+      </p>
+    `);
 
     commands.removeAnnotations([id]);
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-          <p>
-            An important note
-          </p>
-        `);
+      <p>
+        An
+        <span class="selection">
+          important
+        </span>
+        note
+      </p>
+    `);
   });
 });
 
@@ -126,7 +130,7 @@ describe('styling', () => {
 
     expect(dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        <span class="test-class-name">
+        <span class="selection test-class-name">
           Hello
         </span>
       </p>
@@ -146,7 +150,7 @@ describe('styling', () => {
 
     expect(dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        <span class="annotation custom-annotation">
+        <span class="selection annotation custom-annotation">
           Hello
         </span>
       </p>
@@ -259,10 +263,10 @@ describe('custom annotations', () => {
         <span class="annotation">
           Hell
         </span>
-        <span class="annotation custom">
+        <span class="annotation selection custom">
           o
         </span>
-        <span class="annotation custom">
+        <span class="selection annotation custom">
           my frie
         </span>
         nd

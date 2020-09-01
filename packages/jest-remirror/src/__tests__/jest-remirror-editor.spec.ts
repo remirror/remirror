@@ -111,7 +111,9 @@ class CustomExtension extends PlainExtension {
 }
 
 function create() {
-  return renderEditor([new BoldExtension(), new CustomExtension()]);
+  return renderEditor([new BoldExtension(), new CustomExtension()], {
+    builtin: { persistentSelectionClass: undefined },
+  });
 }
 
 describe('add', () => {
