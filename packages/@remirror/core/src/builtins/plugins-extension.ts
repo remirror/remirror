@@ -377,15 +377,15 @@ declare global {
        * the plugin state.
        *
        * ```ts
-       * import { ExtensionPluginSpec } from 'remirror/core';
+       * import { CreatePluginReturn } from 'remirror/core';
        *
        * class MyExtension extends PlainExtension {
        *   get name() {
        *     return 'me' as const;
        *   }
        *
-       *   createPlugin (): ExtensionPluginSpec {
-       *     return  {
+       *   createPlugin(): CreatePluginReturn {
+       *     return {
        *       props: {
        *         handleKeyDown: keydownHandler({
        *           Backspace: handler,
@@ -399,7 +399,8 @@ declare global {
        *           'Alt-Delete': handler,
        *           'Alt-d': handler,
        *         }),
-       *         decorations() {
+       *         decorations: state => {
+       *           const pluginState = this.getPluginState(state);
        *           pluginState.setDeleted(false);
        *           return pluginState.decorationSet;
        *         },
@@ -408,11 +409,6 @@ declare global {
        *   }
        * }
        * ```
-       *
-       * @param getPluginState - a function you can call within any of the
-       * `CreatePluginSpec` methods to get the latest plugin state. Don't call
-       * in the outer scope of the `createPlugin` function or you will get
-       * errors..
        */
       createPlugin?(): CreatePluginReturn;
 
