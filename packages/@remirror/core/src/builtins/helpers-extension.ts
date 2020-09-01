@@ -117,7 +117,8 @@ declare global {
        *
        * This pseudo property makes it easier to infer Generic types of this
        * class.
-       * @private
+       *
+       * @internal
        */
       ['~H']: this['createHelpers'] extends AnyFunction
         ? ReturnType<this['createHelpers']>

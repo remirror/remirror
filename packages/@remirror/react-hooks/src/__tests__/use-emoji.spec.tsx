@@ -192,8 +192,6 @@ describe('useEmoji', () => {
       chain.insertText(':');
     });
 
-    ref.current?.index;
-
     expect(ref.current).toEqual(expect.objectContaining({ index: 0 }));
   });
 });

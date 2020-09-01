@@ -106,6 +106,8 @@ export abstract class BaseClass<
   /**
    * This is not for external use. It is purely here for TypeScript inference of
    * the generic `Options` type parameter.
+   *
+   * @internal
    */
   ['~O']: Options & DefaultStaticOptions;
 

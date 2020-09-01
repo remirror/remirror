@@ -251,8 +251,8 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * The dom node holding the view.
    */
-  get dom(): Element {
-    return this.view.dom;
+  get dom(): HTMLElement {
+    return this.view.dom as HTMLElement;
   }
 
   /**

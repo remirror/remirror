@@ -1,5 +1,73 @@
 const path = require('path');
 const pkg = require('./package.json');
+const { baseDir } = require('../scripts/helpers');
+const { getPackagesSync } = require('@manypkg/get-packages');
+
+const plugins = [
+  path.join(__dirname, 'plugins/monaco-editor'),
+  require.resolve('@docusaurus/plugin-ideal-image'),
+];
+
+const menuItems = [];
+
+if (process.env.NODE_ENV === 'production') {
+  const { compilerOptions } = require('../tsconfig.base.json');
+
+  compilerOptions.lib = ['lib.esnext.full'];
+  delete compilerOptions.sourceMap;
+  delete compilerOptions.declaration;
+
+  const inputFiles = getPackagesSync(baseDir())
+    .packages.filter((pkg) => !!pkg.packageJson.types && !pkg.packageJson.private)
+    .map((pkg) => path.join(pkg.dir, 'src'));
+
+  const typedocPlugin = [
+    'docusaurus-plugin-typedoc',
+    {
+      // list of input files relative to project (required).
+      inputFiles,
+      plugin: ['typedoc-plugin-external-module-name', 'typedoc-plugin-markdown'],
+
+      // docs directory relative to the site directory (defaults to docs).
+      docsRoot: baseDir('docs'),
+      ignoreCompilerErrors: true,
+
+      // output directory relative to docs directory - use '' for docs root
+      // (defaults to 'api').
+      out: 'api',
+
+      // Skip updating of sidebars.json (defaults to false).
+      skipSidebar: false,
+      readme: baseDir('docs/api.md'),
+      name: 'remirror',
+      mode: 'modules',
+      excludePrivate: true,
+      excludeNotExported: true,
+      excludeExternals: true,
+      stripInternal: true,
+      includeDeclarations: false,
+      logger: 'console',
+
+      ...compilerOptions,
+      exclude: [
+        '**/__tests__',
+        '**/__dts__',
+        '**/__mocks__',
+        '**/__fixtures__',
+        '*.{test,spec}.{ts,tsx}',
+        '**/*.d.ts',
+        '*.d.ts',
+      ],
+    },
+  ];
+  plugins.push(typedocPlugin);
+  menuItems.push({
+    to: 'api',
+    activeBasePath: 'api',
+    label: 'API',
+    position: 'right',
+  });
+}
 
 module.exports = {
   title: 'Remirror',
@@ -7,8 +75,9 @@ module.exports = {
   url: 'https://remirror.io',
   baseUrl: '/',
   favicon: 'img/favicon.png',
-  organizationName: 'remirror', // Usually your GitHub org/user name.
-  projectName: 'remirror', // Usually your repo name.
+  organizationName: 'remirror',
+  projectName: 'remirror',
+  onBrokenLinks: 'warn',
   themeConfig: {
     image:
       'https://repository-images.githubusercontent.com/166780923/eb30b500-a97f-11ea-8508-32089c11e24c',
@@ -83,7 +152,7 @@ module.exports = {
       {
         docs: {
           path: '../../docs',
-          sidebarPath: require.resolve('./sidebars.js'),
+          sidebarPath: baseDir('support/website/sidebar-main.js'),
           editUrl: 'https://github.com/remirror/remirror/edit/next/support/website/',
         },
         blog: {
@@ -96,10 +165,7 @@ module.exports = {
       },
     ],
   ],
-  plugins: [
-    path.join(__dirname, 'plugins/monaco-editor'),
-    require.resolve('@docusaurus/plugin-ideal-image'),
-  ],
+  plugins,
   themes: ['@docusaurus/theme-live-codeblock'],
   stylesheets: [
     'https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap',

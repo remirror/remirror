@@ -140,7 +140,6 @@ const useEffectWithWarning: typeof useEffect =
           return effect();
         };
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         useEffect(wrappedEffect, deps);
       };
 

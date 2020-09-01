@@ -31,7 +31,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.11.0",
-    "@types/refractor": "^2.8.0",
+    "@types/refractor": "^3.0.0",
     "refractor": "^3.1.0",
     "type-fest": "^0.16.0"
   },

@@ -4,7 +4,7 @@ const { resolve, join } = require('path');
 const targets = fs
   .readdirSync(baseDir('support', 'root'))
   // Exclude the `readme.md` file from being symlinked.
-  .filter((name) => !name.endsWith('readme.md'))
+  .filter((filename) => !filename.endsWith('readme.md'))
   .map((filename) => ({
     original: baseDir('support', 'root', filename),
     target: baseDir(filename),

@@ -17,5 +17,16 @@
       { "name": "typescript-plugin-css-modules" }
     ]
   },
-  "include": ["packages/**/src", "global.d.ts"]
+  "include": ["packages/**/src", "global.d.ts"],
+  "typedocOptions": {
+    "out": "docs/api",
+    "json": "support/api.json",
+    "name": "Remirror",
+    "mode": "modules",
+    "exclude": "**/*+(spec|dts).(ts|tsx)",
+    "excludePrivate": true,
+    "excludeNotExported": true,
+    "stripInternal": true,
+    "ignoreCompilerErrors": true
+  }
 }

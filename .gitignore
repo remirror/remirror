@@ -132,6 +132,7 @@ secret.json
 .out
 
 docs/public/**
+docs/api/**
 docs/.cache/
 docs/.linaria-cache/
 *.tsbuildinfo
@@ -161,5 +162,9 @@ cc-reporter
 ## Ignore tsconfig files.
 /tsconfig.json
 /tsconfig.lint.json
+/tsconfig.docs.json
 /tsconfig.references.json
 /packages/**/tsconfig.json
+
+# Ignore Docusaurus files
+/support/website/sidebars.js

@@ -82,7 +82,7 @@ module.exports = {
     'jest/no-duplicate-hooks': 'error',
     'jest/no-if': 'error',
     'jest/no-test-prefixes': 'error',
-    'jest/no-test-callback': 'error',
+    'jest/no-done-callback': 'error',
 
     'import/no-deprecated': 'warn',
     'import/max-dependencies': ['warn', { max: 20 }],
@@ -231,7 +231,9 @@ module.exports = {
 
     // React Hooks
 
-    'react-hooks/exhaustive-deps': 'error',
+    // TODO turn back on once this PR is merged
+    // https://github.com/facebook/react/pull/19751
+    // 'react-hooks/exhaustive-deps': 'error',
     'react-hooks/rules-of-hooks': 'error',
 
     // Built in eslint rules

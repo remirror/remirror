@@ -734,12 +734,25 @@ export type AnyRemirrorManager = Replace<
   {
     clone: () => AnyRemirrorManager;
     store: Replace<Remirror.ManagerStore<any>, { chain: any }>;
+
+    /** @internal */
     ['~E']: AnyExtension;
+
+    /** @internal */
     ['~P']: AnyPreset;
+
+    /** @internal */
     ['~Sch']: EditorSchema;
+
+    /** @internal */
     ['~N']: string;
+
+    /** @internal */
     ['~M']: string;
+
+    /** @internal */
     ['~EP']: AnyCombinedUnion;
+
     view: EditorView;
     addView: (view: EditorView) => void;
   }
