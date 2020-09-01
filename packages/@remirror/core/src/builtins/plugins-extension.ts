@@ -377,7 +377,7 @@ declare global {
        * the plugin state.
        *
        * ```ts
-       * import { CreatePluginReturn } from '@remirror/core';
+       * import { CreatePluginReturn } from 'remirror/core';
        *
        * class MyExtension extends PlainExtension {
        *   get name() {
