@@ -84,5 +84,5 @@
     ]
   ],
   "access": "public",
-  "baseBranch": "main"
+  "baseBranch": "next"
 }
