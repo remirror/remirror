@@ -5,7 +5,7 @@ import { isArray, isObject } from './core-helpers';
 
 /**
  * A freeze method for objects that only runs in development. Helps prevent code
- * that shouldn't be mutated from being mutated will developing.
+ * that shouldn't be mutated from being mutated while developing.
  *
  * @remarks
  *
