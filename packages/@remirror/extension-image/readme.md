@@ -47,9 +47,3 @@ manager.addView(element);
 // Insert an image at the current selection.
 manager.store.commands.insertImage({ src: `https://images.com/awesome.jpg` });
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

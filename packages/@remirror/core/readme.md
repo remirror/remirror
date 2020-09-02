@@ -1,6 +1,6 @@
 # @remirror/core
 
-> Where you quest to create a world class editor begins.
+> Where your quest to create a world class editor begins.
 
 [![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
 
@@ -27,10 +27,6 @@ npm install @remirror/core@next @remirror/pm@next
 
 ## Usage
 
-This is the core package for using remirror and more docs will be added soon.
+This is the core `remirror` package where the `Extension` and `RemirrorManager` are defined.
 
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots
+More docs will be added soon.

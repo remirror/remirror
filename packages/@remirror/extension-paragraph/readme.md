@@ -60,9 +60,3 @@ There are several presets which contain this extension and make the installation
 - `@remirror/preset-core`
 
 <br />
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

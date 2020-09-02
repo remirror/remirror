@@ -1,46 +1,74 @@
 import { renderEditor } from 'jest-remirror';
 
-import { object } from '@remirror/core';
-import type { SuggestKeyBindingParameter } from '@remirror/pm/suggest';
+import { BuiltinPreset, object } from '@remirror/core';
 
-import { EmojiExtension } from '../emoji-extension';
 import type {
+  EmojiChangeHandler,
+  EmojiCommand,
   EmojiObject,
   EmojiOptions,
-  EmojiSuggestCommand,
-  EmojiSuggestionChangeHandlerParameter,
-} from '../emoji-types';
+} from '../emoji-extension';
+import {
+  EmojiExtension,
+  getEmojiFromEmoticon,
+  isEmojiName,
+  sortEmojiMatches,
+} from '../emoji-extension';
+
+test('isEmojiName', () => {
+  expect(isEmojiName('')).toBeFalse();
+  expect(isEmojiName('toString')).toBeFalse();
+  expect(isEmojiName('rofl')).toBeTrue();
+});
+
+test('getEmojiFromEmoticon', () => {
+  expect(getEmojiFromEmoticon(':-)')!.char).toBe('😃');
+  expect(getEmojiFromEmoticon(':-(')!.char).toBe('😦');
+  expect(getEmojiFromEmoticon(':-(12')).toBeUndefined();
+});
+
+test('sortEmojiMatches', () => {
+  expect(sortEmojiMatches('+1', 10)[0].char).toBe('👍');
+  expect(sortEmojiMatches('thumbsup', 10)[0].char).toBe('👍');
+  expect(sortEmojiMatches('').length).toBeGreaterThan(1000);
+});
 
 function create(options: EmojiOptions = object()) {
   const extension = new EmojiExtension(options);
 
-  extension.addHandler('onExit', onExit);
+  let emoji: EmojiObject | undefined;
+  let command: EmojiCommand | undefined;
+
+  const onExit = jest.fn();
+  const onChange: EmojiChangeHandler = jest.fn((parameter, cmd) => {
+    if (parameter.exitReason) {
+      onExit();
+      command = undefined;
+      emoji = undefined;
+    } else {
+      command = cmd;
+      emoji = parameter.emojiMatches[0];
+    }
+  });
+
+  const keymap = {
+    Enter: jest.fn(() => {
+      if (!emoji || !command) {
+        return false;
+      }
+
+      command(emoji);
+      return true;
+    }),
+  };
+
+  const editor = renderEditor([extension]);
+
   extension.addHandler('onChange', onChange);
-  extension.addCustomHandler('keyBindings', keyBindings);
+  editor.manager.getPreset(BuiltinPreset).addCustomHandler('keymap', keymap);
 
-  return renderEditor([extension]);
+  return { ...editor, editor, onChange, onExit, getEmoji: () => emoji, keymap };
 }
-
-let emoji: EmojiObject | undefined;
-
-const onChange = jest.fn((params: EmojiSuggestionChangeHandlerParameter) => {
-  emoji = params.emojiMatches[0];
-});
-
-const onExit = jest.fn(() => {
-  emoji = undefined;
-});
-
-const keyBindings = {
-  Enter: jest.fn((params: SuggestKeyBindingParameter<EmojiSuggestCommand>) => {
-    params.command(emoji!);
-    return true;
-  }),
-};
-
-afterEach(() => {
-  emoji = undefined;
-});
 
 describe('inputRules', () => {
   it('replaces emoticons with emoji', () => {
@@ -89,6 +117,9 @@ describe('inputRules', () => {
 describe('suggestions', () => {
   it('creates suggestions from the defaultList first', () => {
     const {
+      onExit,
+      onChange,
+      keymap,
       nodes: { doc, p },
       add,
     } = create();
@@ -100,7 +131,7 @@ describe('suggestions', () => {
       })
       .press('Enter')
       .callback((content) => {
-        expect(keyBindings.Enter).toHaveBeenCalledTimes(1);
+        expect(keymap.Enter).toHaveBeenCalledTimes(1);
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('👍')));
         expect(onExit).toHaveBeenCalledTimes(1);
       });
@@ -122,6 +153,7 @@ describe('suggestions', () => {
 
   it('suggests emoji after another emoji', () => {
     const {
+      onChange,
       nodes: { doc, p },
       add,
     } = create();
@@ -140,6 +172,7 @@ describe('suggestions', () => {
 
   it('does not suggest emoji mid-word', () => {
     const {
+      onChange,
       nodes: { doc, p },
       add,
     } = create();
@@ -159,6 +192,7 @@ describe('suggestions', () => {
 describe('commands', () => {
   test('`suggestEmoji`', () => {
     const {
+      onChange,
       nodes: { doc, p },
       add,
     } = create();

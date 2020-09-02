@@ -205,10 +205,10 @@ export type ProsemirrorAttributes<Extra extends object = object> = Record<string
   };
 
 export type NodeAttributes<Extra extends object = object> = ProsemirrorAttributes<
-  Remirror.ExtraNodeAttributes & Extra
+  Partial<Remirror.ExtraNodeAttributes> & Extra
 >;
 export type MarkAttributes<Extra extends object = object> = ProsemirrorAttributes<
-  Remirror.ExtraMarkAttributes & Extra
+  Partial<Remirror.ExtraMarkAttributes> & Extra
 >;
 
 /**

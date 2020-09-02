@@ -190,6 +190,18 @@ describe('Social Showcase', () => {
           '@abcd12',
         );
       });
+
+      // TODO create a new issue to add forward deletion support to the `prosemirror-suggest`.
+      it.skip('removes mentions for forward deletes', async () => {
+        await $editor.type('@abc ');
+        await press({ key: 'ArrowLeft', count: 5 });
+        await press({ key: 'Delete' });
+        await expect(
+          textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at')),
+        ).rejects.toThrowErrorMatchingInlineSnapshot(
+          `"Error: failed to find element matching selector \\".remirror-editor .mention-at\\""`,
+        );
+      });
     });
 
     describe('#', () => {

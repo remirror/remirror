@@ -36,7 +36,7 @@ test('updates the direction based on typing', () => {
   insertText('بسيطة');
   expect(view.dom).toMatchSnapshot();
 
-  selectText(1, 7).replace('other');
+  selectText({ from: 1, to: 7 }).replace('other');
   expect(view.dom).toMatchSnapshot();
 });
 

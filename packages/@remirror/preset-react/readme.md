@@ -61,9 +61,3 @@ manager.addView(element);
 ```
 
 Granted, the above won't do much. It will allow you to type, and what else do you really need in an editor.
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

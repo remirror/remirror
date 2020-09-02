@@ -34,9 +34,3 @@ import { LinkExtension } from '@remirror/extension-link';
 
 const extension = new LinkExtension();
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

@@ -1,0 +1,39 @@
+{
+  "name": "@remirror/extension-mention-atom",
+  "version": "0.0.0",
+  "description": "Atom mentions for the remirror wysiwyg editor",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-mention-atom",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-mention-atom",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/extension-mention-atom.cjs.js",
+  "module": "dist/extension-mention-atom.esm.js",
+  "browser": {
+    "./dist/extension-mention-atom.cjs.js": "./dist/extension-mention-atom.browser.cjs.js",
+    "./dist/extension-mention-atom.esm.js": "./dist/extension-mention-atom.browser.esm.js"
+  },
+  "types": "dist/extension-mention-atom.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.11.0"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.29",
+    "@remirror/pm": "1.0.0-next.28"
+  },
+  "peerDependencies": {
+    "@remirror/core": "1.0.0-next.29",
+    "@remirror/pm": "1.0.0-next.28"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "5 KB"
+  }
+}

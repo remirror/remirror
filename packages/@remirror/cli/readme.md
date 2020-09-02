@@ -30,9 +30,3 @@ npm install @remirror/cli@next
 ```bash
 remirror bundle src/index.ts
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

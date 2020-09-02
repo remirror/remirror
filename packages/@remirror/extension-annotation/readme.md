@@ -34,9 +34,3 @@ import { AnnotationExtension } from '@remirror/extension-annotation';
 
 const extension = new AnnotationExtension();
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

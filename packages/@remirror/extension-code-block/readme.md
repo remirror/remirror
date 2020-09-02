@@ -55,9 +55,3 @@ manager.store.commands.createCodeBlock({ language: 'markdown' });
 // Also supports chaining
 manager.store.chain.updateCodeBlock({ language: 'js' }).formatCodeBlock().run();
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

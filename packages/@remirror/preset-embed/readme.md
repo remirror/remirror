@@ -39,9 +39,3 @@ import { EmbedPreset } from '@remirror/preset-embed';
 // Create the preset
 const preset = new EmbedPreset();
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

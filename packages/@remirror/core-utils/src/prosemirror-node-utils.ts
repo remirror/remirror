@@ -16,7 +16,7 @@ interface DescendParameter {
   /**
    * Whether to descend into a node.
    *
-   * @defaultValue `true`
+   * @default true
    */
   descend: boolean;
 }

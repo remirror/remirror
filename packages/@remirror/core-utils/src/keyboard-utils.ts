@@ -55,7 +55,7 @@ export type ModifierKeys = keyof typeof Modifier;
 /**
  * Returns true if this is an apple environment either on the server or the client.
  */
-export function isApple() {
+export function isApple(): boolean {
   return environment.isApple;
 }
 
@@ -75,7 +75,7 @@ export function isApple() {
  * @param key - the key to press with the modifier. e.g. `Space` | `Enter`
  * @param [isApple] - a method which returns true when this is an apple device.
  */
-export function mod(modifier: ModifierKeys, key: string, isMacFn = isApple) {
+export function mod(modifier: ModifierKeys, key: string, isMacFn = isApple): string {
   switch (modifier) {
     case 'Primary':
       return `${Modifier[modifier](isMacFn()).join('-')}-${key}`;

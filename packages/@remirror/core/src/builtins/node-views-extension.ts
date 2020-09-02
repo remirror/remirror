@@ -46,6 +46,9 @@ export class NodeViewExtension extends PlainExtension {
       nodeViewList.unshift(isFunction(nodeView) ? { [extension.name]: nodeView } : nodeView);
     }
 
+    // Insert the `nodeViews` provided via the manager.
+    nodeViewList.unshift(this.store.managerSettings.nodeViews ?? {});
+
     for (const nodeView of nodeViewList) {
       Object.assign(nodeViews, nodeView);
     }
@@ -56,10 +59,18 @@ export class NodeViewExtension extends PlainExtension {
 
 declare global {
   namespace Remirror {
+    interface ManagerSettings {
+      /**
+       * Add custom node views to the manager which will take priority over the
+       * nodeViews provided by the extensions and plugins.
+       */
+      nodeViews?: Record<string, NodeViewMethod>;
+    }
+
     interface ManagerStore<Combined extends AnyCombinedUnion> {
       /**
        * The custom nodeView which can be used to replace the nodes or marks in
-       * the dom and change their browser behaviour.
+       * the DOM and change their browser behavior.
        */
       nodeViews: Record<string, NodeViewMethod>;
     }
@@ -68,7 +79,7 @@ declare global {
       /**
        * Whether to exclude the extension's nodeView
        *
-       * @defaultValue `undefined`
+       * @default undefined
        */
       nodeViews?: boolean;
     }

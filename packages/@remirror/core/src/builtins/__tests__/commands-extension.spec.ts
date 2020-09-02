@@ -1,5 +1,6 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
+import { AllSelection } from '@remirror/pm/state';
 import { BoldExtension, ItalicExtension } from '@remirror/testing';
 
 import { CommandsExtension } from '..';
@@ -71,4 +72,26 @@ test('it can insert a range of text', () => {
   editor.commands.insertText('all ', { from: 1 });
 
   expect(editor.doc).toEqualProsemirrorNode(doc(p('all my awesome content')));
+});
+
+test('it can select text', () => {
+  const editor = renderEditor([]);
+  const { doc, p } = editor.nodes;
+
+  editor.add(doc(p('my <cursor>content')));
+
+  editor.commands.selectText('all');
+  expect(editor.state.selection).toBeInstanceOf(AllSelection);
+
+  editor.commands.selectText('end');
+  expect(editor.state.selection.from).toBe(11);
+
+  editor.commands.selectText('start');
+  expect(editor.state.selection.from).toBe(1);
+
+  editor.commands.selectText(2);
+  expect(editor.state.selection.from).toBe(2);
+
+  editor.commands.selectText({ from: 1, to: 3 });
+  expect(editor.state.selection.empty).toBeFalse();
 });

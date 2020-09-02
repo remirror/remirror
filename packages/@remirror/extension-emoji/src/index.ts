@@ -1,16 +1,13 @@
-export type { EmojiCommandOptions } from './emoji-extension';
-export { EmojiExtension } from './emoji-extension';
-export { DEFAULT_FREQUENTLY_USED } from './emoji-utils';
 export type {
   AliasNames,
+  EmojiCommandOptions,
   EmojiObject,
   EmojiOptions,
-  EmojiSuggestCommand,
-  EmojiSuggestionChangeHandler,
-  EmojiSuggestionChangeHandlerParameter,
-  EmojiSuggestionExitHandler,
-  EmojiSuggestionKeyBindings,
+  EmojiCommand as EmojiSuggestCommand,
+  EmojiChangeHandler as EmojiSuggestionChangeHandler,
+  EmojiChangeHandlerParameter as EmojiSuggestionChangeHandlerParameter,
   Names,
   NamesAndAliases,
   SkinVariation,
-} from './emoji-types';
+} from './emoji-extension';
+export { DEFAULT_FREQUENTLY_USED, EmojiExtension } from './emoji-extension';

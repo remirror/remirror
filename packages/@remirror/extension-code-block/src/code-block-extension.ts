@@ -9,6 +9,7 @@ import {
   findParentNodeOfType,
   GetAttributes,
   getMatchString,
+  InputRule,
   isElementDomNode,
   isNodeActive,
   isNodeOfType,
@@ -43,8 +44,7 @@ import {
     supportedLanguages: [],
     keyboardShortcut: mod('ShiftAlt', 'f'),
     toggleName: 'paragraph',
-    // eslint-disable-next-line unicorn/no-useless-undefined
-    formatter: () => undefined,
+    formatter: ({ source }) => ({ cursorOffset: 0, formatted: source }),
     syntaxTheme: 'atomDark',
     defaultLanguage: 'markup',
   },
@@ -59,7 +59,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
   /**
    * Add the languages to the environment if they have not yet been added.
    */
-  protected init() {
+  protected init(): void {
     this.registerLanguages();
   }
 
@@ -173,7 +173,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
    * Create an input rule that listens converts the code fence into a code block
    * when typing triple back tick followed by a space.
    */
-  createInputRules() {
+  createInputRules(): InputRule[] {
     const regexp = /^```([\dA-Za-z]*) $/;
 
     const getAttributes: GetAttributes = (match) => {
@@ -198,7 +198,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
     ];
   }
 
-  protected onSetOptions(parameter: OnSetOptionsParameter<CodeBlockOptions>) {
+  protected onSetOptions(parameter: OnSetOptionsParameter<CodeBlockOptions>): void {
     const { changes } = parameter;
 
     if (changes.supportedLanguages) {
@@ -325,6 +325,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
 
         return true;
       },
+
       [this.options.keyboardShortcut]: ({ tr }) => {
         const commands = this.store.getCommands();
 

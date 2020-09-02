@@ -34,9 +34,3 @@ import { HardBreakExtension } from '@remirror/extension-hard-break';
 
 const extension = new HardBreakExtension();
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

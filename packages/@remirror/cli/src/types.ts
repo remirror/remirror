@@ -25,7 +25,7 @@ export interface CommandContext extends BaseContext {
    * - `false` when this command is being run directly from the command line
    * - `true` when it is run from another command.
    *
-   * @defaultValue false
+   * @default false
    */
   internal: boolean;
 }

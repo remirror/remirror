@@ -137,7 +137,7 @@ export interface CollaborationOptions {
   /**
    * The document version.
    *
-   * @defaultValue 0
+   * @default 0
    */
   version?: Static<number>;
 
@@ -149,7 +149,7 @@ export interface CollaborationOptions {
   /**
    * The debounce time in milliseconds
    *
-   * @defaultValue 250
+   * @default 250
    */
   debounceMs?: Static<number>;
 

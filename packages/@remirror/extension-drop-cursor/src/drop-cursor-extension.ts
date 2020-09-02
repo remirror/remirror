@@ -5,14 +5,14 @@ export interface DropCursorOptions {
   /**
    * Set the color of the cursor.
    *
-   * @defaultValue 'black'
+   * @default 'black'
    */
   color?: string;
 
   /**
    * Set the precise width of the cursor in pixels.
    *
-   * @defaultValue 1
+   * @default 1
    */
   width?: number;
 }

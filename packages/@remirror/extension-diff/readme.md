@@ -34,9 +34,3 @@ import { DiffExtension } from '@remirror/extension-diff';
 
 const extension = new DiffExtension();
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

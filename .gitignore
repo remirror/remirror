@@ -156,6 +156,7 @@ cc-reporter
 /.prettierrc.js
 /.huskyrc
 /.lintstagedrc
+/.markdownlint.json
 
 ## Ignore tsconfig files.
 /tsconfig.json

@@ -29,7 +29,7 @@ interface DefaultOptionsParameter<Options extends Shape = EmptyShape> {
    *
    * All non required options must have a default value provided.
    *
-   * @defaultValue `{}`
+   * @default {}
    */
   defaultOptions: DefaultExtensionOptions<Options>;
 }
@@ -38,7 +38,7 @@ interface DefaultPriorityParameter {
   /**
    * The default priority for this extension.
    *
-   * @defaultValue `{}`
+   * @default {}
    */
   defaultPriority?: ExtensionPriority;
 }
@@ -50,14 +50,45 @@ interface StaticKeysParameter<Options extends Shape = EmptyShape> {
   staticKeys: StaticKeyList<Options>;
 }
 
+/**
+ * This notifies the extension which options are handlers. Handlers typically
+ * represent event handlers that are called in response to something happening.
+ *
+ * An `onChange` option could be a handler. When designing the API I had to
+ * consider that often times, you might want to listen to a handler in several
+ * places.
+ *
+ * A limitation of the static and dynamic options is that there is only one
+ * value per extension. So if there is a `minValue` option and that min value
+ * option is set in the extension then it becomes the value for all consumers of
+ * the  extension. Handlers don't have the same expected behaviour. It is
+ * generally expected that you should be able to subscribe to an event in
+ * multiple places.
+ *
+ * In order to make this possible with `remirror` the handlers are automatically
+ * created based on the handler keys you provide. Each handler is an array and
+ * when the handler is called with `this.options.onChange`, each item in the
+ * array is called based on the rules provided.
+ */
 interface HandlerKeysParameter<Options extends Shape = EmptyShape> {
   /**
-   * The list of all keys which are event handlers.
+   * The list of the option names which are event handlers.
    */
   handlerKeys: HandlerKeyList<Options>;
 
   /**
    * Customize how the handler should work.
+   *
+   * This allows you to decide how the handlers will be composed together.
+   * Currenlty it only support function handlers, but you can tell the extension
+   * to exit early when a certain value is reached.
+   *
+   * ```ts
+   * const handlerOptions = { onChange: { earlyReturnValue: true }};
+   * ```
+   *
+   * The above setting means that onChange will exit early as soon as one of the
+   * methods returns true.
    */
   handlerKeyOptions?: Partial<Record<HandlerKey<Options> | '__ALL__', HandlerKeyOptions>>;
 }

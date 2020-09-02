@@ -85,7 +85,7 @@ export interface RemirrorProviderProps<Combined extends AnyCombinedUnion>
    * undefined then the children components are responsible for calling
    * `getRootProps`.
    *
-   * @defaultValue undefined
+   * @default undefined
    */
   childAsRoot?: GetRootPropsConfig<string> | boolean;
 }
@@ -179,7 +179,7 @@ export interface ThemeProviderProps {
   /**
    * The custom component to use for rendering this editor.
    *
-   * @defaultValue 'div'
+   * @default 'div'
    */
   as?: ElementType<{ style?: CSSProperties; className?: string }>;
 

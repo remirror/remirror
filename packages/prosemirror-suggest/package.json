@@ -23,29 +23,28 @@
     "@babel/runtime": "^7.11.0",
     "@remirror/core-constants": "1.0.0-next.26",
     "@remirror/core-helpers": "1.0.0-next.28",
-    "@remirror/core-types": "1.0.0-next.28",
-    "@types/merge-descriptors": "1.0.1",
     "escape-string-regexp": "^4.0.0",
-    "merge-descriptors": "1.0.1"
+    "type-fest": "^0.16.0"
   },
   "devDependencies": {
     "@types/prosemirror-keymap": "^1.0.3",
+    "@types/prosemirror-model": "^1.7.2",
     "@types/prosemirror-state": "^1.2.5",
     "@types/prosemirror-view": "^1.15.0",
-    "prosemirror-keymap": "^1.1.4",
+    "prosemirror-model": "^1.11.0",
     "prosemirror-state": "^1.3.3",
     "prosemirror-view": "^1.15.5"
   },
   "peerDependencies": {
-    "@types/prosemirror-keymap": "^1.0.3",
+    "@types/prosemirror-model": "^1.7.0",
     "@types/prosemirror-state": "^1.2.5",
     "@types/prosemirror-view": "^1.15.0",
-    "prosemirror-keymap": "^1.1.4",
+    "prosemirror-model": "^1.11.0",
     "prosemirror-state": "^1.3.3",
     "prosemirror-view": "^1.14.9"
   },
   "peerDependenciesMeta": {
-    "@types/prosemirror-keymap": {
+    "@types/prosemirror-model": {
       "optional": true
     },
     "@types/prosemirror-state": {

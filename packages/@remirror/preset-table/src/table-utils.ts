@@ -20,27 +20,27 @@ export interface CreateTableParameter extends SchemaParameter {
   /**
    * Defines the number of rows to create with.
    *
-   * @defaultValue 3
+   * @default 3
    */
   rowsCount?: number;
 
   /**
    * Defines the number of columns to create with.
    *
-   * @defaultValue 3
+   * @default 3
    */
   columnsCount?: number;
   /**
    * When true the first row of the table will be a header row.
    *
-   * @defaultValue true
+   * @default true
    */
   withHeaderRow?: boolean;
 
   /**
    * Defines the content of each cell as a prosemirror node.
    *
-   * @defaultValue undefined
+   * @default undefined
    */
   cellContent?: ProsemirrorNode;
 }

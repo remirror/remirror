@@ -52,16 +52,17 @@ export interface CodeBlockOptions {
    * </RemirrorManager>
    * ```
    *
-   * By default refractor bundles the following languages: `markup`, `css`, `clike`, `js`
+   * By default refractor bundles the following languages: `markup`, `css`,
+   * `clike`, `js`
    *
-   * @defaultValue `[]`
+   * @default []
    */
   supportedLanguages?: RefractorSyntax[];
 
   /**
    * A keyboard shortcut to trigger formatting the current block.
    *
-   * @defaultValue `Alt-Shift-F` (Mac) `Shift-Ctrl-F` (PC)
+   * @default 'Alt-Shift-F' (Mac) | 'Shift-Ctrl-F' (PC)
    */
   keyboardShortcut?: string;
 
@@ -70,7 +71,7 @@ export interface CodeBlockOptions {
    *
    * It is a property so it can change during the editor's life.
    *
-   * @defaultValue 'markup'
+   * @default 'markup'
    */
   defaultLanguage?: string;
 
@@ -80,24 +81,25 @@ export interface CodeBlockOptions {
    * @remarks
    * Currently only one theme can be set per editor.
    *
-   * Set this to false if you want to manage the syntax styles by yourself.
-   * For tips on how this could be accomplished see {@link https://prismjs.com}
+   * Set this to false if you want to manage the syntax styles by yourself. For
+   * tips on how this could be accomplished see {@link https://prismjs.com}
    *
-   * @defaultValue 'atomDark'
+   * @default 'atomDark'
    */
   syntaxTheme?: LiteralUnion<SyntaxTheme, string>;
 
   /**
    * Provide a formatter which can format the provided source code.
    *
-   * @returns an object when formatting was successful and false when the code could not be formatted (a noop).
+   * @returns an object when formatting was successful and false when the code
+   * could not be formatted (a noop).
    */
   formatter?: CodeBlockFormatter;
 
   /**
    * The name of the node that the code block should toggle back and forth from.
    *
-   * @defaultValue 'paragraph'
+   * @default 'paragraph'
    */
   toggleName?: string;
 }
@@ -105,7 +107,8 @@ export interface CodeBlockOptions {
 /**
  * A function which takes code and formats the code.
  *
- * TODO - possibly allow error management if failure is because of invalid syntax
+ * TODO - possibly allow error management if failure is because of invalid
+ * syntax
  */
 export type CodeBlockFormatter = (params: FormatterParameter) => FormattedContent | undefined;
 
@@ -116,15 +119,18 @@ export interface FormatterParameter {
   source: string;
 
   /**
-   * Specify where the cursor is. This option cannot be used with rangeStart and rangeEnd.
-   * This allows the command to both formats the code, and translates a cursor position from unformatted code to formatted code.
+   * Specify where the cursor is. This option cannot be used with rangeStart and
+   * rangeEnd. This allows the command to both formats the code, and translates
+   * a cursor position from unformatted code to formatted code.
    */
   cursorOffset: number;
 
   /**
-   * The language of the code block. Should be used to determine whether the formatter can support the transformation.
+   * The language of the code block. Should be used to determine whether the
+   * formatter can support the transformation.
    *
-   * Possible languages are available here https://github.com/wooorm/refractor/tree/716fe904c37cd7ebfde53ac5157e7d6c323a3986/lang
+   * Possible languages are available here
+   * https://github.com/wooorm/refractor/tree/716fe904c37cd7ebfde53ac5157e7d6c323a3986/lang
    */
   language: string;
 }

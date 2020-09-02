@@ -36,9 +36,3 @@ import { ReactComponentExtension } from '@remirror/extension-react-component';
 
 const extension = new ReactComponentExtension();
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

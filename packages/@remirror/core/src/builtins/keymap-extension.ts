@@ -24,14 +24,14 @@ export interface KeymapOptions {
    * Determines whether a backspace after an input rule has been applied should
    * reverse the effect of the input rule.
    *
-   * @defaultValue `true`
+   * @default true
    */
   undoInputRuleOnBackspace?: boolean;
 
   /**
    * Determines whether the escape key selects the current node.
    *
-   * @defaultValue `false`
+   * @default false
    */
   selectParentNodeOnEscape?: boolean;
 
@@ -44,7 +44,7 @@ export interface KeymapOptions {
    * keyboard mappings for your editor. Otherwise it is advisable to leave it
    * unchanged.
    *
-   * @default `false`
+   * @default false
    */
   excludeBaseKeymap?: boolean;
 
@@ -113,7 +113,7 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
   /**
    * This adds the `createKeymap` method functionality to all extensions.
    */
-  onCreate() {
+  onCreate(): void {
     this.store.setExtensionStore('rebuildKeymap', this.rebuildKeymap);
     this.loopExtensions();
     this.store.addPlugins(this.keymap);
@@ -164,11 +164,11 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
    * Create the base keymap and merge it with any custom keymaps provided by the
    * user as CustomOptions.
    */
-  createKeymap = () => {
+  createKeymap(): KeyBindings {
     this.createBaseKeymap();
 
     return this.buildKeymap();
-  };
+  }
 
   /**
    * @internalremarks Think about the case where bindings are disposed of and then
@@ -192,7 +192,7 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
   /**
    * Handle changes in the dynamic properties.
    */
-  protected onSetOptions(parameter: OnSetOptionsParameter<KeymapOptions>) {
+  protected onSetOptions(parameter: OnSetOptionsParameter<KeymapOptions>): void {
     const { changes } = parameter;
     let shouldReconfigureBindings = false;
 
@@ -245,7 +245,7 @@ declare global {
       /**
        * Whether to exclude the created keymap.
        *
-       * @defaultValue `undefined`
+       * @default undefined
        */
       keymap?: boolean;
     }

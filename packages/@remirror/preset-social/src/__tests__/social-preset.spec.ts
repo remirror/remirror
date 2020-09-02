@@ -5,7 +5,7 @@ import { AutoLinkExtension } from '@remirror/extension-auto-link';
 import { EmojiExtension } from '@remirror/extension-emoji';
 import { MentionExtension } from '@remirror/extension-mention';
 
-import { SocialPreset } from '..';
+import { SocialPreset } from '../..';
 
 presetValidityTest(SocialPreset, { matchers: [] });
 

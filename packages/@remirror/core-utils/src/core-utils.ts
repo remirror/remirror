@@ -842,7 +842,7 @@ interface IsStateEqualOptions {
   /**
    * Whether to compare the selection of the two states.
    *
-   * @defaultValue `false`
+   * @default false
    */
   checkSelection?: boolean;
 }

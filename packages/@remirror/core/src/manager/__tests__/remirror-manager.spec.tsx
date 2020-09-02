@@ -5,8 +5,10 @@ import type {
   EditorState,
   KeyBindingCommandFunction,
   NodeExtensionSpec,
+  NodeViewMethod,
   ProsemirrorAttributes,
 } from '@remirror/core-types';
+import { Plugin } from '@remirror/pm/state';
 import { EditorView } from '@remirror/pm/view';
 import { CorePreset, createCoreManager, HeadingExtension } from '@remirror/testing';
 
@@ -282,5 +284,22 @@ describe('createEmptyDoc', () => {
         ]
       }
     `);
+  });
+});
+
+describe('options', () => {
+  it('can add extra plugins', () => {
+    const extraPlugin = new Plugin({});
+    const manager = createCoreManager([], { plugins: [extraPlugin] });
+
+    expect(manager.store.plugins).toContain(extraPlugin);
+  });
+
+  it('can add additional nodeViews', () => {
+    const custom: NodeViewMethod = jest.fn(() => ({}));
+    const nodeViews: Record<string, NodeViewMethod> = { custom };
+    const manager = createCoreManager([], { nodeViews });
+
+    expect(manager.store.nodeViews.custom).toBe(custom);
   });
 });

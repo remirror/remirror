@@ -19,7 +19,7 @@ export interface ReactComponentOptions {
   /**
    * The default main block node.
    *
-   * @defaultValue `div`
+   * @default 'div'
    *
    * @staticOption
    */
@@ -28,7 +28,7 @@ export interface ReactComponentOptions {
   /**
    * The default main inline node (for inline content).
    *
-   * @defaultValue `span`
+   * @default 'span'
    * @staticOption
    */
   defaultInlineNode?: Static<keyof HTMLElementTagNameMap>;
@@ -36,7 +36,7 @@ export interface ReactComponentOptions {
   /**
    * The default content node to use.
    *
-   * @defaultValue `span`
+   * @default 'span'
    * @staticOption
    */
   defaultContentNode?: Static<keyof HTMLElementTagNameMap>;

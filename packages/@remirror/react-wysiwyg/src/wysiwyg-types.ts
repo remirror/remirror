@@ -38,7 +38,7 @@ export interface WysiwygProviderProps<Combined extends AnyCombinedUnion = Wysiwy
   /**
    * The theme component used to render the `theme`.
    *
-   * @defaultValue 'div'
+   * @default 'div'
    */
   ThemeComponent?: ElementType;
 

@@ -251,7 +251,7 @@ describe('custom annotations', () => {
     add(doc(p('<start>Hello<end> my friend')));
 
     commands.addAnnotation({ id: '1', tag: 'tag' });
-    selectText(5, 14);
+    selectText({ from: 5, to: 14 });
     commands.addAnnotation({ id: '2', tag: 'awesome', className: 'custom' });
 
     expect(dom.innerHTML).toMatchInlineSnapshot(`

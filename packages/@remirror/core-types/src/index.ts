@@ -112,6 +112,7 @@ export type {
   CommandFunction,
   CommandFunctionParameter,
   DispatchFunction,
+  DOMCompatibleAttributes,
   DOMOutputSpec,
   GetAttributes,
   GetAttributesParameter,

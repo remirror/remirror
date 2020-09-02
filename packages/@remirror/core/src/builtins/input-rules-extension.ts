@@ -27,7 +27,7 @@ export class InputRulesExtension extends PlainExtension {
   /**
    * Ensure that all ssr transformers are run.
    */
-  onCreate() {
+  onCreate(): void {
     this.store.setExtensionStore('rebuildInputRules', this.rebuildInputRules);
     this.loopExtensions();
 
@@ -77,7 +77,7 @@ declare global {
       /**
        * Whether to use the inputRules for this particular extension.
        *
-       * @defaultValue `undefined`
+       * @default undefined
        */
       inputRules?: boolean;
     }

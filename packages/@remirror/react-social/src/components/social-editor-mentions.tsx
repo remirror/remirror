@@ -1,11 +1,12 @@
 import { cx } from 'linaria';
 import { Type, useMultishift } from 'multishift';
-import React, { ComponentType, useCallback, useState } from 'react';
+import React, { ComponentType, FC, useCallback, useEffect, useState } from 'react';
 
+import type { MentionExtensionAttributes } from '@remirror/extension-mention';
 import { useI18n } from '@remirror/react';
+import { useEditorFocus } from '@remirror/react-hooks/use-editor-focus';
+import { useMention, UseMentionProps } from '@remirror/react-hooks/use-mention';
 
-import { useSocialRemirror } from '../hooks';
-import { SocialMentionProps, useSocialMention } from '../hooks/use-social-mention';
 import { messages } from '../social-messages';
 import {
   mentionSuggestionsDropdownWrapperStyles,
@@ -15,7 +16,11 @@ import {
   mentionSuggestionsUserItemImageStyles,
   mentionSuggestionsUserItemUsernameStyles,
 } from '../social-styles';
-import type { TagData, UserData } from '../social-types';
+import type { MentionChangeParameter } from '../social-types';
+
+export interface SocialMentionComponentProps extends UseMentionProps {
+  onMentionChange?: (parameter: MentionChangeParameter | null) => void;
+}
 
 /**
  * The social mention component.
@@ -23,25 +28,25 @@ import type { TagData, UserData } from '../social-types';
  * It is responsible to displaying the drop down list of options when you want
  * to tag or add a user mention.
  */
-export const SocialMentionComponent = (props: SocialMentionProps) => {
-  const state = useSocialMention(props);
-  const { focus } = useSocialRemirror();
-  const { command, matcher, index, show } = state;
+export const SocialMentionComponent: FC<SocialMentionComponentProps> = (props) => {
+  const state = useMention(props);
+  const [isFocused, focus] = useEditorFocus();
   const [isClicking, setIsClicking] = useState(false);
+  const { onMentionChange } = props;
 
   const createClickHandler = useCallback(
     (id: string, label: string) => () => {
-      if (!command) {
+      if (!state) {
         return;
       }
 
       // Trigger the command
-      command({ id, label, replacementType: 'full' });
+      state.command({ id, label, replacementType: 'full' });
 
       // Refocus the editor
       focus();
     },
-    [command, focus],
+    [state, focus],
   );
 
   const onMouseDown = useCallback(() => {
@@ -49,17 +54,30 @@ export const SocialMentionComponent = (props: SocialMentionProps) => {
     setTimeout(() => setIsClicking(false), 2000);
   }, []);
 
-  if (!matcher || !command || !(show || isClicking)) {
+  useEffect(() => {
+    if (!onMentionChange) {
+      return;
+    }
+
+    if (!state) {
+      onMentionChange?.(null);
+      return;
+    }
+
+    onMentionChange?.({ index: state.index, name: state.name, query: state.query.full });
+  }, [state, onMentionChange]);
+
+  if (!state || !(isFocused || isClicking)) {
     return null;
   }
 
-  if (matcher === 'at') {
+  if (state.name === 'at') {
     return (
       <MentionDropdown
         onMouseDown={onMouseDown}
-        activeIndex={index}
-        items={props.users}
-        getId={(item) => item.username}
+        activeIndex={state.index}
+        items={props.items as MentionUserItem[]}
+        getId={(item) => item.id}
         getLabel={(item) => `@${item.username}`}
         Component={UserMentionItem}
         createClickHandler={createClickHandler}
@@ -70,8 +88,8 @@ export const SocialMentionComponent = (props: SocialMentionProps) => {
   return (
     <MentionDropdown
       onMouseDown={onMouseDown}
-      activeIndex={index}
-      items={props.tags}
+      activeIndex={state.index}
+      items={props.items as MentionTagItem[]}
       getId={(item) => item.tag}
       getLabel={(item) => `#${item.tag}`}
       Component={TagMentionItem}
@@ -129,8 +147,17 @@ function MentionDropdown<Item>(props: MentionDropdownProps<Item>) {
   );
 }
 
+type MentionTagItem = MentionExtensionAttributes & { href?: string; tag: string };
+
+type MentionUserItem = MentionExtensionAttributes & {
+  href?: string;
+  username: string;
+  displayName: string;
+  avatarUrl: string;
+};
+
 interface UserMentionItemProps {
-  item: UserData;
+  item: MentionUserItem;
 }
 
 const UserMentionItem = (props: UserMentionItemProps) => {
@@ -151,7 +178,7 @@ const UserMentionItem = (props: UserMentionItemProps) => {
 };
 
 interface TagMentionItemProps {
-  item: TagData;
+  item: MentionTagItem;
 }
 
 const TagMentionItem = (props: TagMentionItemProps) => {

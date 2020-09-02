@@ -664,21 +664,21 @@ export interface EditorWrapperProps<Combined extends AnyCombinedUnion>
    * way to set the value via props. As a result this is the only opportunity to
    * directly control the rendered text.
    *
-   * @defaultValue `{ type: 'doc', content: [{ type: 'paragraph' }] }`
+   * @default `{ type: 'doc', content: [{ type: 'paragraph' }] }`
    */
   initialContent?: RemirrorContentType | [RemirrorContentType, PrimitiveSelection];
 
   /**
    * Adds attributes directly to the prosemirror element.
    *
-   * @defaultValue `{}`
+   * @default {}
    */
   attributes?: Record<string, string> | AttributePropFunction<Combined>;
 
   /**
    * Determines whether this editor is editable or not.
    *
-   * @defaultValue true
+   * @default true
    */
   editable?: boolean;
 
@@ -686,7 +686,7 @@ export interface EditorWrapperProps<Combined extends AnyCombinedUnion>
    * When set to true focus will be place on the editor as soon as it first
    * loads.
    *
-   * @defaultValue false
+   * @default false
    */
   autoFocus?: FocusType;
 
@@ -717,7 +717,7 @@ export interface EditorWrapperProps<Combined extends AnyCombinedUnion>
   /**
    * Sets the accessibility label for the editor instance.
    *
-   * @defaultValue ''
+   * @default ''
    */
   label?: string;
 
@@ -927,7 +927,7 @@ export interface TriggerChangeParameter {
   /**
    * Whether or not to trigger this as a change and call any handlers.
    *
-   * @defaultValue true
+   * @default true
    */
   triggerChange?: boolean;
 }

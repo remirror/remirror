@@ -1,35 +1,69 @@
-<div align="center">
-  <br />
-  <div align="center">
-    <a href="https://remirror.io"><img width="300" height="300" src="https://raw.githubusercontent.com/remirror/remirror/next/support/assets/logo-animated-light.svg?sanitize=true" alt="animated remirror logo" /></a>
-  </div>
-  <br />
-  <br />
-  <br />
-  <div align="center">
-    <a href="https://github.com/remirror/remirror/actions?query=workflow:ci"><img src="https://github.com/remirror/remirror/workflows/ci/badge.svg?branch=next" alt="Continuous integration badge for github actions" /></a>
-    <a href="https://github.com/remirror/remirror/actions?query=workflow:docs"><img src="https://github.com/remirror/remirror/workflows/docs/badge.svg?branch=next" alt="Badge outline whether documentation deployed successfully" /></a>
-    <a href="https://codeclimate.com/github/remirror/remirror/maintainability"><img src="https://api.codeclimate.com/v1/badges/f4d8dcd5c2228524a53a/maintainability" alt="Project maintainability" /></a>
-    <a href="https://codeclimate.com/github/remirror/remirror/test_coverage"><img src="https://api.codeclimate.com/v1/badges/f4d8dcd5c2228524a53a/test_coverage" alt="Code coverage" /></a>
-    <a href="https://remirror.io/chat"><img alt="Discord" src="https://img.shields.io/discord/726035064831344711" alt="Join our discord server" /></a>
-    </div>
-</div>
+<p align="center">
+  <a href="https://remirror.io"><img width="300" height="300" src="https://raw.githubusercontent.com/remirror/remirror/next/support/assets/logo-animated-light.svg?sanitize=true" alt="animated remirror logo" /></a>
+</p>
 
-> `remirror` is a toolkit for building accessible editors which run on the web and desktop.
+<p align="center">
+  A <em>toolkit</em> for building cross-platform text editors
+  <br />in the framework of your choice.
+</p>
 
 <br />
 
-## Motivation
+<p align="center">
+  <a href="#why"><strong>Why?</strong></a> ·
+  <a href="#status"><strong>Status</strong></a> ·
+  <a href="https://remirror.io/docs"><strong>Documentation</strong></a> ·
+  <a href="https://remirror.io/playground"><strong>Playground</strong></a> ·
+  <a href="https://remirror.io/docs/contributing"><strong>Contributing</strong></a>
+</p>
+
+<br />
+
+<p align="center">
+  <a href="https://remirror.io/docs/showcase/social">
+    <img src="https://media.githubusercontent.com/media/ifiokjr/assets/master/remirror/repo-banner.gif" title="Editable mentions and emoji being showcased" alt="A gif showing mentions being suggested as the user types with editing supported">
+  </a>
+</p>
+
+<br />
+
+<p align="center">
+  <a href="https://unpkg.com/@remirror/core@next/dist/core.browser.esm.js">
+    <img src="https://img.shields.io/bundlephobia/minzip/@remirror/core/next" alt="Bundled sized of core library" title="@remirror/core bundle size">
+  </a>
+  <a href="https://github.com/remirror/remirror/actions?query=workflow:ci">
+    <img src="https://github.com/remirror/remirror/workflows/ci/badge.svg?branch=next" alt="Continuous integration badge for automatic releases" title="GitHub Actions CI Badge" />
+  </a>
+  <a href="https://github.com/remirror/remirror/actions?query=workflow:docs">
+    <img src="https://github.com/remirror/remirror/workflows/docs/badge.svg?branch=next" alt="Continuous integration badge for docs deployment" title="Docs Deployment CI Badge" />
+  </a>
+  <a href="https://codeclimate.com/github/remirror/remirror/maintainability">
+    <img src="https://api.codeclimate.com/v1/badges/f4d8dcd5c2228524a53a/maintainability" alt="Project maintainability provided by CodeClimate" title="Maintainability score"/>
+  </a>
+  <a href="https://codeclimate.com/github/remirror/remirror/test_coverage">
+    <img src="https://api.codeclimate.com/v1/badges/f4d8dcd5c2228524a53a/test_coverage" alt="Unit test coverage for the codebase" title="Code coverage" />
+  </a>
+  <a href="https://remirror.io/chat">
+    <img alt="Discord" src="https://img.shields.io/discord/726035064831344711" alt="Join our discord server" title="Discord server link" />
+  </a>
+  <a href="./packages/remirror/package.json">
+    <img src="https://img.shields.io/npm/v/remirror/next?style=flat">
+  </a>
+</p>
+
+<br />
+
+## Why
 
 `remirror` was started as a personal challenge. Would it be possible to build an editor that combined great performance with ease of use? It was also important to give users of all frameworks, the ability to build an editor by picking and choosing their desired building blocks.
 
-In order to meet these goals, [ProseMirror][prosemirror] was picked as the core editor layer. The second decision was to base the structure of the editor on blocks of functionality called `Extensions`. Each extension would add a slice of beauty to the editor, allowing users to craft their masterpieces.
+In order to meet these goals, [ProseMirror][prosemirror] was picked as the best choice for the core editor layer. The second decision was to base the structure of the editor on blocks of functionality called `Extensions`. Each extension would be designed to fulfil a specific purpose in the editor. Due to this structure, users would be able to craft a fully custom implementation.
 
-In the latest version, some of the initial goals of `remirror` are bearing fruit. Every single part of the editor can be controlled by extensions. For example, the core (`Schema`) is managed by a [built-in extension](https://github.com/remirror/remirror/blob/HEAD/packages/@remirror/core/src/builtins/schema-extension.ts).
+In the `next` version of `remirror`, some of these initial goals are starting to be met. Every single part of the editor is controlled by extensions. For example, the core (`Schema`) is managed by a [built-in extension](https://github.com/remirror/remirror/blob/HEAD/packages/@remirror/core/src/builtins/schema-extension.ts). This means that the editor you chooses to build is completely customizable, while providing sane defaults.
 
-And the API has improved a lot. For React, this comes with a bunch of drop-in components and hooks. Many more are being worked on.
+In this version the API has improved a lot. Multi-framework support is now possible. Currently there is support for `React` and the `DOM` with support being added for `Preact` in the next few weeks and `Svelte` after that.
 
-To add a drop down emoji picker to your react editor the following code will suffice.
+There are also a host of drop in components and hooks being built. For example to add a drop down emoji picker to your react editor the following code is all you need.
 
 ```tsx
 import React from 'react';
@@ -44,7 +78,7 @@ const Editor = () => {
 };
 ```
 
-With this tiny snippet your editor now supports a really nice ui element. And it's all customisable with ordinary `css`. No more fighting against a `CSS-in-JS` library as in previous versions.
+With this small snippet your editor now supports some complex UI Functionality. And it's all customisable with ordinary `css`. If you prefer `CSS-in-JS` the styles are also available with `emotion` and `styled-components`.
 
 There's so much more to come and I'm glad you're taking a look. I hope `remirror` proves to be everything you need for your next text editor project.
 
@@ -90,12 +124,11 @@ View our documentation website [**here**][introduction].
 ## Prerequisites
 
 - [Typescript](https://www.typescriptlang.org/) `>= 4`
-- [React](https://reactjs.org/) `>= 16.9`
 - [pnpm](https://pnpm.js.org/en/installation) `>= 5.5`
 
 <br />
 
-## Editors
+## Getting Started
 
 ![A gif showing mentions being suggested as the user types with editing supported](https://media.githubusercontent.com/media/ifiokjr/assets/master/remirror/repo-banner.gif 'A gif showing mentions being suggested as the user types with editing supported').
 
@@ -114,7 +147,7 @@ pnpm add remirror@next @remirror/pm@next
 npm install remirror@next @remirror/pm@next
 ```
 
-`@remirror/pm` is a peer dependency which manages all the ProseMirror packages for you.
+`@remirror/pm` is a peer dependency which manages all the ProseMirror packages for you. It means that the conflicts which can sometimes happen between versions are no longer an issue. It's also important because it's quite easy to bundle multiple versions of the same library in your codebase. By
 
 ## Usage
 

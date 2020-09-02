@@ -34,9 +34,3 @@ import { SearchExtension } from '@remirror/extension-search';
 
 const extension = new SearchExtension();
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

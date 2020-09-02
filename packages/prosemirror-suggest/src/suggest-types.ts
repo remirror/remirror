@@ -1,24 +1,12 @@
-import type {
-  AnyFunction,
-  EditorViewParameter,
-  FromToParameter,
-  TextParameter,
-} from '@remirror/core-types';
-
-import type { ChangeReason, ExitReason } from './suggest-constants';
-
 /**
- * This `Suggester` interface defines all the options required to create a
+ * This [[`Suggester`]] interface defines all the options required to create a
  * suggestion within your editor.
  *
  * @remarks
  *
- * The options are passed to the {@link suggest} method which uses them.
- *
- * @typeParam Command - the command method a {@link Suggester} makes available
- * to its handlers.
+ * The options are passed to the [[`suggest`]] method which uses them.
  */
-export interface Suggester<Command extends AnyFunction<void> = AnyFunction<void>> {
+export interface Suggester<Schema extends EditorSchema = EditorSchema> {
   /**
    * The activation character(s) to match against.
    *
@@ -31,8 +19,18 @@ export interface Suggester<Command extends AnyFunction<void> = AnyFunction<void>
    * The character does not have to be unique amongst the suggesters and the
    * eventually matched suggester will depend on the order in which the
    * suggesters are added to the plugin.
+   *
+   * Please note that when this is a plain string, it is assumed to be a plain
+   * string. Which means that it will be matched as it is and **not** as a
+   * string representation of `RegExp`.
+   *
+   * It can also be regex, but the regex support has a few caveats.
+   *
+   * - All flags specified will be ignored.
+   * - Avoid using `^` to denote the start of line since that can conflict with
+   *   the [[`Suggester.startOfLine`]] value and cause an invalid regex.
    */
-  char: string;
+  char: RegExp | string;
 
   /**
    * A unique identifier for the suggester.
@@ -40,23 +38,47 @@ export interface Suggester<Command extends AnyFunction<void> = AnyFunction<void>
    * @remarks
    *
    * This should be globally unique amongst all suggesters registered with this
-   * plugin. The plugin will through an error if duplicates names are found.
+   * plugin. The plugin will throw an error if duplicates names are used.
    *
-   * Typically this value will be appended to classes.
+   * Typically this value will be appended to classes to uniquely identify them
+   * amongst the suggesters and even in your own nodes and mark.
    */
   name: string;
 
   /**
-   * Whether to only match from the start of the line
+   * Called whenever a suggester becomes active or changes in any way.
    *
-   * @defaultValue `false`
+   * @remarks
+   *
+   * It receives a parameters object with the `changeReason` or `exitReason` to
+   * let you know whether the change was an exit and what caused the change.
+   */
+  onChange: SuggestChangeHandler<Schema>;
+
+  /**
+   * The priority for this suggester.
+   *
+   * A higher number means that this will be added to the list earlier. If
+   * you're using this within the context of `remirror` you can also use the
+   * `ExtensionPriority` from the `remirror/core` library.
+   *
+   * @default 50
+   */
+  priority?: number;
+
+  /**
+   * When set to true, matches will only be recognised at the start of a new
+   * line.
+   *
+   * @default false
    */
   startOfLine?: boolean;
 
   /**
-   * A regex containing all supported characters when within an active suggester.
+   * A regex containing all supported characters when within an active
+   * suggester.
    *
-   * @defaultValue `/[\w\d_]+/`
+   * @default /[\w\d_]+/
    */
   supportedCharacters?: RegExp | string;
 
@@ -68,8 +90,8 @@ export interface Suggester<Command extends AnyFunction<void> = AnyFunction<void>
    * This will be used when {@link Suggester.invalidPrefixCharacters} is not
    * provided.
    *
-   * @defaultValue `/^[\s\0]?$/` - translation: only space and zero width
-   * characters allowed.
+   * @default /^[\s\0]?$/ - translation: only space and zero width characters
+   * allowed.
    */
   validPrefixCharacters?: RegExp | string;
 
@@ -81,9 +103,9 @@ export interface Suggester<Command extends AnyFunction<void> = AnyFunction<void>
    * This has preference over the `validPrefixCharacters` option and when it is
    * defined only it will be looked at in determining whether a prefix is valid.
    *
-   * @defaultValue ''
+   * @default ''
    */
-  invalidPrefixCharacters?: RegExp | string;
+  invalidPrefixCharacters?: RegExp | string | null;
 
   /**
    * Sets the characters that need to be present after the initial character
@@ -98,132 +120,233 @@ export interface Suggester<Command extends AnyFunction<void> = AnyFunction<void>
    * - `matchOffset: 2` matches `'@ab'` but not `'@a'` or `'@'`
    * - `matchOffset: 3` matches `'@abc'` but not `'@ab'` or `'@a'` or `'@'`
    * - And so on...
+   *
+   * @default 0
    */
   matchOffset?: number;
 
   /**
-   * Text to append after the suggestion has been added.
-   *
-   * @defaultValue ''
-   */
-  appendText?: string;
-
-  /**
    * Class name to use for the decoration while the suggester is active.
    *
-   * @defaultValue 'suggest'
+   * @default 'suggest'
    */
   suggestClassName?: string;
 
   /**
    * Tag for the prosemirror decoration which wraps an active match.
    *
-   * @defaultValue 'span'
+   * @default 'span'
    */
   suggestTag?: string;
 
   /**
    * Set a class for the ignored suggester decoration.
    *
-   * @defaultValue ''
+   * @default null
    */
-  ignoredClassName?: string;
+  ignoredClassName?: string | null;
 
   /**
    * Set a tag for the ignored suggester decoration.
    *
-   * @defaultValue 'span'
+   * @default 'span'
    */
   ignoredTag?: string;
 
   /**
    * When true, decorations are not created when this mention is being edited.
    */
-  noDecorations?: boolean;
+  disableDecorations?: boolean;
 
   /**
-   * Called whenever a suggester becomes active or changes in any way.
+   * A list of node names which will be marked as invalid.
    *
-   * @remarks
-   *
-   * It receives a parameters object with the `reason` for the change for more
-   * granular control.
-   *
-   * @defaultValue `() => void`
+   * @default []
    */
-  onChange?: SuggestChangeHandlerMethod<Command>;
+  invalidNodes?: string[];
 
   /**
-   * Called whenever a suggester is exited with the pre-exit match value.
+   * A list of node names which will be marked as invalid. This takes priority
+   * over `invalidNodes` if both properties are present.
    *
-   * @remarks
+   * Setting this to an empty array would mean that this [[`Suggester`]] can
+   * never match.
    *
-   * Can be used to force the command to run the command e.g. when no match was
-   * found but a tag should still be created. To accomplish this you would call
-   * the `command` parameter and trigger whatever action is felt required.
-   *
-   * @defaultValue `() => void`
+   * @default null
    */
-  onExit?: SuggestExitHandlerMethod<Command>;
+  validNodes?: string[] | null;
 
   /**
-   * Called for each character entry and can be used to disable certain
-   * characters.
+   * A list of node names which will be marked as invalid.
    *
-   * @remarks
-   *
-   * For example you may want to disable all `@` symbols while the suggester is
-   * active. Return `true` to prevent any further character handlers from
-   * running.
-   *
-   * @defaultValue `() => false`
+   * @default []
    */
-  onCharacterEntry?: SuggestCharacterEntryMethod<Command>;
+  invalidMarks?: string[];
 
   /**
-   * An object that describes how certain key bindings should be handled.
+   * A list of node names which will be marked as invalid. This takes priority
+   * over `invalidMarks` if both properties are present.
    *
-   * @remarks
+   * By setting this value to the empty array `[]`, you are telling this
+   * [[`Suggester`]] to never match if any marks are found.
    *
-   * Return `true` to prevent any further prosemirror actions or return `false`
-   * to allow prosemirror to continue.
+   * @default null
    */
-  keyBindings?: SuggestKeyBindingMap<Command> | (() => SuggestKeyBindingMap<Command>);
+  validMarks?: string[] | null;
 
   /**
-   * Create the suggested actions which are made available to the `onExit` and
-   * on`onChange` handlers.
+   * This is run after the `valid` and `invalid` node and mark checks regardless
+   * of their outcomes and only when the current suggester has found a match at
+   * the current position.
    *
-   * @remarks
-   *
-   * Suggested actions are useful for developing plugins and extensions which
-   * provide useful defaults based on changes happening to the suggester.
+   * It is a method of doing more advanced checking of the resolved position.
+   * Perhaps checking the attributes on the marks `resolvedRange.$to.marks`, or
+   * the checking the attributes of the direct parent node
+   * `resolvedRange.$to.parent.attrs` to check if something is missing.
    */
-  createCommand?: (parameter: CreateSuggestCommandParameter) => Command;
+  isValidPosition?: (
+    resolvedRange: ResolvedRangeWithCursor<Schema>,
+    match: SuggestMatch<Schema>,
+  ) => boolean;
 }
 
 /**
- * The parameters needed for the {@link SuggestIgnoreParameter.addIgnored} action
+ * The potential reasons for an exit of a mention.
+ */
+export enum ExitReason {
+  /**
+   * The user has pasted some text with multiple characters or run a command
+   * that adds multiple characters.
+   *
+   * `onExit` should be called but the previous match should be retested as it's
+   * possible that it's been extended.
+   */
+  End = 'exit-end',
+
+  /**
+   * The suggestion has been removed.
+   */
+  Removed = 'delete',
+
+  /**
+   * The user has pasted some text with multiple characters or run a command
+   * that adds multiple characters somewhere within the active suggestion. e.g.
+   * `@abc` -> `@ab123 asdf aiti c`
+   *
+   * `onExit` should be called but the previous match should be retested as it's
+   * possible that it's been extended.
+   */
+  Split = 'exit-split',
+
+  /**
+   * The user has pasted some text with multiple characters or run a command
+   * that adds multiple characters right after the initial multi-character. e.g.
+   * `@abc` -> `@ this is newabc`
+   *
+   * In this case it is best to remove the mention completely.
+   */
+  InvalidSplit = 'invalid-exit-split',
+
+  /**
+   * User has moved out of the suggestion at the end. This can happen via using
+   * arrow keys, but can also be via the suggestion no longer matching as the
+   * user types, a mouse click or custom command. All that has changed is the
+   * cursor position.
+   */
+  MoveEnd = 'move-end',
+
+  /**
+   * User has moved out of the suggestion but from the beginning. This can be
+   * via the arrow keys but can also be via a mouse click or custom command. All
+   * that changed is the cursor position.
+   */
+  MoveStart = 'move-start',
+
+  /**
+   * The user has jumped to another suggestion which occurs afterwards in the
+   * editor. This can be via a click, a keyboard jump or custom commands. In
+   * this case since there is still an active suggestion it will trigger both an
+   * `onExit` and `onChange` call.
+   */
+  JumpForward = 'jump-forward-exit',
+
+  /**
+   * The user has jumped to another suggestion which occurs before the previous
+   * suggestion in the editor. This can happen via a click, a keyboard jump
+   * (END) or a custom command. In this case since there is still an active
+   * suggestion it will trigger both an `onExit` and `onChange` call.
+   */
+  JumpBackward = 'jump-backward-exit',
+
+  /**
+   * The user has selected some text outside the current selection, this can
+   * trigger an exit. This can be from a triple click to select the line or
+   * Ctrl-A to select all.
+   */
+  SelectionOutside = 'selection-outside',
+}
+
+/**
+ * The potential reason for changes
+ */
+export enum ChangeReason {
+  /**
+   * The user has entered or started a new suggestion.
+   */
+  Start = 'start',
+
+  /**
+   * A changed happened to the character. This can be addition, deletion or
+   * replacement.
+   */
+  Text = 'change-character',
+
+  /**
+   * A change happened to the selection status which was not purely a move. The
+   * selection area may have been increased.
+   */
+  SelectionInside = 'selection-inside',
+
+  /**
+   * The cursor was moved.
+   */
+  Move = 'move',
+
+  /**
+   * The user has moved from one suggestion to another suggestion earlier in the
+   * document.
+   */
+  JumpBackward = 'jump-backward-change',
+
+  /**
+   * The user has moved from one suggestion to another suggestion further along
+   * in the document.
+   */
+  JumpForward = 'jump-forward-change',
+}
+
+/**
+ * The parameters needed for the [[`SuggestIgnoreParameter.addIgnored`]] action
  * method available to the suggest plugin handlers.
  *
  * @remarks
  *
  * See:
- * - {@link RemoveIgnoredParameter}
+ * - [[`RemoveIgnoredParameter`]]
  */
 export interface AddIgnoredParameter extends RemoveIgnoredParameter {
   /**
    * When `false` this will ignore the range for all matching suggesters. When
-   * true the ignored suggesters will only be the one provided by the name.
+   * true the ignored suggesters will only be the ones provided by the name.
    */
-  specific?: false;
+  specific?: boolean;
 }
 
 /**
  * The parameters needed for the {@link SuggestIgnoreParameter.removeIgnored}
  * action method available to the suggest plugin handlers.
  */
-export interface RemoveIgnoredParameter extends Pick<Suggester, 'char' | 'name'> {
+export interface RemoveIgnoredParameter extends Pick<Suggester, 'name'> {
   /**
    * The starting point of the match that should be ignored.
    */
@@ -232,7 +355,7 @@ export interface RemoveIgnoredParameter extends Pick<Suggester, 'char' | 'name'>
 
 /**
  * A parameter builder interface describing the ignore methods available to the
- * {@link Suggester} handlers.
+ * [[`Suggester`]] handlers.
  */
 export interface SuggestIgnoreParameter {
   /**
@@ -240,9 +363,9 @@ export interface SuggestIgnoreParameter {
    *
    * @remarks
    *
-   * Until the activation character is deleted no more `onChange` or `onExit`
-   * handlers will be triggered for the matched character. It will be like the
-   * match doesn't exist.
+   * Until the activation character is deleted the `onChange` handler will no
+   * longer be triggered for the matched character. It will be like the match
+   * doesn't exist.
    *
    * By ignoring the activation character the plugin ensures that any further
    * matches from the activation character will be ignored.
@@ -257,7 +380,7 @@ export interface SuggestIgnoreParameter {
    *
    * ```ts
    * const suggester = {
-   *   onExit: ({ addIgnored, range: { from }, suggester: { char, name } }: SuggestExitHandlerParameter) => {
+   *   onChange: ({ addIgnored, range: { from }, suggester: { char, name } }: SuggestExitHandlerParameter) => {
    *     addIgnored({ from, char, name }); // Ignore this suggester
    *   },
    * }
@@ -266,26 +389,29 @@ export interface SuggestIgnoreParameter {
   addIgnored: (parameter: AddIgnoredParameter) => void;
 
   /**
-   * When name is provided remove all ignored decorations which match the named
-   * suggester. Otherwise remove **all** ignored decorations from the document.
+   * When the name is provided remove all ignored decorations which match the
+   * named suggester. Otherwise remove **all** ignored decorations from the
+   * document.
    */
   clearIgnored: (name?: string) => void;
 
   /**
-   * Use this method to skip the next `onExit` callback.
+   * Use this method to skip the next `onChange` when the reason is an exit.
    *
    * @remarks
    *
    * This is useful when you manually call a command which applies the
-   * suggestion outside of the `onExit` callback. When that happens `onExit`
-   * will still be triggered and if you don't have the logic set
-   * up properly it will rerun your exit command. This can lead to mismatched
-   * transaction errors since the `onExit` handler is provided the last active
-   * range and query and these values no longer valid.
+   * suggestion outside of the `onChange` handler. When that happens `onChange`
+   * will still be triggered since the document has now changed. If you don't
+   * have the logic set up properly it may rerun your exit logic. This can lead
+   * to mismatched transaction errors since the `onChange` handler is provided
+   * the last active range and query when the reason is an exit, but these
+   * values are probably no longer valid.
    *
    * This helper method can be applied to make life easier. Call it when running
    * a command in a click handler or key binding and you don't have to worry
-   * about your exit handler being called with a mismatched transaction error.
+   * about your `onChange` handler being called again and leading to a
+   * mismatched transaction error.
    */
   ignoreNextExit: () => void;
 }
@@ -317,36 +443,82 @@ export interface MatchValue {
 }
 
 /**
- * A parameter builder interface describing a `from`/`to`/`end` range.
+ * A range with the cursor attached.
+ *
+ * - `from` - describes the start position of the query, including the
+ *   activation character.
+ * - `to` - describes the end position of the match, so the point at which there
+ *   is no longer an active suggest.
+ * - `cursor` describes the cursor potion within that match.
+ *
+ * Depending on the use case you can decide which is most important in your
+ * application.
+ *
+ * If you want to replace the whole match regardless of cursor position, then
+ * `from` and `to` are all that you need.
+ *
+ * If you want to split the match and only replace up until the cursor while
+ * preserving the remaining part of the match, then you can use `from`, `cursor`
+ * for the initial replacement and then take the value between `cursor` and `to`
+ * and append it in whatever way you feel works.
  */
-export interface FromToEndParameter extends FromToParameter {
+export interface RangeWithCursor {
+  /**
+   * The absolute starting point of the matching string.
+   */
+  from: number;
+
+  /**
+   * The current cursor position, which may not be at the end of the full match.
+   */
+  cursor: number;
+
   /**
    * The absolute end of the matching string.
    */
-  end: number;
+  to: number;
+}
+
+export interface ResolvedRangeWithCursor<Schema extends EditorSchema = EditorSchema> {
+  /**
+   * The absolute starting point of the matching string as a [resolved
+   * position](https://prosemirror.net/docs/ref/#model.Resolved_Positions).
+   */
+  $from: ResolvedPos<Schema>;
+
+  /**
+   * The current cursor position as a [resolved
+   * position](https://prosemirror.net/docs/ref/#model.Resolved_Positions),
+   * which may not be at the end of the full match.
+   */
+  $cursor: ResolvedPos<Schema>;
+
+  /**
+   * The absolute end of the matching string as a [resolved
+   * position](https://prosemirror.net/docs/ref/#model.Resolved_Positions).
+   */
+  $to: ResolvedPos<Schema>;
 }
 
 /**
  * Describes the properties of a match which includes range and the text as well
  * as information of the suggester that created the match.
  *
- * @typeParam Command - the command method a {@link Suggester} makes available
- * to its handlers.
  */
-export interface SuggestStateMatch<Command extends AnyFunction<void> = AnyFunction<void>>
-  extends SuggesterParameter<Command> {
+export interface SuggestMatch<Schema extends EditorSchema = EditorSchema>
+  extends SuggesterParameter<Schema> {
   /**
    * Range of current match; for example `@foo|bar` (where | is the cursor)
    * - `from` is the start (= 0)
    * - `to` is cursor position (= 4)
    * - `end` is the end of the match (= 7)
    */
-  range: FromToEndParameter;
+  range: RangeWithCursor;
 
   /**
    * Current query of match which doesn't include the activation character.
    */
-  queryText: MatchValue;
+  query: MatchValue;
 
   /**
    * Full text of match including the activation character
@@ -356,7 +528,18 @@ export interface SuggestStateMatch<Command extends AnyFunction<void> = AnyFuncti
    * For a `char` of `'@'` and query of `'awesome'` `text.full` would be
    * `'@awesome'`.
    */
-  matchText: MatchValue;
+  text: MatchValue;
+
+  /**
+   * The raw regex match which caused this suggester to be triggered.
+   *
+   * - `rawMatch[0]` is always the full match.
+   * - `rawMatch[1]` is always the matching character (or regex pattern).
+   *
+   * To make use of this you can set the [[`Suggester.supportedCharacters`]]
+   * property to be a regex which included matching capture group segments.
+   */
+  match: RegExpExecArray;
 }
 
 export interface DocChangedParameter {
@@ -374,11 +557,11 @@ export interface DocChangedParameter {
 /**
  * A parameter builder interface describing match found by the suggest plugin.
  */
-export interface SuggestStateMatchParameter {
+export interface SuggestStateMatchParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * The match that will be triggered.
    */
-  match: SuggestStateMatch;
+  match: SuggestMatch<Schema>;
 }
 
 /**
@@ -388,10 +571,10 @@ export interface SuggestStateMatchParameter {
  */
 export interface SuggestMarkParameter {
   /**
-   * When managing suggesters with marks it is possible to remove a mark
-   * without the change reflecting in the prosemirror state. This method should
-   * be used when removing a suggestion if you are using prosemirror `Marks` to
-   * identify the suggestion.
+   * When managing suggesters with marks it is possible to remove a mark without
+   * the change reflecting in the prosemirror state. This method should be used
+   * when removing a suggestion if you are using prosemirror `Marks` to identify
+   * the suggestion.
    *
    * When this method is called, `prosemirror-suggest` will handle the removal
    * of the mark in the next state update (during apply).
@@ -400,206 +583,75 @@ export interface SuggestMarkParameter {
 }
 
 /**
- * The parameters passed into the `createSuggest` suggester property.
- *
- * @remarks
- *
- * See:
- * - {@link ReasonParameter}
- * - {@link @remirror/core-types#EditorViewParameter}
- * - {@link SuggestStateMatchParameter}
- * - {@link SuggestMarkParameter}
- * - {@link SuggestIgnoreParameter}
- */
-export interface CreateSuggestCommandParameter
-  extends Partial<ReasonParameter>,
-    EditorViewParameter,
-    SuggestStateMatchParameter,
-    SuggestMarkParameter,
-    SuggestIgnoreParameter {}
-
-/**
- * Determines whether to replace the full match or the partial match (up to the
- * cursor position).
- */
-export type SuggestReplacementType = 'full' | 'partial';
-
-export interface SuggestCallbackParameter<Command extends AnyFunction<void> = AnyFunction<void>>
-  extends SuggestStateMatch,
-    EditorViewParameter,
-    SuggestCommandParameter<Command>,
-    SuggestIgnoreParameter {}
-
-/**
- * The parameters required by the {@link Suggester.onKeyDown}.
- *
- * @remarks
- *
- * See:
- * - {@link SuggestStateMatch}
- * - {@link @remirror/core-types#EditorViewParameter}
- * - {@link KeyboardEventParameter}
- */
-export interface OnKeyDownParameter
-  extends SuggestStateMatch,
-    EditorViewParameter,
-    KeyboardEventParameter {}
-
-/**
- * A parameter builder interface describing the event which triggers the
- * keyboard event handler.
- */
-export interface KeyboardEventParameter {
-  /**
-   * The keyboard event which triggered the call to the event handler.
-   */
-  event: KeyboardEvent;
-}
-
-/**
  * A parameter builder interface indicating the reason the handler was called.
  *
  * @typeParam Reason - Whether this is change or an exit reason.
  */
-export interface ReasonParameter<Reason = ExitReason | ChangeReason> {
+export interface ReasonParameter {
   /**
-   * The reason this callback was triggered. This can be used to determine the
-   * action to use in your own code.
+   * The reason for the exit. Either this or the change reason must have a
+   * value.
    */
-  reason: Reason;
+  exitReason?: ExitReason;
+
+  /**
+   * The reason for the change. Either this or change reason must have a value..
+   */
+  changeReason?: ChangeReason;
 }
 
 /**
- * The parameters passed to the {@link Suggester.onChange} method.
+ * The parameter passed to the  [[`Suggester.onChange`]] method. It the
+ * properties `changeReason` and `exitReason` which are available depending on
+ * whether this is an exit or change.
  *
- * @typeParam Command - the command method a {@link Suggester} makes available
- * to its handlers.
+ * Exactly **ONE** will always be available. Unfortunately that's quite hard to
+ * model in TypeScript without complicating all dependent types.
  */
-export interface SuggestChangeHandlerParameter<
-  Command extends AnyFunction<void> = AnyFunction<void>
-> extends SuggestCallbackParameter<Command>,
-    ReasonParameter<ChangeReason> {}
-
-export type SuggestChangeHandlerMethod<Command extends AnyFunction<void> = AnyFunction<void>> = (
-  parameter: SuggestChangeHandlerParameter<Command>,
-) => void;
-
-/**
- * The parameters passed to the {@link Suggester.onExit} method.
- *
- * @typeParam Command - the command method a {@link Suggester} makes available
- * to its handlers.
- */
-export interface SuggestExitHandlerParameter<Command extends AnyFunction<void> = AnyFunction<void>>
-  extends SuggestCallbackParameter<Command>,
-    ReasonParameter<ExitReason> {}
-
-export type SuggestExitHandlerMethod<Command extends AnyFunction<void> = AnyFunction<void>> = (
-  parameter: SuggestExitHandlerParameter<Command>,
-) => void;
-
-/**
- * The parameters passed to the {@link Suggester.onCharacterEntry} method.
- *
- * @typeParam Command - the command method a {@link Suggester} makes available
- * to its handlers.
- */
-export interface SuggestCharacterEntryParameter<
-  Command extends AnyFunction<void> = AnyFunction<void>
-> extends SuggestCallbackParameter<Command>,
-    FromToParameter,
-    TextParameter {}
-
-export type SuggestCharacterEntryMethod<Command extends AnyFunction<void> = AnyFunction<void>> = (
-  parameter: SuggestCharacterEntryParameter<Command>,
-) => boolean;
-
-/**
- * The parameters required by the {@link SuggestKeyBinding} method.
- *
- * @remarks
- *
- * See:
- * - {@link SuggestCallbackParameter}
- * - {@link SuggestMarkParameter}
- * - {@link KeyboardEventParameter}
- *
- * @typeParam Command - the command method a {@link Suggester} makes available
- * to its handlers.
- */
-export interface SuggestKeyBindingParameter<Command extends AnyFunction<void> = AnyFunction<void>>
-  extends SuggestCallbackParameter<Command>,
+export interface SuggestChangeHandlerParameter<Schema extends EditorSchema = EditorSchema>
+  extends SuggestMatch<Schema>,
+    EditorViewParameter<Schema>,
+    SuggestIgnoreParameter,
+    ReasonParameter,
     SuggestMarkParameter,
-    KeyboardEventParameter {}
+    Pick<Suggester<Schema>, 'name' | 'char'> {}
 
 /**
- * A method for performing actions when a certain key / pattern is pressed.
- *
- * @remarks
- *
- * Return true to prevent any further bubbling of the key event and to stop
- * other handlers from also processing the event.
- *
- * @typeParam Command - the command method a {@link Suggester} makes available
- * to its handlers.
+ * The type signature of the `onChange` handler method.
  */
-export type SuggestKeyBinding<Command extends AnyFunction<void> = AnyFunction<void>> = (
-  parameter: SuggestKeyBindingParameter<Command>,
-) => boolean | void;
+export type SuggestChangeHandler<Schema extends EditorSchema = EditorSchema> = (
+  parameter: SuggestChangeHandlerParameter<Schema>,
+) => void;
 
-/**
- * The keybindings shape for the {@link Suggester.keyBindings} property.
- *
- * @typeParam Command - the command method a {@link Suggester} makes available
- * to its handlers.
- */
-export type SuggestKeyBindingMap<Command extends AnyFunction<void> = AnyFunction<void>> = Partial<
-  Record<
-    'Enter' | 'ArrowDown' | 'ArrowUp' | 'ArrowLeft' | 'ArrowRight' | 'Esc' | 'Delete' | 'Backspace',
-    SuggestKeyBinding<Command>
-  >
-> &
-  Record<string, SuggestKeyBinding<Command>>;
-
-/**
- * A parameter builder interface which adds the command property.
- *
- * @typeParam Command - the command method a {@link Suggester} makes available
- * to its handlers.
- */
-export interface SuggestCommandParameter<Command extends AnyFunction<void> = AnyFunction<void>> {
-  /**
-   * A command which automatically applies the provided attributes to the
-   * command.
-   */
-  command: Command;
-}
-
-export interface SuggesterParameter<Command extends AnyFunction<void> = AnyFunction<void>> {
+export interface SuggesterParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * The suggester to use for finding matches.
    */
-  suggester: Required<Suggester<Command>>;
+  suggester: Required<Suggester<Schema>>;
 }
 
-export interface SuggestStateMatchReason<Reason>
-  extends SuggestStateMatch,
-    ReasonParameter<Reason> {}
+/**
+ * The matching suggester along with the reason, whether it is a `changeReason`
+ * or an `exitReason`.
+ */
+export interface SuggestMatchWithReason<Schema extends EditorSchema = EditorSchema>
+  extends SuggestMatch<Schema>,
+    ReasonParameter {}
 
 /**
  * A mapping of the handler matches with their reasons for occurring within the
  * suggest state.
  */
-export interface SuggestReasonMap {
+export interface SuggestReasonMap<Schema extends EditorSchema = EditorSchema> {
   /**
-   * Reasons triggering the onChange handler.
+   * Change reasons for triggering the change handler.
    */
-  change?: SuggestStateMatchReason<ChangeReason>;
+  change?: SuggestMatchWithReason<Schema>;
 
   /**
-   * Reasons triggering the `onExit` handler
+   * Exit reasons for triggering the change handler.
    */
-  exit?: SuggestStateMatchReason<ExitReason>;
+  exit?: SuggestMatchWithReason<Schema>;
 }
 
 /**
@@ -611,11 +663,11 @@ export interface SuggestReasonMap {
  *
  * @typeParam Reason - Whether this is change or an exit reason.
  */
-export interface ReasonMatchParameter<Reason> {
+export interface ReasonMatchParameter {
   /**
    * The match with its reason property.
    */
-  match: SuggestStateMatchReason<Reason>;
+  match: SuggestMatchWithReason;
 }
 
 /**
@@ -627,14 +679,118 @@ export interface ReasonMatchParameter<Reason> {
  * occurred (i.e. change or exit see {@link SuggestReasonMap}) and the reason
  * for that that change. See {@link ExitReason} {@link ChangeReason}
  */
-export interface CompareMatchParameter {
+export interface CompareMatchParameter<Schema extends EditorSchema = EditorSchema> {
   /**
    * The initial match
    */
-  prev: SuggestStateMatch;
+  prev: SuggestMatch<Schema>;
 
   /**
    * The current match
    */
-  next: SuggestStateMatch;
+  next: SuggestMatch<Schema>;
+}
+
+/**
+ * Keeps the partial properties of a type unchanged. Transforms the rest to
+ * `never`.
+ */
+type KeepPartialProperties<Type extends object> = {
+  [Key in keyof Type]: Type[Key] extends undefined ? Type[Key] : never;
+};
+
+/**
+ * Pick the `partial` properties from the provided Type and make them all
+ * required.
+ */
+export type PickPartial<Type extends object> = {
+  [Key in keyof import('type-fest').ConditionalExcept<
+    KeepPartialProperties<Type>,
+    never
+  >]-?: Type[Key];
+};
+
+/**
+ * Makes specified keys of an interface optional while the rest stay the same.
+ */
+export type MakeOptional<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> &
+  { [Key in Keys]+?: Type[Key] };
+
+export type EditorSchema = import('prosemirror-model').Schema<string, string>;
+
+export type Transaction<
+  Schema extends EditorSchema = EditorSchema
+> = import('prosemirror-state').Transaction<Schema>;
+
+/**
+ * A parameter builder interface containing the `tr` property.
+ *
+ * @typeParam Schema - the underlying editor schema.
+ */
+export interface TransactionParameter<Schema extends EditorSchema = EditorSchema> {
+  /**
+   * The prosemirror transaction
+   */
+  tr: Transaction<Schema>;
+}
+
+export type EditorState<
+  Schema extends EditorSchema = EditorSchema
+> = import('prosemirror-state').EditorState<Schema>;
+
+/**
+ * A parameter builder interface containing the `state` property.
+ *
+ * @typeParam Schema - the underlying editor schema.
+ */
+export interface EditorStateParameter<Schema extends EditorSchema = EditorSchema> {
+  /**
+   * A snapshot of the prosemirror editor state.
+   */
+  state: EditorState<Schema>;
+}
+
+export type ResolvedPos<
+  Schema extends EditorSchema = EditorSchema
+> = import('prosemirror-model').ResolvedPos<Schema>;
+
+/**
+ * @typeParam Schema - the underlying editor schema.
+ */
+export interface ResolvedPosParameter<Schema extends EditorSchema = EditorSchema> {
+  /**
+   * A prosemirror resolved pos with provides helpful context methods when
+   * working with a position in the editor.
+   */
+  $pos: ResolvedPos<Schema>;
+}
+
+export interface TextParameter {
+  /**
+   * The text to insert or work with.
+   */
+  text: string;
+}
+
+export type EditorView<
+  Schema extends EditorSchema = EditorSchema
+> = import('prosemirror-view').EditorView<Schema>;
+
+/**
+ * A parameter builder interface containing the `view` property.
+ *
+ * @typeParam Schema - the underlying editor schema.
+ */
+export interface EditorViewParameter<Schema extends EditorSchema = EditorSchema> {
+  /**
+   * An instance of the ProseMirror editor `view`.
+   */
+  view: EditorView<Schema>;
+}
+
+export interface SelectionParameter<Schema extends EditorSchema = EditorSchema> {
+  /**
+   * The text editor selection
+   */
+  selection: import('prosemirror-state').Selection<Schema>;
 }

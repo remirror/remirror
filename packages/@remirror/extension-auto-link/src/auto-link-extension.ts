@@ -221,15 +221,15 @@ export interface AutoLinkOptions {
    * the URL part of the string as it's first match. Take a look at the default
    * value.
    *
-   * @defaultValue
-   * `/((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/.*)?)/gi`
+   * @default
+   * /((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/.*)?)/gi
    */
   urlRegex?: Static<RegExp>;
 
   /**
    * This handler is called every time the matched urls are updated.
    *
-   * @defaultValue ''
+   * @default ''
    */
   onUrlUpdate?: Handler<(parameter: UrlUpdateHandlerParameter) => void>;
 

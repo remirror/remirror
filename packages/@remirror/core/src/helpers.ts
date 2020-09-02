@@ -79,7 +79,7 @@ export interface IsNameUniqueParameter {
   /**
    * The error code to use
    *
-   * @defaultValue 'extension'
+   * @default 'extension'
    */
   code: ErrorConstant.DUPLICATE_HELPER_NAMES | ErrorConstant.DUPLICATE_COMMAND_NAMES;
 }

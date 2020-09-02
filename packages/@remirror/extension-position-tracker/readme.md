@@ -34,9 +34,3 @@ import { PositionTrackerExtension } from '@remirror/extension-position-tracker';
 
 const extension = new PositionTrackerExtension();
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

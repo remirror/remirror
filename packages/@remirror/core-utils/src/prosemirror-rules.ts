@@ -5,6 +5,7 @@ import type {
   MarkTypeParameter,
   NodeTypeParameter,
   ProsemirrorNode,
+  ProsemirrorPlugin,
   RegExpParameter,
   TransactionParameter,
 } from '@remirror/core-types';
@@ -95,7 +96,7 @@ interface MarkInputRuleParameter
    * This helps stop situations from occurring where the a capture group matches
    * but you don't want an update if it's all whitespace.
    *
-   * @defaultValue `false`
+   * @default false
    */
   ignoreWhitespace?: boolean;
 
@@ -132,7 +133,7 @@ interface MarkInputRuleParameter
  * - Support for node paste rules
  * - Support for pasting different kinds of content.
  */
-export function markPasteRule(parameter: MarkInputRuleParameter) {
+export function markPasteRule(parameter: MarkInputRuleParameter): ProsemirrorPlugin {
   const { regexp, type, getAttributes } = parameter;
   const handler = (fragment: Fragment) => {
     const nodes: ProsemirrorNode[] = [];
@@ -182,7 +183,7 @@ export function markPasteRule(parameter: MarkInputRuleParameter) {
 /**
  * Creates an input rule based on the provided regex for the provided mark type.
  */
-export function markInputRule(parameter: MarkInputRuleParameter) {
+export function markInputRule(parameter: MarkInputRuleParameter): InputRule {
   const {
     regexp,
     type,
@@ -257,7 +258,7 @@ export function markInputRule(parameter: MarkInputRuleParameter) {
  * Input rules transform content as the user types based on whether a match is
  * found with a sequence of characters.
  */
-export function nodeInputRule(parameter: NodeInputRuleParameter) {
+export function nodeInputRule(parameter: NodeInputRuleParameter): InputRule {
   const { regexp, type, getAttributes, beforeDispatch } = parameter;
 
   return new InputRule(regexp, (state, match, start, end) => {
@@ -276,7 +277,7 @@ export function nodeInputRule(parameter: NodeInputRuleParameter) {
  * Creates a plain rule based on the provided regex. You can see this being used
  * in the `@remirror/extension-emoji` when it is setup to use plain text.
  */
-export function plainInputRule(parameter: PlainInputRuleParameter) {
+export function plainInputRule(parameter: PlainInputRuleParameter): InputRule {
   const { regexp, transformMatch, beforeDispatch } = parameter;
 
   return new InputRule(regexp, (state, match, start, end) => {

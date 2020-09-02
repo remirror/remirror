@@ -9,7 +9,6 @@ import type {
   EditorSchema,
   EditorState,
   EditorView,
-  Mark,
   ProsemirrorNode,
   Selection,
   Transaction,
@@ -19,6 +18,8 @@ import type {
   EditorStateParameter,
   EditorViewParameter,
   FromToParameter,
+  MarkWithAttributes,
+  NodeWithAttributes,
   TransactionParameter,
 } from './parameter-builders';
 
@@ -42,7 +43,7 @@ export interface StateJSON {
   selection: FromToParameter;
 }
 
-type GetAttributesFunction = (p: string[] | string) => ProsemirrorAttributes | undefined;
+type GetAttributesFunction = (p: string[]) => ProsemirrorAttributes | undefined;
 
 /**
  * A function which takes a regex match array (strings) or a single string match
@@ -219,10 +220,13 @@ export type KeyBindingCommandFunction<Schema extends EditorSchema = EditorSchema
  * proceeding (lower priority) extension. The act of calling the `next` method
  * will prevent the default flow from executing.
  */
-export type KeyBindings<Schema extends EditorSchema = EditorSchema> = Record<
-  string,
-  KeyBindingCommandFunction<Schema>
->;
+export type KeyBindings<Schema extends EditorSchema = EditorSchema> = Partial<
+  Record<
+    'Enter' | 'ArrowDown' | 'ArrowUp' | 'ArrowLeft' | 'ArrowRight' | 'Esc' | 'Delete' | 'Backspace',
+    KeyBindingCommandFunction<Schema>
+  >
+> &
+  Record<string, KeyBindingCommandFunction<Schema>>;
 
 export type ProsemirrorKeyBindings<Schema extends EditorSchema = EditorSchema> = Record<
   string,
@@ -230,10 +234,10 @@ export type ProsemirrorKeyBindings<Schema extends EditorSchema = EditorSchema> =
 >;
 
 export interface DOMCompatibleAttributes {
-  [attribute: string]: string;
+  [attribute: string]: string | number | undefined;
 }
 
-type DOMOutputSpecPos1 = DOMOutputSpecPosX | { [attr: string]: string };
+type DOMOutputSpecPos1 = DOMOutputSpecPosX | DOMCompatibleAttributes;
 type DOMOutputSpecPosX = string | 0 | [string, 0] | [string, DOMCompatibleAttributes, 0];
 
 /**
@@ -286,14 +290,13 @@ export interface NodeExtensionSpec
   > {
   /**
    * Defines the default way a node of this type should be serialized to
-   * DOM/HTML (as used by
-   * [`DOMSerializer.fromSchema`](#model.DOMSerializer^fromSchema)).
+   * DOM/HTML (as used by [[`DOMSerializer.fromSchema`]].
    *
-   * Should return a {@link DOMOutputSpec} that describes a DOM node, with an
+   * Should return a [[`DOMOutputSpec`]] that describes a DOM node, with an
    * optional number zero (“hole”) in it to indicate where the node's content
    * should be inserted.
    */
-  toDOM?: (node: ProsemirrorNode) => DOMOutputSpec;
+  toDOM?: (node: NodeWithAttributes) => DOMOutputSpec;
 }
 
 /**
@@ -305,7 +308,7 @@ export interface MarkExtensionSpec
    * Defines the default way marks of this type should be serialized to
    * DOM/HTML.
    */
-  toDOM?: (mark: Mark, inline: boolean) => DOMOutputSpec;
+  toDOM?: (mark: MarkWithAttributes, inline: boolean) => DOMOutputSpec;
 }
 
 /**

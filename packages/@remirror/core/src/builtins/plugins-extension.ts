@@ -30,23 +30,46 @@ export class PluginsExtension extends PlainExtension {
    */
   #plugins: ProsemirrorPlugin[] = [];
 
+  /**
+   * The plugins added via the manager (for reference only).
+   */
+  #managerPlugins: ProsemirrorPlugin[] = [];
+
+  /**
+   * Store the plugin keys.
+   */
   private readonly pluginKeys: Record<string, PluginKey> = object();
 
+  /**
+   * Store state getters for the extension.
+   */
   private readonly stateGetters = new Map<
     string | AnyExtensionConstructor,
     <State = unknown>() => State
   >();
 
-  // Here set the plugins keys and state getters for retrieving plugin state.
-  // These methods are later used.
+  /**
+   * This extension is responsible for adding state to the editor.
+   */
   onCreate(): void {
     const { setStoreKey, setExtensionStore } = this.store;
     this.updateExtensionStore();
+
+    // Retrieve the plugins passed in when creating the manager.
+    const { plugins = [] } = this.store.managerSettings;
+
+    // Add the plugins which were added directly to the manager.
+    this.addOrReplacePlugins(plugins, this.#managerPlugins);
 
     for (const extension of this.store.extensions) {
       this.extractExtensionPlugins(extension);
     }
 
+    // Store the added plugins for future usage.
+    this.#managerPlugins = plugins;
+
+    // Here set the plugins keys and state getters for retrieving plugin state.
+    // These methods are later used.
     setStoreKey('pluginKeys', this.pluginKeys);
     setStoreKey('getPluginState', this.getStateByName);
     setExtensionStore('getPluginState', this.getStateByName);
@@ -224,6 +247,18 @@ export class PluginsExtension extends PlainExtension {
 
 declare global {
   namespace Remirror {
+    interface ManagerSettings {
+      /**
+       * Add custom plugins to the manager while creating it.
+       *
+       * Plugins created via the manager are given priority over all extension
+       * based plugins. There's scope for adding a priority based model for
+       * inserting plugins, but it seems like a sane default until that's
+       * available.
+       */
+      plugins?: ProsemirrorPlugin[];
+    }
+
     interface ExtensionStore {
       /**
        * Retrieve the state for any given extension name. This will throw an
@@ -317,7 +352,7 @@ declare global {
       /**
        * Whether to exclude the extension's plugin
        *
-       * @defaultValue `undefined`
+       * @default undefined
        */
       plugins?: boolean;
     }

@@ -26,14 +26,14 @@ export interface BidiOptions {
   /**
    * Whether or not the extension should automatically infer the direction as you type.
    *
-   * @defaultValue `true`
+   * @default true
    */
   autoUpdate?: boolean;
 
   /**
    * The names of the nodes to exclude.
    *
-   * @defaultValue `[]`
+   * @default []
    */
   excludeNodes?: Static<readonly string[]>;
 }

@@ -1,6 +1,6 @@
 import { ErrorConstant, ExtensionPriority } from '@remirror/core-constants';
 import { entries, invariant, object } from '@remirror/core-helpers';
-import type { AnyFunction, EmptyShape, ProsemirrorAttributes } from '@remirror/core-types';
+import type { AnyFunction, EmptyShape, ProsemirrorAttributes, Value } from '@remirror/core-types';
 import { isMarkActive, isNodeActive } from '@remirror/core-utils';
 
 import { extensionDecorator } from '../decorators';
@@ -38,7 +38,7 @@ export class HelpersExtension extends PlainExtension {
    * Provide a method with access to the helpers for use in commands and
    * helpers.
    */
-  onCreate() {
+  onCreate(): void {
     this.store.setExtensionStore('getHelpers', () => {
       const helpers = this.store.getStoreKey('helpers');
       invariant(helpers, { code: ErrorConstant.HELPERS_CALLED_IN_OUTER_SCOPE });
@@ -51,7 +51,7 @@ export class HelpersExtension extends PlainExtension {
    * Helpers are only available once the view has been added to
    * `RemirrorManager`.
    */
-  onView() {
+  onView(): void {
     const helpers: Record<string, AnyFunction> = object();
     const active: Record<string, AnyFunction> = object();
     const names = new Set<string>();
@@ -96,7 +96,7 @@ declare global {
       /**
        * The helpers provided by the extensions used.
        */
-      helpers: HelpersFromCombined<Combined>;
+      helpers: HelpersFromCombined<Combined | Value<BuiltinHelpers>>;
 
       /**
        * Check which nodes and marks are active under the current user
@@ -169,8 +169,21 @@ declare global {
        * Each extension can register its own helpers.
        */
       getHelpers: <ExtensionUnion extends AnyExtension = AnyExtension>() => HelpersFromExtensions<
-        ExtensionUnion | HelpersExtension
+        Value<BuiltinHelpers> | ExtensionUnion
       >;
+    }
+
+    /**
+     * This interface is used to automatically add helpers to the available
+     * defaults. By extending this extension in the global `Remirror` namespace
+     * the key is ignored but the value is used to form the union type in the
+     * `getChain` and `getCommands` methods.
+     *
+     * This is useful for extensions being able to reuse the work of other
+     * extension.
+     */
+    interface BuiltinHelpers {
+      helpers: HelpersExtension;
     }
   }
 }

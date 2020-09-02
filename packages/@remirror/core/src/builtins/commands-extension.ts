@@ -7,9 +7,12 @@ import type {
   EditorSchema,
   EmptyShape,
   FromToParameter,
+  PrimitiveSelection,
   ProsemirrorAttributes,
   Transaction,
+  Value,
 } from '@remirror/core-types';
+import { getTextSelection } from '@remirror/core-utils';
 import { TextSelection } from '@remirror/pm/state';
 import type { EditorView } from '@remirror/pm/view';
 
@@ -49,35 +52,55 @@ export class CommandsExtension extends PlainExtension {
 
   /**
    * The current transaction which allows for making commands chainable.
+   *
+   * It is shared by all the commands helpers and even used in the
+   * [[`KeymapExtension`]].
    */
   get transaction(): Transaction {
+    // Make sure we have the most up to date state.
     const state = this.store.getState();
 
     if (!this.#transaction) {
+      // Since there is currently no transaction set, make sure to create a new
+      // one. Behind the scenes `state.tr` creates a new transaction for us to
+      // use.
       this.#transaction = state.tr;
     }
 
+    // Check that the current transaction is valid.
     const isValid = this.#transaction.before.eq(state.doc);
+
+    // Check whether the current transaction has any already applied to it.
     const hasSteps = !isEmptyArray(this.#transaction.steps);
 
     if (!isValid) {
+      // Since the transaction is not valid we create a new one to prevent any
+      // `mismatched` transaction errors.
       const tr = state.tr;
 
+      // Now checking if any steps had been added to the previous transaction
+      // and adding them to the newly created transaction.
       if (hasSteps) {
         for (const step of this.#transaction.steps) {
           tr.step(step);
         }
       }
 
+      // Make sure to store the transaction value to the instance of this
+      // extension.
       this.#transaction = tr;
     }
 
     return this.#transaction;
   }
 
+  /**
+   * This is the holder for the shared transaction which is shared by commands
+   * in order to support chaining.
+   */
   #transaction?: Transaction;
 
-  onCreate() {
+  onCreate(): void {
     const { setExtensionStore, setStoreKey } = this.store;
 
     // Add the commands to the extension store
@@ -92,40 +115,22 @@ export class CommandsExtension extends PlainExtension {
     setExtensionStore('getTransaction', () => this.transaction);
   }
 
-  onView(view: EditorView<EditorSchema>) {
+  onView(view: EditorView<EditorSchema>): void {
+    const { setStoreKey } = this.store;
     const commands: Record<string, CommandShape> = object();
     const names = new Set<string>();
     const chained: Record<string, any> & ChainedCommandRunParameter = object();
-    const unchained: Record<
-      string,
-      { command: AnyFunction; isEnabled: AnyFunction; name: string }
-    > = object();
+    const unchained: Record<string, { command: AnyFunction; isEnabled: AnyFunction }> = object();
 
     for (const extension of this.store.extensions) {
+      // There's no need to continue if the extension has no commands.
       if (!extension.createCommands) {
         continue;
       }
 
-      const extensionCommands = extension.createCommands();
-
-      for (const [name, command] of entries(extensionCommands)) {
-        throwIfNameNotUnique({ name, set: names, code: ErrorConstant.DUPLICATE_COMMAND_NAMES });
-        invariant(!forbiddenNames.has(name), {
-          code: ErrorConstant.DUPLICATE_COMMAND_NAMES,
-          message: 'The command name you chose is forbidden.',
-        });
-
-        unchained[name] = {
-          name: extension.name,
-          command: this.unchainedFactory({ command }),
-          isEnabled: this.unchainedFactory({ command, shouldDispatch: false }),
-        };
-
-        chained[name] = this.chainedFactory({ command, chained });
-      }
+      // Gather the returned commands object from the extension.
+      this.addCommands({ names, chained, unchained, commands: extension.createCommands() });
     }
-
-    const { setStoreKey } = this.store;
 
     for (const [commandName, { command, isEnabled }] of entries(unchained)) {
       commands[commandName] = command as CommandShape;
@@ -141,7 +146,7 @@ export class CommandsExtension extends PlainExtension {
   /**
    * Update the cached transaction whenever the state is updated.
    */
-  onStateUpdate({ state }: StateUpdateLifecycleParameter) {
+  onStateUpdate({ state }: StateUpdateLifecycleParameter): void {
     this.#transaction = state.tr;
   }
 
@@ -150,6 +155,17 @@ export class CommandsExtension extends PlainExtension {
    */
   createCommands() {
     return {
+      /**
+       * Enable custom commands to be used within the editor by users.
+       *
+       * This is preferred to the initial idea of setting commands on the
+       * manager or even as a prop. The problem is that there's no typechecking
+       * and it should be just fine to add your custom commands here to see the
+       * dispatched immediately.
+       */
+      customDispatch(command: CommandFunction): CommandFunction {
+        return command;
+      },
       /**
        * Create a custom transaction.
        *
@@ -185,6 +201,19 @@ export class CommandsExtension extends PlainExtension {
 
           return true;
         };
+      },
+
+      /**
+       * Select the text within the provided range.
+       */
+      selectText: (selection: PrimitiveSelection): CommandFunction => ({ tr, dispatch }) => {
+        const textSelection = getTextSelection(selection, tr.doc);
+
+        // TODO: add some safety checks here. If the selection is out of perhaps
+        // silently fail
+        dispatch?.(tr.setSelection(textSelection));
+
+        return true;
       },
 
       /**
@@ -272,7 +301,7 @@ export class CommandsExtension extends PlainExtension {
   }
 
   /**
-   * This plugin is here only to keep track of the forced updates meta data.
+   * This plugin is here only to keep track of the `forcedUpdates` meta data.
    */
   createPlugin(): CreatePluginReturn {
     return {};
@@ -311,6 +340,31 @@ export class CommandsExtension extends PlainExtension {
   }
 
   /**
+   * Add the commands fro the provided `commands` property to the `chained` and
+   * `unchained` objects.
+   */
+  private addCommands(parameter: AddCommandsParameter) {
+    const { chained, commands, names, unchained } = parameter;
+
+    for (const [name, command] of entries(commands)) {
+      // Command names must be unique so this
+      throwIfNameNotUnique({ name, set: names, code: ErrorConstant.DUPLICATE_COMMAND_NAMES });
+
+      invariant(!forbiddenNames.has(name), {
+        code: ErrorConstant.DUPLICATE_COMMAND_NAMES,
+        message: 'The command name you chose is forbidden.',
+      });
+
+      unchained[name] = {
+        command: this.unchainedFactory({ command }),
+        isEnabled: this.unchainedFactory({ command, shouldDispatch: false }),
+      };
+
+      chained[name] = this.chainedFactory({ command, chained });
+    }
+  }
+
+  /**
    * Create an unchained command method.
    */
   private unchainedFactory(parameter: UnchainedFactoryParameter) {
@@ -330,6 +384,37 @@ export class CommandsExtension extends PlainExtension {
   }
 
   /**
+   * Create a chained command method.
+   */
+  private chainedFactory(parameter: ChainedFactoryParameter) {
+    return (...spread: unknown[]) => {
+      const { chained, command } = parameter;
+      const { view } = this.store;
+      const { state } = view;
+
+      /**
+       * This function is used in place of the `view.dispatch` method which is
+       * passed through to all commands.
+       *
+       * It is responsible for checking that the transaction which was
+       * dispatched is the same as the shared transaction which makes chainable
+       * commands possible.
+       */
+      const dispatch: DispatchFunction = (transaction) => {
+        // Throw an error if the transaction being dispatched is not the same as the currently stored transaction.
+        invariant(transaction === this.transaction, {
+          message:
+            'Chaining currently only supports `CommandFunction` methods which do not use the `state.tr` property. Instead you should use the provided `tr` property.',
+        });
+      };
+
+      command(...spread)({ state, dispatch, view, tr: this.transaction });
+
+      return chained;
+    };
+  }
+
+  /**
    * Get the chainable commands.
    */
   private readonly getChain = <
@@ -342,7 +427,7 @@ export class CommandsExtension extends PlainExtension {
   };
 
   /**
-   * Get the chainable commands.
+   * Get the non-chainable commands.
    */
   private readonly getCommands = <
     ExtensionUnion extends AnyExtension = AnyExtension
@@ -352,29 +437,6 @@ export class CommandsExtension extends PlainExtension {
 
     return commands as CommandsFromExtensions<CommandsExtension | ExtensionUnion>;
   };
-
-  /**
-   * Create a chained command method.
-   */
-  private chainedFactory(parameter: ChainedFactoryParameter) {
-    return (...spread: unknown[]) => {
-      const { chained, command } = parameter;
-      const { view } = this.store;
-      const { state } = view;
-
-      /** Dispatch should do nothing here except check transaction */
-      const dispatch: DispatchFunction = (transaction) => {
-        invariant(transaction === this.transaction, {
-          message:
-            'Chaining currently only supports `CommandFunction` methods which do not use the `state.tr` property. Instead you should use the provided `tr` property.',
-        });
-      };
-
-      command(...spread)({ state, dispatch, view, tr: this.transaction });
-
-      return chained;
-    };
-  }
 }
 
 /**
@@ -382,6 +444,26 @@ export class CommandsExtension extends PlainExtension {
  */
 export type ForcedUpdateMeta = UpdatableViewProps[];
 export type UpdatableViewProps = 'attributes' | 'editable' | 'nodeViews';
+
+interface AddCommandsParameter {
+  /** The currently amassed commands to mutate with new commands. */
+  chained: Record<string, any> & ChainedCommandRunParameter;
+
+  /**
+   * The currently amassed unchained commands to mutate with new commands.
+   */
+  unchained: Record<string, { command: AnyFunction; isEnabled: AnyFunction }>;
+
+  /**
+   * The untransformed commands which need to be added to the extension.
+   */
+  commands: ExtensionCommandReturn;
+
+  /**
+   * The names of the commands amassed. This allows for a uniqueness test.
+   */
+  names: Set<string>;
+}
 
 interface UnchainedFactoryParameter {
   /**
@@ -392,7 +474,7 @@ interface UnchainedFactoryParameter {
   /**
    * When false the dispatch is not provided (making this an `isEnabled` check).
    *
-   * @defaultValue true
+   * @default true
    */
   shouldDispatch?: boolean;
 }
@@ -608,8 +690,21 @@ declare global {
        * ```
        */
       getChain: <ExtensionUnion extends AnyExtension = AnyExtension>() => ChainedFromExtensions<
-        CommandsExtension | ExtensionUnion
+        Value<BuiltinCommands> | ExtensionUnion
       >;
+    }
+
+    /**
+     * This interface is used to automatically add commands to the available
+     * defaults. By extending this extension in the global `Remirror` namespace
+     * the key is ignored but the value is used to form the union type in the
+     * `getChain` and `getCommands` methods.
+     *
+     * This is useful for extensions being able to reuse the work of other
+     * extension.
+     */
+    interface BuiltinCommands {
+      commands: CommandsExtension;
     }
   }
 }

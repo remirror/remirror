@@ -49,9 +49,3 @@ manager.addView(element);
 ```
 
 <br />
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

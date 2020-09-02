@@ -45,9 +45,3 @@ const Editor = () => {
   <SocialEditor i18n={i18n} locale='en' />;
 };
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

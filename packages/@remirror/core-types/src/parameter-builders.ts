@@ -221,24 +221,22 @@ export interface ProsemirrorNodeParameter<Schema extends EditorSchema = EditorSc
   node: ProsemirrorNode<Schema>;
 }
 
-export type NodeWithAttributes<
-  Attributes extends NodeAttributes = NodeAttributes
-> = ProsemirrorNode & {
-  attrs: Attributes;
+export type NodeWithAttributes<Attributes extends object = object> = ProsemirrorNode & {
+  attrs: NodeAttributes<Attributes>;
 };
 
-export interface NodeWithAttributesParameter<Attributes extends NodeAttributes = NodeAttributes> {
+export interface NodeWithAttributesParameter<Attributes extends object = object> {
   /**
    * A prosemirror node with a specific shape for `node.attrs`
    */
   node: NodeWithAttributes<Attributes>;
 }
 
-export type MarkWithAttributes<Attributes extends MarkAttributes = MarkAttributes> = Mark & {
-  attrs: Attributes;
+export type MarkWithAttributes<Attributes extends object = object> = Mark & {
+  attrs: MarkAttributes<Attributes>;
 };
 
-export interface MarkWithAttributesParameter<Attributes extends MarkAttributes = MarkAttributes> {
+export interface MarkWithAttributesParameter<Attributes extends object = object> {
   /**
    * A mark with a specific shape for `node.attrs`
    */

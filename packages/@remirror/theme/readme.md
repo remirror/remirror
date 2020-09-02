@@ -24,9 +24,3 @@ pnpm add @remirror/theme@next
 # npm
 npm install @remirror/theme@next
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

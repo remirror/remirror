@@ -34,7 +34,7 @@ test('`cursorPopupPositioner` can position itself', () => {
           { position: expect.any(Object), element: cursorElement, id: '0' },
         ]);
       })
-      .selectText(1, 5)
+      .selectText({ from: 1, to: 5 })
       .callback(() => {
         expect(cursorMock.onUpdate).toHaveBeenCalledWith([]);
       }),
@@ -66,7 +66,7 @@ test('`centeredSelectionPositioner` can position itself', () => {
       .callback(() => {
         expect(centeredMock.onUpdate).toHaveBeenCalledWith([]);
       })
-      .selectText(1, 5)
+      .selectText({ from: 1, to: 5 })
       .callback(() => {
         expect(centeredMock.onUpdate).toHaveBeenCalledWith([
           { setElement: expect.any(Function), id: '0' },

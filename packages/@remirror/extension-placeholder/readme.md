@@ -34,9 +34,3 @@ import { PlaceholderExtension } from '@remirror/extension-placeholder';
 
 const extension = new PlaceholderExtension();
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

@@ -16,7 +16,7 @@ declare module 'jest-dev-server' {
 
     /**
      * Log server output, useful if server is crashing at start.
-     * @defaultValue `false`
+     * @default false
      * ```js
      * module.exports = {
      *   command: 'npm run start',
@@ -27,8 +27,9 @@ declare module 'jest-dev-server' {
     debug?: boolean;
 
     /**
-     * How many milliseconds to wait for the spawned server to be available before giving up. Defaults to wait-port's default.
-     * @defaultValue 5000
+     * How many milliseconds to wait for the spawned server to be available
+     * before giving up. Defaults to wait-port's default.
+     * @default 5000
      * ```js
      * module.exports = {
      *   command: 'npm run start',
@@ -39,8 +40,9 @@ declare module 'jest-dev-server' {
     launchTimeout?: number;
 
     /**
-     * Host to wait for activity on before considering the server running. Must be used in conjunction with port.
-     * @defaultValue 'localhost'
+     * Host to wait for activity on before considering the server running. Must
+     * be used in conjunction with port.
+     * @default 'localhost'
      *
      * ```js
      * module.exports = {
@@ -53,8 +55,10 @@ declare module 'jest-dev-server' {
     host?: string;
 
     /**
-     * To wait for an HTTP or TCP endpoint before considering the server running, include http or tcp as a protocol. Must be used in conjunction with port.
-     * @defaultValue 'tcp'
+     * To wait for an HTTP or TCP endpoint before considering the server
+     * running, include http or tcp as a protocol. Must be used in conjunction
+     * with port.
+     * @default 'tcp'
      * ```js
      * module.exports = {
      *   command: 'npm run start --port 3000',
@@ -66,8 +70,9 @@ declare module 'jest-dev-server' {
     protocol?: 'https' | 'http' | 'tcp' | 'socket';
 
     /**
-     * Port to wait for activity on before considering the server running. If not provided, the server is assumed to immediately be running.
-     * @defaultValue null
+     * Port to wait for activity on before considering the server running. If
+     * not provided, the server is assumed to immediately be running.
+     * @default null
      *
      * ```js
      * module.exports = {
@@ -80,11 +85,12 @@ declare module 'jest-dev-server' {
 
     /**
      * It defines the action to take if port is already used:
-     * @defaultValue 'ask'
+     * @default 'ask'
      *
      * - ask: a prompt is shown to decide if you want to kill the process or not
      * - error: an errow is thrown
-     * - ignore: your test are executed, we assume that the server is already started
+     * - ignore: your test are executed, we assume that the server is already
+     *   started
      * - kill: the process is automatically killed without a prompt
      *
      * ```js
@@ -97,8 +103,9 @@ declare module 'jest-dev-server' {
     usedPortAction?: 'ask' | 'error' | 'ignore' | 'kill';
 
     /**
-     * jest-dev-server uses the wait-on npm package to wait for resources to become available before calling callback.
-     * @defaultValue `{}`
+     * jest-dev-server uses the wait-on npm package to wait for resources to
+     * become available before calling callback.
+     * @default {}
      *
      * ```js
      * module.exports = {
@@ -135,7 +142,8 @@ declare module 'signal-exit' {
   /**
    * The exit
    * @param code - the exitCode number or null if artificially induced
-   * @param signal - the string signal which triggered the exit or null when artificially triggered
+   * @param signal - the string signal which triggered the exit or null when
+   * artificially triggered
    */
   type ExitListener = (code: number | null, signal: string | null) => void;
 

@@ -15,7 +15,7 @@ export interface TrailingNodeOptions {
    * **Note**: the nodeName will always be added to the ignoredNodes lists to
    * prevent an infinite loop.
    *
-   * @defaultValue 'paragraph'
+   * @default 'paragraph'
    */
   nodeName?: string;
 
@@ -30,7 +30,7 @@ export interface TrailingNodeOptions {
    * means that the only nodes that will be ignored are those passed to the
    * `ignoredNodes` array.
    *
-   * @defaultValue false
+   * @default false
    */
   disableTags?: boolean;
 }

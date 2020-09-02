@@ -42,9 +42,3 @@ Make sure to import the styles as shown below.
 ```ts
 import '@remirror/styles/extension-gap-cursor.css';
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

@@ -652,7 +652,7 @@ export interface ExtensionConstructor<Options extends ValidOptions = EmptyShape>
   /**
    * The default priority level for all instance of this extension.
    *
-   * @defaultValue `ExtensionPriority.Default`
+   * @default ExtensionPriority.Default
    */
   readonly defaultPriority: ExtensionPriority;
 }

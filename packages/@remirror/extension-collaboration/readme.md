@@ -19,9 +19,3 @@ yarn add @remirror/extension-collaboration@next @remirror/pm@next # yarn
 pnpm add @remirror/extension-collaboration@next @remirror/pm@next # pnpm
 npm install @remirror/extension-collaboration@next @remirror/pm@next # npm
 ```
-
-## Credits
-
-This package was bootstrapped with [monots].
-
-[monots]: https://github.com/monots/monots

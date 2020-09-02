@@ -149,7 +149,7 @@ declare global {
       /**
        * Whether to exclude the react components.
        *
-       * @defaultValue `undefined`
+       * @default undefined
        */
       reactComponents?: boolean;
     }
