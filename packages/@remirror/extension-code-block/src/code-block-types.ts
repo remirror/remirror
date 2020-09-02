@@ -102,6 +102,19 @@ export interface CodeBlockOptions {
    * @default 'paragraph'
    */
   toggleName?: string;
+
+  /**
+   * Class to use in decorations of plain `text` nodes.
+   *
+   * @remarks
+   *
+   * refractor highlighting produces `elements` to indicate the type of a part
+   * of the code. These elements get translated into decorations by this plugin.
+   *
+   * For all other parts of the code the decoration will use this class name if
+   * it is set to a non-empty value, otherwise no decoration will be produced.
+   */
+  plainTextClassName?: string;
 }
 
 /**

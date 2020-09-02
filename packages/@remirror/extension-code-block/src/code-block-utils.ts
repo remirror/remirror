@@ -44,16 +44,20 @@ interface PositionedRefractorNode extends FromToParameter, ParsedRefractorNode {
  */
 function parseRefractorNodes(
   refractorNodes: RefractorNode[],
+  plainTextClassName: string | undefined,
   className: string[] = [],
 ): ParsedRefractorNode[][] {
   return refractorNodes.map((node) => {
-    const classes = [
-      ...className,
-      ...(node.type === 'element' && node.properties.className ? node.properties.className : []),
-    ];
+    const classes: string[] = [...className];
+
+    if (node.type === 'element' && node.properties.className) {
+      classes.push(...node.properties.className);
+    } else if (node.type === 'text' && classes.length === 0 && plainTextClassName) {
+      classes.push(plainTextClassName);
+    }
 
     if (node.type === 'element') {
-      return parseRefractorNodes(node.children, classes) as any;
+      return parseRefractorNodes(node.children, plainTextClassName, classes) as any;
     }
 
     return {
@@ -78,22 +82,28 @@ interface CreateDecorationsParameter {
    * decoration for the last refactor node, and hence preventing the jumpy bug.
    */
   skipLast: boolean;
+
+  plainTextClassName: string | undefined;
 }
 
 /**
  * Retrieves positioned refractor nodes from the positionedNode
  *
  * @param nodeWithPosition - a node and position
+ * @param plainTextClassName - a class to assign to text nodes on the top-level
  * @returns the positioned refractor nodes which are text, classes and a FromTo
  * interface
  */
-function getPositionedRefractorNodes(parameter: NodeWithPosition) {
+function getPositionedRefractorNodes(
+  parameter: NodeWithPosition,
+  plainTextClassName: string | undefined,
+) {
   const { node, pos } = parameter;
   const refractorNodes = refractor.highlight(
     node.textContent ?? '',
     node.attrs.language ?? 'markup',
   );
-  const parsedRefractorNodes = parseRefractorNodes(refractorNodes);
+  const parsedRefractorNodes = parseRefractorNodes(refractorNodes, plainTextClassName);
 
   let startPos = pos + 1;
 
@@ -115,22 +125,30 @@ function getPositionedRefractorNodes(parameter: NodeWithPosition) {
  * Creates a decoration set for the provided blocks
  */
 export function createDecorations(parameter: CreateDecorationsParameter): Decoration[] {
-  const { blocks, skipLast } = parameter;
+  const { blocks, skipLast, plainTextClassName } = parameter;
   const decorations: Decoration[] = [];
 
   for (const block of blocks) {
-    const positionedRefractorNodes = getPositionedRefractorNodes(block);
+    const positionedRefractorNodes = getPositionedRefractorNodes(block, plainTextClassName);
     const lastBlockLength = skipLast
       ? positionedRefractorNodes.length - 1
       : positionedRefractorNodes.length;
 
     for (let index = 0; index < lastBlockLength; index++) {
       const positionedRefractorNode = positionedRefractorNodes[index];
+
+      const classes = positionedRefractorNode.classes;
+
+      if (classes.length === 0) {
+        // Do not create a decoration if we cannot assign at least one class
+        continue;
+      }
+
       const decoration = Decoration.inline(
         positionedRefractorNode.from,
         positionedRefractorNode.to,
         {
-          class: positionedRefractorNode.classes.join(' '),
+          class: classes.join(' '),
         },
       );
 

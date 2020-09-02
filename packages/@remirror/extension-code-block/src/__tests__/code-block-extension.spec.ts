@@ -52,6 +52,7 @@ describe('constructor', () => {
 
     expect(codeBlock.options.syntaxTheme).toEqual('a11yDark');
     expect(codeBlock.options.defaultLanguage).toEqual('markup');
+    expect(codeBlock.options.plainTextClassName).toEqual('');
   });
 });
 
@@ -437,5 +438,31 @@ describe('language', () => {
 
   it('handles unknown', () => {
     expect(getLang(`this_language_does_not_exist`)).toEqual('');
+  });
+});
+
+describe('plain text nodes', () => {
+  [
+    {},
+    { plainTextClassName: undefined },
+    { plainTextClassName: '' },
+    { plainTextClassName: 'text' },
+  ].forEach((plainTextClassNameConfiguration) => {
+    it(`renders decorations on plain text based on configuration ${JSON.stringify(
+      plainTextClassNameConfiguration,
+    )}`, () => {
+      const {
+        view: { dom },
+        add,
+        attributeNodes: { codeBlock },
+        nodes: { doc },
+      } = create({ ...plainTextClassNameConfiguration });
+
+      const tsBlock = codeBlock({ language: 'typescript' });
+
+      add(doc(tsBlock(`const a = 'test';`)));
+
+      expect(dom.querySelector('.language-typescript code')!.innerHTML).toMatchSnapshot();
+    });
   });
 });

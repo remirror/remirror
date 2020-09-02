@@ -68,6 +68,7 @@ export class CodeBlockState {
       blocks,
       skipLast: this.#deleted,
       defaultLanguage: this.#extension.options.defaultLanguage,
+      plainTextClassName: this.#extension.options.plainTextClassName ?? undefined,
     });
     this.decorationSet = DecorationSet.create(node, decorations);
     this.#blocks = blocks;
@@ -169,6 +170,7 @@ export class CodeBlockState {
         blocks: [{ node, pos }],
         skipLast: this.#deleted,
         defaultLanguage: this.#extension.options.defaultLanguage,
+        plainTextClassName: this.#extension.options.plainTextClassName ?? undefined,
       }),
     );
   }
