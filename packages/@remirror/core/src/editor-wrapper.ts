@@ -343,7 +343,7 @@ export abstract class EditorWrapper<
     const forcedUpdates = this.manager.store.getForcedUpdates(tr);
 
     if (!isEmptyArray(forcedUpdates)) {
-      this.updateViewProps(...this.manager.store.getForcedUpdates(tr));
+      this.updateViewProps(...forcedUpdates);
     }
   };
 
