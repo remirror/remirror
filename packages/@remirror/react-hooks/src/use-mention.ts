@@ -134,7 +134,7 @@ function useMentionKeyBindings(
 
       const activeIndex = indexFromArrowPress({
         direction,
-        matchLength: items?.length,
+        matchLength: items.length,
         previousIndex: index,
       });
 
@@ -142,7 +142,7 @@ function useMentionKeyBindings(
 
       return true;
     },
-    [items?.length, setState, state],
+    [items, setState, state],
   );
 
   const ArrowUp = useMemo(() => createArrowBinding('up'), [createArrowBinding]);

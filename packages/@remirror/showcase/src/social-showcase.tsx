@@ -53,7 +53,7 @@ export const ExampleSocialEditor: FC<Partial<SocialProviderProps>> = (props) => 
     }
 
     if (mention?.name === 'tag' && mention.query) {
-      return take(matchSorter(fakeTags, mention.query), 6) ?? [];
+      return take(matchSorter(fakeTags, mention.query, { keys: ['tag'] }), 6) ?? [];
     }
 
     return [];
