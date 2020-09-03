@@ -3,14 +3,14 @@
 </p>
 
 <p align="center">
-  A <em>toolkit</em> for building cross-platform text editors
-  <br />in the framework of your choice.
+  A <em>toolkit</em> for building <em>cross-platform</em> text editors
+  <br />in the <em>framework</em> of your choice.
 </p>
 
 <br />
 
 <p align="center">
-  <a href="#why"><strong>Why?</strong></a> ·
+  <a href="#motivation"><strong>Motivation</strong></a> ·
   <a href="#status"><strong>Status</strong></a> ·
   <a href="https://remirror.io/docs"><strong>Documentation</strong></a> ·
   <a href="https://remirror.io/playground"><strong>Playground</strong></a> ·
@@ -53,17 +53,17 @@
 
 <br />
 
-## Why
+## Motivation
 
 `remirror` was started as a personal challenge. Would it be possible to build an editor that combined great performance with ease of use? It was also important to give users of all frameworks, the ability to build an editor by picking and choosing their desired building blocks.
 
 In order to meet these goals, [ProseMirror][prosemirror] was picked as the best choice for the core editor layer. The second decision was to base the structure of the editor on blocks of functionality called `Extensions`. Each extension would be designed to fulfil a specific purpose in the editor. Due to this structure, users would be able to craft a fully custom implementation.
 
-In the `next` version of `remirror`, some of these initial goals are starting to be met. Every single part of the editor is controlled by extensions. For example, the core (`Schema`) is managed by a [built-in extension](https://github.com/remirror/remirror/blob/HEAD/packages/@remirror/core/src/builtins/schema-extension.ts). This means that the editor you chooses to build is completely customizable, while providing sane defaults.
+In the `next` version of `remirror`, some of these initial goals are starting to be met. Every single part of the editor is controlled by extensions. For example, the core (`Schema`) is managed by a [built-in extension](https://github.com/remirror/remirror/blob/HEAD/packages/@remirror/core/src/builtins/schema-extension.ts). This means that the editor you choose to build is completely customizable.
 
-In this version the API has improved a lot. Multi-framework support is now possible. Currently there is support for `React` and the `DOM` with support being added for `Preact` in the next few weeks and `Svelte` after that.
+The API has also improved a lot. Multi-framework support is now possible. Currently there is support for `React` and the `DOM` with support being added for `Preact` in the next few weeks and `Svelte` after that.
 
-There are also a host of drop in components and hooks being built. For example to add a drop down emoji picker to your react editor the following code is all you need.
+There are also a host of drop in components and hooks being developed. For example to add a drop down emoji picker to your react editor the following code is all you need.
 
 ```tsx
 import React from 'react';
@@ -95,7 +95,7 @@ While exploring this project, if you find errors or would like to suggest improv
 - Create a pull request with your proposed improvement by clicking the edit button on the relevant page.
 - Move on, because deadlines are looming and life is too short.
 
-Whatever you decide thanks for giving a chance to the `remirror` project.
+Whatever you decide thanks for taking the time to explore the **remirror** project.
 
 <br />
 
@@ -130,11 +130,7 @@ View our documentation website [**here**][introduction].
 
 ## Getting Started
 
-![A gif showing mentions being suggested as the user types with editing supported](https://media.githubusercontent.com/media/ifiokjr/assets/master/remirror/repo-banner.gif 'A gif showing mentions being suggested as the user types with editing supported').
-
-You can see a guide on how to to add this exact editor to your codebase here.
-
-To add this editor to your codebase, first install the required dependencies. Make sure to include the `@next` distribution tag to ensure you install the correct version.
+To add an editor to your codebase, first install the required dependencies. Make sure to include the `@next` tag so that the correct version is installed.
 
 ```bash
 # yarn
@@ -147,39 +143,52 @@ pnpm add remirror@next @remirror/pm@next
 npm install remirror@next @remirror/pm@next
 ```
 
-`@remirror/pm` is a peer dependency which manages all the ProseMirror packages for you. It means that the conflicts which can sometimes happen between versions are no longer an issue. It's also important because it's quite easy to bundle multiple versions of the same library in your codebase. By
+`@remirror/pm` is a peer dependency which manages all the ProseMirror packages for you. It means that the conflicts which can sometimes happen between versions are no longer an issue. It's also important because it's quite easy to bundle multiple versions of the same library in your codebase.
 
 ## Usage
 
-Once installed you will be able to add the following code which creates an editor with the bold extension active. Clicking the button when text is selected will toggle between bold and not bold.
+Once installed you will be able to add the following code which creates an editor with the bold extension active. Clicking the button when text is selected will toggle between bold.
 
 ```tsx
 import React, { useCallback } from 'react';
 import { BoldExtension } from 'remirror/extension/bold';
-import { RemirrorProvider, useManager, useRemirror, useExtensionCreator } from 'remirror/react';
+import { RemirrorProvider, useManager, useRemirror } from 'remirror/react';
 
-const Editor = () => {
-  const { getRootProps, active, commands } = useRemirror({ autoUpdate: true });
+const Button = () => {
+  // `autoUpdate` means that every editor update will recalculate the output
+  // from `active.bold()` and keep the bold status up to date in the editor.
+  const { active, commands } = useRemirror({ autoUpdate: true });
 
   return (
-    <div>
-      <div {...getRootProps()} />
+    <>
       <button
         onClick={() => commands.toggleBold()}
         style={{ fontWeight: active.bold() ? 'bold' : undefined }}
       >
         Bold
       </button>
-    </div>
+    </>
   );
 };
 
-const EditorWrapper = () => {
-  const manager = useManager([new BoldExtension()]);
+const Editor = () => {
+  // The `getRootProps` adds the ref to the div element below to inject the
+  // ProseMirror dom. You have full control over where it should be placed.
+  // The first call is the one that is used.
+  const { getRootProps } = useRemirror();
 
+  return <div {...getRootProps()} />;
+};
+
+const EditorWrapper = () => {
+  const manager = useManager(() => [new BoldExtension()]);
+
+  // The editor is built up like lego blocks of functionality within the editor
+  // provider.
   return (
     <RemirrorProvider manager={manager}>
       <Editor />
+      <Button />
     </RemirrorProvider>
   );
 };
