@@ -3,6 +3,7 @@ import {
   extensionDecorator,
   ExtensionPriority,
   NodeExtension,
+  NodeExtensionSpec,
   Static,
 } from '@remirror/core';
 
@@ -65,7 +66,10 @@ export class DocExtension extends NodeExtension<DocOptions> {
     return 'doc' as const;
   }
 
-  createNodeSpec(_: ApplySchemaAttributes) {
+  /**
+   * Create the node spec for the `doc` the content that you've provided.
+   */
+  createNodeSpec(_: ApplySchemaAttributes): NodeExtensionSpec {
     return {
       content: this.options.content,
     };

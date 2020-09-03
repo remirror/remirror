@@ -17,7 +17,7 @@
   const EditorWrapper = () => {
     const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {
       // Automatically remove all invalid nodes and marks.
-      return transformer.remove(json, invalidContent);
+      return transformers.remove(json, invalidContent);
     }, []);
 
     const manager = useManager([new WysiwygPreset()]);

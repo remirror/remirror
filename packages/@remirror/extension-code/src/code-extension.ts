@@ -1,5 +1,6 @@
 import {
   ApplySchemaAttributes,
+  CommandFunction,
   extensionDecorator,
   ExtensionTag,
   InputRule,
@@ -14,7 +15,8 @@ import {
 } from '@remirror/core';
 
 /**
- * Add a `code` mark to the editor. This is used to mark inline text as a code snippet.
+ * Add a `code` mark to the editor. This is used to mark inline text as a code
+ * snippet.
  */
 @extensionDecorator({})
 export class CodeExtension extends MarkExtension {
@@ -43,7 +45,7 @@ export class CodeExtension extends MarkExtension {
       /**
        * Toggle the current selection as a code mark.
        */
-      toggleCode: () => toggleMark({ type: this.type }),
+      toggleCode: (): CommandFunction => toggleMark({ type: this.type }),
     };
   }
 
