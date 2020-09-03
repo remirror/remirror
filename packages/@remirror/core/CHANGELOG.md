@@ -1,5 +1,67 @@
 # @remirror/core
 
+## 1.0.0-next.31
+
+> 2020-09-03
+
+### Major Changes
+
+- [`1a7da61a`](https://github.com/remirror/remirror/commit/1a7da61a483358214f8f24e193d837b171dd4e1d) [#608](https://github.com/remirror/remirror/pull/608) Thanks [@ifiokjr](https://github.com/ifiokjr)! - 🚀 Update the `onError` handler with a new improved type signature for better management of errors. See the following example.
+
+  ```tsx
+  import React from 'react';
+  import { RemirrorProvider, InvalidContentHandler } from 'remirror/core';
+  import { RemirrorProvider, useManager } from 'remirror/react';
+  import { WysiwygPreset } from 'remirror/preset/wysiwyg';
+
+  const EditorWrapper = () => {
+    const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {
+      // Automatically remove all invalid nodes and marks.
+      return transformer.remove(json, invalidContent);
+    }, []);
+
+    const manager = useManager([new WysiwygPreset()]);
+
+    return (
+      <RemirrorProvider manager={manager} onError={onError}>
+        <div />
+      </RemirrorProvider>
+    );
+  };
+  ```
+
+  - 🚀 Add `set` and `unset` methods to `@remirror/core-helpers`.
+  - 🚀 Add `getInvalidContent` export from `@remirror/core-utils`.
+  - 🚀 Add logging support for `RemirrorError` for better readability.
+  - 🚀 Add new `ErrorConstant.INVALID_CONTENT` constant for content related errors.
+  - 🚀 Add `Manager.createEmptyDoc()` instance method for creating any empty doc (with default content) for the current schema.
+  - 💥 Remove `Fallback`, `CreateDocumentErrorHandler`, `getLineHeight`, `getPluginMeta`, `getPluginState`, `nodeNameMatchesList` and `setPluginMeta` exports from `@remirror/core-utils`.
+  - 💥 Rename `getNearestNonTextNode` function to `getNearestNonTextElement`.
+  - 💥 Rename `getNearestNonTextNode` function to `getNearestNonTextElement`.
+  - 💥 Rename `StateOrTransactionParameter` interface to `TrStateParameter`.
+
+  General refactor of types to use the `EditorSchema` rather than `any`. If you notice any downstream issues please open an issue.
+
+* [`e8458bc5`](https://github.com/remirror/remirror/commit/e8458bc54402d55355bd5315526fb239bce65ed6) [#623](https://github.com/remirror/remirror/pull/623) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Remove keybindings from `createSuggesters` and update packages to match the new `prosemirror-suggest` API.
+
+### Minor Changes
+
+- [`e8458bc5`](https://github.com/remirror/remirror/commit/e8458bc54402d55355bd5315526fb239bce65ed6) [#623](https://github.com/remirror/remirror/pull/623) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add `selectText` command to `CommandsExtension`. Also add `dispatchCommand` for running custom commands to `CommandsExtension`.
+
+  Fix broken command text selection in `jest-remirror` and improve `jest-remirror` type inference for the `renderEditor().view` property.
+
+* [`e8458bc5`](https://github.com/remirror/remirror/commit/e8458bc54402d55355bd5315526fb239bce65ed6) [#623](https://github.com/remirror/remirror/pull/623) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add support for using a custom schema when creating the editor.
+
+  - Also add support for additional `plugins` and `nodeView`'s via the manager settings.
+
+- [`e8458bc5`](https://github.com/remirror/remirror/commit/e8458bc54402d55355bd5315526fb239bce65ed6) [#623](https://github.com/remirror/remirror/pull/623) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add manager setting `schema` for creating a remirror manager with a custom `EditorSchema`. When provided this is used to bypass the default schema creation. Be aware that when this is used `extraAttributes` will no longer work.
+
+### Patch Changes
+
+- Updated dependencies [[`1a7da61a`](https://github.com/remirror/remirror/commit/1a7da61a483358214f8f24e193d837b171dd4e1d)]:
+  - @remirror/core-helpers@1.0.0-next.31
+  - @remirror/core-utils@1.0.0-next.31
+
 ## 1.0.0-next.29
 
 > 2020-08-28
