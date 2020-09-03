@@ -128,14 +128,16 @@ describe('commands', () => {
     commands.toggleBold();
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-          <p>
-            Hello
-            <strong>
-              friend
-            </strong>
-            , lets dance.
-          </p>
-        `);
+      <p>
+        Hello
+        <strong>
+          <span class="selection">
+            friend
+          </span>
+        </strong>
+        , lets dance.
+      </p>
+    `);
     expect(view.state.doc).toEqualRemirrorDocument(
       doc(p('Hello ', bold('friend'), ', lets dance.')),
     );
@@ -143,10 +145,14 @@ describe('commands', () => {
     commands.toggleBold();
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-          <p>
-            Hello friend, lets dance.
-          </p>
-        `);
+      <p>
+        Hello
+        <span class="selection">
+          friend
+        </span>
+        , lets dance.
+      </p>
+    `);
     expect(view.state.doc).toEqualRemirrorDocument(doc(p('Hello friend, lets dance.')));
   });
 
@@ -155,13 +161,16 @@ describe('commands', () => {
     commands.setBold({ from: 1, to: 6 });
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-        <p>
-          <strong>
-            Hello
-          </strong>
-          friend, lets dance.
-        </p>
-      `);
+      <p>
+        <strong>
+          Hello
+        </strong>
+        <span class="selection">
+          friend
+        </span>
+        , lets dance.
+      </p>
+    `);
     expect(view.state.doc).toEqualRemirrorDocument(doc(p(bold('Hello'), ' friend, lets dance.')));
   });
 

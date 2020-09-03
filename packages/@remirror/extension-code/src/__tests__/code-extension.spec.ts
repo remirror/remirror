@@ -78,23 +78,29 @@ describe('commands', () => {
     commands.toggleCode();
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-          <p>
-            Hello
-            <code>
-              code
-            </code>
-            , lets dance.
-          </p>
-        `);
+      <p>
+        Hello
+        <code>
+          <span class="selection">
+            code
+          </span>
+        </code>
+        , lets dance.
+      </p>
+    `);
     expect(view.state.doc).toEqualRemirrorDocument(doc(p('Hello ', code('code'), ', lets dance.')));
 
     commands.toggleCode();
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-          <p>
-            Hello code, lets dance.
-          </p>
-        `);
+      <p>
+        Hello
+        <span class="selection">
+          code
+        </span>
+        , lets dance.
+      </p>
+    `);
     expect(view.state.doc).toEqualRemirrorDocument(doc(p('Hello code, lets dance.')));
   });
 });

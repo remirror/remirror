@@ -11,12 +11,16 @@ import { InputRulesExtension } from './input-rules-extension';
 import { KeymapExtension, KeymapOptions } from './keymap-extension';
 import { NodeViewExtension } from './node-views-extension';
 import { PasteRulesExtension } from './paste-rules-extension';
+import {
+  PersistentSelectionExtension,
+  PersistentSelectionOptions,
+} from './persistent-selection-extension';
 import { PluginsExtension } from './plugins-extension';
 import { SchemaExtension } from './schema-extension';
 import { SuggestExtension, SuggestOptions } from './suggest-extension';
 import { TagsExtension } from './tags-extension';
 
-export interface BuiltinOptions extends SuggestOptions, KeymapOptions {}
+export interface BuiltinOptions extends SuggestOptions, KeymapOptions, PersistentSelectionOptions {}
 
 /**
  * Provides all the builtin extensions to the editor.
@@ -78,6 +82,7 @@ export class BuiltinPreset extends Preset<BuiltinOptions> {
       'selectParentNodeOnEscape',
       'undoInputRuleOnBackspace',
     ]);
+    const persistentSelectionOptions = pick(this.options, ['persistentSelectionClass']);
 
     return [
       // The order of these extension is important.
@@ -92,6 +97,7 @@ export class BuiltinPreset extends Preset<BuiltinOptions> {
       new CommandsExtension(),
       new HelpersExtension(),
       new KeymapExtension(keymapOptions),
+      new PersistentSelectionExtension(persistentSelectionOptions),
     ];
   }
 }

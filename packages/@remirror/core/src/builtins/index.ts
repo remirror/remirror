@@ -7,6 +7,7 @@ export * from './keymap-extension';
 export * from './node-views-extension';
 export * from './paste-rules-extension';
 export * from './plugins-extension';
+export * from './persistent-selection-extension';
 export * from './schema-extension';
 export * from './suggest-extension';
 export * from './tags-extension';

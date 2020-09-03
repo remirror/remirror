@@ -44,24 +44,30 @@ describe('commands', () => {
     commands.toggleStrike();
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-          <p>
-            Hello
-            <s>
-              strike
-            </s>
-            , lets dance.
-          </p>
-        `);
+      <p>
+        Hello
+        <s>
+          <span class="selection">
+            strike
+          </span>
+        </s>
+        , lets dance.
+      </p>
+    `);
     expect(view.state.doc).toEqualRemirrorDocument(
       doc(p('Hello ', strike('strike'), ', lets dance.')),
     );
 
     commands.toggleStrike();
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-          <p>
-            Hello strike, lets dance.
-          </p>
-        `);
+      <p>
+        Hello
+        <span class="selection">
+          strike
+        </span>
+        , lets dance.
+      </p>
+    `);
     expect(view.state.doc).toEqualRemirrorDocument(doc(p('Hello strike, lets dance.')));
   });
 });
