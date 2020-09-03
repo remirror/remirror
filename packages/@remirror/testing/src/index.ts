@@ -1,3 +1,4 @@
+import createMockRaf from '@react-spring/mock-raf';
 import diff from 'jest-diff';
 
 export const initialJson = {
@@ -41,9 +42,21 @@ export function hideConsoleError(hide: boolean): jest.SpyInstance {
   return spy;
 }
 
+/**
+ * Mock the `requestAnimationFrame`.
+ */
+export function rafMock() {
+  const mockRaf = createMockRaf();
+  const spy = jest.spyOn(window, 'requestAnimationFrame').mockImplementation(mockRaf.raf);
+
+  return { ...mockRaf, cleanup: () => spy.mockRestore() };
+}
+
 export { diff };
 
 export { default as minDocument } from 'min-document';
+
+export type { FrameRequestCallback, MockRaf } from '@react-spring/mock-raf';
 
 export { BuiltinPreset } from '@remirror/core';
 export * from '@remirror/preset-core';

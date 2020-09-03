@@ -493,7 +493,10 @@ export abstract class EditorWrapper<
       return;
     }
 
-    const { selection, doc, tr } = this.getState();
+    // By using the transaction which is shared by all the commands we can make
+    // the focus method, chainable.
+    const { tr } = this.manager;
+    const { selection, doc } = tr;
     const { from = 0, to = from } = selection;
 
     if (position === undefined || position === true) {
@@ -531,11 +534,13 @@ export abstract class EditorWrapper<
 
     // Wait for the next event loop to set the focus.
     requestAnimationFrame(() => {
+      // Use the built in focus method to refocus the editor.
       this.view.focus();
+
       // This has to be called again in order for Safari to scroll into view
       // after the focus. Perhaps there's a better way though or maybe place
       // behind a flag.
-      this.view.dispatch(this.view.state.tr.scrollIntoView());
+      this.view.dispatch(this.manager.tr);
     });
   }
 

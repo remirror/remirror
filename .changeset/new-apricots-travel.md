@@ -16,7 +16,7 @@ import { WysiwygPreset } from 'remirror/preset/wysiwyg';
 const EditorWrapper = () => {
   const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {
     // Automatically remove all invalid nodes and marks.
-    return transformer.remove(json, invalidContent);
+    return transformers.remove(json, invalidContent);
   }, []);
 
   const manager = useManager([new WysiwygPreset()]);
