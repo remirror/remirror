@@ -47,6 +47,8 @@ import {
     formatter: ({ source }) => ({ cursorOffset: 0, formatted: source }),
     syntaxTheme: 'atomDark',
     defaultLanguage: 'markup',
+    // See https://github.com/remirror/remirror/issues/624 for the ''
+    plainTextClassName: '',
   },
 })
 export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
