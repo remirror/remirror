@@ -32,6 +32,13 @@ export interface MentionAtomOptions
     'invalidNodes' | 'validNodes' | 'invalidMarks' | 'validMarks' | 'isValidPosition'
   > {
   /**
+   * When `true` the atom node which wraps the mention will be selectable.
+   *
+   * @default true
+   */
+  selectable?: Static<boolean>;
+
+  /**
    * Provide a custom tag for the mention
    */
   mentionTag?: Static<string>;
@@ -81,6 +88,7 @@ export interface MentionAtomOptions
  */
 @extensionDecorator<MentionAtomOptions>({
   defaultOptions: {
+    selectable: true,
     mentionTag: 'span' as const,
     matchers: [],
     appendText: ' ',
@@ -93,7 +101,7 @@ export interface MentionAtomOptions
     validNodes: null,
   },
   handlerKeys: ['onChange'],
-  staticKeys: ['matchers', 'mentionTag'],
+  staticKeys: ['matchers', 'mentionTag', 'selectable'],
 })
 export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
   get name() {
@@ -114,7 +122,7 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
         name: {},
       },
       inline: true,
-      selectable: false,
+      selectable: this.options.selectable,
       atom: true,
 
       parseDOM: [
