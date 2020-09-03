@@ -1,12 +1,21 @@
 import { axe } from 'jest-axe';
 import { RemirrorTestChain } from 'jest-remirror';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { renderToString } from 'react-dom/server';
 
-import { AnyCombinedUnion, fromHtml } from '@remirror/core';
+import {
+  AnyCombinedUnion,
+  AnyExtension,
+  AnyPreset,
+  CombinedUnion,
+  fromHtml,
+  RemirrorEventListener,
+} from '@remirror/core';
+import { rafMock } from '@remirror/testing';
 import {
   act,
   createReactManager,
+  DefaultEditor,
   fireEvent,
   RemirrorProvider,
   render,
@@ -15,7 +24,7 @@ import {
   useRemirror,
 } from '@remirror/testing/react';
 
-import type { RemirrorContextProps } from '../../react-types';
+import type { ReactCombinedUnion, RemirrorContextProps } from '../../react-types';
 import { ReactEditor } from '../react-editor';
 
 const textContent = `This is editor text`;
@@ -184,11 +193,13 @@ describe('focus', () => {
     content: [{ type: 'paragraph', content: [{ type: 'text', text: 'A sentence here' }] }],
   };
 
+  let mock: ReturnType<typeof rafMock>;
   let context!: RemirrorContextProps<any>;
   let editorNode: HTMLElement;
 
   beforeEach(() => {
-    jest.useFakeTimers();
+    mock = rafMock();
+
     const { getByRole } = strictRender(
       <ReactEditor
         label={label}
@@ -204,11 +215,12 @@ describe('focus', () => {
       </ReactEditor>,
     );
 
+    mock.flush();
     editorNode = getByRole('textbox');
   });
 
   afterEach(() => {
-    jest.useRealTimers();
+    mock.cleanup();
   });
 
   it('should do nothing when focusing on a focused editor without a new position', () => {
@@ -216,29 +228,29 @@ describe('focus', () => {
 
     act(() => {
       context.focus();
-      jest.runAllTimers();
+      mock.flush();
     });
 
     expect(context.getState().selection.from).toBe(1);
   });
 
   it('can focus on the `end`', () => {
-    fireEvent.blur(editorNode);
+    editorNode.blur();
 
     act(() => {
       context.focus('end');
-      jest.runAllTimers();
+      mock.flush();
     });
 
     expect(context.getState().selection.from).toBe(16);
   });
 
   it('can focus on `all`', () => {
-    fireEvent.blur(editorNode);
+    editorNode.blur();
 
     act(() => {
       context.focus('all');
-      jest.runAllTimers();
+      mock.flush();
     });
 
     expect(context.getState().selection.from).toBe(0);
@@ -248,17 +260,18 @@ describe('focus', () => {
   it('can focus on the `start` even when already focused', () => {
     act(() => {
       context.focus('start');
-      jest.runAllTimers();
+      mock.flush();
     });
 
     expect(context.getState().selection.from).toBe(1);
   });
 
   it('can specify the exact position for the blurred editor', () => {
-    fireEvent.blur(editorNode);
+    editorNode.blur();
+
     act(() => {
       context.focus(10);
-      jest.runAllTimers();
+      mock.flush();
     });
 
     expect(context.getState().selection.from).toBe(10);
@@ -267,11 +280,11 @@ describe('focus', () => {
   const expected = { from: 2, to: 5 };
 
   it('can specify the selection for the editor', () => {
-    fireEvent.blur(editorNode);
+    editorNode.blur();
 
     act(() => {
       context.focus(expected);
-      jest.runAllTimers();
+      mock.flush();
     });
 
     {
@@ -282,43 +295,110 @@ describe('focus', () => {
   });
 
   it('restores the previous selection when focused without a parameter', () => {
-    fireEvent.blur(editorNode);
+    editorNode.blur();
+
     act(() => {
       context.focus(expected);
-      jest.runAllTimers();
+      mock.flush();
     });
 
     {
       const { from, to } = context.getState().selection;
 
       expect({ from, to }).toEqual(expected);
+      expect(context.view.hasFocus()).toBeTrue();
     }
 
-    fireEvent.blur(editorNode);
+    editorNode.blur();
 
     act(() => {
       context.focus();
-      jest.runAllTimers();
+      mock.flush();
     });
 
     {
       const { from, to } = context.getState().selection;
 
       expect({ from, to }).toEqual(expected);
-      // expect(props.view.hasFocus()).toBeTrue();
+      expect(context.view.hasFocus()).toBeTrue();
     }
   });
 
   it('should do nothing when passing `false`', () => {
-    fireEvent.blur(editorNode);
+    editorNode.blur();
 
     act(() => {
       context.focus(false);
-      jest.runAllTimers();
+      mock.flush();
     });
 
     expect(context.getState().selection.from).toBe(1);
+    expect(context.view.hasFocus()).toBeFalse();
   });
+});
+
+test('`focus` should be chainable', () => {
+  const mock = rafMock();
+
+  const manager = createReactManager([]);
+  const editor = RemirrorTestChain.create(manager);
+  let context: RemirrorContextProps<CombinedUnion<AnyExtension, AnyPreset>>;
+
+  const TrapContext = () => {
+    context = useRemirror();
+
+    return null;
+  };
+
+  const Component = () => {
+    const [value, setValue] = useState(() =>
+      manager.createState({
+        content: '<p>Content </p>',
+        selection: 'end',
+        stringHandler: fromHtml,
+      }),
+    );
+
+    const onChange: RemirrorEventListener<ReactCombinedUnion<never>> = useCallback(
+      ({ state, firstRender }) => {
+        if (firstRender) {
+          return;
+        }
+
+        act(() => {
+          setValue(state);
+        });
+      },
+      [],
+    );
+
+    return (
+      <RemirrorProvider autoFocus={true} manager={manager} onChange={onChange} value={value}>
+        <TrapContext />
+        <DefaultEditor />
+      </RemirrorProvider>
+    );
+  };
+
+  const { getByRole } = strictRender(<Component />);
+  const editorNode = getByRole('textbox');
+  editorNode.blur();
+
+  act(() => {
+    editor.commands.insertText(' abc');
+    context.focus(1);
+    mock.flush();
+  });
+
+  expect(editor.state.selection.from).toBe(1);
+  expect(editor.view.hasFocus()).toBeTrue();
+  expect(editor.innerHTML).toMatchInlineSnapshot(`
+    <p>
+      Content abc
+    </p>
+  `);
+
+  mock.cleanup();
 });
 
 describe('onChange', () => {

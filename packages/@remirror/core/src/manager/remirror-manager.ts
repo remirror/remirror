@@ -25,6 +25,7 @@ import type {
   NodeExtensionSpec,
   ProsemirrorNode,
   Replace,
+  Transaction,
 } from '@remirror/core-types';
 import {
   createDocumentNode,
@@ -244,6 +245,27 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    */
   get store(): Remirror.ManagerStore<Combined> {
     return freeze(this.#store);
+  }
+
+  /**
+   * Provides access to the extension store.
+   */
+  get extensionStore(): Remirror.ExtensionStore {
+    return freeze(this.#extensionStore);
+  }
+
+  /**
+   * Shorthand access to the active transaction from the manager. This is the
+   * shared transaction available to all commands and should be used when you
+   * need to make your commands chainable.
+   *
+   * If working with react and setting up your editor as a controlled component
+   * then this is the preferred way to run custom commands, otherwise your
+   * commands will end up being non-chainable and be overwritten by anything
+   * that comes after.
+   */
+  get tr(): Transaction<SchemaFromCombined<Combined>> {
+    return this.extensionStore.getTransaction();
   }
 
   /**
@@ -514,7 +536,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * Create the editor state from content passed to this extension manager.
    */
   createState(
-    parameter: Omit<CreateDocumentNodeParameter, 'schema'>,
+    parameter: Omit<CreateDocumentNodeParameter, 'schema' | 'attempts'>,
   ): EditorState<SchemaFromCombined<Combined>> {
     const { content, doc: d, stringHandler, onError, selection } = parameter;
     const { schema, plugins } = this.store;

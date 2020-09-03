@@ -827,14 +827,14 @@ export function last<Type>(array: Type[]): Type {
  * index is placed first hence retaining the original order.
  *
  * @param array - the array to sort
- * @param compareFn - compare the two value arguments `a` and `b` - return 0 for
- *                  equal - return number > 0 for a > b - return number < 0 for
- *                  b > a
+ * @param compareFn - compare the two value arguments `a` and `z` - return 0 for
+ *                  equal - return number > 0 for a > z - return number < 0 for
+ *                  z > a
  */
-export function sort<Type>(array: Type[], compareFn: (a: Type, b: Type) => number): Type[] {
+export function sort<Type>(array: Type[], compareFn: (a: Type, z: Type) => number): Type[] {
   return [...array]
     .map((value, index) => ({ value, index }))
-    .sort((a, b) => compareFn(a.value, b.value) || a.index - b.index)
+    .sort((a, z) => compareFn(a.value, z.value) || a.index - z.index)
     .map(({ value }) => value);
 }
 
@@ -895,7 +895,11 @@ function setClone(obj: any, key: string | number, value: any) {
  * Set the value of a given path for the provided object. Does not mutate the
  * original object.
  */
-export function set(path: number | string | Array<string | number>, obj: Shape, value: unknown) {
+export function set(
+  path: number | string | Array<string | number>,
+  obj: Shape,
+  value: unknown,
+): Shape {
   if (isNumber(path)) {
     return setClone(obj, path, value);
   }
@@ -910,9 +914,9 @@ export function set(path: number | string | Array<string | number>, obj: Shape, 
 /**
  * Unset the value of a given path within an object.
  */
-export function unset(path: Array<string | number>, obj: Shape) {
-  const newObj = clone(obj);
-  let value = newObj;
+export function unset(path: Array<string | number>, target: Shape): Shape {
+  const clonedObject = clone(target);
+  let value = clonedObject;
 
   for (const [index, key] of path.entries()) {
     const shouldDelete = index >= path.length - 1;
@@ -929,11 +933,11 @@ export function unset(path: Array<string | number>, obj: Shape) {
         Reflect.deleteProperty(value, key);
       }
 
-      return newObj;
+      return clonedObject;
     }
 
     if (isPrimitive(item)) {
-      return newObj;
+      return clonedObject;
     }
 
     if (isArray(item)) {
@@ -946,7 +950,7 @@ export function unset(path: Array<string | number>, obj: Shape) {
     value = item;
   }
 
-  return newObj;
+  return clonedObject;
 }
 
 function makeFunctionForUniqueBy<Item = any, Key = any>(value: string | Array<string | number>) {
