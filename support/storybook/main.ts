@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-default-export
 export default {
   stories: ['./stories/*.stories.tsx'],
   addons: ['@storybook/addon-actions', '@storybook/addon-links'],
