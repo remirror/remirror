@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-history",
-  "version": "1.0.0-next.29",
+  "version": "1.0.0-next.31",
   "description": "Add undo and redo history to your editor.",
   "keywords": [
     "remirror",
@@ -27,11 +27,11 @@
     "@babel/runtime": "^7.11.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.29",
+    "@remirror/core": "1.0.0-next.31",
     "@remirror/pm": "1.0.0-next.28"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.29",
+    "@remirror/core": "1.0.0-next.31",
     "@remirror/pm": "1.0.0-next.28"
   },
   "publishConfig": {

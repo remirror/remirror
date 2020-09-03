@@ -1,5 +1,24 @@
 # @remirror/react-social
 
+## 1.0.0-next.31
+
+> 2020-09-03
+
+### Patch Changes
+
+- Updated dependencies [[`e8458bc5`](https://github.com/remirror/remirror/commit/e8458bc54402d55355bd5315526fb239bce65ed6), [`1a7da61a`](https://github.com/remirror/remirror/commit/1a7da61a483358214f8f24e193d837b171dd4e1d), [`e8458bc5`](https://github.com/remirror/remirror/commit/e8458bc54402d55355bd5315526fb239bce65ed6), [`e8458bc5`](https://github.com/remirror/remirror/commit/e8458bc54402d55355bd5315526fb239bce65ed6), [`e8458bc5`](https://github.com/remirror/remirror/commit/e8458bc54402d55355bd5315526fb239bce65ed6), [`e8458bc5`](https://github.com/remirror/remirror/commit/e8458bc54402d55355bd5315526fb239bce65ed6)]:
+  - @remirror/core@1.0.0-next.31
+  - @remirror/react-hooks@1.0.0-next.31
+  - @remirror/extension-emoji@1.0.0-next.31
+  - @remirror/extension-mention@1.0.0-next.31
+  - @remirror/extension-auto-link@1.0.0-next.31
+  - @remirror/extension-events@1.0.0-next.31
+  - @remirror/preset-social@1.0.0-next.31
+  - @remirror/react@1.0.0-next.31
+  - @remirror/i18n@1.0.0-next.31
+  - @remirror/react-utils@1.0.0-next.31
+  - multishift@1.0.0-next.31
+
 ## 1.0.0-next.30
 
 > 2020-08-28

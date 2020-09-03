@@ -1,5 +1,109 @@
 # remirror
 
+## 1.0.0-next.31
+
+> 2020-09-03
+
+### Major Changes
+
+- [`1a7da61a`](https://github.com/remirror/remirror/commit/1a7da61a483358214f8f24e193d837b171dd4e1d) [#608](https://github.com/remirror/remirror/pull/608) Thanks [@ifiokjr](https://github.com/ifiokjr)! - 🚀 Update the `onError` handler with a new improved type signature for better management of errors. See the following example.
+
+  ```tsx
+  import React from 'react';
+  import { RemirrorProvider, InvalidContentHandler } from 'remirror/core';
+  import { RemirrorProvider, useManager } from 'remirror/react';
+  import { WysiwygPreset } from 'remirror/preset/wysiwyg';
+
+  const EditorWrapper = () => {
+    const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {
+      // Automatically remove all invalid nodes and marks.
+      return transformer.remove(json, invalidContent);
+    }, []);
+
+    const manager = useManager([new WysiwygPreset()]);
+
+    return (
+      <RemirrorProvider manager={manager} onError={onError}>
+        <div />
+      </RemirrorProvider>
+    );
+  };
+  ```
+
+  - 🚀 Add `set` and `unset` methods to `@remirror/core-helpers`.
+  - 🚀 Add `getInvalidContent` export from `@remirror/core-utils`.
+  - 🚀 Add logging support for `RemirrorError` for better readability.
+  - 🚀 Add new `ErrorConstant.INVALID_CONTENT` constant for content related errors.
+  - 🚀 Add `Manager.createEmptyDoc()` instance method for creating any empty doc (with default content) for the current schema.
+  - 💥 Remove `Fallback`, `CreateDocumentErrorHandler`, `getLineHeight`, `getPluginMeta`, `getPluginState`, `nodeNameMatchesList` and `setPluginMeta` exports from `@remirror/core-utils`.
+  - 💥 Rename `getNearestNonTextNode` function to `getNearestNonTextElement`.
+  - 💥 Rename `getNearestNonTextNode` function to `getNearestNonTextElement`.
+  - 💥 Rename `StateOrTransactionParameter` interface to `TrStateParameter`.
+
+  General refactor of types to use the `EditorSchema` rather than `any`. If you notice any downstream issues please open an issue.
+
+### Minor Changes
+
+- [`e8458bc5`](https://github.com/remirror/remirror/commit/e8458bc54402d55355bd5315526fb239bce65ed6) [#623](https://github.com/remirror/remirror/pull/623) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add support for creating mentions as uneditable nodes with a new package `@remirror/extension-mention-atom`.
+
+* [`e8458bc5`](https://github.com/remirror/remirror/commit/e8458bc54402d55355bd5315526fb239bce65ed6) [#623](https://github.com/remirror/remirror/pull/623) Thanks [@ifiokjr](https://github.com/ifiokjr)! - New package `@remirror/react-hooks` with support for all core hooks`.
+
+### Patch Changes
+
+- Updated dependencies [[`e8458bc5`](https://github.com/remirror/remirror/commit/e8458bc54402d55355bd5315526fb239bce65ed6), [`e8458bc5`](https://github.com/remirror/remirror/commit/e8458bc54402d55355bd5315526fb239bce65ed6), [`1a7da61a`](https://github.com/remirror/remirror/commit/1a7da61a483358214f8f24e193d837b171dd4e1d), [`e8458bc5`](https://github.com/remirror/remirror/commit/e8458bc54402d55355bd5315526fb239bce65ed6), [`e8458bc5`](https://github.com/remirror/remirror/commit/e8458bc54402d55355bd5315526fb239bce65ed6), [`e8458bc5`](https://github.com/remirror/remirror/commit/e8458bc54402d55355bd5315526fb239bce65ed6), [`e8458bc5`](https://github.com/remirror/remirror/commit/e8458bc54402d55355bd5315526fb239bce65ed6)]:
+  - @remirror/extension-mention-atom@1.0.0-next.31
+  - @remirror/core@1.0.0-next.31
+  - @remirror/core-helpers@1.0.0-next.31
+  - @remirror/core-utils@1.0.0-next.31
+  - @remirror/react-hooks@1.0.0-next.31
+  - @remirror/extension-emoji@1.0.0-next.31
+  - @remirror/extension-mention@1.0.0-next.31
+  - @remirror/dom@1.0.0-next.31
+  - @remirror/extension-annotation@1.0.0-next.31
+  - @remirror/extension-auto-link@1.0.0-next.31
+  - @remirror/extension-bidi@1.0.0-next.31
+  - @remirror/extension-blockquote@1.0.0-next.31
+  - @remirror/extension-bold@1.0.0-next.31
+  - @remirror/extension-code@1.0.0-next.31
+  - @remirror/extension-code-block@1.0.0-next.31
+  - @remirror/extension-collaboration@1.0.0-next.31
+  - @remirror/extension-diff@1.0.0-next.31
+  - @remirror/extension-doc@1.0.0-next.31
+  - @remirror/extension-drop-cursor@1.0.0-next.31
+  - @remirror/extension-epic-mode@1.0.0-next.31
+  - @remirror/extension-events@1.0.0-next.31
+  - @remirror/extension-gap-cursor@1.0.0-next.31
+  - @remirror/extension-hard-break@1.0.0-next.31
+  - @remirror/extension-heading@1.0.0-next.31
+  - @remirror/extension-history@1.0.0-next.31
+  - @remirror/extension-horizontal-rule@1.0.0-next.31
+  - @remirror/extension-image@1.0.0-next.31
+  - @remirror/extension-italic@1.0.0-next.31
+  - @remirror/extension-link@1.0.0-next.31
+  - @remirror/extension-paragraph@1.0.0-next.31
+  - @remirror/extension-placeholder@1.0.0-next.31
+  - @remirror/extension-position-tracker@1.0.0-next.31
+  - @remirror/extension-positioner@1.0.0-next.31
+  - @remirror/extension-react-component@1.0.0-next.31
+  - @remirror/extension-react-ssr@1.0.0-next.31
+  - @remirror/extension-search@1.0.0-next.31
+  - @remirror/extension-strike@1.0.0-next.31
+  - @remirror/extension-text@1.0.0-next.31
+  - @remirror/extension-trailing-node@1.0.0-next.31
+  - @remirror/extension-underline@1.0.0-next.31
+  - @remirror/extension-yjs@1.0.0-next.31
+  - @remirror/preset-core@1.0.0-next.31
+  - @remirror/preset-embed@1.0.0-next.31
+  - @remirror/preset-list@1.0.0-next.31
+  - @remirror/preset-react@1.0.0-next.31
+  - @remirror/preset-social@1.0.0-next.31
+  - @remirror/preset-table@1.0.0-next.31
+  - @remirror/preset-wysiwyg@1.0.0-next.31
+  - @remirror/react@1.0.0-next.31
+  - @remirror/react-social@1.0.0-next.31
+  - @remirror/react-wysiwyg@1.0.0-next.31
+  - @remirror/react-utils@1.0.0-next.31
+
 ## 1.0.0-next.30
 
 > 2020-08-28

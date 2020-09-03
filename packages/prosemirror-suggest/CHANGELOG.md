@@ -1,5 +1,34 @@
 # prosemirror-suggest
 
+## 1.0.0-next.31
+
+> 2020-09-03
+
+### Major Changes
+
+- [`e8458bc5`](https://github.com/remirror/remirror/commit/e8458bc54402d55355bd5315526fb239bce65ed6) [#623](https://github.com/remirror/remirror/pull/623) Thanks [@ifiokjr](https://github.com/ifiokjr)! - - 💥 Remove the `keyBindings` option and the keyboard handler.
+
+  - 💥 Remove `createCommand` handler, since it's up to the developer to interpret the information that's been provided to them.
+  - 💥 Remove the `onCharacterPress` keyboard handler.
+  - 💥 Merge `onExit` functionality into the `onChange` method and split `reason` property into `exitReason` and `changeReason` only one of which can be defined.
+  - 💥Remove a lot of type exports.
+  - 💥Rename `FromToEndParameter` to `RangeWithCursor` and change the property name of `to` => `cursor` and `end` => `to`.
+  - 💥Rename `queryText` => `query` and `matchText` => `text` in the `onChange` handler parameter.
+  - 🎉 Allow the activation character to be `RegExp`.
+  - 🎉 Add raw regex `match` to the `onChange` handler parameter.
+  - 🎉 Add a `priority` property which allows `suggesters` to specify importance. Higher priority means being checked for a match first.
+  - 🎉 Support invalid nodes and marks by name.
+  - 🎉 Support valid nodes and marks by name.
+  - 🎉 Allow whitespace in `supportedCharacters`.
+  - 🎉 Support an `isValidPosition` handler which is a predicate that is run with the active resolved positioner on each suggester. It allows more advanced criteria for rejecting a `suggester` in the dom.
+
+  See #548 for more details.
+
+### Patch Changes
+
+- Updated dependencies [[`1a7da61a`](https://github.com/remirror/remirror/commit/1a7da61a483358214f8f24e193d837b171dd4e1d)]:
+  - @remirror/core-helpers@1.0.0-next.31
+
 ## 1.0.0-next.28
 
 > 2020-08-27
