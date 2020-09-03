@@ -17,8 +17,8 @@ import { Menu, TextEditor } from './my-editor';
 
 const EditorWrapper = () => {
   const manager = useManager([
-    new CorePreset(),
-    new BoldExtension(),
+    new CorePreset({}),
+    new BoldExtension({}),
     new ItalicExtension(),
     new UnderlineExtension(),
   ]);
@@ -40,7 +40,7 @@ const EditorWrapper = () => {
 import { useRemirror } from '@remirror/react';
 
 const Menu = () => {
-  const { getRootProps, commands, active } = useRemirror({ autoUpdate: true });
+  const { commands, active } = useRemirror({ autoUpdate: true });
 
   return (
     <div>

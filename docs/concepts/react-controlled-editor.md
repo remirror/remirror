@@ -116,7 +116,7 @@ const EditorWrapper = () => {
         // Check if the document content for the editor changed.
         if (tr?.docChanged) {
           // Insert text into the editor via a new state.
-          const nextState = state.applyTransaction(state.tr.insertText('NO!!!'));
+          nextState = state.applyTransaction(state.tr.insertText('NO!!!'));
         }
 
         // Update to using a new value
