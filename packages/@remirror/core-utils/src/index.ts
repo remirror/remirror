@@ -14,8 +14,10 @@ export {
 
 export type {
   CreateDocumentNodeParameter,
+  InvalidContentBlock,
   InvalidContentHandler,
   InvalidContentHandlerParameter,
+  StringHandler,
   StringHandlerParameter,
 } from './core-utils';
 export {
