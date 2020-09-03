@@ -735,6 +735,32 @@ export interface EditorWrapperProps<Combined extends AnyCombinedUnion>
 
   /**
    * This is called when the editor has invalid content.
+   *
+   * @remarks
+   *
+   * To add this to the editor the following is needed.
+   *
+   * ```tsx
+   * import React from 'react';
+   * import { RemirrorProvider, InvalidContentHandler } from 'remirror/core';
+   * import { RemirrorProvider, useManager } from 'remirror/react';
+   * import { WysiwygPreset } from 'remirror/preset/wysiwyg';
+   *
+   * const EditorWrapper = () => {
+   *   const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {
+   *     // Automatically remove all invalid nodes and marks.
+   *     return transformers.remove(json, invalidContent);
+   *   }, []);
+   *
+   *   const manager = useManager(() => [new WysiwygPreset()]);
+   *
+   *   return (
+   *     <RemirrorProvider manager={manager} onError={onError}>
+   *       <div />
+   *     </RemirrorProvider>
+   *   );
+   * };
+   * ```
    */
   onError?: InvalidContentHandler;
 }

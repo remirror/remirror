@@ -563,7 +563,7 @@ export interface CreateDocumentNodeParameter
   content: RemirrorContentType;
 
   /**
-   * The fallback object node to use if unable to convert the value correctly
+   * The error handler which is called when the JSON passed is invalid.
    */
   onError?: InvalidContentHandler;
 
@@ -629,6 +629,11 @@ export function getTextSelection(
   return TextSelection.create(doc, start, end);
 }
 
+/**
+ * A function that converts a string into a `ProsemirrorNode`.
+ */
+export type StringHandler = (params: FromStringParameter) => ProsemirrorNode;
+
 export interface StringHandlerParameter {
   /**
    * A function which transforms a string into a prosemirror node.
@@ -637,9 +642,9 @@ export interface StringHandlerParameter {
    * Can be used to transform markdown / html or any other string format into a
    * prosemirror node.
    *
-   * See {@link fromHTML} for an example of how this could work.
+   * See [[`fromHTML`]] for an example of how this could work.
    */
-  stringHandler?: (params: FromStringParameter) => ProsemirrorNode;
+  stringHandler?: StringHandler;
 }
 
 // The maximum attempts to check invalid content before throwing an an error.

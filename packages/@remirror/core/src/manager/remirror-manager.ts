@@ -27,6 +27,7 @@ import type {
   Replace,
   Transaction,
 } from '@remirror/core-types';
+import type { InvalidContentHandler, StringHandlerParameter } from '@remirror/core-utils';
 import {
   createDocumentNode,
   CreateDocumentNodeParameter,
@@ -538,15 +539,17 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   createState(
     parameter: Omit<CreateDocumentNodeParameter, 'schema' | 'attempts'>,
   ): EditorState<SchemaFromCombined<Combined>> {
-    const { content, doc: d, stringHandler, onError, selection } = parameter;
+    const {
+      content,
+      doc: d,
+      stringHandler = this.settings.stringHandler,
+      onError = this.settings.onError,
+      selection,
+    } = parameter;
     const { schema, plugins } = this.store;
     const doc = createDocumentNode({ content, doc: d, schema, stringHandler, onError, selection });
 
-    const state = EditorState.create({
-      schema,
-      doc,
-      plugins,
-    });
+    const state = EditorState.create({ schema, doc, plugins });
 
     if (!selection) {
       return state;
@@ -882,7 +885,7 @@ declare global {
     /**
      * Settings which can be passed into the manager.
      */
-    interface ManagerSettings {
+    interface ManagerSettings extends StringHandlerParameter {
       /**
        * Set the extension priority for extension's by their name.
        */
@@ -893,6 +896,38 @@ declare global {
        * within the manager.
        */
       exclude?: ExcludeOptions;
+
+      /**
+       * The error handler which is called when the JSON passed is invalid.
+       *
+       * @remarks
+       *
+       * The following can be used to setup the `onError` handler on the the
+       * manager.
+       *
+       * ```tsx
+       * import React from 'react';
+       * import { RemirrorProvider, InvalidContentHandler } from 'remirror/core';
+       * import { RemirrorProvider, useManager } from 'remirror/react';
+       * import { WysiwygPreset } from 'remirror/preset/wysiwyg';
+       *
+       * const EditorWrapper = () => {
+       *   const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {
+       *     // Automatically remove all invalid nodes and marks.
+       *     return transformers.remove(json, invalidContent);
+       *   }, []);
+       *
+       *   const manager = useManager(() => [new WysiwygPreset()], { onError });
+       *
+       *   return (
+       *     <RemirrorProvider manager={manager}>
+       *       <div />
+       *     </RemirrorProvider>
+       *   );
+       * };
+       * ```
+       */
+      onError?: InvalidContentHandler;
     }
 
     /**
