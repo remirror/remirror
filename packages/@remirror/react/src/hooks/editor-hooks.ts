@@ -139,7 +139,7 @@ export function useRemirror<Combined extends AnyCombinedUnion>(
   const portalContext = usePortalContext() as RemirrorContextProps<Combined> | null;
 
   // A helper for forcing an update of the state.
-  const forceUpdate = useForceUpdate();
+  const forceUpdate = useRef(useForceUpdate());
 
   // Pick the correct context to use.
   const context = editorContext ?? portalContext;
@@ -147,8 +147,10 @@ export function useRemirror<Combined extends AnyCombinedUnion>(
   // Throw an error if context doesn't exist.
   invariant(context, { code: ErrorConstant.REACT_PROVIDER_CONTEXT });
 
-  // This hook sets the correct update frequency. By default this hook never
-  // updates.
+  // Destructure the `addHandler` to minimise updates in the `useEffect` hook.
+  const { addHandler } = context;
+
+  // Manages the update frequency of this hook.
   useEffect(() => {
     let updateHandler = handler;
 
@@ -160,7 +162,7 @@ export function useRemirror<Combined extends AnyCombinedUnion>(
     // Use the `forceUpdate` handler when `autoUpdate` is true.
     if (isPlainObject(updateHandler)) {
       const { autoUpdate } = updateHandler;
-      updateHandler = autoUpdate ? () => forceUpdate() : undefined;
+      updateHandler = autoUpdate ? () => forceUpdate.current() : undefined;
     }
 
     if (!isFunction(updateHandler)) {
@@ -169,8 +171,8 @@ export function useRemirror<Combined extends AnyCombinedUnion>(
 
     // Add the update handler which will update this hook every time the editor
     // is updated.
-    return context.addHandler('updated', updateHandler);
-  }, [handler, context, forceUpdate]);
+    return addHandler('updated', updateHandler);
+  }, [addHandler, handler]);
 
   return context;
 }
@@ -220,28 +222,65 @@ export type UseRemirrorType<Combined extends AnyCombinedUnion> = <Type extends A
  * This is only available within the context of the `RemirrorProvider` it will
  * throw an error otherwise.
  *
- * ```ts
- * import React, { useCallback, useState } from 'react';
+ * It can be used with three distinct call signatures.
+ *
+ * **Get the extension instance**
+ *
+ * ```tsx
  * import { useExtension } from 'remirror/react';
- * import { MentionExtension } from 'remirror/extension/mention';
+ * import { BoldExtension } from 'remirror/extension/bold';
  *
- * const FloatingQueryText = () => {
- *   const [query, setQuery] = useState('');
- *   const onChange = useCallback(({ query }) => setQuery(query.full), [setQuery]);
+ * const Editor = () => {
+ *   const boldExtension = useExtension(BoldExtension);
  *
- *   useExtension(MentionExtension, { appendText: 'hello' });
+ *   boldExtension.setOptions({ weight: '800' });
  *
- *   useExtension()
- *
- *   return <p>{query}</p>
+ *   return null;
  * }
  * ```
  *
- * The above example would add the `onChange` handler property to the extension.
+ * **Update the extension properties**
  *
- * TODO - What about using this multiple times how could the extension handle
- * that?
+ * ```tsx
+ * import { useExtension } from 'remirror/react';
+ * import { PlaceholderExtension } from 'remirror/extension/placeholder';
+ *
+ * const EditorPlaceholder = ({ placeholder = 'Your magnum opus' }) => {
+ *   useExtension(PlaceholderExtension, { placeholder }); // Updates the placeholder.
+ *
+ *   return null;
+ * }
+ * ```
+ *
+ * **Add event handlers to your extension**
+ *
+ * ```tsx
+ * import { useCallback } from 'react';
+ * import { HistoryExtension, HistoryOptions } from 'remirror/extension/history';
+ * import { useExtension } from 'remirror/react';
+ *
+ * const EditorPlaceholder = ({ placeholder = 'Your magnum opus' }) => {
+ *   useExtension(
+ *     HistoryExtension,
+ *     useCallback(
+ *       ({ addHandler }) => {
+ *         return addHandler('onRedo', () => log('a redo just happened'));
+ *       },
+ *       [],
+ *     ),
+ *     [event, handler],
+ *   );
+ *
+ *   return null;
+ * };
+ * ```
+ *
+ * These hooks can serve as the building blocks when customising your editor
+ * experience with `remirror`.
  */
+export function useExtension<Type extends AnyExtensionConstructor>(
+  Constructor: Type,
+): InstanceType<Type>;
 export function useExtension<Type extends AnyExtensionConstructor>(
   Constructor: Type,
   options: DynamicOptionsOfConstructor<Type>,
@@ -253,15 +292,19 @@ export function useExtension<Type extends AnyExtensionConstructor>(
 ): void;
 export function useExtension<Type extends AnyExtensionConstructor>(
   Constructor: Type,
-  optionsOrCallback: DynamicOptionsOfConstructor<Type> | UseExtensionCallback<Type>,
+  optionsOrCallback:
+    | DynamicOptionsOfConstructor<Type>
+    | UseExtensionCallback<Type>
+    // eslint-disable-next-line unicorn/no-useless-undefined
+    | undefined = undefined,
   dependencies: DependencyList = [],
-): void {
+): InstanceType<Type> | void {
   const { getExtension } = useRemirror();
   const extension = useMemo(() => getExtension(Constructor), [Constructor, getExtension]);
 
-  // Handle the case where it an options object passed in.
+  // Handle the case where an options object passed in.
   useEffectWithWarning(() => {
-    if (isFunction(optionsOrCallback)) {
+    if (isFunction(optionsOrCallback) || !optionsOrCallback) {
       return;
     }
 
@@ -279,6 +322,13 @@ export function useExtension<Type extends AnyExtensionConstructor>(
       extension,
     });
   }, [extension, optionsOrCallback, ...dependencies]);
+
+  // Return early when no extension available.
+  if (optionsOrCallback) {
+    return;
+  }
+
+  return extension;
 }
 
 interface UseExtensionCallbackParameter<Type extends AnyExtensionConstructor> {
@@ -313,7 +363,11 @@ export type UseExtensionCallback<Type extends AnyExtensionConstructor> = (
 
 /**
  * Update preset properties dynamically while the editor is still running.
+ *
+ * Only provide the Constructor in order to be given the unique preset instance
+ * within the editor.
  */
+export function usePreset<Type extends AnyPresetConstructor>(Constructor: Type): InstanceType<Type>;
 export function usePreset<Type extends AnyPresetConstructor>(
   Constructor: Type,
   options: DynamicOptionsOfConstructor<Type>,
@@ -325,15 +379,19 @@ export function usePreset<Type extends AnyPresetConstructor>(
 ): void;
 export function usePreset<Type extends AnyPresetConstructor>(
   Constructor: Type,
-  optionsOrCallback: DynamicOptionsOfConstructor<Type> | UsePresetCallback<Type>,
+  optionsOrCallback:
+    | DynamicOptionsOfConstructor<Type>
+    | UsePresetCallback<Type>
+    // eslint-disable-next-line unicorn/no-useless-undefined
+    | undefined = undefined,
   dependencies: DependencyList = [],
-): void {
+): InstanceType<Type> | void {
   const { getPreset } = useRemirror();
 
   const preset = useMemo(() => getPreset(Constructor), [Constructor, getPreset]);
 
   useEffectWithWarning(() => {
-    if (isFunction(optionsOrCallback)) {
+    if (isFunction(optionsOrCallback) || !optionsOrCallback) {
       return;
     }
 
@@ -351,6 +409,13 @@ export function usePreset<Type extends AnyPresetConstructor>(
       preset,
     });
   }, [preset, optionsOrCallback, ...dependencies]);
+
+  // Return early when the options or callback parameter is provided.
+  if (optionsOrCallback) {
+    return;
+  }
+
+  return preset;
 }
 
 interface UsePresetCallbackParameter<Type extends AnyPresetConstructor> {

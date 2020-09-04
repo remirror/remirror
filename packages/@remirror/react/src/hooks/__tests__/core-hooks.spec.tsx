@@ -30,7 +30,7 @@ test('useMeasure', () => {
   expect(result.current[1].height).toBe(0);
 
   const Component = () => {
-    const [bind, { height: measuredHeight }] = useMeasure();
+    const [bind, { height: measuredHeight }] = useMeasure<HTMLDivElement>();
 
     return (
       <div data-testid='test' {...bind}>
