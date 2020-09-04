@@ -6,6 +6,8 @@ import {
   ExtensionTag,
   InputRule,
   invariant,
+  isEmptyBlockNode,
+  isNodeSelection,
   NodeExtension,
   NodeExtensionSpec,
   nodeInputRule,
@@ -59,7 +61,8 @@ export class HorizontalRuleExtension extends NodeExtension<HorizontalRuleOptions
        */
       insertHorizontalRule: (): CommandFunction => (parameter) => {
         const { tr, dispatch } = parameter;
-        const initialParent = tr.selection.$anchor.parent;
+        const $pos = tr.selection.$anchor;
+        const initialParent = $pos.parent;
 
         if (initialParent.type.name === 'doc' || initialParent.isAtom || initialParent.isLeaf) {
           return false;
@@ -69,10 +72,23 @@ export class HorizontalRuleExtension extends NodeExtension<HorizontalRuleOptions
           return true;
         }
 
-        // Create the horizontal rule.
+        // A boolean value that is true when the current node is empty and
+        // should be duplicated before the replacement of the current node by
+        // the `hr`.
+        const shouldDuplicateEmptyNode = tr.selection.empty && isEmptyBlockNode(initialParent);
+
+        // When the node should eb duplicated add it to the position after
+        // before the replacement.
+        if (shouldDuplicateEmptyNode) {
+          tr.insert($pos.pos + 1, initialParent);
+        }
+
+        // Create the horizontal rule by replacing the selection
         tr.replaceSelectionWith(this.type.create());
 
-        this.updateTransaction(tr);
+        // Update the selection if currently pointed at the node.
+        this.updateFromNodeSelection(tr);
+
         dispatch(tr.scrollIntoView());
 
         return true;
@@ -86,29 +102,40 @@ export class HorizontalRuleExtension extends NodeExtension<HorizontalRuleOptions
         regexp: /^(?:---|___\s|\*\*\*\s)$/,
         type: this.type,
         beforeDispatch: ({ tr }) => {
-          this.updateTransaction(tr);
+          // Update to using a text selection.
+          this.updateFromNodeSelection(tr);
         },
       }),
     ];
   }
 
   /**
-   * Updates the transaction after a `horizontalRule` has been inserted.
+   * Updates the transaction after a `horizontalRule` has been inserted to make
+   * sure the currently selected node isn't a Horizontal Rule.
+   *
+   * This should only be called for empty selections.
    */
-  private updateTransaction(tr: Transaction): void {
-    const pos = tr.selection.$anchor.pos + 1;
-    const { insertionNode } = this.options;
-    const nodes = this.store.schema.nodes;
+  private updateFromNodeSelection(tr: Transaction): void {
+    // Make sure  the `horizontalRule` that is selected. Otherwise do nothing.
+    if (!isNodeSelection(tr.selection) || tr.selection.node.type.name !== this.name) {
+      return;
+    }
 
+    // Get the position right after the current selection for inserting the
+    // node.
+    const pos = tr.selection.$from.pos + 1;
+    const { insertionNode } = this.options;
+
+    // If `insertionNode` was set to false, then don't insert anything.
     if (!insertionNode) {
       return;
     }
 
-    const type = nodes[insertionNode];
+    const type = this.store.schema.nodes[insertionNode];
 
     invariant(type, {
       code: ErrorConstant.EXTENSION,
-      message: `'${insertionNode}' node provided as the insertionNode to the '${HorizontalRuleExtension.name}' does not exist.`,
+      message: `'${insertionNode}' node provided as the insertionNode to the '${this.constructorName}' does not exist.`,
     });
 
     // Insert the new node

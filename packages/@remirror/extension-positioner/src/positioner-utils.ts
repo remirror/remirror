@@ -1,22 +1,11 @@
 import {
-  bool,
   EditorState,
   EditorStateParameter,
   hasTransactionChanged,
-  ProsemirrorNode,
   TransactionParameter,
 } from '@remirror/core';
 
-/**
- * Checks if the current node is a block node and empty.
- *
- * @param node - the prosemirror node
- *
- * @public
- */
-export function isEmptyBlockNode(node: ProsemirrorNode | null | undefined) {
-  return bool(node) && node.type.isBlock && !node.textContent && !node.childCount;
-}
+export { isEmptyBlockNode } from '@remirror/core';
 
 interface HasChangedParameter extends EditorStateParameter, Partial<TransactionParameter> {
   previousState: EditorState;
@@ -28,7 +17,7 @@ interface HasChangedParameter extends EditorStateParameter, Partial<TransactionP
  *
  * Return `true` when a change is detected in the document or the selection.
  */
-export function hasStateChanged(parameter: HasChangedParameter) {
+export function hasStateChanged(parameter: HasChangedParameter): boolean {
   const { tr, state, previousState } = parameter;
 
   if (tr) {
