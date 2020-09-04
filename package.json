@@ -1,5 +1,5 @@
 {
-  "name": "root",
+  "name": "remirror-monorepo",
   "private": true,
   "homepage": "https://remirror.io",
   "repository": "https://github.com/remirror/remirror",
@@ -17,6 +17,7 @@
     "checks:ci": "run-s lint typecheck",
     "checks:disable": "rimraf ./.config.json",
     "checks:enable": "cpy support/.config.sample.json ./ --rename=\".config.json\"",
+    "checks:fix": "run-s -c fix typecheck test",
     "checks:release": "run-s checks build test:e2e",
     "ci:version": "run-s ci:version:changeset ci:version:date ci:version:repo fix:prettier ci:version:install",
     "ci:version:changeset": "changeset version",
