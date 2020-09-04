@@ -112,14 +112,17 @@ export function useSuggester(props: UseSuggesterProps): UseSuggesterReturn {
     ],
   );
 
-  // Attached the editor state handler to the instance of the remirror editor.
+  // Attach the editor state handler to the instance of the remirror editor.
   useRemirror(onStateUpdate);
 
   // Add the suggester to the editor via the BuiltinPreset.
   usePreset(
     BuiltinPreset,
-    ({ addCustomHandler }) => addCustomHandler('suggester', { ...props, onChange }),
-    [props, onChange],
+    useCallback(({ addCustomHandler }) => addCustomHandler('suggester', { ...props, onChange }), [
+      onChange,
+      props,
+    ]),
+    [(props, onChange)],
   );
 
   return omit(hookState, ['updatesSinceLastExit', 'updatesSinceLastChange']);

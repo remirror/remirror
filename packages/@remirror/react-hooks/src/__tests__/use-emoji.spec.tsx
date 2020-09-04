@@ -2,13 +2,19 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { RemirrorTestChain } from 'jest-remirror';
 import React, { FC } from 'react';
 
-import { createReactManager, RemirrorProvider, useRemirror } from '@remirror/testing/react';
+import {
+  act as renderAct,
+  createReactManager,
+  RemirrorProvider,
+  strictRender,
+  useRemirror,
+} from '@remirror/testing/react';
 import { EmojiExtension } from 'remirror/extension/emoji';
 
-import { useEmoji } from '../use-emoji';
+import { EmojiState, useEmoji } from '../use-emoji';
 
 function createChain() {
-  const manager = createReactManager([new EmojiExtension()]);
+  const manager = createReactManager(() => [new EmojiExtension()]);
   const chain = RemirrorTestChain.create(manager);
   const { doc, p } = chain.nodes;
 
@@ -26,7 +32,8 @@ function createChain() {
   const Wrapper: FC = ({ children }) => {
     return (
       <RemirrorProvider manager={manager} initialContent={[doc(p('Initial content ')), 'end']}>
-        <InnerComponent>{children}</InnerComponent>
+        <InnerComponent />
+        {children}
       </RemirrorProvider>
     );
   };
@@ -162,5 +169,31 @@ describe('useEmoji', () => {
     ]);
 
     expect(result.current?.index).toBe(result.current!.list.length - 1);
+  });
+
+  it('can be used with `autoUpdate`', () => {
+    const { Wrapper, chain } = createChain();
+    const ref: { current: EmojiState | null } = { current: null };
+
+    const Component = () => {
+      useRemirror({ autoUpdate: true });
+      ref.current = useEmoji();
+
+      return null;
+    };
+
+    strictRender(
+      <Wrapper>
+        <Component />
+      </Wrapper>,
+    );
+
+    renderAct(() => {
+      chain.insertText(':');
+    });
+
+    ref.current?.index;
+
+    expect(ref.current).toEqual(expect.objectContaining({ index: 0 }));
   });
 });

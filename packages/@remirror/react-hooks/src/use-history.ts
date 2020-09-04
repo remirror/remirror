@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import type { GetHandler, StringKey } from '@remirror/core';
 import { HistoryExtension, HistoryOptions } from '@remirror/extension-history';
 import { useExtension } from '@remirror/react';
@@ -11,9 +13,12 @@ export function useHistory<Key extends StringKey<GetHandler<HistoryOptions>>>(
 ): void {
   useExtension(
     HistoryExtension,
-    ({ addHandler }) => {
-      return addHandler(event, handler);
-    },
+    useCallback(
+      ({ addHandler }) => {
+        return addHandler(event, handler);
+      },
+      [event, handler],
+    ),
     [event, handler],
   );
 }
