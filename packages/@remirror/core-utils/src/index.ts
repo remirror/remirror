@@ -22,6 +22,7 @@ export type {
 } from './core-utils';
 export {
   areSchemasCompatible,
+  isEmptyBlockNode,
   atDocEnd,
   atDocStart,
   canInsertNode,

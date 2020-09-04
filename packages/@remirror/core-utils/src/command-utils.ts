@@ -173,8 +173,6 @@ function isList(node: ProsemirrorNode, schema: EditorSchema) {
  *
  * @param type - the list node type
  * @param itemType - the list item type (must be in the schema)
- *
- * @public
  */
 export function toggleList(type: NodeType, itemType: NodeType): CommandFunction {
   return (parameter) => {

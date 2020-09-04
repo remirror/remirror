@@ -40,6 +40,7 @@ import {
   isDocNode,
   isDocNodeEmpty,
   isElementDomNode,
+  isEmptyBlockNode,
   isMarkActive,
   isNodeSelection,
   isProsemirrorNode,
@@ -51,6 +52,18 @@ import {
   toDom,
   toHtml,
 } from '../core-utils';
+
+describe('isEmptyBlockNode', () => {
+  it('should be true for empty nodes', () => {
+    const { state } = createEditor(doc(p('<cursor>')));
+    expect(isEmptyBlockNode(state.selection.$from.node())).toBeTrue();
+  });
+
+  it('should be false for non-empty nodes', () => {
+    const { state } = createEditor(doc(p('abc<cursor>')));
+    expect(isEmptyBlockNode(state.selection.$from.node())).toBeFalse();
+  });
+});
 
 describe('markActive', () => {
   it('shows active when within an active region', () => {

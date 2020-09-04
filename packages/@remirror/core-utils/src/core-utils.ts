@@ -236,6 +236,15 @@ export function isDocNodeEmpty(node: ProsemirrorNode): boolean {
 }
 
 /**
+ * Checks if the current node is a block node and empty.
+ *
+ * @param node - the prosemirror node
+ */
+export function isEmptyBlockNode(node: ProsemirrorNode | null | undefined): boolean {
+  return bool(node) && node.type.isBlock && !node.textContent && !node.childCount;
+}
+
+/**
  * Retrieve the attributes for a mark.
  *
  * @param trState - the editor state or a transaction
