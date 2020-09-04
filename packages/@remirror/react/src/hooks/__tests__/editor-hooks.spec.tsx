@@ -135,8 +135,12 @@ describe('useRemirror', () => {
   });
 });
 
+/**
+ * A helper function for creating the editor setup when testing the editor
+ * hooks.
+ */
 function createTestChain() {
-  const chain = RemirrorTestChain.create(createReactManager([new BoldExtension()]));
+  const chain = RemirrorTestChain.create(createReactManager(() => [new BoldExtension()]));
 
   const InnerComponent: FC = ({ children }) => {
     const { getRootProps } = useRemirror();
@@ -152,7 +156,8 @@ function createTestChain() {
   const Wrapper: FC = ({ children }) => {
     return (
       <RemirrorProvider manager={chain.manager}>
-        <InnerComponent>{children}</InnerComponent>
+        <InnerComponent></InnerComponent>
+        {children}
       </RemirrorProvider>
     );
   };

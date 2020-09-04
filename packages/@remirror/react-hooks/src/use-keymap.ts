@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import { KeyBindings, KeymapExtension } from '@remirror/core';
 import { useExtension } from '@remirror/react';
 
@@ -35,7 +37,9 @@ import { useExtension } from '@remirror/react';
  * ```
  */
 export function useKeymap(bindings: KeyBindings): void {
-  useExtension(KeymapExtension, ({ addCustomHandler }) => addCustomHandler('keymap', bindings), [
-    bindings,
-  ]);
+  useExtension(
+    KeymapExtension,
+    useCallback(({ addCustomHandler }) => addCustomHandler('keymap', bindings), [bindings]),
+    [bindings],
+  );
 }
