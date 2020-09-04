@@ -12,6 +12,6 @@ jobs:
     steps:
       - uses: JasonEtco/is-sponsor-label-action@v1
         with:
-          label: 'type: sponsored :sparkling_heart:'
+          label: 'status: sponsored :sparkling_heart:'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

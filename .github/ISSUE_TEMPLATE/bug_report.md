@@ -20,10 +20,10 @@ labels: 'type: bug :beetle:'
 
 <!-- Outline the actual results -->
 
-### Additional context
-
-<!-- Optionally provide additional context such as browser version / device etc... -->
-
 ### Possible Solution
 
 <!--- Optionally suggest a fix or reason for the bug -->
+
+### Screenshot(s)
+
+<!--- If this is a bug that can be represented visually then please provide a screenshot or animated GIF/SVG. Doing so makes it easier to verify and debug issues and will speed up response times -->

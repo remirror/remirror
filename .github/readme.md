@@ -20,14 +20,6 @@
 <br />
 
 <p align="center">
-  <a href="https://remirror.io/docs/showcase/social">
-    <img src="https://media.githubusercontent.com/media/ifiokjr/assets/master/remirror/repo-banner.gif" title="Editable mentions and emoji being showcased" alt="A gif showing mentions being suggested as the user types with editing supported">
-  </a>
-</p>
-
-<br />
-
-<p align="center">
   <a href="https://unpkg.com/@remirror/core@next/dist/core.browser.esm.js">
     <img src="https://img.shields.io/bundlephobia/minzip/@remirror/core/next" alt="Bundled sized of core library" title="@remirror/core bundle size">
   </a>
@@ -200,7 +192,7 @@ const EditorWrapper = () => {
 
 Please read our [contribution guide] for details on our code of conduct, and the process for submitting pull requests. It also outlines the project structure so you can find help when navigating your way around the codebase.
 
-In addition each folder in this codebase a readme describing why it exists.
+In addition each folder in this codebase includes a readme describing why it exists.
 
 You might also notice there are surprisingly few files in the root directory of this project. All the configuration files have been moved to the `support/root` directory and are symlinked to the root directory in a `preinstall` hook. For more information take a look at [folder](support/root) and [readme](support/root/readme.md).
 
