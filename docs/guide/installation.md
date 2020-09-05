@@ -38,6 +38,7 @@ import { AllStyledComponent } from '@remirror/styles/emotion';
 // Or with styled components
 import { AllStyledComponent } from '@remirror/styles/styled-components';
 ```
+In order to use the `styled-components` or `emotion` variants you will need to also install `@remirror/styles`.
 
 ## Browser support
 
