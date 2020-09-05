@@ -22,7 +22,7 @@ You will also notice that you are also installing `@remirror/pm`. This is a peer
 
 ## Required styles
 
-Remirror requires styles for the editor to function correctly across different browsers. Adding these styles are supported in with the following methods:
+Remirror requires styles for the editor to function correctly across different browsers. These styles can be added in the following ways:
 
 ```Javascript
 // Plain CSS
