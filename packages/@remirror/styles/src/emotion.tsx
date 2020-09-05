@@ -11,10 +11,10 @@ export const coreStyledCss = css`
  */
 
   .remirror-editor.ProseMirror {
-    position: relative;
     word-wrap: break-word;
     white-space: pre-wrap;
     white-space: break-spaces;
+    position: relative;
     font-variant-ligatures: none;
     font-feature-settings: 'liga' 0, none;
   }
@@ -43,11 +43,14 @@ export const coreStyledCss = css`
     background: transparent;
   }
 
-  *::-moz-selection {
+  .ProseMirror-hideselection *::-moz-selection {
     background: transparent;
   }
 
-  .remirror-editor .ProseMirror-hideselection *::selection,
+  .remirror-editor .ProseMirror-hideselection *::selection {
+    background: transparent;
+  }
+
   .remirror-editor .ProseMirror-hideselection *::-moz-selection {
     background: transparent;
   }
@@ -83,10 +86,10 @@ export const CoreStyledComponent = styled.div`
  */
 
   .remirror-editor.ProseMirror {
-    position: relative;
     word-wrap: break-word;
     white-space: pre-wrap;
     white-space: break-spaces;
+    position: relative;
     font-variant-ligatures: none;
     font-feature-settings: 'liga' 0, none;
   }
@@ -115,11 +118,14 @@ export const CoreStyledComponent = styled.div`
     background: transparent;
   }
 
-  *::-moz-selection {
+  .ProseMirror-hideselection *::-moz-selection {
     background: transparent;
   }
 
-  .remirror-editor .ProseMirror-hideselection *::selection,
+  .remirror-editor .ProseMirror-hideselection *::selection {
+    background: transparent;
+  }
+
   .remirror-editor .ProseMirror-hideselection *::-moz-selection {
     background: transparent;
   }
@@ -1445,10 +1451,10 @@ export const allStyledCss = css`
  */
 
   .remirror-editor.ProseMirror {
-    position: relative;
     word-wrap: break-word;
     white-space: pre-wrap;
     white-space: break-spaces;
+    position: relative;
     font-variant-ligatures: none;
     font-feature-settings: 'liga' 0, none;
   }
@@ -1477,11 +1483,14 @@ export const allStyledCss = css`
     background: transparent;
   }
 
-  *::-moz-selection {
+  .ProseMirror-hideselection *::-moz-selection {
     background: transparent;
   }
 
-  .remirror-editor .ProseMirror-hideselection *::selection,
+  .remirror-editor .ProseMirror-hideselection *::selection {
+    background: transparent;
+  }
+
   .remirror-editor .ProseMirror-hideselection *::-moz-selection {
     background: transparent;
   }
@@ -2146,10 +2155,10 @@ export const AllStyledComponent = styled.div`
  */
 
   .remirror-editor.ProseMirror {
-    position: relative;
     word-wrap: break-word;
     white-space: pre-wrap;
     white-space: break-spaces;
+    position: relative;
     font-variant-ligatures: none;
     font-feature-settings: 'liga' 0, none;
   }
@@ -2178,11 +2187,14 @@ export const AllStyledComponent = styled.div`
     background: transparent;
   }
 
-  *::-moz-selection {
+  .ProseMirror-hideselection *::-moz-selection {
     background: transparent;
   }
 
-  .remirror-editor .ProseMirror-hideselection *::selection,
+  .remirror-editor .ProseMirror-hideselection *::selection {
+    background: transparent;
+  }
+
   .remirror-editor .ProseMirror-hideselection *::-moz-selection {
     background: transparent;
   }
