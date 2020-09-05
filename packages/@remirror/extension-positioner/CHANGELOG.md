@@ -1,5 +1,17 @@
 # @remirror/extension-positioner
 
+## 1.0.0-next.32
+
+> 2020-09-05
+
+### Patch Changes
+
+- [`e7b0bb0f`](https://github.com/remirror/remirror/commit/e7b0bb0ffdb7e2d6ac6be38baadde4a4dd402847) [#641](https://github.com/remirror/remirror/pull/641) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Move `isEmptyBlockNode` function from `@remirror/extension-positioner` to `@remirror/core-utils`. Re-export to prevent breaking change.
+
+- Updated dependencies [[`5786901c`](https://github.com/remirror/remirror/commit/5786901c58d717c0921415f7bfd1f480c39a44f3), [`aa27e968`](https://github.com/remirror/remirror/commit/aa27e96853aaaa701409a04e9b5135c94c371044), [`c8239120`](https://github.com/remirror/remirror/commit/c823912099e9906a21a04bd80d92bc89e251bd37), [`a830c70f`](https://github.com/remirror/remirror/commit/a830c70f76a5021c955e9cbba26b86e2db0333e3), [`5786901c`](https://github.com/remirror/remirror/commit/5786901c58d717c0921415f7bfd1f480c39a44f3), [`bed5a9e3`](https://github.com/remirror/remirror/commit/bed5a9e37026dcbdee323c921f5c05e15d49c93d)]:
+  - @remirror/core@1.0.0-next.32
+  - @remirror/pm@1.0.0-next.32
+
 ## 1.0.0-next.31
 
 > 2020-09-03

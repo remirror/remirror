@@ -1,5 +1,82 @@
 # @remirror/core
 
+## 1.0.0-next.32
+
+> 2020-09-05
+
+### Major Changes
+
+- [`c8239120`](https://github.com/remirror/remirror/commit/c823912099e9906a21a04bd80d92bc89e251bd37) [#646](https://github.com/remirror/remirror/pull/646) Thanks [@ifiokjr](https://github.com/ifiokjr)! - TypeScript 4.0.2 is now the minimum supported version.
+
+### Minor Changes
+
+- [`5786901c`](https://github.com/remirror/remirror/commit/5786901c58d717c0921415f7bfd1f480c39a44f3) [#645](https://github.com/remirror/remirror/pull/645) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add support for prioritized keymaps. It's now possible to make sure that a hook which consumes `useKeymap` runs before the extension keybindings.
+
+  ```ts
+  import React from 'react';
+  import { ExtensionPriority } from 'remirror/core';
+  import { useKeymap } from 'remirror/react/hooks';
+
+  const KeymapHook = () => {
+    // Make sure this keybinding group is run first!
+    useKeymap({ Enter: () => doSomething() }, ExtensionPriority.Highest);
+
+    // This one we don't care about 🤷‍♀️
+    useKeymap({ 'Shift-Delete': () => notImportant() }, ExtensionPriority.Lowest);
+
+    return <div />;
+  };
+  ```
+
+  Here is a breakdown of the default priorities when consuming keymaps.
+
+  - Hooks within `remirror/react/hooks` which consume `useKeymap` have a priority of `ExtensionPriority.High`.
+  - `useKeymap` is given a priority of `ExtensionPriority.Medium`.
+  - The `createKeymap` method for extensions is given a priority of `ExtensionPriority.Default`.
+  - The `baseKeymap` which is added by default is given a priority of `ExtensionPriority.Low`.
+
+  To change the default priority of the `createKeymap` method in a custom extension wrap the `KeyBindings` return in a tuple with the priority as the first parameter.
+
+  ```ts
+  import { PlainExtension, KeyBindingsTuple, ExtensionPriority, KeyBindings } from 'remirror/core';
+
+  class CustomExtension extends PlainExtension {
+    get name() {
+      return 'custom' as const;
+    }
+
+    createKeymap(): KeyBindingsTuple {
+      const bindings = {
+        Enter: () => return true,
+        Backspace: () => return true,
+      }
+
+      return [ExtensionPriority.High, bindings];
+    }
+  }
+  ```
+
+* [`aa27e968`](https://github.com/remirror/remirror/commit/aa27e96853aaaa701409a04e9b5135c94c371044) [#635](https://github.com/remirror/remirror/pull/635) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add `onError` and `stringHandler` methods to the `Remirror.ManagerSettings`.
+
+- [`a830c70f`](https://github.com/remirror/remirror/commit/a830c70f76a5021c955e9cbba26b86e2db0333e3) [#633](https://github.com/remirror/remirror/pull/633) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Make `focus` command chainable and add `manager.tr` property for creating chainable commands. This means that the `focus` method returned by `useRemirror()` can now be safely used within a controlled editor. It uses the shared chainable transaction so that the state update does not override other state updates.
+
+* [`bed5a9e3`](https://github.com/remirror/remirror/commit/bed5a9e37026dcbdee323c921f5c05e15d49c93d) [#616](https://github.com/remirror/remirror/pull/616) Thanks [@ankon](https://github.com/ankon)! - Optionally allow to style the currently selected text
+
+  This adds a new option for the builtin preset, `persistentSelectionClass`. If that is set to a valid CSS class name any selection in the editor will be decorated with this class.
+
+  This can be used to keep an indication for the current selection even when the focus changes away from the editor.
+
+### Patch Changes
+
+- [`5786901c`](https://github.com/remirror/remirror/commit/5786901c58d717c0921415f7bfd1f480c39a44f3) [#645](https://github.com/remirror/remirror/pull/645) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix broken styles for firefox as raised on **discord**.
+
+- Updated dependencies [[`a830c70f`](https://github.com/remirror/remirror/commit/a830c70f76a5021c955e9cbba26b86e2db0333e3), [`e7b0bb0f`](https://github.com/remirror/remirror/commit/e7b0bb0ffdb7e2d6ac6be38baadde4a4dd402847), [`aa27e968`](https://github.com/remirror/remirror/commit/aa27e96853aaaa701409a04e9b5135c94c371044), [`a830c70f`](https://github.com/remirror/remirror/commit/a830c70f76a5021c955e9cbba26b86e2db0333e3)]:
+  - @remirror/core-constants@1.0.0-next.32
+  - @remirror/core-utils@1.0.0-next.32
+  - @remirror/core-helpers@1.0.0-next.32
+  - @remirror/core-types@1.0.0-next.32
+  - @remirror/pm@1.0.0-next.32
+
 ## 1.0.0-next.31
 
 > 2020-09-03

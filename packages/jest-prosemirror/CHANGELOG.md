@@ -1,5 +1,19 @@
 # jest-prosemirror
 
+## 1.0.0-next.32
+
+> 2020-09-05
+
+### Patch Changes
+
+- Updated dependencies [[`a830c70f`](https://github.com/remirror/remirror/commit/a830c70f76a5021c955e9cbba26b86e2db0333e3), [`e7b0bb0f`](https://github.com/remirror/remirror/commit/e7b0bb0ffdb7e2d6ac6be38baadde4a4dd402847), [`aa27e968`](https://github.com/remirror/remirror/commit/aa27e96853aaaa701409a04e9b5135c94c371044), [`a830c70f`](https://github.com/remirror/remirror/commit/a830c70f76a5021c955e9cbba26b86e2db0333e3)]:
+  - @remirror/core-constants@1.0.0-next.32
+  - @remirror/core-utils@1.0.0-next.32
+  - @remirror/core-helpers@1.0.0-next.32
+  - @remirror/core-types@1.0.0-next.32
+  - test-keyboard@1.0.0-next.32
+  - @remirror/pm@1.0.0-next.32
+
 ## 1.0.0-next.31
 
 > 2020-09-03

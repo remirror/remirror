@@ -1,5 +1,74 @@
 # @remirror/react-hooks
 
+## 1.0.0-next.32
+
+> 2020-09-05
+
+### Minor Changes
+
+- [`5786901c`](https://github.com/remirror/remirror/commit/5786901c58d717c0921415f7bfd1f480c39a44f3) [#645](https://github.com/remirror/remirror/pull/645) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add support for prioritized keymaps. It's now possible to make sure that a hook which consumes `useKeymap` runs before the extension keybindings.
+
+  ```ts
+  import React from 'react';
+  import { ExtensionPriority } from 'remirror/core';
+  import { useKeymap } from 'remirror/react/hooks';
+
+  const KeymapHook = () => {
+    // Make sure this keybinding group is run first!
+    useKeymap({ Enter: () => doSomething() }, ExtensionPriority.Highest);
+
+    // This one we don't care about 🤷‍♀️
+    useKeymap({ 'Shift-Delete': () => notImportant() }, ExtensionPriority.Lowest);
+
+    return <div />;
+  };
+  ```
+
+  Here is a breakdown of the default priorities when consuming keymaps.
+
+  - Hooks within `remirror/react/hooks` which consume `useKeymap` have a priority of `ExtensionPriority.High`.
+  - `useKeymap` is given a priority of `ExtensionPriority.Medium`.
+  - The `createKeymap` method for extensions is given a priority of `ExtensionPriority.Default`.
+  - The `baseKeymap` which is added by default is given a priority of `ExtensionPriority.Low`.
+
+  To change the default priority of the `createKeymap` method in a custom extension wrap the `KeyBindings` return in a tuple with the priority as the first parameter.
+
+  ```ts
+  import { PlainExtension, KeyBindingsTuple, ExtensionPriority, KeyBindings } from 'remirror/core';
+
+  class CustomExtension extends PlainExtension {
+    get name() {
+      return 'custom' as const;
+    }
+
+    createKeymap(): KeyBindingsTuple {
+      const bindings = {
+        Enter: () => return true,
+        Backspace: () => return true,
+      }
+
+      return [ExtensionPriority.High, bindings];
+    }
+  }
+  ```
+
+### Patch Changes
+
+- [`28d1fd48`](https://github.com/remirror/remirror/commit/28d1fd486f1c73d66d6c678821cfa744751250b8) [#642](https://github.com/remirror/remirror/pull/642) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix issue with `useEmoji`, `useKeymap` and `useEvents` when used together with `useRemirror({ autoUpdate: true })` causing an infinite loop.
+
+- Updated dependencies [[`55e11ba3`](https://github.com/remirror/remirror/commit/55e11ba3515d54dda1352a15c4e86b85fb587016), [`28d1fd48`](https://github.com/remirror/remirror/commit/28d1fd486f1c73d66d6c678821cfa744751250b8), [`5786901c`](https://github.com/remirror/remirror/commit/5786901c58d717c0921415f7bfd1f480c39a44f3), [`e7b0bb0f`](https://github.com/remirror/remirror/commit/e7b0bb0ffdb7e2d6ac6be38baadde4a4dd402847), [`aa27e968`](https://github.com/remirror/remirror/commit/aa27e96853aaaa701409a04e9b5135c94c371044), [`c8239120`](https://github.com/remirror/remirror/commit/c823912099e9906a21a04bd80d92bc89e251bd37), [`a830c70f`](https://github.com/remirror/remirror/commit/a830c70f76a5021c955e9cbba26b86e2db0333e3), [`5786901c`](https://github.com/remirror/remirror/commit/5786901c58d717c0921415f7bfd1f480c39a44f3), [`bed5a9e3`](https://github.com/remirror/remirror/commit/bed5a9e37026dcbdee323c921f5c05e15d49c93d), [`5786901c`](https://github.com/remirror/remirror/commit/5786901c58d717c0921415f7bfd1f480c39a44f3)]:
+  - @remirror/extension-mention-atom@1.0.0-next.32
+  - @remirror/react@1.0.0-next.32
+  - @remirror/core@1.0.0-next.32
+  - @remirror/extension-positioner@1.0.0-next.32
+  - @remirror/react-utils@1.0.0-next.32
+  - @remirror/extension-emoji@1.0.0-next.32
+  - @remirror/extension-events@1.0.0-next.32
+  - @remirror/extension-history@1.0.0-next.32
+  - @remirror/extension-mention@1.0.0-next.32
+  - @remirror/i18n@1.0.0-next.32
+  - @remirror/pm@1.0.0-next.32
+
 ## 1.0.0-next.31
 
 > 2020-09-03

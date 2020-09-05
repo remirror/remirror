@@ -1,5 +1,19 @@
 # @remirror/core-helpers
 
+## 1.0.0-next.32
+
+> 2020-09-05
+
+### Minor Changes
+
+- [`a830c70f`](https://github.com/remirror/remirror/commit/a830c70f76a5021c955e9cbba26b86e2db0333e3) [#633](https://github.com/remirror/remirror/pull/633) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Make `focus` command chainable and add `manager.tr` property for creating chainable commands. This means that the `focus` method returned by `useRemirror()` can now be safely used within a controlled editor. It uses the shared chainable transaction so that the state update does not override other state updates.
+
+### Patch Changes
+
+- Updated dependencies [[`a830c70f`](https://github.com/remirror/remirror/commit/a830c70f76a5021c955e9cbba26b86e2db0333e3)]:
+  - @remirror/core-constants@1.0.0-next.32
+  - @remirror/core-types@1.0.0-next.32
+
 ## 1.0.0-next.31
 
 > 2020-09-03

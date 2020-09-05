@@ -1,5 +1,14 @@
 # @remirror/pm
 
+## 1.0.0-next.32
+
+> 2020-09-05
+
+### Patch Changes
+
+- Updated dependencies []:
+  - prosemirror-suggest@1.0.0-next.32
+
 ## 1.0.0-next.28
 
 > 2020-08-27
