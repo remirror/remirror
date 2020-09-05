@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react';
 
-import type { KeyBindings, Replace } from '@remirror/core';
+import { ExtensionPriority, KeyBindings, Replace } from '@remirror/core';
 import type {
   MentionChangeHandler,
   MentionChangeHandlerCommand,
@@ -215,7 +215,7 @@ function useMentionKeyBindings(
   );
 
   // Attach the keybindings to the editor.
-  useKeymap(bindings);
+  useKeymap(bindings, ExtensionPriority.High);
 }
 
 type SetMentionState = Dispatch<SetStateAction<MentionState | null>>;

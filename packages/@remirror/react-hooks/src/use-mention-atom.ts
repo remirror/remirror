@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react';
 
-import type { KeyBindings } from '@remirror/core';
+import { ExtensionPriority, KeyBindings } from '@remirror/core';
 import {
   MentionAtomChangeHandler,
   MentionAtomExtension,
@@ -185,7 +185,7 @@ function useMentionAtomKeyBindings<
   );
 
   // Attach the keybindings to the editor.
-  useKeymap(bindings);
+  useKeymap(bindings, ExtensionPriority.High);
 }
 
 type SetMentionAtomState<
