@@ -1,5 +1,13 @@
 # @remirror/core-constants
 
+## 1.0.0-next.32
+
+> 2020-09-05
+
+### Patch Changes
+
+- [`a830c70f`](https://github.com/remirror/remirror/commit/a830c70f76a5021c955e9cbba26b86e2db0333e3) [#633](https://github.com/remirror/remirror/pull/633) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix missing version bump from last release.
+
 ## 1.0.0-next.26
 
 > 2020-08-24

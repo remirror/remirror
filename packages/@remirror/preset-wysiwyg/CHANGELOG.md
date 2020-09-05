@@ -1,5 +1,37 @@
 # @remirror/preset-wysiwyg
 
+## 1.0.0-next.32
+
+> 2020-09-05
+
+### Patch Changes
+
+- Updated dependencies [[`5786901c`](https://github.com/remirror/remirror/commit/5786901c58d717c0921415f7bfd1f480c39a44f3), [`e7b0bb0f`](https://github.com/remirror/remirror/commit/e7b0bb0ffdb7e2d6ac6be38baadde4a4dd402847), [`aa27e968`](https://github.com/remirror/remirror/commit/aa27e96853aaaa701409a04e9b5135c94c371044), [`c8239120`](https://github.com/remirror/remirror/commit/c823912099e9906a21a04bd80d92bc89e251bd37), [`a830c70f`](https://github.com/remirror/remirror/commit/a830c70f76a5021c955e9cbba26b86e2db0333e3), [`5786901c`](https://github.com/remirror/remirror/commit/5786901c58d717c0921415f7bfd1f480c39a44f3), [`3bf621c5`](https://github.com/remirror/remirror/commit/3bf621c57086f8de8084e9f2edba6b2a5c2dc0db), [`bed5a9e3`](https://github.com/remirror/remirror/commit/bed5a9e37026dcbdee323c921f5c05e15d49c93d)]:
+  - @remirror/core@1.0.0-next.32
+  - @remirror/extension-horizontal-rule@1.0.0-next.32
+  - @remirror/extension-code-block@1.0.0-next.32
+  - @remirror/extension-bidi@1.0.0-next.32
+  - @remirror/extension-blockquote@1.0.0-next.32
+  - @remirror/extension-bold@1.0.0-next.32
+  - @remirror/extension-code@1.0.0-next.32
+  - @remirror/extension-drop-cursor@1.0.0-next.32
+  - @remirror/extension-epic-mode@1.0.0-next.32
+  - @remirror/extension-gap-cursor@1.0.0-next.32
+  - @remirror/extension-hard-break@1.0.0-next.32
+  - @remirror/extension-heading@1.0.0-next.32
+  - @remirror/extension-image@1.0.0-next.32
+  - @remirror/extension-italic@1.0.0-next.32
+  - @remirror/extension-link@1.0.0-next.32
+  - @remirror/extension-search@1.0.0-next.32
+  - @remirror/extension-strike@1.0.0-next.32
+  - @remirror/extension-trailing-node@1.0.0-next.32
+  - @remirror/extension-underline@1.0.0-next.32
+  - @remirror/preset-core@1.0.0-next.32
+  - @remirror/preset-embed@1.0.0-next.32
+  - @remirror/preset-list@1.0.0-next.32
+  - @remirror/preset-table@1.0.0-next.32
+  - @remirror/pm@1.0.0-next.32
+
 ## 1.0.0-next.31
 
 > 2020-09-03

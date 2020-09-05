@@ -1,5 +1,73 @@
 # remirror
 
+## 1.0.0-next.32
+
+> 2020-09-05
+
+### Major Changes
+
+- [`c8239120`](https://github.com/remirror/remirror/commit/c823912099e9906a21a04bd80d92bc89e251bd37) [#646](https://github.com/remirror/remirror/pull/646) Thanks [@ifiokjr](https://github.com/ifiokjr)! - TypeScript 4.0.2 is now the minimum supported version.
+
+### Patch Changes
+
+- Updated dependencies [[`55e11ba3`](https://github.com/remirror/remirror/commit/55e11ba3515d54dda1352a15c4e86b85fb587016), [`28d1fd48`](https://github.com/remirror/remirror/commit/28d1fd486f1c73d66d6c678821cfa744751250b8), [`a830c70f`](https://github.com/remirror/remirror/commit/a830c70f76a5021c955e9cbba26b86e2db0333e3), [`5786901c`](https://github.com/remirror/remirror/commit/5786901c58d717c0921415f7bfd1f480c39a44f3), [`e7b0bb0f`](https://github.com/remirror/remirror/commit/e7b0bb0ffdb7e2d6ac6be38baadde4a4dd402847), [`e7b0bb0f`](https://github.com/remirror/remirror/commit/e7b0bb0ffdb7e2d6ac6be38baadde4a4dd402847), [`28d1fd48`](https://github.com/remirror/remirror/commit/28d1fd486f1c73d66d6c678821cfa744751250b8), [`aa27e968`](https://github.com/remirror/remirror/commit/aa27e96853aaaa701409a04e9b5135c94c371044), [`c8239120`](https://github.com/remirror/remirror/commit/c823912099e9906a21a04bd80d92bc89e251bd37), [`a830c70f`](https://github.com/remirror/remirror/commit/a830c70f76a5021c955e9cbba26b86e2db0333e3), [`5786901c`](https://github.com/remirror/remirror/commit/5786901c58d717c0921415f7bfd1f480c39a44f3), [`3bf621c5`](https://github.com/remirror/remirror/commit/3bf621c57086f8de8084e9f2edba6b2a5c2dc0db), [`bed5a9e3`](https://github.com/remirror/remirror/commit/bed5a9e37026dcbdee323c921f5c05e15d49c93d), [`5786901c`](https://github.com/remirror/remirror/commit/5786901c58d717c0921415f7bfd1f480c39a44f3)]:
+  - @remirror/extension-mention-atom@1.0.0-next.32
+  - @remirror/react@1.0.0-next.32
+  - @remirror/core-constants@1.0.0-next.32
+  - @remirror/core@1.0.0-next.32
+  - @remirror/react-hooks@1.0.0-next.32
+  - @remirror/core-utils@1.0.0-next.32
+  - @remirror/extension-positioner@1.0.0-next.32
+  - @remirror/extension-horizontal-rule@1.0.0-next.32
+  - @remirror/core-helpers@1.0.0-next.32
+  - @remirror/extension-code-block@1.0.0-next.32
+  - @remirror/react-social@1.0.0-next.32
+  - @remirror/react-wysiwyg@1.0.0-next.32
+  - @remirror/core-types@1.0.0-next.32
+  - @remirror/react-utils@1.0.0-next.32
+  - @remirror/dom@1.0.0-next.32
+  - @remirror/extension-annotation@1.0.0-next.32
+  - @remirror/extension-auto-link@1.0.0-next.32
+  - @remirror/extension-bidi@1.0.0-next.32
+  - @remirror/extension-blockquote@1.0.0-next.32
+  - @remirror/extension-bold@1.0.0-next.32
+  - @remirror/extension-code@1.0.0-next.32
+  - @remirror/extension-collaboration@1.0.0-next.32
+  - @remirror/extension-diff@1.0.0-next.32
+  - @remirror/extension-doc@1.0.0-next.32
+  - @remirror/extension-drop-cursor@1.0.0-next.32
+  - @remirror/extension-emoji@1.0.0-next.32
+  - @remirror/extension-epic-mode@1.0.0-next.32
+  - @remirror/extension-events@1.0.0-next.32
+  - @remirror/extension-gap-cursor@1.0.0-next.32
+  - @remirror/extension-hard-break@1.0.0-next.32
+  - @remirror/extension-heading@1.0.0-next.32
+  - @remirror/extension-history@1.0.0-next.32
+  - @remirror/extension-image@1.0.0-next.32
+  - @remirror/extension-italic@1.0.0-next.32
+  - @remirror/extension-link@1.0.0-next.32
+  - @remirror/extension-mention@1.0.0-next.32
+  - @remirror/extension-paragraph@1.0.0-next.32
+  - @remirror/extension-placeholder@1.0.0-next.32
+  - @remirror/extension-position-tracker@1.0.0-next.32
+  - @remirror/extension-react-component@1.0.0-next.32
+  - @remirror/extension-react-ssr@1.0.0-next.32
+  - @remirror/extension-search@1.0.0-next.32
+  - @remirror/extension-strike@1.0.0-next.32
+  - @remirror/extension-text@1.0.0-next.32
+  - @remirror/extension-trailing-node@1.0.0-next.32
+  - @remirror/extension-underline@1.0.0-next.32
+  - @remirror/extension-yjs@1.0.0-next.32
+  - @remirror/preset-core@1.0.0-next.32
+  - @remirror/preset-embed@1.0.0-next.32
+  - @remirror/preset-list@1.0.0-next.32
+  - @remirror/preset-react@1.0.0-next.32
+  - @remirror/preset-social@1.0.0-next.32
+  - @remirror/preset-table@1.0.0-next.32
+  - @remirror/preset-wysiwyg@1.0.0-next.32
+  - @remirror/theme@1.0.0-next.32
+  - @remirror/pm@1.0.0-next.32
+
 ## 1.0.0-next.31
 
 > 2020-09-03

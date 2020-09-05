@@ -1,5 +1,14 @@
 # @remirror/theme
 
+## 1.0.0-next.32
+
+> 2020-09-05
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.32
+
 ## 1.0.0-next.28
 
 > 2020-08-27

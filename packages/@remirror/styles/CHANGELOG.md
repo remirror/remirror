@@ -1,5 +1,13 @@
 # @remirror/styles
 
+## 1.0.0-next.32
+
+> 2020-09-05
+
+### Patch Changes
+
+- [`5786901c`](https://github.com/remirror/remirror/commit/5786901c58d717c0921415f7bfd1f480c39a44f3) [#645](https://github.com/remirror/remirror/pull/645) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix broken styles for firefox as raised on **discord**.
+
 ## 1.0.0-next.27
 
 > 2020-08-25
