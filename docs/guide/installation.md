@@ -30,14 +30,23 @@ import 'remirror/styles/all.css';
 ```
 
 ```ts
-// Or with emotion
+// Or with `@emotion/styled`
 import { AllStyledComponent } from '@remirror/styles/emotion';
 ```
 
 ```ts
-// Or with styled components
+// Or with `styled-components`
 import { AllStyledComponent } from '@remirror/styles/styled-components';
 ```
+
+```ts
+// Or with `emotion` using the DOM
+import { addStylesToElement, allStyles } from 'remirror/styles/dom';
+
+cont wrapperElement = document.createElement('div');
+addStylesToElement(wrapperElement, allStyles);
+```
+
 In order to use the `styled-components` or `emotion` variants you will need to also install `@remirror/styles`.
 
 ## Browser support
