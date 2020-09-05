@@ -29,7 +29,7 @@ Remirror requires styles for the editor to function correctly across different b
 import 'remirror/styles/all.css';
 ```
 
-```Javascript
+```ts
 // Or with emotion
 import { AllStyledComponent } from '@remirror/styles/emotion';
 ```
