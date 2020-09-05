@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-annotation @remirror/pm
+yarn add @remirror/extension-annotation@next @remirror/extension-positioner@next @remirror/pm@next
 
 # pnpm
-pnpm add @remirror/extension-annotation @remirror/pm
+pnpm add @remirror/extension-annotation@next @remirror/extension-positioner@next @remirror/pm@next
 
 # npm
-npm install @remirror/extension-annotation @remirror/pm
+npm install @remirror/extension-annotation@next @remirror/extension-positioner@next @remirror/pm@next
 ```
 
 ## Usage
