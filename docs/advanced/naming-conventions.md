@@ -1,6 +1,9 @@
 ---
+hide_title: true
 title: Naming Conventions
 ---
+
+# Naming Conventions
 
 This document is for extension developers who wish to create their own extensions.
 

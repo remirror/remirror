@@ -1,6 +1,9 @@
 ---
+hide_title: true
 title: Extension
 ---
+
+# Extension
 
 Extensions manage similar concerns. It allows for grouping items that affect:
 
@@ -23,7 +26,7 @@ Extensions are able to completely customise the behaviour of the editor via thes
 ### `onCreate`
 
 ```ts
-onCreate(extensions: readonly AnyExtension[]): void;
+function onCreate(): void;
 ```
 
 This handler is called when the `RemirrorManager` is first created. Since it is called as soon as the manager is created some methods may not be available in the extension store. When accessing methods on `this.store` be sure to check their documentation for when they become available. It is recommended that you don't use this method unless absolutely required.
@@ -31,7 +34,7 @@ This handler is called when the `RemirrorManager` is first created. Since it is 
 ### `onView`
 
 ```ts
-onView( extensions: readonly AnyExtension[], view: EditorView<EditorSchema>): void
+function onView(view: EditorView<EditorSchema>): void;
 ```
 
 This lifecycle method is called when the `EditorView` is first added by the UI layer. This is the lifecycle method where commands and editor helpers are added.
@@ -39,7 +42,7 @@ This lifecycle method is called when the `EditorView` is first added by the UI l
 ### `onStateUpdate`
 
 ```ts
-onStateUpdate(parameter: import('remirror/core').StateUpdateLifecycleParameter): void
+function onStateUpdate(parameter: import('remirror/core').StateUpdateLifecycleParameter): void;
 ```
 
 This is called whenever a transaction successfully updates the `EditorState`. For controlled component this is called whenever the state value is updated.
@@ -47,7 +50,7 @@ This is called whenever a transaction successfully updates the `EditorState`. Fo
 ### `onDestroy`
 
 ```ts
-onDestroy(extensions: readonly AnyExtension[]): void
+function onDestroy(): void;
 ```
 
 This is called when the `RemirrorManager` is being destroyed. You can use this method if you need to clean up any externally created handlers in order to prevent memory leaks.
@@ -58,13 +61,13 @@ Options are used to configure the extension at runtime. They come in four differ
 
 ```ts
 import {
-  Static,
-  Dynamic,
-  Handler,
   CustomHandler,
+  Dynamic,
   extensionDecoration,
-  PlainExtension,
   ExtensionPriority,
+  Handler,
+  PlainExtension,
+  Static,
 } from 'remirror/core';
 
 interface ExampleOptions {
@@ -178,7 +181,7 @@ exampleExtension.setOptions({ type: 'not-awesome' });
 To get them to work we would change the above example extension implentation to look like the following.
 
 ```ts
-import { StateUpdateLifecycleParameter, hasTransactionChanged } from 'remirror/core';
+import { hasTransactionChanged, StateUpdateLifecycleParameter } from 'remirror/core';
 import { hasStateChanged } from 'remirror/extension-positioner';
 
 @extensionDecorator<ExampleOptions>({

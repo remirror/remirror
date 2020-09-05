@@ -15,6 +15,7 @@ function readPackage(pkg, context) {
   const updatePackage = createPackageUpdater(pkg, context);
 
   updatePackage({ name: 'serialize-javascript', version: '^4.0.0' });
+  updatePackage({ name: 'bl', version: '>=4.0.3' });
 
   return pkg;
 }

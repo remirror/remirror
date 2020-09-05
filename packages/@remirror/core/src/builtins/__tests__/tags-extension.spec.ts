@@ -1,6 +1,4 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-
-import { hideConsoleError } from '@remirror/testing';
 import {
   ApplySchemaAttributes,
   extensionDecorator,
@@ -8,6 +6,8 @@ import {
   mutateTag,
   NodeExtension,
 } from 'remirror/core';
+
+import { hideConsoleError } from '@remirror/testing';
 
 import { TagsExtension } from '..';
 

@@ -2,9 +2,9 @@ import assert from 'assert';
 import { EventEmitter } from 'events';
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
 import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { EditorState } from 'remirror/core';
 
 import { debounce } from '@remirror/core-helpers';
-import type { EditorState } from 'remirror/core';
 
 import CodeEditor from './code-editor';
 import { PlaygroundContext, PlaygroundContextObject } from './context';
@@ -404,8 +404,7 @@ function decode(data: string) {
     throw new Error('Failed to decode');
   }
 
-  const obj = JSON.parse(json);
-  return obj;
+  return JSON.parse(json);
 }
 
 /**
@@ -413,6 +412,5 @@ function decode(data: string) {
  */
 function encode(obj: object): string {
   const json = JSON.stringify(obj);
-  const data = compressToEncodedURIComponent(json);
-  return data;
+  return compressToEncodedURIComponent(json);
 }

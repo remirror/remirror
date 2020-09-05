@@ -56,12 +56,14 @@ describe('Social Showcase', () => {
       await $editor.type('this.com is test.com');
       await press({ key: 'Home' }); // ? This does nothing on Firefox
       await type({ text: 'split.com ' });
+      // eslint-disable-next-line jest/no-standalone-expect
       await expect($innerHtml(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchSnapshot();
 
       await press({ key: 'ArrowUp' });
       await press({ key: 'End' });
       await press({ key: 'Backspace', count: 2 });
       await type({ text: '..no .co more url please' });
+      // eslint-disable-next-line jest/no-standalone-expect
       await expect(innerHtml(FIRST_PARAGRAPH_SELECTOR)).resolves.toBe(
         `this is the first url.c..no .co more url please`,
       );

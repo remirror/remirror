@@ -17,7 +17,7 @@ test('it supports <ProsemirrorDevTools />', () => {
   );
   const element = baseElement.querySelector('.__prosemirror-dev-tools__');
 
-  expect(element).toBeTruthy();
+  expect(element).toBeInTheDocument();
 });
 
 test('it unmounts <ProsemirrorDevTools />', () => {
@@ -36,5 +36,5 @@ test('it unmounts <ProsemirrorDevTools />', () => {
   );
   const element = baseElement.querySelector('.__prosemirror-dev-tools__');
 
-  expect(element).toBeFalsy();
+  expect(element).not.toBeInTheDocument();
 });

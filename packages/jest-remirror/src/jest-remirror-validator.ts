@@ -30,7 +30,8 @@ export function extensionValidityTest<Type extends AnyExtensionConstructor>(
 ): void {
   describe(`\`${Extension.name}\``, () => {
     it(`has the right properties`, () => {
-      expect(Extension.name.endsWith('Extension'));
+      expect(Extension.name).toEndWith('Extension');
+
       const extension = new Extension(options);
       expect(extension.name).toBe(Extension.instanceName);
 
@@ -38,7 +39,7 @@ export function extensionValidityTest<Type extends AnyExtensionConstructor>(
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
         extension.name = '_CHANGE_';
-      }).toThrowError();
+      }).toThrow();
     });
 
     it('can safely set empty options', () => {
@@ -134,10 +135,11 @@ export function extensionValidityTest<Type extends AnyExtensionConstructor>(
 export function presetValidityTest<Type extends AnyPresetConstructor>(
   Preset: Type,
   ...[options]: PresetConstructorParameter<OptionsOfConstructor<Type>>
-) {
+): void {
   describe(`\`${Preset.name}\``, () => {
     it(`has the right properties`, () => {
-      expect(Preset.name.endsWith('Presets'));
+      expect(Preset.name).toEndWith('Preset');
+
       const preset = new Preset(options);
       expect(preset.name).toBe(Preset.instanceName);
 
@@ -145,7 +147,7 @@ export function presetValidityTest<Type extends AnyPresetConstructor>(
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
         preset.name = 'change';
-      }).toThrowError();
+      }).toThrow();
     });
 
     it('can safely set empty options', () => {

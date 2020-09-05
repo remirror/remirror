@@ -427,7 +427,7 @@ describe('validity', () => {
     expect(onChange).not.toHaveBeenCalled();
   });
 
-  it('it rejects `invalidMarks` option when covering part of the match', () => {
+  it('rejects `invalidMarks` option when covering part of the match', () => {
     const onChange: SuggestChangeHandler = jest.fn();
     const plugin = suggest({ char: '@', name: 'at', onChange, invalidMarks: ['strong'] });
 

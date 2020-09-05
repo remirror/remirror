@@ -3,7 +3,6 @@ export { I18nProvider, RemirrorProvider, ThemeProvider } from './components';
 
 export type {
   BaseReactCombinedUnion,
-  DOMRectReadOnlyLike,
   UseExtensionCallback,
   UsePositionerReturn,
   UseMultiPositionerReturn,
@@ -15,7 +14,6 @@ export {
   useForceUpdate,
   useI18n,
   useManager,
-  useMeasure,
   useMultiPositioner,
   usePositioner,
   usePreset,

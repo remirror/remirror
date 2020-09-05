@@ -25,7 +25,7 @@ describe('schema', () => {
     expect(toHtml({ node: h3('Heading'), schema })).toBe('<h3>Heading</h3>');
   });
 
-  it('it can parse content', () => {
+  it('can parse content', () => {
     const node = fromHtml({ content: '<h2>Hello</h2>', schema });
     const expected = doc(h2('Hello'));
 

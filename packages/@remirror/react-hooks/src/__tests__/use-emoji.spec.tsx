@@ -1,6 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import { RemirrorTestChain } from 'jest-remirror';
 import React, { FC } from 'react';
+import { EmojiExtension } from 'remirror/extension/emoji';
 
 import {
   act as renderAct,
@@ -9,7 +10,6 @@ import {
   strictRender,
   useRemirror,
 } from '@remirror/testing/react';
-import { EmojiExtension } from 'remirror/extension/emoji';
 
 import { EmojiState, useEmoji } from '../use-emoji';
 
@@ -55,7 +55,7 @@ describe('useEmoji', () => {
       wrapper: Wrapper,
     });
 
-    expect(result.current).toEqual(null);
+    expect(result.current).toBeNull();
 
     act(() => {
       chain.insertText(':a');

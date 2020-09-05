@@ -29,9 +29,9 @@ npm install @remirror/extension-bold@next @remirror/pm@next # npm
 When added to your editor it will provide the `toggleBold` command which makes the text under the cursor / or at the provided position range bold.
 
 ```ts
-import { RemirrorManager, ExtensionPriority } from '@remirror/core';
-import { CorePreset } from '@remirror/preset-core';
+import { ExtensionPriority, RemirrorManager } from '@remirror/core';
 import { BoldExtension } from '@remirror/extension-bold';
+import { CorePreset } from '@remirror/preset-core';
 
 // Create the bold extension
 const boldExtension = new BoldExtension({ weight: '500' });
@@ -42,7 +42,7 @@ const manager = RemirrorManager.create([boldExtension, corePreset]);
 
 // Pass the dom element to the editor. If you are using `@remirror/react` this is done for you.
 const element = document.createElement('div');
-document.body.appendChild(element);
+document.body.append(element);
 
 // Add the view to the editor manager.
 manager.addView(element);

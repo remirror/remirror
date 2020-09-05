@@ -1,7 +1,6 @@
 export { invariant, RemirrorError } from './core-errors';
 export {
   Cast,
-  Merge,
   bool,
   callIfDefined,
   camelCase,

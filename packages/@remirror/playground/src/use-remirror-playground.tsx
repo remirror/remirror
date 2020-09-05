@@ -1,5 +1,4 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
-
 import {
   AnyCombinedUnion,
   EditorState,
@@ -54,14 +53,13 @@ export function useRemirrorPlayground(
   }, [playground, value]);
 
   useEffect(() => {
-    const unlisten = playground.onContentChange((json) => {
+    return playground.onContentChange((json) => {
       const state = extensionManager.createState({
         content: json,
       });
       PERSIST.lastKnownGoodState = state;
       setValue(state);
     });
-    return unlisten;
   }, [playground, extensionManager]);
 
   return { value, onChange };

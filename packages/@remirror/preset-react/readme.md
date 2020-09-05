@@ -39,8 +39,8 @@ This preset adds
 
 ```ts
 import { RemirrorManager } from '@remirror/core';
-import { ReactPreset } from '@remirror/preset-react';
 import { CorePreset } from '@remirror/preset-core';
+import { ReactPreset } from '@remirror/preset-react';
 
 const reactPreset = new ReactPreset({ rootContent: 'block*' });
 
@@ -52,7 +52,7 @@ const manager = RemirrorManager.create([reactPreset]);
 
 // Pass the dom element to the editor. If you are using `@remirror/react` this is done for you.
 const element = document.createElement('div');
-document.body.appendChild(element);
+document.body.append(element);
 
 // Add the view to the editor manager.
 manager.addView(element);

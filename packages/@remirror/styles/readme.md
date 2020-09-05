@@ -70,7 +70,7 @@ npm install emotion
 This is useful when using the pure dom to control styles.
 
 ```ts
-import { createDomManager, createDomEditor } from 'remirror/dom';
+import { createDomEditor, createDomManager } from 'remirror/dom';
 import { BoldExtension } from 'remirror/extension/bold';
 import { addStylesToElement, allStyles } from 'remirror/styles/dom';
 
@@ -90,10 +90,13 @@ This is designed to be used in a react app that already consumes styled componen
 Make sure you have `styled-components` installed. And then import either the styled css or the styled component.
 
 ```tsx
-import { coreStyledCss, CoreStyledComponent } from '@remirror/styles/styled-components';
+import React from 'react';
+
+import { CoreStyledComponent, coreStyledCss } from '@remirror/styles/styled-components';
+
 import { MyEditor } from './my-editor';
 
-export const StyledWrapper = () => (
+const StyledWrapper = () => (
   <CoreStyledComponent>
     <MyEditor />
   </CoreStyledComponent>
@@ -107,10 +110,13 @@ The above will provide the styles to your editor component and since it is a sty
 This is designed to be used in a react app that already consumes uses `@emotion/core` and `@emotion/styled`. Make sure both of these are installed before getting started
 
 ```tsx
-import { coreStyledCss, CoreStyledComponent } from '@remirror/styles/emotion';
+import React from 'react';
+
+import { CoreStyledComponent, coreStyledCss } from '@remirror/styles/emotion';
+
 import { MyEditor } from './my-editor';
 
-export const StyledWrapper = () => (
+const StyledWrapper = () => (
   <CoreStyledComponent>
     <MyEditor />
   </CoreStyledComponent>
@@ -118,7 +124,3 @@ export const StyledWrapper = () => (
 ```
 
 This is very similar to the `styled-components` entry point and will provide the styles to your editor component.
-
-```
-
-```

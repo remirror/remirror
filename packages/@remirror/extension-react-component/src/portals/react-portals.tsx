@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import type { AnyCombinedUnion, FrameworkOutput } from 'remirror/core';
+import type { AnyCombinedUnion, FrameworkOutput } from '@remirror/core';
 
 import type { MountedPortal, PortalContainer, PortalMap } from './portal-container';
 

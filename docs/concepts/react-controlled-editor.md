@@ -1,6 +1,9 @@
 ---
+hide_title: true
 title: React controlled editor
 ---
+
+# React controlled editor
 
 There are times when you will want complete control over the content in your editor. For this reason remirror supports **controlled editors**. Setting up your editor like this is more complicated due to the asynchronous nature of react updates versus the synchronous nature of ProseMirror `dispatch`. It's easy to get yourself in trouble without taking care to understand the concepts. If in doubt, start with an uncontrolled editor and upgrade to **controlled** once you're more comfortable with `remirror`.
 
@@ -14,8 +17,8 @@ Get started in the usual way.
 
 ```tsx
 import React from 'react';
-import { RemirrorProvider, useRemirror, useManager } from 'remirror/react';
 import { BoldExtension } from 'remirror/extension/bold';
+import { RemirrorProvider, useManager, useRemirror } from 'remirror/react';
 
 // This is a function that returns the list of extensions and presets we want to
 // use. It's helpful to set up this way since the template can be reused
@@ -47,12 +50,11 @@ The main difference is that you will need to create the state value that is pass
 ```tsx
 // Add the `useState` hook to keep track of the state.
 import React, { useState } from 'react';
-import { RemirrorProvider, useRemirror, useManager } from 'remirror/react';
-import { BoldExtension } from 'remirror/extension/bold';
-
 // Add the `fromHtml` string handler import so that the initial state can be a
 // html string.
 import { fromHtml } from 'remirror/core';
+import { BoldExtension } from 'remirror/extension/bold';
+import { RemirrorProvider, useManager, useRemirror } from 'remirror/react';
 
 const extensionTemplate = () => [new BoldExtension()];
 
@@ -83,7 +85,7 @@ const EditorWrapper = () => {
   );
 };
 
-const Editor = () => {
+export const Editor = (): JSX.Element => {
   const { getRootProps } = useRemirror();
 
   return <div {...getRootProps()} />;
@@ -95,6 +97,11 @@ The editor now behaves in a similar way to what you'd expect from a non controll
 For example, the following change handler now intercepts the state update in order to insert `NO!!!` into the editor whenever the user types any content.
 
 ```tsx
+import React from 'react';
+import { RemirrorProvider, useManager, useRemirror } from 'remirror/react';
+
+import { Editor } from './editor';
+
 const EditorWrapper = () => {
   const manager = useManager(extensionTemplate);
 
@@ -143,10 +150,14 @@ I created a [controlled editor test](https://github.com/remirror/remirror/blob/7
 
 The advised workaround is to use `chained` commands.
 
-```ts
-const { chained } = useRemirror();
+```tsx
+import React from 'react';
 
-chained.toggleBold().toggleItalic().toggleUnderline().run();
+const ChainedButton = () => {
+  const { chained } = useRemirror();
+
+  return <button onClick={() => chained.toggleBold().toggleItalic().toggleUnderline().run()} />;
+};
 ```
 
 Chained commands allow composing different commands together that have been updated to work with the ProseMirror `transaction` rather than the fixed state. This means that each command adds new steps and when the `.run()` is called all these steps are dispatched at the same time.

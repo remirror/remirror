@@ -157,9 +157,9 @@
 
   ```tsx
   import React from 'react';
-  import { RemirrorProvider, InvalidContentHandler } from 'remirror/core';
-  import { RemirrorProvider, useManager } from 'remirror/react';
+  import { InvalidContentHandler, RemirrorProvider } from 'remirror/core';
   import { WysiwygPreset } from 'remirror/preset/wysiwyg';
+  import { RemirrorProvider, useManager } from 'remirror/react';
 
   const EditorWrapper = () => {
     const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {
@@ -738,10 +738,14 @@
 - 8f9eb16c: Enable `all` selection when setting initial content and focusing on the editor.
 
   ```tsx
+  import React from 'react';
   import { useRemirror } from 'remirror/react';
 
-  const { focus } = useRemirror();
-  focus('all');
+  const EditorButton = () => {
+    const { focus } = useRemirror();
+
+    return <button onClick={() => focus('all')} />;
+  };
   ```
 
 ### Patch Changes
@@ -909,7 +913,7 @@
   An example of creating a new positioner with the new api is below.
 
   ```ts
-  import { Positioner, Coords, hasStateChanged } from '@remirror/extension-positioner';
+  import { Coords, hasStateChanged, Positioner } from '@remirror/extension-positioner';
 
   export const cursorPopupPositioner = Positioner.create<Coords>({
     hasChanged: hasStateChanged,
@@ -1325,16 +1329,19 @@
   - Add `autoUpdate` option to `useRemirror` hook from `@remirror/react` which means that the context object returned by the hook is always up to date with the latest editor state. It will also cause the component to rerender so be careful to only use it when necessary.
 
   ```tsx
-  const { active, commands } = useRemirror({ autoUpdate: true });
+  import React from 'react';
+  const Editor = () => {
+    const { active, commands } = useRemirror({ autoUpdate: true });
 
-  return (
-    <button
-      onClick={() => commands.toggleBold}
-      style={{ fontWeight: active.bold() ? 'bold' : undefined }}
-    >
-      B
-    </button>
-  );
+    return (
+      <button
+        onClick={() => commands.toggleBold}
+        style={{ fontWeight: active.bold() ? 'bold' : undefined }}
+      >
+        B
+      </button>
+    );
+  };
   ```
 
   - Fix broken `onChangeHandler` parameter for the use `useRemirror` hook.

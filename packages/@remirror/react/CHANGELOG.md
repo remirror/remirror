@@ -324,7 +324,7 @@
   An example of creating a new positioner with the new api is below.
 
   ```ts
-  import { Positioner, Coords, hasStateChanged } from '@remirror/extension-positioner';
+  import { Coords, hasStateChanged, Positioner } from '@remirror/extension-positioner';
 
   export const cursorPopupPositioner = Positioner.create<Coords>({
     hasChanged: hasStateChanged,
@@ -536,16 +536,19 @@
   - Add `autoUpdate` option to `useRemirror` hook from `@remirror/react` which means that the context object returned by the hook is always up to date with the latest editor state. It will also cause the component to rerender so be careful to only use it when necessary.
 
   ```tsx
-  const { active, commands } = useRemirror({ autoUpdate: true });
+  import React from 'react';
+  const Editor = () => {
+    const { active, commands } = useRemirror({ autoUpdate: true });
 
-  return (
-    <button
-      onClick={() => commands.toggleBold}
-      style={{ fontWeight: active.bold() ? 'bold' : undefined }}
-    >
-      B
-    </button>
-  );
+    return (
+      <button
+        onClick={() => commands.toggleBold}
+        style={{ fontWeight: active.bold() ? 'bold' : undefined }}
+      >
+        B
+      </button>
+    );
+  };
   ```
 
   - Fix broken `onChangeHandler` parameter for the use `useRemirror` hook.
@@ -718,14 +721,15 @@
   To use this run
 
   ```tsx
-  import { useRemirrorContext } from '@remirror/react';
+  import React from 'react';
+  import { useRemirrorContext } from 'remirror/react';
 
   const MyEditor = () => {
     const { focus, getRootProps } = useRemirrorContext();
 
     useEffect(() => {
       focus('end'); // Autofocus to the end once
-    }, []);
+    }, [focus]);
   };
   return <div {...getRootProps()} />;
   ```

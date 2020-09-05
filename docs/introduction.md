@@ -3,11 +3,14 @@ id: introduction
 title: Introduction
 description: Welcome to the remirror documentation.
 slug: '/'
+hide_title: true
 ---
+
+# Introduction
 
 ## Motivation
 
-I started `remirror` as a challenge to myself. Would it be possible to build an editor that combined great performance with ease of use? I wanted something that allowed developers like myself to fall in love and feel playful even when working through deeply complex concepts. The editor would need to combine plug-and-play features, with ample room for customisation.
+I started **remirror** as a challenge to myself. Would it be possible to build an editor that combined great performance with ease of use? I wanted something that allowed developers like myself to fall in love and feel playful even when working through deeply complex concepts. The editor would need to combine plug-and-play features, with ample room for customisation.
 
 I also wanted to give users of all frameworks, the ability to build an editor by picking and choosing their desired building blocks.
 
@@ -24,8 +27,12 @@ import React from 'react';
 import { SocialEmojiComponent, SocialProvider } from 'remirror/react/social';
 
 const Editor = () => {
-  return <SocialProvider><SocialEmojiComponent></SocialProvider>
-}
+  return (
+    <SocialProvider>
+      <SocialEmojiComponent />
+    </SocialProvider>
+  );
+};
 ```
 
 With this tiny snippet your editor now supports a really nice ui element. And it's all customisable with ordinary `css`. No more fighting against yet another `CSS-in-JS` library.

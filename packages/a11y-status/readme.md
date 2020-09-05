@@ -27,8 +27,8 @@ Import the `setStatus` function from this library and then use the function to s
 ```ts
 import { setStatus } from 'a11y-status';
 
-const button = document.getElementById('insert-selection');
-const select = document.getElementById('selection');
+const button = document.querySelector('#insert-selection');
+const select = document.querySelector('#selection');
 
 button.addEventListener('click', (event) => {
   const itemName = select.value;

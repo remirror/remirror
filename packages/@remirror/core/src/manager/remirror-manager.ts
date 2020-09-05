@@ -162,7 +162,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   /**
    * The extension manager store.
    */
-  #store: Remirror.ManagerStore<Combined> = this.createInitialStore();
+  #store: Remirror.ManagerStore<Combined> = object();
 
   /**
    * The stage the manager is currently running.
@@ -444,14 +444,6 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
 
     this.#extensionStore[key] = value;
   };
-
-  /**
-   * Create the initial store.
-   */
-  private createInitialStore() {
-    const store: Remirror.ManagerStore<Combined> = object();
-    return store;
-  }
 
   /**
    * Create the initial store.

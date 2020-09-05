@@ -37,7 +37,7 @@ describe('char', () => {
     expect(events).toEqual(['keydown', 'keypress', 'keyup']);
   });
 
-  it('it should not fire keypress for meta characters', () => {
+  it('should not fire keypress for meta characters', () => {
     expect.assertions(3);
 
     const events: KeyboardEventName[] = [];
@@ -58,7 +58,7 @@ describe('char', () => {
     expect(events).toEqual(['keydown', 'keyup']);
   });
 
-  it('it should only fire keydown for Lock keys', () => {
+  it('should only fire keydown for Lock keys', () => {
     const events: KeyboardEventName[] = [];
     const text: SupportedCharacters = 'CapsLock';
 

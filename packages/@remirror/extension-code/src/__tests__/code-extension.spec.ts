@@ -25,7 +25,7 @@ describe('schema', () => {
     expect(toHtml({ node: p(code(expected)), schema })).toBe(`<p><code>${expected}</code></p>`);
   });
 
-  it('it can parse content', () => {
+  it('can parse content', () => {
     const { p, code, schema, doc } = codeTester();
     const parsedString = 'Test';
     const node = fromHtml({

@@ -1,6 +1,9 @@
 ---
 title: Tooling
+hide_title: true
 ---
+
+# Tooling
 
 This document is a brief breakdown of the tools used when contributing to remirror and why these choices where made.
 

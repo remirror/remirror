@@ -12,6 +12,7 @@ import {
 } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
+import { object } from '@remirror/core-helpers';
 import type { TextSelection } from '@remirror/pm/state';
 import {
   BlockquoteExtension,
@@ -160,12 +161,13 @@ describe('isProsemirrorNode', () => {
 
 describe('getMarkAttributes', () => {
   it('returns correct mark attrs', () => {
-    const attributes = { href: '/awesome', title: 'awesome' };
+    const attributes = object({ href: '/awesome', title: 'awesome' });
     const { aHref } = pm.builders(testSchema, {
       aHref: { markType: 'link', ...attributes },
     });
     const { state, schema } = createEditor(doc(p('a link', aHref('linked <cursor>here'))));
 
+    console.log(Object.keys(attributes), Object.keys(getMarkAttributes(state, schema.marks.link)));
     expect(getMarkAttributes(state, schema.marks.link)).toEqual(attributes);
   });
 
@@ -445,7 +447,7 @@ describe('toDOM', () => {
   });
 
   it('allows for custom document to be passed in', () => {
-    expect(toDom({ node, schema: testSchema, document: domino.createDocument() })).toBeTruthy();
+    expect(toDom({ node, schema: testSchema, document: domino.createDocument() })).toBeObject();
   });
 });
 

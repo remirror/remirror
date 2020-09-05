@@ -13,16 +13,6 @@ jobs:
       name: macOS
       vmImage: 'macOS-latest'
 
-# Cron jobs for scheduling builds
-schedules:
-  - cron: '0 0 * * *'
-    displayName: daily midnight build
-    branches:
-      include:
-        - main
-        - next
-    always: true
-
 # What triggers a new build
 trigger:
   - main

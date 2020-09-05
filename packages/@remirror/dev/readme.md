@@ -20,29 +20,4 @@ For in depth usage with proper code example see the [docs](https://remirror.io)
 
 The following will render the development view in your editor. For more information on what's possible see the [docs][prosemirror-dev-tools].
 
-```tsx
-import React from 'react';
-import { BoldExtension, ItalicExtension, UnderlineExtension } from '@remirror/core-extensions';
-import { ProsemirrorDevTools } from '@remirror/dev';
-import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@remirror/react';
-
-const MyEditor = () => {
-  return (
-    <RemirrorManager>
-      <RemirrorExtension Constructor={BoldExtension} />
-      <RemirrorExtension Constructor={ItalicExtension} />
-      <RemirrorExtension Constructor={UnderlineExtension} />
-      <ManagedRemirrorProvider
-        autoFocus={true}
-        attributes={{ 'data-testid': 'editor-instance' }}
-        editorStyles={editorStyles}
-      >
-        <InnerEditor />
-        <ProsemirrorDevTools />
-      </ManagedRemirrorProvider>
-    </RemirrorManager>
-  );
-};
-```
-
 [prosemirror-dev-tools]: https://github.com/d4rkr00t/prosemirror-dev-tools

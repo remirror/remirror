@@ -1,17 +1,21 @@
 ---
+hide_title: true
 title: Create an editor
 ---
+
+# Create an editor
 
 Creating an editor consists of two steps.
 
 1. Creating the wrapper with `RemirrorProvider` which sets up the editor functionality by passing in the extension manager.
 
 ```tsx
-import { CorePreset } from 'remirror/preset/core';
-import { RemirrorProvider, useManager } from 'remirror/react';
+import React from 'react';
 import { BoldExtension } from 'remirror/extension/bold';
 import { ItalicExtension } from 'remirror/extension/italic';
 import { UnderlineExtension } from 'remirror/extension/underline';
+import { CorePreset } from 'remirror/preset/core';
+import { RemirrorProvider, useManager } from 'remirror/react';
 
 import { Menu, TextEditor } from './my-editor';
 
@@ -37,7 +41,8 @@ const EditorWrapper = () => {
 2. Creating the inner editor which has access to the editor commands, functionality, updating dynamic props cursor position and more. This is where the editor specifics UI will live.
 
 ```tsx
-import { useRemirror } from '@remirror/react';
+import React from 'react';
+import { useRemirror } from 'remirror/react';
 
 const Menu = () => {
   const { commands, active } = useRemirror({ autoUpdate: true });
@@ -66,7 +71,7 @@ const Menu = () => {
   );
 };
 
-export const TextEditor = () => {
+const TextEditor = () => {
   const { getRootProps } = useRemirror();
 
   return <div {...getRootProps()} />;

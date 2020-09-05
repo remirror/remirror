@@ -1,5 +1,5 @@
 ---
-id: first-post
+slug: first-post
 title: First Post
 author: Ifiok Jr.
 author_title: Remirror Contributor

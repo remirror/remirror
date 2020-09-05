@@ -82,10 +82,14 @@
 - 8f9eb16c: Enable `all` selection when setting initial content and focusing on the editor.
 
   ```tsx
+  import React from 'react';
   import { useRemirror } from 'remirror/react';
 
-  const { focus } = useRemirror();
-  focus('all');
+  const EditorButton = () => {
+    const { focus } = useRemirror();
+
+    return <button onClick={() => focus('all')} />;
+  };
   ```
 
 ### Patch Changes
@@ -155,7 +159,7 @@
   The following code will add a decorator to the extension.
 
   ```ts
-  import { PlainExtension, ExtensionPriority, extensionDecorator } from 'remirror/core';
+  import { extensionDecorator, ExtensionPriority, PlainExtension } from 'remirror/core';
 
   interface ExampleOptions {
     color?: string;

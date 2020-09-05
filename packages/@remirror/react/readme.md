@@ -22,15 +22,15 @@ The following example converts all the content to text and appends a list item t
 
 Don't do this, as it would actually be a terrible user experience. But it shows what can be done. A more meaningful example will be created soon.
 
-```ts
+```tsx
 import React, { useCallback } from 'react';
+import { fromHtml, RemirrorEventListener } from 'remirror/core';
 import { BoldExtension } from 'remirror/extension/bold';
 import { ListPreset } from 'remirror/preset/list';
-import { fromHtml, RemirrorEventListener } from 'remirror/core';
 import {
-  RemirrorProvider,
   createReactManager,
   ReactCombinedUnion,
+  RemirrorProvider,
   useManager,
 } from 'remirror/react';
 

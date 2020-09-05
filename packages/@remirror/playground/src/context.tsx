@@ -1,5 +1,4 @@
 import React from 'react';
-
 import type { EditorState, RemirrorJSON } from 'remirror/core';
 
 export interface PlaygroundContextObject {

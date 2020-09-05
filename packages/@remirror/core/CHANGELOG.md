@@ -29,7 +29,7 @@
   Consuming this API looks something like this.
 
   ```ts
-  import { PlainExtension, Dispose } from 'remirror/core';
+  import { Dispose, PlainExtension } from 'remirror/core';
 
   class CoolExtension extends PlainExtension {
     get name() {
@@ -56,7 +56,7 @@
 
   ```ts
   import { ExtensionTag } from 'remirror/core';
-  import { createCoreManager, CorePreset } from 'remirror/preset/core';
+  import { CorePreset, createCoreManager } from 'remirror/preset/core';
   import { WysiwygPreset } from 'remirror/preset/wysiwyg';
   const manager = createCoreManager(() => [new WysiwygPreset(), new CorePreset()], {
     extraAttributes: [
@@ -106,7 +106,7 @@
 
 - [`5786901c`](https://github.com/remirror/remirror/commit/5786901c58d717c0921415f7bfd1f480c39a44f3) [#645](https://github.com/remirror/remirror/pull/645) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add support for prioritized keymaps. It's now possible to make sure that a hook which consumes `useKeymap` runs before the extension keybindings.
 
-  ```ts
+  ```tsx
   import React from 'react';
   import { ExtensionPriority } from 'remirror/core';
   import { useKeymap } from 'remirror/react/hooks';
@@ -132,7 +132,7 @@
   To change the default priority of the `createKeymap` method in a custom extension wrap the `KeyBindings` return in a tuple with the priority as the first parameter.
 
   ```ts
-  import { PlainExtension, KeyBindingsTuple, ExtensionPriority, KeyBindings } from 'remirror/core';
+  import { ExtensionPriority, KeyBindings, KeyBindingsTuple, PlainExtension } from 'remirror/core';
 
   class CustomExtension extends PlainExtension {
     get name() {
@@ -141,9 +141,9 @@
 
     createKeymap(): KeyBindingsTuple {
       const bindings = {
-        Enter: () => return true,
-        Backspace: () => return true,
-      }
+        Enter: () => true,
+        Backspace: () => true,
+      };
 
       return [ExtensionPriority.High, bindings];
     }
@@ -181,9 +181,9 @@
 
   ```tsx
   import React from 'react';
-  import { RemirrorProvider, InvalidContentHandler } from 'remirror/core';
-  import { RemirrorProvider, useManager } from 'remirror/react';
+  import { InvalidContentHandler, RemirrorProvider } from 'remirror/core';
   import { WysiwygPreset } from 'remirror/preset/wysiwyg';
+  import { RemirrorProvider, useManager } from 'remirror/react';
 
   const EditorWrapper = () => {
     const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {
@@ -523,7 +523,7 @@
   The following code will add a decorator to the extension.
 
   ```ts
-  import { PlainExtension, ExtensionPriority, extensionDecorator } from 'remirror/core';
+  import { extensionDecorator, ExtensionPriority, PlainExtension } from 'remirror/core';
 
   interface ExampleOptions {
     color?: string;
@@ -557,7 +557,7 @@
   The following code will add a decorator to the preset.
 
   ```ts
-  import { Preset presetDecorator } from 'remirror/core';
+  import { Preset, presetDecorator } from 'remirror/core';
 
   interface ExampleOptions {
     color?: string;
@@ -672,16 +672,19 @@
   - Add `autoUpdate` option to `useRemirror` hook from `@remirror/react` which means that the context object returned by the hook is always up to date with the latest editor state. It will also cause the component to rerender so be careful to only use it when necessary.
 
   ```tsx
-  const { active, commands } = useRemirror({ autoUpdate: true });
+  import React from 'react';
+  const Editor = () => {
+    const { active, commands } = useRemirror({ autoUpdate: true });
 
-  return (
-    <button
-      onClick={() => commands.toggleBold}
-      style={{ fontWeight: active.bold() ? 'bold' : undefined }}
-    >
-      B
-    </button>
-  );
+    return (
+      <button
+        onClick={() => commands.toggleBold}
+        style={{ fontWeight: active.bold() ? 'bold' : undefined }}
+      >
+        B
+      </button>
+    );
+  };
   ```
 
   - Fix broken `onChangeHandler` parameter for the use `useRemirror` hook.

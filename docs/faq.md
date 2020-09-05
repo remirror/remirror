@@ -1,10 +1,13 @@
 ---
-title: 'Frequently asked questions'
+hide_title: true
+title: Frequently asked questions
 ---
+
+# Frequently Asked Questions
 
 Some of the answers outlined here may be helpful to you if you're stuck somewhere. They're questions that are asked quite frequently on GitHub and in our [discord](https://remirror.io/chat) channel.
 
-### Is there any way to get the value of the editor already parsed to HTML?
+### Is there any way to get the value of the editor already parsed to HTML
 
 There's are methods available in `remirror/core`. `toHtml` which converts the provided node to a HTML string, and `fromHtml` which takes the html string you've provided and converts it into a value that can be used within remirror.
 

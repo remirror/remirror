@@ -40,7 +40,7 @@ const manager = RemirrorManager.create([corePreset]);
 
 // Pass the dom element to the editor. If you are using `@remirror/react` this is done for you.
 const element = document.createElement('div');
-document.body.appendChild(element);
+document.body.append(element);
 
 // Add the view to the editor manager.
 manager.addView(element);

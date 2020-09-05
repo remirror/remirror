@@ -1,6 +1,9 @@
 ---
+hide_title: true
 title: Errors
 ---
+
+# Errors
 
 This page contains the documented errors that occur while using `remirror`. Currently the descriptions are very short and if you'd like to contribute to make them more comprehensive, then that would be very much appreciated. Edit this page to get started.
 
@@ -192,14 +195,14 @@ For example the following would trigger this error.
 
 ```tsx
 import React from 'react';
-import { RemirrorProvider, useManager } from 'remirror/react';
-import { CorePreset } from 'remirror/preset/core';
 import { BoldExtension } from 'remirror/extension/bold';
+import { CorePreset } from 'remirror/preset/core';
+import { RemirrorProvider, useManager } from 'remirror/react';
 
 const Editor = () => {
-  const [boldActive, setBoldActive] = useState(false);
+  const [boldActive] = useState(false);
 
-  const { getRootProps, commands, active } = useRemirror({ autoUpdate: true });
+  const { getRootProps, commands } = useRemirror({ autoUpdate: true });
 
   return (
     <div>
@@ -232,6 +235,9 @@ To fix this issue you need to move the getRootProps to a part of the tree that o
 The fixed code could look something like this.
 
 ```tsx
+import React from 'react';
+import { RemirrorProvider } from 'remirror/react';
+
 const Menu = () => {
   const { commands, active } = useRemirror({ autoUpdate: true });
 

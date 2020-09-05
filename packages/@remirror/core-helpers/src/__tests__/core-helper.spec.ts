@@ -34,7 +34,6 @@ import {
   isSymbol,
   isUndefined,
   keys,
-  Merge,
   noop,
   object,
   randomInt,
@@ -399,15 +398,6 @@ test('unset', () => {
 
 test('deepMerge', () => {
   expect(deepMerge({ a: 'a', c: 2 }, { b: 'b', c: 'c' })).toEqual({ a: 'a', b: 'b', c: 'c' });
-  expect(
-    deepMerge({ a: 'a', c: 2 }, Merge.overwrite({ b: 'b', c: 'c', a: Merge.delete() })),
-  ).toEqual({
-    b: 'b',
-    c: 'c',
-  });
-  expect(deepMerge({ a: { b: 'b ' } }, { a: Merge.overwrite({ c: 'c' }) })).toEqual({
-    a: { c: 'c' },
-  });
 });
 
 test('uniqueBy', () => {

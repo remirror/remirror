@@ -18,8 +18,8 @@ describe('callAllEventHandlers', () => {
 
     result(...args);
 
-    expect(handler1).toBeCalledWith(...args);
-    expect(handler2).toBeCalledWith(...args);
+    expect(handler1).toHaveBeenCalledWith(...args);
+    expect(handler2).toHaveBeenCalledWith(...args);
     expect(handler1).toHaveBeenCalledTimes(1);
     expect(handler2).toHaveBeenCalledTimes(1);
   });
@@ -29,8 +29,8 @@ describe('callAllEventHandlers', () => {
 
     result(...args);
 
-    expect(handler1).toBeCalledWith(...args);
-    expect(handler2).toBeCalledWith(...args);
+    expect(handler1).toHaveBeenCalledWith(...args);
+    expect(handler2).toHaveBeenCalledWith(...args);
     expect(handler1).toHaveBeenCalledTimes(1);
     expect(handler2).toHaveBeenCalledTimes(1);
   });

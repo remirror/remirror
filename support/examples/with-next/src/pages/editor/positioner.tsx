@@ -1,5 +1,4 @@
 import React, { FC, useCallback, useState } from 'react';
-
 import { EMPTY_PARAGRAPH_NODE } from 'remirror/core';
 import { BoldExtension } from 'remirror/extension/bold';
 import { HeadingExtension } from 'remirror/extension/heading';

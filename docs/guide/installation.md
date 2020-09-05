@@ -1,6 +1,9 @@
 ---
+hide_title: true
 title: Installation
 ---
+
+# Installation
 
 Rather than installing multiple scoped packages, the `remirror` package is a gateway to using all the goodness that remirror provides while minimising your bundle size.
 
@@ -43,7 +46,7 @@ import { AllStyledComponent } from '@remirror/styles/styled-components';
 // Or with `emotion` using the DOM
 import { addStylesToElement, allStyles } from 'remirror/styles/dom';
 
-cont wrapperElement = document.createElement('div');
+const wrapperElement = document.createElement('div');
 addStylesToElement(wrapperElement, allStyles);
 ```
 

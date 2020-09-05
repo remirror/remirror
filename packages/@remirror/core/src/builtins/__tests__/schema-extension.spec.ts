@@ -1,6 +1,5 @@
 import { schema } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-
 import { values } from 'remirror/core';
 import { BlockquoteExtension } from 'remirror/extension/blockquote';
 import { BoldExtension } from 'remirror/extension/bold';
@@ -213,12 +212,16 @@ describe('extraAttributes', () => {
       },
     );
 
-    expect(manager.schema.nodes.theNode.spec.attrs?.matchesEverything).toEqual({ default: 'abc' });
+    expect(manager.schema.nodes.theNode.spec.attrs?.matchesEverything).toEqual({
+      default: 'abc',
+    });
     expect(manager.schema.nodes.theNode.spec.attrs).not.toHaveProperty('onlyMarks');
     expect(manager.schema.nodes.theNode.spec.attrs).not.toHaveProperty('emptyTags');
     expect(manager.schema.nodes.theNode.spec.attrs).not.toHaveProperty('tooExclusive');
 
-    expect(manager.schema.marks.theMark.spec.attrs?.matchesEverything).toEqual({ default: 'abc' });
+    expect(manager.schema.marks.theMark.spec.attrs?.matchesEverything).toEqual({
+      default: 'abc',
+    });
     expect(manager.schema.marks.theMark.spec.attrs?.onlyMarks).toEqual({ default: 'abc' });
     expect(manager.schema.marks.theMark.spec.attrs).not.toHaveProperty('emptyTags');
     expect(manager.schema.marks.theMark.spec.attrs).not.toHaveProperty('tooExclusive');

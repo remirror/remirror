@@ -1,11 +1,11 @@
 ---
+hide_title: true
 title: Hello Remirror
-hide_title: Hello Remirror
 ---
 
 # Hello Remirror
 
-The most straightforward way of using `remirror` is to get start with a prebuilt editor. In a later section of this quide I'll walk you through creating your own editor but for now there's enought to learn in consuming the readily available components.
+The most straightforward way of using `remirror` is to get start with a prebuilt editor. In a later section of this quide I'll walk you through creating your own editor but for now there's enough to learn in consuming the readily available components.
 
 The most popular editor for a long time has been the **social editor**.
 
@@ -14,14 +14,14 @@ First make sure you've followed the instructions in the [installation guide](/do
 Then you'll need to import the relevant code.
 
 ```tsx
-import { SocialEditor } from 'remirror/react/social';
 import React, { useState } from 'react';
+import { SocialEditor } from 'remirror/react/social';
 ```
 
 This import gives you access to the social editor. Now let's wire it up with some junk data. In reality you'd be fetching this data from an API.
 
 ```tsx
-import { UserData, TagData } from 'remirror/react/social';
+import { TagData, UserData } from 'remirror/react/social';
 
 const exampleUsers: UserData[] = [
   {

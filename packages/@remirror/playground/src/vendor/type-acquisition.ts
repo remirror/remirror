@@ -419,8 +419,7 @@ export const detectNewImportsToAcquireTypeFor = async (
     addLibraryToRuntime,
     fetcher,
   };
-  const results = getDependenciesForModule(sourceCode, undefined, 'playground.ts', config);
-  return results;
+  return getDependenciesForModule(sourceCode, undefined, 'playground.ts', config);
 };
 
 /**

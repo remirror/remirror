@@ -33,7 +33,7 @@ describe('DEPRECATED flatten', () => {
       const { state } = createEditor(doc(table(row(tdEmpty), row(tdEmpty), row(tdEmpty))));
       const result = flattenNodeDescendants({ node: state.doc.firstChild, descend: false });
 
-      expect(result.length).toEqual(3);
+      expect(result).toHaveLength(3);
 
       result.forEach((item) => {
         expect(Object.keys(item)).toEqual(['node', 'pos']);
@@ -48,7 +48,7 @@ describe('DEPRECATED flatten', () => {
       const { state } = createEditor(doc(table(row(tdEmpty), row(tdEmpty), row(tdEmpty))));
       const result = flattenNodeDescendants({ node: state.doc.firstChild });
 
-      expect(result.length).toEqual(9);
+      expect(result).toHaveLength(9);
     });
   });
 });
@@ -61,7 +61,7 @@ describe('findChildren', () => {
       predicate: (child) => child.node.type === state.schema.nodes.paragraph,
     });
 
-    expect(result.length).toEqual(3);
+    expect(result).toHaveLength(3);
 
     result.forEach((item) => {
       expect(item.node.type.name).toEqual('paragraph');
@@ -93,7 +93,7 @@ describe('findChildren', () => {
       predicate: (child) => child.node.type === state.schema.nodes.atomInline,
     });
 
-    expect(result.length).toEqual(0);
+    expect(result).toHaveLength(0);
   });
 });
 
@@ -102,7 +102,7 @@ describe('findTextNodes', () => {
     const { state } = createEditor(doc(table(row(tdEmpty))));
     const result = findTextNodes({ node: state.doc.firstChild });
 
-    expect(result.length).toEqual(0);
+    expect(result).toHaveLength(0);
   });
 
   it('should return an array if text nodes of a given node', () => {
@@ -111,7 +111,7 @@ describe('findTextNodes', () => {
     );
     const result = findTextNodes({ node: state.doc.firstChild });
 
-    expect(result.length).toEqual(3);
+    expect(result).toHaveLength(3);
 
     result.forEach((item) => {
       expect(item.node.isText).toBe(true);
@@ -124,14 +124,14 @@ describe('findBlockNodes', () => {
     const { state } = createEditor(doc(p('')));
     const result = findBlockNodes({ node: state.doc.firstChild });
 
-    expect(result.length).toEqual(0);
+    expect(result).toHaveLength(0);
   });
 
   it('should return an array if block nodes of a given node', () => {
     const { state } = createEditor(doc(table(row(tdEmpty, tdEmpty))));
     const result = findBlockNodes({ node: state.doc.firstChild });
 
-    expect(result.length).toEqual(5);
+    expect(result).toHaveLength(5);
 
     result.forEach((item) => {
       expect(item.node.isBlock).toBe(true);
@@ -147,7 +147,7 @@ describe('findChildrenByAttr', () => {
       predicate: (attributes) => bool(attributes && attributes.colspan === 2),
     });
 
-    expect(result.length).toEqual(0);
+    expect(result).toHaveLength(0);
   });
 
   it('should return an array if child nodes with the given attribute', () => {
@@ -164,7 +164,7 @@ describe('findChildrenByAttr', () => {
       predicate: (attributes) => attributes.colspan === 2,
     });
 
-    expect(result.length).toEqual(2);
+    expect(result).toHaveLength(2);
 
     result.forEach((item) => {
       expect(item.node.attrs.colspan).toEqual(2);
@@ -177,14 +177,14 @@ describe('findChildrenByNode', () => {
     const { state } = createEditor(doc(p('')));
     const result = findChildrenByNode({ node: state.doc, type: state.schema.nodes.table });
 
-    expect(result.length).toEqual(0);
+    expect(result).toHaveLength(0);
   });
 
   it('should return an array if child nodes of a given `nodeType`', () => {
     const { state } = createEditor(doc(table(row(tdEmpty, tdEmpty, tdEmpty))));
     const result = findChildrenByNode({ node: state.doc, type: state.schema.nodes.table_cell });
 
-    expect(result.length).toEqual(3);
+    expect(result).toHaveLength(3);
 
     result.forEach((item) => {
       expect(item.node.type.name).toEqual('table_cell');
@@ -197,7 +197,7 @@ describe('findChildrenByMark', () => {
     const { state } = createEditor(doc(p('')));
     const result = findChildrenByMark({ node: state.doc, type: state.schema.marks.strong });
 
-    expect(result.length).toEqual(0);
+    expect(result).toHaveLength(0);
   });
 
   it('should return an array if child nodes if a given node has child nodes with the given mark', () => {
@@ -206,7 +206,7 @@ describe('findChildrenByMark', () => {
     );
     const result = findChildrenByMark({ node: state.doc, type: state.schema.marks.strong });
 
-    expect(result.length).toEqual(2);
+    expect(result).toHaveLength(2);
 
     result.forEach((item) => {
       expect(item.node.marks[0].type.name).toEqual('strong');

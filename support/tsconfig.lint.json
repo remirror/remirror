@@ -4,6 +4,8 @@
     "allowJs": true
   },
   "include": [
+    "./patches.d.ts",
+    "**/*.{md,mdx}/",
     "../**/*.ts",
     "../**/*.tsx",
     "../**/*.js",

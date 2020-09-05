@@ -6,7 +6,7 @@ Welcome to the documentation folder for the remirror project. Files in this fold
 
 When creating a file include the front matter configuration and don't use a header. The title property is automatically used as the header.
 
-```md
+```markdown
 ---
 title: <TITLE>
 ---

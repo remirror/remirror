@@ -9,6 +9,8 @@ coverage
 
 pnpm-lock.yaml/
 .pnpm-store/
+*.md
+*.mdx
 
 support/website/.docusaurus
 support/website/build

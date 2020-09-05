@@ -36,9 +36,9 @@
 
   ```tsx
   import React from 'react';
-  import { RemirrorProvider, InvalidContentHandler } from 'remirror/core';
-  import { RemirrorProvider, useManager } from 'remirror/react';
+  import { InvalidContentHandler, RemirrorProvider } from 'remirror/core';
   import { WysiwygPreset } from 'remirror/preset/wysiwyg';
+  import { RemirrorProvider, useManager } from 'remirror/react';
 
   const EditorWrapper = () => {
     const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {

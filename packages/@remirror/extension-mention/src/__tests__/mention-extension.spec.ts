@@ -1,10 +1,10 @@
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
+import { ItalicExtension } from 'remirror/extension/italic';
+import { createCoreManager } from 'remirror/preset/core';
 
 import { fromHtml, toHtml } from '@remirror/core';
 import { hideConsoleError } from '@remirror/testing';
-import { ItalicExtension } from 'remirror/extension/italic';
-import { createCoreManager } from 'remirror/preset/core';
 
 import { MentionExtension, MentionOptions } from '..';
 import type { MentionChangeHandler } from '../mention-extension';

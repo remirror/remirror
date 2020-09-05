@@ -92,7 +92,11 @@ test('`usePositioner` default values', () => {
     const positionerProps = usePositioner('bubble');
     const positioners = useMultiPositioner('bubble');
 
-    expect(positionerProps).toEqual({ active: false, ...emptyCoords, ...emptyVirtualPosition });
+    expect(positionerProps).toEqual({
+      active: false,
+      ...emptyCoords,
+      ...emptyVirtualPosition,
+    });
     expect(positioners).toEqual([]);
 
     return <div />;
