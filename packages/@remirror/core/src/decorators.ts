@@ -29,6 +29,39 @@ interface DefaultOptionsParameter<Options extends Shape = EmptyShape> {
    *
    * All non required options must have a default value provided.
    *
+   * Please note that as mentioned in this issue
+   * [#624](https://github.com/remirror/remirror/issues/624), partial options
+   * can cause trouble when setting a default.
+   *
+   * If you need to accept `undefined `as an acceptable default option there are
+   * two possible ways to resolve this.
+   *
+   * #### Use `AcceptUndefined`
+   *
+   * This is the preferred solution and should be used instead of the following
+   * `null` union.
+   *
+   * ```ts
+   * import { AcceptUndefined } from 'remirror/core';
+   *
+   * interface Options {
+   *   optional?: AcceptUndefined<string>;
+   * }
+   * ```
+   *
+   * Now when the options are consumed by this decorator there should be no
+   * errors when setting the value to `undefined`.
+   *
+   * #### `null` union
+   *
+   * If you don't mind using nulls in your code then this might appeal to you.
+   *   *
+   * ```ts
+   * interface Options {
+   *   optional?: string | null;
+   * }
+   * ```
+   *
    * @default {}
    */
   defaultOptions: DefaultExtensionOptions<Options>;
@@ -80,8 +113,8 @@ interface HandlerKeysParameter<Options extends Shape = EmptyShape> {
    * Customize how the handler should work.
    *
    * This allows you to decide how the handlers will be composed together.
-   * Currenlty it only support function handlers, but you can tell the extension
-   * to exit early when a certain value is reached.
+   * Currently it only support function handlers, but you can tell the extension
+   * to exit early when a certain return value is received.
    *
    * ```ts
    * const handlerOptions = { onChange: { earlyReturnValue: true }};
@@ -126,7 +159,7 @@ export type ExtensionDecoratorOptions<
 export function extensionDecorator<Options extends Shape = EmptyShape>(
   options: ExtensionDecoratorOptions<Options>,
 ) {
-  return <Type extends AnyExtensionConstructor>(ReadonlyConstructor: Type) => {
+  return <Type extends AnyExtensionConstructor>(ReadonlyConstructor: Type): Type => {
     const {
       defaultOptions,
       customHandlerKeys,
@@ -192,7 +225,7 @@ export type PresetDecoratorOptions<Options extends Shape = EmptyShape> = IfHasRe
 export function presetDecorator<Options extends Shape = EmptyShape>(
   options: PresetDecoratorOptions<Options>,
 ) {
-  return <Type extends AnyPresetConstructor>(ReadonlyConstructor: Type) => {
+  return <Type extends AnyPresetConstructor>(ReadonlyConstructor: Type): Type => {
     const { defaultOptions, customHandlerKeys, handlerKeys, staticKeys } = options;
 
     const Constructor = Cast<Writeable<PresetConstructor<Options>>>(ReadonlyConstructor);

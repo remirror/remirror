@@ -20,6 +20,8 @@ export type {
   Transaction,
 } from './alias-types';
 export type {
+  AcceptUndefined,
+  GetAcceptUndefined,
   CustomHandler,
   CustomHandlerKey,
   CustomHandlerKeyList,
@@ -80,6 +82,7 @@ export type {
   MakeOptional,
   MakeReadonly,
   MakeRequired,
+  MakeUndefined,
   MarkAttributes,
   NodeAttributes,
   NodeMarkOptions,

@@ -1,4 +1,5 @@
 import {
+  AcceptUndefined,
   CommandFunction,
   DispatchFunction,
   EditorState,
@@ -22,7 +23,7 @@ export interface HistoryOptions {
    *
    * @default 100
    */
-  depth?: Static<number | null>;
+  depth?: Static<number>;
 
   /**
    * The delay (ms) between changes after which a new group should be
@@ -30,7 +31,7 @@ export interface HistoryOptions {
    *
    * @default 500
    */
-  newGroupDelay?: Static<number | null>;
+  newGroupDelay?: Static<number>;
 
   /**
    * Provide a custom state getter function.
@@ -42,7 +43,7 @@ export interface HistoryOptions {
    * can be dispatched into the parent editor allowing them to propagate into
    * the child editor
    */
-  getState?: (() => EditorState) | null;
+  getState?: AcceptUndefined<() => EditorState>;
 
   /**
    * Provide a custom dispatch getter function for embedded editors
@@ -54,7 +55,7 @@ export interface HistoryOptions {
    * can be dispatched into the parent editor allowing them to propagate into
    * the child editor.
    */
-  getDispatch?: (() => DispatchFunction) | null;
+  getDispatch?: AcceptUndefined<() => DispatchFunction>;
 
   /**
    * A callback to listen to when the user attempts to undo with the keyboard.
@@ -79,8 +80,8 @@ export interface HistoryOptions {
   defaultOptions: {
     depth: 100,
     newGroupDelay: 500,
-    getDispatch: null,
-    getState: null,
+    getDispatch: undefined,
+    getState: undefined,
   },
   staticKeys: ['depth', 'newGroupDelay'],
   handlerKeys: ['onRedo', 'onUndo'],

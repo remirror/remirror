@@ -137,6 +137,12 @@ export type MakeOptional<Type extends object, Keys extends keyof Type> = Omit<Ty
   { [Key in Keys]+?: Type[Key] };
 
 /**
+ * Makes specified keys of an interface optional while the rest stay the same.
+ */
+export type MakeUndefined<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> &
+  { [Key in Keys]: Type[Key] | undefined };
+
+/**
  * Makes specified keys of an interface nullable while the rest stay the same.
  */
 export type MakeNullable<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> &

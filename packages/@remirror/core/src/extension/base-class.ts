@@ -21,6 +21,7 @@ import type {
   AnyFunction,
   Dispose,
   EmptyShape,
+  GetAcceptUndefined,
   GetConstructorParameter,
   GetCustomHandler,
   GetFixed,
@@ -31,8 +32,10 @@ import type {
   GetStatic,
   HandlerKeyList,
   IfNoRequiredProperties,
+  MakeUndefined,
   Replace,
   Shape,
+  StringKey,
   UndefinedFlipPartialAndRequired,
   ValidOptions,
 } from '@remirror/core-types';
@@ -614,9 +617,12 @@ export type ConstructorParameter<
 export type DefaultOptions<
   Options extends ValidOptions,
   DefaultStaticOptions extends Shape
-> = UndefinedFlipPartialAndRequired<GetStatic<Options>> &
-  Partial<DefaultStaticOptions> &
-  GetFixedDynamic<Options>;
+> = MakeUndefined<
+  UndefinedFlipPartialAndRequired<GetStatic<Options>> &
+    Partial<DefaultStaticOptions> &
+    GetFixedDynamic<Options>,
+  StringKey<GetAcceptUndefined<Options>>
+>;
 
 /**
  * Checks that the extension has a valid constructor with the `defaultOptions`

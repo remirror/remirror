@@ -13,6 +13,10 @@ export interface PersistentSelectionOptions {
 
 export const DEFAULT_PERSISTENT_SELECTION_CLASS = 'selection';
 
+/**
+ * This extension adds a decoration to the selected text and can be used to
+ * preserve the marker for the selection when the editor loses focus.
+ */
 @extensionDecorator<PersistentSelectionOptions>({
   defaultOptions: {
     persistentSelectionClass: DEFAULT_PERSISTENT_SELECTION_CLASS,
@@ -31,18 +35,14 @@ export class PersistentSelectionExtension extends PlainExtension<PersistentSelec
         decorations: ({ doc, selection }) => {
           // Do not run the extension at all when there is no actual decoration
           // to be done.
-          if (!this.options.persistentSelectionClass) {
+          if (!this.options.persistentSelectionClass || selection.empty) {
             return;
           }
 
-          if (selection.empty) {
-            return;
-          }
-
+          let decoration: Decoration;
           const decorationAttrs = {
             class: this.options.persistentSelectionClass,
           };
-          let decoration: Decoration;
 
           if (isNodeSelection(selection)) {
             decoration = Decoration.node(selection.from, selection.to, decorationAttrs);

@@ -18,7 +18,7 @@ There are three types of `Extension`.
 
 ## Lifecycle Methods
 
-Extensions are able to completely customise the behaviour of the editor via these lifecycle methods. Even core functionality like the creation of `Schema` is built via `Extensions`. This section outlines what you're working with in extensions.
+Extensions are able to completely customise the behaviour of the editor via these lifecycle methods. Even core functionality like the creation of `Schema` is built via `Extension`s. This section outlines what you're working with in extensions.
 
 ### `onCreate`
 
@@ -26,7 +26,7 @@ Extensions are able to completely customise the behaviour of the editor via thes
 onCreate(extensions: readonly AnyExtension[]): void;
 ```
 
-This handler is called when the `RemirrorManager` is first created. Since it is called as soon as the manager is some methods may not be available in the extension store. When accessing methods on `this.store` be shore to check when they become available in the lifecycle. It is recommende that you don't use this method unless absolutely required.
+This handler is called when the `RemirrorManager` is first created. Since it is called as soon as the manager is created some methods may not be available in the extension store. When accessing methods on `this.store` be sure to check their documentation for when they become available. It is recommended that you don't use this method unless absolutely required.
 
 ### `onView`
 
@@ -34,7 +34,7 @@ This handler is called when the `RemirrorManager` is first created. Since it is 
 onView( extensions: readonly AnyExtension[], view: EditorView<EditorSchema>): void
 ```
 
-This event happens when the `EditorView` is first added by the ui layer. This is the lifecycle method where commands and editor helpers are added.
+This lifecycle method is called when the `EditorView` is first added by the UI layer. This is the lifecycle method where commands and editor helpers are added.
 
 ### `onStateUpdate`
 
@@ -50,7 +50,7 @@ This is called whenever a transaction successfully updates the `EditorState`. Fo
 onDestroy(extensions: readonly AnyExtension[]): void
 ```
 
-This is called when the `RemirrorManager` is being destroyed.
+This is called when the `RemirrorManager` is being destroyed. You can use this method if you need to clean up any externally created handlers in order to prevent memory leaks.
 
 ## Options
 
@@ -105,7 +105,7 @@ class ExampleExtension extends PlainExtension<ExampleOptions> {
 }
 ```
 
-These annotations can be used to provide better intelli-sense support for the end user.
+These annotations can be used to provide better intellisense support for the end user.
 
 ### `extensionDecorator`
 
@@ -128,6 +128,34 @@ const exampleExtension = new ExampleExtension({
 
 // Runtime update
 exampleExtension.setOptions({ color: 'pink', backgroundColor: 'purple' });
+```
+
+Please note that as mentioned in this issue [#624](https://github.com/remirror/remirror/issues/624), partial options can cause trouble when setting a default.
+
+If you need to accept `undefined`as an acceptable default option there are two possible ways to resolve this.
+
+#### Use `AcceptUndefined`
+
+This is the preferred solution and should be used instead of the following `null` union.
+
+```ts
+import { AcceptUndefined } from 'remirror/core';
+
+interface Options {
+  optional?: AcceptUndefined<string>;
+}
+```
+
+Now when the options are consumed by this decorator there should be no errors when setting the value to `undefined`.
+
+#### `null` union
+
+If you don't mind using nulls in your code then this might appeal to you.
+
+```ts
+interface Options {
+  optional?: string | null;
+}
 ```
 
 ### `Static` options
@@ -204,4 +232,6 @@ The onChange handler is automatically managed for you.
 
 ### `CustomHandler` options
 
-`CustomHandler` options are like `Handler` options except it's up to you to wire up the handler. More examples will be added later.
+`CustomHandler` options are like `Handler` options except it's up to the extension creator to manage how they are handled. They are useful for situations when you want the extension to allow composition of events but it doesn't quite fit into the neat `EventHandler` scenario.
+
+The KeymapExtension in `@remirror/core` is a good example of this.
