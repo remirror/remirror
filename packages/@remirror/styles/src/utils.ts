@@ -18,6 +18,6 @@
  * The above snippet will add all styles to the element and all elements it
  * contains.
  */
-export function addStylesToElement(element: Element, css: string) {
+export function addStylesToElement(element: Element, css: string): void {
   element.classList.add(css);
 }
