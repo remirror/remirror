@@ -15,6 +15,13 @@ type DynamicAnnotation = Flavoring<'DynamicAnnotation'>;
 type HandlerAnnotation = Flavoring<'HandlerAnnotation'>;
 type CustomHandlerAnnotation = Flavoring<'CustomAnnotation'>;
 
+/**
+ * This type is in response to the issue raised
+ * [here](https://github.com/remirror/remirror/issues/624). It allows an type to
+ * be `undefined`.
+ */
+type AcceptUndefinedAnnotation = Flavoring<'AcceptUndefinedAnnotation'>;
+
 export type RemoveAnnotation<Type> = RemoveFlavoring<Type>;
 
 /**
@@ -72,6 +79,12 @@ export type Static<Type> = Type & StaticAnnotation;
  * ```
  */
 export type Dynamic<Type> = Type & DynamicAnnotation;
+
+/**
+ * Wrap a type in this to let the `DefaultOptions` know that it can accept
+ * undefined as the default value.
+ */
+export type AcceptUndefined<Type> = Type & AcceptUndefinedAnnotation;
 
 /**
  * A handler is a callback provided by the user to respond to events from your
@@ -148,6 +161,15 @@ export type GetDynamic<Options extends Shape> = Omit<
     Exclude<Remirror.ValidOptionsExtender[keyof Remirror.ValidOptionsExtender], DynamicAnnotation>
   >
 >;
+
+/**
+ * Get the properties that accept undefined as a default.
+ */
+export type GetAcceptUndefined<Options extends Shape> = ConditionalPick<
+  Options,
+  AcceptUndefinedAnnotation
+> &
+  Partial<ConditionalPick<PickPartial<Options>, AcceptUndefinedAnnotation>>;
 
 /**
  * Get the event handler `Options` from the options type.
