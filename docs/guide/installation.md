@@ -24,7 +24,7 @@ You will also notice that you are also installing `@remirror/pm`. This is a peer
 
 Remirror requires styles for the editor to function correctly across different browsers. These styles can be added in the following ways:
 
-```Javascript
+```ts
 // Plain CSS
 import 'remirror/styles/all.css';
 ```
