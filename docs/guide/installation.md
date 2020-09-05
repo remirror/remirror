@@ -34,7 +34,7 @@ import 'remirror/styles/all.css';
 import { AllStyledComponent } from '@remirror/styles/emotion';
 ```
 
-```Javascript
+```ts
 // Or with styled components
 import { AllStyledComponent } from '@remirror/styles/styled-components';
 ```
