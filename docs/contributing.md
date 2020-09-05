@@ -4,7 +4,9 @@ title: Contributing
 
 Fork [this repository][repo], clone your fork and add this repository as the upstream remote.
 
-You will need to have [`pnpm`](https://pnpm.js.org) installed so make sure you follow the installation [instructions](https://pnpm.js.org/en/installation).
+You will need to have [`pnpm`](https://pnpm.js.org) installed so make sure you follow the installation [instructions](https://pnpm.js.org/en/installation). At the time of writing the advised way to install is via `npm i -g pnpm`.
+
+You will also need to install [`git-lfs`](https://git-lfs.github.com/) which is used for managing large file storage. The installation is platform dependent so please follow the instructions outlined [here](https://git-lfs.github.com/).
 
 ```bash
 git clone <<FORKED_REPO_URL>>
@@ -43,7 +45,7 @@ From the root directory use the following command to launch the documentation si
 pnpm docs
 ```
 
-Once the build completes (can take a minute the first time) navigate to http://localhost:3000 (or another port if that one is already being used).
+Once the build completes (can take a minute the first time) navigate to <http://localhost:3000> (or another port if that one is already being used).
 
 The documentation is written using [docusaurus] and all files and dependencies are available in the `/support/website` subdirectory. To add a new dependency, you will need to add it to `/support/website/package.json` and not the top level package.json file. You can either do this by manually editing the `/support/website/package.json` file or you use the following command.
 

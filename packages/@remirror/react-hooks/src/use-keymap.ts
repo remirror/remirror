@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { KeyBindings, KeymapExtension } from '@remirror/core';
+import { ExtensionPriority, KeyBindings, KeymapExtension } from '@remirror/core';
 import { useExtension } from '@remirror/react';
 
 /**
@@ -36,10 +36,13 @@ import { useExtension } from '@remirror/react';
  * };
  * ```
  */
-export function useKeymap(bindings: KeyBindings): void {
+export function useKeymap(bindings: KeyBindings, priority = ExtensionPriority.Medium): void {
   useExtension(
     KeymapExtension,
-    useCallback(({ addCustomHandler }) => addCustomHandler('keymap', bindings), [bindings]),
-    [bindings],
+    useCallback(({ addCustomHandler }) => addCustomHandler('keymap', [priority, bindings]), [
+      priority,
+      bindings,
+    ]),
+    [],
   );
 }

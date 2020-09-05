@@ -1,11 +1,7 @@
 import { ExtensionPriority } from '@remirror/core-constants';
-import { entries, object } from '@remirror/core-helpers';
+import { entries, isArray, object, sort } from '@remirror/core-helpers';
 import type { CustomHandler, KeyBindings, ProsemirrorPlugin } from '@remirror/core-types';
-import {
-  convertCommand,
-  mergeKeyBindings,
-  mergeProsemirrorKeyBindings,
-} from '@remirror/core-utils';
+import { convertCommand, mergeProsemirrorKeyBindings } from '@remirror/core-utils';
 import {
   baseKeymap,
   chainCommands as pmChainCommands,
@@ -68,7 +64,7 @@ export interface KeymapOptions {
    * }});
    * ```
    */
-  keymap?: CustomHandler<KeyBindings>;
+  keymap?: CustomHandler<PrioritizedKeyBindings>;
 }
 
 /**
@@ -99,15 +95,14 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
   }
 
   /**
-   * The base keybinding which will be generated from the provided properties.
+   * The custom keybindings added by the handlers. In react these can be added
+   * via `hooks`.
    */
-  private baseKeyBindings: KeyBindings = object();
+  #extraKeyBindings: PrioritizedKeyBindings[] = [];
 
   /**
-   * The custom keybindings added
+   * The keymap as a plugin.
    */
-  private extraKeyBindings: KeyBindings[] = [];
-
   private keymap!: ProsemirrorPlugin;
 
   /**
@@ -123,7 +118,7 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
    * Updates the stored keymap plugin on this extension.
    */
   private loopExtensions() {
-    const extensionKeymaps: KeyBindings[] = [];
+    const extensionKeymaps: PrioritizedKeyBindings[] = [];
 
     for (const extension of this.store.extensions) {
       // Ignore this extension when.
@@ -141,7 +136,10 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
       extensionKeymaps.push(extension.createKeymap());
     }
 
-    const mappedCommands = mergeProsemirrorKeyBindings(extensionKeymaps);
+    // Sort the keymaps giving keybindings added via the handler a priority over
+    // those implemented by extensions.
+    const sortedKeymaps = this.sortKeymaps([...this.#extraKeyBindings, ...extensionKeymaps]);
+    const mappedCommands = mergeProsemirrorKeyBindings(sortedKeymaps);
     this.keymap = keymap(mappedCommands);
   }
 
@@ -161,13 +159,33 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
   };
 
   /**
-   * Create the base keymap and merge it with any custom keymaps provided by the
-   * user as CustomOptions.
+   * Create the base keymap and give it a low priority so that all other keymaps
+   * override it.
    */
-  createKeymap(): KeyBindings {
-    this.createBaseKeymap();
+  createKeymap(): PrioritizedKeyBindings {
+    const { selectParentNodeOnEscape, undoInputRuleOnBackspace, excludeBaseKeymap } = this.options;
+    const baseKeyBindings: KeyBindings = object();
 
-    return this.buildKeymap();
+    // Only add the base keymap if it is **NOT** excluded.
+    if (!excludeBaseKeymap) {
+      for (const [key, value] of entries(baseKeymap)) {
+        baseKeyBindings[key] = convertCommand(value);
+      }
+    }
+
+    // Automatically remove the input rule when the option is set to true.
+    if (undoInputRuleOnBackspace) {
+      baseKeyBindings.Backspace = convertCommand(
+        pmChainCommands(undoInputRule, baseKeymap.Backspace),
+      );
+    }
+
+    // Allow escape to select the parent node when set to true.
+    if (selectParentNodeOnEscape) {
+      baseKeyBindings.Escape = convertCommand(selectParentNode);
+    }
+
+    return [ExtensionPriority.Low, baseKeyBindings];
   }
 
   /**
@@ -180,11 +198,11 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
       return;
     }
 
-    this.extraKeyBindings = [...this.extraKeyBindings, keymap];
+    this.#extraKeyBindings = [...this.#extraKeyBindings, keymap];
     this.store.rebuildKeymap?.();
 
     return () => {
-      this.extraKeyBindings = this.extraKeyBindings.filter((binding) => binding !== keymap);
+      this.#extraKeyBindings = this.#extraKeyBindings.filter((binding) => binding !== keymap);
       this.store.rebuildKeymap?.();
     };
   };
@@ -209,35 +227,32 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
     }
   }
 
-  private createBaseKeymap() {
-    const { selectParentNodeOnEscape, undoInputRuleOnBackspace, excludeBaseKeymap } = this.options;
-
-    this.baseKeyBindings = object();
-
-    // Only add the base keymap if it is **NOT** excluded.
-    if (!excludeBaseKeymap) {
-      for (const [key, value] of entries(baseKeymap)) {
-        this.baseKeyBindings[key] = convertCommand(value);
-      }
-    }
-
-    // Automatically remove the input rule when the option is set to true.
-    if (undoInputRuleOnBackspace) {
-      this.baseKeyBindings.Backspace = convertCommand(
-        pmChainCommands(undoInputRule, baseKeymap.Backspace),
-      );
-    }
-
-    // Allow escape to select the parent node when set to true.
-    if (selectParentNodeOnEscape) {
-      this.baseKeyBindings.Escape = convertCommand(selectParentNode);
-    }
-  }
-
-  private buildKeymap() {
-    return mergeKeyBindings([...this.extraKeyBindings, this.baseKeyBindings]);
+  private sortKeymaps(bindings: PrioritizedKeyBindings[]): KeyBindings[] {
+    // Sort the bindings.
+    return sort(
+      bindings.map((binding) =>
+        // Make all bindings prioritized a default priority of
+        // `ExtensionPriority.Default`
+        isArray(binding) ? binding : ([ExtensionPriority.Default, binding] as const),
+      ),
+      // Sort from highest binding to the lowest.
+      (a, z) => z[0] - a[0],
+      // Extract the bindings from the prioritized tuple.
+    ).map((binding) => binding[1]);
   }
 }
+
+/**
+ * KeyBindings as a tuple with priority and the keymap.
+ */
+export type KeyBindingsTuple = [priority: ExtensionPriority, bindings: KeyBindings];
+
+/**
+ * `KeyBindings` with as an object or optionally a tuple with a priority.
+ */
+export type PrioritizedKeyBindings =
+  | KeyBindings
+  | [priority: ExtensionPriority, bindings: KeyBindings];
 
 declare global {
   namespace Remirror {
@@ -273,7 +288,7 @@ declare global {
        *
        * @param parameter - schema parameter with type included
        */
-      createKeymap?(): KeyBindings;
+      createKeymap?(): PrioritizedKeyBindings;
     }
   }
 }

@@ -97,7 +97,7 @@ export function transformCombinedUnion<Combined extends AnyCombinedUnion>(
   }
 
   // Sort the extensions.
-  rawExtensions = sort(rawExtensions, (a, b) => b.priority - a.priority);
+  rawExtensions = sort(rawExtensions, (a, z) => z.priority - a.priority);
 
   // Keep track of added constructors for uniqueness.
   const found = new WeakSet<AnyExtensionConstructor>();

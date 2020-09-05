@@ -2,10 +2,10 @@ import { css } from 'linaria';
 
 export const editorStyles = css`
   &.ProseMirror {
-    position: relative;
     word-wrap: break-word;
     white-space: pre-wrap;
     white-space: break-spaces;
+    position: relative;
     font-variant-ligatures: none;
     font-feature-settings: 'liga' 0;
 
@@ -30,14 +30,15 @@ export const editorStyles = css`
     }
   }
 
-  .ProseMirror-hideselection {
-    * {
-      &::selection,
-      &::-moz-selection {
-        background: transparent;
-      }
-    }
+  .ProseMirror-hideselection *::selection {
+    background: transparent;
+  }
 
+  .ProseMirror-hideselection *::-moz-selection {
+    background: transparent;
+  }
+
+  .ProseMirror-hideselection {
     caret-color: transparent;
   }
 

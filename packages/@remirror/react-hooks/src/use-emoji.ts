@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react';
 
-import { isEmptyArray, isUndefined } from '@remirror/core';
+import { ExtensionPriority, isEmptyArray, isUndefined } from '@remirror/core';
 import {
   EmojiExtension,
   EmojiObject,
@@ -153,7 +153,7 @@ function useEmojiKeyBindings(setState: SetEmojiState, state: EmojiState | null) 
     [ArrowDown, ArrowUp, state, helpers, setState],
   );
 
-  useKeymap(bindings);
+  useKeymap(bindings, ExtensionPriority.High);
 }
 
 type SetEmojiState = Dispatch<SetStateAction<EmojiState | null>>;

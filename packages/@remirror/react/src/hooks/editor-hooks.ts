@@ -499,6 +499,9 @@ export function useManager<Combined extends AnyCombinedUnion>(
 
 export type BaseReactCombinedUnion = ReactPreset | CorePreset | BuiltinPreset;
 
+/**
+ * @deprecated Import from `remirror/react/hooks` instead.
+ */
 export interface UseMultiPositionerReturn extends VirtualPosition {
   /**
    * This ref must be applied to the component that is being positioned in order
@@ -517,6 +520,9 @@ export interface UseMultiPositionerReturn extends VirtualPosition {
   key: string;
 }
 
+/**
+ * @deprecated Import from `remirror/react/hooks` instead.
+ */
 export interface UsePositionerReturn extends Partial<UseMultiPositionerReturn> {
   /**
    * When `true`, the position is active and the pop should be displayed.
@@ -525,37 +531,8 @@ export interface UsePositionerReturn extends Partial<UseMultiPositionerReturn> {
 }
 
 /**
- * A hook for creating a positioner with the `PositionerExtension`. When an
- * active position exists for the provided positioner it will return an object
- * with the `ref`, `top`, `left`, `bottom`, `right` properties.
- *
- * @param isActive - Set this to a boolean to override whether the positioner is
- * active. `true` leaves the behaviour unchanged.
- *
- *
- * @remarks
- *
- * Must apply the ref to the component when called.
- *
- * ```ts
- * import { usePositioner } from 'remirror/react';
- *
- * const MenuComponent: FC = () => {
- *   const positions = usePositioner('bubble');
- *
- *   return (
- *     <div style={{ bottom, left }} ref={ref}>
- *       <MenuIcon {...options} />
- *     </div>
- *   );
- * }
- *
- * const Wrapper = () => (
- *   <RemirrorProvider extensions={[]}>
- *     <MenuComponent />
- *   </RemirrorProvider>
- * )
- * ```
+ * @deprecated Import from `remirror/react/hooks` or
+ * `@remirror/react-hooks/use-positioner` instead.
  */
 export function usePositioner(
   positioner: Positioner | StringPositioner,
@@ -571,33 +548,8 @@ export function usePositioner(
 }
 
 /**
- * A positioner for your editor. This returns an array of active positions and
- * is useful for tracking the positions of multiple items in the editor.
- *
- * ```ts
- * import { Positioner } from 'remirror/extension/positioner
- * import { useMultiPositioner } from 'remirror/react';
- *
- * const positioner = Positioner.create({
- *   ...config, // custom config
- * })
- *
- * const MenuComponent: FC = () => {
- *   const positions = usePositioner(positioner);
- *
- *   return (
- *     <>
- *       {
- *         positions.map(({ ref, bottom, left, key }) => (
- *           <div style={{ bottom, left }} ref={ref} key={key}>
- *             <MenuIcon {...options} />
- *           </div>
- *         )
- *       }
- *     </>
- *   )
- * }
- * ```
+ * @deprecated Import from `remirror/react/hooks` or
+ * `@remirror/react-hooks/use-multi-positioner` instead.
  */
 export function useMultiPositioner(
   positioner: Positioner | StringPositioner,
