@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import type { Except } from 'type-fest';
 
 import {
@@ -17,7 +17,7 @@ import type {
   Suggester,
   SuggestState,
 } from '@remirror/pm/suggest';
-import { usePreset, useRemirror, useSetState } from '@remirror/react';
+import { usePreset, useRemirror } from '@remirror/react';
 
 /**
  * This hook allows you to dynamically create a suggester which can respond to
@@ -43,13 +43,13 @@ import { usePreset, useRemirror, useSetState } from '@remirror/react';
 export function useSuggester(props: UseSuggesterProps): UseSuggesterReturn {
   const { helpers } = useRemirror<BuiltinPreset>();
 
-  const [hookState, setHookState] = useSetState<UseSuggesterState>({
+  const [hookState, setHookState] = useState<UseSuggesterState>(() => ({
     change: undefined,
     exit: undefined,
     updatesSinceLastChange: 0,
     updatesSinceLastExit: 0,
     ...helpers.getSuggestMethods(),
-  });
+  }));
 
   // Track changes in the suggester
   const onChange: SuggestChangeHandler = useCallback(
@@ -59,12 +59,12 @@ export function useSuggester(props: UseSuggesterProps): UseSuggesterReturn {
       // Keep track of changes
       if (changeReason) {
         const change = { match, query, text, range, reason: changeReason };
-        setHookState({ change, updatesSinceLastChange: 0 });
+        setHookState((prevState) => ({ ...prevState, change, updatesSinceLastChange: 0 }));
       }
 
       if (exitReason) {
         const exit = { match, query, text, range, reason: exitReason };
-        setHookState({ exit, updatesSinceLastExit: 0 });
+        setHookState((prevState) => ({ ...prevState, exit, updatesSinceLastExit: 0 }));
       }
     },
     [setHookState],
@@ -100,7 +100,7 @@ export function useSuggester(props: UseSuggesterProps): UseSuggesterReturn {
       }
 
       // Call the state function to update the state.
-      setHookState(stateUpdate);
+      setHookState((prevState) => ({ ...prevState, ...stateUpdate }));
     },
     [
       helpers,

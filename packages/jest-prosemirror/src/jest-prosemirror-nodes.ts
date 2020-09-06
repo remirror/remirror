@@ -4,7 +4,7 @@ import pm, {
   TaggedProsemirrorNode,
 } from 'prosemirror-test-builder';
 
-import { Cast, keys } from '@remirror/core-helpers';
+import { Cast, isNumber, keys } from '@remirror/core-helpers';
 import type { EditorSchema, ProsemirrorPlugin } from '@remirror/core-types';
 import { GapCursor } from '@remirror/pm/gapcursor';
 import {
@@ -78,38 +78,44 @@ export function taggedDocHasSelection(taggedDoc: TaggedProsemirrorNode) {
 export function initSelection<Schema extends EditorSchema = EditorSchema>(
   taggedDoc: TaggedProsemirrorNode<Schema>,
 ) {
-  const { cursor, node, start, end, anchor, all, gap } = taggedDoc.tag;
+  const { cursor, node, start, end, anchor, head, all, gap } = taggedDoc.tag;
 
-  if (all) {
+  if (isNumber(all)) {
     return new AllSelection<Schema>(taggedDoc);
   }
 
-  if (node) {
+  if (isNumber(node)) {
     // Node selections should always be at the start of their nodes. This is
     // impossible to annotate since the first text position is always the `node
     // + 1` place.
     return new NodeSelection<Schema>(taggedDoc.resolve(node - 1));
   }
 
-  if (cursor) {
+  if (isNumber(cursor)) {
     return new TextSelection<Schema>(taggedDoc.resolve(cursor));
   }
 
-  if (gap) {
+  if (isNumber(gap)) {
     const $pos = taggedDoc.resolve(gap);
     return new GapCursor($pos, $pos);
   }
 
-  if (start) {
+  if (isNumber(anchor) && isNumber(head)) {
+    return TextSelection.create(taggedDoc, anchor, head);
+  }
+
+  if (isNumber(start)) {
     return createTextSelection({ taggedDoc, start, end });
   }
 
-  const $anchor = resolveCell(taggedDoc, anchor);
+  if (isNumber(anchor)) {
+    const $anchor = resolveCell(taggedDoc, anchor);
 
-  if ($anchor) {
-    return Cast<Selection<Schema>>(
-      new CellSelection<Schema>($anchor, resolveCell(taggedDoc, taggedDoc.tag.head) ?? undefined),
-    );
+    if ($anchor) {
+      return Cast<Selection<Schema>>(
+        new CellSelection<Schema>($anchor, resolveCell(taggedDoc, taggedDoc.tag.head) ?? undefined),
+      );
+    }
   }
 
   return null;

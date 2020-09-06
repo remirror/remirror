@@ -2,6 +2,7 @@ import { prettyDOM } from '@testing-library/dom';
 import {
   backspace,
   dispatchAllSelection,
+  dispatchAnchorTextSelection,
   dispatchCellSelection,
   dispatchNodeSelection,
   dispatchTextSelection,
@@ -29,6 +30,7 @@ import {
   isFunction,
   isMarkExtension,
   isNodeExtension,
+  isNumber,
   object,
   pick,
   PrimitiveSelection,
@@ -309,7 +311,8 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    */
   readonly add = (taggedDocument: TaggedProsemirrorNode<SchemaFromCombined<Combined>>): this => {
     const { content } = taggedDocument;
-    const { cursor, node, start, end, all, anchor, ...tags } = taggedDocument.tags;
+    const { cursor, node, start, end, all, anchor, head, ...tags } = taggedDocument.tags;
+    const view = this.view;
 
     this.#tags = tags;
 
@@ -317,30 +320,24 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
     const tr = this.tr.replaceWith(0, this.doc.nodeSize - 2, content);
 
     tr.setMeta('addToHistory', false);
-    this.view.dispatch(tr);
+    view.dispatch(tr);
 
-    if (cursor) {
-      dispatchTextSelection({ view: this.view, start: cursor });
-    }
-
-    if (start) {
+    if (isNumber(cursor)) {
+      dispatchTextSelection({ view, start: cursor });
+    } else if (isNumber(start)) {
       dispatchTextSelection({
-        view: this.view,
+        view,
         start,
-        end: end && start <= end ? end : taggedDocument.resolve(start).end(),
+        end: isNumber(end) && start <= end ? end : taggedDocument.resolve(start).end(),
       });
-    }
-
-    if (node) {
-      dispatchNodeSelection({ view: this.view, pos: node });
-    }
-
-    if (all) {
-      dispatchAllSelection(this.view);
-    }
-
-    if (anchor) {
-      dispatchCellSelection({ view: this.view, pos: anchor });
+    } else if (isNumber(head) && isNumber(anchor)) {
+      dispatchAnchorTextSelection({ view, anchor, head });
+    } else if (isNumber(node)) {
+      dispatchNodeSelection({ view, pos: node });
+    } else if (isNumber(all)) {
+      dispatchAllSelection(view);
+    } else if (isNumber(anchor)) {
+      dispatchCellSelection({ view, pos: anchor });
     }
 
     return this;

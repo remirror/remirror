@@ -294,6 +294,22 @@ describe('focus', () => {
     }
   });
 
+  it('can specify expected anchor and head for the editor editor', () => {
+    const anchorHead = { anchor: 5, head: 2 };
+    editorNode.blur();
+
+    act(() => {
+      context.focus(anchorHead);
+      mock.flush();
+    });
+
+    {
+      const { from, to, head, anchor } = context.getState().selection;
+
+      expect({ from, to, anchor, head }).toEqual({ ...anchorHead, ...expected });
+    }
+  });
+
   it('restores the previous selection when focused without a parameter', () => {
     editorNode.blur();
 

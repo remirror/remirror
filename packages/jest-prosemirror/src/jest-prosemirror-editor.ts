@@ -4,6 +4,8 @@ import { Keyboard } from 'test-keyboard';
 
 import { isString, object, pick } from '@remirror/core-helpers';
 import type {
+  AnchorHeadParameter,
+  CommandFunction,
   EditorSchema,
   EditorState,
   EditorStateParameter,
@@ -171,6 +173,9 @@ export function insertText<Schema extends EditorSchema = EditorSchema>(
 
 interface DispatchTextSelectionParameter<Schema extends EditorSchema = EditorSchema>
   extends TestEditorViewParameter<Schema> {
+  /**
+   * This defaults to the anchor.
+   */
   start: number;
   end?: number;
 }
@@ -184,6 +189,23 @@ export function dispatchTextSelection<Schema extends EditorSchema = EditorSchema
   const { view, start, end } = parameter;
   const { state } = view;
   const tr = state.tr.setSelection(TextSelection.create(state.doc, start, end));
+
+  view.dispatch(tr);
+}
+
+interface DispatchAnchorTextSelectionParameter<Schema extends EditorSchema = EditorSchema>
+  extends TestEditorViewParameter<Schema>,
+    AnchorHeadParameter {}
+
+/**
+ * Dispatch a text selection from start to [end]
+ */
+export function dispatchAnchorTextSelection<Schema extends EditorSchema = EditorSchema>(
+  parameter: DispatchAnchorTextSelectionParameter<Schema>,
+): void {
+  const { view, anchor, head } = parameter;
+  const { state } = view;
+  const tr = state.tr.setSelection(TextSelection.create(state.doc, anchor, head));
 
   view.dispatch(tr);
 }
@@ -522,6 +544,24 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
     command(this.state, this.view.dispatch, this.view);
     return this;
   }
+
+  /**
+   * Takes any remirror command as an input and dispatches it within the
+   * document context.
+   *
+   * @param command - the command function to run with the current state and
+   * view
+   */
+  readonly remirrorCommand = (command: CommandFunction<Schema>): this => {
+    command({
+      state: this.state,
+      dispatch: this.view.dispatch,
+      view: this.view,
+      tr: this.state.tr,
+    });
+
+    return this;
+  };
 
   /**
    * Insert text into the editor at the current position.

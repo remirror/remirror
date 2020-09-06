@@ -9,7 +9,6 @@ import {
   useState,
 } from 'react';
 import useEffectOnce from 'react-use/lib/useEffectOnce';
-import useSetState from 'react-use/lib/useSetState';
 import useUpdateEffect from 'react-use/lib/useUpdateEffect';
 import ResizeObserver from 'resize-observer-polyfill';
 
@@ -95,20 +94,13 @@ export function useMeasure<Ref extends HTMLElement = HTMLElement>(): UseMeasureR
 }
 
 /**
- * The `setState` type for the `useSetState` hook.
- */
-export type PartialDispatch<Type extends object> = (
-  patch: Partial<Type> | ((prevState: Type) => Partial<Type>),
-) => void;
-
-/**
  * A `useEffect` function which issues a warning when the dependencies provided
  * are deeply equal, but only in development.
  *
  * This is used in places where it's important for developers to memoize and
  * wrap methods with `useCallback`.
  */
-const useEffectWithWarning: typeof useEffect =
+export const useEffectWithWarning: typeof useEffect =
   process.env.NODE_ENV === 'production'
     ? useEffect
     : (effect, deps) => {
@@ -143,5 +135,3 @@ const useEffectWithWarning: typeof useEffect =
         // eslint-disable-next-line react-hooks/exhaustive-deps
         useEffect(wrappedEffect, deps);
       };
-
-export { useEffectWithWarning, useSetState };

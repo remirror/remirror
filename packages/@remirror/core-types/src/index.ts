@@ -111,6 +111,7 @@ export type {
   Writeable,
 } from './base-types';
 export type {
+  AnchorHeadParameter,
   ChainedCommandFunction,
   CommandFunction,
   CommandFunctionParameter,

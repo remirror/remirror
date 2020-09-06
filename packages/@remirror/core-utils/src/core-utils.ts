@@ -13,6 +13,7 @@ import {
   unset,
 } from '@remirror/core-helpers';
 import type {
+  AnchorHeadParameter,
   EditorSchema,
   EditorState,
   FromToParameter,
@@ -597,6 +598,13 @@ export interface CreateDocumentNodeParameter
 }
 
 /**
+ * Return true when the provided value is an anchor / head selection property
+ */
+export function isAnchorHeadObject(value: unknown): value is AnchorHeadParameter {
+  return isObject(value) && isNumber(value.anchor) && isNumber(value.head);
+}
+
+/**
  * Get a valid selection from the primitive selection.
  */
 export function getTextSelection(
@@ -605,7 +613,7 @@ export function getTextSelection(
 ): TextSelection {
   const max = doc.nodeSize - 2;
   const min = 0;
-  let pos: number | FromToParameter;
+  let pos: number | FromToParameter | AnchorHeadParameter;
 
   /** Ensure the selection is within the current document range */
   const clampToDocument = (value: number) => clamp({ min, max, value });
@@ -632,10 +640,19 @@ export function getTextSelection(
     return TextSelection.near(doc.resolve(pos));
   }
 
-  const start = clampToDocument(pos.from);
-  const end = clampToDocument(pos.to);
+  if (isAnchorHeadObject(pos)) {
+    const anchor = clampToDocument(pos.anchor);
+    const head = clampToDocument(pos.head);
 
-  return TextSelection.create(doc, start, end);
+    return TextSelection.create(doc, anchor, head);
+  }
+
+  // In this case assume that `from` is the fixed anchor and `to` is the movable
+  // head.
+  const anchor = clampToDocument(pos.from);
+  const head = clampToDocument(pos.to);
+
+  return TextSelection.create(doc, anchor, head);
 }
 
 /**
@@ -1002,7 +1019,8 @@ const transformers = {
    * and should only be applied if you're sure it's the best strategy.
    *
    * @param json - the content as a json object.
-   * @param invalidContent - the list of invalid items as passed to the error handler.
+   * @param invalidContent - the list of invalid items as passed to the error
+   * handler.
    */
   remove(json: RemirrorJSON, invalidContent: InvalidContentBlock[]): RemirrorJSON {
     let newJSON = json;
