@@ -2,20 +2,20 @@
 title: Error Handling
 ---
 
-Remirror reuses the ProseMirror `Schema` to identify the content the document will support and the rules around how it can be manipulated. For this reason, error handling is a key concern when implementing a Remirror editor.
+Remirror relies on the ProseMirror `Schema` to identify the content the document will support and the rules around how it can be manipulated. For this reason, error handling is a key concern when implementing a Remirror editor.
 
 ## Introduction
 
 Sometimes the content that is passed into the editor is invalid. It may have been valid at the time it was written but the end-user is opening the editor for the first time in months.
 
-Perhaps you've removed a NodeExtension or MarkExtension from the manager since the content was created. If the content passed includes the invalid types ProseMirror throws an error `RangeError: There is no mark type italic in this schema`. Depending on how you're handling things this could lead to all the data being wiped away. This should never be allowed to happen. Imagine your editor is set up to automatically save content over the network, then your code might just have deleted a user's 10,000-word _magnum opus_.
+Perhaps you've removed a `NodeExtension` or `MarkExtension` from the manager since the content was created. If the content includes these invalid types ProseMirror throws `RangeError: There is no mark type italic in this schema`. Depending on how you're handling things this could lead to all the data being wiped away. This should never be allowed to happen. Imagine your editor is set up to automatically save content over the network, then your code might just have deleted a user's 10,000-word _magnum opus_.
 
-**`remirror`** attemptes to give you full control on how to respond when invalid content is encountered.
+**`remirror`** attempts to give you full control on how to respond when invalid content is encountered.
 
-#### What is invalid?
+#### What is invalid
 
-- A node type that is unsupported by the editor (ProseMirror will throw an error)
-- A mark type that is unsupported by the editor (ProseMirror will throw an error)
+- A node type that is unsupported by the editor (ProseMirror will throw an error).
+- A mark type that is unsupported by the editor (ProseMirror will throw an error).
 - Attributes that aren't supported (these are automatically discarded or added by ProseMirror) but can change the expected behaviour of the editor. This is the case if `schema.nodeFromJSON(json)` has attrs that don't exist on the `json.attrs`.
 
 ### Handling errors

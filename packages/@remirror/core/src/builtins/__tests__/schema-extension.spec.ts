@@ -1,11 +1,22 @@
 import { schema } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
+import { values } from 'remirror/core';
 import { BlockquoteExtension } from 'remirror/extension/blockquote';
 import { BoldExtension } from 'remirror/extension/bold';
 import { HeadingExtension } from 'remirror/extension/heading';
+import { CorePreset } from 'remirror/preset/core';
+import { WysiwygPreset } from 'remirror/preset/wysiwyg';
 
 import { SchemaExtension } from '..';
+import {
+  ApplySchemaAttributes,
+  ExtensionTag,
+  MarkExtension,
+  NodeExtension,
+  PlainExtension,
+  RemirrorManager,
+} from '../..';
 
 extensionValidityTest(SchemaExtension);
 
@@ -87,4 +98,129 @@ test('custom schema', () => {
       "code",
     ]
   `);
+});
+
+describe('extraAttributes', () => {
+  it('should support adding attributes to `nodes`, `marks`, and `all`', () => {
+    const manager = RemirrorManager.create(() => [new WysiwygPreset(), new CorePreset()], {
+      extraAttributes: [
+        { identifiers: 'nodes', attributes: { totallyNodes: 'abc' } },
+        { identifiers: 'marks', attributes: { totallyMarks: 'abc' } },
+        { identifiers: 'all', attributes: { totallyAll: 'abc' } },
+      ],
+    });
+
+    for (const type of values(manager.schema.nodes)) {
+      if (['doc', 'text'].includes(type.name)) {
+        continue;
+      }
+
+      expect(type.spec.attrs?.totallyNodes).toEqual({ default: 'abc' });
+      expect(type.spec.attrs).not.toHaveProperty('totallyMarks');
+      expect(type.spec.attrs?.totallyAll).toEqual({ default: 'abc' });
+    }
+
+    for (const type of values(manager.schema.marks)) {
+      expect(type.spec.attrs?.totallyMarks).toEqual({ default: 'abc' });
+      expect(type.spec.attrs).not.toHaveProperty('totallyNodes');
+      expect(type.spec.attrs?.totallyAll).toEqual({ default: 'abc' });
+    }
+  });
+
+  it('should support adding attributes by name', () => {
+    const manager = RemirrorManager.create(() => [new WysiwygPreset(), new CorePreset()], {
+      extraAttributes: [
+        { identifiers: ['bold'], attributes: { totallyBold: 'abc' } },
+        { identifiers: ['paragraph', 'italic'], attributes: { fun: 'abc' } },
+      ],
+    });
+
+    expect(manager.schema.nodes.paragraph.spec.attrs?.fun).toEqual({ default: 'abc' });
+    expect(manager.schema.marks.italic.spec.attrs?.fun).toEqual({ default: 'abc' });
+    expect(manager.schema.marks.bold.spec.attrs).not.toHaveProperty('fun');
+    expect(manager.schema.marks.bold.spec.attrs?.totallyBold).toEqual({ default: 'abc' });
+  });
+
+  it('should support adding attributes by tag', () => {
+    // Here to ensure no errors are caused when a plain extension is found.
+    class ThePlainExtension extends PlainExtension {
+      get name() {
+        return 'thePlain' as const;
+      }
+
+      tags = [ExtensionTag.Alignment];
+    }
+
+    class TheMarkExtension extends MarkExtension {
+      get name() {
+        return 'theMark' as const;
+      }
+
+      tags = [ExtensionTag.Alignment, ExtensionTag.Color];
+
+      createMarkSpec(extra: ApplySchemaAttributes) {
+        return {
+          attrs: extra.defaults(),
+        };
+      }
+    }
+
+    class TheNodeExtension extends NodeExtension {
+      get name() {
+        return 'theNode' as const;
+      }
+
+      tags = [ExtensionTag.Alignment];
+
+      createNodeSpec(extra: ApplySchemaAttributes) {
+        return {
+          attrs: extra.defaults(),
+        };
+      }
+    }
+
+    const manager = RemirrorManager.create(
+      () => [
+        new WysiwygPreset(),
+        new CorePreset(),
+        new ThePlainExtension(),
+        new TheMarkExtension(),
+        new TheNodeExtension(),
+      ],
+      {
+        extraAttributes: [
+          // Matches everything
+          {
+            identifiers: { tags: [ExtensionTag.Alignment] },
+            attributes: { matchesEverything: 'abc' },
+          },
+
+          // Only marks
+          {
+            identifiers: { tags: [ExtensionTag.Alignment], type: 'mark' },
+            attributes: { onlyMarks: 'abc' },
+          },
+
+          // No matches
+          { identifiers: { tags: [] }, attributes: { emptyTags: 'abc' } },
+
+          // No matches - too exclusive
+          {
+            identifiers: { tags: [ExtensionTag.Color], type: 'node' },
+            attributes: { tooExclusive: 'abc' },
+          },
+        ],
+      },
+    );
+
+    expect(manager.schema.nodes.theNode.spec.attrs?.matchesEverything).toEqual({ default: 'abc' });
+    expect(manager.schema.nodes.theNode.spec.attrs).not.toHaveProperty('onlyMarks');
+    expect(manager.schema.nodes.theNode.spec.attrs).not.toHaveProperty('emptyTags');
+    expect(manager.schema.nodes.theNode.spec.attrs).not.toHaveProperty('tooExclusive');
+
+    expect(manager.schema.marks.theMark.spec.attrs?.matchesEverything).toEqual({ default: 'abc' });
+    expect(manager.schema.marks.theMark.spec.attrs?.onlyMarks).toEqual({ default: 'abc' });
+    expect(manager.schema.marks.theMark.spec.attrs).not.toHaveProperty('emptyTags');
+    expect(manager.schema.marks.theMark.spec.attrs).not.toHaveProperty('tooExclusive');
+  });
 });
