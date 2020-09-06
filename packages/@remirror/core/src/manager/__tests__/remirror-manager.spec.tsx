@@ -10,7 +10,12 @@ import type {
 } from '@remirror/core-types';
 import { Plugin } from '@remirror/pm/state';
 import { EditorView } from '@remirror/pm/view';
-import { CorePreset, createCoreManager, HeadingExtension } from '@remirror/testing';
+import {
+  CorePreset,
+  createCoreManager,
+  HeadingExtension,
+  hideConsoleError,
+} from '@remirror/testing';
 
 import { NodeExtension, PlainExtension } from '../../extension';
 import { isRemirrorManager, RemirrorManager } from '../remirror-manager';
@@ -80,12 +85,14 @@ describe('Manager', () => {
     manager.addView(view);
   });
 
-  test('constructor is private', () => {
+  hideConsoleError(true);
+
+  it('enforces constructor privacy', () => {
     // @ts-expect-error
     expect(() => new RemirrorManager({})).toThrowError();
   });
 
-  test('commands', () => {
+  it('supports commands', () => {
     const attributes = { a: 'a' };
     manager.store.commands.dummy(attributes);
 
@@ -98,7 +105,7 @@ describe('Manager', () => {
     });
   });
 
-  test('helpers', () => {
+  it('supports helpers', () => {
     const value = manager.store.helpers.getInformation();
 
     expect(value).toBe('information');

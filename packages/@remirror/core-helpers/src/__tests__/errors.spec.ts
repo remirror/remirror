@@ -11,6 +11,8 @@ afterEach(() => {
 });
 
 describe('freeze', () => {
+  hideConsoleError(true);
+
   it('should freeze in development', () => {
     const obj = { a: 'a', b: 'b' };
     const frozenObject = freeze(obj);
@@ -34,11 +36,12 @@ describe('freeze', () => {
 });
 
 describe('invariant', () => {
+  const ref = hideConsoleError(true);
+
   it('logs to the console when called', () => {
-    const spy = hideConsoleError(true);
     RemirrorError.create({ message: 'should log' }).logError();
 
-    expect(spy).toHaveBeenCalled();
+    expect(ref.spy).toHaveBeenCalled();
   });
 
   it('throws specific errors', () => {

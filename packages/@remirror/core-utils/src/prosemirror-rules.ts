@@ -1,5 +1,6 @@
 import { findMatches, isFunction, isNullOrUndefined } from '@remirror/core-helpers';
 import type {
+  EditorStateParameter,
   GetAttributesParameter,
   Mark,
   MarkTypeParameter,
@@ -183,7 +184,7 @@ export function markPasteRule(parameter: MarkInputRuleParameter): ProsemirrorPlu
 /**
  * Creates an input rule based on the provided regex for the provided mark type.
  */
-export function markInputRule(parameter: MarkInputRuleParameter): InputRule {
+export function markInputRule(parameter: MarkInputRuleParameter): SkippableInputRule {
   const {
     regexp,
     type,
@@ -193,7 +194,7 @@ export function markInputRule(parameter: MarkInputRuleParameter): InputRule {
     updateCaptured,
   } = parameter;
 
-  return new InputRule(regexp, (state, match, start, end) => {
+  const rule: SkippableInputRule = new InputRule(regexp, (state, match, start, end) => {
     const { tr } = state;
 
     // These are the attributes which are added to the mark and they can be
@@ -216,6 +217,10 @@ export function markInputRule(parameter: MarkInputRuleParameter): InputRule {
     // This helps prevent matches which are only whitespace from triggering an
     // update.
     if (ignoreWhitespace && captureGroup?.trim() === '') {
+      return null;
+    }
+
+    if (rule.shouldSkip?.({ state, captureGroup, fullMatch, start, end, ruleType: 'mark' })) {
       return null;
     }
 
@@ -249,6 +254,8 @@ export function markInputRule(parameter: MarkInputRuleParameter): InputRule {
 
     return tr;
   });
+
+  return rule;
 }
 
 /**
@@ -258,12 +265,18 @@ export function markInputRule(parameter: MarkInputRuleParameter): InputRule {
  * Input rules transform content as the user types based on whether a match is
  * found with a sequence of characters.
  */
-export function nodeInputRule(parameter: NodeInputRuleParameter): InputRule {
+export function nodeInputRule(parameter: NodeInputRuleParameter): SkippableInputRule {
   const { regexp, type, getAttributes, beforeDispatch } = parameter;
 
-  return new InputRule(regexp, (state, match, start, end) => {
+  const rule: SkippableInputRule = new InputRule(regexp, (state, match, start, end) => {
     const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
     const { tr } = state;
+    const captureGroup = match[1];
+    const fullMatch = match[0];
+
+    if (rule.shouldSkip?.({ state, captureGroup, fullMatch, start, end, ruleType: 'plain' })) {
+      return null;
+    }
 
     tr.replaceWith(start - 1, end, type.create(attributes));
 
@@ -271,16 +284,18 @@ export function nodeInputRule(parameter: NodeInputRuleParameter): InputRule {
 
     return tr;
   });
+
+  return rule;
 }
 
 /**
  * Creates a plain rule based on the provided regex. You can see this being used
  * in the `@remirror/extension-emoji` when it is setup to use plain text.
  */
-export function plainInputRule(parameter: PlainInputRuleParameter): InputRule {
+export function plainInputRule(parameter: PlainInputRuleParameter): SkippableInputRule {
   const { regexp, transformMatch, beforeDispatch } = parameter;
 
-  return new InputRule(regexp, (state, match, start, end) => {
+  const rule: SkippableInputRule = new InputRule(regexp, (state, match, start, end) => {
     const value = transformMatch(match);
 
     if (isNullOrUndefined(value)) {
@@ -288,6 +303,12 @@ export function plainInputRule(parameter: PlainInputRuleParameter): InputRule {
     }
 
     const { tr } = state;
+    const captureGroup = match[1];
+    const fullMatch = match[0];
+
+    if (rule.shouldSkip?.({ state, captureGroup, fullMatch, start, end, ruleType: 'plain' })) {
+      return null;
+    }
 
     if (value === '') {
       tr.delete(start, end);
@@ -299,4 +320,41 @@ export function plainInputRule(parameter: PlainInputRuleParameter): InputRule {
 
     return tr;
   });
+
+  return rule;
 }
+
+export interface ShouldSkipParameter extends EditorStateParameter, UpdateCaptureTextParameter {
+  /** The type of input rule that has been activated */
+  ruleType: 'mark' | 'node' | 'plain';
+}
+
+interface ShouldSkip {
+  /**
+   * Every input rule calls this function before deciding whether or not to run.
+   *
+   * This is run for every successful input rule match to check if there are any
+   * reasons to prevent it from running.
+   *
+   * In particular it is so that the input rule only runs when there are no
+   * active checks that prevent it from doing so.
+   *
+   * - Other extension can register a `shouldSkip` handler
+   * - Every time in input rule is running it makes sure it isn't blocked is run it makes sure it can run
+   */
+  shouldSkip?: ShouldSkipFunction;
+}
+
+/**
+ * A function which is called to check whether an input rule should be skipped.
+ *
+ * - When it returns false then it won't be skipped.
+ * - When it returns true then it will be skipped.
+ */
+export type ShouldSkipFunction = (parameter: ShouldSkipParameter) => boolean;
+
+/**
+ * An input rule which can have a `shouldSkip` property that returns true when
+ * the input rule should be skipped.
+ */
+export type SkippableInputRule = ShouldSkip & InputRule;

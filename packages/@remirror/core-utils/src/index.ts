@@ -96,6 +96,11 @@ export {
   flattenNodeDescendants as flatten,
 } from './prosemirror-node-utils';
 
+export type {
+  ShouldSkipFunction,
+  SkippableInputRule,
+  ShouldSkipParameter,
+} from './prosemirror-rules';
 export { markInputRule, markPasteRule, nodeInputRule, plainInputRule } from './prosemirror-rules';
 
 export type {

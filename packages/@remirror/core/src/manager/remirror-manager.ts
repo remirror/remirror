@@ -412,7 +412,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
     key: Key,
     value: Remirror.ExtensionStore[Key],
   ) => {
-    invariant(this.#phase <= ManagerPhase.Create, {
+    invariant(this.#phase <= ManagerPhase.EditorView, {
       code: ErrorConstant.MANAGER_PHASE_ERROR,
       message:
         '`setExtensionStore` should only be called during the `onCreate` lifecycle hook. Make sure to only call it within the returned methods.',
@@ -462,6 +462,14 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
       },
       isMounted: {
         value: () => this.mounted,
+        enumerable: true,
+      },
+      getExtension: {
+        value: this.getExtension.bind(this),
+        enumerable: true,
+      },
+      getPreset: {
+        value: this.getPreset.bind(this),
         enumerable: true,
       },
     });
@@ -1018,6 +1026,24 @@ declare global {
        * the necessary thought.
        */
       readonly updateState: (state: EditorState<EditorSchema>) => void;
+
+      /**
+       * Get the extension instance matching the provided constructor from the
+       * manager.
+       *
+       * This will throw an error if not defined.
+       */
+      readonly getExtension: <ExtensionConstructor extends AnyExtensionConstructor>(
+        Constructor: ExtensionConstructor,
+      ) => InstanceType<ExtensionConstructor>;
+
+      /**
+       * Get the requested preset from the manager. This will throw if the preset
+       * doesn't exist within the current editor.
+       */
+      readonly getPreset: <PresetConstructor extends AnyPresetConstructor>(
+        Constructor: PresetConstructor,
+      ) => InstanceType<PresetConstructor>;
 
       /**
        * Get the value of a key from the manager store.

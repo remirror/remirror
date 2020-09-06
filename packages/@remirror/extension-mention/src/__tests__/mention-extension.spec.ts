@@ -2,7 +2,9 @@ import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
 import { fromHtml, toHtml } from '@remirror/core';
-import { createCoreManager } from '@remirror/testing';
+import { hideConsoleError } from '@remirror/testing';
+import { ItalicExtension } from 'remirror/extension/italic';
+import { createCoreManager } from 'remirror/preset/core';
 
 import { MentionExtension, MentionOptions } from '..';
 import type { MentionChangeHandler } from '../mention-extension';
@@ -73,7 +75,7 @@ describe('schema', () => {
  */
 function create(options: MentionOptions, onChange: MentionChangeHandler = () => {}) {
   const extension = new MentionExtension({ ...options });
-  const editor = renderEditor([extension]);
+  const editor = renderEditor([extension, new ItalicExtension()]);
   const { add, view, manager, commands } = editor;
   const { doc, p } = editor.nodes;
   const { mention } = editor.attributeMarks;
@@ -251,6 +253,8 @@ describe('commands', () => {
   const attributes = { id: 'test', label: '@test', name: 'at', appendText: '' };
 
   describe('createMention', () => {
+    hideConsoleError(true);
+
     it('replaces text at the current position by default', () => {
       add(doc(p('This is ', '<cursor>')));
       commands.createMention(attributes);
@@ -292,5 +296,46 @@ describe('commands', () => {
         commands.createMention({ ...attributes, name: undefined }),
       ).toThrowErrorMatchingSnapshot();
     });
+  });
+});
+
+describe('interactions with input rules', () => {
+  const options: MentionOptions = {
+    matchers: [{ char: '@', name: 'at', mentionClassName: 'custom' }],
+  };
+
+  const { add, doc, p, mention, view } = create(options);
+
+  it('should skip input rules when mention active', () => {
+    const mentionMark = mention({ id: 'mention', label: '@mention', name: 'at' });
+    const { state } = add(doc(p('123 ', mentionMark('@men_tion<cursor>')))).insertText('_ ');
+
+    expect(state.doc).toEqualRemirrorDocument(doc(p('123 ', mentionMark('@men_tion'), '_ ')));
+  });
+
+  it('should skip input rules when mention suggestion active', () => {
+    add(doc(p('123 '))).insertText('@a_bc_ ');
+
+    expect(view.dom.innerHTML).toMatchInlineSnapshot(`
+      <p>
+        123
+        <a class="suggest suggest-at">
+          @a_bc_
+        </a>
+      </p>
+    `);
+  });
+
+  it('should skip input for overlapping sections', () => {
+    add(doc(p('_123 '))).insertText('@abc_ ');
+
+    expect(view.dom.innerHTML).toMatchInlineSnapshot(`
+      <p>
+        _123
+        <a class="suggest suggest-at">
+          @abc_
+        </a>
+      </p>
+    `);
   });
 });

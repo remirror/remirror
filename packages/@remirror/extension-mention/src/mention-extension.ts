@@ -8,6 +8,7 @@ import {
   getMarkRange,
   getMatchString,
   Handler,
+  InputRulesExtension,
   invariant,
   isElementDomNode,
   isMarkActive,
@@ -23,6 +24,7 @@ import {
   RangeParameter,
   removeMark,
   replaceText,
+  ShouldSkipParameter,
   Static,
 } from '@remirror/core';
 import {
@@ -199,6 +201,40 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
         ];
       },
     };
+  }
+
+  onCreate(): void {
+    // Add the `shouldSkip` predicate check to this extension.
+    this.store
+      .getExtension(InputRulesExtension)
+      .addHandler('shouldSkipInputRule', this.shouldSkipInputRule.bind(this));
+  }
+
+  private shouldSkipInputRule(parameter: ShouldSkipParameter) {
+    const { ruleType, state, fullMatch, end } = parameter;
+
+    if (ruleType === 'node') {
+      return false;
+    }
+
+    const from = end - fullMatch.length;
+
+    if (
+      // Check if the mark for this mention is active anywhere in the captured
+      // input rule group.
+      isMarkActive({ trState: state, type: this.type, from, to: end }) ||
+      // Check whether the suggester is active and it's name is one of the registered matchers.
+      this.isMatcherActive()
+    ) {
+      return true;
+    }
+
+    return false;
+  }
+
+  private isMatcherActive(): boolean {
+    const activeName = this.store.helpers.getSuggestState().match?.suggester.name;
+    return this.options.matchers.some((matcher) => activeName === matcher.name);
   }
 
   createCommands() {

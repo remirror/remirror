@@ -5,7 +5,7 @@
  * @packageDocumentation
  */
 
-export type { SuggestState } from './suggest-plugin';
+export type { SuggestState } from './suggest-state';
 export { addSuggester, getSuggestPluginState, removeSuggester, suggest } from './suggest-plugin';
 
 export type {

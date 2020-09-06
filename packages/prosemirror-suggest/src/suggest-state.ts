@@ -1,3 +1,4 @@
+import { PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
 import { bool, isString, object, sort } from '@remirror/core-helpers';
@@ -513,3 +514,8 @@ function createSuggesterMapper() {
     return suggesterWithDefaults;
   };
 }
+
+/**
+ * This key is stored to provide access to the plugin state.
+ */
+export const suggestPluginKey = new PluginKey('suggest');
