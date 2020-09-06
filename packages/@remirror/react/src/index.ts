@@ -4,7 +4,6 @@ export { I18nProvider, RemirrorProvider, ThemeProvider } from './components';
 export type {
   BaseReactCombinedUnion,
   DOMRectReadOnlyLike,
-  PartialDispatch,
   UseExtensionCallback,
   UsePositionerReturn,
   UseMultiPositionerReturn,
@@ -22,7 +21,6 @@ export {
   usePreset,
   usePrevious,
   useRemirror,
-  useSetState,
 } from './hooks';
 
 export { createReactManager } from './react-helpers';
