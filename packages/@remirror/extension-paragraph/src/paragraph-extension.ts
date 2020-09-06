@@ -1,5 +1,6 @@
 import {
   ApplySchemaAttributes,
+  CommandFunction,
   extensionDecorator,
   ExtensionPriority,
   ExtensionTag,
@@ -52,7 +53,7 @@ export class ParagraphExtension extends NodeExtension {
    */
   createCommands() {
     return {
-      createParagraph: (attributes: ProsemirrorAttributes) => {
+      createParagraph: (attributes: ProsemirrorAttributes): CommandFunction => {
         return setBlockType(this.type, attributes);
       },
     };

@@ -209,8 +209,8 @@ export class CommandsExtension extends PlainExtension {
       selectText: (selection: PrimitiveSelection): CommandFunction => ({ tr, dispatch }) => {
         const textSelection = getTextSelection(selection, tr.doc);
 
-        // TODO: add some safety checks here. If the selection is out of perhaps
-        // silently fail
+        // TODO: add some safety checks here. If the selection is out of range
+        // perhaps silently fail
         dispatch?.(tr.setSelection(textSelection));
 
         return true;
@@ -500,54 +500,46 @@ declare global {
   namespace Remirror {
     interface ManagerStore<Combined extends AnyCombinedUnion> {
       /**
-       * Enables the use of custom commands created by the extensions for
-       * extending the functionality of your editor in an expressive way.
+       * Enables the use of custom commands created by extensions which extend
+       * the functionality of your editor in an expressive way.
        *
        * @remarks
        *
-       * There are two ways of using these commands.
-       *
-       * ### Single Time Usage
-       *
-       * The command is immediately dispatched. This can be used to create menu
-       * items when the functionality you need is already available by the
-       * commands.
+       * Commands are synchronous and immediately dispatched. This means that
+       * they can be used to create menu items when the functionality you need
+       * is already available by the commands.
        *
        * ```ts
        * if (commands.toggleBold.isEnabled()) {
        *   commands.toggleBold();
        * }
        * ```
-       *
-       * ### Chainable composition.
-       *
-       * The `chain` property of the commands object provides composition of
-       * command through `.` (dot) chaining.
-       *
-       * ```ts
-       * commands
-       *   .chain
-       *   .toggleBold()
-       *   .insertText('Hello')
-       *   .setSelection('start')
-       *   .custom((transaction) => transaction)
-       *   .run();
-       * ```
-       *
-       * The `run()` method ends the chain and dispatches the accumulated
-       * transaction.
-       *
        */
       commands: CommandsFromCombined<Combined>;
 
       /**
        * Chainable commands for composing functionality together in quaint and
-       * beautiful ways...
+       * beautiful ways
        *
        * @remarks
        *
        * You can use this property to create expressive and complex commands
        * that build up the transaction until it can be run.
+       *
+       * The way chainable commands work is by adding multiple steps to a shared
+       * transaction which is then dispatched when the `run` command is called.
+       * This requires making sure that commands within your code use the `tr`
+       * that is provided rather than the `state.tr` property. `state.tr`
+       * creates a new transaction which is not shared by the other steps in a
+       * chainable command.
+       *
+       * The aim is to make as many commands as possible chainable as explained
+       * [here](https://github.com/remirror/remirror/issues/418#issuecomment-666922209).
+       *
+       * There are certain commands that can't be made chainable.
+       *
+       * - undo
+       * - redo
        *
        * ```ts
        * chain

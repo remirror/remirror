@@ -6,6 +6,7 @@ import {
   isEmptyObject,
   isFunction,
   isNullOrUndefined,
+  isPlainObject,
   isString,
   object,
   toString,
@@ -47,6 +48,7 @@ import {
 } from '../extension';
 import type { AnyCombinedUnion, InferCombinedExtensions } from '../preset';
 import type { CreatePluginReturn } from '../types';
+import type { CombinedTags } from './tags-extension';
 
 /**
  * This is the schema extension which creates the schema and provides extra
@@ -147,6 +149,7 @@ export class SchemaExtension extends PlainExtension {
       gatheredSchemaAttributes: this.gatherExtraAttributes(this.store.extensions),
       nodeNames: this.store.nodeNames,
       markNames: this.store.markNames,
+      tags: this.store.tags,
     });
 
     for (const extension of this.store.extensions) {
@@ -417,11 +420,60 @@ export class SchemaExtension extends PlainExtension {
 }
 
 /**
+ * With tags, you can select a specific sub selection of marks and nodes. This
+ * will be the basis for adding advanced formatting to remirror.
+ *
+ * ```ts
+ * import { ExtensionTag } from 'remirror/core';
+ * import { createCoreManager, CorePreset } from 'remirror/preset/core';
+ * import { WysiwygPreset } from 'remirror/preset/wysiwyg';
+ *
+ * const manager = createCoreManager(() => [new WysiwygPreset(), new CorePreset()], {
+ *   extraAttributes: [
+ *     {
+ *       identifiers: {
+ *         tags: [ExtensionTag.NodeBlock],
+ *         type: 'node',
+ *       },
+ *       attributes: { role: 'presentation' },
+ *     },
+ *   ],
+ * });
+ * ```
+ *
+ * Each item in the tags array should be read as an `OR` so the following would
+ * match `Tag1` OR `Tag2` OR `Tag3`.
+ *
+ * ```json
+ * { tags: ["Tag1", "Tag2", "Tag3"] }
+ * ```
+ *
+ * The `type` property (`mark | node`) is exclusive and limits the type of
+ * matches that will be matched.
+ */
+export interface IdentifiersObject {
+  /**
+   * Will match if any of these tags are present.
+   */
+  tags: ExtensionTagType[];
+
+  /**
+   * Whether to restrict by whether this is a [[`ProsemirrorNode`]] or a
+   * [[`Mark`]]. Leave blank to accept all types.
+   */
+  type?: 'node' | 'mark';
+}
+
+/**
  * The extra identifiers that can be used.
  *
- * TODO: Add support for tags #463
+ * - `nodes` - match all nodes
+ * - `marks` - match all marks
+ * - `all` - match everything in the editor
+ * - `string[]` - match the selected node and mark names
+ * - [[`IdentifiersObject`]] - match by `ExtensionTag` and type name.
  */
-export type Identifiers = 'nodes' | 'marks' | 'all' | readonly string[];
+export type Identifiers = 'nodes' | 'marks' | 'all' | readonly string[] | IdentifiersObject;
 
 /**
  * The interface for adding extra attributes to multiple node and mark
@@ -486,6 +538,11 @@ interface TransformSchemaAttributesParameter {
    * The names of all the marks within the editor.
    */
   markNames: readonly string[];
+
+  /**
+   * The tags that are being used by active extension right now.
+   */
+  tags: CombinedTags;
 }
 
 /**
@@ -495,7 +552,7 @@ interface TransformSchemaAttributesParameter {
 function getNamedSchemaAttributes(
   parameter: TransformSchemaAttributesParameter,
 ): NamedSchemaAttributes {
-  const { settings, gatheredSchemaAttributes, nodeNames, markNames } = parameter;
+  const { settings, gatheredSchemaAttributes, nodeNames, markNames, tags } = parameter;
   const extraAttributes: NamedSchemaAttributes = object();
 
   if (settings.disableExtraAttributes) {
@@ -512,6 +569,7 @@ function getNamedSchemaAttributes(
       identifiers: attributeGroup.identifiers,
       nodeNames,
       markNames,
+      tags,
     });
 
     for (const identifier of identifiers) {
@@ -527,23 +585,61 @@ interface GetIdentifiersParameter {
   identifiers: Identifiers;
   nodeNames: readonly string[];
   markNames: readonly string[];
+  tags: CombinedTags;
 }
 
-function getIdentifiers(parameter: GetIdentifiersParameter): readonly string[] {
-  const { identifiers, nodeNames, markNames } = parameter;
+/**
+ * A predicate for checking if the passed in value is an `IdentifiersObject`.
+ */
+function isIdentifiersObject(value: Identifiers): value is IdentifiersObject {
+  return isPlainObject(value) && isArray(value.tags);
+}
 
+/**
+ * Get the array of names from the identifier that the extra attributes should
+ * be applied to.
+ */
+function getIdentifiers(parameter: GetIdentifiersParameter): readonly string[] {
+  const { identifiers, nodeNames, markNames, tags } = parameter;
+
+  if (identifiers === 'nodes') {
+    return nodeNames;
+  }
+
+  if (identifiers === 'marks') {
+    return markNames;
+  }
+
+  if (identifiers === 'all') {
+    return [...nodeNames, ...markNames];
+  }
+
+  // This is already an array of names to apply the attributes to.
   if (isArray(identifiers)) {
     return identifiers;
   }
 
-  switch (identifiers) {
-    case 'nodes':
-      return nodeNames;
-    case 'marks':
-      return markNames;
-    default:
-      return [...nodeNames, ...markNames];
+  // Make sure the object provides is valid.
+  invariant(isIdentifiersObject(identifiers), {
+    code: ErrorConstant.EXTENSION_EXTRA_ATTRIBUTES,
+    message: `Invalid value passed as an identifier when creating \`extraAttributes\`.`,
+  });
+
+  const names: Set<string> = new Set();
+
+  for (const tag of identifiers.tags) {
+    tags[tag].forEach((name) => names.add(name));
   }
+
+  const acceptableNames =
+    identifiers.type === 'mark'
+      ? markNames
+      : identifiers.type === 'node'
+      ? nodeNames
+      : [...markNames, ...nodeNames];
+
+  // Need to filter since the tags can also be added to the `PlainExtension`.
+  return [...names].filter((name) => acceptableNames.includes(name));
 }
 
 interface CreateSpecParameter<Type extends { group?: string | null }> {

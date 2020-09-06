@@ -24,6 +24,7 @@ const sidebarConfig = {
         'concepts/priority',
         'concepts/keymap',
         'concepts/error-handling',
+        'concepts/extra-attributes',
       ],
     },
     { type: 'category', label: 'Showcase', items: ['showcase/social'] },

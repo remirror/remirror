@@ -347,12 +347,14 @@ export function extractLifecycleMethods(parameter: SetupExtensionParameter): voi
   // Keep track of the names of the different types of extension held by this
   // manager. This is already in use by the [[`TagsExtension`]].
 
-  if (isNodeExtension(extension)) {
-    nodeNames.push(extension.name);
-  }
-
   if (isMarkExtension(extension)) {
     markNames.push(extension.name);
+  }
+
+  // Don't include the `doc` as a node since it is a requirement for all editors
+  // and doesn't behave in the same way as other nodes.
+  if (isNodeExtension(extension) && extension.name !== 'doc') {
+    nodeNames.push(extension.name);
   }
 
   if (isPlainExtension(extension)) {
