@@ -336,6 +336,23 @@ export interface RemirrorIdentifierShape {
 }
 
 /**
+ * A parameter for a non empty selection which defines the anchor (the non
+ * movable part of the selection) and the head (the movable part of the
+ * selection).
+ */
+export interface AnchorHeadParameter {
+  /**
+   * The non-movable part of the selection.
+   */
+  anchor: number;
+
+  /**
+   * The movable part of the selection.
+   */
+  head: number;
+}
+
+/**
  * The type of arguments acceptable for a selection.
  *
  * - Can be a selection
@@ -343,4 +360,11 @@ export interface RemirrorIdentifierShape {
  * - A single position with a `number`
  * - `'start' | 'end'`
  */
-export type PrimitiveSelection = Selection | FromToParameter | number | 'start' | 'end' | 'all';
+export type PrimitiveSelection =
+  | Selection
+  | FromToParameter
+  | AnchorHeadParameter
+  | number
+  | 'start'
+  | 'end'
+  | 'all';

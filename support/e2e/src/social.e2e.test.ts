@@ -191,7 +191,8 @@ describe('Social Showcase', () => {
         );
       });
 
-      // TODO create a new issue to add forward deletion support to the `prosemirror-suggest`.
+      // TODO create a new issue to add forward deletion support to the
+      // `@remirror/extension-mention`.
       it.skip('removes mentions for forward deletes', async () => {
         await $editor.type('@abc ');
         await press({ key: 'ArrowLeft', count: 5 });
@@ -201,6 +202,30 @@ describe('Social Showcase', () => {
         ).rejects.toThrowErrorMatchingInlineSnapshot(
           `"Error: failed to find element matching selector \\".remirror-editor .mention-at\\""`,
         );
+      });
+
+      it('can exit when selecting text', async () => {
+        await $editor.type('@abc ');
+        await press({ key: 'ArrowLeft', count: 1 });
+        await page.keyboard.down('Shift');
+        await press({ key: 'ArrowLeft', count: 4 });
+        await page.keyboard.up('Shift');
+        await press({ key: 'ArrowLeft', count: 1 });
+        await $editor.type('Awesome ');
+
+        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe('@abc');
+        await expect(textContent(sel(EDITOR_CLASS_SELECTOR))).resolves.toBe('Awesome @abc ');
+      });
+
+      it('only replaces the selected text in a mention', async () => {
+        await $editor.type('@abc ');
+        await press({ key: 'ArrowLeft', count: 2 });
+        await page.keyboard.down('Shift');
+        await press({ key: 'ArrowLeft', count: 3 });
+        await page.keyboard.up('Shift');
+        await $editor.type('d');
+
+        await expect(textContent(sel(EDITOR_CLASS_SELECTOR))).resolves.toBe('dc ');
       });
     });
 

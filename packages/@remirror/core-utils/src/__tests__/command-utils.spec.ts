@@ -1,4 +1,16 @@
-import { atomInline, blockquote, doc, h1, li, ol, p, schema, strong, ul } from 'jest-prosemirror';
+import {
+  atomInline,
+  blockquote,
+  createEditor,
+  doc,
+  h1,
+  li,
+  ol,
+  p,
+  schema,
+  strong,
+  ul,
+} from 'jest-prosemirror';
 
 import {
   removeMark,
@@ -89,6 +101,18 @@ describe('replaceText', () => {
       from,
       to,
     });
+  });
+
+  it('can preserve the non-empty selection', () => {
+    const editor = createEditor(doc(p('<head>Hell<anchor>o')));
+
+    editor.remirrorCommand((parameter) =>
+      replaceText({ content: 'Content', keepSelection: true })(parameter),
+    );
+
+    const { head, anchor } = editor.view.state.selection;
+    expect(head).toBe(1);
+    expect(anchor).toBe(5);
   });
 });
 

@@ -282,23 +282,27 @@ export function isChrome(minVersion = 0): boolean {
  * @param tr - the transaction which has been updated and may have impacted the
  * selection.
  */
-function preserveSelection(state: EditorState, tr: Transaction) {
-  // Get the previous cursor selection.
-  let { anchor } = state.selection;
+function preserveSelection(state: EditorState, tr: Transaction): void {
+  // Get the previous movable part of the cursor selection.
+  let { head } = state.selection;
 
-  // Map this cursor selection through each of the steps that have happened in
+  // Map this movable cursor selection through each of the steps that have happened in
   // the transaction.
   for (const step of tr.steps) {
     const map = step.getMap();
-    anchor = map.map(anchor);
+    head = map.map(head);
   }
 
-  // Update the transaction with the new text selection.
-  tr.setSelection(new TextSelection(tr.doc.resolve(anchor)));
+  if (state.selection.empty) {
+    // Update the transaction with the new text selection.
+    tr.setSelection(TextSelection.create(tr.doc, head));
+  } else {
+    tr.setSelection(TextSelection.create(tr.doc, state.selection.anchor, head));
+  }
 }
 
 /**
- * Replaces text with an optional appended string at the end
+ * Replaces text with an optional appended string at the end.
  *
  * @param params - the destructured params
  *
