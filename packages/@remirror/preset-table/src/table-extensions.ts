@@ -79,15 +79,19 @@ export class TableExtension extends NodeExtension<TableOptions> {
        */
       createTable: (
         parameter: Pick<CreateTableParameter, 'rowsCount' | 'columnsCount' | 'withHeaderRow'>,
-      ): CommandFunction => ({ state, dispatch }) => {
-        const offset = state.tr.selection.anchor + 1;
-        const nodes = createTable({ schema: state.schema, ...parameter });
-        const tr = state.tr.replaceSelectionWith(nodes).scrollIntoView();
-        const resolvedPos = tr.doc.resolve(offset);
+      ): CommandFunction => ({ tr, dispatch, state }) => {
+        if (!tr.selection.empty) {
+          return false;
+        }
 
-        tr.setSelection(TextSelection.near(resolvedPos));
+        const offset = tr.selection.anchor + 1;
+        const nodes = createTable({ schema: state.schema, ...parameter });
 
         if (dispatch) {
+          tr.replaceSelectionWith(nodes).scrollIntoView();
+          const resolvedPos = tr.doc.resolve(offset);
+
+          tr.setSelection(TextSelection.near(resolvedPos));
           dispatch(tr);
         }
 
