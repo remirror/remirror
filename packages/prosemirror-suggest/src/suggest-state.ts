@@ -1,9 +1,14 @@
-import { PluginKey } from 'prosemirror-state';
+import { PluginKey, Selection } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
-import { bool, isString, object, sort } from '@remirror/core-helpers';
+import { bool, isFunction, isString, object, sort } from '@remirror/core-helpers';
 
-import { isInvalidSplitReason, isJumpReason, isValidMatch } from './suggest-predicates';
+import {
+  isInvalidSplitReason,
+  isJumpReason,
+  isTextSelection,
+  isValidMatch,
+} from './suggest-predicates';
 import type {
   AddIgnoredParameter,
   CompareMatchParameter,
@@ -171,6 +176,30 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
     return true;
   }
 
+  private updateWithNextSelection() {
+    const { doc, selection } = this.view.state;
+
+    // Make sure the position doesn't exceed the bounds of the document.
+    const pos = Math.min(doc.nodeSize - 2, selection.to + 1);
+    const $pos = doc.resolve(pos);
+
+    // Get the position furthest along in the editor to pass back to suggesters
+    // which have the handler.
+    const nextSelection = Selection.findFrom($pos, 1, true);
+
+    // Ignore non-text selections and null / undefined values. This is needed
+    // for TS mainly, since the `true` in the `Selection.findFrom` method means
+    // only `TextSelection` instances will be returned.
+    if (!isTextSelection(nextSelection)) {
+      return;
+    }
+
+    // Update every suggester with a method attached.
+    for (const suggester of this.#suggesters) {
+      suggester.checkNextValidSelection?.(nextSelection.$from, this.view.state);
+    }
+  }
+
   /**
    * Manages the view updates.
    */
@@ -178,8 +207,13 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
     const { change, exit } = this.#handlerMatches;
     const match = this.match;
 
+    // Notify all suggesters of the next valid text selection.
+    this.updateWithNextSelection();
+
     // Cancel update when a suggester isn't active
     if ((!change && !exit) || !isValidMatch(match)) {
+      // TODO - when not active do a look forward to check the next position and
+      // call the handler with the position. This will be used to
       return;
     }
 
@@ -374,7 +408,11 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
   private updateReasons(parameter: UpdateReasonsParameter<Schema>) {
     const { $pos, state } = parameter;
     const docChanged = this.#docChanged;
-    const match = findFromSuggesters({ suggesters: this.#suggesters, $pos, docChanged });
+    const suggesters = this.#suggesters;
+    const selectionEmpty = state.selection.empty;
+    const match = isTextSelection(state.selection)
+      ? findFromSuggesters({ suggesters, $pos, docChanged, selectionEmpty })
+      : undefined;
 
     // Track the next match if not being ignored.
     this.#next = match && this.shouldIgnoreMatch(match) ? undefined : match;
@@ -468,7 +506,12 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
       return this.#ignored;
     }
 
-    if (match.suggester.disableDecorations) {
+    const { disableDecorations } = match.suggester;
+    const shouldSkip = isFunction(disableDecorations)
+      ? disableDecorations(state, match)
+      : disableDecorations;
+
+    if (shouldSkip) {
       return this.#ignored;
     }
 

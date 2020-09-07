@@ -156,7 +156,7 @@ export interface Suggester<Schema extends EditorSchema = EditorSchema> {
   /**
    * When true, decorations are not created when this mention is being edited.
    */
-  disableDecorations?: boolean;
+  disableDecorations?: boolean | ShouldDisableDecorations;
 
   /**
    * A list of node names which will be marked as invalid.
@@ -208,7 +208,60 @@ export interface Suggester<Schema extends EditorSchema = EditorSchema> {
     resolvedRange: ResolvedRangeWithCursor<Schema>,
     match: SuggestMatch<Schema>,
   ) => boolean;
+
+  /**
+   * This is a utility option that may be necessary for you when building
+   * editable mentions using `prosemirror-suggest`.
+   *
+   * By default `prosemirror-suggest` is a backward looking solution to the
+   * suggestions problem. It check backwards from the current cursor position to
+   * see if any text matches any of the configured selections. For the majority
+   * of use cases this is perfectly acceptable behaviour.
+   *
+   * However, [#639](https://github.com/remirror/remirror/issues/639) shows that
+   * it's possible to delete forward and make mentions invalid. At the moment,
+   * when this happens it would require creating a plugin to check each state
+   * update and see whether the current next position has any invalid instances
+   * of the mention mark.
+   *
+   * This method hopefully makes it easier to do this. You can add a function
+   * here which is run every time the view updates and provides you with the
+   * next valid match.
+   *
+   * @default null
+   */
+  checkNextValidSelection?: CheckNextValidSelection | null;
+
+  /**
+   * Whether this suggester should only be valid for empty selections.
+   *
+   * @default false
+   */
+  emptySelectionsOnly?: boolean;
 }
+
+/**
+ * A function for checking whether the next selection is valid.
+ *
+ * It is called for all registered suggesters before any of the onChange
+ * handlers are fired.
+ */
+export type CheckNextValidSelection<Schema extends EditorSchema = EditorSchema> = (
+  $pos: ResolvedPos<Schema>,
+  state: EditorState<Schema>,
+) => void;
+
+/**
+ * A function that can be used to determine whether the decoration should be set
+ * or not.
+ *
+ * @param match - the current active match
+ * @param resolvedRange - the range of the match with each position resolved.
+ */
+export type ShouldDisableDecorations = <Schema extends EditorSchema = EditorSchema>(
+  state: EditorState<Schema>,
+  match: Readonly<SuggestMatch<Schema>>,
+) => boolean;
 
 /**
  * The potential reasons for an exit of a mention.
@@ -761,6 +814,8 @@ export interface ResolvedPosParameter<Schema extends EditorSchema = EditorSchema
   /**
    * A prosemirror resolved pos with provides helpful context methods when
    * working with a position in the editor.
+   *
+   * In prosemirror suggest this always uses the lower bound of the text selection.
    */
   $pos: ResolvedPos<Schema>;
 }

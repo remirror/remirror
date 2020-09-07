@@ -1,4 +1,6 @@
-import { includes, isString } from '@remirror/core-helpers';
+import { TextSelection } from 'prosemirror-state';
+
+import { includes, isObject, isString } from '@remirror/core-helpers';
 
 import type {
   CompareMatchParameter,
@@ -145,4 +147,15 @@ export function selectionOutsideMatch<Schema extends EditorSchema = EditorSchema
 ): boolean {
   const { match, selection } = parameter;
   return !!match && (selection.from < match.range.from || selection.from > match.range.to);
+}
+
+/**
+ * Predicate checking whether the selection is a `TextSelection`.
+ *
+ * @param value - the value to check
+ */
+export function isTextSelection<Schema extends EditorSchema = EditorSchema>(
+  value: unknown,
+): value is TextSelection<Schema> {
+  return isObject(value) && value instanceof TextSelection;
 }

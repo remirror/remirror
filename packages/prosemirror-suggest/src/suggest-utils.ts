@@ -1,7 +1,14 @@
 import escapeStringRegex from 'escape-string-regexp';
 
 import { NULL_CHARACTER } from '@remirror/core-constants';
-import { findMatches, isEmptyArray, isRegExp, isString, object } from '@remirror/core-helpers';
+import {
+  findMatches,
+  isEmptyArray,
+  isRegExp,
+  isString,
+  object,
+  range,
+} from '@remirror/core-helpers';
 
 import { isChange, isEntry, isExit, isJump, isMove } from './suggest-predicates';
 import type {
@@ -325,6 +332,11 @@ interface FindFromSuggestersParameter<Schema extends EditorSchema = EditorSchema
    * The matchers to search through.
    */
   suggesters: Array<Required<Suggester<Schema>>>;
+
+  /**
+   * When `true` the selection is empty.
+   */
+  selectionEmpty: boolean;
 }
 
 interface FindPositionParameter<Schema extends EditorSchema = EditorSchema>
@@ -427,14 +439,15 @@ function hasParentNode($pos: ResolvedPos, types: string[]): boolean {
 function markActiveInRange(resolvedRange: ResolvedRangeWithCursor, marks: string[]) {
   const { $cursor, $from, $to } = resolvedRange;
 
-  const cursorAtStart = $cursor.pos === $from.pos;
-  const cursorAtEnd = $cursor.pos === $to.pos;
+  // Check if there is a mark spanning the range of marks.
+  if (rangeHasMarks(resolvedRange, marks)) {
+    return true;
+  }
 
-  return (
-    rangeHasMarks(resolvedRange, marks) ||
-    positionHasMarks($cursor, marks) ||
-    (!cursorAtStart && positionHasMarks($from, marks)) ||
-    (!cursorAtEnd && positionHasMarks($to, marks))
+  // Check if any of the positions in the available range have the active mark
+  // associated with
+  return range($from.pos + 1, $to.pos - 1).some((value) =>
+    positionHasMarks($cursor.doc.resolve(value), marks),
   );
 }
 
@@ -501,15 +514,20 @@ function isPositionValidForSuggester<Schema extends EditorSchema = EditorSchema>
 }
 
 /**
- * Find a match for the provided matchers
+ * Find a match for the provided matchers.
  */
 export function findFromSuggesters<Schema extends EditorSchema = EditorSchema>(
   parameter: FindFromSuggestersParameter<Schema>,
 ): SuggestMatch<Schema> | undefined {
-  const { suggesters, $pos } = parameter;
+  const { suggesters, $pos, selectionEmpty } = parameter;
 
   // Find the first match and break when done
   for (const suggester of suggesters) {
+    // Make sure the selection is valid for this `suggester`.
+    if (suggester.emptySelectionsOnly && !selectionEmpty) {
+      continue;
+    }
+
     try {
       const match = findMatch<Schema>({ suggester, $pos });
 
@@ -536,7 +554,9 @@ export function findFromSuggesters<Schema extends EditorSchema = EditorSchema>(
       // This log is kept here even though it should probably be removed. It
       // should not happen, so if it does, please open an issue and a use case
       // for replication.
-      console.warn('Error while finding match.');
+      console.error(
+        'If you see this message then something went wrong internally. Please open an issue with the steps you took when it happened.',
+      );
     }
   }
 
@@ -644,6 +664,8 @@ export const DEFAULT_SUGGESTER: PickPartial<Suggester<any>> = {
   validMarks: null,
   validNodes: null,
   isValidPosition: () => true,
+  checkNextValidSelection: null,
+  emptySelectionsOnly: false,
 };
 
 /**

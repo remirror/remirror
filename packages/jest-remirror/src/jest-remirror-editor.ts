@@ -8,6 +8,7 @@ import {
   dispatchTextSelection,
   fireEventAtPosition,
   FireParameter,
+  forwardDelete,
   insertText,
   pasteContent,
   press,
@@ -448,11 +449,20 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Simulates a backspace keypress and deletes text backwards.
    */
-  backspace(times?: number): this {
+  readonly backspace = (times?: number): this => {
     backspace({ view: this.view, times });
 
     return this;
-  }
+  };
+
+  /**
+   * Simulates a forward deletion.
+   */
+  readonly forwardDelete = (times?: number): this => {
+    forwardDelete({ view: this.view, times });
+
+    return this;
+  };
 
   /**
    * Takes any command as an input and dispatches it within the document
