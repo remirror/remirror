@@ -5,6 +5,7 @@ import type { LiteralUnion, Primitive } from 'type-fest';
 import {
   __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
   ErrorConstant,
+  ExtensionPriority,
   RemirrorIdentifier,
 } from '@remirror/core-constants';
 import {
@@ -19,6 +20,7 @@ import {
   noop,
   object,
   omit,
+  sort,
 } from '@remirror/core-helpers';
 import type {
   AnyFunction,
@@ -402,7 +404,7 @@ export abstract class BaseClass<
       methods[key] = (...args: any[]) => {
         let returnValue: unknown;
 
-        for (const handler of this.#mappedHandlers[key]) {
+        for (const [, handler] of this.#mappedHandlers[key]) {
           returnValue = ((handler as unknown) as AnyFunction)(...args);
           const { handlerKeyOptions } = this.constructor;
 
@@ -437,14 +439,24 @@ export abstract class BaseClass<
   addHandler<Key extends keyof GetHandler<Options>>(
     key: Key,
     method: GetHandler<Options>[Key],
+    priority = ExtensionPriority.Default,
   ): Dispose {
-    this.#mappedHandlers[key].push(method);
+    this.#mappedHandlers[key].push([priority, method]);
+    this.sortHandlers(key);
 
     // Return a method for disposing of the handler.
     return () =>
       (this.#mappedHandlers[key] = this.#mappedHandlers[key].filter(
-        (handler) => handler !== method,
+        ([, handler]) => handler !== method,
       ));
+  }
+
+  private sortHandlers<Key extends keyof GetHandler<Options>>(key: Key) {
+    this.#mappedHandlers[key] = sort(
+      this.#mappedHandlers[key],
+      // Sort from highest binding to the lowest.
+      ([a], [z]) => z - a,
+    );
   }
 
   /**

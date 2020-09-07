@@ -1,3 +1,4 @@
+import { ExtensionPriority } from '@remirror/core-constants';
 import type { Handler } from '@remirror/core-types';
 import { BoldExtension } from '@remirror/testing';
 
@@ -131,5 +132,22 @@ describe('Handlers', () => {
     expect(firstHandler).toHaveBeenCalledTimes(1);
     expect(secondHandler).not.toHaveBeenCalled();
     expect(thirdHandler).toHaveBeenCalledTimes(1);
+  });
+
+  it('supports prioritization', () => {
+    const values: number[] = [];
+    const testExtension = new TestExtension();
+    const one = jest.fn(() => values.push(1));
+    const two = jest.fn(() => values.push(2));
+    const three = jest.fn(() => values.push(3));
+
+    testExtension.addHandler('onChange', one, ExtensionPriority.Lowest);
+    testExtension.addHandler('onChange', two);
+    testExtension.addHandler('onChange', three, ExtensionPriority.Medium);
+
+    // Run the handlers.
+    testExtension.options.onChange();
+
+    expect(values).toEqual([3, 2, 1]);
   });
 });
