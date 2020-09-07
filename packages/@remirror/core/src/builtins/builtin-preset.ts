@@ -1,13 +1,14 @@
 import { isEmptyObject, noop, pick } from '@remirror/core-helpers';
 import type { GetStaticAndDynamic } from '@remirror/core-types';
 
+import { presetDecorator } from '../decorators';
 import type { AddCustomHandler } from '../extension/base-class';
 import { Preset } from '../preset';
 import type { OnSetOptionsParameter } from '../types';
 import { AttributesExtension } from './attributes-extension';
 import { CommandsExtension } from './commands-extension';
 import { HelpersExtension } from './helpers-extension';
-import { InputRulesExtension } from './input-rules-extension';
+import { InputRulesExtension, InputRulesOptions } from './input-rules-extension';
 import { KeymapExtension, KeymapOptions } from './keymap-extension';
 import { NodeViewExtension } from './node-views-extension';
 import { PasteRulesExtension } from './paste-rules-extension';
@@ -20,7 +21,11 @@ import { SchemaExtension } from './schema-extension';
 import { SuggestExtension, SuggestOptions } from './suggest-extension';
 import { TagsExtension } from './tags-extension';
 
-export interface BuiltinOptions extends SuggestOptions, KeymapOptions, PersistentSelectionOptions {}
+export interface BuiltinOptions
+  extends SuggestOptions,
+    KeymapOptions,
+    PersistentSelectionOptions,
+    InputRulesOptions {}
 
 /**
  * Provides all the builtin extensions to the editor.
@@ -35,6 +40,18 @@ export interface BuiltinOptions extends SuggestOptions, KeymapOptions, Persisten
  *
  * @builtin
  */
+@presetDecorator<BuiltinOptions>({
+  defaultOptions: {
+    excludeBaseKeymap: KeymapExtension.defaultOptions.excludeBaseKeymap,
+    selectParentNodeOnEscape: KeymapExtension.defaultOptions.selectParentNodeOnEscape,
+    undoInputRuleOnBackspace: KeymapExtension.defaultOptions.undoInputRuleOnBackspace,
+    persistentSelectionClass: PersistentSelectionExtension.defaultOptions.persistentSelectionClass,
+  },
+  staticKeys: ['persistentSelectionClass'],
+  customHandlerKeys: ['keymap', 'suggester'],
+  handlerKeys: ['shouldSkipInputRule'],
+  handlerKeyOptions: { shouldSkipInputRule: { earlyReturnValue: true } },
+})
 export class BuiltinPreset extends Preset<BuiltinOptions> {
   get name() {
     return 'builtin' as const;
@@ -83,6 +100,9 @@ export class BuiltinPreset extends Preset<BuiltinOptions> {
       'undoInputRuleOnBackspace',
     ]);
     const persistentSelectionOptions = pick(this.options, ['persistentSelectionClass']);
+    const inputRulesExtension = new InputRulesExtension();
+
+    inputRulesExtension.addHandler('shouldSkipInputRule', this.options.shouldSkipInputRule);
 
     return [
       // The order of these extension is important.
@@ -90,7 +110,7 @@ export class BuiltinPreset extends Preset<BuiltinOptions> {
       new SchemaExtension(),
       new AttributesExtension(),
       new PluginsExtension(),
-      new InputRulesExtension(),
+      inputRulesExtension,
       new PasteRulesExtension(),
       new NodeViewExtension(),
       new SuggestExtension(),

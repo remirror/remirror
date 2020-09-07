@@ -46,7 +46,7 @@ export type And<Type extends Shape, Other extends Shape> = Type & Other;
 export type TupleValue<Tuple extends readonly unknown[]> = Tuple[number];
 
 /**
- * Creates a predicate type
+ * Creates a predicate type.
  */
 export type Predicate<Type> = (value: unknown) => value is Type;
 

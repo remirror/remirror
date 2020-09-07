@@ -1,3 +1,4 @@
+import { ExtensionPriority } from '@remirror/core-constants';
 import type { Handler } from '@remirror/core-types';
 import { BoldExtension } from '@remirror/testing';
 
@@ -7,11 +8,18 @@ import { PlainExtension } from '../extension-base';
 interface TestOptions {
   onChange: Handler<() => void>;
   custom: Handler<() => boolean>;
+  onEscape: Handler<() => boolean>;
+  onTextInput: Handler<() => string>;
 }
 
 @extensionDecorator<TestOptions>({
-  handlerKeys: ['custom', 'onChange'],
-  handlerKeyOptions: { custom: { earlyReturnValue: true } },
+  handlerKeys: ['custom', 'onChange', 'onEscape', 'onTextInput'],
+  handlerKeyOptions: {
+    custom: { earlyReturnValue: true },
+    onEscape: { earlyReturnValue: (value) => value === true },
+    __ALL__: { earlyReturnValue: (value) => value === '123' },
+    onChange: { earlyReturnValue: '__IGNORE__' },
+  },
 })
 class TestExtension extends PlainExtension<TestOptions> {
   get name() {
@@ -68,5 +76,78 @@ describe('Handlers', () => {
     expect(firstHandler).toHaveBeenCalledTimes(1);
     expect(secondHandler).not.toHaveBeenCalled();
     expect(thirdHandler).toHaveBeenCalledTimes(1);
+  });
+
+  it('supports early return function values', () => {
+    const testExtension = new TestExtension();
+    const firstHandler = jest.fn(() => false);
+    const secondHandler = jest.fn(() => true);
+    const thirdHandler = jest.fn(() => false);
+
+    testExtension.addHandler('onEscape', firstHandler);
+    const dispose = testExtension.addHandler('onEscape', secondHandler);
+    testExtension.addHandler('onEscape', thirdHandler);
+
+    let returnValue = testExtension.options.onEscape();
+    expect(returnValue).toBe(true);
+
+    expect(firstHandler).toHaveBeenCalledTimes(1);
+    expect(secondHandler).toHaveBeenCalledTimes(1);
+    expect(thirdHandler).not.toHaveBeenCalled();
+
+    jest.clearAllMocks();
+    dispose();
+
+    returnValue = testExtension.options.onEscape();
+    expect(returnValue).toBe(false);
+
+    expect(firstHandler).toHaveBeenCalledTimes(1);
+    expect(secondHandler).not.toHaveBeenCalled();
+    expect(thirdHandler).toHaveBeenCalledTimes(1);
+  });
+
+  it('supports the `__ALL__` default return value', () => {
+    const testExtension = new TestExtension();
+    const firstHandler = jest.fn(() => 'asdf');
+    const secondHandler = jest.fn(() => '123');
+    const thirdHandler = jest.fn(() => 'asf');
+
+    testExtension.addHandler('onTextInput', firstHandler);
+    const dispose = testExtension.addHandler('onTextInput', secondHandler);
+    testExtension.addHandler('onTextInput', thirdHandler);
+
+    let returnValue = testExtension.options.onTextInput();
+    expect(returnValue).toBe('123');
+
+    expect(firstHandler).toHaveBeenCalledTimes(1);
+    expect(secondHandler).toHaveBeenCalledTimes(1);
+    expect(thirdHandler).not.toHaveBeenCalled();
+
+    jest.clearAllMocks();
+    dispose();
+
+    returnValue = testExtension.options.onTextInput();
+    expect(returnValue).toBe('asf');
+
+    expect(firstHandler).toHaveBeenCalledTimes(1);
+    expect(secondHandler).not.toHaveBeenCalled();
+    expect(thirdHandler).toHaveBeenCalledTimes(1);
+  });
+
+  it('supports prioritization', () => {
+    const values: number[] = [];
+    const testExtension = new TestExtension();
+    const one = jest.fn(() => values.push(1));
+    const two = jest.fn(() => values.push(2));
+    const three = jest.fn(() => values.push(3));
+
+    testExtension.addHandler('onChange', one, ExtensionPriority.Lowest);
+    testExtension.addHandler('onChange', two);
+    testExtension.addHandler('onChange', three, ExtensionPriority.Medium);
+
+    // Run the handlers.
+    testExtension.options.onChange();
+
+    expect(values).toEqual([3, 2, 1]);
   });
 });

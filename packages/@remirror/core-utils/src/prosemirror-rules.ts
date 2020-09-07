@@ -1,5 +1,6 @@
 import { findMatches, isFunction, isNullOrUndefined } from '@remirror/core-helpers';
 import type {
+  EditorStateParameter,
   GetAttributesParameter,
   Mark,
   MarkTypeParameter,
@@ -12,6 +13,7 @@ import type {
 import { InputRule } from '@remirror/pm/inputrules';
 import { Fragment, Slice } from '@remirror/pm/model';
 import { Plugin, PluginKey } from '@remirror/pm/state';
+import { markActiveInRange } from '@remirror/pm/suggest';
 
 export interface BeforeDispatchParameter extends TransactionParameter {
   /**
@@ -183,7 +185,7 @@ export function markPasteRule(parameter: MarkInputRuleParameter): ProsemirrorPlu
 /**
  * Creates an input rule based on the provided regex for the provided mark type.
  */
-export function markInputRule(parameter: MarkInputRuleParameter): InputRule {
+export function markInputRule(parameter: MarkInputRuleParameter): SkippableInputRule {
   const {
     regexp,
     type,
@@ -193,12 +195,19 @@ export function markInputRule(parameter: MarkInputRuleParameter): InputRule {
     updateCaptured,
   } = parameter;
 
-  return new InputRule(regexp, (state, match, start, end) => {
+  const rule: SkippableInputRule = new InputRule(regexp, (state, match, start, end) => {
     const { tr } = state;
 
     // These are the attributes which are added to the mark and they can be
     // obtained from the match if a function is provided.
     const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
+
+    const $from = state.doc.resolve(start);
+    const $to = state.doc.resolve(end);
+
+    if (rule.invalidMarks && markActiveInRange({ $from, $to }, rule.invalidMarks)) {
+      return null;
+    }
 
     // Update the internal values with the user provided method.
     const details =
@@ -219,10 +228,15 @@ export function markInputRule(parameter: MarkInputRuleParameter): InputRule {
       return null;
     }
 
+    if (rule.shouldSkip?.({ state, captureGroup, fullMatch, start, end, ruleType: 'mark' })) {
+      return null;
+    }
+
     if (captureGroup) {
       const startSpaces = fullMatch.search(/\S/);
       const textStart = start + fullMatch.indexOf(captureGroup);
       const textEnd = textStart + captureGroup.length;
+
       initialStoredMarks = tr.storedMarks ?? [];
 
       if (textEnd < end) {
@@ -249,6 +263,8 @@ export function markInputRule(parameter: MarkInputRuleParameter): InputRule {
 
     return tr;
   });
+
+  return rule;
 }
 
 /**
@@ -258,12 +274,18 @@ export function markInputRule(parameter: MarkInputRuleParameter): InputRule {
  * Input rules transform content as the user types based on whether a match is
  * found with a sequence of characters.
  */
-export function nodeInputRule(parameter: NodeInputRuleParameter): InputRule {
+export function nodeInputRule(parameter: NodeInputRuleParameter): SkippableInputRule {
   const { regexp, type, getAttributes, beforeDispatch } = parameter;
 
-  return new InputRule(regexp, (state, match, start, end) => {
+  const rule: SkippableInputRule = new InputRule(regexp, (state, match, start, end) => {
     const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
     const { tr } = state;
+    const captureGroup = match[1];
+    const fullMatch = match[0];
+
+    if (rule.shouldSkip?.({ state, captureGroup, fullMatch, start, end, ruleType: 'plain' })) {
+      return null;
+    }
 
     tr.replaceWith(start - 1, end, type.create(attributes));
 
@@ -271,16 +293,18 @@ export function nodeInputRule(parameter: NodeInputRuleParameter): InputRule {
 
     return tr;
   });
+
+  return rule;
 }
 
 /**
  * Creates a plain rule based on the provided regex. You can see this being used
  * in the `@remirror/extension-emoji` when it is setup to use plain text.
  */
-export function plainInputRule(parameter: PlainInputRuleParameter): InputRule {
+export function plainInputRule(parameter: PlainInputRuleParameter): SkippableInputRule {
   const { regexp, transformMatch, beforeDispatch } = parameter;
 
-  return new InputRule(regexp, (state, match, start, end) => {
+  const rule: SkippableInputRule = new InputRule(regexp, (state, match, start, end) => {
     const value = transformMatch(match);
 
     if (isNullOrUndefined(value)) {
@@ -288,6 +312,12 @@ export function plainInputRule(parameter: PlainInputRuleParameter): InputRule {
     }
 
     const { tr } = state;
+    const captureGroup = match[1];
+    const fullMatch = match[0];
+
+    if (rule.shouldSkip?.({ state, captureGroup, fullMatch, start, end, ruleType: 'plain' })) {
+      return null;
+    }
 
     if (value === '') {
       tr.delete(start, end);
@@ -299,4 +329,46 @@ export function plainInputRule(parameter: PlainInputRuleParameter): InputRule {
 
     return tr;
   });
+
+  return rule;
 }
+
+export interface ShouldSkipParameter extends EditorStateParameter, UpdateCaptureTextParameter {
+  /** The type of input rule that has been activated */
+  ruleType: 'mark' | 'node' | 'plain';
+}
+
+interface ShouldSkip {
+  /**
+   * Every input rule calls this function before deciding whether or not to run.
+   *
+   * This is run for every successful input rule match to check if there are any
+   * reasons to prevent it from running.
+   *
+   * In particular it is so that the input rule only runs when there are no
+   * active checks that prevent it from doing so.
+   *
+   * - Other extension can register a `shouldSkip` handler
+   * - Every time in input rule is running it makes sure it isn't blocked is run it makes sure it can run
+   */
+  shouldSkip?: ShouldSkipFunction;
+
+  /**
+   * A list of marks which if existing in the provided range should invalidate the range.
+   */
+  invalidMarks?: string[];
+}
+
+/**
+ * A function which is called to check whether an input rule should be skipped.
+ *
+ * - When it returns false then it won't be skipped.
+ * - When it returns true then it will be skipped.
+ */
+export type ShouldSkipFunction = (parameter: ShouldSkipParameter) => boolean;
+
+/**
+ * An input rule which can have a `shouldSkip` property that returns true when
+ * the input rule should be skipped.
+ */
+export type SkippableInputRule = ShouldSkip & InputRule;

@@ -1,9 +1,25 @@
-import { ExtensionPriority } from '@remirror/core-constants';
+import { ExtensionPriority, ExtensionTag } from '@remirror/core-constants';
+import type { Handler } from '@remirror/core-types';
+import type { ShouldSkipFunction, SkippableInputRule } from '@remirror/core-utils';
 import { InputRule, inputRules } from '@remirror/pm/inputrules';
 import type { Plugin } from '@remirror/pm/state';
 
 import { extensionDecorator } from '../decorators';
 import { PlainExtension } from '../extension';
+
+export interface InputRulesOptions {
+  /**
+   * Handlers which can be registered to check whether an input rule should be
+   * active at this time.
+   *
+   * The handlers are given a parameter with the current `state`, the `fullMatch`
+   * and the `captureGroup` and can determine whether the input rule should
+   * still be run.
+   *
+   * Return `true` to prevent any active input rules from being triggered.
+   */
+  shouldSkipInputRule?: Handler<ShouldSkipFunction>;
+}
 
 /**
  * This extension allows others extension to add the `createInputRules` method
@@ -16,8 +32,14 @@ import { PlainExtension } from '../extension';
  *
  * @builtin
  */
-@extensionDecorator({ defaultPriority: ExtensionPriority.High })
-export class InputRulesExtension extends PlainExtension {
+@extensionDecorator<InputRulesOptions>({
+  defaultPriority: ExtensionPriority.High,
+  handlerKeys: ['shouldSkipInputRule'],
+
+  // Return when the value `true` is encountered.
+  handlerKeyOptions: { shouldSkipInputRule: { earlyReturnValue: true } },
+})
+export class InputRulesExtension extends PlainExtension<InputRulesOptions> {
   get name() {
     return 'inputRules' as const;
   }
@@ -35,7 +57,8 @@ export class InputRulesExtension extends PlainExtension {
   }
 
   private loopExtensions() {
-    const rules: InputRule[] = [];
+    const rules: SkippableInputRule[] = [];
+    const invalidMarks = this.store.tags[ExtensionTag.ExcludeInputRules];
 
     for (const extension of this.store.extensions) {
       if (
@@ -49,7 +72,13 @@ export class InputRulesExtension extends PlainExtension {
         continue;
       }
 
-      rules.push(...extension.createInputRules());
+      // For each input rule returned by the extension, add a `shouldSkip`
+      // property.
+      for (const rule of extension.createInputRules() as SkippableInputRule[]) {
+        rule.shouldSkip = this.options.shouldSkipInputRule;
+        rule.invalidMarks = invalidMarks;
+        rules.push(rule);
+      }
     }
 
     this.inputRulesPlugin = inputRules({ rules });

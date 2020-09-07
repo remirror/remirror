@@ -11,6 +11,7 @@ import type {
   EditorStateParameter,
   InputRule,
   PosParameter,
+  PrimitiveSelection,
   ProsemirrorCommandFunction,
   ProsemirrorNode,
   ProsemirrorPlugin,
@@ -18,7 +19,12 @@ import type {
   Shape,
   TextParameter,
 } from '@remirror/core-types';
-import { findElementAtPosition, isElementDomNode, isTextDomNode } from '@remirror/core-utils';
+import {
+  findElementAtPosition,
+  getTextSelection,
+  isElementDomNode,
+  isTextDomNode,
+} from '@remirror/core-utils';
 import { inputRules } from '@remirror/pm/inputrules';
 import { AllSelection, NodeSelection, Selection, TextSelection } from '@remirror/pm/state';
 import { cellAround, CellSelection } from '@remirror/pm/tables';
@@ -289,7 +295,7 @@ interface BackspaceParameter<Schema extends EditorSchema = EditorSchema>
 }
 
 /**
- * Simulate a backspace key press..
+ * Simulate a backspace key press.
  */
 export function backspace<Schema extends EditorSchema = EditorSchema>(
   parameter: BackspaceParameter<Schema>,
@@ -307,6 +313,30 @@ export function backspace<Schema extends EditorSchema = EditorSchema>(
 
   if (times > 1) {
     tr.delete(from - (times - 1), from);
+  }
+
+  view.dispatch(tr);
+}
+
+/**
+ * Simulate a backspace key press.
+ */
+export function forwardDelete<Schema extends EditorSchema = EditorSchema>(
+  parameter: BackspaceParameter<Schema>,
+): void {
+  const { view, times = 1 } = parameter;
+  const { selection, tr } = view.state;
+  const { from, empty } = selection;
+
+  if (empty) {
+    view.dispatch(tr.delete(from, from + times));
+    return;
+  }
+
+  tr.deleteSelection();
+
+  if (times > 1) {
+    tr.delete(from, from + (times - 1));
   }
 
   view.dispatch(tr);
@@ -579,6 +609,8 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    *
    * @param start - a number position or the shorthand 'start' | 'end'
    * @param [end] - the option end position of the new selection
+   *
+   * @deprecated - use `selectText` instead.
    */
   jumpTo(start: 'start' | 'end' | number, end?: number): this {
     if (start === 'start') {
@@ -591,6 +623,18 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
 
     return this;
   }
+
+  /**
+   * Selects the text between the provided selection primitive.
+   */
+  readonly selectText = (selection: PrimitiveSelection): this => {
+    const tr = this.state.tr;
+    const textSelection = getTextSelection(selection, tr.doc);
+
+    this.view.dispatch(tr.setSelection(textSelection));
+
+    return this;
+  };
 
   /**
    * Type a keyboard shortcut - e.g. `Mod-Enter`.

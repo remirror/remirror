@@ -435,9 +435,7 @@ describe('validity', () => {
     expect(onChange).not.toHaveBeenCalled();
   });
 
-  // This is a known failure. I'm tired right now, so I think I'll revisit when
-  // more energized, or when someone notices.
-  it.skip('should reject `invalidMarks` option not at the start or cursor', () => {
+  it('should reject `invalidMarks` option not at the start or cursor', () => {
     const onChange: SuggestChangeHandler = jest.fn();
     const plugin = suggest({ char: '@', name: 'at', onChange, invalidMarks: ['strong'] });
 
@@ -490,4 +488,61 @@ test('should support whitespace characters in `supportedCharacters`', () => {
       expect(onChange).toHaveBeenCalledTimes(13);
       expect(exit).toHaveBeenCalledTimes(1);
     });
+});
+
+describe('checkNextValidSelection', () => {
+  it('updates the next selection', () => {
+    const mocks = {
+      checkNextValidSelection: jest.fn(),
+      onChange: jest.fn(),
+    };
+
+    const plugin = suggest({ char: '@', name: 'at', invalidMarks: ['strong'], ...mocks });
+
+    const editor = createEditor(doc(p(strong('@<cursor>'))), { plugins: [plugin] }).insertText(
+      'abc',
+    );
+    expect(mocks.checkNextValidSelection).not.toHaveBeenCalled();
+
+    editor.insertText(' abcd').selectText(6);
+
+    expect(mocks.checkNextValidSelection).toHaveBeenCalledWith(
+      expect.objectContaining({ pos: 7 }),
+      expect.any(Object),
+    );
+  });
+
+  it('is not called when selecting `all`', () => {
+    const mocks = {
+      checkNextValidSelection: jest.fn(),
+      onChange: jest.fn(),
+    };
+
+    const plugin = suggest({ char: '@', name: 'at', invalidMarks: ['strong'], ...mocks });
+
+    const editor = createEditor(doc(p(strong('@<cursor>'))), { plugins: [plugin] }).insertText(
+      'abc',
+    );
+    expect(mocks.checkNextValidSelection).not.toHaveBeenCalled();
+
+    editor.insertText(' abcd').selectText('all');
+    expect(mocks.checkNextValidSelection).not.toHaveBeenCalled();
+  });
+
+  it('is not called when selecting `node`', () => {
+    const mocks = {
+      checkNextValidSelection: jest.fn(),
+      onChange: jest.fn(),
+    };
+
+    const plugin = suggest({ char: '@', name: 'at', invalidMarks: ['strong'], ...mocks });
+
+    const editor = createEditor(doc(p(strong('@<cursor>'))), { plugins: [plugin] }).insertText(
+      'abc',
+    );
+    expect(mocks.checkNextValidSelection).not.toHaveBeenCalled();
+
+    editor.insertText(' abcd').selectText('all');
+    expect(mocks.checkNextValidSelection).not.toHaveBeenCalled();
+  });
 });

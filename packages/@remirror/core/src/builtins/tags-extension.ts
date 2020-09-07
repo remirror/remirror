@@ -45,6 +45,36 @@ export class TagsExtension extends PlainExtension {
     this.store.setExtensionStore('tags', this.#combinedTags);
   }
 
+  createHelpers() {
+    return {
+      /**
+       * Retrieve the marks based on the provided tags.
+       */
+      getMarksByTags: (tags: ExtensionTagType[]): string[] => {
+        const names: string[] = [];
+
+        for (const tag of tags) {
+          names.push(...this.store.tags[tag].filter((name) => this.store.markNames.includes(name)));
+        }
+
+        return names;
+      },
+
+      /**
+       * Retrieve the nodes based on the provided tags.
+       */
+      getNodesByTags: (tags: ExtensionTagType[]): string[] => {
+        const names: string[] = [];
+
+        for (const tag of tags) {
+          names.push(...this.store.tags[tag].filter((name) => this.store.nodeNames.includes(name)));
+        }
+
+        return names;
+      },
+    };
+  }
+
   /**
    * Reset the tags to the empty object with empty arrays.
    */

@@ -1,8 +1,11 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 
+import type { LiteralUnion, Primitive } from 'type-fest';
+
 import {
   __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
   ErrorConstant,
+  ExtensionPriority,
   RemirrorIdentifier,
 } from '@remirror/core-constants';
 import {
@@ -11,11 +14,13 @@ import {
   invariant,
   isArray,
   isEmptyArray,
+  isFunction,
   isPlainObject,
   keys,
   noop,
   object,
   omit,
+  sort,
 } from '@remirror/core-helpers';
 import type {
   AnyFunction,
@@ -50,6 +55,7 @@ interface BaseClassConstructorParameter<DefaultStaticOptions extends Shape = Emp
 }
 
 const IGNORE = '__IGNORE__';
+const GENERAL_OPTIONS = '__ALL__' as const;
 
 export abstract class BaseClass<
   Options extends ValidOptions = EmptyShape,
@@ -58,7 +64,8 @@ export abstract class BaseClass<
   /**
    * The default options for this extension.
    *
-   * TODO see if this can be cast to something other than any and allow composition.
+   * TODO see if this can be cast to something other than any and allow
+   * composition.
    */
   static readonly defaultOptions: any = {};
 
@@ -76,7 +83,7 @@ export abstract class BaseClass<
    * Customize the way the handler should behave.
    */
   static handlerKeyOptions: Partial<
-    Record<string, HandlerKeyOptions> & { __ALL__?: HandlerKeyOptions }
+    Record<string, HandlerKeyOptions> & { [GENERAL_OPTIONS]?: HandlerKeyOptions }
   > = {};
 
   /**
@@ -300,8 +307,8 @@ export abstract class BaseClass<
 
     this.updateDynamicOptions(options);
 
-    // Trigger the update handler so the extension can respond to any relevant property
-    // updates.
+    // Trigger the update handler so the extension can respond to any relevant
+    // property updates.
     this.onSetOptions?.({
       reason: 'set',
       changes,
@@ -397,22 +404,13 @@ export abstract class BaseClass<
       methods[key] = (...args: any[]) => {
         let returnValue: unknown;
 
-        for (const handler of this.#mappedHandlers[key]) {
+        for (const [, handler] of this.#mappedHandlers[key]) {
           returnValue = ((handler as unknown) as AnyFunction)(...args);
           const { handlerKeyOptions } = this.constructor;
-          const { __ALL__ } = handlerKeyOptions;
-          const customization = handlerKeyOptions[key];
 
           // Check if the method should cause an early return, based on the
           // return value.
-          if (
-            (__ALL__ &&
-              __ALL__.earlyReturnValue !== IGNORE &&
-              returnValue === __ALL__.earlyReturnValue) ||
-            (customization &&
-              customization.earlyReturnValue !== IGNORE &&
-              returnValue === customization.earlyReturnValue)
-          ) {
+          if (shouldReturnEarly(handlerKeyOptions, returnValue, key)) {
             return returnValue;
           }
         }
@@ -425,8 +423,8 @@ export abstract class BaseClass<
   }
 
   /**
-   * Add a handler to the event handlers so that it is called along with all
-   * the other handler methods.
+   * Add a handler to the event handlers so that it is called along with all the
+   * other handler methods.
    *
    * This is helpful for integrating react hooks which can be used in multiple
    * places. The original problem with fixed properties is that you can only
@@ -441,14 +439,24 @@ export abstract class BaseClass<
   addHandler<Key extends keyof GetHandler<Options>>(
     key: Key,
     method: GetHandler<Options>[Key],
+    priority = ExtensionPriority.Default,
   ): Dispose {
-    this.#mappedHandlers[key].push(method);
+    this.#mappedHandlers[key].push([priority, method]);
+    this.sortHandlers(key);
 
     // Return a method for disposing of the handler.
     return () =>
       (this.#mappedHandlers[key] = this.#mappedHandlers[key].filter(
-        (handler) => handler !== method,
+        ([, handler]) => handler !== method,
       ));
+  }
+
+  private sortHandlers<Key extends keyof GetHandler<Options>>(key: Key) {
+    this.#mappedHandlers[key] = sort(
+      this.#mappedHandlers[key],
+      // Sort from highest binding to the lowest.
+      ([a], [z]) => z - a,
+    );
   }
 
   /**
@@ -468,6 +476,57 @@ export abstract class BaseClass<
    * This must return a dispose function.
    */
   protected onAddCustomHandler?: AddCustomHandler<Options>;
+}
+
+type HandlerKeyOptionsMap = Partial<
+  Record<string, HandlerKeyOptions> & { [GENERAL_OPTIONS]?: HandlerKeyOptions }
+>;
+
+/**
+ * A function used to determine whether the value provided by the handler
+ * warrants an early return.
+ */
+function shouldReturnEarly(
+  handlerKeyOptions: HandlerKeyOptionsMap,
+  returnValue: unknown,
+  handlerKey: string,
+): boolean {
+  const { [GENERAL_OPTIONS]: generalOptions } = handlerKeyOptions;
+  const handlerOptions = handlerKeyOptions[handlerKey];
+
+  if (!generalOptions && !handlerOptions) {
+    return false;
+  }
+
+  // First check if there are options set for the provided handlerKey
+  if (
+    handlerOptions &&
+    // Only proceed if the value should not be ignored.
+    handlerOptions.earlyReturnValue !== IGNORE &&
+    (isFunction(handlerOptions.earlyReturnValue)
+      ? handlerOptions.earlyReturnValue(returnValue) === true
+      : returnValue === handlerOptions.earlyReturnValue)
+  ) {
+    return true;
+  }
+
+  if (
+    generalOptions &&
+    // Only proceed if they are not ignored.
+    generalOptions.earlyReturnValue !== IGNORE &&
+    // Check whether the `earlyReturnValue` is a predicate check.
+    (isFunction(generalOptions.earlyReturnValue)
+      ? // If it is a predicate and when called with the current
+        // `returnValue` the value is `true` then we should return
+        // early.
+        generalOptions.earlyReturnValue(returnValue) === true
+      : // Check the actual return value.
+        returnValue === generalOptions.earlyReturnValue)
+  ) {
+    return true;
+  }
+
+  return false;
 }
 
 /**
@@ -502,7 +561,7 @@ export interface HandlerKeyOptions {
    *
    * Set the value to `'__IGNORE__'` to ignore it
    */
-  earlyReturnValue?: unknown;
+  earlyReturnValue?: LiteralUnion<typeof IGNORE, Primitive> | ((value: unknown) => boolean);
 }
 
 export interface BaseClass<
@@ -535,9 +594,9 @@ export interface BaseClassConstructor<
    * the `defaultOptions`.
    *
    * **Please note**: There is a slight downside when setting up
-   * `defaultOptions`. `undefined` is not supported for partial settings at
-   * this point in time. As a workaround use `null` as the type and pass it as
-   * the value in the default settings.
+   * `defaultOptions`. `undefined` is not supported for partial settings at this
+   * point in time. As a workaround use `null` as the type and pass it as the
+   * value in the default settings.
    *
    * @default {}
    *
@@ -556,7 +615,8 @@ export interface BaseClassConstructor<
   /**
    * An array of all the keys which correspond to the the event handler options.
    *
-   * This **MUST** be present if you want to use event handlers in your extension.
+   * This **MUST** be present if you want to use event handlers in your
+   * extension.
    *
    * Every key here is automatically removed from the `setOptions` method and is
    * added to the `addHandler` method for adding new handlers. The
@@ -596,9 +656,8 @@ export type AnyBaseClassConstructor = Replace<
 /* eslint-enable @typescript-eslint/member-ordering */
 
 /**
- * Auto infers the parameter for the constructor. If there is a
- * required static option then the TypeScript compiler will error if nothing is
- * passed in.
+ * Auto infers the parameter for the constructor. If there is a required static
+ * option then the TypeScript compiler will error if nothing is passed in.
  */
 export type ConstructorParameter<
   Options extends ValidOptions,
@@ -610,8 +669,8 @@ export type ConstructorParameter<
 >;
 
 /**
- * Get the expected type signature for the `defaultOptions`. Requires that
- * every optional setting key (except for keys which are defined on the
+ * Get the expected type signature for the `defaultOptions`. Requires that every
+ * optional setting key (except for keys which are defined on the
  * `BaseExtensionOptions`) has a value assigned.
  */
 export type DefaultOptions<

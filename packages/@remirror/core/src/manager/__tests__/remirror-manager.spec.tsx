@@ -2,6 +2,7 @@ import { createEditor, doc, p } from 'jest-prosemirror';
 
 import { EMPTY_PARAGRAPH_NODE, ExtensionPriority, ExtensionTag } from '@remirror/core-constants';
 import type {
+  Dispose,
   EditorState,
   KeyBindingCommandFunction,
   NodeExtensionSpec,
@@ -10,7 +11,12 @@ import type {
 } from '@remirror/core-types';
 import { Plugin } from '@remirror/pm/state';
 import { EditorView } from '@remirror/pm/view';
-import { CorePreset, createCoreManager, HeadingExtension } from '@remirror/testing';
+import {
+  CorePreset,
+  createCoreManager,
+  HeadingExtension,
+  hideConsoleError,
+} from '@remirror/testing';
 
 import { NodeExtension, PlainExtension } from '../../extension';
 import { isRemirrorManager, RemirrorManager } from '../remirror-manager';
@@ -80,12 +86,14 @@ describe('Manager', () => {
     manager.addView(view);
   });
 
-  test('constructor is private', () => {
+  hideConsoleError(true);
+
+  it('enforces constructor privacy', () => {
     // @ts-expect-error
     expect(() => new RemirrorManager({})).toThrowError();
   });
 
-  test('commands', () => {
+  it('supports commands', () => {
     const attributes = { a: 'a' };
     manager.store.commands.dummy(attributes);
 
@@ -98,7 +106,7 @@ describe('Manager', () => {
     });
   });
 
-  test('helpers', () => {
+  it('supports helpers', () => {
     const value = manager.store.helpers.getInformation();
 
     expect(value).toBe('information');
@@ -302,4 +310,38 @@ describe('options', () => {
 
     expect(manager.store.nodeViews.custom).toBe(custom);
   });
+});
+
+test('disposes of methods', () => {
+  const mocks = {
+    create: jest.fn(),
+    view: jest.fn(),
+  };
+
+  class DisposeExtension extends PlainExtension {
+    get name() {
+      return 'dispose' as const;
+    }
+
+    onCreate(): Dispose {
+      return mocks.create;
+    }
+
+    onView(): Dispose {
+      return mocks.view;
+    }
+  }
+
+  const manager = RemirrorManager.create(() => [new DisposeExtension(), new CorePreset()]);
+  const state = manager.createState({ content: EMPTY_PARAGRAPH_NODE });
+  const view = new EditorView(document.createElement('div'), {
+    state,
+    editable: () => true,
+  });
+  manager.addView(view);
+
+  manager.destroy();
+
+  expect(mocks.create).toHaveBeenCalledTimes(1);
+  expect(mocks.view).toHaveBeenCalledTimes(1);
 });

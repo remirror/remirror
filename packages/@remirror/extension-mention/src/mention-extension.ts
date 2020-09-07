@@ -8,11 +8,13 @@ import {
   getMarkRange,
   getMatchString,
   Handler,
+  InputRulesExtension,
   invariant,
   isElementDomNode,
   isMarkActive,
   isPlainObject,
   isString,
+  LEAF_NODE_REPLACING_CHARACTER,
   MarkAttributes,
   MarkExtension,
   MarkExtensionSpec,
@@ -23,6 +25,7 @@ import {
   RangeParameter,
   removeMark,
   replaceText,
+  ShouldSkipParameter,
   Static,
 } from '@remirror/core';
 import {
@@ -99,6 +102,21 @@ export interface MentionOptions
    * @default () => void
    */
   onChange?: Handler<MentionChangeHandler>;
+
+  /**
+   * A predicate check for whether the mention is valid. It proves the mention
+   * mark and it's attributes as well as the text it contains.
+   *
+   * This is used for checking that a recent update to the document hasn't made
+   * a mention invalid.
+   *
+   * For example a mention for `@valid` => `valid` would be considered
+   * invalidating. Return false to remove the mention.
+   *
+   * @param attrs - the attrs for the mention
+   * @param text - the text which is wrapped by the mention
+   */
+  isMentionValid?: (attrs: NamedMentionExtensionAttributes, text: string) => boolean;
 }
 
 /**
@@ -129,6 +147,7 @@ export interface MentionOptions
     isValidPosition: () => true,
     validMarks: null,
     validNodes: null,
+    isMentionValid: isMentionValidDefault,
   },
   handlerKeys: ['onChange'],
   staticKeys: ['matchers', 'mentionTag'],
@@ -141,7 +160,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
   /**
    * Tag this as a behavior influencing mark.
    */
-  readonly tags = [ExtensionTag.Behavior];
+  readonly tags = [ExtensionTag.Behavior, ExtensionTag.ExcludeInputRules];
 
   createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
     const dataAttributeId = 'data-mention-id';
@@ -201,6 +220,48 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     };
   }
 
+  onCreate(): void {
+    // Add the `shouldSkip` predicate check to this extension.
+    this.store
+      .getExtension(InputRulesExtension)
+      .addHandler('shouldSkipInputRule', this.shouldSkipInputRule.bind(this));
+  }
+
+  private shouldSkipInputRule(parameter: ShouldSkipParameter) {
+    const { ruleType, state, end, start } = parameter;
+
+    if (ruleType === 'node') {
+      return false;
+    }
+
+    if (
+      // Check if the mark for this mention is active anywhere in the captured
+      // input rule group.
+      isMarkActive({ trState: state, type: this.type, from: start, to: end }) ||
+      // Check whether the suggester is active and it's name is one of the
+      // registered matchers.
+      this.isMatcherActive(start, end)
+    ) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Check whether the mark is active within the provided start and end range.
+   */
+  private isMatcherActive(start: number, end: number): boolean {
+    const suggestState = this.store.helpers.getSuggestState();
+    const names = new Set(this.options.matchers.map(({ name }) => name));
+    const activeName = suggestState.match?.suggester.name;
+
+    return (
+      this.options.matchers.some((matcher) => activeName === matcher.name) ||
+      suggestState.decorationSet.find(start, end, ({ name }) => names.has(name)).length > 0
+    );
+  }
+
   createCommands() {
     const commands = {
       /**
@@ -210,8 +271,8 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
        *
        * It does nothing for changes and only acts when an exit occurred.
        *
-       * @param handler - the parameter that was passed through to the `onChange`
-       * handler.
+       * @param handler - the parameter that was passed through to the
+       * `onChange` handler.
        * @param attrs - the options which set the values that will be used (in
        * case you want to override the defaults).
        */
@@ -352,13 +413,39 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
         ...options,
         ...matcher,
         onChange: (parameter) => {
-          const { mentionExitHandler } = this.store.getCommands();
+          const { mentionExitHandler } = this.store.commands;
 
           function command(attrs: MentionChangeHandlerCommandAttributes = {}) {
             mentionExitHandler(parameter, attrs);
           }
 
           this.options.onChange(parameter, command);
+        },
+        checkNextValidSelection: ($pos) => {
+          const range = getMarkRange($pos, this.type);
+
+          if (!range) {
+            return;
+          }
+
+          const text = $pos.doc.textBetween(
+            range.from,
+            range.to,
+            LEAF_NODE_REPLACING_CHARACTER,
+            ' ',
+          );
+
+          const isValidMention =
+            isValidMentionAttributes(range.mark.attrs) &&
+            this.options.isMentionValid(range.mark.attrs, text);
+
+          if (isValidMention) {
+            return;
+          }
+
+          // Remove the mention since it is not valid
+          const { removeMention } = this.store.commands;
+          removeMention({ range });
         },
       };
     });
@@ -370,36 +457,20 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
   private createMention(shouldUpdate: boolean) {
     return (config: NamedMentionExtensionAttributes & KeepSelectionParameter): CommandFunction => {
       invariant(isValidMentionAttributes(config), {
+        code: ErrorConstant.EXTENSION,
         message: 'Invalid configuration attributes passed to the MentionExtension command.',
       });
 
-      const { range, appendText, replacementType, keepSelection, ...attributes } = config;
-      let name = attributes.name;
-
-      if (!name) {
-        invariant(this.options.matchers.length < 2, {
-          code: ErrorConstant.EXTENSION,
-          message:
-            'The MentionExtension command must specify a name since there are multiple matchers configured',
-        });
-
-        name = this.options.matchers[0].name;
-      }
+      const { range, appendText, replacementType, keepSelection, name, ...attributes } = config;
 
       const allowedNames = this.options.matchers.map(({ name }) => name);
+      const matcher = getMatcher(name, this.options.matchers);
 
-      invariant(allowedNames.includes(name), {
+      invariant(allowedNames.includes(name) && matcher, {
         code: ErrorConstant.EXTENSION,
         message: `The name '${name}' specified for this command is invalid. Please choose from: ${JSON.stringify(
           allowedNames,
         )}.`,
-      });
-
-      const matcher = getMatcher(name, this.options.matchers);
-
-      invariant(matcher, {
-        code: ErrorConstant.EXTENSION,
-        message: `Mentions matcher not found for name ${name}.`,
       });
 
       return (parameter) => {
@@ -414,7 +485,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
           let { oldFrom, oldTo } = { oldFrom: from, oldTo: range ? range.to : to };
           const $oldTo = tr.doc.resolve(oldTo);
 
-          ({ from: oldFrom, to: oldTo } = getMarkRange($oldTo, this.type) || {
+          ({ from: oldFrom, to: oldTo } = getMarkRange($oldTo, this.type) ?? {
             from: oldFrom,
             to: oldTo,
           });
@@ -423,7 +494,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
 
           // Remove mark at current position
           const $newTo = tr.selection.$from;
-          const { from: newFrom, to: newTo } = getMarkRange($newTo, this.type) || {
+          const { from: newFrom, to: newTo } = getMarkRange($newTo, this.type) ?? {
             from: $newTo.pos,
             to: $newTo.pos,
           };
@@ -490,13 +561,25 @@ export type MentionExtensionAttributes = MarkAttributes<
   }
 >;
 
-export type NamedMentionExtensionAttributes = MentionChangeHandlerCommandAttributes & {
-  /**
-   * The identifying name for the active matcher. This is stored as an
-   * attribute on the HTML that will be produced
-   */
-  name: string;
-};
+export type NamedMentionExtensionAttributes = MarkAttributes<
+  OptionalMentionExtensionParameter & {
+    /**
+     * A unique identifier for the suggesters node
+     */
+    id: string;
+
+    /**
+     * The text to be placed within the suggesters node
+     */
+    label: string;
+  } & {
+    /**
+     * The identifying name for the active matcher. This is stored as an
+     * attribute on the HTML that will be produced
+     */
+    name: string;
+  }
+>;
 
 /**
  * The options for the matchers which can be created by this extension.
@@ -579,8 +662,19 @@ const DEFAULT_MATCHER = {
  * Check that the attributes exist and are valid for the mention update command
  * method.
  */
-function isValidMentionAttributes(attributes: unknown): attributes is MentionExtensionAttributes {
-  return bool(attributes && isPlainObject(attributes) && attributes.id && attributes.label);
+function isValidMentionAttributes(
+  attributes: unknown,
+): attributes is NamedMentionExtensionAttributes {
+  return bool(
+    attributes &&
+      isPlainObject(attributes) &&
+      attributes.id &&
+      isString(attributes.id) &&
+      attributes.label &&
+      isString(attributes.label) &&
+      attributes.name &&
+      isString(attributes.name),
+  );
 }
 
 /**
@@ -608,4 +702,15 @@ function getAppendText(preferred: string | undefined, fallback: string | undefin
   }
 
   return DEFAULT_MATCHER.appendText;
+}
+
+/**
+ * Checks whether the mention is valid and hasn't been edited since being
+ * created.
+ */
+export function isMentionValidDefault(
+  attrs: NamedMentionExtensionAttributes,
+  text: string,
+): boolean {
+  return attrs.label === text;
 }

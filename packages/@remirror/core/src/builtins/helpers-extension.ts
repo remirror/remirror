@@ -39,6 +39,7 @@ export class HelpersExtension extends PlainExtension {
    * helpers.
    */
   onCreate(): void {
+    // TODO - remove this in a future update.
     this.store.setExtensionStore('getHelpers', () => {
       const helpers = this.store.getStoreKey('helpers');
       invariant(helpers, { code: ErrorConstant.HELPERS_CALLED_IN_OUTER_SCOPE });
@@ -83,6 +84,7 @@ export class HelpersExtension extends PlainExtension {
 
     this.store.setStoreKey('active', active);
     this.store.setStoreKey('helpers', helpers);
+    this.store.setExtensionStore('helpers', helpers as any);
   }
 
   createHelpers() {
@@ -167,7 +169,13 @@ declare global {
       /**
        * Helper method to provide information about the content of the editor.
        * Each extension can register its own helpers.
+       *
+       * This should only be accessed after the `onView` lifecycle method
+       * otherwise it will throw an error.
        */
+      helpers: HelpersFromExtensions<Value<BuiltinHelpers> | AnyExtension>;
+
+      /** @deprecated Use `this.store.helpers` instead. */
       getHelpers: <ExtensionUnion extends AnyExtension = AnyExtension>() => HelpersFromExtensions<
         Value<BuiltinHelpers> | ExtensionUnion
       >;

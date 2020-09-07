@@ -53,7 +53,7 @@ export class CommandsExtension extends PlainExtension {
   /**
    * The current transaction which allows for making commands chainable.
    *
-   * It is shared by all the commands helpers and even used in the
+   * It is shared by all the commands helpers and can even be used in the
    * [[`KeymapExtension`]].
    */
   get transaction(): Transaction {
@@ -103,7 +103,7 @@ export class CommandsExtension extends PlainExtension {
   onCreate(): void {
     const { setExtensionStore, setStoreKey } = this.store;
 
-    // Add the commands to the extension store
+    // TODO remove these two.
     setExtensionStore('getCommands', this.getCommands);
     setExtensionStore('getChain', this.getChain);
 
@@ -116,7 +116,7 @@ export class CommandsExtension extends PlainExtension {
   }
 
   onView(view: EditorView<EditorSchema>): void {
-    const { setStoreKey } = this.store;
+    const { setStoreKey, setExtensionStore } = this.store;
     const commands: Record<string, CommandShape> = object();
     const names = new Set<string>();
     const chained: Record<string, any> & ChainedCommandRunParameter = object();
@@ -141,6 +141,9 @@ export class CommandsExtension extends PlainExtension {
 
     setStoreKey('commands', commands);
     setStoreKey('chain', chained as any);
+
+    setExtensionStore('commands', commands as any);
+    setExtensionStore('chain', chained as any);
   }
 
   /**
@@ -416,6 +419,8 @@ export class CommandsExtension extends PlainExtension {
 
   /**
    * Get the chainable commands.
+   *
+   * @deprecated
    */
   private readonly getChain = <
     ExtensionUnion extends AnyExtension = AnyExtension
@@ -428,6 +433,8 @@ export class CommandsExtension extends PlainExtension {
 
   /**
    * Get the non-chainable commands.
+   *
+   * @deprecated
    */
   private readonly getCommands = <
     ExtensionUnion extends AnyExtension = AnyExtension
@@ -636,15 +643,23 @@ declare global {
       forceUpdate: (tr: Transaction, ...keys: UpdatableViewProps[]) => Transaction;
 
       /**
-       * Get the current transaction.
+       * Get the shared transaction for all commands in the editor.
        *
        * This transaction makes chainable commands possible.
        */
       getTransaction: () => Transaction;
 
       /**
-       * A method to return the editor's available commands.
+       * A property containing all the available commands in the editor.
+       *
+       * This should only be accessed after the `onView` lifecycle method
+       * otherwise it will throw an error. If you want to use it in the
+       * `createCommands` function then make sure it is used within the returned
+       * function scope and not in the outer scope.
        */
+      commands: CommandsFromExtensions<CommandsExtension | AnyExtension>;
+
+      /** @deprecated Use `this.store.commands` instead. */
       getCommands: <ExtensionUnion extends AnyExtension = AnyExtension>() => CommandsFromExtensions<
         CommandsExtension | ExtensionUnion
       >;
@@ -680,7 +695,13 @@ declare global {
        *   }
        * })
        * ```
+       *
+       * This should only be accessed after the `onView` lifecycle method
+       * otherwise it will throw an error.
        */
+      chain: ChainedFromExtensions<Value<BuiltinCommands> | AnyExtension>;
+
+      /** @deprecated Use `this.store.chain` instead. */
       getChain: <ExtensionUnion extends AnyExtension = AnyExtension>() => ChainedFromExtensions<
         Value<BuiltinCommands> | ExtensionUnion
       >;

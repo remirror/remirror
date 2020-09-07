@@ -5,18 +5,20 @@
  * @packageDocumentation
  */
 
-export type { SuggestState } from './suggest-plugin';
+export type { SuggestState } from './suggest-state';
 export { addSuggester, getSuggestPluginState, removeSuggester, suggest } from './suggest-plugin';
 
 export type {
   AddIgnoredParameter,
   CompareMatchParameter,
+  CheckNextValidSelection,
   DocChangedParameter,
   RangeWithCursor,
   MatchValue,
   ReasonMatchParameter,
   ReasonParameter,
   RemoveIgnoredParameter,
+  ShouldDisableDecorations,
   SuggestChangeHandler,
   SuggestChangeHandlerParameter,
   SuggestIgnoreParameter,
@@ -51,4 +53,7 @@ export {
   createRegexFromSuggester,
   getSuggesterWithDefaults,
   DEFAULT_SUGGESTER,
+  markActiveInRange,
+  rangeHasMarks,
+  positionHasMarks,
 } from './suggest-utils';

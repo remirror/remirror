@@ -1,8 +1,14 @@
+import { PluginKey, Selection } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
-import { bool, isString, object, sort } from '@remirror/core-helpers';
+import { bool, isFunction, isString, object, sort } from '@remirror/core-helpers';
 
-import { isInvalidSplitReason, isJumpReason, isValidMatch } from './suggest-predicates';
+import {
+  isInvalidSplitReason,
+  isJumpReason,
+  isTextSelection,
+  isValidMatch,
+} from './suggest-predicates';
 import type {
   AddIgnoredParameter,
   CompareMatchParameter,
@@ -78,6 +84,13 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    * Lets us know whether the most recent change was to remove a mention.
    */
   #removed = false;
+
+  /**
+   * The set of all decorations.
+   */
+  get decorationSet(): DecorationSet {
+    return this.#ignored;
+  }
 
   /**
    * True when the most recent change was to remove a mention.
@@ -170,6 +183,30 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
     return true;
   }
 
+  private updateWithNextSelection() {
+    const { doc, selection } = this.view.state;
+
+    // Make sure the position doesn't exceed the bounds of the document.
+    const pos = Math.min(doc.nodeSize - 2, selection.to + 1);
+    const $pos = doc.resolve(pos);
+
+    // Get the position furthest along in the editor to pass back to suggesters
+    // which have the handler.
+    const nextSelection = Selection.findFrom($pos, 1, true);
+
+    // Ignore non-text selections and null / undefined values. This is needed
+    // for TS mainly, since the `true` in the `Selection.findFrom` method means
+    // only `TextSelection` instances will be returned.
+    if (!isTextSelection(nextSelection)) {
+      return;
+    }
+
+    // Update every suggester with a method attached.
+    for (const suggester of this.#suggesters) {
+      suggester.checkNextValidSelection?.(nextSelection.$from, this.view.state);
+    }
+  }
+
   /**
    * Manages the view updates.
    */
@@ -177,8 +214,13 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
     const { change, exit } = this.#handlerMatches;
     const match = this.match;
 
+    // Notify all suggesters of the next valid text selection.
+    this.updateWithNextSelection();
+
     // Cancel update when a suggester isn't active
     if ((!change && !exit) || !isValidMatch(match)) {
+      // TODO - when not active do a look forward to check the next position and
+      // call the handler with the position. This will be used to
       return;
     }
 
@@ -373,7 +415,11 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
   private updateReasons(parameter: UpdateReasonsParameter<Schema>) {
     const { $pos, state } = parameter;
     const docChanged = this.#docChanged;
-    const match = findFromSuggesters({ suggesters: this.#suggesters, $pos, docChanged });
+    const suggesters = this.#suggesters;
+    const selectionEmpty = state.selection.empty;
+    const match = isTextSelection(state.selection)
+      ? findFromSuggesters({ suggesters, $pos, docChanged, selectionEmpty })
+      : undefined;
 
     // Track the next match if not being ignored.
     this.#next = match && this.shouldIgnoreMatch(match) ? undefined : match;
@@ -460,14 +506,19 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    * Handle the decorations which wrap the mention while it is active and not
    * yet complete.
    */
-  decorations(state: EditorState<Schema>): DecorationSet<Schema> {
+  createDecorations(state: EditorState<Schema>): DecorationSet<Schema> {
     const match = this.match;
 
     if (!isValidMatch(match)) {
       return this.#ignored;
     }
 
-    if (match.suggester.disableDecorations) {
+    const { disableDecorations } = match.suggester;
+    const shouldSkip = isFunction(disableDecorations)
+      ? disableDecorations(state, match)
+      : disableDecorations;
+
+    if (shouldSkip) {
       return this.#ignored;
     }
 
@@ -478,10 +529,15 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
     return this.shouldIgnoreMatch(match)
       ? this.#ignored
       : this.#ignored.add(state.doc, [
-          Decoration.inline(from, to, {
-            nodeName: suggestTag,
-            class: name ? `${suggestClassName} ${suggestClassName}-${name}` : suggestClassName,
-          }),
+          Decoration.inline(
+            from,
+            to,
+            {
+              nodeName: suggestTag,
+              class: name ? `${suggestClassName} ${suggestClassName}-${name}` : suggestClassName,
+            },
+            { name },
+          ),
         ]);
   }
 }
@@ -513,3 +569,8 @@ function createSuggesterMapper() {
     return suggesterWithDefaults;
   };
 }
+
+/**
+ * This key is stored to provide access to the plugin state.
+ */
+export const suggestPluginKey = new PluginKey('suggest');

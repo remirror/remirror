@@ -1,5 +1,7 @@
 import type { ConditionalExcept, ConditionalPick } from 'type-fest';
 
+import type { ExtensionPriority } from '@remirror/core-constants';
+
 import type {
   AnyFunction,
   Flavoring,
@@ -223,7 +225,9 @@ export type GetFixedCustomHandler<Options extends ValidOptions> = Readonly<
 >;
 
 export type GetMappedHandler<Options extends ValidOptions> = {
-  [Key in keyof GetHandler<Options>]: Array<GetHandler<Options>[Key]>;
+  [Key in keyof GetHandler<Options>]: Array<
+    [priority: ExtensionPriority, handler: GetHandler<Options>[Key]]
+  >;
 };
 export type GetMappedCustomHandler<Options extends ValidOptions> = {
   [Key in keyof GetCustomHandler<Options>]: Array<GetCustomHandler<Options>[Key]>;

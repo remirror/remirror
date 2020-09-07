@@ -1,10 +1,7 @@
-import { Plugin, PluginKey } from 'prosemirror-state';
+import { Plugin } from 'prosemirror-state';
 
-import { SuggestState } from './suggest-state';
+import { suggestPluginKey, SuggestState } from './suggest-state';
 import type { EditorSchema, EditorState, Suggester } from './suggest-types';
-
-// This key is stored to provide access to the plugin state.
-const suggestPluginKey = new PluginKey('suggest');
 
 /**
  * Get the state of the suggest plugin.
@@ -84,10 +81,8 @@ export function suggest<Schema extends EditorSchema = EditorSchema>(
       // Sets up a decoration (styling options) on the currently active
       // decoration
       decorations: (state) => {
-        return pluginState.decorations(state);
+        return pluginState.createDecorations(state);
       },
     },
   });
 }
-
-export type { SuggestState };
