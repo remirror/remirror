@@ -392,7 +392,7 @@ export function removeMark(parameter: RemoveMarkParameter): CommandFunction {
         ? getMarkRange(tr.doc.resolve(range.from), type) ||
           (isNumber(range.to) && getMarkRange(tr.doc.resolve(range.to), type)) || { from, to }
         : isSelectionEmpty(tr)
-        ? getMarkRange(selection.$anchor, type) || { from, to }
+        ? getMarkRange(selection.$anchor, type) ?? { from, to }
         : { from, to });
     }
 

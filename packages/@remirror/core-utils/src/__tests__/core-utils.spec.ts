@@ -207,20 +207,23 @@ describe('isElementDOMNode', () => {
 describe('getMarkRange', () => {
   it('returns the the mark range when in an active mark', () => {
     const { state, schema } = createEditor(doc(p('Something', em('is <cursor>italic'))));
+    const { from, to, mark } = getMarkRange(state.selection.$from, schema.marks.em) ?? {};
 
-    expect(getMarkRange(state.selection.$from, schema.marks.em)).toEqual({ from: 10, to: 19 });
+    expect(from).toBe(10);
+    expect(to).toBe(19);
+    expect(mark?.type.name).toBe('em');
   });
 
   it('returns false when no active selection', () => {
     const { state, schema } = createEditor(doc(p('Something', em('is italic'))));
 
-    expect(getMarkRange(state.selection.$from, schema.marks.em)).toBeFalse();
+    expect(getMarkRange(state.selection.$from, schema.marks.em)).toBeUndefined();
   });
 
   it('only returns true when $pos starts within mark', () => {
     const { state, schema } = createEditor(doc(p('Some<start>thing', em('is<end> italic'))));
 
-    expect(getMarkRange(state.selection.$from, schema.marks.em)).toBeFalse();
+    expect(getMarkRange(state.selection.$from, schema.marks.em)).toBeUndefined();
   });
 });
 

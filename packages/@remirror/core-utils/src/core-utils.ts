@@ -278,6 +278,13 @@ export function getMarkAttributes(
   return false;
 }
 
+interface GetMarkRangeParameter extends FromToParameter {
+  /**
+   * The mark that was found within the active range.
+   */
+  mark: Mark;
+}
+
 /**
  * Retrieve the `start` and `end` position of a mark. The `$pos` value should be
  * calculated via `tr.doc.resolve(number)`.
@@ -287,10 +294,10 @@ export function getMarkAttributes(
  * @param $pos - the resolved ProseMirror position
  * @param type - the mark type
  */
-export function getMarkRange($pos: ResolvedPos, type: MarkType): FromToParameter | false {
+export function getMarkRange($pos: ResolvedPos, type: MarkType): GetMarkRangeParameter | undefined {
   // Nothing can be done if neither the position or the type have been provided.
   if (!$pos || !type) {
-    return false;
+    return;
   }
 
   // Get the start position of the current node that the `$pos` value was
@@ -300,7 +307,7 @@ export function getMarkRange($pos: ResolvedPos, type: MarkType): FromToParameter
   // If the position provided was incorrect and no node exists for this start
   // position exit early.
   if (!start.node) {
-    return false;
+    return;
   }
 
   // Find the mark if it exists.
@@ -308,7 +315,7 @@ export function getMarkRange($pos: ResolvedPos, type: MarkType): FromToParameter
 
   // If the mark wasn't found then no range can be calculated. Exit early.
   if (!mark) {
-    return false;
+    return;
   }
 
   let startIndex = $pos.index();
@@ -319,7 +326,7 @@ export function getMarkRange($pos: ResolvedPos, type: MarkType): FromToParameter
     startPos -= $pos.parent.child(startIndex).nodeSize;
   }
 
-  return { from: startPos, to: startPos + start.node.nodeSize };
+  return { from: startPos, to: startPos + start.node.nodeSize, mark };
 }
 
 /**
