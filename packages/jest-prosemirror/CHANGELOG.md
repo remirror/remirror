@@ -1,5 +1,28 @@
 # jest-prosemirror
 
+## 1.0.0-next.33
+
+> 2020-09-07
+
+### Minor Changes
+
+- 7a34e15d: Add `forwardDelete` to `jest-remirror` and `jest-prosemirror`.
+- 92ed4135: Add support for `anchor` and `head` cursors when writing tests. Also fix `selectText` when position is `0`.
+
+### Patch Changes
+
+- Updated dependencies [92ed4135]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [525ac3d8]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [92ed4135]
+  - @remirror/core-utils@1.0.0-next.33
+  - @remirror/core-constants@1.0.0-next.33
+  - @remirror/core-types@1.0.0-next.33
+  - @remirror/core-helpers@1.0.0-next.33
+  - test-keyboard@1.0.0-next.33
+
 ## 1.0.0-next.32
 
 > 2020-09-05

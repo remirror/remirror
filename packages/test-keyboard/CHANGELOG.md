@@ -1,5 +1,16 @@
 # test-keyboard
 
+## 1.0.0-next.33
+
+> 2020-09-07
+
+### Patch Changes
+
+- Updated dependencies [525ac3d8]
+- Updated dependencies [92ed4135]
+  - @remirror/core-types@1.0.0-next.33
+  - @remirror/core-helpers@1.0.0-next.33
+
 ## 1.0.0-next.32
 
 > 2020-09-05
