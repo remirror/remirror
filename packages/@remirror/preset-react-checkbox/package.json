@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-react-checkbox",
-  "version": "1.0.0-next.32",
+  "version": "1.0.0-next.33",
   "private": true,
   "description": "A remirror checkbox rendered with react.",
   "keywords": [
@@ -29,11 +29,11 @@
     "@babel/runtime": "^7.11.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.32",
+    "@remirror/core": "1.0.0-next.33",
     "@remirror/pm": "1.0.0-next.32"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.32",
+    "@remirror/core": "1.0.0-next.33",
     "@remirror/pm": "1.0.0-next.32"
   },
   "publishConfig": {

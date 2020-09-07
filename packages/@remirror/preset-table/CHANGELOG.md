@@ -1,5 +1,26 @@
 # @remirror/extension-tables
 
+## 1.0.0-next.33
+
+> 2020-09-07
+
+### Patch Changes
+
+- 04378b54: Fix text selection causing range error when creating table.
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [525ac3d8]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [d47bd78f]
+  - @remirror/core@1.0.0-next.33
+  - @remirror/theme@1.0.0-next.33
+
 ## 1.0.0-next.32
 
 > 2020-09-05

@@ -1,5 +1,99 @@
 # @remirror/core
 
+## 1.0.0-next.33
+
+> 2020-09-07
+
+### Minor Changes
+
+- 7a34e15d: Add support for returning a `Dispose` method from the `onCreate` and `onView` lifecycle methods for automatic cleanup in the `onDestroy` handler.
+- 7a34e15d: Add support for early return handler predicate checks. Now it's possible to use a function to check if the value received from a handler should trigger an early return.
+- 7a34e15d: Update return signature of `getMarkRange` from `@remirror/core-utils` to also include the `mark` found. Additionally, to better support optional chaining it now returns `undefined` instead of `false` when no range can be found.
+- 7a34e15d: Add `invalidMarks` support.
+
+  - Add the ability to disable all input rules if a certain mark is active.
+  - Fix the `ItalicExtension` regex which was over eager.
+  - Expose `decorationSet` for the `prosemirror-suggest` state.
+  - Export `markActiveInRange`, `rangeHasMarks`, `positionHasMarks` from `prosemirror-suggest`.
+  - Add helpers `getMarksByTags` and `getNodesByTags` to the `TagsExtension`.
+
+- 7a34e15d: Add new properties `chain`, `commands` and `helpers` to simplify usage of commands and helpers within extensions. Also allow using `setExtensionStore` within the `onView` lifecycle handler, which previously was prevented.
+
+  Deprecate `getCommands`, `getChain` and `getHelpers` methods on the `Remirror.ExtensionStore` interface. They will be removed in a future release.
+
+- 7a34e15d: Add priority parameter to the `addHandler` method. Now hooks which consume the `addHandler` methods can alter the priority with which they will be run.
+- 525ac3d8: Add `AcceptUndefined` annotation which allows options to accept undefined as their default value.
+- 7a34e15d: Add `isSuggesterActive` helper to the `SuggestExtension`.
+- 7a34e15d: Enable disabling input rules with a `shouldSkip` method. This is now available as a handler for the `InputRulesExtension` via `shouldSkipInputRule`.
+
+  Consuming this API looks something like this.
+
+  ```ts
+  import { PlainExtension, Dispose } from 'remirror/core';
+
+  class CoolExtension extends PlainExtension {
+    get name() {
+      return 'cool';
+    }
+
+    onCreate(): Dispose {
+      // Add the `shouldSkip` predicate check to this extension.
+      return this.store.getExtension(InputRulesExtension).addHandler('shouldSkipInputRule', () => {
+        if (something) {
+          return true;
+        }
+
+        return false;
+      });
+    }
+  }
+  ```
+
+- 7a34e15d: Add `getExtension` and `getPreset` methods to the `Remirror.ExtensionStore`.
+- d47bd78f: 🎉 Brings support for adding extra attributes to the `RemirrorManager` via extension tags. Attributes can now be added to all nodes and marks with a specific tag like `ExtensionTag.Alignment` or `ExtensionTag.NodeBlock`. Every matching tag in the `Schema` receives the extra attributes defined.
+
+  With tags, you can select a specific sub selection of marks and nodes. This will be the basis for adding advanced formatting to `remirror`.
+
+  ```ts
+  import { ExtensionTag } from 'remirror/core';
+  import { createCoreManager, CorePreset } from 'remirror/preset/core';
+  import { WysiwygPreset } from 'remirror/preset/wysiwyg';
+  const manager = createCoreManager(() => [new WysiwygPreset(), new CorePreset()], {
+    extraAttributes: [
+      {
+        identifiers: {
+          tags: [ExtensionTag.NodeBlock],
+
+          // Can be limited by type to `node | mark`.
+          type: 'node',
+        },
+        attributes: { role: 'presentation' },
+      },
+    ],
+  });
+  ```
+
+  Each item in the tags array should be read as an `OR` so the following would match `Tag1` OR `Tag2` OR `Tag3`.
+
+  ```json
+  { "tags": ["Tag1", "Tag2", "Tag3"] }
+  ```
+
+  The `type` property (`mark | node`) is exclusive and limits the type of matches that will be matched.
+
+### Patch Changes
+
+- Updated dependencies [92ed4135]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [525ac3d8]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [92ed4135]
+  - @remirror/core-utils@1.0.0-next.33
+  - @remirror/core-constants@1.0.0-next.33
+  - @remirror/core-types@1.0.0-next.33
+  - @remirror/core-helpers@1.0.0-next.33
+
 ## 1.0.0-next.32
 
 > 2020-09-05

@@ -1,5 +1,37 @@
 # @remirror/react-hooks
 
+## 1.0.0-next.33
+
+> 2020-09-07
+
+### Patch Changes
+
+- 92ed4135: **BREAKING**: 💥 Remove export of `useSetState` and use default `useState` instead.
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [525ac3d8]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [d47bd78f]
+- Updated dependencies [92ed4135]
+  - @remirror/extension-mention@1.0.0-next.33
+  - @remirror/core@1.0.0-next.33
+  - @remirror/extension-history@1.0.0-next.33
+  - @remirror/react@1.0.0-next.33
+  - @remirror/extension-emoji@1.0.0-next.33
+  - @remirror/extension-events@1.0.0-next.33
+  - @remirror/extension-mention-atom@1.0.0-next.33
+  - @remirror/extension-positioner@1.0.0-next.33
+  - @remirror/react-utils@1.0.0-next.33
+  - @remirror/i18n@1.0.0-next.33
+
 ## 1.0.0-next.32
 
 > 2020-09-05

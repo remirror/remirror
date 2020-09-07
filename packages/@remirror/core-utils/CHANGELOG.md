@@ -1,5 +1,55 @@
 # @remirror/core-utils
 
+## 1.0.0-next.33
+
+> 2020-09-07
+
+### Minor Changes
+
+- 7a34e15d: Update return signature of `getMarkRange` from `@remirror/core-utils` to also include the `mark` found. Additionally, to better support optional chaining it now returns `undefined` instead of `false` when no range can be found.
+- 7a34e15d: Add `invalidMarks` support.
+
+  - Add the ability to disable all input rules if a certain mark is active.
+  - Fix the `ItalicExtension` regex which was over eager.
+  - Expose `decorationSet` for the `prosemirror-suggest` state.
+  - Export `markActiveInRange`, `rangeHasMarks`, `positionHasMarks` from `prosemirror-suggest`.
+  - Add helpers `getMarksByTags` and `getNodesByTags` to the `TagsExtension`.
+
+- 7a34e15d: Enable disabling input rules with a `shouldSkip` method. This is now available as a handler for the `InputRulesExtension` via `shouldSkipInputRule`.
+
+  Consuming this API looks something like this.
+
+  ```ts
+  import { PlainExtension, Dispose } from 'remirror/core';
+
+  class CoolExtension extends PlainExtension {
+    get name() {
+      return 'cool';
+    }
+
+    onCreate(): Dispose {
+      // Add the `shouldSkip` predicate check to this extension.
+      return this.store.getExtension(InputRulesExtension).addHandler('shouldSkipInputRule', () => {
+        if (something) {
+          return true;
+        }
+
+        return false;
+      });
+    }
+  }
+  ```
+
+### Patch Changes
+
+- 92ed4135: Fix editable mentions support for exiting when text is selected. Also update `getSelection` to support `anchor` and `head` selections.
+- Updated dependencies [7a34e15d]
+- Updated dependencies [525ac3d8]
+- Updated dependencies [92ed4135]
+  - @remirror/core-constants@1.0.0-next.33
+  - @remirror/core-types@1.0.0-next.33
+  - @remirror/core-helpers@1.0.0-next.33
+
 ## 1.0.0-next.32
 
 > 2020-09-05

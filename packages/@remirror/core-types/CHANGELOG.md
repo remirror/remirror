@@ -1,5 +1,19 @@
 # @remirror/core-types
 
+## 1.0.0-next.33
+
+> 2020-09-07
+
+### Minor Changes
+
+- 525ac3d8: Add `AcceptUndefined` annotation which allows options to accept undefined as their default value.
+- 92ed4135: Add new `AnchorHeadParameter` export and make it a part of `PrimitiveSelection` type.
+
+### Patch Changes
+
+- Updated dependencies [7a34e15d]
+  - @remirror/core-constants@1.0.0-next.33
+
 ## 1.0.0-next.32
 
 > 2020-09-05

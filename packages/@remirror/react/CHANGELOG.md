@@ -1,5 +1,37 @@
 # @remirror/react
 
+## 1.0.0-next.33
+
+> 2020-09-07
+
+### Major Changes
+
+- 92ed4135: **BREAKING**: 💥 Remove export of `useSetState` and use default `useState` instead.
+
+### Patch Changes
+
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [525ac3d8]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [d47bd78f]
+  - @remirror/core@1.0.0-next.33
+  - @remirror/extension-placeholder@1.0.0-next.33
+  - @remirror/extension-positioner@1.0.0-next.33
+  - @remirror/extension-react-component@1.0.0-next.33
+  - @remirror/extension-react-ssr@1.0.0-next.33
+  - @remirror/preset-core@1.0.0-next.33
+  - @remirror/preset-react@1.0.0-next.33
+  - @remirror/react-utils@1.0.0-next.33
+  - @remirror/theme@1.0.0-next.33
+  - @remirror/i18n@1.0.0-next.33
+
 ## 1.0.0-next.32
 
 > 2020-09-05

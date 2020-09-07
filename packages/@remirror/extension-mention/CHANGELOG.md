@@ -1,5 +1,37 @@
 # @remirror/extension-mention
 
+## 1.0.0-next.33
+
+> 2020-09-07
+
+### Minor Changes
+
+- 7a34e15d: Add `invalidMarks` support.
+
+  - Add the ability to disable all input rules if a certain mark is active.
+  - Fix the `ItalicExtension` regex which was over eager.
+  - Expose `decorationSet` for the `prosemirror-suggest` state.
+  - Export `markActiveInRange`, `rangeHasMarks`, `positionHasMarks` from `prosemirror-suggest`.
+  - Add helpers `getMarksByTags` and `getNodesByTags` to the `TagsExtension`.
+
+- 7a34e15d: Skip input rules when the `mention` is active or one of the included suggester names are active.
+
+### Patch Changes
+
+- 7a34e15d: Fix forward deleting when using the `@remirror/extension-mention` #639.
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [525ac3d8]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [7a34e15d]
+- Updated dependencies [d47bd78f]
+  - @remirror/core@1.0.0-next.33
+
 ## 1.0.0-next.32
 
 > 2020-09-05
