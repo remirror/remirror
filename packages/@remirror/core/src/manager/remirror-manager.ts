@@ -19,6 +19,7 @@ import {
   object,
 } from '@remirror/core-helpers';
 import type {
+  Dispose,
   EditorSchema,
   EditorView,
   MarkExtensionSpec,
@@ -179,15 +180,17 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * Store the handlers that will be run when for each event method.
    */
   #handlers: {
-    create: Array<() => void>;
-    view: Array<(view: EditorView) => void>;
+    create: Array<() => Dispose | void>;
+    view: Array<(view: EditorView) => Dispose | void>;
     update: Array<(param: StateUpdateLifecycleParameter) => void>;
     destroy: Array<() => void>;
+    disposers: Array<() => void>;
   } = {
     create: [],
     view: [],
     update: [],
     destroy: [],
+    disposers: [],
   };
 
   /**
@@ -348,7 +351,8 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
     this.#phase = ManagerPhase.Create;
 
     for (const handler of this.#handlers.create) {
-      handler();
+      const disposer = handler();
+      this.#handlers.disposers.push(...(disposer ? [disposer] : []));
     }
   }
 
@@ -518,7 +522,8 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
     this.#store.view = view;
 
     for (const handler of this.#handlers.view) {
-      handler(view);
+      const disposer = handler(view);
+      this.#handlers.disposers.push(...(disposer ? [disposer] : []));
     }
 
     return this;
@@ -687,6 +692,11 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
 
     for (const plugin of this.view?.state.plugins ?? []) {
       plugin.getState(this.view.state)?.destroy?.();
+    }
+
+    // Run all cleanup methods returned by the `onView` and `onCreate` methods.
+    for (const dispose of this.#handlers.disposers) {
+      dispose();
     }
 
     // TODO: prevent `dispatchTransaction` from being called again

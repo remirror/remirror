@@ -17,6 +17,7 @@ import {
 } from '@remirror/core-helpers';
 import type {
   ApplySchemaAttributes,
+  Dispose,
   EditorSchema,
   EditorView,
   EmptyShape,
@@ -291,16 +292,20 @@ interface ExtensionLifecycleMethods {
    *
    * Since it is called as soon as the manager is some methods may not be
    * available in the extension store. When accessing methods on `this.store` be
-   * shore to check when they become available in the lifecycle. It is
-   * recommended that you don't use this method unless absolutely required.
+   * shore to check when they become available in the lifecycle.
+   *
+   * You can return a `Dispose` function which will automatically be called when the extension is destroyed.
    */
-  onCreate?(): void;
+  onCreate?(): Dispose | void;
 
   /**
    * This event happens when the view is first received from the view layer
    * (e.g. React).
+   *
+   * Return a dispose function which will be called when the extension is
+   * destroyed.
    */
-  onView?(view: EditorView): void;
+  onView?(view: EditorView): Dispose | void;
 
   /**
    * Called when a transaction successfully updates the editor state.

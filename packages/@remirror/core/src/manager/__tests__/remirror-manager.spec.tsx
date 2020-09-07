@@ -2,6 +2,7 @@ import { createEditor, doc, p } from 'jest-prosemirror';
 
 import { EMPTY_PARAGRAPH_NODE, ExtensionPriority, ExtensionTag } from '@remirror/core-constants';
 import type {
+  Dispose,
   EditorState,
   KeyBindingCommandFunction,
   NodeExtensionSpec,
@@ -309,4 +310,38 @@ describe('options', () => {
 
     expect(manager.store.nodeViews.custom).toBe(custom);
   });
+});
+
+test('disposes of methods', () => {
+  const mocks = {
+    create: jest.fn(),
+    view: jest.fn(),
+  };
+
+  class DisposeExtension extends PlainExtension {
+    get name() {
+      return 'dispose' as const;
+    }
+
+    onCreate(): Dispose {
+      return mocks.create;
+    }
+
+    onView(): Dispose {
+      return mocks.view;
+    }
+  }
+
+  const manager = RemirrorManager.create(() => [new DisposeExtension(), new CorePreset()]);
+  const state = manager.createState({ content: EMPTY_PARAGRAPH_NODE });
+  const view = new EditorView(document.createElement('div'), {
+    state,
+    editable: () => true,
+  });
+  manager.addView(view);
+
+  manager.destroy();
+
+  expect(mocks.create).toHaveBeenCalledTimes(1);
+  expect(mocks.view).toHaveBeenCalledTimes(1);
 });
