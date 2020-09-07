@@ -53,4 +53,7 @@ export {
   createRegexFromSuggester,
   getSuggesterWithDefaults,
   DEFAULT_SUGGESTER,
+  markActiveInRange,
+  rangeHasMarks,
+  positionHasMarks,
 } from './suggest-utils';

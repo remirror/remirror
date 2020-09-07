@@ -13,6 +13,7 @@ import type {
 import { InputRule } from '@remirror/pm/inputrules';
 import { Fragment, Slice } from '@remirror/pm/model';
 import { Plugin, PluginKey } from '@remirror/pm/state';
+import { markActiveInRange } from '@remirror/pm/suggest';
 
 export interface BeforeDispatchParameter extends TransactionParameter {
   /**
@@ -201,6 +202,13 @@ export function markInputRule(parameter: MarkInputRuleParameter): SkippableInput
     // obtained from the match if a function is provided.
     const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
 
+    const $from = state.doc.resolve(start);
+    const $to = state.doc.resolve(end);
+
+    if (rule.invalidMarks && markActiveInRange({ $from, $to }, rule.invalidMarks)) {
+      return null;
+    }
+
     // Update the internal values with the user provided method.
     const details =
       updateCaptured?.({ captureGroup: match[1], fullMatch: match[0], start, end }) ?? {};
@@ -228,6 +236,7 @@ export function markInputRule(parameter: MarkInputRuleParameter): SkippableInput
       const startSpaces = fullMatch.search(/\S/);
       const textStart = start + fullMatch.indexOf(captureGroup);
       const textEnd = textStart + captureGroup.length;
+
       initialStoredMarks = tr.storedMarks ?? [];
 
       if (textEnd < end) {
@@ -343,6 +352,11 @@ interface ShouldSkip {
    * - Every time in input rule is running it makes sure it isn't blocked is run it makes sure it can run
    */
   shouldSkip?: ShouldSkipFunction;
+
+  /**
+   * A list of marks which if existing in the provided range should invalidate the range.
+   */
+  invalidMarks?: string[];
 }
 
 /**

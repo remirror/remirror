@@ -338,6 +338,16 @@ describe('interactions with input rules', () => {
       </p>
     `);
   });
+
+  it('should support longer matches', () => {
+    add(doc(p('123 '))).insertText('@a_bc_ this should be preserved');
+
+    expect(view.dom.innerHTML).toMatchInlineSnapshot(`
+      <p>
+        123 @a_bc_ this should be preserved
+      </p>
+    `);
+  });
 });
 
 describe('forwardDeletes', () => {

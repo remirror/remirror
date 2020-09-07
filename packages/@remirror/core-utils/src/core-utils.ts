@@ -173,8 +173,8 @@ interface IsMarkActiveParameter
  * to implement their active methods.
  */
 export function isMarkActive(parameter: IsMarkActiveParameter): boolean {
-  const { trState: stateOrTransaction, type, from, to } = parameter;
-  const { selection, doc, storedMarks } = stateOrTransaction;
+  const { trState, type, from, to } = parameter;
+  const { selection, doc, storedMarks } = trState;
   const { $from, empty } = selection;
 
   if (from && to) {

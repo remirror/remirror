@@ -1,4 +1,4 @@
-import { ExtensionPriority } from '@remirror/core-constants';
+import { ExtensionPriority, ExtensionTag } from '@remirror/core-constants';
 import type { Handler } from '@remirror/core-types';
 import type { ShouldSkipFunction, SkippableInputRule } from '@remirror/core-utils';
 import { InputRule, inputRules } from '@remirror/pm/inputrules';
@@ -58,6 +58,7 @@ export class InputRulesExtension extends PlainExtension<InputRulesOptions> {
 
   private loopExtensions() {
     const rules: SkippableInputRule[] = [];
+    const invalidMarks = this.store.tags[ExtensionTag.ExcludeInputRules];
 
     for (const extension of this.store.extensions) {
       if (
@@ -75,6 +76,7 @@ export class InputRulesExtension extends PlainExtension<InputRulesOptions> {
       // property.
       for (const rule of extension.createInputRules() as SkippableInputRule[]) {
         rule.shouldSkip = this.options.shouldSkipInputRule;
+        rule.invalidMarks = invalidMarks;
         rules.push(rule);
       }
     }

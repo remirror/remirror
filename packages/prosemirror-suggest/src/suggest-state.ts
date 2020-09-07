@@ -86,6 +86,13 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
   #removed = false;
 
   /**
+   * The set of all decorations.
+   */
+  get decorationSet(): DecorationSet {
+    return this.#ignored;
+  }
+
+  /**
    * True when the most recent change was to remove a mention.
    *
    * @remarks
@@ -499,7 +506,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    * Handle the decorations which wrap the mention while it is active and not
    * yet complete.
    */
-  decorations(state: EditorState<Schema>): DecorationSet<Schema> {
+  createDecorations(state: EditorState<Schema>): DecorationSet<Schema> {
     const match = this.match;
 
     if (!isValidMatch(match)) {
@@ -522,10 +529,15 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
     return this.shouldIgnoreMatch(match)
       ? this.#ignored
       : this.#ignored.add(state.doc, [
-          Decoration.inline(from, to, {
-            nodeName: suggestTag,
-            class: name ? `${suggestClassName} ${suggestClassName}-${name}` : suggestClassName,
-          }),
+          Decoration.inline(
+            from,
+            to,
+            {
+              nodeName: suggestTag,
+              class: name ? `${suggestClassName} ${suggestClassName}-${name}` : suggestClassName,
+            },
+            { name },
+          ),
         ]);
   }
 }

@@ -202,6 +202,11 @@ const BaseExtensionTag = {
    * Sets this as a block level node.
    */
   BlockNode: 'block',
+
+  /**
+   * A tag that excludes this from input rules.
+   */
+  ExcludeInputRules: 'excludeFromInputRules',
 } as const;
 
 /**

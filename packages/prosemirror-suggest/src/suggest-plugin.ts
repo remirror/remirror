@@ -81,7 +81,7 @@ export function suggest<Schema extends EditorSchema = EditorSchema>(
       // Sets up a decoration (styling options) on the currently active
       // decoration
       decorations: (state) => {
-        return pluginState.decorations(state);
+        return pluginState.createDecorations(state);
       },
     },
   });

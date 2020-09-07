@@ -7,6 +7,7 @@ import {
   InputRule,
   isElementDomNode,
   isString,
+  KeyBindings,
   MarkExtension,
   MarkExtensionSpec,
   markInputRule,
@@ -84,7 +85,7 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
     };
   }
 
-  createKeymap() {
+  createKeymap(): KeyBindings {
     return {
       'Mod-b': toggleMark({ type: this.type }),
     };
@@ -106,7 +107,7 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
        * Toggle the bold styling on and off. Remove the formatting if any
        * matching bold formatting within the selection or provided range.
        */
-      toggleBold: (range?: FromToParameter) => {
+      toggleBold: (range?: FromToParameter): CommandFunction => {
         return toggleMark({ type: this.type, range });
       },
 

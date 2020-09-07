@@ -160,7 +160,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
   /**
    * Tag this as a behavior influencing mark.
    */
-  readonly tags = [ExtensionTag.Behavior];
+  readonly tags = [ExtensionTag.Behavior, ExtensionTag.ExcludeInputRules];
 
   createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
     const dataAttributeId = 'data-mention-id';
@@ -228,20 +228,19 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
   }
 
   private shouldSkipInputRule(parameter: ShouldSkipParameter) {
-    const { ruleType, state, fullMatch, end } = parameter;
+    const { ruleType, state, end, start } = parameter;
 
     if (ruleType === 'node') {
       return false;
     }
 
-    const from = end - fullMatch.length;
-
     if (
       // Check if the mark for this mention is active anywhere in the captured
       // input rule group.
-      isMarkActive({ trState: state, type: this.type, from, to: end }) ||
-      // Check whether the suggester is active and it's name is one of the registered matchers.
-      this.isMatcherActive()
+      isMarkActive({ trState: state, type: this.type, from: start, to: end }) ||
+      // Check whether the suggester is active and it's name is one of the
+      // registered matchers.
+      this.isMatcherActive(start, end)
     ) {
       return true;
     }
@@ -249,9 +248,18 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     return false;
   }
 
-  private isMatcherActive(): boolean {
-    const activeName = this.store.helpers.getSuggestState().match?.suggester.name;
-    return this.options.matchers.some((matcher) => activeName === matcher.name);
+  /**
+   * Check whether the mark is active within the provided start and end range.
+   */
+  private isMatcherActive(start: number, end: number): boolean {
+    const suggestState = this.store.helpers.getSuggestState();
+    const names = new Set(this.options.matchers.map(({ name }) => name));
+    const activeName = suggestState.match?.suggester.name;
+
+    return (
+      this.options.matchers.some((matcher) => activeName === matcher.name) ||
+      suggestState.decorationSet.find(start, end, ({ name }) => names.has(name)).length > 0
+    );
   }
 
   createCommands() {
@@ -263,8 +271,8 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
        *
        * It does nothing for changes and only acts when an exit occurred.
        *
-       * @param handler - the parameter that was passed through to the `onChange`
-       * handler.
+       * @param handler - the parameter that was passed through to the
+       * `onChange` handler.
        * @param attrs - the options which set the values that will be used (in
        * case you want to override the defaults).
        */

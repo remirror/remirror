@@ -436,8 +436,11 @@ function hasParentNode($pos: ResolvedPos, types: string[]): boolean {
  * In reality I should also check for each position within the range to see if a
  * target mark is active but I won't for now.
  */
-function markActiveInRange(resolvedRange: ResolvedRangeWithCursor, marks: string[]) {
-  const { $cursor, $from, $to } = resolvedRange;
+export function markActiveInRange<Schema extends EditorSchema = EditorSchema>(
+  resolvedRange: Omit<ResolvedRangeWithCursor<Schema>, '$cursor'>,
+  marks: string[],
+): boolean {
+  const { $from, $to } = resolvedRange;
 
   // Check if there is a mark spanning the range of marks.
   if (rangeHasMarks(resolvedRange, marks)) {
@@ -446,16 +449,16 @@ function markActiveInRange(resolvedRange: ResolvedRangeWithCursor, marks: string
 
   // Check if any of the positions in the available range have the active mark
   // associated with
-  return range($from.pos + 1, $to.pos - 1).some((value) =>
-    positionHasMarks($cursor.doc.resolve(value), marks),
+  return range($from.pos, $to.pos).some((value) =>
+    positionHasMarks($from.doc.resolve(value), marks),
   );
 }
 
 /**
- * Check if the current matching range, from the start point all the way through
- * to the point, has the required marks.
+ * Check if the entire matching range `from` the start point all the way through
+ * `to` the end point, has any of the provided marks that span it.
  */
-function rangeHasMarks<Schema extends EditorSchema = EditorSchema>(
+export function rangeHasMarks<Schema extends EditorSchema = EditorSchema>(
   resolvedRange: Omit<ResolvedRangeWithCursor<Schema>, '$cursor'>,
   marks: string[],
 ): boolean {
@@ -467,7 +470,10 @@ function rangeHasMarks<Schema extends EditorSchema = EditorSchema>(
   return marks.some((item) => setOfMarks.has(item));
 }
 
-function positionHasMarks<Schema extends EditorSchema = EditorSchema>(
+/**
+ * Check if the provided position has the given marks.
+ */
+export function positionHasMarks<Schema extends EditorSchema = EditorSchema>(
   $pos: ResolvedPos<Schema>,
   marks: string[],
 ): boolean {

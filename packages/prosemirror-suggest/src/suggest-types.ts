@@ -771,6 +771,10 @@ export type MakeOptional<Type extends object, Keys extends keyof Type> = Omit<Ty
 
 export type EditorSchema = import('prosemirror-model').Schema<string, string>;
 
+export type ProsemirrorNode<
+  Schema extends EditorSchema = EditorSchema
+> = import('prosemirror-model').Node<Schema>;
+
 export type Transaction<
   Schema extends EditorSchema = EditorSchema
 > = import('prosemirror-state').Transaction<Schema>;
