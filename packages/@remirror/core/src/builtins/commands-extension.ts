@@ -53,7 +53,7 @@ export class CommandsExtension extends PlainExtension {
   /**
    * The current transaction which allows for making commands chainable.
    *
-   * It is shared by all the commands helpers and even used in the
+   * It is shared by all the commands helpers and can even be used in the
    * [[`KeymapExtension`]].
    */
   get transaction(): Transaction {
@@ -643,7 +643,7 @@ declare global {
       forceUpdate: (tr: Transaction, ...keys: UpdatableViewProps[]) => Transaction;
 
       /**
-       * Get the current transaction.
+       * Get the shared transaction for all commands in the editor.
        *
        * This transaction makes chainable commands possible.
        */

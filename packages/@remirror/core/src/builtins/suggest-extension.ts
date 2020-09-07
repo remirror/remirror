@@ -1,4 +1,4 @@
-import { isArray } from '@remirror/core-helpers';
+import { includes, isArray } from '@remirror/core-helpers';
 import type { CustomHandler } from '@remirror/core-types';
 import {
   addSuggester,
@@ -92,6 +92,16 @@ export class SuggestExtension extends PlainExtension<SuggestOptions> {
         } = this.getState();
 
         return { addIgnored, clearIgnored, removeIgnored, ignoreNextExit, setMarkRemoved };
+      },
+
+      /**
+       * Check to see whether the provided name is the currently active
+       * suggester.
+       *
+       * @param name - the name of the suggester to include
+       */
+      isSuggesterActive: (name: string | string[]) => {
+        return includes(isArray(name) ? name : [name], this.getState().match?.suggester.name);
       },
     };
   }
