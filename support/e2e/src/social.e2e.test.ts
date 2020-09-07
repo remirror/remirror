@@ -191,9 +191,7 @@ describe('Social Showcase', () => {
         );
       });
 
-      // TODO create a new issue to add forward deletion support to the
-      // `@remirror/extension-mention`.
-      it.skip('removes mentions for forward deletes', async () => {
+      it('removes mentions for forward deletes', async () => {
         await $editor.type('@abc ');
         await press({ key: 'ArrowLeft', count: 5 });
         await press({ key: 'Delete' });

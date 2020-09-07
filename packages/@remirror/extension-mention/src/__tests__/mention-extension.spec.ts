@@ -339,3 +339,18 @@ describe('interactions with input rules', () => {
     `);
   });
 });
+
+describe('forwardDeletes', () => {
+  const options: MentionOptions = {
+    matchers: [{ char: '@', name: 'at', mentionClassName: 'custom' }],
+  };
+
+  const { add, doc, p, mention, view } = create(options);
+
+  it('should support deleting forward', () => {
+    const mentionMark = mention({ id: 'mention', label: '@mention', name: 'at' });
+    add(doc(p('abc <cursor>', mentionMark('@mention')))).forwardDelete();
+
+    expect(view.state.doc).toEqualRemirrorDocument(doc(p('abc mention')));
+  });
+});
