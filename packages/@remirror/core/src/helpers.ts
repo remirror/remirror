@@ -95,7 +95,7 @@ const codeLabelMap = {
  *
  * @param parameter - destructured params
  */
-export function throwIfNameNotUnique(parameter: IsNameUniqueParameter) {
+export function throwIfNameNotUnique(parameter: IsNameUniqueParameter): void {
   const { name, set, code } = parameter;
   const label = codeLabelMap[code];
 

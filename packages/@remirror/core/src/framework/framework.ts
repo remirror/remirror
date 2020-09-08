@@ -30,6 +30,7 @@ import type {
   TransactionParameter,
   TransactionTransformer,
 } from '@remirror/core-types';
+import type { InvalidContentHandler } from '@remirror/core-utils';
 import {
   getDocument,
   getTextSelection,
@@ -37,7 +38,6 @@ import {
   StringHandlerParameter,
   toHtml,
 } from '@remirror/core-utils';
-import type { InvalidContentHandler } from '@remirror/core-utils/src/core-utils';
 import type { DirectEditorProps } from '@remirror/pm/view';
 
 import type { UpdatableViewProps } from '../builtins';
