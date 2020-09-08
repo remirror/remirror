@@ -1,9 +1,9 @@
 ---
 title: Hello Remirror
+hide_title: Hello Remirror
 ---
 
-import * as Remirror from 'remirror/react/social';
-import { useState, useCallback } from 'react';
+# Hello Remirror
 
 The most straightforward way of using `remirror` is to get start with a prebuilt editor. In a later section of this quide I'll walk you through creating your own editor but for now there's enought to learn in consuming the readily available components.
 
@@ -70,39 +70,41 @@ Now that the data is available let's use it.
 
 ```tsx live
 function MyEditor() {
-  const [users, setUsers] = useState([]);
-  const [tags, setTags] = useState([]);
+  const [mention, setMention] = useState(null);
 
-  const onMentionChange = (parameter) => {
-    if (!parameter) {
-      setUsers([]);
-      setTags([]);
+  const onChange = useCallback((parameter) => {
+    setMention(parameter);
+  }, []);
 
-      return;
-    }
+  console.log(mention);
 
-    if (parameter.name === 'tag') {
-      const tags = exampleTags.filter((tag) =>
-        tag.tag.toLowerCase().includes(parameter.query.toLowerCase()),
+  const onExit = useCallback(({ query }, command) => {
+    command({ href: `/${query.full}` });
+  }, []);
+
+  const items = useMemo(() => {
+    if (mention && mention.name === 'at' && mention.query) {
+      return exampleUsers.filter((user) =>
+        user.username.toLowerCase().includes(mention.query.toLowerCase()),
       );
-      setTags(tags);
     }
 
-    if (parameter.name === 'at') {
-      const users = exampleUsers.filter((user) =>
-        user.username.toLowerCase().includes(parameter.query.toLowerCase()),
+    if (mention && mention.name === 'tag' && mention.query) {
+      return exampleTags.filter((tag) =>
+        tag.tag.toLowerCase().includes(mention.query.toLowerCase()),
       );
-      setUsers(users);
     }
-  };
+
+    return [];
+  }, [mention]);
 
   return (
     <SocialEditor
-      placeholder='Start typing...'
+      placeholder='Start typing here'
       autoFocus={false}
-      users={users}
-      tags={tags}
-      onMentionChange={onMentionChange}
+      items={items}
+      onMentionChange={onChange}
+      onExit={onExit}
     />
   );
 }
