@@ -46,7 +46,7 @@
   background-color: grey;
 }
 
-.remirror-wysiwyg-editor-wrapper {
+.remirror-wysiwyg-editor-container {
   position: relative;
   height: 100%;
 }

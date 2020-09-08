@@ -705,7 +705,7 @@ const MAX_ATTEMPTS = 3;
  * @param parameter - the destructured create document node params
  */
 export function createDocumentNode(parameter: CreateDocumentNodeParameter): ProsemirrorNode {
-  const { content, schema, doc, stringHandler, onError, attempts = 0 } = parameter;
+  const { content, schema, document, stringHandler, onError, attempts = 0 } = parameter;
 
   // If there is an `onError` handler then check the attempts does not exceed
   // the maximum, otherwise only allow one attempt.
@@ -725,7 +725,7 @@ export function createDocumentNode(parameter: CreateDocumentNodeParameter): Pros
 
     // With string content it is up to you the developer to ensure there are no
     // errors in the produced content.
-    return stringHandler({ doc, content, schema });
+    return stringHandler({ document, content, schema });
   }
 
   // If passing in an editor state, it is left to the developer to make sure the
@@ -792,8 +792,8 @@ export function getDocument(forceEnvironment?: RenderEnvironment): Document {
 }
 
 interface CustomDocParameter {
-  /** The custom document to use (allows for ssr rendering) */
-  doc: Document;
+  /** The root or custom document to use (allows for ssr rendering) */
+  document: Document;
 }
 
 /**
@@ -801,9 +801,9 @@ interface CustomDocParameter {
  *
  * @param params - the from node params
  */
-export function toDom({ node, schema, doc }: FromNodeParameter): DocumentFragment {
+export function toDom({ node, schema, document }: FromNodeParameter): DocumentFragment {
   const fragment = isDocNode(node, schema) ? node.content : Fragment.from(node);
-  return DOMSerializer.fromSchema(schema).serializeFragment(fragment, { document: doc });
+  return DOMSerializer.fromSchema(schema).serializeFragment(fragment, { document });
 }
 
 interface FromNodeParameter
@@ -824,9 +824,9 @@ interface FromNodeParameter
  * }
  * ```
  */
-export function toHtml({ node, schema, doc = getDocument() }: FromNodeParameter): string {
-  const element = doc.createElement('div');
-  element.append(toDom({ node, schema, doc }));
+export function toHtml({ node, schema, document = getDocument() }: FromNodeParameter): string {
+  const element = document.createElement('div');
+  element.append(toDom({ node, schema, document }));
 
   return element.innerHTML;
 }
@@ -859,8 +859,8 @@ interface FromStringParameter extends Partial<CustomDocParameter>, SchemaParamet
  * ```
  */
 export function fromHtml(parameter: FromStringParameter): ProsemirrorNode {
-  const { content, schema, doc = getDocument() } = parameter;
-  const element = doc.createElement('div');
+  const { content, schema, document = getDocument() } = parameter;
+  const element = document.createElement('div');
   element.innerHTML = content.trim();
 
   return DOMParser.fromSchema(schema).parse(element);

@@ -33,11 +33,12 @@ export { extensionDecorator, presetDecorator } from './decorators';
 
 export type {
   AttributePropFunction,
+  BaseFramework,
   BaseListenerParameter,
   CreateStateFromContent,
-  EditorWrapperOutput,
-  EditorWrapperParameter,
-  EditorWrapperProps,
+  FrameworkOutput,
+  FrameworkParameter,
+  FrameworkProps,
   FocusType,
   ListenerParameter,
   PlaceholderConfig,
@@ -46,8 +47,8 @@ export type {
   RemirrorGetterParameter,
   TriggerChangeParameter,
   UpdateStateParameter,
-} from './editor-wrapper';
-export { EditorWrapper } from './editor-wrapper';
+} from './framework';
+export { Framework } from './framework/framework';
 
 export type {
   AnyExtension,

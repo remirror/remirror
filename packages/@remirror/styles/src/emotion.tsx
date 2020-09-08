@@ -693,7 +693,7 @@ export const reactSocialStyledCss = css`
     background-color: grey;
   }
 
-  .remirror-social-editor-wrapper {
+  .remirror-social-editor-container {
     position: relative;
     height: 100%;
   }
@@ -891,7 +891,7 @@ export const ReactSocialStyledComponent = styled.div`
     background-color: grey;
   }
 
-  .remirror-social-editor-wrapper {
+  .remirror-social-editor-container {
     position: relative;
     height: 100%;
   }
@@ -946,7 +946,7 @@ export const reactWysiwygStyledCss = css`
     background-color: grey;
   }
 
-  .remirror-wysiwyg-editor-wrapper {
+  .remirror-wysiwyg-editor-container {
     position: relative;
     height: 100%;
   }
@@ -1001,7 +1001,7 @@ export const ReactWysiwygStyledComponent = styled.div`
     background-color: grey;
   }
 
-  .remirror-wysiwyg-editor-wrapper {
+  .remirror-wysiwyg-editor-container {
     position: relative;
     height: 100%;
   }
@@ -1873,7 +1873,7 @@ export const allStyledCss = css`
     background-color: grey;
   }
 
-  .remirror-social-editor-wrapper {
+  .remirror-social-editor-container {
     position: relative;
     height: 100%;
   }
@@ -1926,7 +1926,7 @@ export const allStyledCss = css`
     background-color: grey;
   }
 
-  .remirror-wysiwyg-editor-wrapper {
+  .remirror-wysiwyg-editor-container {
     position: relative;
     height: 100%;
   }
@@ -2577,7 +2577,7 @@ export const AllStyledComponent = styled.div`
     background-color: grey;
   }
 
-  .remirror-social-editor-wrapper {
+  .remirror-social-editor-container {
     position: relative;
     height: 100%;
   }
@@ -2630,7 +2630,7 @@ export const AllStyledComponent = styled.div`
     background-color: grey;
   }
 
-  .remirror-wysiwyg-editor-wrapper {
+  .remirror-wysiwyg-editor-container {
     position: relative;
     height: 100%;
   }

@@ -16,10 +16,10 @@ export const WysiwygEditor: FC<WysiwygEditorProps> = (props: WysiwygEditorProps)
 
   return (
     <WysiwygProvider {...providerProps}>
-      <WysiwygEditorWrapperComponent data-testid='remirror-editor'>
+      <WysiwygEditorContainerComponent data-testid='remirror-editor'>
         <TextEditor />
         {children}
-      </WysiwygEditorWrapperComponent>
+      </WysiwygEditorContainerComponent>
     </WysiwygProvider>
   );
 };
@@ -85,7 +85,7 @@ export const WysiwygEditorComponent = styled.div`
   }
 `;
 
-export const WysiwygEditorWrapperComponent = styled.div`
+export const WysiwygEditorContainerComponent = styled.div`
   position: relative;
   height: 100%;
 `;

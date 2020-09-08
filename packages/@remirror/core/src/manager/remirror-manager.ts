@@ -46,6 +46,7 @@ import type {
   ManagerStoreKeys,
   SchemaFromExtensionUnion,
 } from '../extension';
+import type { BaseFramework } from '../framework';
 import type {
   AnyCombinedUnion,
   AnyPreset,
@@ -75,35 +76,43 @@ import { extractLifecycleMethods, transformCombinedUnion } from './remirror-mana
  */
 
 /**
- * A class to manage the extensions and prosemirror interactions of our editor.
+ * A class to manage the extensions and prosemirror interactions within the
+ * editor.
  *
  * @remarks
  *
- * The extension manager has three phases of Initialization:
+ * The RemirrorManager enables the lifecycle methods of the extensions by
+ * calling each method in the distinct phases of the lifecycle.
  *
- * - Construction - This takes in all the extensions and creates the schema.
+ * - `onCreate` - This happens when the manager is constructed. It calls on the
+ *   extension which have an `onCreate` method and allows them to do their work.
  *
- * ```ts
- * const manager = Manager.create([ new DocExtension(), new TextExtension(), new ParagraphExtension()])
- * ```
- *
- * - Initialize Getters - This connects the extension manager to the lazily
- *   evaluated `getState` method and the `portalContainer`. Once these are
- *   created and allows access to its data.
+ * For the built in methods, this is when the `SchemaExtension` creates the
+ * Schema and when the `TagsExtension` combines the tags for the editor
+ * instance.
  *
  * ```ts
- * manager.init({ getState: () => state, portalContainer: new PortalContainer })
- *
- * manager.data.
+ * const manager = Manager.create([
+ *   new DocExtension(),
+ *   new TextExtension(),
+ *   new ParagraphExtension(),
+ * ])
  * ```
  *
- * - Initialize View - This connects the extension manager to the EditorView and
- *   creates the actions (which need access to the view).
+ * At this point all the `onCreate` methods have been called. Including the
+ * `onCreate` for the `Schema`.
+ *
+ * - `onView` - This is called the framework instance connects the
+ *   `RemirrorManager` to the ProseMirror EditorView.
  *
  * ```ts
- * manager.initView(new EditorView(...))
- * manager.data.actions
+ * manager.addView(new EditorView(...))
+ * manager.store.commands.insertText('Hello world');.
  * ```
+ *
+ * - `onStateUpdate` - This is the method called every time the ProseMirror
+ *   state changes. Both the extensions and the `Framework` listen to this event
+ *   and can provide updates in response.
  */
 export class RemirrorManager<Combined extends AnyCombinedUnion> {
   /**
@@ -198,6 +207,17 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * events without using props.
    */
   #events = createNanoEvents<ManagerEvents>();
+
+  /**
+   * The active framework for this manager if it exists.
+   */
+  #framework?: BaseFramework;
+
+  /**
+   * A method for disposing the state update event listeners on the active
+   * framework.
+   */
+  #disposeFramework?: Dispose;
 
   /**
    * Returns true if the manager has been destroyed.
@@ -529,10 +549,42 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
     return this;
   }
 
+  /**
+   * Attach a framework to the manager.
+   */
+  attachFramework(
+    framework: BaseFramework,
+    updateHandler: (parameter: StateUpdateLifecycleParameter) => void,
+  ): void {
+    if (this.#framework === framework) {
+      // Do nothing if the instances are identical.
+      return;
+    }
+
+    if (this.#framework) {
+      // Destroy the old instance.
+      this.#framework.destroy();
+
+      // Remove the event listener. This should exist.
+      this.#disposeFramework?.();
+    }
+
+    // Replace with the new instance.
+    this.#framework = framework;
+    this.#disposeFramework = this.addHandler('stateUpdate', updateHandler);
+  }
+
   /* Public Methods */
 
   /**
    * Create an empty document for the editor based on the current schema.
+   *
+   * This automatically looks at the supported content for the doc and the
+   * available nodes which fulfil that content in order to create a document
+   * with only the minimal required content.
+   *
+   * This can be used in conjunction with the create state to reset the current
+   * value of the editor.
    */
   createEmptyDoc(): ProsemirrorNode<SchemaFromCombined<Combined>> {
     const doc = this.schema.nodes.doc.createAndFill();
@@ -554,13 +606,20 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   ): EditorState<SchemaFromCombined<Combined>> {
     const {
       content,
-      doc: d,
+      document,
       stringHandler = this.settings.stringHandler,
       onError = this.settings.onError,
       selection,
     } = parameter;
     const { schema, plugins } = this.store;
-    const doc = createDocumentNode({ content, doc: d, schema, stringHandler, onError, selection });
+    const doc = createDocumentNode({
+      content,
+      document,
+      schema,
+      stringHandler,
+      onError,
+      selection,
+    });
 
     const state = EditorState.create({ schema, doc, plugins });
 
@@ -693,6 +752,11 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
     for (const plugin of this.view?.state.plugins ?? []) {
       plugin.getState(this.view.state)?.destroy?.();
     }
+
+    // Make sure to destroy the framework and it's state update listener if it
+    // exists.
+    this.#framework?.destroy();
+    this.#disposeFramework?.();
 
     // Run all cleanup methods returned by the `onView` and `onCreate` methods.
     for (const dispose of this.#handlers.disposers) {
@@ -929,7 +993,7 @@ declare global {
        * import { RemirrorProvider, useManager } from 'remirror/react';
        * import { WysiwygPreset } from 'remirror/preset/wysiwyg';
        *
-       * const EditorWrapper = () => {
+       * const Editor = () => {
        *   const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {
        *     // Automatically remove all invalid nodes and marks.
        *     return transformers.remove(json, invalidContent);

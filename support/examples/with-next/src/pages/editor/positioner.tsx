@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 
 import { EMPTY_PARAGRAPH_NODE } from 'remirror/core';
 import { BoldExtension } from 'remirror/extension/bold';
@@ -8,7 +8,7 @@ import { UnderlineExtension } from 'remirror/extension/underline';
 import { ListPreset } from 'remirror/preset/list';
 import { RemirrorProvider, useManager, usePositioner, useRemirror } from 'remirror/react';
 
-const EXTENSIONS = [
+const EXTENSIONS = () => [
   new HeadingExtension(),
   new BoldExtension(),
   new ItalicExtension(),
@@ -52,7 +52,7 @@ function Menu() {
 /**
  * This component contains the editor and any toolbars/chrome it requires.
  */
-const SmallEditor = () => {
+const SmallEditor: FC = () => {
   const { getRootProps } = useRemirror();
   return (
     <div>
@@ -62,7 +62,7 @@ const SmallEditor = () => {
   );
 };
 
-const SmallEditorWrapper = () => {
+const SmallEditorContainer: FC = () => {
   const extensionManager = useManager(EXTENSIONS);
   const [value, setValue] = useState(
     extensionManager.createState({ content: EMPTY_PARAGRAPH_NODE }),
@@ -79,4 +79,4 @@ const SmallEditorWrapper = () => {
   );
 };
 
-export default SmallEditorWrapper;
+export default SmallEditorContainer;

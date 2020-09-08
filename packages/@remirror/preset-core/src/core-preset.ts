@@ -1,6 +1,7 @@
 import {
   AddCustomHandler,
   AnyCombinedUnion,
+  BuiltinPreset,
   getLazyArray,
   GetStaticAndDynamic,
   OnSetOptionsParameter,
@@ -159,7 +160,7 @@ export interface CreateCoreManagerOptions extends Remirror.ManagerSettings {
 export function createCoreManager<Combined extends AnyCombinedUnion>(
   combined: Combined[] | (() => Combined[]),
   options: CreateCoreManagerOptions = {},
-) {
+): RemirrorManager<Combined | CorePreset | BuiltinPreset> {
   const { core, ...managerSettings } = options;
 
   return RemirrorManager.create(

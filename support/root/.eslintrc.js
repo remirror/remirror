@@ -356,6 +356,7 @@ module.exports = {
         '**/*extension.ts',
         '**/*extension.tsx',
         'packages/@remirror/core/src/manager/remirror-manager.ts',
+        'packages/@remirror/core/src/framework/*.ts',
         'packages/@remirror/core/src/extension/extension-base.ts',
       ],
       rules: { '@typescript-eslint/method-signature-style': 'off' },

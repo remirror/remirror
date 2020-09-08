@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import type { AnyCombinedUnion, EditorWrapperOutput } from 'remirror/core';
+import type { AnyCombinedUnion, FrameworkOutput } from 'remirror/core';
 
 import type { MountedPortal, PortalContainer, PortalMap } from './portal-container';
 
@@ -12,7 +12,7 @@ export interface RemirrorPortalsProps<Combined extends AnyCombinedUnion> {
    */
   portals: Array<[HTMLElement, MountedPortal]>;
 
-  context: EditorWrapperOutput<Combined>;
+  context: FrameworkOutput<Combined>;
 }
 
 /**
@@ -57,13 +57,11 @@ export function usePortals(portalContainer: PortalContainer): Array<[HTMLElement
 /**
  * Get the current remirror context when using a portal.
  */
-export function usePortalContext<Combined extends AnyCombinedUnion>(): EditorWrapperOutput<
-  Combined
-> {
-  return useContext(EditorContext) as EditorWrapperOutput<Combined>;
+export function usePortalContext<Combined extends AnyCombinedUnion>(): FrameworkOutput<Combined> {
+  return useContext(EditorContext) as FrameworkOutput<Combined>;
 }
 
 /**
  * Allows elemenent inside the portals to consume the provided contenxt
  */
-const EditorContext = createContext<EditorWrapperOutput<any> | null>(null);
+const EditorContext = createContext<FrameworkOutput<any> | null>(null);

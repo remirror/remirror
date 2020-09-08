@@ -131,7 +131,7 @@ const SmallEditor: FC = () => {
   );
 };
 
-const SmallEditorWrapper = () => {
+const SmallEditorContainer = () => {
   const extensionManager = useManager(EXTENSIONS);
 
   const { value, onChange } = useRemirrorPlayground(extensionManager); // Delete this line
@@ -147,7 +147,7 @@ const SmallEditorWrapper = () => {
   );
 };
 
-export default SmallEditorWrapper;
+export default SmallEditorContainer;
 `;
 
   if (window.prettier) {

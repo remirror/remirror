@@ -44,7 +44,7 @@ const exampleUsers = [
     href: '//test.com/tope',
     id: 'tope',
   },
-];
+].map((user) => ({ ...user, label: `@${user.username}` }));
 
 const exampleTags = [
   { tag: 'FunTime', href: '//test.com/funtime', id: 'funtime' },
@@ -55,7 +55,7 @@ const exampleTags = [
   { tag: 'BeStrong', href: '//test.com/bestrong', id: 'bestrong' },
   { tag: 'YouAreMighty', href: '//test.com/youaremighty', id: 'youaremighty' },
   { tag: 'WelcomeChampion', href: '//test.com/welcomechampion', id: 'welcomechampion' },
-];
+].map((tag) => ({ ...tag, label: `#${tag.tag}` }));
 
 /**
  * The globals available to the live editor scope.

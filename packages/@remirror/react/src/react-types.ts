@@ -5,8 +5,8 @@ import type {
   AnyExtension,
   BuiltinPreset,
   EditorState,
-  EditorWrapperOutput,
-  EditorWrapperProps,
+  FrameworkOutput,
+  FrameworkProps,
   GetStaticAndDynamic,
   RemirrorManager,
   SchemaFromCombined,
@@ -28,7 +28,7 @@ export type ReactCombinedUnion<Combined extends AnyCombinedUnion> =
   | BuiltinPreset
   | Combined;
 
-export interface BaseProps<Combined extends AnyCombinedUnion> extends EditorWrapperProps<Combined> {
+export interface BaseProps<Combined extends AnyCombinedUnion> extends FrameworkProps<Combined> {
   /**
    * Pass in the extension manager.
    *
@@ -167,7 +167,7 @@ export interface I18nContextProps {
  * your editor.
  */
 export interface RemirrorContextProps<Combined extends AnyCombinedUnion>
-  extends EditorWrapperOutput<Combined> {
+  extends FrameworkOutput<Combined> {
   /**
    * A function that returns props which should be spread on a react element and
    * declare it as the editor root (where the editor is injected in the DOM).
