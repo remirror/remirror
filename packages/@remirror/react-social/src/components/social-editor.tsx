@@ -31,12 +31,12 @@ export const SocialEditor: FC<SocialEditorProps> = (props: SocialEditorProps) =>
 
   return (
     <SocialProvider {...providerProps}>
-      <SocialEditorWrapperComponent data-testid='remirror-editor'>
+      <SocialEditorContainerComponent data-testid='remirror-editor'>
         <TextEditor />
         <SocialEmojiComponent />
         <Indicator characterLimit={characterLimit} />
         {children}
-      </SocialEditorWrapperComponent>
+      </SocialEditorContainerComponent>
       <SocialMentionComponent
         items={items}
         onExit={onExit}
@@ -123,7 +123,7 @@ export const SocialEditorComponent = styled.div`
   }
 `;
 
-export const SocialEditorWrapperComponent = styled.div`
+const SocialEditorContainerComponent = styled.div`
   position: relative;
   height: 100%;
 `;

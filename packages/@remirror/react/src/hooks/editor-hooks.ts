@@ -460,7 +460,7 @@ type UsePresetCallback<Type extends AnyPresetConstructor> = (
  * import { PresetCore } from 'remirror/preset-core';
  * import { BoldExtension } from 'remirror/extension-bold';
  *
- * const EditorWrapper = () => {
+ * const Framework = () => {
  *   const manager = useManager([new BoldExtension(), new CorePreset()]);
  *
  *   <RemirrorProvider >

@@ -40,26 +40,32 @@ import {
 import type { InvalidContentHandler } from '@remirror/core-utils/src/core-utils';
 import type { DirectEditorProps } from '@remirror/pm/view';
 
-import type { UpdatableViewProps } from './builtins';
-import type { AnyExtensionConstructor } from './extension';
-import type { ManagerEvents, RemirrorManager } from './manager';
-import type { AnyPresetConstructor } from './preset';
-import type { AnyCombinedUnion, SchemaFromCombined } from './preset/preset-types';
+import type { UpdatableViewProps } from '../builtins';
+import type { AnyExtensionConstructor } from '../extension';
+import type { ManagerEvents, RemirrorManager } from '../manager';
+import type { AnyPresetConstructor } from '../preset';
+import type { AnyCombinedUnion, SchemaFromCombined } from '../preset/preset-types';
+import type { StateUpdateLifecycleParameter } from '../types';
+import type { BaseFramework } from './base-framework';
 
 /**
- * This is the `EditorWrapper` it is new in the `1.0.0-next` versions and is a
- * helper class which should be extended when implementing `Remirror` into your
- * desired framework.
+ * This is the `Framework` class which is used to create an abstract class for
+ * implementing `Remirror` into the framework of your choice.
  *
- * TODO - Think of a better name than `EditorWrapper`.
+ * The best way to learn how to use it is to take a look at the [[`DomFramework`]]
+ * and [[`ReactFramework`]] implementations.
+ *
+ * @remarks
+ *
+ * There are two methods and one getter property which must be implemented for this
  */
-export abstract class EditorWrapper<
+export abstract class Framework<
   Combined extends AnyCombinedUnion,
-  Props extends EditorWrapperProps<Combined>
-> {
+  Props extends FrameworkProps<Combined>
+> implements BaseFramework {
   /**
-   * A unique ID for the editor which is also used as a key to pass into
-   * `getRootProps`.
+   * A unique ID for the editor which can also be used as a key in frameworks
+   * that need it.
    */
   readonly #uid = uniqueId();
 
@@ -92,18 +98,7 @@ export abstract class EditorWrapper<
    * - `blur`
    * - `updated`
    */
-  #events = createNanoEvents<EditorWrapperEvents<Combined>>();
-
-  /**
-   * An array of event listener disposers.
-   */
-  #disposers: Unsubscribe[] = [];
-
-  /**
-   * Tracks whether events have been setup for this instance of the
-   * `EditorWrapper` yet.
-   */
-  #hasSetupEvents = false;
+  #events = createNanoEvents<FrameworkEvents<Combined>>();
 
   /**
    * The updatable view props.
@@ -117,7 +112,19 @@ export abstract class EditorWrapper<
   }
 
   /**
-   * The props passed in when creating or updating the `EditorWrapper` instance.
+   * True when this is the first render of the editor.
+   */
+  protected get firstRender(): boolean {
+    return this.#firstRender;
+  }
+
+  /**
+   * Store the name of the framework.
+   */
+  abstract get name(): string;
+
+  /**
+   * The props passed in when creating or updating the `Framework` instance.
    */
   get props(): Props {
     return this.#getProps();
@@ -133,29 +140,29 @@ export abstract class EditorWrapper<
   }
 
   /**
-   * Create the editor state from a remirror content type. This should be passed
-   * in during initialization.
+   * Create the editor state from a `remirror` content type. This should be
+   * passed in during initialization.
    */
   private createStateFromContent: CreateStateFromContent<Combined>;
 
   /**
-   * A utility for quickly retrieving the extension manager.
+   * The instance of the [[`RemirrorManager`]].
    */
   protected get manager(): RemirrorManager<Combined> {
     return this.props.manager;
   }
 
   /**
-   * The prosemirror EditorView.
+   * The ProseMirror [[`EditorView`]].
    */
   protected get view(): EditorView<SchemaFromCombined<Combined>> {
     return this.manager.view;
   }
 
   /**
-   * The document to use when rendering.
+   * The document to use for rendering and outputting HTML.
    */
-  protected get doc(): Document {
+  protected get document(): Document {
     return getDocument(this.props.forceEnvironment);
   }
 
@@ -169,32 +176,16 @@ export abstract class EditorWrapper<
     return this.#uid;
   }
 
-  /**
-   * Allows retrieval of the desired extension by its constructor.
-   */
-  readonly #getExtension: <ExtensionConstructor extends AnyExtensionConstructor>(
-    Constructor: ExtensionConstructor,
-  ) => InstanceType<ExtensionConstructor>;
-
-  /**
-   * Allows retrieval of the desired preset by its constructor.
-   */
-  readonly #getPreset: <PresetConstructor extends AnyPresetConstructor>(
-    Constructor: PresetConstructor,
-  ) => InstanceType<PresetConstructor>;
-
-  constructor(parameter: EditorWrapperParameter<Combined, Props>) {
+  constructor(parameter: FrameworkParameter<Combined, Props>) {
     const { getProps, createStateFromContent, initialEditorState, element } = parameter;
 
     this.#getProps = getProps;
     this.createStateFromContent = createStateFromContent;
 
-    // Store the getter methods for extensions and presets.
-    this.#getExtension = this.manager.getExtension.bind(this.manager);
-    this.#getPreset = this.manager.getPreset.bind(this.manager);
-
-    // Setup the event listeners
-    this.setupEvents();
+    // Attach the framework instance to the manager. The manager will set up the
+    // update listener and manage updates to the instance of the framework
+    // automatically.
+    this.manager.attachFramework(this, this.updateListener.bind(this));
 
     if (this.manager.view) {
       return;
@@ -209,27 +200,9 @@ export abstract class EditorWrapper<
    * Setup the manager event listeners which are disposed of when the manager is
    * destroyed.
    */
-  private setupEvents() {
-    if (this.#hasSetupEvents) {
-      return;
-    }
-
-    const disposeStateUpdate = this.manager.addHandler('stateUpdate', ({ state, tr }) => {
-      return this.#events.emit('updated', this.eventListenerParameter({ state, tr }));
-    });
-
-    const disposeDestroy = this.manager.addHandler('destroy', () => {
-      this.#events.emit('destroy');
-
-      for (const dispose of this.#disposers) {
-        dispose();
-      }
-
-      this.#disposers = [];
-    });
-
-    this.#hasSetupEvents = true;
-    this.#disposers.push(disposeStateUpdate, disposeDestroy);
+  private updateListener(parameter: StateUpdateLifecycleParameter) {
+    const { state, tr } = parameter;
+    return this.#events.emit('updated', this.eventListenerParameter({ state, tr }));
   }
 
   /**
@@ -240,7 +213,7 @@ export abstract class EditorWrapper<
    * You can call the update method with the new `props` to update the internal
    * state of this instance.
    */
-  update(parameter: EditorWrapperParameter<Combined, Props>): this {
+  update(parameter: FrameworkParameter<Combined, Props>): this {
     const { getProps, createStateFromContent } = parameter;
     this.#getProps = getProps;
     this.createStateFromContent = createStateFromContent;
@@ -260,12 +233,23 @@ export abstract class EditorWrapper<
     this.previousState;
 
   /**
-   * Create the prosemirror editor view.
+   * This method must be implement by the extending framework class. It returns
+   * an [[`EditorView`]] which is added to the [[`RemirrorManager`]].
    */
   protected abstract createView(
     state: EditorState<SchemaFromCombined<Combined>>,
     element?: Element,
   ): EditorView<SchemaFromCombined<Combined>>;
+
+  /**
+   * This is used to implement how the state updates are used within your
+   * application instance.
+   *
+   * It must be implemented.
+   */
+  protected abstract updateState(
+    parameter: UpdateStateParameter<SchemaFromCombined<Combined>>,
+  ): void;
 
   /**
    * Update the view props.
@@ -277,7 +261,7 @@ export abstract class EditorWrapper<
   }
 
   /**
-   * This sets the attributes for the prosemirror dom node.
+   * This sets the attributes for the ProseMirror Dom node.
    */
   protected getAttributes(ssr?: false): Record<string, string>;
   protected getAttributes(ssr: true): Shape;
@@ -348,14 +332,6 @@ export abstract class EditorWrapper<
   };
 
   /**
-   * Updates the state either by calling onStateChange when it exists or
-   * directly setting the internal state via a `setState` call.
-   */
-  protected abstract updateState(
-    parameter: UpdateStateParameter<SchemaFromCombined<Combined>>,
-  ): void;
-
-  /**
    * Adds `onBlur` and `onFocus` listeners.
    *
    * When extending this class make sure to call this method once
@@ -369,7 +345,8 @@ export abstract class EditorWrapper<
   /**
    * Remove `onBlur` and `onFocus` listeners.
    *
-   * When extending this class in your framework, make sure to call this just before the view is destroyed.
+   * When extending this class in your framework, make sure to call this just
+   * before the view is destroyed.
    */
   protected removeFocusListeners(): void {
     this.view.dom.removeEventListener('blur', this.onBlur);
@@ -382,10 +359,12 @@ export abstract class EditorWrapper<
    * @remarks
    *
    * - Removes listeners for the editor `blur` and `focus` events
-   * - Destroys the state for each plugin
-   * - Destroys the manager which destroys the editor view.
    */
-  onDestroy(): void {
+  destroy(): void {
+    // Let it clear that this instance has been destroyed.
+    this.#events.emit('destroy');
+
+    // Remove the focus and blur listeners.
     this.removeFocusListeners();
   }
 
@@ -435,7 +414,7 @@ export abstract class EditorWrapper<
   };
 
   /**
-   * Clear; the content of the editor (reset to the default empty node)
+   * Clear the content of the editor (reset to the default empty node).
    *
    * @param triggerChange - whether to notify the onChange handler that the
    * content has been reset
@@ -544,7 +523,11 @@ export abstract class EditorWrapper<
     });
   }
 
-  get editorWrapperOutput(): EditorWrapperOutput<Combined> {
+  /**
+   * Methods and properties which are made available to all consumers of the
+   * `Framework` class.
+   */
+  get frameworkHelpers(): FrameworkOutput<Combined> {
     return {
       ...this.manager.store,
       addHandler: this.#events.on.bind(this.#events),
@@ -557,8 +540,8 @@ export abstract class EditorWrapper<
       /* Getter Methods */
       getState: this.getState,
       getPreviousState: this.getPreviousState,
-      getExtension: this.#getExtension,
-      getPreset: this.#getPreset,
+      getExtension: this.manager.getExtension.bind(this.manager),
+      getPreset: this.manager.getPreset.bind(this.manager),
 
       /* Setter Methods */
       clearContent: this.clearContent,
@@ -570,6 +553,11 @@ export abstract class EditorWrapper<
     };
   }
 
+  /**
+   * A method to get all the content in the editor as text. Depending on the
+   * content in your editor, it is not guaranteed to preserve it 100%, so it's
+   * best to test that it meets your needs before consuming.
+   */
   private readonly getText = (state?: EditorState<SchemaFromCombined<Combined>>) => (
     lineBreakDivider = '\n\n',
   ) => {
@@ -578,13 +566,15 @@ export abstract class EditorWrapper<
   };
 
   /**
-   * Retrieve the HTML from the `doc` prosemirror node
+   * Retrieve the HTML from the `doc` prosemirror node.
+   *
+   * This assumes a dom environment.
    */
   private readonly getHTML = (state?: EditorState<SchemaFromCombined<Combined>>) => () => {
     return toHtml({
       node: (state ?? this.getState()).doc,
       schema: this.manager.store.schema,
-      doc: this.doc,
+      document: this.document,
     });
   };
 
@@ -607,9 +597,9 @@ export abstract class EditorWrapper<
   };
 }
 
-export interface EditorWrapperParameter<
+export interface FrameworkParameter<
   Combined extends AnyCombinedUnion,
-  Props extends EditorWrapperProps<Combined>
+  Props extends FrameworkProps<Combined>
 > {
   /**
    * The initial editor state
@@ -649,8 +639,7 @@ export type FocusType = PrimitiveSelection | boolean;
  * The base options for an editor wrapper. This is used within the react and dom
  * implementations.
  */
-export interface EditorWrapperProps<Combined extends AnyCombinedUnion>
-  extends StringHandlerParameter {
+export interface FrameworkProps<Combined extends AnyCombinedUnion> extends StringHandlerParameter {
   /**
    * Pass in the extension manager.
    *
@@ -746,7 +735,7 @@ export interface EditorWrapperProps<Combined extends AnyCombinedUnion>
    * import { RemirrorProvider, useManager } from 'remirror/react';
    * import { WysiwygPreset } from 'remirror/preset/wysiwyg';
    *
-   * const EditorWrapper = () => {
+   * const Framework = () => {
    *   const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {
    *     // Automatically remove all invalid nodes and marks.
    *     return transformers.remove(json, invalidContent);
@@ -769,7 +758,7 @@ export interface EditorWrapperProps<Combined extends AnyCombinedUnion>
  * These are the props passed to the render function provided when setting up
  * your editor.
  */
-export interface EditorWrapperOutput<Combined extends AnyCombinedUnion>
+export interface FrameworkOutput<Combined extends AnyCombinedUnion>
   extends Remirror.ManagerStore<Combined> {
   /**
    * An instance of the extension manager
@@ -779,9 +768,9 @@ export interface EditorWrapperOutput<Combined extends AnyCombinedUnion>
   /**
    * Add event handlers to the remirror editor at runtime.
    */
-  addHandler: <Key extends keyof EditorWrapperEvents<Combined>>(
+  addHandler: <Key extends keyof FrameworkEvents<Combined>>(
     event: Key,
-    cb: EditorWrapperEvents<Combined>[Key],
+    cb: FrameworkEvents<Combined>[Key],
   ) => Unsubscribe;
 
   /**
@@ -967,7 +956,7 @@ export interface ListenerParameter<Combined extends AnyCombinedUnion>
   extends Partial<EditorStateParameter<SchemaFromCombined<Combined>>>,
     Partial<TransactionParameter<SchemaFromCombined<Combined>>> {}
 
-interface EditorWrapperEvents<Combined extends AnyCombinedUnion>
+interface FrameworkEvents<Combined extends AnyCombinedUnion>
   extends Pick<ManagerEvents, 'destroy'> {
   /**
    * An event listener which is called whenever the editor gains focus.

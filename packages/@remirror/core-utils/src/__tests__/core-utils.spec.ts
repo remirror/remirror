@@ -433,7 +433,7 @@ describe('toHTML', () => {
   });
 
   it('allows for custom document to be passed in', () => {
-    expect(toHtml({ node, schema: testSchema, doc: document })).toBe('<p>hello</p>');
+    expect(toHtml({ node, schema: testSchema, document })).toBe('<p>hello</p>');
   });
 });
 
@@ -445,7 +445,7 @@ describe('toDOM', () => {
   });
 
   it('allows for custom document to be passed in', () => {
-    expect(toDom({ node, schema: testSchema, doc: domino.createDocument() })).toBeTruthy();
+    expect(toDom({ node, schema: testSchema, document: domino.createDocument() })).toBeTruthy();
   });
 });
 
@@ -458,7 +458,7 @@ describe('fromHTML', () => {
 
   it('allows for custom document to be passed in', () => {
     expect(
-      fromHtml({ content, schema: testSchema, doc: domino.createDocument() }),
+      fromHtml({ content, schema: testSchema, document: domino.createDocument() }),
     ).toEqualProsemirrorNode(doc(p('Hello')));
   });
 });

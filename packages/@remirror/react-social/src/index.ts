@@ -4,7 +4,6 @@ export {
   SocialCharacterCountWrapper,
   SocialEditor,
   SocialEditorComponent,
-  SocialEditorWrapperComponent,
   SocialEmojiComponent,
   SocialMentionComponent,
   SocialProvider,

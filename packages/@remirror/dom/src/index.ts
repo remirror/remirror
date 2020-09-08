@@ -1,2 +1,2 @@
-export type { DomEditorWrapperProps } from './dom';
+export type { DomFrameworkProps } from './dom-framework';
 export { createDomEditor, createDomManager } from './dom';
