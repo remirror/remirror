@@ -58,7 +58,7 @@ export class InputRulesExtension extends PlainExtension<InputRulesOptions> {
 
   private loopExtensions() {
     const rules: SkippableInputRule[] = [];
-    const invalidMarks = this.store.tags[ExtensionTag.ExcludeInputRules];
+    const invalidMarks = this.store.markTags[ExtensionTag.ExcludeInputRules];
 
     for (const extension of this.store.extensions) {
       if (

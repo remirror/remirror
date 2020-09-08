@@ -1,4 +1,5 @@
 import { PlainExtension, toHtml } from '@remirror/core';
+import { NodeSelection } from '@remirror/pm/state';
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -255,12 +256,12 @@ describe('tags', () => {
   });
 
   it('supports <node>', () => {
-    // ? Crashes if node is placed at the beginning of the p
-    const { start, end } = add(doc(p('Hello'), p('T<node>ext here')));
+    const { start, end, state } = add(doc(p('Hello'), p('<node>Text here')));
 
-    expect(start).toBe(9);
+    expect(state.selection).toBeInstanceOf(NodeSelection);
+    expect(start).toBe(7);
     expect(start).toBe(view.state.selection.from);
-    expect(end).toBe(17);
+    expect(end).toBe(18);
     expect(end).toBe(view.state.selection.to);
   });
 });

@@ -42,6 +42,7 @@ export interface BuiltinOptions
  */
 @presetDecorator<BuiltinOptions>({
   defaultOptions: {
+    exitMarksOnArrowPress: KeymapExtension.defaultOptions.exitMarksOnArrowPress,
     excludeBaseKeymap: KeymapExtension.defaultOptions.excludeBaseKeymap,
     selectParentNodeOnEscape: KeymapExtension.defaultOptions.selectParentNodeOnEscape,
     undoInputRuleOnBackspace: KeymapExtension.defaultOptions.undoInputRuleOnBackspace,

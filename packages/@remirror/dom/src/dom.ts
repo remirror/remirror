@@ -15,10 +15,10 @@ import { DomFramework, DomFrameworkOutput, DomFrameworkProps } from './dom-frame
  * Create an editor manager. It comes with the `CorePreset` already available.
  */
 export function createDomManager<Combined extends AnyCombinedUnion>(
-  combined: Combined[],
+  combined: Combined[] | (() => Combined[]),
   options?: CreateCoreManagerOptions,
 ): RemirrorManager<CorePreset | BuiltinPreset | Combined> {
-  return createCoreManager([...combined], options);
+  return createCoreManager(combined, options);
 }
 
 /**

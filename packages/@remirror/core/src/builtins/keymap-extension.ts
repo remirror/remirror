@@ -1,7 +1,14 @@
-import { ExtensionPriority } from '@remirror/core-constants';
-import { entries, isArray, object, sort } from '@remirror/core-helpers';
-import type { CustomHandler, KeyBindings, ProsemirrorPlugin } from '@remirror/core-types';
-import { convertCommand, mergeProsemirrorKeyBindings } from '@remirror/core-utils';
+import { ExtensionPriority, ExtensionTag } from '@remirror/core-constants';
+import { entries, isArray, isEmptyArray, object, sort } from '@remirror/core-helpers';
+import type {
+  CommandFunction,
+  CustomHandler,
+  KeyBindings,
+  ProsemirrorPlugin,
+  Selection,
+  Transaction,
+} from '@remirror/core-types';
+import { convertCommand, isTextSelection, mergeProsemirrorKeyBindings } from '@remirror/core-utils';
 import {
   baseKeymap,
   chainCommands as pmChainCommands,
@@ -45,6 +52,16 @@ export interface KeymapOptions {
   excludeBaseKeymap?: boolean;
 
   /**
+   * Whether to support exiting marks when the left and right array keys are
+   * pressed.
+   *
+   * Can be set to
+   *
+   * - `true` - enables exits from both the entrance and the end of the mark
+   */
+  exitMarksOnArrowPress?: boolean;
+
+  /**
    * The implementation for the extra keybindings added to the settings.
    *
    * @remarks
@@ -72,8 +89,8 @@ export interface KeymapOptions {
  *
  * @remarks
  *
- * Keymaps are the way of controlling how the editor responds to a
- * keypress and different key combinations.
+ * Keymaps are the way of controlling how the editor responds to a keypress and
+ * different key combinations.
  *
  * Without this extension most of the shortcuts and behaviors we have come to
  * expect from text editors would not be provided.
@@ -86,6 +103,7 @@ export interface KeymapOptions {
     undoInputRuleOnBackspace: true,
     selectParentNodeOnEscape: false,
     excludeBaseKeymap: false,
+    exitMarksOnArrowPress: true,
   },
   customHandlerKeys: ['keymap'],
 })
@@ -163,7 +181,12 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
    * override it.
    */
   createKeymap(): PrioritizedKeyBindings {
-    const { selectParentNodeOnEscape, undoInputRuleOnBackspace, excludeBaseKeymap } = this.options;
+    const {
+      selectParentNodeOnEscape,
+      undoInputRuleOnBackspace,
+      excludeBaseKeymap,
+      exitMarksOnArrowPress,
+    } = this.options;
     const baseKeyBindings: KeyBindings = object();
 
     // Only add the base keymap if it is **NOT** excluded.
@@ -185,12 +208,26 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
       baseKeyBindings.Escape = convertCommand(selectParentNode);
     }
 
+    if (exitMarksOnArrowPress) {
+      this.addExitMarkHandler(baseKeyBindings);
+    }
+
     return [ExtensionPriority.Low, baseKeyBindings];
   }
 
   /**
-   * @internalremarks Think about the case where bindings are disposed of and then
-   * added in a different position in the `extraKeyBindings` array. This is
+   * Add the arrow press handlers for exiting the mark.
+   */
+  private addExitMarkHandler(bindings: KeyBindings): void {
+    const marks = this.store.markTags[ExtensionTag.MarkSupportsExit];
+
+    bindings.ArrowLeft = exitMarkBackwards(marks);
+    bindings.ArrowRight = exitMarkForwards(marks);
+  }
+
+  /**
+   * @internalremarks Think about the case where bindings are disposed of and
+   * then added in a different position in the `extraKeyBindings` array. This is
    * especially pertinent when using hooks.
    */
   protected onAddCustomHandler: AddCustomHandler<KeymapOptions> = ({ keymap }) => {
@@ -243,6 +280,119 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
 }
 
 /**
+ * Exits the mark forwards when at the end of a block node.
+ */
+function exitMarkForwards(marks: string[], checkForReverse = true): CommandFunction {
+  return (parameter) => {
+    if (checkForReverse && shouldReverseDirection(parameter.tr)) {
+      return exitMarkForwards(marks, false)(parameter);
+    }
+
+    const { tr, dispatch, state } = parameter;
+
+    if (!isEndOfNode(tr.selection)) {
+      return false;
+    }
+
+    const $pos = tr.selection.$from;
+    const types = new Set(marks.map((name) => state.schema.marks[name]));
+    const marksToRemove = $pos.marks().filter((mark) => types.has(mark.type));
+
+    if (isEmptyArray(marksToRemove)) {
+      return false;
+    }
+
+    if (!dispatch) {
+      return true;
+    }
+
+    for (const mark of marksToRemove) {
+      tr.removeStoredMark(mark);
+    }
+
+    dispatch(tr.insertText(' ', tr.selection.from));
+
+    return true;
+  };
+}
+
+/**
+ * Exit a mark when at the beginning of a block node.
+ */
+function exitMarkBackwards(marks: string[], checkForReverse = true): CommandFunction {
+  return (parameter) => {
+    if (checkForReverse && shouldReverseDirection(parameter.tr)) {
+      return exitMarkForwards(marks, false)(parameter);
+    }
+
+    const { tr, dispatch, state } = parameter;
+
+    if (!isStartOfNode(tr.selection)) {
+      return false;
+    }
+
+    const $pos = tr.selection.$from;
+    const types = new Set(marks.map((name) => state.schema.marks[name]));
+
+    // Find all the marks to remove
+    const marksToRemove = $pos.marks().filter((mark) => types.has(mark.type));
+
+    if (isEmptyArray(marksToRemove)) {
+      // There are no marks to remove therefore defer to the empty marks to
+      // remove array.
+      return false;
+    }
+
+    if (!dispatch) {
+      return true;
+    }
+
+    // Remove all the active marks at the current cursor.
+    for (const mark of marksToRemove) {
+      tr.removeStoredMark(mark);
+    }
+
+    dispatch(tr);
+    return true;
+  };
+}
+
+/**
+ * Whether the item should reverse the direction provided.
+ */
+function shouldReverseDirection(tr: Transaction) {
+  return tr.selection.$from.parent.attrs.dir === 'rtl';
+}
+
+/**
+ * Checks that the selection is an empty text selection at the end of its parent
+ * node.
+ */
+function isEndOfNode(selection: Selection) {
+  const $pos = selection.$from;
+  return (
+    selection.empty &&
+    isTextSelection(selection) &&
+    $pos.parent.type.isBlock &&
+    $pos.after() === $pos.pos + 1
+  );
+}
+
+/**
+ * Checks that the selection is an empty text selection at the start of its
+ * parent node.
+ */
+function isStartOfNode(selection: Selection) {
+  const $pos = selection.$from;
+  return (
+    selection.empty &&
+    isTextSelection(selection) &&
+    $pos.parent.type.isBlock &&
+    $pos.before() === $pos.pos - 1
+  );
+}
+
+/**
  * KeyBindings as a tuple with priority and the keymap.
  */
 export type KeyBindingsTuple = [priority: ExtensionPriority, bindings: KeyBindings];
@@ -276,8 +426,9 @@ declare global {
        * keybindings into the editor. This causes the state to be updated and
        * will cause a rerender in your ui framework.
        *
-       * **NOTE** - This will not update keybinding for extensions that implement
-       * their own keybinding functionality (e.g. any plugin using Suggestions)
+       * **NOTE** - This will not update keybinding for extensions that
+       * implement their own keybinding functionality (e.g. any plugin using
+       * Suggestions)
        */
       rebuildKeymap: () => void;
     }

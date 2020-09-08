@@ -7,7 +7,16 @@ import {
 import { includes, invariant, object, values } from '@remirror/core-helpers';
 
 import { extensionDecorator } from '../decorators';
-import { AnyExtension, PlainExtension } from '../extension';
+import {
+  AnyExtension,
+  GetMarkNameUnion,
+  GetNodeNameUnion,
+  GetPlainNames,
+  isMarkExtension,
+  isNodeExtension,
+  isPlainExtension,
+  PlainExtension,
+} from '../extension';
 import type { AnyCombinedUnion } from '../preset';
 import type { GetNameUnion } from '../types';
 
@@ -28,7 +37,22 @@ export class TagsExtension extends PlainExtension {
   /**
    * Track the tags which have been applied to the extensions in this editor.
    */
-  #combinedTags: CombinedTags = object();
+  #allTags: CombinedTags = object();
+
+  /**
+   * The tags for plain extensions.
+   */
+  #plainTags: CombinedTags = object();
+
+  /**
+   * The tags for mark extensions.
+   */
+  #markTags: CombinedTags = object();
+
+  /**
+   * The tags for node extensions.
+   */
+  #nodeTags: CombinedTags = object();
 
   /**
    * Create the tags which are used to identify extension with particular
@@ -41,51 +65,36 @@ export class TagsExtension extends PlainExtension {
       this.updateTagForExtension(extension);
     }
 
-    this.store.setStoreKey('tags', this.#combinedTags);
-    this.store.setExtensionStore('tags', this.#combinedTags);
-  }
-
-  createHelpers() {
-    return {
-      /**
-       * Retrieve the marks based on the provided tags.
-       */
-      getMarksByTags: (tags: ExtensionTagType[]): string[] => {
-        const names: string[] = [];
-
-        for (const tag of tags) {
-          names.push(...this.store.tags[tag].filter((name) => this.store.markNames.includes(name)));
-        }
-
-        return names;
-      },
-
-      /**
-       * Retrieve the nodes based on the provided tags.
-       */
-      getNodesByTags: (tags: ExtensionTagType[]): string[] => {
-        const names: string[] = [];
-
-        for (const tag of tags) {
-          names.push(...this.store.tags[tag].filter((name) => this.store.nodeNames.includes(name)));
-        }
-
-        return names;
-      },
-    };
+    this.store.setStoreKey('tags', this.#allTags);
+    this.store.setExtensionStore('tags', this.#allTags);
+    this.store.setStoreKey('plainTags', this.#plainTags);
+    this.store.setExtensionStore('plainTags', this.#plainTags);
+    this.store.setStoreKey('markTags', this.#markTags);
+    this.store.setExtensionStore('markTags', this.#markTags);
+    this.store.setStoreKey('nodeTags', this.#nodeTags);
+    this.store.setExtensionStore('nodeTags', this.#nodeTags);
   }
 
   /**
    * Reset the tags to the empty object with empty arrays.
    */
   private resetTags() {
-    const combinedTags: CombinedTags = object();
+    const allTags: CombinedTags = object();
+    const plainTags: CombinedTags = object();
+    const markTags: CombinedTags = object();
+    const nodeTags: CombinedTags = object();
 
     for (const tagName of values(ExtensionTag)) {
-      combinedTags[tagName] = [];
+      allTags[tagName] = [];
+      plainTags[tagName] = [];
+      markTags[tagName] = [];
+      nodeTags[tagName] = [];
     }
 
-    this.#combinedTags = combinedTags;
+    this.#allTags = allTags;
+    this.#plainTags = plainTags;
+    this.#markTags = markTags;
+    this.#nodeTags = nodeTags;
   }
 
   /**
@@ -101,13 +110,32 @@ export class TagsExtension extends PlainExtension {
       return;
     }
 
-    for (const tag of extension.tags) {
+    const allTags = [
+      ...extension.tags,
+      ...(extension.options.extraTags ?? []),
+      ...(this.store.managerSettings.extraTags?.[extension.name] ?? []),
+    ];
+
+    for (const tag of allTags) {
       invariant(isExtensionTag(tag), {
         code: ErrorConstant.EXTENSION,
         message: `The tag provided by the extension: ${extension.constructorName} is not supported by the editor. To add new tags you can use the 'mutateTag' method.`,
       });
+
       // Add tags to the combined tags stored here.
-      this.#combinedTags[tag].push(extension.name);
+      this.#allTags[tag].push(extension.name);
+
+      if (isPlainExtension(extension)) {
+        this.#plainTags[tag].push(extension.name);
+      }
+
+      if (isMarkExtension(extension)) {
+        this.#markTags[tag].push(extension.name);
+      }
+
+      if (isNodeExtension(extension)) {
+        this.#nodeTags[tag].push(extension.name);
+      }
     }
   }
 }
@@ -129,6 +157,24 @@ export type CombinedTags<Name extends string = string> = Record<ExtensionTagType
 
 declare global {
   namespace Remirror {
+    interface ManagerSettings {
+      /**
+       * Add extra tags to the extensions by name. This can be used to add
+       * behavior traits to certain extensions.
+       *
+       * Please note this will change the schema since the tags are added to the
+       * node and mark groups.
+       *
+       * ```ts
+       * RemirrorManager.create(
+       *   [],
+       *   { extraTags: { bold: [ExtensionTag.Awesome] } }
+       * );
+       * ```
+       */
+      extraTags?: Record<string, ExtensionTagType[]>;
+    }
+
     interface BaseExtension {
       /**
        * Tags are a helpful tool for categorizing the behavior of an extension.
@@ -150,9 +196,24 @@ declare global {
 
     interface ManagerStore<Combined extends AnyCombinedUnion> {
       /**
-       * Store the built in and custom tags for the editor instance.
+       * All the tags provided by the configured extensions.
        */
       tags: Readonly<CombinedTags<GetNameUnion<Combined>>>;
+
+      /**
+       * All the plain extension tags provided for the editor.
+       */
+      plainTags: Readonly<CombinedTags<GetPlainNames<Combined>>>;
+
+      /**
+       * All the node extension tags provided for the editor.
+       */
+      nodeTags: Readonly<CombinedTags<GetNodeNameUnion<Combined>>>;
+
+      /**
+       * All the mark extension tags provided for the editor.
+       */
+      markTags: Readonly<CombinedTags<GetMarkNameUnion<Combined>>>;
     }
 
     interface ExcludeOptions {
@@ -164,11 +225,39 @@ declare global {
       tags?: boolean;
     }
 
-    export interface ExtensionStore {
+    interface ExtensionStore {
       /**
-       * The tags provided by the configured extensions.
+       * All the tags provided by the configured extensions.
        */
       tags: CombinedTags;
+
+      /**
+       * All the plain extension tags provided for the editor.
+       */
+      plainTags: CombinedTags;
+
+      /**
+       * All the node extension tags provided for the editor.
+       */
+      nodeTags: CombinedTags;
+
+      /**
+       * All the mark extension tags provided for the editor.
+       */
+      markTags: CombinedTags;
+    }
+
+    interface BaseExtensionOptions {
+      /**
+       * Add extra tags to the extension.
+       *
+       * Tags can be used to unlock certain behavioural traits for nodes and
+       * marks.
+       *
+       * Please note this will change the schema since the tags are added to the
+       * node and mark groups.
+       */
+      extraTags?: ExtensionTagType[];
     }
   }
 }

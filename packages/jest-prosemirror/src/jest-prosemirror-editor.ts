@@ -238,7 +238,12 @@ export function dispatchNodeSelection<Schema extends EditorSchema = EditorSchema
 ): void {
   const { view, pos } = parameter;
   const { state } = view;
-  const tr = state.tr.setSelection(NodeSelection.create(state.doc, pos));
+  const tr = state.tr.setSelection(
+    // Node selections should always be at the start of their nodes. This is
+    // impossible to annotate since the first text position is always the `node
+    // + 1` place.
+    NodeSelection.create(state.doc, state.doc.resolve(pos).before()),
+  );
   view.dispatch(tr);
 }
 
