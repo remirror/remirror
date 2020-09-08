@@ -11,9 +11,9 @@ This document is a brief breakdown of the tools used when contributing to remirr
 I've recently started moving over several projects so use `pnpm` and I'm very happy with what I've seen so far.
 
 - Great workspace support (modules are scoped to the package where they are installed).
-- Fast
-- I like the colors in the CLI
-- Reduce multiple copies of node_modules being downloaded and installed on my machine
+- Fast.
+- I like the colors in the CLI.
+- Reduce multiple copies of node_modules being downloaded and installed on my machine.
 
 ## Preconstruct
 
