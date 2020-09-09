@@ -1,6 +1,9 @@
 ---
+hide_title: true
 title: Creating Extensions
 ---
+
+# Creating Extensions
 
 There are three extension types.
 

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { BoldExtension } from 'remirror/extension/bold';
 import { ItalicExtension } from 'remirror/extension/italic';
 import { UnderlineExtension } from 'remirror/extension/underline';

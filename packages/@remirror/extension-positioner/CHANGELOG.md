@@ -161,7 +161,7 @@
   An example of creating a new positioner with the new api is below.
 
   ```ts
-  import { Positioner, Coords, hasStateChanged } from '@remirror/extension-positioner';
+  import { Coords, hasStateChanged, Positioner } from '@remirror/extension-positioner';
 
   export const cursorPopupPositioner = Positioner.create<Coords>({
     hasChanged: hasStateChanged,

@@ -39,18 +39,20 @@ pnpm add prosemirror-suggest prosemirror-view prosemirror-state prosemirror-keym
 npm install prosemirror-suggest prosemirror-view prosemirror-state prosemirror-keymap
 ```
 
-The installation requires the installation of the peer dependencies `prosemirror-view prosemirror-state prosemirror-keymap` to avoid version clashes.
+The installation requires the installation of the peer dependencies `prosemirror-view prosemirror-state and prosemirror-model` to avoid version clashes.
 
 <br />
 
 ## Getting Started
+
+This documentation will be updated soon.
 
 `prosemirror-suggest` uses configuration objects called `Suggester`<!-- -->'s to define the behaviour of the suggesters you create. By calling the exported `suggest` method with all required `Suggester`<!-- -->'s the functionality is added to the editor in one plugin.
 
 In the following example we're creating an emoji suggestion plugin that responds to the colon character with a query and presents a list of matching emojis based on the query typed so far.
 
 ```ts
-import { Suggester, suggest } from 'prosemirror-suggest';
+import { suggest, Suggester } from 'prosemirror-suggest';
 
 const maxResults = 10;
 let selectedIndex = 0;
@@ -150,7 +152,8 @@ This creates a suggestion plugin with all the suggesters provided.
 <b>Signature:</b>
 
 ```ts
-suggest: (...suggesters: Suggester[]) => Plugin;
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
+(...suggesters: Suggester[]) => Plugin;
 ```
 
 The priority of the suggesters is the order in which they are passed into this function.

@@ -9,7 +9,8 @@
 The following editor would add emoji characters as valid prefix characters when typing the `@` key in the editor.
 
 ```tsx
-import { SocialEditor } from '@remirror/react-social';
+import React from 'react';
+import { SocialEditor } from 'remirror/react/social';
 
 const Editor = (props) => (
   <SocialEditor

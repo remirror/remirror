@@ -1,6 +1,9 @@
 ---
+hide_title: true
 title: Preset
 ---
+
+# Preset
 
 Presets are a core building block of the remirror editor.
 

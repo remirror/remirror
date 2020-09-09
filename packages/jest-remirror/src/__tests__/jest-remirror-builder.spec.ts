@@ -73,7 +73,7 @@ describe('text', () => {
   it('supports text with no tags', () => {
     const node = text('0', schema);
 
-    expect(keys(node.tags).length).toBe(0);
+    expect(keys(node.tags)).toHaveLength(0);
   });
 
   it('supports escaping tags with backslash', () => {

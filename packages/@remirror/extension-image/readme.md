@@ -25,9 +25,9 @@ npm install @remirror/extension-image@next @remirror/pm@next # npm
 The following code sample will create a limited editor and run the available commands from this extension.
 
 ```ts
-import { RemirrorManager, ExtensionPriority } from '@remirror/core';
-import { CorePreset } from '@remirror/preset-core';
+import { ExtensionPriority, RemirrorManager } from '@remirror/core';
 import { ImageExtension } from '@remirror/extension-image';
+import { CorePreset } from '@remirror/preset-core';
 
 // Create the codeBlock extension
 const imageExtension = new ImageExtension();
@@ -39,7 +39,7 @@ const manager = RemirrorManager.create([imageExtension, corePreset]);
 // Pass the dom element to the editor. If you are using `@remirror/react` or
 // other framework wrappers then this is handled for you.
 const element = document.createElement('div');
-document.body.appendChild(element);
+document.body.append(element);
 
 // Add the view to the editor manager.
 manager.addView(element);

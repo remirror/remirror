@@ -1,16 +1,7 @@
 import isEqual from 'fast-deep-equal/react';
-import {
-  DependencyList,
-  RefObject,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import { DependencyList, useCallback, useEffect, useRef, useState } from 'react';
 import useEffectOnce from 'react-use/lib/useEffectOnce';
 import useUpdateEffect from 'react-use/lib/useUpdateEffect';
-import ResizeObserver from 'resize-observer-polyfill';
 
 import { object } from '@remirror/core';
 
@@ -22,11 +13,9 @@ import { object } from '@remirror/core';
 export function useForceUpdate(): () => void {
   const [, setState] = useState(object());
 
-  const forceUpdate = useCallback((): void => {
+  return useCallback((): void => {
     setState(object());
   }, []);
-
-  return forceUpdate;
 }
 
 /**
@@ -43,54 +32,6 @@ export function usePrevious<Value>(value: Value): Value | undefined {
   const ref = useRef<Value>();
   useEffect(() => void (ref.current = value), [value]);
   return ref.current;
-}
-
-export interface DOMRectReadOnlyLike {
-  readonly x: number;
-  readonly y: number;
-  readonly width: number;
-  readonly height: number;
-  readonly top: number;
-  readonly right: number;
-  readonly bottom: number;
-  readonly left: number;
-}
-
-const defaultBounds = { x: 0, y: 0, width: 0, height: 0, top: 0, right: 0, bottom: 0, left: 0 };
-
-export type UseMeasureReturn<Ref extends HTMLElement = HTMLElement> = readonly [
-  { readonly ref: RefObject<Ref> },
-  DOMRectReadOnlyLike,
-];
-
-/**
- * Provides the measurements for a react element at the point of layout.
- *
- * @remarks
- *
- * Taken from https://codesandbox.io/embed/lp80n9z7v9
- *
- * ```tsx
- * const [bindRef, { height }] = useMeasure()
- *
- * return <div {...bindRef}>Height: {height}</div>
- * ```
- */
-export function useMeasure<Ref extends HTMLElement = HTMLElement>(): UseMeasureReturn<Ref> {
-  const ref = useRef<Ref>(null);
-  const [bounds, setBounds] = useState<DOMRectReadOnlyLike>(defaultBounds);
-
-  useLayoutEffect(() => {
-    const resizeObserver = new ResizeObserver(([entry]) => setBounds(entry.contentRect));
-
-    if (ref.current) {
-      resizeObserver.observe(ref.current);
-    }
-
-    return () => resizeObserver.disconnect();
-  }, []);
-
-  return [{ ref }, bounds] as const;
 }
 
 /**

@@ -29,7 +29,7 @@ describe('schema', () => {
     );
   });
 
-  it('it can parse content', () => {
+  it('can parse content', () => {
     const node = fromHtml({
       content: `<p><a href="${href}">link</a></p>`,
       schema,

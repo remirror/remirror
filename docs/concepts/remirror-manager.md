@@ -1,6 +1,9 @@
 ---
+hide_title: true
 title: RemirrorManager
 ---
+
+# RemirrorManager
 
 The `RemirrorManager` brings together the required `Extension`'s and `Preset`'s to provide their behaviour to your editor. This is where `commands` and `helpers` are stored.
 

@@ -19,8 +19,8 @@ The following is a work in progress. Please edit the page and provide your sugge
 Every extension can be given extra attributes when created.
 
 ```ts
-import { ParagraphExtension } from 'remirror/extension/paragraph';
 import { uniqueId } from 'remirror/core';
+import { ParagraphExtension } from 'remirror/extension/paragraph';
 
 const paragraphExtension = new ParagraphExtension({
   extraAttributes: {
@@ -38,8 +38,8 @@ The above has given a dynamic attribute `id`, which assigns a unique `id` to eve
 The above could have also been defined like this.
 
 ```ts
-import { ParagraphExtension } from 'remirror/extension/paragraph';
 import { uniqueId } from 'remirror/core';
+import { ParagraphExtension } from 'remirror/extension/paragraph';
 
 const paragraphExtension = new ParagraphExtension({
   extraAttributes: {
@@ -57,9 +57,9 @@ This example accomplishes the same things as the previous example and remirror i
 Extra attributes can also be added via the `RemirrorManager`. This can set attributes for a collection of nodes, marks and tags. This is very useful when adding attributes to multiple places in one sweep.
 
 ```ts
+import { RemirrorManager } from 'remirror/core';
 import { CorePreset } from 'remirror/preset/core';
 import { WysiwygPreset } from 'remirror/preset/wysiwyg';
-import { RemirrorManager } from 'remirror/core';
 
 const manager = RemirrorManager.create(() => [new WysiwygPreset(), new CorePreset()], {
   extraAttributes: [

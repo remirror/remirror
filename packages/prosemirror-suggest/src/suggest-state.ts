@@ -395,8 +395,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
         return false;
       }
 
-      const shouldIgnore = spec.specific ? spec.name === name : true;
-      return shouldIgnore;
+      return spec.specific ? spec.name === name : true;
     });
   }
 

@@ -1,6 +1,9 @@
 ---
+hide_title: true
 title: Priority
 ---
+
+# Priority
 
 The order of extensions matters. By default, extensions are ordered by their placement when creating a new extension. The extensions that appear earlier in the array are given a higher priority. In other words the lower the array index the higher the priority. Extensions operate on a first come, first served basis.
 
@@ -11,8 +14,9 @@ To ensure your extension is given a higher priority you can use the `ExtensionPr
 The higher the priority, the earlier the extension will be run. An extension with a priority of `10` will be run before an extension with a priority of `5`.
 
 ```ts
-import { CustomExtension } from './my/custom/extension';
 import { ExtensionPriority } from 'remirror/core';
+
+import { CustomExtension } from './my/custom/extension';
 
 const customExtension = new CustomExtension({ priority: ExtensionPriority.High });
 ```
@@ -22,7 +26,7 @@ Now your customExtension will have a priority level that's higher than other ext
 If you have full control of the extension you can also set the `defaultPriority` as a static property with the `extension.
 
 ```ts
-import { Extension, ExtensionPriority, extensionDecorator } from 'remirror/core';
+import { Extension, extensionDecorator, ExtensionPriority } from 'remirror/core';
 
 @extensionDecorator({
   // Now every custom extension created will have a `High` priority than default.

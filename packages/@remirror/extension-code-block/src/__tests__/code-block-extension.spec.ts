@@ -9,10 +9,10 @@ import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
 import yaml from 'refractor/lang/yaml';
+import { HardBreakExtension } from 'remirror/extension/hard-break';
 
 import { ExtensionPriority, fromHtml, object, toHtml } from '@remirror/core';
 import { createCoreManager } from '@remirror/testing';
-import { HardBreakExtension } from 'remirror/extension/hard-break';
 
 import { CodeBlockExtension, CodeBlockOptions, FormatterParameter } from '..';
 import { getLanguage } from '../code-block-utils';
@@ -266,20 +266,20 @@ describe('commands', () => {
 
   const tsBlock = codeBlock({ language: 'typescript' });
 
-  describe('updateCodeBlock ', () => {
+  describe('updateCodeBlock', () => {
     it('updates the language', () => {
       const markupBlock = codeBlock({ language: 'markup' });
       add(doc(markupBlock(`const a = 'test';<cursor>`))).callback((content) => {
-        expect(view.dom.querySelector('.language-markup code')).toBeTruthy();
+        expect(view.dom.querySelector('.language-markup code')).not.toBeNull();
 
         content.commands.updateCodeBlock({ language: 'javascript' });
-        expect(view.dom.querySelector('.language-markup code')).toBeFalsy();
+        expect(view.dom.querySelector('.language-markup code')).toBeNull();
         expect(view.dom.querySelector('.language-javascript code')!.outerHTML).toMatchSnapshot();
       });
     });
   });
 
-  describe('createCodeBlock ', () => {
+  describe('createCodeBlock', () => {
     it('creates the codeBlock', () => {
       add(doc(p(`<cursor>`)));
       commands.createCodeBlock({ language: 'typescript' });
@@ -298,7 +298,7 @@ describe('commands', () => {
     });
   });
 
-  describe('toggleCodeBlock ', () => {
+  describe('toggleCodeBlock', () => {
     it('toggles the codeBlock', () => {
       add(doc(p(`<cursor>`)));
 

@@ -1,6 +1,9 @@
 ---
+hide_title: true
 title: Projects
 ---
+
+# Projects
 
 The remirror road map is being planned using GitHub [projects](/projects). Here's a brief introduction to each of them.
 

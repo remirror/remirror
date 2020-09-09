@@ -333,8 +333,8 @@ describe('cloneTransaction', () => {
     jest.useRealTimers();
   });
 
-  it('clones the transaction', () => {
-    return new Promise((done) => {
+  it('clones the transaction', async () => {
+    await new Promise((done) => {
       const {
         state: { tr },
       } = createEditor(doc(p()));
@@ -532,7 +532,7 @@ describe('findNodeAt...', () => {
   const expectedStart = p('<cursor> You am champion');
   const pmDocument = doc(expectedStart, expectedEnd);
 
-  test('findNodeAtSelection', () => {
+  it('findNodeAtSelection', () => {
     const selection = Selection.atEnd(pmDocument);
     const { node, pos, start } = findNodeAtSelection(selection);
 

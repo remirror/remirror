@@ -40,7 +40,7 @@ describe('@extensionDecorator', () => {
     const testExtension = new TestExtension({ type: 'awesome' });
 
     // @ts-expect-error
-    expect(() => testExtension.setOptions({ type: 'not-awesome' })).toThrowError();
+    expect(() => testExtension.setOptions({ type: 'not-awesome' })).toThrow();
   });
 
   it('can decorate an extension as a function call', () => {
@@ -65,7 +65,7 @@ describe('@extensionDecorator', () => {
     const testExtension = new TestExtension({ type: 'awesome' });
 
     // @ts-expect-error
-    expect(() => testExtension.setOptions({ type: 'not-awesome' })).toThrowError();
+    expect(() => testExtension.setOptions({ type: 'not-awesome' })).toThrow();
   });
 });
 
@@ -99,7 +99,7 @@ describe('@presetDecorator', () => {
     const testPreset = new TestPreset({ type: 'awesome' });
 
     // @ts-expect-error
-    expect(() => testPreset.setOptions({ type: 'not-awesome' })).toThrowError();
+    expect(() => testPreset.setOptions({ type: 'not-awesome' })).toThrow();
   });
 
   it('can decorate a preset as a function call', () => {
@@ -132,6 +132,6 @@ describe('@presetDecorator', () => {
     const testPreset = new TestPreset({ type: 'awesome' });
 
     // @ts-expect-error
-    expect(() => testPreset.setOptions({ type: 'not-awesome' })).toThrowError();
+    expect(() => testPreset.setOptions({ type: 'not-awesome' })).toThrow();
   });
 });

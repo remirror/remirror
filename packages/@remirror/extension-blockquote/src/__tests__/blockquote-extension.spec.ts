@@ -23,7 +23,7 @@ describe('schema', () => {
     `);
   });
 
-  it('parses the dom structure and finds itself ', () => {
+  it('parses the dom structure and finds itself', () => {
     const node = fromHtml({ schema, content: '<blockquote>Hello friend!</blockquote>' });
     const expected = doc(blockquote(p('Hello friend!')));
 

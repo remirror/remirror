@@ -18,27 +18,25 @@ test('`cursorPopupPositioner` can position itself', () => {
     onDone: jest.fn(),
   };
 
-  expect(
-    add(doc(p('hello <cursor>')))
-      .callback(() => {
-        positionerExtension.addCustomHandler('positioner', cursorPopupPositioner);
-        cursorPopupPositioner.addListener('update', cursorMock.onUpdate);
-        cursorPopupPositioner.addListener('done', cursorMock.onDone);
-      })
-      .insertText('a')
-      .callback(() => {
-        expect(cursorMock.onUpdate).toHaveBeenCalledWith([
-          { setElement: expect.any(Function), id: expect.any(String) },
-        ]);
-        expect(cursorMock.onDone).toHaveBeenCalledWith([
-          { position: expect.any(Object), element: cursorElement, id: '0' },
-        ]);
-      })
-      .selectText({ from: 1, to: 5 })
-      .callback(() => {
-        expect(cursorMock.onUpdate).toHaveBeenCalledWith([]);
-      }),
-  );
+  add(doc(p('hello <cursor>')))
+    .callback(() => {
+      positionerExtension.addCustomHandler('positioner', cursorPopupPositioner);
+      cursorPopupPositioner.addListener('update', cursorMock.onUpdate);
+      cursorPopupPositioner.addListener('done', cursorMock.onDone);
+    })
+    .insertText('a')
+    .callback(() => {
+      expect(cursorMock.onUpdate).toHaveBeenCalledWith([
+        { setElement: expect.any(Function), id: expect.any(String) },
+      ]);
+      expect(cursorMock.onDone).toHaveBeenCalledWith([
+        { position: expect.any(Object), element: cursorElement, id: '0' },
+      ]);
+    })
+    .selectText({ from: 1, to: 5 })
+    .callback(() => {
+      expect(cursorMock.onUpdate).toHaveBeenCalledWith([]);
+    });
 });
 
 test('`centeredSelectionPositioner` can position itself', () => {
@@ -55,25 +53,23 @@ test('`centeredSelectionPositioner` can position itself', () => {
     onDone: jest.fn(),
   };
 
-  expect(
-    add(doc(p('hello <cursor>')))
-      .callback(() => {
-        positionerExtension.addCustomHandler('positioner', centeredSelectionPositioner);
-        centeredSelectionPositioner.addListener('update', centeredMock.onUpdate);
-        centeredSelectionPositioner.addListener('done', centeredMock.onDone);
-      })
-      .insertText('a')
-      .callback(() => {
-        expect(centeredMock.onUpdate).toHaveBeenCalledWith([]);
-      })
-      .selectText({ from: 1, to: 5 })
-      .callback(() => {
-        expect(centeredMock.onUpdate).toHaveBeenCalledWith([
-          { setElement: expect.any(Function), id: '0' },
-        ]);
-        expect(centeredMock.onDone).toHaveBeenCalledWith([
-          { position: expect.any(Object), element: centeredElement, id: '0' },
-        ]);
-      }),
-  );
+  add(doc(p('hello <cursor>')))
+    .callback(() => {
+      positionerExtension.addCustomHandler('positioner', centeredSelectionPositioner);
+      centeredSelectionPositioner.addListener('update', centeredMock.onUpdate);
+      centeredSelectionPositioner.addListener('done', centeredMock.onDone);
+    })
+    .insertText('a')
+    .callback(() => {
+      expect(centeredMock.onUpdate).toHaveBeenCalledWith([]);
+    })
+    .selectText({ from: 1, to: 5 })
+    .callback(() => {
+      expect(centeredMock.onUpdate).toHaveBeenCalledWith([
+        { setElement: expect.any(Function), id: '0' },
+      ]);
+      expect(centeredMock.onDone).toHaveBeenCalledWith([
+        { position: expect.any(Object), element: centeredElement, id: '0' },
+      ]);
+    });
 });

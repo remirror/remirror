@@ -1,6 +1,9 @@
 ---
+hide_title: true
 title: Keymaps
 ---
+
+# Keymaps
 
 :::note
 
@@ -17,7 +20,7 @@ The following is an example where the enter key can be customised to ignore all 
 The `next` method allows full control beyond the return value. It allows both calling all lower priority key bindings regardless of whether true or false has been called.
 
 ```tsx
-import { BaseExtensionOptions, Extension, KeyBindings, extensionDecorator } from '@remirror/core';
+import { BaseExtensionOptions, Extension, extensionDecorator, KeyBindings } from '@remirror/core';
 
 interface CustomKeymapExtensionOptions {
   override?: boolean;
@@ -57,7 +60,6 @@ To use the above example you could do the following.
 
 ```ts
 import { RemirrorManager } from '@remirror/core';
-
 import { baseExtensions } from '@remirror/core-extensions';
 
 import { CustomKeymapExtension } from './custom-keymap-extension';

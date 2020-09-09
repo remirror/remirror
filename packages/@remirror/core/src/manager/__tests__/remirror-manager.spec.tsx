@@ -9,6 +9,7 @@ import type {
   NodeViewMethod,
   ProsemirrorAttributes,
 } from '@remirror/core-types';
+import { Schema } from '@remirror/pm/model';
 import { Plugin } from '@remirror/pm/state';
 import { EditorView } from '@remirror/pm/view';
 import {
@@ -90,7 +91,7 @@ describe('Manager', () => {
 
   it('enforces constructor privacy', () => {
     // @ts-expect-error
-    expect(() => new RemirrorManager({})).toThrowError();
+    expect(() => new RemirrorManager({})).toThrow();
   });
 
   it('supports commands', () => {
@@ -127,7 +128,7 @@ describe('Manager', () => {
     });
 
     it('should provide the schema at instantiation', () => {
-      expect(createCoreManager([]).schema).toBeTruthy();
+      expect(createCoreManager([]).schema).toBeInstanceOf(Schema);
     });
 
     it('should provide access to `attributes`', () => {
@@ -249,8 +250,8 @@ test('lifecycle', () => {
       expect(this.store.setStoreKey).toBeFunction();
       expect(this.store.getStoreKey).toBeFunction();
       expect(this.store.addPlugins).toBeFunction();
-      expect(this.store.tags).toBeTruthy();
-      expect(this.store.schema).toBeTruthy();
+      expect(this.store.tags).toBeObject();
+      expect(this.store.schema).toBeInstanceOf(Schema);
     }
   }
 

@@ -1,19 +1,5 @@
-const tsProjectOptions = { project: [require.resolve('../tsconfig.lint.json')] };
-
-const tsProjectRules = {
-  '@typescript-eslint/prefer-readonly': 'warn',
-  '@typescript-eslint/await-thenable': 'warn',
-  '@typescript-eslint/no-unnecessary-type-arguments': 'warn',
-  '@typescript-eslint/restrict-plus-operands': 'warn',
-  '@typescript-eslint/no-misused-promises': 'warn',
-  '@typescript-eslint/no-unnecessary-type-assertion': 'error',
-  '@typescript-eslint/prefer-nullish-coalescing': [
-    'error',
-    { ignoreConditionalTests: true, ignoreMixedLogicalExpressions: true },
-  ],
-};
-
-module.exports = {
+/** @type {import('eslint').Linter.Config} */
+let config = {
   parser: '@typescript-eslint/parser',
   plugins: [
     'jest',
@@ -22,24 +8,22 @@ module.exports = {
     'react-hooks',
     'react',
     'unicorn',
-    'import',
     'jsx-a11y',
     'simple-import-sort',
     'eslint-comments',
-    'security',
-    'sonarjs',
   ],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
-    'plugin:import/typescript',
     'prettier',
     'prettier/@typescript-eslint',
     'prettier/react',
     'plugin:jest-formatting/recommended',
     'plugin:unicorn/recommended',
     'plugin:eslint-comments/recommended',
+    'plugin:jest/recommended',
+    'plugin:jest/style',
   ],
 
   parserOptions: {
@@ -48,7 +32,6 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    ...tsProjectOptions,
   },
   settings: {
     react: {
@@ -62,8 +45,6 @@ module.exports = {
     es6: true,
   },
   rules: {
-    'sonarjs/cognitive-complexity': ['warn', 15],
-
     'eslint-comments/no-unused-disable': 'error',
 
     'unicorn/no-fn-reference-in-iterator': 'off',
@@ -75,27 +56,21 @@ module.exports = {
     'unicorn/no-null': 'off',
     'unicorn/no-reduce': 'off',
 
-    'jest/prefer-spy-on': 'warn',
+    'jest/no-test-return-statement': 'off',
+    'jest/prefer-strict-equal': 'off',
+    'jest/no-export': 'off',
+    'jest/consistent-test-it': ['error'],
+    'jest/prefer-spy-on': ['warn'],
+    'jest/prefer-todo': ['warn'],
+    'jest/prefer-hooks-on-top': ['error'],
     'jest/no-large-snapshots': ['warn', { maxSize: 12 }],
-    'jest/no-focused-tests': 'error',
-    'jest/no-identical-title': 'error',
-    'jest/no-duplicate-hooks': 'error',
-    'jest/no-if': 'error',
-    'jest/no-test-prefixes': 'error',
-    'jest/no-test-callback': 'error',
+    'jest/no-duplicate-hooks': ['error'],
+    'jest/no-if': ['error'],
+    'jest/no-restricted-matchers': [
+      'error',
+      { toBeTruthy: 'Avoid `toBeTruthy`', toBeFalsy: 'Avoid `toBeFalsy`' },
+    ],
 
-    'import/no-deprecated': 'warn',
-    'import/max-dependencies': ['warn', { max: 20 }],
-    'import/no-default-export': 'warn',
-    'import/no-mutable-exports': 'error',
-    'import/first': 'error',
-    'import/no-duplicates': 'error',
-    'import/no-cycle': 'error',
-    'import/no-self-import': 'error',
-    'import/newline-after-import': 'error',
-
-    // Turn off conflicting import rules
-    'import/order': 'off',
     'sort-imports': 'off',
 
     // Use nice import rules
@@ -108,10 +83,10 @@ module.exports = {
 
           // Packages that are not scoped to `remirror`
           // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
-          ['^(?!@?remirror)@?\\w'],
+          ['^(?!@remirror)@?\\w'],
 
           // Scoped packages
-          ['^@?remirror'],
+          ['^@remirror'],
 
           // Absolute imports and other imports such as Vue-style `@/foo`.
           // Anything that does not start with a dot.
@@ -270,11 +245,6 @@ module.exports = {
     {
       files: ['*.ts', '*.tsx'],
       rules: {
-        ...tsProjectRules,
-        '@typescript-eslint/restrict-template-expressions': [
-          'warn',
-          { allowNumber: true, allowBoolean: true },
-        ],
         '@typescript-eslint/no-extra-non-null-assertion': ['error'],
         '@typescript-eslint/prefer-optional-chain': ['error'],
         '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
@@ -297,10 +267,6 @@ module.exports = {
         '@typescript-eslint/no-non-null-assertion': 'off', // Makes writing tests more convenient
         '@typescript-eslint/no-use-before-define': 'off',
         'react/display-name': 'off',
-        ...Object.keys(tsProjectRules).reduce(
-          (accumulator, key) => ({ ...accumulator, [key]: 'off' }),
-          {},
-        ),
       },
     },
     {
@@ -363,3 +329,101 @@ module.exports = {
     },
   ],
 };
+
+// Only apply TypeScript specific rules when in TS Mode. This is a hack for now
+// due to the issue raised
+// https://github.com/typescript-eslint/typescript-eslint/issues/2373
+if (process.env.FULL_ESLINT_CHECK) {
+  const rules = {
+    '@typescript-eslint/prefer-readonly': 'warn',
+    '@typescript-eslint/await-thenable': 'warn',
+    '@typescript-eslint/no-unnecessary-type-arguments': 'warn',
+    '@typescript-eslint/restrict-plus-operands': 'warn',
+    '@typescript-eslint/no-misused-promises': 'warn',
+    '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+    '@typescript-eslint/prefer-nullish-coalescing': [
+      'error',
+      { ignoreConditionalTests: true, ignoreMixedLogicalExpressions: true },
+    ],
+    '@typescript-eslint/restrict-template-expressions': [
+      'warn',
+      { allowNumber: true, allowBoolean: true },
+    ],
+  };
+
+  config = {
+    ...config,
+    plugins: [...config.plugins, 'import', 'sonarjs'],
+    extends: [
+      ...config.extends,
+      'plugin:import/typescript',
+      // TODO Turn this rule on once failures are fixed eventually.
+      // 'plugin:sonarjs/recommended'
+    ],
+    rules: {
+      ...config.rules,
+      'import/no-deprecated': 'warn',
+      'import/max-dependencies': ['warn', { max: 20 }],
+      'import/no-default-export': 'warn',
+      'import/no-mutable-exports': 'error',
+      'import/first': 'error',
+      'import/no-duplicates': 'error',
+      'import/no-cycle': 'error',
+      'import/no-self-import': 'error',
+      'import/newline-after-import': 'error',
+
+      // Turn off conflicting import rules
+      'import/order': 'off',
+    },
+    overrides: [
+      {
+        parserOptions: { project: [require.resolve('../tsconfig.lint.json')] },
+        files: ['**/!(*.{md,mdx})/*.ts', '**/!(*.{md,mdx})/*.tsx'],
+        rules,
+      },
+      {
+        files: [
+          '**/__tests__/**',
+          '**/__stories__/**',
+          'support/**',
+          '**/__dts__/**',
+          '**/*.test.ts',
+        ],
+        // Switch off rules for test files.
+        rules: Object.keys(rules).reduce(
+          (accumulator, key) => ({ ...accumulator, [key]: 'off' }),
+          {},
+        ),
+      },
+      ...config.overrides,
+    ],
+  };
+} else {
+  config.plugins = [...config.plugins, 'markdown'];
+  config = {
+    ...config,
+    // Apply the markdown plugin
+    plugins: [...config.plugins, 'markdown'],
+
+    // Only apply markdown rules when not in TypeScript mode, since they are
+    // currently incompatible.
+    overrides: [
+      ...config.overrides,
+
+      { files: ['*.mdx', '*.md'], processor: 'markdown/markdown' },
+      {
+        // Lint code blocks in markdown
+        files: ['**/*.{md,mdx}/*.{ts,tsx,js}'],
+
+        // Set up rules to be excluded in the markdown blocks.
+        rules: {
+          'simple-import-sort/sort': 'warn',
+          'unicorn/filename-case': 'off',
+          '@typescript-eslint/no-unused-vars-experimental': 'off',
+        },
+      },
+    ],
+  };
+}
+
+module.exports = config;

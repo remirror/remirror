@@ -151,13 +151,13 @@ function getObjectType(value: unknown): TypeName | undefined {
  * @param type -  the name of the type to check for
  * @returns a predicate function for checking the value type
  */
-function isOfType<Type>(type: string, test?: (value: Type) => boolean) {
+function isOfType<Type>(type: string, predicate?: (value: Type) => boolean) {
   return (value: unknown): value is Type => {
     if (typeof value !== type) {
       return false;
     }
 
-    return test ? test(value as Type) : true;
+    return predicate ? predicate(value as Type) : true;
   };
 }
 
@@ -544,7 +544,7 @@ export function cleanupOS(os: string, pattern?: string, label?: string): string 
     os = os.replace(new RegExp(pattern, 'i'), label);
   }
 
-  const value = format(
+  return format(
     os
       .replace(/ ce$/i, ' CE')
       .replace(/\bhpw/i, 'web')
@@ -560,8 +560,6 @@ export function cleanupOS(os: string, pattern?: string, label?: string): string 
       .replace(/\b(Chrome OS \w+) [\d.]+\b/, '$1')
       .split(' on ')[0],
   );
-
-  return value;
 }
 
 /**
@@ -736,51 +734,6 @@ export function flattenArray<Type>(array: any[]): Type[] {
  * And Sometimes doing nothing is the best policy.
  */
 export function noop(): void {}
-
-/**
- * Use this to completely overwrite an object when merging.
- *
- * ```ts
- * const source = { awesome: { a: 'a' } }
- * const target = { awesome: { b: 'b' } }
- * const result = deepMerge(source, target) // => { awesome: { a: 'a', b: 'b' } }
- *
- * const overwriteTarget = { awesome: Merge.overwrite({ b: 'b' }) }
- * const overwriteResult = deepMerge(source, overwriteTarget) // => { awesome: { b: 'b' } }
- * ```
- *
- */
-export class Merge {
-  /**
-   * Create an object that will completely replace the key when merging.
-   *
-   * @param [obj] - the object to replace the key with. When blank an empty
-   * object is used.
-   */
-  static overwrite<Return = any>(object_: UnknownShape = object()): Return {
-    return new Merge(object_) as any;
-  }
-
-  /**
-   * Sets the key to undefined thus fully deleting the key.
-   */
-  static delete(): any {
-    return undefined as any;
-  }
-
-  private constructor(object_: UnknownShape = object()) {
-    keys(object_).forEach((key) => {
-      this[key] = object_[key];
-    });
-  }
-}
-
-export interface Merge {
-  /**
-   * This can be used to mimic any object shape.
-   */
-  [key: string]: unknown;
-}
 
 /**
  * A deep merge which only merges plain objects and Arrays. It clones the object

@@ -17,7 +17,7 @@ function create(options?: SearchOptions) {
 }
 
 describe('commands', () => {
-  test('#find', () => {
+  it('#find', () => {
     const { view, add, commands, node } = create();
     add(node);
 
@@ -31,7 +31,7 @@ describe('commands', () => {
     expect(view.dom).toMatchSnapshot();
   });
 
-  test('#replace', () => {
+  it('#replace', () => {
     const { view, add, commands, node } = create();
     add(node);
 
@@ -40,7 +40,7 @@ describe('commands', () => {
     expect(view.dom).toMatchSnapshot();
   });
 
-  test('#findNext, #replace', () => {
+  it('#findNext, #replace', () => {
     const { view, add, commands, node } = create();
     add(node);
 
@@ -61,7 +61,7 @@ describe('commands', () => {
     expect(view.dom).not.toHaveTextContent('abcd');
   });
 
-  test('#replaceAll', () => {
+  it('#replaceAll', () => {
     const { view, add, commands, node } = create();
     add(node);
 
@@ -74,7 +74,7 @@ describe('commands', () => {
     expect(commands.replaceAll.isEnabled()).toBeFalse();
   });
 
-  test('#clearSearch', () => {
+  it('#clearSearch', () => {
     const { view, add, commands, node } = create();
     add(node);
 

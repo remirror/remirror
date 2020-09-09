@@ -1,6 +1,9 @@
 ---
+hide_title: true
 title: Contributing
 ---
+
+# Contributing
 
 Fork [this repository][repo], clone your fork and add this repository as the upstream remote.
 
@@ -148,6 +151,8 @@ The following are some personal preferences for coding style.
 - Use `const` **Arrow Functions** when declaring components.
 
 ```tsx
+import React from 'react';
+
 const MyComponent = () => {
   return <div />;
 };

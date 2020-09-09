@@ -69,10 +69,10 @@ test('NodeViews are created with content', () => {
     </RemirrorProvider>,
   );
   const { doc } = chain.nodes;
-  const { test } = chain.attributeNodes;
+  const { test: t } = chain.attributeNodes;
 
   act(() => {
-    chain.add(doc(test({ custom: 'awesome' })('content<cursor>'))).insertText(' hello world');
+    chain.add(doc(t({ custom: 'awesome' })('content<cursor>'))).insertText(' hello world');
   });
 
   expect(chain.dom).toMatchSnapshot();
@@ -90,10 +90,10 @@ test('NodeViews are created without content', () => {
   );
 
   const { doc } = chain.nodes;
-  const { test } = chain.attributeNodes;
+  const { test: t } = chain.attributeNodes;
 
   act(() => {
-    chain.add(doc(test({ custom: 'awesome' })('content<cursor>'))).insertText('hello world');
+    chain.add(doc(t({ custom: 'awesome' })('content<cursor>'))).insertText('hello world');
   });
 
   expect(chain.dom).toMatchSnapshot();

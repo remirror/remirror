@@ -15,7 +15,7 @@ describe('useMention', () => {
 
     strictRender(<Wrapper />);
 
-    expect(result.state).toEqual(null);
+    expect(result.state).toBeNull();
 
     act(() => {
       editor.insertText('@a');
@@ -106,13 +106,13 @@ describe('useMention', () => {
       },
     ]);
 
-    expect(result.state).toBe(null);
+    expect(result.state).toBeNull();
 
     act(() => {
       editor.insertText('a');
     });
 
-    expect(result.state).toBe(null);
+    expect(result.state).toBeNull();
   });
 
   it('can set `ignoreMatchesOnEscape` to false', () => {
@@ -129,7 +129,7 @@ describe('useMention', () => {
       },
     ]);
 
-    expect(result.state).toBe(null);
+    expect(result.state).toBeNull();
 
     act(() => {
       editor.insertText('a');

@@ -1,6 +1,9 @@
 ---
+hide_title: true
 title: Error Handling
 ---
+
+# Error Handling
 
 Remirror relies on the ProseMirror `Schema` to identify the content the document will support and the rules around how it can be manipulated. For this reason, error handling is a key concern when implementing a Remirror editor.
 
@@ -24,9 +27,9 @@ Whenever an error occurs due to invalid content you will have the chance to inte
 
 ```tsx
 import React from 'react';
-import { RemirrorProvider, InvalidContentHandler } from 'remirror/core';
-import { RemirrorProvider, useManager } from 'remirror/react';
+import { InvalidContentHandler, RemirrorProvider } from 'remirror/core';
 import { WysiwygPreset } from 'remirror/preset/wysiwyg';
+import { RemirrorProvider, useManager } from 'remirror/react';
 
 const EditorWrapper = () => {
   const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {

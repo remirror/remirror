@@ -154,3 +154,16 @@
 .menu__link.menu__link--sublist {
   font-weight: 500;
 }
+
+.main-wrapper {
+  code {
+    background-color: #ebedf0;
+    background-color: var(--ifm-code-background);
+    color: #1c1e21;
+    color: var(--ifm-code-color);
+  }
+
+  a code {
+    color: inherit;
+  }
+}

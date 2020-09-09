@@ -30,9 +30,9 @@ The following code sample will create a limited editor and run the available com
 import jsx from 'refractor/lang/jsx';
 import typescript from 'refractor/lang/typescript';
 
-import { RemirrorManager, ExtensionPriority } from '@remirror/core';
-import { CorePreset } from '@remirror/preset-core';
+import { ExtensionPriority, RemirrorManager } from '@remirror/core';
 import { CodeBlockExtension } from '@remirror/extension-code-block';
+import { CorePreset } from '@remirror/preset-core';
 
 // Create the codeBlock extension
 const codeBlockExtension = new CodeBlockExtension({ supportedLanguages: [typescript, jsx] });
@@ -44,7 +44,7 @@ const manager = RemirrorManager.create([codeBlockExtension, corePreset]);
 // Pass the dom element to the editor. If you are using `@remirror/react` or
 // other framework wrappers then this is handled for you.
 const element = document.createElement('div');
-document.body.appendChild(element);
+document.body.append(element);
 
 // Add the view to the editor manager.
 manager.addView(element);

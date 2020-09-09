@@ -29,9 +29,9 @@ npm install @remirror/extension-auto-link@next # npm
 When added to your editor the auto link extension will automatically add links to any url like pattern that matches the default regex.
 
 ```ts
-import { RemirrorManager, ExtensionPriority } from '@remirror/core';
-import { CorePreset } from '@remirror/preset-core';
+import { ExtensionPriority, RemirrorManager } from '@remirror/core';
 import { AutoLinkExtension } from '@remirror/extension-auto-link';
+import { CorePreset } from '@remirror/preset-core';
 
 // Create the auto link extension
 const autoLinkExtension = new AutoLinkExtension();
@@ -42,7 +42,7 @@ const manager = RemirrorManager.create([autoLinkExtension, corePreset]);
 
 // Pass the dom element to the editor. If you are using `@remirror/react` this is done for you.
 const element = document.createElement('div');
-document.body.appendChild(element);
+document.body.append(element);
 
 // Add the view to the editor manager.
 manager.addView(element);

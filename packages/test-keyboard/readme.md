@@ -27,14 +27,13 @@ npm install test-keyboard@next # npm
 ```ts
 import { Keyboard } from 'test-keyboard';
 
-const target = document.getElementById('editor');
+const target = document.querySelector('#editor');
 Keyboard.create({
-    target,
-  })
-    .start() // Allows events to be dispatched
-    .mod({ text: 'Ctrl-Shift-Enter' })
-    .end(); // Dispatches al the events.
-};
+  target,
+})
+  .start() // Allows events to be dispatched
+  .mod({ text: 'Ctrl-Shift-Enter' })
+  .end(); // Dispatches al the events.
 ```
 
 ### `KeyboardConstructorParameter`

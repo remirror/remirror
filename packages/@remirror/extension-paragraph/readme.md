@@ -29,9 +29,9 @@ npm install @remirror/extension-paragraph@next @remirror/pm@next # npm
 When added to your editor it will provide the `insertParagraph` which inserts a paragraph into the editor.
 
 ```ts
-import { RemirrorManager, ExtensionPriority } from '@remirror/core';
-import { ParagraphExtension } from '@remirror/extension-paragraph';
+import { ExtensionPriority, RemirrorManager } from '@remirror/core';
 import { DocExtension } from '@remirror/extension-doc';
+import { ParagraphExtension } from '@remirror/extension-paragraph';
 import { TextExtension } from '@remirror/extension-text';
 
 // Create the extension
@@ -44,7 +44,7 @@ const manager = RemirrorManager.create([paragraphExtension, docExtension, textEx
 
 // Pass the dom element to the editor. If you are using `@remirror/react` this is done for you.
 const element = document.createElement('div');
-document.body.appendChild(element);
+document.body.append(element);
 
 // Add the view to the editor manager.
 manager.addView(element);

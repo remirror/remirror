@@ -9,8 +9,7 @@ function nameify(str: string): string {
   const safeBase = base.match(/^[a-z]/i)
     ? base
     : `ext${base.slice(0, 1).toUpperCase()}${base.slice(1)}`;
-  const upper = safeBase.slice(0, 1).toUpperCase() + safeBase.slice(1);
-  return upper;
+  return safeBase.slice(0, 1).toUpperCase() + safeBase.slice(1);
   //const lower = safeBase.slice(0, 1).toLowerCase() + safeBase.slice(1);
   //return [upper, lower];
 }

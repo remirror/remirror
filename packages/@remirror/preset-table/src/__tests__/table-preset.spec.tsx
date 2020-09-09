@@ -69,7 +69,7 @@ describe('commands', () => {
     };
   };
 
-  test('#addTableColumnAfter', () => {
+  it('#addTableColumnAfter', () => {
     const { add, doc, commands, view, build } = setup();
     const table = build(['A1', 'B1<cursor>', 'C1'], ['A2', 'B2', 'C2']);
     add(doc(table));
@@ -79,7 +79,7 @@ describe('commands', () => {
     expect(view.state.doc).toEqualRemirrorDocument(expected);
   });
 
-  test('#addTableColumnBefore', () => {
+  it('#addTableColumnBefore', () => {
     const { add, doc, commands, view, build } = setup();
     const table = build(['A1', 'B1', 'C1'], ['A2', 'B2<cursor>', 'C2']);
     add(doc(table));
@@ -91,7 +91,7 @@ describe('commands', () => {
     );
   });
 
-  test('#addTableRowAfter', () => {
+  it('#addTableRowAfter', () => {
     const { add, doc, commands, view, build } = setup();
     const table = build(['A1<cursor>', 'B1'], ['A2', 'B2']);
     add(doc(table));
@@ -103,7 +103,7 @@ describe('commands', () => {
     );
   });
 
-  test('#addTableRowBefore', () => {
+  it('#addTableRowBefore', () => {
     const { add, doc, commands, view, build } = setup();
     const table = build(['A1', 'B1<cursor>'], ['A2', 'B2']);
     add(doc(table));
@@ -115,7 +115,7 @@ describe('commands', () => {
     );
   });
 
-  test('#deleteTableColumn', () => {
+  it('#deleteTableColumn', () => {
     const { add, doc, commands, view, build } = setup();
     const table = build(['A1', 'B1', 'C1'], ['A2<cursor>', 'B2', 'C2']);
     add(doc(table));
@@ -125,7 +125,7 @@ describe('commands', () => {
     expect(view.state.doc).toEqualRemirrorDocument(doc(build(['B1', 'C1'], ['B2', 'C2'])));
   });
 
-  test('#deleteTableRow', () => {
+  it('#deleteTableRow', () => {
     const { add, doc, commands, view, build } = setup();
     const table = build(['A1', 'B1', 'C1'], ['A2', 'B2<cursor>', 'C2'], ['A3', 'B3', 'C3']);
     add(doc(table));
@@ -137,7 +137,7 @@ describe('commands', () => {
     );
   });
 
-  test('#deleteTable', () => {
+  it('#deleteTable', () => {
     const { add, doc, commands, view, build, p } = setup();
     const table = build(['A1', 'B1', 'C1'], ['A2', 'B2', 'C2'], ['A3', 'B3<cursor>', 'C3']);
     add(doc(table));

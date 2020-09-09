@@ -31,10 +31,11 @@ Rather than installing multiple scoped packages, the `remirror` package is a gat
 
 The following creates a dom based remirror editor.
 
-```ts
+```tsx
+import React from 'react';
 import { SocialPreset } from 'remirror/preset/social';
+import { RemirrorProvider, useManager, useRemirror } from 'remirror/react';
 import { SocialEmojiComponent } from 'remirror/react/social';
-import { RemirrorProvider, useRemirror, useManager } from 'remirror/react';
 
 const EditorWrapper = () => {
   const socialPreset = new SocialPreset();
@@ -42,17 +43,15 @@ const EditorWrapper = () => {
 
   return (
     <RemirrorProvider manager={manager}>
-      <div>
-        <SocialEmojiComponent />
-        <Editor />
-      <div/>
+      <SocialEmojiComponent />
+      <Editor />
     </RemirrorProvider>
-  )
-}
+  );
+};
 
 const Editor = () => {
   const { getRootProps } = useRemirror();
 
-  return <div {...getRootProps()}>
-}
+  return <div {...getRootProps()} />;
+};
 ```

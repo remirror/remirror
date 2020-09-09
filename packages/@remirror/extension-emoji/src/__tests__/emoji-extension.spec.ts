@@ -190,7 +190,7 @@ describe('suggestions', () => {
 });
 
 describe('commands', () => {
-  test('`suggestEmoji`', () => {
+  it('`suggestEmoji`', () => {
     const {
       onChange,
       nodes: { doc, p },
@@ -212,7 +212,7 @@ describe('commands', () => {
       });
   });
 
-  test('`insertEmojiByName`', () => {
+  it('`insertEmojiByName`', () => {
     const {
       nodes: { doc, p },
       add,
@@ -232,7 +232,7 @@ describe('commands', () => {
 });
 
 describe('helpers', () => {
-  test('`updateFrequentlyUsed`', () => {
+  it('`updateFrequentlyUsed`', () => {
     const {
       nodes: { doc, p },
       add,

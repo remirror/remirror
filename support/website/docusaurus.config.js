@@ -55,7 +55,7 @@ module.exports = {
           title: 'Community',
           items: [
             { label: 'Discord', to: '/chat' },
-            { label: 'Twitter', href: 'https://twitter.com/ifiokjr' },
+            { label: 'Twitter', href: 'https://twitter.com/@remirrorio' },
           ],
         },
         {

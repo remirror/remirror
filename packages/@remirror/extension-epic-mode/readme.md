@@ -25,9 +25,9 @@ npm install @remirror/extension-epic-mode@next # npm
 The following code sample will create a limited editor and run the available commands from this extension.
 
 ```ts
-import { RemirrorManager, ExtensionPriority } from '@remirror/core';
-import { CorePreset } from '@remirror/preset-core';
+import { ExtensionPriority, RemirrorManager } from '@remirror/core';
 import { EpicModeExtension } from '@remirror/extension-epic-mode';
+import { CorePreset } from '@remirror/preset-core';
 
 // Create the codeBlock extension
 const epicModeExtension = new EpicModeExtension();
@@ -39,7 +39,7 @@ const manager = RemirrorManager.create([epicModeExtension, corePreset]);
 // Pass the dom element to the editor. If you are using `@remirror/react` or
 // other framework wrappers then this is handled for you.
 const element = document.createElement('div');
-document.body.appendChild(element);
+document.body.append(element);
 
 // Add the view to the editor manager.
 manager.addView(element);
@@ -50,9 +50,10 @@ epicModeExtension.setOptions({ active: true });
 
 When using with react you can update the properties with the `useExtensionProperties` hook.
 
-```ts
-import { EpicModeExtension } from '@remirror/extension-epic-mode';
-import { useExtensionProperties, useRemirror } from '@remirror/react';
+```tsx
+import React from 'react';
+import { EpicModeExtension } from 'remirror/extension/epic-mode';
+import { useExtensionProperties, useRemirror } from 'remirror/react';
 
 const InternalEditor = () => {
   useExtensionProperties(EpicModeExtension, { active: true });

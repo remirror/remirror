@@ -40,7 +40,7 @@
 
 - [`5786901c`](https://github.com/remirror/remirror/commit/5786901c58d717c0921415f7bfd1f480c39a44f3) [#645](https://github.com/remirror/remirror/pull/645) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add support for prioritized keymaps. It's now possible to make sure that a hook which consumes `useKeymap` runs before the extension keybindings.
 
-  ```ts
+  ```tsx
   import React from 'react';
   import { ExtensionPriority } from 'remirror/core';
   import { useKeymap } from 'remirror/react/hooks';
@@ -66,7 +66,7 @@
   To change the default priority of the `createKeymap` method in a custom extension wrap the `KeyBindings` return in a tuple with the priority as the first parameter.
 
   ```ts
-  import { PlainExtension, KeyBindingsTuple, ExtensionPriority, KeyBindings } from 'remirror/core';
+  import { ExtensionPriority, KeyBindings, KeyBindingsTuple, PlainExtension } from 'remirror/core';
 
   class CustomExtension extends PlainExtension {
     get name() {
@@ -75,9 +75,9 @@
 
     createKeymap(): KeyBindingsTuple {
       const bindings = {
-        Enter: () => return true,
-        Backspace: () => return true,
-      }
+        Enter: () => true,
+        Backspace: () => true,
+      };
 
       return [ExtensionPriority.High, bindings];
     }
