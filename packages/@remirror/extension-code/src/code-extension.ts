@@ -24,7 +24,7 @@ export class CodeExtension extends MarkExtension {
     return 'code' as const;
   }
 
-  readonly tags = [ExtensionTag.Code];
+  readonly tags = [ExtensionTag.Code, ExtensionTag.MarkSupportsExit];
 
   createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
     return {

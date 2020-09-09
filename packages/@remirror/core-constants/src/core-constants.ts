@@ -207,6 +207,12 @@ const BaseExtensionTag = {
    * A tag that excludes this from input rules.
    */
   ExcludeInputRules: 'excludeFromInputRules',
+
+  /**
+   * A mark that can be exited when at the end and beginning of the document
+   * with an arrow key.
+   */
+  MarkSupportsExit: 'markSupportsExits',
 } as const;
 
 /**

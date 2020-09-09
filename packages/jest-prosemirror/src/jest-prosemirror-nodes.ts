@@ -64,7 +64,7 @@ const supportedTags = new Set(['cursor', 'node', 'start', 'end', 'anchor', 'all'
  *
  * @param taggedDoc
  */
-export function taggedDocHasSelection(taggedDoc: TaggedProsemirrorNode) {
+export function taggedDocHasSelection(taggedDoc: TaggedProsemirrorNode): boolean {
   return keys(taggedDoc.tag).some((tag) => supportedTags.has(tag));
 }
 
@@ -77,7 +77,7 @@ export function taggedDocHasSelection(taggedDoc: TaggedProsemirrorNode) {
  */
 export function initSelection<Schema extends EditorSchema = EditorSchema>(
   taggedDoc: TaggedProsemirrorNode<Schema>,
-) {
+): Selection<Schema> | null {
   const { cursor, node, start, end, anchor, head, all, gap } = taggedDoc.tag;
 
   if (isNumber(all)) {
@@ -85,10 +85,7 @@ export function initSelection<Schema extends EditorSchema = EditorSchema>(
   }
 
   if (isNumber(node)) {
-    // Node selections should always be at the start of their nodes. This is
-    // impossible to annotate since the first text position is always the `node
-    // + 1` place.
-    return new NodeSelection<Schema>(taggedDoc.resolve(node - 1));
+    return NodeSelection.create<Schema>(taggedDoc, taggedDoc.resolve(node).before());
   }
 
   if (isNumber(cursor)) {

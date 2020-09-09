@@ -672,17 +672,13 @@ export type GetPlainNames<Type> = Type extends AnyPlainExtension ? GetNameUnion<
  * A utility type for retrieving the name of an extension only when it's a mark
  * extension.
  */
-export type GetMarkNameUnion<
-  ExtensionUnion extends AnyExtension
-> = ExtensionUnion extends AnyMarkExtension ? ExtensionUnion['name'] : never;
+export type GetMarkNameUnion<Type> = Type extends AnyMarkExtension ? Type['name'] : never;
 
 /**
  * A utility type for retrieving the name of an extension only when it's a node
  * extension.
  */
-export type GetNodeNameUnion<
-  ExtensionUnion extends AnyExtension
-> = ExtensionUnion extends AnyNodeExtension ? ExtensionUnion['name'] : never;
+export type GetNodeNameUnion<Type> = Type extends AnyNodeExtension ? Type['name'] : never;
 
 /**
  * Gets the editor schema from an extension union.

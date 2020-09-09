@@ -71,11 +71,11 @@ const elements = new Set<Element>();
  * By default it already has the core preset applied.
  */
 export function renderEditor<Combined extends AnyCombinedUnion>(
-  combined: Combined[],
+  combined: Combined[] | (() => Combined[]),
   { props, autoClean, ...options }: RenderEditorParameter<Combined> = object(),
 ): RemirrorTestChain<Combined | CorePreset | BuiltinPreset> {
   const element = createElement(props?.element, autoClean);
-  const manager = createDomManager([...combined], options);
+  const manager = createDomManager(combined, options);
 
   // TODO add the editor to the remirror test chain
   createDomEditor({ ...props, element, manager });
