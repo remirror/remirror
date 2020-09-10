@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-table",
-  "version": "1.0.0-next.33",
+  "version": "1.0.0-next.34",
   "description": "A table a day keeps the doctor away. Remirror and play keeps the bad times at bay.",
   "keywords": [
     "remirror",
@@ -30,16 +30,16 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.11.0",
-    "@remirror/theme": "1.0.0-next.33",
+    "@remirror/theme": "1.0.0-next.34",
     "linaria": "^2.0.0-rc.1"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.33",
-    "@remirror/pm": "1.0.0-next.32"
+    "@remirror/core": "1.0.0-next.34",
+    "@remirror/pm": "1.0.0-next.34"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.33",
-    "@remirror/pm": "1.0.0-next.32"
+    "@remirror/core": "1.0.0-next.34",
+    "@remirror/pm": "1.0.0-next.34"
   },
   "publishConfig": {
     "access": "public"

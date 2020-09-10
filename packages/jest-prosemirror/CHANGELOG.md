@@ -1,5 +1,21 @@
 # jest-prosemirror
 
+## 1.0.0-next.34
+
+> 2020-09-10
+
+### Patch Changes
+
+- [`27b358e4`](https://github.com/remirror/remirror/commit/27b358e4cb877a1e8df61c9d5326f366e66f30dc) [#668](https://github.com/remirror/remirror/pull/668) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix `node` cursor selection. Now it selects the right node position.
+
+- Updated dependencies [[`27b358e4`](https://github.com/remirror/remirror/commit/27b358e4cb877a1e8df61c9d5326f366e66f30dc), [`5945dffe`](https://github.com/remirror/remirror/commit/5945dffeadac8ae568be1ab0014e1186e03d5fb0)]:
+  - @remirror/core-constants@1.0.0-next.34
+  - @remirror/core-helpers@1.0.0-next.34
+  - @remirror/core-types@1.0.0-next.34
+  - @remirror/core-utils@1.0.0-next.34
+  - test-keyboard@1.0.0-next.34
+  - @remirror/pm@1.0.0-next.34
+
 ## 1.0.0-next.33
 
 > 2020-09-07

@@ -1,5 +1,19 @@
 # @remirror/core-constants
 
+## 1.0.0-next.34
+
+> 2020-09-10
+
+### Minor Changes
+
+- [`27b358e4`](https://github.com/remirror/remirror/commit/27b358e4cb877a1e8df61c9d5326f366e66f30dc) [#668](https://github.com/remirror/remirror/pull/668) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add `MarkSupportsExit` tag to `ExtensionTag` constant export.
+
+  Add `KeymapExtension` option `exitMarksOnArrowPress` which allows the user to exit marks with the `MarkSupportExit` tag from the beginning or the end of the document.
+
+  Store tags as `markTags`, `nodeTags`, `plainTags` and deprecate the helper methods which were previously doing this.
+
+  Add `extraTags` option to the extension and `RemirrorManager` now extra can be added as part of the configuration.
+
 ## 1.0.0-next.33
 
 > 2020-09-07
