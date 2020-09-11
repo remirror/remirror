@@ -197,11 +197,7 @@ export function toggleList(type: NodeType, itemType: NodeType): CommandFunction 
       }
 
       if (isList(parentList.node, schema) && type.validContent(parentList.node.content)) {
-        tr.setNodeMarkup(parentList.pos, type);
-
-        if (dispatch) {
-          dispatch(tr);
-        }
+        dispatch?.(tr.setNodeMarkup(parentList.pos, type));
 
         return true;
       }
