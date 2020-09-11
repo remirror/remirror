@@ -30,7 +30,11 @@ module.exports = {
   ],
   plugins: [
     'babel-plugin-macros',
-    ['@babel/plugin-transform-runtime', {}, 'deduplicate'],
+    [
+      '@babel/plugin-transform-runtime',
+      { version: require('../package.json').dependencies['@babel/runtime'] },
+      'deduplicate',
+    ],
     ['@babel/plugin-transform-template-literals', {}, 'deduplicate'],
     '@babel/plugin-proposal-object-rest-spread',
     '@babel/plugin-syntax-dynamic-import',
