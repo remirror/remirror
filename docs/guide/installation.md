@@ -50,7 +50,7 @@ const wrapperElement = document.createElement('div');
 addStylesToElement(wrapperElement, allStyles);
 ```
 
-In order to use the `styled-components` or `emotion` variants you will need to also install `@remirror/styles`.
+In order to use the `styled-components` or `emotion` variants you will need to also install `@remirror/styles@next`.
 
 ## Browser support
 
