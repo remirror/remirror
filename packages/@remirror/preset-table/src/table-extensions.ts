@@ -3,10 +3,15 @@ import {
   CommandFunction,
   CommandFunctionParameter,
   convertCommand,
+  EditorState,
   extensionDecorator,
   ExtensionTag,
   NodeExtension,
+  nonChainable,
+  NonChainableCommandFunction,
   OnSetOptionsParameter,
+  ProsemirrorPlugin,
+  StateUpdateLifecycleParameter,
 } from '@remirror/core';
 import { TextSelection } from '@remirror/pm/state';
 import {
@@ -19,6 +24,7 @@ import {
   deleteRow,
   deleteTable,
   fixTables,
+  fixTablesKey,
   mergeCells,
   setCellAttr,
   splitCell,
@@ -58,14 +64,28 @@ export class TableExtension extends NodeExtension<TableOptions> {
 
   readonly tags = [ExtensionTag.BlockNode];
 
+  /**
+   * The last known good state that didn't need fixing. This helps make the fix
+   * command more effective.
+   */
+  #lastGoodState?: EditorState = undefined;
+
   createNodeSpec(extra: ApplySchemaAttributes): TableSchemaSpec {
     return createTableNodeSchema(extra).table;
+  }
+
+  onStateUpdate(parameter: StateUpdateLifecycleParameter): void {
+    const { tr, state } = parameter;
+
+    if (tr?.getMeta(fixTablesKey).fixTables) {
+      this.#lastGoodState = state;
+    }
   }
 
   /**
    * Add the table plugins to the editor.
    */
-  createExternalPlugins() {
+  createExternalPlugins(): ProsemirrorPlugin[] {
     return [tableEditing(), columnResizing({})];
   }
 
@@ -87,13 +107,12 @@ export class TableExtension extends NodeExtension<TableOptions> {
         const offset = tr.selection.anchor + 1;
         const nodes = createTable({ schema: state.schema, ...parameter });
 
-        if (dispatch) {
-          tr.replaceSelectionWith(nodes).scrollIntoView();
-          const resolvedPos = tr.doc.resolve(offset);
-
-          tr.setSelection(TextSelection.near(resolvedPos));
-          dispatch(tr);
-        }
+        dispatch?.(
+          tr
+            .replaceSelectionWith(nodes)
+            .scrollIntoView()
+            .setSelection(TextSelection.near(tr.doc.resolve(offset))),
+        );
 
         return true;
       },
@@ -173,15 +192,19 @@ export class TableExtension extends NodeExtension<TableOptions> {
 
       /**
        * Fix all tables within the document.
+       *
+       * This is a **non-chainable** command.
        */
-      fixTables: () => fixTablesCommand,
+      fixTables: (): NonChainableCommandFunction =>
+        nonChainable(fixTablesCommand(this.#lastGoodState)),
     };
   }
 
   createHelpers() {
     return {
       /**
-       * Enable table usage within the editor. This depends on the editor.
+       * Enable table usage within the editor. This depends on the browser that
+       * is being used.
        */
       enableTableSupport: () => {
         if (tablesEnabled) {
@@ -198,7 +221,7 @@ export class TableExtension extends NodeExtension<TableOptions> {
   /**
    * This managers the updates of the collaboration provider.
    */
-  protected onSetOptions(parameter: OnSetOptionsParameter<TableOptions>) {
+  protected onSetOptions(parameter: OnSetOptionsParameter<TableOptions>): void {
     const { changes } = parameter;
 
     // TODO move this into a new method in `plugins-extension`.
@@ -254,18 +277,23 @@ export class TableHeaderCellExtension extends NodeExtension {
   }
 }
 
-function fixTablesCommand({ state, dispatch }: CommandFunctionParameter) {
-  const tr = fixTables(state);
+/**
+ * The command for fixing the tables.
+ */
+function fixTablesCommand(lastGoodState?: EditorState): CommandFunction {
+  return ({ state, dispatch }) => {
+    const tr = fixTables(state, lastGoodState);
 
-  if (!tr) {
-    return false;
-  }
+    if (!tr) {
+      return false;
+    }
 
-  if (dispatch) {
-    dispatch(tr);
-  }
+    if (dispatch) {
+      dispatch(tr);
+    }
 
-  return true;
+    return true;
+  };
 }
 
 function toggleMergeCellCommand({ state, dispatch }: CommandFunctionParameter) {
