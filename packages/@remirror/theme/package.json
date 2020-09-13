@@ -24,7 +24,7 @@
     "@babel/runtime": "^7.11.0",
     "@remirror/core-types": "1.0.0-next.34",
     "case-anything": "^1.1.1",
-    "linaria": "^2.0.0-rc.1",
+    "linaria": "^2.0.0-rc.3",
     "open-color": "^1.7.0",
     "type-fest": "^0.16.0"
   },

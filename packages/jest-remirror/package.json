@@ -27,7 +27,7 @@
     "@remirror/pm": "1.0.0-next.34",
     "@remirror/preset-core": "1.0.0-next.34",
     "@testing-library/dom": "^7.23.0",
-    "@types/sanitize-html": "^1.23.3",
+    "@types/sanitize-html": "^1.27.0",
     "jest-prosemirror": "1.0.0-next.34",
     "jest-snapshot": "^26.4.2",
     "mutationobserver-shim": "^0.3.7",

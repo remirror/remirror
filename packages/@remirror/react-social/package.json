@@ -34,7 +34,7 @@
     "@remirror/theme": "1.0.0-next.34",
     "@types/classnames": "^2.2.10",
     "classnames": "^2.2.6",
-    "linaria": "^2.0.0-rc.1",
+    "linaria": "^2.0.0-rc.3",
     "multishift": "1.0.0-next.34",
     "type-fest": "^0.16.0"
   },
