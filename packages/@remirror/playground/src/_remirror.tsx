@@ -33,6 +33,7 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
   'remirror/extension/italic': require('remirror/extension/italic'),
   'remirror/extension/link': require('remirror/extension/link'),
   'remirror/extension/mention': require('remirror/extension/mention'),
+  'remirror/extension/mention-atom': require('remirror/extension/mention-atom'),
   'remirror/extension/paragraph': require('remirror/extension/paragraph'),
   'remirror/extension/placeholder': require('remirror/extension/placeholder'),
   'remirror/extension/position-tracker': require('remirror/extension/position-tracker'),
@@ -57,6 +58,7 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
   remirror: require('remirror'),
   'remirror/core': require('remirror/core'),
   'remirror/react': require('remirror/react'),
+  'remirror/react/hooks': require('remirror/react'),
   'remirror/react/social': require('remirror/react/social'),
   'remirror/react/wysiwyg': require('remirror/react/wysiwyg'),
   '@remirror/dev': require('@remirror/dev'),
@@ -92,7 +94,7 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
 export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> = [
   {
     moduleName: 'remirror/extension/annotation',
-    exports: ['AnnotationExtension'],
+    exports: ['AnnotationExtension', 'createCenteredAnnotationPositioner'],
   },
   {
     moduleName: 'remirror/extension/auto-link',
@@ -183,6 +185,10 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
     exports: ['MentionExtension'],
   },
   {
+    moduleName: 'remirror/extension/mention-atom',
+    exports: ['MentionAtomExtension'],
+  },
+  {
     moduleName: 'remirror/extension/paragraph',
     exports: ['ParagraphExtension'],
   },
@@ -197,20 +203,27 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
   {
     moduleName: 'remirror/extension/positioner',
     exports: [
+      'isEmptyBlockNode',
       'Positioner',
       'PositionerExtension',
       'centeredSelectionPositioner',
       'cursorPopupPositioner',
+      'emptyCoords',
       'emptyVirtualPosition',
       'floatingSelectionPositioner',
       'getPositioner',
       'hasStateChanged',
-      'isEmptyBlockNode',
     ],
   },
   {
     moduleName: 'remirror/extension/react-component',
-    exports: ['PortalContainer', 'ReactComponentExtension', 'RemirrorPortals'],
+    exports: [
+      'PortalContainer',
+      'ReactComponentExtension',
+      'RemirrorPortals',
+      'usePortalContext',
+      'usePortals',
+    ],
   },
   {
     moduleName: 'remirror/extension/react-ssr',
