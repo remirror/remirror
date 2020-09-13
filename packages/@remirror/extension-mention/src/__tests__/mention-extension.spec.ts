@@ -123,7 +123,7 @@ describe('`createSuggesters`', () => {
     }
   });
 
-  const { add, doc, p, mention, view } = create(options, onChange);
+  const { add, doc, p, mention, view, editor } = create(options, onChange);
   const mentionMark = mention({ id, label, name: 'at' });
 
   it('should support exits', () => {
@@ -139,7 +139,9 @@ describe('`createSuggesters`', () => {
   it('can split mentions', () => {
     const splitMention = mention({ id: '123', label: '@123', name: 'at' });
 
-    add(doc(p(splitMention('@1<cursor>23')))).insertText(` `);
+    add(doc(p(splitMention('@1<cursor>23'))));
+
+    editor.insertText(' ');
     expect(view.state).toContainRemirrorDocument(
       p(mention({ id: '1', label: '@1', name: 'at' })('@1'), ' 23'),
     );
@@ -147,7 +149,7 @@ describe('`createSuggesters`', () => {
 
   it('removes invalid mentions', () => {
     const splitMention = mention({ id: '123', label: '@123', name: 'at' });
-    add(doc(p(splitMention('@<cursor>123')))).insertText(` `);
+    add(doc(p(splitMention('@<cursor>123')))).insertText(' ');
 
     expect(view.state).toContainRemirrorDocument(p('@ 123'));
   });

@@ -5,6 +5,7 @@ import {
   ErrorConstant,
   extensionDecorator,
   ExtensionTag,
+  FromToParameter,
   getMarkRange,
   getMatchString,
   Handler,
@@ -47,7 +48,12 @@ import {
 export interface MentionOptions
   extends Pick<
     Suggester,
-    'invalidNodes' | 'validNodes' | 'invalidMarks' | 'validMarks' | 'isValidPosition'
+    | 'invalidNodes'
+    | 'validNodes'
+    | 'invalidMarks'
+    | 'validMarks'
+    | 'isValidPosition'
+    | 'disableDecorations'
   > {
   /**
    * Provide a custom tag for the mention
@@ -79,12 +85,6 @@ export interface MentionOptions
    * @default 'span'
    */
   suggestTag?: string;
-
-  /**
-   * When true, decorations are not created when this mention is first being
-   * created or edited.
-   */
-  disableDecorations?: boolean;
 
   /**
    * Called whenever a suggestion becomes active or changes in any way.
@@ -354,13 +354,21 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
       /**
        * Remove the mention(s) at the current selection or provided range.
        */
-      removeMention: ({ range }: Partial<RangeParameter> = {}) =>
-        removeMark({ type: this.type, expand: true, range }),
+      removeMention: ({ range }: Partial<RangeParameter> = {}) => {
+        const value = removeMark({ type: this.type, expand: true, range });
+
+        return value;
+      },
     };
 
     return commands;
   }
 
+  /**
+   * Manages the paste rules for the mention.
+   *
+   * It creates regex tests for each of the configured matchers.
+   */
   createPasteRules(): ProsemirrorPlugin[] {
     return this.options.matchers.map((matcher) => {
       const { startOfLine, char, supportedCharacters, name, matchOffset } = {
@@ -376,6 +384,8 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
             startOfLine,
             supportedCharacters,
             captureChar: true,
+            caseInsensitive: false,
+            multiline: false,
           }).source
         })`,
         'g',
@@ -397,6 +407,8 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
    * Create the suggesters from the matchers that were passed into the editor.
    */
   createSuggesters(): Suggester[] {
+    let cachedRange: FromToParameter | undefined;
+
     const options = pick(this.options, [
       'invalidMarks',
       'invalidNodes',
@@ -421,10 +433,10 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
 
           this.options.onChange(parameter, command);
         },
-        checkNextValidSelection: ($pos) => {
+        checkNextValidSelection: ($pos, tr) => {
           const range = getMarkRange($pos, this.type);
 
-          if (!range) {
+          if (!range || (range.from === cachedRange?.from && range.to === cachedRange?.to)) {
             return;
           }
 
@@ -443,9 +455,12 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
             return;
           }
 
+          // Cache the range value to avoid duplicating the update and preventing
+          // the history plugin from working.
+          cachedRange = range;
+
           // Remove the mention since it is not valid
-          const { removeMention } = this.store.commands;
-          removeMention({ range });
+          this.store.chain.custom(tr).removeMention({ range }).restore();
         },
       };
     });

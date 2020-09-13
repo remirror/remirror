@@ -6,8 +6,6 @@ import { createCoreManager } from '@remirror/testing';
 
 import { MentionAtomExtension } from '..';
 
-console.log(MentionAtomExtension.instanceName);
-
 extensionValidityTest(MentionAtomExtension, { matchers: [] });
 
 describe('schema', () => {
