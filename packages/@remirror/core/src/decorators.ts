@@ -55,7 +55,7 @@ interface DefaultOptionsParameter<Options extends Shape = EmptyShape> {
    * #### `null` union
    *
    * If you don't mind using nulls in your code then this might appeal to you.
-   *   *
+   *
    * ```ts
    * interface Options {
    *   optional?: string | null;

@@ -29,7 +29,7 @@ export class AttributesExtension extends PlainExtension {
    *
    * @internal
    */
-  onCreate() {
+  onCreate(): void {
     this.transformAttributes();
     this.store.setExtensionStore('updateAttributes', this.updateAttributes);
   }
@@ -47,13 +47,13 @@ export class AttributesExtension extends PlainExtension {
     this.#attributeList = [];
     this.#attributeObject = object();
 
-    for (const extension of this.store.extensions) {
+    extensionLoop: for (const extension of this.store.extensions) {
       if (
         !extension.createAttributes ||
         this.store.managerSettings.exclude?.attributes ||
         extension.options.exclude?.attributes
       ) {
-        continue;
+        continue extensionLoop;
       }
 
       // Inserted at the start of the list so that when combining the full

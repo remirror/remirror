@@ -3,6 +3,7 @@ import { entries, invariant, isEmptyArray, object, uniqueArray } from '@remirror
 import type {
   AnyFunction,
   CommandFunction,
+  CommandFunctionParameter,
   DispatchFunction,
   EditorSchema,
   EmptyShape,
@@ -57,6 +58,10 @@ export class CommandsExtension extends PlainExtension {
    * [[`KeymapExtension`]].
    */
   get transaction(): Transaction {
+    if (this.#customTransaction) {
+      return this.#customTransaction;
+    }
+
     // Make sure we have the most up to date state.
     const state = this.store.getState();
 
@@ -100,6 +105,11 @@ export class CommandsExtension extends PlainExtension {
    */
   #transaction?: Transaction;
 
+  /**
+   * Sometimes you need some custom transactions.
+   */
+  #customTransaction?: Transaction;
+
   onCreate(): void {
     const { setExtensionStore, setStoreKey } = this.store;
 
@@ -113,6 +123,14 @@ export class CommandsExtension extends PlainExtension {
 
     // Enable retrieval of the current transaction.
     setExtensionStore('getTransaction', () => this.transaction);
+
+    // Enable retrieval of the command parameter.
+    setExtensionStore('getCommandParameter', () => ({
+      tr: this.transaction,
+      dispatch: this.store.view.dispatch,
+      state: this.store.view.state,
+      view: this.store.view,
+    }));
   }
 
   onView(view: EditorView<EditorSchema>): void {
@@ -150,7 +168,12 @@ export class CommandsExtension extends PlainExtension {
    * Update the cached transaction whenever the state is updated.
    */
   onStateUpdate({ state }: StateUpdateLifecycleParameter): void {
+    this.#customTransaction = undefined;
     this.#transaction = state.tr;
+  }
+
+  createHelpers() {
+    return {};
   }
 
   /**
@@ -169,24 +192,37 @@ export class CommandsExtension extends PlainExtension {
       customDispatch(command: CommandFunction): CommandFunction {
         return command;
       },
+
       /**
        * Create a custom transaction.
        *
-       * @param transactionUpdater - callback method for updating the
-       * transaction in the editor. Since transactions are mutable there is no
-       * return type.
+       * Use the command at the beginning of the command chain to override the
+       * shared transaction.
+       *
+       * There are times when you want to be sure of the transaction which is
+       * being updated.
+       *
+       * To restore the previous transaction call the `restore` chained method.
+       *
+       * @param tr - the transaction to set
        *
        * @remarks
        *
-       * This is primarily intended for use within a chainable command chain.
+       * This is only intended for use within a chainable command chain.
+       *
+       * You **MUST** call the `restore` command after using this to prevent
+       * cryptic errors.
        */
-      customTransaction(transactionUpdater: (transaction: Transaction) => void): CommandFunction {
-        return ({ tr, dispatch }) => {
-          if (dispatch) {
-            transactionUpdater(tr);
-            dispatch(tr);
-          }
+      custom: (tr: Transaction): CommandFunction => {
+        return () => {
+          this.#customTransaction = tr;
+          return true;
+        };
+      },
 
+      restore: (): CommandFunction => {
+        return () => {
+          this.#customTransaction = undefined;
           return true;
         };
       },
@@ -650,6 +686,11 @@ declare global {
       getTransaction: () => Transaction;
 
       /**
+       * A short hand way of getting the `view`, `state`, `tr` and `dispatch` methods.
+       */
+      getCommandParameter: () => Required<CommandFunctionParameter>;
+
+      /**
        * A property containing all the available commands in the editor.
        *
        * This should only be accessed after the `onView` lifecycle method
@@ -682,14 +723,14 @@ declare global {
        * const MyExtension = ExtensionFactory.plain({
        *   name: 'myExtension',
        *   version: '1.0.0',
-       *   createCommands: ({ commands }) => {
+       *   createCommands: () => {
        *     // This will throw since it can only be called within the returned methods.
-       *     const c = commands(); // ❌
+       *     const chain = this.store.chain; // ❌
        *
        *     return {
        *       // This is good 😋
        *       haveFun() {
-       *         return ({ state, dispatch }) => commands().insertText('fun!'); ✅
+       *         return ({ state, dispatch }) => this.store.chain.insertText('fun!').run(); ✅
        *       },
        *     }
        *   }
@@ -717,6 +758,10 @@ declare global {
      * extension.
      */
     interface BuiltinCommands {
+      commands: CommandsExtension;
+    }
+
+    interface BuiltinHelpers {
       commands: CommandsExtension;
     }
   }

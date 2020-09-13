@@ -3,6 +3,7 @@ import type { CustomHandler } from '@remirror/core-types';
 import {
   addSuggester,
   getSuggestPluginState,
+  removeSuggester,
   suggest,
   Suggester,
   SuggestState,
@@ -42,6 +43,14 @@ export class SuggestExtension extends PlainExtension<SuggestOptions> {
   onCreate(): void {
     const suggesters: Suggester[] = [];
 
+    this.store.setExtensionStore('addSuggester', (suggester) =>
+      addSuggester(this.store.getState(), suggester),
+    );
+
+    this.store.setExtensionStore('removeSuggester', (suggester) =>
+      removeSuggester(this.store.getState(), suggester),
+    );
+
     for (const extension of this.store.extensions) {
       if (
         // Manager settings excluded this from running
@@ -76,6 +85,10 @@ export class SuggestExtension extends PlainExtension<SuggestOptions> {
     return {
       /**
        * Get the suggest plugin state.
+       *
+       * This may be removed at a later time.
+       *
+       * @experimental
        */
       getSuggestState: () => this.getState(),
 
@@ -89,9 +102,19 @@ export class SuggestExtension extends PlainExtension<SuggestOptions> {
           removeIgnored,
           ignoreNextExit,
           setMarkRemoved,
+          findMatchAtPosition,
+          findNextTextSelection,
         } = this.getState();
 
-        return { addIgnored, clearIgnored, removeIgnored, ignoreNextExit, setMarkRemoved };
+        return {
+          addIgnored,
+          clearIgnored,
+          removeIgnored,
+          ignoreNextExit,
+          setMarkRemoved,
+          findMatchAtPosition,
+          findNextTextSelection,
+        };
       },
 
       /**
@@ -140,6 +163,18 @@ declare global {
 
     interface BuiltinHelpers {
       suggest: SuggestExtension;
+    }
+
+    interface ExtensionStore {
+      /**
+       * Add a suggester.
+       */
+      addSuggester(suggester: Suggester): void;
+
+      /**
+       * Remove a suggester.
+       */
+      removeSuggester(suggester: Suggester | string): void;
     }
   }
 }
