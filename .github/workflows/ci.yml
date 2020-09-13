@@ -246,6 +246,10 @@ jobs:
       fail-fast: false
 
     steps:
+      ## TODO remove this hack once playwright version updated.
+      - name: install ffmpeg
+        run: sudo apt-get install ffmpeg
+
       - name: checkout code repository
         uses: actions/checkout@v2
         with:
