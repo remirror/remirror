@@ -77,7 +77,7 @@ export class TableExtension extends NodeExtension<TableOptions> {
   onStateUpdate(parameter: StateUpdateLifecycleParameter): void {
     const { tr, state } = parameter;
 
-    if (tr?.getMeta(fixTablesKey).fixTables) {
+    if (tr?.getMeta(fixTablesKey)?.fixTables) {
       this.#lastGoodState = state;
     }
   }

@@ -1,10 +1,10 @@
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
+import { fromHtml, toHtml } from 'remirror/core';
+import { BoldExtension } from 'remirror/extension/bold';
+import { createCoreManager } from 'remirror/preset/core';
 
-import { fromHtml, toHtml } from '@remirror/core';
-import { createCoreManager } from '@remirror/testing';
-
-import { TablePreset } from '..';
+import { TablePreset } from '../../dist/preset-table.cjs';
 
 describe('schema', () => {
   const { schema } = createCoreManager([new TablePreset()]);
@@ -41,12 +41,10 @@ function create() {
 
 describe('commands', () => {
   const setup = () => {
-    const {
-      commands,
-      view,
-      add,
-      nodes: { doc, p, table, tableRow: row, tableCell: cell, tableHeaderCell: header },
-    } = create();
+    const editor = create();
+
+    const { commands, view, add } = editor;
+    const { doc, p, table, tableRow: row, tableCell: cell, tableHeaderCell: header } = editor.nodes;
 
     const build = (...rows: string[][]) => {
       // Ensure that all rows have same length
@@ -56,6 +54,7 @@ describe('commands', () => {
     };
 
     return {
+      editor,
       commands,
       view,
       add,
@@ -146,4 +145,35 @@ describe('commands', () => {
 
     expect(view.state.doc).toEqualRemirrorDocument(doc(p()));
   });
+
+  describe('createTable', () => {
+    it('can create a table', () => {
+      const { build, add, view, commands, doc, p } = setup();
+
+      add(doc(p('text<cursor>')));
+      expect(commands.createTable.isEnabled()).toBe(true);
+      commands.createTable({ columnsCount: 2, rowsCount: 2, withHeaderRow: false });
+
+      expect(view.state.doc).toEqualRemirrorDocument(doc(p('text'), build(['', ''], ['', ''])));
+    });
+
+    it('does not create with an active selection', () => {
+      const { add, view, commands, doc, p } = setup();
+
+      add(doc(p('<start>text<end>')));
+      expect(commands.createTable.isEnabled()).toBe(false);
+      commands.createTable({ columnsCount: 2, rowsCount: 2, withHeaderRow: false });
+
+      expect(view.state.doc).toEqualRemirrorDocument(doc(p('text')));
+    });
+  });
+});
+
+// Test to replicate https://github.com/remirror/remirror/issues/677
+test('it can be run with other commands', () => {
+  const editor = renderEditor([new BoldExtension(), new TablePreset()]);
+  const { doc, p } = editor.nodes;
+  editor.add(doc(p('<start>hello<end>')));
+
+  expect(() => editor.commands.toggleBold()).not.toThrow();
 });

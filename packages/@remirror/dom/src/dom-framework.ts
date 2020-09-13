@@ -71,7 +71,7 @@ export class DomFramework<Combined extends AnyCombinedUnion> extends Framework<
    * Responsible for managing state updates.
    */
   protected updateState(parameter: UpdateStateParameter<SchemaFromCombined<Combined>>): void {
-    const { state, tr, triggerChange = true } = parameter;
+    const { state, tr, transactions, triggerChange = true } = parameter;
 
     // Update the internal prosemirror state. This happens before we update
     // the component's copy of the state.
@@ -81,7 +81,7 @@ export class DomFramework<Combined extends AnyCombinedUnion> extends Framework<
       this.onChange({ state, tr });
     }
 
-    this.manager.onStateUpdate({ previousState: this.previousState, state });
+    this.manager.onStateUpdate({ previousState: this.previousState, state, tr, transactions });
   }
 
   get domOutput(): DomFrameworkOutput<Combined> {
