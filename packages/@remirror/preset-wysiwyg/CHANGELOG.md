@@ -1,5 +1,14 @@
 # @remirror/preset-wysiwyg
 
+## 1.0.0-next.36
+
+> 2020-09-13
+
+### Patch Changes
+
+- Updated dependencies [[`0876a5cc`](https://github.com/remirror/remirror/commit/0876a5cc8cedb1f99e72ab7684b5478b3402b9e7)]:
+  - @remirror/preset-table@1.0.0-next.36
+
 ## 1.0.0-next.35
 
 > 2020-09-13

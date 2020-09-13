@@ -1,5 +1,13 @@
 # @remirror/extension-tables
 
+## 1.0.0-next.36
+
+> 2020-09-13
+
+### Patch Changes
+
+- [`0876a5cc`](https://github.com/remirror/remirror/commit/0876a5cc8cedb1f99e72ab7684b5478b3402b9e7) [#678](https://github.com/remirror/remirror/pull/678) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix broken `TableExtension` lifecycle method for `onStateUpdate`. Fixes #677.
+
 ## 1.0.0-next.35
 
 > 2020-09-13

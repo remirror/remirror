@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-wysiwyg",
-  "version": "1.0.0-next.35",
+  "version": "1.0.0-next.36",
   "description": "The `remirror` what-you-see-is-what-you-get (wysiwyg) editing experience.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react-wysiwyg",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react-wysiwyg",
@@ -26,7 +26,7 @@
     "@remirror/extension-auto-link": "1.0.0-next.35",
     "@remirror/i18n": "1.0.0-next.35",
     "@remirror/preset-social": "1.0.0-next.35",
-    "@remirror/preset-wysiwyg": "1.0.0-next.35",
+    "@remirror/preset-wysiwyg": "1.0.0-next.36",
     "@remirror/react-utils": "1.0.0-next.35",
     "@remirror/theme": "1.0.0-next.35",
     "@types/classnames": "^2.2.10",
