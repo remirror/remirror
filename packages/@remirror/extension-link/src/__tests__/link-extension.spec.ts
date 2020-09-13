@@ -55,6 +55,7 @@ describe('schema', () => {
     it('sets the extra attributes', () => {
       expect(schema.marks.link.spec.attrs).toEqual({
         href: {},
+        auto: { default: false },
         title: { default: null },
         custom: { default: 'failure' },
       });
@@ -74,6 +75,7 @@ describe('schema', () => {
         custom: { default: 'failure' },
         title: { default: null },
         href: {},
+        auto: { default: false },
       });
     });
 
@@ -95,7 +97,7 @@ describe('schema', () => {
 });
 
 function create(options: LinkOptions = {}) {
-  const linkExtension = new LinkExtension({ selectTextOnClick: options.selectTextOnClick });
+  const linkExtension = new LinkExtension(options);
 
   if (options.onActivateLink) {
     linkExtension.addHandler('onActivateLink', options.onActivateLink);
@@ -312,5 +314,82 @@ describe('plugin', () => {
       .callback(({ start, end }) => {
         expect({ start, end }).toEqual({ start: 1, end: 5 });
       });
+  });
+});
+
+describe('autolinking', () => {
+  const editor = create({ autoLink: true });
+  const { doc, p } = editor.nodes;
+  const { link } = editor.attributeMarks;
+
+  it('can auto link', () => {
+    editor.add(doc(p('<cursor>'))).insertText('test.co');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//test.co' })('test.co'))),
+    );
+
+    editor.insertText('m');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//test.com' })('test.com'))),
+    );
+  });
+
+  it('updates the autolink on each change', () => {
+    editor
+      .add(doc(p('<cursor>')))
+      .insertText('test.com')
+      .selectText(8)
+      .insertText(' roo');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//test.co' })('test.co'), ' room')),
+    );
+  });
+
+  it('supports deleting selected to to invalidate the match', () => {
+    editor
+      .add(doc(p('<cursor>')))
+      .insertText('test.com')
+      .selectText({ head: 7, anchor: 9 })
+      .forwardDelete();
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('test.c')));
+  });
+
+  it('supports backspace deletes to invalidate the match', () => {
+    editor
+      .add(doc(p('<cursor>')))
+      .insertText('test.com')
+      .backspace(2);
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('test.c')));
+  });
+
+  it('can respond to `Enter` key presses', () => {
+    editor
+      .add(doc(p('<cursor>')))
+      .insertText('test.cool')
+      .selectText(8)
+      .press('Enter')
+      .insertText('co');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//test.co' })('test.co')), p('cool')),
+    );
+  });
+
+  it('can respond to `Enter` key presses with only one letter', () => {
+    editor
+      .add(doc(p('<cursor>')))
+      .insertText('test.coo')
+      .selectText(8)
+      .press('Enter')
+      .insertText('co');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//test.co' })('test.co')), p('coo')),
+    );
   });
 });

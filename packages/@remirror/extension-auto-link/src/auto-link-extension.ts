@@ -31,6 +31,8 @@ import { ReplaceStep } from '@remirror/pm/transform';
  * `@remirror/extension-link` in that it wraps any url like string as a mark.
  *
  * It's inspired by the behavior of social sites like `twitter`.
+ *
+ * @deprecated - Use `remirror/extension-link` instead.
  */
 @extensionDecorator<AutoLinkOptions>({
   defaultOptions: {
@@ -216,6 +218,9 @@ export interface UrlUpdateHandlerParameter {
  */
 export type DefaultProtocol = 'http:' | 'https:' | '';
 
+/**
+ * @deprecated - Use `remirror/extension-link` instead.
+ */
 export interface AutoLinkOptions {
   /**
    * The regex matcher for matching against the RegExp. The matcher must capture
