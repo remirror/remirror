@@ -1,5 +1,30 @@
 # @remirror/react
 
+## 1.0.0-next.35
+
+> 2020-09-13
+
+### Patch Changes
+
+- [`725df02b`](https://github.com/remirror/remirror/commit/725df02b53fa16b9c7a3768b0c9464e739e35813) [#672](https://github.com/remirror/remirror/pull/672) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Reduce bundle size by updating babel configuration thanks to help from [preconstruct/preconstruct/297](https://github.com/preconstruct/preconstruct/issues/297#issuecomment-690964802). [Fixes #358](https://github.com/remirror/remirror/issues/358).
+
+* [`4fee3e94`](https://github.com/remirror/remirror/commit/4fee3e9400dd5557ddb24f6256e6d7219cef34ec) [#676](https://github.com/remirror/remirror/pull/676) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add `chainableEditorState` which makes the `EditorState` chainable with a shared transaction. Also set the `@remirror/pm` entry point to export types and utility methods. This is now used in the core libraries.
+
+- [`f9760792`](https://github.com/remirror/remirror/commit/f9760792c887a24336cb0a3777e1b47f6ac87ad3) [#676](https://github.com/remirror/remirror/pull/676) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Upgrade linaria and other dependencies
+
+- Updated dependencies [[`34b0f0b3`](https://github.com/remirror/remirror/commit/34b0f0b3c502e5c43712085b9d0da4f4168797aa), [`1b6b2922`](https://github.com/remirror/remirror/commit/1b6b2922cdc83d5a426cf43d3ad9540c18b799d9), [`725df02b`](https://github.com/remirror/remirror/commit/725df02b53fa16b9c7a3768b0c9464e739e35813), [`4fee3e94`](https://github.com/remirror/remirror/commit/4fee3e9400dd5557ddb24f6256e6d7219cef34ec), [`f9760792`](https://github.com/remirror/remirror/commit/f9760792c887a24336cb0a3777e1b47f6ac87ad3)]:
+  - @remirror/core@1.0.0-next.35
+  - @remirror/extension-placeholder@1.0.0-next.35
+  - @remirror/extension-positioner@1.0.0-next.35
+  - @remirror/extension-react-component@1.0.0-next.35
+  - @remirror/extension-react-ssr@1.0.0-next.35
+  - @remirror/i18n@1.0.0-next.35
+  - @remirror/pm@1.0.0-next.35
+  - @remirror/preset-core@1.0.0-next.35
+  - @remirror/preset-react@1.0.0-next.35
+  - @remirror/react-utils@1.0.0-next.35
+  - @remirror/theme@1.0.0-next.35
+
 ## 1.0.0-next.34
 
 > 2020-09-10

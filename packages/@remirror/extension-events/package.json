@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-events",
-  "version": "1.0.0-next.34",
+  "version": "1.0.0-next.35",
   "description": "Manage your remirror editor dom events.",
   "keywords": [
     "remirror",
@@ -27,13 +27,13 @@
     "@babel/runtime": "^7.11.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.34",
-    "@remirror/pm": "1.0.0-next.34",
+    "@remirror/core": "1.0.0-next.35",
+    "@remirror/pm": "1.0.0-next.35",
     "@testing-library/dom": "^7.23.0"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.34",
-    "@remirror/pm": "1.0.0-next.34"
+    "@remirror/core": "1.0.0-next.35",
+    "@remirror/pm": "1.0.0-next.35"
   },
   "publishConfig": {
     "access": "public"

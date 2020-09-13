@@ -1,5 +1,30 @@
 # @remirror/extension-auto-link
 
+## 1.0.0-next.35
+
+> 2020-09-13
+
+### Patch Changes
+
+- [`2a43f303`](https://github.com/remirror/remirror/commit/2a43f3035856f6a6f6ce00938321a40b745b223b) [#676](https://github.com/remirror/remirror/pull/676) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix auto-link extension regex when used with a slash. Fixes #673.
+
+* [`725df02b`](https://github.com/remirror/remirror/commit/725df02b53fa16b9c7a3768b0c9464e739e35813) [#672](https://github.com/remirror/remirror/pull/672) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Reduce bundle size by updating babel configuration thanks to help from [preconstruct/preconstruct/297](https://github.com/preconstruct/preconstruct/issues/297#issuecomment-690964802). [Fixes #358](https://github.com/remirror/remirror/issues/358).
+
+- [`ffa36163`](https://github.com/remirror/remirror/commit/ffa36163f7bd41409a32dd1fbec90f85da74bb5b) [#676](https://github.com/remirror/remirror/pull/676) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add support for `autoLink` in `LinkExtension`. The option defaults to false and must be turned on. This is intended to replace the `AutoLinkExtension`.
+
+  ```ts
+  import { LinkExtension } from 'remirror/extension-link';
+
+  const link = new LinkExtension({ autoLink: true });
+
+  // Or you can turn it on and off during run time.
+  link.setOptions({ autoLink: true });
+  ```
+
+- Updated dependencies [[`34b0f0b3`](https://github.com/remirror/remirror/commit/34b0f0b3c502e5c43712085b9d0da4f4168797aa), [`1b6b2922`](https://github.com/remirror/remirror/commit/1b6b2922cdc83d5a426cf43d3ad9540c18b799d9), [`725df02b`](https://github.com/remirror/remirror/commit/725df02b53fa16b9c7a3768b0c9464e739e35813), [`4fee3e94`](https://github.com/remirror/remirror/commit/4fee3e9400dd5557ddb24f6256e6d7219cef34ec), [`f9760792`](https://github.com/remirror/remirror/commit/f9760792c887a24336cb0a3777e1b47f6ac87ad3)]:
+  - @remirror/core@1.0.0-next.35
+  - @remirror/pm@1.0.0-next.35
+
 ## 1.0.0-next.34
 
 > 2020-09-10

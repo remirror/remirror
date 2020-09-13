@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-epic-mode",
-  "version": "1.0.0-next.34",
+  "version": "1.0.0-next.35",
   "description": "Epic (power) mode extension for the remirror wysiwyg editor.",
   "keywords": [
     "remirror",
@@ -32,12 +32,12 @@
     "@babel/runtime": "^7.11.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.34",
-    "@remirror/pm": "1.0.0-next.34"
+    "@remirror/core": "1.0.0-next.35",
+    "@remirror/pm": "1.0.0-next.35"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.34",
-    "@remirror/pm": "1.0.0-next.34"
+    "@remirror/core": "1.0.0-next.35",
+    "@remirror/pm": "1.0.0-next.35"
   },
   "publishConfig": {
     "access": "public"

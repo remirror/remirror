@@ -1,5 +1,39 @@
 # @remirror/preset-wysiwyg
 
+## 1.0.0-next.35
+
+> 2020-09-13
+
+### Patch Changes
+
+- [`725df02b`](https://github.com/remirror/remirror/commit/725df02b53fa16b9c7a3768b0c9464e739e35813) [#672](https://github.com/remirror/remirror/pull/672) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Reduce bundle size by updating babel configuration thanks to help from [preconstruct/preconstruct/297](https://github.com/preconstruct/preconstruct/issues/297#issuecomment-690964802). [Fixes #358](https://github.com/remirror/remirror/issues/358).
+
+- Updated dependencies [[`34b0f0b3`](https://github.com/remirror/remirror/commit/34b0f0b3c502e5c43712085b9d0da4f4168797aa), [`273db89f`](https://github.com/remirror/remirror/commit/273db89f923000e42b010a4c00f2a15a0d1d9685), [`1b6b2922`](https://github.com/remirror/remirror/commit/1b6b2922cdc83d5a426cf43d3ad9540c18b799d9), [`725df02b`](https://github.com/remirror/remirror/commit/725df02b53fa16b9c7a3768b0c9464e739e35813), [`4fee3e94`](https://github.com/remirror/remirror/commit/4fee3e9400dd5557ddb24f6256e6d7219cef34ec), [`ffa36163`](https://github.com/remirror/remirror/commit/ffa36163f7bd41409a32dd1fbec90f85da74bb5b), [`f9760792`](https://github.com/remirror/remirror/commit/f9760792c887a24336cb0a3777e1b47f6ac87ad3), [`b155ff47`](https://github.com/remirror/remirror/commit/b155ff47c14f24618a5a503d38b495aef5bc0b69)]:
+  - @remirror/core@1.0.0-next.35
+  - @remirror/preset-table@1.0.0-next.35
+  - @remirror/extension-bidi@1.0.0-next.35
+  - @remirror/extension-blockquote@1.0.0-next.35
+  - @remirror/extension-bold@1.0.0-next.35
+  - @remirror/extension-code@1.0.0-next.35
+  - @remirror/extension-code-block@1.0.0-next.35
+  - @remirror/extension-drop-cursor@1.0.0-next.35
+  - @remirror/extension-epic-mode@1.0.0-next.35
+  - @remirror/extension-gap-cursor@1.0.0-next.35
+  - @remirror/extension-hard-break@1.0.0-next.35
+  - @remirror/extension-heading@1.0.0-next.35
+  - @remirror/extension-horizontal-rule@1.0.0-next.35
+  - @remirror/extension-image@1.0.0-next.35
+  - @remirror/extension-italic@1.0.0-next.35
+  - @remirror/extension-link@1.0.0-next.35
+  - @remirror/extension-search@1.0.0-next.35
+  - @remirror/extension-strike@1.0.0-next.35
+  - @remirror/extension-trailing-node@1.0.0-next.35
+  - @remirror/extension-underline@1.0.0-next.35
+  - @remirror/pm@1.0.0-next.35
+  - @remirror/preset-core@1.0.0-next.35
+  - @remirror/preset-embed@1.0.0-next.35
+  - @remirror/preset-list@1.0.0-next.35
+
 ## 1.0.0-next.34
 
 > 2020-09-10
