@@ -1,6 +1,6 @@
 {
   "name": "@remirror/dom",
-  "version": "1.0.0-next.35",
+  "version": "1.0.0-next.36",
   "description": "Use remirror directly in the dom.",
   "keywords": [
     "remirror",

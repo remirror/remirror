@@ -1,6 +1,6 @@
 {
   "name": "remirror",
-  "version": "1.0.0-next.35",
+  "version": "1.0.0-next.36",
   "description": "One editing package to rule them all, one editing package to find them.",
   "keywords": [
     "prosemirror",
@@ -42,7 +42,7 @@
     "@remirror/core-helpers": "1.0.0-next.35",
     "@remirror/core-types": "1.0.0-next.35",
     "@remirror/core-utils": "1.0.0-next.35",
-    "@remirror/dom": "1.0.0-next.35",
+    "@remirror/dom": "1.0.0-next.36",
     "@remirror/extension-annotation": "1.0.0-next.35",
     "@remirror/extension-auto-link": "1.0.0-next.35",
     "@remirror/extension-bidi": "1.0.0-next.35",
@@ -84,13 +84,13 @@
     "@remirror/preset-list": "1.0.0-next.35",
     "@remirror/preset-react": "1.0.0-next.35",
     "@remirror/preset-social": "1.0.0-next.35",
-    "@remirror/preset-table": "1.0.0-next.35",
-    "@remirror/preset-wysiwyg": "1.0.0-next.35",
+    "@remirror/preset-table": "1.0.0-next.36",
+    "@remirror/preset-wysiwyg": "1.0.0-next.36",
     "@remirror/react": "1.0.0-next.35",
     "@remirror/react-hooks": "1.0.0-next.35",
     "@remirror/react-social": "1.0.0-next.35",
     "@remirror/react-utils": "1.0.0-next.35",
-    "@remirror/react-wysiwyg": "1.0.0-next.35",
+    "@remirror/react-wysiwyg": "1.0.0-next.36",
     "@remirror/theme": "1.0.0-next.35"
   },
   "devDependencies": {
