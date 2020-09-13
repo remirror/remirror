@@ -34,7 +34,7 @@
     "@remirror/preset-core": "1.0.0-next.34",
     "@remirror/preset-react": "1.0.0-next.34",
     "@remirror/react": "1.0.0-next.34",
-    "@testing-library/react": "^10.4.9",
+    "@testing-library/react": "^11.0.2",
     "@types/min-document": "^2.19.0",
     "jest-diff": "^26.4.2",
     "min-document": "^2.19.0"

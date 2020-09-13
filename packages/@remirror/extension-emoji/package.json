@@ -41,7 +41,7 @@
   "devDependencies": {
     "@remirror/core": "1.0.0-next.34",
     "@remirror/pm": "1.0.0-next.34",
-    "emojibase-data": "^5.0.1"
+    "emojibase-data": "^6.0.0"
   },
   "peerDependencies": {
     "@remirror/core": "1.0.0-next.34",
