@@ -5,9 +5,10 @@ import {
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
-  toggleList,
 } from '@remirror/core';
-import { wrappingInputRule } from '@remirror/pm/inputrules';
+import { InputRule, wrappingInputRule } from '@remirror/pm/inputrules';
+
+import { toggleList } from './list-commands';
 
 /**
  * Creates the node for a bullet list.
@@ -44,7 +45,7 @@ export class BulletListExtension extends NodeExtension {
     };
   }
 
-  createInputRules() {
+  createInputRules(): InputRule[] {
     return [wrappingInputRule(/^\s*([*+-])\s$/, this.type)];
   }
 }
