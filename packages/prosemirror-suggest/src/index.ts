@@ -43,6 +43,7 @@ export {
   isJumpReason,
   isMove,
   isRemovedReason,
+  isSelectionChangeReason,
   isSelectionExitReason,
   isSplitReason,
   isValidMatch,
@@ -50,6 +51,7 @@ export {
 } from './suggest-predicates';
 
 export {
+  findFromSuggesters,
   createRegexFromSuggester,
   getSuggesterWithDefaults,
   DEFAULT_SUGGESTER,

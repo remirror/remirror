@@ -144,10 +144,25 @@ function findMatch<Schema extends EditorSchema = EditorSchema>(
   parameter: FindMatchParameter<Schema>,
 ): SuggestMatch<Schema> | undefined {
   const { $pos, suggester } = parameter;
-  const { char, name, startOfLine, supportedCharacters, matchOffset } = suggester;
+  const {
+    char,
+    name,
+    startOfLine,
+    supportedCharacters,
+    matchOffset,
+    multiline,
+    caseInsensitive,
+  } = suggester;
 
   // Create the regular expression to match the text against
-  const regexp = createRegexFromSuggester({ char, matchOffset, startOfLine, supportedCharacters });
+  const regexp = createRegexFromSuggester({
+    char,
+    matchOffset,
+    startOfLine,
+    supportedCharacters,
+    multiline,
+    caseInsensitive,
+  });
 
   // All the text in the current node
   const text = $pos.doc.textBetween($pos.before(), $pos.end(), NULL_CHARACTER, NULL_CHARACTER);
@@ -300,7 +315,7 @@ function findExitReason<Schema extends EditorSchema = EditorSchema>(
   const updatedPrevious = recheckMatch({ match, state });
 
   // Exit created a split
-  if (!updatedPrevious || updatedPrevious.query.full !== match.query.full) {
+  if (!updatedPrevious || updatedPrevious.text.full !== match.text.full) {
     return createInsertReason({ prev: match, next: updatedPrevious, state });
   }
 
@@ -557,12 +572,8 @@ export function findFromSuggesters<Schema extends EditorSchema = EditorSchema>(
 
       // Break early and return the match which was found.
     } catch {
-      // This log is kept here even though it should probably be removed. It
-      // should not happen, so if it does, please open an issue and a use case
-      // for replication.
-      console.error(
-        'If you see this message then something went wrong internally. Please open an issue with the steps you took when it happened.',
-      );
+      // Captures any errors which can pop up when all the content in the editor
+      // is deleted or an invalid position was provided.
     }
   }
 
@@ -603,17 +614,8 @@ export function getCharAsRegex(char: RegExp | string): RegExp {
 }
 
 interface CreateRegexFromSuggesterParameter
-  extends Pick<
-    Required<Suggester>,
-    'startOfLine' | 'char' | 'supportedCharacters' | 'matchOffset'
-  > {
-  /**
-   * Flags applied to the regex matcher.
-   *
-   * @default 'gm'
-   */
-  flags?: string;
-
+  extends Pick<Required<Suggester>, 'startOfLine' | 'char' | 'supportedCharacters' | 'matchOffset'>,
+    Pick<Suggester, 'multiline' | 'caseInsensitive'> {
   /**
    * Whether to capture the `char character as the first capture group.
    *
@@ -632,9 +634,11 @@ export function createRegexFromSuggester(parameter: CreateRegexFromSuggesterPara
     matchOffset,
     startOfLine,
     supportedCharacters,
-    flags = 'gm',
     captureChar = true,
+    caseInsensitive = false,
+    multiline = false,
   } = parameter;
+  const flags = `g${multiline ? 'm' : ''}${caseInsensitive ? 'i' : ''}`;
   let charRegex = getCharAsRegex(char).source;
 
   if (captureChar) {
@@ -654,6 +658,7 @@ export function createRegexFromSuggester(parameter: CreateRegexFromSuggesterPara
  * The default value for the suggester.
  */
 export const DEFAULT_SUGGESTER: PickPartial<Suggester<any>> = {
+  appendTransaction: false,
   priority: 50,
   ignoredTag: 'span',
   matchOffset: 0,
@@ -672,6 +677,8 @@ export const DEFAULT_SUGGESTER: PickPartial<Suggester<any>> = {
   isValidPosition: () => true,
   checkNextValidSelection: null,
   emptySelectionsOnly: false,
+  caseInsensitive: false,
+  multiline: false,
 };
 
 /**

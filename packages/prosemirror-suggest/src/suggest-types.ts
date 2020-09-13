@@ -46,6 +46,18 @@ export interface Suggester<Schema extends EditorSchema = EditorSchema> {
   name: string;
 
   /**
+   * Set this to true so that the onChange handler is called in the
+   * `appendTransaction` prosemirror update handler rather than in the view
+   * update handler.
+   *
+   * This tends to work better with updates that are run multiple times while
+   * preserving the redo/undo history stack.
+   *
+   * @default false
+   */
+  appendTransaction?: boolean;
+
+  /**
    * Called whenever a suggester becomes active or changes in any way.
    *
    * @remarks
@@ -215,7 +227,7 @@ export interface Suggester<Schema extends EditorSchema = EditorSchema> {
    *
    * By default `prosemirror-suggest` is a backward looking solution to the
    * suggestions problem. It check backwards from the current cursor position to
-   * see if any text matches any of the configured selections. For the majority
+   * see if any text matches any of the configured suggesters. For the majority
    * of use cases this is perfectly acceptable behaviour.
    *
    * However, [#639](https://github.com/remirror/remirror/issues/639) shows that
@@ -225,12 +237,14 @@ export interface Suggester<Schema extends EditorSchema = EditorSchema> {
    * of the mention mark.
    *
    * This method hopefully makes it easier to do this. You can add a function
-   * here which is run every time the view updates and provides you with the
-   * next valid match.
+   * here which is run every time the view updates and has a valid `next` text
+   * position and provides you with the next valid match.
+   *
+   * This is called after the `onChange` handler calls.
    *
    * @default null
    */
-  checkNextValidSelection?: CheckNextValidSelection | null;
+  checkNextValidSelection?: CheckNextValidSelection<Schema> | null;
 
   /**
    * Whether this suggester should only be valid for empty selections.
@@ -238,6 +252,21 @@ export interface Suggester<Schema extends EditorSchema = EditorSchema> {
    * @default false
    */
   emptySelectionsOnly?: boolean;
+
+  /**
+   * Whether the match should be case insensitive and ignore the case. This adds
+   * the `i` flag to the regex used.
+   *
+   * @default false
+   */
+  caseInsensitive?: boolean;
+
+  /**
+   * When true support matches across multiple lines.
+   *
+   * @default false
+   */
+  multiline?: boolean;
 }
 
 /**
@@ -245,10 +274,17 @@ export interface Suggester<Schema extends EditorSchema = EditorSchema> {
  *
  * It is called for all registered suggesters before any of the onChange
  * handlers are fired.
+ *
+ * @param $pos - the next valid position that supports text selections.
+ * @param tr - the transaction that can be mutated when `appendTransaction` is
+ * set to true.
+ * @param matches - the possibly undefined exit and change matcher names. These
+ * can be used to check if the name matches the current suggester.
  */
 export type CheckNextValidSelection<Schema extends EditorSchema = EditorSchema> = (
   $pos: ResolvedPos<Schema>,
-  state: EditorState<Schema>,
+  tr: Transaction<Schema>,
+  matches: { change?: string; exit?: string },
 ) => void;
 
 /**
@@ -662,18 +698,23 @@ export interface ReasonParameter {
  * model in TypeScript without complicating all dependent types.
  */
 export interface SuggestChangeHandlerParameter<Schema extends EditorSchema = EditorSchema>
-  extends SuggestMatch<Schema>,
+  extends SuggestMatchWithReason<Schema>,
     EditorViewParameter<Schema>,
     SuggestIgnoreParameter,
-    ReasonParameter,
     SuggestMarkParameter,
     Pick<Suggester<Schema>, 'name' | 'char'> {}
 
 /**
  * The type signature of the `onChange` handler method.
+ *
+ * @param changeDetails - all the information related to the change that caused
+ * this to be called.
+ * @param tr - the transaction that can be updated when `appendTransaction` is
+ * set to true.
  */
 export type SuggestChangeHandler<Schema extends EditorSchema = EditorSchema> = (
-  parameter: SuggestChangeHandlerParameter<Schema>,
+  changeDetails: SuggestChangeHandlerParameter<Schema>,
+  tr: Transaction<Schema>,
 ) => void;
 
 export interface SuggesterParameter<Schema extends EditorSchema = EditorSchema> {

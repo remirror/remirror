@@ -1,4 +1,5 @@
 import { createEditor, doc, h1, p, strong } from 'jest-prosemirror';
+import { Transaction } from 'prosemirror-state';
 
 import { addSuggester, suggest } from '../suggest-plugin';
 import type { SuggestChangeHandler } from '../suggest-types';
@@ -81,6 +82,7 @@ describe('suggester', () => {
             query: { full: '123', partial: '123' },
             range: { from: 1, cursor: 5, to: 5 },
           }),
+          expect.any(Transaction),
         );
       });
   });
@@ -154,11 +156,12 @@ describe('suggester', () => {
 
     const editor = createEditor(doc(p('<cursor>')), { plugins: [plugin] })
       .insertText('@abc')
-      .jumpTo(3)
+      .selectText(3)
       .callback(() => {
         expect(onChange).toHaveBeenCalledTimes(5);
         expect(onChange).toHaveBeenLastCalledWith(
           expect.objectContaining({ changeReason: ChangeReason.Move }),
+          expect.any(Transaction),
         );
         expect(exit).not.toHaveBeenCalled();
       })
@@ -173,6 +176,7 @@ describe('suggester', () => {
             range: { from: 4, cursor: 5, to: 7 },
             changeReason: ChangeReason.Start,
           }),
+          expect.any(Transaction),
         );
       });
 
@@ -181,7 +185,7 @@ describe('suggester', () => {
 
     editor
       .insertText('@abc')
-      .jumpTo('start')
+      .selectText('start')
       .callback(() => {
         expect(exit).toHaveBeenLastCalledWith(ExitReason.MoveStart, {
           from: 7,
@@ -508,7 +512,8 @@ describe('checkNextValidSelection', () => {
 
     expect(mocks.checkNextValidSelection).toHaveBeenCalledWith(
       expect.objectContaining({ pos: 7 }),
-      expect.any(Object),
+      expect.any(Transaction),
+      { change: undefined, exit: undefined },
     );
   });
 

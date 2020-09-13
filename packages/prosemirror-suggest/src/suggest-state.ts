@@ -1,4 +1,4 @@
-import { PluginKey, Selection } from 'prosemirror-state';
+import { PluginKey, Selection, TextSelection } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
 import { bool, isFunction, isString, object, sort } from '@remirror/core-helpers';
@@ -17,6 +17,7 @@ import type {
   EditorStateParameter,
   EditorView,
   RemoveIgnoredParameter,
+  ResolvedPos,
   ResolvedPosParameter,
   SuggestChangeHandlerParameter,
   Suggester,
@@ -84,6 +85,11 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    * Lets us know whether the most recent change was to remove a mention.
    */
   #removed = false;
+
+  /**
+   * This is true when the last change was caused by a transaction being appended via this plugin.
+   */
+  #lastChangeFromAppend = false;
 
   /**
    * The set of all decorations.
@@ -183,8 +189,11 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
     return true;
   }
 
-  private updateWithNextSelection() {
-    const { doc, selection } = this.view.state;
+  /**
+   * Find the next text selection from the current selection.
+   */
+  readonly findNextTextSelection = (selection: Selection<Schema>): TextSelection<Schema> | void => {
+    const doc = selection.$from.doc;
 
     // Make sure the position doesn't exceed the bounds of the document.
     const pos = Math.min(doc.nodeSize - 2, selection.to + 1);
@@ -197,30 +206,57 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
     // Ignore non-text selections and null / undefined values. This is needed
     // for TS mainly, since the `true` in the `Selection.findFrom` method means
     // only `TextSelection` instances will be returned.
-    if (!isTextSelection(nextSelection)) {
+    if (!isTextSelection<Schema>(nextSelection)) {
+      return;
+    }
+
+    return nextSelection;
+  };
+
+  /**
+   * Update all the suggesters with the next valid selection. This is called
+   * within the `appendTransaction` ProseMirror method before any of the change
+   * handlers are called.
+   *
+   * @internal
+   */
+  updateWithNextSelection(tr: Transaction<Schema>): void {
+    // Get the position furthest along in the editor to pass back to suggesters
+    // which have the handler.
+    const nextSelection = this.findNextTextSelection(tr.selection);
+
+    if (!nextSelection) {
       return;
     }
 
     // Update every suggester with a method attached.
     for (const suggester of this.#suggesters) {
-      suggester.checkNextValidSelection?.(nextSelection.$from, this.view.state);
+      const change = this.#handlerMatches.change?.suggester.name;
+      const exit = this.#handlerMatches.exit?.suggester.name;
+
+      suggester.checkNextValidSelection?.(nextSelection.$from, tr, { change, exit });
     }
   }
 
   /**
-   * Manages the view updates.
+   * Call the `onChange` handlers.
+   *
+   * @internal
    */
-  private onViewUpdate() {
+  changeHandler(tr: Transaction<Schema>, appendTransaction: boolean): void {
     const { change, exit } = this.#handlerMatches;
     const match = this.match;
 
-    // Notify all suggesters of the next valid text selection.
-    this.updateWithNextSelection();
-
     // Cancel update when a suggester isn't active
     if ((!change && !exit) || !isValidMatch(match)) {
-      // TODO - when not active do a look forward to check the next position and
-      // call the handler with the position. This will be used to
+      return;
+    }
+
+    const shouldRunExit =
+      appendTransaction === exit?.suggester.appendTransaction && this.shouldRunExit();
+    const shouldRunChange = appendTransaction === change?.suggester.appendTransaction;
+
+    if (!shouldRunExit && !shouldRunChange) {
       return;
     }
 
@@ -228,8 +264,8 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
     // later in the document. This is so that changes don't affect previous
     // positions.
     if (change && exit && isJumpReason({ change, exit })) {
-      const exitParameters = this.createParameter(exit);
-      const changeParameters = this.createParameter(change);
+      const exitDetails = this.createParameter(exit);
+      const changeDetails = this.createParameter(change);
 
       // Whether the jump was forwards or backwards. A forwards jump means that
       // the user was within a suggester nearer the beginning of the document,
@@ -239,23 +275,26 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
       if (movedForwards) {
         // Subtle change to call exit first. Conceptually it happens before the
         // change so call the handler before the change handler.
-        this.shouldRunExit() && exit.suggester.onChange(exitParameters);
-        change.suggester.onChange(changeParameters);
+        shouldRunExit && exit.suggester.onChange(exitDetails, tr);
+        shouldRunChange && change.suggester.onChange(changeDetails, tr);
       } else {
-        this.shouldRunExit() && exit.suggester.onChange(exitParameters);
-        change.suggester.onChange(changeParameters);
+        shouldRunExit && exit.suggester.onChange(exitDetails, tr);
+        shouldRunChange && change.suggester.onChange(changeDetails, tr);
       }
 
-      this.#removed = false;
+      if (shouldRunExit) {
+        this.#removed = false;
+      }
+
       return;
     }
 
-    if (change) {
-      change.suggester.onChange(this.createParameter(change));
+    if (change && shouldRunChange) {
+      change.suggester.onChange(this.createParameter(change), tr);
     }
 
-    if (exit && this.shouldRunExit()) {
-      exit.suggester.onChange(this.createParameter(exit));
+    if (exit && shouldRunExit) {
+      exit.suggester.onChange(this.createParameter(exit), tr);
       this.#removed = false;
 
       if (isInvalidSplitReason(exit.exitReason)) {
@@ -264,6 +303,8 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
         this.#handlerMatches = object();
       }
     }
+
+    return;
   }
 
   /**
@@ -406,6 +447,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
     this.#handlerMatches = object();
     this.#next = undefined;
     this.#removed = false;
+    this.#lastChangeFromAppend = false;
   }
 
   /**
@@ -426,6 +468,21 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
     // Store the matches with reasons
     this.#handlerMatches = findReason({ next: this.#next, prev: this.#prev, state, $pos });
   }
+
+  /**
+   * A helper method to check is a match exists for the provided suggester name
+   * at the provided position.
+   */
+  readonly findMatchAtPosition = (
+    $pos: ResolvedPos<Schema>,
+    name?: string,
+  ): SuggestMatch<Schema> | undefined => {
+    const suggesters = name
+      ? this.#suggesters.filter((suggester) => suggester.name === name)
+      : this.#suggesters;
+
+    return findFromSuggesters({ suggesters, $pos, docChanged: false, selectionEmpty: true });
+  };
 
   /**
    * Add a new suggest or replace it if it already exists.
@@ -457,15 +514,6 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
     this.clearIgnored(name);
   }
 
-  /**
-   * Used to handle the view property of the plugin spec.
-   */
-  viewHandler(): { update: () => void } {
-    return {
-      update: this.onViewUpdate.bind(this),
-    };
-  }
-
   toJSON(): SuggestMatch<Schema> | undefined {
     return this.match;
   }
@@ -476,6 +524,11 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    * @param - params
    */
   apply(parameter: TransactionParameter<Schema> & EditorStateParameter<Schema>): this {
+    if (this.#lastChangeFromAppend) {
+      this.#lastChangeFromAppend = false;
+      return this;
+    }
+
     const { tr, state } = parameter;
     const { exit } = this.#handlerMatches;
     const transactionHasChanged = tr.docChanged || tr.selectionSet;
@@ -533,11 +586,20 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
             to,
             {
               nodeName: suggestTag,
-              class: name ? `${suggestClassName} ${suggestClassName}-${name}` : suggestClassName,
+              class: name ? `${suggestClassName} suggest-${name}` : suggestClassName,
             },
             { name },
           ),
         ]);
+  }
+
+  /**
+   * Set that the last change was caused by an appended transaction.
+   *
+   * @internal
+   */
+  setLastChangeFromAppend() {
+    this.#lastChangeFromAppend = true;
   }
 }
 interface UpdateReasonsParameter<Schema extends EditorSchema = EditorSchema>

@@ -62,7 +62,15 @@ export function suggest<Schema extends EditorSchema = EditorSchema>(
 
     // Handle the plugin view
     view: (view) => {
-      return pluginState.init(view).viewHandler();
+      // Initialize the state with the required view before it is used.
+      pluginState.init(view);
+
+      return {
+        update: (view) => {
+          // console.log('VIEW_UPDATE', { content: view.state.doc.textContent });
+          return pluginState.changeHandler(view.state.tr, false);
+        },
+      };
     },
 
     state: {
@@ -73,8 +81,29 @@ export function suggest<Schema extends EditorSchema = EditorSchema>(
 
       // Apply changes to the state
       apply: (tr, _pluginState, _oldState, state) => {
+        // console.log('APPLY', { content: tr.doc.textContent });
         return pluginState.apply({ tr, state });
       },
+    },
+
+    /** Append a transaction via the onChange handlers */
+    appendTransaction: (_, __, state) => {
+      const tr = state.tr;
+      // console.log('APPEND_TRANSACTION', { content: tr.doc.textContent });
+
+      // Run the transaction updater for the next selection.
+      pluginState.updateWithNextSelection(tr);
+
+      // Run the change handler.
+      pluginState.changeHandler(tr, true);
+
+      // Check if the transaction has been amended in any way.
+      if (tr.docChanged || tr.steps.length > 0 || tr.selectionSet || tr.storedMarksSet) {
+        pluginState.setLastChangeFromAppend();
+        return tr;
+      }
+
+      return null;
     },
 
     props: {

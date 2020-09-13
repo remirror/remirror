@@ -18,7 +18,7 @@ import { ChangeReason, ExitReason } from './suggest-types';
 export function isChange<Schema extends EditorSchema = EditorSchema>(
   compare: Partial<CompareMatchParameter<Schema>>,
 ): compare is CompareMatchParameter<Schema> {
-  return !!(compare.prev && compare.next && compare.prev.query.full !== compare.next.query.full);
+  return !!(compare.prev && compare.next && compare.prev.text.full !== compare.next.text.full);
 }
 
 /**
@@ -92,6 +92,19 @@ export function isSelectionExitReason(
   value: unknown,
 ): value is typeof selectionExitReasons[number] {
   return includes(selectionExitReasons, value);
+}
+
+const selectionChangeReasons = [
+  ChangeReason.JumpBackward,
+  ChangeReason.JumpForward,
+  ChangeReason.Move,
+  ChangeReason.SelectionInside,
+] as const;
+
+export function isSelectionChangeReason(
+  value: unknown,
+): value is typeof selectionChangeReasons[number] {
+  return includes(selectionChangeReasons, value);
 }
 
 /**
