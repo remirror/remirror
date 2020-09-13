@@ -1,5 +1,25 @@
 # jest-prosemirror
 
+## 1.0.0-next.35
+
+> 2020-09-13
+
+### Minor Changes
+
+- [`f1b8fc46`](https://github.com/remirror/remirror/commit/f1b8fc46a56877c1b7274f19e808901f9716e25e) [#676](https://github.com/remirror/remirror/pull/676) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Cleanup matchers.
+
+### Patch Changes
+
+- [`725df02b`](https://github.com/remirror/remirror/commit/725df02b53fa16b9c7a3768b0c9464e739e35813) [#672](https://github.com/remirror/remirror/pull/672) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Reduce bundle size by updating babel configuration thanks to help from [preconstruct/preconstruct/297](https://github.com/preconstruct/preconstruct/issues/297#issuecomment-690964802). [Fixes #358](https://github.com/remirror/remirror/issues/358).
+
+- Updated dependencies [[`1b6b2922`](https://github.com/remirror/remirror/commit/1b6b2922cdc83d5a426cf43d3ad9540c18b799d9), [`725df02b`](https://github.com/remirror/remirror/commit/725df02b53fa16b9c7a3768b0c9464e739e35813), [`4fee3e94`](https://github.com/remirror/remirror/commit/4fee3e9400dd5557ddb24f6256e6d7219cef34ec)]:
+  - @remirror/core-utils@1.0.0-next.35
+  - @remirror/core-constants@1.0.0-next.35
+  - @remirror/core-helpers@1.0.0-next.35
+  - @remirror/core-types@1.0.0-next.35
+  - @remirror/pm@1.0.0-next.35
+  - test-keyboard@1.0.0-next.35
+
 ## 1.0.0-next.34
 
 > 2020-09-10

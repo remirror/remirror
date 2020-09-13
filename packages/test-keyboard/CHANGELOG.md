@@ -1,5 +1,15 @@
 # test-keyboard
 
+## 1.0.0-next.35
+
+> 2020-09-13
+
+### Patch Changes
+
+- Updated dependencies [[`725df02b`](https://github.com/remirror/remirror/commit/725df02b53fa16b9c7a3768b0c9464e739e35813), [`4fee3e94`](https://github.com/remirror/remirror/commit/4fee3e9400dd5557ddb24f6256e6d7219cef34ec)]:
+  - @remirror/core-helpers@1.0.0-next.35
+  - @remirror/core-types@1.0.0-next.35
+
 ## 1.0.0-next.34
 
 > 2020-09-10
