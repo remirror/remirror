@@ -19,6 +19,7 @@ import {
   markPasteRule,
   MarkType,
   MarkTypeParameter,
+  ProsemirrorPlugin,
   Static,
   TransactionParameter,
 } from '@remirror/core';
@@ -33,7 +34,7 @@ import { ReplaceStep } from '@remirror/pm/transform';
  */
 @extensionDecorator<AutoLinkOptions>({
   defaultOptions: {
-    urlRegex: /((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/.*)?)/gi,
+    urlRegex: /((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/\S*)?)/gi,
     defaultProtocol: '',
   },
   defaultPriority: ExtensionPriority.Low,
@@ -78,7 +79,7 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkOptions> {
     };
   }
 
-  createPasteRules() {
+  createPasteRules(): ProsemirrorPlugin[] {
     return [
       markPasteRule({
         regexp: this.options.urlRegex,
