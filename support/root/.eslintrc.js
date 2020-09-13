@@ -310,6 +310,10 @@ let config = {
       },
     },
     {
+      files: ['**/*matchers.ts'],
+      rules: { '@typescript-eslint/explicit-module-boundary-types': 'off' },
+    },
+    {
       files: ['packages/@remirror/playground/**', 'support/e2e/**'],
       rules: { '@typescript-eslint/no-var-requires': 'off' },
     },

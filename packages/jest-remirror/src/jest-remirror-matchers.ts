@@ -4,15 +4,11 @@ import type { TaggedProsemirrorNode } from './jest-remirror-types';
 
 export const remirrorMatchers: jest.ExpectExtendMap = {
   toContainRemirrorDocument(state: EditorState, value: TaggedProsemirrorNode) {
-    const actual = state?.toJSON?.();
     const expected = value?.toJSON?.();
 
     if (!isProsemirrorNode(value)) {
       return {
         pass: false,
-        actual,
-        expected,
-        name: 'toContainRemirrorDocument',
         message: () => 'The expected value should be an instance of ProsemirrorNode.',
       };
     }
@@ -20,9 +16,6 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
     if (!isEditorState(state)) {
       return {
         pass: false,
-        actual,
-        expected,
-        name: 'toContainRemirrorDocument',
         message: () => 'Expected the value passed in to be an EditorState',
       };
     }
@@ -30,14 +23,11 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
     if (value.type.schema !== state.schema) {
       return {
         pass: false,
-        actual,
-        expected,
-        name: 'toContainRemirrorDocument',
         message: () => 'Expected both values to be using the same schema.',
       };
     }
 
-    const pass = this.equals(state.doc.content.child(0).toJSON(), value.toJSON());
+    const pass = this.equals(state.doc.content.child(0).toJSON(), expected);
     const message = pass
       ? () =>
           `${this.utils.matcherHint('.not.toContainRemirrorDocument')}\n\n` +
@@ -59,23 +49,14 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
 
     return {
       pass,
-      actual,
-      expected,
       message,
-      name: 'toContainRemirrorDocument',
     };
   },
 
   toEqualRemirrorDocument(doc: ProsemirrorNode, value: TaggedProsemirrorNode) {
-    const actual = doc?.toJSON?.();
-    const expected = value?.toJSON?.();
-
     if (!isProsemirrorNode(value) || !isProsemirrorNode(doc)) {
       return {
         pass: false,
-        actual,
-        expected: value,
-        name: 'toEqualRemirrorDocument',
         message: () => 'Expected both values to be instance of prosemirror-model Node.',
       };
     }
@@ -83,9 +64,6 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
     if (value.type.schema !== doc.type.schema) {
       return {
         pass: false,
-        actual,
-        expected: value,
-        name: 'toEqualRemirrorDocument',
         message: () => 'Expected both values to be using the same schema.',
       };
     }
@@ -110,10 +88,7 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
 
     return {
       pass,
-      actual,
-      expected,
       message,
-      name: 'toEqualRemirrorDocument',
     };
   },
 };

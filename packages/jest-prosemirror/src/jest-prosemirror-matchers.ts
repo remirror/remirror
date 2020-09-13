@@ -35,22 +35,15 @@ export const prosemirrorMatchers = {
     const expected = to ? to : from;
     const shouldChange = bool(to);
     const { pass, taggedDoc: actual } = apply(from, command, to);
-    const properties = {
-      actual: actual.toJSON(),
-      expected: expected.toJSON(),
-      name: 'toTransformNode',
-    };
 
     if (pass) {
       return {
-        ...properties,
         pass,
         message: transformsNodePassMessage(actual, expected, shouldChange),
       };
     }
 
     return {
-      ...properties,
       pass,
       message: transformsNodeFailMessage(actual, expected, shouldChange),
     };
@@ -83,21 +76,12 @@ export const prosemirrorMatchers = {
       (state, dispatch, view) => command({ state, dispatch, view, tr: state.tr }),
       to,
     );
-    const properties = { actual, expected, name: 'toTransformNode' };
 
     if (pass) {
-      return {
-        ...properties,
-        pass,
-        message: transformsNodePassMessage(actual, expected, shouldChange),
-      };
+      return { pass, message: transformsNodePassMessage(actual, expected, shouldChange) };
     }
 
-    return {
-      ...properties,
-      pass,
-      message: transformsNodeFailMessage(actual, expected, shouldChange),
-    };
+    return { pass, message: transformsNodeFailMessage(actual, expected, shouldChange) };
   },
 
   toEqualProsemirrorNode(
@@ -105,33 +89,31 @@ export const prosemirrorMatchers = {
     actual: TaggedProsemirrorNode,
     expected: TaggedProsemirrorNode,
   ) {
-    const pass = this.equals(actual.toJSON(), expected.toJSON());
+    const actualJSON = actual.toJSON();
+    const expectedJSON = expected.toJSON();
+    const pass = this.equals(actualJSON, expectedJSON);
     const message = pass
       ? () =>
           `${this.utils.matcherHint('.not.toEqualProsemirrorNode')}\n\n` +
           `Expected JSON value of document to not equal:\n  ${this.utils.printExpected(
-            expected,
+            expectedJSON,
           )}\n` +
-          `Actual JSON:\n  ${this.utils.printReceived(actual)}`
+          `Actual JSON:\n  ${this.utils.printReceived(actualJSON)}`
       : () => {
-          const diffString = this.utils.diff(expected, actual, {
+          const diffString = this.utils.diff(expectedJSON, actualJSON, {
             expand: this.expand,
           });
           return (
             `${this.utils.matcherHint('.toEqualProsemirrorNode')}\n\n` +
-            `Expected JSON value of document to equal:\n${this.utils.printExpected(expected)}\n` +
-            `Actual JSON:\n  ${this.utils.printReceived(actual)}` +
+            `Expected JSON value of document to equal:\n${this.utils.printExpected(
+              expectedJSON,
+            )}\n` +
+            `Actual JSON:\n  ${this.utils.printReceived(actualJSON)}` +
             `${diffString ? `\n\nDifference:\n\n${diffString}` : ''}`
           );
         };
 
-    return {
-      pass,
-      actual,
-      expected,
-      message,
-      name: 'toEqualProsemirrorNode',
-    };
+    return { pass, message };
   },
 };
 
