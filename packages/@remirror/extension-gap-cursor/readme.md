@@ -2,12 +2,12 @@
 
 > Enable cursors for difficult to reach parts of the document.
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](#) [![MIT License][license]](#)
 
-[version]: https://flat.badgen.net/npm/v/@remirror/extension-gap-cursor
-[npm]: https://npmjs.com/package/@remirror/extension-gap-cursor
+[version]: https://flat.badgen.net/npm/v/@remirror/extension-gap-cursor/next
+[npm]: https://npmjs.com/package/@remirror/extension-gap-cursor/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/extension-gap-cursor
+[size]: https://bundlephobia.com/result?p=@remirror/extension-gap-cursor@next
 [size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-gap-cursor
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-gap-cursor/red?icon=npm

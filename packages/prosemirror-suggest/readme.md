@@ -2,12 +2,12 @@
 
 > Primitives for building your prosemirror suggestion and autocomplete functionality.
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](#) [![MIT License][license]](#)
 
-[version]: https://flat.badgen.net/npm/v/prosemirror-suggest
-[npm]: https://npmjs.com/package/prosemirror-suggest
+[version]: https://flat.badgen.net/npm/v/prosemirror-suggest/next
+[npm]: https://npmjs.com/package/prosemirror-suggest/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=prosemirror-suggest
+[size]: https://bundlephobia.com/result?p=prosemirror-suggest@next
 [size-badge]: https://flat.badgen.net/bundlephobia/minzip/prosemirror-suggest
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/prosemirror-suggest/red?icon=npm

@@ -2,12 +2,12 @@
 
 > Unleash the inner coder with code blocks for your remirror editor.
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](#) [![MIT License][license]](#)
 
-[version]: https://flat.badgen.net/npm/v/@remirror/extension-code-block
-[npm]: https://npmjs.com/package/@remirror/extension-code-block
+[version]: https://flat.badgen.net/npm/v/@remirror/extension-code-block/next
+[npm]: https://npmjs.com/package/@remirror/extension-code-block/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/extension-code-block
+[size]: https://bundlephobia.com/result?p=@remirror/extension-code-block@next
 [size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-code-block
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-code-block/red?icon=npm

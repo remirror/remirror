@@ -2,12 +2,12 @@
 
 > Create prosemirror node views from your react components
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](#) [![MIT License][license]](#)
 
-[version]: https://flat.badgen.net/npm/v/@remirror/extension-react-component
-[npm]: https://npmjs.com/package/@remirror/extension-react-component
+[version]: https://flat.badgen.net/npm/v/@remirror/extension-react-component/next
+[npm]: https://npmjs.com/package/@remirror/extension-react-component/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/extension-react-component
+[size]: https://bundlephobia.com/result?p=@remirror/extension-react-component@next
 [size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-react-component
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-react-component/red?icon=npm

@@ -2,12 +2,12 @@
 
 > One package to rule them all, one entry point to bind them.
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](#) [![MIT License][license]](#)
 
-[version]: https://flat.badgen.net/npm/v/remirror
-[npm]: https://npmjs.com/package/remirror
+[version]: https://flat.badgen.net/npm/v/remirror/next
+[npm]: https://npmjs.com/package/remirror/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=remirror
+[size]: https://bundlephobia.com/result?p=remirror@next
 [size-badge]: https://flat.badgen.net/bundlephobia/minzip/remirror
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/remirror/red?icon=npm

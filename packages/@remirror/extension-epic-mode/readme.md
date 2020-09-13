@@ -2,12 +2,12 @@
 
 > Epic (power) mode extension for the remirror wysiwyg editor.
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](#) [![MIT License][license]](#)
 
-[version]: https://flat.badgen.net/npm/v/@remirror/extension-epic-mode
-[npm]: https://npmjs.com/package/@remirror/extension-epic-mode
+[version]: https://flat.badgen.net/npm/v/@remirror/extension-epic-mode/next
+[npm]: https://npmjs.com/package/@remirror/extension-epic-mode/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/extension-epic-mode
+[size]: https://bundlephobia.com/result?p=@remirror/extension-epic-mode@next
 [size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-epic-mode
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-epic-mode/red?icon=npm

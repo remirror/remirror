@@ -2,12 +2,12 @@
 
 > TEMPLATE_DESCRIPTION
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](#) [![MIT License][license]](#)
 
-[version]: https://flat.badgen.net/npm/v/@remirror/preset-template
-[npm]: https://npmjs.com/package/@remirror/preset-template
+[version]: https://flat.badgen.net/npm/v/@remirror/preset-template/next
+[npm]: https://npmjs.com/package/@remirror/preset-template/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/preset-template
+[size]: https://bundlephobia.com/result?p=@remirror/preset-template@next
 [size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/preset-template
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/preset-template/red?icon=npm

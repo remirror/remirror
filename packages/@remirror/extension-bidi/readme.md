@@ -2,12 +2,12 @@
 
 > Add automatic bi-directional text support to your remirror editor. Just start typing for the magic.
 
-[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts) ![MIT License][license]
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](#) [![MIT License][license]](#)
 
-[version]: https://flat.badgen.net/npm/v/@remirror/extension-bidi
-[npm]: https://npmjs.com/package/@remirror/extension-bidi
+[version]: https://flat.badgen.net/npm/v/@remirror/extension-bidi/next
+[npm]: https://npmjs.com/package/@remirror/extension-bidi/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/extension-bidi
+[size]: https://bundlephobia.com/result?p=@remirror/extension-bidi@next
 [size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-bidi
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-bidi/red?icon=npm
