@@ -9,7 +9,8 @@ import type {
   ResolvedPos,
   Selection,
   Transaction,
-} from './alias-types';
+} from '@remirror/pm';
+
 import type {
   MakeOptional,
   MarkAttributes,

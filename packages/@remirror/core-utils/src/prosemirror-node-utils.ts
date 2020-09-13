@@ -25,8 +25,6 @@ type NodePredicateParameter = PredicateParameter<NodeWithPosition>;
 
 /**
  * A node with it's start position.
- *
- * @public
  */
 export interface NodeWithPosition extends ProsemirrorNodeParameter, PosParameter {}
 

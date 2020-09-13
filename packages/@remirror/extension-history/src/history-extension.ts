@@ -9,6 +9,7 @@ import {
   isFunction,
   KeyBindings,
   nonChainable,
+  NonChainableCommandFunction,
   PlainExtension,
   ProsemirrorCommandFunction,
   ProsemirrorPlugin,
@@ -154,8 +155,11 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
        * // To prevent this use
        * tr.setMeta(pluginKey, { addToHistory: false })
        * ```
+       *
+       * This command is **non-chainable**.
        */
-      undo: () => nonChainable(this.wrapMethod(undo, this.options.onUndo)),
+      undo: (): NonChainableCommandFunction =>
+        nonChainable(this.wrapMethod(undo, this.options.onUndo)),
 
       /**
        * Redo an action that was in the undo stack.
@@ -163,8 +167,11 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
        * ```ts
        * actions.redo()
        * ```
+       *
+       * This command is **non-chainable**.
        */
-      redo: () => nonChainable(this.wrapMethod(redo, this.options.onRedo)),
+      redo: (): NonChainableCommandFunction =>
+        nonChainable(this.wrapMethod(redo, this.options.onRedo)),
     };
   }
 }

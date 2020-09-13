@@ -1,4 +1,3 @@
-import { ErrorConstant } from '@remirror/core-constants';
 import {
   bool,
   entries,
@@ -12,12 +11,9 @@ import {
 import type {
   AnyFunction,
   AttributesParameter,
-  Brand,
-  CommandFunction,
   EditorSchema,
   EditorState,
   EditorView,
-  EmptyShape,
   Fragment,
   KeyBindingCommandFunction,
   KeyBindings,
@@ -35,7 +31,6 @@ import type {
   ResolvedPos,
   Selection,
   SelectionParameter,
-  Shape,
   Transaction,
   TransactionParameter,
 } from '@remirror/core-types';
@@ -594,72 +589,6 @@ export function schemaToJSON<Nodes extends string = string, Marks extends string
   return {
     nodes,
     marks,
-  };
-}
-
-/**
- * Wraps the default [[ProsemirrorCommandFunction]] and makes it compatible with
- * the default **remirror** [[CommandFunction]] call signature.
- *
- * By default this is non chainable since it uses the `state.tr` rather than the
- * accumulated `tr` property passed into all command functions.
- */
-export function convertCommand<
-  Schema extends EditorSchema = EditorSchema,
-  Extra extends Shape = EmptyShape
->(commandFunction: ProsemirrorCommandFunction<Schema>): NonChainableCommandFunction<Schema, Extra> {
-  return nonChainable(({ state, dispatch, view }) => commandFunction(state, dispatch, view));
-}
-
-/**
- * Brands a command as non chainable so that it can be excluded from the
- * inferred chainable commands.
- */
-export type NonChainableCommandFunction<
-  Schema extends EditorSchema = EditorSchema,
-  Extra extends Shape = EmptyShape
-> = Brand<CommandFunction<Schema, Extra>, 'non-chainable'>;
-
-/**
- * Marks a command function as non chainable. It will throw an error when
- * chaining is attempted.
- *
- * @remarks
- *
- * ```ts
- * const command = nonChainable(({ state, dispatch }) => {...});
- * ```
- */
-export function nonChainable<
-  Schema extends EditorSchema = EditorSchema,
-  Extra extends Shape = EmptyShape
->(commandFunction: CommandFunction<Schema, Extra>): NonChainableCommandFunction<Schema, Extra> {
-  return ((parameter) => {
-    invariant(parameter.dispatch === undefined || parameter.dispatch === parameter.view?.dispatch, {
-      code: ErrorConstant.NON_CHAINABLE_COMMAND,
-    });
-
-    return commandFunction(parameter);
-  }) as NonChainableCommandFunction<Schema, Extra>;
-}
-
-/**
- * Similar to the chainCommands from the `prosemirror-commands` library. Allows
- * multiple commands to be chained together and runs until one of them returns
- * true.
- */
-export function chainCommands<
-  Schema extends EditorSchema = EditorSchema,
-  Extra extends object = object
->(...commands: Array<CommandFunction<Schema, Extra>>): CommandFunction<Schema, Extra> {
-  return ({ state, dispatch, view, tr, ...rest }) => {
-    for (const element of commands) {
-      if (element({ state, dispatch, view, tr, ...(rest as Extra) })) {
-        return true;
-      }
-    }
-
-    return false;
   };
 }
 

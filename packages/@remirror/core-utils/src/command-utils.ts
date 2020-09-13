@@ -3,24 +3,21 @@ import type {
   AttributesParameter,
   CommandFunction,
   CommandFunctionParameter,
-  EditorSchema,
-  EditorState,
   MarkType,
   MarkTypeParameter,
   NodeType,
   NodeTypeParameter,
   ProsemirrorAttributes,
   ProsemirrorCommandFunction,
-  ProsemirrorNode,
   RangeParameter,
+  Selection,
   Transaction,
 } from '@remirror/core-types';
-import { liftListItem, wrapInList } from '@remirror/pm/schema-list';
 import { TextSelection } from '@remirror/pm/state';
 import { findWrapping, liftTarget } from '@remirror/pm/transform';
 
 import { getMarkRange, isMarkType, isNodeType } from './core-utils';
-import { findParentNode, isNodeActive, isSelectionEmpty } from './prosemirror-utils';
+import { isNodeActive, isSelectionEmpty } from './prosemirror-utils';
 
 interface UpdateMarkParameter extends Partial<RangeParameter>, Partial<AttributesParameter> {
   /**
@@ -98,8 +95,6 @@ export function wrapIn(type: NodeType, attrs: ProsemirrorAttributes): CommandFun
  *
  * @param type - the node type to toggle
  * @param attrs - the attrs to use for the node
- *
- * @public
  */
 export function toggleWrap(type: NodeType, attrs: ProsemirrorAttributes = {}): CommandFunction {
   return (parameter) => {
@@ -156,57 +151,6 @@ export function setBlockType(type: NodeType, attrs?: ProsemirrorAttributes): Com
   };
 }
 
-/**
- * TODO make this more inclusive of custom user list types.
- */
-function isList(node: ProsemirrorNode, schema: EditorSchema) {
-  return node.type === schema.nodes.bulletList || node.type === schema.nodes.orderedList;
-}
-
-/**
- * Toggles a list item.
- *
- * @remarks
- *
- * When the provided list wrapper is inactive (e.g. ul) then wrap the list with
- * this type. When it is active then remove the selected line from the list.
- *
- * @param type - the list node type
- * @param itemType - the list item type (must be in the schema)
- */
-export function toggleList(type: NodeType, itemType: NodeType): CommandFunction {
-  return (parameter) => {
-    const { state, dispatch, tr } = parameter;
-    const { schema } = state;
-    const { selection } = tr;
-    const { $from, $to } = selection;
-    const range = $from.blockRange($to);
-
-    if (!range) {
-      return false;
-    }
-
-    const parentList = findParentNode({
-      predicate: (node) => isList(node, schema),
-      selection,
-    });
-
-    if (range.depth >= 1 && parentList && range.depth - parentList.depth <= 1) {
-      if (parentList.node.type === type) {
-        return liftListItem(itemType)(state, dispatch);
-      }
-
-      if (isList(parentList.node, schema) && type.validContent(parentList.node.content)) {
-        dispatch?.(tr.setNodeMarkup(parentList.pos, type));
-
-        return true;
-      }
-    }
-
-    return wrapInList(type)(state, dispatch);
-  };
-}
-
 interface ToggleBlockItemParameter extends NodeTypeParameter, Partial<AttributesParameter> {
   /**
    * The type to toggle back to. Usually this is the paragraph node type.
@@ -218,8 +162,6 @@ interface ToggleBlockItemParameter extends NodeTypeParameter, Partial<Attributes
  * Toggle a block between the provided type and toggleType.
  *
  * @param params - the destructured params
- *
- * @public
  */
 export function toggleBlockItem(toggleParameter: ToggleBlockItemParameter): CommandFunction {
   return (parameter) => {
@@ -272,15 +214,15 @@ export function isChrome(minVersion = 0): boolean {
 
 /**
  * Checks the selection for the current state and updates the active transaction
- * to use this mapped transaction.
+ * to a selection that is consistent with the initial selection.
  *
  * @param state - the editor state before any updates
  * @param tr - the transaction which has been updated and may have impacted the
  * selection.
  */
-function preserveSelection(state: EditorState, tr: Transaction): void {
+export function preserveSelection(selection: Selection, tr: Transaction): void {
   // Get the previous movable part of the cursor selection.
-  let { head } = state.selection;
+  let { head } = selection;
 
   // Map this movable cursor selection through each of the steps that have happened in
   // the transaction.
@@ -289,11 +231,11 @@ function preserveSelection(state: EditorState, tr: Transaction): void {
     head = map.map(head);
   }
 
-  if (state.selection.empty) {
+  if (selection.empty) {
     // Update the transaction with the new text selection.
     tr.setSelection(TextSelection.create(tr.doc, head));
   } else {
-    tr.setSelection(TextSelection.create(tr.doc, state.selection.anchor, head));
+    tr.setSelection(TextSelection.create(tr.doc, selection.anchor, head));
   }
 }
 
@@ -301,8 +243,6 @@ function preserveSelection(state: EditorState, tr: Transaction): void {
  * Replaces text with an optional appended string at the end.
  *
  * @param params - the destructured params
- *
- * @public
  */
 export function replaceText(parameter: ReplaceTextParameter): CommandFunction {
   const {
@@ -344,7 +284,7 @@ export function replaceText(parameter: ReplaceTextParameter): CommandFunction {
     }
 
     if (keepSelection) {
-      preserveSelection(state, tr);
+      preserveSelection(state.selection, tr);
     }
 
     if (dispatch) {
@@ -374,8 +314,6 @@ interface RemoveMarkParameter extends MarkTypeParameter, Partial<RangeParameter<
  * Removes a mark from the current selection or provided range.
  *
  * @param params - the destructured params
- *
- * @public
  */
 export function removeMark(parameter: RemoveMarkParameter): CommandFunction {
   return ({ dispatch, tr }) => {

@@ -1,12 +1,14 @@
+export { nonChainable, convertCommand, chainableEditorState, chainCommands } from '@remirror/pm';
+
 export {
   emptyCommandFunction,
   isChrome,
   lift,
+  preserveSelection,
   removeMark,
   replaceText,
   setBlockType,
   toggleBlockItem,
-  toggleList,
   toggleWrap,
   updateMark,
   wrapIn,
@@ -106,15 +108,12 @@ export { markInputRule, markPasteRule, nodeInputRule, plainInputRule } from './p
 export type {
   FindProsemirrorNodeResult,
   FindSelectedNodeOfType,
-  NonChainableCommandFunction,
   SchemaJSON,
 } from './prosemirror-utils';
 export {
   applyClonedTransaction,
-  chainCommands,
   chainKeyBindingCommands,
   cloneTransaction,
-  convertCommand,
   findElementAtPosition,
   findNodeAtPosition,
   findNodeAtSelection,
@@ -130,7 +129,6 @@ export {
   markEqualsType,
   mergeKeyBindings,
   mergeProsemirrorKeyBindings,
-  nonChainable,
   removeNodeAfter,
   removeNodeAtPosition,
   removeNodeBefore,

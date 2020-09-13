@@ -16,6 +16,7 @@ function readPackage(pkg, context) {
 
   updatePackage({ name: 'serialize-javascript', version: '^4.0.0' });
   updatePackage({ name: 'bl', version: '>=4.0.3' });
+  updatePackage({ name: 'node-fetch', version: '^2.6.1' });
 
   return pkg;
 }

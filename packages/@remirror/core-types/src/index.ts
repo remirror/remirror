@@ -1,6 +1,9 @@
 export type {
+  CommandFunction,
+  CommandFunctionParameter,
   Decoration,
   DecorationSet,
+  DispatchFunction,
   EditorSchema,
   EditorState,
   EditorView,
@@ -11,14 +14,17 @@ export type {
   MarkType,
   NodeType,
   NodeView,
-  ProsemirrorPlugin,
+  NonChainableCommandFunction,
   PluginKey,
+  ProsemirrorCommandFunction,
   ProsemirrorNode,
+  ProsemirrorPlugin,
   ResolvedPos,
   Selection,
   Slice,
   Transaction,
-} from './alias-types';
+} from '@remirror/pm';
+
 export type {
   AcceptUndefined,
   GetAcceptUndefined,
@@ -112,10 +118,6 @@ export type {
 } from './base-types';
 export type {
   AnchorHeadParameter,
-  ChainedCommandFunction,
-  CommandFunction,
-  CommandFunctionParameter,
-  DispatchFunction,
   DOMCompatibleAttributes,
   DOMOutputSpec,
   GetAttributes,
@@ -127,7 +129,6 @@ export type {
   NodeExtensionSpec,
   NodeViewMethod,
   PrimitiveSelection,
-  ProsemirrorCommandFunction,
   ProsemirrorKeyBindings,
   RemirrorContentType,
   RemirrorIdentifierShape,

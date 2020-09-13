@@ -164,14 +164,14 @@ interface PosWithinRangeParameter extends PosParameter, FromToParameter {}
 /**
  * Check if the position is within the range.
  */
-export function posWithinRange({ from, to, pos }: PosWithinRangeParameter) {
+export function posWithinRange({ from, to, pos }: PosWithinRangeParameter): boolean {
   return from <= pos && to >= pos;
 }
 
 /**
  * Check whether the length of an array has changed
  */
-export function lengthHasChanged<Type>(previous: ArrayLike<Type>, next: ArrayLike<Type>) {
+export function lengthHasChanged<Type>(previous: ArrayLike<Type>, next: ArrayLike<Type>): boolean {
   return next.length !== previous.length;
 }
 
@@ -303,9 +303,8 @@ interface FormatCodeBlockFactoryParameter
  * one located at the provided position).
  */
 export function formatCodeBlockFactory(parameter: FormatCodeBlockFactoryParameter) {
-  const { type, formatter, defaultLanguage: fallback } = parameter;
-
   return ({ pos }: Partial<PosParameter> = object()): CommandFunction => ({ state, dispatch }) => {
+    const { type, formatter, defaultLanguage: fallback } = parameter;
     const { tr, selection } = state;
 
     const { from, to } = pos ? { from: pos, to: pos } : selection;

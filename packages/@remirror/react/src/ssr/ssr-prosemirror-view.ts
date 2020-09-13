@@ -19,7 +19,7 @@ export class EditorViewSSR<Schema extends EditorSchema = EditorSchema> {
   root: Document | DocumentFragment;
 
   constructor(
-    place: Node | ((p: Node) => void) | { mount: Node } | undefined,
+    _place: Node | ((p: Node) => void) | { mount: Node } | undefined,
     props: DirectEditorProps<Schema>,
   ) {
     const doc = getDocument('ssr');

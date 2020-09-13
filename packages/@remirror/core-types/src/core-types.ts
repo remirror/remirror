@@ -2,26 +2,21 @@ import type {
   __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
   RemirrorIdentifier,
 } from '@remirror/core-constants';
-import type { MarkSpec, NodeSpec } from '@remirror/pm/model';
-import type { Decoration, NodeView } from '@remirror/pm/view';
-
 import type {
+  CommandFunction,
+  CommandFunctionParameter,
   EditorSchema,
   EditorState,
   EditorView,
+  ProsemirrorCommandFunction,
   ProsemirrorNode,
   Selection,
-  Transaction,
-} from './alias-types';
+} from '@remirror/pm';
+import type { MarkSpec, NodeSpec } from '@remirror/pm/model';
+import type { Decoration, NodeView } from '@remirror/pm/view';
+
 import type { Literal, ObjectMark, ProsemirrorAttributes } from './base-types';
-import type {
-  EditorStateParameter,
-  EditorViewParameter,
-  FromToParameter,
-  MarkWithAttributes,
-  NodeWithAttributes,
-  TransactionParameter,
-} from './parameter-builders';
+import type { FromToParameter, MarkWithAttributes, NodeWithAttributes } from './parameter-builders';
 
 /**
  * A JSON representation of the prosemirror Node.
@@ -76,101 +71,6 @@ export type RemirrorContentType<Schema extends EditorSchema = EditorSchema> =
   | RemirrorJSON
   | ProsemirrorNode<Schema>
   | EditorState<Schema>;
-
-/**
- * Used to apply the Prosemirror transaction to the current {@link EditorState}.
- *
- * @typeParam Schema - the underlying editor schema.
- */
-export type DispatchFunction<Schema extends EditorSchema = EditorSchema> = (
-  tr: Transaction<Schema>,
-) => void;
-
-/**
- * This is the type signature for commands within the prosemirror editor.
- *
- * @remarks
- *
- * A command function takes an editor state and optionally a dispatch function
- * that it can use to dispatch a transaction. It should return a boolean that
- * indicates whether it could perform any action.
- *
- * When no dispatch callback is passed, the command should do a 'dry run',
- * determining whether it is applicable, but not actually performing any action.
- *
- * @typeParam Schema - the underlying editor schema.
- */
-export type ProsemirrorCommandFunction<Schema extends EditorSchema = EditorSchema> = (
-  state: EditorState<Schema>,
-  dispatch: DispatchFunction<Schema> | undefined,
-  view: EditorView<Schema> | undefined,
-) => boolean;
-
-/**
- * A command method for running commands in your editor.
- *
- * @typeParam Schema - the underlying editor schema.
- * @typeParam ExtraParameter - extra parameters to add to the command function.
- *
- * @remarks
- *
- * This groups all the prosemirror command arguments into a single parameter.
- *
- * tldr; When `dispatch=undefined` make sure the command function is **idempotent**.
- *
- * One thing to be aware of is that when creating a command function the
- * `tr` should only be updated when the `dispatch` method is available. This is
- * because by convention calling the command function with `dispatch=undefined`
- * is used to check if the function returns `true`, an indicator that it is
- * enabled, or returns `false` to indicate it is not enabled.
- *
- * If the transaction has been updated outside of the `dispatch=true` condition
- * then running the command again will result in multiple transaction updates
- * and unpredictable behavior.
- *
- * @see {@link ProsemirrorCommandFunction}
- */
-export type CommandFunction<
-  Schema extends EditorSchema = EditorSchema,
-  ExtraParameter extends object = object
-> = (params: CommandFunctionParameter<Schema> & ExtraParameter) => boolean;
-
-/**
- * Chained commands take a transaction and act on it before returning the
- * transaction.
- *
- * @remarks
- *
- * They allow for commands to be chained together before being used to update
- * the state and allow the composition of complex commands. They are
- * automatically created from `CommandFunction`'s by providing a fake dispatch
- * method to the command function which captures the updated `transaction` and
- * passes it onto the next chainable command.
- */
-export type ChainedCommandFunction<Schema extends EditorSchema = EditorSchema> = (
-  transaction: TransactionParameter<Schema>,
-) => void;
-
-/**
- * A parameter builder interface for the remirror `CommandFunction`.
- *
- * @typeParam Schema - the underlying editor schema.
- */
-export interface CommandFunctionParameter<Schema extends EditorSchema = EditorSchema>
-  extends Partial<EditorViewParameter<Schema>>,
-    EditorStateParameter<Schema>,
-    TransactionParameter<Schema> {
-  /**
-   * The dispatch function which causes the command to be performed.
-   *
-   * @remarks
-   *
-   * `dispatch` can be `undefined`. When no `dispatch` callback is provided the
-   * command should perform a 'dry run', determining whether the command is
-   * applicable (`return true`), but not actually performing the action.
-   */
-  dispatch?: DispatchFunction<Schema>;
-}
 
 export interface NextParameter<Schema extends EditorSchema = EditorSchema>
   extends CommandFunctionParameter<Schema> {

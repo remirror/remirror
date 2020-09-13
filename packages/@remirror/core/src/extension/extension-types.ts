@@ -1,7 +1,6 @@
 import type { UnionToIntersection } from 'type-fest';
 
-import type { AnyFunction, StringKey } from '@remirror/core-types';
-import type { NonChainableCommandFunction } from '@remirror/core-utils';
+import type { AnyFunction, NonChainableCommandFunction, StringKey } from '@remirror/core-types';
 
 import type { CommandShape, GetCommands, GetHelpers } from '../types';
 import type { AnyExtension } from './extension-base';
@@ -17,14 +16,14 @@ export interface ExtensionListParameter<ExtensionUnion extends AnyExtension = An
  * A utility type which maps the passed in extension command in an action that
  * is store in the `manager.store.actions.commandName()`.
  */
-type MapToUnchainedCommand<RawCommands extends Record<string, AnyFunction>> = {
+export type MapToUnchainedCommand<RawCommands extends Record<string, AnyFunction>> = {
   [Command in keyof RawCommands]: CommandShape<Parameters<RawCommands[Command]>>;
 };
 
 /**
  * A utility type which maps the chained commands.
  */
-type MapToChainedCommand<RawCommands extends Record<string, AnyFunction>> = {
+export type MapToChainedCommand<RawCommands extends Record<string, AnyFunction>> = {
   [Command in keyof RawCommands]: ReturnType<
     RawCommands[Command]
   > extends NonChainableCommandFunction

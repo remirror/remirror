@@ -167,7 +167,6 @@ describe('getMarkAttributes', () => {
     });
     const { state, schema } = createEditor(doc(p('a link', aHref('linked <cursor>here'))));
 
-    console.log(Object.keys(attributes), Object.keys(getMarkAttributes(state, schema.marks.link)));
     expect(getMarkAttributes(state, schema.marks.link)).toEqual(attributes);
   });
 

@@ -27,8 +27,10 @@ This bundles up the prosemirror libraries into one package to make development a
 This library is a required peer dependency when using remirror in your codebase. You might never need to use it directly, but in case you do, here's a snippet of how to do so.
 
 ```ts
-// Top level (not recommended).
-import { Mark, Node } from '@remirror/pm';
+// Top level provides types and utilities for converting commands.
+import type { EditorSchema } from '@remirror/pm';
+import { chainableEditorState } from '@remirror/pm';
+// Nested imports provides access to the individual prosemirror library exports.
 import { EditorState } from '@remirror/pm/state';
 import { Suggest } from '@remirror/pm/suggest';
 import { View } from '@remirror/pm/view';

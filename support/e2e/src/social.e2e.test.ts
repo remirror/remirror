@@ -170,7 +170,7 @@ describe('Social Showcase', () => {
         await expect(
           textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at')),
         ).rejects.toThrowErrorMatchingInlineSnapshot(
-          `"Error: failed to find element matching selector \\".remirror-editor .mention-at\\""`,
+          `"page.$eval: Error: failed to find element matching selector \\".remirror-editor .mention-at\\""`,
         );
       });
 
@@ -200,7 +200,7 @@ describe('Social Showcase', () => {
         await expect(
           textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at')),
         ).rejects.toThrowErrorMatchingInlineSnapshot(
-          `"Error: failed to find element matching selector \\".remirror-editor .mention-at\\""`,
+          `"page.$eval: Error: failed to find element matching selector \\".remirror-editor .mention-at\\""`,
         );
       });
 

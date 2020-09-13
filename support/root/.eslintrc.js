@@ -27,7 +27,7 @@ let config = {
   ],
 
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2020,
     sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
@@ -35,7 +35,7 @@ let config = {
   },
   settings: {
     react: {
-      version: 'detect',
+      version: 'latest',
     },
   },
   env: {
@@ -186,10 +186,6 @@ let config = {
     ],
     '@typescript-eslint/method-signature-style': 'warn',
     '@typescript-eslint/prefer-function-type': 'error',
-    '@typescript-eslint/no-unused-vars-experimental': [
-      'error',
-      { ignoreArgsIfArgsAfterAreUsed: true },
-    ],
     '@typescript-eslint/array-type': [
       'error',
       { default: 'array-simple', readonly: 'array-simple' },
@@ -342,7 +338,7 @@ if (process.env.FULL_ESLINT_CHECK) {
     '@typescript-eslint/no-misused-promises': 'warn',
     '@typescript-eslint/no-unnecessary-type-assertion': 'error',
     '@typescript-eslint/prefer-nullish-coalescing': [
-      'error',
+      'warn',
       { ignoreConditionalTests: true, ignoreMixedLogicalExpressions: true },
     ],
     '@typescript-eslint/restrict-template-expressions': [
@@ -374,6 +370,10 @@ if (process.env.FULL_ESLINT_CHECK) {
 
       // Turn off conflicting import rules
       'import/order': 'off',
+      '@typescript-eslint/no-unused-vars-experimental': [
+        'error',
+        { ignoreArgsIfArgsAfterAreUsed: true },
+      ],
     },
     overrides: [
       {
@@ -420,6 +420,7 @@ if (process.env.FULL_ESLINT_CHECK) {
           'simple-import-sort/sort': 'warn',
           'unicorn/filename-case': 'off',
           '@typescript-eslint/no-unused-vars-experimental': 'off',
+          '@typescript-eslint/no-unused-vars': 'off',
         },
       },
     ],

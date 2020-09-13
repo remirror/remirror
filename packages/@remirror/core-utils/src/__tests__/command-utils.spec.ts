@@ -1,25 +1,6 @@
-import {
-  atomInline,
-  blockquote,
-  createEditor,
-  doc,
-  h1,
-  li,
-  ol,
-  p,
-  schema,
-  strong,
-  ul,
-} from 'jest-prosemirror';
+import { atomInline, blockquote, createEditor, doc, h1, p, schema, strong } from 'jest-prosemirror';
 
-import {
-  removeMark,
-  replaceText,
-  toggleBlockItem,
-  toggleList,
-  toggleWrap,
-  updateMark,
-} from '../command-utils';
+import { removeMark, replaceText, toggleBlockItem, toggleWrap, updateMark } from '../command-utils';
 
 describe('removeMark', () => {
   const type = schema.marks.strong;
@@ -167,50 +148,6 @@ describe('toggleBlockItem', () => {
         attrs: { level: 1 },
       }),
     ).toTransform({
-      from,
-      to,
-    });
-  });
-});
-
-describe('toggleList', () => {
-  it('toggles pagaraph to bullet list', () => {
-    const from = doc(p('make <cursor>list'));
-    const to = doc(ul(li(p('make list'))));
-
-    expect(toggleList(schema.nodes.bulletList, schema.nodes.listItem)).toTransform({
-      from,
-      to,
-    });
-  });
-
-  it('toggles bullet list to paragraph', () => {
-    const from = doc(ul(li(p('make <cursor>list'))));
-    const to = doc(p('make list'));
-
-    expect(toggleList(schema.nodes.bulletList, schema.nodes.listItem)).toTransform({
-      from,
-      to,
-    });
-  });
-
-  it('toggles ordered list to bullet list', () => {
-    const from = doc(ol(li(p('make <cursor>list'))));
-    const to = doc(ul(li(p('make list'))));
-
-    expect(toggleList(schema.nodes.bulletList, schema.nodes.listItem)).toTransform({
-      from,
-      to,
-    });
-  });
-
-  it('toggles nested ordered list to bullet list', () => {
-    const fromNested = ol(li('1.1'), li(p('1.2<cursor>')), li(p('1.3')));
-    const from = doc(ol(li(p('1'), fromNested), li(p('2'))));
-    const toNested = ul(li('1.1'), li(p('1.2')), li(p('1.3')));
-    const to = doc(ol(li(p('1'), toNested), li(p('2'))));
-
-    expect(toggleList(schema.nodes.bulletList, schema.nodes.listItem)).toTransform({
       from,
       to,
     });
