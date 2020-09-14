@@ -16,20 +16,22 @@
 
 ```bash
 # yarn
-yarn add remirror@next @remirror/pm@next
+yarn add remirror@next
 
 # pnpm
-pnpm add remirror@next @remirror/pm@next
+pnpm add remirror@next
 
 # npm
-npm install remirror@next @remirror/pm@next
+npm install remirror@next
 ```
+
+The `remirror` package will automatically install the `@remirror/pm` package for you. You only need to install it yourself if you'd like to ensure consistent versions of the `prosemirror-*` libraries when importing from `@remirror/pm/state` instead of `prosemirror-state` or `@remirror/pm/model` instead of `prosemirror-model`.
 
 ## Usage
 
 Rather than installing multiple scoped packages, the `remirror` package is a gateway to using all the goodness that remirror provides while minimising your bundle size.
 
-The following creates a dom based remirror editor.
+The following creates a React based remirror editor.
 
 ```tsx
 import React from 'react';

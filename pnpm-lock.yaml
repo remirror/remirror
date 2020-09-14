@@ -1640,6 +1640,7 @@ importers:
       '@remirror/extension-trailing-node': 'link:../@remirror/extension-trailing-node'
       '@remirror/extension-underline': 'link:../@remirror/extension-underline'
       '@remirror/extension-yjs': 'link:../@remirror/extension-yjs'
+      '@remirror/pm': 'link:../@remirror/pm'
       '@remirror/preset-core': 'link:../@remirror/preset-core'
       '@remirror/preset-embed': 'link:../@remirror/preset-embed'
       '@remirror/preset-list': 'link:../@remirror/preset-list'
@@ -1654,7 +1655,6 @@ importers:
       '@remirror/react-wysiwyg': 'link:../@remirror/react-wysiwyg'
       '@remirror/theme': 'link:../@remirror/theme'
     devDependencies:
-      '@remirror/pm': 'link:../@remirror/pm'
       '@types/react': 16.9.49
       '@types/react-dom': 16.9.8
       react: 16.13.1

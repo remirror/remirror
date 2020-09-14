@@ -79,6 +79,7 @@
     "@remirror/extension-trailing-node": "1.0.0-next.35",
     "@remirror/extension-underline": "1.0.0-next.35",
     "@remirror/extension-yjs": "1.0.0-next.35",
+    "@remirror/pm": "1.0.0-next.35",
     "@remirror/preset-core": "1.0.0-next.35",
     "@remirror/preset-embed": "1.0.0-next.35",
     "@remirror/preset-list": "1.0.0-next.35",
@@ -94,14 +95,12 @@
     "@remirror/theme": "1.0.0-next.35"
   },
   "devDependencies": {
-    "@remirror/pm": "1.0.0-next.35",
     "@types/react": "^16.9.47",
     "@types/react-dom": "^16.9.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
   "peerDependencies": {
-    "@remirror/pm": "1.0.0-next.35",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "react": "^16.8.0",
