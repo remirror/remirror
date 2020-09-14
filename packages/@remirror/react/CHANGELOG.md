@@ -1,5 +1,28 @@
 # @remirror/react
 
+## 1.0.0-next.37
+
+> 2020-09-14
+
+### Major Changes
+
+- [`a3383ca4`](https://github.com/remirror/remirror/commit/a3383ca4958712ebaf735f5fb25c039e6295d137) [#686](https://github.com/remirror/remirror/pull/686) Thanks [@ifiokjr](https://github.com/ifiokjr)! - **BREAKING**: 💥 Complete move of `useMultiPositioner` and `usePositioner` to `@remirror/react-hooks`. The imports are no longer available via `@remirror/react` after being deprecated for a few weeks.
+
+### Patch Changes
+
+- Updated dependencies [[`5a3dd95f`](https://github.com/remirror/remirror/commit/5a3dd95f11edee885c1d07b1ece8413d830b3405), [`5a3dd95f`](https://github.com/remirror/remirror/commit/5a3dd95f11edee885c1d07b1ece8413d830b3405)]:
+  - @remirror/core@1.0.0-next.37
+  - @remirror/extension-placeholder@1.0.0-next.37
+  - @remirror/extension-positioner@1.0.0-next.37
+  - @remirror/extension-react-component@1.0.0-next.37
+  - @remirror/extension-react-ssr@1.0.0-next.37
+  - @remirror/pm@1.0.0-next.37
+  - @remirror/preset-core@1.0.0-next.37
+  - @remirror/preset-react@1.0.0-next.37
+  - @remirror/i18n@1.0.0-next.37
+  - @remirror/react-utils@1.0.0-next.37
+  - @remirror/theme@1.0.0-next.37
+
 ## 1.0.0-next.35
 
 > 2020-09-13

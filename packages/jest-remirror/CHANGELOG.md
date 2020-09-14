@@ -1,5 +1,18 @@
 # jest-remirror
 
+## 1.0.0-next.37
+
+> 2020-09-14
+
+### Patch Changes
+
+- Updated dependencies [[`5a3dd95f`](https://github.com/remirror/remirror/commit/5a3dd95f11edee885c1d07b1ece8413d830b3405), [`5a3dd95f`](https://github.com/remirror/remirror/commit/5a3dd95f11edee885c1d07b1ece8413d830b3405)]:
+  - @remirror/core@1.0.0-next.37
+  - @remirror/pm@1.0.0-next.37
+  - @remirror/dom@1.0.0-next.37
+  - @remirror/preset-core@1.0.0-next.37
+  - jest-prosemirror@1.0.0-next.37
+
 ## 1.0.0-next.36
 
 > 2020-09-13

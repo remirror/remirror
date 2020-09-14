@@ -1,5 +1,24 @@
 # @remirror/extension-link
 
+## 1.0.0-next.37
+
+> 2020-09-14
+
+### Minor Changes
+
+- [`5a3dd95f`](https://github.com/remirror/remirror/commit/5a3dd95f11edee885c1d07b1ece8413d830b3405) [#686](https://github.com/remirror/remirror/pull/686) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add all extensions to the `Remirror.AllExtensions` interface to support automatic TypeScript inference for every installed extension package.
+
+### Patch Changes
+
+- [`9b48d110`](https://github.com/remirror/remirror/commit/9b48d1101655ef89e960267b582d560f11a89e4a) [#686](https://github.com/remirror/remirror/pull/686) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix some bugs with the `LinkExtension` around auto linking.
+
+  - The `autoLink` option now defaults to `false` and has an impact on the extension functionality. Fixes #682.
+  - Non-auto links which match the automatic urls are no longer overwritten by automated links.
+
+- Updated dependencies [[`5a3dd95f`](https://github.com/remirror/remirror/commit/5a3dd95f11edee885c1d07b1ece8413d830b3405), [`5a3dd95f`](https://github.com/remirror/remirror/commit/5a3dd95f11edee885c1d07b1ece8413d830b3405)]:
+  - @remirror/core@1.0.0-next.37
+  - @remirror/pm@1.0.0-next.37
+
 ## 1.0.0-next.35
 
 > 2020-09-13
