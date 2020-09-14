@@ -1,5 +1,37 @@
 # @remirror/preset-wysiwyg
 
+## 1.0.0-next.37
+
+> 2020-09-14
+
+### Patch Changes
+
+- Updated dependencies [[`5a3dd95f`](https://github.com/remirror/remirror/commit/5a3dd95f11edee885c1d07b1ece8413d830b3405), [`9b48d110`](https://github.com/remirror/remirror/commit/9b48d1101655ef89e960267b582d560f11a89e4a), [`5a3dd95f`](https://github.com/remirror/remirror/commit/5a3dd95f11edee885c1d07b1ece8413d830b3405)]:
+  - @remirror/core@1.0.0-next.37
+  - @remirror/extension-bidi@1.0.0-next.37
+  - @remirror/extension-blockquote@1.0.0-next.37
+  - @remirror/extension-bold@1.0.0-next.37
+  - @remirror/extension-code@1.0.0-next.37
+  - @remirror/extension-code-block@1.0.0-next.37
+  - @remirror/extension-drop-cursor@1.0.0-next.37
+  - @remirror/extension-epic-mode@1.0.0-next.37
+  - @remirror/extension-gap-cursor@1.0.0-next.37
+  - @remirror/extension-hard-break@1.0.0-next.37
+  - @remirror/extension-heading@1.0.0-next.37
+  - @remirror/extension-horizontal-rule@1.0.0-next.37
+  - @remirror/extension-image@1.0.0-next.37
+  - @remirror/extension-italic@1.0.0-next.37
+  - @remirror/extension-link@1.0.0-next.37
+  - @remirror/extension-search@1.0.0-next.37
+  - @remirror/extension-strike@1.0.0-next.37
+  - @remirror/extension-trailing-node@1.0.0-next.37
+  - @remirror/extension-underline@1.0.0-next.37
+  - @remirror/preset-embed@1.0.0-next.37
+  - @remirror/preset-list@1.0.0-next.37
+  - @remirror/preset-table@1.0.0-next.37
+  - @remirror/pm@1.0.0-next.37
+  - @remirror/preset-core@1.0.0-next.37
+
 ## 1.0.0-next.36
 
 > 2020-09-13

@@ -1,5 +1,23 @@
 # @remirror/react-wysiwyg
 
+## 1.0.0-next.37
+
+> 2020-09-14
+
+### Patch Changes
+
+- Updated dependencies [[`5a3dd95f`](https://github.com/remirror/remirror/commit/5a3dd95f11edee885c1d07b1ece8413d830b3405), [`a3383ca4`](https://github.com/remirror/remirror/commit/a3383ca4958712ebaf735f5fb25c039e6295d137), [`5a3dd95f`](https://github.com/remirror/remirror/commit/5a3dd95f11edee885c1d07b1ece8413d830b3405)]:
+  - @remirror/core@1.0.0-next.37
+  - @remirror/extension-auto-link@1.0.0-next.37
+  - @remirror/react@1.0.0-next.37
+  - @remirror/pm@1.0.0-next.37
+  - @remirror/preset-social@1.0.0-next.37
+  - @remirror/preset-wysiwyg@1.0.0-next.37
+  - @remirror/i18n@1.0.0-next.37
+  - @remirror/react-utils@1.0.0-next.37
+  - @remirror/theme@1.0.0-next.37
+  - multishift@1.0.0-next.37
+
 ## 1.0.0-next.36
 
 > 2020-09-13

@@ -1,5 +1,19 @@
 # @remirror/preset-react
 
+## 1.0.0-next.37
+
+> 2020-09-14
+
+### Patch Changes
+
+- Updated dependencies [[`5a3dd95f`](https://github.com/remirror/remirror/commit/5a3dd95f11edee885c1d07b1ece8413d830b3405), [`5a3dd95f`](https://github.com/remirror/remirror/commit/5a3dd95f11edee885c1d07b1ece8413d830b3405)]:
+  - @remirror/core@1.0.0-next.37
+  - @remirror/extension-placeholder@1.0.0-next.37
+  - @remirror/extension-react-component@1.0.0-next.37
+  - @remirror/extension-react-ssr@1.0.0-next.37
+  - @remirror/pm@1.0.0-next.37
+  - @remirror/react-utils@1.0.0-next.37
+
 ## 1.0.0-next.35
 
 > 2020-09-13
