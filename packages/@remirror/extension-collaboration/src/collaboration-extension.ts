@@ -193,3 +193,11 @@ const isValidCollaborationAttributes = (
 ): attributes is CollaborationAttributes => {
   return !(!attributes || !isArray(attributes.steps) || !isNumber(attributes.version));
 };
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      collaboration: CollaborationExtension;
+    }
+  }
+}

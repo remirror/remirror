@@ -71,3 +71,11 @@ export class StrikeExtension extends MarkExtension {
     return [markPasteRule({ regexp: /~([^~]+)~/g, type: this.type })];
   }
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      strike: StrikeExtension;
+    }
+  }
+}

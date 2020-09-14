@@ -450,3 +450,11 @@ export function getHexadecimalsFromEmoji(emoji: string): string[] {
     return codePoint ? codePoint.toString(16) : '';
   });
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      emoji: EmojiExtension;
+    }
+  }
+}

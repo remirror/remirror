@@ -403,3 +403,11 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
 }
 
 export { getLanguage };
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      codeBlock: CodeBlockExtension;
+    }
+  }
+}

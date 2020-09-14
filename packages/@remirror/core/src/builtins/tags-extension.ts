@@ -259,5 +259,9 @@ declare global {
        */
       extraTags?: ExtensionTagType[];
     }
+
+    interface AllExtensions {
+      tags: TagsExtension;
+    }
   }
 }

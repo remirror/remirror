@@ -98,7 +98,7 @@ declare global {
       /**
        * The helpers provided by the extensions used.
        */
-      helpers: HelpersFromCombined<Combined | Value<BuiltinHelpers>>;
+      helpers: HelpersFromCombined<Combined | Value<AllExtensions>>;
 
       /**
        * Check which nodes and marks are active under the current user
@@ -173,24 +173,15 @@ declare global {
        * This should only be accessed after the `onView` lifecycle method
        * otherwise it will throw an error.
        */
-      helpers: HelpersFromExtensions<Value<BuiltinHelpers> | AnyExtension>;
+      helpers: HelpersFromExtensions<Value<AllExtensions> | AnyExtension>;
 
       /** @deprecated Use `this.store.helpers` instead. */
       getHelpers: <ExtensionUnion extends AnyExtension = AnyExtension>() => HelpersFromExtensions<
-        Value<BuiltinHelpers> | ExtensionUnion
+        Value<AllExtensions> | ExtensionUnion
       >;
     }
 
-    /**
-     * This interface is used to automatically add helpers to the available
-     * defaults. By extending this extension in the global `Remirror` namespace
-     * the key is ignored but the value is used to form the union type in the
-     * `getChain` and `getCommands` methods.
-     *
-     * This is useful for extensions being able to reuse the work of other
-     * extension.
-     */
-    interface BuiltinHelpers {
+    interface AllExtensions {
       helpers: HelpersExtension;
     }
   }

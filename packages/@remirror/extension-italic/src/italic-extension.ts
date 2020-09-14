@@ -80,3 +80,11 @@ export class ItalicExtension extends MarkExtension {
     ];
   }
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      italic: ItalicExtension;
+    }
+  }
+}

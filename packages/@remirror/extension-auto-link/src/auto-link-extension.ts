@@ -317,3 +317,11 @@ function areSetsEqual<Type>(setOne: Set<Type>, setTwo: Set<Type>) {
 
   return true;
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      autoLink: AutoLinkExtension;
+    }
+  }
+}

@@ -8,7 +8,7 @@ export class CheckboxPreset extends Preset<CheckboxOptions> {
     return 'checkbox' as const;
   }
 
-  protected onSetOptions(_: OnSetOptionsParameter<CheckboxOptions>) {}
+  protected onSetOptions(_: OnSetOptionsParameter<CheckboxOptions>): void {}
 
   createExtensions() {
     return [];

@@ -175,3 +175,11 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
     };
   }
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      history: HistoryExtension;
+    }
+  }
+}

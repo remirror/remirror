@@ -282,3 +282,11 @@ function getImageAttributes({
 function hasCursor<T extends object>(argument: T): argument is T & { $cursor: ResolvedPos } {
   return bool(Cast(argument).$cursor);
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      image: ImageExtension;
+    }
+  }
+}

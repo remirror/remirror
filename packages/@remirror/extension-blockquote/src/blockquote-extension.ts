@@ -59,3 +59,11 @@ export class BlockquoteExtension extends NodeExtension {
     return [wrappingInputRule(/^\s*>\s$/, this.type)];
   }
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      blockquote: BlockquoteExtension;
+    }
+  }
+}

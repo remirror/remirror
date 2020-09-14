@@ -1060,5 +1060,9 @@ declare global {
        */
       readonly disableExtraAttributes?: boolean;
     }
+
+    interface AllExtensions {
+      schema: SchemaExtension;
+    }
   }
 }

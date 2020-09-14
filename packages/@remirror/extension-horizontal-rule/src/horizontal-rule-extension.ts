@@ -146,3 +146,11 @@ export class HorizontalRuleExtension extends NodeExtension<HorizontalRuleOptions
     tr.setSelection(TextSelection.create(tr.doc, pos + 1));
   }
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      horizontalRule: HorizontalRuleExtension;
+    }
+  }
+}

@@ -72,7 +72,7 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
     };
   };
 
-  protected init() {
+  protected init(): void {
     this.onScroll = debounce(this.options.scrollDebounce, this.onScroll.bind(this));
   }
 
@@ -89,7 +89,7 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
     };
   }
 
-  onScroll() {
+  private onScroll(): void {
     const parameter = this.getParameter({ event: 'scroll', firstUpdate: false });
     this.positioner(parameter);
   }
@@ -107,7 +107,7 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
     };
   }
 
-  onStateUpdate(update: StateUpdateLifecycleParameter) {
+  onStateUpdate(update: StateUpdateLifecycleParameter): void {
     this.positioner({
       ...update,
       event: 'state',
@@ -178,3 +178,11 @@ export function getPositioner(positioner: StringPositioner | Positioner): Positi
 }
 
 export type StringPositioner = keyof typeof positioners;
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      positioner: PositionerExtension;
+    }
+  }
+}

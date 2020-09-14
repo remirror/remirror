@@ -46,3 +46,11 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
     };
   }
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      events: EventsExtension;
+    }
+  }
+}

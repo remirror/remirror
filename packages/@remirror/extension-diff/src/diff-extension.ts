@@ -372,7 +372,7 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
   /**
    * Apply updates for the commit tracker.
    *
-   * Please note this isn't able to track marks and annotations. It can only
+   * Please note this isn't able to track marks and diffs. It can only
    * track changes to content.
    */
   private updateTracked(tr: Transaction, state: TrackedStateParameter): TrackedStateParameter {
@@ -561,4 +561,12 @@ export interface HandlerParameter extends FromToParameter {
    * The commit.
    */
   commit: Commit;
+}
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      diff: DiffExtension;
+    }
+  }
 }

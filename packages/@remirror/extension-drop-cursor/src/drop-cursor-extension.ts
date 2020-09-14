@@ -1,4 +1,4 @@
-import { extensionDecorator, PlainExtension } from '@remirror/core';
+import { extensionDecorator, PlainExtension, ProsemirrorPlugin } from '@remirror/core';
 import { dropCursor } from '@remirror/pm/dropcursor';
 
 export interface DropCursorOptions {
@@ -38,9 +38,17 @@ export class DropCursorExtension extends PlainExtension<DropCursorOptions> {
   /**
    * Use the dropCursor plugin with provided options.
    */
-  public createExternalPlugins() {
+  public createExternalPlugins(): ProsemirrorPlugin[] {
     const { color, width } = this.options;
 
     return [dropCursor({ color, width })];
+  }
+}
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      dropCursor: DropCursorExtension;
+    }
   }
 }

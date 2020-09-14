@@ -134,5 +134,9 @@ declare global {
        */
       createInputRules?(): InputRule[];
     }
+
+    interface AllExtensions {
+      inputRules: InputRulesExtension;
+    }
   }
 }

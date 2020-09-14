@@ -38,7 +38,7 @@ export class AttributesExtension extends PlainExtension {
     this.transformAttributes();
 
     if (triggerUpdate) {
-      this.store.getCommands().forceUpdate('attributes');
+      this.store.commands.forceUpdate('attributes');
     }
   };
 
@@ -125,6 +125,10 @@ declare global {
        * @alpha
        */
       createAttributes?(): ProsemirrorAttributes;
+    }
+
+    interface AllExtensions {
+      attributes: AttributesExtension;
     }
   }
 }

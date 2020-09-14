@@ -1,4 +1,9 @@
-import { extensionDecorator, isInstanceOf, PlainExtension } from '@remirror/core';
+import {
+  extensionDecorator,
+  isInstanceOf,
+  PlainExtension,
+  ProsemirrorPlugin,
+} from '@remirror/core';
 import { GapCursor, gapCursor } from '@remirror/pm/gapcursor';
 
 /**
@@ -23,7 +28,7 @@ export class GapCursorExtension extends PlainExtension {
     return 'gapCursor' as const;
   }
 
-  createExternalPlugins() {
+  createExternalPlugins(): ProsemirrorPlugin[] {
     return [gapCursor()];
   }
 }
@@ -34,3 +39,11 @@ export class GapCursorExtension extends PlainExtension {
  * @param value - the value to check
  */
 export const isGapCursorSelection = isInstanceOf(GapCursor);
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      gapCursor: GapCursorExtension;
+    }
+  }
+}

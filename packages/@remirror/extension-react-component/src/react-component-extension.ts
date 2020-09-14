@@ -189,3 +189,11 @@ declare global {
     }
   }
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      reactComponent: ReactComponentExtension;
+    }
+  }
+}

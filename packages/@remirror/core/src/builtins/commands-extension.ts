@@ -233,10 +233,7 @@ export class CommandsExtension extends PlainExtension {
       insertText(text: string, range?: Partial<FromToParameter>): CommandFunction {
         return ({ tr, dispatch }) => {
           const { from, to } = range ?? tr.selection;
-
-          if (dispatch) {
-            dispatch(tr.insertText(text, from, to));
-          }
+          dispatch?.(tr.insertText(text, from, to));
 
           return true;
         };
@@ -261,10 +258,7 @@ export class CommandsExtension extends PlainExtension {
       delete(range?: FromToParameter): CommandFunction {
         return ({ tr, dispatch }) => {
           const { from, to } = range ?? tr.selection;
-
-          if (dispatch) {
-            dispatch(tr.delete(from, to));
-          }
+          dispatch?.(tr.delete(from, to));
 
           return true;
         };
@@ -274,14 +268,12 @@ export class CommandsExtension extends PlainExtension {
        * Fire an empty update to trigger an update to all decorations, and state
        * that may not yet have run.
        *
-       * This can be used in extensions to when certain options that affect the
-       * plugin state have updated.
+       * This can be used in extensions to trigger updates certain options that
+       * affect the editor state have updated.
        */
       emptyUpdate: (): CommandFunction => {
         return ({ tr, dispatch }) => {
-          if (dispatch) {
-            dispatch(tr);
-          }
+          dispatch?.(tr);
 
           return true;
         };
@@ -292,9 +284,7 @@ export class CommandsExtension extends PlainExtension {
        */
       forceUpdate: (...keys: UpdatableViewProps[]): CommandFunction => {
         return ({ tr, dispatch }) => {
-          if (dispatch) {
-            dispatch(this.forceUpdate(tr, ...keys));
-          }
+          dispatch?.(this.forceUpdate(tr, ...keys));
 
           return true;
         };
@@ -309,9 +299,7 @@ export class CommandsExtension extends PlainExtension {
         attrs: ProsemirrorAttributes<Type>,
       ): CommandFunction => {
         return ({ tr, dispatch }) => {
-          if (dispatch) {
-            dispatch(tr.setNodeMarkup(pos, undefined, attrs));
-          }
+          dispatch?.(tr.setNodeMarkup(pos, undefined, attrs));
 
           return true;
         };
@@ -329,10 +317,7 @@ export class CommandsExtension extends PlainExtension {
             return false;
           }
 
-          if (dispatch) {
-            dispatch(tr.setSelection(TextSelection.create(tr.doc, tr.selection.from)));
-          }
-
+          dispatch?.(tr.setSelection(TextSelection.create(tr.doc, tr.selection.from)));
           return true;
         };
       },
@@ -740,28 +725,15 @@ declare global {
        * This should only be accessed after the `onView` lifecycle method
        * otherwise it will throw an error.
        */
-      chain: ChainedFromExtensions<Value<BuiltinCommands> | AnyExtension>;
+      chain: ChainedFromExtensions<Value<AllExtensions> | AnyExtension>;
 
       /** @deprecated Use `this.store.chain` instead. */
       getChain: <ExtensionUnion extends AnyExtension = AnyExtension>() => ChainedFromExtensions<
-        Value<BuiltinCommands> | ExtensionUnion
+        Value<AllExtensions> | ExtensionUnion
       >;
     }
 
-    /**
-     * This interface is used to automatically add commands to the available
-     * defaults. By extending this extension in the global `Remirror` namespace
-     * the key is ignored but the value is used to form the union type in the
-     * `getChain` and `getCommands` methods.
-     *
-     * This is useful for extensions being able to reuse the work of other
-     * extension.
-     */
-    interface BuiltinCommands {
-      commands: CommandsExtension;
-    }
-
-    interface BuiltinHelpers {
+    interface AllExtensions {
       commands: CommandsExtension;
     }
   }

@@ -10,7 +10,7 @@ import { CommandsExtension } from './commands-extension';
 import { HelpersExtension } from './helpers-extension';
 import { InputRulesExtension, InputRulesOptions } from './input-rules-extension';
 import { KeymapExtension, KeymapOptions } from './keymap-extension';
-import { NodeViewExtension } from './node-views-extension';
+import { NodeViewsExtension } from './node-views-extension';
 import { PasteRulesExtension } from './paste-rules-extension';
 import {
   PersistentSelectionExtension,
@@ -113,7 +113,7 @@ export class BuiltinPreset extends Preset<BuiltinOptions> {
       new PluginsExtension(),
       inputRulesExtension,
       new PasteRulesExtension(),
-      new NodeViewExtension(),
+      new NodeViewsExtension(),
       new SuggestExtension(),
       new CommandsExtension(),
       new HelpersExtension(),

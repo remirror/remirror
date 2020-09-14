@@ -259,3 +259,11 @@ function createYouTubeUrl(parameter: CreateYouTubeIframeParameter) {
 
   return `${urlStart}/embed/${id}?${stringify(searchObject)}`;
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      iframe: IframeExtension;
+    }
+  }
+}

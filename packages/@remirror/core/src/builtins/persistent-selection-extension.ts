@@ -56,3 +56,11 @@ export class PersistentSelectionExtension extends PlainExtension<PersistentSelec
     };
   }
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      persistentSelection: PersistentSelectionExtension;
+    }
+  }
+}

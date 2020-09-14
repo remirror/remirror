@@ -250,3 +250,11 @@ export class AnnotationExtension<A extends Annotation = Annotation> extends Plai
     };
   }
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      annotation: AnnotationExtension;
+    }
+  }
+}

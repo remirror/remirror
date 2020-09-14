@@ -63,3 +63,11 @@ export class CodeExtension extends MarkExtension {
     return [markPasteRule({ regexp: /`([^`]+)`/g, type: this.type })];
   }
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      code: CodeExtension;
+    }
+  }
+}

@@ -71,3 +71,11 @@ export class HardBreakExtension extends NodeExtension {
     };
   }
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      hardBreak: HardBreakExtension;
+    }
+  }
+}

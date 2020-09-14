@@ -361,3 +361,11 @@ function getAppendText(preferred: string | undefined, fallback: string | undefin
 
   return DEFAULT_MATCHER.appendText;
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      mentionAtom: MentionAtomExtension;
+    }
+  }
+}

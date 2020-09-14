@@ -203,3 +203,11 @@ export const editorStyles = css`
     }
   }
 `;
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      yjs: YjsExtension;
+    }
+  }
+}

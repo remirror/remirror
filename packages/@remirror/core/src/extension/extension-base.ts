@@ -711,6 +711,19 @@ declare global {
    */
   namespace Remirror {
     /**
+     * This interface is used to store all the currently installed extensions.
+     * As a result it can be used to set the default loaded extensions to
+     * include all available within `node_modules`. By extending this extension
+     * in the global `Remirror` namespace the key is ignored but the value is
+     * used to form the union type in the `chain`, `commands`, `helpers`
+     * properties on the `Remirror.ExtensionStore` interface.
+     *
+     * This is useful for extensions being able to reuse the work of other
+     * extension.
+     */
+    interface AllExtensions {}
+
+    /**
      * This interface is global and can use declaration merging to add extra
      * methods and properties on all `Extension`s.
      *

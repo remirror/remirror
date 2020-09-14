@@ -110,3 +110,11 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
     );
   }
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      heading: HeadingExtension;
+    }
+  }
+}

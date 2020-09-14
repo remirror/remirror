@@ -1,7 +1,9 @@
 import {
   ApplySchemaAttributes,
+  CommandFunction,
   extensionDecorator,
   ExtensionTag,
+  KeyBindings,
   MarkExtension,
   MarkExtensionSpec,
   toggleMark,
@@ -32,7 +34,7 @@ export class UnderlineExtension extends MarkExtension {
     };
   }
 
-  createKeymap() {
+  createKeymap(): KeyBindings {
     return {
       'Mod-u': toggleMark({ type: this.type }),
     };
@@ -43,7 +45,15 @@ export class UnderlineExtension extends MarkExtension {
       /**
        * Toggle the underline formatting of the selected text.
        */
-      toggleUnderline: () => toggleMark({ type: this.type }),
+      toggleUnderline: (): CommandFunction => toggleMark({ type: this.type }),
     };
+  }
+}
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      underline: UnderlineExtension;
+    }
   }
 }

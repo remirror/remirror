@@ -225,3 +225,11 @@ export class EpicModePluginState {
     }
   }
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      epicMode: EpicModeExtension;
+    }
+  }
+}

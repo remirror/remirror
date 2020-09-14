@@ -75,3 +75,11 @@ export class DocExtension extends NodeExtension<DocOptions> {
     };
   }
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      doc: DocExtension;
+    }
+  }
+}

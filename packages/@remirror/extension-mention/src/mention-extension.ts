@@ -729,3 +729,11 @@ export function isMentionValidDefault(
 ): boolean {
   return attrs.label === text;
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      mention: MentionExtension;
+    }
+  }
+}

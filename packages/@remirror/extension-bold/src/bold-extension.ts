@@ -137,3 +137,11 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
     };
   }
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      bold: BoldExtension;
+    }
+  }
+}

@@ -459,5 +459,9 @@ declare global {
        */
       createExternalPlugins?(): ProsemirrorPlugin[];
     }
+
+    interface AllExtensions {
+      plugins: PluginsExtension;
+    }
   }
 }

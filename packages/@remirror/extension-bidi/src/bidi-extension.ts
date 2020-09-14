@@ -39,7 +39,8 @@ export interface BidiOptions {
 }
 
 /**
- * An extension which adds bi-directional text support to your editor.
+ * An extension which adds bi-directional text support to your editor. This is
+ * the best way to support languages which are read from right-to-left.
  */
 @extensionDecorator<BidiOptions>({
   defaultOptions: { defaultDirection: null, autoUpdate: true, excludeNodes: [] },
@@ -134,7 +135,7 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
     };
   }
 
-  protected onSetOptions(parameter: OnSetOptionsParameter<BidiOptions>) {
+  protected onSetOptions(parameter: OnSetOptionsParameter<BidiOptions>): void {
     const { changes } = parameter;
 
     if (changes.defaultDirection.changed) {
@@ -188,6 +189,14 @@ declare global {
        * This attribute grants control over bidirectional language support.
        */
       dir?: 'ltr' | 'rtl';
+    }
+  }
+}
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      bidi: BidiExtension;
     }
   }
 }

@@ -158,3 +158,11 @@ function createDecorationSet({ extension, state }: SharedParameter) {
 
   return DecorationSet.create(state.doc, decorations);
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      placeholder: PlaceholderExtension;
+    }
+  }
+}

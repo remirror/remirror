@@ -59,3 +59,11 @@ export class ParagraphExtension extends NodeExtension {
     };
   }
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      paragraph: ParagraphExtension;
+    }
+  }
+}

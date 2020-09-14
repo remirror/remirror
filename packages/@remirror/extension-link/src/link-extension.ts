@@ -469,3 +469,11 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 function extractHref(url: string, defaultProtocol: DefaultProtocol) {
   return url.startsWith('http') || url.startsWith('//') ? url : `${defaultProtocol}//${url}`;
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      link: LinkExtension;
+    }
+  }
+}

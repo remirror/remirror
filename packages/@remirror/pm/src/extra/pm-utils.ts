@@ -32,15 +32,14 @@ export function chainableEditorState<Schema extends EditorSchema = EditorSchema>
     applyTransaction: state.applyTransaction.bind(state),
     reconfigure: state.reconfigure.bind(state),
     toJSON: state.toJSON.bind(state),
-
     get storedMarks() {
-      return tr.storedMarks;
+      return state.storedMarks;
     },
     get selection() {
-      return tr.selection;
+      return state.selection;
     },
     get doc() {
-      return tr.doc;
+      return state.doc;
     },
   };
 }

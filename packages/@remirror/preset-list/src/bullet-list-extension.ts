@@ -49,3 +49,11 @@ export class BulletListExtension extends NodeExtension {
     return [wrappingInputRule(/^\s*([*+-])\s$/, this.type)];
   }
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      bulletList: BulletListExtension;
+    }
+  }
+}

@@ -21,7 +21,7 @@ export interface ReactSsrOptions {
    *
    * @default 'DEFAULT_TRANSFORMATIONS'
    */
-  transformers?: Static<SSRTransformer[]>;
+  transformers?: Static<SsrTransformer[]>;
 }
 
 /**
@@ -57,9 +57,9 @@ export class ReactSsrExtension extends PlainExtension<ReactSsrOptions> {
 
   onCreate(): void {
     const components: Record<string, ManagerStoreReactComponent> = object();
-    const ssrTransformers: Array<() => SSRTransformer> = [];
+    const ssrTransformers: Array<() => SsrTransformer> = [];
 
-    const ssrTransformer: SSRTransformer = (initialElement, state) => {
+    const ssrTransformer: SsrTransformer = (initialElement, state) => {
       let element: JSX.Element = initialElement;
 
       for (const transformer of ssrTransformers) {
@@ -114,7 +114,7 @@ export class ReactSsrExtension extends PlainExtension<ReactSsrOptions> {
   };
 }
 
-export type SSRTransformer = (element: JSX.Element, state?: EditorState) => JSX.Element;
+export type SsrTransformer = (element: JSX.Element, state?: EditorState) => JSX.Element;
 
 /**
  * Clone SSR elements ignoring the top level Fragment
@@ -213,7 +213,7 @@ declare global {
        * The transformer for updating the SSR rendering of the prosemirror state
        * and allowing it to render without defects.
        */
-      ssrTransformer: SSRTransformer;
+      ssrTransformer: SsrTransformer;
 
       /**
        * Components for ssr transformations.
@@ -243,7 +243,15 @@ declare global {
        * server render. That way there is no jump or layout adjustment when the
        * document first loads on the browser.
        */
-      createSSRTransformer?: () => SSRTransformer;
+      createSSRTransformer?: () => SsrTransformer;
+    }
+  }
+}
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      reactSsr: ReactSsrExtension;
     }
   }
 }

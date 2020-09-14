@@ -15,9 +15,9 @@ import type { AnyCombinedUnion } from '../preset';
  *
  * @builtin
  */
-export class NodeViewExtension extends PlainExtension {
+export class NodeViewsExtension extends PlainExtension {
   get name() {
-    return 'nodeView' as const;
+    return 'nodeViews' as const;
   }
 
   /**
@@ -100,6 +100,10 @@ declare global {
        * @alpha
        */
       createNodeViews?(): NodeViewMethod | Record<string, NodeViewMethod>;
+    }
+
+    interface AllExtensions {
+      nodeViews: NodeViewsExtension;
     }
   }
 }

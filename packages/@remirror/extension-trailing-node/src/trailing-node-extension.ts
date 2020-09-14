@@ -123,3 +123,11 @@ export class TrailingNodeExtension extends PlainExtension<TrailingNodeOptions> {
     };
   }
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      trailingNode: TrailingNodeExtension;
+    }
+  }
+}

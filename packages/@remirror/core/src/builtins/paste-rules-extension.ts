@@ -17,7 +17,7 @@ export class PasteRulesExtension extends PlainExtension {
   /**
    * Ensure that all ssr transformers are run.
    */
-  onCreate() {
+  onCreate(): void {
     const pasteRules: ProsemirrorPlugin[] = [];
 
     for (const extension of this.store.extensions) {
@@ -60,6 +60,10 @@ declare global {
        * TODO - The paste plugin is currently switched off.
        */
       createPasteRules?(): ProsemirrorPlugin[];
+    }
+
+    interface AllExtensions {
+      pasteRules: PasteRulesExtension;
     }
   }
 }

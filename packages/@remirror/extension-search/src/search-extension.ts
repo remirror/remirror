@@ -463,3 +463,11 @@ export const rotateHighlightedIndex = (parameter: RotateHighlightedIndexParamete
     ? resultsLength - 1
     : previousIndex - 1;
 };
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      search: SearchExtension;
+    }
+  }
+}

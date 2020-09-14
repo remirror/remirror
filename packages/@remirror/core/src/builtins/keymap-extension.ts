@@ -441,5 +441,9 @@ declare global {
        */
       createKeymap?(): PrioritizedKeyBindings;
     }
+
+    interface AllExtensions {
+      keymap: KeymapExtension;
+    }
   }
 }

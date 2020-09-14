@@ -258,3 +258,11 @@ interface AddPositionTrackerParameter
    */
   element?: string | HTMLElement;
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      positionTracker: PositionTrackerExtension;
+    }
+  }
+}

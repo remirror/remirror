@@ -82,3 +82,11 @@ export class OrderedListExtension extends NodeExtension {
     ];
   }
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      orderedList: OrderedListExtension;
+    }
+  }
+}

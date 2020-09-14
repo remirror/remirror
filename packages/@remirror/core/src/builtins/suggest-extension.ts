@@ -161,7 +161,7 @@ declare global {
       createSuggesters?(): Suggester[] | Suggester;
     }
 
-    interface BuiltinHelpers {
+    interface AllExtensions {
       suggest: SuggestExtension;
     }
 
@@ -175,6 +175,10 @@ declare global {
        * Remove a suggester.
        */
       removeSuggester(suggester: Suggester | string): void;
+    }
+
+    interface AllExtensions {
+      suggest: SuggestExtension;
     }
   }
 }

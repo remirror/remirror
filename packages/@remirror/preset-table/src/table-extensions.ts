@@ -303,3 +303,11 @@ function toggleMergeCellCommand({ state, dispatch }: CommandFunctionParameter) {
 
   return splitCell(state, dispatch);
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      table: TableExtension;
+    }
+  }
+}
