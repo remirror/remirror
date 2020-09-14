@@ -89,6 +89,7 @@ module.exports = {
         blog: {
           showReadingTime: true,
           editUrl: 'https://github.com/remirror/remirror/edit/next/support/website/blog/',
+          remarkPlugins: [require('remark-footnotes')],
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

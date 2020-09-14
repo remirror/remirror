@@ -1919,6 +1919,7 @@ importers:
       prism-react-renderer: 1.1.1_react@16.13.1
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
+      remark-footnotes: 2.0.0
       remirror: 'link:../../packages/remirror'
     devDependencies:
       '@docusaurus/module-type-aliases': 2.0.0-alpha.63
@@ -1952,6 +1953,7 @@ importers:
       prism-react-renderer: ^1.1.1
       react: ^16.13.1
       react-dom: ^16.13.1
+      remark-footnotes: ^2.0.0
       remirror: 1.0.0-next.36
 lockfileVersion: 5.1
 packages:
@@ -23129,6 +23131,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-X9Ncj4cj3/CIvLI2Z9IobHtVi8FVdUrdJkCNaL9kdX8ohfsi18DXHsCVd/A7ssARBdccdDb5ODnt62WuEWaM/g==
+  /remark-footnotes/2.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-3Clt8ZMH75Ayjp9q4CorNeyjwIxHFcTkaektplKGl2A1jNGEUey8cKL0ZC5vJwfcD5GFGsNLImLG/NGzWIzoMQ==
   /remark-mdx/1.6.16:
     dependencies:
       '@babel/core': 7.10.5
