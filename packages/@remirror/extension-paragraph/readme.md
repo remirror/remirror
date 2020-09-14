@@ -22,6 +22,8 @@ pnpm add @remirror/extension-paragraph@next @remirror/pm@next # pnpm
 npm install @remirror/extension-paragraph@next @remirror/pm@next # npm
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/paragraph`.
+
 <br />
 
 ## Usage
@@ -29,10 +31,10 @@ npm install @remirror/extension-paragraph@next @remirror/pm@next # npm
 When added to your editor it will provide the `insertParagraph` which inserts a paragraph into the editor.
 
 ```ts
-import { ExtensionPriority, RemirrorManager } from '@remirror/core';
-import { DocExtension } from '@remirror/extension-doc';
-import { ParagraphExtension } from '@remirror/extension-paragraph';
-import { TextExtension } from '@remirror/extension-text';
+import { ExtensionPriority, RemirrorManager } from 'remirror/core';
+import { DocExtension } from 'remirror/extension/doc';
+import { ParagraphExtension } from 'remirror/extension/paragraph';
+import { TextExtension } from 'remirror/extension/text';
 
 // Create the extension
 const paragraphExtension = new ParagraphExtension();
@@ -55,8 +57,6 @@ manager.commands.insertParagraph();
 
 ### Alternatives
 
-There are several presets which contain this extension and make the installation process less verbose. AS a result you probably won't ever need to manage it directly.
-
-- `@remirror/preset-core`
+There are several presets which contain this extension and make the installation process less verbose. As a result you probably won't ever need to manage it directly.
 
 <br />

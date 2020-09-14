@@ -25,6 +25,8 @@ pnpm add @remirror/extension-doc@next @remirror/pm@next
 npm install @remirror/extension-doc@next @remirror/pm@next
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/doc`.
+
 ## Usage
 
-This is one of the **core** extensions and is included by default via `@remirror/preset-core`.
+This is one of the **core** extensions and is included by default when using the `CorePreset` from `remirror/preset/core`.

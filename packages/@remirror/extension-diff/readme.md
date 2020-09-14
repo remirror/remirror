@@ -25,12 +25,14 @@ pnpm add @remirror/extension-diff @remirror/pm
 npm install @remirror/extension-diff @remirror/pm
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/diff`.
+
 ## Usage
 
 The following code creates an instance of this extension.
 
 ```ts
-import { DiffExtension } from '@remirror/extension-diff';
+import { DiffExtension } from 'remirror/extension/diff';
 
 const extension = new DiffExtension();
 ```

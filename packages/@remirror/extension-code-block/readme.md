@@ -20,6 +20,8 @@ pnpm add refractor @remirror/extension-code-block@next @remirror/pm@next # pnpm
 npm install refractor @remirror/extension-code-block@next @remirror/pm@next # npm
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/code-block`.
+
 Refractor is a peer dependency and is needed when adding extra language support.
 
 ## Usage
@@ -29,10 +31,9 @@ The following code sample will create a limited editor and run the available com
 ```ts
 import jsx from 'refractor/lang/jsx';
 import typescript from 'refractor/lang/typescript';
-
-import { ExtensionPriority, RemirrorManager } from '@remirror/core';
-import { CodeBlockExtension } from '@remirror/extension-code-block';
-import { CorePreset } from '@remirror/preset-core';
+import { ExtensionPriority, RemirrorManager } from 'remirror/core';
+import { CodeBlockExtension } from 'remirror/extension/code-block';
+import { CorePreset } from 'remirror/preset/core';
 
 // Create the codeBlock extension
 const codeBlockExtension = new CodeBlockExtension({ supportedLanguages: [typescript, jsx] });

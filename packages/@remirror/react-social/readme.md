@@ -4,6 +4,16 @@
 
 > A configurable editor which replicates a social editors behaviour.
 
+### Installation
+
+```bash
+yarn add @remirror/react-social@next @remirror/pm@next @remirror/react@next # yarn
+pnpm add @remirror/react-social@next @remirror/pm@next @remirror/react@next # pnpm
+npm install @remirror/react-social@next @remirror/pm@next @remirror/react@next # npm
+```
+
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/react/social`.
+
 ## Usage
 
 The following editor would add emoji characters as valid prefix characters when typing the `@` key in the editor.
@@ -21,12 +31,4 @@ const Editor = (props) => (
     onMentionChange={onChange}
   />
 );
-```
-
-### Installation
-
-```bash
-yarn add @remirror/react-social@next @remirror/pm@next @remirror/react@next # yarn
-pnpm add @remirror/react-social@next @remirror/pm@next @remirror/react@next # pnpm
-npm install @remirror/react-social@next @remirror/pm@next @remirror/react@next # npm
 ```

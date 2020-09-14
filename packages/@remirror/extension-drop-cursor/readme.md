@@ -20,14 +20,16 @@ pnpm add @remirror/extension-drop-cursor@next # pnpm
 npm install @remirror/extension-drop-cursor@next # npm
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/drop-cursor`.
+
 ## Usage
 
 The following code sample will create a limited editor and run the available commands from this extension.
 
 ```ts
-import { ExtensionPriority, RemirrorManager } from '@remirror/core';
-import { DropCursorExtension } from '@remirror/extension-drop-cursor';
-import { CorePreset } from '@remirror/preset-core';
+import { ExtensionPriority, RemirrorManager } from 'remirror/core';
+import { DropCursorExtension } from 'remirror/extension/drop-cursor';
+import { CorePreset } from 'remirror/preset/core';
 
 // Create the codeBlock extension
 const dropCursorExtension = new DropCursorExtension({ supportedLanguages: [typescript, jsx] });

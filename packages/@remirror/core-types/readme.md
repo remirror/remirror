@@ -14,4 +14,4 @@
 
 This package provides the core TypeScript types used throughout the remirror code base.
 
-It doesn't add any code to the final bundle.
+This is included by default when you install the recommended `remirror` package. All exports are also available via `remirror/core/types` and `remirror/core`.

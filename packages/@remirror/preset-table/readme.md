@@ -10,8 +10,10 @@ pnpm add @remirror/preset-table@next @remirror/pm@next # pnpm
 npm install @remirror/preset-table@next @remirror/pm@next # npm
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/preset/table`.
+
 ```ts
-import { TableExtension } from '@remirror/preset-table';
+import { TableExtension } from 'remirror/preset/table';
 
 new TableExtension();
 ```

@@ -25,6 +25,8 @@ pnpm add @remirror/react-wysiwyg@next @remirror/pm@next @remirror/react@next
 npm install @remirror/react-wysiwyg@next @remirror/pm@next @remirror/react@next
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/react/wysiwyg`.
+
 ## Usage
 
 More documentation to come.

@@ -25,12 +25,14 @@ pnpm add @remirror/extension-placeholder@next @remirror/pm@next
 npm install @remirror/extension-placeholder@next @remirror/pm@next
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/placeholder`.
+
 ## Usage
 
 The following code creates an instance of this extension.
 
 ```ts
-import { PlaceholderExtension } from '@remirror/extension-placeholder';
+import { PlaceholderExtension } from 'remirror/extension/placeholder';
 
 const extension = new PlaceholderExtension();
 ```

@@ -25,12 +25,14 @@ pnpm add @remirror/extension-annotation@next @remirror/extension-positioner@next
 npm install @remirror/extension-annotation@next @remirror/extension-positioner@next @remirror/pm@next
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/annotation`.
+
 ## Usage
 
 The following code creates an instance of this extension.
 
 ```ts
-import { AnnotationExtension } from '@remirror/extension-annotation';
+import { AnnotationExtension } from 'remirror/extension/annotation';
 
 const extension = new AnnotationExtension();
 ```

@@ -27,8 +27,4 @@ npm install @remirror/playground
 
 ## Credits
 
-This package was bootstrapped with [monots].
-
 - Benjie Gillam <code@benjiegillam.com>
-
-[monots]: https://github.com/monots/monots

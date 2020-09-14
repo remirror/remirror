@@ -20,14 +20,16 @@ pnpm add @remirror/extension-image@next @remirror/pm@next # pnpm
 npm install @remirror/extension-image@next @remirror/pm@next # npm
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/image`.
+
 ## Usage
 
 The following code sample will create a limited editor and run the available commands from this extension.
 
 ```ts
-import { ExtensionPriority, RemirrorManager } from '@remirror/core';
-import { ImageExtension } from '@remirror/extension-image';
-import { CorePreset } from '@remirror/preset-core';
+import { ExtensionPriority, RemirrorManager } from 'remirror/core';
+import { ImageExtension } from 'remirror/extension/image';
+import { CorePreset } from 'remirror/preset/core';
 
 // Create the codeBlock extension
 const imageExtension = new ImageExtension();

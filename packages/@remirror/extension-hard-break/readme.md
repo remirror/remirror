@@ -25,12 +25,14 @@ pnpm add @remirror/extension-hard-break@next @remirror/pm@next
 npm install @remirror/extension-hard-break@next @remirror/pm@next
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/hard-break`.
+
 ## Usage
 
 The following code creates an instance of this extension.
 
 ```ts
-import { HardBreakExtension } from '@remirror/extension-hard-break';
+import { HardBreakExtension } from 'remirror/extension/hard-break';
 
 const extension = new HardBreakExtension();
 ```

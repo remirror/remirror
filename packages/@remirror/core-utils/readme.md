@@ -14,4 +14,4 @@
 
 ## Installation
 
-This is included by default when you install `@remirror/core` or the recommended `remirror` package.
+This is included by default when you install the recommended `remirror` package. All exports are also available via `remirror/core/utils` and `remirror/core`.

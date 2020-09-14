@@ -30,6 +30,9 @@ This library is a required peer dependency when using remirror in your codebase.
 // Top level provides types and utilities for converting commands.
 import type { EditorSchema } from '@remirror/pm';
 import { chainableEditorState } from '@remirror/pm';
+```
+
+```ts
 // Nested imports provides access to the individual prosemirror library exports.
 import { EditorState } from '@remirror/pm/state';
 import { Suggest } from '@remirror/pm/suggest';

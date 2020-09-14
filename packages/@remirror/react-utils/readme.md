@@ -22,4 +22,6 @@ pnpm add @remirror/react-utils # pnpm
 npm install @remirror/react-utils # npm
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/react/utils`.
+
 <br />

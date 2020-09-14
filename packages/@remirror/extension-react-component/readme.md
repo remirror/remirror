@@ -25,6 +25,8 @@ pnpm add @remirror/extension-react-component @remirror/pm
 npm install @remirror/extension-react-component @remirror/pm
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/react-component`.
+
 ## Usage
 
 This extension allows you to use react Components within the editor.
@@ -32,7 +34,7 @@ This extension allows you to use react Components within the editor.
 The following code creates an instance of this extension.
 
 ```ts
-import { ReactComponentExtension } from '@remirror/extension-react-component';
+import { ReactComponentExtension } from 'remirror/extension/react-component';
 
 const extension = new ReactComponentExtension();
 ```

@@ -27,6 +27,8 @@ pnpm add @remirror/preset-social@next @remirror/pm@next
 npm install @remirror/preset-social@next @remirror/pm@next
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/preset/social`.
+
 <br />
 
 ## Usage
@@ -34,7 +36,7 @@ npm install @remirror/preset-social@next @remirror/pm@next
 The following creates an instance of the preset.
 
 ```ts
-import { SocialPreset } from '@remirror/preset-social';
+import { SocialPreset } from 'remirror/preset/social';
 
 // Create the preset
 const preset = new SocialPreset();

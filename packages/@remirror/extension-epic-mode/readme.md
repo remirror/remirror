@@ -20,14 +20,16 @@ pnpm add @remirror/extension-epic-mode@next # pnpm
 npm install @remirror/extension-epic-mode@next # npm
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/epic-mode`.
+
 ## Usage
 
 The following code sample will create a limited editor and run the available commands from this extension.
 
 ```ts
-import { ExtensionPriority, RemirrorManager } from '@remirror/core';
-import { EpicModeExtension } from '@remirror/extension-epic-mode';
-import { CorePreset } from '@remirror/preset-core';
+import { ExtensionPriority, RemirrorManager } from 'remirror/core';
+import { EpicModeExtension } from 'remirror/extension/epic-mode';
+import { CorePreset } from 'remirror/preset/core';
 
 // Create the codeBlock extension
 const epicModeExtension = new EpicModeExtension();
@@ -46,18 +48,4 @@ manager.addView(element);
 
 // Make the epic mode extension active.
 epicModeExtension.setOptions({ active: true });
-```
-
-When using with react you can update the properties with the `useExtensionProperties` hook.
-
-```tsx
-import React from 'react';
-import { EpicModeExtension } from 'remirror/extension/epic-mode';
-import { useExtensionProperties, useRemirror } from 'remirror/react';
-
-const InternalEditor = () => {
-  useExtensionProperties(EpicModeExtension, { active: true });
-
-  return <div />;
-};
 ```

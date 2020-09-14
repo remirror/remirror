@@ -25,6 +25,8 @@ pnpm add @remirror/extension-italic@next @remirror/pm@next
 npm install @remirror/extension-italic@next @remirror/pm@next
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/italic`.
+
 ## Usage
 
 The following code creates an instance of this extension.

@@ -25,12 +25,14 @@ pnpm add @remirror/extension-heading@next @remirror/pm@next
 npm install @remirror/extension-heading@next @remirror/pm@next
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/heading`.
+
 ## Usage
 
 The following code creates an instance of this extension.
 
 ```ts
-import { HeadingExtension } from '@remirror/extension-heading';
+import { HeadingExtension } from 'remirror/extension/heading';
 
 const extension = new HeadingExtension();
 ```

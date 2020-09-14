@@ -22,6 +22,8 @@ pnpm add @remirror/extension-auto-link@next # pnpm
 npm install @remirror/extension-auto-link@next # npm
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/auto-link`.
+
 <br />
 
 ## Usage
@@ -29,9 +31,9 @@ npm install @remirror/extension-auto-link@next # npm
 When added to your editor the auto link extension will automatically add links to any url like pattern that matches the default regex.
 
 ```ts
-import { ExtensionPriority, RemirrorManager } from '@remirror/core';
-import { AutoLinkExtension } from '@remirror/extension-auto-link';
-import { CorePreset } from '@remirror/preset-core';
+import { ExtensionPriority, RemirrorManager } from 'remirror/core';
+import { AutoLinkExtension } from 'remirror/extension/auto-link';
+import { CorePreset } from 'remirror/preset/core';
 
 // Create the auto link extension
 const autoLinkExtension = new AutoLinkExtension();

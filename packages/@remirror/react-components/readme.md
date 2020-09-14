@@ -25,6 +25,8 @@ pnpm add @remirror/react-components@next @remirror/pm@next @remirror/react@next
 npm install @remirror/react-components@next @remirror/pm@next @remirror/react@next
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/react/components`.
+
 ## Usage
 
 More documentation to come.

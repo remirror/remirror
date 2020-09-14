@@ -27,6 +27,8 @@ pnpm add @remirror/preset-embed@next @remirror/pm@next
 npm install @remirror/preset-embed@next @remirror/pm@next
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/preset/embed`.
+
 <br />
 
 ## Usage
@@ -34,7 +36,7 @@ npm install @remirror/preset-embed@next @remirror/pm@next
 The following creates an instance of the preset.
 
 ```ts
-import { EmbedPreset } from '@remirror/preset-embed';
+import { EmbedPreset } from 'remirror/preset/embed';
 
 // Create the preset
 const preset = new EmbedPreset();

@@ -25,12 +25,14 @@ pnpm add @remirror/extension-events @remirror/pm @remirror/core
 npm install @remirror/extension-events @remirror/pm @remirror/core
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/events`.
+
 ## Usage
 
 The following code creates an instance of this extension.
 
 ```ts
-import { EventsExtension } from '@remirror/extension-events';
+import { EventsExtension } from 'remirror/extension/events';
 
 const extension = new EventsExtension();
 
@@ -39,4 +41,4 @@ extension.addCustomHandler('focus', () => {
 });
 ```
 
-This extension is included by default in the `@remirror/preset-core`.
+This extension is included by default in the `CorePreset` from `remirror/preset/core`.

@@ -27,20 +27,20 @@ npm install @remirror/i18n@next
 
 ## Usage
 
-The following code creates adds an `es` translation to your social editor.
+The following code creates adds an `en` translation to your social editor.
 
 ```tsx
-import { es as esPlurals } from 'make-plural/plurals';
+import { en as enPlurals } from 'make-plural/plurals';
 import React from 'react';
 import { SocialEditor } from 'remirror/react/social';
 
 import { i18n } from '@remirror/i18n';
-import es from '@remirror/i18n/es/messages';
+import en from '@remirror/i18n/en/messages';
 
-i18n.loadLocaleData('es', { plurals: esPlurals });
+i18n.loadLocaleData('en', { plurals: anPlurals });
 
 i18n.load({
-  es: es.messages,
+  en: en.messages,
 });
 
 const Editor = () => {

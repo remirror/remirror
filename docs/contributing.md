@@ -71,6 +71,15 @@ pnpm test:watch # Test changed files since the last commit
 
 Always create your tests inside of a `__tests__/` sub-folder.
 
+Sometimes you will want to narrow down tests to run only a specific file or folder.
+
+```bash
+pnpm test dom.spec.ts # Runs the test file matching dom.spec.ts once.
+pnpm test:watch @remirror/react # Runs every tests in the `@remirror/react` package under watch mode.
+```
+
+Once in watch mode you can also press `p` and type out the file you want to focus on. Press enter to select the file.
+
 **For naming conventions, use the following.**
 
 - Unit tests: `*.spec.ts(x)`

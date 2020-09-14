@@ -25,12 +25,14 @@ pnpm add @remirror/extension-underline@next @remirror/pm@next
 npm install @remirror/extension-underline@next @remirror/pm@next
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/underline`.
+
 ## Usage
 
 The following code creates an instance of this extension.
 
 ```ts
-import { UnderlineExtension } from '@remirror/extension-underline';
+import { UnderlineExtension } from 'remirror/extension/underline';
 
 const extension = new UnderlineExtension();
 ```

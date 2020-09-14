@@ -27,6 +27,8 @@ pnpm add @remirror/preset-react@next @remirror/pm@next
 npm install @remirror/preset-react@next @remirror/pm@next
 ```
 
+This package is available via `remirror/preset/react` when you install `remirror`.
+
 <br />
 
 ## Usage
@@ -38,9 +40,9 @@ This preset adds
 - Placeholder support for the editor.
 
 ```ts
-import { RemirrorManager } from '@remirror/core';
-import { CorePreset } from '@remirror/preset-core';
-import { ReactPreset } from '@remirror/preset-react';
+import { RemirrorManager } from 'remirror/core';
+import { CorePreset } from 'remirror/preset/core';
+import { ReactPreset } from 'remirror/preset/react';
 
 const reactPreset = new ReactPreset({ rootContent: 'block*' });
 
@@ -49,15 +51,6 @@ const reactPreset = new ReactPreset(transformers);
 
 // Create the Editor Manager with the required preset.
 const manager = RemirrorManager.create([reactPreset]);
-
-// Pass the dom element to the editor. If you are using `@remirror/react` this is done for you.
-const element = document.createElement('div');
-document.body.append(element);
-
-// Add the view to the editor manager.
-manager.addView(element);
-
-// You now have a basic working editor.
 ```
 
-Granted, the above won't do much. It will allow you to type, and what else do you really need in an editor.
+The `useManager` hook automatically includes both the `CorePreset` and the `ReactPreset` so you may never need to reference this package directly.

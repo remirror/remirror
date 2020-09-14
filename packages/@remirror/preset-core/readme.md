@@ -22,6 +22,8 @@ pnpm add @remirror/preset-core@next # pnpm
 npm install @remirror/preset-core@next # npm
 ```
 
+This package is available via `remirror/preset/core` when you install `remirror`.
+
 <br />
 
 ## Usage
@@ -29,8 +31,8 @@ npm install @remirror/preset-core@next # npm
 When added to your editor it will provide the required nodes, marks to your editor.
 
 ```ts
-import { RemirrorManager } from '@remirror/core';
-import { CorePreset } from '@remirror/preset-core';
+import { RemirrorManager } from 'remirror/core';
+import { CorePreset } from 'remirror/preset/core';
 
 // Create the preset
 const corePreset = new CorePreset({ rootContent: 'block*' });
@@ -48,4 +50,4 @@ manager.addView(element);
 // You now have a basic working editor.
 ```
 
-Granted, the above won't do much. It will allow you to type, and what else do you really need from an editor.
+Granted, the above won't do much. It will allow you to type, if that's your cup of tea.

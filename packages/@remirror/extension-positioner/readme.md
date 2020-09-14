@@ -25,12 +25,14 @@ pnpm add @remirror/extension-positioner@next @remirror/pm@next
 npm install @remirror/extension-positioner@next @remirror/pm@next
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/positioner`.
+
 ## Usage
 
 An extension for tracking the position of the provided element relative to the prosemirror editor. Can be used to find the top / left position in order to position the element as a hover menu.
 
 ```ts
-import { PositionerExtension } from '@remirror/extension-positioner';
+import { PositionerExtension } from 'remirror/extension/positioner';
 
 const extension = new PositionerExtension();
 

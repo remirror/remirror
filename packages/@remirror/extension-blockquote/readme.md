@@ -25,12 +25,14 @@ pnpm add @remirror/extension-blockquote@next @remirror/pm@next
 npm install @remirror/extension-blockquote@next @remirror/pm@next
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/blockquote`.
+
 ## Usage
 
 The following code creates an instance of this extension.
 
 ```ts
-import { BlockquoteExtension } from '@remirror/extension-blockquote';
+import { BlockquoteExtension } from 'remirror/extension/blockquote';
 
 const extension = new BlockquoteExtension();
 ```

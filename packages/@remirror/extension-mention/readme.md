@@ -11,3 +11,5 @@ yarn add @remirror/extension-mention@next @remirror/pm@next # yarn
 pnpm add @remirror/extension-mention@next @remirror/pm@next # pnpm
 npm install @remirror/extension-mention@next @remirror/pm@next # npm
 ```
+
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/mention`.

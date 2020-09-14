@@ -25,12 +25,14 @@ pnpm add @remirror/extension-gap-cursor@next @remirror/pm@next
 npm install @remirror/extension-gap-cursor@next @remirror/pm@next
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/gap-cursor`.
+
 ## Usage
 
 The following code creates an instance of this extension.
 
 ```ts
-import { GapCursorExtension } from '@remirror/extension-gap-cursor';
+import { GapCursorExtension } from 'remirror/extension/gap-cursor';
 
 const extension = new GapCursorExtension();
 ```
@@ -40,5 +42,5 @@ When enabled, this will capture clicks near and arrow-key-motion past places tha
 Make sure to import the styles as shown below.
 
 ```ts
-import '@remirror/styles/extension-gap-cursor.css';
+import 'remirror/styles/gap-cursor.css';
 ```

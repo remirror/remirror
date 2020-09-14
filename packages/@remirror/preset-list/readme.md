@@ -27,6 +27,8 @@ pnpm add @remirror/preset-list@next @remirror/pm@next
 npm install @remirror/preset-list@next @remirror/pm@next
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/preset/list`.
+
 <br />
 
 ## Usage
@@ -34,7 +36,7 @@ npm install @remirror/preset-list@next @remirror/pm@next
 The following creates an instance of the preset.
 
 ```ts
-import { ListPreset } from '@remirror/preset-list';
+import { ListPreset } from 'remirror/preset/list';
 
 // Create the preset
 const preset = new ListPreset();

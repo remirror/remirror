@@ -20,6 +20,8 @@ pnpm add @remirror/extension-text@next # pnpm
 npm install @remirror/extension-text@next # npm
 ```
 
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/text`.
+
 ## Usage
 
-This is one of the **core** extensions and is included by default via `@remirror/preset-core`.
+This is one of the **core** extensions and is included by default via the `CorePreset` from `remirror/preset/core`.
