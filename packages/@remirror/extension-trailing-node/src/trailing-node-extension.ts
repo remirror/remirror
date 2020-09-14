@@ -90,21 +90,16 @@ export class TrailingNodeExtension extends PlainExtension<TrailingNodeOptions> {
       .filter((entry) => !notAfter.includes(entry.name));
 
     return {
-      view: () => {
-        return {
-          update: (view) => {
-            const { state, dispatch } = view;
-            const { doc } = state;
-            const shouldInsertNodeAtEnd = this.getPluginState<boolean>(state);
-            const endPosition = doc.content.size;
+      appendTransaction: (_, __, state) => {
+        const { doc } = state;
+        const shouldInsertNodeAtEnd = this.getPluginState<boolean>(state);
+        const endPosition = doc.content.size;
 
-            if (!shouldInsertNodeAtEnd) {
-              return;
-            }
+        if (!shouldInsertNodeAtEnd) {
+          return;
+        }
 
-            dispatch(state.tr.insert(endPosition, type.create()));
-          },
-        };
+        return state.tr.insert(endPosition, type.create());
       },
       state: {
         init: (_, state) => {
