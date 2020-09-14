@@ -8,7 +8,7 @@
 [npm]: https://npmjs.com/package/@remirror/react-wysiwyg/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
 [size]: https://bundlephobia.com/result?p=@remirror/react-wysiwyg@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/react-wysiwyg
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/react-wysiwyg@next
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/react-wysiwyg/red?icon=npm
 

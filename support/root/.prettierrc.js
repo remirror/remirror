@@ -1,4 +1,5 @@
-module.exports = {
+/** @type {import('prettier').Options} */
+const config = {
   bracketSpacing: true,
   endOfLine: 'lf',
   jsxBracketSameLine: false,
@@ -12,3 +13,5 @@ module.exports = {
   trailingComma: 'all',
   useTabs: false,
 };
+
+module.exports = config;

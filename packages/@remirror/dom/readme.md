@@ -10,7 +10,7 @@
 [npm]: https://npmjs.com/package/@remirror/dom/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
 [size]: https://bundlephobia.com/result?p=@remirror/dom@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/dom
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/dom@next
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/dom/red?icon=npm
 

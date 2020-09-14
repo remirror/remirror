@@ -8,7 +8,7 @@
 [npm]: https://npmjs.com/package/@remirror/extension-position-tracker/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
 [size]: https://bundlephobia.com/result?p=@remirror/extension-position-tracker@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-position-tracker
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-position-tracker@next
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-position-tracker/red?icon=npm
 

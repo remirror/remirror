@@ -8,7 +8,7 @@
 [npm]: https://npmjs.com/package/@remirror/extension-react-component/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
 [size]: https://bundlephobia.com/result?p=@remirror/extension-react-component@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-react-component
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-react-component@next
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-react-component/red?icon=npm
 

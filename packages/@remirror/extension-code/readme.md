@@ -8,7 +8,7 @@
 [npm]: https://npmjs.com/package/@remirror/extension-code/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
 [size]: https://bundlephobia.com/result?p=@remirror/extension-code@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-code
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-code@next
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-code/red?icon=npm
 

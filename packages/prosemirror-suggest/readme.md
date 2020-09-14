@@ -8,7 +8,7 @@
 [npm]: https://npmjs.com/package/prosemirror-suggest/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
 [size]: https://bundlephobia.com/result?p=prosemirror-suggest@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/prosemirror-suggest
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/prosemirror-suggest@next
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/prosemirror-suggest/red?icon=npm
 
