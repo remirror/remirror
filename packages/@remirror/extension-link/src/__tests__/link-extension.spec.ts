@@ -336,6 +336,17 @@ describe('autolinking', () => {
     );
   });
 
+  it('should be off by default', () => {
+    const editor = create();
+    const { doc, p } = editor.nodes;
+
+    editor.add(doc(p('<cursor>'))).insertText('test.co');
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('test.co')));
+
+    editor.insertText(' https://test.com ');
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('test.co https://test.com ')));
+  });
+
   it('updates the autolink on each change', () => {
     editor
       .add(doc(p('<cursor>')))
@@ -390,6 +401,35 @@ describe('autolinking', () => {
 
     expect(editor.doc).toEqualRemirrorDocument(
       doc(p(link({ auto: true, href: '//test.co' })('test.co')), p('coo')),
+    );
+  });
+
+  it('does not replace an active link with an automatic link', () => {
+    editor
+      .add(doc(p('Hi ', link({ auto: false, href: '//test.com' })('test.com'), '<cursor>')))
+      .insertText(' ');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p('Hi ', link({ auto: false, href: '//test.com' })('test.com'), ' ')),
+    );
+  });
+
+  it('does not override a non automatic link', () => {
+    editor.add(doc(p('<cursor>', link({ href: '//test.com' })('test.com')))).insertText('no');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p('no', link({ href: '//test.com' })('test.com'))),
+    );
+  });
+
+  it('does not override a non automatic link in the position ahead', () => {
+    editor
+      .add(doc(p('<cursor> ', link({ href: '//test.com' })('test.com'))))
+      .insertText('a')
+      .selectText(3);
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p('a ', link({ href: '//test.com' })('test.com'))),
     );
   });
 });

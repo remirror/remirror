@@ -230,9 +230,9 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
   }
 
   createSuggesters(): Suggester[] {
-    // if (!this.options.autoLink) {
-    //   return [];
-    // }
+    if (!this.options.autoLink) {
+      return [];
+    }
 
     // Keep track of this to prevent multiple updates which prevent history from
     // working
@@ -315,7 +315,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         const { getSuggestMethods } = this.store.helpers;
         const { findMatchAtPosition } = getSuggestMethods();
 
-        /** Remove the link at the provided range */
+        /** Remove the link at the provided range. */
         const remove = () => {
           // Use the custom transaction.
           custom(tr);
@@ -390,11 +390,15 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
         let value: ReturnType<typeof getMarkRange> | undefined;
 
-        getTheRange: for (const pos of numberRange(range.from, range.to)) {
+        for (const pos of numberRange(range.from, range.to)) {
           value = getMarkRange(tr.doc.resolve(pos), this.type);
 
+          if (value?.mark.attrs.auto === false) {
+            return;
+          }
+
           if (value) {
-            break getTheRange;
+            break;
           }
         }
 
