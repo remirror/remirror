@@ -5,7 +5,8 @@ import { HeadingExtension } from 'remirror/extension/heading';
 import { ItalicExtension } from 'remirror/extension/italic';
 import { UnderlineExtension } from 'remirror/extension/underline';
 import { ListPreset } from 'remirror/preset/list';
-import { RemirrorProvider, useManager, usePositioner, useRemirror } from 'remirror/react';
+import { RemirrorProvider, useManager, useRemirror } from 'remirror/react';
+import { usePositioner } from 'remirror/react/hooks';
 
 const EXTENSIONS = () => [
   new HeadingExtension(),

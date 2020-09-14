@@ -1,13 +1,4 @@
-import {
-  DependencyList,
-  RefCallback,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { DependencyList, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import {
   AddHandler,
@@ -25,17 +16,8 @@ import {
   OptionsOfConstructor,
   RemirrorEventListener,
   RemirrorManager,
+  Value,
 } from '@remirror/core';
-import {
-  ElementsAddedParameter,
-  emptyCoords,
-  emptyVirtualPosition,
-  getPositioner,
-  Positioner,
-  PositionerExtension,
-  StringPositioner,
-  VirtualPosition,
-} from '@remirror/extension-positioner';
 import { usePortalContext } from '@remirror/extension-react-component';
 import type { CorePreset } from '@remirror/preset-core';
 import type { ReactPreset } from '@remirror/preset-react';
@@ -127,7 +109,7 @@ import { useEffectWithWarning, useForceUpdate } from './core-hooks';
  * In this case the component only re-renders when the bold formatting is no
  * longer active.
  */
-export function useRemirror<Combined extends AnyCombinedUnion>(
+export function useRemirror<Combined extends AnyCombinedUnion = Value<Remirror.AllExtensions>>(
   handler?: RemirrorEventListener<Combined> | { autoUpdate: boolean },
 ): RemirrorContextProps<Combined> {
   // This is not null when rendering within the `RemirrorProvider`. The majority
@@ -302,7 +284,7 @@ export function useExtension<Type extends AnyExtensionConstructor>(
   const { getExtension } = useRemirror();
   const extension = useMemo(() => getExtension(Constructor), [Constructor, getExtension]);
 
-  // Handle the case where an options object passed in.
+  // Handle the case where an options object is passed in.
   useEffectWithWarning(() => {
     if (isFunction(optionsOrCallback) || !optionsOrCallback) {
       return;
@@ -498,118 +480,3 @@ export function useManager<Combined extends AnyCombinedUnion>(
 }
 
 export type BaseReactCombinedUnion = ReactPreset | CorePreset | BuiltinPreset;
-
-/**
- * @deprecated Import from `remirror/react/hooks` instead.
- */
-export interface UseMultiPositionerReturn extends VirtualPosition {
-  /**
-   * This ref must be applied to the component that is being positioned in order
-   * to correctly obtain the position data.
-   */
-  ref: RefCallback<HTMLElement>;
-
-  /**
-   * The element that that the ref has found.
-   */
-  element?: HTMLElement;
-
-  /**
-   * A key to uniquely identify this positioner.
-   */
-  key: string;
-}
-
-/**
- * @deprecated Import from `remirror/react/hooks` instead.
- */
-export interface UsePositionerReturn extends Partial<UseMultiPositionerReturn> {
-  /**
-   * When `true`, the position is active and the pop should be displayed.
-   */
-  active: boolean;
-}
-
-/**
- * @deprecated Import from `remirror/react/hooks` or
- * `@remirror/react-hooks/use-positioner` instead.
- */
-export function usePositioner(
-  positioner: Positioner | StringPositioner,
-  isActive = true,
-): UsePositionerReturn {
-  const positions = useMultiPositioner(positioner);
-
-  if (positions.length > 0 && isActive) {
-    return { ...positions[0], active: true };
-  }
-
-  return { ...emptyVirtualPosition, ...emptyCoords, active: false };
-}
-
-/**
- * @deprecated Import from `remirror/react/hooks` or
- * `@remirror/react-hooks/use-multi-positioner` instead.
- */
-export function useMultiPositioner(
-  positioner: Positioner | StringPositioner,
-): UseMultiPositionerReturn[] {
-  interface CollectElementRef {
-    ref: RefCallback<HTMLElement>;
-    id: string;
-  }
-
-  const [state, setState] = useState<ElementsAddedParameter[]>([]);
-  const memoizedPositioner = useMemo(() => getPositioner(positioner), [positioner]);
-  const [collectRefs, setCollectRefs] = useState<CollectElementRef[]>([]);
-
-  useExtension(
-    PositionerExtension,
-    useCallback(
-      (parameter) => {
-        const { addCustomHandler } = parameter;
-        return addCustomHandler('positioner', memoizedPositioner);
-      },
-      [memoizedPositioner],
-    ),
-    [],
-  );
-
-  // Add the positioner update handlers.
-  useEffect(() => {
-    const disposeUpdate = memoizedPositioner.addListener('update', (parameter) => {
-      const items: CollectElementRef[] = [];
-
-      for (const { id, setElement } of parameter) {
-        const ref: RefCallback<HTMLElement> = (element) => {
-          if (!element) {
-            return;
-          }
-
-          setElement(element);
-        };
-
-        items.push({ id, ref });
-      }
-
-      setCollectRefs(items);
-    });
-
-    const disposeElementsAdded = memoizedPositioner.addListener('done', (parameter) => {
-      setState(parameter);
-    });
-
-    return () => {
-      disposeUpdate();
-      disposeElementsAdded();
-    };
-  }, [memoizedPositioner]);
-
-  return collectRefs.map(({ ref, id: key }, index) => {
-    const { element, position } = state[index] ?? {};
-    const virtualPosition = { ...emptyVirtualPosition, ...position };
-    const virtualNode = memoizedPositioner.getVirtualNode(virtualPosition);
-
-    return { ref, element, key, virtualNode, ...position };
-  });
-}

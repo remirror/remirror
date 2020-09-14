@@ -1,21 +1,13 @@
 export type { I18nProviderProps, RemirrorProviderProps, ThemeProviderProps } from './components';
 export { I18nProvider, RemirrorProvider, ThemeProvider } from './components';
 
-export type {
-  BaseReactCombinedUnion,
-  UseExtensionCallback,
-  UsePositionerReturn,
-  UseMultiPositionerReturn,
-  UseRemirrorType,
-} from './hooks';
+export type { BaseReactCombinedUnion, UseExtensionCallback, UseRemirrorType } from './hooks';
 export {
   useEffectWithWarning,
   useExtension,
   useForceUpdate,
   useI18n,
   useManager,
-  useMultiPositioner,
-  usePositioner,
   usePreset,
   usePrevious,
   useRemirror,

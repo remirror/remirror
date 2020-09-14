@@ -5,7 +5,7 @@ import React, { FC } from 'react';
 import type { AnyRemirrorManager } from '@remirror/core';
 import { ReactPreset } from '@remirror/preset-react';
 import { BoldExtension } from '@remirror/testing';
-import { act as renderAct, render } from '@remirror/testing/react';
+import { act as renderAct, render, strictRender } from '@remirror/testing/react';
 
 import { RemirrorProvider } from '../../components';
 import { createReactManager } from '../../react-helpers';
@@ -132,6 +132,33 @@ describe('useRemirror', () => {
     });
 
     expect(mock).toHaveBeenCalledTimes(2);
+  });
+
+  it('should auto update when in strict mode', () => {
+    const mock = jest.fn();
+
+    const HookComponent: FC = () => {
+      useRemirror({ autoUpdate: true });
+      mock();
+
+      return <div />;
+    };
+
+    const chain = RemirrorTestChain.create(createReactManager([]));
+
+    strictRender(
+      <RemirrorProvider manager={chain.manager}>
+        <HookComponent />
+      </RemirrorProvider>,
+    );
+
+    for (const char of 'Strict') {
+      renderAct(() => {
+        chain.insertText(char);
+      });
+    }
+
+    expect(mock).toHaveBeenCalledTimes(14);
   });
 });
 

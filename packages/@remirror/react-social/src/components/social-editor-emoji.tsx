@@ -3,7 +3,7 @@ import { Type, useMultishift } from 'multishift';
 import React, { FC, useCallback, useState } from 'react';
 
 import { isEmptyArray } from '@remirror/core';
-import { usePositioner } from '@remirror/react';
+import { usePositioner } from '@remirror/react-hooks';
 import { useEditorFocus } from '@remirror/react-hooks/use-editor-focus';
 import { useEmoji } from '@remirror/react-hooks/use-emoji';
 
