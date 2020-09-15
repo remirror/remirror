@@ -1,15 +1,12 @@
 ---
 slug: chainable-commands
 title: Chainable commands
-hide_title: true
 author: Ifiok Jr.
 author_title: Remirror Maintainer
 author_url: https://github.com/ifiokjr
 author_image_url: https://avatars1.githubusercontent.com/u/1160934?v=4
 tags: [remirror, prosemirror, chaining, commands, state]
 ---
-
-# Chainable commands
 
 One of the goals of `remirror@1.0.0` is to make consuming commands easier. Chainable commands was identified as one way in which this could be achieved.
 
@@ -53,7 +50,7 @@ Since each command creates it's internal `Transaction` instance updates are expe
 
 ## Configuring `remirror` for chainable commands
 
-The first step was to provide a **shared** transaction for all internal `remirror` commands.
+The first step was to provide a **shared** transaction for all internal **remirror** commands.
 
 Since the command functions already receive _three_ positional arguments adding a _fourth_ for the shared transaction made the function call overly complex. To make things easier to consume, all the arguments have been squashed into one parameter, giving the remirror command function the following type signature.
 
@@ -119,7 +116,7 @@ chained.run = (): void => {
 };
 ```
 
-This is the setup required for `remirror` to make any internal command chainable.
+This is the setup required for **remirror** to make any internal command chainable.
 
 The following example is how commands created in remirror are automatically chainable. It uses the shared `tr` property to accomplish this.
 
@@ -163,19 +160,19 @@ function chainableEditorState(tr: Transaction, state: EditorState): EditorState 
     reconfigure: state.reconfigure.bind(state),
     toJSON: state.toJSON.bind(state),
     get storedMarks() {
-      return state.storedMarks;
+      return tr.storedMarks;
     },
     get selection() {
-      return state.selection;
+      return tr.selection;
     },
     get doc() {
-      return state.doc;
+      return tr.doc;
     },
   };
 }
 ```
 
-With this method now in place it's fairly trivial to convert any ProseMirror command into a chainable function.
+With this method it becomes possible to make ProseMirror commands chainable.
 
 ```ts
 export function convertCommand(commandFunction: ProsemirrorCommandFunction): CommandFunction {
@@ -185,7 +182,7 @@ export function convertCommand(commandFunction: ProsemirrorCommandFunction): Com
 }
 ```
 
-When the commands call `state.tr`, they will be accessing the shared transaction that is provided by remirror.
+When the commands call `state.tr`, they will be accessing the shared transaction that is provided by **remirror**.
 
 So converting the `deleteTable` command from `prosemirror-tables` is possible with the with the following code snippet.
 
@@ -201,9 +198,9 @@ Just because a command **can** be made chainable does not mean it **should** be 
 
 For example, `prosemirror-history` provides the `undo` and `redo` commands. While making them chainable would work in theory, in practice, what does it actually mean for `undo` to be chainable.
 
-Are you undoing the current transaction? Are we undoing the last action before this transaction? It's not clear what the expected behavior should be.
+Are we undoing the current transaction or last action before this transaction? It's not clear what the expected behavior should be in every situation.
 
-There are also commands like `fixTables` from `prosemirror-tables` which I found quite difficult to make chainable. The command uses the `state.tr` to check if any of the tables need fixing. If they do, it dispatches them, if they don't it doesn't. Unfortunately this breaks the `isEnabled` command checks which rely on the `transaction` not being updated unless a dispatch is provided.
+There are also commands like `fixTables` from `prosemirror-tables` which are also non-chainable. The command uses `state.tr` to check if any of the tables need fixing. If they do, it dispatches them, if they don't it doesn't. Unfortunately this breaks the `isEnabled` command checks which rely on the `Transaction` not being updated unless a dispatch is provided.
 
 As a result remirror also supports declaring commands as non-chainable.
 
