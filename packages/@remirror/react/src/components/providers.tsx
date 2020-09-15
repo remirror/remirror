@@ -22,12 +22,12 @@ import type {
   CreateReactManagerOptions,
   GetRootPropsConfig,
   I18nContextProps,
-  RemirrorContextProps,
+  ReactFrameworkOutput,
 } from '../react-types';
 import { ReactEditor } from './react-editor';
 
 interface RemirrorContextProviderProps<Combined extends AnyCombinedUnion>
-  extends ProviderProps<RemirrorContextProps<Combined>>,
+  extends ProviderProps<ReactFrameworkOutput<Combined>>,
     Pick<RemirrorProviderProps<Combined>, 'childAsRoot'> {}
 
 export interface RemirrorProviderProps<Combined extends AnyCombinedUnion>

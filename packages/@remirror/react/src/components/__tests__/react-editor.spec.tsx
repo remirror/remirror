@@ -24,7 +24,7 @@ import {
   useRemirror,
 } from '@remirror/testing/react';
 
-import type { ReactCombinedUnion, RemirrorContextProps } from '../../react-types';
+import type { ReactCombinedUnion, ReactFrameworkOutput } from '../../react-types';
 import { ReactEditor } from '../react-editor';
 
 const textContent = `This is editor text`;
@@ -95,8 +95,8 @@ describe('basic functionality', () => {
   });
 
   it('should allow text input and fire all handlers', () => {
-    let setContent: RemirrorContextProps<AnyCombinedUnion>['setContent'] = jest.fn();
-    const mock = jest.fn((value: RemirrorContextProps<AnyCombinedUnion>) => {
+    let setContent: ReactFrameworkOutput<AnyCombinedUnion>['setContent'] = jest.fn();
+    const mock = jest.fn((value: ReactFrameworkOutput<AnyCombinedUnion>) => {
       setContent = value.setContent;
       return <div />;
     });
@@ -194,7 +194,7 @@ describe('focus', () => {
   };
 
   let mock: ReturnType<typeof rafMock>;
-  let context!: RemirrorContextProps<any>;
+  let context!: ReactFrameworkOutput<any>;
   let editorNode: HTMLElement;
 
   beforeEach(() => {
@@ -358,7 +358,7 @@ test('`focus` should be chainable', () => {
 
   const manager = createReactManager([]);
   const editor = RemirrorTestChain.create(manager);
-  let context: RemirrorContextProps<CombinedUnion<AnyExtension, AnyPreset>>;
+  let context: ReactFrameworkOutput<CombinedUnion<AnyExtension, AnyPreset>>;
 
   const TrapContext = () => {
     context = useRemirror();

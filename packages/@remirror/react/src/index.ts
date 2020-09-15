@@ -24,7 +24,7 @@ export type {
   ReactCombinedUnion,
   RefKeyRootProps,
   RefParameter,
-  RemirrorContextProps,
+  ReactFrameworkOutput,
 } from './react-types';
 
 // Export boundary already applied

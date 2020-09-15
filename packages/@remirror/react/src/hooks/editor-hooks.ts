@@ -28,7 +28,7 @@ import type {
   CreateReactManagerOptions,
   I18nContextProps,
   ReactCombinedUnion,
-  RemirrorContextProps,
+  ReactFrameworkOutput,
 } from '../react-types';
 import { useEffectWithWarning, useForceUpdate } from './core-hooks';
 
@@ -111,14 +111,14 @@ import { useEffectWithWarning, useForceUpdate } from './core-hooks';
  */
 export function useRemirror<Combined extends AnyCombinedUnion = Value<Remirror.AllExtensions>>(
   handler?: RemirrorEventListener<Combined> | { autoUpdate: boolean },
-): RemirrorContextProps<Combined> {
+): ReactFrameworkOutput<Combined> {
   // This is not null when rendering within the `RemirrorProvider`. The majority
   // of times this is called, this will be the case.
-  const editorContext = useContext(RemirrorContext) as RemirrorContextProps<Combined> | null;
+  const editorContext = useContext(RemirrorContext) as ReactFrameworkOutput<Combined> | null;
 
   // This is not null when rendering within the `PortalContext` for custom node
   // views and custom decorations.
-  const portalContext = usePortalContext() as RemirrorContextProps<Combined> | null;
+  const portalContext = usePortalContext() as ReactFrameworkOutput<Combined> | null;
 
   // A helper for forcing an update of the state.
   const forceUpdate = useRef(useForceUpdate());
@@ -189,7 +189,7 @@ export function useI18n(): I18nContextProps {
  */
 export type UseRemirrorType<Combined extends AnyCombinedUnion> = <Type extends AnyCombinedUnion>(
   handler?: RemirrorEventListener<Combined> | { autoUpdate: boolean },
-) => RemirrorContextProps<Combined | Type>;
+) => ReactFrameworkOutput<Combined | Type>;
 
 /**
  * Dynamically update the properties of your extension via hooks. Provide the

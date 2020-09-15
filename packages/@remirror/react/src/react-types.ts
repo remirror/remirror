@@ -166,7 +166,7 @@ export interface I18nContextProps {
  * These are the props passed to the render function provided when setting up
  * your editor.
  */
-export interface RemirrorContextProps<Combined extends AnyCombinedUnion>
+export interface ReactFrameworkOutput<Combined extends AnyCombinedUnion>
   extends FrameworkOutput<Combined> {
   /**
    * A function that returns props which should be spread on a react element and

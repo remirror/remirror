@@ -20,7 +20,7 @@ import { ReactPreset } from '@remirror/preset-react';
 import { RemirrorType } from '@remirror/react-utils';
 
 import { usePrevious } from '../hooks';
-import { ReactEditorProps, ReactFramework, ReactFrameworkParameter } from '../react-framework';
+import { ReactFramework, ReactFrameworkParameter, ReactFrameworkProps } from '../react-framework';
 
 /**
  * The component responsible for rendering your prosemirror editor to the DOM.
@@ -34,8 +34,8 @@ import { ReactEditorProps, ReactFramework, ReactFrameworkParameter } from '../re
  * @internal
  */
 export const ReactEditor = <Combined extends AnyCombinedUnion>(
-  props: ReactEditorProps<Combined>,
-): ReactElement<ReactEditorProps<Combined>> => {
+  props: ReactFrameworkProps<Combined>,
+): ReactElement<ReactFrameworkProps<Combined>> => {
   const { stringHandler = defaultStringHandler, onError, manager, forceEnvironment, value } = props;
   const { placeholder } = props;
   const isFirstMount = useFirstMountState();
@@ -109,14 +109,14 @@ export const ReactEditor = <Combined extends AnyCombinedUnion>(
   useControlledEditor(framework);
 
   // Subscribe to updates from the [[`PortalContainer`]]
-  const portals = usePortals(framework.remirrorContext.portalContainer);
+  const portals = usePortals(framework.frameworkOutput.portalContainer);
 
   // Return the rendered component and the portals for custom node views and
   // decorations
   return (
     <>
       {framework.generateReactElement()}
-      <RemirrorPortals portals={portals} context={framework.remirrorContext} />
+      <RemirrorPortals portals={portals} context={framework.frameworkOutput} />
     </>
   );
 };

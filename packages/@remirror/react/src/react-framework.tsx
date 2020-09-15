@@ -29,14 +29,15 @@ import {
 import type {
   BaseProps,
   GetRootPropsConfig,
+  ReactFrameworkOutput,
   RefKeyRootProps,
-  RemirrorContextProps,
 } from './react-types';
 import { createEditorView, RemirrorSSR } from './ssr';
 
 export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework<
   Combined,
-  ReactEditorProps<Combined>
+  ReactFrameworkProps<Combined>,
+  ReactFrameworkOutput<Combined>
 > {
   /**
    * Whether to render the client immediately.
@@ -298,9 +299,9 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
     }
   }
 
-  get remirrorContext(): RemirrorContextProps<Combined> {
+  get frameworkOutput(): ReactFrameworkOutput<Combined> {
     return {
-      ...this.frameworkHelpers,
+      ...this.baseOutput,
       getRootProps: this.getRootProps,
       portalContainer: this.manager.store.portalContainer,
     };
@@ -385,28 +386,18 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
   generateReactElement(): JSX.Element {
     this.resetRender();
 
-    const element: JSX.Element | null = this.props.children(this.remirrorContext);
+    const element: JSX.Element | null = this.props.children(this.frameworkOutput);
 
-    const { children, ...properties } = getElementProps(element);
     let renderedElement: JSX.Element;
 
-    if (this.rootPropsConfig.called) {
-      // Simply return the element as this method can never actually be called
-      // within an ssr environment
-      renderedElement = element;
-    } else if (
-      // When called by a provider `getRootProps` can't actually be called until
-      // the jsx is generated. Check if this is being rendered via any remirror
-      // context provider. In this case `getRootProps` **must** be called by the
-      // consumer.
+    if (
+      this.rootPropsConfig.called ||
       isRemirrorContextProvider(element) ||
       isRemirrorProvider(element)
     ) {
-      const { childAsRoot } = element.props;
-
-      renderedElement = childAsRoot
-        ? cloneElement(element, properties, this.renderClonedElement(children, childAsRoot))
-        : element;
+      // Simply return the element as this method can never actually be called
+      // within an ssr environment
+      renderedElement = element;
     } else {
       renderedElement = isReactDOMElement(element) ? (
         this.renderClonedElement(element)
@@ -421,7 +412,8 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
   }
 }
 
-export interface ReactEditorProps<Combined extends AnyCombinedUnion> extends BaseProps<Combined> {
+export interface ReactFrameworkProps<Combined extends AnyCombinedUnion>
+  extends BaseProps<Combined> {
   /**
    * The render prop that takes the injected remirror params and returns an
    * element to render. The editor view is automatically attached to the DOM.
@@ -460,14 +452,14 @@ export interface ReactEditorProps<Combined extends AnyCombinedUnion> extends Bas
  * @param - injected remirror params
  */
 type RenderPropFunction<Combined extends AnyCombinedUnion> = (
-  params: RemirrorContextProps<Combined>,
+  params: ReactFrameworkOutput<Combined>,
 ) => JSX.Element;
 
 /**
  * The parameter that is passed into the ReactFramework.
  */
 export interface ReactFrameworkParameter<Combined extends AnyCombinedUnion>
-  extends FrameworkParameter<Combined, ReactEditorProps<Combined>> {
+  extends FrameworkParameter<Combined, ReactFrameworkProps<Combined>> {
   getShouldRenderClient: () => boolean | undefined;
   setShouldRenderClient: SetShouldRenderClient;
 }

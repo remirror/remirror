@@ -16,7 +16,7 @@ import { act, fireEvent, render, strictRender } from '@remirror/testing/react';
 
 import { useManager, useRemirror } from '../../hooks';
 import { createReactManager } from '../../react-helpers';
-import type { RemirrorContextProps } from '../../react-types';
+import type { ReactFrameworkOutput } from '../../react-types';
 import { RemirrorProvider } from '../providers';
 import { ReactEditor } from '../react-editor';
 
@@ -172,7 +172,7 @@ describe('Remirror Controlled Component', () => {
       stringHandler: fromHtml,
     });
 
-    let ctx: RemirrorContextProps<typeof manager['~EP']>;
+    let ctx: ReactFrameworkOutput<typeof manager['~EP']>;
 
     const Component: FC<{
       editorState: EditorState<SchemaFromCombined<typeof manager['~EP']>>;

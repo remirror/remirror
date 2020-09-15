@@ -27,11 +27,12 @@ export interface DomFrameworkProps<Combined extends AnyCombinedUnion>
 }
 
 /**
- * The helper class which makes integrating with the DOM easier.
+ * The Framework implementation when interacting with the DOM.
  */
 export class DomFramework<Combined extends AnyCombinedUnion> extends Framework<
   Combined,
-  DomFrameworkProps<Combined>
+  DomFrameworkProps<Combined>,
+  DomFrameworkOutput<Combined>
 > {
   get name() {
     return 'dom' as const;
@@ -84,9 +85,9 @@ export class DomFramework<Combined extends AnyCombinedUnion> extends Framework<
     this.manager.onStateUpdate({ previousState: this.previousState, state, tr, transactions });
   }
 
-  get domOutput(): DomFrameworkOutput<Combined> {
+  get frameworkOutput(): DomFrameworkOutput<Combined> {
     return {
-      ...this.frameworkHelpers,
+      ...this.baseOutput,
       destroy: () => this.destroy(),
     };
   }

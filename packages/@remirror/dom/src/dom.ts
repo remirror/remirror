@@ -76,5 +76,5 @@ export function createDomEditor<Combined extends AnyCombinedUnion>(
 
   framework.onFirstRender();
 
-  return framework.domOutput;
+  return framework.frameworkOutput;
 }
