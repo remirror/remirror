@@ -14,16 +14,14 @@ First make sure you've followed the instructions in the [installation guide](/do
 Then you'll need to import the relevant code.
 
 ```tsx
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { SocialEditor } from 'remirror/react/social';
 ```
 
-This import gives you access to the social editor. Now let's wire it up with some junk data. In reality you'd be fetching this data from an API.
+This import gives you access to the social editor. Now let's wire it up with some example data. In reality you'd be fetching this data from an API.
 
 ```tsx
-import { TagData, UserData } from 'remirror/react/social';
-
-const exampleUsers: UserData[] = [
+const exampleUsers: [] = [
   {
     avatarUrl: 'https://api.adorable.io/avatars/100/tolu@adorable.io.png',
     displayName: 'Tolu',
@@ -72,11 +70,9 @@ Now that the data is available let's use it.
 function MyEditor() {
   const [mention, setMention] = useState(null);
 
-  const onChange = useCallback((parameter) => {
+  const onMentionChange = useCallback((parameter) => {
     setMention(parameter);
   }, []);
-
-  console.log(mention);
 
   const onExit = useCallback(({ query }, command) => {
     command({ href: `/${query.full}` });
@@ -84,15 +80,15 @@ function MyEditor() {
 
   const items = useMemo(() => {
     if (mention && mention.name === 'at' && mention.query) {
-      return exampleUsers.filter((user) =>
-        user.username.toLowerCase().includes(mention.query.toLowerCase()),
-      );
+      return exampleUsers
+        .filter((user) => user.username.toLowerCase().includes(mention.query.toLowerCase()))
+        .map((user) => ({ ...user, label: user.displayName }));
     }
 
     if (mention && mention.name === 'tag' && mention.query) {
-      return exampleTags.filter((tag) =>
-        tag.tag.toLowerCase().includes(mention.query.toLowerCase()),
-      );
+      return exampleTags
+        .filter((tag) => tag.tag.toLowerCase().includes(mention.query.toLowerCase()))
+        .map((tag) => ({ ...tag, label: tag.tag }));
     }
 
     return [];
@@ -103,7 +99,7 @@ function MyEditor() {
       placeholder='Start typing here'
       autoFocus={false}
       items={items}
-      onMentionChange={onChange}
+      onMentionChange={onMentionChange}
       onExit={onExit}
     />
   );
