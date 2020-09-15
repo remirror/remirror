@@ -23,9 +23,16 @@ export function chainableEditorState<Schema extends EditorSchema = EditorSchema>
   tr: Transaction<Schema>,
   state: EditorState<Schema>,
 ): EditorState<Schema> {
+  // Every time the `state.tr` property is accessed these values are updated to
+  // reflect the current `transaction` value for the doc, selection and
+  // storedMarks. This way they can be mostly be constant within the scope of
+  // the command this state is used in.
+  let selection = tr.selection;
+  let doc = tr.doc;
+  let storedMarks = tr.storedMarks;
+
   return {
     ...state,
-    tr,
     schema: state.schema,
     plugins: state.plugins,
     apply: state.apply.bind(state),
@@ -33,13 +40,20 @@ export function chainableEditorState<Schema extends EditorSchema = EditorSchema>
     reconfigure: state.reconfigure.bind(state),
     toJSON: state.toJSON.bind(state),
     get storedMarks() {
-      return state.storedMarks;
+      return storedMarks;
     },
     get selection() {
-      return state.selection;
+      return selection;
     },
     get doc() {
-      return state.doc;
+      return doc;
+    },
+    get tr() {
+      selection = tr.selection;
+      doc = tr.doc;
+      storedMarks = tr.storedMarks;
+
+      return tr;
     },
   };
 }

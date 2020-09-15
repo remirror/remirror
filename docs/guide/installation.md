@@ -10,18 +10,22 @@ Rather than installing multiple scoped packages, the `remirror` package is a gat
 Use the installation instruction outlined below, depending on the package manager used in your project.
 
 ```bash
-yarn add remirror@next @remirror/pm@next
+yarn add remirror@next
 ```
 
 ```bash
-pnpm add remirror@next @remirror/pm@next
+pnpm add remirror@next
 ```
 
 ```bash
-npm install remirror@next @remirror/pm@next
+npm install remirror@next
 ```
 
-You will also notice that you are also installing `@remirror/pm`. This is a peer dependency to all the scoped `@remirror` packages which interact with `prosemirror-*`. It provides some assurances around the versions of prosemirror libraries being used and helps simplify the codebase.
+::: note
+
+The additional requirement to install the dependency `@remirror/pm` has been removed and it will automatically be installed for you when consuming `remirror`. You can still install it if you wish since it is a peer dependency for all scoped `@remirror` packages which interact with `prosemirror-*` APIs. It ensures consistent library versions across the ecosystem and can simplify your codebase.
+
+:::
 
 ## Required styles
 

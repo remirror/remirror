@@ -134,12 +134,12 @@ export type CommandFunction<
  */
 export interface CommandFunctionParameter<Schema extends EditorSchema = EditorSchema> {
   /**
-   * The prosemirror transaction
+   * The shared ProseMirror Transaction.
    */
   tr: Transaction<Schema>;
 
   /**
-   * A snapshot of the prosemirror editor state.
+   * A snapshot of the ProseMirror editor state.
    */
   state: EditorState<Schema>;
 
@@ -155,7 +155,7 @@ export interface CommandFunctionParameter<Schema extends EditorSchema = EditorSc
   dispatch?: DispatchFunction<Schema>;
 
   /**
-   * An instance of the Prosemirror editor `view`.
+   * An instance of the ProseMirror editor `view`.
    */
   view?: EditorView<Schema>;
 }
