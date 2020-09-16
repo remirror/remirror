@@ -312,35 +312,39 @@ There is something wrong with your i18n setup.
 > Attempted import error: 'en' is not exported from 'make-plural/plurals'.
 
 There is a problem related to Webpack (4 & 5) build configuration. Make sure:
-- `file-loader` does not process `.mjs` files, e.g.:
-```
-// "file" loader makes sure assets end up in the `build` folder.
-// When you `import` an asset, you get its filename.
-// This loader doesn't use a "test" so it will catch all modules
-// that fall through the other loaders.
-{
-  loader: require.resolve('file-loader'),
 
-  // Exclude `js` files to keep "css" loader working as it injects
-  // it's runtime that would otherwise processed through "file" loader.
-  // Also exclude `html` and `json` extensions so they get processed
-  // by webpacks internal loaders.
-  exclude: [/\.js$/, /\.mjs$/, /\.html$/, /\.json$/],
-  options: {
-    name: 'static/media/[name].[hash:8].[ext]'
+- `file-loader` does not process `.mjs` files, e.g.:
+
+  ```
+  // "file" loader makes sure assets end up in the `build` folder.
+  // When you `import` an asset, you get its filename.
+  // This loader doesn't use a "test" so it will catch all modules
+  // that fall through the other loaders.
+  {
+    loader: require.resolve('file-loader'),
+
+    // Exclude `js` files to keep "css" loader working as it injects
+    // it's runtime that would otherwise processed through "file" loader.
+    // Also exclude `html` and `json` extensions so they get processed
+    // by webpacks internal loaders.
+    exclude: [/\.js$/, /\.mjs$/, /\.html$/, /\.json$/],
+    options: {
+      name: 'static/media/[name].[hash:8].[ext]'
+    }
   }
-}
-```
+  ```
+
 - instead these files must be processed for example with `babel-loader`, e.g. 
-```
-// Process JS with Babel.
-{
-  test: /\.(js|jsx|mjs)$/,
-  include: paths.appSrc,
-  exclude: /node_modules/,
-  loader: require.resolve('babel-loader'),
-  options: {
-    compact: true
-  }
-},
-```
+
+  ```
+  // Process JS with Babel.
+  {
+    test: /\.(js|jsx|mjs)$/,
+    include: paths.appSrc,
+    exclude: /node_modules/,
+    loader: require.resolve('babel-loader'),
+    options: {
+      compact: true
+    }
+  },
+  ```
