@@ -4,11 +4,14 @@ import { EMPTY_PARAGRAPH_NODE, ExtensionPriority, ExtensionTag } from '@remirror
 import type {
   Dispose,
   EditorState,
+  FromToParameter,
   KeyBindingCommandFunction,
   NodeExtensionSpec,
   NodeViewMethod,
   ProsemirrorAttributes,
+  RemirrorContentType,
 } from '@remirror/core-types';
+import { fromHtml } from '@remirror/core-utils';
 import { Schema } from '@remirror/pm/model';
 import { Plugin } from '@remirror/pm/state';
 import { EditorView } from '@remirror/pm/view';
@@ -20,6 +23,7 @@ import {
 } from '@remirror/testing';
 
 import { NodeExtension, PlainExtension } from '../../extension';
+import { Framework } from '../../framework';
 import { isRemirrorManager, RemirrorManager } from '../remirror-manager';
 
 describe('Manager', () => {
@@ -145,6 +149,58 @@ describe('Manager', () => {
     expect(isRemirrorManager(manager)).toBeTrue();
     expect(isRemirrorManager(manager, [DummyExtension, CorePreset])).toBeTrue();
     expect(isRemirrorManager(manager, ['dummy', 'big'])).toBeTrue();
+  });
+
+  it('output', () => {
+    const manager = createCoreManager([]);
+    expect(() => manager.output).toThrowErrorMatchingSnapshot();
+    expect(() => (manager.frameworkAttached ? manager.output : false)).not.toThrow();
+
+    class TestFramework extends Framework<any, any, any> {
+      #cacheOutput: any;
+
+      get name() {
+        return 'test';
+      }
+
+      updateState() {}
+
+      createView(state: EditorState, element?: HTMLElement) {
+        return new EditorView(element, {
+          state,
+          nodeViews: this.manager.store.nodeViews,
+          dispatchTransaction: this.dispatchTransaction,
+          attributes: () => this.getAttributes(),
+          editable: () => {
+            return this.props.editable ?? true;
+          },
+        });
+      }
+
+      get frameworkOutput() {
+        return (this.#cacheOutput ??= this.baseOutput);
+      }
+    }
+
+    const createStateFromContent = (
+      content: RemirrorContentType,
+      selection?: FromToParameter | undefined,
+    ) =>
+      manager.createState({
+        content,
+        stringHandler: fromHtml,
+        selection,
+      });
+
+    const framework = new TestFramework({
+      createStateFromContent: createStateFromContent,
+      getProps: () => ({ manager }),
+      initialEditorState: createStateFromContent(manager.createEmptyDoc()),
+    });
+
+    manager.attachFramework(framework, () => {});
+
+    expect(manager.output).toBe(framework.frameworkOutput);
   });
 });
 

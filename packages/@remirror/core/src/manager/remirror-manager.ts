@@ -46,7 +46,7 @@ import type {
   ManagerStoreKeys,
   SchemaFromExtensionUnion,
 } from '../extension';
-import type { BaseFramework } from '../framework';
+import type { BaseFramework, FrameworkOutput } from '../framework';
 import type {
   AnyCombinedUnion,
   AnyPreset,
@@ -211,7 +211,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   /**
    * The active framework for this manager if it exists.
    */
-  #framework?: BaseFramework;
+  #framework?: BaseFramework<Combined>;
 
   /**
    * A method for disposing the state update event listeners on the active
@@ -220,14 +220,23 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   #disposeFramework?: Dispose;
 
   /**
-   * Returns true if the manager has been destroyed.
+   * Identifies this as a `Manager`.
+   *
+   * @internal
+   */
+  get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__](): RemirrorIdentifier.Manager {
+    return RemirrorIdentifier.Manager;
+  }
+
+  /**
+   * Returns `true` if the manager has been destroyed.
    */
   get destroyed(): boolean {
     return this.#phase === ManagerPhase.Destroy;
   }
 
   /**
-   * True when the view has been added to the UI layer and the editor is
+   * `true` when the view has been added to the UI layer and the editor is
    * running.
    */
   get mounted(): boolean {
@@ -235,12 +244,63 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   }
 
   /**
-   * Identifies this as a `Manager`.
+   * Retrieve the framework output.
    *
-   * @internal
+   * This will throw an error if used before a framework has been attached to
+   * the manager.
+   *
+   * With synchronous frameworks this means that it should only be used after
+   * the manager has been applied to the editor creation function.
+   *
+   * For frameworks like react, the following example will throw an error since
+   * the framework hasn't been attached yet by `RemirrorProvider`
+   *
+   * ```tsx
+   * import React from 'react';
+   * import { useManager } from 'remirror/react';
+   *
+   * const Editor = () => {
+   *   const manager = useManager(() => [], {});
+   *   log(manager.output); // ❌ Throws error
+   *
+   *   const callback = () => {
+   *     return manager.output; // ✅ This is fine.
+   *   }
+   *
+   *   return <RemirrorProvider manager={manager} />
+   * }
+   * ```
+   *
+   * A safe way to use this is to check if the framework is attached first.
+   *
+   * const Editor = () => {
+   *   const manager = useManager(() => [], {});
+   *
+   *   if (manager.frameworkAttached) {
+   *     log(manager.output); // ✅ This is fine.
+   *   }
+   *
+   *   return <RemirrorProvider manager={manager} />
+   * }
+   * ```
    */
-  get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__](): RemirrorIdentifier.Manager {
-    return RemirrorIdentifier.Manager;
+  get output(): FrameworkOutput<Combined> {
+    invariant(this.#framework, {
+      code: ErrorConstant.MANAGER_PHASE_ERROR,
+      message:
+        'Access to the manager context is only possible after the framework has been attached.',
+    });
+
+    return this.#framework?.frameworkOutput;
+  }
+
+  /**
+   * Returns true when a framework is attached to the manager.
+   *
+   * This can be used to check if it is safe to call `manager.output`.
+   */
+  get frameworkAttached(): boolean {
+    return !!this.#framework;
   }
 
   /**
@@ -545,7 +605,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * Attach a framework to the manager.
    */
   attachFramework(
-    framework: BaseFramework,
+    framework: BaseFramework<Combined>,
     updateHandler: (parameter: StateUpdateLifecycleParameter) => void,
   ): void {
     if (this.#framework === framework) {
@@ -808,6 +868,7 @@ export type AnyRemirrorManager = Replace<
   {
     clone: () => AnyRemirrorManager;
     store: Replace<Remirror.ManagerStore<any>, { chain: any }>;
+    output: Replace<FrameworkOutput<any>, { chain: any }>;
     ['~E']: AnyExtension;
     ['~P']: AnyPreset;
     ['~Sch']: EditorSchema;
@@ -816,6 +877,10 @@ export type AnyRemirrorManager = Replace<
     ['~EP']: AnyCombinedUnion;
     view: EditorView;
     addView: (view: EditorView) => void;
+    attachFramework: (
+      framework: BaseFramework<any>,
+      updateHandler: (parameter: StateUpdateLifecycleParameter) => void,
+    ) => void;
   }
 >;
 
