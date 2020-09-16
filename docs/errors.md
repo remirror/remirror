@@ -334,7 +334,7 @@ There is a problem related to Webpack (4 & 5) build configuration. Make sure:
   }
   ```
 
-- instead these files must be processed for example with `babel-loader`, e.g. 
+- instead these files must be processed for example with `babel-loader`, e.g.
 
   ```
   // Process JS with Babel.
