@@ -82,7 +82,6 @@ describe('useRemirror', () => {
         helpers: expect.any(Object),
         addHandler: expect.any(Function),
         uid: expect.any(String),
-        manager: expect.any(Object),
         getState: expect.any(Function),
         getPreviousState: expect.any(Function),
         getExtension: expect.any(Function),
@@ -94,7 +93,6 @@ describe('useRemirror', () => {
         getRootProps: expect.any(Function),
       }),
     );
-
     expect(result.current.getState()).toEqual(result.current.getPreviousState());
   });
 
@@ -105,19 +103,14 @@ describe('useRemirror', () => {
       () => useRemirror<BoldExtension>({ autoUpdate: true }),
       { wrapper },
     );
-
     expect(result.current.active.bold()).toBe(false);
-
     act(() => {
       chain.overwrite(doc(p('Welcome <start>friend<end>')));
     });
-
     expect(result.current.active.bold()).toBe(false);
-
     act(() => {
       result.current.commands.toggleBold();
     });
-
     expect(result.current.active.bold()).toBe(true);
   });
 
@@ -126,26 +119,20 @@ describe('useRemirror', () => {
     const { doc, p } = chain.nodes;
     const mock = jest.fn();
     renderHook(() => useRemirror<BoldExtension>(mock), { wrapper });
-
     act(() => {
       chain.overwrite(doc(p('Welcome <start>friend<end>')));
     });
-
     expect(mock).toHaveBeenCalledTimes(2);
   });
 
   it('should auto update when in strict mode', () => {
     const mock = jest.fn();
-
     const HookComponent: FC = () => {
       useRemirror({ autoUpdate: true });
       mock();
-
       return <div />;
     };
-
     const chain = RemirrorTestChain.create(createReactManager([]));
-
     strictRender(
       <RemirrorProvider manager={chain.manager}>
         <HookComponent />

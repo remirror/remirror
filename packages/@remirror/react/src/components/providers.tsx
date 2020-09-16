@@ -1,13 +1,5 @@
-import type { ReactChild, ReactFragment } from 'react';
-import React, {
-  CSSProperties,
-  ElementType,
-  ProviderProps,
-  ReactElement,
-  ReactNode,
-  ReactPortal,
-  useEffect,
-} from 'react';
+import type { CSSProperties, ElementType, ReactElement, ReactNode } from 'react';
+import React, { useEffect } from 'react';
 
 import type { AnyCombinedUnion, MakeOptional } from '@remirror/core';
 import { i18n as defaultI18n } from '@remirror/i18n';
@@ -15,28 +7,17 @@ import { RemirrorType } from '@remirror/react-utils';
 import type { RemirrorThemeType } from '@remirror/theme';
 import { createThemeVariables, themeStyles } from '@remirror/theme';
 
-import { useManager } from '../hooks';
+import { useManager, useRemirror } from '../hooks';
 import { I18nContext, RemirrorContext } from '../react-contexts';
-import type {
-  BaseProps,
-  CreateReactManagerOptions,
-  GetRootPropsConfig,
-  I18nContextProps,
-  ReactFrameworkOutput,
-} from '../react-types';
+import type { BaseProps, CreateReactManagerOptions, I18nContextProps } from '../react-types';
 import { ReactEditor } from './react-editor';
-
-interface RemirrorContextProviderProps<Combined extends AnyCombinedUnion>
-  extends ProviderProps<ReactFrameworkOutput<Combined>>,
-    Pick<RemirrorProviderProps<Combined>, 'childAsRoot'> {}
 
 export interface RemirrorProviderProps<Combined extends AnyCombinedUnion>
   extends MakeOptional<BaseProps<Combined>, 'manager'> {
   /**
-   * The `RemirrorProvider` only supports **ONE** child element. You can place
-   * the child element in a fragment if needed.
+   * The children for the `RemirrorProvider`.
    */
-  children: ReactChild | ReactFragment | ReactPortal;
+  children?: ReactNode;
 
   /**
    * The presets and extensions that you would like to use to automatically
@@ -55,62 +36,21 @@ export interface RemirrorProviderProps<Combined extends AnyCombinedUnion>
   settings?: CreateReactManagerOptions;
 
   /**
-   * Sets the first child element as a the root (where the prosemirror editor
-   * instance will be rendered).
+   * Set this to `start` or `end` to automatically render the editor to the dom.
    *
-   * @remarks
-   *
-   * **Example with directly nested components**
-   *
-   * When using a remirror provider calling `getRootProps` is mandatory. By
-   * setting `childAsRoot` to an object Remirror will inject these props into
-   * the first child element.
-   *
-   * ```tsx
-   * import { RemirrorProvider, useManager } from '@remirror/react';
-   *
-   * const Editor = () => {
-   *   const manager = useManager([...myExtensions]);
-   *
-   *   return (
-   *     <RemirrorProvider childAsRoot={{ refKey: 'ref' }}>
-   *       <div />
-   *     </RemirrorProvider>,
-   *   );
-   * };
-   * ```
-   *
-   * If this is set to an empty object then the outer element must be able to
-   * receive a default ref prop which will mount the editor to it. If left
-   * undefined then the children components are responsible for calling
-   * `getRootProps`.
+   * When set to `start` the editor will be added before all other child
+   * components. If `end` the editable editor will be added after all child
+   * components.
    *
    * @default undefined
    */
-  childAsRoot?: GetRootPropsConfig<string> | boolean;
+  autoRender?: 'start' | 'end';
 }
 
 /**
- * This purely exists so that we know when the remirror editor has been called
- * with a provider as opposed to directly as a render prop by the user.
- *
- * It's important because, when called directly by the user, `getRootProps` is
- * automatically called when the render prop is called. However, when called via
- * a Provider, the render prop renders the context component and it's not until
- * the element is actually rendered that the getRootProp in any nested
- * components is called.
+ * A default internal editor for the react framework.
  */
-const RemirrorContextProvider = <Combined extends AnyCombinedUnion>({
-  childAsRoot: _,
-  ...props
-}: RemirrorContextProviderProps<Combined>) => {
-  return <RemirrorContext.Provider {...props} />;
-};
-
-RemirrorContextProvider.$$remirrorType = RemirrorType.ContextProvider;
-RemirrorContextProvider.defaultProps = {
-  childAsRoot: false,
-};
+const AutoRenderedEditor = () => <div {...useRemirror().getRootProps()} />;
 
 /**
  * The RemirrorProvider which injects context into it's child component.
@@ -127,15 +67,17 @@ RemirrorContextProvider.defaultProps = {
 export const RemirrorProvider = <Combined extends AnyCombinedUnion>(
   props: RemirrorProviderProps<Combined>,
 ): ReactElement<RemirrorProviderProps<Combined>> => {
-  const { children, childAsRoot, manager, combined, settings, ...rest } = props;
+  const { children, autoRender, manager, combined, settings, ...rest } = props;
 
   return (
     <ReactEditor {...rest} manager={useManager(manager ?? combined ?? [], settings)}>
       {(value) => {
         return (
-          <RemirrorContextProvider value={value} childAsRoot={childAsRoot}>
+          <RemirrorContext.Provider value={value}>
+            {autoRender === 'start' && <AutoRenderedEditor />}
             {children}
-          </RemirrorContextProvider>
+            {autoRender === 'end' && <AutoRenderedEditor />}
+          </RemirrorContext.Provider>
         );
       }}
     </ReactEditor>

@@ -21,11 +21,10 @@ import {
   addKeyToElement,
   getElementProps,
   isReactDOMElement,
-  isRemirrorContextProvider,
-  isRemirrorProvider,
   propIsFunction,
 } from '@remirror/react-utils';
 
+import { RemirrorContext } from './react-contexts';
 import type {
   BaseProps,
   GetRootPropsConfig,
@@ -390,11 +389,7 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
 
     let renderedElement: JSX.Element;
 
-    if (
-      this.rootPropsConfig.called ||
-      isRemirrorContextProvider(element) ||
-      isRemirrorProvider(element)
-    ) {
+    if (this.rootPropsConfig.called || element?.type === RemirrorContext.Provider) {
       // Simply return the element as this method can never actually be called
       // within an ssr environment
       renderedElement = element;

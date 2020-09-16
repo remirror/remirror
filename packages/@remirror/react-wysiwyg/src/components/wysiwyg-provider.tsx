@@ -29,7 +29,7 @@ export const WysiwygProvider: FC<WysiwygProviderProps> = (props) => {
 
   return (
     <I18nProvider i18n={i18n} locale={locale}>
-      <RemirrorProvider {...rest} manager={wysiwygManager} childAsRoot={false}>
+      <RemirrorProvider {...rest} manager={wysiwygManager}>
         <ThemeProvider theme={theme ?? {}} as={ThemeComponent}>
           {children}
         </ThemeProvider>

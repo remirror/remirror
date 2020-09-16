@@ -30,7 +30,7 @@ export const SocialProvider: FC<SocialProviderProps> = (props) => {
 
   return (
     <I18nProvider i18n={i18n} locale={locale}>
-      <RemirrorProvider {...rest} manager={socialManager} childAsRoot={false}>
+      <RemirrorProvider {...rest} manager={socialManager}>
         <ThemeProvider theme={theme ?? {}} as={ThemeComponent}>
           {children}
         </ThemeProvider>

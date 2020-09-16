@@ -124,3 +124,25 @@ test('can run multiple synchronous non chainable commands', () => {
 
   expect(chain.state.doc).toEqualRemirrorDocument(doc(p('ab')));
 });
+
+describe('`autoRender`', () => {
+  it('renders at the start', () => {
+    const { container } = strictRender(
+      <RemirrorProvider autoRender='start'>
+        <div>Hello</div>
+      </RemirrorProvider>,
+    );
+
+    expect(container.innerHTML).toMatchSnapshot();
+  });
+
+  it('renders at the end', () => {
+    const { container } = strictRender(
+      <RemirrorProvider autoRender='end'>
+        <div>Hello</div>
+      </RemirrorProvider>,
+    );
+
+    expect(container.innerHTML).toMatchSnapshot();
+  });
+});

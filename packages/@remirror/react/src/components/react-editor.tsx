@@ -136,19 +136,19 @@ function useFramework<Combined extends AnyCombinedUnion>(
   const parameterRef = useRef(parameter);
   parameterRef.current = parameter;
 
-  const [editorWrapper, setFramework] = useState(
+  const [framework, setFramework] = useState(
     () => new ReactFramework<Combined>(parameterRef.current),
   );
 
-  editorWrapper.update(parameter);
+  framework.update(parameter);
 
   useEffect(() => {
-    editorWrapper.props.manager.addHandler('destroy', () => {
+    framework.props.manager.addHandler('destroy', () => {
       setFramework(() => new ReactFramework<Combined>(parameterRef.current));
     });
-  }, [editorWrapper.props.manager]);
+  }, [framework.props.manager]);
 
-  return editorWrapper;
+  return framework;
 }
 
 /**
