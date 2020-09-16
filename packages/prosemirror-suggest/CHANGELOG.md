@@ -1,5 +1,14 @@
 # prosemirror-suggest
 
+## 1.0.0-next.38
+
+> 2020-09-16
+
+### Patch Changes
+
+- Updated dependencies [[`6855ee77`](https://github.com/remirror/remirror/commit/6855ee773bf25a4b30d45a7e09eeab78d6b3f67a)]:
+  - @remirror/core-helpers@1.0.0-next.38
+
 ## 1.0.0-next.37
 
 > 2020-09-14

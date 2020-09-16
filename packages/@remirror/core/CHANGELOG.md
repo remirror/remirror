@@ -1,5 +1,31 @@
 # @remirror/core
 
+## 1.0.0-next.38
+
+> 2020-09-16
+
+### Major Changes
+
+- [`913e8e68`](https://github.com/remirror/remirror/commit/913e8e688081560e53c862adb1187f2f635f7671) [#689](https://github.com/remirror/remirror/pull/689) Thanks [@ifiokjr](https://github.com/ifiokjr)! - **BREAKING**: 💥 Rename `Framework.frameworkHelpers` to `baseOutput` and make it protected.
+
+  - Add required `abstract` getter `frameworkOutput`.
+  - Add third generic property `Output` which extends `FrameworkOutput`.
+  - Remove `manager` property from `FrameworkOutput`.
+
+### Minor Changes
+
+- [`efd2e537`](https://github.com/remirror/remirror/commit/efd2e53779666876bb2d9bdcb917923c0a3a6295) [#689](https://github.com/remirror/remirror/pull/689) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add `output` property to the `RemirrorManager`. The property will throw an error if used before the framework is attached.
+
+  Add the `frameworkAttached` property to the `RemirrorManager` which is true when the `manager.output` is available.
+
+### Patch Changes
+
+- Updated dependencies [[`14e48698`](https://github.com/remirror/remirror/commit/14e48698a28c3ec54a475970e0a6375f446a3a73), [`6855ee77`](https://github.com/remirror/remirror/commit/6855ee773bf25a4b30d45a7e09eeab78d6b3f67a)]:
+  - @remirror/pm@1.0.0-next.38
+  - @remirror/core-helpers@1.0.0-next.38
+  - @remirror/core-types@1.0.0-next.38
+  - @remirror/core-utils@1.0.0-next.38
+
 ## 1.0.0-next.37
 
 > 2020-09-14

@@ -1,5 +1,19 @@
 # @remirror/react-utils
 
+## 1.0.0-next.38
+
+> 2020-09-16
+
+### Major Changes
+
+- [`8cd47216`](https://github.com/remirror/remirror/commit/8cd472168967d95959740ae7b04a51815fa866c8) [#689](https://github.com/remirror/remirror/pull/689) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Remove `isRemirrorContextProvider` export.
+
+### Patch Changes
+
+- Updated dependencies [[`6855ee77`](https://github.com/remirror/remirror/commit/6855ee773bf25a4b30d45a7e09eeab78d6b3f67a)]:
+  - @remirror/core-helpers@1.0.0-next.38
+  - @remirror/core-types@1.0.0-next.38
+
 ## 1.0.0-next.37
 
 > 2020-09-14

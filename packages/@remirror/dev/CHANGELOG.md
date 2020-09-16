@@ -1,5 +1,15 @@
 # @remirror/dev
 
+## 1.0.0-next.38
+
+> 2020-09-16
+
+### Patch Changes
+
+- Updated dependencies [[`14e48698`](https://github.com/remirror/remirror/commit/14e48698a28c3ec54a475970e0a6375f446a3a73), [`913e8e68`](https://github.com/remirror/remirror/commit/913e8e688081560e53c862adb1187f2f635f7671), [`54ae06d4`](https://github.com/remirror/remirror/commit/54ae06d488cf127116b5be75e93261f23c4fb4a2)]:
+  - @remirror/pm@1.0.0-next.38
+  - @remirror/react@1.0.0-next.38
+
 ## 1.0.0-next.37
 
 > 2020-09-14

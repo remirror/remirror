@@ -1,5 +1,16 @@
 # @remirror/core-utils
 
+## 1.0.0-next.38
+
+> 2020-09-16
+
+### Patch Changes
+
+- Updated dependencies [[`14e48698`](https://github.com/remirror/remirror/commit/14e48698a28c3ec54a475970e0a6375f446a3a73), [`6855ee77`](https://github.com/remirror/remirror/commit/6855ee773bf25a4b30d45a7e09eeab78d6b3f67a)]:
+  - @remirror/pm@1.0.0-next.38
+  - @remirror/core-helpers@1.0.0-next.38
+  - @remirror/core-types@1.0.0-next.38
+
 ## 1.0.0-next.37
 
 > 2020-09-14

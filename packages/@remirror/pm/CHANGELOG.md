@@ -1,5 +1,17 @@
 # @remirror/pm
 
+## 1.0.0-next.38
+
+> 2020-09-16
+
+### Patch Changes
+
+- [`14e48698`](https://github.com/remirror/remirror/commit/14e48698a28c3ec54a475970e0a6375f446a3a73) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Update the `selection`, `storedMarks` and `doc` from the `chainableEditorState` whenever the `state.tr` property is accessed. This better mimics the behavior expected within commands where the `Transaction` is created once at the start and the state is used as a reference point.
+
+- Updated dependencies [[`6855ee77`](https://github.com/remirror/remirror/commit/6855ee773bf25a4b30d45a7e09eeab78d6b3f67a)]:
+  - @remirror/core-helpers@1.0.0-next.38
+  - prosemirror-suggest@1.0.0-next.38
+
 ## 1.0.0-next.37
 
 > 2020-09-14

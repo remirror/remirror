@@ -1,5 +1,18 @@
 # @remirror/core-helpers
 
+## 1.0.0-next.38
+
+> 2020-09-16
+
+### Major Changes
+
+- [`6855ee77`](https://github.com/remirror/remirror/commit/6855ee773bf25a4b30d45a7e09eeab78d6b3f67a) [#689](https://github.com/remirror/remirror/pull/689) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Remove `logError` method from the `RemirrorError`. Add `disableLogging` as a property instead.
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.38
+
 ## 1.0.0-next.37
 
 > 2020-09-14
