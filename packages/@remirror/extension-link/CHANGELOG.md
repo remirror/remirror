@@ -1,5 +1,15 @@
 # @remirror/extension-link
 
+## 1.0.0-next.39
+
+> 2020-09-16
+
+### Patch Changes
+
+- Updated dependencies [[`61894188`](https://github.com/remirror/remirror/commit/61894188781ca9f6e0571b1e425261028545385c)]:
+  - @remirror/pm@1.0.0-next.39
+  - @remirror/core@1.0.0-next.39
+
 ## 1.0.0-next.38
 
 > 2020-09-16

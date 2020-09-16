@@ -1,5 +1,17 @@
 # @remirror/pm
 
+## 1.0.0-next.39
+
+> 2020-09-16
+
+### Patch Changes
+
+- [`61894188`](https://github.com/remirror/remirror/commit/61894188781ca9f6e0571b1e425261028545385c) [#691](https://github.com/remirror/remirror/pull/691) Thanks [@ocavue](https://github.com/ocavue)! - Use ranges version for Prosemirror dependencies.
+
+- Updated dependencies []:
+  - @remirror/core-helpers@1.0.0-next.39
+  - prosemirror-suggest@1.0.0-next.39
+
 ## 1.0.0-next.38
 
 > 2020-09-16

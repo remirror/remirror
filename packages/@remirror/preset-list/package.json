@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-list",
-  "version": "1.0.0-next.38",
+  "version": "1.0.0-next.39",
   "description": "The list preset and accompanying extensions.",
   "keywords": [
     "remirror",
@@ -28,12 +28,12 @@
     "@babel/runtime": "^7.11.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.38",
-    "@remirror/pm": "1.0.0-next.38"
+    "@remirror/core": "1.0.0-next.39",
+    "@remirror/pm": "1.0.0-next.39"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.38",
-    "@remirror/pm": "1.0.0-next.38"
+    "@remirror/core": "1.0.0-next.39",
+    "@remirror/pm": "1.0.0-next.39"
   },
   "publishConfig": {
     "access": "public"

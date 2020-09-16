@@ -1,5 +1,15 @@
 # @remirror/react-utils
 
+## 1.0.0-next.39
+
+> 2020-09-16
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.39
+  - @remirror/core-helpers@1.0.0-next.39
+
 ## 1.0.0-next.38
 
 > 2020-09-16
