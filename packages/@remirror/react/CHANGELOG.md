@@ -1,5 +1,37 @@
 # @remirror/react
 
+## 1.0.0-next.38
+
+> 2020-09-16
+
+### Major Changes
+
+- [`913e8e68`](https://github.com/remirror/remirror/commit/913e8e688081560e53c862adb1187f2f635f7671) [#689](https://github.com/remirror/remirror/pull/689) Thanks [@ifiokjr](https://github.com/ifiokjr)! - **BREAKING**: 💥 Rename `Framework.frameworkHelpers` to `baseOutput` and make it protected.
+
+  - Add required `abstract` getter `frameworkOutput`.
+  - Add third generic property `Output` which extends `FrameworkOutput`.
+  - Remove `manager` property from `FrameworkOutput`.
+
+* [`54ae06d4`](https://github.com/remirror/remirror/commit/54ae06d488cf127116b5be75e93261f23c4fb4a2) [#689](https://github.com/remirror/remirror/pull/689) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Remove `childAsRoot` prop from `RemirrorProvider`.
+
+  - Accept child-less rendering for `RemirrorProvider`.
+  - Add `autoRender` prop to the `RemirrorProvider` which automatically adds an editable `div` to contain the ProseMirror editor. it can take values `start` and `end` to determine whether the div is insert before (`start`) all other children, or after (`end`).
+
+### Patch Changes
+
+- Updated dependencies [[`14e48698`](https://github.com/remirror/remirror/commit/14e48698a28c3ec54a475970e0a6375f446a3a73), [`913e8e68`](https://github.com/remirror/remirror/commit/913e8e688081560e53c862adb1187f2f635f7671), [`efd2e537`](https://github.com/remirror/remirror/commit/efd2e53779666876bb2d9bdcb917923c0a3a6295), [`8cd47216`](https://github.com/remirror/remirror/commit/8cd472168967d95959740ae7b04a51815fa866c8)]:
+  - @remirror/pm@1.0.0-next.38
+  - @remirror/core@1.0.0-next.38
+  - @remirror/react-utils@1.0.0-next.38
+  - @remirror/extension-placeholder@1.0.0-next.38
+  - @remirror/extension-positioner@1.0.0-next.38
+  - @remirror/extension-react-component@1.0.0-next.38
+  - @remirror/extension-react-ssr@1.0.0-next.38
+  - @remirror/i18n@1.0.0-next.38
+  - @remirror/preset-core@1.0.0-next.38
+  - @remirror/preset-react@1.0.0-next.38
+  - @remirror/theme@1.0.0-next.38
+
 ## 1.0.0-next.37
 
 > 2020-09-14

@@ -1,5 +1,25 @@
 # @remirror/react-wysiwyg
 
+## 1.0.0-next.38
+
+> 2020-09-16
+
+### Patch Changes
+
+- [`54ae06d4`](https://github.com/remirror/remirror/commit/54ae06d488cf127116b5be75e93261f23c4fb4a2) [#689](https://github.com/remirror/remirror/pull/689) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Remove `childAsRoot` usage.
+
+- Updated dependencies [[`14e48698`](https://github.com/remirror/remirror/commit/14e48698a28c3ec54a475970e0a6375f446a3a73), [`913e8e68`](https://github.com/remirror/remirror/commit/913e8e688081560e53c862adb1187f2f635f7671), [`efd2e537`](https://github.com/remirror/remirror/commit/efd2e53779666876bb2d9bdcb917923c0a3a6295), [`8cd47216`](https://github.com/remirror/remirror/commit/8cd472168967d95959740ae7b04a51815fa866c8), [`54ae06d4`](https://github.com/remirror/remirror/commit/54ae06d488cf127116b5be75e93261f23c4fb4a2)]:
+  - @remirror/pm@1.0.0-next.38
+  - @remirror/core@1.0.0-next.38
+  - @remirror/react@1.0.0-next.38
+  - @remirror/react-utils@1.0.0-next.38
+  - @remirror/extension-auto-link@1.0.0-next.38
+  - @remirror/i18n@1.0.0-next.38
+  - @remirror/preset-social@1.0.0-next.38
+  - @remirror/preset-wysiwyg@1.0.0-next.38
+  - multishift@1.0.0-next.38
+  - @remirror/theme@1.0.0-next.38
+
 ## 1.0.0-next.37
 
 > 2020-09-14

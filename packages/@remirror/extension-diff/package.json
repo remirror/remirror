@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-diff",
-  "version": "1.0.0-next.37",
+  "version": "1.0.0-next.38",
   "description": "Track diffs between your json documents.",
   "keywords": [
     "remirror",
@@ -27,12 +27,12 @@
     "@babel/runtime": "^7.11.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.37",
-    "@remirror/pm": "1.0.0-next.37"
+    "@remirror/core": "1.0.0-next.38",
+    "@remirror/pm": "1.0.0-next.38"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.37",
-    "@remirror/pm": "1.0.0-next.37"
+    "@remirror/core": "1.0.0-next.38",
+    "@remirror/pm": "1.0.0-next.38"
   },
   "publishConfig": {
     "access": "public"
