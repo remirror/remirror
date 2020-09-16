@@ -152,8 +152,8 @@ importers:
       jest-circus: ^26.4.2
       jest-extended: ^0.11.5
       jest-github-reporter: ^1.0.1
-      jest-prosemirror: 1.0.0-next.38
-      jest-remirror: 1.0.0-next.38
+      jest-prosemirror: 1.0.0-next.39
+      jest-remirror: 1.0.0-next.39
       jest-watch-typeahead: ^0.6.0
       json.macro: ^1.3.0
       linaria: ^2.0.0-rc.3
@@ -161,7 +161,7 @@ importers:
       npm-run-all: ^4.1.5
       prettier: ^2.1.1
       prettier-plugin-packagejson: ^2.2.5
-      remirror: 1.0.0-next.38
+      remirror: 1.0.0-next.39
       rimraf: ^3.0.2
       size-limit: ^4.5.7
       snapshot-diff: ^0.8.1
@@ -211,7 +211,7 @@ importers:
       ink-testing-library: 2.0.1
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core-helpers': 1.0.0-next.38
+      '@remirror/core-helpers': 1.0.0-next.39
       '@testing-library/react-hooks': ^3.4.1
       '@types/ink-spinner': ^3.0.0
       '@types/ink-testing-library': ^1.0.1
@@ -259,10 +259,10 @@ importers:
     specifiers:
       '@babel/runtime': ^7.11.0
       '@remirror/core-constants': 1.0.0-next.35
-      '@remirror/core-helpers': 1.0.0-next.38
-      '@remirror/core-types': 1.0.0-next.38
-      '@remirror/core-utils': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core-helpers': 1.0.0-next.39
+      '@remirror/core-types': 1.0.0-next.39
+      '@remirror/core-utils': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
       linaria: ^2.0.0-rc.3
       nanoevents: ^5.1.8
       type-fest: ^0.16.0
@@ -290,7 +290,7 @@ importers:
     specifiers:
       '@babel/runtime': ^7.11.0
       '@remirror/core-constants': 1.0.0-next.35
-      '@remirror/core-types': 1.0.0-next.38
+      '@remirror/core-types': 1.0.0-next.39
       '@types/object.omit': ^3.0.0
       '@types/object.pick': ^1.3.0
       '@types/throttle-debounce': ^2.1.0
@@ -312,7 +312,7 @@ importers:
     specifiers:
       '@babel/runtime': ^7.11.0
       '@remirror/core-constants': 1.0.0-next.35
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/pm': 1.0.0-next.39
       type-fest: ^0.16.0
   packages/@remirror/core-utils:
     dependencies:
@@ -329,9 +329,9 @@ importers:
     specifiers:
       '@babel/runtime': ^7.11.0
       '@remirror/core-constants': 1.0.0-next.35
-      '@remirror/core-helpers': 1.0.0-next.38
-      '@remirror/core-types': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core-helpers': 1.0.0-next.39
+      '@remirror/core-types': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
       '@types/min-document': ^2.19.0
       '@types/node': ^14.10.1
       domino: ^2.1.6
@@ -351,8 +351,8 @@ importers:
       react-dom: 16.13.1_react@16.13.1
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/pm': 1.0.0-next.38
-      '@remirror/react': 1.0.0-next.38
+      '@remirror/pm': 1.0.0-next.39
+      '@remirror/react': 1.0.0-next.39
       '@testing-library/react': ^11.0.2
       '@types/prosemirror-dev-tools': ^2.1.0
       '@types/react': ^16.9.47
@@ -370,9 +370,9 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
-      '@remirror/preset-core': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
+      '@remirror/preset-core': 1.0.0-next.39
       type-fest: ^0.16.0
   packages/@remirror/extension-annotation:
     dependencies:
@@ -383,9 +383,9 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/extension-positioner': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/extension-positioner': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-auto-link:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -394,8 +394,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-bidi:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -406,8 +406,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
       '@types/direction': ^1.0.0
       direction: ^1.0.4
   packages/@remirror/extension-blockquote:
@@ -419,8 +419,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
       linaria: ^2.0.0-rc.3
   packages/@remirror/extension-bold:
     dependencies:
@@ -430,8 +430,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-code:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -440,8 +440,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-code-block:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -454,8 +454,8 @@ importers:
       '@types/prettier': 2.1.0
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
       '@types/prettier': ^2.1.0
       '@types/refractor': ^3.0.0
       refractor: ^3.1.0
@@ -470,8 +470,8 @@ importers:
       prosemirror-collab: 1.2.2
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
       '@types/prosemirror-collab': ^1.1.0
       prosemirror-collab: ^1.2.2
   packages/@remirror/extension-diff:
@@ -482,8 +482,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-doc:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -492,8 +492,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-drop-cursor:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -502,8 +502,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-emoji:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -518,8 +518,8 @@ importers:
       emojibase-data: 6.0.0
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
       '@types/emoji-regex': ^8.0.0
       '@types/match-sorter': ^4.0.0
       emoji-regex: ^9.0.0
@@ -534,8 +534,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-events:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -545,8 +545,8 @@ importers:
       '@testing-library/dom': 7.24.1
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
       '@testing-library/dom': ^7.23.0
   packages/@remirror/extension-gap-cursor:
     dependencies:
@@ -557,8 +557,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
       linaria: ^2.0.0-rc.3
   packages/@remirror/extension-hard-break:
     dependencies:
@@ -568,8 +568,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-heading:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -578,8 +578,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-history:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -588,8 +588,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-horizontal-rule:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -598,8 +598,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-image:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -608,8 +608,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-italic:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -618,8 +618,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-link:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -628,8 +628,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-mention:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -639,8 +639,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
       escape-string-regexp: ^4.0.0
   packages/@remirror/extension-mention-atom:
     dependencies:
@@ -650,8 +650,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-paragraph:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -660,8 +660,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-placeholder:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -671,8 +671,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
       linaria: ^2.0.0-rc.3
   packages/@remirror/extension-position-tracker:
     dependencies:
@@ -682,8 +682,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-positioner:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -693,8 +693,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
       nanoevents: ^5.1.8
   packages/@remirror/extension-react-component:
     dependencies:
@@ -709,8 +709,8 @@ importers:
       react-dom: 16.13.1_react@16.13.1
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
       '@types/react': ^16.9.47
       '@types/react-dom': ^16.9.8
       nanoevents: ^5.1.8
@@ -728,10 +728,10 @@ importers:
       react: 16.13.1
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/extension-react-component': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
-      '@remirror/react-utils': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/extension-react-component': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
+      '@remirror/react-utils': 1.0.0-next.39
       '@types/react': ^16.9.47
       react: ^16.13.1
   packages/@remirror/extension-search:
@@ -744,8 +744,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
       escape-string-regexp: ^4.0.0
       linaria: ^2.0.0-rc.3
   packages/@remirror/extension-strike:
@@ -756,8 +756,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-text:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -766,8 +766,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-trailing-node:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -776,8 +776,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-underline:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -786,8 +786,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/extension-yjs:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -800,8 +800,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
       linaria: ^2.0.0-rc.3
       y-prosemirror: ^0.3.7
       y-webrtc: ^10.1.6
@@ -817,8 +817,8 @@ importers:
     specifiers:
       '@babel/runtime': ^7.11.0
       '@lingui/core': ^3.0.0-13
-      '@remirror/core-helpers': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core-helpers': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
       make-plural: ^6.2.1
   packages/@remirror/playground:
     dependencies:
@@ -849,10 +849,10 @@ importers:
       '@babel/runtime': ^7.11.0
       '@babel/standalone': ^7.11.0
       '@babel/types': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/core-helpers': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
-      '@remirror/react': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/core-helpers': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
+      '@remirror/react': 1.0.0-next.39
       '@types/babel__core': ^7.1.9
       '@types/babel__standalone': ^7.1.2
       '@types/lz-string': ^1.3.34
@@ -867,7 +867,7 @@ importers:
       react: ^16.13.1
       react-dom: ^16.13.1
       regenerator-runtime: ^0.13.7
-      remirror: 1.0.0-next.38
+      remirror: 1.0.0-next.39
   packages/@remirror/pm:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -900,7 +900,7 @@ importers:
     specifiers:
       '@babel/runtime': ^7.11.0
       '@remirror/core-constants': 1.0.0-next.35
-      '@remirror/core-helpers': 1.0.0-next.38
+      '@remirror/core-helpers': 1.0.0-next.39
       '@types/prosemirror-commands': ^1.0.3
       '@types/prosemirror-dropcursor': ^1.0.0
       '@types/prosemirror-gapcursor': ^1.0.1
@@ -921,7 +921,7 @@ importers:
       prosemirror-model: ^1.11.2
       prosemirror-schema-list: ^1.1.4
       prosemirror-state: ^1.3.3
-      prosemirror-suggest: ^1.0.0-next.38
+      prosemirror-suggest: ^1.0.0-next.39
       prosemirror-tables: ^1.1.1
       prosemirror-transform: ^1.2.8
       prosemirror-view: ^1.15.7
@@ -940,15 +940,15 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/extension-doc': 1.0.0-next.38
-      '@remirror/extension-events': 1.0.0-next.38
-      '@remirror/extension-gap-cursor': 1.0.0-next.38
-      '@remirror/extension-history': 1.0.0-next.38
-      '@remirror/extension-paragraph': 1.0.0-next.38
-      '@remirror/extension-positioner': 1.0.0-next.38
-      '@remirror/extension-text': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/extension-doc': 1.0.0-next.39
+      '@remirror/extension-events': 1.0.0-next.39
+      '@remirror/extension-gap-cursor': 1.0.0-next.39
+      '@remirror/extension-history': 1.0.0-next.39
+      '@remirror/extension-paragraph': 1.0.0-next.39
+      '@remirror/extension-positioner': 1.0.0-next.39
+      '@remirror/extension-text': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/preset-embed:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -959,8 +959,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
       linaria: ^2.0.0-rc.3
       tiny-querystring: ^0.0.2
   packages/@remirror/preset-list:
@@ -971,8 +971,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/preset-react:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -990,12 +990,12 @@ importers:
       react-dom: 16.13.1_react@16.13.1
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/extension-placeholder': 1.0.0-next.38
-      '@remirror/extension-react-component': 1.0.0-next.38
-      '@remirror/extension-react-ssr': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
-      '@remirror/react-utils': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/extension-placeholder': 1.0.0-next.39
+      '@remirror/extension-react-component': 1.0.0-next.39
+      '@remirror/extension-react-ssr': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
+      '@remirror/react-utils': 1.0.0-next.39
       '@types/react': ^16.9.47
       '@types/react-dom': ^16.9.8
       linaria: ^2.0.0-rc.3
@@ -1009,8 +1009,8 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
   packages/@remirror/preset-social:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -1023,11 +1023,11 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/extension-auto-link': 1.0.0-next.38
-      '@remirror/extension-emoji': 1.0.0-next.38
-      '@remirror/extension-mention': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/extension-auto-link': 1.0.0-next.39
+      '@remirror/extension-emoji': 1.0.0-next.39
+      '@remirror/extension-mention': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
       type-fest: ^0.16.0
   packages/@remirror/preset-table:
     dependencies:
@@ -1039,9 +1039,9 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
-      '@remirror/theme': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
+      '@remirror/theme': 1.0.0-next.39
       linaria: ^2.0.0-rc.3
   packages/@remirror/preset-wysiwyg:
     dependencies:
@@ -1073,30 +1073,30 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/extension-bidi': 1.0.0-next.38
-      '@remirror/extension-blockquote': 1.0.0-next.38
-      '@remirror/extension-bold': 1.0.0-next.38
-      '@remirror/extension-code': 1.0.0-next.38
-      '@remirror/extension-code-block': 1.0.0-next.38
-      '@remirror/extension-drop-cursor': 1.0.0-next.38
-      '@remirror/extension-epic-mode': 1.0.0-next.38
-      '@remirror/extension-gap-cursor': 1.0.0-next.38
-      '@remirror/extension-hard-break': 1.0.0-next.38
-      '@remirror/extension-heading': 1.0.0-next.38
-      '@remirror/extension-horizontal-rule': 1.0.0-next.38
-      '@remirror/extension-image': 1.0.0-next.38
-      '@remirror/extension-italic': 1.0.0-next.38
-      '@remirror/extension-link': 1.0.0-next.38
-      '@remirror/extension-search': 1.0.0-next.38
-      '@remirror/extension-strike': 1.0.0-next.38
-      '@remirror/extension-trailing-node': 1.0.0-next.38
-      '@remirror/extension-underline': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
-      '@remirror/preset-core': 1.0.0-next.38
-      '@remirror/preset-embed': 1.0.0-next.38
-      '@remirror/preset-list': 1.0.0-next.38
-      '@remirror/preset-table': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/extension-bidi': 1.0.0-next.39
+      '@remirror/extension-blockquote': 1.0.0-next.39
+      '@remirror/extension-bold': 1.0.0-next.39
+      '@remirror/extension-code': 1.0.0-next.39
+      '@remirror/extension-code-block': 1.0.0-next.39
+      '@remirror/extension-drop-cursor': 1.0.0-next.39
+      '@remirror/extension-epic-mode': 1.0.0-next.39
+      '@remirror/extension-gap-cursor': 1.0.0-next.39
+      '@remirror/extension-hard-break': 1.0.0-next.39
+      '@remirror/extension-heading': 1.0.0-next.39
+      '@remirror/extension-horizontal-rule': 1.0.0-next.39
+      '@remirror/extension-image': 1.0.0-next.39
+      '@remirror/extension-italic': 1.0.0-next.39
+      '@remirror/extension-link': 1.0.0-next.39
+      '@remirror/extension-search': 1.0.0-next.39
+      '@remirror/extension-strike': 1.0.0-next.39
+      '@remirror/extension-trailing-node': 1.0.0-next.39
+      '@remirror/extension-underline': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
+      '@remirror/preset-core': 1.0.0-next.39
+      '@remirror/preset-embed': 1.0.0-next.39
+      '@remirror/preset-list': 1.0.0-next.39
+      '@remirror/preset-table': 1.0.0-next.39
   packages/@remirror/react:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -1130,17 +1130,17 @@ importers:
       react-test-renderer: 16.13.1_react@16.13.1
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/extension-placeholder': 1.0.0-next.38
-      '@remirror/extension-positioner': 1.0.0-next.38
-      '@remirror/extension-react-component': 1.0.0-next.38
-      '@remirror/extension-react-ssr': 1.0.0-next.38
-      '@remirror/i18n': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
-      '@remirror/preset-core': 1.0.0-next.38
-      '@remirror/preset-react': 1.0.0-next.38
-      '@remirror/react-utils': 1.0.0-next.38
-      '@remirror/theme': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/extension-placeholder': 1.0.0-next.39
+      '@remirror/extension-positioner': 1.0.0-next.39
+      '@remirror/extension-react-component': 1.0.0-next.39
+      '@remirror/extension-react-ssr': 1.0.0-next.39
+      '@remirror/i18n': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
+      '@remirror/preset-core': 1.0.0-next.39
+      '@remirror/preset-react': 1.0.0-next.39
+      '@remirror/react-utils': 1.0.0-next.39
+      '@remirror/theme': 1.0.0-next.39
       '@seznam/compose-react-refs': ^1.0.4
       '@testing-library/react': ^11.0.2
       '@testing-library/react-hooks': ^3.4.1
@@ -1178,14 +1178,14 @@ importers:
       '@babel/runtime': ^7.11.0
       '@lingui/core': ^3.0.0-13
       '@lingui/macro': ^3.0.0-13
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
-      '@remirror/react': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
+      '@remirror/react': 1.0.0-next.39
       '@testing-library/react': ^11.0.2
       '@types/react': ^16.9.47
       '@types/react-dom': ^16.9.8
       linaria: ^2.0.0-rc.3
-      multishift: 1.0.0-next.38
+      multishift: 1.0.0-next.39
       react: ^16.13.1
       react-dom: ^16.13.1
       type-fest: ^0.16.0
@@ -1215,17 +1215,17 @@ importers:
       react-dom: 16.13.1_react@16.13.1
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/extension-emoji': 1.0.0-next.38
-      '@remirror/extension-events': 1.0.0-next.38
-      '@remirror/extension-history': 1.0.0-next.38
-      '@remirror/extension-mention': 1.0.0-next.38
-      '@remirror/extension-mention-atom': 1.0.0-next.38
-      '@remirror/extension-positioner': 1.0.0-next.38
-      '@remirror/i18n': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
-      '@remirror/react': 1.0.0-next.38
-      '@remirror/react-utils': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/extension-emoji': 1.0.0-next.39
+      '@remirror/extension-events': 1.0.0-next.39
+      '@remirror/extension-history': 1.0.0-next.39
+      '@remirror/extension-mention': 1.0.0-next.39
+      '@remirror/extension-mention-atom': 1.0.0-next.39
+      '@remirror/extension-positioner': 1.0.0-next.39
+      '@remirror/i18n': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
+      '@remirror/react': 1.0.0-next.39
+      '@remirror/react-utils': 1.0.0-next.39
       '@testing-library/dom': ^7.23.0
       '@testing-library/react-hooks': ^3.4.1
       '@testing-library/user-event': ^12.1.3
@@ -1269,18 +1269,18 @@ importers:
       '@babel/runtime': ^7.11.0
       '@lingui/core': ^3.0.0-13
       '@lingui/macro': ^3.0.0-13
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/extension-auto-link': 1.0.0-next.38
-      '@remirror/extension-emoji': 1.0.0-next.38
-      '@remirror/extension-events': 1.0.0-next.38
-      '@remirror/extension-mention': 1.0.0-next.38
-      '@remirror/i18n': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
-      '@remirror/preset-social': 1.0.0-next.38
-      '@remirror/react': 1.0.0-next.38
-      '@remirror/react-hooks': 1.0.0-next.38
-      '@remirror/react-utils': 1.0.0-next.38
-      '@remirror/theme': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/extension-auto-link': 1.0.0-next.39
+      '@remirror/extension-emoji': 1.0.0-next.39
+      '@remirror/extension-events': 1.0.0-next.39
+      '@remirror/extension-mention': 1.0.0-next.39
+      '@remirror/i18n': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
+      '@remirror/preset-social': 1.0.0-next.39
+      '@remirror/react': 1.0.0-next.39
+      '@remirror/react-hooks': 1.0.0-next.39
+      '@remirror/react-utils': 1.0.0-next.39
+      '@remirror/theme': 1.0.0-next.39
       '@testing-library/dom': ^7.23.0
       '@testing-library/react-hooks': ^3.4.1
       '@types/classnames': ^2.2.10
@@ -1289,7 +1289,7 @@ importers:
       '@types/testing-library__react-hooks': ^3.4.0
       classnames: ^2.2.6
       linaria: ^2.0.0-rc.3
-      multishift: 1.0.0-next.38
+      multishift: 1.0.0-next.39
       react: ^16.13.1
       react-dom: ^16.13.1
       type-fest: ^0.16.0
@@ -1305,8 +1305,8 @@ importers:
     specifiers:
       '@babel/runtime': ^7.11.0
       '@remirror/core-constants': 1.0.0-next.35
-      '@remirror/core-helpers': 1.0.0-next.38
-      '@remirror/core-types': 1.0.0-next.38
+      '@remirror/core-helpers': 1.0.0-next.39
+      '@remirror/core-types': 1.0.0-next.39
       '@types/react': ^16.9.47
       react: ^16.13.1
   packages/@remirror/react-wysiwyg:
@@ -1338,22 +1338,22 @@ importers:
       '@babel/runtime': ^7.11.0
       '@lingui/core': ^3.0.0-13
       '@lingui/macro': ^3.0.0-13
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/extension-auto-link': 1.0.0-next.38
-      '@remirror/i18n': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
-      '@remirror/preset-social': 1.0.0-next.38
-      '@remirror/preset-wysiwyg': 1.0.0-next.38
-      '@remirror/react': 1.0.0-next.38
-      '@remirror/react-utils': 1.0.0-next.38
-      '@remirror/theme': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/extension-auto-link': 1.0.0-next.39
+      '@remirror/i18n': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
+      '@remirror/preset-social': 1.0.0-next.39
+      '@remirror/preset-wysiwyg': 1.0.0-next.39
+      '@remirror/react': 1.0.0-next.39
+      '@remirror/react-utils': 1.0.0-next.39
+      '@remirror/theme': 1.0.0-next.39
       '@testing-library/react': ^11.0.2
       '@types/classnames': ^2.2.10
       '@types/react': ^16.9.47
       '@types/react-dom': ^16.9.8
       classnames: ^2.2.6
       linaria: ^2.0.0-rc.3
-      multishift: 1.0.0-next.38
+      multishift: 1.0.0-next.39
       react: ^16.13.1
       react-dom: ^16.13.1
       type-fest: ^0.16.0
@@ -1373,10 +1373,10 @@ importers:
       react: 16.13.1
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/extension-code-block': 1.0.0-next.38
-      '@remirror/react-hooks': 1.0.0-next.38
-      '@remirror/react-social': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/extension-code-block': 1.0.0-next.39
+      '@remirror/react-hooks': 1.0.0-next.39
+      '@remirror/react-social': 1.0.0-next.39
       '@types/match-sorter': ^4.0.0
       '@types/prettier': ^2.1.0
       '@types/react': ^16.9.47
@@ -1428,21 +1428,21 @@ importers:
     specifiers:
       '@babel/runtime': ^7.11.0
       '@react-spring/mock-raf': ^1.1.1
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/extension-blockquote': 1.0.0-next.38
-      '@remirror/extension-bold': 1.0.0-next.38
-      '@remirror/extension-code-block': 1.0.0-next.38
-      '@remirror/extension-doc': 1.0.0-next.38
-      '@remirror/extension-heading': 1.0.0-next.38
-      '@remirror/extension-italic': 1.0.0-next.38
-      '@remirror/extension-link': 1.0.0-next.38
-      '@remirror/extension-paragraph': 1.0.0-next.38
-      '@remirror/extension-text': 1.0.0-next.38
-      '@remirror/extension-underline': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
-      '@remirror/preset-core': 1.0.0-next.38
-      '@remirror/preset-react': 1.0.0-next.38
-      '@remirror/react': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/extension-blockquote': 1.0.0-next.39
+      '@remirror/extension-bold': 1.0.0-next.39
+      '@remirror/extension-code-block': 1.0.0-next.39
+      '@remirror/extension-doc': 1.0.0-next.39
+      '@remirror/extension-heading': 1.0.0-next.39
+      '@remirror/extension-italic': 1.0.0-next.39
+      '@remirror/extension-link': 1.0.0-next.39
+      '@remirror/extension-paragraph': 1.0.0-next.39
+      '@remirror/extension-text': 1.0.0-next.39
+      '@remirror/extension-underline': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
+      '@remirror/preset-core': 1.0.0-next.39
+      '@remirror/preset-react': 1.0.0-next.39
+      '@remirror/react': 1.0.0-next.39
       '@testing-library/react': ^11.0.2
       '@types/min-document': ^2.19.0
       '@types/react': ^16.9.47
@@ -1459,7 +1459,7 @@ importers:
       type-fest: 0.16.0
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core-types': 1.0.0-next.38
+      '@remirror/core-types': 1.0.0-next.39
       case-anything: ^1.1.1
       linaria: ^2.0.0-rc.3
       open-color: ^1.7.0
@@ -1495,10 +1495,10 @@ importers:
     specifiers:
       '@babel/runtime': ^7.11.0
       '@remirror/core-constants': 1.0.0-next.35
-      '@remirror/core-helpers': 1.0.0-next.38
-      '@remirror/core-types': 1.0.0-next.38
-      '@remirror/core-utils': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
+      '@remirror/core-helpers': 1.0.0-next.39
+      '@remirror/core-types': 1.0.0-next.39
+      '@remirror/core-utils': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
       '@testing-library/dom': ^7.23.0
       '@types/prosemirror-schema-basic': ^1.0.1
       '@types/prosemirror-test-builder': ^1.0.1
@@ -1508,7 +1508,7 @@ importers:
       prosemirror-schema-basic: ^1.1.2
       prosemirror-tables: ^1.1.1
       prosemirror-test-builder: ^1.0.3
-      test-keyboard: 1.0.0-next.38
+      test-keyboard: 1.0.0-next.39
   packages/jest-remirror:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -1527,15 +1527,15 @@ importers:
       jest: 26.4.2
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
-      '@remirror/dom': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
-      '@remirror/preset-core': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
+      '@remirror/dom': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
+      '@remirror/preset-core': 1.0.0-next.39
       '@testing-library/dom': ^7.23.0
       '@types/node': ^14.10.1
       '@types/sanitize-html': ^1.27.0
       jest: ^26.4.2
-      jest-prosemirror: 1.0.0-next.38
+      jest-prosemirror: 1.0.0-next.39
       jest-snapshot: ^26.4.2
       mutationobserver-shim: ^0.3.7
       sanitize-html: ^1.27.3
@@ -1557,8 +1557,8 @@ importers:
     specifiers:
       '@babel/runtime': ^7.11.0
       '@reach/auto-id': ^0.11.0
-      '@remirror/core-helpers': 1.0.0-next.38
-      '@remirror/core-types': 1.0.0-next.38
+      '@remirror/core-helpers': 1.0.0-next.39
+      '@remirror/core-types': 1.0.0-next.39
       '@seznam/compose-react-refs': ^1.0.4
       '@testing-library/react': ^11.0.2
       '@types/react': ^16.9.47
@@ -1585,7 +1585,7 @@ importers:
     specifiers:
       '@babel/runtime': ^7.11.0
       '@remirror/core-constants': 1.0.0-next.35
-      '@remirror/core-helpers': 1.0.0-next.38
+      '@remirror/core-helpers': 1.0.0-next.39
       '@types/prosemirror-keymap': ^1.0.3
       '@types/prosemirror-model': ^1.7.2
       '@types/prosemirror-state': ^1.2.5
@@ -1661,62 +1661,62 @@ importers:
       react-dom: 16.13.1_react@16.13.1
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
       '@remirror/core-constants': 1.0.0-next.35
-      '@remirror/core-helpers': 1.0.0-next.38
-      '@remirror/core-types': 1.0.0-next.38
-      '@remirror/core-utils': 1.0.0-next.38
-      '@remirror/dom': 1.0.0-next.38
-      '@remirror/extension-annotation': 1.0.0-next.38
-      '@remirror/extension-auto-link': 1.0.0-next.38
-      '@remirror/extension-bidi': 1.0.0-next.38
-      '@remirror/extension-blockquote': 1.0.0-next.38
-      '@remirror/extension-bold': 1.0.0-next.38
-      '@remirror/extension-code': 1.0.0-next.38
-      '@remirror/extension-code-block': 1.0.0-next.38
-      '@remirror/extension-collaboration': 1.0.0-next.38
-      '@remirror/extension-diff': 1.0.0-next.38
-      '@remirror/extension-doc': 1.0.0-next.38
-      '@remirror/extension-drop-cursor': 1.0.0-next.38
-      '@remirror/extension-emoji': 1.0.0-next.38
-      '@remirror/extension-epic-mode': 1.0.0-next.38
-      '@remirror/extension-events': 1.0.0-next.38
-      '@remirror/extension-gap-cursor': 1.0.0-next.38
-      '@remirror/extension-hard-break': 1.0.0-next.38
-      '@remirror/extension-heading': 1.0.0-next.38
-      '@remirror/extension-history': 1.0.0-next.38
-      '@remirror/extension-horizontal-rule': 1.0.0-next.38
-      '@remirror/extension-image': 1.0.0-next.38
-      '@remirror/extension-italic': 1.0.0-next.38
-      '@remirror/extension-link': 1.0.0-next.38
-      '@remirror/extension-mention': 1.0.0-next.38
-      '@remirror/extension-mention-atom': 1.0.0-next.38
-      '@remirror/extension-paragraph': 1.0.0-next.38
-      '@remirror/extension-placeholder': 1.0.0-next.38
-      '@remirror/extension-position-tracker': 1.0.0-next.38
-      '@remirror/extension-positioner': 1.0.0-next.38
-      '@remirror/extension-react-component': 1.0.0-next.38
-      '@remirror/extension-react-ssr': 1.0.0-next.38
-      '@remirror/extension-search': 1.0.0-next.38
-      '@remirror/extension-strike': 1.0.0-next.38
-      '@remirror/extension-text': 1.0.0-next.38
-      '@remirror/extension-trailing-node': 1.0.0-next.38
-      '@remirror/extension-underline': 1.0.0-next.38
-      '@remirror/extension-yjs': 1.0.0-next.38
-      '@remirror/pm': 1.0.0-next.38
-      '@remirror/preset-core': 1.0.0-next.38
-      '@remirror/preset-embed': 1.0.0-next.38
-      '@remirror/preset-list': 1.0.0-next.38
-      '@remirror/preset-react': 1.0.0-next.38
-      '@remirror/preset-social': 1.0.0-next.38
-      '@remirror/preset-table': 1.0.0-next.38
-      '@remirror/preset-wysiwyg': 1.0.0-next.38
-      '@remirror/react': 1.0.0-next.38
-      '@remirror/react-hooks': 1.0.0-next.38
-      '@remirror/react-social': 1.0.0-next.38
-      '@remirror/react-utils': 1.0.0-next.38
-      '@remirror/react-wysiwyg': 1.0.0-next.38
-      '@remirror/theme': 1.0.0-next.38
+      '@remirror/core-helpers': 1.0.0-next.39
+      '@remirror/core-types': 1.0.0-next.39
+      '@remirror/core-utils': 1.0.0-next.39
+      '@remirror/dom': 1.0.0-next.39
+      '@remirror/extension-annotation': 1.0.0-next.39
+      '@remirror/extension-auto-link': 1.0.0-next.39
+      '@remirror/extension-bidi': 1.0.0-next.39
+      '@remirror/extension-blockquote': 1.0.0-next.39
+      '@remirror/extension-bold': 1.0.0-next.39
+      '@remirror/extension-code': 1.0.0-next.39
+      '@remirror/extension-code-block': 1.0.0-next.39
+      '@remirror/extension-collaboration': 1.0.0-next.39
+      '@remirror/extension-diff': 1.0.0-next.39
+      '@remirror/extension-doc': 1.0.0-next.39
+      '@remirror/extension-drop-cursor': 1.0.0-next.39
+      '@remirror/extension-emoji': 1.0.0-next.39
+      '@remirror/extension-epic-mode': 1.0.0-next.39
+      '@remirror/extension-events': 1.0.0-next.39
+      '@remirror/extension-gap-cursor': 1.0.0-next.39
+      '@remirror/extension-hard-break': 1.0.0-next.39
+      '@remirror/extension-heading': 1.0.0-next.39
+      '@remirror/extension-history': 1.0.0-next.39
+      '@remirror/extension-horizontal-rule': 1.0.0-next.39
+      '@remirror/extension-image': 1.0.0-next.39
+      '@remirror/extension-italic': 1.0.0-next.39
+      '@remirror/extension-link': 1.0.0-next.39
+      '@remirror/extension-mention': 1.0.0-next.39
+      '@remirror/extension-mention-atom': 1.0.0-next.39
+      '@remirror/extension-paragraph': 1.0.0-next.39
+      '@remirror/extension-placeholder': 1.0.0-next.39
+      '@remirror/extension-position-tracker': 1.0.0-next.39
+      '@remirror/extension-positioner': 1.0.0-next.39
+      '@remirror/extension-react-component': 1.0.0-next.39
+      '@remirror/extension-react-ssr': 1.0.0-next.39
+      '@remirror/extension-search': 1.0.0-next.39
+      '@remirror/extension-strike': 1.0.0-next.39
+      '@remirror/extension-text': 1.0.0-next.39
+      '@remirror/extension-trailing-node': 1.0.0-next.39
+      '@remirror/extension-underline': 1.0.0-next.39
+      '@remirror/extension-yjs': 1.0.0-next.39
+      '@remirror/pm': 1.0.0-next.39
+      '@remirror/preset-core': 1.0.0-next.39
+      '@remirror/preset-embed': 1.0.0-next.39
+      '@remirror/preset-list': 1.0.0-next.39
+      '@remirror/preset-react': 1.0.0-next.39
+      '@remirror/preset-social': 1.0.0-next.39
+      '@remirror/preset-table': 1.0.0-next.39
+      '@remirror/preset-wysiwyg': 1.0.0-next.39
+      '@remirror/react': 1.0.0-next.39
+      '@remirror/react-hooks': 1.0.0-next.39
+      '@remirror/react-social': 1.0.0-next.39
+      '@remirror/react-utils': 1.0.0-next.39
+      '@remirror/react-wysiwyg': 1.0.0-next.39
+      '@remirror/theme': 1.0.0-next.39
       '@types/react': ^16.9.47
       '@types/react-dom': ^16.9.8
       react: ^16.13.1
@@ -1728,8 +1728,8 @@ importers:
       '@remirror/core-types': 'link:../@remirror/core-types'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core-helpers': 1.0.0-next.38
-      '@remirror/core-types': 1.0.0-next.38
+      '@remirror/core-helpers': 1.0.0-next.39
+      '@remirror/core-types': 1.0.0-next.39
   support:
     dependencies:
       '@changesets/pre': 1.0.5
@@ -1830,7 +1830,7 @@ importers:
       test-keyboard: 'link:../../packages/test-keyboard'
     specifiers:
       '@babel/runtime': ^7.11.0
-      '@remirror/core': 1.0.0-next.38
+      '@remirror/core': 1.0.0-next.39
       '@types/wait-on': ^4.0.0
       expect-playwright: ^0.2.5
       jest: ^26.4.2
@@ -1841,7 +1841,7 @@ importers:
       playwright-core: ^1.4.0
       playwright-testing-library: ^2.4.0
       signal-exit: ^3.0.3
-      test-keyboard: 1.0.0-next.38
+      test-keyboard: 1.0.0-next.39
   support/examples/with-next:
     dependencies:
       '@preconstruct/next': 1.0.1
@@ -1857,7 +1857,7 @@ importers:
       '@types/refractor': 3.0.0
     specifiers:
       '@preconstruct/next': ^1.0.1
-      '@remirror/showcase': 1.0.0-next.38
+      '@remirror/showcase': 1.0.0-next.39
       '@types/react': ^16.9.47
       '@types/react-dom': ^16.9.8
       '@types/refractor': ^3.0.0
@@ -1865,7 +1865,7 @@ importers:
       react: ^16.13.1
       react-dom: ^16.13.1
       refractor: ^3.1.0
-      remirror: 1.0.0-next.38
+      remirror: 1.0.0-next.39
   support/storybook:
     dependencies:
       '@babel/core': 7.11.6
@@ -1885,8 +1885,8 @@ importers:
       remirror: 'link:../../packages/remirror'
     specifiers:
       '@babel/core': ^7.11.0
-      '@remirror/pm': 1.0.0-next.38
-      '@remirror/showcase': 1.0.0-next.38
+      '@remirror/pm': 1.0.0-next.39
+      '@remirror/showcase': 1.0.0-next.39
       '@storybook/addon-actions': ^6.0.20
       '@storybook/addon-links': ^6.0.20
       '@storybook/addons': ^6.0.20
@@ -1898,7 +1898,7 @@ importers:
       linaria: ^2.0.0-rc.3
       react: ^16.13.1
       react-dom: ^16.13.1
-      remirror: 1.0.0-next.38
+      remirror: 1.0.0-next.39
   support/website:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -1939,9 +1939,9 @@ importers:
       '@docusaurus/theme-live-codeblock': 2.0.0-alpha.63
       '@docusaurus/types': 2.0.0-alpha.63
       '@mdx-js/react': ^1.6.16
-      '@remirror/dev': 1.0.0-next.38
-      '@remirror/playground': 1.0.0-next.38
-      '@remirror/showcase': 1.0.0-next.38
+      '@remirror/dev': 1.0.0-next.39
+      '@remirror/playground': 1.0.0-next.39
+      '@remirror/showcase': 1.0.0-next.39
       '@types/react': ^16.9.47
       '@types/react-dom': ^16.9.8
       babel-plugin-dynamic-import-node: ^2.3.3
@@ -1954,7 +1954,7 @@ importers:
       react: ^16.13.1
       react-dom: ^16.13.1
       remark-footnotes: ^2.0.0
-      remirror: 1.0.0-next.38
+      remirror: 1.0.0-next.39
 lockfileVersion: 5.1
 packages:
   /@algolia/cache-browser-local-storage/4.4.0:
@@ -20551,8 +20551,6 @@ packages:
     dev: false
     engines:
       node: '>=6'
-    peerDependencies:
-      typescript: '*'
     resolution:
       integrity: sha512-7Wjy+9E3WwLOEL30D+m8TSTF7qJJUJLONBnwQp0518siuMxUQUbgZwssaFX+QKlZkjHZcw/IpZCt/H0srrntSg==
   /pnp-webpack-plugin/1.6.4_typescript@4.0.2:

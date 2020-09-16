@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-yjs",
-  "version": "1.0.0-next.38",
+  "version": "1.0.0-next.39",
   "description": "Realtime collaboration with yjs",
   "keywords": [
     "remirror",
@@ -35,12 +35,12 @@
     "yjs": "^13.3.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.38",
-    "@remirror/pm": "1.0.0-next.38"
+    "@remirror/core": "1.0.0-next.39",
+    "@remirror/pm": "1.0.0-next.39"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.38",
-    "@remirror/pm": "1.0.0-next.38"
+    "@remirror/core": "1.0.0-next.39",
+    "@remirror/pm": "1.0.0-next.39"
   },
   "publishConfig": {
     "access": "public"
