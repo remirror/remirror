@@ -10,7 +10,6 @@ export {
   getElementProps,
   isReactDOMElement,
   isReactFragment,
-  isRemirrorContextProvider,
   isRemirrorElement,
   isRemirrorProvider,
   isValidElement,

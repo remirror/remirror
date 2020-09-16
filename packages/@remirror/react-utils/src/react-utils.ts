@@ -37,11 +37,6 @@ export enum RemirrorType {
   Provider = 'provider',
 
   /**
-   * Used to identify the ContextProviderWrapper
-   */
-  ContextProvider = 'context-provider',
-
-  /**
    * Marks the provider for i18n.
    */
   I18nProvider = 'i18n-provider',
@@ -128,16 +123,6 @@ const isRemirrorElementOfType = (type: RemirrorType) => <Options extends object 
   value: unknown,
 ): value is RemirrorElement<Options> =>
   isRemirrorElement(value) && value.type.$$remirrorType === type;
-
-/**
- * Checks to see if this is the wrapper we've created around the RemirrorContent.Provider component.
- *
- * This is used to help determine how the Remirror component will be rendered. `getRootProps` is the main reason
- * for this, and I'm not even sure the effort is worth it.
- *
- * @param value - the value to check
- */
-export const isRemirrorContextProvider = isRemirrorElementOfType(RemirrorType.ContextProvider);
 
 /**
  * Finds if this is a RemirrorProvider (which provides the RemirrorInjectedProps into the context);
