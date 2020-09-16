@@ -305,7 +305,9 @@ Something went wrong with your custom ReactNodeView Component.
 
 There is something wrong with your i18n setup.
 
-### RMR0301
+## Build Errors
+
+### `make-plural/plurals`
 
 > Attempted import error: 'en' is not exported from 'make-plural/plurals'.
 
