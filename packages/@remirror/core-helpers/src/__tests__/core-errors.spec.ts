@@ -1,7 +1,7 @@
 import { ErrorConstant } from '@remirror/core-constants';
 import { hideConsoleError } from '@remirror/testing';
 
-import { invariant, RemirrorError } from '../..';
+import { invariant, RemirrorError } from '../../dist/core-helpers.cjs';
 import { freeze } from '../freeze';
 
 const env = process.env.NODE_ENV;
@@ -38,10 +38,16 @@ describe('freeze', () => {
 describe('invariant', () => {
   const ref = hideConsoleError(true);
 
-  it('logs to the console when called', () => {
-    RemirrorError.create({ message: 'should log' }).logError();
+  it('logs to the console by default', () => {
+    RemirrorError.create({ message: 'should log' });
 
     expect(ref.spy).toHaveBeenCalled();
+  });
+
+  it('can disable logging', () => {
+    RemirrorError.create({ message: 'should log', disableLogging: true });
+
+    expect(ref.spy).not.toHaveBeenCalled();
   });
 
   it('throws specific errors', () => {

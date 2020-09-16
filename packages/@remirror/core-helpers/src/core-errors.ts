@@ -117,7 +117,7 @@ export class RemirrorError extends BaseError {
   /**
    * The constructor is intentionally kept private to prevent being extended from.
    */
-  private constructor({ code, message }: RemirrorErrorOptions = {}) {
+  private constructor({ code, message, disableLogging = false }: RemirrorErrorOptions = {}) {
     let errorCode: ErrorConstant;
 
     if (isErrorConstant(code)) {
@@ -130,15 +130,11 @@ export class RemirrorError extends BaseError {
 
     this.errorCode = errorCode;
     this.url = `${ERROR_INFORMATION_URL}#${errorCode.toLowerCase()}`;
-  }
 
-  /**
-   * Log the error message and return the instance of the error.
-   */
-  logError(): this {
-    // Log the error.
-    console.error(this.message);
-    return this;
+    if (!disableLogging) {
+      // Log the error.
+      console.error(this.message);
+    }
   }
 }
 
@@ -153,12 +149,12 @@ export function invariant(condition: unknown, options: RemirrorErrorOptions): as
 
   // When not in 'DEV' strip the message but still throw
   if (process.env.NODE_ENV === 'production') {
-    throw RemirrorError.create({ code: ErrorConstant.PROD }).logError();
+    throw RemirrorError.create({ code: ErrorConstant.PROD });
   }
 
   // When not in production we allow the message to pass through
   // **This is never called in production builds.**
-  throw RemirrorError.create(options).logError();
+  throw RemirrorError.create(options);
 }
 
 /**
@@ -174,4 +170,11 @@ export interface RemirrorErrorOptions {
    * The message to add to the error.
    */
   message?: string;
+
+  /**
+   * When true logging to the console is disabled.
+   *
+   * @default false
+   */
+  disableLogging?: boolean;
 }
