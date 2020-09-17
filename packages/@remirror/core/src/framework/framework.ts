@@ -360,8 +360,10 @@ export abstract class Framework<
     // Let it clear that this instance has been destroyed.
     this.#events.emit('destroy');
 
-    // Remove the focus and blur listeners.
-    this.removeFocusListeners();
+    if (this.view) {
+      // Remove the focus and blur listeners.
+      this.removeFocusListeners();
+    }
   }
 
   /**
