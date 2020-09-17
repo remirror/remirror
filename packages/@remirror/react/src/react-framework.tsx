@@ -1,5 +1,5 @@
 import composeRefs from '@seznam/compose-react-refs';
-import React, { cloneElement, Dispatch, ReactNode, Ref, SetStateAction } from 'react';
+import React, { Dispatch, ReactNode, Ref, SetStateAction } from 'react';
 
 import {
   AnyCombinedUnion,
@@ -8,7 +8,6 @@ import {
   FrameworkParameter,
   invariant,
   isArray,
-  isPlainObject,
   object,
   SchemaFromCombined,
   shouldUseDomEnvironment,
@@ -17,14 +16,8 @@ import {
 import type { EditorState } from '@remirror/pm/state';
 import type { EditorView } from '@remirror/pm/view';
 import { ReactPreset } from '@remirror/preset-react';
-import {
-  addKeyToElement,
-  getElementProps,
-  isReactDOMElement,
-  propIsFunction,
-} from '@remirror/react-utils';
+import { addKeyToElement } from '@remirror/react-utils';
 
-import { RemirrorContext } from './react-contexts';
 import type {
   BaseProps,
   GetRootPropsConfig,
@@ -80,8 +73,6 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
 
     this.#getShouldRenderClient = getShouldRenderClient;
     this.#setShouldRenderClient = setShouldRenderClient;
-
-    propIsFunction(this.props.children);
 
     if (this.manager.view) {
       this.manager.view.setProps({
@@ -290,7 +281,7 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
    */
   onUpdate(previousEditable: boolean | undefined): void {
     // Ensure that `children` is still a render prop
-    propIsFunction(this.props.children);
+    // propIsFunction(this.props.children);
 
     // Check whether the editable prop has been updated
     if (this.props.editable !== previousEditable && this.view && this.#editorRef) {
@@ -345,65 +336,12 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
   }
 
   /**
-   * Clones the passed element when `getRootProps` hasn't yet been called.
-   *
-   * This method also supports rendering the children within a domless environment where necessary.
-   */
-  private renderClonedElement(
-    element: JSX.Element,
-    rootProperties?: GetRootPropsConfig<string> | boolean,
-  ) {
-    const [editorElement, ...other] = isArray(element) ? element : [element, null];
-    const { children, ...rest } = getElementProps(editorElement);
-    const properties = isPlainObject(rootProperties) ? { ...rootProperties, ...rest } : rest;
-
-    return (
-      <>
-        {cloneElement(
-          editorElement,
-          this.internalGetRootProps(properties, this.renderChildren(children)),
-        )}
-        {[...other]}
-      </>
-    );
-  }
-
-  /**
    * Reset the called status of `getRootProps`.
    */
-  private resetRender() {
+  resetRender(): void {
     // Reset the status of roots props being called
     this.rootPropsConfig.called = false;
     this.rootPropsConfig.count = 0;
-  }
-
-  /**
-   * Create the react element which renders the text editor. This render method
-   * also provides the `RemirrorPortals` which are used to render custom
-   * component based node views.
-   */
-  generateReactElement(): JSX.Element {
-    this.resetRender();
-
-    const element: JSX.Element | null = this.props.children(this.frameworkOutput);
-
-    let renderedElement: JSX.Element;
-
-    if (this.rootPropsConfig.called || element?.type === RemirrorContext.Provider) {
-      // Simply return the element as this method can never actually be called
-      // within an ssr environment
-      renderedElement = element;
-    } else {
-      renderedElement = isReactDOMElement(element) ? (
-        this.renderClonedElement(element)
-      ) : (
-        <div {...this.internalGetRootProps(undefined, this.renderChildren(element))} />
-      );
-    }
-
-    this.resetRender();
-
-    return renderedElement;
   }
 }
 
@@ -413,7 +351,7 @@ export interface ReactFrameworkProps<Combined extends AnyCombinedUnion>
    * The render prop that takes the injected remirror params and returns an
    * element to render. The editor view is automatically attached to the DOM.
    */
-  children: RenderPropFunction<Combined>;
+  // children: RenderPropFunction<Combined>;
 
   /**
    * Set to true to ignore the hydration warning for a mismatch between the
@@ -440,15 +378,6 @@ export interface ReactFrameworkProps<Combined extends AnyCombinedUnion>
    */
   suppressHydrationWarning?: boolean;
 }
-
-/**
- * A function that takes the injected remirror params and returns JSX to render.
- *
- * @param - injected remirror params
- */
-type RenderPropFunction<Combined extends AnyCombinedUnion> = (
-  params: ReactFrameworkOutput<Combined>,
-) => JSX.Element;
 
 /**
  * The parameter that is passed into the ReactFramework.

@@ -1,5 +1,9 @@
-export type { I18nProviderProps, RemirrorProviderProps, ThemeProviderProps } from './components';
-export { I18nProvider, RemirrorProvider, ThemeProvider } from './components';
+export type {
+  I18nProviderProps,
+  RemirrorProviderProps,
+  ThemeProviderProps,
+} from './react-providers';
+export { I18nProvider, RemirrorProvider, ThemeProvider } from './react-providers';
 
 export type { BaseReactCombinedUnion, UseExtensionCallback, UseRemirrorType } from './hooks';
 export {

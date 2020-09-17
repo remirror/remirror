@@ -2,7 +2,7 @@ import React from 'react';
 
 import { strictRender } from '@remirror/testing/react';
 
-import { ThemeProvider } from '../providers';
+import { ThemeProvider } from '../react-providers';
 
 describe('ThemeProvider', () => {
   it('should render', () => {
