@@ -1,6 +1,7 @@
-import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useFirstMountState } from 'react-use/lib/useFirstMountState';
 import useUpdateEffect from 'react-use/lib/useUpdateEffect';
+import useLayoutEffect from 'use-isomorphic-layout-effect';
 
 import {
   AnyCombinedUnion,
@@ -14,16 +15,15 @@ import {
   RemirrorContentType,
   SchemaFromCombined,
 } from '@remirror/core';
-import { RemirrorPortals, usePortals } from '@remirror/extension-react-component';
 import type { EditorState } from '@remirror/pm/state';
 import { ReactPreset } from '@remirror/preset-react';
-import { RemirrorType } from '@remirror/react-utils';
 
-import { usePrevious } from '../hooks';
 import { ReactFramework, ReactFrameworkParameter, ReactFrameworkProps } from '../react-framework';
+import type { ReactFrameworkOutput } from '../react-types';
+import { usePrevious } from './core-hooks';
 
 /**
- * The component responsible for rendering your prosemirror editor to the DOM.
+ * The hook responsible for providing the editor context to the `RemirrorProvider`.
  *
  * @remarks
  *
@@ -33,9 +33,9 @@ import { ReactFramework, ReactFrameworkParameter, ReactFrameworkProps } from '..
  *
  * @internal
  */
-export const ReactEditor = <Combined extends AnyCombinedUnion>(
+export function useReactEditor<Combined extends AnyCombinedUnion>(
   props: ReactFrameworkProps<Combined>,
-): ReactElement<ReactFrameworkProps<Combined>> => {
+): ReactFrameworkOutput<Combined> {
   const { stringHandler = defaultStringHandler, onError, manager, forceEnvironment, value } = props;
   const { placeholder } = props;
   const isFirstMount = useFirstMountState();
@@ -108,23 +108,8 @@ export const ReactEditor = <Combined extends AnyCombinedUnion>(
   // Handle the controlled editor usage.
   useControlledEditor(framework);
 
-  // Subscribe to updates from the [[`PortalContainer`]]
-  const portals = usePortals(framework.frameworkOutput.portalContainer);
-
-  // Return the rendered component and the portals for custom node views and
-  // decorations
-  return (
-    <>
-      {framework.generateReactElement()}
-      <RemirrorPortals portals={portals} context={framework.frameworkOutput} />
-    </>
-  );
-};
-
-/**
- * Sets a flag to be a static remirror
- */
-ReactEditor.remirrorType = RemirrorType.Editor;
+  return framework.frameworkOutput;
+}
 
 /**
  * A hook which creates a reference to the `ReactFramework` and updates the
@@ -172,36 +157,27 @@ function useControlledEditor<Combined extends AnyCombinedUnion>(
   const { value } = framework.props;
 
   // Cache whether this is a controlled editor.
-  const isControlled = useRef(bool(value)).current;
+  const isControlledRef = useRef(bool(value));
   const previousValue = usePrevious(value);
 
-  // Check if the update is valid based on current value.
-  const validUpdate = value ? isControlled === true : isControlled === false;
+  // Using layout effect for synchronous updates.
+  useLayoutEffect(() => {
+    // Check if the update is valid based on current value.
+    const validUpdate = value
+      ? isControlledRef.current === true
+      : isControlledRef.current === false;
 
-  invariant(validUpdate, {
-    code: ErrorConstant.REACT_CONTROLLED,
-    message: isControlled
-      ? 'You have attempted to switch from a controlled to an uncontrolled editor. Once you set up an editor as a controlled editor it must always provide a `value` prop.'
-      : 'You have provided a `value` prop to an uncontrolled editor. In order to set up your editor as controlled you must provide the `value` prop from the very first render.',
-  });
+    invariant(validUpdate, {
+      code: ErrorConstant.REACT_CONTROLLED,
+      message: isControlledRef.current
+        ? 'You have attempted to switch from a controlled to an uncontrolled editor. Once you set up an editor as a controlled editor it must always provide a `value` prop.'
+        : 'You have provided a `value` prop to an uncontrolled editor. In order to set up your editor as controlled you must provide the `value` prop from the very first render.',
+    });
 
-  if (!value || value === previousValue) {
-    return;
-  }
+    if (!value || value === previousValue) {
+      return;
+    }
 
-  // **NOTE:** This is required for controlled updates to work properly (to the
-  // best of my knowledge). If, for example, we try `useEffect` instead
-  // controlled updates are asynchronous and there can be mismatched
-  // transactions caused by React's state representation being one step behind
-  // ProseMirror.
-  //
-  // One issue that I'm bumping into right now while working on the
-  // `ReactNodeView` is that when the `view.updateState()` causes a rerender in
-  // a sub-component it triggers the warning - 'Cannot update a component [`X`]
-  // while rendering a different component [`ReactEditor`]'.
-  //
-  // This is because rendering one component should not attempt to update the
-  // state of a different component while rendering. NodeView's are called as soon
-  // as `view.updateState` is called and the NodeView is updated via a synchronous event listener which triggers a `setState` causing the
-  framework.updateControlledState(value, previousValue ?? undefined);
+    framework.updateControlledState(value, previousValue ?? undefined);
+  }, [value, previousValue, framework]);
 }

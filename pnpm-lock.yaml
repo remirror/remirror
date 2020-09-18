@@ -1115,6 +1115,7 @@ importers:
       react-use: 15.3.4_react-dom@16.13.1+react@16.13.1
       resize-observer-polyfill: 1.5.1
       type-fest: 0.16.0
+      use-isomorphic-layout-effect: 1.0.0_react@16.13.1
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -1157,6 +1158,7 @@ importers:
       react-use: ^15.3.3
       resize-observer-polyfill: ^1.5.1
       type-fest: ^0.16.0
+      use-isomorphic-layout-effect: ^1.0.0
   packages/@remirror/react-components:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -26376,6 +26378,18 @@ packages:
   /use-isomorphic-layout-effect/1.0.0_5ce8f66b58dc92cd3f67a918e0e72f70:
     dependencies:
       '@types/react': 16.9.49
+      react: 16.13.1
+    dev: false
+    peerDependencies:
+      '@types/react': '*'
+      react: ^16.8.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+    resolution:
+      integrity: sha512-JMwJ7Vd86NwAt1jH7q+OIozZSIxA4ND0fx6AsOe2q1H8ooBUp5aN6DvVCqZiIaYU6JaMRJGyR0FO7EBCIsb/Rg==
+  /use-isomorphic-layout-effect/1.0.0_react@16.13.1:
+    dependencies:
       react: 16.13.1
     dev: false
     peerDependencies:

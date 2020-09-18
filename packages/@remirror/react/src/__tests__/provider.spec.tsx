@@ -4,8 +4,8 @@ import React, { FC } from 'react';
 import { BoldExtension, docNodeBasicJSON, ItalicExtension } from '@remirror/testing';
 import { createReactManager, fireEvent, strictRender } from '@remirror/testing/react';
 
-import { useRemirror } from '../../hooks';
-import { RemirrorProvider } from '../providers';
+import { useRemirror } from '../hooks';
+import { RemirrorProvider } from '../react-providers';
 
 test('`RemirrorProvider`', () => {
   const TestComponent: FC = () => {

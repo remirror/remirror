@@ -69,7 +69,7 @@
     "release:latest": "pnpm publish -r",
     "release:next": "pnpm publish -r --tag next",
     "reset": "pnpm clean:all; rm pnpm-lock.yaml; pnpm symlink:root; pnpm install;",
-    "run:prettier": "prettier --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx,md,mdx,json,html,css,yml,yaml,graphql}\"",
+    "run:prettier": "prettier --loglevel warn --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx,md,mdx,json,html,css,yml,yaml,graphql}\"",
     "size": "size-limit",
     "storybook": "cross-env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' manypkg run support/storybook storybook",
     "symlink:root": "node support/scripts/symlink-root.js",

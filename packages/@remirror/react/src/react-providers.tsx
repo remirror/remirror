@@ -7,10 +7,11 @@ import { RemirrorType } from '@remirror/react-utils';
 import type { RemirrorThemeType } from '@remirror/theme';
 import { createThemeVariables, themeStyles } from '@remirror/theme';
 
-import { useManager, useRemirror } from '../hooks';
-import { I18nContext, RemirrorContext } from '../react-contexts';
-import type { BaseProps, CreateReactManagerOptions, I18nContextProps } from '../react-types';
-import { ReactEditor } from './react-editor';
+import { useManager, useRemirror } from './hooks';
+import { I18nContext, RemirrorContext } from './react-contexts';
+import type { BaseProps, CreateReactManagerOptions, I18nContextProps } from './react-types';
+import { useReactEditor } from './hooks/use-react-editor';
+import { RemirrorPortals, usePortals } from '@remirror/extension-react-component';
 
 export interface RemirrorProviderProps<Combined extends AnyCombinedUnion>
   extends MakeOptional<BaseProps<Combined>, 'manager'> {
@@ -44,7 +45,7 @@ export interface RemirrorProviderProps<Combined extends AnyCombinedUnion>
    *
    * @default undefined
    */
-  autoRender?: 'start' | 'end';
+  autoRender?: boolean | 'start' | 'end';
 }
 
 /**
@@ -68,19 +69,21 @@ export const RemirrorProvider = <Combined extends AnyCombinedUnion>(
   props: RemirrorProviderProps<Combined>,
 ): ReactElement<RemirrorProviderProps<Combined>> => {
   const { children, autoRender, manager, combined, settings, ...rest } = props;
+  const context = useReactEditor({
+    ...rest,
+    manager: useManager(manager ?? combined ?? [], settings),
+  });
+
+  // Subscribe to updates from the [[`PortalContainer`]]
+  const portals = usePortals(context.portalContainer);
 
   return (
-    <ReactEditor {...rest} manager={useManager(manager ?? combined ?? [], settings)}>
-      {(value) => {
-        return (
-          <RemirrorContext.Provider value={value}>
-            {autoRender === 'start' && <AutoRenderedEditor />}
-            {children}
-            {autoRender === 'end' && <AutoRenderedEditor />}
-          </RemirrorContext.Provider>
-        );
-      }}
-    </ReactEditor>
+    <RemirrorContext.Provider value={context}>
+      <RemirrorPortals portals={portals} context={context} />
+      {(autoRender === 'start' || autoRender === true) && <AutoRenderedEditor />}
+      {children}
+      {autoRender === 'end' && <AutoRenderedEditor />}
+    </RemirrorContext.Provider>
   );
 };
 

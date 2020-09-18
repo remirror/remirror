@@ -1,41 +1,41 @@
 import { axe } from 'jest-axe';
-import React, { forwardRef, FunctionComponent, Ref, RefAttributes } from 'react';
+import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
 
-import { createReactManager, RenderResult, strictRender } from '@remirror/testing/react';
+import { RenderResult, strictRender } from '@remirror/testing/react';
 
-import { ReactEditor } from '../react-editor';
+import { createReactManager, RemirrorProvider, useRemirror } from '../..';
 
 const mock = jest.fn();
-const CustomRoot: FunctionComponent<RefAttributes<HTMLDivElement>> = forwardRef((props, ref) => {
-  mock(ref);
-  return <div {...props} ref={ref} />;
-});
 
 test('supports a custom root element', () => {
+  const Component: FunctionComponent<RefAttributes<HTMLDivElement>> = forwardRef((_, ref) => {
+    mock(ref);
+
+    return <div {...useRemirror().getRootProps({ ref })} />;
+  });
+
   strictRender(
-    <ReactEditor manager={createReactManager([])}>
-      {({ getRootProps }) => {
-        return <CustomRoot {...getRootProps()} />;
-      }}
-    </ReactEditor>,
+    <RemirrorProvider manager={createReactManager([])}>
+      <Component ref={() => {}} />
+    </RemirrorProvider>,
   );
 
   expect(mock).toHaveBeenCalledWith(expect.any(Function));
 });
 
 test('supports a custom ref label and passed props through', () => {
-  function Cmp(props: { customRef: Ref<HTMLDivElement> }) {
+  const Component = () => {
+    const context = useRemirror();
+    const props = context.getRootProps({ refKey: 'customRef', testProp });
     mock(props);
     return <div ref={props.customRef} />;
-  }
+  };
 
   const testProp = 'test';
   strictRender(
-    <ReactEditor manager={createReactManager([])}>
-      {({ getRootProps }) => {
-        return <Cmp {...getRootProps({ refKey: 'customRef', testProp })} />;
-      }}
-    </ReactEditor>,
+    <RemirrorProvider manager={createReactManager([])}>
+      <Component />
+    </RemirrorProvider>,
   );
 
   expect(mock.mock.calls[0][0].customRef).toBeFunction();
@@ -44,21 +44,22 @@ test('supports a custom ref label and passed props through', () => {
 
 describe('nestedRootProps', () => {
   let result: RenderResult;
+  const Component = () => {
+    return (
+      <div>
+        <div {...useRemirror().getRootProps()} id='nested-div'>
+          <div id='wrapped-div'>Wrapped text</div>
+        </div>
+      </div>
+    );
+  };
 
   beforeEach(() => {
     result = strictRender(
       <main>
-        <ReactEditor manager={createReactManager([])} label='Editor'>
-          {({ getRootProps }) => {
-            return (
-              <div>
-                <div {...getRootProps()} id='nested-div'>
-                  <div id='wrapped-div'>Wrapped text</div>
-                </div>
-              </div>
-            );
-          }}
-        </ReactEditor>
+        <RemirrorProvider manager={createReactManager([])} label='Editor'>
+          <Component />
+        </RemirrorProvider>
       </main>,
     );
   });

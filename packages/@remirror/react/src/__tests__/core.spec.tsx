@@ -4,18 +4,16 @@ import React, { useCallback, useState } from 'react';
 import { renderToString } from 'react-dom/server';
 
 import {
-  AnyCombinedUnion,
   AnyExtension,
   AnyPreset,
   CombinedUnion,
   fromHtml,
   RemirrorEventListener,
 } from '@remirror/core';
-import { rafMock } from '@remirror/testing';
+import { hideConsoleError, rafMock } from '@remirror/testing';
 import {
   act,
   createReactManager,
-  DefaultEditor,
   fireEvent,
   RemirrorProvider,
   render,
@@ -24,8 +22,7 @@ import {
   useRemirror,
 } from '@remirror/testing/react';
 
-import type { ReactCombinedUnion, ReactFrameworkOutput } from '../../react-types';
-import { ReactEditor } from '../react-editor';
+import type { ReactCombinedUnion, ReactFrameworkOutput } from '../react-types';
 
 const textContent = `This is editor text`;
 const label = 'Remirror editor';
@@ -36,14 +33,15 @@ const handlers = {
 };
 
 test('should be called via a render prop', () => {
-  const mock = jest.fn(() => <div />);
   const { getByLabelText } = strictRender(
-    <ReactEditor manager={createReactManager([])} label={label} {...handlers}>
-      {mock}
-    </ReactEditor>,
+    <RemirrorProvider
+      manager={createReactManager([])}
+      label={label}
+      {...handlers}
+      autoRender='start'
+    />,
   );
 
-  expect(mock).toHaveBeenCalledWith(expect.any(Object));
   expect(handlers.onChange).toHaveBeenCalledWith(expect.any(Object));
   expect(handlers.onChange.mock.calls[0][0].getText()).toBe('');
   expect(handlers.onChange.mock.calls[0][0].getJSON().doc.type).toBe('doc');
@@ -55,19 +53,16 @@ test('should be called via a render prop', () => {
 });
 
 test('can `suppressHydrationWarning` without breaking', () => {
-  const mock = jest.fn(() => <div />);
   const { getByLabelText } = strictRender(
-    <ReactEditor
+    <RemirrorProvider
       manager={createReactManager([])}
       label={label}
       {...handlers}
       suppressHydrationWarning={true}
-    >
-      {mock}
-    </ReactEditor>,
+      autoRender='start'
+    />,
   );
 
-  expect(mock).toHaveBeenCalledWith(expect.any(Object));
   expect(handlers.onChange).toHaveBeenCalledWith(expect.any(Object));
   expect(handlers.onChange.mock.calls[0][0].getText()).toBe('');
   expect(handlers.onChange.mock.calls[0][0].getJSON().doc.type).toBe('doc');
@@ -79,37 +74,34 @@ test('can `suppressHydrationWarning` without breaking', () => {
 });
 
 describe('basic functionality', () => {
+  hideConsoleError(true);
+
   it('is accessible', async () => {
     const results = await axe(
-      renderToString(<ReactEditor manager={createReactManager([])}>{() => <div />}</ReactEditor>),
+      renderToString(<RemirrorProvider manager={createReactManager([])} autoRender='start' />),
     );
 
     expect(results).toHaveNoViolations();
   });
 
-  it("doesn't render the editor without `children` as a render prop", () => {
-    expect(() =>
-      // @ts-expect-error
-      strictRender(<ReactEditor label={label} manager={createReactManager([])} />),
-    ).toMatchSnapshot();
-  });
-
   it('should allow text input and fire all handlers', () => {
-    let setContent: ReactFrameworkOutput<AnyCombinedUnion>['setContent'] = jest.fn();
-    const mock = jest.fn((value: ReactFrameworkOutput<AnyCombinedUnion>) => {
-      setContent = value.setContent;
-      return <div />;
-    });
+    const setContent = jest.fn();
+
+    const Component = () => {
+      setContent.mockImplementation(useRemirror().setContent);
+      return null;
+    };
 
     const { getByLabelText } = strictRender(
-      <ReactEditor
+      <RemirrorProvider
         label={label}
         {...handlers}
         manager={createReactManager([])}
         stringHandler={fromHtml}
+        autoRender='start'
       >
-        {mock}
-      </ReactEditor>,
+        <Component />
+      </RemirrorProvider>,
     );
 
     act(() => {
@@ -130,14 +122,11 @@ describe('basic functionality', () => {
   });
 
   it('changes when the editable prop changes', () => {
-    const mock = jest.fn(() => <div />);
     const manager = createReactManager([]);
 
     const El = ({ editable }: { editable: boolean }) => {
       return (
-        <ReactEditor editable={editable} label={label} manager={manager}>
-          {mock}
-        </ReactEditor>
+        <RemirrorProvider editable={editable} label={label} manager={manager} autoRender='start' />
       );
     };
 
@@ -152,15 +141,14 @@ describe('basic functionality', () => {
 describe('initialContent', () => {
   it('should render with string content', () => {
     const { container } = strictRender(
-      <ReactEditor
+      <RemirrorProvider
         label={label}
         {...handlers}
         manager={createReactManager([])}
         initialContent={'<p>Hello</p>'}
         stringHandler={fromHtml}
-      >
-        {() => <div />}
-      </ReactEditor>,
+        autoRender='start'
+      />,
     );
 
     expect(container.innerHTML).toInclude('Hello');
@@ -173,14 +161,13 @@ describe('initialContent', () => {
     };
 
     const { container } = strictRender(
-      <ReactEditor
+      <RemirrorProvider
         label={label}
         {...handlers}
         manager={createReactManager([])}
         initialContent={content}
-      >
-        {() => <div />}
-      </ReactEditor>,
+        autoRender='start'
+      />,
     );
 
     expect(container.innerHTML).toInclude('Hello');
@@ -194,25 +181,28 @@ describe('focus', () => {
   };
 
   let mock: ReturnType<typeof rafMock>;
-  let context!: ReactFrameworkOutput<any>;
+  let context: ReactFrameworkOutput<any>;
   let editorNode: HTMLElement;
+
+  const Component = () => {
+    context = useRemirror();
+    return null;
+  };
 
   beforeEach(() => {
     mock = rafMock();
 
     const { getByRole } = strictRender(
-      <ReactEditor
+      <RemirrorProvider
         label={label}
         {...handlers}
         manager={createReactManager([])}
         initialContent={content}
         autoFocus={true}
+        autoRender='start'
       >
-        {(ctx) => {
-          context = ctx;
-          return <div />;
-        }}
-      </ReactEditor>,
+        <Component />
+      </RemirrorProvider>,
     );
 
     mock.flush();
@@ -389,9 +379,14 @@ test('`focus` should be chainable', () => {
     );
 
     return (
-      <RemirrorProvider autoFocus={true} manager={manager} onChange={onChange} value={value}>
+      <RemirrorProvider
+        autoFocus={true}
+        manager={manager}
+        onChange={onChange}
+        value={value}
+        autoRender='start'
+      >
         <TrapContext />
-        <DefaultEditor />
       </RemirrorProvider>
     );
   };
@@ -423,7 +418,6 @@ describe('onChange', () => {
 
   const Component = () => {
     const manager = useManager(chain.manager);
-
     const [state, setState] = useState(0);
 
     const onChange = () => {

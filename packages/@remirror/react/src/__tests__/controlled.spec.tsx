@@ -14,11 +14,9 @@ import {
 import { BoldExtension, ItalicExtension } from '@remirror/testing';
 import { act, fireEvent, render, strictRender } from '@remirror/testing/react';
 
-import { useManager, useRemirror } from '../../hooks';
-import { createReactManager } from '../../react-helpers';
-import type { ReactFrameworkOutput } from '../../react-types';
-import { RemirrorProvider } from '../providers';
-import { ReactEditor } from '../react-editor';
+import { RemirrorProvider, useManager, useRemirror } from '../..';
+import { createReactManager } from '../react-helpers';
+import type { ReactFrameworkOutput } from '../react-types';
 
 const label = 'Remirror editor';
 
@@ -59,9 +57,13 @@ describe('Remirror Controlled Component', () => {
     const onChange = jest.fn();
 
     const { getByRole } = strictRender(
-      <ReactEditor {...props} value={value} manager={manager} onChange={onChange}>
-        {() => <div />}
-      </ReactEditor>,
+      <RemirrorProvider
+        {...props}
+        value={value}
+        manager={manager}
+        onChange={onChange}
+        autoRender='start'
+      ></RemirrorProvider>,
     );
 
     expect(getByRole('textbox')).toMatchSnapshot();
@@ -80,15 +82,14 @@ describe('Remirror Controlled Component', () => {
     const onChange = jest.fn();
 
     strictRender(
-      <ReactEditor
+      <RemirrorProvider
         {...props}
         manager={manager}
         initialContent='<p>Terrible</p>'
         value={value}
         onChange={onChange}
-      >
-        {() => <div />}
-      </ReactEditor>,
+        autoRender='start'
+      ></RemirrorProvider>,
     );
 
     expect(chain.dom).toMatchSnapshot();
@@ -106,16 +107,15 @@ describe('Remirror Controlled Component', () => {
       );
 
       return (
-        <ReactEditor
+        <RemirrorProvider
           {...props}
           value={value}
           manager={manager}
           onChange={(parameter) => {
             setValue(parameter.state);
           }}
-        >
-          {() => <div />}
-        </ReactEditor>
+          autoRender='start'
+        ></RemirrorProvider>
       );
     };
 
@@ -140,7 +140,7 @@ describe('Remirror Controlled Component', () => {
       );
 
       return (
-        <ReactEditor
+        <RemirrorProvider
           {...props}
           value={value}
           manager={manager}
@@ -149,9 +149,8 @@ describe('Remirror Controlled Component', () => {
 
             setValue(createStateFromContent(`<p>Hello</p><p>${getText()}</p>`));
           }}
-        >
-          {() => <div />}
-        </ReactEditor>
+          autoRender='start'
+        ></RemirrorProvider>
       );
     };
 
@@ -172,25 +171,34 @@ describe('Remirror Controlled Component', () => {
       stringHandler: fromHtml,
     });
 
-    let ctx: ReactFrameworkOutput<typeof manager['~EP']>;
+    let context: ReactFrameworkOutput<typeof manager['~EP']>;
+
+    const GetContext = () => {
+      context = useRemirror();
+
+      return null;
+    };
 
     const Component: FC<{
       editorState: EditorState<SchemaFromCombined<typeof manager['~EP']>>;
     }> = ({ editorState }) => {
       return (
-        <ReactEditor {...props} value={editorState} manager={manager} onChange={jest.fn()}>
-          {(context) => {
-            ctx = context as any;
-            return <div />;
-          }}
-        </ReactEditor>
+        <RemirrorProvider
+          {...props}
+          value={editorState}
+          manager={manager}
+          onChange={jest.fn()}
+          autoRender='start'
+        >
+          <GetContext />
+        </RemirrorProvider>
       );
     };
 
     strictRender(<Component editorState={value} />);
 
-    expect(() => ctx.setContent('<p>Error</p>')).toThrowErrorMatchingSnapshot();
-    expect(() => ctx.clearContent()).toThrowErrorMatchingSnapshot();
+    expect(() => context.setContent('<p>Error</p>')).toThrowErrorMatchingSnapshot();
+    expect(() => context.clearContent()).toThrowErrorMatchingSnapshot();
   });
 
   it('throws when switching from controlled to non-controlled', () => {
@@ -208,9 +216,13 @@ describe('Remirror Controlled Component', () => {
       set.mockImplementation(setState);
 
       return (
-        <ReactEditor {...props} value={state} manager={manager} onChange={jest.fn()}>
-          {() => <div />}
-        </ReactEditor>
+        <RemirrorProvider
+          {...props}
+          value={state}
+          manager={manager}
+          onChange={jest.fn()}
+          autoRender='start'
+        />
       );
     };
 
@@ -239,9 +251,13 @@ describe('Remirror Controlled Component', () => {
       set.mockImplementation(setState);
 
       return (
-        <ReactEditor {...props} value={state} manager={manager} onChange={jest.fn()}>
-          {() => <div />}
-        </ReactEditor>
+        <RemirrorProvider
+          {...props}
+          value={state}
+          manager={manager}
+          onChange={jest.fn()}
+          autoRender='start'
+        />
       );
     };
 
@@ -269,15 +285,16 @@ describe('Remirror Controlled Component', () => {
     const { manager, props, chain, doc, p } = create([new UpdateExtension()]);
 
     const Component = () => {
-      const [value, setValue] = useState<EditorState>(
+      const [value, setValue] = useState<EditorState>(() =>
         manager.createState({
           content: doc(p('some content')),
           stringHandler: fromHtml,
+          selection: 'end',
         }),
       );
 
       return (
-        <ReactEditor
+        <RemirrorProvider
           {...props}
           value={value}
           manager={manager}
@@ -286,9 +303,8 @@ describe('Remirror Controlled Component', () => {
 
             setValue(state);
           }}
-        >
-          {() => <div />}
-        </ReactEditor>
+          autoRender='start'
+        />
       );
     };
 
@@ -298,9 +314,9 @@ describe('Remirror Controlled Component', () => {
       chain.commands.insertText('First text update');
     });
 
-    expect(mock).toHaveBeenCalledTimes(4);
+    expect(mock).toHaveBeenCalledTimes(2);
 
-    const { state, previousState } = mock.mock.calls[3][0];
+    const { state, previousState } = mock.mock.calls[1][0];
 
     expect(state).toBe(chain.state);
     expect(state).not.toBe(previousState);
@@ -312,7 +328,7 @@ test('can run multiple commands', () => {
   const { bold, italic } = chain.marks;
 
   const InnerComponent: FC = () => {
-    const { getRootProps, commands } = useRemirror<BoldExtension | ItalicExtension>();
+    const { getRootProps, commands } = useRemirror();
 
     return (
       <div>
@@ -477,7 +493,7 @@ test('support for rendering a nested controlled editor in strict mode', () => {
 });
 
 describe('onChange', () => {
-  const chain = RemirrorTestChain.create(createReactManager([]));
+  let chain = RemirrorTestChain.create(createReactManager([]));
   const mock = jest.fn();
 
   const Component = () => {
@@ -497,23 +513,12 @@ describe('onChange', () => {
     };
 
     return (
-      <RemirrorProvider manager={manager} onChange={onChange} value={value}>
-        <TextEditor />
-      </RemirrorProvider>
-    );
-  };
-
-  const TextEditor = () => {
-    const { getRootProps } = useRemirror();
-
-    return (
-      <>
-        <div {...getRootProps()} />
-      </>
+      <RemirrorProvider manager={manager} onChange={onChange} value={value} autoRender={true} />
     );
   };
 
   beforeEach(() => {
+    chain = RemirrorTestChain.create(createReactManager([]));
     mock.mockClear();
   });
 
