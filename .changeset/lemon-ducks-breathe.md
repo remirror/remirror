@@ -1,6 +1,5 @@
 ---
 '@remirror/extension-annotation': minor
-'@remirror/storybook': minor
 ---
 
 Visualize the amount of overlapping annotations
