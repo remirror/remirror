@@ -1,4 +1,4 @@
-import type { Annotation, AnnotationData } from './types';
+import type { Annotation, AnnotationData, AnnotationWithoutText } from './types';
 
 export enum ActionType {
   ADD_ANNOTATION,
@@ -27,5 +27,5 @@ export interface RemoveAnnotationsAction {
 
 export interface SetAnnotationsAction<A extends Annotation> {
   type: ActionType.SET_ANNOTATIONS;
-  annotations: A[];
+  annotations: Array<AnnotationWithoutText<A>>;
 }

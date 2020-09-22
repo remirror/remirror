@@ -7,17 +7,16 @@ interface ToDecorationOptions<A extends Annotation> {
   from: number;
   to: number;
   annotationData: AnnotationData<A>;
-  annotationClassName: string;
 }
 export function toDecoration<A extends Annotation>(options: ToDecorationOptions<A>): Decoration {
   const { annotationData: annotation } = options;
 
-  // Mixes extension-level styling for all annotations with annotation-specific styling
-  const combinedClassName = [options.annotationClassName, annotation.className]
-    .filter((className) => className)
-    .join(' ');
-
-  return Decoration.inline(options.from, options.to, { class: combinedClassName }, { annotation });
+  return Decoration.inline(
+    options.from,
+    options.to,
+    { class: annotation.className },
+    { annotation },
+  );
 }
 
 interface ToAnnotationOptions {
