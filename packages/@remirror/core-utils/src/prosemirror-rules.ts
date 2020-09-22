@@ -305,6 +305,7 @@ export function plainInputRule(parameter: PlainInputRuleParameter): SkippableInp
   const { regexp, transformMatch, beforeDispatch } = parameter;
 
   const rule: SkippableInputRule = new InputRule(regexp, (state, match, start, end) => {
+    console.log(state, match, start, end);
     const value = transformMatch(match);
 
     if (isNullOrUndefined(value)) {

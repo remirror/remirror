@@ -81,6 +81,15 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
       plainInputRule({
         regexp: emoticonRegex,
         transformMatch: ([full, partial]) => {
+          console.log('emoji transforms');
+          const emoji = getEmojiFromEmoticon(partial);
+          return emoji ? full.replace(partial, emoji.char) : null;
+        },
+      }),
+      plainInputRule({
+        regexp: /(\[)/,
+        transformMatch: ([full, partial]) => {
+          console.log('amazing', { full, partial });
           const emoji = getEmojiFromEmoticon(partial);
           return emoji ? full.replace(partial, emoji.char) : null;
         },

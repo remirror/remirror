@@ -175,7 +175,7 @@ let config = {
     // types, and also it forces deliberate planning.
     '@typescript-eslint/explicit-module-boundary-types': [
       'warn',
-      { allowedNames: ['name', 'createHelpers', 'createCommands', 'createExtensions'] },
+      { allowedNames: ['name', 'createHelpers', 'createCommands', 'createExtensions', '*Preset'] },
     ],
 
     // Turning off as it leads to code with bad patterns, where implementation
