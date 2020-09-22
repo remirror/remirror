@@ -1,14 +1,16 @@
-export interface AnnotationOptions {
+export type GetStyle<A extends Annotation> = (
+  annotations: Array<AnnotationWithoutText<A>>,
+) => string | undefined;
+export interface AnnotationOptions<A extends Annotation = Annotation> {
   /**
-   * Class name to set for all annotations.
+   * Method to calculate styles for a segment with one or more annotations
    *
    * @remarks
    *
-   * Set this option to use a custom style for
-   * annotation. Note that you can style additionally individual annotations via
-   * Annotation.className.
+   * This can be used e.g. to assign different shades of a color depending on
+   * the amount of annotations in a segment.
    */
-  annotationClassName?: string;
+  getStyle?: GetStyle<A>;
 }
 
 export interface Annotation {
@@ -41,7 +43,9 @@ export interface Annotation {
   className?: string;
 }
 
+export type AnnotationWithoutText<A extends Annotation> = Omit<A, 'text'>;
+
 /**
  * Annotation without the fields managed by Prosemirror
  */
-export type AnnotationData<A extends Annotation> = Omit<A, 'from' | 'to' | 'text'>;
+export type AnnotationData<A extends Annotation> = Omit<AnnotationWithoutText<A>, 'from' | 'to'>;

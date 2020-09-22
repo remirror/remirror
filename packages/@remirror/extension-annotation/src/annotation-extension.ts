@@ -6,7 +6,6 @@ import {
   PlainExtension,
 } from '@remirror/core';
 import type { EditorState } from '@remirror/pm/state';
-import { DecorationSet } from '@remirror/pm/view';
 
 import {
   ActionType,
@@ -15,8 +14,20 @@ import {
   SetAnnotationsAction,
   UpdateAnnotationAction,
 } from './actions';
-import type { Annotation, AnnotationData, AnnotationOptions } from './types';
-import { toAnnotation, toDecoration } from './utils';
+import { AnnotationState } from './annotation-plugin';
+import type { Annotation, AnnotationData, AnnotationOptions, AnnotationWithoutText } from './types';
+
+/**
+ * Computes a background color based on how many overlapping annotations are in
+ * a segment. The more annotations, the darker the background. This gives the
+ * illusion that annotations are above each other.
+ */
+function defaultGetStyle<A extends Annotation>(annotations: Array<AnnotationWithoutText<A>>) {
+  // Consider up to 5 overlapping annotations
+  const backgroundShade = Math.min(annotations.length, 5) / 5;
+  const notBlue = 200 * (1 - backgroundShade) + 55;
+  return `background: rgb(${notBlue}, ${notBlue}, 255);`;
+}
 
 /**
  * This extension allows to annotate the content in your editor.
@@ -25,7 +36,7 @@ import { toAnnotation, toDecoration } from './utils';
  */
 @extensionDecorator<AnnotationOptions>({
   defaultOptions: {
-    annotationClassName: 'annotation',
+    getStyle: defaultGetStyle,
   },
   defaultPriority: ExtensionPriority.Low,
 })
@@ -39,90 +50,22 @@ export class AnnotationExtension<A extends Annotation = Annotation> extends Plai
   /**
    * Create the custom code block plugin which handles the delete key amongst other things.
    */
-  createPlugin(): CreatePluginReturn<DecorationSet> {
+  createPlugin(): CreatePluginReturn<AnnotationState> {
+    const pluginState = new AnnotationState(this.options.getStyle);
+
     return {
       state: {
         init() {
-          return DecorationSet.empty;
+          return pluginState;
         },
-        apply: (tr, state) => {
+        apply(tr) {
           const action = tr.getMeta(AnnotationExtension.name);
-          const actionType = action?.type;
-
-          if (!action && !tr.docChanged) {
-            return state;
-          }
-
-          // Adjust decoration positions based on changes in the editor, e.g.
-          // if new text was added before the decoration
-          const newDecorationSet = state.map(tr.mapping, tr.doc);
-
-          if (actionType === ActionType.ADD_ANNOTATION) {
-            const addAction = action as AddAnnotationAction<A>;
-            const decoration = toDecoration({
-              from: addAction.from,
-              to: addAction.to,
-              annotationData: addAction.annotationData,
-              annotationClassName: this.options.annotationClassName,
-            });
-            return newDecorationSet.add(tr.doc, [decoration]);
-          }
-
-          if (actionType === ActionType.UPDATE_ANNOTATION) {
-            const updateAction = action as UpdateAnnotationAction<A>;
-            const found = newDecorationSet.find(
-              undefined,
-              undefined,
-              (spec) => updateAction.annotationId === spec.annotation.id,
-            );
-
-            if (found.length !== 1) {
-              throw new Error(
-                `Expected exactly one match for annotation ID "${
-                  updateAction.annotationId
-                }" but got: ${JSON.stringify(found)}`,
-              );
-            }
-
-            const match = found[0];
-            const updatedDecoration = toDecoration({
-              from: match.from,
-              to: match.to,
-              annotationData: updateAction.annotationData,
-              annotationClassName: this.options.annotationClassName,
-            });
-            return newDecorationSet.remove(found).add(tr.doc, [updatedDecoration]);
-          }
-
-          if (actionType === ActionType.REMOVE_ANNOTATIONS) {
-            const removeAction = action as RemoveAnnotationsAction;
-            const found = newDecorationSet.find(undefined, undefined, (spec) =>
-              removeAction.annotationIds.includes(spec.annotation.id),
-            );
-            return newDecorationSet.remove(found);
-          }
-
-          if (actionType === ActionType.SET_ANNOTATIONS) {
-            const setAction = action as SetAnnotationsAction<A>;
-            const decos = setAction.annotations.map((a) => {
-              // Ignore field "text". Prosemirror content is source of truth.
-              const { from, to, text, ...annotationData } = a;
-              return toDecoration({
-                from,
-                to,
-                annotationData,
-                annotationClassName: this.options.annotationClassName,
-              });
-            });
-            return DecorationSet.create(tr.doc, decos);
-          }
-
-          return newDecorationSet;
+          return pluginState.apply({ tr, action });
         },
       },
       props: {
         decorations(state: EditorState) {
-          return this.getState(state);
+          return this.getState(state).decorationSet;
         },
       },
     };
@@ -199,7 +142,10 @@ export class AnnotationExtension<A extends Annotation = Annotation> extends Plai
        * Sets the annotation. Use this to initialize the extension based on
        * loaded data
        */
-      setAnnotations: (annotations: A[]): CommandFunction => ({ state, dispatch }) => {
+      setAnnotations: (annotations: Array<AnnotationWithoutText<A>>): CommandFunction => ({
+        state,
+        dispatch,
+      }) => {
         if (dispatch) {
           const action: SetAnnotationsAction<A> = {
             type: ActionType.SET_ANNOTATIONS,
@@ -214,37 +160,32 @@ export class AnnotationExtension<A extends Annotation = Annotation> extends Plai
   }
 
   createHelpers() {
+    // Enrich text at annotation
+    const enrichText = (annotation: AnnotationWithoutText<A>) => ({
+      ...annotation,
+      text: this.store.getState().doc.textBetween(annotation.from, annotation.to),
+    });
+
     return {
       /**
        * @returns all annotations in the editor
        */
       getAnnotations: () => {
-        const decorations: DecorationSet = this.getPluginState();
-        return decorations.find().map((decoration) =>
-          toAnnotation<A>({
-            state: this.store.getState(),
-            decoration,
-          }),
-        );
+        const state: AnnotationState<A> = this.getPluginState();
+        // Enrich text at annotation
+        return state.annotations.map(enrichText);
       },
 
       /**
        * @returns all annotations at a specific position in the editor
        */
       getAnnotationsAt: (pos: number) => {
-        const decorations: DecorationSet = this.getPluginState();
+        const state: AnnotationState<A> = this.getPluginState();
         return (
-          decorations
-            .find()
-            // Only consider decorations that are at the requested position
-            .filter((d) => d.from <= pos && d.to >= pos)
-            // Convert into annotations (external interface)
-            .map((decoration) =>
-              toAnnotation<A>({
-                state: this.store.getState(),
-                decoration,
-              }),
-            )
+          state.annotations
+            // Only consider annotations that are at the requested position
+            .filter((annotation) => annotation.from <= pos && annotation.to >= pos)
+            .map(enrichText)
         );
       },
     };

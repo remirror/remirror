@@ -10,21 +10,23 @@ function create(options?: AnnotationOptions) {
 }
 
 describe('commands', () => {
-  const {
-    add,
-    view,
-    nodes: { p, doc },
-    commands,
-  } = create();
-
   it('#addAnnotation', () => {
+    const {
+      add,
+      view,
+      nodes: { p, doc },
+      commands,
+    } = create();
+
     add(doc(p('An <start>important<end> note')));
     commands.addAnnotation({ id: '1' });
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         An
-        <span class="selection annotation">
+        <span class="selection"
+              style="background: rgb(215, 215, 255);"
+        >
           important
         </span>
         note
@@ -33,6 +35,13 @@ describe('commands', () => {
   });
 
   it('#updateAnnotation', () => {
+    const {
+      add,
+      view,
+      nodes: { p, doc },
+      commands,
+    } = create();
+
     const id = '1';
 
     add(doc(p('An <start>important<end> note')));
@@ -42,7 +51,9 @@ describe('commands', () => {
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         An
-        <span class="selection annotation">
+        <span class="selection"
+              style="background: rgb(215, 215, 255);"
+        >
           important
         </span>
         note
@@ -56,7 +67,9 @@ describe('commands', () => {
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         An
-        <span class="selection annotation updated">
+        <span class="selection updated"
+              style="background: rgb(215, 215, 255);"
+        >
           important
         </span>
         note
@@ -65,20 +78,26 @@ describe('commands', () => {
   });
 
   it('#setAnnotations', () => {
+    const {
+      add,
+      view,
+      nodes: { p, doc },
+      commands,
+    } = create();
+
     add(doc(p('An important note')));
     commands.setAnnotations([
       {
         id: '1',
         from: 3,
         to: 13,
-        text: '<IGNORE>>',
       },
     ]);
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
           <p>
             An
-            <span class="annotation">
+            <span style="background: rgb(215, 215, 255);">
               important
             </span>
             note
@@ -87,6 +106,13 @@ describe('commands', () => {
   });
 
   it('#removeAnnotation', () => {
+    const {
+      add,
+      view,
+      nodes: { p, doc },
+      commands,
+    } = create();
+
     const id = '1';
 
     add(doc(p('An <start>important<end> note')));
@@ -95,7 +121,9 @@ describe('commands', () => {
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         An
-        <span class="selection annotation">
+        <span class="selection"
+              style="background: rgb(215, 215, 255);"
+        >
           important
         </span>
         note
@@ -107,7 +135,9 @@ describe('commands', () => {
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         An
-        <span class="selection">
+        <span class="selection"
+              style
+        >
           important
         </span>
         note
@@ -117,26 +147,6 @@ describe('commands', () => {
 });
 
 describe('styling', () => {
-  it('options', () => {
-    const {
-      add,
-      view: { dom },
-      nodes: { p, doc },
-      commands,
-    } = create({ annotationClassName: 'test-class-name' });
-
-    add(doc(p('<start>Hello<end>')));
-    commands.addAnnotation({ id: '1' });
-
-    expect(dom.innerHTML).toMatchInlineSnapshot(`
-      <p>
-        <span class="selection test-class-name">
-          Hello
-        </span>
-      </p>
-    `);
-  });
-
   it('annotation-specific classname', () => {
     const {
       add,
@@ -150,7 +160,9 @@ describe('styling', () => {
 
     expect(dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        <span class="selection annotation custom-annotation">
+        <span class="selection custom-annotation"
+              style="background: rgb(215, 215, 255);"
+        >
           Hello
         </span>
       </p>
@@ -260,13 +272,19 @@ describe('custom annotations', () => {
 
     expect(dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        <span class="annotation">
+        <span class
+              style="background: rgb(215, 215, 255);"
+        >
           Hell
         </span>
-        <span class="annotation selection custom">
+        <span class="selection custom"
+              style="background: rgb(175, 175, 255);"
+        >
           o
         </span>
-        <span class="selection annotation custom">
+        <span class="selection custom"
+              style="background: rgb(215, 215, 255);"
+        >
           my frie
         </span>
         nd
