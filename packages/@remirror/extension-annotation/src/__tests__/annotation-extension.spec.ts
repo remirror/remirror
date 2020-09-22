@@ -91,7 +91,6 @@ describe('commands', () => {
         id: '1',
         from: 3,
         to: 13,
-        text: '<IGNORE>>',
       },
     ]);
 
