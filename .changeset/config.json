@@ -47,7 +47,6 @@
       "@remirror/extension-mention",
       "@remirror/extension-paragraph",
       "@remirror/extension-placeholder",
-      "@remirror/extension-position-tracker",
       "@remirror/extension-positioner",
       "@remirror/extension-react-component",
       "@remirror/extension-react-ssr",

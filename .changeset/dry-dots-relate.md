@@ -26,7 +26,6 @@
 '@remirror/extension-mention-atom': minor
 '@remirror/extension-paragraph': minor
 '@remirror/extension-placeholder': minor
-'@remirror/extension-position-tracker': minor
 '@remirror/extension-positioner': minor
 '@remirror/extension-react-component': minor
 '@remirror/extension-react-ssr': minor

@@ -21,7 +21,6 @@
 '@remirror/extension-mention': patch
 '@remirror/extension-paragraph': patch
 '@remirror/extension-placeholder': patch
-'@remirror/extension-position-tracker': patch
 '@remirror/extension-positioner': patch
 '@remirror/extension-react-ssr': patch
 '@remirror/extension-search': patch

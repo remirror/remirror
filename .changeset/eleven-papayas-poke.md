@@ -30,7 +30,6 @@
 '@remirror/extension-mention': major
 '@remirror/extension-paragraph': major
 '@remirror/extension-placeholder': major
-'@remirror/extension-position-tracker': major
 '@remirror/extension-positioner': major
 '@remirror/extension-react-ssr': major
 '@remirror/extension-search': major
