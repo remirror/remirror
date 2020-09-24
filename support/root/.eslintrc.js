@@ -27,7 +27,7 @@ let config = {
   ],
 
   parserOptions: {
-    ecmaVersion: 2020,
+    ecmaVersion: 2021,
     sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
@@ -327,6 +327,14 @@ let config = {
         'packages/@remirror/core/src/extension/extension-base.ts',
       ],
       rules: { '@typescript-eslint/method-signature-style': 'off' },
+    },
+    {
+      files: ['packages/@remirror/styles/src/*.tsx'],
+      // Turn these rules off to import `react` for TypeScript
+      rules: {
+        '@typescript-eslint/no-unused-vars-experimental': 'off',
+        '@typescript-eslint/no-unused-vars': 'off',
+      },
     },
   ],
 };

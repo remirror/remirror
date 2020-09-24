@@ -10,11 +10,9 @@
   white-space: nowrap;
   color: white;
 }
-
 .remirror-emoji-suggestions-item.hovered {
   background-color: var(--remirror-hue-gray-2);
 }
-
 .remirror-emoji-suggestions-item.highlighted {
   background-color: var(--remirror-hue-gray-3);
 }
@@ -181,10 +179,12 @@
   text-decoration: none !important;
   color: #1da1f2;
 }
+
 .remirror-social-editor .ProseMirror:focus {
   outline: none;
   box-shadow: focus;
 }
+
 .remirror-social-editor .ProseMirror .Prosemirror-selectednode {
   background-color: grey;
 }

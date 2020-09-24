@@ -9,9 +9,10 @@ const chalk = require('chalk');
 const { baseDir } = require('./helpers');
 const { getOutput, writeOutput, removeGeneratedFiles, copyFilesToRemirror } = require('./linaria');
 const isEqual = require('lodash.isequal');
-const { relative } = require('path');
+const path = require('path');
 
 const [, , ...args] = process.argv;
+const force = args.includes('--force');
 const shouldFix = args.includes('--fix');
 
 const diffOptions = {
@@ -46,7 +47,7 @@ async function readFiles() {
 function orderOutputKeys(output) {
   return Object.keys(output)
     .sort()
-    .map((name) => relative(process.cwd(), name));
+    .map((name) => path.relative(process.cwd(), name));
 }
 
 /**
@@ -73,7 +74,7 @@ function checkOutput(actual, expected) {
 
   for (const [name, actualContents] of Object.entries(actual)) {
     const expectedContents = expected[name];
-    const relativeName = relative(process.cwd(), name);
+    const relativeName = path.relative(process.cwd(), name);
 
     if (isEqual(actualContents, expectedContents)) {
       continue;
@@ -100,12 +101,17 @@ async function run() {
   try {
     checkOutput(actualOutput, css);
     console.log(chalk`\n{green The generated {bold CSS} is valid for all files.}`);
-    return;
+
+    if (!force) {
+      return;
+    }
+
+    console.log(chalk`\n\nForcing update: {yellow \`--force\`} flag applied.\n\n`);
   } catch (error) {
     console.log(error.message);
   }
 
-  if (shouldFix) {
+  if (shouldFix || force) {
     await removeGeneratedFiles();
     await writeOutput(css);
     await writeOutput(ts);

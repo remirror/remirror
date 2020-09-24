@@ -1,14 +1,13 @@
 /**
  * Styles extracted from: packages/@remirror/core/src/styles.ts
  */
-
 .remirror-editor.ProseMirror {
   word-wrap: break-word;
   white-space: pre-wrap;
   white-space: break-spaces;
   position: relative;
   font-variant-ligatures: none;
-  font-feature-settings: 'liga' 0, none;
+  font-feature-settings: 'liga' 0;
 }
 
 .remirror-editor.ProseMirror pre {
@@ -30,36 +29,25 @@
 .remirror-editor.ProseMirror hr {
   border-color: #2e2e2e;
 }
-
 .remirror-editor .ProseMirror-hideselection *::-moz-selection {
   background: transparent;
 }
-
-.ProseMirror-hideselection *::-moz-selection {
-  background: transparent;
-}
-
 .remirror-editor .ProseMirror-hideselection *::selection {
   background: transparent;
 }
-
 .remirror-editor .ProseMirror-hideselection *::-moz-selection {
   background: transparent;
 }
-
 .remirror-editor .ProseMirror-hideselection {
   caret-color: transparent;
 }
-
 .remirror-editor .ProseMirror-selectednode {
   outline: 2px solid #8cf;
 }
 /* Make sure li selections wrap around markers */
-
 .remirror-editor li.ProseMirror-selectednode {
   outline: none;
 }
-
 .remirror-editor li.ProseMirror-selectednode:after {
   content: '';
   position: absolute;
@@ -88,13 +76,6 @@
 /**
  * Styles extracted from: packages/@remirror/extension-gap-cursor/src/styles.ts
  */
-.remirror-editor {
-  @-webkit-keyframes ProseMirror-cursor-blink {
-    to {
-      visibility: hidden;
-    }
-  }
-}
 .remirror-editor .ProseMirror-gapcursor {
   display: none;
   pointer-events: none;
@@ -127,7 +108,6 @@
 /**
  * Styles extracted from: packages/@remirror/extension-placeholder/src/placeholder-extension.ts
  */
-
 .remirror-is-empty:first-of-type::before {
   position: absolute;
   color: #aaa;
@@ -246,11 +226,9 @@
   white-space: nowrap;
   color: white;
 }
-
 .remirror-emoji-suggestions-item.hovered {
   background-color: var(--remirror-hue-gray-2);
 }
-
 .remirror-emoji-suggestions-item.highlighted {
   background-color: var(--remirror-hue-gray-3);
 }
@@ -417,10 +395,12 @@
   text-decoration: none !important;
   color: #1da1f2;
 }
+
 .remirror-social-editor .ProseMirror:focus {
   outline: none;
   box-shadow: focus;
 }
+
 .remirror-social-editor .ProseMirror .Prosemirror-selectednode {
   background-color: grey;
 }
@@ -470,10 +450,12 @@
   text-decoration: none !important;
   color: blue;
 }
+
 .remirror-wysiwyg-editor .ProseMirror:focus {
   outline: none;
   box-shadow: focus;
 }
+
 .remirror-wysiwyg-editor .ProseMirror .Prosemirror-selectednode {
   background-color: grey;
 }
@@ -627,8 +609,8 @@
   --remirror-hue-orange-7: #f76707;
   --remirror-hue-orange-8: #e8590c;
   --remirror-hue-orange-9: #d9480f;
-  --remirror-font-family-default: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
-    Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --remirror-font-family-default: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', sans-serif;
   --remirror-font-family-heading: inherit;
   --remirror-font-family-mono: Menlo, monospace;
   --remirror-font-size-0: 12px;

@@ -210,13 +210,6 @@
     "running": false
   },
   {
-    "name": "@remirror/extension-position-tracker",
-    "path": "packages/@remirror/extension-position-tracker/dist/extension-position-tracker.browser.esm.js",
-    "limit": "5 KB",
-    "ignore": ["@remirror/core", "@remirror/pm"],
-    "running": false
-  },
-  {
     "name": "@remirror/extension-positioner",
     "path": "packages/@remirror/extension-positioner/dist/extension-positioner.browser.esm.js",
     "limit": "5 KB",

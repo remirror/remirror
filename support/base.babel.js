@@ -43,6 +43,7 @@ module.exports = {
     '@babel/plugin-proposal-numeric-separator',
     ['@babel/plugin-proposal-decorators', { legacy: true }],
     'babel-plugin-annotate-pure-calls',
+    'babel-plugin-dev-expression',
   ],
   env: { production: nonTestEnv, development: nonTestEnv },
 };

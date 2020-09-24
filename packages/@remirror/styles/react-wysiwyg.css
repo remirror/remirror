@@ -38,10 +38,12 @@
   text-decoration: none !important;
   color: blue;
 }
+
 .remirror-wysiwyg-editor .ProseMirror:focus {
   outline: none;
   box-shadow: focus;
 }
+
 .remirror-wysiwyg-editor .ProseMirror .Prosemirror-selectednode {
   background-color: grey;
 }

@@ -1,4 +1,4 @@
-const { dirname } = require('path');
+const path = require('path');
 
 /**
  * @param {import('@babel/core').ConfigAPI} api
@@ -9,7 +9,7 @@ function babelConfig(api) {
     caller === null || caller === void 0 ? void 0 : caller.name,
   );
   const isServer = caller === 'server';
-  const absoluteRuntimePath = dirname(require.resolve('@babel/runtime/package.json'));
+  const absoluteRuntimePath = path.dirname(require.resolve('@babel/runtime/package.json'));
 
   return {
     overrides: [

@@ -1,13 +1,6 @@
 /**
  * Styles extracted from: packages/@remirror/extension-gap-cursor/src/styles.ts
  */
-.remirror-editor {
-  @-webkit-keyframes ProseMirror-cursor-blink {
-    to {
-      visibility: hidden;
-    }
-  }
-}
 .remirror-editor .ProseMirror-gapcursor {
   display: none;
   pointer-events: none;
