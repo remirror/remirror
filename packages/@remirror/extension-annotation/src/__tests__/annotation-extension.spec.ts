@@ -316,7 +316,7 @@ describe('custom styling', () => {
 
     expect(dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        <span class
+        <span class="selection"
               style="background: red;"
         >
           Hello
