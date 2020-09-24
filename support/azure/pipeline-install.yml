@@ -19,8 +19,9 @@ steps:
       path: $(PNPM_CACHE_FOLDER)
     displayName: 'cache pnpm'
 
-  - bash: pnpm audit --audit-level high
-    displayName: 'audit dependencies'
+  ## TODO turn this back on when 502 error is fixed.
+  # - bash: pnpm audit --audit-level high
+  #   displayName: 'audit dependencies'
 
   - bash: pnpm install
     displayName: 'install dependencies'

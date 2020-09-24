@@ -21,9 +21,10 @@ runs:
       run: pnpm config set store-dir ${{ inputs.cache }}
       shell: bash
 
-    - name: audit dependencies
-      run: pnpm audit --audit-level high
-      shell: bash
+    # TODO turn this back on once audits stop return 502 errors
+    # - name: audit dependencies
+    #   run: pnpm audit --audit-level high
+    #   shell: bash
 
     - name: install dependencies
       run: pnpm install
