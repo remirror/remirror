@@ -1,5 +1,7 @@
+import type { Primitive } from 'type-fest';
+
 import { ErrorConstant } from '@remirror/core-constants';
-import { bool, invariant, isFunction } from '@remirror/core-helpers';
+import { bool, entries, invariant, isFunction, keys } from '@remirror/core-helpers';
 import type {
   MarkTypeParameter,
   NodeTypeParameter,
@@ -28,53 +30,6 @@ type NodePredicateParameter = PredicateParameter<NodeWithPosition>;
  */
 export interface NodeWithPosition extends ProsemirrorNodeParameter, PosParameter {}
 
-/**
- * @deprecated - This will be removed soon.
- */
-interface FlattenParameter extends OptionalProsemirrorNodeParameter, Partial<DescendParameter> {}
-
-/**
- * Flattens descendants of a given `node`. In other words a deeply nested
- * prosemirror tree will be turned into a flat array of [[`NodeWithPosition`]].
- *
- * @remarks
- *
- * It doesn't descend into a node when descend argument is `false` (defaults to
- * `true`).
- *
- * ```ts
- * const children = flatten(node);
- * ```
- *
- * @deprecated - use [[`findChildren`]] instead.
- */
-export function flattenNodeDescendants(parameter: FlattenParameter): NodeWithPosition[] {
-  const { node, descend = true } = parameter;
-
-  // Ensure that this is a ProsemirrorNode, if it isn't this will throw an
-  // error.
-  invariant(isProsemirrorNode(node), {
-    code: ErrorConstant.INTERNAL,
-    message: 'Invalid "node" parameter".',
-  });
-
-  // This is used to keep track of all the node positions.
-  const result: NodeWithPosition[] = [];
-
-  node.descendants((child, pos) => {
-    result.push({ node: child, pos });
-
-    if (!descend) {
-      // This prevents ProseMirror from diving deeper into the descendant tree.
-      return false;
-    }
-
-    return;
-  });
-
-  return result;
-}
-
 interface NodeActionParameter {
   /**
    * A method which is run whenever the provided predicate returns true.
@@ -102,7 +57,11 @@ interface FindChildrenParameter extends BaseFindParameter, NodePredicateParamete
  * `true`).
  *
  * ```ts
- * const textNodes = findChildren(node, child => child.isText, false);
+ * const textNodes = findChildren({
+ *   node: state.doc,
+ *   predicate: child => child.isText,
+ *   descend: false
+ * });
  * ```
  */
 export function findChildren(parameter: FindChildrenParameter): NodeWithPosition[] {
@@ -166,7 +125,7 @@ function findNodeByPredicate({ predicate }: NodePredicateParameter) {
  * `true`).
  *
  * ```ts
- * const textNodes = findTextNodes(node);
+ * const textNodes = findTextNodes({ node });
  * ```
  */
 export const findTextNodes = findNodeByPredicate({ predicate: (child) => child.node.isText });
@@ -198,11 +157,15 @@ export const findInlineNodes = findNodeByPredicate({ predicate: (child) => child
  */
 export const findBlockNodes = findNodeByPredicate({ predicate: (child) => child.node.isBlock });
 
+type AttributePredicate = (parameter: { value: unknown; exists: boolean }) => boolean;
+
 interface FindChildrenByAttrParameter extends BaseFindParameter {
   /**
-   * Runs a predicate check after receiving the attrs for the found node.
+   * This can either be any primitive value or a function that takes the `value`
+   * as the first argument and whether the key exists within the attributes as
+   * the second argument.
    */
-  predicate: (attrs: ProsemirrorAttributes) => boolean;
+  attrs: { [key: string]: Primitive | AttributePredicate };
 }
 
 /**
@@ -214,15 +177,59 @@ interface FindChildrenByAttrParameter extends BaseFindParameter {
  * It doesn't descend into a node when descend argument is `false` (defaults to
  * `true`).
  *
+ * The following will match any node with an `id` of any value (as long as the
+ * attribute exists) and a `colspan` of `2`.
+ *
  * ```ts
- * const mergedCells = findChildrenByAttr(table, attrs => attrs.colspan === 2);
+ * const mergedCells = findChildrenByAttribute({
+ *   node: table,
+ *   attrs: { colspan: 2, id: (_, exists) => exists }
+ * });
  * ```
  */
 export function findChildrenByAttribute(
   parameter: FindChildrenByAttrParameter,
 ): NodeWithPosition[] {
-  const { predicate, ...rest } = parameter;
-  return findChildren({ ...rest, predicate: (child) => predicate(child.node.attrs) });
+  const { attrs, ...rest } = parameter;
+
+  /**
+   * The predicate function which loops through the provided attributes check if they are valid.
+   */
+  function predicate(nodeWithPos: NodeWithPosition) {
+    const attributeKeys = new Set(keys(nodeWithPos.node.attrs));
+
+    for (const [attr, expectedValue] of entries(attrs)) {
+      const value = nodeWithPos.node.attrs[attr];
+
+      if (
+        // The user has passed in a predicate checking function.
+        isFunction(expectedValue)
+      ) {
+        const exists = attributeKeys.has(attr);
+
+        if (
+          // Check if the predicate checker returns false, in which case we can
+          // exit early.
+          !expectedValue({ value, exists })
+        ) {
+          return false;
+        }
+
+        continue;
+      }
+
+      if (
+        // If the value doesn't match the expected value, exit early.
+        value !== expectedValue
+      ) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  return findChildren({ ...rest, predicate });
 }
 
 interface FindChildrenByNodeParameter extends BaseFindParameter, NodeTypeParameter {}
@@ -237,7 +244,7 @@ interface FindChildrenByNodeParameter extends BaseFindParameter, NodeTypeParamet
  * `true`).
  *
  * ```ts
- * const cells = findChildrenByNode(table, schema.nodes.tableCell);
+ * const cells = findChildrenByNode({ node: state.doc, type: state.schema.nodes.tableCell });
  * ```
  */
 export function findChildrenByNode(parameter: FindChildrenByNodeParameter): NodeWithPosition[] {
@@ -257,7 +264,7 @@ interface FindChildrenByMarkParameter extends BaseFindParameter, MarkTypeParamet
  * to `true`).
  *
  * ```ts
- * const nodes = findChildrenByMark(state.doc, schema.marks.strong);
+ * const nodes = findChildrenByMark({ node: state.doc, mark: schema.marks.strong });
  * ```
  */
 export function findChildrenByMark(paramter: FindChildrenByMarkParameter): NodeWithPosition[] {
@@ -276,7 +283,7 @@ interface ContainsParameter extends ProsemirrorNodeParameter, NodeTypeParameter 
  * @remarks
  *
  * ```ts
- * if (containsNodesOfType({ node: panel, type: schema.nodes.listItem })) {
+ * if (containsNodesOfType({ node: state.doc, type: schema.nodes.listItem })) {
  *   log('contained')
  * }
  * ```

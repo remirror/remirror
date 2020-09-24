@@ -361,7 +361,7 @@ describe('findParentNode', () => {
     const position = findParentNode({
       predicate: (pmNode) => pmNode.type === schema.nodes.paragraph,
       selection,
-    })!;
+    });
 
     expect(position).toEqual({ pos: 0, start: 1, end: 8, depth: 1, node });
   });
@@ -370,12 +370,12 @@ describe('findParentNode', () => {
     const {
       state: { selection },
     } = createEditor(doc(table(row(tdCursor))));
-    const { node } = findParentNode({
+    const result = findParentNode({
       predicate: (pmNode) => pmNode.type === schema.nodes.table,
       selection,
-    })!;
+    });
 
-    expect(node.type.name).toEqual('table');
+    expect(result?.node.type.name).toEqual('table');
   });
 
   it('returns `undefined` when no parent node found', () => {
@@ -397,7 +397,7 @@ describe('findParentNodeOfType', () => {
     const {
       state: { selection },
     } = createEditor(doc(node));
-    const position = findParentNodeOfType({ types: schema.nodes.paragraph, selection })!;
+    const position = findParentNodeOfType({ types: schema.nodes.paragraph, selection });
 
     expect(position).toEqual({ pos: 0, start: 1, end: 8, depth: 1, node });
   });
@@ -421,7 +421,7 @@ describe('findParentNodeOfType', () => {
         selection,
       },
     } = createEditor(doc(node));
-    const position = findParentNodeOfType({ types: [table_, bq, paragraph], selection })!;
+    const position = findParentNodeOfType({ types: [table_, bq, paragraph], selection });
 
     expect(position).toEqual({ pos: 0, start: 1, end: 8, depth: 1, node });
   });

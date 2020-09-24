@@ -1,7 +1,6 @@
 export { nonChainable, convertCommand, chainableEditorState, chainCommands } from '@remirror/pm';
 
 export {
-  emptyCommandFunction,
   isChrome,
   lift,
   preserveSelection,
@@ -95,7 +94,6 @@ export {
   findChildrenByNode,
   findInlineNodes,
   findTextNodes,
-  flattenNodeDescendants as flatten,
 } from './prosemirror-node-utils';
 
 export type {

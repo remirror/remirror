@@ -10,8 +10,6 @@ import {
   tr as row,
 } from 'jest-prosemirror';
 
-import { bool } from '@remirror/core-helpers';
-
 import {
   containsNodesOfType,
   findBlockNodes,
@@ -20,38 +18,7 @@ import {
   findChildrenByMark,
   findChildrenByNode,
   findTextNodes,
-  flattenNodeDescendants,
 } from '../prosemirror-node-utils';
-
-describe('DEPRECATED flatten', () => {
-  it('should throw an error if `node` param is missing', () => {
-    expect(flattenNodeDescendants).toThrow();
-  });
-
-  describe('when `descend` param = `false`', () => {
-    it('should flatten a given node a single level deep', () => {
-      const { state } = createEditor(doc(table(row(tdEmpty), row(tdEmpty), row(tdEmpty))));
-      const result = flattenNodeDescendants({ node: state.doc.firstChild, descend: false });
-
-      expect(result).toHaveLength(3);
-
-      result.forEach((item) => {
-        expect(Object.keys(item)).toEqual(['node', 'pos']);
-        expect(typeof item.pos).toEqual('number');
-        expect(item.node.type.name).toEqual('table_row');
-      });
-    });
-  });
-
-  describe('when `descend` param is missing (defaults to `true`)', () => {
-    it('should deep flatten a given node', () => {
-      const { state } = createEditor(doc(table(row(tdEmpty), row(tdEmpty), row(tdEmpty))));
-      const result = flattenNodeDescendants({ node: state.doc.firstChild });
-
-      expect(result).toHaveLength(9);
-    });
-  });
-});
 
 describe('findChildren', () => {
   it('should return an array of matched nodes `predicate` returns truthy for', () => {
@@ -139,12 +106,12 @@ describe('findBlockNodes', () => {
   });
 });
 
-describe('findChildrenByAttr', () => {
+describe('findChildrenByAttribute', () => {
   it('should return an empty array if a given node does not have nodes with the given attribute', () => {
     const { state } = createEditor(doc(p('')));
     const result = findChildrenByAttribute({
       node: state.doc.firstChild,
-      predicate: (attributes) => bool(attributes && attributes.colspan === 2),
+      attrs: { colspan: 2 },
     });
 
     expect(result).toHaveLength(0);
@@ -161,7 +128,7 @@ describe('findChildrenByAttr', () => {
     );
     const result = findChildrenByAttribute({
       node: state.doc.firstChild,
-      predicate: (attributes) => attributes.colspan === 2,
+      attrs: { colspan: 2 },
     });
 
     expect(result).toHaveLength(2);
@@ -169,6 +136,23 @@ describe('findChildrenByAttr', () => {
     result.forEach((item) => {
       expect(item.node.attrs.colspan).toEqual(2);
     });
+  });
+
+  it('should support predicates for the attribute check', () => {
+    const { state } = createEditor(
+      doc(
+        table(
+          row(tdEmpty, td({ colspan: 2 } as any, p('2')), td({ colspan: 3 } as any, p('3'))),
+          row(td({ colspan: 2 } as any, p('2')), tdEmpty, tdEmpty),
+        ),
+      ),
+    );
+    const result = findChildrenByAttribute({
+      node: state.doc.firstChild,
+      attrs: { colspan: ({ exists }) => exists },
+    });
+
+    expect(result).toHaveLength(6);
   });
 });
 

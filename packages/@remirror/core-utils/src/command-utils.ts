@@ -184,6 +184,7 @@ interface ReplaceTextParameter extends Partial<RangeParameter>, Partial<Attribut
    * @default '''
    */
   appendText?: string;
+
   /**
    * Optional text content to include.
    */
@@ -339,12 +340,3 @@ export function removeMark(parameter: RemoveMarkParameter): CommandFunction {
     return true;
   };
 }
-
-/**
- * An empty (noop) command function.
- *
- * @remarks
- *
- * This is typically used to represent a default _do nothing_ action.
- */
-export const emptyCommandFunction: ProsemirrorCommandFunction = () => false;
