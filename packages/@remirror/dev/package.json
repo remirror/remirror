@@ -27,8 +27,8 @@
     "prosemirror-dev-tools": "^3.0.1"
   },
   "devDependencies": {
-    "@testing-library/react": "^11.0.2",
-    "@types/react": "^16.9.47",
+    "@testing-library/react": "^11.0.4",
+    "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"

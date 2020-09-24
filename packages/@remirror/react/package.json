@@ -42,9 +42,9 @@
   "devDependencies": {
     "@remirror/core": "1.0.0-next.39",
     "@remirror/pm": "1.0.0-next.39",
-    "@testing-library/react": "^11.0.2",
+    "@testing-library/react": "^11.0.4",
     "@testing-library/react-hooks": "^3.4.1",
-    "@types/react": "^16.9.47",
+    "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
     "@types/react-test-renderer": "^16.9.2",
     "@types/testing-library__react-hooks": "^3.4.0",

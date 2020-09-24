@@ -11,9 +11,9 @@
     "@changesets/types": "^3.1.0",
     "@types/autoprefixer": "^9.7.2",
     "@types/lodash.groupby": "^4.6.6",
-    "@types/prettier": "^2.1.0",
+    "@types/prettier": "^2.1.1",
     "@types/rimraf": "^3.0.0",
-    "autoprefixer": "^9.8.6",
+    "autoprefixer": "^10.0.0",
     "chalk": "^4.1.0",
     "cpy": "^8.1.0",
     "diffable-html": "^4.0.0",
@@ -23,8 +23,9 @@
     "linaria": "^2.0.0-rc.3",
     "lodash.groupby": "^4.6.0",
     "lodash.isequal": "^4.5.0",
-    "postcss": "^7.0.32",
-    "precss": "^4.0.0",
+    "postcss": "^8.0.9",
+    "postcss-loader": "^4.0.2",
+    "postcss-nested": "^5.0.0",
     "type-fest": "^0.16.0",
     "write-json-file": "^4.3.0"
   }

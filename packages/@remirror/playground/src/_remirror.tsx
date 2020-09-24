@@ -36,7 +36,6 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
   'remirror/extension/mention-atom': require('remirror/extension/mention-atom'),
   'remirror/extension/paragraph': require('remirror/extension/paragraph'),
   'remirror/extension/placeholder': require('remirror/extension/placeholder'),
-  'remirror/extension/position-tracker': require('remirror/extension/position-tracker'),
   'remirror/extension/positioner': require('remirror/extension/positioner'),
   'remirror/extension/react-component': require('remirror/extension/react-component'),
   'remirror/extension/react-ssr': require('remirror/extension/react-ssr'),
@@ -58,7 +57,7 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
   remirror: require('remirror'),
   'remirror/core': require('remirror/core'),
   'remirror/react': require('remirror/react'),
-  'remirror/react/hooks': require('remirror/react'),
+  'remirror/react/hooks': require('remirror/react/hooks'),
   'remirror/react/social': require('remirror/react/social'),
   'remirror/react/wysiwyg': require('remirror/react/wysiwyg'),
   '@remirror/dev': require('@remirror/dev'),
@@ -195,10 +194,6 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
   {
     moduleName: 'remirror/extension/placeholder',
     exports: ['EMPTY_NODE_CLASS_NAME', 'EMPTY_NODE_CLASS_SELECTOR', 'PlaceholderExtension'],
-  },
-  {
-    moduleName: 'remirror/extension/position-tracker',
-    exports: ['PositionTrackerExtension'],
   },
   {
     moduleName: 'remirror/extension/positioner',

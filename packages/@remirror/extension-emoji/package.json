@@ -36,7 +36,7 @@
     "@types/match-sorter": "^4.0.0",
     "emoji-regex": "^9.0.0",
     "escape-string-regexp": "^4.0.0",
-    "match-sorter": "^4.2.0"
+    "match-sorter": "^4.2.1"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.39",

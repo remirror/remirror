@@ -86,7 +86,7 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
   remirror: require('remirror'),
   'remirror/core': require('remirror/core'),
   'remirror/react': require('remirror/react'),
-  'remirror/react/hooks': require('remirror/react'),
+  'remirror/react/hooks': require('remirror/react/hooks'),
   'remirror/react/social': require('remirror/react/social'),
   'remirror/react/wysiwyg': require('remirror/react/wysiwyg'),
   '@remirror/dev': require('@remirror/dev'),
