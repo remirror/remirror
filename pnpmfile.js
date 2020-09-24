@@ -16,8 +16,6 @@ function readPackage(pkg, context) {
 
   updatePackage({ name: 'serialize-javascript', version: '^4.0.0' });
   updatePackage({ name: 'bl', version: '>=4.0.3' });
-  updatePackage({ name: 'postcss', version: '^8.0.7' });
-  updatePackage({ name: 'postcss-loader', version: '^4.0.2' });
 
   return pkg;
 }

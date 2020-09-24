@@ -31,13 +31,15 @@ function monacoEditorPlugin(_context, _options) {
             continue;
           }
 
-          // Override previous version configuration.
-          delete item.options;
-          item.options = {};
+          const postCssPlugins = item.options?.plugins;
 
-          item.options.postcssOptions = () => ({
-            plugins: ['postcss-nested', 'autoprefixer'],
-          });
+          if (!postCssPlugins) {
+            continue;
+          }
+
+          item.options.plugins = () => {
+            return [require('postcss-nested'), require('autoprefixer')];
+          };
         }
       }
 
