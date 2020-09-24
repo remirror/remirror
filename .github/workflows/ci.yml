@@ -20,7 +20,7 @@ env:
 jobs:
   # Update package versions with changesets.
   version:
-    timeout-minutes: 15
+    timeout-minutes: 8
     runs-on: ubuntu-latest
     if: false == contains(github.ref, 'changeset') && github.repository == 'remirror/remirror'
     steps:
@@ -63,7 +63,7 @@ jobs:
 
   # Lint the project
   lint:
-    timeout-minutes: 15
+    timeout-minutes: 8
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
@@ -109,7 +109,7 @@ jobs:
 
   # Typecheck the project
   typecheck:
-    timeout-minutes: 15
+    timeout-minutes: 8
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
@@ -140,7 +140,7 @@ jobs:
 
   # Unit test and update coverage report
   unit_test:
-    timeout-minutes: 15
+    timeout-minutes: 8
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
@@ -180,7 +180,7 @@ jobs:
 
   # Build the project and run tests on built files.
   build_test:
-    timeout-minutes: 15
+    timeout-minutes: 8
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -219,7 +219,7 @@ jobs:
 
   # Check that package sizes are within their boundaries
   size_check:
-    timeout-minutes: 15
+    timeout-minutes: 8
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
@@ -253,7 +253,7 @@ jobs:
 
   # Run chromium e2e tests with playwright
   chromium_e2e:
-    timeout-minutes: 15
+    timeout-minutes: 8
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -296,7 +296,7 @@ jobs:
 
   # Run firefox e2e tests with playwright
   firefox_e2e:
-    timeout-minutes: 15
+    timeout-minutes: 8
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
