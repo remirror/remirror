@@ -615,17 +615,10 @@ export function getCharAsRegex(char: RegExp | string): RegExp {
 
 interface CreateRegexFromSuggesterParameter
   extends Pick<Required<Suggester>, 'startOfLine' | 'char' | 'supportedCharacters' | 'matchOffset'>,
-    Pick<Suggester, 'multiline' | 'caseInsensitive'> {
-  /**
-   * Whether to capture the `char character as the first capture group.
-   *
-   * @default true
-   */
-  captureChar?: boolean;
-}
+    Pick<Suggester, 'multiline' | 'caseInsensitive' | 'captureChar'> {}
 
 /**
- * Create a regex expression to evaluate matches directly from the suggester
+ * Create a regex expression which evaluate matches directly from the suggester
  * properties.
  */
 export function createRegexFromSuggester(parameter: CreateRegexFromSuggesterParameter): RegExp {
@@ -646,7 +639,7 @@ export function createRegexFromSuggester(parameter: CreateRegexFromSuggesterPara
   }
 
   return new RegExp(
-    `${getRegexPrefix(startOfLine)}(${charRegex})${getRegexSupportedCharacters(
+    `${getRegexPrefix(startOfLine)}${charRegex}${getRegexSupportedCharacters(
       supportedCharacters,
       matchOffset,
     )}`,
@@ -679,6 +672,7 @@ export const DEFAULT_SUGGESTER: PickPartial<Suggester<any>> = {
   emptySelectionsOnly: false,
   caseInsensitive: false,
   multiline: false,
+  captureChar: true,
 };
 
 /**

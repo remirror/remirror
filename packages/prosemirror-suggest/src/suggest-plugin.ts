@@ -67,7 +67,6 @@ export function suggest<Schema extends EditorSchema = EditorSchema>(
 
       return {
         update: (view) => {
-          // console.log('VIEW_UPDATE', { content: view.state.doc.textContent });
           return pluginState.changeHandler(view.state.tr, false);
         },
       };
@@ -81,7 +80,6 @@ export function suggest<Schema extends EditorSchema = EditorSchema>(
 
       // Apply changes to the state
       apply: (tr, _pluginState, _oldState, state) => {
-        // console.log('APPLY', { content: tr.doc.textContent });
         return pluginState.apply({ tr, state });
       },
     },
@@ -89,7 +87,6 @@ export function suggest<Schema extends EditorSchema = EditorSchema>(
     /** Append a transaction via the onChange handlers */
     appendTransaction: (_, __, state) => {
       const tr = state.tr;
-      // console.log('APPEND_TRANSACTION', { content: tr.doc.textContent });
 
       // Run the transaction updater for the next selection.
       pluginState.updateWithNextSelection(tr);

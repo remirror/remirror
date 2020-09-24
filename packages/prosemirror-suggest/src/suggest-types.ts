@@ -46,12 +46,22 @@ export interface Suggester<Schema extends EditorSchema = EditorSchema> {
   name: string;
 
   /**
-   * Set this to true so that the onChange handler is called in the
-   * `appendTransaction` prosemirror update handler rather than in the view
-   * update handler.
+   * Set this to true so that the `onChange` handler is called in the
+   * `appendTransaction` ProseMirror plugin hook instead of the the view update
+   * handler.
    *
    * This tends to work better with updates that are run multiple times while
    * preserving the redo/undo history stack.
+   *
+   * Please note this should only be set to true if updates are expected to be
+   * synchronous and immediately available. If you're planning on packaging the
+   * update into a command which dispatches the update in response to user
+   * interaction, then you're better off leaving this as false.
+   *
+   * An example of how it's being used is in the `autoLink` functionality for
+   * the `LinkExtension` in remirror. Since autolinking is purely based on
+   * configuration and not on user interaction it's possible to create the links
+   * automatically within the `appendTransaction` hook.
    *
    * @default false
    */
@@ -225,22 +235,24 @@ export interface Suggester<Schema extends EditorSchema = EditorSchema> {
    * This is a utility option that may be necessary for you when building
    * editable mentions using `prosemirror-suggest`.
    *
-   * By default `prosemirror-suggest` is a backward looking solution to the
-   * suggestions problem. It check backwards from the current cursor position to
-   * see if any text matches any of the configured suggesters. For the majority
-   * of use cases this is perfectly acceptable behaviour.
+   * By default `prosemirror-suggest` searches backwards from the current cursor
+   * position to see if any text matches any of the configured suggesters. For
+   * the majority of use cases this is perfectly acceptable behaviour.
    *
    * However, [#639](https://github.com/remirror/remirror/issues/639) shows that
-   * it's possible to delete forward and make mentions invalid. At the moment,
-   * when this happens it would require creating a plugin to check each state
-   * update and see whether the current next position has any invalid instances
-   * of the mention mark.
+   * it's possible to delete forward and make mentions invalid. Without adding
+   * this option, the only solution to this problem would have required,
+   * creating a custom plugin to check each state update and see if the next
+   * character is still valid.
    *
-   * This method hopefully makes it easier to do this. You can add a function
-   * here which is run every time the view updates and has a valid `next` text
-   * position and provides you with the next valid match.
+   * This method removes this requirement. It is run on every single update
+   * where there is a valid text selection after the current cursor position. It
+   * makes use of the `appendTransaction` ProseMirror plugin hook and provides
+   * you with a transaction (`tr`) which should be mutated with updates. These
+   * updates are added to the updates for the editor and makes it much easier to
+   * build `history` friendly functionality.
    *
-   * This is called after the `onChange` handler calls.
+   * This is called before all `onChange` handlers.
    *
    * @default null
    */
@@ -267,6 +279,16 @@ export interface Suggester<Schema extends EditorSchema = EditorSchema> {
    * @default false
    */
   multiline?: boolean;
+
+  /**
+   * Whether to capture the `char character as the first capture group.
+   *
+   * When this is set to true it will be the first matching group with
+   * `match[1]`.
+   *
+   * @default true
+   */
+  captureChar?: boolean;
 }
 
 /**
@@ -285,7 +307,7 @@ export type CheckNextValidSelection<Schema extends EditorSchema = EditorSchema> 
   $pos: ResolvedPos<Schema>,
   tr: Transaction<Schema>,
   matches: { change?: string; exit?: string },
-) => void;
+) => Transaction | null | void;
 
 /**
  * A function that can be used to determine whether the decoration should be set
@@ -860,7 +882,8 @@ export interface ResolvedPosParameter<Schema extends EditorSchema = EditorSchema
    * A prosemirror resolved pos with provides helpful context methods when
    * working with a position in the editor.
    *
-   * In prosemirror suggest this always uses the lower bound of the text selection.
+   * In prosemirror suggest this always uses the lower bound of the text
+   * selection.
    */
   $pos: ResolvedPos<Schema>;
 }

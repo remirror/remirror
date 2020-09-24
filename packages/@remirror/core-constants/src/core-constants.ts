@@ -96,8 +96,8 @@ export type ExtensionTags = Remirror.ExtensionTags & typeof BaseExtensionTag;
  * }
  *
  *
- * console.log(ExtensionTag.SuperCustom); // This is fine ✅
- * console.log(ExtensionTag.NotDefined); // This will throw ❌
+ * log(ExtensionTag.SuperCustom); // This is fine ✅
+ * log(ExtensionTag.NotDefined); // This will throw ❌
  * ```
  */
 export function mutateTag(mutator: (Tag: ExtensionTags) => void): void {
