@@ -64,7 +64,12 @@ export const SocialMentionComponent: FC<SocialMentionComponentProps> = (props) =
       return;
     }
 
-    onMentionChange?.({ index: state.index, name: state.name, query: state.query.full });
+    onMentionChange?.({
+      index: state.index,
+      name: state.name,
+      query: state.query.full,
+      command: state.command,
+    });
   }, [state, onMentionChange]);
 
   if (!state || !(isFocused || isClicking)) {

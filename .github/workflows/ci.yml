@@ -95,9 +95,6 @@ jobs:
       - name: check css
         run: pnpm lint:css
 
-      - name: check styles
-        run: pnpm lint:styles
-
       - name: check TS / JS files
         run: pnpm lint:es -- -f github --quiet
 

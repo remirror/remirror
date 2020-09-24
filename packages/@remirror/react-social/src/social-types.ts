@@ -2,6 +2,7 @@ import type { ElementType, ReactElement } from 'react';
 import type { Except } from 'type-fest';
 
 import type { AnyCombinedUnion, GetStaticAndDynamic } from '@remirror/core';
+import type { MentionExtensionAttributes } from '@remirror/extension-mention';
 import type { SocialOptions, SocialPreset } from '@remirror/preset-social';
 import type {
   BaseReactCombinedUnion,
@@ -25,6 +26,11 @@ export interface MentionChangeParameter {
    * The currently active matching index
    */
   index: number;
+
+  /**
+   * This command when the mention is active.
+   */
+  command: (item: MentionExtensionAttributes) => void;
 }
 
 export interface CreateSocialManagerOptions extends CreateReactManagerOptions {
