@@ -8,7 +8,6 @@ import type {
   NodeType,
   NodeTypeParameter,
   ProsemirrorAttributes,
-  ProsemirrorCommandFunction,
   RangeParameter,
   Selection,
   Transaction,

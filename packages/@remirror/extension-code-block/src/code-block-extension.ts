@@ -329,7 +329,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
       },
 
       [this.options.keyboardShortcut]: ({ tr }) => {
-        const commands = this.store.getCommands();
+        const commands = this.store.commands;
 
         if (!isNodeActive({ type: this.type, state: tr })) {
           return false;

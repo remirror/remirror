@@ -224,7 +224,7 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
         ...matcher,
         onChange: (parameter) => {
           const { name, range } = parameter;
-          const { createMentionAtom } = this.store.getCommands();
+          const { createMentionAtom } = this.store.commands;
 
           function command(attrs: Omit<MentionAtomNodeAttributes, 'name'>) {
             createMentionAtom({ name, range }, attrs);

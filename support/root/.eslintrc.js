@@ -55,7 +55,7 @@ let config = {
     'unicorn/filename-case': ['error', { case: 'kebabCase' }],
     'unicorn/no-null': 'off',
     'unicorn/no-reduce': 'off',
-    'unicorn/import-style': ['error', { styles: { path: false } }],
+    'unicorn/import-style': ['off'],
 
     'jest/no-test-return-statement': 'off',
     'jest/prefer-strict-equal': 'off',

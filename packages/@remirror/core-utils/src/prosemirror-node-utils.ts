@@ -8,7 +8,6 @@ import type {
   OptionalProsemirrorNodeParameter,
   PosParameter,
   PredicateParameter,
-  ProsemirrorAttributes,
   ProsemirrorNodeParameter,
 } from '@remirror/core-types';
 

@@ -101,7 +101,6 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
         update: () => {
           const shouldUpdate = this.getPluginState<boolean>();
           const state = this.store.getState();
-          const commands = this.store.getCommands();
           const { autoUpdate, excludeNodes } = this.options;
 
           if (!shouldUpdate || !autoUpdate) {
@@ -128,7 +127,7 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
           }
 
           this.#ignoreNextUpdate = true;
-          commands.updateNodeAttributes(pos, { ...node.attrs, dir });
+          this.store.commands.updateNodeAttributes(pos, { ...node.attrs, dir });
         },
       }),
       props: {},

@@ -45,7 +45,7 @@ export class HardBreakExtension extends NodeExtension {
 
   createKeymap(): KeyBindings {
     const command = chainCommands(convertCommand(exitCode), () => {
-      this.store.getCommands().insertHardBreak();
+      this.store.commands.insertHardBreak();
       return true;
     });
 

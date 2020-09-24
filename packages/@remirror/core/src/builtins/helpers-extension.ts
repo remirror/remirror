@@ -1,5 +1,5 @@
 import { ErrorConstant, ExtensionPriority } from '@remirror/core-constants';
-import { entries, invariant, object } from '@remirror/core-helpers';
+import { entries, object } from '@remirror/core-helpers';
 import type { AnyFunction, EmptyShape, ProsemirrorAttributes, Value } from '@remirror/core-types';
 import { isMarkActive, isNodeActive } from '@remirror/core-utils';
 

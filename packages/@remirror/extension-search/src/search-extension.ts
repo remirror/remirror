@@ -210,7 +210,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
           return false;
         }
 
-        const { clearSearch } = this.store.getCommands();
+        const { clearSearch } = this.store.commands;
         clearSearch();
 
         return true;
@@ -232,7 +232,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
         searchTerm = this.#searchTerm;
       }
 
-      const { find } = this.store.getCommands();
+      const { find } = this.store.commands;
       find(searchTerm, direction);
 
       return true;
@@ -316,7 +316,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
       const { from, to } = result;
 
       dispatch(tr.insertText(replacement, from, to));
-      const { findNext } = this.store.getCommands();
+      const { findNext } = this.store.commands;
       findNext();
 
       return true;
@@ -361,7 +361,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
 
       dispatch(tr);
 
-      const { find } = this.store.getCommands();
+      const { find } = this.store.commands;
       find(this.#searchTerm);
 
       return true;

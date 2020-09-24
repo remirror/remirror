@@ -201,8 +201,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
             ? this.frequentlyUsed
             : sortEmojiMatches(query.full, this.options.maxResults);
 
-        const { getCommands } = this.store;
-        const create = getCommands().insertEmojiByObject;
+        const create = this.store.commands.insertEmojiByObject;
 
         const command = (emoji: EmojiObject, skinVariation?: SkinVariation) => {
           invariant(emoji, {
