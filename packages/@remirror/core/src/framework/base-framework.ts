@@ -32,6 +32,11 @@ export interface BaseFramework<Combined extends AnyCombinedUnion> {
   readonly name: string;
 
   /**
+   * The state that is initially passed into the editor.
+   */
+  initialEditorState: EditorState<SchemaFromCombined<Combined>>;
+
+  /**
    * The minimum required output from the framework.
    */
   readonly frameworkOutput: FrameworkOutput<Combined>;

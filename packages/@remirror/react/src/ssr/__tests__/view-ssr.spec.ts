@@ -4,11 +4,14 @@
 
 import { EMPTY_PARAGRAPH_NODE } from '@remirror/core';
 import { EditorState } from '@remirror/pm/state';
-import { createCoreManager, minDocument } from '@remirror/testing';
+import { createCoreManager, createFramework, minDocument } from '@remirror/testing';
 
 import { createEditorView, EditorViewSSR } from '../ssr-prosemirror-view';
 
-const { schema, plugins } = createCoreManager([]).store;
+const manager = createCoreManager([]);
+manager.attachFramework(createFramework(manager), () => {});
+
+const { schema, plugins } = manager.store;
 const state = EditorState.create({
   doc: schema.nodeFromJSON(EMPTY_PARAGRAPH_NODE),
   schema,

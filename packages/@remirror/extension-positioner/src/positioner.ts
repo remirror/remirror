@@ -247,7 +247,6 @@ export class Positioner<Data = any> {
   /**
    * Add a listener to the positioner events.
    */
-
   readonly addListener = <Key extends keyof PositionerEvents>(
     event: Key,
     cb: PositionerEvents[Key],

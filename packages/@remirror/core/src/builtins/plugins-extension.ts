@@ -97,7 +97,7 @@ export class PluginsExtension extends PlainExtension {
 
       // Assign the plugin key to the extension name.
       this.pluginKeys[extension.name] = key;
-      const getter = this.getPluginStateCreator(key, extension);
+      const getter = this.getPluginStateCreator(key);
 
       extension.pluginKey = key;
       extension.constructor.prototype.getPluginState = getter;
@@ -123,14 +123,9 @@ export class PluginsExtension extends PlainExtension {
     }
   }
 
-  private readonly getPluginStateCreator = (key: PluginKey, extension: AnyExtension) => <State>(
+  private readonly getPluginStateCreator = (key: PluginKey) => <State>(
     state?: EditorState,
   ): State => {
-    invariant(this.store.phase >= ManagerPhase.EditorView || state, {
-      code: ErrorConstant.MANAGER_PHASE_ERROR,
-      message: `The 'getPluginState' method of '${extension.constructorName}' must be called with a current state if called before the 'view' has been added to the manager.`,
-    });
-
     return key.getState(state ?? this.store.getState());
   };
 

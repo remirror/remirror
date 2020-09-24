@@ -1,3 +1,5 @@
+import type { ValueOf } from 'type-fest';
+
 import { isEmptyObject, noop, pick } from '@remirror/core-helpers';
 import type { GetStaticAndDynamic } from '@remirror/core-types';
 
@@ -131,5 +133,21 @@ declare global {
        */
       builtin?: GetStaticAndDynamic<BuiltinOptions>;
     }
+
+    type Builtin =
+      | TagsExtension
+      | InputRulesExtension
+      | SchemaExtension
+      | AttributesExtension
+      | PluginsExtension
+      | PasteRulesExtension
+      | NodeViewsExtension
+      | SuggestExtension
+      | CommandsExtension
+      | HelpersExtension
+      | KeymapExtension
+      | PersistentSelectionExtension;
+
+    type All = ValueOf<AllExtensions>;
   }
 }

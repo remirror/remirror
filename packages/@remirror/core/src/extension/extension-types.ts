@@ -13,6 +13,13 @@ export interface ExtensionListParameter<ExtensionUnion extends AnyExtension = An
 }
 
 /**
+ * Get the default unprocessed commands that are provided by the extensions.
+ */
+export type RawCommandsFromExtensions<ExtensionUnion extends AnyExtension> = UnionToIntersection<
+  GetCommands<ExtensionUnion>
+>;
+
+/**
  * A utility type which maps the passed in extension command in an action that
  * is store in the `manager.store.actions.commandName()`.
  */

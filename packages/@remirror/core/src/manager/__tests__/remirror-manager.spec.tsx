@@ -3,27 +3,23 @@ import { createEditor, doc, p } from 'jest-prosemirror';
 import { EMPTY_PARAGRAPH_NODE, ExtensionPriority, ExtensionTag } from '@remirror/core-constants';
 import type {
   Dispose,
-  EditorState,
-  FromToParameter,
   KeyBindingCommandFunction,
   NodeExtensionSpec,
   NodeViewMethod,
   ProsemirrorAttributes,
-  RemirrorContentType,
 } from '@remirror/core-types';
-import { fromHtml } from '@remirror/core-utils';
 import { Schema } from '@remirror/pm/model';
-import { Plugin } from '@remirror/pm/state';
+import { EditorState, Plugin } from '@remirror/pm/state';
 import { EditorView } from '@remirror/pm/view';
 import {
   CorePreset,
   createCoreManager,
+  createFramework,
   HeadingExtension,
   hideConsoleError,
 } from '@remirror/testing';
 
 import { NodeExtension, PlainExtension } from '../../extension';
-import { Framework } from '../../framework';
 import { isRemirrorManager, RemirrorManager } from '../remirror-manager';
 
 describe('Manager', () => {
@@ -83,6 +79,7 @@ describe('Manager', () => {
       extensions: [dummyExtension, bigExtension],
       presets: [new CorePreset()],
     });
+    manager.attachFramework(createFramework(manager), () => {});
     state = manager.createState({ content: EMPTY_PARAGRAPH_NODE });
     view = new EditorView(document.createElement('div'), {
       state,
@@ -104,10 +101,10 @@ describe('Manager', () => {
 
     expect(mock).toHaveBeenCalledWith(attributes);
     expect(innerMock).toHaveBeenCalledWith({
-      state,
-      dispatch: view.dispatch,
-      view,
-      tr: expect.any(Object),
+      state: manager.view.state,
+      dispatch: manager.view.dispatch,
+      view: manager.view,
+      tr: manager.tr,
     });
   });
 
@@ -155,51 +152,9 @@ describe('Manager', () => {
     const manager = createCoreManager([]);
     expect(() => manager.output).toThrowErrorMatchingSnapshot();
     expect(() => (manager.frameworkAttached ? manager.output : false)).not.toThrow();
-
-    class TestFramework extends Framework<any, any, any> {
-      #cacheOutput: any;
-
-      get name() {
-        return 'test';
-      }
-
-      updateState() {}
-
-      createView(state: EditorState, element?: HTMLElement) {
-        return new EditorView(element, {
-          state,
-          nodeViews: this.manager.store.nodeViews,
-          dispatchTransaction: this.dispatchTransaction,
-          attributes: () => this.getAttributes(),
-          editable: () => {
-            return this.props.editable ?? true;
-          },
-        });
-      }
-
-      get frameworkOutput() {
-        return (this.#cacheOutput ??= this.baseOutput);
-      }
-    }
-
-    const createStateFromContent = (
-      content: RemirrorContentType,
-      selection?: FromToParameter | undefined,
-    ) =>
-      manager.createState({
-        content,
-        stringHandler: fromHtml,
-        selection,
-      });
-
-    const framework = new TestFramework({
-      createStateFromContent: createStateFromContent,
-      getProps: () => ({ manager }),
-      initialEditorState: createStateFromContent(manager.createEmptyDoc()),
-    });
+    const framework = createFramework(manager);
 
     manager.attachFramework(framework, () => {});
-
     expect(manager.output).toBe(framework.frameworkOutput);
   });
 });
@@ -247,10 +202,13 @@ test('keymaps', () => {
     }
   }
 
-  const manager = RemirrorManager.fromObject({
-    extensions: [new FirstExtension(), new SecondExtension(), new ThirdExtension()],
-    presets: [new CorePreset()],
-  });
+  const manager = RemirrorManager.create(() => [
+    new FirstExtension(),
+    new SecondExtension(),
+    new ThirdExtension(),
+    new CorePreset(),
+  ]);
+  manager.attachFramework(createFramework(manager), () => {});
 
   createEditor(doc(p('simple<cursor>')), { plugins: manager.store.plugins })
     .insertText('abcd')
@@ -288,8 +246,6 @@ test('keymaps', () => {
       expect(mocks.thirdEnter).not.toHaveBeenCalled();
     });
 });
-
-// "getCommands" | "getChain" | "helpers" | "rebuildKeymap" | "getPluginState" | "replacePlugin" | "reconfigureStatePlugins" | "addPlugins" | "schema" | "tags" | "phase" | "getState"
 
 test('lifecycle', () => {
   expect.assertions(6);
@@ -390,11 +346,14 @@ test('disposes of methods', () => {
   }
 
   const manager = RemirrorManager.create(() => [new DisposeExtension(), new CorePreset()]);
-  const state = manager.createState({ content: EMPTY_PARAGRAPH_NODE });
+  const framework = createFramework(manager);
+
   const view = new EditorView(document.createElement('div'), {
-    state,
+    state: framework.initialEditorState,
     editable: () => true,
   });
+
+  manager.attachFramework(framework, () => {});
   manager.addView(view);
 
   manager.destroy();

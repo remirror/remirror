@@ -132,7 +132,7 @@ export abstract class Framework<
    * current state will always be equal.
    */
   protected get previousState(): EditorState<SchemaFromCombined<Combined>> {
-    return this.previousStateOverride ?? this.#previousState ?? this.view.state;
+    return this.previousStateOverride ?? this.#previousState ?? this.initialEditorState;
   }
 
   /**
@@ -172,11 +172,21 @@ export abstract class Framework<
     return this.#uid;
   }
 
+  #initialEditorState: EditorState<SchemaFromCombined<Combined>>;
+
+  /**
+   * The initial editor state from when the editor was first created.
+   */
+  get initialEditorState(): EditorState<SchemaFromCombined<Combined>> {
+    return this.#initialEditorState;
+  }
+
   constructor(parameter: FrameworkParameter<Combined, Props>) {
     const { getProps, createStateFromContent, initialEditorState, element } = parameter;
 
     this.#getProps = getProps;
     this.createStateFromContent = createStateFromContent;
+    this.#initialEditorState = initialEditorState;
 
     // Attach the framework instance to the manager. The manager will set up the
     // update listener and manage updates to the instance of the framework
@@ -220,7 +230,8 @@ export abstract class Framework<
   /**
    * Retrieve the editor state.
    */
-  protected readonly getState = (): EditorState<SchemaFromCombined<Combined>> => this.view.state;
+  protected readonly getState = (): EditorState<SchemaFromCombined<Combined>> =>
+    this.view.state ?? this.initialEditorState;
 
   /**
    * Retrieve the previous editor state.

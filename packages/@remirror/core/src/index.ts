@@ -26,7 +26,8 @@ export {
   TagsExtension,
 } from './builtins';
 
-export { toggleMark } from './commands';
+export type { DelayedValue } from './commands';
+export { toggleMark, delayedCommand, insertText, isDelayedValue } from './commands';
 
 export type { ExtensionDecoratorOptions, PresetDecoratorOptions } from './decorators';
 export { extensionDecorator, presetDecorator } from './decorators';
@@ -76,6 +77,7 @@ export type {
   ManagerStoreKeys,
   MapHelpers,
   SchemaFromExtensionUnion,
+  RawCommandsFromExtensions,
 } from './extension';
 export {
   isExtension,

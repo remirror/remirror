@@ -560,14 +560,18 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   /**
    * A state getter method which is passed into the params.
    */
-  private readonly getState = () => {
-    invariant(this.#phase >= ManagerPhase.EditorView, {
+  private readonly getState = (): EditorState => {
+    if (this.#phase >= ManagerPhase.EditorView) {
+      return this.view.state;
+    }
+
+    invariant(this.#framework, {
       code: ErrorConstant.MANAGER_PHASE_ERROR,
       message:
-        '`getState` can only be called after the view has been added to the manager. Avoid using it in the outer scope of `creatorMethods`.',
+        '`getState` can only be called after the `Framework` or the `EditorView` has been added to the manager`.',
     });
 
-    return this.view.state as EditorState;
+    return this.#framework?.initialEditorState;
   };
 
   /**
@@ -687,7 +691,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   /**
    * Add a handler to the manager.
    *
-   * Currently the only event that can be listend to is the `destroy` event.
+   * Currently the only event that can be listened to is the `destroy` event.
    */
   addHandler<Key extends keyof ManagerEvents>(event: Key, cb: ManagerEvents[Key]): Unsubscribe {
     return this.#events.on(event, cb);

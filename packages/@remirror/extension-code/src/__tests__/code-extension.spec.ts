@@ -39,11 +39,19 @@ describe('schema', () => {
 });
 
 describe('inputRules', () => {
-  const {
+  let {
     add,
     nodes: { p, doc },
     marks: { code },
   } = renderEditor([new CodeExtension()]);
+
+  beforeEach(() => {
+    ({
+      add,
+      nodes: { p, doc },
+      marks: { code },
+    } = renderEditor([new CodeExtension()]));
+  });
 
   it('should match input rule', () => {
     add(doc(p('Start<cursor>')))
@@ -65,13 +73,23 @@ describe('inputRules', () => {
 });
 
 describe('commands', () => {
-  const {
+  let {
     add,
     view,
     nodes: { p, doc },
     marks: { code },
     commands,
   } = renderEditor([new CodeExtension()]);
+
+  beforeEach(() => {
+    ({
+      add,
+      view,
+      nodes: { p, doc },
+      marks: { code },
+      commands,
+    } = renderEditor([new CodeExtension()]));
+  });
 
   it('#toggleBold', () => {
     add(doc(p('Hello <start>code<end>, lets dance.')));

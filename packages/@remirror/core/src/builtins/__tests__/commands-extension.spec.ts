@@ -44,7 +44,7 @@ test('clears range selection', () => {
   // Pre-condition: range selection covers complete text
   expect(editor.state.selection.to).toBe(editor.state.selection.from + text.length);
 
-  expect(commands.clearRangeSelection()).toBeTrue();
+  expect(commands.emptySelection()).toBeTrue();
 
   expect(editor.state.selection.to).toBe(editor.state.selection.from);
   expect(editor.state.doc).toEqualRemirrorDocument(doc(p(text)));
@@ -57,21 +57,7 @@ test('rejects clearing range selection if there is none', () => {
 
   editor.add(doc(p('my content')));
 
-  expect(commands.clearRangeSelection()).toBeFalse();
-});
-
-test('it can insert a range of text', () => {
-  const editor = renderEditor([]);
-  const { doc, p } = editor.nodes;
-
-  editor.add(doc(p('my <cursor>content')));
-  editor.commands.insertText('awesome ');
-
-  expect(editor.doc).toEqualProsemirrorNode(doc(p('my awesome content')));
-
-  editor.commands.insertText('all ', { from: 1 });
-
-  expect(editor.doc).toEqualProsemirrorNode(doc(p('all my awesome content')));
+  expect(commands.emptySelection()).toBeFalse();
 });
 
 test('it can select text', () => {
@@ -94,4 +80,92 @@ test('it can select text', () => {
 
   editor.commands.selectText({ from: 1, to: 3 });
   expect(editor.state.selection.empty).toBeFalse();
+});
+
+function sleep(msDelay: number) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, msDelay);
+  });
+}
+
+describe('commands.clearRangeSelection', () => {
+  it('clears the selection', () => {
+    const editor = renderEditor([]);
+    const { doc, p } = editor.nodes;
+
+    editor.add(doc(p('my <head>content<anchor> is chill')));
+    editor.commands.emptySelection();
+    expect(editor.state.selection.from).toBe(11);
+
+    editor.insertText(' vibe');
+    expect(editor.state.doc).toEqualRemirrorDocument(doc(p('my content vibe is chill')));
+  });
+
+  it('does nothing when the selection is empty', () => {
+    const editor = renderEditor([]);
+    const { doc, p } = editor.nodes;
+    editor.add(doc(p('my content<head><anchor> is chill')));
+
+    expect(editor.commands.emptySelection.isEnabled()).toBeFalse();
+  });
+});
+
+describe('commands.insertText', () => {
+  jest.useFakeTimers();
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
+  it('can insert a range of text', () => {
+    const editor = renderEditor([]);
+    const { doc, p } = editor.nodes;
+
+    editor.add(doc(p('my <cursor>content')));
+    editor.commands.insertText('awesome ');
+
+    expect(editor.doc).toEqualProsemirrorNode(doc(p('my awesome content')));
+
+    editor.commands.insertText('all ', { from: 1 });
+
+    expect(editor.doc).toEqualProsemirrorNode(doc(p('all my awesome content')));
+  });
+
+  it('can insert text asynchronously', async () => {
+    const editor = renderEditor([]);
+    const { doc, p } = editor.nodes;
+    editor.add(doc(p('my <cursor>CODE!')));
+    const promise = sleep(100).then(() => 'AWESOME ');
+    editor.commands.insertText(() => promise);
+
+    editor.selectText('end').press('Enter').insertText('More text here.');
+
+    jest.runAllTimers();
+    await promise;
+
+    expect(editor.view.state.doc).toEqualRemirrorDocument(
+      doc(p('my AWESOME CODE!'), p('More text here.')),
+    );
+  });
+
+  it('can recover after a rejected promise', async () => {
+    const editor = renderEditor([]);
+    const { doc, p } = editor.nodes;
+    editor.add(doc(p('my <cursor>CODE!')));
+    const promise = Promise.reject();
+    editor.commands.insertText(promise);
+    editor.selectText('end').press('Enter').insertText('More text here.');
+
+    await expect(promise).toReject();
+    expect(editor.dom.innerHTML).toMatchInlineSnapshot(`
+      <p>
+        my CODE!
+      </p>
+      <p>
+        More text here.
+      </p>
+    `);
+  });
 });

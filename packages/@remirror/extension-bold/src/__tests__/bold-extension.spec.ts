@@ -70,11 +70,19 @@ function create(options?: BoldOptions) {
 }
 
 describe('inputRules', () => {
-  const {
+  let {
     add,
     nodes: { p, doc },
     marks: { bold },
   } = create();
+
+  beforeEach(() => {
+    ({
+      add,
+      nodes: { p, doc },
+      marks: { bold },
+    } = create());
+  });
 
   it('should match input rule', () => {
     add(doc(p('Start<cursor>')))

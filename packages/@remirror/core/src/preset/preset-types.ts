@@ -7,6 +7,7 @@ import type {
   GetMarkNameUnion,
   GetNodeNameUnion,
   HelpersFromExtensions,
+  RawCommandsFromExtensions,
   SchemaFromExtensionUnion,
 } from '../extension';
 import type { GetExtensions } from '../types';
@@ -44,6 +45,10 @@ export type InferCombinedPresets<Combined extends AnyCombinedUnion> = Combined e
   : never;
 
 export type SchemaFromCombined<Combined extends AnyCombinedUnion> = SchemaFromExtensionUnion<
+  InferCombinedExtensions<Combined>
+>;
+
+export type RawCommandsFromCombined<Combined extends AnyCombinedUnion> = RawCommandsFromExtensions<
   InferCombinedExtensions<Combined>
 >;
 

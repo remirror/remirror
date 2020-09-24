@@ -47,9 +47,8 @@ import {
 } from './base-class';
 
 /**
- * Auto infers the parameter for the constructor. If there is a
- * required static option then the TypeScript compiler will error if nothing is
- * passed in.
+ * Auto infers the parameter for the constructor. If there is a required static
+ * option then the TypeScript compiler will error if nothing is passed in.
  */
 export type ExtensionConstructorParameter<Options extends ValidOptions> = ConstructorParameter<
   Options,
@@ -118,7 +117,8 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
   static readonly defaultPriority: ExtensionPriority = ExtensionPriority.Default;
 
   /**
-   * Allows for the `RemirrorManager` or `Preset`'s to override the priority of an extension.
+   * Allows for the `RemirrorManager` or `Preset`'s to override the priority of
+   * an extension.
    */
   #priorityOverride?: ExtensionPriority;
 
@@ -143,8 +143,8 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
    * items like the `view` and `schema` that are added by the extension manager
    * and also the lifecycle extension methods.
    *
-   * **NOTE** - The store is not available until the manager has been created and
-   * received the extension. As a result trying to access the store during
+   * **NOTE** - The store is not available until the manager has been created
+   * and received the extension. As a result trying to access the store during
    * `init` and `constructor` will result in a runtime error.
    *
    * Some properties of the store are available at different phases. You should
@@ -190,7 +190,8 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
   }
 
   /**
-   * Pass a reference to the globally shared `ExtensionStore` for this extension.
+   * Pass a reference to the globally shared `ExtensionStore` for this
+   * extension.
    *
    * @remarks
    *
@@ -233,7 +234,8 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
    * Set the priority override for this extension. This is used in the
    * `RemirrorManager` in order to override the priority of an extension.
    *
-   * If you set the first parameter to `undefined` it will remove the priority override.
+   * If you set the first parameter to `undefined` it will remove the priority
+   * override.
    */
   setPriority(priority: undefined | ExtensionPriority): void {
     this.#priorityOverride = priority;
@@ -264,8 +266,8 @@ interface Extension<Options extends ValidOptions = EmptyShape>
 }
 
 /**
- * Get the expected type signature for the `defaultOptions`. Requires that
- * every optional setting key (except for keys which are defined on the
+ * Get the expected type signature for the `defaultOptions`. Requires that every
+ * optional setting key (except for keys which are defined on the
  * `BaseExtensionOptions`) has a value assigned.
  */
 export type DefaultExtensionOptions<Options extends ValidOptions> = DefaultOptions<
@@ -294,7 +296,8 @@ interface ExtensionLifecycleMethods {
    * available in the extension store. When accessing methods on `this.store` be
    * shore to check when they become available in the lifecycle.
    *
-   * You can return a `Dispose` function which will automatically be called when the extension is destroyed.
+   * You can return a `Dispose` function which will automatically be called when
+   * the extension is destroyed.
    */
   onCreate?(): Dispose | void;
 
@@ -534,8 +537,6 @@ const defaultOptions: BaseExtensionOptions = {
  * A potential use case is for adding a new default option to all extensions. It
  * shows an example of how to accomplish this in a typesafe way.
  *
- * @example
- *
  * ```ts
  * import { mutateDefaultExtensionOptions } from 'remirror/core';
  *
@@ -551,7 +552,7 @@ const defaultOptions: BaseExtensionOptions = {
  *     }
  *   }
  * }
- * ```
+ *```
  *
  * The mutation must happen before any extension have been instantiated.
  */

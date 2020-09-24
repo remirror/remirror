@@ -107,7 +107,7 @@ function create(options: LinkOptions = {}) {
 }
 
 describe('commands', () => {
-  const {
+  let {
     add,
     attributeMarks: { link },
     nodes: { doc, p },
@@ -115,6 +115,17 @@ describe('commands', () => {
     active,
     view,
   } = create();
+
+  beforeEach(() => {
+    ({
+      add,
+      attributeMarks: { link },
+      nodes: { doc, p },
+      commands,
+      active,
+      view,
+    } = create());
+  });
 
   describe('.removeLink', () => {
     describe('()', () => {
@@ -276,12 +287,13 @@ describe('commands', () => {
 
 describe('keys', () => {
   const onActivateLink = jest.fn(() => {});
-  const {
-    add,
-    nodes: { doc, p },
-  } = create({ onActivateLink });
 
   it('responds to Mod-k', () => {
+    const {
+      add,
+      nodes: { doc, p },
+    } = create({ onActivateLink });
+
     add(doc(p(`<cursor>Link`)))
       .shortcut('Mod-k')
       .callback(({ start, end }) => {
@@ -291,6 +303,11 @@ describe('keys', () => {
   });
 
   it('does not call handler when no nearby word', () => {
+    const {
+      add,
+      nodes: { doc, p },
+    } = create({ onActivateLink });
+
     add(doc(p(`<cursor> Link`)))
       .shortcut('Mod-k')
       .callback(({ start, end }) => {

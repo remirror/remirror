@@ -35,20 +35,6 @@ export class HelpersExtension extends PlainExtension {
   }
 
   /**
-   * Provide a method with access to the helpers for use in commands and
-   * helpers.
-   */
-  onCreate(): void {
-    // TODO - remove this in a future update.
-    this.store.setExtensionStore('getHelpers', () => {
-      const helpers = this.store.getStoreKey('helpers');
-      invariant(helpers, { code: ErrorConstant.HELPERS_CALLED_IN_OUTER_SCOPE });
-
-      return helpers as any;
-    });
-  }
-
-  /**
    * Helpers are only available once the view has been added to
    * `RemirrorManager`.
    */
@@ -173,12 +159,7 @@ declare global {
        * This should only be accessed after the `onView` lifecycle method
        * otherwise it will throw an error.
        */
-      helpers: HelpersFromExtensions<Value<AllExtensions> | AnyExtension>;
-
-      /** @deprecated Use `this.store.helpers` instead. */
-      getHelpers: <ExtensionUnion extends AnyExtension = AnyExtension>() => HelpersFromExtensions<
-        Value<AllExtensions> | ExtensionUnion
-      >;
+      helpers: HelpersFromExtensions<Builtin | AnyExtension>;
     }
 
     interface AllExtensions {
