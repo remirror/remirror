@@ -1,5 +1,44 @@
 # @remirror/core
 
+## 1.0.0-next.40
+
+> 2020-09-24
+
+### Major Changes
+
+- [`7c5778ed`](https://github.com/remirror/remirror/commit/7c5778edf123e6a812c77b1fd6181d16887b0fa1) [#700](https://github.com/remirror/remirror/pull/700) Thanks [@ifiokjr](https://github.com/ifiokjr)! - 🎉 Add support for position tracking to `CommandsExtension`.
+
+  - New commands are available.
+    - `commands.addPositionTracker`
+    - `commands.removePositionTracker`.
+    - `commands.clearPositionTrackers`.
+  - New exports from `@remirror/core` including `delayedCommand` which is a building block for creating your own delayed commands.
+  - **BREAKING:** 💥 Rename `clearRangeSelection` to `emptySelection` and fix a bug where it would always select the `from` rather than the `anchor`.
+  - Add store property `this.store.rawCommands` for access to the original command functions which can sometimes come in handy. Also add it to the manager store and export new type named `RawCommandsFromExtensions`
+  - Add `initialState` as a property of the `BaseFramework`.
+  - **BREAKING** 💥 Require the `Framework` to be attached to the manager before any calls to `getState` are allowed. If you're using `jest-remirror` this change might break some of your tests that don't recreate the editor between tests.
+  - `commands.insertText` now support delayed commands.
+  - `commands.insertText` now supports adding marks to the added text.
+
+  ```ts
+  commands.insertText('Hello', {
+    marks: {
+      // The empty object `{}` represents the attributes being added.
+      bold: {},
+    },
+  });
+  ```
+
+### Patch Changes
+
+- [`cbf15ec4`](https://github.com/remirror/remirror/commit/cbf15ec4e38832ccf1495442c306d2c0bc6d6f2c) [#698](https://github.com/remirror/remirror/pull/698) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Check `EditorView` has been added to framework before removing the focus and blur listeners.
+
+- Updated dependencies [[`add65c90`](https://github.com/remirror/remirror/commit/add65c90162612037e1bf9abd98b6436db9ba6ef), [`4b1d99a6`](https://github.com/remirror/remirror/commit/4b1d99a60c9cf7c652b69967179be39ae5db3ff4), [`fd694d61`](https://github.com/remirror/remirror/commit/fd694d610e12bef9e43682074f71ef3097f6ea6e)]:
+  - @remirror/core-utils@1.0.0-next.40
+  - @remirror/core-types@1.0.0-next.40
+  - @remirror/pm@1.0.0-next.40
+  - @remirror/core-helpers@1.0.0-next.40
+
 ## 1.0.0-next.39
 
 > 2020-09-16

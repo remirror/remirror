@@ -1,5 +1,29 @@
 # @remirror/core-utils
 
+## 1.0.0-next.40
+
+> 2020-09-24
+
+### Major Changes
+
+- [`add65c90`](https://github.com/remirror/remirror/commit/add65c90162612037e1bf9abd98b6436db9ba6ef) [#700](https://github.com/remirror/remirror/pull/700) Thanks [@ifiokjr](https://github.com/ifiokjr)! - **BREAKING:** 💥 Remove exports for `flatten` and `emptyCommandFunction` which are unused in the codebase and not very practical.
+
+  Update API for `findChildrenByAttribute` to only support an object of attributeNames and literal value or predicate value.
+
+  ```ts
+  const mergedCells = findChildrenByAttribute({
+    node: table,
+    attrs: { colspan: 2, id: (_, exists) => exists },
+  });
+  ```
+
+### Patch Changes
+
+- Updated dependencies [[`4b1d99a6`](https://github.com/remirror/remirror/commit/4b1d99a60c9cf7c652b69967179be39ae5db3ff4), [`fd694d61`](https://github.com/remirror/remirror/commit/fd694d610e12bef9e43682074f71ef3097f6ea6e)]:
+  - @remirror/core-types@1.0.0-next.40
+  - @remirror/pm@1.0.0-next.40
+  - @remirror/core-helpers@1.0.0-next.40
+
 ## 1.0.0-next.39
 
 > 2020-09-16

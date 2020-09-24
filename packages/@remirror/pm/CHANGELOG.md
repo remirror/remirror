@@ -1,5 +1,17 @@
 # @remirror/pm
 
+## 1.0.0-next.40
+
+> 2020-09-24
+
+### Patch Changes
+
+- [`fd694d61`](https://github.com/remirror/remirror/commit/fd694d610e12bef9e43682074f71ef3097f6ea6e) [#700](https://github.com/remirror/remirror/pull/700) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Upgrade external dependencies.
+
+- Updated dependencies [[`499eb047`](https://github.com/remirror/remirror/commit/499eb047b90e74dfcdd9bc24a2dde303a48bb721)]:
+  - prosemirror-suggest@1.0.0-next.40
+  - @remirror/core-helpers@1.0.0-next.40
+
 ## 1.0.0-next.39
 
 > 2020-09-16
