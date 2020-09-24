@@ -16,8 +16,6 @@ function monacoEditorPlugin(_context, _options) {
   return {
     name: 'monaco-editor',
     configureWebpack(config) {
-      console.log('configuring webpack');
-
       for (const rule of config.module.rules) {
         if (
           String(rule.test) !== String(/\.css$/) &&
