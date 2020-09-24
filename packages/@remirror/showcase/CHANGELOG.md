@@ -1,5 +1,17 @@
 # @remirror/showcase
 
+## 1.0.0-next.40
+
+> 2020-09-24
+
+### Patch Changes
+
+- Updated dependencies [[`7c5778ed`](https://github.com/remirror/remirror/commit/7c5778edf123e6a812c77b1fd6181d16887b0fa1), [`cbf15ec4`](https://github.com/remirror/remirror/commit/cbf15ec4e38832ccf1495442c306d2c0bc6d6f2c), [`1808a9e9`](https://github.com/remirror/remirror/commit/1808a9e9607f7b4951210dbde2c5d5367497cdcb)]:
+  - @remirror/core@1.0.0-next.40
+  - @remirror/react-social@1.0.0-next.40
+  - @remirror/extension-code-block@1.0.0-next.40
+  - @remirror/react-hooks@1.0.0-next.40
+
 ## 1.0.0-next.39
 
 > 2020-09-16

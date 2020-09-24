@@ -1,5 +1,20 @@
 # jest-remirror
 
+## 1.0.0-next.40
+
+> 2020-09-24
+
+### Patch Changes
+
+- [`fd694d61`](https://github.com/remirror/remirror/commit/fd694d610e12bef9e43682074f71ef3097f6ea6e) [#700](https://github.com/remirror/remirror/pull/700) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Upgrade external dependencies.
+
+- Updated dependencies [[`7c5778ed`](https://github.com/remirror/remirror/commit/7c5778edf123e6a812c77b1fd6181d16887b0fa1), [`cbf15ec4`](https://github.com/remirror/remirror/commit/cbf15ec4e38832ccf1495442c306d2c0bc6d6f2c), [`fd694d61`](https://github.com/remirror/remirror/commit/fd694d610e12bef9e43682074f71ef3097f6ea6e)]:
+  - @remirror/core@1.0.0-next.40
+  - @remirror/pm@1.0.0-next.40
+  - jest-prosemirror@1.0.0-next.40
+  - @remirror/dom@1.0.0-next.40
+  - @remirror/preset-core@1.0.0-next.40
+
 ## 1.0.0-next.39
 
 > 2020-09-16

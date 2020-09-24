@@ -1,5 +1,17 @@
 # @remirror/styles
 
+## 1.0.0-next.40
+
+> 2020-09-24
+
+### Minor Changes
+
+- [`07aab2e8`](https://github.com/remirror/remirror/commit/07aab2e85f79eab332a3f561274e97d9746be65d) [#700](https://github.com/remirror/remirror/pull/700) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Improve style output and fix CSS output issues.
+
+### Patch Changes
+
+- [`fd694d61`](https://github.com/remirror/remirror/commit/fd694d610e12bef9e43682074f71ef3097f6ea6e) [#700](https://github.com/remirror/remirror/pull/700) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Upgrade external dependencies.
+
 ## 1.0.0-next.34
 
 > 2020-09-10

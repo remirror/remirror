@@ -1,5 +1,15 @@
 # @remirror/i18n
 
+## 1.0.0-next.40
+
+> 2020-09-24
+
+### Patch Changes
+
+- Updated dependencies [[`fd694d61`](https://github.com/remirror/remirror/commit/fd694d610e12bef9e43682074f71ef3097f6ea6e)]:
+  - @remirror/pm@1.0.0-next.40
+  - @remirror/core-helpers@1.0.0-next.40
+
 ## 1.0.0-next.39
 
 > 2020-09-16

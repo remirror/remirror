@@ -1,5 +1,15 @@
 # multishift
 
+## 1.0.0-next.40
+
+> 2020-09-24
+
+### Patch Changes
+
+- Updated dependencies [[`4b1d99a6`](https://github.com/remirror/remirror/commit/4b1d99a60c9cf7c652b69967179be39ae5db3ff4)]:
+  - @remirror/core-types@1.0.0-next.40
+  - @remirror/core-helpers@1.0.0-next.40
+
 ## 1.0.0-next.39
 
 > 2020-09-16

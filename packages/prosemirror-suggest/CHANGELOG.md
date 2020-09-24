@@ -1,5 +1,18 @@
 # prosemirror-suggest
 
+## 1.0.0-next.40
+
+> 2020-09-24
+
+### Minor Changes
+
+- [`499eb047`](https://github.com/remirror/remirror/commit/499eb047b90e74dfcdd9bc24a2dde303a48bb721) [#700](https://github.com/remirror/remirror/pull/700) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add `captureChar` property and fix `matches` regex matcher
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core-helpers@1.0.0-next.40
+
 ## 1.0.0-next.39
 
 > 2020-09-16

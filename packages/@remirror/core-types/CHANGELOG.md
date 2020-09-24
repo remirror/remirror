@@ -1,5 +1,16 @@
 # @remirror/core-types
 
+## 1.0.0-next.40
+
+> 2020-09-24
+
+### Patch Changes
+
+- [`4b1d99a6`](https://github.com/remirror/remirror/commit/4b1d99a60c9cf7c652b69967179be39ae5db3ff4) [#700](https://github.com/remirror/remirror/pull/700) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix type of `RemirrorJSON` attrs to support all `Literal` values.
+
+- Updated dependencies [[`fd694d61`](https://github.com/remirror/remirror/commit/fd694d610e12bef9e43682074f71ef3097f6ea6e)]:
+  - @remirror/pm@1.0.0-next.40
+
 ## 1.0.0-next.39
 
 > 2020-09-16

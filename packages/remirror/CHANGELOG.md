@@ -1,5 +1,73 @@
 # remirror
 
+## 1.0.0-next.40
+
+> 2020-09-24
+
+### Major Changes
+
+- [`227657ae`](https://github.com/remirror/remirror/commit/227657ae1e30b0aca4c91450b2fab2b8772e5570) [#700](https://github.com/remirror/remirror/pull/700) Thanks [@ifiokjr](https://github.com/ifiokjr)! - **BREAKING:** 💥 Remove `@remirror/position-tracker` extension from the repository and remove `remirror/extension/position-tracker` as a potential import.
+
+### Patch Changes
+
+- [`07aab2e8`](https://github.com/remirror/remirror/commit/07aab2e85f79eab332a3f561274e97d9746be65d) [#700](https://github.com/remirror/remirror/pull/700) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Improve style output and fix CSS output issues.
+
+- Updated dependencies [[`7c5778ed`](https://github.com/remirror/remirror/commit/7c5778edf123e6a812c77b1fd6181d16887b0fa1), [`cbf15ec4`](https://github.com/remirror/remirror/commit/cbf15ec4e38832ccf1495442c306d2c0bc6d6f2c), [`add65c90`](https://github.com/remirror/remirror/commit/add65c90162612037e1bf9abd98b6436db9ba6ef), [`89bd1e86`](https://github.com/remirror/remirror/commit/89bd1e86e56c60ffbd94a7f5e75adca438d75555), [`4b1d99a6`](https://github.com/remirror/remirror/commit/4b1d99a60c9cf7c652b69967179be39ae5db3ff4), [`cbf15ec4`](https://github.com/remirror/remirror/commit/cbf15ec4e38832ccf1495442c306d2c0bc6d6f2c), [`fd694d61`](https://github.com/remirror/remirror/commit/fd694d610e12bef9e43682074f71ef3097f6ea6e), [`1808a9e9`](https://github.com/remirror/remirror/commit/1808a9e9607f7b4951210dbde2c5d5367497cdcb), [`643555cc`](https://github.com/remirror/remirror/commit/643555cc7ba22ee0a8ba3cb1333ea488830fce30)]:
+  - @remirror/core@1.0.0-next.40
+  - @remirror/react@1.0.0-next.40
+  - @remirror/core-utils@1.0.0-next.40
+  - @remirror/extension-annotation@1.0.0-next.40
+  - @remirror/core-types@1.0.0-next.40
+  - @remirror/pm@1.0.0-next.40
+  - @remirror/react-social@1.0.0-next.40
+  - @remirror/dom@1.0.0-next.40
+  - @remirror/extension-auto-link@1.0.0-next.40
+  - @remirror/extension-bidi@1.0.0-next.40
+  - @remirror/extension-blockquote@1.0.0-next.40
+  - @remirror/extension-bold@1.0.0-next.40
+  - @remirror/extension-code@1.0.0-next.40
+  - @remirror/extension-code-block@1.0.0-next.40
+  - @remirror/extension-collaboration@1.0.0-next.40
+  - @remirror/extension-diff@1.0.0-next.40
+  - @remirror/extension-doc@1.0.0-next.40
+  - @remirror/extension-drop-cursor@1.0.0-next.40
+  - @remirror/extension-emoji@1.0.0-next.40
+  - @remirror/extension-epic-mode@1.0.0-next.40
+  - @remirror/extension-events@1.0.0-next.40
+  - @remirror/extension-gap-cursor@1.0.0-next.40
+  - @remirror/extension-hard-break@1.0.0-next.40
+  - @remirror/extension-heading@1.0.0-next.40
+  - @remirror/extension-history@1.0.0-next.40
+  - @remirror/extension-horizontal-rule@1.0.0-next.40
+  - @remirror/extension-image@1.0.0-next.40
+  - @remirror/extension-italic@1.0.0-next.40
+  - @remirror/extension-link@1.0.0-next.40
+  - @remirror/extension-mention@1.0.0-next.40
+  - @remirror/extension-mention-atom@1.0.0-next.40
+  - @remirror/extension-paragraph@1.0.0-next.40
+  - @remirror/extension-placeholder@1.0.0-next.40
+  - @remirror/extension-positioner@1.0.0-next.40
+  - @remirror/extension-react-component@1.0.0-next.40
+  - @remirror/extension-react-ssr@1.0.0-next.40
+  - @remirror/extension-search@1.0.0-next.40
+  - @remirror/extension-strike@1.0.0-next.40
+  - @remirror/extension-text@1.0.0-next.40
+  - @remirror/extension-trailing-node@1.0.0-next.40
+  - @remirror/extension-underline@1.0.0-next.40
+  - @remirror/extension-yjs@1.0.0-next.40
+  - @remirror/preset-core@1.0.0-next.40
+  - @remirror/preset-embed@1.0.0-next.40
+  - @remirror/preset-list@1.0.0-next.40
+  - @remirror/preset-react@1.0.0-next.40
+  - @remirror/preset-social@1.0.0-next.40
+  - @remirror/preset-table@1.0.0-next.40
+  - @remirror/preset-wysiwyg@1.0.0-next.40
+  - @remirror/react-hooks@1.0.0-next.40
+  - @remirror/react-wysiwyg@1.0.0-next.40
+  - @remirror/core-helpers@1.0.0-next.40
+  - @remirror/react-utils@1.0.0-next.40
+  - @remirror/theme@1.0.0-next.40
+
 ## 1.0.0-next.39
 
 > 2020-09-16
