@@ -33,3 +33,5 @@ export type {
 
 // Export boundary already applied
 export * from './renderers';
+
+export { createEditorView } from './ssr';
