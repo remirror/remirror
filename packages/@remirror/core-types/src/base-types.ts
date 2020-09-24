@@ -186,7 +186,7 @@ export type DeepString<Type> = Type extends object
  */
 export interface ObjectMark {
   type: string;
-  attrs?: Record<string, string | null>;
+  attrs?: Record<string, Literal>;
 }
 
 /**

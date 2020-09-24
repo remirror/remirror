@@ -29,7 +29,7 @@ export interface RemirrorJSON {
   marks?: Array<ObjectMark | string>;
   text?: string;
   content?: RemirrorJSON[];
-  attrs?: Record<string, Literal | object>;
+  attrs?: Record<string, Literal>;
 }
 
 export interface StateJSON {
