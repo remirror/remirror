@@ -34,14 +34,14 @@ function defaultGetStyle<A extends Annotation>(annotations: Array<AnnotationWith
  * Extend the Annotation interface to store application specific
  * information like tags or color.
  */
-@extensionDecorator<AnnotationOptions>({
+@extensionDecorator<AnnotationOptions<Annotation>>({
   defaultOptions: {
     getStyle: defaultGetStyle,
   },
   defaultPriority: ExtensionPriority.Low,
 })
 export class AnnotationExtension<A extends Annotation = Annotation> extends PlainExtension<
-  AnnotationOptions
+  AnnotationOptions<A>
 > {
   get name() {
     return 'annotation' as const;
@@ -50,8 +50,8 @@ export class AnnotationExtension<A extends Annotation = Annotation> extends Plai
   /**
    * Create the custom code block plugin which handles the delete key amongst other things.
    */
-  createPlugin(): CreatePluginReturn<AnnotationState> {
-    const pluginState = new AnnotationState(this.options.getStyle);
+  createPlugin(): CreatePluginReturn<AnnotationState<A>> {
+    const pluginState = new AnnotationState<A>(this.options.getStyle);
 
     return {
       state: {

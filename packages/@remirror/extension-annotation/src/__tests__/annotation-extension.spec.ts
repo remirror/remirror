@@ -292,3 +292,37 @@ describe('custom annotations', () => {
     `);
   });
 });
+
+describe('custom styling', () => {
+  interface ColoredAnnotation extends Annotation {
+    color: string;
+  }
+
+  it('should use custom styling', () => {
+    const getStyle = (annotations: Array<Omit<ColoredAnnotation, 'text'>>) => {
+      return `background: ${annotations[0].color}`;
+    };
+
+    const {
+      dom,
+      add,
+      nodes: { p, doc },
+      commands,
+    } = renderEditor([new AnnotationExtension<ColoredAnnotation>({ getStyle })]);
+
+    add(doc(p('<start>Hello<end> my friend')));
+
+    commands.addAnnotation({ id: '1', color: 'red' });
+
+    expect(dom.innerHTML).toMatchInlineSnapshot(`
+      <p>
+        <span class="selection"
+              style="background: red;"
+        >
+          Hello
+        </span>
+        my friend
+      </p>
+    `);
+  });
+});
