@@ -125,8 +125,8 @@ export interface ActionCreatorsMapObject<A = any> {
   [key: string]: ActionCreator<A>;
 }
 
-export type ActionCreatorMapToDispatch<GCreatorMap extends ActionCreatorsMapObject> = {
-  [P in keyof GCreatorMap]: (...args: Parameters<GCreatorMap[P]>) => void;
+export type ActionCreatorMapToDispatch<CreatorMap extends ActionCreatorsMapObject> = {
+  [P in keyof CreatorMap]: (...args: Parameters<CreatorMap[P]>) => void;
 };
 
 /**
@@ -502,8 +502,8 @@ export interface MultishiftStateChangeset<Item = any> {
 export type CreateMultishiftAction<
   Type extends string,
   Payload = any,
-  GArgs extends any[] = [Payload]
-> = (...args: GArgs) => ActionWithPayload<Type, Payload>;
+  Args extends any[] = [Payload]
+> = (...args: Args) => ActionWithPayload<Type, Payload>;
 
 export interface GetRemoveButtonOptions<Element extends HTMLElement = any, Item = any>
   extends HTMLProps<Element> {

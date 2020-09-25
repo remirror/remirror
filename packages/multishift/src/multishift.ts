@@ -21,7 +21,7 @@ import {
   object,
 } from '@remirror/core-helpers';
 
-import * as MultishiftActions from './multishift-action-creators';
+import { Actions } from './multishift-action-creators';
 import {
   SPECIAL_INPUT_KEYS,
   SPECIAL_MENU_KEYS,
@@ -38,7 +38,6 @@ import {
   useTimeouts,
 } from './multishift-hooks';
 import type {
-  AllMultishiftDispatchActions,
   GetComboBoxPropsOptions,
   GetComboBoxPropsReturn,
   GetItemPropsOptions,
@@ -100,10 +99,7 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
     getItemId = defaultGetItemId,
   } = props;
   const [state, dispatch] = useMultishiftReducer<Item>(props);
-  const actions = useMemo(
-    () => bindActionCreators(MultishiftActions, dispatch) as AllMultishiftDispatchActions<Item>,
-    [dispatch],
-  );
+  const actions = useMemo(() => bindActionCreators(Actions, dispatch), [dispatch]);
 
   useSetA11y({ state, items, customA11yStatusMessage, getA11yStatusMessage });
 
@@ -120,8 +116,6 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
   } = stateProps;
 
   const { getItemA11yId, labelId, menuId, toggleButtonId, inputId } = useElementIds(props);
-
-  // const [setInternalTimeout] = useTimeouts();
 
   // Refs
   const refs = useElementRefs();

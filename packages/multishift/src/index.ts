@@ -2,6 +2,7 @@ export type { SpecialKey, DropdownType } from './multishift-constants';
 export { Type, MultishiftActionTypes } from './multishift-constants';
 
 export { useMultishift } from './multishift';
+export { Actions } from './multishift-action-creators';
 
 export type {
   A11yStatusMessageParameter,

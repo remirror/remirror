@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { MultishiftActionTypes } from './multishift-constants';
 import type {
   CreateMultishiftAction,
@@ -19,200 +20,293 @@ export interface ItemsPayload<Item = any> {
 /**
  * Select the provided items.
  */
-export const selectItems = <Item = any>(items: Item[], keepHighlights = false) => ({
-  type: MultishiftActionTypes.SelectItems,
-  payload: { items, keepHighlights },
-});
+function selectItems<Item = any>(items: Item[], keepHighlights = false) {
+  return {
+    type: MultishiftActionTypes.SelectItems,
+    payload: { items, keepHighlights },
+  };
+}
 
 /**
  * Select the provided item.
  */
-export const selectItem = <Item = any>(item: Item, keepHighlights = false) => ({
-  type: MultishiftActionTypes.SelectItem,
-  payload: { items: [item], keepHighlights },
-});
+function selectItem<Item = any>(item: Item, keepHighlights = false) {
+  return {
+    type: MultishiftActionTypes.SelectItem,
+    payload: { items: [item], keepHighlights },
+  };
+}
 
 /**
  * Remove the provided items from the current selection.
  */
-export const removeSelectedItems = <Item = any>(items: Item[], keepHighlights = false) => ({
-  type: MultishiftActionTypes.RemoveSelectedItems,
-  payload: { items, keepHighlights },
-});
+function removeSelectedItems<Item = any>(items: Item[], keepHighlights = false) {
+  return {
+    type: MultishiftActionTypes.RemoveSelectedItems,
+    payload: { items, keepHighlights },
+  };
+}
 
 /**
  * Remove the provided item from the current selection.
  */
-export const removeSelectedItem = <Item = any>(item: Item, keepHighlights = false) => ({
-  type: MultishiftActionTypes.RemoveSelectedItem,
-  payload: { items: [item], keepHighlights },
-});
+function removeSelectedItem<Item = any>(item: Item, keepHighlights = false) {
+  return {
+    type: MultishiftActionTypes.RemoveSelectedItem,
+    payload: { items: [item], keepHighlights },
+  };
+}
 
 /**
  * Remove the provided item from the current selection.
  */
-export const clearSelection = () => ({
-  type: MultishiftActionTypes.ClearSelection,
-});
+function clearSelection() {
+  return {
+    type: MultishiftActionTypes.ClearSelection,
+  };
+}
 
 /**
  * Set the `hoverIndex` to a certain value.
  */
-export const setHoverItemIndex = (payload: number) => ({
-  type: MultishiftActionTypes.SetHoverItemIndex,
-  payload,
-});
+function setHoverItemIndex(payload: number) {
+  return {
+    type: MultishiftActionTypes.SetHoverItemIndex,
+    payload,
+  };
+}
 
 /**
  * Toggle the `isOpen` status of the menu.
  */
-export const toggleMenu = () => ({
-  type: MultishiftActionTypes.ToggleMenu,
-});
+function toggleMenu() {
+  return {
+    type: MultishiftActionTypes.ToggleMenu,
+  };
+}
 
 /**
  * Set isOpen to false (closing the menu).
  */
-export const closeMenu = () => ({
-  type: MultishiftActionTypes.CloseMenu,
-});
+function closeMenu() {
+  return {
+    type: MultishiftActionTypes.CloseMenu,
+  };
+}
 
 /**
  * Set `isOpen` to true (opening the menu).
  */
-export const openMenu = () => ({
-  type: MultishiftActionTypes.OpenMenu,
-});
+function openMenu() {
+  return {
+    type: MultishiftActionTypes.OpenMenu,
+  };
+}
 
 /**
  * Set the highlighted item indexes.
  */
-export const setHighlightedIndexes = (payload: number[]) => ({
-  type: MultishiftActionTypes.SetHighlightedIndexes,
-  payload,
-});
+function setHighlightedIndexes(payload: number[]) {
+  return {
+    type: MultishiftActionTypes.SetHighlightedIndexes,
+    payload,
+  };
+}
 
 /**
  * Set the highlighted item index.
  */
-export const setHighlightedIndex = (index: number) => ({
-  type: MultishiftActionTypes.SetHighlightedIndex,
-  payload: [index],
-});
+function setHighlightedIndex(index: number) {
+  return {
+    type: MultishiftActionTypes.SetHighlightedIndex,
+    payload: [index],
+  };
+}
 
 /**
  * Removes all the highlighted items including the hover.
  */
-export const clearHighlighted = () => ({
-  type: MultishiftActionTypes.ClearHighlighted,
-});
+function clearHighlighted() {
+  return {
+    type: MultishiftActionTypes.ClearHighlighted,
+  };
+}
 
 /**
  * Reset the state of the reducer.
  */
-export const reset = () => ({
-  type: MultishiftActionTypes.Reset,
-});
+function reset() {
+  return {
+    type: MultishiftActionTypes.Reset,
+  };
+}
 
 /**
  * Dispatched when the mouse hovers over an item
  */
-export const itemMouseMove = (payload: number) => ({
-  type: MultishiftActionTypes.ItemMouseMove,
-  payload,
-});
+function itemMouseMove(payload: number) {
+  return {
+    type: MultishiftActionTypes.ItemMouseMove,
+    payload,
+  };
+}
 
-export const itemMouseLeave = (payload: number) => ({
-  type: MultishiftActionTypes.ItemMouseLeave,
-  payload,
-});
+function itemMouseLeave(payload: number) {
+  return {
+    type: MultishiftActionTypes.ItemMouseLeave,
+    payload,
+  };
+}
 
 /**
  * Reports when a user has clicked on an item's element.
  */
-export const itemClick = (payload: ItemClickPayload) => ({
-  type: MultishiftActionTypes.ItemClick,
-  payload,
-});
+function itemClick(payload: ItemClickPayload) {
+  return {
+    type: MultishiftActionTypes.ItemClick,
+    payload,
+  };
+}
 
 /**
  * Called when the menu is blurred.
  */
-export const menuBlur = () => ({
-  type: MultishiftActionTypes.MenuBlur,
-});
+function menuBlur() {
+  return {
+    type: MultishiftActionTypes.MenuBlur,
+  };
+}
 
-export const inputBlur = () => ({
-  type: MultishiftActionTypes.InputBlur,
-});
+function inputBlur() {
+  return {
+    type: MultishiftActionTypes.InputBlur,
+  };
+}
 
-export const toggleButtonBlur = () => ({
-  type: MultishiftActionTypes.ToggleButtonBlur,
-});
+function toggleButtonBlur() {
+  return {
+    type: MultishiftActionTypes.ToggleButtonBlur,
+  };
+}
 
 /**
  * Clears the jump text value.
  */
-export const clearJumpText = () => ({
-  type: MultishiftActionTypes.ClearJumpText,
-});
+function clearJumpText() {
+  return {
+    type: MultishiftActionTypes.ClearJumpText,
+  };
+}
 
-export const clearInputValue = () => ({
-  type: MultishiftActionTypes.ClearInputValue,
-});
+function clearInputValue() {
+  return {
+    type: MultishiftActionTypes.ClearInputValue,
+  };
+}
 
 /**
  * Dispatches the action for clicking the toggle button
  */
-export const toggleButtonClick = () => ({
-  type: MultishiftActionTypes.ToggleButtonClick,
-});
+function toggleButtonClick() {
+  return {
+    type: MultishiftActionTypes.ToggleButtonClick,
+  };
+}
 
-export const outerTouchEnd = () => ({
-  type: MultishiftActionTypes.OuterTouchEnd,
-});
+function outerTouchEnd() {
+  return {
+    type: MultishiftActionTypes.OuterTouchEnd,
+  };
+}
 
-export const outerMouseUp = () => ({
-  type: MultishiftActionTypes.OuterMouseUp,
-});
+function outerMouseUp() {
+  return {
+    type: MultishiftActionTypes.OuterMouseUp,
+  };
+}
 
 /**
  * Handle the menu key down event.
  */
-export const menuSpecialKeyDown = (payload: SpecialKeyDownPayload) => ({
-  type: MultishiftActionTypes.MenuSpecialKeyDown,
-  payload,
-});
+function menuSpecialKeyDown(payload: SpecialKeyDownPayload) {
+  return {
+    type: MultishiftActionTypes.MenuSpecialKeyDown,
+    payload,
+  };
+}
 
-export const toggleButtonSpecialKeyDown = (payload: SpecialKeyDownPayload) => ({
-  type: MultishiftActionTypes.ToggleButtonSpecialKeyDown,
-  payload,
-});
+function toggleButtonSpecialKeyDown(payload: SpecialKeyDownPayload) {
+  return {
+    type: MultishiftActionTypes.ToggleButtonSpecialKeyDown,
+    payload,
+  };
+}
 
-export const inputSpecialKeyDown = (payload: SpecialKeyDownPayload) => ({
-  type: MultishiftActionTypes.InputSpecialKeyDown,
-  payload,
-});
+function inputSpecialKeyDown(payload: SpecialKeyDownPayload) {
+  return {
+    type: MultishiftActionTypes.InputSpecialKeyDown,
+    payload,
+  };
+}
 
-export const menuCharacterKeyDown = (payload: string) => ({
-  type: MultishiftActionTypes.MenuCharacterKeyDown,
-  payload,
-});
+function menuCharacterKeyDown(payload: string) {
+  return {
+    type: MultishiftActionTypes.MenuCharacterKeyDown,
+    payload,
+  };
+}
 
-// export const toggleButtonCharacterKeyDown = (payload: string) => ({
-//   type: MultishiftActionTypes.ToggleButtonCharacterKeyDown,
-//   payload,
-// });
+function inputValueChange(payload: string) {
+  return {
+    type: MultishiftActionTypes.InputValueChange,
+    payload,
+  };
+}
 
-export const inputValueChange = (payload: string) => ({
-  type: MultishiftActionTypes.InputValueChange,
-  payload,
-});
+function setState<Item = any>(payload: MultishiftStateProps<Item>) {
+  return {
+    type: MultishiftActionTypes.SetState,
+    payload,
+  };
+}
 
-export const setState = <Item = any>(payload: MultishiftStateProps<Item>) => ({
-  type: MultishiftActionTypes.SetState,
-  payload,
-});
+/* eslint-enable @typescript-eslint/explicit-module-boundary-types */
+
+/**
+ * The action creators which can be dispatched via the reducer.
+ */
+export const Actions = {
+  itemMouseMove,
+  itemMouseLeave,
+  itemClick,
+  menuBlur,
+  toggleButtonBlur,
+  inputBlur,
+  toggleButtonClick,
+  menuSpecialKeyDown,
+  toggleButtonSpecialKeyDown,
+  inputSpecialKeyDown,
+  menuCharacterKeyDown,
+  outerTouchEnd,
+  outerMouseUp,
+  selectItems,
+  selectItem,
+  removeSelectedItems,
+  removeSelectedItem,
+  setState,
+  clearSelection,
+  setHoverItemIndex,
+  inputValueChange,
+  clearInputValue,
+  toggleMenu,
+  closeMenu,
+  openMenu,
+  setHighlightedIndexes,
+  setHighlightedIndex,
+  clearHighlighted,
+  reset,
+  clearJumpText,
+};
 
 declare global {
   namespace Multishift {
@@ -232,7 +326,6 @@ declare global {
       toggleButtonSpecialKeyDown: typeof toggleButtonSpecialKeyDown;
       inputSpecialKeyDown: typeof inputSpecialKeyDown;
       menuCharacterKeyDown: typeof menuCharacterKeyDown;
-      // toggleButtonCharacterKeyDown: typeof toggleButtonCharacterKeyDown;
       outerTouchEnd: typeof outerTouchEnd;
       outerMouseUp: typeof outerMouseUp;
     }
