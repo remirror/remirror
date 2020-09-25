@@ -148,6 +148,6 @@ declare global {
       | KeymapExtension
       | PersistentSelectionExtension;
 
-    type All = ValueOf<AllExtensions>;
+    type AllExtensionUnion = ValueOf<AllExtensions>;
   }
 }

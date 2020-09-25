@@ -25,7 +25,6 @@ import { I18nContext, RemirrorContext } from '../react-contexts';
 import { createReactManager } from '../react-helpers';
 import type {
   CreateReactManagerOptions,
-  DefaultReactCombined,
   I18nContextProps,
   ReactCombinedUnion,
   ReactFrameworkOutput,
@@ -109,7 +108,7 @@ import { useEffectWithWarning, useForceUpdate } from './core-hooks';
  * In this case the component only re-renders when the bold formatting is no
  * longer active.
  */
-export function useRemirror<Combined extends AnyCombinedUnion = DefaultReactCombined>(
+export function useRemirror<Combined extends AnyCombinedUnion = Remirror.AllExtensionUnion>(
   handler?: RemirrorEventListener<Combined> | { autoUpdate: boolean },
 ): ReactFrameworkOutput<Combined> {
   // This is not null when rendering within the `RemirrorProvider`. The majority
