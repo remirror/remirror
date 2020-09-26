@@ -17,6 +17,7 @@ Fix type annotations for `createCommands` functions. This was causing issues wit
 The following should now work with full type inference.
 
 ```tsx
+import React from 'react';
 import { useRemirror } from 'remirror/react';
 
 const EditorButton = () => {

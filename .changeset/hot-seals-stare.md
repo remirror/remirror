@@ -6,8 +6,12 @@
 Enable `all` selection when setting initial content and focusing on the editor.
 
 ```tsx
+import React from 'react';
 import { useRemirror } from 'remirror/react';
 
-const { focus } = useRemirror();
-focus('all');
+const EditorButton = () => {
+  const { focus } = useRemirror();
+
+  return <button onClick={() => focus('all')} />;
+};
 ```

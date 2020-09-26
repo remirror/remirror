@@ -8,7 +8,7 @@ Enable disabling input rules with a `shouldSkip` method. This is now available a
 Consuming this API looks something like this.
 
 ```ts
-import { PlainExtension, Dispose } from 'remirror/core';
+import { Dispose, PlainExtension } from 'remirror/core';
 
 class CoolExtension extends PlainExtension {
   get name() {

@@ -8,7 +8,7 @@ Add new `extensionDecorator` function which augments the static properties of an
 The following code will add a decorator to the extension.
 
 ```ts
-import { PlainExtension, ExtensionPriority, extensionDecorator } from 'remirror/core';
+import { extensionDecorator, ExtensionPriority, PlainExtension } from 'remirror/core';
 
 interface ExampleOptions {
   color?: string;

@@ -7,7 +7,7 @@ Add new `presetDecorator` function which augments the static properties of an `P
 The following code will add a decorator to the preset.
 
 ```ts
-import { Preset presetDecorator } from 'remirror/core';
+import { Preset, presetDecorator } from 'remirror/core';
 
 interface ExampleOptions {
   color?: string;

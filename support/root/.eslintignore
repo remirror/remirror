@@ -1,5 +1,6 @@
 !.eslintrc.js
 !**/.eslintrc.js
+!.changeset
 **/lib
 lib
 **/dist

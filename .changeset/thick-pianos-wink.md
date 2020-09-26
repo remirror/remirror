@@ -8,8 +8,9 @@ With tags, you can select a specific sub selection of marks and nodes. This will
 
 ```ts
 import { ExtensionTag } from 'remirror/core';
-import { createCoreManager, CorePreset } from 'remirror/preset/core';
+import { CorePreset, createCoreManager } from 'remirror/preset/core';
 import { WysiwygPreset } from 'remirror/preset/wysiwyg';
+
 const manager = createCoreManager(() => [new WysiwygPreset(), new CorePreset()], {
   extraAttributes: [
     {
