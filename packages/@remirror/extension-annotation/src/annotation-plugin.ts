@@ -33,13 +33,16 @@ export class AnnotationState<A extends Annotation = Annotation> {
       return this;
     }
 
-    // Adjust annotation positions based on changes in the editor, e.g.
-    // if new text was added before the decoration
-    this.annotations = this.annotations.map((annotation) => ({
-      ...annotation,
-      from: tr.mapping.map(annotation.from),
-      to: tr.mapping.map(annotation.to),
-    }));
+    this.annotations = this.annotations
+      // Adjust annotation positions based on changes in the editor, e.g.
+      // if new text was added before the decoration
+      .map((annotation) => ({
+        ...annotation,
+        from: tr.mapping.map(annotation.from),
+        to: tr.mapping.map(annotation.to),
+      }))
+      // Remove annotations for which all containing content was deleted
+      .filter((annotation) => annotation.to !== annotation.from);
 
     let newAnnotations: Array<AnnotationWithoutText<A>> | undefined;
 

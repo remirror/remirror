@@ -146,6 +146,28 @@ describe('commands', () => {
   });
 });
 
+describe('plugin#apply', () => {
+  it('removes annotations when content is deleted', () => {
+    const {
+      add,
+      helpers,
+      nodes: { p, doc },
+      commands,
+    } = create();
+
+    add(doc(p('<start>Hello<end>')));
+    commands.addAnnotation({ id: '1' });
+
+    // Pre-condition
+    expect(helpers.getAnnotations()).toHaveLength(1);
+
+    // Delete all annotated content
+    commands.delete();
+
+    expect(helpers.getAnnotations()).toHaveLength(0);
+  });
+});
+
 describe('styling', () => {
   it('annotation-specific classname', () => {
     const {
