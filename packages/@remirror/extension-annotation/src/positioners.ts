@@ -7,13 +7,16 @@ import {
 
 import type { Annotation } from './types';
 
+type MinimalAnnotation = Pick<Annotation, 'from' | 'to'> & {
+  text: string | undefined;
+};
 /**
  * You can pass `helpers.getAnnotationsAt`, which implements the required
  * behavior.
  *
  * @returns the annotations at a specific position
  */
-type GetAnnotationsAt = (pos: number) => Annotation[];
+type GetAnnotationsAt = (pos: number) => MinimalAnnotation[];
 
 /**
  * Render a positioner which is centered around a selected annotation.
@@ -54,7 +57,8 @@ export const createCenteredAnnotationPositioner = (getAnnotationsAt: GetAnnotati
       // there is the possibility that the shorter annotations aren't selectable
       // because they might be fully overlapped by the longer annotation.
       const shortestAnnotation = annotations.sort(
-        (annotation1, annotation2) => annotation1.text.length - annotation2.text.length,
+        (annotation1, annotation2) =>
+          (annotation1.text ?? '').length - (annotation2.text ?? '').length,
       )[0];
 
       const start = view.coordsAtPos(shortestAnnotation.from);
@@ -84,7 +88,7 @@ export const createCenteredAnnotationPositioner = (getAnnotationsAt: GetAnnotati
         Math.max(calculatedLeft, elementBox.width / 2),
       );
       const top = Math.trunc(start.top - parentBox.top);
-      const bottom = Math.trunc(start.bottom - parentBox.top);
+      const bottom = Math.trunc(end.bottom - parentBox.top);
       const rect = new DOMRect(
         start.left,
         start.top,
