@@ -214,7 +214,7 @@ describe('helpers', () => {
     ]);
   });
 
-  it('#getAnnotations gracefully handle misplaced annotations', () => {
+  it('#getAnnotations gracefully handles misplaced annotations', () => {
     const {
       add,
       helpers,
