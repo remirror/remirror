@@ -161,10 +161,19 @@ export class AnnotationExtension<A extends Annotation = Annotation> extends Plai
 
   createHelpers() {
     // Enrich text at annotation
-    const enrichText = (annotation: AnnotationWithoutText<A>) => ({
-      ...annotation,
-      text: this.store.getState().doc.textBetween(annotation.from, annotation.to),
-    });
+    const enrichText = (annotation: AnnotationWithoutText<A>) => {
+      const { doc } = this.store.getState();
+      // Gracefully handle if annotations point to positions outside the content
+      // This can happen if content/annotations are set at different points.
+      const text =
+        annotation.to <= doc.content.size
+          ? doc.textBetween(annotation.from, annotation.to)
+          : undefined;
+      return {
+        ...annotation,
+        text,
+      };
+    };
 
     return {
       /**

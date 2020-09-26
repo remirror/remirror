@@ -214,6 +214,26 @@ describe('helpers', () => {
     ]);
   });
 
+  it('#getAnnotations gracefully handles misplaced annotations', () => {
+    const {
+      add,
+      helpers,
+      nodes: { p, doc },
+      commands,
+    } = create();
+
+    add(doc(p('Hello')));
+    commands.setAnnotations([
+      {
+        id: '1',
+        from: 100,
+        to: 110,
+      },
+    ]);
+
+    expect(helpers.getAnnotations()[0].text).toBeUndefined();
+  });
+
   it('#getAnnotationsAt', () => {
     const {
       add,
