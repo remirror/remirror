@@ -223,7 +223,7 @@ export function findElementAtPosition<Schema extends EditorSchema = EditorSchema
  *
  * ```ts
  * const predicate = node => node.type === schema.nodes.blockquote;
- * const parent = findParentNode({predicate, selection});
+ * const parent = findParentNode({ predicate, selection });
  * ```
  */
 export function findParentNode(
@@ -240,13 +240,7 @@ export function findParentNode(
       const start = $from.start(depth);
       const end = pos + node.nodeSize;
 
-      return {
-        pos,
-        depth,
-        node,
-        start,
-        end,
-      };
+      return { pos, depth, node, start, end };
     }
   }
 
@@ -265,13 +259,7 @@ export function findNodeAtPosition($pos: ResolvedPos): FindProsemirrorNodeResult
   const start = $pos.start(depth);
   const end = pos + node.nodeSize;
 
-  return {
-    pos,
-    start,
-    node,
-    end,
-    depth,
-  };
+  return { pos, start, node, end, depth };
 }
 
 /**

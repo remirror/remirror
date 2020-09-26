@@ -10,10 +10,12 @@ import {
   isObject,
   isString,
   keys,
+  sort,
   unset,
 } from '@remirror/core-helpers';
 import type {
   AnchorHeadParameter,
+  AnyConstructor,
   EditorSchema,
   EditorState,
   FromToParameter,
@@ -38,6 +40,7 @@ import {
   Mark,
   MarkType,
   Node as PMNode,
+  NodeRange,
   NodeType,
   ResolvedPos as PMResolvedPos,
   Schema,
@@ -51,6 +54,7 @@ import {
   TextSelection,
   Transaction as PMTransaction,
 } from '@remirror/pm/state';
+import { ReplaceStep, Step } from '@remirror/pm/transform';
 
 import { environment } from './environment';
 
@@ -327,6 +331,103 @@ export function getMarkRange($pos: ResolvedPos, type: MarkType): GetMarkRangePar
   }
 
   return { from: startPos, to: startPos + start.node.nodeSize, mark };
+}
+
+/**
+ * Return true if the step provided an instance of any of the provided step
+ * constructors.
+ *
+ * @param step - the step to check
+ * @param StepTypes - the valid Step Constructors. Set to an empty array to
+ * accept all Steps.
+ */
+function isValidStep(step: Step, StepTypes: Array<AnyConstructor<Step>>) {
+  return StepTypes.length === 0 || StepTypes.some((Constructor) => step instanceof Constructor);
+}
+
+/**
+ * Get all the ranges of changes for the provided transaction.
+ *
+ * This can be used to gather specific parts of the document which require
+ * decorations to be recalculated or where nodes should be updated.
+ *
+ * This is adapted from the answer
+ * [here](https://discuss.prosemirror.net/t/find-new-node-instances-and-track-them/96/7)
+ *
+ * @param tr - the transaction received with updates applied.
+ * @param StepTypes - the valid Step Constructors. Set to an empty array to
+ * accept all Steps.
+ */
+export function getChangedRanges(
+  tr: Transaction,
+  StepTypes: Array<AnyConstructor<Step>> = [ReplaceStep],
+): FromToParameter[] {
+  // The holder for the ranges value which will be returned from this function.
+  const ranges: FromToParameter[] = [];
+  const rawRanges: FromToParameter[] = [];
+
+  for (const step of tr.steps) {
+    if (!isValidStep(step, StepTypes)) {
+      continue;
+    }
+
+    step.getMap().forEach((_, __, from, to) => {
+      rawRanges.push({ from, to });
+    });
+  }
+
+  // Sort the ranges.
+  const sortedRanges = sort(rawRanges, (a, z) => a.from - z.from);
+
+  // Merge sorted ranges into the new range.
+  for (const { from, to } of sortedRanges) {
+    // The last item in the accumulated `ranges`.
+    const lastRange = ranges[ranges.length - 1];
+
+    // True when range added has no overlap with the previous end value.
+    const noOverlap = !lastRange || lastRange.to < from;
+
+    if (noOverlap) {
+      // Add the new range when no overlap is found.
+      ranges.push({ from, to });
+    } else {
+      // Update the lastRange's end value.
+      lastRange.to = Math.max(lastRange.from, to);
+    }
+  }
+
+  return ranges;
+}
+
+/**
+ * Get all the changed node ranges for a provided transaction.
+ *
+ * @param tr - the transaction received with updates applied.
+ * @param StepTypes - the valid Step Constructors. Set to an empty array to
+ * accept all Steps.
+ */
+export function getChangedNodeRanges(
+  tr: Transaction,
+  StepTypes?: Array<AnyConstructor<Step>>,
+): NodeRange[] {
+  // The container of the ranges to be returned from this function.
+  const nodeRanges: NodeRange[] = [];
+  const ranges = getChangedRanges(tr, StepTypes);
+
+  for (const range of ranges) {
+    const $from = tr.doc.resolve(range.from);
+    const $to = tr.doc.resolve(range.to);
+
+    // Find the node range for this provided range.
+    const nodeRange = $from.blockRange($to);
+
+    // Make sure a valid node is available.
+    if (nodeRange) {
+      nodeRanges.push(nodeRange);
+    }
+  }
+
+  return nodeRanges;
 }
 
 /**

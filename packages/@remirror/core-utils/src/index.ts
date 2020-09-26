@@ -67,6 +67,8 @@ export {
   startPositionOfParent,
   toDom,
   toHtml,
+  getChangedRanges,
+  getChangedNodeRanges,
 } from './core-utils';
 
 export { environment } from './environment';
@@ -94,6 +96,7 @@ export {
   findChildrenByNode,
   findInlineNodes,
   findTextNodes,
+  getChangedNodes,
 } from './prosemirror-node-utils';
 
 export type {

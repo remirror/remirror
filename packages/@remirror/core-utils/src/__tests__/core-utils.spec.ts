@@ -13,7 +13,7 @@ import {
 import { renderEditor } from 'jest-remirror';
 
 import { object } from '@remirror/core-helpers';
-import type { TextSelection } from '@remirror/pm/state';
+import { TextSelection } from '@remirror/pm/state';
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -31,6 +31,7 @@ import {
   createDocumentNode,
   endPositionOfParent,
   fromHtml,
+  getChangedNodeRanges,
   getCursor,
   getInvalidContent,
   getMarkAttributes,
@@ -371,6 +372,43 @@ describe('getCursor', () => {
     const { state } = createEditor(doc(p('<node>Something')));
 
     expect(getCursor(state.selection)).toBeUndefined();
+  });
+});
+
+describe('getChangedNodeRanges', () => {
+  it('can get changed node ranges', () => {
+    const { state } = createEditor(doc(p('start'), p('change<cursor>'), p('end')));
+    const tr = state.tr;
+    tr.insertText('abc');
+    const nodeRanges = getChangedNodeRanges(tr);
+
+    expect(nodeRanges).toHaveLength(1);
+    expect(nodeRanges[0].parent.type.name).toBe('doc');
+    expect(nodeRanges[0].start).toBe(7);
+    expect(nodeRanges[0].end).toBe(18);
+    expect(nodeRanges[0].startIndex).toBe(1);
+    expect(nodeRanges[0].endIndex).toBe(2);
+  });
+
+  it('can understand insertions and complex changes', () => {
+    const { state } = createEditor(doc(p('start'), p('change<cursor>'), p('end')));
+    const tr = state.tr;
+    tr.setSelection(TextSelection.create(tr.doc, tr.doc.nodeSize - 2))
+      .insert(tr.selection.from, p('a new paragraph'))
+      .setSelection(TextSelection.create(tr.doc, 1))
+      .insertText('abc');
+    const nodeRanges = getChangedNodeRanges(tr);
+
+    expect(nodeRanges).toHaveLength(2);
+    expect(nodeRanges[0].start).toBe(0);
+    expect(nodeRanges[0].end).toBe(10);
+    expect(nodeRanges[0].startIndex).toBe(0);
+    expect(nodeRanges[0].endIndex).toBe(1);
+
+    expect(nodeRanges[1].start).toBe(18);
+    expect(nodeRanges[1].end).toBe(40);
+    expect(nodeRanges[1].startIndex).toBe(2);
+    expect(nodeRanges[1].endIndex).toBe(4);
   });
 });
 

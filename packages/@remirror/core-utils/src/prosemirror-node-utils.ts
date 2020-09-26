@@ -3,15 +3,20 @@ import type { Primitive } from 'type-fest';
 import { ErrorConstant } from '@remirror/core-constants';
 import { bool, entries, invariant, isFunction, keys } from '@remirror/core-helpers';
 import type {
+  AnyConstructor,
   MarkTypeParameter,
   NodeTypeParameter,
   OptionalProsemirrorNodeParameter,
   PosParameter,
   PredicateParameter,
+  ProsemirrorNode,
   ProsemirrorNodeParameter,
+  Transaction,
 } from '@remirror/core-types';
+import type { NodeRange } from '@remirror/pm/model';
+import type { Step } from '@remirror/pm/transform';
 
-import { isProsemirrorNode } from './core-utils';
+import { getChangedNodeRanges, isProsemirrorNode } from './core-utils';
 
 interface DescendParameter {
   /**
@@ -81,10 +86,6 @@ export function findChildren(parameter: FindChildrenParameter): NodeWithPosition
   // This is used to keep track of all the node positions.
   const result: NodeWithPosition[] = [];
 
-  // This return will be false when the descend is set to `false` and thus
-  // prevent ProseMirror from diving any deeper into the descendant tree.
-  const descendantReturnValue = descend ? undefined : descend;
-
   // Start descending into the provided node. This can be an expensive operation
   // if the document is very large or deeply nested.
   node.descendants((child, pos) => {
@@ -96,14 +97,14 @@ export function findChildren(parameter: FindChildrenParameter): NodeWithPosition
     if (!isMatch) {
       // Move onto the next node or descendant depending on the value of
       // `descend`.
-      return descendantReturnValue;
+      return descend;
     }
 
     // Store the result and run the provided action if it exists.
     result.push(nodeWithPosition);
     action?.(nodeWithPosition);
 
-    return descendantReturnValue;
+    return descend;
   });
 
   return result;
@@ -192,7 +193,8 @@ export function findChildrenByAttribute(
   const { attrs, ...rest } = parameter;
 
   /**
-   * The predicate function which loops through the provided attributes check if they are valid.
+   * The predicate function which loops through the provided attributes check if
+   * they are valid.
    */
   function predicate(nodeWithPos: NodeWithPosition) {
     const attributeKeys = new Set(keys(nodeWithPos.node.attrs));
@@ -290,4 +292,71 @@ interface ContainsParameter extends ProsemirrorNodeParameter, NodeTypeParameter 
 export function containsNodesOfType(parameter: ContainsParameter): boolean {
   const { node, type } = parameter;
   return findChildrenByNode({ node, type }).length > 0;
+}
+
+interface GetChangedNodesOptions {
+  /**
+   * Whether to descend into child nodes.
+   *
+   * @default false
+   */
+  descend?: boolean;
+
+  /**
+   * A predicate test for node which was found. Return `false` to skip the node.
+   *
+   * @param node - the node that was found
+   * @param pos - the pos of that node
+   * @param range - the `NodeRange` which contained this node.
+   */
+  predicate?: (node: ProsemirrorNode, pos: number, range: NodeRange) => boolean;
+
+  /**
+   * The valid step types to check for. Set to an empty array to accept all
+   * types.
+   *
+   * @default [ReplaceStep]
+   */
+  StepTypes?: Array<AnyConstructor<Step>>;
+}
+
+/**
+ * Get all the changed nodes from the provided transaction.
+ *
+ * The following example will give us all the text nodes in the provided
+ * transaction.
+ *
+ * ```ts
+ * import { getChangedNodes } from 'remirror/core';
+ *
+ * const changedTextNodes = getChangeNodes(tr, { descend: true, predicate: (node) => node.isText });
+ * ```
+ */
+export function getChangedNodes(
+  tr: Transaction,
+  options: GetChangedNodesOptions = {},
+): NodeWithPosition[] {
+  const { descend = false, predicate, StepTypes } = options;
+  const nodeRange = getChangedNodeRanges(tr, StepTypes);
+
+  // The container for the nodes which have been added..
+  const nodes: NodeWithPosition[] = [];
+
+  for (const range of nodeRange) {
+    const { start, end } = range;
+
+    // Find all the nodes between the provided node range.
+    tr.doc.nodesBetween(start, end, (node, pos) => {
+      // Check wether this is a node that should be added.
+      const shouldAdd = predicate?.(node, pos, range) ?? true;
+
+      if (shouldAdd) {
+        nodes.push({ node, pos });
+      }
+
+      return descend;
+    });
+  }
+
+  return nodes;
 }

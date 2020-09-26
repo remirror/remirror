@@ -10,6 +10,8 @@ import {
   tr as row,
 } from 'jest-prosemirror';
 
+import { TextSelection } from '@remirror/pm/state';
+
 import {
   containsNodesOfType,
   findBlockNodes,
@@ -18,6 +20,7 @@ import {
   findChildrenByMark,
   findChildrenByNode,
   findTextNodes,
+  getChangedNodes,
 } from '../prosemirror-node-utils';
 
 describe('findChildren', () => {
@@ -211,5 +214,46 @@ describe('contains', () => {
     const result = containsNodesOfType({ node: state.doc, type: state.schema.nodes.paragraph });
 
     expect(result).toBe(true);
+  });
+});
+
+describe('getChangedNodes', () => {
+  it('can get the changed nodes', () => {
+    const { state } = createEditor(doc(p('start'), p('change<cursor>'), p('end')));
+    const tr = state.tr;
+    tr.insertText('abc');
+    const nodes = getChangedNodes(tr);
+
+    expect(nodes).toHaveLength(1);
+    expect(nodes[0].node.type.name).toBe('paragraph');
+    expect(nodes[0].pos).toBe(7);
+  });
+
+  it('can understand insertions and complex changes', () => {
+    const { state } = createEditor(doc(p('start'), p('change<cursor>'), p('end')));
+    const tr = state.tr;
+    tr.setSelection(TextSelection.create(tr.doc, tr.doc.nodeSize - 2))
+      .insert(tr.selection.from, p('a new paragraph'))
+      .setSelection(TextSelection.create(tr.doc, 1))
+      .insertText('abc');
+    const nodes = getChangedNodes(tr);
+
+    expect(nodes).toHaveLength(3);
+    expect(nodes[0].pos).toBe(0);
+    expect(nodes[0].node.type.name).toBe('paragraph');
+
+    expect(nodes[1].pos).toBe(18);
+
+    expect(nodes[2].pos).toBe(23);
+  });
+
+  it('handles deletions', () => {
+    const { state } = createEditor(doc(p('start'), p('change<start>'), p('a<end>')));
+    const tr = state.tr;
+    tr.deleteSelection();
+    const nodes = getChangedNodes(tr);
+
+    expect(nodes).toHaveLength(1);
+    expect(nodes[0].pos).toBe(7);
   });
 });
