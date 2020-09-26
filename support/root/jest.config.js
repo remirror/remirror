@@ -17,6 +17,7 @@ module.exports = {
     '!**/__fixtures__/**',
     '!support/**',
     '!packages/@remirror/playground/**',
+    '!packages/@remirror/extension-epic-mode/**',
     '!packages/@remirror/showcase/**',
     '!packages/@remirror/cli/**',
   ],

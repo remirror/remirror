@@ -119,6 +119,21 @@ describe('commands.insertText', () => {
     jest.useRealTimers();
   });
 
+  it('can insert text with marks', () => {
+    const editor = renderEditor([new BoldExtension()]);
+    const { doc, p } = editor.nodes;
+    const { bold } = editor.marks;
+
+    editor.add(doc(p('awesome <cursor>')));
+    editor.commands.insertText('hello there', {
+      marks: {
+        bold: {},
+      },
+    });
+
+    expect(editor.doc).toEqualProsemirrorNode(doc(p('awesome ', bold('hello there'))));
+  });
+
   it('can insert a range of text', () => {
     const editor = renderEditor([]);
     const { doc, p } = editor.nodes;
