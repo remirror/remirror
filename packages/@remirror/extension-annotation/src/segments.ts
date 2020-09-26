@@ -1,3 +1,5 @@
+import { sort } from '@remirror/core';
+
 import type { Annotation } from './types';
 
 /**
@@ -15,79 +17,81 @@ interface Item<A extends Annotation> {
 }
 
 type AnnotationWithoutText<A extends Annotation> = Omit<A, 'text'>;
+
 /**
  * Creates non-overlapping segments based on overlapping annotations.
  *
- * Prosemirror combines overlapping inline decorations by creating
- * segments in which the props of each overlapping decoration
- * are merged.
- * The Prosemirror approach doesn't allow to calculate styles based
- * on multiple annotations, e.g. a darker background shade if there
- * are multiple annotations.
- * To overcome this limitations, this method calculates non-overlapping
- * segments with overlapping annotations. These segments can be used
- * to create Prosemirror decorations with a style that reflects all
- * all annotations within the segment.
+ * Prosemirror combines overlapping inline decorations by creating segments in
+ * which the props of each overlapping decoration are merged.
  *
- * Approach was confirmed by Marijn: https://discuss.prosemirror.net/t/how-to-style-overlapping-inline-decorations/3162
+ * The Prosemirror approach doesn't allow to calculate styles based on multiple
+ * annotations, e.g. a darker background shade if there are multiple
+ * annotations.
+ *
+ * To overcome this limitations, this method calculates non-overlapping segments
+ * with overlapping annotations. These segments can be used to create
+ * ProseMirror decorations with a style that reflects all all annotations within
+ * the segment.
+ *
+ * Approach was confirmed by Marijn:
+ * https://discuss.prosemirror.net/t/how-to-style-overlapping-inline-decorations/3162
  */
 export function toSegments<A extends Annotation>(
   annotations: Array<AnnotationWithoutText<A>>,
 ): Array<Segment<A>> {
-  // Create index of start/end annotations per index
-  const indexItems = annotations.reduce(
-    (acc, annotation) => ({
-      ...acc,
-      [annotation.from]: (acc[annotation.from] || []).concat({
-        type: 'start',
-        annotation,
-      }),
-      [annotation.to]: (acc[annotation.to] || []).concat({
-        type: 'end',
-        annotation,
-      }),
-    }),
-    {} as { [key: string]: Array<Item<A>> },
-  );
+  type AnnotationItem = Item<A>;
+  type AnnotationSegment = Segment<A>;
+
+  // Keep track of the segments which will be returned by this function.
+  const segments: AnnotationSegment[] = [];
+
+  // This holds the index of the `start` and `end` annotations for each
+  // position.
+  const positionMap: Map<number, AnnotationItem[]> = new Map();
+
+  // Build up the index items with the provided annotations.
+  for (const annotation of annotations) {
+    // Get the already added annotations for the positions provided.
+    const currentFrom = positionMap.get(annotation.from) ?? [];
+    const currentTo = positionMap.get(annotation.to) ?? [];
+
+    positionMap.set(annotation.from, [...currentFrom, { type: 'start', annotation }]);
+    positionMap.set(annotation.to, [...currentTo, { type: 'end', annotation }]);
+  }
+
+  // Sort from the smallest position to the largest position (a-z);
+  const sortedPositions = sort([...positionMap.entries()], ([a], [z]) => a - z);
 
   // Tracks the annotations active in the currently analyzed segment
   let activeAnnotations: Array<AnnotationWithoutText<A>> = [];
+
   // Tracks the last from state
   let from = 0;
-  return (
-    Object.keys(indexItems)
-      // Sort nummerically
-      .sort((index1, index2) => Number(index1) - Number(index2))
-      .reduce((acc, index) => {
-        // Find starting/ending annotations for current index
-        const items = indexItems[index];
-        const startingAnnotations = items
-          .filter((item) => item.type === 'start')
-          .map((item) => item.annotation);
-        const endingAnnotationIds = new Set(
-          items.filter((item) => item.type === 'end').map((item) => item.annotation.id),
-        );
 
-        const indexAsNumber = Number(index);
+  // Loop through the available items.
+  for (const [to, items] of sortedPositions) {
+    const startAnnotations = items
+      .filter((item) => item.type === 'start')
+      .map((item) => item.annotation);
+    const endIds = new Set(
+      items.filter((item) => item.type === 'end').map((item) => item.annotation.id),
+    );
 
-        // Create segment if there are any active annotations
-        if (activeAnnotations.length > 0) {
-          const segment = {
-            from,
-            to: indexAsNumber,
-            annotations: activeAnnotations,
-          };
-          acc.push(segment);
-        }
+    if (activeAnnotations.length > 0) {
+      segments.push({ from, to, annotations: activeAnnotations });
+    }
 
-        from = indexAsNumber;
+    // Update the from position to point to the current `to` for the next
+    // iteration.
+    from = to;
 
-        // Update active annotations based on starting/ending annotations
-        activeAnnotations = activeAnnotations
-          .concat(...startingAnnotations)
-          .filter((a) => !endingAnnotationIds.has(a.id));
+    // Update the active annotations with the latest start annotations and
+    // remove any annotations that have reached the end.
+    activeAnnotations = [...activeAnnotations, ...startAnnotations].filter(
+      // Remove any annotation that is at the end of the annotation group.
+      (annotation) => !endIds.has(annotation.id),
+    );
+  }
 
-        return acc;
-      }, [] as Array<Segment<A>>)
-  );
+  return segments;
 }
