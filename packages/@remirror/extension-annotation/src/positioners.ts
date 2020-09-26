@@ -88,7 +88,7 @@ export const createCenteredAnnotationPositioner = (getAnnotationsAt: GetAnnotati
         Math.max(calculatedLeft, elementBox.width / 2),
       );
       const top = Math.trunc(start.top - parentBox.top);
-      const bottom = Math.trunc(start.bottom - parentBox.top);
+      const bottom = Math.trunc(end.bottom - parentBox.top);
       const rect = new DOMRect(
         start.left,
         start.top,
