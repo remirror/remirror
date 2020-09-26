@@ -1,4 +1,4 @@
-import { ErrorConstant } from '@remirror/core-constants';
+import { ErrorConstant, LEAF_NODE_REPLACING_CHARACTER } from '@remirror/core-constants';
 import {
   bool,
   Cast,
@@ -282,11 +282,16 @@ export function getMarkAttributes(
   return false;
 }
 
-interface GetMarkRangeParameter extends FromToParameter {
+interface GetMarkRange extends FromToParameter {
   /**
    * The mark that was found within the active range.
    */
   mark: Mark;
+
+  /**
+   * The text contained by this mark.
+   */
+  text: string;
 }
 
 /**
@@ -298,7 +303,7 @@ interface GetMarkRangeParameter extends FromToParameter {
  * @param $pos - the resolved ProseMirror position
  * @param type - the mark type
  */
-export function getMarkRange($pos: ResolvedPos, type: MarkType): GetMarkRangeParameter | undefined {
+export function getMarkRange($pos: ResolvedPos, type: MarkType): GetMarkRange | undefined {
   // Nothing can be done if neither the position or the type have been provided.
   if (!$pos || !type) {
     return;
@@ -330,7 +335,10 @@ export function getMarkRange($pos: ResolvedPos, type: MarkType): GetMarkRangePar
     startPos -= $pos.parent.child(startIndex).nodeSize;
   }
 
-  return { from: startPos, to: startPos + start.node.nodeSize, mark };
+  const [from, to] = [startPos, startPos + start.node.nodeSize];
+  const text = $pos.doc.textBetween(from, to, LEAF_NODE_REPLACING_CHARACTER, '\n\n');
+
+  return { from, to, text, mark };
 }
 
 /**
