@@ -344,17 +344,21 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
       /**
        * Create a new mention
        */
-      createMention: this.createMention(false),
+      createMention: (
+        config: NamedMentionExtensionAttributes & KeepSelectionParameter,
+      ): CommandFunction => this.createMention(false)(config),
 
       /**
        * Update an existing mention.
        */
-      updateMention: this.createMention(true),
+      updateMention: (
+        config: NamedMentionExtensionAttributes & KeepSelectionParameter,
+      ): CommandFunction => this.createMention(true)(config),
 
       /**
        * Remove the mention(s) at the current selection or provided range.
        */
-      removeMention: ({ range }: Partial<RangeParameter> = {}) => {
+      removeMention: ({ range }: Partial<RangeParameter> = {}): CommandFunction => {
         const value = removeMark({ type: this.type, expand: true, range });
 
         return value;

@@ -2,6 +2,7 @@ import refractor from 'refractor/core';
 
 import {
   ApplySchemaAttributes,
+  CommandFunction,
   CreatePluginReturn,
   extensionDecorator,
   ExtensionTag,
@@ -115,7 +116,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
        * The above makes the current node a codeBlock with the language ts or
        * remove the code block altogether.
        */
-      toggleCodeBlock: (attributes: Partial<CodeBlockAttributes>) =>
+      toggleCodeBlock: (attributes: Partial<CodeBlockAttributes>): CommandFunction =>
         toggleBlockItem({
           type: this.type,
           toggleType: this.store.schema.nodes[this.options.toggleName],
@@ -129,7 +130,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
        * commands.createCodeBlock({ language: 'js' });
        * ```
        */
-      createCodeBlock: (attributes: CodeBlockAttributes) => {
+      createCodeBlock: (attributes: CodeBlockAttributes): CommandFunction => {
         return setBlockType(this.type, attributes);
       },
 
@@ -143,7 +144,8 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
        * }
        * ```
        */
-      updateCodeBlock: updateNodeAttributes(this.type),
+      updateCodeBlock: (attributes: CodeBlockAttributes): CommandFunction =>
+        updateNodeAttributes(this.type)(attributes),
 
       /**
        * Format the code block with the code formatting function passed as an
@@ -161,7 +163,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
        * }
        * ```
        */
-      formatCodeBlock: (parameter?: Partial<PosParameter>) => {
+      formatCodeBlock: (parameter?: Partial<PosParameter>): CommandFunction => {
         return formatCodeBlockFactory({
           type: this.type,
           formatter: this.options.formatter,

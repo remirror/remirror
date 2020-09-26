@@ -12,6 +12,7 @@ import {
   isNumber,
   PlainExtension,
   ProsemirrorAttributes,
+  ProsemirrorPlugin,
   Shape,
   StateUpdateLifecycleParameter,
   Static,
@@ -36,10 +37,10 @@ import { Step } from '@remirror/pm/transform';
 })
 export class CollaborationExtension extends PlainExtension<CollaborationOptions> {
   get name() {
-    return 'collaboration';
+    return 'collaboration' as const;
   }
 
-  protected init() {
+  protected init(): void {
     this.getSendableSteps = debounce(this.options.debounceMs, this.getSendableSteps);
   }
 
@@ -77,7 +78,7 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
     };
   }
 
-  createExternalPlugins() {
+  createExternalPlugins(): ProsemirrorPlugin[] {
     const { version, clientID } = this.options;
 
     const plugin = collab({
@@ -88,7 +89,7 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
     return [plugin];
   }
 
-  onStateUpdate(parameter: StateUpdateLifecycleParameter) {
+  onStateUpdate(parameter: StateUpdateLifecycleParameter): void {
     this.getSendableSteps(parameter.state);
   }
 

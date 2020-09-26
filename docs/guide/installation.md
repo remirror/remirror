@@ -31,23 +31,53 @@ The additional requirement to install the dependency `@remirror/pm` has been rem
 
 Remirror requires styles for the editor to function correctly across different browsers. These styles can be added in the following ways:
 
+With plain css:
+
 ```ts
-// Plain CSS
 import 'remirror/styles/all.css';
 ```
 
-```ts
-// Or with `@emotion/styled`
+Or with `@emotion/styled`:
+
+```tsx
+import React from 'react';
+
 import { AllStyledComponent } from '@remirror/styles/emotion';
+
+import { Editor } from './editor';
+
+// Wrap your editor with the component.
+const App = () => {
+  return (
+    <AllStyledComponent>
+      <Editor />
+    </AllStyledComponent>
+  );
+};
 ```
 
-```ts
-// Or with `styled-components`
+Or with `styled-components`:
+
+```tsx
+import React from 'react';
+
 import { AllStyledComponent } from '@remirror/styles/styled-components';
+
+import { Editor } from './editor';
+
+// Wrap your editor with the component.
+const App = () => {
+  return (
+    <AllStyledComponent>
+      <Editor />
+    </AllStyledComponent>
+  );
+};
 ```
 
+Or with `emotion` and the DOM.
+
 ```ts
-// Or with `emotion` using the DOM
 import { addStylesToElement, allStyles } from 'remirror/styles/dom';
 
 const wrapperElement = document.createElement('div');

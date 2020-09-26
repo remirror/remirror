@@ -1,6 +1,6 @@
 import { useId } from '@reach/auto-id';
 import { setStatus } from 'a11y-status';
-import type { DependencyList, EffectCallback } from 'react';
+import type { DependencyList, Dispatch, EffectCallback, MutableRefObject } from 'react';
 import { useEffect, useReducer, useRef } from 'react';
 import useEffectOnce from 'react-use/lib/useEffectOnce';
 import useShallowCompareEffect from 'react-use/lib/useShallowCompareEffect';
@@ -20,6 +20,7 @@ import type {
 import {
   callChangeHandlers,
   defaultItemsToString,
+  GetElementIds,
   getElementIds,
   getInitialStateProps,
   isOrContainsNode,
@@ -28,7 +29,9 @@ import {
 /**
  * Creates the reducer for managing the multishift internal state.
  */
-export function useMultishiftReducer<Item = any>(parameter: MultishiftProps<Item>) {
+export function useMultishiftReducer<Item = any>(
+  parameter: MultishiftProps<Item>,
+): [MultishiftState<Item>, Dispatch<MultishiftRootActions<Item>>] {
   const { stateReducer, ...props } = parameter;
   const initialState = getInitialStateProps<Item>(props);
 
@@ -49,16 +52,25 @@ export function useMultishiftReducer<Item = any>(parameter: MultishiftProps<Item
 /**
  * Creates the ids for identifying the elements in the app.
  */
-export function useElementIds(props: MultishiftA11yIdProps) {
+export function useElementIds(props: MultishiftA11yIdProps): GetElementIds {
   const defaultId = useId();
 
   return getElementIds(defaultId ?? '', props);
 }
 
+interface UseElementRefs {
+  toggleButton: MutableRefObject<HTMLElement | undefined>;
+  input: MutableRefObject<HTMLElement | undefined>;
+  menu: MutableRefObject<HTMLElement | undefined>;
+  comboBox: MutableRefObject<HTMLElement | undefined>;
+  items: MutableRefObject<HTMLElement[]>;
+  ignored: MutableRefObject<HTMLElement[]>;
+}
+
 /**
  * Get the element references.
  */
-export function useElementRefs() {
+export function useElementRefs(): UseElementRefs {
   const items = useRef<HTMLElement[]>([]);
   const ignored = useRef<HTMLElement[]>([]);
   const toggleButton = useRef<HTMLElement>();
@@ -123,7 +135,7 @@ interface UseSetA11yProps<Item = any> {
   customA11yStatusMessage?: string;
 }
 
-export function useSetA11y<Item = any>(props: UseSetA11yProps<Item>) {
+export function useSetA11y<Item = any>(props: UseSetA11yProps<Item>): void {
   const {
     state,
     items,
@@ -160,7 +172,11 @@ export function useOuterEventListener<Item = any>(
   refs: ReturnType<typeof useElementRefs>,
   state: MultishiftState<Item>,
   { outerMouseUp, outerTouchEnd }: { outerMouseUp: () => void; outerTouchEnd: () => void },
-) {
+): MutableRefObject<{
+  isMouseDown: boolean;
+  isTouchMove: boolean;
+  lastBlurred: HTMLElement | undefined;
+}> {
   const context = useRef({
     isMouseDown: false,
     isTouchMove: false,
@@ -257,7 +273,7 @@ export function useOuterEventListener<Item = any>(
  *
  * All timeouts are automatically cleared when un-mounting.
  */
-export function useTimeouts() {
+export function useTimeouts(): Readonly<[(fn: () => void, time?: number) => void, () => void]> {
   const timeoutIds = useRef<any[]>([]);
 
   const setHookTimeout = (fn: () => void, time = 1) => {
@@ -319,7 +335,7 @@ export function useTimeouts() {
  * };
  * ```
  */
-export function useEffectOnUpdate(effect: EffectCallback, dependencies: DependencyList) {
+export function useEffectOnUpdate(effect: EffectCallback, dependencies: DependencyList): void {
   const isInitialMount = useRef(true);
 
   useShallowCompareEffect(() => {
@@ -347,6 +363,6 @@ export function useEffectOnUpdate(effect: EffectCallback, dependencies: Dependen
  * };
  * ```
  */
-export function useUnmount(fn: () => void | undefined) {
+export function useUnmount(fn: () => void | undefined): void {
   useEffectOnce(() => fn);
 }

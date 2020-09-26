@@ -1,5 +1,6 @@
 import {
   ApplySchemaAttributes,
+  CommandFunction,
   ErrorConstant,
   extensionDecorator,
   ExtensionTag,
@@ -183,7 +184,10 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
        * @param attrs - the attributes that should be passed through. Required
        * values are `id` and `label`.
        */
-      createMentionAtom: (details: CreateMentionAtom, attrs: MentionAtomNodeAttributes) => {
+      createMentionAtom: (
+        details: CreateMentionAtom,
+        attrs: MentionAtomNodeAttributes,
+      ): CommandFunction => {
         const { name, range } = details;
         const validNameExists = this.options.matchers.some((matcher) => name === matcher.name);
 
