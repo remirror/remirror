@@ -1,5 +1,13 @@
 # multishift
 
+## 1.0.0-next.41
+
+> 2020-09-26
+
+### Patch Changes
+
+- [`182b0aac`](https://github.com/remirror/remirror/commit/182b0aac665a8d9a38e7dc88837ae66d005c05a4) [#712](https://github.com/remirror/remirror/pull/712) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix global types not being imported automatically when consuming `multishift`.
+
 ## 1.0.0-next.40
 
 > 2020-09-24

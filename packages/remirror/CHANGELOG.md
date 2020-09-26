@@ -1,5 +1,61 @@
 # remirror
 
+## 1.0.0-next.41
+
+> 2020-09-26
+
+### Patch Changes
+
+- Updated dependencies [[`e4701dc4`](https://github.com/remirror/remirror/commit/e4701dc4c045e92e9864f9dabfcee515c4f90bb2), [`83217437`](https://github.com/remirror/remirror/commit/8321743733d1aa794c5b5f5b2f07a9e1065d9ac9), [`e4701dc4`](https://github.com/remirror/remirror/commit/e4701dc4c045e92e9864f9dabfcee515c4f90bb2), [`6644a391`](https://github.com/remirror/remirror/commit/6644a3912a2c168a0d29db617271ec8407ba0f4f)]:
+  - @remirror/core@1.0.0-next.41
+  - @remirror/react@1.0.0-next.41
+  - @remirror/extension-annotation@1.0.0-next.41
+  - @remirror/dom@1.0.0-next.41
+  - @remirror/extension-auto-link@1.0.0-next.41
+  - @remirror/extension-bidi@1.0.0-next.41
+  - @remirror/extension-blockquote@1.0.0-next.41
+  - @remirror/extension-bold@1.0.0-next.41
+  - @remirror/extension-code@1.0.0-next.41
+  - @remirror/extension-code-block@1.0.0-next.41
+  - @remirror/extension-collaboration@1.0.0-next.41
+  - @remirror/extension-diff@1.0.0-next.41
+  - @remirror/extension-doc@1.0.0-next.41
+  - @remirror/extension-drop-cursor@1.0.0-next.41
+  - @remirror/extension-emoji@1.0.0-next.41
+  - @remirror/extension-epic-mode@1.0.0-next.41
+  - @remirror/extension-events@1.0.0-next.41
+  - @remirror/extension-gap-cursor@1.0.0-next.41
+  - @remirror/extension-hard-break@1.0.0-next.41
+  - @remirror/extension-heading@1.0.0-next.41
+  - @remirror/extension-history@1.0.0-next.41
+  - @remirror/extension-horizontal-rule@1.0.0-next.41
+  - @remirror/extension-image@1.0.0-next.41
+  - @remirror/extension-italic@1.0.0-next.41
+  - @remirror/extension-link@1.0.0-next.41
+  - @remirror/extension-mention@1.0.0-next.41
+  - @remirror/extension-mention-atom@1.0.0-next.41
+  - @remirror/extension-paragraph@1.0.0-next.41
+  - @remirror/extension-placeholder@1.0.0-next.41
+  - @remirror/extension-positioner@1.0.0-next.41
+  - @remirror/extension-react-component@1.0.0-next.41
+  - @remirror/extension-react-ssr@1.0.0-next.41
+  - @remirror/extension-search@1.0.0-next.41
+  - @remirror/extension-strike@1.0.0-next.41
+  - @remirror/extension-text@1.0.0-next.41
+  - @remirror/extension-trailing-node@1.0.0-next.41
+  - @remirror/extension-underline@1.0.0-next.41
+  - @remirror/extension-yjs@1.0.0-next.41
+  - @remirror/preset-core@1.0.0-next.41
+  - @remirror/preset-embed@1.0.0-next.41
+  - @remirror/preset-list@1.0.0-next.41
+  - @remirror/preset-react@1.0.0-next.41
+  - @remirror/preset-social@1.0.0-next.41
+  - @remirror/preset-table@1.0.0-next.41
+  - @remirror/preset-wysiwyg@1.0.0-next.41
+  - @remirror/react-hooks@1.0.0-next.41
+  - @remirror/react-social@1.0.0-next.41
+  - @remirror/react-wysiwyg@1.0.0-next.41
+
 ## 1.0.0-next.40
 
 > 2020-09-24
