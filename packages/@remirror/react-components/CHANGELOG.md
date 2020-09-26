@@ -1,5 +1,16 @@
 # @remirror/react-components
 
+## 1.0.0-next.22
+
+> 2020-09-26
+
+### Patch Changes
+
+- Updated dependencies [[`e4701dc4`](https://github.com/remirror/remirror/commit/e4701dc4c045e92e9864f9dabfcee515c4f90bb2), [`83217437`](https://github.com/remirror/remirror/commit/8321743733d1aa794c5b5f5b2f07a9e1065d9ac9), [`e4701dc4`](https://github.com/remirror/remirror/commit/e4701dc4c045e92e9864f9dabfcee515c4f90bb2), [`182b0aac`](https://github.com/remirror/remirror/commit/182b0aac665a8d9a38e7dc88837ae66d005c05a4)]:
+  - @remirror/core@1.0.0-next.41
+  - @remirror/react@1.0.0-next.41
+  - multishift@1.0.0-next.41
+
 ## 1.0.0-next.21
 
 > 2020-09-24

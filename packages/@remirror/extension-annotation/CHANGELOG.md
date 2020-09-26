@@ -1,5 +1,17 @@
 # @remirror/extension-annotation
 
+## 1.0.0-next.41
+
+> 2020-09-26
+
+### Patch Changes
+
+- [`6644a391`](https://github.com/remirror/remirror/commit/6644a3912a2c168a0d29db617271ec8407ba0f4f) [#705](https://github.com/remirror/remirror/pull/705) Thanks [@ronnyroeller](https://github.com/ronnyroeller)! - Support custom annotations for custom styling (typing)
+
+- Updated dependencies [[`e4701dc4`](https://github.com/remirror/remirror/commit/e4701dc4c045e92e9864f9dabfcee515c4f90bb2), [`83217437`](https://github.com/remirror/remirror/commit/8321743733d1aa794c5b5f5b2f07a9e1065d9ac9)]:
+  - @remirror/core@1.0.0-next.41
+  - @remirror/extension-positioner@1.0.0-next.41
+
 ## 1.0.0-next.40
 
 > 2020-09-24

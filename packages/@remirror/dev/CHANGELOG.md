@@ -1,5 +1,14 @@
 # @remirror/dev
 
+## 1.0.0-next.41
+
+> 2020-09-26
+
+### Patch Changes
+
+- Updated dependencies [[`e4701dc4`](https://github.com/remirror/remirror/commit/e4701dc4c045e92e9864f9dabfcee515c4f90bb2)]:
+  - @remirror/react@1.0.0-next.41
+
 ## 1.0.0-next.40
 
 > 2020-09-24
