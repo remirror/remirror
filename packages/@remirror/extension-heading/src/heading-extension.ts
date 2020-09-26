@@ -1,5 +1,6 @@
 import {
   ApplySchemaAttributes,
+  CommandFunction,
   extensionDecorator,
   ExtensionTag,
   InputRule,
@@ -86,7 +87,7 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
        * Toggle the heading for the current block. If you don't provide the
        * level it will use the options.defaultLevel.
        */
-      toggleHeading: (attrs: HeadingExtensionAttributes = {}) =>
+      toggleHeading: (attrs: HeadingExtensionAttributes = {}): CommandFunction =>
         toggleBlockItem({
           type: this.type,
           toggleType: this.store.schema.nodes.paragraph,

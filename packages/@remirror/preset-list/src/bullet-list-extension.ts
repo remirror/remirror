@@ -1,5 +1,6 @@
 import {
   ApplySchemaAttributes,
+  CommandFunction,
   extensionDecorator,
   ExtensionTag,
   KeyBindings,
@@ -35,7 +36,8 @@ export class BulletListExtension extends NodeExtension {
       /**
        * Toggle the bullet list.
        */
-      toggleBulletList: () => toggleList(this.type, this.store.schema.nodes.listItem),
+      toggleBulletList: (): CommandFunction =>
+        toggleList(this.type, this.store.schema.nodes.listItem),
     };
   }
 

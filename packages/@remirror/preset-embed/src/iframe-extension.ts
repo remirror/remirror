@@ -115,22 +115,24 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
       /**
        * Add a custom iFrame to the editor.
        */
-      addIframe: this.addIframe,
+      addIframe: (attributes: IframeAttributes): CommandFunction => this.addIframe(attributes),
 
       /**
        * Add a YouTube embedded iFrame to the editor.
        */
-      addYouTubeVideo: this.addYouTubeVideo,
+      addYouTubeVideo: (parameter: CreateYouTubeIframeParameter): CommandFunction =>
+        this.addYouTubeVideo(parameter),
 
       /**
        * Update the iFrame source for the currently selected video.
        */
-      updateIframeSource: this.updateIframeSource,
+      updateIframeSource: (src: string): CommandFunction => this.updateIframeSource(src),
 
       /**
        * Update the YouTube video iFrame.
        */
-      updateYouTubeVideo: this.updateYouTubeVideo,
+      updateYouTubeVideo: (parameter: CreateYouTubeIframeParameter): CommandFunction =>
+        this.updateYouTubeVideo(parameter),
     };
   }
 

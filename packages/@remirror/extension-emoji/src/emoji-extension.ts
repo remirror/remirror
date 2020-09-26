@@ -64,7 +64,7 @@ export class EmojiExtension extends PlainExtension<EmojiOptions> {
    * The name is dynamically generated based on the passed in type.
    */
   get name() {
-    return 'emoji';
+    return 'emoji' as const;
   }
 
   /**

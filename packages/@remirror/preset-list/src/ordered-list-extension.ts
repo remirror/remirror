@@ -1,5 +1,6 @@
 import {
   ApplySchemaAttributes,
+  CommandFunction,
   extensionDecorator,
   ExtensionTag,
   isElementDomNode,
@@ -61,7 +62,8 @@ export class OrderedListExtension extends NodeExtension {
       /**
        * Toggle the ordered list for the current selection.
        */
-      toggleOrderedList: () => toggleList(this.type, this.store.schema.nodes.listItem),
+      toggleOrderedList: (): CommandFunction =>
+        toggleList(this.type, this.store.schema.nodes.listItem),
     };
   }
 

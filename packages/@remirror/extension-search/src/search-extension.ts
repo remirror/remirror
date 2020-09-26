@@ -126,32 +126,34 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
        * Find a search term in the editor. If no search term is provided it
        * defaults to the currently selected text.
        */
-      find: (searchTerm?: string, direction?: SearchDirection) => this.find(searchTerm, direction),
+      find: (searchTerm?: string, direction?: SearchDirection): CommandFunction =>
+        this.find(searchTerm, direction),
 
       /**
        * Find the next occurrence of the search term.
        */
-      findNext: () => this.find(this.#searchTerm, 'next'),
+      findNext: (): CommandFunction => this.find(this.#searchTerm, 'next'),
 
       /**
        * Find the previous occurrence of the search term.
        */
-      findPrevious: () => this.find(this.#searchTerm, 'previous'),
+      findPrevious: (): CommandFunction => this.find(this.#searchTerm, 'previous'),
 
       /**
        * Replace the provided
        */
-      replace: (replacement: string, index?: number) => this.replace(replacement, index),
+      replace: (replacement: string, index?: number): CommandFunction =>
+        this.replace(replacement, index),
 
       /**
        * Replaces all search results with the replacement text.
        */
-      replaceAll: (replacement: string) => this.replaceAll(replacement),
+      replaceAll: (replacement: string): CommandFunction => this.replaceAll(replacement),
 
       /**
        * Clears the current search.
        */
-      clearSearch: () => this.clear(),
+      clearSearch: (): CommandFunction => this.clear(),
     };
   }
 

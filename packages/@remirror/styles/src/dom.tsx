@@ -6,7 +6,7 @@ import { css } from 'emotion';
 
 export * from './utils';
 
-export const coreStyledCss = css`
+export const coreStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/core/src/styles.ts
  */
@@ -69,7 +69,7 @@ export const coreStyledCss = css`
   }
 `;
 
-export const extensionBlockquoteStyledCss = css`
+export const extensionBlockquoteStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/extension-blockquote/src/styles.ts
  */
@@ -85,7 +85,7 @@ export const extensionBlockquoteStyledCss = css`
   }
 `;
 
-export const extensionGapCursorStyledCss = css`
+export const extensionGapCursorStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/extension-gap-cursor/src/styles.ts
  */
@@ -119,7 +119,7 @@ export const extensionGapCursorStyledCss = css`
   }
 `;
 
-export const extensionPlaceholderStyledCss = css`
+export const extensionPlaceholderStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/extension-placeholder/src/placeholder-extension.ts
  */
@@ -133,7 +133,7 @@ export const extensionPlaceholderStyledCss = css`
   }
 `;
 
-export const extensionYjsStyledCss = css`
+export const extensionYjsStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/extension-yjs/src/yjs-extension.ts
  */
@@ -187,7 +187,7 @@ export const extensionYjsStyledCss = css`
   }
 `;
 
-export const presetTableStyledCss = css`
+export const presetTableStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/preset-table/src/table-styles.ts
  */
@@ -234,7 +234,7 @@ export const presetTableStyledCss = css`
   }
 `;
 
-export const reactSocialStyledCss = css`
+export const reactSocialStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/react-social/src/social-styles.ts
  */
@@ -432,7 +432,7 @@ export const reactSocialStyledCss = css`
   }
 `;
 
-export const reactWysiwygStyledCss = css`
+export const reactWysiwygStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/react-wysiwyg/src/components/wysiwyg-editor.tsx
  */
@@ -489,7 +489,7 @@ export const reactWysiwygStyledCss = css`
   }
 `;
 
-export const themeStyledCss = css`
+export const themeStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/theme/src/theme-styles.ts
  */
@@ -708,7 +708,7 @@ export const themeStyledCss = css`
   }
 `;
 
-export const allStyledCss = css`
+export const allStyledCss: ReturnType<typeof css> = css`
   ${coreStyledCss}
   ${extensionBlockquoteStyledCss}
   ${extensionGapCursorStyledCss}

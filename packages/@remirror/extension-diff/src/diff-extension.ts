@@ -85,7 +85,7 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
       /**
        * Attach a commit message to the recent change.
        */
-      commitChange: (message: string) => this.commit(message),
+      commitChange: (message: string): CommandFunction => this.commit(message),
 
       /**
        * Revert the provided commit.
@@ -95,12 +95,13 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
       /**
        * Highlight the provided commit.
        */
-      highlightCommit: (commit: Commit | CommitId) => this.highlightCommit(commit),
+      highlightCommit: (commit: Commit | CommitId): CommandFunction => this.highlightCommit(commit),
 
       /**
        * Remove the highlight from the commit.
        */
-      removeHighlightedCommit: (commit: Commit | CommitId) => this.removeHighlightedCommit(commit),
+      removeHighlightedCommit: (commit: Commit | CommitId): CommandFunction =>
+        this.removeHighlightedCommit(commit),
     };
   }
 

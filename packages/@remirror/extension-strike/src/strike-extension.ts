@@ -1,5 +1,6 @@
 import {
   ApplySchemaAttributes,
+  CommandFunction,
   extensionDecorator,
   ExtensionTag,
   InputRule,
@@ -59,7 +60,7 @@ export class StrikeExtension extends MarkExtension {
       /**
        * Toggle the strike through formatting annotation.
        */
-      toggleStrike: () => toggleMark({ type: this.type }),
+      toggleStrike: (): CommandFunction => toggleMark({ type: this.type }),
     };
   }
 

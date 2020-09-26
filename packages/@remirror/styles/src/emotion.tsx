@@ -4,9 +4,8 @@
 
 import { css } from '@emotion/core';
 import styled from '@emotion/styled';
-import React from 'react';
 
-export const coreStyledCss = css`
+export const coreStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/core/src/styles.ts
  */
@@ -69,11 +68,11 @@ export const coreStyledCss = css`
   }
 `;
 
-export const CoreStyledComponent = styled.div`
+export const CoreStyledComponent: ReturnType<typeof styled.div> = styled.div`
   ${coreStyledCss}
 `;
 
-export const extensionBlockquoteStyledCss = css`
+export const extensionBlockquoteStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/extension-blockquote/src/styles.ts
  */
@@ -89,11 +88,11 @@ export const extensionBlockquoteStyledCss = css`
   }
 `;
 
-export const ExtensionBlockquoteStyledComponent = styled.div`
+export const ExtensionBlockquoteStyledComponent: ReturnType<typeof styled.div> = styled.div`
   ${extensionBlockquoteStyledCss}
 `;
 
-export const extensionGapCursorStyledCss = css`
+export const extensionGapCursorStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/extension-gap-cursor/src/styles.ts
  */
@@ -127,11 +126,11 @@ export const extensionGapCursorStyledCss = css`
   }
 `;
 
-export const ExtensionGapCursorStyledComponent = styled.div`
+export const ExtensionGapCursorStyledComponent: ReturnType<typeof styled.div> = styled.div`
   ${extensionGapCursorStyledCss}
 `;
 
-export const extensionPlaceholderStyledCss = css`
+export const extensionPlaceholderStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/extension-placeholder/src/placeholder-extension.ts
  */
@@ -145,11 +144,11 @@ export const extensionPlaceholderStyledCss = css`
   }
 `;
 
-export const ExtensionPlaceholderStyledComponent = styled.div`
+export const ExtensionPlaceholderStyledComponent: ReturnType<typeof styled.div> = styled.div`
   ${extensionPlaceholderStyledCss}
 `;
 
-export const extensionYjsStyledCss = css`
+export const extensionYjsStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/extension-yjs/src/yjs-extension.ts
  */
@@ -203,11 +202,11 @@ export const extensionYjsStyledCss = css`
   }
 `;
 
-export const ExtensionYjsStyledComponent = styled.div`
+export const ExtensionYjsStyledComponent: ReturnType<typeof styled.div> = styled.div`
   ${extensionYjsStyledCss}
 `;
 
-export const presetTableStyledCss = css`
+export const presetTableStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/preset-table/src/table-styles.ts
  */
@@ -254,11 +253,11 @@ export const presetTableStyledCss = css`
   }
 `;
 
-export const PresetTableStyledComponent = styled.div`
+export const PresetTableStyledComponent: ReturnType<typeof styled.div> = styled.div`
   ${presetTableStyledCss}
 `;
 
-export const reactSocialStyledCss = css`
+export const reactSocialStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/react-social/src/social-styles.ts
  */
@@ -456,11 +455,11 @@ export const reactSocialStyledCss = css`
   }
 `;
 
-export const ReactSocialStyledComponent = styled.div`
+export const ReactSocialStyledComponent: ReturnType<typeof styled.div> = styled.div`
   ${reactSocialStyledCss}
 `;
 
-export const reactWysiwygStyledCss = css`
+export const reactWysiwygStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/react-wysiwyg/src/components/wysiwyg-editor.tsx
  */
@@ -517,11 +516,11 @@ export const reactWysiwygStyledCss = css`
   }
 `;
 
-export const ReactWysiwygStyledComponent = styled.div`
+export const ReactWysiwygStyledComponent: ReturnType<typeof styled.div> = styled.div`
   ${reactWysiwygStyledCss}
 `;
 
-export const themeStyledCss = css`
+export const themeStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/theme/src/theme-styles.ts
  */
@@ -740,11 +739,11 @@ export const themeStyledCss = css`
   }
 `;
 
-export const ThemeStyledComponent = styled.div`
+export const ThemeStyledComponent: ReturnType<typeof styled.div> = styled.div`
   ${themeStyledCss}
 `;
 
-export const allStyledCss = css`
+export const allStyledCss: ReturnType<typeof css> = css`
   ${coreStyledCss}
   ${extensionBlockquoteStyledCss}
   ${extensionGapCursorStyledCss}
@@ -756,7 +755,7 @@ export const allStyledCss = css`
   ${themeStyledCss}
 `;
 
-export const AllStyledComponent = styled.div`
+export const AllStyledComponent: ReturnType<typeof styled.div> = styled.div`
   ${coreStyledCss}
   ${extensionBlockquoteStyledCss}
   ${extensionGapCursorStyledCss}
