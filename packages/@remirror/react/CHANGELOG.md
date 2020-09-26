@@ -1,5 +1,20 @@
 # @remirror/react
 
+## 1.0.0-next.42
+
+> 2020-09-26
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.42
+  - @remirror/extension-placeholder@1.0.0-next.42
+  - @remirror/extension-positioner@1.0.0-next.42
+  - @remirror/extension-react-component@1.0.0-next.42
+  - @remirror/extension-react-ssr@1.0.0-next.42
+  - @remirror/preset-core@1.0.0-next.42
+  - @remirror/preset-react@1.0.0-next.42
+
 ## 1.0.0-next.41
 
 > 2020-09-26

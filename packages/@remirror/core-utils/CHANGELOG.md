@@ -1,5 +1,15 @@
 # @remirror/core-utils
 
+## 1.0.0-next.42
+
+> 2020-09-26
+
+### Minor Changes
+
+- [`9fa07878`](https://github.com/remirror/remirror/commit/9fa078780504bff81d28183ee8cda3b599412cf0) [#721](https://github.com/remirror/remirror/pull/721) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add new helpers `getChangedRanges`, `getChangedNodeRanges` and `getChangedNodes` which take a transaction and return a list of changed ranges, node ranges or nodes with positions.
+
+  This is useful for increasing the performance and only checking the parts of the document that have changed between updates.
+
 ## 1.0.0-next.40
 
 > 2020-09-24

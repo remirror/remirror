@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react",
-  "version": "1.0.0-next.41",
+  "version": "1.0.0-next.42",
   "description": "react utilities for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react",
@@ -22,13 +22,13 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.11.0",
-    "@remirror/extension-placeholder": "1.0.0-next.41",
-    "@remirror/extension-positioner": "1.0.0-next.41",
-    "@remirror/extension-react-component": "1.0.0-next.41",
-    "@remirror/extension-react-ssr": "1.0.0-next.41",
+    "@remirror/extension-placeholder": "1.0.0-next.42",
+    "@remirror/extension-positioner": "1.0.0-next.42",
+    "@remirror/extension-react-component": "1.0.0-next.42",
+    "@remirror/extension-react-ssr": "1.0.0-next.42",
     "@remirror/i18n": "1.0.0-next.40",
-    "@remirror/preset-core": "1.0.0-next.41",
-    "@remirror/preset-react": "1.0.0-next.41",
+    "@remirror/preset-core": "1.0.0-next.42",
+    "@remirror/preset-react": "1.0.0-next.42",
     "@remirror/react-utils": "1.0.0-next.40",
     "@remirror/theme": "1.0.0-next.40",
     "@seznam/compose-react-refs": "^1.0.4",
@@ -40,7 +40,7 @@
     "use-isomorphic-layout-effect": "^1.0.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.41",
+    "@remirror/core": "1.0.0-next.42",
     "@remirror/pm": "1.0.0-next.40",
     "@testing-library/react": "^11.0.4",
     "@testing-library/react-hooks": "^3.4.1",
@@ -54,7 +54,7 @@
     "react-test-renderer": "^16.13.1"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.41",
+    "@remirror/core": "1.0.0-next.42",
     "@remirror/pm": "1.0.0-next.40",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",

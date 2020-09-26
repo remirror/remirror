@@ -1,5 +1,22 @@
 # @remirror/react-social
 
+## 1.0.0-next.42
+
+> 2020-09-26
+
+### Patch Changes
+
+- Updated dependencies [[`d33f43bf`](https://github.com/remirror/remirror/commit/d33f43bfcb8d7f578f05434b42c938b4132b544a), [`d33f43bf`](https://github.com/remirror/remirror/commit/d33f43bfcb8d7f578f05434b42c938b4132b544a)]:
+  - multishift@1.0.0-next.42
+  - @remirror/extension-mention@1.0.0-next.42
+  - @remirror/extension-emoji@1.0.0-next.42
+  - @remirror/core@1.0.0-next.42
+  - @remirror/preset-social@1.0.0-next.42
+  - @remirror/react-hooks@1.0.0-next.42
+  - @remirror/extension-auto-link@1.0.0-next.42
+  - @remirror/extension-events@1.0.0-next.42
+  - @remirror/react@1.0.0-next.42
+
 ## 1.0.0-next.41
 
 > 2020-09-26
