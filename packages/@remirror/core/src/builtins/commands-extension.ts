@@ -21,7 +21,7 @@ import type {
   Transaction,
 } from '@remirror/core-types';
 import { findNodeAtPosition, getTextSelection } from '@remirror/core-utils';
-import { TextSelection } from '@remirror/pm/state';
+import { EditorState, TextSelection } from '@remirror/pm/state';
 import { Decoration, DecorationSet, EditorView } from '@remirror/pm/view';
 
 import {
@@ -223,7 +223,23 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
   }
 
   createHelpers() {
-    return {};
+    return {
+      /**
+       * Find the position for the tracker with the ID specified.
+       *
+       * @param id - the unique position id which can be any type
+       * @param state - an optional state. Defaults to using the current state.
+       */
+      findPositionTracker: (id: unknown, state?: EditorState) =>
+        this.findPositionTracker(id, state),
+
+      /**
+       * Find the positions of all the trackers in document.
+       *
+       * @param state - an optional state. Defaults to using the current state.
+       */
+      findAllPositionTrackers: (state?: EditorState) => this.findAllPositionTrackers(state),
+    };
   }
 
   /**
@@ -438,8 +454,13 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
 
       /**
        * Command to dispatch a transaction adding the tracker position to be
-       * tracked. If no position parameter is specified it uses the current
-       * position.
+       * tracked.
+       *
+       * @param id - the value that is used to identify this tracker. This can
+       * be any value. A promise, a function call, a string.
+       * @param options - the options to call the tracked position with. You can
+       * specify the range `{ from: number; to: number }` as well as the class
+       * name.
        */
       addPositionTracker: (tracker: AddPositionTrackerParameter): CommandFunction => ({
         dispatch,
@@ -797,12 +818,27 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    * Find the position for the tracker with the ID specified.
    *
    * @param id - the unique position id which can be any type
+   * @param state - an optional state. Defaults to using the current state.
    */
-  private findPositionTracker(id: unknown): FromToParameter | undefined {
-    const decorations = this.getPluginState<DecorationSet>();
-    const found = decorations.find(undefined, undefined, (spec) => spec.id === id)?.[0];
+  private findPositionTracker(id: unknown, state?: EditorState): FromToParameter | undefined {
+    return this.findAllPositionTrackers(state).get(id);
+  }
 
-    return found ? { from: found.from, to: found.to } : undefined;
+  /**
+   * Find the positions of all the trackers in document.
+   *
+   * @param state - an optional state. Defaults to using the current state.
+   */
+  private findAllPositionTrackers(state?: EditorState): Map<unknown, FromToParameter> {
+    const trackers: Map<unknown, FromToParameter> = new Map();
+    const decorations = this.getPluginState<DecorationSet>(state);
+    const found = decorations.find(undefined, undefined, (spec) => spec.type === this.name);
+
+    for (const decoration of found) {
+      trackers.set(decoration.spec.id, { from: decoration.from, to: decoration.to });
+    }
+
+    return trackers;
   }
 }
 
@@ -838,13 +874,7 @@ export interface CommandExtensionMeta {
   clearTrackers?: boolean;
 }
 
-interface AddPositionTrackerParameter extends Partial<FromToParameter> {
-  /**
-   * The ID by which this position will be uniquely identified. It can be any
-   * unknown value. A string, a function, an object, etc.
-   */
-  id: unknown;
-
+interface PositionTrackerOptions extends Partial<FromToParameter> {
   /**
    * A custom class name to use for the tracker position. All the trackers will
    * automatically be given the class name `remirror-tracker-position`
@@ -866,9 +896,18 @@ interface AddPositionTrackerParameter extends Partial<FromToParameter> {
   node?: boolean;
 
   /**
-   * Provide this to set this as a node selection.
+   * Provide this to set this as a node selection. The `pos` must be directly
+   * before the node in order to be valid.
    */
   pos?: number | null;
+}
+
+interface AddPositionTrackerParameter extends PositionTrackerOptions {
+  /**
+   * The ID by which this position will be uniquely identified. It can be any
+   * unknown value. A string, a function, an object, etc.
+   */
+  id: unknown;
 }
 
 interface AddCommandsParameter {

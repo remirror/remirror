@@ -37,13 +37,9 @@ const EditorWrapper = () => {
     return transformers.remove(json, invalidContent);
   }, []);
 
-  const manager = useManager([new WysiwygPreset()]);
+  const manager = useManager([new WysiwygPreset()], { onError });
 
-  return (
-    <RemirrorProvider manager={manager} onError={onError}>
-      <div />
-    </RemirrorProvider>
-  );
+  return <RemirrorProvider manager={manager} />;
 };
 ```
 

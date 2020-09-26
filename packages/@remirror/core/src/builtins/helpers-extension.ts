@@ -1,7 +1,7 @@
 import { ErrorConstant, ExtensionPriority } from '@remirror/core-constants';
 import { entries, object } from '@remirror/core-helpers';
 import type { AnyFunction, EmptyShape, ProsemirrorAttributes, Value } from '@remirror/core-types';
-import { isMarkActive, isNodeActive } from '@remirror/core-utils';
+import { isMarkActive, isNodeActive, isSelectionEmpty } from '@remirror/core-utils';
 
 import { extensionDecorator } from '../decorators';
 import {
@@ -74,7 +74,12 @@ export class HelpersExtension extends PlainExtension {
   }
 
   createHelpers() {
-    return {};
+    return {
+      /**
+       * Check whether the selection is empty.
+       */
+      isSelectionEmpty: () => isSelectionEmpty(this.store.view.state),
+    };
   }
 }
 

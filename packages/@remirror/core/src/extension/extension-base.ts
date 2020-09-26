@@ -712,7 +712,7 @@ declare global {
    */
   namespace Remirror {
     /**
-     * This interface is used to store all the currently installed extensions.
+     * This interface stores all the currently installed extensions.
      * As a result it can be used to set the default loaded extensions to
      * include all available within `node_modules`. By extending this extension
      * in the global `Remirror` namespace the key is ignored but the value is
