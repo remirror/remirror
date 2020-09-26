@@ -1,5 +1,29 @@
 # @remirror/extension-annotation
 
+## 1.0.0-next.42
+
+> 2020-09-26
+
+### Patch Changes
+
+- [`ef1f57c2`](https://github.com/remirror/remirror/commit/ef1f57c2b055d00ca910a0e5aa2e282875f6dde5) [#718](https://github.com/remirror/remirror/pull/718) Thanks [@ronnyroeller](https://github.com/ronnyroeller)! - Remove annotations when their content is deleted
+
+  Users can create annotations on pieces of content. The annotations are automatically updated as the content is moved around, e.g. if a new word is inserted before the annotation. Yet, the extension missed the case that all annotated content is deleted. Before, this would lead to an empty annotation (to and from parameter are equal). With this commit, annotations are automatically removed when the content is completed deleted.
+
+* [`44754a5d`](https://github.com/remirror/remirror/commit/44754a5de1354ab45d2be16fb02aa2fd017319c1) [#723](https://github.com/remirror/remirror/pull/723) Thanks [@ronnyroeller](https://github.com/ronnyroeller)! - Support multi-line annotations in positioner
+
+  The annotation positioner placed the bottom on the bottom of the first line. This meant that a popup placed on the bottom would overlay the rest of a multi-line annotation. Now, the positioner returns the bottom of the last line, allowing to place the popup below all content.
+
+- [`802d5f04`](https://github.com/remirror/remirror/commit/802d5f042ea64974f6db5dc52006f858fa5e3e28) [#720](https://github.com/remirror/remirror/pull/720) Thanks [@ronnyroeller](https://github.com/ronnyroeller)! - Gracefully handle annotations with positions outside the content
+
+  Annotations are loaded separately from the content into the editor (helpers.setAnnotations vs setContent). This can lead to situations where annotations are pointing to positions that are outside the content. For example, the editor shows content with annotations. Then, the user requests to change the content to an empty document. At this point, until helpers.setAnnotations() is called, the editor will have an empty document but still a list of annotations.
+
+  At that point, helpers.getAnnotations() would throw the following error because it couldn't find the matching text for the from/to positions: TypeError: Cannot read property 'nodeSize' of undefined
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.42
+  - @remirror/extension-positioner@1.0.0-next.42
+
 ## 1.0.0-next.41
 
 > 2020-09-26

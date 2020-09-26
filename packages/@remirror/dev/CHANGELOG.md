@@ -1,5 +1,14 @@
 # @remirror/dev
 
+## 1.0.0-next.42
+
+> 2020-09-26
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/react@1.0.0-next.42
+
 ## 1.0.0-next.41
 
 > 2020-09-26

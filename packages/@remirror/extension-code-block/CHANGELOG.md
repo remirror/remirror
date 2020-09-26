@@ -1,5 +1,38 @@
 # @remirror/extension-code-block
 
+## 1.0.0-next.42
+
+> 2020-09-26
+
+### Minor Changes
+
+- [`6f2ababd`](https://github.com/remirror/remirror/commit/6f2ababd44dbfdf4b1f7248457d8d481c33a5d13) [#721](https://github.com/remirror/remirror/pull/721) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Improve performance of the `CodeBlockExtension` by only updating syntax highlighting for the changed code block(s).
+
+### Patch Changes
+
+- [`d33f43bf`](https://github.com/remirror/remirror/commit/d33f43bfcb8d7f578f05434b42c938b4132b544a) [#717](https://github.com/remirror/remirror/pull/717) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix type annotations for `createCommands` functions. This was causing issues with inferring all the commands available across the extensions since the types were compiling as `any`.
+
+  The following should now work with full type inference.
+
+  ```tsx
+  import React from 'react';
+  import { useRemirror } from 'remirror/react';
+
+  const EditorButton = () => {
+    const { commands, chain } = useRemirror();
+
+    return (
+      <>
+        <button onClick={() => commands.toggleBulletList()}>Toggle List</button>
+        <button onClick={() => chain.toggleBold().toggleStrike().toggleItalic()}>Cray!</button>
+      </>
+    );
+  };
+  ```
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.42
+
 ## 1.0.0-next.41
 
 > 2020-09-26

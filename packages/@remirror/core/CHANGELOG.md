@@ -1,5 +1,14 @@
 # @remirror/core
 
+## 1.0.0-next.42
+
+> 2020-09-26
+
+### Patch Changes
+
+- Updated dependencies [[`9fa07878`](https://github.com/remirror/remirror/commit/9fa078780504bff81d28183ee8cda3b599412cf0)]:
+  - @remirror/core-utils@1.0.0-next.42
+
 ## 1.0.0-next.41
 
 > 2020-09-26

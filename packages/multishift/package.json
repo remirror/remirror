@@ -1,6 +1,6 @@
 {
   "name": "multishift",
-  "version": "1.0.0-next.41",
+  "version": "1.0.0-next.42",
   "description": "A repurposed downshift for internal use within remirror",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/multishift",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/multishift",

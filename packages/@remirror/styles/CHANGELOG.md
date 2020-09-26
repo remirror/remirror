@@ -1,5 +1,13 @@
 # @remirror/styles
 
+## 1.0.0-next.42
+
+> 2020-09-26
+
+### Patch Changes
+
+- [`d33f43bf`](https://github.com/remirror/remirror/commit/d33f43bfcb8d7f578f05434b42c938b4132b544a) [#717](https://github.com/remirror/remirror/pull/717) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Improve type inference for `@remirror/styles/emotion`, `@remirror/styles/dom` and `@remirror/styles/styled-components`.
+
 ## 1.0.0-next.40
 
 > 2020-09-24
