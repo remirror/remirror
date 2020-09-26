@@ -155,16 +155,16 @@ describe('plugin#apply', () => {
       commands,
     } = create();
 
-    add(doc(p('<start>H<end>')));
-    commands.addAnnotation({ id: '1', className: 'custom-annotation' });
+    add(doc(p('<start>Hello<end>')));
+    commands.addAnnotation({ id: '1' });
 
     // Pre-condition
     expect(helpers.getAnnotations()).toHaveLength(1);
+
+    // Delete all annotated content
     commands.delete();
 
     expect(helpers.getAnnotations()).toHaveLength(0);
-
-    add(doc(p('<start>H<end>')));
   });
 });
 
