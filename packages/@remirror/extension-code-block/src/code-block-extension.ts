@@ -369,8 +369,8 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
         init(_, state) {
           return pluginState.init(state);
         },
-        apply(tr, _, oldState, newState) {
-          return pluginState.apply({ tr, oldState, newState });
+        apply(tr) {
+          return pluginState.apply(tr);
         },
       },
       props: {

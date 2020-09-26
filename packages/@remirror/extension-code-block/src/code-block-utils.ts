@@ -5,7 +5,6 @@ import {
   bool,
   CommandFunction,
   DOMOutputSpec,
-  EditorState,
   findParentNodeOfType,
   flattenArray,
   FromToParameter,
@@ -19,7 +18,6 @@ import {
   PosParameter,
   ProsemirrorAttributes,
   ProsemirrorNode,
-  ProsemirrorNodeParameter,
   TextParameter,
 } from '@remirror/core';
 import { TextSelection } from '@remirror/pm/state';
@@ -159,48 +157,6 @@ export function createDecorations(parameter: CreateDecorationsParameter): Decora
   return decorations;
 }
 
-interface PosWithinRangeParameter extends PosParameter, FromToParameter {}
-
-/**
- * Check if the position is within the range.
- */
-export function posWithinRange({ from, to, pos }: PosWithinRangeParameter): boolean {
-  return from <= pos && to >= pos;
-}
-
-/**
- * Check whether the length of an array has changed
- */
-export function lengthHasChanged<Type>(previous: ArrayLike<Type>, next: ArrayLike<Type>): boolean {
-  return next.length !== previous.length;
-}
-
-export interface NodeInformation
-  extends NodeTypeParameter,
-    FromToParameter,
-    ProsemirrorNodeParameter,
-    PosParameter {}
-
-/**
- * Retrieves helpful node information from the current state.
- */
-export function getNodeInformationFromState(state: EditorState): NodeInformation {
-  const { $head } = state.selection;
-  const depth = $head.depth;
-  const from = $head.start(depth);
-  const to = $head.end(depth);
-  const node = $head.parent;
-  const type = node.type;
-  const pos = depth > 0 ? $head.before(depth) : 0;
-  return {
-    from,
-    to,
-    type,
-    node,
-    pos,
-  };
-}
-
 /**
  * Check that the attributes exist and are valid for the codeBlock
  * updateAttributes.
@@ -281,8 +237,8 @@ export function getLanguage(parameter: GetLanguageParameter): string {
 }
 
 /**
- * Used to provide a `toDom` function for the code block for both the browser and
- * non browser environments.
+ * Used to provide a `toDom` function for the code block. Currently this only
+ * support the browser runtime.
  */
 export function codeBlockToDOM(
   node: ProsemirrorNode,
