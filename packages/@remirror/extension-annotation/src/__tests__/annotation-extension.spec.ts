@@ -166,6 +166,44 @@ describe('plugin#apply', () => {
 
     expect(helpers.getAnnotations()).toHaveLength(0);
   });
+
+  it('updates annotation when content is added within an annotation', () => {
+    const {
+      add,
+      helpers,
+      nodes: { p, doc },
+      commands,
+    } = create();
+
+    add(doc(p('<start>Hello<end>')));
+    commands.addAnnotation({ id: '1' });
+
+    // Pre-condition
+    expect(helpers.getAnnotations()[0].text).toEqual('Hello');
+
+    commands.insertText('ADDED', { from: 3 });
+
+    expect(helpers.getAnnotations()[0].text).toEqual('HeADDEDllo');
+  });
+
+  it("doesn't extend annotation when content is added at the end of an annotation", () => {
+    const {
+      add,
+      helpers,
+      nodes: { p, doc },
+      commands,
+    } = create();
+
+    add(doc(p('<start>Hello<end>')));
+    commands.addAnnotation({ id: '1' });
+
+    // Pre-condition
+    expect(helpers.getAnnotations()[0].text).toEqual('Hello');
+
+    commands.insertText('ADDED', { from: 6 });
+
+    expect(helpers.getAnnotations()[0].text).toEqual('Hello');
+  });
 });
 
 describe('styling', () => {
