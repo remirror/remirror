@@ -144,6 +144,46 @@ describe('commands', () => {
       </p>
     `);
   });
+
+  it('supports chaining commands', () => {
+    const {
+      manager,
+      add,
+      view,
+      nodes: { p, doc },
+      chain,
+    } = create();
+
+    const id = '1';
+
+    add(doc(p('An <start>important<end> note')));
+    chain.addAnnotation({ id }).selectText('end').insertText(' awesome!');
+
+    expect(manager.tr.getMeta(AnnotationExtension.name)).toMatchInlineSnapshot(`
+      Object {
+        "annotationData": Object {
+          "id": "1",
+        },
+        "from": 4,
+        "to": 13,
+        "type": 0,
+      }
+    `);
+    expect(manager.tr.steps).toHaveLength(1);
+
+    chain.run();
+    expect(view.dom.innerHTML).toMatchInlineSnapshot(`
+      <p>
+        An
+        <span class
+              style="background: rgb(215, 215, 255);"
+        >
+          important
+        </span>
+        note awesome!
+      </p>
+    `);
+  });
 });
 
 describe('plugin#apply', () => {

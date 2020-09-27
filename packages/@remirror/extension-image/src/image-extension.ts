@@ -7,9 +7,9 @@ import {
   extensionDecorator,
   ExtensionTag,
   isElementDomNode,
+  NodeAttributes,
   NodeExtension,
   NodeExtensionSpec,
-  ProsemirrorAttributes,
 } from '@remirror/core';
 import type { ResolvedPos } from '@remirror/pm/model';
 
@@ -64,17 +64,15 @@ export class ImageExtension extends NodeExtension {
 
   createCommands() {
     return {
-      insertImage: (
-        attributes: ProsemirrorAttributes<ImageExtensionAttributes>,
-      ): CommandFunction => ({ state, dispatch }) => {
-        const { selection } = state;
+      insertImage: (attributes: NodeAttributes<ImageExtensionAttributes>): CommandFunction => ({
+        tr,
+        dispatch,
+      }) => {
+        const { selection } = tr;
         const position = hasCursor(selection) ? selection.$cursor.pos : selection.$to.pos;
         const node = this.type.create(attributes);
-        const transaction = state.tr.insert(position, node);
 
-        if (dispatch) {
-          dispatch(transaction);
-        }
+        dispatch?.(tr.insert(position, node));
 
         return true;
       },
