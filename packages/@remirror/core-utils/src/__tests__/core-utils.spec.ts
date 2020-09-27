@@ -13,6 +13,7 @@ import {
 import { renderEditor } from 'jest-remirror';
 
 import { object } from '@remirror/core-helpers';
+import { Mark } from '@remirror/pm/model';
 import { TextSelection } from '@remirror/pm/state';
 import {
   BlockquoteExtension,
@@ -226,6 +227,15 @@ describe('getMarkRange', () => {
     const { state, schema } = createEditor(doc(p('Some<start>thing', em('is<end> italic'))));
 
     expect(getMarkRange(state.selection.$from, schema.marks.em)).toBeUndefined();
+  });
+
+  it('provides the text and a mark', () => {
+    const expected = 'is italic';
+    const { state, schema } = createEditor(doc(p('Something <cursor>', em(expected))));
+    const range = getMarkRange(state.selection.$from, schema.marks.em);
+
+    expect(range?.mark).toBeInstanceOf(Mark);
+    expect(range?.text).toBe(expected);
   });
 });
 
