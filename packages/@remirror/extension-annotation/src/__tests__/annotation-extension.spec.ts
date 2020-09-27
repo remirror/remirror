@@ -145,6 +145,46 @@ describe('commands', () => {
     `);
   });
 
+  it('#redrawAnnotations', () => {
+    let color = 'red';
+    const getStyle = () => `background: ${color};`;
+
+    const {
+      add,
+      view,
+      nodes: { p, doc },
+      commands,
+    } = create({ getStyle });
+
+    const id = '1';
+
+    add(doc(p('<start>Hello<end>')));
+    commands.addAnnotation({ id });
+    // Pre-condition
+    expect(view.dom.innerHTML).toMatchInlineSnapshot(`
+      <p>
+        <span class="selection"
+              style="background: red;"
+        >
+          Hello
+        </span>
+      </p>
+    `);
+
+    color = 'green';
+    commands.redrawAnnotations();
+
+    expect(view.dom.innerHTML).toMatchInlineSnapshot(`
+      <p>
+        <span class="selection"
+              style="background: green;"
+        >
+          Hello
+        </span>
+      </p>
+    `);
+  });
+
   it('supports chaining commands', () => {
     const {
       manager,

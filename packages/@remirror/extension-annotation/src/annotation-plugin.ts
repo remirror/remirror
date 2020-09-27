@@ -84,6 +84,10 @@ export class AnnotationState<A extends Annotation = Annotation> {
       newAnnotations = setAction.annotations;
     }
 
+    if (actionType === ActionType.REDRAW_ANNOTATIONS) {
+      newAnnotations = this.annotations;
+    }
+
     if (newAnnotations) {
       // Recalculate decorations when annotations changed
       const decos = toSegments(newAnnotations).map((segment) => {

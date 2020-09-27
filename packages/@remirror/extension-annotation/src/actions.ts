@@ -2,6 +2,7 @@ import type { Annotation, AnnotationData, AnnotationWithoutText } from './types'
 
 export enum ActionType {
   ADD_ANNOTATION,
+  REDRAW_ANNOTATIONS,
   REMOVE_ANNOTATIONS,
   SET_ANNOTATIONS,
   UPDATE_ANNOTATION,
