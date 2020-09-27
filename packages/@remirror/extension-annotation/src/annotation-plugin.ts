@@ -39,7 +39,9 @@ export class AnnotationState<A extends Annotation = Annotation> {
       .map((annotation) => ({
         ...annotation,
         from: tr.mapping.map(annotation.from),
-        to: tr.mapping.map(annotation.to),
+        // -1 indicates that the annotation isn't extended when the user types
+        // at the end of the annotation
+        to: tr.mapping.map(annotation.to, -1),
       }))
       // Remove annotations for which all containing content was deleted
       .filter((annotation) => annotation.to !== annotation.from);
