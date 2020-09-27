@@ -7,13 +7,7 @@ import {
 } from '@remirror/core';
 import type { EditorState } from '@remirror/pm/state';
 
-import {
-  ActionType,
-  AddAnnotationAction,
-  RemoveAnnotationsAction,
-  SetAnnotationsAction,
-  UpdateAnnotationAction,
-} from './actions';
+import { ActionType, UpdateAnnotationAction } from './actions';
 import { AnnotationState } from './annotation-plugin';
 import type { Annotation, AnnotationData, AnnotationOptions, AnnotationWithoutText } from './types';
 
@@ -74,38 +68,45 @@ export class AnnotationExtension<A extends Annotation = Annotation> extends Plai
   createCommands() {
     return {
       /**
-       * Adds an annotation spanning the currently selected content
+       * Adds an annotation spanning the currently selected content.
+       *
+       * In order to use this command make sure you have the
+       * [[`AnnotationExtension`]] added to your editor.
+       *
+       * @param annotationData - the data for the provided annotation.
        */
-      addAnnotation: (annotationData: AnnotationData<A>): CommandFunction => ({
-        state,
-        dispatch,
-      }) => {
-        const sel = state.selection;
+      addAnnotation: (annotationData: AnnotationData<A>): CommandFunction => ({ tr, dispatch }) => {
+        const { empty, from, to } = tr.selection;
 
-        if (sel.empty) {
+        if (empty) {
           return false;
         }
 
-        if (dispatch) {
-          const action: AddAnnotationAction<A> = {
+        dispatch?.(
+          tr.setMeta(AnnotationExtension.name, {
             type: ActionType.ADD_ANNOTATION,
-            from: sel.from,
-            to: sel.to,
+            from,
+            to,
             annotationData,
-          };
-          dispatch(state.tr.setMeta(AnnotationExtension.name, action));
-        }
+          }),
+        );
 
         return true;
       },
 
       /**
-       * Updates an existing annotation with a new value
+       * Updates an existing annotation with a new value.
+       *
+       * In order to use this command make sure you have the
+       * [[`AnnotationExtension`]] added to your editor.
+       *
+       * @param id - the annotation id to update.
+       * @param annotationDataWithoutId - the annotation data without the id.
        */
       updateAnnotation: (
         id: string,
         annotationDataWithoutId: Omit<AnnotationData<A>, 'id'>,
-      ): CommandFunction => ({ state, dispatch }) => {
+      ): CommandFunction => ({ tr, dispatch }) => {
         if (dispatch) {
           const annotationData = {
             ...annotationDataWithoutId,
@@ -117,42 +118,47 @@ export class AnnotationExtension<A extends Annotation = Annotation> extends Plai
             annotationId: id,
             annotationData,
           };
-          dispatch(state.tr.setMeta(AnnotationExtension.name, action));
+          dispatch(tr.setMeta(AnnotationExtension.name, action));
         }
 
         return true;
       },
 
       /**
-       * Removes a list of annotations
+       * Removes a list of annotations.
+       *
+       * In order to use this command make sure you have the
+       * [[`AnnotationExtension`]] added to your editor.
+       *
+       * @param annotationIds - the ids of the annotations to be removed.
        */
-      removeAnnotations: (ids: string[]): CommandFunction => ({ state, dispatch }) => {
-        if (dispatch) {
-          const action: RemoveAnnotationsAction = {
+      removeAnnotations: (annotationIds: string[]): CommandFunction => ({ tr, dispatch }) => {
+        dispatch?.(
+          tr.setMeta(AnnotationExtension.name, {
             type: ActionType.REMOVE_ANNOTATIONS,
-            annotationIds: ids,
-          };
-          dispatch(state.tr.setMeta(AnnotationExtension.name, action));
-        }
+            annotationIds,
+          }),
+        );
 
         return true;
       },
 
       /**
        * Sets the annotation. Use this to initialize the extension based on
-       * loaded data
+       * loaded data.
+       *
+       * In order to use this command make sure you have the
+       * [[`AnnotationExtension`]] added to your editor.
+       *
+       * @param annotations - the initial annotation to be set.
        */
       setAnnotations: (annotations: Array<AnnotationWithoutText<A>>): CommandFunction => ({
-        state,
+        tr,
         dispatch,
       }) => {
-        if (dispatch) {
-          const action: SetAnnotationsAction<A> = {
-            type: ActionType.SET_ANNOTATIONS,
-            annotations,
-          };
-          dispatch(state.tr.setMeta(AnnotationExtension.name, action));
-        }
+        dispatch?.(
+          tr.setMeta(AnnotationExtension.name, { type: ActionType.SET_ANNOTATIONS, annotations }),
+        );
 
         return true;
       },
@@ -177,7 +183,10 @@ export class AnnotationExtension<A extends Annotation = Annotation> extends Plai
 
     return {
       /**
-       * @returns all annotations in the editor
+       * @returns all annotations in the editor.
+       *
+       * In order to use this helper make sure you have the
+       * [[`AnnotationExtension`]] added to your editor.
        */
       getAnnotations: () => {
         const state: AnnotationState<A> = this.getPluginState();
@@ -186,7 +195,12 @@ export class AnnotationExtension<A extends Annotation = Annotation> extends Plai
       },
 
       /**
-       * @returns all annotations at a specific position in the editor
+       * @param pos - the position in the root document to find annotations.
+       *
+       * @returns all annotations at a specific position in the editor.
+       *
+       * In order to use this command make sure you have the
+       * [[`AnnotationExtension`]] added to your editor.
        */
       getAnnotationsAt: (pos: number) => {
         const state: AnnotationState<A> = this.getPluginState();

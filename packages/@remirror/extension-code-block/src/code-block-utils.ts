@@ -259,9 +259,9 @@ interface FormatCodeBlockFactoryParameter
  * one located at the provided position).
  */
 export function formatCodeBlockFactory(parameter: FormatCodeBlockFactoryParameter) {
-  return ({ pos }: Partial<PosParameter> = object()): CommandFunction => ({ state, dispatch }) => {
+  return ({ pos }: Partial<PosParameter> = object()): CommandFunction => ({ tr, dispatch }) => {
     const { type, formatter, defaultLanguage: fallback } = parameter;
-    const { tr, selection } = state;
+    const { selection } = tr;
 
     const { from, to } = pos ? { from: pos, to: pos } : selection;
 
