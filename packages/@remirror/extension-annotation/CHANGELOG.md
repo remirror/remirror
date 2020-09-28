@@ -1,5 +1,27 @@
 # @remirror/extension-annotation
 
+## 1.0.0-next.43
+
+> 2020-09-28
+
+### Minor Changes
+
+- [`a02dd7d1`](https://github.com/remirror/remirror/commit/a02dd7d1c02b2eec2946d4300c3ef90ec0ff79db) [#730](https://github.com/remirror/remirror/pull/730) Thanks [@ronnyroeller](https://github.com/ronnyroeller)! - Support to forcefully redraw annotations
+
+  Annotations can be styled with a custom getStyle function. Yet, changes to outcome of the function (e.g. color schema is dynamically adjusted) won't be automatically reflected in the editor. To handle such cases, one can now force to redraw the annotations by calling the `redrawAnnotations` command.
+
+### Patch Changes
+
+- [`b674f906`](https://github.com/remirror/remirror/commit/b674f906815776d9c07b608a7de8cbaa9554a3a1) [#729](https://github.com/remirror/remirror/pull/729) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Make annotation commands chainable.
+
+* [`bdea98bf`](https://github.com/remirror/remirror/commit/bdea98bf230d2be59ab3caef8b3cc35273883691) [#725](https://github.com/remirror/remirror/pull/725) Thanks [@ronnyroeller](https://github.com/ronnyroeller)! - Fix: Don't extend annotation when typing at end of annotation
+
+  Annotations auto-adjust as users enter content, e.g. an annotation grows if the user types in the middle of the annotation. Incorrectly, the annotation also grew when the user added content directly after the annotation. Now, this leads to new, non-annotated content.
+
+* Updated dependencies []:
+  - @remirror/core@1.0.0-next.43
+  - @remirror/extension-positioner@1.0.0-next.43
+
 ## 1.0.0-next.42
 
 > 2020-09-26
