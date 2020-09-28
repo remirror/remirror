@@ -162,6 +162,19 @@ export class AnnotationExtension<A extends Annotation = Annotation> extends Plai
 
         return true;
       },
+
+      /**
+       * Forcefully redraws the annotations
+       *
+       * Call this function if the styling of the annotations changes.
+       *
+       * @see https://discord.com/channels/726035064831344711/745695557976195072/759715559477870603
+       */
+      redrawAnnotations: (): CommandFunction => ({ tr, dispatch }) => {
+        dispatch?.(tr.setMeta(AnnotationExtension.name, { type: ActionType.REDRAW_ANNOTATIONS }));
+
+        return true;
+      },
     };
   }
 
