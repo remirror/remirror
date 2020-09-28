@@ -1,5 +1,16 @@
 # @remirror/extension-code-block
 
+## 1.0.0-next.43
+
+> 2020-09-28
+
+### Patch Changes
+
+- [`b674f906`](https://github.com/remirror/remirror/commit/b674f906815776d9c07b608a7de8cbaa9554a3a1) [#729](https://github.com/remirror/remirror/pull/729) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Make `formatCodeBlock` command chainable.
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.43
+
 ## 1.0.0-next.42
 
 > 2020-09-26

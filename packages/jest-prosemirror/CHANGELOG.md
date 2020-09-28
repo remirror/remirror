@@ -1,5 +1,14 @@
 # jest-prosemirror
 
+## 1.0.0-next.43
+
+> 2020-09-28
+
+### Patch Changes
+
+- Updated dependencies [[`b030cb6e`](https://github.com/remirror/remirror/commit/b030cb6e50cb6fdc045a4680f4861ad145609197)]:
+  - @remirror/core-utils@1.0.0-next.43
+
 ## 1.0.0-next.42
 
 > 2020-09-26

@@ -1,5 +1,13 @@
 # @remirror/core-utils
 
+## 1.0.0-next.43
+
+> 2020-09-28
+
+### Minor Changes
+
+- [`b030cb6e`](https://github.com/remirror/remirror/commit/b030cb6e50cb6fdc045a4680f4861ad145609197) [#728](https://github.com/remirror/remirror/pull/728) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add `text` property to the return value from `getMarkRange`. It's a common use case when getting the range of the mark to also extract the text content.
+
 ## 1.0.0-next.42
 
 > 2020-09-26

@@ -1,5 +1,21 @@
 # @remirror/preset-core
 
+## 1.0.0-next.43
+
+> 2020-09-28
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.43
+  - @remirror/extension-doc@1.0.0-next.43
+  - @remirror/extension-events@1.0.0-next.43
+  - @remirror/extension-gap-cursor@1.0.0-next.43
+  - @remirror/extension-history@1.0.0-next.43
+  - @remirror/extension-paragraph@1.0.0-next.43
+  - @remirror/extension-positioner@1.0.0-next.43
+  - @remirror/extension-text@1.0.0-next.43
+
 ## 1.0.0-next.42
 
 > 2020-09-26

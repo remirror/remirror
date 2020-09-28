@@ -1,5 +1,17 @@
 # jest-remirror
 
+## 1.0.0-next.43
+
+> 2020-09-28
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.43
+  - jest-prosemirror@1.0.0-next.43
+  - @remirror/dom@1.0.0-next.43
+  - @remirror/preset-core@1.0.0-next.43
+
 ## 1.0.0-next.42
 
 > 2020-09-26
