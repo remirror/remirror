@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@types/prosemirror-keymap": "^1.0.3",
-    "@types/prosemirror-model": "^1.7.3",
+    "@types/prosemirror-model": "^1.7.4",
     "@types/prosemirror-state": "^1.2.5",
     "@types/prosemirror-view": "^1.15.0",
     "prosemirror-model": "^1.11.2",

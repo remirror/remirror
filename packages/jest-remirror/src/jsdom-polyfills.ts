@@ -4,47 +4,52 @@ import sanitizeHtml from 'sanitize-html';
 import { environment, isFunction, noop } from '@remirror/core';
 
 /**
- * Polyfill DOMElement.innerText because JSDOM lacks support for it.
- * See {@link https://github.com/tmpvar/jsdom/issues/1245}
+ * Polyfill DOMElement.innerText because JSDOM lacks support for it. See
+ * {@link https://github.com/tmpvar/jsdom/issues/1245}
  */
 
-export const jsdomPolyfill = () => {
+export function jsdomPolyfill(): void {
   // Do nothing if not in a jsdom environment
   if (!environment.isJSDOM) {
     return;
   }
 
-  if (!('innerText' in document.createElement('a'))) {
-    Object.defineProperty(Element.prototype, 'innerText', {
-      get() {
-        return sanitizeHtml(this.textContent, {
-          allowedTags: [], // remove all tags and return text content only
-          allowedAttributes: {}, // remove all tags and return text content only
-        });
-      },
-      configurable: true, // make it so that it doesn't blow chunks on re-running tests with things like --watch
-    });
-  }
+  supportBoundingClientRect();
+  supportMutationObserver();
+  supportCancelAnimationFrame();
+  supportInnerTextInAnchors();
+  supportRanges();
+  supportAdjustableSizes();
+}
 
-  if (!window.cancelAnimationFrame) {
-    window.cancelAnimationFrame = () => {
-      if (!window.ignoreAllJSDOMWarnings && !window.hasWarnedAboutCancelAnimationFramePolyfill) {
-        window.hasWarnedAboutCancelAnimationFramePolyfill = true;
-        console.warn(
-          'Warning! Test uses DOM cancelAnimationFrame API which is not available in JSDOM/Node environment.',
-        );
-      }
-    };
-  }
-};
-
-/** To fix Prosemirror tests in jsdom */
-export const jsdomExtras = () => {
-  // Do nothing if not in a jsdom environment
+/**
+ * There are a few warnings about unsupported JSDOM APIS. Calling this function
+ * with true turns them all off.
+ *
+ * @param shouldIgnore - whether to ignore. Defaults to `true`.
+ */
+export function ignoreJSDOMWarnings(shouldIgnore = true): void {
   if (!environment.isJSDOM) {
     return;
   }
 
+  window.ignoreAllJSDOMWarnings = shouldIgnore;
+}
+
+/**
+ * This method adds fixes to the jsdom environment so that `jest-remirror`
+ * tests can be run.
+ *
+ * @deprecated - Use `jsdomPolyfill` instead.
+ */
+export function jsdomExtras(): void {
+  // Will be removed in the beta release.
+}
+
+/**
+ * Add pseudo support for bounding client rects.
+ */
+function supportBoundingClientRect() {
   const originalGetBoundingClientRect = Element.prototype.getBoundingClientRect.bind(
     Element.prototype,
   );
@@ -75,7 +80,7 @@ export const jsdomExtras = () => {
 
   const originalGetClientRects = Element.prototype.getClientRects;
 
-  Element.prototype.getClientRects = function () {
+  Element.prototype.getClientRects = function (): DOMRectList {
     if (isFunction(originalGetClientRects)) {
       try {
         return originalGetClientRects();
@@ -89,20 +94,106 @@ export const jsdomExtras = () => {
 
     return rects;
   };
+}
 
-  Range.prototype.getClientRects = Element.prototype.getClientRects;
-  Range.prototype.getBoundingClientRect = Element.prototype.getBoundingClientRect;
+/**
+ * Add a fake mutation observer when none is available via jsdom.
+ */
+function supportMutationObserver(): void {
+  if (window.MutationObserver) {
+    return;
+  }
 
-  // Copied from react-beautiful-dnd/test/setup.js
-  // overriding these properties in jsdom to allow them to be controlled
+  // Taken from
+  // https://github.com/jsdom/jsdom/issues/639#issuecomment-371278152
+  const mutationObserver = readFileSync(require.resolve('mutationobserver-shim'), {
+    encoding: 'utf-8',
+  });
+
+  const mutationObserverScript = window.document.createElement('script');
+  mutationObserverScript.textContent = mutationObserver;
+
+  window.document.head.append(mutationObserverScript);
+}
+
+/**
+ * Add pseudo support for cancelling animation frames.
+ */
+function supportCancelAnimationFrame() {
+  if (isFunction(window.cancelAnimationFrame)) {
+    return;
+  }
+
+  window.cancelAnimationFrame = () => {
+    if (!window.ignoreAllJSDOMWarnings && !window.hasWarnedAboutCancelAnimationFramePolyfill) {
+      window.hasWarnedAboutCancelAnimationFramePolyfill = true;
+      console.warn(
+        'Warning! Test uses DOM cancelAnimationFrame API which is not available in JSDOM/Node environment.',
+      );
+    }
+  };
+}
+
+/**
+ * Add support for inner text within anchor tags.
+ */
+function supportInnerTextInAnchors() {
+  if ('innerText' in document.createElement('a')) {
+    return;
+  }
+
+  Object.defineProperty(Element.prototype, 'innerText', {
+    get() {
+      return sanitizeHtml(this.textContent, {
+        allowedTags: [], // remove all tags and return text content only
+        allowedAttributes: {}, // remove all tags and return text content only
+      });
+    },
+    configurable: true, // make it so that it doesn't blow chunks on re-running tests with things like --watch
+  });
+}
+
+/**
+ * Support ranges in jsdom.
+ */
+function supportRanges() {
+  // Fix breaking configuration for `jsdom < 16`
+  if (window.Range) {
+    window.Range.prototype.getClientRects = Element.prototype.getClientRects;
+    window.Range.prototype.getBoundingClientRect = Element.prototype.getBoundingClientRect;
+  }
+
+  function fakeCreateRange() {
+    return {
+      setStart: noop,
+      setEnd: noop,
+      commonAncestorContainer: {
+        nodeName: 'BODY',
+        ownerDocument: document,
+      } as Node,
+    } as any;
+  }
+
+  // Create a fake range for selections.
+  document.createRange = document.createRange ?? fakeCreateRange;
+}
+
+/**
+ * Add support overriding document size properties so they can be controlled and
+ * mocked when running tests which depend on them.
+ *
+ * Credit to `react-beautiful-dnd`
+ * https://github.com/atlassian/react-beautiful-dnd/blob/ec06fa266e1617cab2402e0613b36d88b9547f7f/test/env-setup.js
+ */
+function supportAdjustableSizes() {
   Object.defineProperties(document.documentElement, {
     clientWidth: {
       writable: true,
-      value: document.documentElement.clientWidth,
+      value: document.documentElement.clientWidth ?? window.innerWidth,
     },
     clientHeight: {
       writable: true,
-      value: document.documentElement.clientHeight,
+      value: document.documentElement.clientHeight ?? window.innerHeight,
     },
     scrollWidth: {
       writable: true,
@@ -113,42 +204,4 @@ export const jsdomExtras = () => {
       value: document.documentElement.scrollHeight,
     },
   });
-
-  // Setting initial viewport
-  // Need to set clientWidth and clientHeight as jsdom does not set these properties
-  (document.documentElement as any).clientWidth = window.innerWidth;
-  (document.documentElement as any).clientHeight = window.innerHeight;
-
-  document.createRange =
-    document.createRange ??
-    (() =>
-      ({
-        setStart: noop,
-        setEnd: noop,
-        commonAncestorContainer: {
-          nodeName: 'BODY',
-          ownerDocument: document,
-        } as Node,
-      } as any));
-
-  // Taken from https://github.com/jsdom/jsdom/issues/639#issuecomment-371278152
-  const mutationObserver = readFileSync(require.resolve('mutationobserver-shim'), {
-    encoding: 'utf-8',
-  });
-  const mutationObserverScript = window.document.createElement('script');
-  mutationObserverScript.textContent = mutationObserver;
-
-  window.document.head.append(mutationObserverScript);
-};
-
-/**
- * There are a few warnings about unsupported JSDOM APIS. Calling this function with
- * true turns them all off.
- */
-export const ignoreJSDOMWarnings = (val = true) => {
-  if (!environment.isJSDOM) {
-    return;
-  }
-
-  window.ignoreAllJSDOMWarnings = val;
-};
+}
