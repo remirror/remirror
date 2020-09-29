@@ -30,7 +30,7 @@ export function extensionValidityTest<Type extends AnyExtensionConstructor>(
 ): void {
   describe(`\`${Extension.name}\``, () => {
     it(`has the right properties`, () => {
-      expect(Extension.name).toEndWith('Extension');
+      expect(Extension.name.endsWith('Extension')).toBe(true);
 
       const extension = new Extension(options);
       expect(extension.name).toBe(Extension.instanceName);
@@ -138,7 +138,7 @@ export function presetValidityTest<Type extends AnyPresetConstructor>(
 ): void {
   describe(`\`${Preset.name}\``, () => {
     it(`has the right properties`, () => {
-      expect(Preset.name).toEndWith('Preset');
+      expect(Preset.name.endsWith('Preset')).toBe(true);
 
       const preset = new Preset(options);
       expect(preset.name).toBe(Preset.instanceName);
