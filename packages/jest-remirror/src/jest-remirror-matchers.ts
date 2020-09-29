@@ -104,6 +104,7 @@ declare global {
        * ```
        */
       toContainRemirrorDocument: (builder: TaggedProsemirrorNode) => R;
+
       /**
        * Checks that two prosemirror documents are identical.
        */

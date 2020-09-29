@@ -26,7 +26,7 @@
     "@remirror/dom": "1.0.0-next.43",
     "@remirror/pm": "1.0.0-next.40",
     "@remirror/preset-core": "1.0.0-next.43",
-    "@testing-library/dom": "^7.24.2",
+    "@testing-library/dom": "^7.24.3",
     "@types/sanitize-html": "^1.27.0",
     "jest-prosemirror": "1.0.0-next.43",
     "jest-snapshot": "^26.4.2",

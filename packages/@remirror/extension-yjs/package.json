@@ -32,7 +32,7 @@
     "linaria": "^2.0.0-rc.3",
     "y-prosemirror": "^0.3.7",
     "y-webrtc": "^10.1.6",
-    "yjs": "^13.3.0"
+    "yjs": "^13.4.0"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.43",
