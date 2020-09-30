@@ -1,6 +1,6 @@
 {
   "name": "test-keyboard",
-  "version": "1.0.0-next.40",
+  "version": "1.0.0-next.44",
   "description": "A test keyboard for composing fake keyboard events",
   "keywords": [
     "compose events",
@@ -27,8 +27,8 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.11.0",
-    "@remirror/core-helpers": "1.0.0-next.40",
-    "@remirror/core-types": "1.0.0-next.40"
+    "@remirror/core-helpers": "1.0.0-next.44",
+    "@remirror/core-types": "1.0.0-next.44"
   },
   "publishConfig": {
     "access": "public"

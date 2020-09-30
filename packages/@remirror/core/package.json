@@ -1,6 +1,6 @@
 {
   "name": "@remirror/core",
-  "version": "1.0.0-next.43",
+  "version": "1.0.0-next.44",
   "description": "Where your quest to create a world class editing experience begins.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/core",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/core",
@@ -23,18 +23,18 @@
   "dependencies": {
     "@babel/runtime": "^7.11.0",
     "@remirror/core-constants": "1.0.0-next.35",
-    "@remirror/core-helpers": "1.0.0-next.40",
-    "@remirror/core-types": "1.0.0-next.40",
-    "@remirror/core-utils": "1.0.0-next.43",
+    "@remirror/core-helpers": "1.0.0-next.44",
+    "@remirror/core-types": "1.0.0-next.44",
+    "@remirror/core-utils": "1.0.0-next.44",
     "linaria": "^2.0.0-rc.3",
     "nanoevents": "^5.1.8",
     "type-fest": "^0.16.0"
   },
   "devDependencies": {
-    "@remirror/pm": "1.0.0-next.40"
+    "@remirror/pm": "1.0.0-next.44"
   },
   "peerDependencies": {
-    "@remirror/pm": "1.0.0-next.40"
+    "@remirror/pm": "1.0.0-next.44"
   },
   "publishConfig": {
     "access": "public"

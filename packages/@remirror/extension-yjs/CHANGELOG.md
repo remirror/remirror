@@ -1,5 +1,17 @@
 # @remirror/extension-yjs
 
+## 1.0.0-next.44
+
+> 2020-09-30
+
+### Patch Changes
+
+- [`bcf3b2c4`](https://github.com/remirror/remirror/commit/bcf3b2c4c0eabc90e1690593d4a9dfb2a9d39c68) [#731](https://github.com/remirror/remirror/pull/731) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Bump dependencies with minor and patch updates.
+
+- Updated dependencies [[`bcf3b2c4`](https://github.com/remirror/remirror/commit/bcf3b2c4c0eabc90e1690593d4a9dfb2a9d39c68)]:
+  - @remirror/pm@1.0.0-next.44
+  - @remirror/core@1.0.0-next.44
+
 ## 1.0.0-next.43
 
 > 2020-09-28

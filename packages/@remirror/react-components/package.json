@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-components",
-  "version": "1.0.0-next.24",
+  "version": "1.0.0-next.25",
   "private": true,
   "description": "The `remirror` what-you-see-is-what-you-get (wysiwyg) editing experience.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/react-components",
@@ -25,14 +25,14 @@
     "@babel/runtime": "^7.11.0",
     "@lingui/core": "^3.0.0-13",
     "linaria": "^2.0.0-rc.3",
-    "multishift": "1.0.0-next.42",
+    "multishift": "1.0.0-next.44",
     "type-fest": "^0.16.0"
   },
   "devDependencies": {
     "@lingui/macro": "^3.0.0-13",
-    "@remirror/core": "1.0.0-next.43",
-    "@remirror/pm": "1.0.0-next.40",
-    "@remirror/react": "1.0.0-next.43",
+    "@remirror/core": "1.0.0-next.44",
+    "@remirror/pm": "1.0.0-next.44",
+    "@remirror/react": "1.0.0-next.44",
     "@testing-library/react": "^11.0.4",
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
@@ -40,9 +40,9 @@
     "react-dom": "^16.13.1"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.43",
-    "@remirror/pm": "1.0.0-next.40",
-    "@remirror/react": "1.0.0-next.43",
+    "@remirror/core": "1.0.0-next.44",
+    "@remirror/pm": "1.0.0-next.44",
+    "@remirror/react": "1.0.0-next.44",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "react": "^16.8.0",

@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@babel/core": "^7.11.0",
-    "@remirror/pm": "1.0.0-next.40",
-    "@remirror/showcase": "1.0.0-next.43",
+    "@remirror/pm": "1.0.0-next.44",
+    "@remirror/showcase": "1.0.0-next.44",
     "@storybook/addon-actions": "^6.0.22",
     "@storybook/addon-links": "^6.0.22",
     "@storybook/addons": "^6.0.22",
@@ -23,6 +23,6 @@
     "linaria": "^2.0.0-rc.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "remirror": "1.0.0-next.43"
+    "remirror": "1.0.0-next.44"
   }
 }

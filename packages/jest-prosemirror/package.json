@@ -1,6 +1,6 @@
 {
   "name": "jest-prosemirror",
-  "version": "1.0.0-next.43",
+  "version": "1.0.0-next.44",
   "description": "Write expressive tests for your prosemirror editor",
   "keywords": [
     "jest",
@@ -29,10 +29,10 @@
   "dependencies": {
     "@babel/runtime": "^7.11.0",
     "@remirror/core-constants": "1.0.0-next.35",
-    "@remirror/core-helpers": "1.0.0-next.40",
-    "@remirror/core-types": "1.0.0-next.40",
-    "@remirror/core-utils": "1.0.0-next.43",
-    "@remirror/pm": "1.0.0-next.40",
+    "@remirror/core-helpers": "1.0.0-next.44",
+    "@remirror/core-types": "1.0.0-next.44",
+    "@remirror/core-utils": "1.0.0-next.44",
+    "@remirror/pm": "1.0.0-next.44",
     "@testing-library/dom": "^7.24.3",
     "@types/prosemirror-schema-basic": "^1.0.1",
     "@types/prosemirror-test-builder": "^1.0.1",
@@ -41,7 +41,7 @@
     "prosemirror-schema-basic": "^1.1.2",
     "prosemirror-tables": "^1.1.1",
     "prosemirror-test-builder": "^1.0.3",
-    "test-keyboard": "1.0.0-next.40"
+    "test-keyboard": "1.0.0-next.44"
   },
   "devDependencies": {
     "jest": "^26.4.2"

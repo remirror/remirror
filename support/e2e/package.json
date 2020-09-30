@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.11.0",
-    "@remirror/core": "1.0.0-next.43",
+    "@remirror/core": "1.0.0-next.44",
     "@types/wait-on": "^4.0.0",
     "expect-playwright": "^0.2.5",
     "jest": "^26.4.2",
@@ -23,6 +23,6 @@
     "playwright-core": "^1.4.2",
     "playwright-testing-library": "^2.4.0",
     "signal-exit": "^3.0.3",
-    "test-keyboard": "1.0.0-next.40"
+    "test-keyboard": "1.0.0-next.44"
   }
 }

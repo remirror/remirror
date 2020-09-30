@@ -1,5 +1,14 @@
 # @remirror/cli
 
+## 1.0.0-next.44
+
+> 2020-09-30
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core-helpers@1.0.0-next.44
+
 ## 1.0.0-next.40
 
 > 2020-09-24

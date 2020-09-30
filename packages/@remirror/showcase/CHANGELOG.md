@@ -1,5 +1,17 @@
 # @remirror/showcase
 
+## 1.0.0-next.44
+
+> 2020-09-30
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/react-hooks@1.0.0-next.44
+  - @remirror/react-social@1.0.0-next.44
+  - @remirror/core@1.0.0-next.44
+  - @remirror/extension-code-block@1.0.0-next.44
+
 ## 1.0.0-next.43
 
 > 2020-09-28

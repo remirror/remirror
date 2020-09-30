@@ -1,6 +1,6 @@
 {
   "name": "@remirror/showcase",
-  "version": "1.0.0-next.43",
+  "version": "1.0.0-next.44",
   "description": "A showcase of editors built with remirror and react.",
   "keywords": [
     "remirror",
@@ -27,10 +27,10 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.11.0",
-    "@remirror/core": "1.0.0-next.43",
-    "@remirror/extension-code-block": "1.0.0-next.43",
-    "@remirror/react-hooks": "1.0.0-next.43",
-    "@remirror/react-social": "1.0.0-next.43",
+    "@remirror/core": "1.0.0-next.44",
+    "@remirror/extension-code-block": "1.0.0-next.44",
+    "@remirror/react-hooks": "1.0.0-next.44",
+    "@remirror/react-social": "1.0.0-next.44",
     "@types/match-sorter": "^4.0.0",
     "@types/prettier": "^2.1.1",
     "match-sorter": "^4.2.1",

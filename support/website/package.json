@@ -22,9 +22,9 @@
     "@docusaurus/preset-classic": "2.0.0-alpha.64",
     "@docusaurus/theme-live-codeblock": "2.0.0-alpha.64",
     "@mdx-js/react": "^1.6.18",
-    "@remirror/dev": "1.0.0-next.43",
-    "@remirror/playground": "1.0.0-next.43",
-    "@remirror/showcase": "1.0.0-next.43",
+    "@remirror/dev": "1.0.0-next.44",
+    "@remirror/playground": "1.0.0-next.44",
+    "@remirror/showcase": "1.0.0-next.44",
     "clsx": "^1.1.1",
     "core-js": "^3.6.5",
     "docusaurus": "2.0.0-alpha.64",
@@ -33,7 +33,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "remark-footnotes": "^2.0.0",
-    "remirror": "1.0.0-next.43"
+    "remirror": "1.0.0-next.44"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "2.0.0-alpha.64",

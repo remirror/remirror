@@ -1,6 +1,6 @@
 {
   "name": "@remirror/core-utils",
-  "version": "1.0.0-next.43",
+  "version": "1.0.0-next.44",
   "description": "Core utilities for dealing with the dom and prosemirror within remirror",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/core-utils",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/core-utils",
@@ -22,19 +22,19 @@
   "dependencies": {
     "@babel/runtime": "^7.11.0",
     "@remirror/core-constants": "1.0.0-next.35",
-    "@remirror/core-helpers": "1.0.0-next.40",
-    "@remirror/core-types": "1.0.0-next.40",
+    "@remirror/core-helpers": "1.0.0-next.44",
+    "@remirror/core-types": "1.0.0-next.44",
     "@types/min-document": "^2.19.0",
     "min-document": "^2.19.0",
     "type-fest": "^0.16.0"
   },
   "devDependencies": {
-    "@remirror/pm": "1.0.0-next.40",
+    "@remirror/pm": "1.0.0-next.44",
     "@types/node": "^14.11.2",
     "domino": "^2.1.6"
   },
   "peerDependencies": {
-    "@remirror/pm": "1.0.0-next.40",
+    "@remirror/pm": "1.0.0-next.44",
     "@types/node": "*"
   },
   "peerDependenciesMeta": {
