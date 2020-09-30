@@ -14,6 +14,20 @@ export interface EventsOptions {
    * Return `true` to prevent any other prosemirror listeners from firing.
    */
   focus: Handler<(event: FocusEvent) => boolean | undefined>;
+
+  /**
+   * Listens for mousedown events on the editor.
+   *
+   * Return `true` to prevent any other prosemirror listeners from firing.
+   */
+  mousedown: Handler<(event: MouseEvent) => boolean | undefined>;
+
+  /**
+   * Listens for mouseup events on the editor.
+   *
+   * Return `true` to prevent any other prosemirror listeners from firing.
+   */
+  mouseup: Handler<(event: MouseEvent) => boolean | undefined>;
 }
 
 /**
@@ -23,8 +37,13 @@ export interface EventsOptions {
  * TODO - add more events based on user feedback.
  */
 @extensionDecorator<EventsOptions>({
-  handlerKeys: ['blur', 'focus'],
-  handlerKeyOptions: { blur: { earlyReturnValue: true }, focus: { earlyReturnValue: true } },
+  handlerKeys: ['blur', 'focus', 'mousedown', 'mouseup'],
+  handlerKeyOptions: {
+    blur: { earlyReturnValue: true },
+    focus: { earlyReturnValue: true },
+    mousedown: { earlyReturnValue: true },
+    mouseup: { earlyReturnValue: true },
+  },
 })
 export class EventsExtension extends PlainExtension<EventsOptions> {
   get name() {
@@ -40,6 +59,12 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
           },
           blur: (_, event) => {
             return this.options.blur(event as FocusEvent) ?? false;
+          },
+          mousedown: (_, event) => {
+            return this.options.mousedown(event as MouseEvent) ?? false;
+          },
+          mouseup: (_, event) => {
+            return this.options.mouseup(event as MouseEvent) ?? false;
           },
         },
       },
