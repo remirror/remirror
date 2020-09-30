@@ -31,4 +31,30 @@ describe('events', () => {
 
     expect(blurHandler).toHaveBeenCalled();
   });
+
+  it('responds to editor `mousedown` events', () => {
+    const eventsExtension = new EventsExtension();
+    const mouseDownHandler = jest.fn(() => true);
+    const editor = renderEditor([eventsExtension]);
+    const { doc, p } = editor.nodes;
+    eventsExtension.addHandler('mousedown', mouseDownHandler);
+
+    editor.add(doc(p('first')));
+    fireEvent.mouseDown(editor.dom);
+
+    expect(mouseDownHandler).toHaveBeenCalled();
+  });
+
+  it('responds to editor `mouseup` events', () => {
+    const eventsExtension = new EventsExtension();
+    const mouseUpHandler = jest.fn(() => true);
+    const editor = renderEditor([eventsExtension]);
+    const { doc, p } = editor.nodes;
+    eventsExtension.addHandler('mouseup', mouseUpHandler);
+
+    editor.add(doc(p('first')));
+    fireEvent.mouseUp(editor.dom);
+
+    expect(mouseUpHandler).toHaveBeenCalled();
+  });
 });
