@@ -1,5 +1,19 @@
 # @remirror/extension-events
 
+## 1.0.0-next.44
+
+> 2020-09-30
+
+### Minor Changes
+
+- [`60776b1f`](https://github.com/remirror/remirror/commit/60776b1fc683408480a5e9502d104f79146a7977) [#734](https://github.com/remirror/remirror/pull/734) Thanks [@whawker](https://github.com/whawker)! - Add support for `mousedown` and `mouseup` events in `EventsExtension`
+
+### Patch Changes
+
+- Updated dependencies [[`bcf3b2c4`](https://github.com/remirror/remirror/commit/bcf3b2c4c0eabc90e1690593d4a9dfb2a9d39c68)]:
+  - @remirror/pm@1.0.0-next.44
+  - @remirror/core@1.0.0-next.44
+
 ## 1.0.0-next.43
 
 > 2020-09-28

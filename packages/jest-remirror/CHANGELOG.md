@@ -1,5 +1,24 @@
 # jest-remirror
 
+## 1.0.0-next.44
+
+> 2020-09-30
+
+### Patch Changes
+
+- [`bcf3b2c4`](https://github.com/remirror/remirror/commit/bcf3b2c4c0eabc90e1690593d4a9dfb2a9d39c68) [#731](https://github.com/remirror/remirror/pull/731) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix support for `jest-remirror` with versions before the `16` release.
+
+  Deprecate `jsdomExtras` which has been replaced by `jsdomPolyfill`.
+
+* [`8ce923a4`](https://github.com/remirror/remirror/commit/8ce923a46a269a56782704b5bda15e918a897b9a) [#733](https://github.com/remirror/remirror/pull/733) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix incorrect usage of `endsWith` in `ValidityTest`s.
+
+* Updated dependencies [[`bcf3b2c4`](https://github.com/remirror/remirror/commit/bcf3b2c4c0eabc90e1690593d4a9dfb2a9d39c68)]:
+  - @remirror/pm@1.0.0-next.44
+  - @remirror/preset-core@1.0.0-next.44
+  - @remirror/core@1.0.0-next.44
+  - @remirror/dom@1.0.0-next.44
+  - jest-prosemirror@1.0.0-next.44
+
 ## 1.0.0-next.43
 
 > 2020-09-28

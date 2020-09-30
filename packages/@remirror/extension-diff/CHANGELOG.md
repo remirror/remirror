@@ -1,5 +1,15 @@
 # @remirror/extension-diff
 
+## 1.0.0-next.44
+
+> 2020-09-30
+
+### Patch Changes
+
+- Updated dependencies [[`bcf3b2c4`](https://github.com/remirror/remirror/commit/bcf3b2c4c0eabc90e1690593d4a9dfb2a9d39c68)]:
+  - @remirror/pm@1.0.0-next.44
+  - @remirror/core@1.0.0-next.44
+
 ## 1.0.0-next.43
 
 > 2020-09-28

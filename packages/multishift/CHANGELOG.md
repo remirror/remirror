@@ -1,5 +1,15 @@
 # multishift
 
+## 1.0.0-next.44
+
+> 2020-09-30
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.44
+  - @remirror/core-helpers@1.0.0-next.44
+
 ## 1.0.0-next.42
 
 > 2020-09-26

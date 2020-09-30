@@ -1,6 +1,6 @@
 {
   "name": "@remirror/cli",
-  "version": "1.0.0-next.40",
+  "version": "1.0.0-next.44",
   "description": "The remirror cli",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/cli",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/cli",
@@ -19,7 +19,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.11.0",
-    "@remirror/core-helpers": "1.0.0-next.40",
+    "@remirror/core-helpers": "1.0.0-next.44",
     "@types/ms": "^0.7.31",
     "@types/update-notifier": "^4.1.1",
     "@types/yup": "^0.29.7",

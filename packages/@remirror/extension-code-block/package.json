@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-code-block",
-  "version": "1.0.0-next.43",
+  "version": "1.0.0-next.44",
   "description": "Unleash the inner coder with code blocks for your remirror editor.",
   "keywords": [
     "remirror",
@@ -36,13 +36,13 @@
     "type-fest": "^0.16.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.43",
-    "@remirror/pm": "1.0.0-next.40",
+    "@remirror/core": "1.0.0-next.44",
+    "@remirror/pm": "1.0.0-next.44",
     "@types/prettier": "^2.1.1"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.43",
-    "@remirror/pm": "1.0.0-next.40"
+    "@remirror/core": "1.0.0-next.44",
+    "@remirror/pm": "1.0.0-next.44"
   },
   "publishConfig": {
     "access": "public"

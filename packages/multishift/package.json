@@ -1,6 +1,6 @@
 {
   "name": "multishift",
-  "version": "1.0.0-next.42",
+  "version": "1.0.0-next.44",
   "description": "A repurposed downshift for internal use within remirror",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/multishift",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/multishift",
@@ -21,8 +21,8 @@
   "dependencies": {
     "@babel/runtime": "^7.11.0",
     "@reach/auto-id": "^0.11.0",
-    "@remirror/core-helpers": "1.0.0-next.40",
-    "@remirror/core-types": "1.0.0-next.40",
+    "@remirror/core-helpers": "1.0.0-next.44",
+    "@remirror/core-types": "1.0.0-next.44",
     "@seznam/compose-react-refs": "^1.0.4",
     "a11y-status": "1.0.0-next.35",
     "compute-scroll-into-view": "^1.0.14",

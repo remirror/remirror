@@ -1,6 +1,6 @@
 {
   "name": "@remirror/dev",
-  "version": "1.0.0-next.43",
+  "version": "1.0.0-next.44",
   "description": "Development utilities for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/dev",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/dev",
@@ -21,8 +21,8 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.11.0",
-    "@remirror/pm": "1.0.0-next.40",
-    "@remirror/react": "1.0.0-next.43",
+    "@remirror/pm": "1.0.0-next.44",
+    "@remirror/react": "1.0.0-next.44",
     "@types/prosemirror-dev-tools": "^2.1.0",
     "prosemirror-dev-tools": "^3.0.1"
   },
