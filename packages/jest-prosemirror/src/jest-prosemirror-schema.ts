@@ -2,7 +2,7 @@ import { marks, nodes } from 'prosemirror-schema-basic';
 import { tableNodes } from 'prosemirror-tables';
 
 import { NodeGroup } from '@remirror/core-constants';
-import { NodeSpec, Schema } from '@remirror/pm/model';
+import { NodeSpec, MarkSpec, Schema } from '@remirror/pm/model';
 import {
   bulletList as baseBulletList,
   listItem as baseListItem,
@@ -20,6 +20,7 @@ const {
   hard_break,
   image,
 } = nodes;
+const { link, em, strong, code } = marks;
 const { table, table_cell, table_header, table_row } = tableNodes({
   tableGroup: 'block',
   cellContent: 'block+',
@@ -94,6 +95,27 @@ const containerWithRestrictedContent: NodeSpec = {
   },
 };
 
+const strike: MarkSpec = {
+  parseDOM: [
+    {
+      tag: 's',
+    },
+    {
+      tag: 'del',
+    },
+    {
+      tag: 'strike',
+    },
+    {
+      style: 'text-decoration',
+      getAttrs: (node) => (node === 'line-through' ? {} : false),
+    },
+  ],
+  toDOM: () => {
+    return ['s', 0];
+  },
+};
+
 export const schema = new Schema({
   nodes: {
     doc,
@@ -117,5 +139,11 @@ export const schema = new Schema({
     hard_break,
     image,
   },
-  marks,
+  marks: {
+    link,
+    em,
+    strong,
+    code,
+    strike,
+  },
 });

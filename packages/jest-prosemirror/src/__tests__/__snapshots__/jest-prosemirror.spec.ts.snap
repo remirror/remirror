@@ -339,6 +339,22 @@ Prosemirror schema: {
           "tag": "code"
         }
       ]
+    },
+    "strike": {
+      "parseDOM": [
+        {
+          "tag": "s"
+        },
+        {
+          "tag": "del"
+        },
+        {
+          "tag": "strike"
+        },
+        {
+          "style": "text-decoration"
+        }
+      ]
     }
   }
 }
