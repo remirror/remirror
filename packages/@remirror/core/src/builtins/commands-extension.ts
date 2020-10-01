@@ -595,8 +595,8 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
         },
       },
       props: {
-        decorations: () => {
-          return this.getPluginState();
+        decorations: (state) => {
+          return this.getPluginState(state);
         },
       },
     };

@@ -169,7 +169,8 @@ export class PluginsExtension extends PlainExtension {
   };
 
   /**
-   * Add the plugin specific properties and methods to the manager and extension store.
+   * Add the plugin specific properties and methods to the manager and extension
+   * store.
    */
   private updateExtensionStore() {
     const { setStoreKey, setExtensionStore } = this.store;
@@ -210,7 +211,8 @@ export class PluginsExtension extends PlainExtension {
    * Reruns the `createPlugin` and `createExternalPlugins` methods of the
    * provided extension.
    *
-   * For the update to take effect you will need to call `reconfigureStatePlugins`
+   * For the update to take effect you will need to call
+   * `reconfigureStatePlugins`
    *
    * ```ts
    * // From within an extension
@@ -224,7 +226,8 @@ export class PluginsExtension extends PlainExtension {
   };
 
   /**
-   * Applies the store plugins to the state. If any have changed then it will be updated.
+   * Applies the store plugins to the state. If any have changed then it will be
+   * updated.
    */
   private readonly reconfigureStatePlugins = () => {
     invariant(this.store.phase >= ManagerPhase.EditorView, {
@@ -282,13 +285,14 @@ declare global {
       replacePlugin: (original: ProsemirrorPlugin, replacement: ProsemirrorPlugin) => void;
 
       /**
-       * Applies the store plugins to the state. If any have changed then it will be updated.
+       * Applies the store plugins to the state. If any have changed then it
+       * will be updated.
        */
       reconfigureStatePlugins: () => void;
 
       /**
-       * Use this to push custom plugins to the store which are added to the plugin
-       * list after the #plugins.
+       * Use this to push custom plugins to the store which are added to the
+       * plugin list after the #plugins.
        *
        * ```ts
        * this.store.addPlugins(...plugins);
@@ -312,7 +316,8 @@ declare global {
        * Reruns the `createPlugin` and `createExternalPlugins` methods of the
        * provided extension.
        *
-       * For the update to take effect you will need to call `reconfigureStatePlugins`
+       * For the update to take effect you will need to call
+       * `reconfigureStatePlugins`
        *
        * ```ts
        * // From within an extension
@@ -393,6 +398,10 @@ declare global {
        * If you would like to use it before that e.g. in the decorations prop of
        * the `createPlugin` method, you can call it with a current state which
        * will be used to retrieve the plugin state.
+       *
+       * Please note that when using this in the decorations callback it is
+       * advisable to pass in the `state` argument in case the callback is
+       * called before the framework, or the view have been initialized.
        */
       getPluginState: <State>(state?: EditorState) => State;
     }

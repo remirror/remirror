@@ -568,7 +568,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
     invariant(this.#framework, {
       code: ErrorConstant.MANAGER_PHASE_ERROR,
       message:
-        '`getState` can only be called after the `Framework` or the `EditorView` has been added to the manager`.',
+        '`getState` can only be called after the `Framework` or the `EditorView` has been added to the manager`. Check your plugins to make sure that the decorations callback uses the state argument.',
     });
 
     return this.#framework?.initialEditorState;
