@@ -352,6 +352,28 @@ describe('helpers', () => {
     expect(helpers.getAnnotations()[0].text).toBeUndefined();
   });
 
+  it('#getAnnotations concats multi-block content with configured blockseparator', () => {
+    const {
+      add,
+      helpers,
+      nodes: { p, doc },
+      commands,
+    } = create({
+      blockSeparator: '<NEWLINE>',
+    });
+
+    add(doc(p('Hello'), p('World')));
+    commands.setAnnotations([
+      {
+        id: '1',
+        from: 1,
+        to: 13,
+      },
+    ]);
+
+    expect(helpers.getAnnotations()[0].text).toEqual('Hello<NEWLINE>World');
+  });
+
   it('#getAnnotationsAt', () => {
     const {
       add,

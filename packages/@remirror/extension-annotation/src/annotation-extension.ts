@@ -31,6 +31,7 @@ function defaultGetStyle<A extends Annotation>(annotations: Array<AnnotationWith
 @extensionDecorator<AnnotationOptions<Annotation>>({
   defaultOptions: {
     getStyle: defaultGetStyle,
+    blockSeparator: '\n',
   },
   defaultPriority: ExtensionPriority.Low,
 })
@@ -186,7 +187,7 @@ export class AnnotationExtension<A extends Annotation = Annotation> extends Plai
       // This can happen if content/annotations are set at different points.
       const text =
         annotation.to <= doc.content.size
-          ? doc.textBetween(annotation.from, annotation.to)
+          ? doc.textBetween(annotation.from, annotation.to, this.options.blockSeparator)
           : undefined;
       return {
         ...annotation,

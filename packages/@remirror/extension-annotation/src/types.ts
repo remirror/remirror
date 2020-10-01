@@ -11,6 +11,16 @@ export interface AnnotationOptions<A extends Annotation = Annotation> {
    * the amount of annotations in a segment.
    */
   getStyle?: GetStyle<A>;
+
+  /**
+   * Allows to format the text returned for each annotation.
+   *
+   * When `blockSeparator` is given, it will be inserted whenever a new
+   * block node is started.
+   *
+   * @see PromirrorNode.textBetween
+   */
+  blockSeparator?: string | undefined;
 }
 
 export interface Annotation {
