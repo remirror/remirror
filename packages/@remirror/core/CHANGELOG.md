@@ -1,5 +1,13 @@
 # @remirror/core
 
+## 1.0.0-next.45
+
+> 2020-10-01
+
+### Patch Changes
+
+- [`2175be1d`](https://github.com/remirror/remirror/commit/2175be1d4b3fb1d4d1ec7edd8f6054e4e1873fc0) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix `CommandExtension` error when editor started without an attached framework.
+
 ## 1.0.0-next.44
 
 > 2020-09-30
