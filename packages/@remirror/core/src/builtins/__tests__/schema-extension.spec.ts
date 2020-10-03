@@ -95,6 +95,7 @@ test('custom schema', () => {
       "em",
       "strong",
       "code",
+      "strike",
     ]
   `);
 });
