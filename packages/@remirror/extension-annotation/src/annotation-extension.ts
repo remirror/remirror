@@ -31,7 +31,7 @@ function defaultGetStyle<A extends Annotation>(annotations: Array<AnnotationWith
 @extensionDecorator<AnnotationOptions<Annotation>>({
   defaultOptions: {
     getStyle: defaultGetStyle,
-    blockSeparator: '\n',
+    blockSeparator: undefined,
   },
   defaultPriority: ExtensionPriority.Low,
 })

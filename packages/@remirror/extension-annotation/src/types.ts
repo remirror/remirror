@@ -1,3 +1,5 @@
+import type { AcceptUndefined } from '@remirror/core';
+
 export type GetStyle<A extends Annotation> = (
   annotations: Array<AnnotationWithoutText<A>>,
 ) => string | undefined;
@@ -20,7 +22,7 @@ export interface AnnotationOptions<A extends Annotation = Annotation> {
    *
    * @see PromirrorNode.textBetween
    */
-  blockSeparator?: string | undefined;
+  blockSeparator?: AcceptUndefined<string>;
 }
 
 export interface Annotation {
