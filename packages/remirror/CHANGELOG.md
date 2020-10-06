@@ -1,5 +1,14 @@
 # remirror
 
+## 1.0.0-next.46
+
+> 2020-10-06
+
+### Patch Changes
+
+- Updated dependencies [[`73e81b43`](https://github.com/remirror/remirror/commit/73e81b43aa2bd685ad12bfe94942ef16c1c0a006)]:
+  - @remirror/extension-annotation@1.0.0-next.46
+
 ## 1.0.0-next.45
 
 > 2020-10-01
