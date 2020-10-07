@@ -36,7 +36,7 @@
     "linaria": "^2.0.0-rc.3",
     "react-use": "^15.3.3",
     "resize-observer-polyfill": "^1.5.1",
-    "type-fest": "^0.16.0",
+    "type-fest": "^0.17.0",
     "use-isomorphic-layout-effect": "^1.0.0"
   },
   "devDependencies": {
@@ -44,7 +44,7 @@
     "@remirror/pm": "1.0.0-next.44",
     "@testing-library/react": "^11.0.4",
     "@testing-library/react-hooks": "^3.4.2",
-    "@types/react": "^16.9.49",
+    "@types/react": "^16.9.51",
     "@types/react-dom": "^16.9.8",
     "@types/react-test-renderer": "^16.9.2",
     "@types/testing-library__react-hooks": "^3.4.1",

@@ -23,7 +23,7 @@
   "devDependencies": {
     "@emotion/core": "^10.0.35",
     "@emotion/styled": "^10.0.27",
-    "@types/react": "^16.9.49",
+    "@types/react": "^16.9.51",
     "@types/styled-components": "^5.1.2",
     "emotion": "^10.0.27",
     "react": "^16.13.1",

@@ -21,14 +21,14 @@
     "@babel/runtime": "^7.11.0",
     "@remirror/core-helpers": "1.0.0-next.44",
     "@types/ms": "^0.7.31",
-    "@types/update-notifier": "^4.1.1",
+    "@types/update-notifier": "^5.0.0",
     "@types/yup": "^0.29.7",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.4.0",
     "clipanion": "^2.6.2",
     "dargs": "^7.0.0",
     "figures": "^3.2.0",
-    "ink": "^3.0.6",
+    "ink": "^3.0.7",
     "ink-link": "^2.0.0",
     "ink-multi-select": "^2.0.0",
     "ink-spinner": "^4.0.0",
@@ -40,8 +40,8 @@
     "react-use": "^15.3.3",
     "rimraf": "^3.0.2",
     "terminal-link": "^2.1.1",
-    "type-fest": "^0.16.0",
-    "update-notifier": "^4.1.0",
+    "type-fest": "^0.17.0",
+    "update-notifier": "^5.0.0",
     "yup": "^0.29.2"
   },
   "devDependencies": {
@@ -49,11 +49,11 @@
     "@types/ink-spinner": "^3.0.0",
     "@types/ink-testing-library": "^1.0.1",
     "@types/jsesc": "^2.5.1",
-    "@types/node": "^14.11.2",
+    "@types/node": "^14.11.5",
     "@types/parcel-bundler": "^1.12.1",
-    "@types/react": "^16.9.49",
+    "@types/react": "^16.9.51",
     "@types/rimraf": "^3.0.0",
-    "ink-testing-library": "^2.0.1"
+    "ink-testing-library": "^2.1.0"
   },
   "engines": {
     "node": ">=8"

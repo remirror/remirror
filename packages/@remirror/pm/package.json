@@ -59,7 +59,7 @@
     "prosemirror-suggest": "^1.0.0-next.44",
     "prosemirror-tables": "^1.1.1",
     "prosemirror-transform": "^1.2.8",
-    "prosemirror-view": "^1.15.7"
+    "prosemirror-view": "^1.16.0"
   },
   "publishConfig": {
     "access": "public"

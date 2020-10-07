@@ -15,13 +15,13 @@
     "@remirror/core": "1.0.0-next.45",
     "@types/wait-on": "^4.0.0",
     "expect-playwright": "^0.2.5",
-    "jest": "^26.4.2",
+    "jest": "^26.5.2",
     "jest-dev-server": "^4.4.0",
     "jest-playwright-preset": "^1.3.1",
     "looks-same": "^7.2.3",
     "playwright": "^1.4.2",
     "playwright-core": "^1.4.2",
-    "playwright-testing-library": "^2.4.0",
+    "playwright-testing-library": "^2.7.0",
     "signal-exit": "^3.0.3",
     "test-keyboard": "1.0.0-next.44"
   }

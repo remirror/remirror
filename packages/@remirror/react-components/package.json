@@ -26,7 +26,7 @@
     "@lingui/core": "^3.0.0-13",
     "linaria": "^2.0.0-rc.3",
     "multishift": "1.0.0-next.44",
-    "type-fest": "^0.16.0"
+    "type-fest": "^0.17.0"
   },
   "devDependencies": {
     "@lingui/macro": "^3.0.0-13",
@@ -34,7 +34,7 @@
     "@remirror/pm": "1.0.0-next.44",
     "@remirror/react": "1.0.0-next.45",
     "@testing-library/react": "^11.0.4",
-    "@types/react": "^16.9.49",
+    "@types/react": "^16.9.51",
     "@types/react-dom": "^16.9.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"

@@ -37,7 +37,7 @@
   "devDependencies": {
     "@remirror/core": "1.0.0-next.45",
     "@remirror/pm": "1.0.0-next.44",
-    "@types/react": "^16.9.49",
+    "@types/react": "^16.9.51",
     "@types/react-dom": "^16.9.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
