@@ -1744,6 +1744,7 @@ importers:
       lodash.groupby: 4.6.0
       lodash.isequal: 4.5.0
       postcss: 7.0.35
+      postcss-import: 12.0.1
       postcss-loader: 3.0.0
       postcss-nested: 4.2.3
       type-fest: 0.17.0
@@ -1767,6 +1768,7 @@ importers:
       lodash.groupby: ^4.6.0
       lodash.isequal: ^4.5.0
       postcss: ^7.0.34
+      postcss-import: ^12.0.1
       postcss-loader: ^3.0.0
       postcss-nested: ^4.2.3
       type-fest: ^0.17.0
@@ -20858,6 +20860,17 @@ packages:
       node: '>=6.0.0'
     resolution:
       integrity: sha512-oPTcFFip5LZy8Y/whto91L9xdRHCWEMs3e1MdJxhgt4jy2WYXfhkng59fH5qLXSCPN8k4n94p1Czrfe5IOkKUw==
+  /postcss-import/12.0.1:
+    dependencies:
+      postcss: 7.0.35
+      postcss-value-parser: 3.3.1
+      read-cache: 1.0.0
+      resolve: 1.17.0
+    dev: false
+    engines:
+      node: '>=6.0.0'
+    resolution:
+      integrity: sha512-3Gti33dmCjyKBgimqGxL3vcV8w9+bsHwO5UrBawp796+jdardbcFl4RP5w/76BwNL7aGzpKstIfF9I+kdE8pTw==
   /postcss-initial/3.0.2:
     dependencies:
       lodash.template: 4.5.0
@@ -22715,6 +22728,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-KiwVUcFu1RErkI97ywr8nvx8dNOpT03rbnma0SSalTYjkrPYaEajR4a/MRt6DZ46K6arDRbWMNHF+xH7G7n/8A==
+  /read-cache/1.0.0:
+    dependencies:
+      pify: 2.3.0
+    dev: false
+    resolution:
+      integrity: sha1-5mTvMRYRZsl1HNvo28+GtftY93Q=
   /read-pkg-up/1.0.1:
     dependencies:
       find-up: 1.1.2

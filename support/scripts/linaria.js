@@ -16,6 +16,7 @@ const chalk = require('chalk');
 const { baseDir } = require('./helpers');
 const prettier = require('prettier');
 const postcssNested = require('postcss-nested');
+const postcssImport = require('postcss-import');
 const autoprefixer = require('autoprefixer');
 const postcss = require('postcss');
 const { camelCase, pascalCase } = require('case-anything');
@@ -113,7 +114,10 @@ async function formatContents(contents, parser = 'css') {
  * @param {string?} [to] - the output path for the transformation
  */
 async function processCss(css, from, to) {
-  const result = await postcss([postcssNested, autoprefixer]).process(css, { from, to });
+  const result = await postcss([postcssImport, postcssNested, autoprefixer]).process(css, {
+    from,
+    to,
+  });
   return result.css;
 }
 

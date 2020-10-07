@@ -36,7 +36,7 @@ function monacoEditorPlugin(_context, _options) {
           }
 
           item.options.plugins = () => {
-            return [require('postcss-nested'), require('autoprefixer')];
+            return [require('postcss-import'), require('postcss-nested'), require('autoprefixer')];
           };
         }
       }
