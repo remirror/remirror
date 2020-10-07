@@ -9,7 +9,7 @@ on:
       - main
       - next
 
-  pull_request:
+  pull_request_target:
     branches:
       - main
       - next
@@ -48,7 +48,7 @@ jobs:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: check versions are valid
-        if: github.event.pull_request
+        if: github.event.pull_request_target
         run: pnpm ci:version:check
 
       - name: create versions
