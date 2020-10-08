@@ -1,5 +1,14 @@
 # @remirror/dev
 
+## 1.0.0-next.48
+
+> 2020-10-08
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/react@1.0.0-next.48
+
 ## 1.0.0-next.47
 
 > 2020-10-08

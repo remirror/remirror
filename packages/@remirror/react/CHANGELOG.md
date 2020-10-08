@@ -1,5 +1,20 @@
 # @remirror/react
 
+## 1.0.0-next.48
+
+> 2020-10-08
+
+### Patch Changes
+
+- Updated dependencies [[`a2fa2c2b`](https://github.com/remirror/remirror/commit/a2fa2c2b935a6fce99e3f79aad8a207c920e236e)]:
+  - @remirror/core@1.0.0-next.48
+  - @remirror/extension-placeholder@1.0.0-next.48
+  - @remirror/extension-positioner@1.0.0-next.48
+  - @remirror/extension-react-component@1.0.0-next.48
+  - @remirror/extension-react-ssr@1.0.0-next.48
+  - @remirror/preset-core@1.0.0-next.48
+  - @remirror/preset-react@1.0.0-next.48
+
 ## 1.0.0-next.47
 
 > 2020-10-08

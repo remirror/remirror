@@ -1,5 +1,13 @@
 # @remirror/core-utils
 
+## 1.0.0-next.48
+
+> 2020-10-08
+
+### Minor Changes
+
+- [`a2fa2c2b`](https://github.com/remirror/remirror/commit/a2fa2c2b935a6fce99e3f79aad8a207c920e236e) [#745](https://github.com/remirror/remirror/pull/745) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add `isIos` environment flag.
+
 ## 1.0.0-next.47
 
 > 2020-10-08
