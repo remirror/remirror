@@ -1,5 +1,16 @@
 # prosemirror-suggest
 
+## 1.0.0-next.47
+
+> 2020-10-08
+
+### Patch Changes
+
+- [`4658d45c`](https://github.com/remirror/remirror/commit/4658d45ce2c60eb609cb54b19a86cc3fd4a1f33e) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Update external dependencies.
+
+- Updated dependencies [[`4658d45c`](https://github.com/remirror/remirror/commit/4658d45ce2c60eb609cb54b19a86cc3fd4a1f33e)]:
+  - @remirror/core-helpers@1.0.0-next.47
+
 ## 1.0.0-next.44
 
 > 2020-09-30

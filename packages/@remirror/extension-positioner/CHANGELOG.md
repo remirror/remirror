@@ -1,5 +1,19 @@
 # @remirror/extension-positioner
 
+## 1.0.0-next.47
+
+> 2020-10-08
+
+### Minor Changes
+
+- [`c0867ced`](https://github.com/remirror/remirror/commit/c0867ced744d69c92e7ddef63ac9b11cc6e79846) [#744](https://github.com/remirror/remirror/pull/744) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Support scroll updates by default for all positioners.
+
+### Patch Changes
+
+- Updated dependencies [[`4658d45c`](https://github.com/remirror/remirror/commit/4658d45ce2c60eb609cb54b19a86cc3fd4a1f33e)]:
+  - @remirror/core@1.0.0-next.47
+  - @remirror/pm@1.0.0-next.47
+
 ## 1.0.0-next.45
 
 > 2020-10-01

@@ -1,5 +1,37 @@
 # @remirror/preset-wysiwyg
 
+## 1.0.0-next.47
+
+> 2020-10-08
+
+### Patch Changes
+
+- Updated dependencies [[`4658d45c`](https://github.com/remirror/remirror/commit/4658d45ce2c60eb609cb54b19a86cc3fd4a1f33e)]:
+  - @remirror/core@1.0.0-next.47
+  - @remirror/extension-code-block@1.0.0-next.47
+  - @remirror/pm@1.0.0-next.47
+  - @remirror/extension-bidi@1.0.0-next.47
+  - @remirror/extension-blockquote@1.0.0-next.47
+  - @remirror/extension-bold@1.0.0-next.47
+  - @remirror/extension-code@1.0.0-next.47
+  - @remirror/extension-drop-cursor@1.0.0-next.47
+  - @remirror/extension-epic-mode@1.0.0-next.47
+  - @remirror/extension-gap-cursor@1.0.0-next.47
+  - @remirror/extension-hard-break@1.0.0-next.47
+  - @remirror/extension-heading@1.0.0-next.47
+  - @remirror/extension-horizontal-rule@1.0.0-next.47
+  - @remirror/extension-image@1.0.0-next.47
+  - @remirror/extension-italic@1.0.0-next.47
+  - @remirror/extension-link@1.0.0-next.47
+  - @remirror/extension-search@1.0.0-next.47
+  - @remirror/extension-strike@1.0.0-next.47
+  - @remirror/extension-trailing-node@1.0.0-next.47
+  - @remirror/extension-underline@1.0.0-next.47
+  - @remirror/preset-core@1.0.0-next.47
+  - @remirror/preset-embed@1.0.0-next.47
+  - @remirror/preset-list@1.0.0-next.47
+  - @remirror/preset-table@1.0.0-next.47
+
 ## 1.0.0-next.45
 
 > 2020-10-01

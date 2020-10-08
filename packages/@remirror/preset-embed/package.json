@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-embed",
-  "version": "1.0.0-next.45",
+  "version": "1.0.0-next.47",
   "description": "Add embedded content into your editor",
   "keywords": [
     "remirror",
@@ -30,12 +30,12 @@
     "tiny-querystring": "^0.0.2"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.45",
-    "@remirror/pm": "1.0.0-next.44"
+    "@remirror/core": "1.0.0-next.47",
+    "@remirror/pm": "1.0.0-next.47"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.45",
-    "@remirror/pm": "1.0.0-next.44"
+    "@remirror/core": "1.0.0-next.47",
+    "@remirror/pm": "1.0.0-next.47"
   },
   "publishConfig": {
     "access": "public"
