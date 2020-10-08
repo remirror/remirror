@@ -1,5 +1,67 @@
 # remirror
 
+## 1.0.0-next.47
+
+> 2020-10-08
+
+### Patch Changes
+
+- Updated dependencies [[`4658d45c`](https://github.com/remirror/remirror/commit/4658d45ce2c60eb609cb54b19a86cc3fd4a1f33e), [`911cc6d8`](https://github.com/remirror/remirror/commit/911cc6d85f7668cecdfd7e252e9431c1ae2ae845), [`56349ca5`](https://github.com/remirror/remirror/commit/56349ca5f638b90b743f7f008fbf190fa0ab1e12), [`c0867ced`](https://github.com/remirror/remirror/commit/c0867ced744d69c92e7ddef63ac9b11cc6e79846)]:
+  - @remirror/core@1.0.0-next.47
+  - @remirror/core-helpers@1.0.0-next.47
+  - @remirror/core-types@1.0.0-next.47
+  - @remirror/core-utils@1.0.0-next.47
+  - @remirror/dom@1.0.0-next.47
+  - @remirror/extension-code-block@1.0.0-next.47
+  - @remirror/pm@1.0.0-next.47
+  - @remirror/preset-social@1.0.0-next.47
+  - @remirror/react@1.0.0-next.47
+  - @remirror/react-hooks@1.0.0-next.47
+  - @remirror/react-social@1.0.0-next.47
+  - @remirror/react-wysiwyg@1.0.0-next.47
+  - @remirror/theme@1.0.0-next.47
+  - @remirror/extension-yjs@1.0.0-next.47
+  - @remirror/extension-positioner@1.0.0-next.47
+  - @remirror/extension-annotation@1.0.0-next.47
+  - @remirror/extension-auto-link@1.0.0-next.47
+  - @remirror/extension-bidi@1.0.0-next.47
+  - @remirror/extension-blockquote@1.0.0-next.47
+  - @remirror/extension-bold@1.0.0-next.47
+  - @remirror/extension-code@1.0.0-next.47
+  - @remirror/extension-collaboration@1.0.0-next.47
+  - @remirror/extension-diff@1.0.0-next.47
+  - @remirror/extension-doc@1.0.0-next.47
+  - @remirror/extension-drop-cursor@1.0.0-next.47
+  - @remirror/extension-emoji@1.0.0-next.47
+  - @remirror/extension-epic-mode@1.0.0-next.47
+  - @remirror/extension-events@1.0.0-next.47
+  - @remirror/extension-gap-cursor@1.0.0-next.47
+  - @remirror/extension-hard-break@1.0.0-next.47
+  - @remirror/extension-heading@1.0.0-next.47
+  - @remirror/extension-history@1.0.0-next.47
+  - @remirror/extension-horizontal-rule@1.0.0-next.47
+  - @remirror/extension-image@1.0.0-next.47
+  - @remirror/extension-italic@1.0.0-next.47
+  - @remirror/extension-link@1.0.0-next.47
+  - @remirror/extension-mention@1.0.0-next.47
+  - @remirror/extension-mention-atom@1.0.0-next.47
+  - @remirror/extension-paragraph@1.0.0-next.47
+  - @remirror/extension-placeholder@1.0.0-next.47
+  - @remirror/extension-react-component@1.0.0-next.47
+  - @remirror/extension-react-ssr@1.0.0-next.47
+  - @remirror/extension-search@1.0.0-next.47
+  - @remirror/extension-strike@1.0.0-next.47
+  - @remirror/extension-text@1.0.0-next.47
+  - @remirror/extension-trailing-node@1.0.0-next.47
+  - @remirror/extension-underline@1.0.0-next.47
+  - @remirror/preset-core@1.0.0-next.47
+  - @remirror/preset-embed@1.0.0-next.47
+  - @remirror/preset-list@1.0.0-next.47
+  - @remirror/preset-react@1.0.0-next.47
+  - @remirror/preset-table@1.0.0-next.47
+  - @remirror/preset-wysiwyg@1.0.0-next.47
+  - @remirror/react-utils@1.0.0-next.47
+
 ## 1.0.0-next.46
 
 > 2020-10-06

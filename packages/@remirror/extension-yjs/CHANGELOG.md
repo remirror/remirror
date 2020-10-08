@@ -1,5 +1,23 @@
 # @remirror/extension-yjs
 
+## 1.0.0-next.47
+
+> 2020-10-08
+
+### Major Changes
+
+- [`56349ca5`](https://github.com/remirror/remirror/commit/56349ca5f638b90b743f7f008fbf190fa0ab1e12) [#744](https://github.com/remirror/remirror/pull/744) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add new options to the `YjsExtension` to support full configuration of the `y-prosemirror` plugins.
+
+  **BREAKING:** 💥 Remove `WebrtcProvider`. It was always required via TypeScript but now the default implementation throws an error if you don't install and provide the [provider](https://github.com/yjs/yjs#providers) you want to use. The `readme` has been updated to reflect this change.
+
+  **BREAKING:** 💥 `yjs` is now a `peerDependency` and you will need to install it in your codebase in order to consume the `YjsExtension`. This change follows from the above breaking change. For example, to configure any provider will need to provide your desired `Doc` from the `yjs` package.
+
+### Patch Changes
+
+- Updated dependencies [[`4658d45c`](https://github.com/remirror/remirror/commit/4658d45ce2c60eb609cb54b19a86cc3fd4a1f33e)]:
+  - @remirror/core@1.0.0-next.47
+  - @remirror/pm@1.0.0-next.47
+
 ## 1.0.0-next.45
 
 > 2020-10-01

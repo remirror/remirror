@@ -1,5 +1,28 @@
 # @remirror/react-hooks
 
+## 1.0.0-next.47
+
+> 2020-10-08
+
+### Patch Changes
+
+- [`4658d45c`](https://github.com/remirror/remirror/commit/4658d45ce2c60eb609cb54b19a86cc3fd4a1f33e) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Update external dependencies.
+
+* [`911cc6d8`](https://github.com/remirror/remirror/commit/911cc6d85f7668cecdfd7e252e9431c1ae2ae845) [#744](https://github.com/remirror/remirror/pull/744) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix bug in `useMentionAtom` where asynchronous exits, like clicking, would not trigger an exit. Now the state is manually reset when the command is run.
+
+* Updated dependencies [[`4658d45c`](https://github.com/remirror/remirror/commit/4658d45ce2c60eb609cb54b19a86cc3fd4a1f33e), [`c0867ced`](https://github.com/remirror/remirror/commit/c0867ced744d69c92e7ddef63ac9b11cc6e79846)]:
+  - @remirror/core@1.0.0-next.47
+  - @remirror/pm@1.0.0-next.47
+  - @remirror/react@1.0.0-next.47
+  - @remirror/extension-positioner@1.0.0-next.47
+  - @remirror/extension-emoji@1.0.0-next.47
+  - @remirror/extension-events@1.0.0-next.47
+  - @remirror/extension-history@1.0.0-next.47
+  - @remirror/extension-mention@1.0.0-next.47
+  - @remirror/extension-mention-atom@1.0.0-next.47
+  - @remirror/i18n@1.0.0-next.47
+  - @remirror/react-utils@1.0.0-next.47
+
 ## 1.0.0-next.45
 
 > 2020-10-01
