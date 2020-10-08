@@ -166,7 +166,10 @@ export class Positioner<Data = any> {
    *
    * This is useful when you want to modify parts of the positioner.
    */
-  static fromPositioner<Data>(positioner: Positioner, base: Partial<BasePositioner<Data>>) {
+  static fromPositioner<Data>(
+    positioner: Positioner,
+    base: Partial<BasePositioner<Data>>,
+  ): Positioner<Data> {
     return Positioner.create({ ...positioner.basePositioner, ...base });
   }
 
@@ -198,13 +201,13 @@ export class Positioner<Data = any> {
     this.#getPosition = parameter.getPosition;
     this.#getID = parameter.getID;
     this.hasChanged = parameter.hasChanged;
-    this.events = parameter.events ?? ['state'];
+    this.events = parameter.events ?? ['state', 'scroll'];
   }
 
   /**
    * Get the active element setters.
    */
-  onActiveChanged(parameter: GetActiveParameter) {
+  onActiveChanged(parameter: GetActiveParameter): void {
     const active = this.#getActive(parameter);
     this.#active = active;
     this.#parameters = new Map();
