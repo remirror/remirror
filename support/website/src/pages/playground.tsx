@@ -30,8 +30,8 @@ const PlaygroundPage = (props: any) => {
             {/* TODO: Do not assume that it is in english language site */}
             <html lang='en' />
             <script src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
-            <script src='https://unpkg.com/prettier@2.0.5/standalone.js'></script>
-            <script src='https://unpkg.com/prettier@2.0.5/parser-typescript.js'></script>
+            <script src='https://unpkg.com/prettier@2.1.2/standalone.js'></script>
+            <script src='https://unpkg.com/prettier@2.1.2/parser-typescript.js'></script>
             <title>Remirror Playground</title>
             <meta property='og:title' content='Remirror Playground' />
             {favicon ?? <link rel='shortcut icon' href={faviconUrl} />}

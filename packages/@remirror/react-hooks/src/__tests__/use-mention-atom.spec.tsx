@@ -45,10 +45,52 @@ describe('useMentionAtom', () => {
       () => {
         result.state?.command({ ...result.items[0], appendText: NON_BREAKING_SPACE_CHAR });
       },
+    ]);
+
+    expect(result.state?.command).toBeUndefined();
+
+    acts([
       () => {
         editor.insertText('more to come');
       },
     ]);
+
+    expect(editor.innerHTML).toMatchInlineSnapshot(`
+      <p>
+        Initial content
+        <span role="presentation"
+              href="//test.com/aa"
+              class="mention-atom mention-atom-at"
+              data-mention-atom-id="aa"
+              data-mention-atom-name="at"
+        >
+          @aa
+        </span>
+        &nbsp;more to come
+      </p>
+    `);
+  });
+
+  it('should correctly add the mention when the command is called in a controlled editor', () => {
+    const { editor, Wrapper, result } = createEditor(true);
+
+    strictRender(<Wrapper />);
+
+    for (const char of '@a') {
+      act(() => {
+        editor.insertText(char);
+      });
+    }
+
+    act(() => {
+      result.state?.command({ ...result.items[0], appendText: NON_BREAKING_SPACE_CHAR });
+    });
+
+    for (const char of 'more to come') {
+      act(() => {
+        editor.insertText(char);
+      });
+    }
 
     expect(editor.innerHTML).toMatchInlineSnapshot(`
       <p>
@@ -227,7 +269,7 @@ describe('useMentionAtom', () => {
 /**
  * This function is used as a helper when testing the mention hooks.
  */
-function createEditor() {
+function createEditor(controlled = false) {
   const manager = createReactManager(() => [
     new MentionAtomExtension({
       extraAttributes: { role: 'presentation', href: { default: null } },
@@ -310,7 +352,25 @@ function createEditor() {
     );
   };
 
-  return { editor, Wrapper, result };
+  const ControlledWrapper: FC<Props> = (props) => {
+    const [state, setState] = useState(() =>
+      manager.createState({ content: doc(p('Initial content ')), selection: 'end' }),
+    );
+    return (
+      <RemirrorProvider
+        manager={manager}
+        value={state}
+        autoRender={true}
+        onChange={(parameter) => {
+          setState(parameter.state);
+        }}
+      >
+        <Component {...props} />
+      </RemirrorProvider>
+    );
+  };
+
+  return { editor, Wrapper: controlled ? ControlledWrapper : Wrapper, result };
 }
 
 function acts(methods: Array<() => void | undefined>) {

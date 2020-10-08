@@ -67,7 +67,18 @@ function useMentionHandlers<Data extends MentionAtomNodeAttributes = MentionAtom
       const index = changeReason === ChangeReason.Move ? currentIndex : 0;
 
       // Reset the active index so that the dropdown is back to the top.
-      setState({ query, range, name, reason: changeReason, text, command, index });
+      setState({
+        query,
+        range,
+        name,
+        reason: changeReason,
+        text,
+        command: (attrs) => {
+          command(attrs);
+          setState(null);
+        },
+        index,
+      });
     },
     [currentIndex, setState],
   );
@@ -99,7 +110,6 @@ function useMentionAtomKeyBindings<
       }
 
       const { index } = state;
-
       const direction = arrowKey === 'down' ? 'next' : 'previous';
 
       const activeIndex = indexFromArrowPress({
