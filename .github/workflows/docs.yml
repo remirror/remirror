@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - next
-  pull_request_target:
+  pull_request:
     types: [opened, synchronize]
     branches:
       - next
