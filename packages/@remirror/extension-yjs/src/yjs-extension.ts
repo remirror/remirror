@@ -1,19 +1,32 @@
 import { css } from 'linaria';
-import { redo, undo, yCursorPlugin, ySyncPlugin, yUndoPlugin } from 'y-prosemirror';
-import { WebrtcProvider } from 'y-webrtc';
-import { Doc } from 'yjs';
+import {
+  defaultCursorBuilder,
+  redo,
+  undo,
+  yCursorPlugin,
+  YSyncOpts,
+  ySyncPlugin,
+  yUndoPlugin,
+} from 'y-prosemirror';
+import type { Doc } from 'yjs';
 
 import {
+  AcceptUndefined,
   CommandFunction,
   convertCommand,
+  EditorState,
+  ErrorConstant,
   extensionDecorator,
   ExtensionPriority,
+  invariant,
+  isEmptyObject,
   isFunction,
   KeyBindings,
   OnSetOptionsParameter,
   PlainExtension,
   ProsemirrorPlugin,
-  Static,
+  Selection,
+  Shape,
 } from '@remirror/core';
 
 /**
@@ -30,8 +43,7 @@ interface YjsRealtimeProvider {
 
 export interface YjsOptions<Provider extends YjsRealtimeProvider = YjsRealtimeProvider> {
   /**
-   * Get the provider for this extension. There is an option to pass in a
-   * function for when setting this up in a non dom environment.
+   * Get the provider for this extension.
    */
   getProvider: Provider | (() => Provider);
 
@@ -39,7 +51,43 @@ export interface YjsOptions<Provider extends YjsRealtimeProvider = YjsRealtimePr
    * Remove the active provider. This should only be set at initial construction
    * of the editor.
    */
-  destroyProvider: Static<(provider: Provider) => void>;
+  destroyProvider?: (provider: Provider) => void;
+
+  /**
+   * The options which are passed through to the Yjs sync plugin.
+   */
+  syncPluginOptions?: AcceptUndefined<YSyncOpts>;
+
+  /**
+   * Take the user data and transform it into a html element which is used for
+   * the cursor. This is passed into the cursor builder.
+   *
+   * See https://github.com/yjs/y-prosemirror#remote-cursors
+   */
+  cursorBuilder?: (user: Shape) => HTMLElement;
+
+  /**
+   * By default all editor bindings use the awareness 'cursor' field to
+   * propagate cursor information.
+   *
+   * @default 'cursor'
+   */
+  cursorStateField?: string;
+
+  /**
+   * Get the current editor selection.
+   *
+   * @default `(state) => state.selection`
+   */
+  getSelection?: (state: EditorState) => Selection;
+
+  /**
+   * Names of nodes in the editor which should be protected.
+   *
+   * @default `new Set('paragraph')`
+   */
+  protectedNodes?: Set<string>;
+  trackedOrigins?: any[];
 }
 
 /**
@@ -48,19 +96,26 @@ export interface YjsOptions<Provider extends YjsRealtimeProvider = YjsRealtimePr
  */
 @extensionDecorator<YjsOptions>({
   defaultOptions: {
-    // TODO remove y-webrtc dependency and this default option.
-    getProvider: () => new WebrtcProvider('global', new Doc(), {} as any),
-
-    // TODO remove this once better abstraction is available.
+    getProvider: (): never => {
+      invariant(false, {
+        code: ErrorConstant.EXTENSION,
+        message: 'You must provide a YJS Provider to the `YjsExtension`.',
+      });
+    },
     destroyProvider: (provider) => {
       const { doc } = provider;
       provider.disconnect();
       provider.destroy();
       doc.destroy();
     },
+    syncPluginOptions: undefined,
+    cursorBuilder: defaultCursorBuilder,
+    cursorStateField: 'cursor',
+    getSelection: (state) => state.selection,
+    protectedNodes: new Set('paragraph'),
+    trackedOrigins: [],
   },
   defaultPriority: ExtensionPriority.High,
-  staticKeys: ['destroyProvider'],
 })
 export class YjsExtension extends PlainExtension<YjsOptions> {
   get name() {
@@ -76,7 +131,7 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
     const { getProvider } = this.options;
 
     if (!this.#provider) {
-      this.#provider = isFunction(getProvider) ? getProvider() : getProvider;
+      this.#provider = getLazyValue(getProvider);
     }
 
     return this.#provider;
@@ -97,9 +152,25 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
    * Create the yjs plugins.
    */
   createExternalPlugins(): ProsemirrorPlugin[] {
+    const {
+      syncPluginOptions,
+      cursorBuilder,
+      getSelection,
+      cursorStateField,
+      protectedNodes,
+      trackedOrigins,
+    } = this.options;
     const yDoc = this.provider.doc;
     const type = yDoc.getXmlFragment('prosemirror');
-    return [ySyncPlugin(type), yCursorPlugin(this.provider.awareness), yUndoPlugin()];
+    return [
+      ySyncPlugin(type, syncPluginOptions),
+      yCursorPlugin(
+        this.provider.awareness,
+        { cursorBuilder, cursorStateField, getSelection },
+        cursorStateField,
+      ),
+      yUndoPlugin({ protectedNodes, trackedOrigins }),
+    ];
   }
 
   createCommands() {
@@ -120,15 +191,34 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
    * This managers the updates of the collaboration provider.
    */
   onSetOptions(parameter: OnSetOptionsParameter<YjsOptions>): void {
-    const { changes } = parameter;
+    const { changes, pickChanged } = parameter;
+    const changedPluginOptions = pickChanged([
+      'cursorBuilder',
+      'cursorStateField',
+      'getProvider',
+      'getSelection',
+      'syncPluginOptions',
+      'protectedNodes',
+      'trackedOrigins',
+    ]);
 
-    // TODO move this into a new method in `plugins-extension`.
-    if (changes.getProvider.changed) {
+    if (!isEmptyObject(changedPluginOptions)) {
       const previousPlugins = this.externalPlugins;
       const newPlugins = (this.externalPlugins = this.createExternalPlugins());
 
       this.store.addOrReplacePlugins(newPlugins, previousPlugins);
       this.store.reconfigureStatePlugins();
+    }
+
+    if (changes.getProvider.changed) {
+      const previousProvider = getLazyValue(changes.getProvider.previousValue);
+
+      // Check whether the values have changed.
+      if (changes.destroyProvider.changed) {
+        changes.destroyProvider.previousValue?.(previousProvider);
+      } else {
+        this.options.destroyProvider(previousProvider);
+      }
     }
   }
 
@@ -144,8 +234,13 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   }
 }
 
+function getLazyValue<Type>(lazyValue: Type | (() => Type)): Type {
+  return isFunction(lazyValue) ? lazyValue() : lazyValue;
+}
+
 /**
  * @remarks
+ *
  * This magic property is transformed by babel via linaria into CSS that will be
  * wrapped by the `.remirror-editor` class; when you edit it you must run `yarn
  * fix:css` to regenerate `@remirror/styles/all.css`.

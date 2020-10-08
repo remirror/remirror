@@ -16,16 +16,29 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-yjs@next @remirror/pm@next
+yarn add yjs @remirror/extension-yjs@next @remirror/pm@next
 
 # pnpm
-pnpm add @remirror/extension-yjs@next @remirror/pm@next
+pnpm add yjs @remirror/extension-yjs@next @remirror/pm@next
 
 # npm
-npm install @remirror/extension-yjs@next @remirror/pm@next
+npm install yjs @remirror/extension-yjs@next @remirror/pm@next
 ```
 
-This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/yjs`.
+This is package is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/yjs`.
+
+You will also need to install your preferred [`YjsRealtimeProvider`](https://github.com/yjs/yjs#providers).
+
+```bash
+# yarn
+yarn add y-webrtc
+
+# pnpm
+pnpm add y-webrtc
+
+# npm
+npm install y-webrtc
+```
 
 ## Usage
 
@@ -33,6 +46,10 @@ The following code creates an instance of this extension.
 
 ```ts
 import { YjsExtension } from 'remirror/extension/yjs';
+import { WebrtcProvider } from 'y-webrtc';
+import { Doc } from 'yjs';
 
-const extension = new YjsExtension();
+const extension = new YjsExtension({
+  getProvider: () => new WebrtcProvider('global', new Doc()),
+});
 ```
