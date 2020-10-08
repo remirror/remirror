@@ -21,7 +21,13 @@ import type {
   StateJSON,
   Transaction,
 } from '@remirror/core-types';
-import { getDocument, getTextSelection, isElementDomNode, toHtml } from '@remirror/core-utils';
+import {
+  environment,
+  getDocument,
+  getTextSelection,
+  isElementDomNode,
+  toHtml,
+} from '@remirror/core-utils';
 
 import type { UpdatableViewProps } from '../builtins';
 import type { RemirrorManager } from '../manager';
@@ -495,6 +501,19 @@ export abstract class Framework<
   };
 
   /**
+   * Needed on iOS since `requestAnimationFrame` doesn't breaks the focus
+   * implementation.
+   */
+  protected handleIosFocus(): void {
+    if (!environment.isIos) {
+      return;
+    }
+
+    const element = this.view.dom as HTMLElement;
+    element.focus();
+  }
+
+  /**
    * Remove the focus from the editor. If the editor is not focused it will do
    * nothing.
    */
@@ -519,6 +538,8 @@ export abstract class Framework<
     // Set the selection to the requested value
     const transaction = tr.setSelection(selection);
     this.view.dispatch(transaction);
+
+    this.handleIosFocus();
 
     // Wait for the next event loop to set the focus.
     requestAnimationFrame(() => {

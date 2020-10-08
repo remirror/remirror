@@ -35,6 +35,13 @@ export const environment = {
   },
 
   /**
+   * True when on an iOS device.
+   */
+  get isIos(): boolean {
+    return environment.isBrowser && /iPod|iPhone|iPad/.test(navigator.platform);
+  },
+
+  /**
    * True when running on macOS
    */
   get isMac(): boolean {
