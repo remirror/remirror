@@ -1205,6 +1205,7 @@ importers:
       '@types/testing-library__react-hooks': 3.4.1
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
+      use-isomorphic-layout-effect: 1.0.0_55e8cdea6b000668d4c90009a0d5484a
     specifiers:
       '@babel/runtime': ^7.11.0
       '@remirror/core': 1.0.0-next.48
@@ -1227,6 +1228,7 @@ importers:
       react: ^16.13.1
       react-dom: ^16.13.1
       type-fest: ^0.17.0
+      use-isomorphic-layout-effect: ^1.0.0
   packages/@remirror/react-social:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -26173,7 +26175,6 @@ packages:
     dependencies:
       '@types/react': 16.9.51
       react: 16.13.1
-    dev: false
     peerDependencies:
       '@types/react': '*'
       react: ^16.8.0

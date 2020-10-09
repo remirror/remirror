@@ -1,4 +1,5 @@
-import { RefCallback, useCallback, useEffect, useMemo, useState } from 'react';
+import { RefCallback, useCallback, useMemo, useState } from 'react';
+import useLayoutEffect from 'use-isomorphic-layout-effect';
 
 import {
   ElementsAddedParameter,
@@ -7,6 +8,7 @@ import {
   Positioner,
   PositionerExtension,
   StringPositioner,
+  VirtualNode,
   VirtualPosition,
 } from '@remirror/extension-positioner';
 import { useExtension } from '@remirror/react';
@@ -24,9 +26,37 @@ export interface UseMultiPositionerReturn extends VirtualPosition {
   element?: HTMLElement;
 
   /**
-   * A key to uniquely identify this positioner.
+   * A key to uniquely identify this positioner. This can be applied to the
+   * react element.
    */
   key: string;
+
+  /**
+   * A virtual node which can be used to represent the `virtualElement` in
+   * libraries like `react-popper`.
+   * @see https://popper.js.org/react-popper/v2/virtual-elements/
+   *
+   * It returns a `VirtualNode` which is a pseudo-element with a
+   * `getBoundingClientRect()`  method for getting the fake position of the
+   * element.
+   *
+   * ```tsx
+   * import { usePositioner } from 'remirror/react/hooks';
+   * import { usePopper } from 'react-popper';
+   *
+   * const PositionedComponent = () => {
+   *   const { ref, element, virtualNode } = usePositioner('popup');
+   *   const { styles, attributes } = usePopper(virtualNode, element);
+   *
+   *   return (
+   *     <div ref={ref} style={styles.popper} {...attributes.popper}>
+   *       Positioned With Popper ☺️
+   *     </div>
+   *   )
+   * };
+   * ```
+   */
+  virtualNode: VirtualNode;
 }
 
 export interface UsePositionerReturn extends Partial<UseMultiPositionerReturn> {
@@ -90,7 +120,7 @@ export function useMultiPositioner(
   );
 
   // Add the positioner update handlers.
-  useEffect(() => {
+  useLayoutEffect(() => {
     const disposeUpdate = memoizedPositioner.addListener('update', (parameter) => {
       const items: CollectElementRef[] = [];
 
@@ -109,13 +139,13 @@ export function useMultiPositioner(
       setCollectRefs(items);
     });
 
-    const disposeElementsAdded = memoizedPositioner.addListener('done', (parameter) => {
+    const disposeDone = memoizedPositioner.addListener('done', (parameter) => {
       setState(parameter);
     });
 
     return () => {
       disposeUpdate();
-      disposeElementsAdded();
+      disposeDone();
     };
   }, [memoizedPositioner]);
 
