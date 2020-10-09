@@ -8,7 +8,7 @@
   "dependencies": {
     "@changesets/pre": "^1.0.5",
     "@changesets/read": "^0.4.6",
-    "@changesets/types": "^3.1.0",
+    "@changesets/types": "^3.2.0",
     "@types/autoprefixer": "^9.7.2",
     "@types/lodash.groupby": "^4.6.6",
     "@types/prettier": "^2.1.1",

@@ -33,7 +33,8 @@
     "@babel/runtime": "^7.11.0",
     "@remirror/i18n": "1.0.0-next.47",
     "@remirror/react-utils": "1.0.0-next.47",
-    "type-fest": "^0.17.0"
+    "type-fest": "^0.17.0",
+    "use-isomorphic-layout-effect": "^1.0.0"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.48",
