@@ -19,13 +19,6 @@
     "checks:enable": "cpy support/.config.sample.json ./ --rename=\".config.json\"",
     "checks:fix": "run-s -c fix typecheck test",
     "checks:release": "run-s checks build test:e2e",
-    "ci:version": "run-s ci:version:changeset ci:version:date ci:version:repo fix:prettier ci:version:install",
-    "ci:version:changeset": "changeset version",
-    "ci:version:check": "run-s ci:version:pr ci:version:changeset ci:version:repo",
-    "ci:version:date": "node support/scripts/changelog-dates.js",
-    "ci:version:install": "unset CI && pnpm install --frozen-lockfile=false",
-    "ci:version:pr": "node support/scripts/enable-pr-changeset.js",
-    "ci:version:repo": "unset CI && run-s fix:repo update:workspace",
     "clean": "pnpm if-clean git clean -- -fdx --exclude=.config.json --exclude=node_modules --exclude=**/node_modules",
     "clean:all": "git clean -fdX --exclude='.config.json'",
     "clean:modules": "git clean -fdX packages support",
@@ -80,7 +73,16 @@
     "ts": "ts-node -P support/tsconfig.base.json -O '{\"module\":\"commonjs\"}' --transpile-only",
     "typecheck": "tsc -b ./tsconfig.references.json",
     "update:deps": "pnpm update --latest --recursive -i",
-    "update:workspace": "pnpm up -r --workspace \"@remirror/*\""
+    "update:workspace": "pnpm up -r --workspace \"@remirror/*\"",
+    "version": "run-s version:changeset version:date version:repo fix:prettier version:install",
+    "preversion:changeset": "node support/scripts/changeset-forced-update.js",
+    "version:changeset": "changeset version",
+    "postversion:changeset": "node support/scripts/changeset-forced-update.js --clean",
+    "version:check": "run-s version:pr version:changeset version:repo",
+    "version:date": "node support/scripts/changelog-dates.js",
+    "version:install": "unset CI && pnpm install --frozen-lockfile=false",
+    "version:pr": "node support/scripts/enable-pr-changeset.js",
+    "version:repo": "unset CI && run-s fix:repo update:workspace"
   },
   "browserslist": [
     "since 2017"

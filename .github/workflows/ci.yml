@@ -49,13 +49,13 @@ jobs:
 
       - name: check versions are valid
         if: github.event.pull_request_target
-        run: pnpm ci:version:check
+        run: pnpm version:check
 
       - name: create versions
         uses: changesets/action@master
         if: github.ref == 'refs/heads/next'
         with:
-          version: pnpm ci:version
+          version: pnpm version
           commit: 'Update versions with changeset'
           title: 'Update versions with changeset'
         env:
