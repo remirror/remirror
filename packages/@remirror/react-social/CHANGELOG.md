@@ -1,5 +1,28 @@
 # @remirror/react-social
 
+## 1.0.0-next.49
+
+> 2020-10-10
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies [[`cd91b689`](https://github.com/remirror/remirror/commit/cd91b6893e9f0609d95e4945075d98eb3fe53b76), [`049134a3`](https://github.com/remirror/remirror/commit/049134a3d8e99c3b56243579a59e5a316e07444d)]:
+  - @remirror/react-hooks@1.0.0-next.49
+  - @remirror/core@1.0.0-next.49
+  - @remirror/extension-auto-link@1.0.0-next.49
+  - @remirror/extension-emoji@1.0.0-next.49
+  - @remirror/extension-events@1.0.0-next.49
+  - @remirror/extension-mention@1.0.0-next.49
+  - @remirror/i18n@1.0.0-next.49
+  - @remirror/pm@1.0.0-next.49
+  - @remirror/preset-social@1.0.0-next.49
+  - @remirror/react@1.0.0-next.49
+  - @remirror/react-utils@1.0.0-next.49
+  - @remirror/theme@1.0.0-next.49
+  - multishift@1.0.0-next.49
+
 ## 1.0.0-next.48
 
 > 2020-10-08
