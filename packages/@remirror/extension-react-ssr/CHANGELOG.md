@@ -1,5 +1,19 @@
 # @remirror/extension-react-ssr
 
+## 1.0.0-next.49
+
+> 2020-10-10
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.49
+  - @remirror/extension-react-component@1.0.0-next.49
+  - @remirror/pm@1.0.0-next.49
+  - @remirror/react-utils@1.0.0-next.49
+
 ## 1.0.0-next.48
 
 > 2020-10-08

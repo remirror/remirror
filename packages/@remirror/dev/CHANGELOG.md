@@ -1,5 +1,17 @@
 # @remirror/dev
 
+## 1.0.0-next.49
+
+> 2020-10-10
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.0-next.49
+  - @remirror/react@1.0.0-next.49
+
 ## 1.0.0-next.48
 
 > 2020-10-08
