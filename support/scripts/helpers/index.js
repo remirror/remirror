@@ -1,7 +1,10 @@
 const { resolve, join, relative } = require('path');
+const { readPreState } = require('@changesets/pre');
+const readChangesets = require('@changesets/read').default;
 const { getPackages } = require('@manypkg/get-packages');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
+const rm = require('util').promisify(require('rimraf'));
 
 const separator = '__';
 
@@ -23,7 +26,7 @@ const baseDir = (...paths) => resolve(__dirname, '../../..', join(...paths));
 const getRelativePathFromJson = (json) => relative(baseDir(), json.location);
 
 const formatFiles = async (path = '', silent = false) => {
-  const { stderr, stdout } = await exec(`prettier ${path} --write`);
+  const { stderr, stdout } = await exec(`prettier --loglevel warn ${path} --write`);
 
   if (silent) {
     return;
@@ -104,6 +107,33 @@ const getTypedPackagesWithPath = async (relative = false) => {
   return typedPackages;
 };
 
+/**
+ * @typedef { Object } ChangesetState
+ * @property { import("@changesets/types").PreState | undefined } preState
+ * @property { import("@changesets/types").NewChangeset[] } changesets
+ */
+
+/**
+ * @param { string } [cwd]
+ * @returns { Promise<ChangesetState> }
+ */
+async function readChangesetState(cwd = process.cwd()) {
+  const preState = await readPreState(cwd);
+  const isInPreMode = preState !== undefined && preState.mode === 'pre';
+
+  let changesets = await readChangesets(cwd);
+
+  if (isInPreMode) {
+    const changesetsToFilter = new Set(preState.changesets);
+    changesets = changesets.filter((x) => !changesetsToFilter.has(x.id));
+  }
+
+  return {
+    preState: isInPreMode ? preState : undefined,
+    changesets,
+  };
+}
+
 module.exports = {
   getAllDependencies,
   getTypedPackagesWithPath,
@@ -113,4 +143,6 @@ module.exports = {
   unmangleScopedPackage,
   mangleScopedPackageName,
   exec,
+  rm,
+  readChangesetState,
 };

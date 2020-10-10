@@ -13,14 +13,13 @@ const transform = require('linaria/lib/transform').default;
 const path = require('path');
 const groupBy = require('lodash.groupby');
 const chalk = require('chalk');
-const { baseDir } = require('./helpers');
+const { baseDir, rm } = require('./helpers');
 const prettier = require('prettier');
 const postcssNested = require('postcss-nested');
 const postcssImport = require('postcss-import');
 const autoprefixer = require('autoprefixer');
 const postcss = require('postcss');
 const { camelCase, pascalCase } = require('case-anything');
-const rimraf = require('util').promisify(require('rimraf'));
 const cpy = require('cpy');
 
 /**
@@ -276,7 +275,7 @@ async function removeGeneratedFiles() {
   ].join(' ');
 
   // Delete it all 🤭
-  await rimraf(files);
+  await rm(files);
 }
 
 /**
