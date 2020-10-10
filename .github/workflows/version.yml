@@ -1,0 +1,59 @@
+name: version
+
+on:
+  push:
+    branches:
+      - main
+      - next
+
+  pull_request:
+    branches:
+      - main
+      - next
+
+env:
+  PNPM_CACHE_FOLDER: .pnpm-store
+
+jobs:
+  # Update package versions with changesets.
+  version:
+    timeout-minutes: 8
+    runs-on: ubuntu-latest
+    if: false == contains(github.ref, 'changeset') && github.repository == 'remirror/remirror'
+    steps:
+      - name: checkout code repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: setup caching
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node.js
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14
+
+      - name: install and audit
+        uses: ./.github/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
+
+      - name: check versions are valid
+        if: github.event.pull_request_target
+        run: pnpm version:check
+
+      - name: create versions
+        uses: changesets/action@master
+        if: github.ref == 'refs/heads/next'
+        with:
+          version: pnpm version
+          commit: 'Update versions with changeset'
+          title: 'Update versions with changeset'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

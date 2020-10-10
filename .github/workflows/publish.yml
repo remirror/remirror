@@ -1,0 +1,53 @@
+name: publish
+
+on:
+  workflow_run:
+    workflows: [ci]
+    branches: [next, main]
+    types: [completed]
+
+env:
+  PNPM_CACHE_FOLDER: .pnpm-store
+
+jobs:
+  # Publish the public to npm
+  npm:
+    if: github.event.workflow_run.conclusion == 'success' && github.ref == 'refs/heads/next' && github.repository == 'remirror/remirror'
+    timeout-minutes: 10
+    needs: [lint, typecheck, unit_test, build_test, size_check, chromium_e2e, firefox_e2e]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout code repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: setup caching
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node.js
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14
+
+      - name: install and audit
+        uses: ./.github/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
+
+      - name: build project
+        run: pnpm build
+
+      - name: publish npm release
+        run: |
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > $HOME/.npmrc
+          pnpm release
+          rm $HOME/.npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
