@@ -161,7 +161,7 @@ importers:
       npm-run-all: ^4.1.5
       prettier: ^2.1.2
       prettier-plugin-packagejson: ^2.2.6
-      remirror: 1.0.0-next.48
+      remirror: 1.0.0-next.49
       rimraf: ^3.0.2
       size-limit: ^4.5.7
       snapshot-diff: ^0.8.1
@@ -857,7 +857,7 @@ importers:
       react: ^16.13.1
       react-dom: ^16.13.1
       regenerator-runtime: ^0.13.7
-      remirror: 1.0.0-next.48
+      remirror: 1.0.0-next.49
   packages/@remirror/pm:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -1272,7 +1272,7 @@ importers:
       '@remirror/pm': 1.0.0-next.47
       '@remirror/preset-social': 1.0.0-next.48
       '@remirror/react': 1.0.0-next.48
-      '@remirror/react-hooks': 1.0.0-next.48
+      '@remirror/react-hooks': 1.0.0-next.49
       '@remirror/react-utils': 1.0.0-next.47
       '@remirror/theme': 1.0.0-next.47
       '@testing-library/dom': ^7.24.5
@@ -1369,8 +1369,8 @@ importers:
       '@babel/runtime': ^7.11.0
       '@remirror/core': 1.0.0-next.48
       '@remirror/extension-code-block': 1.0.0-next.48
-      '@remirror/react-hooks': 1.0.0-next.48
-      '@remirror/react-social': 1.0.0-next.48
+      '@remirror/react-hooks': 1.0.0-next.49
+      '@remirror/react-social': 1.0.0-next.49
       '@types/match-sorter': ^4.0.0
       '@types/prettier': ^2.1.1
       '@types/react': ^16.9.51
@@ -1709,8 +1709,8 @@ importers:
       '@remirror/preset-table': 1.0.0-next.48
       '@remirror/preset-wysiwyg': 1.0.0-next.48
       '@remirror/react': 1.0.0-next.48
-      '@remirror/react-hooks': 1.0.0-next.48
-      '@remirror/react-social': 1.0.0-next.48
+      '@remirror/react-hooks': 1.0.0-next.49
+      '@remirror/react-social': 1.0.0-next.49
       '@remirror/react-utils': 1.0.0-next.47
       '@remirror/react-wysiwyg': 1.0.0-next.48
       '@remirror/theme': 1.0.0-next.47
@@ -1859,7 +1859,7 @@ importers:
       '@types/refractor': 3.0.0
     specifiers:
       '@preconstruct/next': ^1.0.1
-      '@remirror/showcase': 1.0.0-next.48
+      '@remirror/showcase': 1.0.0-next.49
       '@types/react': ^16.9.51
       '@types/react-dom': ^16.9.8
       '@types/refractor': ^3.0.0
@@ -1867,7 +1867,7 @@ importers:
       react: ^16.13.1
       react-dom: ^16.13.1
       refractor: ^3.1.0
-      remirror: 1.0.0-next.48
+      remirror: 1.0.0-next.49
   support/storybook:
     dependencies:
       '@babel/core': 7.11.6
@@ -1888,7 +1888,7 @@ importers:
     specifiers:
       '@babel/core': ^7.11.0
       '@remirror/pm': 1.0.0-next.47
-      '@remirror/showcase': 1.0.0-next.48
+      '@remirror/showcase': 1.0.0-next.49
       '@storybook/addon-actions': ^6.0.26
       '@storybook/addon-links': ^6.0.26
       '@storybook/addons': ^6.0.26
@@ -1900,7 +1900,7 @@ importers:
       linaria: ^2.0.0-rc.3
       react: ^16.13.1
       react-dom: ^16.13.1
-      remirror: 1.0.0-next.48
+      remirror: 1.0.0-next.49
   support/website:
     dependencies:
       '@babel/runtime': 7.11.2
@@ -1942,8 +1942,8 @@ importers:
       '@docusaurus/types': 2.0.0-alpha.65
       '@mdx-js/react': ^1.6.18
       '@remirror/dev': 1.0.0-next.48
-      '@remirror/playground': 1.0.0-next.48
-      '@remirror/showcase': 1.0.0-next.48
+      '@remirror/playground': 1.0.0-next.49
+      '@remirror/showcase': 1.0.0-next.49
       '@types/react': ^16.9.51
       '@types/react-dom': ^16.9.8
       babel-plugin-dynamic-import-node: ^2.3.3
@@ -1956,7 +1956,7 @@ importers:
       react: ^16.13.1
       react-dom: ^16.13.1
       remark-footnotes: ^3.0.0
-      remirror: 1.0.0-next.48
+      remirror: 1.0.0-next.49
 lockfileVersion: 5.1
 packages:
   /@algolia/cache-browser-local-storage/4.5.1:

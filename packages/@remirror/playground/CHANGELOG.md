@@ -1,5 +1,14 @@
 # @remirror/playground
 
+## 1.0.0-next.49
+
+> 2020-10-10
+
+### Patch Changes
+
+- Updated dependencies []:
+  - remirror@1.0.0-next.49
+
 ## 1.0.0-next.48
 
 > 2020-10-08
