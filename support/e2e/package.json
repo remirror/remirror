@@ -24,5 +24,8 @@
     "playwright-testing-library": "^2.7.0",
     "signal-exit": "^3.0.3",
     "test-keyboard": "1.0.0-next.50"
+  },
+  "devDependencies": {
+    "@testim/root-cause-jest": "^0.1.24"
   }
 }

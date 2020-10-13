@@ -163,3 +163,6 @@ cc-reporter
 /tsconfig.lint.json
 /tsconfig.references.json
 /packages/**/tsconfig.json
+
+# Root Cause data
+.root-cause

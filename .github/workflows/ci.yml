@@ -250,6 +250,12 @@ jobs:
 
       - name: chrome integration test ${{ matrix.os }}
         run: cd support/e2e && pnpm chromium
+        # Register to Root Cloud to create a project and token
+        # Add these env variables to save results to cloud
+        # env:
+        #   TESTIM_PROJECT_ID: XXX
+        #   TESTIM_PROJECT_TOKEN: XXX
+        #   TESTIM_PERSIST_RESULTS_TO_CLOUD: XXX
 
   # Run firefox e2e tests with playwright
   firefox_e2e:

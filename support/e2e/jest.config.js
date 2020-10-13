@@ -1,6 +1,7 @@
 const config = require('../jest/jest.config');
 const { jestSupportDir } = require('../jest/helpers');
 const { server: __SERVER__ } = require('./server.config');
+const path = require('path');
 
 const {
   clearMocks,
@@ -36,8 +37,12 @@ module.exports = {
   ],
   globalSetup: './jest.playwright.setup.ts',
   globalTeardown: './jest.playwright.teardown.ts',
-  testEnvironment: './custom-environment.js',
   testRunner: 'jest-circus/runner',
+  testEnvironment: '@testim/root-cause-jest/lib/RootCauseJestEnv',
+  testEnvironmentOptions: {
+    actualEnvironment: path.resolve(__dirname, './custom-environment.js'),
+  },
+  reporters: ['@testim/root-cause-jest/lib/reporter/default'],
   displayName: {
     name: 'remirror:e2e',
     color: 'purple',
