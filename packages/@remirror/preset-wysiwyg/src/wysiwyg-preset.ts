@@ -55,7 +55,7 @@ export interface WysiwygOptions
     'searchClass',
     'weight',
   ],
-  handlerKeys: ['onActivateLink', 'onSearch'],
+  handlerKeys: ['onActivateLink', 'onUpdateLink', 'onSearch'],
 })
 export class WysiwygPreset extends Preset<WysiwygOptions> {
   get name() {
@@ -120,6 +120,7 @@ export class WysiwygPreset extends Preset<WysiwygOptions> {
 
     const linkExtension = new LinkExtension({ selectTextOnClick: this.options.selectTextOnClick });
     linkExtension.addHandler('onActivateLink', this.options.onActivateLink);
+    linkExtension.addHandler('onUpdateLink', this.options.onUpdateLink);
 
     const { autoUpdate, defaultDirection, excludeNodes } = this.options;
     const bidiExtension = new BidiExtension({ autoUpdate, defaultDirection, excludeNodes });

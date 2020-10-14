@@ -103,10 +103,15 @@ function create(options: LinkOptions = {}) {
     linkExtension.addHandler('onActivateLink', options.onActivateLink);
   }
 
+  if (options.onUpdateLink) {
+    linkExtension.addHandler('onUpdateLink', options.onUpdateLink);
+  }
+
   return renderEditor([linkExtension]);
 }
 
 describe('commands', () => {
+  let onUpdateLink = jest.fn(() => {});
   let {
     add,
     attributeMarks: { link },
@@ -114,9 +119,10 @@ describe('commands', () => {
     commands,
     active,
     view,
-  } = create();
+  } = create({ onUpdateLink });
 
   beforeEach(() => {
+    onUpdateLink = jest.fn(() => {});
     ({
       add,
       attributeMarks: { link },
@@ -124,7 +130,7 @@ describe('commands', () => {
       commands,
       active,
       view,
-    } = create());
+    } = create({ onUpdateLink }));
   });
 
   describe('.removeLink', () => {
@@ -197,11 +203,31 @@ describe('commands', () => {
         );
       });
 
+      it('calls the onUpdateLink handler when creating a link for the selection', () => {
+        add(doc(p('Paragraph <start>A link<end>')));
+        const attrs = { href };
+        commands.updateLink(attrs);
+
+        const { doc: document, selection } = view.state;
+        expect(onUpdateLink).toHaveBeenCalledWith('A link', {
+          doc: document,
+          selection,
+          attrs,
+        });
+      });
+
       it('does nothing for an empty selection', () => {
         add(doc(p('Paragraph <cursor>A link')));
         commands.updateLink({ href });
 
         expect(view.state).toContainRemirrorDocument(p('Paragraph A link'));
+      });
+
+      it('does not call the onUpdateLink handler on an empty selection', () => {
+        add(doc(p('Paragraph <cursor>A link')));
+        commands.updateLink({ href });
+
+        expect(onUpdateLink).not.toHaveBeenCalled();
       });
 
       it('can update an existing link', () => {
@@ -216,6 +242,20 @@ describe('commands', () => {
         );
       });
 
+      it('calls the onUpdateLink handler when updating an existing link', () => {
+        const testLink = link({ href });
+        const attrs = { href: 'https://alt.com' };
+        add(doc(p('Paragraph ', testLink('<start>A link<end>'))));
+        commands.updateLink(attrs);
+
+        const { doc: document, selection } = view.state;
+        expect(onUpdateLink).toHaveBeenCalledWith('A link', {
+          doc: document,
+          selection,
+          attrs,
+        });
+      });
+
       it('overwrites multiple existing links', () => {
         const testLink = link({ href });
         add(doc(p('<all>', testLink('1'), ' ', testLink('2'), ' ', testLink('3'))));
@@ -224,12 +264,39 @@ describe('commands', () => {
         expect(view.state).toContainRemirrorDocument(p(testLink('1 2 3')));
       });
 
+      it('calls the onUpdateLink handler when overwriting multiple existing links', () => {
+        const attrs = { href };
+        const testLink = link(attrs);
+        add(doc(p('<all>', testLink('1'), ' ', testLink('2'), ' ', testLink('3'))));
+        commands.updateLink({ href });
+
+        const { doc: document, selection } = view.state;
+        expect(onUpdateLink).toHaveBeenCalledWith('1 2 3', {
+          doc: document,
+          selection,
+          attrs,
+        });
+      });
+
       it('can select all and create a link', () => {
         const testLink = link({ href });
         add(doc(p('<all>', '1', ' ', '2', ' ', '3')));
         commands.updateLink({ href });
 
         expect(view.state).toContainRemirrorDocument(p(testLink('1 2 3')));
+      });
+
+      it('calls the onUpdateLink handler when selecting all and creating a link', () => {
+        const attrs = { href };
+        add(doc(p('<all>', '1', ' ', '2', ' ', '3')));
+        commands.updateLink({ href });
+
+        const { doc: document, selection } = view.state;
+        expect(onUpdateLink).toHaveBeenCalledWith('1 2 3', {
+          doc: document,
+          selection,
+          attrs,
+        });
       });
     });
 
@@ -335,9 +402,19 @@ describe('plugin', () => {
 });
 
 describe('autolinking', () => {
-  const editor = create({ autoLink: true });
-  const { doc, p } = editor.nodes;
-  const { link } = editor.attributeMarks;
+  let onUpdateLink = jest.fn(() => {});
+  let editor = create({ autoLink: true, onUpdateLink });
+  let { doc, p } = editor.nodes;
+  let { link } = editor.attributeMarks;
+
+  beforeEach(() => {
+    onUpdateLink = jest.fn(() => {});
+    editor = create({ autoLink: true, onUpdateLink });
+    ({
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = editor);
+  });
 
   it('can auto link', () => {
     editor.add(doc(p('<cursor>'))).insertText('test.co');
@@ -353,8 +430,38 @@ describe('autolinking', () => {
     );
   });
 
+  it('calls the onUpdateLink handler when auto linking', () => {
+    let editorText = 'test.co';
+    editor.add(doc(p('<cursor>'))).insertText(editorText);
+
+    expect(onUpdateLink).toHaveBeenCalledWith(editorText, {
+      doc: editor.doc,
+      selection: editor.view.state.selection,
+      range: {
+        from: 1,
+        to: editorText.length + 1,
+        cursor: editorText.length + 1,
+      },
+      attrs: { auto: true, href: '//test.co' },
+    });
+
+    editorText += 'm';
+    editor.insertText('m');
+
+    expect(onUpdateLink).toHaveBeenCalledWith('test.com', {
+      doc: editor.doc,
+      selection: editor.view.state.selection,
+      range: {
+        from: 1,
+        to: editorText.length + 1,
+        cursor: editorText.length + 1,
+      },
+      attrs: { auto: true, href: '//test.com' },
+    });
+  });
+
   it('should be off by default', () => {
-    const editor = create();
+    const editor = create({ onUpdateLink });
     const { doc, p } = editor.nodes;
 
     editor.add(doc(p('<cursor>'))).insertText('test.co');
@@ -362,6 +469,17 @@ describe('autolinking', () => {
 
     editor.insertText(' https://test.com ');
     expect(editor.doc).toEqualRemirrorDocument(doc(p('test.co https://test.com ')));
+  });
+
+  it('should not call the onUpdateLink handler when links are inserted using default settings', () => {
+    const editor = create({ onUpdateLink });
+    const { doc, p } = editor.nodes;
+
+    editor.add(doc(p('<cursor>'))).insertText('test.co');
+    expect(onUpdateLink).not.toHaveBeenCalled();
+
+    editor.insertText(' https://test.com ');
+    expect(onUpdateLink).not.toHaveBeenCalled();
   });
 
   it('updates the autolink on each change', () => {
