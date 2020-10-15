@@ -26,7 +26,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.11.0",
+    "@babel/runtime": "^7.12.0",
     "@remirror/extension-doc": "1.0.0-next.49",
     "@remirror/extension-events": "1.0.0-next.49",
     "@remirror/extension-gap-cursor": "1.0.0-next.49",

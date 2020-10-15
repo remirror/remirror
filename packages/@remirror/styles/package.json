@@ -18,15 +18,15 @@
     "dom"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.11.0"
+    "@babel/runtime": "^7.12.0"
   },
   "devDependencies": {
     "@emotion/core": "^10.0.35",
     "@emotion/styled": "^10.0.27",
-    "@types/react": "^16.9.51",
-    "@types/styled-components": "^5.1.2",
+    "@types/react": "^16.9.52",
+    "@types/styled-components": "^5.1.4",
     "emotion": "^10.0.27",
-    "react": "^16.13.1",
+    "react": "^16.14.0",
     "styled-components": "^5.1.1"
   },
   "peerDependencies": {

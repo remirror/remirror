@@ -15,7 +15,7 @@
     "since 2017"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.11.0",
+    "@babel/runtime": "^7.12.0",
     "@docusaurus/core": "2.0.0-alpha.65",
     "@docusaurus/plugin-client-redirects": "2.0.0-alpha.65",
     "@docusaurus/plugin-content-docs": "2.0.0-alpha.65",
@@ -31,15 +31,15 @@
     "docusaurus": "2.0.0-alpha.65",
     "is-absolute-url": "^3.0.3",
     "prism-react-renderer": "^1.1.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "remark-footnotes": "^3.0.0",
     "remirror": "1.0.0-next.49"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "2.0.0-alpha.65",
     "@docusaurus/types": "2.0.0-alpha.65",
-    "@types/react": "^16.9.51",
+    "@types/react": "^16.9.52",
     "@types/react-dom": "^16.9.8",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "monaco-editor-webpack-plugin": "^2.0.0"

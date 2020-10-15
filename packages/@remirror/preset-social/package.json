@@ -25,11 +25,11 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.11.0",
+    "@babel/runtime": "^7.12.0",
     "@remirror/extension-auto-link": "1.0.0-next.49",
     "@remirror/extension-emoji": "1.0.0-next.49",
     "@remirror/extension-mention": "1.0.0-next.49",
-    "type-fest": "^0.17.0"
+    "type-fest": "^0.18.0"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.49",

@@ -19,7 +19,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.11.0",
+    "@babel/runtime": "^7.12.0",
     "@types/throttle-debounce": "^2.1.0",
     "throttle-debounce": "^2.3.0"
   },

@@ -21,9 +21,9 @@
     "import-remirror": "echo 'Be sure to run `pnpm build` in root first!' && ts-node -O '{\"module\":\"commonjs\"}' --transpile-only ./scripts/import-remirror.ts"
   },
   "dependencies": {
-    "@babel/runtime": "^7.11.0",
-    "@babel/standalone": "^7.11.0",
-    "@babel/types": "^7.11.0",
+    "@babel/runtime": "^7.12.0",
+    "@babel/standalone": "^7.12.0",
+    "@babel/types": "^7.12.0",
     "@remirror/core": "1.0.0-next.49",
     "@remirror/core-helpers": "1.0.0-next.49",
     "@remirror/pm": "1.0.0-next.49",
@@ -38,19 +38,19 @@
     "remirror": "1.0.0-next.49"
   },
   "devDependencies": {
-    "@types/prettier": "^2.1.1",
-    "@types/react": "^16.9.51",
+    "@types/prettier": "^2.1.2",
+    "@types/react": "^16.9.52",
     "@types/react-dom": "^16.9.8",
     "chalk": "^4.1.0",
     "prettier": "^2.1.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^16.8.0 || ^17",
+    "react-dom": "^16.8.0 || ^17"
   },
   "publishConfig": {
     "access": "public"

@@ -24,7 +24,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.11.0",
+    "@babel/runtime": "^7.12.0",
     "escape-string-regexp": "^4.0.0",
     "linaria": "^2.0.0-rc.3"
   },

@@ -31,10 +31,10 @@
     "build:custom": "node ./build.js"
   },
   "dependencies": {
-    "@babel/runtime": "^7.11.0",
+    "@babel/runtime": "^7.12.0",
     "@types/emoji-regex": "^8.0.0",
     "@types/match-sorter": "^4.0.0",
-    "emoji-regex": "^9.0.0",
+    "emoji-regex": "^9.1.1",
     "escape-string-regexp": "^4.0.0",
     "match-sorter": "^4.2.1"
   },

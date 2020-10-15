@@ -11,7 +11,7 @@
     "@changesets/types": "^3.2.0",
     "@types/autoprefixer": "^9.7.2",
     "@types/lodash.groupby": "^4.6.6",
-    "@types/prettier": "^2.1.1",
+    "@types/prettier": "^2.1.2",
     "@types/rimraf": "^3.0.0",
     "autoprefixer": "^9.8.6",
     "chalk": "^4.1.0",
@@ -27,7 +27,7 @@
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
     "postcss-nested": "^4.2.3",
-    "type-fest": "^0.17.0",
+    "type-fest": "^0.18.0",
     "write-json-file": "^4.3.0"
   }
 }

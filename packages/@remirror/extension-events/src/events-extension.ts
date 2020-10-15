@@ -55,16 +55,16 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
       props: {
         handleDOMEvents: {
           focus: (_, event) => {
-            return this.options.focus(event as FocusEvent) ?? false;
+            return this.options.focus(event) ?? false;
           },
           blur: (_, event) => {
-            return this.options.blur(event as FocusEvent) ?? false;
+            return this.options.blur(event) ?? false;
           },
           mousedown: (_, event) => {
-            return this.options.mousedown(event as MouseEvent) ?? false;
+            return this.options.mousedown(event) ?? false;
           },
           mouseup: (_, event) => {
-            return this.options.mouseup(event as MouseEvent) ?? false;
+            return this.options.mouseup(event) ?? false;
           },
         },
       },
