@@ -1,5 +1,23 @@
 # @remirror/core-utils
 
+## 1.0.0-next.50
+
+> 2020-10-15
+
+### Minor Changes
+
+- [`d27c6e1a`](https://github.com/remirror/remirror/commit/d27c6e1aa83bfd59bde0f1659f0989deb66dad24) [#758](https://github.com/remirror/remirror/pull/758) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Support `EditorState | Selection | ResolvedPos` for the `findParentNodeOfType` function.
+
+### Patch Changes
+
+- [`bd8ac67d`](https://github.com/remirror/remirror/commit/bd8ac67da57c85e67f84cf41e04900f99f4f0455) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Upgrade package dependencies.
+
+- Updated dependencies [[`bd8ac67d`](https://github.com/remirror/remirror/commit/bd8ac67da57c85e67f84cf41e04900f99f4f0455)]:
+  - @remirror/core-constants@1.0.0-next.50
+  - @remirror/core-helpers@1.0.0-next.50
+  - @remirror/core-types@1.0.0-next.50
+  - @remirror/pm@1.0.0-next.50
+
 ## 1.0.0-next.49
 
 > 2020-10-10
