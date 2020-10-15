@@ -435,7 +435,10 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
             mentionExitHandler(parameter, attrs);
           }
 
-          this.options.onChange(parameter, command);
+          this.options.onChange(
+            { ...parameter, defaultAppendTextValue: this.options.appendText },
+            command,
+          );
         },
         checkNextValidSelection: ($pos, tr) => {
           const range = getMarkRange($pos, this.type);
@@ -630,13 +633,20 @@ export interface MentionExtensionMatcher
 
 export type MentionChangeHandlerCommand = (attrs?: MentionChangeHandlerCommandAttributes) => void;
 
+export interface MentionChangeHandlerParameter extends SuggestChangeHandlerParameter {
+  /**
+   * The default text to be appended if text should be appended.
+   */
+  defaultAppendTextValue: string;
+}
+
 /**
  * A handler that will be called whenever the the active matchers are updated or
  * exited. The second argument which is the exit command is a function which is
  * only available when the matching suggester has been exited.
  */
 export type MentionChangeHandler = (
-  handlerState: SuggestChangeHandlerParameter,
+  handlerState: MentionChangeHandlerParameter,
   command: (attrs?: MentionChangeHandlerCommandAttributes) => void,
 ) => void;
 

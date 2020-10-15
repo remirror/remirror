@@ -64,7 +64,7 @@ let config = {
     'jest/prefer-spy-on': ['warn'],
     'jest/prefer-todo': ['warn'],
     'jest/prefer-hooks-on-top': ['error'],
-    'jest/no-large-snapshots': ['warn', { maxSize: 12 }],
+    'jest/no-large-snapshots': ['warn', { maxSize: 20 }],
     'jest/no-duplicate-hooks': ['error'],
     'jest/no-if': ['error'],
     'jest/no-restricted-matchers': [
