@@ -2,6 +2,7 @@ import {
   ApplySchemaAttributes,
   CommandFunction,
   CreatePluginReturn,
+  EditorState,
   extensionDecorator,
   ExtensionPriority,
   ExtensionTag,
@@ -23,6 +24,7 @@ import {
   markPasteRule,
   OnSetOptionsParameter,
   preserveSelection,
+  ProsemirrorNode,
   ProsemirrorPlugin,
   range as numberRange,
   removeMark,
@@ -32,16 +34,30 @@ import {
 import { TextSelection } from '@remirror/pm/state';
 import { isInvalidSplitReason, isRemovedReason, Suggester } from '@remirror/pm/suggest';
 
+const UPDATE_LINK = 'updateLink';
+
 /**
  * Can be an empty string which sets url's to '//google.com'.
  */
 export type DefaultProtocol = 'http:' | 'https:' | '';
+
+interface EventMeta {
+  selection: TextSelection;
+  range: FromToParameter | undefined;
+  doc: ProsemirrorNode;
+  attrs: LinkAttributes;
+}
 
 export interface LinkOptions {
   /**
    * Called when the user activates the keyboard shortcut.
    */
   onActivateLink?: Handler<(selectedText: string) => void>;
+
+  /**
+   * Called after the `commands.updateLink` has been called.
+   */
+  onUpdateLink?: Handler<(selectedText: string, meta: EventMeta) => void>;
 
   /**
    * Whether whether to select the text of the full active link when clicked.
@@ -94,7 +110,7 @@ export type LinkAttributes = MarkAttributes<{
     autoLinkRegex: /(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/\S*)?/,
   },
   staticKeys: ['autoLinkRegex'],
-  handlerKeys: ['onActivateLink'],
+  handlerKeys: ['onActivateLink', 'onUpdateLink'],
 })
 export class LinkExtension extends MarkExtension<LinkOptions> {
   get name() {
@@ -194,6 +210,8 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           if (!selectionIsValid && !range) {
             return false;
           }
+
+          tr.setMeta(this.name, { command: UPDATE_LINK, attrs, range });
 
           return updateMark({ type: this.type, attrs, range })(parameter);
         };
@@ -462,6 +480,26 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           view.dispatch(transaction);
           return true;
         },
+      },
+      appendTransaction: (transactions, _oldState, state: EditorState) => {
+        const transactionsWithLinkMeta = transactions.filter((tr) => !!tr.getMeta(this.name));
+
+        if (transactionsWithLinkMeta.length === 0) {
+          return;
+        }
+
+        transactionsWithLinkMeta.forEach((tr) => {
+          const trMeta = tr.getMeta(this.name);
+
+          if (trMeta.command === UPDATE_LINK) {
+            const { range, attrs } = trMeta;
+            const { selection, doc } = state;
+            const meta = { range, selection, doc, attrs };
+
+            const { from, to } = range ?? selection;
+            this.options.onUpdateLink(doc.textBetween(from, to), meta);
+          }
+        });
       },
     };
   }
