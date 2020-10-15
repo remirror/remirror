@@ -43,7 +43,48 @@ describe('useMention', () => {
         editor.insertText('@a');
       },
       () => {
-        result.state?.command({ ...result.items[0], appendText: NON_BREAKING_SPACE_CHAR });
+        result.state?.command({ ...result.items[0] });
+      },
+      () => {
+        editor.insertText('more to come');
+      },
+    ]);
+
+    expect(editor.innerHTML).toMatchInlineSnapshot(`
+      <p>
+        Initial content
+        <a role="presentation"
+           href="//test.com/aa"
+           class="mention mention-at"
+           data-mention-id="aa"
+           data-mention-name="at"
+        >
+          @aa
+        </a>
+        &nbsp;more to come
+      </p>
+    `);
+  });
+
+  it('should not append space multiple times', () => {
+    const { editor, Wrapper, result } = createEditor();
+
+    strictRender(<Wrapper />);
+    acts([
+      () => {
+        editor.insertText('@a');
+      },
+      () => {
+        result.state?.command({ ...result.items[0] });
+      },
+      () => {
+        editor.selectText(19);
+      },
+      () => {
+        result.state?.command({ ...result.items[0] });
+      },
+      () => {
+        editor.selectText('end');
       },
       () => {
         editor.insertText('more to come');
@@ -168,7 +209,7 @@ describe('useMention', () => {
         >
           #AAi
         </a>
-        more to come
+        &nbsp;more to come
       </p>
     `);
   });
@@ -209,6 +250,7 @@ function createEditor() {
   const manager = createReactManager(() => [
     new MentionExtension({
       extraAttributes: { role: 'presentation', href: { default: null } },
+      appendText: NON_BREAKING_SPACE_CHAR,
       matchers: [
         { name: 'at', char: '@', appendText: ' ' },
         { name: 'tag', char: '#', appendText: ' ' },

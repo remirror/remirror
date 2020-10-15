@@ -56,7 +56,17 @@ function useMentionChangeHandler<
    */
   const onChange: MentionChangeHandler = useCallback(
     (parameter, cmd) => {
-      const { query, text, range, ignoreNextExit, name, exitReason, changeReason } = parameter;
+      const {
+        query,
+        text,
+        range,
+        ignoreNextExit,
+        name,
+        exitReason,
+        changeReason,
+        textAfter,
+        defaultAppendTextValue,
+      } = parameter;
 
       // Ignore the next exit since it has been triggered manually but
       // only when this is caused by a change. This is because the command
@@ -67,9 +77,14 @@ function useMentionChangeHandler<
           // generated.
           ignoreNextExit();
 
-          // Default to append text when this command is called. However, this
-          // can be overridden by the user, if appending text is not ideal.
-          cmd({ appendText: ' ', ...attrs });
+          const regex = /^\s+/;
+
+          const appendText = regex.test(textAfter) ? '' : defaultAppendTextValue;
+
+          // Default to append text only when the textAfter the match does not
+          // start with a whitespace character. However, this can be overridden
+          // by the user.
+          cmd({ appendText, ...attrs });
 
           // Reset the state, since the query has been exited.
           setState(null);

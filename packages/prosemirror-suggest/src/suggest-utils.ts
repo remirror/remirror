@@ -124,6 +124,8 @@ function findPosition<Schema extends EditorSchema = EditorSchema>(
             full: match[0].slice(charMatch.length),
           },
           text: { partial: match[0].slice(0, matchLength), full: match[0] },
+          textAfter: $pos.doc.textBetween(to, $pos.end(), NULL_CHARACTER, NULL_CHARACTER),
+          textBefore: $pos.doc.textBetween(start, from, NULL_CHARACTER, NULL_CHARACTER),
           suggester,
         };
       }

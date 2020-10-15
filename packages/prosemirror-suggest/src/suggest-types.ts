@@ -651,6 +651,16 @@ export interface SuggestMatch<Schema extends EditorSchema = EditorSchema>
    * property to be a regex which included matching capture group segments.
    */
   match: RegExpExecArray;
+
+  /**
+   * The text after full match, up until the end of the text block.
+   */
+  textAfter: string;
+
+  /**
+   * The text before the full match, up until the beginning of the node.
+   */
+  textBefore: string;
 }
 
 export interface DocChangedParameter {

@@ -36,6 +36,25 @@ describe('suggester', () => {
       });
   });
 
+  it('supports `textBefore` and `textAfter` `onChange`', () => {
+    const expected = 'suggest';
+    const exit = jest.fn();
+    const onChange: SuggestChangeHandler = jest.fn((param) => {
+      const { exitReason, textBefore, textAfter } = param;
+
+      if (exitReason) {
+        exit({ textBefore, textAfter });
+      }
+    });
+    const plugin = suggest({ char: '@', name: 'at', onChange, matchOffset: 0 });
+
+    createEditor(doc(p('hello'), p(strong('Hello'), ' <cursor>friend')), { plugins: [plugin] })
+      .insertText(`@${expected} `)
+      .callback(() => {
+        expect(exit).toHaveBeenCalledWith({ textBefore: 'Hello ', textAfter: ' friend' });
+      });
+  });
+
   it('supports priority', () => {
     const _1 = jest.fn();
     const _2 = jest.fn();
@@ -230,7 +249,7 @@ describe('suggester', () => {
 
         jest.clearAllMocks();
       })
-      .jumpTo(5)
+      .selectText(5)
       .callback(() => {
         expect(change1).toHaveBeenCalledTimes(1);
         expect(exit1).not.toHaveBeenCalled();
@@ -316,27 +335,27 @@ describe('Suggest Ignore', () => {
       .callback(() => {
         jest.clearAllMocks();
       })
-      .jumpTo(2)
+      .selectText(2)
       .callback(() => {
         expect(onChangeAt).not.toHaveBeenCalled();
 
         clear.at('at');
       })
-      .jumpTo(3)
+      .selectText(3)
       .callback(() => {
         expect(onChangeAt).toHaveBeenCalledTimes(1);
       })
-      .jumpTo(7)
+      .selectText(7)
       .callback(() => {
         expect(onChangeTag).not.toHaveBeenCalled();
 
         clear.tag('tag');
       })
-      .jumpTo(8)
+      .selectText(8)
       .callback(() => {
         expect(onChangeTag).toHaveBeenCalledTimes(1);
       })
-      .jumpTo('end')
+      .selectText('end')
       .callback(() => {
         expect(exitAt).toHaveBeenCalledTimes(1);
         expect(exitTag).toHaveBeenCalledTimes(1);
@@ -412,7 +431,7 @@ describe('validity', () => {
 
     jest.resetAllMocks();
 
-    editor.jumpTo(8).insertText('@abc ');
+    editor.selectText(8).insertText('@abc ');
     expect(onChange).not.toHaveBeenCalled();
   });
 
@@ -427,7 +446,7 @@ describe('validity', () => {
 
     jest.resetAllMocks();
 
-    editor.jumpTo(8).insertText('@abc ');
+    editor.selectText(8).insertText('@abc ');
     expect(onChange).not.toHaveBeenCalled();
   });
 
@@ -455,7 +474,7 @@ describe('validity', () => {
       plugins: [plugin],
     })
       .insertText('abc')
-      .jumpTo(10);
+      .selectText(10);
     expect(onChange).toHaveBeenCalledTimes(4);
 
     jest.resetAllMocks();

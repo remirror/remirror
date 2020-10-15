@@ -230,14 +230,18 @@ export function findParentNode(
   parameter: FindParentNodeParameter,
 ): FindProsemirrorNodeResult | undefined {
   const { predicate, selection } = parameter;
-  const { $from } = selection;
+  const $pos = isEditorState(selection)
+    ? selection.selection.$from
+    : isSelection(selection)
+    ? selection.$from
+    : selection;
 
-  for (let depth = $from.depth; depth > 0; depth--) {
-    const node = $from.node(depth);
+  for (let depth = $pos.depth; depth > 0; depth--) {
+    const node = $pos.node(depth);
 
     if (predicate(node)) {
-      const pos = depth > 0 ? $from.before(depth) : 0;
-      const start = $from.start(depth);
+      const pos = depth > 0 ? $pos.before(depth) : 0;
+      const start = $pos.start(depth);
       const end = pos + node.nodeSize;
 
       return { pos, depth, node, start, end };
@@ -273,7 +277,7 @@ export function findNodeAtSelection(selection: Selection): FindProsemirrorNodeRe
   return parentNode;
 }
 
-interface FindParentNodeOfTypeParameter extends NodeTypesParameter, SelectionParameter {}
+interface FindParentNodeOfTypeParameter extends NodeTypesParameter, StateSelectionPosParameter {}
 
 /**
  *  Iterates over parent nodes, returning closest node of a given `nodeType`.
@@ -420,7 +424,16 @@ export interface FindProsemirrorNodeResult<Schema extends EditorSchema = EditorS
   depth: number;
 }
 
-interface FindParentNodeParameter extends SelectionParameter, PredicateParameter<ProsemirrorNode> {}
+interface StateSelectionPosParameter {
+  /**
+   * Provide an editor state, or the editor selection or a resolved position.
+   */
+  selection: EditorState | Selection | ResolvedPos;
+}
+
+interface FindParentNodeParameter
+  extends StateSelectionPosParameter,
+    PredicateParameter<ProsemirrorNode> {}
 
 /**
  * Returns the position of the node after the current position, selection or

@@ -23,13 +23,14 @@ export const emptyVirtualPosition: VirtualPosition = {
 };
 
 /**
- * Render a floating selection positioner.
+ * Render a floating selection positioner when the current selected node is empty.
  *
  * - `rect` provides a viewport position which spans the width of the editor
  *   with a height identical to the cursor height.
  * - `top` - the top of the cursor.
  * - `bottom` - the bottom of the cursor.
- * - `left
+ * - `left` - the left side of the editor.
+ * - `right` - the right side of the editor.
  */
 export const floatingSelectionPositioner = Positioner.create<Coords>({
   hasChanged: hasStateChanged,

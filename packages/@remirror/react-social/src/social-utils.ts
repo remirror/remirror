@@ -22,7 +22,7 @@ export function socialManagerArgs<Combined extends AnyCombinedUnion>(
   }
 
   return [
-    () => [...getLazyArray(combined), new SocialPreset(social)],
+    () => [...getLazyArray(combined), new SocialPreset({ appendText: ' ', ...social })],
     {
       ...rest,
       extraAttributes: [
