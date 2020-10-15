@@ -1,5 +1,25 @@
 # @remirror/react-wysiwyg
 
+## 1.0.0-next.50
+
+> 2020-10-15
+
+### Patch Changes
+
+- [`bd8ac67d`](https://github.com/remirror/remirror/commit/bd8ac67da57c85e67f84cf41e04900f99f4f0455) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Upgrade package dependencies.
+
+- Updated dependencies [[`359486f6`](https://github.com/remirror/remirror/commit/359486f6a7383588de16e6bd34c94545d3350f90), [`bd8ac67d`](https://github.com/remirror/remirror/commit/bd8ac67da57c85e67f84cf41e04900f99f4f0455)]:
+  - @remirror/preset-wysiwyg@1.0.0-next.50
+  - @remirror/core@1.0.0-next.50
+  - @remirror/extension-auto-link@1.0.0-next.50
+  - @remirror/i18n@1.0.0-next.50
+  - @remirror/pm@1.0.0-next.50
+  - @remirror/preset-social@1.0.0-next.50
+  - @remirror/react@1.0.0-next.50
+  - @remirror/react-utils@1.0.0-next.50
+  - @remirror/theme@1.0.0-next.50
+  - multishift@1.0.0-next.50
+
 ## 1.0.0-next.49
 
 > 2020-10-10

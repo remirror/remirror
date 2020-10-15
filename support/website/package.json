@@ -23,9 +23,9 @@
     "@docusaurus/preset-classic": "2.0.0-alpha.65",
     "@docusaurus/theme-live-codeblock": "2.0.0-alpha.65",
     "@mdx-js/react": "^1.6.18",
-    "@remirror/dev": "1.0.0-next.49",
-    "@remirror/playground": "1.0.0-next.49",
-    "@remirror/showcase": "1.0.0-next.49",
+    "@remirror/dev": "1.0.0-next.50",
+    "@remirror/playground": "1.0.0-next.50",
+    "@remirror/showcase": "1.0.0-next.50",
     "clsx": "^1.1.1",
     "core-js": "^3.6.5",
     "docusaurus": "2.0.0-alpha.65",
@@ -34,7 +34,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "remark-footnotes": "^3.0.0",
-    "remirror": "1.0.0-next.49"
+    "remirror": "1.0.0-next.50"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "2.0.0-alpha.65",

@@ -1,5 +1,17 @@
 # @remirror/extension-bold
 
+## 1.0.0-next.50
+
+> 2020-10-15
+
+### Patch Changes
+
+- [`bd8ac67d`](https://github.com/remirror/remirror/commit/bd8ac67da57c85e67f84cf41e04900f99f4f0455) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Upgrade package dependencies.
+
+- Updated dependencies [[`bd8ac67d`](https://github.com/remirror/remirror/commit/bd8ac67da57c85e67f84cf41e04900f99f4f0455)]:
+  - @remirror/core@1.0.0-next.50
+  - @remirror/pm@1.0.0-next.50
+
 ## 1.0.0-next.49
 
 > 2020-10-10
