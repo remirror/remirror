@@ -47,16 +47,13 @@ Create a `jest.framework.dom.ts` file and add the following
 ```ts
 /* jest.framework.dom.ts */
 
-import { jsdomExtras, jsdomPolyfill, remirrorMatchers } from 'jest-remirror';
+import { jsdomPolyfill, remirrorMatchers } from 'jest-remirror';
 
 /* Add jest-remirror assertions */
 expect.extend(remirrorMatchers);
 
 /* Polyfills for jsdom */
 jsdomPolyfill();
-
-/* Extras for prosemirror testing */
-jsdomExtras();
 ```
 
 In your `jest.config.js` file add this to the configuration
