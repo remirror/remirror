@@ -31,13 +31,13 @@
     "@remirror/extension-code-block": "1.0.0-next.50",
     "@remirror/react-hooks": "1.0.0-next.50",
     "@remirror/react-social": "1.0.0-next.50",
-    "@types/match-sorter": "^4.0.0",
-    "@types/prettier": "^2.1.2",
-    "match-sorter": "^4.2.1",
+    "@types/match-sorter": "^5.0.0",
+    "@types/prettier": "^2.1.5",
+    "match-sorter": "^5.0.0",
     "prettier": "^2.1.2"
   },
   "devDependencies": {
-    "@types/react": "^16.9.52",
+    "@types/react": "^16.9.53",
     "react": "^16.14.0"
   },
   "peerDependencies": {

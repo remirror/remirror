@@ -38,11 +38,17 @@
   "devDependencies": {
     "@remirror/core": "1.0.0-next.50",
     "@remirror/pm": "1.0.0-next.50",
-    "@types/prettier": "^2.1.2"
+    "@types/prettier": "^2.1.5"
   },
   "peerDependencies": {
     "@remirror/core": "1.0.0-next.50",
-    "@remirror/pm": "1.0.0-next.50"
+    "@remirror/pm": "1.0.0-next.50",
+    "@types/prettier": "^2.1.5"
+  },
+  "peerDependenciesMeta": {
+    "@types/prettier": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "access": "public"

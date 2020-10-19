@@ -39,7 +39,7 @@
   "devDependencies": {
     "@docusaurus/module-type-aliases": "2.0.0-alpha.65",
     "@docusaurus/types": "2.0.0-alpha.65",
-    "@types/react": "^16.9.52",
+    "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "monaco-editor-webpack-plugin": "^2.0.0"

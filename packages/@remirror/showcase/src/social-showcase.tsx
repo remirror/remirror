@@ -1,4 +1,4 @@
-import matchSorter from 'match-sorter';
+import { matchSorter } from 'match-sorter';
 import React, { FC, useCallback, useMemo, useState } from 'react';
 
 import { startCase, take } from '@remirror/core';

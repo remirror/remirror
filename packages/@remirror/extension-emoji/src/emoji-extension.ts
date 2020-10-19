@@ -1,5 +1,5 @@
 import escapeStringRegex from 'escape-string-regexp';
-import matchSorter from 'match-sorter';
+import { matchSorter } from 'match-sorter';
 
 import {
   bool,

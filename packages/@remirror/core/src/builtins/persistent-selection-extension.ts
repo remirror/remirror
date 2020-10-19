@@ -39,16 +39,13 @@ export class PersistentSelectionExtension extends PlainExtension<PersistentSelec
             return;
           }
 
-          let decoration: Decoration;
           const decorationAttrs = {
             class: this.options.persistentSelectionClass,
           };
 
-          if (isNodeSelection(selection)) {
-            decoration = Decoration.node(selection.from, selection.to, decorationAttrs);
-          } else {
-            decoration = Decoration.inline(selection.from, selection.to, decorationAttrs);
-          }
+          const decoration = isNodeSelection(selection)
+            ? Decoration.node(selection.from, selection.to, decorationAttrs)
+            : Decoration.inline(selection.from, selection.to, decorationAttrs);
 
           return DecorationSet.create(doc, [decoration]);
         },

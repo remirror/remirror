@@ -893,11 +893,7 @@ export function unset(path: Array<string | number>, target: Shape): Shape {
       return clonedObject;
     }
 
-    if (isArray(item)) {
-      item = [...item];
-    } else {
-      item = { ...item };
-    }
+    item = isArray(item) ? [...item] : { ...item };
 
     value[key] = item;
     value = item;

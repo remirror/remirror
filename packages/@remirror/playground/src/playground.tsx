@@ -210,21 +210,17 @@ export const Playground: FC = () => {
   }, [windowHash, setPlaygroundState]);
 
   const getPlaygroundState = useCallback(() => {
-    let state;
-
-    if (!advanced) {
-      state = {
-        m: 0,
-        a: Object.keys(modules).filter((n) => !REQUIRED_MODULES.includes(n)),
-        e: options.extensions,
-        p: options.presets,
-      };
-    } else {
-      state = {
-        m: 1,
-        c: value,
-      };
-    }
+    const state = !advanced
+      ? {
+          m: 0,
+          a: Object.keys(modules).filter((n) => !REQUIRED_MODULES.includes(n)),
+          e: options.extensions,
+          p: options.presets,
+        }
+      : {
+          m: 1,
+          c: value,
+        };
 
     return state;
   }, [advanced, value, options, modules]);
