@@ -448,7 +448,7 @@ describe('autolinking', () => {
     editorText += 'm';
     editor.insertText('m');
 
-    expect(onUpdateLink).toHaveBeenCalledWith('test.com', {
+    expect(onUpdateLink).toHaveBeenCalledWith(editorText, {
       doc: editor.doc,
       selection: editor.view.state.selection,
       range: {
