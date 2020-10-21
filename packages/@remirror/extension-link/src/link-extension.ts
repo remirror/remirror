@@ -238,6 +238,10 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
    * Create the paste rules that can transform a pasted link in the document.
    */
   createPasteRules(): ProsemirrorPlugin[] {
+    if (this.options.autoLink) {
+      return [];
+    }
+
     return [
       markPasteRule({
         regexp: /https?:\/\/(www\.)?[\w#%+.:=@~-]{2,256}\.[a-z]{2,6}\b([\w#%&+./:=?@~-]*)/gi,
