@@ -8,7 +8,7 @@ inputs:
   version: # id of input
     description: 'The version to use'
     required: false
-    default: 5.7.0
+    default: 5.10.2
 
 runs:
   using: 'composite'
@@ -20,11 +20,6 @@ runs:
     - name: setup pnpm config
       run: pnpm config set store-dir ${{ inputs.cache }}
       shell: bash
-
-    # TODO turn this back on once audits stop return 502 errors
-    # - name: audit dependencies
-    #   run: pnpm audit --audit-level high
-    #   shell: bash
 
     - name: install dependencies
       run: pnpm install

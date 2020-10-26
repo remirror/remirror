@@ -16,6 +16,7 @@ function readPackage(pkg, context) {
 
   updatePackage({ name: 'serialize-javascript', version: '^4.0.0' });
   updatePackage({ name: 'bl', version: '>=4.0.3' });
+  updatePackage({ name: 'react', version: '^16.14.0' });
 
   return pkg;
 }
