@@ -8,11 +8,17 @@ const ignore = [
   '*.d.ts',
 ];
 
+const modules = process.env.REMIRROR_SCRIPT === 'true' ? { modules: 'commonjs' } : {};
 const basePreset = ['@babel/preset-react', 'linaria/babel'];
-
-const presets = [...basePreset, ['@babel/preset-env', { targets: 'since 2017' }, 'deduplicate']];
-
-const testBabelPresetEnv = ['@babel/preset-env', { targets: { node: 'current' } }, 'deduplicate'];
+const presets = [
+  ...basePreset,
+  ['@babel/preset-env', { targets: 'since 2017', ...modules }, 'deduplicate'],
+];
+const testBabelPresetEnv = [
+  '@babel/preset-env',
+  { targets: { node: 'current', ...modules } },
+  'deduplicate',
+];
 const nonTestEnv = { ignore, presets };
 
 module.exports = {
