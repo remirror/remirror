@@ -1,5 +1,19 @@
 # @remirror/extension-link
 
+## 1.0.0-next.51
+
+> 2020-10-27
+
+### Major Changes
+
+- [`b79e4142`](https://github.com/remirror/remirror/commit/b79e414219ffc4f8435b7b934bf503c2c3b128f5) [#761](https://github.com/remirror/remirror/pull/761) Thanks [@whawker](https://github.com/whawker)! - **BREAKING** avoid using the paste rule if `autoLink` is enabled for `LinkExtension`
+
+### Patch Changes
+
+- Updated dependencies [[`997eb56a`](https://github.com/remirror/remirror/commit/997eb56a49ad653544fcd00b83e394e63df3a116)]:
+  - @remirror/core@1.0.0-next.51
+  - @remirror/pm@1.0.0-next.51
+
 ## 1.0.0-next.50
 
 > 2020-10-15
