@@ -1,5 +1,24 @@
 # @remirror/preset-core
 
+## 1.0.0-next.51
+
+> 2020-10-27
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies [[`997eb56a`](https://github.com/remirror/remirror/commit/997eb56a49ad653544fcd00b83e394e63df3a116)]:
+  - @remirror/core@1.0.0-next.51
+  - @remirror/extension-doc@1.0.0-next.51
+  - @remirror/extension-events@1.0.0-next.51
+  - @remirror/extension-gap-cursor@1.0.0-next.51
+  - @remirror/extension-history@1.0.0-next.51
+  - @remirror/extension-paragraph@1.0.0-next.51
+  - @remirror/extension-positioner@1.0.0-next.51
+  - @remirror/extension-text@1.0.0-next.51
+  - @remirror/pm@1.0.0-next.51
+
 ## 1.0.0-next.50
 
 > 2020-10-15

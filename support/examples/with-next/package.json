@@ -11,12 +11,12 @@
   },
   "dependencies": {
     "@preconstruct/next": "^1.0.1",
-    "@remirror/showcase": "1.0.0-next.50",
+    "@remirror/showcase": "1.0.0-next.51",
     "next": "9.4.4",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "refractor": "^3.2.0",
-    "remirror": "1.0.0-next.50"
+    "remirror": "1.0.0-next.51"
   },
   "devDependencies": {
     "@types/react": "^16.9.53",
