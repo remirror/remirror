@@ -105,9 +105,9 @@ importers:
       '@changesets/changelog-github': ^0.2.7
       '@changesets/cli': ^2.11.1
       '@jest/types': ^26.6.1
-      '@lingui/cli': ^3.0.0-18
-      '@lingui/macro': ^3.0.0-18
-      '@lingui/react': ^3.0.0-18
+      '@lingui/cli': ^3.0.0-23
+      '@lingui/macro': ^3.0.0-23
+      '@lingui/react': ^3.0.0-23
       '@manypkg/cli': ^0.16.1
       '@manypkg/get-packages': ^1.1.1
       '@preconstruct/cli': ^1.1.33
@@ -806,7 +806,7 @@ importers:
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.12.0
-      '@lingui/core': ^3.0.0-18
+      '@lingui/core': ^3.0.0-23
       '@remirror/core-helpers': 1.0.0-next.50
       '@remirror/pm': 1.0.0-next.50
       make-plural: ^6.2.1
@@ -1168,8 +1168,8 @@ importers:
       react-dom: 16.14.0_react@16.14.0
     specifiers:
       '@babel/runtime': ^7.12.0
-      '@lingui/core': ^3.0.0-18
-      '@lingui/macro': ^3.0.0-18
+      '@lingui/core': ^3.0.0-23
+      '@lingui/macro': ^3.0.0-23
       '@remirror/core': 1.0.0-next.50
       '@remirror/pm': 1.0.0-next.50
       '@remirror/react': 1.0.0-next.50
@@ -1261,8 +1261,8 @@ importers:
       react-dom: 16.14.0_react@16.14.0
     specifiers:
       '@babel/runtime': ^7.12.0
-      '@lingui/core': ^3.0.0-18
-      '@lingui/macro': ^3.0.0-18
+      '@lingui/core': ^3.0.0-23
+      '@lingui/macro': ^3.0.0-23
       '@remirror/core': 1.0.0-next.50
       '@remirror/extension-auto-link': 1.0.0-next.50
       '@remirror/extension-emoji': 1.0.0-next.50
@@ -1330,8 +1330,8 @@ importers:
       react-dom: 16.14.0_react@16.14.0
     specifiers:
       '@babel/runtime': ^7.12.0
-      '@lingui/core': ^3.0.0-18
-      '@lingui/macro': ^3.0.0-18
+      '@lingui/core': ^3.0.0-23
+      '@lingui/macro': ^3.0.0-23
       '@remirror/core': 1.0.0-next.50
       '@remirror/extension-auto-link': 1.0.0-next.50
       '@remirror/i18n': 1.0.0-next.50
