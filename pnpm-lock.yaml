@@ -432,6 +432,20 @@ importers:
       '@babel/runtime': ^7.12.0
       '@remirror/core': 1.0.0-next.51
       '@remirror/pm': 1.0.0-next.51
+  packages/@remirror/extension-callout:
+    dependencies:
+      '@babel/runtime': 7.12.1
+      linaria: 2.0.0
+      type-fest: 0.18.0
+    devDependencies:
+      '@remirror/core': 'link:../core'
+      '@remirror/pm': 'link:../pm'
+    specifiers:
+      '@babel/runtime': ^7.12.0
+      '@remirror/core': 1.0.0-next.51
+      '@remirror/pm': 1.0.0-next.51
+      linaria: ^2.0.0
+      type-fest: ^0.18.0
   packages/@remirror/extension-code:
     dependencies:
       '@babel/runtime': 7.12.1
@@ -1607,6 +1621,7 @@ importers:
       '@remirror/extension-bidi': 'link:../@remirror/extension-bidi'
       '@remirror/extension-blockquote': 'link:../@remirror/extension-blockquote'
       '@remirror/extension-bold': 'link:../@remirror/extension-bold'
+      '@remirror/extension-callout': 'link:../@remirror/extension-callout'
       '@remirror/extension-code': 'link:../@remirror/extension-code'
       '@remirror/extension-code-block': 'link:../@remirror/extension-code-block'
       '@remirror/extension-collaboration': 'link:../@remirror/extension-collaboration'
@@ -1670,6 +1685,7 @@ importers:
       '@remirror/extension-bidi': 1.0.0-next.51
       '@remirror/extension-blockquote': 1.0.0-next.51
       '@remirror/extension-bold': 1.0.0-next.51
+      '@remirror/extension-callout': 0.0.0
       '@remirror/extension-code': 1.0.0-next.51
       '@remirror/extension-code-block': 1.0.0-next.51
       '@remirror/extension-collaboration': 1.0.0-next.51

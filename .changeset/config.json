@@ -26,6 +26,7 @@
       "@remirror/extension-bidi",
       "@remirror/extension-blockquote",
       "@remirror/extension-bold",
+      "@remirror/extension-callout",
       "@remirror/extension-code-block",
       "@remirror/extension-code",
       "@remirror/extension-collaboration",
