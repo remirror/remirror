@@ -65,6 +65,11 @@ export interface LinkOptions {
   selectTextOnClick?: boolean;
 
   /**
+   * Weather the link is opened when being clicked
+   */
+  openLinkOnClick?: boolean;
+
+  /**
    * Whether automatic links should be created.
    *
    * @default false
@@ -107,6 +112,7 @@ export type LinkAttributes = MarkAttributes<{
     autoLink: false,
     defaultProtocol: '',
     selectTextOnClick: false,
+    openLinkOnClick: false,
     autoLinkRegex: /(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/\S*)?/,
   },
   staticKeys: ['autoLinkRegex'],
@@ -466,7 +472,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     return {
       props: {
         handleClick: (view, pos) => {
-          if (!this.options.selectTextOnClick) {
+          if (!this.options.selectTextOnClick && !this.options.openLinkOnClick) {
             return false;
           }
 
@@ -477,11 +483,19 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             return false;
           }
 
-          const $start = doc.resolve(range.from);
-          const $end = doc.resolve(range.to);
-          const transaction = tr.setSelection(new TextSelection($start, $end));
+          if (this.options.openLinkOnClick) {
+            const href = range.mark.attrs.href;
+            window.open(href, '_blank');
+          }
 
-          view.dispatch(transaction);
+          if (this.options.selectTextOnClick) {
+            const $start = doc.resolve(range.from);
+            const $end = doc.resolve(range.to);
+            const transaction = tr.setSelection(new TextSelection($start, $end));
+
+            view.dispatch(transaction);
+          }
+
           return true;
         },
       },
