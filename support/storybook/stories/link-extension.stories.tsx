@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo } from 'react';
+import React, { FC, useEffect } from 'react';
 import { LinkExtension, LinkOptions } from 'remirror/extension/link';
 import { RemirrorProvider, useManager, useRemirror } from 'remirror/react';
 
