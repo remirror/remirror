@@ -434,7 +434,7 @@ importers:
       '@remirror/pm': 1.0.0-next.51
   packages/@remirror/extension-callout:
     dependencies:
-      '@babel/runtime': 7.12.1
+      '@babel/runtime': 7.12.5
       linaria: 2.0.0
       type-fest: 0.18.0
     devDependencies:

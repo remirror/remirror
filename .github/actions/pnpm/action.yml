@@ -8,13 +8,13 @@ inputs:
   version: # id of input
     description: 'The version to use'
     required: false
-    default: 5.10.2
+    default: 5.10.4
 
 runs:
   using: 'composite'
   steps:
     - name: install pnpm
-      run: npm install pnpm@${{ inputs.version }} -g
+      run: npm i -g pnpm@${{ inputs.version }}
       shell: bash
 
     - name: setup pnpm config

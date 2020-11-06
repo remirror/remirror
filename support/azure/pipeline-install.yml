@@ -1,10 +1,10 @@
 steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: '10.x'
+      versionSpec: '14.x'
     displayName: 'install node'
 
-  - bash: npm install pnpm@5.4.9 -g
+  - bash: npm i -g pnpm@5.10.4
     displayName: 'install pnpm'
 
   - bash: pnpm config set store-dir $PNPM_CACHE_FOLDER
