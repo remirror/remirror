@@ -65,7 +65,7 @@ export interface LinkOptions {
   selectTextOnClick?: boolean;
 
   /**
-   * Weather the link is opened when being clicked
+   * Whether the link is opened when being clicked
    */
   openLinkOnClick?: boolean;
 
