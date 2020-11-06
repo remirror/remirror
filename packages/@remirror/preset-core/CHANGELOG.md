@@ -1,5 +1,24 @@
 # @remirror/preset-core
 
+## 1.0.0-next.52
+
+> 2020-11-06
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.52
+  - @remirror/extension-doc@1.0.0-next.52
+  - @remirror/extension-events@1.0.0-next.52
+  - @remirror/extension-gap-cursor@1.0.0-next.52
+  - @remirror/extension-history@1.0.0-next.52
+  - @remirror/extension-paragraph@1.0.0-next.52
+  - @remirror/extension-positioner@1.0.0-next.52
+  - @remirror/extension-text@1.0.0-next.52
+  - @remirror/pm@1.0.0-next.52
+
 ## 1.0.0-next.51
 
 > 2020-10-27

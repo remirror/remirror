@@ -1,5 +1,21 @@
 # @remirror/extension-link
 
+## 1.0.0-next.52
+
+> 2020-11-06
+
+### Minor Changes
+
+- [`caf2588d`](https://github.com/remirror/remirror/commit/caf2588d52e939cf939773837938d54f54f999a6) [#766](https://github.com/remirror/remirror/pull/766) Thanks [@ronnyroeller](https://github.com/ronnyroeller)! - Allow links to be clickable
+
+  Anchor tags in contenteditable are not clickable by default. To allow users nonetheless to open them, this commit adds an optional clickhandler to open the link.
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.52
+  - @remirror/pm@1.0.0-next.52
+
 ## 1.0.0-next.51
 
 > 2020-10-27

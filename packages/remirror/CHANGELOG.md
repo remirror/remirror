@@ -1,5 +1,103 @@
 # remirror
 
+## 1.0.0-next.52
+
+> 2020-11-06
+
+### Minor Changes
+
+- [`bdaa6af7`](https://github.com/remirror/remirror/commit/bdaa6af7d4daf365bd13c491420ce3e04add571e) [#767](https://github.com/remirror/remirror/pull/767) Thanks [@whawker](https://github.com/whawker)! - 🎉 New extension `@remirror/extension-callout`
+
+  This extension adds support for a new callout node.
+
+  These can be used to add `info`, `warning`, `error` or `success` banners to your document.
+
+  The default callout type is `info`, but this can be changed by using the `defaultType` option of `CalloutExtension`.
+
+  ```ts
+  import { RemirrorManager } from 'remirror/core';
+  import { CalloutExtension } from 'remirror/extension/callout';
+  import { CorePreset } from 'remirror/preset/core';
+
+  // Create the callout extension
+  const calloutExtension = new CalloutExtension();
+  const corePreset = new CorePreset();
+
+  // Create the Editor Manager with the callout extension passed through.
+  const manager = RemirrorManager.create([calloutExtension, corePreset]);
+
+  // Pass the dom element to the editor. If you are using `@remirror/react` or
+  // other framework wrappers then this is handled for you.
+  const element = document.createElement('div');
+  document.body.append(element);
+
+  // Add the view to the editor manager.
+  manager.addView(element);
+
+  // Wrap with an error callout at the current selection
+  manager.store.commands.toggleCallout({ type: 'error' });
+  ```
+
+### Patch Changes
+
+- Updated dependencies [[`3da2b5fd`](https://github.com/remirror/remirror/commit/3da2b5fd41e088c1d24969b53853a2b6f003455c), [`caf2588d`](https://github.com/remirror/remirror/commit/caf2588d52e939cf939773837938d54f54f999a6), [`bdaa6af7`](https://github.com/remirror/remirror/commit/bdaa6af7d4daf365bd13c491420ce3e04add571e)]:
+  - @remirror/preset-embed@1.0.0-next.52
+  - @remirror/extension-link@1.0.0-next.52
+  - @remirror/core@1.0.0-next.52
+  - @remirror/core-constants@1.0.0-next.52
+  - @remirror/core-helpers@1.0.0-next.52
+  - @remirror/core-types@1.0.0-next.52
+  - @remirror/core-utils@1.0.0-next.52
+  - @remirror/dom@1.0.0-next.52
+  - @remirror/extension-annotation@1.0.0-next.52
+  - @remirror/extension-auto-link@1.0.0-next.52
+  - @remirror/extension-bidi@1.0.0-next.52
+  - @remirror/extension-blockquote@1.0.0-next.52
+  - @remirror/extension-bold@1.0.0-next.52
+  - @remirror/extension-code@1.0.0-next.52
+  - @remirror/extension-code-block@1.0.0-next.52
+  - @remirror/extension-collaboration@1.0.0-next.52
+  - @remirror/extension-diff@1.0.0-next.52
+  - @remirror/extension-doc@1.0.0-next.52
+  - @remirror/extension-drop-cursor@1.0.0-next.52
+  - @remirror/extension-emoji@1.0.0-next.52
+  - @remirror/extension-epic-mode@1.0.0-next.52
+  - @remirror/extension-events@1.0.0-next.52
+  - @remirror/extension-gap-cursor@1.0.0-next.52
+  - @remirror/extension-hard-break@1.0.0-next.52
+  - @remirror/extension-heading@1.0.0-next.52
+  - @remirror/extension-history@1.0.0-next.52
+  - @remirror/extension-horizontal-rule@1.0.0-next.52
+  - @remirror/extension-image@1.0.0-next.52
+  - @remirror/extension-italic@1.0.0-next.52
+  - @remirror/extension-mention@1.0.0-next.52
+  - @remirror/extension-mention-atom@1.0.0-next.52
+  - @remirror/extension-paragraph@1.0.0-next.52
+  - @remirror/extension-placeholder@1.0.0-next.52
+  - @remirror/extension-positioner@1.0.0-next.52
+  - @remirror/extension-react-component@1.0.0-next.52
+  - @remirror/extension-react-ssr@1.0.0-next.52
+  - @remirror/extension-search@1.0.0-next.52
+  - @remirror/extension-strike@1.0.0-next.52
+  - @remirror/extension-text@1.0.0-next.52
+  - @remirror/extension-trailing-node@1.0.0-next.52
+  - @remirror/extension-underline@1.0.0-next.52
+  - @remirror/extension-yjs@1.0.0-next.52
+  - @remirror/pm@1.0.0-next.52
+  - @remirror/preset-core@1.0.0-next.52
+  - @remirror/preset-list@1.0.0-next.52
+  - @remirror/preset-react@1.0.0-next.52
+  - @remirror/preset-social@1.0.0-next.52
+  - @remirror/preset-table@1.0.0-next.52
+  - @remirror/preset-wysiwyg@1.0.0-next.52
+  - @remirror/react@1.0.0-next.52
+  - @remirror/react-hooks@1.0.0-next.52
+  - @remirror/react-social@1.0.0-next.52
+  - @remirror/react-utils@1.0.0-next.52
+  - @remirror/react-wysiwyg@1.0.0-next.52
+  - @remirror/theme@1.0.0-next.52
+  - @remirror/extension-callout@1.0.0-next.52
+
 ## 1.0.0-next.51
 
 > 2020-10-27

@@ -1,5 +1,17 @@
 # @remirror/extension-auto-link
 
+## 1.0.0-next.52
+
+> 2020-11-06
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.52
+  - @remirror/pm@1.0.0-next.52
+
 ## 1.0.0-next.51
 
 > 2020-10-27

@@ -1,5 +1,17 @@
 # @remirror/preset-embed
 
+## 1.0.0-next.52
+
+> 2020-11-06
+
+### Patch Changes
+
+- [`3da2b5fd`](https://github.com/remirror/remirror/commit/3da2b5fd41e088c1d24969b53853a2b6f003455c) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix error when `addYouTubeVideo.isEnabled()` is called.
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.52
+  - @remirror/pm@1.0.0-next.52
+
 ## 1.0.0-next.51
 
 > 2020-10-27

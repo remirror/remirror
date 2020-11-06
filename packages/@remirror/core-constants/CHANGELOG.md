@@ -1,5 +1,13 @@
 # @remirror/core-constants
 
+## 1.0.0-next.52
+
+> 2020-11-06
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
 ## 1.0.0-next.51
 
 > 2020-10-27
