@@ -399,6 +399,23 @@ describe('plugin', () => {
         expect({ start, end }).toEqual({ start: 1, end: 5 });
       });
   });
+
+  it('clickHandler opens link when clicked', () => {
+    const {
+      add,
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = create({ openLinkOnClick: true });
+    const testLink = link({ href });
+
+    global.open = jest.fn();
+
+    add(doc(p(testLink('Li<cursor>nk'))))
+      .fire({ event: 'click' })
+      .callback(() => {
+        expect(global.open).toBeCalled();
+      });
+  });
 });
 
 describe('autolinking', () => {
