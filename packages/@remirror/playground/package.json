@@ -43,8 +43,8 @@
     "@types/react-dom": "^16.9.8",
     "chalk": "^4.1.0",
     "prettier": "^2.1.2",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0"
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
