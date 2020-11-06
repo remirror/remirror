@@ -1,5 +1,18 @@
 # @remirror/playground
 
+## 1.0.0-next.52
+
+> 2020-11-06
+
+### Patch Changes
+
+- Updated dependencies [[`bdaa6af7`](https://github.com/remirror/remirror/commit/bdaa6af7d4daf365bd13c491420ce3e04add571e)]:
+  - @remirror/core@1.0.0-next.52
+  - @remirror/core-helpers@1.0.0-next.52
+  - @remirror/pm@1.0.0-next.52
+  - @remirror/react@1.0.0-next.52
+  - remirror@1.0.0-next.52
+
 ## 1.0.0-next.51
 
 > 2020-10-27

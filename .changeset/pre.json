@@ -96,7 +96,8 @@
     "@remirror/extension-annotation": "0.0.0",
     "@remirror/react-components": "0.0.0",
     "@remirror/extension-base-keymap": "1.0.0-next.13",
-    "@remirror/extension-mention-atom": "0.0.0"
+    "@remirror/extension-mention-atom": "0.0.0",
+    "@remirror/extension-callout": "0.0.0"
   },
   "changesets": [
     "afraid-pots-know",
@@ -168,6 +169,7 @@
     "gold-kings-glow",
     "good-bottles-dream",
     "good-bulldogs-call",
+    "good-coats-end",
     "good-flies-hope",
     "great-pans-do",
     "green-frogs-know",
@@ -184,6 +186,7 @@
     "heavy-tables-dream",
     "honest-apes-exist",
     "honest-beans-poke",
+    "honest-birds-do",
     "honest-kids-search",
     "honest-yaks-impress",
     "hot-humans-buy",
@@ -317,6 +320,7 @@
     "stale-donuts-impress",
     "stale-fishes-camp",
     "strange-houses-brake",
+    "strange-lizards-sing",
     "stupid-crabs-wait",
     "stupid-glasses-end",
     "stupid-panthers-exercise",
