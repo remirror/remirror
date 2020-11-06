@@ -85,6 +85,34 @@ export const extensionBlockquoteStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
+export const extensionCalloutStyledCss: ReturnType<typeof css> = css`
+  /**
+ * Styles extracted from: packages/@remirror/extension-callout/src/styles.ts
+ */
+  .remirror-editor div[data-callout-type] {
+    border-left: 2px solid transparent;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 10px;
+  }
+  .remirror-editor div[data-callout-type='info'] {
+    background: #eef6fc;
+    border-left-color: #3298dc;
+  }
+  .remirror-editor div[data-callout-type='warning'] {
+    background: #fffbeb;
+    border-left-color: #ffdd57;
+  }
+  .remirror-editor div[data-callout-type='error'] {
+    background: #feecf0;
+    border-left-color: #f14668;
+  }
+  .remirror-editor div[data-callout-type='success'] {
+    background: #effaf3;
+    border-left-color: #48c774;
+  }
+`;
+
 export const extensionGapCursorStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/extension-gap-cursor/src/styles.ts
@@ -711,6 +739,7 @@ export const themeStyledCss: ReturnType<typeof css> = css`
 export const allStyledCss: ReturnType<typeof css> = css`
   ${coreStyledCss}
   ${extensionBlockquoteStyledCss}
+  ${extensionCalloutStyledCss}
   ${extensionGapCursorStyledCss}
   ${extensionPlaceholderStyledCss}
   ${extensionYjsStyledCss}

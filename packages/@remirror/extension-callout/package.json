@@ -1,0 +1,45 @@
+{
+  "name": "@remirror/extension-callout",
+  "version": "0.0.0",
+  "description": "Add callouts to your text editor.",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/support/templates/extension-callout",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-callout",
+  "license": "MIT",
+  "contributors": [
+    "Will Hawker <w.hawker@hotmail.co.uk>"
+  ],
+  "sideEffects": false,
+  "main": "dist/extension-callout.cjs.js",
+  "module": "dist/extension-callout.esm.js",
+  "browser": {
+    "./dist/extension-callout.cjs.js": "./dist/extension-callout.browser.cjs.js",
+    "./dist/extension-callout.esm.js": "./dist/extension-callout.browser.esm.js"
+  },
+  "types": "dist/extension-callout.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.0",
+    "linaria": "^2.0.0",
+    "type-fest": "^0.18.0"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.51",
+    "@remirror/pm": "1.0.0-next.51"
+  },
+  "peerDependencies": {
+    "@remirror/core": "1.0.0-next.51",
+    "@remirror/pm": "1.0.0-next.51"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "5 KB"
+  }
+}
