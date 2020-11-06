@@ -8,7 +8,8 @@ import {
   NodeType,
   ProsemirrorAttributes,
 } from '@remirror/core';
-import { CalloutAttributes } from './callout-types';
+
+import type { CalloutAttributes } from './callout-types';
 
 export const dataAttributeType = 'data-callout-type';
 

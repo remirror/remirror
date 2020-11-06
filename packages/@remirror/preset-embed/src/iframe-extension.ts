@@ -140,12 +140,8 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
    * Creates the command for adding an iFrame to the editor.
    */
   private readonly addIframe = (attributes: IframeAttributes): CommandFunction => {
-    return ({ state, dispatch }) => {
-      const tr = state.tr.replaceSelectionWith(this.type.create(attributes));
-
-      if (dispatch) {
-        dispatch(tr);
-      }
+    return ({ tr, dispatch }) => {
+      dispatch?.(tr.replaceSelectionWith(this.type.create(attributes)));
 
       return true;
     };
@@ -167,19 +163,14 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
    * Creates the command for updating the iFrame source.
    */
   private readonly updateIframeSource = (src: string): CommandFunction => {
-    return ({ state, dispatch }) => {
-      const { tr } = state;
+    return ({ tr, dispatch }) => {
       const found = findSelectedNodeOfType({ selection: tr.selection, types: this.type });
 
       if (!found) {
         return false;
       }
 
-      tr.setNodeMarkup(found.pos, undefined, { ...found.node.attrs, src });
-
-      if (dispatch) {
-        dispatch(tr);
-      }
+      dispatch?.(tr.setNodeMarkup(found.pos, undefined, { ...found.node.attrs, src }));
 
       return true;
     };

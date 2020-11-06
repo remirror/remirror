@@ -304,19 +304,19 @@ describe('commands', () => {
       it('is enabled when text is selected', () => {
         add(doc(p('Paragraph <start>A<end> link')));
 
-        expect(commands.updateLink.isEnabled()).toBeTrue();
+        expect(commands.updateLink.isEnabled({ href: '' })).toBeTrue();
       });
 
       it('is not enabled for empty selections', () => {
         add(doc(p('Paragraph <cursor>A link')));
 
-        expect(commands.updateLink.isEnabled()).toBeFalse();
+        expect(commands.updateLink.isEnabled({ href: '' })).toBeFalse();
       });
 
       it('is not enabled for node selections', () => {
         add(doc(p('Paragraph <node>A link')));
 
-        expect(commands.updateLink.isEnabled()).toBeFalse();
+        expect(commands.updateLink.isEnabled({ href: '' })).toBeFalse();
       });
     });
   });

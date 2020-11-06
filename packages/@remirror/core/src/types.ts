@@ -11,7 +11,6 @@ import type {
   GetDynamic,
   GetFixedDynamic,
   GetPartialDynamic,
-  ProsemirrorAttributes,
   Transaction,
   ValidOptions,
 } from '@remirror/core-types';
@@ -141,9 +140,9 @@ export interface CommandShape<Parameter extends any[] = []> {
    * disable styling making text bold when within a codeBlock. In that case
    * isEnabled would be false when within the codeBlock and true when outside.
    *
-   * @param attrs - certain commands require attrs to run
+   * @param args - The same arguments that are applied to the command function.
    */
-  isEnabled: (attrs?: ProsemirrorAttributes) => boolean;
+  isEnabled: (...args: Parameter) => boolean;
 
   (...args: Parameter): void;
 }

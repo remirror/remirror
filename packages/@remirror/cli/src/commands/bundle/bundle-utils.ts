@@ -42,7 +42,7 @@ const createJSFile = createFile();
  * Remove all files in the provided path or glob pattern.
  */
 function clearPath(glob: string) {
-  return new Promise((resolve) => rimraf(glob, () => resolve()));
+  return new Promise<void>((resolve) => rimraf(glob, () => resolve()));
 }
 
 /**

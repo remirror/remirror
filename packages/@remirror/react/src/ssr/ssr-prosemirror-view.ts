@@ -13,7 +13,7 @@ import { DirectEditorProps, EditorView } from '@remirror/pm/view';
  * A mock editor view used only when prosemirror is running on the server
  */
 export class EditorViewSSR<Schema extends EditorSchema = EditorSchema> {
-  state: EditorState;
+  state: EditorState<Schema>;
   dom: Element;
   dragging = null;
   root: Document | DocumentFragment;

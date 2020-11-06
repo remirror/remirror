@@ -83,7 +83,7 @@ test('it can select text', () => {
 });
 
 function sleep(msDelay: number) {
-  return new Promise((resolve) => {
+  return new Promise<void>((resolve) => {
     setTimeout(() => {
       resolve();
     }, msDelay);

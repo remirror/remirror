@@ -305,8 +305,8 @@ export function findParentNodeOfType(
  *
  * @param selection - the prosemirror selection
  */
-export function findPositionOfNodeBefore<Schema extends EditorSchema = EditorSchema>(
-  value: Selection<Schema> | ResolvedPos<Schema> | EditorState<Schema> | Transaction<Schema>,
+export function findPositionOfNodeBefore(
+  value: Selection | ResolvedPos | EditorState | Transaction,
 ): FindProsemirrorNodeResult | undefined {
   const $pos = isResolvedPos(value)
     ? value
@@ -445,8 +445,8 @@ interface FindParentNodeParameter
  *
  * @param selection - the prosemirror selection
  */
-export function findPositionOfNodeAfter<Schema extends EditorSchema = EditorSchema>(
-  value: Selection<Schema> | ResolvedPos<Schema> | EditorState<Schema>,
+export function findPositionOfNodeAfter(
+  value: Selection | ResolvedPos | EditorState,
 ): FindProsemirrorNodeResult | undefined {
   const $pos = isResolvedPos(value)
     ? value

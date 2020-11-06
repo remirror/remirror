@@ -311,7 +311,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    * Update the current ignored decorations based on the latest changes to the
    * prosemirror document.
    */
-  private mapIgnoredDecorations(tr: Transaction) {
+  private mapIgnoredDecorations(tr: Transaction<Schema>) {
     // Map over and update the ignored decorations.
     const ignored = this.#ignored.map(tr.mapping, tr.doc);
     const decorations = ignored.find();
@@ -598,7 +598,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    *
    * @internal
    */
-  setLastChangeFromAppend() {
+  setLastChangeFromAppend(): void {
     this.#lastChangeFromAppend = true;
   }
 }

@@ -147,7 +147,7 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
     const commits = this.getPluginState<DiffPluginState>().tracked.commits;
 
     if (isString(id)) {
-      return commits[this.getIndexByName(name)];
+      return commits[this.getIndexByName(id)];
     }
 
     return commits[id];

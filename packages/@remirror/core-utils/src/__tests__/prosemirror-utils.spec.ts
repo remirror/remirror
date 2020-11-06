@@ -334,7 +334,7 @@ describe('cloneTransaction', () => {
   });
 
   it('clones the transaction', async () => {
-    await new Promise((done) => {
+    await new Promise<void>((resolve) => {
       const {
         state: { tr },
       } = createEditor(doc(p()));
@@ -344,7 +344,7 @@ describe('cloneTransaction', () => {
 
         expect(omit(tr, ['time'])).toEqual(omit(clonedTr, ['time']));
 
-        done();
+        resolve();
       }, 10);
 
       jest.advanceTimersByTime(20);

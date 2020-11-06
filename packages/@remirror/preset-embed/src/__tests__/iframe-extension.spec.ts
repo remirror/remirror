@@ -52,14 +52,44 @@ describe('commands', () => {
     attributeNodes: { iframe },
   } = create();
 
-  it('can create an iframe', () => {
-    add(doc(p('add and iframe here <cursor>')))
+  it('`addIframe` - creates an iframe', () => {
+    add(doc(p('add an iframe here <cursor>')))
       .callback(({ commands }) => {
         commands.addIframe({ src: 'https://custom.url/awesome' });
       })
       .callback(({ state }) => {
         const expectedIframe = iframe({ src: 'https://custom.url/awesome' })();
-        expect(state.doc).toEqualRemirrorDocument(doc(p('add and iframe here '), expectedIframe));
+        expect(state.doc).toEqualRemirrorDocument(doc(p('add an iframe here '), expectedIframe));
       });
+  });
+
+  it('`addIframe.isEnabled()` - returns true', () => {
+    const { commands } = add(doc(p('add an iframe here <cursor>')));
+    expect(commands.addIframe.isEnabled({ src: '' })).toBe(true);
+  });
+
+  it('`addYouTubeVideo` - creates an iframe', () => {
+    add(doc(p('add an iframe here <cursor>')))
+      .callback(({ commands }) => {
+        commands.addYouTubeVideo({
+          video: 'asdf',
+          enhancedPrivacy: true,
+          showControls: true,
+          startAt: 30,
+        });
+      })
+      .callback(({ state }) => {
+        const expectedIframe = iframe({
+          src: 'https://www.youtube-nocookie.com/embed/asdf?amp%3Bstart=30',
+          type: 'youtube',
+          allowFullScreen: 'true',
+        })();
+        expect(state.doc).toEqualRemirrorDocument(doc(p('add an iframe here '), expectedIframe));
+      });
+  });
+
+  it('`addYouTubeVideo.isEnabled()` - returns true', () => {
+    const { commands } = add(doc(p('add an iframe here <cursor>')));
+    expect(commands.addYouTubeVideo.isEnabled({ video: '' })).toBe(true);
   });
 });
