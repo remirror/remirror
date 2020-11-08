@@ -24,7 +24,7 @@
     "name": "@remirror/core-utils",
     "path": "packages/@remirror/core-utils/dist/core-utils.browser.esm.js",
     "limit": "20 KB",
-    "ignore": ["@remirror/pm"],
+    "ignore": ["@remirror/pm", "@types/node"],
     "running": false
   },
   {
@@ -70,6 +70,13 @@
     "running": false
   },
   {
+    "name": "@remirror/extension-callout",
+    "path": "packages/@remirror/extension-callout/dist/extension-callout.browser.esm.js",
+    "limit": "5 KB",
+    "ignore": ["@remirror/core", "@remirror/pm"],
+    "running": false
+  },
+  {
     "name": "@remirror/extension-code",
     "path": "packages/@remirror/extension-code/dist/extension-code.browser.esm.js",
     "limit": "5 KB",
@@ -80,6 +87,13 @@
     "name": "@remirror/extension-code-block",
     "path": "packages/@remirror/extension-code-block/dist/extension-code-block.browser.esm.js",
     "limit": "20 KB",
+    "ignore": ["@remirror/core", "@remirror/pm", "@types/prettier"],
+    "running": false
+  },
+  {
+    "name": "@remirror/extension-codemirror",
+    "path": "packages/@remirror/extension-codemirror/dist/extension-codemirror.browser.esm.js",
+    "limit": "70 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
@@ -196,6 +210,13 @@
     "running": false
   },
   {
+    "name": "@remirror/extension-mention-atom",
+    "path": "packages/@remirror/extension-mention-atom/dist/extension-mention-atom.browser.esm.js",
+    "limit": "5 KB",
+    "ignore": ["@remirror/core", "@remirror/pm"],
+    "running": false
+  },
+  {
     "name": "@remirror/extension-paragraph",
     "path": "packages/@remirror/extension-paragraph/dist/extension-paragraph.browser.esm.js",
     "limit": "5 KB",
@@ -276,7 +297,7 @@
     "name": "@remirror/extension-yjs",
     "path": "packages/@remirror/extension-yjs/dist/extension-yjs.browser.esm.js",
     "limit": "115 KB",
-    "ignore": ["@remirror/core", "@remirror/pm"],
+    "ignore": ["@remirror/core", "@remirror/pm", "yjs"],
     "running": false
   },
   {
@@ -384,8 +405,12 @@
     "limit": "200 KB",
     "ignore": [
       "@remirror/core",
-      "@remirror/extension-auto-link",
+      "@remirror/extension-emoji",
+      "@remirror/extension-events",
+      "@remirror/extension-history",
       "@remirror/extension-mention",
+      "@remirror/extension-mention-atom",
+      "@remirror/extension-positioner",
       "@remirror/pm",
       "@remirror/react",
       "@types/react",
@@ -458,10 +483,10 @@
     "path": "packages/prosemirror-suggest/dist/prosemirror-suggest.browser.esm.js",
     "limit": "10 KB",
     "ignore": [
-      "@types/prosemirror-keymap",
+      "@types/prosemirror-model",
       "@types/prosemirror-state",
       "@types/prosemirror-view",
-      "prosemirror-keymap",
+      "prosemirror-model",
       "prosemirror-state",
       "prosemirror-view"
     ],

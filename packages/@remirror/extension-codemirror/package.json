@@ -1,0 +1,47 @@
+{
+  "name": "@remirror/extension-codemirror",
+  "version": "1.0.0-next.52",
+  "description": "Add CodeMirror to your editor.",
+  "keywords": [
+    "remirror",
+    "remirror-extension",
+    "CodeMirror",
+    "editor"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-codemirror",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-codemirror",
+  "license": "MIT",
+  "contributors": [
+    "Ocavue <ocavue@gmail.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/extension-codemirror.cjs.js",
+  "module": "dist/extension-codemirror.esm.js",
+  "browser": {
+    "./dist/extension-codemirror.cjs.js": "./dist/extension-codemirror.browser.cjs.js",
+    "./dist/extension-codemirror.esm.js": "./dist/extension-codemirror.browser.esm.js"
+  },
+  "types": "dist/extension-codemirror.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.0",
+    "@types/codemirror": "^0.0.98",
+    "codemirror": "^5.58.2"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.53",
+    "@remirror/pm": "1.0.0-next.53"
+  },
+  "peerDependencies": {
+    "@remirror/core": "1.0.0-next.53",
+    "@remirror/pm": "1.0.0-next.53"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "70 KB"
+  }
+}
