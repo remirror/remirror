@@ -15,6 +15,7 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
   'remirror/extension/bidi': require('remirror/extension/bidi'),
   'remirror/extension/blockquote': require('remirror/extension/blockquote'),
   'remirror/extension/bold': require('remirror/extension/bold'),
+  'remirror/extension/callout': require('remirror/extension/callout'),
   'remirror/extension/code': require('remirror/extension/code'),
   'remirror/extension/code-block': require('remirror/extension/code-block'),
   'remirror/extension/collaboration': require('remirror/extension/collaboration'),
@@ -110,6 +111,10 @@ export const INTERNAL_MODULES: Array<{ moduleName: string; exports: string[] }> 
   {
     moduleName: 'remirror/extension/bold',
     exports: ['BoldExtension'],
+  },
+  {
+    moduleName: 'remirror/extension/callout',
+    exports: ['CalloutExtension'],
   },
   {
     moduleName: 'remirror/extension/code',
