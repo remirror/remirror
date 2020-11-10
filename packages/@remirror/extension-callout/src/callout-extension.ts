@@ -3,11 +3,15 @@ import {
   CommandFunction,
   extensionDecorator,
   ExtensionTag,
+  findNodeAtSelection,
   isElementDomNode,
+  KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
   toggleWrap,
 } from '@remirror/core';
+import { TextSelection } from '@remirror/pm/state';
+
 import type { CalloutAttributes, CalloutOptions } from './callout-types';
 import { dataAttributeType, updateNodeAttributes } from './callout-utils';
 
@@ -88,6 +92,64 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
        */
       updateCallout: (attributes: CalloutAttributes): CommandFunction =>
         updateNodeAttributes(this.type)(attributes),
+    };
+  }
+
+  /**
+   * Create specific keyboard bindings for the code block.
+   */
+  createKeymap(): KeyBindings {
+    return {
+      Backspace: ({ dispatch, tr }) => {
+        // Aims to stop merging callouts when deleting content in between
+        const { selection } = tr;
+
+        // If the selection is not empty return false and let other extension
+        // (ie: BaseKeymapExtension) to do the deleting operation.
+        if (!selection.empty) {
+          return false;
+        }
+
+        const { $from } = selection;
+
+        // If not at the start of current node, no joining will happen
+        if ($from.parentOffset !== 0) {
+          return false;
+        }
+
+        const previousPosition = $from.before($from.depth) - 1;
+
+        // If nothing above to join with
+        if (previousPosition < 1) {
+          return false;
+        }
+
+        const previousPos = tr.doc.resolve(previousPosition);
+
+        // If resolving previous position fails, bail out
+        if (!previousPos?.parent) {
+          return false;
+        }
+
+        const previousNode = previousPos.parent;
+        const { node, pos } = findNodeAtSelection(selection);
+
+        // If previous node is a callout, cut current node's content into it
+        if (node.type !== this.type && previousNode.type === this.type) {
+          const { content, nodeSize } = node;
+          tr.delete(pos, pos + nodeSize);
+          tr.setSelection(TextSelection.create(tr.doc, previousPosition - 1));
+          tr.insert(previousPosition - 1, content);
+
+          if (dispatch) {
+            dispatch(tr);
+          }
+
+          return true;
+        }
+
+        return false;
+      },
     };
   }
 }

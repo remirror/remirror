@@ -166,3 +166,88 @@ describe('commands', () => {
     });
   });
 });
+
+describe('plugin', () => {
+  const {
+    add,
+    nodes: { p, doc },
+    attributeNodes: { callout },
+  } = create();
+
+  describe('Backspace', () => {
+    it('should avoid merging callouts when they become immediate siblings', () => {
+      const { state } = add(
+        doc(
+          callout({ type: 'error' })(p('Error callout')),
+          p('<cursor>'),
+          callout({ type: 'success' })(p('success callout')),
+        ),
+      ).press('Backspace');
+
+      expect(state.doc).toEqualRemirrorDocument(
+        doc(
+          callout({ type: 'error' })(p('Error callout')),
+          callout({ type: 'success' })(p('success callout')),
+        ),
+      );
+    });
+
+    it('should append the previous callout with the content after the cursor', () => {
+      const { state } = add(
+        doc(
+          callout({ type: 'error' })(p('Error callout')),
+          p('<cursor>To append'),
+          callout({ type: 'success' })(p('Success callout')),
+        ),
+      ).press('Backspace');
+
+      expect(state.doc).toEqualRemirrorDocument(
+        doc(
+          callout({ type: 'error' })(p('Error calloutTo append')),
+          callout({ type: 'success' })(p('Success callout')),
+        ),
+      );
+    });
+
+    it('should merge immediate sibling callouts', () => {
+      const { state } = add(
+        doc(
+          callout({ type: 'error' })(p('Error callout')),
+          callout({ type: 'success' })(p('<cursor>Success callout')),
+        ),
+      ).press('Backspace');
+
+      expect(state.doc).toEqualRemirrorDocument(
+        doc(callout({ type: 'error' })(p('Error callout'), p('Success callout'))),
+      );
+    });
+
+    it('should ignore range selections', () => {
+      const { state } = add(
+        doc(
+          callout({ type: 'error' })(p('Error callout')),
+          p('<start>Some content<end>'),
+          callout({ type: 'success' })(p('Success callout')),
+        ),
+      ).press('Backspace');
+
+      expect(state.doc).toEqualRemirrorDocument(
+        doc(
+          callout({ type: 'error' })(p('Error callout')),
+          p(''),
+          callout({ type: 'success' })(p('Success callout')),
+        ),
+      );
+    });
+
+    it('should ignore when there is nothing to merge with', () => {
+      const { state } = add(
+        doc(p('<cursor>'), callout({ type: 'success' })(p('Success callout'))),
+      ).press('Backspace');
+
+      expect(state.doc).toEqualRemirrorDocument(
+        doc(p(''), callout({ type: 'success' })(p('Success callout'))),
+      );
+    });
+  });
+});
