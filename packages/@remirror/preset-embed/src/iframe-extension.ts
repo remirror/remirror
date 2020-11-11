@@ -104,7 +104,7 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
             src,
             'data-embed-type': type,
             allowfullscreen: allowFullScreen ? 'true' : 'false',
-            frameBorder: frameBorder.toString(),
+            frameBorder: frameBorder?.toString(),
           },
         ];
       },

@@ -18,6 +18,7 @@ import type {
   AnchorHeadParameter,
   AnyConstructor,
   ApplySchemaAttributes,
+  DOMCompatibleAttributes,
   EditorSchema,
   EditorState,
   FromToParameter,
@@ -1074,9 +1075,9 @@ export function areSchemasCompatible(schemaA: EditorSchema, schemaB: EditorSchem
 export function omitExtraAttributes(
   attrs: NodeAttributes,
   extra: ApplySchemaAttributes,
-): NodeAttributes {
+): DOMCompatibleAttributes {
   const extraAttributeNames = keys(extra.defaults());
-  return omit({ ...attrs }, extraAttributeNames);
+  return omit({ ...attrs }, extraAttributeNames) as DOMCompatibleAttributes;
 }
 
 /**
