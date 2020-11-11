@@ -10,6 +10,7 @@ import {
   NodeAttributes,
   NodeExtension,
   NodeExtensionSpec,
+  omitExtraAttributes,
 } from '@remirror/core';
 import type { ResolvedPos } from '@remirror/pm/model';
 
@@ -57,7 +58,8 @@ export class ImageExtension extends NodeExtension {
         },
       ],
       toDOM: (node) => {
-        return ['img', { ...extra.dom(node), ...node.attrs }];
+        const attrs = omitExtraAttributes(node.attrs, extra);
+        return ['img', { ...extra.dom(node), ...attrs }];
       },
     };
   }
