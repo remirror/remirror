@@ -10,17 +10,20 @@ import {
   isObject,
   isString,
   keys,
+  omit,
   sort,
   unset,
 } from '@remirror/core-helpers';
 import type {
   AnchorHeadParameter,
   AnyConstructor,
+  ApplySchemaAttributes,
   EditorSchema,
   EditorState,
   FromToParameter,
   MarkAttributes,
   MarkTypeParameter,
+  NodeAttributes,
   PrimitiveSelection,
   ProsemirrorNode,
   ProsemirrorNodeParameter,
@@ -1060,6 +1063,20 @@ export function areSchemasCompatible(schemaA: EditorSchema, schemaB: EditorSchem
   }
 
   return true;
+}
+
+/**
+ * Returns attributes for a node excluding those that were provided as extra attributes
+ *
+ * @param attrs - The source attributes
+ * @param extra - The extra attribute schema for this node
+ */
+export function omitExtraAttributes(
+  attrs: NodeAttributes,
+  extra: ApplySchemaAttributes,
+): NodeAttributes {
+  const extraAttributeNames = keys(extra.defaults());
+  return omit({ ...attrs }, extraAttributeNames);
 }
 
 /**

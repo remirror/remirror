@@ -10,6 +10,7 @@ import {
   NodeExtension,
   NodeExtensionSpec,
   object,
+  omitExtraAttributes,
   ProsemirrorAttributes,
   Shape,
   Static,
@@ -88,7 +89,10 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
         },
       ],
       toDOM: (node) => {
-        const { frameBorder, allowFullScreen, src, type, ...rest } = node.attrs;
+        const { frameBorder, allowFullScreen, src, type, ...rest } = omitExtraAttributes(
+          node.attrs,
+          extra,
+        );
         const { class: className } = this.options;
 
         return [
