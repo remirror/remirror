@@ -22,6 +22,7 @@ import {
   MarkExtension,
   MarkExtensionSpec,
   markPasteRule,
+  omitExtraAttributes,
   OnSetOptionsParameter,
   preserveSelection,
   ProsemirrorNode,
@@ -152,7 +153,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         },
       ],
       toDOM: (node) => {
-        const { auto: _, ...rest } = node.attrs;
+        const { auto: _, ...rest } = omitExtraAttributes(node.attrs, extra);
         const auto = node.attrs.auto ? { [AUTO_ATTRIBUTE]: '' } : {};
         const rel = 'noopener noreferrer nofollow';
         const attrs = { ...extra.dom(node), ...rest, rel, ...auto };

@@ -12,6 +12,7 @@ import {
   NodeAttributes,
   NodeExtension,
   NodeExtensionSpec,
+  omitExtraAttributes,
   pick,
   replaceText,
   Static,
@@ -150,7 +151,7 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
           name,
           range,
           ...rest
-        } = node.attrs as NamedMentionAtomNodeAttributes;
+        } = omitExtraAttributes(node.attrs, extra) as NamedMentionAtomNodeAttributes;
         const matcher = this.options.matchers.find((matcher) => matcher.name === name);
 
         const mentionClassName = matcher

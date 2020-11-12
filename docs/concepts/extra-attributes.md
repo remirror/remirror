@@ -52,6 +52,24 @@ const paragraphExtension = new ParagraphExtension({
 
 This example accomplishes the same things as the previous example and remirror is smart enough to automatically parse the dom and write to the dom the required values.
 
+### Render as data attributes
+
+You can return an array of a key value pair, to determine how your extra attribute is rendered in the DOM.
+
+```ts
+import { ParagraphExtension } from 'remirror/extension/paragraph';
+
+const paragraphExtension = new ParagraphExtension({
+  extraAttributes: {
+    custom: {
+      default: 'my default',
+      parseDOM: (dom) => dom.getAttribute('data-custom'),
+      toDOM: (attrs) => ['data-custom', attrs.custom],
+    },
+  },
+});
+```
+
 ## RemirrorManager
 
 Extra attributes can also be added via the `RemirrorManager`. This can set attributes for a collection of nodes, marks and tags. This is very useful when adding attributes to multiple places in one sweep.
