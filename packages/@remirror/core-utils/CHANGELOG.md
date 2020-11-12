@@ -1,5 +1,45 @@
 # @remirror/core-utils
 
+## 1.0.0-next.53
+
+> 2020-11-12
+
+### Minor Changes
+
+- [`a1d65df6`](https://github.com/remirror/remirror/commit/a1d65df634f5a575a1cd37b584f52b7b526d3655) [#775](https://github.com/remirror/remirror/pull/775) Thanks [@whawker](https://github.com/whawker)! - Fixes extensions that were erroneously adding extra attributes to the DOM twice.
+
+  Attributes were correctly added using their toDOM handler, but also incorrectly in their raw form.
+
+  Example
+
+  ```ts
+  const linkExtension = new LinkExtension({
+    extraAttributes: {
+      custom: {
+        default: 'my default',
+        parseDOM: (dom) => dom.getAttribute('data-custom'),
+        toDOM: (attrs) => ['data-custom', attrs.custom],
+      },
+    },
+  });
+  ```
+
+  Resulted in
+
+  ```html
+  <a data-custom="my default" custom="my default" <!-- extra attribute rendered in raw form -->
+    href="https://remirror.io" rel="noopener noreferrer nofollow"></a
+  >
+  ```
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core-constants@1.0.0-next.53
+  - @remirror/core-helpers@1.0.0-next.53
+  - @remirror/core-types@1.0.0-next.53
+  - @remirror/pm@1.0.0-next.53
+
 ## 1.0.0-next.52
 
 > 2020-11-06

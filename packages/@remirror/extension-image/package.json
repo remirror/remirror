@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-image",
-  "version": "1.0.0-next.52",
+  "version": "1.0.0-next.53",
   "description": "Add images to your editor.",
   "keywords": [
     "remirror",
@@ -31,12 +31,12 @@
     "@babel/runtime": "^7.12.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.52",
-    "@remirror/pm": "1.0.0-next.52"
+    "@remirror/core": "1.0.0-next.53",
+    "@remirror/pm": "1.0.0-next.53"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.52",
-    "@remirror/pm": "1.0.0-next.52"
+    "@remirror/core": "1.0.0-next.53",
+    "@remirror/pm": "1.0.0-next.53"
   },
   "publishConfig": {
     "access": "public"

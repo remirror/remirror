@@ -1,5 +1,18 @@
 # @remirror/react-utils
 
+## 1.0.0-next.53
+
+> 2020-11-12
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core-constants@1.0.0-next.53
+  - @remirror/core-helpers@1.0.0-next.53
+  - @remirror/core-types@1.0.0-next.53
+
 ## 1.0.0-next.52
 
 > 2020-11-06
