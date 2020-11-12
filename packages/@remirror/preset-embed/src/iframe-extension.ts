@@ -10,7 +10,6 @@ import {
   NodeExtension,
   NodeExtensionSpec,
   object,
-  omitExtraAttributes,
   ProsemirrorAttributes,
   Shape,
   Static,
@@ -89,10 +88,7 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
         },
       ],
       toDOM: (node) => {
-        const { frameBorder, allowFullScreen, src, type, ...rest } = omitExtraAttributes(
-          node.attrs,
-          extra,
-        );
+        const { frameBorder, allowFullScreen, src, type, ...rest } = node.attrs;
         const { class: className } = this.options;
 
         return [
@@ -104,7 +100,7 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
             src,
             'data-embed-type': type,
             allowfullscreen: allowFullScreen ? 'true' : 'false',
-            frameBorder: frameBorder?.toString(),
+            frameBorder: frameBorder.toString(),
           },
         ];
       },

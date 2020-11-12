@@ -76,7 +76,7 @@ import type { CombinedTags } from './tags-extension';
  *         awesome: {
  *           default: 'awesome',
  *           parseDOM: (domNode) => domNode.getAttribute('data-awesome'),
- *           toDOM: (attrs) => ([ 'data-awesome', attrs.awesome ])
+ *           toDOM: (node) => ({ 'data-awesome': node.attrs.awesome })
  *         },
  *       },
  *     },
@@ -857,8 +857,7 @@ function createToDOM(extraAttributes: SchemaAttributes, shouldIgnore: boolean) {
       }
 
       if (isArray(value)) {
-        const [attr, val] = value;
-        domAttributes[attr] = val ?? (item.attrs[name] as string);
+        domAttributes[value[0]] = value[1] ?? (item.attrs[name] as string);
       }
 
       return;
