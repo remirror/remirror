@@ -65,7 +65,6 @@ export {
   isTransaction,
   shouldUseDomEnvironment,
   startPositionOfParent,
-  omitExtraAttributes,
   toDom,
   toHtml,
   getChangedRanges,

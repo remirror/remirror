@@ -8,7 +8,6 @@ import {
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
-  omitExtraAttributes,
   toggleWrap,
 } from '@remirror/core';
 import { TextSelection } from '@remirror/pm/state';
@@ -55,7 +54,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
         },
       ],
       toDOM: (node) => {
-        const { type, ...rest } = omitExtraAttributes(node.attrs, extra) as CalloutAttributes;
+        const { type, ...rest } = node.attrs as CalloutAttributes;
         const attributes = { ...extra.dom(node), ...rest, [dataAttributeType]: type };
 
         return ['div', attributes, 0];

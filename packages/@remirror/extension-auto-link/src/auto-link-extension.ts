@@ -19,7 +19,6 @@ import {
   markPasteRule,
   MarkType,
   MarkTypeParameter,
-  omitExtraAttributes,
   ProsemirrorPlugin,
   Static,
   TransactionParameter,
@@ -69,12 +68,11 @@ export class AutoLinkExtension extends MarkExtension<AutoLinkOptions> {
         },
       ],
       toDOM: (node) => {
-        const attrs = omitExtraAttributes(node.attrs, extra);
         return [
           'a',
           {
             ...extra.dom(node),
-            ...attrs,
+            ...node.attrs,
             role: 'presentation',
           },
           0,
