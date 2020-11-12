@@ -1,5 +1,71 @@
 # remirror
 
+## 1.0.0-next.53
+
+> 2020-11-12
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies [[`a1d65df6`](https://github.com/remirror/remirror/commit/a1d65df634f5a575a1cd37b584f52b7b526d3655), [`5fd944c6`](https://github.com/remirror/remirror/commit/5fd944c64880ec3e7c60a954d22770ff1c613aee)]:
+  - @remirror/core@1.0.0-next.53
+  - @remirror/core-utils@1.0.0-next.53
+  - @remirror/extension-auto-link@1.0.0-next.53
+  - @remirror/extension-callout@1.0.0-next.53
+  - @remirror/extension-image@1.0.0-next.53
+  - @remirror/extension-link@1.0.0-next.53
+  - @remirror/extension-mention-atom@1.0.0-next.53
+  - @remirror/preset-embed@1.0.0-next.53
+  - @remirror/core-constants@1.0.0-next.53
+  - @remirror/core-helpers@1.0.0-next.53
+  - @remirror/core-types@1.0.0-next.53
+  - @remirror/dom@1.0.0-next.53
+  - @remirror/extension-annotation@1.0.0-next.53
+  - @remirror/extension-bidi@1.0.0-next.53
+  - @remirror/extension-blockquote@1.0.0-next.53
+  - @remirror/extension-bold@1.0.0-next.53
+  - @remirror/extension-code@1.0.0-next.53
+  - @remirror/extension-code-block@1.0.0-next.53
+  - @remirror/extension-collaboration@1.0.0-next.53
+  - @remirror/extension-diff@1.0.0-next.53
+  - @remirror/extension-doc@1.0.0-next.53
+  - @remirror/extension-drop-cursor@1.0.0-next.53
+  - @remirror/extension-emoji@1.0.0-next.53
+  - @remirror/extension-epic-mode@1.0.0-next.53
+  - @remirror/extension-events@1.0.0-next.53
+  - @remirror/extension-gap-cursor@1.0.0-next.53
+  - @remirror/extension-hard-break@1.0.0-next.53
+  - @remirror/extension-heading@1.0.0-next.53
+  - @remirror/extension-history@1.0.0-next.53
+  - @remirror/extension-horizontal-rule@1.0.0-next.53
+  - @remirror/extension-italic@1.0.0-next.53
+  - @remirror/extension-mention@1.0.0-next.53
+  - @remirror/extension-paragraph@1.0.0-next.53
+  - @remirror/extension-placeholder@1.0.0-next.53
+  - @remirror/extension-positioner@1.0.0-next.53
+  - @remirror/extension-react-component@1.0.0-next.53
+  - @remirror/extension-react-ssr@1.0.0-next.53
+  - @remirror/extension-search@1.0.0-next.53
+  - @remirror/extension-strike@1.0.0-next.53
+  - @remirror/extension-text@1.0.0-next.53
+  - @remirror/extension-trailing-node@1.0.0-next.53
+  - @remirror/extension-underline@1.0.0-next.53
+  - @remirror/extension-yjs@1.0.0-next.53
+  - @remirror/pm@1.0.0-next.53
+  - @remirror/preset-core@1.0.0-next.53
+  - @remirror/preset-list@1.0.0-next.53
+  - @remirror/preset-react@1.0.0-next.53
+  - @remirror/preset-social@1.0.0-next.53
+  - @remirror/preset-table@1.0.0-next.53
+  - @remirror/preset-wysiwyg@1.0.0-next.53
+  - @remirror/react@1.0.0-next.53
+  - @remirror/react-hooks@1.0.0-next.53
+  - @remirror/react-social@1.0.0-next.53
+  - @remirror/react-utils@1.0.0-next.53
+  - @remirror/react-wysiwyg@1.0.0-next.53
+  - @remirror/theme@1.0.0-next.53
+
 ## 1.0.0-next.52
 
 > 2020-11-06
