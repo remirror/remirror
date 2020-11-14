@@ -37,8 +37,26 @@ interface UpdateMarkParameter extends Partial<RangeParameter>, Partial<Attribute
 export function updateMark(parameter: UpdateMarkParameter): CommandFunction {
   return ({ dispatch, tr }) => {
     const { type, attrs = object(), appendText, range } = parameter;
-    const { selection } = tr;
-    const { from, to } = range ?? selection;
+    const selection = range ? TextSelection.create(tr.doc, range.from, range.to) : tr.selection;
+    const { $from, from, to } = selection;
+    let applicable = $from.depth === 0 ? tr.doc.type.allowsMarkType(type) : false;
+
+    tr.doc.nodesBetween(from, to, (node) => {
+      if (applicable) {
+        return false;
+      }
+
+      if (node.inlineContent && node.type.allowsMarkType(type)) {
+        applicable = true;
+        return;
+      }
+
+      return;
+    });
+
+    if (!applicable) {
+      return false;
+    }
 
     dispatch?.(
       tr.addMark(from, to, type.create(attrs)) && appendText ? tr.insertText(appendText) : tr,
