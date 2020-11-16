@@ -474,6 +474,20 @@ importers:
       '@types/refractor': ^3.0.0
       refractor: ^3.2.0
       type-fest: ^0.18.0
+  packages/@remirror/extension-codemirror:
+    dependencies:
+      '@babel/runtime': 7.12.5
+      '@types/codemirror': 0.0.98
+      codemirror: 5.58.2
+    devDependencies:
+      '@remirror/core': 'link:../core'
+      '@remirror/pm': 'link:../pm'
+    specifiers:
+      '@babel/runtime': ^7.12.0
+      '@remirror/core': 1.0.0-next.53
+      '@remirror/pm': 1.0.0-next.53
+      '@types/codemirror': ^0.0.98
+      codemirror: ^5.58.2
   packages/@remirror/extension-collaboration:
     dependencies:
       '@babel/runtime': 7.12.5
@@ -7288,6 +7302,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-hs+1QSCZC5/yZPNqTOC6Q/ic8DmRna65H2GpvC8zlXjgWZrQyYBD5T5dJafo70bfDTXrBO9c/j5cw3/nY/qMiA==
+  /@types/codemirror/0.0.98:
+    dependencies:
+      '@types/tern': 0.23.3
+    dev: false
+    resolution:
+      integrity: sha512-cbty5LPayy2vNSeuUdjNA9tggG+go5vAxmnLDRWpiZI5a+RDBi9dlozy4/jW/7P/gletbBWbQREEa7A81YxstA==
   /@types/configstore/4.0.0:
     dev: false
     resolution:
@@ -7779,6 +7799,12 @@ packages:
   /@types/tapable/1.0.6:
     resolution:
       integrity: sha512-W+bw9ds02rAQaMvaLYxAbJ6cvguW/iJXNT6lTssS1ps6QdrMKttqEAMEG/b5CR8TZl3/L7/lH0ZV5nNR1LXikA==
+  /@types/tern/0.23.3:
+    dependencies:
+      '@types/estree': 0.0.45
+    dev: false
+    resolution:
+      integrity: sha512-imDtS4TAoTcXk0g7u4kkWqedB3E4qpjXzCpD2LU5M5NAXHzCDsypyvXSaG7mM8DKYkCRa7tFp4tS/lp/Wo7Q3w==
   /@types/testing-library__jest-dom/5.9.5:
     dependencies:
       '@types/jest': 26.0.15
@@ -10450,6 +10476,10 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
+  /codemirror/5.58.2:
+    dev: false
+    resolution:
+      integrity: sha512-K/hOh24cCwRutd1Mk3uLtjWzNISOkm4fvXiMO7LucCrqbh6aJDdtqUziim3MZUI6wOY0rvY1SlL1Ork01uMy6w==
   /coffee-script/1.12.7:
     deprecated: CoffeeScript on NPM has moved to "coffeescript" (no hyphen)
     dev: false

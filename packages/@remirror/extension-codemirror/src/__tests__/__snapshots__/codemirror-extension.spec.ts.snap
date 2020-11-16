@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`nodeView can be updated 1`] = `
+<span style="padding-right: .1px;"
+      role="presentation"
+>
+  hello
+</span>
+`;
+
+exports[`nodeView can be updated 2`] = `
+<span style="padding-right: .1px;"
+      role="presentation"
+>
+  hello world
+</span>
+`;
