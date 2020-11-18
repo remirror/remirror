@@ -196,6 +196,9 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
       }
     }
 
+    // When at the start of a document and the document is empty the document is not the default editor.
+    baseKeymap.Backspace = pmChainCommands(baseKeymap.Backspace);
+
     // Automatically remove the input rule when the option is set to true.
     if (undoInputRuleOnBackspace) {
       baseKeyBindings.Backspace = convertCommand(

@@ -22,10 +22,17 @@ describe('removeMark', () => {
     expect(removeMark({ type })).toTransform({ from, to });
   });
 
+  it.only('removes the uncontained mark', () => {
+    const from = doc(p('Hel<start>lo ', strong('bo<end>ld')));
+    const to = doc(p('Hello bo', 'ld'));
+
+    expect(removeMark({ type })).toTransform({ from, to });
+  });
+
   it('leaves mark untouched when `expand` is `false`', () => {
     const from = doc(p(strong('bo<cursor>ld')));
 
-    expect(removeMark({ type })).toTransform({ from });
+    expect(removeMark({ type, expand: false })).toTransform({ from });
   });
 
   it('removes mark when `expand` is `true`', () => {

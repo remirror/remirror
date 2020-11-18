@@ -372,7 +372,7 @@ interface RemoveMarkParameter extends MarkTypeParameter, Partial<RangeParameter<
   /**
    * Whether to expand empty selections to the current mark range
    *
-   * @default false
+   * @default true
    */
   expand?: boolean;
 }
@@ -384,7 +384,7 @@ interface RemoveMarkParameter extends MarkTypeParameter, Partial<RangeParameter<
  */
 export function removeMark(parameter: RemoveMarkParameter): CommandFunction {
   return ({ dispatch, tr }) => {
-    const { type, expand = false, range } = parameter;
+    const { type, expand = true, range } = parameter;
     const { selection } = tr;
     let { from, to } = range ?? selection;
 

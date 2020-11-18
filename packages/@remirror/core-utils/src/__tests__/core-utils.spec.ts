@@ -344,16 +344,16 @@ describe('getSelectedWord', () => {
     expect(getSelectedWord(state)).toEqual({ from: 11, to: 18 });
   });
 
-  it('should return false for ambiguous locations', () => {
+  it('should return undefined for ambiguous locations', () => {
     const { state } = createEditor(doc(p('Something this <cursor> is a word')));
 
-    expect(getSelectedWord(state)).toBeFalse();
+    expect(getSelectedWord(state)).toBeUndefined();
   });
 
-  it('should return false for completely empty locations', () => {
+  it('should return undefined for completely empty locations', () => {
     const { state } = createEditor(doc(p('   <cursor>   ')));
 
-    expect(getSelectedWord(state)).toBeFalse();
+    expect(getSelectedWord(state)).toBeUndefined();
   });
 });
 

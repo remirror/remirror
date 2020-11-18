@@ -47,10 +47,6 @@ export function useReactEditor<Combined extends AnyCombinedUnion>(
 
   // Keep the placeholder updated
   useUpdateEffect(() => {
-    if (isNullOrUndefined(placeholder)) {
-      return;
-    }
-
     manager.getPreset(ReactPreset).setOptions({ placeholder });
   }, [placeholder, manager]);
 

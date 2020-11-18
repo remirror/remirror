@@ -112,7 +112,7 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
   }
 
   /**
-   * Provides the commands for the iFrame extension.
+   * Provides the commands for the `iFrame` extension.
    */
   createCommands() {
     return {

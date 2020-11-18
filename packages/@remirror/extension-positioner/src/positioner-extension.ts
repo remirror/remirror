@@ -20,6 +20,7 @@ import {
   centeredSelectionPositioner,
   cursorPopupPositioner,
   floatingSelectionPositioner,
+  wordNearCursorPositioner,
 } from './positioners';
 
 export interface PositionerOptions {
@@ -165,6 +166,7 @@ const positioners = {
   floatingSelection: floatingSelectionPositioner,
   popup: cursorPopupPositioner,
   cursor: cursorPopupPositioner,
+  word: wordNearCursorPositioner,
 };
 
 /**

@@ -1,4 +1,4 @@
-import { isSelectionEmpty, Shape } from '@remirror/core';
+import { getSelectedWord, isSelectionEmpty, Shape } from '@remirror/core';
 
 import { Coords, Positioner, VirtualPosition } from './positioner';
 import { hasStateChanged, isEmptyBlockNode } from './positioner-utils';
@@ -191,6 +191,78 @@ export const cursorPopupPositioner = Positioner.create<Coords>({
     const bottom = Math.trunc(cursor.bottom - parentBox.top);
     const top = Math.trunc(cursor.top - parentBox.top);
     const rect = new DOMRect(cursor.left, cursor.top, 0, cursor.bottom - cursor.top);
+    const left =
+      calculatedLeft + elementBox.width > parentBox.width
+        ? calculatedLeft - elementBox.width
+        : calculatedLeft;
+    const right =
+      calculatedRight + elementBox.width > parentBox.width
+        ? calculatedRight - elementBox.width
+        : calculatedRight;
+
+    return { rect, right, left, bottom, top };
+  },
+});
+
+/**
+ * Render a menu that is inline with the first character of the selection. This
+ * is useful for suggestions since they should typically appear while typing
+ * without a multi character selection.
+ *
+ * @remarks
+ *
+ * The menu will center itself within the selection.
+ *
+ * - `right` should be used to absolutely position away from the right hand edge
+ *   of the screen.
+ * - `left` should be used to absolutely position away from the left hand edge
+ *   of the screen.
+ * - `bottom` absolutely positions the element above the text selection.
+ * - `top` absolutely positions the element below the text selection
+ */
+export const wordNearCursorPositioner = Positioner.create<{ from: Coords; to: Coords }>({
+  hasChanged: hasStateChanged,
+
+  /**
+   * Only active when the selection is empty (one character)
+   */
+  getActive: (parameter) => {
+    const { state, view } = parameter;
+
+    if (!state.selection.empty) {
+      return [];
+    }
+
+    const word = getSelectedWord(state);
+
+    if (!word) {
+      return [];
+    }
+
+    return [{ from: view.coordsAtPos(word.from), to: view.coordsAtPos(word.from) }];
+  },
+
+  getPosition(parameter) {
+    const { element, data } = parameter;
+    const parent = element.offsetParent;
+    const { from, to } = data;
+
+    if (!parent) {
+      return emptyVirtualPosition;
+    }
+
+    // The box in which the bubble menu is positioned, to use as an anchor
+    const parentBox = parent.getBoundingClientRect();
+
+    // The popup menu element
+    const elementBox = element.getBoundingClientRect();
+
+    const calculatedLeft = from.left - parentBox.left;
+    const calculatedRight = parentBox.right - to.left;
+
+    const bottom = Math.trunc(to.bottom - parentBox.top);
+    const top = Math.trunc(from.top - parentBox.top);
+    const rect = new DOMRect(from.left, from.top, to.left - from.left, to.bottom - from.top);
     const left =
       calculatedLeft + elementBox.width > parentBox.width
         ? calculatedLeft - elementBox.width

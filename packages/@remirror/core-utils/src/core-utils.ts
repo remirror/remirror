@@ -245,6 +245,25 @@ export function isDocNodeEmpty(node: ProsemirrorNode): boolean {
 }
 
 /**
+ * Check whether the current doc node is the same value as the default empty
+ * node for the document.
+ *
+ * This is useful for extensions like the placeholder which only should be shown
+ * when the document matches the default empty state.
+ */
+export function isDefaultDocNode(state: EditorState): boolean {
+  const defaultDoc = state.schema.nodes.doc.createAndFill();
+  // Make sure the `doc` was created.
+
+  if (!defaultDoc) {
+    // No default doc exists for the current schema.
+    return false;
+  }
+
+  return defaultDoc.eq(state.doc);
+}
+
+/**
  * Checks if the current node is a block node and empty.
  *
  * @param node - the prosemirror node
@@ -516,9 +535,9 @@ export function getTextContentFromSlice(slice: Slice): string {
 export function getSelectedGroup(
   state: EditorState | Transaction,
   exclude: RegExp,
-): FromToParameter | false {
+): FromToParameter | undefined {
   if (!isTextSelection(state.selection)) {
-    return false;
+    return;
   }
 
   let { from, to } = state.selection;
@@ -545,7 +564,7 @@ export function getSelectedGroup(
   }
 
   if (from === to) {
-    return false;
+    return;
   }
 
   return { from, to };
@@ -563,7 +582,7 @@ export function getSelectedGroup(
  *
  * @param state - the editor state or transaction.
  */
-export function getSelectedWord(state: EditorState | Transaction): FromToParameter | false {
+export function getSelectedWord(state: EditorState | Transaction): FromToParameter | undefined {
   return getSelectedGroup(state, /[\s\0]/);
 }
 

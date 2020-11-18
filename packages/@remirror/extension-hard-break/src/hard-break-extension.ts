@@ -12,6 +12,17 @@ import {
 } from '@remirror/core';
 import { exitCode } from '@remirror/pm/commands';
 
+export interface HardBreakOptions {
+  /**
+   * The a collection of nodes where the hard break is not available.
+   */
+  excludedNodes?: string[];
+
+  /**
+   *
+   */
+}
+
 /**
  * An extension which provides the functionality for inserting a `hardBreak`
  * `<br />` tag into the editor.

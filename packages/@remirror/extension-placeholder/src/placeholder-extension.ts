@@ -112,6 +112,7 @@ interface ApplyStateParameter extends SharedParameter {
    * The plugin state passed through to apply
    */
   pluginState: PlaceholderPluginState;
+
   /**
    * A state transaction
    */

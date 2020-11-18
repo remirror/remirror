@@ -14,6 +14,7 @@ export {
   emptyCoords,
   emptyVirtualPosition,
   floatingSelectionPositioner,
+  wordNearCursorPositioner,
 } from './positioners';
 
 export type {
