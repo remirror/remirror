@@ -8,6 +8,7 @@ export type {
   IdentifierSchemaAttributes,
   Identifiers,
   KeymapOptions,
+  PrioritizedKeyBindings,
   SuggestOptions,
   UpdatableViewProps,
 } from './builtins';

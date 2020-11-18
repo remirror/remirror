@@ -7,23 +7,26 @@ import {
   YSyncOpts,
   ySyncPlugin,
   yUndoPlugin,
+  yUndoPluginKey,
 } from 'y-prosemirror';
-import type { Doc } from 'yjs';
+import type { Doc, UndoManager } from 'yjs';
 
 import {
   AcceptUndefined,
   CommandFunction,
   convertCommand,
   EditorState,
+  environment,
   ErrorConstant,
   extensionDecorator,
   ExtensionPriority,
   invariant,
   isEmptyObject,
   isFunction,
-  KeyBindings,
+  nonChainable,
   OnSetOptionsParameter,
   PlainExtension,
+  PrioritizedKeyBindings,
   ProsemirrorPlugin,
   Selection,
   Shape,
@@ -102,12 +105,7 @@ export interface YjsOptions<Provider extends YjsRealtimeProvider = YjsRealtimePr
         message: 'You must provide a YJS Provider to the `YjsExtension`.',
       });
     },
-    destroyProvider: (provider) => {
-      const { doc } = provider;
-      provider.disconnect();
-      provider.destroy();
-      doc.destroy();
-    },
+    destroyProvider: defaultDestroyProvider,
     syncPluginOptions: undefined,
     cursorBuilder: defaultCursorBuilder,
     cursorStateField: 'cursor',
@@ -130,21 +128,17 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   get provider(): YjsRealtimeProvider {
     const { getProvider } = this.options;
 
-    if (!this.#provider) {
-      this.#provider = getLazyValue(getProvider);
-    }
-
-    return this.#provider;
+    return (this.#provider ??= getLazyValue(getProvider));
   }
 
   /**
    * Create the custom undo keymaps for the
    */
-  createKeymap(): KeyBindings {
+  createKeymap(): PrioritizedKeyBindings {
     return {
+      'Mod-y': !environment.isMac ? convertCommand(redo) : () => false,
       'Mod-z': convertCommand(undo),
-      'Mod-y': convertCommand(redo),
-      'Mod-Shift-z': convertCommand(redo),
+      'Shift-Mod-z': convertCommand(redo),
     };
   }
 
@@ -160,6 +154,7 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
       protectedNodes,
       trackedOrigins,
     } = this.options;
+
     const yDoc = this.provider.doc;
     const type = yDoc.getXmlFragment('prosemirror');
     return [
@@ -177,13 +172,49 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
     return {
       /**
        * Undo within a collaborative editor.
+       *
+       * This should be used instead of the built in `undo` command.
+       *
+       * This command does **not** support chaining.
        */
-      yUndo: (): CommandFunction => convertCommand(undo),
+      yUndo: (): CommandFunction =>
+        nonChainable((parameter) => {
+          const { state, dispatch } = parameter;
+          const undoManager: UndoManager = yUndoPluginKey.getState(state).undoManager;
+
+          if (undoManager.undoStack.length === 0) {
+            return false;
+          }
+
+          if (!dispatch) {
+            return true;
+          }
+
+          return convertCommand(undo)(parameter);
+        }),
 
       /**
        * Redo, within a collaborative editor.
+       *
+       * This should be used instead of the built in `redo` command.
+       *
+       * This command does **not** support chaining.
        */
-      yRedo: (): CommandFunction => convertCommand(redo),
+      yRedo: (): CommandFunction =>
+        nonChainable((parameter) => {
+          const { state, dispatch } = parameter;
+          const undoManager: UndoManager = yUndoPluginKey.getState(state).undoManager;
+
+          if (undoManager.redoStack.length === 0) {
+            return false;
+          }
+
+          if (!dispatch) {
+            return true;
+          }
+
+          return convertCommand(redo)(parameter);
+        }),
     };
   }
 
@@ -202,15 +233,8 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
       'trackedOrigins',
     ]);
 
-    if (!isEmptyObject(changedPluginOptions)) {
-      const previousPlugins = this.externalPlugins;
-      const newPlugins = (this.externalPlugins = this.createExternalPlugins());
-
-      this.store.addOrReplacePlugins(newPlugins, previousPlugins);
-      this.store.reconfigureStatePlugins();
-    }
-
     if (changes.getProvider.changed) {
+      this.#provider = undefined;
       const previousProvider = getLazyValue(changes.getProvider.previousValue);
 
       // Check whether the values have changed.
@@ -219,6 +243,10 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
       } else {
         this.options.destroyProvider(previousProvider);
       }
+    }
+
+    if (!isEmptyObject(changedPluginOptions)) {
+      this.store.updateExtensionPlugins(this);
     }
   }
 
@@ -231,7 +259,18 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
     }
 
     this.options.destroyProvider(this.#provider);
+    this.#provider = undefined;
   }
+}
+
+/**
+ * The default destroy provider method.
+ */
+export function defaultDestroyProvider(provider: YjsRealtimeProvider): void {
+  const { doc } = provider;
+  provider.disconnect();
+  provider.destroy();
+  doc.destroy();
 }
 
 function getLazyValue<Type>(lazyValue: Type | (() => Type)): Type {

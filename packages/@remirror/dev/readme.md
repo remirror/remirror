@@ -20,4 +20,31 @@ For in depth usage with proper code example see the [docs](https://remirror.io)
 
 The following will render the development view in your editor. For more information on what's possible see the [docs][prosemirror-dev-tools].
 
+```tsx
+import React from 'react';
+import { BoldExtension } from 'remirror/extension/bold';
+import { ItalicExtension } from 'remirror/extension/italic';
+import { UnderlineExtension } from 'remirror/extension/underline';
+import { CorePreset } from 'remirror/preset/core';
+import { RemirrorProvider } from 'remirror/react';
+import { RemirrorProvider, useManager } from 'remirror/react';
+
+import { ProsemirrorDevTools } from '@remirror/dev';
+
+const Editor = () => {
+  const manager = useManager([
+    new CorePreset(),
+    new BoldExtension(),
+    new ItalicExtension(),
+    new UnderlineExtension(),
+  ]);
+
+  return (
+    <RemirrorProvider manager={manager} autoRender={true}>
+      <ProsemirrorDevTools />
+    </RemirrorProvider>
+  );
+};
+```
+
 [prosemirror-dev-tools]: https://github.com/d4rkr00t/prosemirror-dev-tools
