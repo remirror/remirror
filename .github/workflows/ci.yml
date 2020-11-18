@@ -53,10 +53,10 @@ jobs:
         run: pnpm lint:css
 
       - name: check TS / JS files
-        run: pnpm lint:es -- -f github --quiet
+        run: pnpm lint:es -- -f github
 
       - name: check markdown code blocks
-        run: pnpm lint:md -- -f github --quiet
+        run: pnpm lint:md -- -f github
 
       - name: check formatting
         run: pnpm lint:prettier

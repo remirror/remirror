@@ -7,7 +7,7 @@ import { ReactPreset } from '@remirror/preset-react';
 import { BoldExtension } from '@remirror/testing';
 import { act as renderAct, render, strictRender } from '@remirror/testing/react';
 
-import { RemirrorProvider, createReactManager, useManager, useRemirror } from '../../..';
+import { createReactManager, RemirrorProvider, useManager, useRemirror } from '../../..';
 
 jest.mock('@remirror/preset-react', () => {
   const actual = jest.requireActual('@remirror/preset-react');

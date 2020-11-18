@@ -148,7 +148,7 @@ export function isAllSelection(value: unknown): value is AllSelection<EditorSche
  *
  * @param value - the value to check
  */
-export function isSelection(value: unknown): value is Selection<EditorSchema> {
+export function isSelection(value: unknown): value is Selection {
   return isObject(value) && value instanceof PMSelection;
 }
 

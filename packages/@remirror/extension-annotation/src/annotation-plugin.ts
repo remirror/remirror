@@ -24,7 +24,7 @@ export class AnnotationState<A extends Annotation = Annotation> {
    */
   decorationSet = DecorationSet.empty;
 
-  constructor(private getStyle: GetStyle<A>) {}
+  constructor(private readonly getStyle: GetStyle<A>) {}
 
   apply({ tr, action }: ApplyParameter): this {
     const actionType = action?.type;
