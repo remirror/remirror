@@ -17,11 +17,11 @@ export class CodeMirrorNodeView implements NodeView {
   public dom: Node;
 
   private node: ProsemirrorNode;
-  private schema: EditorSchema;
-  private view: EditorView;
-  private getPos: () => number;
+  private readonly schema: EditorSchema;
+  private readonly view: EditorView;
+  private readonly getPos: () => number;
   private incomingChanges: boolean;
-  private cm: CodeMirror.Editor;
+  private readonly cm: CodeMirror.Editor;
   private updating: boolean;
 
   constructor(

@@ -456,12 +456,12 @@ describe('plugin', () => {
     } = create({ openLinkOnClick: true });
     const testLink = link({ href });
 
-    global.open = jest.fn();
+    jest.spyOn(global, 'open').mockImplementation();
 
     add(doc(p(testLink('Li<cursor>nk'))))
       .fire({ event: 'click' })
       .callback(() => {
-        expect(global.open).toBeCalled();
+        expect(global.open).toHaveBeenCalled();
       });
   });
 });

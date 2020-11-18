@@ -2,16 +2,16 @@ import type { CSSProperties, ElementType, ReactElement, ReactNode } from 'react'
 import React, { useEffect } from 'react';
 
 import type { AnyCombinedUnion, MakeOptional } from '@remirror/core';
+import { RemirrorPortals, usePortals } from '@remirror/extension-react-component';
 import { i18n as defaultI18n } from '@remirror/i18n';
 import { RemirrorType } from '@remirror/react-utils';
 import type { RemirrorThemeType } from '@remirror/theme';
 import { createThemeVariables, themeStyles } from '@remirror/theme';
 
 import { useManager, useRemirror } from './hooks';
+import { useReactEditor } from './hooks/use-react-editor';
 import { I18nContext, RemirrorContext } from './react-contexts';
 import type { BaseProps, CreateReactManagerOptions, I18nContextProps } from './react-types';
-import { useReactEditor } from './hooks/use-react-editor';
-import { RemirrorPortals, usePortals } from '@remirror/extension-react-component';
 
 export interface RemirrorProviderProps<Combined extends AnyCombinedUnion>
   extends MakeOptional<BaseProps<Combined>, 'manager'> {

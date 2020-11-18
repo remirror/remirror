@@ -2,7 +2,7 @@ import { marks, nodes } from 'prosemirror-schema-basic';
 import { tableNodes } from 'prosemirror-tables';
 
 import { NodeGroup } from '@remirror/core-constants';
-import { NodeSpec, MarkSpec, Schema } from '@remirror/pm/model';
+import { MarkSpec, NodeSpec, Schema } from '@remirror/pm/model';
 import {
   bulletList as baseBulletList,
   listItem as baseListItem,

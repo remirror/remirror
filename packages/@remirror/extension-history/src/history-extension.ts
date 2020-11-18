@@ -7,10 +7,10 @@ import {
   extensionDecorator,
   Handler,
   isFunction,
-  KeyBindings,
   nonChainable,
   NonChainableCommandFunction,
   PlainExtension,
+  PrioritizedKeyBindings,
   ProsemirrorCommandFunction,
   ProsemirrorPlugin,
   Static,
@@ -19,16 +19,16 @@ import { history, redo, undo } from '@remirror/pm/history';
 
 export interface HistoryOptions {
   /**
-   * The amount of history events that are collected before the
-   * oldest events are discarded.
+   * The number of history events that are collected before the oldest events
+   * are discarded.
    *
    * @default 100
    */
   depth?: Static<number>;
 
   /**
-   * The delay (ms) between changes after which a new group should be
-   * started. Note that when changes aren't adjacent, a new group is always started.
+   * The delay (ms) between changes after which a new group should be started.
+   * Note that when changes aren't adjacent, a new group is always started.
    *
    * @default 500
    */
@@ -52,9 +52,9 @@ export interface HistoryOptions {
    * @remarks
    *
    * This is only needed when the extension is part of a child editor, e.g.
-   * `ImageCaptionEditor`. By passing in the `getDispatch` method history actions
-   * can be dispatched into the parent editor allowing them to propagate into
-   * the child editor.
+   * `ImageCaptionEditor`. By passing in the `getDispatch` method history
+   * actions can be dispatched into the parent editor allowing them to propagate
+   * into the child editor.
    */
   getDispatch?: AcceptUndefined<() => DispatchFunction>;
 
@@ -117,16 +117,11 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
   /**
    * Adds the default key mappings for undo and redo.
    */
-  createKeymap(): KeyBindings {
-    const notMacOS = !environment.isMac
-      ? { ['Mod-y']: this.wrapMethod(redo, this.options.onRedo) }
-      : undefined;
-
+  createKeymap(): PrioritizedKeyBindings {
     return {
-      'Mod-y': () => false,
+      'Mod-y': !environment.isMac ? this.wrapMethod(redo, this.options.onRedo) : () => false,
       'Mod-z': this.wrapMethod(undo, this.options.onUndo),
       'Shift-Mod-z': this.wrapMethod(redo, this.options.onRedo),
-      ...notMacOS,
     };
   }
 
@@ -145,9 +140,9 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
   createCommands() {
     return {
       /**
-       * Undo the last action that occurred. This can be overridden by
-       * setting an `"addToHistory"` metadata property of `false` on a
-       * transaction to prevent it from being rolled back by undo.
+       * Undo the last action that occurred. This can be overridden by setting
+       * an `"addToHistory"` metadata property of `false` on a transaction to
+       * prevent it from being rolled back by undo.
        *
        * ```ts
        * actions.undo()

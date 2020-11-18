@@ -29,7 +29,7 @@
     "fix": "cross-env TS=true run-s -c fix:*",
     "fix:build": "preconstruct fix",
     "fix:css": "node support/scripts/check-styles.js --fix",
-    "fix:es": "pnpm lint:es -- --fix --quiet",
+    "fix:es": "pnpm lint:es -- --fix",
     "fix:md": "pnpm lint:md -- --fix",
     "fix:prettier": "pnpm run:prettier -- --write",
     "fix:repo": "manypkg fix",

@@ -28,7 +28,7 @@ function defaultGetStyle<A extends Annotation>(annotations: Array<AnnotationWith
  * Extend the Annotation interface to store application specific
  * information like tags or color.
  */
-@extensionDecorator<AnnotationOptions<Annotation>>({
+@extensionDecorator<AnnotationOptions>({
   defaultOptions: {
     getStyle: defaultGetStyle,
     blockSeparator: undefined,
