@@ -348,11 +348,7 @@ export function removeMark(parameter: RemoveMarkParameter): CommandFunction {
         : { from, to });
     }
 
-    tr.removeMark(from, isNumber(to) ? to : from, type);
-
-    if (dispatch) {
-      dispatch(tr);
-    }
+    dispatch?.(tr.removeMark(from, isNumber(to) ? to : from, type));
 
     return true;
   };
