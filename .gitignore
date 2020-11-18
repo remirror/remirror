@@ -157,6 +157,7 @@ cc-reporter
 /.huskyrc
 /.lintstagedrc
 /.markdownlint.json
+/commitlint.config.js
 
 ## Ignore tsconfig files.
 /tsconfig.json
