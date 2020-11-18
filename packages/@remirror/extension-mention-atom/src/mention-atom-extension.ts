@@ -41,6 +41,13 @@ export interface MentionAtomOptions
   selectable?: Static<boolean>;
 
   /**
+   * Whether mentions should be draggable.
+   *
+   * @default false
+   */
+  draggable?: Static<boolean>;
+
+  /**
    * Provide a custom tag for the mention
    */
   mentionTag?: Static<string>;
@@ -91,6 +98,7 @@ export interface MentionAtomOptions
 @extensionDecorator<MentionAtomOptions>({
   defaultOptions: {
     selectable: true,
+    draggable: false,
     mentionTag: 'span' as const,
     matchers: [],
     appendText: ' ',
@@ -125,6 +133,7 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
       },
       inline: true,
       selectable: this.options.selectable,
+      draggable: this.options.draggable,
       atom: true,
 
       parseDOM: [
