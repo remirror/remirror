@@ -46,6 +46,23 @@ describe('removeMark', () => {
       to,
     });
   });
+
+  it('does not mutate the provided transaction', () => {
+    const from = doc(p('start ', strong('bo<cursor>ld'), ' and not'));
+    const editor = createEditor(from);
+    const tr = editor.state.tr;
+    const view = editor.view;
+
+    removeMark({ type })({ state: editor.state, tr, view });
+    removeMark({ type })({ state: editor.state, tr, view });
+
+    // Make sure that no steps have been added when dispatch is not enabled.
+    expect(tr.steps).toHaveLength(0);
+
+    // Dispatch the transaction to make sure nothing has changed.
+    view.dispatch(tr);
+    expect(editor.view.state.doc).toEqualProsemirrorNode(from);
+  });
 });
 
 describe('replaceText', () => {
