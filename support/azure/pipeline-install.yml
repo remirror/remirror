@@ -4,7 +4,7 @@ steps:
       versionSpec: '14.x'
     displayName: 'install node'
 
-  - bash: npm i -g pnpm@5.10.4
+  - bash: npm i -g pnpm@5.13.1
     displayName: 'install pnpm'
 
   - bash: pnpm config set store-dir $PNPM_CACHE_FOLDER
