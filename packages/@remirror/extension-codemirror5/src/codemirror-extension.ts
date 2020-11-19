@@ -1,21 +1,21 @@
 import {
   ApplySchemaAttributes,
   CommandFunction,
-  CreatePluginReturn,
   EditorView,
   extensionDecorator,
   ExtensionTag,
+  isElementDomNode,
   NodeExtension,
   NodeExtensionSpec,
   NodeViewMethod,
+  PrioritizedKeyBindings,
   ProsemirrorNode,
   setBlockType,
 } from '@remirror/core';
 
 import { CodeMirrorNodeView } from './codemirror-node-view';
-import { createArrowHandlerPlugin } from './codemirror-plugin';
 import type { CodeMirrorExtensionAttributes, CodeMirrorExtensionOptions } from './codemirror-types';
-import { parseLanguageToMode, updateNodeAttributes } from './codemirror-utils';
+import { arrowHandler, parseLanguageToMode, updateNodeAttributes } from './codemirror-utils';
 
 @extensionDecorator<CodeMirrorExtensionOptions>({
   defaultOptions: {
@@ -44,6 +44,7 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
       parseDOM: [
         {
           tag: 'pre',
+          getAttrs: (node) => (isElementDomNode(node) ? extra.parse(node) : false),
         },
       ],
       toDOM() {
@@ -56,8 +57,8 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
   createNodeViews(): NodeViewMethod {
     return (node: ProsemirrorNode, view: EditorView, getPos: boolean | (() => number)) => {
       const codeMirrorConfig = {
-        ...(this.options.defaultCodeMirrorConfig || {}),
-        ...(node.attrs.codeMirrorConfig || {}),
+        ...this.options.defaultCodeMirrorConfig,
+        ...node.attrs.codeMirrorConfig,
       };
 
       if (node.attrs.language) {
@@ -72,8 +73,13 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
     };
   }
 
-  createPlugin(): CreatePluginReturn {
-    return createArrowHandlerPlugin();
+  createKeymap(): PrioritizedKeyBindings {
+    return {
+      ArrowLeft: arrowHandler('left'),
+      ArrowRight: arrowHandler('right'),
+      ArrowUp: arrowHandler('up'),
+      ArrowDown: arrowHandler('down'),
+    };
   }
 
   createCommands() {

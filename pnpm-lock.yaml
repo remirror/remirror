@@ -472,14 +472,14 @@ importers:
       '@types/refractor': ^3.0.0
       refractor: ^3.2.0
       type-fest: ^0.18.0
-  packages/@remirror/extension-codemirror:
+  packages/@remirror/extension-codemirror5:
     dependencies:
       '@babel/runtime': 7.12.5
-      '@types/codemirror': 0.0.98
-      codemirror: 5.58.2
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
+      '@types/codemirror': 0.0.98
+      codemirror: 5.58.2
     specifiers:
       '@babel/runtime': ^7.12.0
       '@remirror/core': 1.0.0-next.53
@@ -7309,7 +7309,7 @@ packages:
   /@types/codemirror/0.0.98:
     dependencies:
       '@types/tern': 0.23.3
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-cbty5LPayy2vNSeuUdjNA9tggG+go5vAxmnLDRWpiZI5a+RDBi9dlozy4/jW/7P/gletbBWbQREEa7A81YxstA==
   /@types/configstore/4.0.0:
@@ -7336,7 +7336,6 @@ packages:
     resolution:
       integrity: sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==
   /@types/estree/0.0.45:
-    dev: false
     resolution:
       integrity: sha512-jnqIUKDUqJbDIUxm0Uj7bnlMnRm1T/eZ9N+AVMqhPgzrba2GhGG5o/jCTwmdPK709nEZsGoMzXEDUjcXHa3W0g==
   /@types/express-serve-static-core/4.17.13:
@@ -7806,7 +7805,7 @@ packages:
   /@types/tern/0.23.3:
     dependencies:
       '@types/estree': 0.0.45
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-imDtS4TAoTcXk0g7u4kkWqedB3E4qpjXzCpD2LU5M5NAXHzCDsypyvXSaG7mM8DKYkCRa7tFp4tS/lp/Wo7Q3w==
   /@types/testing-library__jest-dom/5.9.5:
@@ -10478,7 +10477,7 @@ packages:
     resolution:
       integrity: sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
   /codemirror/5.58.2:
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-K/hOh24cCwRutd1Mk3uLtjWzNISOkm4fvXiMO7LucCrqbh6aJDdtqUziim3MZUI6wOY0rvY1SlL1Ork01uMy6w==
   /coffee-script/1.12.7:
