@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { promises as fsp } from 'fs';
+import { constants, promises as fsp } from 'fs';
 import { resolve } from 'path';
 import * as prettier from 'prettier';
 
@@ -19,8 +19,23 @@ async function scanImportsFrom<T extends RemirrorModuleMeta>(
 
   for (const folder of folders) {
     const path = `${sourceDir}/${folder}`;
-    const packageJson = require(`${path}/package.json`);
+    const packageJsonPath = `${path}/package.json`;
+
+    try {
+      await fsp.access(packageJsonPath, constants.R_OK);
+    } catch {
+      console.warn(`Could not find ${packageJsonPath}`);
+      continue;
+    }
+
+    const packageJson = require(packageJsonPath);
     const mainPath = resolve(path, packageJson.main);
+    try {
+      await fsp.access(mainPath, constants.R_OK);
+    } catch {
+      console.warn(`Could not find ${mainPath} ("main" according to ${packageJsonPath})`);
+      continue;
+    }
     const mod = require(mainPath);
     const meta: RemirrorModuleMeta = {
       name: `${sourceModulePath}/${folder}`,

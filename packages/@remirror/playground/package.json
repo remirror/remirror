@@ -18,7 +18,7 @@
     "dist"
   ],
   "scripts": {
-    "import-remirror": "echo 'Be sure to run `pnpm build` in root first!' && ts-node -O '{\"module\":\"commonjs\"}' --transpile-only ./scripts/import-remirror.ts"
+    "import-remirror": "echo 'Be sure to run `pnpm build` in root first!' && pnpm -w ts $(pwd)/scripts/import-remirror.ts"
   },
   "dependencies": {
     "@babel/runtime": "^7.12.0",
