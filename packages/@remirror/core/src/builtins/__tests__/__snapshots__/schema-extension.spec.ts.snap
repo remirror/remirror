@@ -1,5 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`custom schema 1`] = `
+Array [
+  "doc",
+  "orderedList",
+  "bulletList",
+  "listItem",
+  "paragraph",
+  "text",
+  "horizontalRule",
+  "atomInline",
+  "atomBlock",
+  "atomContainer",
+  "containerWithRestrictedContent",
+  "table",
+  "table_row",
+  "table_cell",
+  "table_header",
+  "blockquote",
+  "heading",
+  "code_block",
+  "hard_break",
+  "image",
+]
+`;
+
+exports[`custom schema 2`] = `
+Array [
+  "link",
+  "em",
+  "strong",
+  "code",
+  "strike",
+]
+`;
+
 exports[`dynamic schema attributes should dynamically add attributes when configured 1`] = `
 <div contenteditable="true"
      role="textbox"

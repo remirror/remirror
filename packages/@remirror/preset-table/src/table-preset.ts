@@ -32,7 +32,7 @@ export class TablePreset extends Preset<TableOptions> {
     ];
   }
 
-  protected onSetOptions(parameter: OnSetOptionsParameter<TableOptions>) {
+  protected onSetOptions(parameter: OnSetOptionsParameter<TableOptions>): void {
     const { changes } = parameter;
 
     if (changes.resizable.changed) {

@@ -138,30 +138,5 @@ test('simple commands', () => {
     chain.insertText('add');
   });
 
-  expect(chain.dom).toMatchInlineSnapshot(`
-    <div
-      aria-label=""
-      aria-multiline="true"
-      aria-placeholder=""
-      class="ProseMirror remirror-editor"
-      contenteditable="true"
-      role="textbox"
-    >
-      <div
-        class="test-node-view-wrapper"
-      >
-        <p
-          custom="custom"
-        >
-          <span
-            class="test-node-view-content-wrapper"
-          >
-            <span>
-              add
-            </span>
-          </span>
-        </p>
-      </div>
-    </div>
-  `);
+  expect(chain.dom).toMatchSnapshot();
 });

@@ -65,39 +65,8 @@ test('custom schema', () => {
   const editor = renderEditor([], { schema });
 
   expect(editor.schema).toBe(schema);
-  expect(Object.keys(editor.manager.nodes)).toMatchInlineSnapshot(`
-    Array [
-      "doc",
-      "orderedList",
-      "bulletList",
-      "listItem",
-      "paragraph",
-      "text",
-      "horizontalRule",
-      "atomInline",
-      "atomBlock",
-      "atomContainer",
-      "containerWithRestrictedContent",
-      "table",
-      "table_row",
-      "table_cell",
-      "table_header",
-      "blockquote",
-      "heading",
-      "code_block",
-      "hard_break",
-      "image",
-    ]
-  `);
-  expect(Object.keys(editor.manager.marks)).toMatchInlineSnapshot(`
-    Array [
-      "link",
-      "em",
-      "strong",
-      "code",
-      "strike",
-    ]
-  `);
+  expect(Object.keys(editor.manager.nodes)).toMatchSnapshot();
+  expect(Object.keys(editor.manager.marks)).toMatchSnapshot();
 });
 
 describe('extraAttributes', () => {

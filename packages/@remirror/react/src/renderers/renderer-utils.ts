@@ -20,7 +20,7 @@ function getPossibleStandardName(key: string): string {
 /**
  * Map standard html attribute names to their react equivalents.
  */
-export function mapProps(props: Shape) {
+export function mapProps(props: Shape): Shape {
   const transformedProps: Shape = object();
 
   for (const key of keys(props)) {
@@ -35,15 +35,18 @@ export function mapProps(props: Shape) {
   return transformedProps;
 }
 
+type SharedSpec = MarkExtensionSpec | NodeExtensionSpec;
+type GatheredDomMethods<Spec extends SharedSpec> = Record<string, Spec['toDOM']>;
+
 /**
  * Gather up all the toDOM methods from the provided spec object
  *
  * @param specs - the prosemirror schema specs for each node / mark
  */
-export function gatherDomMethods<Spec extends MarkExtensionSpec | NodeExtensionSpec>(
+export function gatherDomMethods<Spec extends SharedSpec>(
   specs: Record<string, Spec>,
-) {
-  const result: Record<string, Spec['toDOM']> = object();
+): GatheredDomMethods<Spec> {
+  const result: GatheredDomMethods<Spec> = object();
 
   for (const name in specs) {
     if (!hasOwnProperty(specs, name)) {

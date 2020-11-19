@@ -13,7 +13,7 @@ export class EmbedPreset extends Preset<EmbedOptions> {
     return 'embed' as const;
   }
 
-  protected onSetOptions(_parameter: OnSetOptionsParameter<EmbedOptions>) {}
+  protected onSetOptions(_parameter: OnSetOptionsParameter<EmbedOptions>): void {}
 
   createExtensions() {
     const { defaultSource } = this.options;

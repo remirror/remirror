@@ -133,37 +133,7 @@ describe('RemirrorProvider: Server', () => {
       </RemirrorProvider>,
     );
 
-    expect(reactString).toMatchInlineSnapshot(`
-    <div>
-      <div data-testid="OUTER123">
-        <p>
-          Awesome
-        </p>
-      </div>
-      <div data-testid="ROOT">
-        <div role="textbox"
-             aria-multiline="true"
-             aria-label="Remirror editor"
-             aria-placeholder
-             class="Prosemirror remirror-editor"
-             contenteditable="true"
-        >
-          <p>
-            This is a node with
-            <strong>
-              bold text.
-            </strong>
-          </p>
-        </div>
-      </div>
-      <div data-testid="INNER123">
-        <p>
-          inside the editor
-        </p>
-      </div>
-    </div>
-  `);
-
+    expect(reactString).toMatchSnapshot();
     expect(reactString).toInclude('This is a node with');
 
     const indexOfOuter = reactString.indexOf(outerId);

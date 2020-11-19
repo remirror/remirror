@@ -79,7 +79,7 @@ export class TrackState {
   /**
    * Apply a transform to this state.
    */
-  applyTransform(transform: Transform) {
+  applyTransform(transform: Transform): TrackState {
     // Invert the steps in the transaction, to be able to save them in the next
     // commit
     const inverted = transform.steps.map((step, i) => step.invert(transform.docs[i]));
@@ -99,7 +99,7 @@ export class TrackState {
    * When a transaction is marked as a commit, this is used to put any
    * uncommitted steps into a new commit.
    */
-  applyCommit(message: string, time: number) {
+  applyCommit(message: string, time: number): TrackState {
     if (isEmptyArray(this.uncommittedSteps)) {
       return this;
     }

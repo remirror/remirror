@@ -33,7 +33,9 @@ type GetAnnotationsAt = (pos: number) => MinimalAnnotation[];
  * - `bottom` absolutely positions the element below the selected annotation.
  * - `top` absolutely positions the element above the selected annotation
  */
-export const createCenteredAnnotationPositioner = (getAnnotationsAt: GetAnnotationsAt) => {
+export function createCenteredAnnotationPositioner(
+  getAnnotationsAt: GetAnnotationsAt,
+): Positioner<{ start: Coords; end: Coords }> {
   return Positioner.create<{
     start: Coords;
     end: Coords;
@@ -99,4 +101,4 @@ export const createCenteredAnnotationPositioner = (getAnnotationsAt: GetAnnotati
       return { rect, left, top, bottom, right: left };
     },
   });
-};
+}

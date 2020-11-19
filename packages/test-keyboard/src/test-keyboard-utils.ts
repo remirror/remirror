@@ -2,7 +2,7 @@ import { omit } from '@remirror/core-helpers';
 import type { Shape } from '@remirror/core-types';
 
 import type { KeyboardEventName, ModifierInformation } from './test-keyboard-types';
-import { SupportedCharacters, usKeyboardLayout } from './us-keyboard-layout';
+import { KeyDefinition, SupportedCharacters, usKeyboardLayout } from './us-keyboard-layout';
 
 /**
  * Creates a keyboard event which can be dispatched into the DOM
@@ -10,8 +10,12 @@ import { SupportedCharacters, usKeyboardLayout } from './us-keyboard-layout';
  * @param type
  * @param options
  */
-export const createKeyboardEvent = (type: KeyboardEventName, options: KeyboardEventInit & Shape) =>
-  new KeyboardEvent(type, { ...options, bubbles: true });
+export function createKeyboardEvent(
+  type: KeyboardEventName,
+  options: KeyboardEventInit & Shape,
+): KeyboardEvent {
+  return new KeyboardEvent(type, { ...options, bubbles: true });
+}
 
 interface GetModifierInformationParameter {
   /**
@@ -34,10 +38,10 @@ interface GetModifierInformationParameter {
  * @param params.modifiers
  * @param [params.isMac]
  */
-export const getModifierInformation = ({
-  modifiers,
-  isMac = false,
-}: GetModifierInformationParameter) => {
+export function getModifierInformation(
+  parameter: GetModifierInformationParameter,
+): ModifierInformation {
+  const { modifiers, isMac = false } = parameter;
   const info: ModifierInformation = {
     altKey: false,
     ctrlKey: false,
@@ -66,11 +70,13 @@ export const getModifierInformation = ({
   }
 
   return info;
-};
+}
 
 /**
  * Removes the shiftKey property from the keyboard layout spec
  *
  * @param key
  */
-export const cleanKey = (key: SupportedCharacters) => omit(usKeyboardLayout[key], ['shiftKey']);
+export function cleanKey(key: SupportedCharacters): Omit<KeyDefinition, 'shiftKey'> {
+  return omit(usKeyboardLayout[key], ['shiftKey']);
+}

@@ -5,7 +5,7 @@ import type { CommandContext } from './types';
 /**
  * Notify the user of available updates to the CLI.
  */
-export const notifyUpdate = (context: CommandContext) => {
+export function notifyUpdate(context: CommandContext): void {
   const { name, internal, version } = context;
 
   if (internal) {
@@ -13,6 +13,6 @@ export const notifyUpdate = (context: CommandContext) => {
   }
 
   updateNotifier({ pkg: { name, version } }).notify();
-};
+}
 
 export const colors = { pink: '#ef5777', lightBlue: '#4bcffa' };

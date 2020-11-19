@@ -54,7 +54,7 @@ const cleanupStatus = debounce(500, () => {
  * @param status the status message
  * @param doc document passed by the user.
  */
-export const setStatus = (status: string, doc?: Document) => {
+export const setStatus = (status: string, doc?: Document): void => {
   const div = getStatusDiv(doc);
 
   if (!status) {

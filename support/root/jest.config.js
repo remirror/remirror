@@ -26,7 +26,7 @@ module.exports = {
     '!packages/@remirror/extension-epic-mode/**',
 
     // Tests written but needs more coverage.
-    '!packages/@remirror/extension-codemirror/**',
+    '!packages/@remirror/extension-codemirror5/**',
 
     // Refactor upcoming for emoji which will change the structure.
     '!packages/@remirror/extension-emoji/src/data/**',

@@ -155,6 +155,7 @@ export function createState<Schema extends EditorSchema = EditorSchema>(
  * @param testSchema - The schema to use which provided a doc, paragraph and text schema
  * @param names - the extra marks and nodes to provide with their attributes
  */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function pmBuild<
   Type extends Record<string, NodeTypeAttributes | MarkTypeAttributes> = Record<
     string,

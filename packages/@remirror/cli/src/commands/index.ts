@@ -5,7 +5,7 @@ import { BaseCommand, GetShapeOfCommandData } from './base';
 export class HelpCommand extends BaseCommand {
   @Command.Path('-h')
   @Command.Path('--help')
-  public async execute() {
+  public async execute(): Promise<void> {
     this.context.stdout.write(this.cli.usage(null, { detailed: this.verbose }));
   }
 }
@@ -13,7 +13,7 @@ export class HelpCommand extends BaseCommand {
 export class VersionCommand extends BaseCommand {
   @Command.Path('-v')
   @Command.Path('--version')
-  public async execute() {
+  public async execute(): Promise<void> {
     const { version, name, stdout } = this.context;
 
     if (this.verbose) {

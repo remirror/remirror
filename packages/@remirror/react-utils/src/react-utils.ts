@@ -1,5 +1,6 @@
-import React, {
+import {
   Children,
+  cloneElement,
   ComponentType,
   Fragment,
   isValidElement as isValidReactElement,
@@ -153,7 +154,7 @@ export const propIsFunction = (value: unknown): value is AnyFunction => {
  * A drop in replacement for React.Children.only which provides more readable errors
  * when the child is not a react element or undefined.
  */
-export const oneChildOnly = <Props extends object = any>(value: unknown): ReactElement<Props> => {
+export function oneChildOnly<Props extends object = any>(value: unknown): ReactElement<Props> {
   if (!value) {
     throw new Error('This component requires ONE child component - Nothing was provided');
   }
@@ -165,17 +166,17 @@ export const oneChildOnly = <Props extends object = any>(value: unknown): ReactE
   }
 
   return Children.only(value);
-};
+}
 
 /**
  * Add the specified key to an element when it is a valid react element.
  *
  * This is useful when returning an array of components because a fragment isn't sufficient.
  */
-export const addKeyToElement = (element: ReactNode, key: string | number) => {
+export function addKeyToElement(element: ReactNode, key: string | number): ReactNode {
   if (!isValidElement(element)) {
     return element;
   }
 
-  return React.cloneElement(element, { ...element.props, key });
-};
+  return cloneElement(element, { ...element.props, key });
+}

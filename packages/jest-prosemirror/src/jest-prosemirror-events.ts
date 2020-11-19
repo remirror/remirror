@@ -356,7 +356,10 @@ interface EventProperties {
 type EventMap = Record<EventType, EventProperties>;
 const eventMap: EventMap = rawEventMap as EventMap;
 
-export const createEvents = <GEvent extends Event>(event: EventType, options: Shape): GEvent[] => {
+export const createEvents = <CreatedEvent extends Event>(
+  event: EventType,
+  options: Shape,
+): CreatedEvent[] => {
   const { Constructor, defaultProperties } =
     event in eventMap
       ? eventMap[event]
@@ -366,7 +369,7 @@ export const createEvents = <GEvent extends Event>(event: EventType, options: Sh
         };
   let eventName = event.toLowerCase();
   const properties: Shape = { ...defaultProperties, ...options };
-  type GEventConstructor = new (type: string, eventInitDict?: EventInit) => GEvent;
+  type GEventConstructor = new (type: string, eventInitDict?: EventInit) => CreatedEvent;
 
   if (event === 'doubleClick') {
     eventName = 'dblclick';

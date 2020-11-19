@@ -91,10 +91,10 @@
     "running": false
   },
   {
-    "name": "@remirror/extension-codemirror",
-    "path": "packages/@remirror/extension-codemirror/dist/extension-codemirror.browser.esm.js",
-    "limit": "70 KB",
-    "ignore": ["@remirror/core", "@remirror/pm"],
+    "name": "@remirror/extension-codemirror5",
+    "path": "packages/@remirror/extension-codemirror5/dist/extension-codemirror5.browser.esm.js",
+    "limit": "5 KB",
+    "ignore": ["@remirror/core", "@remirror/pm", "@types/codemirror", "codemirror"],
     "running": false
   },
   {

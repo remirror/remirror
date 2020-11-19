@@ -72,7 +72,7 @@ export class EpicModePluginState {
   canvas!: HTMLCanvasElement;
   ctx!: CanvasRenderingContext2D;
 
-  get options() {
+  get options(): Readonly<Required<EpicModeOptions>> {
     return this.#extension.options;
   }
 
@@ -98,7 +98,7 @@ export class EpicModePluginState {
    *
    * @param view
    */
-  init(view: EditorView) {
+  init(view: EditorView): this {
     this.view = view;
     this.container = this.options.getCanvasContainer();
 
@@ -125,7 +125,7 @@ export class EpicModePluginState {
     return this;
   }
 
-  destroy() {
+  destroy(): void {
     // Wrapped in try catch for support of hot module reloading during development
     try {
       this.canvas.remove();
@@ -138,13 +138,13 @@ export class EpicModePluginState {
     }
   }
 
-  shake = () => {
+  shake = (): void => {
     if (this.options.active) {
       this.#shakeTime = this.#shakeTimeMax = this.options.shakeTime;
     }
   };
 
-  spawnParticles = () => {
+  spawnParticles = (): void => {
     const { selection } = this.view.state;
     const coords = this.view.coordsAtPos(selection.$anchor.pos);
 
@@ -182,7 +182,7 @@ export class EpicModePluginState {
   /**
    * Runs through the animation loop
    */
-  loop = () => {
+  loop = (): void => {
     if (!this.options.active) {
       return;
     }

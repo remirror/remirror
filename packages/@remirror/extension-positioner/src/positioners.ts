@@ -1,4 +1,4 @@
-import { isSelectionEmpty } from '@remirror/core';
+import { isSelectionEmpty, Shape } from '@remirror/core';
 
 import { Coords, Positioner, VirtualPosition } from './positioner';
 import { hasStateChanged, isEmptyBlockNode } from './positioner-utils';
@@ -19,7 +19,7 @@ const emptyRect = {
 };
 
 export const emptyVirtualPosition: VirtualPosition = {
-  rect: { ...emptyRect, toJSON: () => emptyRect },
+  rect: { ...emptyRect, toJSON: (): Shape => emptyRect },
 };
 
 /**

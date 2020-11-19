@@ -67,7 +67,7 @@ export class CorePreset extends Preset<CorePresetOptions> {
   /**
    * No properties are defined so this can be ignored.
    */
-  protected onSetOptions(_: OnSetOptionsParameter<CorePresetOptions>) {}
+  protected onSetOptions(_: OnSetOptionsParameter<CorePresetOptions>): void {}
 
   protected onAddCustomHandler: AddCustomHandler<CorePresetOptions> = (handlers) => {
     const { positioner } = handlers;
