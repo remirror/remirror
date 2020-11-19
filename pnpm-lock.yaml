@@ -659,6 +659,7 @@ importers:
   packages/@remirror/extension-mention:
     dependencies:
       '@babel/runtime': 7.12.5
+      '@remirror/extension-events': 'link:../extension-events'
       escape-string-regexp: 4.0.0
     devDependencies:
       '@remirror/core': 'link:../core'
@@ -666,6 +667,7 @@ importers:
     specifiers:
       '@babel/runtime': ^7.12.0
       '@remirror/core': 1.0.0-next.54
+      '@remirror/extension-events': 1.0.0-next.54
       '@remirror/pm': 1.0.0-next.54
       escape-string-regexp: ^4.0.0
   packages/@remirror/extension-mention-atom:

@@ -21,6 +21,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.12.0",
+    "@remirror/extension-events": "1.0.0-next.54",
     "escape-string-regexp": "^4.0.0"
   },
   "devDependencies": {

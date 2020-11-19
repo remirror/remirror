@@ -6,6 +6,7 @@ import {
   extensionDecorator,
   ExtensionTag,
   FromToParameter,
+  GetMarkRange,
   getMarkRange,
   getMatchString,
   Handler,
@@ -29,6 +30,7 @@ import {
   ShouldSkipParameter,
   Static,
 } from '@remirror/core';
+import type { CreateEventHandlers } from '@remirror/extension-events';
 import {
   createRegexFromSuggester,
   DEFAULT_SUGGESTER,
@@ -104,6 +106,11 @@ export interface MentionOptions
   onChange?: Handler<MentionChangeHandler>;
 
   /**
+   * Listen for click events to the mention extension.
+   */
+  onClick?: Handler<(event: MouseEvent, markRange: GetMarkRange) => boolean | undefined | void>;
+
+  /**
    * A predicate check for whether the mention is valid. It proves the mention
    * mark and it's attributes as well as the text it contains.
    *
@@ -149,7 +156,8 @@ export interface MentionOptions
     validNodes: null,
     isMentionValid: isMentionValidDefault,
   },
-  handlerKeys: ['onChange'],
+  handlerKeyOptions: { onClick: { earlyReturnValue: true } },
+  handlerKeys: ['onChange', 'onClick'],
   staticKeys: ['matchers', 'mentionTag'],
 })
 export class MentionExtension extends MarkExtension<MentionOptions> {
@@ -225,6 +233,23 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     this.store
       .getExtension(InputRulesExtension)
       .addHandler('shouldSkipInputRule', this.shouldSkipInputRule.bind(this));
+  }
+
+  /**
+   * Track click events passed through to the editor.
+   */
+  createEventHandlers(): CreateEventHandlers {
+    return {
+      clickMark: (event, clickState) => {
+        const markRange = clickState.getMark(this.type);
+
+        if (!markRange) {
+          return;
+        }
+
+        return this.options.onClick(event, markRange);
+      },
+    };
   }
 
   private shouldSkipInputRule(parameter: ShouldSkipParameter) {

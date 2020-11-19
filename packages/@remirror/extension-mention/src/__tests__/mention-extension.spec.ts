@@ -73,17 +73,14 @@ describe('schema', () => {
 /**
  * Create the mention extension with an optional `onChange` handler.
  */
-function create(options: MentionOptions, onChange: MentionChangeHandler = () => {}) {
+function create(options: MentionOptions) {
   const extension = new MentionExtension({ ...options });
   const editor = renderEditor([extension, new ItalicExtension()]);
   const { add, view, manager, commands } = editor;
   const { doc, p } = editor.nodes;
   const { mention } = editor.attributeMarks;
 
-  // Add the onChange handler to the extension and also give it access to the commands.
-  extension.addHandler('onChange', onChange);
-
-  return { add, doc, p, mention, view, manager, commands, editor };
+  return { add, doc, p, mention, view, manager, commands, editor, extension };
 }
 
 describe('`createSuggesters`', () => {
@@ -100,7 +97,8 @@ describe('`createSuggesters`', () => {
 
   it('uses default noop callbacks and does nothing', () => {
     const noop = jest.fn();
-    const { add, doc, p } = create(options, noop);
+    const { add, doc, p, extension } = create(options);
+    extension.addHandler('onChange', noop);
 
     add(doc(p('<cursor>')))
       .insertText(`This ${label} `)
@@ -123,7 +121,8 @@ describe('`createSuggesters`', () => {
     }
   });
 
-  const { add, doc, p, mention, view, editor } = create(options, onChange);
+  const { add, doc, p, mention, view, editor, extension } = create(options);
+  extension.addHandler('onChange', onChange);
   const mentionMark = mention({ id, label, name: 'at' });
 
   it('should support exits', () => {
@@ -364,5 +363,40 @@ describe('forwardDeletes', () => {
     add(doc(p('abc <cursor>', mentionMark('@mention')))).forwardDelete();
 
     expect(view.state.doc).toEqualRemirrorDocument(doc(p('abc mention')));
+  });
+});
+
+describe('onClick', () => {
+  const options = {
+    matchers: [
+      { char: '#', name: 'tag' },
+      { char: '@', name: 'at' },
+      { char: '+', name: 'plus' },
+    ],
+  };
+
+  const { add, doc, p, mention, view, extension } = create(options);
+
+  it('responds to clicks', () => {
+    const clickHandler = jest.fn(() => true);
+    extension.addHandler('onClick', clickHandler);
+    const atMention = mention({ id: '@hello', name: 'at', label: '@hello' })('@hello');
+    const node = p('first ', atMention);
+    add(doc(node));
+
+    view.someProp('handleClickOn', (fn) => fn(view, 10, node, 1, {}, false));
+    expect(clickHandler).toHaveBeenCalledTimes(1);
+    expect(clickHandler).toHaveBeenCalledWith(
+      {},
+      expect.objectContaining({
+        from: 7,
+        to: 13,
+        text: '@hello',
+        mark: expect.any(Object),
+      }),
+    );
+
+    view.someProp('handleClick', (fn) => fn(view, 3, node, 1, {}, true));
+    expect(clickHandler).toHaveBeenCalledTimes(1);
   });
 });
