@@ -132,6 +132,8 @@ export const IMPORT_CACHE: { [moduleName: string]: any } = {
   '@babel/runtime/helpers/inherits': require('@babel/runtime/helpers/inherits'),
   '@babel/runtime/helpers/defineProperty': require('@babel/runtime/helpers/defineProperty'),
   react: require('react'),
+  'react-dom': require('react-dom'),
+  'react-dom/server': require('react-dom/server'),
 };
 
 export const INTERNAL_MODULES: Array<{ moduleName: string, exports: string[] }> = [
