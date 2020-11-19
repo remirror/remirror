@@ -20,7 +20,15 @@ import type {
   Static,
   Transaction,
 } from '@remirror/core-types';
-import { findNodeAtPosition, getTextSelection } from '@remirror/core-utils';
+import {
+  findNodeAtPosition,
+  getTextSelection,
+  removeMark,
+  setBlockType,
+  toggleBlockItem,
+  toggleWrap,
+  wrapIn,
+} from '@remirror/core-utils';
 import { EditorState, TextSelection } from '@remirror/pm/state';
 import { Decoration, DecorationSet, EditorView } from '@remirror/pm/view';
 
@@ -488,6 +496,36 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
           ? (dispatch?.(tr), true)
           : false;
       },
+
+      /**
+       * Set the block type of the current selection or the provided range.
+       */
+      setBlockNodeType: setBlockType,
+
+      /**
+       * Toggle between wrapping an inactive node with the provided node type, and
+       * lifting it up into it's parent.
+       *
+       * @param nodeType - the node type to toggle
+       * @param attrs - the attrs to use for the node
+       */
+      toggleWrappingNode: toggleWrap,
+
+      /**
+       * Toggle a block between the provided type and toggleType.
+       */
+      toggleBlockNodeItem: toggleBlockItem,
+
+      /**
+       * Wrap the selection or the provided text in a node of the given type with the
+       * given attributes.
+       */
+      wrapInNode: wrapIn,
+
+      /**
+       * Removes a mark from the current selection or provided range.
+       */
+      removeMark,
     };
 
     return commands;
