@@ -57,4 +57,21 @@ describe('events', () => {
 
     expect(mouseUpHandler).toHaveBeenCalled();
   });
+
+  it('responds to editor `click` events', () => {
+    const eventsExtension = new EventsExtension();
+    const clickHandler = jest.fn(() => true);
+    const editor = renderEditor([eventsExtension]);
+    const { view, add } = editor;
+    const { doc, p } = editor.nodes;
+    const node = p('first');
+
+    eventsExtension.addHandler('click', clickHandler);
+    add(doc(p('first')));
+
+    // JSDOM doesn't pass events through so the only way to simulate is to
+    // directly simulate the `handleClick` prop.
+    view.someProp('handleClickOn', (fn) => fn(view, 2, node, 1, {}, true));
+    expect(clickHandler).toHaveBeenCalled();
+  });
 });

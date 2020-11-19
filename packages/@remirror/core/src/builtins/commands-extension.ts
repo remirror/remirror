@@ -340,6 +340,9 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
         };
       },
 
+      /**
+       * Restore the shared transaction for future chained commands.
+       */
       restore: (): CommandFunction => {
         return () => {
           this.#customTransaction = undefined;
