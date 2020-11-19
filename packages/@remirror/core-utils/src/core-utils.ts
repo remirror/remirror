@@ -286,7 +286,7 @@ export function getMarkAttributes(
   return false;
 }
 
-interface GetMarkRange extends FromToParameter {
+export interface GetMarkRange extends FromToParameter {
   /**
    * The mark that was found within the active range.
    */

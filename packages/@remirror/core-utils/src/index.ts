@@ -15,6 +15,7 @@ export {
 
 export type {
   CreateDocumentNodeParameter,
+  GetMarkRange,
   InvalidContentBlock,
   InvalidContentHandler,
   InvalidContentHandlerParameter,
