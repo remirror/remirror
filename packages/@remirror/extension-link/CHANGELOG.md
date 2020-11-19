@@ -1,5 +1,17 @@
 # @remirror/extension-link
 
+## 1.0.0-next.54
+
+> 2020-11-19
+
+### Patch Changes
+
+- [`8a6d5c34`](https://github.com/remirror/remirror/commit/8a6d5c34778a5ac877876bd24d1a252851fb4882) [#781](https://github.com/remirror/remirror/pull/781) Thanks [@whawker](https://github.com/whawker)! - The behaviour of `commands.updateLink.isEnabled()` has been **fixed** to return `false` when the `link` mark can't be applied to the selection. This was fixed by a change in the `@remirror/core-utils` package.
+
+- Updated dependencies [[`e9d95fa4`](https://github.com/remirror/remirror/commit/e9d95fa4891b256d26432e63fbdbeeeabc63f764)]:
+  - @remirror/core@1.0.0-next.54
+  - @remirror/pm@1.0.0-next.54
+
 ## 1.0.0-next.53
 
 > 2020-11-12

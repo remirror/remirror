@@ -1,5 +1,18 @@
 # multishift
 
+## 1.0.0-next.54
+
+> 2020-11-19
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core-helpers@1.0.0-next.54
+  - @remirror/core-types@1.0.0-next.54
+  - a11y-status@1.0.0-next.54
+
 ## 1.0.0-next.53
 
 > 2020-11-12

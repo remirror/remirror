@@ -1,5 +1,19 @@
 # @remirror/core-utils
 
+## 1.0.0-next.54
+
+> 2020-11-19
+
+### Patch Changes
+
+- [`1a0348e7`](https://github.com/remirror/remirror/commit/1a0348e795e1bef83ef31489e0aa3c256da9e434) [#789](https://github.com/remirror/remirror/pull/789) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix `removeMark` when called with `dispatch = undefined`. This means that `command.<NAME>.isEnabled()` checks should all be fixed if they are using `removeMark` as mentioned in [#784](https://github.com/remirror/remirror/issues/784).
+
+- Updated dependencies []:
+  - @remirror/core-constants@1.0.0-next.54
+  - @remirror/core-helpers@1.0.0-next.54
+  - @remirror/core-types@1.0.0-next.54
+  - @remirror/pm@1.0.0-next.54
+
 ## 1.0.0-next.53
 
 > 2020-11-12
