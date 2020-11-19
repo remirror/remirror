@@ -1,5 +1,22 @@
 # @remirror/core
 
+## 1.0.0-next.54
+
+> 2020-11-19
+
+### Minor Changes
+
+- [`e9d95fa4`](https://github.com/remirror/remirror/commit/e9d95fa4891b256d26432e63fbdbeeeabc63f764) [#786](https://github.com/remirror/remirror/pull/786) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Export `PrioritizedKeyBindings` from `@remirror/core` and `remirror/core` entry points.
+
+### Patch Changes
+
+- Updated dependencies [[`1a0348e7`](https://github.com/remirror/remirror/commit/1a0348e795e1bef83ef31489e0aa3c256da9e434)]:
+  - @remirror/core-utils@1.0.0-next.54
+  - @remirror/core-constants@1.0.0-next.54
+  - @remirror/core-helpers@1.0.0-next.54
+  - @remirror/core-types@1.0.0-next.54
+  - @remirror/pm@1.0.0-next.54
+
 ## 1.0.0-next.53
 
 > 2020-11-12

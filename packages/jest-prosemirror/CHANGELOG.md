@@ -1,5 +1,21 @@
 # jest-prosemirror
 
+## 1.0.0-next.54
+
+> 2020-11-19
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies [[`1a0348e7`](https://github.com/remirror/remirror/commit/1a0348e795e1bef83ef31489e0aa3c256da9e434)]:
+  - @remirror/core-utils@1.0.0-next.54
+  - @remirror/core-constants@1.0.0-next.54
+  - @remirror/core-helpers@1.0.0-next.54
+  - @remirror/core-types@1.0.0-next.54
+  - @remirror/pm@1.0.0-next.54
+  - test-keyboard@1.0.0-next.54
+
 ## 1.0.0-next.53
 
 > 2020-11-12

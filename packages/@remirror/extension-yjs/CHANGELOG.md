@@ -1,5 +1,19 @@
 # @remirror/extension-yjs
 
+## 1.0.0-next.54
+
+> 2020-11-19
+
+### Minor Changes
+
+- [`e9d95fa4`](https://github.com/remirror/remirror/commit/e9d95fa4891b256d26432e63fbdbeeeabc63f764) [#786](https://github.com/remirror/remirror/pull/786) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix problems around destroying the `YjsExtension` provider and the `CMD+SHIFT+Z` keymap not registering as mentioned in [#772](https://github.com/remirror/remirror/issues/772).
+
+### Patch Changes
+
+- Updated dependencies [[`e9d95fa4`](https://github.com/remirror/remirror/commit/e9d95fa4891b256d26432e63fbdbeeeabc63f764)]:
+  - @remirror/core@1.0.0-next.54
+  - @remirror/pm@1.0.0-next.54
+
 ## 1.0.0-next.53
 
 > 2020-11-12

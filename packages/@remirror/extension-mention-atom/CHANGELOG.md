@@ -1,5 +1,19 @@
 # @remirror/extension-mention-atom
 
+## 1.0.0-next.54
+
+> 2020-11-19
+
+### Minor Changes
+
+- [`1b5bf359`](https://github.com/remirror/remirror/commit/1b5bf35999898ab82c8868f25444edeee82486ad) [#788](https://github.com/remirror/remirror/pull/788) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Make `draggability` configurable for `MentionAtomExtension` as mentioned in [#777](https://github.com/remirror/remirror/issues/777).
+
+### Patch Changes
+
+- Updated dependencies [[`e9d95fa4`](https://github.com/remirror/remirror/commit/e9d95fa4891b256d26432e63fbdbeeeabc63f764)]:
+  - @remirror/core@1.0.0-next.54
+  - @remirror/pm@1.0.0-next.54
+
 ## 1.0.0-next.53
 
 > 2020-11-12

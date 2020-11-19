@@ -1,5 +1,17 @@
 # @remirror/extension-diff
 
+## 1.0.0-next.54
+
+> 2020-11-19
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies [[`e9d95fa4`](https://github.com/remirror/remirror/commit/e9d95fa4891b256d26432e63fbdbeeeabc63f764)]:
+  - @remirror/core@1.0.0-next.54
+  - @remirror/pm@1.0.0-next.54
+
 ## 1.0.0-next.53
 
 > 2020-11-12
