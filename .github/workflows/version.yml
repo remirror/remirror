@@ -53,7 +53,7 @@ jobs:
         if: github.ref == 'refs/heads/next'
         with:
           version: pnpm version:ci
-          commit: 'Update versions with changeset'
-          title: 'Update versions with changeset'
+          commit: 'chore(changeset): version update'
+          title: 'chore(changeset): version update'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
