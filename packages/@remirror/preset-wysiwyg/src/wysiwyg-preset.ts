@@ -62,7 +62,7 @@ export class WysiwygPreset extends Preset<WysiwygOptions> {
     return 'wysiwyg' as const;
   }
 
-  protected onSetOptions(parameter: OnSetOptionsParameter<WysiwygOptions>) {
+  protected onSetOptions(parameter: OnSetOptionsParameter<WysiwygOptions>): void {
     const { pickChanged } = parameter;
     const trailingNodeOptions = pickChanged(['disableTags', 'ignoredNodes', 'nodeName']);
     const bidiOptions = pickChanged(['defaultDirection', 'autoUpdate']);

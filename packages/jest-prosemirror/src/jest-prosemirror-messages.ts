@@ -8,7 +8,7 @@ export const transformsNodePassMessage = (
   actual: TaggedProsemirrorNode,
   expected: TaggedProsemirrorNode,
   shouldChange: boolean,
-) => () =>
+) => (): string =>
   `${matcherHint('.not.toTransformNode')}\n\n${shouldChange}`
     ? `${chalk`Expected the node {bold not} to be:\n`}${printExpected(expected.toString())}\n` +
       `Position: { from: ${selectionFor(expected).from}, to: ${selectionFor(expected).to} }\n\n` +
@@ -26,7 +26,7 @@ export const transformsNodeFailMessage = (
   actual: TaggedProsemirrorNode,
   expected: TaggedProsemirrorNode,
   shouldChange: boolean,
-) => () =>
+) => (): string =>
   `${matcherHint('.toTransformNode')}\n\n${shouldChange}`
     ? 'Expected the node to be transformed to:\n' +
       `${printExpected(expected.toString())}\n` +

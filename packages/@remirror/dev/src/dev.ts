@@ -14,7 +14,7 @@ import { useRemirror } from '@remirror/react';
  *
  * Built with https://github.com/d4rkr00t/prosemirror-dev-tools
  */
-export const ProsemirrorDevTools = () => {
+export const ProsemirrorDevTools = (): null => {
   const { view } = useRemirror();
 
   useEffect(() => {

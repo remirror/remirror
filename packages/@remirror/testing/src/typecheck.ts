@@ -7,4 +7,4 @@
  * unused variables, just call this function with the unused variables or
  * parameters.
  */
-export const ignoreUnused = (..._: unknown[]) => {};
+export const ignoreUnused = (..._: unknown[]): void => {};

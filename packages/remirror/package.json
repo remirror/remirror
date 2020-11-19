@@ -51,6 +51,7 @@
     "@remirror/extension-callout": "1.0.0-next.53",
     "@remirror/extension-code": "1.0.0-next.53",
     "@remirror/extension-code-block": "1.0.0-next.53",
+    "@remirror/extension-codemirror5": "0.0.0",
     "@remirror/extension-collaboration": "1.0.0-next.53",
     "@remirror/extension-diff": "1.0.0-next.53",
     "@remirror/extension-doc": "1.0.0-next.53",
@@ -95,24 +96,34 @@
     "@remirror/theme": "1.0.0-next.53"
   },
   "devDependencies": {
+    "@types/codemirror": "^0.0.98",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
+    "codemirror": "^5.58.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "yjs": "^13.4.1"
   },
   "peerDependencies": {
+    "@types/codemirror": "^0.0.98",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
+    "codemirror": "^5.58.2",
     "react": "^16.8.0 || ^17",
     "react-dom": "^16.8.0 || ^17",
     "yjs": "^13.4.0"
   },
   "peerDependenciesMeta": {
+    "@types/codemirror": {
+      "optional": true
+    },
     "@types/react": {
       "optional": true
     },
     "@types/react-dom": {
+      "optional": true
+    },
+    "codemirror": {
       "optional": true
     },
     "react": {

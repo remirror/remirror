@@ -81,7 +81,9 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
    *
    * @param manager
    */
-  static fromManager<Combined extends AnyCombinedUnion>(manager: RemirrorManager<Combined>) {
+  static fromManager<Combined extends AnyCombinedUnion>(
+    manager: RemirrorManager<Combined>,
+  ): ReactSerializer<Combined> {
     return new ReactSerializer(
       this.nodesFromManager(manager),
       this.marksFromManager(manager),

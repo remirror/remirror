@@ -18,6 +18,7 @@ import {
   KeyBindings,
   object,
   PlainExtension,
+  PrioritizedKeyBindings,
   ProsemirrorNode,
   Static,
   Transaction,
@@ -194,7 +195,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
   /**
    * Create the keymap for this extension.
    */
-  createKeymap() {
+  createKeymap(): PrioritizedKeyBindings {
     const { searchBackwardShortcut, searchForwardShortcut, clearOnEscape } = this.options;
     const bindings: KeyBindings = object();
 
@@ -454,7 +455,7 @@ interface RotateHighlightedIndexParameter {
    */
   previousIndex: number;
 }
-export const rotateHighlightedIndex = (parameter: RotateHighlightedIndexParameter) => {
+export const rotateHighlightedIndex = (parameter: RotateHighlightedIndexParameter): number => {
   const { direction, resultsLength, previousIndex } = parameter;
 
   return direction === 'next'

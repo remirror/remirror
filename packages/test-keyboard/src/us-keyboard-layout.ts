@@ -420,5 +420,6 @@ export type SupportedCharacters = Extract<keyof USKeyboardLayout, string>;
  *
  * @param char
  */
-export const isUSKeyboardCharacter = (char: unknown): char is SupportedCharacters =>
-  isString(char) && Object.keys(rawUSKeyboardLayout).includes(char);
+export function isUSKeyboardCharacter(char: unknown): char is SupportedCharacters {
+  return isString(char) && Object.keys(rawUSKeyboardLayout).includes(char);
+}

@@ -113,13 +113,18 @@ function isTaggedProsemirrorNode(value: unknown): value is TaggedProsemirrorNode
   return isProsemirrorNode(value) && !isTagTracker(value);
 }
 
+interface SequenceReturn {
+  nodes: TaggedProsemirrorNode[];
+  tags: Tags;
+}
+
 /**
  * Given a collection of nodes, sequence them in an array and return the result
  * along with the updated tags.
  *
  * @param content[] - the spread of tagged content
  */
-export function sequence(...content: TaggedContentItem[]) {
+export function sequence(...content: TaggedContentItem[]): SequenceReturn {
   let position = 0;
   let tags: Tags = object();
   const nodes: TaggedProsemirrorNode[] = [];
@@ -153,7 +158,7 @@ interface CoerceParameter extends SchemaParameter {
  * Checks if the content item is a string and runs the text transformer
  * otherwise passes a flattened structure through to the `sequence` function
  */
-export function coerce(parameter: CoerceParameter) {
+export function coerce(parameter: CoerceParameter): SequenceReturn {
   const { content, schema } = parameter;
 
   const taggedContent = content.map((item) =>
@@ -171,12 +176,14 @@ interface NodeFactoryParameter<Schema extends EditorSchema = EditorSchema>
   marks?: Mark[];
 }
 
+type NodeFactory = (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
+
 /**
  * Create a builder function for nodes.
  */
 export function nodeFactory<Schema extends EditorSchema = EditorSchema>(
   parameter: NodeFactoryParameter<Schema>,
-) {
+): NodeFactory {
   const { name, schema, attrs, marks } = parameter;
   const nodeBuilder = hasOwnProperty(schema.nodes, name) ? schema.nodes[name] : undefined;
 
@@ -198,10 +205,12 @@ interface MarkFactoryParameter extends BaseFactoryParameter {
   allowDupes?: boolean;
 }
 
+type MarkFactory = (...content: TaggedContentWithText[]) => TaggedProsemirrorNode[];
+
 /**
  * Create a builder for marks.
  */
-export function markFactory(parameter: MarkFactoryParameter) {
+export function markFactory(parameter: MarkFactoryParameter): MarkFactory {
   const { name, schema, attrs, allowDupes = false } = parameter;
   const markBuilder = hasOwnProperty(schema.marks, name) ? schema.marks[name] : undefined;
 
@@ -233,12 +242,12 @@ export function markFactory(parameter: MarkFactoryParameter) {
  *
  * @param content[] - spread parameter for tagged content with text
  */
-export function fragment(...content: TaggedContentWithText[]) {
+export function fragment(...content: TaggedContentWithText[]): TaggedContentWithText[] {
   return flattenArray<TaggedContentWithText>(content);
 }
 
 export function slice(schema: EditorSchema) {
-  return (...content: TaggedContentWithText[]) =>
+  return (...content: TaggedContentWithText[]): Slice<EditorSchema> =>
     new Slice(Fragment.from(coerce({ content, schema }).nodes), 0, 0);
 }
 
@@ -252,7 +261,7 @@ interface CleanParameter extends SchemaParameter {
 /**
  * Builds a 'clean' version of the nodes, without Tags or TagTrackers.
  */
-export function clean(parameter: CleanParameter) {
+export function clean(parameter: CleanParameter): ProsemirrorNode[] | ProsemirrorNode | undefined {
   const { schema, content } = parameter;
 
   if (!isArray(content)) {

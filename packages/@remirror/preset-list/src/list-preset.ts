@@ -10,7 +10,7 @@ export class ListPreset extends Preset {
     return 'list' as const;
   }
 
-  protected onSetOptions(_: OnSetOptionsParameter<object>) {}
+  protected onSetOptions(_: OnSetOptionsParameter<object>): void {}
 
   createExtensions() {
     return [new OrderedListExtension(), new BulletListExtension(), new ListItemExtension()];

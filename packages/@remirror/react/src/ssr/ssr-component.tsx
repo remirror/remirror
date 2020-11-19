@@ -30,12 +30,10 @@ export interface RemirrorSSRProps<Combined extends AnyCombinedUnion>
 /**
  * Remirror SSR component used for rendering in non dom environments.
  */
-export const RemirrorSSR = <Combined extends AnyCombinedUnion>({
-  attributes,
-  manager,
-  state,
-  editable,
-}: RemirrorSSRProps<Combined>) => {
+export const RemirrorSSR = <Combined extends AnyCombinedUnion>(
+  props: RemirrorSSRProps<Combined>,
+): JSX.Element => {
+  const { attributes, manager, state, editable } = props;
   const outerProperties = mapProps(attributes);
   const ssrElement = ReactSerializer.fromManager(manager).serializeFragment(state.doc.content);
   const transformedElement = manager.store.ssrTransformer(ssrElement, state);

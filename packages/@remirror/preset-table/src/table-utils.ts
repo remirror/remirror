@@ -202,7 +202,7 @@ function createCell(parameter: CreateCellParameter) {
  * dispatch(tr.replaceSelectionWith(table).scrollIntoView());
  * ```
  */
-export function createTable(parameter: CreateTableParameter) {
+export function createTable(parameter: CreateTableParameter): ProsemirrorNode<EditorSchema> {
   const { schema, cellContent, columnsCount = 3, rowsCount = 3, withHeaderRow = true } = parameter;
   const { cell: tableCell, header_cell: tableHeaderCell, row: tableRow, table } = tableNodeTypes(
     schema,
