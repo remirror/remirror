@@ -29,6 +29,7 @@
       "@remirror/extension-callout",
       "@remirror/extension-code-block",
       "@remirror/extension-code",
+      "@remirror/extension-codemirror5",
       "@remirror/extension-collaboration",
       "@remirror/extension-diff",
       "@remirror/extension-doc",
