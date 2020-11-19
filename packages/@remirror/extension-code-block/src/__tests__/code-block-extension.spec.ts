@@ -9,6 +9,9 @@ import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
 import yaml from 'refractor/lang/yaml';
+import { BlockquoteExtension } from 'remirror/extension/blockquote';
+import { BoldExtension } from 'remirror/extension/bold';
+import { CodeExtension } from 'remirror/extension/code';
 import { HardBreakExtension } from 'remirror/extension/hard-break';
 
 import { ExtensionPriority, fromHtml, object, toHtml } from '@remirror/core';
@@ -58,11 +61,15 @@ describe('constructor', () => {
 
 const supportedLanguages = [typescript, javascript, markdown, tsx];
 
-const create = (options: CodeBlockOptions = object()) =>
-  renderEditor([
+function create(options: CodeBlockOptions = object()) {
+  return renderEditor([
     new CodeBlockExtension({ ...options, supportedLanguages }),
     new HardBreakExtension(),
+    new BoldExtension(),
+    new BlockquoteExtension(),
+    new CodeExtension(),
   ]);
+}
 
 describe('plugin', () => {
   const {
@@ -464,5 +471,35 @@ describe('plain text nodes', () => {
 
       expect(dom.querySelector('.language-typescript code')!.innerHTML).toMatchSnapshot();
     });
+  });
+});
+
+describe('interactions with input rules', () => {
+  it('can handle mark input rules', () => {
+    const { add, nodes, marks } = create({});
+    const { doc, p, codeBlock } = nodes;
+    const { bold: b } = marks;
+
+    add(doc(codeBlock('plain markup'), p('<cursor>')))
+      .insertText('**bold**')
+      .callback((content) => {
+        expect(content.state.doc).toEqualRemirrorDocument(
+          doc(codeBlock('plain markup'), p(b('bold'))),
+        );
+      });
+  });
+
+  it('can handle node input rules', () => {
+    const { add, nodes, marks } = create({});
+    const { doc, p, blockquote } = nodes;
+    const { code } = marks;
+
+    add(doc(blockquote(p(code('a'))), p('><cursor>')))
+      .insertText(' awesome')
+      .callback((content) => {
+        expect(content.state.doc).toEqualRemirrorDocument(
+          doc(blockquote(p(code('a')), p('awesome'))),
+        );
+      });
   });
 });

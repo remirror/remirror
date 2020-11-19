@@ -427,15 +427,19 @@ export function getChangedNodeRanges(
   const ranges = getChangedRanges(tr, StepTypes);
 
   for (const range of ranges) {
-    const $from = tr.doc.resolve(range.from);
-    const $to = tr.doc.resolve(range.to);
+    try {
+      const $from = tr.doc.resolve(range.from);
+      const $to = tr.doc.resolve(range.to);
 
-    // Find the node range for this provided range.
-    const nodeRange = $from.blockRange($to);
+      // Find the node range for this provided range.
+      const nodeRange = $from.blockRange($to);
 
-    // Make sure a valid node is available.
-    if (nodeRange) {
-      nodeRanges.push(nodeRange);
+      // Make sure a valid node is available.
+      if (nodeRange) {
+        nodeRanges.push(nodeRange);
+      }
+    } catch {
+      // Changed ranged outside the document
     }
   }
 

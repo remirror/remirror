@@ -1,10 +1,12 @@
-import { invariant, isNumber, object } from '@remirror/core-helpers';
+import { invariant, isNumber, isString, object } from '@remirror/core-helpers';
 import type {
   AttributesParameter,
   CommandFunction,
   CommandFunctionParameter,
+  FromToParameter,
   MarkType,
   MarkTypeParameter,
+  NodeAttributes,
   NodeType,
   NodeTypeParameter,
   ProsemirrorAttributes,
@@ -88,19 +90,29 @@ export function lift({ tr, dispatch }: Pick<CommandFunctionParameter, 'tr' | 'di
 }
 
 /**
- * Wrap the selection in a node of the given type with the given attributes.
+ * Wrap the selection or the provided text in a node of the given type with the
+ * given attributes.
  */
-export function wrapIn(type: NodeType, attrs: ProsemirrorAttributes): CommandFunction {
-  return function ({ tr, dispatch }) {
-    const { $from, $to } = tr.selection;
-    const range = $from.blockRange($to);
-    const wrapping = range && findWrapping(range, type, attrs);
+export function wrapIn(
+  type: string | NodeType,
+  attrs: NodeAttributes = {},
+  range?: FromToParameter,
+): CommandFunction {
+  return function (parameter) {
+    const { tr, dispatch, state } = parameter;
+    const nodeType = isString(type) ? state.schema.nodes[type] : type;
+    const { from, to } = range ?? tr.selection;
+    const $from = tr.doc.resolve(from);
+    const $to = tr.doc.resolve(to);
 
-    if (!wrapping || !range) {
+    const blockRange = $from.blockRange($to);
+    const wrapping = blockRange && findWrapping(blockRange, nodeType, attrs);
+
+    if (!wrapping || !blockRange) {
       return false;
     }
 
-    dispatch?.(tr.wrap(range, wrapping).scrollIntoView());
+    dispatch?.(tr.wrap(blockRange, wrapping).scrollIntoView());
 
     return true;
   };
@@ -110,29 +122,41 @@ export function wrapIn(type: NodeType, attrs: ProsemirrorAttributes): CommandFun
  * Toggle between wrapping an inactive node with the provided node type, and
  * lifting it up into it's parent.
  *
- * @param type - the node type to toggle
+ * @param nodeType - the node type to toggle
  * @param attrs - the attrs to use for the node
  */
-export function toggleWrap(type: NodeType, attrs: ProsemirrorAttributes = {}): CommandFunction {
+export function toggleWrap(
+  nodeType: string | NodeType,
+  attrs: NodeAttributes = {},
+): CommandFunction {
   return (parameter) => {
-    const { tr } = parameter;
+    const { tr, state } = parameter;
+    const type = isString(nodeType) ? state.schema.nodes[nodeType] : nodeType;
     const isActive = isNodeActive({ state: tr, type });
 
     if (isActive) {
       return lift(parameter);
     }
 
-    return wrapIn(type, attrs)(parameter);
+    return wrapIn(nodeType, attrs)(parameter);
   };
 }
 
 /**
  * Returns a command that tries to set the selected textblocks to the
  * given node type with the given attributes.
+ *
+ * @param nodeType - the name of the node or the [[`NodeType`]].
  */
-export function setBlockType(type: NodeType, attrs?: ProsemirrorAttributes): CommandFunction {
-  return function ({ tr, dispatch }) {
-    const { from, to } = tr.selection;
+export function setBlockType(
+  nodeType: string | NodeType,
+  attrs?: ProsemirrorAttributes,
+  range?: FromToParameter,
+): CommandFunction {
+  return function (parameter) {
+    const { tr, dispatch, state } = parameter;
+    const type = isString(nodeType) ? state.schema.nodes[nodeType] : nodeType;
+    const { from, to } = range ?? tr.selection;
     let applicable = false;
 
     tr.doc.nodesBetween(from, to, (node, pos) => {
