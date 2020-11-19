@@ -21,7 +21,7 @@
     "./dist/extension-codemirror5.cjs.js": "./dist/extension-codemirror5.browser.cjs.js",
     "./dist/extension-codemirror5.esm.js": "./dist/extension-codemirror5.browser.esm.js"
   },
-  "types": "dist/extension-codemirror.cjs.d.ts",
+  "types": "dist/extension-codemirror5.cjs.d.ts",
   "files": [
     "dist"
   ],
