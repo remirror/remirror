@@ -1,5 +1,16 @@
 # @remirror/theme
 
+## 1.0.0-next.55
+
+> 2020-11-20
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.55
+
 ## 1.0.0-next.54
 
 > 2020-11-19

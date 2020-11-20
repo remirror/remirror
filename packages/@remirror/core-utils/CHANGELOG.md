@@ -1,5 +1,25 @@
 # @remirror/core-utils
 
+## 1.0.0-next.55
+
+> 2020-11-20
+
+### Minor Changes
+
+- [`ee1ab4f3`](https://github.com/remirror/remirror/commit/ee1ab4f38bc1a169821b66017d5d24eb00275f0f) [#805](https://github.com/remirror/remirror/pull/805) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add `GetMarkRange` interface to exports from `@remirror/core-utils`.
+
+* [`1adea88a`](https://github.com/remirror/remirror/commit/1adea88a600ea5f92f4403f6817a4acd140eb0b3) [#801](https://github.com/remirror/remirror/pull/801) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Improve type signatures of command utility functions to also include an optional range.
+
+### Patch Changes
+
+- [`1adea88a`](https://github.com/remirror/remirror/commit/1adea88a600ea5f92f4403f6817a4acd140eb0b3) [#801](https://github.com/remirror/remirror/pull/801) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Fix `getChangedNodeRanges` when resolving content that may no longer be within the range of the full document. This addresses the issues raised in [#797](https://github.com/remirror/remirror/issues/797) and [#764](https://github.com/remirror/remirror/issues/764).
+
+- Updated dependencies []:
+  - @remirror/core-constants@1.0.0-next.55
+  - @remirror/core-helpers@1.0.0-next.55
+  - @remirror/core-types@1.0.0-next.55
+  - @remirror/pm@1.0.0-next.55
+
 ## 1.0.0-next.54
 
 > 2020-11-19

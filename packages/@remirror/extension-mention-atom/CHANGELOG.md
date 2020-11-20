@@ -1,5 +1,20 @@
 # @remirror/extension-mention-atom
 
+## 1.0.0-next.55
+
+> 2020-11-20
+
+### Minor Changes
+
+- [`c2268721`](https://github.com/remirror/remirror/commit/c226872161dab8e212407d3d4bc2d177f4f3a6d4) [#805](https://github.com/remirror/remirror/pull/805) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add `onClick` handler to `MentionAtomExtension` which is called with the `event: MouseEvent` and `nodeWithPosition: NodeWithPosition`.
+
+### Patch Changes
+
+- Updated dependencies [[`1adea88a`](https://github.com/remirror/remirror/commit/1adea88a600ea5f92f4403f6817a4acd140eb0b3), [`4bdcac77`](https://github.com/remirror/remirror/commit/4bdcac775c38196ad76431e55fd817d04810f367)]:
+  - @remirror/core@1.0.0-next.55
+  - @remirror/extension-events@1.0.0-next.55
+  - @remirror/pm@1.0.0-next.55
+
 ## 1.0.0-next.54
 
 > 2020-11-19
