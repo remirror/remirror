@@ -7,6 +7,7 @@ import {
   ExtensionPriority,
   ExtensionTag,
   FromToParameter,
+  GetMarkRange,
   getMarkRange,
   getMatchString,
   getSelectedWord,
@@ -32,6 +33,7 @@ import {
   Static,
   updateMark,
 } from '@remirror/core';
+import type { CreateEventHandlers } from '@remirror/extension-events';
 import { TextSelection } from '@remirror/pm/state';
 import { isInvalidSplitReason, isRemovedReason, Suggester } from '@remirror/pm/suggest';
 
@@ -66,7 +68,14 @@ export interface LinkOptions {
   selectTextOnClick?: boolean;
 
   /**
-   * Whether the link is opened when being clicked
+   * Listen to click events for links.
+   */
+  onClick?: Handler<(event: MouseEvent, data: LinkClickData) => boolean>;
+
+  /**
+   * Whether the link is opened when being clicked.
+   *
+   * @deprecated use `onClick` handler instead.
    */
   openLinkOnClick?: boolean;
 
@@ -93,6 +102,8 @@ export interface LinkOptions {
   defaultProtocol?: DefaultProtocol;
 }
 
+export interface LinkClickData extends GetMarkRange, LinkAttributes {}
+
 export type LinkAttributes = MarkAttributes<{
   /**
    * The link which is required property for the link mark.
@@ -117,7 +128,8 @@ export type LinkAttributes = MarkAttributes<{
     autoLinkRegex: /(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/\S*)?/,
   },
   staticKeys: ['autoLinkRegex'],
-  handlerKeys: ['onActivateLink', 'onUpdateLink'],
+  handlerKeyOptions: { onClick: { earlyReturnValue: true } },
+  handlerKeys: ['onActivateLink', 'onUpdateLink', 'onClick'],
 })
 export class LinkExtension extends MarkExtension<LinkOptions> {
   get name() {
@@ -346,11 +358,8 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
         /** Remove the link at the provided range. */
         const remove = () => {
-          // Use the custom transaction.
+          // Call the command to use a custom transaction rather than the current.
           custom(tr);
-
-          // Remove the cached range before the update.
-          // cachedRange = undefined;
 
           let markRange: ReturnType<typeof getMarkRange> | undefined;
 
@@ -364,6 +373,8 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
           removeLink(markRange ?? range);
 
+          // The mark range for the position after the matched text. If this
+          // exists it should be removed to handle cleanup properly.
           let afterMarkRange: ReturnType<typeof getMarkRange> | undefined;
 
           for (const pos of numberRange(
@@ -461,6 +472,44 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     };
 
     return [suggester];
+  }
+
+  /**
+   * Track click events passed through to the editor.
+   */
+  createEventHandlers(): CreateEventHandlers {
+    return {
+      clickMark: (event, clickState) => {
+        const markRange = clickState.getMark(this.type);
+
+        if (!markRange) {
+          return;
+        }
+
+        const attrs = markRange.mark.attrs as LinkAttributes;
+        const data: LinkClickData = { ...attrs, ...markRange };
+
+        // If one of the handlers returns `true` then return early.
+        if (this.options.onClick(event, data)) {
+          return true;
+        }
+
+        let handled = false;
+
+        if (this.options.openLinkOnClick) {
+          handled = true;
+          const href = attrs.href;
+          window.open(href, '_blank');
+        }
+
+        if (this.options.selectTextOnClick) {
+          handled = true;
+          this.store.commands.selectText(markRange);
+        }
+
+        return handled;
+      },
+    };
   }
 
   /**

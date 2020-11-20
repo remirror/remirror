@@ -111,6 +111,10 @@ function create(options: LinkOptions = {}) {
     linkExtension.addHandler('onActivateLink', options.onActivateLink);
   }
 
+  if (options.onClick) {
+    linkExtension.addHandler('onClick', options.onClick);
+  }
+
   if (options.onUpdateLink) {
     linkExtension.addHandler('onUpdateLink', options.onUpdateLink);
   }
@@ -631,5 +635,61 @@ describe('autolinking', () => {
     expect(editor.doc).toEqualRemirrorDocument(
       doc(p('a ', link({ href: '//test.com' })('test.com'))),
     );
+  });
+});
+
+describe('onClick', () => {
+  it('responds to clicks', () => {
+    const onClick = jest.fn(() => false);
+    const {
+      view,
+      add,
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = create({ autoLink: true, onClick });
+
+    const linkMark = link({ href: '//test.com' })('test.com');
+    const node = p('first ', linkMark);
+    add(doc(node));
+
+    view.someProp('handleClickOn', (fn) => fn(view, 10, node, 1, {}, false));
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(onClick).toHaveBeenCalledWith(
+      {},
+      expect.objectContaining({
+        from: 7,
+        to: 15,
+        text: 'test.com',
+        mark: expect.any(Object),
+      }),
+    );
+
+    view.someProp('handleClick', (fn) => fn(view, 3, node, 1, {}, true));
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('can override further options when false is returned', () => {
+    let returnValue = true;
+    const onClick = jest.fn(() => returnValue);
+    const {
+      view,
+      add,
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = create({ autoLink: true, onClick, selectTextOnClick: true });
+
+    const linkMark = link({ href: '//test.com' })('test.com');
+    const node = p('first ', linkMark);
+    add(doc(node));
+
+    view.someProp('handleClickOn', (fn) => fn(view, 10, node, 1, {}, false));
+    // It doesn't select the text when the callback returns true.
+    expect(view.state.selection.empty).toBeTrue();
+
+    returnValue = false;
+
+    view.someProp('handleClickOn', (fn) => fn(view, 10, node, 1, {}, false));
+    // It selects the text when the callback returns true.
+    expect(view.state.selection.empty).toBeFalse();
   });
 });
