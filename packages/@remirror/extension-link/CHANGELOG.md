@@ -1,5 +1,26 @@
 # @remirror/extension-link
 
+## 1.0.0-next.55
+
+> 2020-11-20
+
+### Minor Changes
+
+- [`b65ea785`](https://github.com/remirror/remirror/commit/b65ea785c96b52cc54be205be66918de104d28bc) [#805](https://github.com/remirror/remirror/pull/805) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add `onClick` handler to `LinkExtension` which is called with the `event: MouseEvent` and `data: LinkClickData` which includes the `href` and all the `GetMarkRange` properties.
+
+  Export extra types from the `@remirror/extension-link` package.
+
+  - `LinkAttributes`
+  - `LinkClickData`
+  - `DefaultProtocol`
+
+### Patch Changes
+
+- Updated dependencies [[`1adea88a`](https://github.com/remirror/remirror/commit/1adea88a600ea5f92f4403f6817a4acd140eb0b3), [`4bdcac77`](https://github.com/remirror/remirror/commit/4bdcac775c38196ad76431e55fd817d04810f367)]:
+  - @remirror/core@1.0.0-next.55
+  - @remirror/extension-events@1.0.0-next.55
+  - @remirror/pm@1.0.0-next.55
+
 ## 1.0.0-next.54
 
 > 2020-11-19

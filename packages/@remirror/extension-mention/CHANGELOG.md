@@ -1,5 +1,20 @@
 # @remirror/extension-mention
 
+## 1.0.0-next.55
+
+> 2020-11-20
+
+### Minor Changes
+
+- [`3ee20d40`](https://github.com/remirror/remirror/commit/3ee20d40c90cac71c39320aaefbfb476d9f74101) [#805](https://github.com/remirror/remirror/pull/805) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add `onClick` handler to `MentionExtension` which is called with `event: MouseEvent` and `markRange: GetMarkRange`.
+
+### Patch Changes
+
+- Updated dependencies [[`1adea88a`](https://github.com/remirror/remirror/commit/1adea88a600ea5f92f4403f6817a4acd140eb0b3), [`4bdcac77`](https://github.com/remirror/remirror/commit/4bdcac775c38196ad76431e55fd817d04810f367)]:
+  - @remirror/core@1.0.0-next.55
+  - @remirror/extension-events@1.0.0-next.55
+  - @remirror/pm@1.0.0-next.55
+
 ## 1.0.0-next.54
 
 > 2020-11-19

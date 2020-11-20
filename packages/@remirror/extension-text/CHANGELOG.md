@@ -1,5 +1,17 @@
 # @remirror/extension-text
 
+## 1.0.0-next.55
+
+> 2020-11-20
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies [[`1adea88a`](https://github.com/remirror/remirror/commit/1adea88a600ea5f92f4403f6817a4acd140eb0b3)]:
+  - @remirror/core@1.0.0-next.55
+  - @remirror/pm@1.0.0-next.55
+
 ## 1.0.0-next.54
 
 > 2020-11-19
