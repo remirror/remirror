@@ -673,12 +673,14 @@ importers:
   packages/@remirror/extension-mention-atom:
     dependencies:
       '@babel/runtime': 7.12.5
+      '@remirror/extension-events': 'link:../extension-events'
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7.12.0
       '@remirror/core': 1.0.0-next.54
+      '@remirror/extension-events': 1.0.0-next.54
       '@remirror/pm': 1.0.0-next.54
   packages/@remirror/extension-paragraph:
     dependencies:

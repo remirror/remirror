@@ -20,7 +20,8 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0"
+    "@babel/runtime": "^7.12.0",
+    "@remirror/extension-events": "1.0.0-next.54"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.54",

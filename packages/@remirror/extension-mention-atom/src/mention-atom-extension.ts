@@ -12,11 +12,13 @@ import {
   NodeAttributes,
   NodeExtension,
   NodeExtensionSpec,
+  NodeWithPosition,
   omitExtraAttributes,
   pick,
   replaceText,
   Static,
 } from '@remirror/core';
+import type { CreateEventHandlers } from '@remirror/extension-events';
 import {
   DEFAULT_SUGGESTER,
   MatchValue,
@@ -89,11 +91,21 @@ export interface MentionAtomOptions
    * granular control.
    */
   onChange?: Handler<MentionAtomChangeHandler>;
+
+  /**
+   * Listen for click events to the mention atom extension.
+   */
+  onClick?: Handler<
+    (event: MouseEvent, nodeWithPosition: NodeWithPosition) => boolean | undefined | void
+  >;
 }
 
 /**
- * This is the node version of the already popular
- * `@remirror/extension-mention`. It provides mentions as atom nodes with many
+ * This is the atom version of the `MentionExtension`
+ * `@remirror/extension-mention`.
+ *
+ * It provides mentions as atom nodes which don't support editing once being
+ * inserted into the document.
  */
 @extensionDecorator<MentionAtomOptions>({
   defaultOptions: {
@@ -110,7 +122,8 @@ export interface MentionAtomOptions
     validMarks: null,
     validNodes: null,
   },
-  handlerKeys: ['onChange'],
+  handlerKeyOptions: { onClick: { earlyReturnValue: true } },
+  handlerKeys: ['onChange', 'onClick'],
   staticKeys: ['matchers', 'mentionTag', 'selectable'],
 })
 export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
@@ -215,6 +228,29 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
           attrs: { name, ...rest },
           range,
         });
+      },
+    };
+  }
+
+  /**
+   * Track click events passed through to the editor.
+   */
+  createEventHandlers(): CreateEventHandlers {
+    return {
+      click: (event, clickState) => {
+        // Check if this is a direct click which must be the case for atom
+        // nodes.
+        if (!clickState.direct) {
+          return;
+        }
+
+        const nodeWithPosition = clickState.getNode(this.type);
+
+        if (!nodeWithPosition) {
+          return;
+        }
+
+        return this.options.onClick(event, nodeWithPosition);
       },
     };
   }
