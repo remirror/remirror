@@ -1,6 +1,12 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
-import { centeredSelectionPositioner, cursorPopupPositioner, PositionerExtension } from '../..';
+import {
+  centeredSelectionPositioner,
+  cursorPopupPositioner,
+  floatingSelectionPositioner,
+  Positioner,
+  PositionerExtension,
+} from '../..';
 
 extensionValidityTest(PositionerExtension);
 
@@ -70,6 +76,42 @@ test('`centeredSelectionPositioner` can position itself', () => {
       ]);
       expect(centeredMock.onDone).toHaveBeenCalledWith([
         { position: expect.any(Object), element: centeredElement, id: '0' },
+      ]);
+    });
+});
+
+test("a custom positioner can define it's own hasChanged behaviour", () => {
+  const positionerExtension = new PositionerExtension();
+  const {
+    add,
+    nodes: { p, doc },
+  } = renderEditor([positionerExtension]);
+
+  const customElement = document.createElement('div');
+  document.body.append(customElement);
+  const customMock = {
+    onUpdate: jest.fn((items) => items?.[0]?.setElement(customElement)),
+    onDone: jest.fn(),
+  };
+
+  const customSelectionPositioner = Positioner.fromPositioner(floatingSelectionPositioner, {
+    hasChanged() {
+      return true;
+    },
+  });
+
+  add(doc(p('<cursor>')))
+    .callback(() => {
+      customSelectionPositioner.addListener('update', customMock.onUpdate);
+      customSelectionPositioner.addListener('done', customMock.onDone);
+      positionerExtension.addCustomHandler('positioner', customSelectionPositioner);
+    })
+    .callback(() => {
+      expect(customMock.onUpdate).toHaveBeenCalledWith([
+        { setElement: expect.any(Function), id: '0' },
+      ]);
+      expect(customMock.onDone).toHaveBeenCalledWith([
+        { position: expect.any(Object), element: customElement, id: '0' },
       ]);
     });
 });
