@@ -1,5 +1,17 @@
 # @remirror/extension-positioner
 
+## 1.0.0-next.56
+
+> 2020-11-24
+
+### Patch Changes
+
+- [`cba35d51`](https://github.com/remirror/remirror/commit/cba35d51f2c95c2b930b083959dccdf7cf521615) [#811](https://github.com/remirror/remirror/pull/811) Thanks [@whawker](https://github.com/whawker)! - Fix positioners so they can be displayed as soon as they are added.
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.56
+  - @remirror/pm@1.0.0-next.56
+
 ## 1.0.0-next.55
 
 > 2020-11-20

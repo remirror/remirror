@@ -1,5 +1,26 @@
 # @remirror/react-hooks
 
+## 1.0.0-next.56
+
+> 2020-11-24
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies [[`cba35d51`](https://github.com/remirror/remirror/commit/cba35d51f2c95c2b930b083959dccdf7cf521615)]:
+  - @remirror/core@1.0.0-next.56
+  - @remirror/extension-emoji@1.0.0-next.56
+  - @remirror/extension-events@1.0.0-next.56
+  - @remirror/extension-history@1.0.0-next.56
+  - @remirror/extension-mention@1.0.0-next.56
+  - @remirror/extension-mention-atom@1.0.0-next.56
+  - @remirror/i18n@1.0.0-next.56
+  - @remirror/pm@1.0.0-next.56
+  - @remirror/react@1.0.0-next.56
+  - @remirror/react-utils@1.0.0-next.56
+  - @remirror/extension-positioner@1.0.0-next.56
+
 ## 1.0.0-next.55
 
 > 2020-11-20
