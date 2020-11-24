@@ -67,6 +67,8 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
     }
 
     this.#positioners = [...this.#positioners, positioner];
+    // Ensure onStateUpdate is trigger when positioner is added
+    this.store.commands.forceUpdate();
     return () => {
       this.#positioners = this.#positioners.filter((handler) => handler !== positioner);
     };
