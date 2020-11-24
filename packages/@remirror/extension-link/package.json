@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-link",
-  "version": "1.0.0-next.55",
+  "version": "1.0.0-next.56",
   "description": "Add links to your text editor.",
   "keywords": [
     "remirror",
@@ -25,15 +25,15 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.12.0",
-    "@remirror/extension-events": "1.0.0-next.55"
+    "@remirror/extension-events": "1.0.0-next.56"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.55",
-    "@remirror/pm": "1.0.0-next.55"
+    "@remirror/core": "1.0.0-next.56",
+    "@remirror/pm": "1.0.0-next.56"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.55",
-    "@remirror/pm": "1.0.0-next.55"
+    "@remirror/core": "1.0.0-next.56",
+    "@remirror/pm": "1.0.0-next.56"
   },
   "publishConfig": {
     "access": "public"

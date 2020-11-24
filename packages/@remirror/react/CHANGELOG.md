@@ -1,5 +1,26 @@
 # @remirror/react
 
+## 1.0.0-next.56
+
+> 2020-11-24
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies [[`cba35d51`](https://github.com/remirror/remirror/commit/cba35d51f2c95c2b930b083959dccdf7cf521615), [`01e5c2d2`](https://github.com/remirror/remirror/commit/01e5c2d2707c715cd4e0006f9ac10c0cc3b11042)]:
+  - @remirror/core@1.0.0-next.56
+  - @remirror/extension-placeholder@1.0.0-next.56
+  - @remirror/extension-react-component@1.0.0-next.56
+  - @remirror/extension-react-ssr@1.0.0-next.56
+  - @remirror/i18n@1.0.0-next.56
+  - @remirror/pm@1.0.0-next.56
+  - @remirror/preset-core@1.0.0-next.56
+  - @remirror/preset-react@1.0.0-next.56
+  - @remirror/react-utils@1.0.0-next.56
+  - @remirror/extension-positioner@1.0.0-next.56
+  - @remirror/theme@1.0.0-next.56
+
 ## 1.0.0-next.55
 
 > 2020-11-20

@@ -1,5 +1,18 @@
 # @remirror/extension-annotation
 
+## 1.0.0-next.56
+
+> 2020-11-24
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies [[`cba35d51`](https://github.com/remirror/remirror/commit/cba35d51f2c95c2b930b083959dccdf7cf521615)]:
+  - @remirror/core@1.0.0-next.56
+  - @remirror/pm@1.0.0-next.56
+  - @remirror/extension-positioner@1.0.0-next.56
+
 ## 1.0.0-next.55
 
 > 2020-11-20

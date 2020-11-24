@@ -1,5 +1,16 @@
 # @remirror/theme
 
+## 1.0.0-next.56
+
+> 2020-11-24
+
+### Patch Changes
+
+- [`01e5c2d2`](https://github.com/remirror/remirror/commit/01e5c2d2707c715cd4e0006f9ac10c0cc3b11042) [#807](https://github.com/remirror/remirror/pull/807) Thanks [@ocavue](https://github.com/ocavue)! - Remove `open-color` from the dependencies. Check https://github.com/remirror/remirror/issues/806 for more details.
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.56
+
 ## 1.0.0-next.55
 
 > 2020-11-20
