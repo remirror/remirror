@@ -693,3 +693,33 @@ describe('onClick', () => {
     expect(view.state.selection.empty).toBeFalse();
   });
 });
+
+describe('spanning', () => {
+  it('should allow selection of part of link without splitting it', () => {
+    const {
+      add,
+      attributeMarks: { link },
+      nodes: { doc, p },
+      view,
+    } = renderEditor([new LinkExtension()]);
+
+    const linkMark = link({ href: '//test.com' })('a <start>long<end> link');
+    add(doc(p('Paragraph with ', linkMark, ' and text')));
+
+    expect(view.dom.innerHTML).toMatchInlineSnapshot(`
+      <p>
+        Paragraph with
+        <a href="//test.com"
+           rel="noopener noreferrer nofollow"
+        >
+          a
+          <span class="selection">
+            long
+          </span>
+          link
+        </a>
+        and text
+      </p>
+    `);
+  });
+});

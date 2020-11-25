@@ -147,7 +147,6 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         auto: { default: false },
       },
       inclusive: false,
-      spanning: false,
       parseDOM: [
         {
           tag: 'a[href]',
