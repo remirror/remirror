@@ -1,5 +1,15 @@
 # @remirror/preset-react-checkbox
 
+## 1.0.0-next.57
+
+> 2020-11-25
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.57
+  - @remirror/pm@1.0.0-next.57
+
 ## 1.0.0-next.56
 
 > 2020-11-24

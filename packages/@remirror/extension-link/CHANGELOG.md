@@ -1,5 +1,40 @@
 # @remirror/extension-link
 
+## 1.0.0-next.57
+
+> 2020-11-25
+
+### Patch Changes
+
+- [`4ae3c9b2`](https://github.com/remirror/remirror/commit/4ae3c9b2a1f2073aa243d093a2da4b110e7d246e) [#812](https://github.com/remirror/remirror/pull/812) Thanks [@whawker](https://github.com/whawker)! - Fix rendered HTML when selecting or applying marks to part of a link.
+
+  Behaviour before fix.
+
+  ```html
+  <p>
+    <a href="/">My partially</a>
+    <a href="/"><span class="selection">selected</span></a>
+    <a href="/">link</a>
+  </p>
+  ```
+
+  Behaviour after fix.
+
+  ```html
+  <p>
+    <a href="/">
+      My partially
+      <span class="selection">selected</span>
+      link
+    </a>
+  </p>
+  ```
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.57
+  - @remirror/extension-events@1.0.0-next.57
+  - @remirror/pm@1.0.0-next.57
+
 ## 1.0.0-next.56
 
 > 2020-11-24
