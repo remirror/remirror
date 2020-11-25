@@ -141,7 +141,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [12.x, 14.x, 15.x]
       fail-fast: false
 
     steps:
@@ -171,7 +171,7 @@ jobs:
       - name: build project
         run: pnpm build
 
-      - name: run unit tests
+      - name: run unit tests with built code
         run: pnpm test:build
 
   # Check that package sizes are within their boundaries
@@ -218,10 +218,6 @@ jobs:
       fail-fast: false
 
     steps:
-      ## TODO remove this hack once playwright version updated.
-      - name: install ffmpeg
-        run: sudo apt-get install ffmpeg
-
       - name: checkout code repository
         uses: actions/checkout@v2
         with:
