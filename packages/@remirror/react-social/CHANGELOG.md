@@ -1,5 +1,28 @@
 # @remirror/react-social
 
+## 1.0.0-next.57
+
+> 2020-11-25
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.57
+  - @remirror/extension-auto-link@1.0.0-next.57
+  - @remirror/extension-emoji@1.0.0-next.57
+  - @remirror/extension-events@1.0.0-next.57
+  - @remirror/extension-mention@1.0.0-next.57
+  - @remirror/i18n@1.0.0-next.57
+  - @remirror/pm@1.0.0-next.57
+  - @remirror/preset-social@1.0.0-next.57
+  - @remirror/react@1.0.0-next.57
+  - @remirror/react-hooks@1.0.0-next.57
+  - @remirror/react-utils@1.0.0-next.57
+  - @remirror/theme@1.0.0-next.57
+  - multishift@1.0.0-next.57
+
 ## 1.0.0-next.56
 
 > 2020-11-24

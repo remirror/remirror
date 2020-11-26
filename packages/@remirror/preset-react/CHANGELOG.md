@@ -1,5 +1,21 @@
 # @remirror/preset-react
 
+## 1.0.0-next.57
+
+> 2020-11-25
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.57
+  - @remirror/extension-placeholder@1.0.0-next.57
+  - @remirror/extension-react-component@1.0.0-next.57
+  - @remirror/extension-react-ssr@1.0.0-next.57
+  - @remirror/pm@1.0.0-next.57
+  - @remirror/react-utils@1.0.0-next.57
+
 ## 1.0.0-next.56
 
 > 2020-11-24

@@ -1,5 +1,19 @@
 # @remirror/showcase
 
+## 1.0.0-next.57
+
+> 2020-11-25
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.57
+  - @remirror/extension-code-block@1.0.0-next.57
+  - @remirror/react-hooks@1.0.0-next.57
+  - @remirror/react-social@1.0.0-next.57
+
 ## 1.0.0-next.56
 
 > 2020-11-24

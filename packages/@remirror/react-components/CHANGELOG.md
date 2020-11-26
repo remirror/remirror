@@ -1,5 +1,17 @@
 # @remirror/react-components
 
+## 1.0.0-next.37
+
+> 2020-11-25
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.57
+  - @remirror/pm@1.0.0-next.57
+  - @remirror/react@1.0.0-next.57
+  - multishift@1.0.0-next.57
+
 ## 1.0.0-next.36
 
 > 2020-11-24
