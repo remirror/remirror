@@ -74,4 +74,16 @@ describe('events', () => {
     view.someProp('handleClickOn', (fn) => fn(view, 2, node, 1, {}, true));
     expect(clickHandler).toHaveBeenCalled();
   });
+
+  it('should not throw when clicked on before first state called', () => {
+    const eventsExtension = new EventsExtension();
+    const editor = renderEditor([eventsExtension]);
+    const { view } = editor;
+    const { p } = editor.nodes;
+    const node = p('first');
+
+    expect(() =>
+      editor.view.someProp('handleClickOn', (fn) => fn(view, 2, node, 1, {}, true)),
+    ).not.toThrow();
+  });
 });
