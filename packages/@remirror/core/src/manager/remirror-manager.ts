@@ -510,43 +510,28 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    */
   private createExtensionStore(): Remirror.ExtensionStore {
     const store: Remirror.ExtensionStore = object();
+    const enumerable = true;
+
+    // Allow current state to default to `getState` for first access.
+    // This fixed an issue with #814
+    let currentState: EditorState | undefined;
 
     Object.defineProperties(store, {
-      extensions: {
-        get: () => this.#extensions,
-        enumerable: true,
-      },
-      phase: {
-        get: () => this.#phase,
-        enumerable: true,
-      },
-      view: {
-        get: () => this.view,
-        enumerable: true,
-      },
-      managerSettings: {
-        get: () => freeze(this.#settings),
-        enumerable: true,
-      },
-      getState: {
-        value: this.getState,
-        enumerable: true,
-      },
-      updateState: {
-        value: this.updateState,
-        enumerable: true,
-      },
-      isMounted: {
-        value: () => this.mounted,
-        enumerable: true,
-      },
-      getExtension: {
-        value: this.getExtension.bind(this),
-        enumerable: true,
-      },
-      getPreset: {
-        value: this.getPreset.bind(this),
-        enumerable: true,
+      extensions: { get: () => this.#extensions, enumerable },
+      phase: { get: () => this.#phase, enumerable },
+      view: { get: () => this.view, enumerable },
+      managerSettings: { get: () => freeze(this.#settings), enumerable },
+      getState: { value: this.getState, enumerable },
+      updateState: { value: this.updateState, enumerable },
+      isMounted: { value: () => this.mounted, enumerable },
+      getExtension: { value: this.getExtension.bind(this), enumerable },
+      getPreset: { value: this.getPreset.bind(this), enumerable },
+      currentState: {
+        get: () => (currentState ??= this.getState()),
+        set: (state: EditorState) => {
+          currentState = state;
+        },
+        enumerable,
       },
     });
 
