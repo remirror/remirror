@@ -1,5 +1,20 @@
 # @remirror/core
 
+## 1.0.0-next.58
+
+> 2020-11-29
+
+### Patch Changes
+
+- [`3d3da227`](https://github.com/remirror/remirror/commit/3d3da227fd582d388ed2587f0ccd0ac6e5b6ae73) [#815](https://github.com/remirror/remirror/pull/815) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Allow access to `extension.store.currentState` before the first state update. This fixes [#814](https://github.com/remirror/remirror/issues/814).
+
+- Updated dependencies []:
+  - @remirror/core-constants@1.0.0-next.58
+  - @remirror/core-helpers@1.0.0-next.58
+  - @remirror/core-types@1.0.0-next.58
+  - @remirror/core-utils@1.0.0-next.58
+  - @remirror/pm@1.0.0-next.58
+
 ## 1.0.0-next.57
 
 > 2020-11-25

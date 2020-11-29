@@ -1,5 +1,19 @@
 # @remirror/core-utils
 
+## 1.0.0-next.58
+
+> 2020-11-29
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core-constants@1.0.0-next.58
+  - @remirror/core-helpers@1.0.0-next.58
+  - @remirror/core-types@1.0.0-next.58
+  - @remirror/pm@1.0.0-next.58
+
 ## 1.0.0-next.57
 
 > 2020-11-25
