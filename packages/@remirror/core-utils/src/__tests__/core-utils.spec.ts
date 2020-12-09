@@ -8,6 +8,7 @@ import {
   p,
   pm,
   schema as testSchema,
+  strong,
   tableRow,
 } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
@@ -236,6 +237,16 @@ describe('getMarkRange', () => {
 
     expect(range?.mark).toBeInstanceOf(Mark);
     expect(range?.text).toBe(expected);
+  });
+
+  it('returns the entire range when marks are mixed', () => {
+    const { state, schema } = createEditor(
+      doc(p('Something <cursor>', strong(em('italic')), strong(' but still strong'))),
+    );
+    const range = getMarkRange(state.selection.$from, schema.marks.strong);
+
+    expect(range?.mark).toBeInstanceOf(Mark);
+    expect(range?.text).toBe('italic but still strong');
   });
 });
 
