@@ -333,16 +333,22 @@ export function getMarkRange($pos: ResolvedPos, type: MarkType): GetMarkRange | 
 
   let startIndex = $pos.index();
   let startPos = $pos.start() + start.offset;
+  let endIndex = startIndex + 1;
+  let endPos = startPos + start.node.nodeSize;
 
   while (startIndex > 0 && mark.isInSet($pos.parent.child(startIndex - 1).marks)) {
     startIndex -= 1;
     startPos -= $pos.parent.child(startIndex).nodeSize;
   }
 
-  const [from, to] = [startPos, startPos + start.node.nodeSize];
-  const text = $pos.doc.textBetween(from, to, LEAF_NODE_REPLACING_CHARACTER, '\n\n');
+  while (endIndex < $pos.parent.childCount && mark.isInSet($pos.parent.child(endIndex).marks)) {
+    endPos += $pos.parent.child(endIndex).nodeSize;
+    endIndex += 1;
+  }
 
-  return { from, to, text, mark };
+  const text = $pos.doc.textBetween(startPos, endPos, LEAF_NODE_REPLACING_CHARACTER, '\n\n');
+
+  return { from: startPos, to: endPos, text, mark };
 }
 
 /**
