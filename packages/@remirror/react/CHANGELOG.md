@@ -1,5 +1,26 @@
 # @remirror/react
 
+## 1.0.0-next.59
+
+> 2020-12-12
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.59
+  - @remirror/extension-placeholder@1.0.0-next.59
+  - @remirror/extension-positioner@1.0.0-next.59
+  - @remirror/extension-react-component@1.0.0-next.59
+  - @remirror/extension-react-ssr@1.0.0-next.59
+  - @remirror/i18n@1.0.0-next.59
+  - @remirror/pm@1.0.0-next.59
+  - @remirror/preset-core@1.0.0-next.59
+  - @remirror/preset-react@1.0.0-next.59
+  - @remirror/react-utils@1.0.0-next.59
+  - @remirror/theme@1.0.0-next.59
+
 ## 1.0.0-next.58
 
 > 2020-11-29

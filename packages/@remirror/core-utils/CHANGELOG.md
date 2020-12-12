@@ -1,5 +1,19 @@
 # @remirror/core-utils
 
+## 1.0.0-next.59
+
+> 2020-12-12
+
+### Patch Changes
+
+- [`e69115f1`](https://github.com/remirror/remirror/commit/e69115f141c12c7dd21bd89c716b12b279414364) [#825](https://github.com/remirror/remirror/pull/825) Thanks [@tommoor](https://github.com/tommoor)! - Fix `getMarkRange` not returning the entire mark length, instead stopping at the first change in mark. This fix also resolves the infinite loop described in #823.
+
+- Updated dependencies []:
+  - @remirror/core-constants@1.0.0-next.59
+  - @remirror/core-helpers@1.0.0-next.59
+  - @remirror/core-types@1.0.0-next.59
+  - @remirror/pm@1.0.0-next.59
+
 ## 1.0.0-next.58
 
 > 2020-11-29

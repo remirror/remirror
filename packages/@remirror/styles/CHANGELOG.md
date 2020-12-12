@@ -1,5 +1,13 @@
 # @remirror/styles
 
+## 1.0.0-next.59
+
+> 2020-12-12
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
 ## 1.0.0-next.58
 
 > 2020-11-29

@@ -1,5 +1,18 @@
 # @remirror/pm
 
+## 1.0.0-next.59
+
+> 2020-12-12
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core-constants@1.0.0-next.59
+  - @remirror/core-helpers@1.0.0-next.59
+  - prosemirror-suggest@1.0.0-next.59
+
 ## 1.0.0-next.58
 
 > 2020-11-29
