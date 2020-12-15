@@ -30,7 +30,7 @@
   "dependencies": {
     "@babel/runtime": "^7.12.0",
     "linaria": "^2.0.0",
-    "y-prosemirror": "^0.3.7"
+    "y-prosemirror": "^1.0.5"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.59",
