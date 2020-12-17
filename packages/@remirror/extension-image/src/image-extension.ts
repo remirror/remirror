@@ -93,7 +93,7 @@ export class ImageExtension extends NodeExtension {
               return false;
             }
 
-            const images = [...event.dataTransfer.files].filter((file) => /image/i.test(file.type));
+            const images = [...event.dataTransfer.files].filter((file) => /^image\//i.test(file.type));
 
             if (images.length === 0) {
               return false;
