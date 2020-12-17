@@ -18,7 +18,7 @@ import { TextSelection } from '@remirror/pm/state';
 import { findWrapping, liftTarget } from '@remirror/pm/transform';
 
 import { getMarkRange, isMarkType, isNodeType } from './core-utils';
-import { isNodeActive, isSelectionEmpty } from './prosemirror-utils';
+import { getActiveNode, isNodeActive, isSelectionEmpty } from './prosemirror-utils';
 
 interface UpdateMarkParameter extends Partial<RangeParameter>, Partial<AttributesParameter> {
   /**
@@ -157,10 +157,13 @@ export function setBlockType(
     const { tr, dispatch, state } = parameter;
     const type = isString(nodeType) ? state.schema.nodes[nodeType] : nodeType;
     const { from, to } = range ?? tr.selection;
+
     let applicable = false;
+    let activeAttrs: ProsemirrorAttributes | undefined;
 
     tr.doc.nodesBetween(from, to, (node, pos) => {
       if (applicable) {
+        // Exit early and don't descend.
         return false;
       }
 
@@ -170,6 +173,8 @@ export function setBlockType(
 
       if (node.type === type) {
         applicable = true;
+        activeAttrs = node.attrs;
+
         return;
       }
 
@@ -177,6 +182,11 @@ export function setBlockType(
       const index = $pos.index();
 
       applicable = $pos.parent.canReplaceWith(index, index + 1, type);
+
+      if (applicable) {
+        activeAttrs = $pos.parent.attrs;
+      }
+
       return;
     });
 
@@ -185,7 +195,7 @@ export function setBlockType(
     }
 
     if (dispatch) {
-      dispatch(tr.setBlockType(from, to, type, attrs).scrollIntoView());
+      dispatch(tr.setBlockType(from, to, type, { ...activeAttrs, ...attrs }).scrollIntoView());
     }
 
     return true;
@@ -197,6 +207,14 @@ interface ToggleBlockItemParameter extends NodeTypeParameter, Partial<Attributes
    * The type to toggle back to. Usually this is the paragraph node type.
    */
   toggleType: NodeType;
+
+  /**
+   * Whether to preserve the attrs when toggling a block item. This means that
+   * extra attributes that are shared between nodes will be maintained.
+   *
+   * @default true
+   */
+  preserveAttrs?: boolean;
 }
 
 /**
@@ -207,14 +225,21 @@ interface ToggleBlockItemParameter extends NodeTypeParameter, Partial<Attributes
 export function toggleBlockItem(toggleParameter: ToggleBlockItemParameter): CommandFunction {
   return (parameter) => {
     const { tr } = parameter;
-    const { type, toggleType, attrs } = toggleParameter;
-    const isActive = isNodeActive({ state: tr, type, attrs });
+    const { type, toggleType, attrs, preserveAttrs = true } = toggleParameter;
+    const activeNode = getActiveNode({ state: tr, type, attrs });
 
-    if (isActive) {
-      return setBlockType(toggleType)(parameter);
+    if (activeNode) {
+      return setBlockType(toggleType, {
+        ...(preserveAttrs ? activeNode.node.attrs : {}),
+        ...attrs,
+      })(parameter);
     }
 
-    return setBlockType(type, attrs)(parameter);
+    const toggleNode = getActiveNode({ state: tr, type: toggleType, attrs });
+
+    return setBlockType(type, { ...(preserveAttrs ? toggleNode?.node.attrs : {}), ...attrs })(
+      parameter,
+    );
   };
 }
 

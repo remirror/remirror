@@ -38,6 +38,7 @@ import {
   getInvalidContent,
   getMarkAttributes,
   getMarkRange,
+  getMarkRanges,
   getNearestNonTextElement,
   getRemirrorJSON,
   getSelectedWord,
@@ -247,6 +248,40 @@ describe('getMarkRange', () => {
 
     expect(range?.mark).toBeInstanceOf(Mark);
     expect(range?.text).toBe('italic but still strong');
+  });
+
+  it('returns first matched range when provided with $end', () => {
+    const { state, schema } = createEditor(
+      doc(p('Something <start>', em('italic'), strong(' <end>but still strong'))),
+    );
+    const { $from, $to } = state.selection;
+    const range = getMarkRange($from, schema.marks.strong, $to);
+
+    expect(range?.mark).toBeInstanceOf(Mark);
+    expect(range?.text).toBe(' but still strong');
+  });
+});
+
+describe('getMarkRanges', () => {
+  it('returns all the marks within provided range', () => {
+    const { state } = createEditor(
+      doc(
+        p(
+          'Something <start>',
+          strong('hi'),
+          em(' my '),
+          strong('friend. '),
+          em('Bye'),
+          strong(' for<en> now... 😼'),
+        ),
+      ),
+    );
+    const ranges = getMarkRanges(state.selection, 'strong');
+
+    expect(ranges).toHaveLength(3);
+    expect(ranges[0]?.text).toBe('hi');
+    expect(ranges[1]?.text).toBe('friend. ');
+    expect(ranges[2]?.text).toBe(' for now... 😼');
   });
 });
 

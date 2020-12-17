@@ -37,6 +37,7 @@ export {
   getInvalidContent,
   getMarkAttributes,
   getMarkRange,
+  getMarkRanges,
   getMatchString,
   getNearestNonTextElement,
   getRemirrorJSON,
@@ -137,4 +138,5 @@ export {
   removeNodeBefore,
   replaceNodeAtPosition,
   schemaToJSON,
+  getActiveNode,
 } from './prosemirror-utils';
