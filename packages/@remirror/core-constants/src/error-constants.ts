@@ -64,11 +64,10 @@ export enum ErrorConstant {
   INVALID_MANAGER_ARGUMENTS = 'RMR0011',
 
   /**
-   * The `commands` or `dispatch` method which is passed into the `create*`
-   * method should only be called within returned method since it relies on an
-   * active view (not present in the outer scope).
+   * There is a problem with the schema or you are trying to access a node /
+   * mark that doesn't exists.
    */
-  COMMANDS_CALLED_IN_OUTER_SCOPE = 'RMR0012',
+  SCHEMA = 'RMR0012',
 
   /**
    * The `helpers` method which is passed into the ``create*` method should only

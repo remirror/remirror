@@ -306,13 +306,17 @@ export interface GetMarkRange extends FromToParameter {
  *
  * @param $pos - the resolved ProseMirror position
  * @param type - the mark type
+ * @param $end - the end position to search until. When this is provided the
+ * mark will be checked for all point up until the `$end`. The first mark within
+ * the range will be returned.
+ *
+ * To find all marks within a selection use [[`getMarkRanges`]].
  */
-export function getMarkRange($pos: ResolvedPos, type: MarkType): GetMarkRange | undefined {
-  // Nothing can be done if neither the position or the type have been provided.
-  if (!$pos || !type) {
-    return;
-  }
-
+export function getMarkRange(
+  $pos: ResolvedPos,
+  type: string | MarkType,
+  $end?: ResolvedPos,
+): GetMarkRange | undefined {
   // Get the start position of the current node that the `$pos` value was
   // calculated for.
   const start = $pos.parent.childAfter($pos.parentOffset);
@@ -323,18 +327,24 @@ export function getMarkRange($pos: ResolvedPos, type: MarkType): GetMarkRange | 
     return;
   }
 
-  // Find the mark if it exists.
-  const mark = start.node.marks.find(({ type: markType }) => markType === type);
+  const typeName = isString(type) ? type : type.name;
 
-  // If the mark wasn't found then no range can be calculated. Exit early.
-  if (!mark) {
-    return;
-  }
+  // Find the mark if it exists.
+  const mark = start.node.marks.find(({ type: markType }) => markType.name === typeName);
 
   let startIndex = $pos.index();
   let startPos = $pos.start() + start.offset;
   let endIndex = startIndex + 1;
   let endPos = startPos + start.node.nodeSize;
+
+  // If the mark wasn't found then no range can be calculated. Exit early.
+  if (!mark) {
+    if ($end && endPos < $end.pos) {
+      return getMarkRange($pos.doc.resolve(endPos + 1), type, $end);
+    }
+
+    return;
+  }
 
   while (startIndex > 0 && mark.isInSet($pos.parent.child(startIndex - 1).marks)) {
     startIndex -= 1;
@@ -349,6 +359,32 @@ export function getMarkRange($pos: ResolvedPos, type: MarkType): GetMarkRange | 
   const text = $pos.doc.textBetween(startPos, endPos, LEAF_NODE_REPLACING_CHARACTER, '\n\n');
 
   return { from: startPos, to: endPos, text, mark };
+}
+
+/**
+ * Get all the ranges which contain marks for the provided selection.
+ */
+export function getMarkRanges(selection: Selection, type: string | MarkType): GetMarkRange[] {
+  const markRanges: GetMarkRange[] = [];
+  const { $from, $to } = selection;
+  let $pos = $from;
+
+  while (true) {
+    const range = getMarkRange($pos, type, $to);
+
+    if (!range) {
+      return markRanges;
+    }
+
+    markRanges.push(range);
+
+    if (range.to < $to.pos) {
+      $pos = $from.doc.resolve(range.to + 1);
+      continue;
+    }
+
+    return markRanges;
+  }
 }
 
 /**

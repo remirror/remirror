@@ -816,7 +816,7 @@ importers:
     dependencies:
       '@babel/runtime': 7.12.5
       linaria: 2.0.2
-      y-prosemirror: 0.3.7_yjs@13.4.4
+      y-prosemirror: 1.0.5_yjs@13.4.4
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
@@ -827,7 +827,7 @@ importers:
       '@remirror/core': 1.0.0-next.59
       '@remirror/pm': 1.0.0-next.59
       linaria: ^2.0.0
-      y-prosemirror: ^0.3.7
+      y-prosemirror: ^1.0.5
       y-webrtc: ^10.1.6
       yjs: ^13.4.1
   packages/@remirror/i18n:
@@ -27511,12 +27511,9 @@ packages:
       node: '>=0.4'
     resolution:
       integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==
-  /y-prosemirror/0.3.7_yjs@13.4.4:
+  /y-prosemirror/1.0.5_yjs@13.4.4:
     dependencies:
-      '@rollup/plugin-commonjs': 15.1.0_rollup@2.33.3
-      '@rollup/plugin-node-resolve': 9.0.0_rollup@2.33.3
       lib0: 0.2.34
-      rollup: 2.33.3
       yjs: 13.4.4
     dev: false
     peerDependencies:
@@ -27526,7 +27523,7 @@ packages:
       y-protocols: ^1.0.1
       yjs: ^13.3.2
     resolution:
-      integrity: sha512-9jj+BU5T608AjER3uwXkbYKhms6hLNivJDU6/CUAafaM4A1qrDE6blAPe4WOL8f1/oMQ7ZdcXMZpIsoemFHXzg==
+      integrity: sha512-m9XzX4BE9Ois3RBImpWUuUUTDVGgkt3XKxCZXrO86VwwzFtDS4OD25GI/DD79Iqr/B+dgyleqqheZsZB0p0CKQ==
   /y-protocols/1.0.1:
     dependencies:
       lib0: 0.2.34

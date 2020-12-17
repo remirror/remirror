@@ -87,9 +87,9 @@ Invalid value passed into `Manager constructor`. Only `Presets` and `Extensions`
 
 ### RMR0012
 
-> Commands Called In Outer Scope
+> Schema
 
-The `commands` or `dispatch` method which is passed into the `create*` method should only be called within returned method since it relies on an active view (not present in the outer scope).
+There is a problem with the schema or you are trying to access a node / mark that doesn't exists.
 
 ### RMR0013
 
