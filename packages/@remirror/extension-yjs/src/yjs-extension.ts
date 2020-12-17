@@ -4,7 +4,6 @@ import {
   redo,
   undo,
   yCursorPlugin,
-  YSyncOpts,
   ySyncPlugin,
   yUndoPlugin,
   yUndoPluginKey,
@@ -31,6 +30,17 @@ import {
   Selection,
   Shape,
 } from '@remirror/core';
+
+export interface ColorDef {
+  light: string;
+  dark: string;
+}
+
+export interface YSyncOpts {
+  colors?: ColorDef[];
+  colorMapping?: Map<string, ColorDef>;
+  permanentUserData?: any | null;
+}
 
 /**
  * yjs typings are very rough; so we define here the interface that we require
