@@ -1,16 +1,16 @@
+import { ErrorConstant } from '@remirror/core-constants';
 import {
-  bool,
   entries,
   invariant,
   isArray,
   isEmptyArray,
   isEmptyObject,
   isNullOrUndefined,
+  isString,
   object,
 } from '@remirror/core-helpers';
 import type {
   AnyFunction,
-  AttributesParameter,
   EditorSchema,
   EditorState,
   EditorView,
@@ -18,12 +18,12 @@ import type {
   KeyBindingCommandFunction,
   KeyBindings,
   MarkTypesParameter,
-  NodeTypeParameter,
   NodeTypesParameter,
   OptionalMarkParameter,
   OptionalProsemirrorNodeParameter,
   PosParameter,
   PredicateParameter,
+  ProsemirrorAttributes,
   ProsemirrorCommandFunction,
   ProsemirrorKeyBindings,
   ProsemirrorNode,
@@ -524,13 +524,6 @@ export function hasTransactionChanged(tr: Transaction): boolean {
   return tr.docChanged || tr.selectionSet;
 }
 
-interface IsNodeActiveParameter extends NodeTypeParameter, Partial<AttributesParameter> {
-  /**
-   * State or transaction parameter.
-   */
-  state: EditorState | Transaction;
-}
-
 /**
  * Checks whether the node type passed in is active within the region. Used by
  * extensions to implement the `active` method.
@@ -539,20 +532,47 @@ interface IsNodeActiveParameter extends NodeTypeParameter, Partial<AttributesPar
  *
  * @param params - the destructured node active parameters
  */
-export function isNodeActive(parameter: IsNodeActiveParameter): boolean {
-  const { state, type, attrs = {} } = parameter;
+export function isNodeActive(parameter: GetActiveAttrsParameter): boolean {
+  return !!getActiveNode(parameter);
+}
 
+interface GetActiveAttrsParameter {
+  /**
+   * The attributes to check for.
+   */
+  attrs?: ProsemirrorAttributes;
+
+  /**
+   * State or transaction parameter.
+   */
+  state: EditorState | Transaction;
+
+  /** */
+  type: NodeType | string;
+}
+
+/**
+ * Get node of a provided type with the provided attributes if it exists as a
+ * parent. Returns positional data for the node that was found.
+ */
+export function getActiveNode(
+  parameter: GetActiveAttrsParameter,
+): FindProsemirrorNodeResult | undefined {
+  const { state, type, attrs } = parameter;
   const { selection } = state;
-  const predicate = (node: ProsemirrorNode) => node.type === type;
+  const nodeType = isString(type) ? state.doc.type.schema.nodes[type] : type;
 
-  const parent =
-    findSelectedNodeOfType({ selection, types: type }) ?? findParentNode({ predicate, selection });
+  invariant(nodeType, { code: ErrorConstant.SCHEMA, message: `No node exists for ${type}` });
 
-  if (!attrs || isEmptyObject(attrs) || !parent) {
-    return bool(parent);
+  const active =
+    findSelectedNodeOfType({ selection, types: type }) ??
+    findParentNode({ predicate: (node: ProsemirrorNode) => node.type === nodeType, selection });
+
+  if (!attrs || isEmptyObject(attrs) || !active) {
+    return active;
   }
 
-  return parent.node.hasMarkup(type, { ...parent.node.attrs, ...attrs });
+  return active.node.hasMarkup(nodeType, { ...active.node.attrs, ...attrs }) ? active : undefined;
 }
 
 /**
