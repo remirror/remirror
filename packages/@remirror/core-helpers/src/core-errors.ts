@@ -35,8 +35,8 @@ if (process.env.NODE_ENV !== 'production') {
       'You requested an invalid extension from the preset. Please check the `createExtensions` return method is returning an extension with the requested constructor.',
     [ErrorConstant.INVALID_MANAGER_ARGUMENTS]:
       'Invalid value(s) passed into `Manager` constructor. Only `Presets` and `Extensions` are supported.',
-    [ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE]:
-      'The `commands` or `dispatch` method which is passed into the `create*` method should only be called within returned method since it relies on an active view (not present in the outer scope).',
+    [ErrorConstant.SCHEMA]:
+      "There is a problem with the schema or you are trying to access a node / mark that doesn't exists.",
     [ErrorConstant.HELPERS_CALLED_IN_OUTER_SCOPE]:
       'The `helpers` method which is passed into the ``create*` method should only be called within returned method since it relies on an active view (not present in the outer scope).',
     [ErrorConstant.INVALID_MANAGER_EXTENSION]:
