@@ -1,5 +1,5 @@
 ---
-"@remirror/extension-image": patch
+'@remirror/extension-image': patch
 ---
 
 Fix regexp for image filetype check
