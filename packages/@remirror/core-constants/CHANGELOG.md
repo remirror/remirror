@@ -1,5 +1,13 @@
 # @remirror/core-constants
 
+## 1.0.0-next.60
+
+> 2020-12-17
+
+### Major Changes
+
+- [`4504aadb`](https://github.com/remirror/remirror/commit/4504aadb09be7d632ea8c5861755f31b150781d0) [#830](https://github.com/remirror/remirror/pull/830) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Rename deprecated error constant from `COMMANDS_CALLED_IN_OUTER_SCOPE` to `SCHEMA`.
+
 ## 1.0.0-next.59
 
 > 2020-12-12

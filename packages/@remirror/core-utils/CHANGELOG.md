@@ -1,5 +1,25 @@
 # @remirror/core-utils
 
+## 1.0.0-next.60
+
+> 2020-12-17
+
+### Minor Changes
+
+- [`4504aadb`](https://github.com/remirror/remirror/commit/4504aadb09be7d632ea8c5861755f31b150781d0) [#830](https://github.com/remirror/remirror/pull/830) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add `getActiveNode` function which returns the information for an active node of the provided type.
+
+* [`4504aadb`](https://github.com/remirror/remirror/commit/4504aadb09be7d632ea8c5861755f31b150781d0) [#830](https://github.com/remirror/remirror/pull/830) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add `getMarkRanges` which supports retrieving all the mark ranges from within the provided selection.
+
+### Patch Changes
+
+- [`4504aadb`](https://github.com/remirror/remirror/commit/4504aadb09be7d632ea8c5861755f31b150781d0) [#830](https://github.com/remirror/remirror/pull/830) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Preserve attributes when toggling a block node. This allows for better support when using `extraAttributes` and fixes [#819](https://github.com/remirror/remirror/issues/819).
+
+- Updated dependencies [[`4504aadb`](https://github.com/remirror/remirror/commit/4504aadb09be7d632ea8c5861755f31b150781d0)]:
+  - @remirror/core-constants@1.0.0-next.60
+  - @remirror/core-helpers@1.0.0-next.60
+  - @remirror/core-types@1.0.0-next.60
+  - @remirror/pm@1.0.0-next.60
+
 ## 1.0.0-next.59
 
 > 2020-12-12

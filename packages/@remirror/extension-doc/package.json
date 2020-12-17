@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-doc",
-  "version": "1.0.0-next.59",
+  "version": "1.0.0-next.60",
   "description": "The root of your text-editor. One doc to rule them all.",
   "keywords": [
     "remirror",
@@ -30,12 +30,12 @@
     "@babel/runtime": "^7.12.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.59",
-    "@remirror/pm": "1.0.0-next.59"
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.59",
-    "@remirror/pm": "1.0.0-next.59"
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
   },
   "publishConfig": {
     "access": "public"

@@ -1,5 +1,17 @@
 # @remirror/extension-horizontal-rule
 
+## 1.0.0-next.60
+
+> 2020-12-17
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.60
+  - @remirror/pm@1.0.0-next.60
+
 ## 1.0.0-next.59
 
 > 2020-12-12
