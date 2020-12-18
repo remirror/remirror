@@ -1,5 +1,17 @@
 # @remirror/extension-yjs
 
+## 1.0.0-next.60
+
+> 2020-12-17
+
+### Patch Changes
+
+- [`34a7981d`](https://github.com/remirror/remirror/commit/34a7981de827e9d804a0fb5e1304ddf5a8ae4505) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Includes fixes for scrolling while remote clients are editing and incorrect remote selections
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.60
+  - @remirror/pm@1.0.0-next.60
+
 ## 1.0.0-next.59
 
 > 2020-12-12

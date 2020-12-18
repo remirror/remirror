@@ -1,5 +1,25 @@
 # @remirror/react-wysiwyg
 
+## 1.0.0-next.60
+
+> 2020-12-17
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.60
+  - @remirror/extension-auto-link@1.0.0-next.60
+  - @remirror/i18n@1.0.0-next.60
+  - @remirror/pm@1.0.0-next.60
+  - @remirror/preset-social@1.0.0-next.60
+  - @remirror/preset-wysiwyg@1.0.0-next.60
+  - @remirror/react@1.0.0-next.60
+  - @remirror/react-utils@1.0.0-next.60
+  - @remirror/theme@1.0.0-next.60
+  - multishift@1.0.0-next.60
+
 ## 1.0.0-next.59
 
 > 2020-12-12

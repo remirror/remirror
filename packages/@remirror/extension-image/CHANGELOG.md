@@ -1,5 +1,17 @@
 # @remirror/extension-image
 
+## 1.0.0-next.60
+
+> 2020-12-17
+
+### Patch Changes
+
+- [`302bdf7e`](https://github.com/remirror/remirror/commit/302bdf7e92c5df562d0402b83da9d7b7240aa2f6) [#829](https://github.com/remirror/remirror/pull/829) Thanks [@benjie](https://github.com/benjie)! - Fix regexp for image filetype check
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.60
+  - @remirror/pm@1.0.0-next.60
+
 ## 1.0.0-next.59
 
 > 2020-12-12
