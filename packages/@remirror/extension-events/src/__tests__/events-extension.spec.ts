@@ -1,5 +1,7 @@
 import { fireEvent } from '@testing-library/dom';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
+import { BoldExtension } from 'remirror/extension/bold';
+import { HardBreakExtension } from 'remirror/extension/hard-break';
 
 import { EventsExtension } from '..';
 
@@ -86,4 +88,14 @@ describe('events', () => {
       editor.view.someProp('handleClickOn', (fn) => fn(view, 2, node, 1, {}, true)),
     ).not.toThrow();
   });
+});
+
+test.only('dom stuff', () => {
+  const editor = renderEditor([new BoldExtension(), new HardBreakExtension()]);
+  const { doc, p, hardBreak: br } = editor.nodes;
+  const { bold } = editor.marks;
+
+  editor.add(doc(p('1', bold('b'), br())));
+
+  console.log(editor.view.nodeDOM(5));
 });
