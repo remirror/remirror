@@ -35,6 +35,7 @@ const Popup: FC = () => {
         position: 'absolute',
         border: '1px solid black',
         whiteSpace: 'pre-line',
+        background: 'white',
       }}
       ref={positioner.ref}
     >
@@ -44,7 +45,9 @@ const Popup: FC = () => {
 };
 
 const SmallEditor: FC = () => {
-  const { getRootProps, setContent, commands } = useRemirror();
+  const { getRootProps, setContent, commands, helpers } = useRemirror({
+    autoUpdate: true,
+  });
 
   useEffect(() => {
     setContent({
@@ -84,6 +87,8 @@ const SmallEditor: FC = () => {
     <div>
       <div {...getRootProps()} />
       <Popup />
+      <div>Annotations:</div>
+      <pre>{JSON.stringify(helpers.getAnnotations(), null, '  ')}</pre>
     </div>
   );
 };
