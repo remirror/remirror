@@ -1,18 +1,15 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "allowJs": true
+    "checkJs": false,
+    "allowJs": false
   },
-  "include": [
-    "./patches.d.ts",
-    "**/*.{md,mdx}/",
-    "../**/*.ts",
-    "../**/*.tsx",
-    "../**/*.js",
-    "../*.js",
-    "../.eslintrc.js",
-    "../**/.eslintrc.js",
-    "../**/.babelrc.js"
-  ],
-  "exclude": ["../**/dist/", "../**/public/", "../**/.cache/", "../**/.linaria-cache/"]
+  "include": ["../**/*.ts", "../**/*.tsx", "../**/*.js"],
+  "exclude": [
+    "../**/dist/",
+    "../**/public/",
+    "../**/.cache/",
+    "../**/.linaria-cache/",
+    "../**/node_modules/**"
+  ]
 }

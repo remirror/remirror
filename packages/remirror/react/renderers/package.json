@@ -1,9 +1,0 @@
-{
-  "main": "dist/remirror.cjs.js",
-  "module": "dist/remirror.esm.js",
-  "browser": {},
-  "types": "dist/remirror.cjs.d.ts",
-  "preconstruct": {
-    "source": "../../src/react/renderers"
-  }
-}

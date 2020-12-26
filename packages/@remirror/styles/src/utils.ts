@@ -5,7 +5,7 @@
  *
  * ```ts
  * import { createDomManager, createDomEditor } from 'remirror/dom';
- * import { BoldExtension } from 'remirror/extension/bold';
+ * import { BoldExtension } from 'remirror/extensions';
  * import { addStylesToElement, allStyles } from 'remirror/styles/dom';
  *
  * const manager = createDomManager(() => [new BoldExtension()]);

@@ -29,7 +29,7 @@ const allTestRegex = getRegex();
 const servers = (exports.servers = {
   next: {
     server: {
-      command: 'cd ../examples/with-next && pnpm dev -- -p 3030',
+      command: 'cd ../../examples/with-next && pnpm dev -- -p 3030',
       port: 3030,
       usedPortAction: 'kill',
       launchTimeout: 120000,

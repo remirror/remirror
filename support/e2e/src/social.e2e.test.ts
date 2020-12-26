@@ -290,7 +290,7 @@ describe('Social Showcase', () => {
     });
   });
 
-  describe('Combined', () => {
+  describe('Combined Emoji, Mentions and AutoLinks', () => {
     it('should combine mentions emoji and links', async () => {
       await $editor.type('#awesome hello @ab 😀 google.com', { delay: 10 });
       await press({ key: 'Enter' });

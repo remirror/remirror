@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Manager output 1`] = `
-"This occurs when accessing a method or property before it is available.
-
-Access to the manager context is only possible after the framework has been attached.
-
-For more information visit https://remirror.io/docs/errors#rmr0008"
-`;

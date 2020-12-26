@@ -13,18 +13,30 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-bidi.cjs.js",
-  "module": "dist/extension-bidi.esm.js",
-  "browser": {
-    "./dist/extension-bidi.cjs.js": "./dist/extension-bidi.browser.cjs.js",
-    "./dist/extension-bidi.esm.js": "./dist/extension-bidi.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-bidi.esm.js",
+      "require": "./dist/remirror-extension-bidi.cjs.js",
+      "browser": "./dist/remirror-extension-bidi.browser.esm.js",
+      "types": "./dist/remirror-extension-bidi.cjs.d.ts",
+      "default": "./dist/remirror-extension-bidi.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-bidi.cjs.d.ts",
+  "main": "dist/remirror-extension-bidi.cjs.js",
+  "module": "dist/remirror-extension-bidi.esm.js",
+  "browser": {
+    "./dist/remirror-extension-bidi.cjs.js": "./dist/remirror-extension-bidi.browser.cjs.js",
+    "./dist/remirror-extension-bidi.esm.js": "./dist/remirror-extension-bidi.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-bidi.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0",
     "@types/direction": "^1.0.0",
     "direction": "^1.0.4"
   },

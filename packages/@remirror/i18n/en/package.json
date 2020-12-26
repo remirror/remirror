@@ -1,12 +1,9 @@
 {
-  "main": "dist/i18n.cjs.js",
-  "module": "dist/i18n.esm.js",
+  "main": "dist/remirror-i18n-en.cjs.js",
+  "module": "dist/remirror-i18n-en.esm.js",
   "browser": {
-    "./dist/i18n.cjs.js": "./dist/i18n.browser.cjs.js",
-    "./dist/i18n.esm.js": "./dist/i18n.browser.esm.js"
+    "./dist/remirror-i18n-en.cjs.js": "./dist/remirror-i18n-en.browser.cjs.js",
+    "./dist/remirror-i18n-en.esm.js": "./dist/remirror-i18n-en.browser.esm.js"
   },
-  "types": "dist/i18n.cjs.d.ts",
-  "preconstruct": {
-    "source": "../src/en"
-  }
+  "types": "dist/remirror-i18n-en.cjs.d.ts"
 }

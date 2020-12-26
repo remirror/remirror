@@ -13,19 +13,31 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-blockquote.cjs.js",
-  "module": "dist/extension-blockquote.esm.js",
-  "browser": {
-    "./dist/extension-blockquote.cjs.js": "./dist/extension-blockquote.browser.cjs.js",
-    "./dist/extension-blockquote.esm.js": "./dist/extension-blockquote.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-blockquote.esm.js",
+      "require": "./dist/remirror-extension-blockquote.cjs.js",
+      "browser": "./dist/remirror-extension-blockquote.browser.esm.js",
+      "types": "./dist/remirror-extension-blockquote.cjs.d.ts",
+      "default": "./dist/remirror-extension-blockquote.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-blockquote.cjs.d.ts",
+  "main": "dist/remirror-extension-blockquote.cjs.js",
+  "module": "dist/remirror-extension-blockquote.esm.js",
+  "browser": {
+    "./dist/remirror-extension-blockquote.cjs.js": "./dist/remirror-extension-blockquote.browser.cjs.js",
+    "./dist/remirror-extension-blockquote.esm.js": "./dist/remirror-extension-blockquote.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-blockquote.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
-    "linaria": "^2.0.0"
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0",
+    "@remirror/theme": "1.0.0-next.60"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",

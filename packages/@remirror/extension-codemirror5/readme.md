@@ -32,18 +32,22 @@ npm install codemirror @types/codemirror
 
 The following code sample will create a limited editor and run the available commands from this extension.
 
+In order to support codemirror the extension requires you to provide an instance of the CodeMirror import. This is necessary because by default CodeMirror interacts with the DOM and will cause errors when running in node.
+
 ```ts
+import 'codemirror/mode/meta'; // This must be imported.
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/yaml/yaml';
 
+import CodeMirror from 'codemirror';
 import { RemirrorManager } from 'remirror/core';
 import { CorePreset } from 'remirror/preset/core';
 
 import { CodeMirrorExtension } from '@remirror/extension-codemirror5';
 
-// Create the codeMirror extension
-const codeMirrorExtension = new CodeMirrorExtension();
+// Create the codeMirror extension with an instance of the codemirror import.
+const codeMirrorExtension = new CodeMirrorExtension({ CodeMirror });
 const corePreset = new CorePreset();
 
 // Create the Editor Manager with the codeMirror extension passed through.
@@ -64,4 +68,12 @@ manager.store.commands.createCodeMirror({ language: 'yaml' });
 manager.store.chain
   .updateCodeBlock({ language: 'js', codeMirrorConfig: { lineNumbers: true } })
   .run();
+```
+
+There is an async version of codemirror available .
+
+```ts
+import { loadCodeMirror } from '@remirror/extension-codemirror5';
+
+await loadCodeMirror();
 ```

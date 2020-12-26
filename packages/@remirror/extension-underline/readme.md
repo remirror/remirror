@@ -7,8 +7,8 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-underline/next
 [npm]: https://npmjs.com/package/@remirror/extension-underline/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/extension-underline@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-underline@next
+[size]: https://bundlephobia.com/result?p=@remirror/extension-underline
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-underline
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-underline/red?icon=npm
 
@@ -16,23 +16,23 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-underline@next @remirror/pm@next
+yarn add @remirror/extension-underline @remirror/pm
 
 # pnpm
-pnpm add @remirror/extension-underline@next @remirror/pm@next
+pnpm add @remirror/extension-underline @remirror/pm
 
 # npm
-npm install @remirror/extension-underline@next @remirror/pm@next
+npm install @remirror/extension-underline @remirror/pm
 ```
 
-This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/underline`.
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.
 
 ## Usage
 
 The following code creates an instance of this extension.
 
 ```ts
-import { UnderlineExtension } from 'remirror/extension/underline';
+import { UnderlineExtension } from 'remirror/extensions';
 
 const extension = new UnderlineExtension();
 ```

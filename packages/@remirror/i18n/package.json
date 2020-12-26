@@ -13,21 +13,47 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/i18n.cjs.js",
-  "module": "dist/i18n.esm.js",
-  "browser": {
-    "./dist/i18n.cjs.js": "./dist/i18n.browser.cjs.js",
-    "./dist/i18n.esm.js": "./dist/i18n.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-i18n.esm.js",
+      "require": "./dist/remirror-i18n.cjs.js",
+      "browser": "./dist/remirror-i18n.browser.esm.js",
+      "types": "./dist/remirror-i18n.cjs.d.ts",
+      "default": "./dist/remirror-i18n.esm.js"
+    },
+    "./en": {
+      "import": "./en/dist/remirror-i18n-en.esm.js",
+      "require": "./en/dist/remirror-i18n-en.cjs.js",
+      "browser": "./en/dist/remirror-i18n.browser.esm.js",
+      "types": "./en/dist/remirror-i18n-en.cjs.d.ts",
+      "default": "./en/dist/remirror-i18n-en.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./plurals": {
+      "import": "./plurals/dist/remirror-i18n-plurals.esm.js",
+      "require": "./plurals/dist/remirror-i18n-plurals.cjs.js",
+      "browser": "./plurals/dist/remirror-i18n.browser.esm.js",
+      "types": "./plurals/dist/remirror-i18n-plurals.cjs.d.ts",
+      "default": "./plurals/dist/remirror-i18n-plurals.esm.js"
+    },
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/i18n.cjs.d.ts",
+  "main": "dist/remirror-i18n.cjs.js",
+  "module": "dist/remirror-i18n.esm.js",
+  "browser": {
+    "./dist/remirror-i18n.cjs.js": "./dist/remirror-i18n.browser.cjs.js",
+    "./dist/remirror-i18n.esm.js": "./dist/remirror-i18n.browser.esm.js"
+  },
+  "types": "dist/remirror-i18n.cjs.d.ts",
   "files": [
     "dist",
     "plurals",
     "en"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
-    "@lingui/core": "^3.0.3",
+    "@babel/runtime": "^7.12.5",
+    "@lingui/core": "^3.3.0",
+    "@lingui/detect-locale": "^3.3.0",
     "@remirror/core-helpers": "1.0.0-next.60",
     "make-plural": "^6.2.1"
   },
@@ -45,9 +71,9 @@
   },
   "preconstruct": {
     "entrypoints": [
-      ".",
-      "plurals",
-      "en"
+      "index.ts",
+      "plurals.ts",
+      "en/index.ts"
     ]
   }
 }

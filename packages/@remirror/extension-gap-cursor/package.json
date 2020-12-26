@@ -13,19 +13,31 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-gap-cursor.cjs.js",
-  "module": "dist/extension-gap-cursor.esm.js",
-  "browser": {
-    "./dist/extension-gap-cursor.cjs.js": "./dist/extension-gap-cursor.browser.cjs.js",
-    "./dist/extension-gap-cursor.esm.js": "./dist/extension-gap-cursor.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-gap-cursor.esm.js",
+      "require": "./dist/remirror-extension-gap-cursor.cjs.js",
+      "browser": "./dist/remirror-extension-gap-cursor.browser.esm.js",
+      "types": "./dist/remirror-extension-gap-cursor.cjs.d.ts",
+      "default": "./dist/remirror-extension-gap-cursor.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-gap-cursor.cjs.d.ts",
+  "main": "dist/remirror-extension-gap-cursor.cjs.js",
+  "module": "dist/remirror-extension-gap-cursor.esm.js",
+  "browser": {
+    "./dist/remirror-extension-gap-cursor.cjs.js": "./dist/remirror-extension-gap-cursor.browser.cjs.js",
+    "./dist/remirror-extension-gap-cursor.esm.js": "./dist/remirror-extension-gap-cursor.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-gap-cursor.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
-    "linaria": "^2.0.0"
+    "@babel/runtime": "^7.12.5",
+    "@linaria/core": "^3.0.0-beta.1",
+    "@remirror/messages": "0.0.0"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",

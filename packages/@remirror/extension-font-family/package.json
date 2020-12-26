@@ -1,0 +1,55 @@
+{
+  "name": "@remirror/extension-font-family",
+  "version": "0.0.0",
+  "description": "Add a font family to selected text, or text within the provided range.",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-font-family",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-font-family",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-font-family.esm.js",
+      "require": "./dist/remirror-extension-font-family.cjs.js",
+      "browser": "./dist/remirror-extension-font-family.browser.esm.js",
+      "types": "./dist/remirror-extension-font-family.cjs.d.ts",
+      "default": "./dist/remirror-extension-font-family.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-font-family.cjs.js",
+  "module": "dist/remirror-extension-font-family.esm.js",
+  "browser": {
+    "./dist/remirror-extension-font-family.cjs.js": "./dist/remirror-extension-font-family.browser.cjs.js",
+    "./dist/remirror-extension-font-family.esm.js": "./dist/remirror-extension-font-family.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-font-family.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "peerDependencies": {
+    "@remirror/core": "^1.0.0-next.60",
+    "@remirror/pm": "^1.0.0-next.60"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "5 KB"
+  }
+}

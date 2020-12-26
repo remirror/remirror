@@ -10,8 +10,7 @@
     ],
     "declarationMap": false,
     "declaration": false,
-    "noEmit": true,
-    "skipLibCheck": true // TODO jest-playwright-preset has a broken type
+    "noEmit": true
   },
   "include": ["./", "patches.d.ts"]
 }

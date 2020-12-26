@@ -1,6 +1,5 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-
-import { HeadingExtension } from '@remirror/testing';
+import { HeadingExtension } from 'remirror/extensions';
 
 import { BidiExtension } from '..';
 

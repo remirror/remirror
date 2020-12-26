@@ -1,11 +1,23 @@
+import { useMemo, useRef } from 'react';
+
+import { isBoolean, MakeOptional, uniqueId } from '@remirror/core';
 import {
-  emptyCoords,
-  emptyVirtualPosition,
+  CallbackPositioner,
+  defaultAbsolutePosition,
   Positioner,
+  PositionerParam,
+  positioners,
   StringPositioner,
 } from '@remirror/extension-positioner';
 
-import { useMultiPositioner, UsePositionerReturn } from './use-multi-positioner';
+import { useMultiPositioner, UseMultiPositionerReturn } from './use-multi-positioner';
+
+interface UsePositionerReturn extends MakeOptional<UseMultiPositionerReturn, 'ref'> {
+  /**
+   * When `true`, the position is active and the positioner will be displayed.
+   */
+  active: boolean;
+}
 
 /**
  * A hook for creating a positioner with the `PositionerExtension`. When an
@@ -14,6 +26,8 @@ import { useMultiPositioner, UsePositionerReturn } from './use-multi-positioner'
  *
  * @param isActive - Set this to a boolean to override whether the positioner is
  * active. `true` leaves the behaviour unchanged.
+ *
+ * In a recent update, the positioner is now automatically memoized for you.
  *
  *
  * @remarks
@@ -34,21 +48,41 @@ import { useMultiPositioner, UsePositionerReturn } from './use-multi-positioner'
  * }
  *
  * const Wrapper = () => (
- *   <RemirrorProvider extensions={[]}>
+ *   <Remirror extensions={[]}>
  *     <MenuComponent />
- *   </RemirrorProvider>
+ *   </Remirror>
  * )
  * ```
+ *
+ * @param positioner - the positioner to use which can be a string or a
+ * `Positioner` instance.
+ * @param activeOrDeps - the dependency array which will cause the positioner to
+ * be updated when changed or a boolean value when the positioner is a string
+ * which can be used to override whether the positioner is active.
  */
 export function usePositioner(
-  positioner: Positioner | StringPositioner,
-  isActive = true,
+  positioner: StringPositioner,
+  isActive?: boolean,
+): UsePositionerReturn;
+export function usePositioner(
+  positioner: Positioner | CallbackPositioner,
+  deps: unknown[],
+): UsePositionerReturn;
+export function usePositioner(
+  positioner: PositionerParam,
+  activeOrDeps?: unknown[] | boolean,
 ): UsePositionerReturn {
-  const positions = useMultiPositioner(positioner);
+  const deps = activeOrDeps == null || isBoolean(activeOrDeps) ? [] : activeOrDeps;
+  const isActive = isBoolean(activeOrDeps) ? activeOrDeps : true;
+  const key = useRef(uniqueId());
+  const positions = useMultiPositioner(positioner, deps);
+  const position = positions[0];
 
-  if (positions.length > 0 && isActive) {
-    return { ...positions[0], active: true };
-  }
+  return useMemo(() => {
+    if (position && isActive) {
+      return { ...position, active: true };
+    }
 
-  return { ...emptyVirtualPosition, ...emptyCoords, active: false };
+    return { ...defaultAbsolutePosition, active: false, key: key.current };
+  }, [isActive, position]);
 }

@@ -1,23 +1,16 @@
 import type { ValueOf } from 'type-fest';
 
-import { isEmptyObject, noop, pick } from '@remirror/core-helpers';
+import { pick } from '@remirror/core-helpers';
 import type { GetStaticAndDynamic } from '@remirror/core-types';
 
-import { presetDecorator } from '../decorators';
-import type { AddCustomHandler } from '../extension/base-class';
-import { Preset } from '../preset';
-import type { OnSetOptionsParameter } from '../types';
 import { AttributesExtension } from './attributes-extension';
 import { CommandsExtension } from './commands-extension';
+import { DecorationsExtension, DecorationsOptions } from './decorations-extension';
 import { HelpersExtension } from './helpers-extension';
 import { InputRulesExtension, InputRulesOptions } from './input-rules-extension';
 import { KeymapExtension, KeymapOptions } from './keymap-extension';
 import { NodeViewsExtension } from './node-views-extension';
 import { PasteRulesExtension } from './paste-rules-extension';
-import {
-  PersistentSelectionExtension,
-  PersistentSelectionOptions,
-} from './persistent-selection-extension';
 import { PluginsExtension } from './plugins-extension';
 import { SchemaExtension } from './schema-extension';
 import { SuggestExtension, SuggestOptions } from './suggest-extension';
@@ -26,7 +19,7 @@ import { TagsExtension } from './tags-extension';
 export interface BuiltinOptions
   extends SuggestOptions,
     KeymapOptions,
-    PersistentSelectionOptions,
+    DecorationsOptions,
     InputRulesOptions {}
 
 /**
@@ -40,90 +33,64 @@ export interface BuiltinOptions
  * here](https://github.com/remirror/remirror/discussions/category_choices) and
  * it can be addressed.
  *
- * @builtin
+ * @category Builtin Extension
+ *
+ * The order of these extension are important.
+ *
+ * - [[`TagsExtension`]] is places first because it provides tagging which is
+ *   used by the schema extension.
+ * - [[`SchemeExtension`]] goes next because it's super important to the editor
+ *   functionality and needs to run before everything else which might depend
+ *   on it.
  */
-@presetDecorator<BuiltinOptions>({
-  defaultOptions: {
+export function builtinPreset(options: GetStaticAndDynamic<BuiltinOptions> = {}): BuiltinPreset[] {
+  const defaultOptions = {
     exitMarksOnArrowPress: KeymapExtension.defaultOptions.exitMarksOnArrowPress,
     excludeBaseKeymap: KeymapExtension.defaultOptions.excludeBaseKeymap,
     selectParentNodeOnEscape: KeymapExtension.defaultOptions.selectParentNodeOnEscape,
     undoInputRuleOnBackspace: KeymapExtension.defaultOptions.undoInputRuleOnBackspace,
-    persistentSelectionClass: PersistentSelectionExtension.defaultOptions.persistentSelectionClass,
-  },
-  staticKeys: ['persistentSelectionClass'],
-  customHandlerKeys: ['keymap', 'suggester'],
-  handlerKeys: ['shouldSkipInputRule'],
-  handlerKeyOptions: { shouldSkipInputRule: { earlyReturnValue: true } },
-})
-export class BuiltinPreset extends Preset<BuiltinOptions> {
-  get name() {
-    return 'builtin' as const;
-  }
-
-  protected onSetOptions(parameter: OnSetOptionsParameter<BuiltinOptions>): void {
-    const { pickChanged } = parameter;
-    const changedKeymapOptions = pickChanged([
-      'selectParentNodeOnEscape',
-      'excludeBaseKeymap',
-      'undoInputRuleOnBackspace',
-    ]);
-
-    if (!isEmptyObject(changedKeymapOptions)) {
-      this.getExtension(KeymapExtension).setOptions(changedKeymapOptions);
-    }
-  }
-
-  protected onAddCustomHandler: AddCustomHandler<BuiltinOptions> = (handlers) => {
-    const { suggester, keymap } = handlers;
-
-    if (suggester) {
-      return this.getExtension(SuggestExtension).addCustomHandler('suggester', suggester);
-    }
-
-    if (keymap) {
-      return this.getExtension(KeymapExtension).addCustomHandler('keymap', keymap);
-    }
-
-    return noop;
+    persistentSelectionClass: DecorationsExtension.defaultOptions.persistentSelectionClass,
   };
 
-  /**
-   * The order of these extension are important.
-   *
-   * - [[TagsExtension]] is places first because it provides tagging which is
-   *   used by the schema extension.
-   * - [[SchemeExtension]] goes next because it's super important to the editor
-   *   functionality and needs to run before everything else which might depend
-   *   on it.
-   */
-  createExtensions() {
-    const keymapOptions = pick(this.options, [
-      'excludeBaseKeymap',
-      'selectParentNodeOnEscape',
-      'undoInputRuleOnBackspace',
-    ]);
-    const persistentSelectionOptions = pick(this.options, ['persistentSelectionClass']);
-    const inputRulesExtension = new InputRulesExtension();
+  options = { ...defaultOptions, ...options };
 
-    inputRulesExtension.addHandler('shouldSkipInputRule', this.options.shouldSkipInputRule);
+  const keymapOptions = pick(options, [
+    'excludeBaseKeymap',
+    'selectParentNodeOnEscape',
+    'undoInputRuleOnBackspace',
+  ]);
+  const decorationsOptions = pick(options, ['persistentSelectionClass']);
 
-    return [
-      // The order of these extension is important.
-      new TagsExtension(),
-      new SchemaExtension(),
-      new AttributesExtension(),
-      new PluginsExtension(),
-      inputRulesExtension,
-      new PasteRulesExtension(),
-      new NodeViewsExtension(),
-      new SuggestExtension(),
-      new CommandsExtension(),
-      new HelpersExtension(),
-      new KeymapExtension(keymapOptions),
-      new PersistentSelectionExtension(persistentSelectionOptions),
-    ];
-  }
+  return [
+    // The order of these extension is important. First come first served.
+    new TagsExtension(),
+    new SchemaExtension(),
+    new AttributesExtension(),
+    new PluginsExtension(),
+    new InputRulesExtension(),
+    new PasteRulesExtension(),
+    new NodeViewsExtension(),
+    new SuggestExtension(),
+    new CommandsExtension(),
+    new HelpersExtension(),
+    new KeymapExtension(keymapOptions),
+    new DecorationsExtension(decorationsOptions),
+  ];
 }
+
+export type BuiltinPreset =
+  | TagsExtension
+  | SchemaExtension
+  | AttributesExtension
+  | PluginsExtension
+  | InputRulesExtension
+  | PasteRulesExtension
+  | NodeViewsExtension
+  | SuggestExtension
+  | CommandsExtension
+  | HelpersExtension
+  | KeymapExtension
+  | DecorationsExtension;
 
 declare global {
   namespace Remirror {
@@ -134,20 +101,14 @@ declare global {
       builtin?: GetStaticAndDynamic<BuiltinOptions>;
     }
 
-    type Builtin =
-      | TagsExtension
-      | InputRulesExtension
-      | SchemaExtension
-      | AttributesExtension
-      | PluginsExtension
-      | PasteRulesExtension
-      | NodeViewsExtension
-      | SuggestExtension
-      | CommandsExtension
-      | HelpersExtension
-      | KeymapExtension
-      | PersistentSelectionExtension;
+    /**
+     * The builtin preset.
+     */
+    type Builtin = BuiltinPreset;
 
+    /**
+     * The union of every extension available via the remirror codebase.
+     */
     type AllExtensionUnion = ValueOf<AllExtensions>;
   }
 }

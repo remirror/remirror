@@ -1,9 +1,8 @@
 import {
   AnyExtensionConstructor,
-  AnyPresetConstructor,
   BaseExtensionOptions,
   ExtensionConstructorParameter,
-  fromHtml,
+  htmlToProsemirrorNode,
   isEmptyArray,
   isFunction,
   isMarkExtension,
@@ -16,7 +15,6 @@ import {
   omit,
   OptionsOfConstructor,
   pick,
-  PresetConstructorParameter,
 } from '@remirror/core';
 
 import { renderEditor } from './jest-remirror-editor';
@@ -33,7 +31,7 @@ export function extensionValidityTest<Type extends AnyExtensionConstructor>(
       expect(Extension.name.endsWith('Extension')).toBe(true);
 
       const extension = new Extension(options);
-      expect(extension.name).toBe(Extension.instanceName);
+      expect(extension.constructorName).toBe(Extension.name);
 
       expect(() => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -94,7 +92,9 @@ export function extensionValidityTest<Type extends AnyExtensionConstructor>(
         const spec = extension.createNodeSpec(extraAttributes);
         expect(isPlainObject(spec)).toBe(true);
 
-        renderEditor([extension], { props: { stringHandler: fromHtml, initialContent: '' } });
+        renderEditor([extension], {
+          props: { stringHandler: 'html', initialContent: '' },
+        });
         expect(isNodeType(extension.type)).toBe(true);
 
         if (Extension.disableExtraAttributes) {
@@ -116,7 +116,9 @@ export function extensionValidityTest<Type extends AnyExtensionConstructor>(
         const spec = extension.createMarkSpec(extraAttributes);
         expect(isPlainObject(spec)).toBe(true);
 
-        renderEditor([extension], { props: { stringHandler: fromHtml, initialContent: '' } });
+        renderEditor([extension], {
+          props: { stringHandler: htmlToProsemirrorNode, initialContent: '' },
+        });
         expect(isMarkType(extension.type)).toBe(true);
 
         if (Extension.disableExtraAttributes) {
@@ -126,59 +128,5 @@ export function extensionValidityTest<Type extends AnyExtensionConstructor>(
         expect(extraAttributes.defaults).toHaveBeenCalled();
       });
     }
-  });
-}
-
-/**
- * Test that your `Preset` is valid.
- */
-export function presetValidityTest<Type extends AnyPresetConstructor>(
-  Preset: Type,
-  ...[options]: PresetConstructorParameter<OptionsOfConstructor<Type>>
-): void {
-  describe(`\`${Preset.name}\``, () => {
-    it(`has the right properties`, () => {
-      expect(Preset.name.endsWith('Preset')).toBe(true);
-
-      const preset = new Preset(options);
-      expect(preset.name).toBe(Preset.instanceName);
-
-      expect(() => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        preset.name = 'change';
-      }).toThrow();
-    });
-
-    it('can safely set empty options', () => {
-      const preset = new Preset(options);
-      expect(() => preset.setOptions({})).not.toThrow();
-    });
-
-    it('can safely be cloned', () => {
-      const preset = new Preset(options);
-      const keys = [...preset.dynamicKeys, ...Preset.staticKeys];
-      const clonedPreset = preset.clone(options);
-      expect(pick(clonedPreset.options, keys)).toEqual(pick(preset.options, keys));
-    });
-
-    const handlerKeys = Preset.handlerKeys.map((key) => [key]);
-
-    if (!isEmptyArray(handlerKeys)) {
-      it.each(handlerKeys)('has valid handlerKey: %s', (handlerKey) => {
-        const preset = new Preset(options);
-        expect(isFunction(preset.options[handlerKey])).toBe(true);
-      });
-    }
-
-    it('has the correct options', () => {
-      const preset = new Preset(options);
-      const expectedOptions = {
-        ...Preset.defaultOptions,
-        ...options,
-      };
-
-      expect(omit(preset.options, Preset.handlerKeys)).toEqual(expectedOptions);
-    });
   });
 }

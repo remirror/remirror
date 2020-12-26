@@ -1,16 +1,15 @@
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-
 import {
   ApplySchemaAttributes,
-  extensionDecorator,
+  extension,
   ExtensionTag,
-  fromHtml,
+  htmlToProsemirrorNode,
   NodeExtension,
   NodeExtensionSpec,
-  toHtml,
-} from '@remirror/core';
-import { createCoreManager } from '@remirror/testing';
+  prosemirrorNodeToHtml,
+} from 'remirror';
+import { createCoreManager } from 'remirror/extensions';
 
 import { LinkExtension, LinkOptions } from '..';
 
@@ -32,13 +31,13 @@ describe('schema', () => {
   });
 
   it('uses the href', () => {
-    expect(toHtml({ node: p(a('link')), schema })).toBe(
+    expect(prosemirrorNodeToHtml(p(a('link')))).toBe(
       `<p><a href="${href}" rel="noopener noreferrer nofollow">link</a></p>`,
     );
   });
 
   it('can parse content', () => {
-    const node = fromHtml({
+    const node = htmlToProsemirrorNode({
       content: `<p><a href="${href}">link</a></p>`,
       schema,
     });
@@ -92,7 +91,7 @@ describe('schema', () => {
         a: { markType: 'link', href, custom, title },
       });
 
-      const node = fromHtml({
+      const node = htmlToProsemirrorNode({
         content: `<p><a href="${href}" title="${title}" data-custom="${custom}">link</a></p>`,
         schema,
       });
@@ -332,13 +331,13 @@ describe('commands', () => {
       });
 
       it('is not enabled for nodes that are not applicable', () => {
-        @extensionDecorator({ disableExtraAttributes: true })
+        @extension({ disableExtraAttributes: true })
         class NoMarksExtension extends NodeExtension {
           get name() {
             return 'noMarks';
           }
 
-          tags = [ExtensionTag.BlockNode];
+          tags = [ExtensionTag.Block];
 
           createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
             return {

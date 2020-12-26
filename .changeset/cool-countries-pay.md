@@ -28,8 +28,8 @@
 '@remirror/extension-trailing-node': patch
 '@remirror/extension-underline': patch
 '@remirror/extension-yjs': patch
-'@remirror/preset-embed': patch
-'@remirror/preset-list': patch
+'@remirror/extension-embed': patch
+'@remirror/extension-list': patch
 '@remirror/preset-table': patch
 ---
 

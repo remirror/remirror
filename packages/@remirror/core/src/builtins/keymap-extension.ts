@@ -1,14 +1,35 @@
-import { ExtensionPriority, ExtensionTag } from '@remirror/core-constants';
-import { entries, isArray, isEmptyArray, object, sort } from '@remirror/core-helpers';
+import { ExtensionPriority, ExtensionTag, NamedShortcut } from '@remirror/core-constants';
+import {
+  entries,
+  includes,
+  isArray,
+  isEmptyArray,
+  isFunction,
+  isString,
+  isUndefined,
+  object,
+  sort,
+  values,
+} from '@remirror/core-helpers';
 import type {
   CommandFunction,
   CustomHandler,
+  KeyBindingParameter,
   KeyBindings,
   ProsemirrorPlugin,
   Selection,
+  Shape,
   Transaction,
 } from '@remirror/core-types';
-import { convertCommand, isTextSelection, mergeProsemirrorKeyBindings } from '@remirror/core-utils';
+import {
+  convertCommand,
+  environment,
+  findParentNode,
+  findParentNodeOfType,
+  isDefaultBlockNode,
+  isTextSelection,
+  mergeProsemirrorKeyBindings,
+} from '@remirror/core-utils';
 import {
   baseKeymap,
   chainCommands as pmChainCommands,
@@ -17,12 +38,26 @@ import {
 import { undoInputRule } from '@remirror/pm/inputrules';
 import { keymap } from '@remirror/pm/keymap';
 
-import { extensionDecorator } from '../decorators';
-import { PlainExtension } from '../extension';
+import { AnyExtension, extension, Helper, PlainExtension } from '../extension';
 import type { AddCustomHandler } from '../extension/base-class';
 import type { OnSetOptionsParameter } from '../types';
+import {
+  command,
+  helper,
+  keyBinding,
+  KeybindingDecoratorOptions,
+  KeyboardShortcut,
+} from './builtin-decorators';
+import { CommandsExtension } from './commands-extension';
 
 export interface KeymapOptions {
+  /**
+   * The shortcuts to use for named keybindings in the editor.
+   *
+   * @default 'default'
+   */
+  shortcuts?: KeyboardShortcuts;
+
   /**
    * Determines whether a backspace after an input rule has been applied should
    * reverse the effect of the input rule.
@@ -95,11 +130,12 @@ export interface KeymapOptions {
  * Without this extension most of the shortcuts and behaviors we have come to
  * expect from text editors would not be provided.
  *
- * @builtin
+ * @category Builtin Extension
  */
-@extensionDecorator<KeymapOptions>({
+@extension<KeymapOptions>({
   defaultPriority: ExtensionPriority.Low,
   defaultOptions: {
+    shortcuts: 'default',
     undoInputRuleOnBackspace: true,
     selectParentNodeOnEscape: false,
     excludeBaseKeymap: false,
@@ -116,77 +152,159 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
    * The custom keybindings added by the handlers. In react these can be added
    * via `hooks`.
    */
-  #extraKeyBindings: PrioritizedKeyBindings[] = [];
+  private extraKeyBindings: PrioritizedKeyBindings[] = [];
 
   /**
-   * The keymap as a plugin.
+   * Get the shortcut map.
    */
-  private keymap!: ProsemirrorPlugin;
+  private get shortcutMap(): ShortcutMap {
+    const { shortcuts } = this.options;
+    return isString(shortcuts) ? keyboardShortcuts[shortcuts] : shortcuts;
+  }
 
   /**
    * This adds the `createKeymap` method functionality to all extensions.
    */
   onCreate(): void {
     this.store.setExtensionStore('rebuildKeymap', this.rebuildKeymap);
-    this.loopExtensions();
-    this.store.addPlugins(this.keymap);
+  }
+
+  /** Add the created keymap to the available plugins. */
+  createExternalPlugins(): ProsemirrorPlugin[] {
+    if (
+      // The user doesn't want any keymaps in the editor so don't add the keymap
+      // handler.
+      this.store.managerSettings.exclude?.keymap
+    ) {
+      return [];
+    }
+
+    return [this.generateKeymap()];
   }
 
   /**
    * Updates the stored keymap plugin on this extension.
    */
-  private loopExtensions() {
+  private generateKeymap() {
     const extensionKeymaps: PrioritizedKeyBindings[] = [];
+    const shortcutMap = this.shortcutMap;
+    const commandsExtension = this.store.getExtension(CommandsExtension);
+    const extractNamesFactory = (extension: AnyExtension) => (shortcut: string) =>
+      extractShortcutNames({
+        shortcut,
+        map: shortcutMap,
+        store: this.store,
+        options: extension.options,
+      });
 
     for (const extension of this.store.extensions) {
-      // Ignore this extension when.
+      const decoratedKeybindings = extension.decoratedKeybindings ?? {};
+
       if (
-        // The user doesn't want any keymaps in the editor.
-        this.store.managerSettings.exclude?.keymap ||
-        // The extension doesn't have the `createKeymap` method.
-        !extension.createKeymap ||
         // The extension was configured to ignore the keymap.
         extension.options.exclude?.keymap
       ) {
         continue;
       }
 
-      extensionKeymaps.push(extension.createKeymap());
+      if (
+        // The extension doesn't have the `createKeymap` method.
+        extension.createKeymap
+      ) {
+        extensionKeymaps.push(
+          updateNamedKeys(extension.createKeymap(extractNamesFactory(extension)), shortcutMap),
+        );
+      }
+
+      for (const [name, options] of entries(decoratedKeybindings)) {
+        if (options.isActive && !options.isActive(extension.options, this.store)) {
+          continue;
+        }
+
+        // Bind the keybinding function to the extension.
+        const keyBinding = (extension as Shape)[name].bind(extension);
+
+        // Extract the keypress pattern.
+        const shortcutNames = extractShortcutNames({
+          shortcut: options.shortcut,
+          map: shortcutMap,
+          options: extension.options,
+          store: this.store,
+        });
+
+        // Decide the priority to assign to the keymap.
+        const priority = isFunction(options.priority)
+          ? options.priority(extension.options, this.store)
+          : options.priority ?? ExtensionPriority.Low;
+
+        const bindingObject: KeyBindings = object();
+
+        for (const shortcut of shortcutNames) {
+          bindingObject[shortcut] = keyBinding;
+        }
+
+        extensionKeymaps.push([priority, bindingObject]);
+
+        // Attach the normalized shortcut to the decorated command so that is
+        // can be referenced in the UI.
+        if (options.command) {
+          commandsExtension.updateDecorated(options.command, { shortcut: shortcutNames });
+        }
+      }
     }
 
-    // Sort the keymaps giving keybindings added via the handler a priority over
-    // those implemented by extensions.
-    const sortedKeymaps = this.sortKeymaps([...this.#extraKeyBindings, ...extensionKeymaps]);
+    // Sort the keymaps with a priority given to keymaps added via
+    // `extension.addHandler` (e.g. in hooks).
+    const sortedKeymaps = this.sortKeymaps([...this.extraKeyBindings, ...extensionKeymaps]);
     const mappedCommands = mergeProsemirrorKeyBindings(sortedKeymaps);
-    this.keymap = keymap(mappedCommands);
+
+    return keymap(mappedCommands);
   }
 
   /**
-   * The method for rebuilding all the extension keymaps.
-   *
-   * 1. Rebuild keymaps.
-   * 2. Replace the old keymap plugin.
-   * 3. Update the plugins used in the state (triggers an editor update).
+   * Handle exiting the mark forwards.
    */
-  private readonly rebuildKeymap = () => {
-    const previousKeymap = this.keymap;
+  @keyBinding<KeymapExtension>({
+    shortcut: 'ArrowRight',
+    isActive: (options) => options.exitMarksOnArrowPress,
+  })
+  arrowRight(parameter: KeyBindingParameter): boolean {
+    const marks = this.store.markTags[ExtensionTag.PreventExits];
+    return this.exitMarkForwards(marks)(parameter);
+  }
 
-    this.loopExtensions();
-    this.store.replacePlugin(previousKeymap, this.keymap);
-    this.store.reconfigureStatePlugins();
-  };
+  /**
+   * Handle the arrow left key to exit the mark.
+   */
+  @keyBinding<KeymapExtension>({
+    shortcut: 'ArrowLeft',
+    isActive: (options) => options.exitMarksOnArrowPress,
+  })
+  arrowLeft(parameter: KeyBindingParameter): boolean {
+    const excludedMarks = this.store.markTags[ExtensionTag.PreventExits];
+    const excludedNodes = this.store.nodeTags[ExtensionTag.PreventExits];
+    return this.exitMarkBackwards(excludedMarks, excludedNodes)(parameter);
+  }
+
+  /**
+   * Handle exiting the mark forwards.
+   */
+  @keyBinding<KeymapExtension>({
+    shortcut: 'Backspace',
+    isActive: (options) => options.exitMarksOnArrowPress,
+  })
+  backspace(parameter: KeyBindingParameter): boolean {
+    const excludedMarks = this.store.markTags[ExtensionTag.PreventExits];
+    const excludedNodes = this.store.nodeTags[ExtensionTag.PreventExits];
+    return this.exitMarkBackwards(excludedMarks, excludedNodes)(parameter);
+  }
 
   /**
    * Create the base keymap and give it a low priority so that all other keymaps
    * override it.
    */
   createKeymap(): PrioritizedKeyBindings {
-    const {
-      selectParentNodeOnEscape,
-      undoInputRuleOnBackspace,
-      excludeBaseKeymap,
-      exitMarksOnArrowPress,
-    } = this.options;
+    const { selectParentNodeOnEscape, undoInputRuleOnBackspace, excludeBaseKeymap } = this.options;
     const baseKeyBindings: KeyBindings = object();
 
     // Only add the base keymap if it is **NOT** excluded.
@@ -197,7 +315,7 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
     }
 
     // Automatically remove the input rule when the option is set to true.
-    if (undoInputRuleOnBackspace) {
+    if (undoInputRuleOnBackspace && baseKeymap.Backspace) {
       baseKeyBindings.Backspace = convertCommand(
         pmChainCommands(undoInputRule, baseKeymap.Backspace),
       );
@@ -208,38 +326,43 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
       baseKeyBindings.Escape = convertCommand(selectParentNode);
     }
 
-    if (exitMarksOnArrowPress) {
-      this.addExitMarkHandler(baseKeyBindings);
-    }
-
     return [ExtensionPriority.Low, baseKeyBindings];
   }
 
   /**
-   * Add the arrow press handlers for exiting the mark.
+   * Get the real shortcut name from the named shortcut.
    */
-  private addExitMarkHandler(bindings: KeyBindings): void {
-    const marks = this.store.markTags[ExtensionTag.MarkSupportsExit];
+  @helper()
+  getNamedShortcut(shortcut: string, options: Shape = {}): Helper<string[]> {
+    if (!shortcut.startsWith('_|')) {
+      return [shortcut];
+    }
 
-    bindings.ArrowLeft = exitMarkBackwards(marks);
-    bindings.ArrowRight = exitMarkForwards(marks);
+    return extractShortcutNames({
+      shortcut,
+      map: this.shortcutMap,
+      store: this.store,
+      options: options,
+    });
   }
 
   /**
-   * @internalremarks Think about the case where bindings are disposed of and
-   * then added in a different position in the `extraKeyBindings` array. This is
-   * especially pertinent when using hooks.
+   * @internalremarks
+   *
+   * Think about the case where bindings are disposed of and then added in a
+   * different position in the `extraKeyBindings` array. This is especially
+   * pertinent when using hooks.
    */
   protected onAddCustomHandler: AddCustomHandler<KeymapOptions> = ({ keymap }) => {
     if (!keymap) {
       return;
     }
 
-    this.#extraKeyBindings = [...this.#extraKeyBindings, keymap];
+    this.extraKeyBindings = [...this.extraKeyBindings, keymap];
     this.store.rebuildKeymap?.();
 
     return () => {
-      this.#extraKeyBindings = this.#extraKeyBindings.filter((binding) => binding !== keymap);
+      this.extraKeyBindings = this.extraKeyBindings.filter((binding) => binding !== keymap);
       this.store.rebuildKeymap?.();
     };
   };
@@ -249,18 +372,13 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
    */
   protected onSetOptions(parameter: OnSetOptionsParameter<KeymapOptions>): void {
     const { changes } = parameter;
-    let shouldReconfigureBindings = false;
 
     if (
       changes.excludeBaseKeymap.changed ||
       changes.selectParentNodeOnEscape.changed ||
       changes.undoInputRuleOnBackspace.changed
     ) {
-      shouldReconfigureBindings = true;
-    }
-
-    if (shouldReconfigureBindings) {
-      this.store?.rebuildKeymap?.();
+      this.store.rebuildKeymap?.();
     }
   }
 
@@ -277,84 +395,101 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
       // Extract the bindings from the prioritized tuple.
     ).map((binding) => binding[1]);
   }
-}
 
-/**
- * Exits the mark forwards when at the end of a block node.
- */
-function exitMarkForwards(marks: string[], checkForReverse = true): CommandFunction {
-  return (parameter) => {
-    if (checkForReverse && shouldReverseDirection(parameter.tr)) {
-      return exitMarkForwards(marks, false)(parameter);
-    }
-
-    const { tr, dispatch, state } = parameter;
-
-    if (!isEndOfNode(tr.selection)) {
-      return false;
-    }
-
-    const $pos = tr.selection.$from;
-    const types = new Set(marks.map((name) => state.schema.marks[name]));
-    const marksToRemove = $pos.marks().filter((mark) => types.has(mark.type));
-
-    if (isEmptyArray(marksToRemove)) {
-      return false;
-    }
-
-    if (!dispatch) {
-      return true;
-    }
-
-    for (const mark of marksToRemove) {
-      tr.removeStoredMark(mark);
-    }
-
-    dispatch(tr.insertText(' ', tr.selection.from));
-
-    return true;
+  /**
+   * The method for rebuilding all the extension keymaps.
+   *
+   * 1. Rebuild keymaps.
+   * 2. Replace the old keymap plugin.
+   * 3. Update the plugins used in the state (triggers an editor update).
+   */
+  private readonly rebuildKeymap = () => {
+    this.store.updateExtensionPlugins(this);
   };
-}
 
-/**
- * Exit a mark when at the beginning of a block node.
- */
-function exitMarkBackwards(marks: string[], checkForReverse = true): CommandFunction {
-  return (parameter) => {
-    if (checkForReverse && shouldReverseDirection(parameter.tr)) {
-      return exitMarkForwards(marks, false)(parameter);
-    }
+  /**
+   * Exits the mark forwards when at the end of a block node.
+   */
+  @command()
+  exitMarkForwards(excludedMarks: string[]): CommandFunction {
+    return (parameter) => {
+      const { tr, dispatch } = parameter;
 
-    const { tr, dispatch, state } = parameter;
+      if (!isEndOfNode(tr.selection)) {
+        return false;
+      }
 
-    if (!isStartOfNode(tr.selection)) {
-      return false;
-    }
+      const $pos = tr.selection.$from;
+      const marksToRemove = $pos.marks().filter((mark) => !excludedMarks.includes(mark.type.name));
 
-    const $pos = tr.selection.$from;
-    const types = new Set(marks.map((name) => state.schema.marks[name]));
+      if (isEmptyArray(marksToRemove)) {
+        return false;
+      }
 
-    // Find all the marks to remove
-    const marksToRemove = $pos.marks().filter((mark) => types.has(mark.type));
+      if (!dispatch) {
+        return true;
+      }
 
-    if (isEmptyArray(marksToRemove)) {
-      // There are no marks to remove therefore defer to the empty marks to
-      // remove array.
-      return false;
-    }
+      for (const mark of marksToRemove) {
+        tr.removeStoredMark(mark);
+      }
 
-    if (!dispatch) {
+      dispatch(tr.insertText(' ', tr.selection.from));
+
       return true;
-    }
+    };
+  }
 
-    // Remove all the active marks at the current cursor.
-    for (const mark of marksToRemove) {
-      tr.removeStoredMark(mark);
-    }
+  /**
+   * Exit a mark when at the beginning of a block node.
+   */
+  @command()
+  exitMarkBackwards(excludedMarks: string[], excludedNodes: string[]): CommandFunction {
+    return (parameter) => {
+      const { tr, dispatch } = parameter;
 
-    dispatch(tr);
-    return true;
-  };
+      if (!isStartOfNode(tr.selection)) {
+        return false;
+      }
+
+      // Find all the marks to remove
+      const marksToRemove =
+        tr.storedMarks?.filter((mark) => !excludedMarks.includes(mark.type.name)) ?? [];
+
+      const parentNode = findParentNode({
+        predicate: (node) => node.isBlock,
+        selection: tr.selection,
+      });
+      const shouldUpdateNode =
+        !isDefaultBlockNode(tr.doc) &&
+        !findParentNodeOfType({ selection: tr.selection, types: excludedNodes });
+
+      if (isEmptyArray(marksToRemove) && !shouldUpdateNode) {
+        // There are no marks to remove therefore defer to the empty marks to
+        // remove array.
+        return false;
+      }
+
+      if (!dispatch) {
+        return true;
+      }
+
+      // Remove all the active marks at the current cursor.
+      for (const mark of marksToRemove) {
+        tr.removeStoredMark(mark);
+      }
+
+      if (parentNode) {
+        this.store.commands.toggleBlockNodeItem.original({ type: parentNode.node.type })({
+          ...parameter,
+          dispatch() {},
+        });
+      }
+
+      dispatch(tr);
+      return true;
+    };
+  }
 }
 
 /**
@@ -392,6 +527,144 @@ function isStartOfNode(selection: Selection) {
   );
 }
 
+function isNamedShortcut(value: string): value is NamedShortcut {
+  return includes(values(NamedShortcut), value);
+}
+
+interface ExtractShortcutNamesParameter {
+  shortcut: KeyboardShortcut;
+  map: ShortcutMap;
+  options: Shape;
+  store: Remirror.ExtensionStore;
+}
+
+function extractShortcutNames({
+  shortcut,
+  map,
+  options,
+  store,
+}: ExtractShortcutNamesParameter): string[] {
+  if (isString(shortcut)) {
+    return [normalizeShortcutName(shortcut, map)];
+  }
+
+  if (isArray(shortcut)) {
+    return shortcut.map((value) => normalizeShortcutName(value, map));
+  }
+
+  shortcut = shortcut(options, store);
+  return extractShortcutNames({ shortcut, map, options, store });
+}
+
+function normalizeShortcutName(value: string, shortcutMap: ShortcutMap): string {
+  return isNamedShortcut(value) ? shortcutMap[value] : value;
+}
+
+function updateNamedKeys(
+  prioritizedBindings: PrioritizedKeyBindings,
+  shortcutMap: ShortcutMap,
+): PrioritizedKeyBindings {
+  const updatedBindings: KeyBindings = {};
+  let previousBindings: KeyBindings;
+  let priority: ExtensionPriority | undefined;
+
+  if (isArray(prioritizedBindings)) {
+    [priority, previousBindings] = prioritizedBindings;
+  } else {
+    previousBindings = prioritizedBindings;
+  }
+
+  for (const [shortcutName, commandFunction] of entries(previousBindings)) {
+    updatedBindings[normalizeShortcutName(shortcutName, shortcutMap)] = commandFunction;
+  }
+
+  return isUndefined(priority) ? updatedBindings : [priority, updatedBindings];
+}
+
+/**
+ * A shortcut map which is used by the `KeymapExtension`.
+ */
+export type ShortcutMap = Record<NamedShortcut, string>;
+
+/**
+ * The default named shortcuts used within `remirror`.
+ */
+export const DEFAULT_SHORTCUTS: ShortcutMap = {
+  [NamedShortcut.Copy]: 'Mod-c',
+  [NamedShortcut.Cut]: 'Mod-x',
+  [NamedShortcut.Paste]: 'Mod-p',
+  [NamedShortcut.PastePlain]: 'Mod-Shift-p',
+  [NamedShortcut.SelectAll]: 'Mod-a',
+  [NamedShortcut.Undo]: 'Mod-z',
+  [NamedShortcut.Redo]: environment.isMac ? 'Shift-Mod-z' : 'Mod-y',
+  [NamedShortcut.Bold]: 'Mod-b',
+  [NamedShortcut.Italic]: 'Mod-i',
+  [NamedShortcut.Underline]: 'Mod-u',
+  [NamedShortcut.Strike]: 'Mod-d',
+  [NamedShortcut.Code]: 'Mod-`',
+  [NamedShortcut.Paragraph]: 'Mod-Shift-0',
+  [NamedShortcut.H1]: 'Mod-Shift-1',
+  [NamedShortcut.H2]: 'Mod-Shift-2',
+  [NamedShortcut.H3]: 'Mod-Shift-3',
+  [NamedShortcut.H4]: 'Mod-Shift-4',
+  [NamedShortcut.H5]: 'Mod-Shift-5',
+  [NamedShortcut.H6]: 'Mod-Shift-6',
+  [NamedShortcut.NumberList]: 'Mod-Shift-9',
+  [NamedShortcut.BulletList]: 'Mod-Shift-8',
+  [NamedShortcut.Quote]: 'Mod->',
+  [NamedShortcut.Divider]: 'Mod-Shift-|',
+  [NamedShortcut.Codeblock]: 'Mod-Shift-~',
+  [NamedShortcut.ClearFormatting]: 'Mod-Shift-C',
+  [NamedShortcut.Superscript]: 'Mod-.',
+  [NamedShortcut.Subscript]: 'Mod-,',
+  [NamedShortcut.LeftAlignment]: 'Mod-Shift-L',
+  [NamedShortcut.CenterAlignment]: 'Mod-Shift-E',
+  [NamedShortcut.RightAlignment]: 'Mod-Shift-R',
+  [NamedShortcut.JustifyAlignment]: 'Mod-Shift-J',
+  [NamedShortcut.InsertLink]: 'Mod-k',
+  [NamedShortcut.Find]: 'Mod-f',
+  [NamedShortcut.FindBackwards]: 'Mod-Shift-f',
+  [NamedShortcut.FindReplace]: 'Mod-Shift-H',
+  [NamedShortcut.AddFootnote]: 'Mod-Alt-f',
+  [NamedShortcut.AddComment]: 'Mod-Alt-m',
+  [NamedShortcut.ContextMenu]: 'Mod-Shift-\\',
+  [NamedShortcut.IncreaseFontSize]: 'Mod-Shift-.',
+  [NamedShortcut.DecreaseFontSize]: 'Mod-Shift-,',
+  [NamedShortcut.Indent]: 'Tab',
+  [NamedShortcut.Dedent]: 'Shift-Tab',
+  [NamedShortcut.Shortcuts]: 'Mod-/',
+  [NamedShortcut.Format]: environment.isMac ? 'Alt-Shift-f' : 'Shift-Ctrl-f',
+};
+
+/**
+ * Shortcuts used within google docs.
+ */
+export const GOOGLE_DOC_SHORTCUTS: ShortcutMap = {
+  ...DEFAULT_SHORTCUTS,
+  [NamedShortcut.Strike]: 'Mod-Shift-S',
+  [NamedShortcut.Code]: 'Mod-Shift-M',
+  [NamedShortcut.Paragraph]: 'Mod-Alt-0',
+  [NamedShortcut.H1]: 'Mod-Alt-1',
+  [NamedShortcut.H2]: 'Mod-Alt-2',
+  [NamedShortcut.H3]: 'Mod-Alt-3',
+  [NamedShortcut.H4]: 'Mod-Alt-4',
+  [NamedShortcut.H5]: 'Mod-Alt-5',
+  [NamedShortcut.H6]: 'Mod-Alt-6',
+  [NamedShortcut.NumberList]: 'Mod-Alt-7',
+  [NamedShortcut.BulletList]: 'Mod-Alt-8',
+  [NamedShortcut.Quote]: 'Mod-Alt-9',
+  [NamedShortcut.ClearFormatting]: 'Mod-\\',
+  [NamedShortcut.Indent]: 'Mod-[',
+  [NamedShortcut.Dedent]: 'Mod-]',
+};
+
+export const keyboardShortcuts = {
+  default: DEFAULT_SHORTCUTS,
+  googleDoc: GOOGLE_DOC_SHORTCUTS,
+};
+
+export type KeyboardShortcuts = keyof typeof keyboardShortcuts | ShortcutMap;
+
 /**
  * KeyBindings as a tuple with priority and the keymap.
  */
@@ -408,7 +681,8 @@ declare global {
   namespace Remirror {
     interface ExcludeOptions {
       /**
-       * Whether to exclude the created keymap.
+       * Whether to exclude keybindings support. This is not a recommended
+       * action and can break functionality.
        *
        * @default undefined
        */
@@ -433,13 +707,23 @@ declare global {
       rebuildKeymap: () => void;
     }
 
-    interface ExtensionCreatorMethods {
+    interface BaseExtension {
+      /**
+       * Stores all the keybinding names and options for this decoration that
+       * have been added as decorators to the extension instance. This is used
+       * by the `KeymapExtension` to pick the commands and store metadata
+       * attached to each command.
+       *
+       * @internal
+       */
+      decoratedKeybindings?: Record<string, KeybindingDecoratorOptions>;
+
       /**
        * Add keymap bindings for this extension.
        *
        * @param parameter - schema parameter with type included
        */
-      createKeymap?(): PrioritizedKeyBindings;
+      createKeymap?(extractShortcutNames: (shortcut: string) => string[]): PrioritizedKeyBindings;
     }
 
     interface AllExtensions {

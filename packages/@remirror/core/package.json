@@ -9,26 +9,42 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/core.cjs.js",
-  "module": "dist/core.esm.js",
-  "browser": {
-    "./dist/core.cjs.js": "./dist/core.browser.cjs.js",
-    "./dist/core.esm.js": "./dist/core.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-core.esm.js",
+      "require": "./dist/remirror-core.cjs.js",
+      "browser": "./dist/remirror-core.browser.esm.js",
+      "types": "./dist/remirror-core.cjs.d.ts",
+      "default": "./dist/remirror-core.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/core.cjs.d.ts",
+  "main": "dist/remirror-core.cjs.js",
+  "module": "dist/remirror-core.esm.js",
+  "browser": {
+    "./dist/remirror-core.cjs.js": "./dist/remirror-core.browser.cjs.js",
+    "./dist/remirror-core.esm.js": "./dist/remirror-core.browser.esm.js"
+  },
+  "types": "dist/remirror-core.cjs.d.ts",
   "files": [
     "style",
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
+    "@babel/runtime": "^7.12.5",
+    "@linaria/core": "^3.0.0-beta.1",
     "@remirror/core-constants": "1.0.0-next.60",
     "@remirror/core-helpers": "1.0.0-next.60",
     "@remirror/core-types": "1.0.0-next.60",
     "@remirror/core-utils": "1.0.0-next.60",
-    "linaria": "^2.0.0",
+    "@remirror/i18n": "1.0.0-next.60",
+    "@remirror/icons": "0.0.0",
+    "@remirror/messages": "0.0.0",
+    "@remirror/theme": "1.0.0-next.60",
     "nanoevents": "^5.1.10",
-    "type-fest": "^0.18.0"
+    "tiny-warning": "^1.0.3",
+    "type-fest": "^0.20.2"
   },
   "devDependencies": {
     "@remirror/pm": "1.0.0-next.60"
@@ -40,6 +56,6 @@
     "access": "public"
   },
   "meta": {
-    "sizeLimit": "35 KB"
+    "sizeLimit": "40 KB"
   }
 }

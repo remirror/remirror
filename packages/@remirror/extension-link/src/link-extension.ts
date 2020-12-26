@@ -1,9 +1,12 @@
+import { LiteralUnion } from 'type-fest';
+
 import {
   ApplySchemaAttributes,
+  command,
   CommandFunction,
-  CreatePluginReturn,
+  CreateExtensionPlugin,
   EditorState,
-  extensionDecorator,
+  extension,
   ExtensionPriority,
   ExtensionTag,
   FromToParameter,
@@ -17,23 +20,25 @@ import {
   isMarkActive,
   isSelectionEmpty,
   isTextSelection,
-  KeyBindings,
+  keyBinding,
+  KeyBindingParameter,
   LEAF_NODE_REPLACING_CHARACTER,
-  MarkAttributes,
   MarkExtension,
   MarkExtensionSpec,
-  markPasteRule,
+  MarkSpecOverride,
+  NamedShortcut,
   omitExtraAttributes,
   OnSetOptionsParameter,
   preserveSelection,
+  ProsemirrorAttributes,
   ProsemirrorNode,
-  ProsemirrorPlugin,
   range as numberRange,
   removeMark,
   Static,
   updateMark,
 } from '@remirror/core';
 import type { CreateEventHandlers } from '@remirror/extension-events';
+import { MarkPasteRule } from '@remirror/pm/paste-rules';
 import { TextSelection } from '@remirror/pm/state';
 import { isInvalidSplitReason, isRemovedReason, Suggester } from '@remirror/pm/suggest';
 
@@ -51,11 +56,32 @@ interface EventMeta {
   attrs: LinkAttributes;
 }
 
+interface ShortcutHandlerActiveLink extends FromToParameter {
+  attrs: LinkAttributes;
+}
+
+export interface ShortcutHandlerProps extends FromToParameter {
+  selectedText: string;
+  activeLink: ShortcutHandlerActiveLink | undefined;
+}
+
+type LinkTarget = LiteralUnion<'_blank' | '_self' | '_parent' | '_top', string> | null;
+
 export interface LinkOptions {
   /**
-   * Called when the user activates the keyboard shortcut.
+   * @deprecated use `onShortcut` instead
    */
   onActivateLink?: Handler<(selectedText: string) => void>;
+
+  /**
+   * Called when the user activates the keyboard shortcut.
+   *
+   * It is called with the active link in the selected range, if it exists.
+   *
+   * If multiple links exist within the range, only the first is returned. I'm
+   * open to PR's if you feel it's important to capture all contained links.
+   */
+  onShortcut?: Handler<(props: ShortcutHandlerProps) => void>;
 
   /**
    * Called after the `commands.updateLink` has been called.
@@ -97,16 +123,25 @@ export interface LinkOptions {
   autoLinkRegex?: Static<RegExp>;
 
   /**
-   * The default protocol to use when it can't be inferred
+   * The default protocol to use when it can't be inferred.
+   *
+   * @default ''
    */
   defaultProtocol?: DefaultProtocol;
+
+  /**
+   * The default target to use for links.
+   *
+   * @default null
+   */
+  defaultTarget?: LinkTarget;
 }
 
 export interface LinkClickData extends GetMarkRange, LinkAttributes {}
 
-export type LinkAttributes = MarkAttributes<{
+export type LinkAttributes = ProsemirrorAttributes<{
   /**
-   * The link which is required property for the link mark.
+   * The link which is a required property for the link mark.
    */
   href: string;
 
@@ -117,36 +152,48 @@ export type LinkAttributes = MarkAttributes<{
    * @default false
    */
   auto?: boolean;
+
+  /**
+   * The target for the link..
+   */
+  target?: LinkTarget;
 }>;
 
-@extensionDecorator<LinkOptions>({
+@extension<LinkOptions>({
   defaultOptions: {
     autoLink: false,
     defaultProtocol: '',
     selectTextOnClick: false,
     openLinkOnClick: false,
     autoLinkRegex: /(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/\S*)?/,
+    defaultTarget: null,
   },
   staticKeys: ['autoLinkRegex'],
   handlerKeyOptions: { onClick: { earlyReturnValue: true } },
-  handlerKeys: ['onActivateLink', 'onUpdateLink', 'onClick'],
+  handlerKeys: ['onActivateLink', 'onUpdateLink', 'onClick', 'onShortcut'],
+  defaultPriority: ExtensionPriority.Medium,
 })
 export class LinkExtension extends MarkExtension<LinkOptions> {
   get name() {
     return 'link' as const;
   }
 
-  readonly tags = [ExtensionTag.Link];
+  createTags() {
+    return [ExtensionTag.Link, ExtensionTag.ExcludeInputRules];
+  }
 
-  createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
+  createMarkSpec(extra: ApplySchemaAttributes, override: MarkSpecOverride): MarkExtensionSpec {
     const AUTO_ATTRIBUTE = 'data-link-auto';
     return {
+      inclusive: false,
+      excludes: '_',
+      ...override,
       attrs: {
         ...extra.defaults(),
         href: {},
+        target: { default: this.options.defaultTarget },
         auto: { default: false },
       },
-      inclusive: false,
       parseDOM: [
         {
           tag: 'a[href]',
@@ -176,8 +223,10 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
   onSetOptions(options: OnSetOptionsParameter<LinkOptions>): void {
     if (options.changes.autoLink.changed) {
-      if (options.changes.autoLink.value === true) {
-        this.store.addSuggester(this.createSuggesters()[0]);
+      const [newSuggester] = this.createSuggesters();
+
+      if (options.changes.autoLink.value === true && newSuggester) {
+        this.store.addSuggester(newSuggester);
       }
 
       if (options.changes.autoLink.value === false) {
@@ -186,90 +235,113 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     }
   }
 
-  createKeymap(): KeyBindings {
-    return {
-      'Mod-k': ({ state, dispatch }) => {
-        // if the selection is empty, expand it
-        const range = state.selection.empty ? getSelectedWord(state) : state.selection;
+  /**
+   * Add a handler to the `onActivateLink` to capture when .
+   */
+  @keyBinding({ shortcut: NamedShortcut.InsertLink })
+  shortcut({ state, dispatch, tr }: KeyBindingParameter): boolean {
+    let selectedText = '';
+    let { from, to } = tr.selection;
+    let expandedSelection = false;
 
-        if (!range) {
-          return false;
-        }
+    // When the selection is empty, expand it
+    if (tr.selection.empty) {
+      const selectedWord = getSelectedWord(tr);
 
-        const { from, to } = range;
-        const tr = state.tr.setSelection(TextSelection.create(state.doc, from, to));
+      if (!selectedWord) {
+        return false;
+      }
 
-        if (dispatch) {
-          dispatch(tr);
-        }
+      ({ text: selectedText, from, to } = selectedWord);
+      expandedSelection = true;
+    }
 
-        this.options.onActivateLink(tr.doc.textBetween(from, to));
+    if (from === to) {
+      return false;
+    }
 
-        return true;
-      },
+    if (!expandedSelection) {
+      selectedText = tr.doc.textBetween(from, to);
+    }
+
+    if (dispatch) {
+      expandedSelection && tr.setSelection(TextSelection.create(state.doc, from, to));
+      dispatch(tr);
+    }
+
+    const mark = getMarkRange(tr.doc.resolve(from), this.type, tr.doc.resolve(to));
+    this.options.onActivateLink(selectedText);
+    this.options.onShortcut({
+      activeLink: mark
+        ? { attrs: mark.mark.attrs as LinkAttributes, from: mark.from, to: mark.to }
+        : undefined,
+      selectedText,
+      from,
+      to,
+    });
+
+    return true;
+  }
+
+  /**
+   * Create or update the link if it doesn't currently exist at the current
+   * selection or provided range.
+   */
+  @command()
+  updateLink(attrs: LinkAttributes, range?: FromToParameter): CommandFunction {
+    return (parameter) => {
+      const { tr } = parameter;
+      const { selection } = tr;
+      const selectionIsValid =
+        (isTextSelection(selection) && !isSelectionEmpty(tr.selection)) ||
+        isAllSelection(selection) ||
+        isMarkActive({ trState: tr, type: this.type });
+
+      if (!selectionIsValid && !range) {
+        return false;
+      }
+
+      tr.setMeta(this.name, { command: UPDATE_LINK, attrs, range });
+
+      return updateMark({ type: this.type, attrs, range })(parameter);
     };
   }
 
-  createCommands() {
-    return {
-      /**
-       * Create or update the link if it doesn't currently exist at the current
-       * selection or provided range.
-       */
-      updateLink: (attrs: LinkAttributes, range?: FromToParameter): CommandFunction => {
-        return (parameter) => {
-          const { tr } = parameter;
-          const { selection } = tr;
-          const selectionIsValid =
-            (isTextSelection(selection) && !isSelectionEmpty(tr.selection)) ||
-            isAllSelection(selection) ||
-            isMarkActive({ trState: tr, type: this.type });
+  /**
+   * Remove the link at the current selection
+   */
+  @command()
+  removeLink(range?: FromToParameter): CommandFunction {
+    return (parameter) => {
+      const { tr } = parameter;
 
-          if (!selectionIsValid && !range) {
-            return false;
-          }
+      if (!isMarkActive({ trState: tr, type: this.type, ...range })) {
+        return false;
+      }
 
-          tr.setMeta(this.name, { command: UPDATE_LINK, attrs, range });
-
-          return updateMark({ type: this.type, attrs, range })(parameter);
-        };
-      },
-
-      /**
-       * Remove the link at the current selection
-       */
-      removeLink: (range?: FromToParameter): CommandFunction => {
-        return (parameter) => {
-          const { tr } = parameter;
-
-          if (!isMarkActive({ trState: tr, type: this.type, ...range })) {
-            return false;
-          }
-
-          return removeMark({ type: this.type, expand: true, range })(parameter);
-        };
-      },
+      return removeMark({ type: this.type, expand: true, range })(parameter);
     };
   }
 
   /**
    * Create the paste rules that can transform a pasted link in the document.
    */
-  createPasteRules(): ProsemirrorPlugin[] {
+  createPasteRules(): MarkPasteRule[] {
     if (this.options.autoLink) {
       return [];
     }
 
     return [
-      markPasteRule({
+      {
+        type: 'mark',
         regexp: /https?:\/\/(www\.)?[\w#%+.:=@~-]{2,256}\.[a-z]{2,6}\b([\w#%&+./:=?@~-]*)/gi,
-        type: this.type,
+        markType: this.type,
         getAttributes: (url) => ({ href: getMatchString(url), auto: true }),
-      }),
+      },
     ];
   }
 
-  createSuggesters(): Suggester[] {
+  createSuggesters(): [Suggester] | [] {
     if (!this.options.autoLink) {
       return [];
     }
@@ -517,7 +589,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
    * TODO extract this into the events extension and move that extension into
    * core.
    */
-  createPlugin(): CreatePluginReturn {
+  createPlugin(): CreateExtensionPlugin {
     return {
       props: {
         handleClick: (view, pos) => {

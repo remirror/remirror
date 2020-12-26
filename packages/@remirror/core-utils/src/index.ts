@@ -1,5 +1,9 @@
-export { nonChainable, convertCommand, chainableEditorState, chainCommands } from '@remirror/pm';
-
+export type {
+  RemoveMarkParameter,
+  ReplaceTextParameter,
+  ToggleBlockItemParameter,
+  UpdateMarkParameter,
+} from './command-utils';
 export {
   isChrome,
   lift,
@@ -12,27 +16,32 @@ export {
   updateMark,
   wrapIn,
 } from './command-utils';
-
 export type {
   CreateDocumentNodeParameter,
+  CustomDocumentParameter,
   GetMarkRange,
   InvalidContentBlock,
   InvalidContentHandler,
   InvalidContentHandlerParameter,
+  NamedStringHandlers,
   StringHandler,
+  StringHandlerOptions,
   StringHandlerParameter,
 } from './core-utils';
 export {
   areSchemasCompatible,
-  isEmptyBlockNode,
+  areStatesEqual,
   atDocEnd,
   atDocStart,
   canInsertNode,
   closestElement,
   createDocumentNode,
   endPositionOfParent,
-  fromHtml,
+  getChangedNodeRanges,
+  getChangedRanges,
   getCursor,
+  getDefaultBlockNode,
+  getDocRange,
   getDocument,
   getInvalidContent,
   getMarkAttributes,
@@ -43,15 +52,20 @@ export {
   getRemirrorJSON,
   getSelectedGroup,
   getSelectedWord,
+  getStyle,
   getTextContentFromSlice,
   getTextSelection,
+  htmlToProsemirrorNode,
   isAllSelection,
+  isDefaultBlockNode,
+  isDefaultDocNode,
   isDocNode,
   isDocNodeEmpty,
   isDomNode,
   isEditorSchema,
   isEditorState,
   isElementDomNode,
+  isEmptyBlockNode,
   isMarkActive,
   isMarkType,
   isNodeSelection,
@@ -61,34 +75,19 @@ export {
   isRemirrorJSON,
   isResolvedPos,
   isSelection,
-  areStatesEqual,
   isTextDomNode,
   isTextSelection,
   isTransaction,
+  joinStyles,
+  omitExtraAttributes,
+  prosemirrorNodeToDom,
+  prosemirrorNodeToHtml,
   shouldUseDomEnvironment,
   startPositionOfParent,
-  omitExtraAttributes,
-  toDom,
-  toHtml,
-  getChangedRanges,
-  getChangedNodeRanges,
+  textBetween,
 } from './core-utils';
-
 export { environment } from './environment';
-
-export type { ModifierKeys } from './keyboard-utils';
-export {
-  ALT,
-  CAPS_LOCK,
-  COMMAND,
-  CTRL,
-  isApple,
-  mod,
-  Modifier,
-  SHIFT,
-  WINDOWS,
-} from './keyboard-utils';
-
+export * from './keyboard-utils';
 export type { NodeWithPosition } from './prosemirror-node-utils';
 export {
   containsNodesOfType,
@@ -101,19 +100,13 @@ export {
   findTextNodes,
   getChangedNodes,
 } from './prosemirror-node-utils';
-
 export type {
   ShouldSkipFunction,
-  SkippableInputRule,
   ShouldSkipParameter,
+  SkippableInputRule,
 } from './prosemirror-rules';
-export { markInputRule, markPasteRule, nodeInputRule, plainInputRule } from './prosemirror-rules';
-
-export type {
-  FindProsemirrorNodeResult,
-  FindSelectedNodeOfType,
-  SchemaJSON,
-} from './prosemirror-utils';
+export { markInputRule, nodeInputRule, plainInputRule } from './prosemirror-rules';
+export type { FindProsemirrorNodeResult, SchemaJSON } from './prosemirror-utils';
 export {
   applyClonedTransaction,
   chainKeyBindingCommands,
@@ -126,6 +119,7 @@ export {
   findPositionOfNodeAfter,
   findPositionOfNodeBefore,
   findSelectedNodeOfType,
+  getActiveNode,
   hasTransactionChanged,
   isNodeActive,
   isNodeOfType,
@@ -138,5 +132,5 @@ export {
   removeNodeBefore,
   replaceNodeAtPosition,
   schemaToJSON,
-  getActiveNode,
 } from './prosemirror-utils';
+export { chainableEditorState, chainCommands, convertCommand, nonChainable } from '@remirror/pm';

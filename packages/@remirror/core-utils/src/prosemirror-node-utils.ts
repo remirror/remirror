@@ -1,9 +1,10 @@
 import type { Primitive } from 'type-fest';
 
 import { ErrorConstant } from '@remirror/core-constants';
-import { bool, entries, invariant, isFunction, keys } from '@remirror/core-helpers';
+import { entries, invariant, isFunction, isString, keys } from '@remirror/core-helpers';
 import type {
   AnyConstructor,
+  MarkType,
   MarkTypeParameter,
   NodeTypeParameter,
   OptionalProsemirrorNodeParameter,
@@ -270,9 +271,22 @@ interface FindChildrenByMarkParameter extends BaseFindParameter, MarkTypeParamet
  */
 export function findChildrenByMark(paramter: FindChildrenByMarkParameter): NodeWithPosition[] {
   const { type, ...rest } = paramter;
+  let markType: MarkType | undefined;
+
   return findChildren({
     ...rest,
-    predicate: (child) => bool(type.isInSet(child.node.marks)),
+    predicate: (child) => {
+      if (!markType) {
+        markType = isString(type) ? child.node.type.schema.marks[type] : type;
+
+        invariant(markType, {
+          code: ErrorConstant.SCHEMA,
+          message: `Mark type: ${type} does not exist on the current schema.`,
+        });
+      }
+
+      return !!markType.isInSet(child.node.marks);
+    },
   });
 }
 

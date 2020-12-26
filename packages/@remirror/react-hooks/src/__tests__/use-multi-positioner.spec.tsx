@@ -1,22 +1,21 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
-import { createReactManager, RemirrorProvider } from '@remirror/react';
+import { createReactManager, Remirror } from '@remirror/react';
 import { strictRender } from '@remirror/testing/react';
 
 import { useMultiPositioner } from '../use-multi-positioner';
 
 test('`useMultiPositioner` default values', () => {
   const HookComponent: FC = () => {
-    const positioners = useMultiPositioner('bubble');
+    const positioners = useMultiPositioner('selection');
 
     expect(positioners).toEqual([]);
-
     return <div />;
   };
 
   strictRender(
-    <RemirrorProvider manager={createReactManager([])}>
+    <Remirror manager={createReactManager([])}>
       <HookComponent />
-    </RemirrorProvider>,
+    </Remirror>,
   );
 });

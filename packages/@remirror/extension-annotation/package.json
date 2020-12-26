@@ -13,18 +13,30 @@
     "Ronny Roeller <ronny@nextapp.co>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-annotation.cjs.js",
-  "module": "dist/extension-annotation.esm.js",
-  "browser": {
-    "./dist/extension-annotation.cjs.js": "./dist/extension-annotation.browser.cjs.js",
-    "./dist/extension-annotation.esm.js": "./dist/extension-annotation.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-annotation.esm.js",
+      "require": "./dist/remirror-extension-annotation.cjs.js",
+      "browser": "./dist/remirror-extension-annotation.browser.esm.js",
+      "types": "./dist/remirror-extension-annotation.cjs.d.ts",
+      "default": "./dist/remirror-extension-annotation.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-annotation.cjs.d.ts",
+  "main": "dist/remirror-extension-annotation.cjs.js",
+  "module": "dist/remirror-extension-annotation.esm.js",
+  "browser": {
+    "./dist/remirror-extension-annotation.cjs.js": "./dist/remirror-extension-annotation.browser.cjs.js",
+    "./dist/remirror-extension-annotation.esm.js": "./dist/remirror-extension-annotation.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-annotation.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0"
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",

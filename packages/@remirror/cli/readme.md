@@ -7,8 +7,8 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/cli/next
 [npm]: https://npmjs.com/package/@remirror/cli/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/cli@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/cli@next
+[size]: https://bundlephobia.com/result?p=@remirror/cli
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/cli
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/cli/red?icon=npm
 
@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/cli@next
+yarn add @remirror/cli
 
 # pnpm
-pnpm add @remirror/cli@next
+pnpm add @remirror/cli
 
 # npm
-npm install @remirror/cli@next
+npm install @remirror/cli
 ```
 
 ## Usage

@@ -1,31 +1,38 @@
 import {
   ApplySchemaAttributes,
+  command,
   CommandFunction,
-  extensionDecorator,
+  extension,
   ExtensionTag,
   InputRule,
-  KeyBindings,
+  keyBinding,
+  KeyBindingParameter,
   MarkExtension,
   MarkExtensionSpec,
   markInputRule,
-  markPasteRule,
-  ProsemirrorPlugin,
+  MarkSpecOverride,
+  NamedShortcut,
   toggleMark,
 } from '@remirror/core';
+import { MarkPasteRule } from '@remirror/pm/paste-rules';
 
+import { toggleStrikeOptions } from './strike-utils';
 /**
  * The extension for adding strike-through marks to the editor.
  */
-@extensionDecorator({})
+@extension({})
 export class StrikeExtension extends MarkExtension {
   get name() {
     return 'strike' as const;
   }
 
-  readonly tags = [ExtensionTag.FontStyle];
+  createTags() {
+    return [ExtensionTag.FontStyle, ExtensionTag.FormattingMark];
+  }
 
-  createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
+  createMarkSpec(extra: ApplySchemaAttributes, override: MarkSpecOverride): MarkExtensionSpec {
     return {
+      ...override,
       attrs: extra.defaults(),
       parseDOM: [
         {
@@ -49,27 +56,28 @@ export class StrikeExtension extends MarkExtension {
     };
   }
 
-  createKeymap(): KeyBindings {
-    return {
-      'Mod-d': toggleMark({ type: this.type }),
-    };
+  /**
+   * Toggle the strike through formatting annotation.
+   */
+  @command(toggleStrikeOptions)
+  toggleStrike(): CommandFunction {
+    return toggleMark({ type: this.type });
   }
 
-  createCommands() {
-    return {
-      /**
-       * Toggle the strike through formatting annotation.
-       */
-      toggleStrike: (): CommandFunction => toggleMark({ type: this.type }),
-    };
+  /**
+   * Attach the keyboard shortcut to format the text.
+   */
+  @keyBinding({ shortcut: NamedShortcut.Strike, command: 'toggleStrike' })
+  shortcut(parameter: KeyBindingParameter): boolean {
+    return this.toggleStrike()(parameter);
   }
 
   createInputRules(): InputRule[] {
     return [markInputRule({ regexp: /~([^~]+)~$/, type: this.type, ignoreWhitespace: true })];
   }
 
-  createPasteRules(): ProsemirrorPlugin[] {
-    return [markPasteRule({ regexp: /~([^~]+)~/g, type: this.type })];
+  createPasteRules(): MarkPasteRule[] {
+    return [{ regexp: /~([^~]+)~/g, type: 'mark', markType: this.type }];
   }
 }
 

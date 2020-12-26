@@ -1,9 +1,9 @@
 import type { ComponentType } from 'react';
 
 import {
-  AnyCombinedUnion,
+  AnyExtension,
   entries,
-  extensionDecorator,
+  extension,
   isNodeExtension,
   NodeViewMethod,
   object,
@@ -67,7 +67,7 @@ import { ReactNodeView } from './react-node-view';
  * `forwardRef` prop appends the `contentDOM` to the element where `forwardRef`
  * was attached.
  */
-@extensionDecorator<ReactComponentOptions>({
+@extension<ReactComponentOptions>({
   defaultOptions: {
     defaultBlockNode: 'div',
     defaultInlineNode: 'span',
@@ -82,7 +82,7 @@ export class ReactComponentExtension extends PlainExtension<ReactComponentOption
    * The portal container which keeps track of all the React Portals containing
    * custom prosemirror NodeViews.
    */
-  readonly #portalContainer: PortalContainer = new PortalContainer();
+  private readonly portalContainer: PortalContainer = new PortalContainer();
 
   get name() {
     return 'reactComponent' as const;
@@ -93,11 +93,11 @@ export class ReactComponentExtension extends PlainExtension<ReactComponentOption
    * `ReactEditor` to manage the portals.
    */
   onCreate(): void {
-    this.store.setStoreKey('portalContainer', this.#portalContainer);
+    this.store.setStoreKey('portalContainer', this.portalContainer);
   }
 
   /**
-   * Create the node views from the custom
+   * Create the node views from the custom components provided.
    */
   createNodeViews(): Record<string, NodeViewMethod> {
     const nodeViews: Record<string, NodeViewMethod> = object();
@@ -116,7 +116,7 @@ export class ReactComponentExtension extends PlainExtension<ReactComponentOption
       nodeViews[extension.name] = ReactNodeView.create({
         options: this.options,
         ReactComponent: extension.ReactComponent,
-        portalContainer: this.#portalContainer,
+        portalContainer: this.portalContainer,
       });
     }
 
@@ -127,7 +127,7 @@ export class ReactComponentExtension extends PlainExtension<ReactComponentOption
       nodeViews[name] = ReactNodeView.create({
         options: this.options,
         ReactComponent,
-        portalContainer: this.#portalContainer,
+        portalContainer: this.portalContainer,
       });
     }
 
@@ -137,7 +137,7 @@ export class ReactComponentExtension extends PlainExtension<ReactComponentOption
 
 declare global {
   namespace Remirror {
-    interface ManagerStore<Combined extends AnyCombinedUnion> {
+    interface ManagerStore<ExtensionUnion extends AnyExtension> {
       /**
        * The portal container which keeps track of all the React Portals
        * containing custom ProseMirror node views.

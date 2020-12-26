@@ -9,23 +9,36 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/theme.cjs.js",
-  "module": "dist/theme.esm.js",
-  "browser": {
-    "./dist/theme.cjs.js": "./dist/theme.browser.cjs.js",
-    "./dist/theme.esm.js": "./dist/theme.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-theme.esm.js",
+      "require": "./dist/remirror-theme.cjs.js",
+      "browser": "./dist/remirror-theme.browser.esm.js",
+      "types": "./dist/remirror-theme.cjs.d.ts",
+      "default": "./dist/remirror-theme.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/theme.cjs.d.ts",
+  "main": "dist/remirror-theme.cjs.js",
+  "module": "dist/remirror-theme.esm.js",
+  "browser": {
+    "./dist/remirror-theme.cjs.js": "./dist/remirror-theme.browser.cjs.js",
+    "./dist/remirror-theme.esm.js": "./dist/remirror-theme.browser.esm.js"
+  },
+  "types": "dist/remirror-theme.cjs.d.ts",
   "files": [
     "style",
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
+    "@babel/runtime": "^7.12.5",
+    "@linaria/core": "^3.0.0-beta.1",
     "@remirror/core-types": "1.0.0-next.60",
-    "case-anything": "^1.1.1",
-    "linaria": "^2.0.0",
-    "type-fest": "^0.18.0"
+    "case-anything": "^1.1.2",
+    "color2k": "^1.1.1",
+    "csstype": "^3.0.6",
+    "type-fest": "^0.20.2"
   },
   "publishConfig": {
     "access": "public"

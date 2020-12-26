@@ -1,4 +1,5 @@
 const MonacoEditorWebpackPlugin = require('monaco-editor-webpack-plugin');
+const WorkerPlugin = require('worker-plugin');
 
 /**
  * @typedef {import('@docusaurus/types').LoadContext} Context
@@ -15,7 +16,7 @@ const MonacoEditorWebpackPlugin = require('monaco-editor-webpack-plugin');
 function monacoEditorPlugin(_context, _options) {
   return {
     name: 'monaco-editor',
-    configureWebpack(config) {
+    configureWebpack(config, isServer, utils) {
       for (const rule of config.module.rules) {
         if (
           String(rule.test) !== String(/\.css$/) &&
@@ -47,20 +48,21 @@ function monacoEditorPlugin(_context, _options) {
         },
         module: {
           rules: [
-            {
-              test: /\.ttf$/,
-              use: [require.resolve('file-loader')],
-            },
-            {
-              test: /\.css$/,
-              use: [require.resolve('css-loader')],
-              // For some reason this fixes an issue with the monaco editor
-              // being loaded
-              include: [],
-            },
+            { test: /\.ttf$/, use: [require.resolve('file-loader')] },
+            // For some reason the empty include array `[]` fixes an issue with
+            // the monaco editor being loaded
+            { test: /\.css$/, use: [require.resolve('css-loader')], include: [] },
           ],
         },
-        plugins: [new MonacoEditorWebpackPlugin({ languages: ['typescript', 'javascript'] })],
+        resolver: {
+          alias: {
+            '@linaria/core': '@emotion/css',
+          },
+        },
+        plugins: [
+          new MonacoEditorWebpackPlugin({ languages: ['typescript', 'javascript'] }),
+          new WorkerPlugin(),
+        ],
       };
     },
   };

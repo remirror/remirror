@@ -1,6 +1,5 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-
-import { HeadingExtension } from '@remirror/testing';
+import { HeadingExtension } from 'remirror/extensions';
 
 import { HelpersExtension } from '..';
 
@@ -19,5 +18,18 @@ describe('active', () => {
 
     expect(active.heading({ level: 2 })).toBeTrue();
     expect(active.heading({ level: 1 })).toBeFalse();
+  });
+});
+
+describe('helpers', () => {
+  it('`isSelectionEmpty`', () => {
+    const {
+      add,
+      nodes: { p, doc },
+      helpers,
+    } = renderEditor([], { props: { onChange: ({ getJSON }) => {} } }, {});
+
+    add(doc(p('on<cursor>e')));
+    expect(helpers.isSelectionEmpty()).toBeTrue();
   });
 });

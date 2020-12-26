@@ -9,13 +9,20 @@ import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
 import yaml from 'refractor/lang/yaml';
-import { BlockquoteExtension } from 'remirror/extension/blockquote';
-import { BoldExtension } from 'remirror/extension/bold';
-import { CodeExtension } from 'remirror/extension/code';
-import { HardBreakExtension } from 'remirror/extension/hard-break';
+import {
+  BlockquoteExtension,
+  BoldExtension,
+  CodeExtension,
+  createCoreManager,
+  HardBreakExtension,
+} from 'remirror/extensions';
 
-import { ExtensionPriority, fromHtml, object, toHtml } from '@remirror/core';
-import { createCoreManager } from '@remirror/testing';
+import {
+  ExtensionPriority,
+  htmlToProsemirrorNode,
+  object,
+  prosemirrorNodeToHtml,
+} from '@remirror/core';
 
 import { CodeBlockExtension, CodeBlockOptions, FormatterParameter } from '..';
 import { getLanguage } from '../code-block-utils';
@@ -33,13 +40,13 @@ describe('schema', () => {
   });
 
   it('creates the correct dom node', () => {
-    expect(toHtml({ node: codeBlock(content), schema })).toBe(
+    expect(prosemirrorNodeToHtml(codeBlock(content))).toBe(
       `<pre class="language-${attributes.language}"><code data-code-block-language="${attributes.language}">${content}</code></pre>`,
     );
   });
 
   it('parses the dom structure and finds itself', () => {
-    const node = fromHtml({
+    const node = htmlToProsemirrorNode({
       schema,
       content: `<pre><code class="language-${attributes.language}" data-code-block-language="${attributes.language}">${content}</code></pre>`,
     });
@@ -51,9 +58,9 @@ describe('schema', () => {
 
 describe('constructor', () => {
   it('is created with the correct default properties and settings', () => {
-    const codeBlock = new CodeBlockExtension({ syntaxTheme: 'a11yDark' });
+    const codeBlock = new CodeBlockExtension({ syntaxTheme: 'a11y-dark' });
 
-    expect(codeBlock.options.syntaxTheme).toEqual('a11yDark');
+    expect(codeBlock.options.syntaxTheme).toEqual('a11y-dark');
     expect(codeBlock.options.defaultLanguage).toEqual('markup');
     expect(codeBlock.options.plainTextClassName).toEqual('');
   });

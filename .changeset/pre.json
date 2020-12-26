@@ -45,16 +45,14 @@
     "@remirror/playground": "0.0.0",
     "@remirror/pm": "0.0.0",
     "@remirror/preset-core": "0.0.0",
-    "@remirror/preset-embed": "0.0.0",
-    "@remirror/preset-list": "0.0.0",
+    "@remirror/extension-embed": "0.0.0",
+    "@remirror/extension-list": "0.0.0",
     "@remirror/preset-react": "0.0.0",
     "@remirror/preset-social": "0.0.0",
-    "@remirror/preset-table": "0.0.0",
     "@remirror/preset-wysiwyg": "0.0.0",
     "@remirror/react": "0.13.1",
     "@remirror/react-social": "0.0.0",
     "@remirror/react-utils": "0.7.6",
-    "@remirror/react-wysiwyg": "0.0.0",
     "@remirror/showcase": "0.13.1",
     "@remirror/styles": "0.0.0",
     "@remirror/theme": "0.0.0",
@@ -398,7 +396,6 @@
     "witty-houses-repeat",
     "witty-kangaroos-sit",
     "witty-kiwis-sleep",
-    "young-plants-help",
     "young-schools-remain"
   ]
 }

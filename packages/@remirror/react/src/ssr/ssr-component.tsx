@@ -1,17 +1,15 @@
-import React from 'react';
-
 import type {
-  AnyCombinedUnion,
+  AnyExtension,
   EditorStateParameter,
+  GetSchema,
   RemirrorManager,
-  SchemaFromCombined,
   Shape,
 } from '@remirror/core';
 
 import { mapProps, ReactSerializer } from '../renderers';
 
-export interface RemirrorSSRProps<Combined extends AnyCombinedUnion>
-  extends EditorStateParameter<SchemaFromCombined<Combined>> {
+export interface RemirrorSSRProps<ExtensionUnion extends AnyExtension>
+  extends EditorStateParameter<GetSchema<ExtensionUnion>> {
   /**
    * The attributes to pass into the root div element.
    */
@@ -24,14 +22,14 @@ export interface RemirrorSSRProps<Combined extends AnyCombinedUnion>
   /**
    * The manager.
    */
-  manager: RemirrorManager<Combined>;
+  manager: RemirrorManager<ExtensionUnion>;
 }
 
 /**
  * Remirror SSR component used for rendering in non dom environments.
  */
-export const RemirrorSSR = <Combined extends AnyCombinedUnion>(
-  props: RemirrorSSRProps<Combined>,
+export const RemirrorSSR = <ExtensionUnion extends AnyExtension>(
+  props: RemirrorSSRProps<ExtensionUnion>,
 ): JSX.Element => {
   const { attributes, manager, state, editable } = props;
   const outerProperties = mapProps(attributes);

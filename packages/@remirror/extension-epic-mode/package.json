@@ -18,18 +18,30 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-epic-mode.cjs.js",
-  "module": "dist/extension-epic-mode.esm.js",
-  "browser": {
-    "./dist/extension-epic-mode.cjs.js": "./dist/extension-epic-mode.browser.cjs.js",
-    "./dist/extension-epic-mode.esm.js": "./dist/extension-epic-mode.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-epic-mode.esm.js",
+      "require": "./dist/remirror-extension-epic-mode.cjs.js",
+      "browser": "./dist/remirror-extension-epic-mode.browser.esm.js",
+      "types": "./dist/remirror-extension-epic-mode.cjs.d.ts",
+      "default": "./dist/remirror-extension-epic-mode.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-epic-mode.cjs.d.ts",
+  "main": "dist/remirror-extension-epic-mode.cjs.js",
+  "module": "dist/remirror-extension-epic-mode.esm.js",
+  "browser": {
+    "./dist/remirror-extension-epic-mode.cjs.js": "./dist/remirror-extension-epic-mode.browser.cjs.js",
+    "./dist/remirror-extension-epic-mode.esm.js": "./dist/remirror-extension-epic-mode.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-epic-mode.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0"
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",

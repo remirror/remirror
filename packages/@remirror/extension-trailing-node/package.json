@@ -13,18 +13,30 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-trailing-node.cjs.js",
-  "module": "dist/extension-trailing-node.esm.js",
-  "browser": {
-    "./dist/extension-trailing-node.cjs.js": "./dist/extension-trailing-node.browser.cjs.js",
-    "./dist/extension-trailing-node.esm.js": "./dist/extension-trailing-node.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-trailing-node.esm.js",
+      "require": "./dist/remirror-extension-trailing-node.cjs.js",
+      "browser": "./dist/remirror-extension-trailing-node.browser.esm.js",
+      "types": "./dist/remirror-extension-trailing-node.cjs.d.ts",
+      "default": "./dist/remirror-extension-trailing-node.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-trailing-node.cjs.d.ts",
+  "main": "dist/remirror-extension-trailing-node.cjs.js",
+  "module": "dist/remirror-extension-trailing-node.esm.js",
+  "browser": {
+    "./dist/remirror-extension-trailing-node.cjs.js": "./dist/remirror-extension-trailing-node.browser.cjs.js",
+    "./dist/remirror-extension-trailing-node.esm.js": "./dist/remirror-extension-trailing-node.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-trailing-node.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0"
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",

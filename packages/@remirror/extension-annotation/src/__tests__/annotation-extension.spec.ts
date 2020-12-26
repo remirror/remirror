@@ -371,7 +371,7 @@ describe('helpers', () => {
       },
     ]);
 
-    expect(helpers.getAnnotations()[0].text).toEqual('Hello<NEWLINE>World');
+    expect(helpers.getAnnotations()[0]?.text).toEqual('Hello<NEWLINE>World');
   });
 
   it('#getAnnotationsAt', () => {

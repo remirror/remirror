@@ -45,20 +45,14 @@ export enum ErrorConstant {
   MANAGER_PHASE_ERROR = 'RMR0008',
 
   /**
-   * No directly invoking the editor manager with `new`. Instead use one of the
-   * static methods to create your instance.
+   * The user requested an invalid extension from the getExtensions method.
+   * Please check the `createExtensions` return method is returning an extension
+   * with the defined constructor.
    */
-  NEW_EDITOR_MANAGER = 'RMR0009',
+  INVALID_GET_EXTENSION = 'RMR0010',
 
   /**
-   * The user requested an invalid extension from the preset. Please check the
-   * `createExtensions` return method is returning an extension with the defined
-   * constructor.
-   */
-  INVALID_PRESET_EXTENSION = 'RMR0010',
-
-  /**
-   * Invalid value passed into `Manager constructor`. Only `Presets` and
+   * Invalid value passed into `Manager constructor`. Only and
    * `Extensions` are supported.
    */
   INVALID_MANAGER_ARGUMENTS = 'RMR0011',
@@ -79,9 +73,6 @@ export enum ErrorConstant {
   /** The user requested an invalid extension from the manager. */
   INVALID_MANAGER_EXTENSION = 'RMR0014',
 
-  /** The user requested an invalid preset from the manager. */
-  INVALID_MANAGER_PRESET = 'RMR0015',
-
   /** Command method names must be unique within the editor. */
   DUPLICATE_COMMAND_NAMES = 'RMR0016',
 
@@ -93,9 +84,6 @@ export enum ErrorConstant {
 
   /** The provided extension is invalid. */
   INVALID_EXTENSION = 'RMR0019',
-
-  /** The provided preset is invalid. */
-  INVALID_PRESET = 'RMR0020',
 
   /** The content provided to the editor is not supported. */
   INVALID_CONTENT = 'RMR0021',
@@ -117,9 +105,10 @@ export enum ErrorConstant {
 
   /**
    * `useRemirror` was called outside of the remirror context. It can only be used
-   * within an active remirror context created by the `<RemirrorProvider />`.
+   * within an active remirror context created by the `<Remirror />`.
    */
   REACT_PROVIDER_CONTEXT = 'RMR0200',
+
   /**
    * `getRootProps` has been called MULTIPLE times. It should only be called ONCE during render.
    */
@@ -139,6 +128,23 @@ export enum ErrorConstant {
    * Something went wrong with your custom ReactNodeView Component.
    */
   REACT_NODE_VIEW = 'RMR0204',
+
+  /**
+   * You attempted to call `getContext` provided by the `useRemirror` prop
+   * during the first render of the editor. This is not possible and should only
+   * be after the editor first mounts.
+   */
+  REACT_GET_CONTEXT = 'RMR0205',
+
+  /**
+   * An error occurred when rendering the react components.
+   */
+  REACT_COMPONENTS = 'RMR0206',
+
+  /**
+   * An error occurred within a remirror hook.
+   */
+  REACT_HOOKS = 'RMR0207',
 
   /**
    * There is something wrong with your i18n setup.

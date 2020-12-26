@@ -1,35 +1,32 @@
 import composeRefs from '@seznam/compose-react-refs';
-import React, { Dispatch, ReactNode, Ref, SetStateAction } from 'react';
+import { Dispatch, ReactNode, Ref, SetStateAction } from 'react';
 
 import {
-  AnyCombinedUnion,
+  AnyExtension,
   ErrorConstant,
   Framework,
   FrameworkParameter,
+  FrameworkProps,
+  GetSchema,
   invariant,
   isArray,
   object,
-  SchemaFromCombined,
   shouldUseDomEnvironment,
+  STATE_OVERRIDE,
   UpdateStateParameter,
 } from '@remirror/core';
+import { PlaceholderExtension } from '@remirror/extension-placeholder';
 import type { EditorState } from '@remirror/pm/state';
 import type { EditorView } from '@remirror/pm/view';
-import { ReactPreset } from '@remirror/preset-react';
 import { addKeyToElement } from '@remirror/react-utils';
 
-import type {
-  BaseProps,
-  GetRootPropsConfig,
-  ReactFrameworkOutput,
-  RefKeyRootProps,
-} from './react-types';
+import type { GetRootPropsConfig, ReactFrameworkOutput, RefKeyRootProps } from './react-types';
 import { createEditorView, RemirrorSSR } from './ssr';
 
-export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework<
-  Combined,
-  ReactFrameworkProps<Combined>,
-  ReactFrameworkOutput<Combined>
+export class ReactFramework<ExtensionUnion extends AnyExtension> extends Framework<
+  ExtensionUnion,
+  ReactFrameworkProps<ExtensionUnion>,
+  ReactFrameworkOutput<ExtensionUnion>
 > {
   /**
    * Whether to render the client immediately.
@@ -66,7 +63,7 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
     return 'react' as const;
   }
 
-  constructor(parameter: ReactFrameworkParameter<Combined>) {
+  constructor(parameter: ReactFrameworkParameter<ExtensionUnion>) {
     super(parameter);
 
     const { getShouldRenderClient, setShouldRenderClient } = parameter;
@@ -85,13 +82,15 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
       return;
     }
 
-    this.manager.getPreset(ReactPreset).setOptions({ placeholder: this.props.placeholder ?? '' });
+    this.manager
+      .getExtension(PlaceholderExtension)
+      .setOptions({ placeholder: this.props.placeholder ?? '' });
   }
 
   /**
    * This is called to update props on every render so that values don't become stale.
    */
-  update(parameter: ReactFrameworkParameter<Combined>): this {
+  update(parameter: ReactFrameworkParameter<ExtensionUnion>): this {
     super.update(parameter);
 
     const { getShouldRenderClient, setShouldRenderClient } = parameter;
@@ -106,13 +105,12 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
    * Create the prosemirror editor view.
    */
   protected createView(
-    state: EditorState<SchemaFromCombined<Combined>>,
-  ): EditorView<SchemaFromCombined<Combined>> {
-    return createEditorView<SchemaFromCombined<Combined>>(
+    state: EditorState<GetSchema<ExtensionUnion>>,
+  ): EditorView<GetSchema<ExtensionUnion>> {
+    return createEditorView<GetSchema<ExtensionUnion>>(
       undefined,
       {
         state,
-        nodeViews: this.manager.store.nodeViews,
         dispatchTransaction: this.dispatchTransaction,
         attributes: () => this.getAttributes(),
         editable: () => this.props.editable ?? true,
@@ -134,6 +132,8 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
   /**
    * Creates the props that should be spread on the root element inside which
    * the prosemirror instance will be rendered.
+   *
+   * TODO - this is useless - REFACTOR
    */
   private readonly internalGetRootProps = <RefKey extends string = 'ref'>(
     options?: GetRootPropsConfig<RefKey>,
@@ -151,12 +151,12 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
       [refKey]: composeRefs(ref as Ref<HTMLElement>, this.onRef),
       key: this.uid,
       ...config,
-      children: children ?? this.renderChildren(null),
+      children: this.renderChildren(children),
     } as any;
   };
 
   /**
-   * Stores the Prosemirror editor dom instance for this component using `refs`
+   * Stores the Prosemirror editor dom instance for this component using `refs`.
    */
   private readonly onRef: Ref<HTMLElement> = (element) => {
     if (!element) {
@@ -175,13 +175,13 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
   };
 
   /**
-   * Updates the state either by calling onStateChange when it exists or
+   * Updates the state either by calling `onChange` when it exists or
    * directly setting the internal state via a `setState` call.
    */
-  protected updateState(parameter: UpdateStateParameter<SchemaFromCombined<Combined>>): void {
-    const { state, triggerChange = true, tr, transactions } = parameter;
+  protected updateState({ state, ...rest }: UpdateStateParameter<GetSchema<ExtensionUnion>>): void {
+    const { triggerChange = true, tr, transactions } = rest;
 
-    if (this.props.value) {
+    if (this.props.state) {
       const { onChange } = this.props;
 
       invariant(onChange, {
@@ -193,7 +193,7 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
       invariant(triggerChange, {
         code: ErrorConstant.REACT_CONTROLLED,
         message:
-          'Controlled editors do not support `clearContent` or `setContent` where `triggerChange` is `true`. Update the `value` prop instead.',
+          'Controlled editors do not support `clearContent` or `setContent` where `triggerChange` is `true`. Update the `state` prop instead.',
       });
 
       if (!this.previousStateOverride) {
@@ -203,6 +203,12 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
       this.onChange({ state, tr });
 
       return;
+    }
+
+    // Check if this is a fresh update directly applied by the developer (without
+    // transactions or commands).
+    if (!tr && !transactions) {
+      state = state.apply(state.tr.setMeta(STATE_OVERRIDE, {}));
     }
 
     // Update the internal prosemirror state. This happens before we update
@@ -222,10 +228,14 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
    * of this update.
    */
   updateControlledState(
-    state: EditorState<SchemaFromCombined<Combined>>,
-    previousState?: EditorState<SchemaFromCombined<Combined>>,
+    state: EditorState<GetSchema<ExtensionUnion>>,
+    previousState?: EditorState<GetSchema<ExtensionUnion>>,
   ): void {
     this.previousStateOverride = previousState;
+
+    // Mark this as a state override so that extensions and plugins know to
+    // ignore the transaction.
+    state = state.apply(state.tr.setMeta(STATE_OVERRIDE, {}));
 
     this.view.updateState(state);
     this.manager.onStateUpdate({ previousState: this.previousState, state });
@@ -289,11 +299,15 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
     }
   }
 
-  get frameworkOutput(): ReactFrameworkOutput<Combined> {
+  /**
+   * Get the framework output.
+   */
+  get frameworkOutput(): ReactFrameworkOutput<ExtensionUnion> {
     return {
       ...this.baseOutput,
       getRootProps: this.getRootProps,
       portalContainer: this.manager.store.portalContainer,
+      renderSsr: this.renderSsr,
     };
   }
 
@@ -302,8 +316,10 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
    * the SSR component
    *
    * @param children
+   *
+   * TODO - this is useless and should be refactored.
    */
-  private renderChildren(child: ReactNode) {
+  private renderChildren(child: ReactNode = null) {
     const { forceEnvironment, insertPosition = 'end', suppressHydrationWarning } = this.props;
     const children = isArray(child) ? child : [child];
 
@@ -314,7 +330,7 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
       return children;
     }
 
-    const ssrElement = this.renderSSR();
+    const ssrElement = this.renderSsr();
 
     return (insertPosition === 'start' ? [ssrElement, ...children] : [...children, ssrElement]).map(
       addKeyToElement,
@@ -322,18 +338,27 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
   }
 
   /**
-   * Return a JSX Element to be used within the domless environment.
+   * Return a JSX Element to be used within the ssr rendering phase.
    */
-  private renderSSR() {
+  renderSsr = (): ReactNode => {
+    const { suppressHydrationWarning, forceEnvironment, editable } = this.props;
+
+    if (
+      shouldUseDomEnvironment(forceEnvironment) &&
+      (!suppressHydrationWarning || this.shouldRenderClient)
+    ) {
+      return null;
+    }
+
     return (
       <RemirrorSSR
         attributes={this.getAttributes(true)}
         state={this.getState()}
         manager={this.manager}
-        editable={this.props.editable ?? true}
+        editable={editable ?? true}
       />
     );
-  }
+  };
 
   /**
    * Reset the called status of `getRootProps`.
@@ -345,13 +370,32 @@ export class ReactFramework<Combined extends AnyCombinedUnion> extends Framework
   }
 }
 
-export interface ReactFrameworkProps<Combined extends AnyCombinedUnion>
-  extends BaseProps<Combined> {
+export interface ReactFrameworkProps<ExtensionUnion extends AnyExtension>
+  extends FrameworkProps<ExtensionUnion> {
   /**
-   * The render prop that takes the injected remirror params and returns an
-   * element to render. The editor view is automatically attached to the DOM.
+   * When `onChange` is defined this prop is used to set the next editor
+   * state value of the Editor. The value is an instance of the **ProseMirror**
+   * [[`EditorState`]].
+   *
+   * @remarks
+   *
+   * When this is provided the editor becomes a controlled component. Nothing
+   * will be updated unless you explicitly set the value prop to the updated
+   * state.
+   *
+   * Be careful not to set and unset the value as this will trigger an error.
+   *
+   * When the Editor is set to be controlled there are a number of things to be
+   * aware of.
+   *
+   * - **The last dispatch wins** - Calling multiple dispatches synchronously
+   *   during an update is no longer possible since each dispatch needs to be
+   *   processed within the `onChange` handler and updated via `setState` call.
+   *   Only the most recent call is updated.
+   * - **Use chained commands** - These can help resolve the above limitation
+   *   for handling multiple updates.
    */
-  // children: RenderPropFunction<Combined>;
+  state?: EditorState<GetSchema<ExtensionUnion>> | null;
 
   /**
    * Set to true to ignore the hydration warning for a mismatch between the
@@ -374,16 +418,29 @@ export interface ReactFrameworkProps<Combined extends AnyCombinedUnion>
    *
    * For ease of use this prop copies the name used by react for DOM Elements.
    * See {@link
-   * https://reactjs.org/docs/dom-elements.html#suppresshydrationwarning}.
+   * https://reactjs.org/docs/dom-elements.html#suppresshydrationwarning.
    */
   suppressHydrationWarning?: boolean;
+
+  /**
+   * Determine whether the Prosemirror view is inserted at the `start` or `end`
+   * of it's container DOM element.
+   *
+   * @default 'end'
+   */
+  insertPosition?: 'start' | 'end';
+
+  /**
+   * The placeholder to set for the editor.
+   */
+  placeholder?: string;
 }
 
 /**
  * The parameter that is passed into the ReactFramework.
  */
-export interface ReactFrameworkParameter<Combined extends AnyCombinedUnion>
-  extends FrameworkParameter<Combined, ReactFrameworkProps<Combined>> {
+export interface ReactFrameworkParameter<ExtensionUnion extends AnyExtension>
+  extends FrameworkParameter<ExtensionUnion, ReactFrameworkProps<ExtensionUnion>> {
   getShouldRenderClient: () => boolean | undefined;
   setShouldRenderClient: SetShouldRenderClient;
 }

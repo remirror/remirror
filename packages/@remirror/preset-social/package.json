@@ -14,22 +14,33 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/preset-social.cjs.js",
-  "module": "dist/preset-social.esm.js",
-  "browser": {
-    "./dist/preset-social.cjs.js": "./dist/preset-social.browser.cjs.js",
-    "./dist/preset-social.esm.js": "./dist/preset-social.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-preset-social.esm.js",
+      "require": "./dist/remirror-preset-social.cjs.js",
+      "browser": "./dist/remirror-preset-social.browser.esm.js",
+      "types": "./dist/remirror-preset-social.cjs.d.ts",
+      "default": "./dist/remirror-preset-social.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/preset-social.cjs.d.ts",
+  "main": "dist/remirror-preset-social.cjs.js",
+  "module": "dist/remirror-preset-social.esm.js",
+  "browser": {
+    "./dist/remirror-preset-social.cjs.js": "./dist/remirror-preset-social.browser.cjs.js",
+    "./dist/remirror-preset-social.esm.js": "./dist/remirror-preset-social.browser.esm.js"
+  },
+  "types": "dist/remirror-preset-social.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
-    "@remirror/extension-auto-link": "1.0.0-next.60",
+    "@babel/runtime": "^7.12.5",
     "@remirror/extension-emoji": "1.0.0-next.60",
+    "@remirror/extension-link": "1.0.0-next.60",
     "@remirror/extension-mention": "1.0.0-next.60",
-    "type-fest": "^0.18.0"
+    "type-fest": "^0.20.2"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",

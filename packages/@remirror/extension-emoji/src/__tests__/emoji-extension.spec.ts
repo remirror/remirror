@@ -1,6 +1,6 @@
 import { renderEditor } from 'jest-remirror';
 
-import { BuiltinPreset, object } from '@remirror/core';
+import { KeymapExtension, object } from '@remirror/core';
 
 import type {
   EmojiChangeHandler,
@@ -65,7 +65,7 @@ function create(options: EmojiOptions = object()) {
   const editor = renderEditor([extension]);
 
   extension.addHandler('onChange', onChange);
-  editor.manager.getPreset(BuiltinPreset).addCustomHandler('keymap', keymap);
+  editor.manager.getExtension(KeymapExtension).addCustomHandler('keymap', keymap);
 
   return { ...editor, editor, onChange, onExit, getEmoji: () => emoji, keymap };
 }

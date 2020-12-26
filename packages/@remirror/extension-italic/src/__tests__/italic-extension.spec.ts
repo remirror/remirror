@@ -1,6 +1,5 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-
-import { BoldExtension } from '@remirror/testing';
+import { BoldExtension } from 'remirror/extensions';
 
 import { ItalicExtension } from '../..';
 

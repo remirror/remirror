@@ -8,7 +8,9 @@ import type { EditorSchema, EditorState, Suggester } from './suggest-types';
  *
  * @param state - the editor state.
  */
-export function getSuggestPluginState(state: EditorState): SuggestState {
+export function getSuggestPluginState<Schema extends EditorSchema = EditorSchema>(
+  state: EditorState<Schema>,
+): SuggestState {
   return suggestPluginKey.getState(state);
 }
 

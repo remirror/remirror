@@ -1,7 +1,6 @@
-import React from 'react';
+import { createReactManager, Remirror } from 'remirror/react';
 
-import { RemirrorProvider } from '@remirror/react';
-import { createReactManager, strictRender } from '@remirror/testing/react';
+import { strictRender } from '@remirror/testing/react';
 
 import { ProsemirrorDevTools } from '../dev';
 
@@ -11,9 +10,9 @@ beforeEach(() => {
 
 test('it supports <ProsemirrorDevTools />', () => {
   const { baseElement } = strictRender(
-    <RemirrorProvider manager={createReactManager([])}>
+    <Remirror manager={createReactManager([])}>
       <ProsemirrorDevTools />
-    </RemirrorProvider>,
+    </Remirror>,
   );
   const element = baseElement.querySelector('.__prosemirror-dev-tools__');
 
@@ -24,15 +23,15 @@ test('it unmounts <ProsemirrorDevTools />', () => {
   const Component = ({ dev }: { dev: boolean }) => (dev ? <ProsemirrorDevTools /> : <div />);
 
   const { baseElement, rerender } = strictRender(
-    <RemirrorProvider manager={createReactManager([])}>
+    <Remirror manager={createReactManager([])}>
       <Component dev={true} />
-    </RemirrorProvider>,
+    </Remirror>,
   );
 
   rerender(
-    <RemirrorProvider manager={createReactManager([])}>
+    <Remirror manager={createReactManager([])}>
       <Component dev={false} />
-    </RemirrorProvider>,
+    </Remirror>,
   );
   const element = baseElement.querySelector('.__prosemirror-dev-tools__');
 

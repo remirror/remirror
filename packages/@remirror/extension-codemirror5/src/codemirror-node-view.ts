@@ -2,13 +2,12 @@
  * Reference: https://prosemirror.net/examples/codemirror/
  */
 
-import CodeMirror from 'codemirror';
-
 import type { EditorSchema, EditorView, NodeView, ProsemirrorNode } from '@remirror/pm';
 import { exitCode } from '@remirror/pm/commands';
 import { redo, undo } from '@remirror/pm/history';
 import { Selection, TextSelection } from '@remirror/pm/state';
 
+import ref from './codemirror-ref';
 import type { CodeMirrorExtensionAttributes } from './codemirror-types';
 import { parseLanguageToMode } from './codemirror-utils';
 
@@ -73,7 +72,7 @@ export class CodeMirrorNodeView implements NodeView {
     this.#getPos = getPos;
 
     // Create a CodeMirror instance
-    this.#cm = CodeMirror((null as unknown) as HTMLElement, {
+    this.#cm = ref.CodeMirror((null as unknown) as HTMLElement, {
       value: this.#node.textContent,
       extraKeys: this.codeMirrorKeymap(),
       ...config,
@@ -197,7 +196,7 @@ export class CodeMirrorNodeView implements NodeView {
   codeMirrorKeymap(): CodeMirror.KeyMap {
     const view = this.#view;
     const mod = /Mac/.test(navigator.platform) ? 'Cmd' : 'Ctrl';
-    return CodeMirror.normalizeKeyMap({
+    return ref.CodeMirror.normalizeKeyMap({
       Up: () => this.maybeEscape('line', -1),
       Left: () => this.maybeEscape('char', -1),
       Down: () => this.maybeEscape('line', 1),
@@ -213,7 +212,7 @@ export class CodeMirrorNodeView implements NodeView {
     });
   }
 
-  maybeEscape(unit: 'line' | 'char', dir: 1 | -1): null | typeof CodeMirror.Pass {
+  maybeEscape(unit: 'line' | 'char', dir: 1 | -1): null | typeof ref.CodeMirror.Pass {
     const pos = this.#cm.getCursor();
 
     if (
@@ -221,7 +220,7 @@ export class CodeMirrorNodeView implements NodeView {
       pos.line !== (dir < 0 ? this.#cm.firstLine() : this.#cm.lastLine()) ||
       (unit === 'char' && pos.ch !== (dir < 0 ? 0 : this.#cm.getLine(pos.line).length))
     ) {
-      return CodeMirror.Pass;
+      return ref.CodeMirror.Pass;
     }
 
     this.#view.focus();

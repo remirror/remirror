@@ -42,8 +42,8 @@
 '@remirror/playground': patch
 '@remirror/pm': patch
 '@remirror/preset-core': patch
-'@remirror/preset-embed': patch
-'@remirror/preset-list': patch
+'@remirror/extension-embed': patch
+'@remirror/extension-list': patch
 '@remirror/preset-react': patch
 '@remirror/preset-social': patch
 '@remirror/preset-table': patch
@@ -51,7 +51,6 @@
 '@remirror/react': patch
 '@remirror/react-social': patch
 '@remirror/react-utils': patch
-'@remirror/react-wysiwyg': patch
 '@remirror/showcase': patch
 '@remirror/styles': patch
 '@remirror/theme': patch

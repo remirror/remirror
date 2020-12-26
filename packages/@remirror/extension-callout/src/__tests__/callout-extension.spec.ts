@@ -1,8 +1,7 @@
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-
-import { fromHtml, toHtml } from '@remirror/core';
-import { createCoreManager } from '@remirror/testing';
+import { htmlToProsemirrorNode, prosemirrorNodeToHtml } from 'remirror';
+import { createCoreManager } from 'remirror/extensions';
 
 import { CalloutExtension } from '..';
 
@@ -14,7 +13,7 @@ describe('schema', () => {
   const { callout, doc, p } = pmBuild(schema, {});
 
   it('creates the correct dom node', () => {
-    expect(toHtml({ node: callout(p('Hello friend!')), schema })).toMatchInlineSnapshot(`
+    expect(prosemirrorNodeToHtml(callout(p('Hello friend!')))).toMatchInlineSnapshot(`
       <div data-callout-type="info">
         <p>
           Hello friend!
@@ -24,7 +23,10 @@ describe('schema', () => {
   });
 
   it('parses the dom structure and finds itself', () => {
-    const node = fromHtml({ schema, content: '<div data-callout-type="info">Hello friend!</div>' });
+    const node = htmlToProsemirrorNode({
+      schema,
+      content: '<div data-callout-type="info">Hello friend!</div>',
+    });
     const expected = doc(callout(p('Hello friend!')));
 
     expect(node).toEqualProsemirrorNode(expected);
@@ -37,7 +39,7 @@ test('supports extra attributes', () => {
   ]);
   const { callout, p } = pmBuild(schema, {});
 
-  expect(toHtml({ node: callout(p('friend!')), schema })).toMatchInlineSnapshot(`
+  expect(prosemirrorNodeToHtml(callout(p('friend!')))).toMatchInlineSnapshot(`
     <div data-custom="hello-world"
          data-callout-type="info"
     >

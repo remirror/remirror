@@ -1,16 +1,14 @@
-import React from 'react';
 import TestRenderer from 'react-test-renderer';
-
-import { ExtensionTag, NodeExtension, NodeExtensionSpec } from '@remirror/core';
-import { Node as PMNode } from '@remirror/pm/model';
 import {
   BoldExtension,
   CodeBlockExtension,
   ItalicExtension,
-  simpleJSON,
-  testJSON,
   UnderlineExtension,
-} from '@remirror/testing';
+} from 'remirror/extensions';
+
+import { ExtensionTag, NodeExtension, NodeExtensionSpec } from '@remirror/core';
+import { Node as PMNode } from '@remirror/pm/model';
+import { simpleJSON, testJSON } from '@remirror/testing';
 
 import { createReactManager } from '../../react-helpers';
 import { ReactSerializer } from '../react-serializer';
@@ -22,7 +20,9 @@ class FooExtension extends NodeExtension {
     return 'foo' as const;
   }
 
-  readonly tags = [ExtensionTag.BlockNode];
+  createTags() {
+    return [ExtensionTag.Block];
+  }
 
   createNodeSpec(): NodeExtensionSpec {
     return {

@@ -1,7 +1,7 @@
 import { PluginKey, Selection, TextSelection } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
-import { bool, isFunction, isString, object, sort } from '@remirror/core-helpers';
+import { isFunction, isString, keys, object, sort } from '@remirror/core-helpers';
 
 import {
   isInvalidSplitReason,
@@ -394,7 +394,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
     const offset = isString(suggester.char) ? suggester.char.length : 1;
     const decoration = this.#ignored.find(from, from + offset)[0];
 
-    if (!bool(decoration) || decoration.spec.name !== name) {
+    if (!decoration || decoration.spec.name !== name) {
       return;
     }
 

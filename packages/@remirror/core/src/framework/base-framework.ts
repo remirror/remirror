@@ -1,3 +1,4 @@
+import { ClassName } from '@linaria/core/types/cx';
 import type { Unsubscribe } from 'nanoevents';
 
 import type {
@@ -5,41 +6,42 @@ import type {
   EditorState,
   EditorStateParameter,
   EditorViewParameter,
-  FromToParameter,
   PrimitiveSelection,
   RemirrorContentType,
-  RemirrorJSON,
   RenderEnvironment,
-  StateJSON,
   TextParameter,
   Transaction,
   TransactionParameter,
   TransactionTransformer,
 } from '@remirror/core-types';
-import type { InvalidContentHandler, StringHandlerParameter } from '@remirror/core-utils';
+import type { InvalidContentHandler, StringHandler } from '@remirror/core-utils';
 import type { DirectEditorProps } from '@remirror/pm/view';
 
 import type { UpdatableViewProps } from '../builtins';
-import type { AnyExtensionConstructor } from '../extension';
+import type { AnyExtension, AnyExtensionConstructor, GetSchema } from '../extension';
 import type { ManagerEvents, RemirrorManager } from '../manager';
-import type { AnyPresetConstructor } from '../preset';
-import type { AnyCombinedUnion, SchemaFromCombined } from '../preset/preset-types';
 
-export interface BaseFramework<Combined extends AnyCombinedUnion> {
+export interface BaseFramework<ExtensionUnion extends AnyExtension> {
   /**
    * The name of the framework being used.
    */
   readonly name: string;
 
   /**
+   * The document that should be used for rendering. This can be overridden for
+   * frameworks that wish to implement SSR support.
+   */
+  readonly document: Document;
+
+  /**
    * The state that is initially passed into the editor.
    */
-  initialEditorState: EditorState<SchemaFromCombined<Combined>>;
+  initialEditorState: EditorState<GetSchema<ExtensionUnion>>;
 
   /**
    * The minimum required output from the framework.
    */
-  readonly frameworkOutput: FrameworkOutput<Combined>;
+  readonly frameworkOutput: FrameworkOutput<ExtensionUnion>;
 
   /**
    * Destroy the framework and cleanup all created listeners.
@@ -48,13 +50,13 @@ export interface BaseFramework<Combined extends AnyCombinedUnion> {
 }
 
 export interface FrameworkParameter<
-  Combined extends AnyCombinedUnion,
-  Props extends FrameworkProps<Combined>
+  ExtensionUnion extends AnyExtension,
+  Props extends FrameworkProps<ExtensionUnion>
 > {
   /**
    * The initial editor state
    */
-  initialEditorState: EditorState<SchemaFromCombined<Combined>>;
+  initialEditorState: EditorState<GetSchema<ExtensionUnion>>;
 
   /**
    * A method for getting the passed in props.
@@ -65,7 +67,7 @@ export interface FrameworkParameter<
    * A custom method for creating a prosemirror state from content. It allows
    * users to manage controlled editors more easily.
    */
-  createStateFromContent: CreateStateFromContent<Combined>;
+  createStateFromContent: CreateStateFromContent<ExtensionUnion>;
 
   /**
    * When provided the view will immediately be inserted into the dom within
@@ -89,21 +91,22 @@ export type FocusType = PrimitiveSelection | boolean;
  * The base options for an editor wrapper. This is used within the react and dom
  * implementations.
  */
-export interface FrameworkProps<Combined extends AnyCombinedUnion> extends StringHandlerParameter {
+export interface FrameworkProps<
+  ExtensionUnion extends AnyExtension,
+  Manager extends RemirrorManager<ExtensionUnion> = RemirrorManager<ExtensionUnion>
+> {
   /**
    * Pass in the extension manager.
    *
    * The manager is responsible for handling all Prosemirror related
    * functionality.
-   *
-   * TODO - why does this only work as `any`.
    */
-  manager: RemirrorManager<any>;
+  manager: Manager;
 
   /**
-   * Set the starting value object of the editor.
+   * Set the starting value for the editor.
    *
-   * Without setting onStateChange remirror renders as an uncontrolled
+   * Without setting the value prop `onChange` remirror renders as an uncontrolled
    * component. Value changes are passed back out of the editor and there is now
    * way to set the value via props. As a result this is the only opportunity to
    * directly control the rendered text.
@@ -117,7 +120,14 @@ export interface FrameworkProps<Combined extends AnyCombinedUnion> extends Strin
    *
    * @default {}
    */
-  attributes?: Record<string, string> | AttributePropFunction<Combined>;
+  attributes?: Record<string, string> | AttributePropFunction<Manager['~E']>;
+
+  /**
+   * Additional classes which can be passed into the the editor wrapper. These
+   * are placed on root `Prosemirror` element and can be used to effect styling
+   * within the editor.
+   */
+  classNames?: ClassName[];
 
   /**
    * Determines whether this editor is editable or not.
@@ -137,17 +147,17 @@ export interface FrameworkProps<Combined extends AnyCombinedUnion> extends Strin
   /**
    * An event listener which is called whenever the editor gains focus.
    */
-  onFocus?: (params: RemirrorEventListenerParameter<Combined>, event: Event) => void;
+  onFocus?: (params: RemirrorEventListenerParameter<Manager['~E']>, event: Event) => void;
 
   /**
    * An event listener which is called whenever the editor is blurred.
    */
-  onBlur?: (params: RemirrorEventListenerParameter<Combined>, event: Event) => void;
+  onBlur?: (params: RemirrorEventListenerParameter<Manager['~E']>, event: Event) => void;
 
   /**
    * Called on every change to the Prosemirror state.
    */
-  onChange?: RemirrorEventListener<Combined>;
+  onChange?: RemirrorEventListener<ExtensionUnion>;
 
   /**
    * A method called when the editor is dispatching the transaction.
@@ -156,7 +166,7 @@ export interface FrameworkProps<Combined extends AnyCombinedUnion> extends Strin
    * Use this to update the transaction which will be used to update the editor
    * state.
    */
-  onDispatchTransaction?: TransactionTransformer<SchemaFromCombined<Combined>>;
+  onDispatchTransaction?: TransactionTransformer<GetSchema<Manager['~E']>>;
 
   /**
    * Sets the accessibility label for the editor instance.
@@ -181,9 +191,9 @@ export interface FrameworkProps<Combined extends AnyCombinedUnion> extends Strin
    *
    * ```tsx
    * import React from 'react';
-   * import { RemirrorProvider, InvalidContentHandler } from 'remirror/core';
-   * import { RemirrorProvider, useManager } from 'remirror/react';
-   * import { WysiwygPreset } from 'remirror/preset/wysiwyg';
+   * import { Remirror, InvalidContentHandler } from 'remirror';
+   * import { Remirror, useManager } from 'remirror/react';
+   * import { WysiwygPreset } from 'remirror/extensions';
    *
    * const Framework = () => {
    *   const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {
@@ -194,28 +204,51 @@ export interface FrameworkProps<Combined extends AnyCombinedUnion> extends Strin
    *   const manager = useManager(() => [new WysiwygPreset()]);
    *
    *   return (
-   *     <RemirrorProvider manager={manager} onError={onError}>
+   *     <Remirror manager={manager} onError={onError}>
    *       <div />
-   *     </RemirrorProvider>
+   *     </Remirror>
    *   );
    * };
    * ```
    */
   onError?: InvalidContentHandler;
+
+  /**
+   * A function which transforms a string into a prosemirror node.
+   *
+   * @remarks
+   *
+   * Can be used to transform markdown / html or any other string format into a
+   * prosemirror node.
+   *
+   * See [[`fromHTML`]] for an example of how this could work.
+   */
+  stringHandler?: keyof Remirror.StringHandlers | StringHandler;
 }
+
+export type AddFrameworkHandler<ExtensionUnion extends AnyExtension> = <
+  Key extends keyof FrameworkEvents<ExtensionUnion>
+>(
+  event: Key,
+  cb: FrameworkEvents<ExtensionUnion>[Key],
+) => Unsubscribe;
 
 /**
  * This is the base output that is created by a framework.
  */
-export interface FrameworkOutput<Combined extends AnyCombinedUnion>
-  extends Remirror.ManagerStore<Combined> {
+export interface FrameworkOutput<
+  ExtensionUnion extends AnyExtension,
+  Manager extends RemirrorManager<ExtensionUnion> = RemirrorManager<ExtensionUnion>
+> extends Remirror.ManagerStore<Manager['~E']> {
+  /**
+   * The manager which was used to create this editor.
+   */
+  manager: Manager;
+
   /**
    * Add event handlers to the remirror editor at runtime.
    */
-  addHandler: <Key extends keyof FrameworkEvents<Combined>>(
-    event: Key,
-    cb: FrameworkEvents<Combined>[Key],
-  ) => Unsubscribe;
+  addHandler: AddFrameworkHandler<Manager['~E']>;
 
   /**
    * The unique id for the editor instance.
@@ -228,7 +261,7 @@ export interface FrameworkOutput<Combined extends AnyCombinedUnion>
    * @param options - includes a `triggerChange` handler which should be
    * triggered by the update.
    *
-   * This method is not supported when using a controlled editor.
+   * To use this in a controlled editor, you must set `triggerChange` to `true`.
    */
   clearContent: (options?: TriggerChangeParameter) => void;
 
@@ -242,32 +275,21 @@ export interface FrameworkOutput<Combined extends AnyCombinedUnion>
    * @param triggerOnChange - whether the `onChange` handler should be triggered
    * by the update. Defaults to `false`.
    *
-   * This method is not supported when using a controlled editor.
+   * To use this in a controlled editor, you must set `triggerChange` to `true`.
    */
   setContent: (content: RemirrorContentType, options?: TriggerChangeParameter) => void;
-
-  /**
-   * Focus the editor at the `start` | `end` a specific position or at a valid
-   * range between `{ from, to }`.
-   */
-  focus: (position?: FocusType) => void;
-
-  /**
-   * Blur the editor.
-   */
-  blur: () => void;
 
   /**
    * A getter function for the current editor state. It's a wrapper around
    * `view.state`.
    */
-  getState: () => EditorState<SchemaFromCombined<Combined>>;
+  getState: () => EditorState<GetSchema<ExtensionUnion>>;
 
   /**
    * A getter function for the previous prosemirror editor state. It can be used
    * to check what's changed between states.
    */
-  getPreviousState: () => EditorState<SchemaFromCombined<Combined>>;
+  getPreviousState: () => EditorState<GetSchema<ExtensionUnion>>;
 
   /**
    * Get an extension by it's constructor.
@@ -277,43 +299,32 @@ export interface FrameworkOutput<Combined extends AnyCombinedUnion>
   ) => InstanceType<ExtensionConstructor>;
 
   /**
-   * Get an extension by it's constructor.
-   */
-  getPreset: <PresetConstructor extends AnyPresetConstructor>(
-    Constructor: PresetConstructor,
-  ) => InstanceType<PresetConstructor>;
-}
-
-export interface RemirrorGetterParameter {
-  /**
-   * Get the current HTML from the latest editor state.
-   */
-  getHTML: () => string;
-
-  /**
-   * Get the current raw text from the latest editor state.
+   * Focus the editor at the `start` | `end` a specific position or at a valid
+   * range between `{ from, to }`.
    *
-   * @param lineBreakDivider - the divider to use for new lines defaults to
-   * '\n\n'
+   * @deprecated This method may be removed in the future and it is advisable to
+   * use `commands.focus()`.
    */
-  getText: (lineBreakDivider?: string) => string;
+  focus: (position?: FocusType) => void;
 
   /**
-   * Get the full JSON representation of the state (including the selection
-   * information)
+   * Blur the editor.
+   *
+   * @deprecated This method may be removed in the future and it is advisable to
+   * use `commands.blur()`.
    */
-  getJSON: () => StateJSON;
-
-  /**
-   * Get a representation of the editor content as an ObjectNode which can be
-   * used to set content for and editor.
-   */
-  getRemirrorJSON: () => RemirrorJSON;
+  blur: (position?: PrimitiveSelection) => void;
 }
 
-export interface BaseListenerParameter<Combined extends AnyCombinedUnion>
-  extends EditorViewParameter<SchemaFromCombined<Combined>>,
-    RemirrorGetterParameter {
+export type CreateStateFromContent<ExtensionUnion extends AnyExtension> = (
+  content: RemirrorContentType,
+  selection?: PrimitiveSelection,
+) => EditorState<GetSchema<ExtensionUnion>>;
+
+export interface RemirrorEventListenerParameter<ExtensionUnion extends AnyExtension>
+  extends EditorStateParameter<GetSchema<ExtensionUnion>>,
+    Remirror.ListenerProperties<ExtensionUnion>,
+    EditorViewParameter<GetSchema<ExtensionUnion>> {
   /**
    * The original transaction which caused this state update.
    *
@@ -326,7 +337,7 @@ export interface BaseListenerParameter<Combined extends AnyCombinedUnion>
    * - Was ths change caused by an updated selection? `tr.selectionSet`
    * - `tr.steps` can be inspected for further granularity.
    */
-  tr?: Transaction<SchemaFromCombined<Combined>>;
+  tr?: Transaction<GetSchema<ExtensionUnion>>;
 
   /**
    * A shorthand way of checking whether the update was triggered by editor
@@ -337,16 +348,7 @@ export interface BaseListenerParameter<Combined extends AnyCombinedUnion>
    * - `false` The update was caused by a call to `setContent` or `resetContent`
    */
   internalUpdate: boolean;
-}
 
-export type CreateStateFromContent<Combined extends AnyCombinedUnion> = (
-  content: RemirrorContentType,
-  selection?: FromToParameter,
-) => EditorState<SchemaFromCombined<Combined>>;
-
-export interface RemirrorEventListenerParameter<Combined extends AnyCombinedUnion>
-  extends EditorStateParameter<SchemaFromCombined<Combined>>,
-    BaseListenerParameter<Combined> {
   /**
    * True when this is the first render of the editor. This applies when the
    * editor is first attached to the DOM.
@@ -356,20 +358,20 @@ export interface RemirrorEventListenerParameter<Combined extends AnyCombinedUnio
   /**
    * The previous state.
    */
-  previousState: EditorState<SchemaFromCombined<Combined>>;
+  previousState: EditorState<GetSchema<ExtensionUnion>>;
 
   /**
    * Manually create a new state object with the desired content.
    */
-  createStateFromContent: CreateStateFromContent<Combined>;
+  createStateFromContent: CreateStateFromContent<ExtensionUnion>;
 }
 
-export type RemirrorEventListener<Combined extends AnyCombinedUnion> = (
-  params: RemirrorEventListenerParameter<Combined>,
+export type RemirrorEventListener<ExtensionUnion extends AnyExtension> = (
+  params: RemirrorEventListenerParameter<ExtensionUnion>,
 ) => void;
 
-export type AttributePropFunction<Combined extends AnyCombinedUnion> = (
-  params: RemirrorEventListenerParameter<Combined>,
+export type AttributePropFunction<ExtensionUnion extends AnyExtension> = (
+  params: RemirrorEventListenerParameter<ExtensionUnion>,
 ) => Record<string, string>;
 
 export interface PlaceholderConfig extends TextParameter {
@@ -400,21 +402,21 @@ export interface TriggerChangeParameter {
   triggerChange?: boolean;
 }
 
-export interface ListenerParameter<Combined extends AnyCombinedUnion>
-  extends Partial<EditorStateParameter<SchemaFromCombined<Combined>>>,
-    Partial<TransactionParameter<SchemaFromCombined<Combined>>> {}
+export interface ListenerParameter<ExtensionUnion extends AnyExtension>
+  extends Partial<EditorStateParameter<GetSchema<ExtensionUnion>>>,
+    Partial<TransactionParameter<GetSchema<ExtensionUnion>>> {}
 
-export interface FrameworkEvents<Combined extends AnyCombinedUnion>
+export interface FrameworkEvents<ExtensionUnion extends AnyExtension>
   extends Pick<ManagerEvents, 'destroy'> {
   /**
    * An event listener which is called whenever the editor gains focus.
    */
-  focus: (params: RemirrorEventListenerParameter<Combined>, event: Event) => void;
+  focus: (params: RemirrorEventListenerParameter<ExtensionUnion>, event: Event) => void;
 
   /**
    * An event listener which is called whenever the editor is blurred.
    */
-  blur: (params: RemirrorEventListenerParameter<Combined>, event: Event) => void;
+  blur: (params: RemirrorEventListenerParameter<ExtensionUnion>, event: Event) => void;
 
   /**
    * Called on every state update after the state has been applied to the editor.
@@ -422,7 +424,13 @@ export interface FrameworkEvents<Combined extends AnyCombinedUnion>
    * This should be used to track the current editor state and check if commands
    * are enabled.
    */
-  updated: RemirrorEventListener<Combined>;
+  updated: RemirrorEventListener<ExtensionUnion>;
 }
 
 export type UpdatableViewPropsObject = { [Key in UpdatableViewProps]: DirectEditorProps[Key] };
+
+declare global {
+  namespace Remirror {
+    interface ListenerProperties<ExtensionUnion extends AnyExtension> {}
+  }
+}

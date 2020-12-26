@@ -1,8 +1,8 @@
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
+import { createCoreManager } from 'remirror/extensions';
 
-import { fromHtml, toHtml } from '@remirror/core';
-import { createCoreManager } from '@remirror/testing';
+import { htmlToProsemirrorNode, prosemirrorNodeToHtml } from '@remirror/core';
 
 import { MentionAtomExtension, MentionAtomOptions } from '..';
 
@@ -19,7 +19,7 @@ describe('schema', () => {
   });
 
   it('creates the correct dom node', () => {
-    expect(toHtml({ node: p(mentionAtom()), schema })).toMatchInlineSnapshot(`
+    expect(prosemirrorNodeToHtml(p(mentionAtom()))).toMatchInlineSnapshot(`
       <p>
         <span class="mention-atom mention-atom-testing"
               data-mention-atom-id="test"
@@ -32,7 +32,7 @@ describe('schema', () => {
   });
 
   it('parses the dom structure and finds itself', () => {
-    const node = fromHtml({
+    const node = htmlToProsemirrorNode({
       schema,
       content: `<span class="mention-atom mention-atom-testing" data-mention-atom-id="${attributes.id}" data-mention-atom-name="${attributes.name}">${attributes.label}</a>`,
     });

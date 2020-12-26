@@ -5,7 +5,6 @@
 '@remirror/extension-react-component': patch
 '@remirror/preset-core': patch
 '@remirror/react': patch
-'@remirror/react-wysiwyg': patch
 '@remirror/styles': patch
 'jest-remirror': patch
 ---

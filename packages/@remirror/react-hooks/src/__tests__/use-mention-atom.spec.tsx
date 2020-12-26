@@ -1,10 +1,10 @@
 import { RemirrorTestChain } from 'jest-remirror';
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { NON_BREAKING_SPACE_CHAR } from '@remirror/core';
 import { MentionAtomExtension, MentionAtomNodeAttributes } from '@remirror/extension-mention-atom';
 import { ChangeReason } from '@remirror/pm/suggest';
-import { createReactManager, RemirrorProvider } from '@remirror/react';
+import { createReactManager, Remirror, useRemirror } from '@remirror/react';
 import { act, DefaultEditor, render, strictRender } from '@remirror/testing/react';
 
 import { MentionAtomState, useMentionAtom } from '../use-mention-atom';
@@ -270,7 +270,7 @@ describe('useMentionAtom', () => {
  * This function is used as a helper when testing the mention hooks.
  */
 function createEditor(controlled = false) {
-  const manager = createReactManager(() => [
+  const extensions = createReactManager(() => [
     new MentionAtomExtension({
       extraAttributes: { role: 'presentation', href: { default: null } },
       matchers: [
@@ -280,7 +280,7 @@ function createEditor(controlled = false) {
     }),
   ]);
 
-  const editor = RemirrorTestChain.create(manager);
+  const editor = RemirrorTestChain.create(extensions);
   const { doc, p } = editor.nodes;
 
   interface GetItemsParameter {
@@ -343,34 +343,30 @@ function createEditor(controlled = false) {
     return null;
   };
 
+  const hookProps = controlled
+    ? { content: doc(p('Initial content ')), selection: 'end' as const }
+    : {};
+
   const Wrapper: FC<Props> = (props) => {
+    const { onChange, state, manager } = useRemirror({
+      extensions,
+      ...hookProps,
+    });
+
     return (
-      <RemirrorProvider manager={manager} initialContent={[doc(p('Initial content ')), 'end']}>
+      <Remirror
+        manager={manager}
+        onChange={controlled ? onChange : undefined}
+        state={controlled ? state : undefined}
+        initialContent={controlled ? undefined : [doc(p('Initial content ')), 'end']}
+      >
         <DefaultEditor />
         <Component {...props} />
-      </RemirrorProvider>
+      </Remirror>
     );
   };
 
-  const ControlledWrapper: FC<Props> = (props) => {
-    const [state, setState] = useState(() =>
-      manager.createState({ content: doc(p('Initial content ')), selection: 'end' }),
-    );
-    return (
-      <RemirrorProvider
-        manager={manager}
-        value={state}
-        autoRender={true}
-        onChange={(parameter) => {
-          setState(parameter.state);
-        }}
-      >
-        <Component {...props} />
-      </RemirrorProvider>
-    );
-  };
-
-  return { editor, Wrapper: controlled ? ControlledWrapper : Wrapper, result };
+  return { editor, Wrapper, result };
 }
 
 function acts(methods: Array<() => void | undefined>) {

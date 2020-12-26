@@ -1,9 +1,8 @@
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-import { ItalicExtension } from 'remirror/extension/italic';
-import { createCoreManager } from 'remirror/preset/core';
+import { createCoreManager, ItalicExtension } from 'remirror/extensions';
 
-import { fromHtml, toHtml } from '@remirror/core';
+import { htmlToProsemirrorNode, prosemirrorNodeToHtml } from '@remirror/core';
 import { hideConsoleError } from '@remirror/testing';
 
 import { MentionExtension, MentionOptions } from '..';
@@ -22,7 +21,7 @@ describe('schema', () => {
   });
 
   it('creates the correct dom node', () => {
-    expect(toHtml({ node: p(mention(attributes.label)), schema })).toMatchInlineSnapshot(`
+    expect(prosemirrorNodeToHtml(p(mention(attributes.label)))).toMatchInlineSnapshot(`
       <p>
         <a class="mention mention-testing"
            data-mention-id="test"
@@ -35,7 +34,7 @@ describe('schema', () => {
   });
 
   it('parses the dom structure and finds itself', () => {
-    const node = fromHtml({
+    const node = htmlToProsemirrorNode({
       schema,
       content: `<a class="mention mention-at" data-mention-id="${attributes.id}" data-mention-name="${attributes.name}">${attributes.label}</a>`,
     });
@@ -58,7 +57,7 @@ describe('schema', () => {
     });
 
     it('parses the dom structure and finds itself with custom attributes', () => {
-      const node = fromHtml({
+      const node = htmlToProsemirrorNode({
         schema,
         content: `<a class="mention mention-at" data-custom="${custom}" data-mention-id="${attributes.id}" data-mention-name="${attributes.name}">${attributes.label}</a>`,
       });

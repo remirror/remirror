@@ -13,20 +13,31 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/dom.cjs.js",
-  "module": "dist/dom.esm.js",
-  "browser": {
-    "./dist/dom.cjs.js": "./dist/dom.browser.cjs.js",
-    "./dist/dom.esm.js": "./dist/dom.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-dom.esm.js",
+      "require": "./dist/remirror-dom.cjs.js",
+      "browser": "./dist/remirror-dom.browser.esm.js",
+      "types": "./dist/remirror-dom.cjs.d.ts",
+      "default": "./dist/remirror-dom.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/dom.cjs.d.ts",
+  "main": "dist/remirror-dom.cjs.js",
+  "module": "dist/remirror-dom.esm.js",
+  "browser": {
+    "./dist/remirror-dom.cjs.js": "./dist/remirror-dom.browser.cjs.js",
+    "./dist/remirror-dom.esm.js": "./dist/remirror-dom.browser.esm.js"
+  },
+  "types": "dist/remirror-dom.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
+    "@babel/runtime": "^7.12.5",
     "@remirror/preset-core": "1.0.0-next.60",
-    "type-fest": "^0.18.0"
+    "type-fest": "^0.20.2"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",

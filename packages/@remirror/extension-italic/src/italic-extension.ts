@@ -1,29 +1,41 @@
 import {
   ApplySchemaAttributes,
+  command,
   CommandFunction,
-  extensionDecorator,
+  extension,
   ExtensionTag,
-  FromToParameter,
   InputRule,
+  keyBinding,
+  KeyBindingParameter,
   KeyBindings,
   MarkExtension,
   MarkExtensionSpec,
   markInputRule,
-  markPasteRule,
-  ProsemirrorPlugin,
+  MarkSpecOverride,
+  NamedShortcut,
+  PrimitiveSelection,
   toggleMark,
 } from '@remirror/core';
+import { MarkPasteRule } from '@remirror/pm/paste-rules';
 
-@extensionDecorator({})
+import { toggleItalicOptions } from './italic-utils';
+
+/**
+ * Add italic formatting to your editor.
+ */
+@extension({})
 export class ItalicExtension extends MarkExtension {
   get name() {
     return 'italic' as const;
   }
 
-  readonly tags = [ExtensionTag.FontStyle];
+  createTags() {
+    return [ExtensionTag.FontStyle, ExtensionTag.FormattingMark];
+  }
 
-  createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
+  createMarkSpec(extra: ApplySchemaAttributes, override: MarkSpecOverride): MarkExtensionSpec {
     return {
+      ...override,
       attrs: extra.defaults(),
 
       parseDOM: [
@@ -38,16 +50,6 @@ export class ItalicExtension extends MarkExtension {
   createKeymap(): KeyBindings {
     return {
       'Mod-i': toggleMark({ type: this.type }),
-    };
-  }
-
-  createCommands() {
-    return {
-      /**
-       * Toggle the italic formatting on the selected text.
-       */
-      toggleItalic: (range?: FromToParameter): CommandFunction =>
-        toggleMark({ type: this.type, range }),
     };
   }
 
@@ -73,11 +75,27 @@ export class ItalicExtension extends MarkExtension {
     ];
   }
 
-  createPasteRules(): ProsemirrorPlugin[] {
+  createPasteRules(): MarkPasteRule[] {
     return [
-      markPasteRule({ regexp: /_([^_]+)_/g, type: this.type }),
-      markPasteRule({ regexp: /\*([^*]+)\*/g, type: this.type }),
+      { type: 'mark', markType: this.type, regexp: /_([^_]+)_/g },
+      { type: 'mark', markType: this.type, regexp: /\*([^*]+)\*/g },
     ];
+  }
+
+  /**
+   * Toggle the italic formatting on the selected text.
+   */
+  @command(toggleItalicOptions)
+  toggleItalic(selection?: PrimitiveSelection): CommandFunction {
+    return toggleMark({ type: this.type, selection });
+  }
+
+  /**
+   * Attach the keyboard shortcut for formatting.
+   */
+  @keyBinding({ shortcut: NamedShortcut.Italic, command: 'toggleItalic' })
+  shortcut(parameter: KeyBindingParameter): boolean {
+    return this.toggleItalic()(parameter);
   }
 }
 

@@ -27,19 +27,22 @@ Whenever an error occurs due to invalid content you will have the chance to inte
 
 ```tsx
 import React from 'react';
-import { InvalidContentHandler, RemirrorProvider } from 'remirror/core';
-import { WysiwygPreset } from 'remirror/preset/wysiwyg';
-import { RemirrorProvider, useManager } from 'remirror/react';
+import { InvalidContentHandler } from 'remirror';
+import { wysiwygPreset } from 'remirror/extensions';
+import { Remirror, useRemirror } from 'remirror/react';
 
-const EditorWrapper = () => {
+const Editor = () => {
   const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {
     // Automatically remove all invalid nodes and marks.
     return transformers.remove(json, invalidContent);
   }, []);
 
-  const manager = useManager([new WysiwygPreset()], { onError });
+  const { manager, onChange, state } = useRemirror({
+    extensions: () => [...wysiwygPreset()],
+    onError,
+  });
 
-  return <RemirrorProvider manager={manager} />;
+  return <Remirror manager={manager} state={state} onChange={onChange} />;
 };
 ```
 

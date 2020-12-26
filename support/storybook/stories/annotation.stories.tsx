@@ -1,23 +1,44 @@
-import React, { FC, useEffect, useMemo } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
+import { Button } from 'reakit/Button';
+import { uniqueId } from 'remirror';
 import {
   AnnotationExtension,
+  BoldExtension,
   createCenteredAnnotationPositioner,
-} from 'remirror/extension/annotation';
-import { RemirrorProvider, useManager, useRemirror } from 'remirror/react';
-import { usePositioner } from 'remirror/react/hooks';
+  ItalicExtension,
+  MarkdownExtension,
+  UnderlineExtension,
+} from 'remirror/extensions';
+import {
+  ComponentItem,
+  ControlledDialog,
+  EditorComponent,
+  FloatingToolbar,
+  PositionerComponent,
+  Remirror,
+  ThemeProvider,
+  ToolbarItemUnion,
+  useCommands,
+  useHelpers,
+  useI18n,
+  usePositioner,
+  useRemirror,
+  useRemirrorContext,
+} from 'remirror/react';
 
-export default { title: 'Editor with annotation' };
+import { ExtensionAnnotationMessages as Messages } from '@remirror/messages';
+
+export default { title: 'Annotation Extension' };
 
 const SAMPLE_TEXT = 'This is a sample text';
 
 const Popup: FC = () => {
-  const { helpers, getState } = useRemirror({ autoUpdate: true });
+  const { helpers, getState } = useRemirrorContext({ autoUpdate: true });
 
-  const memoizedPositioner = useMemo(
-    () => createCenteredAnnotationPositioner(helpers.getAnnotationsAt),
-    [helpers],
+  const positioner = usePositioner(
+    createCenteredAnnotationPositioner(helpers.getAnnotationsAt),
+    [],
   );
-  const positioner = usePositioner(memoizedPositioner);
 
   if (!positioner.active) {
     return null;
@@ -28,24 +49,26 @@ const Popup: FC = () => {
   const label = annotations.map((annotation) => annotation.text).join('\n');
 
   return (
-    <div
-      style={{
-        top: positioner.bottom,
-        left: positioner.left,
-        position: 'absolute',
-        border: '1px solid black',
-        whiteSpace: 'pre-line',
-        background: 'white',
-      }}
-      ref={positioner.ref}
-    >
-      {label}
-    </div>
+    <PositionerComponent>
+      <div
+        style={{
+          top: positioner.y + positioner.height,
+          left: positioner.x,
+          position: 'absolute',
+          border: '1px solid black',
+          whiteSpace: 'pre-line',
+          background: 'white',
+        }}
+        ref={positioner.ref}
+      >
+        {label}
+      </div>
+    </PositionerComponent>
   );
 };
 
 const SmallEditor: FC = () => {
-  const { getRootProps, setContent, commands, helpers } = useRemirror({
+  const { getRootProps, setContent, commands, helpers } = useRemirrorContext({
     autoUpdate: true,
   });
 
@@ -94,11 +117,111 @@ const SmallEditor: FC = () => {
 };
 
 export const Basic = () => {
-  const extensionManager = useManager([new AnnotationExtension()]);
+  const { manager } = useRemirror({ extensions: () => [new AnnotationExtension()] });
 
   return (
-    <RemirrorProvider manager={extensionManager}>
+    <Remirror manager={manager}>
       <SmallEditor />
-    </RemirrorProvider>
+    </Remirror>
+  );
+};
+
+const simpleExtensions = [new BoldExtension(), new UnderlineExtension(), new ItalicExtension()];
+
+interface AnnotationEditorProps {
+  onChange: (markdown: string) => void;
+}
+/**
+ * The editor which is used to create the annotation. Supports formatting.
+ */
+const AnnotationEditor = (props: AnnotationEditorProps) => {
+  const { manager, state } = useRemirror({
+    extensions: () => [...simpleExtensions, new MarkdownExtension()],
+    content: '**bold** content is the _best_',
+    stringHandler: 'markdown',
+  });
+
+  return (
+    <Remirror
+      manager={manager}
+      initialContent={state}
+      autoFocus
+      onChange={({ helpers }) => {
+        props.onChange(helpers.getMarkdown());
+      }}
+    ></Remirror>
+  );
+};
+
+export const Configurable = () => {
+  const { manager, state } = useRemirror({
+    extensions: () => [...simpleExtensions, new AnnotationExtension()],
+    content: '<p>Select some text, and click the button to add annotated text.</p>',
+    stringHandler: 'html',
+  });
+
+  return (
+    <ThemeProvider>
+      <Remirror manager={manager} initialContent={state} autoFocus>
+        <FloatingAnnotations />
+        <EditorComponent />
+      </Remirror>
+    </ThemeProvider>
+  );
+};
+
+const FloatingAnnotations = () => {
+  const { t } = useI18n();
+  const [visible, setVisible] = useState(false);
+  const { commands } = useCommands();
+  const { getAnnotationsAt } = useHelpers();
+  const floatingToolbarItems = useMemo<ToolbarItemUnion[]>(
+    () => [
+      {
+        type: ComponentItem.ToolbarButton,
+        onClick: () => {
+          // setVisible(true);
+          commands.addAnnotation({ id: uniqueId() });
+        },
+        icon: 'chatNewLine',
+      },
+    ],
+    [commands],
+  );
+
+  const annotations = getAnnotationsAt();
+  const label = annotations.map((annotation) => annotation.text).join('\n');
+  const positioner = usePositioner(createCenteredAnnotationPositioner(getAnnotationsAt), []);
+
+  return (
+    <>
+      <FloatingToolbar items={floatingToolbarItems} positioner='selection' placement='top' />
+      <PositionerComponent>
+        <div
+          style={{
+            top: positioner.y + positioner.height,
+            left: positioner.x,
+            position: 'absolute',
+            border: '1px solid black',
+            whiteSpace: 'pre-line',
+            background: 'white',
+          }}
+          ref={positioner.ref}
+        >
+          {label}
+        </div>
+      </PositionerComponent>
+      <ControlledDialog visible={visible} onUpdate={(v) => setVisible(v)} backdrop={true}>
+        <AnnotationEditor onChange={(text) => console.log(text)} />
+        <Button
+          onClick={() => {
+            commands.addAnnotation({ id: uniqueId() });
+            setVisible(false);
+          }}
+        >
+          Done
+        </Button>
+      </ControlledDialog>
+    </>
   );
 };

@@ -7,10 +7,14 @@ let config = {
     '@typescript-eslint',
     'react-hooks',
     'react',
+    'react-native',
     'unicorn',
     'jsx-a11y',
     'simple-import-sort',
-    'eslint-comments',
+
+    // For `@remirror/dom-components`
+    'lit',
+    'lit-a11y',
   ],
   extends: [
     'eslint:recommended',
@@ -21,9 +25,12 @@ let config = {
     'prettier/react',
     'plugin:jest-formatting/recommended',
     'plugin:unicorn/recommended',
-    'plugin:eslint-comments/recommended',
     'plugin:jest/recommended',
     'plugin:jest/style',
+
+    // For `@remirror/dom-components`
+    'plugin:lit/recommended',
+    'plugin:lit-a11y/recommended',
   ],
 
   parserOptions: {
@@ -45,17 +52,17 @@ let config = {
     es6: true,
   },
   rules: {
-    'eslint-comments/no-unused-disable': 'error',
-
-    'unicorn/no-fn-reference-in-iterator': 'off',
+    'unicorn/no-array-callback-reference': 'off',
     'unicorn/no-object-as-default-parameter': 'off',
     'unicorn/consistent-function-scoping': 'off',
+    'unicorn/prefer-default-parameters': 'off',
     'unicorn/no-nested-ternary': 'off',
     'unicorn/prevent-abbreviations': 'off', // Too aggressive.
     'unicorn/filename-case': ['error', { case: 'kebabCase' }],
     'unicorn/no-null': 'off',
-    'unicorn/no-reduce': 'off',
+    'unicorn/no-array-reduce': 'off',
     'unicorn/import-style': ['off'],
+    'unicorn/no-abusive-eslint-disable': ['warn'],
 
     'jest/no-test-return-statement': 'off',
     'jest/prefer-strict-equal': 'off',
@@ -74,8 +81,9 @@ let config = {
 
     'sort-imports': 'off',
 
-    // Use nice import rules
-    'simple-import-sort/sort': [
+    // Use nice import and export rules
+    'simple-import-sort/exports': ['warn'], // TODO switch on after release
+    'simple-import-sort/imports': [
       'warn',
       {
         groups: [
@@ -168,19 +176,24 @@ let config = {
       },
     ],
 
-    // @todo Set `explicit-module-boundary-types` lint rule to `error` once all
-    // issues are resolve @block All exported methods that are exposed to end
-    // users should be explicitly typed. It makes for better readability when
-    // contributing since inference requires more work to determine the return
-    // types, and also it forces deliberate planning.
+    /**
+     * @todo Set `explicit-module-boundary-types` lint rule to `error` once all
+     * issues are resolved
+     * @block All exported methods that are exposed to end users should be
+     * explicitly typed. It makes for better readability when contributing since
+     * inference requires more work to determine the return types, and also it
+     * forces deliberate planning.
+     */
     '@typescript-eslint/explicit-module-boundary-types': [
       'warn',
-      { allowedNames: ['name', 'createHelpers', 'createCommands', 'createExtensions'] },
+      {
+        allowedNames: ['name', 'createHelpers', 'createCommands', 'createExtensions', 'createTags'],
+      },
     ],
 
     // Turning off as it leads to code with bad patterns, where implementation
     // details are placed before the actual meaningful code.
-    '@typescript-eslint/no-use-before-define': ['off', { typedefs: false }],
+    '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/member-ordering': [
       'warn',
       { default: ['signature', 'static-field', 'static-method', 'field', 'constructor', 'method'] },
@@ -195,6 +208,8 @@ let config = {
     // React Rules
 
     'react/no-multi-comp': 'off',
+    'react/jsx-uses-react': 'off',
+    'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'react/display-name': 'warn',
     'react/no-unescaped-entities': 'error',
@@ -211,7 +226,8 @@ let config = {
     'no-empty': 'warn',
     'no-else-return': 'warn',
     'no-useless-escape': 'warn',
-    'default-case': 'warn',
+    'default-case': 'off',
+    'default-case-last': 'error',
     'prefer-template': 'warn',
     'guard-for-in': 'warn',
     'prefer-object-spread': 'warn',
@@ -296,9 +312,15 @@ let config = {
       },
     },
     {
-      files: ['support/scripts/**', 'support/e2e/**', 'packages/@remirror/playground/scripts/**'],
+      files: [
+        'support/scripts/**/*.{js,mjs,ts}',
+        'support/e2e/**/*.{js,ts}',
+        'packages/@remirror/playground/**',
+        'packages/@remirror/playground-deprecated/**',
+      ],
       rules: {
         '@typescript-eslint/ban-ts-comment': 'off',
+        '@typescript-eslint/no-var-requires': 'off',
         'unicorn/no-process-exit': 'off',
         'unicorn/no-unreadable-array-destructuring': 'off',
       },
@@ -345,6 +367,20 @@ let config = {
       rules: {
         '@typescript-eslint/no-unused-vars-experimental': 'off',
         '@typescript-eslint/no-unused-vars': 'off',
+      },
+    },
+    {
+      files: [
+        'examples/with-react-native/**/*.{ts,tsx}',
+        'packages/@remirror/react-native/**/*.{ts,tsx}',
+      ],
+      rules: {
+        'react-native/no-unused-styles': ['error'],
+        'react-native/split-platform-components': ['error'],
+        'react-native/no-inline-styles': ['error'],
+        'react-native/no-color-literals': ['error'],
+        'react-native/no-raw-text': ['error'],
+        'react-native/no-single-element-style-arrays': ['error'],
       },
     },
   ],
@@ -441,7 +477,8 @@ if (process.env.FULL_ESLINT_CHECK) {
 
         // Set up rules to be excluded in the markdown blocks.
         rules: {
-          'simple-import-sort/sort': 'warn',
+          'simple-import-sort/exports': 'warn',
+          'simple-import-sort/imports': 'warn',
           'unicorn/filename-case': 'off',
           '@typescript-eslint/no-unused-vars-experimental': 'off',
           '@typescript-eslint/no-unused-vars': 'off',

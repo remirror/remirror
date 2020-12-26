@@ -78,19 +78,3 @@ You have provided a \`value\` prop to an uncontrolled editor. In order to set up
 
 For more information visit https://remirror.io/docs/errors#rmr0203"
 `;
-
-exports[`Remirror Controlled Component throws when using  \`setContent\` updates 1`] = `
-"There is a problem with your controlled editor setup.
-
-Controlled editors do not support \`clearContent\` or \`setContent\` where \`triggerChange\` is \`true\`. Update the \`value\` prop instead.
-
-For more information visit https://remirror.io/docs/errors#rmr0203"
-`;
-
-exports[`Remirror Controlled Component throws when using  \`setContent\` updates 2`] = `
-"There is a problem with your controlled editor setup.
-
-Controlled editors do not support \`clearContent\` or \`setContent\` where \`triggerChange\` is \`true\`. Update the \`value\` prop instead.
-
-For more information visit https://remirror.io/docs/errors#rmr0203"
-`;

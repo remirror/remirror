@@ -1,5 +1,10 @@
-import { presetValidityTest } from 'jest-remirror';
+import { renderEditor } from 'jest-remirror';
 
-import { WysiwygPreset } from '..';
+import { BoldExtension } from '@remirror/extension-bold';
 
-presetValidityTest(WysiwygPreset);
+import { wysiwygPreset } from '../..';
+
+test('it renders with options', () => {
+  const editor = renderEditor(() => wysiwygPreset({ weight: 900 }));
+  expect(editor.manager.getExtension(BoldExtension).options.weight).toBe(900);
+});

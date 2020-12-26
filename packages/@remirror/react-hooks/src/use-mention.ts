@@ -8,7 +8,7 @@ import type {
 } from '@remirror/extension-mention';
 import { MentionExtension } from '@remirror/extension-mention';
 import { ChangeReason, ExitReason, SuggestChangeHandlerParameter } from '@remirror/pm/suggest';
-import { useExtension, useRemirror } from '@remirror/react';
+import { useExtension, useRemirrorContext } from '@remirror/react';
 
 import { indexFromArrowPress } from './react-hook-utils';
 import { useKeymap } from './use-keymap';
@@ -134,7 +134,7 @@ function useMentionKeyBindings(
   state: MentionState | null,
 ) {
   const { items, ignoreMatchesOnEscape = true } = props;
-  const { helpers } = useRemirror();
+  const { helpers } = useRemirrorContext();
 
   const createArrowBinding = useCallback(
     (arrowKey: 'up' | 'down') => () => {

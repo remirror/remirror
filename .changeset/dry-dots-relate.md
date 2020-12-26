@@ -35,8 +35,8 @@
 '@remirror/extension-trailing-node': minor
 '@remirror/extension-underline': minor
 '@remirror/extension-yjs': minor
-'@remirror/preset-embed': minor
-'@remirror/preset-list': minor
+'@remirror/extension-embed': minor
+'@remirror/extension-list': minor
 '@remirror/preset-react-checkbox': minor
 '@remirror/preset-table': minor
 ---

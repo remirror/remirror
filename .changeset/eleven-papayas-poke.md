@@ -42,8 +42,8 @@
 '@remirror/playground': major
 '@remirror/pm': major
 '@remirror/preset-core': major
-'@remirror/preset-embed': major
-'@remirror/preset-list': major
+'@remirror/extension-embed': major
+'@remirror/extension-list': major
 '@remirror/preset-react': major
 '@remirror/preset-social': major
 '@remirror/preset-table': major
@@ -51,7 +51,6 @@
 '@remirror/react': major
 '@remirror/react-social': major
 '@remirror/react-utils': major
-'@remirror/react-wysiwyg': major
 '@remirror/showcase': major
 '@remirror/styles': major
 '@remirror/theme': major

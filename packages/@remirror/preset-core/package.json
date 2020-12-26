@@ -15,18 +15,29 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/preset-core.cjs.js",
-  "module": "dist/preset-core.esm.js",
-  "browser": {
-    "./dist/preset-core.cjs.js": "./dist/preset-core.browser.cjs.js",
-    "./dist/preset-core.esm.js": "./dist/preset-core.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-preset-core.esm.js",
+      "require": "./dist/remirror-preset-core.cjs.js",
+      "browser": "./dist/remirror-preset-core.browser.esm.js",
+      "types": "./dist/remirror-preset-core.cjs.d.ts",
+      "default": "./dist/remirror-preset-core.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/preset-core.cjs.d.ts",
+  "main": "dist/remirror-preset-core.cjs.js",
+  "module": "dist/remirror-preset-core.esm.js",
+  "browser": {
+    "./dist/remirror-preset-core.cjs.js": "./dist/remirror-preset-core.browser.cjs.js",
+    "./dist/remirror-preset-core.esm.js": "./dist/remirror-preset-core.browser.esm.js"
+  },
+  "types": "dist/remirror-preset-core.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
+    "@babel/runtime": "^7.12.5",
     "@remirror/extension-doc": "1.0.0-next.60",
     "@remirror/extension-events": "1.0.0-next.60",
     "@remirror/extension-gap-cursor": "1.0.0-next.60",

@@ -1,7 +1,7 @@
-import React from 'react';
+import { createReactManager } from 'remirror/react';
 
 import { initialJson } from '@remirror/testing';
-import { createReactManager, strictRender } from '@remirror/testing/react';
+import { strictRender } from '@remirror/testing/react';
 
 import { RemirrorSSR } from '..';
 

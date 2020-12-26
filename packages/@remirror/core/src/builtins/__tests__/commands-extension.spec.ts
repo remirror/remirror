@@ -1,7 +1,7 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
+import { BoldExtension, ItalicExtension } from 'remirror/extensions';
 
 import { AllSelection } from '@remirror/pm/state';
-import { BoldExtension, ItalicExtension } from '@remirror/testing';
 
 import { CommandsExtension } from '..';
 
@@ -152,7 +152,9 @@ describe('commands.insertText', () => {
     const editor = renderEditor([]);
     const { doc, p } = editor.nodes;
     editor.add(doc(p('my <cursor>CODE!')));
-    const promise = sleep(100).then(() => 'AWESOME ');
+    const promise = sleep(100).then(() => {
+      return 'AWESOME ';
+    });
     editor.commands.insertText(() => promise);
 
     editor.selectText('end').press('Enter').insertText('More text here.');
@@ -170,7 +172,7 @@ describe('commands.insertText', () => {
     const { doc, p } = editor.nodes;
     editor.add(doc(p('my <cursor>CODE!')));
     const promise = Promise.reject();
-    editor.commands.insertText(promise);
+    editor.commands.insertText(() => promise);
     editor.selectText('end').press('Enter').insertText('More text here.');
 
     await expect(promise).toReject();

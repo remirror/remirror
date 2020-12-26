@@ -1,11 +1,11 @@
-import React from 'react';
+import type { FC } from 'react';
 
 import styles from './components.module.css';
 
 /**
  * An external icon svg.
  */
-export const ExternalIcon = () => {
+export const ExternalIcon: FC = () => {
   return (
     <svg viewBox='0 0 24 24' className={styles.externalIcon}>
       <path fill='none' d='M0 0h24v24H0z' />

@@ -22,6 +22,22 @@ export function isChange<Schema extends EditorSchema = EditorSchema>(
 }
 
 /**
+ * Is this is a repetition of the same check?
+ */
+export function isIdentical<Schema extends EditorSchema = EditorSchema>(
+  compare: Partial<CompareMatchParameter<Schema>>,
+  match: SuggestReasonMap<Schema>,
+): compare is CompareMatchParameter<Schema> {
+  return !!(
+    compare.prev &&
+    compare.next &&
+    compare.prev.text.full === compare.next.text.full &&
+    match.change &&
+    !match.exit
+  );
+}
+
+/**
  * Has the cursor moved within the current suggestion (added or deleted
  * characters)?
  */

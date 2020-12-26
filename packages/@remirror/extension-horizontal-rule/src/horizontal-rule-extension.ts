@@ -2,7 +2,7 @@ import {
   ApplySchemaAttributes,
   CommandFunction,
   ErrorConstant,
-  extensionDecorator,
+  extension,
   ExtensionTag,
   InputRule,
   invariant,
@@ -11,6 +11,7 @@ import {
   NodeExtension,
   NodeExtensionSpec,
   nodeInputRule,
+  NodeSpecOverride,
   Transaction,
 } from '@remirror/core';
 import { TextSelection } from '@remirror/pm/state';
@@ -29,7 +30,7 @@ export interface HorizontalRuleOptions {
 /**
  * Adds a horizontal line to the editor.
  */
-@extensionDecorator<HorizontalRuleOptions>({
+@extension<HorizontalRuleOptions>({
   defaultOptions: { insertionNode: 'paragraph' },
 })
 export class HorizontalRuleExtension extends NodeExtension<HorizontalRuleOptions> {
@@ -37,10 +38,13 @@ export class HorizontalRuleExtension extends NodeExtension<HorizontalRuleOptions
     return 'horizontalRule' as const;
   }
 
-  readonly tags = [ExtensionTag.BlockNode];
+  createTags() {
+    return [ExtensionTag.Block];
+  }
 
-  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
     return {
+      ...override,
       attrs: extra.defaults(),
       parseDOM: [{ tag: 'hr', getAttrs: extra.parse }],
       toDOM: (node) => ['hr', extra.dom(node)],
@@ -51,13 +55,6 @@ export class HorizontalRuleExtension extends NodeExtension<HorizontalRuleOptions
     return {
       /**
        * Inserts a horizontal line into the editor.
-       *
-       * @remarks
-       *
-       * TODO: There is currently a bug in Chrome where if the editor is not
-       * focused at the point that this is called, the selection jumps to before
-       * the first insertion when you start typing. It doesn't happen in Firefox
-       * or Safari.
        */
       insertHorizontalRule: (): CommandFunction => (parameter) => {
         const { tr, dispatch } = parameter;

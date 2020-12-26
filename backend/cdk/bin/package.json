@@ -1,0 +1,4 @@
+{
+  "main": "dist/remirror-cdk-bin.cjs.js",
+  "module": "dist/remirror-cdk-bin.esm.js"
+}

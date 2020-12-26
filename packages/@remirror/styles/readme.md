@@ -7,8 +7,8 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/styles/next
 [npm]: https://npmjs.com/package/@remirror/styles/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/styles@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/styles@next
+[size]: https://bundlephobia.com/result?p=@remirror/styles
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/styles
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/styles/red?icon=npm
 
@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/styles@next
+yarn add @remirror/styles
 
 # pnpm
-pnpm add @remirror/styles@next
+pnpm add @remirror/styles
 
 # npm
-npm install @remirror/styles@next
+npm install @remirror/styles
 ```
 
 Depending on how you want to consume the styles there are some peer dependencies that might be required. Any additional packages are listed in their relevant section.
@@ -71,7 +71,7 @@ This is useful when using the pure dom to control styles.
 
 ```ts
 import { createDomEditor, createDomManager } from 'remirror/dom';
-import { BoldExtension } from 'remirror/extension/bold';
+import { BoldExtension } from 'remirror/extensions';
 import { addStylesToElement, allStyles } from 'remirror/styles/dom';
 
 const manager = createDomManager(() => [new BoldExtension()]);

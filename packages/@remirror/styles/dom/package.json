@@ -1,12 +1,9 @@
 {
-  "main": "dist/styles.cjs.js",
-  "module": "dist/styles.esm.js",
+  "main": "dist/remirror-styles-dom.cjs.js",
+  "module": "dist/remirror-styles-dom.esm.js",
   "browser": {
-    "./dist/styles.cjs.js": "./dist/styles.browser.cjs.js",
-    "./dist/styles.esm.js": "./dist/styles.browser.esm.js"
+    "./dist/remirror-styles-dom.cjs.js": "./dist/remirror-styles-dom.browser.cjs.js",
+    "./dist/remirror-styles-dom.esm.js": "./dist/remirror-styles-dom.browser.esm.js"
   },
-  "types": "dist/styles.cjs.d.ts",
-  "preconstruct": {
-    "source": "../src/dom.tsx"
-  }
+  "types": "dist/remirror-styles-dom.cjs.d.ts"
 }

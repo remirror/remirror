@@ -1,14 +1,14 @@
 # @remirror/preset-react
 
-> The core preset providing the functionality you need and want.
+> The preset which provides all required `React` extensions for your editor.
 
 [![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](#) [![MIT License][license]](#)
 
 [version]: https://flat.badgen.net/npm/v/@remirror/preset-react/next
 [npm]: https://npmjs.com/package/@remirror/preset-react/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/preset-react@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/preset-react@next
+[size]: https://bundlephobia.com/result?p=@remirror/preset-react
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/preset-react
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/preset-react/red?icon=npm
 
@@ -18,16 +18,16 @@
 
 ```bash
 # yarn
-yarn add @remirror/preset-react@next @remirror/pm@next
+yarn add @remirror/preset-react @remirror/pm
 
 # pnpm
-pnpm add @remirror/preset-react@next @remirror/pm@next
+pnpm add @remirror/preset-react @remirror/pm
 
 # npm
-npm install @remirror/preset-react@next @remirror/pm@next
+npm install @remirror/preset-react @remirror/pm
 ```
 
-This package is available via `remirror/preset/react` when you install `remirror`.
+This package is available via `remirror/presets` when you install `remirror`.
 
 <br />
 
@@ -40,17 +40,11 @@ This preset adds
 - Placeholder support for the editor.
 
 ```ts
-import { RemirrorManager } from 'remirror/core';
-import { CorePreset } from 'remirror/preset/core';
-import { ReactPreset } from 'remirror/preset/react';
-
-const reactPreset = new ReactPreset({ rootContent: 'block*' });
-
-// Create the preset
-const reactPreset = new ReactPreset(transformers);
+import { RemirrorManager } from 'remirror';
+import { reactPreset } from 'remirror/extensions';
 
 // Create the Editor Manager with the required preset.
-const manager = RemirrorManager.create([reactPreset]);
+const manager = RemirrorManager.create(() => [...reactPreset()]);
 ```
 
-The `useManager` hook automatically includes both the `CorePreset` and the `ReactPreset` so you may never need to reference this package directly.
+The `useRemirror` hook automatically adds both the `CorePreset` and `ReactPreset` to the editor so you may never need to reference this package directly.

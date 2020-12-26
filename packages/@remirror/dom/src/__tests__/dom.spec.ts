@@ -1,4 +1,4 @@
-import { BoldExtension } from '@remirror/testing';
+import { BoldExtension } from 'remirror/extensions';
 
 import { createDomEditor, createDomManager } from '../dom';
 

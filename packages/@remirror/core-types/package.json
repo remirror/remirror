@@ -9,20 +9,31 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/core-types.cjs.js",
-  "module": "dist/core-types.esm.js",
-  "browser": {
-    "./dist/core-types.cjs.js": "./dist/core-types.browser.cjs.js",
-    "./dist/core-types.esm.js": "./dist/core-types.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-core-types.esm.js",
+      "require": "./dist/remirror-core-types.cjs.js",
+      "browser": "./dist/remirror-core-types.browser.esm.js",
+      "types": "./dist/remirror-core-types.cjs.d.ts",
+      "default": "./dist/remirror-core-types.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/core-types.cjs.d.ts",
+  "main": "dist/remirror-core-types.cjs.js",
+  "module": "dist/remirror-core-types.esm.js",
+  "browser": {
+    "./dist/remirror-core-types.cjs.js": "./dist/remirror-core-types.browser.cjs.js",
+    "./dist/remirror-core-types.esm.js": "./dist/remirror-core-types.browser.esm.js"
+  },
+  "types": "dist/remirror-core-types.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
+    "@babel/runtime": "^7.12.5",
     "@remirror/core-constants": "1.0.0-next.60",
-    "type-fest": "^0.18.0"
+    "type-fest": "^0.20.2"
   },
   "devDependencies": {
     "@remirror/pm": "1.0.0-next.60"

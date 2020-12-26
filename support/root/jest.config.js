@@ -1,3 +1,9 @@
+const reporters = ['default'];
+
+if (process.env.CI === 'true') {
+  reporters.push('jest-github-reporter');
+}
+
 module.exports = {
   ...require('../jest/jest.config'),
   coverageThreshold: {
@@ -80,7 +86,7 @@ module.exports = {
   ],
   coverageReporters: ['json', 'lcov', 'text-summary', 'clover'],
   collectCoverage: true,
-  reporters: ['default', 'jest-github-reporter'],
+  reporters,
   watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
   testRunner: 'jest-circus/runner',
   testPathIgnorePatterns: ['<rootDir>/support/', '/node_modules/'],

@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`options persistentSelectionClass retains selection and decoration 1`] = `
+<div contenteditable="true"
+     role="textbox"
+     aria-multiline="true"
+     aria-label
+     class="ProseMirror remirror-editor"
+>
+  <p>
+    Som
+    <span class="selection">
+      e tex
+    </span>
+    t
+  </p>
+</div>
+`;
+
+exports[`options persistentSelectionClass uses provided configuration ({"persistentSelectionClass":""}) 1`] = `
+<div contenteditable="true"
+     role="textbox"
+     aria-multiline="true"
+     aria-label
+     class="ProseMirror remirror-editor"
+>
+  <p>
+    Some text
+  </p>
+</div>
+`;
+
+exports[`options persistentSelectionClass uses provided configuration ({"persistentSelectionClass":"selection"}) 1`] = `
+<div contenteditable="true"
+     role="textbox"
+     aria-multiline="true"
+     aria-label
+     class="ProseMirror remirror-editor"
+>
+  <p>
+    Som
+    <span class="selection">
+      e tex
+    </span>
+    t
+  </p>
+</div>
+`;
+
+exports[`options persistentSelectionClass uses provided configuration ({}) 1`] = `
+<div contenteditable="true"
+     role="textbox"
+     aria-multiline="true"
+     aria-label
+     class="ProseMirror remirror-editor"
+>
+  <p>
+    Som
+    <span class="selection">
+      e tex
+    </span>
+    t
+  </p>
+</div>
+`;
+
+exports[`options persistentSelectionClass uses provided configuration ({}) 2`] = `
+<div contenteditable="true"
+     role="textbox"
+     aria-multiline="true"
+     aria-label
+     class="ProseMirror remirror-editor"
+>
+  <p>
+    Some text
+  </p>
+</div>
+`;

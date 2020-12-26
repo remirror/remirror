@@ -1,0 +1,55 @@
+{
+  "name": "@remirror/extension-media",
+  "version": "0.0.0",
+  "description": "Handle uploads and all things media related.",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-media",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-media",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-media.esm.js",
+      "require": "./dist/remirror-extension-media.cjs.js",
+      "browser": "./dist/remirror-extension-media.browser.esm.js",
+      "types": "./dist/remirror-extension-media.cjs.d.ts",
+      "default": "./dist/remirror-extension-media.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-media.cjs.js",
+  "module": "dist/remirror-extension-media.esm.js",
+  "browser": {
+    "./dist/remirror-extension-media.cjs.js": "./dist/remirror-extension-media.browser.cjs.js",
+    "./dist/remirror-extension-media.esm.js": "./dist/remirror-extension-media.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-media.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "peerDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "5 KB"
+  }
+}

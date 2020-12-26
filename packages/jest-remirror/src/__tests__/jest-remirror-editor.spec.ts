@@ -1,11 +1,12 @@
-import { PlainExtension, toHtml } from '@remirror/core';
-import { NodeSelection } from '@remirror/pm/state';
 import {
   BlockquoteExtension,
   BoldExtension,
   HeadingExtension,
   LinkExtension,
-} from '@remirror/testing';
+} from 'remirror/extensions';
+
+import { PlainExtension, prosemirrorNodeToHtml } from '@remirror/core';
+import { NodeSelection } from '@remirror/pm/state';
 import { cleanup } from '@remirror/testing/react';
 
 import { renderEditor } from '../jest-remirror-editor';
@@ -56,8 +57,8 @@ test('can be configured with attribute node extensions', () => {
   const h2 = heading({ level: 2 });
   add(doc(h2(expected), h3(expected)));
 
-  expect(dom).toContainHTML(toHtml({ node: h3(expected), schema }));
-  expect(dom).toContainHTML(toHtml({ node: h2(expected), schema }));
+  expect(dom).toContainHTML(prosemirrorNodeToHtml(h3(expected)));
+  expect(dom).toContainHTML(prosemirrorNodeToHtml(h2(expected)));
 });
 
 test('can be configured with plain mark extensions', () => {
@@ -139,8 +140,8 @@ describe('add', () => {
   it('overwrites the whole doc on each call', () => {
     const node = p('Hello');
     const nodeTwo = p('Tolu');
-    const expected = toHtml({ node, schema });
-    const expectedTwo = toHtml({ node: nodeTwo, schema });
+    const expected = prosemirrorNodeToHtml(node);
+    const expectedTwo = prosemirrorNodeToHtml(nodeTwo);
 
     add(doc(node));
     expect(dom).toContainHTML(expected);
@@ -154,7 +155,7 @@ describe('add', () => {
     const node = p('New me');
     add(doc(p('Hello'))).overwrite(doc(node));
 
-    expect(dom).toContainHTML(toHtml({ node, schema }));
+    expect(dom).toContainHTML(prosemirrorNodeToHtml(node));
   });
 
   it('can insert text', () => {
@@ -168,7 +169,7 @@ describe('add', () => {
     const node = p(bold('Welcome'));
     add(doc(p('<start>Welcome<end>'))).shortcut('Mod-b');
 
-    expect(dom).toContainHTML(toHtml({ node, schema }));
+    expect(dom).toContainHTML(prosemirrorNodeToHtml(node));
   });
 
   it('can fire custom events', () => {
@@ -195,8 +196,8 @@ describe('add', () => {
   it('can replace text with nodes', () => {
     const node = p('Brilliant');
     const nodeTwo = p('Wonderful');
-    const expected = toHtml({ node, schema });
-    const expectedTwo = toHtml({ node: nodeTwo, schema });
+    const expected = prosemirrorNodeToHtml(node);
+    const expectedTwo = prosemirrorNodeToHtml(nodeTwo);
     add(doc(p('Today is a <start>sad<end> day'))).replace(node, nodeTwo);
 
     expect(dom).toContainHTML(expected);

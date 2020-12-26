@@ -9,19 +9,31 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-mention-atom.cjs.js",
-  "module": "dist/extension-mention-atom.esm.js",
-  "browser": {
-    "./dist/extension-mention-atom.cjs.js": "./dist/extension-mention-atom.browser.cjs.js",
-    "./dist/extension-mention-atom.esm.js": "./dist/extension-mention-atom.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-mention-atom.esm.js",
+      "require": "./dist/remirror-extension-mention-atom.cjs.js",
+      "browser": "./dist/remirror-extension-mention-atom.browser.esm.js",
+      "types": "./dist/remirror-extension-mention-atom.cjs.d.ts",
+      "default": "./dist/remirror-extension-mention-atom.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-mention-atom.cjs.d.ts",
+  "main": "dist/remirror-extension-mention-atom.cjs.js",
+  "module": "dist/remirror-extension-mention-atom.esm.js",
+  "browser": {
+    "./dist/remirror-extension-mention-atom.cjs.js": "./dist/remirror-extension-mention-atom.browser.cjs.js",
+    "./dist/remirror-extension-mention-atom.esm.js": "./dist/remirror-extension-mention-atom.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-mention-atom.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
-    "@remirror/extension-events": "1.0.0-next.60"
+    "@babel/runtime": "^7.12.5",
+    "@remirror/extension-events": "1.0.0-next.60",
+    "@remirror/messages": "0.0.0"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",

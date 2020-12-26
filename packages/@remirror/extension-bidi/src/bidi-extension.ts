@@ -1,27 +1,40 @@
 import direction from 'direction';
 
 import type {
-  CreatePluginReturn,
+  AcceptUndefined,
+  CommandFunction,
+  CreateExtensionPlugin,
   IdentifierSchemaAttributes,
-  NodeAttributes,
   OnSetOptionsParameter,
+  PrimitiveSelection,
+  ProsemirrorAttributes,
   SchemaAttributesObject,
+  Selection,
   Static,
 } from '@remirror/core';
 import {
-  bool,
-  extensionDecorator,
+  command,
+  extension,
+  ExtensionTag,
   findParentNode,
+  getTextSelection,
   hasTransactionChanged,
   isString,
   PlainExtension,
 } from '@remirror/core';
+import { ExtensionBidiMessages } from '@remirror/messages';
+
+const setTextDirectionOptions: Remirror.CommandDecoratorOptions = {
+  icon: ({ attrs }) => (attrs?.dir === 'ltr' ? 'textDirectionL' : 'textDirectionR'),
+  description: ({ t, attrs }) => t(ExtensionBidiMessages.DESCRIPTION, { dir: attrs?.dir }),
+  label: ({ t, attrs }) => t(ExtensionBidiMessages.LABEL, { dir: attrs?.dir }),
+};
 
 export interface BidiOptions {
   /**
    * This is the direction that is used when the algorithm is not quite sure.
    */
-  defaultDirection?: null | 'ltr' | 'rtl';
+  defaultDirection?: AcceptUndefined<'ltr' | 'rtl'>;
 
   /**
    * Whether or not the extension should automatically infer the direction as you type.
@@ -35,15 +48,19 @@ export interface BidiOptions {
    *
    * @default []
    */
-  excludeNodes?: Static<readonly string[]>;
+  excludeNodes?: Static<string[]>;
 }
 
 /**
  * An extension which adds bi-directional text support to your editor. This is
  * the best way to support languages which are read from right-to-left.
  */
-@extensionDecorator<BidiOptions>({
-  defaultOptions: { defaultDirection: null, autoUpdate: true, excludeNodes: [] },
+@extension<BidiOptions>({
+  defaultOptions: {
+    defaultDirection: undefined,
+    autoUpdate: true,
+    excludeNodes: [],
+  },
   staticKeys: ['excludeNodes'],
 })
 export class BidiExtension extends PlainExtension<BidiOptions> {
@@ -59,7 +76,7 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
   /**
    * Add the bidi property to the top level editor attributes `doc`.
    */
-  createAttributes(): NodeAttributes {
+  createAttributes(): ProsemirrorAttributes {
     if (this.options.defaultDirection) {
       return {
         dir: this.options.defaultDirection,
@@ -73,18 +90,32 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
    * Add the `dir` to all the inner node types.
    */
   createSchemaAttributes = (): IdentifierSchemaAttributes[] => {
-    const identifiers = this.store.nodeNames.filter(
-      (name) => !this.options.excludeNodes.includes(name),
-    );
-
-    return [{ identifiers, attributes: { dir: this.dir() } }];
+    const IGNORE_BIDI_AUTO_UPDATE = 'data-ignore-bidi-auto';
+    return [
+      {
+        identifiers: {
+          type: 'node',
+          tags: [ExtensionTag.BlockNode],
+          excludeNames: this.options.excludeNodes,
+        },
+        attributes: {
+          dir: this.dir(),
+          ignoreBidiAutoUpdate: {
+            default: null,
+            parseDOM: IGNORE_BIDI_AUTO_UPDATE,
+            toDOM: (attrs) =>
+              attrs.ignoreBidiAutoUpdate ? [IGNORE_BIDI_AUTO_UPDATE, 'true'] : undefined,
+          },
+        },
+      },
+    ];
   };
 
   /**
    * Create the plugin that ensures the node has the correct `dir` value on each
    * state update.
    */
-  createPlugin(): CreatePluginReturn<boolean> {
+  createPlugin(): CreateExtensionPlugin<boolean> {
     return {
       state: {
         init: () => false,
@@ -97,40 +128,75 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
           return hasTransactionChanged(tr);
         },
       },
-      view: () => ({
-        update: () => {
-          const shouldUpdate = this.getPluginState<boolean>();
-          const state = this.store.getState();
-          const { autoUpdate, excludeNodes } = this.options;
+      appendTransaction: (_, __, state) => {
+        const shouldUpdate = this.getPluginState<boolean>();
+        const { autoUpdate, excludeNodes } = this.options;
+        const tr = state.tr;
 
-          if (!shouldUpdate || !autoUpdate) {
-            return;
-          }
+        if (!shouldUpdate || !autoUpdate) {
+          return;
+        }
 
-          const parent = findParentNode({
-            predicate: (node) =>
-              bool(node.isTextblock && node.textContent && !excludeNodes.includes(node.type.name)),
-            selection: state.selection,
-          });
+        const parent = findParent(state.selection, excludeNodes);
 
-          if (!parent) {
-            return;
-          }
+        if (!parent) {
+          return;
+        }
 
-          const { node, pos } = parent;
+        const { node, pos } = parent;
 
-          const currentDirection = node.attrs.dir;
-          const dir = this.getDirection(node.textContent);
+        const currentDirection = node.attrs.dir;
+        const dir = this.getDirection(node.textContent);
 
-          if (currentDirection === dir) {
-            return;
-          }
+        if (currentDirection === dir) {
+          return;
+        }
 
-          this.#ignoreNextUpdate = true;
-          this.store.commands.updateNodeAttributes(pos, { ...node.attrs, dir });
-        },
-      }),
-      props: {},
+        if (node.attrs.ignoreBidiAutoUpdate) {
+          return;
+        }
+
+        this.#ignoreNextUpdate = true;
+        this.store.chain
+          .custom(tr)
+          .updateNodeAttributes(pos, { ...node.attrs, dir })
+          .restore();
+
+        return tr;
+      },
+      // view: () => ({
+      //   update: () => {
+      //     const shouldUpdate = this.getPluginState<boolean>();
+      //     const state = this.store.getState();
+      //     const { autoUpdate, excludeNodes } = this.options;
+
+      //     if (!shouldUpdate || !autoUpdate) {
+      //       return;
+      //     }
+
+      //     const parent = findParentNode({
+      //       predicate: (node) =>
+      //         !!(node.isTextblock && node.textContent && !excludeNodes.includes(node.type.name)),
+      //       selection: state.selection,
+      //     });
+
+      //     if (!parent) {
+      //       return;
+      //     }
+
+      //     const { node, pos } = parent;
+
+      //     const currentDirection = node.attrs.dir;
+      //     const dir = this.getDirection(node.textContent);
+
+      //     if (currentDirection === dir) {
+      //       return;
+      //     }
+
+      //     this.#ignoreNextUpdate = true;
+      //     this.store.commands.updateNodeAttributes(pos, { ...node.attrs, dir });
+      //   },
+      // }),
     };
   }
 
@@ -147,7 +213,7 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
    */
   private dir(): SchemaAttributesObject {
     return {
-      default: this.options.defaultDirection,
+      default: this.options.defaultDirection ?? null,
       parseDOM: (element) => element.getAttribute('dir') ?? this.getDirection(element.textContent),
       toDOM: (_, { node }) => {
         if (!node) {
@@ -179,21 +245,57 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
 
     return dir;
   }
+
+  @command(setTextDirectionOptions)
+  setTextDirection(
+    dir: 'ltr' | 'rtl' | undefined,
+    options: SetTextDirectionOptions = {},
+  ): CommandFunction {
+    return (parameter) => {
+      const { tr } = parameter;
+      const { selection } = options;
+      const cmd = this.store.commands.updateNodeAttributes.original;
+      const parent = findParent(
+        getTextSelection(selection ?? tr.selection, tr.doc),
+        this.options.excludeNodes,
+      );
+
+      // eslint-disable-next-line eqeqeq
+      if (!parent || parent.node.attrs.dir == dir) {
+        return false;
+      }
+
+      return cmd(parent.pos, { dir, ignoreBidiAutoUpdate: dir ? true : dir })(parameter);
+    };
+  }
+}
+
+function findParent(selection: Selection, excludeNodes: string[]) {
+  return findParentNode({
+    predicate: (node) =>
+      !!(node.isTextblock && node.textContent && !excludeNodes.includes(node.type.name)),
+    selection,
+  });
+}
+
+interface SetTextDirectionOptions {
+  selection?: PrimitiveSelection;
 }
 
 declare global {
   namespace Remirror {
-    interface ExtraNodeAttributes {
+    interface Attributes {
       /**
        * This attribute grants control over bidirectional language support.
        */
       dir?: 'ltr' | 'rtl';
-    }
-  }
-}
 
-declare global {
-  namespace Remirror {
+      /**
+       * When truthy this should set the
+       */
+      ignoreBidiAutoUpdate?: boolean;
+    }
+
     interface AllExtensions {
       bidi: BidiExtension;
     }

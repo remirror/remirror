@@ -1,5 +1,5 @@
 /**
- * Styles extracted from: packages/@remirror/extension-callout/src/styles.ts
+ * Styles extracted from: packages/@remirror/theme/src/extension-callout.ts
  */
 .remirror-editor div[data-callout-type] {
   border-left: 2px solid transparent;

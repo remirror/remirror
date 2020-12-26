@@ -10,7 +10,7 @@ import {
   range,
 } from '@remirror/core-helpers';
 
-import { isChange, isEntry, isExit, isJump, isMove } from './suggest-predicates';
+import { isChange, isEntry, isExit, isIdentical, isJump, isMove } from './suggest-predicates';
 import type {
   CompareMatchParameter,
   DocChangedParameter,
@@ -100,18 +100,25 @@ function findPosition<Schema extends EditorSchema = EditorSchema>(
       // The absolute position of the matching parent node
       const from = match.index + start;
 
+      // The full match of the created regex.
+      const fullMatch = match[0];
+
+      // The matching text for the `char` regex or string is always captured as
+      // the first matching group.
+      const charMatch = match[1];
+
+      if (!isString(fullMatch) || !isString(charMatch)) {
+        return;
+      }
+
       // The position where the match ends
-      const to = from + match[0].length;
+      const to = from + fullMatch.length;
 
       // The cursor position (or end position whichever is greater)
       const cursor = Math.min(to, $pos.pos);
 
       // The length of the current match
       const matchLength = cursor - from;
-
-      // The matching text for the `char` regex or string is always captured as
-      // the first matching group.
-      const charMatch = match[1];
 
       // If the $position is located within the matched substring, return that
       // range.
@@ -120,10 +127,10 @@ function findPosition<Schema extends EditorSchema = EditorSchema>(
           range: { from, to, cursor },
           match,
           query: {
-            partial: match[0].slice(charMatch.length, matchLength),
-            full: match[0].slice(charMatch.length),
+            partial: fullMatch.slice(charMatch.length, matchLength),
+            full: fullMatch.slice(charMatch.length),
           },
-          text: { partial: match[0].slice(0, matchLength), full: match[0] },
+          text: { partial: fullMatch.slice(0, matchLength), full: fullMatch },
           textAfter: $pos.doc.textBetween(to, $pos.end(), NULL_CHARACTER, NULL_CHARACTER),
           textBefore: $pos.doc.textBetween(start, from, NULL_CHARACTER, NULL_CHARACTER),
           suggester,
@@ -180,10 +187,9 @@ function findMatch<Schema extends EditorSchema = EditorSchema>(
   });
 }
 
-type RecheckMatchParameter<Schema extends EditorSchema = EditorSchema> = SuggestStateMatchParameter<
-  Schema
-> &
-  EditorStateParameter<Schema>;
+type RecheckMatchParameter<
+  Schema extends EditorSchema = EditorSchema
+> = SuggestStateMatchParameter<Schema> & EditorStateParameter<Schema>;
 
 /**
  * Checks the provided match and generates a new match. This is useful for
@@ -261,10 +267,9 @@ function createInsertReason<Schema extends EditorSchema = EditorSchema>(
   return {};
 }
 
-type FindJumpReasonParameter<Schema extends EditorSchema = EditorSchema> = CompareMatchParameter<
-  Schema
-> &
-  EditorStateParameter<Schema>;
+type FindJumpReasonParameter<
+  Schema extends EditorSchema = EditorSchema
+> = CompareMatchParameter<Schema> & EditorStateParameter<Schema>;
 
 /**
  * Find the reason for the Jump between two suggesters.
@@ -367,11 +372,12 @@ interface FindPositionParameter<Schema extends EditorSchema = EditorSchema>
   regexp: RegExp;
 }
 
-type FindReasonParameter<Schema extends EditorSchema = EditorSchema> = EditorStateParameter<
-  Schema
-> &
+type FindReasonParameter<
+  Schema extends EditorSchema = EditorSchema
+> = EditorStateParameter<Schema> &
   ResolvedPosParameter<Schema> &
-  Partial<CompareMatchParameter<Schema>>;
+  Partial<CompareMatchParameter<Schema>> &
+  object;
 
 /**
  * Creates an array of the actions taken based on the current prev and next

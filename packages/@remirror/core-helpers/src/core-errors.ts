@@ -29,10 +29,8 @@ if (process.env.NODE_ENV !== 'production') {
     [ErrorConstant.MISSING_REQUIRED_EXTENSION]: 'Your editor is missing a required extension.',
     [ErrorConstant.MANAGER_PHASE_ERROR]:
       'This occurs when accessing a method or property before it is available.',
-    [ErrorConstant.NEW_EDITOR_MANAGER]:
-      'No directly invoking the editor manager with `new`. Instead use one of the available static methods to create your instance.',
-    [ErrorConstant.INVALID_PRESET_EXTENSION]:
-      'You requested an invalid extension from the preset. Please check the `createExtensions` return method is returning an extension with the requested constructor.',
+    [ErrorConstant.INVALID_GET_EXTENSION]:
+      'The user requested an invalid extension from the getExtensions method. Please check the `createExtensions` return method is returning an extension with the defined constructor.',
     [ErrorConstant.INVALID_MANAGER_ARGUMENTS]:
       'Invalid value(s) passed into `Manager` constructor. Only `Presets` and `Extensions` are supported.',
     [ErrorConstant.SCHEMA]:
@@ -41,14 +39,11 @@ if (process.env.NODE_ENV !== 'production') {
       'The `helpers` method which is passed into the ``create*` method should only be called within returned method since it relies on an active view (not present in the outer scope).',
     [ErrorConstant.INVALID_MANAGER_EXTENSION]:
       'You requested an invalid extension from the manager.',
-    [ErrorConstant.INVALID_MANAGER_PRESET]:
-      'The user requested an invalid preset from the manager.',
     [ErrorConstant.DUPLICATE_COMMAND_NAMES]:
       'Command method names must be unique within the editor.',
     [ErrorConstant.DUPLICATE_HELPER_NAMES]: 'Helper method names must be unique within the editor.',
     [ErrorConstant.NON_CHAINABLE_COMMAND]: 'Attempted to chain a non chainable command.',
     [ErrorConstant.INVALID_EXTENSION]: 'The provided extension is invalid.',
-    [ErrorConstant.INVALID_PRESET]: 'The provided preset is invalid.',
     [ErrorConstant.INVALID_CONTENT]: 'The content provided to the editor is not supported.',
     [ErrorConstant.INVALID_NAME]: 'An invalid name was used for the extension.',
     [ErrorConstant.EXTENSION]:
@@ -60,11 +55,18 @@ if (process.env.NODE_ENV !== 'production') {
     [ErrorConstant.INVALID_SET_EXTENSION_OPTIONS]:
       'A call to `extension.setOptions` was made with invalid keys.',
     [ErrorConstant.REACT_PROVIDER_CONTEXT]:
-      '`useRemirror` was called outside of the `remirror` context. It can only be used within an active remirror context created by the `<RemirrorProvider />`.',
+      '`useRemirror` was called outside of the `remirror` context. It can only be used within an active remirror context created by the `<Remirror />`.',
     [ErrorConstant.REACT_GET_ROOT_PROPS]:
       '`getRootProps` has been attached to the DOM more than once. It should only be attached to the dom once per editor.',
     [ErrorConstant.REACT_EDITOR_VIEW]: 'A problem occurred adding the editor view to the dom.',
     [ErrorConstant.REACT_CONTROLLED]: 'There is a problem with your controlled editor setup.',
+    [ErrorConstant.REACT_NODE_VIEW]:
+      'Something went wrong with your custom ReactNodeView Component.',
+    [ErrorConstant.REACT_GET_CONTEXT]:
+      'You attempted to call `getContext` provided by the `useRemirror` prop during the first render of the editor. This is not possible and should only be after the editor first mounts.',
+    [ErrorConstant.REACT_COMPONENTS]: 'An error occurred within a remirror component.',
+    [ErrorConstant.REACT_HOOKS]: 'An error occurred within a remirror hook.',
+
     [ErrorConstant.I18N_CONTEXT]: 'You called `useI18n()` outside of an `I18nProvider` context.',
   };
 }

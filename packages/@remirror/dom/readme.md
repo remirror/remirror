@@ -1,7 +1,5 @@
 # @remirror/dom
 
-@next@next
-
 > Use remirror directly in the dom.
 
 [![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](#) [![MIT License][license]](#)
@@ -9,8 +7,8 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/dom/next
 [npm]: https://npmjs.com/package/@remirror/dom/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/dom@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/dom@next
+[size]: https://bundlephobia.com/result?p=@remirror/dom
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/dom
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/dom/red?icon=npm
 
@@ -26,13 +24,13 @@ The functionality of the prosemirror library is wrapped up into extensions which
 
 ```bash
 # yarn
-yarn add @remirror/dom@next @remirror/pm@next
+yarn add @remirror/dom @remirror/pm
 
 # pnpm
-pnpm add @remirror/dom@next @remirror/pm@next
+pnpm add @remirror/dom @remirror/pm
 
 # npm
-npm install @remirror/dom@next @remirror/pm@next
+npm install @remirror/dom @remirror/pm
 ```
 
 ## Usage
@@ -41,7 +39,7 @@ The following code is a guide to get you started.
 
 ```ts
 import { createDomEditor, createDomManager } from 'remirror/dom';
-import { BoldExtension } from 'remirror/extension/bold';
+import { BoldExtension } from 'remirror/extensions';
 
 const element = document.querySelector('#editor');
 const manager = createDomManager([new BoldExtension()]);

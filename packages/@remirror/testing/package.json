@@ -5,19 +5,37 @@
   "description": "Test fixtures for remirror unit tests",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/testing",
   "sideEffects": false,
-  "main": "dist/testing.cjs.js",
-  "module": "dist/testing.esm.js",
-  "browser": {
-    "./dist/testing.cjs.js": "./dist/testing.browser.cjs.js",
-    "./dist/testing.esm.js": "./dist/testing.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-testing.esm.js",
+      "require": "./dist/remirror-testing.cjs.js",
+      "browser": "./dist/remirror-testing.browser.esm.js",
+      "types": "./dist/remirror-testing.cjs.d.ts",
+      "default": "./dist/remirror-testing.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./react": {
+      "import": "./react/dist/remirror-testing-react.esm.js",
+      "require": "./react/dist/remirror-testing-react.cjs.js",
+      "browser": "./react/dist/remirror-testing.browser.esm.js",
+      "types": "./react/dist/remirror-testing-react.cjs.d.ts",
+      "default": "./react/dist/remirror-testing-react.esm.js"
+    },
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/testing.cjs.d.ts",
+  "main": "dist/remirror-testing.cjs.js",
+  "module": "dist/remirror-testing.esm.js",
+  "browser": {
+    "./dist/remirror-testing.cjs.js": "./dist/remirror-testing.browser.cjs.js",
+    "./dist/remirror-testing.esm.js": "./dist/remirror-testing.browser.esm.js"
+  },
+  "types": "dist/remirror-testing.cjs.d.ts",
   "files": [
     "dist",
     "react"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
+    "@babel/runtime": "^7.12.5",
     "@react-spring/mock-raf": "^1.1.1",
     "@remirror/core": "1.0.0-next.60",
     "@remirror/extension-blockquote": "1.0.0-next.60",
@@ -34,23 +52,28 @@
     "@remirror/preset-core": "1.0.0-next.60",
     "@remirror/preset-react": "1.0.0-next.60",
     "@remirror/react": "1.0.0-next.60",
-    "@testing-library/react": "^11.1.0",
+    "@testing-library/react": "^11.2.3",
     "@types/min-document": "^2.19.0",
-    "jest-diff": "^26.6.1",
+    "jest-diff": "^26.6.2",
     "min-document": "^2.19.0"
   },
   "devDependencies": {
-    "@types/react": "^16.9.53",
+    "@types/react": "^17.0.0",
     "react": "^17.0.1"
   },
   "peerDependencies": {
-    "@types/react": "^16.8.0",
-    "react": "^16.8.0 || ^17"
+    "@types/react": "^16.14.0 || ^17",
+    "react": "^16.14.0 || ^17"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
   },
   "preconstruct": {
     "entrypoints": [
-      ".",
-      "react"
+      "index.ts",
+      "react.tsx"
     ]
   }
 }

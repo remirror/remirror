@@ -13,18 +13,30 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-history.cjs.js",
-  "module": "dist/extension-history.esm.js",
-  "browser": {
-    "./dist/extension-history.cjs.js": "./dist/extension-history.browser.cjs.js",
-    "./dist/extension-history.esm.js": "./dist/extension-history.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-history.esm.js",
+      "require": "./dist/remirror-extension-history.cjs.js",
+      "browser": "./dist/remirror-extension-history.browser.esm.js",
+      "types": "./dist/remirror-extension-history.cjs.d.ts",
+      "default": "./dist/remirror-extension-history.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-history.cjs.d.ts",
+  "main": "dist/remirror-extension-history.cjs.js",
+  "module": "dist/remirror-extension-history.esm.js",
+  "browser": {
+    "./dist/remirror-extension-history.cjs.js": "./dist/remirror-extension-history.browser.cjs.js",
+    "./dist/remirror-extension-history.esm.js": "./dist/remirror-extension-history.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-history.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0"
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",

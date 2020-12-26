@@ -9,18 +9,30 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/core-constants.cjs.js",
-  "module": "dist/core-constants.esm.js",
-  "browser": {
-    "./dist/core-constants.cjs.js": "./dist/core-constants.browser.cjs.js",
-    "./dist/core-constants.esm.js": "./dist/core-constants.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-core-constants.esm.js",
+      "require": "./dist/remirror-core-constants.cjs.js",
+      "browser": "./dist/remirror-core-constants.browser.esm.js",
+      "types": "./dist/remirror-core-constants.cjs.d.ts",
+      "default": "./dist/remirror-core-constants.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/core-constants.cjs.d.ts",
+  "main": "dist/remirror-core-constants.cjs.js",
+  "module": "dist/remirror-core-constants.esm.js",
+  "browser": {
+    "./dist/remirror-core-constants.cjs.js": "./dist/remirror-core-constants.browser.cjs.js",
+    "./dist/remirror-core-constants.esm.js": "./dist/remirror-core-constants.browser.esm.js"
+  },
+  "types": "dist/remirror-core-constants.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0"
+    "@babel/runtime": "^7.12.5",
+    "@linaria/core": "^3.0.0-beta.1"
   },
   "publishConfig": {
     "access": "public"

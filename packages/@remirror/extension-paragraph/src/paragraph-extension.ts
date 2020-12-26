@@ -1,14 +1,33 @@
 import {
   ApplySchemaAttributes,
+  command,
   CommandFunction,
-  extensionDecorator,
+  extension,
   ExtensionPriority,
   ExtensionTag,
+  keyBinding,
+  KeyBindingParameter,
+  NamedShortcut,
   NodeExtension,
   NodeExtensionSpec,
+  NodeSpecOverride,
+  PrimitiveSelection,
   ProsemirrorAttributes,
   setBlockType,
 } from '@remirror/core';
+import { ExtensionParagraphMessages } from '@remirror/messages';
+
+const insertParagraphOptions: Remirror.CommandDecoratorOptions = {
+  icon: 'paragraph',
+  label: ({ t }) => t(ExtensionParagraphMessages.INSERT_LABEL),
+  description: ({ t }) => t(ExtensionParagraphMessages.INSERT_DESCRIPTION),
+};
+
+const convertParagraphOptions: Remirror.CommandDecoratorOptions = {
+  icon: 'paragraph',
+  label: ({ t }) => t(ExtensionParagraphMessages.CONVERT_LABEL),
+  description: ({ t }) => t(ExtensionParagraphMessages.CONVERT_DESCRIPTION),
+};
 
 /**
  * The paragraph is one of the essential building blocks for a prosemirror
@@ -16,7 +35,7 @@ import {
  *
  * @core
  */
-@extensionDecorator({
+@extension({
   defaultPriority: ExtensionPriority.Medium,
 })
 export class ParagraphExtension extends NodeExtension {
@@ -24,15 +43,18 @@ export class ParagraphExtension extends NodeExtension {
     return 'paragraph' as const;
   }
 
-  readonly tags = [ExtensionTag.LastNodeCompatible, ExtensionTag.BlockNode];
+  createTags() {
+    return [ExtensionTag.LastNodeCompatible, ExtensionTag.Block];
+  }
 
-  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
     return {
       content: 'inline*',
+      draggable: false,
+      ...override,
       attrs: {
         ...extra.defaults(),
       },
-      draggable: false,
       parseDOM: [
         {
           tag: 'p',
@@ -49,15 +71,42 @@ export class ParagraphExtension extends NodeExtension {
   }
 
   /**
-   * Provides the commands that this extension uses.
+   * Convert the current node to a paragraph.
    */
-  createCommands() {
-    return {
-      createParagraph: (attributes: ProsemirrorAttributes): CommandFunction => {
-        return setBlockType(this.type, attributes);
-      },
-    };
+  @command(convertParagraphOptions)
+  convertParagraph(options: ParagraphCommandOptions = {}): CommandFunction {
+    const { attrs, selection, preserveAttrs } = options;
+
+    return this.store.commands.setBlockNodeType.original(
+      this.type,
+      attrs,
+      selection,
+      preserveAttrs,
+    );
   }
+
+  /**
+   * Inserts a paragraph into the editor at the current selection.
+   */
+  @command(insertParagraphOptions)
+  insertParagraph(content: string, options: ParagraphCommandOptions = {}): CommandFunction {
+    const { selection, attrs } = options;
+    return this.store.commands.insertNode.original(this.type, { content, selection, attrs });
+  }
+
+  /**
+   * Add the paragraph shortcut to the editor. This makes a paragraph into a
+   */
+  @keyBinding({ shortcut: NamedShortcut.Paragraph, command: 'convertParagraph' })
+  shortcut(parameter: KeyBindingParameter): boolean {
+    return this.convertParagraph()(parameter);
+  }
+}
+
+interface ParagraphCommandOptions {
+  attrs?: ProsemirrorAttributes;
+  selection?: PrimitiveSelection;
+  preserveAttrs?: boolean;
 }
 
 declare global {

@@ -7,9 +7,9 @@ Add non editable mentions to your editor.
 ## Installation
 
 ```bash
-yarn add @remirror/extension-mention-atom@next @remirror/pm@next # yarn
-pnpm add @remirror/extension-mention-atom@next @remirror/pm@next # pnpm
-npm install @remirror/extension-mention-atom@next @remirror/pm@next # npm
+yarn add @remirror/extension-mention-atom @remirror/pm # yarn
+pnpm add @remirror/extension-mention-atom @remirror/pm # pnpm
+npm install @remirror/extension-mention-atom @remirror/pm # npm
 ```
 
-This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/mention-atom`.
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

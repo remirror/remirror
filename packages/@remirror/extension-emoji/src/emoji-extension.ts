@@ -2,11 +2,14 @@ import escapeStringRegex from 'escape-string-regexp';
 import { matchSorter } from 'match-sorter';
 
 import {
-  bool,
+  omitExtraAttributes,
+  command,
+  TupleRange,
+  isElementDomNode,
   CommandFunction,
   entries,
   ErrorConstant,
-  extensionDecorator,
+  extension,
   FromToParameter,
   Handler,
   includes,
@@ -15,14 +18,18 @@ import {
   isNumber,
   isPlainObject,
   keys,
+  NodeExtension,
   object,
-  PlainExtension,
+  Static,
   plainInputRule,
   range,
   take,
   Value,
   values,
   within,
+  NodeExtensionSpec,
+  ApplySchemaAttributes,
+  NodeSpecOverride,
 } from '@remirror/core';
 import type { SuggestChangeHandlerParameter, Suggester } from '@remirror/pm/suggest';
 
@@ -51,20 +58,62 @@ export const DEFAULT_FREQUENTLY_USED: Names[] = [
   'poop',
 ];
 
-@extensionDecorator<EmojiOptions>({
+const EMOJI_DATA_ATTRIBUTE = 'data-emoji-node';
+
+interface EmojiAttributes {
+  skin?: TupleRange<5>[number];
+  native: string;
+  hexcode: string;
+  shortcode: string;
+}
+
+@extension<EmojiOptions>({
   defaultOptions: {
+    plainText: false,
     defaultEmoji: DEFAULT_FREQUENTLY_USED,
     suggestionCharacter: ':',
     maxResults: 20,
   },
   handlerKeys: ['onChange'],
+  staticKeys: ['plainText'],
 })
-export class EmojiExtension extends PlainExtension<EmojiOptions> {
+export class EmojiExtension extends NodeExtension<EmojiOptions> {
   /**
    * The name is dynamically generated based on the passed in type.
    */
   get name() {
     return 'emoji' as const;
+  }
+
+  createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
+    return {
+      ...override,
+      atom: true,
+      attrs: { ...extra.defaults() },
+      parseDOM: [
+        {
+          tag: `span[${EMOJI_DATA_ATTRIBUTE}`,
+          getAttrs: (node) => {
+            if (!isElementDomNode(node)) {
+              return;
+            }
+
+            const skin = node.getAttribute('data-emoji-skin');
+            const native = node.getAttribute('data-emoji-native');
+            const hexcode = node.getAttribute('data-emoji-hexcode');
+            const shortcode = node.getAttribute('data-emoji-shortcode');
+
+            return { ...extra.parse(node), skin, native, hexcode, shortcode };
+          },
+        },
+      ],
+
+      toDOM: (node) => {
+        const attrs = omitExtraAttributes(node.attrs, extra);
+
+        return ['span', {}, ['img', {}]];
+      },
+    };
   }
 
   /**
@@ -259,6 +308,13 @@ export type EmojiChangeHandler = (
 
 export interface EmojiOptions {
   /**
+   * When true, emoji will be rendered as plain text instead of atom nodes.
+   *
+   * @default false
+   */
+  plainText?: Static<boolean>;
+
+  /**
    * The character which will trigger the emoji suggesters popup.
    */
   suggestionCharacter?: string;
@@ -382,7 +438,7 @@ export function isValidEmojiName(name: unknown): name is NamesAndAliases {
  * Verify that this is a valid emoji object
  */
 export function isValidEmojiObject(value: unknown): value is EmojiObject {
-  return bool(isPlainObject(value) && isEmojiName(value.name));
+  return !!(isPlainObject(value) && isEmojiName(value.name));
 }
 
 /**

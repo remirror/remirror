@@ -17,7 +17,7 @@
 '@remirror/extension-strike': patch
 '@remirror/extension-underline': patch
 '@remirror/extension-yjs': patch
-'@remirror/preset-list': patch
+'@remirror/extension-list': patch
 ---
 
 Switch to using method signatures for extension class methods as discussed in #360. The following methods have been affected:

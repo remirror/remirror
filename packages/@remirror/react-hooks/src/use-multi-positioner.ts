@@ -1,19 +1,19 @@
-import { RefCallback, useCallback, useMemo, useState } from 'react';
+import { RefCallback, useMemo, useRef, useState } from 'react';
 import useLayoutEffect from 'use-isomorphic-layout-effect';
 
+import { omitUndefined } from '@remirror/core';
 import {
+  defaultAbsolutePosition,
   ElementsAddedParameter,
-  emptyVirtualPosition,
   getPositioner,
   Positioner,
   PositionerExtension,
-  StringPositioner,
-  VirtualNode,
-  VirtualPosition,
+  PositionerParam,
+  PositionerPosition,
 } from '@remirror/extension-positioner';
 import { useExtension } from '@remirror/react';
 
-export interface UseMultiPositionerReturn extends VirtualPosition {
+export interface UseMultiPositionerReturn extends PositionerPosition {
   /**
    * This ref must be applied to the component that is being positioned in order
    * to correctly obtain the position data.
@@ -30,40 +30,6 @@ export interface UseMultiPositionerReturn extends VirtualPosition {
    * react element.
    */
   key: string;
-
-  /**
-   * A virtual node which can be used to represent the `virtualElement` in
-   * libraries like `react-popper`.
-   * @see https://popper.js.org/react-popper/v2/virtual-elements/
-   *
-   * It returns a `VirtualNode` which is a pseudo-element with a
-   * `getBoundingClientRect()`  method for getting the fake position of the
-   * element.
-   *
-   * ```tsx
-   * import { usePositioner } from 'remirror/react/hooks';
-   * import { usePopper } from 'react-popper';
-   *
-   * const PositionedComponent = () => {
-   *   const { ref, element, virtualNode } = usePositioner('popup');
-   *   const { styles, attributes } = usePopper(virtualNode, element);
-   *
-   *   return (
-   *     <div ref={ref} style={styles.popper} {...attributes.popper}>
-   *       Positioned With Popper ☺️
-   *     </div>
-   *   )
-   * };
-   * ```
-   */
-  virtualNode: VirtualNode;
-}
-
-export interface UsePositionerReturn extends Partial<UseMultiPositionerReturn> {
-  /**
-   * When `true`, the position is active and the pop should be displayed.
-   */
-  active: boolean;
 }
 
 /**
@@ -71,7 +37,7 @@ export interface UsePositionerReturn extends Partial<UseMultiPositionerReturn> {
  * is useful for tracking the positions of multiple items in the editor.
  *
  * ```ts
- * import { Positioner } from 'remirror/extension/positioner
+ * import { Positioner } from 'remirror/extensions
  * import { useMultiPositioner } from 'remirror/react';
  *
  * const positioner = Positioner.create({
@@ -79,7 +45,7 @@ export interface UsePositionerReturn extends Partial<UseMultiPositionerReturn> {
  * })
  *
  * const MenuComponent: FC = () => {
- *   const positions = usePositioner(positioner);
+ *   const positions = usePositioner(positioner, []);
  *
  *   return (
  *     <>
@@ -92,31 +58,40 @@ export interface UsePositionerReturn extends Partial<UseMultiPositionerReturn> {
  *       }
  *     </>
  *   )
- * }
+ * };
  * ```
+ *
+ * @param positioner - the positioner which will be used
+ * @param deps - an array of dependencies which will cause the hook to rerender
+ * with an updated positioner. This is the only way to update the positioner.
  */
 export function useMultiPositioner(
-  positioner: Positioner | StringPositioner,
+  positioner: PositionerParam,
+  deps: unknown[],
 ): UseMultiPositionerReturn[] {
   interface CollectElementRef {
     ref: RefCallback<HTMLElement>;
     id: string;
   }
 
+  const positionerRef = useRef(positioner);
+  positionerRef.current = positioner;
+
   const [state, setState] = useState<ElementsAddedParameter[]>([]);
-  const memoizedPositioner = useMemo(() => getPositioner(positioner), [positioner]);
+  const [memoizedPositioner, setMemoizedPositioner] = useState(() => getPositioner(positioner));
   const [collectRefs, setCollectRefs] = useState<CollectElementRef[]>([]);
 
   useExtension(
     PositionerExtension,
-    useCallback(
-      (parameter) => {
-        const { addCustomHandler } = parameter;
-        return addCustomHandler('positioner', memoizedPositioner);
-      },
-      [memoizedPositioner],
-    ),
-    [],
+    ({ addCustomHandler }) => {
+      const positioner = getPositioner(positionerRef.current);
+      const dispose = addCustomHandler('positioner', positioner);
+
+      setMemoizedPositioner(positioner);
+
+      return dispose;
+    },
+    deps,
   );
 
   // Add the positioner update handlers.
@@ -149,11 +124,17 @@ export function useMultiPositioner(
     };
   }, [memoizedPositioner]);
 
-  return collectRefs.map(({ ref, id: key }, index) => {
-    const { element, position } = state[index] ?? {};
-    const virtualPosition = { ...emptyVirtualPosition, ...position };
-    const virtualNode = memoizedPositioner.getVirtualNode(virtualPosition);
+  return useMemo(() => {
+    const positions: UseMultiPositionerReturn[] = [];
 
-    return { ref, element, key, virtualNode, ...position };
-  });
+    for (const [index, { ref, id: key }] of collectRefs.entries()) {
+      const stateValue = state[index];
+      const { element, position = {} } = stateValue ?? {};
+      const absolutePosition = { ...defaultAbsolutePosition, ...omitUndefined(position) };
+
+      positions.push({ ref, element, key, ...absolutePosition });
+    }
+
+    return positions;
+  }, [collectRefs, state]);
 }

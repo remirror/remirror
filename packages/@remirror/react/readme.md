@@ -7,9 +7,9 @@ The react components for the remirror editor
 ## Installation
 
 ```bash
-yarn add @remirror/react@next @remirror/pm@next @remirror/react/@next # yarn
-pnpm add @remirror/react@next @remirror/pm@next @remirror/react/@next # pnpm
-npm install @remirror/react@next @remirror/pm@next @remirror/react/@next # npm
+yarn add @remirror/react @remirror/pm # yarn
+pnpm add @remirror/react @remirror/pm # pnpm
+npm install @remirror/react @remirror/pm # npm
 ```
 
 ## Usage
@@ -24,22 +24,22 @@ Don't do this, as it would actually be a terrible user experience. But it shows 
 
 ```tsx
 import React, { useCallback } from 'react';
-import { fromHtml, RemirrorEventListener } from 'remirror/core';
-import { BoldExtension } from 'remirror/extension/bold';
-import { ListPreset } from 'remirror/preset/list';
+import { fromHtml, RemirrorEventListener } from 'remirror';
+import { BoldExtension } from 'remirror/extensions';
+import { ListPreset } from 'remirror/extensions';
 import {
   createReactManager,
-  ReactCombinedUnion,
+  ReactExtensionUnion,
   RemirrorProvider,
   useManager,
 } from 'remirror/react';
 
-type Combined = ReactCombinedUnion<ListPreset | BoldExtension>;
+type ExtensionUnion = ReactExtensionUnion<ListPreset | BoldExtension>;
 
 const EditorWrapper = () => {
   const boldExtension = new BoldExtension();
   const listPreset = new ListPreset();
-  const manager = useManager<Combined>([boldExtension, listPreset]);
+  const manager = useManager<ExtensionUnion>([boldExtension, listPreset]);
 
   const initialValue = manager.createState({
     content: '<p>This is the initial value</p>',
@@ -48,7 +48,7 @@ const EditorWrapper = () => {
 
   const [value, setValue] = useState(initialValue);
 
-  const onChange: RemirrorEventListener<Combined> = useCallback(
+  const onChange: RemirrorEventListener<ExtensionUnion> = useCallback(
     ({ getText, createStateFromContent }) => {
       const newValue = createStateFromContent(`${getText()}<ul><li>Surprise!!!</li></ul>`);
       setValue(newValue);

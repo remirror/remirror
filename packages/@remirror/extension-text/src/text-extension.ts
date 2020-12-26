@@ -1,5 +1,5 @@
 import {
-  extensionDecorator,
+  extension,
   ExtensionPriority,
   ExtensionTag,
   NodeExtension,
@@ -13,7 +13,7 @@ import {
  *
  * @core
  */
-@extensionDecorator({
+@extension({
   disableExtraAttributes: true,
   defaultPriority: ExtensionPriority.Medium,
 })
@@ -22,7 +22,9 @@ export class TextExtension extends NodeExtension {
     return 'text' as const;
   }
 
-  readonly tags = [ExtensionTag.InlineNode];
+  createTags() {
+    return [ExtensionTag.InlineNode];
+  }
 
   createNodeSpec(): NodeExtensionSpec {
     return {};

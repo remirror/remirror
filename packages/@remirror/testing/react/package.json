@@ -1,12 +1,9 @@
 {
-  "main": "dist/testing.cjs.js",
-  "module": "dist/testing.esm.js",
+  "main": "dist/remirror-testing-react.cjs.js",
+  "module": "dist/remirror-testing-react.esm.js",
   "browser": {
-    "./dist/testing.cjs.js": "./dist/testing.browser.cjs.js",
-    "./dist/testing.esm.js": "./dist/testing.browser.esm.js"
+    "./dist/remirror-testing-react.cjs.js": "./dist/remirror-testing-react.browser.cjs.js",
+    "./dist/remirror-testing-react.esm.js": "./dist/remirror-testing-react.browser.esm.js"
   },
-  "types": "dist/testing.cjs.d.ts",
-  "preconstruct": {
-    "source": "../src/react"
-  }
+  "types": "dist/remirror-testing-react.cjs.d.ts"
 }

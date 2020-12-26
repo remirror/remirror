@@ -20,6 +20,7 @@ This document is for extension developers who wish to create their own extension
   - `remirror-extension-angular-split` and exports `AngularSplitExtension`.
 - Extensions which take options should export their options interface. The name should replace `Extension` from the exported extension class with `Options`.
   - `remirror-extension-awesome` becomes `AwesomeOptions`.
+  - This is not a hard requirement and can be ignored when there are naming conflicts.
 
 ## Presets
 

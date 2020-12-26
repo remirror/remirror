@@ -1,8 +1,10 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-
-import { BlockquoteExtension, HeadingExtension } from '@remirror/testing';
-
-import { TrailingNodeExtension, TrailingNodeOptions } from '../trailing-node-extension';
+import {
+  BlockquoteExtension,
+  HeadingExtension,
+  TrailingNodeExtension,
+  TrailingNodeOptions,
+} from 'remirror/extensions';
 
 extensionValidityTest(TrailingNodeExtension);
 
@@ -10,7 +12,7 @@ function create(params?: Partial<TrailingNodeOptions>) {
   const {
     add,
     nodes: { doc, p, heading, blockquote },
-  } = renderEditor([
+  } = renderEditor(() => [
     new TrailingNodeExtension(params),
     new HeadingExtension(),
     new BlockquoteExtension(),

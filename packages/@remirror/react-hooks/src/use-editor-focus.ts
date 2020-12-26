@@ -1,9 +1,23 @@
 import { useCallback, useState } from 'react';
 
 import type { FocusType } from '@remirror/core';
-import { useRemirror } from '@remirror/react';
+import { useRemirrorContext } from '@remirror/react';
 
 import { useEvents } from './use-events';
+
+export interface UseEditorFocusProps {
+  /**
+   * The elements that can be focused without setting `isFocused` to false.
+   */
+  ignoredElements?: Array<Element | null>;
+
+  /**
+   * Whether to set focused to false when the focus is lost by actions taken outside of the dom.
+   *
+   * @default false
+   */
+  blurOnInactive?: boolean;
+}
 
 /**
  * Keep track of the editor focus.
@@ -12,9 +26,13 @@ import { useEvents } from './use-events';
  *
  * When `true`, the editor is focused when `false` the editor is not focused.
  */
-export function useEditorFocus(): [isFocused: boolean, focus: (position?: FocusType) => void] {
+export function useEditorFocus(
+  props: UseEditorFocusProps = {},
+): [isFocused: boolean, focus: (position?: FocusType) => void] {
+  const { ignoredElements = [], blurOnInactive = false } = props;
+
   // Get the view from the context and use it to calculate the initial focus.
-  const { view, focus } = useRemirror();
+  const { view, commands } = useRemirrorContext();
 
   // Create the initial state with the current view focus.
   const [isFocused, setIsFocused] = useState(() => view.hasFocus());
@@ -22,26 +40,45 @@ export function useEditorFocus(): [isFocused: boolean, focus: (position?: FocusT
   // Listen to blur events and set focused to false in those instances.
   useEvents(
     'blur',
-    useCallback(() => {
-      setIsFocused(false);
+    useCallback(
+      (_: FocusEvent) => {
+        const focusedElement = document.activeElement;
+        const ignoreBlur = !blurOnInactive && !focusedElement;
 
-      // Returning false means that other event listeners will still receive
-      // this event.
-      return false;
-    }, [setIsFocused]),
+        if (ignoreBlur || view.dom.contains(focusedElement)) {
+          return false;
+        }
+
+        for (const element of ignoredElements) {
+          if (element?.contains(focusedElement)) {
+            return false;
+          }
+        }
+
+        setIsFocused(false);
+
+        return false;
+      },
+      [blurOnInactive, ignoredElements, view.dom],
+    ),
   );
 
   // Listen to focus events and set focused to true in those instances.
   useEvents(
     'focus',
-    useCallback(() => {
-      setIsFocused(true);
+    useCallback(
+      (_: FocusEvent) => {
+        if (isFocused) {
+          return false;
+        }
 
-      // Returning false means that other event listeners will still receive
-      // this event.
-      return false;
-    }, [setIsFocused]),
+        setIsFocused(true);
+
+        return false;
+      },
+      [isFocused],
+    ),
   );
 
-  return [isFocused, focus];
+  return [isFocused, commands.focus];
 }

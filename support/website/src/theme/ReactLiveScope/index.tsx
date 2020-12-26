@@ -1,18 +1,13 @@
-import React from 'react';
-import { BoldExtension } from 'remirror/extension/bold';
-import { ItalicExtension } from 'remirror/extension/italic';
-import { UnderlineExtension } from 'remirror/extension/underline';
-import { CorePreset } from 'remirror/preset/core';
+import * as React from 'react';
+import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions';
 import {
   createReactManager,
-  RemirrorProvider,
+  Remirror,
   useExtension,
   useManager,
   usePositioner,
-  usePreset,
   useRemirror,
 } from 'remirror/react';
-import { SocialEditor } from 'remirror/react/social';
 
 const exampleUsers = [
   {
@@ -62,17 +57,14 @@ const exampleTags = [
 export default {
   React,
   ...React,
-  SocialEditor,
   exampleUsers,
   exampleTags,
   useManager,
   useExtension,
   useRemirror,
-  usePreset,
   usePositioner,
-  RemirrorProvider,
+  Remirror,
   createReactManager,
-  CorePreset,
   BoldExtension,
   ItalicExtension,
   UnderlineExtension,

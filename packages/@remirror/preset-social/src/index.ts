@@ -1,2 +1,2 @@
-export type { SocialOptions } from './social-preset';
-export { SocialPreset } from './social-preset';
+export type { SocialOptions, SocialPreset } from './social-preset';
+export { socialPreset } from './social-preset';

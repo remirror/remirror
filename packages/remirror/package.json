@@ -18,6 +18,51 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror.esm.js",
+      "require": "./dist/remirror.cjs.js",
+      "browser": "./dist/remirror.browser.esm.js",
+      "types": "./dist/remirror.cjs.d.ts",
+      "default": "./dist/remirror.esm.js"
+    },
+    "./dom": {
+      "import": "./dom/dist/remirror-dom.esm.js",
+      "require": "./dom/dist/remirror-dom.cjs.js",
+      "browser": "./dom/dist/remirror.browser.esm.js",
+      "types": "./dom/dist/remirror-dom.cjs.d.ts",
+      "default": "./dom/dist/remirror-dom.esm.js"
+    },
+    "./extensions": {
+      "import": "./extensions/dist/remirror-extensions.esm.js",
+      "require": "./extensions/dist/remirror-extensions.cjs.js",
+      "browser": "./extensions/dist/remirror.browser.esm.js",
+      "types": "./extensions/dist/remirror-extensions.cjs.d.ts",
+      "default": "./extensions/dist/remirror-extensions.esm.js"
+    },
+    "./icons": {
+      "import": "./icons/dist/remirror-icons.esm.js",
+      "require": "./icons/dist/remirror-icons.cjs.js",
+      "browser": "./icons/dist/remirror.browser.esm.js",
+      "default": "./icons/dist/remirror-icons.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./playground": {
+      "import": "./playground/dist/remirror-playground.esm.js",
+      "require": "./playground/dist/remirror-playground.cjs.js",
+      "browser": "./playground/dist/remirror.browser.esm.js",
+      "types": "./playground/dist/remirror-playground.cjs.d.ts",
+      "default": "./playground/dist/remirror-playground.esm.js"
+    },
+    "./react": {
+      "import": "./react/dist/remirror-react.esm.js",
+      "require": "./react/dist/remirror-react.cjs.js",
+      "browser": "./react/dist/remirror.browser.esm.js",
+      "types": "./react/dist/remirror-react.cjs.d.ts",
+      "default": "./react/dist/remirror-react.esm.js"
+    },
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
   "main": "dist/remirror.cjs.js",
   "module": "dist/remirror.esm.js",
   "browser": {
@@ -26,17 +71,16 @@
   },
   "types": "dist/remirror.cjs.d.ts",
   "files": [
-    "core",
     "dist",
     "dom",
-    "theme",
-    "extension",
-    "preset",
+    "extensions",
+    "icons",
+    "playground",
     "react",
     "styles"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
+    "@babel/runtime": "^7.12.5",
     "@remirror/core": "1.0.0-next.60",
     "@remirror/core-constants": "1.0.0-next.60",
     "@remirror/core-helpers": "1.0.0-next.60",
@@ -53,22 +97,31 @@
     "@remirror/extension-code-block": "1.0.0-next.60",
     "@remirror/extension-codemirror5": "1.0.0-next.60",
     "@remirror/extension-collaboration": "1.0.0-next.60",
+    "@remirror/extension-columns": "0.0.0",
     "@remirror/extension-diff": "1.0.0-next.60",
     "@remirror/extension-doc": "1.0.0-next.60",
     "@remirror/extension-drop-cursor": "1.0.0-next.60",
+    "@remirror/extension-embed": "1.0.0-next.60",
     "@remirror/extension-emoji": "1.0.0-next.60",
     "@remirror/extension-epic-mode": "1.0.0-next.60",
     "@remirror/extension-events": "1.0.0-next.60",
+    "@remirror/extension-font-family": "0.0.0",
+    "@remirror/extension-font-size": "0.0.0",
     "@remirror/extension-gap-cursor": "1.0.0-next.60",
     "@remirror/extension-hard-break": "1.0.0-next.60",
     "@remirror/extension-heading": "1.0.0-next.60",
     "@remirror/extension-history": "1.0.0-next.60",
     "@remirror/extension-horizontal-rule": "1.0.0-next.60",
+    "@remirror/extension-icons": "0.0.0",
     "@remirror/extension-image": "1.0.0-next.60",
     "@remirror/extension-italic": "1.0.0-next.60",
     "@remirror/extension-link": "1.0.0-next.60",
+    "@remirror/extension-list": "1.0.0-next.60",
+    "@remirror/extension-markdown": "0.0.0",
+    "@remirror/extension-media": "0.0.0",
     "@remirror/extension-mention": "1.0.0-next.60",
     "@remirror/extension-mention-atom": "1.0.0-next.60",
+    "@remirror/extension-native-bridge": "0.0.0",
     "@remirror/extension-paragraph": "1.0.0-next.60",
     "@remirror/extension-placeholder": "1.0.0-next.60",
     "@remirror/extension-positioner": "1.0.0-next.60",
@@ -76,19 +129,27 @@
     "@remirror/extension-react-ssr": "1.0.0-next.60",
     "@remirror/extension-search": "1.0.0-next.60",
     "@remirror/extension-strike": "1.0.0-next.60",
+    "@remirror/extension-sub": "0.0.0",
+    "@remirror/extension-sup": "0.0.0",
+    "@remirror/extension-tables": "1.0.0-next.60",
     "@remirror/extension-text": "1.0.0-next.60",
+    "@remirror/extension-text-case": "0.0.0",
+    "@remirror/extension-text-color": "0.0.0",
+    "@remirror/extension-text-highlight": "0.0.0",
+    "@remirror/extension-text-wrap": "0.0.0",
     "@remirror/extension-trailing-node": "1.0.0-next.60",
     "@remirror/extension-underline": "1.0.0-next.60",
+    "@remirror/extension-whitespace": "0.0.0",
     "@remirror/extension-yjs": "1.0.0-next.60",
+    "@remirror/icons": "0.0.0",
     "@remirror/pm": "1.0.0-next.60",
     "@remirror/preset-core": "1.0.0-next.60",
-    "@remirror/preset-embed": "1.0.0-next.60",
-    "@remirror/preset-list": "1.0.0-next.60",
+    "@remirror/preset-formatting": "0.0.0",
     "@remirror/preset-react": "1.0.0-next.60",
     "@remirror/preset-social": "1.0.0-next.60",
-    "@remirror/preset-table": "1.0.0-next.60",
     "@remirror/preset-wysiwyg": "1.0.0-next.60",
     "@remirror/react": "1.0.0-next.60",
+    "@remirror/react-components": "1.0.0-next.40",
     "@remirror/react-hooks": "1.0.0-next.60",
     "@remirror/react-social": "1.0.0-next.60",
     "@remirror/react-utils": "1.0.0-next.60",
@@ -96,25 +157,36 @@
     "@remirror/theme": "1.0.0-next.60"
   },
   "devDependencies": {
-    "@types/codemirror": "^0.0.98",
-    "@types/react": "^16.9.53",
-    "@types/react-dom": "^16.9.8",
-    "codemirror": "^5.58.2",
+    "@types/codemirror": "^0.0.106",
+    "@types/prettier": "^2.1.6",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/refractor": "^3.0.0",
+    "codemirror": "^5.59.1",
+    "prettier": "^2.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "yjs": "^13.4.1"
+    "refractor": "^3.3.0",
+    "yjs": "^13.4.11"
   },
   "peerDependencies": {
     "@types/codemirror": "^0.0.98",
-    "@types/react": "^16.8.0",
-    "@types/react-dom": "^16.8.0",
+    "@types/prettier": "^2.1.5",
+    "@types/react": "^16.14.0 || ^17",
+    "@types/react-dom": "^16.9.0 || ^17",
+    "@types/refractor": "^3.0.0",
     "codemirror": "^5.58.2",
-    "react": "^16.8.0 || ^17",
-    "react-dom": "^16.8.0 || ^17",
+    "prettier": "^2.2.0",
+    "react": "^16.14.0 || ^17",
+    "react-dom": "^16.14.0 || ^17",
+    "refractor": "^3.2.0",
     "yjs": "^13.4.0"
   },
   "peerDependenciesMeta": {
     "@types/codemirror": {
+      "optional": true
+    },
+    "@types/prettier": {
       "optional": true
     },
     "@types/react": {
@@ -123,13 +195,22 @@
     "@types/react-dom": {
       "optional": true
     },
+    "@types/refractor": {
+      "optional": true
+    },
     "codemirror": {
+      "optional": true
+    },
+    "prettier": {
       "optional": true
     },
     "react": {
       "optional": true
     },
     "react-dom": {
+      "optional": true
+    },
+    "refractor": {
       "optional": true
     },
     "yjs": {
@@ -141,62 +222,12 @@
   },
   "preconstruct": {
     "entrypoints": [
-      ".",
-      "core",
-      "core/constants",
-      "core/helpers",
-      "core/types",
-      "core/utils",
-      "dom",
-      "extension/annotation",
-      "extension/auto-link",
-      "extension/blockquote",
-      "extension/bold",
-      "extension/bidi",
-      "extension/code-block",
-      "extension/callout",
-      "extension/code",
-      "extension/collaboration",
-      "extension/doc",
-      "extension/drop-cursor",
-      "extension/emoji",
-      "extension/epic-mode",
-      "extension/events",
-      "extension/gap-cursor",
-      "extension/hard-break",
-      "extension/heading",
-      "extension/history",
-      "extension/horizontal-rule",
-      "extension/image",
-      "extension/italic",
-      "extension/link",
-      "extension/mention",
-      "extension/mention-atom",
-      "extension/paragraph",
-      "extension/placeholder",
-      "extension/positioner",
-      "extension/react-component",
-      "extension/react-ssr",
-      "extension/search",
-      "extension/strike",
-      "extension/text",
-      "extension/diff",
-      "extension/trailing-node",
-      "extension/underline",
-      "extension/yjs",
-      "preset/core",
-      "preset/embed",
-      "preset/list",
-      "preset/react",
-      "preset/social",
-      "preset/table",
-      "preset/wysiwyg",
-      "react",
-      "react/hooks",
-      "react/social",
-      "react/wysiwyg",
-      "react/utils",
-      "theme"
+      "dom.ts",
+      "extensions.ts",
+      "icons.ts",
+      "index.ts",
+      "playground.ts",
+      "react.ts"
     ]
   }
 }

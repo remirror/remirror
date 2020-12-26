@@ -7,8 +7,8 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/core-helpers/next
 [npm]: https://npmjs.com/package/@remirror/core-helpers/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/core-helpers@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/core-helpers@next
+[size]: https://bundlephobia.com/result?p=@remirror/core-helpers
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/core-helpers
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/core-helpers/red?icon=npm
 

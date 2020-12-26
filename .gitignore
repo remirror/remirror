@@ -132,6 +132,7 @@ secret.json
 .out
 
 docs/public/**
+docs/api/**
 docs/.cache/
 docs/.linaria-cache/
 *.tsbuildinfo
@@ -152,7 +153,6 @@ cc-reporter
 /linaria.config.js
 /lingui.config.js
 /jest.config.js
-/.vscode
 /.prettierrc.js
 /.huskyrc
 /.lintstagedrc
@@ -162,5 +162,5 @@ cc-reporter
 ## Ignore tsconfig files.
 /tsconfig.json
 /tsconfig.lint.json
+/tsconfig.docs.json
 /tsconfig.references.json
-/packages/**/tsconfig.json

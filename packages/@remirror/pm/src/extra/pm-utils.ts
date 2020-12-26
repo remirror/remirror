@@ -1,5 +1,5 @@
 import { ErrorConstant } from '@remirror/core-constants';
-import { invariant } from '@remirror/core-helpers';
+import { invariant, object } from '@remirror/core-helpers';
 
 import type { EditorState, Transaction } from '../state';
 import type {
@@ -23,6 +23,10 @@ export function chainableEditorState<Schema extends EditorSchema = EditorSchema>
   tr: Transaction<Schema>,
   state: EditorState<Schema>,
 ): EditorState<Schema> {
+  // Get the prototype of the state which is used to allow this chainable editor
+  // state to pass `instanceof` checks.
+  const proto = Object.getPrototypeOf(state);
+
   // Every time the `state.tr` property is accessed these values are updated to
   // reflect the current `transaction` value for the doc, selection and
   // storedMarks. This way they can be mostly be constant within the scope of
@@ -31,31 +35,41 @@ export function chainableEditorState<Schema extends EditorSchema = EditorSchema>
   let doc = tr.doc;
   let storedMarks = tr.storedMarks;
 
-  return {
-    ...state,
-    schema: state.schema,
-    plugins: state.plugins,
-    apply: state.apply.bind(state),
-    applyTransaction: state.applyTransaction.bind(state),
-    reconfigure: state.reconfigure.bind(state),
-    toJSON: state.toJSON.bind(state),
-    get storedMarks() {
-      return storedMarks;
-    },
-    get selection() {
-      return selection;
-    },
-    get doc() {
-      return doc;
-    },
-    get tr() {
-      selection = tr.selection;
-      doc = tr.doc;
-      storedMarks = tr.storedMarks;
+  // Container for the enumerable properties on the current state object.
+  const properties: PropertyDescriptorMap = object();
 
-      return tr;
+  for (const [key, value] of Object.entries(state)) {
+    // Store the enumerable state value.
+    properties[key] = { value };
+  }
+
+  return Object.create(proto, {
+    ...properties,
+    storedMarks: {
+      get() {
+        return storedMarks;
+      },
     },
-  };
+    selection: {
+      get() {
+        return selection;
+      },
+    },
+    doc: {
+      get() {
+        return doc;
+      },
+    },
+    tr: {
+      get() {
+        selection = tr.selection;
+        doc = tr.doc;
+        storedMarks = tr.storedMarks;
+
+        return tr;
+      },
+    },
+  });
 }
 
 /**

@@ -13,20 +13,33 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-placeholder.cjs.js",
-  "module": "dist/extension-placeholder.esm.js",
-  "browser": {
-    "./dist/extension-placeholder.cjs.js": "./dist/extension-placeholder.browser.cjs.js",
-    "./dist/extension-placeholder.esm.js": "./dist/extension-placeholder.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-placeholder.esm.js",
+      "require": "./dist/remirror-extension-placeholder.cjs.js",
+      "browser": "./dist/remirror-extension-placeholder.browser.esm.js",
+      "types": "./dist/remirror-extension-placeholder.cjs.d.ts",
+      "default": "./dist/remirror-extension-placeholder.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-placeholder.cjs.d.ts",
+  "main": "dist/remirror-extension-placeholder.cjs.js",
+  "module": "dist/remirror-extension-placeholder.esm.js",
+  "browser": {
+    "./dist/remirror-extension-placeholder.cjs.js": "./dist/remirror-extension-placeholder.browser.cjs.js",
+    "./dist/remirror-extension-placeholder.esm.js": "./dist/remirror-extension-placeholder.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-placeholder.cjs.d.ts",
   "files": [
     "dist",
     "style"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
-    "linaria": "^2.0.0"
+    "@babel/runtime": "^7.12.5",
+    "@linaria/core": "^3.0.0-beta.1",
+    "@remirror/messages": "0.0.0",
+    "@remirror/theme": "1.0.0-next.60"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",

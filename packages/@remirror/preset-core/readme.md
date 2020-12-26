@@ -7,8 +7,8 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/preset-core/next
 [npm]: https://npmjs.com/package/@remirror/preset-core/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/preset-core@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/preset-core@next
+[size]: https://bundlephobia.com/result?p=@remirror/preset-core
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/preset-core
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/preset-core/red?icon=npm
 
@@ -17,12 +17,12 @@
 ## Installation
 
 ```bash
-yarn add @remirror/preset-core@next # yarn
-pnpm add @remirror/preset-core@next # pnpm
-npm install @remirror/preset-core@next # npm
+yarn add @remirror/preset-core # yarn
+pnpm add @remirror/preset-core # pnpm
+npm install @remirror/preset-core # npm
 ```
 
-This package is available via `remirror/preset/core` when you install `remirror`.
+This package is available via `remirror/presets` when you install `remirror`.
 
 <br />
 
@@ -31,23 +31,8 @@ This package is available via `remirror/preset/core` when you install `remirror`
 When added to your editor it will provide the required nodes, marks to your editor.
 
 ```ts
-import { RemirrorManager } from 'remirror/core';
-import { CorePreset } from 'remirror/preset/core';
-
-// Create the preset
-const corePreset = new CorePreset({ rootContent: 'block*' });
+import { corePreset, RemirrorManager } from 'remirror';
 
 // Create the Editor Manager with the required preset.
-const manager = RemirrorManager.create([corePreset]);
-
-// Pass the dom element to the editor. If you are using `@remirror/react` this is done for you.
-const element = document.createElement('div');
-document.body.append(element);
-
-// Add the view to the editor manager.
-manager.addView(element);
-
-// You now have a basic working editor.
+const manager = RemirrorManager.create([...corePreset({ rootContent: 'block*' })]);
 ```
-
-Granted, the above won't do much. It will allow you to type, if that's your cup of tea.

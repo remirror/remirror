@@ -8,6 +8,17 @@
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
+  "exports": {
+    ".": {
+      "import": "./dist/a11y-status.esm.js",
+      "require": "./dist/a11y-status.cjs.js",
+      "browser": "./dist/a11y-status.browser.esm.js",
+      "types": "./dist/a11y-status.cjs.d.ts",
+      "default": "./dist/a11y-status.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
   "main": "dist/a11y-status.cjs.js",
   "module": "dist/a11y-status.esm.js",
   "browser": {
@@ -19,7 +30,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
+    "@babel/runtime": "^7.12.5",
     "@types/throttle-debounce": "^2.1.0",
     "throttle-debounce": "^3.0.1"
   },

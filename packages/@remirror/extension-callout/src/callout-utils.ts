@@ -1,13 +1,14 @@
 import {
-  bool,
   CommandFunction,
   findParentNodeOfType,
+  includes,
   isEqual,
   isObject,
   isString,
   NodeType,
   ProsemirrorAttributes,
 } from '@remirror/core';
+import { ExtensionCalloutMessages } from '@remirror/messages';
 
 import type { CalloutAttributes } from './callout-types';
 
@@ -20,8 +21,11 @@ export const dataAttributeType = 'data-callout-type';
 export function isValidCalloutAttributes(
   attributes: ProsemirrorAttributes,
 ): attributes is CalloutAttributes {
-  return bool(
-    attributes && isObject(attributes) && isString(attributes.type) && attributes.type.length,
+  return !!(
+    attributes &&
+    isObject(attributes) &&
+    isString(attributes.type) &&
+    attributes.type.length > 0
   );
 }
 
@@ -54,4 +58,34 @@ export function updateNodeAttributes(type: NodeType) {
 
     return true;
   };
+}
+
+const { DESCRIPTION, LABEL } = ExtensionCalloutMessages;
+
+export const toggleCalloutOptions: Remirror.CommandDecoratorOptions = {
+  icon: ({ attrs }) => {
+    switch (attrs?.type as CalloutAttributes['type']) {
+      case 'error':
+        return 'closeCircleLine';
+      case 'success':
+        return 'checkboxCircleLine';
+      case 'warning':
+        return 'errorWarningLine';
+      default:
+        return 'informationLine';
+    }
+  },
+  description: ({ t, attrs }) => t(DESCRIPTION, { type: attrs?.type }),
+  label: ({ t, attrs }) => t(LABEL, { type: attrs?.type }),
+};
+
+/**
+ * Get the callout type from the provided string.
+ */
+export function getCalloutType(
+  value: string | null | undefined,
+  validTypes: string[],
+  defaultType: string,
+): string {
+  return includes(validTypes, value) ? value : defaultType;
 }

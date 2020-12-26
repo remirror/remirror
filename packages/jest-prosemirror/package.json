@@ -14,6 +14,31 @@
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
+  "exports": {
+    ".": {
+      "import": "./dist/jest-prosemirror.esm.js",
+      "require": "./dist/jest-prosemirror.cjs.js",
+      "browser": "./dist/jest-prosemirror.browser.esm.js",
+      "types": "./dist/jest-prosemirror.cjs.d.ts",
+      "default": "./dist/jest-prosemirror.esm.js"
+    },
+    "./environment": {
+      "import": "./environment/dist/jest-prosemirror-environment.esm.js",
+      "require": "./environment/dist/jest-prosemirror-environment.cjs.js",
+      "browser": "./environment/dist/jest-prosemirror.browser.esm.js",
+      "types": "./environment/dist/jest-prosemirror-environment.cjs.d.ts",
+      "default": "./environment/dist/jest-prosemirror-environment.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./serializer": {
+      "import": "./serializer/dist/jest-prosemirror-serializer.esm.js",
+      "require": "./serializer/dist/jest-prosemirror-serializer.cjs.js",
+      "browser": "./serializer/dist/jest-prosemirror.browser.esm.js",
+      "types": "./serializer/dist/jest-prosemirror-serializer.cjs.d.ts",
+      "default": "./serializer/dist/jest-prosemirror-serializer.esm.js"
+    },
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
   "main": "dist/jest-prosemirror.cjs.js",
   "module": "dist/jest-prosemirror.esm.js",
   "browser": {
@@ -27,24 +52,24 @@
     "serializer"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
+    "@babel/runtime": "^7.12.5",
     "@remirror/core-constants": "1.0.0-next.60",
     "@remirror/core-helpers": "1.0.0-next.60",
     "@remirror/core-types": "1.0.0-next.60",
     "@remirror/core-utils": "1.0.0-next.60",
     "@remirror/pm": "1.0.0-next.60",
-    "@testing-library/dom": "^7.26.3",
+    "@testing-library/dom": "^7.29.2",
     "@types/prosemirror-schema-basic": "^1.0.1",
     "@types/prosemirror-test-builder": "^1.0.1",
     "chalk": "^4.1.0",
-    "jest-matcher-utils": "^26.6.1",
+    "jest-matcher-utils": "^26.6.2",
     "prosemirror-schema-basic": "^1.1.2",
     "prosemirror-tables": "^1.1.1",
     "prosemirror-test-builder": "^1.0.3",
     "test-keyboard": "1.0.0-next.60"
   },
   "devDependencies": {
-    "jest": "^26.6.1"
+    "jest": "^26.6.3"
   },
   "peerDependencies": {
     "jest": ">= 24"
@@ -54,9 +79,9 @@
   },
   "preconstruct": {
     "entrypoints": [
-      ".",
-      "environment",
-      "serializer"
+      "index.ts",
+      "environment.ts",
+      "serializer.ts"
     ]
   }
 }

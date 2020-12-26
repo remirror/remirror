@@ -67,3 +67,32 @@ const failedCustom: GetCustomHandler<MixedOptions> = { onChange() {} };
 type FailedHandler1 = Handler<object>;
 // @ts-expect-error
 type FailedHandler3 = Handler<AnyConstructor>;
+
+// type ArrayPath<Type> = false;
+// type ArrayPathValue<Type, Path extends ArrayPath<Type>> = false;
+
+// declare function get<Type, Path extends ArrayPath<Type>>(
+//   obj: Type,
+//   path: Path,
+// ): ArrayPathValue<Type, Path>;
+
+// const obj = { a: 'a', b: [1, 2, 3], c: { d: { e: { f: 'Awesome' } } } } as const;
+
+// const a: 'a' = get(obj, ['a']);
+
+// type TupleOf<T, N extends number> = N extends N
+//   ? number extends N
+//     ? T[]
+//     : _TupleOf<T, N, []>
+//   : never;
+// type _TupleOf<T, N extends number, R extends unknown[]> = R['length'] extends N
+//   ? R
+//   : _TupleOf<T, N, [T, ...R]>;
+// type T1 = TupleOf<string, 3>;
+
+// type T<N extends number> = N extends N ? 'it does!' : 'it does not 😢';
+// type B = T<number>;
+// type C = number extends number ? true : false;
+// type D = 0 | 1 extends 0 | 1 ? true : false;
+
+// type E = [1, 2]['length'] extends 1 ? true : false

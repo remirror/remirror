@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Social Showcase Combined should combine mentions emoji and links 1`] = `
+exports[`Social Showcase ExtensionUnion should combine mentions emoji and links 1`] = `
 <a role="presentation"
    href="/awesome"
    class="mention mention-tag"
@@ -26,7 +26,7 @@ hello
 </a>
 `;
 
-exports[`Social Showcase Combined should not replace emoji with link when no space between 1`] = `
+exports[`Social Showcase ExtensionUnion should not replace emoji with link when no space between 1`] = `
 😀
 <a href="//google.com"
    role="presentation"

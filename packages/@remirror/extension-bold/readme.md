@@ -7,8 +7,8 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-bold/next
 [npm]: https://npmjs.com/package/@remirror/extension-bold/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/extension-bold@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-bold@next
+[size]: https://bundlephobia.com/result?p=@remirror/extension-bold
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-bold
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-bold/red?icon=npm
 
@@ -17,12 +17,12 @@
 ## Installation
 
 ```bash
-yarn add @remirror/extension-bold@next @remirror/pm@next # yarn
-pnpm add @remirror/extension-bold@next @remirror/pm@next # pnpm
-npm install @remirror/extension-bold@next @remirror/pm@next # npm
+yarn add @remirror/extension-bold @remirror/pm # yarn
+pnpm add @remirror/extension-bold @remirror/pm # pnpm
+npm install @remirror/extension-bold @remirror/pm # npm
 ```
 
-This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/bold`.
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.
 
 <br />
 
@@ -31,9 +31,9 @@ This is included by default when you install the recommended `remirror` package.
 When added to your editor it will provide the `toggleBold` command which makes the text under the cursor / or at the provided position range bold.
 
 ```ts
-import { ExtensionPriority, RemirrorManager } from 'remirror/core';
-import { BoldExtension } from 'remirror/extension/bold';
-import { CorePreset } from 'remirror/preset/core';
+import { ExtensionPriority, RemirrorManager } from 'remirror';
+import { BoldExtension } from 'remirror/extensions';
+import { CorePreset } from 'remirror/extensions';
 
 // Create the bold extension
 const boldExtension = new BoldExtension({ weight: '500' });

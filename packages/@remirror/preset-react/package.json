@@ -16,39 +16,58 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/preset-react.cjs.js",
-  "module": "dist/preset-react.esm.js",
-  "browser": {
-    "./dist/preset-react.cjs.js": "./dist/preset-react.browser.cjs.js",
-    "./dist/preset-react.esm.js": "./dist/preset-react.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-preset-react.esm.js",
+      "require": "./dist/remirror-preset-react.cjs.js",
+      "browser": "./dist/remirror-preset-react.browser.esm.js",
+      "types": "./dist/remirror-preset-react.cjs.d.ts",
+      "default": "./dist/remirror-preset-react.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/preset-react.cjs.d.ts",
+  "main": "dist/remirror-preset-react.cjs.js",
+  "module": "dist/remirror-preset-react.esm.js",
+  "browser": {
+    "./dist/remirror-preset-react.cjs.js": "./dist/remirror-preset-react.browser.cjs.js",
+    "./dist/remirror-preset-react.esm.js": "./dist/remirror-preset-react.browser.esm.js"
+  },
+  "types": "dist/remirror-preset-react.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
+    "@babel/runtime": "^7.12.5",
+    "@linaria/core": "^3.0.0-beta.1",
     "@remirror/extension-placeholder": "1.0.0-next.60",
     "@remirror/extension-react-component": "1.0.0-next.60",
     "@remirror/extension-react-ssr": "1.0.0-next.60",
-    "@remirror/react-utils": "1.0.0-next.60",
-    "linaria": "^2.0.0"
+    "@remirror/react-utils": "1.0.0-next.60"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",
     "@remirror/pm": "1.0.0-next.60",
-    "@types/react": "^16.9.53",
-    "@types/react-dom": "^16.9.8",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },
   "peerDependencies": {
     "@remirror/core": "1.0.0-next.60",
     "@remirror/pm": "1.0.0-next.60",
-    "@types/react": "^16.9.41",
-    "@types/react-dom": "^16.9.8",
-    "react": "^16.8.0 || ^17",
-    "react-dom": "^16.8.0 || ^17"
+    "@types/react": "^16.14.0 || ^17",
+    "@types/react-dom": "^16.9.0 || ^17",
+    "react": "^16.14.0 || ^17",
+    "react-dom": "^16.14.0 || ^17"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    },
+    "@types/react-dom": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "access": "public"

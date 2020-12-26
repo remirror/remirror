@@ -1,62 +1,86 @@
 import {
   ApplySchemaAttributes,
+  command,
   CommandFunction,
-  extensionDecorator,
+  extension,
   ExtensionTag,
   InputRule,
-  KeyBindings,
+  keyBinding,
+  KeyBindingParameter,
   NodeExtension,
   NodeExtensionSpec,
+  NodeSpecOverride,
   toggleWrap,
 } from '@remirror/core';
+import { ExtensionBlockquoteMessages as Messages } from '@remirror/messages';
 import { wrappingInputRule } from '@remirror/pm/inputrules';
+import type { PasteRule } from '@remirror/pm/paste-rules';
+import { ExtensionBlockquote as Theme } from '@remirror/theme';
 
 /**
- * Adds a blockquote to the editor.
+ * Add the blockquote block to the editor.
  */
-@extensionDecorator({})
+@extension({})
 export class BlockquoteExtension extends NodeExtension {
   get name() {
     return 'blockquote' as const;
   }
 
-  readonly tags = [ExtensionTag.BlockNode];
+  get classNames(): string[] {
+    return [Theme.EDITOR];
+  }
 
-  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
+  createTags() {
+    return [ExtensionTag.Block];
+  }
+
+  createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
     return {
-      attrs: extra.defaults(),
       content: 'block*',
       defining: true,
       draggable: false,
+      ...override,
+      attrs: extra.defaults(),
       parseDOM: [{ tag: 'blockquote', getAttrs: extra.parse, priority: 100 }],
       toDOM: (node) => ['blockquote', extra.dom(node), 0],
     };
   }
 
-  createCommands() {
-    return {
-      /**
-       * Toggle the blockquote at the current selection.
-       *
-       * If none exists one will be created or the existing blockquote content will be
-       * lifted out of the blockquote node.
-       *
-       * ```ts
-       * actions.blockquote();
-       * ```
-       */
-      toggleBlockquote: (): CommandFunction => toggleWrap(this.type),
-    };
+  /**
+   * Toggle the blockquote for the current block.
+   *
+   * If none exists one will be created or the existing blockquote content will be
+   * lifted out of the blockquote node.
+   *
+   * ```ts
+   * commands.toggleBlockquote();
+   * ```
+   */
+  @command({
+    icon: 'doubleQuotesL',
+    description: ({ t }) => t(Messages.DESCRIPTION),
+    label: ({ t }) => t(Messages.LABEL),
+  })
+  toggleBlockquote(): CommandFunction {
+    return toggleWrap(this.type);
   }
 
-  createKeymap(): KeyBindings {
-    return {
-      'Ctrl->': toggleWrap(this.type),
-    };
+  @keyBinding({ shortcut: 'Ctrl->', command: 'toggleBlockquote' })
+  shortcut(parameter: KeyBindingParameter): boolean {
+    return this.toggleBlockquote()(parameter);
   }
 
   createInputRules(): InputRule[] {
     return [wrappingInputRule(/^\s*>\s$/, this.type)];
+  }
+
+  createPasteRules(): PasteRule {
+    return {
+      type: 'node',
+      nodeType: this.type,
+      regexp: /^\s*>\s$/,
+      startOfTextBlock: true,
+    };
   }
 }
 

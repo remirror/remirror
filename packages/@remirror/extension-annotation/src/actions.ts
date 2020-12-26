@@ -1,4 +1,4 @@
-import type { Annotation, AnnotationData, AnnotationWithoutText } from './types';
+import type { Annotation, GetData, OmitText } from './types';
 
 export enum ActionType {
   ADD_ANNOTATION,
@@ -8,17 +8,17 @@ export enum ActionType {
   UPDATE_ANNOTATION,
 }
 
-export interface AddAnnotationAction<A extends Annotation> {
+export interface AddAnnotationAction<Type extends Annotation> {
   type: ActionType.ADD_ANNOTATION;
   from: number;
   to: number;
-  annotationData: AnnotationData<A>;
+  annotationData: GetData<Type>;
 }
 
-export interface UpdateAnnotationAction<A extends Annotation> {
+export interface UpdateAnnotationAction<Type extends Annotation> {
   type: ActionType.UPDATE_ANNOTATION;
   annotationId: string;
-  annotationData: AnnotationData<A>;
+  annotationData: GetData<Type>;
 }
 
 export interface RemoveAnnotationsAction {
@@ -26,7 +26,7 @@ export interface RemoveAnnotationsAction {
   annotationIds: string[];
 }
 
-export interface SetAnnotationsAction<A extends Annotation> {
+export interface SetAnnotationsAction<Type extends Annotation> {
   type: ActionType.SET_ANNOTATIONS;
-  annotations: Array<AnnotationWithoutText<A>>;
+  annotations: Array<OmitText<Type>>;
 }

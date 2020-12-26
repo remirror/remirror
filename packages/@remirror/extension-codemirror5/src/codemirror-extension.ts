@@ -1,12 +1,15 @@
+import type CodeMirror from 'codemirror';
+
 import {
   ApplySchemaAttributes,
   CommandFunction,
   EditorView,
-  extensionDecorator,
+  extension,
   ExtensionTag,
   isElementDomNode,
   NodeExtension,
   NodeExtensionSpec,
+  NodeSpecOverride,
   NodeViewMethod,
   PrioritizedKeyBindings,
   ProsemirrorNode,
@@ -14,28 +17,39 @@ import {
 } from '@remirror/core';
 
 import { CodeMirrorNodeView } from './codemirror-node-view';
+import ref from './codemirror-ref';
 import type { CodeMirrorExtensionAttributes, CodeMirrorExtensionOptions } from './codemirror-types';
 import { arrowHandler, parseLanguageToMode, updateNodeAttributes } from './codemirror-utils';
 
-@extensionDecorator<CodeMirrorExtensionOptions>({
+@extension<CodeMirrorExtensionOptions>({
   defaultOptions: {
+    CodeMirror: ref.CodeMirror,
     defaultCodeMirrorConfig: null,
   },
+  staticKeys: ['CodeMirror'],
 })
 export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOptions> {
   get name() {
     return 'codeMirror' as const;
   }
 
-  readonly tags = [ExtensionTag.BlockNode, ExtensionTag.Code];
+  readonly tags = [ExtensionTag.Block, ExtensionTag.Code];
 
-  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
+  init(): void {
+    // Update the reference to the codemirror instance.
+    if (this.options.CodeMirror) {
+      ref.CodeMirror = this.options.CodeMirror;
+    }
+  }
+
+  createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
     return {
       group: 'block',
       content: 'text*',
       marks: '',
-      code: true,
       defining: true,
+      ...override,
+      code: true,
       attrs: {
         ...extra.defaults(),
         codeMirrorConfig: { default: undefined },

@@ -7,8 +7,8 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-positioner/next
 [npm]: https://npmjs.com/package/@remirror/extension-positioner/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/extension-positioner@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-positioner@next
+[size]: https://bundlephobia.com/result?p=@remirror/extension-positioner
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-positioner
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-positioner/red?icon=npm
 
@@ -16,23 +16,23 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-positioner@next @remirror/pm@next
+yarn add @remirror/extension-positioner @remirror/pm
 
 # pnpm
-pnpm add @remirror/extension-positioner@next @remirror/pm@next
+pnpm add @remirror/extension-positioner @remirror/pm
 
 # npm
-npm install @remirror/extension-positioner@next @remirror/pm@next
+npm install @remirror/extension-positioner @remirror/pm
 ```
 
-This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/positioner`.
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.
 
 ## Usage
 
 An extension for tracking the position of the provided element relative to the prosemirror editor. Can be used to find the top / left position in order to position the element as a hover menu.
 
 ```ts
-import { PositionerExtension } from 'remirror/extension/positioner';
+import { PositionerExtension } from 'remirror/extensions';
 
 const extension = new PositionerExtension();
 

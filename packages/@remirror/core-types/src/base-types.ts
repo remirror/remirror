@@ -33,6 +33,13 @@ export type Nullable<Type> = Type | null | undefined;
 export type And<Type extends Shape, Other extends Shape> = Type & Other;
 
 /**
+ * When the type is never use a default type instead.
+ *
+ * TODO why doesn't this work
+ */
+export type UseDefault<Type, Default> = Type extends never ? Default : Type;
+
+/**
  * Extract the values of a tuple as a union type.
  *
  * @remarks
@@ -56,28 +63,28 @@ declare const _flavor: unique symbol;
 /**
  * Used by Brand to mark a type in a readable way.
  */
-interface Branding<Type> {
-  readonly [_brand]: Type;
+interface Branding<Name> {
+  readonly [_brand]: Name;
 }
 
 /**
  * Used by `Flavor` to mark a type in a readable way.
  */
-export interface Flavoring<Flavor> {
-  readonly [_flavor]?: Flavor;
+export interface Flavoring<Name> {
+  readonly [_flavor]?: Name;
 }
 
 /**
- * Remove the flavaring from a type.
+ * Remove the flavoring from a type.
  */
-export type RemoveFlavoring<Type> = Omit<Type, typeof _flavor>;
+export type RemoveFlavoring<Type, Name> = Type extends Flavor<infer T, Name> ? T : Type;
 
 /**
  * Create a "flavored" version of a type. TypeScript will disallow mixing
  * flavors, but will allow unflavored values of that type to be passed in where
  * a flavored version is expected. This is a less restrictive form of branding.
  */
-export type Flavor<Type, F> = Type & Flavoring<F>;
+export type Flavor<Type, Name> = Type & Flavoring<Name>;
 
 /**
  * Create a "branded" version of a type. TypeScript won't allow implicit
@@ -115,6 +122,119 @@ export type AnyFunction<Type = any> = (...args: any[]) => Type;
  * Matches any constructor type.
  */
 export type AnyConstructor<Type = any> = new (...args: any[]) => Type;
+
+/**
+ * Create a type for an array (as a tuple) which has at least the provided
+ * `Length`.
+ *
+ * This can be  useful when `noUncheckedIndexedAccess` is set to true in the
+ * compiler options. Annotate types when you are sure the provided index will
+ * always be available.
+ *
+ * ```ts
+ * import { MinArray } from '@remirror/core-types';
+ *
+ * MinArray<string, 2>; // => [string, string, ...string[]];
+ * ```
+ */
+export type MinArray<Type, Length extends number> = Length extends Length
+  ? number extends Length
+    ? Type[]
+    : _MinArray<Type, Length, []>
+  : never;
+type _MinArray<
+  Type,
+  Length extends number,
+  Accumulated extends unknown[]
+> = Accumulated['length'] extends Length
+  ? [...Accumulated, ...Type[]]
+  : _MinArray<Type, Length, [Type, ...Accumulated]>;
+
+/**
+ * An array which must include the first item.
+ */
+export type Array1<Type> = MinArray<Type, 1>;
+
+/**
+ * An array which must include the first 2 items.
+ */
+export type Array2<Type> = MinArray<Type, 2>;
+
+/**
+ * An array which must include the first 3 items.
+ */
+export type Array3<Type> = MinArray<Type, 3>;
+
+/**
+ * Allow a type of a list of types.
+ */
+export type Listable<Type> = Type | Type[];
+
+/**
+ * When a type is really deep and has retained an unnecessary amount of type
+ * information, this flattens it to a single array/object/value.
+ *
+ * TODO not using it right now as it's breaking with globally available types
+ * via namespace.
+ */
+export type Simplify<T> = T extends object | any[] ? { [K in keyof T]: T[K] } : T;
+
+/**
+ * Returns tuple types that include every string in union TupleUnion<keyof {
+ * bar: string; leet: number }>; ["bar", "leet"] | ["leet", "bar"];
+ *
+ * Taken from ❤️
+ * https://github.com/microsoft/TypeScript/issues/13298#issuecomment-692864087
+ *
+ */
+export type TupleUnion<U extends string, R extends string[] = []> = {
+  [S in U]: Exclude<U, S> extends never ? [...R, S] : TupleUnion<Exclude<U, S>, [...R, S]>;
+}[U] &
+  string[];
+
+/**
+ * Extract the valid index union from a provided tuple.
+ *
+ * ```ts
+ * import { IndexUnionFromTuple } from '@remirror/core-types';
+ *
+ * const tuple = ['a', 'b', 'c'];
+ * type Index = IndexUnionFromTuple<typeof tuple> => 0 | 1 | 2
+ * ```
+ */
+export type IndexUnionFromTuple<Tuple extends readonly unknown[]> = Tuple extends Tuple
+  ? number extends Tuple['length']
+    ? number
+    : _IndexUnionFromTuple<[], Tuple['length']>
+  : never;
+type _IndexUnionFromTuple<
+  Tuple extends readonly unknown[],
+  Length extends number
+> = Tuple['length'] extends Length
+  ? Tuple[number]
+  : _IndexUnionFromTuple<[...Tuple, Tuple['length']], Length>;
+
+export type TupleRange<Size extends number> = Size extends Size
+  ? number extends Size
+    ? number[]
+    : _NumberRangeTuple<[], Size>
+  : never;
+type _NumberRangeTuple<
+  Tuple extends readonly unknown[],
+  Length extends number
+> = Tuple['length'] extends Length ? Tuple : _NumberRangeTuple<[...Tuple, Tuple['length']], Length>;
+
+/**
+ * Create a tuple of `Size` from the provided `Type`.
+ */
+export type TupleOf<Type, Size extends number> = Size extends Size
+  ? number extends Size
+    ? Type[]
+    : _TupleOf<Type, Size, []>
+  : never;
+type _TupleOf<Type, Size extends number, Tuple extends unknown[]> = Tuple['length'] extends Size
+  ? Tuple
+  : _TupleOf<Type, Size, [Type, ...Tuple]>;
 
 /**
  * Make the whole interface partial except for some specified keys which will be
@@ -203,19 +323,13 @@ export interface Position {
  * Used for attributes which can be added to prosemirror nodes and marks.
  */
 export type ProsemirrorAttributes<Extra extends object = object> = Record<string, unknown> &
+  Remirror.Attributes &
   Extra & {
     /**
      * The class is a preserved attribute name.
      */
     class?: string;
   };
-
-export type NodeAttributes<Extra extends object = object> = ProsemirrorAttributes<
-  Partial<Remirror.ExtraNodeAttributes> & Extra
->;
-export type MarkAttributes<Extra extends object = object> = ProsemirrorAttributes<
-  Partial<Remirror.ExtraMarkAttributes> & Extra
->;
 
 /**
  * A dynamic attributes creator. This is used to create attributes that are
@@ -349,11 +463,11 @@ type NeverBrand = Brand<object, never>;
  * This is useful for dynamically setting the parameter list of a method call
  * depending on whether keys are required.
  */
-export type IfNoRequiredProperties<Type extends object, Then, Else> = GetRequiredKeys<
-  Type
-> extends NeverBrand
-  ? Then
-  : Else;
+export type IfNoRequiredProperties<
+  Type extends object,
+  Then,
+  Else
+> = GetRequiredKeys<Type> extends NeverBrand ? Then : Else;
 
 /**
  * Get all the keys for required properties on this type.
@@ -452,16 +566,65 @@ export type NonNullableShape<Type extends object> = {
   [Key in keyof Type]: NonNullable<Type[Key]>;
 };
 
+/**
+ * Conditionally pick keys which are functions and have the requested return
+ * type.
+ */
+export type ConditionalReturnKeys<Base, Return> = NonNullable<
+  // Wrap in `NonNullable` to strip away the `undefined` type from the produced union.
+  {
+    // Map through all the keys of the given base type.
+    [Key in keyof Base]: Base[Key] extends AnyFunction<infer R> // Pick only keys with types extending the given `Return` type.
+      ? // Check whether the inferred `R` type extends the requested `Return` type.
+        R extends Return
+        ? // The check passes therefor keep the key
+          Key
+        : // Discard this key since it the return type does not match.
+          never
+      : // Discard this key since it is not a function.
+        never;
+
+    // Convert the produced object into a union type of the keys which passed the conditional test.
+  }[keyof Base]
+>;
+
+/**
+ * Pick the properties from an object that are methods with the requested
+ * `Return` type.
+ */
+export type ConditionalReturnPick<Base, Return> = Pick<Base, ConditionalReturnKeys<Base, Return>>;
+
+type GetRecursivePath<Type, Key extends keyof Type> = Key extends string
+  ? Type[Key] extends Record<string, any>
+    ?
+        | `${Key}.${GetRecursivePath<Type[Key], Exclude<keyof Type[Key], keyof any[]>> & string}`
+        | `${Key}.${Exclude<keyof Type[Key], keyof any[]> & string}`
+    : never
+  : never;
+type GetJoinedPath<Type> = GetRecursivePath<Type, keyof Type> | keyof Type;
+
+export type GetPath<Type> = GetJoinedPath<Type> extends string | keyof Type
+  ? GetJoinedPath<Type>
+  : keyof Type;
+
+export type GetPathValue<
+  Type,
+  Path extends GetPath<Type>
+> = Path extends `${infer Key}.${infer Rest}`
+  ? Key extends keyof Type
+    ? Rest extends GetPath<Type[Key]>
+      ? GetPathValue<Type[Key], Rest>
+      : never
+    : never
+  : Path extends keyof Type
+  ? Type[Path]
+  : never;
+
 declare global {
   namespace Remirror {
     /**
      * Define globally available extra node attributes here.
      */
-    interface ExtraNodeAttributes {}
-
-    /**
-     * Define globally available extra mark attributes here.
-     */
-    interface ExtraMarkAttributes {}
+    interface Attributes {}
   }
 }

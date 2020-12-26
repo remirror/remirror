@@ -1,22 +1,18 @@
+import warning from 'tiny-warning';
+
 import { ErrorConstant } from '@remirror/core-constants';
 import { invariant, isEmptyArray, sort } from '@remirror/core-helpers';
-import type { EditorView } from '@remirror/core-types';
+import type { Dispose, EditorView } from '@remirror/core-types';
 
 import {
   AnyExtension,
   AnyExtensionConstructor,
+  GetExtensions,
   isExtension,
   isMarkExtension,
   isNodeExtension,
   isPlainExtension,
 } from '../extension';
-import {
-  AnyCombinedUnion,
-  AnyPreset,
-  InferCombinedExtensions,
-  InferCombinedPresets,
-  isPreset,
-} from '../preset';
 import type { GetConstructor, StateUpdateLifecycleParameter } from '../types';
 
 /**
@@ -27,91 +23,60 @@ import type { GetConstructor, StateUpdateLifecycleParameter } from '../types';
  * @internalremarks Currently matching by constructor - what if different
  * versions exist in the same app
  *
- * @param unionValues - the extensions to transform as well as their priorities
+ * @param initialExtensions - the extensions to be transformed. This includes
+ * the extension that are parents to other extensions.
  *
  * @returns the list of extension instances sorted by priority
  */
-export function transformCombinedUnion<Combined extends AnyCombinedUnion>(
-  unionValues: readonly Combined[],
+export function transformExtensions<RawExtensions extends AnyExtension>(
+  initialExtensions: readonly RawExtensions[],
   settings: Remirror.ManagerSettings,
-): CombinedTransformation<Combined> {
-  type ExtensionUnion = InferCombinedExtensions<Combined>;
+): ExtensionTransformation<
+  GetExtensions<RawExtensions> extends never ? AnyExtension : GetExtensions<RawExtensions>
+> {
+  type ExtensionUnion = GetExtensions<RawExtensions> extends never
+    ? AnyExtension
+    : GetExtensions<RawExtensions>;
   type ExtensionConstructor = GetConstructor<ExtensionUnion>;
-  type PresetUnion = InferCombinedPresets<Combined>;
-  type PresetConstructor = GetConstructor<PresetUnion>;
 
-  // The items to return.
-  const presets: PresetUnion[] = [];
-  const presetMap = new WeakMap<PresetConstructor, PresetUnion>();
+  // This is the holder for the sorted and cleaned extensions returned by this
+  // function.
   const extensions: ExtensionUnion[] = [];
   const extensionMap = new WeakMap<ExtensionConstructor, ExtensionUnion>();
 
-  // Used to track duplicates and the presets they've been added by.
-  const duplicateMap = new WeakMap<AnyExtensionConstructor, PresetUnion[]>();
+  // All the extensions which provide child extensions.
+  const parentExtensions: ExtensionUnion[] = [];
+
+  // Used to track duplicates and the extension holders they were added by.
+  const duplicateMap = new WeakMap<AnyExtensionConstructor, ExtensionUnion[]>();
 
   // The unsorted, de-duped, unrefined extensions.
-  let rawExtensions: ExtensionUnion[] = [];
+  let gatheredExtensions: ExtensionUnion[] = [];
 
-  for (const presetOrExtension of unionValues) {
-    // Update the extension list in this block
-    if (isExtension<ExtensionUnion>(presetOrExtension)) {
-      presetOrExtension.setPriority(settings.priority?.[presetOrExtension.name]);
-      rawExtensions.push(presetOrExtension);
+  // The mutable objects and the manager settings which are used to gather all
+  // the deeply nested extensions.
+  const gatherRawExtensionConfig = { duplicateMap, parentExtensions, gatheredExtensions, settings };
 
-      // Keep track of the extension which have been added multiple times by
-      // separate presets. Later on, the highest priority extension will be
-      // added to each preset instead of the one that they configured.
-      updateExtensionDuplicates({ duplicateMap, extension: presetOrExtension });
-
-      continue;
-    }
-
-    // Update the presets list in this block
-    if (isPreset<PresetUnion>(presetOrExtension)) {
-      presets.push(presetOrExtension);
-      presetMap.set(presetOrExtension.constructor, presetOrExtension);
-
-      for (const extension of presetOrExtension.extensions) {
-        extension.setPriority(settings.priority?.[extension.name]);
-
-        // Similar to the comment in the previous block. Add the preset to the
-        // map for identifying extensions which are added by multiple presets.
-        // Later the highest priority extension is shared amongst all presets
-        // that require it to prevent instance of the same extension which would
-        // break the editor.
-        updateExtensionDuplicates({
-          duplicateMap,
-          extension: extension as ExtensionUnion,
-          preset: presetOrExtension,
-        });
-        rawExtensions.push(extension as ExtensionUnion);
-      }
-
-      continue;
-    }
-
-    // TODO: Allow constructors to be auto instantiated.
-
-    // This is only reached if the passed value is invalid.
-    invariant(false, { code: ErrorConstant.INVALID_MANAGER_ARGUMENTS });
+  for (const extension of initialExtensions) {
+    gatherRawExtensions(gatherRawExtensionConfig, { extension: extension as ExtensionUnion });
   }
 
   // Sort the extensions.
-  rawExtensions = sort(rawExtensions, (a, z) => z.priority - a.priority);
+  gatheredExtensions = sort(gatheredExtensions, (a, z) => z.priority - a.priority);
 
   // Keep track of added constructors for uniqueness.
   const found = new WeakSet<AnyExtensionConstructor>();
   const names = new Set<string>();
 
-  // Remove extension duplicates and update the preset with the non duplicated
-  // value.
-  for (const extension of rawExtensions) {
+  // Remove extension duplicates and update the parent extension with the
+  // highest priority identical extension.
+  for (const extension of gatheredExtensions) {
     const key = extension.constructor;
     const name = extension.name;
     const duplicates = duplicateMap.get(key);
 
     invariant(duplicates, {
-      message: `No entries where found for the ExtensionConstructor ${extension.name}`,
+      message: `No entries were found for the ExtensionConstructor ${extension.name}`,
       code: ErrorConstant.INTERNAL,
     });
 
@@ -125,7 +90,7 @@ export function transformCombinedUnion<Combined extends AnyCombinedUnion>(
     extensionMap.set(key, extension);
 
     // Replace the extensions for all presets that referenced this constructor.
-    duplicates.forEach((preset) => preset?.replaceExtension(key, extension));
+    duplicates.forEach((parent) => parent?.replaceChildExtension(key, extension));
   }
 
   const missing: Array<MissingConstructor<ExtensionUnion>> = [];
@@ -145,12 +110,101 @@ export function transformCombinedUnion<Combined extends AnyCombinedUnion>(
       .join('\n'),
   });
 
-  return {
-    extensions,
-    extensionMap,
-    presets,
-    presetMap,
-  };
+  return { extensions, extensionMap };
+}
+
+interface GatherAllExtensionsConfig<ExtensionUnion extends AnyExtension> {
+  /** The list of gathered raw extensions, updated by mutation. */
+  gatheredExtensions: ExtensionUnion[];
+
+  /** The duplicate map which is updated by mutation. */
+  duplicateMap: WeakMap<AnyExtensionConstructor, ExtensionUnion[]>;
+
+  /** The parent extensions which are updated by mutation  */
+  parentExtensions: ExtensionUnion[];
+
+  /** The settings passed into the manager. */
+  settings: Remirror.ManagerSettings;
+}
+
+interface GatherAllExtensionsParameter<ExtensionUnion extends AnyExtension> {
+  /** The extension to check and gather children from. */
+  extension: ExtensionUnion;
+
+  /** Used to check if there there is a circular dependency encountered. */
+  names?: string[];
+
+  /** The parent of this extension. */
+  parentExtension?: ExtensionUnion;
+}
+
+/**
+ * Dive into the current extension and gather all child extensions including
+ * those which are deeply nested.
+ *
+ * It also automatically handles circular dependencies. And logs a warning when
+ * one is encountered.
+ *
+ * @param config - the configuration and mutable objects which are updated by
+ * this function.
+ * @param parameter - the extension, gathered names and parent extension.
+ */
+function gatherRawExtensions<ExtensionUnion extends AnyExtension>(
+  config: GatherAllExtensionsConfig<ExtensionUnion>,
+  parameter: GatherAllExtensionsParameter<ExtensionUnion>,
+) {
+  const { gatheredExtensions, duplicateMap, parentExtensions, settings } = config;
+  const { extension, parentExtension } = parameter;
+
+  // Get the list of parent names of the current extension. This is used to
+  // track circular dependencies.
+  let { names = [] } = parameter;
+
+  invariant(isExtension(extension), {
+    code: ErrorConstant.INVALID_MANAGER_EXTENSION,
+    message: `An invalid extension: ${extension} was provided to the [[\`RemirrorManager\`]].`,
+  });
+
+  // The children provided by this extension.
+  const childExtensions = extension.extensions;
+
+  // Override the priority if the user has done so in the settings passed to the
+  // [[`RemirrorManager`]].
+  extension.setPriority(settings.priority?.[extension.name]);
+
+  // Update the gathered extension list in this block
+  gatheredExtensions.push(extension);
+
+  // Keep track of the extensions which have been added multiple times by
+  // separate extension parents. Later on, the highest priority extension will
+  // be added to each parent instead of the one that they may have been
+  // configured with.
+  updateExtensionDuplicates({ duplicateMap, extension, parentExtension });
+
+  // Check if there are any children extensions to be added an if not move onto
+  // the next provided extension.
+  if (childExtensions.length === 0) {
+    return;
+  }
+
+  if (names.includes(extension.name)) {
+    warning(
+      true,
+      `Circular dependency encountered when loading extensions: ${names.join(' > ')} > ${
+        extension.name
+      }`,
+    );
+    return;
+  }
+
+  names = [...names, extension.name];
+  parentExtensions.push(extension);
+
+  for (const child of childExtensions) {
+    // Recursively gather all the children extension from the current extension
+    // level.
+    gatherRawExtensions(config, { names, extension: child, parentExtension: extension });
+  }
 }
 
 interface FindMissingParameter<ExtensionUnion extends AnyExtension> {
@@ -176,22 +230,19 @@ function findMissingExtensions<ExtensionUnion extends AnyExtension>(
   }
 
   for (const Constructor of extension.requiredExtensions ?? []) {
-    if (found.has(Constructor as AnyExtensionConstructor)) {
+    if (found.has(Constructor)) {
       continue;
     }
 
-    missing.push({ Constructor: Constructor as AnyExtensionConstructor, extension });
+    missing.push({ Constructor: Constructor, extension });
   }
 }
 
-interface UpdateExtensionDuplicatesParameter<
-  ExtensionUnion extends AnyExtension,
-  PresetUnion extends AnyPreset
-> {
+interface UpdateExtensionDuplicatesParameter<ExtensionUnion extends AnyExtension> {
   /**
    * The map of all duplicates.
    */
-  duplicateMap: WeakMap<AnyExtensionConstructor, PresetUnion[]>;
+  duplicateMap: WeakMap<AnyExtensionConstructor, ExtensionUnion[]>;
 
   /**
    * The extension to associate to the multiple presets that have added it..
@@ -201,7 +252,7 @@ interface UpdateExtensionDuplicatesParameter<
   /**
    * The preset which was responsible for adding the extension (if it exists).
    */
-  preset?: PresetUnion;
+  parentExtension?: ExtensionUnion;
 }
 
 /**
@@ -215,30 +266,29 @@ interface UpdateExtensionDuplicatesParameter<
  * each extension, and replacing the instance of the required extension within
  * the preset with the highest priority instance.
  */
-function updateExtensionDuplicates<
-  ExtensionUnion extends AnyExtension,
-  PresetUnion extends AnyPreset
->(parameter: UpdateExtensionDuplicatesParameter<ExtensionUnion, PresetUnion>) {
-  const { duplicateMap, extension, preset } = parameter;
+function updateExtensionDuplicates<ExtensionUnion extends AnyExtension>(
+  parameter: UpdateExtensionDuplicatesParameter<ExtensionUnion>,
+) {
+  const { duplicateMap, extension, parentExtension } = parameter;
 
   // The extension constructor is used as the identifier for lookups.
   const key = extension.constructor;
 
   const duplicate = duplicateMap.get(key);
-  const presetToAdd: PresetUnion[] = preset ? [preset] : [];
+  const parentToAdd: ExtensionUnion[] = parentExtension ? [parentExtension] : [];
 
-  duplicateMap.set(key, duplicate ? [...duplicate, ...presetToAdd] : presetToAdd);
+  duplicateMap.set(key, duplicate ? [...duplicate, ...parentToAdd] : parentToAdd);
 }
 
 /**
  * This is the object shape that is returned from the combined transformation.
  */
-export interface CombinedTransformation<Combined extends AnyCombinedUnion> {
+export interface ExtensionTransformation<ExtensionUnion extends AnyExtension> {
   /**
    * The list of extensions sorted by priority and original extension. Every
    * extension passed in and those contained by presets are placed here.
    */
-  extensions: Array<InferCombinedExtensions<Combined>>;
+  extensions: ExtensionUnion[];
 
   /**
    * A map where the key is the [[`ExtensionConstructor`]] and the value is the
@@ -246,26 +296,7 @@ export interface CombinedTransformation<Combined extends AnyCombinedUnion> {
    * within a manager. It is a weak map so that values can be garbage collected
    * when references to the constructor are lost.
    */
-  extensionMap: WeakMap<
-    GetConstructor<InferCombinedExtensions<Combined>>,
-    InferCombinedExtensions<Combined>
-  >;
-
-  /**
-   * The list of presets within the extension.
-   */
-  presets: Array<InferCombinedPresets<Combined>>;
-
-  /**
-   * A map where the key is the [[`PresetConstructor`]] and the value is the
-   * [[`Preset`]] instance. This is used to lookup presets contained within a
-   * manager. It is a weak map so that values can be garbage collected when
-   * references to the constructor are lost.
-   */
-  presetMap: WeakMap<
-    GetConstructor<InferCombinedPresets<Combined>>,
-    InferCombinedPresets<Combined>
-  >;
+  extensionMap: WeakMap<GetConstructor<ExtensionUnion>, ExtensionUnion>;
 }
 
 interface MissingConstructor<ExtensionUnion extends AnyExtension> {
@@ -277,18 +308,19 @@ export interface ManagerLifecycleHandlers {
   /**
    * Contains the methods run when the manager is first created.
    */
-  create: Array<() => void>;
+  create: Array<() => Dispose | void>;
 
   /**
-   * Holds the methods to run once the Editor has received the view from the attached.
+   * Holds the methods to run once the Editor has received the view from the
+   * attached.
    */
-  view: Array<(view: EditorView) => void>;
+  view: Array<(view: EditorView) => Dispose | void>;
 
   /**
    * The update method is called every time the state updates. This allows
    * extensions to listen to updates.
    */
-  update: Array<(param: StateUpdateLifecycleParameter) => void>;
+  update: Array<(parameter: StateUpdateLifecycleParameter) => void>;
 
   /**
    * Called when the manager is being destroyed.

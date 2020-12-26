@@ -121,7 +121,7 @@ This is the setup required for **remirror** to make any internal command chainab
 The following example is how commands created in remirror are automatically chainable. It uses the shared `tr` property to accomplish this.
 
 ```ts
-import { CommandFunction, PlainExtension } from 'remirror/core';
+import { CommandFunction, PlainExtension } from 'remirror';
 
 class CustomExtension extends PlainExtension {
   get name() {
@@ -218,6 +218,6 @@ function nonChainable(commandFunction: CommandFunction): NonChainableCommandFunc
 
 However, for the vast majority of instances chainable commands are a joy to use.
 
-You can try them out for yourself in by installing `remirror@next` and following the [getting started guide](https://remirror.io/docs/guide/create-editor).
+You can try them out for yourself in by installing `remirror` and following the [getting started guide](https://remirror.io/docs/guide/create-editor).
 
 [^1]: Behind the scenes `state.tr` is a getter property which returns a `new Transaction()` every time it is accessed.

@@ -7,8 +7,8 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/preset-social/next
 [npm]: https://npmjs.com/package/@remirror/preset-social/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/preset-social@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/preset-social@next
+[size]: https://bundlephobia.com/result?p=@remirror/preset-social
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/preset-social
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/preset-social/red?icon=npm
 
@@ -18,26 +18,26 @@
 
 ```bash
 # yarn
-yarn add @remirror/preset-social@next @remirror/pm@next
+yarn add @remirror/preset-social @remirror/pm
 
 # pnpm
-pnpm add @remirror/preset-social@next @remirror/pm@next
+pnpm add @remirror/preset-social @remirror/pm
 
 # npm
-npm install @remirror/preset-social@next @remirror/pm@next
+npm install @remirror/preset-social @remirror/pm
 ```
 
-This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/preset/social`.
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/presets`.
 
 <br />
 
 ## Usage
 
-The following creates an instance of the preset.
+The following adds the extensions from this preset to the editor.
 
 ```ts
-import { SocialPreset } from 'remirror/preset/social';
+import { createCoreManager, socialPreset } from 'remirror/extensions';
 
-// Create the preset
-const preset = new SocialPreset();
+// Add the preset to the manager.
+const manager = createCoreManager(() => socialPreset());
 ```

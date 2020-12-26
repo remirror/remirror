@@ -1,7 +1,4 @@
 {
   "extends": "../tsconfig.base.json",
-  "compilerOptions": {
-    "skipLibCheck": true
-  },
-  "include": ["./", "../../packages/@remirror/preset-embed/src/modules.d.ts"]
+  "include": ["./"]
 }

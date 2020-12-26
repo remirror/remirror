@@ -1,12 +1,8 @@
 import {
-  AddCustomHandler,
-  AnyCombinedUnion,
+  AnyExtension,
   BuiltinPreset,
   getLazyArray,
   GetStaticAndDynamic,
-  OnSetOptionsParameter,
-  Preset,
-  presetDecorator,
   RemirrorManager,
   Static,
 } from '@remirror/core';
@@ -23,18 +19,25 @@ import { TextExtension } from '@remirror/extension-text';
  */
 export interface CorePresetOptions extends DocOptions, PositionerOptions, HistoryOptions {
   /**
-   * You can exclude one or multiple extensions from CorePreset by passing their
-   * extension names in `excludeExtensions`.
+   * You can exclude one or multiple extensions from the [[`corePreset`]]
+   * function by passing their extension names in `excludeExtensions`.
    *
    * When using the `yjs` extension it is important to exclude the history
    * extension to prevent issues with collaborative editing mode.
    *
    * @default []
    */
-  excludeExtensions?: Static<
-    Array<'doc' | 'paragraph' | 'text' | 'positioner' | 'history' | 'gapCursor' | 'events'>
-  >;
+  excludeExtensions?: Static<ExcludeExtensionKey[]>;
 }
+
+type ExcludeExtensionKey = CorePreset['name'];
+
+const defaultOptions = {
+  ...DocExtension.defaultOptions,
+  ...ParagraphExtension.defaultOptions,
+  ...HistoryExtension.defaultOptions,
+  excludeExtensions: [],
+};
 
 /**
  * The core preset is included by default in framework code like
@@ -46,105 +49,50 @@ export interface CorePresetOptions extends DocOptions, PositionerOptions, Histor
  * - `DocExtension` - provides the top level prosemirror node.
  * - `TextExtension` - provides the prosemirror text node
  * - `ParagraphExtension` - provides the prosemirror paragraph node
- * - `PositionerExtension` - allows for creating  the extension.
+ * - `PositionerExtension` - set up automatic position checking and creation of
+ *   virtual nodes from any part of the editor.
  */
-@presetDecorator<CorePresetOptions>({
-  defaultOptions: {
-    ...DocExtension.defaultOptions,
-    ...ParagraphExtension.defaultOptions,
-    ...HistoryExtension.defaultOptions,
-    excludeExtensions: [],
-  },
-  customHandlerKeys: ['positioner'],
-  handlerKeys: ['onRedo', 'onUndo'],
-  staticKeys: ['content', 'depth', 'newGroupDelay', 'excludeExtensions'],
-})
-export class CorePreset extends Preset<CorePresetOptions> {
-  get name() {
-    return 'core' as const;
+export function corePreset(options: GetStaticAndDynamic<CorePresetOptions> = {}): CorePreset[] {
+  options = { ...defaultOptions, ...options };
+  const { content, depth, getDispatch, getState, newGroupDelay, excludeExtensions } = options;
+  const excludeMap: Partial<Record<ExcludeExtensionKey, boolean>> = {};
+
+  for (const name of excludeExtensions ?? []) {
+    excludeMap[name] = true;
   }
 
-  /**
-   * No properties are defined so this can be ignored.
-   */
-  protected onSetOptions(_: OnSetOptionsParameter<CorePresetOptions>): void {}
+  const coreExtensions: CorePreset[] = [];
 
-  protected onAddCustomHandler: AddCustomHandler<CorePresetOptions> = (handlers) => {
-    const { positioner } = handlers;
-
-    if (positioner) {
-      return this.getExtension(PositionerExtension).addCustomHandler('positioner', positioner);
-    }
-
-    return;
-  };
-
-  createExtensions() {
-    const {
-      content,
-      depth,
-      getDispatch,
-      getState,
-      newGroupDelay,
-      excludeExtensions,
-    } = this.options;
-
-    type ExcludeExtensionKey = typeof excludeExtensions[number];
-    const excludeMap: Partial<Record<ExcludeExtensionKey, boolean>> = {};
-
-    for (const name of excludeExtensions ?? []) {
-      excludeMap[name] = true;
-    }
-
-    type CoreExtension =
-      | HistoryExtension
-      | GapCursorExtension
-      | DocExtension
-      | TextExtension
-      | ParagraphExtension
-      | PositionerExtension
-      | EventsExtension;
-
-    const coreExtensions: CoreExtension[] = [];
-
-    if (!excludeMap['history']) {
-      const historyExtension = new HistoryExtension({
-        depth,
-        getDispatch,
-        getState,
-        newGroupDelay,
-      });
-      historyExtension.addHandler('onRedo', this.options.onRedo);
-      historyExtension.addHandler('onUndo', this.options.onUndo);
-      coreExtensions.push(historyExtension);
-    }
-
-    if (!excludeMap['doc']) {
-      coreExtensions.push(new DocExtension({ content }));
-    }
-
-    if (!excludeMap['text']) {
-      coreExtensions.push(new TextExtension());
-    }
-
-    if (!excludeMap['paragraph']) {
-      coreExtensions.push(new ParagraphExtension());
-    }
-
-    if (!excludeMap['positioner']) {
-      coreExtensions.push(new PositionerExtension());
-    }
-
-    if (!excludeMap['gapCursor']) {
-      coreExtensions.push(new GapCursorExtension());
-    }
-
-    if (!excludeMap['events']) {
-      coreExtensions.push(new EventsExtension());
-    }
-
-    return coreExtensions;
+  if (!excludeMap['history']) {
+    const historyExtension = new HistoryExtension({ depth, getDispatch, getState, newGroupDelay });
+    coreExtensions.push(historyExtension);
   }
+
+  if (!excludeMap['doc']) {
+    coreExtensions.push(new DocExtension({ content }));
+  }
+
+  if (!excludeMap['text']) {
+    coreExtensions.push(new TextExtension());
+  }
+
+  if (!excludeMap['paragraph']) {
+    coreExtensions.push(new ParagraphExtension());
+  }
+
+  if (!excludeMap['positioner']) {
+    coreExtensions.push(new PositionerExtension());
+  }
+
+  if (!excludeMap['gapCursor']) {
+    coreExtensions.push(new GapCursorExtension());
+  }
+
+  if (!excludeMap['events']) {
+    coreExtensions.push(new EventsExtension());
+  }
+
+  return coreExtensions;
 }
 
 export interface CreateCoreManagerOptions extends Remirror.ManagerSettings {
@@ -154,17 +102,26 @@ export interface CreateCoreManagerOptions extends Remirror.ManagerSettings {
   core?: GetStaticAndDynamic<CorePresetOptions>;
 }
 
+export type CorePreset =
+  | HistoryExtension
+  | GapCursorExtension
+  | DocExtension
+  | TextExtension
+  | ParagraphExtension
+  | PositionerExtension
+  | EventsExtension;
+
 /**
  * Create a manager with the core preset already applied.
  */
-export function createCoreManager<Combined extends AnyCombinedUnion>(
-  combined: Combined[] | (() => Combined[]),
+export function createCoreManager<ExtensionUnion extends AnyExtension>(
+  extensions: ExtensionUnion[] | (() => ExtensionUnion[]),
   options: CreateCoreManagerOptions = {},
-): RemirrorManager<Combined | CorePreset | BuiltinPreset> {
+): RemirrorManager<ExtensionUnion | CorePreset | BuiltinPreset> {
   const { core, ...managerSettings } = options;
 
   return RemirrorManager.create(
-    () => [...getLazyArray(combined), new CorePreset(core)],
+    () => [...getLazyArray(extensions), ...corePreset(core)],
     managerSettings,
   );
 }

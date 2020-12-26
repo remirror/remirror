@@ -6,7 +6,9 @@ lib
 **/dist
 dist
 **/node_modules
+**/node_modules/**
 node_modules
+examples/*/node_modules/
 .out
 public
 coverage
@@ -28,3 +30,4 @@ support/root/pnpm-lock.yaml
 support/website/.docusaurus
 support/website/build
 
+docs/api/

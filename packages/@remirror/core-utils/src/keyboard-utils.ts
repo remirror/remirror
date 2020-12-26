@@ -1,104 +1,177 @@
+import { CoreUtilsMessages as Messages, MessageDescriptor } from '@remirror/messages';
+
 import { environment } from './environment';
 
 /**
- * Keycode for ALT key.
+ * Return true when the provided key is the the Command (⌘) key. Takes into
+ * account the platform.
  */
-export const ALT = ['Alt', '⌥'] as const;
+function isCommandKey(key: string): boolean {
+  const allowedKeys = ['command', 'cmd', 'meta'];
 
-/**
- * Keycode for CTRL key.
- */
-export const CTRL = ['Control', '⌃'] as const;
+  if (environment.isMac) {
+    allowedKeys.push('mod');
+  }
 
-/**
- * Keycode for COMMAND/META key.
- */
-export const COMMAND = ['Meta', '⌘'] as const;
-
-/**
- * Keycode for SHIFT key.
- */
-export const SHIFT = ['Shift', '⇧'] as const;
-
-/**
- * Keycode for the windows key
- */
-export const WINDOWS = ['Windows', '', '❖'];
-
-/**
- * Keycode and symbols for caps lock
- */
-export const CAPS_LOCK = ['CapsLock', '⇪', '⇪'];
-
-/**
- * Shorthand names for common modifier key combinations which should `just` work on Apple and PC.
- */
-export const Modifier = {
-  Primary: (isMac?: boolean) => (isMac ? [COMMAND[0]] : [CTRL[0]]),
-  PrimaryShift: (isMac?: boolean) => (isMac ? [SHIFT[0], COMMAND[0]] : [CTRL[0], SHIFT[0]]),
-  PrimaryAlt: (isMac?: boolean) => (isMac ? [ALT[0], COMMAND[0]] : [CTRL[0], ALT[0]]),
-  Secondary: (isMac?: boolean) =>
-    isMac ? [SHIFT[0], ALT[0], COMMAND[0]] : [CTRL[0], SHIFT[0], ALT[0]],
-  Access: (isMac?: boolean) => (isMac ? [CTRL[0], ALT[0]] : [SHIFT[0], ALT[0]]),
-  Ctrl: () => [CTRL[0]],
-  Alt: () => [ALT[0]],
-  CtrlShift: () => [CTRL[0], SHIFT[0]],
-  Shift: () => [SHIFT[0]],
-  ShiftAlt: () => [SHIFT[0], ALT[0]],
-};
-
-/**
- * The cross platform modifier key combination names.
- */
-export type ModifierKeys = keyof typeof Modifier;
-
-/**
- * Returns true if this is an apple environment either on the server or the client.
- */
-export function isApple(): boolean {
-  return environment.isApple;
+  return allowedKeys.includes(key);
 }
 
 /**
- * Create a consistent cross platform modifier string pattern.
- *
- * This can be used with the pressKeyWithModifier.
- *
- * ```ts
- * mod('Primary', 'A')
- * // => 'Control-A' // on PC
- * // => 'Cmd-A' // on Mac
- * ```
- *
- * @param modifier - A named modifier which is consistent across platforms
- *                  e.g. 'Primary' refers to 'Meta' on a mac and 'Control' on a PC
- * @param key - the key to press with the modifier. e.g. `Space` | `Enter`
- * @param [isApple] - a method which returns true when this is an apple device.
+ * Return true when the provided key is the the Control (⌃) key. Takes into
+ * account the platform.
  */
-export function mod(modifier: ModifierKeys, key: string, isMacFn = isApple): string {
-  switch (modifier) {
-    case 'Primary':
-      return `${Modifier[modifier](isMacFn()).join('-')}-${key}`;
-    case 'PrimaryShift':
-      return `${Modifier[modifier](isMacFn()).join('-')}-${key}`;
-    case 'PrimaryAlt':
-      return `${Modifier[modifier](isMacFn()).join('-')}-${key}`;
-    case 'Secondary':
-      return `${Modifier[modifier](isMacFn()).join('-')}-${key}`;
-    case 'Access':
-      return `${Modifier[modifier](isMacFn()).join('-')}-${key}`;
-    case 'Ctrl':
-      return `${Modifier[modifier]().join('-')}-${key}`;
-    case 'Alt':
-      return `${Modifier[modifier]().join('-')}-${key}`;
-    case 'CtrlShift':
-      return `${Modifier[modifier]().join('-')}-${key}`;
-    case 'Shift':
-      return `${Modifier[modifier]().join('-')}-${key}`;
-    case 'ShiftAlt':
-      return `${Modifier[modifier]().join('-')}-${key}`;
+function isControlKey(key: string): boolean {
+  const allowedKeys = ['control', 'ctrl'];
 
-    default:
-      throw new Error('Invalid modifier name passed in');
+  if (!environment.isMac) {
+    allowedKeys.push('mod');
   }
+
+  return allowedKeys.includes(key);
+}
+
+interface BaseKeyboardSymbol {
+  /**
+   * The normalized value for the symbol.
+   */
+  key: string;
+}
+
+interface I18nKeyboardSymbol extends BaseKeyboardSymbol {
+  /**
+   * The internationalized representation of the key.
+   */
+  i18n: MessageDescriptor;
+}
+
+interface ModifierKeyboardSymbol extends I18nKeyboardSymbol {
+  /**
+   * Modifier keys like 'shift' | 'alt' | 'meta'.
+   */
+  type: 'modifier';
+
+  /**
+   * The symbol for the modifier key.
+   */
+  symbol: string;
+}
+
+interface NamedKeyboardSymbol extends I18nKeyboardSymbol {
+  /**
+   * Named keys like `Enter` | `Escape`
+   */
+  type: 'named';
+
+  /**
+   * The potentially undefined symbol for the named key.
+   */
+  symbol?: string;
+}
+
+interface CharKeyboardSymbol extends BaseKeyboardSymbol {
+  /**
+   * Character keys like `a` | `b`
+   */
+  type: 'char';
+}
+
+type KeyboardSymbol = ModifierKeyboardSymbol | NamedKeyboardSymbol | CharKeyboardSymbol;
+
+/**
+ * Convert a keyboard shortcut into symbols which and keys.
+ */
+export function getShortcutSymbols(shortcut: string): KeyboardSymbol[] {
+  const symbols: KeyboardSymbol[] = [];
+
+  for (let key of shortcut.split('-')) {
+    key = key.toLowerCase();
+
+    if (isCommandKey(key)) {
+      symbols.push({ type: 'modifier', symbol: '⌘', key: 'command', i18n: Messages.COMMAND_KEY });
+      continue;
+    }
+
+    if (isControlKey(key)) {
+      symbols.push({ type: 'modifier', symbol: '⌃', key: 'control', i18n: Messages.CONTROL_KEY });
+      continue;
+    }
+
+    switch (key) {
+      case 'shift':
+        symbols.push({ type: 'modifier', symbol: '⇧', key, i18n: Messages.SHIFT_KEY });
+        continue;
+
+      case 'alt':
+        symbols.push({ type: 'modifier', symbol: '⌥', key, i18n: Messages.ALT_KEY });
+        continue;
+
+      case '\n':
+      case '\r':
+      case 'enter':
+        symbols.push({ type: 'named', symbol: '↵', key, i18n: Messages.ENTER_KEY });
+        continue;
+
+      case 'backspace':
+        symbols.push({ type: 'named', symbol: '⌫', key, i18n: Messages.BACKSPACE_KEY });
+        continue;
+
+      case 'delete':
+        symbols.push({ type: 'named', symbol: '⌦', key, i18n: Messages.DELETE_KEY });
+        continue;
+
+      case 'escape':
+        symbols.push({ type: 'named', symbol: '␛', key, i18n: Messages.ESCAPE_KEY });
+        continue;
+
+      case 'tab':
+        symbols.push({ type: 'named', symbol: '⇥', key, i18n: Messages.TAB_KEY });
+        continue;
+
+      case 'capslock':
+        symbols.push({ type: 'named', symbol: '⇪', key, i18n: Messages.CAPS_LOCK_KEY });
+        continue;
+
+      case 'space':
+        symbols.push({ type: 'named', symbol: '␣', key, i18n: Messages.SPACE_KEY });
+        continue;
+
+      case 'pageup':
+        symbols.push({ type: 'named', symbol: '⤒', key, i18n: Messages.PAGE_UP_KEY });
+        continue;
+
+      case 'pagedown':
+        symbols.push({ type: 'named', symbol: '⤓', key, i18n: Messages.PAGE_DOWN_KEY });
+        continue;
+
+      case 'home':
+        symbols.push({ type: 'named', key, i18n: Messages.HOME_KEY });
+        continue;
+
+      case 'end':
+        symbols.push({ type: 'named', key, i18n: Messages.END_KEY });
+        continue;
+
+      case 'arrowleft':
+        symbols.push({ type: 'named', symbol: '←', key, i18n: Messages.ARROW_LEFT_KEY });
+        continue;
+
+      case 'arrowright':
+        symbols.push({ type: 'named', symbol: '→', key, i18n: Messages.ARROW_RIGHT_KEY });
+        continue;
+
+      case 'arrowup':
+        symbols.push({ type: 'named', symbol: '→', key, i18n: Messages.ARROW_UP_KEY });
+        continue;
+
+      case 'arrowdown':
+        symbols.push({ type: 'named', symbol: '↓', key, i18n: Messages.ARROW_DOWN_KEY });
+        continue;
+
+      default:
+        symbols.push({ type: 'char', key });
+        continue;
+    }
+  }
+
+  return symbols;
 }

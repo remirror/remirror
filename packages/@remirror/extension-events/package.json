@@ -13,23 +13,34 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-events.cjs.js",
-  "module": "dist/extension-events.esm.js",
-  "browser": {
-    "./dist/extension-events.cjs.js": "./dist/extension-events.browser.cjs.js",
-    "./dist/extension-events.esm.js": "./dist/extension-events.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-events.esm.js",
+      "require": "./dist/remirror-extension-events.cjs.js",
+      "browser": "./dist/remirror-extension-events.browser.esm.js",
+      "types": "./dist/remirror-extension-events.cjs.d.ts",
+      "default": "./dist/remirror-extension-events.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-events.cjs.d.ts",
+  "main": "dist/remirror-extension-events.cjs.js",
+  "module": "dist/remirror-extension-events.esm.js",
+  "browser": {
+    "./dist/remirror-extension-events.cjs.js": "./dist/remirror-extension-events.browser.cjs.js",
+    "./dist/remirror-extension-events.esm.js": "./dist/remirror-extension-events.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-events.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0"
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60",
-    "@testing-library/dom": "^7.26.3"
+    "@remirror/pm": "1.0.0-next.60"
   },
   "peerDependencies": {
     "@remirror/core": "1.0.0-next.60",

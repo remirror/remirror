@@ -206,7 +206,10 @@ jobs:
         run: pnpm build
 
       - name: check sizes
-        run: pnpm size
+        uses: andresz1/size-limit-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          skip_step: install
 
   # Run chromium e2e tests with playwright
   chromium_e2e:

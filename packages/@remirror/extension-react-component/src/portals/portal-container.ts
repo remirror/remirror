@@ -14,18 +14,35 @@ export interface MountedPortal extends RenderParameter {
   key: string;
 }
 
-export interface RenderMethodParameter extends RenderParameter {
+export interface SingleRenderMethodParameter extends RenderParameter {
+  key?: undefined;
+
   /**
    * The DOM element to contain the react portal.
    */
   container: HTMLElement;
 }
 
+export interface SharedRenderMethodParameter extends RenderParameter {
+  /**
+   * The DOM element to contain the react portal.
+   */
+  container: HTMLElement;
+
+  /**
+   * Shared renders must provide a key. By setting this value, the portal will
+   * be rendered as a shared parameter.
+   */
+  key: string;
+}
+
+type RenderMethodParameter = SingleRenderMethodParameter;
+
 interface Events {
   /**
    * Trigger an update in all subscribers
    */
-  update: (portalMap: PortalMap) => void;
+  update: (portals: PortalMap) => void;
 }
 
 export type PortalList = ReadonlyArray<[HTMLElement, MountedPortal]>;
@@ -37,9 +54,10 @@ export type PortalMap = Map<HTMLElement, MountedPortal>;
  */
 export class PortalContainer {
   /**
-   * A map of all the active portals.
+   * A map of all the active portals which have a one to one relation between
+   * the container and the component.
    */
-  portals: Map<HTMLElement, MountedPortal> = new Map();
+  portals: PortalMap = new Map();
 
   /**
    * The event listener which allows consumers to subscribe to when a new portal
@@ -50,17 +68,17 @@ export class PortalContainer {
   /**
    * Event handler for subscribing to update events from the portalContainer.
    */
-  on = (callback: (portalMap: PortalMap) => void): Unsubscribe => {
+  on = (callback: (portals: PortalMap) => void): Unsubscribe => {
     return this.#events.on('update', callback);
   };
 
   /**
    * Subscribe to one event before automatically unbinding.
    */
-  once = (callback: (portalMap: PortalMap) => void): Unsubscribe => {
-    const unbind = this.#events.on('update', (portalMap) => {
+  once = (callback: (portals: PortalMap) => void): Unsubscribe => {
+    const unbind = this.#events.on('update', (portals) => {
       unbind();
-      callback(portalMap);
+      callback(portals);
     });
 
     return unbind;
@@ -79,9 +97,8 @@ export class PortalContainer {
    */
   render({ Component, container }: RenderMethodParameter): void {
     const portal = this.portals.get(container);
-    const key = portal ? portal.key : uniqueId();
+    this.portals.set(container, { Component, key: portal?.key ?? uniqueId() });
 
-    this.portals.set(container, { Component, key });
     this.update();
   }
 

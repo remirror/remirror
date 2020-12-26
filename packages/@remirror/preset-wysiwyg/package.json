@@ -14,25 +14,36 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/preset-wysiwyg.cjs.js",
-  "module": "dist/preset-wysiwyg.esm.js",
-  "browser": {
-    "./dist/preset-wysiwyg.cjs.js": "./dist/preset-wysiwyg.browser.cjs.js",
-    "./dist/preset-wysiwyg.esm.js": "./dist/preset-wysiwyg.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-preset-wysiwyg.esm.js",
+      "require": "./dist/remirror-preset-wysiwyg.cjs.js",
+      "browser": "./dist/remirror-preset-wysiwyg.browser.esm.js",
+      "types": "./dist/remirror-preset-wysiwyg.cjs.d.ts",
+      "default": "./dist/remirror-preset-wysiwyg.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/preset-wysiwyg.cjs.d.ts",
+  "main": "dist/remirror-preset-wysiwyg.cjs.js",
+  "module": "dist/remirror-preset-wysiwyg.esm.js",
+  "browser": {
+    "./dist/remirror-preset-wysiwyg.cjs.js": "./dist/remirror-preset-wysiwyg.browser.cjs.js",
+    "./dist/remirror-preset-wysiwyg.esm.js": "./dist/remirror-preset-wysiwyg.browser.esm.js"
+  },
+  "types": "dist/remirror-preset-wysiwyg.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
+    "@babel/runtime": "^7.12.5",
     "@remirror/extension-bidi": "1.0.0-next.60",
     "@remirror/extension-blockquote": "1.0.0-next.60",
     "@remirror/extension-bold": "1.0.0-next.60",
     "@remirror/extension-code": "1.0.0-next.60",
     "@remirror/extension-code-block": "1.0.0-next.60",
     "@remirror/extension-drop-cursor": "1.0.0-next.60",
-    "@remirror/extension-epic-mode": "1.0.0-next.60",
+    "@remirror/extension-embed": "1.0.0-next.60",
     "@remirror/extension-gap-cursor": "1.0.0-next.60",
     "@remirror/extension-hard-break": "1.0.0-next.60",
     "@remirror/extension-heading": "1.0.0-next.60",
@@ -40,14 +51,13 @@
     "@remirror/extension-image": "1.0.0-next.60",
     "@remirror/extension-italic": "1.0.0-next.60",
     "@remirror/extension-link": "1.0.0-next.60",
+    "@remirror/extension-list": "1.0.0-next.60",
     "@remirror/extension-search": "1.0.0-next.60",
     "@remirror/extension-strike": "1.0.0-next.60",
+    "@remirror/extension-tables": "1.0.0-next.60",
     "@remirror/extension-trailing-node": "1.0.0-next.60",
     "@remirror/extension-underline": "1.0.0-next.60",
-    "@remirror/preset-core": "1.0.0-next.60",
-    "@remirror/preset-embed": "1.0.0-next.60",
-    "@remirror/preset-list": "1.0.0-next.60",
-    "@remirror/preset-table": "1.0.0-next.60"
+    "@remirror/preset-core": "1.0.0-next.60"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",

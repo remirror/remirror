@@ -20,7 +20,7 @@
 <br />
 
 <p align="center">
-  <a href="https://unpkg.com/@remirror/core@next/dist/core.browser.esm.js">
+  <a href="https://unpkg.com/@remirror/core/dist/core.browser.esm.js">
     <img src="https://img.shields.io/bundlephobia/minzip/@remirror/core/next" alt="Bundled sized of core library" title="@remirror/core bundle size">
   </a>
   <a href="https://github.com/remirror/remirror/actions?query=workflow:ci">
@@ -59,7 +59,7 @@ There are also a host of drop in components and hooks being developed. For examp
 
 ```tsx
 import React from 'react';
-import { SocialEmojiComponent, SocialProvider } from 'remirror/react/social';
+import { SocialEmojiComponent, SocialProvider } from 'remirror/react';
 
 const Editor = () => {
   return (
@@ -106,8 +106,7 @@ View our documentation website [**here**][introduction].
 - A11y focused and ARIA compatible.
 - I18n support via [lingui](https://github.com/lingui/js-lingui).
 - Collaborative editing with [yjs](https://github.com/yjs/yjs).
-- Prebuilt editors [social](./@remirror/react-social) and [wysiwyg](./@remirror/react-wysiwyg) and a markdown option is coming soon.
-- 30+ extensions and 8 presets available to create your very own editor.
+- 30+ extensions for creating fully customized editing experiences.
 - Zero configuration support for **Server Side Rendering (SSR)**.
 - Cross platform and cross-framework, with an Angular solution coming later this year.
 
@@ -122,17 +121,17 @@ View our documentation website [**here**][introduction].
 
 ## Getting Started
 
-To add an editor to your codebase, first install the required dependencies. Make sure to include the `@next` tag so that the correct version is installed.
+To add an editor to your codebase, first install the required dependencies. Make sure to include the `` tag so that the correct version is installed.
 
 ```bash
 # yarn
-yarn add remirror@next @remirror/pm@next
+yarn add remirror @remirror/pm
 
 # pnpm
-pnpm add remirror@next @remirror/pm@next
+pnpm add remirror @remirror/pm
 
 # npm
-npm install remirror@next @remirror/pm@next
+npm install remirror @remirror/pm
 ```
 
 `@remirror/pm` is a peer dependency which manages all the ProseMirror packages for you. It means that the conflicts which can sometimes happen between versions are no longer an issue. It's also important because it's quite easy to bundle multiple versions of the same library in your codebase.
@@ -143,13 +142,13 @@ Once installed you will be able to add the following code which creates an edito
 
 ```tsx
 import React, { useCallback } from 'react';
-import { BoldExtension } from 'remirror/extension/bold';
-import { RemirrorProvider, useManager, useRemirror } from 'remirror/react';
+import { BoldExtension } from 'remirror/extensions';
+import { Remirror, useRemirrorContext, useRemirror } from 'remirror/react';
 
 const Button = () => {
   // `autoUpdate` means that every editor update will recalculate the output
   // from `active.bold()` and keep the bold status up to date in the editor.
-  const { active, commands } = useRemirror({ autoUpdate: true });
+  const { active, commands } = useRemirrorContext({ autoUpdate: true });
 
   return (
     <>
@@ -178,10 +177,10 @@ const EditorWrapper = () => {
   // The editor is built up like lego blocks of functionality within the editor
   // provider.
   return (
-    <RemirrorProvider manager={manager}>
+    <Remirror manager={manager}>
       <Editor />
       <Button />
-    </RemirrorProvider>
+    </Remirror>
   );
 };
 ```

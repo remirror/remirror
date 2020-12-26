@@ -169,7 +169,7 @@ class ExtensionWithHandlers extends PlainExtension<WithHandlers> {
     const { bindings } = parameter;
 
     if (bindings) {
-      bindings.a('');
+      bindings.a?.('');
       // @ts-expect-error
       bindings.b(100);
     }

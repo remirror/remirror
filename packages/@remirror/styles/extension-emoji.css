@@ -1,0 +1,12 @@
+/**
+ * Styles extracted from: packages/@remirror/theme/src/extension-emoji.ts
+ */
+.remirror-editor img.emoji {
+  object-fit: contain;
+  width: 1.375em;
+  height: 1.375em;
+  vertical-align: bottom;
+}
+.remirror-editor span.img[alt] {
+  text-indent: -9999px;
+}

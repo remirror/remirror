@@ -7,39 +7,7 @@ import {
   strong,
 } from 'jest-prosemirror';
 
-import { markInputRule, markPasteRule, nodeInputRule, plainInputRule } from '../prosemirror-rules';
-
-describe('markPasteRule', () => {
-  it('should transform simple content', () => {
-    const plugin = markPasteRule({ regexp: /(Hello)/, type: testSchema.marks.strong });
-    createEditor(doc(p('<cursor>')), { plugins: [plugin] })
-      .paste('Hello')
-      .callback((content) => expect(content.doc).toEqualProsemirrorNode(doc(p(strong('Hello')))));
-  });
-
-  it('should transform complex content', () => {
-    const plugin = markPasteRule({ regexp: /(@[a-z]+)/, type: testSchema.marks.strong });
-    createEditor(doc(p('<cursor>')), { plugins: [plugin] })
-      .paste(doc(p('Some @test @content'), p('should @be amazing')))
-      .callback((content) => {
-        expect(content.doc).toEqualProsemirrorNode(
-          doc(
-            p('Some ', strong('@test'), ' ', strong('@content')),
-            p('should ', strong('@be'), ' amazing'),
-          ),
-        );
-      });
-  });
-
-  it('should not transform when no match found', () => {
-    const plugin = markPasteRule({ regexp: /(Hello)/, type: testSchema.marks.strong });
-    createEditor(doc(p('<cursor>')), { plugins: [plugin] })
-      .paste('Not The Word')
-      .callback((content) => {
-        expect(content.doc).toEqualProsemirrorNode(doc(p('Not The Word')));
-      });
-  });
-});
+import { markInputRule, nodeInputRule, plainInputRule } from '../prosemirror-rules';
 
 describe('markInputRule', () => {
   it('should wrap matched content with the specified mark type', () => {
@@ -132,7 +100,7 @@ describe('plainInputRule', () => {
   it('should replace content with the transformation function', () => {
     const rule = plainInputRule({
       regexp: /abc$/,
-      transformMatch: (value) => value[0].toUpperCase(),
+      transformMatch: (value) => value[0]?.toUpperCase(),
     });
 
     const {
@@ -152,7 +120,7 @@ describe('plainInputRule', () => {
   it('should support `beforeDispatch`', () => {
     const rule = plainInputRule({
       regexp: /abc$/,
-      transformMatch: (value) => value[0].toUpperCase(),
+      transformMatch: (value) => value[0]?.toUpperCase(),
       beforeDispatch: ({ tr }) => tr.insertText(' '),
     });
 
@@ -173,7 +141,8 @@ describe('plainInputRule', () => {
   it('should work with partial matches', () => {
     const rule = plainInputRule({
       regexp: /(abc)xyz$/,
-      transformMatch: ([full, match]) => full.replace(match, match.toUpperCase()),
+      transformMatch: ([full, match]) =>
+        match ? full?.replace(match, match.toUpperCase()) : undefined,
     });
 
     const {

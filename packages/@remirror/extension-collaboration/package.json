@@ -15,18 +15,30 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-collaboration.cjs.js",
-  "module": "dist/extension-collaboration.esm.js",
-  "browser": {
-    "./dist/extension-collaboration.cjs.js": "./dist/extension-collaboration.browser.cjs.js",
-    "./dist/extension-collaboration.esm.js": "./dist/extension-collaboration.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-collaboration.esm.js",
+      "require": "./dist/remirror-extension-collaboration.cjs.js",
+      "browser": "./dist/remirror-extension-collaboration.browser.esm.js",
+      "types": "./dist/remirror-extension-collaboration.cjs.d.ts",
+      "default": "./dist/remirror-extension-collaboration.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-collaboration.cjs.d.ts",
+  "main": "dist/remirror-extension-collaboration.cjs.js",
+  "module": "dist/remirror-extension-collaboration.esm.js",
+  "browser": {
+    "./dist/remirror-extension-collaboration.cjs.js": "./dist/remirror-extension-collaboration.browser.cjs.js",
+    "./dist/remirror-extension-collaboration.esm.js": "./dist/remirror-extension-collaboration.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-collaboration.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0",
     "@types/prosemirror-collab": "^1.1.0"
   },
   "devDependencies": {

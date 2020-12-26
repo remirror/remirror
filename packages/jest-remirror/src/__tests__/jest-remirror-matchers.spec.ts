@@ -1,7 +1,7 @@
-import { Cast } from '@remirror/core';
-import { BoldExtension } from '@remirror/testing';
+import { Cast } from 'remirror';
+import { BoldExtension } from 'remirror/extensions';
 
-import { renderEditor } from '../jest-remirror-editor';
+import { renderEditor } from '../..';
 
 describe('toContainRemirrorDocument', () => {
   it('should match when state contains node', () => {

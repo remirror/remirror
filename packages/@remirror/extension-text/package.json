@@ -15,18 +15,30 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-text.cjs.js",
-  "module": "dist/extension-text.esm.js",
-  "browser": {
-    "./dist/extension-text.cjs.js": "./dist/extension-text.browser.cjs.js",
-    "./dist/extension-text.esm.js": "./dist/extension-text.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-text.esm.js",
+      "require": "./dist/remirror-extension-text.cjs.js",
+      "browser": "./dist/remirror-extension-text.browser.esm.js",
+      "types": "./dist/remirror-extension-text.cjs.d.ts",
+      "default": "./dist/remirror-extension-text.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-text.cjs.d.ts",
+  "main": "dist/remirror-extension-text.cjs.js",
+  "module": "dist/remirror-extension-text.esm.js",
+  "browser": {
+    "./dist/remirror-extension-text.cjs.js": "./dist/remirror-extension-text.browser.cjs.js",
+    "./dist/remirror-extension-text.esm.js": "./dist/remirror-extension-text.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-text.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0"
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",

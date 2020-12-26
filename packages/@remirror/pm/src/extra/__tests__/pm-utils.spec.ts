@@ -1,8 +1,16 @@
 import { createEditor, doc, p } from 'jest-prosemirror';
 
+import { EditorState } from '../../state';
 import { chainableEditorState } from '../pm-utils';
 
 describe('chainableEditorState', () => {
+  it('passes `instanceof` checks', () => {
+    const editor = createEditor(doc(p('An editor')));
+    const tr = editor.state.tr;
+    const state = chainableEditorState(tr, editor.state);
+    expect(state).toBeInstanceOf(EditorState);
+  });
+
   it('creates a state like object', () => {
     const editor = createEditor(doc(p('An editor')));
 

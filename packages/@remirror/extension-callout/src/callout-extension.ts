@@ -1,45 +1,60 @@
 import {
   ApplySchemaAttributes,
+  command,
   CommandFunction,
-  extensionDecorator,
+  extension,
   ExtensionTag,
   findNodeAtSelection,
+  getMatchString,
+  InputRule,
   isElementDomNode,
-  KeyBindings,
+  isTextSelection,
+  keyBinding,
+  KeyBindingParameter,
   NodeExtension,
   NodeExtensionSpec,
+  nodeInputRule,
+  NodeSpecOverride,
   omitExtraAttributes,
   toggleWrap,
 } from '@remirror/core';
 import { TextSelection } from '@remirror/pm/state';
 
 import type { CalloutAttributes, CalloutOptions } from './callout-types';
-import { dataAttributeType, updateNodeAttributes } from './callout-utils';
+import {
+  dataAttributeType,
+  getCalloutType,
+  toggleCalloutOptions,
+  updateNodeAttributes,
+} from './callout-utils';
 
 /**
  * Adds a callout to the editor.
  */
-@extensionDecorator<CalloutOptions>({
+@extension<CalloutOptions>({
   defaultOptions: {
     defaultType: 'info',
+    validTypes: ['info', 'warning', 'error', 'success'],
   },
+  staticKeys: ['defaultType', 'validTypes'],
 })
 export class CalloutExtension extends NodeExtension<CalloutOptions> {
   get name() {
     return 'callout' as const;
   }
 
-  readonly tags = [ExtensionTag.BlockNode];
+  readonly tags = [ExtensionTag.Block];
 
-  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
     return {
+      content: 'block*',
+      defining: true,
+      draggable: false,
+      ...override,
       attrs: {
         ...extra.defaults(),
         type: { default: this.options.defaultType },
       },
-      content: 'block*',
-      defining: true,
-      draggable: false,
       parseDOM: [
         {
           tag: `div[${dataAttributeType}]`,
@@ -55,7 +70,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
         },
       ],
       toDOM: (node) => {
-        const { type, ...rest } = omitExtraAttributes(node.attrs, extra) as CalloutAttributes;
+        const { type, ...rest } = omitExtraAttributes(node.attrs, extra);
         const attributes = { ...extra.dom(node), ...rest, [dataAttributeType]: type };
 
         return ['div', attributes, 0];
@@ -63,95 +78,160 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
     };
   }
 
-  createCommands() {
-    return {
-      /**
-       * Toggle the callout at the current selection. If you don't provide the
-       * type it will use the options.defaultType.
-       *
-       * If none exists one will be created or the existing callout content will be
-       * lifted out of the callout node.
-       *
-       * ```ts
-       * if (commands.toggleCallout.isEnabled()) {
-       *   commands.toggleCallout({ type: 'success' });
-       * }
-       * ```
-       */
-      toggleCallout: (attributes: CalloutAttributes = {}): CommandFunction =>
-        toggleWrap(this.type, attributes),
-
-      /**
-       * Update the callout at the current position. Primarily this is used
-       * to change the type.
-       *
-       * ```ts
-       * if (commands.updateCallout.isEnabled()) {
-       *   commands.updateCallout({ type: 'error' });
-       * }
-       * ```
-       */
-      updateCallout: (attributes: CalloutAttributes): CommandFunction =>
-        updateNodeAttributes(this.type)(attributes),
-    };
+  /**
+   * Create an input rule that listens converts the code fence into a code block
+   * when typing triple back tick followed by a space.
+   */
+  createInputRules(): InputRule[] {
+    return [
+      nodeInputRule({
+        regexp: /^:::([\dA-Za-z]*) $/,
+        type: this.type,
+        beforeDispatch: ({ tr, start }) => {
+          const $pos = tr.doc.resolve(start);
+          tr.setSelection(new TextSelection($pos));
+        },
+        getAttributes: (match) => {
+          const { defaultType, validTypes } = this.options;
+          return { type: getCalloutType(getMatchString(match, 1), validTypes, defaultType) };
+        },
+      }),
+    ];
   }
 
   /**
-   * Create specific keyboard bindings for the code block.
+   * Toggle the callout at the current selection. If you don't provide the
+   * type it will use the options.defaultType.
+   *
+   * If none exists one will be created or the existing callout content will be
+   * lifted out of the callout node.
+   *
+   * ```ts
+   * if (commands.toggleCallout.isEnabled()) {
+   *   commands.toggleCallout({ type: 'success' });
+   * }
+   * ```
    */
-  createKeymap(): KeyBindings {
-    return {
-      Backspace: ({ dispatch, tr }) => {
-        // Aims to stop merging callouts when deleting content in between
-        const { selection } = tr;
+  @command()
+  toggleCallout(attributes: CalloutAttributes = {}): CommandFunction {
+    return toggleWrap(this.type, attributes);
+  }
 
-        // If the selection is not empty return false and let other extension
-        // (ie: BaseKeymapExtension) to do the deleting operation.
-        if (!selection.empty) {
-          return false;
-        }
+  /**
+   * Update the callout at the current position. Primarily this is used
+   * to change the type.
+   *
+   * ```ts
+   * if (commands.updateCallout.isEnabled()) {
+   *   commands.updateCallout({ type: 'error' });
+   * }
+   * ```
+   */
+  @command(toggleCalloutOptions)
+  updateCallout(attributes: CalloutAttributes): CommandFunction {
+    return updateNodeAttributes(this.type)(attributes);
+  }
 
-        const { $from } = selection;
+  @keyBinding({ shortcut: 'Enter' })
+  handleEnterKey({ dispatch, tr }: KeyBindingParameter): boolean {
+    const { selection } = tr;
 
-        // If not at the start of current node, no joining will happen
-        if ($from.parentOffset !== 0) {
-          return false;
-        }
+    if (!isTextSelection(selection) || !selection.$cursor) {
+      return false;
+    }
 
-        const previousPosition = $from.before($from.depth) - 1;
+    const { nodeBefore, parent } = selection.$from;
 
-        // If nothing above to join with
-        if (previousPosition < 1) {
-          return false;
-        }
+    if (!nodeBefore || !nodeBefore.isText || !parent.type.isTextblock) {
+      return false;
+    }
 
-        const previousPos = tr.doc.resolve(previousPosition);
+    const regex = /^:::([A-Za-z]*)?$/;
+    const { text } = nodeBefore;
+    const { textContent } = parent;
 
-        // If resolving previous position fails, bail out
-        if (!previousPos?.parent) {
-          return false;
-        }
+    if (!text) {
+      return false;
+    }
 
-        const previousNode = previousPos.parent;
-        const { node, pos } = findNodeAtSelection(selection);
+    const matchesNodeBefore = text.match(regex);
+    const matchesParent = textContent.match(regex);
 
-        // If previous node is a callout, cut current node's content into it
-        if (node.type !== this.type && previousNode.type === this.type) {
-          const { content, nodeSize } = node;
-          tr.delete(pos, pos + nodeSize);
-          tr.setSelection(TextSelection.create(tr.doc, previousPosition - 1));
-          tr.insert(previousPosition - 1, content);
+    if (!matchesNodeBefore || !matchesParent) {
+      return false;
+    }
 
-          if (dispatch) {
-            dispatch(tr);
-          }
+    const { defaultType, validTypes } = this.options;
 
-          return true;
-        }
+    const type = getCalloutType(matchesNodeBefore[1], validTypes, defaultType);
+    const pos = selection.$from.before();
+    const end = pos + nodeBefore.nodeSize + 1;
+    // +1 to account for the extra pos a node takes up
 
-        return false;
-      },
-    };
+    if (dispatch) {
+      tr.replaceWith(pos, end, this.type.create({ type }));
+
+      // Set the selection to within the codeBlock
+      tr.setSelection(TextSelection.create(tr.doc, pos + 1));
+      dispatch(tr);
+    }
+
+    return true;
+  }
+
+  /**
+   * Handle the backspace key when deleting content.
+   */
+  @keyBinding({ shortcut: 'Backspace' })
+  handleBackspace({ dispatch, tr }: KeyBindingParameter): boolean {
+    // Aims to stop merging callouts when deleting content in between
+    const { selection } = tr;
+
+    // If the selection is not empty return false and let other extension
+    // (ie: BaseKeymapExtension) to do the deleting operation.
+    if (!selection.empty) {
+      return false;
+    }
+
+    const { $from } = selection;
+
+    // If not at the start of current node, no joining will happen
+    if ($from.parentOffset !== 0) {
+      return false;
+    }
+
+    const previousPosition = $from.before($from.depth) - 1;
+
+    // If nothing above to join with
+    if (previousPosition < 1) {
+      return false;
+    }
+
+    const previousPos = tr.doc.resolve(previousPosition);
+
+    // If resolving previous position fails, bail out
+    if (!previousPos?.parent) {
+      return false;
+    }
+
+    const previousNode = previousPos.parent;
+    const { node, pos } = findNodeAtSelection(selection);
+
+    // If previous node is a callout, cut current node's content into it
+    if (node.type !== this.type && previousNode.type === this.type) {
+      const { content, nodeSize } = node;
+      tr.delete(pos, pos + nodeSize);
+      tr.setSelection(TextSelection.create(tr.doc, previousPosition - 1));
+      tr.insert(previousPosition - 1, content);
+
+      if (dispatch) {
+        dispatch(tr);
+      }
+
+      return true;
+    }
+
+    return false;
   }
 }
 

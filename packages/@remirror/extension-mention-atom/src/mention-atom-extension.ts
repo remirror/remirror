@@ -1,20 +1,22 @@
 import {
   ApplySchemaAttributes,
+  command,
   CommandFunction,
   ErrorConstant,
-  extensionDecorator,
+  extension,
   ExtensionTag,
   Handler,
   invariant,
   isElementDomNode,
   isString,
   kebabCase,
-  NodeAttributes,
   NodeExtension,
   NodeExtensionSpec,
+  NodeSpecOverride,
   NodeWithPosition,
   omitExtraAttributes,
   pick,
+  ProsemirrorAttributes,
   replaceText,
   Static,
 } from '@remirror/core';
@@ -107,7 +109,7 @@ export interface MentionAtomOptions
  * It provides mentions as atom nodes which don't support editing once being
  * inserted into the document.
  */
-@extensionDecorator<MentionAtomOptions>({
+@extension<MentionAtomOptions>({
   defaultOptions: {
     selectable: true,
     draggable: false,
@@ -124,31 +126,33 @@ export interface MentionAtomOptions
   },
   handlerKeyOptions: { onClick: { earlyReturnValue: true } },
   handlerKeys: ['onChange', 'onClick'],
-  staticKeys: ['matchers', 'mentionTag', 'selectable'],
+  staticKeys: ['matchers', 'mentionTag', 'selectable', 'draggable'],
 })
 export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
   get name() {
     return 'mentionAtom' as const;
   }
 
-  readonly tags = [ExtensionTag.InlineNode, ExtensionTag.Behavior];
+  createTags() {
+    return [ExtensionTag.InlineNode, ExtensionTag.Behavior];
+  }
 
-  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
     const dataAttributeId = 'data-mention-atom-id';
     const dataAttributeName = 'data-mention-atom-name';
 
     return {
+      inline: true,
+      selectable: this.options.selectable,
+      draggable: this.options.draggable,
+      atom: true,
+      ...override,
       attrs: {
         ...extra.defaults(),
         id: {},
         label: {},
         name: {},
       },
-      inline: true,
-      selectable: this.options.selectable,
-      draggable: this.options.draggable,
-      atom: true,
-
       parseDOM: [
         {
           tag: `${this.options.mentionTag}[${dataAttributeId}]`,
@@ -165,15 +169,10 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
         },
       ],
       toDOM: (node) => {
-        const {
-          appendText: _,
-          replacementType: __,
-          label,
-          id,
-          name,
-          range,
-          ...rest
-        } = omitExtraAttributes(node.attrs, extra) as NamedMentionAtomNodeAttributes;
+        const { appendText: _, replacementType: __, label, id, name } = omitExtraAttributes(
+          node.attrs,
+          extra,
+        ) as NamedMentionAtomNodeAttributes;
         const matcher = this.options.matchers.find((matcher) => matcher.name === name);
 
         const mentionClassName = matcher
@@ -182,7 +181,6 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
 
         const attrs = {
           ...extra.dom(node),
-          ...rest,
           class: name
             ? `${mentionClassName} ${mentionClassName}-${kebabCase(name)}`
             : mentionClassName,
@@ -195,41 +193,35 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
     };
   }
 
-  createCommands() {
-    return {
-      /**
-       * Creates a mention atom at the  the provided range.
-       *
-       * A variant of this method is provided to the `onChange` handler for this
-       * extension.
-       *
-       * @param details - the range and name of the mention to be created.
-       * @param attrs - the attributes that should be passed through. Required
-       * values are `id` and `label`.
-       */
-      createMentionAtom: (
-        details: CreateMentionAtom,
-        attrs: MentionAtomNodeAttributes,
-      ): CommandFunction => {
-        const { name, range } = details;
-        const validNameExists = this.options.matchers.some((matcher) => name === matcher.name);
+  /**
+   * Creates a mention atom at the  the provided range.
+   *
+   * A variant of this method is provided to the `onChange` handler for this
+   * extension.
+   *
+   * @param details - the range and name of the mention to be created.
+   * @param attrs - the attributes that should be passed through. Required
+   * values are `id` and `label`.
+   */
+  @command()
+  createMentionAtom(details: CreateMentionAtom, attrs: MentionAtomNodeAttributes): CommandFunction {
+    const { name, range } = details;
+    const validNameExists = this.options.matchers.some((matcher) => name === matcher.name);
 
-        // Check that the name is valid.
-        invariant(validNameExists, {
-          code: ErrorConstant.EXTENSION,
-          message: `Invalid name '${name}' provided when creating a mention. Please ensure you only use names that were configured on the matchers when creating the \`MentionAtomExtension\`.`,
-        });
+    // Check that the name is valid.
+    invariant(validNameExists, {
+      code: ErrorConstant.EXTENSION,
+      message: `Invalid name '${name}' provided when creating a mention. Please ensure you only use names that were configured on the matchers when creating the \`MentionAtomExtension\`.`,
+    });
 
-        const { appendText, ...rest } = attrs;
+    const { appendText, ...rest } = attrs;
 
-        return replaceText({
-          type: this.type,
-          appendText: getAppendText(appendText, this.options.appendText),
-          attrs: { name, ...rest },
-          range,
-        });
-      },
-    };
+    return replaceText({
+      type: this.type,
+      appendText: getAppendText(appendText, this.options.appendText),
+      attrs: { name, ...rest },
+      range,
+    });
   }
 
   /**
@@ -338,7 +330,7 @@ export interface CreateMentionAtom {
  * The attrs that will be added to the node.
  * ID and label are plucked and used while attributes like href and role can be assigned as desired.
  */
-export type MentionAtomNodeAttributes = NodeAttributes<
+export type MentionAtomNodeAttributes = ProsemirrorAttributes<
   OptionalMentionAtomExtensionParameter & {
     /**
      * A unique identifier for the suggesters node

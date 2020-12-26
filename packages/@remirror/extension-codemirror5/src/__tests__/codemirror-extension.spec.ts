@@ -1,13 +1,13 @@
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/python/python';
 import 'codemirror/mode/yaml/yaml';
+import 'codemirror/mode/meta';
 
-import type CodeMirror from 'codemirror';
+import CodeMirror from 'codemirror';
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-
-import { fromHtml, object, toHtml } from '@remirror/core';
-import { createCoreManager } from '@remirror/testing';
+import { htmlToProsemirrorNode, object, prosemirrorNodeToHtml } from 'remirror';
+import { createCoreManager } from 'remirror/extensions';
 
 import { CodeMirrorExtension, CodeMirrorExtensionOptions } from '..';
 
@@ -20,20 +20,18 @@ function getCodeMirrorMode(dom: Element) {
 }
 
 describe('schema', () => {
-  const { schema } = createCoreManager([new CodeMirrorExtension()]);
+  const { schema } = createCoreManager([new CodeMirrorExtension({ CodeMirror })]);
   const content = 'hello world!';
   const { codeMirror, doc } = pmBuild(schema, {
     codeMirror: { nodeType: 'codeMirror' },
   });
 
   it('creates the correct dom node', () => {
-    expect(toHtml({ node: codeMirror(content), schema })).toBe(
-      `<pre><code>${content}</code></pre>`,
-    );
+    expect(prosemirrorNodeToHtml(codeMirror(content))).toBe(`<pre><code>${content}</code></pre>`);
   });
 
   it('parses the dom structure and finds itself', () => {
-    const node = fromHtml({
+    const node = htmlToProsemirrorNode({
       schema,
       content: `<pre><code>${content}</code></pre>`,
     });
@@ -43,8 +41,8 @@ describe('schema', () => {
   });
 });
 
-const create = (options: CodeMirrorExtensionOptions = object()) => {
-  const renderEditorReturn = renderEditor([new CodeMirrorExtension(options)]);
+function create(options: CodeMirrorExtensionOptions = object()) {
+  const renderEditorReturn = renderEditor([new CodeMirrorExtension({ ...options, CodeMirror })]);
 
   const {
     add,
@@ -67,7 +65,7 @@ const create = (options: CodeMirrorExtensionOptions = object()) => {
     dom,
     commands,
   };
-};
+}
 
 describe('nodeView', () => {
   it('renders the CodeMirror editor', () => {

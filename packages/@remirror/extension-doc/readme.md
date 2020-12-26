@@ -7,8 +7,8 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-doc/next
 [npm]: https://npmjs.com/package/@remirror/extension-doc/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/extension-doc@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-doc@next
+[size]: https://bundlephobia.com/result?p=@remirror/extension-doc
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-doc
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-doc/red?icon=npm
 
@@ -16,17 +16,17 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-doc@next @remirror/pm@next
+yarn add @remirror/extension-doc @remirror/pm
 
 # pnpm
-pnpm add @remirror/extension-doc@next @remirror/pm@next
+pnpm add @remirror/extension-doc @remirror/pm
 
 # npm
-npm install @remirror/extension-doc@next @remirror/pm@next
+npm install @remirror/extension-doc @remirror/pm
 ```
 
-This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/doc`.
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.
 
 ## Usage
 
-This is one of the **core** extensions and is included by default when using the `CorePreset` from `remirror/preset/core`.
+This is one of the **core** extensions and is included by default when using the `CorePreset` from `remirror/presets`.

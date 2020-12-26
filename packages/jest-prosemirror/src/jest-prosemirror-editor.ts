@@ -26,6 +26,7 @@ import {
   isTextDomNode,
 } from '@remirror/core-utils';
 import { inputRules } from '@remirror/pm/inputrules';
+import { DOMParser, Slice } from '@remirror/pm/model';
 import { AllSelection, NodeSelection, Selection, TextSelection } from '@remirror/pm/state';
 import { cellAround, CellSelection } from '@remirror/pm/tables';
 import { DirectEditorProps, EditorView } from '@remirror/pm/view';
@@ -96,9 +97,10 @@ export function createEditor<Schema extends EditorSchema = EditorSchema>(
   const { plugins = [], rules = [], autoClean = true, ...editorOptions } = options;
   const element = document.createElement('div');
   const state = createState(taggedDocument, [...plugins, inputRules({ rules })]);
-  const view = new EditorView<Schema>(element, { state, ...editorOptions }) as TestEditorView<
-    Schema
-  >;
+  const view = new EditorView<Schema>(element, {
+    state,
+    ...editorOptions,
+  }) as TestEditorView<Schema>;
 
   document.body.append(element);
 
@@ -126,9 +128,23 @@ export function pasteContent<Schema extends EditorSchema = EditorSchema>(
     TestEditorViewParameter<Schema> & { content: ProsemirrorNode | string },
 ): void {
   const { view, content } = parameter;
-  let slice = isString(content)
-    ? p(content).slice(0)
-    : content.slice(content.type.name === 'doc' ? 1 : 0);
+  let slice: ProsemirrorNode[] | Slice | Slice[];
+
+  if (isString(content)) {
+    const element = document.createElement('div');
+    element.innerHTML = content;
+    slice = DOMParser.fromSchema(view.state.schema).parseSlice(element, {
+      context: view.state.selection.$head,
+      preserveWhitespace: true,
+    });
+  } else {
+    const { from, to } =
+      content.type.name === 'doc'
+        ? { from: 1, to: content.nodeSize - 2 }
+        : { from: 0, to: undefined };
+
+    slice = content.slice(from, to);
+  }
 
   view.someProp('transformPasted', (f) => {
     slice = f(slice);
@@ -442,7 +458,7 @@ export function fireEventAtPosition<Schema extends EditorSchema = EditorSchema>(
  * The return type for the apply method which
  * @remarks
  *
- * @typeParam Schema - the editor schema used node.
+ * @template Schema - the editor schema used node.
  */
 export interface ApplyReturn<Schema extends EditorSchema = EditorSchema>
   extends TaggedDocParameter<Schema>,

@@ -1,19 +1,7 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import type { AnyCombinedUnion, FrameworkOutput } from '@remirror/core';
-
 import type { MountedPortal, PortalContainer, PortalMap } from './portal-container';
-
-export interface RemirrorPortalsProps<Combined extends AnyCombinedUnion> {
-  /**
-   * An array of tuples holding all the element containers for node view
-   * portals.
-   */
-  portals: Array<[HTMLElement, MountedPortal]>;
-
-  context: FrameworkOutput<Combined>;
-}
 
 /**
  * The component that places all the portals into the DOM.
@@ -21,18 +9,25 @@ export interface RemirrorPortalsProps<Combined extends AnyCombinedUnion> {
  * Portals can currently be created by a [[`ReactNodeView`]] and coming soon
  * both the [[`ReactMarkView`]] and [[`ReactDecoration`]].
  */
-export const RemirrorPortals = <Combined extends AnyCombinedUnion>(
-  props: RemirrorPortalsProps<Combined>,
-): JSX.Element => {
-  const { context, portals } = props;
+export const RemirrorPortals = (props: RemirrorPortalsProps): JSX.Element => {
+  const { portals } = props;
+
   return (
-    <EditorContext.Provider value={context}>
+    <>
       {portals.map(([container, { Component, key }]) =>
         createPortal(<Component />, container, key),
       )}
-    </EditorContext.Provider>
+    </>
   );
 };
+
+export interface RemirrorPortalsProps {
+  /**
+   * An array of tuples holding all the element containers for node view
+   * portals.
+   */
+  portals: Array<[HTMLElement, MountedPortal]>;
+}
 
 /**
  * A hook which subscribes to updates from the portal container.
@@ -46,22 +41,10 @@ export function usePortals(portalContainer: PortalContainer): Array<[HTMLElement
   // Dispose of all portals.
   useEffect(() => {
     // Auto disposed when the component un-mounts.
-    return portalContainer.on((portalMap: PortalMap) => {
+    return portalContainer.on((portalMap) => {
       setPortals([...portalMap.entries()]);
     });
   }, [portalContainer]);
 
-  return portals;
+  return useMemo(() => portals, [portals]);
 }
-
-/**
- * Get the current remirror context when using a portal.
- */
-export function usePortalContext<Combined extends AnyCombinedUnion>(): FrameworkOutput<Combined> {
-  return useContext(EditorContext) as FrameworkOutput<Combined>;
-}
-
-/**
- * Allows elemenent inside the portals to consume the provided contenxt
- */
-const EditorContext = createContext<FrameworkOutput<any> | null>(null);

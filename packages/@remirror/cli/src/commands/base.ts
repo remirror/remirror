@@ -7,11 +7,12 @@ import type { BaseCommandProps, CommandContext } from '../types';
 
 export abstract class BaseCommand extends Command<CommandContext> implements BaseCommandProps {
   /**
-   * Wrap the specified command to be attached to the given path on the command line.
-   * The first path thus attached will be considered the "main" one, and all others will be aliases.
+   * Wrap the specified command to be attached to the given path on the command
+   * line. The first path thus attached will be considered the "main" one, and
+   * all others will be aliases.
    * @param path The command path.
    */
-  public static Path(command: keyof RemirrorCli.Commands) {
+  static Path(command: keyof RemirrorCli.Commands): ReturnType<typeof Command.Path> {
     return Command.Path(...command.split(' '));
   }
 
@@ -19,7 +20,7 @@ export abstract class BaseCommand extends Command<CommandContext> implements Bas
    * Set the current working directory from the command line.
    */
   @Command.String('--cwd', { hidden: true })
-  private readonly _cwd: string = '';
+  private readonly _cwd: string = process.cwd();
 
   /**
    * Get the current working directory for this command.
@@ -35,12 +36,13 @@ export abstract class BaseCommand extends Command<CommandContext> implements Bas
   public verbose: CommandBoolean = false;
 
   /**
-   * Run the a sub command with the command line arguments transformed automatically.
+   * Run the a sub command with the command line arguments transformed
+   * automatically.
    */
   public async run<Cmd extends keyof RemirrorCli.Commands>(
     command: Cmd,
     { positional = [], ...other }: RunSubCommandParams<RemirrorCli.Commands[Cmd]>,
-  ) {
+  ): Promise<number> {
     const _ = [...(command ? command.split(' ') : []), ...positional];
     const args = dargs({ _, verbose: this.verbose, cwd: this.cwd, ...other }, {});
 

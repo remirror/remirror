@@ -1,15 +1,10 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import { RemirrorTestChain } from 'jest-remirror';
-import React, { FC } from 'react';
-import { EmojiExtension } from 'remirror/extension/emoji';
+import { FC } from 'react';
+import { EmojiExtension } from 'remirror/extensions';
+import { createReactManager, Remirror, useRemirrorContext } from 'remirror/react';
 
-import {
-  act as renderAct,
-  createReactManager,
-  RemirrorProvider,
-  strictRender,
-  useRemirror,
-} from '@remirror/testing/react';
+import { act as renderAct, strictRender } from '@remirror/testing/react';
 
 import { EmojiState, useEmoji } from '../use-emoji';
 
@@ -18,23 +13,11 @@ function createChain() {
   const chain = RemirrorTestChain.create(manager);
   const { doc, p } = chain.nodes;
 
-  const InnerComponent: FC = ({ children }) => {
-    const { getRootProps } = useRemirror<EmojiExtension>();
-
-    return (
-      <>
-        {children}
-        <div {...getRootProps()} />
-      </>
-    );
-  };
-
   const Wrapper: FC = ({ children }) => {
     return (
-      <RemirrorProvider manager={manager} initialContent={[doc(p('Initial content ')), 'end']}>
-        <InnerComponent />
+      <Remirror manager={manager} initialContent={[doc(p('Initial content ')), 'end']} autoRender>
         {children}
-      </RemirrorProvider>
+      </Remirror>
     );
   };
 
@@ -176,7 +159,7 @@ describe('useEmoji', () => {
     const ref: { current: EmojiState | null } = { current: null };
 
     const Component = () => {
-      useRemirror({ autoUpdate: true });
+      useRemirrorContext({ autoUpdate: true });
       ref.current = useEmoji();
 
       return null;

@@ -7,22 +7,22 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-code-block/next
 [npm]: https://npmjs.com/package/@remirror/extension-code-block/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/extension-code-block@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-code-block@next
+[size]: https://bundlephobia.com/result?p=@remirror/extension-code-block
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-code-block
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-code-block/red?icon=npm
 
 ## Installation
 
 ```bash
-yarn add refractor @remirror/extension-code-block@next @remirror/pm@next # yarn
-pnpm add refractor @remirror/extension-code-block@next @remirror/pm@next # pnpm
-npm install refractor @remirror/extension-code-block@next @remirror/pm@next # npm
+yarn add refractor @remirror/extension-code-block @remirror/pm # yarn
+pnpm add refractor @remirror/extension-code-block @remirror/pm # pnpm
+npm install refractor @remirror/extension-code-block @remirror/pm # npm
 ```
 
-This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/code-block`.
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.
 
-Refractor is a peer dependency and is needed when adding extra language support.
+Refractor is a peer dependency and must be installed to consume the package properly.
 
 ## Usage
 
@@ -31,9 +31,9 @@ The following code sample will create a limited editor and run the available com
 ```ts
 import jsx from 'refractor/lang/jsx';
 import typescript from 'refractor/lang/typescript';
-import { ExtensionPriority, RemirrorManager } from 'remirror/core';
-import { CodeBlockExtension } from 'remirror/extension/code-block';
-import { CorePreset } from 'remirror/preset/core';
+import { ExtensionPriority, RemirrorManager } from 'remirror';
+import { CodeBlockExtension } from 'remirror/extensions';
+import { CorePreset } from 'remirror/extensions';
 
 // Create the codeBlock extension
 const codeBlockExtension = new CodeBlockExtension({ supportedLanguages: [typescript, jsx] });
@@ -56,3 +56,9 @@ manager.store.commands.createCodeBlock({ language: 'markdown' });
 // Also supports chaining
 manager.store.chain.updateCodeBlock({ language: 'js' }).formatCodeBlock().run();
 ```
+
+### Formatter
+
+If you would like to format code, you can import from the `@remirror/extension-code-block/formatter` endpoint.
+
+The formatter requires `prettier@2` to be installed as a peer dependency.

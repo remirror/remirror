@@ -1,8 +1,8 @@
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
+import { BoldExtension, createCoreManager } from 'remirror/extensions';
 
-import { fromHtml, toHtml } from '@remirror/core';
-import { BoldExtension, createCoreManager } from '@remirror/testing';
+import { htmlToProsemirrorNode, prosemirrorNodeToHtml } from '@remirror/core';
 
 import { HeadingExtension, HeadingOptions } from '../heading-extension';
 
@@ -17,16 +17,16 @@ describe('schema', () => {
   });
 
   it('defaults to level 1', () => {
-    expect(toHtml({ node: h1('Heading'), schema })).toBe('<h1>Heading</h1>');
+    expect(prosemirrorNodeToHtml(h1('Heading'))).toBe('<h1>Heading</h1>');
   });
 
   it('changes level based on attributes', () => {
-    expect(toHtml({ node: h2('Heading'), schema })).toBe('<h2>Heading</h2>');
-    expect(toHtml({ node: h3('Heading'), schema })).toBe('<h3>Heading</h3>');
+    expect(prosemirrorNodeToHtml(h2('Heading'))).toBe('<h2>Heading</h2>');
+    expect(prosemirrorNodeToHtml(h3('Heading'))).toBe('<h3>Heading</h3>');
   });
 
   it('can parse content', () => {
-    const node = fromHtml({ content: '<h2>Hello</h2>', schema });
+    const node = htmlToProsemirrorNode({ content: '<h2>Hello</h2>', schema });
     const expected = doc(h2('Hello'));
 
     expect(node).toEqualProsemirrorNode(expected);

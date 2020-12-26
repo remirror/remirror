@@ -3,14 +3,26 @@ import {
   chainCommands,
   CommandFunction,
   convertCommand,
-  extensionDecorator,
+  extension,
   ExtensionPriority,
   ExtensionTag,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
+  NodeSpecOverride,
 } from '@remirror/core';
 import { exitCode } from '@remirror/pm/commands';
+
+export interface HardBreakOptions {
+  /**
+   * The a collection of nodes where the hard break is not available.
+   */
+  excludedNodes?: string[];
+
+  /**
+   *
+   */
+}
 
 /**
  * An extension which provides the functionality for inserting a `hardBreak`
@@ -23,7 +35,7 @@ import { exitCode } from '@remirror/pm/commands';
  * doc, you should add the `TrailingNodeExtension` which automatically appends a
  * paragraph node to the last node..
  */
-@extensionDecorator({
+@extension({
   defaultPriority: ExtensionPriority.Low,
 })
 export class HardBreakExtension extends NodeExtension {
@@ -31,13 +43,16 @@ export class HardBreakExtension extends NodeExtension {
     return 'hardBreak' as const;
   }
 
-  tags = [ExtensionTag.InlineNode];
+  createTags() {
+    return [ExtensionTag.InlineNode];
+  }
 
-  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
     return {
-      attrs: extra.defaults(),
       inline: true,
       selectable: false,
+      ...override,
+      attrs: extra.defaults(),
       parseDOM: [{ tag: 'br', getAttrs: extra.parse }],
       toDOM: (node) => ['br', extra.dom(node)],
     };

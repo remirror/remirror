@@ -7,17 +7,17 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/pm/next
 [npm]: https://npmjs.com/package/@remirror/pm/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/pm@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/pm@next
+[size]: https://bundlephobia.com/result?p=@remirror/pm
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/pm
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/pm/red?icon=npm
 
 ## Installation
 
 ```bash
-yarn add @remirror/pm@next # yarn
-pnpm add @remirror/pm@next # pnpm
-npm install @remirror/pm@next # npm
+yarn add @remirror/pm # yarn
+pnpm add @remirror/pm # pnpm
+npm install @remirror/pm # npm
 ```
 
 ## Usage

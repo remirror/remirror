@@ -1,6 +1,7 @@
 import type { Shape } from '@remirror/core-types';
 
 import {
+  assert,
   capitalize,
   clone,
   deepMerge,
@@ -57,10 +58,10 @@ describe('findMatches', () => {
     const matches = findMatches(str, regex);
 
     expect(matches).toHaveLength(2);
-    expect(matches[0][1]).toBe('@12');
-    expect(matches[0].index).toBe(0);
-    expect(matches[1][1]).toBe('@34');
-    expect(matches[1].index).toBe(4);
+    expect(matches[0]?.[1]).toBe('@12');
+    expect(matches[0]?.index).toBe(0);
+    expect(matches[1]?.[1]).toBe('@34');
+    expect(matches[1]?.index).toBe(4);
   });
 
   it('does not crash when no `g` flag added', () => {
@@ -80,7 +81,17 @@ describe('findMatches', () => {
   });
 });
 
-test('flatterArray', () => {
+test('assert', () => {
+  let nothing: undefined;
+
+  expect(() => assert(1)).not.toThrow();
+  expect(() => assert(false)).toThrow();
+  expect(() => assert(0)).toThrow();
+  expect(() => assert(nothing)).toThrow();
+  expect(() => assert(null)).toThrow();
+});
+
+test('flattenArray', () => {
   const array = [[1, [2, [[3]]]], 4, [5, [[[6]]]]];
   expect(flattenArray(array)).toEqual([1, 2, 3, 4, 5, 6]);
 });
@@ -338,24 +349,6 @@ test('sort', () => {
   ]);
 });
 
-test('get', () => {
-  const obj = { a: 'a', b: 'b', nested: [{ awesome: true }] };
-
-  expect(get('', obj)).toBe(obj);
-  expect(get('a', 1)).toBeUndefined();
-  expect(get('a', obj)).toBe('a');
-  expect(get('nested.0.awesome', obj)).toBe(true);
-  expect(get('nested.0.fake', obj)).toBeUndefined();
-
-  expect(get([], obj)).toBe(obj);
-  expect(get(['a'], 1)).toBeUndefined();
-  expect(get(['a'], obj)).toBe('a');
-  expect(get(['nested', 0, 'awesome'], obj)).toBe(true);
-  expect(get(['nested', 0, 'fake'], obj)).toBeUndefined();
-
-  expect(get(['nested', 0, 'fake'], obj, 'fallback')).toBe('fallback');
-});
-
 test('unset', () => {
   const obj = { a: 'a', b: 'b', nested: [{ awesome: true }] };
 
@@ -408,7 +401,6 @@ test('uniqueBy', () => {
   const expected = [foo, bar];
 
   expect(uniqueBy(original, 'key')).toEqual(expected);
-  expect(uniqueBy(original, ['key'])).toEqual(expected);
   expect(uniqueBy(original, (item) => item.key)).toEqual(expected);
 
   expect(uniqueBy(original, (item) => item.key, true)).toEqual([bar, baz]);

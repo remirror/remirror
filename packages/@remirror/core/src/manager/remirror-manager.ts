@@ -24,45 +24,43 @@ import type {
   EditorView,
   MarkExtensionSpec,
   NodeExtensionSpec,
+  PrimitiveSelection,
   ProsemirrorNode,
+  RemirrorContentType,
   Replace,
+  Simplify,
   Transaction,
 } from '@remirror/core-types';
-import type { InvalidContentHandler, StringHandlerParameter } from '@remirror/core-utils';
-import {
-  createDocumentNode,
-  CreateDocumentNodeParameter,
-  getTextSelection,
+import type {
+  CustomDocumentParameter,
+  InvalidContentHandler,
+  NamedStringHandlers,
+  StringHandler,
+  StringHandlerParameter,
 } from '@remirror/core-utils';
+import { createDocumentNode, getTextSelection } from '@remirror/core-utils';
 import { EditorState } from '@remirror/pm/state';
 
-import { BuiltinPreset, CombinedTags } from '../builtins';
+import { BuiltinPreset, builtinPreset, CombinedTags, CommandsExtension } from '../builtins';
 import type {
   AnyExtension,
   AnyExtensionConstructor,
   AnyManagerStore,
+  GetExtensions,
   GetMarkNameUnion,
+  GetNameUnion,
   GetNodeNameUnion,
+  GetPlainNameUnion,
+  GetSchema,
   ManagerStoreKeys,
-  SchemaFromExtensionUnion,
 } from '../extension';
 import type { BaseFramework, FrameworkOutput } from '../framework';
-import type {
-  AnyCombinedUnion,
-  AnyPreset,
-  AnyPresetConstructor,
-  InferCombinedExtensions,
-  InferCombinedPresets,
-  SchemaFromCombined,
-} from '../preset';
-import { privacySymbol } from '../privacy';
-import type {
-  GetConstructor,
-  GetExtensions,
-  GetNameUnion,
-  StateUpdateLifecycleParameter,
-} from '../types';
-import { extractLifecycleMethods, transformCombinedUnion } from './remirror-manager-helpers';
+import type { StateUpdateLifecycleParameter } from '../types';
+import {
+  extractLifecycleMethods,
+  ManagerLifecycleHandlers,
+  transformExtensions,
+} from './remirror-manager-helpers';
 
 /**
  * The `Manager` has multiple hook phases which are able to hook into the
@@ -92,7 +90,7 @@ import { extractLifecycleMethods, transformCombinedUnion } from './remirror-mana
  * instance.
  *
  * ```ts
- * const manager = Manager.create([
+ * const manager = Manager.create(() => [
  *   new DocExtension(),
  *   new TextExtension(),
  *   new ParagraphExtension(),
@@ -110,39 +108,20 @@ import { extractLifecycleMethods, transformCombinedUnion } from './remirror-mana
  * manager.store.commands.insertText('Hello world');.
  * ```
  *
- * - `onStateUpdate` - This is the method called every time the ProseMirror
+ * - [[`onStateUpdate`]] - This is the method called every time the ProseMirror
  *   state changes. Both the extensions and the `Framework` listen to this event
  *   and can provide updates in response.
  */
-export class RemirrorManager<Combined extends AnyCombinedUnion> {
+export class RemirrorManager<ExtensionUnion extends AnyExtension> {
   /**
-   * The main static method for creating a manager.
+   * Create the manager for your `Remirror` editor.
    */
-  static create<Combined extends AnyCombinedUnion>(
-    combined: Combined[] | (() => Combined[]),
+  static create<ExtensionUnion extends AnyExtension>(
+    extensions: ExtensionUnion[] | ExtensionTemplate<ExtensionUnion>,
     settings: Remirror.ManagerSettings = {},
-  ): RemirrorManager<Combined | BuiltinPreset> {
-    return new RemirrorManager<Combined | BuiltinPreset>(
-      [...getLazyArray(combined), new BuiltinPreset(settings.builtin)],
-      {
-        ...settings,
-        privacy: privacySymbol,
-      },
-    );
-  }
-
-  /**
-   * A static method to create the editor manager from an object.
-   */
-  static fromObject<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>({
-    extensions,
-    presets,
-    settings = {},
-  }: RemirrorManagerParameter<ExtensionUnion, PresetUnion>): RemirrorManager<
-    ExtensionUnion | PresetUnion | BuiltinPreset
-  > {
-    return RemirrorManager.create<ExtensionUnion | PresetUnion>(
-      [...extensions, ...presets],
+  ): RemirrorManager<ExtensionUnion | BuiltinPreset> {
+    return new RemirrorManager<ExtensionUnion | BuiltinPreset>(
+      [...getLazyArray(extensions), ...builtinPreset(settings.builtin)],
       settings,
     );
   }
@@ -153,16 +132,26 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    */
   #extensionStore: Remirror.ExtensionStore;
 
-  #extensions: ReadonlyArray<this['~E']>;
-  #extensionMap: WeakMap<AnyExtensionConstructor, this['~E']>;
-
-  #presets: ReadonlyArray<this['~P']>;
-  #presetMap: WeakMap<GetConstructor<this['~P']>, this['~P']>;
+  /**
+   * The named string handlers
+   */
+  #stringHandlers: NamedStringHandlers = object();
 
   /**
    * The extension manager store.
    */
-  #store: Remirror.ManagerStore<Combined> = object();
+  #store: Remirror.ManagerStore<this['~E']> = object();
+
+  /**
+   * All the extensions being used within this editor.
+   */
+  #extensions: ReadonlyArray<this['~E']>;
+
+  /**
+   * The map of extension constructor to their extension counterparts. This is
+   * what makes the `getExtension` method possible.
+   */
+  #extensionMap: WeakMap<AnyExtensionConstructor, this['~E']>;
 
   /**
    * The stage the manager is currently running.
@@ -175,11 +164,6 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   #settings: Remirror.ManagerSettings;
 
   /**
-   * The original combined array passed into the editor..
-   */
-  #combined: readonly Combined[];
-
-  /**
    * When true this identifies this as the first state update since the view was
    * added to the editor.
    */
@@ -188,19 +172,17 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   /**
    * Store the handlers that will be run when for each event method.
    */
-  #handlers: {
-    create: Array<() => Dispose | void>;
-    view: Array<(view: EditorView) => Dispose | void>;
-    update: Array<(param: StateUpdateLifecycleParameter) => void>;
-    destroy: Array<() => void>;
-    disposers: Array<() => void>;
-  } = {
+  #handlers: ManagerLifecycleHandlers = {
     create: [],
     view: [],
     update: [],
     destroy: [],
-    disposers: [],
   };
+
+  /**
+   * The disposers for the editor.
+   */
+  #disposers: Array<() => void> = [];
 
   /**
    * The event listener which allows consumers to subscribe to the different
@@ -211,7 +193,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   /**
    * The active framework for this manager if it exists.
    */
-  #framework?: BaseFramework<Combined>;
+  #framework?: BaseFramework<ExtensionUnion>;
 
   /**
    * A method for disposing the state update event listeners on the active
@@ -246,51 +228,38 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   /**
    * Retrieve the framework output.
    *
-   * This will throw an error if used before a framework has been attached to
+   * This be undefined if the manager hasn't been provided to a framework yet
    * the manager.
    *
-   * With synchronous frameworks this means that it should only be used after
-   * the manager has been applied to the editor creation function.
+   * With synchronous frameworks this means that it should only be accessed
+   * after the manager has been applied to the editor creation function.
    *
-   * For frameworks like react, the following example will throw an error since
-   * the framework hasn't been attached yet by `RemirrorProvider`
+   * For frameworks like React it is only available when the manager is provided
+   * to the `Remirror` component and after the very first render. This means it
+   * is available within the `onRef` callback.
    *
    * ```tsx
-   * import React from 'react';
-   * import { useManager } from 'remirror/react';
+   * import React, { useEffect } from 'react';
+   * import { useRemirror, Remirror } from 'remirror/react';
    *
    * const Editor = () => {
-   *   const manager = useManager(() => [], {});
-   *   log(manager.output); // ❌ Throws error
+   *   const { manager } = useRemirror();
    *
    *   const callback = () => {
    *     return manager.output; // ✅ This is fine.
    *   }
    *
-   *   return <RemirrorProvider manager={manager} />
-   * }
-   * ```
+   *   useEffect(() => {
+   *     log(manager.output); // ✅  This is also fine.
+   *   }, []);
    *
-   * A safe way to use this is to check if the framework is attached first.
+   *   log(manager.output); // ❌ This will be undefined on the first render.
    *
-   * const Editor = () => {
-   *   const manager = useManager(() => [], {});
-   *
-   *   if (manager.frameworkAttached) {
-   *     log(manager.output); // ✅ This is fine.
-   *   }
-   *
-   *   return <RemirrorProvider manager={manager} />
+   *   return <Remirror manager={manager} />
    * }
    * ```
    */
-  get output(): FrameworkOutput<Combined> {
-    invariant(this.#framework, {
-      code: ErrorConstant.MANAGER_PHASE_ERROR,
-      message:
-        'Access to the manager context is only possible after the framework has been attached.',
-    });
-
+  get output(): FrameworkOutput<ExtensionUnion> | undefined {
     return this.#framework?.frameworkOutput;
   }
 
@@ -306,28 +275,23 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   /**
    * The extensions stored by this manager
    */
-  get extensions(): ReadonlyArray<GetExtensions<this>> {
+  get extensions(): ReadonlyArray<this['~E']> {
     return this.#extensions;
   }
 
   /**
-   * The preset stored by this manager
+   * The registered string handlers provided by the extensions.
+   *
+   * By default this includes `html` and `plainText`
    */
-  get presets(): ReadonlyArray<this['~P']> {
-    return this.#presets;
-  }
-
-  /**
-   * Get the original combined presets used to create this manager.
-   */
-  get combined(): readonly Combined[] {
-    return freeze(this.#combined);
+  get stringHandlers(): NamedStringHandlers {
+    return this.#stringHandlers;
   }
 
   /**
    * Get the extension manager store which is accessible at initialization.
    */
-  get store(): Remirror.ManagerStore<Combined> {
+  get store(): Remirror.ManagerStore<this['~E']> {
     return freeze(this.#store);
   }
 
@@ -348,21 +312,21 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * commands will end up being non-chainable and be overwritten by anything
    * that comes after.
    */
-  get tr(): Transaction<SchemaFromCombined<Combined>> {
-    return this.extensionStore.getTransaction();
+  get tr(): Transaction<GetSchema<this['~E']>> {
+    return this.getExtension(CommandsExtension).transaction;
   }
 
   /**
    * Returns the stored nodes
    */
-  get nodes(): Record<GetNodeNameUnion<InferCombinedExtensions<Combined>>, NodeExtensionSpec> {
+  get nodes(): Record<this['~N'], NodeExtensionSpec> {
     return this.#store.nodes;
   }
 
   /**
    * Returns the store marks.
    */
-  get marks(): Record<GetMarkNameUnion<InferCombinedExtensions<Combined>>, MarkExtensionSpec> {
+  get marks(): Record<this['~M'], MarkExtensionSpec> {
     return this.#store.marks;
   }
 
@@ -370,21 +334,21 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * A shorthand method for retrieving the schema for this extension manager
    * from the data.
    */
-  get schema(): SchemaFromExtensionUnion<InferCombinedExtensions<Combined>> {
+  get schema(): this['~Sch'] {
     return this.#store.schema;
   }
 
   /**
    * A shorthand getter for retrieving the tags from the extension manager.
    */
-  get extensionTags(): Readonly<CombinedTags<GetNameUnion<Combined>>> {
+  get extensionTags(): Readonly<CombinedTags<GetNameUnion<ExtensionUnion>>> {
     return this.#store.tags;
   }
 
   /**
    * A shorthand way of retrieving the editor view.
    */
-  get view(): EditorView<SchemaFromCombined<Combined>> {
+  get view(): EditorView<GetSchema<ExtensionUnion>> {
     return this.#store.view;
   }
 
@@ -399,40 +363,33 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * Creates the extension manager which is used to simplify the management of
    * the prosemirror editor.
    *
-   * This should not be called directly if you want to use prioritized
-   * extensions. Instead use `RemirrorManager.create([])`.
+   * This is set to private to encourage using `RemirrorManager.create`
+   * instead of the `new` keyword.
    */
   private constructor(
-    combined: readonly Combined[],
-    { privacy, ...settings }: SettingsWithPrivacy = {},
+    initialExtension: readonly ExtensionUnion[],
+    settings: Remirror.ManagerSettings = {},
   ) {
     this.#settings = settings;
-    this.#combined = combined;
 
-    invariant(privacy === privacySymbol, {
-      message: `The extension manager can only be invoked via one of it's static methods. e.g 'RemirrorManager.create([...extensions])'.`,
-      code: ErrorConstant.NEW_EDITOR_MANAGER,
-    });
-
-    const { extensions, extensionMap, presets, presetMap } = transformCombinedUnion<Combined>(
-      combined,
+    const { extensions, extensionMap } = transformExtensions<ExtensionUnion>(
+      initialExtension,
       settings,
     );
 
     this.#extensions = freeze(extensions);
     this.#extensionMap = extensionMap;
-    this.#presets = freeze(presets);
-    this.#presetMap = presetMap;
-
     this.#extensionStore = this.createExtensionStore();
+    this.#phase = ManagerPhase.Create;
 
     this.setupLifecycleHandlers();
 
-    this.#phase = ManagerPhase.Create;
-
     for (const handler of this.#handlers.create) {
       const disposer = handler();
-      this.#handlers.disposers.push(...(disposer ? [disposer] : []));
+
+      if (disposer) {
+        this.#disposers.push(disposer);
+      }
     }
   }
 
@@ -442,12 +399,6 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   private setupLifecycleHandlers(): void {
     const store = this.#extensionStore;
     const handlers = this.#handlers;
-
-    // Add the extension store to presets so they are able to handle it
-    // properly.
-    for (const preset of this.#presets) {
-      preset.setExtensionStore(store);
-    }
 
     const nodeNames: string[] = [];
     const markNames: string[] = [];
@@ -465,16 +416,27 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   }
 
   /**
-   * Set the store key.
+   * Set the string handler to use for a given name.
+   *
+   * This allows users to set the string handler
    */
-  private readonly setStoreKey = <Key extends ManagerStoreKeys>(
-    key: Key,
-    value: AnyManagerStore[Key],
-  ) => {
-    this.#store[key] = value;
-  };
+  private setStringHandler(name: keyof Remirror.StringHandlers, handler: StringHandler): void {
+    this.#stringHandlers[name] = handler;
+  }
 
-  private readonly getStoreKey = <Key extends ManagerStoreKeys>(key: Key): AnyManagerStore[Key] => {
+  /**
+   * Set the manager value for the provided key. This is used by extensions to
+   * add data to the manager.
+   */
+  private setStoreKey<Key extends ManagerStoreKeys>(key: Key, value: AnyManagerStore[Key]): void {
+    this.#store[key] = value;
+  }
+
+  /**
+   * Get the manager value for the provided key. This is used by extensions to
+   * get data from the manager.
+   */
+  private getStoreKey<Key extends ManagerStoreKeys>(key: Key): AnyManagerStore[Key] {
     const value = this.#store[key];
 
     invariant(!isNullOrUndefined(value), {
@@ -483,7 +445,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
     });
 
     return value;
-  };
+  }
 
   /**
    * A method to set values in the extension store which is made available to
@@ -492,10 +454,10 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * **NOTE** This method should only be used in the `onCreate` extension method
    * or it will throw an error.
    */
-  private readonly setExtensionStore = <Key extends keyof Remirror.ExtensionStore>(
+  private setExtensionStore<Key extends keyof Remirror.ExtensionStore>(
     key: Key,
     value: Remirror.ExtensionStore[Key],
-  ) => {
+  ) {
     invariant(this.#phase <= ManagerPhase.EditorView, {
       code: ErrorConstant.MANAGER_PHASE_ERROR,
       message:
@@ -503,7 +465,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
     });
 
     this.#extensionStore[key] = value;
-  };
+  }
 
   /**
    * Create the initial store.
@@ -525,7 +487,9 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
       updateState: { value: this.updateState, enumerable },
       isMounted: { value: () => this.mounted, enumerable },
       getExtension: { value: this.getExtension.bind(this), enumerable },
-      getPreset: { value: this.getPreset.bind(this), enumerable },
+      manager: { get: () => this, enumerable },
+      document: { get: () => this.#framework?.document, enumerable },
+      stringHandlers: { get: () => this.#stringHandlers, enumerable },
       currentState: {
         get: () => (currentState ??= this.getState()),
         set: (state: EditorState) => {
@@ -535,9 +499,10 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
       },
     });
 
-    store.getStoreKey = this.getStoreKey;
-    store.setStoreKey = this.setStoreKey;
-    store.setExtensionStore = this.setExtensionStore;
+    store.getStoreKey = this.getStoreKey.bind(this);
+    store.setStoreKey = this.setStoreKey.bind(this);
+    store.setExtensionStore = this.setExtensionStore.bind(this);
+    store.setStringHandler = this.setStringHandler.bind(this);
 
     return store;
   }
@@ -569,10 +534,6 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
       // Do nothing since a view has already been added.
       return this;
     }
-    // invariant(this.#phase < ManagerPhase.EditorView, {code:
-    //   ErrorConstant.MANAGER_PHASE_ERROR, message: 'A view has already been
-    //   added to this manager. A view should only be added once.',
-    // });
 
     this.#firstStateUpdate = true;
 
@@ -584,7 +545,10 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
 
     for (const handler of this.#handlers.view) {
       const disposer = handler(view);
-      this.#handlers.disposers.push(...(disposer ? [disposer] : []));
+
+      if (disposer) {
+        this.#disposers.push(disposer);
+      }
     }
 
     return this;
@@ -594,7 +558,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * Attach a framework to the manager.
    */
   attachFramework(
-    framework: BaseFramework<Combined>,
+    framework: BaseFramework<ExtensionUnion>,
     updateHandler: (parameter: StateUpdateLifecycleParameter) => void,
   ): void {
     if (this.#framework === framework) {
@@ -627,8 +591,8 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    * This can be used in conjunction with the create state to reset the current
    * value of the editor.
    */
-  createEmptyDoc(): ProsemirrorNode<SchemaFromCombined<Combined>> {
-    const doc = this.schema.nodes.doc.createAndFill();
+  createEmptyDoc(): ProsemirrorNode<GetSchema<ExtensionUnion>> {
+    const doc = this.schema.nodes.doc?.createAndFill();
 
     // Make sure the `doc` was created.
     invariant(doc, {
@@ -642,17 +606,13 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   /**
    * Create the editor state from content passed to this extension manager.
    */
-  createState(
-    parameter: Omit<CreateDocumentNodeParameter, 'schema' | 'attempts'>,
-  ): EditorState<SchemaFromCombined<Combined>> {
-    const {
-      content,
-      document,
-      stringHandler = this.settings.stringHandler,
-      onError = this.settings.onError,
-      selection,
-    } = parameter;
+  createState(parameter: CreateEditorStateParameter): EditorState<GetSchema<ExtensionUnion>> {
+    const { content, document, onError = this.settings.onError, selection } = parameter;
     const { schema, plugins } = this.store;
+
+    const handler = parameter.stringHandler ?? this.settings.stringHandler;
+    const stringHandler = isString(handler) ? this.stringHandlers[handler] : handler;
+
     const doc = createDocumentNode({
       content,
       document,
@@ -662,15 +622,12 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
       selection,
     });
 
-    const state = EditorState.create({ schema, doc, plugins });
-
-    if (!selection) {
-      return state;
-    }
-
-    const tr = state.tr.setSelection(getTextSelection(selection, state.doc));
-
-    return state.applyTransaction(tr).state;
+    return EditorState.create({
+      schema,
+      doc,
+      plugins,
+      selection: getTextSelection(selection ?? 'end', doc),
+    });
   }
 
   /**
@@ -683,7 +640,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   }
 
   /**
-   * Update the state of the view and trigger the `onStateUpdate` lifecyle
+   * Update the state of the view and trigger the `onStateUpdate` lifecycle
    * method as well.
    */
   private readonly updateState = (state: EditorState<this['~Sch']>) => {
@@ -741,47 +698,31 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   }
 
   /**
-   * Get the requested preset from the manager. This will throw if the preset
-   * doesn't exist within this manager.
-   */
-  getPreset<PresetConstructor extends AnyPresetConstructor>(
-    Constructor: PresetConstructor,
-  ): InstanceType<PresetConstructor> {
-    const preset = this.#presetMap.get(Constructor);
-
-    // Throws an error if attempting to retrieve a preset which is not present
-    // in the manager.
-    invariant(preset, {
-      code: ErrorConstant.INVALID_MANAGER_PRESET,
-      message: `'${Constructor.name}' doesn't exist within this manager. Make sure it is properly added before attempting to use it.`,
-    });
-
-    return preset as InstanceType<PresetConstructor>;
-  }
-
-  /**
    * Make a clone of the manager.
    *
    * @internalremarks What about the state stored in the extensions and presets,
    * does this need to be recreated as well?
    */
-  clone(): RemirrorManager<Combined> {
-    const currentCombined = this.#combined.map((e) => e.clone(e.options));
-    return RemirrorManager.create(currentCombined, this.#settings);
+  clone(): RemirrorManager<ExtensionUnion> {
+    const extensions = this.#extensions.map((e) => e.clone(e.options));
+    const manager = RemirrorManager.create(() => extensions, this.#settings);
+    this.#events.emit('clone', manager);
+
+    return manager;
   }
 
   /**
-   * Recreate the manager.
+   * Recreate the manager with new settings and extensions
    */
-  recreate<ExtraCombined extends AnyCombinedUnion>(
-    combined: ExtraCombined[] = [],
+  recreate<ExtraExtensionUnion extends AnyExtension>(
+    extensions: ExtraExtensionUnion[] = [],
     settings: Remirror.ManagerSettings = {},
-  ): RemirrorManager<Combined | ExtraCombined> {
-    const currentCombined = this.#combined.map((e) => e.clone(e.initialOptions as any));
+  ): RemirrorManager<ExtensionUnion | ExtraExtensionUnion> {
+    const currentExtensions = this.#extensions.map((e) => e.clone(e.initialOptions));
+    const manager = RemirrorManager.create(() => [...currentExtensions, ...extensions], settings);
+    this.#events.emit('recreate', manager);
 
-    return RemirrorManager.create([...currentCombined, ...combined], settings) as RemirrorManager<
-      Combined | ExtraCombined
-    >;
+    return manager;
   }
 
   /**
@@ -800,7 +741,7 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
     this.#disposeFramework?.();
 
     // Run all cleanup methods returned by the `onView` and `onCreate` methods.
-    for (const dispose of this.#handlers.disposers) {
+    for (const dispose of this.#disposers) {
       dispose();
     }
 
@@ -820,16 +761,14 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
    *
    * Returns true if all are included, returns false otherwise.
    */
-  includes(
-    mustIncludeList: Array<AnyExtensionConstructor | AnyPresetConstructor | string>,
-  ): boolean {
+  includes(mustIncludeList: Array<AnyExtensionConstructor | string>): boolean {
     // Searches can be made by either the name of the extension / preset or the
     // names of the constructor. We gather the values to check in separate
     // arrays
     const names: string[] = [];
-    const extensionsAndPresets: Array<AnyExtensionConstructor | AnyPresetConstructor> = [];
+    const extensionsAndPresets: AnyExtensionConstructor[] = [];
 
-    for (const item of this.combined) {
+    for (const item of this.#extensions) {
       names.push(item.name, item.constructorName);
       extensionsAndPresets.push(item.constructor);
     }
@@ -840,6 +779,23 @@ export class RemirrorManager<Combined extends AnyCombinedUnion> {
   }
 }
 
+/**
+ * A function that returns the extension to be used in the RemirrorManager. This
+ * is similar to a preset function except that it takes no arguments.
+ *
+ * ```ts
+ * import { RemirrorManager } from 'remirror';
+ * import { BoldExtension, ItalicExtension } from 'remirror/extensions';
+ *
+ * const template = () => [new BoldExtension(), new ItalicExtension()]
+ * const manager = RemirrorManager.create(template);
+ * ```
+ *
+ * If the template is mixed in with other manager creators it will add the
+ * relevant extension provided.
+ */
+export type ExtensionTemplate<ExtensionUnion extends AnyExtension> = () => ExtensionUnion[];
+
 export interface ManagerEvents {
   /**
    * Called when the state is updated.
@@ -847,30 +803,56 @@ export interface ManagerEvents {
   stateUpdate: (parameter: StateUpdateLifecycleParameter) => void;
 
   /**
+   * Called whenever the manager is cloned with the newly created manager
+   * instance.
+   *
+   * This is mainly used for testing so that the RemirrorTester can always
+   * reference the latest manager.
+   */
+  clone: (manager: AnyRemirrorManager) => void;
+
+  /**
+   * Called whenever the manager is recreated with the newly created manager
+   * instance.
+   *
+   * This is mainly used for testing so that the RemirrorTester can always
+   * reference the latest manager.
+   */
+  recreate: (manager: AnyRemirrorManager) => void;
+
+  /**
    * An event listener which is called whenever the manager is destroyed.
    */
   destroy: () => void;
 }
 
-export type AnyRemirrorManager = Replace<
-  RemirrorManager<AnyCombinedUnion>,
-  {
-    clone: () => AnyRemirrorManager;
-    store: Replace<Remirror.ManagerStore<any>, { chain: any }>;
-    output: Replace<FrameworkOutput<any>, { chain: any }>;
-    ['~E']: AnyExtension;
-    ['~P']: AnyPreset;
-    ['~Sch']: EditorSchema;
-    ['~N']: string;
-    ['~M']: string;
-    ['~EP']: AnyCombinedUnion;
-    view: EditorView;
-    addView: (view: EditorView) => void;
-    attachFramework: (
-      framework: BaseFramework<any>,
-      updateHandler: (parameter: StateUpdateLifecycleParameter) => void,
-    ) => void;
-  }
+export type AnyRemirrorManager = Simplify<
+  Replace<
+    RemirrorManager<AnyExtension>,
+    {
+      clone: () => AnyRemirrorManager;
+      store: Replace<Remirror.ManagerStore<any>, { chain: any }>;
+      output: Replace<FrameworkOutput<any>, { chain: any }> | undefined;
+      view: EditorView;
+      addView: (view: EditorView) => void;
+      attachFramework: (
+        framework: BaseFramework<AnyExtension>,
+        updateHandler: (parameter: StateUpdateLifecycleParameter) => void,
+      ) => void;
+      /** @internal */
+      ['~E']: AnyExtension;
+      /** @internal */
+      ['~Sch']: EditorSchema;
+      /** @internal */
+      ['~AN']: string;
+      /** @internal */
+      ['~N']: string;
+      /** @internal */
+      ['~M']: string;
+      /** @internal */
+      ['~P']: string;
+    }
+  >
 >;
 
 /**
@@ -884,10 +866,10 @@ export type AnyRemirrorManager = Replace<
  * include to pass the test. The identifier can either be the Extension / Preset
  * name e.g. `bold`, or the Extension / Preset constructor `BoldExtension`
  */
-export function isRemirrorManager<Combined extends AnyCombinedUnion = AnyCombinedUnion>(
+export function isRemirrorManager<ExtensionUnion extends AnyExtension = AnyExtension>(
   value: unknown,
-  mustIncludeList?: Array<AnyExtensionConstructor | AnyPresetConstructor | string>,
-): value is RemirrorManager<Combined> {
+  mustIncludeList?: Array<AnyExtensionConstructor | string>,
+): value is RemirrorManager<ExtensionUnion> {
   if (!isRemirrorType(value) || !isIdentifierOfType(value, RemirrorIdentifier.Manager)) {
     return false;
   }
@@ -900,84 +882,84 @@ export function isRemirrorManager<Combined extends AnyCombinedUnion = AnyCombine
   return (value as AnyRemirrorManager).includes(mustIncludeList);
 }
 
-export interface RemirrorManagerParameter<
-  ExtensionUnion extends AnyExtension,
-  PresetUnion extends AnyPreset
-> {
+export interface CreateEditorStateParameter
+  extends Partial<CustomDocumentParameter>,
+    Omit<StringHandlerParameter, 'stringHandler'> {
   /**
-   * The extensions so use when creating the editor.
+   * This is where content can be supplied to the Editor.
    *
    * @remarks
    *
-   * This is a required even when just an empty array to improve type inference.
+   * Content can either be
+   * - a string (which will be parsed by the stringHandler)
+   * - JSON object matching Prosemirror expected shape
+   * - A top level ProsemirrorNode
    */
-  extensions: ExtensionUnion[];
+  content: RemirrorContentType;
 
   /**
-   * The presets to include with the editor.
+   * The error handler which is called when the content is a JSON object and is
+   * invalid.
    *
-   * @remarks
-   *
-   * This is required even when just an empty array to improve type inference.
+   * When the content is a string you will be expected to manage any errors in
+   * the `stringHandler`. When the content is an EditorState or a
+   * ProsemirrorNode you will also be expected to handle the errors wherever you
+   * are creating these primitives.
    */
-  presets: PresetUnion[];
+  onError?: InvalidContentHandler;
 
   /**
-   * Settings to customise the behaviour of the editor.
+   * The selection that the user should have in the created node.
+   *
+   * @default 'end'
    */
-  settings?: Remirror.ManagerSettings;
+  selection?: PrimitiveSelection;
+
+  /**
+   * The string handler method, or the key of the builtin string handler.
+   */
+  stringHandler?: keyof Remirror.StringHandlers | StringHandler;
 }
 
-interface SettingsWithPrivacy extends Remirror.ManagerSettings {
-  /**
-   * A symbol value that prevents the RemirrorManager constructor from being
-   * called directly.
-   *
-   * @internal
-   */
-  privacy?: symbol;
-}
-
-export type GetCombined<Manager extends AnyRemirrorManager> = Manager['~EP'];
-
-interface RemirrorManagerConstructor extends Function, Remirror.RemirrorManagerConstructor {
-  fromObject<Combined extends AnyCombinedUnion>(
-    parameter: RemirrorManagerParameter<
-      InferCombinedExtensions<Combined>,
-      InferCombinedPresets<Combined>
-    >,
-  ): RemirrorManager<
-    InferCombinedExtensions<Combined> | InferCombinedPresets<Combined> | BuiltinPreset
-  >;
-  create<Combined extends AnyCombinedUnion>(
-    combined: Combined[],
+interface RemirrorManagerConstructor extends Function {
+  create<ExtensionUnion extends AnyExtension>(
+    extension: ExtensionUnion[],
     settings?: Remirror.ManagerSettings,
-  ): RemirrorManager<Combined | BuiltinPreset>;
+  ): RemirrorManager<ExtensionUnion | BuiltinPreset>;
 }
 
-export interface RemirrorManager<Combined extends AnyCombinedUnion> {
+export interface RemirrorManager<ExtensionUnion extends AnyExtension> {
   /**
-   * The constructor for the editor manager.
+   * The constructor for the [[`RemirrorManager`]].
    */
   constructor: RemirrorManagerConstructor;
 
   /**
-   * Pseudo property which is a small hack to store the type of the extension
-   * union.
+   * Pseudo type property which contains the recursively extracted `ExtensionUnion`
+   * stored by this manager.
+   *
+   * @internal
    */
-  ['~E']: InferCombinedExtensions<Combined>;
-
-  /**
-   * Pseudo property which is a small hack to store the type of the presets
-   * available from this manager..
-   */
-  ['~P']: InferCombinedPresets<Combined>;
+  ['~E']: GetExtensions<ExtensionUnion> extends never
+    ? AnyExtension
+    : GetExtensions<ExtensionUnion>;
 
   /**
    * Pseudo property which is a small hack to store the type of the schema
-   * available from this manager..
+   * available from this manager.
+   *
+   * @internal
    */
-  ['~Sch']: SchemaFromCombined<Combined>;
+  ['~Sch']: GetSchema<this['~E']>;
+
+  /**
+   * `AllNames`
+   *
+   * Get all the names of the extensions within this editor.
+   *
+   * @internal
+   */
+  ['~AN']: GetNameUnion<this['~E']> extends never ? string : GetNameUnion<this['~E']>;
 
   /**
    * `NodeNames`
@@ -987,7 +969,7 @@ export interface RemirrorManager<Combined extends AnyCombinedUnion> {
    *
    * @internal
    */
-  ['~N']: GetNodeNameUnion<this['~E']>;
+  ['~N']: GetNodeNameUnion<this['~E']> extends never ? string : GetNodeNameUnion<this['~E']>;
 
   /**
    * `MarkNames`
@@ -997,23 +979,25 @@ export interface RemirrorManager<Combined extends AnyCombinedUnion> {
    *
    * @internal
    */
-  ['~M']: GetMarkNameUnion<this['~E']>;
+  ['~M']: GetMarkNameUnion<this['~E']> extends never ? string : GetMarkNameUnion<this['~E']>;
 
-  ['~EP']: Combined;
+  /**
+   * `PlainNames`
+   *
+   * Type inference hack for all the plain extension names. This is the only way
+   * I know to store types on a class.
+   *
+   * @internal
+   */
+  ['~P']: GetPlainNameUnion<this['~E']> extends never ? string : GetPlainNameUnion<this['~E']>;
 }
 
 declare global {
   namespace Remirror {
     /**
-     * Extend this to add extra static methods to the
-     * `RemirrorManagerConstructor`.
-     */
-    interface RemirrorManagerConstructor {}
-
-    /**
      * Settings which can be passed into the manager.
      */
-    interface ManagerSettings extends StringHandlerParameter {
+    interface ManagerSettings {
       /**
        * Set the extension priority for extension's by their name.
        */
@@ -1035,9 +1019,9 @@ declare global {
        *
        * ```tsx
        * import React from 'react';
-       * import { RemirrorProvider, InvalidContentHandler } from 'remirror/core';
-       * import { RemirrorProvider, useManager } from 'remirror/react';
-       * import { WysiwygPreset } from 'remirror/preset/wysiwyg';
+       * import { Remirror, InvalidContentHandler } from 'remirror';
+       * import { Remirror, useManager } from 'remirror/react';
+       * import { WysiwygPreset } from 'remirror/extensions';
        *
        * const Editor = () => {
        *   const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {
@@ -1048,14 +1032,19 @@ declare global {
        *   const manager = useManager(() => [new WysiwygPreset()], { onError });
        *
        *   return (
-       *     <RemirrorProvider manager={manager}>
+       *     <Remirror manager={manager}>
        *       <div />
-       *     </RemirrorProvider>
+       *     </Remirror>
        *   );
        * };
        * ```
        */
       onError?: InvalidContentHandler;
+
+      /**
+       * The string handler method, or the key of the builtin string handler.
+       */
+      stringHandler?: keyof Remirror.StringHandlers | StringHandler;
     }
 
     /**
@@ -1066,11 +1055,11 @@ declare global {
      * Since this is a global namespace, you can extend the store if your
      * extension is modifying the shape of the `Manager.store` property.
      */
-    interface ManagerStore<Combined extends AnyCombinedUnion> {
+    interface ManagerStore<ExtensionUnion extends AnyExtension> {
       /**
        * The editor view stored by this instance.
        */
-      view: EditorView<SchemaFromCombined<Combined>>;
+      view: EditorView<GetSchema<ExtensionUnion>>;
     }
 
     /**
@@ -1078,12 +1067,14 @@ declare global {
      * extension manager. This can be added to by the requesting framework
      * layer.
      */
-    interface ManagerInitializationParameter<
-      ExtensionUnion extends AnyExtension,
-      PresetUnion extends AnyPreset
-    > {}
+    interface ManagerInitializationParameter<ExtensionUnion extends AnyExtension> {}
 
     interface ExtensionStore {
+      /**
+       * Make the remirror manager available to the editor.
+       */
+      manager: AnyRemirrorManager;
+
       /**
        * The list of all extensions included in the editor.
        */
@@ -1111,6 +1102,12 @@ declare global {
       previousState?: EditorState<EditorSchema>;
 
       /**
+       * The root document to be used for the editor. This is mainly used for
+       * SSR.
+       */
+      readonly document: Document;
+
+      /**
        * The settings passed to the manager.
        */
       readonly managerSettings: ManagerSettings;
@@ -1131,6 +1128,12 @@ declare global {
       plainNames: readonly string[];
 
       /**
+       * The named string handlers which are supported by the current editor
+       * implementation.
+       */
+      readonly stringHandlers: NamedStringHandlers;
+
+      /**
        * Return true when the editor view has been created.
        */
       readonly isMounted: () => boolean;
@@ -1142,8 +1145,11 @@ declare global {
 
       /**
        * Allow extensions to trigger an update in the prosemirror state. This
-       * should only be used in rarely as it is easy to get in trouble without
-       * the necessary thought.
+       * should not be used often. It's here in case you need it in an
+       * emergency.
+       *
+       * Internally it's used by the [[`PluginsExtension`]] to create a new
+       * state when the plugins are updated at runtime.
        */
       readonly updateState: (state: EditorState<EditorSchema>) => void;
 
@@ -1158,14 +1164,6 @@ declare global {
       ) => InstanceType<ExtensionConstructor>;
 
       /**
-       * Get the requested preset from the manager. This will throw if the preset
-       * doesn't exist within the current editor.
-       */
-      readonly getPreset: <PresetConstructor extends AnyPresetConstructor>(
-        Constructor: PresetConstructor,
-      ) => InstanceType<PresetConstructor>;
-
-      /**
        * Get the value of a key from the manager store.
        */
       getStoreKey: <Key extends ManagerStoreKeys>(key: Key) => AnyManagerStore[Key];
@@ -1176,12 +1174,30 @@ declare global {
       setStoreKey: <Key extends ManagerStoreKeys>(key: Key, value: AnyManagerStore[Key]) => void;
 
       /**
-       * Set a custom manager method parameter.
+       * Set a value on the extension store. One of the design decisions in this `1.0.0`
+       * version of `remirror` was to move away from passing elaborate arguments to each extension
+       * method and allow extensions to interact with a store shared by all
+       * extensions.
+       *
+       * The extension store object is immutable and will throw an error if updated directly.
+       *
+       * ```ts
+       * class MyExtension extends PlainExtension {
+       *   get name() {}
+       * }
+       * ```
        */
-      setExtensionStore: <Key extends keyof Remirror.ExtensionStore>(
+      setExtensionStore: <Key extends keyof ExtensionStore>(
         key: Key,
-        value: Remirror.ExtensionStore[Key],
+        value: ExtensionStore[Key],
       ) => void;
+
+      /**
+       * Set the string handler to use for a given name.
+       *
+       * This allows users to set the string handler
+       */
+      setStringHandler: (name: keyof StringHandlers, handler: StringHandler) => void;
     }
   }
 }

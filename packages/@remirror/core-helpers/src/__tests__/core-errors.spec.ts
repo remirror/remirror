@@ -1,7 +1,7 @@
 import { ErrorConstant } from '@remirror/core-constants';
 import { hideConsoleError } from '@remirror/testing';
 
-import { invariant, RemirrorError } from '../../dist/core-helpers.cjs';
+import { invariant, RemirrorError } from '../..';
 import { freeze } from '../freeze';
 
 const env = process.env.NODE_ENV;

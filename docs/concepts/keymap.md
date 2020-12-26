@@ -13,21 +13,19 @@ Parts of this document are for more advanced user cases and you probably won't e
 
 Keymaps allow users to use shortcuts to manipulate the text in their editor. `Cmd-b` is an example for setting the selected text to be **bold**.
 
-In a sufficiently large
-
 The following is an example where the enter key can be customised to ignore all lower priority `Enter` key bindings.
 
 The `next` method allows full control beyond the return value. It allows both calling all lower priority key bindings regardless of whether true or false has been called.
 
 ```tsx
-import { BaseExtensionOptions, Extension, extensionDecorator, KeyBindings } from '@remirror/core';
+import { BaseExtensionOptions, extensionDecorator, KeyBindings, PlainExtension } from 'remirror';
 
 interface CustomKeymapExtensionOptions {
   override?: boolean;
 }
 
 @extensionDecorator({ defaultOptions: { override: false } })
-export class CustomKeymapExtension extends Extension<CustomKeymapExtensionOptions> {
+export class CustomKeymapExtension extends PlainExtension<CustomKeymapExtensionOptions> {
   get name() {
     return 'customKeymap' as const;
   }

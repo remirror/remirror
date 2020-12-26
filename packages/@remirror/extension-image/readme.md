@@ -7,29 +7,29 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-image/next
 [npm]: https://npmjs.com/package/@remirror/extension-image/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/extension-image@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-image@next
+[size]: https://bundlephobia.com/result?p=@remirror/extension-image
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-image
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-image/red?icon=npm
 
 ## Installation
 
 ```bash
-yarn add @remirror/extension-image@next @remirror/pm@next # yarn
-pnpm add @remirror/extension-image@next @remirror/pm@next # pnpm
-npm install @remirror/extension-image@next @remirror/pm@next # npm
+yarn add @remirror/extension-image @remirror/pm # yarn
+pnpm add @remirror/extension-image @remirror/pm # pnpm
+npm install @remirror/extension-image @remirror/pm # npm
 ```
 
-This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/image`.
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.
 
 ## Usage
 
 The following code sample will create a limited editor and run the available commands from this extension.
 
 ```ts
-import { ExtensionPriority, RemirrorManager } from 'remirror/core';
-import { ImageExtension } from 'remirror/extension/image';
-import { CorePreset } from 'remirror/preset/core';
+import { ExtensionPriority, RemirrorManager } from 'remirror';
+import { ImageExtension } from 'remirror/extensions';
+import { CorePreset } from 'remirror/extensions';
 
 // Create the codeBlock extension
 const imageExtension = new ImageExtension();

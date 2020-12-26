@@ -17,26 +17,41 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-emoji.cjs.js",
-  "module": "dist/extension-emoji.esm.js",
-  "browser": {
-    "./dist/extension-emoji.cjs.js": "./dist/extension-emoji.browser.cjs.js",
-    "./dist/extension-emoji.esm.js": "./dist/extension-emoji.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-emoji.esm.js",
+      "require": "./dist/remirror-extension-emoji.cjs.js",
+      "browser": "./dist/remirror-extension-emoji.browser.esm.js",
+      "types": "./dist/remirror-extension-emoji.cjs.d.ts",
+      "default": "./dist/remirror-extension-emoji.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-emoji.cjs.d.ts",
+  "main": "dist/remirror-extension-emoji.cjs.js",
+  "module": "dist/remirror-extension-emoji.esm.js",
+  "browser": {
+    "./dist/remirror-extension-emoji.cjs.js": "./dist/remirror-extension-emoji.browser.cjs.js",
+    "./dist/remirror-extension-emoji.esm.js": "./dist/remirror-extension-emoji.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-emoji.cjs.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "apple"
   ],
   "scripts": {
     "build:custom": "node ./build.js"
   },
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
-    "@types/emoji-regex": "^8.0.0",
-    "@types/match-sorter": "^5.0.0",
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0",
+    "@types/emoji-regex": "^9.2.0",
     "emoji-regex": "^9.2.0",
+    "emojibase": "^5.0.0",
+    "emojibase-data": "^6.0.0",
+    "emojibase-regex": "^5.0.0",
     "escape-string-regexp": "^4.0.0",
-    "match-sorter": "^5.0.0"
+    "match-sorter": "^6.1.0"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",

@@ -1,24 +1,63 @@
 import {
   ApplySchemaAttributes,
-  bool,
   Cast,
   CommandFunction,
-  CreatePluginReturn,
-  extensionDecorator,
+  CreateExtensionPlugin,
+  delayedCommand,
+  DelayedValue,
+  EditorView,
+  ErrorConstant,
+  extension,
   ExtensionTag,
+  invariant,
+  isArray,
   isElementDomNode,
-  NodeAttributes,
   NodeExtension,
   NodeExtensionSpec,
+  NodeSpecOverride,
+  NodeWithAttributes,
   omitExtraAttributes,
+  ProsemirrorAttributes,
+  RemirrorError,
 } from '@remirror/core';
 import type { ResolvedPos } from '@remirror/pm/model';
+import { PasteRule } from '@remirror/pm/paste-rules';
+
+type DelayedImage = DelayedValue<ImageAttributes>;
+
+export interface ImageOptions {
+  createPlaceholder?: (view: EditorView, pos: number) => HTMLElement;
+  updatePlaceholder?: (
+    view: EditorView,
+    pos: number,
+    element: HTMLElement,
+    progress: number,
+  ) => void;
+  destroyPlaceholder?: (view: EditorView, element: HTMLElement) => void;
+
+  /**
+   * The upload handler for the image extension.
+   *
+   * It receives a list of dropped or pasted files and returns a promise for the
+   * attributes which should be used to insert the image into the editor.
+   *
+   * @param files - a list of files to upload.
+   * @param setProgress - the progress handler.
+   */
+  uploadHandler?: (files: FileWithProgress[]) => DelayedImage[];
+}
+
+interface FileWithProgress {
+  file: File;
+  progress: SetProgress;
+}
 
 /**
- * Values which can safely be ignored when styling nodes.
+ * Set the progress.
+ *
+ * @param progress - a value between `0` and `1`.
  */
-const EMPTY_CSS_VALUE = new Set(['', '0%', '0pt', '0px']);
-const CSS_ROTATE_PATTERN = /rotate\(([\d.]+)rad\)/i;
+type SetProgress = (progress: number) => void;
 
 /**
  * The image extension for placing images into your editor.
@@ -27,20 +66,31 @@ const CSS_ROTATE_PATTERN = /rotate\(([\d.]+)rad\)/i;
  * - Captions https://glitch.com/edit/#!/pet-figcaption?path=index.js%3A27%3A1 into a preset
  * - Resizable https://glitch.com/edit/#!/toothsome-shoemaker?path=index.js%3A1%3A0
  */
-@extensionDecorator({})
-export class ImageExtension extends NodeExtension {
+@extension<ImageOptions>({
+  defaultOptions: {
+    createPlaceholder,
+    updatePlaceholder: () => {},
+    destroyPlaceholder: () => {},
+    uploadHandler,
+  },
+})
+export class ImageExtension extends NodeExtension<ImageOptions> {
   get name() {
     return 'image' as const;
   }
 
-  readonly tags = [ExtensionTag.InlineNode];
+  createTags() {
+    return [ExtensionTag.InlineNode, ExtensionTag.Media];
+  }
 
-  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
+  createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
     return {
       inline: true,
+      draggable: true,
+      selectable: false,
+      ...override,
       attrs: {
         ...extra.defaults(),
-        align: { default: null },
         alt: { default: '' },
         crop: { default: null },
         height: { default: null },
@@ -48,8 +98,8 @@ export class ImageExtension extends NodeExtension {
         rotate: { default: null },
         src: { default: null },
         title: { default: '' },
+        fileName: { default: null },
       },
-      draggable: true,
       parseDOM: [
         {
           tag: 'img[src]',
@@ -65,71 +115,100 @@ export class ImageExtension extends NodeExtension {
   }
 
   createCommands() {
-    return {
-      insertImage: (attributes: NodeAttributes<ImageExtensionAttributes>): CommandFunction => ({
+    const commands = {
+      insertImage: (attributes: ImageAttributes, position?: number): CommandFunction => ({
         tr,
         dispatch,
       }) => {
         const { selection } = tr;
-        const position = hasCursor(selection) ? selection.$cursor.pos : selection.$to.pos;
+        position = position ?? selection.head;
         const node = this.type.create(attributes);
 
         dispatch?.(tr.insert(position, node));
 
         return true;
       },
-    };
-  }
 
-  createPlugin(): CreatePluginReturn {
-    return {
-      props: {
-        handleDOMEvents: {
-          drop(view, e) {
-            const event = Cast<DragEvent>(e);
-            const hasFiles = event.dataTransfer?.files?.length;
+      /**
+       * Insert an image once the provide promise resolves.
+       */
+      uploadImage: (value: DelayedValue<ImageAttributes>): CommandFunction => {
+        return delayedCommand({
+          promise: value,
+          immediate: (parameter) => {
+            const { empty, anchor } = parameter.tr.selection;
+            const { createPlaceholder, updatePlaceholder, destroyPlaceholder } = this.options;
 
-            if (!hasFiles || !event.dataTransfer) {
+            return this.store.commands.addPlaceholder.original(
+              value,
+              {
+                type: 'widget',
+                pos: anchor,
+                createElement: (view, pos) => {
+                  return createPlaceholder(view, pos);
+                },
+                onUpdate: (view, pos, element, data) => {
+                  updatePlaceholder(view, pos, element, data);
+                },
+                onDestroy: (view, element) => {
+                  destroyPlaceholder(view, element);
+                },
+              },
+              !empty,
+            )(parameter);
+          },
+          onDone: ({ value, ...rest }) => {
+            const range = this.store.helpers.findPlaceholder(value);
+
+            if (!range) {
               return false;
             }
 
-            const images = [...event.dataTransfer.files].filter((file) =>
-              /^image\//i.test(file.type),
-            );
+            this.store.chain.removePlaceholder(value).insertImage(value, range.from).run();
 
-            if (images.length === 0) {
-              return false;
-            }
-
-            const { schema } = view.state;
-            const coordinates = view.posAtCoords({ left: event.clientX, top: event.clientY });
-
-            if (!coordinates) {
-              return false;
-            }
-
-            event.preventDefault();
-
-            images.forEach((image) => {
-              const reader = new FileReader();
-
-              reader.addEventListener('load', (readerEvent) => {
-                const node = schema.nodes.image.create({
-                  src: readerEvent.target && Cast(readerEvent.target).result,
-                });
-                const transaction = view.state.tr.insert(coordinates.pos, node);
-
-                view.dispatch(transaction);
-              });
-              reader.readAsDataURL(image);
-            });
             return true;
           },
-        },
+          // Cleanup in case of an error.
+          onFail: (parameter) => this.store.commands.removePlaceholder.original(value)(parameter),
+        });
       },
     };
+
+    return commands;
+  }
+
+  private fileUploadHandler(files: File[]) {
+    const { commands, chain } = this.store;
+    const filesWithProgress: FileWithProgress[] = files.map((file, index) => ({
+      file,
+      progress: (progress) => {
+        commands.updatePlaceholder(uploads[index], progress);
+      },
+    }));
+
+    const uploads = this.options.uploadHandler(filesWithProgress);
+
+    for (const upload of uploads) {
+      chain.uploadImage(upload);
+    }
+
+    chain.run();
+
+    return true;
+  }
+
+  createPasteRules(): PasteRule[] {
+    return [
+      {
+        type: 'file',
+        regexp: /image/i,
+        fileHandler: ({ files }) => this.fileUploadHandler(files),
+      },
+    ];
   }
 }
+
+type ImageAttributes = ProsemirrorAttributes<ImageExtensionAttributes>;
 
 export interface ImageExtensionAttributes {
   align?: 'center' | 'end' | 'justify' | 'left' | 'match-parent' | 'right' | 'start';
@@ -145,16 +224,27 @@ export interface ImageExtensionAttributes {
   rotate?: string;
   src?: string;
   title?: string;
+  /** The file name used to create the image. */
+  fileName?: string;
 }
 
-export interface ImageExtensionProperties {}
-
-export interface ImageExtensionOptions {}
+/**
+ * Values which can safely be ignored when styling nodes.
+ */
+const EMPTY_CSS_VALUE = new Set(['', '0%', '0pt', '0px']);
+const CSS_ROTATE_PATTERN = /rotate\(([\d.]+)rad\)/i;
 
 /**
  * The set of valid image files.
  */
-const IMAGE_FILE_TYPES = new Set(['image/jpeg', 'image/gif', 'image/png', 'image/jpg']);
+const IMAGE_FILE_TYPES = new Set([
+  'image/jpeg',
+  'image/gif',
+  'image/png',
+  'image/jpg',
+  'image/svg',
+  'image/webp',
+]);
 
 /**
  * True when the provided file is an image file.
@@ -220,40 +310,6 @@ function getRotation(element: HTMLElement) {
 }
 
 /**
- * Get the crop value for this element. Only applies to google doc images.
- */
-function getCrop(element: HTMLElement) {
-  const { parentElement } = element;
-
-  if (!isElementDomNode(parentElement)) {
-    return null;
-  }
-
-  const { marginTop, marginLeft } = element.style;
-
-  const hasCropValue =
-    parentElement.style.display === 'inline-block' &&
-    parentElement.style.overflow === 'hidden' &&
-    parentElement.style.width &&
-    parentElement.style.height &&
-    marginLeft &&
-    !EMPTY_CSS_VALUE.has(marginLeft) &&
-    marginTop &&
-    !EMPTY_CSS_VALUE.has(marginTop);
-
-  if (!hasCropValue) {
-    return null;
-  }
-
-  return {
-    width: Number.parseInt(parentElement.style.width, 10) || 0,
-    height: Number.parseInt(parentElement.style.height, 10) || 0,
-    left: Number.parseInt(marginLeft, 10) || 0,
-    top: Number.parseInt(marginTop, 10) || 0,
-  };
-}
-
-/**
  * Retrieve attributes from the dom for the image extension.
  */
 function getImageAttributes({
@@ -264,31 +320,82 @@ function getImageAttributes({
   parse: ApplySchemaAttributes['parse'];
 }) {
   const { width, height } = getDimensions(element);
-  const align = getAlignment(element);
-  const crop = getCrop(element);
-  const rotate = getRotation(element);
 
   return {
     ...parse(element),
-    align,
     alt: element.getAttribute('alt') ?? null,
-    crop,
     height: Number.parseInt(height || '0', 10) || null,
-    rotate,
     src: element.getAttribute('src') ?? null,
     title: element.getAttribute('title') ?? null,
     width: Number.parseInt(width || '0', 10) || null,
+    fileName: element.getAttribute('data-file-name') ?? null,
   };
 }
 
+function setImageAttributes(node: NodeWithAttributes<ImageAttributes>) {}
+
 function hasCursor<T extends object>(argument: T): argument is T & { $cursor: ResolvedPos } {
-  return bool(Cast(argument).$cursor);
+  return !!Cast(argument).$cursor;
+}
+
+function createBlockImageSpec() {}
+
+function createInlineImageSpec() {}
+
+function createPlaceholder(view: EditorView, pos: number): HTMLElement {
+  const element = document.createElement('div');
+  element.classList.add(loaderClass);
+
+  return element;
+}
+
+/**
+ * The default handler converts the files into their `base64` representations
+ * and adds the attributes before inserting them into the editor.
+ */
+function uploadHandler(files: FileWithProgress[]): DelayedImage[] {
+  invariant(files.length > 0, {
+    code: ErrorConstant.EXTENSION,
+    message: 'The upload handler was applied for the image extension without any valid files',
+  });
+
+  let completed = 0;
+  const promises: Array<Promise<ImageAttributes>> = [];
+
+  for (const { file, progress } of files) {
+    promises.push(
+      new Promise<ImageAttributes>((resolve) => {
+        const reader = new FileReader();
+
+        reader.addEventListener(
+          'load',
+          (readerEvent) => {
+            completed += 1;
+            progress(1);
+            resolve({ src: readerEvent.target?.result as string, fileName: file.name });
+          },
+          { once: true },
+        );
+
+        reader.readAsDataURL(file);
+      }),
+    );
+  }
+
+  return promises;
 }
 
 declare global {
   namespace Remirror {
     interface AllExtensions {
       image: ImageExtension;
+    }
+
+    interface BaseExtension {
+      /**
+       * Awesome stuff
+       */
+      a: string;
     }
   }
 }

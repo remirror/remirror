@@ -24,7 +24,7 @@ export const prosemirrorMatchers = {
       };
     }
 
-    if (!bool(from)) {
+    if (!from) {
       return {
         message: () =>
           `Please specify the 'from' node which this command: ${command.name} should transform`,
@@ -33,7 +33,7 @@ export const prosemirrorMatchers = {
     }
 
     const expected = to ? to : from;
-    const shouldChange = bool(to);
+    const shouldChange = !!to;
     const { pass, taggedDoc: actual } = apply(from, command, to);
 
     if (pass) {
@@ -61,7 +61,7 @@ export const prosemirrorMatchers = {
       };
     }
 
-    if (!bool(from)) {
+    if (!from) {
       return {
         message: () =>
           `Please specify the 'from' node which this command: ${command.name} should transform`,
@@ -70,7 +70,7 @@ export const prosemirrorMatchers = {
     }
 
     const expected = to ? to : from;
-    const shouldChange = bool(to);
+    const shouldChange = !!to;
     const { pass, taggedDoc: actual } = apply(
       from,
       (state, dispatch, view) => command({ state, dispatch, view, tr: state.tr }),

@@ -1,9 +1,8 @@
 import {
   ApplySchemaAttributes,
-  bool,
   CommandFunction,
   ErrorConstant,
-  extensionDecorator,
+  extension,
   ExtensionTag,
   FromToParameter,
   GetMarkRange,
@@ -17,13 +16,12 @@ import {
   isPlainObject,
   isString,
   LEAF_NODE_REPLACING_CHARACTER,
-  MarkAttributes,
   MarkExtension,
   MarkExtensionSpec,
-  markPasteRule,
+  MarkSpecOverride,
+  omitExtraAttributes,
   pick,
   ProsemirrorAttributes,
-  ProsemirrorPlugin,
   RangeParameter,
   removeMark,
   replaceText,
@@ -31,6 +29,7 @@ import {
   Static,
 } from '@remirror/core';
 import type { CreateEventHandlers } from '@remirror/extension-events';
+import { MarkPasteRule } from '@remirror/pm/paste-rules';
 import {
   createRegexFromSuggester,
   DEFAULT_SUGGESTER,
@@ -142,7 +141,7 @@ export interface MentionOptions
  *   suggested.
  * - Decorations for in-progress mentions
  */
-@extensionDecorator<MentionOptions>({
+@extension<MentionOptions>({
   defaultOptions: {
     mentionTag: 'a' as const,
     matchers: [],
@@ -168,21 +167,24 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
   /**
    * Tag this as a behavior influencing mark.
    */
-  readonly tags = [ExtensionTag.Behavior, ExtensionTag.ExcludeInputRules];
+  createTags() {
+    return [ExtensionTag.Behavior, ExtensionTag.ExcludeInputRules];
+  }
 
-  createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
+  createMarkSpec(extra: ApplySchemaAttributes, override: MarkSpecOverride): MarkExtensionSpec {
     const dataAttributeId = 'data-mention-id';
     const dataAttributeName = 'data-mention-name';
 
     return {
+      excludes: '_',
+      inclusive: false,
+      ...override,
       attrs: {
         ...extra.defaults(),
         id: {},
         label: {},
         name: {},
       },
-      excludes: '_',
-      inclusive: false,
       parseDOM: [
         {
           tag: `${this.options.mentionTag}[${dataAttributeId}]`,
@@ -199,14 +201,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
         },
       ],
       toDOM: (mark) => {
-        const {
-          label: _,
-          id,
-          name,
-          replacementType,
-          range,
-          ...attributes
-        } = mark.attrs as Required<NamedMentionExtensionAttributes>;
+        const { id, name } = omitExtraAttributes(mark.attrs, extra);
         const matcher = this.options.matchers.find((matcher) => matcher.name === name);
 
         const mentionClassName = matcher
@@ -217,7 +212,6 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
           this.options.mentionTag,
           {
             ...extra.dom(mark),
-            ...attributes,
             class: name ? `${mentionClassName} ${mentionClassName}-${name}` : mentionClassName,
             [dataAttributeId]: id,
             [dataAttributeName]: name,
@@ -398,7 +392,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
    *
    * It creates regex tests for each of the configured matchers.
    */
-  createPasteRules(): ProsemirrorPlugin[] {
+  createPasteRules(): MarkPasteRule[] {
     return this.options.matchers.map((matcher) => {
       const { startOfLine, char, supportedCharacters, name, matchOffset } = {
         ...DEFAULT_MATCHER,
@@ -420,15 +414,16 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
         'g',
       );
 
-      return markPasteRule({
+      return {
+        type: 'mark',
         regexp,
-        type: this.type,
+        markType: this.type,
         getAttributes: (string) => ({
-          id: getMatchString(string.slice(string[2].length, string.length)),
+          id: getMatchString(string.slice(string[2]?.length, string.length)),
           label: getMatchString(string),
           name,
         }),
-      });
+      };
     });
   }
 
@@ -594,7 +589,7 @@ interface KeepSelectionParameter {
  * The attrs that will be added to the node. ID and label are plucked and used
  * while attributes like href and role can be assigned as desired.
  */
-export type MentionExtensionAttributes = MarkAttributes<
+export type MentionExtensionAttributes = ProsemirrorAttributes<
   OptionalMentionExtensionParameter & {
     /**
      * A unique identifier for the suggesters node
@@ -608,7 +603,7 @@ export type MentionExtensionAttributes = MarkAttributes<
   }
 >;
 
-export type NamedMentionExtensionAttributes = MarkAttributes<
+export type NamedMentionExtensionAttributes = ProsemirrorAttributes<
   OptionalMentionExtensionParameter & {
     /**
      * A unique identifier for the suggesters node
@@ -719,15 +714,15 @@ const DEFAULT_MATCHER = {
 function isValidMentionAttributes(
   attributes: unknown,
 ): attributes is NamedMentionExtensionAttributes {
-  return bool(
+  return !!(
     attributes &&
-      isPlainObject(attributes) &&
-      attributes.id &&
-      isString(attributes.id) &&
-      attributes.label &&
-      isString(attributes.label) &&
-      attributes.name &&
-      isString(attributes.name),
+    isPlainObject(attributes) &&
+    attributes.id &&
+    isString(attributes.id) &&
+    attributes.label &&
+    isString(attributes.label) &&
+    attributes.name &&
+    isString(attributes.name)
   );
 }
 

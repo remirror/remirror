@@ -1,11 +1,11 @@
+import { cx } from '@linaria/core';
 import escapeStringRegexp from 'escape-string-regexp';
-import { cx } from 'linaria';
 
 import {
   CommandFunction,
-  CreatePluginReturn,
+  CreateExtensionPlugin,
   DispatchFunction,
-  extensionDecorator,
+  extension,
   findMatches,
   FromToParameter,
   getSelectedWord,
@@ -95,7 +95,7 @@ export type SearchDirection = 'next' | 'previous';
 /**
  * This extension add search functionality to your editor.
  */
-@extensionDecorator<SearchOptions>({
+@extension<SearchOptions>({
   defaultOptions: {
     autoSelectNext: true,
     searchClass: 'search',
@@ -116,10 +116,10 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
     return 'search' as const;
   }
 
-  #updating = false;
-  #searchTerm?: string;
-  #results: FromToParameter[] = [];
-  #activeIndex = 0;
+  private _updating = false;
+  private _searchTerm?: string;
+  private _results: FromToParameter[] = [];
+  private _activeIndex = 0;
 
   createCommands() {
     return {
@@ -133,12 +133,12 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
       /**
        * Find the next occurrence of the search term.
        */
-      findNext: (): CommandFunction => this.find(this.#searchTerm, 'next'),
+      findNext: (): CommandFunction => this.find(this._searchTerm, 'next'),
 
       /**
        * Find the previous occurrence of the search term.
        */
-      findPrevious: (): CommandFunction => this.find(this.#searchTerm, 'previous'),
+      findPrevious: (): CommandFunction => this.find(this._searchTerm, 'previous'),
 
       /**
        * Replace the provided
@@ -161,7 +161,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
   /**
    * This plugin is responsible for adding something decorations to the
    */
-  createPlugin(): CreatePluginReturn {
+  createPlugin(): CreateExtensionPlugin {
     return {
       state: {
         init() {
@@ -169,7 +169,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
         },
         apply: (tr, old) => {
           if (
-            this.#updating ||
+            this._updating ||
             this.options.searching ||
             (tr.docChanged && this.options.alwaysSearch)
           ) {
@@ -209,7 +209,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
 
     if (clearOnEscape) {
       bindings.Escape = () => {
-        if (!isString(this.#searchTerm)) {
+        if (!isString(this._searchTerm)) {
           return false;
         }
 
@@ -228,11 +228,11 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
       let searchTerm: string | undefined;
 
       if (isSelectionEmpty(state)) {
-        if (!this.#searchTerm) {
+        if (!this._searchTerm) {
           return false;
         }
 
-        searchTerm = this.#searchTerm;
+        searchTerm = this._searchTerm;
       }
 
       const { find } = this.store.commands;
@@ -243,15 +243,15 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
   }
 
   private findRegExp() {
-    return new RegExp(this.#searchTerm ?? '', !this.options.caseSensitive ? 'gui' : 'gu');
+    return new RegExp(this._searchTerm ?? '', !this.options.caseSensitive ? 'gui' : 'gu');
   }
 
   private getDecorations() {
-    return this.#results.map((deco, index) =>
+    return this._results.map((deco, index) =>
       Decoration.inline(deco.from, deco.to, {
         class: cx(
           this.options.searchClass,
-          index === this.#activeIndex && this.options.highlightedClass,
+          index === this._activeIndex && this.options.highlightedClass,
         ),
       }),
     );
@@ -263,11 +263,11 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
       pos: number;
     }
 
-    this.#results = [];
+    this._results = [];
     const mergedTextNodes: MergedTextNode[] = [];
     let index = 0;
 
-    if (!this.#searchTerm) {
+    if (!this._searchTerm) {
       return;
     }
 
@@ -296,7 +296,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
       const search = this.findRegExp();
 
       findMatches(text, search).forEach((match) => {
-        this.#results.push({
+        this._results.push({
           from: pos + match.index,
           to: pos + match.index + match[0].length,
         });
@@ -306,7 +306,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
 
   private replace(replacement: string, index?: number): CommandFunction {
     return ({ tr, dispatch }) => {
-      const result = this.#results[isNumber(index) ? index : this.#activeIndex];
+      const result = this._results[isNumber(index) ? index : this._activeIndex];
 
       if (!result) {
         return false;
@@ -329,15 +329,15 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
   private rebaseNextResult({ replacement, index, lastOffset = 0 }: RebaseNextResultParameter) {
     const nextIndex = index + 1;
 
-    if (!this.#results[nextIndex]) {
+    if (!this._results[nextIndex]) {
       return;
     }
 
-    const { from: currentFrom, to: currentTo } = this.#results[index];
+    const { from: currentFrom, to: currentTo } = this._results[index];
     const offset = currentTo - currentFrom - replacement.length + lastOffset;
-    const { from, to } = this.#results[nextIndex];
+    const { from, to } = this._results[nextIndex];
 
-    this.#results[nextIndex] = {
+    this._results[nextIndex] = {
       to: to - offset,
       from: from - offset,
     };
@@ -349,7 +349,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
     return ({ tr, dispatch }) => {
       let offset: number | undefined;
 
-      if (isEmptyArray(this.#results)) {
+      if (isEmptyArray(this._results)) {
         return false;
       }
 
@@ -357,7 +357,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
         return true;
       }
 
-      this.#results.forEach(({ from, to }, index) => {
+      this._results.forEach(({ from, to }, index) => {
         tr.insertText(replacement, from, to);
         offset = this.rebaseNextResult({ replacement, index, lastOffset: offset });
       });
@@ -365,7 +365,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
       dispatch(tr);
 
       const { find } = this.store.commands;
-      find(this.#searchTerm);
+      find(this._searchTerm);
 
       return true;
     };
@@ -383,17 +383,17 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
         actualSearch = tr.doc.textBetween(from, to);
       }
 
-      this.#searchTerm = this.options.disableRegex
+      this._searchTerm = this.options.disableRegex
         ? escapeStringRegexp(actualSearch)
         : actualSearch;
 
       if (!direction) {
-        this.#activeIndex = 0;
+        this._activeIndex = 0;
       } else {
-        this.#activeIndex = rotateHighlightedIndex({
+        this._activeIndex = rotateHighlightedIndex({
           direction,
-          previousIndex: this.#activeIndex,
-          resultsLength: this.#results.length,
+          previousIndex: this._activeIndex,
+          resultsLength: this._results.length,
         });
       }
 
@@ -403,8 +403,8 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
 
   private clear(): CommandFunction {
     return ({ tr, dispatch }) => {
-      this.#searchTerm = undefined;
-      this.#activeIndex = 0;
+      this._searchTerm = undefined;
+      this._activeIndex = 0;
 
       return this.updateView(tr, dispatch);
     };
@@ -414,13 +414,13 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
    * Dispatch an empty transaction to trigger an update of the decoration.
    */
   private updateView(tr: Transaction, dispatch?: DispatchFunction): boolean {
-    this.#updating = true;
+    this._updating = true;
 
     if (dispatch) {
       dispatch(tr);
     }
 
-    this.#updating = false;
+    this._updating = false;
 
     return true;
   }

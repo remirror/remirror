@@ -1,5 +1,5 @@
 /**
- * Styles extracted from: packages/@remirror/extension-gap-cursor/src/styles.ts
+ * Styles extracted from: packages/@remirror/theme/src/extension-gap-cursor.ts
  */
 .remirror-editor .ProseMirror-gapcursor {
   display: none;

@@ -3,8 +3,8 @@ import {
   entries,
   invariant,
   isArray,
-  isEmptyArray,
   isEmptyObject,
+  isNonEmptyArray,
   isNullOrUndefined,
   isString,
   object,
@@ -22,8 +22,8 @@ import type {
   OptionalMarkParameter,
   OptionalProsemirrorNodeParameter,
   PosParameter,
-  PredicateParameter,
-  ProsemirrorAttributes,
+  NodeTypeParameter,
+  AttributesParameter,
   ProsemirrorCommandFunction,
   ProsemirrorKeyBindings,
   ProsemirrorNode,
@@ -238,12 +238,11 @@ export function findParentNode(
 
   for (let depth = $pos.depth; depth > 0; depth--) {
     const node = $pos.node(depth);
+    const pos = depth > 0 ? $pos.before(depth) : 0;
+    const start = $pos.start(depth);
+    const end = pos + node.nodeSize;
 
-    if (predicate(node)) {
-      const pos = depth > 0 ? $pos.before(depth) : 0;
-      const start = $pos.start(depth);
-      const end = pos + node.nodeSize;
-
+    if (predicate(node, pos)) {
       return { pos, depth, node, start, end };
     }
   }
@@ -362,14 +361,6 @@ interface FindSelectedNodeOfTypeParameter<Schema extends EditorSchema = EditorSc
   extends NodeTypesParameter<Schema>,
     SelectionParameter<Schema> {}
 
-export interface FindSelectedNodeOfType<Schema extends EditorSchema = EditorSchema>
-  extends FindProsemirrorNodeResult<Schema> {
-  /**
-   * The depth of the returned node.
-   */
-  depth: number;
-}
-
 /**
  * Returns a node of a given `nodeType` if it is selected. `start` points to the
  * start position of the node, `pos` points directly before the node.
@@ -385,7 +376,7 @@ export interface FindSelectedNodeOfType<Schema extends EditorSchema = EditorSche
  */
 export function findSelectedNodeOfType<Schema extends EditorSchema = EditorSchema>(
   parameter: FindSelectedNodeOfTypeParameter<Schema>,
-): FindSelectedNodeOfType<Schema> | undefined {
+): FindProsemirrorNodeResult<Schema> | undefined {
   const { types, selection } = parameter;
 
   if (!isNodeSelection(selection) || !isNodeOfType({ types, node: selection.node })) {
@@ -431,9 +422,9 @@ interface StateSelectionPosParameter {
   selection: EditorState | Selection | ResolvedPos;
 }
 
-interface FindParentNodeParameter
-  extends StateSelectionPosParameter,
-    PredicateParameter<ProsemirrorNode> {}
+interface FindParentNodeParameter extends StateSelectionPosParameter {
+  predicate: (node: ProsemirrorNode, pos: number) => boolean;
+}
 
 /**
  * Returns the position of the node after the current position, selection or
@@ -536,19 +527,11 @@ export function isNodeActive(parameter: GetActiveAttrsParameter): boolean {
   return !!getActiveNode(parameter);
 }
 
-interface GetActiveAttrsParameter {
-  /**
-   * The attributes to check for.
-   */
-  attrs?: ProsemirrorAttributes;
-
+interface GetActiveAttrsParameter extends NodeTypeParameter, Partial<AttributesParameter> {
   /**
    * State or transaction parameter.
    */
   state: EditorState | Transaction;
-
-  /** */
-  type: NodeType | string;
 }
 
 /**
@@ -627,7 +610,7 @@ export function chainKeyBindingCommands<Schema extends EditorSchema = EditorSche
 ): KeyBindingCommandFunction<Schema> {
   return (parameters) => {
     // When no commands are passed just ignore and continue.
-    if (isEmptyArray(commands)) {
+    if (!isNonEmptyArray(commands)) {
       return false;
     }
 
@@ -645,7 +628,7 @@ export function chainKeyBindingCommands<Schema extends EditorSchema = EditorSche
       ...nextCommands: Array<KeyBindingCommandFunction<Schema>>
     ): (() => boolean) => () => {
       // If there are no commands then this can be ignored and continued.
-      if (isEmptyArray(nextCommands)) {
+      if (!isNonEmptyArray(nextCommands)) {
         return false;
       }
 
@@ -689,8 +672,8 @@ export function chainKeyBindingCommands<Schema extends EditorSchema = EditorSche
  * - It is used to create the [[`mergeKeyBindings`]] function helper.
  * - It is used to create the [[`mergeProsemirrorKeyBindings`]] function helper.
  *
- * @typeParam [Schema] - the schema that is being used to create this command.
- * @typeParam [Type] - the mapper type signature which is what the `mapper`
+ * @template [Schema] - the schema that is being used to create this command.
+ * @template [Type] - the mapper type signature which is what the `mapper`
  * param transforms the [[`KeyBindingCommandFunction`]]  into.
  *
  * @param extensionKeymaps - the list of extension keymaps similar to the

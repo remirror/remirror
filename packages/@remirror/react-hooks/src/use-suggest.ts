@@ -1,12 +1,15 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import type { Except } from 'type-fest';
 
 import {
   AnyExtension,
-  AnyPreset,
+  ApplyStateLifecycleParameter,
   BuiltinPreset,
+  isEmptyObject,
   omit,
+  PluginsExtension,
   RemirrorEventListener,
+  SuggestExtension,
 } from '@remirror/core';
 import { hasStateChanged } from '@remirror/extension-positioner';
 import type {
@@ -17,7 +20,8 @@ import type {
   Suggester,
   SuggestState,
 } from '@remirror/pm/suggest';
-import { usePreset, useRemirror } from '@remirror/react';
+import { ReplaceAroundStep } from '@remirror/pm/transform';
+import { useExtension, useRemirrorContext } from '@remirror/react';
 
 /**
  * This hook allows you to dynamically create a suggester which can respond to
@@ -40,14 +44,14 @@ import { usePreset, useRemirror } from '@remirror/react';
  *
  * The cursor has exited and entered (changed) at the same time.
  */
-export function useSuggester(props: UseSuggesterProps): UseSuggesterReturn {
-  const { helpers } = useRemirror<BuiltinPreset>();
+export function useSuggest(props: UseSuggesterProps): UseSuggestReturn {
+  const { helpers } = useRemirrorContext<BuiltinPreset>();
 
-  const [hookState, setHookState] = useState<UseSuggesterState>(() => ({
+  const [hookState, setHookState] = useState<UseSuggestState>(() => ({
     change: undefined,
     exit: undefined,
-    updatesSinceLastChange: 0,
-    updatesSinceLastExit: 0,
+    shouldResetChangeState: false,
+    shouldResetExitState: false,
     ...helpers.getSuggestMethods(),
   }));
 
@@ -55,16 +59,25 @@ export function useSuggester(props: UseSuggesterProps): UseSuggesterReturn {
   const onChange: SuggestChangeHandler = useCallback(
     (parameter) => {
       const { changeReason, exitReason, match, query, text, range } = parameter;
+      const stateUpdate: Partial<UseSuggestState> = {};
 
       // Keep track of changes
       if (changeReason) {
-        const change = { match, query, text, range, reason: changeReason };
-        setHookState((prevState) => ({ ...prevState, change, updatesSinceLastChange: 0 }));
+        stateUpdate.change = { match, query, text, range, reason: changeReason };
+        stateUpdate.shouldResetChangeState = false;
       }
 
       if (exitReason) {
-        const exit = { match, query, text, range, reason: exitReason };
-        setHookState((prevState) => ({ ...prevState, exit, updatesSinceLastExit: 0 }));
+        stateUpdate.exit = { match, query, text, range, reason: exitReason };
+        stateUpdate.shouldResetExitState = false;
+
+        if (!changeReason) {
+          stateUpdate.change = undefined;
+        }
+      }
+
+      if (!isEmptyObject(stateUpdate)) {
+        setHookState((prevState) => ({ ...prevState, ...stateUpdate }));
       }
     },
     [setHookState],
@@ -72,61 +85,95 @@ export function useSuggester(props: UseSuggesterProps): UseSuggesterReturn {
 
   // This change handler will be called on every editor state update. It keeps
   // the state for the suggester that has been added correct.
-  const onStateUpdate: RemirrorEventListener<AnyExtension | AnyPreset> = useCallback(
-    (parameter) => {
+  const onApplyState = useCallback(
+    (parameter: ApplyStateLifecycleParameter) => {
       const { tr, state, previousState } = parameter;
+      const [step] = tr.steps;
 
       if (!hasStateChanged({ tr, state, previousState }) || helpers.getSuggestState().removed) {
         return;
       }
 
-      // Group all updates into one object.
-      const stateUpdate: Partial<UseSuggesterState> = {};
-
-      if (hookState.updatesSinceLastChange > 0 && hookState.change) {
-        stateUpdate.change = undefined;
-      }
-
-      if (hookState.updatesSinceLastExit > 0 && hookState.exit) {
-        stateUpdate.exit = undefined;
-      }
-
-      if (hookState.updatesSinceLastChange === 0 && hookState.change) {
-        stateUpdate.updatesSinceLastChange = hookState.updatesSinceLastChange + 1;
-      }
-
-      if (hookState.updatesSinceLastExit === 0 && hookState.exit) {
-        stateUpdate.updatesSinceLastExit = hookState.updatesSinceLastExit + 1;
-      }
-
       // Call the state function to update the state.
-      setHookState((prevState) => ({ ...prevState, ...stateUpdate }));
+      setHookState((prevState) => {
+        // Group all updates into one object.
+        const stateUpdate: UseSuggestState = { ...prevState };
+
+        if (
+          prevState.shouldResetChangeState &&
+          prevState.change &&
+          !(step instanceof ReplaceAroundStep)
+        ) {
+          console.log('RESET CHANGE', prevState.shouldResetChangeState);
+          stateUpdate.change = undefined;
+        }
+
+        if (
+          prevState.shouldResetExitState &&
+          prevState.exit &&
+          !(step instanceof ReplaceAroundStep)
+        ) {
+          stateUpdate.exit = undefined;
+        }
+
+        if (!prevState.shouldResetChangeState && prevState.change) {
+          console.log('set RESET CHANGE to true');
+          stateUpdate.shouldResetChangeState = true;
+        }
+
+        if (!prevState.shouldResetExitState && prevState.exit) {
+          stateUpdate.shouldResetExitState = true;
+        }
+
+        return stateUpdate;
+      });
     },
-    [
-      helpers,
-      hookState.change,
-      hookState.exit,
-      hookState.updatesSinceLastChange,
-      hookState.updatesSinceLastExit,
-      setHookState,
-    ],
+    [helpers, setHookState],
   );
 
   // Attach the editor state handler to the instance of the remirror editor.
-  useRemirror(onStateUpdate);
+  useExtension(PluginsExtension, ({ addHandler }) => addHandler('applyState', onApplyState), [
+    onApplyState,
+  ]);
 
-  // Add the suggester to the editor via the BuiltinPreset.
-  usePreset(
-    BuiltinPreset,
-    useCallback(({ addCustomHandler }) => addCustomHandler('suggester', { ...props, onChange }), [
-      onChange,
-      props,
-    ]),
-    [(props, onChange)],
+  // Add the suggester to the editor via the `useExtension` hook.
+  useExtension(
+    SuggestExtension,
+    ({ addCustomHandler }) => addCustomHandler('suggester', { ...props, onChange }),
+    [onChange, props],
   );
 
-  return omit(hookState, ['updatesSinceLastExit', 'updatesSinceLastChange']);
+  return useMemo(() => {
+    // console.log(
+    //   'MEMOIZED VALUE',
+    //   `'${hookState.change?.query.full ?? ''}'`,
+    //   hookState.shouldResetChangeState,
+    // );
+    return {
+      addIgnored: hookState.addIgnored,
+      change: hookState.change,
+      exit: hookState.exit,
+      clearIgnored: hookState.clearIgnored,
+      ignoreNextExit: hookState.ignoreNextExit,
+      removeIgnored: hookState.removeIgnored,
+      setMarkRemoved: hookState.setMarkRemoved,
+    };
+  }, [
+    // hookState.shouldResetChangeState,
+    hookState.addIgnored,
+    hookState.change,
+    hookState.clearIgnored,
+    hookState.exit,
+    hookState.ignoreNextExit,
+    hookState.removeIgnored,
+    hookState.setMarkRemoved,
+  ]);
 }
+
+/**
+ * @deprecated - Renamed to useSuggest
+ */
+export const useSuggester = useSuggest;
 
 export interface UseSuggesterProps extends Except<Suggester, 'onChange'> {}
 
@@ -149,7 +196,7 @@ interface ChangeReasonParameter {
   reason: ChangeReason;
 }
 
-export interface UseSuggesterReturn extends SuggestStateMethods {
+export interface UseSuggestReturn extends SuggestStateMethods {
   change:
     | (Pick<SuggestChangeHandlerParameter, 'text' | 'query' | 'range' | 'match'> &
         ChangeReasonParameter)
@@ -160,16 +207,16 @@ export interface UseSuggesterReturn extends SuggestStateMethods {
     | undefined;
 }
 
-interface UseSuggesterState extends UseSuggesterReturn {
+interface UseSuggestState extends UseSuggestReturn {
   /**
    * Keep track of the updates since the last change to this suggester. If
    * greater than `1` then reset the `change` state.
    */
-  updatesSinceLastChange: number;
+  shouldResetChangeState: boolean;
 
   /**
    * Keep track of the updates since the last exit from this suggester. If
    * greater than `1` then reset the `exit` state.
    */
-  updatesSinceLastExit: number;
+  shouldResetExitState: boolean;
 }

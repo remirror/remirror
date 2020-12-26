@@ -7,8 +7,8 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/i18n/next
 [npm]: https://npmjs.com/package/@remirror/i18n/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/i18n@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/i18n@next
+[size]: https://bundlephobia.com/result?p=@remirror/i18n
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/i18n
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/i18n/red?icon=npm
 
@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/i18n@next
+yarn add @remirror/i18n
 
 # pnpm
-pnpm add @remirror/i18n@next
+pnpm add @remirror/i18n
 
 # npm
-npm install @remirror/i18n@next
+npm install @remirror/i18n
 ```
 
 ## Usage
@@ -32,7 +32,7 @@ The following code creates adds an `en` translation to your social editor.
 ```tsx
 import { en as enPlurals } from 'make-plural/plurals';
 import React from 'react';
-import { SocialEditor } from 'remirror/react/social';
+import { SocialEditor } from 'remirror/react';
 
 import { i18n } from '@remirror/i18n';
 import en from '@remirror/i18n/en/messages';

@@ -1,14 +1,8 @@
 import type { Except } from 'type-fest';
 
-import {
-  ExtensionPriority,
-  OnSetOptionsParameter,
-  Preset,
-  presetDecorator,
-  Static,
-} from '@remirror/core';
-import { AutoLinkExtension, AutoLinkOptions } from '@remirror/extension-auto-link';
+import type { GetStaticAndDynamic, Static } from '@remirror/core';
 import { EmojiExtension, EmojiOptions } from '@remirror/extension-emoji';
+import { LinkExtension, LinkOptions } from '@remirror/extension-link';
 import {
   MentionExtension,
   MentionExtensionMatcher,
@@ -16,9 +10,9 @@ import {
 } from '@remirror/extension-mention';
 
 export interface SocialOptions
-  extends AutoLinkOptions,
-    Except<EmojiOptions, 'onChange'>,
-    Partial<MentionOptions> {
+  extends Except<EmojiOptions, 'onChange'>,
+    Partial<MentionOptions>,
+    LinkOptions {
   onChangeEmoji?: EmojiOptions['onChange'];
 
   /**
@@ -32,77 +26,52 @@ export interface SocialOptions
   tagMatcherOptions?: Static<Except<MentionExtensionMatcher, 'name' | 'char'>>;
 }
 
-@presetDecorator<SocialOptions>({
-  defaultOptions: {
-    ...AutoLinkExtension.defaultOptions,
+export function socialPreset(options: GetStaticAndDynamic<SocialOptions> = {}): SocialPreset[] {
+  options = {
     ...MentionExtension.defaultOptions,
     ...EmojiExtension.defaultOptions,
     matchers: [],
     atMatcherOptions: {},
     tagMatcherOptions: {},
-  },
-  handlerKeys: ['onChange', 'onChangeEmoji', 'onUrlUpdate'],
-  staticKeys: ['matchers', 'mentionTag', 'urlRegex', 'atMatcherOptions', 'tagMatcherOptions'],
-})
-export class SocialPreset extends Preset<SocialOptions> {
-  get name() {
-    return 'social' as const;
-  }
 
-  protected onSetOptions(parameter: OnSetOptionsParameter<SocialOptions>): void {
-    const { pickChanged } = parameter;
+    ...options,
+  };
 
-    this.getExtension(MentionExtension).setOptions(
-      pickChanged(['suggestTag', 'appendText', 'disableDecorations']),
-    );
-    this.getExtension(EmojiExtension).setOptions(pickChanged(['defaultEmoji', 'maxResults']));
-    this.getExtension(AutoLinkExtension).setOptions(pickChanged(['defaultProtocol']));
-  }
+  const { defaultEmoji, maxResults, suggestionCharacter, autoLinkRegex } = options;
+  const emojiExtension = new EmojiExtension({
+    defaultEmoji,
+    maxResults,
+    suggestionCharacter,
+    extraAttributes: { role: { default: 'presentation' } },
+  });
 
-  createExtensions() {
-    const { defaultProtocol, urlRegex } = this.options;
-    const autoLinkExtension = new AutoLinkExtension({
-      defaultProtocol,
-      urlRegex,
-      priority: ExtensionPriority.Lowest,
-    });
-    autoLinkExtension.addHandler('onUrlUpdate', this.options.onUrlUpdate);
+  const {
+    matchers,
+    appendText,
+    mentionTag,
+    disableDecorations,
+    suggestTag,
+    atMatcherOptions,
+    tagMatcherOptions,
+  } = options;
+  const mentionExtension = new MentionExtension({
+    matchers: [
+      ...(matchers ?? []),
+      { name: 'at', char: '@', appendText: ' ', ...atMatcherOptions },
+      { name: 'tag', char: '#', appendText: ' ', ...tagMatcherOptions },
+    ],
+    appendText,
+    mentionTag,
+    disableDecorations,
+    suggestTag,
+    extraAttributes: {
+      href: { default: null },
+      role: 'presentation',
+    },
+  });
+  const linkExtension = new LinkExtension({ autoLink: true, autoLinkRegex });
 
-    const { defaultEmoji, maxResults, suggestionCharacter } = this.options;
-    const emojiExtension = new EmojiExtension({
-      defaultEmoji,
-      maxResults,
-      suggestionCharacter,
-      extraAttributes: { role: { default: 'presentation' } },
-    });
-    emojiExtension.addHandler('onChange', this.options.onChangeEmoji);
-
-    const {
-      matchers,
-      appendText,
-      mentionTag,
-      disableDecorations: noDecorations,
-      suggestTag,
-      atMatcherOptions,
-      tagMatcherOptions,
-    } = this.options;
-    const mentionExtension = new MentionExtension({
-      matchers: [
-        ...matchers,
-        { name: 'at', char: '@', appendText: ' ', ...atMatcherOptions },
-        { name: 'tag', char: '#', appendText: ' ', ...tagMatcherOptions },
-      ],
-      appendText,
-      mentionTag,
-      disableDecorations: noDecorations,
-      suggestTag,
-      extraAttributes: {
-        href: { default: null },
-        role: 'presentation',
-      },
-    });
-    mentionExtension.addHandler('onChange', this.options.onChange);
-
-    return [emojiExtension, mentionExtension, autoLinkExtension];
-  }
+  return [emojiExtension, mentionExtension, linkExtension];
 }
+
+export type SocialPreset = EmojiExtension | MentionExtension | LinkExtension;

@@ -10,11 +10,11 @@ export const environment = {
    * Verifies that the environment has both a window and window.document
    */
   get isBrowser(): boolean {
-    return bool(
+    return !!(
       typeof window !== 'undefined' &&
-        typeof window.document !== 'undefined' &&
-        window.navigator &&
-        window.navigator.userAgent,
+      typeof window.document !== 'undefined' &&
+      window.navigator &&
+      window.navigator.userAgent
     );
   },
 

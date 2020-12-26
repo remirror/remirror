@@ -3,13 +3,13 @@ import type {
   RemirrorIdentifier,
 } from '@remirror/core-constants';
 import type {
-  CommandFunction,
   CommandFunctionParameter,
   EditorSchema,
   EditorState,
   EditorView,
   ProsemirrorCommandFunction,
   ProsemirrorNode,
+  ResolvedPos,
   Selection,
 } from '@remirror/pm';
 import type { MarkSpec, NodeSpec } from '@remirror/pm/model';
@@ -33,8 +33,20 @@ export interface RemirrorJSON {
 }
 
 export interface StateJSON {
+  /**
+   * This allows for plugin state to be stored, although this is not currently
+   * used in remirror.
+   */
   [key: string]: unknown;
+
+  /**
+   * The main `ProseMirror` doc.
+   */
   doc: RemirrorJSON;
+
+  /**
+   * The current selection.
+   */
   selection: FromToParameter;
 }
 
@@ -48,8 +60,7 @@ export type GetAttributes = ProsemirrorAttributes | GetAttributesFunction;
 
 export interface GetAttributesParameter {
   /**
-   * A helper function for setting receiving a match array / string and setting
-   * the attributes for a node.
+   * A helper function for setting the attributes for a transformation .
    */
   getAttributes: GetAttributes;
 }
@@ -64,7 +75,7 @@ export interface GetAttributesParameter {
  * - JSON object matching Prosemirror expected shape
  * - A top level ProsemirrorNode
  *
- * @typeParam Schema - the underlying editor schema.
+ * @template Schema - the underlying editor schema.
  */
 export type RemirrorContentType<Schema extends EditorSchema = EditorSchema> =
   | string
@@ -72,7 +83,7 @@ export type RemirrorContentType<Schema extends EditorSchema = EditorSchema> =
   | ProsemirrorNode<Schema>
   | EditorState<Schema>;
 
-export interface NextParameter<Schema extends EditorSchema = EditorSchema>
+export interface KeyBindingParameter<Schema extends EditorSchema = EditorSchema>
   extends CommandFunctionParameter<Schema> {
   /**
    * A method to run the next (lower priority) command in the chain of
@@ -96,16 +107,15 @@ export interface NextParameter<Schema extends EditorSchema = EditorSchema>
 /**
  * The command function passed to any of the keybindings.
  */
-export type KeyBindingCommandFunction<Schema extends EditorSchema = EditorSchema> = CommandFunction<
-  Schema,
-  NextParameter<Schema>
->;
+export type KeyBindingCommandFunction<Schema extends EditorSchema = EditorSchema> = (
+  params: KeyBindingParameter<Schema>,
+) => boolean;
 
 /**
  * A map of keyboard bindings and their corresponding command functions (a.k.a
  * editing actions).
  *
- * @typeParam Schema - the underlying editor schema.
+ * @template Schema - the underlying editor schema.
  *
  * @remarks
  *
@@ -141,9 +151,10 @@ type DOMOutputSpecPos1 = DOMOutputSpecPosX | DOMCompatibleAttributes;
 type DOMOutputSpecPosX = string | 0 | [string, 0] | [string, DOMCompatibleAttributes, 0];
 
 /**
- * Defines the return type of the toDOM methods for both Nodes and marks
+ * Defines the return type of the toDOM methods for both nodes and marks
  *
  * @remarks
+ *
  * This differs from the default Prosemirror type definition which seemed didn't
  * work at the time of writing.
  *
@@ -199,6 +210,20 @@ export interface NodeExtensionSpec
   toDOM?: (node: NodeWithAttributes) => DOMOutputSpec;
 }
 
+export type NodeSpecOverride = Pick<
+  NodeSpec,
+  | 'content'
+  | 'marks'
+  | 'group'
+  | 'inline'
+  | 'atom'
+  | 'selectable'
+  | 'draggable'
+  | 'code'
+  | 'defining'
+  | 'isolating'
+>;
+
 /**
  * The schema spec definition for a mark extension
  */
@@ -210,6 +235,8 @@ export interface MarkExtensionSpec
    */
   toDOM?: (mark: MarkWithAttributes, inline: boolean) => DOMOutputSpec;
 }
+
+export type MarkSpecOverride = Pick<MarkSpec, 'inclusive' | 'excludes' | 'group' | 'spanning'>;
 
 /**
  * The method signature used to call the Prosemirror `nodeViews`
@@ -258,13 +285,15 @@ export interface AnchorHeadParameter {
  * - Can be a selection
  * - A range of `{ from: number; to: number }`
  * - A single position with a `number`
- * - `'start' | 'end'`
+ * - `'start' | 'end' | 'all'`
+ * - { anchor: number, head: number }
  */
 export type PrimitiveSelection =
   | Selection
   | FromToParameter
   | AnchorHeadParameter
   | number
+  | ResolvedPos
   | 'start'
   | 'end'
   | 'all';

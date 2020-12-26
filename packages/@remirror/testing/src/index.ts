@@ -4,8 +4,8 @@ import diff from 'jest-diff';
 import {
   AnyRemirrorManager,
   EditorState,
+  EditorView,
   Framework,
-  fromHtml,
   FromToParameter,
   RemirrorContentType,
 } from '@remirror/core';
@@ -46,11 +46,14 @@ export function hideConsoleError(hide: boolean): { spy: jest.SpyInstance } {
   return ref;
 }
 
+interface RafMockReturn extends ReturnType<typeof createMockRaf> {
+  cleanup: () => void;
+}
+
 /**
  * Mock the `requestAnimationFrame`.
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function rafMock() {
+export function rafMock(): RafMockReturn {
   const mockRaf = createMockRaf();
   const spy = jest.spyOn(window, 'requestAnimationFrame').mockImplementation(mockRaf.raf);
 
@@ -66,7 +69,7 @@ class TestFramework extends Framework<any, any, any> {
 
   updateState() {}
 
-  createView(state: EditorState, element?: HTMLElement) {
+  createView(state: EditorState, element?: HTMLElement): EditorView {
     return createEditorView(
       element,
       {
@@ -95,7 +98,7 @@ export function createFramework(manager: AnyRemirrorManager): TestFramework {
   ) {
     return manager.createState({
       content,
-      stringHandler: fromHtml,
+      stringHandler: 'html',
       selection,
     });
   }
@@ -108,22 +111,8 @@ export function createFramework(manager: AnyRemirrorManager): TestFramework {
 }
 
 export { diff };
-
 export { default as minDocument } from 'min-document';
-
 export type { FrameRequestCallback, MockRaf } from '@react-spring/mock-raf';
 
-export { BuiltinPreset } from '@remirror/core';
-export * from '@remirror/preset-core';
-export * from '@remirror/extension-doc';
-export * from '@remirror/extension-text';
-export * from '@remirror/extension-paragraph';
-export * from '@remirror/extension-bold';
-export * from '@remirror/extension-code-block';
-export * from '@remirror/extension-heading';
-export * from '@remirror/extension-blockquote';
-export * from '@remirror/extension-link';
-export * from '@remirror/extension-italic';
-export * from '@remirror/extension-underline';
 export * from './object-nodes';
 export * from './typecheck';

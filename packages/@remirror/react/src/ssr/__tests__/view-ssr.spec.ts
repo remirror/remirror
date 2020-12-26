@@ -2,9 +2,11 @@
  * @jest-environment node
  */
 
+import { createCoreManager } from 'remirror/extensions';
+
 import { EMPTY_PARAGRAPH_NODE } from '@remirror/core';
 import { EditorState } from '@remirror/pm/state';
-import { createCoreManager, createFramework, minDocument } from '@remirror/testing';
+import { createFramework, minDocument } from '@remirror/testing';
 
 import { createEditorView, EditorViewSSR } from '../ssr-prosemirror-view';
 

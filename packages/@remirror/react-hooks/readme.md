@@ -7,8 +7,8 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/react-hooks/next
 [npm]: https://npmjs.com/package/@remirror/react-hooks/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/react-hooks@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/react-hooks@next
+[size]: https://bundlephobia.com/result?p=@remirror/react-hooks
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/react-hooks
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/react-hooks/red?icon=npm
 
@@ -16,16 +16,16 @@
 
 ```bash
 # yarn
-yarn add @remirror/react-hooks@next @remirror/pm@next @remirror/react@next
+yarn add @remirror/react-hooks @remirror/pm @remirror/react
 
 # pnpm
-pnpm add @remirror/react-hooks@next @remirror/pm@next @remirror/react@next
+pnpm add @remirror/react-hooks @remirror/pm @remirror/react
 
 # npm
-npm install @remirror/react-hooks@next @remirror/pm@next @remirror/react@next
+npm install @remirror/react-hooks @remirror/pm @remirror/react
 ```
 
-This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/react/hooks`.
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/react`.
 
 ## Usage
 

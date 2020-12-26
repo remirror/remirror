@@ -1,0 +1,53 @@
+{
+  "name": "@remirror/cdk",
+  "version": "0.1.0",
+  "private": true,
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/backend/cdk",
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-cdk.esm.js",
+      "require": "./dist/remirror-cdk.cjs.js",
+      "browser": "./dist/remirror-cdk.esm.js",
+      "default": "./dist/remirror-cdk.esm.js"
+    },
+    "./bin": {
+      "import": "./bin/dist/remirror-cdk-bin.esm.js",
+      "require": "./bin/dist/remirror-cdk-bin.cjs.js",
+      "browser": "./bin/dist/remirror-cdk.esm.js",
+      "default": "./bin/dist/remirror-cdk-bin.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-cdk.cjs.js",
+  "module": "dist/remirror-cdk.esm.js",
+  "bin": {
+    "cdk": "cli.js"
+  },
+  "files": [
+    "dist",
+    "bin.js",
+    "bin"
+  ],
+  "scripts": {
+    "bootstrap": "cdk bootstrap",
+    "cdk": "cdk",
+    "deploy": "cdk deploy"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-sns": "1.83.0",
+    "@aws-cdk/aws-sns-subscriptions": "1.83.0",
+    "@aws-cdk/aws-sqs": "1.83.0",
+    "@aws-cdk/core": "1.83.0"
+  },
+  "devDependencies": {
+    "@aws-cdk/assert": "1.83.0",
+    "aws-cdk": "^1.83.0"
+  },
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts",
+      "bin.ts"
+    ]
+  }
+}

@@ -1,29 +1,14 @@
 import type { RefractorSyntax } from 'refractor/core';
-import type { LiteralUnion } from 'type-fest';
 
-import type { ProsemirrorAttributes } from '@remirror/core';
+import type { AcceptUndefined, ProsemirrorAttributes, Static, StringKey } from '@remirror/core';
+import { ExtensionCodeBlock } from '@remirror/theme';
+
+type A = Lowercase<StringKey<typeof ExtensionCodeBlock>>;
 
 /**
  * The default supported syntax themes.
  */
-export type SyntaxTheme =
-  | 'a11y-dark'
-  | 'atom-dark'
-  | 'base16-ateliersulphurpool.light'
-  | 'cb'
-  | 'darcula'
-  | 'dracula'
-  | 'duotone-dark'
-  | 'duotone-earth'
-  | 'duotone-forest'
-  | 'duotone-light'
-  | 'duotone-sea'
-  | 'duotone-space'
-  | 'ghcolors'
-  | 'hopscotch'
-  | 'pojoaque'
-  | 'vs'
-  | 'xonokai';
+export type SyntaxTheme = Lowercase<StringKey<typeof ExtensionCodeBlock>>;
 
 export interface CodeBlockOptions {
   /**
@@ -60,13 +45,6 @@ export interface CodeBlockOptions {
   supportedLanguages?: RefractorSyntax[];
 
   /**
-   * A keyboard shortcut to trigger formatting the current block.
-   *
-   * @default 'Alt-Shift-F' (Mac) | 'Shift-Ctrl-F' (PC)
-   */
-  keyboardShortcut?: string;
-
-  /**
    * The default language to use when none is provided.
    *
    * It is a property so it can change during the editor's life.
@@ -79,14 +57,15 @@ export interface CodeBlockOptions {
    * The theme to use for the codeBlocks.
    *
    * @remarks
+   *
    * Currently only one theme can be set per editor.
    *
    * Set this to false if you want to manage the syntax styles by yourself. For
    * tips on how this could be accomplished see {@link https://prismjs.com}
    *
-   * @default 'atomDark'
+   * @default 'atom-dark'
    */
-  syntaxTheme?: LiteralUnion<SyntaxTheme, string>;
+  syntaxTheme?: SyntaxTheme;
 
   /**
    * Provide a formatter which can format the provided source code.
@@ -99,9 +78,11 @@ export interface CodeBlockOptions {
   /**
    * The name of the node that the code block should toggle back and forth from.
    *
-   * @default 'paragraph'
+   * Leave `undefined` to use the `defaultBlockNode` for the editor.
+   *
+   * @default undefined
    */
-  toggleName?: string;
+  toggleName?: AcceptUndefined<string>;
 
   /**
    * Class to use in decorations of plain `text` nodes.
@@ -115,6 +96,13 @@ export interface CodeBlockOptions {
    * it is set to a non-empty value, otherwise no decoration will be produced.
    */
   plainTextClassName?: string;
+
+  /**
+   * Extract the language string from a code block.
+   */
+  getLanguageFromDom?: Static<
+    (codeElement: HTMLElement, preElement: HTMLElement) => string | undefined
+  >;
 }
 
 /**

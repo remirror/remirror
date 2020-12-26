@@ -1,21 +1,8 @@
 import { RemirrorTestChain } from 'jest-remirror';
-import React, { useState } from 'react';
+import { createReactManager, Remirror, useRemirror } from 'remirror/react';
 
-import {
-  AnyExtension,
-  ExtensionPriority,
-  fromHtml,
-  RemirrorEventListener,
-  toHtml,
-} from '@remirror/core';
-import {
-  act,
-  createReactManager,
-  DefaultEditor,
-  RemirrorProvider,
-  strictRender,
-  useManager,
-} from '@remirror/testing/react';
+import { ExtensionPriority, prosemirrorNodeToHtml } from '@remirror/core';
+import { act, strictRender } from '@remirror/testing/react';
 
 import { useKeymap } from '../use-keymap';
 
@@ -33,10 +20,9 @@ describe('useKeymap', () => {
     };
 
     strictRender(
-      <RemirrorProvider manager={editor.manager}>
-        <DefaultEditor />
+      <Remirror manager={editor.manager} autoRender>
         <HooksComponent />
-      </RemirrorProvider>,
+      </Remirror>,
     );
 
     act(() => {
@@ -59,10 +45,9 @@ describe('useKeymap', () => {
     };
 
     strictRender(
-      <RemirrorProvider manager={editor.manager}>
-        <DefaultEditor />
+      <Remirror manager={editor.manager} autoRender>
         <HooksComponent />
-      </RemirrorProvider>,
+      </Remirror>,
     );
 
     act(() => {
@@ -77,31 +62,23 @@ describe('useKeymap', () => {
     const mockSubmit = jest.fn();
 
     const Component = () => {
-      const manager = useManager(chain.manager);
-
-      const initialValue = manager.createState({
+      const { manager, onChange, state } = useRemirror({
+        extensions: chain.manager,
         content: '<p>test</p>',
+        stringHandler: 'html',
         selection: 'end',
-        stringHandler: fromHtml,
       });
 
-      const [value, setValue] = useState(initialValue);
-
       function onSubmit() {
-        mockSubmit(toHtml({ node: value.doc, schema: value.schema }));
+        mockSubmit(prosemirrorNodeToHtml(state.doc));
       }
 
-      const onChange: RemirrorEventListener<AnyExtension> = ({ state }) => {
-        setValue(state);
-      };
-
       return (
-        <RemirrorProvider manager={manager} onChange={onChange} value={value}>
+        <Remirror manager={manager} onChange={onChange} state={state} autoRender>
           <div id='1'>
-            <DefaultEditor />
             <KeymapComponent onSubmit={onSubmit} />
           </div>
-        </RemirrorProvider>
+        </Remirror>
       );
     };
 

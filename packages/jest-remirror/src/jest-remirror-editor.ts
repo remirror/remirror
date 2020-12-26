@@ -17,17 +17,18 @@ import {
 } from 'jest-prosemirror';
 
 import {
-  ActiveFromCombined,
-  AnyCombinedUnion,
+  ActiveFromExtensions,
+  AnyExtension,
   BuiltinPreset,
-  ChainedFromCombined,
+  ChainedFromExtensions,
   CommandFunctionParameter,
-  CommandsFromCombined,
+  CommandsFromExtensions,
   EditorState,
   GetMarkNameUnion,
   GetNodeNameUnion,
+  GetSchema,
   getTextSelection,
-  HelpersFromCombined,
+  HelpersFromExtensions,
   isFunction,
   isMarkExtension,
   isNodeExtension,
@@ -39,7 +40,6 @@ import {
   ProsemirrorNode,
   range,
   RemirrorManager,
-  SchemaFromCombined,
   Transaction,
 } from '@remirror/core';
 import { createDomEditor, createDomManager } from '@remirror/dom';
@@ -70,14 +70,13 @@ const elements = new Set<Element>();
  *
  * By default it already has the core preset applied.
  */
-export function renderEditor<Combined extends AnyCombinedUnion>(
-  combined: Combined[] | (() => Combined[]),
-  { props, autoClean, ...options }: RenderEditorParameter<Combined> = object(),
-): RemirrorTestChain<Combined | CorePreset | BuiltinPreset> {
+export function renderEditor<ExtensionUnion extends AnyExtension>(
+  extensions: ExtensionUnion[] | (() => ExtensionUnion[]),
+  { props, autoClean, ...options }: RenderEditorParameter<ExtensionUnion> = object(),
+): RemirrorTestChain<ExtensionUnion | CorePreset | BuiltinPreset> {
   const element = createElement(props?.element, autoClean);
-  const manager = createDomManager(combined, options);
+  const manager = createDomManager(extensions, options);
 
-  // TODO add the editor to the remirror test chain
   createDomEditor({ ...props, element, manager });
 
   return RemirrorTestChain.create(manager);
@@ -87,19 +86,19 @@ export function renderEditor<Combined extends AnyCombinedUnion>(
  * This creates a chainable test helper for testing your remirror presets,
  * extensions and commands.
  */
-export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
+export class RemirrorTestChain<ExtensionUnion extends AnyExtension> {
   /**
    * A static method for creating the test helpers when testing your remirror
    * models.
    */
-  static create<Combined extends AnyCombinedUnion>(
-    manager: RemirrorManager<Combined>,
-  ): RemirrorTestChain<Combined> {
+  static create<ExtensionUnion extends AnyExtension>(
+    manager: RemirrorManager<ExtensionUnion>,
+  ): RemirrorTestChain<ExtensionUnion> {
     return new RemirrorTestChain(manager);
   }
 
   /** The editor manager */
-  #manager: RemirrorManager<Combined>;
+  #manager: RemirrorManager<ExtensionUnion>;
 
   /** Additional custom tags */
   #tags?: Tags;
@@ -119,7 +118,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * able to receive custom attributes.
    *
    * ```ts
-   * import { HeadingExtension } from 'remirror/extension/heading';
+   * import { HeadingExtension } from 'remirror/extensions';
    *
    * const editor = renderEditor([new HeadingExtension()])
    * const { heading } = editor.attributeNodes;
@@ -148,42 +147,42 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Provide access to the editor manager.
    */
-  get manager(): RemirrorManager<Combined> {
+  get manager(): RemirrorManager<ExtensionUnion> {
     return this.#manager;
   }
 
   /**
    * The editor view.
    */
-  get view(): TestEditorView<SchemaFromCombined<Combined>> {
-    return this.#manager.view as TestEditorView<SchemaFromCombined<Combined>>;
+  get view(): TestEditorView<this['manager']['~Sch']> {
+    return this.manager.view as TestEditorView<this['manager']['~Sch']>;
   }
 
   /**
    * The editor state.
    */
-  get state(): EditorState<SchemaFromCombined<Combined>> {
+  get state(): EditorState<this['manager']['~Sch']> {
     return this.view.state;
   }
 
   /**
    * The editor state.
    */
-  get tr(): Transaction<SchemaFromCombined<Combined>> {
+  get tr(): Transaction<this['manager']['~Sch']> {
     return this.view.state.tr;
   }
 
   /**
    * The editor schema.
    */
-  get schema(): SchemaFromCombined<Combined> {
+  get schema(): this['manager']['~Sch'] {
     return this.manager.schema;
   }
 
   /**
    * The root node for the editor.
    */
-  get doc(): ProsemirrorNode<SchemaFromCombined<Combined>> {
+  get doc(): ProsemirrorNode<this['manager']['~Sch']> {
     return this.state.doc;
   }
 
@@ -192,7 +191,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * TestEditor make sure not to use a stale copy of the actions otherwise it
    * will throw errors due to using an outdated state.
    */
-  get commands(): CommandsFromCombined<Combined> {
+  get commands(): CommandsFromExtensions<this['manager']['~E']> {
     return this.#manager.store.commands;
   }
 
@@ -201,14 +200,14 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * TestEditor make sure not to use a stale copy of the actions otherwise it
    * will throw errors due to using an outdated state.
    */
-  get chain(): ChainedFromCombined<Combined> {
+  get chain(): ChainedFromExtensions<this['manager']['~E']> {
     return this.#manager.store.chain;
   }
 
   /**
    * Access to which nodes and marks are active under the current selection.
    */
-  get active(): ActiveFromCombined<Combined> {
+  get active(): ActiveFromExtensions<this['manager']['~E']> {
     return this.#manager.store.active;
   }
 
@@ -217,7 +216,9 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    * TestEditor make sure not to use a stale copy of the helpers object
    * otherwise it will throw errors due to using an outdated state.
    */
-  get helpers(): HelpersFromCombined<Combined> {
+  get helpers(): HelpersFromExtensions<this['manager']['~E']> extends object
+    ? HelpersFromExtensions<this['manager']['~E']>
+    : object {
     return this.#manager.store.helpers;
   }
 
@@ -254,8 +255,8 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * The dom node holding the view.
    */
-  get dom(): Element {
-    return this.view.dom;
+  get dom(): HTMLElement {
+    return this.view.dom as HTMLElement;
   }
 
   /**
@@ -265,18 +266,31 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
     return this.dom.innerHTML;
   }
 
-  private constructor(manager: RemirrorManager<Combined>) {
+  private constructor(manager: RemirrorManager<ExtensionUnion>) {
     this.#manager = manager;
 
     this.createDocBuilders();
+    this.setupCloneListener();
+  }
+
+  /**
+   * Replace the manager with the newly cloned manager when cloned.
+   */
+  private setupCloneListener() {
+    const dispose = this.#manager.addHandler('clone', (newManager) => {
+      this.#manager = newManager as any;
+      console.log('cloned manager');
+      dispose();
+      this.setupCloneListener();
+    });
   }
 
   /**
    * Create the node and mark document builders.
    */
   private createDocBuilders() {
-    type MarkNames = GetMarkNameUnion<this['manager']['~E']>;
-    type NodeNames = Exclude<GetNodeNameUnion<this['manager']['~E']>, 'text'>;
+    type MarkNames = this['manager']['~M'];
+    type NodeNames = Exclude<this['manager']['~N'], 'text'>;
 
     this.nodes.p = nodeFactory({ name: 'paragraph', schema: this.schema });
 
@@ -310,7 +324,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
    *
    * If content already exists it will be overwritten.
    */
-  readonly add = (taggedDocument: TaggedProsemirrorNode<SchemaFromCombined<Combined>>): this => {
+  readonly add = (taggedDocument: TaggedProsemirrorNode<this['manager']['~Sch']>): this => {
     const { content } = taggedDocument;
     const { cursor, node, start, end, all, anchor, head, ...tags } = taggedDocument.tags;
     const view = this.view;
@@ -347,9 +361,7 @@ export class RemirrorTestChain<Combined extends AnyCombinedUnion> {
   /**
    * Alias for add.
    */
-  readonly overwrite = (
-    taggedDocument: TaggedProsemirrorNode<SchemaFromCombined<Combined>>,
-  ): this => {
+  readonly overwrite = (taggedDocument: TaggedProsemirrorNode<this['manager']['~Sch']>): this => {
     return this.add(taggedDocument);
   };
 

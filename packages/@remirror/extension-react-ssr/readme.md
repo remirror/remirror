@@ -7,8 +7,8 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-react-ssr/next
 [npm]: https://npmjs.com/package/@remirror/extension-react-ssr/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/extension-react-ssr@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-react-ssr@next
+[size]: https://bundlephobia.com/result?p=@remirror/extension-react-ssr
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-react-ssr
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-react-ssr/red?icon=npm
 
@@ -16,17 +16,17 @@
 
 ```bash
 # Yarn
-yarn add @remirror/extension-react-ssr@next @remirror/pm@next
+yarn add @remirror/extension-react-ssr @remirror/pm
 
 # pnpm
-pnpm add @remirror/extension-react-ssr@next @remirror/pm@next
+pnpm add @remirror/extension-react-ssr @remirror/pm
 
 # npm
-npm install @remirror/extension-react-ssr@next @remirror/pm@next
+npm install @remirror/extension-react-ssr @remirror/pm
 ```
 
-This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/react-ssr`.
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.
 
 ## Usage
 
-This is one of the **core react** extensions and is included by default in the `ReactPreset`. All exports are also available via the entry-point, `remirror/extension/react-ssr`.
+This is one of the **core react** extensions and is included by default in the `ReactPreset`. All exports are also available via the entry-point, `remirror/extensions`.

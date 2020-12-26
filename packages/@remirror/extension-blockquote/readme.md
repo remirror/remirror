@@ -7,8 +7,8 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-blockquote/next
 [npm]: https://npmjs.com/package/@remirror/extension-blockquote/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/extension-blockquote@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-blockquote@next
+[size]: https://bundlephobia.com/result?p=@remirror/extension-blockquote
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-blockquote
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-blockquote/red?icon=npm
 
@@ -16,23 +16,23 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-blockquote@next @remirror/pm@next
+yarn add @remirror/extension-blockquote @remirror/pm
 
 # pnpm
-pnpm add @remirror/extension-blockquote@next @remirror/pm@next
+pnpm add @remirror/extension-blockquote @remirror/pm
 
 # npm
-npm install @remirror/extension-blockquote@next @remirror/pm@next
+npm install @remirror/extension-blockquote @remirror/pm
 ```
 
-This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/blockquote`.
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.
 
 ## Usage
 
 The following code creates an instance of this extension.
 
 ```ts
-import { BlockquoteExtension } from 'remirror/extension/blockquote';
+import { BlockquoteExtension } from 'remirror/extensions';
 
 const extension = new BlockquoteExtension();
 ```

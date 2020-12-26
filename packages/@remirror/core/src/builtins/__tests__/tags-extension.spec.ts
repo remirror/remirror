@@ -1,11 +1,5 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-import {
-  ApplySchemaAttributes,
-  extensionDecorator,
-  ExtensionTag,
-  mutateTag,
-  NodeExtension,
-} from 'remirror/core';
+import { ApplySchemaAttributes, extension, ExtensionTag, mutateTag, NodeExtension } from 'remirror';
 
 import { hideConsoleError } from '@remirror/testing';
 
@@ -23,7 +17,9 @@ describe('tags', () => {
     }
 
     // @ts-expect-error
-    tags = ['awesome'];
+    createTags() {
+      return ['awesome'];
+    }
 
     createNodeSpec(extra: ApplySchemaAttributes) {
       return { attrs: extra.defaults() };
@@ -31,13 +27,15 @@ describe('tags', () => {
   }
 
   it('tags are added to the schema', () => {
-    @extensionDecorator({ disableExtraAttributes: true })
+    @extension({ disableExtraAttributes: true })
     class CustomExtension extends NodeExtension {
       get name() {
         return 'custom';
       }
 
-      tags = [ExtensionTag.Alignment];
+      createTags() {
+        return [ExtensionTag.Alignment];
+      }
 
       createNodeSpec() {
         return {};

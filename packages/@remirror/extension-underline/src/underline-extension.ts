@@ -1,24 +1,37 @@
 import {
   ApplySchemaAttributes,
+  command,
   CommandFunction,
-  extensionDecorator,
+  extension,
   ExtensionTag,
-  KeyBindings,
+  keyBinding,
+  KeyBindingParameter,
   MarkExtension,
   MarkExtensionSpec,
+  MarkSpecOverride,
+  NamedShortcut,
+  PrimitiveSelection,
   toggleMark,
 } from '@remirror/core';
 
-@extensionDecorator({})
+import { toggleUnderlineOptions } from './underline-utils';
+
+/**
+ * Add underline formatting support to the editor.
+ */
+@extension({})
 export class UnderlineExtension extends MarkExtension {
   get name() {
     return 'underline' as const;
   }
 
-  readonly tags = [ExtensionTag.FontStyle];
+  createTags() {
+    return [ExtensionTag.FontStyle, ExtensionTag.FormattingMark];
+  }
 
-  createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
+  createMarkSpec(extra: ApplySchemaAttributes, override: MarkSpecOverride): MarkExtensionSpec {
     return {
+      ...override,
       attrs: extra.defaults(),
       parseDOM: [
         {
@@ -34,19 +47,22 @@ export class UnderlineExtension extends MarkExtension {
     };
   }
 
-  createKeymap(): KeyBindings {
-    return {
-      'Mod-u': toggleMark({ type: this.type }),
-    };
+  /**
+   * Toggle the underline formatting of the selected text.
+   *
+   * This command is provided by the `UnderlineExtension`.
+   */
+  @command(toggleUnderlineOptions)
+  toggleUnderline(selection?: PrimitiveSelection): CommandFunction {
+    return toggleMark({ type: this.type, selection });
   }
 
-  createCommands() {
-    return {
-      /**
-       * Toggle the underline formatting of the selected text.
-       */
-      toggleUnderline: (): CommandFunction => toggleMark({ type: this.type }),
-    };
+  /**
+   * Attach the keyboard shortcut for formatting the text.
+   */
+  @keyBinding({ shortcut: NamedShortcut.Underline, command: 'toggleUnderline' })
+  shortcut(parameter: KeyBindingParameter): boolean {
+    return this.toggleUnderline()(parameter);
   }
 }
 

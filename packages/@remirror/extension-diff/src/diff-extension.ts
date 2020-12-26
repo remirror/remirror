@@ -1,9 +1,9 @@
 import {
   CommandFunction,
-  CreatePluginReturn,
+  CreateExtensionPlugin,
   EditorState,
   EditorView,
-  extensionDecorator,
+  extension,
   FromToParameter,
   Handler,
   hasTransactionChanged,
@@ -61,7 +61,7 @@ export interface DiffOptions {
 /**
  * An extension for the remirror editor. CHANGE ME.
  */
-@extensionDecorator<DiffOptions>({
+@extension<DiffOptions>({
   defaultOptions: {
     blameMarkerClass: 'blame-marker',
     revertMessage: (message: string) => `Revert: '${message}'`,
@@ -74,8 +74,8 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
     return 'diff' as const;
   }
 
-  #hovered?: HandlerParameter;
-  #selections?: HandlerParameter[];
+  private hovered?: HandlerParameter;
+  private selections?: HandlerParameter[];
 
   /**
    * Create the command for managing the commits in the document.
@@ -164,7 +164,7 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
    * This has been adapted from the prosemirror website demo.
    * https://github.com/ProseMirror/website/blob/master/example/track/index.js
    */
-  createPlugin(): CreatePluginReturn {
+  createPlugin(): CreateExtensionPlugin {
     return {
       state: {
         init: (_, state) => {
@@ -220,16 +220,16 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
 
     const selectionHasCommit = selections.length > 0;
 
-    if (selectionHasCommit && !isEqual(selections, this.#selections)) {
-      this.options.onSelectCommits(selections, this.#selections);
-      this.#selections = selections;
+    if (selectionHasCommit && !isEqual(selections, this.selections)) {
+      this.options.onSelectCommits(selections, this.selections);
+      this.selections = selections;
 
       return;
     }
 
-    if (this.#selections) {
-      this.options.onDeselectCommits(this.#selections);
-      this.#selections = undefined;
+    if (this.selections) {
+      this.options.onDeselectCommits(this.selections);
+      this.selections = undefined;
     }
   }
 
@@ -263,7 +263,7 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
     const parameter = this.getHandlerParameterFromEvent(view, event);
 
     if (parameter) {
-      this.#hovered = parameter;
+      this.hovered = parameter;
       this.options.onMouseOverCommit(parameter);
     }
 
@@ -274,14 +274,14 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
    * Capture the mouseleave event and trigger the `onMouseLeaveCommit` handler.
    */
   private handleMouseLeave(view: EditorView, event: Event) {
-    if (!this.#hovered) {
+    if (!this.hovered) {
       return false;
     }
 
     const commit = this.getHandlerParameterFromEvent(view, event);
 
     if (commit) {
-      this.#hovered = undefined;
+      this.hovered = undefined;
       this.options.onMouseLeaveCommit(commit);
     }
 

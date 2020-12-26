@@ -1,9 +1,9 @@
 import { axe } from 'jest-axe';
-import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
+import { forwardRef, FunctionComponent, RefAttributes } from 'react';
 
 import { RenderResult, strictRender } from '@remirror/testing/react';
 
-import { createReactManager, RemirrorProvider, useRemirror } from '../..';
+import { createReactManager, Remirror, useRemirrorContext } from '../..';
 
 const mock = jest.fn();
 
@@ -11,13 +11,13 @@ test('supports a custom root element', () => {
   const Component: FunctionComponent<RefAttributes<HTMLDivElement>> = forwardRef((_, ref) => {
     mock(ref);
 
-    return <div {...useRemirror().getRootProps({ ref })} />;
+    return <div {...useRemirrorContext().getRootProps({ ref })} />;
   });
 
   strictRender(
-    <RemirrorProvider manager={createReactManager([])}>
+    <Remirror manager={createReactManager([])}>
       <Component ref={() => {}} />
-    </RemirrorProvider>,
+    </Remirror>,
   );
 
   expect(mock).toHaveBeenCalledWith(expect.any(Function));
@@ -25,7 +25,7 @@ test('supports a custom root element', () => {
 
 test('supports a custom ref label and passed props through', () => {
   const Component = () => {
-    const context = useRemirror();
+    const context = useRemirrorContext();
     const props = context.getRootProps({ refKey: 'customRef', testProp });
     mock(props);
     return <div ref={props.customRef} />;
@@ -33,9 +33,9 @@ test('supports a custom ref label and passed props through', () => {
 
   const testProp = 'test';
   strictRender(
-    <RemirrorProvider manager={createReactManager([])}>
+    <Remirror manager={createReactManager([])}>
       <Component />
-    </RemirrorProvider>,
+    </Remirror>,
   );
 
   expect(mock.mock.calls[0][0].customRef).toBeFunction();
@@ -47,7 +47,7 @@ describe('nestedRootProps', () => {
   const Component = () => {
     return (
       <div>
-        <div {...useRemirror().getRootProps()} id='nested-div'>
+        <div {...useRemirrorContext().getRootProps()} id='nested-div'>
           <div id='wrapped-div'>Wrapped text</div>
         </div>
       </div>
@@ -57,9 +57,9 @@ describe('nestedRootProps', () => {
   beforeEach(() => {
     result = strictRender(
       <main>
-        <RemirrorProvider manager={createReactManager([])} label='Editor'>
+        <Remirror manager={createReactManager([])} label='Editor'>
           <Component />
-        </RemirrorProvider>
+        </Remirror>
       </main>,
     );
   });

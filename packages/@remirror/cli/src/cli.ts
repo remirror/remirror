@@ -1,7 +1,9 @@
+// #!/usr/bin/env node
+
 import { Cli } from 'clipanion';
 import { getVersion, loadPackageJson } from 'json.macro';
 
-import { BundleCommand, HelpCommand, VersionCommand } from './commands';
+import { BundleCommand, CreateCommand, HelpCommand, VersionCommand } from './commands';
 import type { CommandContext } from './types';
 
 const version = getVersion();
@@ -14,9 +16,10 @@ const cli = new Cli<CommandContext>({
   binaryVersion: version,
 });
 
+cli.register(CreateCommand);
+cli.register(BundleCommand);
 cli.register(HelpCommand);
 cli.register(VersionCommand);
-cli.register(BundleCommand);
 
 cli.runExit(process.argv.slice(2), {
   version,

@@ -1,9 +1,9 @@
 import { Children, cloneElement, ComponentType, createElement, JSXElementConstructor } from 'react';
 
 import {
-  AnyCombinedUnion,
+  AnyExtension,
   EditorState,
-  extensionDecorator,
+  extension,
   ExtensionPriority,
   isArray,
   object,
@@ -43,7 +43,7 @@ export interface ReactSsrOptions {
  * The transformations can also serve as a guideline when creating your own
  * SSRTransforms. However in most cases the defaults should be sufficient.
  */
-@extensionDecorator<ReactSsrOptions>({
+@extension<ReactSsrOptions>({
   defaultOptions: {
     transformers: [injectBrIntoEmptyParagraphs],
   },
@@ -90,7 +90,7 @@ export class ReactSsrExtension extends PlainExtension<ReactSsrOptions> {
       }
 
       if (extension.createSSRTransformer && !extension.options.exclude?.reactSSR) {
-        ssrTransformers.push(extension.createSSRTransformer);
+        ssrTransformers.push(extension.createSSRTransformer.bind(extension));
       }
     }
 
@@ -208,7 +208,7 @@ declare global {
       reactSSR?: boolean;
     }
 
-    interface ManagerStore<Combined extends AnyCombinedUnion> {
+    interface ManagerStore<ExtensionUnion extends AnyExtension> {
       /**
        * The transformer for updating the SSR rendering of the prosemirror state
        * and allowing it to render without defects.
@@ -221,7 +221,7 @@ declare global {
       components: Record<string, ManagerStoreReactComponent>;
     }
 
-    interface ExtensionCreatorMethods {
+    interface BaseExtension {
       /**
        * A method for transforming the original JSX element received by the
        * extension. This is typically for usage in server side rendered
@@ -243,7 +243,7 @@ declare global {
        * server render. That way there is no jump or layout adjustment when the
        * document first loads on the browser.
        */
-      createSSRTransformer?: () => SsrTransformer;
+      createSSRTransformer?(): SsrTransformer;
     }
   }
 }

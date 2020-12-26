@@ -1,2 +1,2 @@
-export type { ReactPresetOptions } from './react-preset';
-export { ReactPreset } from './react-preset';
+export * from './react-extension';
+export * from './react-placeholder-extension';

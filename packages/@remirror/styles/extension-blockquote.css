@@ -1,5 +1,5 @@
 /**
- * Styles extracted from: packages/@remirror/extension-blockquote/src/styles.ts
+ * Styles extracted from: packages/@remirror/theme/src/extension-blockquote.ts
  */
 .remirror-editor blockquote {
   border-left: 2px solid #ddd;

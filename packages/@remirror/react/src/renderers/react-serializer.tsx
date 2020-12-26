@@ -1,7 +1,7 @@
-import React, { createElement, Fragment, ReactNode } from 'react';
+import { createElement, Fragment, ReactNode } from 'react';
 
 import {
-  AnyCombinedUnion,
+  AnyExtension,
   DOMOutputSpec,
   EditorView,
   ErrorConstant,
@@ -28,7 +28,7 @@ type MarkToDOM = MarkExtensionSpec['toDOM'];
 /**
  * Serialize the extension provided schema into a JSX element that can be displayed node and non-dom environments.
  */
-export class ReactSerializer<Combined extends AnyCombinedUnion> {
+export class ReactSerializer<ExtensionUnion extends AnyExtension> {
   /**
    * Receives the return value from toDOM defined in the node schema and transforms it
    * into JSX
@@ -81,9 +81,9 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
    *
    * @param manager
    */
-  static fromManager<Combined extends AnyCombinedUnion>(
-    manager: RemirrorManager<Combined>,
-  ): ReactSerializer<Combined> {
+  static fromManager<ExtensionUnion extends AnyExtension>(
+    manager: RemirrorManager<ExtensionUnion>,
+  ): ReactSerializer<ExtensionUnion> {
     return new ReactSerializer(
       this.nodesFromManager(manager),
       this.marksFromManager(manager),
@@ -96,8 +96,8 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
    *
    * @param manager
    */
-  private static nodesFromManager<Combined extends AnyCombinedUnion>(
-    manager: RemirrorManager<Combined>,
+  private static nodesFromManager<ExtensionUnion extends AnyExtension>(
+    manager: RemirrorManager<ExtensionUnion>,
   ) {
     const result = gatherDomMethods(manager.nodes);
 
@@ -113,8 +113,8 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
    *
    * @param manager
    */
-  private static marksFromManager<Combined extends AnyCombinedUnion>(
-    manager: RemirrorManager<Combined>,
+  private static marksFromManager<ExtensionUnion extends AnyExtension>(
+    manager: RemirrorManager<ExtensionUnion>,
   ) {
     return gatherDomMethods(manager.marks);
   }
@@ -128,7 +128,7 @@ export class ReactSerializer<Combined extends AnyCombinedUnion> {
   constructor(
     nodes: Record<string, NodeToDOM>,
     marks: Record<string, MarkToDOM>,
-    manager: RemirrorManager<Combined>,
+    manager: RemirrorManager<ExtensionUnion>,
   ) {
     this.nodes = nodes;
     this.marks = marks;

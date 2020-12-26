@@ -11,16 +11,16 @@
     "webkit": "REMIRROR_E2E_BROWSER=webkit jest --runInBand --verbose"
   },
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
+    "@babel/runtime": "^7.12.5",
     "@remirror/core": "1.0.0-next.60",
-    "@types/wait-on": "^4.0.0",
-    "expect-playwright": "^0.2.5",
-    "jest": "^26.6.1",
+    "@types/wait-on": "^5.2.0",
+    "expect-playwright": "^0.3.0",
+    "jest": "^26.6.3",
     "jest-dev-server": "^4.4.0",
-    "jest-playwright-preset": "^1.4.0",
+    "jest-playwright-preset": "^1.4.3",
     "looks-same": "^7.2.3",
-    "playwright": "^1.5.1",
-    "playwright-core": "^1.5.1",
+    "playwright": "^1.7.1",
+    "playwright-core": "^1.7.1",
     "playwright-testing-library": "^2.7.0",
     "signal-exit": "^3.0.3",
     "test-keyboard": "1.0.0-next.60"

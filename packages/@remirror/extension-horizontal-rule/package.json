@@ -13,18 +13,30 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-horizontal-rule.cjs.js",
-  "module": "dist/extension-horizontal-rule.esm.js",
-  "browser": {
-    "./dist/extension-horizontal-rule.cjs.js": "./dist/extension-horizontal-rule.browser.cjs.js",
-    "./dist/extension-horizontal-rule.esm.js": "./dist/extension-horizontal-rule.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-horizontal-rule.esm.js",
+      "require": "./dist/remirror-extension-horizontal-rule.cjs.js",
+      "browser": "./dist/remirror-extension-horizontal-rule.browser.esm.js",
+      "types": "./dist/remirror-extension-horizontal-rule.cjs.d.ts",
+      "default": "./dist/remirror-extension-horizontal-rule.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-horizontal-rule.cjs.d.ts",
+  "main": "dist/remirror-extension-horizontal-rule.cjs.js",
+  "module": "dist/remirror-extension-horizontal-rule.esm.js",
+  "browser": {
+    "./dist/remirror-extension-horizontal-rule.cjs.js": "./dist/remirror-extension-horizontal-rule.browser.cjs.js",
+    "./dist/remirror-extension-horizontal-rule.esm.js": "./dist/remirror-extension-horizontal-rule.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-horizontal-rule.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0"
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",

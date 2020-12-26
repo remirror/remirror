@@ -1,9 +1,9 @@
 import { pmBuild } from 'jest-prosemirror';
+import { createCoreManager } from 'remirror/extensions';
 
 import { ExtensionPriority, ExtensionTag } from '@remirror/core-constants';
 import type { ApplySchemaAttributes, NodeExtensionSpec } from '@remirror/core-types';
-import { fromHtml } from '@remirror/core-utils';
-import { createCoreManager } from '@remirror/testing';
+import { htmlToProsemirrorNode } from '@remirror/core-utils';
 
 import { NodeExtension } from '..';
 
@@ -12,7 +12,9 @@ class CustomExtension extends NodeExtension {
     return 'custom' as const;
   }
 
-  readonly tags = [ExtensionTag.BlockNode];
+  createTags() {
+    return [ExtensionTag.Block];
+  }
 
   createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
     return {
@@ -63,7 +65,7 @@ describe('extraAttributes', () => {
   });
 
   it('parses the dom for extra attributes', () => {
-    const node = fromHtml({
+    const node = htmlToProsemirrorNode({
       content: `<p title="${title}" data-run="${run}">hello</p>`,
       schema,
     });
@@ -72,7 +74,7 @@ describe('extraAttributes', () => {
   });
 
   it('supports parsing with getAttributes method', () => {
-    const node = fromHtml({
+    const node = htmlToProsemirrorNode({
       content: `<p title="${title}" data-run="${run}" simple="believe me">hello</p>`,
       schema,
     });

@@ -1,0 +1,56 @@
+{
+  "name": "@remirror/lit-components",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Web components for @remirror/lit.",
+  "keywords": [
+    "remirror"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/lit-components",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/lit-components",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-lit-components.esm.js",
+      "require": "./dist/remirror-lit-components.cjs.js",
+      "browser": "./dist/remirror-lit-components.browser.esm.js",
+      "types": "./dist/remirror-lit-components.cjs.d.ts",
+      "default": "./dist/remirror-lit-components.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-lit-components.cjs.js",
+  "module": "dist/remirror-lit-components.esm.js",
+  "browser": {
+    "./dist/remirror-lit-components.cjs.js": "./dist/remirror-lit-components.browser.cjs.js",
+    "./dist/remirror-lit-components.esm.js": "./dist/remirror-lit-components.browser.esm.js"
+  },
+  "types": "dist/remirror-lit-components.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.5"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60",
+    "lit-element": "^2.4.0"
+  },
+  "peerDependencies": {
+    "@remirror/core": "^1.0.0-next.60",
+    "@remirror/pm": "^1.0.0-next.60",
+    "lit-element": "^2.4.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "50 KB"
+  }
+}

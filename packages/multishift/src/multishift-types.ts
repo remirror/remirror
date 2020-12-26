@@ -859,7 +859,7 @@ export interface MultishiftFocusHelpers {
  * This provides utility methods which make updating the state for
  * _uncontrolled_ components a bit simpler.
  *
- * @typeParam Item = the underlying item type.
+ * @template Item = the underlying item type.
  */
 export interface MultishiftStateHelpers<Item = any> {
   /**

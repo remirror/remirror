@@ -1,4 +1,5 @@
 packages:
+  - 'support/templates/*'
   - 'packages/@remirror/*'
   - 'packages/*'
   - 'support'
@@ -6,4 +7,5 @@ packages:
   - 'support/e2e'
   - 'support/storybook'
   - 'support/website'
-  - 'support/examples/*'
+  - 'examples/*'
+  - 'backend/*'

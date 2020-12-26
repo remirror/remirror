@@ -2,8 +2,8 @@ import { object } from '@remirror/core-helpers';
 import type { CommandFunction } from '@remirror/core-types';
 import { nonChainable } from '@remirror/core-utils';
 
-import { ChainedFromExtensions, PlainExtension } from '..';
-import type { AnyExtension } from '../extension-base';
+import { ChainedFromExtensions, ChainedIntersection, PlainExtension } from '..';
+import type { AnyExtension } from '../extension';
 import type { CommandsFromExtensions } from '../extension-types';
 
 class FirstExtension extends PlainExtension {
@@ -77,5 +77,5 @@ chain.free('asdf').love(20).notChainable().run();
 
 // Any extension should be loose.
 const anyCommands: CommandsFromExtensions<AnyExtension> = object();
-const doSomethingReturn: void = anyCommands.doSomething();
-const doSomethingIsEnabled: boolean = anyCommands.doSomething.isEnabled();
+const doSomethingReturn: void = anyCommands.doSomething?.();
+const doSomethingIsEnabled: boolean | undefined = anyCommands.doSomething?.isEnabled();

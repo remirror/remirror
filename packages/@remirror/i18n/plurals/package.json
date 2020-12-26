@@ -1,12 +1,9 @@
 {
-  "main": "dist/i18n.cjs.js",
-  "module": "dist/i18n.esm.js",
+  "main": "dist/remirror-i18n-plurals.cjs.js",
+  "module": "dist/remirror-i18n-plurals.esm.js",
   "browser": {
-    "./dist/i18n.cjs.js": "./dist/i18n.browser.cjs.js",
-    "./dist/i18n.esm.js": "./dist/i18n.browser.esm.js"
+    "./dist/remirror-i18n-plurals.cjs.js": "./dist/remirror-i18n-plurals.browser.cjs.js",
+    "./dist/remirror-i18n-plurals.esm.js": "./dist/remirror-i18n-plurals.browser.esm.js"
   },
-  "types": "dist/i18n.cjs.d.ts",
-  "preconstruct": {
-    "source": "../src/plurals"
-  }
+  "types": "dist/remirror-i18n-plurals.cjs.d.ts"
 }

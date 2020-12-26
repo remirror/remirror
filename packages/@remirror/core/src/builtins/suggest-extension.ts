@@ -1,5 +1,5 @@
 import { includes, isArray } from '@remirror/core-helpers';
-import type { CustomHandler } from '@remirror/core-types';
+import type { CustomHandler, ProsemirrorPlugin } from '@remirror/core-types';
 import {
   addSuggester,
   getSuggestPluginState,
@@ -9,8 +9,7 @@ import {
   SuggestState,
 } from '@remirror/pm/suggest';
 
-import { extensionDecorator } from '../decorators';
-import { PlainExtension } from '../extension';
+import { extension, PlainExtension } from '../extension';
 import type { AddCustomHandler } from '../extension/base-class';
 
 export interface SuggestOptions {
@@ -29,20 +28,22 @@ export interface SuggestOptions {
  * This is an example of adding custom functionality to an extension via the
  * `ExtensionParameterMethods`.
  *
- * @builtin
+ * @category Builtin Extension
  */
-@extensionDecorator<SuggestOptions>({ customHandlerKeys: ['suggester'] })
+@extension<SuggestOptions>({ customHandlerKeys: ['suggester'] })
 export class SuggestExtension extends PlainExtension<SuggestOptions> {
   get name() {
     return 'suggest' as const;
   }
 
   /**
-   * Ensure that all ssr transformers are run.
+   * Create the `addSuggester` method and `removeSuggester` methods to the
+   * extension store.
+   *
+   * This can be used by extensions to conditionally add suggestion support.
    */
   onCreate(): void {
     const suggesters: Suggester[] = [];
-
     this.store.setExtensionStore('addSuggester', (suggester) =>
       addSuggester(this.store.getState(), suggester),
     );
@@ -50,11 +51,21 @@ export class SuggestExtension extends PlainExtension<SuggestOptions> {
     this.store.setExtensionStore('removeSuggester', (suggester) =>
       removeSuggester(this.store.getState(), suggester),
     );
+  }
+
+  /**
+   * Add the `prosemirror-suggest` plugin to the editor.
+   */
+  createExternalPlugins(): ProsemirrorPlugin[] {
+    const suggesters: Suggester[] = [];
 
     for (const extension of this.store.extensions) {
+      if (this.store.managerSettings.exclude?.suggesters) {
+        // Exit the loop early when the manager is set to ignore suggesters.
+        break;
+      }
+
       if (
-        // Manager settings excluded this from running
-        this.store.managerSettings.exclude?.suggesters ||
         // Method doesn't exist
         !extension.createSuggesters ||
         // Extension settings exclude it from running
@@ -68,11 +79,15 @@ export class SuggestExtension extends PlainExtension<SuggestOptions> {
       suggesters.push(...suggesterList);
     }
 
-    this.store.addPlugins(suggest(...suggesters));
+    return [suggest(...suggesters)];
   }
 
+  /**
+   * Allow additional `Suggesters` to be added to the editor. This can be used
+   * by `React` to create hooks.
+   */
   onAddCustomHandler: AddCustomHandler<SuggestOptions> = ({ suggester }) => {
-    if (!suggester) {
+    if (!suggester || this.store.managerSettings.exclude?.suggesters) {
       return;
     }
 
@@ -81,6 +96,9 @@ export class SuggestExtension extends PlainExtension<SuggestOptions> {
     return addSuggester(this.store.getState(), suggester);
   };
 
+  /**
+   * Add useful helpers to the editor for managing suggest state.
+   */
   createHelpers() {
     return {
       /**
@@ -146,7 +164,7 @@ declare global {
       suggesters?: boolean;
     }
 
-    interface ExtensionCreatorMethods {
+    interface BaseExtension {
       /**
        * Create suggesters which respond to an activation `char` or regex
        * pattern within the editor instance. The onChange handler provided is

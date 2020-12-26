@@ -1,13 +1,14 @@
 import { schema } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-import { values } from 'remirror/core';
-import { BlockquoteExtension } from 'remirror/extension/blockquote';
-import { BoldExtension } from 'remirror/extension/bold';
-import { HeadingExtension } from 'remirror/extension/heading';
-import { CorePreset } from 'remirror/preset/core';
-import { WysiwygPreset } from 'remirror/preset/wysiwyg';
+import { values } from 'remirror';
+import {
+  BlockquoteExtension,
+  BoldExtension,
+  corePreset,
+  HeadingExtension,
+  wysiwygPreset,
+} from 'remirror/extensions';
 
-import { SchemaExtension } from '..';
 import {
   ApplySchemaAttributes,
   ExtensionTag,
@@ -16,6 +17,7 @@ import {
   PlainExtension,
   RemirrorManager,
 } from '../..';
+import { SchemaExtension } from '..';
 
 extensionValidityTest(SchemaExtension);
 
@@ -71,7 +73,7 @@ test('custom schema', () => {
 
 describe('extraAttributes', () => {
   it('should support adding attributes to `nodes`, `marks`, and `all`', () => {
-    const manager = RemirrorManager.create(() => [new WysiwygPreset(), new CorePreset()], {
+    const manager = RemirrorManager.create(() => [...wysiwygPreset(), ...corePreset()], {
       extraAttributes: [
         { identifiers: 'nodes', attributes: { totallyNodes: 'abc' } },
         { identifiers: 'marks', attributes: { totallyMarks: 'abc' } },
@@ -97,7 +99,7 @@ describe('extraAttributes', () => {
   });
 
   it('should support adding attributes by name', () => {
-    const manager = RemirrorManager.create(() => [new WysiwygPreset(), new CorePreset()], {
+    const manager = RemirrorManager.create(() => [...wysiwygPreset(), ...corePreset()], {
       extraAttributes: [
         { identifiers: ['bold'], attributes: { totallyBold: 'abc' } },
         { identifiers: ['paragraph', 'italic'], attributes: { fun: 'abc' } },
@@ -117,7 +119,9 @@ describe('extraAttributes', () => {
         return 'thePlain' as const;
       }
 
-      tags = [ExtensionTag.Alignment];
+      createTags() {
+        return [ExtensionTag.Alignment];
+      }
     }
 
     class TheMarkExtension extends MarkExtension {
@@ -125,7 +129,9 @@ describe('extraAttributes', () => {
         return 'theMark' as const;
       }
 
-      tags = [ExtensionTag.Alignment, ExtensionTag.Color];
+      createTags() {
+        return [ExtensionTag.Alignment, ExtensionTag.Color];
+      }
 
       createMarkSpec(extra: ApplySchemaAttributes) {
         return {
@@ -139,7 +145,9 @@ describe('extraAttributes', () => {
         return 'theNode' as const;
       }
 
-      tags = [ExtensionTag.Alignment];
+      createTags() {
+        return [ExtensionTag.Alignment];
+      }
 
       createNodeSpec(extra: ApplySchemaAttributes) {
         return {
@@ -150,8 +158,8 @@ describe('extraAttributes', () => {
 
     const manager = RemirrorManager.create(
       () => [
-        new WysiwygPreset(),
-        new CorePreset(),
+        ...wysiwygPreset(),
+        ...corePreset(),
         new ThePlainExtension(),
         new TheMarkExtension(),
         new TheNodeExtension(),

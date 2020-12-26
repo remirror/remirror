@@ -1,8 +1,8 @@
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
+import { createCoreManager } from 'remirror/extensions';
 
-import { fromHtml, toHtml } from '@remirror/core';
-import { createCoreManager } from '@remirror/testing';
+import { htmlToProsemirrorNode, prosemirrorNodeToHtml } from '@remirror/core';
 
 import { BoldExtension, BoldOptions } from '../..';
 
@@ -15,7 +15,7 @@ describe('schema', () => {
   });
 
   it('creates the correct dom node', () => {
-    expect(toHtml({ node: p('Hello ', bold('friend!')), schema })).toMatchInlineSnapshot(`
+    expect(prosemirrorNodeToHtml(p('Hello ', bold('friend!')))).toMatchInlineSnapshot(`
       <p>
         Hello
         <strong>
@@ -30,7 +30,7 @@ describe('schema', () => {
     ['tag: `strong`', '<p>Hello <strong>friend!</strong></p>'],
     ['style: `font-weight`', '<p>Hello <span style="font-weight: bold">friend!</span></p>'],
   ])('parses the dom structure and finds itself with: %s', (_, content) => {
-    const node = fromHtml({ schema, content });
+    const node = htmlToProsemirrorNode({ schema, content: content });
     const expected = doc(p('Hello ', bold('friend!')));
 
     expect(node).toEqualProsemirrorNode(expected);
@@ -40,7 +40,7 @@ describe('schema', () => {
     ['tag: `b`', '<p>Hello <b style="font-weight: normal">friend!</b></p>'],
     ['style: `font-weight`', '<p>Hello <span style="font-weight: normal">friend!</span></p>'],
   ])('does not parse when font-weight is normal: %s', (_, content) => {
-    const node = fromHtml({ schema, content });
+    const node = htmlToProsemirrorNode({ schema, content: content });
     const expected = doc(p('Hello ', 'friend!'));
 
     expect(node).toEqualProsemirrorNode(expected);
@@ -55,7 +55,7 @@ test('supports extra attributes', () => {
     bold: { markType: 'bold' },
   });
 
-  expect(toHtml({ node: p('Hello ', bold('friend!')), schema })).toMatchInlineSnapshot(`
+  expect(prosemirrorNodeToHtml(p('Hello ', bold('friend!')))).toMatchInlineSnapshot(`
     <p>
       Hello
       <strong data-custom="hello-world">

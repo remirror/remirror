@@ -1,12 +1,9 @@
 {
-  "main": "dist/react.cjs.js",
-  "module": "dist/react.esm.js",
+  "main": "dist/remirror-react-renderers.cjs.js",
+  "module": "dist/remirror-react-renderers.esm.js",
   "browser": {
-    "./dist/react.cjs.js": "./dist/react.browser.cjs.js",
-    "./dist/react.esm.js": "./dist/react.browser.esm.js"
+    "./dist/remirror-react-renderers.cjs.js": "./dist/remirror-react-renderers.browser.cjs.js",
+    "./dist/remirror-react-renderers.esm.js": "./dist/remirror-react-renderers.browser.esm.js"
   },
-  "types": "dist/react.cjs.d.ts",
-  "preconstruct": {
-    "source": "../src/renderers/index"
-  }
+  "types": "dist/remirror-react-renderers.cjs.d.ts"
 }

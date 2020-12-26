@@ -1,12 +1,36 @@
 import { ErrorConstant, ExtensionPriority, ManagerPhase } from '@remirror/core-constants';
-import { invariant, isEmptyArray, object } from '@remirror/core-helpers';
-import type { ProsemirrorPlugin } from '@remirror/core-types';
+import { assertGet, invariant, isEmptyArray, object } from '@remirror/core-helpers';
+import type { Handler, ProsemirrorPlugin } from '@remirror/core-types';
 import { EditorState, Plugin, PluginKey } from '@remirror/pm/state';
 
-import { extensionDecorator } from '../decorators';
-import { AnyExtension, AnyExtensionConstructor, PlainExtension } from '../extension';
-import type { AnyCombinedUnion, InferCombinedExtensions } from '../preset';
-import type { CreatePluginReturn, GetNameUnion } from '../types';
+import {
+  AnyExtension,
+  AnyExtensionConstructor,
+  extension,
+  GetNameUnion,
+  isExtension,
+  isExtensionConstructor,
+  PlainExtension,
+} from '../extension';
+import type {
+  AppendLifecycleParameter,
+  ApplyStateLifecycleParameter,
+  CreateExtensionPlugin,
+} from '../types';
+
+export interface PluginsOptions {
+  /**
+   * The event handler which can be used by hooks to listen to state updates
+   * when they are being applied to the editor.
+   */
+  applyState?: Handler<(parameter: ApplyStateLifecycleParameter) => void>;
+
+  /**
+   * The event handler which can be used by hooks to listen to intercept updates
+   * to the transaction.
+   */
+  appendTransaction?: Handler<(parameter: AppendLifecycleParameter) => void>;
+}
 
 /**
  * This extension allows others extension to add the `createPlugin` method using
@@ -17,10 +41,13 @@ import type { CreatePluginReturn, GetNameUnion } from '../types';
  * This is an example of adding custom functionality to an extension via the
  * `ExtensionParameterMethods`.
  *
- * @builtin
+ * @category Builtin Extension
  */
-@extensionDecorator({ defaultPriority: ExtensionPriority.Highest })
-export class PluginsExtension extends PlainExtension {
+@extension<PluginsOptions>({
+  defaultPriority: ExtensionPriority.Highest,
+  handlerKeys: ['applyState', 'appendTransaction'],
+})
+export class PluginsExtension extends PlainExtension<PluginsOptions> {
   get name() {
     return 'plugins' as const;
   }
@@ -28,12 +55,31 @@ export class PluginsExtension extends PlainExtension {
   /**
    * All plugins created by other extension as well.
    */
-  #plugins: ProsemirrorPlugin[] = [];
+  private plugins: ProsemirrorPlugin[] = [];
 
   /**
    * The plugins added via the manager (for reference only).
    */
-  #managerPlugins: ProsemirrorPlugin[] = [];
+  private managerPlugins: ProsemirrorPlugin[] = [];
+
+  /**
+   * Called when the state is is being applied after an update.
+   */
+  private readonly applyStateHandlers: Array<
+    (parameter: ApplyStateLifecycleParameter) => void
+  > = [];
+
+  /**
+   * Called when the state is first initialized.
+   */
+  private readonly initStateHandlers: Array<(state: EditorState) => void> = [];
+
+  /**
+   * Handlers for the `onAppendTransaction` lifecycle method.
+   */
+  private readonly appendTransactionHandlers: Array<
+    (parameter: AppendLifecycleParameter) => void
+  > = [];
 
   /**
    * Store the plugin keys.
@@ -59,20 +105,76 @@ export class PluginsExtension extends PlainExtension {
     const { plugins = [] } = this.store.managerSettings;
 
     // Add the plugins which were added directly to the manager.
-    this.addOrReplacePlugins(plugins, this.#managerPlugins);
+    this.updatePlugins(plugins, this.managerPlugins);
 
     for (const extension of this.store.extensions) {
+      if (extension.onApplyState) {
+        this.applyStateHandlers.push(extension.onApplyState.bind(extension));
+      }
+
+      if (extension.onInitState) {
+        this.initStateHandlers.push(extension.onInitState.bind(extension));
+      }
+
+      if (extension.onAppendTransaction) {
+        this.appendTransactionHandlers.push(extension.onAppendTransaction.bind(extension));
+      }
+
       this.extractExtensionPlugins(extension);
     }
 
     // Store the added plugins for future usage.
-    this.#managerPlugins = plugins;
+    this.managerPlugins = plugins;
+
+    // Add all the extracted plugins to the manager store. From the manager
+    // store they are automatically added to the state for use in the editor.
+    this.store.setStoreKey('plugins', this.plugins);
 
     // Here set the plugins keys and state getters for retrieving plugin state.
     // These methods are later used.
     setStoreKey('pluginKeys', this.pluginKeys);
     setStoreKey('getPluginState', this.getStateByName);
     setExtensionStore('getPluginState', this.getStateByName);
+  }
+
+  /**
+   * Create a plugin which adds the [[`onInitState`]] and [[`onApplyState`]]
+   * lifecycle methods.
+   */
+  createPlugin(): CreateExtensionPlugin<void> {
+    return {
+      appendTransaction: (transactions, previousState, state) => {
+        const tr = state.tr;
+        const parameter = { previousState, tr, transactions, state };
+
+        for (const handler of this.appendTransactionHandlers) {
+          handler(parameter);
+        }
+
+        this.options.appendTransaction(parameter);
+
+        // Return the transaction if it has been amended in any way.
+        return tr.docChanged || tr.steps.length > 0 || tr.selectionSet || tr.storedMarksSet
+          ? tr
+          : undefined;
+      },
+      state: {
+        init: (_, state) => {
+          for (const handler of this.initStateHandlers) {
+            handler(state);
+          }
+        },
+        apply: (tr, _, previousState, state) => {
+          const parameter = { previousState, state, tr };
+
+          for (const handler of this.applyStateHandlers) {
+            handler(parameter);
+          }
+
+          this.options.applyState(parameter);
+        },
+      },
+    };
   }
 
   /**
@@ -111,14 +213,14 @@ export class PluginsExtension extends PlainExtension {
       };
       const plugin = new Plugin(pluginSpec);
 
-      this.addOrReplacePlugins([plugin], extension.plugin ? [extension.plugin] : undefined);
+      this.updatePlugins([plugin], extension.plugin ? [extension.plugin] : undefined);
       extension.plugin = plugin;
     }
 
     if (extension.createExternalPlugins) {
       const externalPlugins = extension.createExternalPlugins();
 
-      this.addOrReplacePlugins(externalPlugins, extension.externalPlugins);
+      this.updatePlugins(externalPlugins, extension.externalPlugins);
       extension.externalPlugins = externalPlugins;
     }
   }
@@ -132,17 +234,17 @@ export class PluginsExtension extends PlainExtension {
   /**
    * Add or replace a plugin.
    */
-  private addOrReplacePlugins(plugins: Plugin[], previous?: Plugin[]) {
+  private updatePlugins(plugins: Plugin[], previous?: Plugin[]) {
     // This is the first time plugins are being added.
     if (!previous || isEmptyArray(previous)) {
-      this.#plugins = [...this.#plugins, ...plugins];
+      this.plugins = [...this.plugins, ...plugins];
       return;
     }
 
     // The number of plugins and previous plugins is different.
     if (plugins.length !== previous.length) {
       // Remove previous plugins and add the new plugins to the end.
-      this.#plugins = [...this.#plugins.filter((plugin) => !previous.includes(plugin)), ...plugins];
+      this.plugins = [...this.plugins.filter((plugin) => !previous.includes(plugin)), ...plugins];
       return;
     }
 
@@ -150,11 +252,11 @@ export class PluginsExtension extends PlainExtension {
 
     const pluginMap = new Map<Plugin, Plugin>();
 
-    for (const [index, plugin] of Object.entries(plugins)) {
-      pluginMap.set(previous[Number.parseInt(index, 10)], plugin);
+    for (const [index, plugin] of plugins.entries()) {
+      pluginMap.set(assertGet(previous, index), plugin);
     }
 
-    this.#plugins = this.#plugins.map((plugin) => {
+    this.plugins = this.plugins.map((plugin) => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       return previous.includes(plugin) ? pluginMap.get(plugin)! : plugin;
     });
@@ -173,74 +275,58 @@ export class PluginsExtension extends PlainExtension {
    * store.
    */
   private updateExtensionStore() {
-    const { setStoreKey, setExtensionStore } = this.store;
-    // Set the list of plugins on the manager store.
-    setStoreKey('plugins', []);
+    const { setExtensionStore } = this.store;
 
     // Allow adding, replacing and removing plugins by other extensions.
-    setExtensionStore('addPlugins', this.addPlugins);
-    setExtensionStore('replacePlugin', this.replacePlugin);
-    setExtensionStore('addOrReplacePlugins', this.addOrReplacePlugins);
-    setExtensionStore('updateExtensionPlugins', this.updateExtensionPlugins);
-    setExtensionStore('reconfigureStatePlugins', this.reconfigureStatePlugins);
+    setExtensionStore('updatePlugins', this.updatePlugins.bind(this));
+    setExtensionStore('dispatchPluginUpdate', this.dispatchPluginUpdate.bind(this));
+    setExtensionStore('updateExtensionPlugins', this.updateExtensionPlugins.bind(this));
   }
-
-  /**
-   * Adds a plugin to the list of plugins.
-   */
-  private readonly addPlugins = (...plugins: ProsemirrorPlugin[]) => {
-    this.#plugins = [...this.#plugins, ...plugins];
-
-    this.store.setStoreKey('plugins', this.#plugins);
-  };
-
-  /**
-   * Replace a plugin in the state.
-   *
-   * Remember to update the state to see any changes.
-   */
-  private readonly replacePlugin = (
-    original: ProsemirrorPlugin,
-    replacement: ProsemirrorPlugin,
-  ) => {
-    this.#plugins = this.#plugins.map((plugin) => (plugin === original ? replacement : plugin));
-    this.store.setStoreKey('plugins', this.#plugins);
-  };
 
   /**
    * Reruns the `createPlugin` and `createExternalPlugins` methods of the
    * provided extension.
    *
-   * For the update to take effect you will need to call
-   * `reconfigureStatePlugins`
-   *
    * ```ts
    * // From within an extension
    * this.store.updateExtensionPlugins(this);
-   * this.store.reconfigureStatePlugins();
    * ```
    */
-  private readonly updateExtensionPlugins = (extension: AnyExtension) => {
+  private updateExtensionPlugins(value: AnyExtension | AnyExtensionConstructor | string) {
+    const extension = isExtension(value)
+      ? value
+      : isExtensionConstructor(value)
+      ? this.store.manager.getExtension(value)
+      : this.store.extensions.find((extension) => extension.name === value);
+
+    invariant(extension, {
+      code: ErrorConstant.INVALID_MANAGER_EXTENSION,
+      message: `The extension ${value} does not exist within the editor.`,
+    });
+
     this.extractExtensionPlugins(extension);
-    this.store.setStoreKey('plugins', this.#plugins);
-  };
+    this.store.setStoreKey('plugins', this.plugins);
+
+    // Dispatch the plugin updates to the editor.
+    this.dispatchPluginUpdate();
+  }
 
   /**
    * Applies the store plugins to the state. If any have changed then it will be
    * updated.
    */
-  private readonly reconfigureStatePlugins = () => {
+  private dispatchPluginUpdate() {
     invariant(this.store.phase >= ManagerPhase.EditorView, {
       code: ErrorConstant.MANAGER_PHASE_ERROR,
       message:
-        '`reconfigureStatePlugins` should only be called after the view has been added to the manager.',
+        '`dispatchPluginUpdate` should only be called after the view has been added to the manager.',
     });
 
     const { view, updateState } = this.store;
-    const newState = view.state.reconfigure({ plugins: this.#plugins });
+    const newState = view.state.reconfigure({ plugins: this.plugins });
 
     updateState(newState);
-  };
+  }
 }
 
 declare global {
@@ -271,64 +357,46 @@ declare global {
        * const pluginState = getPluginState(extension.name);
        * ```
        */
-      getPluginState: <State>(name: string) => State;
+      getPluginState<State>(name: string): State;
 
       /**
-       * Replace a plugin in the manager store.
-       *
-       * Remember to also update the state with your plugin changes.
-       *
-       * ```ts
-       * this.store.reconfigureStatePlugins();
-       * ```
-       */
-      replacePlugin: (original: ProsemirrorPlugin, replacement: ProsemirrorPlugin) => void;
-
-      /**
-       * Applies the store plugins to the state. If any have changed then it
-       * will be updated.
-       */
-      reconfigureStatePlugins: () => void;
-
-      /**
-       * Use this to push custom plugins to the store which are added to the
-       * plugin list after the #plugins.
+       * Add the new plugins. If previous plugins are provided then also remove
+       * the previous plugins.
        *
        * ```ts
-       * this.store.addPlugins(...plugins);
+       * this.store.updatePlugins(this.createExternalPlugins(), this.externalPlugins);
        * ```
-       */
-      addPlugins: (...plugins: ProsemirrorPlugin[]) => void;
-
-      /**
-       * Replace the previous plugins with new plugins.
        *
-       * ```ts
-       * this.store.addOrReplacePlugins(this.createExternalPlugins(), this.externalPlugins);
-       * ```
+       * @param plugins - the plugins to add
+       * @param previousPlugins - the plugins to remove
        */
-      addOrReplacePlugins: (
-        plugins: ProsemirrorPlugin[],
-        previousPlugins?: ProsemirrorPlugin[],
-      ) => void;
+      updatePlugins(plugins: ProsemirrorPlugin[], previousPlugins?: ProsemirrorPlugin[]): void;
 
       /**
        * Reruns the `createPlugin` and `createExternalPlugins` methods of the
        * provided extension.
        *
-       * For the update to take effect you will need to call
-       * `reconfigureStatePlugins`
+       * This will also automatically update the state with the newly generated
+       * plugins by dispatching an update.
        *
        * ```ts
        * // From within an extension
        * this.store.updateExtensionPlugins(this);
-       * this.store.reconfigureStatePlugins();
+       * this.store.dispatchPluginUpdate();
        * ```
+       *
+       * @param extension - the extension instance, constructor or name.
        */
-      updateExtensionPlugins: (extension: AnyExtension) => void;
+      updateExtensionPlugins(extension: AnyExtension | AnyExtensionConstructor | string): void;
+
+      /**
+       * Applies the store plugins to the state. If any have changed then it
+       * will be updated.
+       */
+      dispatchPluginUpdate(): void;
     }
 
-    interface ManagerStore<Combined extends AnyCombinedUnion> {
+    interface ManagerStore<ExtensionUnion extends AnyExtension> {
       /**
        * All of the plugins combined together from all sources
        */
@@ -340,7 +408,7 @@ declare global {
        *
        * @param name - the name of the extension
        */
-      getPluginState: <State>(name: GetNameUnion<InferCombinedExtensions<Combined>>) => State;
+      getPluginState: <State>(name: GetNameUnion<ExtensionUnion>) => State;
 
       /**
        * All the plugin keys available to be used by plugins.
@@ -404,9 +472,7 @@ declare global {
        * called before the framework, or the view have been initialized.
        */
       getPluginState: <State>(state?: EditorState) => State;
-    }
 
-    interface ExtensionCreatorMethods {
       /**
        * Create a custom plugin directly in the editor.
        *
@@ -416,14 +482,14 @@ declare global {
        * the plugin state.
        *
        * ```ts
-       * import { CreatePluginReturn } from 'remirror/core';
+       * import { CreateExtensionPlugin } from 'remirror';
        *
        * class MyExtension extends PlainExtension {
        *   get name() {
        *     return 'me' as const;
        *   }
        *
-       *   createPlugin(): CreatePluginReturn {
+       *   createPlugin(): CreateExtensionPlugin {
        *     return {
        *       props: {
        *         handleKeyDown: keydownHandler({
@@ -449,7 +515,7 @@ declare global {
        * }
        * ```
        */
-      createPlugin?(): CreatePluginReturn;
+      createPlugin?(): CreateExtensionPlugin;
 
       /**
        * Register third party plugins when this extension is placed into the

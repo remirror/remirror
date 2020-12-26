@@ -7,8 +7,8 @@
 [version]: https://flat.badgen.net/npm/v/prosemirror-suggest/next
 [npm]: https://npmjs.com/package/prosemirror-suggest/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=prosemirror-suggest@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/prosemirror-suggest@next
+[size]: https://bundlephobia.com/result?p=prosemirror-suggest
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/prosemirror-suggest
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/prosemirror-suggest/red?icon=npm
 
@@ -39,7 +39,7 @@ pnpm add prosemirror-suggest prosemirror-view prosemirror-state prosemirror-keym
 npm install prosemirror-suggest prosemirror-view prosemirror-state prosemirror-keymap
 ```
 
-The installation requires the installation of the peer dependencies `prosemirror-view prosemirror-state and prosemirror-model` to avoid version clashes.
+The installation requires the installation of the peer dependencies `prosemirror-view`, `prosemirror-state` and `prosemirror-model` to avoid version clashes.
 
 <br />
 
@@ -52,6 +52,7 @@ This documentation will be updated soon.
 In the following example we're creating an emoji suggestion plugin that responds to the colon character with a query and presents a list of matching emojis based on the query typed so far.
 
 ```ts
+import { schema } from 'prosemirror-schema-basic';
 import { suggest, Suggester } from 'prosemirror-suggest';
 
 const maxResults = 10;

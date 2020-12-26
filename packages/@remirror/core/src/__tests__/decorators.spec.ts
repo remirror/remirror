@@ -1,14 +1,7 @@
 import type { CustomHandler, Dynamic, Handler, Static } from '@remirror/core-types';
 import { hideConsoleError } from '@remirror/testing';
 
-import { extensionDecorator } from '..';
-import { presetDecorator } from '../decorators';
-import { PlainExtension } from '../extension';
-import { Preset } from '../preset';
-import type { OnSetOptionsParameter } from '../types';
-
-// Hides console messages
-hideConsoleError(true);
+import { extensionDecorator, PlainExtension } from '../..';
 
 interface GeneralOptions {
   type: Static<'awesome' | 'not-awesome'>;
@@ -19,6 +12,9 @@ interface GeneralOptions {
 }
 
 describe('@extensionDecorator', () => {
+  // Hides console messages
+  hideConsoleError(true);
+
   it('can decorate an extension', () => {
     @extensionDecorator<GeneralOptions>({
       defaultOptions: { backgroundColor: 'red', color: 'pink' },
@@ -66,72 +62,5 @@ describe('@extensionDecorator', () => {
 
     // @ts-expect-error
     expect(() => testExtension.setOptions({ type: 'not-awesome' })).toThrow();
-  });
-});
-
-describe('@presetDecorator', () => {
-  it('can decorate a preset', () => {
-    @presetDecorator<GeneralOptions>({
-      defaultOptions: { backgroundColor: 'red', color: 'pink' },
-      staticKeys: ['type'],
-      handlerKeys: ['onChange'],
-      customHandlerKeys: ['keyBindings'],
-    })
-    class TestPreset extends Preset<GeneralOptions> {
-      get name() {
-        return 'test' as const;
-      }
-
-      createExtensions() {
-        return [];
-      }
-
-      protected onSetOptions(_: OnSetOptionsParameter<GeneralOptions>): void {
-        return;
-      }
-    }
-
-    expect(TestPreset.staticKeys).toEqual(['type']);
-    expect(TestPreset.handlerKeys).toEqual(['onChange']);
-    expect(TestPreset.customHandlerKeys).toEqual(['keyBindings']);
-    expect(TestPreset.defaultOptions).toEqual({ backgroundColor: 'red', color: 'pink' });
-
-    const testPreset = new TestPreset({ type: 'awesome' });
-
-    // @ts-expect-error
-    expect(() => testPreset.setOptions({ type: 'not-awesome' })).toThrow();
-  });
-
-  it('can decorate a preset as a function call', () => {
-    const TestPreset = presetDecorator<GeneralOptions>({
-      defaultOptions: { backgroundColor: 'red', color: 'pink' },
-      staticKeys: ['type'],
-      handlerKeys: ['onChange'],
-      customHandlerKeys: ['keyBindings'],
-    })(
-      class TestPreset extends Preset<GeneralOptions> {
-        get name() {
-          return 'test' as const;
-        }
-
-        createExtensions() {
-          return [];
-        }
-
-        protected onSetOptions(_: OnSetOptionsParameter<GeneralOptions>): void {
-          return;
-        }
-      },
-    );
-
-    expect(TestPreset.staticKeys).toEqual(['type']);
-    expect(TestPreset.handlerKeys).toEqual(['onChange']);
-    expect(TestPreset.customHandlerKeys).toEqual(['keyBindings']);
-    expect(TestPreset.defaultOptions).toEqual({ backgroundColor: 'red', color: 'pink' });
-
-    const testPreset = new TestPreset({ type: 'awesome' });
-
-    // @ts-expect-error
-    expect(() => testPreset.setOptions({ type: 'not-awesome' })).toThrow();
   });
 });

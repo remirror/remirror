@@ -1,24 +1,28 @@
-import { AnyCombinedUnion, getLazyArray, isRemirrorManager, RemirrorManager } from '@remirror/core';
-import { CorePreset } from '@remirror/preset-core';
-import { ReactPreset } from '@remirror/preset-react';
+import { AnyExtension, getLazyArray, isRemirrorManager, RemirrorManager } from '@remirror/core';
+import { corePreset } from '@remirror/preset-core';
+import { ReactExtension } from '@remirror/preset-react';
 
-import type { CreateReactManagerOptions, ReactCombinedUnion } from './react-types';
+import type { CreateReactManagerOptions, ReactExtensionUnion } from './react-types';
 
 /**
- * Create a react manager with all the default react presets and extensions.
+ * Create a React [[`RemirrorManager`]] with all the default react presets and
+ * extensions.
  */
-export function createReactManager<Combined extends AnyCombinedUnion>(
-  combined: Combined[] | (() => Combined[]) | RemirrorManager<ReactCombinedUnion<Combined>>,
+export function createReactManager<ExtensionUnion extends AnyExtension>(
+  extensions:
+    | ExtensionUnion[]
+    | (() => ExtensionUnion[])
+    | RemirrorManager<ReactExtensionUnion<ExtensionUnion>>,
   options: CreateReactManagerOptions = {},
-): RemirrorManager<ReactCombinedUnion<Combined>> {
+): RemirrorManager<ReactExtensionUnion<ExtensionUnion>> {
   const { core, react, ...settings } = options;
 
-  if (isRemirrorManager<ReactCombinedUnion<Combined>>(combined)) {
-    return combined;
+  if (isRemirrorManager<ReactExtensionUnion<ExtensionUnion>>(extensions)) {
+    return extensions;
   }
 
   return RemirrorManager.create(
-    () => [...getLazyArray(combined), new ReactPreset(react), new CorePreset(core)],
+    () => [...getLazyArray(extensions), new ReactExtension(react), ...corePreset(core)],
     settings,
   );
 }

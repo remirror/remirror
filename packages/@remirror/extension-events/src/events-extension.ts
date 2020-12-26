@@ -1,16 +1,18 @@
 import {
-  CreatePluginReturn,
+  CreateExtensionPlugin,
   EditorState,
   EditorStateParameter,
   EditorViewParameter,
   entries,
   ErrorConstant,
-  extensionDecorator,
+  extension,
   ExtensionPriority,
   GetHandler,
   GetMarkRange,
   getMarkRange,
   Handler,
+  Helper,
+  helper,
   invariant,
   isString,
   MarkType,
@@ -51,6 +53,20 @@ export interface EventsOptions {
   mouseup?: Handler<(event: MouseEvent) => boolean | undefined | void>;
 
   /**
+   * Listens for mouseenter events on the editor.
+   *
+   * Return `true` to prevent any other prosemirror listeners from firing.
+   */
+  mouseenter?: Handler<(event: MouseEvent) => boolean | undefined | void>;
+
+  /**
+   * Listens for mouseleave events on the editor.
+   *
+   * Return `true` to prevent any other prosemirror listeners from firing.
+   */
+  mouseleave?: Handler<(event: MouseEvent) => boolean | undefined | void>;
+
+  /**
    * Listens for click events and provides information which may be useful in
    * handling them properly.
    *
@@ -75,12 +91,13 @@ export interface EventsOptions {
  * The events extension which listens to events which occur within the
  * remirror editor.
  */
-@extensionDecorator<EventsOptions>({
-  handlerKeys: ['blur', 'focus', 'mousedown', 'mouseup', 'click', 'clickMark'],
+@extension<EventsOptions>({
+  handlerKeys: ['blur', 'focus', 'mousedown', 'mouseup', 'click', 'clickMark', 'mouseleave'],
   handlerKeyOptions: {
     blur: { earlyReturnValue: true },
     focus: { earlyReturnValue: true },
     mousedown: { earlyReturnValue: true },
+    mouseleave: { earlyReturnValue: true },
     mouseup: { earlyReturnValue: true },
     click: { earlyReturnValue: true },
   },
@@ -90,6 +107,16 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
   get name() {
     return 'events' as const;
   }
+
+  /**
+   * Indicates whether the user is currently interacting with the editor.
+   */
+  private mousedown = false;
+
+  /**
+   * True when the mouse is within the bounds of the editor.
+   */
+  private mouseover = false;
 
   /**
    * Add a new lifecycle method which is available to all extensions for adding
@@ -122,7 +149,7 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
    * Create the plugin which manages all of the events being listened to within
    * the editor.
    */
-  createPlugin(): CreatePluginReturn {
+  createPlugin(): CreateExtensionPlugin {
     // Since event methods can possible be run multiple times for the same event
     // outer node, it is possible that one event can be run multiple times. To
     // prevent needless potentially expensive recalculations, this weak map
@@ -191,14 +218,59 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
             return this.options.blur(event) || false;
           },
           mousedown: (_, event) => {
+            this.startMouseover();
             return this.options.mousedown(event) || false;
           },
           mouseup: (_, event) => {
+            this.endMouseover();
             return this.options.mouseup(event) || false;
+          },
+          mouseleave: (_, event) => {
+            this.mouseover = false;
+            return this.options.mouseleave(event) || false;
+          },
+          mouseenter: (_, event) => {
+            this.mouseover = true;
+            return this.options.mouseenter(event) || false;
           },
         },
       },
     };
+  }
+
+  /**
+   * Check if the user is currently interacting with the editor.
+   */
+  @helper()
+  isInteracting(): Helper<boolean> {
+    return this.mousedown && this.mouseover;
+  }
+
+  private startMouseover() {
+    this.mouseover = true;
+
+    if (this.mousedown) {
+      return;
+    }
+
+    this.mousedown = true;
+
+    this.store.document.documentElement.addEventListener(
+      'mouseup',
+      () => {
+        this.endMouseover();
+      },
+      { once: true },
+    );
+  }
+
+  private endMouseover() {
+    if (!this.mousedown) {
+      return;
+    }
+
+    this.mousedown = false;
+    this.store.commands.emptyUpdate();
   }
 }
 

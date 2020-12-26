@@ -1,10 +1,12 @@
 import { createNanoEvents, Unsubscribe } from 'nanoevents';
 
 import {
+  EditorState,
   EditorViewParameter,
   ElementParameter,
   ErrorConstant,
   invariant,
+  isFunction,
   StateUpdateLifecycleParameter,
 } from '@remirror/core';
 
@@ -14,22 +16,52 @@ import {
 export type PositionerUpdateEvent = 'scroll' | 'state';
 
 export interface Coords {
-  left: number;
-  right: number;
   top: number;
+  left: number;
   bottom: number;
+  right: number;
 }
 
-export interface VirtualPosition extends Partial<Coords> {
+export interface Rect {
   /**
-   * The bounding client of the tracked element. The `DOMRect` is relative to
-   * the `viewport` and can be used by libraries like `Tippy.js` and
-   * `react-popper`.
-   *
-   * It should be possible to use this `rect` with tooltip libraries as a
-   * virtual element.
+   * Pixel distance from left of the reference frame.
+   * Alias of `left`.
+   */
+  x: number;
+
+  /**
+   * Pixel distance from top of the reference frame.
+   * Alias of `top` for css.
+   */
+  y: number;
+
+  /**
+   * The height of the captured position.
+   */
+  height: number;
+
+  /**
+   * The width of the captured position.
+   */
+  width: number;
+}
+
+/**
+ * The absolutely positioned coordinates relative to the editor element. With
+ * these coordinates you can perfectly simulate a position within the text
+ * editor and render it as you decide.
+ */
+export interface PositionerPosition extends Rect {
+  /**
+   * The position relative to the document viewport. This can be used with
+   * `position: fixed` when that is a better fit for your application.
    */
   rect: DOMRect;
+
+  /**
+   * True when any part of the captured position is visible within the dom view.
+   */
+  visible: boolean;
 }
 
 export interface GetPositionParameter<Data>
@@ -79,7 +111,7 @@ export interface BasePositioner<Data> {
    * Calculate and return an array of `VirtualPosition`'s which represent the
    * virtual element the positioner represents.
    */
-  getPosition: (parameter: GetPositionParameter<Data>) => VirtualPosition;
+  getPosition: (parameter: GetPositionParameter<Data>) => PositionerPosition;
 
   /**
    * An array of update listeners to determines when the positioner will update it's position.
@@ -90,10 +122,6 @@ export interface BasePositioner<Data> {
    * @default ['state']
    */
   events?: PositionerUpdateEvent[];
-}
-
-export interface VirtualNode {
-  getBoundingClientRect: () => DOMRect;
 }
 
 export interface SetActiveElement {
@@ -108,7 +136,10 @@ export interface SetActiveElement {
   id: string;
 }
 
-export interface BasePositionerParameter extends StateUpdateLifecycleParameter {
+export interface BasePositionerParameter
+  extends Omit<StateUpdateLifecycleParameter, 'previousState'> {
+  previousState: undefined | EditorState;
+
   /**
    * The event that triggered this update.
    */
@@ -121,7 +152,7 @@ export interface BasePositionerParameter extends StateUpdateLifecycleParameter {
 }
 
 export interface ElementsAddedParameter {
-  position: VirtualPosition;
+  position: PositionerPosition;
   element: HTMLElement;
   id: string;
 }
@@ -155,6 +186,11 @@ interface PositionerEvents {
  */
 export class Positioner<Data = any> {
   /**
+   * An empty return value for the positioner.
+   */
+  static EMPTY: never[] = [];
+
+  /**
    * Create a positioner.
    */
   static create<Data>(parameter: BasePositioner<Data>): Positioner<Data> {
@@ -181,9 +217,10 @@ export class Positioner<Data = any> {
   #ids: string[] = [];
   #updated = false;
 
-  readonly #getActive: (parameter: GetActiveParameter) => Data[];
+  readonly #constructorParameter: BasePositioner<Data>;
+  readonly #getActive: BasePositioner<Data>['getActive'];
   readonly #getID?: (data: Data, index: number) => string;
-  readonly #getPosition: (parameter: GetPositionParameter<Data>) => VirtualPosition;
+  readonly #getPosition: BasePositioner<Data>['getPosition'];
   readonly hasChanged: (parameter: BasePositionerParameter) => boolean;
 
   get basePositioner(): BasePositioner<Data> {
@@ -197,6 +234,7 @@ export class Positioner<Data = any> {
   }
 
   private constructor(parameter: BasePositioner<Data>) {
+    this.#constructorParameter = parameter;
     this.#getActive = parameter.getActive;
     this.#getPosition = parameter.getPosition;
     this.#getID = parameter.getID;
@@ -239,15 +277,6 @@ export class Positioner<Data = any> {
   }
 
   /**
-   * Create a virtual node from the provided position to use in libraries like `react-poppy`.
-   */
-  getVirtualNode(position: VirtualPosition): VirtualNode {
-    return {
-      getBoundingClientRect: () => position.rect,
-    };
-  }
-
-  /**
    * Add a listener to the positioner events.
    */
   readonly addListener = <Key extends keyof PositionerEvents>(
@@ -278,13 +307,45 @@ export class Positioner<Data = any> {
         message: 'Something went wrong when retrieving the parameters',
       });
 
+      const id = this.#ids[index];
+
+      if (!id) {
+        return;
+      }
+
       doneParameter.push({
         position: this.#getPosition(item),
         element: item.element,
-        id: this.#ids[index],
+        id,
       });
     }
 
     this.#handler.emit('done', doneParameter);
   }
+
+  /**
+   * Create a new parameter with the provided argument list.
+   */
+  clone(parameter?: PositionerCloneParameter<Data>): Positioner<Data> {
+    return Positioner.create({
+      ...this.#constructorParameter,
+      ...(isFunction(parameter) ? parameter(this.#constructorParameter) : parameter),
+    });
+  }
+
+  /**
+   * Clones the positioner while updating the `active` value. This is designed
+   * for usage in frameworks like `react`.
+   */
+  active(isActive: boolean | ((data: Data) => boolean)): Positioner<Data> {
+    const filterFunction = isFunction(isActive) ? isActive : () => isActive;
+
+    return this.clone((original) => ({
+      getActive: (props) => original.getActive(props).filter(filterFunction),
+    }));
+  }
 }
+
+type PositionerCloneParameter<Data> =
+  | Partial<BasePositioner<Data>>
+  | ((original: BasePositioner<Data>) => Partial<BasePositioner<Data>>);

@@ -580,7 +580,7 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
         }
       },
       focusMenuItem: (index: number) => {
-        if (bool(refs.items.current[index])) {
+        if (refs.items.current[index]) {
           refs.items.current[index].focus();
         }
       },

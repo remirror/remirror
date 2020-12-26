@@ -12,9 +12,9 @@
   ],
   "{packages,support}/**/*.{ts,tsx,js}": [
     "prettier --write",
-    "FULL_ESLINT_CHECK=true eslint --fix"
+    "eslint --fix"
   ],
-  "packages/**/*.spec.{ts,tsx}": [
+  "packages/**/*.{ts,tsx}": [
     "jest --coverage=false --bail --findRelatedTests"
   ]
 }

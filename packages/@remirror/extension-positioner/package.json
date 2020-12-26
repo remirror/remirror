@@ -15,18 +15,31 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-positioner.cjs.js",
-  "module": "dist/extension-positioner.esm.js",
-  "browser": {
-    "./dist/extension-positioner.cjs.js": "./dist/extension-positioner.browser.cjs.js",
-    "./dist/extension-positioner.esm.js": "./dist/extension-positioner.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-positioner.esm.js",
+      "require": "./dist/remirror-extension-positioner.cjs.js",
+      "browser": "./dist/remirror-extension-positioner.browser.esm.js",
+      "types": "./dist/remirror-extension-positioner.cjs.d.ts",
+      "default": "./dist/remirror-extension-positioner.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-positioner.cjs.d.ts",
+  "main": "dist/remirror-extension-positioner.cjs.js",
+  "module": "dist/remirror-extension-positioner.esm.js",
+  "browser": {
+    "./dist/remirror-extension-positioner.cjs.js": "./dist/remirror-extension-positioner.browser.cjs.js",
+    "./dist/remirror-extension-positioner.esm.js": "./dist/remirror-extension-positioner.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-positioner.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0",
+    "@remirror/theme": "1.0.0-next.60",
     "nanoevents": "^5.1.10"
   },
   "devDependencies": {

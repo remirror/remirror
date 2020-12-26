@@ -1,33 +1,49 @@
 import {
   ApplySchemaAttributes,
+  command,
   CommandFunction,
-  extensionDecorator,
+  extension,
   ExtensionTag,
   InputRule,
+  keyBinding,
+  KeyBindingParameter,
   KeyBindings,
   LEAF_NODE_REPLACING_CHARACTER,
   MarkExtension,
   MarkExtensionSpec,
   markInputRule,
-  markPasteRule,
-  ProsemirrorPlugin,
+  MarkSpecOverride,
+  NamedShortcut,
   toggleMark,
 } from '@remirror/core';
+import { ExtensionCodeMessages } from '@remirror/messages';
+import { MarkPasteRule } from '@remirror/pm/paste-rules';
+
+const { DESCRIPTION, LABEL } = ExtensionCodeMessages;
+const toggleCodeOptions: Remirror.CommandDecoratorOptions = {
+  icon: 'codeLine',
+  description: ({ t }) => t(DESCRIPTION),
+  label: ({ t }) => t(LABEL),
+};
 
 /**
  * Add a `code` mark to the editor. This is used to mark inline text as a code
  * snippet.
  */
-@extensionDecorator({})
+@extension({})
 export class CodeExtension extends MarkExtension {
   get name() {
     return 'code' as const;
   }
 
-  readonly tags = [ExtensionTag.Code, ExtensionTag.MarkSupportsExit];
+  createTags() {
+    return [ExtensionTag.Code, ExtensionTag.ExcludeInputRules];
+  }
 
-  createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
+  createMarkSpec(extra: ApplySchemaAttributes, override: MarkSpecOverride): MarkExtensionSpec {
     return {
+      excludes: '_',
+      ...override,
       attrs: extra.defaults(),
       parseDOM: [{ tag: 'code', getAttrs: extra.parse }],
       toDOM: (mark) => ['code', extra.dom(mark), 0],
@@ -40,13 +56,17 @@ export class CodeExtension extends MarkExtension {
     };
   }
 
-  createCommands() {
-    return {
-      /**
-       * Toggle the current selection as a code mark.
-       */
-      toggleCode: (): CommandFunction => toggleMark({ type: this.type }),
-    };
+  @keyBinding({ shortcut: NamedShortcut.Code, command: 'toggleCode' })
+  keyboardShortcut(parameter: KeyBindingParameter): boolean {
+    return this.toggleCode()(parameter);
+  }
+
+  /**
+   * Toggle the current selection as a code mark.
+   */
+  @command(toggleCodeOptions)
+  toggleCode(): CommandFunction {
+    return toggleMark({ type: this.type });
   }
 
   createInputRules(): InputRule[] {
@@ -59,8 +79,8 @@ export class CodeExtension extends MarkExtension {
     ];
   }
 
-  createPasteRules(): ProsemirrorPlugin[] {
-    return [markPasteRule({ regexp: /`([^`]+)`/g, type: this.type })];
+  createPasteRules(): MarkPasteRule[] {
+    return [{ type: 'mark', regexp: /`([^`]+)`/g, markType: this.type }];
   }
 }
 

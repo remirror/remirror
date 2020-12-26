@@ -5,7 +5,7 @@ import {
   debounce,
   EditorSchema,
   EditorState,
-  extensionDecorator,
+  extension,
   Handler,
   invariant,
   isArray,
@@ -26,7 +26,7 @@ import { Step } from '@remirror/pm/transform';
  *
  * Once a central server is created the collaboration extension is good.
  */
-@extensionDecorator<CollaborationOptions>({
+@extension<CollaborationOptions>({
   defaultOptions: {
     version: 0,
     clientID: uniqueId(),

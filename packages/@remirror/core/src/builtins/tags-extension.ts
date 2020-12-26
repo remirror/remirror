@@ -5,20 +5,20 @@ import {
   ExtensionTagType,
 } from '@remirror/core-constants';
 import { includes, invariant, object, values } from '@remirror/core-helpers';
+import type { UseDefault } from '@remirror/core-types';
 
-import { extensionDecorator } from '../decorators';
 import {
   AnyExtension,
+  extension,
   GetMarkNameUnion,
+  GetNameUnion,
   GetNodeNameUnion,
-  GetPlainNames,
+  GetPlainNameUnion,
   isMarkExtension,
   isNodeExtension,
   isPlainExtension,
   PlainExtension,
 } from '../extension';
-import type { AnyCombinedUnion } from '../preset';
-import type { GetNameUnion } from '../types';
 
 /**
  * Create the extension tags which are passed into each extensions method to
@@ -26,9 +26,9 @@ import type { GetNameUnion } from '../types';
  *
  * Tags on nodes and marks are automatically added to the schema as groups.
  *
- * @builtin
+ * @category Builtin Extension
  */
-@extensionDecorator({ defaultPriority: ExtensionPriority.Highest })
+@extension({ defaultPriority: ExtensionPriority.Highest })
 export class TagsExtension extends PlainExtension {
   get name() {
     return 'tags' as const;
@@ -37,22 +37,22 @@ export class TagsExtension extends PlainExtension {
   /**
    * Track the tags which have been applied to the extensions in this editor.
    */
-  #allTags: CombinedTags = object();
+  private allTags: CombinedTags = object();
 
   /**
    * The tags for plain extensions.
    */
-  #plainTags: CombinedTags = object();
+  private plainTags: CombinedTags = object();
 
   /**
    * The tags for mark extensions.
    */
-  #markTags: CombinedTags = object();
+  private markTags: CombinedTags = object();
 
   /**
    * The tags for node extensions.
    */
-  #nodeTags: CombinedTags = object();
+  private nodeTags: CombinedTags = object();
 
   /**
    * Create the tags which are used to identify extension with particular
@@ -65,14 +65,14 @@ export class TagsExtension extends PlainExtension {
       this.updateTagForExtension(extension);
     }
 
-    this.store.setStoreKey('tags', this.#allTags);
-    this.store.setExtensionStore('tags', this.#allTags);
-    this.store.setStoreKey('plainTags', this.#plainTags);
-    this.store.setExtensionStore('plainTags', this.#plainTags);
-    this.store.setStoreKey('markTags', this.#markTags);
-    this.store.setExtensionStore('markTags', this.#markTags);
-    this.store.setStoreKey('nodeTags', this.#nodeTags);
-    this.store.setExtensionStore('nodeTags', this.#nodeTags);
+    this.store.setStoreKey('tags', this.allTags);
+    this.store.setExtensionStore('tags', this.allTags);
+    this.store.setStoreKey('plainTags', this.plainTags);
+    this.store.setExtensionStore('plainTags', this.plainTags);
+    this.store.setStoreKey('markTags', this.markTags);
+    this.store.setExtensionStore('markTags', this.markTags);
+    this.store.setStoreKey('nodeTags', this.nodeTags);
+    this.store.setExtensionStore('nodeTags', this.nodeTags);
   }
 
   /**
@@ -91,52 +91,48 @@ export class TagsExtension extends PlainExtension {
       nodeTags[tagName] = [];
     }
 
-    this.#allTags = allTags;
-    this.#plainTags = plainTags;
-    this.#markTags = markTags;
-    this.#nodeTags = nodeTags;
+    this.allTags = allTags;
+    this.plainTags = plainTags;
+    this.markTags = markTags;
+    this.nodeTags = nodeTags;
   }
 
   /**
    * Update the tags object for each extension.
    */
   private updateTagForExtension(extension: AnyExtension) {
-    if (
-      !extension.tags ||
-      this.store.managerSettings.exclude?.tags ||
-      extension.options.exclude?.tags
-    ) {
-      // Exit early when the editor configuration requires it.
-      return;
-    }
-
-    const allTags = [
-      ...extension.tags,
+    const allTags = new Set([
+      // TODO remove `extension.tags` once all tags have been moved over to `createTags`
+      ...(extension.tags ?? []),
+      ...(extension.createTags?.() ?? []),
       ...(extension.options.extraTags ?? []),
       ...(this.store.managerSettings.extraTags?.[extension.name] ?? []),
-    ];
+    ]);
 
     for (const tag of allTags) {
       invariant(isExtensionTag(tag), {
         code: ErrorConstant.EXTENSION,
-        message: `The tag provided by the extension: ${extension.constructorName} is not supported by the editor. To add new tags you can use the 'mutateTag' method.`,
+        message: `The tag provided by the extension: ${extension.constructorName} is not supported by the editor. To add custom tags you can use the 'mutateTag' method.`,
       });
 
       // Add tags to the combined tags stored here.
-      this.#allTags[tag].push(extension.name);
+      this.allTags[tag].push(extension.name);
 
       if (isPlainExtension(extension)) {
-        this.#plainTags[tag].push(extension.name);
+        this.plainTags[tag].push(extension.name);
       }
 
       if (isMarkExtension(extension)) {
-        this.#markTags[tag].push(extension.name);
+        this.markTags[tag].push(extension.name);
       }
 
       if (isNodeExtension(extension)) {
-        this.#nodeTags[tag].push(extension.name);
+        this.nodeTags[tag].push(extension.name);
       }
     }
+
+    // All tags available.
+    extension.tags = [...allTags];
   }
 }
 
@@ -177,6 +173,14 @@ declare global {
 
     interface BaseExtension {
       /**
+       * The generated tags for this extension are added here. Do not add this
+       * property to your extensions as it will be overridden.
+       */
+      tags: ExtensionTagType[];
+
+      /**
+       * Dynamically create tags for the extension.
+       *
        * Tags are a helpful tool for categorizing the behavior of an extension.
        * This behavior is later grouped in the `Manager` and passed to the
        * `extensionStore`. Tags can be used by commands that need to remove all
@@ -189,40 +193,50 @@ declare global {
        * group when they are found there.
        *
        * There are internally defined tags but it's also possible to define any
-       * custom string as a tag. See {@link ExtensionTag}
+       * custom string as a tag. See [[`ExtensionTag`]].
        */
-      tags?: ExtensionTagType[];
+      createTags?(): ExtensionTagType[];
     }
+    type A = UseDefault<never, string>;
 
-    interface ManagerStore<Combined extends AnyCombinedUnion> {
+    interface ManagerStore<ExtensionUnion extends AnyExtension> {
       /**
        * All the tags provided by the configured extensions.
        */
-      tags: Readonly<CombinedTags<GetNameUnion<Combined>>>;
+      tags: Readonly<
+        CombinedTags<
+          GetNameUnion<ExtensionUnion> extends never ? string : GetNameUnion<ExtensionUnion>
+        >
+      >;
 
       /**
        * All the plain extension tags provided for the editor.
        */
-      plainTags: Readonly<CombinedTags<GetPlainNames<Combined>>>;
+      plainTags: Readonly<
+        CombinedTags<
+          GetPlainNameUnion<ExtensionUnion> extends never
+            ? string
+            : GetPlainNameUnion<ExtensionUnion>
+        >
+      >;
 
       /**
        * All the node extension tags provided for the editor.
        */
-      nodeTags: Readonly<CombinedTags<GetNodeNameUnion<Combined>>>;
+      nodeTags: Readonly<
+        CombinedTags<
+          GetNodeNameUnion<ExtensionUnion> extends never ? string : GetNodeNameUnion<ExtensionUnion>
+        >
+      >;
 
       /**
        * All the mark extension tags provided for the editor.
        */
-      markTags: Readonly<CombinedTags<GetMarkNameUnion<Combined>>>;
-    }
-
-    interface ExcludeOptions {
-      /**
-       * Whether to exclude the tags plugin for this extension.
-       *
-       * @default undefined
-       */
-      tags?: boolean;
+      markTags: Readonly<
+        CombinedTags<
+          GetMarkNameUnion<ExtensionUnion> extends never ? string : GetMarkNameUnion<ExtensionUnion>
+        >
+      >;
     }
 
     interface ExtensionStore {

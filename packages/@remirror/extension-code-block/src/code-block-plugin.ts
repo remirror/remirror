@@ -68,7 +68,7 @@ export class CodeBlockState {
    * Apply the state and update decorations when a change has happened in the
    * editor.
    */
-  apply(tr: Transaction): this {
+  apply(tr: Transaction, state: EditorState): this {
     if (!tr.docChanged) {
       return this;
     }

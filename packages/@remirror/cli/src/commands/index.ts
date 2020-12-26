@@ -27,6 +27,7 @@ export class VersionCommand extends BaseCommand {
 }
 
 export { BundleCommand } from './bundle';
+export { CreateCommand } from './create';
 
 declare global {
   namespace RemirrorCli {

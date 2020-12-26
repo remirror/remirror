@@ -1,12 +1,9 @@
 {
-  "main": "dist/styles.cjs.js",
-  "module": "dist/styles.esm.js",
+  "main": "dist/remirror-styles-emotion.cjs.js",
+  "module": "dist/remirror-styles-emotion.esm.js",
   "browser": {
-    "./dist/styles.cjs.js": "./dist/styles.browser.cjs.js",
-    "./dist/styles.esm.js": "./dist/styles.browser.esm.js"
+    "./dist/remirror-styles-emotion.cjs.js": "./dist/remirror-styles-emotion.browser.cjs.js",
+    "./dist/remirror-styles-emotion.esm.js": "./dist/remirror-styles-emotion.browser.esm.js"
   },
-  "types": "dist/styles.cjs.d.ts",
-  "preconstruct": {
-    "source": "../src/emotion.tsx"
-  }
+  "types": "dist/remirror-styles-emotion.cjs.d.ts"
 }

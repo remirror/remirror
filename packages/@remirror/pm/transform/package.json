@@ -1,12 +1,9 @@
 {
-  "main": "dist/pm.cjs.js",
-  "module": "dist/pm.esm.js",
+  "main": "dist/remirror-pm-transform.cjs.js",
+  "module": "dist/remirror-pm-transform.esm.js",
   "browser": {
-    "./dist/pm.cjs.js": "./dist/pm.browser.cjs.js",
-    "./dist/pm.esm.js": "./dist/pm.browser.esm.js"
+    "./dist/remirror-pm-transform.cjs.js": "./dist/remirror-pm-transform.browser.cjs.js",
+    "./dist/remirror-pm-transform.esm.js": "./dist/remirror-pm-transform.browser.esm.js"
   },
-  "types": "dist/pm.cjs.d.ts",
-  "preconstruct": {
-    "source": "../src/transform"
-  }
+  "types": "dist/remirror-pm-transform.cjs.d.ts"
 }

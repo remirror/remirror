@@ -1,9 +1,9 @@
 import { RemirrorTestChain } from 'jest-remirror';
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 import type { RemirrorManager } from '@remirror/core';
 import type { HistoryExtension } from '@remirror/extension-history';
-import { createReactManager, ReactCombinedUnion, RemirrorProvider } from '@remirror/react';
+import { createReactManager, ReactExtensionUnion, Remirror } from '@remirror/react';
 import { act, DefaultEditor, strictRender } from '@remirror/testing/react';
 
 import { useHistory } from '../use-history';
@@ -21,15 +21,15 @@ const HookConsumer = () => {
 };
 
 interface Props {
-  manager: RemirrorManager<ReactCombinedUnion<HistoryExtension>>;
+  manager: RemirrorManager<ReactExtensionUnion<HistoryExtension>>;
 }
 
 const Wrapper: FC<Props> = ({ manager }) => {
   return (
-    <RemirrorProvider manager={manager} autoFocus={true}>
+    <Remirror manager={manager} autoFocus={true}>
       <DefaultEditor />
       <HookConsumer />
-    </RemirrorProvider>
+    </Remirror>
   );
 };
 

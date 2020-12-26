@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { fireEvent, strictRender } from '@remirror/testing/react';
 
 import { useMultishift } from '../multishift';

@@ -6,13 +6,12 @@
 '@remirror/extension-placeholder': patch
 '@remirror/extension-search': patch
 '@remirror/extension-yjs': patch
-'@remirror/preset-embed': patch
+'@remirror/extension-embed': patch
 '@remirror/preset-react': patch
 '@remirror/preset-table': patch
 '@remirror/react': patch
 '@remirror/react-components': patch
 '@remirror/react-social': patch
-'@remirror/react-wysiwyg': patch
 '@remirror/theme': patch
 'jest-remirror': patch
 ---

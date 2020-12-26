@@ -13,18 +13,30 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-underline.cjs.js",
-  "module": "dist/extension-underline.esm.js",
-  "browser": {
-    "./dist/extension-underline.cjs.js": "./dist/extension-underline.browser.cjs.js",
-    "./dist/extension-underline.esm.js": "./dist/extension-underline.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-underline.esm.js",
+      "require": "./dist/remirror-extension-underline.cjs.js",
+      "browser": "./dist/remirror-extension-underline.browser.esm.js",
+      "types": "./dist/remirror-extension-underline.cjs.d.ts",
+      "default": "./dist/remirror-extension-underline.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-underline.cjs.d.ts",
+  "main": "dist/remirror-extension-underline.cjs.js",
+  "module": "dist/remirror-extension-underline.esm.js",
+  "browser": {
+    "./dist/remirror-extension-underline.cjs.js": "./dist/remirror-extension-underline.browser.cjs.js",
+    "./dist/remirror-extension-underline.esm.js": "./dist/remirror-extension-underline.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-underline.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0"
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",

@@ -1,10 +1,7 @@
-import 'codemirror/mode/meta';
-
-import CodeMirror from 'codemirror';
-
 import { CommandFunction, findParentNodeOfType, isEqual, NodeType } from '@remirror/core';
 import { Selection } from '@remirror/pm/state';
 
+import ref from './codemirror-ref';
 import type { CodeMirrorExtensionAttributes } from './codemirror-types';
 
 /**
@@ -71,7 +68,7 @@ export function updateNodeAttributes(type: NodeType) {
  */
 export function parseLanguageToMode(language?: string): string | null {
   if (language) {
-    const mime = CodeMirror.findModeByName(language);
+    const mime = ref.CodeMirror.findModeByName(language);
     return mime?.mode;
   }
 

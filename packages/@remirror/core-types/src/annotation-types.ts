@@ -10,12 +10,13 @@ import type {
   RemoveFlavoring,
   Shape,
   StringKey,
+  TupleUnion,
 } from './base-types';
 
 type StaticAnnotation = Flavoring<'StaticAnnotation'>;
 type DynamicAnnotation = Flavoring<'DynamicAnnotation'>;
 type HandlerAnnotation = Flavoring<'HandlerAnnotation'>;
-type CustomHandlerAnnotation = Flavoring<'CustomAnnotation'>;
+type CustomHandlerAnnotation = Flavoring<'CustomHandlerAnnotation'>;
 
 /**
  * This type is in response to the issue raised
@@ -24,14 +25,27 @@ type CustomHandlerAnnotation = Flavoring<'CustomAnnotation'>;
  */
 type AcceptUndefinedAnnotation = Flavoring<'AcceptUndefinedAnnotation'>;
 
-export type RemoveAnnotation<Type> = RemoveFlavoring<Type>;
+export type RemoveAnnotation<Type> = RemoveFlavoring<
+  RemoveFlavoring<
+    RemoveFlavoring<
+      RemoveFlavoring<RemoveFlavoring<Type, 'StaticAnnotation'>, 'DynamicAnnotation'>,
+      'HandlerAnnotation'
+    >,
+    'CustomHandlerAnnotation'
+  >,
+  'AcceptUndefinedAnnotation'
+>;
+
+export type RemoveAnnotations<Options extends Shape> = {
+  [Key in keyof Options]: RemoveAnnotation<Options[Key]>;
+};
 
 /**
  * Wrap your type in this to represent a static option, which can only be set at
  * instantiation.
  *
  * ```ts
- * import { Static, PlainExtension } from 'remirror/core';
+ * import { Static, PlainExtension } from 'remirror';
  *
  * interface MyExtensionOptions {
  *   content: Static<string>;
@@ -64,7 +78,7 @@ export type Static<Type> = Type & StaticAnnotation;
  * This is the default type assumed and it can be left unused.
  *
  * ```ts
- * import { Dynamic, PlainExtension } from 'remirror/core';
+ * import { Dynamic, PlainExtension } from 'remirror';
  *
  * interface MyExtensionOptions {
  *   isSwitchedOn: Dynamic<boolean>;
@@ -106,7 +120,7 @@ export type AcceptUndefined<Type> = Type & AcceptUndefinedAnnotation;
  * created to automate this.
  *
  * ```ts
- * import { PlainExtension, extensionDecorator } from 'remirror/core';
+ * import { PlainExtension, extensionDecorator } from 'remirror';
  * interface CustomOptions {
  *   simple: boolean; // Automatically a dynamic property
  *   onChange: Handler<(value: string) => void>;
@@ -252,10 +266,12 @@ export type HandlerKey<Options extends ValidOptions> = StringKey<GetHandler<Opti
 export type StaticKey<Options extends ValidOptions> = StringKey<GetStatic<Options>>;
 export type DynamicKey<Options extends ValidOptions> = StringKey<GetDynamic<Options>>;
 export type CustomHandlerKey<Options extends ValidOptions> = StringKey<GetCustomHandler<Options>>;
-export type HandlerKeyList<Options extends ValidOptions> = Array<HandlerKey<Options>>;
-export type StaticKeyList<Options extends ValidOptions> = Array<StaticKey<Options>>;
-export type DynamicKeyList<Options extends ValidOptions> = Array<DynamicKey<Options>>;
-export type CustomHandlerKeyList<Options extends ValidOptions> = Array<CustomHandlerKey<Options>>;
+export type HandlerKeyList<Options extends ValidOptions> = TupleUnion<HandlerKey<Options>>;
+export type StaticKeyList<Options extends ValidOptions> = TupleUnion<StaticKey<Options>>;
+export type DynamicKeyList<Options extends ValidOptions> = TupleUnion<DynamicKey<Options>>;
+export type CustomHandlerKeyList<Options extends ValidOptions> = TupleUnion<
+  CustomHandlerKey<Options>
+>;
 
 declare global {
   namespace Remirror {

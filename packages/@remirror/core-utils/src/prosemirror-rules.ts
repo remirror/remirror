@@ -1,18 +1,16 @@
-import { findMatches, isFunction, isNullOrUndefined } from '@remirror/core-helpers';
+import { ErrorConstant } from '@remirror/core-constants';
+import { invariant, isFunction, isNullOrUndefined, isString } from '@remirror/core-helpers';
 import type {
   EditorStateParameter,
   GetAttributesParameter,
   Mark,
+  MarkType,
   MarkTypeParameter,
   NodeTypeParameter,
-  ProsemirrorNode,
-  ProsemirrorPlugin,
   RegExpParameter,
   TransactionParameter,
 } from '@remirror/core-types';
 import { InputRule } from '@remirror/pm/inputrules';
-import { Fragment, Slice } from '@remirror/pm/model';
-import { Plugin, PluginKey } from '@remirror/pm/state';
 import { markActiveInRange } from '@remirror/pm/suggest';
 
 export interface BeforeDispatchParameter extends TransactionParameter {
@@ -39,7 +37,7 @@ export interface BaseInputRuleParameter {
      state.
    *
    * ```ts
-   * import { nodeInputRule } from 'remirror/core';
+   * import { nodeInputRule } from 'remirror';
    *
    * nodeInputRule({
    *   type,
@@ -69,7 +67,7 @@ export interface UpdateCaptureTextParameter {
   /**
    * The first capture group from the matching input rule.
    */
-  captureGroup: string;
+  captureGroup: string | undefined;
 
   /**
    * The text of the full match which was received.
@@ -128,61 +126,6 @@ interface MarkInputRuleParameter
 }
 
 /**
- * Creates a paste rule based on the provided regex for the provided mark type.
- *
- * TODO extract this into a separate package
- * - All contained in one plugin.
- * - Support for node paste rules
- * - Support for pasting different kinds of content.
- */
-export function markPasteRule(parameter: MarkInputRuleParameter): ProsemirrorPlugin {
-  const { regexp, type, getAttributes } = parameter;
-  const handler = (fragment: Fragment) => {
-    const nodes: ProsemirrorNode[] = [];
-
-    fragment.forEach((child) => {
-      if (child.isText) {
-        const text = child.text ?? '';
-        let pos = 0;
-
-        findMatches(text, regexp).forEach((match) => {
-          if (!match[1]) {
-            return;
-          }
-
-          const start = match.index;
-          const end = start + match[0].length;
-          const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
-
-          if (start > 0) {
-            nodes.push(child.cut(pos, start));
-          }
-
-          nodes.push(child.cut(start, end).mark(type.create(attributes).addToSet(child.marks)));
-
-          pos = end;
-        });
-
-        if (text && pos < text.length) {
-          nodes.push(child.cut(pos));
-        }
-      } else {
-        nodes.push(child.copy(handler(child.content)));
-      }
-    });
-
-    return Fragment.fromArray(nodes);
-  };
-
-  return new Plugin({
-    key: new PluginKey('pasteRule'),
-    props: {
-      transformPasted: (slice) => new Slice(handler(slice.content), slice.openStart, slice.openEnd),
-    },
-  });
-}
-
-/**
  * Creates an input rule based on the provided regex for the provided mark type.
  */
 export function markInputRule(parameter: MarkInputRuleParameter): SkippableInputRule {
@@ -195,27 +138,42 @@ export function markInputRule(parameter: MarkInputRuleParameter): SkippableInput
     updateCaptured,
   } = parameter;
 
+  let markType: MarkType | undefined;
+
   const rule: SkippableInputRule = new InputRule(regexp, (state, match, start, end) => {
-    const { tr } = state;
+    const { tr, schema, doc } = state;
+
+    if (!markType) {
+      markType = isString(type) ? schema.marks[type] : type;
+
+      invariant(markType, {
+        code: ErrorConstant.SCHEMA,
+        message: `Mark type: ${type} does not exist on the current schema.`,
+      });
+    }
 
     // These are the attributes which are added to the mark and they can be
     // obtained from the match if a function is provided.
     const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
+    const $from = doc.resolve(start);
+    const $to = doc.resolve(end);
 
-    const $from = state.doc.resolve(start);
-    const $to = state.doc.resolve(end);
+    let captureGroup = match[1];
+    let fullMatch = match[0];
 
-    if (rule.invalidMarks && markActiveInRange({ $from, $to }, rule.invalidMarks)) {
+    if (
+      fullMatch == null ||
+      (rule.invalidMarks && markActiveInRange({ $from, $to }, rule.invalidMarks))
+    ) {
       return null;
     }
 
     // Update the internal values with the user provided method.
-    const details =
-      updateCaptured?.({ captureGroup: match[1], fullMatch: match[0], start, end }) ?? {};
+    const details = updateCaptured?.({ captureGroup, fullMatch, start, end }) ?? {};
 
     // Store the updated values or the original.
-    const captureGroup = details.captureGroup ?? match[1];
-    const fullMatch = details.fullMatch ?? match[0];
+    captureGroup = details.captureGroup ?? captureGroup;
+    fullMatch = details.fullMatch ?? fullMatch;
     start = details.start ?? start;
     end = details.end ?? end;
 
@@ -250,7 +208,7 @@ export function markInputRule(parameter: MarkInputRuleParameter): SkippableInput
       markEnd = start + startSpaces + captureGroup.length;
     }
 
-    tr.addMark(start, markEnd, type.create(attributes));
+    tr.addMark(start, markEnd, markType.create(attributes));
 
     // Make sure not to reactivate any marks which had previously been
     // deactivated. By keeping track of the initial stored marks we are able to
@@ -279,16 +237,24 @@ export function nodeInputRule(parameter: NodeInputRuleParameter): SkippableInput
 
   const rule: SkippableInputRule = new InputRule(regexp, (state, match, start, end) => {
     const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
-    const { tr } = state;
+    const { tr, schema } = state;
+    const nodeType = isString(type) ? schema.nodes[type] : type;
     const captureGroup = match[1];
     const fullMatch = match[0];
 
-    if (rule.shouldSkip?.({ state, captureGroup, fullMatch, start, end, ruleType: 'plain' })) {
+    if (
+      fullMatch == null ||
+      rule.shouldSkip?.({ state, captureGroup, fullMatch, start, end, ruleType: 'plain' })
+    ) {
       return null;
     }
 
-    tr.replaceWith(start - 1, end, type.create(attributes));
+    invariant(nodeType, {
+      code: ErrorConstant.SCHEMA,
+      message: `No node exists for ${type} in the schema.`,
+    });
 
+    tr.replaceWith(start - 1, end, nodeType.create(attributes));
     beforeDispatch?.({ tr, match, start, end });
 
     return tr;
@@ -315,7 +281,10 @@ export function plainInputRule(parameter: PlainInputRuleParameter): SkippableInp
     const captureGroup = match[1];
     const fullMatch = match[0];
 
-    if (rule.shouldSkip?.({ state, captureGroup, fullMatch, start, end, ruleType: 'plain' })) {
+    if (
+      fullMatch == null ||
+      rule.shouldSkip?.({ state, captureGroup, fullMatch, start, end, ruleType: 'plain' })
+    ) {
       return null;
     }
 

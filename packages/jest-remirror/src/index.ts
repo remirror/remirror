@@ -4,7 +4,7 @@ export { renderEditor, RemirrorTestChain } from './jest-remirror-editor';
 export { setupRemirrorEnvironment } from './jest-remirror-environment';
 export type { RenderEditorParameter, TaggedProsemirrorNode } from './jest-remirror-types';
 
-export { extensionValidityTest, presetValidityTest } from './jest-remirror-validator';
+export { extensionValidityTest } from './jest-remirror-validator';
 
 declare global {
   interface Window {

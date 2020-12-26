@@ -1,22 +1,21 @@
-const { kebabCase } = require('case-anything');
-
 /**
- * @type import('linaria/lib/babel/types').StrictOptions
+ * @type {import('@linaria/babel').StrictOptions}
  */
 const config = {
   displayName: true,
   classNameSlug: (_hash, title) => {
-    return `remirror-${kebabCase(title.replace(/(?:Styles?|Component)$/g, ''))}`;
+    return `remirror-${title.toLowerCase().split('_').join('-')}`;
   },
   babelOptions: require('../base.babel'),
   rules: [
     {
-      action: require('linaria/evaluators').shaker,
+      action: require('@linaria/shaker').default,
     },
     {
       action: 'ignore',
-      test: (modulePath) =>
-        /node_modules/.test(modulePath) && !/node_modules\/(@?remirror)/.test(modulePath),
+      test: (modulePath) => {
+        return /node_modules/.test(modulePath) && !/node_modules\/(@?remirror)/.test(modulePath);
+      },
     },
   ],
 };

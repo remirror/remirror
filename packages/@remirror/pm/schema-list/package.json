@@ -1,12 +1,9 @@
 {
-  "main": "dist/pm.cjs.js",
-  "module": "dist/pm.esm.js",
+  "main": "dist/remirror-pm-schema-list.cjs.js",
+  "module": "dist/remirror-pm-schema-list.esm.js",
   "browser": {
-    "./dist/pm.cjs.js": "./dist/pm.browser.cjs.js",
-    "./dist/pm.esm.js": "./dist/pm.browser.esm.js"
+    "./dist/remirror-pm-schema-list.cjs.js": "./dist/remirror-pm-schema-list.browser.cjs.js",
+    "./dist/remirror-pm-schema-list.esm.js": "./dist/remirror-pm-schema-list.browser.esm.js"
   },
-  "types": "dist/pm.cjs.d.ts",
-  "preconstruct": {
-    "source": "../src/schema-list"
-  }
+  "types": "dist/remirror-pm-schema-list.cjs.d.ts"
 }

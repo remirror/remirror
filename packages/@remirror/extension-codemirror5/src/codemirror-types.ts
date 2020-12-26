@@ -1,5 +1,6 @@
 import type CodeMirror from 'codemirror';
-import type { ProsemirrorAttributes } from 'remirror/core';
+
+import type { ProsemirrorAttributes, Static } from '@remirror/core';
 
 export interface CodeMirrorExtensionOptions {
   /**
@@ -8,6 +9,11 @@ export interface CodeMirrorExtensionOptions {
    * @default undefined
    */
   defaultCodeMirrorConfig?: CodeMirror.EditorConfiguration | null;
+
+  /**
+   * The instance of codemirror to use.
+   */
+  CodeMirror?: Static<typeof CodeMirror>;
 }
 
 export interface CodeMirrorExtensionAttributes extends ProsemirrorAttributes {

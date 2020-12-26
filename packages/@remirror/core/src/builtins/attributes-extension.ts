@@ -1,8 +1,10 @@
-import { bool, object } from '@remirror/core-helpers';
+import { cx } from '@linaria/core';
+import { ClassName } from '@linaria/core/types/cx';
+
+import { object } from '@remirror/core-helpers';
 import type { ProsemirrorAttributes } from '@remirror/core-types';
 
-import { PlainExtension } from '../extension';
-import type { AnyCombinedUnion } from '../preset';
+import { AnyExtension, PlainExtension } from '../extension';
 
 /**
  * This extension allows others extension to add the `createAttributes` method
@@ -14,15 +16,15 @@ import type { AnyCombinedUnion } from '../preset';
  * extension. High priority extensions have preference over the lower priority
  * extensions.
  *
- * @builtin
+ * @category Builtin Extension
  */
 export class AttributesExtension extends PlainExtension {
   get name() {
     return 'attributes' as const;
   }
 
-  #attributeList: ProsemirrorAttributes[] = [];
-  #attributeObject: ProsemirrorAttributes = object();
+  private attributeList: ProsemirrorAttributes[] = [];
+  private attributeObject: ProsemirrorAttributes = object();
 
   /**
    * Create the attributes object on initialization.
@@ -43,43 +45,50 @@ export class AttributesExtension extends PlainExtension {
   };
 
   private transformAttributes() {
-    // Reset this attributes
-    this.#attributeList = [];
-    this.#attributeObject = object();
+    this.attributeObject = object();
 
-    extensionLoop: for (const extension of this.store.extensions) {
-      if (
-        !extension.createAttributes ||
-        this.store.managerSettings.exclude?.attributes ||
-        extension.options.exclude?.attributes
-      ) {
-        continue extensionLoop;
+    // Exit early when the manager excludes these settings.
+    if (this.store.managerSettings.exclude?.attributes) {
+      this.store.setStoreKey('attributes', this.attributeObject);
+      return;
+    }
+
+    // Reset this attributes
+    this.attributeList = [];
+
+    for (const extension of this.store.extensions) {
+      if (extension.options.exclude?.attributes) {
+        continue;
       }
+
+      const createdAttributes = extension.createAttributes?.();
+      const attributes = {
+        ...createdAttributes,
+        class: cx(...(extension.classNames ?? []), createdAttributes?.class),
+      };
 
       // Inserted at the start of the list so that when combining the full
       // attribute object the higher priority extension attributes are
       // preferred to the lower priority since they merge with the object
       // later.
-      this.#attributeList.unshift(extension.createAttributes());
+      this.attributeList.unshift(attributes);
     }
 
-    for (const attributes of this.#attributeList) {
-      this.#attributeObject = {
-        ...this.#attributeObject,
+    for (const attributes of this.attributeList) {
+      this.attributeObject = {
+        ...this.attributeObject,
         ...attributes,
-        class:
-          (this.#attributeObject.class ?? '') + (bool(attributes.class) ? attributes.class : '') ||
-          '',
+        class: cx(this.attributeObject.class, attributes.class),
       };
     }
 
-    this.store.setStoreKey('attributes', this.#attributeObject);
+    this.store.setStoreKey('attributes', this.attributeObject);
   }
 }
 
 declare global {
   namespace Remirror {
-    interface ManagerStore<Combined extends AnyCombinedUnion> {
+    interface ManagerStore<ExtensionUnion extends AnyExtension> {
       /**
        * The attributes to be added to the prosemirror editor.
        */
@@ -110,7 +119,12 @@ declare global {
       attributes?: boolean;
     }
 
-    interface ExtensionCreatorMethods {
+    interface BaseExtension {
+      /**
+       * A list of class names to add to the main editor element.
+       */
+      classNames?: ClassName[];
+
       /**
        * Allows the extension to modify the attributes for the Prosemirror editor
        * dom element.

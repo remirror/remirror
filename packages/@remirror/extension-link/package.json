@@ -13,19 +13,32 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-link.cjs.js",
-  "module": "dist/extension-link.esm.js",
-  "browser": {
-    "./dist/extension-link.cjs.js": "./dist/extension-link.browser.cjs.js",
-    "./dist/extension-link.esm.js": "./dist/extension-link.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-link.esm.js",
+      "require": "./dist/remirror-extension-link.cjs.js",
+      "browser": "./dist/remirror-extension-link.browser.esm.js",
+      "types": "./dist/remirror-extension-link.cjs.d.ts",
+      "default": "./dist/remirror-extension-link.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-link.cjs.d.ts",
+  "main": "dist/remirror-extension-link.cjs.js",
+  "module": "dist/remirror-extension-link.esm.js",
+  "browser": {
+    "./dist/remirror-extension-link.cjs.js": "./dist/remirror-extension-link.browser.cjs.js",
+    "./dist/remirror-extension-link.esm.js": "./dist/remirror-extension-link.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-link.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
-    "@remirror/extension-events": "1.0.0-next.60"
+    "@babel/runtime": "^7.12.5",
+    "@remirror/extension-events": "1.0.0-next.60",
+    "@remirror/messages": "0.0.0",
+    "type-fest": "^0.20.2"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",

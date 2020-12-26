@@ -13,18 +13,30 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-strike.cjs.js",
-  "module": "dist/extension-strike.esm.js",
-  "browser": {
-    "./dist/extension-strike.cjs.js": "./dist/extension-strike.browser.cjs.js",
-    "./dist/extension-strike.esm.js": "./dist/extension-strike.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-strike.esm.js",
+      "require": "./dist/remirror-extension-strike.cjs.js",
+      "browser": "./dist/remirror-extension-strike.browser.esm.js",
+      "types": "./dist/remirror-extension-strike.cjs.d.ts",
+      "default": "./dist/remirror-extension-strike.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-strike.cjs.d.ts",
+  "main": "dist/remirror-extension-strike.cjs.js",
+  "module": "dist/remirror-extension-strike.esm.js",
+  "browser": {
+    "./dist/remirror-extension-strike.cjs.js": "./dist/remirror-extension-strike.browser.cjs.js",
+    "./dist/remirror-extension-strike.esm.js": "./dist/remirror-extension-strike.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-strike.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0"
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",

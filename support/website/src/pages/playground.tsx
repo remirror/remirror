@@ -1,34 +1,39 @@
+/** @jsxImportSource @emotion/react */
+
+import '@fontsource/fira-code';
+import '@fontsource/rubik';
+
 import Head from '@docusaurus/Head';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import styled from '@emotion/styled';
 import AnnouncementBar from '@theme/AnnouncementBar';
-import Footer from '@theme/Footer';
 import Navbar from '@theme/Navbar';
 import ThemeProvider from '@theme/ThemeProvider';
 import UserPreferencesProvider from '@theme/UserPreferencesProvider';
-import clsx from 'clsx';
-import React from 'react';
 
 import { Playground } from '@remirror/playground';
-
-import styles from './playground.module.css';
 
 const PlaygroundPage = (props: any) => {
   const { siteConfig } = useDocusaurusContext();
   const { favicon, url: siteUrl } = siteConfig!;
   const defaultImage = siteConfig?.themeConfig?.image;
-  const { noFooter, description, image, keywords, permalink, version } = props;
+  const { description, image, keywords, permalink, version } = props;
   const metaImage = image || defaultImage;
   const metaImageUrl = useBaseUrl(metaImage, { absolute: true });
   const faviconUrl = useBaseUrl(favicon);
 
   return (
-    <div className={clsx('playground', styles.playground)}>
+    <PageWrapper>
       <ThemeProvider>
         <UserPreferencesProvider>
           <Head>
             {/* TODO: Do not assume that it is in english language site */}
             <html lang='en' />
+            <link
+              href='https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap'
+              rel='stylesheet'
+            />
             <script src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
             <script src='https://unpkg.com/prettier@2.1.2/standalone.js'></script>
             <script src='https://unpkg.com/prettier@2.1.2/parser-typescript.js'></script>
@@ -40,7 +45,7 @@ const PlaygroundPage = (props: any) => {
             {version ?? <meta name='docsearch:version' content={version} />}
             {keywords?.length ?? <meta name='keywords' content={keywords?.join(',')} />}
             {metaImage ?? <meta property='og:image' content={metaImageUrl} />}
-            {metaImage ?? <meta property='twitter:image' content={metaImageUrl} />}
+            <meta property='twitter:image' content={metaImageUrl} />
             {metaImage ?? <meta name='twitter:image:alt' content='Image for Remirror Playground' />}
             {permalink ?? <meta property='og:url' content={siteUrl + permalink} />}
             {permalink ?? <link rel='canonical' href={siteUrl + permalink} />}
@@ -48,23 +53,28 @@ const PlaygroundPage = (props: any) => {
           </Head>
           <AnnouncementBar />
           <Navbar />
-          <Head></Head>
-          <div
-            className='custom-main-wrapper'
-            style={{
-              /* TODO: move this to CSS, make sensible */
-              position: 'relative',
-              height: 'calc(100vh - 17rem + 3px)',
-              minHeight: '400px',
-            }}
-          >
+          <PlaygroundWrapper>
             <Playground />
-          </div>
-          {!noFooter && <Footer />}
+          </PlaygroundWrapper>
         </UserPreferencesProvider>
       </ThemeProvider>
-    </div>
+    </PageWrapper>
   );
 };
+
+const PageWrapper = styled.div`
+  width: 100%;
+  height: 100vh;
+
+  .navbar--fixed-top {
+    position: fixed;
+  }
+`;
+
+const PlaygroundWrapper = styled.div`
+  margin-top: 64px;
+  height: 100px;
+  max-height: 100px;
+`;
 
 export default PlaygroundPage;

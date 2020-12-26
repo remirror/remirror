@@ -1,22 +1,18 @@
-import { sort } from '@remirror/core';
+import { FromToParameter, sort } from '@remirror/core';
 
-import type { Annotation } from './types';
+import type { Annotation, OmitText } from './types';
 
 /**
  * Reflects one non-overlapping segment
  */
-export interface Segment<A extends Annotation> {
-  from: number;
-  to: number;
-  annotations: Array<AnnotationWithoutText<A>>;
+export interface Segment<Type extends Annotation> extends FromToParameter {
+  annotations: Array<OmitText<Type>>;
 }
 
-interface Item<A extends Annotation> {
+interface Item<Type extends Annotation> {
   type: 'start' | 'end';
-  annotation: AnnotationWithoutText<A>;
+  annotation: OmitText<Type>;
 }
-
-type AnnotationWithoutText<A extends Annotation> = Omit<A, 'text'>;
 
 /**
  * Creates non-overlapping segments based on overlapping annotations.
@@ -37,7 +33,7 @@ type AnnotationWithoutText<A extends Annotation> = Omit<A, 'text'>;
  * https://discuss.prosemirror.net/t/how-to-style-overlapping-inline-decorations/3162
  */
 export function toSegments<A extends Annotation>(
-  annotations: Array<AnnotationWithoutText<A>>,
+  annotations: Array<OmitText<A>>,
 ): Array<Segment<A>> {
   type AnnotationItem = Item<A>;
   type AnnotationSegment = Segment<A>;
@@ -63,7 +59,7 @@ export function toSegments<A extends Annotation>(
   const sortedPositions = sort([...positionMap.entries()], ([a], [z]) => a - z);
 
   // Tracks the annotations active in the currently analyzed segment
-  let activeAnnotations: Array<AnnotationWithoutText<A>> = [];
+  let activeAnnotations: Array<OmitText<A>> = [];
 
   // Tracks the last from state
   let from = 0;

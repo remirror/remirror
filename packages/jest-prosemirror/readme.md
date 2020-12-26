@@ -13,9 +13,9 @@ You want to write tests for some of your prosemirror editor but you don't know w
 ## Installation
 
 ```bash
-yarn add jest-prosemirror@next # yarn
-pnpm add jest-prosemirror@next # pnpm
-npm install jest-prosemirror@next # npm
+yarn add jest-prosemirror # yarn
+pnpm add jest-prosemirror # pnpm
+npm install jest-prosemirror # npm
 ```
 
 ## Getting started

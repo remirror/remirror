@@ -1,12 +1,15 @@
 ---
+hide_title: true
 title: Extra Attributes
 ---
 
-In ProseMirror each node and mark can have certain attributes. These attribute are stored on the dom and can be retrieved from the dom via the created `MarkSpec` or the `NodeSpec`.
+# Extra Attributes
+
+In ProseMirror each node and mark can define attributes that affect it's behaviour at runtime. These attribute are stored on the dom and can be retrieved from the dom via the created `MarkSpec` / `NodeSpec`.
 
 Attributes can also set default values.
 
-One constraint that ProseMirror sets is that attributes must be declared ahead of time. There is no runtime ability to add undeclared attributes dynamically. This can be an issue when consuming a library like `Remirror`. Perhaps you want the `paragraph` functionality, but also want to add an extra attribute as well. This is where extra attributes come into play.
+One constraint that ProseMirror sets is that attributes must be declared ahead of time. There is no runtime ability to dynamically add attributes. This can be an issue when consuming a library like `Remirror`. Perhaps you want the `paragraph` functionality, but also want to add an extra attribute as well. This is where extra attributes come into play.
 
 :::note
 
@@ -19,15 +22,15 @@ The following is a work in progress. Please edit the page and provide your sugge
 Every extension can be given extra attributes when created.
 
 ```ts
-import { uniqueId } from 'remirror/core';
-import { ParagraphExtension } from 'remirror/extension/paragraph';
+import { uniqueId } from 'remirror';
+import { ParagraphExtension } from 'remirror/extensions';
 
 const paragraphExtension = new ParagraphExtension({
   extraAttributes: {
     id: {
       default: () => uniqueId(),
       parseDOM: (dom) => dom.id,
-      toDOM: (attrs) => attrs.id as string,
+      toDOM: (node) => node.attrs.id as string,
     },
   },
 });
@@ -38,8 +41,8 @@ The above has given a dynamic attribute `id`, which assigns a unique `id` to eve
 The above could have also been defined like this.
 
 ```ts
-import { uniqueId } from 'remirror/core';
-import { ParagraphExtension } from 'remirror/extension/paragraph';
+import { uniqueId } from 'remirror';
+import { ParagraphExtension } from 'remirror/extensions';
 
 const paragraphExtension = new ParagraphExtension({
   extraAttributes: {
@@ -75,9 +78,9 @@ const paragraphExtension = new ParagraphExtension({
 Extra attributes can also be added via the `RemirrorManager`. This can set attributes for a collection of nodes, marks and tags. This is very useful when adding attributes to multiple places in one sweep.
 
 ```ts
-import { RemirrorManager } from 'remirror/core';
-import { CorePreset } from 'remirror/preset/core';
-import { WysiwygPreset } from 'remirror/preset/wysiwyg';
+import { RemirrorManager } from 'remirror';
+import { CorePreset } from 'remirror/extensions';
+import { WysiwygPreset } from 'remirror/extensions';
 
 const manager = RemirrorManager.create(() => [new WysiwygPreset(), new CorePreset()], {
   extraAttributes: [

@@ -3,8 +3,10 @@
   "files": [],
   "references": [
     { "path": "./tsconfig.json" },
+    { "path": "./packages/@remirror/svelte/tsconfig.json" },
+    { "path": "./support/templates/tsconfig.json" },
     { "path": "./support/e2e/tsconfig.json" },
     { "path": "./support/storybook/tsconfig.json" },
-    { "path": "./support/examples/with-next/tsconfig.json" }
+    { "path": "./examples/with-next/tsconfig.json" }
   ]
 }

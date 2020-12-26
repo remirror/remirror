@@ -1,24 +1,38 @@
+import { BoldExtension } from 'remirror/extensions';
+
 import { ExtensionPriority } from '@remirror/core-constants';
 import type { Handler } from '@remirror/core-types';
-import { BoldExtension } from '@remirror/testing';
 
-import { extensionDecorator } from '../../decorators';
-import { PlainExtension } from '../extension-base';
+import { PlainExtension } from '../extension';
+import { extension } from '../extension-decorator';
 
 interface TestOptions {
   onChange: Handler<() => void>;
   custom: Handler<() => boolean>;
   onEscape: Handler<() => boolean>;
   onTextInput: Handler<() => string>;
+  incrementer: Handler<(stringNumber: string) => number>;
 }
 
-@extensionDecorator<TestOptions>({
-  handlerKeys: ['custom', 'onChange', 'onEscape', 'onTextInput'],
+@extension<TestOptions>({
+  handlerKeys: ['custom', 'onChange', 'onEscape', 'onTextInput', 'incrementer'],
   handlerKeyOptions: {
     custom: { earlyReturnValue: true },
     onEscape: { earlyReturnValue: (value) => value === true },
     __ALL__: { earlyReturnValue: (value) => value === '123' },
     onChange: { earlyReturnValue: '__IGNORE__' },
+    incrementer: {
+      reducer: {
+        accumulator: (accumulated, latestValue, stringNumber) => {
+          expect(stringNumber).toBeString();
+          return accumulated + latestValue;
+        },
+        getDefault: (stringNumber) => {
+          expect(stringNumber).toBeString();
+          return 0;
+        },
+      },
+    },
   },
 })
 class TestExtension extends PlainExtension<TestOptions> {
@@ -149,5 +163,21 @@ describe('Handlers', () => {
     testExtension.options.onChange();
 
     expect(values).toEqual([3, 2, 1]);
+  });
+
+  it('supports reducer functions', () => {
+    const testExtension = new TestExtension();
+    const firstHandler = jest.fn(() => 10);
+    const secondHandler = jest.fn(() => 100);
+    const thirdHandler = jest.fn(() => 1);
+
+    testExtension.addHandler('incrementer', firstHandler);
+    const dispose = testExtension.addHandler('incrementer', secondHandler);
+    testExtension.addHandler('incrementer', thirdHandler);
+
+    expect(testExtension.options.incrementer('20')).toBe(111);
+
+    dispose();
+    expect(testExtension.options.incrementer('20')).toBe(11);
   });
 });

@@ -1,15 +1,28 @@
-import { entries, isFunction, isPromise } from '@remirror/core-helpers';
+import { ErrorConstant } from '@remirror/core-constants';
+import {
+  assertGet,
+  entries,
+  invariant,
+  isFunction,
+  isPromise,
+  isString,
+} from '@remirror/core-helpers';
 import type {
+  AnyFunction,
   AttributesParameter,
   CommandFunction,
+  CommandFunctionParameter,
   EditorSchema,
   FromToParameter,
-  MarkAttributes,
+  MarkType,
   MarkTypeParameter,
-  RangeParameter,
+  PrimitiveSelection,
+  ProsemirrorAttributes,
+  ProsemirrorNode,
 } from '@remirror/core-types';
-import { convertCommand, isMarkActive } from '@remirror/core-utils';
+import { convertCommand, getCursor, getTextSelection, isMarkActive } from '@remirror/core-utils';
 import { toggleMark as originalToggleMark } from '@remirror/pm/commands';
+import { SelectionRange } from '@remirror/pm/state';
 
 /**
  * The parameter that is passed into `DelayedCommand`s.
@@ -61,6 +74,8 @@ export function isDelayedValue<Type>(value: unknown): value is DelayedValue<Type
  * @experimental This is still being worked on and the API is subject to changes
  * in structure going forward.
  *
+ * @deprecated use [[`DelayedCommand`]] instead.
+ *
  */
 export function delayedCommand<Value>({
   immediate,
@@ -95,10 +110,122 @@ export function delayedCommand<Value>({
   };
 }
 
+export type DelayedPromiseCreator<Value> = (parameter: CommandFunctionParameter) => Promise<Value>;
+export class DelayedCommand<Value> {
+  private failureHandlers: Array<CommandFunction<EditorSchema, { error: any }>> = [];
+  private successHandlers: Array<CommandFunction<EditorSchema, { value: Value }>> = [];
+  private validateHandlers: CommandFunction[] = [];
+
+  constructor(private promiseCreator: DelayedPromiseCreator<Value>) {}
+
+  /**
+   * The commands that will immediately be run and used to evaluate whether to
+   * proceed.
+   */
+  validate(handler: CommandFunction, method: 'push' | 'unshift' = 'push'): this {
+    this.validateHandlers[method](handler);
+    return this;
+  }
+
+  /**
+   * Add a success callback to the handler.
+   */
+  success(
+    handler: CommandFunction<EditorSchema, { value: Value }>,
+    method: 'push' | 'unshift' = 'push',
+  ): this {
+    this.successHandlers[method](handler);
+    return this;
+  }
+
+  /**
+   * Add a failure callback to the handler.
+   */
+  failure(
+    handler: CommandFunction<EditorSchema, { error: any }>,
+    method: 'push' | 'unshift' = 'push',
+  ): this {
+    this.failureHandlers[method](handler);
+    return this;
+  }
+
+  private runHandlers<Param extends CommandFunctionParameter>(
+    handlers: Array<(params: Param) => boolean>,
+    param: Param,
+  ): void {
+    for (const handler of handlers) {
+      if (!handler({ ...param, dispatch: () => {} })) {
+        break;
+      }
+    }
+
+    param.dispatch?.(param.tr);
+  }
+
+  /**
+   * Generate the `remirror` command.
+   */
+  readonly generateCommand = (): CommandFunction => {
+    return (parameter) => {
+      let isValid = true;
+      const { view } = parameter;
+
+      if (!view) {
+        return false;
+      }
+
+      for (const handler of this.validateHandlers) {
+        if (!handler(parameter)) {
+          isValid = false;
+          break;
+        }
+      }
+
+      if (!parameter.dispatch || !isValid) {
+        return isValid;
+      }
+
+      // Start the promise.
+      const deferred = this.promiseCreator(parameter);
+
+      deferred
+        .then((value) => {
+          this.runHandlers(this.successHandlers, {
+            value,
+            state: view.state,
+            tr: view.state.tr,
+            dispatch: view.dispatch,
+            view,
+          });
+        })
+        .catch((error) => {
+          this.runHandlers(this.failureHandlers, {
+            error,
+            state: view.state,
+            tr: view.state.tr,
+            dispatch: view.dispatch,
+            view,
+          });
+        });
+
+      return true;
+    };
+  };
+}
+
 export interface ToggleMarkParameter<Schema extends EditorSchema = EditorSchema>
   extends MarkTypeParameter<Schema>,
-    Partial<AttributesParameter>,
-    Partial<RangeParameter> {}
+    Partial<AttributesParameter> {
+  /**
+   * @deprecated use `selection` property instead.
+   */
+  range?: FromToParameter;
+
+  /**
+   * The selection point for toggling the chosen mark.
+   */
+  selection?: PrimitiveSelection;
+}
 
 /**
  * A custom `toggleMark` function that works for the `remirror` codebase.
@@ -117,20 +244,121 @@ export interface ToggleMarkParameter<Schema extends EditorSchema = EditorSchema>
  * - Supports passing a custom range.
  */
 export function toggleMark(parameter: ToggleMarkParameter): CommandFunction {
-  const { type, attrs, range } = parameter;
+  const { type, attrs, range, selection } = parameter;
 
   return (parameter) => {
-    const { dispatch, tr } = parameter;
+    const { dispatch, tr, state } = parameter;
+    const markType = isString(type) ? state.schema.marks[type] : type;
 
-    if (range) {
+    invariant(markType, {
+      code: ErrorConstant.SCHEMA,
+      message: `Mark type: ${type} does not exist on the current schema.`,
+    });
+
+    if (range || selection) {
+      const { from, to } = getTextSelection(selection ?? range ?? tr.selection, tr.doc);
       isMarkActive({ trState: tr, type, ...range })
-        ? dispatch?.(tr.removeMark(range.from, range.to, type))
-        : dispatch?.(tr.addMark(range.from, range.to, type.create(attrs)));
+        ? dispatch?.(tr.removeMark(from, to, markType))
+        : dispatch?.(tr.addMark(from, to, markType.create(attrs)));
 
       return true;
     }
 
-    return convertCommand(originalToggleMark(type, attrs))(parameter);
+    return convertCommand(originalToggleMark(markType, attrs))(parameter);
+  };
+}
+
+/**
+ * Verifies that the mark type can be applied to the current document.
+ */
+function markApplies(type: MarkType, doc: ProsemirrorNode, ranges: SelectionRange[]) {
+  for (const { $from, $to } of ranges) {
+    let markIsAllowed = $from.depth === 0 ? doc.type.allowsMarkType(type) : false;
+
+    doc.nodesBetween($from.pos, $to.pos, (node) => {
+      if (markIsAllowed) {
+        // This prevents diving deeper into child nodes.
+        return false;
+      }
+
+      markIsAllowed = node.inlineContent && node.type.allowsMarkType(type);
+      return;
+    });
+
+    if (markIsAllowed) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Apply the provided mark type and attributes.
+ *
+ * @param markType - the mark to apply.
+ * @param attrs - the attributes to set on the applied mark.
+ * @param selectionPoint - optionally specify where the mark should be applied.
+ * Defaults to the current selection.
+ */
+export function applyMark(
+  type: Remirror.MarkNameUnion | MarkType,
+  attrs?: ProsemirrorAttributes,
+  selectionPoint?: PrimitiveSelection,
+): CommandFunction {
+  return ({ tr, dispatch, state }) => {
+    const selection = getTextSelection(selectionPoint ?? tr.selection, tr.doc);
+    const $cursor = getCursor(selection);
+
+    const markType = isString(type) ? state.schema.marks[type] : type;
+
+    invariant(markType, {
+      code: ErrorConstant.SCHEMA,
+      message: `Mark type: ${type} does not exist on the current schema.`,
+    });
+
+    if ((selection.empty && !$cursor) || !markApplies(markType, tr.doc, selection.ranges)) {
+      return false;
+    }
+
+    if (!dispatch) {
+      return true;
+    }
+
+    if ($cursor) {
+      tr.removeStoredMark(markType);
+
+      if (attrs) {
+        tr.addStoredMark(markType.create(attrs));
+      }
+
+      dispatch(tr);
+      return true;
+    }
+
+    let containsMark = false;
+
+    for (const { $from, $to } of selection.ranges) {
+      if (containsMark) {
+        break;
+      }
+
+      containsMark = tr.doc.rangeHasMark($from.pos, $to.pos, markType);
+    }
+
+    for (const { $from, $to } of selection.ranges) {
+      if (containsMark) {
+        tr.removeMark($from.pos, $to.pos, markType);
+      }
+
+      if (attrs) {
+        tr.addMark($from.pos, $to.pos, markType.create(attrs));
+      }
+    }
+
+    dispatch(tr);
+
+    return true;
   };
 }
 
@@ -138,7 +366,7 @@ export interface InsertTextOptions extends Partial<FromToParameter> {
   /**
    * Marks can be added to the inserted text.
    */
-  marks?: Record<string, MarkAttributes>;
+  marks?: Record<Remirror.MarkNameUnion, ProsemirrorAttributes>;
 }
 
 /**
@@ -161,13 +389,15 @@ export function insertText(text: string, options: InsertTextOptions = {}): Comma
 
     // Map the end position after inserting the text to understand what needs to
     // be wrapped with a mark.
-    const end = tr.steps[tr.steps.length - 1].getMap().map(to);
+    const end = assertGet(tr.steps, tr.steps.length - 1)
+      .getMap()
+      .map(to);
 
     // Loop through the provided marks to add the mark to the selection. This
     // uses the order of the map you created. If any marks are exclusive, they
     // will override the previous.
     for (const [markName, attributes] of entries(marks)) {
-      tr.addMark(from, end, schema.marks[markName].create(attributes));
+      tr.addMark(from, end, assertGet(schema.marks, markName).create(attributes));
     }
 
     dispatch(tr);

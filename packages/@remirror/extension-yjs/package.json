@@ -17,26 +17,38 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-yjs.cjs.js",
-  "module": "dist/extension-yjs.esm.js",
-  "browser": {
-    "./dist/extension-yjs.cjs.js": "./dist/extension-yjs.browser.cjs.js",
-    "./dist/extension-yjs.esm.js": "./dist/extension-yjs.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-yjs.esm.js",
+      "require": "./dist/remirror-extension-yjs.cjs.js",
+      "browser": "./dist/remirror-extension-yjs.browser.esm.js",
+      "types": "./dist/remirror-extension-yjs.cjs.d.ts",
+      "default": "./dist/remirror-extension-yjs.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-yjs.cjs.d.ts",
+  "main": "dist/remirror-extension-yjs.cjs.js",
+  "module": "dist/remirror-extension-yjs.esm.js",
+  "browser": {
+    "./dist/remirror-extension-yjs.cjs.js": "./dist/remirror-extension-yjs.browser.cjs.js",
+    "./dist/remirror-extension-yjs.esm.js": "./dist/remirror-extension-yjs.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-yjs.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
-    "linaria": "^2.0.0",
+    "@babel/runtime": "^7.12.5",
+    "@linaria/core": "^3.0.0-beta.1",
+    "@remirror/messages": "0.0.0",
     "y-prosemirror": "^1.0.5"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",
     "@remirror/pm": "1.0.0-next.60",
-    "y-webrtc": "^10.1.6",
-    "yjs": "^13.4.1"
+    "y-webrtc": "^10.1.8",
+    "yjs": "^13.4.11"
   },
   "peerDependencies": {
     "@remirror/core": "1.0.0-next.60",

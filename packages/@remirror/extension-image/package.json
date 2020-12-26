@@ -17,18 +17,31 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-image.cjs.js",
-  "module": "dist/extension-image.esm.js",
-  "browser": {
-    "./dist/extension-image.cjs.js": "./dist/extension-image.browser.cjs.js",
-    "./dist/extension-image.esm.js": "./dist/extension-image.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-image.esm.js",
+      "require": "./dist/remirror-extension-image.cjs.js",
+      "browser": "./dist/remirror-extension-image.browser.esm.js",
+      "types": "./dist/remirror-extension-image.cjs.d.ts",
+      "default": "./dist/remirror-extension-image.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-image.cjs.d.ts",
+  "main": "dist/remirror-extension-image.cjs.js",
+  "module": "dist/remirror-extension-image.esm.js",
+  "browser": {
+    "./dist/remirror-extension-image.cjs.js": "./dist/remirror-extension-image.browser.cjs.js",
+    "./dist/remirror-extension-image.esm.js": "./dist/remirror-extension-image.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-image.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0"
+    "@babel/runtime": "^7.12.5",
+    "@remirror/extension-media": "0.0.0",
+    "@remirror/messages": "0.0.0"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",

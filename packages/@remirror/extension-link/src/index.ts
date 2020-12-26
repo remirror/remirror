@@ -1,2 +1,8 @@
-export type { LinkOptions, LinkAttributes, LinkClickData, DefaultProtocol } from './link-extension';
+export type {
+  DefaultProtocol,
+  LinkAttributes,
+  LinkClickData,
+  LinkOptions,
+  ShortcutHandlerProps,
+} from './link-extension';
 export { LinkExtension } from './link-extension';

@@ -1,5 +1,5 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-import { CodeExtension } from 'remirror/extension/code';
+import { CodeExtension } from 'remirror/extensions';
 
 import { ExtensionPriority } from '@remirror/core-constants';
 

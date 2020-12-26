@@ -1,6 +1,4 @@
 # Configuration as specified
 # [here](https://github.com/JasonEtco/todo/blob/4324136a7c2f0d01b0238e48ceebe635aec2a802/README.md#available-options)
 todo:
-  keyword: ['@todo']
-  bodyKeyword: ['@body']
   label: 'type: todo :construction:'

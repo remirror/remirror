@@ -1,5 +1,11 @@
-import { ErrorConstant, ExtensionPriority, ExtensionTagType } from '@remirror/core-constants';
 import {
+  ErrorConstant,
+  ExtensionPriority,
+  ExtensionTag,
+  ExtensionTagType,
+} from '@remirror/core-constants';
+import {
+  assertGet,
   entries,
   invariant,
   isArray,
@@ -17,8 +23,10 @@ import type {
   EditorSchema,
   Mark,
   MarkExtensionSpec,
+  MarkSpecOverride,
   NodeExtensionSpec,
   NodeMarkOptions,
+  NodeSpecOverride,
   ProsemirrorAttributes,
   ProsemirrorNode,
   SchemaAttributes,
@@ -28,6 +36,7 @@ import type {
 } from '@remirror/core-types';
 import {
   findChildren,
+  getDefaultBlockNode,
   getMarkRange,
   isElementDomNode,
   isProsemirrorMark,
@@ -36,18 +45,17 @@ import {
 } from '@remirror/core-utils';
 import { MarkSpec, NodeSpec, Schema } from '@remirror/pm/model';
 
-import { extensionDecorator } from '../decorators';
 import {
   AnyExtension,
+  extension,
   GetMarkNameUnion,
   GetNodeNameUnion,
+  GetSchema,
   isMarkExtension,
   isNodeExtension,
   PlainExtension,
-  SchemaFromExtensionUnion,
 } from '../extension';
-import type { AnyCombinedUnion, InferCombinedExtensions } from '../preset';
-import type { CreatePluginReturn } from '../types';
+import type { CreateExtensionPlugin } from '../types';
 import type { CombinedTags } from './tags-extension';
 
 /**
@@ -64,7 +72,7 @@ import type { CombinedTags } from './tags-extension';
  * In order to add extra attributes the following would work.
  *
  * ```ts
- * import { RemirrorManager } from 'remirror/core';
+ * import { RemirrorManager } from 'remirror';
  * import uuid from 'uuid';
  * import hash from 'made-up-hasher';
  *
@@ -90,9 +98,9 @@ import type { CombinedTags } from './tags-extension';
  * function allows you to set up a dynamic attribute which is updated with the
  * synchronous function that you provide to it.
  *
- * @builtin
+ * @category Builtin Extension
  */
-@extensionDecorator({ defaultPriority: ExtensionPriority.Highest })
+@extension({ defaultPriority: ExtensionPriority.Highest })
 export class SchemaExtension extends PlainExtension {
   get name() {
     return 'schema' as const;
@@ -114,7 +122,10 @@ export class SchemaExtension extends PlainExtension {
    * and check for new nodes and marks which haven't yet applied the dynamic
    * attribute and add the attribute.
    */
-  #dynamicAttributes: DynamicSchemaAttributeCreators = { marks: object(), nodes: object() };
+  private readonly dynamicAttributes: DynamicSchemaAttributeCreators = {
+    marks: object(),
+    nodes: object(),
+  };
 
   /**
    * This method is responsible for creating, configuring and adding the
@@ -123,6 +134,11 @@ export class SchemaExtension extends PlainExtension {
    */
   onCreate(): void {
     const { managerSettings } = this.store;
+    const { defaultBlockNode } = managerSettings;
+
+    // True when the `defaultBlockNode` exists for this editor.
+    const isValidDefaultBlockNode = (name: string | undefined): name is string =>
+      !!(name && this.store.tags[ExtensionTag.Block].includes(name));
 
     // The user can override the whole schema creation process by providing
     // their own version. In that case we can exit early.
@@ -136,7 +152,15 @@ export class SchemaExtension extends PlainExtension {
 
     // This nodes object is built up for each extension and then at the end it
     // will be passed to the `Schema` constructor to create a new `schema`.
-    const nodes: Record<string, NodeSpec> = object();
+    const nodes: Record<string, NodeSpec> = isValidDefaultBlockNode(defaultBlockNode)
+      ? {
+          doc: object(),
+          // Ensure that this is the highest positioned block node by adding it
+          // to the object early. Later on it will be overwritten but maintain
+          // it's position.
+          [defaultBlockNode]: object(),
+        }
+      : object();
 
     // Similar to the `nodes` object above this is passed to the `Schema`.
     const marks: Record<string, MarkSpec> = object();
@@ -172,11 +196,14 @@ export class SchemaExtension extends PlainExtension {
         // Create the spec and gather dynamic attributes for this node
         // extension.
         const { spec, dynamic } = createSpec({
-          createExtensionSpec: (extra) => extension.createNodeSpec(extra),
-          extraAttributes: namedExtraAttributes[extension.name],
+          createExtensionSpec: (extra, override) => extension.createNodeSpec(extra, override),
+          extraAttributes: assertGet(namedExtraAttributes, extension.name),
+
+          // Todo add support for setting overrides via the manager.
+          override: { ...managerSettings.nodeOverride, ...extension.options.nodeOverride },
           ignoreExtraAttributes,
           name: extension.constructorName,
-          tags: extension.tags ?? [],
+          tags: extension.tags,
         });
 
         // Store the node spec on the extension for future reference.
@@ -189,7 +216,7 @@ export class SchemaExtension extends PlainExtension {
         // Keep track of the dynamic attributes. The `extension.name` is the
         // same name of the `NodeType` and is used by the plugin in this
         // extension to dynamically generate attributes for the correct nodes.
-        this.#dynamicAttributes.nodes[extension.name] = dynamic;
+        this.dynamicAttributes.nodes[extension.name] = dynamic;
       }
 
       // Very similar to the previous conditional block except for marks rather
@@ -198,8 +225,10 @@ export class SchemaExtension extends PlainExtension {
         // Create the spec and gather dynamic attributes for this mark
         // extension.
         const { spec, dynamic } = createSpec({
-          createExtensionSpec: (extra) => extension.createMarkSpec(extra),
-          extraAttributes: namedExtraAttributes[extension.name],
+          createExtensionSpec: (extra, override) => extension.createMarkSpec(extra, override),
+          extraAttributes: assertGet(namedExtraAttributes, extension.name),
+          // Todo add support for setting overrides via the manager.
+          override: { ...managerSettings.markOverride, ...extension.options.markOverride },
           ignoreExtraAttributes,
           name: extension.constructorName,
           tags: extension.tags ?? [],
@@ -211,12 +240,12 @@ export class SchemaExtension extends PlainExtension {
         // Add the spec to the `marks` object which is used to create the schema
         // with the same name as the extension name.
         marks[extension.name] = spec as MarkSpec;
-        this.#dynamicAttributes.marks[extension.name] = dynamic;
+        this.dynamicAttributes.marks[extension.name] = dynamic;
       }
     }
 
     // Create the schema from the gathered nodes and marks.
-    const schema = new Schema({ nodes, marks });
+    const schema = new Schema({ nodes, marks, topNode: 'doc' });
 
     // Add the schema and nodes marks to the store.
     this.addSchema(
@@ -230,7 +259,7 @@ export class SchemaExtension extends PlainExtension {
    * This creates the plugin that is used to automatically create the dynamic
    * attributes defined in the extra attributes object.
    */
-  createPlugin(): CreatePluginReturn {
+  createPlugin(): CreateExtensionPlugin {
     return {
       appendTransaction: (transactions, _, nextState) => {
         // This creates a new transaction which will be used to update the
@@ -251,8 +280,8 @@ export class SchemaExtension extends PlainExtension {
         // committing to that level of work let's check that there user has
         // actually defined some dynamic attributes.
         if (
-          isEmptyObject(this.#dynamicAttributes.nodes) ||
-          isEmptyObject(this.#dynamicAttributes.marks)
+          isEmptyObject(this.dynamicAttributes.nodes) ||
+          isEmptyObject(this.dynamicAttributes.marks)
         ) {
           return null;
         }
@@ -300,6 +329,19 @@ export class SchemaExtension extends PlainExtension {
     // Add the schema to the extension store, so that all extension from this
     // point have access to the schema via `this.store.schema`.
     this.store.setExtensionStore('schema', schema);
+    this.store.setStoreKey('defaultBlockNode', getDefaultBlockNode(schema).name);
+
+    // Set the default block node from the schema.
+    for (const type of Object.values(schema.nodes)) {
+      if (type.name === 'doc') {
+        continue;
+      }
+
+      // Break as soon as the first non 'doc' block node is encountered.
+      if (type.isBlock || type.isTextblock) {
+        break;
+      }
+    }
   }
 
   /**
@@ -317,7 +359,7 @@ export class SchemaExtension extends PlainExtension {
     const { node, pos } = child;
 
     // Check for matching nodes.
-    for (const [name, dynamic] of entries(this.#dynamicAttributes.nodes)) {
+    for (const [name, dynamic] of entries(this.dynamicAttributes.nodes)) {
       if (node.type.name !== name) {
         continue;
       }
@@ -351,12 +393,12 @@ export class SchemaExtension extends PlainExtension {
     const { node, pos } = child;
 
     // Check for matching marks.
-    for (const [name, dynamic] of entries(this.#dynamicAttributes.marks)) {
+    for (const [name, dynamic] of entries(this.dynamicAttributes.marks)) {
       // This is needed to create the new mark. Even though a mark may already
       // exist ProseMirror requires that a new one is created and added in
       // order. More details available
       // [here](https://discuss.prosemirror.net/t/updating-mark-attributes/776/2?u=ifi).
-      const type = this.store.schema.marks[name];
+      const type = assertGet(this.store.schema.marks, name);
 
       // Get the attrs from the mark.
       const mark = node.marks.find((mark) => mark.type.name === name);
@@ -424,9 +466,9 @@ export class SchemaExtension extends PlainExtension {
  * will be the basis for adding advanced formatting to remirror.
  *
  * ```ts
- * import { ExtensionTag } from 'remirror/core';
- * import { createCoreManager, CorePreset } from 'remirror/preset/core';
- * import { WysiwygPreset } from 'remirror/preset/wysiwyg';
+ * import { ExtensionTag } from 'remirror';
+ * import { createCoreManager, CorePreset } from 'remirror/extensions';
+ * import { WysiwygPreset } from 'remirror/extensions';
  *
  * const manager = createCoreManager(() => [new WysiwygPreset(), new CorePreset()], {
  *   extraAttributes: [
@@ -449,19 +491,54 @@ export class SchemaExtension extends PlainExtension {
  * ```
  *
  * The `type` property (`mark | node`) is exclusive and limits the type of
- * matches that will be matched.
+ * extension names that will be matched. When `mark` is set it only matches with
+ * marks.
  */
 export interface IdentifiersObject {
   /**
-   * Will match if any of these tags are present.
+   * Determines how the array of tags are combined:
+   *
+   * - `all` - the extension only matches when all tags are present.
+   * - `any` - the extension will match if it includes any of the specified
+   *   tags.
+   *
+   * This only affects the `tags` property.
+   *
+   * The saddest part about this property is that, as a UK resident, I've
+   * succumbed to using the Americanized spelling instead of the Oxford
+   * Dictionary defined spelling of `behaviour` 😢
+   *
+   * @default 'any'
    */
-  tags: ExtensionTagType[];
+  behavior?: 'all' | 'any';
+
+  /**
+   * Will find relevant names based on the defined `behaviour`.
+   */
+  tags?: ExtensionTagType[];
+
+  /**
+   * Additional names to include. These will still be added even if the
+   * extension name matches with `excludeTags` member.
+   */
+  names?: string[];
 
   /**
    * Whether to restrict by whether this is a [[`ProsemirrorNode`]] or a
    * [[`Mark`]]. Leave blank to accept all types.
    */
   type?: 'node' | 'mark';
+
+  /**
+   * Exclude these names from being matched.
+   */
+  excludeNames?: string[];
+
+  /**
+   * Exclude these tags from being matched. Will always exclude if any of the
+   * tags
+   */
+  excludeTags?: string[];
 }
 
 /**
@@ -625,34 +702,93 @@ function getIdentifiers(parameter: GetIdentifiersParameter): readonly string[] {
     message: `Invalid value passed as an identifier when creating \`extraAttributes\`.`,
   });
 
-  const names: Set<string> = new Set();
+  // Provide type aliases for easier readability.
+  type Name = string; // `type` Alias for the extension name.
+  type Tag = string; // The tag for this extension.
+  type TagSet = Set<Tag>; // The set of tags.
+  type TaggedNamesMap = Map<Name, TagSet>;
 
-  for (const tag of identifiers.tags) {
-    tags[tag].forEach((name) => names.add(name));
+  const {
+    tags: extensionTags = [],
+    names: extensionNames = [],
+    behavior = 'any',
+    excludeNames,
+    excludeTags,
+    type,
+  } = identifiers;
+
+  // Keep track of the set of stored names.
+  const names: Set<Name> = new Set();
+
+  // Collect the array of names that are supported.
+  const acceptableNames =
+    type === 'mark' ? markNames : type === 'node' ? nodeNames : [...markNames, ...nodeNames];
+
+  // Check if the name is valid
+  const isNameValid = (name: string) =>
+    acceptableNames.includes(name) && !excludeNames?.includes(name);
+
+  for (const name of extensionNames) {
+    if (isNameValid(name)) {
+      names.add(name);
+    }
   }
 
-  const acceptableNames =
-    identifiers.type === 'mark'
-      ? markNames
-      : identifiers.type === 'node'
-      ? nodeNames
-      : [...markNames, ...nodeNames];
+  // Create a map of extension names to their set of included tags. Then check
+  // that the length of the `TagSet` for each extension name is equal to the
+  // provided extension tags in this identifier.
+  const taggedNamesMap: TaggedNamesMap = new Map();
 
-  // Need to filter since the tags can also be added to the `PlainExtension`.
-  return [...names].filter((name) => acceptableNames.includes(name));
+  // Loop through every extension
+  for (const tag of extensionTags) {
+    if (excludeTags?.includes(tag)) {
+      continue;
+    }
+
+    for (const name of tags[tag]) {
+      if (!isNameValid(name)) {
+        continue;
+      }
+
+      // When any tag can be an identifier simply add the name to names.
+      if (behavior === 'any') {
+        names.add(name);
+        continue;
+      }
+
+      const tagSet: TagSet = taggedNamesMap.get(name) ?? new Set();
+      tagSet.add(tag);
+      taggedNamesMap.set(name, tagSet);
+    }
+  }
+
+  // Only add the names that have a `TagSet` where `size` is equal to the number
+  // of `extensionTags`
+  for (const [name, tagSet] of taggedNamesMap) {
+    if (tagSet.size === extensionTags.length) {
+      names.add(name);
+    }
+  }
+
+  return [...names];
 }
 
-interface CreateSpecParameter<Type extends { group?: string | null }> {
+interface CreateSpecParameter<Spec extends { group?: string | null }, Override extends object> {
   /**
    * The node or mark creating function.
    */
-  createExtensionSpec: (extra: ApplySchemaAttributes) => Type;
+  createExtensionSpec: (extra: ApplySchemaAttributes, override: Override) => Spec;
 
   /**
    * The extra attributes object which has been passed through for this
    * extension.
    */
   extraAttributes: SchemaAttributes;
+
+  /**
+   * The overrides provided to the schema.
+   */
+  override: Override;
 
   /**
    * This is true when the extension is set to ignore extra attributes.
@@ -684,13 +820,20 @@ interface CreateSpecReturn<Type extends { group?: string | null }> {
 /**
  * Create the scheme spec for a node or mark extension.
  *
- * @typeParam Type - either a [[Mark]] or a [[ProsemirrorNode]]
+ * @template Type - either a [[Mark]] or a [[ProsemirrorNode]]
  * @param parameter - the options object [[CreateSpecParameter]]
  */
-function createSpec<Type extends { group?: string | null }>(
-  parameter: CreateSpecParameter<Type>,
+function createSpec<Type extends { group?: string | null }, Override extends object>(
+  parameter: CreateSpecParameter<Type, Override>,
 ): CreateSpecReturn<Type> {
-  const { createExtensionSpec, extraAttributes, ignoreExtraAttributes, name, tags } = parameter;
+  const {
+    createExtensionSpec,
+    extraAttributes,
+    ignoreExtraAttributes,
+    name,
+    tags,
+    override,
+  } = parameter;
 
   // Keep track of the dynamic attributes which are a part of this spec.
   const dynamic: Record<string, DynamicAttributeCreator> = object();
@@ -718,7 +861,7 @@ function createSpec<Type extends { group?: string | null }>(
 
   const parse = createParseDOM(extraAttributes, ignoreExtraAttributes);
   const dom = createToDOM(extraAttributes, ignoreExtraAttributes);
-  const spec = createExtensionSpec({ defaults, parse, dom });
+  const spec = createExtensionSpec({ defaults, parse, dom }, override);
 
   invariant(ignoreExtraAttributes || defaultsCalled, {
     code: ErrorConstant.EXTENSION_SPEC,
@@ -921,7 +1064,7 @@ function getSpecFromSchema(schema: EditorSchema) {
 
 declare global {
   namespace Remirror {
-    interface ExtensionCreatorMethods {
+    interface BaseExtension {
       /**
        * Allows the extension to create an extra attributes array that will be
        * added to the extra attributes.
@@ -942,6 +1085,8 @@ declare global {
        * Sometimes you need to add additional attributes to a node or mark. This
        * property enables this without needing to create a new extension.
        *
+       * This is only applied to the `MarkExtension` and `NodeExtension`.
+       *
        * @default {}
        */
       extraAttributes?: Static<SchemaAttributes>;
@@ -950,9 +1095,25 @@ declare global {
        * When true will disable extra attributes for this instance of the
        * extension.
        *
+       * @remarks
+       *
+       * This is only applied to the `MarkExtension` and `NodeExtension`.
+       *
        * @default undefined
        */
       disableExtraAttributes?: Static<boolean>;
+
+      /**
+       * An override for the mark spec object. This only applies for
+       * `MarkExtension`.
+       */
+      markOverride?: Static<MarkSpecOverride>;
+
+      /**
+       * An override object for a node spec object. This only applies to the
+       * `NodeExtension`.
+       */
+      nodeOverride?: Static<NodeSpecOverride>;
     }
 
     interface ManagerSettings {
@@ -966,7 +1127,7 @@ declare global {
        * An example is shown below.
        *
        * ```ts
-       * import { RemirrorManager } from 'remirror/core';
+       * import { RemirrorManager } from 'remirror';
        *
        * const managerSettings = {
        *   extraAttributes: [
@@ -984,6 +1145,16 @@ declare global {
        * ```
        */
       extraAttributes?: IdentifierSchemaAttributes[];
+
+      /**
+       * Overrides for the mark.
+       */
+      markOverride?: Record<string, MarkSpecOverride>;
+
+      /**
+       * Overrides for the nodes.
+       */
+      nodeOverride?: Record<string, NodeSpecOverride>;
 
       /**
        * Perhaps you don't need extra attributes at all in the editor. This
@@ -1006,23 +1177,52 @@ declare global {
        * the `extraAttributes`.
        */
       schema?: EditorSchema;
+
+      /**
+       * The name of the default block node. This node will be given a higher
+       * priority when being added to the schema.
+       *
+       * By default this is undefined and the default block node is assigned
+       * based on the extension priorities.
+       *
+       * @default undefined
+       */
+      defaultBlockNode?: string;
     }
 
-    interface ManagerStore<Combined extends AnyCombinedUnion> {
+    interface ManagerStore<ExtensionUnion extends AnyExtension> {
       /**
        * The nodes to place on the schema.
        */
-      nodes: Record<GetNodeNameUnion<InferCombinedExtensions<Combined>>, NodeExtensionSpec>;
+      nodes: Record<
+        GetNodeNameUnion<ExtensionUnion> extends never ? string : GetNodeNameUnion<ExtensionUnion>,
+        NodeExtensionSpec
+      >;
 
       /**
        * The marks to be added to the schema.
        */
-      marks: Record<GetMarkNameUnion<InferCombinedExtensions<Combined>>, MarkExtensionSpec>;
+      marks: Record<
+        GetMarkNameUnion<ExtensionUnion> extends never ? string : GetMarkNameUnion<ExtensionUnion>,
+        MarkExtensionSpec
+      >;
 
       /**
        * The schema created by this extension manager.
        */
-      schema: SchemaFromExtensionUnion<InferCombinedExtensions<Combined>>;
+      schema: GetSchema<ExtensionUnion>;
+
+      /**
+       * The name of the default block node. This is used by all internal
+       * extension when toggling block nodes. It can also be used in other
+       * cases.
+       *
+       * This can be updated via the manager settings when first creating the
+       * editor.
+       *
+       * @default 'paragraph'
+       */
+      defaultBlockNode: string;
     }
 
     interface MarkExtension {

@@ -1,10 +1,10 @@
-import type { CreatePluginReturn, EditorView } from '@remirror/core';
-import { extensionDecorator, PlainExtension, randomInt, throttle } from '@remirror/core';
+import type { CreateExtensionPlugin, EditorView } from '@remirror/core';
+import { extension, PlainExtension, randomInt, throttle } from '@remirror/core';
 
 import { defaultEffect, PARTICLE_NUM_RANGE, VIBRANT_COLORS } from './epic-mode-effects';
 import type { EpicModeOptions, Particle } from './epic-mode-types';
 
-@extensionDecorator<EpicModeOptions>({
+@extension<EpicModeOptions>({
   defaultOptions: {
     particleEffect: defaultEffect,
     getCanvasContainer: () => document.body,
@@ -20,7 +20,7 @@ export class EpicModeExtension extends PlainExtension<EpicModeOptions> {
     return 'epicMode' as const;
   }
 
-  createPlugin(): CreatePluginReturn<EpicModePluginState> {
+  createPlugin(): CreateExtensionPlugin<EpicModePluginState> {
     const pluginState = new EpicModePluginState(this);
 
     return {
@@ -133,8 +133,8 @@ export class EpicModePluginState {
       if (this.container.contains(this.canvas)) {
         this.canvas.remove();
       }
-    } catch (error) {
-      console.warn(error);
+    } catch {
+      // Do nothing in hmr
     }
   }
 
@@ -190,7 +190,7 @@ export class EpicModePluginState {
     this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
     // get the time past the previous frame
-    const currentTime = new Date().getTime();
+    const currentTime = Date.now();
 
     if (!this.#lastTime) {
       this.#lastTime = currentTime;

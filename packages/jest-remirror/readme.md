@@ -5,9 +5,9 @@
 ## Installation
 
 ```bash
-yarn add jest-remirror@next # yarn
-pnpm add jest-remirror@next # pnpm
-npm install jest-remirror@next # npm
+yarn add jest-remirror # yarn
+pnpm add jest-remirror # pnpm
+npm install jest-remirror # npm
 ```
 
 ## Getting started

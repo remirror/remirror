@@ -4,7 +4,7 @@ import {
   DispatchFunction,
   EditorState,
   environment,
-  extensionDecorator,
+  extension,
   Handler,
   isFunction,
   nonChainable,
@@ -14,8 +14,13 @@ import {
   ProsemirrorCommandFunction,
   ProsemirrorPlugin,
   Static,
+  command,
+  keyBinding,
+  NamedShortcut,
+  KeyBindingParameter,
 } from '@remirror/core';
 import { history, redo, undo } from '@remirror/pm/history';
+import { ExtensionHistoryMessages as Messages } from '@remirror/messages';
 
 export interface HistoryOptions {
   /**
@@ -75,9 +80,9 @@ export interface HistoryOptions {
  * This extension provides undo and redo commands and inserts a plugin which
  * handles history related actions.
  *
- * @builtin
+ * @category Builtin Extension
  */
-@extensionDecorator<HistoryOptions>({
+@extension<HistoryOptions>({
   defaultOptions: {
     depth: 100,
     newGroupDelay: 500,
@@ -126,6 +131,22 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
   }
 
   /**
+   * Handle the undo keybinding.
+   */
+  @keyBinding({ shortcut: NamedShortcut.Undo, command: 'undo' })
+  undoShortcut(parameter: KeyBindingParameter): boolean {
+    return this.wrapMethod(undo, this.options.onUndo)(parameter);
+  }
+
+  /**
+   * Handle the redo keybinding for the editor.
+   */
+  @keyBinding({ shortcut: NamedShortcut.Redo, command: 'redo' })
+  redoShortcut(parameter: KeyBindingParameter): boolean {
+    return this.wrapMethod(redo, this.options.onRedo)(parameter);
+  }
+
+  /**
    * Bring the `prosemirror-history` plugin with options set on this extension.
    */
   createExternalPlugins(): ProsemirrorPlugin[] {
@@ -135,39 +156,46 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
   }
 
   /**
-   * Provide the undo and redo commands.
+   * Undo the last action that occurred. This can be overridden by setting
+   * an `"addToHistory"` metadata property of `false` on a transaction to
+   * prevent it from being rolled back by undo.
+   *
+   * ```ts
+   * actions.undo()
+   *
+   * // To prevent this use
+   * tr.setMeta(pluginKey, { addToHistory: false })
+   * ```
+   *
+   * This command is **non-chainable**.
    */
-  createCommands() {
-    return {
-      /**
-       * Undo the last action that occurred. This can be overridden by setting
-       * an `"addToHistory"` metadata property of `false` on a transaction to
-       * prevent it from being rolled back by undo.
-       *
-       * ```ts
-       * actions.undo()
-       *
-       * // To prevent this use
-       * tr.setMeta(pluginKey, { addToHistory: false })
-       * ```
-       *
-       * This command is **non-chainable**.
-       */
-      undo: (): NonChainableCommandFunction =>
-        nonChainable(this.wrapMethod(undo, this.options.onUndo)),
+  @command({
+    disableChaining: true,
+    description: ({ t }) => t(Messages.UNDO_DESCRIPTION),
+    label: ({ t }) => t(Messages.UNDO_LABEL),
+    icon: 'arrowGoBackFill',
+  })
+  undo(): NonChainableCommandFunction {
+    return nonChainable(this.wrapMethod(undo, this.options.onUndo));
+  }
 
-      /**
-       * Redo an action that was in the undo stack.
-       *
-       * ```ts
-       * actions.redo()
-       * ```
-       *
-       * This command is **non-chainable**.
-       */
-      redo: (): NonChainableCommandFunction =>
-        nonChainable(this.wrapMethod(redo, this.options.onRedo)),
-    };
+  /**
+   * Redo an action that was in the undo stack.
+   *
+   * ```ts
+   * actions.redo()
+   * ```
+   *
+   * This command is **non-chainable**.
+   */
+  @command({
+    disableChaining: true,
+    description: ({ t }) => t(Messages.REDO_DESCRIPTION),
+    label: ({ t }) => t(Messages.REDO_LABEL),
+    icon: 'arrowGoForwardFill',
+  })
+  redo(): NonChainableCommandFunction {
+    return nonChainable(this.wrapMethod(redo, this.options.onRedo));
   }
 }
 

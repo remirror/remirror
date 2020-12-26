@@ -1,4 +1,4 @@
-import type { TransactionParameter } from '@remirror/core';
+import { assertGet, TransactionParameter } from '@remirror/core';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
 
 import {
@@ -9,14 +9,14 @@ import {
   UpdateAnnotationAction,
 } from './actions';
 import { toSegments } from './segments';
-import type { Annotation, AnnotationWithoutText, GetStyle } from './types';
+import type { Annotation, GetStyle, OmitText } from './types';
 
 interface ApplyParameter extends TransactionParameter {
   action: any;
 }
 
-export class AnnotationState<A extends Annotation = Annotation> {
-  annotations: Array<AnnotationWithoutText<A>> = [];
+export class AnnotationState<Type extends Annotation = Annotation> {
+  annotations: Array<OmitText<Type>> = [];
 
   /**
    * Decorations are computed based on the annotations. The state contains a
@@ -24,7 +24,7 @@ export class AnnotationState<A extends Annotation = Annotation> {
    */
   decorationSet = DecorationSet.empty;
 
-  constructor(private readonly getStyle: GetStyle<A>) {}
+  constructor(private readonly getStyle: GetStyle<Type>) {}
 
   apply({ tr, action }: ApplyParameter): this {
     const actionType = action?.type;
@@ -46,25 +46,25 @@ export class AnnotationState<A extends Annotation = Annotation> {
       // Remove annotations for which all containing content was deleted
       .filter((annotation) => annotation.to !== annotation.from);
 
-    let newAnnotations: Array<AnnotationWithoutText<A>> | undefined;
+    let newAnnotations: Array<OmitText<Type>> | undefined;
 
     if (actionType === ActionType.ADD_ANNOTATION) {
-      const addAction = action as AddAnnotationAction<A>;
+      const addAction = action as AddAnnotationAction<Type>;
       const newAnnotation = {
         ...addAction.annotationData,
         from: addAction.from,
         to: addAction.to,
-      } as AnnotationWithoutText<A>;
+      } as OmitText<Type>;
       newAnnotations = this.annotations.concat(newAnnotation);
     }
 
     if (actionType === ActionType.UPDATE_ANNOTATION) {
-      const updateAction = action as UpdateAnnotationAction<A>;
+      const updateAction = action as UpdateAnnotationAction<Type>;
       const annotationIndex = this.annotations.findIndex(
         (annotation) => annotation.id === updateAction.annotationId,
       );
       const updatedAnnotation = {
-        ...this.annotations[annotationIndex],
+        ...assertGet(this.annotations, annotationIndex),
         ...updateAction.annotationData,
       };
       newAnnotations = [
@@ -80,7 +80,7 @@ export class AnnotationState<A extends Annotation = Annotation> {
     }
 
     if (actionType === ActionType.SET_ANNOTATIONS) {
-      const setAction = action as SetAnnotationsAction<A>;
+      const setAction = action as SetAnnotationsAction<Type>;
       newAnnotations = setAction.annotations;
     }
 

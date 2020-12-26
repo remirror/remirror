@@ -7,8 +7,8 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-emoji/next
 [npm]: https://npmjs.com/package/@remirror/extension-emoji/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/extension-emoji@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-emoji@next
+[size]: https://bundlephobia.com/result?p=@remirror/extension-emoji
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-emoji
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-emoji/red?icon=npm
 
@@ -16,25 +16,25 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-emoji@next @remirror/pm@next
+yarn add @remirror/extension-emoji @remirror/pm
 
 # pnpm
-pnpm add @remirror/extension-emoji@next @remirror/pm@next
+pnpm add @remirror/extension-emoji @remirror/pm
 
 # npm
-npm install @remirror/extension-emoji@next @remirror/pm@next
+npm install @remirror/extension-emoji @remirror/pm
 ```
 
-This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/emoji`.
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.
 
 ## Usage
 
 The following code sample will create a limited editor and run the available commands from this extension.
 
 ```ts
-import { ExtensionPriority, RemirrorManager } from 'remirror/core';
-import { EmojiExtension } from 'remirror/extension/emoji';
-import { CorePreset } from 'remirror/preset/core';
+import { ExtensionPriority, RemirrorManager } from 'remirror';
+import { EmojiExtension } from 'remirror/extensions';
+import { CorePreset } from 'remirror/extensions';
 
 // Create the codeBlock extension
 const emojiExtension = new EmojiExtension({ supportedLanguages: [typescript, jsx] });

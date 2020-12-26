@@ -3,8 +3,8 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import clsx from 'clsx';
-import React, { ReactElement } from 'react';
-import { isString } from 'remirror/core';
+import { ReactElement } from 'react';
+import { isString } from 'remirror';
 
 import { ExternalIcon } from '../components/external-icon';
 import styles from './styles.module.css';

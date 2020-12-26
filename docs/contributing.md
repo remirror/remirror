@@ -45,7 +45,7 @@ The number of files in the root directory is deliberately as minimal as possible
 From the root directory use the following command to launch the documentation site.
 
 ```bash
-pnpm docs
+pnpm docs:dev
 ```
 
 Once the build completes (can take a minute the first time) navigate to <http://localhost:3000> (or another port if that one is already being used).
@@ -126,13 +126,13 @@ This project uses [`preconstruct`](https://github.com/preconstruct/preconstruct)
 
 ### Playground
 
-Working on the playground needs an extra step. The code being injected into the iframe needs to be pre-compiled and updates will fail for you if using `preconstruct dev`. The following command resolves this problem.
+Working on the playground requires the docs to be started.
 
 ```bash
-pnpm dev
+pnpm run docs
 ```
 
-When run this builds all packages and then watch for changes to rebuild as necessary. One issue with running this command is that you will lose any meaningful type checking. If you run `pnpm typecheck` and it fails with cryptic issues, it may be that you're still in the build state.
+When run this builds all packages and then watch for changes to rebuild as necessary.
 
 <br />
 
@@ -185,18 +185,31 @@ const doSomething = (something: string) => {
 
 ## Creating packages
 
-When creating your own extension or preset you can follow these steps.
+### Automated
+
+The easiest way to create a new scoped package in this repo is to run `pnpm create:package NAME -- --description "DESCRIPTION"`. For example the following command would create a package called `@remirror/extension-chill`.
+
+```bash
+pnpm create:package @remirror/extension-chill -- --description "The time to be chill."
+```
+
+### Manually
+
+If you prefer not to use the automated method for creating extension the following also works.
 
 1. Copy `support/templates/extension-template` to `packages/@remirror/extension-<name>`.
 2. Rename `template`, `Template` and `TEMPLATE` in the new package to `<name>`, `<Name>` and `<NAME>`.
 3. Replace `TEMPLATE_DESCRIPTION` with a suitable description.
 4. Rename the files from `template-` to `<name>-`.
-5. (OPTIONAL) -Add your name and email as a contributor to the `package.json`.
-6. Add `packages/remirror/extension/<name>/package.json`.
-7. Add `packages/remirror/src/extension/<name>.ts`.
-8. Edit `packages/remirror/package.json` to add dependency and entrypoint.
-9. (OPTIONAL) - Edit `/.changeset/config.json` and add the package name to the linked array.
-10. Run `pnpm i` in root.
+
+### Final steps
+
+1. (OPTIONAL) -Add your name and email as a contributor to the `package.json`.
+2. Add `packages/remirror/extension/<name>/package.json`.
+3. Add `packages/remirror/src/extension/<name>.ts`.
+4. Edit `packages/remirror/package.json` to add dependency and entrypoint.
+5. (OPTIONAL) - Edit `/.changeset/config.json` and add the package name to the linked array.
+6. Run `pnpm i` in root.
 
 <br />
 

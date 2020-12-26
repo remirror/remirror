@@ -1,9 +1,9 @@
 import type { AcceptUndefined } from '@remirror/core';
 
-export type GetStyle<A extends Annotation> = (
-  annotations: Array<AnnotationWithoutText<A>>,
+export type GetStyle<Type extends Annotation> = (
+  annotations: Array<OmitText<Type>>,
 ) => string | undefined;
-export interface AnnotationOptions<A extends Annotation = Annotation> {
+export interface AnnotationOptions<Type extends Annotation = Annotation> {
   /**
    * Method to calculate styles for a segment with one or more annotations
    *
@@ -12,7 +12,7 @@ export interface AnnotationOptions<A extends Annotation = Annotation> {
    * This can be used e.g. to assign different shades of a color depending on
    * the amount of annotations in a segment.
    */
-  getStyle?: GetStyle<A>;
+  getStyle?: GetStyle<Type>;
 
   /**
    * Allows to format the text returned for each annotation.
@@ -20,7 +20,7 @@ export interface AnnotationOptions<A extends Annotation = Annotation> {
    * When `blockSeparator` is given, it will be inserted whenever a new
    * block node is started.
    *
-   * @see PromirrorNode.textBetween
+   * @see ProsemirrorNode.textBetween
    */
   blockSeparator?: AcceptUndefined<string>;
 }
@@ -32,12 +32,12 @@ export interface Annotation {
   id: string;
 
   /**
-   * Document position where the annotation starts
+   * Document position where the annotation starts.
    */
   from: number;
 
   /**
-   * Document position where the annotation ends
+   * Document position where the annotation ends.
    */
   to: number;
 
@@ -55,9 +55,12 @@ export interface Annotation {
   className?: string;
 }
 
-export type AnnotationWithoutText<A extends Annotation> = Omit<A, 'text'>;
+/**
+ * Remove the text field from an annotation.
+ */
+export type OmitText<Type extends Annotation> = Omit<Type, 'text'>;
 
 /**
- * Annotation without the fields managed by Prosemirror
+ * Get the data of the annotation without the fields managed by ProseMirror.
  */
-export type AnnotationData<A extends Annotation> = Omit<AnnotationWithoutText<A>, 'from' | 'to'>;
+export type GetData<Type extends Annotation> = Omit<OmitText<Type>, 'from' | 'to'>;

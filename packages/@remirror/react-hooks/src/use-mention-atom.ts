@@ -7,7 +7,7 @@ import {
   MentionAtomNodeAttributes,
 } from '@remirror/extension-mention-atom';
 import { ChangeReason, SuggestChangeHandlerParameter } from '@remirror/pm/suggest';
-import { useExtension, useRemirror } from '@remirror/react';
+import { useExtension, useRemirrorContext } from '@remirror/react';
 
 import { indexFromArrowPress } from './react-hook-utils';
 import { useKeymap } from './use-keymap';
@@ -100,7 +100,7 @@ function useMentionAtomKeyBindings<
   state: MentionAtomState<Data> | null,
 ) {
   const { items, ignoreMatchesOnEscape = true } = props;
-  const { helpers } = useRemirror();
+  const { helpers } = useRemirrorContext();
 
   const createArrowBinding = useCallback(
     (arrowKey: 'up' | 'down') => () => {

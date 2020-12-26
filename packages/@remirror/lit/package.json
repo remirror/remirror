@@ -1,0 +1,47 @@
+{
+  "name": "@remirror/lit",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Consume a remirror editor with lit web components",
+  "keywords": [
+    "remirror"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/lit",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/lit",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-lit.esm.js",
+      "require": "./dist/remirror-lit.cjs.js",
+      "browser": "./dist/remirror-lit.browser.esm.js",
+      "types": "./dist/remirror-lit.cjs.d.ts",
+      "default": "./dist/remirror-lit.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-lit.cjs.js",
+  "module": "dist/remirror-lit.esm.js",
+  "browser": {
+    "./dist/remirror-lit.cjs.js": "./dist/remirror-lit.browser.cjs.js",
+    "./dist/remirror-lit.esm.js": "./dist/remirror-lit.browser.esm.js"
+  },
+  "types": "dist/remirror-lit.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "@remirror/core-helpers": "^1.0.0-next.60"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "50 KB"
+  }
+}

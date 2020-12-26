@@ -1,27 +1,26 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
-import { emptyCoords, emptyVirtualPosition } from '@remirror/extension-positioner';
-import { createReactManager, RemirrorProvider } from '@remirror/react';
+import { defaultAbsolutePosition } from '@remirror/extension-positioner';
+import { createReactManager, Remirror } from '@remirror/react';
 import { strictRender } from '@remirror/testing/react';
 
 import { usePositioner } from '../use-positioner';
 
 test('`usePositioner` default values', () => {
   const HookComponent: FC = () => {
-    const positionerProps = usePositioner('bubble');
+    const positionerProps = usePositioner('cursor');
 
     expect(positionerProps).toEqual({
       active: false,
-      ...emptyCoords,
-      ...emptyVirtualPosition,
+      ...defaultAbsolutePosition,
     });
 
     return <div />;
   };
 
   strictRender(
-    <RemirrorProvider manager={createReactManager([])}>
+    <Remirror manager={createReactManager([])}>
       <HookComponent />
-    </RemirrorProvider>,
+    </Remirror>,
   );
 });

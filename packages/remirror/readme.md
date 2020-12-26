@@ -7,8 +7,8 @@
 [version]: https://flat.badgen.net/npm/v/remirror/next
 [npm]: https://npmjs.com/package/remirror/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=remirror@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/remirror@next
+[size]: https://bundlephobia.com/result?p=remirror
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/remirror
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/remirror/red?icon=npm
 
@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add remirror@next
+yarn add remirror
 
 # pnpm
-pnpm add remirror@next
+pnpm add remirror
 
 # npm
-npm install remirror@next
+npm install remirror
 ```
 
 The `remirror` package will automatically install the `@remirror/pm` package for you. You only need to install it yourself if you'd like to ensure consistent versions of the `prosemirror-*` libraries when importing from `@remirror/pm/state` instead of `prosemirror-state` or `@remirror/pm/model` instead of `prosemirror-model`.
@@ -31,29 +31,28 @@ The `remirror` package will automatically install the `@remirror/pm` package for
 
 Rather than installing multiple scoped packages, the `remirror` package is a gateway to using all the goodness that remirror provides while minimising your bundle size.
 
-The following creates a React based remirror editor.
+The following creates a controlled editor with React.
 
 ```tsx
 import React from 'react';
-import { SocialPreset } from 'remirror/preset/social';
-import { RemirrorProvider, useManager, useRemirror } from 'remirror/react';
-import { SocialEmojiComponent } from 'remirror/react/social';
+import { socialPreset } from 'remirror/extensions';
+import { Remirror, SocialEmojiComponent, useRemirror } from 'remirror/react';
 
 const EditorWrapper = () => {
   const socialPreset = new SocialPreset();
-  const manager = useManager([socialPreset]);
+  const { state, onChange } = useRemirror({ extensions: () => [...socialPreset()] });
 
   return (
-    <RemirrorProvider manager={manager}>
+    <Remirror state={state} onChange={onChange} manager={manager} autoRender={true}>
       <SocialEmojiComponent />
-      <Editor />
-    </RemirrorProvider>
+    </Remirror>
   );
 };
-
-const Editor = () => {
-  const { getRootProps } = useRemirror();
-
-  return <div {...getRootProps()} />;
-};
 ```
+
+These are the entry points available through the `remirror` package.
+
+- `remirror` - All the core functionality available through `@remirror/core`.
+- `remirror/extensions` - All the core extensions and presets made available through the main `remirror` repository. This doesn't include any framework specific extensions and presets.
+- `remirror/react` - All the react specific functionality including, hooks, presets, extensions and the main `Remirror` component.
+- `remirror/dom` - The dom framework implementation of via `createDomEditor`.

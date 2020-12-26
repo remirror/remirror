@@ -24,7 +24,7 @@ For example, to add a drop down emoji picker to your react editor the following 
 
 ```tsx
 import React from 'react';
-import { SocialEmojiComponent, SocialProvider } from 'remirror/react/social';
+import { SocialEmojiComponent, SocialProvider } from 'remirror/react';
 
 const Editor = () => {
   return (

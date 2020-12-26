@@ -7,8 +7,8 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-search/next
 [npm]: https://npmjs.com/package/@remirror/extension-search/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/extension-search@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-search@next
+[size]: https://bundlephobia.com/result?p=@remirror/extension-search
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-search
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-search/red?icon=npm
 
@@ -16,23 +16,23 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-search@next @remirror/pm@next
+yarn add @remirror/extension-search @remirror/pm
 
 # pnpm
-pnpm add @remirror/extension-search@next @remirror/pm@next
+pnpm add @remirror/extension-search @remirror/pm
 
 # npm
-npm install @remirror/extension-search@next @remirror/pm@next
+npm install @remirror/extension-search @remirror/pm
 ```
 
-This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/search`.
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.
 
 ## Usage
 
 The following code creates an instance of this extension.
 
 ```ts
-import { SearchExtension } from 'remirror/extension/search';
+import { SearchExtension } from 'remirror/extensions';
 
 const extension = new SearchExtension();
 ```

@@ -1,19 +1,44 @@
-import { ErrorConstant, ExtensionPriority } from '@remirror/core-constants';
-import { entries, object } from '@remirror/core-helpers';
-import type { AnyFunction, EmptyShape, ProsemirrorAttributes, Value } from '@remirror/core-types';
-import { isMarkActive, isNodeActive, isSelectionEmpty } from '@remirror/core-utils';
+import { LiteralUnion } from 'type-fest';
 
-import { extensionDecorator } from '../decorators';
+import { ErrorConstant, NULL_CHARACTER } from '@remirror/core-constants';
+import { entries, isEmptyObject, object } from '@remirror/core-helpers';
+import type {
+  AnyFunction,
+  EditorState,
+  EditorStateParameter,
+  EmptyShape,
+  ProsemirrorAttributes,
+  RemirrorJSON,
+  Shape,
+  StateJSON,
+} from '@remirror/core-types';
 import {
+  getActiveNode,
+  getMarkRange,
+  htmlToProsemirrorNode,
+  isMarkActive,
+  isNodeActive,
+  isSelectionEmpty,
+  prosemirrorNodeToHtml,
+  StringHandlerOptions,
+} from '@remirror/core-utils';
+import { TextSelection } from '@remirror/pm/state';
+
+import {
+  ActiveFromExtensions,
   AnyExtension,
+  AttrsFromExtensions,
+  extension,
+  Helper,
+  HelperNames,
   HelpersFromExtensions,
   isMarkExtension,
   isNodeExtension,
   PlainExtension,
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
-import type { ActiveFromCombined, AnyCombinedUnion, HelpersFromCombined } from '../preset';
 import type { ExtensionHelperReturn } from '../types';
+import { helper, HelperDecoratorOptions } from './builtin-decorators';
 
 /**
  * Helpers are custom methods that can provide extra functionality to the
@@ -26,21 +51,24 @@ import type { ExtensionHelperReturn } from '../types';
  *
  * Also provides the default helpers used within the extension.
  *
- * @builtin
+ * @category Builtin Extension
  */
-@extensionDecorator({ defaultPriority: ExtensionPriority.High })
+@extension({})
 export class HelpersExtension extends PlainExtension {
   get name() {
     return 'helpers' as const;
   }
 
   /**
-   * Helpers are only available once the view has been added to
-   * `RemirrorManager`.
+   * Add the `html` and `text` string handlers to the editor.
    */
-  onView(): void {
+  onCreate(): void {
+    this.store.setStringHandler('text', this.textToProsemirrorNode.bind(this));
+    this.store.setStringHandler('html', htmlToProsemirrorNode);
+
     const helpers: Record<string, AnyFunction> = object();
     const active: Record<string, AnyFunction> = object();
+    const attrs: Record<string, AnyFunction> = object();
     const names = new Set<string>();
 
     for (const extension of this.store.extensions) {
@@ -48,19 +76,32 @@ export class HelpersExtension extends PlainExtension {
         active[extension.name] = (attrs?: ProsemirrorAttributes) => {
           return isNodeActive({ state: this.store.getState(), type: extension.type, attrs });
         };
+
+        attrs[extension.name] = (attrs?: ProsemirrorAttributes) => {
+          return getActiveNode({ state: this.store.getState(), type: extension.type, attrs })?.node
+            .attrs;
+        };
       }
 
       if (isMarkExtension(extension)) {
         active[extension.name] = () => {
           return isMarkActive({ trState: this.store.getState(), type: extension.type });
         };
+
+        attrs[extension.name] = () => {
+          return getMarkRange(this.store.getState().selection.$from, extension.type)?.mark.attrs;
+        };
       }
 
-      if (!extension.createHelpers) {
+      const extensionHelpers = extension.createHelpers?.() ?? {};
+
+      for (const helperName of Object.keys(extension.decoratedHelpers ?? {})) {
+        extensionHelpers[helperName] = (extension as Shape)[helperName].bind(extension);
+      }
+
+      if (isEmptyObject(extensionHelpers)) {
         continue;
       }
-
-      const extensionHelpers = extension.createHelpers();
 
       for (const [name, helper] of entries(extensionHelpers)) {
         throwIfNameNotUnique({ name, set: names, code: ErrorConstant.DUPLICATE_HELPER_NAMES });
@@ -68,28 +109,96 @@ export class HelpersExtension extends PlainExtension {
       }
     }
 
+    this.store.setStoreKey('attrs', attrs);
     this.store.setStoreKey('active', active);
     this.store.setStoreKey('helpers', helpers);
     this.store.setExtensionStore('helpers', helpers as any);
   }
 
-  createHelpers() {
-    return {
-      /**
-       * Check whether the selection is empty.
-       */
-      isSelectionEmpty: () => isSelectionEmpty(this.store.view.state),
-    };
+  /**
+   * Check whether the selection is empty.
+   */
+  @helper()
+  isSelectionEmpty(state: EditorState = this.store.getState()): Helper<boolean> {
+    return isSelectionEmpty(state);
   }
+
+  /**
+   * Get the full JSON output for the ProseMirror editor state object.
+   */
+  @helper()
+  getStateJSON(state: EditorState = this.store.getState()): Helper<StateJSON> {
+    return state.toJSON() as StateJSON;
+  }
+
+  /**
+   * Get the JSON output for the main ProseMirror `doc` node.
+   *
+   * This can be used to persist data between sessions and can be passed as
+   * content to the `initialContent` prop.
+   */
+  @helper()
+  getJSON(state: EditorState = this.store.getState()): Helper<RemirrorJSON> {
+    return state.doc.toJSON() as RemirrorJSON;
+  }
+
+  /**
+   * @deprecated use `getJSON` instead.
+   */
+  @helper()
+  getRemirrorJSON(state: EditorState = this.store.getState()): Helper<RemirrorJSON> {
+    return this.getJSON(state);
+  }
+
+  /**
+   * A method to get all the content in the editor as text. Depending on the
+   * content in your editor, it is not guaranteed to preserve it 100%, so it's
+   * best to test that it meets your needs before consuming.
+   */
+  @helper()
+  getText({
+    lineBreakDivider = '\n\n',
+    state = this.store.getState(),
+  }: GetTextHelperOptions = {}): Helper<string> {
+    return state.doc.textBetween(0, state.doc.content.size, lineBreakDivider, NULL_CHARACTER);
+  }
+
+  /**
+   * Get the html from the current state, or provide a custom state.
+   */
+  @helper()
+  getHTML(state: EditorState = this.store.getState()): Helper<string> {
+    return prosemirrorNodeToHtml(state.doc, this.store.document);
+  }
+
+  /**
+   * Wrap the content in a pre tag to preserve whitespace and see what the
+   * editor does with it.
+   */
+  private textToProsemirrorNode(options: StringHandlerOptions) {
+    const content = `<pre>${options.content}</pre>`;
+    return this.store.stringHandlers.html({ ...options, content });
+  }
+}
+
+interface GetTextHelperOptions extends Partial<EditorStateParameter> {
+  /**
+   * The divider used to separate text blocks.
+   *
+   * @default '\n\n'
+   */
+  lineBreakDivider?: string;
 }
 
 declare global {
   namespace Remirror {
-    interface ManagerStore<Combined extends AnyCombinedUnion> {
+    interface ManagerStore<ExtensionUnion extends AnyExtension> {
       /**
        * The helpers provided by the extensions used.
        */
-      helpers: HelpersFromCombined<Combined | Value<AllExtensions>>;
+      helpers: HelpersFromExtensions<ExtensionUnion> extends object
+        ? HelpersFromExtensions<ExtensionUnion>
+        : object;
 
       /**
        * Check which nodes and marks are active under the current user
@@ -101,20 +210,44 @@ declare global {
        * return active.bold() ? 'bold' : 'regular';
        * ```
        */
-      active: ActiveFromCombined<Combined>;
+      active: ActiveFromExtensions<ExtensionUnion>;
+
+      /**
+       * Get the attributes for the named node or mark from the current user
+       * selection.
+       *
+       * ```ts
+       * const { attrs } = manager.store;
+       *
+       * attrs.heading(); // => { id: 'i1238ha', level: 1 }
+       * ```
+       */
+      attrs: AttrsFromExtensions<ExtensionUnion>;
     }
 
-    interface ExtensionCreatorMethods {
+    interface BaseExtension {
       /**
        * `ExtensionHelpers`
        *
        * This pseudo property makes it easier to infer Generic types of this
        * class.
-       * @private
+       *
+       * @internal
        */
       ['~H']: this['createHelpers'] extends AnyFunction
         ? ReturnType<this['createHelpers']>
         : EmptyShape;
+
+      /**
+       * @experimental
+       *
+       * Stores all the helpers that have been added via decorators to the
+       * extension instance. This is used by the `HelpersExtension` to pick the
+       * helpers.
+       *
+       * @internal
+       */
+      decoratedHelpers?: Record<string, HelperDecoratorOptions>;
 
       /**
        * A helper method is a function that takes in arguments and returns a
@@ -142,10 +275,10 @@ declare global {
        *
        * ```
        * // app.tsx
-       * import { useRemirror } from '@remirror/react';
+       * import { useRemirrorContext } from 'remirror/react';
        *
        * const MyEditor = () => {
-       *   const { helpers } = useRemirror({ autoUpdate: true });
+       *   const { helpers } = useRemirrorContext({ autoUpdate: true });
        *
        *   return helpers.beautiful.checkBeautyLevel() > 50
        *     ? (<span>😍</span>)
@@ -156,6 +289,20 @@ declare global {
       createHelpers?(): ExtensionHelperReturn;
     }
 
+    interface StringHandlers {
+      /**
+       * Register the plain `text` string handler which renders a text string
+       * inside a `<pre />`.
+       */
+      text: HelpersExtension;
+
+      /**
+       * Register the html string handler, which converts a html string to a
+       * prosemirror node.
+       */
+      html: HelpersExtension;
+    }
+
     interface ExtensionStore {
       /**
        * Helper method to provide information about the content of the editor.
@@ -164,11 +311,22 @@ declare global {
        * This should only be accessed after the `onView` lifecycle method
        * otherwise it will throw an error.
        */
-      helpers: HelpersFromExtensions<Builtin | AnyExtension>;
+      helpers: HelpersFromExtensions<AllExtensionUnion>;
+    }
+
+    interface ListenerProperties<ExtensionUnion extends AnyExtension> {
+      helpers: HelpersFromExtensions<ExtensionUnion> extends object
+        ? HelpersFromExtensions<ExtensionUnion>
+        : object;
     }
 
     interface AllExtensions {
       helpers: HelpersExtension;
     }
   }
+
+  /**
+   * The helpers name for all extension defined in the current project.
+   */
+  type AllHelperNames = LiteralUnion<HelperNames<Remirror.AllExtensionUnion>, string>;
 }

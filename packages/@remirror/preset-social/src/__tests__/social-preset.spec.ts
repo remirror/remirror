@@ -1,28 +1,15 @@
-import { presetValidityTest, renderEditor } from 'jest-remirror';
+import { renderEditor } from 'jest-remirror';
 
-import { ExtensionPriority } from '@remirror/core';
-import { AutoLinkExtension } from '@remirror/extension-auto-link';
 import { EmojiExtension } from '@remirror/extension-emoji';
+import { LinkExtension } from '@remirror/extension-link';
 import { MentionExtension } from '@remirror/extension-mention';
 
-import { SocialPreset } from '../..';
+import { socialPreset } from '../..';
 
-presetValidityTest(SocialPreset, { matchers: [] });
+test('provides the expected extensions', () => {
+  const editor = renderEditor(socialPreset({ maxResults: 10 }));
 
-test('can override extensions', () => {
-  const autoLinkExtension = new AutoLinkExtension({ defaultProtocol: 'https:' });
-  const mentionExtension = new MentionExtension({ matchers: [] });
-  const emojiExtension = new EmojiExtension({ priority: ExtensionPriority.Low });
-  const socialPreset = new SocialPreset();
-  const { manager } = renderEditor([
-    autoLinkExtension,
-    mentionExtension,
-    emojiExtension,
-    socialPreset,
-  ]);
-
-  expect(manager.getExtension(AutoLinkExtension)).toBe(autoLinkExtension);
-  expect(manager.getExtension(MentionExtension)).toBe(mentionExtension);
-  expect(manager.getExtension(EmojiExtension)).not.toBe(emojiExtension);
-  expect(manager.getExtension(EmojiExtension)).toBe(socialPreset.getExtension(EmojiExtension));
+  expect(editor.manager.getExtension(LinkExtension).options.autoLink).toBeTrue();
+  expect(editor.manager.getExtension(EmojiExtension).options.maxResults).toBe(10);
+  expect(editor.manager.getExtension(MentionExtension).options.matchers).toHaveLength(2);
 });

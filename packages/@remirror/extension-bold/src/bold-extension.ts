@@ -1,44 +1,31 @@
 import {
   ApplySchemaAttributes,
+  command,
   CommandFunction,
-  extensionDecorator,
+  extension,
   ExtensionTag,
-  FromToParameter,
+  getTextSelection,
   InputRule,
   isElementDomNode,
   isString,
-  KeyBindings,
+  keyBinding,
+  KeyBindingParameter,
   MarkExtension,
   MarkExtensionSpec,
   markInputRule,
-  Static,
+  MarkSpecOverride,
+  NamedShortcut,
+  PrimitiveSelection,
   toggleMark,
 } from '@remirror/core';
 
-type FontWeightProperty =
-  | '-moz-initial'
-  | 'inherit'
-  | 'initial'
-  | 'revert'
-  | 'unset'
-  | 'bold'
-  | 'normal'
-  | 'bolder'
-  | 'lighter'
-  | number;
-
-export interface BoldOptions {
-  /**
-   * Optionally set the font weight property for this extension.
-   */
-  weight?: Static<FontWeightProperty>;
-}
+import { BoldOptions, toggleBoldOptions } from './bold-utils';
 
 /**
- * When added to your editor it will provide the `bold` command which makes the text under the cursor /
- * or at the provided position range bold.
+ * When added to your editor it will provide the `toggleBold` command which makes the
+ * text under the cursor / or at the provided position range bold.
  */
-@extensionDecorator<BoldOptions>({
+@extension<BoldOptions>({
   defaultOptions: { weight: undefined },
   staticKeys: ['weight'],
 })
@@ -47,10 +34,13 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
     return 'bold' as const;
   }
 
-  readonly tags = [ExtensionTag.FormattingMark, ExtensionTag.FontStyle];
+  createTags() {
+    return [ExtensionTag.FormattingMark, ExtensionTag.FontStyle];
+  }
 
-  createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
+  createMarkSpec(extra: ApplySchemaAttributes, override: MarkSpecOverride): MarkExtensionSpec {
     return {
+      ...override,
       attrs: extra.defaults(),
       parseDOM: [
         {
@@ -85,12 +75,6 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
     };
   }
 
-  createKeymap(): KeyBindings {
-    return {
-      'Mod-b': toggleMark({ type: this.type }),
-    };
-  }
-
   createInputRules(): InputRule[] {
     return [
       markInputRule({
@@ -101,40 +85,53 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
     ];
   }
 
-  createCommands() {
-    return {
-      /**
-       * Toggle the bold styling on and off. Remove the formatting if any
-       * matching bold formatting within the selection or provided range.
-       */
-      toggleBold: (range?: FromToParameter): CommandFunction => {
-        return toggleMark({ type: this.type, range });
-      },
+  /**
+   * Toggle the bold styling on and off. Remove the formatting if any
+   * matching bold formatting within the selection or provided range.
+   */
+  @command(toggleBoldOptions)
+  toggleBold(selection?: PrimitiveSelection): CommandFunction {
+    return toggleMark({ type: this.type, selection });
+  }
 
-      /**
-       * Set the bold formatting for the provided range.
-       *
-       * TODO add selection support.
-       * TODO add check to see that provided range is valid.
-       */
-      setBold: (range: FromToParameter): CommandFunction => ({ tr, dispatch }) => {
-        dispatch?.(tr.addMark(range?.from, range?.to, this.type.create()));
+  /**
+   * Set the bold formatting for the provided range.
+   */
+  @command()
+  setBold(selection?: PrimitiveSelection): CommandFunction {
+    return ({ tr, dispatch }) => {
+      const { from, to } = getTextSelection(selection ?? tr.selection, tr.doc);
+      dispatch?.(tr.addMark(from, to, this.type.create()));
 
-        return true;
-      },
-
-      /**
-       * Remove the bold formatting from the provided range.
-       *
-       * TODO add selection support.
-       * TODO add check that the provided range is valid.
-       */
-      removeBold: (range: FromToParameter): CommandFunction => ({ tr, dispatch }) => {
-        dispatch?.(tr.removeMark(range?.from, range?.to, this.type));
-
-        return true;
-      },
+      return true;
     };
+  }
+
+  /**
+   * Remove the bold formatting from the provided range.
+   */
+  @command()
+  removeBold(selection?: PrimitiveSelection): CommandFunction {
+    return ({ tr, dispatch }) => {
+      const { from, to } = getTextSelection(selection ?? tr.selection, tr.doc);
+
+      if (!tr.doc.rangeHasMark(from, to, this.type)) {
+        return false;
+      }
+
+      dispatch?.(tr.removeMark(from, to, this.type));
+
+      return true;
+    };
+  }
+
+  /**
+   * Attach the keyboard shortcut for making text bold to this mark and also to
+   * the `toggleBold` command.
+   */
+  @keyBinding({ shortcut: NamedShortcut.Bold, command: 'toggleBold' })
+  shortcut(parameter: KeyBindingParameter): boolean {
+    return this.toggleBold()(parameter);
   }
 }
 

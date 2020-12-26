@@ -13,10 +13,10 @@ import { isArray, isObject } from './core-helpers';
  * environment. It's purpose is to help prevent bad practice while developing
  * by avoiding mutation of values that shouldn't be mutated.
  */
-export const freeze = <Target extends object>(
+export function freeze<Target extends object>(
   target: Target,
   options: FreezeOptions = {},
-): Readonly<Target> => {
+): Readonly<Target> {
   if (process.env.NODE_ENV === 'production') {
     return target;
   }
@@ -43,7 +43,7 @@ export const freeze = <Target extends object>(
       });
     },
   });
-};
+}
 
 interface FreezeOptions {
   /**

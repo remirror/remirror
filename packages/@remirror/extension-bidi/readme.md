@@ -7,8 +7,8 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-bidi/next
 [npm]: https://npmjs.com/package/@remirror/extension-bidi/v/next
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/extension-bidi@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-bidi@next
+[size]: https://bundlephobia.com/result?p=@remirror/extension-bidi
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-bidi
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-bidi/red?icon=npm
 
@@ -16,16 +16,16 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-bidi@next @remirror/pm@next
+yarn add @remirror/extension-bidi @remirror/pm
 
 # pnpm
-pnpm add @remirror/extension-bidi@next @remirror/pm@next
+pnpm add @remirror/extension-bidi @remirror/pm
 
 # npm
-npm install @remirror/extension-bidi@next @remirror/pm@next
+npm install @remirror/extension-bidi @remirror/pm
 ```
 
-This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extension/bidi`.
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.
 
 ## Usage
 
@@ -34,7 +34,7 @@ This add bidirectional text support to your editor.
 The following code creates an instance of this extension.
 
 ```ts
-import { BidiExtension } from 'remirror/extension/bidi';
+import { BidiExtension } from 'remirror/extensions';
 
 const extension = new BidiExtension();
 ```

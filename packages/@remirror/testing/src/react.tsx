@@ -1,7 +1,8 @@
 import { render as originalRender, RenderOptions, RenderResult } from '@testing-library/react';
-import React, { FC, StrictMode } from 'react';
+import { FC, StrictMode } from 'react';
+import * as React from 'react';
 
-import { useRemirror } from '@remirror/react';
+import { useRemirrorContext } from '@remirror/react';
 
 /**
  * Render the component in `StrictMode`
@@ -17,7 +18,7 @@ export function strictRender(
  * A default editor for the react wrapper.
  */
 export const DefaultEditor: FC = () => {
-  const { getRootProps } = useRemirror();
+  const { getRootProps } = useRemirrorContext();
 
   return (
     <>
@@ -26,13 +27,4 @@ export const DefaultEditor: FC = () => {
   );
 };
 
-export { cleanup, act, fireEvent, render } from '@testing-library/react';
-export type { RenderResult };
-export {
-  useRemirror,
-  RemirrorProvider,
-  useManager,
-  useExtension,
-  usePreset,
-  createReactManager,
-} from '@remirror/react';
+export * from '@testing-library/react';

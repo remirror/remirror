@@ -1,8 +1,8 @@
+import { cx } from '@linaria/core';
 import refractor, { RefractorNode } from 'refractor/core';
 
 import {
   ApplySchemaAttributes,
-  bool,
   CommandFunction,
   DOMOutputSpec,
   findParentNodeOfType,
@@ -15,11 +15,14 @@ import {
   NodeTypeParameter,
   NodeWithPosition,
   object,
+  omitExtraAttributes,
   PosParameter,
   ProsemirrorAttributes,
   ProsemirrorNode,
+  range,
   TextParameter,
 } from '@remirror/core';
+import { ExtensionCodeMessages } from '@remirror/messages';
 import { TextSelection } from '@remirror/pm/state';
 import { Decoration } from '@remirror/pm/view';
 
@@ -99,7 +102,7 @@ function getPositionedRefractorNodes(
   const { node, pos } = parameter;
   const refractorNodes = refractor.highlight(
     node.textContent ?? '',
-    node.attrs.language ?? 'markup',
+    node.attrs.language?.replace('language-', '') ?? 'markup',
   );
   const parsedRefractorNodes = parseRefractorNodes(refractorNodes, plainTextClassName);
 
@@ -132,12 +135,11 @@ export function createDecorations(parameter: CreateDecorationsParameter): Decora
       ? positionedRefractorNodes.length - 1
       : positionedRefractorNodes.length;
 
-    for (let index = 0; index < lastBlockLength; index++) {
+    for (const index of range(lastBlockLength)) {
       const positionedRefractorNode = positionedRefractorNodes[index];
+      const classes = positionedRefractorNode?.classes;
 
-      const classes = positionedRefractorNode.classes;
-
-      if (classes.length === 0) {
+      if (!positionedRefractorNode || !classes?.length) {
         // Do not create a decoration if we cannot assign at least one class
         continue;
       }
@@ -164,11 +166,11 @@ export function createDecorations(parameter: CreateDecorationsParameter): Decora
 export function isValidCodeBlockAttributes(
   attributes: ProsemirrorAttributes,
 ): attributes is CodeBlockAttributes {
-  return bool(
+  return !!(
     attributes &&
-      isObject(attributes) &&
-      isString(attributes.language) &&
-      attributes.language.length,
+    isObject(attributes) &&
+    isString(attributes.language) &&
+    attributes.language.length > 0
   );
 }
 
@@ -207,7 +209,7 @@ interface GetLanguageParameter {
   /**
    * The language input from the user;
    */
-  language: string;
+  language: string | undefined;
 
   /**
    * The default language to use if none found.
@@ -240,12 +242,14 @@ export function getLanguage(parameter: GetLanguageParameter): string {
  * Used to provide a `toDom` function for the code block. Currently this only
  * support the browser runtime.
  */
-export function codeBlockToDOM(
-  node: ProsemirrorNode,
-  toDOM: ApplySchemaAttributes['dom'],
-): DOMOutputSpec {
-  const { language, ...rest } = node.attrs as CodeBlockAttributes;
-  const attributes = { ...toDOM(node), ...rest, class: `language-${language}` };
+export function codeBlockToDOM(node: ProsemirrorNode, extra: ApplySchemaAttributes): DOMOutputSpec {
+  const { language, ...rest } = omitExtraAttributes(node.attrs, extra);
+  const extraAttrs = extra.dom(node);
+  const attributes = {
+    ...extraAttrs,
+    ...rest,
+    class: cx(rest.class as string, extraAttrs.class, `language-${language}`),
+  };
 
   return ['pre', attributes, ['code', { [dataAttribute]: language }, 0]];
 }
@@ -319,3 +323,21 @@ export function formatCodeBlockFactory(parameter: FormatCodeBlockFactoryParamete
     return true;
   };
 }
+
+/**
+ * Get the language from the provided `code` element. This is used as the
+ * default implementation in the `CodeExtension` but it can be overridden.
+ */
+export function getLanguageFromDom(codeElement: HTMLElement): string | undefined {
+  return (codeElement.getAttribute(dataAttribute) ?? codeElement.classList[0])?.replace(
+    'language-',
+    '',
+  );
+}
+
+const { DESCRIPTION, LABEL } = ExtensionCodeMessages;
+export const toggleCodeBlockOptions: Remirror.CommandDecoratorOptions = {
+  icon: 'bracesLine',
+  description: ({ t }) => t(DESCRIPTION),
+  label: ({ t }) => t(LABEL),
+};

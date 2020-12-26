@@ -16,18 +16,30 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-drop-cursor.cjs.js",
-  "module": "dist/extension-drop-cursor.esm.js",
-  "browser": {
-    "./dist/extension-drop-cursor.cjs.js": "./dist/extension-drop-cursor.browser.cjs.js",
-    "./dist/extension-drop-cursor.esm.js": "./dist/extension-drop-cursor.browser.esm.js"
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-drop-cursor.esm.js",
+      "require": "./dist/remirror-extension-drop-cursor.cjs.js",
+      "browser": "./dist/remirror-extension-drop-cursor.browser.esm.js",
+      "types": "./dist/remirror-extension-drop-cursor.cjs.d.ts",
+      "default": "./dist/remirror-extension-drop-cursor.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "types": "dist/extension-drop-cursor.cjs.d.ts",
+  "main": "dist/remirror-extension-drop-cursor.cjs.js",
+  "module": "dist/remirror-extension-drop-cursor.esm.js",
+  "browser": {
+    "./dist/remirror-extension-drop-cursor.cjs.js": "./dist/remirror-extension-drop-cursor.browser.cjs.js",
+    "./dist/remirror-extension-drop-cursor.esm.js": "./dist/remirror-extension-drop-cursor.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-drop-cursor.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0"
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",

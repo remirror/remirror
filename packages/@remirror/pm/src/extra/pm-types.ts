@@ -4,12 +4,12 @@ export type EditorSchema<
   Nodes extends string = string,
   Marks extends string = string
 > = import('../model').Schema<Nodes, Marks>;
-export type EditorView<Schema extends EditorSchema = EditorSchema> = import('../view').EditorView<
-  Schema
->;
-export type Selection<Schema extends EditorSchema = EditorSchema> = import('../state').Selection<
-  Schema
->;
+export type EditorView<
+  Schema extends EditorSchema = EditorSchema
+> = import('../view').EditorView<Schema>;
+export type Selection<
+  Schema extends EditorSchema = EditorSchema
+> = import('../state').Selection<Schema>;
 export type DecorationSet<
   Schema extends EditorSchema = EditorSchema
 > = import('../view').DecorationSet<Schema>;
@@ -28,25 +28,25 @@ export type ResolvedPos<
 export type InputRule<
   Schema extends EditorSchema = EditorSchema
 > = import('../inputrules').InputRule<Schema>;
-export type Fragment<Schema extends EditorSchema = EditorSchema> = import('../model').Fragment<
-  Schema
->;
-export type NodeView<Schema extends EditorSchema = EditorSchema> = import('../view').NodeView<
-  Schema
->;
-export type ProsemirrorNode<Schema extends EditorSchema = EditorSchema> = import('../model').Node<
-  Schema
->;
+export type Fragment<
+  Schema extends EditorSchema = EditorSchema
+> = import('../model').Fragment<Schema>;
+export type NodeView<
+  Schema extends EditorSchema = EditorSchema
+> = import('../view').NodeView<Schema>;
+export type ProsemirrorNode<
+  Schema extends EditorSchema = EditorSchema
+> = import('../model').Node<Schema>;
 export type ProsemirrorPlugin<PluginState = any> = import('../state').Plugin<
   PluginState,
   EditorSchema
 >;
-export type MarkType<Schema extends EditorSchema = EditorSchema> = import('../model').MarkType<
-  Schema
->;
-export type NodeType<Schema extends EditorSchema = EditorSchema> = import('../model').NodeType<
-  Schema
->;
+export type MarkType<
+  Schema extends EditorSchema = EditorSchema
+> = import('../model').MarkType<Schema>;
+export type NodeType<
+  Schema extends EditorSchema = EditorSchema
+> = import('../model').NodeType<Schema>;
 export type EditorState<Schema extends EditorSchema = EditorSchema> = Readonly<
   import('../state').EditorState<Schema>
 >;
@@ -72,7 +72,7 @@ export type NonChainableCommandFunction<
 /**
  * Used to apply the Prosemirror transaction to the current {@link EditorState}.
  *
- * @typeParam Schema - the underlying editor schema.
+ * @template Schema - the underlying editor schema.
  */
 export type DispatchFunction<Schema extends EditorSchema = EditorSchema> = (
   tr: Transaction<Schema>,
@@ -90,7 +90,7 @@ export type DispatchFunction<Schema extends EditorSchema = EditorSchema> = (
  * When no dispatch callback is passed, the command should do a 'dry run',
  * determining whether it is applicable, but not actually performing any action.
  *
- * @typeParam Schema - the underlying editor schema.
+ * @template Schema - the underlying editor schema.
  */
 export type ProsemirrorCommandFunction<Schema extends EditorSchema = EditorSchema> = (
   state: EditorState<Schema>,
@@ -101,8 +101,8 @@ export type ProsemirrorCommandFunction<Schema extends EditorSchema = EditorSchem
 /**
  * A command method for running commands in your editor.
  *
- * @typeParam Schema - the underlying editor schema.
- * @typeParam ExtraParameter - extra parameters to add to the command function.
+ * @template Schema - the underlying editor schema.
+ * @template ExtraParameter - extra parameters to add to the command function.
  *
  * @remarks
  *
@@ -130,7 +130,7 @@ export type CommandFunction<
 /**
  * A parameter builder interface for the remirror `CommandFunction`.
  *
- * @typeParam Schema - the underlying editor schema.
+ * @template Schema - the underlying editor schema.
  */
 export interface CommandFunctionParameter<Schema extends EditorSchema = EditorSchema> {
   /**
