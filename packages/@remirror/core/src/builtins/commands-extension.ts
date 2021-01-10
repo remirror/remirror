@@ -68,12 +68,7 @@ import type {
   ExtensionCommandReturn,
   StateUpdateLifecycleParameter,
 } from '../types';
-import {
-  command,
-  CommandDecoratorOptions,
-  CommandUiDecoratorOptions,
-  helper,
-} from './builtin-decorators';
+import { command, CommandDecoratorOptions, helper } from './builtin-decorators';
 
 export interface CommandOptions {
   /**
@@ -219,7 +214,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
 
     chain.run = () => view.dispatch(this.transaction);
 
-    setStoreKey('commands', commands);
+    setStoreKey('commands', commands as any);
     setStoreKey('chain', chain as any);
 
     setExtensionStore('commands', commands as any);

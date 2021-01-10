@@ -77,7 +77,7 @@ export function renderEditor<ExtensionUnion extends AnyExtension>(
   const element = createElement(props?.element, autoClean);
   const manager = createDomManager(extensions, options);
 
-  createDomEditor({ ...props, element, manager });
+  createDomEditor<ExtensionUnion | CorePreset | BuiltinPreset>({ ...props, element, manager });
 
   return RemirrorTestChain.create(manager);
 }
@@ -85,6 +85,8 @@ export function renderEditor<ExtensionUnion extends AnyExtension>(
 /**
  * This creates a chainable test helper for testing your remirror presets,
  * extensions and commands.
+ *
+ * @template ExtensionUnion - All the extensions being used within this editor
  */
 export class RemirrorTestChain<ExtensionUnion extends AnyExtension> {
   /**

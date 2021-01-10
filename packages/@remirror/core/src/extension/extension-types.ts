@@ -48,9 +48,17 @@ export type MapToChainedCommand<RawCommands extends Record<string, AnyFunction>>
 /**
  * Utility type which receives an extension and provides the type of actions it
  * makes available.
+ *
+ * @template ExtensionUnion - the extensions being used within the editor
+ * @template Expanded - auto generated from `ExtensionUnion`. These are the
+ * fully expanded extensions with all sub extensions automatically provided. You
+ * never need to provide this type as it is automatically calculated.
  */
-export type CommandsFromExtensions<ExtensionUnion extends AnyExtension> = UnionToIntersection<
-  MapToUnchainedCommand<GetCommands<ExtensionUnion> | GetDecoratedCommands<ExtensionUnion>>
+export type CommandsFromExtensions<
+  ExtensionUnion extends AnyExtension,
+  Expanded extends AnyExtension = GetExtensions<ExtensionUnion>
+> = UnionToIntersection<
+  MapToUnchainedCommand<GetCommands<Expanded> | GetDecoratedCommands<Expanded>>
 >;
 
 /**
@@ -144,10 +152,16 @@ export type MapHelpers<RawHelpers extends Record<string, AnyFunction>> = {
 /**
  * Utility type which receives an extension and provides the type of helpers it
  * makes available.
+ *
+ * @template ExtensionUnion - the extensions being used within the editor
+ * @template Expanded - auto generated from `ExtensionUnion`. These are the
+ * fully expanded extensions with all sub extensions automatically provided. You
+ * never need to provide this type as it is automatically calculated.
  */
-export type HelpersFromExtensions<ExtensionUnion extends AnyExtension> = UnionToIntersection<
-  MapHelpers<GetHelpers<ExtensionUnion> | GetDecoratedHelpers<ExtensionUnion>>
->;
+export type HelpersFromExtensions<
+  ExtensionUnion extends AnyExtension,
+  Expanded extends AnyExtension = GetExtensions<ExtensionUnion>
+> = UnionToIntersection<MapHelpers<GetHelpers<Expanded> | GetDecoratedHelpers<Expanded>>>;
 
 export type HelperAnnotation = Flavoring<'HelperAnnotation'>;
 
@@ -227,31 +241,51 @@ export type AttrsFromExtensions<ExtensionUnion extends AnyExtension> = Record<
 /**
  * Get the names of all available extensions.
  */
-export type GetNameUnion<ExtensionUnion extends AnyExtension> = ExtensionUnion['name'];
+export type GetNameUnion<
+  ExtensionUnion extends AnyExtension
+> = GetExtensions<ExtensionUnion>['name'];
 
 /**
  * A utility type for retrieving the name of an extension only when it's a plain
  * extension.
+ *
+ * @template ExtensionUnion - the extensions being used within the editor
+ * @template Expanded - auto generated from `ExtensionUnion`. These are the
+ * fully expanded extensions with all sub extensions automatically provided. You
+ * never need to provide this type as it is automatically calculated.
  */
 export type GetPlainNameUnion<
-  ExtensionUnion extends AnyExtension
-> = ExtensionUnion extends AnyPlainExtension ? ExtensionUnion['name'] : never;
+  ExtensionUnion extends AnyExtension,
+  Expanded extends AnyExtension = GetExtensions<ExtensionUnion>
+> = Expanded extends AnyPlainExtension ? Expanded['name'] : never;
 
 /**
  * A utility type for retrieving the name of an extension only when it's a mark
  * extension.
+ *
+ * @template ExtensionUnion - the extensions being used within the editor
+ * @template Expanded - auto generated from `ExtensionUnion`. These are the
+ * fully expanded extensions with all sub extensions automatically provided. You
+ * never need to provide this type as it is automatically calculated.
  */
 export type GetMarkNameUnion<
-  ExtensionUnion extends AnyExtension
-> = ExtensionUnion extends AnyMarkExtension ? ExtensionUnion['name'] : never;
+  ExtensionUnion extends AnyExtension,
+  Expanded extends AnyExtension = GetExtensions<ExtensionUnion>
+> = Expanded extends AnyMarkExtension ? Expanded['name'] : never;
 
 /**
  * A utility type for retrieving the name of an extension only when it's a node
  * extension.
+ *
+ * @template ExtensionUnion - the extensions being used within the editor
+ * @template Expanded - auto generated from `ExtensionUnion`. These are the
+ * fully expanded extensions with all sub extensions automatically provided. You
+ * never need to provide this type as it is automatically calculated.
  */
 export type GetNodeNameUnion<
-  ExtensionUnion extends AnyExtension
-> = ExtensionUnion extends AnyNodeExtension ? ExtensionUnion['name'] : never;
+  ExtensionUnion extends AnyExtension,
+  Expanded extends AnyExtension = GetExtensions<ExtensionUnion>
+> = Expanded extends AnyNodeExtension ? Expanded['name'] : never;
 
 /**
  * Gets the editor schema from an extension union.

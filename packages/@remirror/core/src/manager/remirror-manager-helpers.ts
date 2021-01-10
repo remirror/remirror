@@ -31,12 +31,8 @@ import type { GetConstructor, StateUpdateLifecycleParameter } from '../types';
 export function transformExtensions<RawExtensions extends AnyExtension>(
   initialExtensions: readonly RawExtensions[],
   settings: Remirror.ManagerSettings,
-): ExtensionTransformation<
-  GetExtensions<RawExtensions> extends never ? AnyExtension : GetExtensions<RawExtensions>
-> {
-  type ExtensionUnion = GetExtensions<RawExtensions> extends never
-    ? AnyExtension
-    : GetExtensions<RawExtensions>;
+): ExtensionTransformation<RawExtensions> {
+  type ExtensionUnion = GetExtensions<RawExtensions>;
   type ExtensionConstructor = GetConstructor<ExtensionUnion>;
 
   // This is the holder for the sorted and cleaned extensions returned by this
@@ -283,12 +279,15 @@ function updateExtensionDuplicates<ExtensionUnion extends AnyExtension>(
 /**
  * This is the object shape that is returned from the combined transformation.
  */
-export interface ExtensionTransformation<ExtensionUnion extends AnyExtension> {
+export interface ExtensionTransformation<
+  ExtensionUnion extends AnyExtension,
+  Expanded extends AnyExtension = GetExtensions<ExtensionUnion>
+> {
   /**
    * The list of extensions sorted by priority and original extension. Every
    * extension passed in and those contained by presets are placed here.
    */
-  extensions: ExtensionUnion[];
+  extensions: Expanded[];
 
   /**
    * A map where the key is the [[`ExtensionConstructor`]] and the value is the
@@ -296,7 +295,7 @@ export interface ExtensionTransformation<ExtensionUnion extends AnyExtension> {
    * within a manager. It is a weak map so that values can be garbage collected
    * when references to the constructor are lost.
    */
-  extensionMap: WeakMap<GetConstructor<ExtensionUnion>, ExtensionUnion>;
+  extensionMap: WeakMap<GetConstructor<Expanded>, Expanded>;
 }
 
 interface MissingConstructor<ExtensionUnion extends AnyExtension> {

@@ -140,18 +140,18 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
   /**
    * The extension manager store.
    */
-  #store: Remirror.ManagerStore<this['~E']> = object();
+  #store: Remirror.ManagerStore<ExtensionUnion> = object();
 
   /**
    * All the extensions being used within this editor.
    */
-  #extensions: ReadonlyArray<this['~E']>;
+  #extensions: ReadonlyArray<GetExtensions<ExtensionUnion>>;
 
   /**
    * The map of extension constructor to their extension counterparts. This is
    * what makes the `getExtension` method possible.
    */
-  #extensionMap: WeakMap<AnyExtensionConstructor, this['~E']>;
+  #extensionMap: WeakMap<AnyExtensionConstructor, GetExtensions<ExtensionUnion>>;
 
   /**
    * The stage the manager is currently running.
@@ -275,7 +275,7 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
   /**
    * The extensions stored by this manager
    */
-  get extensions(): ReadonlyArray<this['~E']> {
+  get extensions(): ReadonlyArray<GetExtensions<ExtensionUnion>> {
     return this.#extensions;
   }
 
@@ -291,7 +291,7 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
   /**
    * Get the extension manager store which is accessible at initialization.
    */
-  get store(): Remirror.ManagerStore<this['~E']> {
+  get store(): Remirror.ManagerStore<ExtensionUnion> {
     return freeze(this.#store);
   }
 
@@ -312,7 +312,7 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
    * commands will end up being non-chainable and be overwritten by anything
    * that comes after.
    */
-  get tr(): Transaction<GetSchema<this['~E']>> {
+  get tr(): Transaction<GetSchema<ExtensionUnion>> {
     return this.getExtension(CommandsExtension).transaction;
   }
 
@@ -940,9 +940,7 @@ export interface RemirrorManager<ExtensionUnion extends AnyExtension> {
    *
    * @internal
    */
-  ['~E']: GetExtensions<ExtensionUnion> extends never
-    ? AnyExtension
-    : GetExtensions<ExtensionUnion>;
+  ['~E']: ExtensionUnion;
 
   /**
    * Pseudo property which is a small hack to store the type of the schema
@@ -950,7 +948,7 @@ export interface RemirrorManager<ExtensionUnion extends AnyExtension> {
    *
    * @internal
    */
-  ['~Sch']: GetSchema<this['~E']>;
+  ['~Sch']: GetSchema<ExtensionUnion>;
 
   /**
    * `AllNames`
@@ -959,7 +957,7 @@ export interface RemirrorManager<ExtensionUnion extends AnyExtension> {
    *
    * @internal
    */
-  ['~AN']: GetNameUnion<this['~E']> extends never ? string : GetNameUnion<this['~E']>;
+  ['~AN']: GetNameUnion<ExtensionUnion> extends never ? string : GetNameUnion<ExtensionUnion>;
 
   /**
    * `NodeNames`
@@ -969,7 +967,9 @@ export interface RemirrorManager<ExtensionUnion extends AnyExtension> {
    *
    * @internal
    */
-  ['~N']: GetNodeNameUnion<this['~E']> extends never ? string : GetNodeNameUnion<this['~E']>;
+  ['~N']: GetNodeNameUnion<ExtensionUnion> extends never
+    ? string
+    : GetNodeNameUnion<ExtensionUnion>;
 
   /**
    * `MarkNames`
@@ -979,7 +979,9 @@ export interface RemirrorManager<ExtensionUnion extends AnyExtension> {
    *
    * @internal
    */
-  ['~M']: GetMarkNameUnion<this['~E']> extends never ? string : GetMarkNameUnion<this['~E']>;
+  ['~M']: GetMarkNameUnion<ExtensionUnion> extends never
+    ? string
+    : GetMarkNameUnion<ExtensionUnion>;
 
   /**
    * `PlainNames`
@@ -989,7 +991,9 @@ export interface RemirrorManager<ExtensionUnion extends AnyExtension> {
    *
    * @internal
    */
-  ['~P']: GetPlainNameUnion<this['~E']> extends never ? string : GetPlainNameUnion<this['~E']>;
+  ['~P']: GetPlainNameUnion<ExtensionUnion> extends never
+    ? string
+    : GetPlainNameUnion<ExtensionUnion>;
 }
 
 declare global {
@@ -1061,13 +1065,6 @@ declare global {
        */
       view: EditorView<GetSchema<ExtensionUnion>>;
     }
-
-    /**
-     * The initialization params which are passed by the view layer into the
-     * extension manager. This can be added to by the requesting framework
-     * layer.
-     */
-    interface ManagerInitializationParameter<ExtensionUnion extends AnyExtension> {}
 
     interface ExtensionStore {
       /**

@@ -91,17 +91,14 @@ export type FocusType = PrimitiveSelection | boolean;
  * The base options for an editor wrapper. This is used within the react and dom
  * implementations.
  */
-export interface FrameworkProps<
-  ExtensionUnion extends AnyExtension,
-  Manager extends RemirrorManager<ExtensionUnion> = RemirrorManager<ExtensionUnion>
-> {
+export interface FrameworkProps<ExtensionUnion extends AnyExtension> {
   /**
    * Pass in the extension manager.
    *
    * The manager is responsible for handling all Prosemirror related
    * functionality.
    */
-  manager: Manager;
+  manager: RemirrorManager<ExtensionUnion>;
 
   /**
    * Set the starting value for the editor.
@@ -120,7 +117,7 @@ export interface FrameworkProps<
    *
    * @default {}
    */
-  attributes?: Record<string, string> | AttributePropFunction<Manager['~E']>;
+  attributes?: Record<string, string> | AttributePropFunction<ExtensionUnion>;
 
   /**
    * Additional classes which can be passed into the the editor wrapper. These
@@ -147,12 +144,12 @@ export interface FrameworkProps<
   /**
    * An event listener which is called whenever the editor gains focus.
    */
-  onFocus?: (params: RemirrorEventListenerParameter<Manager['~E']>, event: Event) => void;
+  onFocus?: (params: RemirrorEventListenerParameter<ExtensionUnion>, event: Event) => void;
 
   /**
    * An event listener which is called whenever the editor is blurred.
    */
-  onBlur?: (params: RemirrorEventListenerParameter<Manager['~E']>, event: Event) => void;
+  onBlur?: (params: RemirrorEventListenerParameter<ExtensionUnion>, event: Event) => void;
 
   /**
    * Called on every change to the Prosemirror state.
@@ -166,7 +163,7 @@ export interface FrameworkProps<
    * Use this to update the transaction which will be used to update the editor
    * state.
    */
-  onDispatchTransaction?: TransactionTransformer<GetSchema<Manager['~E']>>;
+  onDispatchTransaction?: TransactionTransformer<GetSchema<ExtensionUnion>>;
 
   /**
    * Sets the accessibility label for the editor instance.
@@ -236,19 +233,17 @@ export type AddFrameworkHandler<ExtensionUnion extends AnyExtension> = <
 /**
  * This is the base output that is created by a framework.
  */
-export interface FrameworkOutput<
-  ExtensionUnion extends AnyExtension,
-  Manager extends RemirrorManager<ExtensionUnion> = RemirrorManager<ExtensionUnion>
-> extends Remirror.ManagerStore<Manager['~E']> {
+export interface FrameworkOutput<ExtensionUnion extends AnyExtension>
+  extends Remirror.ManagerStore<ExtensionUnion> {
   /**
    * The manager which was used to create this editor.
    */
-  manager: Manager;
+  manager: RemirrorManager<ExtensionUnion>;
 
   /**
    * Add event handlers to the remirror editor at runtime.
    */
-  addHandler: AddFrameworkHandler<Manager['~E']>;
+  addHandler: AddFrameworkHandler<ExtensionUnion>;
 
   /**
    * The unique id for the editor instance.
