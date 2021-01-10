@@ -38,6 +38,6 @@ export type {
   MentionAtomExtensionMatcher,
   MentionAtomOptions,
   NamedMentionAtomNodeAttributes,
-  OptionalMentionAtomExtensionParameter,
+  OptionalMentionAtomExtensionProps,
   MentionAtomNodeAttributes,
 } from './mention-atom-extension';

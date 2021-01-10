@@ -10,7 +10,7 @@ import {
   isElementDomNode,
   isTextSelection,
   keyBinding,
-  KeyBindingParameter,
+  KeyBindingProps,
   NodeExtension,
   NodeExtensionSpec,
   nodeInputRule,
@@ -133,7 +133,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
   }
 
   @keyBinding({ shortcut: 'Enter' })
-  handleEnterKey({ dispatch, tr }: KeyBindingParameter): boolean {
+  handleEnterKey({ dispatch, tr }: KeyBindingProps): boolean {
     const { selection } = tr;
 
     if (!isTextSelection(selection) || !selection.$cursor) {
@@ -183,7 +183,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
    * Handle the backspace key when deleting content.
    */
   @keyBinding({ shortcut: 'Backspace' })
-  handleBackspace({ dispatch, tr }: KeyBindingParameter): boolean {
+  handleBackspace({ dispatch, tr }: KeyBindingProps): boolean {
     // Aims to stop merging callouts when deleting content in between
     const { selection } = tr;
 

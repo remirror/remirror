@@ -18,14 +18,14 @@ import {
   isNodeOfType,
   isTextSelection,
   keyBinding,
-  KeyBindingParameter,
+  KeyBindingProps,
   NamedShortcut,
   NodeExtension,
   NodeExtensionSpec,
   nodeInputRule,
   NodeSpecOverride,
-  OnSetOptionsParameter,
-  PosParameter,
+  OnSetOptionsProps,
+  PosProps,
   ProsemirrorAttributes,
   removeNodeAtPosition,
   replaceNodeAtPosition,
@@ -172,8 +172,8 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
     ];
   }
 
-  protected onSetOptions(parameter: OnSetOptionsParameter<CodeBlockOptions>): void {
-    const { changes } = parameter;
+  protected onSetOptions(props: OnSetOptionsProps<CodeBlockOptions>): void {
+    const { changes } = props;
 
     if (changes.supportedLanguages.changed) {
       // Update the registered languages when language support is dynamically
@@ -299,16 +299,16 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
    * ```
    */
   @command()
-  formatCodeBlock(parameter?: Partial<PosParameter>): CommandFunction {
+  formatCodeBlock(props?: Partial<PosProps>): CommandFunction {
     return formatCodeBlockFactory({
       type: this.type,
       formatter: this.options.formatter,
       defaultLanguage: this.options.defaultLanguage,
-    })(parameter);
+    })(props);
   }
 
   @keyBinding({ shortcut: 'Tab' })
-  tabKey({ state, dispatch }: KeyBindingParameter): boolean {
+  tabKey({ state, dispatch }: KeyBindingProps): boolean {
     const { selection, tr, schema } = state;
 
     // Check to ensure that this is the correct node.
@@ -333,7 +333,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
   }
 
   @keyBinding({ shortcut: 'Backspace' })
-  backspaceKey({ dispatch, tr, state }: KeyBindingParameter): boolean {
+  backspaceKey({ dispatch, tr, state }: KeyBindingProps): boolean {
     const { selection } = tr;
 
     // If the selection is not empty, return false and let other extension
@@ -376,7 +376,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
   }
 
   @keyBinding({ shortcut: 'Enter' })
-  enterKey({ dispatch, tr }: KeyBindingParameter): boolean {
+  enterKey({ dispatch, tr }: KeyBindingProps): boolean {
     const { selection } = tr;
 
     if (!isTextSelection(selection) || !selection.$cursor) {
@@ -426,7 +426,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
   }
 
   @keyBinding({ shortcut: NamedShortcut.Format })
-  formatShortcut({ tr }: KeyBindingParameter): boolean {
+  formatShortcut({ tr }: KeyBindingProps): boolean {
     const commands = this.store.commands;
 
     if (!isNodeActive({ type: this.type, state: tr })) {

@@ -4,7 +4,7 @@ import useLayoutEffect from 'use-isomorphic-layout-effect';
 import { omitUndefined } from '@remirror/core';
 import {
   defaultAbsolutePosition,
-  ElementsAddedParameter,
+  ElementsAddedProps,
   getPositioner,
   Positioner,
   PositionerExtension,
@@ -77,7 +77,7 @@ export function useMultiPositioner(
   const positionerRef = useRef(positioner);
   positionerRef.current = positioner;
 
-  const [state, setState] = useState<ElementsAddedParameter[]>([]);
+  const [state, setState] = useState<ElementsAddedProps[]>([]);
   const [memoizedPositioner, setMemoizedPositioner] = useState(() => getPositioner(positioner));
   const [collectRefs, setCollectRefs] = useState<CollectElementRef[]>([]);
 
@@ -96,10 +96,10 @@ export function useMultiPositioner(
 
   // Add the positioner update handlers.
   useLayoutEffect(() => {
-    const disposeUpdate = memoizedPositioner.addListener('update', (parameter) => {
+    const disposeUpdate = memoizedPositioner.addListener('update', (options) => {
       const items: CollectElementRef[] = [];
 
-      for (const { id, setElement } of parameter) {
+      for (const { id, setElement } of options) {
         const ref: RefCallback<HTMLElement> = (element) => {
           if (!element) {
             return;
@@ -114,8 +114,8 @@ export function useMultiPositioner(
       setCollectRefs(items);
     });
 
-    const disposeDone = memoizedPositioner.addListener('done', (parameter) => {
-      setState(parameter);
+    const disposeDone = memoizedPositioner.addListener('done', (options) => {
+      setState(options);
     });
 
     return () => {

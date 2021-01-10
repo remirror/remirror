@@ -9,7 +9,7 @@ import {
   extension,
   ExtensionPriority,
   ExtensionTag,
-  FromToParameter,
+  FromToProps,
   GetMarkRange,
   getMarkRange,
   getMatchString,
@@ -21,14 +21,14 @@ import {
   isSelectionEmpty,
   isTextSelection,
   keyBinding,
-  KeyBindingParameter,
+  KeyBindingProps,
   LEAF_NODE_REPLACING_CHARACTER,
   MarkExtension,
   MarkExtensionSpec,
   MarkSpecOverride,
   NamedShortcut,
   omitExtraAttributes,
-  OnSetOptionsParameter,
+  OnSetOptionsProps,
   preserveSelection,
   ProsemirrorAttributes,
   ProsemirrorNode,
@@ -51,16 +51,16 @@ export type DefaultProtocol = 'http:' | 'https:' | '';
 
 interface EventMeta {
   selection: TextSelection;
-  range: FromToParameter | undefined;
+  range: FromToProps | undefined;
   doc: ProsemirrorNode;
   attrs: LinkAttributes;
 }
 
-interface ShortcutHandlerActiveLink extends FromToParameter {
+interface ShortcutHandlerActiveLink extends FromToProps {
   attrs: LinkAttributes;
 }
 
-export interface ShortcutHandlerProps extends FromToParameter {
+export interface ShortcutHandlerProps extends FromToProps {
   selectedText: string;
   activeLink: ShortcutHandlerActiveLink | undefined;
 }
@@ -221,7 +221,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     };
   }
 
-  onSetOptions(options: OnSetOptionsParameter<LinkOptions>): void {
+  onSetOptions(options: OnSetOptionsProps<LinkOptions>): void {
     if (options.changes.autoLink.changed) {
       const [newSuggester] = this.createSuggesters();
 
@@ -239,7 +239,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
    * Add a handler to the `onActivateLink` to capture when .
    */
   @keyBinding({ shortcut: NamedShortcut.InsertLink })
-  shortcut({ state, dispatch, tr }: KeyBindingParameter): boolean {
+  shortcut({ state, dispatch, tr }: KeyBindingProps): boolean {
     let selectedText = '';
     let { from, to } = tr.selection;
     let expandedSelection = false;
@@ -288,9 +288,9 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
    * selection or provided range.
    */
   @command()
-  updateLink(attrs: LinkAttributes, range?: FromToParameter): CommandFunction {
-    return (parameter) => {
-      const { tr } = parameter;
+  updateLink(attrs: LinkAttributes, range?: FromToProps): CommandFunction {
+    return (props) => {
+      const { tr } = props;
       const { selection } = tr;
       const selectionIsValid =
         (isTextSelection(selection) && !isSelectionEmpty(tr.selection)) ||
@@ -303,7 +303,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
       tr.setMeta(this.name, { command: UPDATE_LINK, attrs, range });
 
-      return updateMark({ type: this.type, attrs, range })(parameter);
+      return updateMark({ type: this.type, attrs, range })(props);
     };
   }
 
@@ -311,15 +311,15 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
    * Remove the link at the current selection
    */
   @command()
-  removeLink(range?: FromToParameter): CommandFunction {
-    return (parameter) => {
-      const { tr } = parameter;
+  removeLink(range?: FromToProps): CommandFunction {
+    return (props) => {
+      const { tr } = props;
 
       if (!isMarkActive({ trState: tr, type: this.type, ...range })) {
         return false;
       }
 
-      return removeMark({ type: this.type, expand: true, range })(parameter);
+      return removeMark({ type: this.type, expand: true, range })(props);
     };
   }
 
@@ -348,7 +348,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
     // Keep track of this to prevent multiple updates which prevent history from
     // working
-    let cachedRange: FromToParameter | undefined;
+    let cachedRange: FromToProps | undefined;
 
     const suggester: Suggester = {
       name: this.name,

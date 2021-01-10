@@ -31,7 +31,6 @@
  * @packageDocumentation
  */
 
-export { MentionExtension } from './mention-extension';
 export type {
   MentionChangeHandler,
   MentionChangeHandlerCommand,
@@ -40,5 +39,6 @@ export type {
   MentionExtensionMatcher,
   MentionOptions,
   NamedMentionExtensionAttributes,
-  OptionalMentionExtensionParameter,
+  OptionalMentionExtensionProps,
 } from './mention-extension';
+export { MentionExtension } from './mention-extension';

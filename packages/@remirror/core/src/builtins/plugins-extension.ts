@@ -13,8 +13,8 @@ import {
   PlainExtension,
 } from '../extension';
 import type {
-  AppendLifecycleParameter,
-  ApplyStateLifecycleParameter,
+  AppendLifecycleProps,
+  ApplyStateLifecycleProps,
   CreateExtensionPlugin,
 } from '../types';
 
@@ -23,13 +23,13 @@ export interface PluginsOptions {
    * The event handler which can be used by hooks to listen to state updates
    * when they are being applied to the editor.
    */
-  applyState?: Handler<(parameter: ApplyStateLifecycleParameter) => void>;
+  applyState?: Handler<(props: ApplyStateLifecycleProps) => void>;
 
   /**
    * The event handler which can be used by hooks to listen to intercept updates
    * to the transaction.
    */
-  appendTransaction?: Handler<(parameter: AppendLifecycleParameter) => void>;
+  appendTransaction?: Handler<(props: AppendLifecycleProps) => void>;
 }
 
 /**
@@ -65,9 +65,7 @@ export class PluginsExtension extends PlainExtension<PluginsOptions> {
   /**
    * Called when the state is is being applied after an update.
    */
-  private readonly applyStateHandlers: Array<
-    (parameter: ApplyStateLifecycleParameter) => void
-  > = [];
+  private readonly applyStateHandlers: Array<(props: ApplyStateLifecycleProps) => void> = [];
 
   /**
    * Called when the state is first initialized.
@@ -77,9 +75,7 @@ export class PluginsExtension extends PlainExtension<PluginsOptions> {
   /**
    * Handlers for the `onAppendTransaction` lifecycle method.
    */
-  private readonly appendTransactionHandlers: Array<
-    (parameter: AppendLifecycleParameter) => void
-  > = [];
+  private readonly appendTransactionHandlers: Array<(props: AppendLifecycleProps) => void> = [];
 
   /**
    * Store the plugin keys.
@@ -145,13 +141,13 @@ export class PluginsExtension extends PlainExtension<PluginsOptions> {
     return {
       appendTransaction: (transactions, previousState, state) => {
         const tr = state.tr;
-        const parameter = { previousState, tr, transactions, state };
+        const props = { previousState, tr, transactions, state };
 
         for (const handler of this.appendTransactionHandlers) {
-          handler(parameter);
+          handler(props);
         }
 
-        this.options.appendTransaction(parameter);
+        this.options.appendTransaction(props);
 
         // Return the transaction if it has been amended in any way.
         return tr.docChanged || tr.steps.length > 0 || tr.selectionSet || tr.storedMarksSet
@@ -165,13 +161,13 @@ export class PluginsExtension extends PlainExtension<PluginsOptions> {
           }
         },
         apply: (tr, _, previousState, state) => {
-          const parameter = { previousState, state, tr };
+          const props = { previousState, state, tr };
 
           for (const handler of this.applyStateHandlers) {
-            handler(parameter);
+            handler(props);
           }
 
-          this.options.applyState(parameter);
+          this.options.applyState(props);
         },
       },
     };

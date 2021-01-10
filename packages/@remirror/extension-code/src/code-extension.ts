@@ -6,7 +6,7 @@ import {
   ExtensionTag,
   InputRule,
   keyBinding,
-  KeyBindingParameter,
+  KeyBindingProps,
   KeyBindings,
   LEAF_NODE_REPLACING_CHARACTER,
   MarkExtension,
@@ -57,8 +57,8 @@ export class CodeExtension extends MarkExtension {
   }
 
   @keyBinding({ shortcut: NamedShortcut.Code, command: 'toggleCode' })
-  keyboardShortcut(parameter: KeyBindingParameter): boolean {
-    return this.toggleCode()(parameter);
+  keyboardShortcut(props: KeyBindingProps): boolean {
+    return this.toggleCode()(props);
   }
 
   /**

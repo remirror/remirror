@@ -7,6 +7,10 @@ title: Naming Conventions
 
 This document is for extension developers who wish to create their own extensions.
 
+## Interfaces
+
+Destructured object parameter is postfixed with `Props`. For interfaces with a single property e.g. `EditorViewProp` the postfix is the singular `Prop` to signify that the interface is designed to be composed with other interfaces.
+
 ## Extensions
 
 - Packages must supply the following keywords - `remirror`, `extension`.

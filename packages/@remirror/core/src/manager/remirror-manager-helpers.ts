@@ -13,7 +13,7 @@ import {
   isNodeExtension,
   isPlainExtension,
 } from '../extension';
-import type { GetConstructor, StateUpdateLifecycleParameter } from '../types';
+import type { GetConstructor, StateUpdateLifecycleProps } from '../types';
 
 /**
  * Transforms the unsorted array of presets and extension into presets and
@@ -123,7 +123,7 @@ interface GatherAllExtensionsConfig<ExtensionUnion extends AnyExtension> {
   settings: Remirror.ManagerSettings;
 }
 
-interface GatherAllExtensionsParameter<ExtensionUnion extends AnyExtension> {
+interface GatherAllExtensionsProps<ExtensionUnion extends AnyExtension> {
   /** The extension to check and gather children from. */
   extension: ExtensionUnion;
 
@@ -143,18 +143,18 @@ interface GatherAllExtensionsParameter<ExtensionUnion extends AnyExtension> {
  *
  * @param config - the configuration and mutable objects which are updated by
  * this function.
- * @param parameter - the extension, gathered names and parent extension.
+ * @param props - the extension, gathered names and parent extension.
  */
 function gatherRawExtensions<ExtensionUnion extends AnyExtension>(
   config: GatherAllExtensionsConfig<ExtensionUnion>,
-  parameter: GatherAllExtensionsParameter<ExtensionUnion>,
+  props: GatherAllExtensionsProps<ExtensionUnion>,
 ) {
   const { gatheredExtensions, duplicateMap, parentExtensions, settings } = config;
-  const { extension, parentExtension } = parameter;
+  const { extension, parentExtension } = props;
 
   // Get the list of parent names of the current extension. This is used to
   // track circular dependencies.
-  let { names = [] } = parameter;
+  let { names = [] } = props;
 
   invariant(isExtension(extension), {
     code: ErrorConstant.INVALID_MANAGER_EXTENSION,
@@ -203,7 +203,7 @@ function gatherRawExtensions<ExtensionUnion extends AnyExtension>(
   }
 }
 
-interface FindMissingParameter<ExtensionUnion extends AnyExtension> {
+interface FindMissingProps<ExtensionUnion extends AnyExtension> {
   extension: ExtensionUnion;
   found: WeakSet<AnyExtensionConstructor>;
   missing: Array<MissingConstructor<ExtensionUnion>>;
@@ -217,9 +217,9 @@ interface FindMissingParameter<ExtensionUnion extends AnyExtension> {
  * error.
  */
 function findMissingExtensions<ExtensionUnion extends AnyExtension>(
-  parameter: FindMissingParameter<ExtensionUnion>,
+  props: FindMissingProps<ExtensionUnion>,
 ) {
-  const { extension, found, missing } = parameter;
+  const { extension, found, missing } = props;
 
   if (!extension.requiredExtensions) {
     return;
@@ -234,7 +234,7 @@ function findMissingExtensions<ExtensionUnion extends AnyExtension>(
   }
 }
 
-interface UpdateExtensionDuplicatesParameter<ExtensionUnion extends AnyExtension> {
+interface UpdateExtensionDuplicatesProps<ExtensionUnion extends AnyExtension> {
   /**
    * The map of all duplicates.
    */
@@ -263,9 +263,9 @@ interface UpdateExtensionDuplicatesParameter<ExtensionUnion extends AnyExtension
  * the preset with the highest priority instance.
  */
 function updateExtensionDuplicates<ExtensionUnion extends AnyExtension>(
-  parameter: UpdateExtensionDuplicatesParameter<ExtensionUnion>,
+  props: UpdateExtensionDuplicatesProps<ExtensionUnion>,
 ) {
-  const { duplicateMap, extension, parentExtension } = parameter;
+  const { duplicateMap, extension, parentExtension } = props;
 
   // The extension constructor is used as the identifier for lookups.
   const key = extension.constructor;
@@ -319,7 +319,7 @@ export interface ManagerLifecycleHandlers {
    * The update method is called every time the state updates. This allows
    * extensions to listen to updates.
    */
-  update: Array<(parameter: StateUpdateLifecycleParameter) => void>;
+  update: Array<(props: StateUpdateLifecycleProps) => void>;
 
   /**
    * Called when the manager is being destroyed.
@@ -327,7 +327,7 @@ export interface ManagerLifecycleHandlers {
   destroy: Array<() => void>;
 }
 
-interface SetupExtensionParameter {
+interface SetupExtensionProps {
   extension: AnyExtension;
   nodeNames: string[];
   markNames: string[];
@@ -340,8 +340,8 @@ interface SetupExtensionParameter {
  * This helper function extracts all the lifecycle methods from the provided
  * extension and adds them to the provided `handler` container.
  */
-export function extractLifecycleMethods(parameter: SetupExtensionParameter): void {
-  const { extension, nodeNames, markNames, plainNames, store, handlers } = parameter;
+export function extractLifecycleMethods(props: SetupExtensionProps): void {
+  const { extension, nodeNames, markNames, plainNames, store, handlers } = props;
 
   // Add the store to the extension. The store is used by extensions to access
   // all the data included in `Remirror.ExtensionStore`. I decided on this

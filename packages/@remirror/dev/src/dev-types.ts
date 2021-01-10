@@ -6,7 +6,7 @@
 
 import type { Delta } from 'jsondiffpatch';
 
-import { EditorState, FromToParameter, RemirrorJSON, Shape } from '@remirror/core';
+import { EditorState, FromToProps, RemirrorJSON, Shape } from '@remirror/core';
 
 export interface JsonDiffOutput {
   id: string;
@@ -53,5 +53,5 @@ export interface DevSnapshot {
   name: string;
   timestamp: number;
   content: RemirrorJSON;
-  selection: FromToParameter;
+  selection: FromToProps;
 }

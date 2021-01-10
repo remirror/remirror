@@ -9,7 +9,7 @@
  */
 
 import {
-  ApplyStateLifecycleParameter,
+  ApplyStateLifecycleProps,
   command,
   CommandFunction,
   EditorState,
@@ -18,7 +18,7 @@ import {
   getDocRange,
   isEmptyObject,
   isString,
-  OnSetOptionsParameter,
+  OnSetOptionsProps,
   PlainExtension,
   ProsemirrorNode,
 } from '@remirror/core';
@@ -86,8 +86,8 @@ export class WhitespaceExtension extends PlainExtension<WhitespaceOptions> {
   /**
    * Update the whitespace decorations for each state update.
    */
-  onApplyState(parameter: ApplyStateLifecycleParameter): void {
-    const { tr } = parameter;
+  onApplyState(props: ApplyStateLifecycleProps): void {
+    const { tr } = props;
 
     if (!tr.docChanged && !this.forcedUpdate) {
       return;
@@ -122,8 +122,8 @@ export class WhitespaceExtension extends PlainExtension<WhitespaceOptions> {
    * When the decorators are updated we should update trigger an update to the
    * editor state.
    */
-  protected onSetOptions(parameter: OnSetOptionsParameter<WhitespaceOptions>): void {
-    const { pickChanged } = parameter;
+  protected onSetOptions(props: OnSetOptionsProps<WhitespaceOptions>): void {
+    const { pickChanged } = props;
     const allUpdates = pickChanged([
       'breakNodes',
       'decorators',
@@ -176,11 +176,11 @@ export class WhitespaceExtension extends PlainExtension<WhitespaceOptions> {
    */
   @command(toggleWhitespaceOptions)
   toggleWhitespace(): CommandFunction {
-    return (parameter) => {
+    return (props) => {
       return this.store.commands.emptyUpdate.original(() => {
         this.forcedUpdate = true;
         this.active = !this.active;
-      })(parameter);
+      })(props);
     };
   }
 
@@ -189,7 +189,7 @@ export class WhitespaceExtension extends PlainExtension<WhitespaceOptions> {
    */
   @command()
   showWhitespace(): CommandFunction {
-    return (parameter) => {
+    return (props) => {
       if (this.active) {
         return false;
       }
@@ -197,7 +197,7 @@ export class WhitespaceExtension extends PlainExtension<WhitespaceOptions> {
       return this.store.commands.emptyUpdate.original(() => {
         this.forcedUpdate = true;
         this.active = true;
-      })(parameter);
+      })(props);
     };
   }
 
@@ -206,7 +206,7 @@ export class WhitespaceExtension extends PlainExtension<WhitespaceOptions> {
    */
   @command()
   hideWhitespace(): CommandFunction {
-    return (parameter) => {
+    return (props) => {
       if (!this.active) {
         return false;
       }
@@ -214,7 +214,7 @@ export class WhitespaceExtension extends PlainExtension<WhitespaceOptions> {
       return this.store.commands.emptyUpdate.original(() => {
         this.forcedUpdate = true;
         this.active = false;
-      })(parameter);
+      })(props);
     };
   }
 }

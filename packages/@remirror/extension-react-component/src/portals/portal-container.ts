@@ -3,18 +3,18 @@ import type { FunctionComponent } from 'react';
 
 import { uniqueId } from '@remirror/core';
 
-export interface RenderParameter {
+export interface RenderProps {
   /**
    * Renders a JSX element.
    */
   Component: FunctionComponent;
 }
 
-export interface MountedPortal extends RenderParameter {
+export interface MountedPortal extends RenderProps {
   key: string;
 }
 
-export interface SingleRenderMethodParameter extends RenderParameter {
+export interface SingleRenderMethodProps extends RenderProps {
   key?: undefined;
 
   /**
@@ -23,7 +23,7 @@ export interface SingleRenderMethodParameter extends RenderParameter {
   container: HTMLElement;
 }
 
-export interface SharedRenderMethodParameter extends RenderParameter {
+export interface SharedRenderMethodProps extends RenderProps {
   /**
    * The DOM element to contain the react portal.
    */
@@ -36,7 +36,7 @@ export interface SharedRenderMethodParameter extends RenderParameter {
   key: string;
 }
 
-type RenderMethodParameter = SingleRenderMethodParameter;
+type RenderMethodProps = SingleRenderMethodProps;
 
 interface Events {
   /**
@@ -95,7 +95,7 @@ export class PortalContainer {
    * Responsible for registering a new portal by rendering the react element
    * into the provided container.
    */
-  render({ Component, container }: RenderMethodParameter): void {
+  render({ Component, container }: RenderMethodProps): void {
     const portal = this.portals.get(container);
     this.portals.set(container, { Component, key: portal?.key ?? uniqueId() });
 

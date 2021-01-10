@@ -19,7 +19,7 @@ import type {
   AnyPlainExtension,
 } from './extension';
 
-export interface ExtensionListParameter<ExtensionUnion extends AnyExtension = AnyExtension> {
+export interface ExtensionListProps<ExtensionUnion extends AnyExtension = AnyExtension> {
   /**
    * The extensions property.
    */
@@ -104,7 +104,7 @@ export type UiCommandNames<ExtensionUnion extends AnyExtension> = StringKey<
   >
 >;
 
-export interface ChainedCommandRunParameter {
+export interface ChainedCommandRunProps {
   /**
    * Dispatches the chained commands.
    *
@@ -121,9 +121,7 @@ export type ChainedIntersection<ExtensionUnion extends AnyExtension> = UnionToIn
   MapToChainedCommand<GetCommands<ExtensionUnion> | GetDecoratedCommands<ExtensionUnion>>
 >;
 
-export type ChainedFromExtensions<
-  ExtensionUnion extends AnyExtension
-> = ChainedCommandRunParameter &
+export type ChainedFromExtensions<ExtensionUnion extends AnyExtension> = ChainedCommandRunProps &
   {
     [Command in keyof ChainedIntersection<ExtensionUnion>]: ChainedIntersection<ExtensionUnion>[Command] extends (
       ...args: any[]
@@ -205,13 +203,13 @@ export type GetExtensions<ExtensionUnion> =
   // provided extension is `AnyExtension` return `never`. This has the added
   // benefit of making this a distributive conditional type.
   AnyExtension extends ExtensionUnion
-    ? never
+    ? AnyExtension
     : // Make sure the extension is valid
     ExtensionUnion extends AnyExtension
     ? // Now create the union of the provided extension and it's recursively
       // calculated nested extensions.
       ExtensionUnion | GetExtensions<ExtensionUnion['~E']>
-    : never;
+    : AnyExtension;
 
 /**
  * The type which gets the active methods from the provided extensions.

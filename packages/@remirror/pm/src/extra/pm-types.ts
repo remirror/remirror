@@ -102,7 +102,7 @@ export type ProsemirrorCommandFunction<Schema extends EditorSchema = EditorSchem
  * A command method for running commands in your editor.
  *
  * @template Schema - the underlying editor schema.
- * @template ExtraParameter - extra parameters to add to the command function.
+ * @template ExtraProps - extra parameters to add to the command function.
  *
  * @remarks
  *
@@ -124,15 +124,15 @@ export type ProsemirrorCommandFunction<Schema extends EditorSchema = EditorSchem
  */
 export type CommandFunction<
   Schema extends EditorSchema = EditorSchema,
-  ExtraParameter extends object = object
-> = (params: CommandFunctionParameter<Schema> & ExtraParameter) => boolean;
+  ExtraProps extends object = object
+> = (params: CommandFunctionProps<Schema> & ExtraProps) => boolean;
 
 /**
  * A parameter builder interface for the remirror `CommandFunction`.
  *
  * @template Schema - the underlying editor schema.
  */
-export interface CommandFunctionParameter<Schema extends EditorSchema = EditorSchema> {
+export interface CommandFunctionProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * The shared ProseMirror Transaction.
    */

@@ -261,12 +261,12 @@ function createEditor() {
   const editor = RemirrorTestChain.create(manager);
   const { doc, p } = editor.nodes;
 
-  interface GetItemsParameter {
+  interface GetItemsProps {
     name: string;
     query: string;
   }
 
-  const getItems = jest.fn((parameter?: GetItemsParameter) => {
+  const getItems = jest.fn((parameter?: GetItemsProps) => {
     if (!parameter) {
       return [];
     }
@@ -284,7 +284,7 @@ function createEditor() {
     return [];
   });
 
-  interface GetItemsParameter {
+  interface GetItemsProps {
     name: string;
     query: string;
   }

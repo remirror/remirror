@@ -1,19 +1,19 @@
 import { ErrorConstant } from '@remirror/core-constants';
 import { invariant, isFunction, isNullOrUndefined, isString } from '@remirror/core-helpers';
 import type {
-  EditorStateParameter,
-  GetAttributesParameter,
+  EditorStateProps,
+  GetAttributesProps,
   Mark,
   MarkType,
-  MarkTypeParameter,
-  NodeTypeParameter,
-  RegExpParameter,
-  TransactionParameter,
+  MarkTypeProps,
+  NodeTypeProps,
+  RegExpProps,
+  TransactionProps,
 } from '@remirror/core-types';
 import { InputRule } from '@remirror/pm/inputrules';
 import { markActiveInRange } from '@remirror/pm/suggest';
 
-export interface BeforeDispatchParameter extends TransactionParameter {
+export interface BeforeDispatchProps extends TransactionProps {
   /**
    * The matches returned by the regex.
    */
@@ -30,7 +30,7 @@ export interface BeforeDispatchParameter extends TransactionParameter {
   end: number;
 }
 
-export interface BaseInputRuleParameter {
+export interface BaseInputRuleProps {
   /**
    * A method which can be used to add more steps to the transaction after the
    * input rule update but before the editor has dispatched to update to a new
@@ -42,28 +42,28 @@ export interface BaseInputRuleParameter {
    * nodeInputRule({
    *   type,
    *   regexp: /abc/,
-   *     beforeDispatch?: (parameter: BeforeDispatchParameter) => void; : (tr)
+   *     beforeDispatch?: (props: BeforeDispatchProps) => void; : (tr)
          => tr.insertText('hello')
    * });
    * ```
    */
-  beforeDispatch?: (parameter: BeforeDispatchParameter) => void;
+  beforeDispatch?: (props: BeforeDispatchProps) => void;
 }
 
-export interface NodeInputRuleParameter
-  extends Partial<GetAttributesParameter>,
-    RegExpParameter,
-    NodeTypeParameter,
-    BaseInputRuleParameter {}
+export interface NodeInputRuleProps
+  extends Partial<GetAttributesProps>,
+    RegExpProps,
+    NodeTypeProps,
+    BaseInputRuleProps {}
 
-export interface PlainInputRuleParameter extends RegExpParameter, BaseInputRuleParameter {
+export interface PlainInputRuleProps extends RegExpProps, BaseInputRuleProps {
   /**
    * A function that transforms the match into the desired value.
    */
   transformMatch: (match: string[]) => string | null | undefined;
 }
 
-export interface UpdateCaptureTextParameter {
+export interface UpdateCaptureTextProps {
   /**
    * The first capture group from the matching input rule.
    */
@@ -85,11 +85,11 @@ export interface UpdateCaptureTextParameter {
   end: number;
 }
 
-interface MarkInputRuleParameter
-  extends Partial<GetAttributesParameter>,
-    RegExpParameter,
-    MarkTypeParameter,
-    BaseInputRuleParameter {
+interface MarkInputRuleProps
+  extends Partial<GetAttributesProps>,
+    RegExpProps,
+    MarkTypeProps,
+    BaseInputRuleProps {
   /**
    * Ignore the match when all characters in the capture group are whitespace.
    *
@@ -122,13 +122,13 @@ interface MarkInputRuleParameter
    * See https://github.com/remirror/remirror/issues/574#issuecomment-678700121
    * for more context.
    */
-  updateCaptured?: (captured: UpdateCaptureTextParameter) => Partial<UpdateCaptureTextParameter>;
+  updateCaptured?: (captured: UpdateCaptureTextProps) => Partial<UpdateCaptureTextProps>;
 }
 
 /**
  * Creates an input rule based on the provided regex for the provided mark type.
  */
-export function markInputRule(parameter: MarkInputRuleParameter): SkippableInputRule {
+export function markInputRule(props: MarkInputRuleProps): SkippableInputRule {
   const {
     regexp,
     type,
@@ -136,7 +136,7 @@ export function markInputRule(parameter: MarkInputRuleParameter): SkippableInput
     ignoreWhitespace = false,
     beforeDispatch,
     updateCaptured,
-  } = parameter;
+  } = props;
 
   let markType: MarkType | undefined;
 
@@ -232,8 +232,8 @@ export function markInputRule(parameter: MarkInputRuleParameter): SkippableInput
  * Input rules transform content as the user types based on whether a match is
  * found with a sequence of characters.
  */
-export function nodeInputRule(parameter: NodeInputRuleParameter): SkippableInputRule {
-  const { regexp, type, getAttributes, beforeDispatch } = parameter;
+export function nodeInputRule(props: NodeInputRuleProps): SkippableInputRule {
+  const { regexp, type, getAttributes, beforeDispatch } = props;
 
   const rule: SkippableInputRule = new InputRule(regexp, (state, match, start, end) => {
     const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
@@ -267,8 +267,8 @@ export function nodeInputRule(parameter: NodeInputRuleParameter): SkippableInput
  * Creates a plain rule based on the provided regex. You can see this being used
  * in the `@remirror/extension-emoji` when it is setup to use plain text.
  */
-export function plainInputRule(parameter: PlainInputRuleParameter): SkippableInputRule {
-  const { regexp, transformMatch, beforeDispatch } = parameter;
+export function plainInputRule(props: PlainInputRuleProps): SkippableInputRule {
+  const { regexp, transformMatch, beforeDispatch } = props;
 
   const rule: SkippableInputRule = new InputRule(regexp, (state, match, start, end) => {
     const value = transformMatch(match);
@@ -302,7 +302,7 @@ export function plainInputRule(parameter: PlainInputRuleParameter): SkippableInp
   return rule;
 }
 
-export interface ShouldSkipParameter extends EditorStateParameter, UpdateCaptureTextParameter {
+export interface ShouldSkipProps extends EditorStateProps, UpdateCaptureTextProps {
   /** The type of input rule that has been activated */
   ruleType: 'mark' | 'node' | 'plain';
 }
@@ -334,7 +334,7 @@ interface ShouldSkip {
  * - When it returns false then it won't be skipped.
  * - When it returns true then it will be skipped.
  */
-export type ShouldSkipFunction = (parameter: ShouldSkipParameter) => boolean;
+export type ShouldSkipFunction = (props: ShouldSkipProps) => boolean;
 
 /**
  * An input rule which can have a `shouldSkip` property that returns true when

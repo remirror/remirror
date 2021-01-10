@@ -4,7 +4,7 @@ import {
   ErrorConstant,
   extension,
   ExtensionTag,
-  FromToParameter,
+  FromToProps,
   GetMarkRange,
   getMarkRange,
   getMatchString,
@@ -22,10 +22,10 @@ import {
   omitExtraAttributes,
   pick,
   ProsemirrorAttributes,
-  RangeParameter,
+  RangeProps,
   removeMark,
   replaceText,
-  ShouldSkipParameter,
+  ShouldSkipProps,
   Static,
 } from '@remirror/core';
 import type { CreateEventHandlers } from '@remirror/extension-events';
@@ -39,7 +39,7 @@ import {
   isSplitReason,
   MatchValue,
   RangeWithCursor,
-  SuggestChangeHandlerParameter,
+  SuggestChangeHandlerProps,
   Suggester,
 } from '@remirror/pm/suggest';
 
@@ -246,8 +246,8 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     };
   }
 
-  private shouldSkipInputRule(parameter: ShouldSkipParameter) {
-    const { ruleType, state, end, start } = parameter;
+  private shouldSkipInputRule(props: ShouldSkipProps) {
+    const { ruleType, state, end, start } = props;
 
     if (ruleType === 'node') {
       return false;
@@ -296,9 +296,9 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
        * case you want to override the defaults).
        */
       mentionExitHandler: (
-        handler: SuggestChangeHandlerParameter,
+        handler: SuggestChangeHandlerProps,
         attrs: MentionChangeHandlerCommandAttributes = {},
-      ): CommandFunction => (parameter) => {
+      ): CommandFunction => (props) => {
         const reason = handler.exitReason ?? handler.changeReason;
 
         // Get boolean flags of the reason for this exit.
@@ -310,7 +310,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
 
           try {
             // This might fail when a deletion has taken place.
-            return isInvalid && commands.removeMention({ range: handler.range })(parameter);
+            return isInvalid && commands.removeMention({ range: handler.range })(props);
           } catch {
             // This happens when removing the mention failed. If you select the
             // whole document and delete while there are mentions active then
@@ -324,7 +324,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
           }
         }
 
-        const { tr } = parameter;
+        const { tr } = props;
         const { range, text, query, name } = handler;
         const { from, to } = range;
 
@@ -358,26 +358,26 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
           range,
           keepSelection,
           ...rest,
-        })(parameter);
+        })(props);
       },
       /**
        * Create a new mention
        */
       createMention: (
-        config: NamedMentionExtensionAttributes & KeepSelectionParameter,
+        config: NamedMentionExtensionAttributes & KeepSelectionProps,
       ): CommandFunction => this.createMention(false)(config),
 
       /**
        * Update an existing mention.
        */
       updateMention: (
-        config: NamedMentionExtensionAttributes & KeepSelectionParameter,
+        config: NamedMentionExtensionAttributes & KeepSelectionProps,
       ): CommandFunction => this.createMention(true)(config),
 
       /**
        * Remove the mention(s) at the current selection or provided range.
        */
-      removeMention: ({ range }: Partial<RangeParameter> = {}): CommandFunction => {
+      removeMention: ({ range }: Partial<RangeProps> = {}): CommandFunction => {
         const value = removeMark({ type: this.type, expand: true, range });
 
         return value;
@@ -431,7 +431,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
    * Create the suggesters from the matchers that were passed into the editor.
    */
   createSuggesters(): Suggester[] {
-    let cachedRange: FromToParameter | undefined;
+    let cachedRange: FromToProps | undefined;
 
     const options = pick(this.options, [
       'invalidMarks',
@@ -448,15 +448,15 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
         ...DEFAULT_MATCHER,
         ...options,
         ...matcher,
-        onChange: (parameter) => {
+        onChange: (props) => {
           const { mentionExitHandler } = this.store.commands;
 
           function command(attrs: MentionChangeHandlerCommandAttributes = {}) {
-            mentionExitHandler(parameter, attrs);
+            mentionExitHandler(props, attrs);
           }
 
           this.options.onChange(
-            { ...parameter, defaultAppendTextValue: this.options.appendText },
+            { ...props, defaultAppendTextValue: this.options.appendText },
             command,
           );
         },
@@ -497,7 +497,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
    * The factory method for mention commands to update and create new mentions.
    */
   private createMention(shouldUpdate: boolean) {
-    return (config: NamedMentionExtensionAttributes & KeepSelectionParameter): CommandFunction => {
+    return (config: NamedMentionExtensionAttributes & KeepSelectionProps): CommandFunction => {
       invariant(isValidMentionAttributes(config), {
         code: ErrorConstant.EXTENSION,
         message: 'Invalid configuration attributes passed to the MentionExtension command.',
@@ -515,8 +515,8 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
         )}.`,
       });
 
-      return (parameter) => {
-        const { tr } = parameter;
+      return (props) => {
+        const { tr } = props;
         const { from, to } = {
           from: range?.from ?? tr.selection.from,
           to: range?.cursor ?? tr.selection.to,
@@ -551,13 +551,13 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
           appendText: getAppendText(appendText, matcher.appendText),
           range: range ? { from, to: replacementType === 'full' ? range.to || to : to } : undefined,
           content: attributes.label,
-        })(parameter);
+        })(props);
       };
     };
   }
 }
 
-export interface OptionalMentionExtensionParameter {
+export interface OptionalMentionExtensionProps {
   /**
    * The text to append to the replacement.
    *
@@ -577,7 +577,7 @@ export interface OptionalMentionExtensionParameter {
   replacementType?: keyof MatchValue;
 }
 
-interface KeepSelectionParameter {
+interface KeepSelectionProps {
   /**
    * Whether to preserve the original selection after the replacement has
    * occurred.
@@ -590,7 +590,7 @@ interface KeepSelectionParameter {
  * while attributes like href and role can be assigned as desired.
  */
 export type MentionExtensionAttributes = ProsemirrorAttributes<
-  OptionalMentionExtensionParameter & {
+  OptionalMentionExtensionProps & {
     /**
      * A unique identifier for the suggesters node
      */
@@ -604,7 +604,7 @@ export type MentionExtensionAttributes = ProsemirrorAttributes<
 >;
 
 export type NamedMentionExtensionAttributes = ProsemirrorAttributes<
-  OptionalMentionExtensionParameter & {
+  OptionalMentionExtensionProps & {
     /**
      * A unique identifier for the suggesters node
      */
@@ -653,7 +653,7 @@ export interface MentionExtensionMatcher
 
 export type MentionChangeHandlerCommand = (attrs?: MentionChangeHandlerCommandAttributes) => void;
 
-export interface MentionChangeHandlerParameter extends SuggestChangeHandlerParameter {
+export interface MentionChangeHandlerProps extends SuggestChangeHandlerProps {
   /**
    * The default text to be appended if text should be appended.
    */
@@ -666,7 +666,7 @@ export interface MentionChangeHandlerParameter extends SuggestChangeHandlerParam
  * only available when the matching suggester has been exited.
  */
 export type MentionChangeHandler = (
-  handlerState: MentionChangeHandlerParameter,
+  handlerState: MentionChangeHandlerProps,
   command: (attrs?: MentionChangeHandlerCommandAttributes) => void,
 ) => void;
 

@@ -1,4 +1,4 @@
-import { assertGet, TransactionParameter } from '@remirror/core';
+import { assertGet, TransactionProps } from '@remirror/core';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
 
 import {
@@ -11,7 +11,7 @@ import {
 import { toSegments } from './segments';
 import type { Annotation, GetStyle, OmitText } from './types';
 
-interface ApplyParameter extends TransactionParameter {
+interface ApplyProps extends TransactionProps {
   action: any;
 }
 
@@ -26,7 +26,7 @@ export class AnnotationState<Type extends Annotation = Annotation> {
 
   constructor(private readonly getStyle: GetStyle<Type>) {}
 
-  apply({ tr, action }: ApplyParameter): this {
+  apply({ tr, action }: ApplyProps): this {
     const actionType = action?.type;
 
     if (!action && !tr.docChanged) {

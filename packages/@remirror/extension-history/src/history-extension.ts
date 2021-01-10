@@ -1,5 +1,6 @@
 import {
   AcceptUndefined,
+  command,
   CommandFunction,
   DispatchFunction,
   EditorState,
@@ -7,6 +8,9 @@ import {
   extension,
   Handler,
   isFunction,
+  keyBinding,
+  KeyBindingProps,
+  NamedShortcut,
   nonChainable,
   NonChainableCommandFunction,
   PlainExtension,
@@ -14,13 +18,9 @@ import {
   ProsemirrorCommandFunction,
   ProsemirrorPlugin,
   Static,
-  command,
-  keyBinding,
-  NamedShortcut,
-  KeyBindingParameter,
 } from '@remirror/core';
-import { history, redo, undo } from '@remirror/pm/history';
 import { ExtensionHistoryMessages as Messages } from '@remirror/messages';
+import { history, redo, undo } from '@remirror/pm/history';
 
 export interface HistoryOptions {
   /**
@@ -134,16 +134,16 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
    * Handle the undo keybinding.
    */
   @keyBinding({ shortcut: NamedShortcut.Undo, command: 'undo' })
-  undoShortcut(parameter: KeyBindingParameter): boolean {
-    return this.wrapMethod(undo, this.options.onUndo)(parameter);
+  undoShortcut(props: KeyBindingProps): boolean {
+    return this.wrapMethod(undo, this.options.onUndo)(props);
   }
 
   /**
    * Handle the redo keybinding for the editor.
    */
   @keyBinding({ shortcut: NamedShortcut.Redo, command: 'redo' })
-  redoShortcut(parameter: KeyBindingParameter): boolean {
-    return this.wrapMethod(redo, this.options.onRedo)(parameter);
+  redoShortcut(props: KeyBindingProps): boolean {
+    return this.wrapMethod(redo, this.options.onRedo)(props);
   }
 
   /**

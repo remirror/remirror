@@ -11,28 +11,28 @@ import {
 } from '@remirror/core-helpers';
 import type {
   AnyFunction,
+  AttributesProps,
   EditorSchema,
   EditorState,
   EditorView,
   Fragment,
   KeyBindingCommandFunction,
   KeyBindings,
-  MarkTypesParameter,
-  NodeTypesParameter,
-  OptionalMarkParameter,
-  OptionalProsemirrorNodeParameter,
-  PosParameter,
-  NodeTypeParameter,
-  AttributesParameter,
+  MarkTypesProps,
+  NodeTypeProps,
+  NodeTypesProps,
+  OptionalMarkProps,
+  OptionalProsemirrorNodeProps,
+  PosProps,
   ProsemirrorCommandFunction,
   ProsemirrorKeyBindings,
   ProsemirrorNode,
-  ProsemirrorNodeParameter,
+  ProsemirrorNodeProps,
   ResolvedPos,
   Selection,
-  SelectionParameter,
+  SelectionProps,
   Transaction,
-  TransactionParameter,
+  TransactionProps,
 } from '@remirror/core-types';
 import type { MarkSpec, NodeSpec, NodeType } from '@remirror/pm/model';
 import { Selection as PMSelection } from '@remirror/pm/state';
@@ -46,17 +46,17 @@ import {
   isTransaction,
 } from './core-utils';
 
-interface NodeEqualsTypeParameter<Schema extends EditorSchema = EditorSchema>
-  extends NodeTypesParameter<Schema>,
-    OptionalProsemirrorNodeParameter<Schema> {}
+interface NodeEqualsTypeProps<Schema extends EditorSchema = EditorSchema>
+  extends NodeTypesProps<Schema>,
+    OptionalProsemirrorNodeProps<Schema> {}
 
 /**
  * Checks if the type a given `node` has a given `nodeType`.
  */
 export function isNodeOfType<Schema extends EditorSchema = EditorSchema>(
-  parameter: NodeEqualsTypeParameter<Schema>,
+  props: NodeEqualsTypeProps<Schema>,
 ): boolean {
-  const { types, node } = parameter;
+  const { types, node } = props;
 
   if (!node) {
     return false;
@@ -73,9 +73,9 @@ export function isNodeOfType<Schema extends EditorSchema = EditorSchema>(
   return matches(types);
 }
 
-interface MarkEqualsTypeParameter<Schema extends EditorSchema = EditorSchema>
-  extends MarkTypesParameter<Schema>,
-    OptionalMarkParameter<Schema> {}
+interface MarkEqualsTypeProps<Schema extends EditorSchema = EditorSchema>
+  extends MarkTypesProps<Schema>,
+    OptionalMarkProps<Schema> {}
 
 /**
  * Creates a new transaction object from a given transaction. This is useful
@@ -105,7 +105,7 @@ export function cloneTransaction(tr: Transaction): Transaction {
   return Object.assign(Object.create(tr), tr).setTime(Date.now());
 }
 
-interface ApplyClonedTransactionParameter extends TransactionParameter {
+interface ApplyClonedTransactionProps extends TransactionProps {
   /**
    * The clone.
    */
@@ -122,8 +122,8 @@ function diff<Type>(primary: Type[], other: Type[]): Type[] {
 /**
  * Apply the steps of a cloned transaction to the original transaction `tr`.
  */
-export function applyClonedTransaction(parameter: ApplyClonedTransactionParameter): void {
-  const { clone, tr } = parameter;
+export function applyClonedTransaction(props: ApplyClonedTransactionProps): void {
+  const { clone, tr } = props;
   const steps = diff(clone.steps, tr.steps);
 
   for (const step of steps) {
@@ -135,13 +135,13 @@ export function applyClonedTransaction(parameter: ApplyClonedTransactionParamete
  * Checks if the type a given `node` has a given `nodeType`.
  */
 export function markEqualsType<Schema extends EditorSchema = EditorSchema>(
-  parameter: MarkEqualsTypeParameter<Schema>,
+  props: MarkEqualsTypeProps<Schema>,
 ): boolean {
-  const { types, mark } = parameter;
+  const { types, mark } = props;
   return mark ? (Array.isArray(types) && types.includes(mark.type)) || mark.type === types : false;
 }
 
-interface RemoveNodeAtPositionParameter extends TransactionParameter, PosParameter {}
+interface RemoveNodeAtPositionProps extends TransactionProps, PosProps {}
 
 /**
  * Performs a `delete` transaction that removes a node at a given position with
@@ -150,7 +150,7 @@ interface RemoveNodeAtPositionParameter extends TransactionParameter, PosParamet
  *
  * @param position - the prosemirror position
  */
-export function removeNodeAtPosition({ pos, tr }: RemoveNodeAtPositionParameter): Transaction {
+export function removeNodeAtPosition({ pos, tr }: RemoveNodeAtPositionProps): Transaction {
   const node = tr.doc.nodeAt(pos);
 
   if (node) {
@@ -160,7 +160,7 @@ export function removeNodeAtPosition({ pos, tr }: RemoveNodeAtPositionParameter)
   return tr;
 }
 
-interface ReplaceNodeAtPositionParameter extends RemoveNodeAtPositionParameter {
+interface ReplaceNodeAtPositionProps extends RemoveNodeAtPositionProps {
   content: Fragment | ProsemirrorNode | ProsemirrorNode[];
 }
 
@@ -171,7 +171,7 @@ export function replaceNodeAtPosition({
   pos,
   tr,
   content,
-}: ReplaceNodeAtPositionParameter): Transaction {
+}: ReplaceNodeAtPositionProps): Transaction {
   const node = tr.doc.nodeAt(pos);
 
   if (node) {
@@ -226,10 +226,8 @@ export function findElementAtPosition<Schema extends EditorSchema = EditorSchema
  * const parent = findParentNode({ predicate, selection });
  * ```
  */
-export function findParentNode(
-  parameter: FindParentNodeParameter,
-): FindProsemirrorNodeResult | undefined {
-  const { predicate, selection } = parameter;
+export function findParentNode(props: FindParentNodeProps): FindProsemirrorNodeResult | undefined {
+  const { predicate, selection } = props;
   const $pos = isEditorState(selection)
     ? selection.selection.$from
     : isSelection(selection)
@@ -276,7 +274,7 @@ export function findNodeAtSelection(selection: Selection): FindProsemirrorNodeRe
   return parentNode;
 }
 
-interface FindParentNodeOfTypeParameter extends NodeTypesParameter, StateSelectionPosParameter {}
+interface FindParentNodeOfTypeProps extends NodeTypesProps, StateSelectionPosProps {}
 
 /**
  *  Iterates over parent nodes, returning closest node of a given `nodeType`.
@@ -288,9 +286,9 @@ interface FindParentNodeOfTypeParameter extends NodeTypesParameter, StateSelecti
  *  ```
  */
 export function findParentNodeOfType(
-  parameter: FindParentNodeOfTypeParameter,
+  props: FindParentNodeOfTypeProps,
 ): FindProsemirrorNodeResult | undefined {
-  const { types, selection } = parameter;
+  const { types, selection } = props;
 
   return findParentNode({ predicate: (node) => isNodeOfType({ types, node }), selection });
 }
@@ -357,9 +355,9 @@ export function removeNodeBefore(tr: Transaction): Transaction {
   return tr;
 }
 
-interface FindSelectedNodeOfTypeParameter<Schema extends EditorSchema = EditorSchema>
-  extends NodeTypesParameter<Schema>,
-    SelectionParameter<Schema> {}
+interface FindSelectedNodeOfTypeProps<Schema extends EditorSchema = EditorSchema>
+  extends NodeTypesProps<Schema>,
+    SelectionProps<Schema> {}
 
 /**
  * Returns a node of a given `nodeType` if it is selected. `start` points to the
@@ -375,9 +373,9 @@ interface FindSelectedNodeOfTypeParameter<Schema extends EditorSchema = EditorSc
  * ```
  */
 export function findSelectedNodeOfType<Schema extends EditorSchema = EditorSchema>(
-  parameter: FindSelectedNodeOfTypeParameter<Schema>,
+  props: FindSelectedNodeOfTypeProps<Schema>,
 ): FindProsemirrorNodeResult<Schema> | undefined {
-  const { types, selection } = parameter;
+  const { types, selection } = props;
 
   if (!isNodeSelection(selection) || !isNodeOfType({ types, node: selection.node })) {
     return;
@@ -393,7 +391,7 @@ export function findSelectedNodeOfType<Schema extends EditorSchema = EditorSchem
 }
 
 export interface FindProsemirrorNodeResult<Schema extends EditorSchema = EditorSchema>
-  extends ProsemirrorNodeParameter<Schema> {
+  extends ProsemirrorNodeProps<Schema> {
   /**
    * The start position of the node.
    */
@@ -415,14 +413,14 @@ export interface FindProsemirrorNodeResult<Schema extends EditorSchema = EditorS
   depth: number;
 }
 
-interface StateSelectionPosParameter {
+interface StateSelectionPosProps {
   /**
    * Provide an editor state, or the editor selection or a resolved position.
    */
   selection: EditorState | Selection | ResolvedPos;
 }
 
-interface FindParentNodeParameter extends StateSelectionPosParameter {
+interface FindParentNodeProps extends StateSelectionPosProps {
   predicate: (node: ProsemirrorNode, pos: number) => boolean;
 }
 
@@ -521,13 +519,13 @@ export function hasTransactionChanged(tr: Transaction): boolean {
  *
  * To ignore `attrs` just leave the attrs object empty or undefined.
  *
- * @param params - the destructured node active parameters
+ * @param props - see [[`GetActiveAttrsProps`]]
  */
-export function isNodeActive(parameter: GetActiveAttrsParameter): boolean {
-  return !!getActiveNode(parameter);
+export function isNodeActive(props: GetActiveAttrsProps): boolean {
+  return !!getActiveNode(props);
 }
 
-interface GetActiveAttrsParameter extends NodeTypeParameter, Partial<AttributesParameter> {
+interface GetActiveAttrsProps extends NodeTypeProps, Partial<AttributesProps> {
   /**
    * State or transaction parameter.
    */
@@ -538,10 +536,8 @@ interface GetActiveAttrsParameter extends NodeTypeParameter, Partial<AttributesP
  * Get node of a provided type with the provided attributes if it exists as a
  * parent. Returns positional data for the node that was found.
  */
-export function getActiveNode(
-  parameter: GetActiveAttrsParameter,
-): FindProsemirrorNodeResult | undefined {
-  const { state, type, attrs } = parameter;
+export function getActiveNode(props: GetActiveAttrsProps): FindProsemirrorNodeResult | undefined {
+  const { state, type, attrs } = props;
   const { selection } = state;
   const nodeType = isString(type) ? state.doc.type.schema.nodes[type] : type;
 
@@ -608,7 +604,7 @@ export function schemaToJSON<Nodes extends string = string, Marks extends string
 export function chainKeyBindingCommands<Schema extends EditorSchema = EditorSchema>(
   ...commands: Array<KeyBindingCommandFunction<Schema>>
 ): KeyBindingCommandFunction<Schema> {
-  return (parameters) => {
+  return (props) => {
     // When no commands are passed just ignore and continue.
     if (!isNonEmptyArray(commands)) {
       return false;
@@ -640,13 +636,13 @@ export function chainKeyBindingCommands<Schema extends EditorSchema = EditorSche
 
       // Recursively call the key bindings method.
       return chainKeyBindingCommands(...nextCommands)({
-        ...parameters,
+        ...props,
         next: createNext(...nextRest),
       });
     };
 
     const next = createNext(...rest);
-    const exitEarly = command({ ...parameters, next });
+    const exitEarly = command({ ...props, next });
 
     // Exit the chain of commands early if either:
     // - a) next was called

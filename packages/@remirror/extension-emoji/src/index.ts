@@ -5,7 +5,7 @@ export type {
   EmojiOptions,
   EmojiCommand as EmojiSuggestCommand,
   EmojiChangeHandler as EmojiSuggestionChangeHandler,
-  EmojiChangeHandlerParameter as EmojiSuggestionChangeHandlerParameter,
+  EmojiChangeHandlerProps as EmojiSuggestionChangeHandlerProps,
   Names,
   NamesAndAliases,
   SkinVariation,

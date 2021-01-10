@@ -24,11 +24,11 @@ import {
 import { DOMSerializer } from '@remirror/pm/model';
 
 import type {
-  CreateNodeViewParameter,
+  CreateNodeViewProps,
   GetPosition,
   NodeViewComponentProps,
   ReactComponentOptions,
-  ReactNodeViewParameter,
+  ReactNodeViewProps,
 } from './node-view-types';
 import type { PortalContainer } from './portals';
 
@@ -40,9 +40,9 @@ export class ReactNodeView implements NodeView {
    * A shorthand method for creating the `ReactNodeView`.
    */
   static create(
-    parameter: CreateNodeViewParameter,
+    props: CreateNodeViewProps,
   ): (node: NodeWithAttributes, view: EditorView, getPosition: GetPosition) => NodeView {
-    const { portalContainer, ReactComponent, options } = parameter;
+    const { portalContainer, ReactComponent, options } = props;
 
     return (node: NodeWithAttributes, view: EditorView, getPosition: GetPosition) =>
       new ReactNodeView({
@@ -140,7 +140,7 @@ export class ReactNodeView implements NodeView {
     view,
     ReactComponent,
     options,
-  }: ReactNodeViewParameter) {
+  }: ReactNodeViewProps) {
     invariant(isFunction(getPosition), {
       message:
         'You are attempting to use a node view for a mark type. Please check your configuration.',
@@ -390,7 +390,7 @@ export class ReactNodeView implements NodeView {
   /**
    * The handler which decides when mutations should be ignored.
    */
-  ignoreMutation(mutation: IgnoreMutationParameter): boolean {
+  ignoreMutation(mutation: IgnoreMutationProps): boolean {
     if (mutation.type === 'selection') {
       return false;
     }
@@ -403,4 +403,4 @@ export class ReactNodeView implements NodeView {
   }
 }
 
-type IgnoreMutationParameter = MutationRecord | { type: 'selection'; target: Element };
+type IgnoreMutationProps = MutationRecord | { type: 'selection'; target: Element };

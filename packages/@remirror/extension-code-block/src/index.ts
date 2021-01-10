@@ -4,6 +4,6 @@ export type {
   CodeBlockFormatter,
   CodeBlockOptions,
   FormattedContent,
-  FormatterParameter,
+  FormatterProps,
   SyntaxTheme,
 } from './code-block-types';

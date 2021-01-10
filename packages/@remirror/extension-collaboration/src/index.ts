@@ -2,7 +2,7 @@ export type {
   CollaborationAttributes,
   CollaborationOptions,
   JSONSendable,
-  OnSendableReceivedParameter,
+  OnSendableReceivedProps,
   Sendable,
 } from './collaboration-extension';
 export { CollaborationExtension } from './collaboration-extension';

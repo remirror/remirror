@@ -3,9 +3,9 @@ import type { ComponentType, RefCallback } from 'react';
 import type {
   Decoration,
   Dynamic,
-  EditorViewParameter,
+  EditorViewProps,
   GetFixed,
-  NodeWithAttributesParameter,
+  NodeWithAttributesProps,
   ProsemirrorAttributes,
   RenderEnvironment,
   Static,
@@ -59,7 +59,7 @@ export interface ReactComponentOptions {
   nodeViewComponents?: Dynamic<Record<string, ComponentType<NodeViewComponentProps>>>;
 }
 
-export interface NodeViewComponentProps extends EditorViewParameter, NodeWithAttributesParameter {
+export interface NodeViewComponentProps extends EditorViewProps, NodeWithAttributesProps {
   /**
    * - `ssr` - when this is not being rendered in the dom.
    * - `dom` - when rendering in the browser
@@ -105,17 +105,17 @@ export interface NodeViewComponentProps extends EditorViewParameter, NodeWithAtt
  */
 export type GetPosition = (() => number) | boolean;
 
-export interface ReactNodeViewParameter
-  extends EditorViewParameter,
-    NodeWithAttributesParameter,
-    CreateNodeViewParameter {
+export interface ReactNodeViewProps
+  extends EditorViewProps,
+    NodeWithAttributesProps,
+    CreateNodeViewProps {
   /**
    * Method for retrieving the position of the current nodeView
    */
   getPosition: GetPosition;
 }
 
-export interface CreateNodeViewParameter {
+export interface CreateNodeViewProps {
   /**
    * A container and event dispatcher which keeps track of all dom elements that
    * hold node views

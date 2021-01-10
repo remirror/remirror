@@ -7,14 +7,14 @@ import type {
   MentionExtensionAttributes,
 } from '@remirror/extension-mention';
 import { MentionExtension } from '@remirror/extension-mention';
-import { ChangeReason, ExitReason, SuggestChangeHandlerParameter } from '@remirror/pm/suggest';
+import { ChangeReason, ExitReason, SuggestChangeHandlerProps } from '@remirror/pm/suggest';
 import { useExtension, useRemirrorContext } from '@remirror/react';
 
 import { indexFromArrowPress } from './react-hook-utils';
 import { useKeymap } from './use-keymap';
 
 export interface MentionState<Data extends MentionExtensionAttributes = MentionExtensionAttributes>
-  extends Pick<SuggestChangeHandlerParameter, 'name' | 'query' | 'text' | 'range'> {
+  extends Pick<SuggestChangeHandlerProps, 'name' | 'query' | 'text' | 'range'> {
   /**
    * The name of the current matcher. When this is undefined there is no
    * active mention.
@@ -55,7 +55,7 @@ function useMentionChangeHandler<
    * The is the callback for when a suggestion is changed.
    */
   const onChange: MentionChangeHandler = useCallback(
-    (parameter, cmd) => {
+    (props, cmd) => {
       const {
         query,
         text,
@@ -66,7 +66,7 @@ function useMentionChangeHandler<
         changeReason,
         textAfter,
         defaultAppendTextValue,
-      } = parameter;
+      } = props;
 
       // Ignore the next exit since it has been triggered manually but
       // only when this is caused by a change. This is because the command
@@ -300,8 +300,9 @@ export interface UseMentionProps<
 
 export type UseMentionExitHandler<
   Data extends MentionExtensionAttributes = MentionExtensionAttributes
-> = (parameter: OnExitParameter<Data>, command: (attrs?: Partial<Data>) => void) => void;
+> = (props: OnExitProps<Data>, command: (attrs?: Partial<Data>) => void) => void;
 
-type OnExitParameter<
-  Data extends MentionExtensionAttributes = MentionExtensionAttributes
-> = Replace<Omit<MentionState<Data>, 'command'>, { reason: ExitReason }>;
+type OnExitProps<Data extends MentionExtensionAttributes = MentionExtensionAttributes> = Replace<
+  Omit<MentionState<Data>, 'command'>,
+  { reason: ExitReason }
+>;

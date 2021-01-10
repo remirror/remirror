@@ -67,7 +67,7 @@ async function promiseSequence(sequence: Array<() => Promise<void>>) {
   return sequence.reduce((current, next) => current.then(next), Promise.resolve());
 }
 
-export interface TypeParameter {
+export interface TypeProps {
   /**
    * The text to type.
    */
@@ -79,7 +79,7 @@ export interface TypeParameter {
   delay?: number;
 }
 
-export interface PressParameter extends Pick<TypeParameter, 'delay'> {
+export interface PressProps extends Pick<TypeProps, 'delay'> {
   /**
    * The key to press.
    */
@@ -100,14 +100,14 @@ export interface PressParameter extends Pick<TypeParameter, 'delay'> {
  *
  * @return Promise resolving when key presses complete.
  */
-export async function press({ key, count = 1, delay = 10 }: PressParameter) {
+export async function press({ key, count = 1, delay = 10 }: PressProps) {
   return promiseSequence(times(count, () => () => page.keyboard.press(key, { delay })));
 }
 
 /**
  * Wrapper around `page.keyboard.type` with default typing delay.
  */
-export async function type({ text, delay = 10 }: TypeParameter) {
+export async function type({ text, delay = 10 }: TypeProps) {
   return page.keyboard.type(text, { delay });
 }
 

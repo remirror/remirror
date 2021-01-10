@@ -2,36 +2,36 @@ import escapeStringRegex from 'escape-string-regexp';
 import { matchSorter } from 'match-sorter';
 
 import {
-  omitExtraAttributes,
+  ApplySchemaAttributes,
   command,
-  TupleRange,
-  isElementDomNode,
   CommandFunction,
   entries,
   ErrorConstant,
   extension,
-  FromToParameter,
+  FromToProps,
   Handler,
   includes,
   InputRule,
   invariant,
+  isElementDomNode,
   isNumber,
   isPlainObject,
   keys,
   NodeExtension,
+  NodeExtensionSpec,
+  NodeSpecOverride,
   object,
-  Static,
+  omitExtraAttributes,
   plainInputRule,
   range,
+  Static,
   take,
+  TupleRange,
   Value,
   values,
   within,
-  NodeExtensionSpec,
-  ApplySchemaAttributes,
-  NodeSpecOverride,
 } from '@remirror/core';
-import type { SuggestChangeHandlerParameter, Suggester } from '@remirror/pm/suggest';
+import type { SuggestChangeHandlerProps, Suggester } from '@remirror/pm/suggest';
 
 import type AliasData from './data/aliases';
 import aliasObject from './data/aliases';
@@ -164,14 +164,14 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
       insertEmojiByName: (
         name: string,
         options: EmojiCommandOptions = object(),
-      ): CommandFunction => (parameter) => {
+      ): CommandFunction => (props) => {
         const emoji = getEmojiByName(name);
 
         if (!emoji) {
           return false;
         }
 
-        return commands.insertEmojiByObject(emoji, options)(parameter);
+        return commands.insertEmojiByObject(emoji, options)(props);
       },
 
       /**
@@ -201,7 +201,7 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
        * Inserts the suggestion character into the current position in the
        * editor in order to activate the suggestion popup.
        */
-      suggestEmoji: ({ from, to }: Partial<FromToParameter> = object()): CommandFunction => ({
+      suggestEmoji: ({ from, to }: Partial<FromToProps> = object()): CommandFunction => ({
         state,
         dispatch,
       }) => {
@@ -242,8 +242,8 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
       char: this.options.suggestionCharacter,
       name: this.name,
       suggestTag: 'span',
-      onChange: (parameter) => {
-        const { range, query } = parameter;
+      onChange: (props) => {
+        const { range, query } = props;
 
         const emojiMatches =
           query.full.length === 0
@@ -262,13 +262,13 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
           create(emoji, { skinVariation, from, to });
         };
 
-        this.options.onChange({ ...parameter, emojiMatches }, command);
+        this.options.onChange({ ...props, emojiMatches }, command);
       },
     };
   }
 }
 
-export interface EmojiCommandOptions extends Partial<FromToParameter> {
+export interface EmojiCommandOptions extends Partial<FromToProps> {
   /**
    * The skin variation which is a number between `0` and `4`.
    */
@@ -289,7 +289,7 @@ export interface EmojiObject {
   skinVariations: boolean;
 }
 
-export interface EmojiChangeHandlerParameter extends SuggestChangeHandlerParameter {
+export interface EmojiChangeHandlerProps extends SuggestChangeHandlerProps {
   /**
    * The currently matching objects
    *
@@ -301,10 +301,7 @@ export interface EmojiChangeHandlerParameter extends SuggestChangeHandlerParamet
 export type SkinVariation = 0 | 1 | 2 | 3 | 4;
 
 export type EmojiCommand = (emoji: EmojiObject, skinVariation?: SkinVariation) => void;
-export type EmojiChangeHandler = (
-  parameter: EmojiChangeHandlerParameter,
-  command: EmojiCommand,
-) => void;
+export type EmojiChangeHandler = (props: EmojiChangeHandlerProps, command: EmojiCommand) => void;
 
 export interface EmojiOptions {
   /**

@@ -4,7 +4,7 @@ import type { GetFixedDynamic, GetPartialDynamic, ValidOptions } from '@remirror
 
 import type { GetChangeOptionsReturn, PickChanged } from './types';
 
-export interface GetChangedOptionsParameter<Options extends ValidOptions> {
+export interface GetChangedOptionsProps<Options extends ValidOptions> {
   /**
    * The previous readonly properties object.
    */
@@ -29,9 +29,9 @@ function defaultEquals(valueA: unknown, valueB: unknown) {
  * Get the property changes and the next value from an update.
  */
 export function getChangedOptions<Options extends ValidOptions>(
-  parameter: GetChangedOptionsParameter<Options>,
+  props: GetChangedOptionsProps<Options>,
 ): GetChangeOptionsReturn<Options> {
-  const { previousOptions, update, equals = defaultEquals } = parameter;
+  const { previousOptions, update, equals = defaultEquals } = props;
   const next = freeze({ ...previousOptions, ...update });
   const changes = object<any>();
   const optionKeys = keys(previousOptions);
@@ -65,7 +65,7 @@ export function getChangedOptions<Options extends ValidOptions>(
   return { changes: freeze(changes), options: next, pickChanged };
 }
 
-export interface IsNameUniqueParameter {
+export interface IsNameUniqueProps {
   /**
    * The name to check against
    */
@@ -93,10 +93,10 @@ const codeLabelMap = {
  * Checks whether a given string is unique to the set. Add the name if it
  * doesn't already exist, or throw an error when `shouldThrow` is true.
  *
- * @param parameter - destructured params
+ * @param props - destructured params
  */
-export function throwIfNameNotUnique(parameter: IsNameUniqueParameter): void {
-  const { name, set, code } = parameter;
+export function throwIfNameNotUnique(props: IsNameUniqueProps): void {
+  const { name, set, code } = props;
   const label = codeLabelMap[code];
 
   invariant(!set.has(name), {

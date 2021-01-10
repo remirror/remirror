@@ -1,8 +1,8 @@
 import {
   CreateExtensionPlugin,
   EditorState,
-  EditorStateParameter,
-  EditorViewParameter,
+  EditorStateProps,
+  EditorViewProps,
   entries,
   ErrorConstant,
   extension,
@@ -274,7 +274,7 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
   }
 }
 
-interface CreateClickMarkStateParameter extends BaseEventState {
+interface CreateClickMarkStateProps extends BaseEventState {
   /**
    * True when the event has previously been handled. In this situation we can
    * return early, since the mark can be checked directly from the current
@@ -291,8 +291,8 @@ interface CreateClickMarkStateParameter extends BaseEventState {
 /**
  * Create the click handler state for the mark.
  */
-function createClickMarkState(parameter: CreateClickMarkStateParameter): ClickMarkHandlerState {
-  const { handled, view, $pos, state } = parameter;
+function createClickMarkState(props: CreateClickMarkStateProps): ClickMarkHandlerState {
+  const { handled, view, $pos, state } = props;
   const clickState: ClickMarkHandlerState = { getMark: noop, markRanges: [], view, state };
 
   if (handled) {
@@ -382,7 +382,7 @@ export interface ClickHandlerState extends ClickMarkHandlerState {
  */
 export type CreateEventHandlers = GetHandler<EventsOptions>;
 
-interface BaseEventState extends EditorViewParameter, EditorStateParameter {
+interface BaseEventState extends EditorViewProps, EditorStateProps {
   /**
    * The editor state before updates from the event.
    */

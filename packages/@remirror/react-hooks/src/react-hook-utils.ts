@@ -1,4 +1,4 @@
-interface IndexFromArrowPressParameter {
+interface IndexFromArrowPressProps {
   /**
    * Depending on the application the arrow key pressed could be an up or down
    * arrow and it's up to you to translate that to next and previous.
@@ -21,9 +21,11 @@ interface IndexFromArrowPressParameter {
 /**
  * Get the next index from an arrow key press.
  */
-export function indexFromArrowPress(parameter: IndexFromArrowPressParameter): number {
-  const { direction, matchLength, previousIndex } = parameter;
-
+export function indexFromArrowPress({
+  direction,
+  matchLength,
+  previousIndex,
+}: IndexFromArrowPressProps): number {
   return direction === 'next'
     ? previousIndex + 1 > matchLength - 1
       ? 0

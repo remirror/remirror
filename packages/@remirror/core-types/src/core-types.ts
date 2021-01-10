@@ -3,7 +3,7 @@ import type {
   RemirrorIdentifier,
 } from '@remirror/core-constants';
 import type {
-  CommandFunctionParameter,
+  CommandFunctionProps,
   EditorSchema,
   EditorState,
   EditorView,
@@ -16,7 +16,7 @@ import type { MarkSpec, NodeSpec } from '@remirror/pm/model';
 import type { Decoration, NodeView } from '@remirror/pm/view';
 
 import type { Literal, ObjectMark, ProsemirrorAttributes } from './base-types';
-import type { FromToParameter, MarkWithAttributes, NodeWithAttributes } from './parameter-builders';
+import type { FromToProps, MarkWithAttributes, NodeWithAttributes } from './props-types';
 
 /**
  * A JSON representation of the prosemirror Node.
@@ -47,7 +47,7 @@ export interface StateJSON {
   /**
    * The current selection.
    */
-  selection: FromToParameter;
+  selection: FromToProps;
 }
 
 type GetAttributesFunction = (p: string[]) => ProsemirrorAttributes | undefined;
@@ -58,7 +58,7 @@ type GetAttributesFunction = (p: string[]) => ProsemirrorAttributes | undefined;
  */
 export type GetAttributes = ProsemirrorAttributes | GetAttributesFunction;
 
-export interface GetAttributesParameter {
+export interface GetAttributesProps {
   /**
    * A helper function for setting the attributes for a transformation .
    */
@@ -83,8 +83,8 @@ export type RemirrorContentType<Schema extends EditorSchema = EditorSchema> =
   | ProsemirrorNode<Schema>
   | EditorState<Schema>;
 
-export interface KeyBindingParameter<Schema extends EditorSchema = EditorSchema>
-  extends CommandFunctionParameter<Schema> {
+export interface KeyBindingProps<Schema extends EditorSchema = EditorSchema>
+  extends CommandFunctionProps<Schema> {
   /**
    * A method to run the next (lower priority) command in the chain of
    * keybindings.
@@ -108,7 +108,7 @@ export interface KeyBindingParameter<Schema extends EditorSchema = EditorSchema>
  * The command function passed to any of the keybindings.
  */
 export type KeyBindingCommandFunction<Schema extends EditorSchema = EditorSchema> = (
-  params: KeyBindingParameter<Schema>,
+  params: KeyBindingProps<Schema>,
 ) => boolean;
 
 /**
@@ -267,7 +267,7 @@ export interface RemirrorIdentifierShape {
  * movable part of the selection) and the head (the movable part of the
  * selection).
  */
-export interface AnchorHeadParameter {
+export interface AnchorHeadProps {
   /**
    * The non-movable part of the selection.
    */
@@ -290,8 +290,8 @@ export interface AnchorHeadParameter {
  */
 export type PrimitiveSelection =
   | Selection
-  | FromToParameter
-  | AnchorHeadParameter
+  | FromToProps
+  | AnchorHeadProps
   | number
   | ResolvedPos
   | 'start'

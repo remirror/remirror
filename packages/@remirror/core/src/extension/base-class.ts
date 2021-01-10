@@ -24,7 +24,7 @@ import type {
   Dispose,
   EmptyShape,
   GetAcceptUndefined,
-  GetConstructorParameter,
+  GetConstructorProps,
   GetCustomHandler,
   GetFixed,
   GetFixedDynamic,
@@ -44,7 +44,7 @@ import type {
 } from '@remirror/core-types';
 
 import { getChangedOptions } from '../helpers';
-import type { OnSetOptionsParameter } from '../types';
+import type { OnSetOptionsProps } from '../types';
 
 const IGNORE = '__IGNORE__';
 const GENERAL_OPTIONS = '__ALL__' as const;
@@ -170,7 +170,7 @@ export abstract class BaseClass<
 
   constructor(
     defaultOptions: DefaultStaticOptions,
-    ...[options]: ConstructorParameter<Options, DefaultStaticOptions>
+    ...[options]: ConstructorProps<Options, DefaultStaticOptions>
   ) {
     this._mappedHandlers = object();
     this.populateMappedHandlers();
@@ -215,7 +215,7 @@ export abstract class BaseClass<
    * provided it uses the same initial options as the current instance.
    */
   abstract clone(
-    ...parameters: ConstructorParameter<Options, DefaultStaticOptions>
+    ...parameters: ConstructorProps<Options, DefaultStaticOptions>
   ): BaseClass<Options, DefaultStaticOptions>;
 
   /**
@@ -331,16 +331,16 @@ export abstract class BaseClass<
    * ```ts
    * class ThisPreset extends Preset {
    *   // GOOD ✅
-   *   onSetOptions(parameter: OnSetOptionsParameter<Options>) {}
+   *   onSetOptions(props: OnSetOptionsProps<Options>) {}
    *
    *    // BAD ❌
-   *   onSetOptions = (parameter: OnSetOptionsParameter<Options>) => {}
+   *   onSetOptions = (props: OnSetOptionsProps<Options>) => {}
    * }
    * ```
    *
    * @abstract
    */
-  protected onSetOptions?(parameter: OnSetOptionsParameter<Options>): void;
+  protected onSetOptions?(props: OnSetOptionsProps<Options>): void;
 
   /**
    * Update the private options.
@@ -516,7 +516,7 @@ export type CustomHandlerMethod<Options extends ValidOptions> = <
 ) => Dispose;
 
 export type AddCustomHandler<Options extends ValidOptions> = (
-  parameter: Partial<GetCustomHandler<Options>>,
+  props: Partial<GetCustomHandler<Options>>,
 ) => Dispose | undefined;
 
 export type AddHandler<Options extends ValidOptions> = <Key extends keyof GetHandler<Options>>(
@@ -528,7 +528,7 @@ export type AddHandler<Options extends ValidOptions> = <Key extends keyof GetHan
  * TODO see if this is needed or remove.
  */
 export type AddHandlers<Options extends ValidOptions> = (
-  parameter: Partial<GetHandler<Options>>,
+  props: Partial<GetHandler<Options>>,
 ) => Dispose;
 
 export interface HandlerKeyOptions<ReturnType = any, Args extends any[] = any[]> {
@@ -568,7 +568,7 @@ export interface BaseClassConstructor<
   Options extends ValidOptions = EmptyShape,
   DefaultStaticOptions extends Shape = EmptyShape
 > extends Function {
-  new (...parameters: ConstructorParameter<Options, DefaultStaticOptions>): any;
+  new (...args: ConstructorProps<Options, DefaultStaticOptions>): any;
 
   /**
    * The identifier for the constructor which can determine whether it is a node
@@ -644,13 +644,13 @@ export type AnyBaseClassConstructor = Replace<
  * Auto infers the parameter for the constructor. If there is a required static
  * option then the TypeScript compiler will error if nothing is passed in.
  */
-export type ConstructorParameter<
+export type ConstructorProps<
   Options extends ValidOptions,
   DefaultStaticOptions extends Shape
 > = IfNoRequiredProperties<
   GetStatic<Options>,
-  [options?: GetConstructorParameter<Options> & DefaultStaticOptions],
-  [options: GetConstructorParameter<Options> & DefaultStaticOptions]
+  [options?: GetConstructorProps<Options> & DefaultStaticOptions],
+  [options: GetConstructorProps<Options> & DefaultStaticOptions]
 >;
 
 /**

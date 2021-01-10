@@ -101,12 +101,12 @@ export function nonChainable<
   Schema extends EditorSchema = EditorSchema,
   Extra extends object = object
 >(commandFunction: CommandFunction<Schema, Extra>): NonChainableCommandFunction<Schema, Extra> {
-  return ((parameter) => {
-    invariant(parameter.dispatch === undefined || parameter.dispatch === parameter.view?.dispatch, {
+  return ((props) => {
+    invariant(props.dispatch === undefined || props.dispatch === props.view?.dispatch, {
       code: ErrorConstant.NON_CHAINABLE_COMMAND,
     });
 
-    return commandFunction(parameter);
+    return commandFunction(props);
   }) as NonChainableCommandFunction<Schema, Extra>;
 }
 

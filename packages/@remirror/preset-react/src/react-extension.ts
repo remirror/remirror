@@ -3,7 +3,7 @@ import {
   extension,
   ExtensionPriority,
   ManagerPhase,
-  OnSetOptionsParameter,
+  OnSetOptionsProps,
   PlainExtension,
 } from '@remirror/core';
 import { PlaceholderOptions } from '@remirror/extension-placeholder';
@@ -48,8 +48,8 @@ export class ReactExtension extends PlainExtension<ReactExtensionOptions> {
     return 'react' as const;
   }
 
-  protected onSetOptions(parameter: OnSetOptionsParameter<ReactExtensionOptions>): void {
-    const { pickChanged } = parameter;
+  protected onSetOptions(props: OnSetOptionsProps<ReactExtensionOptions>): void {
+    const { pickChanged } = props;
     this.getExtension(ReactPlaceholderExtension).setOptions(pickChanged(['placeholder']));
   }
 

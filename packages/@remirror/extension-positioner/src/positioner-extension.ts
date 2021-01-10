@@ -11,7 +11,7 @@ import {
   isString,
   PlainExtension,
   ProsemirrorAttributes,
-  StateUpdateLifecycleParameter,
+  StateUpdateLifecycleProps,
   Static,
 } from '@remirror/core';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
@@ -27,7 +27,7 @@ import {
   selectionPositioner,
 } from './core-positioners';
 import type {
-  BasePositionerParameter,
+  BasePositionerProps,
   Positioner,
   PositionerUpdateEvent,
   SetActiveElement,
@@ -51,7 +51,7 @@ export interface PositionerOptions {
   scrollDebounce?: Static<number>;
 }
 
-interface TriggerUpdateParameter {
+interface TriggerUpdateProps {
   event: PositionerUpdateEvent;
   firstUpdate: boolean;
 }
@@ -107,7 +107,7 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
     this.onScroll = debounce(this.options.scrollDebounce, this.onScroll.bind(this));
   }
 
-  private getParameter({ event, firstUpdate }: TriggerUpdateParameter) {
+  private getProps({ event, firstUpdate }: TriggerUpdateProps) {
     const state = this.store.getState();
     const previousState = this.store.previousState ?? state;
 
@@ -121,8 +121,8 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
   }
 
   private onScroll(): void {
-    const parameter = this.getParameter({ event: 'scroll', firstUpdate: false });
-    this.positioner(parameter);
+    const props = this.getProps({ event: 'scroll', firstUpdate: false });
+    this.positioner(props);
   }
 
   createPlugin(): CreateExtensionPlugin {
@@ -138,7 +138,7 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
     };
   }
 
-  onStateUpdate(update: StateUpdateLifecycleParameter): void {
+  onStateUpdate(update: StateUpdateLifecycleProps): void {
     this.positioner({
       ...update,
       previousState: update.firstUpdate ? undefined : update.previousState,
@@ -175,7 +175,7 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
     return element;
   }
 
-  private triggerPositioner(positioner: Positioner, update: BasePositionerParameter) {
+  private triggerPositioner(positioner: Positioner, update: BasePositionerProps) {
     if (!positioner.hasChanged(update)) {
       // Nothing has changed so return without calling the change handler.
       return;
@@ -184,7 +184,7 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
     positioner.onActiveChanged({ ...update, view: this.store.view });
   }
 
-  private positioner(update: BasePositionerParameter) {
+  private positioner(update: BasePositionerProps) {
     for (const positioner of this.positioners) {
       const eventIsNotSupported = !positioner.events.includes(update.event);
 
@@ -251,7 +251,7 @@ export const positioners = {
 };
 
 /**
- * This is a helper method for getting the positioner. The parameter can either
+ * This is a helper method for getting the positioner. The props can either
  * be a named positioner or a positioner that you've created for the purpose.
  */
 export function getPositioner(positioner: PositionerParam): Positioner {

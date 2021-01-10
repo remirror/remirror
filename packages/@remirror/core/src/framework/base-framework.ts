@@ -4,14 +4,14 @@ import type { Unsubscribe } from 'nanoevents';
 import type {
   EditorSchema,
   EditorState,
-  EditorStateParameter,
-  EditorViewParameter,
+  EditorStateProps,
+  EditorViewProps,
   PrimitiveSelection,
   RemirrorContentType,
   RenderEnvironment,
-  TextParameter,
+  TextProps,
   Transaction,
-  TransactionParameter,
+  TransactionProps,
   TransactionTransformer,
 } from '@remirror/core-types';
 import type { InvalidContentHandler, StringHandler } from '@remirror/core-utils';
@@ -49,7 +49,7 @@ export interface BaseFramework<ExtensionUnion extends AnyExtension> {
   destroy(): void;
 }
 
-export interface FrameworkParameter<
+export interface FrameworkOptions<
   ExtensionUnion extends AnyExtension,
   Props extends FrameworkProps<ExtensionUnion>
 > {
@@ -144,12 +144,12 @@ export interface FrameworkProps<ExtensionUnion extends AnyExtension> {
   /**
    * An event listener which is called whenever the editor gains focus.
    */
-  onFocus?: (params: RemirrorEventListenerParameter<ExtensionUnion>, event: Event) => void;
+  onFocus?: (params: RemirrorEventListenerProps<ExtensionUnion>, event: Event) => void;
 
   /**
    * An event listener which is called whenever the editor is blurred.
    */
-  onBlur?: (params: RemirrorEventListenerParameter<ExtensionUnion>, event: Event) => void;
+  onBlur?: (params: RemirrorEventListenerProps<ExtensionUnion>, event: Event) => void;
 
   /**
    * Called on every change to the Prosemirror state.
@@ -258,7 +258,7 @@ export interface FrameworkOutput<ExtensionUnion extends AnyExtension>
    *
    * To use this in a controlled editor, you must set `triggerChange` to `true`.
    */
-  clearContent: (options?: TriggerChangeParameter) => void;
+  clearContent: (options?: TriggerChangeProps) => void;
 
   /**
    * Replace all editor content with the new content.
@@ -272,7 +272,7 @@ export interface FrameworkOutput<ExtensionUnion extends AnyExtension>
    *
    * To use this in a controlled editor, you must set `triggerChange` to `true`.
    */
-  setContent: (content: RemirrorContentType, options?: TriggerChangeParameter) => void;
+  setContent: (content: RemirrorContentType, options?: TriggerChangeProps) => void;
 
   /**
    * A getter function for the current editor state. It's a wrapper around
@@ -316,10 +316,10 @@ export type CreateStateFromContent<ExtensionUnion extends AnyExtension> = (
   selection?: PrimitiveSelection,
 ) => EditorState<GetSchema<ExtensionUnion>>;
 
-export interface RemirrorEventListenerParameter<ExtensionUnion extends AnyExtension>
-  extends EditorStateParameter<GetSchema<ExtensionUnion>>,
+export interface RemirrorEventListenerProps<ExtensionUnion extends AnyExtension>
+  extends EditorStateProps<GetSchema<ExtensionUnion>>,
     Remirror.ListenerProperties<ExtensionUnion>,
-    EditorViewParameter<GetSchema<ExtensionUnion>> {
+    EditorViewProps<GetSchema<ExtensionUnion>> {
   /**
    * The original transaction which caused this state update.
    *
@@ -362,21 +362,21 @@ export interface RemirrorEventListenerParameter<ExtensionUnion extends AnyExtens
 }
 
 export type RemirrorEventListener<ExtensionUnion extends AnyExtension> = (
-  params: RemirrorEventListenerParameter<ExtensionUnion>,
+  params: RemirrorEventListenerProps<ExtensionUnion>,
 ) => void;
 
 export type AttributePropFunction<ExtensionUnion extends AnyExtension> = (
-  params: RemirrorEventListenerParameter<ExtensionUnion>,
+  params: RemirrorEventListenerProps<ExtensionUnion>,
 ) => Record<string, string>;
 
-export interface PlaceholderConfig extends TextParameter {
+export interface PlaceholderConfig extends TextProps {
   className: string;
 }
 
-export interface UpdateStateParameter<Schema extends EditorSchema = EditorSchema>
-  extends Partial<TransactionParameter<Schema>>,
-    EditorStateParameter<Schema>,
-    TriggerChangeParameter {
+export interface UpdateStateProps<Schema extends EditorSchema = EditorSchema>
+  extends Partial<TransactionProps<Schema>>,
+    EditorStateProps<Schema>,
+    TriggerChangeProps {
   /**
    * When the state updates are not controlled and it was a transaction that
    * caused the state to be updated this value captures all the transaction
@@ -388,7 +388,7 @@ export interface UpdateStateParameter<Schema extends EditorSchema = EditorSchema
   transactions?: Array<Transaction<Schema>>;
 }
 
-export interface TriggerChangeParameter {
+export interface TriggerChangeProps {
   /**
    * Whether or not to trigger this as a change and call any handlers.
    *
@@ -397,21 +397,21 @@ export interface TriggerChangeParameter {
   triggerChange?: boolean;
 }
 
-export interface ListenerParameter<ExtensionUnion extends AnyExtension>
-  extends Partial<EditorStateParameter<GetSchema<ExtensionUnion>>>,
-    Partial<TransactionParameter<GetSchema<ExtensionUnion>>> {}
+export interface ListenerProps<ExtensionUnion extends AnyExtension>
+  extends Partial<EditorStateProps<GetSchema<ExtensionUnion>>>,
+    Partial<TransactionProps<GetSchema<ExtensionUnion>>> {}
 
 export interface FrameworkEvents<ExtensionUnion extends AnyExtension>
   extends Pick<ManagerEvents, 'destroy'> {
   /**
    * An event listener which is called whenever the editor gains focus.
    */
-  focus: (params: RemirrorEventListenerParameter<ExtensionUnion>, event: Event) => void;
+  focus: (params: RemirrorEventListenerProps<ExtensionUnion>, event: Event) => void;
 
   /**
    * An event listener which is called whenever the editor is blurred.
    */
-  blur: (params: RemirrorEventListenerParameter<ExtensionUnion>, event: Event) => void;
+  blur: (params: RemirrorEventListenerProps<ExtensionUnion>, event: Event) => void;
 
   /**
    * Called on every state update after the state has been applied to the editor.

@@ -54,9 +54,9 @@ interface PopulateRemirrorImports {
  * files..
  */
 async function populateRemirrorImports(
-  parameter: PopulateRemirrorImports,
+  props: PopulateRemirrorImports,
 ): Promise<Record<string, PackageModuleMeta>> {
-  const { absolutePath, packageJsonPattern, excludedNames = [] } = parameter;
+  const { absolutePath, packageJsonPattern, excludedNames = [] } = props;
   const result: Record<string, PackageModuleMeta> = {};
   const mainPackageJsonFiles = await glob(packageJsonPattern, {
     cwd: absolutePath,
@@ -472,9 +472,9 @@ for (const [name, importName] of externalModules) {
  * Generate the code strings which should be used to create the files for the
  * `../src/generated` folder.
  */
-async function generateCode(parameter: ImportGroups) {
+async function generateCode(props: ImportGroups) {
   log.debug('Generating the playground code.');
-  const { extensions, presets, core, react, unscoped, pm } = parameter;
+  const { extensions, presets, core, react, unscoped, pm } = props;
   const currentPath = 'playground.tsx';
   const importGroups: PackageModuleMeta[] = [
     ...Object.values(pm),

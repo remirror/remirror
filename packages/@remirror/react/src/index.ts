@@ -25,7 +25,7 @@ export type {
   ReactExtensionUnion,
   ReactFrameworkOutput,
   RefKeyRootProps,
-  RefParameter,
+  RefProps,
   UseRemirrorContextType,
 } from './react-types';
 export * from './renderers';

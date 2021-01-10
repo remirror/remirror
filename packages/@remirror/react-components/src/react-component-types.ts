@@ -2,7 +2,7 @@ import type { ComponentType, MouseEvent as ReactMouseEvent } from 'react';
 import type { MenuBarStateReturn, MenuStateReturn } from 'reakit/Menu';
 import type { ToolbarItem as ReakitToolbarItem, ToolbarStateReturn } from 'reakit/Toolbar';
 
-import type { ProsemirrorAttributes } from '@remirror/core';
+import type { AnyExtension, ProsemirrorAttributes } from '@remirror/core';
 import type { CoreIcon } from '@remirror/icons';
 import type { ReactFrameworkOutput, useRemirrorContext } from '@remirror/react';
 
@@ -97,9 +97,9 @@ export enum ComponentItem {
 /**
  * Handle click events.
  */
-export type ButtonClickHandler = (
+export type ButtonClickHandler<ExtensionUnion extends AnyExtension = Remirror.AllExtensionUnion> = (
   event: ReactMouseEvent<HTMLButtonElement, MouseEvent>,
-  context: ReturnType<typeof useRemirrorContext>,
+  context: ReactFrameworkOutput<ExtensionUnion>,
 ) => void;
 
 export interface BaseButtonItem {

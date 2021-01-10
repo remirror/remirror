@@ -15,7 +15,7 @@ import typescriptPlugin from 'prettier/parser-typescript';
 import yamlPlugin from 'prettier/parser-yaml';
 import { formatWithCursor } from 'prettier/standalone';
 
-import type { FormattedContent, FormatterParameter } from './code-block-types';
+import type { FormattedContent, FormatterProps } from './code-block-types';
 
 // TODO load this asynchronously
 const plugins = [
@@ -35,7 +35,7 @@ const options: Partial<CursorOptions> = {
   semi: true,
 };
 
-interface FormatCodeParameter {
+interface FormatCodeProps {
   /**
    * The initial code.
    */
@@ -55,7 +55,7 @@ interface FormatCodeParameter {
 /**
  * Wrapper around the prettier formatWithCursor.
  */
-function formatCode({ parser, source, cursorOffset }: FormatCodeParameter) {
+function formatCode({ parser, source, cursorOffset }: FormatCodeProps) {
   return formatWithCursor(source, {
     ...options,
     cursorOffset,
@@ -90,8 +90,8 @@ function offsetIncrement(
  * A prettier based code formatter which can be dropped in for use within the
  * `CodeBlockExtension`.
  */
-export function formatter(parameter: FormatterParameter): FormattedContent | undefined {
-  const { cursorOffset, language, source } = parameter;
+export function formatter(props: FormatterProps): FormattedContent | undefined {
+  const { cursorOffset, language, source } = props;
 
   const fn = (
     result: CursorResult,

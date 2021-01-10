@@ -121,8 +121,8 @@ describe('replaceText', () => {
   it('can preserve the non-empty selection', () => {
     const editor = createEditor(doc(p('<head>Hell<anchor>o')));
 
-    editor.remirrorCommand((parameter) =>
-      replaceText({ content: 'Content', keepSelection: true })(parameter),
+    editor.remirrorCommand((props) =>
+      replaceText({ content: 'Content', keepSelection: true })(props),
     );
 
     const { head, anchor } = editor.view.state.selection;

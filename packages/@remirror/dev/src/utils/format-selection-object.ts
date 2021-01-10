@@ -22,11 +22,11 @@ const isNode = new Set(['nodeAfter', 'nodeBefore', 'parent']);
 function filterProps(selection, props, subProps) {
   return props.reduce((acc, prop) => {
     if (subProps && subProps[prop]) {
-      acc[prop] = subProps[prop].reduce((subAcc, subProp) => {
-        subAcc[subProp] =
-          !isNode.has(subProp) || !selection[prop][subProp]
-            ? selection[prop][subProp]
-            : selection[prop][subProp].toJSON();
+      acc[prop] = subProps[prop].reduce((subAcc, subProps) => {
+        subAcc[subProps] =
+          !isNode.has(subProps) || !selection[prop][subProps]
+            ? selection[prop][subProps]
+            : selection[prop][subProps].toJSON();
         return subAcc;
       }, {});
     } else {

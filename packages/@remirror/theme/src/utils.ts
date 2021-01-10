@@ -124,11 +124,11 @@ export function getTheme(getter: (theme: DeepString<Remirror.Theme>) => string):
  * Get the name of the theme property.
  *
  * ```ts
- * import {getThemeProp} from '@remirror/theme';
- * getThemeProp((t) => t.color.primary.text) => `--rmr-color-primary-text`
+ * import {getThemeProps} from '@remirror/theme';
+ * getThemeProps((t) => t.color.primary.text) => `--rmr-color-primary-text`
  * ```
  */
-export function getThemeProp(getter: (theme: DeepString<Remirror.Theme>) => string): string {
+export function getThemeProps(getter: (theme: DeepString<Remirror.Theme>) => string): string {
   return getCustomPropertyName(keyCapturingProxy(getter));
 }
 // defaultRemirrorThemeHue is copied from https://github.com/yeun/open-color/blob/v1.7.0/open-color.json

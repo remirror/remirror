@@ -19,15 +19,15 @@ export const setTextColorOptions: Remirror.CommandDecoratorOptions = {
 
 const hueRange = range(10);
 
-interface CreateHuePaletteParameter {
+interface CreateHuePaletteProps {
   t: I18n['_'];
   name: keyof Remirror.ThemeHue;
   labelDescriptor: MessageDescriptor;
   hueDescriptor: MessageDescriptor;
 }
 
-function createHuePalette(parameter: CreateHuePaletteParameter): HuePalette {
-  const { t, name, labelDescriptor, hueDescriptor } = parameter;
+function createHuePalette(props: CreateHuePaletteProps): HuePalette {
+  const { t, name, labelDescriptor, hueDescriptor } = props;
   const label = t(labelDescriptor);
   const hues = hueRange.map((hue) => ({
     label: t(hueDescriptor, { hue }),

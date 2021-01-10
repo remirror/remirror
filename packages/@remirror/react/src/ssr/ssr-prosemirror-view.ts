@@ -32,7 +32,7 @@ export class EditorViewSSR<Schema extends EditorSchema = EditorSchema> {
   update(_props: DirectEditorProps<Schema>): void {}
   setProps(_props: DirectEditorProps<Schema>): void {}
   updateState(_state: EditorState): void {}
-  someProp(_propName: string, f?: (prop: any) => any): any {
+  someProps(_propName: string, f?: (prop: any) => any): any {
     return f ? f(null) : null;
   }
   hasFocus(): boolean {

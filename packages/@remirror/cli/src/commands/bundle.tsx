@@ -134,7 +134,7 @@ export function bundleEntryPoint({ source, cwd }: BundleCommandShape): BundleMet
 
 export type BundleCommandShape = RemirrorCli.Commands['bundle'];
 export type BundleEditorProps = BundleCommandShape & { method: BundleMethod; startTime?: number };
-export type BundleMethod = (parameter: BundleCommandShape) => BundleMethodReturn;
+export type BundleMethod = (props: BundleCommandShape) => BundleMethodReturn;
 export interface BundleMethodReturn {
   bundle: () => Promise<void>;
   write: () => Promise<void>;

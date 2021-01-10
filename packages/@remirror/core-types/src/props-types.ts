@@ -11,14 +11,14 @@ import type {
   Transaction,
 } from '@remirror/pm';
 
-import type { MakeOptional, Position, ProsemirrorAttributes } from './base-types';
+import type { ProsemirrorAttributes } from './base-types';
 
 /**
  * A parameter builder interface containing the `view` property.
  *
  * @template Schema - the underlying editor schema.
  */
-export interface EditorViewParameter<Schema extends EditorSchema = EditorSchema> {
+export interface EditorViewProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * An instance of the Prosemirror editor `view`.
    */
@@ -28,12 +28,19 @@ export interface EditorViewParameter<Schema extends EditorSchema = EditorSchema>
 /**
  * A parameter builder interface containing the `schema` property.
  *
- * @template GNodes - the names of the nodes within the editor schema.
- * @template GMarks - the names of the marks within the editor schema.
+ * @template Nodes - the names of the nodes within the editor schema.
+ * @template Marks - the names of the marks within the editor schema.
  */
-export interface SchemaParameter<Nodes extends string = string, Marks extends string = string> {
+export interface SchemaProps<Nodes extends string = string, Marks extends string = string> {
   /**
-   * The Prosemirror schema being used for the current interface
+   * Each Remirror Editor has an automatically generated schema associated with
+   * it. The schema is a ProseMirror primitive which describes the kind of nodes
+   * that may occur in the document, and the way they are nested. For example,
+   * it might say that the top-level node can contain one or more blocks, and
+   * that paragraph nodes can contain any number of inline nodes, with any marks
+   * applied to them.
+   *
+   * Read more about it [here](https://prosemirror.net/docs/guide/#schema).
    */
   schema: EditorSchema<Nodes, Marks>;
 }
@@ -43,14 +50,14 @@ export interface SchemaParameter<Nodes extends string = string, Marks extends st
  *
  * @template Schema - the underlying editor schema.
  */
-export interface EditorStateParameter<Schema extends EditorSchema = EditorSchema> {
+export interface EditorStateProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * A snapshot of the prosemirror editor state.
    */
   state: EditorState<Schema>;
 }
 
-export interface TrStateParameter<Schema extends EditorSchema = EditorSchema> {
+export interface TrStateProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * The shared types between a state and a transaction. Allows for commands to
    * operate on either a state object or a transaction object.
@@ -59,94 +66,26 @@ export interface TrStateParameter<Schema extends EditorSchema = EditorSchema> {
 }
 
 /**
- * A parameter builder interface for comparing two instances of the editor state.
- *
- * @template Schema - the underlying editor schema.
- */
-export interface CompareStateParameter<Schema extends EditorSchema = EditorSchema> {
-  /**
-   * The previous snapshot of the prosemirror editor state.
-   */
-  oldState: EditorState<Schema>;
-
-  /**
-   * The latest snapshot of the prosemirror editor state.
-   */
-  newState: EditorState<Schema>;
-}
-
-/**
- * A parameter builder interface for a html dom `element`.
- */
-export interface ElementParameter {
-  /**
-   * The target HTML element
-   */
-  element: HTMLElement;
-}
-
-/**
  * A parameter builder interface describing a `from`/`to` range.
  */
-export interface FromToParameter {
+export interface FromToProps {
   /**
-   * The starting point
+   * The starting position in the document.
    */
   from: number;
 
   /**
-   * The ending point
+   * The ending position in the document.
    */
   to: number;
 }
 
 /**
- * A parameter builder type which uses {@link FromToParameter} where `from` or `to`, or both
- * can be set as optional.
- *
- * @template Key - the keys to set as optional (either `from` or `to`).
- */
-export type OptionalFromToParameter<Key extends keyof FromToParameter> = MakeOptional<
-  FromToParameter,
-  Key
->;
-
-/**
- * A parameter builder interface containing the `position` property.
- */
-export interface PositionParameter {
-  /**
-   * Defines a generic position with coordinates
-   */
-  position: Position;
-}
-
-/**
  * A parameter builder interface containing the `attrs` property.
  */
-export interface AttributesParameter {
+export interface AttributesProps {
   /**
    * An object describing the attrs for a prosemirror mark / node
-   */
-  attrs: ProsemirrorAttributes;
-}
-
-/**
- * A parameter builder interface containing the `attrs` property.
- */
-export interface NodeAttributesParameter {
-  /**
-   * An object describing the attrs for a prosemirror node
-   */
-  attrs: ProsemirrorAttributes;
-}
-
-/**
- * This interface contains the default mark attributes.
- */
-export interface MarkAttributesParameter {
-  /**
-   * An object describing the attrs for a mark.
    */
   attrs: ProsemirrorAttributes;
 }
@@ -156,7 +95,7 @@ export interface MarkAttributesParameter {
  *
  * @template Schema - the underlying editor schema.
  */
-export interface NodeTypeParameter<Schema extends EditorSchema = EditorSchema> {
+export interface NodeTypeProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * A prosemirror node type instance.
    */
@@ -173,7 +112,7 @@ export interface NodeTypeParameter<Schema extends EditorSchema = EditorSchema> {
  *
  * @template Schema - the underlying editor schema.
  */
-export interface NodeTypesParameter<Schema extends EditorSchema = EditorSchema> {
+export interface NodeTypesProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * The prosemirror node types to use.
    */
@@ -193,7 +132,7 @@ export interface NodeTypesParameter<Schema extends EditorSchema = EditorSchema> 
  *
  * @template Schema - the underlying editor schema.
  */
-export interface MarkTypesParameter<Schema extends EditorSchema = EditorSchema> {
+export interface MarkTypesProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * The prosemirror node types to use.
    */
@@ -205,14 +144,14 @@ export interface MarkTypesParameter<Schema extends EditorSchema = EditorSchema> 
  *
  * @template Schema - the underlying editor schema.
  */
-export interface MarkTypeParameter<Schema extends EditorSchema = EditorSchema> {
+export interface MarkTypeProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * The prosemirror mark type instance.
    */
   type: MarkType<Schema> | Remirror.MarkNameUnion;
 }
 
-export interface ProsemirrorNodeParameter<Schema extends EditorSchema = EditorSchema> {
+export interface ProsemirrorNodeProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * The prosemirror node
    */
@@ -223,7 +162,7 @@ export type NodeWithAttributes<Attributes extends object = object> = Prosemirror
   attrs: ProsemirrorAttributes<Attributes>;
 };
 
-export interface NodeWithAttributesParameter<Attributes extends object = object> {
+export interface NodeWithAttributesProps<Attributes extends object = object> {
   /**
    * A prosemirror node with a specific shape for `node.attrs`
    */
@@ -234,22 +173,14 @@ export type MarkWithAttributes<Attributes extends object = object> = Mark & {
   attrs: ProsemirrorAttributes<Attributes>;
 };
 
-export interface MarkWithAttributesParameter<Attributes extends object = object> {
+export interface MarkWithAttributesProps<Attributes extends object = object> {
   /**
    * A mark with a specific shape for `node.attrs`
    */
   mark: MarkWithAttributes<Attributes>;
 }
 
-export interface DocParameter {
-  /**
-   * The parent doc node of the editor which contains all the other nodes.
-   * This is also a ProsemirrorNode
-   */
-  doc: ProsemirrorNode;
-}
-
-export interface OptionalProsemirrorNodeParameter<Schema extends EditorSchema = EditorSchema> {
+export interface OptionalProsemirrorNodeProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * The nullable prosemirror node which may or may not exist. Please note that
    * the `find` will fail if this does not exists.
@@ -259,32 +190,25 @@ export interface OptionalProsemirrorNodeParameter<Schema extends EditorSchema = 
   node: ProsemirrorNode<Schema> | null | undefined;
 }
 
-export interface OptionalMarkParameter<Schema extends EditorSchema = EditorSchema> {
+export interface OptionalMarkProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * The nullable prosemirror mark which may or may not exist.
    */
   mark: Mark<Schema> | null | undefined;
 }
 
-export interface PosParameter {
+export interface PosProps {
   /**
    * The position of the referenced prosemirror item.
    */
   pos: number;
 }
 
-export interface TransactionParameter<Schema extends EditorSchema = EditorSchema> {
+export interface TransactionProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * The prosemirror transaction
    */
   tr: Transaction<Schema>;
-}
-
-export interface CallbackParameter {
-  /**
-   * A simple callback to run.
-   */
-  callback: () => void;
 }
 
 /**
@@ -309,14 +233,14 @@ export interface TransactionLifecycle {
   after: TransactionTransformer;
 }
 
-export interface RangeParameter<Key extends keyof FromToParameter = never> {
+export interface RangeProps<Key extends keyof FromToProps = never> {
   /**
    * The from/to interface.
    */
-  range: OptionalFromToParameter<Key>;
+  range: FromToProps;
 }
 
-export interface ResolvedPosParameter<Schema extends EditorSchema = EditorSchema> {
+export interface ResolvedPosProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * A prosemirror resolved pos with provides helpful context methods when working with
    * a position in the editor.
@@ -324,45 +248,30 @@ export interface ResolvedPosParameter<Schema extends EditorSchema = EditorSchema
   $pos: ResolvedPos<Schema>;
 }
 
-export interface TextParameter {
+export interface TextProps {
   /**
    * The text to insert or work with.
    */
   text: string;
 }
 
-export interface SelectionParameter<Schema extends EditorSchema = EditorSchema> {
+export interface SelectionProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * The text editor selection
    */
   selection: Selection<Schema>;
 }
 
-export interface PredicateParameter<Parameter> {
+export interface PredicateProps<Type> {
   /**
    * The predicate function
    */
-  predicate: (parameter: Parameter) => boolean;
+  predicate: (value: Type) => boolean;
 }
 
-export interface RegExpParameter {
+export interface RegExpProps {
   /**
    * The regular expression to test against.
    */
   regexp: RegExp;
-}
-
-/**
- * Shows the previous and next value.
- */
-export interface PreviousNextParameter<Type> {
-  /**
-   * The previous value.
-   */
-  previous: Type;
-
-  /**
-   * The next value.
-   */
-  next: Type;
 }

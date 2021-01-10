@@ -2,46 +2,15 @@
  * Primitives for building your prosemirror suggestion and autocomplete
  * functionality.
  *
- * @packageDocumentation
+ * @module
  */
 
-export type { SuggestState } from './suggest-state';
 export { addSuggester, getSuggestPluginState, removeSuggester, suggest } from './suggest-plugin';
-
-export type {
-  AddIgnoredParameter,
-  CompareMatchParameter,
-  CheckNextValidSelection,
-  DocChangedParameter,
-  RangeWithCursor,
-  MatchValue,
-  ReasonMatchParameter,
-  ReasonParameter,
-  RemoveIgnoredParameter,
-  ShouldDisableDecorations,
-  SuggestChangeHandler,
-  SuggestChangeHandlerParameter,
-  SuggestIgnoreParameter,
-  SuggestMarkParameter,
-  SuggestReasonMap,
-  SuggestMatch,
-  SuggestStateMatchParameter,
-  SuggestMatchWithReason,
-  Suggester,
-  SuggesterParameter,
-} from './suggest-types';
-export { ChangeReason, ExitReason } from './suggest-types';
-
 export {
-  isChange,
   isChangeReason,
-  isEntry,
-  isExit,
   isExitReason,
   isInvalidSplitReason,
-  isJump,
   isJumpReason,
-  isMove,
   isRemovedReason,
   isSelectionChangeReason,
   isSelectionExitReason,
@@ -49,13 +18,14 @@ export {
   isValidMatch,
   selectionOutsideMatch,
 } from './suggest-predicates';
-
+export type { SuggestState } from './suggest-state';
+export * from './suggest-types';
 export {
-  findFromSuggesters,
   createRegexFromSuggester,
-  getSuggesterWithDefaults,
   DEFAULT_SUGGESTER,
+  findFromSuggesters,
+  getSuggesterWithDefaults,
   markActiveInRange,
-  rangeHasMarks,
   positionHasMarks,
+  rangeHasMarks,
 } from './suggest-utils';

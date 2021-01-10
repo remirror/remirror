@@ -140,7 +140,7 @@ export function useExtension<Type extends AnyExtensionConstructor>(
   return extension;
 }
 
-interface UseExtensionCallbackParameter<Type extends AnyExtensionConstructor> {
+interface UseExtensionCallbackProps<Type extends AnyExtensionConstructor> {
   /**
    * Add a handler to the the extension callback.
    *
@@ -167,5 +167,5 @@ interface UseExtensionCallbackParameter<Type extends AnyExtensionConstructor> {
 }
 
 export type UseExtensionCallback<Type extends AnyExtensionConstructor> = (
-  parameter: UseExtensionCallbackParameter<Type>,
+  props: UseExtensionCallbackProps<Type>,
 ) => Dispose | undefined;

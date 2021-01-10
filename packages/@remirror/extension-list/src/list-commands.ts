@@ -32,9 +32,9 @@ function isList(node: ProsemirrorNode, schema: EditorSchema) {
  * @param itemType - the list item type (must be in the schema)
  */
 export function toggleList(type: NodeType, itemType: NodeType): CommandFunction {
-  return (parameter) => {
-    const { dispatch, tr } = parameter;
-    const state = chainableEditorState(tr, parameter.state);
+  return (props) => {
+    const { dispatch, tr } = props;
+    const state = chainableEditorState(tr, props.state);
     const { schema } = state;
     const { selection } = tr;
     const { $from, $to } = selection;

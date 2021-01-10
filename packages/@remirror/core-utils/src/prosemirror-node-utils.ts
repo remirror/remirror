@@ -5,13 +5,13 @@ import { entries, invariant, isFunction, isString, keys } from '@remirror/core-h
 import type {
   AnyConstructor,
   MarkType,
-  MarkTypeParameter,
-  NodeTypeParameter,
-  OptionalProsemirrorNodeParameter,
-  PosParameter,
-  PredicateParameter,
+  MarkTypeProps,
+  NodeTypeProps,
+  OptionalProsemirrorNodeProps,
+  PosProps,
+  PredicateProps,
   ProsemirrorNode,
-  ProsemirrorNodeParameter,
+  ProsemirrorNodeProps,
   Transaction,
 } from '@remirror/core-types';
 import type { NodeRange } from '@remirror/pm/model';
@@ -19,7 +19,7 @@ import type { Step } from '@remirror/pm/transform';
 
 import { getChangedNodeRanges, isProsemirrorNode } from './core-utils';
 
-interface DescendParameter {
+interface DescendProps {
   /**
    * Whether to descend into a node.
    *
@@ -28,14 +28,14 @@ interface DescendParameter {
   descend: boolean;
 }
 
-type NodePredicateParameter = PredicateParameter<NodeWithPosition>;
+type NodePredicateProps = PredicateProps<NodeWithPosition>;
 
 /**
  * A node with it's start position.
  */
-export interface NodeWithPosition extends ProsemirrorNodeParameter, PosParameter {}
+export interface NodeWithPosition extends ProsemirrorNodeProps, PosProps {}
 
-interface NodeActionParameter {
+interface NodeActionProps {
   /**
    * A method which is run whenever the provided predicate returns true.
    *
@@ -45,12 +45,12 @@ interface NodeActionParameter {
   action?: (node: NodeWithPosition) => void;
 }
 
-interface BaseFindParameter
-  extends OptionalProsemirrorNodeParameter,
-    Partial<DescendParameter>,
-    NodeActionParameter {}
+interface BaseFindProps
+  extends OptionalProsemirrorNodeProps,
+    Partial<DescendProps>,
+    NodeActionProps {}
 
-interface FindChildrenParameter extends BaseFindParameter, NodePredicateParameter {}
+interface FindChildrenProps extends BaseFindProps, NodePredicateProps {}
 
 /**
  * Iterates over descendants of a given `node`, returning child nodes predicate
@@ -69,8 +69,8 @@ interface FindChildrenParameter extends BaseFindParameter, NodePredicateParamete
  * });
  * ```
  */
-export function findChildren(parameter: FindChildrenParameter): NodeWithPosition[] {
-  const { node, predicate, descend = true, action } = parameter;
+export function findChildren(props: FindChildrenProps): NodeWithPosition[] {
+  const { node, predicate, descend = true, action } = props;
 
   // Ensure that the node provided is a `ProsemirrorNode`.
   invariant(isProsemirrorNode(node), {
@@ -114,8 +114,8 @@ export function findChildren(parameter: FindChildrenParameter): NodeWithPosition
 /**
  * A utility for creating methods that find a node by a specific condition.
  */
-function findNodeByPredicate({ predicate }: NodePredicateParameter) {
-  return (parameter: BaseFindParameter) => findChildren({ ...parameter, predicate });
+function findNodeByPredicate({ predicate }: NodePredicateProps) {
+  return (props: BaseFindProps) => findChildren({ ...props, predicate });
 }
 
 /**
@@ -158,9 +158,9 @@ export const findInlineNodes = findNodeByPredicate({ predicate: (child) => child
  */
 export const findBlockNodes = findNodeByPredicate({ predicate: (child) => child.node.isBlock });
 
-type AttributePredicate = (parameter: { value: unknown; exists: boolean }) => boolean;
+type AttributePredicate = (props: { value: unknown; exists: boolean }) => boolean;
 
-interface FindChildrenByAttrParameter extends BaseFindParameter {
+interface FindChildrenByAttrProps extends BaseFindProps {
   /**
    * This can either be any primitive value or a function that takes the `value`
    * as the first argument and whether the key exists within the attributes as
@@ -188,10 +188,8 @@ interface FindChildrenByAttrParameter extends BaseFindParameter {
  * });
  * ```
  */
-export function findChildrenByAttribute(
-  parameter: FindChildrenByAttrParameter,
-): NodeWithPosition[] {
-  const { attrs, ...rest } = parameter;
+export function findChildrenByAttribute(props: FindChildrenByAttrProps): NodeWithPosition[] {
+  const { attrs, ...rest } = props;
 
   /**
    * The predicate function which loops through the provided attributes check if
@@ -234,7 +232,7 @@ export function findChildrenByAttribute(
   return findChildren({ ...rest, predicate });
 }
 
-interface FindChildrenByNodeParameter extends BaseFindParameter, NodeTypeParameter {}
+interface FindChildrenByNodeProps extends BaseFindProps, NodeTypeProps {}
 
 /**
  * Iterates over descendants of a given `node`, returning child nodes of a given
@@ -249,12 +247,12 @@ interface FindChildrenByNodeParameter extends BaseFindParameter, NodeTypeParamet
  * const cells = findChildrenByNode({ node: state.doc, type: state.schema.nodes.tableCell });
  * ```
  */
-export function findChildrenByNode(parameter: FindChildrenByNodeParameter): NodeWithPosition[] {
-  const { type, ...rest } = parameter;
+export function findChildrenByNode(props: FindChildrenByNodeProps): NodeWithPosition[] {
+  const { type, ...rest } = props;
   return findChildren({ ...rest, predicate: (child) => child.node.type === type });
 }
 
-interface FindChildrenByMarkParameter extends BaseFindParameter, MarkTypeParameter {}
+interface FindChildrenByMarkProps extends BaseFindProps, MarkTypeProps {}
 
 /**
  * Iterates over descendants of a given `node`, returning child nodes that have
@@ -269,7 +267,7 @@ interface FindChildrenByMarkParameter extends BaseFindParameter, MarkTypeParamet
  * const nodes = findChildrenByMark({ node: state.doc, mark: schema.marks.strong });
  * ```
  */
-export function findChildrenByMark(paramter: FindChildrenByMarkParameter): NodeWithPosition[] {
+export function findChildrenByMark(paramter: FindChildrenByMarkProps): NodeWithPosition[] {
   const { type, ...rest } = paramter;
   let markType: MarkType | undefined;
 
@@ -290,7 +288,7 @@ export function findChildrenByMark(paramter: FindChildrenByMarkParameter): NodeW
   });
 }
 
-interface ContainsParameter extends ProsemirrorNodeParameter, NodeTypeParameter {}
+interface ContainsProps extends ProsemirrorNodeProps, NodeTypeProps {}
 
 /**
  * Returns `true` if a given node contains nodes of a given `nodeType`.
@@ -303,8 +301,8 @@ interface ContainsParameter extends ProsemirrorNodeParameter, NodeTypeParameter 
  * }
  * ```
  */
-export function containsNodesOfType(parameter: ContainsParameter): boolean {
-  const { node, type } = parameter;
+export function containsNodesOfType(props: ContainsProps): boolean {
+  const { node, type } = props;
   return findChildrenByNode({ node, type }).length > 0;
 }
 

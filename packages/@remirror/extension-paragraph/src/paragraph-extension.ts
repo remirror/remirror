@@ -6,7 +6,7 @@ import {
   ExtensionPriority,
   ExtensionTag,
   keyBinding,
-  KeyBindingParameter,
+  KeyBindingProps,
   NamedShortcut,
   NodeExtension,
   NodeExtensionSpec,
@@ -98,8 +98,8 @@ export class ParagraphExtension extends NodeExtension {
    * Add the paragraph shortcut to the editor. This makes a paragraph into a
    */
   @keyBinding({ shortcut: NamedShortcut.Paragraph, command: 'convertParagraph' })
-  shortcut(parameter: KeyBindingParameter): boolean {
-    return this.convertParagraph()(parameter);
+  shortcut(props: KeyBindingProps): boolean {
+    return this.convertParagraph()(props);
   }
 }
 

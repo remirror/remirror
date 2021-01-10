@@ -1305,12 +1305,12 @@ importers:
       '@babel/runtime': 7.12.5
       '@linaria/core': 3.0.0-beta.1
       '@remirror/messages': 'link:../messages'
-      y-prosemirror: 1.0.5_yjs@13.4.11
+      y-prosemirror: 1.0.5_yjs@13.4.12
     devDependencies:
       '@remirror/core': 'link:../core'
       '@remirror/pm': 'link:../pm'
       y-webrtc: 10.1.8
-      yjs: 13.4.11
+      yjs: 13.4.12
     specifiers:
       '@babel/runtime': ^7.12.5
       '@linaria/core': ^3.0.0-beta.1
@@ -1319,7 +1319,7 @@ importers:
       '@remirror/pm': 1.0.0-next.60
       y-prosemirror: ^1.0.5
       y-webrtc: ^10.1.8
-      yjs: ^13.4.11
+      yjs: ^13.4.12
   packages/@remirror/i18n:
     dependencies:
       '@babel/runtime': 7.12.5
@@ -2342,7 +2342,7 @@ importers:
       react: 17.0.1
       react-dom: 17.0.1_react@17.0.1
       refractor: 3.3.0
-      yjs: 13.4.11
+      yjs: 13.4.12
     specifiers:
       '@babel/runtime': ^7.12.5
       '@remirror/core': 1.0.0-next.60
@@ -2429,7 +2429,7 @@ importers:
       react: ^17.0.1
       react-dom: ^17.0.1
       refractor: ^3.3.0
-      yjs: ^13.4.11
+      yjs: ^13.4.12
   packages/test-keyboard:
     dependencies:
       '@babel/runtime': 7.12.5
@@ -31216,10 +31216,10 @@ packages:
       node: '>=0.4'
     resolution:
       integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==
-  /y-prosemirror/1.0.5_yjs@13.4.11:
+  /y-prosemirror/1.0.5_yjs@13.4.12:
     dependencies:
       lib0: 0.2.35
-      yjs: 13.4.11
+      yjs: 13.4.12
     dev: false
     peerDependencies:
       prosemirror-model: ^1.7.1
@@ -31376,13 +31376,13 @@ packages:
       fd-slicer: 1.1.0
     resolution:
       integrity: sha1-x+sXyT4RLLEIb6bY5R+wZnt5pfk=
-  /yjs/13.4.11:
+  /yjs/13.4.12:
     dependencies:
       lib0: 0.2.35
     dev: true
     requiresBuild: true
     resolution:
-      integrity: sha512-UJ2UaRF4gLun8X9gioK12NXC5a+GewteDgQ5pMBACkHOzjynvG9aq5MR6vMZcJxnxhMAfBDUNeStTMO4n5HQtg==
+      integrity: sha512-ABmFknpmjcGOOWx6m4dTsjEWsN77+jHTI5DbjbwUu5t9ni1teUPOrdZtsNwQDuNPTdwGpiU9MJtIr7W6dgr9aw==
   /yn/3.1.1:
     dev: false
     engines:

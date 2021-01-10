@@ -21,7 +21,7 @@ import {
 } from 'reakit/Menu';
 import { Tooltip, TooltipReference, useTooltipState } from 'reakit/Tooltip';
 
-import type { AnyExtension, CommandDecoratorMessageParameter } from '@remirror/core';
+import type { AnyExtension, CommandDecoratorMessageProps } from '@remirror/core';
 import { ErrorConstant, includes, invariant, isString } from '@remirror/core';
 import { useActive, useCommands, useHelpers, useI18n, useRemirrorContext } from '@remirror/react';
 import { Components } from '@remirror/theme';
@@ -105,7 +105,6 @@ const MenuCommandPane = (props: MenuCommandPaneProps): JSX.Element => {
 
   // Will cause the editor to rerender for each state update.
   const active = useActive<AnyExtension>();
-
   const { commandName, attrs, displayShortcut = true } = item;
   const options = getCommandOptions(commandName);
 
@@ -115,9 +114,9 @@ const MenuCommandPane = (props: MenuCommandPaneProps): JSX.Element => {
 
   const enabled = commands[commandName]?.isEnabled(attrs) ?? false;
   const isActive = active[options.name]?.(attrs) ?? false;
-  const parameter: CommandDecoratorMessageParameter = { active: isActive, attrs, enabled, t };
-  const label = getCommandOptionValue(options.label, parameter);
-  const icon = getCommandOptionValue(options.icon, parameter);
+  const commandProps: CommandDecoratorMessageProps = { active: isActive, attrs, enabled, t };
+  const label = getCommandOptionValue(options.label, commandProps);
+  const icon = getCommandOptionValue(options.icon, commandProps);
   const shortcutString =
     displayShortcut && options.shortcut
       ? `${getShortcutString(getUiShortcutString(options.shortcut, attrs ?? {}), { t })}`

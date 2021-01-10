@@ -2,25 +2,17 @@ import { createNanoEvents, Unsubscribe } from 'nanoevents';
 
 import {
   EditorState,
-  EditorViewParameter,
-  ElementParameter,
+  EditorViewProps,
   ErrorConstant,
   invariant,
   isFunction,
-  StateUpdateLifecycleParameter,
+  StateUpdateLifecycleProps,
 } from '@remirror/core';
 
 /**
  * The events that can trigger a positioner update.
  */
 export type PositionerUpdateEvent = 'scroll' | 'state';
-
-export interface Coords {
-  top: number;
-  left: number;
-  bottom: number;
-  right: number;
-}
 
 export interface Rect {
   /**
@@ -64,17 +56,20 @@ export interface PositionerPosition extends Rect {
   visible: boolean;
 }
 
-export interface GetPositionParameter<Data>
-  extends EditorViewParameter,
-    ElementParameter,
-    BasePositionerParameter {
+export interface GetPositionProps<Data> extends EditorViewProps, BasePositionerProps {
   /**
    * The data that can be transformed into a position.
    */
   data: Data;
+
+  /**
+   * The reference element being used by the positioner to determine
+   * positioning.
+   */
+  element: HTMLElement;
 }
 
-export interface GetActiveParameter extends EditorViewParameter, BasePositionerParameter {}
+export interface GetActiveProps extends EditorViewProps, BasePositionerProps {}
 
 export interface BasePositioner<Data> {
   /**
@@ -93,7 +88,7 @@ export interface BasePositioner<Data> {
    * };
    * ```
    */
-  hasChanged: (parameter: BasePositionerParameter) => boolean;
+  hasChanged: (props: BasePositionerProps) => boolean;
 
   /**
    * Get a unique id for the data returned from `getActive`.
@@ -105,13 +100,13 @@ export interface BasePositioner<Data> {
   /**
    * Get the active items that will be passed into the `getPosition` method.
    */
-  getActive: (parameter: GetActiveParameter) => Data[];
+  getActive: (props: GetActiveProps) => Data[];
 
   /**
    * Calculate and return an array of `VirtualPosition`'s which represent the
    * virtual element the positioner represents.
    */
-  getPosition: (parameter: GetPositionParameter<Data>) => PositionerPosition;
+  getPosition: (props: GetPositionProps<Data>) => PositionerPosition;
 
   /**
    * An array of update listeners to determines when the positioner will update it's position.
@@ -136,8 +131,7 @@ export interface SetActiveElement {
   id: string;
 }
 
-export interface BasePositionerParameter
-  extends Omit<StateUpdateLifecycleParameter, 'previousState'> {
+export interface BasePositionerProps extends Omit<StateUpdateLifecycleProps, 'previousState'> {
   previousState: undefined | EditorState;
 
   /**
@@ -151,7 +145,7 @@ export interface BasePositionerParameter
   scrollTop: number;
 }
 
-export interface ElementsAddedParameter {
+export interface ElementsAddedProps {
   position: PositionerPosition;
   element: HTMLElement;
   id: string;
@@ -162,7 +156,7 @@ interface PositionerEvents {
    * Called when the dom elements have all been received. In some frameworks
    * like `React` this may be called asynchronously.
    */
-  done: (parameter: ElementsAddedParameter[]) => void;
+  done: (props: ElementsAddedProps[]) => void;
 
   /**
    * Called when the active values have been updated.
@@ -193,8 +187,8 @@ export class Positioner<Data = any> {
   /**
    * Create a positioner.
    */
-  static create<Data>(parameter: BasePositioner<Data>): Positioner<Data> {
-    return new Positioner(parameter);
+  static create<Data>(props: BasePositioner<Data>): Positioner<Data> {
+    return new Positioner(props);
   }
 
   /**
@@ -213,15 +207,15 @@ export class Positioner<Data = any> {
 
   #handler = createNanoEvents<PositionerEvents>();
   #active: Data[] = [];
-  #parameters: Map<number, GetPositionParameter<Data>> = new Map();
+  #props: Map<number, GetPositionProps<Data>> = new Map();
   #ids: string[] = [];
   #updated = false;
 
-  readonly #constructorParameter: BasePositioner<Data>;
+  readonly #constructorProps: BasePositioner<Data>;
   readonly #getActive: BasePositioner<Data>['getActive'];
   readonly #getID?: (data: Data, index: number) => string;
   readonly #getPosition: BasePositioner<Data>['getPosition'];
-  readonly hasChanged: (parameter: BasePositionerParameter) => boolean;
+  readonly hasChanged: (props: BasePositionerProps) => boolean;
 
   get basePositioner(): BasePositioner<Data> {
     return {
@@ -233,22 +227,22 @@ export class Positioner<Data = any> {
     };
   }
 
-  private constructor(parameter: BasePositioner<Data>) {
-    this.#constructorParameter = parameter;
-    this.#getActive = parameter.getActive;
-    this.#getPosition = parameter.getPosition;
-    this.#getID = parameter.getID;
-    this.hasChanged = parameter.hasChanged;
-    this.events = parameter.events ?? ['state', 'scroll'];
+  private constructor(props: BasePositioner<Data>) {
+    this.#constructorProps = props;
+    this.#getActive = props.getActive;
+    this.#getPosition = props.getPosition;
+    this.#getID = props.getID;
+    this.hasChanged = props.hasChanged;
+    this.events = props.events ?? ['state', 'scroll'];
   }
 
   /**
    * Get the active element setters.
    */
-  onActiveChanged(parameter: GetActiveParameter): void {
-    const active = this.#getActive(parameter);
+  onActiveChanged(props: GetActiveProps): void {
+    const active = this.#getActive(props);
     this.#active = active;
-    this.#parameters = new Map();
+    this.#props = new Map();
     this.#updated = false;
     this.#ids = [];
 
@@ -260,7 +254,7 @@ export class Positioner<Data = any> {
 
       elementSetters.push({
         setElement: (element: HTMLElement) => {
-          return this.addParameter({ ...parameter, data, element }, index);
+          return this.addProps({ ...props, data, element }, index);
         },
         id,
       });
@@ -286,21 +280,21 @@ export class Positioner<Data = any> {
     return this.#handler.on(event, cb);
   };
 
-  private addParameter(parameter: GetPositionParameter<Data>, index: number) {
+  private addProps(props: GetPositionProps<Data>, index: number) {
     if (this.#updated) {
       return;
     }
 
-    this.#parameters.set(index, parameter);
+    this.#props.set(index, props);
 
-    if (this.#parameters.size < this.#active.length) {
+    if (this.#props.size < this.#active.length) {
       return;
     }
 
-    const doneParameter: ElementsAddedParameter[] = [];
+    const doneProps: ElementsAddedProps[] = [];
 
     for (const index of this.#active.keys()) {
-      const item = this.#parameters.get(index);
+      const item = this.#props.get(index);
 
       invariant(item, {
         code: ErrorConstant.INTERNAL,
@@ -313,23 +307,23 @@ export class Positioner<Data = any> {
         return;
       }
 
-      doneParameter.push({
+      doneProps.push({
         position: this.#getPosition(item),
         element: item.element,
         id,
       });
     }
 
-    this.#handler.emit('done', doneParameter);
+    this.#handler.emit('done', doneProps);
   }
 
   /**
-   * Create a new parameter with the provided argument list.
+   * Create a new Positioner with the provided props.
    */
-  clone(parameter?: PositionerCloneParameter<Data>): Positioner<Data> {
+  clone(props?: PositionerCloneProps<Data>): Positioner<Data> {
     return Positioner.create({
-      ...this.#constructorParameter,
-      ...(isFunction(parameter) ? parameter(this.#constructorParameter) : parameter),
+      ...this.#constructorProps,
+      ...(isFunction(props) ? props(this.#constructorProps) : props),
     });
   }
 
@@ -346,6 +340,6 @@ export class Positioner<Data = any> {
   }
 }
 
-type PositionerCloneParameter<Data> =
+type PositionerCloneProps<Data> =
   | Partial<BasePositioner<Data>>
   | ((original: BasePositioner<Data>) => Partial<BasePositioner<Data>>);

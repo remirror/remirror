@@ -131,8 +131,8 @@ export class MediaSupportExtension extends PlainExtension<MediaSupportOptions> {
         });
         return delayedCommand({
           promise: value,
-          immediate: (parameter) => {
-            const { empty, anchor } = parameter.tr.selection;
+          immediate: (props) => {
+            const { empty, anchor } = props.tr.selection;
             const { createPlaceholder, updatePlaceholder, destroyPlaceholder } = this.options;
 
             return this.store.commands.original.addPlaceholder(
@@ -151,7 +151,7 @@ export class MediaSupportExtension extends PlainExtension<MediaSupportOptions> {
                 },
               },
               !empty,
-            )(parameter);
+            )(props);
           },
 
           // Add the node once done.
@@ -171,7 +171,7 @@ export class MediaSupportExtension extends PlainExtension<MediaSupportOptions> {
           },
 
           // Cleanup in case of an error.
-          onFail: (parameter) => this.store.commands.removePlaceholder.original(value)(parameter),
+          onFail: (props) => this.store.commands.removePlaceholder.original(value)(props),
         });
       },
     };

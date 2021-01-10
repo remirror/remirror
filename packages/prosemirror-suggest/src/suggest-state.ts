@@ -10,21 +10,21 @@ import {
   isValidMatch,
 } from './suggest-predicates';
 import type {
-  AddIgnoredParameter,
-  CompareMatchParameter,
+  AddIgnoredProps,
+  CompareMatchProps,
   EditorSchema,
   EditorState,
-  EditorStateParameter,
+  EditorStateProps,
   EditorView,
-  RemoveIgnoredParameter,
+  RemoveIgnoredProps,
   ResolvedPos,
-  ResolvedPosParameter,
-  SuggestChangeHandlerParameter,
+  ResolvedPosProps,
+  SuggestChangeHandlerProps,
   Suggester,
   SuggestMatch,
   SuggestReasonMap,
   Transaction,
-  TransactionParameter,
+  TransactionProps,
 } from './suggest-types';
 import { DEFAULT_SUGGESTER, findFromSuggesters, findReason } from './suggest-utils';
 
@@ -162,7 +162,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
   /**
    * Create the props which should be passed into each action handler
    */
-  private createParameter(match: SuggestMatch<Schema>): SuggestChangeHandlerParameter<Schema> {
+  private createProps(match: SuggestMatch<Schema>): SuggestChangeHandlerProps<Schema> {
     const { name, char } = match.suggester;
 
     return {
@@ -264,8 +264,8 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
     // later in the document. This is so that changes don't affect previous
     // positions.
     if (change && exit && isJumpReason({ change, exit })) {
-      const exitDetails = this.createParameter(exit);
-      const changeDetails = this.createParameter(change);
+      const exitDetails = this.createProps(exit);
+      const changeDetails = this.createProps(change);
 
       // Whether the jump was forwards or backwards. A forwards jump means that
       // the user was within a suggester nearer the beginning of the document,
@@ -290,11 +290,11 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
     }
 
     if (change && shouldRunChange) {
-      change.suggester.onChange(this.createParameter(change), tr);
+      change.suggester.onChange(this.createProps(change), tr);
     }
 
     if (exit && shouldRunExit) {
-      exit.suggester.onChange(this.createParameter(exit), tr);
+      exit.suggester.onChange(this.createProps(exit), tr);
       this.#removed = false;
 
       if (isInvalidSplitReason(exit.exitReason)) {
@@ -354,7 +354,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    * All we need to ignore is the match character. This means that any further
    * matches from the activation character will be ignored.
    */
-  readonly addIgnored = ({ from, name, specific = false }: AddIgnoredParameter): void => {
+  readonly addIgnored = ({ from, name, specific = false }: AddIgnoredProps): void => {
     const suggester = this.#suggesters.find((value) => value.name === name);
 
     if (!suggester) {
@@ -384,7 +384,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    * After this point event handlers will begin to be called again for the match
    * character.
    */
-  readonly removeIgnored = ({ from, name }: RemoveIgnoredParameter): void => {
+  readonly removeIgnored = ({ from, name }: RemoveIgnoredProps): void => {
     const suggester = this.#suggesters.find((value) => value.name === name);
 
     if (!suggester) {
@@ -453,8 +453,8 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
   /**
    * Update the next state value.
    */
-  private updateReasons(parameter: UpdateReasonsParameter<Schema>) {
-    const { $pos, state } = parameter;
+  private updateReasons(props: UpdateReasonsProps<Schema>) {
+    const { $pos, state } = props;
     const docChanged = this.#docChanged;
     const suggesters = this.#suggesters;
     const selectionEmpty = state.selection.empty;
@@ -523,13 +523,13 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    *
    * @param - params
    */
-  apply(parameter: TransactionParameter<Schema> & EditorStateParameter<Schema>): this {
+  apply(props: TransactionProps<Schema> & EditorStateProps<Schema>): this {
     if (this.#lastChangeFromAppend) {
       this.#lastChangeFromAppend = false;
       return this;
     }
 
-    const { tr, state } = parameter;
+    const { tr, state } = props;
     const { exit } = this.#handlerMatches;
     const transactionHasChanged = tr.docChanged || tr.selectionSet;
 
@@ -602,10 +602,10 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
     this.#lastChangeFromAppend = true;
   }
 }
-interface UpdateReasonsParameter<Schema extends EditorSchema = EditorSchema>
-  extends EditorStateParameter<Schema>,
-    ResolvedPosParameter<Schema>,
-    Partial<CompareMatchParameter> {}
+interface UpdateReasonsProps<Schema extends EditorSchema = EditorSchema>
+  extends EditorStateProps<Schema>,
+    ResolvedPosProps<Schema>,
+    Partial<CompareMatchProps> {}
 
 /**
  * Map over the suggesters provided and make sure they have all the required

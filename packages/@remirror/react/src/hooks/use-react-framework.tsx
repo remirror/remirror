@@ -16,7 +16,7 @@ import {
 import type { EditorState } from '@remirror/pm/state';
 import { ReactExtension } from '@remirror/preset-react';
 
-import { ReactFramework, ReactFrameworkParameter, ReactFrameworkProps } from '../react-framework';
+import { ReactFramework, ReactFrameworkOptions, ReactFrameworkProps } from '../react-framework';
 import type { ReactFrameworkOutput } from '../react-types';
 
 /**
@@ -116,20 +116,20 @@ export function useReactFramework<ExtensionUnion extends AnyExtension>(
  * parameters on every render.
  */
 function useFramework<ExtensionUnion extends AnyExtension>(
-  parameter: ReactFrameworkParameter<ExtensionUnion>,
+  props: ReactFrameworkOptions<ExtensionUnion>,
 ): ReactFramework<ExtensionUnion> {
-  const parameterRef = useRef(parameter);
-  parameterRef.current = parameter;
+  const propsRef = useRef(props);
+  propsRef.current = props;
 
   const [framework, setFramework] = useState(
-    () => new ReactFramework<ExtensionUnion>(parameterRef.current),
+    () => new ReactFramework<ExtensionUnion>(propsRef.current),
   );
 
-  framework.update(parameter);
+  framework.update(props);
 
   useEffect(() => {
     return framework.frameworkOutput.addHandler('destroy', () => {
-      setFramework(() => new ReactFramework<ExtensionUnion>(parameterRef.current));
+      setFramework(() => new ReactFramework<ExtensionUnion>(propsRef.current));
     });
   }, [framework]);
 

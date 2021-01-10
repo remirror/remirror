@@ -1,4 +1,5 @@
 import {
+  Coords,
   findParentNode,
   FindProsemirrorNodeResult,
   getDefaultBlockNode,
@@ -12,7 +13,7 @@ import {
   Shape,
 } from '@remirror/core';
 
-import { Coords, Positioner, PositionerPosition } from './positioner';
+import { Positioner, PositionerPosition } from './positioner';
 import { hasStateChanged, isEmptyBlockNode, isPositionVisible } from './positioner-utils';
 
 const basePosition = { y: -999_999, x: -999_999, width: 0, height: 0 };
@@ -42,8 +43,8 @@ export const blockNodePositioner = Positioner.create<FindProsemirrorNodeResult>(
    * This is only active for empty top level nodes. The data is the cursor start
    * and end position.
    */
-  getActive(parameter) {
-    const { state } = parameter;
+  getActive(props) {
+    const { state } = props;
 
     if (!isSelectionEmpty(state) || state.selection.$anchor.depth > 2) {
       return Positioner.EMPTY;
@@ -54,8 +55,8 @@ export const blockNodePositioner = Positioner.create<FindProsemirrorNodeResult>(
     return parentNode ? [parentNode] : Positioner.EMPTY;
   },
 
-  getPosition(parameter) {
-    const { view, data } = parameter;
+  getPosition(props) {
+    const { view, data } = props;
     const node = view.nodeDOM(data.pos);
 
     if (!isElementDomNode(node)) {
@@ -84,11 +85,11 @@ export const blockNodePositioner = Positioner.create<FindProsemirrorNodeResult>(
  * empty.
  */
 export const emptyBlockNodePositioner = blockNodePositioner.clone(({ getActive }) => ({
-  getActive: (parameter) => {
-    const [parentNode] = getActive(parameter);
+  getActive: (props) => {
+    const [parentNode] = getActive(props);
     return parentNode &&
       isEmptyBlockNode(parentNode.node) &&
-      parentNode.node.type === getDefaultBlockNode(parameter.state.schema)
+      parentNode.node.type === getDefaultBlockNode(props.state.schema)
       ? [parentNode]
       : Positioner.EMPTY;
   },
@@ -99,7 +100,7 @@ export const emptyBlockNodePositioner = blockNodePositioner.clone(({ getActive }
  * as a position
  */
 export const emptyBlockNodeStartPositioner = emptyBlockNodePositioner.clone(({ getPosition }) => ({
-  getPosition: (parameter) => ({ ...getPosition(parameter), width: 1 }),
+  getPosition: (props) => ({ ...getPosition(props), width: 1 }),
 }));
 
 /**
@@ -107,10 +108,10 @@ export const emptyBlockNodeStartPositioner = emptyBlockNodePositioner.clone(({ g
  * node.
  */
 export const emptyBlockNodeEndPositioner = emptyBlockNodePositioner.clone(({ getPosition }) => ({
-  getPosition: (parameter) => {
-    const { width, x: left, y: top, height } = getPosition(parameter);
+  getPosition: (props) => {
+    const { width, x: left, y: top, height } = getPosition(props);
     return {
-      ...getPosition(parameter),
+      ...getPosition(props),
       width: 1,
       x: width + left,
       rect: new DOMRect(width + left, top, 1, height),
@@ -128,8 +129,8 @@ export const selectionPositioner = Positioner.create<{
   to: Coords;
 }>({
   hasChanged: hasStateChanged,
-  getActive: (parameter) => {
-    const { state, view } = parameter;
+  getActive: (props) => {
+    const { state, view } = props;
 
     if (state.selection.empty) {
       return Positioner.EMPTY;
@@ -139,8 +140,8 @@ export const selectionPositioner = Positioner.create<{
     return [{ from: view.coordsAtPos(anchor), to: view.coordsAtPos(head) }];
   },
 
-  getPosition(parameter) {
-    const { element, data, view } = parameter;
+  getPosition(props) {
+    const { element, data, view } = props;
     const { from, to } = data;
     const parent = element.offsetParent ?? view.dom;
     const parentRect = parent.getBoundingClientRect();
@@ -189,8 +190,8 @@ export const cursorPositioner = Positioner.create<Coords>({
   /**
    * Only active when the selection is empty (one character)
    */
-  getActive: (parameter) => {
-    const { state, view } = parameter;
+  getActive: (props) => {
+    const { state, view } = props;
 
     if (!state.selection.empty) {
       return Positioner.EMPTY;
@@ -199,8 +200,8 @@ export const cursorPositioner = Positioner.create<Coords>({
     return [view.coordsAtPos(state.selection.from)];
   },
 
-  getPosition(parameter) {
-    const { element, data, view } = parameter;
+  getPosition(props) {
+    const { element, data, view } = props;
     const parent = element.offsetParent ?? view.dom;
 
     // The dimensions of the containing element (should be the Prosemirror editor dom)
@@ -228,8 +229,8 @@ export const cursorPositioner = Positioner.create<Coords>({
  * Creates a rect that wraps the nearest word.
  */
 export const nearestWordPositioner = selectionPositioner.clone(() => ({
-  getActive: (parameter) => {
-    const { state, view } = parameter;
+  getActive: (props) => {
+    const { state, view } = props;
 
     if (!state.selection.empty) {
       return Positioner.EMPTY;
@@ -266,11 +267,11 @@ export interface MarkPositionerProps {
   onlyVisible?: boolean;
 }
 
-export interface VisibleProp {
+export interface VisibleProps {
   visible: boolean;
 }
 
-interface CreateMarkPositionerData extends GetMarkRange, VisibleProp {
+interface CreateMarkPositionerData extends GetMarkRange, VisibleProps {
   cursor: { from: Coords; to: Coords };
 }
 

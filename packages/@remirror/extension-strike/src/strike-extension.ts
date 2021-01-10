@@ -6,7 +6,7 @@ import {
   ExtensionTag,
   InputRule,
   keyBinding,
-  KeyBindingParameter,
+  KeyBindingProps,
   MarkExtension,
   MarkExtensionSpec,
   markInputRule,
@@ -68,8 +68,8 @@ export class StrikeExtension extends MarkExtension {
    * Attach the keyboard shortcut to format the text.
    */
   @keyBinding({ shortcut: NamedShortcut.Strike, command: 'toggleStrike' })
-  shortcut(parameter: KeyBindingParameter): boolean {
-    return this.toggleStrike()(parameter);
+  shortcut(props: KeyBindingProps): boolean {
+    return this.toggleStrike()(props);
   }
 
   createInputRules(): InputRule[] {

@@ -4,9 +4,10 @@ import {
   EditorState,
   EditorView,
   extension,
-  FromToParameter,
+  FromToProps,
   Handler,
   hasTransactionChanged,
+  invariant,
   isDomNode,
   isEmptyArray,
   isEqual,
@@ -36,26 +37,26 @@ export interface DiffOptions {
    * A handler that is called whenever a tracked change is hovered over in the
    * editor.
    */
-  onMouseOverCommit?: Handler<(parameter: HandlerParameter) => void>;
+  onMouseOverCommit?: Handler<(props: HandlerProps) => void>;
 
   /**
    * A handler that is called whenever a tracked change was being hovered is no
    * longer hovered.
    */
-  onMouseLeaveCommit?: Handler<(parameter: HandlerParameter) => void>;
+  onMouseLeaveCommit?: Handler<(props: HandlerProps) => void>;
 
   /**
    * Called when the commit is part of the current text selection. Called with
    * an array of possible selection.
    */
   onSelectCommits?: Handler<
-    (selections: HandlerParameter[], previousSelections?: HandlerParameter[]) => void
+    (selections: HandlerProps[], previousSelections?: HandlerProps[]) => void
   >;
 
   /**
    * Called when commits are deselected.
    */
-  onDeselectCommits?: Handler<(selections: HandlerParameter[]) => void>;
+  onDeselectCommits?: Handler<(selections: HandlerProps[]) => void>;
 }
 
 /**
@@ -74,8 +75,8 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
     return 'diff' as const;
   }
 
-  private hovered?: HandlerParameter;
-  private selections?: HandlerParameter[];
+  private hovered?: HandlerProps;
+  private selections?: HandlerProps[];
 
   /**
    * Create the command for managing the commits in the document.
@@ -145,12 +146,10 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
    */
   private getCommit(id: CommitId) {
     const commits = this.getPluginState<DiffPluginState>().tracked.commits;
+    const commit = isString(id) ? commits[this.getIndexByName(id)] : commits[id];
+    invariant(commit, {});
 
-    if (isString(id)) {
-      return commits[this.getIndexByName(id)];
-    }
-
-    return commits[id];
+    return commit;
   }
 
   private getCommitId(commit: Commit) {
@@ -205,7 +204,7 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
 
     const { from, to } = tr.selection;
     const { blameMap, commits } = pluginState.tracked;
-    const selections: HandlerParameter[] = [];
+    const selections: HandlerProps[] = [];
 
     for (const map of blameMap) {
       const selectionIncludesSpan =
@@ -236,10 +235,7 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
   /**
    * Transform the view and event into a commit and span.
    */
-  private getHandlerParameterFromEvent(
-    view: EditorView,
-    event: Event,
-  ): HandlerParameter | undefined {
+  private getHandlerPropsFromEvent(view: EditorView, event: Event): HandlerProps | undefined {
     if (!isDomNode(event.target)) {
       return;
     }
@@ -260,11 +256,11 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
    * when it is captured.
    */
   private handlerMouseOver(view: EditorView, event: Event) {
-    const parameter = this.getHandlerParameterFromEvent(view, event);
+    const props = this.getHandlerPropsFromEvent(view, event);
 
-    if (parameter) {
-      this.hovered = parameter;
-      this.options.onMouseOverCommit(parameter);
+    if (props) {
+      this.hovered = props;
+      this.options.onMouseOverCommit(props);
     }
 
     return false;
@@ -278,7 +274,7 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
       return false;
     }
 
-    const commit = this.getHandlerParameterFromEvent(view, event);
+    const commit = this.getHandlerPropsFromEvent(view, event);
 
     if (commit) {
       this.hovered = undefined;
@@ -343,7 +339,7 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
     tr: Transaction,
     pluginState: DiffPluginState,
     state: EditorState,
-  ): HighlightStateParameter {
+  ): HighlightStateProps {
     const { add, clear } = this.getMeta(tr);
 
     if (isNumber(add) && pluginState.commits && !pluginState.commits.includes(add)) {
@@ -376,7 +372,7 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
    * Please note this isn't able to track marks and diffs. It can only
    * track changes to content.
    */
-  private updateTracked(tr: Transaction, state: TrackedStateParameter): TrackedStateParameter {
+  private updateTracked(tr: Transaction, state: TrackedStateProps): TrackedStateProps {
     let { tracked } = state;
 
     if (tr.docChanged) {
@@ -393,8 +389,8 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
   }
 
   private highlightCommit(commit: Commit | CommitId): CommandFunction {
-    return (parameter) => {
-      const { tr, dispatch } = parameter;
+    return (props) => {
+      const { tr, dispatch } = props;
 
       if (isString(commit)) {
         commit = this.getIndexByName(commit);
@@ -413,8 +409,8 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
   }
 
   private removeHighlightedCommit(commit: Commit | CommitId): CommandFunction {
-    return (parameter) => {
-      const { tr, dispatch } = parameter;
+    return (props) => {
+      const { tr, dispatch } = props;
 
       if (isString(commit)) {
         commit = this.getIndexByName(commit);
@@ -436,8 +432,8 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
    * Add a commit to the transaction history.
    */
   private commit(message: string): CommandFunction {
-    return (parameter) => {
-      const { tr, dispatch } = parameter;
+    return (props) => {
+      const { tr, dispatch } = props;
 
       if (dispatch) {
         dispatch(this.setMeta(tr, { message }));
@@ -450,8 +446,8 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
   /**
    * Revert a commit which was added to the transaction history.
    */
-  private readonly revertCommit = (commit?: Commit): CommandFunction => (parameter) => {
-    const { state, tr, dispatch } = parameter;
+  private readonly revertCommit = (commit?: Commit): CommandFunction => (props) => {
+    const { state, tr, dispatch } = props;
 
     if (!commit) {
       commit = this.getCommit('last');
@@ -484,10 +480,10 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
     // Build up a transaction that includes all (inverted) steps in this
     // commit, rebased to the current document. They have to be applied
     // in reverse order.
-    for (let i = commit.steps.length - 1; i >= 0; i--) {
+    for (let index = commit.steps.length - 1; index >= 0; index--) {
       // The mapping is sliced to not include maps for this step and the
       // ones before it.
-      const remapped = commit.steps[i].map(remap.slice(i + 1));
+      const remapped = commit.steps[index]?.map(remap.slice(index + 1));
 
       if (!remapped) {
         continue;
@@ -498,7 +494,7 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
       // If the step can be applied, add its map to our mapping
       // pipeline, so that subsequent steps are mapped over it.
       if (result.doc) {
-        remap.appendMap(remapped.getMap(), i);
+        remap.appendMap(remapped.getMap(), index);
       }
     }
 
@@ -528,14 +524,14 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
   }
 }
 
-interface TrackedStateParameter {
+interface TrackedStateProps {
   /**
    * The tracked state.
    */
   tracked: TrackState;
 }
 
-interface HighlightStateParameter {
+interface HighlightStateProps {
   /**
    * The decorations for highlighted commits.
    */
@@ -547,7 +543,7 @@ interface HighlightStateParameter {
   commits?: number[];
 }
 
-export interface DiffPluginState extends TrackedStateParameter, HighlightStateParameter {}
+export interface DiffPluginState extends TrackedStateProps, HighlightStateProps {}
 
 interface DiffMeta {
   message?: string;
@@ -557,7 +553,7 @@ interface DiffMeta {
 
 type CommitId = number | 'first' | 'last';
 
-export interface HandlerParameter extends FromToParameter {
+export interface HandlerProps extends FromToProps {
   /**
    * The commit.
    */

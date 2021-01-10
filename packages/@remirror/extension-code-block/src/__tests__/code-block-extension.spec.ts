@@ -24,7 +24,7 @@ import {
   prosemirrorNodeToHtml,
 } from '@remirror/core';
 
-import { CodeBlockExtension, CodeBlockOptions, FormatterParameter } from '..';
+import { CodeBlockExtension, CodeBlockOptions, FormatterProps } from '..';
 import { getLanguage } from '../code-block-utils';
 
 extensionValidityTest(CodeBlockExtension);
@@ -336,7 +336,7 @@ describe('commands', () => {
   });
 
   describe('formatCodeBlock', () => {
-    function formatter({ cursorOffset, language, source }: FormatterParameter) {
+    function formatter({ cursorOffset, language, source }: FormatterProps) {
       if (getLanguage({ fallback: 'text', language }) === 'typescript') {
         return formatWithCursor(source, {
           cursorOffset,

@@ -6,7 +6,7 @@ import {
   htmlToProsemirrorNode,
   PlainExtension,
   RemirrorEventListener,
-  StateUpdateLifecycleParameter,
+  StateUpdateLifecycleProps,
 } from 'remirror';
 import { BoldExtension, ItalicExtension } from 'remirror/extensions';
 
@@ -110,8 +110,8 @@ describe('Remirror Controlled Component', () => {
           {...props}
           state={value}
           manager={manager}
-          onChange={(parameter) => {
-            setValue(parameter.state);
+          onChange={(changeProps) => {
+            setValue(changeProps.state);
           }}
           autoRender='start'
         ></Remirror>
@@ -144,8 +144,8 @@ describe('Remirror Controlled Component', () => {
           {...props}
           state={state}
           manager={manager}
-          onChange={(parameter) => {
-            const { createStateFromContent, helpers, state } = parameter;
+          onChange={(changeProps) => {
+            const { createStateFromContent, helpers, state } = changeProps;
             setState(
               createStateFromContent(`<p>Hello</p><p>${helpers.getText({ state })}</p>`, 'start'),
             );
@@ -242,7 +242,7 @@ describe('Remirror Controlled Component', () => {
         return 'update' as const;
       }
 
-      onStateUpdate: (update: StateUpdateLifecycleParameter) => void = mock;
+      onStateUpdate: (update: StateUpdateLifecycleProps) => void = mock;
     }
 
     const { manager, props, chain, doc, p } = create([new UpdateExtension()]);
@@ -261,8 +261,8 @@ describe('Remirror Controlled Component', () => {
           {...props}
           state={value}
           manager={manager}
-          onChange={(parameter) => {
-            const { state } = parameter;
+          onChange={(changeProps) => {
+            const { state } = changeProps;
 
             setValue(state);
           }}
@@ -319,8 +319,8 @@ test('can run multiple commands', () => {
         {...props}
         state={value}
         manager={manager}
-        onChange={(parameter) => {
-          const { state } = parameter;
+        onChange={(changeProps) => {
+          const { state } = changeProps;
           setValue(state);
         }}
       >
@@ -379,8 +379,8 @@ test('NOTE: this test is to show that synchronous state updates only show the mo
         {...props}
         state={value}
         manager={manager}
-        onChange={(parameter) => {
-          const { state } = parameter;
+        onChange={(changeProps) => {
+          const { state } = changeProps;
           setValue(state);
         }}
       >

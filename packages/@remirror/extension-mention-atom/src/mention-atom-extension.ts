@@ -25,7 +25,7 @@ import {
   DEFAULT_SUGGESTER,
   MatchValue,
   RangeWithCursor,
-  SuggestChangeHandlerParameter,
+  SuggestChangeHandlerProps,
   Suggester,
 } from '@remirror/pm/suggest';
 
@@ -264,15 +264,15 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
         ...DEFAULT_MATCHER,
         ...options,
         ...matcher,
-        onChange: (parameter) => {
-          const { name, range } = parameter;
+        onChange: (props) => {
+          const { name, range } = props;
           const { createMentionAtom } = this.store.commands;
 
           function command(attrs: Omit<MentionAtomNodeAttributes, 'name'>) {
             createMentionAtom({ name, range }, attrs);
           }
 
-          this.options.onChange(parameter, command);
+          this.options.onChange(props, command);
         },
       };
     });
@@ -295,7 +295,7 @@ const DEFAULT_MATCHER = {
   mentionClassName: 'mention-atom',
 };
 
-export interface OptionalMentionAtomExtensionParameter {
+export interface OptionalMentionAtomExtensionProps {
   /**
    * The text to append to the replacement.
    *
@@ -331,7 +331,7 @@ export interface CreateMentionAtom {
  * ID and label are plucked and used while attributes like href and role can be assigned as desired.
  */
 export type MentionAtomNodeAttributes = ProsemirrorAttributes<
-  OptionalMentionAtomExtensionParameter & {
+  OptionalMentionAtomExtensionProps & {
     /**
      * A unique identifier for the suggesters node
      */
@@ -357,7 +357,7 @@ export type NamedMentionAtomNodeAttributes = MentionAtomNodeAttributes & {
  * create the mention with the required attributes.
  */
 export type MentionAtomChangeHandler = (
-  handlerState: SuggestChangeHandlerParameter,
+  handlerState: SuggestChangeHandlerProps,
   command: (attrs: MentionAtomNodeAttributes) => void,
 ) => void;
 

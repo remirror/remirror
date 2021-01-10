@@ -5,7 +5,7 @@ import { entries, isEmptyObject, object } from '@remirror/core-helpers';
 import type {
   AnyFunction,
   EditorState,
-  EditorStateParameter,
+  EditorStateProps,
   EmptyShape,
   ProsemirrorAttributes,
   RemirrorJSON,
@@ -181,7 +181,7 @@ export class HelpersExtension extends PlainExtension {
   }
 }
 
-interface GetTextHelperOptions extends Partial<EditorStateParameter> {
+interface GetTextHelperOptions extends Partial<EditorStateProps> {
   /**
    * The divider used to separate text blocks.
    *

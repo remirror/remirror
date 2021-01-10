@@ -32,11 +32,11 @@ import type {
   Transaction,
 } from '@remirror/core-types';
 import type {
-  CustomDocumentParameter,
+  CustomDocumentProps,
   InvalidContentHandler,
   NamedStringHandlers,
   StringHandler,
-  StringHandlerParameter,
+  StringHandlerProps,
 } from '@remirror/core-utils';
 import { createDocumentNode, getTextSelection } from '@remirror/core-utils';
 import { EditorState } from '@remirror/pm/state';
@@ -55,7 +55,7 @@ import type {
   ManagerStoreKeys,
 } from '../extension';
 import type { BaseFramework, FrameworkOutput } from '../framework';
-import type { StateUpdateLifecycleParameter } from '../types';
+import type { StateUpdateLifecycleProps } from '../types';
 import {
   extractLifecycleMethods,
   ManagerLifecycleHandlers,
@@ -127,7 +127,7 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
   }
 
   /**
-   * Utility getter for storing the base method parameter which is available to
+   * Utility getter for storing the base method props which is available to
    * all extensions.
    */
   #extensionStore: Remirror.ExtensionStore;
@@ -559,7 +559,7 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
    */
   attachFramework(
     framework: BaseFramework<ExtensionUnion>,
-    updateHandler: (parameter: StateUpdateLifecycleParameter) => void,
+    updateHandler: (props: StateUpdateLifecycleProps) => void,
   ): void {
     if (this.#framework === framework) {
       // Do nothing if the instances are identical.
@@ -606,11 +606,11 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
   /**
    * Create the editor state from content passed to this extension manager.
    */
-  createState(parameter: CreateEditorStateParameter): EditorState<GetSchema<ExtensionUnion>> {
-    const { content, document, onError = this.settings.onError, selection } = parameter;
+  createState(props: CreateEditorStateProps): EditorState<GetSchema<ExtensionUnion>> {
+    const { content, document, onError = this.settings.onError, selection } = props;
     const { schema, plugins } = this.store;
 
-    const handler = parameter.stringHandler ?? this.settings.stringHandler;
+    const handler = props.stringHandler ?? this.settings.stringHandler;
     const stringHandler = isString(handler) ? this.stringHandlers[handler] : handler;
 
     const doc = createDocumentNode({
@@ -656,24 +656,24 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
    *
    * An example usage of this is within the collaboration extension.
    */
-  onStateUpdate(parameter: Omit<StateUpdateLifecycleParameter, 'firstUpdate'>): void {
+  onStateUpdate(props: Omit<StateUpdateLifecycleProps, 'firstUpdate'>): void {
     const firstUpdate = this.#firstStateUpdate;
 
-    this.#extensionStore.currentState = parameter.state;
-    this.#extensionStore.previousState = parameter.previousState;
+    this.#extensionStore.currentState = props.state;
+    this.#extensionStore.previousState = props.previousState;
 
     if (this.#firstStateUpdate) {
       this.#phase = ManagerPhase.Runtime;
       this.#firstStateUpdate = false;
     }
 
-    const parameterWithUpdate = { ...parameter, firstUpdate };
+    const propsWithUpdate = { ...props, firstUpdate };
 
     for (const handler of this.#handlers.update) {
-      handler(parameterWithUpdate);
+      handler(propsWithUpdate);
     }
 
-    this.#events.emit('stateUpdate', parameterWithUpdate);
+    this.#events.emit('stateUpdate', propsWithUpdate);
   }
 
   /**
@@ -800,7 +800,7 @@ export interface ManagerEvents {
   /**
    * Called when the state is updated.
    */
-  stateUpdate: (parameter: StateUpdateLifecycleParameter) => void;
+  stateUpdate: (props: StateUpdateLifecycleProps) => void;
 
   /**
    * Called whenever the manager is cloned with the newly created manager
@@ -837,7 +837,7 @@ export type AnyRemirrorManager = Simplify<
       addView: (view: EditorView) => void;
       attachFramework: (
         framework: BaseFramework<AnyExtension>,
-        updateHandler: (parameter: StateUpdateLifecycleParameter) => void,
+        updateHandler: (props: StateUpdateLifecycleProps) => void,
       ) => void;
       /** @internal */
       ['~E']: AnyExtension;
@@ -882,9 +882,9 @@ export function isRemirrorManager<ExtensionUnion extends AnyExtension = AnyExten
   return (value as AnyRemirrorManager).includes(mustIncludeList);
 }
 
-export interface CreateEditorStateParameter
-  extends Partial<CustomDocumentParameter>,
-    Omit<StringHandlerParameter, 'stringHandler'> {
+export interface CreateEditorStateProps
+  extends Partial<CustomDocumentProps>,
+    Omit<StringHandlerProps, 'stringHandler'> {
   /**
    * This is where content can be supplied to the Editor.
    *

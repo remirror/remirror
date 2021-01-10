@@ -5,7 +5,7 @@ import type {
   CommandFunction,
   CreateExtensionPlugin,
   IdentifierSchemaAttributes,
-  OnSetOptionsParameter,
+  OnSetOptionsProps,
   PrimitiveSelection,
   ProsemirrorAttributes,
   SchemaAttributesObject,
@@ -200,8 +200,8 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
     };
   }
 
-  protected onSetOptions(parameter: OnSetOptionsParameter<BidiOptions>): void {
-    const { changes } = parameter;
+  protected onSetOptions(props: OnSetOptionsProps<BidiOptions>): void {
+    const { changes } = props;
 
     if (changes.defaultDirection.changed) {
       this.store.updateAttributes();
@@ -251,8 +251,8 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
     dir: 'ltr' | 'rtl' | undefined,
     options: SetTextDirectionOptions = {},
   ): CommandFunction {
-    return (parameter) => {
-      const { tr } = parameter;
+    return (props) => {
+      const { tr } = props;
       const { selection } = options;
       const cmd = this.store.commands.updateNodeAttributes.original;
       const parent = findParent(
@@ -265,7 +265,7 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
         return false;
       }
 
-      return cmd(parent.pos, { dir, ignoreBidiAutoUpdate: dir ? true : dir })(parameter);
+      return cmd(parent.pos, { dir, ignoreBidiAutoUpdate: dir ? true : dir })(props);
     };
   }
 }

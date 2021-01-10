@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {
-  FromToParameter,
+  FromToProps,
   isNodeOfType,
   NodeWithPosition,
   ProsemirrorNode,
@@ -15,7 +15,7 @@ import {
   WhitespaceRange,
 } from './whitespace-types';
 
-interface GenerateDecorationsParameter extends FromToParameter {
+interface GenerateDecorationsProps extends FromToProps {
   /**
    * The starting decoration set.
    *
@@ -38,9 +38,9 @@ interface GenerateDecorationsParameter extends FromToParameter {
 /**
  * Generate a decoration set of whitespace characters for the provided range.
  */
-export function generateDecorations(parameter: GenerateDecorationsParameter): DecorationSet {
-  const { from, to, doc, decorators } = parameter;
-  let { decorationSet = DecorationSet.empty } = parameter;
+export function generateDecorations(props: GenerateDecorationsProps): DecorationSet {
+  const { from, to, doc, decorators } = props;
+  let { decorationSet = DecorationSet.empty } = props;
 
   for (const decorator of decorators) {
     decorationSet = decorator({ decorationSet, doc, from, to });
@@ -62,7 +62,7 @@ function createWidget(pos: number, key: string) {
   });
 }
 
-interface NodeBuilderParameter {
+interface NodeBuilderProps {
   key: string;
   calculatePosition: (nodeWithPosition: NodeWithPosition) => number;
   predicate: (node: ProsemirrorNode) => boolean;
@@ -72,7 +72,7 @@ interface NodeBuilderParameter {
  * Create a hidden character creator which responds to different node areas
  * within the editor.
  */
-function createNodeBuilder(builderOptions: NodeBuilderParameter) {
+function createNodeBuilder(builderOptions: NodeBuilderProps) {
   return (details: WhitespaceRange) => {
     const { calculatePosition, key, predicate } = builderOptions;
     const { decorationSet, doc, from, to } = details;
@@ -99,7 +99,7 @@ function createNodeBuilder(builderOptions: NodeBuilderParameter) {
   };
 }
 
-interface CharacterBuilderParameter {
+interface CharacterBuilderProps {
   key: string;
   /**
    * Check the provided character to see if it is an invisible character.
@@ -111,7 +111,7 @@ interface CharacterBuilderParameter {
  * Build a hidden character creator which responds to certain characters in the
  * document.
  */
-export function createCharacterBuilder(builderOptions: CharacterBuilderParameter) {
+export function createCharacterBuilder(builderOptions: CharacterBuilderProps) {
   return (details: WhitespaceRange): DecorationSet => {
     const { key, predicate } = builderOptions;
     const { decorationSet, doc, from, to } = details;

@@ -1,18 +1,18 @@
-import type { TestEditorViewParameter } from 'jest-prosemirror';
+import type { TestEditorViewProps } from 'jest-prosemirror';
 
-import { isObject, isProsemirrorNode, SchemaParameter } from '@remirror/core';
+import { isObject, isProsemirrorNode, SchemaProps } from '@remirror/core';
 
 import { coerce, offsetTags } from './jest-remirror-builder';
 import type { TaggedProsemirrorNode, Tags } from './jest-remirror-types';
 
-interface ProcessTextParameter extends SchemaParameter {
+interface ProcessTextProps extends SchemaProps {
   /**
    * The content to process text in
    */
   content: string[] | TaggedProsemirrorNode[];
 }
 
-function processText({ schema, content }: ProcessTextParameter) {
+function processText({ schema, content }: ProcessTextProps) {
   return coerce({ content, schema });
 }
 
@@ -27,7 +27,7 @@ function processNodeMark(content: TaggedProsemirrorNode) {
 /**
  * Insert
  */
-interface InsertParameter extends TestEditorViewParameter {
+interface InsertProps extends TestEditorViewProps {
   /**
    * The content to replace the current selection with
    * This can be strings a node or an array of nodes.
@@ -39,8 +39,8 @@ interface InsertParameter extends TestEditorViewParameter {
  * Replace the current selection with the given content, which may be
  * string, a fragment, node, or array of nodes.
  */
-export function replaceSelection(parameter: InsertParameter): Tags {
-  const { view, content } = parameter;
+export function replaceSelection(props: InsertProps): Tags {
+  const { view, content } = props;
   const { state } = view;
   const { from, to } = state.selection;
 

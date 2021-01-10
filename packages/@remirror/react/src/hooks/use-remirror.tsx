@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 
 import {
   AnyExtension,
-  CreateEditorStateParameter,
+  CreateEditorStateProps,
   EditorState,
   ErrorConstant,
   GetSchema,
@@ -23,7 +23,7 @@ import { useManager } from './use-manager';
  */
 export interface UseRemirrorProps<ExtensionUnion extends AnyExtension>
   extends CreateReactManagerOptions,
-    Partial<CreateEditorStateParameter> {
+    Partial<CreateEditorStateProps> {
   /**
    * Provide a function that returns an array of extensions which will be used
    * to create the manager. If you prefer you can directly provide your own
@@ -63,7 +63,7 @@ export interface UseRemirrorReturn<ExtensionUnion extends AnyExtension> {
    *
    *   return (
    *     <Remirror
-   *       onChange={useCallback((parameter) => setState(parameter.state), [setState])}
+   *       onChange={useCallback((changeProps) => setState(changeProps.state), [setState])}
    *       state={state}
    *       manager={manager}
    *     />

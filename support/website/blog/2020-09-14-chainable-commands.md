@@ -55,14 +55,14 @@ The first step was to provide a **shared** transaction for all internal **remirr
 Since the command functions already receive _three_ positional arguments adding a _fourth_ for the shared transaction made the function call overly complex. To make things easier to consume, all the arguments have been squashed into one parameter, giving the remirror command function the following type signature.
 
 ```ts
-interface CommandFunctionParameter {
+interface CommandFunctionProps {
   tr: Transaction;
   state: EditorState;
   dispatch?: (tr: Transaction) => void;
   view?: EditorView;
 }
 
-type CommandFunction = (parameter: CommandFunctionParameter) => boolean;
+type CommandFunction = (parameter: CommandFunctionProps) => boolean;
 ```
 
 The exact way that this was done is beyond the scope of this blog post but you can take a look for yourself how the shared transaction is [created](https://github.com/remirror/remirror/blob/3a89f121cb10b5ef6a0b2705aa5b9e65a4ad469e/packages/%40remirror/core/src/builtins/commands-extension.ts#L54-L100) and [maintained](https://github.com/remirror/remirror/blob/3a89f121cb10b5ef6a0b2705aa5b9e65a4ad469e/packages/%40remirror/core/src/builtins/commands-extension.ts#L167-L173).

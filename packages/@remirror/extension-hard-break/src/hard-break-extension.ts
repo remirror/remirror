@@ -75,8 +75,8 @@ export class HardBreakExtension extends NodeExtension {
       /**
        * Inserts a hardBreak `<br />` tag into the editor.
        */
-      insertHardBreak: (): CommandFunction => (parameter) => {
-        const { tr, dispatch } = parameter;
+      insertHardBreak: (): CommandFunction => (props) => {
+        const { tr, dispatch } = props;
 
         // Create the `hardBreak`
         dispatch?.(tr.replaceSelectionWith(this.type.create()).scrollIntoView());

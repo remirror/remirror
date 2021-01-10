@@ -9,7 +9,7 @@ import {
   NodeSpecOverride,
   NodeType,
   object,
-  SchemaParameter,
+  SchemaProps,
   values,
 } from '@remirror/core';
 import type { Node as ProsemirrorNode } from '@remirror/pm/model';
@@ -47,7 +47,7 @@ export interface CreateTableCommand {
   cellContent?: ProsemirrorNode;
 }
 
-export interface CreateTableParameter extends SchemaParameter, CreateTableCommand {}
+export interface CreateTableProps extends SchemaProps, CreateTableCommand {}
 
 // Helper for creating a schema that supports tables.
 
@@ -184,7 +184,7 @@ function tableNodeTypes(schema: EditorSchema): Record<string, NodeType> {
   return roles;
 }
 
-interface CreateCellParameter {
+interface CreateCellProps {
   type: NodeType;
   content?: ProsemirrorNode;
 }
@@ -192,8 +192,8 @@ interface CreateCellParameter {
 /**
  * Create a cell with the provided content.
  */
-function createCell(parameter: CreateCellParameter) {
-  const { content, type } = parameter;
+function createCell(props: CreateCellProps) {
+  const { content, type } = props;
 
   if (content) {
     return type.createChecked(null, content);
@@ -212,8 +212,8 @@ function createCell(parameter: CreateCellParameter) {
  * dispatch(tr.replaceSelectionWith(table).scrollIntoView());
  * ```
  */
-export function createTable(parameter: CreateTableParameter): ProsemirrorNode<EditorSchema> {
-  const { schema, cellContent, columnsCount = 3, rowsCount = 3, withHeaderRow = true } = parameter;
+export function createTable(props: CreateTableProps): ProsemirrorNode<EditorSchema> {
+  const { schema, cellContent, columnsCount = 3, rowsCount = 3, withHeaderRow = true } = props;
   const { cell: tableCell, header_cell: tableHeaderCell, row: tableRow, table } = tableNodeTypes(
     schema,
   );

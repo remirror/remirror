@@ -101,7 +101,7 @@ export function mod(modifier: ModifierKeys, key: string, isMacFn = isApple): str
 /**
  * Returns a list of normalized modifier keys
  */
-export const getModifiers = ({ modifiers, isMac = false }: GetModifiersParameter) => {
+export const getModifiers = ({ modifiers, isMac = false }: GetModifiersProps) => {
   const list: string[] = [];
 
   for (const modifier of modifiers) {
@@ -286,7 +286,7 @@ export async function pressKeyWithModifier(pattern: string) {
   );
 }
 
-interface GetModifiersParameter {
+interface GetModifiersProps {
   /**
    * The modifier keys passed in
    */

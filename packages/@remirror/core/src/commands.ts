@@ -8,14 +8,13 @@ import {
   isString,
 } from '@remirror/core-helpers';
 import type {
-  AnyFunction,
-  AttributesParameter,
+  AttributesProps,
   CommandFunction,
-  CommandFunctionParameter,
+  CommandFunctionProps,
   EditorSchema,
-  FromToParameter,
+  FromToProps,
   MarkType,
-  MarkTypeParameter,
+  MarkTypeProps,
   PrimitiveSelection,
   ProsemirrorAttributes,
   ProsemirrorNode,
@@ -27,7 +26,7 @@ import { SelectionRange } from '@remirror/pm/state';
 /**
  * The parameter that is passed into `DelayedCommand`s.
  */
-interface DelayedCommandParameter<Value> {
+interface DelayedCommandProps<Value> {
   /**
    * Runs as soon as the command is triggered. For most delayed commands within
    * the `remirror` codebase this is used to add a position tracker to the
@@ -82,11 +81,11 @@ export function delayedCommand<Value>({
   promise,
   onDone,
   onFail,
-}: DelayedCommandParameter<Value>): CommandFunction {
-  return (parameter) => {
-    const { view } = parameter;
+}: DelayedCommandProps<Value>): CommandFunction {
+  return (props) => {
+    const { view } = props;
 
-    if (immediate?.(parameter) === false) {
+    if (immediate?.(props) === false) {
       return false;
     }
 
@@ -110,7 +109,7 @@ export function delayedCommand<Value>({
   };
 }
 
-export type DelayedPromiseCreator<Value> = (parameter: CommandFunctionParameter) => Promise<Value>;
+export type DelayedPromiseCreator<Value> = (props: CommandFunctionProps) => Promise<Value>;
 export class DelayedCommand<Value> {
   private failureHandlers: Array<CommandFunction<EditorSchema, { error: any }>> = [];
   private successHandlers: Array<CommandFunction<EditorSchema, { value: Value }>> = [];
@@ -149,7 +148,7 @@ export class DelayedCommand<Value> {
     return this;
   }
 
-  private runHandlers<Param extends CommandFunctionParameter>(
+  private runHandlers<Param extends CommandFunctionProps>(
     handlers: Array<(params: Param) => boolean>,
     param: Param,
   ): void {
@@ -166,27 +165,27 @@ export class DelayedCommand<Value> {
    * Generate the `remirror` command.
    */
   readonly generateCommand = (): CommandFunction => {
-    return (parameter) => {
+    return (props) => {
       let isValid = true;
-      const { view } = parameter;
+      const { view } = props;
 
       if (!view) {
         return false;
       }
 
       for (const handler of this.validateHandlers) {
-        if (!handler(parameter)) {
+        if (!handler(props)) {
           isValid = false;
           break;
         }
       }
 
-      if (!parameter.dispatch || !isValid) {
+      if (!props.dispatch || !isValid) {
         return isValid;
       }
 
       // Start the promise.
-      const deferred = this.promiseCreator(parameter);
+      const deferred = this.promiseCreator(props);
 
       deferred
         .then((value) => {
@@ -213,13 +212,13 @@ export class DelayedCommand<Value> {
   };
 }
 
-export interface ToggleMarkParameter<Schema extends EditorSchema = EditorSchema>
-  extends MarkTypeParameter<Schema>,
-    Partial<AttributesParameter> {
+export interface ToggleMarkProps<Schema extends EditorSchema = EditorSchema>
+  extends MarkTypeProps<Schema>,
+    Partial<AttributesProps> {
   /**
    * @deprecated use `selection` property instead.
    */
-  range?: FromToParameter;
+  range?: FromToProps;
 
   /**
    * The selection point for toggling the chosen mark.
@@ -243,11 +242,11 @@ export interface ToggleMarkParameter<Schema extends EditorSchema = EditorSchema>
  * - Uses the ONE parameter function signature for compatibility with remirror.
  * - Supports passing a custom range.
  */
-export function toggleMark(parameter: ToggleMarkParameter): CommandFunction {
-  const { type, attrs, range, selection } = parameter;
+export function toggleMark(props: ToggleMarkProps): CommandFunction {
+  const { type, attrs, range, selection } = props;
 
-  return (parameter) => {
-    const { dispatch, tr, state } = parameter;
+  return (props) => {
+    const { dispatch, tr, state } = props;
     const markType = isString(type) ? state.schema.marks[type] : type;
 
     invariant(markType, {
@@ -264,7 +263,7 @@ export function toggleMark(parameter: ToggleMarkParameter): CommandFunction {
       return true;
     }
 
-    return convertCommand(originalToggleMark(markType, attrs))(parameter);
+    return convertCommand(originalToggleMark(markType, attrs))(props);
   };
 }
 
@@ -362,7 +361,7 @@ export function applyMark(
   };
 }
 
-export interface InsertTextOptions extends Partial<FromToParameter> {
+export interface InsertTextOptions extends Partial<FromToProps> {
   /**
    * Marks can be added to the inserted text.
    */

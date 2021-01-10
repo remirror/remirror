@@ -1,5 +1,5 @@
 export type {
-  CreateNodeViewParameter,
+  CreateNodeViewProps,
   NodeViewComponentProps,
   ReactComponentEnvironment,
   ReactComponentOptions,
@@ -9,8 +9,8 @@ export type {
   PortalList,
   PortalMap,
   RemirrorPortalsProps,
-  SingleRenderMethodParameter as RenderMethodParameter,
-  RenderParameter,
+  SingleRenderMethodProps as RenderMethodProps,
+  RenderProps,
 } from './portals';
 export { PortalContainer, RemirrorPortals, usePortals } from './portals';
 export { ReactComponentExtension } from './react-component-extension';

@@ -5,7 +5,7 @@
  */
 
 import { ComponentType } from 'react';
-import { FromToParameter, RemirrorJSON, StateJSON } from 'remirror';
+import { FromToProps, RemirrorJSON, StateJSON } from 'remirror';
 
 export interface DebugComponentProps {
   /**
@@ -250,7 +250,7 @@ interface ExportedEditorState extends StateJSON {
   /**
    * The current selection.
    */
-  selection: FromToParameter;
+  selection: FromToProps;
 }
 
 interface ModelV1AdvancedConfiguration {

@@ -56,8 +56,8 @@ export class HorizontalRuleExtension extends NodeExtension<HorizontalRuleOptions
       /**
        * Inserts a horizontal line into the editor.
        */
-      insertHorizontalRule: (): CommandFunction => (parameter) => {
-        const { tr, dispatch } = parameter;
+      insertHorizontalRule: (): CommandFunction => (props) => {
+        const { tr, dispatch } = props;
         const $pos = tr.selection.$anchor;
         const initialParent = $pos.parent;
 

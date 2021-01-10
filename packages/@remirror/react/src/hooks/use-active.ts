@@ -14,9 +14,15 @@ type UseActiveReturn<ExtensionUnion extends AnyExtension> = ReactFrameworkOutput
  * ```ts
  * import { useActive } from 'remirror/react';
  * ```
+ *
+ * This hooks updates the local component on each state update for the editor,
+ * so it can be quite expensive.
+ *
+ * @param autoUpdate - Set to false to prevent automatic re-rendering on every
+ * state update.
  */
-export function useActive<
-  ExtensionUnion extends AnyExtension = Remirror.AllExtensionUnion
->(): UseActiveReturn<ExtensionUnion> {
-  return useRemirrorContext<ExtensionUnion>({ autoUpdate: true }).active;
+export function useActive<ExtensionUnion extends AnyExtension = Remirror.AllExtensionUnion>(
+  autoUpdate = true,
+): UseActiveReturn<ExtensionUnion> {
+  return useRemirrorContext<ExtensionUnion>({ autoUpdate }).active;
 }

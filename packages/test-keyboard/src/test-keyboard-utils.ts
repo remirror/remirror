@@ -17,7 +17,7 @@ export function createKeyboardEvent(
   return new KeyboardEvent(type, { ...options, bubbles: true });
 }
 
-interface GetModifierInformationParameter {
+interface GetModifierInformationProps {
   /**
    * The modifier keys passed in
    */
@@ -34,14 +34,10 @@ interface GetModifierInformationParameter {
 /**
  * Returns an info object detailing which modifier keys are currently active
  *
- * @param params
- * @param params.modifiers
- * @param [params.isMac]
+ * @param props
  */
-export function getModifierInformation(
-  parameter: GetModifierInformationParameter,
-): ModifierInformation {
-  const { modifiers, isMac = false } = parameter;
+export function getModifierInformation(props: GetModifierInformationProps): ModifierInformation {
+  const { modifiers, isMac = false } = props;
   const info: ModifierInformation = {
     altKey: false,
     ctrlKey: false,

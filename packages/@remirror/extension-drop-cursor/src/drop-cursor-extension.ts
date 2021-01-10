@@ -12,7 +12,7 @@ import {
   isUndefined,
   PlainExtension,
   ResolvedPos,
-  StateUpdateLifecycleParameter,
+  StateUpdateLifecycleProps,
   Static,
   throttle,
 } from '@remirror/core';
@@ -62,7 +62,7 @@ export interface DropCursorOptions {
   /**
    * Create the inline and block HTML elements for the drop cursor widgets.
    */
-  createCursorElement?: (parameter: CursorElementsParameter) => CursorElements;
+  createCursorElement?: (props: CursorElementsProps) => CursorElements;
 
   /**
    * Set the throttling delay in milliseconds. Set it to `-1` to remove any
@@ -167,8 +167,8 @@ export class DropCursorExtension extends PlainExtension<DropCursorOptions> {
    * Update the elements if an active cursor is present while the state is
    * updating.
    */
-  onStateUpdate(parameter: StateUpdateLifecycleParameter): void {
-    const { previousState, state } = parameter;
+  onStateUpdate(props: StateUpdateLifecycleProps): void {
+    const { previousState, state } = props;
 
     if (isNumber(this.#target) && !state.doc.eq(previousState.doc)) {
       // Update the cursor when the cursor is active and the doc has changed.
@@ -377,8 +377,8 @@ export class DropCursorExtension extends PlainExtension<DropCursorOptions> {
 /**
  * The default cursor element creator.
  */
-function createCursorElement(parameter: CursorElementsParameter): CursorElements {
-  const { blockClass, inlineClass } = parameter;
+function createCursorElement(props: CursorElementsProps): CursorElements {
+  const { blockClass, inlineClass } = props;
   const inline = document.createElement('span');
   const block = document.createElement('div');
 
@@ -388,7 +388,7 @@ function createCursorElement(parameter: CursorElementsParameter): CursorElements
   return { inline, block };
 }
 
-export interface CursorElementsParameter {
+export interface CursorElementsProps {
   view: EditorView;
   inlineClass: string;
   blockClass: string;

@@ -128,8 +128,8 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
       /**
        * Add a YouTube embedded iFrame to the editor.
        */
-      addYouTubeVideo: (parameter: CreateYouTubeIframeParameter): CommandFunction =>
-        this.addYouTubeVideo(parameter),
+      addYouTubeVideo: (props: CreateYouTubeIframeProps): CommandFunction =>
+        this.addYouTubeVideo(props),
 
       /**
        * Update the iFrame source for the currently selected video.
@@ -139,8 +139,8 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
       /**
        * Update the YouTube video iFrame.
        */
-      updateYouTubeVideo: (parameter: CreateYouTubeIframeParameter): CommandFunction =>
-        this.updateYouTubeVideo(parameter),
+      updateYouTubeVideo: (props: CreateYouTubeIframeProps): CommandFunction =>
+        this.updateYouTubeVideo(props),
     };
   }
 
@@ -158,9 +158,9 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
   /**
    * The command for adding a YouTube iframe.
    */
-  private addYouTubeVideo(parameter: CreateYouTubeIframeParameter): CommandFunction {
+  private addYouTubeVideo(props: CreateYouTubeIframeProps): CommandFunction {
     return this.addIframe({
-      src: createYouTubeUrl(parameter),
+      src: createYouTubeUrl(props),
       frameBorder: 0,
       type: 'youtube',
       allowFullScreen: 'true',
@@ -184,12 +184,12 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
     };
   };
 
-  private updateYouTubeVideo(parameter: CreateYouTubeIframeParameter): CommandFunction {
-    return this.updateIframeSource(createYouTubeUrl(parameter));
+  private updateYouTubeVideo(props: CreateYouTubeIframeProps): CommandFunction {
+    return this.updateIframeSource(createYouTubeUrl(props));
   }
 }
 
-interface CreateYouTubeIframeParameter {
+interface CreateYouTubeIframeProps {
   /**
    * The video id (dQw4w9WgXcQ) or full link
    * (https://www.youtube.com/watch?v=dQw4w9WgXcQ).
@@ -242,8 +242,8 @@ function parseUrl<Query extends Shape = Shape>(url: string) {
   };
 }
 
-function createYouTubeUrl(parameter: CreateYouTubeIframeParameter) {
-  const { video, enhancedPrivacy = true, showControls = true, startAt = 0 } = parameter;
+function createYouTubeUrl(props: CreateYouTubeIframeProps) {
+  const { video, enhancedPrivacy = true, showControls = true, startAt = 0 } = props;
   const id: string = parseUrl<{ v?: string }>(video)?.searchObject?.v ?? video;
   const urlStart = enhancedPrivacy ? 'https://www.youtube-nocookie.com' : 'https://www.youtube.com';
   const searchObject = object<Shape>();

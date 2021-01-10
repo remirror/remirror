@@ -595,7 +595,7 @@ interface DynamicSchemaAttributeCreators {
  */
 type NamedSchemaAttributes = Record<string, SchemaAttributes>;
 
-interface TransformSchemaAttributesParameter {
+interface TransformSchemaAttributesProps {
   /**
    * The manager settings at the point of creation.
    */
@@ -626,10 +626,8 @@ interface TransformSchemaAttributesParameter {
  * Get the extension extra attributes created via the manager and convert into a
  * named object which can be added to each node and mark spec.
  */
-function getNamedSchemaAttributes(
-  parameter: TransformSchemaAttributesParameter,
-): NamedSchemaAttributes {
-  const { settings, gatheredSchemaAttributes, nodeNames, markNames, tags } = parameter;
+function getNamedSchemaAttributes(props: TransformSchemaAttributesProps): NamedSchemaAttributes {
+  const { settings, gatheredSchemaAttributes, nodeNames, markNames, tags } = props;
   const extraAttributes: NamedSchemaAttributes = object();
 
   if (settings.disableExtraAttributes) {
@@ -658,7 +656,7 @@ function getNamedSchemaAttributes(
   return extraAttributes;
 }
 
-interface GetIdentifiersParameter {
+interface GetIdentifiersProps {
   identifiers: Identifiers;
   nodeNames: readonly string[];
   markNames: readonly string[];
@@ -676,8 +674,8 @@ function isIdentifiersObject(value: Identifiers): value is IdentifiersObject {
  * Get the array of names from the identifier that the extra attributes should
  * be applied to.
  */
-function getIdentifiers(parameter: GetIdentifiersParameter): readonly string[] {
-  const { identifiers, nodeNames, markNames, tags } = parameter;
+function getIdentifiers(props: GetIdentifiersProps): readonly string[] {
+  const { identifiers, nodeNames, markNames, tags } = props;
 
   if (identifiers === 'nodes') {
     return nodeNames;
@@ -773,7 +771,7 @@ function getIdentifiers(parameter: GetIdentifiersParameter): readonly string[] {
   return [...names];
 }
 
-interface CreateSpecParameter<Spec extends { group?: string | null }, Override extends object> {
+interface CreateSpecProps<Spec extends { group?: string | null }, Override extends object> {
   /**
    * The node or mark creating function.
    */
@@ -821,10 +819,10 @@ interface CreateSpecReturn<Type extends { group?: string | null }> {
  * Create the scheme spec for a node or mark extension.
  *
  * @template Type - either a [[Mark]] or a [[ProsemirrorNode]]
- * @param parameter - the options object [[CreateSpecParameter]]
+ * @param props - the options object [[CreateSpecProps]]
  */
 function createSpec<Type extends { group?: string | null }, Override extends object>(
-  parameter: CreateSpecParameter<Type, Override>,
+  props: CreateSpecProps<Type, Override>,
 ): CreateSpecReturn<Type> {
   const {
     createExtensionSpec,
@@ -833,7 +831,7 @@ function createSpec<Type extends { group?: string | null }, Override extends obj
     name,
     tags,
     override,
-  } = parameter;
+  } = props;
 
   // Keep track of the dynamic attributes which are a part of this spec.
   const dynamic: Record<string, DynamicAttributeCreator> = object();

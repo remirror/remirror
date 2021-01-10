@@ -167,7 +167,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "refractor": "^3.3.0",
-    "yjs": "^13.4.11"
+    "yjs": "^13.4.12"
   },
   "peerDependencies": {
     "@types/codemirror": "^0.0.98",

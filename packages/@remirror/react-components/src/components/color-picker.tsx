@@ -78,7 +78,7 @@ export const ColorPicker = (props: ColorPickerProps): JSX.Element => {
   );
 };
 
-interface ColorPickerHue extends HuePalette, CompositeStateParameter {
+interface ColorPickerHue extends HuePalette, CompositeStateProps {
   selectedColor?: string;
   /**
    * Called when a color is selected.
@@ -107,19 +107,19 @@ const ColorPickerHue = (props: ColorPickerHue) => {
   );
 };
 
-const Grid: FC<CompositeStateParameter> = (props) => {
+const Grid: FC<CompositeStateProps> = (props) => {
   return <Composite role='grid' {...props.compositeState} />;
 };
 
-interface CompositeStateParameter {
+interface CompositeStateProps {
   compositeState: CompositeStateReturn;
 }
 
-const GridRow: FC<CompositeStateParameter> = (props) => {
+const GridRow: FC<CompositeStateProps> = (props) => {
   return <CompositeGroup role='row' {...props.compositeState} />;
 };
 
-interface GridCellProps extends CompositeStateParameter {
+interface GridCellProps extends CompositeStateProps {
   /**
    * Called when a color is selected.
    */

@@ -3,7 +3,7 @@ import type { Except } from 'type-fest';
 
 import {
   AnyExtension,
-  ApplyStateLifecycleParameter,
+  ApplyStateLifecycleProps,
   BuiltinPreset,
   isEmptyObject,
   omit,
@@ -16,7 +16,7 @@ import type {
   ChangeReason,
   ExitReason,
   SuggestChangeHandler,
-  SuggestChangeHandlerParameter,
+  SuggestChangeHandlerProps,
   Suggester,
   SuggestState,
 } from '@remirror/pm/suggest';
@@ -57,8 +57,8 @@ export function useSuggest(props: UseSuggesterProps): UseSuggestReturn {
 
   // Track changes in the suggester
   const onChange: SuggestChangeHandler = useCallback(
-    (parameter) => {
-      const { changeReason, exitReason, match, query, text, range } = parameter;
+    (options) => {
+      const { changeReason, exitReason, match, query, text, range } = options;
       const stateUpdate: Partial<UseSuggestState> = {};
 
       // Keep track of changes
@@ -86,8 +86,7 @@ export function useSuggest(props: UseSuggesterProps): UseSuggestReturn {
   // This change handler will be called on every editor state update. It keeps
   // the state for the suggester that has been added correct.
   const onApplyState = useCallback(
-    (parameter: ApplyStateLifecycleParameter) => {
-      const { tr, state, previousState } = parameter;
+    ({ tr, state, previousState }: ApplyStateLifecycleProps) => {
       const [step] = tr.steps;
 
       if (!hasStateChanged({ tr, state, previousState }) || helpers.getSuggestState().removed) {
@@ -182,14 +181,14 @@ type SuggestStateMethods = Pick<
   'addIgnored' | 'clearIgnored' | 'removeIgnored' | 'ignoreNextExit' | 'setMarkRemoved'
 >;
 
-interface ExitReasonParameter {
+interface ExitReasonProps {
   /**
    * The reason for the exit. More details can be found in the [[`ExitReason`]] docs.
    */
   reason: ExitReason;
 }
 
-interface ChangeReasonParameter {
+interface ChangeReasonProps {
   /**
    * The reason for the change. More details can be found in the [[`ChangeReason`]] docs.
    */
@@ -198,12 +197,10 @@ interface ChangeReasonParameter {
 
 export interface UseSuggestReturn extends SuggestStateMethods {
   change:
-    | (Pick<SuggestChangeHandlerParameter, 'text' | 'query' | 'range' | 'match'> &
-        ChangeReasonParameter)
+    | (Pick<SuggestChangeHandlerProps, 'text' | 'query' | 'range' | 'match'> & ChangeReasonProps)
     | undefined;
   exit:
-    | (Pick<SuggestChangeHandlerParameter, 'text' | 'query' | 'range' | 'match'> &
-        ExitReasonParameter)
+    | (Pick<SuggestChangeHandlerProps, 'text' | 'query' | 'range' | 'match'> & ExitReasonProps)
     | undefined;
 }
 

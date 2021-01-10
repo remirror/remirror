@@ -6,7 +6,7 @@ import {
   ExtensionTag,
   InputRule,
   keyBinding,
-  KeyBindingParameter,
+  KeyBindingProps,
   NodeExtension,
   NodeExtensionSpec,
   NodeSpecOverride,
@@ -66,8 +66,8 @@ export class BlockquoteExtension extends NodeExtension {
   }
 
   @keyBinding({ shortcut: 'Ctrl->', command: 'toggleBlockquote' })
-  shortcut(parameter: KeyBindingParameter): boolean {
-    return this.toggleBlockquote()(parameter);
+  shortcut(props: KeyBindingProps): boolean {
+    return this.toggleBlockquote()(props);
   }
 
   createInputRules(): InputRule[] {

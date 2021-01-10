@@ -3,16 +3,18 @@ import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { isAllSelection } from '@remirror/core';
 
 import {
-  centeredSelectionPositioner,
-  cursorPopupPositioner,
-  floatingSelectionPositioner,
+  blockNodePositioner,
+  cursorPositioner,
+  emptyBlockNodePositioner,
+  nearestWordPositioner,
   Positioner,
   PositionerExtension,
+  selectionPositioner,
 } from '../..';
 
 extensionValidityTest(PositionerExtension);
 
-test('`cursorPopupPositioner` can position itself', () => {
+test('`cursorPositioner` can position itself', () => {
   const positionerExtension = new PositionerExtension();
   const {
     add,
@@ -28,9 +30,9 @@ test('`cursorPopupPositioner` can position itself', () => {
 
   add(doc(p('hello <cursor>')))
     .callback(() => {
-      positionerExtension.addCustomHandler('positioner', cursorPopupPositioner);
-      cursorPopupPositioner.addListener('update', cursorMock.onUpdate);
-      cursorPopupPositioner.addListener('done', cursorMock.onDone);
+      positionerExtension.addCustomHandler('positioner', cursorPositioner);
+      cursorPositioner.addListener('update', cursorMock.onUpdate);
+      cursorPositioner.addListener('done', cursorMock.onDone);
     })
     .insertText('a')
     .callback(() => {
@@ -47,7 +49,7 @@ test('`cursorPopupPositioner` can position itself', () => {
     });
 });
 
-test('`centeredSelectionPositioner` can position itself', () => {
+test('`selectionPositioner` can position itself', () => {
   const positionerExtension = new PositionerExtension();
   const {
     add,
@@ -63,9 +65,9 @@ test('`centeredSelectionPositioner` can position itself', () => {
 
   add(doc(p('hello <cursor>')))
     .callback(() => {
-      positionerExtension.addCustomHandler('positioner', centeredSelectionPositioner);
-      centeredSelectionPositioner.addListener('update', centeredMock.onUpdate);
-      centeredSelectionPositioner.addListener('done', centeredMock.onDone);
+      positionerExtension.addCustomHandler('positioner', selectionPositioner);
+      selectionPositioner.addListener('update', centeredMock.onUpdate);
+      selectionPositioner.addListener('done', centeredMock.onDone);
     })
     .insertText('a')
     .callback(() => {
@@ -82,7 +84,7 @@ test('`centeredSelectionPositioner` can position itself', () => {
     });
 });
 
-test('`floatingSelectionPositioner` can position itself', () => {
+test('`positionerExtension` can position itself', () => {
   const positionerExtension = new PositionerExtension();
   const {
     add,
@@ -98,13 +100,11 @@ test('`floatingSelectionPositioner` can position itself', () => {
 
   add(doc(p('<cursor>')))
     .callback(() => {
-      positionerExtension.addCustomHandler('positioner', floatingSelectionPositioner);
-      floatingSelectionPositioner.addListener('update', floatingMock.onUpdate);
-      floatingSelectionPositioner.addListener('done', floatingMock.onDone);
+      positionerExtension.addCustomHandler('positioner', blockNodePositioner);
+      blockNodePositioner.addListener('update', floatingMock.onUpdate);
+      blockNodePositioner.addListener('done', floatingMock.onDone);
     })
-    .insertText('a')
-    .selectText({ from: 1, to: 2 })
-    .replace('')
+    .insertText('a \n')
     .callback(() => {
       expect(floatingMock.onUpdate).toHaveBeenCalledWith([
         { setElement: expect.any(Function), id: '0' },
@@ -112,14 +112,6 @@ test('`floatingSelectionPositioner` can position itself', () => {
       expect(floatingMock.onDone).toHaveBeenCalledWith([
         { position: expect.any(Object), element: floatingElement, id: '0' },
       ]);
-    })
-    .insertText('hello')
-    .callback(() => {
-      expect(floatingMock.onUpdate).toHaveBeenCalledWith([]);
-    })
-    .selectText({ from: 1, to: 5 })
-    .callback(() => {
-      expect(floatingMock.onUpdate).toHaveBeenCalledWith([]);
     });
 });
 
@@ -137,10 +129,8 @@ test("a custom positioner can define it's own hasChanged behaviour", () => {
     onDone: jest.fn(),
   };
 
-  const customSelectionPositioner = Positioner.fromPositioner(floatingSelectionPositioner, {
-    hasChanged() {
-      return true;
-    },
+  const customSelectionPositioner = Positioner.fromPositioner(nearestWordPositioner, {
+    hasChanged: () => true,
   });
 
   add(doc(p('<cursor>')))
@@ -173,9 +163,9 @@ test("a custom positioner can determine it's own active state", () => {
     onDone: jest.fn(),
   };
 
-  const customSelectionPositioner = Positioner.fromPositioner(centeredSelectionPositioner, {
-    getActive(parameter) {
-      const { state, view } = parameter;
+  const customSelectionPositioner = Positioner.fromPositioner(selectionPositioner, {
+    getActive(props) {
+      const { state, view } = props;
 
       if (isAllSelection(state.selection) === false) {
         return [];

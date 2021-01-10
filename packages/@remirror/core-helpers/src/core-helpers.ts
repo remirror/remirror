@@ -31,8 +31,8 @@ type Falsy = false | 0 | '' | null | undefined;
  *
  * @param arg - the arg to typecast
  */
-export function Cast<Type = any>(parameter: unknown): Type {
-  return parameter as Type;
+export function Cast<Type = any>(value: unknown): Type {
+  return value as Type;
 }
 
 /**
@@ -672,7 +672,7 @@ n.last = 0;
 /**
  * Generate a unique id
  *
- * @param params - the destructured params
+ * @param prefix - a prefix for the generated id.
  * @returns a unique string of specified length
  *
  */
@@ -787,7 +787,7 @@ export function deepMerge<Type = any>(...objects: Array<object | unknown[]>): Ty
   return deepmerge.all<Type>(objects as any, { isMergeableObject: isPlainObject });
 }
 
-interface ClampParameter {
+interface ClampProps {
   min: number;
   max: number;
   value: number;
@@ -796,7 +796,7 @@ interface ClampParameter {
 /**
  * Clamps the value to the provided range.
  */
-export function clamp({ min, max, value }: ClampParameter): number {
+export function clamp({ min, max, value }: ClampProps): number {
   if (value < min) {
     return min;
   }

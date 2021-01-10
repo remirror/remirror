@@ -5,7 +5,7 @@ import {
   extension,
   ExtensionTag,
   keyBinding,
-  KeyBindingParameter,
+  KeyBindingProps,
   MarkExtension,
   MarkExtensionSpec,
   MarkSpecOverride,
@@ -61,8 +61,8 @@ export class UnderlineExtension extends MarkExtension {
    * Attach the keyboard shortcut for formatting the text.
    */
   @keyBinding({ shortcut: NamedShortcut.Underline, command: 'toggleUnderline' })
-  shortcut(parameter: KeyBindingParameter): boolean {
-    return this.toggleUnderline()(parameter);
+  shortcut(props: KeyBindingProps): boolean {
+    return this.toggleUnderline()(props);
   }
 }
 

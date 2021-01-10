@@ -165,8 +165,8 @@ class ExtensionWithHandlers extends PlainExtension<WithHandlers> {
     return 'withHandlers' as const;
   }
 
-  protected onAddCustomHandler: AddCustomHandler<WithHandlers> = (parameter) => {
-    const { bindings } = parameter;
+  protected onAddCustomHandler: AddCustomHandler<WithHandlers> = (props) => {
+    const { bindings } = props;
 
     if (bindings) {
       bindings.a?.('');

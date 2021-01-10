@@ -3,11 +3,11 @@ import { isNumber, isString, uniqueArray, uniqueId } from '@remirror/core-helper
 import type {
   AcceptUndefined,
   CommandFunction,
-  CommandFunctionParameter,
+  CommandFunctionProps,
   EditorSchema,
   EditorState,
   EditorView,
-  FromToParameter,
+  FromToProps,
   Handler,
   MakeRequired,
   Static,
@@ -18,7 +18,7 @@ import { Decoration, DecorationSet, WidgetDecorationSpec } from '@remirror/pm/vi
 
 import { DelayedCommand, DelayedPromiseCreator } from '../commands';
 import { extension, Helper, PlainExtension } from '../extension';
-import { ApplyStateLifecycleParameter, CreateExtensionPlugin } from '../types';
+import { ApplyStateLifecycleProps, CreateExtensionPlugin } from '../types';
 import { command, helper } from './builtin-decorators';
 
 export interface DecorationsOptions {
@@ -215,7 +215,7 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
    * @param state - an optional state. Defaults to using the current state.
    */
   @helper()
-  findPlaceholder(id: unknown, state?: EditorState): Helper<FromToParameter | undefined> {
+  findPlaceholder(id: unknown, state?: EditorState): Helper<FromToProps | undefined> {
     return this.findAllPlaceholders(state).get(id);
   }
 
@@ -225,8 +225,8 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
    * @param state - an optional state. Defaults to using the current state.
    */
   @helper()
-  findAllPlaceholders(state?: EditorState): Helper<Map<unknown, FromToParameter>> {
-    const trackers: Map<unknown, FromToParameter> = new Map();
+  findAllPlaceholders(state?: EditorState): Helper<Map<unknown, FromToProps>> {
+    const trackers: Map<unknown, FromToProps> = new Map();
     const found = this.placeholders.find(undefined, undefined, (spec) => spec.__type === __type);
 
     for (const decoration of found) {
@@ -259,7 +259,7 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
    * This stores all tracked positions in the editor and maps them via the
    * transaction updates.
    */
-  onApplyState({ tr }: ApplyStateLifecycleParameter): void {
+  onApplyState({ tr }: ApplyStateLifecycleProps): void {
     // Get tracker updates from the meta data
     const { added, clearTrackers, removed, updated } = this.getMeta(tr);
 
@@ -484,13 +484,13 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
    *
    * This replaces the whole data value.
    */
-  private updatePlaceholderTransaction<Data = any>(parameter: {
+  private updatePlaceholderTransaction<Data = any>(props: {
     id: unknown;
     data: Data;
     tr: Transaction;
     checkOnly?: boolean;
   }): boolean {
-    const { id, tr, checkOnly = false, data } = parameter;
+    const { id, tr, checkOnly = false, data } = props;
     const existingPosition = this.findPlaceholder(id);
 
     if (!existingPosition) {
@@ -512,12 +512,12 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
    *
    * This should be used to cleanup once the position is no longer needed.
    */
-  private removePlaceholderTransaction(parameter: {
+  private removePlaceholderTransaction(props: {
     id: unknown;
     tr: Transaction;
     checkOnly?: boolean;
   }): boolean {
-    const { id, tr, checkOnly = false } = parameter;
+    const { id, tr, checkOnly = false } = props;
     const existingPosition = this.findPlaceholder(id);
 
     if (!existingPosition) {
@@ -540,11 +540,8 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
    *
    * Otherwise it returns undefined.
    */
-  private clearPlaceholdersTransaction(parameter: {
-    tr: Transaction;
-    checkOnly?: boolean;
-  }): boolean {
-    const { tr, checkOnly = false } = parameter;
+  private clearPlaceholdersTransaction(props: { tr: Transaction; checkOnly?: boolean }): boolean {
+    const { tr, checkOnly = false } = props;
     const positionTrackerState = this.getPluginState();
 
     if (positionTrackerState === DecorationSet.empty) {
@@ -563,17 +560,17 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
    * Handles delayed commands which rely on the
    */
   private readonly createPlaceholderCommand = <Value>(
-    parameter: DelayedPlaceholderCommandParameter<Value>,
+    props: DelayedPlaceholderCommandProps<Value>,
   ): CommandFunction => {
     const id = uniqueId();
-    const { promise, placeholder, onFailure, onSuccess } = parameter;
+    const { promise, placeholder, onFailure, onSuccess } = props;
 
     return new DelayedCommand(promise)
-      .validate((parameter) => {
-        return this.addPlaceholder(id, placeholder)(parameter);
+      .validate((props) => {
+        return this.addPlaceholder(id, placeholder)(props);
       })
-      .success((parameter) => {
-        const { state, tr, dispatch, view, value } = parameter;
+      .success((props) => {
+        const { state, tr, dispatch, view, value } = props;
         const range = this.store.helpers.findPlaceholder(id);
 
         if (!range) {
@@ -585,9 +582,9 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
         return onSuccess(value, range, { state, tr, dispatch, view });
       })
 
-      .failure((parameter) => {
-        this.removePlaceholder(id)({ ...parameter, dispatch: () => {} });
-        return onFailure?.(parameter) ?? false;
+      .failure((props) => {
+        this.removePlaceholder(id)({ ...props, dispatch: () => {} });
+        return onFailure?.(props) ?? false;
       })
       .generateCommand();
   };
@@ -643,7 +640,7 @@ interface BasePlaceholder {
   nodeName?: string;
 }
 
-interface DataParameter<Data = any> {
+interface DataProps<Data = any> {
   /**
    * The data to store for this placeholder.
    */
@@ -652,12 +649,12 @@ interface DataParameter<Data = any> {
 
 interface InlinePlaceholder<Data = any>
   extends BasePlaceholder,
-    Partial<FromToParameter>,
-    DataParameter<Data> {
+    Partial<FromToProps>,
+    DataProps<Data> {
   type: 'inline';
 }
 
-interface NodePlaceholder<Data = any> extends BasePlaceholder, DataParameter<Data> {
+interface NodePlaceholder<Data = any> extends BasePlaceholder, DataProps<Data> {
   /**
    * Set this as a node tracker.
    */
@@ -671,7 +668,7 @@ interface NodePlaceholder<Data = any> extends BasePlaceholder, DataParameter<Dat
   pos: number | null;
 }
 
-export interface WidgetPlaceholder<Data = any> extends BasePlaceholder, DataParameter<Data> {
+export interface WidgetPlaceholder<Data = any> extends BasePlaceholder, DataProps<Data> {
   /**
    * Declare this as a widget tracker.
    *
@@ -729,7 +726,7 @@ function generatePersistentSelectionDecorations(
   return decorationSet.add(doc, [decoration]);
 }
 
-export interface DelayedPlaceholderCommandParameter<Value> {
+export interface DelayedPlaceholderCommandProps<Value> {
   /**
    * A function that returns a promise.
    */
@@ -745,11 +742,7 @@ export interface DelayedPlaceholderCommandParameter<Value> {
    * placeholder can be found (for example, the user has deleted the entire
    * document) then the failure handler is called instead.
    */
-  onSuccess: (
-    value: Value,
-    range: FromToParameter,
-    commandParameter: CommandFunctionParameter,
-  ) => boolean;
+  onSuccess: (value: Value, range: FromToProps, commandProps: CommandFunctionProps) => boolean;
 
   /**
    * Called when a failure is encountered.
@@ -766,7 +759,7 @@ declare global {
        * removes it once it has completed.
        */
       createPlaceholderCommand<Value = any>(
-        parameter: DelayedPlaceholderCommandParameter<Value>,
+        props: DelayedPlaceholderCommandProps<Value>,
       ): CommandFunction;
     }
 

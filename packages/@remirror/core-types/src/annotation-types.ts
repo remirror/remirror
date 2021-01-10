@@ -250,7 +250,7 @@ export type GetMappedCustomHandler<Options extends ValidOptions> = {
 /**
  * The options that can be passed into a constructor.
  */
-export type GetConstructorParameter<Options extends ValidOptions> = GetStatic<Options> &
+export type GetConstructorProps<Options extends ValidOptions> = GetStatic<Options> &
   GetDynamic<Options>;
 
 /**

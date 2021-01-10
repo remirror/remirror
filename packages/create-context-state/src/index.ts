@@ -1,3 +1,3 @@
-export * from './create-context-state';
+export type { ContextHook, CreateContextReturn } from './create-context-hook';
 export { createContextHook } from './create-context-hook';
-export type { CreateContextReturn, ContextHook } from './create-context-hook';
+export * from './create-context-state';

@@ -1,1 +1,1 @@
-export { BundleCommand, HelpCommand, VersionCommand } from './commands';
+export * from './commands';

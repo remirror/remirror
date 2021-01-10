@@ -14,7 +14,7 @@ import {
 import type {
   CommandFunction,
   CustomHandler,
-  KeyBindingParameter,
+  KeyBindingProps,
   KeyBindings,
   ProsemirrorPlugin,
   Selection,
@@ -40,7 +40,7 @@ import { keymap } from '@remirror/pm/keymap';
 
 import { AnyExtension, extension, Helper, PlainExtension } from '../extension';
 import type { AddCustomHandler } from '../extension/base-class';
-import type { OnSetOptionsParameter } from '../types';
+import type { OnSetOptionsProps } from '../types';
 import {
   command,
   helper,
@@ -268,9 +268,9 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
     shortcut: 'ArrowRight',
     isActive: (options) => options.exitMarksOnArrowPress,
   })
-  arrowRight(parameter: KeyBindingParameter): boolean {
+  arrowRight(props: KeyBindingProps): boolean {
     const marks = this.store.markTags[ExtensionTag.PreventExits];
-    return this.exitMarkForwards(marks)(parameter);
+    return this.exitMarkForwards(marks)(props);
   }
 
   /**
@@ -280,10 +280,10 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
     shortcut: 'ArrowLeft',
     isActive: (options) => options.exitMarksOnArrowPress,
   })
-  arrowLeft(parameter: KeyBindingParameter): boolean {
+  arrowLeft(props: KeyBindingProps): boolean {
     const excludedMarks = this.store.markTags[ExtensionTag.PreventExits];
     const excludedNodes = this.store.nodeTags[ExtensionTag.PreventExits];
-    return this.exitMarkBackwards(excludedMarks, excludedNodes)(parameter);
+    return this.exitMarkBackwards(excludedMarks, excludedNodes)(props);
   }
 
   /**
@@ -293,10 +293,10 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
     shortcut: 'Backspace',
     isActive: (options) => options.exitMarksOnArrowPress,
   })
-  backspace(parameter: KeyBindingParameter): boolean {
+  backspace(props: KeyBindingProps): boolean {
     const excludedMarks = this.store.markTags[ExtensionTag.PreventExits];
     const excludedNodes = this.store.nodeTags[ExtensionTag.PreventExits];
-    return this.exitMarkBackwards(excludedMarks, excludedNodes)(parameter);
+    return this.exitMarkBackwards(excludedMarks, excludedNodes)(props);
   }
 
   /**
@@ -370,8 +370,8 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
   /**
    * Handle changes in the dynamic properties.
    */
-  protected onSetOptions(parameter: OnSetOptionsParameter<KeymapOptions>): void {
-    const { changes } = parameter;
+  protected onSetOptions(props: OnSetOptionsProps<KeymapOptions>): void {
+    const { changes } = props;
 
     if (
       changes.excludeBaseKeymap.changed ||
@@ -412,8 +412,8 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
    */
   @command()
   exitMarkForwards(excludedMarks: string[]): CommandFunction {
-    return (parameter) => {
-      const { tr, dispatch } = parameter;
+    return (props) => {
+      const { tr, dispatch } = props;
 
       if (!isEndOfNode(tr.selection)) {
         return false;
@@ -445,8 +445,8 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
    */
   @command()
   exitMarkBackwards(excludedMarks: string[], excludedNodes: string[]): CommandFunction {
-    return (parameter) => {
-      const { tr, dispatch } = parameter;
+    return (props) => {
+      const { tr, dispatch } = props;
 
       if (!isStartOfNode(tr.selection)) {
         return false;
@@ -481,7 +481,7 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
 
       if (parentNode) {
         this.store.commands.toggleBlockNodeItem.original({ type: parentNode.node.type })({
-          ...parameter,
+          ...props,
           dispatch() {},
         });
       }
@@ -531,7 +531,7 @@ function isNamedShortcut(value: string): value is NamedShortcut {
   return includes(values(NamedShortcut), value);
 }
 
-interface ExtractShortcutNamesParameter {
+interface ExtractShortcutNamesProps {
   shortcut: KeyboardShortcut;
   map: ShortcutMap;
   options: Shape;
@@ -543,7 +543,7 @@ function extractShortcutNames({
   map,
   options,
   store,
-}: ExtractShortcutNamesParameter): string[] {
+}: ExtractShortcutNamesProps): string[] {
   if (isString(shortcut)) {
     return [normalizeShortcutName(shortcut, map)];
   }

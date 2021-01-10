@@ -1,4 +1,4 @@
-import { FromToParameter, ProsemirrorNode, Static } from '@remirror/core';
+import { FromToProps, ProsemirrorNode, Static } from '@remirror/core';
 import { DecorationSet } from '@remirror/pm/view';
 
 export interface WhitespaceOptions extends WhitespaceDecoratorSettings {
@@ -48,7 +48,7 @@ export interface WhitespaceDecoratorSettings {
  */
 export type WhitespaceDecorator = (details: WhitespaceRange) => DecorationSet;
 
-export interface WhitespaceRange extends FromToParameter {
+export interface WhitespaceRange extends FromToProps {
   doc: ProsemirrorNode;
   decorationSet: DecorationSet;
 }

@@ -263,7 +263,7 @@ export interface CommandUiDecoratorOptions {
   shortcut?: CommandDecoratorShortcut;
 }
 
-export interface CommandDecoratorMessageParameter {
+export interface CommandDecoratorMessageProps {
   /**
    * True when the command is enabled.
    */
@@ -286,9 +286,11 @@ export interface CommandDecoratorMessageParameter {
   t: I18n['_'];
 }
 
-export type CommandDecoratorValue<Value> =
-  | ((parameter: CommandDecoratorMessageParameter) => Value)
-  | Value;
+/**
+ * @template Value - the value which should be returned from the function or
+ * used directly.
+ */
+export type CommandDecoratorValue<Value> = ((props: CommandDecoratorMessageProps) => Value) | Value;
 
 export type CommandDecoratorMessage = CommandDecoratorValue<string>;
 interface ChainableCommandDecoratorOptions extends Remirror.CommandDecoratorOptions {

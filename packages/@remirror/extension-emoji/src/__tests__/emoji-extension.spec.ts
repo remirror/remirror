@@ -40,14 +40,14 @@ function create(options: EmojiOptions = object()) {
   let command: EmojiCommand | undefined;
 
   const onExit = jest.fn();
-  const onChange: EmojiChangeHandler = jest.fn((parameter, cmd) => {
-    if (parameter.exitReason) {
+  const onChange: EmojiChangeHandler = jest.fn((props, cmd) => {
+    if (props.exitReason) {
       onExit();
       command = undefined;
       emoji = undefined;
     } else {
       command = cmd;
-      emoji = parameter.emojiMatches[0];
+      emoji = props.emojiMatches[0];
     }
   });
 

@@ -9,7 +9,7 @@ import {
   isElementDomNode,
   isString,
   keyBinding,
-  KeyBindingParameter,
+  KeyBindingProps,
   MarkExtension,
   MarkExtensionSpec,
   markInputRule,
@@ -130,8 +130,8 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
    * the `toggleBold` command.
    */
   @keyBinding({ shortcut: NamedShortcut.Bold, command: 'toggleBold' })
-  shortcut(parameter: KeyBindingParameter): boolean {
-    return this.toggleBold()(parameter);
+  shortcut(props: KeyBindingProps): boolean {
+    return this.toggleBold()(props);
   }
 }
 

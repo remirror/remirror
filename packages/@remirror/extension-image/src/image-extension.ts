@@ -135,8 +135,8 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
       uploadImage: (value: DelayedValue<ImageAttributes>): CommandFunction => {
         return delayedCommand({
           promise: value,
-          immediate: (parameter) => {
-            const { empty, anchor } = parameter.tr.selection;
+          immediate: (props) => {
+            const { empty, anchor } = props.tr.selection;
             const { createPlaceholder, updatePlaceholder, destroyPlaceholder } = this.options;
 
             return this.store.commands.addPlaceholder.original(
@@ -155,7 +155,7 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
                 },
               },
               !empty,
-            )(parameter);
+            )(props);
           },
           onDone: ({ value, ...rest }) => {
             const range = this.store.helpers.findPlaceholder(value);
@@ -169,7 +169,7 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
             return true;
           },
           // Cleanup in case of an error.
-          onFail: (parameter) => this.store.commands.removePlaceholder.original(value)(parameter),
+          onFail: (props) => this.store.commands.removePlaceholder.original(value)(props),
         });
       },
     };

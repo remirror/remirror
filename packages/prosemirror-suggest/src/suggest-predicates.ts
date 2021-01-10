@@ -3,12 +3,12 @@ import { TextSelection } from 'prosemirror-state';
 import { includes, isObject, isString } from '@remirror/core-helpers';
 
 import type {
-  CompareMatchParameter,
+  CompareMatchProps,
   EditorSchema,
-  SelectionParameter,
+  SelectionProps,
   SuggestMatch,
   SuggestReasonMap,
-  SuggestStateMatchParameter,
+  SuggestStateMatchProps,
 } from './suggest-types';
 import { ChangeReason, ExitReason } from './suggest-types';
 
@@ -16,8 +16,8 @@ import { ChangeReason, ExitReason } from './suggest-types';
  * Is this a change in the current suggestion (added or deleted characters)?
  */
 export function isChange<Schema extends EditorSchema = EditorSchema>(
-  compare: Partial<CompareMatchParameter<Schema>>,
-): compare is CompareMatchParameter<Schema> {
+  compare: Partial<CompareMatchProps<Schema>>,
+): compare is CompareMatchProps<Schema> {
   return !!(compare.prev && compare.next && compare.prev.text.full !== compare.next.text.full);
 }
 
@@ -25,9 +25,9 @@ export function isChange<Schema extends EditorSchema = EditorSchema>(
  * Is this is a repetition of the same check?
  */
 export function isIdentical<Schema extends EditorSchema = EditorSchema>(
-  compare: Partial<CompareMatchParameter<Schema>>,
+  compare: Partial<CompareMatchProps<Schema>>,
   match: SuggestReasonMap<Schema>,
-): compare is CompareMatchParameter<Schema> {
+): compare is CompareMatchProps<Schema> {
   return !!(
     compare.prev &&
     compare.next &&
@@ -42,8 +42,8 @@ export function isIdentical<Schema extends EditorSchema = EditorSchema>(
  * characters)?
  */
 export function isMove<Schema extends EditorSchema = EditorSchema>(
-  compare: Partial<CompareMatchParameter<Schema>>,
-): compare is CompareMatchParameter<Schema> {
+  compare: Partial<CompareMatchProps<Schema>>,
+): compare is CompareMatchProps<Schema> {
   return !!(
     compare.prev &&
     compare.next &&
@@ -55,8 +55,8 @@ export function isMove<Schema extends EditorSchema = EditorSchema>(
  * Are we entering a new suggestion?
  */
 export function isEntry<Schema extends EditorSchema = EditorSchema>(
-  compare: Partial<CompareMatchParameter<Schema>>,
-): compare is Pick<CompareMatchParameter<Schema>, 'next'> {
+  compare: Partial<CompareMatchProps<Schema>>,
+): compare is Pick<CompareMatchProps<Schema>, 'next'> {
   return !!(!compare.prev && compare.next);
 }
 
@@ -64,8 +64,8 @@ export function isEntry<Schema extends EditorSchema = EditorSchema>(
  * Are we exiting a suggestion?
  */
 export function isExit<Schema extends EditorSchema = EditorSchema>(
-  compare: Partial<CompareMatchParameter<Schema>>,
-): compare is Pick<CompareMatchParameter<Schema>, 'prev'> {
+  compare: Partial<CompareMatchProps<Schema>>,
+): compare is Pick<CompareMatchProps<Schema>, 'prev'> {
   return !!(compare.prev && !compare.next);
 }
 
@@ -73,8 +73,8 @@ export function isExit<Schema extends EditorSchema = EditorSchema>(
  * Is this a jump from one suggestion to another?
  */
 export function isJump<Schema extends EditorSchema = EditorSchema>(
-  compare: Partial<CompareMatchParameter<Schema>>,
-): compare is CompareMatchParameter<Schema> {
+  compare: Partial<CompareMatchProps<Schema>>,
+): compare is CompareMatchProps<Schema> {
   return !!(compare.prev && compare.next && compare.prev.range.from !== compare.next.range.from);
 }
 
@@ -172,9 +172,9 @@ export function isValidMatch<Schema extends EditorSchema = EditorSchema>(
  * True when the current selection is outside the match.
  */
 export function selectionOutsideMatch<Schema extends EditorSchema = EditorSchema>(
-  parameter: Partial<SuggestStateMatchParameter<Schema>> & SelectionParameter<Schema>,
+  props: Partial<SuggestStateMatchProps<Schema>> & SelectionProps<Schema>,
 ): boolean {
-  const { match, selection } = parameter;
+  const { match, selection } = props;
   return !!match && (selection.from < match.range.from || selection.from > match.range.to);
 }
 

@@ -26,12 +26,12 @@ test('supports a custom root element', () => {
 test('supports a custom ref label and passed props through', () => {
   const Component = () => {
     const context = useRemirrorContext();
-    const props = context.getRootProps({ refKey: 'customRef', testProp });
+    const props = context.getRootProps({ refKey: 'customRef', testProps });
     mock(props);
     return <div ref={props.customRef} />;
   };
 
-  const testProp = 'test';
+  const testProps = 'test';
   strictRender(
     <Remirror manager={createReactManager([])}>
       <Component />
@@ -39,7 +39,7 @@ test('supports a custom ref label and passed props through', () => {
   );
 
   expect(mock.mock.calls[0][0].customRef).toBeFunction();
-  expect(mock.mock.calls[0][0].testProp).toBe(testProp);
+  expect(mock.mock.calls[0][0].testProps).toBe(testProps);
 });
 
 describe('nestedRootProps', () => {

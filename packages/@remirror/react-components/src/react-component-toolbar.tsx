@@ -22,7 +22,7 @@ import { Except } from 'type-fest';
 
 import {
   AnyExtension,
-  CommandDecoratorMessageParameter,
+  CommandDecoratorMessageProps,
   ErrorConstant,
   includes,
   invariant,
@@ -101,10 +101,10 @@ const ToolbarCommandButton = (props: ToolbarCommandButtonProps) => {
 
   const enabled = commands[name]?.isEnabled(attrs) ?? false;
   const isActive = active[options.name]?.(attrs) ?? false;
-  const parameter: CommandDecoratorMessageParameter = { active: isActive, attrs, enabled, t };
-  const description = getCommandOptionValue(options.description, parameter);
-  const label = getCommandOptionValue(options.label, parameter);
-  const icon = getCommandOptionValue(options.icon, parameter);
+  const commandProps: CommandDecoratorMessageProps = { active: isActive, attrs, enabled, t };
+  const description = getCommandOptionValue(options.description, commandProps);
+  const label = getCommandOptionValue(options.label, commandProps);
+  const icon = getCommandOptionValue(options.icon, commandProps);
   const shortcutString =
     displayShortcut && options.shortcut
       ? ` (${getShortcutString(getUiShortcutString(options.shortcut, attrs ?? {}), { t })})`

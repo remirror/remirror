@@ -1,4 +1,5 @@
-import { Coords, Positioner, selectionPositioner } from '@remirror/extension-positioner';
+import { Coords } from '@remirror/core';
+import { Positioner, selectionPositioner } from '@remirror/extension-positioner';
 
 import type { Annotation } from './types';
 
@@ -26,8 +27,8 @@ export function createCenteredAnnotationPositioner(
   getAnnotationsAt: GetAnnotationsAt,
 ): Positioner<{ from: Coords; to: Coords }> {
   return selectionPositioner.clone({
-    getActive: (parameter) => {
-      const { state, view } = parameter;
+    getActive: (props) => {
+      const { state, view } = props;
 
       if (!state.selection.empty) {
         return [];

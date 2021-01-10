@@ -7,20 +7,20 @@ import {
   DOMOutputSpec,
   findParentNodeOfType,
   flattenArray,
-  FromToParameter,
+  FromToProps,
   isEqual,
   isObject,
   isString,
   NodeType,
-  NodeTypeParameter,
+  NodeTypeProps,
   NodeWithPosition,
   object,
   omitExtraAttributes,
-  PosParameter,
+  PosProps,
   ProsemirrorAttributes,
   ProsemirrorNode,
   range,
-  TextParameter,
+  TextProps,
 } from '@remirror/core';
 import { ExtensionCodeMessages } from '@remirror/messages';
 import { TextSelection } from '@remirror/pm/state';
@@ -30,14 +30,14 @@ import type { CodeBlockAttributes, CodeBlockOptions, FormattedContent } from './
 
 export const dataAttribute = 'data-code-block-language';
 
-interface ParsedRefractorNode extends TextParameter {
+interface ParsedRefractorNode extends TextProps {
   /**
    * The classes that will wrap the node
    */
   classes: string[];
 }
 
-interface PositionedRefractorNode extends FromToParameter, ParsedRefractorNode {}
+interface PositionedRefractorNode extends FromToProps, ParsedRefractorNode {}
 
 /**
  * Maps the refractor nodes into text and classes which will be used to create
@@ -68,7 +68,7 @@ function parseRefractorNodes(
   });
 }
 
-interface CreateDecorationsParameter {
+interface CreateDecorationsProps {
   defaultLanguage: string;
 
   /**
@@ -90,16 +90,16 @@ interface CreateDecorationsParameter {
 /**
  * Retrieves positioned refractor nodes from the positionedNode
  *
- * @param nodeWithPosition - a node and position
+ * @param nodeWithPos - a node and position
  * @param plainTextClassName - a class to assign to text nodes on the top-level
  * @returns the positioned refractor nodes which are text, classes and a FromTo
  * interface
  */
 function getPositionedRefractorNodes(
-  parameter: NodeWithPosition,
+  nodeWithPos: NodeWithPosition,
   plainTextClassName: string | undefined,
 ) {
-  const { node, pos } = parameter;
+  const { node, pos } = nodeWithPos;
   const refractorNodes = refractor.highlight(
     node.textContent ?? '',
     node.attrs.language?.replace('language-', '') ?? 'markup',
@@ -125,8 +125,8 @@ function getPositionedRefractorNodes(
 /**
  * Creates a decoration set for the provided blocks
  */
-export function createDecorations(parameter: CreateDecorationsParameter): Decoration[] {
-  const { blocks, skipLast, plainTextClassName } = parameter;
+export function createDecorations(props: CreateDecorationsProps): Decoration[] {
+  const { blocks, skipLast, plainTextClassName } = props;
   const decorations: Decoration[] = [];
 
   for (const block of blocks) {
@@ -205,7 +205,7 @@ export function updateNodeAttributes(type: NodeType) {
   };
 }
 
-interface GetLanguageParameter {
+interface GetLanguageProps {
   /**
    * The language input from the user;
    */
@@ -220,8 +220,8 @@ interface GetLanguageParameter {
 /**
  * Get the language from user input.
  */
-export function getLanguage(parameter: GetLanguageParameter): string {
-  const { language, fallback } = parameter;
+export function getLanguage(props: GetLanguageProps): string {
+  const { language, fallback } = props;
 
   if (!language) {
     return fallback;
@@ -254,17 +254,17 @@ export function codeBlockToDOM(node: ProsemirrorNode, extra: ApplySchemaAttribut
   return ['pre', attributes, ['code', { [dataAttribute]: language }, 0]];
 }
 
-interface FormatCodeBlockFactoryParameter
-  extends NodeTypeParameter,
+interface FormatCodeBlockFactoryProps
+  extends NodeTypeProps,
     Required<Pick<CodeBlockOptions, 'formatter' | 'defaultLanguage'>> {}
 
 /**
  * A factory for creating a command which can format a selected codeBlock (or
  * one located at the provided position).
  */
-export function formatCodeBlockFactory(parameter: FormatCodeBlockFactoryParameter) {
-  return ({ pos }: Partial<PosParameter> = object()): CommandFunction => ({ tr, dispatch }) => {
-    const { type, formatter, defaultLanguage: fallback } = parameter;
+export function formatCodeBlockFactory(props: FormatCodeBlockFactoryProps) {
+  return ({ pos }: Partial<PosProps> = object()): CommandFunction => ({ tr, dispatch }) => {
+    const { type, formatter, defaultLanguage: fallback } = props;
     const { selection } = tr;
 
     const { from, to } = pos ? { from: pos, to: pos } : selection;

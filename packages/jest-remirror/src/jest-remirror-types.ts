@@ -1,6 +1,6 @@
 import type {
   AnyExtension,
-  AttributesParameter,
+  AttributesProps,
   EditorSchema,
   ProsemirrorAttributes,
   ProsemirrorNode,
@@ -8,8 +8,8 @@ import type {
 import type { DomFrameworkProps } from '@remirror/dom';
 import type { CreateCoreManagerOptions } from '@remirror/preset-core';
 
-export interface BaseFactoryParameter<Schema extends EditorSchema = EditorSchema>
-  extends Partial<AttributesParameter> {
+export interface BaseFactoryProps<Schema extends EditorSchema = EditorSchema>
+  extends Partial<AttributesProps> {
   /**
    * The name of the node or mark
    */
@@ -102,7 +102,7 @@ export type NodeWithoutAttributes<Names extends string> = {
   [P in Names]: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
 };
 
-export interface RenderEditorParameter<ExtensionUnion extends AnyExtension>
+export interface RenderEditorProps<ExtensionUnion extends AnyExtension>
   extends CreateCoreManagerOptions {
   props?: Partial<Omit<DomFrameworkProps<ExtensionUnion>, 'manager'>>;
 

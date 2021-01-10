@@ -7,7 +7,7 @@ import {
   DispatchFunction,
   extension,
   findMatches,
-  FromToParameter,
+  FromToProps,
   getSelectedWord,
   Handler,
   isEmptyArray,
@@ -118,7 +118,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
 
   private _updating = false;
   private _searchTerm?: string;
-  private _results: FromToParameter[] = [];
+  private _results: FromToProps[] = [];
   private _activeIndex = 0;
 
   createCommands() {
@@ -326,7 +326,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
     };
   }
 
-  private rebaseNextResult({ replacement, index, lastOffset = 0 }: RebaseNextResultParameter) {
+  private rebaseNextResult({ replacement, index, lastOffset = 0 }: RebaseNextResultProps) {
     const nextIndex = index + 1;
 
     if (!this._results[nextIndex]) {
@@ -433,13 +433,13 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
   }
 }
 
-interface RebaseNextResultParameter {
+interface RebaseNextResultProps {
   replacement: string;
   index: number;
   lastOffset?: number;
 }
 
-interface RotateHighlightedIndexParameter {
+interface RotateHighlightedIndexProps {
   /**
    * Whether the search is moving forward or backward.
    */
@@ -455,8 +455,8 @@ interface RotateHighlightedIndexParameter {
    */
   previousIndex: number;
 }
-export const rotateHighlightedIndex = (parameter: RotateHighlightedIndexParameter): number => {
-  const { direction, resultsLength, previousIndex } = parameter;
+export const rotateHighlightedIndex = (props: RotateHighlightedIndexProps): number => {
+  const { direction, resultsLength, previousIndex } = props;
 
   return direction === 'next'
     ? previousIndex + 1 > resultsLength - 1

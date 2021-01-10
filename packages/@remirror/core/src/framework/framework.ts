@@ -29,21 +29,21 @@ import type { BuiltinPreset, UpdatableViewProps } from '../builtins';
 import { CommandsExtension } from '../builtins';
 import type { AnyExtension, CommandsFromExtensions, GetSchema } from '../extension';
 import type { RemirrorManager } from '../manager';
-import type { StateUpdateLifecycleParameter } from '../types';
+import type { StateUpdateLifecycleProps } from '../types';
 import type {
   AddFrameworkHandler,
   BaseFramework,
   CreateStateFromContent,
   FocusType,
   FrameworkEvents,
+  FrameworkOptions,
   FrameworkOutput,
-  FrameworkParameter,
   FrameworkProps,
-  ListenerParameter,
-  RemirrorEventListenerParameter,
-  TriggerChangeParameter,
+  ListenerProps,
+  RemirrorEventListenerProps,
+  TriggerChangeProps,
   UpdatableViewPropsObject,
-  UpdateStateParameter,
+  UpdateStateProps,
 } from './base-framework';
 
 /**
@@ -208,8 +208,8 @@ export abstract class Framework<
     return this.#initialEditorState;
   }
 
-  constructor(parameter: FrameworkParameter<ExtensionUnion, Props>) {
-    const { getProps, createStateFromContent, initialEditorState, element } = parameter;
+  constructor(options: FrameworkOptions<ExtensionUnion, Props>) {
+    const { getProps, createStateFromContent, initialEditorState, element } = options;
 
     this.#getProps = getProps;
     this.createStateFromContent = createStateFromContent;
@@ -233,9 +233,9 @@ export abstract class Framework<
    * Setup the manager event listeners which are disposed of when the manager is
    * destroyed.
    */
-  private updateListener(parameter: StateUpdateLifecycleParameter) {
-    const { state, tr } = parameter;
-    return this.#events.emit('updated', this.eventListenerParameter({ state, tr }));
+  private updateListener(props: StateUpdateLifecycleProps) {
+    const { state, tr } = props;
+    return this.#events.emit('updated', this.eventListenerProps({ state, tr }));
   }
 
   /**
@@ -246,8 +246,8 @@ export abstract class Framework<
    * You can call the update method with the new `props` to update the internal
    * state of this instance.
    */
-  update(parameter: FrameworkParameter<ExtensionUnion, Props>): this {
-    const { getProps, createStateFromContent } = parameter;
+  update(options: FrameworkOptions<ExtensionUnion, Props>): this {
+    const { getProps, createStateFromContent } = options;
     this.#getProps = getProps;
     this.createStateFromContent = createStateFromContent;
 
@@ -280,7 +280,7 @@ export abstract class Framework<
    *
    * It must be implemented.
    */
-  protected abstract updateState(parameter: UpdateStateParameter<this['~Sch']>): void;
+  protected abstract updateState(props: UpdateStateProps<this['~Sch']>): void;
 
   /**
    * Update the view props.
@@ -302,7 +302,7 @@ export abstract class Framework<
 
     // The attributes which were passed in as props.
     const propAttributes = isFunction(attributes)
-      ? attributes(this.eventListenerParameter())
+      ? attributes(this.eventListenerProps())
       : attributes;
 
     // Whether or not the editor is focused.
@@ -404,8 +404,8 @@ export abstract class Framework<
   /**
    * Use this method in the `onUpdate` event to run all change handlers.
    */
-  readonly onChange = (parameter: ListenerParameter<ExtensionUnion> = object()): void => {
-    this.props.onChange?.(this.eventListenerParameter(parameter));
+  readonly onChange = (props: ListenerProps<ExtensionUnion> = object()): void => {
+    this.props.onChange?.(this.eventListenerProps(props));
 
     if (this.#firstRender) {
       this.#firstRender = false;
@@ -416,20 +416,20 @@ export abstract class Framework<
    * Listener for editor 'blur' events
    */
   private readonly onBlur = (event: Event) => {
-    const parameter = this.eventListenerParameter();
+    const props = this.eventListenerProps();
 
-    this.props.onBlur?.(parameter, event);
-    this.#events.emit('blur', parameter, event);
+    this.props.onBlur?.(props, event);
+    this.#events.emit('blur', props, event);
   };
 
   /**
    * Listener for editor 'focus' events
    */
   private readonly onFocus = (event: Event) => {
-    const parameter = this.eventListenerParameter();
+    const props = this.eventListenerProps();
 
-    this.props.onFocus?.(parameter, event);
-    this.#events.emit('focus', parameter, event);
+    this.props.onFocus?.(props, event);
+    this.#events.emit('focus', props, event);
   };
 
   /**
@@ -440,7 +440,7 @@ export abstract class Framework<
    */
   private readonly setContent = (
     content: RemirrorContentType,
-    { triggerChange = false }: TriggerChangeParameter = {},
+    { triggerChange = false }: TriggerChangeProps = {},
   ) => {
     const state = this.createStateFromContent(content);
 
@@ -457,18 +457,18 @@ export abstract class Framework<
    * @param triggerChange - whether to notify the onChange handler that the
    * content has been reset
    */
-  private readonly clearContent = ({ triggerChange = false }: TriggerChangeParameter = {}) => {
+  private readonly clearContent = ({ triggerChange = false }: TriggerChangeProps = {}) => {
     this.setContent(this.manager.createEmptyDoc(), { triggerChange });
   };
 
   /**
-   * Creates the parameters passed into all event listener handlers. e.g.
+   * Creates the props passed into all event listener handlers. e.g.
    * `onChange`
    */
-  protected eventListenerParameter(
-    parameter: ListenerParameter<ExtensionUnion> = object(),
-  ): RemirrorEventListenerParameter<ExtensionUnion> {
-    const { state, tr } = parameter;
+  protected eventListenerProps(
+    props: ListenerProps<ExtensionUnion> = object(),
+  ): RemirrorEventListenerProps<ExtensionUnion> {
+    const { state, tr } = props;
 
     return {
       tr,

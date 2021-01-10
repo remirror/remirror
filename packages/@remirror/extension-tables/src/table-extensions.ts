@@ -2,7 +2,7 @@ import {
   ApplySchemaAttributes,
   command,
   CommandFunction,
-  CommandFunctionParameter,
+  CommandFunctionProps,
   convertCommand,
   EditorState,
   extension,
@@ -14,9 +14,9 @@ import {
   NodeSpecOverride,
   nonChainable,
   NonChainableCommandFunction,
-  OnSetOptionsParameter,
+  OnSetOptionsProps,
   ProsemirrorPlugin,
-  StateUpdateLifecycleParameter,
+  StateUpdateLifecycleProps,
 } from '@remirror/core';
 import { ExtensionTablesMessages as Messages } from '@remirror/messages';
 import { TextSelection } from '@remirror/pm/state';
@@ -98,8 +98,8 @@ export class TableExtension extends NodeExtension<TableOptions> {
     return [new TableRowExtension({ priority: ExtensionPriority.Low })];
   }
 
-  onStateUpdate(parameter: StateUpdateLifecycleParameter): void {
-    const { tr, state } = parameter;
+  onStateUpdate(props: StateUpdateLifecycleProps): void {
+    const { tr, state } = props;
 
     if (tr?.getMeta(fixTablesKey)?.fixTables) {
       this.lastGoodState = state;
@@ -124,8 +124,8 @@ export class TableExtension extends NodeExtension<TableOptions> {
    */
   @command(createTableCommand)
   createTable(options: CreateTableCommand = {}): CommandFunction {
-    return (parameter) => {
-      const { tr, dispatch, state } = parameter;
+    return (props) => {
+      const { tr, dispatch, state } = props;
 
       if (!tr.selection.empty) {
         return false;
@@ -283,8 +283,8 @@ export class TableExtension extends NodeExtension<TableOptions> {
   /**
    * This managers the updates of the collaboration provider.
    */
-  protected onSetOptions(parameter: OnSetOptionsParameter<TableOptions>): void {
-    const { changes } = parameter;
+  protected onSetOptions(props: OnSetOptionsProps<TableOptions>): void {
+    const { changes } = props;
 
     // TODO move this into a new method in `plugins-extension`.
     if (changes.resizable.changed) {
@@ -366,7 +366,7 @@ function fixTablesCommand(lastGoodState?: EditorState): CommandFunction {
   };
 }
 
-function toggleMergeCellCommand({ state, dispatch }: CommandFunctionParameter) {
+function toggleMergeCellCommand({ state, dispatch }: CommandFunctionProps) {
   if (mergeCells(state, dispatch)) {
     return false;
   }

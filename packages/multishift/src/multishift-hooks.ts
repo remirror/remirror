@@ -9,7 +9,7 @@ import { isEmptyArray } from '@remirror/core-helpers';
 
 import { multishiftReducer } from './multishift-reducer';
 import type {
-  A11yStatusMessageParameter,
+  A11yStatusMessageProps,
   GetA11yStatusMessage,
   ItemsToString,
   MultishiftA11yIdProps,
@@ -30,19 +30,19 @@ import {
  * Creates the reducer for managing the multishift internal state.
  */
 export function useMultishiftReducer<Item = any>(
-  parameter: MultishiftProps<Item>,
+  props: MultishiftProps<Item>,
 ): [MultishiftState<Item>, Dispatch<MultishiftRootActions<Item>>] {
-  const { stateReducer, ...props } = parameter;
-  const initialState = getInitialStateProps<Item>(props);
+  const { stateReducer, ...rest } = props;
+  const initialState = getInitialStateProps<Item>(rest);
 
   return useReducer((prevState: MultishiftState<Item>, action: MultishiftRootActions<Item>) => {
-    const [state, changes] = multishiftReducer(prevState, action, props);
+    const [state, changes] = multishiftReducer(prevState, action, rest);
     const changeset = { changes, state, prevState };
 
-    callChangeHandlers(props, changeset);
+    callChangeHandlers(rest, changeset);
 
     if (stateReducer) {
-      return stateReducer(changeset, action, props);
+      return stateReducer(changeset, action, rest);
     }
 
     return state;
@@ -103,7 +103,7 @@ const defaultGetA11yStatusMessage = <Item = any>({
   items,
   state: { selectedItems, isOpen },
   itemsToString = defaultItemsToString,
-}: A11yStatusMessageParameter<Item>) => {
+}: A11yStatusMessageProps<Item>) => {
   if (!isEmptyArray(selectedItems)) {
     return `${itemsToString(selectedItems)} has been selected.`;
   }

@@ -632,7 +632,7 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
     clearInputValue: actions.clearInputValue,
     clearJumpText: actions.clearJumpText,
 
-    // Prop Getters
+    // Props Getters
     getMenuProps,
     getComboBoxProps,
     getToggleButtonProps,

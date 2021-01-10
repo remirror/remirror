@@ -3,7 +3,7 @@ import {
   extension,
   isDefaultDocNode,
   ManagerPhase,
-  OnSetOptionsParameter,
+  OnSetOptionsProps,
   PlainExtension,
   ProsemirrorAttributes,
   Transaction,
@@ -66,8 +66,8 @@ export class PlaceholderExtension extends PlainExtension<PlaceholderOptions> {
     };
   }
 
-  protected onSetOptions(parameter: OnSetOptionsParameter<PlaceholderOptions>): void {
-    const { changes } = parameter;
+  protected onSetOptions(props: OnSetOptionsProps<PlaceholderOptions>): void {
+    const { changes } = props;
 
     if (changes.placeholder.changed && this.store.phase >= ManagerPhase.EditorView) {
       // update the attributes object
@@ -76,7 +76,7 @@ export class PlaceholderExtension extends PlainExtension<PlaceholderOptions> {
   }
 }
 
-interface SharedParameter {
+interface SharedProps {
   /**
    * A reference to the extension
    */
@@ -87,7 +87,7 @@ interface SharedParameter {
   state: EditorState;
 }
 
-interface ApplyStateParameter extends SharedParameter {
+interface ApplyStateProps extends SharedProps {
   /**
    * The plugin state passed through to apply
    */
@@ -102,9 +102,11 @@ interface ApplyStateParameter extends SharedParameter {
 /**
  * Apply state for managing the created placeholder plugin.
  *
- * @param params
+ * @param props
  */
-function applyState({ pluginState, extension, tr, state }: ApplyStateParameter) {
+function applyState(props: ApplyStateProps) {
+  const { pluginState, extension, tr, state } = props;
+
   if (!tr.docChanged) {
     return pluginState;
   }
@@ -115,10 +117,10 @@ function applyState({ pluginState, extension, tr, state }: ApplyStateParameter) 
 /**
  * Creates a decoration set from the passed through state.
  *
- * @param params.extension
- * @param params.state
+ * @param props - see [[`SharedProps`]]
  */
-function createDecorationSet({ extension, state }: SharedParameter) {
+function createDecorationSet(props: SharedProps) {
+  const { extension, state } = props;
   const { empty } = extension.pluginKey.getState(state) as PlaceholderPluginState;
   const { emptyNodeClass, placeholder } = extension.options;
 

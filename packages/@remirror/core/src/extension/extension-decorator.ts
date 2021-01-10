@@ -17,7 +17,7 @@ import type {
 import type { AnyExtensionConstructor, DefaultExtensionOptions, ExtensionConstructor } from '.';
 import type { HandlerKeyOptions } from './base-class';
 
-interface DefaultOptionsParameter<Options extends Shape = EmptyShape> {
+interface DefaultOptionsProps<Options extends Shape = EmptyShape> {
   /**
    * The default options.
    *
@@ -61,7 +61,7 @@ interface DefaultOptionsParameter<Options extends Shape = EmptyShape> {
   defaultOptions: DefaultExtensionOptions<Options>;
 }
 
-interface DefaultPriorityParameter {
+interface DefaultPriorityProps {
   /**
    * The default priority for this extension.
    *
@@ -70,7 +70,7 @@ interface DefaultPriorityParameter {
   defaultPriority?: ExtensionPriority;
 }
 
-interface StaticKeysParameter<Options extends Shape = EmptyShape> {
+interface StaticKeysProps<Options extends Shape = EmptyShape> {
   /**
    * The list of all keys which are static and can only be set at the start.
    */
@@ -97,7 +97,7 @@ interface StaticKeysParameter<Options extends Shape = EmptyShape> {
  * when the handler is called with `this.options.onChange`, each item in the
  * array is called based on the rules provided.
  */
-interface HandlerKeysParameter<Options extends Shape = EmptyShape> {
+interface HandlerKeysProps<Options extends Shape = EmptyShape> {
   /**
    * The list of the option names which are event handlers.
    */
@@ -127,28 +127,22 @@ type MappedHandlerKeyOptions<Options extends Shape = EmptyShape> = {
   >;
 } & { __ALL__?: HandlerKeyOptions };
 
-interface CustomHandlerKeysParameter<Options extends Shape = EmptyShape> {
+interface CustomHandlerKeysProps<Options extends Shape = EmptyShape> {
   customHandlerKeys: CustomHandlerKeyList<Options>;
 }
 
-export type ExtensionDecoratorOptions<
-  Options extends Shape = EmptyShape
-> = DefaultPriorityParameter &
+export type ExtensionDecoratorOptions<Options extends Shape = EmptyShape> = DefaultPriorityProps &
   IfHasRequiredProperties<
     DefaultExtensionOptions<Options>,
-    DefaultOptionsParameter<Options>,
-    Partial<DefaultOptionsParameter<Options>>
+    DefaultOptionsProps<Options>,
+    Partial<DefaultOptionsProps<Options>>
   > &
-  IfEmpty<GetStatic<Options>, Partial<StaticKeysParameter<Options>>, StaticKeysParameter<Options>> &
-  IfEmpty<
-    GetHandler<Options>,
-    Partial<HandlerKeysParameter<Options>>,
-    HandlerKeysParameter<Options>
-  > &
+  IfEmpty<GetStatic<Options>, Partial<StaticKeysProps<Options>>, StaticKeysProps<Options>> &
+  IfEmpty<GetHandler<Options>, Partial<HandlerKeysProps<Options>>, HandlerKeysProps<Options>> &
   IfEmpty<
     GetCustomHandler<Options>,
-    Partial<CustomHandlerKeysParameter<Options>>,
-    CustomHandlerKeysParameter<Options>
+    Partial<CustomHandlerKeysProps<Options>>,
+    CustomHandlerKeysProps<Options>
   > &
   Partial<Remirror.StaticExtensionOptions>;
 

@@ -1,8 +1,8 @@
 export type {
-  RemoveMarkParameter,
-  ReplaceTextParameter,
-  ToggleBlockItemParameter,
-  UpdateMarkParameter,
+  RemoveMarkProps,
+  ReplaceTextProps,
+  ToggleBlockItemProps,
+  UpdateMarkProps,
 } from './command-utils';
 export {
   isChrome,
@@ -17,16 +17,16 @@ export {
   wrapIn,
 } from './command-utils';
 export type {
-  CreateDocumentNodeParameter,
-  CustomDocumentParameter,
+  CreateDocumentNodeProps,
+  CustomDocumentProps,
   GetMarkRange,
   InvalidContentBlock,
   InvalidContentHandler,
-  InvalidContentHandlerParameter,
+  InvalidContentHandlerProps,
   NamedStringHandlers,
   StringHandler,
   StringHandlerOptions,
-  StringHandlerParameter,
+  StringHandlerProps,
 } from './core-utils';
 export {
   areSchemasCompatible,
@@ -100,11 +100,7 @@ export {
   findTextNodes,
   getChangedNodes,
 } from './prosemirror-node-utils';
-export type {
-  ShouldSkipFunction,
-  ShouldSkipParameter,
-  SkippableInputRule,
-} from './prosemirror-rules';
+export type { ShouldSkipFunction, ShouldSkipProps, SkippableInputRule } from './prosemirror-rules';
 export { markInputRule, nodeInputRule, plainInputRule } from './prosemirror-rules';
 export type { FindProsemirrorNodeResult, SchemaJSON } from './prosemirror-utils';
 export {

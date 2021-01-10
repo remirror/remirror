@@ -34,18 +34,18 @@ import type {
 } from '@remirror/core-types';
 
 import type {
-  AppendLifecycleParameter,
-  ApplyStateLifecycleParameter,
+  AppendLifecycleProps,
+  ApplyStateLifecycleProps,
   BaseExtensionOptions,
   ExtensionCommandReturn,
   ExtensionHelperReturn,
-  StateUpdateLifecycleParameter,
+  StateUpdateLifecycleProps,
 } from '../types';
 import {
   AnyBaseClassOverrides,
   BaseClass,
   BaseClassConstructor,
-  ConstructorParameter,
+  ConstructorProps,
   DefaultOptions,
 } from './base-class';
 
@@ -53,7 +53,7 @@ import {
  * Auto infers the parameter for the constructor. If there is a required static
  * option then the TypeScript compiler will error if nothing is passed in.
  */
-export type ExtensionConstructorParameter<Options extends ValidOptions> = ConstructorParameter<
+export type ExtensionConstructorProps<Options extends ValidOptions> = ConstructorProps<
   Options,
   BaseExtensionOptions
 >;
@@ -189,8 +189,8 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
    */
   private _store?: Remirror.ExtensionStore;
 
-  constructor(...parameters: ExtensionConstructorParameter<Options>) {
-    super(defaultOptions, ...parameters);
+  constructor(...args: ExtensionConstructorProps<Options>) {
+    super(defaultOptions, ...args);
 
     // Create the extension list.
     this._extensions = uniqueBy(
@@ -282,7 +282,7 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
    * extensions. It is the spiritual replacement of the `Preset` extension.
    *
    * ```ts
-   * import { PlainExtension, OnSetOptionsParameter } from 'remirror';
+   * import { PlainExtension, OnSetOptionsProps } from 'remirror';
    *
    * interface ParentOptions { weight?: string }
    *
@@ -295,7 +295,7 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
    *     return [new BoldExtension()]
    *   }
    *
-   *   onSetOptions(options: OnSetOptionsParameter<ParentOptions>): void {
+   *   onSetOptions(options: OnSetOptionsProps<ParentOptions>): void {
    *     if (options.changes.weight.changed) {
    *       // Update the value of the provided extension.
    *       this.getExtension(BoldExtension).setOption({ weight: options.changes.weight.value });
@@ -362,8 +362,8 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
   /**
    * Clone an extension.
    */
-  clone(...parameters: ExtensionConstructorParameter<Options>): Extension<Options> {
-    return new this.constructor(...parameters);
+  clone(...args: ExtensionConstructorProps<Options>): Extension<Options> {
+    return new this.constructor(...args);
   }
 
   /**
@@ -462,7 +462,7 @@ interface ExtensionLifecycleMethods {
    *
    * @category Lifecycle Methods
    */
-  onAppendTransaction?(parameter: AppendLifecycleParameter): void;
+  onAppendTransaction?(props: AppendLifecycleProps): void;
 
   /**
    * This is called when the prosemirror editor state is first attached to the
@@ -484,7 +484,7 @@ interface ExtensionLifecycleMethods {
    *
    * @category Lifecycle Methods
    */
-  onApplyState?(parameter: ApplyStateLifecycleParameter): void;
+  onApplyState?(props: ApplyStateLifecycleProps): void;
 
   /**
    * This handler is called after a transaction successfully updates the editor
@@ -493,7 +493,7 @@ interface ExtensionLifecycleMethods {
    *
    * @category Lifecycle Methods
    */
-  onStateUpdate?(parameter: StateUpdateLifecycleParameter): void;
+  onStateUpdate?(props: StateUpdateLifecycleProps): void;
 
   /**
    * Called when the extension is being destroyed.
@@ -564,8 +564,8 @@ export abstract class MarkExtension<
     return assertGet(this.store.schema.marks, this.name);
   }
 
-  constructor(...parameters: ExtensionConstructorParameter<Options>) {
-    super(...parameters);
+  constructor(...args: ExtensionConstructorProps<Options>) {
+    super(...args);
   }
 
   /**
@@ -623,8 +623,8 @@ export abstract class NodeExtension<
     return assertGet(this.store.schema.nodes, this.name);
   }
 
-  constructor(...parameters: ExtensionConstructorParameter<Options>) {
-    super(...parameters);
+  constructor(...args: ExtensionConstructorProps<Options>) {
+    super(...args);
   }
 
   /**
@@ -829,7 +829,7 @@ export function isMarkExtension<Type extends AnyMarkExtension = AnyMarkExtension
 export interface ExtensionConstructor<Options extends ValidOptions = EmptyShape>
   extends BaseClassConstructor<Options, BaseExtensionOptions>,
     Partial<Remirror.StaticExtensionOptions> {
-  new (...parameters: ExtensionConstructorParameter<Options>): Extension<Options>;
+  new (...args: ExtensionConstructorProps<Options>): Extension<Options>;
 
   /**
    * The default priority level for all instance of this extension.
@@ -887,7 +887,7 @@ declare global {
      * ```ts
      * declare global {
      *   namespace Remirror {
-     *     interface ExtensionFactoryParameter {
+     *     interface ExtensionFactoryProps {
      *       newOption?: string;
      *     }
      *   }

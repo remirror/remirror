@@ -129,7 +129,7 @@ export interface TableSizeEditorProps {
   MetricsComponent?: ComponentType<SelectTableSizeState>;
 }
 
-interface TableSizeRefParameter {
+interface TableSizeRefProps {
   props: TableSizeEditorProps;
   state: SelectTableSizeState;
   setState: Dispatch<SetStateAction<SelectTableSizeState>>;
@@ -149,9 +149,7 @@ class TableSizeRef {
   props: TableSizeEditorProps;
   state: SelectTableSizeState;
 
-  constructor(parameter: TableSizeRefParameter) {
-    const { props, state, setState } = parameter;
-
+  constructor({ props, state, setState }: TableSizeRefProps) {
     this.props = props;
     this.state = state;
     this.setState = setState;

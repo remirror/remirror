@@ -180,8 +180,8 @@ export type Listable<Type> = Type | Type[];
 export type Simplify<T> = T extends object | any[] ? { [K in keyof T]: T[K] } : T;
 
 /**
- * Returns tuple types that include every string in union TupleUnion<keyof {
- * bar: string; leet: number }>; ["bar", "leet"] | ["leet", "bar"];
+ * Returns tuple types that include every string in union TupleUnion<keyof {bar:
+ * string; leet: number }>; ["bar", "leet"] | ["leet", "bar"];
  *
  * Taken from ❤️
  * https://github.com/microsoft/TypeScript/issues/13298#issuecomment-692864087
@@ -310,12 +310,31 @@ export interface ObjectMark {
 }
 
 /**
- * Defines a position.
+ * Defines coordinates returned by the [[`EditorView.coordsAtPos`]] function.
  */
-export interface Position {
+export interface Coords {
+  /**
+   * Vertical distance from the top of the page viewport to the top side of the
+   * described position (px).
+   */
   top: number;
+
+  /**
+   * Horizontal distance from the left of the page viewport to the left side of
+   * the described position (px).
+   */
   left: number;
+
+  /**
+   * Vertical distance from the top of the page viewport to the bottom side of
+   * the described position (px).
+   */
   bottom: number;
+
+  /**
+   * Horizontal distance from the left of the page viewport to the right side of
+   * the described position (px).
+   */
   right: number;
 }
 
@@ -536,14 +555,15 @@ export type UndefinedFlipPartialAndRequired<Type extends object> = UndefinedPick
 export type Diff<A, B> = Omit<A, keyof B> & Omit<B, keyof A>;
 
 /**
- * Conditional type which checks if the provided `Type` is and empty object (no properties). If it is
- * uses the `Then` type if not falls back to the `Else` type.
+ * Conditional type which checks if the provided `Type` is and empty object (no
+ * properties). If it is uses the `Then` type if not falls back to the `Else`
+ * type.
  */
 export type IfEmpty<Type extends object, Then, Else> = keyof Type extends never ? Then : Else;
 
 /**
- * Condition that checks if the keys of the two objects match. If so,
- * respond with `Then` otherwise `Else`.
+ * Condition that checks if the keys of the two objects match. If so, respond
+ * with `Then` otherwise `Else`.
  */
 export type IfMatches<A, B, Then, Else> = IfEmpty<Diff<A, B>, Then, Else>;
 
@@ -571,7 +591,8 @@ export type NonNullableShape<Type extends object> = {
  * type.
  */
 export type ConditionalReturnKeys<Base, Return> = NonNullable<
-  // Wrap in `NonNullable` to strip away the `undefined` type from the produced union.
+  // Wrap in `NonNullable` to strip away the `undefined` type from the produced
+  // union.
   {
     // Map through all the keys of the given base type.
     [Key in keyof Base]: Base[Key] extends AnyFunction<infer R> // Pick only keys with types extending the given `Return` type.
@@ -584,7 +605,8 @@ export type ConditionalReturnKeys<Base, Return> = NonNullable<
       : // Discard this key since it is not a function.
         never;
 
-    // Convert the produced object into a union type of the keys which passed the conditional test.
+    // Convert the produced object into a union type of the keys which passed
+    // the conditional test.
   }[keyof Base]
 >;
 

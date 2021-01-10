@@ -21,11 +21,11 @@ import {
   isEmptyObject,
   isFunction,
   keyBinding,
-  KeyBindingParameter,
+  KeyBindingProps,
   NamedShortcut,
   nonChainable,
   NonChainableCommandFunction,
-  OnSetOptionsParameter,
+  OnSetOptionsProps,
   PlainExtension,
   ProsemirrorPlugin,
   Selection,
@@ -173,8 +173,8 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   /**
    * This managers the updates of the collaboration provider.
    */
-  onSetOptions(parameter: OnSetOptionsParameter<YjsOptions>): void {
-    const { changes, pickChanged } = parameter;
+  onSetOptions(props: OnSetOptionsProps<YjsOptions>): void {
+    const { changes, pickChanged } = props;
     const changedPluginOptions = pickChanged([
       'cursorBuilder',
       'cursorStateField',
@@ -228,8 +228,8 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
     icon: 'arrowGoBackFill',
   })
   yUndo(): NonChainableCommandFunction {
-    return nonChainable((parameter) => {
-      const { state, dispatch } = parameter;
+    return nonChainable((props) => {
+      const { state, dispatch } = props;
       const undoManager: UndoManager = yUndoPluginKey.getState(state).undoManager;
 
       if (undoManager.undoStack.length === 0) {
@@ -240,7 +240,7 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
         return true;
       }
 
-      return convertCommand(undo)(parameter);
+      return convertCommand(undo)(props);
     });
   }
 
@@ -258,8 +258,8 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
     icon: 'arrowGoForwardFill',
   })
   yRedo(): NonChainableCommandFunction {
-    return nonChainable((parameter) => {
-      const { state, dispatch } = parameter;
+    return nonChainable((props) => {
+      const { state, dispatch } = props;
       const undoManager: UndoManager = yUndoPluginKey.getState(state).undoManager;
 
       if (undoManager.redoStack.length === 0) {
@@ -270,7 +270,7 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
         return true;
       }
 
-      return convertCommand(redo)(parameter);
+      return convertCommand(redo)(props);
     });
   }
 
@@ -278,16 +278,16 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
    * Handle the undo keybinding.
    */
   @keyBinding({ shortcut: NamedShortcut.Undo, command: 'yUndo' })
-  undoShortcut(parameter: KeyBindingParameter): boolean {
-    return this.yUndo()(parameter);
+  undoShortcut(props: KeyBindingProps): boolean {
+    return this.yUndo()(props);
   }
 
   /**
    * Handle the redo keybinding for the editor.
    */
   @keyBinding({ shortcut: NamedShortcut.Redo, command: 'yRedo' })
-  redoShortcut(parameter: KeyBindingParameter): boolean {
-    return this.yRedo()(parameter);
+  redoShortcut(props: KeyBindingProps): boolean {
+    return this.yRedo()(props);
   }
 }
 

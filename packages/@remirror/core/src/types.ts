@@ -7,11 +7,11 @@ import type {
   CommandFunction,
   EditorSchema,
   EditorState,
-  EditorStateParameter,
+  EditorStateProps,
   GetDynamic,
   GetFixedDynamic,
   GetPartialDynamic,
-  ProsemirrorCommandFunction,
+  RemoveAnnotations,
   Transaction,
   ValidOptions,
 } from '@remirror/core-types';
@@ -135,7 +135,7 @@ export interface CommandShape<Parameter extends any[] = []> {
    * This function gives you access to the original command defined by the
    * extension in your editor exactly as it was defined.
    *
-   * The function returns a function that takes the CommandFunctionParameter of
+   * The function returns a function that takes the CommandFunctionProps of
    * `{ state, dispatch?, tr, view? }` object.
    *
    * ```ts
@@ -147,7 +147,7 @@ export interface CommandShape<Parameter extends any[] = []> {
   (...args: Parameter): void;
 }
 
-export interface ApplyStateLifecycleParameter extends EditorStateParameter {
+export interface ApplyStateLifecycleProps extends EditorStateProps {
   /**
    * The original transaction which caused this state update.
    */
@@ -159,7 +159,7 @@ export interface ApplyStateLifecycleParameter extends EditorStateParameter {
   previousState: EditorState;
 }
 
-export interface AppendLifecycleParameter extends EditorStateParameter {
+export interface AppendLifecycleProps extends EditorStateProps {
   /**
    * Update this transaction in order to append.
    */
@@ -176,7 +176,7 @@ export interface AppendLifecycleParameter extends EditorStateParameter {
   transactions: Transaction[];
 }
 
-export interface StateUpdateLifecycleParameter extends EditorStateParameter {
+export interface StateUpdateLifecycleProps extends EditorStateProps {
   /**
    * The previous state.
    */
@@ -241,7 +241,7 @@ export interface ExcludeOptions extends Partial<Remirror.ExcludeOptions> {}
  */
 export type UpdateReason = 'set' | 'reset';
 
-export interface UpdateReasonParameter {
+export interface UpdateReasonProps {
   /**
    * Describes what triggered an update.
    *
@@ -293,19 +293,19 @@ export type PickChanged<Options> = <Key extends keyof GetFixedDynamic<Options>>(
   keys: Key[],
 ) => Partial<Pick<GetFixedDynamic<Options>, Key>>;
 
-export interface OnSetOptionsParameter<Options extends ValidOptions>
+export interface OnSetOptionsProps<Options extends ValidOptions>
   extends Pick<GetChangeOptionsReturn<Options>, 'changes' | 'pickChanged'>,
-    UpdateReasonParameter {
+    UpdateReasonProps {
   /**
    * The initial options for the extension. Falls back to default options.
    */
-  initialOptions: GetFixedDynamic<Options>;
+  initialOptions: RemoveAnnotations<GetFixedDynamic<Options>>;
 
   /**
    * The next value of the properties after the update.This also includes values
    * which have not been changed.
    */
-  options: GetFixedDynamic<Options>;
+  options: RemoveAnnotations<GetFixedDynamic<Options>>;
 }
 
 declare global {

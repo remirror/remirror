@@ -467,11 +467,9 @@ export type ItemsToString<Item = any> = (
 ) => string;
 export type GetItemId<Item = any> = (items: Item) => any;
 export type ItemToString<Item = any> = (item: Item) => string;
-export type GetA11yStatusMessage<Item = any> = (
-  options: A11yStatusMessageParameter<Item>,
-) => string;
+export type GetA11yStatusMessage<Item = any> = (options: A11yStatusMessageProps<Item>) => string;
 
-export interface A11yStatusMessageParameter<Item = any> {
+export interface A11yStatusMessageProps<Item = any> {
   state: MultishiftState<Item>;
   items: Item[];
   itemsToString: (items: Item[], itemToString?: (item: Item) => string) => string;
@@ -531,7 +529,7 @@ export interface GetRemoveButtonReturn<Element extends HTMLElement = any>
 export interface GetComboBoxPropsOptions<
   Element extends HTMLElement = any,
   RefKey extends string = 'ref'
-> extends RefParameter<RefKey>,
+> extends RefProps<RefKey>,
     HTMLProps<Element> {}
 
 export type GetComboBoxPropsReturn<
@@ -552,7 +550,7 @@ export type GetComboBoxPropsReturn<
 export interface GetPropsWithRefOptions<
   Element extends HTMLElement = any,
   RefKey extends string = 'ref'
-> extends RefParameter<RefKey>,
+> extends RefProps<RefKey>,
     HTMLProps<Element> {
   /**
    * Determine whether or not the item can be highlighted and selected.
@@ -913,7 +911,7 @@ export interface MultishiftReturn<Item = any>
   dispatch: Dispatch<MultishiftRootActions<Item>>;
 }
 
-export interface RefParameter<RefKey extends string = 'ref'> {
+export interface RefProps<RefKey extends string = 'ref'> {
   /**
    * A custom ref key which allows a reference to be obtained from non standard
    * components.

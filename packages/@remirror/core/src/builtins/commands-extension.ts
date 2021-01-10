@@ -13,12 +13,12 @@ import {
 import type {
   AnyFunction,
   CommandFunction,
-  CommandFunctionParameter,
+  CommandFunctionProps,
   DispatchFunction,
   EditorSchema,
   EmptyShape,
   Fragment,
-  FromToParameter,
+  FromToProps,
   MarkType,
   NodeType,
   PrimitiveSelection,
@@ -35,10 +35,10 @@ import {
   isProsemirrorNode,
   isTextSelection,
   removeMark,
-  RemoveMarkParameter,
+  RemoveMarkProps,
   setBlockType,
   toggleBlockItem,
-  ToggleBlockItemParameter,
+  ToggleBlockItemProps,
   toggleWrap,
   wrapIn,
 } from '@remirror/core-utils';
@@ -50,7 +50,7 @@ import { EditorView } from '@remirror/pm/view';
 import { applyMark, insertText, InsertTextOptions, toggleMark } from '../commands';
 import {
   AnyExtension,
-  ChainedCommandRunParameter,
+  ChainedCommandRunProps,
   ChainedFromExtensions,
   CommandNames,
   CommandsFromExtensions,
@@ -66,7 +66,7 @@ import type {
   CreateExtensionPlugin,
   ExtensionCommandFunction,
   ExtensionCommandReturn,
-  StateUpdateLifecycleParameter,
+  StateUpdateLifecycleProps,
 } from '../types';
 import { command, CommandDecoratorOptions, helper } from './builtin-decorators';
 
@@ -183,7 +183,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
     const { setStoreKey, setExtensionStore } = this.store;
     const commands: Record<string, CommandShape> = object();
     const names = new Set<string>();
-    const chain: Record<string, any> & ChainedCommandRunParameter = object();
+    const chain: Record<string, any> & ChainedCommandRunProps = object();
 
     for (const extension of this.store.extensions) {
       const extensionCommands: ExtensionCommandReturn = extension.createCommands?.() ?? {};
@@ -224,7 +224,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
   /**
    * Update the cached transaction whenever the state is updated.
    */
-  onStateUpdate({ state }: StateUpdateLifecycleParameter): void {
+  onStateUpdate({ state }: StateUpdateLifecycleProps): void {
     this.customTransaction = undefined;
     this._transaction = state.tr;
   }
@@ -351,8 +351,8 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
 
     return this.store.createPlaceholderCommand({
       promise: text,
-      onSuccess: (value, range, parameter) => {
-        return this.insertText(value, { ...options, ...range })(parameter);
+      onSuccess: (value, range, props) => {
+        return this.insertText(value, { ...options, ...range })(props);
       },
       placeholder: { type: 'inline' },
     });
@@ -418,7 +418,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    * Delete the provided range or current selection.
    */
   @command()
-  delete(range?: FromToParameter): CommandFunction {
+  delete(range?: FromToProps): CommandFunction {
     return ({ tr, dispatch }) => {
       const { from, to } = range ?? tr.selection;
       dispatch?.(tr.delete(from, to));
@@ -612,8 +612,8 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    */
   @command()
   focus(position?: FocusType): CommandFunction {
-    return (parameter) => {
-      const { dispatch, tr } = parameter;
+    return (props) => {
+      const { dispatch, tr } = props;
       const { view } = this.store;
 
       if (position === false) {
@@ -635,7 +635,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
         this.delayedFocus();
       }
 
-      return this.selectText(position)(parameter);
+      return this.selectText(position)(props);
     };
   }
 
@@ -645,7 +645,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    */
   @command()
   blur(position?: PrimitiveSelection): CommandFunction {
-    return (parameter) => {
+    return (props) => {
       const { view } = this.store;
 
       if (!view.hasFocus()) {
@@ -656,7 +656,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
         (view.dom as HTMLElement).blur();
       });
 
-      return position ? this.selectText(position)(parameter) : true;
+      return position ? this.selectText(position)(props) : true;
     };
   }
 
@@ -699,8 +699,8 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    * Toggle a block between the provided type and toggleType.
    */
   @command()
-  toggleBlockNodeItem(toggleParameter: ToggleBlockItemParameter): CommandFunction {
-    return toggleBlockItem(toggleParameter);
+  toggleBlockNodeItem(toggleProps: ToggleBlockItemProps): CommandFunction {
+    return toggleBlockItem(toggleProps);
   }
 
   /**
@@ -711,7 +711,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
   wrapInNode(
     nodeType: string | NodeType,
     attrs?: ProsemirrorAttributes,
-    range?: FromToParameter | undefined,
+    range?: FromToProps | undefined,
   ): CommandFunction {
     return wrapIn(nodeType, attrs, range);
   }
@@ -731,15 +731,15 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    * Removes a mark from the current selection or provided range.
    */
   @command()
-  toggleMark(parameter: RemoveMarkParameter): CommandFunction {
-    return toggleMark(parameter);
+  toggleMark(props: RemoveMarkProps): CommandFunction {
+    return toggleMark(props);
   }
   /**
    * Removes a mark from the current selection or provided range.
    */
   @command()
-  removeMark(parameter: RemoveMarkParameter): CommandFunction {
-    return removeMark(parameter);
+  removeMark(props: RemoveMarkProps): CommandFunction {
+    return removeMark(props);
   }
 
   /**
@@ -775,12 +775,12 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
     icon: 'fileCopyLine',
   })
   copy(): CommandFunction {
-    return (parameter) => {
-      if (parameter.tr.selection.empty) {
+    return (props) => {
+      if (props.tr.selection.empty) {
         return false;
       }
 
-      if (parameter.dispatch) {
+      if (props.dispatch) {
         document.execCommand('copy');
       }
 
@@ -805,11 +805,11 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
       // TODO https://caniuse.com/?search=clipboard.read - once browser support is sufficient.
       promise: () => navigator.clipboard.readText(),
       placeholder: { type: 'inline' },
-      onSuccess: (value, selection, parameter) => {
+      onSuccess: (value, selection, props) => {
         return this.insertNode(
-          htmlToProsemirrorNode({ content: value, schema: parameter.state.schema }),
+          htmlToProsemirrorNode({ content: value, schema: props.state.schema }),
           { selection },
-        )(parameter);
+        )(props);
       },
     });
   }
@@ -824,12 +824,12 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
     icon: 'scissorsFill',
   })
   cut(): CommandFunction {
-    return (parameter) => {
-      if (parameter.tr.selection.empty) {
+    return (props) => {
+      if (props.tr.selection.empty) {
         return false;
       }
 
-      if (parameter.dispatch) {
+      if (props.dispatch) {
         document.execCommand('cut');
       }
 
@@ -868,7 +868,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    * methods.
    */
   @helper()
-  getCommandParam(): Helper<Required<CommandFunctionParameter>> {
+  getCommandParam(): Helper<Required<CommandFunctionProps>> {
     return {
       tr: this.transaction,
       dispatch: this.store.view.dispatch,
@@ -979,8 +979,8 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    * Add the commands from the provided `commands` property to the `chained`,
    * `original` and `unchained` objects.
    */
-  private addCommands(parameter: AddCommandsParameter) {
-    const { extensionCommands, chain, commands, names, decoratedCommands } = parameter;
+  private addCommands(props: AddCommandsProps) {
+    const { extensionCommands, chain, commands, names, decoratedCommands } = props;
 
     for (const [name, command] of entries(extensionCommands)) {
       // Command names must be unique.
@@ -1005,9 +1005,9 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
   /**
    * Create an unchained command method.
    */
-  private unchainedFactory(parameter: UnchainedFactoryParameter) {
+  private unchainedFactory(props: UnchainedFactoryProps) {
     return (...args: unknown[]) => {
-      const { shouldDispatch = true, command } = parameter;
+      const { shouldDispatch = true, command } = props;
       const { view } = this.store;
       const { state } = view;
 
@@ -1035,9 +1035,9 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
   /**
    * Create a chained command method.
    */
-  private chainedFactory(parameter: ChainedFactoryParameter) {
+  private chainedFactory(props: ChainedFactoryProps) {
     return (...args: unknown[]) => {
-      const { chain: chained, command } = parameter;
+      const { chain: chained, command } = props;
       const { view } = this.store;
       const { state } = view;
 
@@ -1077,7 +1077,7 @@ export interface InsertNodeOptions {
   /**
    * @deprecated use selection property instead.
    */
-  range?: FromToParameter;
+  range?: FromToProps;
 
   /**
    * Set the selection where the command should occur.
@@ -1099,11 +1099,11 @@ export interface CommandExtensionMeta {
   forcedUpdates?: UpdatableViewProps[];
 }
 
-interface AddCommandsParameter {
+interface AddCommandsProps {
   /**
    * The currently amassed command chain to mutate for each extension.
    */
-  chain: Record<string, any> & ChainedCommandRunParameter;
+  chain: Record<string, any> & ChainedCommandRunProps;
 
   /**
    * The currently amassed commands (unchained) to mutate for each extension.
@@ -1126,7 +1126,7 @@ interface AddCommandsParameter {
   decoratedCommands: Record<string, CommandDecoratorOptions>;
 }
 
-interface UnchainedFactoryParameter {
+interface UnchainedFactoryProps {
   /**
    * All the commands.
    */
@@ -1145,7 +1145,7 @@ interface UnchainedFactoryParameter {
  */
 type WithName<Type> = Type & { name: string };
 
-interface ChainedFactoryParameter {
+interface ChainedFactoryProps {
   /**
    * All the commands.
    */

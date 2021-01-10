@@ -1,17 +1,17 @@
 import { ErrorConstant } from '@remirror/core-constants';
 import { assertGet, invariant, isNumber, isString, object } from '@remirror/core-helpers';
 import type {
-  AttributesParameter,
+  AttributesProps,
   CommandFunction,
-  CommandFunctionParameter,
-  FromToParameter,
+  CommandFunctionProps,
+  FromToProps,
   MarkType,
-  MarkTypeParameter,
+  MarkTypeProps,
   NodeType,
-  NodeTypeParameter,
+  NodeTypeProps,
   PrimitiveSelection,
   ProsemirrorAttributes,
-  RangeParameter,
+  RangeProps,
   Selection,
   Transaction,
 } from '@remirror/core-types';
@@ -27,7 +27,7 @@ import {
 } from './core-utils';
 import { getActiveNode, isSelectionEmpty } from './prosemirror-utils';
 
-export interface UpdateMarkParameter extends Partial<RangeParameter>, Partial<AttributesParameter> {
+export interface UpdateMarkProps extends Partial<RangeProps>, Partial<AttributesProps> {
   /**
    * The text to append.
    *
@@ -42,10 +42,12 @@ export interface UpdateMarkParameter extends Partial<RangeParameter>, Partial<At
 }
 /**
  * Update the selection with the provided MarkType.
+ *
+ * @param props - see [[`UpdateMarkProps`]] for options
  */
-export function updateMark(parameter: UpdateMarkParameter): CommandFunction {
+export function updateMark(props: UpdateMarkProps): CommandFunction {
   return ({ dispatch, tr }) => {
-    const { type, attrs = object(), appendText, range } = parameter;
+    const { type, attrs = object(), appendText, range } = props;
     const selection = range ? TextSelection.create(tr.doc, range.from, range.to) : tr.selection;
     const { $from, from, to } = selection;
     let applicable = $from.depth === 0 ? tr.doc.type.allowsMarkType(type) : false;
@@ -82,7 +84,7 @@ export function updateMark(parameter: UpdateMarkParameter): CommandFunction {
  * Adapted from
  * https://github.com/ProseMirror/prosemirror-commands/blob/3126d5c625953ba590c5d3a0db7f1009f46f1571/src/commands.js#L212-L221
  */
-export function lift({ tr, dispatch }: Pick<CommandFunctionParameter, 'tr' | 'dispatch'>): boolean {
+export function lift({ tr, dispatch }: Pick<CommandFunctionProps, 'tr' | 'dispatch'>): boolean {
   const { $from, $to } = tr.selection;
   const range = $from.blockRange($to);
   const target = range && liftTarget(range);
@@ -105,8 +107,8 @@ export function wrapIn(
   attrs: ProsemirrorAttributes = {},
   selection?: PrimitiveSelection,
 ): CommandFunction {
-  return function (parameter) {
-    const { tr, dispatch, state } = parameter;
+  return function (props) {
+    const { tr, dispatch, state } = props;
     const nodeType = isString(type) ? assertGet(state.schema.nodes, type) : type;
     const { from, to } = getTextSelection(selection ?? tr.selection, tr.doc);
     const $from = tr.doc.resolve(from);
@@ -136,16 +138,16 @@ export function toggleWrap(
   attrs: ProsemirrorAttributes = {},
   selection?: PrimitiveSelection,
 ): CommandFunction {
-  return (parameter) => {
-    const { tr, state } = parameter;
+  return (props) => {
+    const { tr, state } = props;
     const type = isString(nodeType) ? assertGet(state.schema.nodes, nodeType) : nodeType;
     const activeNode = getActiveNode({ state: tr, type, attrs });
 
     if (activeNode) {
-      return lift(parameter);
+      return lift(props);
     }
 
-    return wrapIn(nodeType, attrs, selection)(parameter);
+    return wrapIn(nodeType, attrs, selection)(props);
   };
 }
 
@@ -161,8 +163,8 @@ export function setBlockType(
   selection?: PrimitiveSelection,
   preserveAttrs = true,
 ): CommandFunction {
-  return function (parameter) {
-    const { tr, dispatch, state } = parameter;
+  return function (props) {
+    const { tr, dispatch, state } = props;
     const type = isString(nodeType) ? assertGet(state.schema.nodes, nodeType) : nodeType;
     const { from, to } = getTextSelection(selection ?? tr.selection, tr.doc);
 
@@ -212,7 +214,7 @@ export function setBlockType(
   };
 }
 
-export interface ToggleBlockItemParameter extends NodeTypeParameter, Partial<AttributesParameter> {
+export interface ToggleBlockItemProps extends NodeTypeProps, Partial<AttributesProps> {
   /**
    * The type to toggle back to. Usually this is the `paragraph` node type.
    *
@@ -232,33 +234,31 @@ export interface ToggleBlockItemParameter extends NodeTypeParameter, Partial<Att
 /**
  * Toggle a block between the provided type and toggleType.
  *
- * @param params - the destructured params
+ * @param toggleProps - see [[`ToggleBlockItemProps`]] for available options
  */
-export function toggleBlockItem(toggleParameter: ToggleBlockItemParameter): CommandFunction {
-  return (parameter) => {
-    const { tr, state } = parameter;
-    const { type, attrs, preserveAttrs = true } = toggleParameter;
+export function toggleBlockItem(toggleProps: ToggleBlockItemProps): CommandFunction {
+  return (props) => {
+    const { tr, state } = props;
+    const { type, attrs, preserveAttrs = true } = toggleProps;
     const activeNode = getActiveNode({ state: tr, type, attrs });
-    const toggleType = toggleParameter.toggleType ?? getDefaultBlockNode(state.schema);
+    const toggleType = toggleProps.toggleType ?? getDefaultBlockNode(state.schema);
 
     if (activeNode) {
       return setBlockType(toggleType, {
         ...(preserveAttrs ? activeNode.node.attrs : {}),
         ...attrs,
-      })(parameter);
+      })(props);
     }
 
     const toggleNode = getActiveNode({ state: tr, type: toggleType, attrs });
 
     return setBlockType(type, { ...(preserveAttrs ? toggleNode?.node.attrs : {}), ...attrs })(
-      parameter,
+      props,
     );
   };
 }
 
-export interface ReplaceTextParameter
-  extends Partial<RangeParameter>,
-    Partial<AttributesParameter> {
+export interface ReplaceTextProps extends Partial<RangeProps>, Partial<AttributesProps> {
   /**
    * The text to append.
    *
@@ -324,10 +324,10 @@ export function preserveSelection(selection: Selection, tr: Transaction): void {
 /**
  * Replaces text with an optional appended string at the end.
  *
- * @param params - the destructured params
+ * @param props - see [[`ReplaceTextProps`]]
  */
-export function replaceText(parameter: ReplaceTextParameter): CommandFunction {
-  const { range, attrs = {}, appendText = '', content = '', keepSelection = false } = parameter;
+export function replaceText(props: ReplaceTextProps): CommandFunction {
+  const { range, attrs = {}, appendText = '', content = '', keepSelection = false } = props;
 
   return ({ state, tr, dispatch }) => {
     const schema = state.schema;
@@ -335,11 +335,11 @@ export function replaceText(parameter: ReplaceTextParameter): CommandFunction {
     const index = selection.$from.index();
     const { from, to } = range ?? selection;
 
-    const type = isString(parameter.type)
-      ? schema.nodes[parameter.type] ?? schema.marks[parameter.type]
-      : parameter.type;
+    const type = isString(props.type)
+      ? schema.nodes[props.type] ?? schema.marks[props.type]
+      : props.type;
 
-    invariant(isString(parameter.type) ? type : true, {
+    invariant(isString(props.type) ? type : true, {
       code: ErrorConstant.SCHEMA,
       message: `Schema contains no marks or nodes with name ${type}`,
     });
@@ -385,7 +385,7 @@ export function replaceText(parameter: ReplaceTextParameter): CommandFunction {
   };
 }
 
-export interface RemoveMarkParameter extends MarkTypeParameter {
+export interface RemoveMarkProps extends MarkTypeProps {
   /**
    * Whether to expand empty selections to the current mark range.
    *
@@ -396,7 +396,7 @@ export interface RemoveMarkParameter extends MarkTypeParameter {
   /**
    * @deprecated use `selection` property instead.
    */
-  range?: FromToParameter;
+  range?: FromToProps;
 
   /**
    * The selection to apply to the command.
@@ -407,15 +407,12 @@ export interface RemoveMarkParameter extends MarkTypeParameter {
 /**
  * Removes a mark from the current selection or provided range.
  *
- * @param params - the destructured params
+ * @param props - see [[`RemoveMarkProps`]] for options
  */
-export function removeMark(parameter: RemoveMarkParameter): CommandFunction {
+export function removeMark(props: RemoveMarkProps): CommandFunction {
   return ({ dispatch, tr, state }) => {
-    const { type, expand = true } = parameter;
-    const selection = getTextSelection(
-      parameter.selection ?? parameter.range ?? tr.selection,
-      tr.doc,
-    );
+    const { type, expand = true } = props;
+    const selection = getTextSelection(props.selection ?? props.range ?? tr.selection, tr.doc);
     let { from, to } = selection;
 
     const markType = isString(type) ? state.schema.marks[type] : type;
@@ -427,7 +424,7 @@ export function removeMark(parameter: RemoveMarkParameter): CommandFunction {
 
     if (expand) {
       ({ from, to } =
-        parameter.selection || parameter.range
+        props.selection || props.range
           ? getMarkRange(tr.doc.resolve(from), markType) ||
             (isNumber(to) && getMarkRange(tr.doc.resolve(to), markType)) || { from, to }
           : selection.empty

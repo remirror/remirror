@@ -20,15 +20,15 @@ import {
   unset,
 } from '@remirror/core-helpers';
 import type {
-  AnchorHeadParameter,
+  AnchorHeadProps,
   AnyConstructor,
   ApplySchemaAttributes,
   DOMCompatibleAttributes,
   EditorSchema,
   EditorState,
-  FromToParameter,
-  MarkTypeParameter,
-  PosParameter,
+  FromToProps,
+  MarkTypeProps,
+  PosProps,
   PrimitiveSelection,
   ProsemirrorAttributes,
   ProsemirrorNode,
@@ -36,12 +36,12 @@ import type {
   RemirrorJSON,
   RenderEnvironment,
   ResolvedPos,
-  SchemaParameter,
+  SchemaProps,
   Selection,
   StringKey,
-  TextParameter,
+  TextProps,
   Transaction,
-  TrStateParameter,
+  TrStateProps,
 } from '@remirror/core-types';
 import {
   DOMParser,
@@ -176,18 +176,17 @@ export function isNodeSelection(value: unknown): value is NodeSelection<EditorSc
   return isObject(value) && value instanceof NodeSelection;
 }
 
-interface IsMarkActiveParameter
-  extends MarkTypeParameter,
-    Partial<FromToParameter>,
-    TrStateParameter {}
+interface IsMarkActiveProps extends MarkTypeProps, Partial<FromToProps>, TrStateProps {}
 
 /**
  * Checks that a mark is active within the selected region, or the current
  * selection point is within a region with the mark active. Used by extensions
  * to implement their active methods.
+ *
+ * @param props - see [[`IsMarkActiveProps`]] for options
  */
-export function isMarkActive(parameter: IsMarkActiveParameter): boolean {
-  const { trState, type, from, to } = parameter;
+export function isMarkActive(props: IsMarkActiveProps): boolean {
+  const { trState, type, from, to } = props;
   const { selection, doc, storedMarks } = trState;
   const markType = isString(type) ? doc.type.schema.marks[type] : type;
 
@@ -361,7 +360,7 @@ export function getMarkAttributes(
   return false;
 }
 
-export interface GetMarkRange extends FromToParameter {
+export interface GetMarkRange extends FromToProps {
   /**
    * The mark that was found within the active range.
    */
@@ -490,10 +489,10 @@ function isValidStep(step: Step, StepTypes: Array<AnyConstructor<Step>>) {
 export function getChangedRanges(
   tr: Transaction,
   StepTypes: Array<AnyConstructor<Step>> = [],
-): FromToParameter[] {
+): FromToProps[] {
   // The holder for the ranges value which will be returned from this function.
-  const ranges: FromToParameter[] = [];
-  const rawRanges: FromToParameter[] = [];
+  const ranges: FromToProps[] = [];
+  const rawRanges: FromToProps[] = [];
 
   for (const step of tr.steps) {
     if (!isValidStep(step, StepTypes)) {
@@ -576,7 +575,7 @@ export function getTextContentFromSlice(slice: Slice): string {
   return slice.content.firstChild?.textContent ?? '';
 }
 
-export interface GetSelectedGroup extends FromToParameter {
+export interface GetSelectedGroup extends FromToProps {
   /**
    * The capture text within the group.
    */
@@ -825,7 +824,7 @@ export function isRemirrorJSON(value: unknown): value is RemirrorJSON {
  */
 export type NamedStringHandlers = { [K in keyof Remirror.StringHandlers]: StringHandler };
 
-export interface HandlersParameter {
+export interface HandlersProps {
   /**
    * All the available string handlers which have been made available for this
    * editor. Using this allows for composition of [[`StringHandler`]]'s.
@@ -839,10 +838,10 @@ export interface HandlersParameter {
   handlers: NamedStringHandlers;
 }
 
-export interface CreateDocumentNodeParameter
-  extends SchemaParameter,
-    Partial<CustomDocumentParameter>,
-    StringHandlerParameter {
+export interface CreateDocumentNodeProps
+  extends SchemaProps,
+    Partial<CustomDocumentProps>,
+    StringHandlerProps {
   /**
    * The content to render
    */
@@ -876,7 +875,7 @@ export interface CreateDocumentNodeParameter
 /**
  * Return true when the provided value is an anchor / head selection property
  */
-export function isAnchorHeadObject(value: unknown): value is AnchorHeadParameter {
+export function isAnchorHeadObject(value: unknown): value is AnchorHeadProps {
   return isObject(value) && isNumber(value.anchor) && isNumber(value.head);
 }
 
@@ -889,7 +888,7 @@ export function getTextSelection(
 ): TextSelection {
   const max = doc.nodeSize - 2;
   const min = 0;
-  let pos: number | FromToParameter | AnchorHeadParameter;
+  let pos: number | FromToProps | AnchorHeadProps;
 
   /** Ensure the selection is within the current document range */
   const clampToDocument = (value: number) => clamp({ min, max, value });
@@ -938,7 +937,7 @@ export function getTextSelection(
  */
 export type StringHandler = (params: StringHandlerOptions) => ProsemirrorNode;
 
-export interface StringHandlerParameter {
+export interface StringHandlerProps {
   /**
    * A function which transforms a string into a prosemirror node.
    *
@@ -973,8 +972,8 @@ const MAX_ATTEMPTS = 3;
  * as a result, the errors should be handled at the point of creation rather
  * than when the document is being applied to the editor.
  */
-export function createDocumentNode(parameter: CreateDocumentNodeParameter): ProsemirrorNode {
-  const { content, schema, document, stringHandler, onError, attempts = 0 } = parameter;
+export function createDocumentNode(props: CreateDocumentNodeProps): ProsemirrorNode {
+  const { content, schema, document, stringHandler, onError, attempts = 0 } = props;
 
   // If there is an `onError` handler then check the attempts does not exceed
   // the maximum, otherwise only allow one attempt.
@@ -1031,7 +1030,7 @@ export function createDocumentNode(parameter: CreateDocumentNodeParameter): Pros
     });
 
     return createDocumentNode({
-      ...parameter,
+      ...props,
       content: transformedContent,
       attempts: attempts + 1,
     });
@@ -1062,7 +1061,7 @@ export function getDocument(forceEnvironment?: RenderEnvironment): Document {
   return shouldUseDomEnvironment(forceEnvironment) ? document : require('min-document');
 }
 
-export interface CustomDocumentParameter {
+export interface CustomDocumentProps {
   /**
    * The root or custom document to use when referencing the dom.
    *
@@ -1106,7 +1105,7 @@ export function prosemirrorNodeToHtml(node: ProsemirrorNode, document = getDocum
   return element.innerHTML;
 }
 
-export interface StringHandlerOptions extends Partial<CustomDocumentParameter>, SchemaParameter {
+export interface StringHandlerOptions extends Partial<CustomDocumentProps>, SchemaProps {
   /**
    * The string content provided to the editor.
    */
@@ -1135,8 +1134,8 @@ export interface StringHandlerOptions extends Partial<CustomDocumentParameter>, 
  * }
  * ```
  */
-export function htmlToProsemirrorNode(parameter: StringHandlerOptions): ProsemirrorNode {
-  const { content, schema, document = getDocument() } = parameter;
+export function htmlToProsemirrorNode(props: StringHandlerOptions): ProsemirrorNode {
+  const { content, schema, document = getDocument() } = props;
   const element = document.createElement('div');
   element.innerHTML = content.trim();
 
@@ -1266,21 +1265,21 @@ export function joinStyles(styleObject: object, initialStyles?: string): string 
   return `${start}${separator}${end}`;
 }
 
-interface TextBetweenParameter extends FromToParameter {
+interface TextBetweenProps extends FromToProps {
   /**
    * The prosemirror `doc` node.
    */
   doc: ProsemirrorNode;
 }
 
-interface TextBetween extends PosParameter, TextParameter {}
+interface TextBetween extends PosProps, TextProps {}
 
 /**
  * Find the different ranges of text between a provided range with support for
  * traversing multiple nodes.
  */
-export function textBetween(parameter: TextBetweenParameter): TextBetween[] {
-  const { from, to, doc } = parameter;
+export function textBetween(props: TextBetweenProps): TextBetween[] {
+  const { from, to, doc } = props;
   const positions: TextBetween[] = [];
 
   doc.nodesBetween(from, to, (node, pos) => {
@@ -1301,7 +1300,7 @@ export function textBetween(parameter: TextBetweenParameter): TextBetween[] {
 /**
  * Get the full range of the selectable content in the ProseMirror `doc`.
  */
-export function getDocRange(doc: ProsemirrorNode): FromToParameter {
+export function getDocRange(doc: ProsemirrorNode): FromToProps {
   const { from, to } = new AllSelection(doc);
   return { from, to };
 }
@@ -1342,7 +1341,7 @@ export interface InvalidContentBlock {
 /**
  * This interface is used when there is an attempt to add content to a schema
  */
-export interface InvalidContentHandlerParameter {
+export interface InvalidContentHandlerProps {
   /**
    * The JSON representation of the content that caused the error.
    */
@@ -1369,9 +1368,7 @@ export interface InvalidContentHandlerParameter {
  * The error handler function which should return a valid content type to
  * prevent further errors.
  */
-export type InvalidContentHandler = (
-  parameter: InvalidContentHandlerParameter,
-) => RemirrorContentType;
+export type InvalidContentHandler = (props: InvalidContentHandlerProps) => RemirrorContentType;
 
 const transformers = {
   /**
@@ -1397,14 +1394,14 @@ const transformers = {
   },
 };
 
-type GetInvalidContentParameter<Extra extends object> = SchemaParameter & {
+type GetInvalidContentProps<Extra extends object> = SchemaProps & {
   /**
    * The RemirrorJSON representation of the invalid content.
    */
   json: RemirrorJSON;
 } & Extra;
 
-type GetInvalidContentReturn<Extra extends object> = Omit<InvalidContentHandlerParameter, 'error'> &
+type GetInvalidContentReturn<Extra extends object> = Omit<InvalidContentHandlerProps, 'error'> &
   Extra;
 
 /**
@@ -1414,7 +1411,7 @@ export function getInvalidContent<Extra extends object>({
   json,
   schema,
   ...extra
-}: GetInvalidContentParameter<Extra>): GetInvalidContentReturn<Extra> {
+}: GetInvalidContentProps<Extra>): GetInvalidContentReturn<Extra> {
   const validMarks = new Set(keys(schema.marks));
   const validNodes = new Set(keys(schema.nodes));
   const invalidContent = checkForInvalidContent({ json, path: [], validNodes, validMarks });
@@ -1422,7 +1419,7 @@ export function getInvalidContent<Extra extends object>({
   return { json, invalidContent, transformers, ...extra } as GetInvalidContentReturn<Extra>;
 }
 
-interface CheckForInvalidContentParameter {
+interface CheckForInvalidContentProps {
   json: RemirrorJSON;
   validMarks: Set<string>;
   validNodes: Set<string>;
@@ -1434,12 +1431,12 @@ interface CheckForInvalidContentParameter {
 /**
  * Get the invalid content from the `RemirrorJSON`.
  */
-function checkForInvalidContent(parameter: CheckForInvalidContentParameter): InvalidContentBlock[] {
-  const { json, validMarks, validNodes, path = [] } = parameter;
+function checkForInvalidContent(props: CheckForInvalidContentProps): InvalidContentBlock[] {
+  const { json, validMarks, validNodes, path = [] } = props;
   const valid = { validMarks, validNodes };
   const invalidNodes: InvalidContentBlock[] = [];
   const { type, marks, content } = json;
-  let { invalidParentMark = false, invalidParentNode = false } = parameter;
+  let { invalidParentMark = false, invalidParentNode = false } = props;
 
   if (marks) {
     const invalidMarks: InvalidContentBlock[] = [];

@@ -7,7 +7,7 @@ import {
   dispatchNodeSelection,
   dispatchTextSelection,
   fireEventAtPosition,
-  FireParameter,
+  FireProps,
   forwardDelete,
   insertText,
   pasteContent,
@@ -21,7 +21,7 @@ import {
   AnyExtension,
   BuiltinPreset,
   ChainedFromExtensions,
-  CommandFunctionParameter,
+  CommandFunctionProps,
   CommandsFromExtensions,
   EditorState,
   GetMarkNameUnion,
@@ -51,7 +51,7 @@ import type {
   MarkWithoutAttributes,
   NodeWithAttributes,
   NodeWithoutAttributes,
-  RenderEditorParameter,
+  RenderEditorProps,
   TaggedProsemirrorNode,
   Tags,
 } from './jest-remirror-types';
@@ -72,7 +72,7 @@ const elements = new Set<Element>();
  */
 export function renderEditor<ExtensionUnion extends AnyExtension>(
   extensions: ExtensionUnion[] | (() => ExtensionUnion[]),
-  { props, autoClean, ...options }: RenderEditorParameter<ExtensionUnion> = object(),
+  { props, autoClean, ...options }: RenderEditorProps<ExtensionUnion> = object(),
 ): RemirrorTestChain<ExtensionUnion | CorePreset | BuiltinPreset> {
   const element = createElement(props?.element, autoClean);
   const manager = createDomManager(extensions, options);
@@ -486,7 +486,7 @@ export class RemirrorTestChain<ExtensionUnion extends AnyExtension> {
    * view
    */
   readonly dispatchCommand = (
-    command: (parameter: Required<CommandFunctionParameter>) => any,
+    command: (props: Required<CommandFunctionProps>) => any,
   ): this => {
     command({ state: this.state, dispatch: this.view.dispatch, view: this.view, tr: this.tr });
 
@@ -498,7 +498,7 @@ export class RemirrorTestChain<ExtensionUnion extends AnyExtension> {
    *
    * @param shortcut - the shortcut to type
    */
-  readonly fire = (parameters: FireParameter): this => {
+  readonly fire = (parameters: FireProps): this => {
     fireEventAtPosition({ view: this.view, ...parameters });
 
     return this;

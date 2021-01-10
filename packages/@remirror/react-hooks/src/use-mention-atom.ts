@@ -6,7 +6,7 @@ import {
   MentionAtomExtension,
   MentionAtomNodeAttributes,
 } from '@remirror/extension-mention-atom';
-import { ChangeReason, SuggestChangeHandlerParameter } from '@remirror/pm/suggest';
+import { ChangeReason, SuggestChangeHandlerProps } from '@remirror/pm/suggest';
 import { useExtension, useRemirrorContext } from '@remirror/react';
 
 import { indexFromArrowPress } from './react-hook-utils';
@@ -14,7 +14,7 @@ import { useKeymap } from './use-keymap';
 
 export interface MentionAtomState<
   Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes
-> extends Pick<SuggestChangeHandlerParameter, 'name' | 'query' | 'text' | 'range'> {
+> extends Pick<SuggestChangeHandlerProps, 'name' | 'query' | 'text' | 'range'> {
   /**
    * The reason for the change.
    */
@@ -45,8 +45,8 @@ function useMentionHandlers<Data extends MentionAtomNodeAttributes = MentionAtom
    * The is the callback for when a suggestion is changed.
    */
   const onChange: MentionAtomChangeHandler = useCallback(
-    (parameter, command) => {
-      const { query, range, name, exitReason, changeReason, text } = parameter;
+    (props, command) => {
+      const { query, range, name, exitReason, changeReason, text } = props;
 
       // By default the mention atom will not automatically create the mention
       // for you.

@@ -7,7 +7,7 @@ import { ComponentType, useEffect, useRef } from 'react';
 import {
   AnyRemirrorManager,
   EditorState,
-  FromToParameter,
+  FromToProps,
   object,
   pascalCase,
   RemirrorJSON,
@@ -45,7 +45,7 @@ export interface DebugState {
   /**
    * The current selection point.
    */
-  selection: FromToParameter;
+  selection: FromToProps;
 }
 
 /**

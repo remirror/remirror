@@ -1,7 +1,7 @@
-import { isEmptyArray } from '@remirror/core';
+import { assertGet, isEmptyArray } from '@remirror/core';
 import type { Step, StepMap, Transform } from '@remirror/pm/transform';
 
-interface SpanConstructorParameter {
+interface SpanConstructorProps {
   from: number;
   to: number;
   commit: number | undefined;
@@ -12,8 +12,8 @@ export class Span {
   to: number;
   commit: number | undefined;
 
-  constructor(parameter: SpanConstructorParameter) {
-    const { from, to, commit } = parameter;
+  constructor(props: SpanConstructorProps) {
+    const { from, to, commit } = props;
 
     this.from = from;
     this.to = to;
@@ -21,7 +21,7 @@ export class Span {
   }
 }
 
-interface CommitConstructorParameter {
+interface CommitConstructorProps {
   message: string;
   time: number;
   steps: Step[];
@@ -36,8 +36,8 @@ export class Commit {
   maps: StepMap[];
   hidden?: boolean;
 
-  constructor(parameter: CommitConstructorParameter) {
-    const { message, time, steps, maps, hidden } = parameter;
+  constructor(props: CommitConstructorProps) {
+    const { message, time, steps, maps, hidden } = props;
 
     this.message = message;
     this.time = time;
@@ -47,7 +47,7 @@ export class Commit {
   }
 }
 
-interface TrackStateConstructorParameter {
+interface TrackStateConstructorProps {
   blameMap: Span[];
   commits: Commit[];
   uncommittedSteps: Step[];
@@ -60,8 +60,8 @@ export class TrackState {
   uncommittedSteps: Step[];
   uncommittedMaps: StepMap[];
 
-  constructor(parameter: TrackStateConstructorParameter) {
-    const { blameMap, commits, uncommittedSteps, uncommittedMaps } = parameter;
+  constructor(props: TrackStateConstructorProps) {
+    const { blameMap, commits, uncommittedSteps, uncommittedMaps } = props;
 
     // The blame map is a data structure that lists a sequence of
     // document ranges, along with the commit that inserted them. This
@@ -82,7 +82,9 @@ export class TrackState {
   applyTransform(transform: Transform): TrackState {
     // Invert the steps in the transaction, to be able to save them in the next
     // commit
-    const inverted = transform.steps.map((step, i) => step.invert(transform.docs[i]));
+    const inverted = transform.steps.map((step, index) =>
+      step.invert(assertGet(transform.docs, index)),
+    );
     const newBlame = updateBlameMap({ map: this.blameMap, transform, id: this.commits.length });
 
     // Create a new state—since these are part of the editor state, a persistent
@@ -120,13 +122,13 @@ export class TrackState {
   }
 }
 
-interface UpdateBlameMapParameter {
+interface UpdateBlameMapProps {
   map: Span[];
   transform: Transform;
   id: number;
 }
 
-function updateBlameMap({ map, transform, id }: UpdateBlameMapParameter) {
+function updateBlameMap({ map, transform, id }: UpdateBlameMapProps) {
   const result: Span[] = [];
   const mapping = transform.mapping;
 
@@ -155,16 +157,16 @@ function updateBlameMap({ map, transform, id }: UpdateBlameMapParameter) {
   return result;
 }
 
-interface InsertIntoBlameMapParameter {
+interface InsertIntoBlameMapProps {
   map: Span[];
   from: number;
   to: number;
   commit: number;
 }
 
-function insertIntoBlameMap(parameter: InsertIntoBlameMapParameter) {
-  const { map, commit } = parameter;
-  let { from, to } = parameter;
+function insertIntoBlameMap(props: InsertIntoBlameMapProps) {
+  const { map, commit } = props;
+  let { from, to } = props;
 
   if (from >= to) {
     return;
@@ -174,7 +176,7 @@ function insertIntoBlameMap(parameter: InsertIntoBlameMapParameter) {
   let next: Span;
 
   for (; pos < map.length; pos++) {
-    next = map[pos];
+    next = assertGet(map, pos);
 
     if (next.commit === commit) {
       if (next.to >= from) {
@@ -203,7 +205,7 @@ function insertIntoBlameMap(parameter: InsertIntoBlameMapParameter) {
     break;
   }
 
-  while ((next = map[pos])) {
+  while ((next = assertGet(map, pos))) {
     if (next.commit === commit) {
       if (next.from > to) {
         break;

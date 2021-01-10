@@ -48,7 +48,7 @@
     "@remirror/core": "1.0.0-next.60",
     "@remirror/pm": "1.0.0-next.60",
     "y-webrtc": "^10.1.8",
-    "yjs": "^13.4.11"
+    "yjs": "^13.4.12"
   },
   "peerDependencies": {
     "@remirror/core": "1.0.0-next.60",

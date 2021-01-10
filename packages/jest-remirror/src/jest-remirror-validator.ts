@@ -1,7 +1,7 @@
 import {
   AnyExtensionConstructor,
   BaseExtensionOptions,
-  ExtensionConstructorParameter,
+  ExtensionConstructorProps,
   htmlToProsemirrorNode,
   isEmptyArray,
   isFunction,
@@ -24,7 +24,7 @@ import { renderEditor } from './jest-remirror-editor';
  */
 export function extensionValidityTest<Type extends AnyExtensionConstructor>(
   Extension: Type,
-  ...[options]: ExtensionConstructorParameter<OptionsOfConstructor<Type>>
+  ...[options]: ExtensionConstructorProps<OptionsOfConstructor<Type>>
 ): void {
   describe(`\`${Extension.name}\``, () => {
     it(`has the right properties`, () => {

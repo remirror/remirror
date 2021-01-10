@@ -28,9 +28,9 @@ type Tables = GetSchema<
   | ParagraphExtension
   | BoldExtension
   | HistoryExtension
-  // GapCursorExtension
-  // PositionerExtension
-  // EventsExtension
+  | GapCursorExtension
+  | PositionerExtension
+  | EventsExtension
 >;
 
 type A = GetExtensions<ParagraphExtension | DocExtension | CorePreset | BuiltinPreset>;

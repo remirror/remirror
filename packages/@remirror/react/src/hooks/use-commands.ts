@@ -4,7 +4,7 @@ import { ReactFrameworkOutput } from '../react-types';
 import { useRemirrorContext } from './use-remirror-context';
 
 type UseCommandsReturn<ExtensionUnion extends AnyExtension> = Pick<
-  ReactFrameworkOutput<RemirrorManager<ExtensionUnion>['~E']>,
+  ReactFrameworkOutput<ExtensionUnion>,
   'chain' | 'commands'
 >;
 

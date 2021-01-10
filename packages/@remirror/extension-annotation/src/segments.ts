@@ -1,11 +1,11 @@
-import { FromToParameter, sort } from '@remirror/core';
+import { FromToProps, sort } from '@remirror/core';
 
 import type { Annotation, OmitText } from './types';
 
 /**
  * Reflects one non-overlapping segment
  */
-export interface Segment<Type extends Annotation> extends FromToParameter {
+export interface Segment<Type extends Annotation> extends FromToProps {
   annotations: Array<OmitText<Type>>;
 }
 

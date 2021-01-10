@@ -1,6 +1,6 @@
 import {
   capitalize,
-  CommandDecoratorMessageParameter,
+  CommandDecoratorMessageProps,
   CommandDecoratorShortcut,
   CommandDecoratorValue,
   getShortcutSymbols,
@@ -18,10 +18,10 @@ import type { I18n } from '@remirror/i18n';
  */
 
 export function getCommandOptionValue<Type>(
-  prop: CommandDecoratorValue<Type> | undefined,
-  parameter: CommandDecoratorMessageParameter,
+  value: CommandDecoratorValue<Type> | undefined,
+  commandProps: CommandDecoratorMessageProps,
 ): Type | undefined {
-  return isFunction(prop) ? prop(parameter) : prop;
+  return isFunction(value) ? value(commandProps) : value;
 }
 
 /**

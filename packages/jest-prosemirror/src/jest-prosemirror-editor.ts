@@ -4,20 +4,20 @@ import { Keyboard } from 'test-keyboard';
 
 import { isString, object, pick } from '@remirror/core-helpers';
 import type {
-  AnchorHeadParameter,
+  AnchorHeadProps,
   CommandFunction,
   EditorSchema,
   EditorState,
-  EditorStateParameter,
+  EditorStateProps,
   InputRule,
-  PosParameter,
+  PosProps,
   PrimitiveSelection,
   ProsemirrorCommandFunction,
   ProsemirrorNode,
   ProsemirrorPlugin,
-  SelectionParameter,
+  SelectionProps,
   Shape,
-  TextParameter,
+  TextProps,
 } from '@remirror/core-types';
 import {
   findElementAtPosition,
@@ -33,11 +33,7 @@ import { DirectEditorProps, EditorView } from '@remirror/pm/view';
 
 import { createEvents, EventType } from './jest-prosemirror-events';
 import { createState, p, pm, selectionFor, taggedDocHasSelection } from './jest-prosemirror-nodes';
-import type {
-  TaggedDocParameter,
-  TestEditorView,
-  TestEditorViewParameter,
-} from './jest-prosemirror-types';
+import type { TaggedDocProps, TestEditorView, TestEditorViewProps } from './jest-prosemirror-types';
 
 const cleanupItems = new Set<[TestEditorView<any>, HTMLElement]>();
 
@@ -67,7 +63,7 @@ afterEach(() => {
  *
  * test('`keyBindings`', () => {
  * const keyBindings = {
- *  Enter: jest.fn((params: SuggestKeyBindingParameter) => {
+ *  Enter: jest.fn((params: SuggestKeyBindingProps) => {
  *    params.command();
  *  }),
  * };
@@ -124,10 +120,10 @@ export function flush<Schema extends EditorSchema = EditorSchema>(
  * A very basic broken paste implementation for jsdom and prosemirror.
  */
 export function pasteContent<Schema extends EditorSchema = EditorSchema>(
-  parameter: TestEditorViewParameter<Schema> &
-    TestEditorViewParameter<Schema> & { content: ProsemirrorNode | string },
+  props: TestEditorViewProps<Schema> &
+    TestEditorViewProps<Schema> & { content: ProsemirrorNode | string },
 ): void {
-  const { view, content } = parameter;
+  const { view, content } = props;
   let slice: ProsemirrorNode[] | Slice | Slice[];
 
   if (isString(content)) {
@@ -153,9 +149,9 @@ export function pasteContent<Schema extends EditorSchema = EditorSchema>(
   view.dispatch(view.state.tr.replaceSelection(slice));
 }
 
-export interface InsertTextParameter<Schema extends EditorSchema = EditorSchema>
-  extends TestEditorViewParameter<Schema>,
-    TextParameter {
+export interface InsertTextProps<Schema extends EditorSchema = EditorSchema>
+  extends TestEditorViewProps<Schema>,
+    TextProps {
   /**
    * The start point of text insertion
    */
@@ -167,9 +163,9 @@ export interface InsertTextParameter<Schema extends EditorSchema = EditorSchema>
  * better simulate calls to handleTextInput.
  */
 export function insertText<Schema extends EditorSchema = EditorSchema>(
-  parameter: InsertTextParameter<Schema>,
+  props: InsertTextProps<Schema>,
 ): void {
-  const { view, text, start } = parameter;
+  const { view, text, start } = props;
   const keys = Keyboard.create({
     target: view.dom,
   }).start();
@@ -193,8 +189,8 @@ export function insertText<Schema extends EditorSchema = EditorSchema>(
   keys.end();
 }
 
-interface DispatchTextSelectionParameter<Schema extends EditorSchema = EditorSchema>
-  extends TestEditorViewParameter<Schema> {
+interface DispatchTextSelectionProps<Schema extends EditorSchema = EditorSchema>
+  extends TestEditorViewProps<Schema> {
   /**
    * This defaults to the anchor.
    */
@@ -206,26 +202,26 @@ interface DispatchTextSelectionParameter<Schema extends EditorSchema = EditorSch
  * Dispatch a text selection from start to [end]
  */
 export function dispatchTextSelection<Schema extends EditorSchema = EditorSchema>(
-  parameter: DispatchTextSelectionParameter<Schema>,
+  props: DispatchTextSelectionProps<Schema>,
 ): void {
-  const { view, start, end } = parameter;
+  const { view, start, end } = props;
   const { state } = view;
   const tr = state.tr.setSelection(TextSelection.create(state.doc, start, end));
 
   view.dispatch(tr);
 }
 
-interface DispatchAnchorTextSelectionParameter<Schema extends EditorSchema = EditorSchema>
-  extends TestEditorViewParameter<Schema>,
-    AnchorHeadParameter {}
+interface DispatchAnchorTextSelectionProps<Schema extends EditorSchema = EditorSchema>
+  extends TestEditorViewProps<Schema>,
+    AnchorHeadProps {}
 
 /**
  * Dispatch a text selection from start to [end]
  */
 export function dispatchAnchorTextSelection<Schema extends EditorSchema = EditorSchema>(
-  parameter: DispatchAnchorTextSelectionParameter<Schema>,
+  props: DispatchAnchorTextSelectionProps<Schema>,
 ): void {
-  const { view, anchor, head } = parameter;
+  const { view, anchor, head } = props;
   const { state } = view;
   const tr = state.tr.setSelection(TextSelection.create(state.doc, anchor, head));
 
@@ -242,17 +238,17 @@ export function dispatchAllSelection<Schema extends EditorSchema = EditorSchema>
   view.dispatch(tr.setSelection(new AllSelection(doc)));
 }
 
-interface DispatchNodeSelectionParameter<Schema extends EditorSchema = EditorSchema>
-  extends TestEditorViewParameter<Schema>,
-    PosParameter {}
+interface DispatchNodeSelectionProps<Schema extends EditorSchema = EditorSchema>
+  extends TestEditorViewProps<Schema>,
+    PosProps {}
 
 /**
  * Dispatch a text selection from the provided pos.
  */
 export function dispatchNodeSelection<Schema extends EditorSchema = EditorSchema>(
-  parameter: DispatchNodeSelectionParameter<Schema>,
+  props: DispatchNodeSelectionProps<Schema>,
 ): void {
-  const { view, pos } = parameter;
+  const { view, pos } = props;
   const { state } = view;
   const tr = state.tr.setSelection(
     // Node selections should always be at the start of their nodes. This is
@@ -264,9 +260,9 @@ export function dispatchNodeSelection<Schema extends EditorSchema = EditorSchema
 }
 
 export function dispatchCellSelection<Schema extends EditorSchema = EditorSchema>(
-  parameter: DispatchNodeSelectionParameter<Schema>,
+  props: DispatchNodeSelectionProps<Schema>,
 ): void {
-  const { view, pos } = parameter;
+  const { view, pos } = props;
   const { state } = view;
   const $anchor = cellAround(state.doc.resolve(pos));
 
@@ -278,8 +274,8 @@ export function dispatchCellSelection<Schema extends EditorSchema = EditorSchema
   view.dispatch(tr);
 }
 
-interface PressParameter<Schema extends EditorSchema = EditorSchema>
-  extends TestEditorViewParameter<Schema> {
+interface PressProps<Schema extends EditorSchema = EditorSchema>
+  extends TestEditorViewProps<Schema> {
   /**
    * The keyboard shortcut to run
    */
@@ -289,10 +285,8 @@ interface PressParameter<Schema extends EditorSchema = EditorSchema>
 /**
  * Press a key.
  */
-export function press<Schema extends EditorSchema = EditorSchema>(
-  parameter: PressParameter<Schema>,
-): void {
-  const { view, char } = parameter;
+export function press<Schema extends EditorSchema = EditorSchema>(props: PressProps<Schema>): void {
+  const { view, char } = props;
   Keyboard.create({
     target: view.dom,
     batch: true,
@@ -305,8 +299,8 @@ export function press<Schema extends EditorSchema = EditorSchema>(
     });
 }
 
-interface BackspaceParameter<Schema extends EditorSchema = EditorSchema>
-  extends TestEditorViewParameter<Schema> {
+interface BackspaceProps<Schema extends EditorSchema = EditorSchema>
+  extends TestEditorViewProps<Schema> {
   /**
    * The number of times to activate backspace.
    *
@@ -319,9 +313,9 @@ interface BackspaceParameter<Schema extends EditorSchema = EditorSchema>
  * Simulate a backspace key press.
  */
 export function backspace<Schema extends EditorSchema = EditorSchema>(
-  parameter: BackspaceParameter<Schema>,
+  props: BackspaceProps<Schema>,
 ): void {
-  const { view, times = 1 } = parameter;
+  const { view, times = 1 } = props;
   const { selection, tr } = view.state;
   const { from, empty } = selection;
 
@@ -343,9 +337,9 @@ export function backspace<Schema extends EditorSchema = EditorSchema>(
  * Simulate a backspace key press.
  */
 export function forwardDelete<Schema extends EditorSchema = EditorSchema>(
-  parameter: BackspaceParameter<Schema>,
+  props: BackspaceProps<Schema>,
 ): void {
-  const { view, times = 1 } = parameter;
+  const { view, times = 1 } = props;
   const { selection, tr } = view.state;
   const { from, empty } = selection;
 
@@ -363,8 +357,8 @@ export function forwardDelete<Schema extends EditorSchema = EditorSchema>(
   view.dispatch(tr);
 }
 
-interface KeyboardShortcutParameter<Schema extends EditorSchema = EditorSchema>
-  extends TestEditorViewParameter<Schema> {
+interface KeyboardShortcutProps<Schema extends EditorSchema = EditorSchema>
+  extends TestEditorViewProps<Schema> {
   /**
    * The keyboard shortcut to run
    */
@@ -375,9 +369,9 @@ interface KeyboardShortcutParameter<Schema extends EditorSchema = EditorSchema>
  * Runs a keyboard shortcut.
  */
 export function shortcut<Schema extends EditorSchema = EditorSchema>(
-  parameter: KeyboardShortcutParameter<Schema>,
+  props: KeyboardShortcutProps<Schema>,
 ): void {
-  const { view, shortcut: text } = parameter;
+  const { view, shortcut: text } = props;
 
   Keyboard.create({
     target: view.dom,
@@ -391,7 +385,7 @@ export function shortcut<Schema extends EditorSchema = EditorSchema>(
     });
 }
 
-export interface FireParameter {
+export interface FireProps {
   /**
    * The event to fire on the view
    */
@@ -408,23 +402,18 @@ export interface FireParameter {
   position?: number;
 }
 
-interface FireEventAtPositionParameter<Schema extends EditorSchema = EditorSchema>
-  extends TestEditorViewParameter<Schema>,
-    FireParameter {}
+interface FireEventAtPositionProps<Schema extends EditorSchema = EditorSchema>
+  extends TestEditorViewProps<Schema>,
+    FireProps {}
 
 /**
  * Fires an event at the provided position or the current selected position in
  * the dom.
  */
 export function fireEventAtPosition<Schema extends EditorSchema = EditorSchema>(
-  parameter: FireEventAtPositionParameter<Schema>,
+  props: FireEventAtPositionProps<Schema>,
 ): void {
-  const {
-    view,
-    event,
-    options = object<Shape>(),
-    position = view.state.selection.anchor,
-  } = parameter;
+  const { view, event, options = object<Shape>(), position = view.state.selection.anchor } = props;
   const element = findElementAtPosition(position, view);
   const syntheticEvents = createEvents(event, options);
 
@@ -461,8 +450,8 @@ export function fireEventAtPosition<Schema extends EditorSchema = EditorSchema>(
  * @template Schema - the editor schema used node.
  */
 export interface ApplyReturn<Schema extends EditorSchema = EditorSchema>
-  extends TaggedDocParameter<Schema>,
-    EditorStateParameter<Schema> {
+  extends TaggedDocProps<Schema>,
+    EditorStateProps<Schema> {
   /**
    * True when the command was applied successfully.
    */
@@ -702,10 +691,10 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
   /**
    * Fire an event in the editor (very hit and miss).
    *
-   * @param params - the fire event parameters
+   * @param props - the props when firing an event
    */
-  fire(parameters: Omit<FireEventAtPositionParameter<Schema>, 'view'>): this {
-    fireEventAtPosition({ view: this.view, ...parameters });
+  fire(props: Omit<FireEventAtPositionProps<Schema>, 'view'>): this {
+    fireEventAtPosition({ view: this.view, ...props });
     return this;
   }
 
@@ -714,7 +703,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    * `schema` and `selection` properties and allows for easier testing of the
    * current state of the editor.
    */
-  callback(fn: (content: ReturnValueCallbackParameter<Schema>) => void): this {
+  callback(fn: (content: ReturnValueCallbackProps<Schema>) => void): this {
     fn(pick(this, ['start', 'end', 'state', 'view', 'schema', 'selection', 'doc', 'debug']));
     return this;
   }
@@ -731,10 +720,10 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
   }
 }
 
-export interface ReturnValueCallbackParameter<Schema extends EditorSchema = EditorSchema>
-  extends TestEditorViewParameter<Schema>,
-    EditorStateParameter<Schema>,
-    SelectionParameter<Schema> {
+export interface ReturnValueCallbackProps<Schema extends EditorSchema = EditorSchema>
+  extends TestEditorViewProps<Schema>,
+    EditorStateProps<Schema>,
+    SelectionProps<Schema> {
   start: number;
   end: number;
   schema: Schema;

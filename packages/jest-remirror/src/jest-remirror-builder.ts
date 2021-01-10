@@ -10,12 +10,12 @@ import {
   isString,
   keys,
   object,
-  SchemaParameter,
+  SchemaProps,
 } from '@remirror/core';
 import { Fragment, Mark, Node as ProsemirrorNode, Slice } from '@remirror/pm/model';
 
 import {
-  BaseFactoryParameter,
+  BaseFactoryProps,
   TaggedContent,
   TaggedContentItem,
   TaggedContentWithText,
@@ -54,6 +54,10 @@ export function text(value: string, schema: EditorSchema): TaggedContentItem {
 
     const skipLength = escapeCharacters?.length;
 
+    if (!(taggedToken && tagName)) {
+      continue;
+    }
+
     if (skipLength) {
       if (isOdd(skipLength)) {
         stripped += value.slice(textIndex, index + (skipLength - 1) / 2);
@@ -86,10 +90,8 @@ export function text(value: string, schema: EditorSchema): TaggedContentItem {
 export function offsetTags(tags: Tags, offset: number): Tags {
   const result: Tags = object();
 
-  for (const name in tags) {
-    if (hasOwnProperty(tags, name)) {
-      result[name] = tags[name] + offset;
-    }
+  for (const [name, value] of Object.entries(tags)) {
+    result[name] = value + offset;
   }
 
   return result;
@@ -145,7 +147,7 @@ export function sequence(...content: TaggedContentItem[]): SequenceReturn {
   return { nodes, tags };
 }
 
-interface CoerceParameter extends SchemaParameter {
+interface CoerceProps extends SchemaProps {
   /**
    * Content that will be transformed into taggedNodes
    */
@@ -158,8 +160,8 @@ interface CoerceParameter extends SchemaParameter {
  * Checks if the content item is a string and runs the text transformer
  * otherwise passes a flattened structure through to the `sequence` function
  */
-export function coerce(parameter: CoerceParameter): SequenceReturn {
-  const { content, schema } = parameter;
+export function coerce(props: CoerceProps): SequenceReturn {
+  const { content, schema } = props;
 
   const taggedContent = content.map((item) =>
     isString(item) ? text(item, schema) : item,
@@ -168,8 +170,8 @@ export function coerce(parameter: CoerceParameter): SequenceReturn {
   return sequence(...flattenArray<TaggedContentItem>(taggedContent));
 }
 
-interface NodeFactoryParameter<Schema extends EditorSchema = EditorSchema>
-  extends BaseFactoryParameter<Schema> {
+interface NodeFactoryProps<Schema extends EditorSchema = EditorSchema>
+  extends BaseFactoryProps<Schema> {
   /**
    * The marks which wrap this node.
    */
@@ -182,9 +184,9 @@ type NodeFactory = (...content: TaggedContentWithText[]) => TaggedProsemirrorNod
  * Create a builder function for nodes.
  */
 export function nodeFactory<Schema extends EditorSchema = EditorSchema>(
-  parameter: NodeFactoryParameter<Schema>,
+  props: NodeFactoryProps<Schema>,
 ): NodeFactory {
-  const { name, schema, attrs, marks } = parameter;
+  const { name, schema, attrs, marks } = props;
   const nodeBuilder = hasOwnProperty(schema.nodes, name) ? schema.nodes[name] : undefined;
 
   invariant(nodeBuilder, {
@@ -201,7 +203,7 @@ export function nodeFactory<Schema extends EditorSchema = EditorSchema>(
   };
 }
 
-interface MarkFactoryParameter extends BaseFactoryParameter {
+interface MarkFactoryProps extends BaseFactoryProps {
   allowDupes?: boolean;
 }
 
@@ -210,8 +212,8 @@ type MarkFactory = (...content: TaggedContentWithText[]) => TaggedProsemirrorNod
 /**
  * Create a builder for marks.
  */
-export function markFactory(parameter: MarkFactoryParameter): MarkFactory {
-  const { name, schema, attrs, allowDupes = false } = parameter;
+export function markFactory(props: MarkFactoryProps): MarkFactory {
+  const { name, schema, attrs, allowDupes = false } = props;
   const markBuilder = hasOwnProperty(schema.marks, name) ? schema.marks[name] : undefined;
 
   invariant(markBuilder, {
@@ -251,7 +253,7 @@ export function slice(schema: EditorSchema) {
     new Slice(Fragment.from(coerce({ content, schema }).nodes), 0, 0);
 }
 
-interface CleanParameter extends SchemaParameter {
+interface CleanProps extends SchemaProps {
   /**
    * The tagged content which will be replaced with a clean Prosemirror node
    */
@@ -261,8 +263,8 @@ interface CleanParameter extends SchemaParameter {
 /**
  * Builds a 'clean' version of the nodes, without Tags or TagTrackers.
  */
-export function clean(parameter: CleanParameter): ProsemirrorNode[] | ProsemirrorNode | undefined {
-  const { schema, content } = parameter;
+export function clean(props: CleanProps): ProsemirrorNode[] | ProsemirrorNode | undefined {
+  const { schema, content } = props;
 
   if (!isArray(content)) {
     return isProsemirrorNode(content)

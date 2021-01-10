@@ -13,21 +13,21 @@ export type {
   BaseFramework,
   CreateStateFromContent,
   FocusType,
+  FrameworkOptions,
   FrameworkOutput,
-  FrameworkParameter,
   FrameworkProps,
-  ListenerParameter,
+  ListenerProps,
   PlaceholderConfig,
   RemirrorEventListener,
-  RemirrorEventListenerParameter,
-  TriggerChangeParameter,
-  UpdateStateParameter,
+  RemirrorEventListenerProps,
+  TriggerChangeProps,
+  UpdateStateProps,
 } from './framework';
 export { Framework } from './framework';
-export type { AnyRemirrorManager, CreateEditorStateParameter, ManagerEvents } from './manager';
+export type { AnyRemirrorManager, CreateEditorStateProps, ManagerEvents } from './manager';
 export { isRemirrorManager, RemirrorManager } from './manager';
 export type {
-  ApplyStateLifecycleParameter,
+  ApplyStateLifecycleProps,
   BaseExtensionOptions,
   ChangedOptions,
   CommandShape,
@@ -43,12 +43,12 @@ export type {
   GetConstructor,
   GetHelpers,
   GetOptions,
-  OnSetOptionsParameter,
+  OnSetOptionsProps,
   OptionsOfConstructor,
   PickChanged,
-  StateUpdateLifecycleParameter,
+  StateUpdateLifecycleProps,
   UpdateReason,
-  UpdateReasonParameter,
+  UpdateReasonProps,
 } from './types';
 export * from '@remirror/core-constants';
 export * from '@remirror/core-helpers';

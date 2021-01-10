@@ -6,7 +6,7 @@ import {
   EditorState,
   EditorView,
   Framework,
-  FromToParameter,
+  FromToProps,
   RemirrorContentType,
 } from '@remirror/core';
 import { createEditorView } from '@remirror/react';
@@ -94,7 +94,7 @@ class TestFramework extends Framework<any, any, any> {
 export function createFramework(manager: AnyRemirrorManager): TestFramework {
   function createStateFromContent(
     content: RemirrorContentType,
-    selection?: FromToParameter | undefined,
+    selection?: FromToProps | undefined,
   ) {
     return manager.createState({
       content,
@@ -111,8 +111,7 @@ export function createFramework(manager: AnyRemirrorManager): TestFramework {
 }
 
 export { diff };
-export { default as minDocument } from 'min-document';
-export type { FrameRequestCallback, MockRaf } from '@react-spring/mock-raf';
-
 export * from './object-nodes';
 export * from './typecheck';
+export type { FrameRequestCallback, MockRaf } from '@react-spring/mock-raf';
+export { default as minDocument } from 'min-document';

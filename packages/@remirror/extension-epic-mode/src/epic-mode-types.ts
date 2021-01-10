@@ -1,4 +1,4 @@
-export type EpicModePluginStateParameter = Required<EpicModeOptions>;
+export type EpicModePluginStateProps = Required<EpicModeOptions>;
 
 export interface ParticleRange {
   min: number;
@@ -61,7 +61,7 @@ export interface Particle {
   theta?: number;
 }
 
-export interface CreateParticleParameter {
+export interface CreateParticleProps {
   /**
    * x coordinate
    */
@@ -93,7 +93,7 @@ export interface CreateParticleParameter {
   canvas: HTMLCanvasElement;
 }
 
-export interface UpdateParticleParameter {
+export interface UpdateParticleProps {
   particle: Particle;
   ctx: CanvasRenderingContext2D;
   canvas: HTMLCanvasElement;
@@ -103,14 +103,14 @@ export interface ParticleEffect {
   /**
    * Create a particle
    *
-   * @param params
+   * @param props
    */
-  createParticle: (params: CreateParticleParameter) => Particle;
+  createParticle: (props: CreateParticleProps) => Particle;
 
   /**
    * Update the created particle (via mutation)
    *
-   * @param params
+   * @param props
    */
-  updateParticle: (params: UpdateParticleParameter) => void;
+  updateParticle: (props: UpdateParticleProps) => void;
 }

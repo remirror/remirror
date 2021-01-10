@@ -17,4 +17,4 @@ export type {
   Hue,
   RemirrorThemeType,
 } from './utils';
-export { createThemeVariables, defaultRemirrorTheme, getTheme, getThemeProp } from './utils';
+export { createThemeVariables, defaultRemirrorTheme, getTheme, getThemeProps } from './utils';

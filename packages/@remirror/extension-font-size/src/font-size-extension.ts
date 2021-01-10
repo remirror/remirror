@@ -18,7 +18,7 @@ import {
   isString,
   joinStyles,
   keyBinding,
-  KeyBindingParameter,
+  KeyBindingProps,
   Mark,
   MarkExtension,
   MarkExtensionSpec,
@@ -141,13 +141,13 @@ export class FontSizeExtension extends MarkExtension<FontSizeOptions> {
   increaseFontSize(options?: SizeCommandOptions): CommandFunction {
     const { increment } = this.options;
 
-    return (parameter) => {
+    return (props) => {
       const [parsedFontSize] = this.getFontSizeForSelection(options?.selection);
       let [size] = parsedFontSize;
 
       size += isFunction(increment) ? increment(parsedFontSize, 1) : increment;
 
-      return this.setFontSize(size, options)(parameter);
+      return this.setFontSize(size, options)(props);
     };
   }
 
@@ -155,13 +155,13 @@ export class FontSizeExtension extends MarkExtension<FontSizeOptions> {
   decreaseFontSize(options?: SizeCommandOptions): CommandFunction {
     const { increment } = this.options;
 
-    return (parameter) => {
+    return (props) => {
       const [parsedFontSize] = this.getFontSizeForSelection(options?.selection);
       let [size] = parsedFontSize;
 
       size -= isFunction(increment) ? increment(parsedFontSize, -1) : increment;
 
-      return this.setFontSize(size, options)(parameter);
+      return this.setFontSize(size, options)(props);
     };
   }
 
@@ -177,16 +177,16 @@ export class FontSizeExtension extends MarkExtension<FontSizeOptions> {
    * Handle exiting the mark forwards.
    */
   @keyBinding({ shortcut: NamedShortcut.IncreaseFontSize, command: 'increaseFontSize' })
-  increaseFontSizeShortcut(parameter: KeyBindingParameter): boolean {
-    return this.increaseFontSize()(parameter);
+  increaseFontSizeShortcut(props: KeyBindingProps): boolean {
+    return this.increaseFontSize()(props);
   }
 
   /**
    * Handle exiting the mark forwards.
    */
   @keyBinding({ shortcut: NamedShortcut.IncreaseFontSize, command: 'decreaseFontSize' })
-  decreaseFontSizeShortcut(parameter: KeyBindingParameter): boolean {
-    return this.decreaseFontSize()(parameter);
+  decreaseFontSizeShortcut(props: KeyBindingProps): boolean {
+    return this.decreaseFontSize()(props);
   }
 
   /**

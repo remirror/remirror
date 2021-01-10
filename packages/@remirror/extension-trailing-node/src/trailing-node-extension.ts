@@ -1,9 +1,4 @@
-import {
-  extension,
-  OnSetOptionsParameter,
-  PlainExtension,
-  ProsemirrorPlugin,
-} from '@remirror/core';
+import { extension, OnSetOptionsProps, PlainExtension, ProsemirrorPlugin } from '@remirror/core';
 import { trailingNode, TrailingNodePluginOptions } from '@remirror/pm/trailing-node';
 
 export interface TrailingNodeOptions extends TrailingNodePluginOptions {
@@ -41,8 +36,8 @@ export class TrailingNodeExtension extends PlainExtension<TrailingNodeOptions> {
    * Whenever the options are changed make sure to update the plugin with the
    * new values and trigger a state update.
    */
-  protected onSetOptions(parameter: OnSetOptionsParameter<TrailingNodeOptions>): void {
-    const { changes } = parameter;
+  protected onSetOptions(props: OnSetOptionsProps<TrailingNodeOptions>): void {
+    const { changes } = props;
 
     if (changes.disableTags.changed || changes.ignoredNodes.changed || changes.nodeName.changed) {
       this.store.updateExtensionPlugins(this);

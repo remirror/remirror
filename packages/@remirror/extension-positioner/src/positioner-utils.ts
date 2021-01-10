@@ -1,16 +1,16 @@
 import {
   EditorState,
-  EditorStateParameter,
+  EditorStateProps,
   getStyle,
   hasTransactionChanged,
   isElementDomNode,
-  TransactionParameter,
+  TransactionProps,
   within,
 } from '@remirror/core';
 
 export { isEmptyBlockNode } from '@remirror/core';
 
-interface HasChangedParameter extends EditorStateParameter, Partial<TransactionParameter> {
+interface HasChangedProps extends EditorStateProps, Partial<TransactionProps> {
   previousState: EditorState | undefined;
 }
 
@@ -20,8 +20,8 @@ interface HasChangedParameter extends EditorStateParameter, Partial<TransactionP
  *
  * Return `true` when a change is detected in the document or the selection.
  */
-export function hasStateChanged(parameter: HasChangedParameter): boolean {
-  const { tr, state, previousState } = parameter;
+export function hasStateChanged(props: HasChangedProps): boolean {
+  const { tr, state, previousState } = props;
 
   if (!previousState) {
     return true;

@@ -17,7 +17,7 @@ import {
 import { cellAround, CellSelection } from '@remirror/pm/tables';
 
 import { schema } from './jest-prosemirror-schema';
-import type { TaggedDocParameter } from './jest-prosemirror-types';
+import type { TaggedDocProps } from './jest-prosemirror-types';
 
 /**
  * Table specific cell resolution
@@ -33,8 +33,8 @@ function resolveCell(taggedDoc: TaggedProsemirrorNode, tag?: number) {
   return cellAround(taggedDoc.resolve(tag));
 }
 
-interface CreateTextSelectionParameter<Schema extends EditorSchema = EditorSchema>
-  extends TaggedDocParameter<Schema> {
+interface CreateTextSelectionProps<Schema extends EditorSchema = EditorSchema>
+  extends TaggedDocProps<Schema> {
   start: number;
   end?: number;
 }
@@ -51,7 +51,7 @@ function createTextSelection<Schema extends EditorSchema = EditorSchema>({
   taggedDoc,
   start,
   end,
-}: CreateTextSelectionParameter<Schema>) {
+}: CreateTextSelectionProps<Schema>) {
   const $start = taggedDoc.resolve(start);
   const $end = end && start <= end ? taggedDoc.resolve(end) : taggedDoc.resolve($start.end());
   return new TextSelection<Schema>($start, $end);

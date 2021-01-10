@@ -251,9 +251,9 @@ export interface TextPasteRule extends BaseRegexPasteRule {
   type: 'text';
 }
 
-export type FileHandlerParameter = FilePasteHandlerParameter | FileDropHandlerParameter;
+export type FileHandlerProps = FilePasteHandlerProps | FileDropHandlerProps;
 
-export interface FilePasteHandlerParameter {
+export interface FilePasteHandlerProps {
   type: 'paste';
   /** All the matching files */
   files: File[];
@@ -262,7 +262,7 @@ export interface FilePasteHandlerParameter {
   selection: Selection;
 }
 
-export interface FileDropHandlerParameter {
+export interface FileDropHandlerProps {
   type: 'drop';
   /** All the matching files */
   files: File[];
@@ -294,7 +294,7 @@ export interface FilePasteRule extends BasePasteRule {
    *
    * The file
    */
-  fileHandler: (parameter: FileHandlerParameter) => boolean;
+  fileHandler: (props: FileHandlerProps) => boolean;
 }
 
 export type PasteRule = FilePasteRule | TextPasteRule | NodePasteRule | MarkPasteRule;
@@ -313,7 +313,7 @@ interface PasteRuleHandler<Rule extends RegexPasteRule> {
   nodes: ProsemirrorNode[];
 }
 
-interface TransformerParameter<Rule extends RegexPasteRule> {
+interface TransformerProps<Rule extends RegexPasteRule> {
   rule: Rule;
   textNode: ProsemirrorNode;
   nodes: ProsemirrorNode[];
@@ -321,7 +321,7 @@ interface TransformerParameter<Rule extends RegexPasteRule> {
   schema: EditorSchema;
 }
 
-type Transformer<Rule extends RegexPasteRule> = (parameter: TransformerParameter<Rule>) => void;
+type Transformer<Rule extends RegexPasteRule> = (props: TransformerProps<Rule>) => void;
 
 /**
  * Factory for creating paste rules.
@@ -330,8 +330,8 @@ function createPasteRuleHandler<Rule extends RegexPasteRule>(
   transformer: Transformer<Rule>,
   schema: EditorSchema,
 ) {
-  return function handler(parameter: PasteRuleHandler<Rule>) {
-    const { fragment, rule, nodes } = parameter;
+  return function handler(props: PasteRuleHandler<Rule>) {
+    const { fragment, rule, nodes } = props;
     const { regexp, ignoreWhitespace, ignoredMarks, ignoredNodes, transformMatch } = rule;
 
     fragment.forEach((child) => {
@@ -361,20 +361,21 @@ function createPasteRuleHandler<Rule extends RegexPasteRule>(
       for (const match of findMatches(text, regexp)) {
         // The captured value from the regex.
         const capturedValue = match[1];
+
         const transformedCapturedValue = transformMatch?.(match);
         const fullValue = match[0];
 
         if (
           // This helps prevent matches which are only whitespace from triggering
           // an update.
-          ignoreWhitespace &&
-          capturedValue?.trim() === ''
+          (ignoreWhitespace && capturedValue?.trim() === '') ||
+          !fullValue
         ) {
           return;
         }
 
         const start = match.index;
-        const end = start + match[0].length;
+        const end = start + fullValue.length;
 
         if (start > 0) {
           nodes.push(child.cut(pos, start));
@@ -388,7 +389,7 @@ function createPasteRuleHandler<Rule extends RegexPasteRule>(
         }
 
         // When a capture value is provided use it.
-        else if (capturedValue) {
+        else if (fullValue && capturedValue) {
           const startSpaces = fullValue.search(/\S/);
           const textStart = start + fullValue.indexOf(capturedValue);
           const textEnd = textStart + capturedValue.length;
@@ -420,8 +421,8 @@ function createPasteRuleHandler<Rule extends RegexPasteRule>(
  * Mark rule transformer which pushes the transformed mark into the provided
  * nodes.
  */
-function markRuleTransformer(parameter: TransformerParameter<MarkPasteRule>) {
-  const { nodes, rule, textNode, match } = parameter;
+function markRuleTransformer(props: TransformerProps<MarkPasteRule>) {
+  const { nodes, rule, textNode, match } = props;
   const { getAttributes, markType } = rule;
   const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
   nodes.push(textNode.mark([markType.create(attributes), ...textNode.marks]));
@@ -430,8 +431,8 @@ function markRuleTransformer(parameter: TransformerParameter<MarkPasteRule>) {
 /**
  * Support for pasting node content into the editor.
  */
-function nodeRuleTransformer(parameter: TransformerParameter<NodePasteRule>) {
-  const { nodes, rule, textNode, match } = parameter;
+function nodeRuleTransformer(props: TransformerProps<NodePasteRule>) {
+  const { nodes, rule, textNode, match } = props;
   const { getAttributes, nodeType } = rule;
   const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
   nodes.push(nodeType.create(attributes, textNode));
@@ -440,8 +441,8 @@ function nodeRuleTransformer(parameter: TransformerParameter<NodePasteRule>) {
 /**
  * Support for pasting and transforming text content into the editor.
  */
-function textRuleTransformer(parameter: TransformerParameter<TextPasteRule>) {
-  const { nodes, textNode } = parameter;
+function textRuleTransformer(props: TransformerProps<TextPasteRule>) {
+  const { nodes, textNode } = props;
   nodes.push(textNode);
 }
 

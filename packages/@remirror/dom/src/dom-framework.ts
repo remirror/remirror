@@ -5,9 +5,8 @@ import {
   FrameworkOutput,
   FrameworkProps,
   GetSchema,
-  RemirrorManager,
   STATE_OVERRIDE,
-  UpdateStateParameter,
+  UpdateStateProps,
 } from '@remirror/core';
 import { EditorView } from '@remirror/pm/view';
 
@@ -72,7 +71,7 @@ export class DomFramework<ExtensionUnion extends AnyExtension> extends Framework
   /**
    * Responsible for managing state updates.
    */
-  protected updateState({ state, ...rest }: UpdateStateParameter<GetSchema<ExtensionUnion>>): void {
+  protected updateState({ state, ...rest }: UpdateStateProps<GetSchema<ExtensionUnion>>): void {
     const { tr, transactions, triggerChange = true } = rest;
 
     // Check if this is a fresh update directly applied by the developer (without

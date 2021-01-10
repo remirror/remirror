@@ -27,9 +27,7 @@ export type ReactExtensionUnion<ExtensionUnion extends AnyExtension = never> =
 /**
  * The config options for the `getRootProps` method.
  */
-export interface GetRootPropsConfig<RefKey extends string = 'ref'>
-  extends RefParameter<RefKey>,
-    Shape {
+export interface GetRootPropsConfig<RefKey extends string = 'ref'> extends RefProps<RefKey>, Shape {
   /**
    * Allows for composing the refs together. If you have a ref you would also
    * like to add to the main element then just add it here.
@@ -47,7 +45,7 @@ export type RefKeyRootProps<RefKey extends string = 'ref'> = {
   children: ReactNode;
 } & Shape;
 
-export interface RefParameter<RefKey = 'ref'> {
+export interface RefProps<RefKey = 'ref'> {
   /**
    * A custom ref key which allows a reference to be obtained from non standard
    * components.

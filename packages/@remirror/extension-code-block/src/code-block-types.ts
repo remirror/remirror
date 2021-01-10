@@ -111,9 +111,9 @@ export interface CodeBlockOptions {
  * TODO - possibly allow error management if failure is because of invalid
  * syntax
  */
-export type CodeBlockFormatter = (params: FormatterParameter) => FormattedContent | undefined;
+export type CodeBlockFormatter = (params: FormatterProps) => FormattedContent | undefined;
 
-export interface FormatterParameter {
+export interface FormatterProps {
   /**
    * The code to be formatted
    */

@@ -6,7 +6,7 @@ import {
   ExtensionTag,
   InputRule,
   keyBinding,
-  KeyBindingParameter,
+  KeyBindingProps,
   KeyBindings,
   MarkExtension,
   MarkExtensionSpec,
@@ -94,8 +94,8 @@ export class ItalicExtension extends MarkExtension {
    * Attach the keyboard shortcut for formatting.
    */
   @keyBinding({ shortcut: NamedShortcut.Italic, command: 'toggleItalic' })
-  shortcut(parameter: KeyBindingParameter): boolean {
-    return this.toggleItalic()(parameter);
+  shortcut(props: KeyBindingProps): boolean {
+    return this.toggleItalic()(props);
   }
 }
 

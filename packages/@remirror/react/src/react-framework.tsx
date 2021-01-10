@@ -5,7 +5,7 @@ import {
   AnyExtension,
   ErrorConstant,
   Framework,
-  FrameworkParameter,
+  FrameworkOptions,
   FrameworkProps,
   GetSchema,
   invariant,
@@ -13,7 +13,7 @@ import {
   object,
   shouldUseDomEnvironment,
   STATE_OVERRIDE,
-  UpdateStateParameter,
+  UpdateStateProps,
 } from '@remirror/core';
 import { PlaceholderExtension } from '@remirror/extension-placeholder';
 import type { EditorState } from '@remirror/pm/state';
@@ -63,10 +63,10 @@ export class ReactFramework<ExtensionUnion extends AnyExtension> extends Framewo
     return 'react' as const;
   }
 
-  constructor(parameter: ReactFrameworkParameter<ExtensionUnion>) {
-    super(parameter);
+  constructor(props: ReactFrameworkOptions<ExtensionUnion>) {
+    super(props);
 
-    const { getShouldRenderClient, setShouldRenderClient } = parameter;
+    const { getShouldRenderClient, setShouldRenderClient } = props;
 
     this.#getShouldRenderClient = getShouldRenderClient;
     this.#setShouldRenderClient = setShouldRenderClient;
@@ -90,10 +90,10 @@ export class ReactFramework<ExtensionUnion extends AnyExtension> extends Framewo
   /**
    * This is called to update props on every render so that values don't become stale.
    */
-  update(parameter: ReactFrameworkParameter<ExtensionUnion>): this {
-    super.update(parameter);
+  update(props: ReactFrameworkOptions<ExtensionUnion>): this {
+    super.update(props);
 
-    const { getShouldRenderClient, setShouldRenderClient } = parameter;
+    const { getShouldRenderClient, setShouldRenderClient } = props;
 
     this.#getShouldRenderClient = getShouldRenderClient;
     this.#setShouldRenderClient = setShouldRenderClient;
@@ -178,7 +178,7 @@ export class ReactFramework<ExtensionUnion extends AnyExtension> extends Framewo
    * Updates the state either by calling `onChange` when it exists or
    * directly setting the internal state via a `setState` call.
    */
-  protected updateState({ state, ...rest }: UpdateStateParameter<GetSchema<ExtensionUnion>>): void {
+  protected updateState({ state, ...rest }: UpdateStateProps<GetSchema<ExtensionUnion>>): void {
     const { triggerChange = true, tr, transactions } = rest;
 
     if (this.props.state) {
@@ -437,10 +437,10 @@ export interface ReactFrameworkProps<ExtensionUnion extends AnyExtension>
 }
 
 /**
- * The parameter that is passed into the ReactFramework.
+ * The options that are passed into the [[`ReactFramework`]] constructor.
  */
-export interface ReactFrameworkParameter<ExtensionUnion extends AnyExtension>
-  extends FrameworkParameter<ExtensionUnion, ReactFrameworkProps<ExtensionUnion>> {
+export interface ReactFrameworkOptions<ExtensionUnion extends AnyExtension>
+  extends FrameworkOptions<ExtensionUnion, ReactFrameworkProps<ExtensionUnion>> {
   getShouldRenderClient: () => boolean | undefined;
   setShouldRenderClient: SetShouldRenderClient;
 }
