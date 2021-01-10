@@ -13,8 +13,5 @@
   "{packages,support}/**/*.{ts,tsx,js}": [
     "prettier --write",
     "eslint --fix"
-  ],
-  "packages/**/*.{ts,tsx}": [
-    "jest --coverage=false --bail --findRelatedTests"
   ]
 }
