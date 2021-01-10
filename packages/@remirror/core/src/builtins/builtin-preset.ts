@@ -109,6 +109,6 @@ declare global {
     /**
      * The union of every extension available via the remirror codebase.
      */
-    type AllExtensionUnion = ValueOf<AllExtensions>;
+    type Extensions = ValueOf<AllExtensions>;
   }
 }

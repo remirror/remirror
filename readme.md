@@ -70,7 +70,7 @@ const Editor = () => {
 };
 ```
 
-With this small snippet your editor now supports some complex UI Functionality. And it's all customisable with ordinary `css`. If you prefer `CSS-in-JS` the styles are also available with `emotion` and `styled-components`.
+With this small snippet your editor now supports some complex UI Functionality. And it's all customisable with ordinary `css`. If you prefer `CSS-in-JS` the styles are also available via `emotion` and `styled-components`.
 
 There's so much more to come and I'm glad you're taking a look. I hope `remirror` proves to be everything you need for your next text editor project.
 
@@ -143,7 +143,7 @@ Once installed you will be able to add the following code which creates an edito
 ```tsx
 import React, { useCallback } from 'react';
 import { BoldExtension } from 'remirror/extensions';
-import { Remirror, useRemirrorContext, useRemirror } from 'remirror/react';
+import { Remirror, useRemirror, useRemirrorContext } from 'remirror/react';
 
 const Button = () => {
   // `autoUpdate` means that every editor update will recalculate the output

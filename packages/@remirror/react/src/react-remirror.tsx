@@ -16,8 +16,8 @@ import type { ReactFrameworkProps } from './react-framework';
 /**
  * The props for the main `<Remirror />` component.
  */
-export interface RemirrorProps<ExtensionUnion extends AnyExtension>
-  extends Omit<ReactFrameworkProps<ExtensionUnion>, 'stringHandler'>,
+export interface RemirrorProps<Extension extends AnyExtension>
+  extends Omit<ReactFrameworkProps<Extension>, 'stringHandler'>,
     I18nProps {
   /**
    * The optional children which can be passed into the [`Remirror`].
@@ -58,7 +58,7 @@ export interface RemirrorProps<ExtensionUnion extends AnyExtension>
 /**
  * The default editor placeholder where the prosemirror editor will be rendered.
  */
-export const EditorComponent = (): JSX.Element => {
+export const Editor = (): JSX.Element => {
   return <div className={Components.EDITOR_WRAPPER} {...useRemirrorContext().getRootProps()} />;
 };
 
@@ -88,9 +88,9 @@ const HookComponent = (props: HookComponentProps) => {
  * the context can be accessed from outside the editor via
  * `useRemirror().getContext()`.
  */
-export const Remirror = <ExtensionUnion extends AnyExtension>(
-  props: RemirrorProps<ExtensionUnion>,
-): ReactElement<RemirrorProps<ExtensionUnion>> => {
+export const Remirror = <Extension extends AnyExtension>(
+  props: RemirrorProps<Extension>,
+): ReactElement<RemirrorProps<Extension>> => {
   const {
     children,
     autoRender,
@@ -121,9 +121,9 @@ export const Remirror = <ExtensionUnion extends AnyExtension>(
         {hooks.map((hook, index) => (
           <HookComponent hook={hook} key={index} />
         ))}
-        {autoRenderAtStart && <EditorComponent />}
+        {autoRenderAtStart && <Editor />}
         {children}
-        {autoRenderAtEnd && <EditorComponent />}
+        {autoRenderAtEnd && <Editor />}
       </RemirrorContext.Provider>
     </I18nProvider>
   );

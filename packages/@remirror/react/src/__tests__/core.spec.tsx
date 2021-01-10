@@ -10,7 +10,7 @@ import {
 } from 'remirror';
 import {
   createReactManager,
-  ReactExtensionUnion,
+  ReactExtensions,
   ReactFrameworkOutput,
   Remirror,
   useRemirror,
@@ -352,7 +352,7 @@ test('`focus` should be chainable', () => {
       }),
     );
 
-    const onChange: RemirrorEventListener<ReactExtensionUnion<never>> = useCallback(
+    const onChange: RemirrorEventListener<ReactExtensions<never>> = useCallback(
       ({ state, firstRender }) => {
         if (firstRender) {
           return;

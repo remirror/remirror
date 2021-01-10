@@ -18,48 +18,24 @@ For in depth usage with proper code example see the [docs](https://remirror.io).
 
 ### Controlled Editor
 
-The following example converts all the content to text and appends a list item to the end of every editor after every edit.
-
-Don't do this, as it would actually be a terrible user experience. But it shows what can be done. A more meaningful example will be created soon.
-
 ```tsx
 import React, { useCallback } from 'react';
 import { fromHtml, RemirrorEventListener } from 'remirror';
-import { BoldExtension } from 'remirror/extensions';
-import { ListPreset } from 'remirror/extensions';
-import {
-  createReactManager,
-  ReactExtensionUnion,
-  RemirrorProvider,
-  useManager,
-} from 'remirror/react';
+import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions';
+import { createReactManager, ReactExtensions, Remirror, useRemirror } from 'remirror/react';
 
-type ExtensionUnion = ReactExtensionUnion<ListPreset | BoldExtension>;
+type Extension = ReactExtensions<ListPreset | BoldExtension>;
+const extensions = () => [new BoldExtension(), new ItalicExtension(), new UnderlineExtension()];
 
-const EditorWrapper = () => {
-  const boldExtension = new BoldExtension();
-  const listPreset = new ListPreset();
-  const manager = useManager<ExtensionUnion>([boldExtension, listPreset]);
-
-  const initialValue = manager.createState({
+const MyEditor = () => {
+  const { manager, state, onChange } = useRemirror<Extension>({
+    extensions,
     content: '<p>This is the initial value</p>',
-    stringHandler: fromHtml,
+    stringHandler: 'html',
   });
 
   const [value, setValue] = useState(initialValue);
 
-  const onChange: RemirrorEventListener<ExtensionUnion> = useCallback(
-    ({ getText, createStateFromContent }) => {
-      const newValue = createStateFromContent(`${getText()}<ul><li>Surprise!!!</li></ul>`);
-      setValue(newValue);
-    },
-    [],
-  );
-
-  return (
-    <RemirrorProvider manager={manager} stringHandler={fromHtml} value={value} onChange={onChange}>
-      <div />
-    </RemirrorProvider>
-  );
+  return <Remirror manager={manager} state={state} onChange={onChange} />;
 };
 ```

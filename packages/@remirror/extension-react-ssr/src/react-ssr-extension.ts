@@ -208,7 +208,7 @@ declare global {
       reactSSR?: boolean;
     }
 
-    interface ManagerStore<ExtensionUnion extends AnyExtension> {
+    interface ManagerStore<Extension extends AnyExtension> {
       /**
        * The transformer for updating the SSR rendering of the prosemirror state
        * and allowing it to render without defects.

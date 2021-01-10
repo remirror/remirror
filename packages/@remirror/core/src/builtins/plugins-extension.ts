@@ -392,7 +392,7 @@ declare global {
       dispatchPluginUpdate(): void;
     }
 
-    interface ManagerStore<ExtensionUnion extends AnyExtension> {
+    interface ManagerStore<Extension extends AnyExtension> {
       /**
        * All of the plugins combined together from all sources
        */
@@ -404,7 +404,7 @@ declare global {
        *
        * @param name - the name of the extension
        */
-      getPluginState: <State>(name: GetNameUnion<ExtensionUnion>) => State;
+      getPluginState: <State>(name: GetNameUnion<Extension>) => State;
 
       /**
        * All the plugin keys available to be used by plugins.

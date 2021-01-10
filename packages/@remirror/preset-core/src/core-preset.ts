@@ -114,10 +114,10 @@ export type CorePreset =
 /**
  * Create a manager with the core preset already applied.
  */
-export function createCoreManager<ExtensionUnion extends AnyExtension>(
-  extensions: ExtensionUnion[] | (() => ExtensionUnion[]),
+export function createCoreManager<Extension extends AnyExtension>(
+  extensions: Extension[] | (() => Extension[]),
   options: CreateCoreManagerOptions = {},
-): RemirrorManager<ExtensionUnion | CorePreset | BuiltinPreset> {
+): RemirrorManager<Extension | CorePreset | BuiltinPreset> {
   const { core, ...managerSettings } = options;
 
   return RemirrorManager.create(

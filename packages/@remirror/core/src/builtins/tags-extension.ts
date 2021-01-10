@@ -199,14 +199,12 @@ declare global {
     }
     type A = UseDefault<never, string>;
 
-    interface ManagerStore<ExtensionUnion extends AnyExtension> {
+    interface ManagerStore<Extension extends AnyExtension> {
       /**
        * All the tags provided by the configured extensions.
        */
       tags: Readonly<
-        CombinedTags<
-          GetNameUnion<ExtensionUnion> extends never ? string : GetNameUnion<ExtensionUnion>
-        >
+        CombinedTags<GetNameUnion<Extension> extends never ? string : GetNameUnion<Extension>>
       >;
 
       /**
@@ -214,9 +212,7 @@ declare global {
        */
       plainTags: Readonly<
         CombinedTags<
-          GetPlainNameUnion<ExtensionUnion> extends never
-            ? string
-            : GetPlainNameUnion<ExtensionUnion>
+          GetPlainNameUnion<Extension> extends never ? string : GetPlainNameUnion<Extension>
         >
       >;
 
@@ -225,7 +221,7 @@ declare global {
        */
       nodeTags: Readonly<
         CombinedTags<
-          GetNodeNameUnion<ExtensionUnion> extends never ? string : GetNodeNameUnion<ExtensionUnion>
+          GetNodeNameUnion<Extension> extends never ? string : GetNodeNameUnion<Extension>
         >
       >;
 
@@ -234,7 +230,7 @@ declare global {
        */
       markTags: Readonly<
         CombinedTags<
-          GetMarkNameUnion<ExtensionUnion> extends never ? string : GetMarkNameUnion<ExtensionUnion>
+          GetMarkNameUnion<Extension> extends never ? string : GetMarkNameUnion<Extension>
         >
       >;
     }

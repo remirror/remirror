@@ -13,7 +13,7 @@ import {
 
 import type {
   CreateReactManagerOptions,
-  ReactExtensionUnion,
+  ReactExtensions,
   ReactFrameworkOutput,
 } from '../react-types';
 import { useManager } from './use-manager';
@@ -21,7 +21,7 @@ import { useManager } from './use-manager';
 /**
  * Props which are passed into the `useRemirror` hook.
  */
-export interface UseRemirrorProps<ExtensionUnion extends AnyExtension>
+export interface UseRemirrorProps<Extension extends AnyExtension>
   extends CreateReactManagerOptions,
     Partial<CreateEditorStateProps> {
   /**
@@ -30,21 +30,21 @@ export interface UseRemirrorProps<ExtensionUnion extends AnyExtension>
    * `RemirrorManager` to override this. The manager you provide will be cloned
    * and used within your editor.
    */
-  extensions?: (() => ExtensionUnion[]) | RemirrorManager<any>;
+  extensions?: (() => Extension[]) | RemirrorManager<any>;
 }
 
-export interface UseRemirrorReturn<ExtensionUnion extends AnyExtension> {
+export interface UseRemirrorReturn<Extension extends AnyExtension> {
   /**
    * The manager which is required by the `<Remirror />` component.
    */
-  manager: RemirrorManager<ExtensionUnion>;
+  manager: RemirrorManager<Extension>;
 
   /**
    * The initial editor state based on the provided `content` and `selection`
    * properties. If none were passed in then the state is created from the
    * default empty doc node as defined by the editor Schema.
    */
-  state: EditorState<GetSchema<ExtensionUnion>>;
+  state: EditorState<GetSchema<Extension>>;
 
   /**
    * A function to update the state when you intend to make the editor
@@ -71,7 +71,7 @@ export interface UseRemirrorReturn<ExtensionUnion extends AnyExtension> {
    * }
    * ```
    */
-  setState: (state: EditorState<GetSchema<ExtensionUnion>>) => void;
+  setState: (state: EditorState<GetSchema<Extension>>) => void;
 
   /**
    * Syntactic sugar for using the `setState` method directly on the `<Remirror
@@ -92,14 +92,14 @@ export interface UseRemirrorReturn<ExtensionUnion extends AnyExtension> {
    * }
    * ```
    */
-  onChange: RemirrorEventListener<ExtensionUnion>;
+  onChange: RemirrorEventListener<Extension>;
 
   /**
    * A function that provides the editor context. This is only available after
    * the `<Remirror />` component is mounted. Calling it in the very first
    * render phase will cause an error to be thrown.
    */
-  getContext: () => ReactFrameworkOutput<ExtensionUnion> | undefined;
+  getContext: () => ReactFrameworkOutput<Extension> | undefined;
 }
 
 /**
@@ -109,9 +109,9 @@ export interface UseRemirrorReturn<ExtensionUnion extends AnyExtension> {
  * This is very experimental and if successful could replace the current
  * patterns being used.
  */
-export function useRemirror<ExtensionUnion extends AnyExtension>(
-  props: UseRemirrorProps<ExtensionUnion> = {},
-): UseRemirrorReturn<ReactExtensionUnion<ExtensionUnion>> {
+export function useRemirror<Extension extends AnyExtension>(
+  props: UseRemirrorProps<Extension> = {},
+): UseRemirrorReturn<ReactExtensions<Extension>> {
   const { content, document, selection, extensions, ...settings } = props;
   const manager = useManager(extensions ?? (() => []), settings);
 
@@ -125,13 +125,13 @@ export function useRemirror<ExtensionUnion extends AnyExtension>(
     }),
   );
 
-  const onChange: RemirrorEventListener<ExtensionUnion> = useCallback(({ state }) => {
+  const onChange: RemirrorEventListener<Extension> = useCallback(({ state }) => {
     setState(state);
   }, []);
 
   const getContext = useCallback(() => {
     const context: unknown = manager.output;
-    return context as ReactFrameworkOutput<ReactExtensionUnion<ExtensionUnion>>;
+    return context as ReactFrameworkOutput<ReactExtensions<Extension>>;
   }, [manager]);
 
   // Memoize the return to prevent unnecessary re-renders when props change.

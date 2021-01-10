@@ -1164,7 +1164,7 @@ const forbiddenNames = new Set(['run', 'chain', 'original', 'raw']);
 
 declare global {
   namespace Remirror {
-    interface ManagerStore<ExtensionUnion extends AnyExtension> {
+    interface ManagerStore<Extension extends AnyExtension> {
       /**
        * Enables the use of custom commands created by extensions which extend
        * the functionality of your editor in an expressive way.
@@ -1181,7 +1181,7 @@ declare global {
        * }
        * ```
        */
-      commands: CommandsFromExtensions<ExtensionUnion>;
+      commands: CommandsFromExtensions<Extension>;
 
       /**
        * Chainable commands for composing functionality together in quaint and
@@ -1217,7 +1217,7 @@ declare global {
        *
        * The `run()` method ends the chain and dispatches the command.
        */
-      chain: ChainedFromExtensions<ExtensionUnion>;
+      chain: ChainedFromExtensions<Extension>;
     }
 
     interface BaseExtension {
@@ -1299,7 +1299,7 @@ declare global {
        * `createCommands` function then make sure it is used within the returned
        * function scope and not in the outer scope.
        */
-      commands: CommandsFromExtensions<AllExtensionUnion | (AnyExtension & { _T: false })>;
+      commands: CommandsFromExtensions<Extensions | (AnyExtension & { _T: false })>;
 
       /**
        * A method that returns an object with all the chainable commands
@@ -1336,7 +1336,7 @@ declare global {
        * This should only be accessed after the `onView` lifecycle method
        * otherwise it will throw an error.
        */
-      chain: ChainedFromExtensions<AllExtensionUnion | (AnyExtension & { _T: false })>;
+      chain: ChainedFromExtensions<Extensions | (AnyExtension & { _T: false })>;
     }
 
     interface AllExtensions {
@@ -1346,11 +1346,11 @@ declare global {
     /**
      * The command names for all core extensions.
      */
-    type AllCommandNames = LiteralUnion<CommandNames<Remirror.AllExtensionUnion>, string>;
+    type AllCommandNames = LiteralUnion<CommandNames<Remirror.Extensions>, string>;
 
     /**
      * The command names for all core extensions.
      */
-    type AllUiCommandNames = LiteralUnion<UiCommandNames<Remirror.AllExtensionUnion>, string>;
+    type AllUiCommandNames = LiteralUnion<UiCommandNames<Remirror.Extensions>, string>;
   }
 }

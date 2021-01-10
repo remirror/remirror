@@ -58,16 +58,16 @@ import type {
  * There are two methods and one getter property which must be implemented for this
  */
 export abstract class Framework<
-  ExtensionUnion extends AnyExtension = BuiltinPreset,
-  Props extends FrameworkProps<ExtensionUnion> = FrameworkProps<ExtensionUnion>,
-  Output extends FrameworkOutput<ExtensionUnion> = FrameworkOutput<ExtensionUnion>
-> implements BaseFramework<ExtensionUnion> {
+  Extension extends AnyExtension = BuiltinPreset,
+  Props extends FrameworkProps<Extension> = FrameworkProps<Extension>,
+  Output extends FrameworkOutput<Extension> = FrameworkOutput<Extension>
+> implements BaseFramework<Extension> {
   /**
    * The schema available via the provided extensions.
    *
    * @internal
    */
-  ['~Sch']: GetSchema<ExtensionUnion>;
+  ['~Sch']: GetSchema<Extension>;
 
   /**
    * A unique ID for the editor which can also be used as a key in frameworks
@@ -104,7 +104,7 @@ export abstract class Framework<
    * - `blur`
    * - `updated`
    */
-  #events = createNanoEvents<FrameworkEvents<ExtensionUnion>>();
+  #events = createNanoEvents<FrameworkEvents<Extension>>();
 
   /**
    * The event listener which allows consumers to subscribe to the different
@@ -115,14 +115,14 @@ export abstract class Framework<
    * - `blur`
    * - `updated`
    */
-  protected get addHandler(): AddFrameworkHandler<ExtensionUnion> {
+  protected get addHandler(): AddFrameworkHandler<Extension> {
     return (this.#addHandler ??= this.#events.on.bind(this.#events));
   }
 
   /**
    * The handler which is bound to the events listener object.
    */
-  #addHandler?: AddFrameworkHandler<ExtensionUnion>;
+  #addHandler?: AddFrameworkHandler<Extension>;
 
   /**
    * The updatable view props.
@@ -166,12 +166,12 @@ export abstract class Framework<
    * Create the editor state from a `remirror` content type. This should be
    * passed in during initialization.
    */
-  private createStateFromContent: CreateStateFromContent<ExtensionUnion>;
+  private createStateFromContent: CreateStateFromContent<Extension>;
 
   /**
    * The instance of the [[`RemirrorManager`]].
    */
-  protected get manager(): RemirrorManager<ExtensionUnion> {
+  protected get manager(): RemirrorManager<Extension> {
     return this.props.manager;
   }
 
@@ -208,7 +208,7 @@ export abstract class Framework<
     return this.#initialEditorState;
   }
 
-  constructor(options: FrameworkOptions<ExtensionUnion, Props>) {
+  constructor(options: FrameworkOptions<Extension, Props>) {
     const { getProps, createStateFromContent, initialEditorState, element } = options;
 
     this.#getProps = getProps;
@@ -246,7 +246,7 @@ export abstract class Framework<
    * You can call the update method with the new `props` to update the internal
    * state of this instance.
    */
-  update(options: FrameworkOptions<ExtensionUnion, Props>): this {
+  update(options: FrameworkOptions<Extension, Props>): this {
     const { getProps, createStateFromContent } = options;
     this.#getProps = getProps;
     this.createStateFromContent = createStateFromContent;
@@ -404,7 +404,7 @@ export abstract class Framework<
   /**
    * Use this method in the `onUpdate` event to run all change handlers.
    */
-  readonly onChange = (props: ListenerProps<ExtensionUnion> = object()): void => {
+  readonly onChange = (props: ListenerProps<Extension> = object()): void => {
     this.props.onChange?.(this.eventListenerProps(props));
 
     if (this.#firstRender) {
@@ -466,8 +466,8 @@ export abstract class Framework<
    * `onChange`
    */
   protected eventListenerProps(
-    props: ListenerProps<ExtensionUnion> = object(),
-  ): RemirrorEventListenerProps<ExtensionUnion> {
+    props: ListenerProps<Extension> = object(),
+  ): RemirrorEventListenerProps<Extension> {
     const { state, tr } = props;
 
     return {
@@ -500,7 +500,7 @@ export abstract class Framework<
    * Methods and properties which are made available to all consumers of the
    * `Framework` class.
    */
-  protected get baseOutput(): FrameworkOutput<ExtensionUnion> {
+  protected get baseOutput(): FrameworkOutput<Extension> {
     return {
       manager: this.manager,
       ...this.manager.store,

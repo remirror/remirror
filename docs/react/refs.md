@@ -16,7 +16,7 @@ Here's the pure **JavaScript** version.
 ```jsx
 import React, { forwardRef, useImperativeHandle } from 'react';
 import {
-  ReactExtensionUnion,
+  ReactExtensions,
   ReactFrameworkOutput,
   ReactFrameworkOutput,
   Remirror,
@@ -49,7 +49,7 @@ Here's the **TypeScript** version which, as a bonus should pass type checks.
 ```tsx
 import React, { forwardRef, useImperativeHandle } from 'react';
 import {
-  ReactExtensionUnion,
+  ReactExtensions,
   ReactFrameworkOutput,
   ReactFrameworkOutput,
   Remirror,
@@ -57,7 +57,7 @@ import {
 } from 'remirror/react';
 
 const extensions = () => [new BoldExtension()];
-type Extensions = ReactExtensionUnion<BoldExtension>;
+type Extensions = ReactExtensions<BoldExtension>;
 
 const EditorWithRef = forwardRef<ReactFrameworkOutput<Extensions>>((_, ref) => {
   const { manager, state, setState, getContext } = useRemirror({ extensions });

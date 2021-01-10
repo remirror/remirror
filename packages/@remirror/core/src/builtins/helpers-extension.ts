@@ -111,7 +111,7 @@ export class HelpersExtension extends PlainExtension {
 
     this.store.setStoreKey('attrs', attrs);
     this.store.setStoreKey('active', active);
-    this.store.setStoreKey('helpers', helpers);
+    this.store.setStoreKey('helpers', helpers as any);
     this.store.setExtensionStore('helpers', helpers as any);
   }
 
@@ -192,13 +192,11 @@ interface GetTextHelperOptions extends Partial<EditorStateProps> {
 
 declare global {
   namespace Remirror {
-    interface ManagerStore<ExtensionUnion extends AnyExtension> {
+    interface ManagerStore<Extension extends AnyExtension> {
       /**
        * The helpers provided by the extensions used.
        */
-      helpers: HelpersFromExtensions<ExtensionUnion> extends object
-        ? HelpersFromExtensions<ExtensionUnion>
-        : object;
+      helpers: HelpersFromExtensions<Extension>;
 
       /**
        * Check which nodes and marks are active under the current user
@@ -210,7 +208,7 @@ declare global {
        * return active.bold() ? 'bold' : 'regular';
        * ```
        */
-      active: ActiveFromExtensions<ExtensionUnion>;
+      active: ActiveFromExtensions<Extension>;
 
       /**
        * Get the attributes for the named node or mark from the current user
@@ -222,7 +220,7 @@ declare global {
        * attrs.heading(); // => { id: 'i1238ha', level: 1 }
        * ```
        */
-      attrs: AttrsFromExtensions<ExtensionUnion>;
+      attrs: AttrsFromExtensions<Extension>;
     }
 
     interface BaseExtension {
@@ -311,12 +309,12 @@ declare global {
        * This should only be accessed after the `onView` lifecycle method
        * otherwise it will throw an error.
        */
-      helpers: HelpersFromExtensions<AllExtensionUnion>;
+      helpers: HelpersFromExtensions<Extensions>;
     }
 
-    interface ListenerProperties<ExtensionUnion extends AnyExtension> {
-      helpers: HelpersFromExtensions<ExtensionUnion> extends object
-        ? HelpersFromExtensions<ExtensionUnion>
+    interface ListenerProperties<Extension extends AnyExtension> {
+      helpers: HelpersFromExtensions<Extension> extends object
+        ? HelpersFromExtensions<Extension>
         : object;
     }
 
@@ -328,5 +326,5 @@ declare global {
   /**
    * The helpers name for all extension defined in the current project.
    */
-  type AllHelperNames = LiteralUnion<HelperNames<Remirror.AllExtensionUnion>, string>;
+  type AllHelperNames = LiteralUnion<HelperNames<Remirror.Extensions>, string>;
 }

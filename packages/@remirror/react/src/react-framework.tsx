@@ -23,10 +23,10 @@ import { addKeyToElement } from '@remirror/react-utils';
 import type { GetRootPropsConfig, ReactFrameworkOutput, RefKeyRootProps } from './react-types';
 import { createEditorView, RemirrorSSR } from './ssr';
 
-export class ReactFramework<ExtensionUnion extends AnyExtension> extends Framework<
-  ExtensionUnion,
-  ReactFrameworkProps<ExtensionUnion>,
-  ReactFrameworkOutput<ExtensionUnion>
+export class ReactFramework<Extension extends AnyExtension> extends Framework<
+  Extension,
+  ReactFrameworkProps<Extension>,
+  ReactFrameworkOutput<Extension>
 > {
   /**
    * Whether to render the client immediately.
@@ -63,7 +63,7 @@ export class ReactFramework<ExtensionUnion extends AnyExtension> extends Framewo
     return 'react' as const;
   }
 
-  constructor(props: ReactFrameworkOptions<ExtensionUnion>) {
+  constructor(props: ReactFrameworkOptions<Extension>) {
     super(props);
 
     const { getShouldRenderClient, setShouldRenderClient } = props;
@@ -90,7 +90,7 @@ export class ReactFramework<ExtensionUnion extends AnyExtension> extends Framewo
   /**
    * This is called to update props on every render so that values don't become stale.
    */
-  update(props: ReactFrameworkOptions<ExtensionUnion>): this {
+  update(props: ReactFrameworkOptions<Extension>): this {
     super.update(props);
 
     const { getShouldRenderClient, setShouldRenderClient } = props;
@@ -104,10 +104,8 @@ export class ReactFramework<ExtensionUnion extends AnyExtension> extends Framewo
   /**
    * Create the prosemirror editor view.
    */
-  protected createView(
-    state: EditorState<GetSchema<ExtensionUnion>>,
-  ): EditorView<GetSchema<ExtensionUnion>> {
-    return createEditorView<GetSchema<ExtensionUnion>>(
+  protected createView(state: EditorState<GetSchema<Extension>>): EditorView<GetSchema<Extension>> {
+    return createEditorView<GetSchema<Extension>>(
       undefined,
       {
         state,
@@ -178,7 +176,7 @@ export class ReactFramework<ExtensionUnion extends AnyExtension> extends Framewo
    * Updates the state either by calling `onChange` when it exists or
    * directly setting the internal state via a `setState` call.
    */
-  protected updateState({ state, ...rest }: UpdateStateProps<GetSchema<ExtensionUnion>>): void {
+  protected updateState({ state, ...rest }: UpdateStateProps<GetSchema<Extension>>): void {
     const { triggerChange = true, tr, transactions } = rest;
 
     if (this.props.state) {
@@ -228,8 +226,8 @@ export class ReactFramework<ExtensionUnion extends AnyExtension> extends Framewo
    * of this update.
    */
   updateControlledState(
-    state: EditorState<GetSchema<ExtensionUnion>>,
-    previousState?: EditorState<GetSchema<ExtensionUnion>>,
+    state: EditorState<GetSchema<Extension>>,
+    previousState?: EditorState<GetSchema<Extension>>,
   ): void {
     this.previousStateOverride = previousState;
 
@@ -302,7 +300,7 @@ export class ReactFramework<ExtensionUnion extends AnyExtension> extends Framewo
   /**
    * Get the framework output.
    */
-  get frameworkOutput(): ReactFrameworkOutput<ExtensionUnion> {
+  get frameworkOutput(): ReactFrameworkOutput<Extension> {
     return {
       ...this.baseOutput,
       getRootProps: this.getRootProps,
@@ -370,8 +368,8 @@ export class ReactFramework<ExtensionUnion extends AnyExtension> extends Framewo
   }
 }
 
-export interface ReactFrameworkProps<ExtensionUnion extends AnyExtension>
-  extends FrameworkProps<ExtensionUnion> {
+export interface ReactFrameworkProps<Extension extends AnyExtension>
+  extends FrameworkProps<Extension> {
   /**
    * When `onChange` is defined this prop is used to set the next editor
    * state value of the Editor. The value is an instance of the **ProseMirror**
@@ -395,7 +393,7 @@ export interface ReactFrameworkProps<ExtensionUnion extends AnyExtension>
    * - **Use chained commands** - These can help resolve the above limitation
    *   for handling multiple updates.
    */
-  state?: EditorState<GetSchema<ExtensionUnion>> | null;
+  state?: EditorState<GetSchema<Extension>> | null;
 
   /**
    * Set to true to ignore the hydration warning for a mismatch between the
@@ -439,8 +437,8 @@ export interface ReactFrameworkProps<ExtensionUnion extends AnyExtension>
 /**
  * The options that are passed into the [[`ReactFramework`]] constructor.
  */
-export interface ReactFrameworkOptions<ExtensionUnion extends AnyExtension>
-  extends FrameworkOptions<ExtensionUnion, ReactFrameworkProps<ExtensionUnion>> {
+export interface ReactFrameworkOptions<Extension extends AnyExtension>
+  extends FrameworkOptions<Extension, ReactFrameworkProps<Extension>> {
   getShouldRenderClient: () => boolean | undefined;
   setShouldRenderClient: SetShouldRenderClient;
 }

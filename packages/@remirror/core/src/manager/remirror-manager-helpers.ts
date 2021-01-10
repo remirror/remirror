@@ -32,29 +32,29 @@ export function transformExtensions<RawExtensions extends AnyExtension>(
   initialExtensions: readonly RawExtensions[],
   settings: Remirror.ManagerSettings,
 ): ExtensionTransformation<RawExtensions> {
-  type ExtensionUnion = GetExtensions<RawExtensions>;
-  type ExtensionConstructor = GetConstructor<ExtensionUnion>;
+  type Extension = GetExtensions<RawExtensions>;
+  type ExtensionConstructor = GetConstructor<Extension>;
 
   // This is the holder for the sorted and cleaned extensions returned by this
   // function.
-  const extensions: ExtensionUnion[] = [];
-  const extensionMap = new WeakMap<ExtensionConstructor, ExtensionUnion>();
+  const extensions: Extension[] = [];
+  const extensionMap = new WeakMap<ExtensionConstructor, Extension>();
 
   // All the extensions which provide child extensions.
-  const parentExtensions: ExtensionUnion[] = [];
+  const parentExtensions: Extension[] = [];
 
   // Used to track duplicates and the extension holders they were added by.
-  const duplicateMap = new WeakMap<AnyExtensionConstructor, ExtensionUnion[]>();
+  const duplicateMap = new WeakMap<AnyExtensionConstructor, Extension[]>();
 
   // The unsorted, de-duped, unrefined extensions.
-  let gatheredExtensions: ExtensionUnion[] = [];
+  let gatheredExtensions: Extension[] = [];
 
   // The mutable objects and the manager settings which are used to gather all
   // the deeply nested extensions.
   const gatherRawExtensionConfig = { duplicateMap, parentExtensions, gatheredExtensions, settings };
 
   for (const extension of initialExtensions) {
-    gatherRawExtensions(gatherRawExtensionConfig, { extension: extension as ExtensionUnion });
+    gatherRawExtensions(gatherRawExtensionConfig, { extension: extension as Extension });
   }
 
   // Sort the extensions.
@@ -89,7 +89,7 @@ export function transformExtensions<RawExtensions extends AnyExtension>(
     duplicates.forEach((parent) => parent?.replaceChildExtension(key, extension));
   }
 
-  const missing: Array<MissingConstructor<ExtensionUnion>> = [];
+  const missing: Array<MissingConstructor<Extension>> = [];
 
   // Throw if any required extensions are missing.
   for (const extension of extensions) {
@@ -109,29 +109,29 @@ export function transformExtensions<RawExtensions extends AnyExtension>(
   return { extensions, extensionMap };
 }
 
-interface GatherAllExtensionsConfig<ExtensionUnion extends AnyExtension> {
+interface GatherAllExtensionsConfig<Extension extends AnyExtension> {
   /** The list of gathered raw extensions, updated by mutation. */
-  gatheredExtensions: ExtensionUnion[];
+  gatheredExtensions: Extension[];
 
   /** The duplicate map which is updated by mutation. */
-  duplicateMap: WeakMap<AnyExtensionConstructor, ExtensionUnion[]>;
+  duplicateMap: WeakMap<AnyExtensionConstructor, Extension[]>;
 
   /** The parent extensions which are updated by mutation  */
-  parentExtensions: ExtensionUnion[];
+  parentExtensions: Extension[];
 
   /** The settings passed into the manager. */
   settings: Remirror.ManagerSettings;
 }
 
-interface GatherAllExtensionsProps<ExtensionUnion extends AnyExtension> {
+interface GatherAllExtensionsProps<Extension extends AnyExtension> {
   /** The extension to check and gather children from. */
-  extension: ExtensionUnion;
+  extension: Extension;
 
   /** Used to check if there there is a circular dependency encountered. */
   names?: string[];
 
   /** The parent of this extension. */
-  parentExtension?: ExtensionUnion;
+  parentExtension?: Extension;
 }
 
 /**
@@ -145,9 +145,9 @@ interface GatherAllExtensionsProps<ExtensionUnion extends AnyExtension> {
  * this function.
  * @param props - the extension, gathered names and parent extension.
  */
-function gatherRawExtensions<ExtensionUnion extends AnyExtension>(
-  config: GatherAllExtensionsConfig<ExtensionUnion>,
-  props: GatherAllExtensionsProps<ExtensionUnion>,
+function gatherRawExtensions<Extension extends AnyExtension>(
+  config: GatherAllExtensionsConfig<Extension>,
+  props: GatherAllExtensionsProps<Extension>,
 ) {
   const { gatheredExtensions, duplicateMap, parentExtensions, settings } = config;
   const { extension, parentExtension } = props;
@@ -203,10 +203,10 @@ function gatherRawExtensions<ExtensionUnion extends AnyExtension>(
   }
 }
 
-interface FindMissingProps<ExtensionUnion extends AnyExtension> {
-  extension: ExtensionUnion;
+interface FindMissingProps<Extension extends AnyExtension> {
+  extension: Extension;
   found: WeakSet<AnyExtensionConstructor>;
-  missing: Array<MissingConstructor<ExtensionUnion>>;
+  missing: Array<MissingConstructor<Extension>>;
 }
 
 /**
@@ -216,9 +216,7 @@ interface FindMissingProps<ExtensionUnion extends AnyExtension> {
  * calling method to deal with the error. Currently the action is to `throw` an
  * error.
  */
-function findMissingExtensions<ExtensionUnion extends AnyExtension>(
-  props: FindMissingProps<ExtensionUnion>,
-) {
+function findMissingExtensions<Extension extends AnyExtension>(props: FindMissingProps<Extension>) {
   const { extension, found, missing } = props;
 
   if (!extension.requiredExtensions) {
@@ -234,21 +232,21 @@ function findMissingExtensions<ExtensionUnion extends AnyExtension>(
   }
 }
 
-interface UpdateExtensionDuplicatesProps<ExtensionUnion extends AnyExtension> {
+interface UpdateExtensionDuplicatesProps<Extension extends AnyExtension> {
   /**
    * The map of all duplicates.
    */
-  duplicateMap: WeakMap<AnyExtensionConstructor, ExtensionUnion[]>;
+  duplicateMap: WeakMap<AnyExtensionConstructor, Extension[]>;
 
   /**
    * The extension to associate to the multiple presets that have added it..
    */
-  extension: ExtensionUnion;
+  extension: Extension;
 
   /**
    * The preset which was responsible for adding the extension (if it exists).
    */
-  parentExtension?: ExtensionUnion;
+  parentExtension?: Extension;
 }
 
 /**
@@ -262,8 +260,8 @@ interface UpdateExtensionDuplicatesProps<ExtensionUnion extends AnyExtension> {
  * each extension, and replacing the instance of the required extension within
  * the preset with the highest priority instance.
  */
-function updateExtensionDuplicates<ExtensionUnion extends AnyExtension>(
-  props: UpdateExtensionDuplicatesProps<ExtensionUnion>,
+function updateExtensionDuplicates<Extension extends AnyExtension>(
+  props: UpdateExtensionDuplicatesProps<Extension>,
 ) {
   const { duplicateMap, extension, parentExtension } = props;
 
@@ -271,7 +269,7 @@ function updateExtensionDuplicates<ExtensionUnion extends AnyExtension>(
   const key = extension.constructor;
 
   const duplicate = duplicateMap.get(key);
-  const parentToAdd: ExtensionUnion[] = parentExtension ? [parentExtension] : [];
+  const parentToAdd: Extension[] = parentExtension ? [parentExtension] : [];
 
   duplicateMap.set(key, duplicate ? [...duplicate, ...parentToAdd] : parentToAdd);
 }
@@ -280,8 +278,8 @@ function updateExtensionDuplicates<ExtensionUnion extends AnyExtension>(
  * This is the object shape that is returned from the combined transformation.
  */
 export interface ExtensionTransformation<
-  ExtensionUnion extends AnyExtension,
-  Expanded extends AnyExtension = GetExtensions<ExtensionUnion>
+  Extension extends AnyExtension,
+  Expanded extends AnyExtension = GetExtensions<Extension>
 > {
   /**
    * The list of extensions sorted by priority and original extension. Every
@@ -298,9 +296,9 @@ export interface ExtensionTransformation<
   extensionMap: WeakMap<GetConstructor<Expanded>, Expanded>;
 }
 
-interface MissingConstructor<ExtensionUnion extends AnyExtension> {
+interface MissingConstructor<Extension extends AnyExtension> {
   Constructor: AnyExtensionConstructor;
-  extension: ExtensionUnion;
+  extension: Extension;
 }
 
 export interface ManagerLifecycleHandlers {

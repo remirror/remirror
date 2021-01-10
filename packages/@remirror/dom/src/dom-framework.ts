@@ -10,8 +10,8 @@ import {
 } from '@remirror/core';
 import { EditorView } from '@remirror/pm/view';
 
-export interface DomFrameworkOutput<ExtensionUnion extends AnyExtension>
-  extends FrameworkOutput<ExtensionUnion> {
+export interface DomFrameworkOutput<Extension extends AnyExtension>
+  extends FrameworkOutput<Extension> {
   /**
    * Call this method when cleaning up the DOM. It is called for you if you call
    * `manager.destroy()`.
@@ -19,8 +19,8 @@ export interface DomFrameworkOutput<ExtensionUnion extends AnyExtension>
   destroy: () => void;
 }
 
-export interface DomFrameworkProps<ExtensionUnion extends AnyExtension>
-  extends FrameworkProps<ExtensionUnion> {
+export interface DomFrameworkProps<Extension extends AnyExtension>
+  extends FrameworkProps<Extension> {
   /**
    * Provide a container element. Which the editor will be appended to.
    */
@@ -30,10 +30,10 @@ export interface DomFrameworkProps<ExtensionUnion extends AnyExtension>
 /**
  * The Framework implementation when interacting with the DOM.
  */
-export class DomFramework<ExtensionUnion extends AnyExtension> extends Framework<
-  ExtensionUnion,
-  DomFrameworkProps<ExtensionUnion>,
-  DomFrameworkOutput<ExtensionUnion>
+export class DomFramework<Extension extends AnyExtension> extends Framework<
+  Extension,
+  DomFrameworkProps<Extension>,
+  DomFrameworkOutput<Extension>
 > {
   get name() {
     return 'dom' as const;
@@ -43,9 +43,9 @@ export class DomFramework<ExtensionUnion extends AnyExtension> extends Framework
    * Create the prosemirror `[[EditorView`]].
    */
   protected createView(
-    state: EditorState<GetSchema<ExtensionUnion>>,
+    state: EditorState<GetSchema<Extension>>,
     element?: Element,
-  ): EditorView<GetSchema<ExtensionUnion>> {
+  ): EditorView<GetSchema<Extension>> {
     return new EditorView(element, {
       state,
       dispatchTransaction: this.dispatchTransaction,
@@ -71,7 +71,7 @@ export class DomFramework<ExtensionUnion extends AnyExtension> extends Framework
   /**
    * Responsible for managing state updates.
    */
-  protected updateState({ state, ...rest }: UpdateStateProps<GetSchema<ExtensionUnion>>): void {
+  protected updateState({ state, ...rest }: UpdateStateProps<GetSchema<Extension>>): void {
     const { tr, transactions, triggerChange = true } = rest;
 
     // Check if this is a fresh update directly applied by the developer (without
@@ -91,7 +91,7 @@ export class DomFramework<ExtensionUnion extends AnyExtension> extends Framework
     this.manager.onStateUpdate({ previousState: this.previousState, state, tr, transactions });
   }
 
-  get frameworkOutput(): DomFrameworkOutput<ExtensionUnion> {
+  get frameworkOutput(): DomFrameworkOutput<Extension> {
     return {
       ...this.baseOutput,
       destroy: () => this.destroy(),

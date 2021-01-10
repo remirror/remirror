@@ -99,14 +99,12 @@ export const RemirrorContext = createContext<ReactFrameworkOutput<any> | null>(n
  *
  * In this case the component only re-renders when the bold formatting changes.
  */
-export function useRemirrorContext<
-  ExtensionUnion extends AnyExtension = Remirror.AllExtensionUnion
->(
-  handler?: RemirrorEventListener<ExtensionUnion> | { autoUpdate: boolean },
-): ReactFrameworkOutput<ExtensionUnion> {
+export function useRemirrorContext<Extension extends AnyExtension = Remirror.Extensions>(
+  handler?: RemirrorEventListener<Extension> | { autoUpdate: boolean },
+): ReactFrameworkOutput<Extension> {
   // This is not null when rendering within the `Remirror`. The majority
   // of times this is called, this will be the case.
-  const context = useContext(RemirrorContext) as ReactFrameworkOutput<ExtensionUnion> | null;
+  const context = useContext(RemirrorContext) as ReactFrameworkOutput<Extension> | null;
 
   // A helper for forcing an update of the state.
   const forceUpdate = useRef(useForceUpdate());

@@ -28,7 +28,7 @@ type MarkToDOM = MarkExtensionSpec['toDOM'];
 /**
  * Serialize the extension provided schema into a JSX element that can be displayed node and non-dom environments.
  */
-export class ReactSerializer<ExtensionUnion extends AnyExtension> {
+export class ReactSerializer<Extension extends AnyExtension> {
   /**
    * Receives the return value from toDOM defined in the node schema and transforms it
    * into JSX
@@ -81,9 +81,9 @@ export class ReactSerializer<ExtensionUnion extends AnyExtension> {
    *
    * @param manager
    */
-  static fromManager<ExtensionUnion extends AnyExtension>(
-    manager: RemirrorManager<ExtensionUnion>,
-  ): ReactSerializer<ExtensionUnion> {
+  static fromManager<Extension extends AnyExtension>(
+    manager: RemirrorManager<Extension>,
+  ): ReactSerializer<Extension> {
     return new ReactSerializer(
       this.nodesFromManager(manager),
       this.marksFromManager(manager),
@@ -96,8 +96,8 @@ export class ReactSerializer<ExtensionUnion extends AnyExtension> {
    *
    * @param manager
    */
-  private static nodesFromManager<ExtensionUnion extends AnyExtension>(
-    manager: RemirrorManager<ExtensionUnion>,
+  private static nodesFromManager<Extension extends AnyExtension>(
+    manager: RemirrorManager<Extension>,
   ) {
     const result = gatherDomMethods(manager.nodes);
 
@@ -113,8 +113,8 @@ export class ReactSerializer<ExtensionUnion extends AnyExtension> {
    *
    * @param manager
    */
-  private static marksFromManager<ExtensionUnion extends AnyExtension>(
-    manager: RemirrorManager<ExtensionUnion>,
+  private static marksFromManager<Extension extends AnyExtension>(
+    manager: RemirrorManager<Extension>,
   ) {
     return gatherDomMethods(manager.marks);
   }
@@ -128,7 +128,7 @@ export class ReactSerializer<ExtensionUnion extends AnyExtension> {
   constructor(
     nodes: Record<string, NodeToDOM>,
     marks: Record<string, MarkToDOM>,
-    manager: RemirrorManager<ExtensionUnion>,
+    manager: RemirrorManager<Extension>,
   ) {
     this.nodes = nodes;
     this.marks = marks;

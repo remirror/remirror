@@ -137,7 +137,7 @@ export class ReactComponentExtension extends PlainExtension<ReactComponentOption
 
 declare global {
   namespace Remirror {
-    interface ManagerStore<ExtensionUnion extends AnyExtension> {
+    interface ManagerStore<Extension extends AnyExtension> {
       /**
        * The portal container which keeps track of all the React Portals
        * containing custom ProseMirror node views.

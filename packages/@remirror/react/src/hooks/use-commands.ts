@@ -1,12 +1,6 @@
-import { AnyExtension, RemirrorManager } from '@remirror/core';
+import { AnyExtension, ChainedFromExtensions, CommandsFromExtensions } from '@remirror/core';
 
-import { ReactFrameworkOutput } from '../react-types';
 import { useRemirrorContext } from './use-remirror-context';
-
-type UseCommandsReturn<ExtensionUnion extends AnyExtension> = Pick<
-  ReactFrameworkOutput<ExtensionUnion>,
-  'chain' | 'commands'
->;
 
 /**
  * A core hook which provides the commands for usage in your editor.
@@ -22,7 +16,29 @@ type UseCommandsReturn<ExtensionUnion extends AnyExtension> = Pick<
  *       <button onClick={() => commands.toggleBold()}>
  *         Click me!
  *       </button>
- *       <button onClick={() => commands.chain.toggleBold().toggleItalic().run()}>
+ *     </>
+ *   );
+ * }
+ * ````
+ */
+export function useCommands<
+  Extension extends AnyExtension = Remirror.Extensions
+>(): CommandsFromExtensions<Extension> {
+  return useRemirrorContext<Extension>().commands;
+}
+
+/**
+ * A core hook which provides the chainable commands for usage in your editor.
+ *
+ * ```tsx
+ * import { useCommandsChain } from 'remirror/react';
+ *
+ * const EditorButton = () => {
+ *   const chain = useCommandsChain();
+ *
+ *   return (
+ *     <>
+ *       <button onClick={() => chain.toggleBold().toggleItalic().run()}>
  *         Chain me!
  *       </button>
  *     </>
@@ -30,10 +46,8 @@ type UseCommandsReturn<ExtensionUnion extends AnyExtension> = Pick<
  * }
  * ````
  */
-export function useCommands<
-  ExtensionUnion extends AnyExtension = Remirror.AllExtensionUnion
->(): UseCommandsReturn<ExtensionUnion> {
-  const { commands, chain } = useRemirrorContext<ExtensionUnion>();
-
-  return { commands, chain };
+export function useCommandsChain<
+  Extension extends AnyExtension = Remirror.Extensions
+>(): ChainedFromExtensions<Extension> {
+  return useRemirrorContext<Extension>().chain;
 }

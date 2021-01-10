@@ -70,14 +70,14 @@ const elements = new Set<Element>();
  *
  * By default it already has the core preset applied.
  */
-export function renderEditor<ExtensionUnion extends AnyExtension>(
-  extensions: ExtensionUnion[] | (() => ExtensionUnion[]),
-  { props, autoClean, ...options }: RenderEditorProps<ExtensionUnion> = object(),
-): RemirrorTestChain<ExtensionUnion | CorePreset | BuiltinPreset> {
+export function renderEditor<Extension extends AnyExtension>(
+  extensions: Extension[] | (() => Extension[]),
+  { props, autoClean, ...options }: RenderEditorProps<Extension> = object(),
+): RemirrorTestChain<Extension | CorePreset | BuiltinPreset> {
   const element = createElement(props?.element, autoClean);
   const manager = createDomManager(extensions, options);
 
-  createDomEditor<ExtensionUnion | CorePreset | BuiltinPreset>({ ...props, element, manager });
+  createDomEditor<Extension | CorePreset | BuiltinPreset>({ ...props, element, manager });
 
   return RemirrorTestChain.create(manager);
 }
@@ -86,21 +86,21 @@ export function renderEditor<ExtensionUnion extends AnyExtension>(
  * This creates a chainable test helper for testing your remirror presets,
  * extensions and commands.
  *
- * @template ExtensionUnion - All the extensions being used within this editor
+ * @template Extension - All the extensions being used within this editor
  */
-export class RemirrorTestChain<ExtensionUnion extends AnyExtension> {
+export class RemirrorTestChain<Extension extends AnyExtension> {
   /**
    * A static method for creating the test helpers when testing your remirror
    * models.
    */
-  static create<ExtensionUnion extends AnyExtension>(
-    manager: RemirrorManager<ExtensionUnion>,
-  ): RemirrorTestChain<ExtensionUnion> {
+  static create<Extension extends AnyExtension>(
+    manager: RemirrorManager<Extension>,
+  ): RemirrorTestChain<Extension> {
     return new RemirrorTestChain(manager);
   }
 
   /** The editor manager */
-  #manager: RemirrorManager<ExtensionUnion>;
+  #manager: RemirrorManager<Extension>;
 
   /** Additional custom tags */
   #tags?: Tags;
@@ -149,7 +149,7 @@ export class RemirrorTestChain<ExtensionUnion extends AnyExtension> {
   /**
    * Provide access to the editor manager.
    */
-  get manager(): RemirrorManager<ExtensionUnion> {
+  get manager(): RemirrorManager<Extension> {
     return this.#manager;
   }
 
@@ -268,7 +268,7 @@ export class RemirrorTestChain<ExtensionUnion extends AnyExtension> {
     return this.dom.innerHTML;
   }
 
-  private constructor(manager: RemirrorManager<ExtensionUnion>) {
+  private constructor(manager: RemirrorManager<Extension>) {
     this.#manager = manager;
 
     this.createDocBuilders();
@@ -485,9 +485,7 @@ export class RemirrorTestChain<ExtensionUnion extends AnyExtension> {
    * @param command - the command function to run with the current state and
    * view
    */
-  readonly dispatchCommand = (
-    command: (props: Required<CommandFunctionProps>) => any,
-  ): this => {
+  readonly dispatchCommand = (command: (props: Required<CommandFunctionProps>) => any): this => {
     command({ state: this.state, dispatch: this.view.dispatch, view: this.view, tr: this.tr });
 
     return this;

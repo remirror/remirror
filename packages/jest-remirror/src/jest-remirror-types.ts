@@ -102,9 +102,9 @@ export type NodeWithoutAttributes<Names extends string> = {
   [P in Names]: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
 };
 
-export interface RenderEditorProps<ExtensionUnion extends AnyExtension>
+export interface RenderEditorProps<Extension extends AnyExtension>
   extends CreateCoreManagerOptions {
-  props?: Partial<Omit<DomFrameworkProps<ExtensionUnion>, 'manager'>>;
+  props?: Partial<Omit<DomFrameworkProps<Extension>, 'manager'>>;
 
   /**
    * Whether to automatically cleanup the dom once the test finishes.

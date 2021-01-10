@@ -21,7 +21,7 @@ import {
 } from 'remirror/extensions';
 import {
   ComponentItem,
-  ReactExtensionUnion,
+  ReactExtensions,
   Remirror,
   ThemeProvider,
   Toolbar,
@@ -60,8 +60,8 @@ interface Context extends Props {
 }
 
 interface Props {
-  visual: UseRemirrorReturn<ReactExtensionUnion<ReturnType<typeof extensions>[number]>>;
-  markdown: UseRemirrorReturn<ReactExtensionUnion<DocExtension | CodeBlockExtension>>;
+  visual: UseRemirrorReturn<ReactExtensions<ReturnType<typeof extensions>[number]>>;
+  markdown: UseRemirrorReturn<ReactExtensions<DocExtension | CodeBlockExtension>>;
 }
 
 const [DualEditorProvider, useDualEditor] = createContextState<Context, Props>(({ get, props }) => {

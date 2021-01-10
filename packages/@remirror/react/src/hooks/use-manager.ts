@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { AnyExtension, RemirrorManager } from '@remirror/core';
 
 import { createReactManager } from '../react-helpers';
-import type { CreateReactManagerOptions, ReactExtensionUnion } from '../react-types';
+import type { CreateReactManagerOptions, ReactExtensions } from '../react-types';
 
 /**
  * A hook for creating the editor manager directly in the react component.
@@ -34,10 +34,10 @@ import type { CreateReactManagerOptions, ReactExtensionUnion } from '../react-ty
  *
  * @internal
  */
-export function useManager<ExtensionUnion extends AnyExtension>(
-  extensions: (() => ExtensionUnion[]) | RemirrorManager<ReactExtensionUnion<ExtensionUnion>>,
+export function useManager<Extension extends AnyExtension = Remirror.Extensions>(
+  extensions: (() => Extension[]) | RemirrorManager<ReactExtensions<Extension>>,
   options: CreateReactManagerOptions = {},
-): RemirrorManager<ReactExtensionUnion<ExtensionUnion>> {
+): RemirrorManager<ReactExtensions<Extension>> {
   // Store the value in refs so that they can be used in the `useEffect` hook
   // without being passed as dependencies.
   const extensionsRef = useRef(extensions);

@@ -1188,12 +1188,12 @@ declare global {
       defaultBlockNode?: string;
     }
 
-    interface ManagerStore<ExtensionUnion extends AnyExtension> {
+    interface ManagerStore<Extension extends AnyExtension> {
       /**
        * The nodes to place on the schema.
        */
       nodes: Record<
-        GetNodeNameUnion<ExtensionUnion> extends never ? string : GetNodeNameUnion<ExtensionUnion>,
+        GetNodeNameUnion<Extension> extends never ? string : GetNodeNameUnion<Extension>,
         NodeExtensionSpec
       >;
 
@@ -1201,14 +1201,14 @@ declare global {
        * The marks to be added to the schema.
        */
       marks: Record<
-        GetMarkNameUnion<ExtensionUnion> extends never ? string : GetMarkNameUnion<ExtensionUnion>,
+        GetMarkNameUnion<Extension> extends never ? string : GetMarkNameUnion<Extension>,
         MarkExtensionSpec
       >;
 
       /**
        * The schema created by this extension manager.
        */
-      schema: GetSchema<ExtensionUnion>;
+      schema: GetSchema<Extension>;
 
       /**
        * The name of the default block node. This is used by all internal

@@ -18,7 +18,7 @@ import type { ReactFrameworkOutput } from '../react-types';
 
 const label = 'Remirror editor';
 
-function create<ExtensionUnion extends AnyExtension>(extensions?: ExtensionUnion[]) {
+function create<Extension extends AnyExtension>(extensions?: Extension[]) {
   const manager = createReactManager(extensions ?? []);
   const chain = RemirrorTestChain.create(manager);
 

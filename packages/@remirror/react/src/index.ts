@@ -17,12 +17,11 @@ export {
 } from './hooks';
 export { createReactManager } from './react-helpers';
 export type { RemirrorProps } from './react-remirror';
-export { EditorComponent, Remirror } from './react-remirror';
+export { Editor as EditorComponent, Remirror } from './react-remirror';
 export type {
   CreateReactManagerOptions,
-  DefaultReactExtensionUnion,
   GetRootPropsConfig,
-  ReactExtensionUnion,
+  ReactExtensions,
   ReactFrameworkOutput,
   RefKeyRootProps,
   RefProps,

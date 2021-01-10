@@ -132,7 +132,7 @@ export function useExtension<Type extends AnyExtensionConstructor>(
     });
   }, deps);
 
-  // Return early when no extension available.
+  // Return early when more than one argument received.
   if (optionsOrCallback) {
     return;
   }

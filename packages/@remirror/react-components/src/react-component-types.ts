@@ -97,9 +97,9 @@ export enum ComponentItem {
 /**
  * Handle click events.
  */
-export type ButtonClickHandler<ExtensionUnion extends AnyExtension = Remirror.AllExtensionUnion> = (
+export type ButtonClickHandler<Extension extends AnyExtension = Remirror.Extensions> = (
   event: ReactMouseEvent<HTMLButtonElement, MouseEvent>,
-  context: ReactFrameworkOutput<ExtensionUnion>,
+  context: ReactFrameworkOutput<Extension>,
 ) => void;
 
 export interface BaseButtonItem {

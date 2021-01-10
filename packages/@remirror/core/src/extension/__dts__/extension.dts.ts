@@ -19,13 +19,9 @@ import {
 } from '../../..';
 import type { AddCustomHandler } from '../base-class';
 
-const anyExtensionTester = <ExtensionUnion extends AnyExtension>(extension: ExtensionUnion) => {};
-const anyNodeExtensionTester = <ExtensionUnion extends AnyNodeExtension>(
-  extension: ExtensionUnion,
-) => {};
-const anyMarkExtensionTester = <ExtensionUnion extends AnyMarkExtension>(
-  extension: ExtensionUnion,
-) => {};
+const anyExtensionTester = <Extension extends AnyExtension>(extension: Extension) => {};
+const anyNodeExtensionTester = <Extension extends AnyNodeExtension>(extension: Extension) => {};
+const anyMarkExtensionTester = <Extension extends AnyMarkExtension>(extension: Extension) => {};
 
 // Extension without settings.
 

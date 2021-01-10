@@ -103,7 +103,7 @@ class DevState {
    */
   cleanup: () => void;
 
-  get manager(): RemirrorManager<Remirror.AllExtensionUnion> {
+  get manager(): RemirrorManager<Remirror.Extensions> {
     return this.helpers.props.manager;
   }
 

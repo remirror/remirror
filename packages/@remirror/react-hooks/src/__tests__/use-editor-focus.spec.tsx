@@ -3,7 +3,7 @@ import { FC } from 'react';
 
 import type { RemirrorManager } from '@remirror/core';
 import { EventsExtension } from '@remirror/extension-events';
-import { createReactManager, ReactExtensionUnion, Remirror } from '@remirror/react';
+import { createReactManager, ReactExtensions, Remirror } from '@remirror/react';
 import { act, DefaultEditor, fireEvent, strictRender } from '@remirror/testing/react';
 
 import { useEditorFocus } from '../use-editor-focus';
@@ -20,7 +20,7 @@ const HookConsumer = () => {
 };
 
 interface Props {
-  manager: RemirrorManager<ReactExtensionUnion<EventsExtension>>;
+  manager: RemirrorManager<ReactExtensions<EventsExtension>>;
 }
 
 const Wrapper: FC<Props> = ({ manager }) => {

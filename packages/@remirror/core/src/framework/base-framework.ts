@@ -21,7 +21,7 @@ import type { UpdatableViewProps } from '../builtins';
 import type { AnyExtension, AnyExtensionConstructor, GetSchema } from '../extension';
 import type { ManagerEvents, RemirrorManager } from '../manager';
 
-export interface BaseFramework<ExtensionUnion extends AnyExtension> {
+export interface BaseFramework<Extension extends AnyExtension> {
   /**
    * The name of the framework being used.
    */
@@ -36,12 +36,12 @@ export interface BaseFramework<ExtensionUnion extends AnyExtension> {
   /**
    * The state that is initially passed into the editor.
    */
-  initialEditorState: EditorState<GetSchema<ExtensionUnion>>;
+  initialEditorState: EditorState<GetSchema<Extension>>;
 
   /**
    * The minimum required output from the framework.
    */
-  readonly frameworkOutput: FrameworkOutput<ExtensionUnion>;
+  readonly frameworkOutput: FrameworkOutput<Extension>;
 
   /**
    * Destroy the framework and cleanup all created listeners.
@@ -50,13 +50,13 @@ export interface BaseFramework<ExtensionUnion extends AnyExtension> {
 }
 
 export interface FrameworkOptions<
-  ExtensionUnion extends AnyExtension,
-  Props extends FrameworkProps<ExtensionUnion>
+  Extension extends AnyExtension,
+  Props extends FrameworkProps<Extension>
 > {
   /**
    * The initial editor state
    */
-  initialEditorState: EditorState<GetSchema<ExtensionUnion>>;
+  initialEditorState: EditorState<GetSchema<Extension>>;
 
   /**
    * A method for getting the passed in props.
@@ -67,7 +67,7 @@ export interface FrameworkOptions<
    * A custom method for creating a prosemirror state from content. It allows
    * users to manage controlled editors more easily.
    */
-  createStateFromContent: CreateStateFromContent<ExtensionUnion>;
+  createStateFromContent: CreateStateFromContent<Extension>;
 
   /**
    * When provided the view will immediately be inserted into the dom within
@@ -91,14 +91,14 @@ export type FocusType = PrimitiveSelection | boolean;
  * The base options for an editor wrapper. This is used within the react and dom
  * implementations.
  */
-export interface FrameworkProps<ExtensionUnion extends AnyExtension> {
+export interface FrameworkProps<Extension extends AnyExtension> {
   /**
    * Pass in the extension manager.
    *
    * The manager is responsible for handling all Prosemirror related
    * functionality.
    */
-  manager: RemirrorManager<ExtensionUnion>;
+  manager: RemirrorManager<Extension>;
 
   /**
    * Set the starting value for the editor.
@@ -117,7 +117,7 @@ export interface FrameworkProps<ExtensionUnion extends AnyExtension> {
    *
    * @default {}
    */
-  attributes?: Record<string, string> | AttributePropFunction<ExtensionUnion>;
+  attributes?: Record<string, string> | AttributePropFunction<Extension>;
 
   /**
    * Additional classes which can be passed into the the editor wrapper. These
@@ -144,17 +144,17 @@ export interface FrameworkProps<ExtensionUnion extends AnyExtension> {
   /**
    * An event listener which is called whenever the editor gains focus.
    */
-  onFocus?: (params: RemirrorEventListenerProps<ExtensionUnion>, event: Event) => void;
+  onFocus?: (params: RemirrorEventListenerProps<Extension>, event: Event) => void;
 
   /**
    * An event listener which is called whenever the editor is blurred.
    */
-  onBlur?: (params: RemirrorEventListenerProps<ExtensionUnion>, event: Event) => void;
+  onBlur?: (params: RemirrorEventListenerProps<Extension>, event: Event) => void;
 
   /**
    * Called on every change to the Prosemirror state.
    */
-  onChange?: RemirrorEventListener<ExtensionUnion>;
+  onChange?: RemirrorEventListener<Extension>;
 
   /**
    * A method called when the editor is dispatching the transaction.
@@ -163,7 +163,7 @@ export interface FrameworkProps<ExtensionUnion extends AnyExtension> {
    * Use this to update the transaction which will be used to update the editor
    * state.
    */
-  onDispatchTransaction?: TransactionTransformer<GetSchema<ExtensionUnion>>;
+  onDispatchTransaction?: TransactionTransformer<GetSchema<Extension>>;
 
   /**
    * Sets the accessibility label for the editor instance.
@@ -223,27 +223,27 @@ export interface FrameworkProps<ExtensionUnion extends AnyExtension> {
   stringHandler?: keyof Remirror.StringHandlers | StringHandler;
 }
 
-export type AddFrameworkHandler<ExtensionUnion extends AnyExtension> = <
-  Key extends keyof FrameworkEvents<ExtensionUnion>
+export type AddFrameworkHandler<Extension extends AnyExtension> = <
+  Key extends keyof FrameworkEvents<Extension>
 >(
   event: Key,
-  cb: FrameworkEvents<ExtensionUnion>[Key],
+  cb: FrameworkEvents<Extension>[Key],
 ) => Unsubscribe;
 
 /**
  * This is the base output that is created by a framework.
  */
-export interface FrameworkOutput<ExtensionUnion extends AnyExtension>
-  extends Remirror.ManagerStore<ExtensionUnion> {
+export interface FrameworkOutput<Extension extends AnyExtension>
+  extends Remirror.ManagerStore<Extension> {
   /**
    * The manager which was used to create this editor.
    */
-  manager: RemirrorManager<ExtensionUnion>;
+  manager: RemirrorManager<Extension>;
 
   /**
    * Add event handlers to the remirror editor at runtime.
    */
-  addHandler: AddFrameworkHandler<ExtensionUnion>;
+  addHandler: AddFrameworkHandler<Extension>;
 
   /**
    * The unique id for the editor instance.
@@ -278,13 +278,13 @@ export interface FrameworkOutput<ExtensionUnion extends AnyExtension>
    * A getter function for the current editor state. It's a wrapper around
    * `view.state`.
    */
-  getState: () => EditorState<GetSchema<ExtensionUnion>>;
+  getState: () => EditorState<GetSchema<Extension>>;
 
   /**
    * A getter function for the previous prosemirror editor state. It can be used
    * to check what's changed between states.
    */
-  getPreviousState: () => EditorState<GetSchema<ExtensionUnion>>;
+  getPreviousState: () => EditorState<GetSchema<Extension>>;
 
   /**
    * Get an extension by it's constructor.
@@ -311,15 +311,15 @@ export interface FrameworkOutput<ExtensionUnion extends AnyExtension>
   blur: (position?: PrimitiveSelection) => void;
 }
 
-export type CreateStateFromContent<ExtensionUnion extends AnyExtension> = (
+export type CreateStateFromContent<Extension extends AnyExtension> = (
   content: RemirrorContentType,
   selection?: PrimitiveSelection,
-) => EditorState<GetSchema<ExtensionUnion>>;
+) => EditorState<GetSchema<Extension>>;
 
-export interface RemirrorEventListenerProps<ExtensionUnion extends AnyExtension>
-  extends EditorStateProps<GetSchema<ExtensionUnion>>,
-    Remirror.ListenerProperties<ExtensionUnion>,
-    EditorViewProps<GetSchema<ExtensionUnion>> {
+export interface RemirrorEventListenerProps<Extension extends AnyExtension>
+  extends EditorStateProps<GetSchema<Extension>>,
+    Remirror.ListenerProperties<Extension>,
+    EditorViewProps<GetSchema<Extension>> {
   /**
    * The original transaction which caused this state update.
    *
@@ -332,7 +332,7 @@ export interface RemirrorEventListenerProps<ExtensionUnion extends AnyExtension>
    * - Was ths change caused by an updated selection? `tr.selectionSet`
    * - `tr.steps` can be inspected for further granularity.
    */
-  tr?: Transaction<GetSchema<ExtensionUnion>>;
+  tr?: Transaction<GetSchema<Extension>>;
 
   /**
    * A shorthand way of checking whether the update was triggered by editor
@@ -353,20 +353,20 @@ export interface RemirrorEventListenerProps<ExtensionUnion extends AnyExtension>
   /**
    * The previous state.
    */
-  previousState: EditorState<GetSchema<ExtensionUnion>>;
+  previousState: EditorState<GetSchema<Extension>>;
 
   /**
    * Manually create a new state object with the desired content.
    */
-  createStateFromContent: CreateStateFromContent<ExtensionUnion>;
+  createStateFromContent: CreateStateFromContent<Extension>;
 }
 
-export type RemirrorEventListener<ExtensionUnion extends AnyExtension> = (
-  params: RemirrorEventListenerProps<ExtensionUnion>,
+export type RemirrorEventListener<Extension extends AnyExtension> = (
+  params: RemirrorEventListenerProps<Extension>,
 ) => void;
 
-export type AttributePropFunction<ExtensionUnion extends AnyExtension> = (
-  params: RemirrorEventListenerProps<ExtensionUnion>,
+export type AttributePropFunction<Extension extends AnyExtension> = (
+  params: RemirrorEventListenerProps<Extension>,
 ) => Record<string, string>;
 
 export interface PlaceholderConfig extends TextProps {
@@ -397,21 +397,21 @@ export interface TriggerChangeProps {
   triggerChange?: boolean;
 }
 
-export interface ListenerProps<ExtensionUnion extends AnyExtension>
-  extends Partial<EditorStateProps<GetSchema<ExtensionUnion>>>,
-    Partial<TransactionProps<GetSchema<ExtensionUnion>>> {}
+export interface ListenerProps<Extension extends AnyExtension>
+  extends Partial<EditorStateProps<GetSchema<Extension>>>,
+    Partial<TransactionProps<GetSchema<Extension>>> {}
 
-export interface FrameworkEvents<ExtensionUnion extends AnyExtension>
+export interface FrameworkEvents<Extension extends AnyExtension>
   extends Pick<ManagerEvents, 'destroy'> {
   /**
    * An event listener which is called whenever the editor gains focus.
    */
-  focus: (params: RemirrorEventListenerProps<ExtensionUnion>, event: Event) => void;
+  focus: (params: RemirrorEventListenerProps<Extension>, event: Event) => void;
 
   /**
    * An event listener which is called whenever the editor is blurred.
    */
-  blur: (params: RemirrorEventListenerProps<ExtensionUnion>, event: Event) => void;
+  blur: (params: RemirrorEventListenerProps<Extension>, event: Event) => void;
 
   /**
    * Called on every state update after the state has been applied to the editor.
@@ -419,13 +419,13 @@ export interface FrameworkEvents<ExtensionUnion extends AnyExtension>
    * This should be used to track the current editor state and check if commands
    * are enabled.
    */
-  updated: RemirrorEventListener<ExtensionUnion>;
+  updated: RemirrorEventListener<Extension>;
 }
 
 export type UpdatableViewPropsObject = { [Key in UpdatableViewProps]: DirectEditorProps[Key] };
 
 declare global {
   namespace Remirror {
-    interface ListenerProperties<ExtensionUnion extends AnyExtension> {}
+    interface ListenerProperties<Extension extends AnyExtension> {}
   }
 }

@@ -14,10 +14,10 @@ import { DomFramework, DomFrameworkOutput, DomFrameworkProps } from './dom-frame
 /**
  * Create an editor manager. It comes with the `CorePreset` already available.
  */
-export function createDomManager<ExtensionUnion extends AnyExtension>(
-  extensions: ExtensionUnion[] | (() => ExtensionUnion[]),
+export function createDomManager<Extension extends AnyExtension>(
+  extensions: Extension[] | (() => Extension[]),
   options?: CreateCoreManagerOptions,
-): RemirrorManager<CorePreset | BuiltinPreset | ExtensionUnion> {
+): RemirrorManager<CorePreset | BuiltinPreset | Extension> {
   return createCoreManager(extensions, options);
 }
 
@@ -41,15 +41,15 @@ export function createDomManager<ExtensionUnion extends AnyExtension>(
  * editor.commands.insertText('Hello Friend!');
  * ```
  */
-export function createDomEditor<ExtensionUnion extends AnyExtension>(
-  props: DomFrameworkProps<ExtensionUnion>,
-): DomFrameworkOutput<ExtensionUnion> {
+export function createDomEditor<Extension extends AnyExtension>(
+  props: DomFrameworkProps<Extension>,
+): DomFrameworkOutput<Extension> {
   const { stringHandler, onError, manager, forceEnvironment, element } = props;
 
   function createStateFromContent(
     content: RemirrorContentType,
     selection?: PrimitiveSelection,
-  ): EditorState<GetSchema<ExtensionUnion>> {
+  ): EditorState<GetSchema<Extension>> {
     return manager.createState({
       content,
       document: getDocument(forceEnvironment),
@@ -67,7 +67,7 @@ export function createDomEditor<ExtensionUnion extends AnyExtension>(
     : ([props.initialContent ?? fallback] as const);
   const initialEditorState = createStateFromContent(initialContent, initialSelection);
 
-  const framework = new DomFramework<ExtensionUnion>({
+  const framework = new DomFramework<Extension>({
     createStateFromContent,
     getProps: () => props,
     initialEditorState,

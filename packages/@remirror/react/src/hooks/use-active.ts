@@ -3,8 +3,8 @@ import type { AnyExtension, RemirrorManager } from '@remirror/core';
 import { ReactFrameworkOutput } from '../react-types';
 import { useRemirrorContext } from './use-remirror-context';
 
-type UseActiveReturn<ExtensionUnion extends AnyExtension> = ReactFrameworkOutput<
-  RemirrorManager<ExtensionUnion>['~E']
+type UseActiveReturn<Extension extends AnyExtension> = ReactFrameworkOutput<
+  RemirrorManager<Extension>['~E']
 >['active'];
 
 /**
@@ -21,8 +21,8 @@ type UseActiveReturn<ExtensionUnion extends AnyExtension> = ReactFrameworkOutput
  * @param autoUpdate - Set to false to prevent automatic re-rendering on every
  * state update.
  */
-export function useActive<ExtensionUnion extends AnyExtension = Remirror.AllExtensionUnion>(
+export function useActive<Extension extends AnyExtension = Remirror.Extensions>(
   autoUpdate = true,
-): UseActiveReturn<ExtensionUnion> {
-  return useRemirrorContext<ExtensionUnion>({ autoUpdate }).active;
+): UseActiveReturn<Extension> {
+  return useRemirrorContext<Extension>({ autoUpdate }).active;
 }

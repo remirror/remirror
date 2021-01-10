@@ -12,17 +12,15 @@ import type { PortalContainer } from '@remirror/extension-react-component';
 import type { CorePreset, CreateCoreManagerOptions } from '@remirror/preset-core';
 import type { ReactExtension, ReactExtensionOptions } from '@remirror/preset-react';
 
-export type DefaultReactExtensionUnion = ReactExtensionUnion<AnyExtension>;
-
 /**
  * Use this to build your own extension union type which extends from the
- * `ReactExtensionUnion`.
+ * `ReactExtensions`.
  */
-export type ReactExtensionUnion<ExtensionUnion extends AnyExtension = never> =
+export type ReactExtensions<Extension extends AnyExtension = never> =
   | CorePreset
   | ReactExtension
   | BuiltinPreset
-  | ExtensionUnion;
+  | Extension;
 
 /**
  * The config options for the `getRootProps` method.
@@ -59,8 +57,8 @@ export interface RefProps<RefKey = 'ref'> {
  * These are the props passed to the render function provided when setting up
  * your editor.
  */
-export interface ReactFrameworkOutput<ExtensionUnion extends AnyExtension>
-  extends FrameworkOutput<ExtensionUnion> {
+export interface ReactFrameworkOutput<Extension extends AnyExtension>
+  extends FrameworkOutput<Extension> {
   /**
    * A function that returns the props which should be spread on the react
    * element to be used as the root for the editor. This is where the
@@ -151,8 +149,6 @@ export interface CreateReactManagerOptions extends CreateCoreManagerOptions {
  * }
  * ```
  */
-export type UseRemirrorContextType<ExtensionUnion extends AnyExtension> = <
-  Type extends AnyExtension
->(
-  handler?: RemirrorEventListener<ExtensionUnion> | { autoUpdate: boolean },
-) => ReactFrameworkOutput<ExtensionUnion | Type>;
+export type UseRemirrorContextType<Extension extends AnyExtension> = <Type extends AnyExtension>(
+  handler?: RemirrorEventListener<Extension> | { autoUpdate: boolean },
+) => ReactFrameworkOutput<Extension | Type>;

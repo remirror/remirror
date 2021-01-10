@@ -88,7 +88,7 @@ export class AttributesExtension extends PlainExtension {
 
 declare global {
   namespace Remirror {
-    interface ManagerStore<ExtensionUnion extends AnyExtension> {
+    interface ManagerStore<Extension extends AnyExtension> {
       /**
        * The attributes to be added to the prosemirror editor.
        */

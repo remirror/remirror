@@ -31,9 +31,9 @@ import type { ReactFrameworkOutput } from '../react-types';
  *
  * @internal
  */
-export function useReactFramework<ExtensionUnion extends AnyExtension>(
-  props: ReactFrameworkProps<ExtensionUnion>,
-): ReactFrameworkOutput<ExtensionUnion> {
+export function useReactFramework<Extension extends AnyExtension>(
+  props: ReactFrameworkProps<Extension>,
+): ReactFrameworkOutput<Extension> {
   const {
     onError,
     manager,
@@ -58,7 +58,7 @@ export function useReactFramework<ExtensionUnion extends AnyExtension>(
     (
       content: RemirrorContentType,
       selection?: PrimitiveSelection,
-    ): EditorState<GetSchema<ExtensionUnion>> => {
+    ): EditorState<GetSchema<Extension>> => {
       return manager.createState({
         content,
         document: getDocument(forceEnvironment),
@@ -82,7 +82,7 @@ export function useReactFramework<ExtensionUnion extends AnyExtension>(
   );
 
   // Store all the `logic` in a `ref`
-  const framework: ReactFramework<ExtensionUnion> = useFramework<ExtensionUnion>({
+  const framework: ReactFramework<Extension> = useFramework<Extension>({
     initialEditorState,
     setShouldRenderClient,
     createStateFromContent,
@@ -115,21 +115,19 @@ export function useReactFramework<ExtensionUnion extends AnyExtension>(
  * A hook which creates a reference to the `ReactFramework` and updates the
  * parameters on every render.
  */
-function useFramework<ExtensionUnion extends AnyExtension>(
-  props: ReactFrameworkOptions<ExtensionUnion>,
-): ReactFramework<ExtensionUnion> {
+function useFramework<Extension extends AnyExtension>(
+  props: ReactFrameworkOptions<Extension>,
+): ReactFramework<Extension> {
   const propsRef = useRef(props);
   propsRef.current = props;
 
-  const [framework, setFramework] = useState(
-    () => new ReactFramework<ExtensionUnion>(propsRef.current),
-  );
+  const [framework, setFramework] = useState(() => new ReactFramework<Extension>(propsRef.current));
 
   framework.update(props);
 
   useEffect(() => {
     return framework.frameworkOutput.addHandler('destroy', () => {
-      setFramework(() => new ReactFramework<ExtensionUnion>(propsRef.current));
+      setFramework(() => new ReactFramework<Extension>(propsRef.current));
     });
   }, [framework]);
 
@@ -151,8 +149,8 @@ function defaultStringHandler(): never {
 /**
  * A hook which manages the controlled updates for the editor.
  */
-function useControlledEditor<ExtensionUnion extends AnyExtension>(
-  framework: ReactFramework<ExtensionUnion>,
+function useControlledEditor<Extension extends AnyExtension>(
+  framework: ReactFramework<Extension>,
 ): void {
   const { state } = framework.props;
 

@@ -112,15 +112,15 @@ import {
  *   state changes. Both the extensions and the `Framework` listen to this event
  *   and can provide updates in response.
  */
-export class RemirrorManager<ExtensionUnion extends AnyExtension> {
+export class RemirrorManager<Extension extends AnyExtension> {
   /**
    * Create the manager for your `Remirror` editor.
    */
-  static create<ExtensionUnion extends AnyExtension>(
-    extensions: ExtensionUnion[] | ExtensionTemplate<ExtensionUnion>,
+  static create<Extension extends AnyExtension>(
+    extensions: Extension[] | ExtensionTemplate<Extension>,
     settings: Remirror.ManagerSettings = {},
-  ): RemirrorManager<ExtensionUnion | BuiltinPreset> {
-    return new RemirrorManager<ExtensionUnion | BuiltinPreset>(
+  ): RemirrorManager<Extension | BuiltinPreset> {
+    return new RemirrorManager<Extension | BuiltinPreset>(
       [...getLazyArray(extensions), ...builtinPreset(settings.builtin)],
       settings,
     );
@@ -140,18 +140,18 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
   /**
    * The extension manager store.
    */
-  #store: Remirror.ManagerStore<ExtensionUnion> = object();
+  #store: Remirror.ManagerStore<Extension> = object();
 
   /**
    * All the extensions being used within this editor.
    */
-  #extensions: ReadonlyArray<GetExtensions<ExtensionUnion>>;
+  #extensions: ReadonlyArray<GetExtensions<Extension>>;
 
   /**
    * The map of extension constructor to their extension counterparts. This is
    * what makes the `getExtension` method possible.
    */
-  #extensionMap: WeakMap<AnyExtensionConstructor, GetExtensions<ExtensionUnion>>;
+  #extensionMap: WeakMap<AnyExtensionConstructor, GetExtensions<Extension>>;
 
   /**
    * The stage the manager is currently running.
@@ -193,7 +193,7 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
   /**
    * The active framework for this manager if it exists.
    */
-  #framework?: BaseFramework<ExtensionUnion>;
+  #framework?: BaseFramework<Extension>;
 
   /**
    * A method for disposing the state update event listeners on the active
@@ -259,7 +259,7 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
    * }
    * ```
    */
-  get output(): FrameworkOutput<ExtensionUnion> | undefined {
+  get output(): FrameworkOutput<Extension> | undefined {
     return this.#framework?.frameworkOutput;
   }
 
@@ -275,7 +275,7 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
   /**
    * The extensions stored by this manager
    */
-  get extensions(): ReadonlyArray<GetExtensions<ExtensionUnion>> {
+  get extensions(): ReadonlyArray<GetExtensions<Extension>> {
     return this.#extensions;
   }
 
@@ -291,7 +291,7 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
   /**
    * Get the extension manager store which is accessible at initialization.
    */
-  get store(): Remirror.ManagerStore<ExtensionUnion> {
+  get store(): Remirror.ManagerStore<Extension> {
     return freeze(this.#store);
   }
 
@@ -312,7 +312,7 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
    * commands will end up being non-chainable and be overwritten by anything
    * that comes after.
    */
-  get tr(): Transaction<GetSchema<ExtensionUnion>> {
+  get tr(): Transaction<GetSchema<Extension>> {
     return this.getExtension(CommandsExtension).transaction;
   }
 
@@ -341,14 +341,14 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
   /**
    * A shorthand getter for retrieving the tags from the extension manager.
    */
-  get extensionTags(): Readonly<CombinedTags<GetNameUnion<ExtensionUnion>>> {
+  get extensionTags(): Readonly<CombinedTags<GetNameUnion<Extension>>> {
     return this.#store.tags;
   }
 
   /**
    * A shorthand way of retrieving the editor view.
    */
-  get view(): EditorView<GetSchema<ExtensionUnion>> {
+  get view(): EditorView<GetSchema<Extension>> {
     return this.#store.view;
   }
 
@@ -367,15 +367,12 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
    * instead of the `new` keyword.
    */
   private constructor(
-    initialExtension: readonly ExtensionUnion[],
+    initialExtension: readonly Extension[],
     settings: Remirror.ManagerSettings = {},
   ) {
     this.#settings = settings;
 
-    const { extensions, extensionMap } = transformExtensions<ExtensionUnion>(
-      initialExtension,
-      settings,
-    );
+    const { extensions, extensionMap } = transformExtensions<Extension>(initialExtension, settings);
 
     this.#extensions = freeze(extensions);
     this.#extensionMap = extensionMap;
@@ -558,7 +555,7 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
    * Attach a framework to the manager.
    */
   attachFramework(
-    framework: BaseFramework<ExtensionUnion>,
+    framework: BaseFramework<Extension>,
     updateHandler: (props: StateUpdateLifecycleProps) => void,
   ): void {
     if (this.#framework === framework) {
@@ -591,7 +588,7 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
    * This can be used in conjunction with the create state to reset the current
    * value of the editor.
    */
-  createEmptyDoc(): ProsemirrorNode<GetSchema<ExtensionUnion>> {
+  createEmptyDoc(): ProsemirrorNode<GetSchema<Extension>> {
     const doc = this.schema.nodes.doc?.createAndFill();
 
     // Make sure the `doc` was created.
@@ -606,7 +603,7 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
   /**
    * Create the editor state from content passed to this extension manager.
    */
-  createState(props: CreateEditorStateProps): EditorState<GetSchema<ExtensionUnion>> {
+  createState(props: CreateEditorStateProps): EditorState<GetSchema<Extension>> {
     const { content, document, onError = this.settings.onError, selection } = props;
     const { schema, plugins } = this.store;
 
@@ -703,7 +700,7 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
    * @internalremarks What about the state stored in the extensions and presets,
    * does this need to be recreated as well?
    */
-  clone(): RemirrorManager<ExtensionUnion> {
+  clone(): RemirrorManager<Extension> {
     const extensions = this.#extensions.map((e) => e.clone(e.options));
     const manager = RemirrorManager.create(() => extensions, this.#settings);
     this.#events.emit('clone', manager);
@@ -714,10 +711,10 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
   /**
    * Recreate the manager with new settings and extensions
    */
-  recreate<ExtraExtensionUnion extends AnyExtension>(
-    extensions: ExtraExtensionUnion[] = [],
+  recreate<ExtraExtension extends AnyExtension>(
+    extensions: ExtraExtension[] = [],
     settings: Remirror.ManagerSettings = {},
-  ): RemirrorManager<ExtensionUnion | ExtraExtensionUnion> {
+  ): RemirrorManager<Extension | ExtraExtension> {
     const currentExtensions = this.#extensions.map((e) => e.clone(e.initialOptions));
     const manager = RemirrorManager.create(() => [...currentExtensions, ...extensions], settings);
     this.#events.emit('recreate', manager);
@@ -794,7 +791,7 @@ export class RemirrorManager<ExtensionUnion extends AnyExtension> {
  * If the template is mixed in with other manager creators it will add the
  * relevant extension provided.
  */
-export type ExtensionTemplate<ExtensionUnion extends AnyExtension> = () => ExtensionUnion[];
+export type ExtensionTemplate<Extension extends AnyExtension> = () => Extension[];
 
 export interface ManagerEvents {
   /**
@@ -866,10 +863,10 @@ export type AnyRemirrorManager = Simplify<
  * include to pass the test. The identifier can either be the Extension / Preset
  * name e.g. `bold`, or the Extension / Preset constructor `BoldExtension`
  */
-export function isRemirrorManager<ExtensionUnion extends AnyExtension = AnyExtension>(
+export function isRemirrorManager<Extension extends AnyExtension = AnyExtension>(
   value: unknown,
   mustIncludeList?: Array<AnyExtensionConstructor | string>,
-): value is RemirrorManager<ExtensionUnion> {
+): value is RemirrorManager<Extension> {
   if (!isRemirrorType(value) || !isIdentifierOfType(value, RemirrorIdentifier.Manager)) {
     return false;
   }
@@ -922,25 +919,25 @@ export interface CreateEditorStateProps
 }
 
 interface RemirrorManagerConstructor extends Function {
-  create<ExtensionUnion extends AnyExtension>(
-    extension: ExtensionUnion[],
+  create<Extension extends AnyExtension>(
+    extension: Extension[],
     settings?: Remirror.ManagerSettings,
-  ): RemirrorManager<ExtensionUnion | BuiltinPreset>;
+  ): RemirrorManager<Extension | BuiltinPreset>;
 }
 
-export interface RemirrorManager<ExtensionUnion extends AnyExtension> {
+export interface RemirrorManager<Extension extends AnyExtension> {
   /**
    * The constructor for the [[`RemirrorManager`]].
    */
   constructor: RemirrorManagerConstructor;
 
   /**
-   * Pseudo type property which contains the recursively extracted `ExtensionUnion`
+   * Pseudo type property which contains the recursively extracted `Extension`
    * stored by this manager.
    *
    * @internal
    */
-  ['~E']: ExtensionUnion;
+  ['~E']: Extension;
 
   /**
    * Pseudo property which is a small hack to store the type of the schema
@@ -948,7 +945,7 @@ export interface RemirrorManager<ExtensionUnion extends AnyExtension> {
    *
    * @internal
    */
-  ['~Sch']: GetSchema<ExtensionUnion>;
+  ['~Sch']: GetSchema<Extension>;
 
   /**
    * `AllNames`
@@ -957,7 +954,7 @@ export interface RemirrorManager<ExtensionUnion extends AnyExtension> {
    *
    * @internal
    */
-  ['~AN']: GetNameUnion<ExtensionUnion> extends never ? string : GetNameUnion<ExtensionUnion>;
+  ['~AN']: GetNameUnion<Extension> extends never ? string : GetNameUnion<Extension>;
 
   /**
    * `NodeNames`
@@ -967,9 +964,7 @@ export interface RemirrorManager<ExtensionUnion extends AnyExtension> {
    *
    * @internal
    */
-  ['~N']: GetNodeNameUnion<ExtensionUnion> extends never
-    ? string
-    : GetNodeNameUnion<ExtensionUnion>;
+  ['~N']: GetNodeNameUnion<Extension> extends never ? string : GetNodeNameUnion<Extension>;
 
   /**
    * `MarkNames`
@@ -979,9 +974,7 @@ export interface RemirrorManager<ExtensionUnion extends AnyExtension> {
    *
    * @internal
    */
-  ['~M']: GetMarkNameUnion<ExtensionUnion> extends never
-    ? string
-    : GetMarkNameUnion<ExtensionUnion>;
+  ['~M']: GetMarkNameUnion<Extension> extends never ? string : GetMarkNameUnion<Extension>;
 
   /**
    * `PlainNames`
@@ -991,9 +984,7 @@ export interface RemirrorManager<ExtensionUnion extends AnyExtension> {
    *
    * @internal
    */
-  ['~P']: GetPlainNameUnion<ExtensionUnion> extends never
-    ? string
-    : GetPlainNameUnion<ExtensionUnion>;
+  ['~P']: GetPlainNameUnion<Extension> extends never ? string : GetPlainNameUnion<Extension>;
 }
 
 declare global {
@@ -1059,11 +1050,11 @@ declare global {
      * Since this is a global namespace, you can extend the store if your
      * extension is modifying the shape of the `Manager.store` property.
      */
-    interface ManagerStore<ExtensionUnion extends AnyExtension> {
+    interface ManagerStore<Extension extends AnyExtension> {
       /**
        * The editor view stored by this instance.
        */
-      view: EditorView<GetSchema<ExtensionUnion>>;
+      view: EditorView<GetSchema<Extension>>;
     }
 
     interface ExtensionStore {

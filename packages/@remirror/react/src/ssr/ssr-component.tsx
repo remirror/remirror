@@ -8,8 +8,8 @@ import type {
 
 import { mapProps, ReactSerializer } from '../renderers';
 
-export interface RemirrorSSRProps<ExtensionUnion extends AnyExtension>
-  extends EditorStateProps<GetSchema<ExtensionUnion>> {
+export interface RemirrorSSRProps<Extension extends AnyExtension>
+  extends EditorStateProps<GetSchema<Extension>> {
   /**
    * The attributes to pass into the root div element.
    */
@@ -22,14 +22,14 @@ export interface RemirrorSSRProps<ExtensionUnion extends AnyExtension>
   /**
    * The manager.
    */
-  manager: RemirrorManager<ExtensionUnion>;
+  manager: RemirrorManager<Extension>;
 }
 
 /**
  * Remirror SSR component used for rendering in non dom environments.
  */
-export const RemirrorSSR = <ExtensionUnion extends AnyExtension>(
-  props: RemirrorSSRProps<ExtensionUnion>,
+export const RemirrorSSR = <Extension extends AnyExtension>(
+  props: RemirrorSSRProps<Extension>,
 ): JSX.Element => {
   const { attributes, manager, state, editable } = props;
   const outerProperties = mapProps(attributes);
