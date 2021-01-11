@@ -25,7 +25,7 @@ import {
   isMarkType,
   isNodeType,
 } from './core-utils';
-import { getActiveNode, isSelectionEmpty } from './prosemirror-utils';
+import { getActiveNode } from './prosemirror-utils';
 
 export interface UpdateMarkProps extends Partial<RangeProps>, Partial<AttributesProps> {
   /**

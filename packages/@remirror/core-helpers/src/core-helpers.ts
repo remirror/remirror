@@ -22,11 +22,6 @@ import type {
 } from '@remirror/core-types';
 
 /**
- * Any falsy type.
- */
-type Falsy = false | 0 | '' | null | undefined;
-
-/**
  * Type cast an argument. If no type is provided it will default to any.
  *
  * @param arg - the arg to typecast
@@ -455,7 +450,7 @@ export const isArray = Array.isArray;
  * @param value - the value to check
  *
  */
-export function isEmptyArray<Item>(value: unknown): value is never[] {
+export function isEmptyArray(value: unknown): value is never[] {
   return isArray(value) && value.length === 0;
 }
 

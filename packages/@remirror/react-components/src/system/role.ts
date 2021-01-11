@@ -7,7 +7,7 @@ import { Components } from '@remirror/theme';
 export type BootstrapRoleOptions = PaletteRoleOptions;
 
 export function useRoleProps(
-  { unstable_system }: BootstrapRoleOptions,
+  _: BootstrapRoleOptions,
   htmlProps: RoleHTMLProps = {},
 ): RoleHTMLProps {
   return { ...htmlProps, className: cx(Components.ROLE, htmlProps.className) };

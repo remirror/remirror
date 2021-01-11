@@ -41,7 +41,8 @@
   "dependencies": {
     "@babel/runtime": "^7.12.5",
     "@remirror/extension-media": "0.0.0",
-    "@remirror/messages": "0.0.0"
+    "@remirror/messages": "0.0.0",
+    "@remirror/theme": "1.0.0-next.60"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",
@@ -54,7 +55,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "meta": {
+  "@remirror": {
     "sizeLimit": "5 KB"
   }
 }

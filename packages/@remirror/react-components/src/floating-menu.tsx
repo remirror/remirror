@@ -14,12 +14,11 @@ import { useMenuState } from 'reakit/Menu';
 import { Popover, PopoverState, usePopoverState } from 'reakit/Popover';
 import { Except } from 'type-fest';
 
-import { ExtensionPriority, isEmptyArray, isUndefined } from '@remirror/core';
-import type { Positioner, PositionerParam } from '@remirror/extension-positioner';
+import { ExtensionPriority, isEmptyArray } from '@remirror/core';
+import type { PositionerParam } from '@remirror/extension-positioner';
 import { getPositioner } from '@remirror/extension-positioner';
-import { useEditorDomRef, useHelpers, useRemirrorContext } from '@remirror/react';
+import { useEditorDomRef, useHelpers } from '@remirror/react';
 import {
-  indexFromArrowPress,
   useEditorFocus,
   UseEditorFocusProps,
   useKeymap,
@@ -39,8 +38,22 @@ import {
 } from './react-component-types';
 
 interface UseFloatingPositioner extends UseEditorFocusProps {
+  /**
+   * The positioner used to determine the position of the relevant part of the
+   * editor state.
+   */
   positioner: PositionerParam;
+
+  /**
+   * Where to place the popover relative to the positioner.
+   */
   placement?: PopoverState['placement'];
+
+  /**
+   * When `true` will hide the popover element whenever the positioner is no
+   * longer visible in the DOM.
+   */
+  hideWhenInvisible?: boolean;
 
   /**
    * Set animated as detailed [here](https://reakit.io/docs/popover/#animating).
@@ -63,18 +76,19 @@ function useFloatingPositioner(props: UseFloatingPositioner) {
     enabled = true,
     blurOnInactive = false,
     ignoredElements = [],
+    hideWhenInvisible = true,
   } = props;
   const editorRef = useEditorDomRef();
   const popoverState = usePopoverState({ placement, modal: false, animated });
   const [isFocused] = useEditorFocus({ blurOnInactive, ignoredElements });
   const { ref, active, height, x: left, y: top, width, visible } = usePositioner(
-    getPositioner(positioner).active(enabled && isFocused),
+    () => getPositioner(positioner).active(enabled && isFocused),
     [enabled, isFocused],
   );
   const position = useMemo(() => ({ height, left, top, width }), [height, left, top, width]);
 
   useEffect(() => {
-    const shouldShow = visible && active;
+    const shouldShow = (hideWhenInvisible ? visible : true) && active;
 
     if (!shouldShow) {
       popoverState.stopAnimation();
@@ -86,7 +100,7 @@ function useFloatingPositioner(props: UseFloatingPositioner) {
     }
 
     popoverState.unstable_update();
-  }, [active, popoverState, placement, position, visible]);
+  }, [active, popoverState, placement, position, visible, hideWhenInvisible]);
 
   return useMemo(
     () => ({
@@ -103,6 +117,7 @@ interface FloatingWrapperProps extends UseFloatingPositioner {
   animatedClass?: string;
   containerClass?: string;
   floatingLabel?: string;
+
   /**
    * When true the arrow will be displayed.
    *
@@ -123,6 +138,7 @@ export const FloatingWrapper: FC<FloatingWrapperProps> = (props): JSX.Element =>
     ignoredElements,
     enabled,
     floatingLabel,
+    hideWhenInvisible,
   } = props;
   const { editorRef, positionerRef, popoverState, position } = useFloatingPositioner({
     animated,
@@ -131,11 +147,12 @@ export const FloatingWrapper: FC<FloatingWrapperProps> = (props): JSX.Element =>
     blurOnInactive,
     ignoredElements,
     enabled,
+    hideWhenInvisible,
   });
 
   return (
     <>
-      <PositionerComponent>
+      <PositionerPortal>
         <span
           className={ExtensionPositioner.POSITIONER}
           style={{
@@ -146,8 +163,8 @@ export const FloatingWrapper: FC<FloatingWrapperProps> = (props): JSX.Element =>
           }}
           ref={positionerRef}
         />
-      </PositionerComponent>
-      <PositionerComponent>
+      </PositionerPortal>
+      <PositionerPortal>
         <Popover
           {...popoverState}
           aria-label={floatingLabel}
@@ -160,7 +177,7 @@ export const FloatingWrapper: FC<FloatingWrapperProps> = (props): JSX.Element =>
         >
           {animated ? <div className={animatedClass}>{children}</div> : children}
         </Popover>
-      </PositionerComponent>
+      </PositionerPortal>
     </>
   );
 };
@@ -204,9 +221,10 @@ export interface PositionerComponentProps {
 }
 
 /**
- * Render a component into the editors positioner widget.
+ * Render a component into the editors positioner widget using `createPortal`
+ * from `react-dom`.
  */
-export const PositionerComponent: FC<PositionerComponentProps> = (props) => {
+export const PositionerPortal: FC<PositionerComponentProps> = (props) => {
   const container = useHelpers().getPositionerWidget();
 
   return createPortal(<>{props.children}</>, container);
@@ -229,7 +247,7 @@ export const FloatingActionsMenu = (props: FloatingActionsMenuProps): JSX.Elemen
     ignoredElements,
     enabled = true,
   } = props;
-  const { change, addIgnored } = useSuggest({ char: '/', name: 'actions-dropdown' });
+  const { change } = useSuggest({ char: '/', name: 'actions-dropdown' });
   const query = change?.query.full;
   const menuState = useMenuState({ unstable_virtual: true, wrap: true, loop: true });
 
@@ -325,4 +343,4 @@ export const FloatingActionsMenu = (props: FloatingActionsMenuProps): JSX.Elemen
  * Query the provided items and return a list of items which can be used in the
  * menu.
  */
-function queryActionItems(actions: MenuActionItemUnion[]) {}
+// function queryActionItems(actions: MenuActionItemUnion[]) {}

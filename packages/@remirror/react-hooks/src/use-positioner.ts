@@ -6,7 +6,6 @@ import {
   defaultAbsolutePosition,
   Positioner,
   PositionerParam,
-  positioners,
   StringPositioner,
 } from '@remirror/extension-positioner';
 
@@ -72,7 +71,7 @@ export function usePositioner(
   positioner: PositionerParam,
   activeOrDeps?: unknown[] | boolean,
 ): UsePositionerReturn {
-  const deps = activeOrDeps == null || isBoolean(activeOrDeps) ? [] : activeOrDeps;
+  const deps = activeOrDeps == null || isBoolean(activeOrDeps) ? [positioner] : activeOrDeps;
   const isActive = isBoolean(activeOrDeps) ? activeOrDeps : true;
   const key = useRef(uniqueId());
   const positions = useMultiPositioner(positioner, deps);

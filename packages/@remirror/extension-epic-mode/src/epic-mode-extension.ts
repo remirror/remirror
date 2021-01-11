@@ -1,4 +1,4 @@
-import type { CreateExtensionPlugin, EditorView } from '@remirror/core';
+import type { assertGet, CreateExtensionPlugin, EditorView } from '@remirror/core';
 import { extension, PlainExtension, randomInt, throttle } from '@remirror/core';
 
 import { defaultEffect, PARTICLE_NUM_RANGE, VIBRANT_COLORS } from './epic-mode-effects';
@@ -162,7 +162,7 @@ export class EpicModePluginState {
     const textColor = getRGBComponents(node);
 
     for (let ii = 0; ii < numParticles; ii++) {
-      const colorCode = this.options.colors[ii % this.options.colors.length];
+      const colorCode = assertGet(this.options.colors, ii % this.options.colors.length);
       const r = Number.parseInt(colorCode.slice(1, 3), 16);
       const g = Number.parseInt(colorCode.slice(3, 5), 16);
       const b = Number.parseInt(colorCode.slice(5, 7), 16);

@@ -102,7 +102,7 @@ export type UiCommandNames<Extension extends AnyExtension> = StringKey<
   >
 >;
 
-export interface ChainedCommandRunProps {
+export interface ChainedCommandProps {
   /**
    * Dispatches the chained commands.
    *
@@ -119,14 +119,13 @@ export type ChainedIntersection<Extension extends AnyExtension> = UnionToInterse
   MapToChainedCommand<GetCommands<Extension> | GetDecoratedCommands<Extension>>
 >;
 
-export type ChainedFromExtensions<Extension extends AnyExtension> = ChainedCommandRunProps &
+export type ChainedFromExtensions<
+  Extension extends AnyExtension,
+  Chained extends ChainedIntersection<Extension> = ChainedIntersection<Extension>
+> = ChainedCommandProps &
   {
-    [Command in keyof ChainedIntersection<Extension>]: ChainedIntersection<Extension>[Command] extends (
-      ...args: any[]
-    ) => any
-      ? (
-          ...args: Parameters<ChainedIntersection<Extension>[Command]>
-        ) => ChainedFromExtensions<Extension>
+    [Command in keyof Chained]: Chained[Command] extends (...args: any[]) => any
+      ? (...args: Parameters<Chained[Command]>) => ChainedFromExtensions<Extension>
       : never;
   };
 

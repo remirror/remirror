@@ -3,7 +3,6 @@ import { matchSorter } from 'match-sorter';
 
 import {
   ApplySchemaAttributes,
-  command,
   CommandFunction,
   entries,
   ErrorConstant,
@@ -26,18 +25,18 @@ import {
   range,
   Static,
   take,
-  TupleRange,
   Value,
   values,
   within,
 } from '@remirror/core';
 import type { SuggestChangeHandlerProps, Suggester } from '@remirror/pm/suggest';
-
+import { ExtensionEmoji } from '@remirror/theme';
 import type AliasData from './data/aliases';
 import aliasObject from './data/aliases';
 import type CategoryData from './data/categories';
 import type EmojiData from './data/emojis';
 import rawEmojiObject from './data/emojis';
+import {CompactEmoji, fetchEmojis} from 'emojibase'
 
 export const DEFAULT_FREQUENTLY_USED: Names[] = [
   '+1',
@@ -58,14 +57,9 @@ export const DEFAULT_FREQUENTLY_USED: Names[] = [
   'poop',
 ];
 
-const EMOJI_DATA_ATTRIBUTE = 'data-emoji-node';
-
-interface EmojiAttributes {
-  skin?: TupleRange<5>[number];
-  native: string;
-  hexcode: string;
-  shortcode: string;
-}
+const EMOJI_DATA_HEXCODE = 'data-emoji-hexcode';
+const EMOJI_DATA_UNICODE = 'data-emoji-unicode';
+const EMOJI_DATA_HEXCODE = 'data-emoji-hexcode';
 
 @extension<EmojiOptions>({
   defaultOptions: {
@@ -85,24 +79,28 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
     return 'emoji' as const;
   }
 
+  /**
+   * Keep track of the frequently used list.
+   */
+  private frequentlyUsed: EmojiObject[] = populateFrequentlyUsed(this.options.defaultEmoji);
+
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
     return {
       ...override,
       atom: true,
-      attrs: { ...extra.defaults() },
+      attrs: { ...extra.defaults(),
+        hexcode: {},
+        unicode: {},
+     },
       parseDOM: [
         {
-          tag: `span[${EMOJI_DATA_ATTRIBUTE}`,
+          tag: `span[${EMOJI_DATA_HEXCODE}`,
           getAttrs: (node) => {
             if (!isElementDomNode(node)) {
               return;
             }
 
-            const skin = node.getAttribute('data-emoji-skin');
-            const native = node.getAttribute('data-emoji-native');
-            const hexcode = node.getAttribute('data-emoji-hexcode');
-            const shortcode = node.getAttribute('data-emoji-shortcode');
-
+            const hexcode = node.getAttribute(EMOJI_DATA_HEXCODE);
             return { ...extra.parse(node), skin, native, hexcode, shortcode };
           },
         },
@@ -115,11 +113,6 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
       },
     };
   }
-
-  /**
-   * Keep track of the frequently used list.
-   */
-  private frequentlyUsed: EmojiObject[] = populateFrequentlyUsed(this.options.defaultEmoji);
 
   /**
    * Manage input rules for emoticons.

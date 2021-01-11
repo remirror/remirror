@@ -5,6 +5,6 @@
  */
 
 export * from './code-editor';
-export * from './styled';
-export * from './resizable-layout';
 export * from './playground';
+export * from './resizable-layout';
+export * from './styled';

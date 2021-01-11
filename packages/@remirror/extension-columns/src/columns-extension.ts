@@ -18,9 +18,23 @@ import {
   SchemaAttributesObject,
   Static,
 } from '@remirror/core';
+import { ExtensionColumnsMessages as Messages } from '@remirror/messages';
 
-import { DEFAULT_COLUMN_ATTRIBUTES, toggleColumnsOptions } from './columns-contants';
+export const toggleColumnsOptions: Remirror.CommandDecoratorOptions = {
+  icon: ({ attrs }) => ({ name: 'layoutColumnLine', sup: attrs?.count as string }),
+  label: ({ t, attrs }) => t(Messages.LABEL, { count: attrs?.count }),
+  description: ({ t, attrs }) => t(Messages.DESCRIPTION, { count: attrs?.count }),
+};
 
+export const DEFAULT_COLUMN_ATTRIBUTES: Required<BaseColumnAttributes> = {
+  count: 2,
+  fill: 'auto',
+  gap: 'inherit',
+  ruleColor: 'inherit',
+  ruleStyle: 'none',
+  ruleWidth: 'inherit',
+  width: 'inherit',
+};
 const COLUMN_DATA_ATTRIBUTE = 'data-column-type';
 
 export interface ColumnsOptions {

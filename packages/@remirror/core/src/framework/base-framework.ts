@@ -20,6 +20,7 @@ import type { DirectEditorProps } from '@remirror/pm/view';
 import type { UpdatableViewProps } from '../builtins';
 import type { AnyExtension, AnyExtensionConstructor, GetSchema } from '../extension';
 import type { ManagerEvents, RemirrorManager } from '../manager';
+import { FocusType } from '../types';
 
 export interface BaseFramework<Extension extends AnyExtension> {
   /**
@@ -75,17 +76,6 @@ export interface FrameworkOptions<
    */
   element?: Element;
 }
-
-/**
- * The type of arguments acceptable for the focus parameter.
- *
- * - Can be a prosemirror selection
- * - A range of `{ from: number; to: number }`
- * - A single position with a `number`
- * - A string of `'start' | 'end'`
- * - `true` which sets the focus to the current position or start.
- */
-export type FocusType = PrimitiveSelection | boolean;
 
 /**
  * The base options for an editor wrapper. This is used within the react and dom

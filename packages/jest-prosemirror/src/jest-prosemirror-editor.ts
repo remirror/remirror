@@ -32,7 +32,7 @@ import { cellAround, CellSelection } from '@remirror/pm/tables';
 import { DirectEditorProps, EditorView } from '@remirror/pm/view';
 
 import { createEvents, EventType } from './jest-prosemirror-events';
-import { createState, p, pm, selectionFor, taggedDocHasSelection } from './jest-prosemirror-nodes';
+import { createState, pm, selectionFor, taggedDocHasSelection } from './jest-prosemirror-nodes';
 import type { TaggedDocProps, TestEditorView, TestEditorViewProps } from './jest-prosemirror-types';
 
 const cleanupItems = new Set<[TestEditorView<any>, HTMLElement]>();

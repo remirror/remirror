@@ -111,28 +111,28 @@ describe('nodeFactory', () => {
 
   it('correctly calculates flat node tag positions', () => {
     const node = p('t<a>ex<b>t');
-    const { a, b } = node.tags;
+    const { a = 0, b = 0 } = node.tags;
 
     expect(node.textBetween(a, b)).toBe('ex');
   });
 
   it('correctly calculates flat node tag positions with tags tracking node', () => {
     const node = p('<a>', 'text', '<b>');
-    const { a, b } = node.tags;
+    const { a = 0, b = 0 } = node.tags;
 
     expect(node.textBetween(a, b)).toBe('text');
   });
 
   it('correctly calculates single nested node tag positions', () => {
     const node = doc(p('t<a>ex<b>t'));
-    const { a, b } = node.tags;
+    const { a = 0, b = 0 } = node.tags;
 
     expect(node.textBetween(a, b)).toBe('ex');
   });
 
   it('correctly calculates twice nested node tag positions', () => {
     const node = doc(blockquote(p('t<a>ex<b>t')));
-    const { a, b } = node.tags;
+    const { a = 0, b = 0 } = node.tags;
 
     expect(node.textBetween(a, b)).toBe('ex');
   });
@@ -157,21 +157,21 @@ describe('markFactory', () => {
 
   it('correctly calculates tags', () => {
     const node = p(em('t<a>ex<b>t'));
-    const { a, b } = node.tags;
+    const { a = 0, b = 0 } = node.tags;
 
     expect(node.textBetween(a, b)).toBe('ex');
   });
 
   it('supports being composed with text() and maintaining tags', () => {
     const node = p(em('t<a>ex<b>t'));
-    const { a, b } = node.tags;
+    const { a = 0, b = 0 } = node.tags;
 
     expect(node.textBetween(a, b)).toBe('ex');
   });
 
   it('supports being composed with multiple text() and maintaining tags', () => {
     const node = p(em('t<a>ex<b>t', 't<c>ex<d>t'));
-    const { a, b, c, d } = node.tags;
+    const { a = 0, b = 0, c = 0, d = 0 } = node.tags;
 
     expect(node.textBetween(a, b)).toBe('ex');
     expect(node.textBetween(c, d)).toBe('ex');

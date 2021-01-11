@@ -1,7 +1,5 @@
 /// <reference types="node" />
 
-import { bool } from '@remirror/core-helpers';
-
 /**
  * A object with flags identifying the current environment.
  */

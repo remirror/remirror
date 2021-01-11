@@ -1,14 +1,19 @@
 import {
   ApplySchemaAttributes,
+  assertGet,
+  command,
   CommandFunction,
   extension,
   ExtensionTag,
   isElementDomNode,
-  KeyBindings,
+  keyBinding,
+  KeyBindingProps,
+  NamedShortcut,
   NodeExtension,
   NodeExtensionSpec,
   NodeSpecOverride,
 } from '@remirror/core';
+import { ExtensionListMessages as Messages } from '@remirror/messages';
 import { InputRule, wrappingInputRule } from '@remirror/pm/inputrules';
 
 import { toggleList } from './list-commands';
@@ -69,20 +74,17 @@ export class OrderedListExtension extends NodeExtension {
     return [new ListItemExtension()];
   }
 
-  createCommands() {
-    return {
-      /**
-       * Toggle the ordered list for the current selection.
-       */
-      toggleOrderedList: (): CommandFunction =>
-        toggleList(this.type, this.store.schema.nodes.listItem),
-    };
+  /**
+   * Toggle the ordered list for the current selection.
+   */
+  @command({ icon: 'listOrdered', label: ({ t }) => t(Messages.ORDERED_LIST_LABEL) })
+  toggleOrderedList(): CommandFunction {
+    return toggleList(this.type, assertGet(this.store.schema.nodes, 'listItem'));
   }
 
-  createKeymap(): KeyBindings {
-    return {
-      'Shift-Ctrl-9': toggleList(this.type, this.store.schema.nodes.listItem),
-    };
+  @keyBinding({ shortcut: NamedShortcut.OrderedList, command: 'toggleOrderedList' })
+  listShortcut(props: KeyBindingProps): boolean {
+    return this.toggleOrderedList()(props);
   }
 
   createInputRules(): InputRule[] {
@@ -90,8 +92,8 @@ export class OrderedListExtension extends NodeExtension {
       wrappingInputRule(
         /^(\d+)\.\s$/,
         this.type,
-        (match) => ({ order: +match[1] }),
-        (match, node) => node.childCount + (node.attrs.order as number) === +match[1],
+        (match) => ({ order: +assertGet(match, 1) }),
+        (match, node) => node.childCount + (node.attrs.order as number) === +assertGet(match, 1),
       ),
     ];
   }

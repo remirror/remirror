@@ -2,6 +2,7 @@ import { cx } from '@linaria/core';
 import escapeStringRegexp from 'escape-string-regexp';
 
 import {
+  assertGet,
   CommandFunction,
   CreateExtensionPlugin,
   DispatchFunction,
@@ -109,7 +110,7 @@ export type SearchDirection = 'next' | 'previous';
     clearOnEscape: true,
   },
   handlerKeys: ['onSearch'],
-  staticKeys: ['highlightedClass', 'searchClass'],
+  staticKeys: ['searchClass', 'highlightedClass'],
 })
 export class SearchExtension extends PlainExtension<SearchOptions> {
   get name() {
@@ -272,15 +273,17 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
     }
 
     doc.descendants((node, pos) => {
-      if (!node.isText && mergedTextNodes[index]) {
+      const mergedTextNode = mergedTextNodes[index];
+
+      if (!node.isText && mergedTextNode) {
         index += 1;
         return;
       }
 
-      if (mergedTextNodes[index]) {
+      if (mergedTextNode) {
         mergedTextNodes[index] = {
-          text: `${mergedTextNodes[index].text}${node.text ?? ''}`,
-          pos: mergedTextNodes[index].pos + (index === 0 ? 1 : 0),
+          text: `${mergedTextNode.text}${node.text ?? ''}`,
+          pos: mergedTextNode.pos + (index === 0 ? 1 : 0),
         };
 
         return;
@@ -298,7 +301,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
       findMatches(text, search).forEach((match) => {
         this._results.push({
           from: pos + match.index,
-          to: pos + match.index + match[0].length,
+          to: pos + match.index + assertGet(match, 0).length,
         });
       });
     }
@@ -333,13 +336,13 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
       return;
     }
 
-    const { from: currentFrom, to: currentTo } = this._results[index];
-    const offset = currentTo - currentFrom - replacement.length + lastOffset;
-    const { from, to } = this._results[nextIndex];
+    const current = assertGet(this._results, index);
+    const offset = current.to - current.from - replacement.length + lastOffset;
+    const next = assertGet(this._results, nextIndex);
 
     this._results[nextIndex] = {
-      to: to - offset,
-      from: from - offset,
+      to: next.to - offset,
+      from: next.from - offset,
     };
 
     return offset;

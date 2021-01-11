@@ -1,11 +1,4 @@
-import {
-  CreateExtensionPlugin,
-  extension,
-  ExtensionPriority,
-  ManagerPhase,
-  OnSetOptionsProps,
-  PlainExtension,
-} from '@remirror/core';
+import { extension, ExtensionPriority, OnSetOptionsProps, PlainExtension } from '@remirror/core';
 import { PlaceholderOptions } from '@remirror/extension-placeholder';
 import {
   ReactComponentExtension,

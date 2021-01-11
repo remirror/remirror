@@ -79,7 +79,7 @@ import * as remirrorReactHooks from '@remirror/react-hooks';
 import * as remirrorReactUtils from '@remirror/react-utils';
 import * as remirrorTheme from '@remirror/theme';
 
-const playgroundImports = {
+export const PlaygroundImports = {
   // Extensions
   '@remirror/extension-annotation': remirrorExtensionAnnotation,
   '@remirror/extension-bidi': remirrorExtensionBidi,
@@ -104,7 +104,6 @@ const playgroundImports = {
   '@remirror/extension-heading': remirrorExtensionHeading,
   '@remirror/extension-history': remirrorExtensionHistory,
   '@remirror/extension-horizontal-rule': remirrorExtensionHorizontalRule,
-  '@remirror/extension-html': remirrorExtensionHtml,
   '@remirror/extension-icons': remirrorExtensionIcons,
   '@remirror/extension-image': remirrorExtensionImage,
   '@remirror/extension-italic': remirrorExtensionItalic,
@@ -160,8 +159,6 @@ const playgroundImports = {
   '@remirror/react': remirrorReact,
   '@remirror/react/renderers': remirrorReactRenderers,
 } as const;
-
-export default playgroundImports;
 
 export interface PlaygroundExportProps {
   /**

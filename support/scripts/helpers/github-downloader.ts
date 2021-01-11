@@ -3,9 +3,8 @@ import { Octokit } from '@octokit/rest';
 import { mkdir, writeFile } from 'fs/promises';
 import Keyv from 'keyv';
 import { KeyvFile } from 'keyv-file';
-import { dirname } from 'path';
 import os from 'os';
-import path from 'path';
+import path, { dirname } from 'path';
 
 const ONE_HOUR_IN_MS = 1000 * 3600;
 const DEFAULT_TARGET = path.join(os.tmpdir(), '__remirror__', 'gh');
@@ -57,7 +56,7 @@ export class Downloader {
 
     this.store = store;
     this.cache = new Keyv(cacheOpts);
-    this.octokit = new Octokit(github);
+    this.octokit = new Octokit({ ...github, auth: process.env.GITHUB_TOKEN });
   }
 
   async getTree(options: GitHubRepo) {
@@ -149,6 +148,6 @@ export interface DownloadGithubFolder extends DownloadOptions {
 /**
  * Download a GitHub folder.
  */
-export async function downloadGithubFolder(options: DownloadGithubFolder): Promise<string> {
+export async function downloadGithubFolder(options: DownloadOptions): Promise<string> {
   return downloader.download(options);
 }

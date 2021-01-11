@@ -75,7 +75,7 @@ import { ReactNodeView } from './react-node-view';
     defaultEnvironment: 'both',
     nodeViewComponents: {},
   },
-  staticKeys: ['defaultEnvironment'],
+  staticKeys: ['defaultBlockNode', 'defaultInlineNode', 'defaultContentNode', 'defaultEnvironment'],
 })
 export class ReactComponentExtension extends PlainExtension<ReactComponentOptions> {
   /**

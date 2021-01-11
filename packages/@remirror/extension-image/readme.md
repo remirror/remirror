@@ -28,8 +28,7 @@ The following code sample will create a limited editor and run the available com
 
 ```ts
 import { ExtensionPriority, RemirrorManager } from 'remirror';
-import { ImageExtension } from 'remirror/extensions';
-import { CorePreset } from 'remirror/extensions';
+import { CorePreset, ImageExtension } from 'remirror/extensions';
 
 // Create the codeBlock extension
 const imageExtension = new ImageExtension();

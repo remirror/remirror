@@ -32,8 +32,7 @@ When added to your editor it will provide the `toggleBold` command which makes t
 
 ```ts
 import { ExtensionPriority, RemirrorManager } from 'remirror';
-import { BoldExtension } from 'remirror/extensions';
-import { CorePreset } from 'remirror/extensions';
+import { BoldExtension, CorePreset } from 'remirror/extensions';
 
 // Create the bold extension
 const boldExtension = new BoldExtension({ weight: '500' });

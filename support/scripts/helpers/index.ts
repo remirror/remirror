@@ -152,7 +152,7 @@ export interface Package extends Omit<PackageJson, 'name'> {
   /**
    * Custom meta properties consumed by `remirror`.
    */
-  meta?: PackageMeta;
+  '@remirror'?: PackageMeta;
 }
 
 /**

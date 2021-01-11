@@ -10,6 +10,10 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/theme/src/components.ts
  */
+  .remirror-editor-wrapper {
+    padding-top: var(--rmr-space-3);
+  }
+
   .remirror-button-active {
     color: var(--rmr-color-primary-text);
     background-color: var(--rmr-color-primary);
@@ -26,7 +30,7 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
     user-select: none;
     padding: 0.375em 0.75em;
     line-height: 1.5;
-    border-radius: 0.25rem;
+    border-radius: var(--rmr-radius-border);
     text-decoration: none;
     border: 1px solid var(--rmr-color-border);
     cursor: pointer;
@@ -91,7 +95,7 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
     top: 28px;
     left: 50%;
     transform: translateX(-50%);
-    border-radius: 0.25rem;
+    border-radius: var(--rmr-radius-border);
     padding: 1em;
     max-height: calc(100vh - 56px);
     outline: 0;
@@ -138,7 +142,7 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
     display: block;
     color: var(--rmr-color-text);
     border: 1px solid var(--rmr-color-border);
-    border-radius: 0.25rem;
+    border-radius: var(--rmr-radius-border);
     padding: 0.5rem 1rem 1rem;
   }
 
@@ -173,7 +177,7 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
   .remirror-input {
     display: block;
     width: 100%;
-    border-radius: 0.2rem;
+    border-radius: var(--rmr-radius-border);
     padding: 0.5em 0.75em;
     font-size: 100%;
     border: 1px solid var(--rmr-hue-gray-2);
@@ -191,25 +195,53 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
   }
 
   .remirror-menu-pane {
-    display: flex;
     position: relative;
+    display: flex;
     justify-content: center;
     align-items: flex-start;
+    padding-top: var(--rmr-space-1);
+    padding-bottom: var(--rmr-space-1);
+    padding-right: var(--rmr-space-2);
+  }
+
+  .remirror-menu-pane-active {
+    color: var(--rmr-color-primary-text);
+    background-color: var(--rmr-color-primary);
+  }
+
+  .remirror-menu-dropdown-label {
+    padding: 0 var(--rmr-space-2);
   }
 
   .remirror-menu-pane-icon {
     position: absolute;
-    width: 24px;
+    left: 8px;
+    width: 20px;
+    color: var(--rmr-hue-gray-7);
+  }
+
+  button:hover .remirror-menu-pane-icon,
+  button:active .remirror-menu-pane-icon,
+  [aria-checked='true'] .remirror-menu-pane-icon {
+    color: var(--rmr-hue-gray-1);
   }
 
   .remirror-menu-pane-label {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    padding-right: var(--rmr-space-3);
   }
 
   .remirror-menu-pane-shortcut {
     align-self: flex-end;
+    color: var(--rmr-hue-gray-6);
+  }
+
+  button:hover .remirror-menu-pane-shortcut,
+  button:active .remirror-menu-pane-shortcut,
+  [aria-checked='true'] .remirror-menu-pane-shortcut {
+    color: var(--rmr-hue-gray-1);
   }
 
   [role='menu'] > .remirror-menu-button-left {
@@ -275,7 +307,7 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
     flex-direction: row;
   }
 
-  .remirror-menu-item.remirror-menu-item.remirror-menu-item {
+  .remirror-menu-item {
     line-height: 1.5;
     text-align: left;
     justify-content: flex-start;
@@ -293,15 +325,15 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
     text-decoration: none;
   }
 
-  .remirror-menu-item.remirror-menu-item.remirror-menu-item:focus,
-  .remirror-menu-item.remirror-menu-item.remirror-menu-item[aria-expanded='true'] {
+  .remirror-menu-item:focus,
+  .remirror-menu-item[aria-expanded='true'] {
     background-color: var(--rmr-color-primary);
     color: var(--rmr-color-primary-text);
     box-shadow: none !important;
   }
 
-  .remirror-menu-item.remirror-menu-item.remirror-menu-item:active,
-  .remirror-menu-item.remirror-menu-item.remirror-menu-item[data-active] {
+  .remirror-menu-item:active,
+  .remirror-menu-item[data-active] {
     background-color: var(--rmr-color-active-primary) !important;
     color: var(--rmr-color-active-primary-text) !important;
   }
@@ -348,6 +380,13 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
     flex-direction: inherit;
   }
 
+  .remirror-floating-popover {
+    /* padding: var(--rmr-space-2); */
+    padding: 0;
+    border: none;
+    max-height: calc(100vh - 56px);
+  }
+
   .remirror-popover [data-arrow] {
     background-color: transparent;
   }
@@ -358,6 +397,18 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
 
   .remirror-popover [data-arrow] .fill {
     fill: var(--rmr-color-background);
+  }
+
+  .remirror-animated-popover {
+    transition: opacity 250ms ease-in-out, transform 250ms ease-in-out;
+    opacity: 0;
+    transform-origin: top center;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  [data-enter] .remirror-animated-popover {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 
   .remirror-role {
@@ -389,7 +440,7 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
     background-color: transparent;
     border: 1px solid transparent;
     border-width: 1px 1px 0 1px;
-    border-radius: 0.25rem 0.25rem 0 0;
+    border-radius: var(--rmr-radius-border) var(--rmr-radius-border) 0 0;
     font-size: 100%;
     padding: 0.5em 1em;
     margin: 0 0 -1px 0;
@@ -426,7 +477,7 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
   }
 
   .remirror-tabbable:not([type='checkbox']):not([type='radio']):focus {
-    box-shadow: 0 0 0 0.2em var(--rmr-color-shadow-1);
+    box-shadow: var(--rmr-color-outline) 0px 0px 0px 0.2em;
     position: relative;
     z-index: 2;
   }
@@ -462,7 +513,7 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
     color: white;
     font-size: 0.8em;
     padding: 0.5rem;
-    border-radius: 0.25rem;
+    border-radius: var(--rmr-radius-border);
     z-index: 999;
   }
 
@@ -477,6 +528,57 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
   .remirror-tooltip [data-arrow] .fill {
     fill: var(--rmr-hue-gray-8);
   }
+
+  .remirror-table-size-editor {
+    background: var(--rmr-color-background);
+    box-shadow: var(--rmr-color-shadow-1);
+    font-family: var(--rmr-font-family-default);
+    font-size: var(--rmr-font-size-1);
+  }
+
+  .remirror-table-size-editor-body {
+    position: relative;
+  }
+
+  .remirror-table-size-editor-body::after {
+    background: rgba(0, 0, 0, 0);
+    bottom: -50px;
+    content: '';
+    left: 0;
+    position: absolute;
+    right: -50px;
+    top: -50px;
+  }
+
+  .remirror-table-size-editor-cell {
+    border: var(--rmr-color-border);
+    position: absolute;
+    z-index: 2;
+  }
+
+  .remirror-table-size-editor-cell-selected {
+    background: var(--rmr-color-selection-background);
+    border-color: var(--rmr-color-border);
+  }
+
+  .remirror-table-size-editor-footer {
+    padding-bottom: var(--rmr-space-1);
+    text-align: center;
+  }
+
+  .remirror-color-picker {
+    background: var(--rmr-color-background);
+    box-shadow: var(--rmr-box-shadow-1);
+    font-family: var(--rmr-font-family-default);
+    font-size: var(--rmr-font-size-1);
+    padding: var(--rmr-space-2) var(--rmr-space-3);
+  }
+
+  .remirror-color-picker-cell {
+  }
+
+  .remirror-color-picker-cell-selected {
+  }
 `;
 
 export const coreStyledCss: ReturnType<typeof css> = css`
@@ -490,26 +592,40 @@ export const coreStyledCss: ReturnType<typeof css> = css`
     position: relative;
     font-variant-ligatures: none;
     font-feature-settings: 'liga' 0;
-  }
+    overflow-y: scroll;
 
+    /** TODO DELETE ME */
+    max-height: 200px;
+    height: 200px;
+  }
+  /** END TODO */
   .remirror-editor.ProseMirror pre {
     white-space: pre-wrap;
   }
-
   .remirror-editor.ProseMirror li {
     position: relative;
   }
-
   .remirror-editor.ProseMirror[contenteditable='false'] {
     white-space: normal;
   }
-
   .remirror-editor.ProseMirror[contenteditable='true'] {
     white-space: pre-wrap;
   }
-
   .remirror-editor.ProseMirror hr {
     border-color: #2e2e2e;
+  }
+  .remirror-editor.ProseMirror ::-moz-selection {
+    background: var(--rmr-color-selection-background);
+    color: var(--rmr-color-selection-text);
+    caret-color: var(--rmr-color-selection-caret);
+    text-shadow: var(--rmr-color-selection-shadow);
+  }
+  .remirror-editor.ProseMirror ::selection,
+  .remirror-editor.ProseMirror .selection {
+    background: var(--rmr-color-selection-background);
+    color: var(--rmr-color-selection-text);
+    caret-color: var(--rmr-color-selection-caret);
+    text-shadow: var(--rmr-color-selection-shadow);
   }
   .remirror-editor .ProseMirror-hideselection *::-moz-selection {
     background: transparent;
@@ -546,14 +662,14 @@ export const extensionBlockquoteStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/theme/src/extension-blockquote.ts
  */
-  .remirror-editor blockquote {
-    border-left: 2px solid #ddd;
+  .remirror-editor .Prosemirror blockquote {
+    border-left: 3px solid var(--rmr-hue-gray-3);
     margin-left: 0;
     margin-right: 0;
     padding-left: 10px;
     font-style: italic;
   }
-  .remirror-editor blockquote p {
+  .remirror-editor .Prosemirror blockquote p {
     color: #888;
   }
 `;
@@ -3378,6 +3494,34 @@ export const extensionPlaceholderStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
+export const extensionPositionerStyledCss: ReturnType<typeof css> = css`
+  /**
+ * Styles extracted from: packages/@remirror/theme/src/extension-positioner.ts
+ */
+  .remirror-editor {
+    position: relative;
+  }
+
+  .remirror-positioner {
+    position: absolute;
+    min-width: 1px;
+    min-height: 1px;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: none;
+    z-index: -1;
+  }
+
+  .remirror-positioner-widget {
+    width: 0;
+    height: 0;
+    position: absolute;
+  }
+`;
+
 export const extensionTablesStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/@remirror/theme/src/extension-tables.ts
@@ -3404,7 +3548,7 @@ export const extensionTablesStyledCss: ReturnType<typeof css> = css`
     bottom: 0;
     width: 4px;
     z-index: 20;
-    background-color: var(--remirror-hue-blue-9);
+    background-color: var(--rmr-hue-blue-9);
     pointer-events: none;
   }
   .remirror-editor .ProseMirror .resize-cursor {
@@ -3515,6 +3659,20 @@ export const themeStyledCss: ReturnType<typeof css> = css`
  * Styles extracted from: packages/@remirror/theme/src/theme.ts
  */
   .remirror-theme {
+    /* The following makes it easier to measure components within the editor. */
+    box-sizing: border-box;
+  }
+
+  .remirror-theme *,
+  .remirror-theme *:before,
+  .remirror-theme *:after {
+    /** Preserve box-sizing when override exists:
+   * https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+   * */
+    box-sizing: inherit;
+  }
+
+  .remirror-theme {
     --rmr-color-background: #ffffff;
     --rmr-color-border: rgba(0, 0, 0, 0.25);
     --rmr-color-foreground: #000000;
@@ -3548,7 +3706,12 @@ export const themeStyledCss: ReturnType<typeof css> = css`
     --rmr-color-shadow-1: rgba(10, 31, 68, 0.08);
     --rmr-color-shadow-2: rgba(10, 31, 68, 0.1);
     --rmr-color-shadow-3: rgba(10, 31, 68, 0.12);
-    --rmr-color-backdrop: rgba(0, 0, 0, 0.5);
+    --rmr-color-backdrop: rgba(0, 0, 0, 0.9);
+    --rmr-color-outline: rgba(121, 99, 210, 0.4);
+    --rmr-color-selection-background: Highlight;
+    --rmr-color-selection-shadow: inherit;
+    --rmr-color-selection-text: HighlightText;
+    --rmr-color-selection-caret: inherit;
     --rmr-hue-gray-0: #f8f9fa;
     --rmr-hue-gray-1: #f1f3f5;
     --rmr-hue-gray-2: #e9ecef;
@@ -3679,6 +3842,9 @@ export const themeStyledCss: ReturnType<typeof css> = css`
     --rmr-hue-orange-7: #f76707;
     --rmr-hue-orange-8: #e8590c;
     --rmr-hue-orange-9: #d9480f;
+    --rmr-radius-border: 0.25rem;
+    --rmr-radius-extra: 0.5rem;
+    --rmr-radius-circle: 50%;
     --rmr-font-family-default: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
       'Helvetica Neue', sans-serif;
     --rmr-font-family-heading: inherit;
@@ -3710,6 +3876,9 @@ export const themeStyledCss: ReturnType<typeof css> = css`
     --rmr-letter-spacing-wide: 3px;
     --rmr-line-height-heading: 1.25em;
     --rmr-line-height-default: 1.5em;
+    --rmr-box-shadow-1: 0 1px 1px rgba(10, 31, 68, 0.08);
+    --rmr-box-shadow-2: 0 1px 1px rgba(10, 31, 68, 0.1);
+    --rmr-box-shadow-3: 0 1px 1px rgba(10, 31, 68, 0.12);
 
     font-family: var(--rmr-font-family-default);
     line-height: var(--rmr-line-height-default);
@@ -3751,6 +3920,32 @@ export const themeStyledCss: ReturnType<typeof css> = css`
   .remirror-theme h6 {
     font-size: var(--rmr-font-size-0);
   }
+
+  .remirror-theme .ProseMirror {
+    min-height: var(--rmr-space-6);
+    box-shadow: var(--rmr-color-border) 0px 0px 0px 0.1em;
+    padding: var(--rmr-space-3);
+    border-radius: var(--rmr-radius-border);
+    outline: none;
+  }
+
+  .remirror-theme .ProseMirror:active,
+  .remirror-theme .ProseMirror:focus {
+    box-shadow: var(--rmr-color-outline) 0px 0px 0px 0.2em;
+  }
+
+  .remirror-theme .ProseMirror p,
+  .remirror-theme .ProseMirror h1,
+  .remirror-theme .ProseMirror h2,
+  .remirror-theme .ProseMirror h3,
+  .remirror-theme .ProseMirror h4,
+  .remirror-theme .ProseMirror h4,
+  .remirror-theme .ProseMirror h5,
+  .remirror-theme .ProseMirror h6,
+  .remirror-theme .ProseMirror span {
+    margin: 0;
+    /* margin-bottom: var(--rmr-space-2); */
+  }
 `;
 
 export const allStyledCss: ReturnType<typeof css> = css`
@@ -3763,6 +3958,7 @@ export const allStyledCss: ReturnType<typeof css> = css`
   ${extensionGapCursorStyledCss}
   ${extensionMediaStyledCss}
   ${extensionPlaceholderStyledCss}
+  ${extensionPositionerStyledCss}
   ${extensionTablesStyledCss}
   ${extensionWhitespaceStyledCss}
   ${extensionYjsStyledCss}

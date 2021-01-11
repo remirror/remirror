@@ -555,7 +555,7 @@ async function generateCode(props: ImportGroups) {
  */
 
 ${[...importDeclarations].join('\n')}
-import PlaygroundImports from 'remirror/playground';
+import { PlaygroundImports } from 'remirror/playground';
 
 import { INTERNAL_MODULE_PREFIX } from '../playground-constants';
 import { ImportMap, ImportMapImports } from '../playground-types';

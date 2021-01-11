@@ -179,9 +179,9 @@ export function extension<Options extends Shape = EmptyShape>(
       Constructor.handlerKeyOptions = handlerKeyOptions;
     }
 
-    Constructor.staticKeys = staticKeys ?? [];
-    Constructor.handlerKeys = handlerKeys ?? [];
-    Constructor.customHandlerKeys = customHandlerKeys ?? [];
+    Constructor.staticKeys = (staticKeys as string[]) ?? [];
+    Constructor.handlerKeys = (handlerKeys as string[]) ?? [];
+    Constructor.customHandlerKeys = (customHandlerKeys as string[]) ?? [];
 
     for (const [key, value] of Object.entries(rest as Shape)) {
       if (Constructor[key]) {

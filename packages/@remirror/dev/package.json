@@ -58,7 +58,7 @@
     "create-context-state": "0.0.0",
     "date-fns": "^2.16.1",
     "html": "^1.0.0",
-    "idb-keyval": "^3.2.0",
+    "idb-keyval": "^4.0.1",
     "jsondiffpatch": "^0.4.1",
     "nanoid": "^3.1.20",
     "promise-worker": "^2.0.1",

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import type { MountedPortal, PortalContainer, PortalMap } from './portal-container';
+import type { MountedPortal, PortalContainer } from './portal-container';
 
 /**
  * The component that places all the portals into the DOM.

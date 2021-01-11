@@ -136,7 +136,7 @@ docs/api/**
 docs/.cache/
 docs/.linaria-cache/
 *.tsbuildinfo
-support/e2e/__failed-diffs__
+test/__failed-diffs__
 cc-reporter
 
 # CI `pnpm` cache

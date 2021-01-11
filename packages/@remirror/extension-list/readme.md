@@ -36,8 +36,7 @@ This is included by default when you install the recommended `remirror` package.
 The following creates an editor which supports both ordered and bullet lists.
 
 ```ts
-import { BulletListExtension, OrderedListExtension } from 'remirror/extensions';
-import { createCoreManager } from 'remirror/extensions';
+import { BulletListExtension, createCoreManager, OrderedListExtension } from 'remirror/extensions';
 
 const manager = createCoreManager(() => [new BulletListExtension(), new OrderedListExtension()]);
 ```

@@ -2,13 +2,10 @@ import { useCallback, useMemo, useState } from 'react';
 import type { Except } from 'type-fest';
 
 import {
-  AnyExtension,
   ApplyStateLifecycleProps,
   BuiltinPreset,
   isEmptyObject,
-  omit,
   PluginsExtension,
-  RemirrorEventListener,
   SuggestExtension,
 } from '@remirror/core';
 import { hasStateChanged } from '@remirror/extension-positioner';

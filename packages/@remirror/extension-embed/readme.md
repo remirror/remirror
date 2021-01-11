@@ -36,8 +36,7 @@ This is included by default when you install the recommended `remirror` package.
 The following adds the support for iFrames in your editor.
 
 ```ts
-import { IframeExtension } from 'remirror/extensions';
-import { createCoreManager } from 'remirror/extensions';
+import { createCoreManager, IframeExtension } from 'remirror/extensions';
 
 const manager = createCoreManager([new IframeExtension()]);
 ```

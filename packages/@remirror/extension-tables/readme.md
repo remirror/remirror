@@ -13,8 +13,7 @@ npm install @remirror/extension-tables @remirror/pm # npm
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.
 
 ```ts
-import { TableExtension } from 'remirror/extensions';
-import { createCoreManager } from 'remirror/extensions';
+import { createCoreManager, TableExtension } from 'remirror/extensions';
 
 const manager = createCoreManager(() => [TableExtension()]);
 ```

@@ -1,7 +1,7 @@
 import { PluginKey, Selection, TextSelection } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
-import { isFunction, isString, keys, object, sort } from '@remirror/core-helpers';
+import { isFunction, isString, object, sort } from '@remirror/core-helpers';
 
 import {
   isInvalidSplitReason,

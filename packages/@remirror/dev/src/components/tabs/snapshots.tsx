@@ -82,7 +82,7 @@ class SnapshotTab extends React.Component {
     return (
       <SplitView>
         <SplitViewColumn removePadding grow>
-          {snapshots && snapshots.length ? (
+          {snapshots && snapshots.length > 0 ? (
             <SnapshotsList
               snapshots={snapshots}
               loadSnapshot={loadSnapshot}

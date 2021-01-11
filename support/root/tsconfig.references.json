@@ -5,7 +5,7 @@
     { "path": "./tsconfig.json" },
     { "path": "./packages/@remirror/svelte/tsconfig.json" },
     { "path": "./support/templates/tsconfig.json" },
-    { "path": "./support/e2e/tsconfig.json" },
+    { "path": "./test/tsconfig.json" },
     { "path": "./support/storybook/tsconfig.json" },
     { "path": "./examples/with-next/tsconfig.json" }
   ]

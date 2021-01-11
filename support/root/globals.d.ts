@@ -20,3 +20,7 @@ declare const __VERSION__: string;
  * development build.
  */
 declare const __DEV__: boolean;
+
+declare module '@ngard/tiny-get' {
+  export function get(obj: unknown, path: string | string[], defaultValue?: unknown): any;
+}

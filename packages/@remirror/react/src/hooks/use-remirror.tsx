@@ -4,9 +4,7 @@ import {
   AnyExtension,
   CreateEditorStateProps,
   EditorState,
-  ErrorConstant,
   GetSchema,
-  invariant,
   RemirrorEventListener,
   RemirrorManager,
 } from '@remirror/core';

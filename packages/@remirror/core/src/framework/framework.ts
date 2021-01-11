@@ -17,24 +17,20 @@ import type {
   EditorView,
   PrimitiveSelection,
   RemirrorContentType,
-  RemirrorJSON,
   Shape,
-  StateJSON,
   Transaction,
 } from '@remirror/core-types';
-import { getDocument, prosemirrorNodeToHtml } from '@remirror/core-utils';
+import { getDocument } from '@remirror/core-utils';
 import { Core } from '@remirror/theme';
 
 import type { BuiltinPreset, UpdatableViewProps } from '../builtins';
-import { CommandsExtension } from '../builtins';
 import type { AnyExtension, CommandsFromExtensions, GetSchema } from '../extension';
 import type { RemirrorManager } from '../manager';
-import type { StateUpdateLifecycleProps } from '../types';
+import type { FocusType, StateUpdateLifecycleProps } from '../types';
 import type {
   AddFrameworkHandler,
   BaseFramework,
   CreateStateFromContent,
-  FocusType,
   FrameworkEvents,
   FrameworkOptions,
   FrameworkOutput,
@@ -355,7 +351,7 @@ export abstract class Framework<
     this.updateState({ state, tr, transactions });
 
     // Update the view props when an update is requested
-    const forcedUpdates = this.manager.getExtension(CommandsExtension).getForcedUpdates(tr);
+    const forcedUpdates = this.manager.store.getForcedUpdates(tr);
 
     if (!isEmptyArray(forcedUpdates)) {
       this.updateViewProps(...forcedUpdates);

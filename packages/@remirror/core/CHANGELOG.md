@@ -499,6 +499,7 @@
   import { ExtensionTag } from 'remirror/core';
   import { CorePreset, createCoreManager } from 'remirror/preset/core';
   import { WysiwygPreset } from 'remirror/preset/wysiwyg';
+
   const manager = createCoreManager(() => [new WysiwygPreset(), new CorePreset()], {
     extraAttributes: [
       {
@@ -1114,6 +1115,7 @@
 
   ```tsx
   import React from 'react';
+
   const Editor = () => {
     const { active, commands } = useRemirror({ autoUpdate: true });
 

@@ -578,6 +578,7 @@
 
   ```tsx
   import React from 'react';
+
   const Editor = () => {
     const { active, commands } = useRemirror({ autoUpdate: true });
 

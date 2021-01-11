@@ -1,6 +1,6 @@
 export * from './builtins';
-export type { DelayedValue } from './commands';
-export { delayedCommand, insertText, isDelayedValue, toggleMark } from './commands';
+export type { DelayedPromiseCreator, DelayedValue } from './commands';
+export { DelayedCommand, delayedCommand, insertText, isDelayedValue, toggleMark } from './commands';
 export * from './extension';
 export type {
   AddCustomHandler,
@@ -12,7 +12,6 @@ export type {
   AttributePropFunction,
   BaseFramework,
   CreateStateFromContent,
-  FocusType,
   FrameworkOptions,
   FrameworkOutput,
   FrameworkProps,
@@ -38,6 +37,7 @@ export type {
   ExtensionCommandReturn,
   ExtensionHelperReturn,
   ExtensionStore,
+  FocusType,
   GetChangeOptionsReturn,
   GetCommands,
   GetConstructor,

@@ -12,6 +12,7 @@ let config = {
     'jsx-a11y',
     'simple-import-sort',
 
+
     // For `@remirror/dom-components`
     'lit',
     'lit-a11y',
@@ -78,6 +79,7 @@ let config = {
       'error',
       { toBeTruthy: 'Avoid `toBeTruthy`', toBeFalsy: 'Avoid `toBeFalsy`' },
     ],
+
 
     'sort-imports': 'off',
 
@@ -314,7 +316,7 @@ let config = {
     {
       files: [
         'support/scripts/**/*.{js,mjs,ts}',
-        'support/e2e/**/*.{js,ts}',
+        'test/**/*.{js,ts}',
         'packages/@remirror/playground/**',
         'packages/@remirror/playground-deprecated/**',
       ],
@@ -338,6 +340,7 @@ let config = {
       files: [
         '**/*matchers.ts',
         'support/**',
+        'test/**',
         'examples/**',
         'packages/@remirror/playground/**',
         'packages/@remirror/core-utils/src/keyboard-utils.ts',
@@ -348,7 +351,7 @@ let config = {
       },
     },
     {
-      files: ['packages/@remirror/playground/**', 'support/e2e/**'],
+      files: ['packages/@remirror/playground/**', 'test/**'],
       rules: { '@typescript-eslint/no-var-requires': 'off' },
     },
     {
@@ -391,31 +394,25 @@ let config = {
 // https://github.com/typescript-eslint/typescript-eslint/issues/2373
 if (process.env.FULL_ESLINT_CHECK) {
   const rules = {
-    '@typescript-eslint/prefer-readonly': 'warn',
-    '@typescript-eslint/await-thenable': 'warn',
-    '@typescript-eslint/no-unnecessary-type-arguments': 'warn',
-    '@typescript-eslint/restrict-plus-operands': 'warn',
-    '@typescript-eslint/no-misused-promises': 'warn',
-    '@typescript-eslint/no-unnecessary-type-assertion': 'error',
-    '@typescript-eslint/prefer-nullish-coalescing': [
-      'warn',
-      { ignoreConditionalTests: true, ignoreMixedLogicalExpressions: true },
-    ],
-    '@typescript-eslint/restrict-template-expressions': [
-      'warn',
-      { allowNumber: true, allowBoolean: true },
-    ],
+    // '@typescript-eslint/prefer-readonly': 'warn',
+    // '@typescript-eslint/await-thenable': 'warn',
+    // '@typescript-eslint/no-unnecessary-type-arguments': 'warn',
+    // '@typescript-eslint/restrict-plus-operands': 'warn',
+    // '@typescript-eslint/no-misused-promises': 'warn',
+    // '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+    // '@typescript-eslint/prefer-nullish-coalescing': [
+    //   'warn',
+    //   { ignoreConditionalTests: true, ignoreMixedLogicalExpressions: true },
+    // ],
+    // '@typescript-eslint/restrict-template-expressions': [
+    //   'warn',
+    //   { allowNumber: true, allowBoolean: true },
+    // ],
   };
 
   config = {
     ...config,
-    plugins: [...config.plugins, 'import', 'sonarjs'],
-    extends: [
-      ...config.extends,
-      'plugin:import/typescript',
-      // TODO Turn this rule on once failures are fixed eventually.
-      // 'plugin:sonarjs/recommended'
-    ],
+    extends: [...config.extends, 'plugin:import/typescript',  'import',],
     rules: {
       ...config.rules,
       'import/no-deprecated': 'warn',
@@ -430,14 +427,14 @@ if (process.env.FULL_ESLINT_CHECK) {
 
       // Turn off conflicting import rules
       'import/order': 'off',
-      '@typescript-eslint/no-unused-vars-experimental': [
-        'error',
-        { ignoreArgsIfArgsAfterAreUsed: true },
-      ],
+      // '@typescript-eslint/no-unused-vars-experimental': [
+      //   'error',
+      //   { ignoreArgsIfArgsAfterAreUsed: true },
+      // ],
     },
     overrides: [
       {
-        parserOptions: { project: [require.resolve('../tsconfig.lint.json')] },
+        // parserOptions: { project: [require.resolve('../tsconfig.lint.json')] },
         files: ['**/!(*.{md,mdx})/*.ts', '**/!(*.{md,mdx})/*.tsx'],
         rules,
       },

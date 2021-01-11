@@ -110,6 +110,7 @@ export function delayedCommand<Value>({
 }
 
 export type DelayedPromiseCreator<Value> = (props: CommandFunctionProps) => Promise<Value>;
+
 export class DelayedCommand<Value> {
   private failureHandlers: Array<CommandFunction<EditorSchema, { error: any }>> = [];
   private successHandlers: Array<CommandFunction<EditorSchema, { value: Value }>> = [];
@@ -167,20 +168,20 @@ export class DelayedCommand<Value> {
   readonly generateCommand = (): CommandFunction => {
     return (props) => {
       let isValid = true;
-      const { view } = props;
+      const { view, tr, dispatch } = props;
 
       if (!view) {
         return false;
       }
 
       for (const handler of this.validateHandlers) {
-        if (!handler(props)) {
+        if (!handler({ ...props, dispatch: () => {} })) {
           isValid = false;
           break;
         }
       }
 
-      if (!props.dispatch || !isValid) {
+      if (!dispatch || !isValid) {
         return isValid;
       }
 
@@ -207,6 +208,7 @@ export class DelayedCommand<Value> {
           });
         });
 
+      dispatch(tr);
       return true;
     };
   };

@@ -42,7 +42,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "meta": {
+  "@remirror": {
     "sizeLimit": "50 KB"
   }
 }

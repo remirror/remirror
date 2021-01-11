@@ -23,7 +23,7 @@
   bottom: 0;
   width: 4px;
   z-index: 20;
-  background-color: var(--remirror-hue-blue-9);
+  background-color: var(--rmr-hue-blue-9);
   pointer-events: none;
 }
 .remirror-editor .ProseMirror .resize-cursor {

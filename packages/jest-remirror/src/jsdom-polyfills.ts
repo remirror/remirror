@@ -74,7 +74,7 @@ function supportBoundingClientRect() {
         this.bottom = 0;
       }
 
-      fromRect(other?: DOMRect) {
+      fromRect(_?: DOMRect) {
         return new DOMRect();
       }
     } as any;

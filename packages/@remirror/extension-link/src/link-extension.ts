@@ -170,7 +170,7 @@ export type LinkAttributes = ProsemirrorAttributes<{
   },
   staticKeys: ['autoLinkRegex'],
   handlerKeyOptions: { onClick: { earlyReturnValue: true } },
-  handlerKeys: ['onActivateLink', 'onUpdateLink', 'onClick', 'onShortcut'],
+  handlerKeys: ['onActivateLink', 'onShortcut', 'onUpdateLink', 'onClick'],
   defaultPriority: ExtensionPriority.Medium,
 })
 export class LinkExtension extends MarkExtension<LinkOptions> {

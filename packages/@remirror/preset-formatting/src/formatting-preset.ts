@@ -1,6 +1,6 @@
 export interface FormattingOptions {}
 
-export const formattingPreset = (_: FormattingOptions = {}) => {
+export const formattingPreset = (_: FormattingOptions = {}): never[] => {
   return [];
 };
 

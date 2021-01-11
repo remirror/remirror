@@ -90,7 +90,7 @@ export interface HistoryOptions {
     getState: undefined,
   },
   staticKeys: ['depth', 'newGroupDelay'],
-  handlerKeys: ['onRedo', 'onUndo'],
+  handlerKeys: ['onUndo', 'onRedo'],
 })
 export class HistoryExtension extends PlainExtension<HistoryOptions> {
   get name() {

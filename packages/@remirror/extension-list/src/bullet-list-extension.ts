@@ -1,13 +1,18 @@
 import {
   ApplySchemaAttributes,
+  assertGet,
+  command,
   CommandFunction,
   extension,
   ExtensionTag,
-  KeyBindings,
+  keyBinding,
+  KeyBindingProps,
+  NamedShortcut,
   NodeExtension,
   NodeExtensionSpec,
   NodeSpecOverride,
 } from '@remirror/core';
+import { ExtensionListMessages as Messages } from '@remirror/messages';
 import { InputRule, wrappingInputRule } from '@remirror/pm/inputrules';
 
 import { toggleList } from './list-commands';
@@ -43,20 +48,17 @@ export class BulletListExtension extends NodeExtension {
     return [new ListItemExtension()];
   }
 
-  createCommands() {
-    return {
-      /**
-       * Toggle the bullet list.
-       */
-      toggleBulletList: (): CommandFunction =>
-        toggleList(this.type, this.store.schema.nodes.listItem),
-    };
+  /**
+   * Toggle the bullet list for the current selection.
+   */
+  @command({ icon: 'listUnordered', label: ({ t }) => t(Messages.BULLET_LIST_LABEL) })
+  toggleBulletList(): CommandFunction {
+    return toggleList(this.type, assertGet(this.store.schema.nodes, 'listItem'));
   }
 
-  createKeymap(): KeyBindings {
-    return {
-      'Shift-Ctrl-8': toggleList(this.type, this.store.schema.nodes.listItem),
-    };
+  @keyBinding({ shortcut: NamedShortcut.BulletList, command: 'toggleBulletList' })
+  listShortcut(props: KeyBindingProps): boolean {
+    return this.toggleBulletList()(props);
   }
 
   createInputRules(): InputRule[] {

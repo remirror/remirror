@@ -1,27 +1,29 @@
 import {
   ApplySchemaAttributes,
   Cast,
+  command,
   CommandFunction,
-  CreateExtensionPlugin,
-  delayedCommand,
+  DelayedPromiseCreator,
   DelayedValue,
   EditorView,
   ErrorConstant,
   extension,
   ExtensionTag,
+  getTextSelection,
   invariant,
-  isArray,
   isElementDomNode,
   NodeExtension,
   NodeExtensionSpec,
   NodeSpecOverride,
   NodeWithAttributes,
   omitExtraAttributes,
+  PrimitiveSelection,
   ProsemirrorAttributes,
-  RemirrorError,
 } from '@remirror/core';
 import type { ResolvedPos } from '@remirror/pm/model';
 import { PasteRule } from '@remirror/pm/paste-rules';
+import { insertPoint } from '@remirror/pm/transform';
+import { ExtensionImage } from '@remirror/theme';
 
 type DelayedImage = DelayedValue<ImageAttributes>;
 
@@ -114,67 +116,75 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
     };
   }
 
-  createCommands() {
-    const commands = {
-      insertImage: (attributes: ImageAttributes, position?: number): CommandFunction => ({
-        tr,
-        dispatch,
-      }) => {
-        const { selection } = tr;
-        position = position ?? selection.head;
-        const node = this.type.create(attributes);
+  @command()
+  insertImage(attributes: ImageAttributes, selection?: PrimitiveSelection): CommandFunction {
+    return ({ tr, dispatch }) => {
+      const { from, to } = getTextSelection(selection ?? tr.selection, tr.doc);
+      const node = this.type.create(attributes);
 
-        dispatch?.(tr.insert(position, node));
+      dispatch?.(tr.replaceRangeWith(from, to, node));
 
-        return true;
-      },
-
-      /**
-       * Insert an image once the provide promise resolves.
-       */
-      uploadImage: (value: DelayedValue<ImageAttributes>): CommandFunction => {
-        return delayedCommand({
-          promise: value,
-          immediate: (props) => {
-            const { empty, anchor } = props.tr.selection;
-            const { createPlaceholder, updatePlaceholder, destroyPlaceholder } = this.options;
-
-            return this.store.commands.addPlaceholder.original(
-              value,
-              {
-                type: 'widget',
-                pos: anchor,
-                createElement: (view, pos) => {
-                  return createPlaceholder(view, pos);
-                },
-                onUpdate: (view, pos, element, data) => {
-                  updatePlaceholder(view, pos, element, data);
-                },
-                onDestroy: (view, element) => {
-                  destroyPlaceholder(view, element);
-                },
-              },
-              !empty,
-            )(props);
-          },
-          onDone: ({ value, ...rest }) => {
-            const range = this.store.helpers.findPlaceholder(value);
-
-            if (!range) {
-              return false;
-            }
-
-            this.store.chain.removePlaceholder(value).insertImage(value, range.from).run();
-
-            return true;
-          },
-          // Cleanup in case of an error.
-          onFail: (props) => this.store.commands.removePlaceholder.original(value)(props),
-        });
-      },
+      return true;
     };
+  }
 
-    return commands;
+  /**
+   * Insert an image once the provide promise resolves.
+   */
+  @command()
+  uploadImage(
+    value: DelayedPromiseCreator<ImageAttributes>,
+    onElement?: (element: HTMLElement) => void,
+  ): CommandFunction {
+    const { updatePlaceholder, destroyPlaceholder, createPlaceholder } = this.options;
+    return (props) => {
+      const { tr } = props;
+
+      // This is update in the validate hook
+      let pos = tr.selection.from;
+
+      return this.store
+        .createPlaceholderCommand({
+          promise: value,
+          placeholder: {
+            type: 'widget',
+            get pos() {
+              return pos;
+            },
+            createElement: (view, pos) => {
+              const element = createPlaceholder(view, pos);
+              onElement?.(element);
+              return element;
+            },
+            onUpdate: (view, pos, element, data) => {
+              updatePlaceholder(view, pos, element, data);
+            },
+            onDestroy: (view, element) => {
+              destroyPlaceholder(view, element);
+            },
+          },
+          onSuccess: (value, range, commandProps) => {
+            return this.insertImage(value, range)(commandProps);
+          },
+        })
+        .validate(({ tr, dispatch }) => {
+          const insertPos = insertPoint(tr.doc, pos, this.type);
+
+          if (insertPos == null) {
+            return false;
+          }
+
+          pos = insertPos;
+
+          if (!tr.selection.empty) {
+            dispatch?.(tr.deleteSelection());
+          }
+
+          return true;
+        }, 'unshift')
+
+        .generateCommand()(props);
+    };
   }
 
   private fileUploadHandler(files: File[]) {
@@ -213,26 +223,15 @@ type ImageAttributes = ProsemirrorAttributes<ImageExtensionAttributes>;
 export interface ImageExtensionAttributes {
   align?: 'center' | 'end' | 'justify' | 'left' | 'match-parent' | 'right' | 'start';
   alt?: string;
-  crop?: {
-    width: number;
-    height: number;
-    left: number;
-    top: number;
-  };
   height?: string;
   width?: string;
   rotate?: string;
-  src?: string;
+  src: string;
   title?: string;
+
   /** The file name used to create the image. */
   fileName?: string;
 }
-
-/**
- * Values which can safely be ignored when styling nodes.
- */
-const EMPTY_CSS_VALUE = new Set(['', '0%', '0pt', '0px']);
-const CSS_ROTATE_PATTERN = /rotate\(([\d.]+)rad\)/i;
 
 /**
  * The set of valid image files.
@@ -342,9 +341,9 @@ function createBlockImageSpec() {}
 
 function createInlineImageSpec() {}
 
-function createPlaceholder(view: EditorView, pos: number): HTMLElement {
+function createPlaceholder(_: EditorView, pos: number): HTMLElement {
   const element = document.createElement('div');
-  element.classList.add(loaderClass);
+  element.classList.add(ExtensionImage.IMAGE_LOADER);
 
   return element;
 }

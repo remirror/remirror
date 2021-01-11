@@ -7,7 +7,6 @@ import {
   isFunction,
   isPlainObject,
   RemirrorEventListener,
-  RemirrorManager,
 } from '@remirror/core';
 
 import type { ReactFrameworkOutput } from '../react-types';

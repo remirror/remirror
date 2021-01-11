@@ -91,3 +91,14 @@ With the new support for extensions which act as parents to other extensions the
 ### Misc
 
 Editor selection now defaults to the `end` of the document.
+
+Remove social preset Deprecate packages
+
+Rename all `*Parameter` interfaces to `*Props`. With the exception of \[React\]FrameworkParameter which is now \[React\]FrameworkOptions.
+
+### UI Commands
+
+- Add commands with UI configuration and i18n text descriptions
+- `@command`, `@keyBinding`, `@helper` decorators for more typesafe configuration of extensions.
+- `NameShortcut` keybindings which can be set in the keymap extension
+- `overrides` property

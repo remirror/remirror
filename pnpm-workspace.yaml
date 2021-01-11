@@ -4,7 +4,7 @@ packages:
   - 'packages/*'
   - 'support'
   - 'support/deprecated/*'
-  - 'support/e2e'
+  - 'test'
   - 'support/storybook'
   - 'support/website'
   - 'examples/*'

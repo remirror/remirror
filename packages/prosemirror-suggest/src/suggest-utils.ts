@@ -10,7 +10,7 @@ import {
   range,
 } from '@remirror/core-helpers';
 
-import { isChange, isEntry, isExit, isIdentical, isJump, isMove } from './suggest-predicates';
+import { isChange, isEntry, isExit, isJump, isMove } from './suggest-predicates';
 import type {
   CompareMatchProps,
   DocChangedProps,

@@ -1,7 +1,4 @@
-import { cx } from '@linaria/core';
 import { CompositeItemHTMLProps, CompositeItemOptions } from 'reakit/Composite/CompositeItem';
-
-import { Components } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';
 

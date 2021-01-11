@@ -32,8 +32,7 @@ The following code sample will create a limited editor and run the available com
 import jsx from 'refractor/lang/jsx';
 import typescript from 'refractor/lang/typescript';
 import { ExtensionPriority, RemirrorManager } from 'remirror';
-import { CodeBlockExtension } from 'remirror/extensions';
-import { CorePreset } from 'remirror/extensions';
+import { CodeBlockExtension, CorePreset } from 'remirror/extensions';
 
 // Create the codeBlock extension
 const codeBlockExtension = new CodeBlockExtension({ supportedLanguages: [typescript, jsx] });

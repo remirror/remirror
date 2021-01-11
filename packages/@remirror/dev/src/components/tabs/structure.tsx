@@ -84,7 +84,7 @@ const InlineNodeView = styled('div')(
 InlineNodeView.displayName = 'InlineNodeView';
 
 export function BlockNodeContent(props) {
-  if (!props.content || !props.content.content || !props.content.content.length) {
+  if (!props.content || !props.content.content || props.content.content.length === 0) {
     return null;
   }
 

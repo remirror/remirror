@@ -21,16 +21,11 @@ function createPlace() {
   return place;
 }
 
-function applyDevTools(editorView, props) {
+function applyDevTools(manager) {
   const place = createPlace();
   const editorState = new EditorStateContainer(editorView, props);
 
-  ReactDOM.render(
-    <Provider inject={[editorState]}>
-      <DevTools />
-    </Provider>,
-    place,
-  );
+  ReactDOM.render(<DevTools dock={true} supportsToggling={true} />, place);
 }
 
 export default applyDevTools;

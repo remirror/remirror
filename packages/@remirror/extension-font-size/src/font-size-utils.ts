@@ -43,8 +43,8 @@ const PICAS_PER_INCH = 6;
 
 export function getFontSize(element?: Element | null): string {
   return isElementDomNode(element)
-    ? getStyle(element, 'fontSize') || getFontSize(element.parentElement)
-    : getStyle(window.document.documentElement, 'fontSize');
+    ? getStyle(element, 'font-size') || getFontSize(element.parentElement)
+    : getStyle(window.document.documentElement, 'font-size');
 }
 
 /**

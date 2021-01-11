@@ -179,7 +179,7 @@
     "prosemirror-tables": "^1.1.1",
     "prosemirror-trailing-node": "^0.0.0",
     "prosemirror-transform": "^1.2.8",
-    "prosemirror-view": "^1.17.1"
+    "prosemirror-view": "^1.17.2"
   },
   "publishConfig": {
     "access": "public"

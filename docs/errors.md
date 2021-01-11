@@ -197,8 +197,7 @@ For example the following would trigger this error.
 
 ```tsx
 import React from 'react';
-import { BoldExtension } from 'remirror/extensions';
-import { CorePreset } from 'remirror/extensions';
+import { BoldExtension, CorePreset } from 'remirror/extensions';
 import { Remirror, useRemirror, useRemirrorContext } from 'remirror/react';
 
 const Editor = () => {

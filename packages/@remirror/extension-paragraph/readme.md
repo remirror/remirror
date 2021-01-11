@@ -32,9 +32,7 @@ When added to your editor it will provide the `insertParagraph` which inserts a 
 
 ```ts
 import { ExtensionPriority, RemirrorManager } from 'remirror';
-import { DocExtension } from 'remirror/extensions';
-import { ParagraphExtension } from 'remirror/extensions';
-import { TextExtension } from 'remirror/extensions';
+import { DocExtension, ParagraphExtension, TextExtension } from 'remirror/extensions';
 
 // Create the extension
 const paragraphExtension = new ParagraphExtension();

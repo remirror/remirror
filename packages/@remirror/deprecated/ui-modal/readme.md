@@ -1,0 +1,3 @@
+# @remirror/ui-modal
+
+**DEPRECATED**

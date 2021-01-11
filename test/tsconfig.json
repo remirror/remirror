@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "types": [
+      "expect-playwright/global",
+      "jest-playwright-preset",
+      "jest",
+      "jest-extended",
+      "playwright"
+    ],
+    "declarationMap": false,
+    "declaration": false,
+    "noEmit": true
+  },
+  "include": ["./", "patches.d.ts"]
+}

@@ -1,10 +1,10 @@
 import type { ComponentType, MouseEvent as ReactMouseEvent } from 'react';
-import type { MenuBarStateReturn, MenuStateReturn } from 'reakit/Menu';
+import type { MenuStateReturn } from 'reakit/Menu';
 import type { ToolbarItem as ReakitToolbarItem, ToolbarStateReturn } from 'reakit/Toolbar';
 
 import type { AnyExtension, ProsemirrorAttributes } from '@remirror/core';
 import type { CoreIcon } from '@remirror/icons';
-import type { ReactFrameworkOutput, useRemirrorContext } from '@remirror/react';
+import type { ReactFrameworkOutput } from '@remirror/react';
 
 export enum ComponentItem {
   /**

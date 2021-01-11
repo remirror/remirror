@@ -246,4 +246,4 @@ export type ValidHookName<Name extends string> = Name extends `use${infer Rest}`
   : never;
 export type StartsWithUpperCase<
   Name extends string
-> = Name extends `${UpperCaseCharacters}${infer Rest}` ? Name : never;
+> = Name extends `${UpperCaseCharacters}${infer _Rest}` ? Name : never;

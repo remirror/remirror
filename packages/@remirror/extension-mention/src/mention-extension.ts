@@ -157,7 +157,7 @@ export interface MentionOptions
   },
   handlerKeyOptions: { onClick: { earlyReturnValue: true } },
   handlerKeys: ['onChange', 'onClick'],
-  staticKeys: ['matchers', 'mentionTag'],
+  staticKeys: ['mentionTag', 'matchers'],
 })
 export class MentionExtension extends MarkExtension<MentionOptions> {
   get name() {

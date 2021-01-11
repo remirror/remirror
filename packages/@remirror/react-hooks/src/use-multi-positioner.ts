@@ -6,7 +6,6 @@ import {
   defaultAbsolutePosition,
   ElementsAddedProps,
   getPositioner,
-  Positioner,
   PositionerExtension,
   PositionerParam,
   PositionerPosition,

@@ -89,7 +89,7 @@ export function extensionValidityTest<Type extends AnyExtensionConstructor>(
           parse: jest.fn(() => ({})),
         };
 
-        const spec = extension.createNodeSpec(extraAttributes);
+        const spec = extension.createNodeSpec(extraAttributes, {});
         expect(isPlainObject(spec)).toBe(true);
 
         renderEditor([extension], {
@@ -113,7 +113,7 @@ export function extensionValidityTest<Type extends AnyExtensionConstructor>(
           parse: jest.fn(() => ({})),
         };
 
-        const spec = extension.createMarkSpec(extraAttributes);
+        const spec = extension.createMarkSpec(extraAttributes, {});
         expect(isPlainObject(spec)).toBe(true);
 
         renderEditor([extension], {

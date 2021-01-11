@@ -1,11 +1,11 @@
+/* eslint-disable import/no-mutable-exports */
+
 export const hasSelf = typeof self !== 'undefined';
 
+let baseUrl: string | undefined;
 const envGlobal = hasSelf ? self : global;
-export { envGlobal as global };
 
 export const resolvedPromise = Promise.resolve();
-
-export let baseUrl: string | undefined;
 
 export function createBlob(source: BlobPart): string {
   return URL.createObjectURL(new Blob([source], { type: 'application/javascript' }));
@@ -13,8 +13,9 @@ export function createBlob(source: BlobPart): string {
 
 export const hasDocument = typeof document !== 'undefined';
 
-// support browsers without dynamic import support (eg Firefox 6x)
-export let dynamicImport: (path: string) => Promise<{ default: any; [key: string]: any }>;
+/** Support for browsers without dynamic import (eg Firefox 6x) */
+let dynamicImport: (path: string) => Promise<{ default: any; [key: string]: any }>;
+
 try {
   dynamicImport = (0, eval)('u=>import(u)');
 } catch {
@@ -320,3 +321,5 @@ export function resolveImportMap(
     (resolvedOrPlain.includes(':') ? resolvedOrPlain : undefined)
   );
 }
+
+export { baseUrl, dynamicImport, envGlobal as global };

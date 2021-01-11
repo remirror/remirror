@@ -38,7 +38,7 @@ export const PARTICLE_ALPHA_FADEOUT = 0.96;
 export const PARTICLE_VELOCITY_RANGE = {
   x: [-1, 1],
   y: [-3.5, -1.5],
-};
+} as const;
 
 export const defaultEffect: ParticleEffect = {
   createParticle({ x, y, color }) {

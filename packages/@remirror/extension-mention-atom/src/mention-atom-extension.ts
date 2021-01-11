@@ -126,7 +126,7 @@ export interface MentionAtomOptions
   },
   handlerKeyOptions: { onClick: { earlyReturnValue: true } },
   handlerKeys: ['onChange', 'onClick'],
-  staticKeys: ['matchers', 'mentionTag', 'selectable', 'draggable'],
+  staticKeys: ['selectable', 'draggable', 'mentionTag', 'matchers'],
 })
 export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
   get name() {
@@ -169,7 +169,7 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
         },
       ],
       toDOM: (node) => {
-        const { appendText: _, replacementType: __, label, id, name } = omitExtraAttributes(
+        const { label, id, name } = omitExtraAttributes(
           node.attrs,
           extra,
         ) as NamedMentionAtomNodeAttributes;
@@ -268,7 +268,7 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
           const { name, range } = props;
           const { createMentionAtom } = this.store.commands;
 
-          function command(attrs: Omit<MentionAtomNodeAttributes, 'name'>) {
+          function command(attrs: MentionAtomNodeAttributes) {
             createMentionAtom({ name, range }, attrs);
           }
 

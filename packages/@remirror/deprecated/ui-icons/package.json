@@ -1,0 +1,14 @@
+{
+  "name": "@remirror/ui-icons",
+  "version": "1.0.0-next.1",
+  "description": "DEPRECATED - ui-icons utilities for remirror",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/support/deprecated/ui-icons",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/support/deprecated/ui-icons",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

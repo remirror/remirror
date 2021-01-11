@@ -13,7 +13,6 @@ import {
   NodeSpecOverride,
   PrimitiveSelection,
   ProsemirrorAttributes,
-  setBlockType,
 } from '@remirror/core';
 import { ExtensionParagraphMessages } from '@remirror/messages';
 

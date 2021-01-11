@@ -10,6 +10,7 @@
       "@types/requestidlecallback",
       "snapshot-diff"
     ],
+    "skipLibCheck": true,
     "noEmit": true,
     "importsNotUsedAsValues": "remove",
     "plugins": [
@@ -18,5 +19,5 @@
     ]
   },
   "include": ["packages/*/src", "packages/@remirror/*/src", "global.d.ts"],
-  "exclude": ["packages/@remirror/svelte", "**/node_modules/**"]
+  "exclude": ["packages/@remirror/svelte", "**/node_modules/**", "node_modules"]
 }

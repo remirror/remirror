@@ -187,7 +187,7 @@ export const StateTab = (): JSX.Element => {
               <Section>
                 <Heading>Active Marks</Heading>
                 <JsonTreeWrapper>
-                  {activeMarks.length ? (
+                  {activeMarks.length > 0 ? (
                     <JsonTree data={activeMarks} hideRoot getItemString={getItemStringForMark} />
                   ) : (
                     <Group>

@@ -16,7 +16,6 @@ import {
   uniqueBy,
 } from '@remirror/core-helpers';
 import type {
-  AnyFunction,
   ApplySchemaAttributes,
   Dispose,
   EditorState,

@@ -60,7 +60,7 @@ export interface MarkdownOptions {
     markdownToHtml,
     htmlSanitizer,
   },
-  staticKeys: ['markdownToHtml', 'htmlToMarkdown'],
+  staticKeys: ['htmlToMarkdown', 'markdownToHtml', 'htmlSanitizer'],
 })
 export class MarkdownExtension extends PlainExtension<MarkdownOptions> {
   get name() {

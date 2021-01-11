@@ -16,7 +16,7 @@ import * as ReactDom from 'react-dom';
 import * as Remirror from 'remirror';
 import * as SubRemirrorDom from 'remirror/dom';
 import * as SubRemirrorExtensions from 'remirror/extensions';
-import PlaygroundImports from 'remirror/playground';
+import { PlaygroundImports } from 'remirror/playground';
 import * as SubRemirrorReact from 'remirror/react';
 
 import * as RemirrorDev from '@remirror/dev';

@@ -112,7 +112,6 @@ async function generateExports() {
 
   if (cliArgs.check && error) {
     process.exit(1);
-    return;
   }
 
   if (cliArgs.check) {
@@ -203,7 +202,7 @@ async function generateSizeLimitConfig() {
   // Transform the packages into the correct sizes.
   const sizes = packages
     // Only pick the packages that are ESModules and have a size limit value in the `meta` package.json field.
-    .filter((pkg): pkg is DesiredPackage => !!(pkg.module && pkg.meta?.sizeLimit))
+    .filter((pkg): pkg is DesiredPackage => !!(pkg.module && pkg['@remirror']?.sizeLimit))
 
     // Convert the package.json into a valid array of [sizelimit
     // config](https://github.com/ai/size-limit/blob/HEAD/README.md#config)
@@ -214,7 +213,7 @@ async function generateSizeLimitConfig() {
       return {
         name: pkg.name,
         path: join(getRelativePathFromJson(pkg), relativePath),
-        limit: pkg.meta?.sizeLimit,
+        limit: pkg['@remirror']?.sizeLimit,
         ignore: Object.keys(pkg.peerDependencies ?? {}),
         running: false,
       };
@@ -229,7 +228,7 @@ const baseMainTsconfig = {
   __AUTO_GENERATED__: 'To update run: `pnpm generate:ts:experimental`',
   files: [],
   references: [
-    { path: 'support/e2e/tsconfig.json' },
+    { path: 'test/tsconfig.json' },
     { path: 'support/storybook/tsconfig.json' },
     { path: 'examples/with-next/tsconfig.json' },
     { path: 'support/tsconfig.all.json' },

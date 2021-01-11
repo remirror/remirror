@@ -31,13 +31,13 @@
  * @packageDocumentation
  */
 
-export { MentionAtomExtension } from './mention-atom-extension';
 export type {
-  MentionAtomChangeHandler,
   CreateMentionAtom,
+  MentionAtomChangeHandler,
   MentionAtomExtensionMatcher,
+  MentionAtomNodeAttributes,
   MentionAtomOptions,
   NamedMentionAtomNodeAttributes,
   OptionalMentionAtomExtensionProps,
-  MentionAtomNodeAttributes,
 } from './mention-atom-extension';
+export { MentionAtomExtension } from './mention-atom-extension';

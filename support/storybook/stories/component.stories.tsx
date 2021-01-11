@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { ColumnsExtension, corePreset, wysiwygPreset } from 'remirror/extensions';
 import {
   ComponentItem,

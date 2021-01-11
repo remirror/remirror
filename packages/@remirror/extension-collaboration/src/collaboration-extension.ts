@@ -32,7 +32,7 @@ import { Step } from '@remirror/pm/transform';
     clientID: uniqueId(),
     debounceMs: 250,
   },
-  staticKeys: ['clientID', 'debounceMs', 'version'],
+  staticKeys: ['version', 'clientID', 'debounceMs'],
   handlerKeys: ['onSendableReceived'],
 })
 export class CollaborationExtension extends PlainExtension<CollaborationOptions> {

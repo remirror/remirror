@@ -10,6 +10,6 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "exclude": ["node_modules"],
-  "include": ["**/*.ts", "**/*.tsx"]
+  "exclude": ["**/node_modules"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "nex-env.d.ts"]
 }

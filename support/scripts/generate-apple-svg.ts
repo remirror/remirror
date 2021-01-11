@@ -1,9 +1,10 @@
+import { bitmap2vector } from 'bitmap2vector';
 import fontkit, { Glyph } from 'fontkit';
 import { mkdir, writeFile } from 'fs/promises';
 import os from 'os';
-import { log, baseDir } from './helpers';
-import { bitmap2vector } from 'bitmap2vector';
 import path from 'path';
+
+import { baseDir, log } from './helpers';
 
 const SVG_OUTPUT_FOLDER = baseDir('packages/@remirror/extension-emoji/apple/svg');
 const PNG_OUTPUT_FOLDER = baseDir('packages/@remirror/extension-emoji/apple/png');
@@ -81,7 +82,7 @@ declare module 'fontkit' {
   }
 
   interface Font {
-    getGlyph(id: number, codePoints?: number[]): Glyph;
+    getGlyph: (id: number, codePoints?: number[]) => Glyph;
   }
 }
 

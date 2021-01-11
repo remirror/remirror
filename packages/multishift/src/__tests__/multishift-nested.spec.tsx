@@ -31,7 +31,7 @@ const Component = ({ multiple }: { multiple: boolean }) => {
     <div>
       <nav>
         <label {...getLabelProps()}>Label</label>
-        {selectedItems.length && (
+        {selectedItems.length > 0 && (
           <ul>
             {selectedItems.map((item) => {
               return (

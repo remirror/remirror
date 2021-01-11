@@ -1,6 +1,5 @@
 import type { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 
-import { bool } from '@remirror/core-helpers';
 import type {
   CommandFunction,
   ProsemirrorCommandFunction,

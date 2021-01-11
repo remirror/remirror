@@ -1,4 +1,4 @@
-import { keys } from '@remirror/core-helpers';
+import { assertGet, keys } from '@remirror/core-helpers';
 import { isEditorSchema, isEditorState, isProsemirrorNode } from '@remirror/core-utils';
 
 /**
@@ -17,11 +17,11 @@ export const prosemirrorSerializer: jest.SnapshotSerializerPlugin = {
 
     if (isEditorSchema(val)) {
       const nodes = keys(val.nodes).reduce((acc, key) => {
-        const { spec } = val.nodes[key];
+        const { spec } = assertGet(val.nodes, key);
         return { ...acc, [key]: spec };
       }, {});
       const marks = keys(val.marks).reduce((acc, key) => {
-        const { spec } = val.marks[key];
+        const { spec } = assertGet(val.marks, key);
         return { ...acc, [key]: spec };
       }, {});
 

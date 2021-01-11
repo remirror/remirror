@@ -1,0 +1,3 @@
+# @remirror/editor-markdown
+
+**DEPRECATED**

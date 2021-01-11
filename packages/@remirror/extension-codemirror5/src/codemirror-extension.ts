@@ -1,5 +1,3 @@
-import type CodeMirror from 'codemirror';
-
 import {
   ApplySchemaAttributes,
   CommandFunction,

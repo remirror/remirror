@@ -27,7 +27,14 @@ import {
   includes,
   invariant,
 } from '@remirror/core';
-import { useActive, useCommands, useHelpers, useI18n, useRemirrorContext } from '@remirror/react';
+import {
+  useActive,
+  useChainedCommands,
+  useCommands,
+  useHelpers,
+  useI18n,
+  useRemirrorContext,
+} from '@remirror/react';
 import { Components } from '@remirror/theme';
 
 import { CommandIcon } from './core-components';
@@ -83,7 +90,8 @@ interface ToolbarCommandButtonProps extends BaseToolbarProps {
 const ToolbarCommandButton = (props: ToolbarCommandButtonProps) => {
   // Gather all the hooks used for this component.
   const { toolbarState, item } = props;
-  const { commands, chain } = useCommands<AnyExtension>();
+  const commands = useCommands();
+  const chain = useChainedCommands();
   const { getCommandOptions } = useHelpers();
   const context = useRemirrorContext();
   const { t } = useI18n();

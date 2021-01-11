@@ -148,7 +148,12 @@ export interface DOMCompatibleAttributes {
 }
 
 type DOMOutputSpecPos1 = DOMOutputSpecPosX | DOMCompatibleAttributes;
-type DOMOutputSpecPosX = string | 0 | [string, 0] | [string, DOMCompatibleAttributes, 0];
+type DOMOutputSpecPosX =
+  | string
+  | 0
+  | [string, 0]
+  | [string, DOMCompatibleAttributes]
+  | [string, DOMCompatibleAttributes, 0];
 
 /**
  * Defines the return type of the toDOM methods for both nodes and marks

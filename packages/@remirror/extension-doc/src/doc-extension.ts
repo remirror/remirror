@@ -76,7 +76,7 @@ export interface DocOptions {
     docAttributes: [],
   },
   defaultPriority: ExtensionPriority.Medium,
-  staticKeys: ['content'],
+  staticKeys: ['content', 'docAttributes'],
   disableExtraAttributes: true,
 })
 export class DocExtension extends NodeExtension<DocOptions> {

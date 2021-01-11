@@ -45,18 +45,18 @@
   "dependencies": {
     "@babel/runtime": "^7.12.5",
     "@remirror/messages": "0.0.0",
+    "@remirror/theme": "1.0.0-next.60",
     "@types/emoji-regex": "^9.2.0",
     "emoji-regex": "^9.2.0",
-    "emojibase": "^5.0.0",
-    "emojibase-data": "^6.0.0",
-    "emojibase-regex": "^5.0.0",
+    "emojibase": "^5.1.0",
+    "emojibase-data": "^6.1.0",
+    "emojibase-regex": "^5.1.0",
     "escape-string-regexp": "^4.0.0",
     "match-sorter": "^6.1.0"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60",
-    "emojibase-data": "^6.0.0"
+    "@remirror/pm": "1.0.0-next.60"
   },
   "peerDependencies": {
     "@remirror/core": "1.0.0-next.60",
@@ -65,7 +65,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "meta": {
+  "@remirror": {
     "sizeLimit": "60 KB"
   }
 }

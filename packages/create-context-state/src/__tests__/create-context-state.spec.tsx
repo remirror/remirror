@@ -191,9 +191,3 @@ test('supports hooks state', () => {
   expect(message.textContent).toBe('200');
   expect(value.textContent).toBe('updated');
 });
-
-const a = [
-  () => {
-    useMemo(() => 1, []);
-  },
-];

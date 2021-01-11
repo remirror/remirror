@@ -1,40 +1,28 @@
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button } from 'reakit/Button';
-import { uniqueId } from 'remirror';
 import {
-  AnnotationExtension,
   BoldExtension,
-  createCenteredAnnotationPositioner,
   createMarkPositioner,
   ItalicExtension,
   LinkExtension,
   LinkOptions,
   MarkdownExtension,
   ShortcutHandlerProps,
-  UnderlineExtension,
 } from 'remirror/extensions';
 import {
-  ComponentItem,
   ControlledDialog,
-  EditorComponent,
   FloatingToolbar,
   FloatingWrapper,
-  PositionerComponent,
   Remirror,
   ThemeProvider,
-  ToolbarItemUnion,
   useCommands,
   useExtension,
-  useHelpers,
-  useI18n,
-  usePositioner,
   useRemirror,
-  useRemirrorContext,
 } from 'remirror/react';
 
 export default { title: 'Link extension' };
 
-export const Basic = (args: LinkOptions): JSX.Element => {
+export const Basic = (): JSX.Element => {
   const { manager, state } = useRemirror({ extensions, content, stringHandler: 'html' });
 
   return (
@@ -61,7 +49,6 @@ function useLinkShortcut(): ShortcutHandlerProps | undefined {
 const FloatingLinkToolbar = () => {
   const link = useLinkShortcut();
   const [visible, setVisible] = useState(false);
-  const { commands } = useCommands();
   const linkPositioner = useMemo(() => createMarkPositioner({ type: 'link' }), []);
   const onUpdate = useCallback((visible: boolean) => setVisible(visible), []);
 

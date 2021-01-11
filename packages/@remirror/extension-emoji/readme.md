@@ -33,8 +33,7 @@ The following code sample will create a limited editor and run the available com
 
 ```ts
 import { ExtensionPriority, RemirrorManager } from 'remirror';
-import { EmojiExtension } from 'remirror/extensions';
-import { CorePreset } from 'remirror/extensions';
+import { CorePreset, EmojiExtension } from 'remirror/extensions';
 
 // Create the codeBlock extension
 const emojiExtension = new EmojiExtension({ supportedLanguages: [typescript, jsx] });

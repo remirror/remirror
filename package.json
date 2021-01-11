@@ -81,7 +81,7 @@
     "symlink:root": "node support/scripts/symlink-root.mjs",
     "test": "jest --verbose",
     "test:build": "TEST_BUILD=true jest --verbose --coverage=false",
-    "test:e2e": "manypkg run support/e2e chromium",
+    "test:e2e": "manypkg run test chromium",
     "test:watch": "jest  --watch --verbose=false --coverage=false",
     "ts": "node -r ./support/scripts/babel-register.js",
     "typecheck": "tsc -b ./tsconfig.references.json",
@@ -132,9 +132,9 @@
     "@preconstruct/cli": "^2.0.1",
     "@remirror/testing": "^0.0.4",
     "@size-limit/preset-big-lib": "^4.9.1",
-    "@testing-library/dom": "^7.29.2",
+    "@testing-library/dom": "^7.29.4",
     "@testing-library/jest-dom": "^5.11.8",
-    "@testing-library/react-hooks": "^4.0.0",
+    "@testing-library/react-hooks": "^4.0.1",
     "@testing-library/user-event": "^12.6.0",
     "@types/eslint": "^7.2.6",
     "@types/jest": "^26.0.20",
@@ -144,8 +144,8 @@
     "@types/requestidlecallback": "^0.3.1",
     "@types/testing-library__jest-dom": "^5.9.5",
     "@types/testing-library__react-hooks": "^3.4.1",
-    "@typescript-eslint/eslint-plugin": "^4.12.0",
-    "@typescript-eslint/parser": "^4.12.0",
+    "@typescript-eslint/eslint-plugin": "^4.13.0",
+    "@typescript-eslint/parser": "^4.13.0",
     "aws-cdk": "^1.83.0",
     "babel-jest": "^26.6.3",
     "babel-plugin-annotate-pure-calls": "^0.4.0",
@@ -174,8 +174,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-react-native": "^3.10.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "eslint-plugin-sonarjs": "^0.5.0",
-    "eslint-plugin-unicorn": "^25.0.1",
+    "eslint-plugin-unicorn": "^26.0.0",
     "esm": "^3.2.25",
     "husky": "^4.3.7",
     "if-env": "^1.0.4",
@@ -204,7 +203,7 @@
   },
   "engines": {
     "node": ">=14",
-    "pnpm": "^5.13.0"
+    "pnpm": "^5.15.0"
   },
   "manypkg": {
     "defaultBranch": "HEAD"

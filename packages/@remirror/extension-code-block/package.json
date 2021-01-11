@@ -86,7 +86,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "meta": {
+  "@remirror": {
     "sizeLimit": "20 KB"
   },
   "preconstruct": {

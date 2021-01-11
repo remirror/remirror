@@ -1,11 +1,6 @@
-import type { AnyExtension, RemirrorManager } from '@remirror/core';
+import type { ActiveFromExtensions, AnyExtension } from '@remirror/core';
 
-import { ReactFrameworkOutput } from '../react-types';
 import { useRemirrorContext } from './use-remirror-context';
-
-type UseActiveReturn<Extension extends AnyExtension> = ReactFrameworkOutput<
-  RemirrorManager<Extension>['~E']
->['active'];
 
 /**
  * This is a shorthand method for retrieving the active available in the
@@ -23,6 +18,6 @@ type UseActiveReturn<Extension extends AnyExtension> = ReactFrameworkOutput<
  */
 export function useActive<Extension extends AnyExtension = Remirror.Extensions>(
   autoUpdate = true,
-): UseActiveReturn<Extension> {
+): ActiveFromExtensions<Extension> {
   return useRemirrorContext<Extension>({ autoUpdate }).active;
 }

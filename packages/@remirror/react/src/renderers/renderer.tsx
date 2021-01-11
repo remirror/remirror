@@ -1,10 +1,8 @@
-import { ComponentType, FC, Fragment, ReactNode } from 'react';
+import { ComponentType, FC, Fragment } from 'react';
 
 import { isEmptyArray, isString, object, ObjectMark, RemirrorJSON } from '@remirror/core';
 
-/* Inspired by https://github.com/rexxars/react-prosemirror-document */
-
-type MarkMap = Partial<Record<string, string | ComponentType<SubRenderTreeProps>>>;
+type MarkMap = Partial<Record<string, string | ComponentType<any>>>;
 interface TextHandlerProps {
   node: RemirrorJSON;
   markMap: MarkMap;
@@ -43,38 +41,6 @@ const TextHandler: FC<TextHandlerProps> = ({ node, ...props }) => {
   return textElement;
 };
 
-const Heading: FC<{
-  node: RemirrorJSON;
-  markMap: MarkMap;
-}> = (props) => {
-  const content = props.node.content;
-
-  if (!content) {
-    return null;
-  }
-
-  const children = content.map((node, ii) => {
-    return <TextHandler key={ii} {...props} node={node} />;
-  });
-
-  switch (props.node.attrs?.level) {
-    case 1:
-      return <h1>{children}</h1>;
-    case 2:
-      return <h2>{children}</h2>;
-    case 3:
-      return <h3>{children}</h3>;
-    case 4:
-      return <h4>{children}</h4>;
-    case 5:
-      return <h5>{children}</h5>;
-    case 6:
-      return <h6>{children}</h6>;
-    default:
-      return <h3>{children}</h3>;
-  }
-};
-
 const CodeBlock: FC<{
   node: RemirrorJSON;
   markMap: MarkMap;
@@ -84,6 +50,10 @@ const CodeBlock: FC<{
   if (!content) {
     return null;
   }
+
+  content.map((node, ii) => {
+    return <TextHandler key={ii} {...{ ...props, node }} />;
+  });
 
   return (
     <pre>
@@ -100,7 +70,7 @@ const Doc: FC<SubRenderTreeProps> = ({ node, ...props }) => {
   }
 
   const children = content.map((child, ii) => {
-    return <RenderTree node={child} {...props} key={ii} />;
+    return <RenderTree json={child} {...props} key={ii} />;
   });
 
   return <div {...(node.attrs ?? object())}>{children}</div>;
@@ -113,7 +83,6 @@ const defaultTypeMap: MarkMap = {
   hardBreak: 'br',
   codeBlock: CodeBlock,
   text: TextHandler,
-  heading: Heading,
 };
 
 const defaultMarkMap: MarkMap = {
@@ -129,7 +98,7 @@ export interface BaseRenderTreeProps {
   skipUnknownMarks: boolean;
   markMap: MarkMap;
   typeMap: MarkMap;
-  children?: ReactNode;
+  children?: never;
 }
 
 export interface SubRenderTreeProps extends BaseRenderTreeProps {
@@ -137,7 +106,7 @@ export interface SubRenderTreeProps extends BaseRenderTreeProps {
 }
 
 export interface RenderTreeProps extends Partial<BaseRenderTreeProps> {
-  node: RemirrorJSON;
+  json: RemirrorJSON;
 }
 
 /**
@@ -145,46 +114,37 @@ export interface RenderTreeProps extends Partial<BaseRenderTreeProps> {
  */
 export const RenderTree: FC<RenderTreeProps> = (props) => {
   const {
-    node,
+    json,
     markMap = defaultMarkMap,
     skipUnknownMarks = false,
     skipUnknownTypes = false,
     typeMap = defaultTypeMap,
   } = props;
 
-  if (node.type === 'text' && node.text && (!node.marks || isEmptyArray(node.marks))) {
-    return <>{node.text}</>;
+  if (json.type === 'text' && json.text && (!json.marks || isEmptyArray(json.marks))) {
+    return <Fragment>{json.text}</Fragment>; // For some reason FunctionalComponent don't allow returning react-nodes
   }
 
-  const rest = {
-    markMap: { ...defaultMarkMap, markMap },
-    typeMap: { ...defaultTypeMap, typeMap },
-    skipUnknownMarks,
-    skipUnknownTypes,
-  };
-  const TypeHandler = typeMap[node.type];
+  const rest = { markMap, typeMap, skipUnknownMarks, skipUnknownTypes };
+  const TypeHandler = typeMap[json.type];
 
   if (!TypeHandler) {
     if (!skipUnknownTypes) {
-      throw new Error(`No handler for node type \`${node.type}\` registered`);
+      throw new Error(`No handler for node type \`${json.type}\` registered`);
     }
 
     return null;
   }
 
-  const childProps = isString(TypeHandler) ? node.attrs ?? object() : { ...rest, node };
-  const { content } = node;
+  const childProps = isString(TypeHandler) ? json.attrs ?? object() : { ...rest, node: json };
+  const { content } = json;
 
   if (!content || isEmptyArray(content)) {
-    return isString(TypeHandler) ? (
-      <TypeHandler {...node.attrs} />
-    ) : (
-      <TypeHandler {...rest} node={node} />
-    );
+    return <TypeHandler {...childProps} />;
   }
 
   const children = content.map((child, ii) => {
-    return <RenderTree key={ii} node={child} {...rest} />;
+    return <RenderTree key={ii} json={child} {...rest} />;
   });
 
   return <TypeHandler {...childProps}>{children}</TypeHandler>;

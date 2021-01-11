@@ -48,7 +48,7 @@ export type IframeAttributes = ProsemirrorAttributes<{
     defaultSource: '',
     class: 'remirror-iframe',
   },
-  staticKeys: ['class', 'class'],
+  staticKeys: ['defaultSource', 'class'],
 })
 export class IframeExtension extends NodeExtension<IframeOptions> {
   get name() {

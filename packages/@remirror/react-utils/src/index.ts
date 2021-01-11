@@ -4,11 +4,11 @@ export type {
   RemirrorElement,
 } from './react-utils';
 export {
-  RemirrorType,
   addKeyToElement,
   getElementProps,
   isReactDOMElement,
   isReactFragment,
   isValidElement,
   propIsFunction,
+  RemirrorType,
 } from './react-utils';

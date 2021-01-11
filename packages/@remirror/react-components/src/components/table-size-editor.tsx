@@ -246,10 +246,6 @@ function htmlElementToRect(element: HTMLElement): Rect {
   return { x: rect.left, y: rect.top, width: rect.width, height: rect.height };
 }
 
-function isCollapsed(rect: Rect): boolean {
-  return rect.width === 0 || rect.height === 0;
-}
-
 function isIntersected(r1: Rect, r2: Rect, padding = 0): boolean {
   return !(
     r2.x - padding > r1.x + r1.width + padding ||

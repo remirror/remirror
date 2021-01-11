@@ -31,10 +31,10 @@ export function useCommands<
  * A core hook which provides the chainable commands for usage in your editor.
  *
  * ```tsx
- * import { useCommandsChain } from 'remirror/react';
+ * import { useChainedCommands } from 'remirror/react';
  *
  * const EditorButton = () => {
- *   const chain = useCommandsChain();
+ *   const chain = useChainedCommands();
  *
  *   return (
  *     <>
@@ -46,8 +46,8 @@ export function useCommands<
  * }
  * ````
  */
-export function useCommandsChain<
-  Extension extends AnyExtension = Remirror.Extensions
+export function useChainedCommands<
+  Extension extends AnyExtension = Remirror.Extensions | AnyExtension
 >(): ChainedFromExtensions<Extension> {
   return useRemirrorContext<Extension>().chain;
 }

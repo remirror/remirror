@@ -2,7 +2,6 @@ import { ExtensionPriority, ExtensionTag } from '@remirror/core-constants';
 import type { Handler, ProsemirrorPlugin } from '@remirror/core-types';
 import type { ShouldSkipFunction, SkippableInputRule } from '@remirror/core-utils';
 import { InputRule, inputRules } from '@remirror/pm/inputrules';
-import type { Plugin } from '@remirror/pm/state';
 
 import { extension, PlainExtension } from '../extension';
 

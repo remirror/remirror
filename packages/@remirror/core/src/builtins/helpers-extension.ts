@@ -22,7 +22,6 @@ import {
   prosemirrorNodeToHtml,
   StringHandlerOptions,
 } from '@remirror/core-utils';
-import { TextSelection } from '@remirror/pm/state';
 
 import {
   ActiveFromExtensions,
@@ -313,9 +312,7 @@ declare global {
     }
 
     interface ListenerProperties<Extension extends AnyExtension> {
-      helpers: HelpersFromExtensions<Extension> extends object
-        ? HelpersFromExtensions<Extension>
-        : object;
+      helpers: HelpersFromExtensions<Extension>;
     }
 
     interface AllExtensions {

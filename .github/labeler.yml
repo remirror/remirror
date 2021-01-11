@@ -83,14 +83,14 @@
   - any: ['**/*.spec.{ts,tsx}']
 
 'test: e2e :heavy_check_mark:':
-  - any: ['**/*.e2e.test.{ts,tsx}', 'packages/**/*.snap', 'support/e2e/**/*.{ts,tsx,json,snap}']
+  - any: ['**/*.e2e.test.{ts,tsx}', 'packages/**/*.snap', 'test/**/*.{ts,tsx,json,snap}']
 
 'type: support :books:':
   - any:
       [
         'support/**/*',
         '!support/website/src/pages/playground.tsx',
-        '!support/e2e/**',
+        '!test/**',
         '!support/actions/**',
         '!support/azure/**',
         '!support/deprecated/**',

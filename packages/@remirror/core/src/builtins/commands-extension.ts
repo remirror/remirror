@@ -50,7 +50,7 @@ import { EditorView } from '@remirror/pm/view';
 import { applyMark, insertText, InsertTextOptions, toggleMark } from '../commands';
 import {
   AnyExtension,
-  ChainedCommandRunProps,
+  ChainedCommandProps,
   ChainedFromExtensions,
   CommandNames,
   CommandsFromExtensions,
@@ -59,13 +59,13 @@ import {
   PlainExtension,
   UiCommandNames,
 } from '../extension';
-import { FocusType } from '../framework';
 import { throwIfNameNotUnique } from '../helpers';
 import type {
   CommandShape,
   CreateExtensionPlugin,
   ExtensionCommandFunction,
   ExtensionCommandReturn,
+  FocusType,
   StateUpdateLifecycleProps,
 } from '../types';
 import { command, CommandDecoratorOptions, helper } from './builtin-decorators';
@@ -176,6 +176,10 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    */
   private readonly decorated = new Map<string, WithName<CommandDecoratorOptions>>();
 
+  onCreate(): void {
+    this.store.setStoreKey('getForcedUpdates', this.getForcedUpdates.bind(this));
+  }
+
   /**
    * Attach commands once the view is attached.
    */
@@ -183,7 +187,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
     const { setStoreKey, setExtensionStore } = this.store;
     const commands: Record<string, CommandShape> = object();
     const names = new Set<string>();
-    const chain: Record<string, any> & ChainedCommandRunProps = object();
+    const chain: Record<string, any> & ChainedCommandProps = object();
 
     for (const extension of this.store.extensions) {
       const extensionCommands: ExtensionCommandReturn = extension.createCommands?.() ?? {};
@@ -349,13 +353,15 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
       return insertText(text, options);
     }
 
-    return this.store.createPlaceholderCommand({
-      promise: text,
-      onSuccess: (value, range, props) => {
-        return this.insertText(value, { ...options, ...range })(props);
-      },
-      placeholder: { type: 'inline' },
-    });
+    return this.store
+      .createPlaceholderCommand({
+        promise: text,
+        placeholder: { type: 'inline' },
+        onSuccess: (value, range, props) => {
+          return this.insertText(value, { ...options, ...range })(props);
+        },
+      })
+      .generateCommand();
   }
 
   /**
@@ -727,6 +733,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
   ): CommandFunction {
     return applyMark(markType, attrs, selection);
   }
+
   /**
    * Removes a mark from the current selection or provided range.
    */
@@ -734,6 +741,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
   toggleMark(props: RemoveMarkProps): CommandFunction {
     return toggleMark(props);
   }
+
   /**
    * Removes a mark from the current selection or provided range.
    */
@@ -801,17 +809,19 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
     // Todo check if the permissions are supported first.
     // navigator.permissions.query({name: 'clipboard'})
 
-    return this.store.createPlaceholderCommand({
-      // TODO https://caniuse.com/?search=clipboard.read - once browser support is sufficient.
-      promise: () => navigator.clipboard.readText(),
-      placeholder: { type: 'inline' },
-      onSuccess: (value, selection, props) => {
-        return this.insertNode(
-          htmlToProsemirrorNode({ content: value, schema: props.state.schema }),
-          { selection },
-        )(props);
-      },
-    });
+    return this.store
+      .createPlaceholderCommand({
+        // TODO https://caniuse.com/?search=clipboard.read - once browser support is sufficient.
+        promise: () => navigator.clipboard.readText(),
+        placeholder: { type: 'inline' },
+        onSuccess: (value, selection, props) => {
+          return this.insertNode(
+            htmlToProsemirrorNode({ content: value, schema: props.state.schema }),
+            { selection },
+          )(props);
+        },
+      })
+      .generateCommand();
   }
 
   /**
@@ -958,7 +968,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    *
    * @internal
    */
-  getForcedUpdates(tr: Transaction): ForcedUpdateMeta {
+  private getForcedUpdates(tr: Transaction): ForcedUpdateMeta {
     return this.getCommandMeta(tr).forcedUpdates;
   }
 
@@ -1103,7 +1113,7 @@ interface AddCommandsProps {
   /**
    * The currently amassed command chain to mutate for each extension.
    */
-  chain: Record<string, any> & ChainedCommandRunProps;
+  chain: Record<string, any> & ChainedCommandProps;
 
   /**
    * The currently amassed commands (unchained) to mutate for each extension.
@@ -1165,6 +1175,11 @@ const forbiddenNames = new Set(['run', 'chain', 'original', 'raw']);
 declare global {
   namespace Remirror {
     interface ManagerStore<Extension extends AnyExtension> {
+      /**
+       * Get the forced updates from the provided transaction.
+       */
+      getForcedUpdates: (tr: Transaction) => ForcedUpdateMeta;
+
       /**
        * Enables the use of custom commands created by extensions which extend
        * the functionality of your editor in an expressive way.

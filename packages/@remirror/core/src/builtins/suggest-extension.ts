@@ -43,7 +43,6 @@ export class SuggestExtension extends PlainExtension<SuggestOptions> {
    * This can be used by extensions to conditionally add suggestion support.
    */
   onCreate(): void {
-    const suggesters: Suggester[] = [];
     this.store.setExtensionStore('addSuggester', (suggester) =>
       addSuggester(this.store.getState(), suggester),
     );

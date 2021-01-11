@@ -16,10 +16,35 @@ import {
   MarkSpecOverride,
   NamedShortcut,
   PrimitiveSelection,
+  Static,
   toggleMark,
 } from '@remirror/core';
+import { ExtensionBoldMessages as Messages } from '@remirror/messages';
 
-import { BoldOptions, toggleBoldOptions } from './bold-utils';
+const toggleBoldOptions: Remirror.CommandDecoratorOptions = {
+  icon: 'bold',
+  label: ({ t }) => t(Messages.LABEL),
+  description: ({ t }) => t(Messages.DESCRIPTION),
+};
+
+type FontWeightProperty =
+  | '-moz-initial'
+  | 'inherit'
+  | 'initial'
+  | 'revert'
+  | 'unset'
+  | 'bold'
+  | 'normal'
+  | 'bolder'
+  | 'lighter'
+  | number;
+
+export interface BoldOptions {
+  /**
+   * Optionally set the font weight property for this extension.
+   */
+  weight?: Static<FontWeightProperty>;
+}
 
 /**
  * When added to your editor it will provide the `toggleBold` command which makes the

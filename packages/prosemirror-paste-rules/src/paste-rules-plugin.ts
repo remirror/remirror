@@ -540,7 +540,6 @@ function isCodeMark(mark: Mark) {
 }
 
 function getDataTransferFiles(event: DragEvent): File[] {
-  let dataTransferItemsList: FileList;
   const { dataTransfer } = event;
 
   if (!dataTransfer) {

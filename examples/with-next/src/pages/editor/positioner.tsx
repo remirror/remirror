@@ -7,7 +7,13 @@ import {
   OrderedListExtension,
   UnderlineExtension,
 } from 'remirror/extensions';
-import { Remirror, usePositioner, useRemirror, useRemirrorContext } from 'remirror/react';
+import {
+  FloatingWrapper,
+  Remirror,
+  ThemeProvider,
+  useRemirror,
+  useRemirrorContext,
+} from 'remirror/react';
 
 const extensions = () => [
   new HeadingExtension(),
@@ -18,16 +24,15 @@ const extensions = () => [
   new OrderedListExtension(),
 ];
 
-function Menu() {
+function FloatingButtons() {
   const { commands, active } = useRemirrorContext({
     autoUpdate: true,
   });
 
   // The use positioner hook allows for tracking the current selection in the editor.
-  const { bottom, left, ref } = usePositioner('bubble');
 
   return (
-    <div ref={ref} style={{ bottom, left, position: 'absolute' }} data-testid='bubble-menu'>
+    <FloatingWrapper positioner='cursor' placement='top'>
       <button
         onClick={() => commands.toggleBold()}
         style={{ fontWeight: active.bold() ? 'bold' : undefined }}
@@ -47,7 +52,7 @@ function Menu() {
       >
         Underline
       </button>
-    </div>
+    </FloatingWrapper>
   );
 }
 
@@ -55,9 +60,11 @@ const SmallEditorContainer: FC = () => {
   const { manager, state, onChange } = useRemirror({ extensions });
 
   return (
-    <Remirror manager={manager} state={state} onChange={onChange} autoRender>
-      <Menu />
-    </Remirror>
+    <ThemeProvider>
+      <Remirror manager={manager} state={state} onChange={onChange} autoRender>
+        <FloatingButtons />
+      </Remirror>
+    </ThemeProvider>
   );
 };
 

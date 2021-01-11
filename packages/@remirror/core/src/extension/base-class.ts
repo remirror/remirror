@@ -32,7 +32,6 @@ import type {
   GetMappedHandler,
   GetPartialDynamic,
   GetStatic,
-  HandlerKeyList,
   IfNoRequiredProperties,
   MakeUndefined,
   RemoveAnnotations,
@@ -363,8 +362,8 @@ export abstract class BaseClass<
    * Set up the mapped handlers object with default values (an empty array);
    */
   private populateMappedHandlers() {
-    for (const key of this.constructor.handlerKeys as HandlerKeyList<Options>) {
-      this._mappedHandlers[key] = [];
+    for (const key of this.constructor.handlerKeys) {
+      this._mappedHandlers[key as keyof GetMappedHandler<Options>] = [];
     }
   }
 
@@ -374,13 +373,13 @@ export abstract class BaseClass<
   private createDefaultHandlerOptions() {
     const methods = object<any>();
 
-    for (const key of this.constructor.handlerKeys as HandlerKeyList<Options>) {
+    for (const key of this.constructor.handlerKeys) {
       methods[key] = (...args: any[]) => {
         const { handlerKeyOptions } = this.constructor;
-        const reducer = handlerKeyOptions[key as string]?.reducer;
+        const reducer = handlerKeyOptions[key]?.reducer;
         let returnValue: unknown = reducer?.getDefault(...args);
 
-        for (const [, handler] of this._mappedHandlers[key]) {
+        for (const [, handler] of this._mappedHandlers[key as keyof GetMappedHandler<Options>]) {
           const value = ((handler as unknown) as AnyFunction)(...args);
           returnValue = reducer ? reducer.accumulator(returnValue, value, ...args) : value;
 

@@ -233,7 +233,7 @@ export interface TransactionLifecycle {
   after: TransactionTransformer;
 }
 
-export interface RangeProps<Key extends keyof FromToProps = never> {
+export interface RangeProps {
   /**
    * The from/to interface.
    */

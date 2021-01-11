@@ -43,7 +43,6 @@ import {
   isResolvedPos,
   isSelection,
   isTextDomNode,
-  isTransaction,
 } from './core-utils';
 
 interface NodeEqualsTypeProps<Schema extends EditorSchema = EditorSchema>
@@ -492,15 +491,7 @@ export function removeNodeAfter(tr: Transaction): Transaction {
  * @param value - the transaction selection or state
  */
 export function isSelectionEmpty(value: Transaction | EditorState | Selection): boolean {
-  if (isSelection(value)) {
-    return value.empty;
-  }
-
-  if (isTransaction(value) || isEditorState(value)) {
-    return value.selection.empty;
-  }
-
-  return true;
+  return isSelection(value) ? value.empty : value.selection.empty;
 }
 
 /**

@@ -72,21 +72,13 @@ export function wysiwygPreset(options: GetStaticAndDynamic<WysiwygOptions> = {})
   const { weight } = options;
   const boldExtension = new BoldExtension({ weight });
 
-  const {
-    defaultLanguage,
-    formatter,
-    toggleName,
-    syntaxTheme,
-    supportedLanguages,
-    keyboardShortcut,
-  } = options;
+  const { defaultLanguage, formatter, toggleName, syntaxTheme, supportedLanguages } = options;
   const codeBlockExtension = new CodeBlockExtension({
     defaultLanguage,
     formatter,
     toggleName,
     syntaxTheme,
     supportedLanguages,
-    keyboardShortcut,
   });
 
   const {

@@ -64,7 +64,7 @@ import {
   TextSelection,
   Transaction as PMTransaction,
 } from '@remirror/pm/state';
-import { ReplaceStep, Step } from '@remirror/pm/transform';
+import { Step } from '@remirror/pm/transform';
 
 import { environment } from './environment';
 

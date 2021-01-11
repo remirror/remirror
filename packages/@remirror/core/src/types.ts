@@ -11,6 +11,7 @@ import type {
   GetDynamic,
   GetFixedDynamic,
   GetPartialDynamic,
+  PrimitiveSelection,
   RemoveAnnotations,
   Transaction,
   ValidOptions,
@@ -340,3 +341,14 @@ export interface TypedPropertyDescriptor<Type> {
   get?: () => Type;
   set?: (v: Type) => void;
 }
+
+/**
+ * The type of arguments acceptable for the focus parameter.
+ *
+ * - Can be a prosemirror selection
+ * - A range of `{ from: number; to: number }`
+ * - A single position with a `number`
+ * - A string of `'start' | 'end'`
+ * - `true` which sets the focus to the current position or start.
+ */
+export type FocusType = PrimitiveSelection | boolean;

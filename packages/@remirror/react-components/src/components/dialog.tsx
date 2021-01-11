@@ -1,7 +1,6 @@
 import type { FC } from 'react';
 import { useEffect } from 'react';
-import { Button } from 'reakit/Button';
-import { Dialog, DialogBackdrop, DialogDisclosure, useDialogState } from 'reakit/Dialog';
+import { Dialog, DialogBackdrop, useDialogState } from 'reakit/Dialog';
 import usePrevious from 'use-previous';
 
 import { useTheme, UseThemeProps } from '../react-providers';

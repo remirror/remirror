@@ -2,6 +2,7 @@ export type { UseExtensionCallback, UseRemirrorProps, UseRemirrorReturn } from '
 export {
   RemirrorContext,
   useActive,
+  useChainedCommands,
   useCommands,
   useEditorDomRef,
   useEditorState,

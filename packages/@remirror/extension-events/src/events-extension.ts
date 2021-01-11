@@ -92,7 +92,16 @@ export interface EventsOptions {
  * remirror editor.
  */
 @extension<EventsOptions>({
-  handlerKeys: ['blur', 'focus', 'mousedown', 'mouseup', 'click', 'clickMark', 'mouseleave'],
+  handlerKeys: [
+    'blur',
+    'focus',
+    'mousedown',
+    'mouseup',
+    'mouseenter',
+    'mouseleave',
+    'click',
+    'clickMark',
+  ],
   handlerKeyOptions: {
     blur: { earlyReturnValue: true },
     focus: { earlyReturnValue: true },

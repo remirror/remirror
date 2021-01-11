@@ -493,13 +493,6 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
 }
 
 /**
- * Whether the item should reverse the direction provided.
- */
-function shouldReverseDirection(tr: Transaction) {
-  return tr.selection.$from.parent.attrs.dir === 'rtl';
-}
-
-/**
  * Checks that the selection is an empty text selection at the end of its parent
  * node.
  */
@@ -609,7 +602,7 @@ export const DEFAULT_SHORTCUTS: ShortcutMap = {
   [NamedShortcut.H4]: 'Mod-Shift-4',
   [NamedShortcut.H5]: 'Mod-Shift-5',
   [NamedShortcut.H6]: 'Mod-Shift-6',
-  [NamedShortcut.NumberList]: 'Mod-Shift-9',
+  [NamedShortcut.OrderedList]: 'Mod-Shift-9',
   [NamedShortcut.BulletList]: 'Mod-Shift-8',
   [NamedShortcut.Quote]: 'Mod->',
   [NamedShortcut.Divider]: 'Mod-Shift-|',
@@ -650,7 +643,7 @@ export const GOOGLE_DOC_SHORTCUTS: ShortcutMap = {
   [NamedShortcut.H4]: 'Mod-Alt-4',
   [NamedShortcut.H5]: 'Mod-Alt-5',
   [NamedShortcut.H6]: 'Mod-Alt-6',
-  [NamedShortcut.NumberList]: 'Mod-Alt-7',
+  [NamedShortcut.OrderedList]: 'Mod-Alt-7',
   [NamedShortcut.BulletList]: 'Mod-Alt-8',
   [NamedShortcut.Quote]: 'Mod-Alt-9',
   [NamedShortcut.ClearFormatting]: 'Mod-\\',

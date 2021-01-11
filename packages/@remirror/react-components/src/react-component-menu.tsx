@@ -23,7 +23,14 @@ import { Tooltip, TooltipReference, useTooltipState } from 'reakit/Tooltip';
 
 import type { AnyExtension, CommandDecoratorMessageProps } from '@remirror/core';
 import { ErrorConstant, includes, invariant, isString } from '@remirror/core';
-import { useActive, useCommands, useHelpers, useI18n, useRemirrorContext } from '@remirror/react';
+import {
+  useActive,
+  useChainedCommands,
+  useCommands,
+  useHelpers,
+  useI18n,
+  useRemirrorContext,
+} from '@remirror/react';
 import { Components } from '@remirror/theme';
 
 import { CommandIcon } from './core-components';
@@ -98,7 +105,8 @@ const MenuCommandPane = (props: MenuCommandPaneProps): JSX.Element => {
   // Gather all the hooks used for this component.
   const context = useRemirrorContext();
   const { menuState, item, role } = props;
-  const { commands, chain } = useCommands<AnyExtension>();
+  const commands = useCommands();
+  const chain = useChainedCommands();
   const { getCommandOptions } = useHelpers();
   const { t } = useI18n();
   const autoFocus = item.refocusEditor ?? props.autoFocus ?? false;

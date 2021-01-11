@@ -24,9 +24,6 @@ import {
   CommandFunctionProps,
   CommandsFromExtensions,
   EditorState,
-  GetMarkNameUnion,
-  GetNodeNameUnion,
-  GetSchema,
   getTextSelection,
   HelpersFromExtensions,
   isFunction,
@@ -193,7 +190,7 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
    * TestEditor make sure not to use a stale copy of the actions otherwise it
    * will throw errors due to using an outdated state.
    */
-  get commands(): CommandsFromExtensions<this['manager']['~E']> {
+  get commands(): CommandsFromExtensions<Extension> {
     return this.#manager.store.commands;
   }
 
@@ -202,14 +199,14 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
    * TestEditor make sure not to use a stale copy of the actions otherwise it
    * will throw errors due to using an outdated state.
    */
-  get chain(): ChainedFromExtensions<this['manager']['~E']> {
+  get chain(): ChainedFromExtensions<Extension> {
     return this.#manager.store.chain;
   }
 
   /**
    * Access to which nodes and marks are active under the current selection.
    */
-  get active(): ActiveFromExtensions<this['manager']['~E']> {
+  get active(): ActiveFromExtensions<Extension> {
     return this.#manager.store.active;
   }
 
@@ -218,9 +215,7 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
    * TestEditor make sure not to use a stale copy of the helpers object
    * otherwise it will throw errors due to using an outdated state.
    */
-  get helpers(): HelpersFromExtensions<this['manager']['~E']> extends object
-    ? HelpersFromExtensions<this['manager']['~E']>
-    : object {
+  get helpers(): HelpersFromExtensions<Extension> {
     return this.#manager.store.helpers;
   }
 

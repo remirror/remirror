@@ -7,7 +7,6 @@
 
 import { createElement, ReactElement, ReactNode, SVGAttributes } from 'react';
 
-import type { CoreIcon } from '@remirror/icons';
 import { IconTree } from '@remirror/icons';
 import * as Icons from '@remirror/icons';
 

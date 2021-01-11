@@ -21,7 +21,7 @@ const isNode = new Set(['nodeAfter', 'nodeBefore', 'parent']);
 
 function filterProps(selection, props, subProps) {
   return props.reduce((acc, prop) => {
-    if (subProps && subProps[prop]) {
+    if (subProps?.[prop]) {
       acc[prop] = subProps[prop].reduce((subAcc, subProps) => {
         subAcc[subProps] =
           !isNode.has(subProps) || !selection[prop][subProps]

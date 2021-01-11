@@ -1,18 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { get as getPath } from '@ngard/tiny-get';
-import {
-  // createContext,
-  Dispatch,
-  MutableRefObject,
-  useEffect,
-  useMemo,
-  // PropsWithChildren,
-  useRef,
-  useState,
-} from 'react';
+import { Dispatch, MutableRefObject, useEffect, useRef, useState } from 'react';
 
 import {
-  // contextHookFactory,
   ContextSelector,
   createContextHook,
   CreateContextReturn,

@@ -212,20 +212,17 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
    * Find the position for the tracker with the ID specified.
    *
    * @param id - the unique position id which can be any type
-   * @param state - an optional state. Defaults to using the current state.
    */
   @helper()
-  findPlaceholder(id: unknown, state?: EditorState): Helper<FromToProps | undefined> {
-    return this.findAllPlaceholders(state).get(id);
+  findPlaceholder(id: unknown): Helper<FromToProps | undefined> {
+    return this.findAllPlaceholders().get(id);
   }
 
   /**
    * Find the positions of all the trackers in document.
-   *
-   * @param state - an optional state. Defaults to using the current state.
    */
   @helper()
-  findAllPlaceholders(state?: EditorState): Helper<Map<unknown, FromToProps>> {
+  findAllPlaceholders(): Helper<Map<unknown, FromToProps>> {
     const trackers: Map<unknown, FromToProps> = new Map();
     const found = this.placeholders.find(undefined, undefined, (spec) => spec.__type === __type);
 
@@ -561,7 +558,7 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
    */
   private readonly createPlaceholderCommand = <Value>(
     props: DelayedPlaceholderCommandProps<Value>,
-  ): CommandFunction => {
+  ): DelayedCommand<Value> => {
     const id = uniqueId();
     const { promise, placeholder, onFailure, onSuccess } = props;
 
@@ -586,7 +583,6 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
         this.removePlaceholder(id)({ ...props, dispatch: () => {} });
         return onFailure?.(props) ?? false;
       })
-      .generateCommand();
   };
 }
 
@@ -760,7 +756,7 @@ declare global {
        */
       createPlaceholderCommand<Value = any>(
         props: DelayedPlaceholderCommandProps<Value>,
-      ): CommandFunction;
+      ): DelayedCommand<Value>;
     }
 
     interface BaseExtension {

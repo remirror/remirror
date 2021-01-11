@@ -3,8 +3,6 @@ import type { RefractorSyntax } from 'refractor/core';
 import type { AcceptUndefined, ProsemirrorAttributes, Static, StringKey } from '@remirror/core';
 import { ExtensionCodeBlock } from '@remirror/theme';
 
-type A = Lowercase<StringKey<typeof ExtensionCodeBlock>>;
-
 /**
  * The default supported syntax themes.
  */

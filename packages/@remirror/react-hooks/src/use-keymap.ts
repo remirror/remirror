@@ -1,5 +1,3 @@
-import { useCallback } from 'react';
-
 import { ExtensionPriority, KeyBindings, KeymapExtension } from '@remirror/core';
 import { useExtension } from '@remirror/react';
 
