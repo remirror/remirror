@@ -30,7 +30,7 @@ npm install @remirror/extension-sub @remirror/pm
 The following code creates an instance of this extension.
 
 ```ts
-import { subExtension } from '@remirror/extension-sub';
+import { SubExtension } from '@remirror/extension-sub';
 
 const extension = new SubExtension();
 ```

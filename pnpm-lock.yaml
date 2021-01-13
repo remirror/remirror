@@ -1745,7 +1745,7 @@ importers:
       '@remirror/extension-react-ssr': 1.0.0-next.60
       '@remirror/extension-search': 1.0.0-next.60
       '@remirror/extension-strike': 1.0.0-next.60
-      '@remirror/extension-sub': '*'
+      '@remirror/extension-sub': 0.0.0
       '@remirror/extension-text': 1.0.0-next.60
       '@remirror/extension-trailing-node': 1.0.0-next.60
       '@remirror/extension-underline': 1.0.0-next.60
@@ -6025,7 +6025,7 @@ packages:
       '@octokit/request': 5.4.10
       jsonwebtoken: 8.5.1
       lru-cache: 6.0.0
-    deprecated: '''@octokit/app'' will be repurposed in future. Use ''@octokit/auth-app'' instead'
+    deprecated: "'@octokit/app' will be repurposed in future. Use '@octokit/auth-app' instead"
     dev: false
     resolution:
       integrity: sha512-TAi6Ju1u1rf7+V1vd2pg70SFwmHmwt5WAaAJ8BPaIHALxKbLpyyKUaVP1DBBmNmgF+fw0dwBR/edrClDMpdDfQ==
