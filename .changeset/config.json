@@ -54,6 +54,7 @@
       "@remirror/extension-react-ssr",
       "@remirror/extension-search",
       "@remirror/extension-strike",
+      "@remirror/extension-sub",
       "@remirror/extension-text",
       "@remirror/extension-trailing-node",
       "@remirror/extension-underline",
