@@ -1,0 +1,44 @@
+{
+  "name": "@remirror/extension-sup",
+  "version": "0.0.0",
+  "description": "Add superscript formatting to your text editor.",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-sup",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-sup",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>",
+    "Christopher Manouvrier <cmanou@mac.com>"
+  ],
+  "sideEffects": false,
+  "main": "dist/extension-sup.cjs.js",
+  "module": "dist/extension-sup.esm.js",
+  "browser": {
+    "./dist/extension-sup.cjs.js": "./dist/extension-sup.browser.cjs.js",
+    "./dist/extension-sup.esm.js": "./dist/extension-sup.browser.esm.js"
+  },
+  "types": "dist/extension-sup.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.0"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "peerDependencies": {
+    "@remirror/core": "*",
+    "@remirror/pm": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "5 KB"
+  }
+}
