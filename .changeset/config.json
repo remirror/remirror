@@ -55,6 +55,7 @@
       "@remirror/extension-search",
       "@remirror/extension-strike",
       "@remirror/extension-sub",
+      "@remirror/extension-sup",
       "@remirror/extension-text",
       "@remirror/extension-trailing-node",
       "@remirror/extension-underline",
