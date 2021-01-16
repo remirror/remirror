@@ -1,17 +1,35 @@
-import { CompactEmoji, stripHexcode } from 'emojibase';
+import {
+  CompactEmoji,
+  stripHexcode,
+  FlatEmoji,
+  fetchEmojis,
+  Emoticon,
+  generateEmoticonPermutations,
+} from 'emojibase';
 import { mkdir, readdir, readFile, writeFile } from 'fs/promises';
 import got from 'got';
 import os from 'os';
 import path from 'path';
 import Sprite from 'svg-sprite';
 import tar from 'tar';
+import { assert } from 'remirror';
+import 'localstorage-polyfill';
+import fetch from 'node-fetch';
 
 import { baseDir, log } from './helpers';
 
-log.info({
-  hexcode: '1F3CB-1F3FB-200D-2642-FE0F',
-  stripped: stripHexcode('1F3CB-1F3FB-200D-2642-FE0F'),
-});
+// log.info({
+//   hexcode: '1F3CB-1F3FB-200D-2642-FE0F',
+//   stripped: stripHexcode('1F3CB-1F3FB-200D-2642-FE0F'),
+// });
+
+if (!globalThis.fetch) {
+  // @ts-expect-error
+  globalThis.fetch = fetch;
+}
+
+let emojis: FlatEmoji[] = [];
+const emoticons: Record<string, Array<Emoticon>> = {};
 
 interface GitHubRepo {
   owner: string;
@@ -56,8 +74,49 @@ const emojiLibraries: EmojiLibrary[] = [
     directory: 'svg',
     extractPath: (emoji) =>
       `emoji_u${emoji.hexcode.replace(/-FE0F/, '').split('-').join('_').toLowerCase()}.svg`,
-    getHexcode: (filePath) =>
-      filePath.replace('emoji_u', '').replace('.svg', '').split('_').join('-').toUpperCase(),
+    getHexcode: (filePath) => {
+      const maybeHexcode = filePath
+        .replace('emoji_u', '')
+        .replace('.svg', '')
+        .split('_')
+        .join('-')
+        .toUpperCase();
+      const found = emojis.find(
+        (compact) => stripHexcode(compact.hexcode) === stripHexcode(maybeHexcode),
+      );
+      assert(
+        found,
+        `No hexcode could be found for the filePath: ${filePath}, hexcode: ${maybeHexcode}`,
+      );
+
+      return found.hexcode;
+    },
+  },
+  {
+    name: 'blobmoji',
+    owner: 'c1710',
+    repo: 'blobmoji',
+    sha: 'v2019-06-14-Emoji-12',
+    directory: 'svg',
+    extractPath: (emoji) =>
+      `emoji_u${emoji.hexcode.replace(/-FE0F/, '').split('-').join('_').toLowerCase()}.svg`,
+    getHexcode: (filePath) => {
+      const maybeHexcode = filePath
+        .replace('emoji_u', '')
+        .replace('.svg', '')
+        .split('_')
+        .join('-')
+        .toUpperCase();
+      const found = emojis.find(
+        (compact) => stripHexcode(compact.hexcode) === stripHexcode(maybeHexcode),
+      );
+      assert(
+        found,
+        `No hexcode could be found for the filePath: ${filePath}, hexcode: ${maybeHexcode}`,
+      );
+
+      return found.hexcode;
+    },
   },
   {
     name: 'openmoji-color',
@@ -78,17 +137,6 @@ const emojiLibraries: EmojiLibrary[] = [
     getHexcode: (filePath) => filePath.replace('.svg', ''),
   },
   {
-    name: 'blobmoji',
-    owner: 'c1710',
-    repo: 'blobmoji',
-    sha: 'v2019-06-14-Emoji-12',
-    directory: 'svg',
-    extractPath: (emoji) =>
-      `emoji_u${emoji.hexcode.replace(/-FE0F/, '').split('-').join('_').toLowerCase()}.svg`,
-    getHexcode: (filePath) =>
-      filePath.replace('emoji_u', '').replace('.svg', '').split('_').join('-').toUpperCase(),
-  },
-  {
     name: 'twemoji',
     owner: 'twitter',
     repo: 'twemoji',
@@ -99,8 +147,10 @@ const emojiLibraries: EmojiLibrary[] = [
   },
 ];
 
+const destinationDirectory = baseDir('packages', '@remirror', 'extension-emoji', 'data');
+
 async function writeSprite(folder: string, library: EmojiLibrary) {
-  const dest = baseDir('packages', '@remirror', 'extension-emoji', 'data', library.name);
+  const dest = path.join(destinationDirectory, library.name);
   await mkdir(dest, { recursive: true });
   const files = await readdir(folder);
   const spriter = new Sprite({
@@ -112,7 +162,7 @@ async function writeSprite(folder: string, library: EmojiLibrary) {
         dest: '',
         bust: false,
         prefix: 'emoji-%s',
-        sprite: `sprite-stack.svg`,
+        sprite: `sprite.svg`,
       },
       defs: false,
       symbol: false,
@@ -150,7 +200,28 @@ async function writeSprite(folder: string, library: EmojiLibrary) {
 }
 
 async function run() {
+  const emojiFile = path.join(destinationDirectory, `emoji.json`);
+  const emoticonsFile = path.join(destinationDirectory, `emoticons.json`);
   const tmpdir = path.join(os.tmpdir(), '__remirror__');
+
+  log.debug('Loading emojis from cdn');
+  emojis = await fetchEmojis('en', {
+    flat: true,
+    compact: true,
+    shortcodes: ['cldr'],
+    local: true,
+  });
+
+  for (const emoji of emojis) {
+    if (!emoji.emoticon) continue;
+
+    emoticons[emoji.hexcode] = generateEmoticonPermutations(emoji.emoticon);
+  }
+
+  log.debug('Writing emojis to file');
+  await writeFile(emojiFile, JSON.stringify(emojis, null, 2));
+  await writeFile(emoticonsFile, JSON.stringify(emoticons, null, 2));
+
   await mkdir(tmpdir, { recursive: true });
 
   const promises: Array<Promise<void>> = [];

@@ -2,7 +2,6 @@ import {
   ApplySchemaAttributes,
   command,
   CommandFunction,
-  extension,
   ExtensionTag,
   InputRule,
   keyBinding,
@@ -20,7 +19,6 @@ import { ExtensionBlockquote as Theme } from '@remirror/theme';
 /**
  * Add the blockquote block to the editor.
  */
-@extension({})
 export class BlockquoteExtension extends NodeExtension {
   get name() {
     return 'blockquote' as const;

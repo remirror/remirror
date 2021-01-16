@@ -1,10 +1,7 @@
 import { Config } from '@jest/types';
-import { setup, teardown } from 'jest-dev-server';
+import { setup, teardown } from 'jest-process-manager';
 import onExit from 'signal-exit';
-
-const {
-  server: { server },
-} = require('./server.config');
+import { server } from './server.config';
 
 const { globalSetup, globalTeardown } = require('jest-playwright-preset');
 
@@ -17,7 +14,7 @@ export const destroyServer = async (globalConfig?: Config.GlobalConfig) => {
 };
 
 export const setupServer = async (globalConfig: Config.GlobalConfig) => {
-  await setup([server]);
+  await setup([server.server]);
 
   onExit(() => {
     destroyServer().then(() => {

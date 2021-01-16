@@ -167,7 +167,7 @@ export function useSuggest(props: UseSuggesterProps): UseSuggestReturn {
 }
 
 /**
- * @deprecated - Renamed to useSuggest
+ * @deprecated - use `useSuggest`
  */
 export const useSuggester = useSuggest;
 

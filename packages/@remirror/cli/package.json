@@ -38,7 +38,7 @@
     "@types/yup": "^0.29.11",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.5.0",
-    "clipanion": "^2.6.2",
+    "clipanion": "^3.0.0-rc.5",
     "cpy": "^8.1.1",
     "dargs": "^7.0.0",
     "execa": "^5.0.0",
@@ -61,11 +61,11 @@
     "yup": "^0.32.8"
   },
   "devDependencies": {
-    "@testing-library/react-hooks": "^4.0.1",
+    "@testing-library/react-hooks": "^5.0.0",
     "@types/ink-spinner": "^3.0.0",
     "@types/ink-testing-library": "^1.0.1",
     "@types/jsesc": "^2.5.1",
-    "@types/node": "^14.14.20",
+    "@types/node": "^14.14.21",
     "@types/parcel-bundler": "^1.12.3",
     "@types/react": "^17.0.0",
     "@types/rimraf": "^3.0.0",

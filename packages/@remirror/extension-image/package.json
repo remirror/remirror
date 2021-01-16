@@ -40,7 +40,6 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "@remirror/extension-media": "0.0.0",
     "@remirror/messages": "0.0.0",
     "@remirror/theme": "1.0.0-next.60"
   },

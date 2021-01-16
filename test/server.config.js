@@ -29,7 +29,7 @@ const allTestRegex = getRegex();
 const servers = (exports.servers = {
   next: {
     server: {
-      command: 'cd ../../examples/with-next && pnpm dev -- -p 3030',
+      command: 'cd ../examples/with-next && pnpm dev -- -p 3030',
       port: 3030,
       usedPortAction: 'kill',
       launchTimeout: 120000,
@@ -40,7 +40,18 @@ const servers = (exports.servers = {
 
   docs: {
     server: {
-      command: 'cd ../website && pnpm start -- -p 3030',
+      command: 'cd ../support/website && pnpm start -- -p 3030',
+      port: 3030,
+      usedPortAction: 'kill',
+      launchTimeout: 120000,
+    },
+    regex: noSSRRegex,
+    home: 'http://localhost:3030',
+  },
+
+  storybooks: {
+    server: {
+      command: 'cd ../support/website && pnpm start -- -p 3030',
       port: 3030,
       usedPortAction: 'kill',
       launchTimeout: 120000,
@@ -78,13 +89,15 @@ const editors = (exports.editors = {
   },
 });
 
+const urls = {};
+
+for (const [key, editor] of Object.entries(editors)) {
+  urls[key] = editor[REMIRROR_E2E_SERVER];
+}
+
+/** @type {{server: import('jest-process-manager').JestProcessManagerOptions}} */
 exports.server = {
   ...servers[REMIRROR_E2E_SERVER],
   name: REMIRROR_E2E_SERVER,
-  urls: Object.keys(editors).reduce((acc, key) => {
-    return {
-      ...acc,
-      [key]: editors[key][REMIRROR_E2E_SERVER],
-    };
-  }, {}),
+  urls,
 };

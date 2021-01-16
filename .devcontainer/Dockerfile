@@ -10,6 +10,6 @@ RUN apt-get update -yq && export DEBIAN_FRONTEND=noninteractive \
     && apt-get install -yq git-lfs \
     && git lfs install
 
-ARG PNPM_VERSION="5.14.1"
+ARG PNPM_VERSION="5.15.0"
 # Install more global node modules
 RUN sudo -u node npm install -g pnpm@${PNPM_VERSION}

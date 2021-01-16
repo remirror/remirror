@@ -35,14 +35,14 @@
     "deploy": "cdk deploy"
   },
   "dependencies": {
-    "@aws-cdk/aws-sns": "1.83.0",
-    "@aws-cdk/aws-sns-subscriptions": "1.83.0",
-    "@aws-cdk/aws-sqs": "1.83.0",
-    "@aws-cdk/core": "1.83.0"
+    "@aws-cdk/aws-sns": "1.85.0",
+    "@aws-cdk/aws-sns-subscriptions": "1.85.0",
+    "@aws-cdk/aws-sqs": "1.85.0",
+    "@aws-cdk/core": "1.85.0"
   },
   "devDependencies": {
-    "@aws-cdk/assert": "1.83.0",
-    "aws-cdk": "^1.83.0"
+    "@aws-cdk/assert": "1.85.0",
+    "aws-cdk": "^1.85.0"
   },
   "preconstruct": {
     "entrypoints": [

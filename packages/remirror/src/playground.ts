@@ -44,7 +44,6 @@ import * as remirrorExtensionItalic from '@remirror/extension-italic';
 import * as remirrorExtensionLink from '@remirror/extension-link';
 import * as remirrorExtensionList from '@remirror/extension-list';
 import * as remirrorExtensionMarkdown from '@remirror/extension-markdown';
-import * as remirrorExtensionMedia from '@remirror/extension-media';
 import * as remirrorExtensionMention from '@remirror/extension-mention';
 import * as remirrorExtensionMentionAtom from '@remirror/extension-mention-atom';
 import * as remirrorExtensionNativeBridge from '@remirror/extension-native-bridge';
@@ -70,7 +69,6 @@ import * as remirrorExtensionYjs from '@remirror/extension-yjs';
 import * as remirrorPresetCore from '@remirror/preset-core';
 import * as remirrorPresetFormatting from '@remirror/preset-formatting';
 import * as remirrorPresetReact from '@remirror/preset-react';
-import * as remirrorPresetSocial from '@remirror/preset-social';
 import * as remirrorPresetWysiwyg from '@remirror/preset-wysiwyg';
 import * as remirrorReact from '@remirror/react';
 import * as remirrorReactRenderers from '@remirror/react/renderers';
@@ -110,7 +108,6 @@ export const PlaygroundImports = {
   '@remirror/extension-link': remirrorExtensionLink,
   '@remirror/extension-list': remirrorExtensionList,
   '@remirror/extension-markdown': remirrorExtensionMarkdown,
-  '@remirror/extension-media': remirrorExtensionMedia,
   '@remirror/extension-mention-atom': remirrorExtensionMentionAtom,
   '@remirror/extension-mention': remirrorExtensionMention,
   '@remirror/extension-native-bridge': remirrorExtensionNativeBridge,
@@ -135,7 +132,6 @@ export const PlaygroundImports = {
   // Presets
   '@remirror/preset-core': remirrorPresetCore,
   '@remirror/preset-formatting': remirrorPresetFormatting,
-  '@remirror/preset-social': remirrorPresetSocial,
   '@remirror/preset-wysiwyg': remirrorPresetWysiwyg,
 
   // Core

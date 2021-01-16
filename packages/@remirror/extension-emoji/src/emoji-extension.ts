@@ -28,15 +28,16 @@ import {
   Value,
   values,
   within,
+  helper,
+  command,
+  Helper,
 } from '@remirror/core';
+import { ValueOf } from 'type-fest';
 import type { SuggestChangeHandlerProps, Suggester } from '@remirror/pm/suggest';
 import { ExtensionEmoji } from '@remirror/theme';
-import type AliasData from './data/aliases';
-import aliasObject from './data/aliases';
-import type CategoryData from './data/categories';
-import type EmojiData from './data/emojis';
-import rawEmojiObject from './data/emojis';
-import {CompactEmoji, fetchEmojis} from 'emojibase'
+import { FlatCompactEmoji, fetchEmojis } from 'emojibase';
+import EMOTICON_REGEX from 'emojibase-regex/emoticon';
+import groups from 'emojibase-data/meta/groups.json';
 
 export const DEFAULT_FREQUENTLY_USED: Names[] = [
   '+1',
@@ -57,8 +58,6 @@ export const DEFAULT_FREQUENTLY_USED: Names[] = [
   'poop',
 ];
 
-const EMOJI_DATA_HEXCODE = 'data-emoji-hexcode';
-const EMOJI_DATA_UNICODE = 'data-emoji-unicode';
 const EMOJI_DATA_HEXCODE = 'data-emoji-hexcode';
 
 @extension<EmojiOptions>({
@@ -86,12 +85,12 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
 
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
     return {
+      selectable: true,
+      draggable: false,
       ...override,
+      inline: true,
       atom: true,
-      attrs: { ...extra.defaults(),
-        hexcode: {},
-        unicode: {},
-     },
+      attrs: { ...extra.defaults(), hexcode: {}, unicode: {} },
       parseDOM: [
         {
           tag: `span[${EMOJI_DATA_HEXCODE}`,
@@ -326,7 +325,29 @@ export interface EmojiOptions {
    * @default 15
    */
   maxResults?: number;
+
+  /**
+   * The list of emoji to import this can be imported from `@svgmoji/data`.
+   */
+  data: FlatCompactEmoji[];
+
+  /**
+   * The emoji library to use.
+   *
+   * @default 'noto'
+   */
+  emojiSet?: EmojiLibraryName;
 }
+
+export const EmojiLibrary = {
+  GoogleNoto: 'noto',
+  OpenMojiColor: 'openmoji-color',
+  OpenMojiBlack: 'openmoji-black',
+  TwitterEmoji: 'twemoji',
+  Blob: 'blobmoji',
+};
+
+export type EmojiLibraryName = ValueOf<typeof EmojiLibrary>;
 
 export type EmojiObjectRecord = Record<Names, EmojiObject>;
 
@@ -459,9 +480,15 @@ export function getEmojiFromEmoticon(emoticon: string): EmojiObject | undefined 
 /**
  * Return a list of `maxResults` length of closest matches
  */
-export function sortEmojiMatches(query: string, maxResults = -1): EmojiObject[] {
+export function sortEmojiMatches(query: string, maxResults = -1): FlatCompactEmoji[] {
   const results = matchSorter(emojiList, query, {
-    keys: ['name', (item) => item.description.replace(/\W/g, '')],
+    keys: [
+      'unicode',
+      'tags',
+      'shortcodes',
+      'annotation',
+      (item) => item.description.replace(/\W/g, ''),
+    ],
     threshold: matchSorter.rankings.CONTAINS,
   });
 
