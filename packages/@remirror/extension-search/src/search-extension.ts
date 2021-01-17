@@ -16,13 +16,14 @@ import {
   isSelectionEmpty,
   isString,
   KeyBindingCommandFunction,
-  KeyBindings,
-  object,
   PlainExtension,
-  PrioritizedKeyBindings,
   ProsemirrorNode,
   Static,
   Transaction,
+  command,
+  keyBinding,
+  KeyBindingProps,
+  NamedShortcut,
 } from '@remirror/core';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
 
@@ -65,21 +66,7 @@ export interface SearchOptions {
   alwaysSearch?: boolean;
 
   /**
-   * Set to false to disable.
-   *
-   * @default 'Mod-f'
-   */
-  searchForwardShortcut?: string | false;
-
-  /**
-   * Set to false to disable.
-   *
-   * @default 'Mod-Shift-f'
-   */
-  searchBackwardShortcut?: string | false;
-
-  /**
-   * Whether to clear the search when the esc key is pressed.
+   * Whether to clear the search when the `Escape` key is pressed.
    *
    * @default true
    */
@@ -105,8 +92,6 @@ export type SearchDirection = 'next' | 'previous';
     caseSensitive: false,
     disableRegex: true,
     alwaysSearch: false,
-    searchForwardShortcut: 'Mod-f',
-    searchBackwardShortcut: 'Mod-Shift-f',
     clearOnEscape: true,
   },
   handlerKeys: ['onSearch'],
@@ -121,43 +106,6 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
   private _searchTerm?: string;
   private _results: FromToProps[] = [];
   private _activeIndex = 0;
-
-  createCommands() {
-    return {
-      /**
-       * Find a search term in the editor. If no search term is provided it
-       * defaults to the currently selected text.
-       */
-      find: (searchTerm?: string, direction?: SearchDirection): CommandFunction =>
-        this.find(searchTerm, direction),
-
-      /**
-       * Find the next occurrence of the search term.
-       */
-      findNext: (): CommandFunction => this.find(this._searchTerm, 'next'),
-
-      /**
-       * Find the previous occurrence of the search term.
-       */
-      findPrevious: (): CommandFunction => this.find(this._searchTerm, 'previous'),
-
-      /**
-       * Replace the provided
-       */
-      replace: (replacement: string, index?: number): CommandFunction =>
-        this.replace(replacement, index),
-
-      /**
-       * Replaces all search results with the replacement text.
-       */
-      replaceAll: (replacement: string): CommandFunction => this.replaceAll(replacement),
-
-      /**
-       * Clears the current search.
-       */
-      clearSearch: (): CommandFunction => this.clear(),
-    };
-  }
 
   /**
    * This plugin is responsible for adding something decorations to the
@@ -194,34 +142,73 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
   }
 
   /**
-   * Create the keymap for this extension.
+   * Find a search term in the editor. If no search term is provided it
+   * defaults to the currently selected text.
    */
-  createKeymap(): PrioritizedKeyBindings {
-    const { searchBackwardShortcut, searchForwardShortcut, clearOnEscape } = this.options;
-    const bindings: KeyBindings = object();
+  @command()
+  findSearchQuery(searchTerm?: string, direction?: SearchDirection): CommandFunction {
+    return this.find(searchTerm, direction);
+  }
 
-    if (searchBackwardShortcut) {
-      bindings[searchBackwardShortcut] = this.createSearchKeyBinding('previous');
+  /**
+   * Find the next occurrence of the search term.
+   */
+  @command()
+  findNextSearchItem(): CommandFunction {
+    return this.find(this._searchTerm, 'next');
+  }
+
+  /**
+   * Find the previous occurrence of the search term.
+   */
+  @command()
+  findPreviousSearchItem(): CommandFunction {
+    return this.find(this._searchTerm, 'previous');
+  }
+
+  /**
+   * Replace the provided
+   */
+  @command()
+  replaceSearchItem(replacement: string, index?: number): CommandFunction {
+    return this.replace(replacement, index);
+  }
+
+  /**
+   * Replaces all search results with the replacement text.
+   */
+  @command()
+  replaceAllSearchItem(replacement: string): CommandFunction {
+    return this.replaceAll(replacement);
+  }
+
+  /**
+   * Clears the current search.
+   */
+  @command()
+  clearSearch(): CommandFunction {
+    return this.clear();
+  }
+
+  @keyBinding<SearchExtension>({ shortcut: NamedShortcut.Find })
+  searchForwardShortcut(props: KeyBindingProps): boolean {
+    return this.createSearchKeyBinding('next')(props);
+  }
+
+  @keyBinding<SearchExtension>({ shortcut: NamedShortcut.FindBackwards })
+  searchBackwardShortcut(props: KeyBindingProps): boolean {
+    return this.createSearchKeyBinding('previous')(props);
+  }
+
+  @keyBinding<SearchExtension>({ shortcut: 'Escape', isActive: (options) => options.clearOnEscape })
+  escapeShortcut(_: KeyBindingProps): boolean {
+    if (!isString(this._searchTerm)) {
+      return false;
     }
 
-    if (searchForwardShortcut) {
-      bindings[searchForwardShortcut] = this.createSearchKeyBinding('next');
-    }
+    this.clearSearch();
 
-    if (clearOnEscape) {
-      bindings.Escape = () => {
-        if (!isString(this._searchTerm)) {
-          return false;
-        }
-
-        const { clearSearch } = this.store.commands;
-        clearSearch();
-
-        return true;
-      };
-    }
-
-    return bindings;
+    return true;
   }
 
   private createSearchKeyBinding(direction: SearchDirection): KeyBindingCommandFunction {
@@ -236,8 +223,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
         searchTerm = this._searchTerm;
       }
 
-      const { find } = this.store.commands;
-      find(searchTerm, direction);
+      this.find(searchTerm, direction);
 
       return true;
     };
@@ -322,8 +308,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
       const { from, to } = result;
 
       dispatch(tr.insertText(replacement, from, to));
-      const { findNext } = this.store.commands;
-      findNext();
+      this.findNextSearchItem();
 
       return true;
     };
@@ -367,8 +352,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
 
       dispatch(tr);
 
-      const { find } = this.store.commands;
-      find(this._searchTerm);
+      this.find(this._searchTerm);
 
       return true;
     };

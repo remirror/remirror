@@ -218,6 +218,66 @@ importers:
       '@aws-cdk/aws-sqs': 1.85.0
       '@aws-cdk/core': 1.85.0
       aws-cdk: ^1.85.0
+  examples/storybook-react:
+    dependencies:
+      '@emotion/css': 11.1.3_@babel+core@7.12.10
+      '@linaria/core': 3.0.0-beta.1
+      '@remirror/messages': link:../../packages/@remirror/messages
+      '@remirror/playground': link:../../packages/@remirror/playground
+      '@remirror/pm': link:../../packages/@remirror/pm
+      '@remirror/react-components': link:../../packages/@remirror/react-components
+      '@remirror/styles': link:../../packages/@remirror/styles
+      '@storybook/addon-actions': 6.1.14_4695a47c40ef995f48f8c834d2fb82ec
+      '@storybook/addon-links': 6.1.14_react-dom@17.0.1+react@17.0.1
+      '@storybook/addons': 6.1.14_react-dom@17.0.1+react@17.0.1
+      '@storybook/react': 6.1.14_817693d124f2aba29ab66261bec06dfd
+      '@types/refractor': 3.0.0
+      clsx: 1.1.1
+      create-context-state: link:../../packages/create-context-state
+      react: 17.0.1
+      react-dom: 17.0.1_react@17.0.1
+      react-is: 17.0.1
+      reakit: 1.3.4_react-dom@17.0.1+react@17.0.1
+      refractor: 3.3.0
+      remirror: link:../../packages/remirror
+    devDependencies:
+      '@babel/core': 7.12.10
+      '@types/react': 17.0.0
+      '@types/react-dom': 17.0.0
+      '@types/webpack': 4.41.26
+      '@types/worker-plugin': 4.0.0
+      babel-loader: 8.2.2_@babel+core@7.12.10
+      monaco-editor-webpack-plugin: 2.1.0
+      worker-plugin: 5.0.0
+    specifiers:
+      '@babel/core': ^7.12.10
+      '@emotion/css': ^11.1.3
+      '@linaria/core': ^3.0.0-beta.1
+      '@remirror/messages': 0.0.0
+      '@remirror/playground': 1.0.0-next.60
+      '@remirror/pm': 1.0.0-next.60
+      '@remirror/react-components': 1.0.0-next.40
+      '@remirror/styles': 1.0.0-next.60
+      '@storybook/addon-actions': ^6.1.14
+      '@storybook/addon-links': ^6.1.14
+      '@storybook/addons': ^6.1.14
+      '@storybook/react': ^6.1.14
+      '@types/react': ^17.0.0
+      '@types/react-dom': ^17.0.0
+      '@types/refractor': ^3.0.0
+      '@types/webpack': ^4.41.26
+      '@types/worker-plugin': ^4.0.0
+      babel-loader: ^8.2.2
+      clsx: ^1.1.1
+      create-context-state: 0.0.0
+      monaco-editor-webpack-plugin: ^2.1.0
+      react: ^17.0.1
+      react-dom: ^17.0.1
+      react-is: ^17.0.1
+      reakit: ^1.3.4
+      refractor: ^3.3.0
+      remirror: 1.0.0-next.60
+      worker-plugin: ^5.0.0
   examples/with-next:
     dependencies:
       '@emotion/css': 11.1.3
@@ -732,14 +792,13 @@ importers:
       '@babel/runtime': 7.12.5
       '@remirror/messages': link:../messages
       '@remirror/theme': link:../theme
-      '@types/emoji-regex': 9.2.0
-      emoji-regex: 9.2.0
       emojibase: 5.1.0
       emojibase-data: 6.1.0_emojibase@5.1.0
       emojibase-regex: 5.1.0
       escape-string-regexp: 4.0.0
       idb-keyval: 5.0.1
       match-sorter: 6.1.0
+      svgmoji: 2.0.0
       type-fest: 0.20.2
     devDependencies:
       '@remirror/core': link:../core
@@ -750,14 +809,13 @@ importers:
       '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
       '@remirror/theme': 1.0.0-next.60
-      '@types/emoji-regex': ^9.2.0
-      emoji-regex: ^9.2.0
       emojibase: ^5.1.0
       emojibase-data: ^6.1.0
       emojibase-regex: ^5.1.0
       escape-string-regexp: ^4.0.0
       idb-keyval: ^5.0.1
       match-sorter: ^6.1.0
+      svgmoji: ^2.0.0
       type-fest: ^0.20.2
   packages/@remirror/extension-epic-mode:
     dependencies:
@@ -1776,6 +1834,7 @@ importers:
       '@types/react-dom': 17.0.0
       react: 17.0.1
       react-dom: 17.0.1_react@17.0.1
+      svgmoji: 2.0.0
     specifiers:
       '@babel/runtime': ^7.12.5
       '@remirror/core': 1.0.0-next.60
@@ -1793,6 +1852,7 @@ importers:
       '@types/react-dom': ^17.0.0
       react: ^17.0.1
       react-dom: ^17.0.1
+      svgmoji: ^2.0.0
       type-fest: ^0.20.2
       use-isomorphic-layout-effect: ^1.1.1
   packages/@remirror/react-native:
@@ -1852,18 +1912,18 @@ importers:
       '@babel/runtime': 7.12.5
     devDependencies:
       '@remirror/core': link:../core
-      '@rollup/plugin-commonjs': 17.0.0_rollup@2.36.1
-      '@rollup/plugin-node-resolve': 11.1.0_rollup@2.36.1
-      '@rollup/plugin-typescript': 8.1.0_rollup@2.36.1+tslib@2.1.0
+      '@rollup/plugin-commonjs': 17.0.0_rollup@2.36.2
+      '@rollup/plugin-node-resolve': 11.1.0_rollup@2.36.2
+      '@rollup/plugin-typescript': 8.1.0_rollup@2.36.2+tslib@2.1.0
       '@tsconfig/svelte': 1.0.10
-      '@wessberg/rollup-plugin-ts': 1.3.8_rollup@2.36.1
-      rollup: 2.36.1
+      '@wessberg/rollup-plugin-ts': 1.3.8_rollup@2.36.2
+      rollup: 2.36.2
       rollup-plugin-copy: 3.3.0
       rollup-plugin-livereload: 2.0.0
-      rollup-plugin-svelte: 7.0.0_rollup@2.36.1+svelte@3.31.2
-      rollup-plugin-terser: 7.0.2_rollup@2.36.1
+      rollup-plugin-svelte: 7.0.0_rollup@2.36.2+svelte@3.31.2
+      rollup-plugin-terser: 7.0.2_rollup@2.36.2
       svelte: 3.31.2
-      svelte-check: 1.1.27_svelte@3.31.2
+      svelte-check: 1.1.28_svelte@3.31.2
       svelte-preprocess: 4.6.1_svelte@3.31.2
       svelte-typed-component: 1.1.1
       tslib: 2.1.0
@@ -1875,13 +1935,13 @@ importers:
       '@rollup/plugin-typescript': ^8.1.0
       '@tsconfig/svelte': ^1.0.10
       '@wessberg/rollup-plugin-ts': ^1.3.8
-      rollup: ^2.36.1
+      rollup: ^2.36.2
       rollup-plugin-copy: ^3.3.0
       rollup-plugin-livereload: ^2.0.0
       rollup-plugin-svelte: ^7.0.0
       rollup-plugin-terser: ^7.0.2
       svelte: ^3.31.2
-      svelte-check: ^1.1.27
+      svelte-check: ^1.1.28
       svelte-preprocess: ^4.6.1
       svelte-typed-component: ^1.1.1
       tslib: ^2.1.0
@@ -2389,9 +2449,9 @@ importers:
       ts-morph: 9.1.0
       tslog: 3.0.5
       type-fest: 0.20.2
-      typedoc: 0.20.14
-      typedoc-plugin-external-module-name: 4.0.6_typedoc@0.20.14
-      typedoc-plugin-markdown: 3.4.0_typedoc@0.20.14
+      typedoc: 0.20.16
+      typedoc-plugin-external-module-name: 4.0.6_typedoc@0.20.16
+      typedoc-plugin-markdown: 3.4.0_typedoc@0.20.16
       write-json-file: 4.3.0
     specifiers:
       '@changesets/get-dependents-graph': ^1.1.3
@@ -2449,70 +2509,10 @@ importers:
       ts-morph: ^9.1.0
       tslog: ^3.0.5
       type-fest: ^0.20.2
-      typedoc: ^0.20.14
+      typedoc: ^0.20.16
       typedoc-plugin-external-module-name: ^4.0.6
       typedoc-plugin-markdown: ^3.4.0
       write-json-file: ^4.3.0
-  support/storybook:
-    dependencies:
-      '@emotion/css': 11.1.3_@babel+core@7.12.10
-      '@linaria/core': 3.0.0-beta.1
-      '@remirror/messages': link:../../packages/@remirror/messages
-      '@remirror/playground': link:../../packages/@remirror/playground
-      '@remirror/pm': link:../../packages/@remirror/pm
-      '@remirror/react-components': link:../../packages/@remirror/react-components
-      '@remirror/styles': link:../../packages/@remirror/styles
-      '@storybook/addon-actions': 6.1.14_4695a47c40ef995f48f8c834d2fb82ec
-      '@storybook/addon-links': 6.1.14_react-dom@17.0.1+react@17.0.1
-      '@storybook/addons': 6.1.14_react-dom@17.0.1+react@17.0.1
-      '@storybook/react': 6.1.14_817693d124f2aba29ab66261bec06dfd
-      '@types/refractor': 3.0.0
-      clsx: 1.1.1
-      create-context-state: link:../../packages/create-context-state
-      react: 17.0.1
-      react-dom: 17.0.1_react@17.0.1
-      react-is: 17.0.1
-      reakit: 1.3.4_react-dom@17.0.1+react@17.0.1
-      refractor: 3.3.0
-      remirror: link:../../packages/remirror
-    devDependencies:
-      '@babel/core': 7.12.10
-      '@types/react': 17.0.0
-      '@types/react-dom': 17.0.0
-      '@types/webpack': 4.41.26
-      '@types/worker-plugin': 4.0.0
-      babel-loader: 8.2.2_@babel+core@7.12.10
-      monaco-editor-webpack-plugin: 2.1.0
-      worker-plugin: 5.0.0
-    specifiers:
-      '@babel/core': ^7.12.10
-      '@emotion/css': ^11.1.3
-      '@linaria/core': ^3.0.0-beta.1
-      '@remirror/messages': 0.0.0
-      '@remirror/playground': 1.0.0-next.60
-      '@remirror/pm': 1.0.0-next.60
-      '@remirror/react-components': 1.0.0-next.40
-      '@remirror/styles': 1.0.0-next.60
-      '@storybook/addon-actions': ^6.1.14
-      '@storybook/addon-links': ^6.1.14
-      '@storybook/addons': ^6.1.14
-      '@storybook/react': ^6.1.14
-      '@types/react': ^17.0.0
-      '@types/react-dom': ^17.0.0
-      '@types/refractor': ^3.0.0
-      '@types/webpack': ^4.41.26
-      '@types/worker-plugin': ^4.0.0
-      babel-loader: ^8.2.2
-      clsx: ^1.1.1
-      create-context-state: 0.0.0
-      monaco-editor-webpack-plugin: ^2.1.0
-      react: ^17.0.1
-      react-dom: ^17.0.1
-      react-is: ^17.0.1
-      reakit: ^1.3.4
-      refractor: ^3.3.0
-      remirror: 1.0.0-next.60
-      worker-plugin: ^5.0.0
   support/templates/extension-template:
     dependencies:
       '@babel/runtime': 7.12.5
@@ -7214,16 +7214,16 @@ packages:
       rollup: ^2.22.0
     resolution:
       integrity: sha512-xCQqz4z/o0h2syQ7d9LskIMvBSH4PX5PjYdpSSvgS+pQik3WahkQVNWg3D8XJeYjZoVWnIUQYDghuEMRGrmQYQ==
-  /@rollup/plugin-commonjs/17.0.0_rollup@2.36.1:
+  /@rollup/plugin-commonjs/17.0.0_rollup@2.36.2:
     dependencies:
-      '@rollup/pluginutils': 3.1.0_rollup@2.36.1
+      '@rollup/pluginutils': 3.1.0_rollup@2.36.2
       commondir: 1.0.1
       estree-walker: 2.0.2
       glob: 7.1.6
       is-reference: 1.2.1
       magic-string: 0.25.7
       resolve: 1.19.0
-      rollup: 2.36.1
+      rollup: 2.36.2
     dev: true
     engines:
       node: '>= 8.0.0'
@@ -7240,15 +7240,15 @@ packages:
       rollup: ^1.20.0 || ^2.0.0
     resolution:
       integrity: sha512-yfLbTdNS6amI/2OpmbiBoW12vngr5NW2jCJVZSBEz+H5KfUJZ2M7sDjk0U6GOOdCWFVScShte29o9NezJ53TPw==
-  /@rollup/plugin-node-resolve/11.1.0_rollup@2.36.1:
+  /@rollup/plugin-node-resolve/11.1.0_rollup@2.36.2:
     dependencies:
-      '@rollup/pluginutils': 3.1.0_rollup@2.36.1
+      '@rollup/pluginutils': 3.1.0_rollup@2.36.2
       '@types/resolve': 1.17.1
       builtin-modules: 3.2.0
       deepmerge: 4.2.2
       is-module: 1.0.0
       resolve: 1.19.0
-      rollup: 2.36.1
+      rollup: 2.36.2
     dev: true
     engines:
       node: '>= 10.0.0'
@@ -7282,11 +7282,11 @@ packages:
       rollup: ^1.20.0 || ^2.0.0
     resolution:
       integrity: sha512-waBhMzyAtjCL1GwZes2jaE9MjuQ/DQF2BatH3fRivUF3z0JBFrU0U6iBNC/4WR+2rLKhaAhPWDNPYp4mI6RqdQ==
-  /@rollup/plugin-typescript/8.1.0_rollup@2.36.1+tslib@2.1.0:
+  /@rollup/plugin-typescript/8.1.0_rollup@2.36.2+tslib@2.1.0:
     dependencies:
-      '@rollup/pluginutils': 3.1.0_rollup@2.36.1
+      '@rollup/pluginutils': 3.1.0_rollup@2.36.2
       resolve: 1.19.0
-      rollup: 2.36.1
+      rollup: 2.36.2
       tslib: 2.1.0
     dev: true
     engines:
@@ -7303,17 +7303,31 @@ packages:
       estree-walker: 1.0.1
       picomatch: 2.2.2
       rollup: 2.36.1
+    dev: false
     engines:
       node: '>= 8.0.0'
     peerDependencies:
       rollup: ^1.20.0||^2.0.0
     resolution:
       integrity: sha512-GksZ6pr6TpIjHm8h9lSQ8pi8BE9VeubNT0OMJ3B5uZJ8pz73NPiqOtCog/x2/QzM1ENChPKxMDhiQuRHsqc+lg==
-  /@rollup/pluginutils/4.1.0_rollup@2.36.1:
+  /@rollup/pluginutils/3.1.0_rollup@2.36.2:
+    dependencies:
+      '@types/estree': 0.0.39
+      estree-walker: 1.0.1
+      picomatch: 2.2.2
+      rollup: 2.36.2
+    dev: true
+    engines:
+      node: '>= 8.0.0'
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0
+    resolution:
+      integrity: sha512-GksZ6pr6TpIjHm8h9lSQ8pi8BE9VeubNT0OMJ3B5uZJ8pz73NPiqOtCog/x2/QzM1ENChPKxMDhiQuRHsqc+lg==
+  /@rollup/pluginutils/4.1.0_rollup@2.36.2:
     dependencies:
       estree-walker: 2.0.2
       picomatch: 2.2.2
-      rollup: 2.36.1
+      rollup: 2.36.2
     dev: true
     engines:
       node: '>= 8.0.0'
@@ -7664,7 +7678,7 @@ packages:
       '@storybook/ui': 6.1.14_4695a47c40ef995f48f8c834d2fb82ec
       '@types/glob-base': 0.3.0
       '@types/micromatch': 4.0.1
-      '@types/node-fetch': 2.5.7
+      '@types/node-fetch': 2.5.8
       airbnb-js-shims: 2.2.1
       ansi-to-html: 0.6.14
       autoprefixer: 9.8.6
@@ -7879,6 +7893,48 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0
     resolution:
       integrity: sha512-DTW2TM05jTMKxh8LzUGk3g5a528PgJxrtgODFU6zzwSg2+LwdmSDtd1HAxopt2vpfTyQyX+6WN2H+lMNwfQTAQ==
+  /@svgmoji/blob/2.0.0_@svgmoji+core@2.0.0:
+    dependencies:
+      '@babel/runtime': 7.12.5
+      '@svgmoji/core': 2.0.0
+    peerDependencies:
+      '@svgmoji/core': ^2.0.0
+    resolution:
+      integrity: sha512-SWE07ckMyMZvbsBotcPBkY2X+MT2n0QeSI4epnAR8fH0e0cHIC670ptPZc8qsqnX0cZRnpIAFSmcHkLgBbBZeQ==
+  /@svgmoji/core/2.0.0:
+    dependencies:
+      '@babel/runtime': 7.12.5
+      emojibase: 5.1.0
+      emojibase-regex: 5.1.0
+      idb-keyval: 5.0.1
+      match-sorter: 6.1.0
+      type-fest: 0.19.0
+    resolution:
+      integrity: sha512-U9ByMZ6nY2V51iRKZoZ0s1BmXJuB3cnADysWo8hpFPgsRBPySK8m3jr/bkDrxb3ubK8Rt934zrVOagIqvr9TYg==
+  /@svgmoji/noto/2.0.0_@svgmoji+core@2.0.0:
+    dependencies:
+      '@babel/runtime': 7.12.5
+      '@svgmoji/core': 2.0.0
+    peerDependencies:
+      '@svgmoji/core': ^2.0.0
+    resolution:
+      integrity: sha512-L+fSn/w6v3p+piZr0fIVMMf8dO4xfb9T5JZ9WxSanREDuOzkEncU1pYoD9gahoe00ijcwE8F/GtB1zdSKrXr9g==
+  /@svgmoji/openmoji/2.0.0_@svgmoji+core@2.0.0:
+    dependencies:
+      '@babel/runtime': 7.12.5
+      '@svgmoji/core': 2.0.0
+    peerDependencies:
+      '@svgmoji/core': ^2.0.0
+    resolution:
+      integrity: sha512-nVX29KzCQ2fBt4I5bB65390WfUmGg7bV0fgal+nZmyZ2AyKFIHJ5k8JawVIbD0QiB3WbmIjXVoa5v7HRtPMnQQ==
+  /@svgmoji/twemoji/2.0.0_@svgmoji+core@2.0.0:
+    dependencies:
+      '@babel/runtime': 7.12.5
+      '@svgmoji/core': 2.0.0
+    peerDependencies:
+      '@svgmoji/core': ^2.0.0
+    resolution:
+      integrity: sha512-r7BXCoSoAgUrYIk1hxwrRCFrMk3gly0AwjLt/ofqSPaII1jSUjAueLBOdsoveyOs4GC2kU7WbEUWWODpdVr6xQ==
   /@svgr/babel-plugin-add-jsx-attribute/5.4.0:
     dev: true
     engines:
@@ -8277,13 +8333,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-et1wmqXm/5smJ8lTJfBnwD12/2Y7eVJLKbuaRT0h2xaKAoo1h8Dz2Io22GObDLFwxY1ddXRTLH3Gq5v44Fl/2w==
-  /@types/emoji-regex/9.2.0:
-    dependencies:
-      emoji-regex: 9.2.0
-    deprecated: This is a stub types definition. emoji-regex provides its own type definitions, so you do not need this installed.
-    dev: false
-    resolution:
-      integrity: sha512-Q2BaUWiokKV2ZWk15twerRiNIex/VOGIz3pAgPMk6JZAeuGT9oAm/kA2Ri9InUtPc84bY0UQZzn/Pd2yUd33Ig==
   /@types/es-module-lexer/0.3.0:
     dev: false
     resolution:
@@ -8531,13 +8580,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
-  /@types/node-fetch/2.5.7:
-    dependencies:
-      '@types/node': 14.14.20
-      form-data: 3.0.0
-    dev: false
-    resolution:
-      integrity: sha512-o2WVNf5UhWRkxlf6eq+jMZDu7kjgpgJfl4xVNlvryc95O/6F2ld8ztKX+qu+Rjyet93WAWm5LjeX9H5FGkODvw==
   /@types/node-fetch/2.5.8:
     dependencies:
       '@types/node': 14.14.21
@@ -8955,7 +8997,7 @@ packages:
       integrity: sha512-Fx+NpfOO0CpeYX2g9bkvX8O5qh9wrU1sOF4g8sft4Mu7z+qfe387YlyY8w8daDyDsKY5vUxM0yxkAYnbkRbZEw==
   /@types/webpack-sources/2.1.0:
     dependencies:
-      '@types/node': 14.14.20
+      '@types/node': 14.14.21
       '@types/source-list-map': 0.1.2
       source-map: 0.7.3
     resolution:
@@ -8973,12 +9015,11 @@ packages:
   /@types/webpack/4.41.26:
     dependencies:
       '@types/anymatch': 1.3.1
-      '@types/node': 14.14.20
+      '@types/node': 14.14.21
       '@types/tapable': 1.0.6
       '@types/uglify-js': 3.11.1
       '@types/webpack-sources': 2.1.0
       source-map: 0.6.1
-    dev: true
     resolution:
       integrity: sha512-7ZyTfxjCRwexh+EJFwRUM+CDB2XvgHl4vfuqf1ZKrgGvcS5BrNvPQqJh3tsZ0P6h6Aa1qClVHaJZszLPzpqHeA==
   /@types/websocket/1.0.1:
@@ -9318,7 +9359,7 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-d7fHVGNbpMFhrwyiQrXlbmjtpmgKI3y0ns+THQNjA1exk6TY8tb6ZmUYn8KVXdCRjZUsvjedNpev/FO8OTTSyQ==
-  /@wessberg/rollup-plugin-ts/1.3.8_rollup@2.36.1:
+  /@wessberg/rollup-plugin-ts/1.3.8_rollup@2.36.2:
     dependencies:
       '@babel/core': 7.12.10
       '@babel/plugin-proposal-async-generator-functions': 7.12.12_@babel+core@7.12.10
@@ -9330,7 +9371,7 @@ packages:
       '@babel/plugin-transform-runtime': 7.12.10_@babel+core@7.12.10
       '@babel/preset-env': 7.12.11_@babel+core@7.12.10
       '@babel/runtime': 7.12.5
-      '@rollup/pluginutils': 4.1.0_rollup@2.36.1
+      '@rollup/pluginutils': 4.1.0_rollup@2.36.2
       '@types/babel__core': 7.1.12
       '@wessberg/browserslist-generator': 1.0.42
       '@wessberg/stringutil': 1.0.19
@@ -9338,7 +9379,7 @@ packages:
       browserslist: 4.16.1
       chalk: 4.1.0
       magic-string: 0.25.7
-      rollup: 2.36.1
+      rollup: 2.36.2
       slash: 3.0.0
       tslib: 2.1.0
     dev: true
@@ -9917,7 +9958,7 @@ packages:
       integrity: sha1-z+nYwmYoudxa7MYqn12PHzUsEZU=
   /array-includes/3.1.2:
     dependencies:
-      call-bind: 1.0.1
+      call-bind: 1.0.2
       define-properties: 1.1.3
       es-abstract: 1.18.0-next.1
       get-intrinsic: 1.0.2
@@ -9965,7 +10006,7 @@ packages:
       integrity: sha1-qJS3XUvE9s1nnvMkSp/Y9Gri1Cg=
   /array.prototype.flat/1.2.4:
     dependencies:
-      call-bind: 1.0.1
+      call-bind: 1.0.2
       define-properties: 1.1.3
       es-abstract: 1.18.0-next.1
     dev: false
@@ -9975,7 +10016,7 @@ packages:
       integrity: sha512-4470Xi3GAPAjZqFcljX2xzckv1qeKPizoNkiS0+O4IoPR2ZNpcjE0pkhdihlDouK+x6QOast26B4Q/O9DJnwSg==
   /array.prototype.flatmap/1.2.4:
     dependencies:
-      call-bind: 1.0.1
+      call-bind: 1.0.2
       define-properties: 1.1.3
       es-abstract: 1.18.0-next.1
       function-bind: 1.1.1
@@ -11778,6 +11819,22 @@ packages:
       fsevents: 2.3.1
     resolution:
       integrity: sha512-JgQM9JS92ZbFR4P90EvmzNpSGhpPBGBSj10PILeDyYFwp4h2/D9OM03wsJ4zW1fEp4ka2DGrnUeD7FuvQ2aZ2Q==
+  /chokidar/3.5.1:
+    dependencies:
+      anymatch: 3.1.1
+      braces: 3.0.2
+      glob-parent: 5.1.1
+      is-binary-path: 2.1.0
+      is-glob: 4.0.1
+      normalize-path: 3.0.0
+      readdirp: 3.5.0
+    dev: true
+    engines:
+      node: '>= 8.10.0'
+    optionalDependencies:
+      fsevents: 2.3.1
+    resolution:
+      integrity: sha512-9+s+Od+W0VJJzawDma/gvBNQqkTiqYTWLuZoyAsivsI4AaWTCzHG06/TMjsf1cYe9Cb97UCEhjz7HvnPk2p/tw==
   /chownr/1.1.4:
     resolution:
       integrity: sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==
@@ -14163,11 +14220,9 @@ packages:
     resolution:
       integrity: sha512-/q1v9O+ji387xeYCRKf/C/FTSlQTHklfEH+GvXK6fb/n01dO9lm1k/theE1ZpfljxogDCLNXo8vnXIOmjY18XA==
   /emojibase-regex/5.1.0:
-    dev: false
     resolution:
       integrity: sha512-V/pU5d1smYqD6//J7yfrJLOmIH+oG51bUxGgdFSW6oDMghYKKFYp6+SKu3MZpWDzmKETZPka0Ah+f0ai92CN0A==
   /emojibase/5.1.0:
-    dev: false
     resolution:
       integrity: sha512-Jj6jYwic/msP0I3Nwp9Kj7EDH1/aQ35rGrBdYC/cFtas70CK2Br95AWIjZytXYpSCKLjW6YC4IduZg74sd/tlA==
   /emojis-list/2.1.0:
@@ -17379,7 +17434,7 @@ packages:
     dependencies:
       '@types/html-minifier-terser': 5.1.1
       '@types/tapable': 1.0.6
-      '@types/webpack': 4.41.25
+      '@types/webpack': 4.41.26
       html-minifier-terser: 5.1.1
       loader-utils: 1.4.0
       lodash: 4.17.20
@@ -17398,7 +17453,7 @@ packages:
     dependencies:
       '@types/html-minifier-terser': 5.1.1
       '@types/tapable': 1.0.6
-      '@types/webpack': 4.41.25
+      '@types/webpack': 4.41.26
       html-minifier-terser: 5.1.1
       loader-utils: 1.4.0
       lodash: 4.17.20
@@ -17686,7 +17741,6 @@ packages:
     resolution:
       integrity: sha512-soFhflCVWLfRNOPU3iv5Z9VUdT44xFRbzjLsEzSr5AQmgqPMTHdU3PMT1Cf1ssx8fLNJDA1juftYl+PUcv3MqA==
   /idb-keyval/5.0.1:
-    dev: false
     resolution:
       integrity: sha512-bfi+Znn6oSPPgGcVUj2tYMIOQ5TD6V1qj50SdKQecGZx9lqUATcQ7ArHOt9sPcEhACoYe//yr2igmS6SMc59SA==
   /ieee754/1.1.13:
@@ -21014,7 +21068,6 @@ packages:
     dependencies:
       '@babel/runtime': 7.12.5
       remove-accents: 0.4.2
-    dev: false
     resolution:
       integrity: sha512-sKPMf4kbF7Dm5Crx0bbfLpokK68PUJ/0STUIOPa1ZmTZEA3lCaPK3gapQR573oLmvdkTfGojzySkIwuq6Z6xRQ==
   /material-colors/1.2.6:
@@ -22542,7 +22595,7 @@ packages:
       integrity: sha512-ixT2L5THXsApyiUPYKmW+2EHpXXe5Ii3M+f4e+aJFAHao5amFRW6J0OO6c/LU8Be47utCx2GL89hxGB6XSmKuQ==
   /object.entries/1.1.3:
     dependencies:
-      call-bind: 1.0.1
+      call-bind: 1.0.2
       define-properties: 1.1.3
       es-abstract: 1.18.0-next.1
       has: 1.0.3
@@ -22553,7 +22606,7 @@ packages:
       integrity: sha512-ym7h7OZebNS96hn5IJeyUmaWhaSM4SVtAPPfNLQEI2MYWCO2egsITb9nab2+i/Pwibx+R0mtn+ltKJXRSeTMGg==
   /object.fromentries/2.0.3:
     dependencies:
-      call-bind: 1.0.1
+      call-bind: 1.0.2
       define-properties: 1.1.3
       es-abstract: 1.18.0-next.1
       has: 1.0.3
@@ -26655,7 +26708,6 @@ packages:
     resolution:
       integrity: sha512-q54ra2QutYDZpuSnFjmeagmEiN9IMo56/zz5dDNitzKD23oFRw77cWo4TsrAdmdkPiEn8mxlrTqxnkujDbEGww==
   /remove-accents/0.4.2:
-    dev: false
     resolution:
       integrity: sha1-CkPTqq4egNuRngeuJUsoXZ4ce7U=
   /remove-trailing-separator/1.1.0:
@@ -26990,10 +27042,10 @@ packages:
       node: '>=8.3'
     resolution:
       integrity: sha512-oC/8NqumGYuphkqrfszOHUUIwzKsaHBICw6QRwT5uD07gvePTS+HW+GFwu6f9K8W02CUuTvtIM9AWJrbj4wE1A==
-  /rollup-plugin-svelte/7.0.0_rollup@2.36.1+svelte@3.31.2:
+  /rollup-plugin-svelte/7.0.0_rollup@2.36.2+svelte@3.31.2:
     dependencies:
       require-relative: 0.8.7
-      rollup: 2.36.1
+      rollup: 2.36.2
       rollup-pluginutils: 2.8.2
       svelte: 3.31.2
     dev: true
@@ -27004,11 +27056,11 @@ packages:
       svelte: '>=3.5.0'
     resolution:
       integrity: sha512-cw4yv/5v1NQV3nPbpOJtikgkB+9mfSJaqKUdq7x5fVQJnwLtcdc2JOszBs5pBY+SemTs5pmJbdEMseEavbUtjQ==
-  /rollup-plugin-terser/7.0.2_rollup@2.36.1:
+  /rollup-plugin-terser/7.0.2_rollup@2.36.2:
     dependencies:
       '@babel/code-frame': 7.12.11
       jest-worker: 26.6.2
-      rollup: 2.36.1
+      rollup: 2.36.2
       serialize-javascript: 4.0.0
       terser: 5.5.1
     dev: true
@@ -27023,6 +27075,7 @@ packages:
     resolution:
       integrity: sha512-EEp9NhnUkwY8aif6bxgovPHMoMoNr2FulJziTndpt5H9RdwC47GSGuII9XxpSdzVGM0GWrNPHV6ie1LTNJPaLQ==
   /rollup/2.36.1:
+    dev: false
     engines:
       node: '>=10.0.0'
     hasBin: true
@@ -27030,6 +27083,15 @@ packages:
       fsevents: 2.1.3
     resolution:
       integrity: sha512-eAfqho8dyzuVvrGqpR0ITgEdq0zG2QJeWYh+HeuTbpcaXk8vNFc48B7bJa1xYosTCKx0CuW+447oQOW8HgBIZQ==
+  /rollup/2.36.2:
+    dev: true
+    engines:
+      node: '>=10.0.0'
+    hasBin: true
+    optionalDependencies:
+      fsevents: 2.1.3
+    resolution:
+      integrity: sha512-qjjiuJKb+/8n0EZyQYVW+gFU4bNRBcZaXVzUgSVrGw0HlQBlK2aWyaOMMs1Ufic1jV69b9kW3u3i9B+hISDm3A==
   /rope-sequence/1.3.2:
     dev: false
     resolution:
@@ -27661,7 +27723,7 @@ packages:
       integrity: sha512-ggLesLtu2xp+ZxI+ysJTmNjh2U0TsC+rQ/pfED9bUZZ4DKefP27D+7YJVVTvKsmjLpIi9jAa7itwDGkDDmt1GQ==
   /side-channel/1.0.4:
     dependencies:
-      call-bind: 1.0.1
+      call-bind: 1.0.2
       get-intrinsic: 1.0.2
       object-inspect: 1.9.0
     dev: false
@@ -28425,7 +28487,7 @@ packages:
       integrity: sha512-zUz5JD+tgqtuDjMhwIg5uFVV3dtqZ9yQJlZVfq4I01/K5Paj5UHj7VyrQOJvzawSVlKpObApbfD0Ed6yJc+1eg==
   /string.prototype.matchall/4.0.3:
     dependencies:
-      call-bind: 1.0.1
+      call-bind: 1.0.2
       define-properties: 1.1.3
       es-abstract: 1.18.0-next.1
       has-symbols: 1.0.1
@@ -28782,10 +28844,10 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-zoE5/e+dnEijk6ASB6/qrK+oYdm2do1hjoLWrqUC/8WEIW1gbxFcKuBof7sW8ArN6e+AYvsE8HBGiVRWL/F5CA==
-  /svelte-check/1.1.27_svelte@3.31.2:
+  /svelte-check/1.1.28_svelte@3.31.2:
     dependencies:
       chalk: 4.1.0
-      chokidar: 3.5.0
+      chokidar: 3.5.1
       glob: 7.1.6
       import-fresh: 3.3.0
       minimist: 1.2.5
@@ -28798,7 +28860,7 @@ packages:
     peerDependencies:
       svelte: ^3.24.0
     resolution:
-      integrity: sha512-ashkoqmzOFXe+bI50RvciE2+RBwU+NmjLJeDc72DmWrNjLVj+f3oJcRp0nIeCGeEi4qHCXNGFJg2lzQdUHkT8g==
+      integrity: sha512-jp1i8JImIwyH8gp2G9nLZ1+HXUgxPbuuT4StzeAvHdQ27b0u8XANoODcjl2w15i1J33EiH4S4CE9M3o9kau4cg==
   /svelte-preprocess/4.6.1_svelte@3.31.2:
     dependencies:
       '@types/pug': 2.0.4
@@ -28941,6 +29003,16 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-0mE5BLY3K8wg3+HrYfzpiKbIM44IGcg8uINED8ri22EdQbLvGecOHjRtkrNAlphbiU5kyGyqoBlIaukL45fs2Q==
+  /svgmoji/2.0.0:
+    dependencies:
+      '@babel/runtime': 7.12.5
+      '@svgmoji/blob': 2.0.0_@svgmoji+core@2.0.0
+      '@svgmoji/core': 2.0.0
+      '@svgmoji/noto': 2.0.0_@svgmoji+core@2.0.0
+      '@svgmoji/openmoji': 2.0.0_@svgmoji+core@2.0.0
+      '@svgmoji/twemoji': 2.0.0_@svgmoji+core@2.0.0
+    resolution:
+      integrity: sha512-lYy0h56Avmuq8ttIpCsJqD1PNXzeS+Ri/ktRrdI5Orl3DYUxiMp70/wsimpjPC8RUSeDeepZTJDX0dySVSIE/A==
   /svgo/1.3.2:
     dependencies:
       chalk: 2.4.2
@@ -29733,26 +29805,26 @@ packages:
   /typedarray/0.0.6:
     resolution:
       integrity: sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-  /typedoc-default-themes/0.12.1:
+  /typedoc-default-themes/0.12.4:
     dev: false
     engines:
       node: '>= 8'
     resolution:
-      integrity: sha512-6PEvV+/kWAJeUwEtrKgIsZQSbybW5DGCr6s2mMjHsDplpgN8iBHI52UbA+2C+c2TMCxBNMK9TMS6pdeIdwsLSw==
-  /typedoc-plugin-external-module-name/4.0.6_typedoc@0.20.14:
+      integrity: sha512-EZiXBUpogsYWe0dLgy47J8yRZCd+HAn9woGzO28XJxxSCSwZRYGKeQiw1KjyIcm3cBtLWUXiPD5+Bgx24GgZjg==
+  /typedoc-plugin-external-module-name/4.0.6_typedoc@0.20.16:
     dependencies:
       lodash: 4.17.20
       semver: 7.3.4
-      typedoc: 0.20.14
+      typedoc: 0.20.16
     dev: false
     peerDependencies:
       typedoc: '>=0.7.0 <0.20.0'
     resolution:
       integrity: sha512-WqJW5gbfeQD7VA96p5eRFkVlPPGXfpaAo7M/sNOeBwSBTRylKYX15kAVaGP6iM/VhXtDagTMyKhwG97sENfKHA==
-  /typedoc-plugin-markdown/3.4.0_typedoc@0.20.14:
+  /typedoc-plugin-markdown/3.4.0_typedoc@0.20.16:
     dependencies:
       handlebars: 4.7.6
-      typedoc: 0.20.14
+      typedoc: 0.20.16
     dev: false
     engines:
       node: '>=10.0.0'
@@ -29760,7 +29832,7 @@ packages:
       typedoc: '>=0.20.0'
     resolution:
       integrity: sha512-aHLWI4jeSpSDgMbRByinRp+b2u4kHXySiccZc7lKSExH4Md44ds21oH0g+xZ5lBv9dhZdTz7mhTCrbAm5Nh24w==
-  /typedoc/0.20.14:
+  /typedoc/0.20.16:
     dependencies:
       colors: 1.4.0
       fs-extra: 9.0.1
@@ -29772,7 +29844,7 @@ packages:
       progress: 2.0.3
       shelljs: 0.8.4
       shiki: 0.2.7
-      typedoc-default-themes: 0.12.1
+      typedoc-default-themes: 0.12.4
     dev: false
     engines:
       node: '>= 10.8.0'
@@ -29780,7 +29852,7 @@ packages:
     peerDependencies:
       typescript: 3.9.x || 4.0.x || 4.1.x
     resolution:
-      integrity: sha512-9bsZp5/qkl+gDSv9DRvHbfbY8Sr0tD8fKx7hNIvcluxeAFzBCEo9o0qDCdLUZw+/axbfd9TaqHvSuCVRu+YH6Q==
+      integrity: sha512-xqIL8lT6ZE3QpP0GN30ckeTR05NSEkrP2pXQlNhC0OFkbvnjqJtDUcWSmCO15BuYyu4qsEbZT+tKYFEAt9Jxew==
   /typescript-plugin-css-modules/3.0.1_typescript@4.1.3:
     dependencies:
       dotenv: 8.2.0

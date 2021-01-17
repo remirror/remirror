@@ -41,6 +41,8 @@ import {
   ToggleBlockItemProps,
   toggleWrap,
   wrapIn,
+  replaceText,
+  ReplaceTextProps,
 } from '@remirror/core-utils';
 import { CoreMessages as Messages } from '@remirror/messages';
 import { Mark } from '@remirror/pm/model';
@@ -845,6 +847,17 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
 
       return true;
     };
+  }
+
+  /**
+   * Replaces text with an optional appended string at the end. The replacement
+   * can be text, or a custom node.
+   *
+   * @param props - see [[`ReplaceTextProps`]]
+   */
+  @command()
+  replaceText(props: ReplaceTextProps): CommandFunction {
+    return replaceText(props);
   }
 
   /**

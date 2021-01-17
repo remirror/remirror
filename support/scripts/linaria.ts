@@ -21,7 +21,7 @@ import postcssImport from 'postcss-import';
 import postcssNested from 'postcss-nested';
 import prettier from 'prettier';
 
-import { baseDir, log, rm } from './helpers';
+import { baseDir, rm } from './helpers';
 
 /**
  * The files to check when searching for linaria based css strings.
@@ -66,17 +66,16 @@ const groupingRegex = /([\w-]+)\.ts$/;
  *   "react-social": ["packages/@remirror/react-social/src/components/social-mentions.tsx"],
  * }
  * ```
- *
- * @type {{ [scopedPackageIdentifier: string]: File[] }}
  */
 const groupedFiles = groupBy(files, (file) => {
   const match = file.match(groupingRegex);
+  const captured = match?.[1];
 
-  if (!match || !match[1]) {
+  if (!captured) {
     throw new Error(`Invalid file ${file}`);
   }
 
-  return match[1];
+  return captured.replace('-theme.ts', '.ts');
 });
 
 /**

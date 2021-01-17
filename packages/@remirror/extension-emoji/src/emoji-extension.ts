@@ -1,74 +1,51 @@
+import EMOJI_REGEX from 'emojibase-regex/emoji';
+import EMOTICON_REGEX from 'emojibase-regex/emoticon';
+import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import escapeStringRegex from 'escape-string-regexp';
-import { matchSorter } from 'match-sorter';
+import { Moji, SpriteCollection } from 'svgmoji';
 
 import {
   ApplySchemaAttributes,
+  command,
   CommandFunction,
-  entries,
-  ErrorConstant,
   extension,
-  FromToProps,
-  Handler,
-  includes,
+  ExtensionTag,
+  GetAttributes,
+  getTextSelection,
   InputRule,
-  invariant,
   isElementDomNode,
-  isNumber,
-  isPlainObject,
-  keys,
+  isString,
   NodeExtension,
   NodeExtensionSpec,
+  nodeInputRule,
   NodeSpecOverride,
-  object,
   omitExtraAttributes,
   plainInputRule,
-  range,
-  Static,
-  take,
-  Value,
-  values,
-  within,
-  helper,
-  command,
-  Helper,
+  PrimitiveSelection,
+  ShouldSkipFunction,
 } from '@remirror/core';
-import { ValueOf } from 'type-fest';
-import type { SuggestChangeHandlerProps, Suggester } from '@remirror/pm/suggest';
+import type { Suggester } from '@remirror/pm/suggest';
 import { ExtensionEmoji } from '@remirror/theme';
-import { FlatCompactEmoji, fetchEmojis } from 'emojibase';
-import EMOTICON_REGEX from 'emojibase-regex/emoticon';
-import groups from 'emojibase-data/meta/groups.json';
 
-export const DEFAULT_FREQUENTLY_USED: Names[] = [
-  '+1',
-  'grinning',
-  'kissing_heart',
-  'heart_eyes',
-  'laughing',
-  'stuck_out_tongue_winking_eye',
-  'sweat_smile',
-  'joy',
-  'scream',
-  'disappointed',
-  'unamused',
-  'weary',
-  'sob',
-  'sunglasses',
-  'heart',
-  'poop',
-];
-
-const EMOJI_DATA_HEXCODE = 'data-emoji-hexcode';
+import {
+  AddEmojiCommandOptions,
+  DefaultMoji,
+  EMOJI_DATA_ATTRIBUTE,
+  EmojiAttributes,
+  EmojiOptions,
+} from './emoji-utils';
 
 @extension<EmojiOptions>({
   defaultOptions: {
     plainText: false,
-    defaultEmoji: DEFAULT_FREQUENTLY_USED,
+    data: [],
+    identifier: 'emoji',
+    fallback: ':red_question_mark:',
+    moji: 'noto',
     suggestionCharacter: ':',
-    maxResults: 20,
   },
-  handlerKeys: ['onChange'],
   staticKeys: ['plainText'],
+  handlerKeys: ['suggestEmoji'],
 })
 export class EmojiExtension extends NodeExtension<EmojiOptions> {
   /**
@@ -78,10 +55,21 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
     return 'emoji' as const;
   }
 
-  /**
-   * Keep track of the frequently used list.
-   */
-  private frequentlyUsed: EmojiObject[] = populateFrequentlyUsed(this.options.defaultEmoji);
+  private _moji?: Moji;
+
+  get moji(): Moji {
+    return (this._moji ??= isString(this.options.moji)
+      ? new DefaultMoji[this.options.moji]({
+          data: this.options.data,
+          type: SpriteCollection.All,
+          fallback: this.options.fallback,
+        })
+      : this.options.moji);
+  }
+
+  createTags() {
+    return [ExtensionTag.InlineNode];
+  }
 
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
     return {
@@ -89,26 +77,46 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
       draggable: false,
       ...override,
       inline: true,
+
       atom: true,
-      attrs: { ...extra.defaults(), hexcode: {}, unicode: {} },
+      attrs: { ...extra.defaults(), code: {} },
       parseDOM: [
         {
-          tag: `span[${EMOJI_DATA_HEXCODE}`,
+          tag: `span[${EMOJI_DATA_ATTRIBUTE}`,
           getAttrs: (node) => {
             if (!isElementDomNode(node)) {
               return;
             }
 
-            const hexcode = node.getAttribute(EMOJI_DATA_HEXCODE);
-            return { ...extra.parse(node), skin, native, hexcode, shortcode };
+            const code = node.getAttribute(EMOJI_DATA_ATTRIBUTE);
+            return { ...extra.parse(node), code };
           },
         },
       ],
 
       toDOM: (node) => {
-        const attrs = omitExtraAttributes(node.attrs, extra);
+        const { code } = omitExtraAttributes(node.attrs, extra) as EmojiAttributes;
+        const emoji = this.moji.find(code) ?? this.moji.fallback;
 
-        return ['span', {}, ['img', {}]];
+        return [
+          'span',
+          {
+            class: ExtensionEmoji.EMOJI_WRAPPER,
+            [EMOJI_DATA_ATTRIBUTE]: emoji[this.options.identifier],
+          },
+          [
+            'img',
+            {
+              role: 'presentation',
+              class: ExtensionEmoji.EMOJI_IMAGE,
+              'aria-label': emoji.annotation,
+              alt: emoji.annotation,
+              // TODO use the emoji rather than the code once `svgmoji` supports it.
+              src: this.moji.url(code),
+            },
+          ],
+          emoji.emoji,
+        ];
       },
     };
   }
@@ -117,109 +125,140 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
    * Manage input rules for emoticons.
    */
   createInputRules(): InputRule[] {
+    // Use plain text when this option is set.
+    if (this.options.plainText) {
+      return [
+        // Replace emoticons
+        plainInputRule({
+          regexp: new RegExp(`(${EMOTICON_REGEX.source})[\\s]$`),
+          transformMatch: ([full, partial]) => {
+            if (!full || !partial) {
+              return null;
+            }
+
+            const emoji = this.moji.find(partial);
+            return emoji ? full.replace(partial, emoji.emoji) : null;
+          },
+        }),
+
+        // Replace matching shortcodes
+        plainInputRule({
+          regexp: new RegExp(`(${SHORTCODE_REGEX.source})$`),
+          transformMatch: ([, match]) => {
+            if (!match) {
+              return null;
+            }
+
+            const emoji = this.moji.find(match);
+            return emoji ? emoji.emoji : null;
+          },
+        }),
+      ];
+    }
+
+    // Return true when the input rule should be skipped.
+    const shouldSkip: ShouldSkipFunction = ({ captureGroup }) => {
+      // eslint-disable-next-line unicorn/prefer-array-some
+      return !captureGroup || !this.moji.find(captureGroup);
+    };
+
+    // Capture the attributes for the emoji
+    const getAttributes: GetAttributes = ([, match]) => {
+      if (!match) {
+        return;
+      }
+
+      const emoji = this.moji.find(match);
+
+      return emoji ? { code: emoji[this.options.identifier] } : undefined;
+    };
+
+    // The current emoji node type.
+    const type = this.type;
+
     return [
-      // Emoticons
-      plainInputRule({
-        regexp: emoticonRegex,
-        transformMatch: ([full, partial]) => {
-          const emoji = getEmojiFromEmoticon(partial);
-          return emoji ? full.replace(partial, emoji.char) : null;
+      // Replace emoticons
+      nodeInputRule({
+        type,
+        shouldSkip,
+        getAttributes,
+        regexp: new RegExp(`(${EMOTICON_REGEX.source})[\\s]$`),
+        beforeDispatch: ({ tr }) => {
+          tr.insertText(' ');
         },
       }),
 
-      // Emoji Names
-      plainInputRule({
-        regexp: /:([\w-]+):$/,
-        transformMatch: ([, match]) => {
-          const emoji = getEmojiByName(match);
-          return emoji ? emoji.char : null;
-        },
+      // Replace matching shortcodes
+      nodeInputRule({
+        type,
+        shouldSkip,
+        getAttributes,
+        regexp: new RegExp(`(${SHORTCODE_REGEX.source})$`),
+      }),
+
+      // Replace matching shortcodes
+      nodeInputRule({
+        type,
+        shouldSkip,
+        getAttributes,
+        regexp: new RegExp(`(${EMOJI_REGEX.source})`),
       }),
     ];
   }
 
   /**
-   * Add the commands which are used to manage the creation of emojis and
-   * insertion into the editor.
+   * Insert an emoji into the document at the requested location by name
+   *
+   * The range is optional and if not specified the emoji will be inserted
+   * at the current selection.
+   *
+   * @param identifier - the hexcode | unicode | shortcode | emoticon of the emoji to insert.
+   * @param [options] - the options when inserting the emoji.
    */
-  createCommands() {
-    const commands = {
-      /**
-       * Insert an emoji into the document at the requested location by name
-       *
-       * The range is optional and if not specified the emoji will be inserted
-       * at the current selection.
-       *
-       * @param name - the emoji to insert
-       * @param [options] - the options when inserting the emoji.
-       */
-      insertEmojiByName: (
-        name: string,
-        options: EmojiCommandOptions = object(),
-      ): CommandFunction => (props) => {
-        const emoji = getEmojiByName(name);
+  @command()
+  addEmoji(identifier: string, options: AddEmojiCommandOptions = {}): CommandFunction {
+    return (props) => {
+      const { dispatch, tr } = props;
+      const emoji = this.moji.find(identifier);
 
-        if (!emoji) {
-          return false;
-        }
+      if (!emoji) {
+        // Nothing to do here since no emoji found.
+        return false;
+      }
 
-        return commands.insertEmojiByObject(emoji, options)(props);
-      },
+      if (!this.options.plainText) {
+        return this.store.commands.replaceText.original({
+          type: this.type,
+          attrs: { code: emoji[this.options.identifier] },
+          selection: options.selection,
+        })(props);
+      }
 
-      /**
-       * Insert an emoji into the document at the requested location.
-       *
-       * The range is optional and if not specified the emoji will be inserted
-       * at the current selection.
-       *
-       * @param emoji - the emoji object to use.
-       * @param [range] - the from/to position to replace.
-       */
-      insertEmojiByObject: (
-        emoji: EmojiObject,
-        { from, to, skinVariation }: EmojiCommandOptions = object(),
-      ): CommandFunction => ({ tr, dispatch }) => {
-        const emojiChar = skinVariation ? emoji.char + SKIN_VARIATIONS[skinVariation] : emoji.char;
-        tr.insertText(emojiChar, from, to);
+      const { from, to } = getTextSelection(options.selection ?? tr.selection, tr.doc);
 
-        if (dispatch) {
-          dispatch(tr);
-        }
+      dispatch?.(tr.insertText(emoji.emoji, from, to));
 
-        return true;
-      },
-
-      /**
-       * Inserts the suggestion character into the current position in the
-       * editor in order to activate the suggestion popup.
-       */
-      suggestEmoji: ({ from, to }: Partial<FromToProps> = object()): CommandFunction => ({
-        state,
-        dispatch,
-      }) => {
-        if (dispatch) {
-          dispatch(state.tr.insertText(this.options.suggestionCharacter, from, to));
-        }
-
-        return true;
-      },
+      return true;
     };
-
-    return commands;
   }
 
   /**
-   * Manage the creation of helpers for this extension.
+   * Inserts the suggestion character into the current position in the
+   * editor in order to activate the suggestion popup.
    */
-  createHelpers() {
-    return {
-      /**
-       * Update the emoji which are displayed to the user when the query is not
-       * specific enough.
-       */
-      updateFrequentlyUsed: (names: NamesAndAliases[]) => {
-        this.frequentlyUsed = populateFrequentlyUsed(names);
-      },
+  @command()
+  suggestEmoji(selection?: PrimitiveSelection): CommandFunction {
+    return ({ tr, dispatch }) => {
+      const { from, to } = getTextSelection(selection ?? tr.selection, tr.doc);
+      const text = this.store.helpers.getTextBetween(from - 1, to, tr.doc);
+
+      if (text.includes(this.options.suggestionCharacter)) {
+        return false;
+      }
+
+      dispatch?.(tr.insertText(this.options.suggestionCharacter, from, to));
+
+      return true;
     };
   }
 
@@ -235,292 +274,22 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
       name: this.name,
       suggestTag: 'span',
       onChange: (props) => {
-        const { range, query } = props;
-
-        const emojiMatches =
-          query.full.length === 0
-            ? this.frequentlyUsed
-            : sortEmojiMatches(query.full, this.options.maxResults);
-
-        const create = this.store.commands.insertEmojiByObject;
-
-        const command = (emoji: EmojiObject, skinVariation?: SkinVariation) => {
-          invariant(emoji, {
-            message: 'An emoji object is required when calling the emoji suggesters command',
-            code: ErrorConstant.EXTENSION,
-          });
-
-          const { from, to } = range;
-          create(emoji, { skinVariation, from, to });
-        };
-
-        this.options.onChange({ ...props, emojiMatches }, command);
+        // When the change handler is called call the extension handler
+        // `suggestEmoji` with props that can be used to trigger the emoji.
+        this.options.suggestEmoji({
+          moji: this.moji,
+          query: props.query.full,
+          text: props.text.full,
+          range: props.range,
+          exit: !!props.exitReason,
+          change: !!props.changeReason,
+          apply: (code: string) => {
+            this.store.commands.addEmoji(code, { selection: props.range });
+          },
+        });
       },
     };
   }
-}
-
-export interface EmojiCommandOptions extends Partial<FromToProps> {
-  /**
-   * The skin variation which is a number between `0` and `4`.
-   */
-  skinVariation?: SkinVariation;
-}
-
-export type Names = keyof typeof EmojiData;
-export type AliasNames = keyof typeof AliasData;
-export type Category = keyof typeof CategoryData;
-export type NamesAndAliases = Names | AliasNames;
-
-export interface EmojiObject {
-  keywords: string[];
-  char: string;
-  category: string;
-  name: string;
-  description: string;
-  skinVariations: boolean;
-}
-
-export interface EmojiChangeHandlerProps extends SuggestChangeHandlerProps {
-  /**
-   * The currently matching objects
-   *
-   * @deprecated This will be replaced with a new way of using emojis.
-   */
-  emojiMatches: EmojiObject[];
-}
-
-export type SkinVariation = 0 | 1 | 2 | 3 | 4;
-
-export type EmojiCommand = (emoji: EmojiObject, skinVariation?: SkinVariation) => void;
-export type EmojiChangeHandler = (props: EmojiChangeHandlerProps, command: EmojiCommand) => void;
-
-export interface EmojiOptions {
-  /**
-   * When true, emoji will be rendered as plain text instead of atom nodes.
-   *
-   * @default false
-   */
-  plainText?: Static<boolean>;
-
-  /**
-   * The character which will trigger the emoji suggesters popup.
-   */
-  suggestionCharacter?: string;
-
-  /**
-   * A list of the initial (frequently used) emoji displayed to the user.
-   * These are used when the query typed is less than two characters long.
-   */
-  defaultEmoji?: NamesAndAliases[];
-
-  /**
-   * Called whenever the suggestion value is updated.
-   */
-  onChange?: Handler<EmojiChangeHandler>;
-
-  /**
-   * The maximum results to show when searching for matching emoji.
-   *
-   * @default 15
-   */
-  maxResults?: number;
-
-  /**
-   * The list of emoji to import this can be imported from `@svgmoji/data`.
-   */
-  data: FlatCompactEmoji[];
-
-  /**
-   * The emoji library to use.
-   *
-   * @default 'noto'
-   */
-  emojiSet?: EmojiLibraryName;
-}
-
-export const EmojiLibrary = {
-  GoogleNoto: 'noto',
-  OpenMojiColor: 'openmoji-color',
-  OpenMojiBlack: 'openmoji-black',
-  TwitterEmoji: 'twemoji',
-  Blob: 'blobmoji',
-};
-
-export type EmojiLibraryName = ValueOf<typeof EmojiLibrary>;
-
-export type EmojiObjectRecord = Record<Names, EmojiObject>;
-
-/* Taken from
-https://github.com/tommoor/react-emoji-render/blob/bb67d5e344bb2b91a010461d84184052b1eb4212/data/asciiAliases.js
-and emojiIndex.emoticons */
-export const EMOTICONS: Record<string, string[]> = {
-  angry: ['>:(', '>:-('],
-  blush: [':")', ':-")'],
-  broken_heart: ['</3', '<\\3'],
-  confused: [':/', ':-/', ':\\', ':-\\'],
-  cry: [":'(", ":'-(", ':,(', ':,-('],
-  frowning: [':(', ':-('],
-  heart: ['<3'],
-  imp: [']:(', ']:-('],
-  innocent: ['o:)', 'O:)', 'o:-)', 'O:-)', '0:)', '0:-)'],
-  joy: [":')", ":'-)", ':,)', ':,-)', ":'D", ":'-D", ':,D', ':,-D'],
-  kissing: [':*', ':-*'],
-  laughing: ['x-)', 'X-)', ':>', ':->'],
-  neutral_face: [':|', ':-|'],
-  open_mouth: [':o', ':-o', ':O', ':-O'],
-  rage: [':@', ':-@'],
-  smile: [':D', ':-D', 'C:', 'c:'],
-  smiley: [':)', ':-)', '=)', '=-)'],
-  smiling_imp: [']:)', ']:-)'],
-  sob: [":,'(", ":,'-(", ';(', ';-('],
-  stuck_out_tongue: [':P', ':-P', ':p', ':-p', ':b', ':-b'],
-  sunglasses: ['8-)', 'B-)', '8)'],
-  sweat: [',:(', ',:-('],
-  sweat_smile: [',:)', ',:-)'],
-  unamused: [':s', ':-S', ':z', ':-Z', ':$', ':-$'],
-  wink: [';)', ';-)'],
-  monkey_face: [':o)'],
-  kissing_heart: [':*', ':*', ':-*'],
-  slightly_smiling_face: [':)', ':)', '(:', ':-)'],
-  stuck_out_tongue_winking_eye: [';p', ';p', ';-p', ';b', ';-b', ';P', ';-P'],
-  disappointed: ['):', '):', ':(', ':-('],
-  anguished: ['D:', 'D:'],
-};
-
-/**
- * The different skin variations supported.
- */
-export const SKIN_VARIATIONS = ['🏻', '🏼', '🏽', '🏾', '🏿'] as const;
-
-/**
- * Check that the value is a valid skin variation index.
- *
- * Perhaps a controversial name...
- */
-export function isValidSkinVariation(value: unknown): value is SkinVariation {
-  return isNumber(value) && within(value, 0, 4);
-}
-
-const emojiObject: EmojiObjectRecord = rawEmojiObject as EmojiObjectRecord;
-const emoticonSet = new Set<string>();
-
-for (const emoticons of values(EMOTICONS)) {
-  emoticons.forEach((emoticon) => emoticon && emoticonSet.add(emoticon));
-}
-
-const emoticonSource = [...emoticonSet].map(escapeStringRegex).join('|');
-export const emoticonRegex = new RegExp(`(${emoticonSource})[\\s]$`);
-export const emojiNames = keys(emojiObject);
-export const emojiList = entries(emojiObject).map(([, entry]) => entry);
-export const emojiCategories = [
-  'symbols',
-  'people',
-  'animals_and_nature',
-  'food_and_drink',
-  'activity',
-  'travel_and_places',
-  'objects',
-  'flags',
-] as const;
-
-/**
- * Verifies that this is a valid and supported emoji name.
- */
-export function isEmojiName(name: unknown): name is Names {
-  return includes(emojiNames, name);
-}
-
-/**
- * Verifies that the provided names is an alias name.
- */
-export function isEmojiAliasName(name: unknown): name is AliasNames {
-  return includes(keys(aliasObject), name);
-}
-
-/**
- * Verifies that the name is either and alias or valid emoji name.
- */
-export function isValidEmojiName(name: unknown): name is NamesAndAliases {
-  return isEmojiName(name) || isEmojiAliasName(name);
-}
-
-/**
- * Verify that this is a valid emoji object
- */
-export function isValidEmojiObject(value: unknown): value is EmojiObject {
-  return !!(isPlainObject(value) && isEmojiName(value.name));
-}
-
-/**
- * Convert an alias to the correct name.
- */
-export function aliasToName(name: AliasNames): Value<typeof aliasObject> {
-  return aliasObject[name];
-}
-
-export function getEmojiByName(name: string | undefined): EmojiObject | undefined {
-  return isEmojiName(name)
-    ? emojiObject[name]
-    : isEmojiAliasName(name)
-    ? emojiObject[aliasToName(name)]
-    : undefined;
-}
-
-/**
- * Retrieve the EmojiData from an emoticon.
- *
- * @param emoticon e.g. `:-)`
- */
-export function getEmojiFromEmoticon(emoticon: string): EmojiObject | undefined {
-  const emoticonName = Object.keys(EMOTICONS).find((name) => EMOTICONS[name].includes(emoticon));
-  return getEmojiByName(emoticonName);
-}
-
-/**
- * Return a list of `maxResults` length of closest matches
- */
-export function sortEmojiMatches(query: string, maxResults = -1): FlatCompactEmoji[] {
-  const results = matchSorter(emojiList, query, {
-    keys: [
-      'unicode',
-      'tags',
-      'shortcodes',
-      'annotation',
-      (item) => item.description.replace(/\W/g, ''),
-    ],
-    threshold: matchSorter.rankings.CONTAINS,
-  });
-
-  return take(results, maxResults);
-}
-
-/**
- * Keeps track of the frequently used list. Eventually restore this
- * automatically from an async localStorage.
- */
-export function populateFrequentlyUsed(names: NamesAndAliases[]): EmojiObject[] {
-  const frequentlyUsed: EmojiObject[] = [];
-
-  for (const name of names) {
-    const emoji = getEmojiByName(name);
-
-    if (emoji) {
-      frequentlyUsed.push(emoji);
-    }
-  }
-
-  return frequentlyUsed;
-}
-
-/**
- * Return a string array of hexadecimals representing the hex code for an emoji
- */
-export function getHexadecimalsFromEmoji(emoji: string): string[] {
-  return range(emoji.length / 2).map((index) => {
-    const codePoint = emoji.codePointAt(index * 2);
-    return codePoint ? codePoint.toString(16) : '';
-  });
 }
 
 declare global {

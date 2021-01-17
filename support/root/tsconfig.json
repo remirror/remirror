@@ -18,6 +18,11 @@
       { "name": "typescript-plugin-css-modules" }
     ]
   },
-  "include": ["packages/*/src", "packages/@remirror/*/src", "global.d.ts"],
+  "include": [
+    "packages/*/src",
+    "packages/@remirror/*/src",
+    "global.d.ts",
+    "packages/@remirror/react-components/__tests__"
+  ],
   "exclude": ["packages/@remirror/svelte", "**/node_modules/**", "node_modules"]
 }

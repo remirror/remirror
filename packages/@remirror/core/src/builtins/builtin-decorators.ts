@@ -170,7 +170,14 @@ export type KeyboardShortcutFunction<Options extends Shape = Shape> = (
 ) => KeyboardShortcut;
 export type KeyboardShortcutValue = Listable<
   LiteralUnion<
-    'Enter' | 'ArrowDown' | 'ArrowUp' | 'ArrowLeft' | 'ArrowRight' | 'Esc' | 'Delete' | 'Backspace',
+    | 'Enter'
+    | 'ArrowDown'
+    | 'ArrowUp'
+    | 'ArrowLeft'
+    | 'ArrowRight'
+    | 'Escape'
+    | 'Delete'
+    | 'Backspace',
     string
   >
 >;

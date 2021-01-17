@@ -50,7 +50,10 @@ export interface StateJSON {
   selection: FromToProps;
 }
 
-type GetAttributesFunction = (p: string[]) => ProsemirrorAttributes | undefined;
+/**
+ * The matches array. `matches[0]` is the full match.
+ */
+type GetAttributesFunction = (matches: string[]) => ProsemirrorAttributes | undefined;
 
 /**
  * A function which takes a regex match array (strings) or a single string match
@@ -132,7 +135,14 @@ export type KeyBindingCommandFunction<Schema extends EditorSchema = EditorSchema
  */
 export type KeyBindings<Schema extends EditorSchema = EditorSchema> = Partial<
   Record<
-    'Enter' | 'ArrowDown' | 'ArrowUp' | 'ArrowLeft' | 'ArrowRight' | 'Esc' | 'Delete' | 'Backspace',
+    | 'Enter'
+    | 'ArrowDown'
+    | 'ArrowUp'
+    | 'ArrowLeft'
+    | 'ArrowRight'
+    | 'Escape'
+    | 'Delete'
+    | 'Backspace',
     KeyBindingCommandFunction<Schema>
   >
 > &

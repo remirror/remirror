@@ -61,7 +61,7 @@
     "ts-morph": "^9.1.0",
     "tslog": "^3.0.5",
     "type-fest": "^0.20.2",
-    "typedoc": "^0.20.14",
+    "typedoc": "^0.20.16",
     "typedoc-plugin-external-module-name": "^4.0.6",
     "typedoc-plugin-markdown": "^3.4.0",
     "write-json-file": "^4.3.0"

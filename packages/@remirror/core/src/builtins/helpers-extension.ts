@@ -1,6 +1,10 @@
 import { LiteralUnion } from 'type-fest';
 
-import { ErrorConstant, NULL_CHARACTER } from '@remirror/core-constants';
+import {
+  ErrorConstant,
+  LEAF_NODE_REPLACING_CHARACTER,
+  NULL_CHARACTER,
+} from '@remirror/core-constants';
 import { entries, isEmptyObject, object } from '@remirror/core-helpers';
 import type {
   AnyFunction,
@@ -8,6 +12,7 @@ import type {
   EditorStateProps,
   EmptyShape,
   ProsemirrorAttributes,
+  ProsemirrorNode,
   RemirrorJSON,
   Shape,
   StateJSON,
@@ -160,6 +165,11 @@ export class HelpersExtension extends PlainExtension {
     state = this.store.getState(),
   }: GetTextHelperOptions = {}): Helper<string> {
     return state.doc.textBetween(0, state.doc.content.size, lineBreakDivider, NULL_CHARACTER);
+  }
+
+  @helper()
+  getTextBetween(from: number, to: number, doc: ProsemirrorNode): Helper<string> {
+    return doc.textBetween(from, to, LEAF_NODE_REPLACING_CHARACTER, NULL_CHARACTER);
   }
 
   /**

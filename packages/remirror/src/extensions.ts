@@ -37,7 +37,6 @@ export * from '@remirror/extension-placeholder';
 export * from '@remirror/extension-positioner';
 export * from '@remirror/extension-search';
 export * from '@remirror/extension-strike';
-export * from '@remirror/extension-sub';
 export * from '@remirror/extension-sup';
 export * from '@remirror/extension-tables';
 export * from '@remirror/extension-text';

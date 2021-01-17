@@ -258,7 +258,7 @@ export function toggleBlockItem(toggleProps: ToggleBlockItemProps): CommandFunct
   };
 }
 
-export interface ReplaceTextProps extends Partial<RangeProps>, Partial<AttributesProps> {
+export interface ReplaceTextProps extends Partial<AttributesProps> {
   /**
    * The text to append.
    *
@@ -280,6 +280,16 @@ export interface ReplaceTextProps extends Partial<RangeProps>, Partial<Attribute
    * Whether to keep the original selection after the replacement.
    */
   keepSelection?: boolean;
+
+  /**
+   * @deprecated - use `selection` instead.
+   */
+  range?: FromToProps;
+
+  /**
+   * The selected part of the document to replace.
+   */
+  selection?: PrimitiveSelection;
 }
 
 /**
@@ -327,13 +337,13 @@ export function preserveSelection(selection: Selection, tr: Transaction): void {
  * @param props - see [[`ReplaceTextProps`]]
  */
 export function replaceText(props: ReplaceTextProps): CommandFunction {
-  const { range, attrs = {}, appendText = '', content = '', keepSelection = false } = props;
+  const { attrs = {}, appendText = '', content = '', keepSelection = false } = props;
 
   return ({ state, tr, dispatch }) => {
     const schema = state.schema;
-    const selection = tr.selection;
+    const selection = getTextSelection(props.selection ?? props.range ?? tr.selection, tr.doc);
     const index = selection.$from.index();
-    const { from, to } = range ?? selection;
+    const { from, to } = selection;
 
     const type = isString(props.type)
       ? schema.nodes[props.type] ?? schema.marks[props.type]

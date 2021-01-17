@@ -1,6 +1,7 @@
 import { ErrorConstant } from '@remirror/core-constants';
 import { invariant, isFunction, isNullOrUndefined, isString } from '@remirror/core-helpers';
 import type {
+  EditorState,
   EditorStateProps,
   GetAttributesProps,
   Mark,
@@ -30,11 +31,11 @@ export interface BeforeDispatchProps extends TransactionProps {
   end: number;
 }
 
-export interface BaseInputRuleProps {
+export interface BaseInputRuleProps extends ShouldSkip {
   /**
    * A method which can be used to add more steps to the transaction after the
    * input rule update but before the editor has dispatched to update to a new
-     state.
+   * state.
    *
    * ```ts
    * import { nodeInputRule } from 'remirror';
@@ -43,53 +44,12 @@ export interface BaseInputRuleProps {
    *   type,
    *   regexp: /abc/,
    *     beforeDispatch?: (props: BeforeDispatchProps) => void; : (tr)
-         => tr.insertText('hello')
+   *     => tr.insertText('hello')
    * });
    * ```
    */
   beforeDispatch?: (props: BeforeDispatchProps) => void;
-}
 
-export interface NodeInputRuleProps
-  extends Partial<GetAttributesProps>,
-    RegExpProps,
-    NodeTypeProps,
-    BaseInputRuleProps {}
-
-export interface PlainInputRuleProps extends RegExpProps, BaseInputRuleProps {
-  /**
-   * A function that transforms the match into the desired value.
-   */
-  transformMatch: (match: string[]) => string | null | undefined;
-}
-
-export interface UpdateCaptureTextProps {
-  /**
-   * The first capture group from the matching input rule.
-   */
-  captureGroup: string | undefined;
-
-  /**
-   * The text of the full match which was received.
-   */
-  fullMatch: string;
-
-  /**
-   * The starting position of the match relative to the `doc`.
-   */
-  start: number;
-
-  /**
-   * The end position of the match relative to the `doc`.
-   */
-  end: number;
-}
-
-interface MarkInputRuleProps
-  extends Partial<GetAttributesProps>,
-    RegExpProps,
-    MarkTypeProps,
-    BaseInputRuleProps {
   /**
    * Ignore the match when all characters in the capture group are whitespace.
    *
@@ -122,8 +82,53 @@ interface MarkInputRuleProps
    * See https://github.com/remirror/remirror/issues/574#issuecomment-678700121
    * for more context.
    */
-  updateCaptured?: (captured: UpdateCaptureTextProps) => Partial<UpdateCaptureTextProps>;
+  updateCaptured?: UpdateCaptured;
 }
+
+type UpdateCaptured = (captured: UpdateCaptureTextProps) => Partial<UpdateCaptureTextProps>;
+
+export interface NodeInputRuleProps
+  extends Partial<GetAttributesProps>,
+    RegExpProps,
+    NodeTypeProps,
+    BaseInputRuleProps {}
+
+export interface PlainInputRuleProps extends RegExpProps, BaseInputRuleProps {
+  /**
+   * A function that transforms the match into the desired value.
+   *
+   * Return `null` or `undefined` to invalidate the match.
+   */
+  transformMatch: (match: string[]) => string | null | undefined;
+}
+
+export interface UpdateCaptureTextProps {
+  /**
+   * The first capture group from the matching input rule.
+   */
+  captureGroup: string | undefined;
+
+  /**
+   * The text of the full match which was received.
+   */
+  fullMatch: string;
+
+  /**
+   * The starting position of the match relative to the `doc`.
+   */
+  start: number;
+
+  /**
+   * The end position of the match relative to the `doc`.
+   */
+  end: number;
+}
+
+interface MarkInputRuleProps
+  extends Partial<GetAttributesProps>,
+    RegExpProps,
+    MarkTypeProps,
+    BaseInputRuleProps {}
 
 /**
  * Creates an input rule based on the provided regex for the provided mark type.
@@ -136,12 +141,14 @@ export function markInputRule(props: MarkInputRuleProps): SkippableInputRule {
     ignoreWhitespace = false,
     beforeDispatch,
     updateCaptured,
+    shouldSkip,
+    invalidMarks,
   } = props;
 
   let markType: MarkType | undefined;
 
   const rule: SkippableInputRule = new InputRule(regexp, (state, match, start, end) => {
-    const { tr, schema, doc } = state;
+    const { tr, schema } = state;
 
     if (!markType) {
       markType = isString(type) ? schema.marks[type] : type;
@@ -152,43 +159,33 @@ export function markInputRule(props: MarkInputRuleProps): SkippableInputRule {
       });
     }
 
-    // These are the attributes which are added to the mark and they can be
-    // obtained from the match if a function is provided.
-    const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
-    const $from = doc.resolve(start);
-    const $to = doc.resolve(end);
-
     let captureGroup = match[1];
     let fullMatch = match[0];
 
-    if (
-      fullMatch == null ||
-      (rule.invalidMarks && markActiveInRange({ $from, $to }, rule.invalidMarks))
-    ) {
+    // These are the attributes which are added to the mark and they can be
+    // obtained from the match if a function is provided.
+    const details = gatherDetails({
+      captureGroup,
+      fullMatch,
+      end,
+      start,
+      rule,
+      state,
+      ignoreWhitespace,
+      invalidMarks,
+      shouldSkip,
+      updateCaptured,
+    });
+
+    if (!details) {
       return null;
     }
 
-    // Update the internal values with the user provided method.
-    const details = updateCaptured?.({ captureGroup, fullMatch, start, end }) ?? {};
+    ({ start, end, captureGroup, fullMatch } = details);
 
-    // Store the updated values or the original.
-    captureGroup = details.captureGroup ?? captureGroup;
-    fullMatch = details.fullMatch ?? fullMatch;
-    start = details.start ?? start;
-    end = details.end ?? end;
-
+    const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
     let markEnd = end;
     let initialStoredMarks: Mark[] = [];
-
-    // This helps prevent matches which are only whitespace from triggering an
-    // update.
-    if (ignoreWhitespace && captureGroup?.trim() === '') {
-      return null;
-    }
-
-    if (rule.shouldSkip?.({ state, captureGroup, fullMatch, start, end, ruleType: 'mark' })) {
-      return null;
-    }
 
     if (captureGroup) {
       const startSpaces = fullMatch.search(/\S/);
@@ -233,29 +230,57 @@ export function markInputRule(props: MarkInputRuleProps): SkippableInputRule {
  * found with a sequence of characters.
  */
 export function nodeInputRule(props: NodeInputRuleProps): SkippableInputRule {
-  const { regexp, type, getAttributes, beforeDispatch } = props;
+  const {
+    regexp,
+    type,
+    getAttributes,
+    beforeDispatch,
+    shouldSkip,
+    ignoreWhitespace = false,
+    updateCaptured,
+    invalidMarks,
+  } = props;
 
   const rule: SkippableInputRule = new InputRule(regexp, (state, match, start, end) => {
     const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
     const { tr, schema } = state;
     const nodeType = isString(type) ? schema.nodes[type] : type;
-    const captureGroup = match[1];
-    const fullMatch = match[0];
 
-    if (
-      fullMatch == null ||
-      rule.shouldSkip?.({ state, captureGroup, fullMatch, start, end, ruleType: 'plain' })
-    ) {
+    let captureGroup = match[1];
+    let fullMatch = match[0];
+
+    // These are the attributes which are added to the mark and they can be
+    // obtained from the match if a function is provided.
+    const details = gatherDetails({
+      captureGroup,
+      fullMatch,
+      end,
+      start,
+      rule,
+      state,
+      ignoreWhitespace,
+      invalidMarks,
+      shouldSkip,
+      updateCaptured,
+    });
+
+    if (!details) {
       return null;
     }
+
+    ({ start, end, captureGroup, fullMatch } = details);
 
     invariant(nodeType, {
       code: ErrorConstant.SCHEMA,
       message: `No node exists for ${type} in the schema.`,
     });
 
-    tr.replaceWith(start - 1, end, nodeType.create(attributes));
-    beforeDispatch?.({ tr, match, start, end });
+    tr.replaceWith(
+      nodeType.isBlock ? tr.doc.resolve(start).before() : start,
+      end,
+      nodeType.create(attributes),
+    );
+    beforeDispatch?.({ tr, match: [fullMatch, captureGroup ?? ''], start, end });
 
     return tr;
   });
@@ -268,7 +293,15 @@ export function nodeInputRule(props: NodeInputRuleProps): SkippableInputRule {
  * in the `@remirror/extension-emoji` when it is setup to use plain text.
  */
 export function plainInputRule(props: PlainInputRuleProps): SkippableInputRule {
-  const { regexp, transformMatch, beforeDispatch } = props;
+  const {
+    regexp,
+    transformMatch,
+    beforeDispatch,
+    shouldSkip,
+    ignoreWhitespace = false,
+    updateCaptured,
+    invalidMarks,
+  } = props;
 
   const rule: SkippableInputRule = new InputRule(regexp, (state, match, start, end) => {
     const value = transformMatch(match);
@@ -277,21 +310,35 @@ export function plainInputRule(props: PlainInputRuleProps): SkippableInputRule {
       return null;
     }
 
-    const { tr } = state;
-    const captureGroup = match[1];
-    const fullMatch = match[0];
+    const { tr, schema } = state;
+    let captureGroup = match[1];
+    let fullMatch = match[0];
 
-    if (
-      fullMatch == null ||
-      rule.shouldSkip?.({ state, captureGroup, fullMatch, start, end, ruleType: 'plain' })
-    ) {
+    // These are the attributes which are added to the mark and they can be
+    // obtained from the match if a function is provided.
+    const details = gatherDetails({
+      captureGroup,
+      fullMatch,
+      end,
+      start,
+      rule,
+      state,
+      ignoreWhitespace,
+      invalidMarks,
+      shouldSkip,
+      updateCaptured,
+    });
+
+    if (!details) {
       return null;
     }
+
+    ({ start, end, captureGroup, fullMatch } = details);
 
     if (value === '') {
       tr.delete(start, end);
     } else {
-      tr.replaceWith(start, end, state.schema.text(value));
+      tr.replaceWith(start, end, schema.text(value));
     }
 
     beforeDispatch?.({ tr, match, start, end });
@@ -318,12 +365,13 @@ interface ShouldSkip {
    * active checks that prevent it from doing so.
    *
    * - Other extension can register a `shouldSkip` handler
-   * - Every time in input rule is running it makes sure it isn't blocked is run it makes sure it can run
+   * - Every time the input rule is running it makes sure it isn't blocked.
    */
   shouldSkip?: ShouldSkipFunction;
 
   /**
-   * A list of marks which if existing in the provided range should invalidate the range.
+   * A list of marks which if existing in the provided range should invalidate
+   * the range.
    */
   invalidMarks?: string[];
 }
@@ -341,3 +389,84 @@ export type ShouldSkipFunction = (props: ShouldSkipProps) => boolean;
  * the input rule should be skipped.
  */
 export type SkippableInputRule = ShouldSkip & InputRule;
+
+interface GatherDetailsProps extends Omit<BaseInputRuleProps, 'beforeDispatch'> {
+  /**
+   * The first capture group from the matching input rule.
+   */
+  captureGroup: string | undefined;
+
+  /**
+   * The text of the full match which was received.
+   */
+  fullMatch: string | undefined;
+
+  /**
+   * The starting position of the match relative to the `doc`.
+   */
+  start: number;
+
+  /**
+   * The end position of the match relative to the `doc`.
+   */
+  end: number;
+
+  /**
+   * The current editor state.
+   */
+  state: EditorState;
+
+  /**
+   * The input rule being run. This can have global skip handlers attached.
+   */
+  rule: SkippableInputRule;
+}
+
+/**
+ * This is a monster of a function.
+ *
+ * TODO make it make sense.
+ */
+function gatherDetails({
+  captureGroup,
+  fullMatch,
+  end,
+  start,
+  rule,
+  ignoreWhitespace,
+  shouldSkip,
+  updateCaptured,
+  state,
+  invalidMarks,
+}: GatherDetailsProps): UpdateCaptureTextProps | null {
+  if (fullMatch == null) {
+    return null;
+  }
+
+  // Update the internal values with the user provided method.
+  const details = updateCaptured?.({ captureGroup, fullMatch, start, end }) ?? {};
+
+  // Store the updated values or the original.
+  captureGroup = details.captureGroup ?? captureGroup;
+  fullMatch = details.fullMatch ?? fullMatch;
+  start = details.start ?? start;
+  end = details.end ?? end;
+
+  const $from = state.doc.resolve(start);
+  const $to = state.doc.resolve(end);
+
+  if (
+    // Skip when the range contains an excluded mark.
+    (invalidMarks && markActiveInRange({ $from, $to }, invalidMarks)) ||
+    (rule.invalidMarks && markActiveInRange({ $from, $to }, rule.invalidMarks)) ||
+    // Skip pure whitespace updates
+    (ignoreWhitespace && captureGroup?.trim() === '') ||
+    // Skip when configured to do
+    shouldSkip?.({ state, captureGroup, fullMatch, start, end, ruleType: 'mark' }) ||
+    rule.shouldSkip?.({ state, captureGroup, fullMatch, start, end, ruleType: 'mark' })
+  ) {
+    return null;
+  }
+
+  return { captureGroup, end, fullMatch, start };
+}

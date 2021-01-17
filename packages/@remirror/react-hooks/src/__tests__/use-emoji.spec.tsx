@@ -3,13 +3,14 @@ import { RemirrorTestChain } from 'jest-remirror';
 import { FC } from 'react';
 import { EmojiExtension } from 'remirror/extensions';
 import { createReactManager, Remirror, useRemirrorContext } from 'remirror/react';
+import data from 'svgmoji/emoji.json';
 
 import { act as renderAct, strictRender } from '@remirror/testing/react';
 
 import { EmojiState, useEmoji } from '../use-emoji';
 
 function createChain() {
-  const manager = createReactManager(() => [new EmojiExtension()]);
+  const manager = createReactManager(() => [new EmojiExtension({ data })]);
   const chain = RemirrorTestChain.create(manager);
   const { doc, p } = chain.nodes;
 
@@ -46,10 +47,11 @@ describe('useEmoji', () => {
 
     expect(result.current).toEqual({
       range: { from: 17, to: 19, cursor: 19 },
-      command: expect.any(Function),
+      apply: expect.any(Function),
       list: expect.any(Array),
       index: 0,
     });
+
     expect(result.current?.list.length).toBeGreaterThan(0);
   });
 
@@ -62,16 +64,12 @@ describe('useEmoji', () => {
 
     acts([
       () => {
-        chain.insertText(':');
+        chain.insertText(':red_heart');
       },
-      () => result.current?.command?.(result.current.list[0]),
+      () => result.current?.apply?.(result.current.list[0]?.emoji ?? ''),
     ]);
 
-    expect(chain.innerHTML).toMatchInlineSnapshot(`
-      <p>
-        Initial content 👍
-      </p>
-    `);
+    expect(chain.innerHTML).toMatchSnapshot();
   });
 
   it('should clear suggestions when the `Escape` key is pressed', () => {
@@ -117,11 +115,7 @@ describe('useEmoji', () => {
       },
     ]);
 
-    expect(chain.innerHTML).toMatchInlineSnapshot(`
-      <p>
-        Initial content 👍
-      </p>
-    `);
+    expect(chain.innerHTML).toMatchSnapshot();
   });
 
   it('should update index when `Arrow` keys are used', () => {

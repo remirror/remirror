@@ -50,13 +50,11 @@ export function jsdomExtras(): void {
  * Add pseudo support for bounding client rects.
  */
 function supportBoundingClientRect() {
-  console.log('jsdom you');
   const originalGetBoundingClientRect = Element.prototype.getBoundingClientRect.bind(
     Element.prototype,
   );
 
   if (!window.DOMRect) {
-    console.log('jsdom yo');
     global.DOMRect = window.DOMRect = class DOMRect {
       public left: number;
       public right: number;
