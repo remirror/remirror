@@ -38,7 +38,6 @@ import * as remirrorExtensionHardBreak from '@remirror/extension-hard-break';
 import * as remirrorExtensionHeading from '@remirror/extension-heading';
 import * as remirrorExtensionHistory from '@remirror/extension-history';
 import * as remirrorExtensionHorizontalRule from '@remirror/extension-horizontal-rule';
-import * as remirrorExtensionIcons from '@remirror/extension-icons';
 import * as remirrorExtensionImage from '@remirror/extension-image';
 import * as remirrorExtensionItalic from '@remirror/extension-italic';
 import * as remirrorExtensionLink from '@remirror/extension-link';
@@ -54,8 +53,6 @@ import * as remirrorExtensionReactComponent from '@remirror/extension-react-comp
 import * as remirrorExtensionReactSsr from '@remirror/extension-react-ssr';
 import * as remirrorExtensionSearch from '@remirror/extension-search';
 import * as remirrorExtensionStrike from '@remirror/extension-strike';
-import * as remirrorExtensionSub from '@remirror/extension-sub';
-import * as remirrorExtensionSup from '@remirror/extension-sup';
 import * as remirrorExtensionTables from '@remirror/extension-tables';
 import * as remirrorExtensionText from '@remirror/extension-text';
 import * as remirrorExtensionTextCase from '@remirror/extension-text-case';
@@ -102,7 +99,6 @@ export const PlaygroundImports = {
   '@remirror/extension-heading': remirrorExtensionHeading,
   '@remirror/extension-history': remirrorExtensionHistory,
   '@remirror/extension-horizontal-rule': remirrorExtensionHorizontalRule,
-  '@remirror/extension-icons': remirrorExtensionIcons,
   '@remirror/extension-image': remirrorExtensionImage,
   '@remirror/extension-italic': remirrorExtensionItalic,
   '@remirror/extension-link': remirrorExtensionLink,
@@ -116,8 +112,6 @@ export const PlaygroundImports = {
   '@remirror/extension-positioner': remirrorExtensionPositioner,
   '@remirror/extension-search': remirrorExtensionSearch,
   '@remirror/extension-strike': remirrorExtensionStrike,
-  '@remirror/extension-sub': remirrorExtensionSub,
-  '@remirror/extension-sup': remirrorExtensionSup,
   '@remirror/extension-tables': remirrorExtensionTables,
   '@remirror/extension-text-case': remirrorExtensionTextCase,
   '@remirror/extension-text-color': remirrorExtensionTextColor,

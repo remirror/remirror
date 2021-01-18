@@ -1,9 +1,12 @@
 import { renderEditor } from 'jest-remirror';
+import { extensionValidityTest } from 'jest-remirror';
 import data from 'svgmoji/emoji.json';
 
 import { KeymapExtension, object } from '@remirror/core';
 
 import { EmojiExtension, EmojiOptions, EmojiSuggestHandler, EmojiSuggestHandlerCommand } from '../';
+
+extensionValidityTest(IframeExtension);
 
 function create(options: EmojiOptions = object()) {
   const extension = new EmojiExtension(options);

@@ -36,13 +36,14 @@ import {
   isTextSelection,
   removeMark,
   RemoveMarkProps,
+  replaceText,
+  ReplaceTextProps,
   setBlockType,
   toggleBlockItem,
   ToggleBlockItemProps,
+  ToggleMarkProps,
   toggleWrap,
   wrapIn,
-  replaceText,
-  ReplaceTextProps,
 } from '@remirror/core-utils';
 import { CoreMessages as Messages } from '@remirror/messages';
 import { Mark } from '@remirror/pm/model';
@@ -740,7 +741,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    * Removes a mark from the current selection or provided range.
    */
   @command()
-  toggleMark(props: RemoveMarkProps): CommandFunction {
+  toggleMark(props: ToggleMarkProps): CommandFunction {
     return toggleMark(props);
   }
 

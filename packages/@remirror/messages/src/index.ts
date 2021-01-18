@@ -17,6 +17,7 @@ export * as ExtensionListMessages from './extension-list-messages';
 export * as ExtensionParagraphMessages from './extension-paragraph-messages';
 export * as ExtensionStrikeMessages from './extension-strike-messages';
 export * as ExtensionTablesMessages from './extension-tables-messages';
+export * as ExtensionTextCaseMessages from './extension-text-case-messages';
 export * as ExtensionTextColorMessages from './extension-text-color-messages';
 export * as ExtensionTextHighlightMessages from './extension-text-highlight-messages';
 export * as ExtensionUnderlineMessages from './extension-underline-messages';

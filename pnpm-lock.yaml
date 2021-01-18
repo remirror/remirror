@@ -957,18 +957,6 @@ importers:
       '@remirror/core': 1.0.0-next.60
       '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
-  packages/@remirror/extension-icons:
-    dependencies:
-      '@babel/runtime': 7.12.5
-      '@remirror/messages': link:../messages
-    devDependencies:
-      '@remirror/core': link:../core
-      '@remirror/pm': link:../pm
-    specifiers:
-      '@babel/runtime': ^7.12.5
-      '@remirror/core': 1.0.0-next.60
-      '@remirror/messages': 0.0.0
-      '@remirror/pm': 1.0.0-next.60
   packages/@remirror/extension-image:
     dependencies:
       '@babel/runtime': 7.12.5
@@ -1214,18 +1202,6 @@ importers:
       '@remirror/pm': 1.0.0-next.60
       escape-string-regexp: ^4.0.0
   packages/@remirror/extension-strike:
-    dependencies:
-      '@babel/runtime': 7.12.5
-      '@remirror/messages': link:../messages
-    devDependencies:
-      '@remirror/core': link:../core
-      '@remirror/pm': link:../pm
-    specifiers:
-      '@babel/runtime': ^7.12.5
-      '@remirror/core': 1.0.0-next.60
-      '@remirror/messages': 0.0.0
-      '@remirror/pm': 1.0.0-next.60
-  packages/@remirror/extension-sup:
     dependencies:
       '@babel/runtime': 7.12.5
       '@remirror/messages': link:../messages
@@ -2230,7 +2206,6 @@ importers:
       '@remirror/extension-heading': link:../@remirror/extension-heading
       '@remirror/extension-history': link:../@remirror/extension-history
       '@remirror/extension-horizontal-rule': link:../@remirror/extension-horizontal-rule
-      '@remirror/extension-icons': link:../@remirror/extension-icons
       '@remirror/extension-image': link:../@remirror/extension-image
       '@remirror/extension-italic': link:../@remirror/extension-italic
       '@remirror/extension-link': link:../@remirror/extension-link
@@ -2246,7 +2221,6 @@ importers:
       '@remirror/extension-react-ssr': link:../@remirror/extension-react-ssr
       '@remirror/extension-search': link:../@remirror/extension-search
       '@remirror/extension-strike': link:../@remirror/extension-strike
-      '@remirror/extension-sup': link:../@remirror/extension-sup
       '@remirror/extension-tables': link:../@remirror/extension-tables
       '@remirror/extension-text': link:../@remirror/extension-text
       '@remirror/extension-text-case': link:../@remirror/extension-text-case
@@ -2312,7 +2286,6 @@ importers:
       '@remirror/extension-heading': 1.0.0-next.60
       '@remirror/extension-history': 1.0.0-next.60
       '@remirror/extension-horizontal-rule': 1.0.0-next.60
-      '@remirror/extension-icons': 0.0.0
       '@remirror/extension-image': 1.0.0-next.60
       '@remirror/extension-italic': 1.0.0-next.60
       '@remirror/extension-link': 1.0.0-next.60
@@ -2328,7 +2301,6 @@ importers:
       '@remirror/extension-react-ssr': 1.0.0-next.60
       '@remirror/extension-search': 1.0.0-next.60
       '@remirror/extension-strike': 1.0.0-next.60
-      '@remirror/extension-sup': 0.0.0
       '@remirror/extension-tables': 1.0.0-next.60
       '@remirror/extension-text': 1.0.0-next.60
       '@remirror/extension-text-case': 0.0.0
@@ -9826,7 +9798,7 @@ packages:
       integrity: sha512-5Kgy8Cz6LPC9DJcNb3yjAXTu3XihQgEdnIg50c//zOC/MyLP0Clg+Y8Sh9ZjjnvBrDZU4DgXS9C3T9r4/scGZQ==
   /axios/0.21.1:
     dependencies:
-      follow-redirects: 1.13.1_debug@4.3.1
+      follow-redirects: 1.13.1
     resolution:
       integrity: sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
   /axobject-query/2.2.0:
@@ -15009,9 +14981,20 @@ packages:
     dev: false
     resolution:
       integrity: sha512-GRnmB5gPyJpAhTQdSZTSp9uaPSvl09KoYcMQtsB9rQoOmzs9dH6ffeccH+Z+cv6P68Hu5bC6JjRh4Ah/mHSNRw==
+  /follow-redirects/1.13.1:
+    engines:
+      node: '>=4.0'
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    resolution:
+      integrity: sha512-SSG5xmZh1mkPGyKzjZP8zLjltIfpW32Y5QpdNJyjcfGxK3qo3NDDkZOZSFiGn1A6SclQxY9GzEwAHQ3dmYRWpg==
   /follow-redirects/1.13.1_debug@4.3.1:
     dependencies:
       debug: 4.3.1_supports-color@6.1.0
+    dev: true
     engines:
       node: '>=4.0'
     peerDependencies:
