@@ -82,13 +82,13 @@ module.exports = {
       '@docusaurus/preset-classic',
       {
         docs: {
-          path: '../../docs',
+          path: '../docs',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/remirror/remirror/edit/next/support/website/',
+          editUrl: 'https://github.com/remirror/remirror/edit/next/website/',
         },
         blog: {
           showReadingTime: true,
-          editUrl: 'https://github.com/remirror/remirror/edit/next/support/website/blog/',
+          editUrl: 'https://github.com/remirror/remirror/edit/next/website/blog/',
           remarkPlugins: [require('remark-footnotes')],
         },
         theme: {
