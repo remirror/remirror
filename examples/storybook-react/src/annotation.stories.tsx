@@ -14,7 +14,7 @@ import {
   ControlledDialog,
   EditorComponent,
   FloatingToolbar,
-  PositionerComponent,
+  PositionerPortal,
   Remirror,
   ThemeProvider,
   ToolbarItemUnion,
@@ -49,7 +49,7 @@ const Popup: FC = () => {
   const label = annotations.map((annotation) => annotation.text).join('\n');
 
   return (
-    <PositionerComponent>
+    <PositionerPortal>
       <div
         style={{
           top: positioner.y + positioner.height,
@@ -63,7 +63,7 @@ const Popup: FC = () => {
       >
         {label}
       </div>
-    </PositionerComponent>
+    </PositionerPortal>
   );
 };
 
@@ -173,7 +173,7 @@ export const Configurable = () => {
 const FloatingAnnotations = () => {
   const { t } = useI18n();
   const [visible, setVisible] = useState(false);
-  const { commands } = useCommands();
+  const commands = useCommands();
   const { getAnnotationsAt } = useHelpers();
   const floatingToolbarItems = useMemo<ToolbarItemUnion[]>(
     () => [
@@ -196,7 +196,7 @@ const FloatingAnnotations = () => {
   return (
     <>
       <FloatingToolbar items={floatingToolbarItems} positioner='selection' placement='top' />
-      <PositionerComponent>
+      <PositionerPortal>
         <div
           style={{
             top: positioner.y + positioner.height,
@@ -210,7 +210,7 @@ const FloatingAnnotations = () => {
         >
           {label}
         </div>
-      </PositionerComponent>
+      </PositionerPortal>
       <ControlledDialog visible={visible} onUpdate={(v) => setVisible(v)} backdrop={true}>
         <AnnotationEditor onChange={(text) => console.log(text)} />
         <Button

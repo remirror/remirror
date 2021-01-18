@@ -1,4 +1,5 @@
-import { Blobmoji, FlatEmoji, Moji, Notomoji, Openmoji, Twemoji } from 'svgmoji';
+import type { FlatEmoji, Moji } from 'svgmoji';
+import { Blobmoji, Notomoji, Openmoji, Twemoji } from 'svgmoji';
 
 import type {
   AcceptUndefined,
@@ -174,4 +175,4 @@ export interface AddEmojiCommandOptions {
   selection?: PrimitiveSelection;
 }
 
-export { FlatEmoji } from 'svgmoji';
+export type { FlatEmoji } from 'svgmoji';

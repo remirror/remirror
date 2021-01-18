@@ -1,8 +1,8 @@
 {
   "hooks": {
-    "preCommit": true,
-    "prePush": true,
-    "postMerge": true,
-    "macPostInstall": true
+    "preCommit": false,
+    "prePush": false,
+    "postMerge": false,
+    "macPostInstall": false
   }
 }

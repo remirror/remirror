@@ -1,11 +1,10 @@
 packages:
   - 'support/templates/*'
   - 'packages/@remirror/*'
+  - 'packages/@remirror/deprecated/*'
   - 'packages/*'
   - 'support'
-  - 'support/deprecated/*'
   - 'test'
-  - 'support/storybook'
   - 'support/website'
   - 'examples/*'
   - 'backend/*'

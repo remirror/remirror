@@ -1,5 +1,5 @@
 import MonacoEditorWebpackPlugin from 'monaco-editor-webpack-plugin';
-import { Configuration } from 'webpack';
+import type { Configuration } from 'webpack';
 import WorkerPlugin from 'worker-plugin';
 
 export default {
