@@ -1,7 +1,7 @@
 import { cx } from '@linaria/core';
 import { TooltipHTMLProps, TooltipOptions } from 'reakit/Tooltip/Tooltip';
 
-import { Components } from '@remirror/theme';
+import { ComponentsTheme } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';
 
@@ -18,5 +18,5 @@ export function useTooltipProps(
   _: BootstrapTooltipOptions,
   htmlProps: TooltipHTMLProps = {},
 ): TooltipHTMLProps {
-  return { ...htmlProps, className: cx(Components.TOOLTIP, htmlProps.className) };
+  return { ...htmlProps, className: cx(ComponentsTheme.TOOLTIP, htmlProps.className) };
 }

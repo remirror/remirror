@@ -18,7 +18,7 @@ import { Tooltip, TooltipReference, useTooltipState } from 'reakit/Tooltip';
 
 import { HuePalette, Palette, palette as defaultPalette } from '@remirror/extension-text-color';
 import { useI18n } from '@remirror/react';
-import { Components } from '@remirror/theme';
+import { ComponentsTheme } from '@remirror/theme';
 
 export interface ColorPickerProps {
   /**
@@ -144,9 +144,9 @@ const GridCell = (props: GridCellProps) => {
           {...compositeState}
           style={{ backgroundColor: color }}
           className={cx(
-            Components.COLOR_PICKER_CELL,
+            ComponentsTheme.COLOR_PICKER_CELL,
             className,
-            selected && Components.COLOR_PICKER_CELL_SELECTED,
+            selected && ComponentsTheme.COLOR_PICKER_CELL_SELECTED,
           )}
           onClick={onClick}
         />

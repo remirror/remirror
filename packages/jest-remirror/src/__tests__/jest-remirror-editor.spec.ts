@@ -4,10 +4,10 @@ import {
   HeadingExtension,
   LinkExtension,
 } from 'remirror/extensions';
+import { cleanup } from 'testing/react';
 
 import { PlainExtension, prosemirrorNodeToHtml } from '@remirror/core';
 import { NodeSelection } from '@remirror/pm/state';
-import { cleanup } from '@remirror/testing/react';
 
 import { renderEditor } from '../jest-remirror-editor';
 

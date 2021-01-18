@@ -3,7 +3,7 @@ import { Type, useMultishift } from 'multishift';
 import React, { FC } from 'react';
 
 import { FlatEmojiWithUrl, useEmoji } from '@remirror/react-hooks';
-import { ExtensionEmoji } from '@remirror/theme';
+import { ExtensionEmojiTheme } from '@remirror/theme';
 
 import { FloatingWrapper } from '../floating-menu';
 
@@ -14,7 +14,7 @@ const EmojiFromCdn = (props: FlatEmojiWithUrl): JSX.Element => {
   return (
     <img
       role='presentation'
-      className={ExtensionEmoji.EMOJI_IMAGE}
+      className={ExtensionEmojiTheme.EMOJI_IMAGE}
       aria-label={props.annotation}
       alt={props.annotation}
       src={props.url}
@@ -49,9 +49,9 @@ export const SocialEmojiComponent: FC = () => {
               <div
                 key={emoji.emoji}
                 className={cx(
-                  ExtensionEmoji.EMOJI_POPUP_ITEM,
-                  isHighlighted && ExtensionEmoji.EMOJI_POPUP_HIGHLIGHT,
-                  isHovered && ExtensionEmoji.EMOJI_POPUP_HOVERED,
+                  ExtensionEmojiTheme.EMOJI_POPUP_ITEM,
+                  isHighlighted && ExtensionEmojiTheme.EMOJI_POPUP_HIGHLIGHT,
+                  isHovered && ExtensionEmojiTheme.EMOJI_POPUP_HOVERED,
                 )}
                 {...getItemProps({
                   onClick: () => {
@@ -62,10 +62,10 @@ export const SocialEmojiComponent: FC = () => {
                   index,
                 })}
               >
-                <span className={ExtensionEmoji.EMOJI_POPUP_CHAR}>
+                <span className={ExtensionEmojiTheme.EMOJI_POPUP_CHAR}>
                   <EmojiFromCdn {...emoji} />
                 </span>
-                <span className={ExtensionEmoji.EMOJI_POPUP_NAME}>:{shortcode}:</span>
+                <span className={ExtensionEmojiTheme.EMOJI_POPUP_NAME}>:{shortcode}:</span>
               </div>
             );
           })}

@@ -14,7 +14,7 @@ import {
 import { ExtensionBlockquoteMessages as Messages } from '@remirror/messages';
 import { wrappingInputRule } from '@remirror/pm/inputrules';
 import type { PasteRule } from '@remirror/pm/paste-rules';
-import { ExtensionBlockquote as Theme } from '@remirror/theme';
+import { ExtensionBlockquoteTheme as Theme } from '@remirror/theme';
 
 /**
  * Add the blockquote block to the editor.

@@ -2,7 +2,7 @@ import { cx } from '@linaria/core';
 import { DialogHTMLProps, DialogOptions } from 'reakit/Dialog/Dialog';
 import { DialogBackdropHTMLProps, DialogBackdropOptions } from 'reakit/Dialog/DialogBackdrop';
 
-import { Components } from '@remirror/theme';
+import { ComponentsTheme } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';
 
@@ -22,7 +22,7 @@ export function useDialogProps(
   _: BootstrapDialogOptions,
   htmlProps: DialogHTMLProps = {},
 ): DialogHTMLProps {
-  return { ...htmlProps, className: cx(Components.DIALOG, htmlProps.className) };
+  return { ...htmlProps, className: cx(ComponentsTheme.DIALOG, htmlProps.className) };
 }
 
 export type BootstrapDialogBackdropOptions = BootstrapRoleOptions & DialogBackdropOptions;
@@ -31,5 +31,5 @@ export function useDialogBackdropProps(
   _: BootstrapDialogBackdropOptions,
   htmlProps: DialogBackdropHTMLProps = {},
 ): DialogBackdropHTMLProps {
-  return { ...htmlProps, className: cx(Components.DIALOG_BACKDROP, htmlProps.className) };
+  return { ...htmlProps, className: cx(ComponentsTheme.DIALOG_BACKDROP, htmlProps.className) };
 }

@@ -21,7 +21,7 @@ import type {
   Transaction,
 } from '@remirror/core-types';
 import { getDocument } from '@remirror/core-utils';
-import { Core } from '@remirror/theme';
+import { CoreTheme } from '@remirror/theme';
 
 import type { BuiltinPreset, UpdatableViewProps } from '../builtins';
 import type { AnyExtension, CommandsFromExtensions, GetSchema } from '../extension';
@@ -319,7 +319,7 @@ export abstract class Framework<
       ...(!(this.props.editable ?? true) ? { 'aria-readonly': 'true' } : {}),
       'aria-label': this.props.label ?? '',
       ...managerAttributes,
-      class: cx(ssr && 'Prosemirror', Core.EDITOR, managerAttributes?.class, ...classNames),
+      class: cx(ssr && 'Prosemirror', CoreTheme.EDITOR, managerAttributes?.class, ...classNames),
     };
 
     return omitUndefined({ ...defaultAttributes, ...propAttributes }) as Shape;

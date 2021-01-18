@@ -364,7 +364,7 @@ let config = {
     {
       files: [
         'support/scripts/**/*.{js,mjs,ts}',
-        'test/**/*.{js,ts}',
+        'packages/testing/**/*.{js,ts}',
         'packages/@remirror/playground/**',
         'packages/@remirror/playground-deprecated/**',
       ],
@@ -388,7 +388,7 @@ let config = {
       files: [
         '**/*matchers.ts',
         'support/**',
-        'test/**',
+        'packages/testing/**',
         'examples/**',
         'packages/@remirror/playground/**',
         'packages/@remirror/core-utils/src/keyboard-utils.ts',
@@ -399,7 +399,7 @@ let config = {
       },
     },
     {
-      files: ['packages/@remirror/playground/**', 'test/**'],
+      files: ['packages/@remirror/playground/**', 'packages/testing/**'],
       rules: { '@typescript-eslint/no-var-requires': 'off' },
     },
     {

@@ -9,7 +9,7 @@ import {
   NodeExtensionSpec,
   setBlockType,
 } from '@remirror/core';
-import { act, render, strictRender } from '@remirror/testing/react';
+import { act, render, strictRender } from 'testing/react';
 
 import { ReactComponentExtension } from '..';
 import type { NodeViewComponentProps } from '../node-view-types';

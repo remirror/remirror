@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { defaultAbsolutePosition } from '@remirror/extension-positioner';
 import { createReactManager, Remirror } from '@remirror/react';
-import { strictRender } from '@remirror/testing/react';
+import { strictRender } from 'testing/react';
 
 import { usePositioner } from '../use-positioner';
 

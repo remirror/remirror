@@ -1,5 +1,6 @@
+import { hideConsoleError } from 'testing';
+
 import { ErrorConstant } from '@remirror/core-constants';
-import { hideConsoleError } from '@remirror/testing';
 
 import { invariant, RemirrorError } from '../..';
 import { freeze } from '../freeze';

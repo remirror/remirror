@@ -1,8 +1,6 @@
 import { getDocument, queries } from 'playwright-testing-library';
 import { ElementHandle } from 'playwright-testing-library/dist/typedefs';
-
-import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
-
+import { CoreTheme } from 'remirror';
 import {
   $innerHtml,
   goto,
@@ -10,15 +8,20 @@ import {
   outerHtml,
   press,
   sel,
-  skipTestOnFirefox,
+  smokeTest,
+  ssrTest,
   textContent,
   type,
-} from './helpers';
+} from 'testing/e2e';
 
-const FIRST_PARAGRAPH_SELECTOR = `${EDITOR_CLASS_SELECTOR} > p:first-child`;
+const FIRST_PARAGRAPH_SELECTOR = `${CoreTheme.EDITOR} > p:first-child`;
 
 const { getByRole } = queries;
-const path = __SERVER__.urls.social.empty;
+const path = 'editor/social';
+
+smokeTest(path);
+ssrTest('social without content', path);
+ssrTest('social with content', 'editor/social/content');
 
 describe('Social Showcase', () => {
   let $document: ElementHandle;
@@ -91,15 +94,13 @@ describe('Social Showcase', () => {
   describe('Mentions', () => {
     it('should not allow mixing the tags', async () => {
       await $editor.type('@#ab #@simple ');
-      await expect(outerHtml(sel(EDITOR_CLASS_SELECTOR, 'a'))).rejects.toThrow();
+      await expect(outerHtml(sel(CoreTheme.EDITOR, 'a'))).rejects.toThrow();
     });
 
     describe('@', () => {
       it('should wrap in progress mentions in a-tag decorations', async () => {
         await $editor.type('Hello @jonathan');
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.suggest-at'))).resolves.toBe(
-          '@jonathan',
-        );
+        await expect(textContent(sel(CoreTheme.EDITOR, '.suggest-at'))).resolves.toBe('@jonathan');
       });
 
       it('should not trap the arrow keys', async () => {
@@ -111,7 +112,7 @@ describe('Social Showcase', () => {
       });
 
       it('should not revert the mention', async () => {
-        const selector = sel(EDITOR_CLASS_SELECTOR, '.mention-at');
+        const selector = sel(CoreTheme.EDITOR, '.mention-at');
         await $editor.type('@a ');
         await press({ key: 'ArrowLeft' });
 
@@ -120,7 +121,7 @@ describe('Social Showcase', () => {
       });
 
       it('should accept selections onEnter', async () => {
-        const selector = sel(EDITOR_CLASS_SELECTOR, '.mention-at');
+        const selector = sel(CoreTheme.EDITOR, '.mention-at');
 
         await $editor.type('hello @ab');
         await press({ key: 'Enter' });
@@ -130,7 +131,7 @@ describe('Social Showcase', () => {
 
       it('should still wrap selections when exiting without selections', async () => {
         await $editor.type('hello @ab ');
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe('@ab');
+        await expect(textContent(sel(CoreTheme.EDITOR, '.mention-at'))).resolves.toBe('@ab');
       });
 
       it('allows clicking on suggestions', async () => {
@@ -138,10 +139,10 @@ describe('Social Showcase', () => {
         await $editor.type('hello @alex');
 
         await page.click(selector);
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe(
+        await expect(textContent(sel(CoreTheme.EDITOR, '.mention-at'))).resolves.toBe(
           '@lazymeercat594',
         );
-        await expect(textContent(EDITOR_CLASS_SELECTOR)).resolves.toBe(`hello @lazymeercat594 `);
+        await expect(textContent(CoreTheme.EDITOR)).resolves.toBe(`hello @lazymeercat594 `);
       });
 
       it('allows arrowing between suggesters', async () => {
@@ -149,21 +150,21 @@ describe('Social Showcase', () => {
         await press({ key: 'ArrowLeft', count: 2 });
         await $editor.type('@ab');
         await press({ key: 'ArrowRight' });
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe('@ab');
+        await expect(textContent(sel(CoreTheme.EDITOR, '.mention-at'))).resolves.toBe('@ab');
       });
 
       it('allows arrowing between suggesters and breaking up the suggestion', async () => {
         await $editor.type('hello  1');
         await press({ key: 'ArrowLeft' });
         await $editor.type('@ab ');
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe('@ab');
+        await expect(textContent(sel(CoreTheme.EDITOR, '.mention-at'))).resolves.toBe('@ab');
       });
 
       it('handles arrowing between arrowing back into mention without errors', async () => {
         await $editor.type('@ab ');
         await press({ key: 'ArrowLeft', count: 4 });
         await press({ key: 'ArrowRight' });
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe('@ab');
+        await expect(textContent(sel(CoreTheme.EDITOR, '.mention-at'))).resolves.toBe('@ab');
       });
 
       it('removes mark when no partial query', async () => {
@@ -171,7 +172,7 @@ describe('Social Showcase', () => {
         await press({ key: 'ArrowLeft', count: 4 });
         await $editor.type(' ');
         await expect(
-          textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at')),
+          textContent(sel(CoreTheme.EDITOR, '.mention-at')),
         ).rejects.toThrowErrorMatchingInlineSnapshot(
           `"page.$eval: Error: failed to find element matching selector \\".remirror-editor .mention-at\\""`,
         );
@@ -181,9 +182,7 @@ describe('Social Showcase', () => {
         const username = '@abcd1234';
         await $editor.type(username);
         await press({ key: 'Enter' });
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe(
-          username,
-        );
+        await expect(textContent(sel(CoreTheme.EDITOR, '.mention-at'))).resolves.toBe(username);
       });
 
       it('splits up the mark when enter is pressed', async () => {
@@ -191,9 +190,7 @@ describe('Social Showcase', () => {
         await $editor.type(username);
         await press({ key: 'ArrowLeft', count: 3 });
         await press({ key: 'Enter' });
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe(
-          '@abcd12',
-        );
+        await expect(textContent(sel(CoreTheme.EDITOR, '.mention-at'))).resolves.toBe('@abcd12');
       });
 
       it('removes mentions for forward deletes', async () => {
@@ -201,7 +198,7 @@ describe('Social Showcase', () => {
         await press({ key: 'ArrowLeft', count: 5 });
         await press({ key: 'Delete' });
         await expect(
-          textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at')),
+          textContent(sel(CoreTheme.EDITOR, '.mention-at')),
         ).rejects.toThrowErrorMatchingInlineSnapshot(
           `"page.$eval: Error: failed to find element matching selector \\".remirror-editor .mention-at\\""`,
         );
@@ -216,8 +213,8 @@ describe('Social Showcase', () => {
         await press({ key: 'ArrowLeft', count: 1 });
         await $editor.type('Awesome ');
 
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe('@abc');
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR))).resolves.toBe('Awesome @abc ');
+        await expect(textContent(sel(CoreTheme.EDITOR, '.mention-at'))).resolves.toBe('@abc');
+        await expect(textContent(sel(CoreTheme.EDITOR))).resolves.toBe('Awesome @abc ');
       });
 
       it('only replaces the selected text in a mention', async () => {
@@ -228,20 +225,18 @@ describe('Social Showcase', () => {
         await page.keyboard.up('Shift');
         await $editor.type('d');
 
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR))).resolves.toBe('dc ');
+        await expect(textContent(sel(CoreTheme.EDITOR))).resolves.toBe('dc ');
       });
     });
 
     describe('#', () => {
       it('should wrap in progress mentions in a-tag decorations', async () => {
         await $editor.type('My tag is #Topic');
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.suggest-tag'))).resolves.toBe(
-          '#Topic',
-        );
+        await expect(textContent(sel(CoreTheme.EDITOR, '.suggest-tag'))).resolves.toBe('#Topic');
       });
 
       it('should accept selections onEnter', async () => {
-        const selector = sel(EDITOR_CLASS_SELECTOR, '.mention-tag');
+        const selector = sel(CoreTheme.EDITOR, '.mention-tag');
 
         await $editor.type('hello #T');
         await press({ key: 'Enter' });
@@ -251,17 +246,15 @@ describe('Social Showcase', () => {
 
       it('should still wrap selections when exiting without selections', async () => {
         await $editor.type('hello #T ');
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-tag'))).resolves.toBe('#T');
+        await expect(textContent(sel(CoreTheme.EDITOR, '.mention-tag'))).resolves.toBe('#T');
       });
 
       it('allows clicking on suggesters', async () => {
         const selector = '.remirror-mention-suggestions-item.highlighted';
         await $editor.type('My #T');
         await page.click(selector);
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-tag'))).resolves.toBe(
-          '#Tags',
-        );
-        await expect(textContent(EDITOR_CLASS_SELECTOR)).resolves.toBe(`My #Tags `);
+        await expect(textContent(sel(CoreTheme.EDITOR, '.mention-tag'))).resolves.toBe('#Tags');
+        await expect(textContent(CoreTheme.EDITOR)).resolves.toBe(`My #Tags `);
       });
     });
   });
@@ -270,7 +263,7 @@ describe('Social Showcase', () => {
     // Emoji are being completely rewritten soon so this is temporary
     it('should be able to add emoji', async () => {
       await $editor.type('😀', { delay: 10 });
-      await expect(innerHtml(sel(EDITOR_CLASS_SELECTOR, 'p'))).resolves.toBe(`😀`);
+      await expect(innerHtml(sel(CoreTheme.EDITOR, 'p'))).resolves.toBe(`😀`);
     });
 
     it('transforms emoticons', async () => {

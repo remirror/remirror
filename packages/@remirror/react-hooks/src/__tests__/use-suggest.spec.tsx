@@ -3,7 +3,7 @@ import { FC } from 'react';
 
 import type { RemirrorManager } from '@remirror/core';
 import { createReactManager, Remirror } from '@remirror/react';
-import { act, DefaultEditor, strictRender } from '@remirror/testing/react';
+import { act, DefaultEditor, strictRender } from 'testing/react';
 
 import { useSuggest, UseSuggestReturn } from '../use-suggest';
 

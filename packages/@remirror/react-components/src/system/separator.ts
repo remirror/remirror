@@ -1,7 +1,7 @@
 import { cx } from '@linaria/core';
 import { SeparatorHTMLProps, SeparatorOptions } from 'reakit/Separator/Separator';
 
-import { Components } from '@remirror/theme';
+import { ComponentsTheme } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';
 
@@ -11,5 +11,5 @@ export function useSeparatorProps(
   _: BootstrapSeparatorOptions,
   htmlProps: SeparatorHTMLProps = {},
 ): SeparatorHTMLProps {
-  return { ...htmlProps, className: cx(htmlProps.className, Components.SEPARATOR) };
+  return { ...htmlProps, className: cx(htmlProps.className, ComponentsTheme.SEPARATOR) };
 }

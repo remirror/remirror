@@ -1,7 +1,7 @@
 import { cx } from '@linaria/core';
 import { GroupHTMLProps, GroupOptions } from 'reakit/Group/Group';
 
-import { Components } from '@remirror/theme';
+import { ComponentsTheme } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';
 
@@ -11,5 +11,5 @@ export function useGroupProps(
   _: BootstrapGroupOptions,
   htmlProps: GroupHTMLProps = {},
 ): GroupHTMLProps {
-  return { ...htmlProps, className: cx(htmlProps.className, Components.GROUP) };
+  return { ...htmlProps, className: cx(htmlProps.className, ComponentsTheme.GROUP) };
 }

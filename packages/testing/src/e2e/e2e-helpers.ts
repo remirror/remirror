@@ -1,24 +1,26 @@
 import { SupportedCharacters } from 'test-keyboard';
 
-import { getBrowserName } from './test-environment';
+import { PlaywrightBrowserName } from './e2e-types';
 
 /**
- * Clear the editor via triple click and delete
+ * Clear the editor via triple click and backspace.
  */
-export async function clearEditor(selector: string) {
+export async function clearEditor(selector: string): Promise<void> {
   await page.click(selector, { clickCount: 3 });
   await page.keyboard.press('Backspace');
 }
 
 /**
- * Create a selector
+ * Create a selector.
  */
-export const sel = (...selectors: string[]) => selectors.join(' ');
+export function sel(...selectors: string[]): string {
+  return selectors.join(' ');
+}
 
 /**
- * Obtain the inner HTML
+ * Obtain the inner HTML.
  */
-export function innerHtml(selector: string) {
+export function innerHtml(selector: string): Promise<string> {
   return page.$eval(selector, (element) => element.innerHTML);
 }
 
@@ -63,8 +65,14 @@ function times<Type = number>(length: number, fn?: (index: number) => Type): Typ
  *
  * @return Promise resolving once all in the sequence complete.
  */
-async function promiseSequence(sequence: Array<() => Promise<void>>) {
-  return sequence.reduce((current, next) => current.then(next), Promise.resolve());
+async function promiseSequence(sequence: Array<() => Promise<void>>): Promise<void> {
+  const promise = Promise.resolve();
+
+  for (const next of sequence) {
+    promise.then(next);
+  }
+
+  return promise;
 }
 
 export interface TypeProps {
@@ -111,8 +119,8 @@ export async function type({ text, delay = 10 }: TypeProps) {
   return page.keyboard.type(text, { delay });
 }
 
-export * from './images';
-export * from './modifier-keys';
+export * from './e2e-images';
+export * from './e2e-modifier-keys';
 
 interface HTMLObject {
   _: 'HTML';
@@ -128,8 +136,24 @@ export function $innerHtml(selector: string) {
 }
 
 /**
- * Navigate to a page with an increased timeout from default.
+ * Navigate to a page relative to the active server's main URL.
+ *
+ * The timeout is increased so that the first navigation can succeed.
  */
-export async function goto(url: string) {
-  return page.goto(url, { timeout: 60_000 });
+export async function goto(url = '') {
+  return page.goto(__SERVER__.url + url, { timeout: 60_000 });
+}
+
+/**
+ * Retrieve the browser name from the environment
+ */
+export function getBrowserName(): PlaywrightBrowserName {
+  return process.env.REMIRROR_E2E_BROWSER ?? 'chromium';
+}
+
+/**
+ * Prefix the browser name to the passed in string
+ */
+export function prefixBrowserName(...value: string[]): string {
+  return `${getBrowserName()}-${process.platform}-${__SERVER__.name}-${value.join('-')}`;
 }

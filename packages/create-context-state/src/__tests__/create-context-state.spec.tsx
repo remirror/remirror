@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { act, fireEvent, render } from '@remirror/testing/react';
+import { act, fireEvent, render } from 'testing/react';
 
 import { createContextState } from '../create-context-state';
 

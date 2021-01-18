@@ -2,7 +2,7 @@
   "name": "@remirror/website",
   "version": "0.0.0",
   "private": true,
-  "description": "Your friendly, world-class ProseMirror editor toolkit.",
+  "description": "The remirror documentation website",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/support/website",
   "scripts": {
     "build": "docusaurus build",
@@ -46,7 +46,6 @@
     "@types/worker-plugin": "^4.0.0",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "core-js": "^3.8.2",
-    "docusaurus": "2.0.0-alpha.66",
     "monaco-editor-webpack-plugin": "^2.1.0",
     "worker-plugin": "^5.0.0"
   }

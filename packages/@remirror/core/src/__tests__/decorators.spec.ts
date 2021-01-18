@@ -1,5 +1,6 @@
+import { hideConsoleError } from 'testing';
+
 import type { CustomHandler, Dynamic, Handler, Static } from '@remirror/core-types';
-import { hideConsoleError } from '@remirror/testing';
 
 import { extensionDecorator, PlainExtension } from '../..';
 

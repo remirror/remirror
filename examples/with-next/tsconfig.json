@@ -1,7 +1,6 @@
 {
   "extends": "../../support/tsconfig.base.json",
   "compilerOptions": {
-    "lib": ["DOM", "ES2017"],
     "declaration": false,
     "declarationMap": false,
     "noEmit": true,
@@ -10,6 +9,5 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "exclude": ["**/node_modules"],
-  "include": ["src/**/*.ts", "src/**/*.tsx", "nex-env.d.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "next-env.d.ts"]
 }

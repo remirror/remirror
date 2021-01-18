@@ -5,7 +5,7 @@ import { NON_BREAKING_SPACE_CHAR } from '@remirror/core';
 import { MentionExtension, MentionExtensionAttributes } from '@remirror/extension-mention';
 import { ChangeReason } from '@remirror/pm/suggest';
 import { createReactManager, Remirror } from '@remirror/react';
-import { act, DefaultEditor, strictRender } from '@remirror/testing/react';
+import { act, DefaultEditor, strictRender } from 'testing/react';
 
 import { MentionState, useMention, UseMentionExitHandler } from '../use-mention';
 

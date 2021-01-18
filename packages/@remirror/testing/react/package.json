@@ -1,9 +1,0 @@
-{
-  "main": "dist/remirror-testing-react.cjs.js",
-  "module": "dist/remirror-testing-react.esm.js",
-  "browser": {
-    "./dist/remirror-testing-react.cjs.js": "./dist/remirror-testing-react.browser.cjs.js",
-    "./dist/remirror-testing-react.esm.js": "./dist/remirror-testing-react.browser.esm.js"
-  },
-  "types": "dist/remirror-testing-react.cjs.d.ts"
-}

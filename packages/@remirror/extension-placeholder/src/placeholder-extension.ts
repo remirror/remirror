@@ -10,7 +10,7 @@ import {
 } from '@remirror/core';
 import type { EditorState } from '@remirror/pm/state';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
-import { ExtensionPlaceholder } from '@remirror/theme';
+import { ExtensionPlaceholderTheme } from '@remirror/theme';
 
 export interface PlaceholderOptions {
   /**
@@ -34,7 +34,7 @@ export interface PlaceholderPluginState extends Required<PlaceholderOptions> {
  */
 @extension<PlaceholderOptions>({
   defaultOptions: {
-    emptyNodeClass: ExtensionPlaceholder.IS_EMPTY,
+    emptyNodeClass: ExtensionPlaceholderTheme.IS_EMPTY,
     placeholder: '',
   },
 })

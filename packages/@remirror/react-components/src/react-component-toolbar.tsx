@@ -35,7 +35,7 @@ import {
   useI18n,
   useRemirrorContext,
 } from '@remirror/react';
-import { Components } from '@remirror/theme';
+import { ComponentsTheme } from '@remirror/theme';
 
 import { CommandIcon } from './core-components';
 import { Dropdown } from './react-component-menu';
@@ -239,7 +239,7 @@ const BaseToolbarButton = (props: BaseToolbarButtonProps) => {
             disabled={disabled}
             focusable={focusable}
             onClick={onClick}
-            className={cx(props.className, active && Components.BUTTON_ACTIVE)}
+            className={cx(props.className, active && ComponentsTheme.BUTTON_ACTIVE)}
           >
             {children}
           </ReakitToolbarItem>

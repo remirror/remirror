@@ -10,7 +10,7 @@ import {
 } from 'remirror';
 import { BoldExtension, ItalicExtension } from 'remirror/extensions';
 
-import { act, fireEvent, render, strictRender } from '@remirror/testing/react';
+import { act, fireEvent, render, strictRender } from 'testing/react';
 
 import { Remirror, useManager, useRemirrorContext } from '../..';
 import { createReactManager } from '../react-helpers';

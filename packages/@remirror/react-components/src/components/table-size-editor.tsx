@@ -11,7 +11,7 @@ import { createRef, Dispatch, SetStateAction, useEffect, useRef, useState } from
 
 import { clamp } from '@remirror/core';
 import { Rect } from '@remirror/extension-positioner';
-import { Components } from '@remirror/theme';
+import { ComponentsTheme } from '@remirror/theme';
 
 /**
  * The component used to insert a table into the editor of a given size.
@@ -74,16 +74,16 @@ export const TableSizeEditor = ({
   );
 
   return (
-    <div className={Components.TABLE_SIZE_EDITOR} ref={instance.current.ref}>
+    <div className={ComponentsTheme.TABLE_SIZE_EDITOR} ref={instance.current.ref}>
       <div
-        className={Components.TABLE_SIZE_EDITOR_BODY}
+        className={ComponentsTheme.TABLE_SIZE_EDITOR_BODY}
         onMouseDown={instance.current.onMouseDown}
         onMouseEnter={instance.current.onMouseEnter}
         style={{ width, height }}
       >
         {cells}
       </div>
-      <div className={Components.TABLE_SIZE_EDITOR_FOOTER}>{metrics}</div>
+      <div className={ComponentsTheme.TABLE_SIZE_EDITOR_FOOTER}>{metrics}</div>
     </div>
   );
 };
@@ -102,8 +102,8 @@ const TableSizeEditorCell = (props: TableSizeEditorCellProps): JSX.Element => {
   return (
     <div
       className={cx(
-        Components.TABLE_SIZE_EDITOR_CELL,
-        props.selected && Components.TABLE_SIZE_EDITOR_CELL_SELECTED,
+        ComponentsTheme.TABLE_SIZE_EDITOR_CELL,
+        props.selected && ComponentsTheme.TABLE_SIZE_EDITOR_CELL_SELECTED,
       )}
       style={{ top: props.y, left: props.x }}
     />

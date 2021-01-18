@@ -4,10 +4,9 @@
 
 import { Fragment } from 'react';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
-import { Core } from 'remirror';
+import { CoreTheme } from 'remirror';
 import { BoldExtension } from 'remirror/extensions';
-
-import { docNodeBasicJSON, docNodeSimpleJSON } from '@remirror/testing';
+import { docNodeBasicJSON, docNodeSimpleJSON } from 'testing';
 
 import { createReactManager, Remirror, useRemirrorContext } from '..';
 
@@ -138,7 +137,7 @@ describe('Remirror: Server', () => {
 
     const indexOfOuter = reactString.indexOf(outerId);
     const indexOfWrapper = reactString.indexOf(wrapperId);
-    const indexOfInjectedSSRComponent = reactString.indexOf(Core.EDITOR);
+    const indexOfInjectedSSRComponent = reactString.indexOf(CoreTheme.EDITOR);
     const indexOfInnerDiv = reactString.indexOf(finalId);
 
     expect(indexOfOuter).toBeLessThan(indexOfWrapper);
@@ -170,7 +169,7 @@ describe('Remirror: Server', () => {
 
     const indexOfOuter = reactString.indexOf(outerId);
     const indexOfInnerDiv = reactString.indexOf(finalId);
-    const indexOfInjectedSSRComponent = reactString.indexOf(Core.EDITOR);
+    const indexOfInjectedSSRComponent = reactString.indexOf(CoreTheme.EDITOR);
 
     expect(isAscending([indexOfInjectedSSRComponent, indexOfInnerDiv, indexOfOuter])).toBeTrue();
   });

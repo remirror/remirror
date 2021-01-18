@@ -10,7 +10,7 @@ import {
 import { unstable_FormRemoveButtonOptions } from 'reakit/Form/FormRemoveButton';
 import { unstable_getIn } from 'reakit/Form/utils/getIn';
 
-import { Components } from '@remirror/theme';
+import { ComponentsTheme } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';
 
@@ -20,7 +20,7 @@ export function useFormProps(
   _: BootstrapFormOptions,
   htmlProps: unstable_FormHTMLProps = {},
 ): unstable_FormHTMLProps {
-  return { ...htmlProps, className: cx(htmlProps.className, Components.FORM) };
+  return { ...htmlProps, className: cx(htmlProps.className, ComponentsTheme.FORM) };
 }
 
 export type BootstrapFormInputOptions = BootstrapRoleOptions & unstable_FormInputOptions<any, any>;
@@ -63,7 +63,7 @@ export function useFormMessageProps(
   _: BootstrapFormMessageOptions,
   htmlProps: unstable_FormMessageHTMLProps = {},
 ): unstable_FormMessageHTMLProps {
-  return { ...htmlProps, className: cx(htmlProps.className, Components.FORM_MESSAGE) };
+  return { ...htmlProps, className: cx(htmlProps.className, ComponentsTheme.FORM_MESSAGE) };
 }
 
 export type BootstrapFormLabelOptions = BootstrapRoleOptions & unstable_FormLabelOptions<any, any>;
@@ -72,7 +72,7 @@ export function useFormLabelProps(
   _: BootstrapFormLabelOptions,
   htmlProps: unstable_FormLabelHTMLProps = {},
 ): unstable_FormLabelHTMLProps {
-  return { ...htmlProps, className: cx(htmlProps.className, Components.FORM_LABEL) };
+  return { ...htmlProps, className: cx(htmlProps.className, ComponentsTheme.FORM_LABEL) };
 }
 
 export type BootstrapFormGroupOptions = BootstrapRoleOptions & unstable_FormGroupOptions<any, any>;
@@ -94,7 +94,7 @@ export function useFormGroupProps(
   _: BootstrapFormGroupOptions,
   htmlProps: unstable_FormGroupHTMLProps = {},
 ): unstable_FormGroupHTMLProps {
-  return { ...htmlProps, className: cx(htmlProps.className, Components.FORM_GROUP) };
+  return { ...htmlProps, className: cx(htmlProps.className, ComponentsTheme.FORM_GROUP) };
 }
 
 export type BootstrapFormRemoveButtonOptions = BootstrapRoleOptions &

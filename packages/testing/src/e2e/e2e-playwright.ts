@@ -1,7 +1,8 @@
 import { Config } from '@jest/types';
 import { setup, teardown } from 'jest-process-manager';
 import onExit from 'signal-exit';
-import { server } from './server.config';
+
+import { server } from './e2e-server.config';
 
 const { globalSetup, globalTeardown } = require('jest-playwright-preset');
 

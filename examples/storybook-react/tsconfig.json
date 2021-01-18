@@ -1,8 +1,4 @@
 {
   "extends": "../../support/tsconfig.base.json",
-  "compilerOptions": {
-    "noUnusedLocals": false,
-    "noUnusedParameters": false
-  },
-  "include": ["./"]
+  "include": ["src", "main.ts"]
 }

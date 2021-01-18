@@ -23,7 +23,7 @@ import {
 import type { ResolvedPos } from '@remirror/pm/model';
 import { PasteRule } from '@remirror/pm/paste-rules';
 import { insertPoint } from '@remirror/pm/transform';
-import { ExtensionImage } from '@remirror/theme';
+import { ExtensionImageTheme } from '@remirror/theme';
 
 type DelayedImage = DelayedValue<ImageAttributes>;
 
@@ -343,7 +343,7 @@ function createInlineImageSpec() {}
 
 function createPlaceholder(_: EditorView, pos: number): HTMLElement {
   const element = document.createElement('div');
-  element.classList.add(ExtensionImage.IMAGE_LOADER);
+  element.classList.add(ExtensionImageTheme.IMAGE_LOADER);
 
   return element;
 }

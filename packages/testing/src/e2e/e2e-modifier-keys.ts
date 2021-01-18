@@ -1,4 +1,9 @@
-// Taken from https://github.com/WordPress/gutenberg/blob/5bbda3656a530616a7a78c0a101d6ec2d8fa6a7a/packages/e2e-test-utils/src/press-key-with-modifier.js
+/**
+ * @module
+ *
+ * Some of the testing utils are adapted from
+ * https://github.com/WordPress/gutenberg/blob/5bbda3656a530616a7a78c0a101d6ec2d8fa6a7a/packages/e2e-test-utils/src/press-key-with-modifier.js
+ */
 
 import { take } from '@remirror/core';
 
@@ -156,10 +161,10 @@ export interface ModifierInformation {
 /**
  * Emulates a Ctrl+A SelectAll key combination by dispatching custom keyboard
  * events and using the results of those events to determine whether to call
- * `document.execCommand( 'selectall' );`. This is necessary because Puppeteer
- * does not emulate Ctrl+A SelectAll in macOS. Events are dispatched to ensure
- * that any `Event#preventDefault` which would have normally occurred in the
- * application as a result of Ctrl+A is respected.
+ * `document.execCommand( 'selectall' );`. This is necessary because
+ * `playwright` does not emulate Ctrl+A SelectAll in macOS. Events are
+ * dispatched to ensure that any `Event#preventDefault` which would have
+ * normally occurred in the application as a result of Ctrl+A is respected.
  *
  * @see https://github.com/GoogleChrome/puppeteer/issues/1313
  * @see https://w3c.github.io/uievents/tools/key-event-viewer.html

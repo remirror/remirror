@@ -1,6 +1,6 @@
 import { createReactManager, Remirror } from 'remirror/react';
 
-import { strictRender } from '@remirror/testing/react';
+import { strictRender } from 'testing/react';
 
 import { ProsemirrorDevTools } from '../dev';
 

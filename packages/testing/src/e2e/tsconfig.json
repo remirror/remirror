@@ -1,0 +1,17 @@
+{
+  "extends": "../../support/tsconfig.base.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "types": [
+      "expect-playwright/global",
+      "jest-playwright-preset",
+      "jest",
+      "jest-extended",
+      "playwright"
+    ],
+    "declarationMap": false,
+    "declaration": false,
+    "noEmit": true
+  },
+  "include": ["./"]
+}

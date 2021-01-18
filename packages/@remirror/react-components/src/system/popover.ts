@@ -2,7 +2,7 @@ import { cx } from '@linaria/core';
 import { PopoverHTMLProps, PopoverOptions } from 'reakit/Popover/Popover';
 import { PopoverArrowHTMLProps, PopoverArrowOptions } from 'reakit/Popover/PopoverArrow';
 
-import { Components } from '@remirror/theme';
+import { ComponentsTheme } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';
 
@@ -22,7 +22,7 @@ export function usePopoverProps(
   _: BootstrapPopoverOptions,
   htmlProps: PopoverHTMLProps = {},
 ): PopoverHTMLProps {
-  return { ...htmlProps, className: cx(Components.POPOVER, htmlProps.className) };
+  return { ...htmlProps, className: cx(ComponentsTheme.POPOVER, htmlProps.className) };
 }
 
 export type BootstrapPopoverArrowOptions = BootstrapRoleOptions & PopoverArrowOptions;

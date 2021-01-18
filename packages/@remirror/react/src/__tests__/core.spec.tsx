@@ -16,9 +16,8 @@ import {
   useRemirror,
   useRemirrorContext,
 } from 'remirror/react';
-
-import { hideConsoleError, rafMock } from '@remirror/testing';
-import { act, fireEvent, render, strictRender } from '@remirror/testing/react';
+import { hideConsoleError, rafMock } from 'testing';
+import { act, fireEvent, render, strictRender } from 'testing/react';
 
 const textContent = `This is editor text`;
 const label = 'Remirror editor';

@@ -5,10 +5,10 @@ import {
   ItalicExtension,
   UnderlineExtension,
 } from 'remirror/extensions';
+import { simpleJSON, testJSON } from 'testing';
 
 import { ExtensionTag, NodeExtension, NodeExtensionSpec } from '@remirror/core';
 import { Node as PMNode } from '@remirror/pm/model';
-import { simpleJSON, testJSON } from '@remirror/testing';
 
 import { createReactManager } from '../../react-helpers';
 import { ReactSerializer } from '../react-serializer';

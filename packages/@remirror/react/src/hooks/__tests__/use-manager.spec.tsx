@@ -1,6 +1,6 @@
 import type { AnyRemirrorManager } from '@remirror/core';
 import { ReactExtension } from '@remirror/preset-react';
-import { act as renderAct, render } from '@remirror/testing/react';
+import { act as renderAct, render } from 'testing/react';
 
 import { useManager } from '../../..';
 

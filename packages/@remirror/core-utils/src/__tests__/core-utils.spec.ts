@@ -22,7 +22,7 @@ import {
 import { object } from '@remirror/core-helpers';
 import { Mark } from '@remirror/pm/model';
 import { TextSelection } from '@remirror/pm/state';
-import { docNodeBasicJSON } from '@remirror/testing';
+import { docNodeBasicJSON } from 'testing';
 
 import {
   areSchemasCompatible,

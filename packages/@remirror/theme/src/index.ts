@@ -1,15 +1,15 @@
-export * as Components from './components-theme';
-export * as Core from './core-theme';
-export * as ExtensionBlockquote from './extension-blockquote-theme';
-export * as ExtensionCallout from './extension-callout-theme';
-export * as ExtensionCodeBlock from './extension-code-block-theme';
-export * as ExtensionEmoji from './extension-emoji-theme';
-export * as ExtensionGapCursor from './extension-gap-cursor-theme';
-export * as ExtensionImage from './extension-image-theme';
-export * as ExtensionPlaceholder from './extension-placeholder-theme';
-export * as ExtensionPositioner from './extension-positioner-theme';
-export * as ExtensionTables from './extension-tables-theme';
-export * as ExtensionWhitespace from './extension-whitespace-theme';
+export * as ComponentsTheme from './components-theme';
+export * as CoreTheme from './core-theme';
+export * as ExtensionBlockquoteTheme from './extension-blockquote-theme';
+export * as ExtensionCalloutTheme from './extension-callout-theme';
+export * as ExtensionCodeBlockTheme from './extension-code-block-theme';
+export * as ExtensionEmojiTheme from './extension-emoji-theme';
+export * as ExtensionGapCursorTheme from './extension-gap-cursor-theme';
+export * as ExtensionImageTheme from './extension-image-theme';
+export * as ExtensionPlaceholderTheme from './extension-placeholder-theme';
+export * as ExtensionPositionerTheme from './extension-positioner-theme';
+export * as ExtensionTablesTheme from './extension-tables-theme';
+export * as ExtensionWhitespaceTheme from './extension-whitespace-theme';
 export * as Theme from './theme';
 export type {
   Color,

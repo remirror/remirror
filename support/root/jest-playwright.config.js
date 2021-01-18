@@ -14,7 +14,7 @@ const debug = REMIRROR_E2E_DEBUG === 'true';
 module.exports = {
   launch: {
     headless: !debug,
-    timeout: 120000,
+    timeout: 120_000,
     slowMo: debug ? 10 : undefined,
   },
   browsers,

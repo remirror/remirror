@@ -34,7 +34,7 @@ import {
 } from '@remirror/core';
 import { keydownHandler } from '@remirror/pm/keymap';
 import { TextSelection } from '@remirror/pm/state';
-import { ExtensionCodeBlock as Theme } from '@remirror/theme';
+import { ExtensionCodeBlockTheme as Theme } from '@remirror/theme';
 
 import { CodeBlockState } from './code-block-plugin';
 import type { CodeBlockAttributes, CodeBlockOptions } from './code-block-types';

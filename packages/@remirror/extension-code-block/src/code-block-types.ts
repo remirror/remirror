@@ -1,12 +1,12 @@
 import type { RefractorSyntax } from 'refractor/core';
 
 import type { AcceptUndefined, ProsemirrorAttributes, Static, StringKey } from '@remirror/core';
-import { ExtensionCodeBlock } from '@remirror/theme';
+import { ExtensionCodeBlockTheme } from '@remirror/theme';
 
 /**
  * The default supported syntax themes.
  */
-export type SyntaxTheme = Lowercase<StringKey<typeof ExtensionCodeBlock>>;
+export type SyntaxTheme = Lowercase<StringKey<typeof ExtensionCodeBlockTheme>>;
 
 export interface CodeBlockOptions {
   /**

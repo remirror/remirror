@@ -31,7 +31,7 @@ import {
   useI18n,
   useRemirrorContext,
 } from '@remirror/react';
-import { Components } from '@remirror/theme';
+import { ComponentsTheme } from '@remirror/theme';
 
 import { CommandIcon } from './core-components';
 import {
@@ -159,15 +159,15 @@ const MenuCommandPane = (props: MenuCommandPaneProps): JSX.Element => {
       role={role}
     >
       {icon && (
-        <Box as='span' className={Components.MENU_PANE_ICON}>
+        <Box as='span' className={ComponentsTheme.MENU_PANE_ICON}>
           <CommandIcon icon={icon} />
         </Box>
       )}
-      <Box as='span' className={Components.MENU_PANE_LABEL}>
+      <Box as='span' className={ComponentsTheme.MENU_PANE_LABEL}>
         {label}
       </Box>
       {shortcutString && (
-        <Box as='span' className={Components.MENU_PANE_SHORTCUT}>
+        <Box as='span' className={ComponentsTheme.MENU_PANE_SHORTCUT}>
           {shortcutString}
         </Box>
       )}
@@ -222,12 +222,12 @@ export const Dropdown = forwardRef<HTMLButtonElement, DropdownProps>((props, ref
     <>
       <ReakitMenuButton {...menuState} {...rest} ref={ref} aria-label={label}>
         {labelElement && (
-          <Box as='span' className={Components.MENU_DROPDOWN_LABEL}>
+          <Box as='span' className={ComponentsTheme.MENU_DROPDOWN_LABEL}>
             {labelElement}
           </Box>
         )}
         {icon && (
-          <Box as='span' className={Components.MENU_PANE_ICON}>
+          <Box as='span' className={ComponentsTheme.MENU_PANE_ICON}>
             <CommandIcon icon={icon} />
           </Box>
         )}
@@ -408,8 +408,8 @@ const BaseMenuPane = (props: BaseMenuPaneProps) => {
             onClick={onClick}
             className={cx(
               props.className,
-              Components.MENU_PANE,
-              active && Components.MENU_PANE_ACTIVE,
+              ComponentsTheme.MENU_PANE,
+              active && ComponentsTheme.MENU_PANE_ACTIVE,
             )}
           >
             {children}

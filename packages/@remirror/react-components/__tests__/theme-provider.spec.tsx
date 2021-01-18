@@ -1,4 +1,4 @@
-import { strictRender } from '@remirror/testing/react';
+import { strictRender } from 'testing/react';
 
 import { ThemeProvider } from '../';
 

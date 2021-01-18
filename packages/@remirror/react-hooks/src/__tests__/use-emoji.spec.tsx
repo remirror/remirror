@@ -5,7 +5,7 @@ import { EmojiExtension } from 'remirror/extensions';
 import { createReactManager, Remirror, useRemirrorContext } from 'remirror/react';
 import data from 'svgmoji/emoji.json';
 
-import { act as renderAct, strictRender } from '@remirror/testing/react';
+import { act as renderAct, strictRender } from 'testing/react';
 
 import { EmojiState, useEmoji } from '../use-emoji';
 

@@ -25,7 +25,7 @@ import {
   usePositioner,
   useSuggest,
 } from '@remirror/react-hooks';
-import { Components, ExtensionPositioner } from '@remirror/theme';
+import { ComponentsTheme, ExtensionPositionerTheme } from '@remirror/theme';
 
 import { ControllableMenu } from './react-component-menu';
 import { Toolbar } from './react-component-toolbar';
@@ -154,7 +154,7 @@ export const FloatingWrapper: FC<FloatingWrapperProps> = (props): JSX.Element =>
     <>
       <PositionerPortal>
         <span
-          className={ExtensionPositioner.POSITIONER}
+          className={ExtensionPositionerTheme.POSITIONER}
           style={{
             top: position.top,
             left: position.left,
@@ -173,7 +173,7 @@ export const FloatingWrapper: FC<FloatingWrapperProps> = (props): JSX.Element =>
           // unstable_orphan={true}
           unstable_initialFocusRef={editorRef}
           unstable_finalFocusRef={editorRef}
-          className={cx(Components.FLOATING_POPOVER, containerClass)}
+          className={cx(ComponentsTheme.FLOATING_POPOVER, containerClass)}
         >
           {animated ? <div className={animatedClass}>{children}</div> : children}
         </Popover>
@@ -189,7 +189,7 @@ export const FloatingToolbar = (props: FloatingToolbarProps): JSX.Element => {
     placement,
     positioner,
     animated = 200,
-    animatedClass = Components.ANIMATED_POPOVER,
+    animatedClass = ComponentsTheme.ANIMATED_POPOVER,
     containerClass,
     blurOnInactive,
     enabled,

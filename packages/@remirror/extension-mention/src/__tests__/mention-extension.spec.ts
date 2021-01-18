@@ -3,7 +3,7 @@ import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { createCoreManager, ItalicExtension } from 'remirror/extensions';
 
 import { htmlToProsemirrorNode, prosemirrorNodeToHtml } from '@remirror/core';
-import { hideConsoleError } from '@remirror/testing';
+import { hideConsoleError } from 'testing';
 
 import { MentionExtension, MentionOptions } from '..';
 import type { MentionChangeHandler } from '../mention-extension';

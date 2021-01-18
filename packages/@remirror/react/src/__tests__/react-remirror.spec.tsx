@@ -1,9 +1,8 @@
 import { RemirrorTestChain } from 'jest-remirror';
 import { FC } from 'react';
 import { BoldExtension, ItalicExtension } from 'remirror/extensions';
-
-import { docNodeBasicJSON } from '@remirror/testing';
-import { fireEvent, strictRender } from '@remirror/testing/react';
+import { docNodeBasicJSON } from 'testing';
+import { fireEvent, strictRender } from 'testing/react';
 
 import { useRemirrorContext } from '../hooks';
 import { createReactManager } from '../react-helpers';

@@ -1,6 +1,6 @@
 import { createReactManager, Remirror, useRemirrorContext } from 'remirror/react';
 
-import { act, strictRender } from '@remirror/testing/react';
+import { act, strictRender } from 'testing/react';
 
 import { PortalContainer, RemirrorPortals, usePortals } from '../../..';
 

@@ -25,7 +25,7 @@ import {
   ShouldSkipFunction,
 } from '@remirror/core';
 import type { Suggester } from '@remirror/pm/suggest';
-import { ExtensionEmoji } from '@remirror/theme';
+import { ExtensionEmojiTheme } from '@remirror/theme';
 
 import {
   AddEmojiCommandOptions,
@@ -101,14 +101,14 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
         return [
           'span',
           {
-            class: ExtensionEmoji.EMOJI_WRAPPER,
+            class: ExtensionEmojiTheme.EMOJI_WRAPPER,
             [EMOJI_DATA_ATTRIBUTE]: emoji[this.options.identifier],
           },
           [
             'img',
             {
               role: 'presentation',
-              class: ExtensionEmoji.EMOJI_IMAGE,
+              class: ExtensionEmojiTheme.EMOJI_IMAGE,
               'aria-label': emoji.annotation,
               alt: emoji.annotation,
               // TODO use the emoji rather than the code once `svgmoji` supports it.

@@ -1,5 +1,5 @@
 {
-  "extends": "../support/tsconfig.base.json",
+  "extends": "../../../support/tsconfig.base.json",
   "compilerOptions": {
     "allowJs": true,
     "types": [
@@ -13,5 +13,5 @@
     "declaration": false,
     "noEmit": true
   },
-  "include": ["./", "patches.d.ts"]
+  "include": ["*.ts"]
 }

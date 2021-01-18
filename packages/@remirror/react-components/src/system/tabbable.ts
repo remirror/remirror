@@ -1,7 +1,7 @@
 import { cx } from '@linaria/core';
 import { TabbableHTMLProps, TabbableOptions } from 'reakit/Tabbable/Tabbable';
 
-import { Components } from '@remirror/theme';
+import { ComponentsTheme } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';
 
@@ -11,5 +11,5 @@ export function useTabbableProps(
   _: BootstrapTabbableOptions,
   htmlProps: TabbableHTMLProps = {},
 ): TabbableHTMLProps {
-  return { ...htmlProps, className: cx(htmlProps.className, Components.TABBABLE) };
+  return { ...htmlProps, className: cx(htmlProps.className, ComponentsTheme.TABBABLE) };
 }

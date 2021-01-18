@@ -15,7 +15,7 @@ import {
   Static,
 } from '@remirror/core';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
-import { ExtensionPositioner } from '@remirror/theme';
+import { ExtensionPositionerTheme } from '@remirror/theme';
 
 import {
   blockNodePositioner,
@@ -100,7 +100,7 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
      * Add the positioner class to make the main editor container `relative` so
      * that positioners can be fixed in relation to the editor.
      */
-    return { class: ExtensionPositioner.EDITOR };
+    return { class: ExtensionPositionerTheme.EDITOR };
   }
 
   protected init(): void {

@@ -2,7 +2,7 @@ import type { ReactElement, ReactNode } from 'react';
 
 import { AnyExtension, isNullOrUndefined } from '@remirror/core';
 import { RemirrorPortals, usePortals } from '@remirror/extension-react-component';
-import { Components } from '@remirror/theme';
+import { ComponentsTheme } from '@remirror/theme';
 
 import {
   I18nProps,
@@ -59,7 +59,9 @@ export interface RemirrorProps<Extension extends AnyExtension>
  * The default editor placeholder where the prosemirror editor will be rendered.
  */
 export const Editor = (): JSX.Element => {
-  return <div className={Components.EDITOR_WRAPPER} {...useRemirrorContext().getRootProps()} />;
+  return (
+    <div className={ComponentsTheme.EDITOR_WRAPPER} {...useRemirrorContext().getRootProps()} />
+  );
 };
 
 interface HookComponentProps {

@@ -1,10 +1,22 @@
 import { getDocument, queries } from 'playwright-testing-library';
 import { ElementHandle } from 'playwright-testing-library/dist/typedefs';
-
-import { goto, mod, press, pressKeyWithModifier, selectAll, textContent } from './helpers';
+import {
+  goto,
+  mod,
+  press,
+  pressKeyWithModifier,
+  selectAll,
+  smokeTest,
+  ssrTest,
+  textContent,
+} from 'testing/e2e';
 
 const { getByRole } = queries;
-const path = __SERVER__.urls.wysiwyg.empty;
+const path = 'editor/wysiwyg';
+
+smokeTest(path);
+ssrTest('wysiwyg without content', path);
+ssrTest('wysiwyg with content', 'editor/wysiwyg/content');
 
 describe('Wysiwyg Showcase', () => {
   let $document: ElementHandle;

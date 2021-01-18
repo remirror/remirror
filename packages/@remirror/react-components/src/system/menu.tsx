@@ -9,7 +9,7 @@ import { MenuItemCheckboxHTMLProps, MenuItemCheckboxOptions } from 'reakit/Menu/
 import { MenuItemRadioHTMLProps, MenuItemRadioOptions } from 'reakit/Menu/MenuItemRadio';
 import { MenuStateReturn } from 'reakit/Menu/MenuState';
 
-import { Components } from '@remirror/theme';
+import { ComponentsTheme } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';
 
@@ -22,8 +22,8 @@ export function useMenuBarProps(
   return {
     ...htmlProps,
     className: cx(
-      Components.MENU_BAR,
-      orientation === 'horizontal' ? Components.FLEX_ROW : Components.FLEX_COLUMN,
+      ComponentsTheme.MENU_BAR,
+      orientation === 'horizontal' ? ComponentsTheme.FLEX_ROW : ComponentsTheme.FLEX_COLUMN,
       htmlProps.className,
     ),
   };
@@ -38,8 +38,10 @@ export function useMenuItemProps(
   return {
     ...htmlProps,
     className: cx(
-      Components.MENU_ITEM,
-      orientation === 'horizontal' ? Components.MENU_ITEM_ROW : Components.MENU_ITEM_COLUMN,
+      ComponentsTheme.MENU_ITEM,
+      orientation === 'horizontal'
+        ? ComponentsTheme.MENU_ITEM_ROW
+        : ComponentsTheme.MENU_ITEM_COLUMN,
       htmlProps.className,
     ),
   };
@@ -94,7 +96,7 @@ export function useMenuProps(
   return {
     ...htmlProps,
     wrapElement,
-    className: cx(Components.MENU, htmlProps.className),
+    className: cx(ComponentsTheme.MENU, htmlProps.className),
   };
 }
 
@@ -158,10 +160,10 @@ export function useMenuButtonProps(
         </>
       ),
     className: cx(
-      Components.MENU_BUTTON,
-      dir === 'left' ? Components.MENU_BUTTON_LEFT : Components.MENU_BUTTON_RIGHT,
-      children && dir === 'left' && Components.MENU_BUTTON_NESTED_LEFT,
-      children && dir === 'right' && Components.MENU_BUTTON_NESTED_RIGHT,
+      ComponentsTheme.MENU_BUTTON,
+      dir === 'left' ? ComponentsTheme.MENU_BUTTON_LEFT : ComponentsTheme.MENU_BUTTON_RIGHT,
+      children && dir === 'left' && ComponentsTheme.MENU_BUTTON_NESTED_LEFT,
+      children && dir === 'right' && ComponentsTheme.MENU_BUTTON_NESTED_RIGHT,
       htmlProps.className,
     ),
   };
@@ -173,7 +175,7 @@ export function useMenuItemCheckboxProps(
   _: BootstrapMenuItemCheckboxOptions,
   htmlProps: MenuItemCheckboxHTMLProps = {},
 ): MenuItemCheckboxHTMLProps {
-  return { ...htmlProps, className: cx(Components.MENU_ITEM_CHECKBOX, htmlProps.className) };
+  return { ...htmlProps, className: cx(ComponentsTheme.MENU_ITEM_CHECKBOX, htmlProps.className) };
 }
 
 export type BootstrapMenuItemRadioOptions = BootstrapRoleOptions & MenuItemRadioOptions;
@@ -182,7 +184,7 @@ export function useMenuItemRadioProps(
   _: BootstrapMenuItemRadioOptions,
   htmlProps: MenuItemRadioHTMLProps = {},
 ): MenuItemRadioHTMLProps {
-  return { ...htmlProps, className: cx(Components.MENU_ITEM_CHECKBOX, htmlProps.className) };
+  return { ...htmlProps, className: cx(ComponentsTheme.MENU_ITEM_CHECKBOX, htmlProps.className) };
 }
 
 export type BootstrapMenuGroupOptions = BootstrapRoleOptions & MenuGroupOptions;
@@ -191,5 +193,5 @@ export function useMenuGroupProps(
   _: BootstrapMenuGroupOptions,
   htmlProps: MenuGroupHTMLProps = {},
 ): MenuGroupHTMLProps {
-  return { ...htmlProps, className: cx(Components.MENU_GROUP, htmlProps.className) };
+  return { ...htmlProps, className: cx(ComponentsTheme.MENU_GROUP, htmlProps.className) };
 }

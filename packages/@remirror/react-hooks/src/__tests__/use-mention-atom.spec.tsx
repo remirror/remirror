@@ -5,7 +5,7 @@ import { NON_BREAKING_SPACE_CHAR } from '@remirror/core';
 import { MentionAtomExtension, MentionAtomNodeAttributes } from '@remirror/extension-mention-atom';
 import { ChangeReason } from '@remirror/pm/suggest';
 import { createReactManager, Remirror, useRemirror } from '@remirror/react';
-import { act, DefaultEditor, render, strictRender } from '@remirror/testing/react';
+import { act, DefaultEditor, render, strictRender } from 'testing/react';
 
 import { MentionAtomState, useMentionAtom } from '../use-mention-atom';
 

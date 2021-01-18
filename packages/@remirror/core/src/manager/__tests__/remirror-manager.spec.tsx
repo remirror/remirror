@@ -12,7 +12,7 @@ import type {
 import { Schema } from '@remirror/pm/model';
 import { EditorState, Plugin } from '@remirror/pm/state';
 import { EditorView } from '@remirror/pm/view';
-import { createFramework, hideConsoleError } from '@remirror/testing';
+import { createFramework, hideConsoleError } from 'testing';
 
 import { NodeViewsExtension } from '../../builtins';
 import { NodeExtension, PlainExtension } from '../../extension';

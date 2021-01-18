@@ -4,7 +4,6 @@ packages:
   - 'deprecated/*'
   - 'packages/*'
   - 'support'
-  - 'test'
-  - 'support/website'
+  - 'website'
   - 'examples/*'
   - 'backend/*'
