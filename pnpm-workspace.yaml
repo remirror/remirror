@@ -1,7 +1,7 @@
 packages:
   - 'support/templates/*'
   - 'packages/@remirror/*'
-  - 'packages/@remirror/deprecated/*'
+  - 'deprecated/*'
   - 'packages/*'
   - 'support'
   - 'test'
