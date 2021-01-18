@@ -8,13 +8,11 @@ dist
 **/node_modules
 **/node_modules/**
 node_modules
-examples/*/node_modules/
 .out
 public
 coverage
 
 .cache
-**/.next
 lerna.json
 .vscode
 .yarn/**
@@ -27,7 +25,10 @@ pnpm-lock.yaml
 .pnpm-store/
 support/root/pnpm-lock.yaml
 
-support/website/.docusaurus
-support/website/build
+**/.next
+**/.docusaurus
+website/build
+**/storybook-static
 
 docs/api/
+

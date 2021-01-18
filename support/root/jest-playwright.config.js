@@ -4,9 +4,7 @@ const {
   REMIRROR_E2E_BROWSER = 'chromium',
 } = process.env;
 
-/** @typedef {'chromium' | 'firefox' | 'webkit'} BrowserType */
-
-/** @type BrowserType[] */
+/** @type {import('testing/playwright').PlaywrightBrowserName} */
 const browsers = REMIRROR_E2E_BROWSER.split(',');
 const collectCoverage = REMIRROR_E2E_COVERAGE === 'true';
 const debug = REMIRROR_E2E_DEBUG === 'true';

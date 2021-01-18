@@ -64,18 +64,24 @@ pnpm add <package>
 Unit tests can be run with the following commands.
 
 ```bash
-pnpm test # Unit Test
-pnpm test:e2e # Unit + Integration Tests on chrome
-pnpm test:watch # Test changed files since the last commit
+# Unit
+pnpm test
+pnpm test:watch
+
+# E2E
+pnpm e2e
+pnpm e2e:watch
 ```
 
 Always create your tests inside of a `__tests__/` sub-folder.
+
+Always create your e2e tests inside of a `__e2e__/` folder.
 
 Sometimes you will want to narrow down tests to run only a specific file or folder.
 
 ```bash
 pnpm test dom.spec.ts # Runs the test file matching dom.spec.ts once.
-pnpm test:watch @remirror/react # Runs every tests in the `@remirror/react` package under watch mode.
+pnpm test:watch @remirror/react # Runs every test in the `@remirror/react` package under watch mode.
 ```
 
 Once in watch mode you can also press `p` and type out the file you want to focus on. Press enter to select the file.

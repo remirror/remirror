@@ -1,13 +1,13 @@
 import { promises } from 'fs';
 import looksSame, { createDiff } from 'looks-same';
-import { dirname, resolve } from 'path';
+import path from 'path';
 
 import { kebabCase } from '@remirror/core';
 
 const { mkdir, writeFile } = promises;
 
 function tempDir(...paths: string[]) {
-  return resolve(__dirname, '../..', '__failed-diffs__', ...paths);
+  return path.resolve(__dirname, '../..', '__failed-diffs__', ...paths);
 }
 
 function toPng(name: string) {
@@ -37,7 +37,7 @@ export function imagesMatch(image1: string | Buffer, image2: string | Buffer) {
 
       const { diff, one, two } = getDiffPaths();
 
-      mkdir(dirname(diff), { recursive: true })
+      mkdir(path.dirname(diff), { recursive: true })
         .then(() => {
           return Promise.all([writeFile(one, image1), writeFile(two, image2)]);
         })

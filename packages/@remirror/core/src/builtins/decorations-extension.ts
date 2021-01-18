@@ -242,7 +242,7 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
     // A container for the gathered decorations.
     let decorationSet = this.placeholders;
 
-    if (persistentSelectionClass && !this.store.helpers.isInteracting()) {
+    if (persistentSelectionClass && !this.store.helpers.isInteracting?.()) {
       // Add the selection decoration to the decorations array.
       decorationSet = generatePersistentSelectionDecorations(state, decorationSet, {
         class: isString(persistentSelectionClass) ? persistentSelectionClass : 'selection',
@@ -582,7 +582,7 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
       .failure((props) => {
         this.removePlaceholder(id)({ ...props, dispatch: () => {} });
         return onFailure?.(props) ?? false;
-      })
+      });
   };
 }
 

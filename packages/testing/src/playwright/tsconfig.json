@@ -1,5 +1,5 @@
 {
-  "extends": "../../support/tsconfig.base.json",
+  "extends": "../../../../support/tsconfig.base.json",
   "compilerOptions": {
     "allowJs": true,
     "types": [

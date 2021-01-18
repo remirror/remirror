@@ -1,5 +1,5 @@
 import { Config } from '@jest/types';
-import { startServer } from 'testing/e2e';
+import { startServer } from 'testing/playwright';
 
 export default async (globalConfig: Config.GlobalConfig) => {
   await startServer(globalConfig);

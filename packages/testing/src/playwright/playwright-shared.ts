@@ -6,7 +6,8 @@
 
 import { Page } from 'playwright';
 
-import { goto, imagesMatch } from './e2e-helpers';
+import { goto } from './playwright-helpers';
+import { imagesMatch } from './playwright-images';
 
 /**
  * If this test fails for the server then something is wrong with the setup or

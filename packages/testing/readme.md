@@ -7,6 +7,6 @@ An internal remirror library providing test fixtures.
 This library provides fixtures and helpers for use throughout the codebase.
 
 ```ts
-import { imageSnapshot } from 'testing/e2e';
+import { imageSnapshot } from 'testing/playwright';
 import { strictRender } from 'testing/react';
 ```

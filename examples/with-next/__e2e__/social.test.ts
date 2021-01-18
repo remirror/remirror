@@ -12,7 +12,7 @@ import {
   ssrTest,
   textContent,
   type,
-} from 'testing/e2e';
+} from 'testing/playwright';
 
 const FIRST_PARAGRAPH_SELECTOR = `${CoreTheme.EDITOR} > p:first-child`;
 

@@ -1,0 +1,62 @@
+name: e2e
+
+on:
+  push:
+    branches:
+      - main
+      - next
+      # - beta
+
+env:
+  PNPM_CACHE_FOLDER: .pnpm-store
+
+jobs:
+  # Run the e2e playwright tests
+  playwright:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        server: [next, docs, storybook-react]
+        browser: [chromium, firefox, webkit]
+        mode: [development, production]
+      fail-fast: true
+
+    steps:
+      - name: checkout code repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: setup caching
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node.js
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14
+
+      - name: install and audit
+        uses: ./.github/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
+
+      - name: build project
+        run: pnpm build
+
+      - name: build server
+        if: matrix.mode == 'production'
+        run: 'pnpm build:e2e:${{ matrix.server }}'
+
+      - name: ${{ matrix.server }} e2e - ${{ matrix.browser }} - ${{matrix.mode}}
+        env:
+          REMIRROR_E2E_ENVIRONMENT: playwright
+          REMIRROR_E2E_SERVER: ${{matrix.server}}
+          REMIRROR_E2E_BROWSER: ${{matrix.browser}}
+          REMIRROR_E2E_MODE: ${{matrix.mode}}
+        run: pnpm e2e

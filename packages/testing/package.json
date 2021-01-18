@@ -32,7 +32,7 @@
   "types": "dist/testing.cjs.d.ts",
   "files": [
     "dist",
-    "e2e",
+    "playwright",
     "react"
   ],
   "dependencies": {
@@ -87,7 +87,7 @@
   "preconstruct": {
     "entrypoints": [
       "index.ts",
-      "e2e/index.ts",
+      "playwright/index.ts",
       "react.tsx"
     ]
   }

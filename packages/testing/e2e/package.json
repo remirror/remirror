@@ -1,8 +1,0 @@
-{
-  "main": "dist/testing-e2e.cjs.js",
-  "module": "dist/testing-e2e.esm.js",
-  "browser": {
-    "./dist/testing-e2e.cjs.js": "./dist/testing-e2e.browser.cjs.js",
-    "./dist/testing-e2e.esm.js": "./dist/testing-e2e.browser.esm.js"
-  }
-}

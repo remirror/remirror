@@ -9,7 +9,7 @@ import {
   smokeTest,
   ssrTest,
   textContent,
-} from 'testing/e2e';
+} from 'testing/playwright';
 
 const { getByRole } = queries;
 const path = 'editor/wysiwyg';

@@ -166,3 +166,6 @@ cc-reporter
 /tsconfig.lint.json
 /tsconfig.docs.json
 /tsconfig.references.json
+
+## Storybook
+**/storybook-static

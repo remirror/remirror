@@ -1,6 +1,6 @@
 import { SupportedCharacters } from 'test-keyboard';
 
-import { PlaywrightBrowserName } from './e2e-types';
+import { PlaywrightBrowserName } from './playwright-types';
 
 /**
  * Clear the editor via triple click and backspace.
@@ -118,9 +118,6 @@ export async function press({ key, count = 1, delay = 10 }: PressProps) {
 export async function type({ text, delay = 10 }: TypeProps) {
   return page.keyboard.type(text, { delay });
 }
-
-export * from './e2e-images';
-export * from './e2e-modifier-keys';
 
 interface HTMLObject {
   _: 'HTML';

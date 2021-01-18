@@ -1,6 +1,6 @@
 import { getDocument, queries } from 'playwright-testing-library';
 import { ElementHandle } from 'playwright-testing-library/dist/typedefs';
-import { goto, selectAll } from 'testing/e2e';
+import { goto, selectAll } from 'testing/playwright';
 
 const { getByRole, getByTestId, getByText } = queries;
 const path = 'editor/positioner';

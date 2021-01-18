@@ -6,8 +6,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next",
-    "start": "next start",
-    "type-check": "tsc"
+    "start": "next start"
   },
   "dependencies": {
     "@emotion/css": "^11.1.3",

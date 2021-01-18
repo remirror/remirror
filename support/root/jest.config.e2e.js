@@ -1,6 +1,8 @@
-const { server: __SERVER__ } = require('testing/e2e');
+const { server: __SERVER__ } = require('testing/playwright');
 const config = require('../jest/jest.config');
 const { jestSupportDir } = require('../jest/helpers');
+
+const { REMIRROR_E2E_ENVIRONMENT = 'playwright' } = process.env;
 
 const environment = {
   playwright: {
@@ -9,8 +11,16 @@ const environment = {
     testRunner: 'jest-circus/runner',
     preset: 'jest-playwright-preset',
     testEnvironment: jestSupportDir('./jest.playwright.environment.js'),
+    setupFilesAfterEnv: [
+      'expect-playwright',
+      jestSupportDir('jest.framework.ts'),
+      jestSupportDir('jest.framework.e2e.ts'),
+    ],
   },
-};
+  detox: {},
+  spectron: {},
+  appium: {},
+}[REMIRROR_E2E_ENVIRONMENT];
 
 const {
   clearMocks,
@@ -38,11 +48,6 @@ module.exports = {
     name: 'remirror:e2e',
     color: 'purple',
   },
-  setupFilesAfterEnv: [
-    'expect-playwright',
-    jestSupportDir('jest.framework.ts'),
-    jestSupportDir('jest.framework.e2e.ts'),
-  ],
   testMatch: __SERVER__.testMatch,
-  ...environment[__SERVER__.environment],
+  ...environment,
 };

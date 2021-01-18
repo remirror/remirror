@@ -1,0 +1,8 @@
+{
+  "main": "dist/testing-playwright.cjs.js",
+  "module": "dist/testing-playwright.esm.js",
+  "browser": {
+    "./dist/testing-playwright.cjs.js": "./dist/testing-playwright.browser.cjs.js",
+    "./dist/testing-playwright.esm.js": "./dist/testing-playwright.browser.esm.js"
+  }
+}
