@@ -85,6 +85,7 @@
     "test:watch": "jest --watch --verbose=false --coverage=false",
     "ts": "node -r ./support/scripts/babel-register.js",
     "typecheck": "tsc -b",
+    "typecheck:force": "tsc -b --force",
     "typecheck:quick": "tsc -p tsconfig.dev.json",
     "update:deps": "pnpm update --latest --recursive -i",
     "update:workspace": "pnpm up -r --workspace \"@remirror/*\" remirror multishift jest-remirror jest-prosemirror prosemirror-suggest a11y-status test-keyboard",

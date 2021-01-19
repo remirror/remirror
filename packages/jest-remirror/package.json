@@ -61,20 +61,22 @@
   "publishConfig": {
     "access": "public"
   },
+  "@remirror": {
+    "tsconfigs": {
+      "src": {
+        "compilerOptions": {
+          "types": [
+            "node",
+            "jest"
+          ]
+        }
+      }
+    }
+  },
   "preconstruct": {
     "entrypoints": [
       "index.ts",
       "environment.ts"
     ]
-  },
-  "tsconfigs": {
-    "src": {
-      "compilerOptions": {
-        "types": [
-          "node",
-          "jest"
-        ]
-      }
-    }
   }
 }

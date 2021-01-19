@@ -10,6 +10,7 @@
     "declaration": false,
     "noEmit": true,
     "skipLibCheck": true,
+    "types": ["node"],
     "allowJs": true
   },
   "include": ["./*.js", "jest", "root", "scripts"],

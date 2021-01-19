@@ -72,6 +72,9 @@
       "src": false,
       "./": {
         "compilerOptions": {
+          "types": [
+            "node"
+          ],
           "allowJs": true,
           "noEmit": true
         },
