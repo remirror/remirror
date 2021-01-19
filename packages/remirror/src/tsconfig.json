@@ -152,6 +152,12 @@
       "path": "../../@remirror/extension-strike/src"
     },
     {
+      "path": "../../@remirror/extension-sub/src"
+    },
+    {
+      "path": "../../@remirror/extension-sup/src"
+    },
+    {
       "path": "../../@remirror/extension-tables/src"
     },
     {

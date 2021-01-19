@@ -308,6 +308,12 @@
       "path": "packages/@remirror/extension-strike/src"
     },
     {
+      "path": "packages/@remirror/extension-sub/src"
+    },
+    {
+      "path": "packages/@remirror/extension-sup/src"
+    },
+    {
       "path": "packages/@remirror/extension-tables/__tests__"
     },
     {
