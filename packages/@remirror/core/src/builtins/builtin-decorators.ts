@@ -1,7 +1,6 @@
-import { LiteralUnion } from 'type-fest';
-
-import { ExtensionPriority } from '@remirror/core-constants';
-import {
+import type { LiteralUnion } from 'type-fest';
+import type { ExtensionPriority } from '@remirror/core-constants';
+import type {
   AnyFunction,
   CommandFunction,
   KeyBindingCommandFunction,
@@ -13,8 +12,8 @@ import {
 import type { I18n } from '@remirror/i18n';
 import type { CoreIcon } from '@remirror/icons';
 
-import { AnyExtension, HelperAnnotation } from '../extension';
-import { GetOptions, TypedPropertyDescriptor } from '../types';
+import type { AnyExtension, HelperAnnotation } from '../extension';
+import type { GetOptions, TypedPropertyDescriptor } from '../types';
 
 /**
  * A decorator which can be applied to top level methods on an extension to

@@ -1,4 +1,4 @@
-import type { assertGet, CreateExtensionPlugin, EditorView } from '@remirror/core';
+import { assertGet, CreateExtensionPlugin, EditorView } from '@remirror/core';
 import { extension, PlainExtension, randomInt, throttle } from '@remirror/core';
 
 import { defaultEffect, PARTICLE_NUM_RANGE, VIBRANT_COLORS } from './epic-mode-effects';

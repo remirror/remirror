@@ -1,12 +1,11 @@
 import createMockRaf from '@react-spring/mock-raf';
 import diff from 'jest-diff';
-
 import {
   AnyRemirrorManager,
   EditorState,
   EditorView,
   Framework,
-  FromToProps,
+  PrimitiveSelection,
   RemirrorContentType,
 } from '@remirror/core';
 import { createEditorView } from '@remirror/react';
@@ -74,7 +73,6 @@ class TestFramework extends Framework<any, any, any> {
       element,
       {
         state,
-        nodeViews: this.manager.store.nodeViews,
         dispatchTransaction: this.dispatchTransaction,
         attributes: () => this.getAttributes(),
         editable: () => this.props.editable ?? true,
@@ -92,10 +90,7 @@ class TestFramework extends Framework<any, any, any> {
  * Helper function which creates a framework to use in testing.
  */
 export function createFramework(manager: AnyRemirrorManager): TestFramework {
-  function createStateFromContent(
-    content: RemirrorContentType,
-    selection?: FromToProps | undefined,
-  ) {
+  function createStateFromContent(content: RemirrorContentType, selection?: PrimitiveSelection) {
     return manager.createState({
       content,
       stringHandler: 'html',
@@ -104,7 +99,7 @@ export function createFramework(manager: AnyRemirrorManager): TestFramework {
   }
 
   return new TestFramework({
-    createStateFromContent: createStateFromContent,
+    createStateFromContent,
     getProps: () => ({ manager }),
     initialEditorState: createStateFromContent(manager.createEmptyDoc()),
   });

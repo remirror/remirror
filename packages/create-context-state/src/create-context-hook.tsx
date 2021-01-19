@@ -1,4 +1,4 @@
-import { get as getPath } from '@ngard/tiny-get';
+import getPath from 'dash-get';
 import pick from 'object.pick';
 import { ComponentType, Context as ReactContext, createContext, FC, useContext } from 'react';
 import usePrevious from 'use-previous';
@@ -195,55 +195,3 @@ export type SplitEmpty<
   Input extends string,
   Splitter extends string
 > = Input extends `${infer T}${Splitter}${infer Rest}` ? [T, ...Split<Rest, Splitter>] : [Input];
-
-// type A = Split<'a-b-c-s-d', '-'>;
-
-// declare function trial<Type, Path extends GetPath<Type>>(
-//   value: Type,
-//   path: Path,
-// ): PathValue<Type, Path>;
-// const a = { list: ['a', 'b', 'c'], name: 'asdf', nested: { a: 'a', b: 'b' } };
-// const c = ['a', 'b', 'c', { a: 1 }] as const;
-// const b = trial(a, 'asdfasdf');
-
-// type B = keyof string;
-
-// type C = string[];
-// type D = C extends Record<string, any> ? C[number] : false;
-// type E = keyof string;
-
-type UpperCaseCharacters =
-  | 'A'
-  | 'B'
-  | 'C'
-  | 'D'
-  | 'E'
-  | 'F'
-  | 'G'
-  | 'H'
-  | 'I'
-  | 'J'
-  | 'K'
-  | 'L'
-  | 'M'
-  | 'N'
-  | 'O'
-  | 'P'
-  | 'Q'
-  | 'R'
-  | 'S'
-  | 'T'
-  | 'U'
-  | 'V'
-  | 'W'
-  | 'X'
-  | 'Y'
-  | 'Z';
-export type ValidHookName<Name extends string> = Name extends `use${infer Rest}`
-  ? Rest extends StartsWithUpperCase<Rest>
-    ? Name
-    : never
-  : never;
-export type StartsWithUpperCase<
-  Name extends string
-> = Name extends `${UpperCaseCharacters}${infer _Rest}` ? Name : never;

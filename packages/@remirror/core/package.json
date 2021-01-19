@@ -56,6 +56,15 @@
     "access": "public"
   },
   "@remirror": {
-    "sizeLimit": "40 KB"
+    "sizeLimit": "40 KB",
+    "tsconfigs": {
+      "src": {
+        "compilerOptions": {
+          "types": [
+            "node"
+          ]
+        }
+      }
+    }
   }
 }

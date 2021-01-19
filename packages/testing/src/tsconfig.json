@@ -1,0 +1,76 @@
+{
+  "__AUTO_GENERATED__": [
+    "To update the configuration edit the following field.",
+    "`package.json > @remirror > tsconfigs > 'src'`",
+    "",
+    "Then run: `pnpm -w generate:ts`"
+  ],
+  "extends": "../../../support/tsconfig.base.json",
+  "compilerOptions": {
+    "types": [
+      "expect-playwright/global",
+      "jest-playwright-preset",
+      "jest",
+      "jest-extended",
+      "snapshot-diff",
+      "playwright",
+      "node"
+    ],
+    "declaration": true,
+    "noEmit": false,
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "outDir": "../dist-types"
+  },
+  "include": ["./"],
+  "references": [
+    {
+      "path": "../../@remirror/core/src"
+    },
+    {
+      "path": "../../@remirror/extension-blockquote/src"
+    },
+    {
+      "path": "../../@remirror/extension-bold/src"
+    },
+    {
+      "path": "../../@remirror/extension-code-block/src"
+    },
+    {
+      "path": "../../@remirror/extension-doc/src"
+    },
+    {
+      "path": "../../@remirror/extension-heading/src"
+    },
+    {
+      "path": "../../@remirror/extension-italic/src"
+    },
+    {
+      "path": "../../@remirror/extension-link/src"
+    },
+    {
+      "path": "../../@remirror/extension-paragraph/src"
+    },
+    {
+      "path": "../../@remirror/extension-text/src"
+    },
+    {
+      "path": "../../@remirror/extension-underline/src"
+    },
+    {
+      "path": "../../@remirror/pm/src"
+    },
+    {
+      "path": "../../@remirror/preset-core/src"
+    },
+    {
+      "path": "../../@remirror/preset-react/src"
+    },
+    {
+      "path": "../../@remirror/react/src"
+    },
+    {
+      "path": "../../test-keyboard/src"
+    }
+  ]
+}

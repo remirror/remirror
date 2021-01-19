@@ -1,18 +1,15 @@
-import { get as getPath } from '@ngard/tiny-get';
 import deepmerge from 'deepmerge';
 import fastDeepEqual from 'fast-deep-equal';
 import { BaseError } from 'make-error';
 import omit from 'object.omit';
 import pick from 'object.pick';
 import type { ConditionalExcept, Primitive } from 'type-fest';
-
 import type { RemirrorIdentifier } from '@remirror/core-constants';
 import { __INTERNAL_REMIRROR_IDENTIFIER_KEY__ } from '@remirror/core-constants';
 import type {
   AnyConstructor,
   AnyFunction,
   GetPath,
-  GetPathValue,
   Nullable,
   Predicate,
   RemirrorIdentifierShape,
@@ -833,12 +830,29 @@ export function sort<Type>(array: Type[], compareFn: (a: Type, z: Type) => numbe
  * @param obj - object to retrieve property from
  * @param path - path to property
  */
-export function get<Type, Path extends GetPath<Type>, Default = undefined>(
-  value: Type,
-  path: Path,
-  fallback?: Default,
-): GetPathValue<Type, Path> | Default {
-  return getPath(value, path as string, fallback);
+export function get<Return>(root: Shape, path: string | string[], defaultValue?: unknown): Return {
+  try {
+    if (isString(path) && path in root) {
+      return (root as any)[path];
+    }
+
+    if (isArray(path)) {
+      path = `['${path.join("']['")}']`;
+    }
+
+    let obj = root;
+    path.replace(
+      /\[\s*(["'])(.*?)\1\s*]|^\s*(\w+)\s*(?=\.|\[|$)|\.\s*(\w*)\s*(?=\.|\[|$)|\[\s*(-?\d+)\s*]/g,
+      (_, __, quotedProp, firstLevel, namedProp, index) => {
+        obj = obj[quotedProp || firstLevel || namedProp || index];
+        return '';
+      },
+    );
+
+    return (obj === undefined ? defaultValue : obj) as Return;
+  } catch {
+    return defaultValue as Return;
+  }
 }
 
 function setPropInternal<Type extends object = any>(
@@ -926,7 +940,7 @@ export function unset(path: Array<string | number>, target: Shape): Shape {
 
 function makeFunctionForUniqueBy<Item = any>(value: GetPath<Item>) {
   return (item: Item) => {
-    return get(item, value);
+    return get(item, value as string);
   };
 }
 

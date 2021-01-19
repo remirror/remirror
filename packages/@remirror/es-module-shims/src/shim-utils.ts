@@ -1,9 +1,7 @@
-/* eslint-disable import/no-mutable-exports */
-
 export const hasSelf = typeof self !== 'undefined';
 
 let baseUrl: string | undefined;
-const envGlobal = hasSelf ? self : global;
+const envGlobal = hasSelf ? self : globalThis;
 
 export const resolvedPromise = Promise.resolve();
 

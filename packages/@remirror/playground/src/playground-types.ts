@@ -4,8 +4,8 @@
  * The types used throughout the playground.
  */
 
-import { ComponentType } from 'react';
-import { FromToProps, RemirrorJSON, StateJSON } from 'remirror';
+import type { ComponentType } from 'react';
+import type { FromToProps, RemirrorJSON, StateJSON } from 'remirror';
 
 export interface DebugComponentProps {
   /**

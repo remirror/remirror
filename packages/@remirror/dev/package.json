@@ -92,6 +92,18 @@
   "publishConfig": {
     "access": "public"
   },
+  "@remirror": {
+    "tsconfigs": {
+      "src": {
+        "compilerOptions": {
+          "types": [
+            "node",
+            "@types/requestidlecallback"
+          ]
+        }
+      }
+    }
+  },
   "cjs": "lib/dist/dev.cjs.js",
   "preconstruct": {
     "entrypoints": [

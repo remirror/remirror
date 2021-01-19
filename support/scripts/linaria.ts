@@ -75,7 +75,7 @@ const groupedFiles = groupBy(files, (file) => {
     throw new Error(`Invalid file ${file}`);
   }
 
-  return captured.replace('-theme.ts', '.ts');
+  return captured.replace('-theme', '');
 });
 
 /**
@@ -298,7 +298,7 @@ async function getTsOutput(css: Record<string, string>): Promise<Record<string, 
 
   const allPath = resolveCssOutputFilename('all');
 
-  const { [resolveCssOutputFilename('all')]: all, ...rest } = css;
+  const { [allPath]: all, ...rest } = css;
 
   /** @type {string[]} */
   const allPaths = [];
@@ -346,16 +346,12 @@ interface Output {
  * Get the output files and css.
  */
 export async function getOutput(): Promise<Output> {
-  /**
-   * A container for all the css output gathered so far.
-   */
+  // A container for all the css output gathered so far.
   const css: Record<string, string> = {};
 
-  /**
-   * A list of all the styles gathered together so far. This is tracked so that
-   * after running through the full list of packages a new entry can be made
-   * which includes the entire css bundle.
-   */
+  // A list of all the styles gathered together so far. This is tracked so that
+  // after running through the full list of packages a new entry can be made
+  // which includes the entire css bundle.
   const all: string[] = [];
 
   for (const [name, relativeFilePaths] of Object.entries(groupedFiles)) {
@@ -388,8 +384,7 @@ export async function getOutput(): Promise<Output> {
 /**
  * Write the output to the required locations.
  *
- * @param output - container for all the output
- * gathered so far.
+ * @param output - container for all the output gathered so far.
  */
 export async function writeOutput(output: Record<string, string>): Promise<void> {
   const entries = Object.entries(output);

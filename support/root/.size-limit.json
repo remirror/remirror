@@ -35,6 +35,13 @@
     "running": false
   },
   {
+    "name": "@remirror/es-module-shims",
+    "path": "packages/@remirror/es-module-shims/dist/remirror-es-module-shims.browser.esm.js",
+    "limit": "50 KB",
+    "ignore": [],
+    "running": false
+  },
+  {
     "name": "@remirror/extension-annotation",
     "path": "packages/@remirror/extension-annotation/dist/remirror-extension-annotation.browser.esm.js",
     "limit": "5 KB",
@@ -210,20 +217,6 @@
     "running": false
   },
   {
-    "name": "@remirror/extension-html",
-    "path": "packages/@remirror/extension-html/dist/remirror-extension-html.browser.esm.js",
-    "limit": "5 KB",
-    "ignore": ["@remirror/core", "@remirror/pm"],
-    "running": false
-  },
-  {
-    "name": "@remirror/extension-icons",
-    "path": "packages/@remirror/extension-icons/dist/remirror-extension-icons.browser.esm.js",
-    "limit": "5 KB",
-    "ignore": ["@remirror/core", "@remirror/pm"],
-    "running": false
-  },
-  {
     "name": "@remirror/extension-image",
     "path": "packages/@remirror/extension-image/dist/remirror-extension-image.browser.esm.js",
     "limit": "5 KB",
@@ -259,8 +252,8 @@
     "running": false
   },
   {
-    "name": "@remirror/extension-media",
-    "path": "packages/@remirror/extension-media/dist/remirror-extension-media.browser.esm.js",
+    "name": "@remirror/extension-math",
+    "path": "packages/@remirror/extension-math/dist/remirror-extension-math.browser.esm.js",
     "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
@@ -345,20 +338,6 @@
   {
     "name": "@remirror/extension-strike",
     "path": "packages/@remirror/extension-strike/dist/remirror-extension-strike.browser.esm.js",
-    "limit": "5 KB",
-    "ignore": ["@remirror/core", "@remirror/pm"],
-    "running": false
-  },
-  {
-    "name": "@remirror/extension-sub",
-    "path": "packages/@remirror/extension-sub/dist/remirror-extension-sub.browser.esm.js",
-    "limit": "5 KB",
-    "ignore": ["@remirror/core", "@remirror/pm"],
-    "running": false
-  },
-  {
-    "name": "@remirror/extension-sup",
-    "path": "packages/@remirror/extension-sup/dist/remirror-extension-sup.browser.esm.js",
     "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
@@ -462,6 +441,13 @@
     "running": false
   },
   {
+    "name": "@remirror/messages",
+    "path": "packages/@remirror/messages/dist/remirror-messages.browser.esm.js",
+    "limit": "50 KB",
+    "ignore": [],
+    "running": false
+  },
+  {
     "name": "@remirror/preset-core",
     "path": "packages/@remirror/preset-core/dist/remirror-preset-core.browser.esm.js",
     "limit": "10 KB",
@@ -490,31 +476,10 @@
     "running": false
   },
   {
-    "name": "@remirror/preset-social",
-    "path": "packages/@remirror/preset-social/dist/remirror-preset-social.browser.esm.js",
-    "limit": "80 KB",
-    "ignore": ["@remirror/core", "@remirror/pm"],
-    "running": false
-  },
-  {
     "name": "@remirror/preset-wysiwyg",
     "path": "packages/@remirror/preset-wysiwyg/dist/remirror-preset-wysiwyg.browser.esm.js",
     "limit": "130 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
-    "running": false
-  },
-  {
-    "name": "@remirror/react",
-    "path": "packages/@remirror/react/dist/remirror-react.browser.esm.js",
-    "limit": "30 KB",
-    "ignore": [
-      "@remirror/core",
-      "@remirror/pm",
-      "@types/react",
-      "@types/react-dom",
-      "react",
-      "react-dom"
-    ],
     "running": false
   },
   {
@@ -639,21 +604,21 @@
   },
   {
     "name": "@remirror/extension-template",
-    "path": "support/templates/extension-template/dist/extension-template.esm.js",
+    "path": "support/templates/extension-template/dist/remirror-extension-template.browser.esm.js",
     "limit": "5 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/minimal-template",
-    "path": "support/templates/minimal-template/dist/minimal-template.esm.js",
+    "path": "support/templates/minimal-template/dist/remirror-minimal-template.browser.esm.js",
     "limit": "50 KB",
     "ignore": [],
     "running": false
   },
   {
     "name": "@remirror/preset-template",
-    "path": "support/templates/preset-template/dist/remirror-preset-template.esm.js",
+    "path": "support/templates/preset-template/dist/remirror-preset-template.browser.esm.js",
     "limit": "10 KB",
     "ignore": ["@remirror/core", "@remirror/pm"],
     "running": false

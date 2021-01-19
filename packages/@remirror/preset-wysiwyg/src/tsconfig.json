@@ -1,0 +1,83 @@
+{
+  "__AUTO_GENERATED__": [
+    "To update the configuration edit the following field.",
+    "`package.json > @remirror > tsconfigs > 'src'`",
+    "",
+    "Then run: `pnpm -w generate:ts`"
+  ],
+  "extends": "../../../../support/tsconfig.base.json",
+  "compilerOptions": {
+    "types": [],
+    "declaration": true,
+    "noEmit": false,
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "outDir": "../dist-types"
+  },
+  "include": ["./"],
+  "references": [
+    {
+      "path": "../../extension-bidi/src"
+    },
+    {
+      "path": "../../extension-blockquote/src"
+    },
+    {
+      "path": "../../extension-bold/src"
+    },
+    {
+      "path": "../../extension-code/src"
+    },
+    {
+      "path": "../../extension-code-block/src"
+    },
+    {
+      "path": "../../extension-drop-cursor/src"
+    },
+    {
+      "path": "../../extension-embed/src"
+    },
+    {
+      "path": "../../extension-gap-cursor/src"
+    },
+    {
+      "path": "../../extension-hard-break/src"
+    },
+    {
+      "path": "../../extension-heading/src"
+    },
+    {
+      "path": "../../extension-horizontal-rule/src"
+    },
+    {
+      "path": "../../extension-image/src"
+    },
+    {
+      "path": "../../extension-italic/src"
+    },
+    {
+      "path": "../../extension-link/src"
+    },
+    {
+      "path": "../../extension-list/src"
+    },
+    {
+      "path": "../../extension-search/src"
+    },
+    {
+      "path": "../../extension-strike/src"
+    },
+    {
+      "path": "../../extension-tables/src"
+    },
+    {
+      "path": "../../extension-trailing-node/src"
+    },
+    {
+      "path": "../../extension-underline/src"
+    },
+    {
+      "path": "../../preset-core/src"
+    }
+  ]
+}

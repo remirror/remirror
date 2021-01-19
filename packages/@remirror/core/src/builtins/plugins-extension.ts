@@ -94,16 +94,16 @@ export class PluginsExtension extends PlainExtension<PluginsOptions> {
    * This extension is responsible for adding state to the editor.
    */
   onCreate(): void {
-    const { setStoreKey, setExtensionStore } = this.store;
+    const { setStoreKey, setExtensionStore, managerSettings, extensions } = this.store;
     this.updateExtensionStore();
 
     // Retrieve the plugins passed in when creating the manager.
-    const { plugins = [] } = this.store.managerSettings;
+    const { plugins = [] } = managerSettings;
 
     // Add the plugins which were added directly to the manager.
     this.updatePlugins(plugins, this.managerPlugins);
 
-    for (const extension of this.store.extensions) {
+    for (const extension of extensions) {
       if (extension.onApplyState) {
         this.applyStateHandlers.push(extension.onApplyState.bind(extension));
       }

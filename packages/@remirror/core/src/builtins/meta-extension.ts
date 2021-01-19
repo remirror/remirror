@@ -1,8 +1,8 @@
 import { ExtensionPriority } from '@remirror/core-constants';
-import { AnyFunction, CommandFunction, Static, Transaction } from '@remirror/core-types';
+import type { AnyFunction, CommandFunction, Static, Transaction } from '@remirror/core-types';
 
 import { AnyExtension, extension, PlainExtension } from '../extension';
-import { CreateExtensionPlugin } from '../types';
+import type { CreateExtensionPlugin } from '../types';
 
 export interface MetaOptions {
   /**
@@ -20,6 +20,7 @@ export interface MetaOptions {
  * provided to the `onChange` handle whenever the state is updated.
  *
  * @internalremarks
+ *
  * TODO capture keybindings as well. This will be more difficult since
  * keybindings can dynamically be added to the editor.
  */

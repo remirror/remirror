@@ -66,5 +66,15 @@
       "index.ts",
       "environment.ts"
     ]
+  },
+  "tsconfigs": {
+    "src": {
+      "compilerOptions": {
+        "types": [
+          "node",
+          "jest"
+        ]
+      }
+    }
   }
 }

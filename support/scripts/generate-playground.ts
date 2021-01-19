@@ -11,7 +11,7 @@ import assert from 'assert';
 import { promises as fs, readdirSync, Stats } from 'fs';
 import glob from 'globby';
 import isBuiltinModule from 'is-builtin-module';
-import { dirname, join, relative } from 'path';
+import path from 'path';
 import { format, resolveConfig } from 'prettier';
 import { assertGet, ErrorConstant, findMatches, invariant, pascalCase } from 'remirror';
 import sortKeys from 'sort-keys';
@@ -69,7 +69,7 @@ async function populateRemirrorImports(
   async function addResult(packageJsonPath: string, _name?: string): Promise<void> {
     // Deprecated and should never be true.
     const isSubdirectory = !!_name;
-    const packageFolder = dirname(packageJsonPath);
+    const packageFolder = path.dirname(packageJsonPath);
 
     if (
       // Skip the folder if it's the build directory.
@@ -94,7 +94,7 @@ async function populateRemirrorImports(
 
     // The main entry point relative to the current folder.
     const relativeEntryPoint = packageJson.browser?.[`./${packageJson.main}`] ?? packageJson.main;
-    const mainPath = join(packageFolder, relativeEntryPoint);
+    const mainPath = path.join(packageFolder, relativeEntryPoint);
 
     // Populate the `.d.ts` file map and retrieve all the data.
     result[packageFolder] = await extractPackageModuleData(
@@ -108,9 +108,9 @@ async function populateRemirrorImports(
 
     // Loop through nested directories.
     for (const directory of subDirectories) {
-      const path = join(packageFolder, directory, 'package.json');
+      const filepath = path.join(packageFolder, directory, 'package.json');
 
-      await addResult(path, join(name, directory));
+      await addResult(filepath, path.join(name, directory));
     }
   }
 
@@ -171,14 +171,14 @@ async function extractPackageModuleData(
 
   if (!singleEntryPoint) {
     // Get the declaration directory.
-    const dtsFolder = join(absolutePath, 'dist', 'declarations', 'src');
+    const dtsFolder = path.join(absolutePath, 'dist', 'declarations', 'src');
 
     // Add all folder contents to the folder
     contents = await getDtsFileContents(dtsFolder);
   } else {
     const [dtsEntryPoint] = await glob('*.d.ts', {
       absolute: true,
-      cwd: join(absolutePath, 'dist'),
+      cwd: path.join(absolutePath, 'dist'),
     });
 
     invariant(dtsEntryPoint, {
@@ -258,8 +258,8 @@ async function getDtsFileContents(dtsFolder: string, subFolder = ''): Promise<Dt
   let dtsFileContents: DtsFileContents = {};
 
   for (const declaration of await fs.readdir(dtsFolder)) {
-    const key = join(subFolder, declaration);
-    const filePath = join(dtsFolder, declaration);
+    const key = path.join(subFolder, declaration);
+    const filePath = path.join(dtsFolder, declaration);
     const filePathStat = await getFileStat(filePath);
 
     if (!filePathStat) {
@@ -267,7 +267,7 @@ async function getDtsFileContents(dtsFolder: string, subFolder = ''): Promise<Dt
     }
 
     if (filePathStat.isDirectory()) {
-      const nestedDeclarations = await getDtsFileContents(join(dtsFolder, declaration), key);
+      const nestedDeclarations = await getDtsFileContents(path.join(dtsFolder, declaration), key);
 
       dtsFileContents = { ...dtsFileContents, ...nestedDeclarations };
       continue;
@@ -316,22 +316,12 @@ async function preloadRequiredLibraries(dtsCache: DtsCache) {
   // Instead we're going to look at the special `.pnpm` folder inside the root
   // `node_modules`.
 
-  // Get the folder for `@types`
-  const pnpmTypeFolder = baseDir('node_modules', '.pnpm', '@types');
-
   // Get the folder for `.pnpm`.
   const pnpmFolder = baseDir('node_modules', '.pnpm');
 
   const packages: Record<string, string[]> = {
     '.': await fs.readdir(pnpmFolder),
   };
-
-  // Read the directories of both folders to be able to search through the
-  // folder names which are postfixed with a version number.
-  const [pnpmTypeFolders, pnpmFolders] = await Promise.all([
-    fs.readdir(pnpmTypeFolder),
-    fs.readdir(pnpmFolder),
-  ]);
 
   /** A function which retrieves the package folder for a given package name. */
   function getPackageFolder(name: string, subFolder = '') {
@@ -357,7 +347,7 @@ async function preloadRequiredLibraries(dtsCache: DtsCache) {
       return '';
     }
 
-    return join(base, directory, 'node_modules', name, subFolder);
+    return path.join(base, directory, 'node_modules', name, subFolder);
   }
 
   // The list of packages that should be preloaded and the location of their root `*.d.ts` file.
@@ -475,7 +465,6 @@ for (const [name, importName] of externalModules) {
 async function generateCode(props: ImportGroups) {
   log.debug('Generating the playground code.');
   const { extensions, presets, core, react, unscoped, pm } = props;
-  const currentPath = 'playground.tsx';
   const importGroups: PackageModuleMeta[] = [
     ...Object.values(pm),
     ...Object.values(core),
@@ -659,14 +648,14 @@ export const DTS_CACHE: DtsCache = dtsCache;
 const unscopedAbsolutePath = baseDir('packages');
 
 // The location for all the scoped packages.
-const scopedAbsolutePath = join(unscopedAbsolutePath, '@remirror');
+const scopedAbsolutePath = path.join(unscopedAbsolutePath, '@remirror');
 
 // Where the generated file will be located.
 const generatedFolder = baseDir('packages', '@remirror', 'playground', 'src', 'generated');
-const modulesPath = join(generatedFolder, 'modules.ts');
-const jsonPath = join(generatedFolder, 'dts.json');
-const exportsPath = join(generatedFolder, 'exports.ts');
-const metaPath = join(generatedFolder, 'meta.ts');
+const modulesPath = path.join(generatedFolder, 'modules.ts');
+const jsonPath = path.join(generatedFolder, 'dts.json');
+const exportsPath = path.join(generatedFolder, 'exports.ts');
+const metaPath = path.join(generatedFolder, 'meta.ts');
 
 interface FileFormatterConfig {
   contents: string;
@@ -699,7 +688,7 @@ async function formatAndWriteFiles(files: FileFormatterConfig[]) {
 
   log.debug(
     'Linting generated files',
-    filesToFormat.map((filepath) => relative(process.cwd(), filepath)).join('\n'),
+    filesToFormat.map((filepath) => path.relative(process.cwd(), filepath)).join('\n'),
   );
 
   // Run eslint on the files.
@@ -711,7 +700,7 @@ async function formatAndWriteFiles(files: FileFormatterConfig[]) {
  */
 async function ensureActiveBuild() {
   const stat = await getFileStat(
-    join(scopedAbsolutePath, 'core', 'dist', 'declarations', 'src', 'index.d.ts'),
+    path.join(scopedAbsolutePath, 'core', 'dist', 'declarations', 'src', 'index.d.ts'),
   );
 
   invariant(stat?.isFile(), {

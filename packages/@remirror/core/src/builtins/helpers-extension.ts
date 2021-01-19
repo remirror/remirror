@@ -1,5 +1,4 @@
-import { LiteralUnion } from 'type-fest';
-
+import type { LiteralUnion } from 'type-fest';
 import {
   ErrorConstant,
   LEAF_NODE_REPLACING_CHARACTER,

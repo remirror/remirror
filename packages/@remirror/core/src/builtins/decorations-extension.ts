@@ -18,7 +18,7 @@ import { Decoration, DecorationSet, WidgetDecorationSpec } from '@remirror/pm/vi
 
 import { DelayedCommand, DelayedPromiseCreator } from '../commands';
 import { extension, Helper, PlainExtension } from '../extension';
-import { ApplyStateLifecycleProps, CreateExtensionPlugin } from '../types';
+import type { ApplyStateLifecycleProps, CreateExtensionPlugin } from '../types';
 import { command, helper } from './builtin-decorators';
 
 export interface DecorationsOptions {

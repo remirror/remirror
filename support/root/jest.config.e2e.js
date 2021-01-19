@@ -46,7 +46,7 @@ module.exports = {
   watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
   displayName: {
     name: 'remirror:e2e',
-    color: 'purple',
+    color: 'black',
   },
   testMatch: __SERVER__.testMatch,
   ...environment,

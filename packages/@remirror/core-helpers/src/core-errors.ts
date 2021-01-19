@@ -1,5 +1,4 @@
 import { BaseError } from 'make-error';
-
 import { ErrorConstant } from '@remirror/core-constants';
 
 import { includes, isString, values } from './core-helpers';

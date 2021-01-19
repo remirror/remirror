@@ -1,5 +1,5 @@
 /**
- * Styles extracted from: packages/@remirror/theme/src/extension-blockquote.ts
+ * Styles extracted from: packages/@remirror/theme/src/extension-blockquote-theme.ts
  */
 .remirror-editor .Prosemirror blockquote {
   border-left: 3px solid var(--rmr-hue-gray-3);

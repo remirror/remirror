@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { get as getPath } from '@ngard/tiny-get';
+import getPath from 'dash-get';
 import { Dispatch, MutableRefObject, useEffect, useRef, useState } from 'react';
 
 import {

@@ -1,0 +1,20 @@
+{
+  "extends": "./support/tsconfig.base.json",
+  "compilerOptions": {
+    "types": [
+      "node",
+      "jest",
+      "jest-extended",
+      "jest-axe",
+      "@testing-library/jest-dom",
+      "@types/requestidlecallback",
+      "expect-playwright/global",
+      "jest-playwright-preset",
+      "snapshot-diff",
+      "playwright"
+    ],
+    "noEmit": true
+  },
+  "include": ["packages/*/src", "global.d.ts"],
+  "exclude": ["packages/@remirror/svelte", "**/node_modules/**", "node_modules"]
+}

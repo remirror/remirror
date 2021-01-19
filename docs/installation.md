@@ -43,7 +43,6 @@ Or with `@emotion/styled`:
 
 ```tsx
 import React from 'react';
-
 import { AllStyledComponent } from '@remirror/styles/emotion';
 
 import { Editor } from './editor';
@@ -62,7 +61,6 @@ Or with `styled-components`:
 
 ```tsx
 import React from 'react';
-
 import { AllStyledComponent } from '@remirror/styles/styled-components';
 
 import { Editor } from './editor';

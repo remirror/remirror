@@ -7,19 +7,25 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-testing.esm.js",
-      "require": "./dist/remirror-testing.cjs.js",
-      "browser": "./dist/remirror-testing.browser.esm.js",
-      "types": "./dist/remirror-testing.cjs.d.ts",
-      "default": "./dist/remirror-testing.esm.js"
+      "import": "./dist/testing.esm.js",
+      "require": "./dist/testing.cjs.js",
+      "browser": "./dist/testing.browser.esm.js",
+      "types": "./dist/testing.cjs.d.ts",
+      "default": "./dist/testing.esm.js"
     },
     "./package.json": "./package.json",
+    "./playwright": {
+      "import": "./playwright/dist/testing-playwright.esm.js",
+      "require": "./playwright/dist/testing-playwright.cjs.js",
+      "browser": "./playwright/dist/testing.browser.esm.js",
+      "default": "./playwright/dist/testing-playwright.esm.js"
+    },
     "./react": {
-      "import": "./react/dist/remirror-testing-react.esm.js",
-      "require": "./react/dist/remirror-testing-react.cjs.js",
-      "browser": "./react/dist/remirror-testing.browser.esm.js",
-      "types": "./react/dist/remirror-testing-react.cjs.d.ts",
-      "default": "./react/dist/remirror-testing-react.esm.js"
+      "import": "./react/dist/testing-react.esm.js",
+      "require": "./react/dist/testing-react.cjs.js",
+      "browser": "./react/dist/testing.browser.esm.js",
+      "types": "./react/dist/testing-react.cjs.d.ts",
+      "default": "./react/dist/testing-react.esm.js"
     },
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
@@ -82,6 +88,23 @@
   "peerDependenciesMeta": {
     "@types/react": {
       "optional": true
+    }
+  },
+  "@remirror": {
+    "tsconfigs": {
+      "src": {
+        "compilerOptions": {
+          "types": [
+            "expect-playwright/global",
+            "jest-playwright-preset",
+            "jest",
+            "jest-extended",
+            "snapshot-diff",
+            "playwright",
+            "node"
+          ]
+        }
+      }
     }
   },
   "preconstruct": {

@@ -84,7 +84,6 @@ Under the hood `jest-remirror` leans heavily on `@remirror/dom` to render an ins
 
 ```ts
 import { renderEditor } from 'jest-remirror';
-
 import { EmojiExtension } from '@remirror/extension-emoji';
 
 test('emoticons replaced with emoji', () => {

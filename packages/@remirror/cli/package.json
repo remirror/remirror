@@ -78,6 +78,25 @@
   "publishConfig": {
     "access": "public"
   },
+  "@remirror": {
+    "tsconfigs": {
+      "src": {
+        "compilerOptions": {
+          "allowJs": true
+        },
+        "include": [
+          "bin.js",
+          "src"
+        ]
+      },
+      "./": {
+        "include": [
+          "bin.js",
+          "src"
+        ]
+      }
+    }
+  },
   "preconstruct": {
     "entrypoints": [
       "index.ts",

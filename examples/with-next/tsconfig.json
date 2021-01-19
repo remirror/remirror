@@ -1,13 +1,17 @@
 {
+  "__AUTO_GENERATED__": [
+    "To update the configuration edit the following field.",
+    "`package.json > @remirror > tsconfigs > 'src'`",
+    "",
+    "Then run: `pnpm -w generate:ts`"
+  ],
   "extends": "../../support/tsconfig.base.json",
   "compilerOptions": {
+    "types": [],
     "declaration": false,
-    "declarationMap": false,
     "noEmit": true,
-    "target": "ESNext",
     "allowJs": true,
-    "isolatedModules": true,
-    "jsx": "preserve"
+    "skipLibCheck": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "next-env.d.ts"]
+  "include": ["src", "next.config.js", "next-env.d.ts"]
 }

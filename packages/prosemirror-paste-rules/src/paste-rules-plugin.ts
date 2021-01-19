@@ -9,8 +9,7 @@ import {
   Slice,
 } from 'prosemirror-model';
 import { Plugin, PluginKey, Selection } from 'prosemirror-state';
-import { EditorView } from 'prosemirror-view';
-
+import type { EditorView } from 'prosemirror-view';
 import { ExtensionPriority } from '@remirror/core-constants';
 import { findMatches, includes, isFunction, isString, range, sort } from '@remirror/core-helpers';
 
@@ -117,7 +116,7 @@ export function pasteRules(pasteRules: PasteRule[]): Plugin<void> {
             return false;
           }
 
-          const { dataTransfer } = event;
+          const { dataTransfer, clientX, clientY } = event;
 
           if (!dataTransfer) {
             return false;
@@ -130,8 +129,7 @@ export function pasteRules(pasteRules: PasteRule[]): Plugin<void> {
           }
 
           const pos =
-            view.posAtCoords({ left: event.clientX, top: event.clientY })?.pos ??
-            view.state.selection.anchor;
+            view.posAtCoords({ left: clientX, top: clientY })?.pos ?? view.state.selection.anchor;
 
           for (const { fileHandler, regexp } of filePasteRules) {
             const files = regexp ? allFiles.filter((file) => regexp.test(file.type)) : allFiles;

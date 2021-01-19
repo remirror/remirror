@@ -19,7 +19,6 @@ import type {
   ProsemirrorPlugin,
   Selection,
   Shape,
-  Transaction,
 } from '@remirror/core-types';
 import {
   convertCommand,

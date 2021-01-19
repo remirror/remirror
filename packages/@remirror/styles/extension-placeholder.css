@@ -1,5 +1,5 @@
 /**
- * Styles extracted from: packages/@remirror/theme/src/extension-placeholder.ts
+ * Styles extracted from: packages/@remirror/theme/src/extension-placeholder-theme.ts
  */
 .remirror-is-empty:first-of-type::before {
   position: absolute;

@@ -1,4 +1,4 @@
-import { Messages } from '@lingui/core';
+import type { Messages } from '@lingui/core';
 import { camelCase, pascalCase } from 'case-anything';
 import fs from 'fs/promises';
 import path from 'path';

@@ -10,9 +10,7 @@ import {
   useRef,
 } from 'react';
 import useEffectOnce from 'react-use/lib/useEffectOnce';
-
 import {
-  bool,
   debounce,
   includes,
   isEmptyArray,
@@ -97,6 +95,7 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
     getA11yStatusMessage,
     items,
     getItemId = defaultGetItemId,
+    multiple,
   } = props;
   const [state, dispatch] = useMultishiftReducer<Item>(props);
   const actions = useMemo(() => bindActionCreators(Actions, dispatch), [dispatch]);
@@ -196,7 +195,7 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
         start: highlightedGroupStartIndex,
         end: highlightedGroupEndIndex,
         indexes: highlightedIndexes,
-      }) || (props.multiple ? isHovered : !isValidIndex(mostRecentHighlightedIndex) && isHovered)
+      }) || (multiple ? isHovered : !isValidIndex(mostRecentHighlightedIndex) && isHovered)
     );
   };
 
@@ -309,7 +308,7 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
   ): GetPropsWithRefReturn<Element, RefKey> {
     const { onKeyDown, onBlur, refKey = 'ref' as RefKey, ref, ...rest } = options;
 
-    const multi = props.multiple ? { 'aria-multiselectable': props.multiple } : {};
+    const multi = multiple ? { 'aria-multiselectable': multiple } : {};
     const activeDescendant = !isEmptyArray(highlightedIndexes)
       ? {
           'aria-activedescendant': getItemA11yId(mostRecentHighlightedIndex),
@@ -483,11 +482,7 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
         }
       }),
       role:
-        type === Type.ControlledMenu
-          ? props.multiple
-            ? 'menuitemcheckbox'
-            : 'menuitemradio'
-          : 'option',
+        type === Type.ControlledMenu ? (multiple ? 'menuitemcheckbox' : 'menuitemradio') : 'option',
       'aria-current': index === hoveredIndex || index === mostRecentHighlightedIndex,
       'aria-selected': itemHighlightedAtIndex(index) && !rest.disabled,
       id: getItemA11yId(itemIndex),
@@ -581,7 +576,7 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
       },
       focusMenuItem: (index: number) => {
         if (refs.items.current[index]) {
-          refs.items.current[index].focus();
+          refs.items.current[index]?.focus();
         }
       },
     }),

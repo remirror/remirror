@@ -21,7 +21,7 @@ import type {
 } from '@remirror/core-types';
 import { convertCommand, getCursor, getTextSelection, isMarkActive } from '@remirror/core-utils';
 import { toggleMark as originalToggleMark } from '@remirror/pm/commands';
-import { SelectionRange } from '@remirror/pm/state';
+import type { SelectionRange } from '@remirror/pm/state';
 
 /**
  * The parameter that is passed into `DelayedCommand`s.
@@ -303,7 +303,7 @@ function markApplies(type: MarkType, doc: ProsemirrorNode, ranges: SelectionRang
  * Defaults to the current selection.
  */
 export function applyMark(
-  type: Remirror.MarkNameUnion | MarkType,
+  type: string | MarkType,
   attrs?: ProsemirrorAttributes,
   selectionPoint?: PrimitiveSelection,
 ): CommandFunction {
@@ -367,7 +367,7 @@ export interface InsertTextOptions extends Partial<FromToProps> {
   /**
    * Marks can be added to the inserted text.
    */
-  marks?: Record<Remirror.MarkNameUnion, ProsemirrorAttributes>;
+  marks?: Record<string, ProsemirrorAttributes>;
 }
 
 /**

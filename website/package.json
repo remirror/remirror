@@ -48,5 +48,21 @@
     "core-js": "^3.8.2",
     "monaco-editor-webpack-plugin": "^2.1.0",
     "worker-plugin": "^5.0.0"
+  },
+  "@remirror": {
+    "tsconfigs": {
+      "src": {
+        "compilerOptions": {
+          "allowJs": true
+        }
+      },
+      "./": {
+        "include": [
+          "./*.js",
+          "src",
+          "plugins"
+        ]
+      }
+    }
   }
 }

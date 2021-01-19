@@ -5,5 +5,5 @@
     "./dist/testing-react.cjs.js": "./dist/testing-react.browser.cjs.js",
     "./dist/testing-react.esm.js": "./dist/testing-react.browser.esm.js"
   },
-  "types": "dist/remirror-testing-react.cjs.d.ts"
+  "types": "dist/testing-react.cjs.d.ts"
 }

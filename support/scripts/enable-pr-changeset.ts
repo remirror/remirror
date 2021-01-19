@@ -22,7 +22,7 @@ async function main() {
     return;
   }
 
-  delete changesetConfig.changelog;
+  Reflect.deleteProperty(changesetConfig, 'changelog');
   await writeJson(baseDir('.changeset', 'config.json'), changesetConfig);
 
   console.log(chalk`{green Successfully updated the CI configuration. }`);

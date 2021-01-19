@@ -1,5 +1,4 @@
 import round from 'round';
-
 import {
   ApplySchemaAttributes,
   Array1,

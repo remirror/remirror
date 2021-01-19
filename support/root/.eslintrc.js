@@ -142,10 +142,10 @@ let config = {
 
           // Packages that are not scoped to `remirror`
           // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
-          ['^(?!@remirror)@?\\w'],
+          ['^(?!@remirror)@?\\w', '^@remirror'],
 
           // Scoped packages
-          ['^@remirror'],
+          // [],
 
           // Absolute imports and other imports such as Vue-style `@/foo`.
           // Anything that does not start with a dot.
@@ -481,6 +481,10 @@ if (process.env.FULL_ESLINT_CHECK) {
       // ],
     },
     overrides: [
+      {
+        files: ['./packages/@remirror/es-module-shims'],
+        rules: { 'import/no-mutable-exports': 'off' },
+      },
       {
         // parserOptions: { project: [require.resolve('../tsconfig.lint.json')] },
         files: ['**/!(*.{md,mdx})/*.ts', '**/!(*.{md,mdx})/*.tsx'],

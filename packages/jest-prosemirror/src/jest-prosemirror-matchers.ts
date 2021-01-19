@@ -1,5 +1,4 @@
 import type { TaggedProsemirrorNode } from 'prosemirror-test-builder';
-
 import type {
   CommandFunction,
   ProsemirrorCommandFunction,

@@ -1,6 +1,5 @@
-import { ClassName } from '@linaria/core/types/cx';
+import type { ClassName } from '@linaria/core/types/cx';
 import type { Unsubscribe } from 'nanoevents';
-
 import type {
   EditorSchema,
   EditorState,
@@ -20,7 +19,7 @@ import type { DirectEditorProps } from '@remirror/pm/view';
 import type { UpdatableViewProps } from '../builtins';
 import type { AnyExtension, AnyExtensionConstructor, GetSchema } from '../extension';
 import type { ManagerEvents, RemirrorManager } from '../manager';
-import { FocusType } from '../types';
+import type { FocusType } from '../types';
 
 export interface BaseFramework<Extension extends AnyExtension> {
   /**

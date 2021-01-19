@@ -295,8 +295,6 @@ function getOrCreateLoad(url: string, source?: string): RegistryUrl {
     return load.a[0].filter((d) => d.d === -1).map((d) => source?.slice(d.s, d.e) ?? '');
   })();
 
-  const fullLoad = load;
-
   load.L = load.f?.then(async (deps) => {
     load.d = await Promise.all(
       deps.map(async (depId) => {

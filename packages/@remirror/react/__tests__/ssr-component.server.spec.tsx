@@ -1,5 +1,4 @@
 import { createReactManager } from 'remirror/react';
-
 import { initialJson } from 'testing';
 import { strictRender } from 'testing/react';
 

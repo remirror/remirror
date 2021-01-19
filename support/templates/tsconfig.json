@@ -1,8 +1,0 @@
-{
-  "extends": "../tsconfig.base.json",
-  "compilerOptions": {
-    "types": ["node", "jest", "jest-extended"],
-    "noEmit": true,
-    "importsNotUsedAsValues": "error"
-  }
-}

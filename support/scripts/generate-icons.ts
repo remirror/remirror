@@ -12,7 +12,7 @@ import { promises as fs } from 'fs';
 import globby from 'globby';
 import path from 'path';
 import { isEmptyObject, object } from 'remirror';
-import { IconTree } from 'remirror/icons';
+import type { IconTree } from 'remirror/icons';
 
 import data from './data/icons.json';
 import { baseDir, formatFiles, log } from './helpers';
@@ -131,7 +131,7 @@ function generateComponentIconImports(iconNames: string[], type: IconCollection)
 function generateFileHeader(type: 'component' | 'icon') {
   const importString =
     'icon' === type
-      ? `import { IconTree } from './icon-types';`
+      ? `import type { IconTree } from './icon-types';`
       : `import { GenIcon, IconType } from './icons-base';`;
 
   return `/** THIS FILE IS AUTO GENERATED */\n\n${importString}`;
@@ -191,7 +191,7 @@ interface GenerateOptions {
 /**
  * Update the content arrays.
  */
-async function updateContent(files: string[], type: IconCollection, options: GenerateOptions) {
+async function updateContent(files: string[], _: IconCollection, options: GenerateOptions) {
   const { names, iconContent, componentContent } = options;
 
   for (const file of files) {

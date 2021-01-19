@@ -43,7 +43,6 @@ import 'codemirror/mode/yaml/yaml';
 import CodeMirror from 'codemirror';
 import { RemirrorManager } from 'remirror/core';
 import { CorePreset } from 'remirror/preset/core';
-
 import { CodeMirrorExtension } from '@remirror/extension-codemirror5';
 
 // Create the codeMirror extension with an instance of the codemirror import.

@@ -29,7 +29,6 @@ import {
   UnderlineExtension,
 } from 'remirror/extensions';
 import { Remirror, useRemirror } from 'remirror/react';
-
 import { ProsemirrorDevTools } from '@remirror/dev';
 
 const extensions = () => [

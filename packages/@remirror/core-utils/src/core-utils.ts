@@ -1,7 +1,6 @@
 import { cssifyObject } from 'css-in-js-utils';
 import type { StyleObject } from 'css-in-js-utils/es/cssifyObject';
-import { KebabCase } from 'type-fest';
-
+import type { KebabCase } from 'type-fest';
 import { ErrorConstant, LEAF_NODE_REPLACING_CHARACTER } from '@remirror/core-constants';
 import {
   assert,
@@ -64,7 +63,7 @@ import {
   TextSelection,
   Transaction as PMTransaction,
 } from '@remirror/pm/state';
-import { Step } from '@remirror/pm/transform';
+import type { Step } from '@remirror/pm/transform';
 
 import { environment } from './environment';
 

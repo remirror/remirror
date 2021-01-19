@@ -91,7 +91,6 @@ Make sure you have `styled-components` installed. And then import either the sty
 
 ```tsx
 import React from 'react';
-
 import { CoreStyledComponent, coreStyledCss } from '@remirror/styles/styled-components';
 
 import { MyEditor } from './my-editor';
@@ -111,7 +110,6 @@ This is designed to be used in a react app that already consumes uses `@emotion/
 
 ```tsx
 import React from 'react';
-
 import { CoreStyledComponent, coreStyledCss } from '@remirror/styles/emotion';
 
 import { MyEditor } from './my-editor';

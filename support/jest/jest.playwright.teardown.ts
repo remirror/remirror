@@ -1,4 +1,4 @@
-import { Config } from '@jest/types';
+import type { Config } from '@jest/types';
 import { destroyServer } from 'testing/playwright';
 
 export default async (globalConfig: Config.GlobalConfig) => {

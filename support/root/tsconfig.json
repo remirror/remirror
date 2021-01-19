@@ -1,28 +1,539 @@
 {
-  "extends": "./support/tsconfig.base.json",
-  "compilerOptions": {
-    "types": [
-      "node",
-      "jest",
-      "jest-extended",
-      "jest-axe",
-      "@testing-library/jest-dom",
-      "@types/requestidlecallback",
-      "snapshot-diff"
-    ],
-    "skipLibCheck": true,
-    "noEmit": true,
-    "importsNotUsedAsValues": "remove",
-    "plugins": [
-      { "name": "typescript-snapshots-plugin" },
-      { "name": "typescript-plugin-css-modules" }
-    ]
-  },
-  "include": [
-    "packages/*/src",
-    "packages/@remirror/*/src",
-    "global.d.ts",
-    "packages/@remirror/react-components/__tests__"
-  ],
-  "exclude": ["packages/@remirror/svelte", "**/node_modules/**", "node_modules"]
+  "files": [],
+  "references": [
+    {
+      "path": "examples/storybook-react/__e2e__"
+    },
+    {
+      "path": "examples/storybook-react/src"
+    },
+    {
+      "path": "examples/with-next/__e2e__"
+    },
+    {
+      "path": "examples/with-next/src"
+    },
+    {
+      "path": "packages/@remirror/cli/src"
+    },
+    {
+      "path": "packages/@remirror/core-constants/src"
+    },
+    {
+      "path": "packages/@remirror/core-helpers/__tests__"
+    },
+    {
+      "path": "packages/@remirror/core-helpers/src"
+    },
+    {
+      "path": "packages/@remirror/core-types/__dts__"
+    },
+    {
+      "path": "packages/@remirror/core-types/src"
+    },
+    {
+      "path": "packages/@remirror/core-utils/__tests__"
+    },
+    {
+      "path": "packages/@remirror/core-utils/src"
+    },
+    {
+      "path": "packages/@remirror/core/__dts__"
+    },
+    {
+      "path": "packages/@remirror/core/__tests__"
+    },
+    {
+      "path": "packages/@remirror/core/src"
+    },
+    {
+      "path": "packages/@remirror/dev/__tests__"
+    },
+    {
+      "path": "packages/@remirror/dev/src"
+    },
+    {
+      "path": "packages/@remirror/dom/__tests__"
+    },
+    {
+      "path": "packages/@remirror/dom/src"
+    },
+    {
+      "path": "packages/@remirror/es-module-shims/src"
+    },
+    {
+      "path": "packages/@remirror/extension-annotation/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-annotation/src"
+    },
+    {
+      "path": "packages/@remirror/extension-bidi/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-bidi/src"
+    },
+    {
+      "path": "packages/@remirror/extension-blockquote/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-blockquote/src"
+    },
+    {
+      "path": "packages/@remirror/extension-bold/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-bold/src"
+    },
+    {
+      "path": "packages/@remirror/extension-callout/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-callout/src"
+    },
+    {
+      "path": "packages/@remirror/extension-code-block/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-code-block/src"
+    },
+    {
+      "path": "packages/@remirror/extension-code/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-code/src"
+    },
+    {
+      "path": "packages/@remirror/extension-codemirror5/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-codemirror5/src"
+    },
+    {
+      "path": "packages/@remirror/extension-collaboration/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-collaboration/src"
+    },
+    {
+      "path": "packages/@remirror/extension-columns/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-columns/src"
+    },
+    {
+      "path": "packages/@remirror/extension-diff/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-diff/src"
+    },
+    {
+      "path": "packages/@remirror/extension-doc/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-doc/src"
+    },
+    {
+      "path": "packages/@remirror/extension-drop-cursor/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-drop-cursor/src"
+    },
+    {
+      "path": "packages/@remirror/extension-embed/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-embed/src"
+    },
+    {
+      "path": "packages/@remirror/extension-emoji/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-emoji/src"
+    },
+    {
+      "path": "packages/@remirror/extension-epic-mode/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-epic-mode/src"
+    },
+    {
+      "path": "packages/@remirror/extension-events/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-events/src"
+    },
+    {
+      "path": "packages/@remirror/extension-font-family/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-font-family/src"
+    },
+    {
+      "path": "packages/@remirror/extension-font-size/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-font-size/src"
+    },
+    {
+      "path": "packages/@remirror/extension-gap-cursor/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-gap-cursor/src"
+    },
+    {
+      "path": "packages/@remirror/extension-hard-break/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-hard-break/src"
+    },
+    {
+      "path": "packages/@remirror/extension-heading/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-heading/src"
+    },
+    {
+      "path": "packages/@remirror/extension-history/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-history/src"
+    },
+    {
+      "path": "packages/@remirror/extension-horizontal-rule/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-horizontal-rule/src"
+    },
+    {
+      "path": "packages/@remirror/extension-image/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-image/src"
+    },
+    {
+      "path": "packages/@remirror/extension-italic/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-italic/src"
+    },
+    {
+      "path": "packages/@remirror/extension-link/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-link/src"
+    },
+    {
+      "path": "packages/@remirror/extension-list/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-list/src"
+    },
+    {
+      "path": "packages/@remirror/extension-markdown/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-markdown/src"
+    },
+    {
+      "path": "packages/@remirror/extension-math/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-math/src"
+    },
+    {
+      "path": "packages/@remirror/extension-mention-atom/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-mention-atom/src"
+    },
+    {
+      "path": "packages/@remirror/extension-mention/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-mention/src"
+    },
+    {
+      "path": "packages/@remirror/extension-native-bridge/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-native-bridge/src"
+    },
+    {
+      "path": "packages/@remirror/extension-node-formatting/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-node-formatting/src"
+    },
+    {
+      "path": "packages/@remirror/extension-paragraph/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-paragraph/src"
+    },
+    {
+      "path": "packages/@remirror/extension-placeholder/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-placeholder/src"
+    },
+    {
+      "path": "packages/@remirror/extension-positioner/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-positioner/src"
+    },
+    {
+      "path": "packages/@remirror/extension-react-component/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-react-component/src"
+    },
+    {
+      "path": "packages/@remirror/extension-react-ssr/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-react-ssr/src"
+    },
+    {
+      "path": "packages/@remirror/extension-search/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-search/src"
+    },
+    {
+      "path": "packages/@remirror/extension-strike/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-strike/src"
+    },
+    {
+      "path": "packages/@remirror/extension-tables/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-tables/src"
+    },
+    {
+      "path": "packages/@remirror/extension-text-case/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-text-case/src"
+    },
+    {
+      "path": "packages/@remirror/extension-text-color/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-text-color/src"
+    },
+    {
+      "path": "packages/@remirror/extension-text-highlight/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-text-highlight/src"
+    },
+    {
+      "path": "packages/@remirror/extension-text-wrap/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-text-wrap/src"
+    },
+    {
+      "path": "packages/@remirror/extension-text/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-text/src"
+    },
+    {
+      "path": "packages/@remirror/extension-trailing-node/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-trailing-node/src"
+    },
+    {
+      "path": "packages/@remirror/extension-underline/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-underline/src"
+    },
+    {
+      "path": "packages/@remirror/extension-whitespace/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-whitespace/src"
+    },
+    {
+      "path": "packages/@remirror/extension-yjs/__tests__"
+    },
+    {
+      "path": "packages/@remirror/extension-yjs/src"
+    },
+    {
+      "path": "packages/@remirror/i18n/__tests__"
+    },
+    {
+      "path": "packages/@remirror/i18n/src"
+    },
+    {
+      "path": "packages/@remirror/icons/src"
+    },
+    {
+      "path": "packages/@remirror/lit-components/src"
+    },
+    {
+      "path": "packages/@remirror/lit/src"
+    },
+    {
+      "path": "packages/@remirror/messages/src"
+    },
+    {
+      "path": "packages/@remirror/playground/src"
+    },
+    {
+      "path": "packages/@remirror/pm/__tests__"
+    },
+    {
+      "path": "packages/@remirror/pm/src"
+    },
+    {
+      "path": "packages/@remirror/preset-core/__tests__"
+    },
+    {
+      "path": "packages/@remirror/preset-core/src"
+    },
+    {
+      "path": "packages/@remirror/preset-formatting/src"
+    },
+    {
+      "path": "packages/@remirror/preset-react/__tests__"
+    },
+    {
+      "path": "packages/@remirror/preset-react/src"
+    },
+    {
+      "path": "packages/@remirror/preset-wysiwyg/__tests__"
+    },
+    {
+      "path": "packages/@remirror/preset-wysiwyg/src"
+    },
+    {
+      "path": "packages/@remirror/react-components/__tests__"
+    },
+    {
+      "path": "packages/@remirror/react-components/src"
+    },
+    {
+      "path": "packages/@remirror/react-hooks/__tests__"
+    },
+    {
+      "path": "packages/@remirror/react-hooks/src"
+    },
+    {
+      "path": "packages/@remirror/react-native/__tests__"
+    },
+    {
+      "path": "packages/@remirror/react-native/src"
+    },
+    {
+      "path": "packages/@remirror/react-utils/__tests__"
+    },
+    {
+      "path": "packages/@remirror/react-utils/src"
+    },
+    {
+      "path": "packages/@remirror/react/__tests__"
+    },
+    {
+      "path": "packages/@remirror/react/src"
+    },
+    {
+      "path": "packages/@remirror/styles/__tests__"
+    },
+    {
+      "path": "packages/@remirror/styles/src"
+    },
+    {
+      "path": "packages/@remirror/svelte/src"
+    },
+    {
+      "path": "packages/@remirror/theme/__tests__"
+    },
+    {
+      "path": "packages/@remirror/theme/src"
+    },
+    {
+      "path": "packages/a11y-status/__tests__"
+    },
+    {
+      "path": "packages/a11y-status/src"
+    },
+    {
+      "path": "packages/create-context-state/__tests__"
+    },
+    {
+      "path": "packages/create-context-state/src"
+    },
+    {
+      "path": "packages/jest-prosemirror/__tests__"
+    },
+    {
+      "path": "packages/jest-prosemirror/src"
+    },
+    {
+      "path": "packages/jest-remirror/__tests__"
+    },
+    {
+      "path": "packages/jest-remirror/src"
+    },
+    {
+      "path": "packages/multishift/__tests__"
+    },
+    {
+      "path": "packages/multishift/src"
+    },
+    {
+      "path": "packages/prosemirror-paste-rules/__tests__"
+    },
+    {
+      "path": "packages/prosemirror-paste-rules/src"
+    },
+    {
+      "path": "packages/prosemirror-suggest/__tests__"
+    },
+    {
+      "path": "packages/prosemirror-suggest/src"
+    },
+    {
+      "path": "packages/prosemirror-trailing-node/__tests__"
+    },
+    {
+      "path": "packages/prosemirror-trailing-node/src"
+    },
+    {
+      "path": "packages/remirror/src"
+    },
+    {
+      "path": "packages/test-keyboard/__tests__"
+    },
+    {
+      "path": "packages/test-keyboard/src"
+    },
+    {
+      "path": "packages/testing/src"
+    },
+    {
+      "path": "support/templates/extension-template/__tests__"
+    },
+    {
+      "path": "support/templates/extension-template/src"
+    },
+    {
+      "path": "support/templates/minimal-template/src"
+    },
+    {
+      "path": "support/templates/preset-template/src"
+    },
+    {
+      "path": "website/src"
+    }
+  ]
 }

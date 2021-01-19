@@ -1,6 +1,7 @@
+import type { Response } from 'playwright';
 import { SupportedCharacters } from 'test-keyboard';
 
-import { PlaywrightBrowserName } from './playwright-types';
+import type { PlaywrightBrowserName } from './playwright-types';
 
 /**
  * Clear the editor via triple click and backspace.
@@ -137,7 +138,7 @@ export function $innerHtml(selector: string) {
  *
  * The timeout is increased so that the first navigation can succeed.
  */
-export async function goto(url = '') {
+export async function goto(url = ''): Promise<Response | null> {
   return page.goto(__SERVER__.url + url, { timeout: 60_000 });
 }
 

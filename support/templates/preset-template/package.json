@@ -28,7 +28,10 @@
   },
   "main": "dist/remirror-preset-template.cjs.js",
   "module": "dist/remirror-preset-template.esm.js",
-  "browser": {},
+  "browser": {
+    "./dist/remirror-preset-template.cjs.js": "./dist/remirror-preset-template.browser.cjs.js",
+    "./dist/remirror-preset-template.esm.js": "./dist/remirror-preset-template.browser.esm.js"
+  },
   "types": "dist/remirror-preset-template.cjs.d.ts",
   "files": [
     "dist"

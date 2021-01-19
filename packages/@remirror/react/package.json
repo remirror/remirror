@@ -92,7 +92,15 @@
     "access": "public"
   },
   "@remirror": {
-    "sizeLimit": "30 KB"
+    "tsconfigs": {
+      "src": {
+        "compilerOptions": {
+          "types": [
+            "node"
+          ]
+        }
+      }
+    }
   },
   "preconstruct": {
     "entrypoints": [

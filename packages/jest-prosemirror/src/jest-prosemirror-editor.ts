@@ -1,7 +1,6 @@
 import { fireEvent, prettyDOM } from '@testing-library/dom';
 import type { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 import { Keyboard } from 'test-keyboard';
-
 import { isString, object, pick } from '@remirror/core-helpers';
 import type {
   AnchorHeadProps,

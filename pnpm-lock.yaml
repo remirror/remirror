@@ -44,8 +44,8 @@ importers:
       '@types/requestidlecallback': 0.3.1
       '@types/testing-library__jest-dom': 5.9.5
       '@types/testing-library__react-hooks': 3.4.1
-      '@typescript-eslint/eslint-plugin': 4.13.0_f3178e4628777c9e52e8278f98ca1f2d
-      '@typescript-eslint/parser': 4.13.0_eslint@7.18.0+typescript@4.1.3
+      '@typescript-eslint/eslint-plugin': 4.14.0_980e7d90d2d08155204a38366bd3b934
+      '@typescript-eslint/parser': 4.14.0_eslint@7.18.0+typescript@4.1.3
       aws-cdk: 1.85.0
       babel-jest: 26.6.3_@babel+core@7.12.10
       babel-plugin-annotate-pure-calls: 0.4.0_@babel+core@7.12.10
@@ -58,7 +58,7 @@ importers:
       cpy-cli: 3.1.1
       downlevel-dts: 0.7.0
       eslint: 7.18.0
-      eslint-config-prettier: 7.1.0_eslint@7.18.0
+      eslint-config-prettier: 7.2.0_eslint@7.18.0
       eslint-formatter-github: 1.0.11_eslint@7.18.0
       eslint-plugin-eslint-comments: 3.2.0_eslint@7.18.0
       eslint-plugin-graphql: 4.0.0_typescript@4.1.3
@@ -149,8 +149,8 @@ importers:
       '@types/requestidlecallback': ^0.3.1
       '@types/testing-library__jest-dom': ^5.9.5
       '@types/testing-library__react-hooks': ^3.4.1
-      '@typescript-eslint/eslint-plugin': ^4.13.0
-      '@typescript-eslint/parser': ^4.13.0
+      '@typescript-eslint/eslint-plugin': ^4.14.0
+      '@typescript-eslint/parser': ^4.14.0
       aws-cdk: ^1.85.0
       babel-jest: ^26.6.3
       babel-plugin-annotate-pure-calls: ^0.4.0
@@ -163,7 +163,7 @@ importers:
       cpy-cli: ^3.1.1
       downlevel-dts: ^0.7.0
       eslint: ^7.18.0
-      eslint-config-prettier: ^7.1.0
+      eslint-config-prettier: ^7.2.0
       eslint-formatter-github: ^1.0.11
       eslint-plugin-eslint-comments: ^3.2.0
       eslint-plugin-graphql: ^4.0.0
@@ -452,13 +452,13 @@ importers:
   packages/@remirror/core-helpers:
     dependencies:
       '@babel/runtime': 7.12.5
-      '@ngard/tiny-get': 1.2.2
       '@remirror/core-constants': link:../core-constants
       '@remirror/core-types': link:../core-types
       '@types/object.omit': 3.0.0
       '@types/object.pick': 1.3.0
       '@types/throttle-debounce': 2.1.0
       case-anything: 1.1.2
+      dash-get: 1.0.2
       deepmerge: 4.2.2
       fast-deep-equal: 3.1.3
       make-error: 1.3.6
@@ -468,13 +468,13 @@ importers:
       type-fest: 0.20.2
     specifiers:
       '@babel/runtime': ^7.12.5
-      '@ngard/tiny-get': ^1.2.2
       '@remirror/core-constants': 1.0.0-next.60
       '@remirror/core-types': 1.0.0-next.60
       '@types/object.omit': ^3.0.0
       '@types/object.pick': ^1.3.0
       '@types/throttle-debounce': ^2.1.0
       case-anything: ^1.1.2
+      dash-get: ^1.0.2
       deepmerge: ^4.2.2
       fast-deep-equal: ^3.1.3
       make-error: ^1.3.6
@@ -735,7 +735,7 @@ importers:
     dependencies:
       '@babel/runtime': 7.12.5
       '@remirror/messages': link:../messages
-      '@types/prosemirror-collab': 1.1.0
+      '@types/prosemirror-collab': 1.1.1
     devDependencies:
       '@remirror/core': link:../core
       '@remirror/pm': link:../pm
@@ -745,7 +745,7 @@ importers:
       '@remirror/core': 1.0.0-next.60
       '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
-      '@types/prosemirror-collab': ^1.1.0
+      '@types/prosemirror-collab': ^1.1.1
       prosemirror-collab: ^1.2.2
   packages/@remirror/extension-columns:
     dependencies:
@@ -1525,17 +1525,17 @@ importers:
       '@babel/runtime': 7.12.5
       '@remirror/core-constants': link:../core-constants
       '@remirror/core-helpers': link:../core-helpers
-      '@types/prosemirror-commands': 1.0.3
-      '@types/prosemirror-dropcursor': 1.0.0
-      '@types/prosemirror-gapcursor': 1.0.1
-      '@types/prosemirror-history': 1.0.1
-      '@types/prosemirror-inputrules': 1.0.3
-      '@types/prosemirror-keymap': 1.0.3
-      '@types/prosemirror-model': 1.11.1
-      '@types/prosemirror-schema-list': 1.0.1
-      '@types/prosemirror-state': 1.2.5
-      '@types/prosemirror-transform': 1.1.1
-      '@types/prosemirror-view': 1.17.0
+      '@types/prosemirror-commands': 1.0.4
+      '@types/prosemirror-dropcursor': 1.0.1
+      '@types/prosemirror-gapcursor': 1.0.2
+      '@types/prosemirror-history': 1.0.2
+      '@types/prosemirror-inputrules': 1.0.4
+      '@types/prosemirror-keymap': 1.0.4
+      '@types/prosemirror-model': 1.11.2
+      '@types/prosemirror-schema-list': 1.0.2
+      '@types/prosemirror-state': 1.2.6
+      '@types/prosemirror-transform': 1.1.2
+      '@types/prosemirror-view': 1.17.1
       prosemirror-commands: 1.1.5
       prosemirror-dropcursor: 1.3.2
       prosemirror-gapcursor: 1.1.5
@@ -1555,17 +1555,17 @@ importers:
       '@babel/runtime': ^7.12.5
       '@remirror/core-constants': 1.0.0-next.60
       '@remirror/core-helpers': 1.0.0-next.60
-      '@types/prosemirror-commands': ^1.0.3
-      '@types/prosemirror-dropcursor': ^1.0.0
-      '@types/prosemirror-gapcursor': ^1.0.1
-      '@types/prosemirror-history': ^1.0.1
-      '@types/prosemirror-inputrules': ^1.0.2
-      '@types/prosemirror-keymap': ^1.0.3
-      '@types/prosemirror-model': ^1.11.0
-      '@types/prosemirror-schema-list': ^1.0.1
-      '@types/prosemirror-state': ^1.2.5
-      '@types/prosemirror-transform': ^1.1.1
-      '@types/prosemirror-view': ^1.17.0
+      '@types/prosemirror-commands': ^1.0.4
+      '@types/prosemirror-dropcursor': ^1.0.1
+      '@types/prosemirror-gapcursor': ^1.0.2
+      '@types/prosemirror-history': ^1.0.2
+      '@types/prosemirror-inputrules': ^1.0.4
+      '@types/prosemirror-keymap': ^1.0.4
+      '@types/prosemirror-model': ^1.11.2
+      '@types/prosemirror-schema-list': ^1.0.2
+      '@types/prosemirror-state': ^1.2.6
+      '@types/prosemirror-transform': ^1.1.2
+      '@types/prosemirror-view': ^1.17.1
       prosemirror-commands: ^1.1.5
       prosemirror-dropcursor: ^1.3.2
       prosemirror-gapcursor: ^1.1.5
@@ -1978,8 +1978,8 @@ importers:
   packages/create-context-state:
     dependencies:
       '@babel/runtime': 7.12.5
-      '@ngard/tiny-get': 1.2.2
       '@types/object.pick': 1.3.0
+      dash-get: 1.0.2
       object.pick: 1.3.0
       use-previous: 1.1.0_@types+react@17.0.0+react@17.0.1
     devDependencies:
@@ -1988,10 +1988,10 @@ importers:
       react: 17.0.1
     specifiers:
       '@babel/runtime': ^7.12.5
-      '@ngard/tiny-get': ^1.2.2
       '@testing-library/react': ^11.2.3
       '@types/object.pick': ^1.3.0
       '@types/react': ^17.0.0
+      dash-get: ^1.0.2
       object.pick: ^1.3.0
       react: ^17.0.1
       use-previous: ^1.1.0
@@ -2004,8 +2004,8 @@ importers:
       '@remirror/core-utils': link:../@remirror/core-utils
       '@remirror/pm': link:../@remirror/pm
       '@testing-library/dom': 7.29.4
-      '@types/prosemirror-schema-basic': 1.0.1
-      '@types/prosemirror-test-builder': 1.0.1
+      '@types/prosemirror-schema-basic': 1.0.2
+      '@types/prosemirror-test-builder': 1.0.2
       chalk: 4.1.0
       jest-matcher-utils: 26.6.2
       prosemirror-schema-basic: 1.1.2
@@ -2022,8 +2022,8 @@ importers:
       '@remirror/core-utils': 1.0.0-next.60
       '@remirror/pm': 1.0.0-next.60
       '@testing-library/dom': ^7.29.4
-      '@types/prosemirror-schema-basic': ^1.0.1
-      '@types/prosemirror-test-builder': ^1.0.1
+      '@types/prosemirror-schema-basic': ^1.0.2
+      '@types/prosemirror-test-builder': ^1.0.2
       chalk: ^4.1.0
       jest: ^26.6.3
       jest-matcher-utils: ^26.6.2
@@ -2097,10 +2097,10 @@ importers:
       escape-string-regexp: 4.0.0
       type-fest: 0.20.2
     devDependencies:
-      '@types/prosemirror-keymap': 1.0.3
-      '@types/prosemirror-model': 1.11.1
-      '@types/prosemirror-state': 1.2.5
-      '@types/prosemirror-view': 1.17.0
+      '@types/prosemirror-keymap': 1.0.4
+      '@types/prosemirror-model': 1.11.2
+      '@types/prosemirror-state': 1.2.6
+      '@types/prosemirror-view': 1.17.1
       prosemirror-model: 1.13.1
       prosemirror-state: 1.3.3
       prosemirror-view: 1.17.2
@@ -2108,10 +2108,10 @@ importers:
       '@babel/runtime': ^7.12.5
       '@remirror/core-constants': 1.0.0-next.60
       '@remirror/core-helpers': 1.0.0-next.60
-      '@types/prosemirror-keymap': ^1.0.3
-      '@types/prosemirror-model': ^1.11.0
-      '@types/prosemirror-state': ^1.2.5
-      '@types/prosemirror-view': ^1.17.0
+      '@types/prosemirror-keymap': ^1.0.4
+      '@types/prosemirror-model': ^1.11.2
+      '@types/prosemirror-state': ^1.2.6
+      '@types/prosemirror-view': ^1.17.1
       escape-string-regexp: ^4.0.0
       prosemirror-model: ^1.13.1
       prosemirror-state: ^1.3.3
@@ -2125,10 +2125,10 @@ importers:
       escape-string-regexp: 4.0.0
       type-fest: 0.20.2
     devDependencies:
-      '@types/prosemirror-keymap': 1.0.3
-      '@types/prosemirror-model': 1.11.1
-      '@types/prosemirror-state': 1.2.5
-      '@types/prosemirror-view': 1.17.0
+      '@types/prosemirror-keymap': 1.0.4
+      '@types/prosemirror-model': 1.11.2
+      '@types/prosemirror-state': 1.2.6
+      '@types/prosemirror-view': 1.17.1
       prosemirror-model: 1.13.1
       prosemirror-state: 1.3.3
       prosemirror-view: 1.17.2
@@ -2136,10 +2136,10 @@ importers:
       '@babel/runtime': ^7.12.5
       '@remirror/core-constants': 1.0.0-next.60
       '@remirror/core-helpers': 1.0.0-next.60
-      '@types/prosemirror-keymap': ^1.0.3
-      '@types/prosemirror-model': ^1.11.0
-      '@types/prosemirror-state': ^1.2.5
-      '@types/prosemirror-view': ^1.17.0
+      '@types/prosemirror-keymap': ^1.0.4
+      '@types/prosemirror-model': ^1.11.2
+      '@types/prosemirror-state': ^1.2.6
+      '@types/prosemirror-view': ^1.17.1
       escape-string-regexp: ^4.0.0
       prosemirror-model: ^1.13.1
       prosemirror-state: ^1.3.3
@@ -2153,10 +2153,10 @@ importers:
       escape-string-regexp: 4.0.0
       type-fest: 0.20.2
     devDependencies:
-      '@types/prosemirror-keymap': 1.0.3
-      '@types/prosemirror-model': 1.11.1
-      '@types/prosemirror-state': 1.2.5
-      '@types/prosemirror-view': 1.17.0
+      '@types/prosemirror-keymap': 1.0.4
+      '@types/prosemirror-model': 1.11.2
+      '@types/prosemirror-state': 1.2.6
+      '@types/prosemirror-view': 1.17.1
       prosemirror-model: 1.13.1
       prosemirror-state: 1.3.3
       prosemirror-view: 1.17.2
@@ -2164,10 +2164,10 @@ importers:
       '@babel/runtime': ^7.12.5
       '@remirror/core-constants': 1.0.0-next.60
       '@remirror/core-helpers': 1.0.0-next.60
-      '@types/prosemirror-keymap': ^1.0.3
-      '@types/prosemirror-model': ^1.11.0
-      '@types/prosemirror-state': ^1.2.5
-      '@types/prosemirror-view': ^1.17.0
+      '@types/prosemirror-keymap': ^1.0.4
+      '@types/prosemirror-model': ^1.11.2
+      '@types/prosemirror-state': ^1.2.6
+      '@types/prosemirror-view': ^1.17.1
       escape-string-regexp: ^4.0.0
       prosemirror-model: ^1.13.1
       prosemirror-state: ^1.3.3
@@ -2464,6 +2464,7 @@ importers:
       lodash.isequal: 4.5.0
       minimist: 1.2.5
       node-fetch: 2.6.1
+      p-limit: 3.1.0
       postcss: 7.0.35
       postcss-import: 12.0.1
       postcss-loader: 3.0.0
@@ -2524,6 +2525,7 @@ importers:
       lodash.isequal: ^4.5.0
       minimist: ^1.2.5
       node-fetch: ^2.6.1
+      p-limit: ^3.1.0
       postcss: ^7.0.34
       postcss-import: ^12.0.1
       postcss-loader: ^3.0.0
@@ -6315,10 +6317,6 @@ packages:
       webpack: ^4 || ^5
     resolution:
       integrity: sha512-Eo+nvW1ZhdkuxBWSsKHGDLNspUaJJQClld9R+H+EtiIuAQtTa8f2rhcQeyUOtvUNQoPyq7Em2PwUqOQD6LOOMA==
-  /@ngard/tiny-get/1.2.2:
-    dev: false
-    resolution:
-      integrity: sha512-+B2yx8KGWPxi/z0fqCgA+gNEWGwoVJZ8v98DFHIEVtEfn5BHXV8Wcr9NfracmrZa2dqekyXduPFcw2sL1HUw6Q==
   /@nodelib/fs.scandir/2.1.4:
     dependencies:
       '@nodelib/fs.stat': 2.0.4
@@ -8283,21 +8281,21 @@ packages:
   /@types/prop-types/15.7.3:
     resolution:
       integrity: sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
-  /@types/prosemirror-collab/1.1.0:
+  /@types/prosemirror-collab/1.1.1:
     dependencies:
-      '@types/prosemirror-model': 1.11.1
-      '@types/prosemirror-state': 1.2.5
-      '@types/prosemirror-transform': 1.1.1
+      '@types/prosemirror-model': 1.11.2
+      '@types/prosemirror-state': 1.2.6
+      '@types/prosemirror-transform': 1.1.2
     dev: false
     resolution:
-      integrity: sha512-YxXFtxblWVTSKupWTYYKcoCYIdzW2aeJkuPiRBjkcsbM1xFYDM1Urzu2nG967X+RB6VbwJsWEs41fM4LMWZT5g==
-  /@types/prosemirror-commands/1.0.3:
+      integrity: sha512-6rdyuycOInGo7wq50K9Wa5McCZ/BEigj83fdjekUrNAkAbIgIGyHtu5+xc4wGlgwUfrDS7cVyjt63Nc8sRJZ9g==
+  /@types/prosemirror-commands/1.0.4:
     dependencies:
-      '@types/prosemirror-model': 1.11.1
-      '@types/prosemirror-state': 1.2.5
-      '@types/prosemirror-view': 1.17.0
+      '@types/prosemirror-model': 1.11.2
+      '@types/prosemirror-state': 1.2.6
+      '@types/prosemirror-view': 1.17.1
     resolution:
-      integrity: sha512-AjFCJqBvAhQ4gOzXPgUcnEZwu4jd7se7ani3dYAv8p4L+cWEPD6Pshrpp5uJDI5/pzvNXLWQ/4c2Qk4h9IML1w==
+      integrity: sha512-utDNYB3EXLjAfYIcRWJe6pn3kcQ5kG4RijbT/0Y/TFOm6yhvYS/D9eJVnijdg9LDjykapcezchxGRqFD5LcyaQ==
   /@types/prosemirror-dev-tools/2.1.0:
     dependencies:
       '@types/prosemirror-state': 1.2.5
@@ -8305,84 +8303,112 @@ packages:
     dev: false
     resolution:
       integrity: sha512-OhnSaC4yrrEMLPRUkEWcHAIPVqgKlLkE4kISqL3cHeAYxASouSPvPMLqhBIbWkGwaozy43DjjVC1OXkxTo+y5Q==
-  /@types/prosemirror-dropcursor/1.0.0:
+  /@types/prosemirror-dropcursor/1.0.1:
     dependencies:
-      '@types/prosemirror-state': 1.2.5
+      '@types/prosemirror-state': 1.2.6
     dev: false
     resolution:
-      integrity: sha512-S2ndHt94M64avSqjBcgIblaF3YeC3RfcmpY9/WIdfqU7aoJxuOh4RJk5emdmQPHZT1wbczMHFmFSsRqgErK0EQ==
-  /@types/prosemirror-gapcursor/1.0.1:
+      integrity: sha512-nHokhFypOZjknolZBm2XShlR7fx1IUcCiA3S2fBwmAraWu6zv3gboDSwwFpoS9UB2xKc4ismAmBxh2bpL3YNkg==
+  /@types/prosemirror-gapcursor/1.0.2:
     dependencies:
-      '@types/prosemirror-state': 1.2.5
+      '@types/prosemirror-state': 1.2.6
     dev: false
     resolution:
-      integrity: sha512-ruA7FK9NJv+bn5s55SZYFf9SwaN3wk/MkBvqRmhIqIHvowTTa7nzIGWbUdWZMga1DDTk+GrwdcQaEHunAFjFsQ==
-  /@types/prosemirror-history/1.0.1:
+      integrity: sha512-FML5Ws2CagX7haI6ir43bov2rtjUH2d7nhwJkkehuaZxQXxNXPhCnH1bg+tUT5hTbxzV7U/xOj9eQgxfEJpyFw==
+  /@types/prosemirror-history/1.0.2:
     dependencies:
-      '@types/prosemirror-model': 1.11.1
-      '@types/prosemirror-state': 1.2.5
+      '@types/prosemirror-model': 1.11.2
+      '@types/prosemirror-state': 1.2.6
     dev: false
     resolution:
-      integrity: sha512-BYyPJlWDo3VEnWS5X2DCHXrrAKEjdbCe1DUjGL6R/8hmwMFe3iMJGYdBkOXU1FfkTpw7Z+PlwY/pMyeelVydmg==
-  /@types/prosemirror-inputrules/1.0.3:
+      integrity: sha512-AcfpWo+HkIuvq/H2zYjIMi2jxa2GWfYaTNiFTB2sigjkpWNM93CIlb7Cimy/4vNH8lVPp0GwLBjYIMRX6zOUyA==
+  /@types/prosemirror-inputrules/1.0.4:
     dependencies:
-      '@types/prosemirror-model': 1.11.1
-      '@types/prosemirror-state': 1.2.5
+      '@types/prosemirror-model': 1.11.2
+      '@types/prosemirror-state': 1.2.6
     dev: false
     resolution:
-      integrity: sha512-cxMkCcu/di8//68jWc/NrRpvpCbizgq9vqv4rCRsAiuSiJ8L5hf4aFlCBUYCffuQnrY98uOfJ8YAUY3dbtaF9A==
-  /@types/prosemirror-keymap/1.0.3:
+      integrity: sha512-lJIMpOjO47SYozQybUkpV6QmfuQt7GZKHtVrvS+mR5UekA8NMC5HRIVMyaIauJLWhKU6oaNjpVaXdw41kh165g==
+  /@types/prosemirror-keymap/1.0.4:
     dependencies:
-      '@types/prosemirror-commands': 1.0.3
-      '@types/prosemirror-model': 1.11.1
-      '@types/prosemirror-state': 1.2.5
-      '@types/prosemirror-view': 1.17.0
+      '@types/prosemirror-commands': 1.0.4
+      '@types/prosemirror-model': 1.11.2
+      '@types/prosemirror-state': 1.2.6
+      '@types/prosemirror-view': 1.17.1
     resolution:
-      integrity: sha512-iCYUtt0u8y6qeDZVsidEWJGbw2Kas+jtHD1QY374W/N2jASYp+8auucFLXe0UvoOy9jiWcGcqcecec1R+vkzgw==
+      integrity: sha512-ycevwkqUh+jEQtPwqO7sWGcm+Sybmhu8MpBsM8DlO3+YTKnXbKA6SDz/+q14q1wK3UA8lHJyfR+v+GPxfUSemg==
   /@types/prosemirror-model/1.11.1:
     dependencies:
       '@types/orderedmap': 1.0.0
+    dev: false
     resolution:
       integrity: sha512-sAue1p9V/JjATX1JzQDFzW2ON8QEGUz3eMSpJX94oCr0CoAQgK4/kSM2funtQKy1GHd+xr7wZ509ykt49b+T1Q==
-  /@types/prosemirror-schema-basic/1.0.1:
-    dependencies:
-      '@types/prosemirror-model': 1.11.1
-    dev: false
-    resolution:
-      integrity: sha512-IOQAYf1urifbH+Zwbq5XfFOUMNCbEnvIqpuSAE8SUt00nDAoH62T/S8Qhu8LuF++KQbyXb7fdMp352zkPW9Hmw==
-  /@types/prosemirror-schema-list/1.0.1:
+  /@types/prosemirror-model/1.11.2:
     dependencies:
       '@types/orderedmap': 1.0.0
-      '@types/prosemirror-model': 1.11.1
-      '@types/prosemirror-state': 1.2.5
+    resolution:
+      integrity: sha512-mohs15V+gxj10QWJGVooErzSE9ryTo1Wy92lULiQ0BSN5Po9K4vngPzfKmLft0+gAPbEghovTX+I2zQW3bZo1w==
+  /@types/prosemirror-schema-basic/1.0.2:
+    dependencies:
+      '@types/prosemirror-model': 1.11.2
     dev: false
     resolution:
-      integrity: sha512-+iUYq+pj2wVHSThj0MjNDzkkGwq8aDQ6j0UJK8a0cNCL8v44Ftcx1noGPtBIEUJgitH960VnfBNoTWfQoQZfRA==
+      integrity: sha512-dzT/6t+dq8/On1be0yarcOIu8wROjhK8QB5wslpLbtTIr5wb0iQv/esJm/KAHcD/PBXR9nSV4TL5AtQmBrcRnw==
+  /@types/prosemirror-schema-list/1.0.2:
+    dependencies:
+      '@types/orderedmap': 1.0.0
+      '@types/prosemirror-model': 1.11.2
+      '@types/prosemirror-state': 1.2.6
+    dev: false
+    resolution:
+      integrity: sha512-jn9uR2iUppCCmMZPn7qjP4ZEIKcn2OJudRXGaqXzT5BdNAx8SJ5Eg7XAyWiVw917Itm+0xMlol8aux0sOB57lg==
   /@types/prosemirror-state/1.2.5:
     dependencies:
       '@types/prosemirror-model': 1.11.1
       '@types/prosemirror-transform': 1.1.1
       '@types/prosemirror-view': 1.17.0
+    dev: false
     resolution:
       integrity: sha512-a5DxAifiF6vmdSJ5jsDMkpykUgUJUy+T5Q5hCjFOKJ4cfd3m3q1lsFKr7Bc4r91Qb7rfqyiKCMDnASS8LIHrKw==
-  /@types/prosemirror-test-builder/1.0.1:
+  /@types/prosemirror-state/1.2.6:
+    dependencies:
+      '@types/prosemirror-model': 1.11.2
+      '@types/prosemirror-transform': 1.1.2
+      '@types/prosemirror-view': 1.17.1
+    resolution:
+      integrity: sha512-tJo0wC+/cQvbrPDVx01Fnng9Fs41bAMVxgJY1KLOyIsUPN0otUN1KdoQurLMmHNHTvIna9ZXxjZD//xJKLYfJw==
+  /@types/prosemirror-test-builder/1.0.2:
+    dependencies:
+      '@types/prosemirror-model': 1.11.2
+    dev: false
+    resolution:
+      integrity: sha512-L1cZhJ1d+E5VbX6zIjb+XHkFmDiF74lzSokaK03Qvt856NEvEt1DwajMkxME4yPhNuHjFfr+KNW9hAKKX2BVWA==
+  /@types/prosemirror-transform/1.1.1:
     dependencies:
       '@types/prosemirror-model': 1.11.1
     dev: false
     resolution:
-      integrity: sha512-MJYVhk/IrIageh9NxOMhMnKDAOupyoemwY8VjigsbXZYAhfQA1qcKJj7KingsFA++Dn7jQN2I1aEiPZe0DsSgg==
-  /@types/prosemirror-transform/1.1.1:
-    dependencies:
-      '@types/prosemirror-model': 1.11.1
-    resolution:
       integrity: sha512-yYCYSoiRH+Wcbl8GJc0PFCzeyMzNQ1vL2xrHHSXZuNcIlH75VoiKrZFeZ6BS9cl8mYXjZrlmdBe8YOxYvyKM6A==
+  /@types/prosemirror-transform/1.1.2:
+    dependencies:
+      '@types/prosemirror-model': 1.11.2
+    resolution:
+      integrity: sha512-Ozyvs5Dquc49gaFysmC4gNhv6E65r569HSzw4RXdZgIljZ5Y9K4kHFlDvsWBBDH19+1178X9LMmM9J620O6Bug==
   /@types/prosemirror-view/1.17.0:
     dependencies:
       '@types/prosemirror-model': 1.11.1
       '@types/prosemirror-state': 1.2.5
       '@types/prosemirror-transform': 1.1.1
+    dev: false
     resolution:
       integrity: sha512-1OALGaiRmq3c+Y35QVrqqlEykWEszYYx08jAPBhYe6M+YbC6Y2LnmCDXjEOTI1oToJwoADHFPGHl4W59L3fgGg==
+  /@types/prosemirror-view/1.17.1:
+    dependencies:
+      '@types/prosemirror-model': 1.11.2
+      '@types/prosemirror-state': 1.2.6
+      '@types/prosemirror-transform': 1.1.2
+    resolution:
+      integrity: sha512-PNiGGc6BffxHQzMR09UUilsBR8xFPDsKiPIXb4K/g56voPIvqq1pqySnWFfSR50Vo4ZL0tss3VBLWiiiKzVahQ==
   /@types/pug/2.0.4:
     dev: true
     resolution:
@@ -8682,11 +8708,11 @@ packages:
     dev: false
     resolution:
       integrity: sha512-3QfyIf3kMCSa+HjRNyi/pKIDRVcOqyYSbxe3g+kajyVmMfocCVV4opVFUcPcofKPtGEaeAMdtfImQsAXKHoe9A==
-  /@typescript-eslint/eslint-plugin/4.13.0_f3178e4628777c9e52e8278f98ca1f2d:
+  /@typescript-eslint/eslint-plugin/4.14.0_980e7d90d2d08155204a38366bd3b934:
     dependencies:
-      '@typescript-eslint/experimental-utils': 4.13.0_eslint@7.18.0+typescript@4.1.3
-      '@typescript-eslint/parser': 4.13.0_eslint@7.18.0+typescript@4.1.3
-      '@typescript-eslint/scope-manager': 4.13.0
+      '@typescript-eslint/experimental-utils': 4.14.0_eslint@7.18.0+typescript@4.1.3
+      '@typescript-eslint/parser': 4.14.0_eslint@7.18.0+typescript@4.1.3
+      '@typescript-eslint/scope-manager': 4.14.0
       debug: 4.3.1
       eslint: 7.18.0
       functional-red-black-tree: 1.0.1
@@ -8706,7 +8732,7 @@ packages:
       typescript:
         optional: true
     resolution:
-      integrity: sha512-ygqDUm+BUPvrr0jrXqoteMqmIaZ/bixYOc3A4BRwzEPTZPi6E+n44rzNZWaB0YvtukgP+aoj0i/fyx7FkM2p1w==
+      integrity: sha512-IJ5e2W7uFNfg4qh9eHkHRUCbgZ8VKtGwD07kannJvM5t/GU8P8+24NX8gi3Hf5jST5oWPY8kyV1s/WtfiZ4+Ww==
   /@typescript-eslint/experimental-utils/4.13.0_eslint@7.18.0+typescript@4.1.3:
     dependencies:
       '@types/json-schema': 7.0.6
@@ -8724,11 +8750,28 @@ packages:
       typescript: '*'
     resolution:
       integrity: sha512-/ZsuWmqagOzNkx30VWYV3MNB/Re/CGv/7EzlqZo5RegBN8tMuPaBgNK6vPBCQA8tcYrbsrTdbx3ixMRRKEEGVw==
-  /@typescript-eslint/parser/4.13.0_eslint@7.18.0+typescript@4.1.3:
+  /@typescript-eslint/experimental-utils/4.14.0_eslint@7.18.0+typescript@4.1.3:
     dependencies:
-      '@typescript-eslint/scope-manager': 4.13.0
-      '@typescript-eslint/types': 4.13.0
-      '@typescript-eslint/typescript-estree': 4.13.0_typescript@4.1.3
+      '@types/json-schema': 7.0.6
+      '@typescript-eslint/scope-manager': 4.14.0
+      '@typescript-eslint/types': 4.14.0
+      '@typescript-eslint/typescript-estree': 4.14.0_typescript@4.1.3
+      eslint: 7.18.0
+      eslint-scope: 5.1.1
+      eslint-utils: 2.1.0
+    dev: false
+    engines:
+      node: ^10.12.0 || >=12.0.0
+    peerDependencies:
+      eslint: '*'
+      typescript: '*'
+    resolution:
+      integrity: sha512-6i6eAoiPlXMKRbXzvoQD5Yn9L7k9ezzGRvzC/x1V3650rUk3c3AOjQyGYyF9BDxQQDK2ElmKOZRD0CbtdkMzQQ==
+  /@typescript-eslint/parser/4.14.0_eslint@7.18.0+typescript@4.1.3:
+    dependencies:
+      '@typescript-eslint/scope-manager': 4.14.0
+      '@typescript-eslint/types': 4.14.0
+      '@typescript-eslint/typescript-estree': 4.14.0_typescript@4.1.3
       debug: 4.3.1
       eslint: 7.18.0
       typescript: 4.1.3
@@ -8742,7 +8785,7 @@ packages:
       typescript:
         optional: true
     resolution:
-      integrity: sha512-KO0J5SRF08pMXzq9+abyHnaGQgUJZ3Z3ax+pmqz9vl81JxmTTOUfQmq7/4awVfq09b6C4owNlOgOwp61pYRBSg==
+      integrity: sha512-sUDeuCjBU+ZF3Lzw0hphTyScmDDJ5QVkyE21pRoBo8iDl7WBtVFS+WDN3blY1CH3SBt7EmYCw6wfmJjF0l/uYg==
   /@typescript-eslint/scope-manager/4.13.0:
     dependencies:
       '@typescript-eslint/types': 4.13.0
@@ -8752,12 +8795,27 @@ packages:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
     resolution:
       integrity: sha512-UpK7YLG2JlTp/9G4CHe7GxOwd93RBf3aHO5L+pfjIrhtBvZjHKbMhBXTIQNkbz7HZ9XOe++yKrXutYm5KmjWgQ==
+  /@typescript-eslint/scope-manager/4.14.0:
+    dependencies:
+      '@typescript-eslint/types': 4.14.0
+      '@typescript-eslint/visitor-keys': 4.14.0
+    dev: false
+    engines:
+      node: ^8.10.0 || ^10.13.0 || >=11.10.1
+    resolution:
+      integrity: sha512-/J+LlRMdbPh4RdL4hfP1eCwHN5bAhFAGOTsvE6SxsrM/47XQiPSgF5MDgLyp/i9kbZV9Lx80DW0OpPkzL+uf8Q==
   /@typescript-eslint/types/4.13.0:
     dev: false
     engines:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
     resolution:
       integrity: sha512-/+aPaq163oX+ObOG00M0t9tKkOgdv9lq0IQv/y4SqGkAXmhFmCfgsELV7kOCTb2vVU5VOmVwXBXJTDr353C1rQ==
+  /@typescript-eslint/types/4.14.0:
+    dev: false
+    engines:
+      node: ^8.10.0 || ^10.13.0 || >=11.10.1
+    resolution:
+      integrity: sha512-VsQE4VvpldHrTFuVPY1ZnHn/Txw6cZGjL48e+iBxTi2ksa9DmebKjAeFmTVAYoSkTk7gjA7UqJ7pIsyifTsI4A==
   /@typescript-eslint/typescript-estree/4.13.0_typescript@4.1.3:
     dependencies:
       '@typescript-eslint/types': 4.13.0
@@ -8779,6 +8837,27 @@ packages:
         optional: true
     resolution:
       integrity: sha512-9A0/DFZZLlGXn5XA349dWQFwPZxcyYyCFX5X88nWs2uachRDwGeyPz46oTsm9ZJE66EALvEns1lvBwa4d9QxMg==
+  /@typescript-eslint/typescript-estree/4.14.0_typescript@4.1.3:
+    dependencies:
+      '@typescript-eslint/types': 4.14.0
+      '@typescript-eslint/visitor-keys': 4.14.0
+      debug: 4.3.1
+      globby: 11.0.2
+      is-glob: 4.0.1
+      lodash: 4.17.20
+      semver: 7.3.4
+      tsutils: 3.19.1_typescript@4.1.3
+      typescript: 4.1.3
+    dev: false
+    engines:
+      node: ^10.12.0 || >=12.0.0
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    resolution:
+      integrity: sha512-wRjZ5qLao+bvS2F7pX4qi2oLcOONIB+ru8RGBieDptq/SudYwshveORwCVU4/yMAd4GK7Fsf8Uq1tjV838erag==
   /@typescript-eslint/visitor-keys/4.13.0:
     dependencies:
       '@typescript-eslint/types': 4.13.0
@@ -8788,6 +8867,15 @@ packages:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
     resolution:
       integrity: sha512-6RoxWK05PAibukE7jElqAtNMq+RWZyqJ6Q/GdIxaiUj2Ept8jh8+FUVlbq9WxMYxkmEOPvCE5cRSyupMpwW31g==
+  /@typescript-eslint/visitor-keys/4.14.0:
+    dependencies:
+      '@typescript-eslint/types': 4.14.0
+      eslint-visitor-keys: 2.0.0
+    dev: false
+    engines:
+      node: ^8.10.0 || ^10.13.0 || >=11.10.1
+    resolution:
+      integrity: sha512-MeHHzUyRI50DuiPgV9+LxcM52FCJFYjJiWHtXlbyC27b80mfOwKeiKI+MHOTEpcpfmoPFm/vvQS88bYIx6PZTA==
   /@webassemblyjs/ast/1.9.0:
     dependencies:
       '@webassemblyjs/helper-module-context': 1.9.0
@@ -12522,6 +12610,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Vy4dx7gquTeMcQR/hDkYLGUnwVil6vk4FOOct+djUnHOUWt+zJPJAaRIXaAFkPXtJjvlY7o3rfRu0/3hpnwoUA==
+  /dash-get/1.0.2:
+    dev: false
+    resolution:
+      integrity: sha512-4FbVrHDwfOASx7uQVxeiCTo7ggSdYZbqs8lH+WU6ViypPlDbe9y6IP5VVUDQBv9DcnyaiPT5XT0UWHgJ64zLeQ==
   /dashdash/1.14.1:
     dependencies:
       assert-plus: 1.0.0
@@ -13718,7 +13810,7 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-otzzTim2/1+lVrlH19EfQQJEhVJSu0zOb9ygb3iapN6UlyaDtyRq4b5U1FuW0v1lRa9Fp/GJyHkSwm6NqABgCA==
-  /eslint-config-prettier/7.1.0_eslint@7.18.0:
+  /eslint-config-prettier/7.2.0_eslint@7.18.0:
     dependencies:
       eslint: 7.18.0
     dev: false
@@ -13726,7 +13818,7 @@ packages:
     peerDependencies:
       eslint: '>=7.0.0'
     resolution:
-      integrity: sha512-9sm5/PxaFG7qNJvJzTROMM1Bk1ozXVTKI0buKOyb0Bsr1hrwi0H/TzxF/COtf1uxikIK8SwhX7K6zg78jAzbeA==
+      integrity: sha512-rV4Qu0C3nfJKPOAhFujFxB7RMP+URFyQqqOZW9DMRD7ZDTFyjaIlETU3xzHELt++4ugC0+Jm084HQYkkJe+Ivg==
   /eslint-formatter-github/1.0.11_eslint@7.18.0:
     dependencies:
       create-check: 0.6.39

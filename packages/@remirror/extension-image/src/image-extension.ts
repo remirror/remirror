@@ -1,10 +1,8 @@
 import {
   ApplySchemaAttributes,
-  Cast,
   command,
   CommandFunction,
   DelayedPromiseCreator,
-  DelayedValue,
   EditorView,
   ErrorConstant,
   extension,
@@ -15,17 +13,15 @@ import {
   NodeExtension,
   NodeExtensionSpec,
   NodeSpecOverride,
-  NodeWithAttributes,
   omitExtraAttributes,
   PrimitiveSelection,
   ProsemirrorAttributes,
 } from '@remirror/core';
-import type { ResolvedPos } from '@remirror/pm/model';
 import { PasteRule } from '@remirror/pm/paste-rules';
 import { insertPoint } from '@remirror/pm/transform';
 import { ExtensionImageTheme } from '@remirror/theme';
 
-type DelayedImage = DelayedValue<ImageAttributes>;
+type DelayedImage = DelayedPromiseCreator<ImageAttributes>;
 
 export interface ImageOptions {
   createPlaceholder?: (view: EditorView, pos: number) => HTMLElement;
@@ -248,30 +244,30 @@ const IMAGE_FILE_TYPES = new Set([
 /**
  * True when the provided file is an image file.
  */
-export function isImageFileType(file: File) {
+export function isImageFileType(file: File): boolean {
   return IMAGE_FILE_TYPES.has(file.type);
 }
 
-/**
- * Get the alignment of the text in the element.
- */
-function getAlignment(element: HTMLElement) {
-  const { cssFloat, display } = element.style;
+// /**
+//  * Get the alignment of the text in the element.
+//  */
+// function getAlignment(element: HTMLElement) {
+//   const { cssFloat, display } = element.style;
 
-  let align = element.getAttribute('data-align') ?? element.getAttribute('align');
+//   let align = element.getAttribute('data-align') ?? element.getAttribute('align');
 
-  if (align) {
-    align = /(left|right|center)/.test(align) ? align : null;
-  } else if (cssFloat === 'left' && !display) {
-    align = 'left';
-  } else if (cssFloat === 'right' && !display) {
-    align = 'right';
-  } else if (!cssFloat && display === 'block') {
-    align = 'block';
-  }
+//   if (align) {
+//     align = /(left|right|center)/.test(align) ? align : null;
+//   } else if (cssFloat === 'left' && !display) {
+//     align = 'left';
+//   } else if (cssFloat === 'right' && !display) {
+//     align = 'right';
+//   } else if (!cssFloat && display === 'block') {
+//     align = 'block';
+//   }
 
-  return align;
-}
+//   return align;
+// }
 
 /**
  * Get the width and the height of the image.
@@ -282,30 +278,6 @@ function getDimensions(element: HTMLElement) {
   height = height ?? element.getAttribute('height') ?? '';
 
   return { width, height };
-}
-
-/**
- * Get the rotation of the image from the parent element.
- */
-function getRotation(element: HTMLElement) {
-  const { parentElement } = element;
-
-  if (!isElementDomNode(parentElement)) {
-    return null;
-  }
-
-  if (!parentElement.style.transform) {
-    return null;
-  }
-
-  // example text to match: `rotate(1.57rad) translateZ(0px)`;
-  const matchingPattern = parentElement.style.transform.match(CSS_ROTATE_PATTERN);
-
-  if (!matchingPattern?.[1]) {
-    return null;
-  }
-
-  return Number.parseFloat(matchingPattern[1]) || null;
 }
 
 /**
@@ -331,17 +303,17 @@ function getImageAttributes({
   };
 }
 
-function setImageAttributes(node: NodeWithAttributes<ImageAttributes>) {}
+// function setImageAttributes(node: NodeWithAttributes<ImageAttributes>) {}
 
-function hasCursor<T extends object>(argument: T): argument is T & { $cursor: ResolvedPos } {
-  return !!Cast(argument).$cursor;
-}
+// function hasCursor<T extends object>(argument: T): argument is T & { $cursor: ResolvedPos } {
+//   return !!Cast(argument).$cursor;
+// }
 
-function createBlockImageSpec() {}
+// function createBlockImageSpec() {}
 
-function createInlineImageSpec() {}
+// function createInlineImageSpec() {}
 
-function createPlaceholder(_: EditorView, pos: number): HTMLElement {
+function createPlaceholder(_: EditorView, __: number): HTMLElement {
   const element = document.createElement('div');
   element.classList.add(ExtensionImageTheme.IMAGE_LOADER);
 
@@ -359,25 +331,26 @@ function uploadHandler(files: FileWithProgress[]): DelayedImage[] {
   });
 
   let completed = 0;
-  const promises: Array<Promise<ImageAttributes>> = [];
+  const promises: Array<DelayedPromiseCreator<ImageAttributes>> = [];
 
   for (const { file, progress } of files) {
     promises.push(
-      new Promise<ImageAttributes>((resolve) => {
-        const reader = new FileReader();
+      () =>
+        new Promise<ImageAttributes>((resolve) => {
+          const reader = new FileReader();
 
-        reader.addEventListener(
-          'load',
-          (readerEvent) => {
-            completed += 1;
-            progress(1);
-            resolve({ src: readerEvent.target?.result as string, fileName: file.name });
-          },
-          { once: true },
-        );
+          reader.addEventListener(
+            'load',
+            (readerEvent) => {
+              completed += 1;
+              progress(completed / files.length);
+              resolve({ src: readerEvent.target?.result as string, fileName: file.name });
+            },
+            { once: true },
+          );
 
-        reader.readAsDataURL(file);
-      }),
+          reader.readAsDataURL(file);
+        }),
     );
   }
 

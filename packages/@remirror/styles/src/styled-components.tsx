@@ -6,7 +6,7 @@ import styled, { css } from 'styled-components';
 
 export const componentsStyledCss: ReturnType<typeof css> = css`
   /**
- * Styles extracted from: packages/@remirror/theme/src/components.ts
+ * Styles extracted from: packages/@remirror/theme/src/components-theme.ts
  */
   .remirror-editor-wrapper {
     padding-top: var(--rmr-space-3);
@@ -585,7 +585,7 @@ export const ComponentsStyledComponent: ReturnType<typeof styled.div> = styled.d
 
 export const coreStyledCss: ReturnType<typeof css> = css`
   /**
- * Styles extracted from: packages/@remirror/theme/src/core.ts
+ * Styles extracted from: packages/@remirror/theme/src/core-theme.ts
  */
   .remirror-editor.ProseMirror {
     word-wrap: break-word;
@@ -666,7 +666,7 @@ export const CoreStyledComponent: ReturnType<typeof styled.div> = styled.div`
 
 export const extensionBlockquoteStyledCss: ReturnType<typeof css> = css`
   /**
- * Styles extracted from: packages/@remirror/theme/src/extension-blockquote.ts
+ * Styles extracted from: packages/@remirror/theme/src/extension-blockquote-theme.ts
  */
   .remirror-editor .Prosemirror blockquote {
     border-left: 3px solid var(--rmr-hue-gray-3);
@@ -686,7 +686,7 @@ export const ExtensionBlockquoteStyledComponent: ReturnType<typeof styled.div> =
 
 export const extensionCalloutStyledCss: ReturnType<typeof css> = css`
   /**
- * Styles extracted from: packages/@remirror/theme/src/extension-callout.ts
+ * Styles extracted from: packages/@remirror/theme/src/extension-callout-theme.ts
  */
   .remirror-editor div[data-callout-type] {
     border-left: 2px solid transparent;
@@ -718,7 +718,7 @@ export const ExtensionCalloutStyledComponent: ReturnType<typeof styled.div> = st
 
 export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
   /**
- * Styles extracted from: packages/@remirror/theme/src/extension-code-block.ts
+ * Styles extracted from: packages/@remirror/theme/src/extension-code-block-theme.ts
  */
   .remirror-a11y-dark code[class*='language-'],
   .remirror-a11y-dark pre[class*='language-'] {
@@ -3418,16 +3418,60 @@ export const ExtensionCodeBlockStyledComponent: ReturnType<typeof styled.div> = 
 
 export const extensionEmojiStyledCss: ReturnType<typeof css> = css`
   /**
- * Styles extracted from: packages/@remirror/theme/src/extension-emoji.ts
+ * Styles extracted from: packages/@remirror/theme/src/extension-emoji-theme.ts
  */
-  .remirror-editor img.emoji {
+  .remirror-emoji-image {
     object-fit: contain;
     width: 1.375em;
     height: 1.375em;
     vertical-align: bottom;
   }
-  .remirror-editor span.img[alt] {
-    text-indent: -9999px;
+
+  .remirror-emoji-wrapper {
+    text-indent: -99999px;
+  }
+
+  .remirror-emoji-popup-item {
+    padding: 8px;
+    text-overflow: ellipsis;
+    max-width: 250px;
+    width: 250px;
+    overflow: hidden;
+    white-space: nowrap;
+    color: white;
+  }
+
+  .remirror-emoji-popup-hovered {
+    background-color: var(--rmr-hue-gray-2);
+  }
+
+  .remirror-emoji-popup-highlight {
+    background-color: var(--rmr-hue-gray-3);
+  }
+
+  .remirror-emoji-popup-wrapper {
+    position: absolute;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: hsla(205, 70%, 15%, 0.25) 0 4px 8px, hsla(205, 70%, 15%, 0.31) 0px 0px 1px;
+    background-color: white;
+    z-index: 10;
+    max-height: 250px;
+    overflow-y: scroll;
+  }
+
+  .remirror-emoji-popup-name {
+    color: rgb(121, 129, 134);
+  }
+
+  .remirror-emoji-popup-char {
+    font-size: 1.25em;
+    padding-right: 5px;
   }
 `;
 
@@ -3437,7 +3481,7 @@ export const ExtensionEmojiStyledComponent: ReturnType<typeof styled.div> = styl
 
 export const extensionGapCursorStyledCss: ReturnType<typeof css> = css`
   /**
- * Styles extracted from: packages/@remirror/theme/src/extension-gap-cursor.ts
+ * Styles extracted from: packages/@remirror/theme/src/extension-gap-cursor-theme.ts
  */
   .remirror-editor .ProseMirror-gapcursor {
     display: none;
@@ -3473,11 +3517,11 @@ export const ExtensionGapCursorStyledComponent: ReturnType<typeof styled.div> = 
   ${extensionGapCursorStyledCss}
 `;
 
-export const extensionMediaStyledCss: ReturnType<typeof css> = css`
+export const extensionImageStyledCss: ReturnType<typeof css> = css`
   /**
- * Styles extracted from: packages/@remirror/theme/src/extension-media.ts
+ * Styles extracted from: packages/@remirror/theme/src/extension-image-theme.ts
  */
-  .remirror-media-loader {
+  .remirror-image-loader {
     border: 16px solid #f3f3f3;
     border-radius: 50%;
     border-top: 16px solid #3498db;
@@ -3506,13 +3550,13 @@ export const extensionMediaStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
-export const ExtensionMediaStyledComponent: ReturnType<typeof styled.div> = styled.div`
-  ${extensionMediaStyledCss}
+export const ExtensionImageStyledComponent: ReturnType<typeof styled.div> = styled.div`
+  ${extensionImageStyledCss}
 `;
 
 export const extensionPlaceholderStyledCss: ReturnType<typeof css> = css`
   /**
- * Styles extracted from: packages/@remirror/theme/src/extension-placeholder.ts
+ * Styles extracted from: packages/@remirror/theme/src/extension-placeholder-theme.ts
  */
   .remirror-is-empty:first-of-type::before {
     position: absolute;
@@ -3530,7 +3574,7 @@ export const ExtensionPlaceholderStyledComponent: ReturnType<typeof styled.div> 
 
 export const extensionPositionerStyledCss: ReturnType<typeof css> = css`
   /**
- * Styles extracted from: packages/@remirror/theme/src/extension-positioner.ts
+ * Styles extracted from: packages/@remirror/theme/src/extension-positioner-theme.ts
  */
   .remirror-editor {
     position: relative;
@@ -3562,7 +3606,7 @@ export const ExtensionPositionerStyledComponent: ReturnType<typeof styled.div> =
 
 export const extensionTablesStyledCss: ReturnType<typeof css> = css`
   /**
- * Styles extracted from: packages/@remirror/theme/src/extension-tables.ts
+ * Styles extracted from: packages/@remirror/theme/src/extension-tables-theme.ts
  */
   .remirror-editor .ProseMirror .tableWrapper {
     overflow-x: auto;
@@ -3613,7 +3657,7 @@ export const ExtensionTablesStyledComponent: ReturnType<typeof styled.div> = sty
 
 export const extensionWhitespaceStyledCss: ReturnType<typeof css> = css`
   /**
- * Styles extracted from: packages/@remirror/theme/src/extension-whitespace.ts
+ * Styles extracted from: packages/@remirror/theme/src/extension-whitespace-theme.ts
  */
   .remirror-editor.ProseMirror .whitespace {
     pointer-events: none;
@@ -3648,7 +3692,7 @@ export const ExtensionWhitespaceStyledComponent: ReturnType<typeof styled.div> =
 
 export const extensionYjsStyledCss: ReturnType<typeof css> = css`
   /**
- * Styles extracted from: packages/@remirror/theme/src/extension-yjs.ts
+ * Styles extracted from: packages/@remirror/theme/src/extension-yjs-theme.ts
  */
   .remirror-editor .ProseMirror .ProseMirror-yjs-cursor {
     position: absolute;
@@ -4010,7 +4054,7 @@ export const allStyledCss: ReturnType<typeof css> = css`
   ${extensionCodeBlockStyledCss}
   ${extensionEmojiStyledCss}
   ${extensionGapCursorStyledCss}
-  ${extensionMediaStyledCss}
+  ${extensionImageStyledCss}
   ${extensionPlaceholderStyledCss}
   ${extensionPositionerStyledCss}
   ${extensionTablesStyledCss}
@@ -4027,7 +4071,7 @@ export const AllStyledComponent: ReturnType<typeof styled.div> = styled.div`
   ${extensionCodeBlockStyledCss}
   ${extensionEmojiStyledCss}
   ${extensionGapCursorStyledCss}
-  ${extensionMediaStyledCss}
+  ${extensionImageStyledCss}
   ${extensionPlaceholderStyledCss}
   ${extensionPositionerStyledCss}
   ${extensionTablesStyledCss}

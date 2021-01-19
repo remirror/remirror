@@ -103,7 +103,7 @@ export function lift({ tr, dispatch }: Pick<CommandFunctionProps, 'tr' | 'dispat
  * given attributes.
  */
 export function wrapIn(
-  type: Remirror.NodeNameUnion | NodeType,
+  type: string | NodeType,
   attrs: ProsemirrorAttributes = {},
   selection?: PrimitiveSelection,
 ): CommandFunction {
@@ -134,7 +134,7 @@ export function wrapIn(
  * @param attrs - the attrs to use for the node
  */
 export function toggleWrap(
-  nodeType: Remirror.NodeNameUnion | NodeType,
+  nodeType: string | NodeType,
   attrs: ProsemirrorAttributes = {},
   selection?: PrimitiveSelection,
 ): CommandFunction {
@@ -158,7 +158,7 @@ export function toggleWrap(
  * @param nodeType - the name of the node or the [[`NodeType`]].
  */
 export function setBlockType(
-  nodeType: Remirror.NodeNameUnion | NodeType,
+  nodeType: string | NodeType,
   attrs?: ProsemirrorAttributes,
   selection?: PrimitiveSelection,
   preserveAttrs = true,
@@ -220,7 +220,7 @@ export interface ToggleBlockItemProps extends NodeTypeProps, Partial<AttributesP
    *
    * @default 'paragraph'
    */
-  toggleType?: NodeType | Remirror.NodeNameUnion;
+  toggleType?: NodeType | string;
 
   /**
    * Whether to preserve the attrs when toggling a block item. This means that
@@ -274,7 +274,7 @@ export interface ReplaceTextProps extends Partial<AttributesProps> {
   /**
    * The content type to be inserted in place of the range / selection.
    */
-  type?: NodeType | MarkType | Remirror.NodeNameUnion | Remirror.MarkNameUnion;
+  type?: NodeType | MarkType | string;
 
   /**
    * Whether to keep the original selection after the replacement.

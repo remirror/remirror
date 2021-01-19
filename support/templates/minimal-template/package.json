@@ -24,9 +24,12 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/minimal-template.cjs.js",
-  "module": "dist/minimal-template.esm.js",
-  "browser": {},
+  "main": "dist/remirror-minimal-template.cjs.js",
+  "module": "dist/remirror-minimal-template.esm.js",
+  "browser": {
+    "./dist/remirror-minimal-template.cjs.js": "./dist/remirror-minimal-template.browser.cjs.js",
+    "./dist/remirror-minimal-template.esm.js": "./dist/remirror-minimal-template.browser.esm.js"
+  },
   "types": "dist/remirror-minimal-template.cjs.d.ts",
   "files": [
     "dist"

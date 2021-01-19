@@ -1,7 +1,6 @@
 import { promises } from 'fs';
 import looksSame, { createDiff } from 'looks-same';
 import path from 'path';
-
 import { kebabCase } from '@remirror/core';
 
 const { mkdir, writeFile } = promises;

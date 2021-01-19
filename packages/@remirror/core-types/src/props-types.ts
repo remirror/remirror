@@ -99,7 +99,7 @@ export interface NodeTypeProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * A prosemirror node type instance.
    */
-  type: NodeType<Schema> | Remirror.NodeNameUnion;
+  type: NodeType<Schema> | string;
 }
 
 /**
@@ -116,10 +116,7 @@ export interface NodeTypesProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * The prosemirror node types to use.
    */
-  types:
-    | NodeType<Schema>
-    | Remirror.NodeNameUnion
-    | Array<NodeType<Schema> | Remirror.NodeNameUnion>;
+  types: NodeType<Schema> | string | Array<NodeType<Schema> | string>;
 }
 
 /**
@@ -148,7 +145,7 @@ export interface MarkTypeProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * The prosemirror mark type instance.
    */
-  type: MarkType<Schema> | Remirror.MarkNameUnion;
+  type: MarkType<Schema> | string;
 }
 
 export interface ProsemirrorNodeProps<Schema extends EditorSchema = EditorSchema> {

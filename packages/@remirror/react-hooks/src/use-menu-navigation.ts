@@ -4,7 +4,7 @@
  * Create menu navigation handlers when within the editor.
  */
 
-import { Reducer, useReducer } from 'react';
+// import { Reducer, useReducer } from 'react';
 import { ValueOf } from 'type-fest';
 
 export const MenuNavigationAction = {

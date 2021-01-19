@@ -5,8 +5,8 @@
  */
 
 import { getPackages } from '@manypkg/get-packages';
-import { join } from 'path';
-import { PackageJson } from 'type-fest';
+import path from 'path';
+import type { PackageJson } from 'type-fest';
 import { Application } from 'typedoc';
 
 import { baseDir, log } from './helpers';
@@ -18,7 +18,7 @@ async function getEntryPoints() {
   const inputFiles = await getPackages(baseDir());
   return inputFiles.packages
     .filter((pkg) => !!(pkg.packageJson as PackageJson).types && !pkg.packageJson.private)
-    .map((pkg) => join(pkg.dir, 'src'));
+    .map((pkg) => path.join(pkg.dir, 'src'));
 }
 
 async function createApplication() {

@@ -2,6 +2,7 @@
  * @type {import('@linaria/babel').StrictOptions}
  */
 const config = {
+  evaluate: true,
   displayName: true,
   classNameSlug: (_hash, title) => {
     return `remirror-${title.toLowerCase().split('_').join('-')}`;

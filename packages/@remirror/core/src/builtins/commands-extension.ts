@@ -1,5 +1,4 @@
-import { LiteralUnion } from 'type-fest';
-
+import type { LiteralUnion } from 'type-fest';
 import { ErrorConstant, ExtensionPriority, NamedShortcut } from '@remirror/core-constants';
 import {
   entries,
@@ -41,16 +40,15 @@ import {
   setBlockType,
   toggleBlockItem,
   ToggleBlockItemProps,
-  ToggleMarkProps,
   toggleWrap,
   wrapIn,
 } from '@remirror/core-utils';
 import { CoreMessages as Messages } from '@remirror/messages';
 import { Mark } from '@remirror/pm/model';
 import { TextSelection } from '@remirror/pm/state';
-import { EditorView } from '@remirror/pm/view';
+import type { EditorView } from '@remirror/pm/view';
 
-import { applyMark, insertText, InsertTextOptions, toggleMark } from '../commands';
+import { applyMark, insertText, InsertTextOptions, toggleMark, ToggleMarkProps } from '../commands';
 import {
   AnyExtension,
   ChainedCommandProps,
@@ -187,19 +185,19 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    * Attach commands once the view is attached.
    */
   onView(view: EditorView<EditorSchema>): void {
-    const { setStoreKey, setExtensionStore } = this.store;
+    const { setStoreKey, setExtensionStore, extensions, helpers } = this.store;
     const commands: Record<string, CommandShape> = object();
     const names = new Set<string>();
     const chain: Record<string, any> & ChainedCommandProps = object();
 
-    for (const extension of this.store.extensions) {
+    for (const extension of extensions) {
       const extensionCommands: ExtensionCommandReturn = extension.createCommands?.() ?? {};
       const decoratedCommands = extension.decoratedCommands ?? {};
 
       for (const [commandName, options] of Object.entries(decoratedCommands)) {
         const shortcut =
           isString(options.shortcut) && options.shortcut.startsWith('_|')
-            ? { shortcut: this.store.helpers.getNamedShortcut(options.shortcut, extension.options) }
+            ? { shortcut: helpers.getNamedShortcut(options.shortcut, extension.options) }
             : undefined;
         this.updateDecorated(commandName, { ...options, name: extension.name, ...shortcut });
         extensionCommands[commandName] = (extension as Shape)[commandName].bind(extension);
@@ -505,13 +503,13 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
   @command()
   emptySelection(): CommandFunction {
     return ({ tr, dispatch }) => {
-      const { selection } = tr;
+      const { selection, doc } = tr;
 
       if (selection.empty) {
         return false;
       }
 
-      dispatch?.(tr.setSelection(TextSelection.create(tr.doc, tr.selection.anchor)));
+      dispatch?.(tr.setSelection(TextSelection.create(doc, selection.anchor)));
       return true;
     };
   }

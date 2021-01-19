@@ -16,7 +16,6 @@
     "resolveJsonModule": true,
     "preserveWatchOutput": true,
     "noUncheckedIndexedAccess": true,
-
     "skipLibCheck": true,
 
     "experimentalDecorators": true,
@@ -27,6 +26,7 @@
     "esModuleInterop": true,
 
     // Stylistic, but faster than eslint
+    "importsNotUsedAsValues": "remove",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "allowUnreachableCode": false,

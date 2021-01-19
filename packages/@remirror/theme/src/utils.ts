@@ -1,8 +1,7 @@
 import { kebabCase } from 'case-anything';
 import { darken, lighten, readableColor, transparentize } from 'color2k';
-import * as CSS from 'csstype';
-
-import { DeepPartial, DeepString } from '@remirror/core-types';
+import type * as CSS from 'csstype';
+import type { DeepPartial, DeepString } from '@remirror/core-types';
 
 export interface CSSProperties extends CSS.Properties {
   [key: string]: any;

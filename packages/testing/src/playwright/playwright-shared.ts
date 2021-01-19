@@ -4,7 +4,7 @@
  * These are the shared tests across the different setups.
  */
 
-import { Page } from 'playwright';
+import type { Page } from 'playwright';
 
 import { goto } from './playwright-helpers';
 import { imagesMatch } from './playwright-images';

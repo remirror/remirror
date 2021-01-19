@@ -1,4 +1,4 @@
-import { MessageDescriptor } from '@lingui/core';
+import type { MessageDescriptor } from '@lingui/core';
 import { defineMessage } from '@lingui/macro';
 
 export const TOP_MENU_LABEL: MessageDescriptor = defineMessage({

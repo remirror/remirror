@@ -81,23 +81,10 @@ export function wysiwygPreset(options: GetStaticAndDynamic<WysiwygOptions> = {})
     supportedLanguages,
   });
 
-  const {
-    createCursorElement,
-    afterClass,
-    beforeClass,
-    containerClass,
-    inlineClass,
-    blockClass,
-    throttle,
-  } = options;
+  const { color, width } = options;
   const dropCursorExtension = new DropCursorExtension({
-    createCursorElement,
-    afterClass,
-    beforeClass,
-    containerClass,
-    inlineClass,
-    blockClass,
-    throttle,
+    color,
+    width,
   });
 
   const { defaultLevel, levels } = options;
@@ -111,9 +98,7 @@ export function wysiwygPreset(options: GetStaticAndDynamic<WysiwygOptions> = {})
     disableRegex,
     highlightedClass,
     searching,
-    searchForwardShortcut,
     searchClass,
-    searchBackwardShortcut,
   } = options;
   const searchExtension = new SearchExtension({
     alwaysSearch,
@@ -123,9 +108,7 @@ export function wysiwygPreset(options: GetStaticAndDynamic<WysiwygOptions> = {})
     disableRegex,
     highlightedClass,
     searching,
-    searchForwardShortcut,
     searchClass,
-    searchBackwardShortcut,
   });
 
   const { disableTags, ignoredNodes, nodeName } = options;

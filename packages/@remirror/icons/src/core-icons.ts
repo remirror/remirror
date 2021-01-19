@@ -1,6 +1,6 @@
 /** THIS FILE IS AUTO GENERATED */
 
-import { IconTree } from './icon-types';
+import type { IconTree } from './icon-types';
 
 /**
  * The icon for `ab.svg` created by [RemixIcons](https://remixicons.com).

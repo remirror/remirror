@@ -5,11 +5,14 @@
  */
 
 import chalk from 'chalk';
+import { readdir } from 'fs/promises';
 import globby from 'globby';
-import { dirname, join, relative } from 'path';
-import { assert, isPlainObject, isString, object, omitUndefined } from 'remirror';
+import os from 'os';
+import pLimit from 'p-limit';
+import path from 'path';
+import { assert, deepMerge, isPlainObject, isString, object, omitUndefined } from 'remirror';
 import sortKeys from 'sort-keys';
-import { PackageJson } from 'type-fest';
+import { PackageJson, TsConfigJson } from 'type-fest';
 import writeJSON from 'write-json-file';
 
 import {
@@ -22,7 +25,8 @@ import {
   getTypedPackagesWithPath,
   log,
   Package,
-  PackageMeta,
+  RemirrorPackageMeta,
+  TsConfigMeta,
 } from './helpers';
 
 // A collection of the absolute paths where files will be written to.
@@ -30,6 +34,7 @@ const paths = {
   sizeLimit: baseDir('support', 'root', '.size-limit.json'),
   mainTsconfig: baseDir('tsconfig.json'),
   baseTsconfig: baseDir('support', 'tsconfig.base.json'),
+  rootTsconfig: baseDir('support', 'root', 'tsconfig.json'),
 };
 
 // A list of all the generated files which will be prettified at the end of the process.
@@ -44,7 +49,7 @@ type ExportField = { [Key in PackageJson.ExportCondition | 'types']?: string } |
  * TODO support `typeVersions` field https://github.com/sandersn/downlevel-dts
  */
 async function generateExports() {
-  log.info(chalk`{blue Running script for package.json {bold.grey exports} field}`);
+  log.info(chalk`\n{blue Running script for package.json {bold.grey exports} field}`);
 
   // The following are used for running checks.
   const actual: Record<string, unknown> = object();
@@ -80,7 +85,7 @@ async function generateExports() {
 
     for (const subPackage of subPackages) {
       const subPackageJson: PackageJson = require(subPackage);
-      const relativePath = prefixRelativePath(relative(location, dirname(subPackage)));
+      const relativePath = prefixRelativePath(path.relative(location, path.dirname(subPackage)));
 
       augmentExportsObject(packageJson, relativePath, subPackageJson);
     }
@@ -90,13 +95,13 @@ async function generateExports() {
 
     // Track the generated exports object for testing.
     expected[name] = JSON.stringify(packageJson.exports, null, 2);
-    files.push([join(location, 'package.json'), packageJson]);
+    files.push([path.join(location, 'package.json'), packageJson]);
   }
 
   let error: Error | undefined;
 
   try {
-    log.info('Checking the generated exports');
+    log.info('\nChecking the generated exports');
     compareOutput(actual, expected);
     log.info(chalk`\n{green The generated {bold exports} are valid for all packages.}`);
 
@@ -107,7 +112,7 @@ async function generateExports() {
     log.info(chalk`\n\nForcing update: {yellow \`--force\`} flag applied.\n\n`);
   } catch (error_) {
     error = error_;
-    log.error(error?.message);
+    log.error('\n', error?.message);
   }
 
   if (cliArgs.check && error) {
@@ -118,12 +123,12 @@ async function generateExports() {
     return;
   }
 
-  log.info('Writing updates to file system.');
+  log.info('\nWriting updates to file system.');
 
   await Promise.all(
-    files.map(async ([path, json]) => {
-      filesToPrettify.push(relative(process.cwd(), path));
-      await writeJSON(path, json);
+    files.map(async ([filepath, json]) => {
+      filesToPrettify.push(path.relative(process.cwd(), filepath));
+      await writeJSON(filepath, json);
     }),
   );
 }
@@ -143,16 +148,16 @@ function prefixRelativePath<Type extends string | undefined>(path: Type): Type {
  * Add the path with relevant fields to the export field of the provided
  * `package.json` object.
  */
-function augmentExportsObject(packageJson: PackageJson, path: string, json: PackageJson) {
-  path = path || '.';
+function augmentExportsObject(packageJson: PackageJson, filepath: string, json: PackageJson) {
+  filepath = filepath || '.';
   const browserPath = getBrowserPath(packageJson);
   const field: ExportField = {
-    import: prefixRelativePath(json.module ? join(path, json.module) : undefined),
-    require: prefixRelativePath(json.main ? join(path, json.main) : undefined),
-    browser: prefixRelativePath(browserPath ? join(path, browserPath) : undefined),
+    import: prefixRelativePath(json.module ? path.join(filepath, json.module) : undefined),
+    require: prefixRelativePath(json.main ? path.join(filepath, json.main) : undefined),
+    browser: prefixRelativePath(browserPath ? path.join(filepath, browserPath) : undefined),
 
     // Experimental since this is not currently resolved by TypeScript.
-    types: prefixRelativePath(json.types ? join(path, json.types) : undefined),
+    types: prefixRelativePath(json.types ? path.join(filepath, json.types) : undefined),
   };
   field.default = field.import;
 
@@ -169,9 +174,9 @@ function augmentExportsObject(packageJson: PackageJson, path: string, json: Pack
     packageJson.exports = {};
   }
 
-  exportsObject[path] = omitUndefined(field);
+  exportsObject[filepath] = omitUndefined(field);
 
-  if (path === '.') {
+  if (filepath === '.') {
     exportsObject['./package.json'] = './package.json';
     exportsObject['./types/*'] = './dist/declarations/src/*.d.ts';
   }
@@ -192,12 +197,12 @@ function getBrowserPath(pkg: PackageJson) {
  * `support/root` folder.
  */
 async function generateSizeLimitConfig() {
-  log.info(chalk`{blue Generating {bold.grey size-limit.json} config file}`);
+  log.info(chalk`\n{blue Generating {bold.grey size-limit.json} config file}`);
 
   // Get all the packages in the `pnpm` monorepo.
   const packages = await getAllDependencies();
 
-  type DesiredPackage = Package & { module: string; meta: Required<PackageMeta> };
+  type DesiredPackage = Package & { module: string; meta: Required<RemirrorPackageMeta> };
 
   // Transform the packages into the correct sizes.
   const sizes = packages
@@ -212,7 +217,7 @@ async function generateSizeLimitConfig() {
 
       return {
         name: pkg.name,
-        path: join(getRelativePathFromJson(pkg), relativePath),
+        path: path.join(getRelativePathFromJson(pkg), relativePath),
         limit: pkg['@remirror']?.sizeLimit,
         ignore: Object.keys(pkg.peerDependencies ?? {}),
         running: false,
@@ -246,7 +251,9 @@ const excludedPackageNames = new Set(['@remirror/support']);
  * Generate the main tsconfig reference file which points to all the packages.
  */
 async function generateMainTsConfig() {
-  log.info(chalk`{blue Generating {bold.grey tsconfig.json} reference file for the project root}`);
+  log.info(
+    chalk`\n{blue Generating {bold.grey tsconfig.json} reference file for the project root}`,
+  );
 
   // Get all the workspace packages.
   const packages = await getAllDependencies();
@@ -262,7 +269,9 @@ async function generateMainTsConfig() {
     }
 
     // Add the reference to the main tsconfig object.
-    mainTsconfig.references.push({ path: join(getRelativePathFromJson(pkg), tsconfigFileName) });
+    mainTsconfig.references.push({
+      path: path.join(getRelativePathFromJson(pkg), tsconfigFileName),
+    });
   }
 
   // Write the main tsconfig reference file to the defined absolute path.
@@ -272,37 +281,122 @@ async function generateMainTsConfig() {
   filesToPrettify.push(paths.mainTsconfig);
 }
 
-const basePackageTsconfig = {
-  // Flag to show that this file is autogenerated and should not be edited.
-  __AUTO_GENERATED__: 'To update run: `pnpm generate:ts`',
-
-  // Needs to be generated based on the location of the package.
-  extends: '',
-  compilerOptions: {},
+const DEFAULT_TSCONFIG_META: Required<TsConfigMeta> = {
+  src: {
+    // Flag to show that this file is autogenerated and should not be edited.
+    compilerOptions: { types: [], declaration: true, noEmit: true },
+    include: ['./'],
+  },
+  __e2e__: {
+    // Flag to show that this file is autogenerated and should not be edited.
+    compilerOptions: {
+      types: [
+        'expect-playwright/global',
+        'jest-playwright-preset',
+        'jest',
+        'jest-extended',
+        'snapshot-diff',
+        'playwright',
+        'node',
+      ],
+      declaration: false,
+      noEmit: true,
+      skipLibCheck: true,
+      // @ts-ignore
+      importsNotUsedAsValues: 'remove',
+    },
+    include: ['./'],
+  },
+  __tests__: {
+    compilerOptions: {
+      types: [
+        'jest',
+        'jest-extended',
+        'jest-axe',
+        '@testing-library/jest-dom',
+        'snapshot-diff',
+        'node',
+      ],
+      declaration: false,
+      noEmit: true,
+      skipLibCheck: true,
+      // @ts-ignore
+      importsNotUsedAsValues: 'remove',
+    },
+    include: ['./'],
+  },
+  __dts__: {
+    compilerOptions: {
+      declarationMap: false,
+      declaration: false,
+      noEmit: true,
+      skipLibCheck: true,
+      noUnusedLocals: false,
+      noUnusedParameters: false,
+      allowUnreachableCode: true,
+      noImplicitReturns: false,
+      // @ts-ignore
+      importsNotUsedAsValues: 'remove',
+    },
+    include: ['./'],
+  },
+  './': {
+    compilerOptions: {
+      declaration: false,
+      noEmit: true,
+      skipLibCheck: true,
+    },
+    include: ['src'],
+  },
 };
 
+interface TsConfigFile {
+  filepath: string;
+  json: TsConfigJson;
+  shouldReference: boolean;
+}
+
 /**
- * Generate a tsconfig for every package.
- *
- * This is currently unused.
+ * Add flag to indicate that this file is auto generated.
  */
-async function generatePackageTsConfigs() {
-  log.info(chalk`{blue Generating {bold.grey tsconfig.json} files for all packages}`);
+function createAutoGeneratedFlag(folderName: string): object {
+  return {
+    __AUTO_GENERATED__: [
+      `To update the configuration edit the following field.`,
+      `\`package.json > @remirror > tsconfigs > '${folderName}'\``,
+      '',
+      `Then run: \`pnpm -w generate:ts\``,
+    ],
+  };
+}
 
-  // Get the full package and the locations of all packages with a `types` field
-  // in their `package.json`.
-  const [packages, dependencies] = await Promise.all([
-    getAllDependencies(),
-    getTypedPackagesWithPath(),
-  ]);
+function makeRelative(filepath: string) {
+  return filepath.startsWith('.') ? filepath : `./${filepath}`;
+}
 
-  /**
-   * Write the file for an individual package.
-   */
-  async function writePackageTsconfig(pkg: Package) {
+/**
+ * Resolve the metadata from the tsconfig file.
+ */
+async function resolveTsConfigMeta(
+  pkg: Package,
+  dependencies: Record<string, string>,
+): Promise<TsConfigFile[]> {
+  const configFiles: TsConfigFile[] = [];
+  const meta = pkg['@remirror']?.tsconfigs;
+
+  if (meta === false) {
+    return configFiles;
+  }
+
+  const foldersInDirectory = await readdir(pkg.location);
+  const mergedMeta: Required<TsConfigMeta> = deepMerge(DEFAULT_TSCONFIG_META, meta ?? {});
+  const { './': main, src, ...rest } = mergedMeta;
+  const references: TsConfigJson.References[] = [];
+
+  if (src !== false) {
+    const filepath = path.join(pkg.location, 'src', tsconfigFileName);
+
     // Collect all the references need for the current package.
-    const references: Array<{ path: string }> = [];
-
     for (const dependency of Object.keys(pkg.dependencies ?? {})) {
       const dependencyPath = dependencies[dependency];
 
@@ -315,45 +409,181 @@ async function generatePackageTsConfigs() {
 
       references.push({
         // Add the dependency which is a path relative to the current package being checked.
-        path: join(relative(pkg.location, dependencyPath), tsconfigFileName),
+        path: path.join(path.relative(path.dirname(filepath), path.join(dependencyPath, 'src'))),
       });
     }
 
-    // Don't add a tsconfig to packages within the support directory.
-    if (relative(baseDir(), pkg.location).startsWith('support')) {
-      return;
+    const { compilerOptions: original, ...other } = src ?? {};
+    const isComposite =
+      !!pkg.types ||
+      Object.keys(dependencies).includes(pkg.name) ||
+      ['__tests__', '__dts__'].some((folder) => foldersInDirectory.includes(folder));
+    const compilerOptions = deepMerge(
+      {},
+      original ?? {},
+      isComposite
+        ? { composite: true, noEmit: false, emitDeclarationOnly: true, outDir: '../dist-types' }
+        : { declaration: false, noEmit: true },
+    );
+
+    configFiles.push({
+      shouldReference: true,
+      filepath,
+      json: {
+        ...createAutoGeneratedFlag('src'),
+        extends: path.relative(path.dirname(filepath), paths.baseTsconfig),
+        compilerOptions,
+        ...other,
+        references:
+          pkg.name === '@remirror/support'
+            ? [{ path: path.relative(path.dirname(filepath), dependencies['remirror'] ?? '') }]
+            : references,
+      },
+    });
+  }
+
+  if (main !== false) {
+    const filepath = path.join(pkg.location, tsconfigFileName);
+    const { compilerOptions: original = {}, ...other } = main ?? {};
+    const compilerOptions = deepMerge(src !== false ? src?.compilerOptions ?? {} : {}, original);
+    configFiles.push({
+      shouldReference: false,
+      filepath,
+      json: {
+        ...createAutoGeneratedFlag('src'),
+        extends: makeRelative(path.relative(path.dirname(filepath), paths.baseTsconfig)),
+        compilerOptions,
+        ...other,
+      },
+    });
+  }
+
+  for (const [folder, config] of Object.entries(rest)) {
+    if (!foldersInDirectory.includes(folder.replace(/^\.\//, '')) || config === false) {
+      continue;
     }
 
-    // The path for the tsconfig
-    const tsconfigFilePath = join(pkg.location, tsconfigFileName);
+    const filepath = path.join(pkg.location, folder, tsconfigFileName);
+    const { compilerOptions: original = {}, ...other } = config ?? {};
+    const compilerOptions = deepMerge(src !== false ? src?.compilerOptions ?? {} : {}, original);
 
-    // The compiler options for the tsconfig file. If this is a typed package
-    // then it is declared to be composite and if not it is left quite bare.
-    const tsconfigCompilerOptions = pkg.types
-      ? { declaration: true, noEmit: true }
-      : { noEmit: true };
+    const extraReferences: TsConfigJson.References[] = [];
 
-    // Create the json for the tsconfig which will be written to the tsconfig file.
-    const tsconfig = {
-      ...basePackageTsconfig,
-      extends: relative(pkg.location, baseDir(paths.mainTsconfig)),
-      compilerOptions: {
-        ...basePackageTsconfig.compilerOptions,
-        ...tsconfigCompilerOptions,
+    if (['__tests__', '__dts__'].includes(folder)) {
+      extraReferences.push({ path: '../src' });
+    }
+
+    if (folder.startsWith('__')) {
+      const testingPath = path.relative(
+        path.dirname(filepath),
+        path.join(dependencies['testing'] ?? '', 'src'),
+      );
+      const remirrorPath = path.relative(
+        path.dirname(filepath),
+        path.join(dependencies['remirror'] ?? '', 'src'),
+      );
+      extraReferences.push({ path: testingPath }, { path: remirrorPath });
+    }
+
+    configFiles.push({
+      shouldReference: true,
+      filepath,
+      json: {
+        ...createAutoGeneratedFlag(folder),
+        extends: path.relative(path.dirname(filepath), paths.baseTsconfig),
+        compilerOptions,
+        ...other,
+        references: [...extraReferences, ...references],
       },
-      // references,
-    };
+    });
+  }
 
-    // Write and prettify the files.
-    await writeJSON(tsconfigFilePath, tsconfig);
+  return configFiles;
+}
 
-    // Add the file created to the list of files to prettify at the end of the
-    // script being run.
-    filesToPrettify.push(tsconfigFilePath);
+/**
+ * Generate a tsconfig for every package.
+ *
+ * This is currently unused.
+ */
+async function generatePackageTsConfigs() {
+  log.info(chalk`\n{blue Generating {bold.grey tsconfig.json} files for all packages}`);
+
+  // Get the full package and the locations of all packages with a `types` field
+  // in their `package.json`.
+  const [packages, dependencies] = await Promise.all([
+    getAllDependencies(),
+    getTypedPackagesWithPath(),
+  ]);
+
+  const promises: Array<Promise<void>> = [];
+  const limit = pLimit(os.cpus().length);
+  const references: TsConfigJson.References[] = [];
+
+  /**
+   * Write the file for an individual package.
+   */
+  function writePackageTsconfig(pkg: Package) {
+    // // Don't add a tsconfig to packages within the support directory.
+    // if (path.relative(baseDir(), pkg.location).startsWith('support')) {
+    //   return;
+    // }
+
+    // // The path for the tsconfig
+    // const tsconfigFilePath = path.join(pkg.location, tsconfigFileName);
+
+    // // The compiler options for the tsconfig file. If this is a typed package
+    // // then it is declared to be composite and if not it is left quite bare.
+    // const tsconfigCompilerOptions = pkg.types
+    //   ? { declaration: true, noEmit: true }
+    //   : { noEmit: true };
+
+    // // Create the json for the tsconfig which will be written to the tsconfig file.
+    // const tsconfig = {
+    //   ...basePackageTsconfig,
+    //   extends: path.relative(pkg.location, baseDir(paths.mainTsconfig)),
+    //   compilerOptions: {
+    //     ...basePackageTsconfig.compilerOptions,
+    //     ...tsconfigCompilerOptions,
+    //   },
+    //   // references,
+    // };
+
+    promises.push(
+      limit(async () => {
+        const tsconfigs = await resolveTsConfigMeta(pkg, dependencies);
+
+        for (const tsconfig of tsconfigs) {
+          if (!tsconfig.shouldReference) {
+            continue;
+          }
+
+          references.push({
+            path: path.relative(baseDir(), path.dirname(tsconfig.filepath)),
+          });
+        }
+
+        // Write the tsconfig files to disk.
+        await Promise.all(tsconfigs.map(({ filepath, json }) => writeJSON(filepath, json)));
+
+        // Add the file created to the list of files to prettify at the end of the
+        // script being run.
+        filesToPrettify.push(tsconfigs.map((tsconfig) => tsconfig.filepath).join(' '));
+      }),
+    );
+  }
+
+  for (const pkg of packages) {
+    // Populate the promises.
+    writePackageTsconfig(pkg);
   }
 
   // Write all the files to the locations.
-  await Promise.all(packages.map(writePackageTsconfig));
+  await Promise.all(promises);
+
+  references.sort((a, b) => a.path.localeCompare(b.path));
+  await writeJSON(paths.rootTsconfig, { files: [], references });
+  filesToPrettify.push(paths.rootTsconfig);
 }
 
 /**
@@ -382,7 +612,7 @@ async function main() {
     return;
   }
 
-  log.info('Prettifying the updated and created files');
+  log.debug('Prettifying the updated and created files');
 
   // Format all the files which have been created before exiting.
   await formatFiles(filesToPrettify.join(' '), { silent: true, formatter: 'prettier' });
@@ -391,9 +621,9 @@ async function main() {
 // Run the script and listen for any errors.
 main().catch((error) => {
   log.error(
-    chalk`{red Something went wrong while running the} {blue.bold playground:imports} {red script.}`,
+    chalk`\n{red Something went wrong while running the} {blue.bold playground:imports} {red script.}`,
   );
 
-  log.fatal(error);
+  log.fatal('\n', error);
   process.exit(1);
 });

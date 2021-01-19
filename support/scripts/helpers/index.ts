@@ -1,6 +1,6 @@
 import { readPreState } from '@changesets/pre';
 import readChangesets from '@changesets/read';
-import { NewChangeset, PreState } from '@changesets/types';
+import type { NewChangeset, PreState } from '@changesets/types';
 import { getPackages } from '@manypkg/get-packages';
 import assert from 'assert';
 import camelCaseKeys from 'camelcase-keys';
@@ -9,10 +9,10 @@ import { exec as _exec } from 'child_process';
 import diff from 'jest-diff';
 import isEqual from 'lodash.isequal';
 import minimist from 'minimist';
-import { join, relative, resolve } from 'path';
+import path from 'path';
 import _rm from 'rimraf';
 import { Logger } from 'tslog';
-import { PackageJson } from 'type-fest';
+import { PackageJson, TsConfigJson } from 'type-fest';
 import { promisify } from 'util';
 
 /**
@@ -63,14 +63,14 @@ export function mangleScopedPackageName(packageName: string): string {
  * arguments it will return the base directory.
  */
 export function baseDir(...paths: string[]): string {
-  return resolve(__dirname, '../../..', join(...paths));
+  return path.resolve(__dirname, '../../..', path.join(...paths));
 }
 
 /**
  * Get the path relative to the base directory of this project.
  */
 export function getRelativePathFromJson({ location }: { location: string }): string {
-  return relative(baseDir(), location);
+  return path.relative(baseDir(), location);
 }
 
 interface FormatFilesOptions {
@@ -131,11 +131,26 @@ export async function formatFiles(
   }
 }
 
-export interface PackageMeta {
+export interface RemirrorPackageMeta {
   /**
    * The maximum size in KB for the package.
    */
   sizeLimit?: string;
+
+  /**
+   * Set the options for the tsconfig.
+   *
+   * False means no tsconfig files will be added to the package.
+   */
+  tsconfigs?: false | TsConfigMeta;
+}
+
+export interface TsConfigMeta {
+  [key: string]: TsConfigJson | false | undefined;
+  __dts__?: TsConfigJson | false;
+  __tests__?: TsConfigJson | false;
+  __e2e__?: TsConfigJson | false;
+  src?: TsConfigJson | false;
 }
 
 export interface Package extends Omit<PackageJson, 'name'> {
@@ -152,7 +167,7 @@ export interface Package extends Omit<PackageJson, 'name'> {
   /**
    * Custom meta properties consumed by `remirror`.
    */
-  '@remirror'?: PackageMeta;
+  '@remirror'?: RemirrorPackageMeta;
 }
 
 /**
@@ -268,7 +283,7 @@ const diffOptions = {
 function orderOutputKeys(output: Record<string, unknown>) {
   return Object.keys(output)
     .sort()
-    .map((name) => relative(process.cwd(), name));
+    .map((name) => path.relative(process.cwd(), name));
 }
 
 /**
@@ -294,7 +309,7 @@ export function compareOutput(actual: Record<string, unknown>, expected: Record<
 
   for (const [name, actualContents] of Object.entries(actual)) {
     const expectedContents = expected[name];
-    const relativeName = relative(process.cwd(), name);
+    const relativeName = path.relative(process.cwd(), name);
 
     if (isEqual(actualContents, expectedContents)) {
       continue;

@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-
 import type { AnyExtension, RemirrorManager } from '@remirror/core';
 
 import { createReactManager } from '../react-helpers';

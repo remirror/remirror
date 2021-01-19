@@ -1,6 +1,5 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { BoldExtension, ItalicExtension } from 'remirror/extensions';
-
 import { AllSelection } from '@remirror/pm/state';
 
 import { CommandsExtension } from '../';

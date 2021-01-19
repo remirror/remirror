@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import { ErrorConstant } from '@remirror/core-constants';
 
 import { invariant } from './core-errors';

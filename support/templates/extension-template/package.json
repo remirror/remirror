@@ -25,9 +25,12 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/extension-template.cjs.js",
-  "module": "dist/extension-template.esm.js",
-  "browser": {},
+  "main": "dist/remirror-extension-template.cjs.js",
+  "module": "dist/remirror-extension-template.esm.js",
+  "browser": {
+    "./dist/remirror-extension-template.cjs.js": "./dist/remirror-extension-template.browser.cjs.js",
+    "./dist/remirror-extension-template.esm.js": "./dist/remirror-extension-template.browser.esm.js"
+  },
   "types": "dist/remirror-extension-template.cjs.d.ts",
   "files": [
     "dist"

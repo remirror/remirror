@@ -15,7 +15,7 @@ const [, , property, ...args] = process.argv;
 const command = args.join(' ');
 
 // Check for property
-const value = readProperty(property);
+const value = readProperty(property ?? '');
 
 if (value) {
   console.log('Opted into husky checks... 😋');

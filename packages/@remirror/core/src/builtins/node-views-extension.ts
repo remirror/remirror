@@ -2,7 +2,7 @@ import { isFunction, object } from '@remirror/core-helpers';
 import type { NodeViewMethod } from '@remirror/core-types';
 
 import { PlainExtension } from '../extension';
-import { CreateExtensionPlugin } from '../types';
+import type { CreateExtensionPlugin } from '../types';
 
 /**
  * This extension allows others extension to add the `createNodeView` method
