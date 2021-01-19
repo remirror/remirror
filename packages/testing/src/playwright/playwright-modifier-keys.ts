@@ -5,6 +5,7 @@
  * https://github.com/WordPress/gutenberg/blob/5bbda3656a530616a7a78c0a101d6ec2d8fa6a7a/packages/e2e-test-utils/src/press-key-with-modifier.js
  */
 
+import delay from 'delay';
 import { take } from '@remirror/core';
 
 /**
@@ -169,7 +170,7 @@ export interface ModifierInformation {
  * @see https://github.com/GoogleChrome/puppeteer/issues/1313
  * @see https://w3c.github.io/uievents/tools/key-event-viewer.html
  */
-export const selectAll = async () => {
+export const selectAll = async (options: { delay?: number } = {}) => {
   await page.evaluate(() => {
     const isMac = /Mac|iPod|iPhone|iPad/.test(window.navigator.platform);
 
@@ -229,6 +230,10 @@ export const selectAll = async () => {
       } as KeyboardEventInit),
     );
   });
+
+  if (options.delay) {
+    return delay(options.delay);
+  }
 };
 
 /**
@@ -247,7 +252,9 @@ const selectAllShortcuts = new Set([
 /**
  * Determines whether this is an apple machine
  */
-const isApple = () => process.platform === 'darwin';
+export function isApple() {
+  return process.platform === 'darwin';
+}
 
 /**
  * Performs a key press with modifier (Shift, Control, Meta, Alt), where each modifier

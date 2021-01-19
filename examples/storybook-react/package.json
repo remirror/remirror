@@ -5,8 +5,9 @@
   "description": "The storybook configuration for the remirror project.",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/examples/storybook-react",
   "scripts": {
-    "build": "cross-env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}'  build-storybook -c ./",
-    "start": "cross-env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}'  start-storybook -p 6006 -c ./"
+    "build": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}'  build-storybook -c ./",
+    "e2e": "",
+    "start": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}'  start-storybook -p 6006 -c ./"
   },
   "dependencies": {
     "@emotion/css": "^11.1.3",

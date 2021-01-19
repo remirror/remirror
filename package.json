@@ -78,7 +78,7 @@
     "reset": "pnpm clean:all; rm pnpm-lock.yaml; pnpm symlink:root; pnpm install;",
     "run:prettier": "prettier --loglevel warn --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx,md,mdx,json,html,css,yml,yaml,graphql}\"",
     "size": "size-limit",
-    "storybook": "manypkg run examples/storybook-react storybook",
+    "storybook": "manypkg run examples/storybook-react start",
     "symlink:root": "node support/scripts/symlink-root.mjs",
     "test": "jest --verbose",
     "test:build": "TEST_BUILD=true jest --verbose --coverage=false",
