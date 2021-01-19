@@ -17,16 +17,16 @@
   "include": ["./"],
   "references": [
     {
-      "path": "../../@remirror/core/src"
+      "path": "../../remirror__core/src"
     },
     {
-      "path": "../../@remirror/dom/src"
+      "path": "../../remirror__dom/src"
     },
     {
-      "path": "../../@remirror/pm/src"
+      "path": "../../remirror__pm/src"
     },
     {
-      "path": "../../@remirror/preset-core/src"
+      "path": "../../remirror__preset-core/src"
     },
     {
       "path": "../../jest-prosemirror/src"

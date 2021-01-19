@@ -1,9 +1,7 @@
 packages:
   - 'support/templates/*'
-  - 'packages/@remirror/*'
   - 'deprecated/*'
   - 'packages/*'
   - 'support'
   - 'website'
   - 'examples/*'
-  - 'backend/*'

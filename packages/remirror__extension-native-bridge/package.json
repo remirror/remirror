@@ -1,0 +1,55 @@
+{
+  "name": "@remirror/extension-native-bridge",
+  "version": "0.0.0",
+  "description": "Support for communication between the webview and native editor.",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-native-bridge",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-native-bridge",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-native-bridge.esm.js",
+      "require": "./dist/remirror-extension-native-bridge.cjs.js",
+      "browser": "./dist/remirror-extension-native-bridge.browser.esm.js",
+      "types": "./dist/remirror-extension-native-bridge.cjs.d.ts",
+      "default": "./dist/remirror-extension-native-bridge.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-native-bridge.cjs.js",
+  "module": "dist/remirror-extension-native-bridge.esm.js",
+  "browser": {
+    "./dist/remirror-extension-native-bridge.cjs.js": "./dist/remirror-extension-native-bridge.browser.cjs.js",
+    "./dist/remirror-extension-native-bridge.esm.js": "./dist/remirror-extension-native-bridge.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-native-bridge.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "peerDependencies": {
+    "@remirror/core": "^1.0.0-next.60",
+    "@remirror/pm": "^1.0.0-next.60"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "5 KB"
+  }
+}

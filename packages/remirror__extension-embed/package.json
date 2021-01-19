@@ -1,0 +1,60 @@
+{
+  "name": "@remirror/extension-embed",
+  "version": "1.0.0-next.60",
+  "private": true,
+  "description": "Add embedded content into your editor",
+  "keywords": [
+    "remirror",
+    "preset",
+    "text-editor"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-embed",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-embed",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-embed.esm.js",
+      "require": "./dist/remirror-extension-embed.cjs.js",
+      "browser": "./dist/remirror-extension-embed.browser.esm.js",
+      "types": "./dist/remirror-extension-embed.cjs.d.ts",
+      "default": "./dist/remirror-extension-embed.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-embed.cjs.js",
+  "module": "dist/remirror-extension-embed.esm.js",
+  "browser": {
+    "./dist/remirror-extension-embed.cjs.js": "./dist/remirror-extension-embed.browser.cjs.js",
+    "./dist/remirror-extension-embed.esm.js": "./dist/remirror-extension-embed.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-embed.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "@linaria/core": "^3.0.0-beta.1",
+    "@remirror/messages": "0.0.0",
+    "@types/querystringify": "^2.0.0",
+    "querystringify": "^2.2.0"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "peerDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "10 KB"
+  }
+}

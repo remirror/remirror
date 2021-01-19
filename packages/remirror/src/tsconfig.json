@@ -17,208 +17,208 @@
   "include": ["./"],
   "references": [
     {
-      "path": "../../@remirror/core/src"
+      "path": "../../remirror__core/src"
     },
     {
-      "path": "../../@remirror/core-constants/src"
+      "path": "../../remirror__core-constants/src"
     },
     {
-      "path": "../../@remirror/core-helpers/src"
+      "path": "../../remirror__core-helpers/src"
     },
     {
-      "path": "../../@remirror/core-types/src"
+      "path": "../../remirror__core-types/src"
     },
     {
-      "path": "../../@remirror/core-utils/src"
+      "path": "../../remirror__core-utils/src"
     },
     {
-      "path": "../../@remirror/dom/src"
+      "path": "../../remirror__dom/src"
     },
     {
-      "path": "../../@remirror/extension-annotation/src"
+      "path": "../../remirror__extension-annotation/src"
     },
     {
-      "path": "../../@remirror/extension-bidi/src"
+      "path": "../../remirror__extension-bidi/src"
     },
     {
-      "path": "../../@remirror/extension-blockquote/src"
+      "path": "../../remirror__extension-blockquote/src"
     },
     {
-      "path": "../../@remirror/extension-bold/src"
+      "path": "../../remirror__extension-bold/src"
     },
     {
-      "path": "../../@remirror/extension-callout/src"
+      "path": "../../remirror__extension-callout/src"
     },
     {
-      "path": "../../@remirror/extension-code/src"
+      "path": "../../remirror__extension-code/src"
     },
     {
-      "path": "../../@remirror/extension-code-block/src"
+      "path": "../../remirror__extension-code-block/src"
     },
     {
-      "path": "../../@remirror/extension-codemirror5/src"
+      "path": "../../remirror__extension-codemirror5/src"
     },
     {
-      "path": "../../@remirror/extension-collaboration/src"
+      "path": "../../remirror__extension-collaboration/src"
     },
     {
-      "path": "../../@remirror/extension-columns/src"
+      "path": "../../remirror__extension-columns/src"
     },
     {
-      "path": "../../@remirror/extension-diff/src"
+      "path": "../../remirror__extension-diff/src"
     },
     {
-      "path": "../../@remirror/extension-doc/src"
+      "path": "../../remirror__extension-doc/src"
     },
     {
-      "path": "../../@remirror/extension-drop-cursor/src"
+      "path": "../../remirror__extension-drop-cursor/src"
     },
     {
-      "path": "../../@remirror/extension-embed/src"
+      "path": "../../remirror__extension-embed/src"
     },
     {
-      "path": "../../@remirror/extension-emoji/src"
+      "path": "../../remirror__extension-emoji/src"
     },
     {
-      "path": "../../@remirror/extension-epic-mode/src"
+      "path": "../../remirror__extension-epic-mode/src"
     },
     {
-      "path": "../../@remirror/extension-events/src"
+      "path": "../../remirror__extension-events/src"
     },
     {
-      "path": "../../@remirror/extension-font-family/src"
+      "path": "../../remirror__extension-font-family/src"
     },
     {
-      "path": "../../@remirror/extension-font-size/src"
+      "path": "../../remirror__extension-font-size/src"
     },
     {
-      "path": "../../@remirror/extension-gap-cursor/src"
+      "path": "../../remirror__extension-gap-cursor/src"
     },
     {
-      "path": "../../@remirror/extension-hard-break/src"
+      "path": "../../remirror__extension-hard-break/src"
     },
     {
-      "path": "../../@remirror/extension-heading/src"
+      "path": "../../remirror__extension-heading/src"
     },
     {
-      "path": "../../@remirror/extension-history/src"
+      "path": "../../remirror__extension-history/src"
     },
     {
-      "path": "../../@remirror/extension-horizontal-rule/src"
+      "path": "../../remirror__extension-horizontal-rule/src"
     },
     {
-      "path": "../../@remirror/extension-image/src"
+      "path": "../../remirror__extension-image/src"
     },
     {
-      "path": "../../@remirror/extension-italic/src"
+      "path": "../../remirror__extension-italic/src"
     },
     {
-      "path": "../../@remirror/extension-link/src"
+      "path": "../../remirror__extension-link/src"
     },
     {
-      "path": "../../@remirror/extension-list/src"
+      "path": "../../remirror__extension-list/src"
     },
     {
-      "path": "../../@remirror/extension-markdown/src"
+      "path": "../../remirror__extension-markdown/src"
     },
     {
-      "path": "../../@remirror/extension-mention/src"
+      "path": "../../remirror__extension-mention/src"
     },
     {
-      "path": "../../@remirror/extension-mention-atom/src"
+      "path": "../../remirror__extension-mention-atom/src"
     },
     {
-      "path": "../../@remirror/extension-native-bridge/src"
+      "path": "../../remirror__extension-native-bridge/src"
     },
     {
-      "path": "../../@remirror/extension-paragraph/src"
+      "path": "../../remirror__extension-paragraph/src"
     },
     {
-      "path": "../../@remirror/extension-placeholder/src"
+      "path": "../../remirror__extension-placeholder/src"
     },
     {
-      "path": "../../@remirror/extension-positioner/src"
+      "path": "../../remirror__extension-positioner/src"
     },
     {
-      "path": "../../@remirror/extension-react-component/src"
+      "path": "../../remirror__extension-react-component/src"
     },
     {
-      "path": "../../@remirror/extension-react-ssr/src"
+      "path": "../../remirror__extension-react-ssr/src"
     },
     {
-      "path": "../../@remirror/extension-search/src"
+      "path": "../../remirror__extension-search/src"
     },
     {
-      "path": "../../@remirror/extension-strike/src"
+      "path": "../../remirror__extension-strike/src"
     },
     {
-      "path": "../../@remirror/extension-sub/src"
+      "path": "../../remirror__extension-sub/src"
     },
     {
-      "path": "../../@remirror/extension-sup/src"
+      "path": "../../remirror__extension-sup/src"
     },
     {
-      "path": "../../@remirror/extension-tables/src"
+      "path": "../../remirror__extension-tables/src"
     },
     {
-      "path": "../../@remirror/extension-text/src"
+      "path": "../../remirror__extension-text/src"
     },
     {
-      "path": "../../@remirror/extension-text-case/src"
+      "path": "../../remirror__extension-text-case/src"
     },
     {
-      "path": "../../@remirror/extension-text-color/src"
+      "path": "../../remirror__extension-text-color/src"
     },
     {
-      "path": "../../@remirror/extension-text-highlight/src"
+      "path": "../../remirror__extension-text-highlight/src"
     },
     {
-      "path": "../../@remirror/extension-text-wrap/src"
+      "path": "../../remirror__extension-text-wrap/src"
     },
     {
-      "path": "../../@remirror/extension-trailing-node/src"
+      "path": "../../remirror__extension-trailing-node/src"
     },
     {
-      "path": "../../@remirror/extension-underline/src"
+      "path": "../../remirror__extension-underline/src"
     },
     {
-      "path": "../../@remirror/extension-whitespace/src"
+      "path": "../../remirror__extension-whitespace/src"
     },
     {
-      "path": "../../@remirror/extension-yjs/src"
+      "path": "../../remirror__extension-yjs/src"
     },
     {
-      "path": "../../@remirror/icons/src"
+      "path": "../../remirror__icons/src"
     },
     {
-      "path": "../../@remirror/pm/src"
+      "path": "../../remirror__pm/src"
     },
     {
-      "path": "../../@remirror/preset-core/src"
+      "path": "../../remirror__preset-core/src"
     },
     {
-      "path": "../../@remirror/preset-formatting/src"
+      "path": "../../remirror__preset-formatting/src"
     },
     {
-      "path": "../../@remirror/preset-react/src"
+      "path": "../../remirror__preset-react/src"
     },
     {
-      "path": "../../@remirror/preset-wysiwyg/src"
+      "path": "../../remirror__preset-wysiwyg/src"
     },
     {
-      "path": "../../@remirror/react/src"
+      "path": "../../remirror__react/src"
     },
     {
-      "path": "../../@remirror/react-components/src"
+      "path": "../../remirror__react-components/src"
     },
     {
-      "path": "../../@remirror/react-hooks/src"
+      "path": "../../remirror__react-hooks/src"
     },
     {
-      "path": "../../@remirror/react-utils/src"
+      "path": "../../remirror__react-utils/src"
     },
     {
-      "path": "../../@remirror/theme/src"
+      "path": "../../remirror__theme/src"
     }
   ]
 }

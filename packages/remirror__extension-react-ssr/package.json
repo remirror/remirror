@@ -1,0 +1,71 @@
+{
+  "name": "@remirror/extension-react-ssr",
+  "version": "1.0.0-next.60",
+  "description": "If server side support is important to you, then this is perfect for your remirror editor in react.",
+  "keywords": [
+    "remirror",
+    "prosemirror",
+    "extension",
+    "ssr",
+    "server side",
+    "react",
+    "text-editor"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-react-ssr",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-react-ssr",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-react-ssr.esm.js",
+      "require": "./dist/remirror-extension-react-ssr.cjs.js",
+      "browser": "./dist/remirror-extension-react-ssr.browser.esm.js",
+      "types": "./dist/remirror-extension-react-ssr.cjs.d.ts",
+      "default": "./dist/remirror-extension-react-ssr.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-react-ssr.cjs.js",
+  "module": "dist/remirror-extension-react-ssr.esm.js",
+  "browser": {
+    "./dist/remirror-extension-react-ssr.cjs.js": "./dist/remirror-extension-react-ssr.browser.cjs.js",
+    "./dist/remirror-extension-react-ssr.esm.js": "./dist/remirror-extension-react-ssr.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-react-ssr.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "@remirror/extension-react-component": "1.0.0-next.60",
+    "@remirror/messages": "0.0.0",
+    "@remirror/react-utils": "1.0.0-next.60"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60",
+    "@types/react": "^17.0.0",
+    "react": "^17.0.1"
+  },
+  "peerDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60",
+    "@types/react": "^16.14.0 || ^17",
+    "react": "^16.14.0 || ^17"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "5 KB"
+  }
+}

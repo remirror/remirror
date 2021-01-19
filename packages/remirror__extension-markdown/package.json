@@ -1,0 +1,60 @@
+{
+  "name": "@remirror/extension-markdown",
+  "version": "0.0.0",
+  "description": "Generate markdown output from your editor",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/support/templates/extension-markdown",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-markdown",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-markdown.esm.js",
+      "require": "./dist/remirror-extension-markdown.cjs.js",
+      "browser": "./dist/remirror-extension-markdown.browser.esm.js",
+      "types": "./dist/remirror-extension-markdown.cjs.d.ts",
+      "default": "./dist/remirror-extension-markdown.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-markdown.cjs.js",
+  "module": "dist/remirror-extension-markdown.esm.js",
+  "browser": {
+    "./dist/remirror-extension-markdown.cjs.js": "./dist/remirror-extension-markdown.browser.cjs.js",
+    "./dist/remirror-extension-markdown.esm.js": "./dist/remirror-extension-markdown.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-markdown.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0",
+    "@types/marked": "^1.2.1",
+    "@types/turndown": "^5.0.0",
+    "marked": "^1.2.7",
+    "turndown": "^7.0.0",
+    "turndown-plugin-gfm": "^1.0.2"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "peerDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "5 KB"
+  }
+}

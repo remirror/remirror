@@ -1,0 +1,55 @@
+{
+  "name": "@remirror/extension-events",
+  "version": "1.0.0-next.60",
+  "description": "Manage your remirror editor dom events.",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/support/eventss/extension-events",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-events",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-events.esm.js",
+      "require": "./dist/remirror-extension-events.cjs.js",
+      "browser": "./dist/remirror-extension-events.browser.esm.js",
+      "types": "./dist/remirror-extension-events.cjs.d.ts",
+      "default": "./dist/remirror-extension-events.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-events.cjs.js",
+  "module": "dist/remirror-extension-events.esm.js",
+  "browser": {
+    "./dist/remirror-extension-events.cjs.js": "./dist/remirror-extension-events.browser.cjs.js",
+    "./dist/remirror-extension-events.esm.js": "./dist/remirror-extension-events.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-events.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "peerDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "5 KB"
+  }
+}

@@ -10,7 +10,7 @@
     "shortcut",
     "productivity"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/@remirror/extension-base-keymap",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-base-keymap",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/deprecated/extension-base-keymap",
   "license": "MIT",
   "contributors": [

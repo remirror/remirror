@@ -1,0 +1,102 @@
+{
+  "name": "@remirror/react-components",
+  "version": "1.0.0-next.40",
+  "private": true,
+  "description": "Components to begin your remirror journey",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-components",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-components",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-react-components.esm.js",
+      "require": "./dist/remirror-react-components.cjs.js",
+      "browser": "./dist/remirror-react-components.browser.esm.js",
+      "types": "./dist/remirror-react-components.cjs.d.ts",
+      "default": "./dist/remirror-react-components.esm.js"
+    },
+    "./all-icons": {
+      "import": "./all-icons/dist/remirror-react-components-all-icons.esm.js",
+      "require": "./all-icons/dist/remirror-react-components-all-icons.cjs.js",
+      "browser": "./all-icons/dist/remirror-react-components.browser.esm.js",
+      "default": "./all-icons/dist/remirror-react-components-all-icons.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-react-components.cjs.js",
+  "module": "dist/remirror-react-components.esm.js",
+  "browser": {
+    "./dist/remirror-react-components.cjs.js": "./dist/remirror-react-components.browser.cjs.js",
+    "./dist/remirror-react-components.esm.js": "./dist/remirror-react-components.browser.esm.js"
+  },
+  "types": "dist/remirror-react-components.cjs.d.ts",
+  "files": [
+    "all-icons",
+    "style",
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "@linaria/core": "^3.0.0-beta.1",
+    "@lingui/core": "^3.4.0",
+    "@remirror/extension-positioner": "1.0.0-next.60",
+    "@remirror/extension-text-color": "0.0.0",
+    "@remirror/i18n": "1.0.0-next.60",
+    "@remirror/icons": "0.0.0",
+    "@remirror/react-hooks": "1.0.0-next.60",
+    "@remirror/react-utils": "1.0.0-next.60",
+    "@remirror/theme": "1.0.0-next.60",
+    "@seznam/compose-react-refs": "^1.0.5",
+    "create-context-state": "0.0.0",
+    "match-sorter": "^6.1.0",
+    "multishift": "1.0.0-next.60",
+    "reakit": "^1.3.4",
+    "reakit-system-palette": "^0.14.1",
+    "reakit-utils": "^0.15.1",
+    "type-fest": "^0.20.2",
+    "use-previous": "^1.1.0"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60",
+    "@remirror/react": "1.0.0-next.60",
+    "@testing-library/react": "^11.2.3",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "peerDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60",
+    "@remirror/react": "1.0.0-next.60",
+    "@types/react": "^16.14.0 || ^17",
+    "@types/react-dom": "^16.9.0 || ^17",
+    "react": "^16.14.0 || ^17",
+    "react-dom": "^16.14.0 || ^17"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    },
+    "@types/react-dom": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "200 KB"
+  },
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts",
+      "all-icons.ts"
+    ]
+  }
+}

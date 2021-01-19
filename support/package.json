@@ -75,6 +75,10 @@
           "allowJs": true,
           "noEmit": true
         },
+        "exclude": [
+          "templates",
+          "root"
+        ],
         "include": [
           "./*.js",
           "jest",

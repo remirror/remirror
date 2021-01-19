@@ -1,0 +1,57 @@
+{
+  "name": "@remirror/extension-list",
+  "version": "1.0.0-next.60",
+  "private": true,
+  "description": "The list extensions.",
+  "keywords": [
+    "remirror",
+    "preset",
+    "text-editor"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-list",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-list",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-list.esm.js",
+      "require": "./dist/remirror-extension-list.cjs.js",
+      "browser": "./dist/remirror-extension-list.browser.esm.js",
+      "types": "./dist/remirror-extension-list.cjs.d.ts",
+      "default": "./dist/remirror-extension-list.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-list.cjs.js",
+  "module": "dist/remirror-extension-list.esm.js",
+  "browser": {
+    "./dist/remirror-extension-list.cjs.js": "./dist/remirror-extension-list.browser.cjs.js",
+    "./dist/remirror-extension-list.esm.js": "./dist/remirror-extension-list.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-list.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "peerDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "10 KB"
+  }
+}

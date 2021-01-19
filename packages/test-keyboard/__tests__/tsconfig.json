@@ -32,10 +32,10 @@
       "path": "../../remirror/src"
     },
     {
-      "path": "../../@remirror/core-helpers/src"
+      "path": "../../remirror__core-helpers/src"
     },
     {
-      "path": "../../@remirror/core-types/src"
+      "path": "../../remirror__core-types/src"
     }
   ]
 }

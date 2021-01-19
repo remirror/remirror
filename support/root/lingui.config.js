@@ -12,8 +12,8 @@ module.exports = {
   },
   catalogs: [
     {
-      path: '<rootDir>/packages/@remirror/i18n/src/{locale}/messages',
-      include: ['<rootDir>/packages/@remirror/messages/src/*.ts'],
+      path: '<rootDir>/packages/remirror__i18n/src/{locale}/messages',
+      include: ['<rootDir>/packages/remirror__messages/src/*.ts'],
       exclude: ['**/node_modules/**'],
     },
   ],

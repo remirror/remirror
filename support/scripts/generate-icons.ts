@@ -23,10 +23,10 @@ const coreIcons = new Set(data.icons);
 const remixIconNodeModules = path.resolve(__dirname, '../node_modules/remixicon/icons');
 const remixIconContents = path.join(remixIconNodeModules, './*/*.svg');
 
-const coreIconsPath = baseDir('packages/@remirror/icons/src/core-icons.ts');
-const coreComponentsPath = baseDir('packages/@remirror/react-components/src/icons/core.ts');
-const allIconsPath = baseDir('packages/@remirror/icons/src/all-icons.ts');
-const allComponentsPath = baseDir('packages/@remirror/react-components/src/icons/all.ts');
+const coreIconsPath = baseDir('packages/remirror__icons/src/core-icons.ts');
+const coreComponentsPath = baseDir('packages/remirror__react-components/src/icons/core.ts');
+const allIconsPath = baseDir('packages/remirror__icons/src/all-icons.ts');
+const allComponentsPath = baseDir('packages/remirror__react-components/src/icons/all.ts');
 
 /**
  * Get all the icon files from the provided glob

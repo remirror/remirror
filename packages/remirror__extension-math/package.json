@@ -1,0 +1,55 @@
+{
+  "name": "@remirror/extension-math",
+  "version": "0.0.0",
+  "description": "Add math support to your remirror editor with mathjax",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-math",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-math",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-math.esm.js",
+      "require": "./dist/remirror-extension-math.cjs.js",
+      "browser": "./dist/remirror-extension-math.browser.esm.js",
+      "types": "./dist/remirror-extension-math.cjs.d.ts",
+      "default": "./dist/remirror-extension-math.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-math.cjs.js",
+  "module": "dist/remirror-extension-math.esm.js",
+  "browser": {
+    "./dist/remirror-extension-math.cjs.js": "./dist/remirror-extension-math.browser.cjs.js",
+    "./dist/remirror-extension-math.esm.js": "./dist/remirror-extension-math.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-math.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "peerDependencies": {
+    "@remirror/core": "^1.0.0-next.60",
+    "@remirror/pm": "^1.0.0-next.60"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "5 KB"
+  }
+}

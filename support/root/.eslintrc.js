@@ -12,7 +12,7 @@ let config = {
     'jsx-a11y',
     'simple-import-sort',
 
-    // For `@remirror/dom-components`
+    // For `remirror__lit-components`
     'lit',
     'lit-a11y',
   ],
@@ -27,7 +27,7 @@ let config = {
     'plugin:jest/recommended',
     'plugin:jest/style',
 
-    // For `@remirror/dom-components`
+    // For `remirror__lit-components`
     'plugin:lit/recommended',
     'plugin:lit-a11y/recommended',
   ],
@@ -336,16 +336,16 @@ let config = {
       files: [
         '**/*.d.ts',
         '**/__mocks__/**',
-        'packages/@remirror/i18n/**/*.ts',
+        'packages/remirror__i18n/**/*.ts',
         'docs/**',
         'examples/**',
         'support/**',
         '**/__stories__',
         '**/*.stories.tsx',
         '**/*.stories.ts',
-        'packages/@remirror/cli/**',
-        'packages/@remirror/playground/**',
-        'packages/@remirror/extension-emoji/src/data/*.ts',
+        'packages/remirror__cli/**',
+        'packages/remirror__playground/**',
+        'packages/remirror__extension-emoji/src/data/*.ts',
       ],
       rules: { 'import/no-default-export': 'off' },
     },
@@ -365,8 +365,8 @@ let config = {
       files: [
         'support/scripts/**/*.{js,mjs,ts}',
         'packages/testing/**/*.{js,ts}',
-        'packages/@remirror/playground/**',
-        'packages/@remirror/playground-deprecated/**',
+        'packages/remirror__playground/**',
+        'packages/remirror__playground-deprecated/**',
       ],
       rules: {
         '@typescript-eslint/ban-ts-comment': 'off',
@@ -376,7 +376,7 @@ let config = {
       },
     },
     {
-      files: ['packages/@remirror/i18n/**/*.js'],
+      files: ['packages/remirror__i18n/**/*.js'],
       rules: {
         'eslint-comments/disable-enable-pair': 'off',
         'eslint-comments/no-unlimited-disable': 'off',
@@ -390,8 +390,8 @@ let config = {
         'support/**',
         'packages/testing/**',
         'examples/**',
-        'packages/@remirror/playground/**',
-        'packages/@remirror/core-utils/src/keyboard-utils.ts',
+        'packages/remirror__playground/**',
+        'packages/remirror__core-utils/src/keyboard-utils.ts',
       ],
       rules: {
         '@typescript-eslint/explicit-module-boundary-types': 'off',
@@ -399,21 +399,21 @@ let config = {
       },
     },
     {
-      files: ['packages/@remirror/playground/**', 'packages/testing/**'],
+      files: ['packages/remirror__playground/**', 'packages/testing/**'],
       rules: { '@typescript-eslint/no-var-requires': 'off' },
     },
     {
       files: [
         '**/*extension.ts',
         '**/*extension.tsx',
-        'packages/@remirror/core/src/manager/remirror-manager.ts',
-        'packages/@remirror/core/src/framework/*.ts',
-        'packages/@remirror/core/src/extension/extension-base.ts',
+        'packages/remirror__core/src/manager/remirror-manager.ts',
+        'packages/remirror__core/src/framework/*.ts',
+        'packages/remirror__core/src/extension/extension-base.ts',
       ],
       rules: { '@typescript-eslint/method-signature-style': 'off' },
     },
     {
-      files: ['packages/@remirror/styles/src/*.tsx'],
+      files: ['packages/remirror__styles/src/*.tsx'],
       // Turn these rules off to import `react` for TypeScript
       rules: {
         '@typescript-eslint/no-unused-vars-experimental': 'off',
@@ -423,7 +423,7 @@ let config = {
     {
       files: [
         'examples/with-react-native/**/*.{ts,tsx}',
-        'packages/@remirror/react-native/**/*.{ts,tsx}',
+        'packages/remirror__react-native/**/*.{ts,tsx}',
       ],
       rules: {
         'react-native/no-unused-styles': ['error'],
@@ -482,7 +482,7 @@ if (process.env.FULL_ESLINT_CHECK) {
     },
     overrides: [
       {
-        files: ['./packages/@remirror/es-module-shims'],
+        files: ['./packages/remirror__es-module-shims'],
         rules: { 'import/no-mutable-exports': 'off' },
       },
       {

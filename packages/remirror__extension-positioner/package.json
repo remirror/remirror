@@ -1,0 +1,59 @@
+{
+  "name": "@remirror/extension-positioner",
+  "version": "1.0.0-next.60",
+  "description": "Reposition your elements with every state update.",
+  "keywords": [
+    "remirror",
+    "extension",
+    "positioning",
+    "text-editor"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-positioner",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-positioner",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-positioner.esm.js",
+      "require": "./dist/remirror-extension-positioner.cjs.js",
+      "browser": "./dist/remirror-extension-positioner.browser.esm.js",
+      "types": "./dist/remirror-extension-positioner.cjs.d.ts",
+      "default": "./dist/remirror-extension-positioner.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-positioner.cjs.js",
+  "module": "dist/remirror-extension-positioner.esm.js",
+  "browser": {
+    "./dist/remirror-extension-positioner.cjs.js": "./dist/remirror-extension-positioner.browser.cjs.js",
+    "./dist/remirror-extension-positioner.esm.js": "./dist/remirror-extension-positioner.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-positioner.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0",
+    "@remirror/theme": "1.0.0-next.60",
+    "nanoevents": "^5.1.10"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "peerDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "5 KB"
+  }
+}

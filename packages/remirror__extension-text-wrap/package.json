@@ -1,0 +1,55 @@
+{
+  "name": "@remirror/extension-text-wrap",
+  "version": "0.0.0",
+  "description": "Wrap text based on character input.",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-text-wrap",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-text-wrap",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-text-wrap.esm.js",
+      "require": "./dist/remirror-extension-text-wrap.cjs.js",
+      "browser": "./dist/remirror-extension-text-wrap.browser.esm.js",
+      "types": "./dist/remirror-extension-text-wrap.cjs.d.ts",
+      "default": "./dist/remirror-extension-text-wrap.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-text-wrap.cjs.js",
+  "module": "dist/remirror-extension-text-wrap.esm.js",
+  "browser": {
+    "./dist/remirror-extension-text-wrap.cjs.js": "./dist/remirror-extension-text-wrap.browser.cjs.js",
+    "./dist/remirror-extension-text-wrap.esm.js": "./dist/remirror-extension-text-wrap.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-text-wrap.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "peerDependencies": {
+    "@remirror/core": "^1.0.0-next.60",
+    "@remirror/pm": "^1.0.0-next.60"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "5 KB"
+  }
+}

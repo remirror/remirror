@@ -17,10 +17,10 @@
   "include": ["./"],
   "references": [
     {
-      "path": "../../@remirror/core-constants/src"
+      "path": "../../remirror__core-constants/src"
     },
     {
-      "path": "../../@remirror/core-helpers/src"
+      "path": "../../remirror__core-helpers/src"
     }
   ]
 }

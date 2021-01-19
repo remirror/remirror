@@ -26,63 +26,63 @@ module.exports = {
     '!support/**',
 
     // This is internal code and doesn't affect the end user experience.
-    '!packages/@remirror/playground/**',
+    '!packages/remirror__playground/**',
 
     // Currently can't be tested with JSDOM
-    '!packages/@remirror/extension-epic-mode/**',
+    '!packages/remirror__extension-epic-mode/**',
 
     // Tests written but needs more coverage.
-    '!packages/@remirror/extension-codemirror5/**',
+    '!packages/remirror__extension-codemirror5/**',
 
     // Refactor upcoming for emoji which will change the structure.
-    '!packages/@remirror/extension-emoji/src/data/**',
+    '!packages/remirror__extension-emoji/src/data/**',
 
     // Positions can't be tested properly in JSDOM. This will be addressed again
     // once the project moves to a new unit test runner.
-    '!packages/@remirror/extension-positioner/**',
+    '!packages/remirror__extension-positioner/**',
 
     // Themes may be removed at some point, or heavily refactored.
-    '!packages/@remirror/theme/**',
+    '!packages/remirror__theme/**',
 
     // Tables are still in a very early stage
-    '!packages/@remirror/preset-table/**',
+    '!packages/remirror__preset-table/**',
 
     // There is still al ot of work needed in order to make renderers useful.
-    '!packages/@remirror/react/src/renderers/**',
+    '!packages/remirror__react/src/renderers/**',
 
     // SSR is currently being looked at, starting from e2e tests.
-    '!packages/@remirror/react/src/ssr/**',
+    '!packages/remirror__react/src/ssr/**',
 
     // Still deciding whether to deprecate and replace with `yjs`.
-    '!packages/@remirror/extension-collaboration/**',
+    '!packages/remirror__extension-collaboration/**',
 
     // Still a wip
-    '!packages/@remirror/extension-image/**',
+    '!packages/remirror__extension-image/**',
 
     // Still a wip
-    '!packages/@remirror/preset-embed/**',
+    '!packages/remirror__preset-embed/**',
 
     // Still a wip
-    '!packages/@remirror/preset-list/**',
+    '!packages/remirror__preset-list/**',
 
     // Still a wip
-    '!packages/@remirror/react-components/**',
+    '!packages/remirror__react-components/**',
 
     // Deprecated package
-    '!packages/@remirror/react-social/**',
+    '!packages/remirror__react-social/**',
 
     // Still deciding how best to use this project. It should be moved outside
     // of remirror for simplification.
     '!packages/multishift/**',
 
     // Deprecated package
-    '!packages/@remirror/react-wysiwyg/**',
+    '!packages/remirror__react-wysiwyg/**',
 
     // Deprecated package
-    '!packages/@remirror/showcase/**',
+    '!packages/remirror__showcase/**',
 
     // Still a wip. No tests at the moment due to lack of usage.
-    '!packages/@remirror/cli/**',
+    '!packages/remirror__cli/**',
   ],
   coverageReporters: ['json', 'lcov', 'text-summary', 'clover'],
   collectCoverage: true,

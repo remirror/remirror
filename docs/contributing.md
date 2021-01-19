@@ -203,7 +203,7 @@ pnpm create:package @remirror/extension-chill -- --description "The time to be c
 
 If you prefer not to use the automated method for creating extension the following also works.
 
-1. Copy `support/templates/extension-template` to `packages/@remirror/extension-<name>`.
+1. Copy `support/templates/extension-template` to `packages/remirror__extension-<name>`.
 2. Rename `template`, `Template` and `TEMPLATE` in the new package to `<name>`, `<Name>` and `<NAME>`.
 3. Replace `TEMPLATE_DESCRIPTION` with a suitable description.
 4. Rename the files from `template-` to `<name>-`.

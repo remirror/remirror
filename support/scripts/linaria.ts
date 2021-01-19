@@ -28,7 +28,7 @@ import { baseDir, rm } from './helpers';
  *
  * @param {string[]} paths
  */
-const files = globby.sync(['packages/@remirror/theme/src/*.{ts,tsx}'], {
+const files = globby.sync(['packages/remirror__theme/src/*.{ts,tsx}'], {
   cwd: baseDir(),
   ignore: [
     '**/@remirror/styles',
@@ -49,7 +49,7 @@ const files = globby.sync(['packages/@remirror/theme/src/*.{ts,tsx}'], {
  * The destination of the outputted css, where styles are eventually published
  * from.
  */
-const outputDirectory = baseDir('packages/@remirror/styles');
+const outputDirectory = baseDir('packages/remirror__styles');
 
 /**
  * This regex groups the generated css files from the same package together.
@@ -62,8 +62,8 @@ const groupingRegex = /([\w-]+)\.ts$/;
  *
  * ```json
  * {
- *   "core": ["packages/@remirror/core/src/styles.ts"],
- *   "react-social": ["packages/@remirror/react-social/src/components/social-mentions.tsx"],
+ *   "core": ["packages/remirror__core/src/styles.ts"],
+ *   "react-social": ["packages/remirror__react-social/src/components/social-mentions.tsx"],
  * }
  * ```
  */
@@ -276,7 +276,7 @@ export async function removeGeneratedFiles(): Promise<void> {
  * Copy files from `@remirror/styles` to `remirror/styles`.
  */
 export async function copyFilesToRemirror(): Promise<void> {
-  await cpy(['packages/@remirror/styles/*.css'], 'packages/remirror/styles/');
+  await cpy(['packages/remirror__styles/*.css'], 'packages/remirror/styles/');
 }
 
 /**

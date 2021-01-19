@@ -1,0 +1,58 @@
+{
+  "name": "@remirror/extension-text-color",
+  "version": "0.0.0",
+  "description": "Wraps text with a styled span using the color css property. The name of the wrapper tag should be configurable.",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-text-color",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-text-color",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-text-color.esm.js",
+      "require": "./dist/remirror-extension-text-color.cjs.js",
+      "browser": "./dist/remirror-extension-text-color.browser.esm.js",
+      "types": "./dist/remirror-extension-text-color.cjs.d.ts",
+      "default": "./dist/remirror-extension-text-color.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-text-color.cjs.js",
+  "module": "dist/remirror-extension-text-color.esm.js",
+  "browser": {
+    "./dist/remirror-extension-text-color.cjs.js": "./dist/remirror-extension-text-color.browser.cjs.js",
+    "./dist/remirror-extension-text-color.esm.js": "./dist/remirror-extension-text-color.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-text-color.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "@remirror/i18n": "^1.0.0-next.60",
+    "@remirror/messages": "0.0.0",
+    "@remirror/theme": "^1.0.0-next.60",
+    "color2k": "^1.1.1"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "peerDependencies": {
+    "@remirror/core": "^1.0.0-next.60",
+    "@remirror/pm": "^1.0.0-next.60"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "5 KB"
+  }
+}

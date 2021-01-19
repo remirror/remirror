@@ -16,7 +16,7 @@ I also wanted to give users of all frameworks, the ability to build an editor by
 
 In order to meet my goals, I settled on [ProseMirror](https://prosemirror.net/) as the core editor layer. The second decision was to base the structure of the editor on blocks of functionality called `Extensions`. Each extension would add a slice of beauty to the editor, allowing users to craft their masterpieces.
 
-In this latest version, I believe I'm starting to see these goals come to fruition. Every single part of the editor can be controlled by extensions. For example, the core (`Schema`) is managed by a [built-in extension](https://github.com/remirror/remirror/blob/next/packages/@remirror/core/src/builtins/schema-extension.ts). There's already a huge selection of extensions for users to choose from.
+In this latest version, I believe I'm starting to see these goals come to fruition. Every single part of the editor can be controlled by extensions. For example, the core (`Schema`) is managed by a [built-in extension](https://github.com/remirror/remirror/blob/next/packages/remirror__core/src/builtins/schema-extension.ts). There's already a huge selection of extensions for users to choose from.
 
 And the new API is beautiful. For React, this comes with a slew of drop-in components and hooks. Many more are being worked on. It's almost magical how well it works.
 

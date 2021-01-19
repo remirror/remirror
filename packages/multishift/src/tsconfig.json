@@ -17,10 +17,10 @@
   "include": ["./"],
   "references": [
     {
-      "path": "../../@remirror/core-helpers/src"
+      "path": "../../remirror__core-helpers/src"
     },
     {
-      "path": "../../@remirror/core-types/src"
+      "path": "../../remirror__core-types/src"
     },
     {
       "path": "../../a11y-status/src"

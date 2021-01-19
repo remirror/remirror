@@ -17,7 +17,7 @@
   "include": ["./"],
   "references": [
     {
-      "path": "../../../../packages/@remirror/core-helpers/src"
+      "path": "../../../../packages/remirror__core-helpers/src"
     }
   ]
 }

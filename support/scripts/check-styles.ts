@@ -14,7 +14,7 @@ import { copyFilesToRemirror, getOutput, removeGeneratedFiles, writeOutput } fro
 const force: boolean = cliArgs.force;
 const shouldFix: boolean = cliArgs.fix;
 
-const files = globby.sync(['packages/@remirror/styles/*.css'], { cwd: baseDir() });
+const files = globby.sync(['packages/remirror__styles/*.css'], { cwd: baseDir() });
 
 /**
  * Read all the style files.

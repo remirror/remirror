@@ -1,0 +1,55 @@
+{
+  "name": "@remirror/extension-history",
+  "version": "1.0.0-next.60",
+  "description": "Add undo and redo history to your editor.",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-history",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-history",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-history.esm.js",
+      "require": "./dist/remirror-extension-history.cjs.js",
+      "browser": "./dist/remirror-extension-history.browser.esm.js",
+      "types": "./dist/remirror-extension-history.cjs.d.ts",
+      "default": "./dist/remirror-extension-history.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-history.cjs.js",
+  "module": "dist/remirror-extension-history.esm.js",
+  "browser": {
+    "./dist/remirror-extension-history.cjs.js": "./dist/remirror-extension-history.browser.cjs.js",
+    "./dist/remirror-extension-history.esm.js": "./dist/remirror-extension-history.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-history.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "peerDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "5 KB"
+  }
+}

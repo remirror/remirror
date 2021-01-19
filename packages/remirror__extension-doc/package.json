@@ -1,0 +1,58 @@
+{
+  "name": "@remirror/extension-doc",
+  "version": "1.0.0-next.60",
+  "description": "The root of your text-editor. One doc to rule them all.",
+  "keywords": [
+    "remirror",
+    "extension",
+    "doc",
+    "root",
+    "text-editor"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-doc",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-doc",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-doc.esm.js",
+      "require": "./dist/remirror-extension-doc.cjs.js",
+      "browser": "./dist/remirror-extension-doc.browser.esm.js",
+      "types": "./dist/remirror-extension-doc.cjs.d.ts",
+      "default": "./dist/remirror-extension-doc.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-doc.cjs.js",
+  "module": "dist/remirror-extension-doc.esm.js",
+  "browser": {
+    "./dist/remirror-extension-doc.cjs.js": "./dist/remirror-extension-doc.browser.cjs.js",
+    "./dist/remirror-extension-doc.esm.js": "./dist/remirror-extension-doc.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-doc.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "peerDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "5 KB"
+  }
+}

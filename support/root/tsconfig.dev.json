@@ -16,5 +16,5 @@
     "noEmit": true
   },
   "include": ["packages/*/src", "global.d.ts"],
-  "exclude": ["packages/@remirror/svelte", "**/node_modules/**", "node_modules"]
+  "exclude": ["packages/remirror__svelte", "**/node_modules/**", "node_modules"]
 }

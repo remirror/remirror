@@ -25,49 +25,49 @@
   "include": ["./"],
   "references": [
     {
-      "path": "../../@remirror/core/src"
+      "path": "../../remirror__core/src"
     },
     {
-      "path": "../../@remirror/extension-blockquote/src"
+      "path": "../../remirror__extension-blockquote/src"
     },
     {
-      "path": "../../@remirror/extension-bold/src"
+      "path": "../../remirror__extension-bold/src"
     },
     {
-      "path": "../../@remirror/extension-code-block/src"
+      "path": "../../remirror__extension-code-block/src"
     },
     {
-      "path": "../../@remirror/extension-doc/src"
+      "path": "../../remirror__extension-doc/src"
     },
     {
-      "path": "../../@remirror/extension-heading/src"
+      "path": "../../remirror__extension-heading/src"
     },
     {
-      "path": "../../@remirror/extension-italic/src"
+      "path": "../../remirror__extension-italic/src"
     },
     {
-      "path": "../../@remirror/extension-link/src"
+      "path": "../../remirror__extension-link/src"
     },
     {
-      "path": "../../@remirror/extension-paragraph/src"
+      "path": "../../remirror__extension-paragraph/src"
     },
     {
-      "path": "../../@remirror/extension-text/src"
+      "path": "../../remirror__extension-text/src"
     },
     {
-      "path": "../../@remirror/extension-underline/src"
+      "path": "../../remirror__extension-underline/src"
     },
     {
-      "path": "../../@remirror/pm/src"
+      "path": "../../remirror__pm/src"
     },
     {
-      "path": "../../@remirror/preset-core/src"
+      "path": "../../remirror__preset-core/src"
     },
     {
-      "path": "../../@remirror/preset-react/src"
+      "path": "../../remirror__preset-react/src"
     },
     {
-      "path": "../../@remirror/react/src"
+      "path": "../../remirror__react/src"
     },
     {
       "path": "../../test-keyboard/src"

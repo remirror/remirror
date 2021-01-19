@@ -6,8 +6,8 @@ import path from 'path';
 
 import { baseDir, log } from './helpers';
 
-const SVG_OUTPUT_FOLDER = baseDir('packages/@remirror/extension-emoji/apple/svg');
-const PNG_OUTPUT_FOLDER = baseDir('packages/@remirror/extension-emoji/apple/png');
+const SVG_OUTPUT_FOLDER = baseDir('packages/remirror__extension-emoji/apple/svg');
+const PNG_OUTPUT_FOLDER = baseDir('packages/remirror__extension-emoji/apple/png');
 
 async function writeToOutput(glyph: Glyph) {
   const image = glyph.getImageForSize(256);

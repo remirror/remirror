@@ -582,7 +582,7 @@ async function generatePackageTsConfigs() {
   await Promise.all(promises);
 
   references.sort((a, b) => a.path.localeCompare(b.path));
-  await writeJSON(paths.rootTsconfig, { files: [], references });
+  await writeJSON(paths.rootTsconfig, { include: [], files: [], references });
   filesToPrettify.push(paths.rootTsconfig);
 }
 

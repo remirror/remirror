@@ -1,0 +1,57 @@
+{
+  "name": "@remirror/extension-bold",
+  "version": "1.0.0-next.60",
+  "description": "Make your text bold. Make it courageous.",
+  "keywords": [
+    "remirror",
+    "extension",
+    "bold",
+    "text-editor"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-bold",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-bold",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-bold.esm.js",
+      "require": "./dist/remirror-extension-bold.cjs.js",
+      "browser": "./dist/remirror-extension-bold.browser.esm.js",
+      "types": "./dist/remirror-extension-bold.cjs.d.ts",
+      "default": "./dist/remirror-extension-bold.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-bold.cjs.js",
+  "module": "dist/remirror-extension-bold.esm.js",
+  "browser": {
+    "./dist/remirror-extension-bold.cjs.js": "./dist/remirror-extension-bold.browser.cjs.js",
+    "./dist/remirror-extension-bold.esm.js": "./dist/remirror-extension-bold.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-bold.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
+  },
+  "devDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "peerDependencies": {
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "5 KB"
+  }
+}

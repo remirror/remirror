@@ -16,7 +16,7 @@ import { format, resolveConfig } from 'prettier';
 import { assertGet, ErrorConstant, findMatches, invariant, pascalCase } from 'remirror';
 import sortKeys from 'sort-keys';
 
-import type { DtsCache } from '../../packages/@remirror/playground/src/playground-types';
+import type { DtsCache } from '../../packages/remirror__playground/src/playground-types';
 import { baseDir, formatFiles, log } from './helpers';
 
 log.debug('Launching the `generate:playground` script.');
@@ -352,7 +352,7 @@ async function preloadRequiredLibraries(dtsCache: DtsCache) {
 
   // The list of packages that should be preloaded and the location of their root `*.d.ts` file.
   const preloadList: Array<[ModuleName, AbsolutePath]> = [
-    ['@remirror/dev', baseDir('packages/@remirror/dev/dist/declarations/src')],
+    ['@remirror/dev', baseDir('packages/remirror__dev/dist/declarations/src')],
     ['react', getPackageFolder('@types/react')],
     ['react-dom', getPackageFolder('@types/react-dom')],
     ['prosemirror-view', getPackageFolder('@types/prosemirror-view')],

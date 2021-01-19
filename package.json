@@ -11,7 +11,7 @@
     "build:custom": "pnpm recursive run build:custom",
     "build:dev": "preconstruct dev",
     "build:docs": "run-s docs:sidebar docs:prod docs:redirects",
-    "build:svelte": "manypkg run packages/@remirror/svelte build",
+    "build:svelte": "manypkg run packages/remirror__svelte build",
     "changeset": "changeset",
     "check:pnpm": "node support/scripts/check-pnpm.mjs",
     "checks": "run-s lint typecheck:quick test",
@@ -23,8 +23,8 @@
     "clean:all": "git clean -fdX --exclude='.config.json'",
     "clean:modules": "git clean -fdX packages support",
     "clean:tsconfig": "rimraf packages/**/tsconfig.json",
-    "create:package": "node packages/@remirror/cli/bin.js create",
-    "css:copy": "cpy packages/@remirror/styles/*.css packages/remirror/styles/",
+    "create:package": "node packages/remirror__cli/bin.js create",
+    "css:copy": "cpy packages/remirror__styles/*.css packages/remirror/styles/",
     "css:force": "pnpm ts support/scripts/check-styles.js --force",
     "dev": "preconstruct watch",
     "docs": "pnpm run docs:dev",
@@ -228,8 +228,7 @@
   "preconstruct": {
     "packages": [
       "packages/*",
-      "packages/@remirror/*",
-      "!packages/@remirror/svelte",
+      "!packages/remirror__svelte",
       "support/templates/*"
     ]
   }

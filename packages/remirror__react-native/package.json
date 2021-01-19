@@ -1,0 +1,58 @@
+{
+  "name": "@remirror/react-native",
+  "version": "0.1.0",
+  "description": "React Native support for your remirror editor.",
+  "keywords": [
+    "remirror",
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-native",
+  "bugs": {
+    "url": "https://github.com/remirror/remirror/issues"
+  },
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-native",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com> (https://github.com/ifiokjr)"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-react-native.esm.js",
+      "require": "./dist/remirror-react-native.cjs.js",
+      "browser": "./dist/remirror-react-native.esm.js",
+      "types": "./dist/remirror-react-native.cjs.d.ts",
+      "default": "./dist/remirror-react-native.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-react-native.cjs.js",
+  "module": "dist/remirror-react-native.esm.js",
+  "types": "dist/remirror-react-native.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.5"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.0",
+    "@types/react-native": "^0.63.45",
+    "react": "^17.0.1",
+    "react-native": "^0.63.4",
+    "react-native-builder-bob": "^0.17.1"
+  },
+  "peerDependencies": {
+    "@types/react": "^16.14.0 || ^17",
+    "@types/react-native": "^0.63.34",
+    "react": "^16.14.0 || ^17",
+    "react-native": "^0.63.3"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  }
+}
