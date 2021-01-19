@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useRef } from 'react';
-
 import {
   AnyExtension,
   ErrorConstant,

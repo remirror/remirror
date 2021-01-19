@@ -13,7 +13,6 @@ import type { BabelFileResult, NodePath, PluginObj, PluginPass } from '@babel/co
 import * as Babel from '@babel/standalone';
 import * as t from '@babel/types';
 import registerPromiseWorker from 'promise-worker/register';
-
 import { assert } from '@remirror/core-helpers';
 
 import { EXTERNAL_MODULE_META, INTERNAL_MODULE_META } from './generated/meta';
@@ -198,7 +197,7 @@ function isExternalSource(
     // Ensure that this is a string literal.
     !!source?.isStringLiteral() &&
     // Ignore relative or absolute paths
-    !source.node.value.match(/^(\.\/|\/|https?:\/\/|file:\/\/)/) &&
+    !/^(\.\/|\/|https?:\/\/|file:\/\/)/.test(source.node.value) &&
     // Check that the module is is not one of the internal packages.
     !internalModules.has(source.node.value) &&
     // Check that it is not a subpath of the provided internal modules

@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import useLayoutEffect from 'use-isomorphic-layout-effect';
 import usePrevious from 'use-previous';
-
 import {
   AnyExtension,
   ErrorConstant,

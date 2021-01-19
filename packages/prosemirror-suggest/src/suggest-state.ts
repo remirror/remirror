@@ -1,6 +1,5 @@
 import { PluginKey, Selection, TextSelection } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
-
 import { isFunction, isString, object, sort } from '@remirror/core-helpers';
 
 import {
@@ -118,9 +117,9 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
   get match(): Readonly<SuggestMatch<Schema>> | undefined {
     return this.#next
       ? this.#next
-      : this.#prev && this.#handlerMatches.exit
+      : (this.#prev && this.#handlerMatches.exit
       ? this.#prev
-      : undefined;
+      : undefined);
   }
 
   /**

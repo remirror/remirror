@@ -30,7 +30,6 @@ import {
   useRemirror,
   useRemirrorContext,
 } from 'remirror/react';
-
 import { Icon } from '@remirror/react-components';
 
 type EditorExtensions = WysiwygPreset | CorePreset;

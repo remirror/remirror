@@ -1,5 +1,4 @@
 import type { ComponentType, RefCallback } from 'react';
-
 import type {
   Decoration,
   Dynamic,

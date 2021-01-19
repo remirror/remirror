@@ -1,6 +1,5 @@
 import { readFileSync } from 'fs';
 import sanitizeHtml from 'sanitize-html';
-
 import { environment, isFunction, noop } from '@remirror/core';
 
 /**

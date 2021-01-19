@@ -1,5 +1,4 @@
 import { Box } from 'reakit/Box';
-
 import { CommandUiIcon, isString } from '@remirror/core';
 import { CoreIcon } from '@remirror/icons';
 

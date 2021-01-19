@@ -16,7 +16,6 @@ import {
 } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 import { BoldExtension, createCoreManager, HeadingExtension } from 'remirror/extensions';
-
 import { omit } from '@remirror/core-helpers';
 import { NodeSelection, Selection, TextSelection } from '@remirror/pm/state';
 

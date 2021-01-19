@@ -1,5 +1,4 @@
 import { toHex } from 'color2k';
-
 import {
   ApplySchemaAttributes,
   command,

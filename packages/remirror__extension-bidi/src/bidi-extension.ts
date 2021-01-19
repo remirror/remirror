@@ -1,5 +1,4 @@
 import direction from 'direction';
-
 import type {
   AcceptUndefined,
   CommandFunction,

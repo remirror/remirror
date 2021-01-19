@@ -1,5 +1,4 @@
 import { ContextHook as _, createContextState } from 'create-context-state';
-
 import { I18n, i18n as defaultI18n } from '@remirror/i18n';
 
 /**

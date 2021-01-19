@@ -3,7 +3,6 @@ import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import escapeStringRegex from 'escape-string-regexp';
 import { Moji, SpriteCollection } from 'svgmoji';
-
 import {
   ApplySchemaAttributes,
   command,

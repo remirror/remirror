@@ -13,7 +13,6 @@ import { createPortal } from 'react-dom';
 import { useMenuState } from 'reakit/Menu';
 import { Popover, PopoverState, usePopoverState } from 'reakit/Popover';
 import { Except } from 'type-fest';
-
 import { ExtensionPriority, isEmptyArray } from '@remirror/core';
 import type { PositionerParam } from '@remirror/extension-positioner';
 import { getPositioner } from '@remirror/extension-positioner';

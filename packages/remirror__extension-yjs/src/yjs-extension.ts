@@ -8,7 +8,6 @@ import {
   yUndoPluginKey,
 } from 'y-prosemirror';
 import type { Doc, UndoManager } from 'yjs';
-
 import {
   AcceptUndefined,
   command,

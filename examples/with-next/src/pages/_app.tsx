@@ -1,5 +1,4 @@
 import App from 'next/app';
-
 import { AllStyledComponent } from '@remirror/styles/emotion';
 
 export default class MyApp extends App {

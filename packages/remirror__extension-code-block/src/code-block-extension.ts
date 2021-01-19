@@ -1,5 +1,4 @@
 import refractor from 'refractor/core';
-
 import {
   ApplySchemaAttributes,
   assertGet,

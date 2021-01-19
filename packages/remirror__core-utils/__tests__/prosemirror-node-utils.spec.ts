@@ -9,7 +9,6 @@ import {
   tdEmpty,
   tr as row,
 } from 'jest-prosemirror';
-
 import { TextSelection } from '@remirror/pm/state';
 
 import {

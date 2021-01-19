@@ -11,7 +11,7 @@ expect.addSnapshotSerializer(getSnapshotDiffSerializer());
 expect.extend({ toMatchDiffSnapshot });
 
 if (__E2E__) {
-  jest.setTimeout(120000);
+  jest.setTimeout(120_000);
 }
 
 /* Make unhandledRejection errors easier to debug */

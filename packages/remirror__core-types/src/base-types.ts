@@ -1,7 +1,6 @@
 /* Utility Types */
 
 import type { ConditionalExcept, ConditionalPick } from 'type-fest';
-
 import type { Mark, ProsemirrorNode } from '@remirror/pm';
 
 /**

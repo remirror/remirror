@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 
 import type { LiteralUnion, Primitive } from 'type-fest';
-
 import {
   __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
   ErrorConstant,

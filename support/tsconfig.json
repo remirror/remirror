@@ -12,5 +12,6 @@
     "skipLibCheck": true,
     "allowJs": true
   },
-  "include": ["./*.js", "jest", "root", "scripts"]
+  "include": ["./*.js", "jest", "root", "scripts"],
+  "exclude": ["templates", "root"]
 }

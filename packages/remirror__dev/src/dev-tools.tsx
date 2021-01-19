@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import { ThemeProvider } from '@remirror/react-components';
 
 import { DevStoreProps, DevStoreProvider } from './dev-state';

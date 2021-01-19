@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import Dock from 'react-dock';
 import { Tab, TabList, TabPanel } from 'reakit';
-
 import { CloseLineIcon, DragDropLineIcon } from '@remirror/react-components/all-icons';
 
 import {

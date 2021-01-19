@@ -15,7 +15,6 @@ import {
   useCompositeState,
 } from 'reakit/Composite';
 import { Tooltip, TooltipReference, useTooltipState } from 'reakit/Tooltip';
-
 import { HuePalette, Palette, palette as defaultPalette } from '@remirror/extension-text-color';
 import { useI18n } from '@remirror/react';
 import { ComponentsTheme } from '@remirror/theme';

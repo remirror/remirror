@@ -8,7 +8,6 @@ import '@remirror/es-module-shims';
 
 import { useLayoutEffect, useMemo, useState } from 'react';
 import type { AnyFunction } from 'remirror';
-
 import { debounce as debounceFn } from '@remirror/core-helpers';
 
 import { LOCAL_MODULE_PREFIX, PLAYGROUND_EXPORTS } from './playground-constants';

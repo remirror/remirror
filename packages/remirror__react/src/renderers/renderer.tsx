@@ -1,5 +1,4 @@
 import { ComponentType, FC, Fragment } from 'react';
-
 import { isEmptyArray, isString, object, ObjectMark, RemirrorJSON } from '@remirror/core';
 
 type MarkMap = Partial<Record<string, string | ComponentType<any>>>;

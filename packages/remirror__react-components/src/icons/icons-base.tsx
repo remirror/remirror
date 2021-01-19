@@ -6,7 +6,6 @@
  */
 
 import { createElement, ReactElement, ReactNode, SVGAttributes } from 'react';
-
 import { IconTree } from '@remirror/icons';
 import * as Icons from '@remirror/icons';
 

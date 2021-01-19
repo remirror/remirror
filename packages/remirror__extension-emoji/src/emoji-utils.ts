@@ -1,6 +1,5 @@
 import type { FlatEmoji, Moji } from 'svgmoji';
 import { Blobmoji, Notomoji, Openmoji, Twemoji } from 'svgmoji';
-
 import type {
   AcceptUndefined,
   FromToProps,

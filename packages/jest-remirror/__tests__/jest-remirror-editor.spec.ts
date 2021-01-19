@@ -5,7 +5,6 @@ import {
   LinkExtension,
 } from 'remirror/extensions';
 import { cleanup } from 'testing/react';
-
 import { PlainExtension, prosemirrorNodeToHtml } from '@remirror/core';
 import { NodeSelection } from '@remirror/pm/state';
 

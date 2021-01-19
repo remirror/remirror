@@ -1,5 +1,4 @@
 import escapeStringRegex from 'escape-string-regexp';
-
 import { NULL_CHARACTER } from '@remirror/core-constants';
 import {
   findMatches,

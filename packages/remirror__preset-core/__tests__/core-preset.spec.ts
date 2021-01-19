@@ -1,5 +1,4 @@
 import { hideConsoleError } from 'testing';
-
 import { GapCursorExtension } from '@remirror/extension-gap-cursor';
 
 import { createCoreManager } from '../';

@@ -437,9 +437,9 @@ export function removeMark(props: RemoveMarkProps): CommandFunction {
         props.selection || props.range
           ? getMarkRange(tr.doc.resolve(from), markType) ||
             (isNumber(to) && getMarkRange(tr.doc.resolve(to), markType)) || { from, to }
-          : selection.empty
+          : (selection.empty
           ? getMarkRange(selection.$anchor, markType) ?? { from, to }
-          : { from, to });
+          : { from, to }));
     }
 
     dispatch?.(tr.removeMark(from, isNumber(to) ? to : from, markType));

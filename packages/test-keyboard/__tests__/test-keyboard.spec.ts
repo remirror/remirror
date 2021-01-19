@@ -1,5 +1,4 @@
-import type { KeyboardEventName } from '../';
-import type { SupportedCharacters } from '../';
+import type { KeyboardEventName , SupportedCharacters } from '../';
 import { Keyboard } from '../';
 
 let target: HTMLDivElement;

@@ -3,7 +3,6 @@ import pm, {
   NodeTypeAttributes,
   TaggedProsemirrorNode,
 } from 'prosemirror-test-builder';
-
 import { Cast, isNumber, keys } from '@remirror/core-helpers';
 import type { EditorSchema, ProsemirrorPlugin } from '@remirror/core-types';
 import { GapCursor } from '@remirror/pm/gapcursor';

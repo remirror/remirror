@@ -9,7 +9,6 @@ import {
 } from 'reakit/Form/FormMessage';
 import { unstable_FormRemoveButtonOptions } from 'reakit/Form/FormRemoveButton';
 import { unstable_getIn } from 'reakit/Form/utils/getIn';
-
 import { ComponentsTheme } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';

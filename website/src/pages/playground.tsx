@@ -11,12 +11,11 @@ import AnnouncementBar from '@theme/AnnouncementBar';
 import Navbar from '@theme/Navbar';
 import ThemeProvider from '@theme/ThemeProvider';
 import UserPreferencesProvider from '@theme/UserPreferencesProvider';
-
 import { Playground } from '@remirror/playground';
 
 const PlaygroundPage = (props: any) => {
   const { siteConfig } = useDocusaurusContext();
-  const { favicon, url: siteUrl } = siteConfig!;
+  const { favicon, url: siteUrl } = siteConfig;
   const defaultImage = siteConfig?.themeConfig?.image;
   const { description, image, keywords, permalink, version } = props;
   const metaImage = image || defaultImage;

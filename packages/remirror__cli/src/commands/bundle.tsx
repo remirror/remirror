@@ -11,7 +11,6 @@ import { FC, useEffect } from 'react';
 import useSetState from 'react-use/lib/useSetState';
 import rimraf from 'rimraf';
 import util from 'util';
-
 import { isNumber, uniqueId } from '@remirror/core-helpers';
 
 import { notifyUpdate } from '../utils';
@@ -99,7 +98,7 @@ export function bundleEntryPoint({ source, cwd }: BundleCommandShape): BundleMet
   const tempFileName = 'remirror-webview.js';
   const tempFilePath = path.join(tempDir, tempFileName);
   const outDir = cwd;
-  const isTs = !!source.match(/\.tsx?$/);
+  const isTs = !!/\.tsx?$/.test(source);
   const outFilePath = path.join(outDir, isTs ? 'file.ts' : 'file.js');
 
   // Parcel config

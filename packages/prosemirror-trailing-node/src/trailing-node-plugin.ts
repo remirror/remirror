@@ -1,6 +1,5 @@
 import { NodeType, Schema as EditorSchema } from 'prosemirror-model';
 import { Plugin, PluginKey } from 'prosemirror-state';
-
 import { includes, uniqueArray } from '@remirror/core-helpers';
 
 export interface TrailingNodePluginOptions {

@@ -15,15 +15,15 @@ describe(`absolute units`, () => {
   });
 
   it(`cm unit conversion`, () => {
-    expect(pixels('1cm')).toBe(37.795275590551185);
+    expect(pixels('1cm')).toBe(37.795_275_590_551_185);
   });
 
   it(`mm unit conversion`, () => {
-    expect(pixels('1mm')).toBe(3.7795275590551185);
+    expect(pixels('1mm')).toBe(3.779_527_559_055_118_5);
   });
 
   it(`Q unit conversion`, () => {
-    expect(pixels('1Q')).toBe(0.9448818897637796);
+    expect(pixels('1Q')).toBe(0.944_881_889_763_779_6);
   });
 
   it(`in unit conversion`, () => {
@@ -35,7 +35,7 @@ describe(`absolute units`, () => {
   });
 
   it(`pt unit conversion`, () => {
-    expect(pixels('1pt')).toBe(1.3333333333333333);
+    expect(pixels('1pt')).toBe(1.333_333_333_333_333_3);
   });
 });
 

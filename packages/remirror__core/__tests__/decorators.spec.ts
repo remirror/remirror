@@ -1,5 +1,4 @@
 import { hideConsoleError } from 'testing';
-
 import type { CustomHandler, Dynamic, Handler, Static } from '@remirror/core-types';
 
 import { extension, PlainExtension } from '../';

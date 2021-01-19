@@ -1,5 +1,4 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-
 import { isAllSelection } from '@remirror/core';
 
 import {

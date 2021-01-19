@@ -1,5 +1,4 @@
 import type { ReactElement, ReactNode } from 'react';
-
 import { AnyExtension, isNullOrUndefined } from '@remirror/core';
 import { RemirrorPortals, usePortals } from '@remirror/extension-react-component';
 import { ComponentsTheme } from '@remirror/theme';

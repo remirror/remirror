@@ -1,5 +1,4 @@
 import type { ValueOf } from 'type-fest';
-
 import { pick } from '@remirror/core-helpers';
 import type { GetStaticAndDynamic } from '@remirror/core-types';
 

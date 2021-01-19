@@ -1,5 +1,4 @@
 import { useMemo, useRef } from 'react';
-
 import { isBoolean, MakeOptional, uniqueId } from '@remirror/core';
 import {
   CallbackPositioner,

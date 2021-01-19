@@ -1,7 +1,6 @@
 import { cx } from '@linaria/core';
 import { DialogHTMLProps, DialogOptions } from 'reakit/Dialog/Dialog';
 import { DialogBackdropHTMLProps, DialogBackdropOptions } from 'reakit/Dialog/DialogBackdrop';
-
 import { ComponentsTheme } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';

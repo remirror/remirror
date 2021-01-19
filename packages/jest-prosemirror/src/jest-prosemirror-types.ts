@@ -1,5 +1,4 @@
 import type { TaggedProsemirrorNode } from 'prosemirror-test-builder';
-
 import type { EditorSchema } from '@remirror/core-types';
 import type { EditorView } from '@remirror/pm/view';
 

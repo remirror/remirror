@@ -7,10 +7,10 @@
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__svelte",
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "browser": "./dist/index.mjs",
-      "default": "./dist/index.mjs"
+      "import": "./dist/remirror-svelte.esm.js",
+      "require": "./dist/remirror-svelte.cjs.js",
+      "browser": "./dist/remirror-svelte.esm.js",
+      "default": "./dist/remirror-svelte.esm.js"
     },
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"

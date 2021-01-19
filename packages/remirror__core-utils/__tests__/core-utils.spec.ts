@@ -19,7 +19,6 @@ import {
   ItalicExtension,
 } from 'remirror/extensions';
 import { docNodeBasicJSON } from 'testing';
-
 import { object } from '@remirror/core-helpers';
 import { Mark } from '@remirror/pm/model';
 import { TextSelection } from '@remirror/pm/state';

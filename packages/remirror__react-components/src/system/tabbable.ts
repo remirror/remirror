@@ -1,6 +1,5 @@
 import { cx } from '@linaria/core';
 import { TabbableHTMLProps, TabbableOptions } from 'reakit/Tabbable/Tabbable';
-
 import { ComponentsTheme } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';

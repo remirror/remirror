@@ -18,7 +18,6 @@ import * as SubRemirrorDom from 'remirror/dom';
 import * as SubRemirrorExtensions from 'remirror/extensions';
 import { PlaygroundImports } from 'remirror/playground';
 import * as SubRemirrorReact from 'remirror/react';
-
 import * as RemirrorDev from '@remirror/dev';
 import * as RemirrorPm from '@remirror/pm';
 import * as RemirrorPmDropcursor from '@remirror/pm/dropcursor';

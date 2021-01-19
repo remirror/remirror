@@ -20,7 +20,6 @@ import {
   useMenuState,
 } from 'reakit/Menu';
 import { Tooltip, TooltipReference, useTooltipState } from 'reakit/Tooltip';
-
 import type { AnyExtension, CommandDecoratorMessageProps } from '@remirror/core';
 import { ErrorConstant, includes, invariant, isString } from '@remirror/core';
 import {
@@ -390,9 +389,9 @@ const BaseMenuPane = (props: BaseMenuPaneProps) => {
   const role =
     props.role === 'checkbox'
       ? 'menuitemcheckbox'
-      : props.role === 'radio'
+      : (props.role === 'radio'
       ? 'menuitemradio'
-      : undefined;
+      : undefined);
 
   return (
     <>

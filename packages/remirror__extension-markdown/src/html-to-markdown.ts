@@ -5,7 +5,6 @@
  * default common mark converter.
  */
 import TurndownService from 'turndown';
-
 import { ErrorConstant, invariant, isElementDomNode } from '@remirror/core';
 
 /**

@@ -5,7 +5,6 @@
  */
 
 import type { Delta } from 'jsondiffpatch';
-
 import { EditorState, FromToProps, RemirrorJSON, Shape } from '@remirror/core';
 
 export interface JsonDiffOutput {

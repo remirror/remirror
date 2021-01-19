@@ -14,6 +14,17 @@
     "Christopher Manouvrier <cmanou@mac.com>"
   ],
   "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-sup.esm.js",
+      "require": "./dist/remirror-extension-sup.cjs.js",
+      "browser": "./dist/remirror-extension-sup.browser.esm.js",
+      "types": "./dist/extension-sup.cjs.d.ts",
+      "default": "./dist/remirror-extension-sup.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
   "main": "dist/remirror-extension-sup.cjs.js",
   "module": "dist/remirror-extension-sup.esm.js",
   "browser": {

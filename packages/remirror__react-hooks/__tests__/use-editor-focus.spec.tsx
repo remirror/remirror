@@ -1,10 +1,9 @@
 import { RemirrorTestChain } from 'jest-remirror';
 import { FC } from 'react';
-
+import { act, DefaultEditor, fireEvent, strictRender } from 'testing/react';
 import type { RemirrorManager } from '@remirror/core';
 import { EventsExtension } from '@remirror/extension-events';
 import { createReactManager, ReactExtensions, Remirror } from '@remirror/react';
-import { act, DefaultEditor, fireEvent, strictRender } from 'testing/react';
 
 import { useEditorFocus } from '../use-editor-focus';
 

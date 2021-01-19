@@ -1,6 +1,5 @@
 import { cx } from '@linaria/core';
 import { parse, stringify } from 'querystringify';
-
 import {
   ApplySchemaAttributes,
   CommandFunction,

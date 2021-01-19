@@ -1,5 +1,4 @@
 import { LiteralUnion } from 'type-fest';
-
 import {
   ApplySchemaAttributes,
   command,

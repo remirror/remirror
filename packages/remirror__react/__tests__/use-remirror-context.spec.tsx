@@ -2,7 +2,6 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { RemirrorTestChain } from 'jest-remirror';
 import { FC } from 'react';
 import { BoldExtension } from 'remirror/extensions';
-
 import { act as renderAct, strictRender } from 'testing/react';
 
 import { createReactManager, Remirror, useRemirrorContext } from '../../..';

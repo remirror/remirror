@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react';
-
 import { ExtensionPriority, KeyBindings } from '@remirror/core';
 import {
   MentionAtomChangeHandler,

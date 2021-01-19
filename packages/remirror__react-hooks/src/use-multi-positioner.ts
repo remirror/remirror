@@ -1,6 +1,5 @@
 import { RefCallback, useMemo, useRef, useState } from 'react';
 import useLayoutEffect from 'use-isomorphic-layout-effect';
-
 import { omitUndefined } from '@remirror/core';
 import {
   defaultAbsolutePosition,

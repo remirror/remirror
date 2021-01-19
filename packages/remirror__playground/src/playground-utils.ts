@@ -3,7 +3,6 @@ import babelTraverse, { NodePath } from '@babel/traverse';
 import * as t from '@babel/types';
 import PromiseWorker from 'promise-worker';
 import { PackageJson } from 'type-fest';
-
 import { findMatches } from '@remirror/core-helpers';
 
 import {

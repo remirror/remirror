@@ -1,5 +1,68 @@
 [
   {
+    "name": "a11y-status",
+    "path": "packages/a11y-status/dist/a11y-status.browser.esm.js",
+    "limit": "1 KB",
+    "ignore": [],
+    "running": false
+  },
+  {
+    "name": "create-context-state",
+    "path": "packages/create-context-state/dist/create-context-state.browser.esm.js",
+    "limit": "1 KB",
+    "ignore": ["@types/react", "react"],
+    "running": false
+  },
+  {
+    "name": "multishift",
+    "path": "packages/multishift/dist/multishift.browser.esm.js",
+    "limit": "20 KB",
+    "ignore": ["@types/react", "react"],
+    "running": false
+  },
+  {
+    "name": "prosemirror-paste-rules",
+    "path": "packages/prosemirror-paste-rules/dist/prosemirror-paste-rules.browser.esm.js",
+    "limit": "10 KB",
+    "ignore": [
+      "@types/prosemirror-model",
+      "@types/prosemirror-state",
+      "@types/prosemirror-view",
+      "prosemirror-model",
+      "prosemirror-state",
+      "prosemirror-view"
+    ],
+    "running": false
+  },
+  {
+    "name": "prosemirror-suggest",
+    "path": "packages/prosemirror-suggest/dist/prosemirror-suggest.browser.esm.js",
+    "limit": "10 KB",
+    "ignore": [
+      "@types/prosemirror-model",
+      "@types/prosemirror-state",
+      "@types/prosemirror-view",
+      "prosemirror-model",
+      "prosemirror-state",
+      "prosemirror-view"
+    ],
+    "running": false
+  },
+  {
+    "name": "prosemirror-trailing-node",
+    "path": "packages/prosemirror-trailing-node/dist/prosemirror-trailing-node.browser.esm.js",
+    "limit": "10 KB",
+    "ignore": [
+      "@types/prosemirror-model",
+      "@types/prosemirror-state",
+      "@types/prosemirror-view",
+      "prosemirror-model",
+      "prosemirror-state",
+      "prosemirror-view"
+    ],
+    "running": false
+  },
+  {
     "name": "@remirror/core",
     "path": "packages/remirror__core/dist/remirror-core.browser.esm.js",
     "limit": "40 KB",
@@ -530,69 +593,6 @@
     "path": "packages/remirror__theme/dist/remirror-theme.browser.esm.js",
     "limit": "5 KB",
     "ignore": [],
-    "running": false
-  },
-  {
-    "name": "a11y-status",
-    "path": "packages/a11y-status/dist/a11y-status.browser.esm.js",
-    "limit": "1 KB",
-    "ignore": [],
-    "running": false
-  },
-  {
-    "name": "create-context-state",
-    "path": "packages/create-context-state/dist/create-context-state.browser.esm.js",
-    "limit": "1 KB",
-    "ignore": ["@types/react", "react"],
-    "running": false
-  },
-  {
-    "name": "multishift",
-    "path": "packages/multishift/dist/multishift.browser.esm.js",
-    "limit": "20 KB",
-    "ignore": ["@types/react", "react"],
-    "running": false
-  },
-  {
-    "name": "prosemirror-paste-rules",
-    "path": "packages/prosemirror-paste-rules/dist/prosemirror-paste-rules.browser.esm.js",
-    "limit": "10 KB",
-    "ignore": [
-      "@types/prosemirror-model",
-      "@types/prosemirror-state",
-      "@types/prosemirror-view",
-      "prosemirror-model",
-      "prosemirror-state",
-      "prosemirror-view"
-    ],
-    "running": false
-  },
-  {
-    "name": "prosemirror-suggest",
-    "path": "packages/prosemirror-suggest/dist/prosemirror-suggest.browser.esm.js",
-    "limit": "10 KB",
-    "ignore": [
-      "@types/prosemirror-model",
-      "@types/prosemirror-state",
-      "@types/prosemirror-view",
-      "prosemirror-model",
-      "prosemirror-state",
-      "prosemirror-view"
-    ],
-    "running": false
-  },
-  {
-    "name": "prosemirror-trailing-node",
-    "path": "packages/prosemirror-trailing-node/dist/prosemirror-trailing-node.browser.esm.js",
-    "limit": "10 KB",
-    "ignore": [
-      "@types/prosemirror-model",
-      "@types/prosemirror-state",
-      "@types/prosemirror-view",
-      "prosemirror-model",
-      "prosemirror-state",
-      "prosemirror-view"
-    ],
     "running": false
   },
   {

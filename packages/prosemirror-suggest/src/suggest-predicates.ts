@@ -1,5 +1,4 @@
 import { TextSelection } from 'prosemirror-state';
-
 import { includes, isObject, isString } from '@remirror/core-helpers';
 
 import type {

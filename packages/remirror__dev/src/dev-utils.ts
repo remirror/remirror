@@ -1,6 +1,5 @@
 import { prettyPrint } from 'html';
 import PromiseWorker from 'promise-worker';
-
 import {
   EditorSchema,
   EditorState,

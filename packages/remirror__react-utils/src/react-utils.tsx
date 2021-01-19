@@ -6,7 +6,6 @@ import {
   ReactElement,
   ReactNode,
 } from 'react';
-
 import { ErrorConstant } from '@remirror/core-constants';
 import { invariant, isFunction, isObject, isString } from '@remirror/core-helpers';
 import type { AnyFunction, UnknownShape } from '@remirror/core-types';

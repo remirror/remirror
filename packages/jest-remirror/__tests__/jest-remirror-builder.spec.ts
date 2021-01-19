@@ -1,5 +1,4 @@
 import { schema } from 'jest-prosemirror';
-
 import { clone, keys } from '@remirror/core';
 
 import { TagTracker } from '../';

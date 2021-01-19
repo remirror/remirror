@@ -1,6 +1,5 @@
 import { cx } from '@linaria/core';
 import { SeparatorHTMLProps, SeparatorOptions } from 'reakit/Separator/Separator';
-
 import { ComponentsTheme } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';

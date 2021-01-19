@@ -4,7 +4,6 @@ import type { DependencyList, Dispatch, EffectCallback, MutableRefObject } from 
 import { useEffect, useReducer, useRef } from 'react';
 import useEffectOnce from 'react-use/lib/useEffectOnce';
 import useShallowCompareEffect from 'react-use/lib/useShallowCompareEffect';
-
 import { isEmptyArray } from '@remirror/core-helpers';
 
 import { multishiftReducer } from './multishift-reducer';

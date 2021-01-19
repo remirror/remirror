@@ -52,9 +52,9 @@ export const environment = {
   get isApple(): boolean {
     return environment.isNode
       ? process.platform === 'darwin'
-      : environment.isBrowser
+      : (environment.isBrowser
       ? /Mac|iPod|iPhone|iPad/.test(window.navigator.platform)
-      : false;
+      : false);
   },
 
   /**

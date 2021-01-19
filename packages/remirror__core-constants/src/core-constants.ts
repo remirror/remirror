@@ -356,7 +356,7 @@ export enum ExtensionPriority {
    * A medium priority extension. This is typically all you need to take
    * priority over built in extensions.
    */
-  Medium = 1_000,
+  Medium = 1000,
 
   /**
    * This is the **default** priority for most extensions.

@@ -1,5 +1,4 @@
 import type CodeMirror from 'codemirror';
-
 import type { ProsemirrorAttributes, Static } from '@remirror/core';
 
 export interface CodeMirrorExtensionOptions {

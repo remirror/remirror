@@ -1,5 +1,4 @@
 import type { RefractorSyntax } from 'refractor/core';
-
 import type { AcceptUndefined, ProsemirrorAttributes, Static, StringKey } from '@remirror/core';
 import { ExtensionCodeBlockTheme } from '@remirror/theme';
 

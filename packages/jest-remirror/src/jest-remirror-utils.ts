@@ -1,5 +1,4 @@
 import type { TestEditorViewProps } from 'jest-prosemirror';
-
 import { isObject, isProsemirrorNode, SchemaProps } from '@remirror/core';
 
 import { coerce, offsetTags } from './jest-remirror-builder';

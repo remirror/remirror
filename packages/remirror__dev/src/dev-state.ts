@@ -2,7 +2,6 @@ import { ContextCreatorHelpers, createContextState } from 'create-context-state'
 import { set } from 'idb-keyval';
 import { useMemo } from 'react';
 import { TabStateReturn, useTabState } from 'reakit/Tab';
-
 import {
   EditorState,
   EditorView,
@@ -294,9 +293,7 @@ class DevState {
     const fullDoc = this.context.state.doc;
     const path = generateJsonNodePath(doc, node);
 
-    if (path) {
-    } else {
-    }
+    if (path) {} else {}
   };
 
   selectHistoryItem = (selectedHistoryIndex: number) => {

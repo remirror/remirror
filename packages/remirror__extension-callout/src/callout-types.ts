@@ -1,5 +1,4 @@
 import type { LiteralUnion } from 'type-fest';
-
 import type { ProsemirrorAttributes, Static } from '@remirror/core';
 
 /**

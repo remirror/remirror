@@ -1,5 +1,4 @@
 import type { Except } from 'type-fest';
-
 import type { ExtensionPriority } from '@remirror/core-constants';
 import type {
   AnyConstructor,

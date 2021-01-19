@@ -1,9 +1,8 @@
 import { RemirrorTestChain } from 'jest-remirror';
 import { FC } from 'react';
-
+import { act, DefaultEditor, strictRender } from 'testing/react';
 import type { RemirrorManager } from '@remirror/core';
 import { createReactManager, Remirror } from '@remirror/react';
-import { act, DefaultEditor, strictRender } from 'testing/react';
 
 import { useSuggest, UseSuggestReturn } from '../use-suggest';
 

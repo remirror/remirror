@@ -16,7 +16,6 @@ import {
   createCoreManager,
   HardBreakExtension,
 } from 'remirror/extensions';
-
 import {
   ExtensionPriority,
   htmlToProsemirrorNode,

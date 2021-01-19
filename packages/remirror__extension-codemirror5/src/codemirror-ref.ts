@@ -1,5 +1,4 @@
 import type CodeMirrorNamespace from 'codemirror';
-
 import { object } from '@remirror/core';
 
 type CodeMirrorType = typeof CodeMirrorNamespace;

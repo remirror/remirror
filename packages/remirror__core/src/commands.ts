@@ -112,11 +112,11 @@ export function delayedCommand<Value>({
 export type DelayedPromiseCreator<Value> = (props: CommandFunctionProps) => Promise<Value>;
 
 export class DelayedCommand<Value> {
-  private failureHandlers: Array<CommandFunction<EditorSchema, { error: any }>> = [];
-  private successHandlers: Array<CommandFunction<EditorSchema, { value: Value }>> = [];
-  private validateHandlers: CommandFunction[] = [];
+  private readonly failureHandlers: Array<CommandFunction<EditorSchema, { error: any }>> = [];
+  private readonly successHandlers: Array<CommandFunction<EditorSchema, { value: Value }>> = [];
+  private readonly validateHandlers: CommandFunction[] = [];
 
-  constructor(private promiseCreator: DelayedPromiseCreator<Value>) {}
+  constructor(private readonly promiseCreator: DelayedPromiseCreator<Value>) {}
 
   /**
    * The commands that will immediately be run and used to evaluate whether to

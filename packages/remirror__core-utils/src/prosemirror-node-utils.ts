@@ -1,5 +1,4 @@
 import type { Primitive } from 'type-fest';
-
 import { ErrorConstant } from '@remirror/core-constants';
 import { entries, invariant, isFunction, isString, keys } from '@remirror/core-helpers';
 import type {

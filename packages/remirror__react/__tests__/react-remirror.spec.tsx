@@ -4,9 +4,9 @@ import { BoldExtension, ItalicExtension } from 'remirror/extensions';
 import { docNodeBasicJSON } from 'testing';
 import { fireEvent, strictRender } from 'testing/react';
 
-import { useRemirrorContext } from '../';
-import { createReactManager } from '../';
-import { Remirror } from '../';
+import { createReactManager , Remirror,useRemirrorContext  } from '../';
+
+
 
 test('`Remirror`', () => {
   const TestComponent: FC = () => {

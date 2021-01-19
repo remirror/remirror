@@ -320,6 +320,7 @@ let config = {
         '**/__tests__/**',
         '**/__stories__/**',
         'support/**',
+        'website/**',
         '**/__dts__/**',
         '**/*.test.ts',
       ],
@@ -387,6 +388,7 @@ let config = {
     {
       files: [
         '**/*matchers.ts',
+        'website/**',
         'support/**',
         'packages/testing/**',
         'examples/**',
@@ -460,7 +462,8 @@ if (process.env.FULL_ESLINT_CHECK) {
 
   config = {
     ...config,
-    extends: [...config.extends, 'plugin:import/typescript', 'import'],
+    plugins: [...config.plugins, 'import'],
+    extends: [...config.extends, 'plugin:import/typescript'],
     rules: {
       ...config.rules,
       'import/no-deprecated': 'warn',
@@ -486,7 +489,7 @@ if (process.env.FULL_ESLINT_CHECK) {
         rules: { 'import/no-mutable-exports': 'off' },
       },
       {
-        // parserOptions: { project: [require.resolve('../tsconfig.lint.json')] },
+        parserOptions: { project: [require.resolve('../tsconfig.lint.json')] },
         files: ['**/!(*.{md,mdx})/*.ts', '**/!(*.{md,mdx})/*.tsx'],
         rules,
       },
@@ -495,6 +498,7 @@ if (process.env.FULL_ESLINT_CHECK) {
           '**/__tests__/**',
           '**/__stories__/**',
           'support/**',
+          'website/**',
           '**/__dts__/**',
           '**/*.test.ts',
         ],

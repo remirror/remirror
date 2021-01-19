@@ -4,7 +4,6 @@
 
 import { createCoreManager } from 'remirror/extensions';
 import { createFramework, minDocument } from 'testing';
-
 import { EMPTY_PARAGRAPH_NODE } from '@remirror/core';
 import { EditorState } from '@remirror/pm/state';
 

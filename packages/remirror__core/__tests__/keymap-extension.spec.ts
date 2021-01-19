@@ -1,6 +1,5 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { CodeExtension } from 'remirror/extensions';
-
 import { ExtensionPriority } from '@remirror/core-constants';
 
 import { KeymapExtension } from '../';

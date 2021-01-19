@@ -1,7 +1,6 @@
 import { cx } from '@linaria/core';
 import { PopoverHTMLProps, PopoverOptions } from 'reakit/Popover/Popover';
 import { PopoverArrowHTMLProps, PopoverArrowOptions } from 'reakit/Popover/PopoverArrow';
-
 import { ComponentsTheme } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';

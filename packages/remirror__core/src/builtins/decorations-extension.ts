@@ -394,9 +394,9 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
     const { pos, className, nodeName, id } = placeholder;
     const $pos = isNumber(pos) ? tr.doc.resolve(pos) : tr.selection.$from;
     const found = isNumber(pos)
-      ? $pos.nodeAfter
+      ? ($pos.nodeAfter
         ? { pos, end: $pos.nodeAfter.nodeSize }
-        : undefined
+        : undefined)
       : findNodeAtPosition($pos);
 
     if (!found) {

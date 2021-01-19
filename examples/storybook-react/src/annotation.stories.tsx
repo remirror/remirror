@@ -25,7 +25,6 @@ import {
   useRemirror,
   useRemirrorContext,
 } from 'remirror/react';
-
 import { ExtensionAnnotationMessages as Messages } from '@remirror/messages';
 
 export default { title: 'Annotation Extension' };

@@ -1,6 +1,5 @@
 import { pmBuild } from 'jest-prosemirror';
 import { createCoreManager } from 'remirror/extensions';
-
 import { ExtensionPriority, ExtensionTag } from '@remirror/core-constants';
 import type { ApplySchemaAttributes, NodeExtensionSpec } from '@remirror/core-types';
 import { htmlToProsemirrorNode } from '@remirror/core-utils';

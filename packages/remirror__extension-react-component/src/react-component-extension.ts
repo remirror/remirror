@@ -1,5 +1,4 @@
 import type { ComponentType } from 'react';
-
 import {
   AnyExtension,
   entries,

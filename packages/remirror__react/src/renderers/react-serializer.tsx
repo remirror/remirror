@@ -1,5 +1,4 @@
 import { createElement, Fragment, ReactNode } from 'react';
-
 import {
   AnyExtension,
   DOMOutputSpec,

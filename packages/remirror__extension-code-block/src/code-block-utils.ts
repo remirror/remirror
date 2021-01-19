@@ -1,6 +1,5 @@
 import { cx } from '@linaria/core';
 import refractor, { RefractorNode } from 'refractor/core';
-
 import {
   ApplySchemaAttributes,
   CommandFunction,

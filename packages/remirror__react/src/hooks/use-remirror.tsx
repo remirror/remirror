@@ -1,5 +1,4 @@
 import { useCallback, useMemo, useState } from 'react';
-
 import {
   AnyExtension,
   CreateEditorStateProps,

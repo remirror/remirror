@@ -9,7 +9,6 @@ import { createContextState } from 'create-context-state';
 import type * as Monaco from 'monaco-editor';
 import { relative } from 'path-browserify';
 import { PackageJson } from 'type-fest';
-
 import { assertGet, entries, invariant, pick } from '@remirror/core-helpers';
 
 import { DTS_MODULE_NAMES } from './generated/meta';
@@ -443,7 +442,7 @@ class CodeEditorHelper {
 
           const typed = match ? assertGet(match, 0) : '';
           // Map '.' to './' and '..' to '../' for better autocomplete
-          const prefix = typed === '.' ? './' : typed === '..' ? '../' : typed;
+          const prefix = typed === '.' ? './' : (typed === '..' ? '../' : typed);
           const suggestions: Monaco.languages.CompletionItem[] = [];
 
           for (const file of files) {

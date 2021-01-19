@@ -15,7 +15,6 @@ import {
   shortcut,
   TestEditorView,
 } from 'jest-prosemirror';
-
 import {
   ActiveFromExtensions,
   AnyExtension,

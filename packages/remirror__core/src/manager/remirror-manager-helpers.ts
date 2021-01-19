@@ -1,5 +1,4 @@
 import warning from 'tiny-warning';
-
 import { ErrorConstant } from '@remirror/core-constants';
 import { invariant, isEmptyArray, sort } from '@remirror/core-helpers';
 import type { Dispose, EditorView } from '@remirror/core-types';

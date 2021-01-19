@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react';
-
 import { ExtensionPriority, isEmptyArray, isUndefined } from '@remirror/core';
 import {
   EmojiExtension,

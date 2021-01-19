@@ -1,7 +1,6 @@
 import { createEditor, doc, p } from 'jest-prosemirror';
 import { corePreset, createCoreManager, HeadingExtension } from 'remirror/extensions';
 import { createFramework, hideConsoleError } from 'testing';
-
 import { EMPTY_PARAGRAPH_NODE, ExtensionPriority, ExtensionTag } from '@remirror/core-constants';
 import type {
   Dispose,
@@ -14,9 +13,9 @@ import { Schema } from '@remirror/pm/model';
 import { EditorState, Plugin } from '@remirror/pm/state';
 import { EditorView } from '@remirror/pm/view';
 
-import { NodeViewsExtension } from '../';
-import { NodeExtension, PlainExtension } from '../';
-import { isRemirrorManager, RemirrorManager } from '../';
+import { isRemirrorManager, NodeExtension, NodeViewsExtension , PlainExtension , RemirrorManager } from '../';
+
+
 
 describe('Manager', () => {
   let state: EditorState;

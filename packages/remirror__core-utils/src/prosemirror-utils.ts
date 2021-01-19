@@ -229,9 +229,9 @@ export function findParentNode(props: FindParentNodeProps): FindProsemirrorNodeR
   const { predicate, selection } = props;
   const $pos = isEditorState(selection)
     ? selection.selection.$from
-    : isSelection(selection)
+    : (isSelection(selection)
     ? selection.$from
-    : selection;
+    : selection);
 
   for (let depth = $pos.depth; depth > 0; depth--) {
     const node = $pos.node(depth);
@@ -306,9 +306,9 @@ export function findPositionOfNodeBefore(
 ): FindProsemirrorNodeResult | undefined {
   const $pos = isResolvedPos(value)
     ? value
-    : isSelection(value)
+    : (isSelection(value)
     ? value.$from
-    : value.selection.$from;
+    : value.selection.$from);
 
   if (isNullOrUndefined($pos)) {
     throw new Error('Invalid value passed in.');
@@ -438,9 +438,9 @@ export function findPositionOfNodeAfter(
 ): FindProsemirrorNodeResult | undefined {
   const $pos = isResolvedPos(value)
     ? value
-    : isSelection(value)
+    : (isSelection(value)
     ? value.$from
-    : value.selection.$from;
+    : value.selection.$from);
 
   if (isNullOrUndefined($pos)) {
     throw new Error('Invalid value passed in.');

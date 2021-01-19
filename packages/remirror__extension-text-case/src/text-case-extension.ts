@@ -1,4 +1,3 @@
-import {} from '@remirror/core';
 import {
   ApplySchemaAttributes,
   command,

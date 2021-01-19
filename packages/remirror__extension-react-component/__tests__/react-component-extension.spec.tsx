@@ -1,7 +1,7 @@
 import { extensionValidityTest, RemirrorTestChain } from 'jest-remirror';
 import { ComponentType } from 'react';
 import { createReactManager, Remirror } from 'remirror/react';
-
+import { act, render, strictRender } from 'testing/react';
 import {
   ApplySchemaAttributes,
   ExtensionTag,
@@ -9,7 +9,6 @@ import {
   NodeExtensionSpec,
   setBlockType,
 } from '@remirror/core';
-import { act, render, strictRender } from 'testing/react';
 
 import { ReactComponentExtension } from '..';
 import type { NodeViewComponentProps } from '../node-view-types';

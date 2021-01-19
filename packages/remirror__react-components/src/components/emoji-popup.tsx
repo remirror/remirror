@@ -1,7 +1,6 @@
 import { cx } from 'linaria';
 import { Type, useMultishift } from 'multishift';
 import React, { FC } from 'react';
-
 import { FlatEmojiWithUrl, useEmoji } from '@remirror/react-hooks';
 import { ExtensionEmojiTheme } from '@remirror/theme';
 

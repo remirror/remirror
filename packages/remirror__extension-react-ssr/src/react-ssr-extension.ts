@@ -1,5 +1,4 @@
 import { Children, cloneElement, ComponentType, createElement, JSXElementConstructor } from 'react';
-
 import {
   AnyExtension,
   EditorState,

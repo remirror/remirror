@@ -1,7 +1,6 @@
 import computeScrollIntoView from 'compute-scroll-into-view';
 import type { Dispatch, KeyboardEvent, SyntheticEvent } from 'react';
 import { keyName } from 'w3c-keyname';
-
 import {
   assertGet,
   clamp,
@@ -496,11 +495,11 @@ export function getMostRecentHighlightIndex(lastHighlight: GetLastHighlightProps
   const lastIndex = last(highlightedIndexes);
   return isValidIndex(highlightedGroupEndIndex)
     ? highlightedGroupEndIndex
-    : isValidIndex(highlightedGroupStartIndex)
+    : (isValidIndex(highlightedGroupStartIndex)
     ? highlightedGroupStartIndex
     : isValidIndex(lastIndex)
     ? lastIndex
-    : -1;
+    : -1);
 }
 
 /**
@@ -895,17 +894,17 @@ export function getChangesFromMenuKeyDown<Item = any>({
       circular: false,
       steps: isDown ? 1 : -1,
     });
-    const endIndex = !metaKeyPressed ? index : isDown ? items.length - 1 : 0;
+    const endIndex = !metaKeyPressed ? index : (isDown ? items.length - 1 : 0);
     const changes = isValidIndex(state.highlightedGroupStartIndex)
       ? {
           highlightedGroupEndIndex: endIndex,
         }
-      : isValidIndex(mostRecentHighlightIndex)
+      : (isValidIndex(mostRecentHighlightIndex)
       ? {
           highlightedGroupStartIndex: mostRecentHighlightIndex,
           highlightedGroupEndIndex: endIndex,
         }
-      : { highlightedGroupStartIndex: index, highlightedGroupEndIndex: endIndex };
+      : { highlightedGroupStartIndex: index, highlightedGroupEndIndex: endIndex });
 
     return omitUnchangedState(changes, params);
   }
@@ -969,7 +968,7 @@ export function getChangesFromToggleButtonKeyDown<Item = any>({
             highlightedIndexes: getHighlightedIndexOnOpen(
               props,
               state,
-              isNext ? 1 : isPrev ? -1 : 0,
+              isNext ? 1 : (isPrev ? -1 : 0),
               getItemId,
             ),
           }

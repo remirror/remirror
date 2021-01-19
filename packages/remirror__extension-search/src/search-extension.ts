@@ -1,8 +1,8 @@
 import { cx } from '@linaria/core';
 import escapeStringRegexp from 'escape-string-regexp';
-
 import {
   assertGet,
+  command,
   CommandFunction,
   CreateExtensionPlugin,
   DispatchFunction,
@@ -15,15 +15,14 @@ import {
   isNumber,
   isSelectionEmpty,
   isString,
+  keyBinding,
   KeyBindingCommandFunction,
+  KeyBindingProps,
+  NamedShortcut,
   PlainExtension,
   ProsemirrorNode,
   Static,
   Transaction,
-  command,
-  keyBinding,
-  KeyBindingProps,
-  NamedShortcut,
 } from '@remirror/core';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
 
@@ -446,12 +445,12 @@ export const rotateHighlightedIndex = (props: RotateHighlightedIndexProps): numb
   const { direction, resultsLength, previousIndex } = props;
 
   return direction === 'next'
-    ? previousIndex + 1 > resultsLength - 1
+    ? (previousIndex + 1 > resultsLength - 1
       ? 0
-      : previousIndex + 1
-    : previousIndex - 1 < 0
+      : previousIndex + 1)
+    : (previousIndex - 1 < 0
     ? resultsLength - 1
-    : previousIndex - 1;
+    : previousIndex - 1);
 };
 
 declare global {

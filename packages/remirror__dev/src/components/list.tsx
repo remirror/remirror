@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { useCallback, useState } from 'react';
-
 import { assert, isArray, noop } from '@remirror/core-helpers';
 import { Icon } from '@remirror/react-components';
 
@@ -35,9 +34,9 @@ export const ListItem = styled.div<ListItemProps>`
   background: ${(props) =>
     props.background
       ? props.background(props)
-      : props.isSelected
+      : (props.isSelected
       ? mainTheme.main40
-      : 'transparent'};
+      : 'transparent')};
 
   &:first-child {
     border-top: none;

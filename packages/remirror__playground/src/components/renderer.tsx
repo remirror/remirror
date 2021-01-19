@@ -7,7 +7,6 @@
 
 import styled from '@emotion/styled';
 import { FC, Fragment, useEffect, useLayoutEffect, useRef, useState } from 'react';
-
 import { assert, isString } from '@remirror/core-helpers';
 
 import {

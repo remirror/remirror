@@ -1,6 +1,5 @@
 import { cx } from '@linaria/core';
 import { InputHTMLProps, InputOptions } from 'reakit/Input/Input';
-
 import { ComponentsTheme } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';

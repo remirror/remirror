@@ -1,8 +1,7 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
+import { hideConsoleError } from 'testing';
 import { WebrtcProvider } from 'y-webrtc';
 import { Doc } from 'yjs';
-
-import { hideConsoleError } from 'testing';
 
 import { defaultDestroyProvider, YjsExtension, YjsOptions } from '../..';
 

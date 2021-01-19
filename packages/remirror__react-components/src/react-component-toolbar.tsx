@@ -19,7 +19,6 @@ import {
 import { Tooltip, TooltipReference, useTooltipState } from 'reakit/Tooltip';
 import { VisuallyHidden } from 'reakit/VisuallyHidden';
 import { Except } from 'type-fest';
-
 import {
   AnyExtension,
   CommandDecoratorMessageProps,

@@ -1,5 +1,5 @@
-import { doc, p, prosemirrorSerializer, schema } from '..';
-import { createEditor } from '../';
+import { createEditor,doc, p, prosemirrorSerializer, schema  } from '..';
+
 
 test('serializer', () => {
   const { test: t } = prosemirrorSerializer;

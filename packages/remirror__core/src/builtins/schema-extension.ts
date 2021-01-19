@@ -720,7 +720,7 @@ function getIdentifiers(props: GetIdentifiersProps): readonly string[] {
 
   // Collect the array of names that are supported.
   const acceptableNames =
-    type === 'mark' ? markNames : type === 'node' ? nodeNames : [...markNames, ...nodeNames];
+    type === 'mark' ? markNames : (type === 'node' ? nodeNames : [...markNames, ...nodeNames]);
 
   // Check if the name is valid
   const isNameValid = (name: string) =>

@@ -1,5 +1,4 @@
 import { ComponentType, FunctionComponent, RefCallback } from 'react';
-
 import {
   Decoration,
   EditorView,

@@ -1,5 +1,4 @@
 import { createNanoEvents, Unsubscribe } from 'nanoevents';
-
 import {
   EditorState,
   EditorViewProps,

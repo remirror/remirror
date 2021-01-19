@@ -1,5 +1,4 @@
 import { collab, getVersion, receiveTransaction, sendableSteps } from 'prosemirror-collab';
-
 import {
   CommandFunction,
   debounce,
