@@ -40,11 +40,6 @@ export function outerHtml(selector: string) {
 }
 
 /**
- * Skips the test on Firefox.
- */
-export const skipTestOnFirefox = getBrowserName() === 'firefox' ? test.skip : test;
-
-/**
  * Creates an array of length `length` `and transforms each index value with the provided function.
  *
  * @param length - the length of the created array
@@ -146,7 +141,7 @@ export async function goto(url = ''): Promise<Response | null> {
  * Retrieve the browser name from the environment
  */
 export function getBrowserName(): PlaywrightBrowserName {
-  return process.env.REMIRROR_E2E_BROWSER ?? 'chromium';
+  return process.env.E2E_BROWSER ?? 'chromium';
 }
 
 /**

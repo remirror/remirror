@@ -55,8 +55,8 @@ jobs:
 
       - name: ${{ matrix.server }} e2e - ${{ matrix.browser }} - ${{matrix.mode}}
         env:
-          REMIRROR_E2E_ENVIRONMENT: playwright
-          REMIRROR_E2E_SERVER: ${{matrix.server}}
-          REMIRROR_E2E_BROWSER: ${{matrix.browser}}
-          REMIRROR_E2E_MODE: ${{matrix.mode}}
+          E2E_ENVIRONMENT: playwright
+          E2E_SERVER: ${{matrix.server}}
+          E2E_BROWSER: ${{matrix.browser}}
+          E2E_MODE: ${{matrix.mode}}
         run: pnpm e2e

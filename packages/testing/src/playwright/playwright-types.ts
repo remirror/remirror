@@ -40,16 +40,16 @@ declare global {
 
   namespace NodeJS {
     interface ProcessEnv {
-      REMIRROR_E2E_BROWSER?: PlaywrightBrowserName;
-      REMIRROR_E2E_MODE?: 'development' | 'production';
-      REMIRROR_E2E_SERVER?: TestServerName;
-      REMIRROR_E2E_ENVIRONMENT?: TestEnvironment;
-      REMIRROR_E2E_DEBUG?: string;
-      REMIRROR_E2E_COVERAGE?: string;
+      E2E_BROWSER?: PlaywrightBrowserName;
+      E2E_MODE?: 'development' | 'production';
+      E2E_SERVER?: TestServerName;
+      E2E_ENVIRONMENT?: TestEnvironment;
+      E2E_DEBUG?: string;
+      E2E_COVERAGE?: string;
       /**
        * When set only run the most basic of tests.
        */
-      REMIRROR_E2E_BASIC?: string;
+      E2E_BASIC?: string;
     }
   }
 }

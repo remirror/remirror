@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Positioner Bubble menu should show the bubble menu 1`] = `
+<span data-id="remirror-positioner-widget"
+      role="presentation"
+      contenteditable="false"
+      class="ProseMirror-widget"
+>
+  <div style="top: 33px; left: 71.1094px; position: absolute; border: 1px solid black; white-space: pre-line; background: white;">
+    This is a sample text
+  </div>
+</span>
+<p class>
+  This is text
+  <span style="background: rgb(215, 215, 255);">
+    This is
+  </span>
+  <span style="background: rgb(175, 175, 255);">
+    a
+  </span>
+  <span style="background: rgb(135, 135, 255);">
+    sample
+  </span>
+  <span style="background: rgb(175, 175, 255);">
+    text
+  </span>
+</p>
+`;

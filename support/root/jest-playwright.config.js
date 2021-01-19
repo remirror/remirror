@@ -1,12 +1,10 @@
-const {
-  REMIRROR_E2E_DEBUG,
-  REMIRROR_E2E_COVERAGE,
-  REMIRROR_E2E_BROWSER = 'chromium',
-} = process.env;
+const { E2E_DEBUG, E2E_COVERAGE, E2E_BROWSER = 'chromium' } = process.env;
 
-const browsers = REMIRROR_E2E_BROWSER.split(',');
-const collectCoverage = REMIRROR_E2E_COVERAGE === 'true';
-const debug = REMIRROR_E2E_DEBUG === 'true';
+const browsers = E2E_BROWSER.split(',');
+const collectCoverage = E2E_COVERAGE === 'true';
+const debug = E2E_DEBUG === 'true';
+
+console.log('loaded config here', __dirname);
 
 module.exports = {
   launch: {
