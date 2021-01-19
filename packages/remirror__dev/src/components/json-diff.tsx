@@ -84,7 +84,7 @@ function parseTextDiff(textDiff: string) {
   const diffByLines = textDiff.split(/\n/gm).slice(1);
 
   return diffByLines.map((line) => {
-    const type = line.startsWith('-') ? 'delete' : (line.startsWith('+') ? 'add' : 'raw');
+    const type = line.startsWith('-') ? 'delete' : line.startsWith('+') ? 'add' : 'raw';
 
     return { [type]: replaceSpacesWithNonBreakingSpace(line.slice(1)) };
   });

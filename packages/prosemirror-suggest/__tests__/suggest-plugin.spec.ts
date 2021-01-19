@@ -2,8 +2,7 @@ import { createEditor, doc, h1, p, strong } from 'jest-prosemirror';
 import { Transaction } from 'prosemirror-state';
 
 import type { SuggestChangeHandler } from '../';
-import { addSuggester, ChangeReason, ExitReason,suggest  } from '../';
-
+import { addSuggester, ChangeReason, ExitReason, suggest } from '../';
 
 describe('suggester', () => {
   it('should call `onChange`', () => {

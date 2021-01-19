@@ -157,9 +157,9 @@ export function InlineNode(props) {
   const marks =
     node.marks.length === 1
       ? ` - [${node.marks[0].type.name}]`
-      : (node.marks.length > 1
+      : node.marks.length > 1
       ? ` - [${node.marks.length} marks]`
-      : '');
+      : '';
   return (
     <InlineNodeView onClick={() => props.onNodeSelected({ node })} bg={bg}>
       {index === 0 ? <Side>{startPos}</Side> : null}

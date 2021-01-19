@@ -131,9 +131,9 @@ export const HistoryTab = (): JSX.Element => {
           customItemBackground={(props) =>
             props.isSelected
               ? mainTheme.main40
-              : (props.isPrevious
+              : props.isPrevious
               ? mainTheme.main20
-              : 'transparent')
+              : 'transparent'
           }
           onListItemClick={(item) => selectHistoryItem(item.index)}
           onListItemDoubleClick={(item) => rollbackHistory(item.index)}

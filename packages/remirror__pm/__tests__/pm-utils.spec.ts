@@ -1,7 +1,6 @@
 import { createEditor, doc, p } from 'jest-prosemirror';
 
-import { chainableEditorState,EditorState  } from '../';
-
+import { chainableEditorState, EditorState } from '../';
 
 describe('chainableEditorState', () => {
   it('passes `instanceof` checks', () => {

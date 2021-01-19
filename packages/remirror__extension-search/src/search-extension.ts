@@ -445,12 +445,12 @@ export const rotateHighlightedIndex = (props: RotateHighlightedIndexProps): numb
   const { direction, resultsLength, previousIndex } = props;
 
   return direction === 'next'
-    ? (previousIndex + 1 > resultsLength - 1
+    ? previousIndex + 1 > resultsLength - 1
       ? 0
-      : previousIndex + 1)
-    : (previousIndex - 1 < 0
+      : previousIndex + 1
+    : previousIndex - 1 < 0
     ? resultsLength - 1
-    : previousIndex - 1);
+    : previousIndex - 1;
 };
 
 declare global {

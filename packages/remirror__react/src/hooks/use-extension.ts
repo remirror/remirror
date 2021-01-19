@@ -106,9 +106,9 @@ export function useExtension<Type extends AnyExtensionConstructor>(
   const extension = useMemo(() => getExtension(Constructor), [Constructor, getExtension]);
   const deps = isFunction(optionsOrCallback)
     ? [extension, ...dependencies]
-    : (optionsOrCallback
+    : optionsOrCallback
     ? [extension, ...Object.values(optionsOrCallback)]
-    : []);
+    : [];
 
   // Handle the case where an options object is passed in.
   useEffectWithWarning(() => {

@@ -13,9 +13,13 @@ import { Schema } from '@remirror/pm/model';
 import { EditorState, Plugin } from '@remirror/pm/state';
 import { EditorView } from '@remirror/pm/view';
 
-import { isRemirrorManager, NodeExtension, NodeViewsExtension , PlainExtension , RemirrorManager } from '../';
-
-
+import {
+  isRemirrorManager,
+  NodeExtension,
+  NodeViewsExtension,
+  PlainExtension,
+  RemirrorManager,
+} from '../';
 
 describe('Manager', () => {
   let state: EditorState;

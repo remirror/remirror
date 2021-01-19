@@ -19,7 +19,7 @@
       "import": "./dist/remirror-extension-sup.esm.js",
       "require": "./dist/remirror-extension-sup.cjs.js",
       "browser": "./dist/remirror-extension-sup.browser.esm.js",
-      "types": "./dist/extension-sup.cjs.d.ts",
+      "types": "./dist/remirror-extension-sup.cjs.d.ts",
       "default": "./dist/remirror-extension-sup.esm.js"
     },
     "./package.json": "./package.json",
@@ -31,20 +31,21 @@
     "./dist/remirror-extension-sup.cjs.js": "./dist/remirror-extension-sup.browser.cjs.js",
     "./dist/remirror-extension-sup.esm.js": "./dist/remirror-extension-sup.browser.esm.js"
   },
-  "types": "dist/extension-sup.cjs.d.ts",
+  "types": "dist/remirror-extension-sup.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.5"
+    "@babel/runtime": "^7.12.5",
+    "@remirror/messages": "0.0.0"
   },
   "devDependencies": {
     "@remirror/core": "1.0.0-next.60",
     "@remirror/pm": "1.0.0-next.60"
   },
   "peerDependencies": {
-    "@remirror/core": "*",
-    "@remirror/pm": "*"
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
   },
   "publishConfig": {
     "access": "public"

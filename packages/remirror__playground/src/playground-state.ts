@@ -442,7 +442,7 @@ class CodeEditorHelper {
 
           const typed = match ? assertGet(match, 0) : '';
           // Map '.' to './' and '..' to '../' for better autocomplete
-          const prefix = typed === '.' ? './' : (typed === '..' ? '../' : typed);
+          const prefix = typed === '.' ? './' : typed === '..' ? '../' : typed;
           const suggestions: Monaco.languages.CompletionItem[] = [];
 
           for (const file of files) {

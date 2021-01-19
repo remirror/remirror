@@ -12,8 +12,7 @@ import { BoldExtension, ItalicExtension } from 'remirror/extensions';
 import { act, fireEvent, render, strictRender } from 'testing/react';
 
 import type { ReactFrameworkOutput } from '../';
-import { createReactManager,Remirror, useManager, useRemirrorContext  } from '../';
-
+import { createReactManager, Remirror, useManager, useRemirrorContext } from '../';
 
 const label = 'Remirror editor';
 

@@ -1587,22 +1587,26 @@ importers:
   packages/remirror__extension-sub:
     dependencies:
       '@babel/runtime': 7.12.5
+      '@remirror/messages': link:../remirror__messages
     devDependencies:
       '@remirror/core': link:../remirror__core
       '@remirror/pm': link:../remirror__pm
     specifiers:
       '@babel/runtime': ^7.12.5
       '@remirror/core': 1.0.0-next.60
+      '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
   packages/remirror__extension-sup:
     dependencies:
       '@babel/runtime': 7.12.5
+      '@remirror/messages': link:../remirror__messages
     devDependencies:
       '@remirror/core': link:../remirror__core
       '@remirror/pm': link:../remirror__pm
     specifiers:
       '@babel/runtime': ^7.12.5
       '@remirror/core': 1.0.0-next.60
+      '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
   packages/remirror__extension-tables:
     dependencies:
@@ -2852,6 +2856,9 @@ packages:
     bundledDependencies:
       - jsonschema
       - semver
+    dependencies:
+      jsonschema: 1.4.0
+      semver: 7.3.4
     dev: false
     engines:
       node: '>= 10.13.0 <13 || >=13.7.0'
@@ -2875,6 +2882,7 @@ packages:
       - semver
     dependencies:
       '@aws-cdk/cloud-assembly-schema': 1.85.0
+      semver: 7.3.4
     dev: false
     engines:
       node: '>= 10.13.0 <13 || >=13.7.0'
@@ -2889,6 +2897,8 @@ packages:
   /@aws-cdk/yaml-cfn/1.85.0:
     bundledDependencies:
       - yaml
+    dependencies:
+      yaml: 1.10.0
     dev: false
     engines:
       node: '>= 10.13.0 <13 || >=13.7.0'
@@ -18532,6 +18542,7 @@ packages:
     resolution:
       integrity: sha512-hk/69oAeaIzchq/v3lS50PXuzn5O2ynldopMC+SWBql7J2WtdptfB9dy8Y7+Og5rPkTCpn83zTiO8FMcqlXJ/g==
   /jsondiffpatch/0.4.1:
+    bundledDependencies: []
     dependencies:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
@@ -18562,6 +18573,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-LHS27kHZPKUbe1qu6PUDYx0lKnM=
+  /jsonschema/1.4.0:
+    dev: false
+    resolution:
+      integrity: sha512-/YgW6pRMr6M7C+4o8kS+B/2myEpHCrxO4PEWnqJNBFMjn7EWXqlQ4tGwL6xTHeRplwuZmcAncdvfOad1nT2yMw==
   /jsonwebtoken/8.5.1:
     dependencies:
       jws: 3.2.2

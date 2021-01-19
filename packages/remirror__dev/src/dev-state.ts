@@ -293,7 +293,9 @@ class DevState {
     const fullDoc = this.context.state.doc;
     const path = generateJsonNodePath(doc, node);
 
-    if (path) {} else {}
+    if (path) {
+    } else {
+    }
   };
 
   selectHistoryItem = (selectedHistoryIndex: number) => {

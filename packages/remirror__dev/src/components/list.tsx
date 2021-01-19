@@ -34,9 +34,9 @@ export const ListItem = styled.div<ListItemProps>`
   background: ${(props) =>
     props.background
       ? props.background(props)
-      : (props.isSelected
+      : props.isSelected
       ? mainTheme.main40
-      : 'transparent')};
+      : 'transparent'};
 
   &:first-child {
     border-top: none;

@@ -16,6 +16,8 @@ export * as ExtensionItalicMessages from './extension-italic-messages';
 export * as ExtensionListMessages from './extension-list-messages';
 export * as ExtensionParagraphMessages from './extension-paragraph-messages';
 export * as ExtensionStrikeMessages from './extension-strike-messages';
+export * as ExtensionSubMessages from './extension-sub-messages';
+export * as ExtensionSupMessages from './extension-sup-messages';
 export * as ExtensionTablesMessages from './extension-tables-messages';
 export * as ExtensionTextCaseMessages from './extension-text-case-messages';
 export * as ExtensionTextColorMessages from './extension-text-color-messages';

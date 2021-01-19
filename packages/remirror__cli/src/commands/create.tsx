@@ -50,9 +50,9 @@ export class CreateCommand extends BaseCommand {
 
     const template: keyof typeof templateTransformations = this.name.startsWith('@remirror/preset-')
       ? ('preset-template' as const)
-      : (this.name.startsWith('@remirror/extension-')
+      : this.name.startsWith('@remirror/extension-')
       ? ('extension-template' as const)
-      : ('minimal-template' as const));
+      : ('minimal-template' as const);
 
     createPackage(template, this);
   }

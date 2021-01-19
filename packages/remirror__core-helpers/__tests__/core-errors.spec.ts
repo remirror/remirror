@@ -1,8 +1,7 @@
 import { hideConsoleError } from 'testing';
 import { ErrorConstant } from '@remirror/core-constants';
 
-import { freeze,invariant, RemirrorError  } from '../';
-
+import { freeze, invariant, RemirrorError } from '../';
 
 const env = process.env.NODE_ENV;
 

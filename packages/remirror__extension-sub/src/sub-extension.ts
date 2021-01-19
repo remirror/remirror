@@ -1,21 +1,32 @@
 import {
   ApplySchemaAttributes,
+  command,
   CommandFunction,
-  extensionDecorator,
+  extension,
   ExtensionTag,
-  KeyBindings,
+  keyBinding,
+  KeyBindingProps,
   MarkExtension,
   MarkExtensionSpec,
+  NamedShortcut,
   toggleMark,
 } from '@remirror/core';
+import { ExtensionSubMessages as Messages } from '@remirror/messages';
 
-@extensionDecorator({})
+const toggleSubscriptOptions: Remirror.CommandDecoratorOptions = {
+  icon: 'subscript',
+  label: ({ t }) => t(Messages.LABEL),
+};
+
+@extension({})
 export class SubExtension extends MarkExtension {
   get name() {
     return 'sub' as const;
   }
 
-  readonly tags = [ExtensionTag.FontStyle];
+  createTags() {
+    return [ExtensionTag.FormattingMark, ExtensionTag.FontStyle];
+  }
 
   createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
     return {
@@ -30,19 +41,21 @@ export class SubExtension extends MarkExtension {
     };
   }
 
-  createKeymap(): KeyBindings {
-    return {
-      'Ctrl-Cmd--': toggleMark({ type: this.type }),
-    };
+  /**
+   * Toggle the subscript formatting of the selected text.
+   */
+  @command(toggleSubscriptOptions)
+  toggleSubscript(): CommandFunction {
+    return toggleMark({ type: this.type });
   }
 
-  createCommands() {
-    return {
-      /**
-       * Toggle the subscript formatting of the selected text.
-       */
-      toggleSub: (): CommandFunction => toggleMark({ type: this.type }),
-    };
+  /**
+   * Attach the keyboard shortcut for making text bold to this mark and also to
+   * the `toggleBold` command.
+   */
+  @keyBinding({ shortcut: NamedShortcut.Subscript, command: 'toggleSubscript' })
+  shortcut(props: KeyBindingProps): boolean {
+    return this.toggleSubscript()(props);
   }
 }
 

@@ -15,7 +15,7 @@ describe('commands', () => {
 
   it('#toggleSup', () => {
     add(doc(p('Hello <start>sup<end>, lets dance.')));
-    commands.toggleSup();
+    commands.toggleSuperscript();
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
@@ -30,7 +30,7 @@ describe('commands', () => {
     `);
     expect(view.state.doc).toEqualRemirrorDocument(doc(p('Hello ', sup('sup'), ', lets dance.')));
 
-    commands.toggleSup();
+    commands.toggleSuperscript();
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         Hello

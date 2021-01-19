@@ -389,9 +389,9 @@ const BaseMenuPane = (props: BaseMenuPaneProps) => {
   const role =
     props.role === 'checkbox'
       ? 'menuitemcheckbox'
-      : (props.role === 'radio'
+      : props.role === 'radio'
       ? 'menuitemradio'
-      : undefined);
+      : undefined;
 
   return (
     <>
