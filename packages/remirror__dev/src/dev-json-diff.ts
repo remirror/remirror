@@ -1,5 +1,5 @@
 import type { DiffPatcher } from 'jsondiffpatch';
-import { uniqueId } from '@remirror/core-helpers';
+import { uniqueId } from '@remirror/core';
 
 import { JsonDiffInput, JsonDiffOutput, JsonDiffWorkerInput } from './dev-types';
 import { IdleScheduler, TypedPromiseWorker } from './dev-utils';

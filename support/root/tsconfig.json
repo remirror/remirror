@@ -357,7 +357,13 @@
       "path": "packages/remirror__extension-strike/src"
     },
     {
+      "path": "packages/remirror__extension-sub/__tests__"
+    },
+    {
       "path": "packages/remirror__extension-sub/src"
+    },
+    {
+      "path": "packages/remirror__extension-sup/__tests__"
     },
     {
       "path": "packages/remirror__extension-sup/src"
