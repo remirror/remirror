@@ -1,6 +1,6 @@
 import assert from 'assert';
 import chalk from 'chalk';
-import { Command } from 'clipanion';
+import { Command, Option } from 'clipanion';
 import cpy from 'cpy';
 import execa from 'execa';
 import { promises as fs } from 'fs';
@@ -8,12 +8,13 @@ import globby from 'globby';
 import path from 'path';
 import { camelCase, invariant, pascalCase } from '@remirror/core-helpers';
 
-import { BaseCommand, CommandString, GetShapeOfCommandData } from './base';
+import { BaseCommand, CommandString, GetShapeOfCommandData } from './base-command';
 
 /**
  * Create a new `@remirror` package.
  */
 export class CreateCommand extends BaseCommand {
+  static paths = [['create'], ['c']];
   static usage = Command.Usage({
     description: 'Create a package from a template directory.',
     category: 'Create',
@@ -36,13 +37,17 @@ export class CreateCommand extends BaseCommand {
    *
    * e.g '@remirror/extension-amazing'
    */
-  @Command.String({ required: true })
-  name: CommandString = '';
+  name: CommandString = Option.String();
 
-  @Command.String('--description,-d', { description: 'Provide the description for the package.' })
-  description: CommandString = 'Description not provided.';
+  /**
+   * The package description which is used in the generated `package.json` file
+   * and `README.md`.
+   */
+  description: CommandString = Option.String('--description,-d', {
+    description: 'Provide the description for the package.',
+    required: true,
+  });
 
-  @BaseCommand.Path('create')
   async execute(): Promise<void> {
     invariant(this.name.startsWith('@remirror/'), {
       message: 'Only scoped packages are supported at this time.',

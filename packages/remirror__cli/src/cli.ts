@@ -1,10 +1,10 @@
 // #!/usr/bin/env node
 
-import { Cli } from 'clipanion';
+import { Builtins, Cli } from 'clipanion';
 import { getVersion, loadPackageJson } from 'json.macro';
 
-import { BundleCommand, CreateCommand, HelpCommand, VersionCommand } from './commands';
-import type { CommandContext } from './types';
+import type { CommandContext } from './cli-types';
+import { BundleCommand, CreateCommand } from './commands';
 
 const version = getVersion();
 const description = loadPackageJson('description') ?? '';
@@ -18,8 +18,9 @@ const cli = new Cli<CommandContext>({
 
 cli.register(CreateCommand);
 cli.register(BundleCommand);
-cli.register(HelpCommand);
-cli.register(VersionCommand);
+cli.register(Builtins.DefinitionsCommand);
+cli.register(Builtins.HelpCommand);
+cli.register(Builtins.VersionCommand);
 
 cli.runExit(process.argv.slice(2), {
   version,

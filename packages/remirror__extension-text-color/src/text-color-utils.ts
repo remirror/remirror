@@ -17,7 +17,7 @@ export const setTextColorOptions: Remirror.CommandDecoratorOptions = {
   label: ({ t }) => t(Messages.SET_COLOR_LABEL),
 };
 
-const hueRange = range(10);
+const hueRange = range([10]);
 
 interface CreateHuePaletteProps {
   t: I18n['_'];

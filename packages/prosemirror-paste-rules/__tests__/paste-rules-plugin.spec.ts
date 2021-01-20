@@ -95,7 +95,7 @@ describe('pasteRules', () => {
   describe('type: text', () => {
     it('can transform text matches', () => {
       const plugin = pasteRules([
-        { regexp: /(Hello)/, transformMatch: (match) => 'Transformed Hello', type: 'text' },
+        { regexp: /(Hello)/, transformMatch: () => 'Transformed Hello', type: 'text' },
       ]);
       createEditor(doc(p('Hello <cursor>')), { plugins: [plugin] })
         .paste('Hello')

@@ -1,4 +1,4 @@
-import type { Annotation, GetData, OmitText } from './types';
+import type { Annotation, GetData, OmitText } from './annotation-types';
 
 export enum ActionType {
   ADD_ANNOTATION,

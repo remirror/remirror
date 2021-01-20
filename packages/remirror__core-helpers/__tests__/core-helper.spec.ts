@@ -430,6 +430,7 @@ test('values', () => {
 });
 
 test('range', () => {
+  expect(range([5])).toEqual([0, 1, 2, 3, 4]);
   expect(range(5)).toEqual([0, 1, 2, 3, 4]);
   expect(range(-5)).toEqual([-0, -1, -2, -3, -4]);
   expect(range(0)).toEqual([]);

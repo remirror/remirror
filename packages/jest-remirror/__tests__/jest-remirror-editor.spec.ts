@@ -46,7 +46,6 @@ test('can be configured with attribute node extensions', () => {
   const expected = 'A heading';
   const {
     view: { dom },
-    schema,
     nodes: { doc },
     attributeNodes: { heading },
     add,
@@ -120,7 +119,6 @@ function create() {
 describe('add', () => {
   let {
     view: { dom },
-    schema,
     nodes: { doc, p },
     marks: { bold },
     add,
@@ -129,7 +127,6 @@ describe('add', () => {
   beforeEach(() => {
     ({
       view: { dom },
-      schema,
       nodes: { doc, p },
       marks: { bold },
       add,

@@ -1,5 +1,6 @@
+import { Option } from 'clipanion';
 import figures from 'figures';
-import fs from 'fs';
+import { readFile, writeFile } from 'fs/promises';
 import { Box, render, Text } from 'ink';
 import Spinner from 'ink-spinner';
 import escape from 'jsesc';
@@ -10,11 +11,10 @@ import path from 'path';
 import { FC, useEffect } from 'react';
 import useSetState from 'react-use/lib/useSetState';
 import rimraf from 'rimraf';
-import util from 'util';
 import { isNumber, uniqueId } from '@remirror/core-helpers';
 
-import { notifyUpdate } from '../utils';
-import { BaseCommand, CommandString, GetShapeOfCommandData } from './base';
+import { notifyUpdate } from '../cli-utils';
+import { BaseCommand, CommandString, GetShapeOfCommandData } from './base-command';
 
 const REMIRROR_ID = '__remirror';
 
@@ -22,6 +22,8 @@ const REMIRROR_ID = '__remirror';
  * Create a new monorepo project.
  */
 export class BundleCommand extends BaseCommand {
+  static paths = [['bundle'], ['b']];
+
   static usage = BaseCommand.Usage({
     description: 'Bundle a remirror editor for use within a webview.',
     category: 'Bundle',
@@ -43,10 +45,8 @@ export class BundleCommand extends BaseCommand {
   /**
    * The source of the editor to create. This can be a.
    */
-  @BaseCommand.String({ required: true })
-  source: CommandString = '';
+  source: CommandString = Option.String();
 
-  @BaseCommand.Path('bundle')
   async execute(): Promise<void> {
     await renderBundleEditor({ ...this, method: bundleEntryPoint });
     notifyUpdate(this.context);
@@ -89,9 +89,6 @@ function clearPath(glob: string) {
  * Uses parcel-bundler to bundle the target file.
  */
 export function bundleEntryPoint({ source, cwd }: BundleCommandShape): BundleMethodReturn {
-  const readFile = util.promisify(fs.readFile);
-  const writeFile = util.promisify(fs.writeFile);
-
   // Paths
   const entryFile = path.join(cwd, source);
   const tempDir = path.join(os.tmpdir(), uniqueId());
@@ -168,8 +165,8 @@ const useBundleEditor = ({
   verbose,
 }: BundleEditorProps) => {
   const [state, setState] = useSetState<BundleEditorState>({ step: Step.Bundle });
-  const { endTime } = state;
-  const completed = state.step === Step.Complete;
+  const { endTime, step } = state;
+  const completed = step === Step.Complete;
 
   useEffect(() => {
     const { bundle, write, clean } = method({ source, cwd, verbose });
