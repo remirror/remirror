@@ -1,5 +1,5 @@
 import { extensionValidityTest } from 'jest-remirror';
 
-import { DocExtension } from '../..';
+import { DocExtension } from '../';
 
 extensionValidityTest(DocExtension);

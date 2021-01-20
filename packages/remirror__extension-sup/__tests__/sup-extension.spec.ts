@@ -1,6 +1,6 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
-import { SupExtension } from '..';
+import { SupExtension } from '../';
 
 extensionValidityTest(SupExtension);
 

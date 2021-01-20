@@ -1,5 +1,5 @@
 import type { ReactElement, ReactNode } from 'react';
-import { AnyExtension, isNullOrUndefined } from '@remirror/core';
+import { AnyExtension, isNullOrUndefined, RemirrorManager } from '@remirror/core';
 import { RemirrorPortals, usePortals } from '@remirror/extension-react-component';
 import { ComponentsTheme } from '@remirror/theme';
 
@@ -15,9 +15,18 @@ import type { ReactFrameworkProps } from './react-framework';
 /**
  * The props for the main `<Remirror />` component.
  */
-export interface RemirrorProps<Extension extends AnyExtension>
-  extends Omit<ReactFrameworkProps<Extension>, 'stringHandler'>,
+export interface RemirrorProps<Extension extends AnyExtension = Remirror.Extensions>
+  extends Omit<ReactFrameworkProps<Extension>, 'stringHandler' | 'manager'>,
     I18nProps {
+  /**
+   * This manager composes the extensions provided and provides the
+   * functionality used throughout the editor.
+   *
+   * It is overriden here since there was an issue with type inference when
+   * using the manager inhereted from `ReactFrameworkProps`.
+   */
+  manager: RemirrorManager<any>;
+
   /**
    * The optional children which can be passed into the [`Remirror`].
    */
@@ -89,9 +98,9 @@ const HookComponent = (props: HookComponentProps) => {
  * the context can be accessed from outside the editor via
  * `useRemirror().getContext()`.
  */
-export const Remirror = <Extension extends AnyExtension>(
+export function Remirror<Extension extends AnyExtension = Remirror.Extensions>(
   props: RemirrorProps<Extension>,
-): ReactElement<RemirrorProps<Extension>> => {
+): ReactElement<RemirrorProps<Extension>> {
   const {
     children,
     autoRender,
@@ -128,4 +137,4 @@ export const Remirror = <Extension extends AnyExtension>(
       </RemirrorContext.Provider>
     </I18nProvider>
   );
-};
+}

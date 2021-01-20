@@ -1,5 +1,5 @@
 import type { Annotation } from '../';
-import { toSegments } from '../';
+import { toSegments } from '../src/annotation-segments';
 
 let idCounter = 0;
 

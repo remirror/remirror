@@ -3,7 +3,7 @@ import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { htmlToProsemirrorNode, prosemirrorNodeToHtml } from 'remirror';
 import { createCoreManager } from 'remirror/extensions';
 
-import { CalloutExtension } from '..';
+import { CalloutExtension } from '../';
 
 extensionValidityTest(CalloutExtension);
 

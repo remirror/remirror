@@ -34,9 +34,7 @@ test('multiple `getRootProps` applied to dom throw an error', () => {
   const manager = createReactManager(() => []);
 
   const TestComponent: FC = () => {
-    const { getRootProps, commands } = useRemirrorContext();
-
-    // commands.
+    const { getRootProps } = useRemirrorContext();
 
     return (
       <div>

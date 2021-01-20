@@ -325,6 +325,7 @@ let config = {
         '**/*.test.ts',
       ],
       rules: {
+        'unicorn/consistent-destructuring': 'off',
         '@typescript-eslint/await-thenable': 'off',
         '@typescript-eslint/ban-ts-comment': 'off',
         '@typescript-eslint/ban-ts-ignore': 'off', // Often you need to use @ts-ignore in tests
@@ -341,6 +342,7 @@ let config = {
         'docs/**',
         'examples/**',
         'support/**',
+        'website/**',
         '**/__stories__',
         '**/*.stories.tsx',
         '**/*.stories.ts',
@@ -460,6 +462,12 @@ if (process.env.FULL_ESLINT_CHECK) {
     ],
   };
 
+  const rulesOff = {};
+
+  for (const rule of Object.keys(rules)) {
+    rulesOff[rule] = 'off';
+  }
+
   config = {
     ...config,
     plugins: [...config.plugins, 'import'],
@@ -503,10 +511,7 @@ if (process.env.FULL_ESLINT_CHECK) {
           '**/*.test.ts',
         ],
         // Switch off rules for test files.
-        rules: Object.keys(rules).reduce(
-          (accumulator, key) => ({ ...accumulator, [key]: 'off' }),
-          {},
-        ),
+        rules: rulesOff,
       },
       ...config.overrides,
     ],

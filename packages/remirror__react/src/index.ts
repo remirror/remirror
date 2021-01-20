@@ -29,4 +29,4 @@ export type {
   UseRemirrorContextType,
 } from './react-types';
 export * from './renderers';
-export { createEditorView } from './ssr';
+export * from './ssr';

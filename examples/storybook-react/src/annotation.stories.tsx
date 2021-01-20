@@ -25,7 +25,6 @@ import {
   useRemirror,
   useRemirrorContext,
 } from 'remirror/react';
-import { ExtensionAnnotationMessages as Messages } from '@remirror/messages';
 
 export default { title: 'Annotation Extension' };
 
@@ -58,6 +57,7 @@ const Popup: FC = () => {
           whiteSpace: 'pre-line',
           background: 'white',
         }}
+        title='Floating annotation'
         ref={positioner.ref}
       >
         {label}

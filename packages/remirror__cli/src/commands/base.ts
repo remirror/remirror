@@ -1,15 +1,16 @@
-import { Command } from 'clipanion';
+import { Command, Option } from 'clipanion';
 import dargs from 'dargs';
-import { isAbsolute, resolve } from 'path';
+import path from 'path';
 import type { ConditionalPick } from 'type-fest';
 
-import type { BaseCommandProps, CommandContext } from '../types';
+import type { BaseCommandProps, CommandContext } from '../cli-types';
 
 export abstract class BaseCommand extends Command<CommandContext> implements BaseCommandProps {
   /**
    * Wrap the specified command to be attached to the given path on the command
    * line. The first path thus attached will be considered the "main" one, and
    * all others will be aliases.
+   *
    * @param path The command path.
    */
   static Path(command: keyof RemirrorCli.Commands): ReturnType<typeof Command.Path> {
@@ -26,7 +27,11 @@ export abstract class BaseCommand extends Command<CommandContext> implements Bas
    * Get the current working directory for this command.
    */
   get cwd(): CommandString {
-    return this._cwd ? (isAbsolute(this._cwd) ? this._cwd : resolve(this._cwd)) : process.cwd();
+    return this._cwd
+      ? path.isAbsolute(this._cwd)
+        ? this._cwd
+        : path.resolve(this._cwd)
+      : process.cwd();
   }
 
   /**

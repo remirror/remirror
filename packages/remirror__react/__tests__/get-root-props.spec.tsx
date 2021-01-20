@@ -2,7 +2,7 @@ import { axe } from 'jest-axe';
 import { forwardRef, FunctionComponent, RefAttributes } from 'react';
 import { RenderResult, strictRender } from 'testing/react';
 
-import { createReactManager, Remirror, useRemirrorContext } from '../..';
+import { createReactManager, Remirror, useRemirrorContext } from '../';
 
 const mock = jest.fn();
 

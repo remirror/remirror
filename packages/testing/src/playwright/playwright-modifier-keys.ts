@@ -6,6 +6,7 @@
  */
 
 import delay from 'delay';
+import { Page } from 'playwright';
 import { take } from '@remirror/core';
 
 /**
@@ -170,8 +171,10 @@ export interface ModifierInformation {
  * @see https://github.com/GoogleChrome/puppeteer/issues/1313
  * @see https://w3c.github.io/uievents/tools/key-event-viewer.html
  */
-export const selectAll = async (options: { delay?: number } = {}) => {
-  await page.evaluate(() => {
+export const selectAll = async (options: { delay?: number; page?: Page } = {}) => {
+  const { page: playwrightPage = page } = options;
+
+  await playwrightPage.evaluate(() => {
     const isMac = /Mac|iPod|iPhone|iPad/.test(window.navigator.platform);
 
     const dom = document.activeElement;

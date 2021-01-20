@@ -2,9 +2,8 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { RemirrorTestChain } from 'jest-remirror';
 import { FC } from 'react';
 import { BoldExtension } from 'remirror/extensions';
+import { createReactManager, Remirror, useRemirrorContext } from 'remirror/react';
 import { act as renderAct, strictRender } from 'testing/react';
-
-import { createReactManager, Remirror, useRemirrorContext } from '../../..';
 
 describe('useRemirrorContext', () => {
   it('returns the provider context', () => {

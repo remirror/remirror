@@ -30,6 +30,9 @@
     },
     {
       "path": "../../remirror/src"
+    },
+    {
+      "path": "../../remirror__messages/src"
     }
   ]
 }

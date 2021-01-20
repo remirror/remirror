@@ -827,12 +827,17 @@ export type AnyRemirrorManager = Simplify<
     RemirrorManager<AnyExtension>,
     {
       clone: () => AnyRemirrorManager;
-      store: Replace<Remirror.ManagerStore<any>, { chain: any }>;
-      output: Replace<FrameworkOutput<any>, { chain: any }> | undefined;
+      store: Replace<Remirror.ManagerStore<AnyExtension>, { chain: any }>;
+      output:
+        | Replace<FrameworkOutput<AnyExtension>, { chain: any; manager: AnyRemirrorManager }>
+        | undefined;
+      // output: any;
+      // store: any;
+      // attachFramework: any;
       view: EditorView;
       addView: (view: EditorView) => void;
       attachFramework: (
-        framework: BaseFramework<AnyExtension>,
+        framework: any,
         updateHandler: (props: StateUpdateLifecycleProps) => void,
       ) => void;
       /** @internal */

@@ -1,5 +1,5 @@
 import { extensionValidityTest } from 'jest-remirror';
 
-import { WhitespaceExtension } from '..';
+import { WhitespaceExtension } from '../';
 
 extensionValidityTest(WhitespaceExtension);

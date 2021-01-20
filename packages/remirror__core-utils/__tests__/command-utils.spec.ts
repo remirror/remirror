@@ -46,9 +46,9 @@ describe('removeMark', () => {
     const from = doc(p('start ', strong('bold'), ' and not<cursor>'));
     const to = doc(p('start bold and not'));
 
-    expect(removeMark({ type, range: { from: 7, to: 11 } })).toTransform({ from, to });
-    expect(removeMark({ type, range: { from: 8 }, expand: true })).toTransform({ from, to });
-    expect(removeMark({ type, range: { from: 3, to: 7 }, expand: true })).toTransform({
+    expect(removeMark({ type, selection: { from: 7, to: 11 } })).toTransform({ from, to });
+    expect(removeMark({ type, selection: 8, expand: true })).toTransform({ from, to });
+    expect(removeMark({ type, selection: { from: 3, to: 7 }, expand: true })).toTransform({
       from,
       to,
     });

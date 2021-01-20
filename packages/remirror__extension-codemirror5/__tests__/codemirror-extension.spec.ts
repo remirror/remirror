@@ -9,7 +9,7 @@ import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { htmlToProsemirrorNode, object, prosemirrorNodeToHtml } from 'remirror';
 import { createCoreManager } from 'remirror/extensions';
 
-import { CodeMirrorExtension, CodeMirrorExtensionOptions } from '..';
+import { CodeMirrorExtension, CodeMirrorExtensionOptions } from '../';
 
 extensionValidityTest(CodeMirrorExtension);
 

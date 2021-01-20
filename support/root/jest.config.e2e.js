@@ -3,11 +3,6 @@ const config = require('../jest/jest.config');
 const { jestSupportDir } = require('../jest/helpers');
 
 const { E2E_ENVIRONMENT = 'playwright' } = process.env;
-const { E2E_DEBUG, E2E_COVERAGE, E2E_BROWSER = 'chromium' } = process.env;
-
-const browsers = E2E_BROWSER.split(',');
-const collectCoverage = E2E_COVERAGE === 'true';
-const debug = E2E_DEBUG === 'true';
 
 const environment = {
   playwright: {
@@ -16,17 +11,9 @@ const environment = {
     testRunner: 'jest-circus/runner',
     preset: 'jest-playwright-preset',
     testEnvironment: jestSupportDir('./jest.playwright.environment.js'),
-    testEnvironmentOptions: {
-      launchOptions: {
-        headless: !debug,
-        timeout: 120_000,
-        slowMo: debug ? 10 : undefined,
-      },
-      browsers,
-      collectCoverage,
-    },
     setupFilesAfterEnv: [
       'expect-playwright',
+      'jest-playwright-preset/lib/extends.js',
       jestSupportDir('jest.framework.ts'),
       jestSupportDir('jest.framework.e2e.ts'),
     ],

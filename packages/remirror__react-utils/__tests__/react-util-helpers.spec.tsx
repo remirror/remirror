@@ -1,4 +1,4 @@
-import { getElementProps, isReactDOMElement, isReactFragment } from '../react-utils';
+import { getElementProps, isReactDOMElement, isReactFragment } from '../';
 
 test('getElementProps', () => {
   const expected = { id: 'test' };

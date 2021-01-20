@@ -3,7 +3,7 @@ import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { createCoreManager } from 'remirror/extensions';
 import { htmlToProsemirrorNode, prosemirrorNodeToHtml } from '@remirror/core';
 
-import { BoldExtension, BoldOptions } from '../..';
+import { BoldExtension, BoldOptions } from '../';
 
 extensionValidityTest(BoldExtension);
 

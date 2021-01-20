@@ -2,12 +2,7 @@ import { axe } from 'jest-axe';
 import { RemirrorTestChain } from 'jest-remirror';
 import { useCallback, useState } from 'react';
 import { renderToString } from 'react-dom/server';
-import {
-  AnyExtension,
-  BuiltinPreset,
-  htmlToProsemirrorNode,
-  RemirrorEventListener,
-} from 'remirror';
+import { htmlToProsemirrorNode, RemirrorEventListener } from 'remirror';
 import {
   createReactManager,
   ReactExtensions,
@@ -168,7 +163,7 @@ describe('focus', () => {
   };
 
   let mock: ReturnType<typeof rafMock>;
-  let context: ReturnType<typeof useRemirrorContext>;
+  let context: ReactFrameworkOutput<Remirror.Extensions>;
   let editorNode: HTMLElement;
 
   const Component = () => {
@@ -335,7 +330,7 @@ test('`focus` should be chainable', () => {
 
   const manager = createReactManager([]);
   const editor = RemirrorTestChain.create(manager);
-  let context: ReturnType<typeof useRemirrorContext>;
+  let context: ReactFrameworkOutput<Remirror.Extensions>;
 
   const TrapContext = () => {
     context = useRemirrorContext();

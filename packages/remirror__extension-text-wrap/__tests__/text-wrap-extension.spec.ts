@@ -1,5 +1,5 @@
 import { extensionValidityTest } from 'jest-remirror';
 
-import { TextWrapExtension } from '..';
+import { TextWrapExtension } from '../';
 
 extensionValidityTest(TextWrapExtension);

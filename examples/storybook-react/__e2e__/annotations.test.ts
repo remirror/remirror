@@ -1,44 +1,30 @@
-import delay from 'delay';
 import { getDocument, queries } from 'playwright-testing-library';
 import { ElementHandle } from 'playwright-testing-library/dist/typedefs';
-import { goto, selectAll } from 'testing/playwright';
+import { goto, typist } from 'testing/playwright';
 
-const { getByRole, getByTestId, getByText } = queries;
-const path = 'annotation-extension--basic';
+const { getByRole, getByTitle } = queries;
 
-describe('Positioner', () => {
+describe('Annotations', () => {
   let $document: ElementHandle;
   let $editor: ElementHandle;
 
-  beforeEach(async () => {
-    await goto(path);
-    $document = await getDocument(page);
-    $editor = await getByRole($document, 'textbox');
-  });
+  describe('Basic', () => {
+    const path = 'annotation-extension--basic';
 
-  describe('Bubble menu', () => {
+    beforeEach(async () => {
+      await goto(path);
+      $document = await getDocument(page);
+      $editor = await getByRole($document, 'textbox');
+    });
+
     it('should show the bubble menu', async () => {
-      console.log('here I am');
       await $editor.focus();
-      await delay(30_000);
-      // await $editor.type('This is text', { delay: 20 });
-      // await expect($editor.innerHTML()).resolves.toMatchSnapshot();
-      // const $bubbleMenu = await getByTestId($document, 'bubble-menu');
-      // await expect($bubbleMenu.getAttribute('style')).resolves.toBe(
-      //   'bottom:999999px;left:-999999px;position:absolute',
-      // );
+      const $floatingMenu = await getByTitle($editor, 'Floating annotation');
+      await expect($floatingMenu.textContent()).resolves.toMatchInlineSnapshot(
+        `"This is a sample text"`,
+      );
 
-      // await selectAll();
-      // const $visibleBubbleMenu = await getByTestId($document, 'bubble-menu');
-      // const newStyles = await $visibleBubbleMenu.getAttribute('style');
-      // expect(newStyles).toInclude('bottom');
-      // expect(newStyles).not.toInclude('999999px');
-      // expect(newStyles).toInclude('left');
-
-      // const $boldButton = await getByText($document, 'Bold');
-      // await $boldButton.click();
-
-      // await expect($editor.innerHTML()).resolves.toMatchSnapshot();
+      await typist('{home} this should be at the end{enter}{enter}I am your fried!');
     });
   });
 });

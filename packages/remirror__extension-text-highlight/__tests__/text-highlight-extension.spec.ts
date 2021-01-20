@@ -1,5 +1,5 @@
 import { extensionValidityTest } from 'jest-remirror';
 
-import { TextHighlightExtension } from '..';
+import { TextHighlightExtension } from '../';
 
 extensionValidityTest(TextHighlightExtension);

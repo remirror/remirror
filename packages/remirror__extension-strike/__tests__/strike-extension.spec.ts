@@ -1,6 +1,6 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
-import { StrikeExtension } from '..';
+import { StrikeExtension } from '../';
 
 extensionValidityTest(StrikeExtension);
 

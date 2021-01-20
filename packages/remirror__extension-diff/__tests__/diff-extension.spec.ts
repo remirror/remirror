@@ -1,7 +1,7 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { entries, GetHandler } from '@remirror/core';
 
-import { DiffExtension, DiffOptions } from '..';
+import { DiffExtension, DiffOptions } from '../';
 
 extensionValidityTest(DiffExtension);
 

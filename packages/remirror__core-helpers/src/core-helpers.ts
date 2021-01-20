@@ -14,7 +14,6 @@ import type {
   Predicate,
   RemirrorIdentifierShape,
   Shape,
-  TupleRange,
   UnknownShape,
 } from '@remirror/core-types';
 
@@ -993,7 +992,7 @@ export function uniqueBy<Item = any>(
  * and end are provided it creates an array who's first position is start and
  * final position is end. i.e. `length = (end - start) + 1`
  */
-export function range<Size extends number>(size: Size): TupleRange<Size>;
+export function range(size: number): number[];
 export function range(start: number, end: number): number[];
 export function range(start: number, end?: number): number[] {
   if (!isNumber(end)) {

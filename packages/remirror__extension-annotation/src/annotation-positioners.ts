@@ -1,7 +1,7 @@
 import { Coords } from '@remirror/core';
 import { Positioner, selectionPositioner } from '@remirror/extension-positioner';
 
-import type { Annotation } from './types';
+import type { Annotation } from './annotation-types';
 
 type MinimalAnnotation = Pick<Annotation, 'from' | 'to'> & {
   text: string | undefined;

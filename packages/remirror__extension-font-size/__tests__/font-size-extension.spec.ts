@@ -1,5 +1,5 @@
 import { extensionValidityTest } from 'jest-remirror';
 
-import { FontSizeExtension } from '..';
+import { FontSizeExtension } from '../';
 
 extensionValidityTest(FontSizeExtension);

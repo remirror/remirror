@@ -8,7 +8,7 @@ import { CoreTheme } from 'remirror';
 import { BoldExtension } from 'remirror/extensions';
 import { docNodeBasicJSON, docNodeSimpleJSON } from 'testing';
 
-import { createReactManager, Remirror, useRemirrorContext } from '..';
+import { createReactManager, Remirror, useRemirrorContext } from '../';
 
 const label = 'Remirror editor';
 const handlers = {

@@ -6,7 +6,7 @@ import { useMultiPositioner } from '../use-multi-positioner';
 
 test('`useMultiPositioner` default values', () => {
   const HookComponent: FC = () => {
-    const positioners = useMultiPositioner('selection');
+    const positioners = useMultiPositioner('selection', []);
 
     expect(positioners).toEqual([]);
     return <div />;

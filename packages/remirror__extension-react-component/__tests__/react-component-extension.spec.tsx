@@ -1,5 +1,6 @@
 import { extensionValidityTest, RemirrorTestChain } from 'jest-remirror';
 import { ComponentType } from 'react';
+import { command, CommandFunction } from 'remirror';
 import { createReactManager, Remirror } from 'remirror/react';
 import { act, render, strictRender } from 'testing/react';
 import {
@@ -10,13 +11,13 @@ import {
   setBlockType,
 } from '@remirror/core';
 
-import { ReactComponentExtension } from '..';
-import type { NodeViewComponentProps } from '../node-view-types';
+import type { NodeViewComponentProps } from '../';
+import { ReactComponentExtension } from '../';
 
 extensionValidityTest(ReactComponentExtension);
 
 class TestExtension extends NodeExtension<{ useContent: boolean }> {
-  get name(): string {
+  get name() {
     return 'test' as const;
   }
 
@@ -39,11 +40,10 @@ class TestExtension extends NodeExtension<{ useContent: boolean }> {
     };
   }
 
-  createCommands = () => {
-    return {
-      toggleCustomBlock: () => setBlockType(this.type, {}),
-    };
-  };
+  @command()
+  toggleCustomBlock(): CommandFunction {
+    return setBlockType(this.type, {});
+  }
 
   ReactComponent: ComponentType<NodeViewComponentProps> = ({ node, forwardRef }) => {
     if (this.options.useContent) {

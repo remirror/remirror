@@ -102,3 +102,30 @@ Rename all `*Parameter` interfaces to `*Props`. With the exception of \[React\]F
 - `@command`, `@keyBinding`, `@helper` decorators for more typesafe configuration of extensions.
 - `NameShortcut` keybindings which can be set in the keymap extension
 - `overrides` property
+
+### Accessibility as a priority
+
+Actively test for the following
+
+- Screen Readers
+- Braille display
+- Zoom functionality
+- High contrast for the default theme
+
+### Caveats around inference
+
+- Make sure all your commands in an extension are annotated with a return type of `CommandFunction`. Failure to do so will break all type inference wherever the extension is used.
+
+  ```ts
+  import { CommandFunction } from 'remirror';
+  ```
+
+- When setting the name of the extension make sure to use `as const` otherwise it will be a string and ruin autocompletion for extension names, nodes and marks.
+
+  ```ts
+  class MyExtension extends PlainExtension {
+    get name() {
+      return 'makeItConst' as const;
+    }
+  }
+  ```

@@ -1,4 +1,4 @@
-import { pixels } from '../font-size-utils';
+import { pixels } from '../src/font-size-utils';
 
 afterEach(() => {
   window.document.documentElement.style.fontSize = '16px';

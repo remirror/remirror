@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
-    "@types/react-native": "^0.63.45",
+    "@types/react-native": "^0.63.46",
     "react": "^17.0.1",
     "react-native": "^0.63.4",
     "react-native-builder-bob": "^0.17.1"

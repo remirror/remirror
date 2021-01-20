@@ -29,7 +29,7 @@ describe('tags', () => {
     @extension({ disableExtraAttributes: true })
     class CustomExtension extends NodeExtension {
       get name() {
-        return 'custom';
+        return 'custom' as const;
       }
 
       createTags() {
@@ -42,7 +42,7 @@ describe('tags', () => {
     }
 
     const editor = renderEditor([new CustomExtension()]);
-    expect(editor.manager.nodes['custom'].group).toBe(ExtensionTag.Alignment);
+    expect(editor.manager.nodes.custom.group).toBe(ExtensionTag.Alignment);
   });
 
   it('throws when an invalid tag is added', () => {

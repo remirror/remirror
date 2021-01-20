@@ -10,10 +10,6 @@ import { getSnapshotDiffSerializer, toMatchDiffSnapshot } from 'snapshot-diff';
 expect.addSnapshotSerializer(getSnapshotDiffSerializer());
 expect.extend({ toMatchDiffSnapshot });
 
-if (__E2E__) {
-  jest.setTimeout(120_000);
-}
-
 /* Make unhandledRejection errors easier to debug */
 process.on('unhandledRejection', (reason) => {
   console.error('REJECTION', reason);

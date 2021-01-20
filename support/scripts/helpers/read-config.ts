@@ -1,7 +1,7 @@
 import { lstat, readFile } from 'fs/promises';
 
 import DEFAULT_CONFIG from '../../.config.sample.json';
-import { baseDir, log } from '.';
+import { baseDir, log } from './';
 
 /**
  * Check if a file exists for the provide `filePath` the provided target.

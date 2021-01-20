@@ -1,6 +1,7 @@
 import { createEditor, doc, p } from 'jest-prosemirror';
 
-import { chainableEditorState, EditorState } from '../';
+import { chainableEditorState } from '../';
+import { EditorState } from '../state';
 
 describe('chainableEditorState', () => {
   it('passes `instanceof` checks', () => {
@@ -46,7 +47,8 @@ describe('chainableEditorState', () => {
     expect(state.selection).not.toBe(tr.selection);
 
     // Accessing the transaction should reset the state.
-    const _ = state.tr;
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    state.tr;
 
     expect(state.doc).toBe(tr.doc);
     expect(state.selection).toBe(tr.selection);

@@ -3,7 +3,7 @@ import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { createCoreManager } from 'remirror/extensions';
 import { htmlToProsemirrorNode, prosemirrorNodeToHtml } from '@remirror/core';
 
-import { BlockquoteExtension } from '..';
+import { BlockquoteExtension } from '../';
 
 extensionValidityTest(BlockquoteExtension);
 

@@ -12,8 +12,12 @@ import yaml from 'refractor/lang/yaml';
 import {
   BlockquoteExtension,
   BoldExtension,
+  CodeBlockExtension,
+  CodeBlockOptions,
   CodeExtension,
   createCoreManager,
+  FormatterProps,
+  getLanguage,
   HardBreakExtension,
 } from 'remirror/extensions';
 import {
@@ -22,9 +26,6 @@ import {
   object,
   prosemirrorNodeToHtml,
 } from '@remirror/core';
-
-import { CodeBlockExtension, CodeBlockOptions, FormatterProps } from '..';
-import { getLanguage } from '../code-block-utils';
 
 extensionValidityTest(CodeBlockExtension);
 
@@ -57,9 +58,9 @@ describe('schema', () => {
 
 describe('constructor', () => {
   it('is created with the correct default properties and settings', () => {
-    const codeBlock = new CodeBlockExtension({ syntaxTheme: 'a11y-dark' });
+    const codeBlock = new CodeBlockExtension({ syntaxTheme: 'a11y_dark' });
 
-    expect(codeBlock.options.syntaxTheme).toEqual('a11y-dark');
+    expect(codeBlock.options.syntaxTheme).toEqual('a11y_dark');
     expect(codeBlock.options.defaultLanguage).toEqual('markup');
     expect(codeBlock.options.plainTextClassName).toEqual('');
   });

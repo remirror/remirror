@@ -89,10 +89,10 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
    * A static method for creating the test helpers when testing your remirror
    * models.
    */
-  static create<Extension extends AnyExtension>(
+  static create<Extension extends AnyExtension = Remirror.Extensions>(
     manager: RemirrorManager<Extension>,
   ): RemirrorTestChain<Extension> {
-    return new RemirrorTestChain(manager);
+    return new RemirrorTestChain<Extension>(manager);
   }
 
   /** The editor manager */

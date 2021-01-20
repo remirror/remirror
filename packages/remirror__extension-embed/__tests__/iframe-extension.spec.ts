@@ -3,7 +3,7 @@ import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { htmlToProsemirrorNode, prosemirrorNodeToHtml } from 'remirror';
 import { createCoreManager } from 'remirror/extensions';
 
-import { IframeExtension, IframeOptions } from '../iframe-extension';
+import { IframeExtension, IframeOptions } from '../';
 
 extensionValidityTest(IframeExtension);
 

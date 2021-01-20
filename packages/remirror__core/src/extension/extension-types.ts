@@ -189,10 +189,28 @@ export type HelperNames<Extension extends AnyExtension> = StringKey<
 >;
 
 /**
+ * Removes [[`AnyExtension`]] from an extension union. This can be used to make
+ * typechecking stricter.
+ *
+ * @template Extension - The union of extensions to remove [[`AnyExtension`]] from.
+ */
+export type RemoveAny<Extension> =
+  // Use this to make the `Extension` a distributive union. It is always a
+  // truthy condition.
+  Extension extends Extension
+    ? // A way of checking if AnyExtension is identical to the current `Extension` within the distributive union.
+      AnyExtension extends Extension
+      ? never
+      : Extension
+    : never;
+
+/**
  * Get the extension type and the extension type of all sub extensions.
  *
  * This uses recursive conditional types which are only available in
  * `typescript@4.1` https://github.com/microsoft/TypeScript/pull/40002
+ *
+ * @template Extension - The union of extensions.
  */
 export type GetExtensions<Extension> =
   // I don't want to pick up `AnyExtension` in the collected union. If the

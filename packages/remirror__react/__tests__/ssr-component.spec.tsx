@@ -2,7 +2,7 @@ import { createReactManager } from 'remirror/react';
 import { initialJson } from 'testing';
 import { strictRender } from 'testing/react';
 
-import { RemirrorSSR } from '..';
+import { RemirrorSSR } from '../';
 
 test('should render the ssr component', () => {
   const manager = createReactManager([]);

@@ -1,6 +1,6 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
-import { ReactExtension, ReactPlaceholderExtension } from '../..';
+import { ReactExtension, ReactPlaceholderExtension } from '../';
 
 extensionValidityTest(ReactExtension);
 

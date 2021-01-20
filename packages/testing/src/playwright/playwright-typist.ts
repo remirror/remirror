@@ -79,14 +79,14 @@ import { isApple, selectAll } from './playwright-modifier-keys';
  * });
  * ```
  */
-export const typist = createTypistAction({});
+export const typist = createTypist({ delay: 10 });
 
 /**
  * Create your own `typist` with custom options applied.
  */
-export function createTypistAction(options: TypistOptions = {}) {
+export function createTypist(options: TypistOptions = {}) {
   return async function typist(text: string): Promise<void> {
-    for (const action of createActionQueue(text)) {
+    for (const action of createActionQueue(text, options)) {
       await action(options);
     }
   };
@@ -109,9 +109,14 @@ interface TypistOptions {
    * Provide a custom page object when not available globally.
    */
   page?: Page;
+
+  /**
+   * Extra actions to add.
+   */
+  actions?: Record<string, TypistAction>;
 }
 
-const modifierActions: Record<string, TypistAction> = {
+const defaultModifierActions: Record<string, TypistAction> = {
   // Closable modifier tags.
   ...createCloseableAction('shift', 'Shift'),
   ...createCloseableAction('ctrl', 'Control'),
@@ -129,8 +134,7 @@ const modifierActions: Record<string, TypistAction> = {
   '{arrowup}': ({ delay }: TypistOptions) => page.keyboard.press('ArrowUp', { delay }),
   '{pagedown}': ({ delay }: TypistOptions) => page.keyboard.press('PageDown', { delay }),
   '{pageup}': ({ delay }: TypistOptions) => page.keyboard.press('PageUp', { delay }),
-  '{home}': ({ delay }: TypistOptions) => page.keyboard.press('Home', { delay }),
-  '{end}': ({ delay }: TypistOptions) => page.keyboard.press('End', { delay }),
+  ...createAliasedActions(),
   '{enter}': ({ delay }: TypistOptions) => page.keyboard.press('Enter', { delay }),
   '\n': ({ delay }: TypistOptions) => page.keyboard.press('Enter', { delay }),
   '\r': ({ delay }: TypistOptions) => page.keyboard.press('Enter', { delay }),
@@ -154,19 +158,34 @@ const modifierActions: Record<string, TypistAction> = {
   '{f12}': ({ delay }: TypistOptions) => page.keyboard.press('F12', { delay }),
 };
 
+function createAliasedActions() {
+  const homeAction: TypistAction = ({ delay, page: playwrightPage = page }) =>
+    isApple() ? Promise.resolve() : playwrightPage.keyboard.press('Home', { delay });
+  homeAction.alias = isApple() ? '{cmd}{arrowright}{/cmd}' : undefined;
+
+  const endAction: TypistAction = ({ delay, page: playwrightPage = page }) =>
+    isApple() ? Promise.resolve() : playwrightPage.keyboard.press('End', { delay });
+  endAction.alias = isApple() ? '{cmd}{arrowleft}{/cmd}' : undefined;
+
+  return {
+    '{home}': homeAction,
+    '{end}': endAction,
+  };
+}
+
 function createCloseableAction(name: string, key: string): Record<string, TypistAction> {
   const openTag = `{${name}}`;
   const closeTag = `{/${name}}`;
 
-  async function open(options: TypistOptions) {
+  const open: TypistAction = async (options) => {
     await page.keyboard.down(key);
     return options.delay ? delay(options.delay) : undefined;
-  }
+  };
 
-  async function close(options: TypistOptions) {
+  const close: TypistAction = async (options) => {
     await page.keyboard.up(key);
     return options.delay ? delay(options.delay) : undefined;
-  }
+  };
 
   open.closingTag = closeTag;
 
@@ -176,7 +195,16 @@ function createCloseableAction(name: string, key: string): Record<string, Typist
   };
 }
 
-interface TypistAction {
+export interface TypistAction {
+  /**
+   * An action can be an alias. When an alias is set the aliased string is
+   * prepended to the remaining text.
+   *
+   * Since this increases the remaining text, it's possible to create an
+   * infinite loop. Make sure the alias created won't lead to a circular loop
+   * where the text is never completed.
+   */
+  alias?: string;
   closingTag?: string;
   (options: TypistOptions): Promise<void>;
 }
@@ -185,9 +213,9 @@ interface TypistAction {
  * A generator that yields the actions for each action without the need for an
  * array.
  */
-function* createActionQueue(text: string) {
+function* createActionQueue(text: string, options: TypistOptions) {
   while (text) {
-    const value = getAction(text);
+    const value = getAction(text, options);
     text = value.text;
 
     yield value.action;
@@ -199,20 +227,27 @@ interface GetActionReturn {
   text: string;
 }
 
-function getAction(text: string): GetActionReturn {
-  const value = Object.entries(modifierActions).find(([tag]) => text.startsWith(tag));
+function getAction(text: string, options: TypistOptions): GetActionReturn {
+  const value = Object.entries({ ...defaultModifierActions, ...options.actions }).find(([tag]) =>
+    text.startsWith(tag),
+  );
 
   if (value) {
     const [tag, action] = value;
+    text = text.slice(tag.length);
 
     // If this modifier has an associated "close" callback and the developer
     // doesn't close it themselves, then we close it for them automatically
     // Effectively if they send in: '{alt}a' then we type: '{alt}a{/alt}'
-    if (action.closingTag && !text.includes(action.closingTag)) {
+    if (!options.skipAutoClose && action.closingTag && !text.includes(action.closingTag)) {
       text += action.closingTag;
     }
 
-    return { action, text: text.slice(tag.length) };
+    if (action.alias) {
+      text = action.alias + text;
+    }
+
+    return { action, text };
   }
 
   const character = text[0] ?? '';

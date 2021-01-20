@@ -195,7 +195,7 @@ describe('findChildrenByMark', () => {
     expect(result).toHaveLength(2);
 
     result.forEach((item) => {
-      expect(item.node.marks[0].type.name).toEqual('strong');
+      expect(item.node.marks[0]?.type.name).toEqual('strong');
     });
   });
 });
@@ -224,8 +224,8 @@ describe('getChangedNodes', () => {
     const nodes = getChangedNodes(tr);
 
     expect(nodes).toHaveLength(1);
-    expect(nodes[0].node.type.name).toBe('paragraph');
-    expect(nodes[0].pos).toBe(7);
+    expect(nodes[0]?.node.type.name).toBe('paragraph');
+    expect(nodes[0]?.pos).toBe(7);
   });
 
   it('can understand insertions and complex changes', () => {
@@ -238,12 +238,12 @@ describe('getChangedNodes', () => {
     const nodes = getChangedNodes(tr);
 
     expect(nodes).toHaveLength(3);
-    expect(nodes[0].pos).toBe(0);
-    expect(nodes[0].node.type.name).toBe('paragraph');
+    expect(nodes[0]?.pos).toBe(0);
+    expect(nodes[0]?.node.type.name).toBe('paragraph');
 
-    expect(nodes[1].pos).toBe(18);
+    expect(nodes[1]?.pos).toBe(18);
 
-    expect(nodes[2].pos).toBe(23);
+    expect(nodes[2]?.pos).toBe(23);
   });
 
   it('handles deletions', () => {
@@ -253,6 +253,6 @@ describe('getChangedNodes', () => {
     const nodes = getChangedNodes(tr);
 
     expect(nodes).toHaveLength(1);
-    expect(nodes[0].pos).toBe(7);
+    expect(nodes[0]?.pos).toBe(7);
   });
 });

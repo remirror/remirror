@@ -30,7 +30,8 @@ export interface PlaceholderPluginState extends Required<PlaceholderOptions> {
 }
 
 /**
- * An extension for the remirror editor. CHANGE ME.
+ * The placeholder extension which adds a placeholder annotation to an empty
+ * document.
  */
 @extension<PlaceholderOptions>({
   defaultOptions: {

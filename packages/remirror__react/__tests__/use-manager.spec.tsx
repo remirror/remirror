@@ -1,8 +1,7 @@
+import { useManager } from 'remirror/react';
 import { act as renderAct, render } from 'testing/react';
 import type { AnyRemirrorManager } from '@remirror/core';
 import { ReactExtension } from '@remirror/preset-react';
-
-import { useManager } from '../';
 
 jest.mock('@remirror/preset-react', () => {
   const actual = jest.requireActual('@remirror/preset-react');

@@ -4,7 +4,7 @@ import { KeymapExtension, object } from '@remirror/core';
 
 import { EmojiExtension, EmojiOptions, EmojiSuggestHandler, EmojiSuggestHandlerCommand } from '../';
 
-extensionValidityTest(IframeExtension);
+extensionValidityTest(EmojiExtension);
 
 function create(options: EmojiOptions = object()) {
   const extension = new EmojiExtension(options);
@@ -164,7 +164,7 @@ describe('plainText', () => {
           expect(suggestEmoji).toHaveBeenCalledTimes(1);
         })
         .overwrite(doc(p('a:cde')))
-        .callback(({ commands, view }) => {
+        .callback(({ commands }) => {
           expect(commands.suggestEmoji.isEnabled({ from: 3, to: 4 })).toBe(false);
           expect(commands.suggestEmoji.isEnabled('end')).toBe(true);
           expect(commands.suggestEmoji.isEnabled('start')).toBe(true);

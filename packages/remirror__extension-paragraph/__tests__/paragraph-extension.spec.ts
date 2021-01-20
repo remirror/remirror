@@ -1,5 +1,5 @@
 import { extensionValidityTest } from 'jest-remirror';
 
-import { ParagraphExtension } from '../..';
+import { ParagraphExtension } from '../';
 
 extensionValidityTest(ParagraphExtension);

@@ -1,6 +1,5 @@
 import { createEditor, doc, li, ol, p, schema, ul } from 'jest-prosemirror';
-
-import { toggleList } from '../list-commands';
+import { toggleList } from 'remirror/extensions';
 
 describe('toggleList', () => {
   it('toggles paragraph to bullet list', () => {

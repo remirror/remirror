@@ -1,4 +1,4 @@
-import { htmlToMarkdown } from '../html-to-markdown';
+import { htmlToMarkdown } from '../src/html-to-markdown';
 
 const casesArray = [
   ['strike', '<strike>Lorem ipsum</strike>', '~Lorem ipsum~'],

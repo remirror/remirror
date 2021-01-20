@@ -1,10 +1,20 @@
+import {
+  AnyExtension,
+  ChainedFromExtensions,
+  CommandsFromExtensions,
+  GetExtensions,
+  PlainExtension,
+  RemoveAny,
+} from 'remirror';
+import {
+  DocExtension,
+  EventsExtension,
+  HistoryExtension,
+  ParagraphExtension,
+} from 'remirror/extensions';
 import { object } from '@remirror/core-helpers';
 import type { CommandFunction } from '@remirror/core-types';
 import { nonChainable } from '@remirror/core-utils';
-
-import { ChainedFromExtensions, ChainedIntersection, PlainExtension } from '..';
-import type { AnyExtension } from '../extension';
-import type { CommandsFromExtensions } from '../extension-types';
 
 class FirstExtension extends PlainExtension {
   get name() {
@@ -79,3 +89,28 @@ chain.free('asdf').love(20).notChainable().run();
 const anyCommands: CommandsFromExtensions<AnyExtension> = object();
 const doSomethingReturn: void = anyCommands.doSomething?.();
 const doSomethingIsEnabled: boolean | undefined = anyCommands.doSomething?.isEnabled();
+
+class SubbedExtension extends PlainExtension {
+  get name() {
+    return 'subbed' as const;
+  }
+
+  createExtensions() {
+    return [new EventsExtension(), new DocExtension(), new ParagraphExtension()];
+  }
+}
+
+const extensionArray: Array<GetExtensions<SubbedExtension>> = [
+  new EventsExtension(),
+  new DocExtension(),
+  new ParagraphExtension(),
+  new HistoryExtension(),
+];
+
+declare function onlySubbed(extension: RemoveAny<GetExtensions<SubbedExtension>>): void;
+onlySubbed(new EventsExtension());
+onlySubbed(new DocExtension());
+onlySubbed(new SubbedExtension());
+onlySubbed(new ParagraphExtension());
+// @ts-expect-error - only subbed extensions should be valid
+onlySubbed(new HistoryExtension());

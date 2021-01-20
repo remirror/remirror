@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@remirror/pm": "1.0.0-next.60",
-    "@types/node": "^14.14.21",
+    "@types/node": "^14.14.22",
     "domino": "^2.1.6"
   },
   "peerDependencies": {

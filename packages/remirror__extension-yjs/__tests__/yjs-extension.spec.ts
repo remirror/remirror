@@ -3,7 +3,7 @@ import { hideConsoleError } from 'testing';
 import { WebrtcProvider } from 'y-webrtc';
 import { Doc } from 'yjs';
 
-import { defaultDestroyProvider, YjsExtension, YjsOptions } from '../..';
+import { defaultDestroyProvider, YjsExtension, YjsOptions } from '../';
 
 let provider = new WebrtcProvider('global', new Doc());
 

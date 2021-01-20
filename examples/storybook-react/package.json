@@ -6,8 +6,8 @@
   "repository": "https://github.com/remirror/remirror/tree/HEAD/examples/storybook-react",
   "scripts": {
     "build": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}'  build-storybook -c ./",
-    "e2e": "E2E_DEBUG=true E2E_SERVER=storybook-react pnpm -w e2e",
-    "e2e:watch": "E2E_DEBUG=true E2E_SERVER=storybook-react pnpm -w e2e:watch",
+    "e2e": "E2E_SERVER=storybook-react pnpm -w e2e",
+    "e2e:watch": "E2E_SERVER=storybook-react pnpm -w e2e:watch",
     "start": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}'  start-storybook -p 6006 -c ./"
   },
   "dependencies": {

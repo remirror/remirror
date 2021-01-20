@@ -1,5 +1,5 @@
 import { extensionValidityTest } from 'jest-remirror';
 
-import { TextColorExtension } from '..';
+import { TextColorExtension } from '../';
 
 extensionValidityTest(TextColorExtension);

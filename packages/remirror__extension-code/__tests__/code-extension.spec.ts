@@ -3,7 +3,7 @@ import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { createCoreManager } from 'remirror/extensions';
 import { htmlToProsemirrorNode, prosemirrorNodeToHtml } from '@remirror/core';
 
-import { CodeExtension } from '..';
+import { CodeExtension } from '../';
 
 extensionValidityTest(CodeExtension);
 
@@ -19,7 +19,7 @@ describe('schema', () => {
 
   it('returns the correct html', () => {
     const expected = 'Brilliant';
-    const { p, code, schema } = codeTester();
+    const { p, code } = codeTester();
 
     expect(prosemirrorNodeToHtml(p(code(expected)))).toBe(`<p><code>${expected}</code></p>`);
   });

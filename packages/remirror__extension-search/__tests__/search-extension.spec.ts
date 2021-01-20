@@ -1,6 +1,6 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
-import { SearchExtension, SearchOptions } from '..';
+import { SearchExtension, SearchOptions } from '../';
 
 extensionValidityTest(SearchExtension);
 
@@ -21,13 +21,13 @@ describe('commands', () => {
     const { view, add, commands, node } = create();
     add(node);
 
-    commands.find('welcome');
+    commands.search('welcome');
     expect(view.dom).toMatchSnapshot();
 
-    commands.findNext();
+    commands.searchNext();
     expect(view.dom).toMatchSnapshot();
 
-    commands.findPrevious();
+    commands.searchPrevious();
     expect(view.dom).toMatchSnapshot();
   });
 
@@ -35,8 +35,8 @@ describe('commands', () => {
     const { view, add, commands, node } = create();
     add(node);
 
-    commands.find('we');
-    commands.replace('me');
+    commands.search('we');
+    commands.replaceSearchResult('me');
     expect(view.dom).toMatchSnapshot();
   });
 
@@ -44,20 +44,20 @@ describe('commands', () => {
     const { view, add, commands, node } = create();
     add(node);
 
-    commands.find('e');
-    commands.findNext();
-    commands.replace('E');
+    commands.search('e');
+    commands.searchNext();
+    commands.replaceSearchResult('E');
     expect(view.dom).toHaveTextContent('welcomE');
 
-    commands.replace('E');
+    commands.replaceSearchResult('E');
     expect(view.dom).toHaveTextContent('friEnd');
 
-    commands.find('hello');
-    commands.replace('goodbye');
+    commands.search('hello');
+    commands.replaceSearchResult('goodbye');
     expect(view.dom).toHaveTextContent('goodbye');
     expect(view.dom).toMatchSnapshot();
 
-    commands.replace('abcd');
+    commands.replaceSearchResult('abcd');
     expect(view.dom).not.toHaveTextContent('abcd');
   });
 
@@ -65,20 +65,20 @@ describe('commands', () => {
     const { view, add, commands, node } = create();
     add(node);
 
-    commands.find('friend');
-    expect(commands.replaceAll.isEnabled('')).toBeTrue();
+    commands.search('friend');
+    expect(commands.replaceAllSearchResults.isEnabled('')).toBeTrue();
 
-    commands.replaceAll('enemy');
+    commands.replaceAllSearchResults('enemy');
     expect(view.dom).toMatchSnapshot();
 
-    expect(commands.replaceAll.isEnabled('')).toBeFalse();
+    expect(commands.replaceAllSearchResults.isEnabled('')).toBeFalse();
   });
 
   it('#clearSearch', () => {
     const { view, add, commands, node } = create();
     add(node);
 
-    commands.find('friend');
+    commands.search('friend');
     commands.clearSearch();
     expect(view.dom).toMatchSnapshot();
   });

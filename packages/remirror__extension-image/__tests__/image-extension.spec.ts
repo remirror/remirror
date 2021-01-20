@@ -1,6 +1,6 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
-import { ImageExtension } from '../..';
+import { ImageExtension } from '../';
 
 extensionValidityTest(ImageExtension);
 

@@ -1,7 +1,7 @@
 import { fireEvent } from '@testing-library/dom';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
-import { EventsExtension } from '..';
+import { EventsExtension } from '../';
 
 extensionValidityTest(EventsExtension);
 

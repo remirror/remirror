@@ -1,38 +1,14 @@
-import type { BuiltinPreset, GetExtensions, GetNodeNameUnion, GetSchema } from 'remirror';
-import { RemirrorManager } from 'remirror';
-import type {
-  BoldExtension,
-  DocExtension,
-  EventsExtension,
-  GapCursorExtension,
-  HistoryExtension,
-  ParagraphExtension,
-  PositionerExtension,
-  TextExtension,
-} from 'remirror/extensions';
-import { CorePreset, corePreset, TableExtension } from 'remirror/extensions';
+import { AnyRemirrorManager, BuiltinPreset, RemirrorManager } from 'remirror';
+import { CorePreset, corePreset, DocExtension, ParagraphExtension } from 'remirror/extensions';
 
 const manager: RemirrorManager<
   ParagraphExtension | DocExtension | CorePreset | BuiltinPreset
 > = RemirrorManager.create(() => [...corePreset()]);
 
-// @ts-expect-error
+// @ts-expect-error - Don't allow direct instantiation.
 new RemirrorManager(() => []);
 
-type Tables = GetSchema<
-  | TableExtension
-  | ParagraphExtension
-  | DocExtension
-  | DocExtension
-  | TextExtension
-  | ParagraphExtension
-  | BoldExtension
-  | HistoryExtension
-  | GapCursorExtension
-  | PositionerExtension
-  | EventsExtension
->;
-
-type A = GetExtensions<ParagraphExtension | DocExtension | CorePreset | BuiltinPreset>;
-
 // `AnyRemirrorManager` can be used
+declare function createManager(manager: AnyRemirrorManager): void;
+
+createManager(manager);

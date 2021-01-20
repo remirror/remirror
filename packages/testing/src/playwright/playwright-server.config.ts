@@ -44,10 +44,7 @@ export const servers: Record<TestServerName, TestServer> = {
       usedPortAction: 'kill',
       launchTimeout: 120_000,
     },
-    testMatch: [
-      '<rootDir>/examples/storybook-react/__e2e__/**/*.test.ts',
-      // 'examples/storybook-react/__e2e__/annotations.test.ts',
-    ],
+    testMatch: ['<rootDir>/examples/storybook-react/__e2e__/**/*.test.ts'],
     url: 'http://localhost:3032/iframe.html?id=',
     name: 'storybook-react',
   },

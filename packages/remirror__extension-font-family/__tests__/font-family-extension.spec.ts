@@ -1,5 +1,5 @@
 import { extensionValidityTest } from 'jest-remirror';
 
-import { FontFamilyExtension } from '..';
+import { FontFamilyExtension } from '../';
 
 extensionValidityTest(FontFamilyExtension);

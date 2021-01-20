@@ -8,7 +8,7 @@ import {
   TableExtension,
   TableHeaderCellExtension,
   TableRowExtension,
-} from '../..';
+} from '../';
 
 extensionValidityTest(TableExtension);
 extensionValidityTest(TableCellExtension);

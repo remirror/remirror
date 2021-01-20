@@ -1,7 +1,7 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { isTextSelection } from '@remirror/core';
 
-import { HardBreakExtension } from '..';
+import { HardBreakExtension } from '../';
 
 extensionValidityTest(HardBreakExtension);
 

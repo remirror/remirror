@@ -1,5 +1,5 @@
 import { extensionValidityTest } from 'jest-remirror';
 
-import { TextCaseExtension } from '..';
+import { TextCaseExtension } from '../';
 
 extensionValidityTest(TextCaseExtension);

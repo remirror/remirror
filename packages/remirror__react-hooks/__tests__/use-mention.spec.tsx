@@ -1,10 +1,11 @@
 import { RemirrorTestChain } from 'jest-remirror';
 import { FC, useCallback, useEffect, useState } from 'react';
+import { assertGet } from 'remirror';
+import { createReactManager, Remirror } from 'remirror/react';
 import { act, DefaultEditor, strictRender } from 'testing/react';
 import { NON_BREAKING_SPACE_CHAR } from '@remirror/core';
 import { MentionExtension, MentionExtensionAttributes } from '@remirror/extension-mention';
 import { ChangeReason } from '@remirror/pm/suggest';
-import { createReactManager, Remirror } from '@remirror/react';
 
 import { MentionState, useMention, UseMentionExitHandler } from '../use-mention';
 
@@ -42,7 +43,7 @@ describe('useMention', () => {
         editor.insertText('@a');
       },
       () => {
-        result.state?.command({ ...result.items[0] });
+        result.state?.command({ ...assertGet(result.items, 0) });
       },
       () => {
         editor.insertText('more to come');
@@ -74,13 +75,13 @@ describe('useMention', () => {
         editor.insertText('@a');
       },
       () => {
-        result.state?.command({ ...result.items[0] });
+        result.state?.command({ ...assertGet(result.items, 0) });
       },
       () => {
         editor.selectText(19);
       },
       () => {
-        result.state?.command({ ...result.items[0] });
+        result.state?.command({ ...assertGet(result.items, 0) });
       },
       () => {
         editor.selectText('end');

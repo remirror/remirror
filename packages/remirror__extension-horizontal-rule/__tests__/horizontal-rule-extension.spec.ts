@@ -1,7 +1,7 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { isNodeSelection, isTextSelection } from '@remirror/core';
 
-import { HorizontalRuleExtension } from '..';
+import { HorizontalRuleExtension } from '../';
 
 extensionValidityTest(HorizontalRuleExtension);
 

@@ -1,5 +1,5 @@
 import { extensionValidityTest } from 'jest-remirror';
 
-import { GapCursorExtension } from '../..';
+import { GapCursorExtension } from '../';
 
 extensionValidityTest(GapCursorExtension);

@@ -13,9 +13,9 @@ import {
 } from '@remirror/core';
 import type { EditorState } from '@remirror/pm/state';
 
-import { ActionType, UpdateAnnotationAction } from './actions';
+import { ActionType, UpdateAnnotationAction } from './annotation-actions';
 import { AnnotationState } from './annotation-plugin';
-import type { Annotation, AnnotationOptions, GetData, OmitText } from './types';
+import type { Annotation, AnnotationOptions, GetData, OmitText } from './annotation-types';
 
 /**
  * Computes a background color based on how many overlapping annotations are in

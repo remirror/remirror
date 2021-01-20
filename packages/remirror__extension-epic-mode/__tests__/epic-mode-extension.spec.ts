@@ -1,5 +1,5 @@
 import { extensionValidityTest } from 'jest-remirror';
 
-import { EpicModeExtension } from '../..';
+import { EpicModeExtension } from '../';
 
 extensionValidityTest(EpicModeExtension);

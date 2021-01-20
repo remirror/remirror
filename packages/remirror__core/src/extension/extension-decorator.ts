@@ -14,7 +14,7 @@ import type {
   Writeable,
 } from '@remirror/core-types';
 
-import type { AnyExtensionConstructor, DefaultExtensionOptions, ExtensionConstructor } from '.';
+import type { AnyExtensionConstructor, DefaultExtensionOptions, ExtensionConstructor } from './';
 import type { HandlerKeyOptions } from './base-class';
 
 interface DefaultOptionsProps<Options extends Shape = EmptyShape> {

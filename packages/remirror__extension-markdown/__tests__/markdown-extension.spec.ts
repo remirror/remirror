@@ -1,5 +1,5 @@
 import { extensionValidityTest } from 'jest-remirror';
 
-import { MarkdownExtension } from '..';
+import { MarkdownExtension } from '../';
 
 extensionValidityTest(MarkdownExtension);

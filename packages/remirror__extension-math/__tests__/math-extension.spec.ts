@@ -1,5 +1,5 @@
 import { extensionValidityTest } from 'jest-remirror';
 
-import { MathExtension } from '..';
+import { MathExtension } from '../';
 
 extensionValidityTest(MathExtension);

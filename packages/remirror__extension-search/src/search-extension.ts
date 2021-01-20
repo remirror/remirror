@@ -145,7 +145,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
    * defaults to the currently selected text.
    */
   @command()
-  findSearchQuery(searchTerm?: string, direction?: SearchDirection): CommandFunction {
+  search(searchTerm?: string, direction?: SearchDirection): CommandFunction {
     return this.find(searchTerm, direction);
   }
 
@@ -153,7 +153,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
    * Find the next occurrence of the search term.
    */
   @command()
-  findNextSearchItem(): CommandFunction {
+  searchNext(): CommandFunction {
     return this.find(this._searchTerm, 'next');
   }
 
@@ -161,7 +161,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
    * Find the previous occurrence of the search term.
    */
   @command()
-  findPreviousSearchItem(): CommandFunction {
+  searchPrevious(): CommandFunction {
     return this.find(this._searchTerm, 'previous');
   }
 
@@ -169,7 +169,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
    * Replace the provided
    */
   @command()
-  replaceSearchItem(replacement: string, index?: number): CommandFunction {
+  replaceSearchResult(replacement: string, index?: number): CommandFunction {
     return this.replace(replacement, index);
   }
 
@@ -177,7 +177,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
    * Replaces all search results with the replacement text.
    */
   @command()
-  replaceAllSearchItem(replacement: string): CommandFunction {
+  replaceAllSearchResults(replacement: string): CommandFunction {
     return this.replaceAll(replacement);
   }
 
@@ -243,7 +243,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
     );
   }
 
-  private search(doc: ProsemirrorNode) {
+  private gatherSearchResults(doc: ProsemirrorNode) {
     interface MergedTextNode {
       text: string;
       pos: number;
@@ -307,7 +307,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
       const { from, to } = result;
 
       dispatch(tr.insertText(replacement, from, to));
-      this.findNextSearchItem();
+      this.searchNext();
 
       return true;
     };
@@ -412,7 +412,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
   }
 
   private createDecoration(doc: ProsemirrorNode) {
-    this.search(doc);
+    this.gatherSearchResults(doc);
     const decorations = this.getDecorations();
 
     return decorations ? DecorationSet.create(doc, decorations) : [];
@@ -444,13 +444,11 @@ interface RotateHighlightedIndexProps {
 export const rotateHighlightedIndex = (props: RotateHighlightedIndexProps): number => {
   const { direction, resultsLength, previousIndex } = props;
 
-  return direction === 'next'
-    ? previousIndex + 1 > resultsLength - 1
-      ? 0
-      : previousIndex + 1
-    : previousIndex - 1 < 0
-    ? resultsLength - 1
-    : previousIndex - 1;
+  if (direction === 'next') {
+    return previousIndex + 1 > resultsLength - 1 ? 0 : previousIndex + 1;
+  }
+
+  return previousIndex - 1 < 0 ? resultsLength - 1 : previousIndex - 1;
 };
 
 declare global {

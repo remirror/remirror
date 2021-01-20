@@ -9,9 +9,7 @@ import {
   NodeExtensionSpec,
   prosemirrorNodeToHtml,
 } from 'remirror';
-import { createCoreManager } from 'remirror/extensions';
-
-import { LinkExtension, LinkOptions } from '..';
+import { createCoreManager, LinkExtension, LinkOptions } from 'remirror/extensions';
 
 extensionValidityTest(LinkExtension);
 
@@ -334,10 +332,12 @@ describe('commands', () => {
         @extension({ disableExtraAttributes: true })
         class NoMarksExtension extends NodeExtension {
           get name() {
-            return 'noMarks';
+            return 'noMarks' as const;
           }
 
-          tags = [ExtensionTag.Block];
+          createTags() {
+            return [ExtensionTag.Block];
+          }
 
           createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
             return {
@@ -359,11 +359,11 @@ describe('commands', () => {
           }
         }
 
-        const {
-          add,
-          nodes: { doc, noMarks },
-          commands,
-        } = renderEditor([new LinkExtension(), new NoMarksExtension()]);
+        const { add, nodes, commands } = renderEditor([
+          new LinkExtension(),
+          new NoMarksExtension(),
+        ]);
+        const { doc, noMarks } = nodes;
 
         add(doc(noMarks('No marks <start>A<end> link')));
 

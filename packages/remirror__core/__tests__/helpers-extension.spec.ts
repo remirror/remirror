@@ -23,11 +23,8 @@ describe('active', () => {
 
 describe('helpers', () => {
   it('`isSelectionEmpty`', () => {
-    const {
-      add,
-      nodes: { p, doc },
-      helpers,
-    } = renderEditor([], { props: { onChange: ({ getJSON }) => {} } }, {});
+    const { add, nodes, helpers } = renderEditor([]);
+    const { p, doc } = nodes;
 
     add(doc(p('on<cursor>e')));
     expect(helpers.isSelectionEmpty()).toBeTrue();

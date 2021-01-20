@@ -11,25 +11,16 @@ import {
 import { BoldExtension, ItalicExtension } from 'remirror/extensions';
 import { act, fireEvent, render, strictRender } from 'testing/react';
 
-import type { ReactFrameworkOutput } from '../';
+import type { ReactExtensions } from '../';
 import { createReactManager, Remirror, useManager, useRemirrorContext } from '../';
 
 const label = 'Remirror editor';
+const props = { label, stringHandler: 'text' as const };
 
-function create<Extension extends AnyExtension>(extensions?: Extension[]) {
-  const manager = createReactManager(extensions ?? []);
-  const chain = RemirrorTestChain.create(manager);
-
-  return {
-    manager,
-    chain,
-    doc: chain.nodes.doc,
-    p: chain.nodes.paragraph,
-    props: {
-      label,
-      stringHandler: 'text' as const,
-    },
-  };
+function create<Extension extends AnyExtension>(
+  extensions: Extension[] = [],
+): RemirrorTestChain<ReactExtensions<Extension>> {
+  return RemirrorTestChain.create(createReactManager(extensions));
 }
 
 let errorSpy = jest.spyOn(console, 'error');
@@ -44,7 +35,7 @@ afterEach(() => {
 
 describe('Remirror Controlled Component', () => {
   it('should set the initial value', () => {
-    const { manager, props } = create();
+    const { manager } = create();
 
     const value = manager.createState({
       content: '<p>This is the initial value</p>',
@@ -69,9 +60,9 @@ describe('Remirror Controlled Component', () => {
   });
 
   it('overrides initial content', () => {
-    const { manager, props, chain } = create();
+    const chain = create();
 
-    const value = manager.createState({
+    const value = chain.manager.createState({
       content: '<p>Not terrible</p>',
       stringHandler: htmlToProsemirrorNode,
     });
@@ -80,7 +71,7 @@ describe('Remirror Controlled Component', () => {
     strictRender(
       <Remirror
         {...props}
-        manager={manager}
+        manager={chain.manager}
         initialContent='<p>Terrible</p>'
         state={value}
         onChange={onChange}
@@ -92,11 +83,11 @@ describe('Remirror Controlled Component', () => {
   });
 
   it('responds to updates to the editor state', () => {
-    const { manager, props, chain } = create();
+    const chain = create();
 
     const Component = () => {
       const [value, setValue] = useState<EditorState>(
-        manager.createState({
+        chain.manager.createState({
           content: '<p>some content</p>',
           stringHandler: htmlToProsemirrorNode,
           selection: 'start',
@@ -107,7 +98,7 @@ describe('Remirror Controlled Component', () => {
         <Remirror
           {...props}
           state={value}
-          manager={manager}
+          manager={chain.manager}
           onChange={(changeProps) => {
             setValue(changeProps.state);
           }}
@@ -126,11 +117,11 @@ describe('Remirror Controlled Component', () => {
   });
 
   it('can override updates to the editor state', () => {
-    const { manager, props, chain } = create();
+    const chain = create();
 
     const Component = () => {
       const [state, setState] = useState<EditorState>(
-        manager.createState({
+        chain.manager.createState({
           content: '<p>some content</p>',
           stringHandler: 'html',
           selection: 'start',
@@ -141,7 +132,7 @@ describe('Remirror Controlled Component', () => {
         <Remirror
           {...props}
           state={state}
-          manager={manager}
+          manager={chain.manager}
           onChange={(changeProps) => {
             const { createStateFromContent, helpers, state } = changeProps;
             setState(
@@ -163,7 +154,7 @@ describe('Remirror Controlled Component', () => {
   });
 
   it('throws when switching from controlled to non-controlled', () => {
-    const { manager, props } = create();
+    const { manager } = create();
 
     const value = manager.createState({
       content: '<p>some content</p>',
@@ -198,7 +189,7 @@ describe('Remirror Controlled Component', () => {
   });
 
   it('throws when switching from non-controlled to controlled', () => {
-    const { manager, props } = create();
+    const { manager } = create();
 
     const value = manager.createState({
       content: '<p>some content</p>',
@@ -243,7 +234,9 @@ describe('Remirror Controlled Component', () => {
       onStateUpdate: (update: StateUpdateLifecycleProps) => void = mock;
     }
 
-    const { manager, props, chain, doc, p } = create([new UpdateExtension()]);
+    const chain = create([new UpdateExtension()]);
+    const { manager, nodes, commands } = chain;
+    const { doc, p } = nodes;
 
     const Component = () => {
       const [value, setValue] = useState<EditorState>(() =>
@@ -272,7 +265,7 @@ describe('Remirror Controlled Component', () => {
     strictRender(<Component />);
 
     act(() => {
-      chain.commands.insertText('First text update');
+      commands.insertText('First text update');
     });
 
     expect(mock).toHaveBeenCalledTimes(2);
@@ -285,8 +278,10 @@ describe('Remirror Controlled Component', () => {
 });
 
 test('can run multiple commands', () => {
-  const { manager, props, chain, doc, p } = create([new BoldExtension(), new ItalicExtension()]);
-  const { bold, italic } = chain.marks;
+  const chain = create([new BoldExtension(), new ItalicExtension()]);
+  const { manager, nodes, marks } = chain;
+  const { doc, p } = nodes;
+  const { bold, italic } = marks;
 
   const InnerComponent: FC = () => {
     const { getRootProps, commands } = useRemirrorContext();
@@ -345,7 +340,9 @@ test('can run multiple commands', () => {
 });
 
 test('NOTE: this test is to show that synchronous state updates only show the most recent state update', () => {
-  const { manager, props, chain, doc, p } = create([]);
+  const chain = create([]);
+  const { manager, nodes } = chain;
+  const { doc, p } = nodes;
 
   const InnerComponent: FC = () => {
     const { getRootProps, view } = useRemirrorContext();

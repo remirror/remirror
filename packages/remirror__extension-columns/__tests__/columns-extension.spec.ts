@@ -1,5 +1,5 @@
 import { extensionValidityTest } from 'jest-remirror';
 
-import { ColumnsExtension } from '..';
+import { ColumnsExtension } from '../';
 
 extensionValidityTest(ColumnsExtension);

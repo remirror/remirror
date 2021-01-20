@@ -4,12 +4,11 @@ import { isAllSelection } from '@remirror/core';
 import {
   blockNodePositioner,
   cursorPositioner,
-  emptyBlockNodePositioner,
   nearestWordPositioner,
   Positioner,
   PositionerExtension,
   selectionPositioner,
-} from '../..';
+} from '../';
 
 extensionValidityTest(PositionerExtension);
 

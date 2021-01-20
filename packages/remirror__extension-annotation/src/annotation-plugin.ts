@@ -7,9 +7,9 @@ import {
   RemoveAnnotationsAction,
   SetAnnotationsAction,
   UpdateAnnotationAction,
-} from './actions';
-import { toSegments } from './segments';
-import type { Annotation, GetStyle, OmitText } from './types';
+} from './annotation-actions';
+import { toSegments } from './annotation-segments';
+import type { Annotation, GetStyle, OmitText } from './annotation-types';
 
 interface ApplyProps extends TransactionProps {
   action: any;

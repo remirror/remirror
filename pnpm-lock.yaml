@@ -40,7 +40,7 @@ importers:
       '@types/jest': 26.0.20
       '@types/jest-axe': 3.5.1
       '@types/ms.macro': 2.0.0
-      '@types/node': 14.14.21
+      '@types/node': 14.14.22
       '@types/requestidlecallback': 0.3.1
       '@types/testing-library__jest-dom': 5.9.5
       '@types/testing-library__react-hooks': 3.4.1
@@ -77,7 +77,7 @@ importers:
       eslint-plugin-simple-import-sort: 7.0.0_eslint@7.18.0
       eslint-plugin-unicorn: 26.0.1_eslint@7.18.0
       esm: 3.2.25
-      expect-playwright: 0.3.0
+      expect-playwright: 0.3.1
       husky: 4.3.8
       if-env: 1.0.4
       jest: 26.6.3
@@ -146,7 +146,7 @@ importers:
       '@types/jest': ^26.0.20
       '@types/jest-axe': ^3.5.1
       '@types/ms.macro': ^2.0.0
-      '@types/node': ^14.14.21
+      '@types/node': ^14.14.22
       '@types/requestidlecallback': ^0.3.1
       '@types/testing-library__jest-dom': ^5.9.5
       '@types/testing-library__react-hooks': ^3.4.1
@@ -183,7 +183,7 @@ importers:
       eslint-plugin-simple-import-sort: ^7.0.0
       eslint-plugin-unicorn: ^26.0.1
       esm: ^3.2.25
-      expect-playwright: ^0.3.0
+      expect-playwright: ^0.3.1
       husky: ^4.3.8
       if-env: ^1.0.4
       jest: ^26.6.3
@@ -413,7 +413,7 @@ importers:
       mutationobserver-shim: 0.3.7
       sanitize-html: 2.3.0
     devDependencies:
-      '@types/node': 14.14.21
+      '@types/node': 14.14.22
       jest: 26.6.3
     specifiers:
       '@babel/runtime': ^7.12.5
@@ -422,7 +422,7 @@ importers:
       '@remirror/pm': 1.0.0-next.60
       '@remirror/preset-core': 1.0.0-next.60
       '@testing-library/dom': ^7.29.4
-      '@types/node': ^14.14.21
+      '@types/node': ^14.14.22
       '@types/sanitize-html': ^1.27.0
       jest: ^26.6.3
       jest-prosemirror: 1.0.0-next.60
@@ -740,7 +740,7 @@ importers:
       '@types/ink-spinner': 3.0.0
       '@types/ink-testing-library': 1.0.1
       '@types/jsesc': 2.5.1
-      '@types/node': 14.14.21
+      '@types/node': 14.14.22
       '@types/parcel-bundler': 1.12.3
       '@types/react': 17.0.0
       '@types/rimraf': 3.0.0
@@ -753,7 +753,7 @@ importers:
       '@types/ink-testing-library': ^1.0.1
       '@types/jsesc': ^2.5.1
       '@types/ms': ^0.7.31
-      '@types/node': ^14.14.21
+      '@types/node': ^14.14.22
       '@types/parcel-bundler': ^1.12.3
       '@types/react': ^17.0.0
       '@types/rimraf': ^3.0.0
@@ -880,7 +880,7 @@ importers:
       type-fest: 0.20.2
     devDependencies:
       '@remirror/pm': link:../remirror__pm
-      '@types/node': 14.14.21
+      '@types/node': 14.14.22
       domino: 2.1.6
     specifiers:
       '@babel/runtime': ^7.12.5
@@ -890,7 +890,7 @@ importers:
       '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
       '@types/min-document': ^2.19.0
-      '@types/node': ^14.14.21
+      '@types/node': ^14.14.22
       css-in-js-utils: ^3.1.0
       domino: ^2.1.6
       min-document: ^2.19.0
@@ -1199,7 +1199,7 @@ importers:
       escape-string-regexp: 4.0.0
       idb-keyval: 5.0.1
       match-sorter: 6.1.0
-      svgmoji: 2.0.0
+      svgmoji: 3.0.0
       type-fest: 0.20.2
     devDependencies:
       '@remirror/core': link:../remirror__core
@@ -1216,7 +1216,7 @@ importers:
       escape-string-regexp: ^4.0.0
       idb-keyval: ^5.0.1
       match-sorter: ^6.1.0
-      svgmoji: ^2.0.0
+      svgmoji: ^3.0.0
       type-fest: ^0.20.2
   packages/remirror__extension-epic-mode:
     dependencies:
@@ -1840,7 +1840,7 @@ importers:
       prosemirror-paste-rules: link:../prosemirror-paste-rules
       prosemirror-suggest: link:../prosemirror-suggest
       prosemirror-trailing-node: link:../prosemirror-trailing-node
-      react-content-loader: 6.0.0_react@17.0.1
+      react-content-loader: 6.0.1_react@17.0.1
       react-error-boundary: 3.1.0_react@17.0.1
       react-frame-component: 4.1.3_react-dom@17.0.1+react@17.0.1
       react-grid-layout: 1.2.0_react-dom@17.0.1+react@17.0.1
@@ -1903,7 +1903,7 @@ importers:
       prosemirror-suggest: 1.0.0-next.60
       prosemirror-trailing-node: 0.0.0
       react: ^17.0.1
-      react-content-loader: ^6.0.0
+      react-content-loader: ^6.0.1
       react-dom: ^17.0.1
       react-error-boundary: ^3.1.0
       react-frame-component: ^4.1.3
@@ -2235,7 +2235,7 @@ importers:
       '@types/react-dom': 17.0.0
       react: 17.0.1
       react-dom: 17.0.1_react@17.0.1
-      svgmoji: 2.0.0
+      svgmoji: 3.0.0
     specifiers:
       '@babel/runtime': ^7.12.5
       '@remirror/core': 1.0.0-next.60
@@ -2253,7 +2253,7 @@ importers:
       '@types/react-dom': ^17.0.0
       react: ^17.0.1
       react-dom: ^17.0.1
-      svgmoji: ^2.0.0
+      svgmoji: ^3.0.0
       type-fest: ^0.20.2
       use-isomorphic-layout-effect: ^1.1.1
   packages/remirror__react-native:
@@ -2261,14 +2261,14 @@ importers:
       '@babel/runtime': 7.12.5
     devDependencies:
       '@types/react': 17.0.0
-      '@types/react-native': 0.63.45
+      '@types/react-native': 0.63.46
       react: 17.0.1
       react-native: 0.63.4_react@17.0.1
       react-native-builder-bob: 0.17.1
     specifiers:
       '@babel/runtime': ^7.12.5
       '@types/react': ^17.0.0
-      '@types/react-native': ^0.63.45
+      '@types/react-native': ^0.63.46
       react: ^17.0.1
       react-native: ^0.63.4
       react-native-builder-bob: ^0.17.1
@@ -2396,7 +2396,7 @@ importers:
       '@types/signal-exit': 3.0.0
       '@types/wait-on': 5.2.0
       delay: 4.4.0
-      expect-playwright: 0.3.0_playwright-core@1.7.1
+      expect-playwright: 0.3.1_playwright-core@1.7.1
       jest: 26.6.3
       jest-dev-server: 4.4.0
       jest-diff: 26.6.2
@@ -2436,7 +2436,7 @@ importers:
       '@types/signal-exit': ^3.0.0
       '@types/wait-on': ^5.2.0
       delay: ^4.4.0
-      expect-playwright: ^0.3.0
+      expect-playwright: ^0.3.1
       jest: ^26.6.3
       jest-dev-server: ^4.4.0
       jest-diff: ^26.6.2
@@ -2510,7 +2510,7 @@ importers:
       type-fest: 0.20.2
       typedoc: 0.20.16
       typedoc-plugin-external-module-name: 4.0.6_typedoc@0.20.16
-      typedoc-plugin-markdown: 3.4.0_typedoc@0.20.16
+      typedoc-plugin-markdown: 3.4.1_typedoc@0.20.16
       write-json-file: 4.3.0
     specifiers:
       '@changesets/get-dependents-graph': ^1.1.3
@@ -2571,7 +2571,7 @@ importers:
       type-fest: ^0.20.2
       typedoc: ^0.20.16
       typedoc-plugin-external-module-name: ^4.0.6
-      typedoc-plugin-markdown: ^3.4.0
+      typedoc-plugin-markdown: ^3.4.1
       write-json-file: ^4.3.0
   support/templates/extension-template:
     dependencies:
@@ -7565,15 +7565,15 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0
     resolution:
       integrity: sha512-DTW2TM05jTMKxh8LzUGk3g5a528PgJxrtgODFU6zzwSg2+LwdmSDtd1HAxopt2vpfTyQyX+6WN2H+lMNwfQTAQ==
-  /@svgmoji/blob/2.0.0_@svgmoji+core@2.0.0:
+  /@svgmoji/blob/3.0.0_@svgmoji+core@3.0.0:
     dependencies:
       '@babel/runtime': 7.12.5
-      '@svgmoji/core': 2.0.0
+      '@svgmoji/core': 3.0.0
     peerDependencies:
-      '@svgmoji/core': ^2.0.0
+      '@svgmoji/core': ^3.0.0
     resolution:
-      integrity: sha512-SWE07ckMyMZvbsBotcPBkY2X+MT2n0QeSI4epnAR8fH0e0cHIC670ptPZc8qsqnX0cZRnpIAFSmcHkLgBbBZeQ==
-  /@svgmoji/core/2.0.0:
+      integrity: sha512-8SkWNjp+QK1+SOobGuuJ/SXghupOlzi0Bvz9/NyqqIqul9MRUUCWbaZQ0//so37i//gcDiVytB3B+BevUKzJrw==
+  /@svgmoji/core/3.0.0:
     dependencies:
       '@babel/runtime': 7.12.5
       emojibase: 5.1.0
@@ -7582,31 +7582,31 @@ packages:
       match-sorter: 6.1.0
       type-fest: 0.19.0
     resolution:
-      integrity: sha512-U9ByMZ6nY2V51iRKZoZ0s1BmXJuB3cnADysWo8hpFPgsRBPySK8m3jr/bkDrxb3ubK8Rt934zrVOagIqvr9TYg==
-  /@svgmoji/noto/2.0.0_@svgmoji+core@2.0.0:
+      integrity: sha512-pEAn6m4vXXJgooMDDecY8hoJByeIjCZJJ7mhK07WycUT4x9OHRs1bTsc+lDoxY7+3hu791ejbZBGQmqt4sVYwA==
+  /@svgmoji/noto/3.0.0_@svgmoji+core@3.0.0:
     dependencies:
       '@babel/runtime': 7.12.5
-      '@svgmoji/core': 2.0.0
+      '@svgmoji/core': 3.0.0
     peerDependencies:
-      '@svgmoji/core': ^2.0.0
+      '@svgmoji/core': ^3.0.0
     resolution:
-      integrity: sha512-L+fSn/w6v3p+piZr0fIVMMf8dO4xfb9T5JZ9WxSanREDuOzkEncU1pYoD9gahoe00ijcwE8F/GtB1zdSKrXr9g==
-  /@svgmoji/openmoji/2.0.0_@svgmoji+core@2.0.0:
+      integrity: sha512-33EwFB/u41al9Ktjbd+dFicV8Fy3er7Em6Fki7mN9YO8ejeQJXQ8BQgZBeh3mftdkGG94oDMvJYKrOTs+Bv2Jg==
+  /@svgmoji/openmoji/3.0.0_@svgmoji+core@3.0.0:
     dependencies:
       '@babel/runtime': 7.12.5
-      '@svgmoji/core': 2.0.0
+      '@svgmoji/core': 3.0.0
     peerDependencies:
-      '@svgmoji/core': ^2.0.0
+      '@svgmoji/core': ^3.0.0
     resolution:
-      integrity: sha512-nVX29KzCQ2fBt4I5bB65390WfUmGg7bV0fgal+nZmyZ2AyKFIHJ5k8JawVIbD0QiB3WbmIjXVoa5v7HRtPMnQQ==
-  /@svgmoji/twemoji/2.0.0_@svgmoji+core@2.0.0:
+      integrity: sha512-vNtna5RWYStQDCzoHX6wtEG7c2Hr4SJER3wdlNUJT2oCP/o47LsVv0QV79QXxzPqMD+L2UCDlSrcsy2vOfbvZQ==
+  /@svgmoji/twemoji/3.0.0_@svgmoji+core@3.0.0:
     dependencies:
       '@babel/runtime': 7.12.5
-      '@svgmoji/core': 2.0.0
+      '@svgmoji/core': 3.0.0
     peerDependencies:
-      '@svgmoji/core': ^2.0.0
+      '@svgmoji/core': ^3.0.0
     resolution:
-      integrity: sha512-r7BXCoSoAgUrYIk1hxwrRCFrMk3gly0AwjLt/ofqSPaII1jSUjAueLBOdsoveyOs4GC2kU7WbEUWWODpdVr6xQ==
+      integrity: sha512-79w2iyWUklCIgMNLvKr8xzUFp+xq6w2zFte8c8zS4oi3EV7fYnbfpZBh23R8z6k/T/EEl7APYpChSTTjTsgFUw==
   /@svgr/babel-plugin-add-jsx-attribute/5.4.0:
     dev: true
     engines:
@@ -8253,6 +8253,9 @@ packages:
   /@types/node/14.14.21:
     resolution:
       integrity: sha512-cHYfKsnwllYhjOzuC5q1VpguABBeecUp24yFluHpn/BQaVxB1CuQ1FSRZCzrPxrkIfWISXV2LbeoBthLWg0+0A==
+  /@types/node/14.14.22:
+    resolution:
+      integrity: sha512-g+f/qj/cNcqKkc3tFqlXOYjrmZA+jNBiDzbP3kH+B+otKFqAdPgVTGP1IeKRdMml/aE69as5S4FqtxAbl+LaMw==
   /@types/normalize-package-data/2.4.0:
     resolution:
       integrity: sha512-f5j5b/Gf71L+dbqxIpQ4Z2WlmI/mPJ0fOkGGmFgtb6sAu97EPczzbS3/tJKxmcYDj55OX6ssqwDAWOHIYDRDGA==
@@ -8469,12 +8472,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-otKcjNCfVUzdBMdwOqFITTmBruIXw6GeoZitTBvJ6BMrif8Utu2JLy42GWukNnYI7ewJdncUCooz5Y/1dBz4+w==
-  /@types/react-native/0.63.45:
+  /@types/react-native/0.63.46:
     dependencies:
       '@types/react': 17.0.0
     dev: true
     resolution:
-      integrity: sha512-HvsHe8hbcAuZJKcqUEN+E/qV1TNjL6venNUiQvDi7d1IlEK6ZyTrpIS937PwiNWc3UePNzR0xZ++aqpMAJqz1A==
+      integrity: sha512-SnBnWRErpISIaWk4K8kAfIKqSPdZ8fdH6HIw7kVdz6jMl/5FAf6iXeIwRfVZg1bCMh+ymNPCpSENNNEVprxj/w==
   /@types/react-syntax-highlighter/11.0.4:
     dependencies:
       '@types/react': 17.0.0
@@ -14416,12 +14419,6 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-C4HrqJflo9MdHD0QL48BRB5VlEk=
-  /expect-playwright/0.3.0:
-    dev: false
-    peerDependencies:
-      playwright-core: ^1.7.1
-    resolution:
-      integrity: sha512-BSEj56w7/w9RrFkzfypn3e7OOdGr5gD1OKTEB2891dZ0O8hE1K+HGrgx2pcyPnKdp+6KM/YaKs4GKkRZ9pKsAw==
   /expect-playwright/0.3.0_playwright-core@1.7.1:
     dependencies:
       playwright-core: 1.7.1
@@ -14430,6 +14427,20 @@ packages:
       playwright-core: ^1.7.1
     resolution:
       integrity: sha512-BSEj56w7/w9RrFkzfypn3e7OOdGr5gD1OKTEB2891dZ0O8hE1K+HGrgx2pcyPnKdp+6KM/YaKs4GKkRZ9pKsAw==
+  /expect-playwright/0.3.1:
+    dev: false
+    peerDependencies:
+      playwright-core: ^1.7.1
+    resolution:
+      integrity: sha512-ev8sGRCleoipm2BMtblM45mj1NxQNjtdWQd78je/XFOqhH1c6MC48AqncRdSqonFWHGm7at4FuWCT/CBWayLBg==
+  /expect-playwright/0.3.1_playwright-core@1.7.1:
+    dependencies:
+      playwright-core: 1.7.1
+    dev: false
+    peerDependencies:
+      playwright-core: ^1.7.1
+    resolution:
+      integrity: sha512-ev8sGRCleoipm2BMtblM45mj1NxQNjtdWQd78je/XFOqhH1c6MC48AqncRdSqonFWHGm7at4FuWCT/CBWayLBg==
   /expect/24.9.0:
     dependencies:
       '@jest/types': 24.9.0
@@ -15898,7 +15909,7 @@ packages:
       node: '>=0.4.7'
     hasBin: true
     optionalDependencies:
-      uglify-js: 3.12.4
+      uglify-js: 3.12.5
     resolution:
       integrity: sha512-1f2BACcBfiwAfStCKZNrUCgqNZkGsAT7UM3kkYtXuLo0KnaVfjKOyf7PRzB6++aK9STyT1Pd2ZCPe3EGOXleXA==
   /har-schema/2.0.0:
@@ -23879,7 +23890,7 @@ packages:
       react: '*'
     resolution:
       integrity: sha512-LEeGE/ZzNLIsFWa1TMe8y5VYqr7bibneWmvJwm1pCn/eNmrabWDh659JSPn9BuaMpEfU83WTOJfnCcjDZwNQTA==
-  /react-content-loader/6.0.0_react@17.0.1:
+  /react-content-loader/6.0.1_react@17.0.1:
     dependencies:
       react: 17.0.1
     dev: false
@@ -23888,7 +23899,7 @@ packages:
     peerDependencies:
       react: '>=16.0.0'
     resolution:
-      integrity: sha512-+v3GxZvHALPn5853cCqpQx8FkaSP6lBXdh1XPdqGCzlZTvP0+FcPTGbsfpZOPnaRSiourcGaW0TFTysHDN/elA==
+      integrity: sha512-djJUgGNze7YdWzJA1kYO1eKXAMpP+Z4sMulmEuTVi6vEXzfuQCJs6yD8hhgWj23vvJPZL5b8NyabxteyF8Hq/g==
   /react-dev-utils/10.2.1:
     dependencies:
       '@babel/code-frame': 7.8.3
@@ -27118,16 +27129,16 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-0mE5BLY3K8wg3+HrYfzpiKbIM44IGcg8uINED8ri22EdQbLvGecOHjRtkrNAlphbiU5kyGyqoBlIaukL45fs2Q==
-  /svgmoji/2.0.0:
+  /svgmoji/3.0.0:
     dependencies:
       '@babel/runtime': 7.12.5
-      '@svgmoji/blob': 2.0.0_@svgmoji+core@2.0.0
-      '@svgmoji/core': 2.0.0
-      '@svgmoji/noto': 2.0.0_@svgmoji+core@2.0.0
-      '@svgmoji/openmoji': 2.0.0_@svgmoji+core@2.0.0
-      '@svgmoji/twemoji': 2.0.0_@svgmoji+core@2.0.0
+      '@svgmoji/blob': 3.0.0_@svgmoji+core@3.0.0
+      '@svgmoji/core': 3.0.0
+      '@svgmoji/noto': 3.0.0_@svgmoji+core@3.0.0
+      '@svgmoji/openmoji': 3.0.0_@svgmoji+core@3.0.0
+      '@svgmoji/twemoji': 3.0.0_@svgmoji+core@3.0.0
     resolution:
-      integrity: sha512-lYy0h56Avmuq8ttIpCsJqD1PNXzeS+Ri/ktRrdI5Orl3DYUxiMp70/wsimpjPC8RUSeDeepZTJDX0dySVSIE/A==
+      integrity: sha512-arP+EAqTSeRBaNCB8Xoky8QPASgLdYON0mySBSgKpjsy5cim6qvGuaJunEAo6WnCARfQojhzRm9hfxeJRUVwnw==
   /svgo/1.3.2:
     dependencies:
       chalk: 2.4.2
@@ -27829,7 +27840,7 @@ packages:
       typedoc: '>=0.7.0 <0.20.0'
     resolution:
       integrity: sha512-WqJW5gbfeQD7VA96p5eRFkVlPPGXfpaAo7M/sNOeBwSBTRylKYX15kAVaGP6iM/VhXtDagTMyKhwG97sENfKHA==
-  /typedoc-plugin-markdown/3.4.0_typedoc@0.20.16:
+  /typedoc-plugin-markdown/3.4.1_typedoc@0.20.16:
     dependencies:
       handlebars: 4.7.6
       typedoc: 0.20.16
@@ -27839,7 +27850,7 @@ packages:
     peerDependencies:
       typedoc: '>=0.20.0'
     resolution:
-      integrity: sha512-aHLWI4jeSpSDgMbRByinRp+b2u4kHXySiccZc7lKSExH4Md44ds21oH0g+xZ5lBv9dhZdTz7mhTCrbAm5Nh24w==
+      integrity: sha512-nKy8k2d8CAHtTekZ/WcQc9/9OXPIg98QYbiyMeiYaXnX4hIa6e1MaDTpkmAMV96xY8nuZn7onoNYs94R5p5EbQ==
   /typedoc/0.20.16:
     dependencies:
       colors: 1.4.0
@@ -27919,14 +27930,14 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-r+MU0rfv4L/0eeW3xZrd16t4NZfK8Ld4SWVglYBb7ez5uXFWHuVRs6xCTrf1yirs9a4j4Y27nn7SRfO6v67XsQ==
-  /uglify-js/3.12.4:
+  /uglify-js/3.12.5:
     dev: false
     engines:
       node: '>=0.8.0'
     hasBin: true
     optional: true
     resolution:
-      integrity: sha512-L5i5jg/SHkEqzN18gQMTWsZk3KelRsfD1wUVNqtq0kzqWQqcJjyL8yc1o8hJgRrWqrAl2mUFbhfznEIoi7zi2A==
+      integrity: sha512-SgpgScL4T7Hj/w/GexjnBHi3Ien9WS1Rpfg5y91WXMj9SY997ZCQU76mH4TpLwwfmMvoOU8wiaRkIf6NaH3mtg==
   /ultron/1.0.2:
     dev: true
     resolution:

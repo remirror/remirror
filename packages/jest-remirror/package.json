@@ -46,7 +46,7 @@
     "sanitize-html": "^2.3.0"
   },
   "devDependencies": {
-    "@types/node": "^14.14.21",
+    "@types/node": "^14.14.22",
     "jest": "^26.6.3"
   },
   "peerDependencies": {

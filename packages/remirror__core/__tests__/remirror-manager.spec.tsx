@@ -1,4 +1,11 @@
 import { createEditor, doc, p } from 'jest-prosemirror';
+import {
+  isRemirrorManager,
+  NodeExtension,
+  NodeViewsExtension,
+  PlainExtension,
+  RemirrorManager,
+} from 'remirror';
 import { corePreset, createCoreManager, HeadingExtension } from 'remirror/extensions';
 import { createFramework, hideConsoleError } from 'testing';
 import { EMPTY_PARAGRAPH_NODE, ExtensionPriority, ExtensionTag } from '@remirror/core-constants';
@@ -13,14 +20,6 @@ import { Schema } from '@remirror/pm/model';
 import { EditorState, Plugin } from '@remirror/pm/state';
 import { EditorView } from '@remirror/pm/view';
 
-import {
-  isRemirrorManager,
-  NodeExtension,
-  NodeViewsExtension,
-  PlainExtension,
-  RemirrorManager,
-} from '../';
-
 describe('Manager', () => {
   let state: EditorState;
 
@@ -32,6 +31,7 @@ describe('Manager', () => {
     get name() {
       return 'dummy' as const;
     }
+
     createTags() {
       return [ExtensionTag.Behavior, ExtensionTag.LastNodeCompatible];
     }
@@ -114,15 +114,15 @@ describe('Manager', () => {
 
   describe('#properties', () => {
     it('should sort extensions by priority', () => {
-      expect(manager.extensions[0].name).toBe('dummy');
-      expect(manager.extensions[manager.extensions.length - 1].name).toBe('big');
+      expect(manager.extensions[0]?.name).toBe('dummy');
+      expect(manager.extensions[manager.extensions.length - 1]?.name).toBe('big');
     });
 
     it('should allow overriding the priority', () => {
       manager = manager.recreate([], { priority: { dummy: ExtensionPriority.Lowest } });
-      expect(manager.extensions[0].name).not.toBe('dummy');
-      expect(manager.extensions[manager.extensions.length - 1].name).toBe('big');
-      expect(manager.extensions[manager.extensions.length - 2].name).toBe('dummy');
+      expect(manager.extensions[0]?.name).not.toBe('dummy');
+      expect(manager.extensions[manager.extensions.length - 1]?.name).toBe('big');
+      expect(manager.extensions[manager.extensions.length - 2]?.name).toBe('dummy');
     });
 
     it('should provide the schema at instantiation', () => {

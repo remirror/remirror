@@ -1,5 +1,5 @@
 import { extensionValidityTest } from 'jest-remirror';
 
-import { NativeBridgeExtension } from '..';
+import { NativeBridgeExtension } from '../';
 
 extensionValidityTest(NativeBridgeExtension);
