@@ -1,4 +1,4 @@
-import { ProsemirrorNode, RemirrorJSON } from '@remirror/core';
+import { ProsemirrorNode, range, RemirrorJSON } from '@remirror/core';
 
 function findNode(
   fullPath: Array<string | number>,
@@ -69,7 +69,7 @@ function findNodeJson(
   //   return fullPath.concat('content');
   // }
 
-  for (const [index, section] of node.content.entries()) {
+  for (const index of range(node.content.length)) {
     const path = findNodeJson([...fullPath, 'content', index], node, nodeToFind);
 
     if (path?.length) {

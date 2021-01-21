@@ -1,8 +1,0 @@
-{
-  "main": "dist/remirror-dev-render.cjs.js",
-  "module": "dist/remirror-dev-render.esm.js",
-  "browser": {
-    "./dist/remirror-dev-render.cjs.js": "./dist/remirror-dev-render.browser.cjs.js",
-    "./dist/remirror-dev-render.esm.js": "./dist/remirror-dev-render.browser.esm.js"
-  }
-}

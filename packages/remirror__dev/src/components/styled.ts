@@ -1,6 +1,8 @@
-import type * as _ from '@emotion/react';
+import type * as _t from '@emotion/react'; // For type inference
 import styled from '@emotion/styled';
 import { Button } from 'reakit/Button';
+// import type * as __ from 'reakit-system';
+import type * as __t from 'reakit-utils'; // For type inference
 
 import { mainTheme } from '../dev-constants';
 

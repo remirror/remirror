@@ -4,7 +4,7 @@
 
 import { Model, ModelV0, ModelV1 } from './playground-types';
 
-function migrateV0ToV1(model: ModelV0): ModelV1 {
+function migrateV0ToV1(_: ModelV0): ModelV1 {
   return {} as any;
 }
 

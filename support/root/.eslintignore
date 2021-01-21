@@ -3,10 +3,12 @@
 !.changeset
 **/lib
 lib
-**/dist
-dist
 **/node_modules
 **/node_modules/**
+**/dist
+dist
+**/dist-types
+dist-types
 node_modules
 .out
 public

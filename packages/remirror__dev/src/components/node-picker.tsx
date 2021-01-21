@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
-import { isNumber } from '@remirror/core-helpers';
+import { isNumber } from '@remirror/core';
 
 import { mainTheme } from '../dev-constants';
 

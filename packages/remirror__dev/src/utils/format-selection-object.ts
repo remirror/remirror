@@ -1,46 +1,32 @@
-const copyProps = [
-  'jsonID',
-  'empty',
-  'anchor',
-  'from',
-  'head',
-  'to',
-  '$anchor',
-  '$head',
-  '$cursor',
-  '$to',
-  '$from',
-];
+import { isTextSelection } from '@remirror/core';
+import { ResolvedPos } from '@remirror/pm/model';
+import { Selection } from '@remirror/pm/state';
 
-const copySubProps = {
-  $from: ['nodeAfter', 'nodeBefore', 'parent', 'textOffset', 'depth', 'pos'],
-  $to: ['nodeAfter', 'nodeBefore', 'parent', 'textOffset', 'depth', 'pos'],
-};
-
-const isNode = new Set(['nodeAfter', 'nodeBefore', 'parent']);
-
-function filterProps(selection, props, subProps) {
-  return props.reduce((acc, prop) => {
-    if (subProps?.[prop]) {
-      acc[prop] = subProps[prop].reduce((subAcc, subProps) => {
-        subAcc[subProps] =
-          !isNode.has(subProps) || !selection[prop][subProps]
-            ? selection[prop][subProps]
-            : selection[prop][subProps].toJSON();
-        return subAcc;
-      }, {});
-    } else {
-      acc[prop === 'jsonID' ? 'type' : prop] = selection[prop];
-    }
-
-    return acc;
-  }, {});
+export function expandedStateFormatSelection(selection: Selection): object {
+  return {
+    ...collapsedStateFormatSelection(selection),
+    $anchor: resolvedPosToJSON(selection.$anchor),
+    $head: resolvedPosToJSON(selection.$head),
+    $from: resolvedPosToJSON(selection.$from),
+    $to: resolvedPosToJSON(selection.$to),
+    $cursor:
+      isTextSelection(selection) && selection.$cursor
+        ? resolvedPosToJSON(selection.$cursor)
+        : undefined,
+  };
 }
 
-export function expandedStateFormatSelection(selection) {
-  return filterProps(selection, copyProps, copySubProps);
+export function collapsedStateFormatSelection(selection: Selection): object {
+  return { ...selection.toJSON(), empty: selection.empty, from: selection.from, to: selection.to };
 }
 
-export function collapsedStateFormatSelection(selection) {
-  return filterProps(selection, copyProps.slice(0, 6));
+function resolvedPosToJSON($pos: ResolvedPos): object {
+  return {
+    nodeAfter: $pos.nodeAfter?.toJSON(),
+    nodeBefore: $pos.nodeBefore?.toJSON(),
+    parent: $pos.parent?.toJSON(),
+    textOffset: $pos.textOffset,
+    depth: $pos.depth,
+    pos: $pos.pos,
+  };
 }

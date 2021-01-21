@@ -1,5 +1,5 @@
 import { ContextCreatorHelpers, createContextState } from 'create-context-state';
-import { set } from 'idb-keyval';
+import { get, set } from 'idb-keyval';
 import { useMemo } from 'react';
 import { TabStateReturn, useTabState } from 'reakit/Tab';
 import {
@@ -37,6 +37,10 @@ export interface DevStoreContext {
   historyRolledBackTo: false | number;
   selectedHistoryIndex: number;
   snapshots: DevSnapshot[];
+  /**
+   * When `true` the snapshots are being loaded.
+   */
+  loadingSnapshots: boolean;
   nodePicker: NodePicker;
   selectedPlugin: number;
   selectionExpanded: boolean;
@@ -46,7 +50,6 @@ export interface DevStoreContext {
 export interface DevStoreProps {
   manager: RemirrorManager<any>;
   diffWorker?: boolean;
-  savedSnapshots: DevSnapshot[];
 }
 
 interface DevStoreState {
@@ -66,6 +69,11 @@ export const [DevStoreProvider, useDevStore] = createContextState<
 
     const { props, previousContext, state } = helpers;
     const actions = new DevState(helpers);
+    const loadingSnapshots = previousContext?.loadingSnapshots ?? true;
+
+    if (loadingSnapshots) {
+      actions.loadSnapshots();
+    }
 
     return {
       tabState: state.tab,
@@ -78,7 +86,8 @@ export const [DevStoreProvider, useDevStore] = createContextState<
       expandPath: [],
       historyRolledBackTo: false,
       selectedHistoryIndex: 0,
-      snapshots: previousContext?.snapshots ?? props.savedSnapshots ?? [],
+      snapshots: previousContext?.snapshots ?? [],
+      loadingSnapshots,
       nodePicker: previousContext?.nodePicker ?? NODE_PICKER_DEFAULT,
       selectedNode: undefined,
       selectedPlugin: 0,
@@ -176,29 +185,29 @@ class DevState {
   /**
    * Update the tab being used.
    */
-  selectTab = (tab: TabName) => {
+  readonly selectTab = (tab: TabName): void => {
     this.helpers.state.tab.select(tab);
   };
 
-  toggleSelection = () => {
+  readonly toggleSelection = (): void => {
     this.helpers.set((previous) => ({ selectionExpanded: !previous.selectionExpanded }));
   };
 
-  selectNode = (selectedNode: NodeWithPosition | undefined) => {
+  readonly selectNode = (selectedNode: NodeWithPosition | undefined): void => {
     this.helpers.set({ selectedNode });
   };
 
-  selectPlugin = (selectedPlugin: number) => {
+  readonly selectPlugin = (selectedPlugin: number): void => {
     this.helpers.set({ selectedPlugin });
   };
 
-  activatePicker = () => {
+  readonly activatePicker = (): void => {
     this.helpers.set({
       nodePicker: { ...NODE_PICKER_DEFAULT, active: true },
     });
   };
 
-  deactivatePicker = () => {
+  readonly deactivatePicker = (): void => {
     if (!this.context.nodePicker.active) {
       return;
     }
@@ -206,7 +215,7 @@ class DevState {
     this.helpers.set({ nodePicker: NODE_PICKER_DEFAULT });
   };
 
-  updateNodePickerPosition = (target: Node) => {
+  readonly updateNodePickerPosition = (target: Node): void => {
     const nodePicker = { ...NODE_PICKER_DEFAULT, active: true };
 
     if (!this.view.dom.contains(target)) {
@@ -225,6 +234,7 @@ class DevState {
     }
 
     const { top, left, width, height } = nodeDom.getBoundingClientRect();
+
     this.helpers.set({
       nodePicker: {
         top: top + window.scrollY,
@@ -236,7 +246,7 @@ class DevState {
     });
   };
 
-  selectNodePicker = (target: Node) => {
+  readonly selectNodePicker = (target: Node): void => {
     if (!this.view.dom.contains(target)) {
       this.helpers.set({ nodePicker: NODE_PICKER_DEFAULT });
       return;
@@ -251,25 +261,40 @@ class DevState {
   };
 
   /**
+   * Load all snapshots from the local store and update the local context to
+   * reflect the change.
+   */
+  readonly loadSnapshots = async (): Promise<void> => {
+    const snapshots = await get(SNAPSHOTS_KEY);
+    this.helpers.set({ snapshots });
+  };
+
+  /**
    * Save a snapshot of the current state.
    */
-  saveSnapshot = async (name: string) => {
+  readonly saveSnapshot = async (name: string): Promise<void> => {
     if (!name) {
       return;
     }
 
     const { doc: content, selection } = this.manager.store.helpers.getStateJSON();
     const snapshot = { name, content, selection, timestamp: Date.now() };
+    let promise: Promise<void> | undefined;
 
     this.helpers.set((previous) => {
       const snapshots = [...previous.snapshots, snapshot];
-      set(SNAPSHOTS_KEY, snapshots);
+      promise = set(SNAPSHOTS_KEY, snapshots);
 
       return { snapshots };
     });
+
+    await promise;
   };
 
-  loadSnapshot = ({ content, selection }: DevSnapshot) => {
+  /**
+   * Set a snapshot to be the active snapshot.
+   */
+  readonly loadSnapshot = ({ content, selection }: DevSnapshot): void => {
     const state = this.manager.createState({ content, selection });
 
     this.helpers.set({
@@ -277,32 +302,39 @@ class DevState {
       state,
     });
 
+    // TODO This would wipe away history.
     this.view.updateState(state);
   };
 
-  deleteSnapshot = (snapshot: DevSnapshot) => {
+  readonly deleteSnapshot = async (snapshot: DevSnapshot): Promise<void> => {
+    let promise: Promise<void> | undefined;
+
     this.helpers.set((previous) => {
       const snapshots = previous.snapshots.filter((item) => item !== snapshot);
-      set(SNAPSHOTS_KEY, snapshots);
+      promise = set(SNAPSHOTS_KEY, snapshots);
 
       return { snapshots };
     });
+
+    await promise;
   };
 
-  logNodeFromJSON = (doc: RemirrorJSON, node: RemirrorJSON) => {
-    const fullDoc = this.context.state.doc;
+  readonly logNodeFromJSON = (doc: RemirrorJSON, node: RemirrorJSON): void => {
+    // const fullDoc = this.context.state.doc;
     const path = generateJsonNodePath(doc, node);
 
     if (path) {
+      console.log('Not Implemented');
     } else {
+      console.log('Not implemented');
     }
   };
 
-  selectHistoryItem = (selectedHistoryIndex: number) => {
+  readonly selectHistoryItem = (selectedHistoryIndex: number): void => {
     return this.helpers.set({ selectedHistoryIndex });
   };
 
-  rollbackHistory = (index: number) => {
+  readonly rollbackHistory = (index: number): void => {
     const historyEntry = this.context.history[index];
 
     if (!historyEntry) {
@@ -327,3 +359,5 @@ class DevState {
     });
   };
 }
+
+export type { DevState };

@@ -1,25 +1,28 @@
-import React from 'react';
-import { Subscribe } from 'unstated';
+import { isObject, Shape } from '@remirror/core';
 
 import { useDevStore } from '../../dev-state';
-import JSONTree from '../components/json-tree.tsv';
-import { SplitView, SplitViewColumn } from '../components/split-view';
-import EditorStateContainer from '../state/editor';
-import { Heading } from './../components/heading';
+import { JsonTree } from '../json-tree';
+import { SplitView, SplitViewColumn } from '../styled';
+import { Heading } from '../styled';
 
 const ignoreFields = ['schema', 'contentExpr', 'schema', 'parseDOM', 'toDOM'];
 
-export function postprocessValue(ignore, data) {
-  if (!data || Object.prototype.toString.call(data) !== '[object Object]') {
+function postprocessValue(ignore: string[], data: unknown) {
+  if (!data || !isObject(data)) {
     return data;
   }
 
-  return Object.keys(data)
-    .filter((key) => !ignore.includes(key))
-    .reduce((res, key) => {
-      res[key] = data[key];
-      return res;
-    }, {});
+  const processedValue: Shape = {};
+
+  for (const [key, value] of Object.entries(data)) {
+    if (ignore.includes(key)) {
+      continue;
+    }
+
+    processedValue[key] = value;
+  }
+
+  return processedValue;
 }
 
 export const SchemaTab = (): JSX.Element => {
@@ -29,14 +32,14 @@ export const SchemaTab = (): JSX.Element => {
     <SplitView>
       <SplitViewColumn grow>
         <Heading>Nodes</Heading>
-        <JSONTree
+        <JsonTree
           data={schema.nodes}
           postprocessValue={postprocessValue.bind(null, ignoreFields)}
         />
       </SplitViewColumn>
       <SplitViewColumn grow sep>
         <Heading>Marks</Heading>
-        <JSONTree
+        <JsonTree
           data={schema.marks}
           postprocessValue={postprocessValue.bind(null, ignoreFields)}
         />

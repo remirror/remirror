@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import { useCallback, useState } from 'react';
-import { assert, isArray, noop } from '@remirror/core-helpers';
+import { ReactNode, useCallback, useState } from 'react';
+import { assert, isArray, noop } from '@remirror/core';
 import { Icon } from '@remirror/react-components';
 
 import { mainTheme } from '../dev-constants';
@@ -66,14 +66,14 @@ const ListItemGroupContent = styled.div<ListItemGroupContentProps>`
 `;
 
 interface BaseListProps<Item = any> {
-  groupTitle: (items: Item[], index: number) => string;
-  title: (item: Item, index: number) => string;
+  groupTitle?: (items: Item[], index: number) => ReactNode;
+  title: (item: Item, index: number) => ReactNode;
   isSelected?: (item: Item, index: number, items: Item[]) => boolean;
   isPrevious?: (item: Item, index: number) => boolean;
   isDimmed?: (item: Item, index: number, items: Item[]) => boolean;
   getKey?: (item: Item) => string | number;
-  onListItemClick?: (item: Item, index: number) => boolean;
-  onListItemDoubleClick?: (item: Item, index: number) => boolean;
+  onListItemClick?: (item: Item, index: number) => void;
+  onListItemDoubleClick?: (item: Item, index: number) => void;
   customItemBackground?: (props: ListItemProps) => string;
 }
 
@@ -125,7 +125,7 @@ export function ListItemGroup<Item = any>(props: ListItemGroupProps<Item>): JSX.
         isDimmed={items.every(isDimmed)}
         background={customItemBackground}
       >
-        <div style={{ flexGrow: 1 }}>{groupTitle(items, 0)}</div>
+        <div style={{ flexGrow: 1 }}>{groupTitle?.(items, 0)}</div>
         <ListIcon collapsed={collapsed} />
       </ListItem>
       <ListItemGroupContent collapsed={collapsed}>
@@ -163,6 +163,7 @@ export function List<Item = any>(props: ListProps<Item>): JSX.Element {
     getKey = noop,
     onListItemClick = noop,
     onListItemDoubleClick = noop,
+    customItemBackground,
   } = props;
   return (
     <div>
@@ -177,7 +178,7 @@ export function List<Item = any>(props: ListProps<Item>): JSX.Element {
             isSelected={isSelected(item, index, items)}
             isPrevious={isPrevious(item, index)}
             isDimmed={isDimmed(item, index, items)}
-            background={props.customItemBackground}
+            background={customItemBackground}
             onClick={() => onListItemClick(item, index)}
             onDoubleClick={() => onListItemDoubleClick(item, index)}
           >

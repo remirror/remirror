@@ -72,8 +72,8 @@
     "jest-process-manager": "^0.2.9",
     "looks-same": "^7.2.3",
     "min-document": "^2.19.0",
-    "playwright": "^1.7.1",
-    "playwright-core": "^1.7.1",
+    "playwright": "^1.8.0",
+    "playwright-core": "^1.8.0",
     "playwright-testing-library": "^2.7.0",
     "signal-exit": "^3.0.3",
     "test-keyboard": "1.0.0-next.60"

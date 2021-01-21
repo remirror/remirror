@@ -11,13 +11,7 @@ interface DevToolsProps extends DevStoreProps {
 }
 
 export const DevTools = (props: DevToolsProps): JSX.Element => {
-  const {
-    manager,
-    savedSnapshots,
-    diffWorker = false,
-    supportsToggling = false,
-    dock = true,
-  } = props;
+  const { manager, diffWorker = false, supportsToggling = false, dock = true } = props;
   const [opened, setOpened] = useState<boolean>(!supportsToggling);
 
   const open = () => supportsToggling && setOpened(true);
@@ -25,7 +19,7 @@ export const DevTools = (props: DevToolsProps): JSX.Element => {
 
   return (
     <ThemeProvider>
-      <DevStoreProvider manager={manager} savedSnapshots={savedSnapshots} diffWorker={diffWorker}>
+      <DevStoreProvider manager={manager} diffWorker={diffWorker}>
         {opened ? (
           <DevToolsExpanded close={close} dock={dock} />
         ) : (
