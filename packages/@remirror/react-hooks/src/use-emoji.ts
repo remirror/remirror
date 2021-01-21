@@ -49,8 +49,8 @@ function useEmojiChangeHandler(setState: SetEmojiState) {
           list: emojiMatches,
           index: 0,
           command: (emoji, skinVariation) => {
-            return command(emoji, skinVariation);
             setState(null);
+            return command(emoji, skinVariation);
           },
           range,
         });
