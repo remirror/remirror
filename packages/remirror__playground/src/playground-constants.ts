@@ -1,4 +1,5 @@
 import type { editor, languages } from 'monaco-editor';
+import type { PackageJson } from 'type-fest';
 
 /**
  * The key used to store the internal module on the window object.
@@ -165,4 +166,15 @@ export const editorThemes = {
       'editorIndentGuide.activeBackground': '#FBC95A',
     },
   } as editor.IStandaloneThemeData,
+};
+
+export const DEFAULT_PACK_JSON: PackageJson = {
+  name: 'remirror-playground',
+  description: 'An editor built with the remirror playground',
+  main: 'index.tsx',
+  dependencies: {
+    remirror: '*',
+    react: '*',
+    '@remirror/pm': '*',
+  },
 };

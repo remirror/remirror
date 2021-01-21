@@ -5,20 +5,8 @@ import PromiseWorker from 'promise-worker';
 import { PackageJson } from 'type-fest';
 import { findMatches } from '@remirror/core-helpers';
 
-import {
-  DATA_ROOT_URL,
-  GLOBAL_INTERNAL_MODULES,
-  INTERNAL_MODULE_PREFIX,
-  LOCAL_MODULE_PREFIX,
-  NPM_ROOT_URL,
-} from './playground-constants';
-import type {
-  CompileWorkerOutput,
-  EntryFile,
-  ImportMap,
-  Language,
-  WorkerData,
-} from './playground-types';
+import { DATA_ROOT_URL, GLOBAL_INTERNAL_MODULES, NPM_ROOT_URL } from './playground-constants';
+import type { EntryFile, Language } from './playground-types';
 
 /**
  * Grab any import/requires from inside the code and make a list of its

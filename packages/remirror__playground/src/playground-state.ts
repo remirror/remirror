@@ -8,7 +8,6 @@
 import { createContextState } from 'create-context-state';
 import type * as Monaco from 'monaco-editor';
 import { relative } from 'path-browserify';
-import { PackageJson } from 'type-fest';
 import { assertGet, entries, invariant, pick } from '@remirror/core-helpers';
 
 import { DTS_MODULE_NAMES } from './generated/meta';
@@ -431,7 +430,7 @@ class CodeEditorHelper {
           return;
         }
 
-        const { activeIndex, files, readOnly } = getContext();
+        const { activeIndex, files } = getContext();
         const activeFile = assertGet(files, activeIndex);
 
         if (textUntilPosition.endsWith('.') || textUntilPosition.endsWith('/')) {
@@ -516,17 +515,6 @@ class CodeEditorHelper {
 }
 
 export const codeEditorHelper = new CodeEditorHelper();
-
-const defaultPackJson: PackageJson = {
-  name: 'remirror-playground',
-  description: 'An editor built with the remirror playground',
-  main: 'index.tsx',
-  dependencies: {
-    remirror: '*',
-    react: '*',
-    '@remirror/pm': '*',
-  },
-};
 
 const defaultContent = `\
 import { FC } from 'react';

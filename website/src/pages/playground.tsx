@@ -11,7 +11,6 @@ import AnnouncementBar from '@theme/AnnouncementBar';
 import Navbar from '@theme/Navbar';
 import ThemeProvider from '@theme/ThemeProvider';
 import UserPreferencesProvider from '@theme/UserPreferencesProvider';
-import { Playground } from '@remirror/playground';
 
 const PlaygroundPage = (props: any) => {
   const { siteConfig } = useDocusaurusContext();
@@ -53,7 +52,7 @@ const PlaygroundPage = (props: any) => {
           <AnnouncementBar />
           <Navbar />
           <PlaygroundWrapper>
-            <Playground />
+            <div>The playground is currently being reworked.</div>
           </PlaygroundWrapper>
         </UserPreferencesProvider>
       </ThemeProvider>

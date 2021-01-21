@@ -20,7 +20,6 @@ import {
   ToolbarItemUnion,
   useCommands,
   useHelpers,
-  useI18n,
   usePositioner,
   useRemirror,
   useRemirrorContext,
@@ -170,7 +169,6 @@ export const Configurable = () => {
 };
 
 const FloatingAnnotations = () => {
-  const { t } = useI18n();
   const [visible, setVisible] = useState(false);
   const commands = useCommands();
   const { getAnnotationsAt } = useHelpers();

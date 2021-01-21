@@ -5,6 +5,7 @@
  * @see `support/scripts/playground.ts`
  */
 
+import * as CreateContextHook from 'create-context-state';
 import * as Multishift from 'multishift';
 import * as ProsemirrorPasteRules from 'prosemirror-paste-rules';
 import * as ProsemirrorSuggest from 'prosemirror-suggest';
@@ -32,7 +33,6 @@ import * as RemirrorPmTables from '@remirror/pm/tables';
 import * as RemirrorPmTransform from '@remirror/pm/transform';
 import * as RemirrorPmView from '@remirror/pm/view';
 
-import * as CreateContextHook from '../create-context-state';
 import { INTERNAL_MODULE_PREFIX } from '../playground-constants';
 import { ImportMap, ImportMapImports } from '../playground-types';
 
@@ -53,7 +53,6 @@ export const IMPORT_CACHE_MODULES: Record<string, any> = {
   '@remirror/extension-callout': PlaygroundImports['@remirror/extension-callout'],
   '@remirror/extension-code': PlaygroundImports['@remirror/extension-code'],
   '@remirror/extension-code-block': PlaygroundImports['@remirror/extension-code-block'],
-  '@remirror/extension-codemirror5': PlaygroundImports['@remirror/extension-codemirror5'],
   '@remirror/extension-collaboration': PlaygroundImports['@remirror/extension-collaboration'],
   '@remirror/extension-columns': PlaygroundImports['@remirror/extension-columns'],
   '@remirror/extension-diff': PlaygroundImports['@remirror/extension-diff'],
@@ -70,18 +69,14 @@ export const IMPORT_CACHE_MODULES: Record<string, any> = {
   '@remirror/extension-heading': PlaygroundImports['@remirror/extension-heading'],
   '@remirror/extension-history': PlaygroundImports['@remirror/extension-history'],
   '@remirror/extension-horizontal-rule': PlaygroundImports['@remirror/extension-horizontal-rule'],
-  '@remirror/extension-html': PlaygroundImports['@remirror/extension-html'],
-  '@remirror/extension-icons': PlaygroundImports['@remirror/extension-icons'],
   '@remirror/extension-image': PlaygroundImports['@remirror/extension-image'],
   '@remirror/extension-italic': PlaygroundImports['@remirror/extension-italic'],
   '@remirror/extension-link': PlaygroundImports['@remirror/extension-link'],
   '@remirror/extension-list': PlaygroundImports['@remirror/extension-list'],
   '@remirror/extension-markdown': PlaygroundImports['@remirror/extension-markdown'],
-  '@remirror/extension-media': PlaygroundImports['@remirror/extension-media'],
   '@remirror/extension-mention': PlaygroundImports['@remirror/extension-mention'],
   '@remirror/extension-mention-atom': PlaygroundImports['@remirror/extension-mention-atom'],
   '@remirror/extension-native-bridge': PlaygroundImports['@remirror/extension-native-bridge'],
-  '@remirror/extension-node-formatting': PlaygroundImports['@remirror/extension-node-formatting'],
   '@remirror/extension-paragraph': PlaygroundImports['@remirror/extension-paragraph'],
   '@remirror/extension-placeholder': PlaygroundImports['@remirror/extension-placeholder'],
   '@remirror/extension-positioner': PlaygroundImports['@remirror/extension-positioner'],
@@ -89,8 +84,6 @@ export const IMPORT_CACHE_MODULES: Record<string, any> = {
   '@remirror/extension-react-ssr': PlaygroundImports['@remirror/extension-react-ssr'],
   '@remirror/extension-search': PlaygroundImports['@remirror/extension-search'],
   '@remirror/extension-strike': PlaygroundImports['@remirror/extension-strike'],
-  '@remirror/extension-sub': PlaygroundImports['@remirror/extension-sub'],
-  '@remirror/extension-sup': PlaygroundImports['@remirror/extension-sup'],
   '@remirror/extension-tables': PlaygroundImports['@remirror/extension-tables'],
   '@remirror/extension-text': PlaygroundImports['@remirror/extension-text'],
   '@remirror/extension-text-case': PlaygroundImports['@remirror/extension-text-case'],
@@ -104,7 +97,6 @@ export const IMPORT_CACHE_MODULES: Record<string, any> = {
   '@remirror/preset-core': PlaygroundImports['@remirror/preset-core'],
   '@remirror/preset-formatting': PlaygroundImports['@remirror/preset-formatting'],
   '@remirror/preset-react': PlaygroundImports['@remirror/preset-react'],
-  '@remirror/preset-social': PlaygroundImports['@remirror/preset-social'],
   '@remirror/preset-wysiwyg': PlaygroundImports['@remirror/preset-wysiwyg'],
   '@remirror/react': PlaygroundImports['@remirror/react'],
   '@remirror/react-components': PlaygroundImports['@remirror/react-components'],

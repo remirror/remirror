@@ -64,7 +64,7 @@ interface Props {
   markdown: UseRemirrorReturn<ReactExtensions<DocExtension | CodeBlockExtension>>;
 }
 
-const [DualEditorProvider, useDualEditor] = createContextState<Context, Props>(({ get, props }) => {
+const [DualEditorProvider, useDualEditor] = createContextState<Context, Props>(({ props }) => {
   return {
     ...props,
 

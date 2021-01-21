@@ -105,8 +105,8 @@ function overrideImportShim(modules: Record<string, any>, getFiles: GetFiles) {
   importShim.skipRegistry = (url) => url.includes(LOCAL_MODULE_PREFIX);
   importShim.fetch = async (url) => {
     const destination = isString(url) ? url : url.url;
-    const [_, internalName] = destination.split(INTERNAL_MODULE_PREFIX);
-    const [__, localName] = destination.split(LOCAL_MODULE_PREFIX);
+    const [, internalName] = destination.split(INTERNAL_MODULE_PREFIX);
+    const [, localName] = destination.split(LOCAL_MODULE_PREFIX);
 
     // This is a local file that needs to be transpiled first.
     if (localName) {

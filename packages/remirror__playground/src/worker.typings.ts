@@ -9,7 +9,7 @@
 
 /// <reference lib="webworker" />
 
-import { get, set, Store } from 'idb-keyval';
+import { createStore, get, set } from 'idb-keyval';
 import path from 'path-browserify';
 import registerPromiseWorker from 'promise-worker/register';
 
@@ -30,7 +30,7 @@ interface FileMetadata {
   [key: string]: File;
 }
 
-const store = new Store('typescript-definitions-cache-v1');
+const store = createStore('typescript-definitions-cache-v1', 'store');
 const cache = new Map<string, Promise<string>>();
 
 /**

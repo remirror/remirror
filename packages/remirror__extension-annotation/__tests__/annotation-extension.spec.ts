@@ -259,11 +259,11 @@ describe('plugin#apply', () => {
     commands.addAnnotation({ id: '1' });
 
     // Pre-condition
-    expect(helpers.getAnnotations()[0].text).toEqual('Hello');
+    expect(helpers.getAnnotations()[0]?.text).toEqual('Hello');
 
     commands.insertText('ADDED', { from: 3 });
 
-    expect(helpers.getAnnotations()[0].text).toEqual('HeADDEDllo');
+    expect(helpers.getAnnotations()[0]?.text).toEqual('HeADDEDllo');
   });
 
   it("doesn't extend annotation when content is added at the end of an annotation", () => {
@@ -278,11 +278,11 @@ describe('plugin#apply', () => {
     commands.addAnnotation({ id: '1' });
 
     // Pre-condition
-    expect(helpers.getAnnotations()[0].text).toEqual('Hello');
+    expect(helpers.getAnnotations()[0]?.text).toEqual('Hello');
 
     commands.insertText('ADDED', { from: 6 });
 
-    expect(helpers.getAnnotations()[0].text).toEqual('Hello');
+    expect(helpers.getAnnotations()[0]?.text).toEqual('Hello');
   });
 });
 
@@ -349,7 +349,7 @@ describe('helpers', () => {
       },
     ]);
 
-    expect(helpers.getAnnotations()[0].text).toBeUndefined();
+    expect(helpers.getAnnotations()[0]?.text).toBeUndefined();
   });
 
   it('#getAnnotations concats multi-block content with configured blockseparator', () => {
@@ -482,7 +482,7 @@ describe('custom styling', () => {
 
   it('should use custom styling', () => {
     const getStyle = (annotations: Array<Omit<ColoredAnnotation, 'text'>>) => {
-      return `background: ${annotations[0].color}`;
+      return `background: ${annotations[0]?.color}`;
     };
 
     const {

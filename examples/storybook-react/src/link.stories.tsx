@@ -5,7 +5,6 @@ import {
   createMarkPositioner,
   ItalicExtension,
   LinkExtension,
-  LinkOptions,
   MarkdownExtension,
   ShortcutHandlerProps,
 } from 'remirror/extensions';
@@ -15,7 +14,6 @@ import {
   FloatingWrapper,
   Remirror,
   ThemeProvider,
-  useCommands,
   useExtension,
   useRemirror,
 } from 'remirror/react';
