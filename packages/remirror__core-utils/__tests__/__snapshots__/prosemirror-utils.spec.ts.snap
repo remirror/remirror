@@ -5,7 +5,7 @@ Object {
   "marks": Object {
     "bold": Object {
       "attrs": Object {},
-      "group": "formattingMark fontStyle supportsExit",
+      "group": "formattingMark fontStyle",
       "parseDOM": Array [
         Object {
           "getAttrs": [Function],

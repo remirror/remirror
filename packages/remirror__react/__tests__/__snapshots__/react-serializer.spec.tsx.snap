@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReactSerializer #serializeNode serializes a codeBlock node with nested array from \`toDOM\` call 1`] = `
+<pre
+  className="language-markup"
+>
+  <code
+    data-code-block-language="markup"
+  >
+    Hello
+  </code>
+</pre>
+`;
+
+exports[`ReactSerializer #serializeNode serializes the node 1`] = `
+<p>
+  This is a node with 
+  <strong>
+    bold text.
+  </strong>
+</p>
+`;
+
+exports[`ReactSerializer #serializeNode serializes the node with nested data 1`] = `
+<p>
+  This is a node with 
+  <strong>
+    bold text and 
+  </strong>
+  <strong>
+    <em>
+      italic bold and 
+    </em>
+  </strong>
+  <strong>
+    <em>
+      <u>
+        underlined italic text
+      </u>
+    </em>
+  </strong>
+</p>
+`;

@@ -24,7 +24,7 @@ describe('removeMark', () => {
 
   it('removes the uncontained mark', () => {
     const from = doc(p('Hel<start>lo ', strong('bo<end>ld')));
-    const to = doc(p('Hello bo', 'ld'));
+    const to = doc(p('Hello bold'));
 
     expect(removeMark({ type })).toTransform({ from, to });
   });

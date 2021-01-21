@@ -12,7 +12,9 @@ import { liftListItem, wrapInList } from '@remirror/pm/schema-list';
 /**
  * Checks to see whether this is a list node.
  */
-function isList(node: ProsemirrorNode, schema: EditorSchema): boolean {
+function isList(node: ProsemirrorNode): boolean {
+  const schema = node.type.schema;
+
   return !!(
     node.type.spec.group?.includes(ExtensionTag.ListContainerNode) ||
     node.type === schema.nodes.bulletList ||
@@ -35,23 +37,24 @@ export function toggleList(type: NodeType, itemType: NodeType): CommandFunction 
   return (props) => {
     const { dispatch, tr } = props;
     const state = chainableEditorState(tr, props.state);
-    const { schema } = state;
-    const { selection } = tr;
-    const { $from, $to } = selection;
+    const { $from, $to } = tr.selection;
     const range = $from.blockRange($to);
 
     if (!range) {
       return false;
     }
 
-    const parentList = findParentNode({ predicate: (node) => isList(node, schema), selection });
+    const parentList = findParentNode({
+      predicate: (node) => isList(node),
+      selection: tr.selection,
+    });
 
     if (range.depth >= 1 && parentList && range.depth - parentList.depth <= 1) {
       if (parentList.node.type === type) {
         return liftListItem(itemType)(state, dispatch);
       }
 
-      if (isList(parentList.node, schema) && type.validContent(parentList.node.content)) {
+      if (isList(parentList.node) && type.validContent(parentList.node.content)) {
         if (dispatch) {
           dispatch(tr.setNodeMarkup(parentList.pos, type));
         }

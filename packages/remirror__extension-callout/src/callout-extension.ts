@@ -134,13 +134,11 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
 
   @keyBinding({ shortcut: 'Enter' })
   handleEnterKey({ dispatch, tr }: KeyBindingProps): boolean {
-    const { selection, doc } = tr;
-
-    if (!isTextSelection(selection) || !selection.$cursor) {
+    if (!isTextSelection(tr.selection) || !tr.selection.$cursor) {
       return false;
     }
 
-    const { nodeBefore, parent } = selection.$from;
+    const { nodeBefore, parent } = tr.selection.$from;
 
     if (!nodeBefore || !nodeBefore.isText || !parent.type.isTextblock) {
       return false;
@@ -164,7 +162,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
     const { defaultType, validTypes } = this.options;
 
     const type = getCalloutType(matchesNodeBefore[1], validTypes, defaultType);
-    const pos = selection.$from.before();
+    const pos = tr.selection.$from.before();
     const end = pos + nodeSize + 1;
     // +1 to account for the extra pos a node takes up
 
@@ -172,7 +170,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
       tr.replaceWith(pos, end, this.type.create({ type }));
 
       // Set the selection to within the codeBlock
-      tr.setSelection(TextSelection.create(doc, pos + 1));
+      tr.setSelection(TextSelection.create(tr.doc, pos + 1));
       dispatch(tr);
     }
 
@@ -185,15 +183,14 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
   @keyBinding({ shortcut: 'Backspace' })
   handleBackspace({ dispatch, tr }: KeyBindingProps): boolean {
     // Aims to stop merging callouts when deleting content in between
-    const { selection, doc } = tr;
 
     // If the selection is not empty return false and let other extension
     // (ie: BaseKeymapExtension) to do the deleting operation.
-    if (!selection.empty) {
+    if (!tr.selection.empty) {
       return false;
     }
 
-    const { $from } = selection;
+    const { $from } = tr.selection;
 
     // If not at the start of current node, no joining will happen
     if ($from.parentOffset !== 0) {
@@ -207,7 +204,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
       return false;
     }
 
-    const previousPos = doc.resolve(previousPosition);
+    const previousPos = tr.doc.resolve(previousPosition);
 
     // If resolving previous position fails, bail out
     if (!previousPos?.parent) {
@@ -215,13 +212,13 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
     }
 
     const previousNode = previousPos.parent;
-    const { node, pos } = findNodeAtSelection(selection);
+    const { node, pos } = findNodeAtSelection(tr.selection);
 
     // If previous node is a callout, cut current node's content into it
     if (node.type !== this.type && previousNode.type === this.type) {
       const { content, nodeSize } = node;
       tr.delete(pos, pos + nodeSize);
-      tr.setSelection(TextSelection.create(doc, previousPosition - 1));
+      tr.setSelection(TextSelection.create(tr.doc, previousPosition - 1));
       tr.insert(previousPosition - 1, content);
 
       if (dispatch) {

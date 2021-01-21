@@ -338,14 +338,14 @@ test('uniqueArray', () => {
 });
 
 test('sort', () => {
-  const arr = [...range(100), 11, 9, 12].map((value, index) => ({
+  const arr = [...range(100).map(() => 0), 11, 9, 12].map((value, index) => ({
     value: value || 10,
     index,
   }));
 
   expect(sort(arr, (a, b) => a.value - b.value)).toEqual([
     { value: 9, index: 101 },
-    ...range(100),
+    ...range(100).map((index) => ({ value: 10, index })),
     { value: 11, index: 100 },
     { value: 12, index: 102 },
   ]);

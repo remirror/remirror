@@ -333,18 +333,16 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
 
   @keyBinding({ shortcut: 'Backspace' })
   backspaceKey({ dispatch, tr, state }: KeyBindingProps): boolean {
-    const { selection, doc } = tr;
-
     // If the selection is not empty, return false and let other extension
     // (ie: BaseKeymapExtension) to do the deleting operation.
-    if (!selection.empty) {
+    if (!tr.selection.empty) {
       return false;
     }
 
     // Check that this is the correct node.
-    const parent = findParentNodeOfType({ types: this.type, selection });
+    const parent = findParentNodeOfType({ types: this.type, selection: tr.selection });
 
-    if (parent?.start !== selection.from) {
+    if (parent?.start !== tr.selection.from) {
       return false;
     }
 
@@ -360,12 +358,12 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
       }
     } else if (start > 2) {
       // Jump to the previous node.
-      tr.setSelection(TextSelection.create(doc, start - 2));
+      tr.setSelection(TextSelection.create(tr.doc, start - 2));
     } else {
       // There is no content before the codeBlock so simply create a new
       // block and jump into it.
       tr.insert(0, toggleNode.create());
-      tr.setSelection(TextSelection.create(doc, 1));
+      tr.setSelection(TextSelection.create(tr.doc, 1));
     }
 
     if (dispatch) {
@@ -377,13 +375,11 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
 
   @keyBinding({ shortcut: 'Enter' })
   enterKey({ dispatch, tr }: KeyBindingProps): boolean {
-    const { selection, doc } = tr;
-
-    if (!isTextSelection(selection) || !selection.$cursor) {
+    if (!isTextSelection(tr.selection) || !tr.selection.$cursor) {
       return false;
     }
 
-    const { nodeBefore, parent } = selection.$from;
+    const { nodeBefore, parent } = tr.selection.$from;
 
     if (!nodeBefore || !nodeBefore.isText || !parent.type.isTextblock) {
       return false;
@@ -411,12 +407,12 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
       fallback: this.options.defaultLanguage,
     });
 
-    const pos = selection.$from.before();
+    const pos = tr.selection.$from.before();
     const end = pos + nodeSize + 1; // +1 to account for the extra pos a node takes up
     tr.replaceWith(pos, end, this.type.create({ language }));
 
     // Set the selection to within the codeBlock
-    tr.setSelection(TextSelection.create(doc, pos + 1));
+    tr.setSelection(TextSelection.create(tr.doc, pos + 1));
 
     if (dispatch) {
       dispatch(tr);

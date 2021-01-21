@@ -185,7 +185,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    * Attach commands once the view is attached.
    */
   onView(view: EditorView<EditorSchema>): void {
-    const { setStoreKey, setExtensionStore, extensions, helpers } = this.store;
+    const { extensions, helpers } = this.store;
     const commands: Record<string, CommandShape> = object();
     const names = new Set<string>();
     const chain: Record<string, any> & ChainedCommandProps = object();
@@ -219,11 +219,10 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
 
     chain.run = () => view.dispatch(this.transaction);
 
-    setStoreKey('commands', commands as any);
-    setStoreKey('chain', chain as any);
-
-    setExtensionStore('commands', commands as any);
-    setExtensionStore('chain', chain as any);
+    this.store.setStoreKey('commands', commands as any);
+    this.store.setStoreKey('chain', chain as any);
+    this.store.setExtensionStore('commands', commands as any);
+    this.store.setExtensionStore('chain', chain as any);
   }
 
   /**
@@ -503,13 +502,11 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
   @command()
   emptySelection(): CommandFunction {
     return ({ tr, dispatch }) => {
-      const { selection, doc } = tr;
-
-      if (selection.empty) {
+      if (tr.selection.empty) {
         return false;
       }
 
-      dispatch?.(tr.setSelection(TextSelection.create(doc, selection.anchor)));
+      dispatch?.(tr.setSelection(TextSelection.create(tr.doc, tr.selection.anchor)));
       return true;
     };
   }

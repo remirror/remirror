@@ -235,12 +235,12 @@ describe('Remirror Controlled Component', () => {
     }
 
     const chain = create([new UpdateExtension()]);
-    const { manager, nodes, commands } = chain;
-    const { doc, p } = nodes;
+
+    const { doc, p } = chain.nodes;
 
     const Component = () => {
       const [value, setValue] = useState<EditorState>(() =>
-        manager.createState({
+        chain.manager.createState({
           content: doc(p('some content')),
           stringHandler: htmlToProsemirrorNode,
           selection: 'end',
@@ -251,7 +251,7 @@ describe('Remirror Controlled Component', () => {
         <Remirror
           {...props}
           state={value}
-          manager={manager}
+          manager={chain.manager}
           onChange={(changeProps) => {
             const { state } = changeProps;
 
@@ -265,12 +265,11 @@ describe('Remirror Controlled Component', () => {
     strictRender(<Component />);
 
     act(() => {
-      commands.insertText('First text update');
+      chain.commands.insertText('First text update');
     });
 
-    expect(mock).toHaveBeenCalledTimes(2);
-
-    const { state, previousState } = mock.mock.calls[1][0];
+    expect(mock).toHaveBeenCalledTimes(3);
+    const { state, previousState } = mock.mock.calls[2][0];
 
     expect(state).toBe(chain.state);
     expect(state).not.toBe(previousState);

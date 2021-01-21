@@ -289,10 +289,9 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
   updateLink(attrs: LinkAttributes, range?: FromToProps): CommandFunction {
     return (props) => {
       const { tr } = props;
-      const { selection } = tr;
       const selectionIsValid =
-        (isTextSelection(selection) && !isSelectionEmpty(selection)) ||
-        isAllSelection(selection) ||
+        (isTextSelection(tr.selection) && !isSelectionEmpty(tr.selection)) ||
+        isAllSelection(tr.selection) ||
         isMarkActive({ trState: tr, type: this.type });
 
       if (!selectionIsValid && !range) {

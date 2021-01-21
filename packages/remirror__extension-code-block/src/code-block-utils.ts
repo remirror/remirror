@@ -264,12 +264,11 @@ interface FormatCodeBlockFactoryProps
 export function formatCodeBlockFactory(props: FormatCodeBlockFactoryProps) {
   return ({ pos }: Partial<PosProps> = object()): CommandFunction => ({ tr, dispatch }) => {
     const { type, formatter, defaultLanguage: fallback } = props;
-    const { selection, doc } = tr;
 
-    const { from, to } = pos ? { from: pos, to: pos } : selection;
+    const { from, to } = pos ? { from: pos, to: pos } : tr.selection;
 
     // Find the current codeBlock the cursor is positioned in.
-    const codeBlock = findParentNodeOfType({ types: type, selection });
+    const codeBlock = findParentNodeOfType({ types: type, selection: tr.selection });
 
     if (!codeBlock) {
       return false;
@@ -313,7 +312,7 @@ export function formatCodeBlockFactory(props: FormatCodeBlockFactoryProps) {
     const anchor = start + cursorOffset;
     const head = formatEnd ? start + formatEnd.cursorOffset : undefined;
 
-    tr.setSelection(TextSelection.create(doc, anchor, head));
+    tr.setSelection(TextSelection.create(tr.doc, anchor, head));
 
     if (dispatch) {
       dispatch(tr);

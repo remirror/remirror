@@ -1,6 +1,6 @@
 import { object } from '@remirror/core-helpers';
-import type { MarkType, NodeType } from '@remirror/core-types';
 import { isEditorSchema, isEditorState, isProsemirrorNode } from '@remirror/core-utils';
+import { MarkSpec, NodeSpec } from '@remirror/pm/model';
 /**
  * Jest serializer for prosemirror nodes and the editor state.
  */
@@ -16,25 +16,18 @@ export const prosemirrorSerializer: jest.SnapshotSerializerPlugin = {
     }
 
     if (isEditorSchema(value)) {
-      const nodes: Record<string, NodeType> = object();
-      const marks: Record<string, MarkType> = object();
+      const nodes: Record<string, NodeSpec> = object();
+      const marks: Record<string, MarkSpec> = object();
 
-      for (const [name, type] of Object.entries(value.nodes)) {
-        nodes[name] = type;
+      for (const [name, { spec }] of Object.entries(value.nodes)) {
+        nodes[name] = spec;
       }
 
-      for (const [name, type] of Object.entries(value.marks)) {
-        marks[name] = type;
+      for (const [name, { spec }] of Object.entries(value.marks)) {
+        marks[name] = spec;
       }
 
-      return `Prosemirror schema: ${JSON.stringify(
-        {
-          nodes,
-          marks,
-        },
-        null,
-        2,
-      )}`;
+      return `Prosemirror schema: ${JSON.stringify({ nodes, marks }, null, 2)}`;
     }
 
     return `Prosemirror node: ${JSON.stringify(value, null, 2)}`;

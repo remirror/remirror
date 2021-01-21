@@ -43,13 +43,7 @@ export const useEffectWithWarning: typeof useEffect =
         const wrappedEffect = () => {
           warning(
             unnecessaryChange.current === 0,
-            `The dependencies passed into your useEffect are identical, but an update has been triggered ${
-              unnecessaryChange.current
-            } time(s). Please consider wrapping the values with \`useMemo\` or \`useCallback\` to memoize your dependencies and prevent unnecessary re-renders.: ${JSON.stringify(
-              deps,
-              null,
-              2,
-            )}`,
+            `The dependencies passed into your useEffect are identical, but an update has been triggered ${unnecessaryChange.current} time(s). Please consider wrapping the values with \`useMemo\` or \`useCallback\` to memoize your dependencies and prevent unnecessary re-renders.`,
           );
 
           return effect();

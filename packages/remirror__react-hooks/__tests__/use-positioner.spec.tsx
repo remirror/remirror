@@ -11,6 +11,7 @@ test('`usePositioner` default values', () => {
 
     expect(positionerProps).toEqual({
       active: false,
+      key: expect.any(String),
       ...defaultAbsolutePosition,
     });
 

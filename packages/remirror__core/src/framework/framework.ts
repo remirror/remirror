@@ -9,6 +9,7 @@ import {
   object,
   omitUndefined,
   pick,
+  uniqueArray,
   uniqueId,
 } from '@remirror/core-helpers';
 import type {
@@ -311,6 +312,12 @@ export abstract class Framework<
       focus = ssr ? { autoFocus: true } : { autofocus: 'true' };
     }
 
+    const uniqueClasses = uniqueArray(
+      cx(ssr && 'Prosemirror', CoreTheme.EDITOR, managerAttributes?.class, ...classNames).split(
+        ' ',
+      ),
+    ).join(' ');
+
     const defaultAttributes = {
       role: 'textbox',
       ...focus,
@@ -318,7 +325,7 @@ export abstract class Framework<
       ...(!(editable ?? true) ? { 'aria-readonly': 'true' } : {}),
       'aria-label': label ?? '',
       ...managerAttributes,
-      class: cx(ssr && 'Prosemirror', CoreTheme.EDITOR, managerAttributes?.class, ...classNames),
+      class: uniqueClasses,
     };
 
     return omitUndefined({ ...defaultAttributes, ...propAttributes }) as Shape;

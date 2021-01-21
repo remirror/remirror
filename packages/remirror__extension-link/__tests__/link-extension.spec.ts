@@ -60,6 +60,7 @@ describe('schema', () => {
     it('sets the extra attributes', () => {
       expect(schema.marks.link.spec.attrs).toEqual({
         href: {},
+        target: { default: null },
         auto: { default: false },
         title: { default: null },
         custom: { default: 'failure' },
@@ -80,6 +81,7 @@ describe('schema', () => {
         custom: { default: 'failure' },
         title: { default: null },
         href: {},
+        target: { default: null },
         auto: { default: false },
       });
     });
@@ -706,6 +708,11 @@ describe('spanning', () => {
     add(doc(p('Paragraph with ', linkMark, ' and text')));
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
+      <span data-id="remirror-positioner-widget"
+            role="presentation"
+            class="ProseMirror-widget"
+      >
+      </span>
       <p>
         Paragraph with
         <a href="//test.com"

@@ -423,14 +423,15 @@ export function removeMark(props: RemoveMarkProps): CommandFunction {
   return ({ dispatch, tr, state }) => {
     const { type, expand = true, range } = props;
     const selection = getTextSelection(props.selection ?? range ?? tr.selection, tr.doc);
-    let { from, to, $anchor, empty } = selection;
-
     const markType = isString(type) ? state.schema.marks[type] : type;
+    let { from, to, empty, $anchor } = selection;
 
     invariant(markType, {
       code: ErrorConstant.SCHEMA,
       message: `Mark type: ${type} does not exist on the current schema.`,
     });
+
+    console.log(getMarkRange(tr.doc.resolve(from), markType));
 
     if (expand) {
       ({ from, to } =
