@@ -51,6 +51,7 @@ let config = {
     es6: true,
   },
   rules: {
+    'prefer-const': ['error', { destructuring: 'all' }],
     'unicorn/better-regex': 'error',
     'unicorn/catch-error-name': 'error',
     'unicorn/consistent-destructuring': 'error',
@@ -349,6 +350,7 @@ let config = {
         'packages/remirror__cli/**',
         'packages/remirror__playground/**',
         'packages/remirror__extension-emoji/src/data/*.ts',
+        'packages/remirror__svelte/rollup.config.js',
       ],
       rules: { 'import/no-default-export': 'off' },
     },
@@ -458,7 +460,7 @@ if (process.env.FULL_ESLINT_CHECK) {
     ],
     '@typescript-eslint/restrict-template-expressions': [
       'warn',
-      { allowNumber: true, allowBoolean: true },
+      { allowNumber: true, allowBoolean: true, allowAny: true, allowNullish: true },
     ],
   };
 
@@ -493,7 +495,7 @@ if (process.env.FULL_ESLINT_CHECK) {
     },
     overrides: [
       {
-        files: ['./packages/remirror__es-module-shims'],
+        files: ['./packages/remirror__es-module-shims/**'],
         rules: { 'import/no-mutable-exports': 'off' },
       },
       {

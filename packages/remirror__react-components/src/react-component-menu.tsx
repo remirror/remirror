@@ -56,13 +56,9 @@ interface MenuGroupProps extends BaseMenuProps {
 
 const MenuGroup = (props: MenuGroupProps) => {
   const { menuState, item: group } = props;
-  const { items, label, role } = group;
-  const startSeparator = includes(['start', 'both'], group.separator) && (
-    <MenuSeparator {...menuState} />
-  );
-  const endSeparator = includes(['end', 'both'], group.separator) && (
-    <MenuSeparator {...menuState} />
-  );
+  const { items, label, role, separator } = group;
+  const startSeparator = includes(['start', 'both'], separator) && <MenuSeparator {...menuState} />;
+  const endSeparator = includes(['end', 'both'], separator) && <MenuSeparator {...menuState} />;
 
   return (
     <>
@@ -337,12 +333,11 @@ interface MenuBarGroupProps extends BaseMenuBarProps {
 }
 
 const MenuBarGroup = (props: MenuBarGroupProps) => {
-  const { menuState } = props;
-  const { items, label } = props.item;
+  const { menuState, item } = props;
 
   return (
-    <ReakitMenuGroup {...menuState} aria-label={label}>
-      {items.map((item) => {
+    <ReakitMenuGroup {...menuState} aria-label={item.label}>
+      {item.items.map((item) => {
         switch (item.type) {
           case ComponentItem.MenuDropdown:
             return <MenuDropdown item={item} menuState={menuState} />;
@@ -382,6 +377,7 @@ const BaseMenuPane = (props: BaseMenuPaneProps) => {
     onClick,
     tooltipClass,
     active,
+    className,
   } = props;
   const tooltipState = useTooltipState({ gutter: 5 });
   const themeProps = useTheme({ className: tooltipClass });
@@ -406,7 +402,7 @@ const BaseMenuPane = (props: BaseMenuPaneProps) => {
             focusable={focusable}
             onClick={onClick}
             className={cx(
-              props.className,
+              className,
               ComponentsTheme.MENU_PANE,
               active && ComponentsTheme.MENU_PANE_ACTIVE,
             )}

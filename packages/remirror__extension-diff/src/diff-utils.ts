@@ -165,8 +165,7 @@ interface InsertIntoBlameMapProps {
 }
 
 function insertIntoBlameMap(props: InsertIntoBlameMapProps) {
-  const { map, commit } = props;
-  let { from, to } = props;
+  let { from, to, map, commit } = props;
 
   if (from >= to) {
     return;

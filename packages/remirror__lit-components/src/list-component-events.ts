@@ -11,7 +11,7 @@ export class EventEmitter<T> {
 }
 
 export function event() {
-  return (protoOrDescriptor: any, name: string): any => {
+  return (protoOrDescriptor: Shape, name: string): any => {
     const descriptor = {
       get(this: HTMLElement) {
         return new EventEmitter(this, name !== undefined ? name : protoOrDescriptor.key);

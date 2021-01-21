@@ -4,8 +4,7 @@ import { assertGet, Fragment, NodeWithPosition, ProsemirrorNode } from '@remirro
 import { mainTheme } from '../../dev-constants';
 import { useDevStore } from '../../dev-state';
 import { JsonTree } from '../json-tree';
-import { SplitView, SplitViewColumn } from '../styled';
-import { Heading, HeadingButton, HeadingWithButton } from '../styled';
+import { Heading, HeadingButton, HeadingWithButton, SplitView, SplitViewColumn } from '../styled';
 
 interface BlockNodeContentProps extends BaseNodeProps {
   colors: Record<string, string>;

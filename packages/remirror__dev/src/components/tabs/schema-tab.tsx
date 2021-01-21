@@ -2,8 +2,7 @@ import { isObject, Shape } from '@remirror/core';
 
 import { useDevStore } from '../../dev-state';
 import { JsonTree } from '../json-tree';
-import { SplitView, SplitViewColumn } from '../styled';
-import { Heading } from '../styled';
+import { Heading, SplitView, SplitViewColumn } from '../styled';
 
 const ignoreFields = ['schema', 'contentExpr', 'schema', 'parseDOM', 'toDOM'];
 

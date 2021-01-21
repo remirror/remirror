@@ -1,6 +1,6 @@
 import { execSync } from 'child_process';
 import { promises as fs } from 'fs';
-import { join } from 'path';
+import path from 'path';
 
 import { getAllDependencies } from './helpers';
 
@@ -52,7 +52,7 @@ async function run() {
   const packages = await getAllDependencies({ excludeDeprecated: false });
 
   for (const pkg of packages) {
-    const filePath = join(pkg.location, NAME);
+    const filePath = path.join(pkg.location, NAME);
     const contents = await readFile(filePath);
 
     if (!contents) {

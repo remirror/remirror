@@ -17,10 +17,8 @@ function processText({ schema, content }: ProcessTextProps) {
 
 function processNodeMark(content: TaggedProsemirrorNode) {
   const nodes = content;
-  const tags = ([] as TaggedProsemirrorNode[])
-    .concat(content)
-    .reduce((accumulator, node) => ({ ...accumulator, ...node.tags }), {});
-  return { nodes, tags };
+
+  return { nodes, tags: { ...content.tags } };
 }
 
 /**

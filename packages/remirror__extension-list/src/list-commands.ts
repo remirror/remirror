@@ -12,7 +12,7 @@ import { liftListItem, wrapInList } from '@remirror/pm/schema-list';
 /**
  * Checks to see whether this is a list node.
  */
-function isList(node: ProsemirrorNode, schema: EditorSchema) {
+function isList(node: ProsemirrorNode, schema: EditorSchema): boolean {
   return !!(
     node.type.spec.group?.includes(ExtensionTag.ListContainerNode) ||
     node.type === schema.nodes.bulletList ||

@@ -9,8 +9,7 @@ import {
   expandedStateFormatSelection,
 } from '../../utils/format-selection-object';
 import { JsonTree } from '../json-tree';
-import { SplitView, SplitViewColumn } from '../styled';
-import { Heading, HeadingButton, HeadingWithButton } from '../styled';
+import { Heading, HeadingButton, HeadingWithButton, SplitView, SplitViewColumn } from '../styled';
 
 export function getItemString(
   doc: RemirrorJSON,

@@ -474,6 +474,7 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
     // This is the mapping from the document as it was at the start of
     // the commit to the current document.
     const remap = new Mapping(
+      // eslint-disable-next-line unicorn/no-array-reduce
       tracked.commits.slice(index).reduce((maps, c) => maps.concat(c.maps), [] as StepMap[]),
     );
 

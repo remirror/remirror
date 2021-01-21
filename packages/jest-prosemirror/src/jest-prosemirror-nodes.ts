@@ -109,7 +109,7 @@ export function initSelection<Schema extends EditorSchema = EditorSchema>(
 
     if ($anchor) {
       return Cast<Selection<Schema>>(
-        new CellSelection<Schema>($anchor, resolveCell(taggedDoc, taggedDoc.tag.head) ?? undefined),
+        new CellSelection<Schema>($anchor, resolveCell(taggedDoc, head) ?? undefined),
       );
     }
   }

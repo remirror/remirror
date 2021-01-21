@@ -71,7 +71,7 @@ export function text(value: string, schema: EditorSchema): TaggedContentItem {
 
     stripped += value.slice(textIndex, index);
     tags[tagName] = stripped.length;
-    textIndex = match.index + taggedToken.length;
+    textIndex = index + taggedToken.length;
   }
 
   stripped += value.slice(textIndex);

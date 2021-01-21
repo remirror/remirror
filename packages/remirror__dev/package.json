@@ -18,12 +18,6 @@
       "default": "./dist/remirror-dev.esm.js"
     },
     "./package.json": "./package.json",
-    "./render": {
-      "import": "./render/dist/remirror-dev-render.esm.js",
-      "require": "./render/dist/remirror-dev-render.cjs.js",
-      "browser": "./render/dist/remirror-dev.browser.esm.js",
-      "default": "./render/dist/remirror-dev-render.esm.js"
-    },
     "./types/*": "./dist/declarations/src/*.d.ts",
     "./worker.json-diff": {
       "import": "./worker.json-diff/dist/remirror-dev-worker.json-diff.esm.js",

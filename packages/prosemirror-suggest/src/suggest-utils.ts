@@ -323,10 +323,7 @@ function findExitReason<Schema extends EditorSchema = EditorSchema>(
   }
 
   // Exit caused by a selection
-  if (
-    !state.selection.empty &&
-    (selection.from <= match.range.from || selection.to >= match.range.to)
-  ) {
+  if (!selection.empty && (selection.from <= match.range.from || selection.to >= match.range.to)) {
     return { exit: createMatchWithReason({ match, exitReason: ExitReason.SelectionOutside }) };
   }
 

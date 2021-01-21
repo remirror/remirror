@@ -264,7 +264,7 @@ interface FormatCodeBlockFactoryProps
 export function formatCodeBlockFactory(props: FormatCodeBlockFactoryProps) {
   return ({ pos }: Partial<PosProps> = object()): CommandFunction => ({ tr, dispatch }) => {
     const { type, formatter, defaultLanguage: fallback } = props;
-    const { selection } = tr;
+    const { selection, doc } = tr;
 
     const { from, to } = pos ? { from: pos, to: pos } : selection;
 
@@ -313,7 +313,7 @@ export function formatCodeBlockFactory(props: FormatCodeBlockFactoryProps) {
     const anchor = start + cursorOffset;
     const head = formatEnd ? start + formatEnd.cursorOffset : undefined;
 
-    tr.setSelection(TextSelection.create(tr.doc, anchor, head));
+    tr.setSelection(TextSelection.create(doc, anchor, head));
 
     if (dispatch) {
       dispatch(tr);

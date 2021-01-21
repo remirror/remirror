@@ -51,7 +51,7 @@ const Themed: FC<UseThemeProps> = (props) => {
 
   return (
     <div style={style} className={className}>
-      {props.children}
+      {children}
     </div>
   );
 };

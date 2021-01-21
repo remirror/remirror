@@ -133,12 +133,17 @@ export class SchemaExtension extends PlainExtension {
    * and with `remirror` it's all just handled for you.
    */
   onCreate(): void {
-    const { managerSettings } = this.store;
-    const { defaultBlockNode } = managerSettings;
+    const { managerSettings, tags, markNames, nodeNames, extensions } = this.store;
+    const {
+      defaultBlockNode,
+      disableExtraAttributes,
+      nodeOverride,
+      markOverride,
+    } = managerSettings;
 
     // True when the `defaultBlockNode` exists for this editor.
     const isValidDefaultBlockNode = (name: string | undefined): name is string =>
-      !!(name && this.store.tags[ExtensionTag.Block].includes(name));
+      !!(name && tags[ExtensionTag.Block].includes(name));
 
     // The user can override the whole schema creation process by providing
     // their own version. In that case we can exit early.
@@ -170,13 +175,13 @@ export class SchemaExtension extends PlainExtension {
     // extensions which specified.
     const namedExtraAttributes = getNamedSchemaAttributes({
       settings: managerSettings,
-      gatheredSchemaAttributes: this.gatherExtraAttributes(this.store.extensions),
-      nodeNames: this.store.nodeNames,
-      markNames: this.store.markNames,
-      tags: this.store.tags,
+      gatheredSchemaAttributes: this.gatherExtraAttributes(extensions),
+      nodeNames: nodeNames,
+      markNames: markNames,
+      tags: tags,
     });
 
-    for (const extension of this.store.extensions) {
+    for (const extension of extensions) {
       // Pick the current attributes from the named attributes and merge them
       // with the extra attributes which were added to the extension. Extra
       // attributes added to the extension are prioritized.
@@ -188,7 +193,7 @@ export class SchemaExtension extends PlainExtension {
       // There are several places that extra attributes can be ignored. This
       // checks them all.
       const ignoreExtraAttributes =
-        managerSettings.disableExtraAttributes === true ||
+        disableExtraAttributes === true ||
         extension.options.disableExtraAttributes === true ||
         extension.constructor.disableExtraAttributes === true;
 
@@ -200,7 +205,7 @@ export class SchemaExtension extends PlainExtension {
           extraAttributes: assertGet(namedExtraAttributes, extension.name),
 
           // Todo add support for setting overrides via the manager.
-          override: { ...managerSettings.nodeOverride, ...extension.options.nodeOverride },
+          override: { ...nodeOverride, ...extension.options.nodeOverride },
           ignoreExtraAttributes,
           name: extension.constructorName,
           tags: extension.tags,
@@ -228,7 +233,7 @@ export class SchemaExtension extends PlainExtension {
           createExtensionSpec: (extra, override) => extension.createMarkSpec(extra, override),
           extraAttributes: assertGet(namedExtraAttributes, extension.name),
           // Todo add support for setting overrides via the manager.
-          override: { ...managerSettings.markOverride, ...extension.options.markOverride },
+          override: { ...markOverride, ...extension.options.markOverride },
           ignoreExtraAttributes,
           name: extension.constructorName,
           tags: extension.tags ?? [],
@@ -1050,12 +1055,16 @@ function getNodeMarkOptions(item: ProsemirrorNode | Mark): NodeMarkOptions {
  * This is used when the user provides their own custom schema.
  */
 function getSpecFromSchema(schema: EditorSchema) {
-  const nodes = entries(schema.nodes)
-    .map(([name, type]) => [name, type.spec as NodeExtensionSpec] as const)
-    .reduce((acc, [name, spec]) => ({ ...acc, [name]: spec }), {});
-  const marks = entries(schema.marks)
-    .map(([name, type]) => [name, type.spec as MarkExtensionSpec] as const)
-    .reduce((acc, [name, spec]) => ({ ...acc, [name]: spec }), {});
+  const nodes: Record<string, NodeExtensionSpec> = object();
+  const marks: Record<string, MarkExtensionSpec> = object();
+
+  for (const [name, type] of Object.entries(schema.nodes)) {
+    nodes[name] = type.spec as NodeExtensionSpec;
+  }
+
+  for (const [name, type] of Object.entries(schema.marks)) {
+    marks[name] = type.spec as MarkExtensionSpec;
+  }
 
   return { nodes, marks };
 }

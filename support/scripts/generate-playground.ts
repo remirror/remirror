@@ -21,19 +21,17 @@ import { baseDir, formatFiles, log } from './helpers';
 
 log.debug('Launching the `generate:playground` script.');
 
-interface PopulateRemirrorImports {
-  /**
-   * The absolute path to the source folder of the sub directory.
-   */
-  absolutePath: string;
+// The location for all the project packages.
+const packagesFolder = baseDir('packages');
 
+interface PopulateRemirrorImports {
   /**
    * The pattern which matches the main package.json file.
    *
    * e.g. `extension-*\/package.json` matches all package.json files for
    * extensions.
    */
-  packageJsonPattern: string;
+  pattern: string;
 
   /**
    * The names to skip.
@@ -56,10 +54,10 @@ interface PopulateRemirrorImports {
 async function populateRemirrorImports(
   props: PopulateRemirrorImports,
 ): Promise<Record<string, PackageModuleMeta>> {
-  const { absolutePath, packageJsonPattern, excludedNames = [] } = props;
+  const { pattern, excludedNames = [] } = props;
   const result: Record<string, PackageModuleMeta> = {};
-  const mainPackageJsonFiles = await glob(packageJsonPattern, {
-    cwd: absolutePath,
+  const mainPackageJsonFiles = await glob(pattern, {
+    cwd: packagesFolder,
     absolute: true,
   });
 
@@ -642,14 +640,6 @@ export const DTS_CACHE: DtsCache = dtsCache;
   };
 }
 
-// The absolute paths to the of the unscoped `remirror/` subdirectory exports.
-
-// The location for all the unscoped packages.
-const unscopedAbsolutePath = baseDir('packages');
-
-// The location for all the scoped packages.
-const scopedAbsolutePath = path.join(unscopedAbsolutePath, '@remirror');
-
 // Where the generated file will be located.
 const generatedFolder = baseDir('packages', '@remirror', 'playground', 'src', 'generated');
 const modulesPath = path.join(generatedFolder, 'modules.ts');
@@ -777,37 +767,31 @@ async function main() {
   await ensureActiveBuild();
 
   const pm = await populateRemirrorImports({
-    absolutePath: scopedAbsolutePath,
-    packageJsonPattern: 'pm/package.json',
+    pattern: 'pm/package.json',
   });
 
   const extensions = await populateRemirrorImports({
-    absolutePath: scopedAbsolutePath,
     // TODO add support for SSR to codemirror5 extension
     // excludedNames: ['@remirror/extension-codemirror5'],
-    packageJsonPattern: 'extension-*/package.json',
+    pattern: 'remirror__extension-*/package.json',
   });
 
   const presets = await populateRemirrorImports({
-    absolutePath: scopedAbsolutePath,
-    packageJsonPattern: 'preset-*/package.json',
+    pattern: 'remirror__preset-*/package.json',
   });
 
   const core = await populateRemirrorImports({
-    absolutePath: scopedAbsolutePath,
-    packageJsonPattern: '{core-*,core}/package.json',
+    pattern: 'remirror__{core-*,core}/package.json',
   });
 
   const react = await populateRemirrorImports({
-    absolutePath: scopedAbsolutePath,
     excludedNames: ['@remirror/react-native'],
-    packageJsonPattern: '{react-*,react}/package.json',
+    pattern: 'remirror__{react-*,react}/package.json',
   });
 
   const unscoped = await populateRemirrorImports({
-    absolutePath: unscopedAbsolutePath,
     excludedNames: ['jest-prosemirror', 'jest-remirror', 'a11y-status', 'test-keyboard'],
-    packageJsonPattern: '*/package.json',
+    pattern: '{a11y-status,create-context-state,multishift,prosemirror-*,remirror}/package.json',
   });
 
   // Generate the code from the importGroups.

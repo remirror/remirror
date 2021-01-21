@@ -12,14 +12,14 @@ export function createBlob(source: BlobPart): string {
 export const hasDocument = typeof document !== 'undefined';
 
 /** Support for browsers without dynamic import (eg Firefox 6x) */
-let dynamicImport: (path: string) => Promise<{ default: any; [key: string]: any }>;
+let dynamicImport: (path: string) => Promise<{ [key: string]: any; default: any }>;
 
 try {
   dynamicImport = (0, eval)('u=>import(u)');
 } catch {
   if (hasDocument) {
     self.addEventListener('error', (e) => (importShim.e = e.error));
-    dynamicImport = (blobUrl) => {
+    dynamicImport = (blobUrl: string): Promise<{ [key: string]: any; default: any }> => {
       const topLevelBlobUrl = createBlob(
         `import*as m from'${blobUrl}';self.importShim.l=m;self.importShim.e=null`,
       );

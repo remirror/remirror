@@ -78,7 +78,7 @@ declare module 'fontkit' {
 
   interface Glyph {
     name: string;
-    getImageForSize(size: number): GlyphImage | null;
+    getImageForSize: (size: number) => GlyphImage | null;
   }
 
   interface Font {

@@ -40,7 +40,7 @@ export function useReactFramework<Extension extends AnyExtension>(
     state,
     stringHandler = manager.settings.stringHandler ?? defaultStringHandler,
   } = props;
-  const { placeholder } = props;
+  const { placeholder, editable, suppressHydrationWarning } = props;
   const firstUpdate = useRef(true);
 
   // Update the placeholder on first render.
@@ -77,7 +77,7 @@ export function useReactFramework<Extension extends AnyExtension>(
     ? state
     : createStateFromContent(initialContent, initialSelection);
   const [shouldRenderClient, setShouldRenderClient] = useState<boolean | undefined>(
-    props.suppressHydrationWarning ? false : undefined,
+    suppressHydrationWarning ? false : undefined,
   );
 
   // Store all the `logic` in a `ref`
@@ -97,7 +97,7 @@ export function useReactFramework<Extension extends AnyExtension>(
     };
   }, [framework]);
 
-  const previousEditable = usePrevious(props.editable);
+  const previousEditable = usePrevious(editable);
 
   // Handle editor updates
   useEffect(() => {

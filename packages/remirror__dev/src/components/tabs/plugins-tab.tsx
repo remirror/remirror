@@ -4,9 +4,7 @@ import { assertGet } from 'remirror';
 import { useDevStore } from '../../dev-state';
 import { JsonTree } from '../json-tree';
 import { List } from '../list';
-import { InfoPanel } from '../styled';
-import { SplitView, SplitViewColumn } from '../styled';
-import { Heading } from './../styled';
+import { Heading, InfoPanel, SplitView, SplitViewColumn } from '../styled';
 
 function valueRenderer(raw: string, ...rest: Array<string | number>) {
   if (typeof rest[0] === 'function') {

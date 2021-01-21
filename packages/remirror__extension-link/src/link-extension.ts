@@ -21,7 +21,6 @@ import {
   isTextSelection,
   keyBinding,
   KeyBindingProps,
-  LEAF_NODE_REPLACING_CHARACTER,
   MarkExtension,
   MarkExtensionSpec,
   MarkSpecOverride,
@@ -240,11 +239,11 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
   @keyBinding({ shortcut: NamedShortcut.InsertLink })
   shortcut({ state, dispatch, tr }: KeyBindingProps): boolean {
     let selectedText = '';
-    let { from, to } = tr.selection;
+    let { from, to, empty } = tr.selection;
     let expandedSelection = false;
 
     // When the selection is empty, expand it
-    if (tr.selection.empty) {
+    if (empty) {
       const selectedWord = getSelectedWord(tr);
 
       if (!selectedWord) {
@@ -292,7 +291,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
       const { tr } = props;
       const { selection } = tr;
       const selectionIsValid =
-        (isTextSelection(selection) && !isSelectionEmpty(tr.selection)) ||
+        (isTextSelection(selection) && !isSelectionEmpty(selection)) ||
         isAllSelection(selection) ||
         isMarkActive({ trState: tr, type: this.type });
 
@@ -370,11 +369,10 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           return;
         }
 
-        const { mark, from, to } = range;
-        const text = $pos.doc.textBetween(from, to, LEAF_NODE_REPLACING_CHARACTER, ' ');
+        const { mark, to, text } = range;
         const href = extractHref(text, this.options.defaultProtocol);
 
-        if (from === range.from && to === range.to && mark.attrs.href === href) {
+        if (mark.attrs.href === href) {
           return;
         }
 

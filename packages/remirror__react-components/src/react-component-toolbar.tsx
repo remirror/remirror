@@ -223,6 +223,7 @@ const BaseToolbarButton = (props: BaseToolbarButtonProps) => {
     onClick,
     tooltipClass,
     active,
+    className,
   } = props;
   const tooltipState = useTooltipState({ gutter: 5 });
   const themeProps = useTheme({ className: tooltipClass });
@@ -238,7 +239,7 @@ const BaseToolbarButton = (props: BaseToolbarButtonProps) => {
             disabled={disabled}
             focusable={focusable}
             onClick={onClick}
-            className={cx(props.className, active && ComponentsTheme.BUTTON_ACTIVE)}
+            className={cx(className, active && ComponentsTheme.BUTTON_ACTIVE)}
           >
             {children}
           </ReakitToolbarItem>

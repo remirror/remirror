@@ -57,7 +57,7 @@ export function useMenuOptions({
 }: BootstrapMenuOptions): BootstrapMenuOptions {
   const parentOrientation = useContext(OrientationContext);
   const unstable_system = { palette, fill, ...system };
-  const transform = options.unstable_popoverStyles?.transform || '';
+  const transform = options.unstable_popoverStyles?.transform ?? '';
 
   if (parentOrientation === 'vertical' && options.orientation === 'vertical') {
     return {
@@ -107,7 +107,7 @@ export function useMenuButtonProps(
   options: BootstrapMenuButtonOptions,
   { children, ...htmlProps }: MenuButtonHTMLProps = {},
 ): MenuButtonHTMLProps {
-  const placement = options.unstable_originalPlacement || options.placement;
+  const placement = options.unstable_originalPlacement ?? options.placement;
   const dir = placement
     ? (placement.split('-')[0] as 'top' | 'bottom' | 'right' | 'left')
     : undefined;

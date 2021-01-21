@@ -293,7 +293,8 @@ class CodeEditorHelper {
         continue;
       }
 
-      const name = (match[1] ? `@${match[1]}/` : '') + match[2];
+      const [scope, nameOrSubScope] = match;
+      const name = `${scope ? `@${scope}/` : ''}${nameOrSubScope}`;
 
       if (this.#requestedTypings.has(name) || DTS_MODULE_NAMES.has(name)) {
         // Typing already loaded

@@ -202,7 +202,7 @@ function fetchFromTypings(dependency: string, version: string, fetchedPaths: Fet
   return fetchAsText(`${depUrl}/package.json`)
     .then((response: string) => JSON.parse(response))
     .then((packageJSON: { typings?: string; types?: string }) => {
-      const types = packageJSON.typings || packageJSON.types;
+      const types = packageJSON.typings ?? packageJSON.types;
 
       if (types) {
         // Add package.json, since this defines where all types lie

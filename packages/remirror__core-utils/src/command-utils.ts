@@ -314,7 +314,7 @@ export function isChrome(minVersion = 0): boolean {
  */
 export function preserveSelection(selection: Selection, tr: Transaction): void {
   // Get the previous movable part of the cursor selection.
-  let { head } = selection;
+  let { head, empty, anchor } = selection;
 
   // Map this movable cursor selection through each of the steps that have happened in
   // the transaction.
@@ -323,11 +323,11 @@ export function preserveSelection(selection: Selection, tr: Transaction): void {
     head = map.map(head);
   }
 
-  if (selection.empty) {
+  if (empty) {
     // Update the transaction with the new text selection.
     tr.setSelection(TextSelection.create(tr.doc, head));
   } else {
-    tr.setSelection(TextSelection.create(tr.doc, selection.anchor, head));
+    tr.setSelection(TextSelection.create(tr.doc, anchor, head));
   }
 }
 
@@ -337,13 +337,13 @@ export function preserveSelection(selection: Selection, tr: Transaction): void {
  * @param props - see [[`ReplaceTextProps`]]
  */
 export function replaceText(props: ReplaceTextProps): CommandFunction {
-  const { attrs = {}, appendText = '', content = '', keepSelection = false } = props;
+  const { attrs = {}, appendText = '', content = '', keepSelection = false, range } = props;
 
   return ({ state, tr, dispatch }) => {
     const schema = state.schema;
-    const selection = getTextSelection(props.selection ?? props.range ?? tr.selection, tr.doc);
+    const selection = getTextSelection(props.selection ?? range ?? tr.selection, tr.doc);
     const index = selection.$from.index();
-    const { from, to } = selection;
+    const { from, to, $from } = selection;
 
     const type = isString(props.type)
       ? schema.nodes[props.type] ?? schema.marks[props.type]
@@ -355,7 +355,7 @@ export function replaceText(props: ReplaceTextProps): CommandFunction {
     });
 
     if (isNodeType(type)) {
-      if (!selection.$from.parent.canReplaceWith(index, index, type)) {
+      if (!$from.parent.canReplaceWith(index, index, type)) {
         return false;
       }
 
@@ -421,9 +421,9 @@ export interface RemoveMarkProps extends MarkTypeProps {
  */
 export function removeMark(props: RemoveMarkProps): CommandFunction {
   return ({ dispatch, tr, state }) => {
-    const { type, expand = true } = props;
-    const selection = getTextSelection(props.selection ?? props.range ?? tr.selection, tr.doc);
-    let { from, to } = selection;
+    const { type, expand = true, range } = props;
+    const selection = getTextSelection(props.selection ?? range ?? tr.selection, tr.doc);
+    let { from, to, $anchor, empty } = selection;
 
     const markType = isString(type) ? state.schema.marks[type] : type;
 
@@ -434,11 +434,11 @@ export function removeMark(props: RemoveMarkProps): CommandFunction {
 
     if (expand) {
       ({ from, to } =
-        props.selection || props.range
+        props.selection || range
           ? getMarkRange(tr.doc.resolve(from), markType) ||
             (isNumber(to) && getMarkRange(tr.doc.resolve(to), markType)) || { from, to }
-          : selection.empty
-          ? getMarkRange(selection.$anchor, markType) ?? { from, to }
+          : empty
+          ? getMarkRange($anchor, markType) ?? { from, to }
           : { from, to });
     }
 

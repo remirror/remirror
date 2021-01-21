@@ -292,7 +292,7 @@ export abstract class Framework<
   protected getAttributes(ssr?: false): Record<string, string>;
   protected getAttributes(ssr: true): Shape;
   protected getAttributes(ssr?: boolean): Shape {
-    const { attributes, autoFocus, classNames = [] } = this.props;
+    const { attributes, autoFocus, classNames = [], label, editable } = this.props;
     const managerAttributes = this.manager.store?.attributes;
 
     // The attributes which were passed in as props.
@@ -315,8 +315,8 @@ export abstract class Framework<
       role: 'textbox',
       ...focus,
       'aria-multiline': 'true',
-      ...(!(this.props.editable ?? true) ? { 'aria-readonly': 'true' } : {}),
-      'aria-label': this.props.label ?? '',
+      ...(!(editable ?? true) ? { 'aria-readonly': 'true' } : {}),
+      'aria-label': label ?? '',
       ...managerAttributes,
       class: cx(ssr && 'Prosemirror', CoreTheme.EDITOR, managerAttributes?.class, ...classNames),
     };

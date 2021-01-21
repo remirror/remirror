@@ -134,7 +134,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
 
   @keyBinding({ shortcut: 'Enter' })
   handleEnterKey({ dispatch, tr }: KeyBindingProps): boolean {
-    const { selection } = tr;
+    const { selection, doc } = tr;
 
     if (!isTextSelection(selection) || !selection.$cursor) {
       return false;
@@ -147,7 +147,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
     }
 
     const regex = /^:::([A-Za-z]*)?$/;
-    const { text } = nodeBefore;
+    const { text, nodeSize } = nodeBefore;
     const { textContent } = parent;
 
     if (!text) {
@@ -165,14 +165,14 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
 
     const type = getCalloutType(matchesNodeBefore[1], validTypes, defaultType);
     const pos = selection.$from.before();
-    const end = pos + nodeBefore.nodeSize + 1;
+    const end = pos + nodeSize + 1;
     // +1 to account for the extra pos a node takes up
 
     if (dispatch) {
       tr.replaceWith(pos, end, this.type.create({ type }));
 
       // Set the selection to within the codeBlock
-      tr.setSelection(TextSelection.create(tr.doc, pos + 1));
+      tr.setSelection(TextSelection.create(doc, pos + 1));
       dispatch(tr);
     }
 
@@ -185,7 +185,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
   @keyBinding({ shortcut: 'Backspace' })
   handleBackspace({ dispatch, tr }: KeyBindingProps): boolean {
     // Aims to stop merging callouts when deleting content in between
-    const { selection } = tr;
+    const { selection, doc } = tr;
 
     // If the selection is not empty return false and let other extension
     // (ie: BaseKeymapExtension) to do the deleting operation.
@@ -207,7 +207,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
       return false;
     }
 
-    const previousPos = tr.doc.resolve(previousPosition);
+    const previousPos = doc.resolve(previousPosition);
 
     // If resolving previous position fails, bail out
     if (!previousPos?.parent) {
@@ -221,7 +221,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
     if (node.type !== this.type && previousNode.type === this.type) {
       const { content, nodeSize } = node;
       tr.delete(pos, pos + nodeSize);
-      tr.setSelection(TextSelection.create(tr.doc, previousPosition - 1));
+      tr.setSelection(TextSelection.create(doc, previousPosition - 1));
       tr.insert(previousPosition - 1, content);
 
       if (dispatch) {

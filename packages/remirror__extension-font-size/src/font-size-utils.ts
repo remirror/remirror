@@ -27,7 +27,7 @@ export const FONT_SIZE_ATTRIBUTE = 'data-font-size-mark';
  * Parse the font size and font unit from the provided value. When the value
  * type is unsupported it default to `px`.
  */
-export function parseFontSize(fontSize: string | undefined | null): ParsedFontSize {
+export function parseFontSize(fontSize: string | undefined | null = '0'): ParsedFontSize {
   const length = fontSize || '0';
   const value = Number.parseFloat(length);
   const match = length.match(/[\d-.]+(\w+)$/);

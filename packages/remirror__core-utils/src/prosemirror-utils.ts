@@ -529,8 +529,8 @@ interface GetActiveAttrsProps extends NodeTypeProps, Partial<AttributesProps> {
  */
 export function getActiveNode(props: GetActiveAttrsProps): FindProsemirrorNodeResult | undefined {
   const { state, type, attrs } = props;
-  const { selection } = state;
-  const nodeType = isString(type) ? state.doc.type.schema.nodes[type] : type;
+  const { selection, doc } = state;
+  const nodeType = isString(type) ? doc.type.schema.nodes[type] : type;
 
   invariant(nodeType, { code: ErrorConstant.SCHEMA, message: `No node exists for ${type}` });
 
