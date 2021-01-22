@@ -35,7 +35,12 @@ Object {
 --rmr-color-shadow-1: rgba(10,31,68,0.08);
 --rmr-color-shadow-2: rgba(10,31,68,0.10);
 --rmr-color-shadow-3: rgba(10,31,68,0.12);
---rmr-color-backdrop: rgba(0, 0, 0, 0.5);
+--rmr-color-backdrop: rgba(0, 0, 0, 0.9);
+--rmr-color-outline: rgba(121, 99, 210, 0.4);
+--rmr-color-selection-background: Highlight;
+--rmr-color-selection-shadow: inherit;
+--rmr-color-selection-text: HighlightText;
+--rmr-color-selection-caret: inherit;
 --rmr-hue-gray-0: #f8f9fa;
 --rmr-hue-gray-1: #f1f3f5;
 --rmr-hue-gray-2: #e9ecef;
@@ -166,6 +171,9 @@ Object {
 --rmr-hue-orange-7: #f76707;
 --rmr-hue-orange-8: #e8590c;
 --rmr-hue-orange-9: #d9480f;
+--rmr-radius-border: 0.25rem;
+--rmr-radius-extra: 0.5rem;
+--rmr-radius-circle: 50%;
 --rmr-font-family-default: system-ui, -apple-system, BlinkMacSystemFont, \\"Segoe UI\\", Roboto, \\"Helvetica Neue\\", sans-serif;
 --rmr-font-family-heading: inherit;
 --rmr-font-family-mono: Menlo, monospace;
@@ -195,8 +203,14 @@ Object {
 --rmr-letter-spacing-loose: 1px;
 --rmr-letter-spacing-wide: 3px;
 --rmr-line-height-heading: 1.25em;
---rmr-line-height-default: 1.5em;",
+--rmr-line-height-default: 1.5em;
+--rmr-box-shadow-1: 0 1px 1px rgba(10,31,68,0.08);
+--rmr-box-shadow-2: 0 1px 1px rgba(10,31,68,0.10);
+--rmr-box-shadow-3: 0 1px 1px rgba(10,31,68,0.12);",
   "styles": Object {
+    "--rmr-box-shadow-1": "0 1px 1px rgba(10,31,68,0.08)",
+    "--rmr-box-shadow-2": "0 1px 1px rgba(10,31,68,0.10)",
+    "--rmr-box-shadow-3": "0 1px 1px rgba(10,31,68,0.12)",
     "--rmr-color-active-background": "hsla(0, 0%, 85%, 1)",
     "--rmr-color-active-border": "hsla(0, 0%, 0%, 0.25)",
     "--rmr-color-active-faded": "hsla(0, 0%, 13%, 0.9)",
@@ -207,7 +221,7 @@ Object {
     "--rmr-color-active-secondary": "hsla(72, 55%, 46%, 1)",
     "--rmr-color-active-secondary-text": "#000",
     "--rmr-color-active-text": "#000",
-    "--rmr-color-backdrop": "rgba(0, 0, 0, 0.5)",
+    "--rmr-color-backdrop": "rgba(0, 0, 0, 0.9)",
     "--rmr-color-background": "#ffffff",
     "--rmr-color-border": "rgba(0, 0, 0, 0.25)",
     "--rmr-color-faded": "hsla(0, 0%, 13%, 0.9)",
@@ -223,10 +237,15 @@ Object {
     "--rmr-color-hover-secondary-text": "#000",
     "--rmr-color-hover-text": "#000",
     "--rmr-color-muted": "#f1f3f5",
+    "--rmr-color-outline": "rgba(121, 99, 210, 0.4)",
     "--rmr-color-primary": "#7963d2",
     "--rmr-color-primary-text": "#fff",
     "--rmr-color-secondary": "#bcd263",
     "--rmr-color-secondary-text": "#fff",
+    "--rmr-color-selection-background": "Highlight",
+    "--rmr-color-selection-caret": "inherit",
+    "--rmr-color-selection-shadow": "inherit",
+    "--rmr-color-selection-text": "HighlightText",
     "--rmr-color-shadow-1": "rgba(10,31,68,0.08)",
     "--rmr-color-shadow-2": "rgba(10,31,68,0.10)",
     "--rmr-color-shadow-3": "rgba(10,31,68,0.12)",
@@ -383,6 +402,9 @@ Object {
     "--rmr-letter-spacing-wide": "3px",
     "--rmr-line-height-default": "1.5em",
     "--rmr-line-height-heading": "1.25em",
+    "--rmr-radius-border": "0.25rem",
+    "--rmr-radius-circle": "50%",
+    "--rmr-radius-extra": "0.5rem",
     "--rmr-space-1": "4px",
     "--rmr-space-2": "8px",
     "--rmr-space-3": "16px",

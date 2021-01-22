@@ -94,7 +94,7 @@ describe('basic functionality', () => {
     });
     const editorNode = getByLabelText(label);
 
-    expect(handlers.onChange).toHaveBeenCalledTimes(2);
+    expect(handlers.onChange).toHaveBeenCalledTimes(3);
     expect(handlers.onChange.mock.calls[0][0].helpers.getText()).toBe(textContent);
     expect(handlers.onChange.mock.calls[0][0].firstRender).toBe(true);
     expect(handlers.onChange.mock.calls[1][0].firstRender).toBe(false);
@@ -418,8 +418,8 @@ describe('onChange', () => {
       });
     }
 
-    expect(mock).toHaveBeenCalledTimes(8);
-    expect(mock).toHaveBeenLastCalledWith(7);
+    expect(mock).toHaveBeenCalledTimes(9);
+    expect(mock).toHaveBeenLastCalledWith(8);
   });
 
   it('updates values in `StrictMode`', () => {
@@ -446,7 +446,7 @@ describe('onChange', () => {
       });
     }
 
-    expect(mock).toHaveBeenCalledTimes(8);
-    expect(mock).toHaveBeenLastCalledWith(7);
+    expect(mock).toHaveBeenCalledTimes(9);
+    expect(mock).toHaveBeenLastCalledWith(8);
   });
 });

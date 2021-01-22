@@ -240,7 +240,7 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
     const { persistentSelectionClass } = this.options;
 
     // A container for the gathered decorations.
-    let decorationSet = this.placeholders;
+    let decorationSet = DecorationSet.empty;
 
     if (persistentSelectionClass && !this.store.helpers.isInteracting?.()) {
       // Add the selection decoration to the decorations array.

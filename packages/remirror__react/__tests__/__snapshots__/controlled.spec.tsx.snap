@@ -8,11 +8,6 @@ exports[`Remirror Controlled Component can override updates to the editor state 
   contenteditable="true"
   role="textbox"
 >
-  <span
-    class="ProseMirror-widget"
-    data-id="remirror-positioner-widget"
-    role="presentation"
-  />
   <p>
     Hello
   </p>
@@ -30,11 +25,6 @@ exports[`Remirror Controlled Component overrides initial content 1`] = `
   contenteditable="true"
   role="textbox"
 >
-  <span
-    class="ProseMirror-widget"
-    data-id="remirror-positioner-widget"
-    role="presentation"
-  />
   <p>
     Not terrible
   </p>
@@ -49,11 +39,6 @@ exports[`Remirror Controlled Component responds to updates to the editor state 1
   contenteditable="true"
   role="textbox"
 >
-  <span
-    class="ProseMirror-widget"
-    data-id="remirror-positioner-widget"
-    role="presentation"
-  />
   <p>
     add more value some content
   </p>
@@ -68,11 +53,6 @@ exports[`Remirror Controlled Component should set the initial value 1`] = `
   contenteditable="true"
   role="textbox"
 >
-  <span
-    class="ProseMirror-widget"
-    data-id="remirror-positioner-widget"
-    role="presentation"
-  />
   <p>
     This is the initial value
   </p>

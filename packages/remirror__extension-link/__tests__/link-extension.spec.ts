@@ -708,11 +708,6 @@ describe('spanning', () => {
     add(doc(p('Paragraph with ', linkMark, ' and text')));
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-      <span data-id="remirror-positioner-widget"
-            role="presentation"
-            class="ProseMirror-widget"
-      >
-      </span>
       <p>
         Paragraph with
         <a href="//test.com"

@@ -28,36 +28,6 @@
       "path": "../../remirror__core/src"
     },
     {
-      "path": "../../remirror__extension-blockquote/src"
-    },
-    {
-      "path": "../../remirror__extension-bold/src"
-    },
-    {
-      "path": "../../remirror__extension-code-block/src"
-    },
-    {
-      "path": "../../remirror__extension-doc/src"
-    },
-    {
-      "path": "../../remirror__extension-heading/src"
-    },
-    {
-      "path": "../../remirror__extension-italic/src"
-    },
-    {
-      "path": "../../remirror__extension-link/src"
-    },
-    {
-      "path": "../../remirror__extension-paragraph/src"
-    },
-    {
-      "path": "../../remirror__extension-text/src"
-    },
-    {
-      "path": "../../remirror__extension-underline/src"
-    },
-    {
       "path": "../../remirror__pm/src"
     },
     {

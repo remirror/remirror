@@ -53,7 +53,7 @@ export class PlaceholderExtension extends PlainExtension<PlaceholderOptions> {
       state: {
         init: (_, state): PlaceholderPluginState => ({
           ...this.options,
-          empty: isDefaultDocNode(state.doc),
+          empty: isDefaultDocNode(state.doc, { ignoreAttributes: true }),
         }),
         apply: (tr, pluginState: PlaceholderPluginState, _, state): PlaceholderPluginState => {
           return applyState({ pluginState, tr, extension: this, state });

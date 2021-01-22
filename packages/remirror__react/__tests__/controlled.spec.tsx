@@ -55,7 +55,7 @@ describe('Remirror Controlled Component', () => {
 
     expect(getByRole('textbox')).toMatchSnapshot();
 
-    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledTimes(2);
     expect(onChange.mock.calls[0][0].firstRender).toBeTrue();
   });
 
@@ -488,7 +488,7 @@ describe('onChange', () => {
       });
     }
 
-    expect(mock).toHaveBeenCalledTimes(8);
+    expect(mock).toHaveBeenCalledTimes(9);
     expect(mock).toHaveBeenLastCalledWith('Amazing');
   });
 
@@ -501,7 +501,7 @@ describe('onChange', () => {
       });
     }
 
-    expect(mock).toHaveBeenCalledTimes(8);
+    expect(mock).toHaveBeenCalledTimes(9);
     expect(mock).toHaveBeenLastCalledWith('Amazing');
   });
 });

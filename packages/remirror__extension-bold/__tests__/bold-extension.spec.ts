@@ -186,10 +186,10 @@ describe('commands', () => {
     commands.removeBold({ from: 1, to: 6 });
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-          <p>
-            Hello friend, lets dance.
-          </p>
-        `);
+      <p>
+        Hello friend, lets dance.
+      </p>
+    `);
     expect(view.state.doc).toEqualRemirrorDocument(doc(p('Hello friend, lets dance.')));
   });
 });

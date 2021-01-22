@@ -86,5 +86,5 @@ export const createEditorView = <Schema extends EditorSchema = EditorSchema>(
   const Constructor = shouldUseDomEnvironment(forceEnvironment)
     ? EditorView
     : Cast<typeof EditorView>(EditorViewSSR);
-  return new Constructor(place, props) as any;
+  return new Constructor(place, props);
 };

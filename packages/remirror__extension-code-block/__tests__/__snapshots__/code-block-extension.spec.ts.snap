@@ -164,11 +164,6 @@ a
 `;
 
 exports[`plugin updates when multiple changes occur 1`] = `
-<span data-id="remirror-positioner-widget"
-      role="presentation"
-      class="ProseMirror-widget"
->
-</span>
 <pre class="language-typescript">
   <code data-code-block-language="typescript">
     <span class="token keyword">
@@ -200,11 +195,6 @@ exports[`plugin updates when multiple changes occur 1`] = `
 `;
 
 exports[`plugin updates when multiple changes occur 2`] = `
-<span data-id="remirror-positioner-widget"
-      role="presentation"
-      class="ProseMirror-widget"
->
-</span>
 <pre class="language-typescript">
   <code data-code-block-language="typescript">
     <span class="token keyword">

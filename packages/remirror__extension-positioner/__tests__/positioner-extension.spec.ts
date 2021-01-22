@@ -127,9 +127,7 @@ test("a custom positioner can define it's own hasChanged behaviour", () => {
     onDone: jest.fn(),
   };
 
-  const customSelectionPositioner = Positioner.fromPositioner(nearestWordPositioner, {
-    hasChanged: () => true,
-  });
+  const customSelectionPositioner = cursorPositioner.clone({ hasChanged: () => true });
 
   add(doc(p('<cursor>')))
     .callback(() => {
@@ -161,19 +159,18 @@ test("a custom positioner can determine it's own active state", () => {
     onDone: jest.fn(),
   };
 
-  const customSelectionPositioner = Positioner.fromPositioner(selectionPositioner, {
-    getActive(props) {
+  const customSelectionPositioner = selectionPositioner.clone({
+    getActive: (props) => {
       const { state, view } = props;
 
       if (isAllSelection(state.selection) === false) {
         return [];
       }
 
-      const { from, to } = state.selection;
-      const start = view.coordsAtPos(from);
-      const end = view.coordsAtPos(to);
+      const from = view.coordsAtPos(state.selection.from);
+      const to = view.coordsAtPos(state.selection.to);
 
-      return [{ start, end }];
+      return [{ from, to }];
     },
   });
 

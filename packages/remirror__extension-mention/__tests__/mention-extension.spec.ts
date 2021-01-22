@@ -158,11 +158,6 @@ describe('`createSuggesters`', () => {
     add(doc(p('hello <cursor>friend'))).insertText(`${label}`);
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-      <span data-id="remirror-positioner-widget"
-            role="presentation"
-            class="ProseMirror-widget"
-      >
-      </span>
       <p>
         hello
         <a class="suggest suggest-at">
@@ -324,11 +319,6 @@ describe('interactions with input rules', () => {
     add(doc(p('123 '))).insertText('@a_bc_ ');
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-      <span data-id="remirror-positioner-widget"
-            role="presentation"
-            class="ProseMirror-widget"
-      >
-      </span>
       <p>
         123
         <a class="suggest suggest-at">
@@ -342,11 +332,6 @@ describe('interactions with input rules', () => {
     add(doc(p('_123 '))).insertText('@abc_ ');
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-      <span data-id="remirror-positioner-widget"
-            role="presentation"
-            class="ProseMirror-widget"
-      >
-      </span>
       <p>
         _123
         <a class="suggest suggest-at">
@@ -360,11 +345,6 @@ describe('interactions with input rules', () => {
     add(doc(p('123 '))).insertText('@a_bc_ this should be preserved');
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-      <span data-id="remirror-positioner-widget"
-            role="presentation"
-            class="ProseMirror-widget"
-      >
-      </span>
       <p>
         123 @a_bc_ this should be preserved
       </p>

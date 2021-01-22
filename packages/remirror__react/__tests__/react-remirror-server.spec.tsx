@@ -87,8 +87,8 @@ describe('Remirror: Server', () => {
         <div role="textbox"
              aria-multiline="true"
              aria-label="Remirror editor"
-             aria-placeholder
              class="Prosemirror remirror-editor"
+             aria-placeholder
              contenteditable="true"
         >
           <p>
@@ -195,8 +195,8 @@ test('autoFocus', () => {
            autofocus
            aria-multiline="true"
            aria-label="Remirror editor"
-           aria-placeholder
            class="Prosemirror remirror-editor"
+           aria-placeholder
            contenteditable="true"
       >
         <p>

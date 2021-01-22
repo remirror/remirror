@@ -172,7 +172,7 @@ function insertIntoBlameMap(props: InsertIntoBlameMapProps) {
   }
 
   let pos = 0;
-  let next: Span;
+  let next: Span | undefined;
 
   for (; pos < map.length; pos++) {
     next = assertGet(map, pos);
@@ -204,7 +204,7 @@ function insertIntoBlameMap(props: InsertIntoBlameMapProps) {
     break;
   }
 
-  while ((next = assertGet(map, pos))) {
+  while ((next = map[pos])) {
     if (next.commit === commit) {
       if (next.from > to) {
         break;

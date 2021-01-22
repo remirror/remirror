@@ -452,8 +452,9 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
       }
 
       // Find all the marks to remove
-      const marksToRemove =
-        tr.storedMarks?.filter((mark) => !excludedMarks.includes(mark.type.name)) ?? [];
+      const marksToRemove = [...(tr.storedMarks ?? []), ...tr.selection.$from.marks()].filter(
+        (mark) => !excludedMarks.includes(mark.type.name),
+      );
 
       const parentNode = findParentNode({
         predicate: (node) => node.isBlock,

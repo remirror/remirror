@@ -22,11 +22,6 @@ describe('commands', () => {
     commands.addAnnotation({ id: '1' });
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-      <span data-id="remirror-positioner-widget"
-            role="presentation"
-            class="ProseMirror-widget"
-      >
-      </span>
       <p>
         An
         <span class="selection"
@@ -54,11 +49,6 @@ describe('commands', () => {
 
     // Pre-condition
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-      <span data-id="remirror-positioner-widget"
-            role="presentation"
-            class="ProseMirror-widget"
-      >
-      </span>
       <p>
         An
         <span class="selection"
@@ -75,11 +65,6 @@ describe('commands', () => {
     });
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-      <span data-id="remirror-positioner-widget"
-            role="presentation"
-            class="ProseMirror-widget"
-      >
-      </span>
       <p>
         An
         <span class="selection updated"
@@ -110,11 +95,6 @@ describe('commands', () => {
     ]);
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-      <span data-id="remirror-positioner-widget"
-            role="presentation"
-            class="ProseMirror-widget"
-      >
-      </span>
       <p>
         An
         <span style="background: rgb(215, 215, 255);">
@@ -139,11 +119,6 @@ describe('commands', () => {
     commands.addAnnotation({ id });
     // Pre-condition
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-      <span data-id="remirror-positioner-widget"
-            role="presentation"
-            class="ProseMirror-widget"
-      >
-      </span>
       <p>
         An
         <span class="selection"
@@ -158,11 +133,6 @@ describe('commands', () => {
     commands.removeAnnotations([id]);
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-      <span data-id="remirror-positioner-widget"
-            role="presentation"
-            class="ProseMirror-widget"
-      >
-      </span>
       <p>
         An
         <span class="selection"
@@ -192,11 +162,6 @@ describe('commands', () => {
     commands.addAnnotation({ id });
     // Pre-condition
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-      <span data-id="remirror-positioner-widget"
-            role="presentation"
-            class="ProseMirror-widget"
-      >
-      </span>
       <p>
         <span class="selection"
               style="background: red;"
@@ -210,11 +175,6 @@ describe('commands', () => {
     commands.redrawAnnotations();
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-      <span data-id="remirror-positioner-widget"
-            role="presentation"
-            class="ProseMirror-widget"
-      >
-      </span>
       <p>
         <span class="selection"
               style="background: green;"
@@ -253,11 +213,6 @@ describe('commands', () => {
 
     chain.run();
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-      <span data-id="remirror-positioner-widget"
-            role="presentation"
-            class="ProseMirror-widget"
-      >
-      </span>
       <p>
         An
         <span class
@@ -344,11 +299,6 @@ describe('styling', () => {
     commands.addAnnotation({ id: '1', className: 'custom-annotation' });
 
     expect(dom.innerHTML).toMatchInlineSnapshot(`
-      <span data-id="remirror-positioner-widget"
-            role="presentation"
-            class="ProseMirror-widget"
-      >
-      </span>
       <p>
         <span class="selection custom-annotation"
               style="background: rgb(215, 215, 255);"
@@ -503,11 +453,6 @@ describe('custom annotations', () => {
     commands.addAnnotation({ id: '2', tag: 'awesome', className: 'custom' });
 
     expect(dom.innerHTML).toMatchInlineSnapshot(`
-      <span data-id="remirror-positioner-widget"
-            role="presentation"
-            class="ProseMirror-widget"
-      >
-      </span>
       <p>
         <span class
               style="background: rgb(215, 215, 255);"
@@ -552,11 +497,6 @@ describe('custom styling', () => {
     commands.addAnnotation({ id: '1', color: 'red' });
 
     expect(dom.innerHTML).toMatchInlineSnapshot(`
-      <span data-id="remirror-positioner-widget"
-            role="presentation"
-            class="ProseMirror-widget"
-      >
-      </span>
       <p>
         <span class="selection"
               style="background: red;"

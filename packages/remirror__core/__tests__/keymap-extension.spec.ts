@@ -89,7 +89,7 @@ describe('exitMark', () => {
     },
   ]);
 
-  it('can exit the node backwards', () => {
+  it('can exit the mark backwards', () => {
     editor
       .add(doc(p(code('<cursor>this ')), p('the end')))
       .press('ArrowLeft')
@@ -98,7 +98,7 @@ describe('exitMark', () => {
     expect(editor.state.doc).toEqualRemirrorDocument(doc(p('abc', code('this ')), p('the end')));
   });
 
-  it('can exit the node forwards', () => {
+  it('can exit the mark forwards', () => {
     editor
       .add(doc(p(code('this<cursor>')), p('the end')))
       .press('ArrowRight')

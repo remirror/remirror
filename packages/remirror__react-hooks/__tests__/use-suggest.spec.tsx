@@ -29,7 +29,7 @@ const Wrapper: FC<Props> = ({ manager }) => {
   );
 };
 
-test('should update the query for each keypress', () => {
+test.only('should update the query for each keypress', () => {
   const editor = RemirrorTestChain.create(createReactManager([]));
 
   strictRender(<Wrapper manager={editor.manager} />);

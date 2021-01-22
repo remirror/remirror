@@ -16,7 +16,6 @@ import type {
   Suggester,
   SuggestState,
 } from '@remirror/pm/suggest';
-import { ReplaceAroundStep } from '@remirror/pm/transform';
 import { useExtension, useRemirrorContext } from '@remirror/react';
 
 /**
@@ -83,8 +82,6 @@ export function useSuggest(props: UseSuggesterProps): UseSuggestReturn {
   // the state for the suggester that has been added correct.
   const onApplyState = useCallback(
     ({ tr, state, previousState }: ApplyStateLifecycleProps) => {
-      const [step] = tr.steps;
-
       if (!hasStateChanged({ tr, state, previousState }) || helpers.getSuggestState().removed) {
         return;
       }
@@ -94,25 +91,15 @@ export function useSuggest(props: UseSuggesterProps): UseSuggestReturn {
         // Group all updates into one object.
         const stateUpdate: UseSuggestState = { ...prevState };
 
-        if (
-          prevState.shouldResetChangeState &&
-          prevState.change &&
-          !(step instanceof ReplaceAroundStep)
-        ) {
-          console.log('RESET CHANGE', prevState.shouldResetChangeState);
+        if (prevState.shouldResetChangeState && prevState.change) {
           stateUpdate.change = undefined;
         }
 
-        if (
-          prevState.shouldResetExitState &&
-          prevState.exit &&
-          !(step instanceof ReplaceAroundStep)
-        ) {
+        if (prevState.shouldResetExitState && prevState.exit) {
           stateUpdate.exit = undefined;
         }
 
         if (!prevState.shouldResetChangeState && prevState.change) {
-          console.log('set RESET CHANGE to true');
           stateUpdate.shouldResetChangeState = true;
         }
 
@@ -135,15 +122,10 @@ export function useSuggest(props: UseSuggesterProps): UseSuggestReturn {
   useExtension(
     SuggestExtension,
     ({ addCustomHandler }) => addCustomHandler('suggester', { ...props, onChange }),
-    [onChange, props],
+    [onChange, ...Object.values(props)],
   );
 
   return useMemo(() => {
-    // console.log(
-    //   'MEMOIZED VALUE',
-    //   `'${hookState.change?.query.full ?? ''}'`,
-    //   hookState.shouldResetChangeState,
-    // );
     return {
       addIgnored: hookState.addIgnored,
       change: hookState.change,

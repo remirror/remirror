@@ -253,6 +253,19 @@ export function isDocNodeEmpty(node: ProsemirrorNode): boolean {
   );
 }
 
+interface DefaultDocNodeOptions {
+  /**
+   * When true will not check any of the attributes for any of the nodes.
+   */
+  ignoreAttributes?: boolean;
+
+  /**
+   * Set this to true to only test whether the content is identical to the
+   * default and not the parent node.
+   */
+  ignoreDocAttributes?: boolean;
+}
+
 /**
  * Check whether the provided doc node has the same value as the default empty
  * node for the document. Basically checks that the document is untouched.
@@ -260,7 +273,10 @@ export function isDocNodeEmpty(node: ProsemirrorNode): boolean {
  * This is useful for extensions like the placeholder which only should be shown
  * when the document matches the default empty state.
  */
-export function isDefaultDocNode(doc: ProsemirrorNode): boolean {
+export function isDefaultDocNode(
+  doc: ProsemirrorNode,
+  options: DefaultDocNodeOptions = {},
+): boolean {
   const defaultDoc = getDefaultDocNode(doc.type.schema);
 
   // Make sure the `doc` was created.
@@ -269,9 +285,68 @@ export function isDefaultDocNode(doc: ProsemirrorNode): boolean {
     return false;
   }
 
+  const { ignoreAttributes, ignoreDocAttributes } = options;
+
+  if (ignoreAttributes) {
+    return prosemirrorNodeEquals(defaultDoc, doc);
+  }
+
+  if (ignoreDocAttributes) {
+    return defaultDoc.content.eq(doc.content);
+  }
+
   return defaultDoc.eq(doc);
 }
 
+/**
+ * Check that two nodes are equal while ignoring all attributes.
+ *
+ * This is an alternative to the `node.eq()` method.
+ */
+export function prosemirrorNodeEquals(node: ProsemirrorNode, other: ProsemirrorNode): boolean {
+  // The values are equivalent so return `true` early.
+  if (node === other) {
+    return true;
+  }
+
+  // Check if the markup is the same (ignoring attributes)
+  const identicalMarkup = node.type === other.type && Mark.sameSet(node.marks, other.marks);
+
+  function contentEquals(): boolean {
+    if (node.content === other.content) {
+      return true;
+    }
+
+    if (node.content.size !== other.content.size) {
+      return false;
+    }
+
+    const nodeChildren: ProsemirrorNode[] = [];
+    const otherChildren: ProsemirrorNode[] = [];
+    node.content.forEach((node) => nodeChildren.push(node));
+    other.content.forEach((node) => otherChildren.push(node));
+
+    for (const [index, nodeChild] of nodeChildren.entries()) {
+      const otherChild = otherChildren[index];
+
+      if (!otherChild) {
+        return false;
+      }
+
+      if (!prosemirrorNodeEquals(nodeChild, otherChild)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  return identicalMarkup && contentEquals();
+}
+
+/**
+ * Get the default `doc` node for a given schema.
+ */
 export function getDefaultDocNode(schema: EditorSchema): ProsemirrorNode | undefined {
   return schema.nodes.doc?.createAndFill() ?? undefined;
 }

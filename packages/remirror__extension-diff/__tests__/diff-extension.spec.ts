@@ -120,13 +120,12 @@ describe('handlers', () => {
   it('can call selection handlers', () => {
     const mocks = { onSelectCommits: jest.fn(), onDeselectCommits: jest.fn() };
     const { add, commands, node } = create(undefined, mocks);
-
     const { insertText } = add(node);
+
     commands.commitChange('first commit');
 
     insertText(' welcome');
     commands.commitChange('commit two');
-
     expect(mocks.onSelectCommits).toHaveBeenCalled();
 
     insertText(' not committed').jumpTo('end');

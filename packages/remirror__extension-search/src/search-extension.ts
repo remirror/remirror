@@ -293,7 +293,8 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
   }
 
   private replace(replacement: string, index?: number): CommandFunction {
-    return ({ tr, dispatch }) => {
+    return (props) => {
+      const { tr, dispatch } = props;
       const result = this._results[isNumber(index) ? index : this._activeIndex];
 
       if (!result) {
@@ -304,12 +305,8 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
         return true;
       }
 
-      const { from, to } = result;
-
-      dispatch(tr.insertText(replacement, from, to));
-      this.searchNext();
-
-      return true;
+      tr.insertText(replacement, result.from, result.to);
+      return this.searchNext()(props);
     };
   }
 
@@ -333,7 +330,8 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
   }
 
   private replaceAll(replacement: string): CommandFunction {
-    return ({ tr, dispatch }) => {
+    return (props) => {
+      const { tr, dispatch } = props;
       let offset: number | undefined;
 
       if (isEmptyArray(this._results)) {
@@ -349,11 +347,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
         offset = this.rebaseNextResult({ replacement, index, lastOffset: offset });
       });
 
-      dispatch(tr);
-
-      this.find(this._searchTerm);
-
-      return true;
+      return this.find(this._searchTerm)(props);
     };
   }
 

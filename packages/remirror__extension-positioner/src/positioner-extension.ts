@@ -153,8 +153,18 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
   createDecorations(state: EditorState): DecorationSet {
     this.element ??= this.createElement();
 
-    // Use the element as the decoration which is always available at the start of the document.
-    const decoration = Decoration.widget(0, this.element, { key: 'positioner-widget', side: -1 });
+    // Only add the decorations when there are positioners present.
+    if (!this.element.hasChildNodes()) {
+      return DecorationSet.empty;
+    }
+
+    // // Use the element as the decoration which is always available at the start of the document.
+    const decoration = Decoration.widget(0, this.element, {
+      key: 'positioner-widget',
+      side: -1,
+      // TODO tests this which prevents any events from bubbling through
+      stopEvent: () => true,
+    });
     return DecorationSet.create(state.doc, [decoration]);
   }
 

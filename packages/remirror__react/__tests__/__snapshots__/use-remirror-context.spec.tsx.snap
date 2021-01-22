@@ -14,6 +14,7 @@ Array [
   "defaultBlockNode",
   "focus",
   "getExtension",
+  "getForcedUpdates",
   "getPluginState",
   "getPreviousState",
   "getRootProps",

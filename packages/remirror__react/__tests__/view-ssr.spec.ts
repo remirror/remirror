@@ -46,5 +46,5 @@ test('createEditorView:forceEnvironment', () => {
       },
       'dom',
     ),
-  ).toThrowErrorMatchingInlineSnapshot(`"Cannot read property 'add' of undefined"`);
+  ).toThrow();
 });

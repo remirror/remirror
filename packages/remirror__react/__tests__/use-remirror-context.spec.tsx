@@ -40,7 +40,7 @@ describe('useRemirrorContext', () => {
     act(() => {
       chain.overwrite(doc(p('Welcome <start>friend<end>')));
     });
-    expect(mock).toHaveBeenCalledTimes(2);
+    expect(mock).toHaveBeenCalledTimes(3);
   });
 
   it('should auto update when in strict mode', () => {
@@ -63,7 +63,7 @@ describe('useRemirrorContext', () => {
       });
     }
 
-    expect(mock).toHaveBeenCalledTimes(14);
+    expect(mock).toHaveBeenCalledTimes(16);
   });
 });
 
