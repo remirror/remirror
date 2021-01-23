@@ -30,6 +30,12 @@
     },
     {
       "path": "../../../../packages/remirror/src"
+    },
+    {
+      "path": "../../../../packages/remirror__core/src"
+    },
+    {
+      "path": "../../../../packages/remirror__pm/src"
     }
   ]
 }

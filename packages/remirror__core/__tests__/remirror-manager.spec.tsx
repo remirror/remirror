@@ -85,7 +85,7 @@ describe('Manager', () => {
     manager.addView(view);
   });
 
-  // hideConsoleError(true);
+  hideConsoleError(true);
 
   it('enforces constructor privacy', () => {
     // @ts-expect-error

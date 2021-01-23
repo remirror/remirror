@@ -99,6 +99,7 @@
     "react-sizeme": "^2.6.12",
     "regenerator-runtime": "^0.13.7",
     "remirror": "1.0.0-next.60",
+    "tiny-warning": "^1.0.3",
     "tinykeys": "^1.1.0",
     "type-fest": "^0.20.2",
     "use-clipboard-copy": "^0.1.2",

@@ -683,6 +683,7 @@ export class ProsemirrorTestChain<Schema extends EditorSchema = EditorSchema> {
    * Logs to the dom for help debugging your tests.
    */
   debug = (): this => {
+    // eslint-disable-next-line no-console
     console.log(prettyDOM(this.view.dom as HTMLElement));
     return this;
   };

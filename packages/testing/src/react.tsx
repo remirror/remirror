@@ -2,6 +2,7 @@ import { render as originalRender, RenderOptions, RenderResult } from '@testing-
 import * as hooks from '@testing-library/react-hooks';
 import { FC, StrictMode } from 'react';
 import * as React from 'react';
+import TestRenderer from 'react-test-renderer';
 import { useRemirrorContext } from '@remirror/react';
 
 /**
@@ -28,4 +29,4 @@ export const DefaultEditor: FC = () => {
 };
 
 export * from '@testing-library/react';
-export { hooks };
+export { hooks, TestRenderer };

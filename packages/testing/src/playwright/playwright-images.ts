@@ -50,8 +50,7 @@ export function imagesMatch(image1: string | Buffer, image2: string | Buffer) {
             },
             (diffError) => {
               if (diffError) {
-                console.error('Could not create diff after failing test', diffError.message);
-                reject(new Error('Could not create diff after failing test'));
+                reject(new Error(`Could not create diff after failing test ${diffError.message}`));
                 return;
               }
 

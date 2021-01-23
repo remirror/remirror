@@ -134,6 +134,7 @@ export class RemirrorError extends BaseError {
 
     if (!disableLogging) {
       // Log the error.
+      // eslint-disable-next-line no-console
       console.error(this.message);
     }
   }

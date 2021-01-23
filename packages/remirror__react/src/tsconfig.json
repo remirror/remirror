@@ -17,6 +17,9 @@
   "include": ["./"],
   "references": [
     {
+      "path": "../../remirror__core/src"
+    },
+    {
       "path": "../../remirror__extension-placeholder/src"
     },
     {
@@ -30,6 +33,9 @@
     },
     {
       "path": "../../remirror__i18n/src"
+    },
+    {
+      "path": "../../remirror__pm/src"
     },
     {
       "path": "../../remirror__preset-core/src"

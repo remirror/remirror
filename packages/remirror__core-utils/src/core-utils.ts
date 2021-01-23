@@ -1,11 +1,17 @@
 import { cssifyObject } from 'css-in-js-utils';
 import type { StyleObject } from 'css-in-js-utils/es/cssifyObject';
 import type { KebabCase } from 'type-fest';
-import { ErrorConstant, LEAF_NODE_REPLACING_CHARACTER } from '@remirror/core-constants';
+import {
+  __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
+  ErrorConstant,
+  LEAF_NODE_REPLACING_CHARACTER,
+  RemirrorIdentifier,
+} from '@remirror/core-constants';
 import {
   assert,
   Cast,
   clamp,
+  includes,
   invariant,
   isArray,
   isFunction,
@@ -32,6 +38,7 @@ import type {
   ProsemirrorAttributes,
   ProsemirrorNode,
   RemirrorContentType,
+  RemirrorIdentifierShape,
   RemirrorJSON,
   RenderEnvironment,
   ResolvedPos,
@@ -66,6 +73,35 @@ import {
 import type { Step } from '@remirror/pm/transform';
 
 import { environment } from './environment';
+
+/**
+ * Identifies the value as having a remirror identifier. This is the core
+ * predicate check for the remirror library.
+ *
+ * @param value - the value to be checked
+ *
+ * @internal
+ */
+export function isRemirrorType(value: unknown): value is RemirrorIdentifierShape {
+  return isObject<RemirrorIdentifierShape>(value);
+}
+
+/**
+ * Checks that the provided remirror shape is of a given type.
+ *
+ * @param value - any remirror shape
+ * @param type - the remirror identifier type to check for
+ *
+ * @internal
+ */
+export function isIdentifierOfType(
+  value: RemirrorIdentifierShape,
+  type: RemirrorIdentifier | RemirrorIdentifier[],
+): boolean {
+  return isArray(type)
+    ? includes(type, value[__INTERNAL_REMIRROR_IDENTIFIER_KEY__])
+    : type === value[__INTERNAL_REMIRROR_IDENTIFIER_KEY__];
+}
 
 /**
  * Check to see if the passed value is a NodeType.

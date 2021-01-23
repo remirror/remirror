@@ -412,6 +412,7 @@ importers:
       jest-snapshot: 26.6.2
       mutationobserver-shim: 0.3.7
       sanitize-html: 2.3.1
+      tiny-warning: 1.0.3
     devDependencies:
       '@types/node': 14.14.22
       jest: 26.6.3
@@ -429,6 +430,7 @@ importers:
       jest-snapshot: ^26.6.1
       mutationobserver-shim: ^0.3.7
       sanitize-html: ^2.3.1
+      tiny-warning: ^1.0.3
   packages/multishift:
     dependencies:
       '@babel/runtime': 7.12.5
@@ -439,6 +441,7 @@ importers:
       a11y-status: link:../a11y-status
       compute-scroll-into-view: 1.0.16
       react-use: 15.3.8_react@17.0.1
+      tiny-warning: 1.0.3
       w3c-keyname: 2.2.4
     devDependencies:
       '@testing-library/react': 11.2.3_react@17.0.1
@@ -456,6 +459,7 @@ importers:
       compute-scroll-into-view: ^1.0.14
       react: ^17.0.1
       react-use: ^15.3.8
+      tiny-warning: ^1.0.3
       w3c-keyname: ^2.2.4
   packages/prosemirror-paste-rules:
     dependencies:
@@ -825,7 +829,6 @@ importers:
     dependencies:
       '@babel/runtime': 7.12.5
       '@remirror/core-constants': link:../remirror__core-constants
-      '@remirror/core-types': link:../remirror__core-types
       '@types/object.omit': 3.0.0
       '@types/object.pick': 1.3.0
       '@types/throttle-debounce': 2.1.0
@@ -841,7 +844,6 @@ importers:
     specifiers:
       '@babel/runtime': ^7.12.5
       '@remirror/core-constants': 1.0.0-next.60
-      '@remirror/core-types': 1.0.0-next.60
       '@types/object.omit': ^3.0.0
       '@types/object.pick': ^1.3.0
       '@types/throttle-debounce': ^2.1.0
@@ -974,11 +976,13 @@ importers:
       '@remirror/core-helpers': link:../remirror__core-helpers
       '@types/es-module-lexer': 0.3.0
       es-module-lexer: 0.3.26
+      tiny-warning: 1.0.3
     specifiers:
       '@babel/runtime': ^7.12.5
       '@remirror/core-helpers': ^1.0.0-next.60
       '@types/es-module-lexer': ^0.3.0
       es-module-lexer: ^0.3.26
+      tiny-warning: ^1.0.3
   packages/remirror__extension-annotation:
     dependencies:
       '@babel/runtime': 7.12.5
@@ -1799,6 +1803,7 @@ importers:
       react-sizeme: 2.6.12_react-dom@17.0.1+react@17.0.1
       regenerator-runtime: 0.13.7
       remirror: link:../remirror
+      tiny-warning: 1.0.3
       tinykeys: 1.1.1
       type-fest: 0.20.2
       use-clipboard-copy: 0.1.2_react@17.0.1
@@ -1863,6 +1868,7 @@ importers:
       react-sizeme: ^2.6.12
       regenerator-runtime: ^0.13.7
       remirror: 1.0.0-next.60
+      tiny-warning: ^1.0.3
       tinykeys: ^1.1.0
       type-fest: ^0.20.2
       use-clipboard-copy: ^0.1.2
@@ -2317,9 +2323,10 @@ importers:
       '@remirror/preset-react': link:../remirror__preset-react
       '@remirror/react': link:../remirror__react
       '@testing-library/react': 11.2.3_react@17.0.1
-      '@testing-library/react-hooks': 5.0.2_react@17.0.1
+      '@testing-library/react-hooks': 5.0.2_59c10a9f92837cab37888c15f7d5c44c
       '@types/fluent-ffmpeg': 2.1.16
       '@types/min-document': 2.19.0
+      '@types/react-test-renderer': 17.0.0
       '@types/signal-exit': 3.0.0
       '@types/wait-on': 5.2.0
       delay: 4.4.0
@@ -2336,6 +2343,7 @@ importers:
       playwright: 1.8.0
       playwright-core: 1.8.0
       playwright-testing-library: 2.7.0_playwright@1.8.0
+      react-test-renderer: 17.0.1_react@17.0.1
       signal-exit: 3.0.3
       test-keyboard: link:../test-keyboard
     devDependencies:
@@ -2355,6 +2363,7 @@ importers:
       '@types/fluent-ffmpeg': ^2.1.16
       '@types/min-document': ^2.19.0
       '@types/react': ^17.0.0
+      '@types/react-test-renderer': ^17.0.0
       '@types/signal-exit': ^3.0.0
       '@types/wait-on': ^5.2.0
       delay: ^4.4.0
@@ -2372,6 +2381,7 @@ importers:
       playwright-core: ^1.8.0
       playwright-testing-library: ^2.7.0
       react: ^17.0.1
+      react-test-renderer: ^17.0.1
       signal-exit: ^3.0.3
       test-keyboard: 1.0.0-next.60
   support:
@@ -7786,6 +7796,28 @@ packages:
         optional: true
     resolution:
       integrity: sha512-Ih/qcjEOVu0XCrWD7p0kI6PCHTv7kQpe1mo027Uxjvbusjde3KK8QosbOwj0pChri90G2x4+WGB8tScX+HlIhg==
+  /@testing-library/react-hooks/5.0.2_59c10a9f92837cab37888c15f7d5c44c:
+    dependencies:
+      '@babel/runtime': 7.12.5
+      '@types/react': 17.0.0
+      '@types/react-dom': 17.0.0
+      '@types/react-test-renderer': 17.0.0
+      filter-console: 0.1.1
+      react: 17.0.1
+      react-error-boundary: 3.1.0_react@17.0.1
+      react-test-renderer: 17.0.1_react@17.0.1
+    dev: false
+    peerDependencies:
+      react: '>=16.9.0'
+      react-dom: '>=16.9.0'
+      react-test-renderer: '>=16.9.0'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-test-renderer:
+        optional: true
+    resolution:
+      integrity: sha512-Ih/qcjEOVu0XCrWD7p0kI6PCHTv7kQpe1mo027Uxjvbusjde3KK8QosbOwj0pChri90G2x4+WGB8tScX+HlIhg==
   /@testing-library/react-hooks/5.0.2_react@17.0.1:
     dependencies:
       '@babel/runtime': 7.12.5
@@ -7795,6 +7827,7 @@ packages:
       filter-console: 0.1.1
       react: 17.0.1
       react-error-boundary: 3.1.0_react@17.0.1
+    dev: true
     peerDependencies:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
@@ -24337,6 +24370,16 @@ packages:
       react: '>=15'
     resolution:
       integrity: sha512-smz1DUuFHRKdcJC0jobGo8cVbhO3x50tCL4icacOlcwDOEQPq4TMqwx3sY1TP+DvtTgz4nm3thuo7A+BK2U0Dw==
+  /react-shallow-renderer/16.14.1_react@17.0.1:
+    dependencies:
+      object-assign: 4.1.1
+      react: 17.0.1
+      react-is: 17.0.1
+    dev: false
+    peerDependencies:
+      react: ^16.0.0 || ^17.0.0
+    resolution:
+      integrity: sha512-rkIMcQi01/+kxiTE9D3fdS959U1g7gs+/rborw++42m1O9FAQiNI/UNRZExVUoAOprn4umcXf+pFRou8i4zuBg==
   /react-side-effect/2.1.1_react@17.0.1:
     dependencies:
       react: 17.0.1
@@ -24382,6 +24425,18 @@ packages:
       react: '>= 0.14.0'
     resolution:
       integrity: sha512-crPaF+QGPeHNIblxxCdf2Lg936NAHKhNhuMzRL3F9ct6aYXL3NcZtCL0Rms9+qVo6Y1EQLdXGypBNSbPL/r+qg==
+  /react-test-renderer/17.0.1_react@17.0.1:
+    dependencies:
+      object-assign: 4.1.1
+      react: 17.0.1
+      react-is: 17.0.1
+      react-shallow-renderer: 16.14.1_react@17.0.1
+      scheduler: 0.20.1
+    dev: false
+    peerDependencies:
+      react: 17.0.1
+    resolution:
+      integrity: sha512-/dRae3mj6aObwkjCcxZPlxDFh73XZLgvwhhyON2haZGUEhiaY5EjfAdw+d/rQmlcFwdTpMXCSGVk374QbCTlrA==
   /react-textarea-autosize/6.1.0_react@17.0.1:
     dependencies:
       prop-types: 15.7.2

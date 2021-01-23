@@ -64,6 +64,9 @@ jobs:
       - name: check repo and versions
         run: pnpm lint:repo
 
+      - name: check exports
+        run: pnpm lint:exports
+
   # Typecheck the project
   typecheck:
     timeout-minutes: 8

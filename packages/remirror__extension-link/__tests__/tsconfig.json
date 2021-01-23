@@ -32,10 +32,16 @@
       "path": "../../remirror/src"
     },
     {
+      "path": "../../remirror__core/src"
+    },
+    {
       "path": "../../remirror__extension-events/src"
     },
     {
       "path": "../../remirror__messages/src"
+    },
+    {
+      "path": "../../remirror__pm/src"
     }
   ]
 }

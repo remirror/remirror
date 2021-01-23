@@ -1,4 +1,4 @@
-import type { Shape } from '@remirror/core-types';
+import type { Shape } from 'remirror';
 
 import {
   assert,

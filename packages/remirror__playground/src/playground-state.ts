@@ -282,7 +282,6 @@ class CodeEditorHelper {
    */
   async fetchTypingsFromCode(path: string, source: string) {
     const dependencies = getImportStatements(path, source);
-    console.log(dependencies);
 
     for (const dependency of dependencies) {
       // Parse the qualifier to get the package name

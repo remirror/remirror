@@ -32,6 +32,9 @@
       "path": "../../remirror/src"
     },
     {
+      "path": "../../remirror__core/src"
+    },
+    {
       "path": "../../remirror__extension-placeholder/src"
     },
     {
@@ -39,6 +42,9 @@
     },
     {
       "path": "../../remirror__extension-react-ssr/src"
+    },
+    {
+      "path": "../../remirror__pm/src"
     },
     {
       "path": "../../remirror__react-utils/src"

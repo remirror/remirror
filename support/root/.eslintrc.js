@@ -315,6 +315,14 @@ let config = {
         '@typescript-eslint/no-var-requires': 'error',
       },
     },
+
+    // Rules exclusive to published packages.
+    {
+      files: ['packages/*/src/**'],
+      rules: {
+        'no-console': 'error',
+      },
+    },
     {
       files: [
         '**/__tests__/**',

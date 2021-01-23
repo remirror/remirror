@@ -83,8 +83,6 @@ export function useSuggest(props: UseSuggesterProps): UseSuggestReturn {
         return;
       }
 
-      console.log(tr.steps);
-
       // Call the state function to update the state.
       setHookState((prevState) => {
         // Group all updates into one object.

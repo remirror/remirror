@@ -17,7 +17,34 @@
   "include": ["./"],
   "references": [
     {
+      "path": "../../remirror__core/src"
+    },
+    {
+      "path": "../../remirror__extension-emoji/src"
+    },
+    {
+      "path": "../../remirror__extension-events/src"
+    },
+    {
+      "path": "../../remirror__extension-history/src"
+    },
+    {
+      "path": "../../remirror__extension-mention/src"
+    },
+    {
+      "path": "../../remirror__extension-mention-atom/src"
+    },
+    {
+      "path": "../../remirror__extension-positioner/src"
+    },
+    {
       "path": "../../remirror__i18n/src"
+    },
+    {
+      "path": "../../remirror__pm/src"
+    },
+    {
+      "path": "../../remirror__react/src"
     },
     {
       "path": "../../remirror__react-utils/src"

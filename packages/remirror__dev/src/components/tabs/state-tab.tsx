@@ -109,7 +109,14 @@ export const StateTab = (): JSX.Element => {
       <SplitViewColumn grow>
         <HeadingWithButton>
           <Heading>Current Doc</Heading>
-          <HeadingButton onClick={() => console.log(state)}>Log State</HeadingButton>
+          <HeadingButton
+            onClick={() => {
+              // eslint-disable-next-line no-console
+              return console.log(state);
+            }}
+          >
+            Log State
+          </HeadingButton>
         </HeadingWithButton>
         <JsonTree
           data={doc}

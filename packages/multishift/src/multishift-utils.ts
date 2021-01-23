@@ -1,5 +1,6 @@
 import computeScrollIntoView from 'compute-scroll-into-view';
 import type { Dispatch, KeyboardEvent, SyntheticEvent } from 'react';
+import warning from 'tiny-warning';
 import { keyName } from 'w3c-keyname';
 import {
   assertGet,
@@ -797,9 +798,7 @@ export function getKeyName(event: KeyboardEvent<HTMLElement>): string {
  * Log a warning when using in an internal type that doesn't get resolved.
  */
 export function warnIfInternalType(type: string, message = ''): void {
-  if (type.startsWith('$$')) {
-    console.warn(message);
-  }
+  warning(!type.startsWith('$$'), message);
 }
 
 interface CreateChangesFromKeyDownProps<Item = any> {

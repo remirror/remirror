@@ -137,7 +137,14 @@ export const StructureTab = (): JSX.Element => {
       <SplitViewColumn sep minWidth={200} maxWidth={300}>
         <HeadingWithButton>
           <Heading>Node Info</Heading>
-          <HeadingButton onClick={() => console.log(selected)}>Log Node</HeadingButton>
+          <HeadingButton
+            onClick={() => {
+              // eslint-disable-next-line no-console
+              return console.log(selected);
+            }}
+          >
+            Log Node
+          </HeadingButton>
         </HeadingWithButton>
         <JsonTree
           data={selected.toJSON()}

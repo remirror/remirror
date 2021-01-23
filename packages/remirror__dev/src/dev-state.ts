@@ -153,7 +153,7 @@ class DevState {
         state,
         nodeColors: buildColors(state.schema),
         activeMarks: getActiveMarks(state),
-        history: updatedHistory || this.context.history,
+        history: updatedHistory ?? this.context.history,
         selectedHistoryIndex: updatedHistory ? 0 : this.context.selectedHistoryIndex,
         historyRolledBackTo: updatedHistory ? false : this.context.historyRolledBackTo,
       });
@@ -324,9 +324,9 @@ class DevState {
     const path = generateJsonNodePath(doc, node);
 
     if (path) {
-      console.log('Not Implemented');
+      // ('Not Implemented');
     } else {
-      console.log('Not implemented');
+      // ('Not implemented');
     }
   };
 

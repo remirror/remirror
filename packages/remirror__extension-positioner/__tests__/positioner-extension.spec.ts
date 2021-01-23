@@ -4,8 +4,6 @@ import { isAllSelection } from '@remirror/core';
 import {
   blockNodePositioner,
   cursorPositioner,
-  nearestWordPositioner,
-  Positioner,
   PositionerExtension,
   selectionPositioner,
 } from '../';

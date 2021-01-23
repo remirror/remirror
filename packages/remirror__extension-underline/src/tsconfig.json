@@ -17,7 +17,13 @@
   "include": ["./"],
   "references": [
     {
+      "path": "../../remirror__core/src"
+    },
+    {
       "path": "../../remirror__messages/src"
+    },
+    {
+      "path": "../../remirror__pm/src"
     }
   ]
 }

@@ -12,5 +12,9 @@
     "noEmit": true
   },
   "include": ["./"],
-  "references": []
+  "references": [
+    {
+      "path": "../../remirror__core/src"
+    }
+  ]
 }

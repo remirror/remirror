@@ -275,7 +275,6 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
   private setupCloneListener() {
     const dispose = this.#manager.addHandler('clone', (newManager) => {
       this.#manager = newManager as any;
-      console.log('cloned manager');
       dispose();
       this.setupCloneListener();
     });
@@ -543,6 +542,7 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
    * Logs the view to the dom for help debugging the html in your tests.
    */
   readonly debug = (element = this.view.dom): this => {
+    // eslint-disable-next-line no-console
     console.log(prettyDOM(element));
     return this;
   };

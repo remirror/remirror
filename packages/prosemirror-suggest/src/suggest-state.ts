@@ -466,7 +466,6 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
 
     // Store the matches with reasons
     this.#handlerMatches = findReason({ next: this.#next, prev: this.#prev, state, $pos });
-    console.log(this.#handlerMatches);
   }
 
   /**

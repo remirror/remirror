@@ -13,7 +13,6 @@ export const destroyServer = async (globalConfig?: Config.GlobalConfig) => {
     return;
   }
 
-  console.log('destroying the server');
   serverSetupPromise = undefined;
   await teardown();
   await globalTeardown(globalConfig);
@@ -24,17 +23,14 @@ export const setupServer = async (globalConfig: Config.GlobalConfig) => {
     return;
   }
 
-  console.log('setting up server');
   await setup([server.config]);
 
   onExit(() => {
     destroyServer().then(() => {
-      console.log('destroying server');
       process.exit();
     });
   });
 
-  console.log('global setup');
   await globalSetup(globalConfig);
 };
 

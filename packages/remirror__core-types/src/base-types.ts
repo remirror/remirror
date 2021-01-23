@@ -224,16 +224,6 @@ type _IndexUnionFromTuple<
   ? Tuple[number]
   : _IndexUnionFromTuple<[...Tuple, Tuple['length']], Length>;
 
-export type TupleRange<Size extends number> = Size extends Size
-  ? number extends Size
-    ? number[]
-    : _NumberRangeTuple<[], Size>
-  : never;
-type _NumberRangeTuple<
-  Tuple extends readonly unknown[],
-  Length extends number
-> = Tuple['length'] extends Length ? Tuple : _NumberRangeTuple<[...Tuple, Tuple['length']], Length>;
-
 /**
  * Create a tuple of `Size` from the provided `Type`.
  */
@@ -625,32 +615,6 @@ export type ConditionalReturnKeys<Base, Return> = NonNullable<
  * `Return` type.
  */
 export type ConditionalReturnPick<Base, Return> = Pick<Base, ConditionalReturnKeys<Base, Return>>;
-
-type GetRecursivePath<Type, Key extends keyof Type> = Key extends string
-  ? Type[Key] extends Record<string, any>
-    ?
-        | `${Key}.${GetRecursivePath<Type[Key], Exclude<keyof Type[Key], keyof any[]>> & string}`
-        | `${Key}.${Exclude<keyof Type[Key], keyof any[]> & string}`
-    : never
-  : never;
-type GetJoinedPath<Type> = GetRecursivePath<Type, keyof Type> | keyof Type;
-
-export type GetPath<Type> = GetJoinedPath<Type> extends string | keyof Type
-  ? GetJoinedPath<Type>
-  : keyof Type;
-
-export type GetPathValue<
-  Type,
-  Path extends GetPath<Type>
-> = Path extends `${infer Key}.${infer Rest}`
-  ? Key extends keyof Type
-    ? Rest extends GetPath<Type[Key]>
-      ? GetPathValue<Type[Key], Rest>
-      : never
-    : never
-  : Path extends keyof Type
-  ? Type[Path]
-  : never;
 
 declare global {
   namespace Remirror {

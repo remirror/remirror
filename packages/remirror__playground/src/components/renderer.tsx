@@ -35,7 +35,6 @@ export const RenderEditor: FC = () => {
 
   useLayoutEffect(() => {
     setupInternalModules(async () => contextPropsRef.current.files).then(() => {
-      console.dir(importShim.fetch);
       setLoaded(true);
     });
   }, []);

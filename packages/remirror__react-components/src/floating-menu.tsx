@@ -248,7 +248,6 @@ export const FloatingActionsMenu = (props: FloatingActionsMenuProps): JSX.Elemen
   } = props;
   const { change } = useSuggest({ char: '/', name: 'actions-dropdown', matchOffset: 0 });
   const query = change?.query.full;
-  console.log({ query });
   const menuState = useMenuState({ unstable_virtual: true, wrap: true, loop: true });
 
   const items = (query

@@ -54,6 +54,7 @@
     "@testing-library/react-hooks": "^5.0.2",
     "@types/fluent-ffmpeg": "^2.1.16",
     "@types/min-document": "^2.19.0",
+    "@types/react-test-renderer": "^17.0.0",
     "@types/signal-exit": "^3.0.0",
     "@types/wait-on": "^5.2.0",
     "delay": "^4.4.0",
@@ -70,6 +71,7 @@
     "playwright": "^1.8.0",
     "playwright-core": "^1.8.0",
     "playwright-testing-library": "^2.7.0",
+    "react-test-renderer": "^17.0.1",
     "signal-exit": "^3.0.3",
     "test-keyboard": "1.0.0-next.60"
   },

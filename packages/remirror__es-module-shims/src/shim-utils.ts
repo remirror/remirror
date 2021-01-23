@@ -1,3 +1,5 @@
+import warning from 'tiny-warning';
+
 export const hasSelf = typeof self !== 'undefined';
 
 let baseUrl: string | undefined;
@@ -294,7 +296,7 @@ function applyPackages(id: string, packages: ImportMapImports) {
 }
 
 function targetWarning(match: string, target: string, message: string) {
-  console.warn(`Package target ${message}, resolving target '${target}' for ${match}`);
+  warning(false, `Package target ${message}, resolving target '${target}' for ${match}`);
 }
 
 export function resolveImportMap(

@@ -4,6 +4,7 @@
  */
 
 import { ImportSpecifier, init, parse } from 'es-module-lexer';
+import warning from 'tiny-warning';
 
 import {
   baseUrl as pageBaseUrl,
@@ -96,7 +97,7 @@ async function topLevelLoad(url: string, source?: string) {
 }
 
 const importShim: Window['importShim'] = ((id: string, parentUrl?: string) => {
-  return topLevelLoad(resolve(id, parentUrl || pageBaseUrl));
+  return topLevelLoad(resolve(id, parentUrl ?? pageBaseUrl));
 }) as any;
 
 global.importShim = importShim;
@@ -288,7 +289,7 @@ function getOrCreateLoad(url: string, source?: string): RegistryUrl {
     try {
       load.a = parse(source, load.u);
     } catch (error) {
-      console.warn(error);
+      warning(false, error);
       load.a = [[], []];
     }
     load.S = source;

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import assert from 'assert';
 import chalk from 'chalk';
 import { Command, Option } from 'clipanion';

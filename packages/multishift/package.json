@@ -38,6 +38,7 @@
     "a11y-status": "1.0.0-next.60",
     "compute-scroll-into-view": "^1.0.14",
     "react-use": "^15.3.8",
+    "tiny-warning": "^1.0.3",
     "w3c-keyname": "^2.2.4"
   },
   "devDependencies": {

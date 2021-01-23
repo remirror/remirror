@@ -1,4 +1,3 @@
-import TestRenderer from 'react-test-renderer';
 import {
   BoldExtension,
   CodeBlockExtension,
@@ -6,6 +5,7 @@ import {
   UnderlineExtension,
 } from 'remirror/extensions';
 import { simpleJSON, testJSON } from 'testing';
+import { TestRenderer } from 'testing/react';
 import { ExtensionTag, NodeExtension, NodeExtensionSpec } from '@remirror/core';
 import { Node as PMNode } from '@remirror/pm/model';
 

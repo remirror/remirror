@@ -12,6 +12,7 @@
 import { createStore, get, set } from 'idb-keyval';
 import path from 'path-browserify';
 import registerPromiseWorker from 'promise-worker/register';
+import warning from 'tiny-warning';
 
 import { DTS_MODULE_NAMES } from './generated/meta';
 import { DATA_ROOT_URL, NPM_ROOT_URL } from './playground-constants';
@@ -264,7 +265,7 @@ async function fetchDefinitions(payload: TypingsWorkerPayload) {
   try {
     result = await get(key, store);
   } catch (error) {
-    console.error('An error occurred when getting definitions from cache', error);
+    warning(false, `An error occurred when getting definitions from cache ${error.message}`);
     result = undefined;
   }
 
@@ -301,7 +302,6 @@ registerPromiseWorker(
   async (data: WorkerData): Promise<TypingsWorkerOutput | null> => {
     if (data.type === 'typings') {
       const payload = await fetchDefinitions(data);
-      console.log(payload);
 
       return { type: 'typings-success', typings: payload };
     }

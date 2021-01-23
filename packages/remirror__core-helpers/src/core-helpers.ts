@@ -4,19 +4,50 @@ import { BaseError } from 'make-error';
 import omit from 'object.omit';
 import pick from 'object.pick';
 import type { ConditionalExcept, Primitive } from 'type-fest';
-import type { RemirrorIdentifier } from '@remirror/core-constants';
 import { __INTERNAL_REMIRROR_IDENTIFIER_KEY__ } from '@remirror/core-constants';
-import type {
-  AnyConstructor,
-  AnyFunction,
-  GetPath,
-  Nullable,
-  Predicate,
-  RemirrorIdentifierShape,
-  Shape,
-  TupleRange,
-  UnknownShape,
-} from '@remirror/core-types';
+
+interface Shape {
+  [key: string]: any;
+}
+type UnknownShape<Type = unknown> = Record<string, Type>;
+type Nullable<Type> = Type | null | undefined;
+type AnyConstructor<Type = any> = new (...args: any[]) => Type;
+type AnyFunction<Type = any> = (...args: any[]) => Type;
+
+type GetRecursivePath<Type, Key extends keyof Type> = Key extends string
+  ? Type[Key] extends Record<string, any>
+    ?
+        | `${Key}.${GetRecursivePath<Type[Key], Exclude<keyof Type[Key], keyof any[]>> & string}`
+        | `${Key}.${Exclude<keyof Type[Key], keyof any[]> & string}`
+    : never
+  : never;
+type GetJoinedPath<Type> = GetRecursivePath<Type, keyof Type> | keyof Type;
+export type GetPath<Type> = GetJoinedPath<Type> extends string | keyof Type
+  ? GetJoinedPath<Type>
+  : keyof Type;
+
+export type GetPathValue<
+  Type,
+  Path extends GetPath<Type>
+> = Path extends `${infer Key}.${infer Rest}`
+  ? Key extends keyof Type
+    ? Rest extends GetPath<Type[Key]>
+      ? GetPathValue<Type[Key], Rest>
+      : never
+    : never
+  : Path extends keyof Type
+  ? Type[Path]
+  : never;
+
+export type TupleRange<Size extends number> = Size extends Size
+  ? number extends Size
+    ? number[]
+    : _NumberRangeTuple<[], Size>
+  : never;
+type _NumberRangeTuple<
+  Tuple extends readonly unknown[],
+  Length extends number
+> = Tuple['length'] extends Length ? Tuple : _NumberRangeTuple<[...Tuple, Tuple['length']], Length>;
 
 /**
  * Type cast an argument. If no type is provided it will default to any.
@@ -135,18 +166,6 @@ enum TypeName {
  */
 export function toString(value: unknown): string {
   return Object.prototype.toString.call(value);
-}
-
-/**
- * Negates a predicate check.
- *
- * @remarks
- *
- * Unfortunately it doesn't seem possible to automatically negate the predicate
- * with typescript.
- */
-export function not<Type>(predicate: Predicate<Type>) {
-  return (a: unknown): boolean => !predicate(a);
 }
 
 /**
@@ -459,34 +478,6 @@ export function isEmptyArray(value: unknown): value is never[] {
  */
 export function isNonEmptyArray<Item>(value: Item[]): value is [Item, ...Item[]] {
   return isArray(value) && value.length > 0;
-}
-
-/**
- * Identifies the value as having a remirror identifier. This is the core
- * predicate check for the remirror library.
- *
- * @param value - the value to be checked
- *
- * @internal
- */
-export const isRemirrorType = (value: unknown): value is RemirrorIdentifierShape =>
-  isObject<RemirrorIdentifierShape>(value);
-
-/**
- * Checks that the provided remirror shape is of a given type.
- *
- * @param value - any remirror shape
- * @param type - the remirror identifier type to check for
- *
- * @internal
- */
-export function isIdentifierOfType(
-  value: RemirrorIdentifierShape,
-  type: RemirrorIdentifier | RemirrorIdentifier[],
-): boolean {
-  return isArray(type)
-    ? includes(type, value[__INTERNAL_REMIRROR_IDENTIFIER_KEY__])
-    : type === value[__INTERNAL_REMIRROR_IDENTIFIER_KEY__];
 }
 
 /**

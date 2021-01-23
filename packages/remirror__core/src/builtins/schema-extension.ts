@@ -376,7 +376,6 @@ export class SchemaExtension extends PlainExtension {
 
         // The new attributes which will be added to the node.
         const attrs = { ...node.attrs, [attributeName]: attributeCreator(node) };
-        console.log({ name, dynamic, attrs, pos });
 
         // Apply the new dynamic attribute to the node via the transaction.
         tr.setNodeMarkup(pos, undefined, attrs);

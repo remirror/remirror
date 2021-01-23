@@ -11,9 +11,7 @@ import {
   getLazyArray,
   includes,
   invariant,
-  isIdentifierOfType,
   isNullOrUndefined,
-  isRemirrorType,
   isString,
   object,
 } from '@remirror/core-helpers';
@@ -37,7 +35,12 @@ import type {
   StringHandler,
   StringHandlerProps,
 } from '@remirror/core-utils';
-import { createDocumentNode, getTextSelection } from '@remirror/core-utils';
+import {
+  createDocumentNode,
+  getTextSelection,
+  isIdentifierOfType,
+  isRemirrorType,
+} from '@remirror/core-utils';
 import { EditorState } from '@remirror/pm/state';
 
 import { BuiltinPreset, builtinPreset, CombinedTags, CommandsExtension } from '../builtins';

@@ -25,12 +25,12 @@ test('updates to the default direction affect the attributes', () => {
   } = renderEditor([extension]);
 
   add(doc(p('first paragraph')));
-  extension.setOptions({ defaultDirection: 'rtl' });
+  extension.setOptions({ defaultDirection: 'rtl', autoUpdate: true });
   expect(view.dom).toMatchSnapshot();
 });
 
 test('updates the direction based on typing', () => {
-  const { insertText, view, selectText } = renderEditor([new BidiExtension()]);
+  const { insertText, view, selectText } = renderEditor([new BidiExtension({ autoUpdate: true })]);
 
   insertText('بسيطة');
   expect(view.dom).toMatchSnapshot();
@@ -45,7 +45,7 @@ describe('options', () => {
       add,
       nodes: { p, doc },
       view,
-    } = renderEditor([new BidiExtension({ defaultDirection: 'rtl' })]);
+    } = renderEditor([new BidiExtension({ defaultDirection: 'rtl', autoUpdate: true })]);
 
     add(doc(p('first paragraph'), p('بسيطة'), p('@')));
     expect(view.dom).toMatchSnapshot();
@@ -64,7 +64,7 @@ describe('options', () => {
   });
 
   it('can make use of `excludedNodes`', () => {
-    const extension = new BidiExtension({ excludeNodes: ['heading'] });
+    const extension = new BidiExtension({ excludeNodes: ['heading'], autoUpdate: true });
     const {
       add,
       nodes: { p, doc, heading },

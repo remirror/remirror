@@ -184,7 +184,7 @@ function gatherRawExtensions<Extension extends AnyExtension>(
 
   if (names.includes(extension.name)) {
     warning(
-      true,
+      false,
       `Circular dependency encountered when loading extensions: ${names.join(' > ')} > ${
         extension.name
       }`,

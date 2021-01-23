@@ -6,7 +6,7 @@
  * - other video formats
  */
 
-import { readFile } from 'fs/promises';
+import { readFile, writeFile } from 'fs/promises';
 import os from 'os';
 import pLimit from 'p-limit';
 import path from 'path';
@@ -32,7 +32,7 @@ export interface SaveVideoProps {
   /**
    * The supported format to use.
    */
-  output?: FormatOptions[];
+  outputs?: OutputFormatOptions[];
 }
 
 interface GifFormatOptions {
@@ -109,9 +109,11 @@ interface WebpFormatOptions {
   type: 'webp';
 }
 
-type FormatOptions = GifFormatOptions | WebpFormatOptions;
+interface Mp4FormatOptions {
+  type: 'mp4';
+}
 
-export type SupportedFormats = 'webp' | 'gif' | 'mp4';
+type OutputFormatOptions = GifFormatOptions | WebpFormatOptions | Mp4FormatOptions;
 
 const TMP_DIRECTORY = path.join(os.tmpdir(), '__playwright-capture__');
 
@@ -122,7 +124,8 @@ export function saveVideo(
   props: SaveVideoProps,
   runner: (page: Page) => Promise<void>,
 ): () => Promise<void> {
-  const { name, directory, browser, output = ['mp4'] } = props;
+  const { name, directory, browser, outputs = [{ type: 'mp4' }] } = props;
+  const destination = path.resolve(directory, name);
 
   return async () => {
     const page = await browser.newPage({ recordVideo: { dir: TMP_DIRECTORY } });
@@ -141,10 +144,16 @@ export function saveVideo(
     const limit = pLimit(os.cpus().length);
     const promises: Array<Promise<void>> = [];
 
-    for (const type of output) {
-      if (type === 'mp4') {
-        pLimit('');
+    for (const output of outputs) {
+      if (output.type === 'mp4') {
+        const promiseFn = async () => {
+          await writeFile(`${destination}.${output.type}`, originalFile);
+        };
+
+        promises.push(limit(promiseFn));
       }
     }
+
+    await Promise.all(promises);
   };
 }

@@ -15,6 +15,12 @@
     ],
     "noEmit": true
   },
-  "include": ["packages/*/src", "global.d.ts"],
-  "exclude": ["packages/remirror__svelte", "**/node_modules/**", "node_modules"]
+  "include": ["packages/**/*.ts", "packages/**/*.tsx", "global.d.ts"],
+  "exclude": [
+    "packages/remirror__svelte",
+    "**/node_modules/**",
+    "node_modules",
+    "**/dist",
+    "**/dist-types"
+  ]
 }

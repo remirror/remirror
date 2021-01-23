@@ -17,6 +17,9 @@
   "include": ["./"],
   "references": [
     {
+      "path": "../../remirror__core/src"
+    },
+    {
       "path": "../../remirror__extension-doc/src"
     },
     {
@@ -36,6 +39,9 @@
     },
     {
       "path": "../../remirror__extension-text/src"
+    },
+    {
+      "path": "../../remirror__pm/src"
     }
   ]
 }

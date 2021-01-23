@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 import sanitizeHtml from 'sanitize-html';
+import warning from 'tiny-warning';
 import { environment, isFunction, noop } from '@remirror/core';
 
 /**
@@ -150,7 +151,8 @@ function supportCancelAnimationFrame() {
   window.cancelAnimationFrame = () => {
     if (!window.ignoreAllJSDOMWarnings && !window.hasWarnedAboutCancelAnimationFramePolyfill) {
       window.hasWarnedAboutCancelAnimationFramePolyfill = true;
-      console.warn(
+      warning(
+        true,
         'Warning! Test uses DOM cancelAnimationFrame API which is not available in JSDOM/Node environment.',
       );
     }

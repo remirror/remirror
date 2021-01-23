@@ -6,15 +6,7 @@ import {
   ExtensionPriority,
   RemirrorIdentifier,
 } from '@remirror/core-constants';
-import {
-  assertGet,
-  freeze,
-  invariant,
-  isIdentifierOfType,
-  isRemirrorType,
-  pascalCase,
-  uniqueBy,
-} from '@remirror/core-helpers';
+import { assertGet, freeze, invariant, pascalCase, uniqueBy } from '@remirror/core-helpers';
 import type {
   ApplySchemaAttributes,
   Dispose,
@@ -31,6 +23,7 @@ import type {
   Shape,
   ValidOptions,
 } from '@remirror/core-types';
+import { isIdentifierOfType, isRemirrorType } from '@remirror/core-utils';
 
 import type {
   AppendLifecycleProps,
