@@ -43,7 +43,12 @@ export class ParagraphExtension extends NodeExtension {
   }
 
   createTags() {
-    return [ExtensionTag.LastNodeCompatible, ExtensionTag.Block];
+    return [
+      ExtensionTag.LastNodeCompatible,
+      ExtensionTag.TextBlock,
+      ExtensionTag.Block,
+      ExtensionTag.FormattingNode,
+    ];
   }
 
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {

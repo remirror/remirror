@@ -193,6 +193,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
     for (const extension of extensions) {
       const extensionCommands: ExtensionCommandReturn = extension.createCommands?.() ?? {};
       const decoratedCommands = extension.decoratedCommands ?? {};
+      const active: Record<string, () => boolean> = {};
 
       for (const [commandName, options] of Object.entries(decoratedCommands)) {
         const shortcut =
@@ -201,6 +202,10 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
             : undefined;
         this.updateDecorated(commandName, { ...options, name: extension.name, ...shortcut });
         extensionCommands[commandName] = (extension as Shape)[commandName].bind(extension);
+
+        if (options.active) {
+          active[commandName] = () => options.active?.(extension.options, this.store) ?? false;
+        }
       }
 
       if (isEmptyObject(extensionCommands)) {
@@ -208,13 +213,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
       }
 
       // Gather the returned commands object from the extension.
-      this.addCommands({
-        names,
-        chain,
-        commands,
-        extensionCommands,
-        decoratedCommands,
-      });
+      this.addCommands({ active, names, chain, commands, extensionCommands, decoratedCommands });
     }
 
     chain.run = () => view.dispatch(this.transaction);
@@ -999,7 +998,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    * `original` and `unchained` objects.
    */
   private addCommands(props: AddCommandsProps) {
-    const { extensionCommands, chain, commands, names, decoratedCommands } = props;
+    const { extensionCommands, chain, commands, names, decoratedCommands, active } = props;
 
     for (const [name, command] of entries(extensionCommands)) {
       // Command names must be unique.
@@ -1012,7 +1011,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
       });
 
       // Create the unchained command.
-      commands[name] = this.createUnchainedCommand(command);
+      commands[name] = this.createUnchainedCommand(command, active[name]);
 
       if (!decoratedCommands[name]?.disableChaining) {
         // Create the chained command.
@@ -1043,10 +1042,14 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
   /**
    * Create the unchained command.
    */
-  private createUnchainedCommand(command: ExtensionCommandFunction): CommandShape {
+  private createUnchainedCommand(
+    command: ExtensionCommandFunction,
+    active: (() => boolean) | undefined,
+  ): CommandShape {
     const unchainedCommand: CommandShape = this.unchainedFactory({ command }) as any;
     unchainedCommand.isEnabled = this.unchainedFactory({ command, shouldDispatch: false });
     unchainedCommand.original = command;
+    unchainedCommand.active = active;
 
     return unchainedCommand;
   }
@@ -1119,6 +1122,11 @@ export interface CommandExtensionMeta {
 }
 
 interface AddCommandsProps {
+  /**
+   * Some commands can declare that they are active.
+   */
+  active: Record<string, () => boolean>;
+
   /**
    * The currently amassed command chain to mutate for each extension.
    */

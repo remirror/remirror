@@ -5,9 +5,11 @@ import {
   clamp,
   command,
   CommandFunction,
+  convertPixelsToDomUnit,
   extension,
   ExtensionPriority,
   ExtensionTag,
+  getFontSize,
   getMarkRanges,
   getTextSelection,
   Helper,
@@ -24,17 +26,16 @@ import {
   MarkSpecOverride,
   NamedShortcut,
   omitExtraAttributes,
+  ParsedDomSize,
+  parseSizeUnit,
   PrimitiveSelection,
 } from '@remirror/core';
 
-import { FontSizeAttributes, FontSizeOptions, ParsedFontSize } from './font-size-types';
+import { FontSizeAttributes, FontSizeOptions } from './font-size-types';
 import {
-  convertFontSizeUnit,
   decreaseFontSizeOptions,
   FONT_SIZE_ATTRIBUTE,
-  getFontSize,
   increaseFontSizeOptions,
-  parseFontSize,
   setFontSizeOptions,
 } from './font-size-utils';
 
@@ -82,7 +83,7 @@ export class FontSizeExtension extends MarkExtension<FontSizeOptions> {
               return;
             }
 
-            size = `${convertFontSizeUnit(size, this.options.unit, dom)}${this.options.unit}`;
+            size = `${convertPixelsToDomUnit(size, this.options.unit, dom)}${this.options.unit}`;
 
             return { ...extra.parse(dom), size };
           },
@@ -120,7 +121,7 @@ export class FontSizeExtension extends MarkExtension<FontSizeOptions> {
   private getFontSize(size: string) {
     const { unit, roundingMultiple, max, min } = this.options;
     const value = clamp({
-      value: round(convertFontSizeUnit(size, unit, this.store.view.dom), roundingMultiple),
+      value: round(convertPixelsToDomUnit(size, unit, this.store.view.dom), roundingMultiple),
       max,
       min,
     });
@@ -194,32 +195,32 @@ export class FontSizeExtension extends MarkExtension<FontSizeOptions> {
    * the non-empty selection.
    */
   @helper()
-  getFontSizeForSelection(position?: PrimitiveSelection): Helper<Array1<ParsedFontSize>> {
+  getFontSizeForSelection(position?: PrimitiveSelection): Helper<Array1<ParsedDomSize>> {
     const state = this.store.getState();
     const selection = getTextSelection(position ?? state.selection, state.doc);
     const [range, ...rest] = getMarkRanges(selection, this.type);
 
     if (range) {
       return [
-        parseFontSize(range.mark.attrs.size),
-        ...rest.map((range) => parseFontSize(range.mark.attrs.size)),
+        parseSizeUnit(range.mark.attrs.size),
+        ...rest.map((range) => parseSizeUnit(range.mark.attrs.size)),
       ];
     }
 
     const { defaultSize, unit } = this.options;
-    const parsedSize: ParsedFontSize = [convertFontSizeUnit(defaultSize, unit), unit];
+    const parsedSize: ParsedDomSize = [convertPixelsToDomUnit(defaultSize, unit), unit];
 
     return [parsedSize];
   }
 
   @helper()
-  getFontSizeFromDom(position?: PrimitiveSelection): Helper<ParsedFontSize> {
+  getFontSizeFromDom(position?: PrimitiveSelection): Helper<ParsedDomSize> {
     const state = this.store.getState();
     const selection = getTextSelection(position ?? state.selection, state.doc);
     const nodeAtPos = this.store.view.domAtPos(selection.from);
     const element = isElementDomNode(nodeAtPos.node) ? nodeAtPos.node : this.store.view.dom;
 
-    return parseFontSize(getFontSize(element));
+    return parseSizeUnit(getFontSize(element));
   }
 }
 

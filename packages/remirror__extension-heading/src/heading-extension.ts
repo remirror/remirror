@@ -61,7 +61,7 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
   }
 
   createTags() {
-    return [ExtensionTag.Block, ExtensionTag.TextBlock];
+    return [ExtensionTag.Block, ExtensionTag.TextBlock, ExtensionTag.FormattingNode];
   }
 
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {

@@ -88,7 +88,7 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
   /**
    * Add the `dir` to all the inner node types.
    */
-  createSchemaAttributes = (): IdentifierSchemaAttributes[] => {
+  createSchemaAttributes(): IdentifierSchemaAttributes[] {
     const IGNORE_BIDI_AUTO_UPDATE = 'data-ignore-bidi-auto';
     return [
       {
@@ -108,7 +108,7 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
         },
       },
     ];
-  };
+  }
 
   /**
    * Create the plugin that ensures the node has the correct `dir` value on each
@@ -163,39 +163,6 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
 
         return tr;
       },
-      // view: () => ({
-      //   update: () => {
-      //     const shouldUpdate = this.getPluginState<boolean>();
-      //     const state = this.store.getState();
-      //     const { autoUpdate, excludeNodes } = this.options;
-
-      //     if (!shouldUpdate || !autoUpdate) {
-      //       return;
-      //     }
-
-      //     const parent = findParentNode({
-      //       predicate: (node) =>
-      //         !!(node.isTextblock && node.textContent && !excludeNodes.includes(node.type.name)),
-      //       selection: state.selection,
-      //     });
-
-      //     if (!parent) {
-      //       return;
-      //     }
-
-      //     const { node, pos } = parent;
-
-      //     const currentDirection = node.attrs.dir;
-      //     const dir = this.getDirection(node.textContent);
-
-      //     if (currentDirection === dir) {
-      //       return;
-      //     }
-
-      //     this.#ignoreNextUpdate = true;
-      //     this.store.commands.updateNodeAttributes(pos, { ...node.attrs, dir });
-      //   },
-      // }),
     };
   }
 
@@ -290,7 +257,8 @@ declare global {
       dir?: 'ltr' | 'rtl';
 
       /**
-       * When truthy this should set the
+       * When truthy this should set the node to ignore any updates to the
+       * direction of the text.
        */
       ignoreBidiAutoUpdate?: boolean;
     }

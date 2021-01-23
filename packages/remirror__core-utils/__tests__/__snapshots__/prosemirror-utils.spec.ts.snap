@@ -33,7 +33,7 @@ Object {
       "attrs": Object {},
       "content": "inline*",
       "draggable": false,
-      "group": "lastNodeCompatible block",
+      "group": "lastNodeCompatible textBlock block formattingNode",
       "parseDOM": Array [
         Object {
           "getAttrs": [Function],

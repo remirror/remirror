@@ -586,6 +586,7 @@ importers:
       '@remirror/extension-mention': link:../remirror__extension-mention
       '@remirror/extension-mention-atom': link:../remirror__extension-mention-atom
       '@remirror/extension-native-bridge': link:../remirror__extension-native-bridge
+      '@remirror/extension-node-formatting': link:../remirror__extension-node-formatting
       '@remirror/extension-paragraph': link:../remirror__extension-paragraph
       '@remirror/extension-placeholder': link:../remirror__extension-placeholder
       '@remirror/extension-positioner': link:../remirror__extension-positioner
@@ -668,6 +669,7 @@ importers:
       '@remirror/extension-mention': 1.0.0-next.60
       '@remirror/extension-mention-atom': 1.0.0-next.60
       '@remirror/extension-native-bridge': 0.0.0
+      '@remirror/extension-node-formatting': 0.0.0
       '@remirror/extension-paragraph': 1.0.0-next.60
       '@remirror/extension-placeholder': 1.0.0-next.60
       '@remirror/extension-positioner': 1.0.0-next.60

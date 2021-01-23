@@ -623,8 +623,8 @@ export const DEFAULT_SHORTCUTS: ShortcutMap = {
   [NamedShortcut.ContextMenu]: 'Mod-Shift-\\',
   [NamedShortcut.IncreaseFontSize]: 'Mod-Shift-.',
   [NamedShortcut.DecreaseFontSize]: 'Mod-Shift-,',
-  [NamedShortcut.Indent]: 'Tab',
-  [NamedShortcut.Dedent]: 'Shift-Tab',
+  [NamedShortcut.IncreaseIndent]: 'Tab',
+  [NamedShortcut.DecreaseIndent]: 'Shift-Tab',
   [NamedShortcut.Shortcuts]: 'Mod-/',
   [NamedShortcut.Format]: environment.isMac ? 'Alt-Shift-f' : 'Shift-Ctrl-f',
 };
@@ -647,8 +647,8 @@ export const GOOGLE_DOC_SHORTCUTS: ShortcutMap = {
   [NamedShortcut.BulletList]: 'Mod-Alt-8',
   [NamedShortcut.Quote]: 'Mod-Alt-9',
   [NamedShortcut.ClearFormatting]: 'Mod-\\',
-  [NamedShortcut.Indent]: 'Mod-[',
-  [NamedShortcut.Dedent]: 'Mod-]',
+  [NamedShortcut.IncreaseIndent]: 'Mod-[',
+  [NamedShortcut.DecreaseIndent]: 'Mod-]',
 };
 
 export const keyboardShortcuts = {

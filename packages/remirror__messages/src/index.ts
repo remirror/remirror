@@ -14,6 +14,7 @@ export * as ExtensionHeadingMessages from './extension-heading-messages';
 export * as ExtensionHistoryMessages from './extension-history-messages';
 export * as ExtensionItalicMessages from './extension-italic-messages';
 export * as ExtensionListMessages from './extension-list-messages';
+export * as ExtensionNodeFormattingMessages from './extension-node-formatting-messages';
 export * as ExtensionParagraphMessages from './extension-paragraph-messages';
 export * as ExtensionStrikeMessages from './extension-strike-messages';
 export * as ExtensionSubMessages from './extension-sub-messages';

@@ -37,13 +37,8 @@ import type {
 import type { MarkSpec, NodeSpec, NodeType } from '@remirror/pm/model';
 import { Selection as PMSelection } from '@remirror/pm/state';
 
-import {
-  isEditorState,
-  isNodeSelection,
-  isResolvedPos,
-  isSelection,
-  isTextDomNode,
-} from './core-utils';
+import { isEditorState, isNodeSelection, isResolvedPos, isSelection } from './core-utils';
+import { isTextDomNode } from './dom-utils';
 
 interface NodeEqualsTypeProps<Schema extends EditorSchema = EditorSchema>
   extends NodeTypesProps<Schema>,

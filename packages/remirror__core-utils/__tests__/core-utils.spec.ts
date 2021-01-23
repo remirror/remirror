@@ -37,7 +37,6 @@ import {
   getMarkAttributes,
   getMarkRange,
   getMarkRanges,
-  getNearestNonTextElement,
   getRemirrorJSON,
   getSelectedWord,
   htmlToProsemirrorNode,
@@ -291,15 +290,6 @@ describe('getMarkRanges', () => {
     expect(ranges[1]?.text).toBe('friend. ');
     expect(ranges[2]?.text).toBe(' for now... 😼');
   });
-});
-
-test('getNearestNonTextNode', () => {
-  const div = document.createElement('div');
-  const text = document.createTextNode('hello');
-  div.append(text);
-
-  expect(getNearestNonTextElement(text)).toBe(div);
-  expect(getNearestNonTextElement(div)).toBe(div);
 });
 
 describe('selections', () => {

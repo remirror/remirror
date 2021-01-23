@@ -25,7 +25,12 @@ import type {
   Transaction,
   TransactionProps,
 } from './suggest-types';
-import { DEFAULT_SUGGESTER, findFromSuggesters, findReason } from './suggest-utils';
+import {
+  DEFAULT_SUGGESTER,
+  findFromSuggesters,
+  findReason,
+  IGNORE_SUGGEST_META_KEY,
+} from './suggest-utils';
 
 /**
  * The `prosemirror-suggest` state which manages the list of suggesters.
@@ -531,8 +536,9 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
     const { tr, state } = props;
     const { exit } = this.#handlerMatches;
     const transactionHasChanged = tr.docChanged || tr.selectionSet;
+    const shouldIgnoreUpdate: boolean = tr.getMeta(IGNORE_SUGGEST_META_KEY);
 
-    if (!transactionHasChanged && !this.#removed) {
+    if (shouldIgnoreUpdate || (!transactionHasChanged && !this.#removed)) {
       return this;
     }
 

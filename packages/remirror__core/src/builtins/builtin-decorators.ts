@@ -125,10 +125,10 @@ export function helper(options: HelperDecoratorOptions = {}) {
  * @category Method Decorator
  */
 export function command<Extension extends AnyExtension>(
-  options?: ChainableCommandDecoratorOptions,
+  options?: ChainableCommandDecoratorOptions<Required<GetOptions<Extension>>>,
 ): ExtensionDecorator<Extension, CommandFunction, void>;
 export function command<Extension extends AnyExtension>(
-  options: NonChainableCommandDecoratorOptions,
+  options: NonChainableCommandDecoratorOptions<Required<GetOptions<Extension>>>,
 ): ExtensionDecorator<Extension, NonChainableCommandFunction, void>;
 export function command(options: CommandDecoratorOptions = {}): any {
   return (target: any, propertyKey: string, _descriptor: any): void => {
@@ -299,7 +299,8 @@ export interface CommandDecoratorMessageProps {
 export type CommandDecoratorValue<Value> = ((props: CommandDecoratorMessageProps) => Value) | Value;
 
 export type CommandDecoratorMessage = CommandDecoratorValue<string>;
-interface ChainableCommandDecoratorOptions extends Remirror.CommandDecoratorOptions {
+interface ChainableCommandDecoratorOptions<Options extends Shape>
+  extends Remirror.CommandDecoratorOptions<Options> {
   /**
    * Set this to `true` to disable chaining of this command. This means it will
    * no longer be available when running `
@@ -308,7 +309,8 @@ interface ChainableCommandDecoratorOptions extends Remirror.CommandDecoratorOpti
    */
   disableChaining?: false;
 }
-interface NonChainableCommandDecoratorOptions extends Remirror.CommandDecoratorOptions {
+interface NonChainableCommandDecoratorOptions<Options extends Shape>
+  extends Remirror.CommandDecoratorOptions<Options> {
   /**
    * Set this to `true` to disable chaining of this command. This means it will
    * no longer be available when running `
@@ -318,15 +320,22 @@ interface NonChainableCommandDecoratorOptions extends Remirror.CommandDecoratorO
   disableChaining: true;
 }
 
-export type CommandDecoratorOptions =
-  | ChainableCommandDecoratorOptions
-  | NonChainableCommandDecoratorOptions;
+export type CommandDecoratorOptions<Options extends Shape = Shape> =
+  | ChainableCommandDecoratorOptions<Options>
+  | NonChainableCommandDecoratorOptions<Options>;
 
 declare global {
   namespace Remirror {
     /**
      * UX options for the command which can be extended.
      */
-    interface CommandDecoratorOptions extends CommandUiDecoratorOptions {}
+    interface CommandDecoratorOptions<Options extends Shape = Shape>
+      extends CommandUiDecoratorOptions {
+      /**
+       * A function which can be used to override whether a command is already
+       * active for the current selection.
+       */
+      active?: (options: Options, store: ExtensionStore) => boolean;
+    }
   }
 }

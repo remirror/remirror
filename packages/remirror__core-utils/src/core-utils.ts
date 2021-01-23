@@ -1,6 +1,5 @@
 import { cssifyObject } from 'css-in-js-utils';
 import type { StyleObject } from 'css-in-js-utils/es/cssifyObject';
-import type { KebabCase } from 'type-fest';
 import {
   __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
   ErrorConstant,
@@ -9,12 +8,10 @@ import {
 } from '@remirror/core-constants';
 import {
   assert,
-  Cast,
   clamp,
   includes,
   invariant,
   isArray,
-  isFunction,
   isNullOrUndefined,
   isNumber,
   isObject,
@@ -44,7 +41,6 @@ import type {
   ResolvedPos,
   SchemaProps,
   Selection,
-  StringKey,
   TextProps,
   Transaction,
   TrStateProps,
@@ -426,18 +422,6 @@ export function isEmptyBlockNode(node: ProsemirrorNode | null | undefined): bool
 }
 
 /**
- * Get the styles for a given property of an element.
- */
-export function getStyle(
-  element: HTMLElement,
-  property: KebabCase<StringKey<CSSStyleDeclaration>>,
-): string {
-  const view = element.ownerDocument?.defaultView ?? window;
-  const style = view.getComputedStyle(element);
-  return style.getPropertyValue(property);
-}
-
-/**
  * Retrieve the attributes for a mark.
  *
  * @param trState - the editor state or a transaction
@@ -779,75 +763,6 @@ export function getMatchString(match: string | string[], index = 0): string {
   assert(isString(value), `No match string found for match ${match}`);
 
   return value ?? '';
-}
-
-/**
- * Checks whether the passed value is a valid dom node
- *
- * @param domNode - the dom node
- */
-export function isDomNode(domNode: unknown): domNode is Node {
-  return isObject(Node)
-    ? domNode instanceof Node
-    : isObject(domNode) && isNumber(Cast(domNode).nodeType) && isString(Cast(domNode).nodeName);
-}
-
-/**
- * Checks for an element node like `<p>` or `<div>`.
- *
- * @param domNode - the dom node
- */
-export function isElementDomNode(domNode: unknown): domNode is HTMLElement {
-  return isDomNode(domNode) && domNode.nodeType === Node.ELEMENT_NODE;
-}
-
-/**
- * Finds the closest element which matches the passed selector
- *
- * @param domNode - the dom node
- * @param selector - the selector
- */
-export function closestElement(
-  domNode: Node | null | undefined,
-  selector: string,
-): HTMLElement | null {
-  if (!isElementDomNode(domNode)) {
-    return null;
-  }
-
-  if (isNullOrUndefined(document.documentElement) || !document.documentElement.contains(domNode)) {
-    return null;
-  }
-
-  const matches = isFunction(domNode.matches) ? 'matches' : Cast<'matches'>('msMatchesSelector');
-
-  do {
-    if (isFunction(domNode[matches]) && domNode[matches](selector)) {
-      return domNode;
-    }
-
-    domNode = (domNode.parentElement ?? domNode.parentNode) as HTMLElement;
-  } while (isElementDomNode(domNode));
-
-  return null;
-}
-
-/**
- * Checks for a text node.
- *
- * @param domNode - the dom node
- */
-export function isTextDomNode(domNode: unknown): domNode is Text {
-  return isDomNode(domNode) && domNode.nodeType === Node.TEXT_NODE;
-}
-
-/**
- * Retrieve the nearest non-text node.
- *
- * @param domNode - the dom node
- */
-export function getNearestNonTextElement(domNode: Node): HTMLElement | null {
-  return isTextDomNode(domNode) ? domNode.parentElement : (domNode as HTMLElement);
 }
 
 /**

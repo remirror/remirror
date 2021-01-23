@@ -3501,6 +3501,12 @@ button:active .remirror-menu-pane-shortcut,
 }
 
 /**
+ * Styles extracted from: packages/remirror__theme/src/extension-node-formatting-theme.ts
+ */
+.remirror-editor .Prosemirror {
+}
+
+/**
  * Styles extracted from: packages/remirror__theme/src/extension-placeholder-theme.ts
  */
 .remirror-is-empty:first-of-type::before {

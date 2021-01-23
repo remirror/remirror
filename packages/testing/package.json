@@ -9,7 +9,7 @@
     ".": {
       "import": "./dist/testing.esm.js",
       "require": "./dist/testing.cjs.js",
-      "browser": "./dist/testing.browser.esm.js",
+      "browser": "./dist/testing.esm.js",
       "types": "./dist/testing.cjs.d.ts",
       "default": "./dist/testing.esm.js"
     },
@@ -17,13 +17,14 @@
     "./playwright": {
       "import": "./playwright/dist/testing-playwright.esm.js",
       "require": "./playwright/dist/testing-playwright.cjs.js",
-      "browser": "./playwright/dist/testing.browser.esm.js",
+      "browser": "./playwright/dist/testing.esm.js",
+      "types": "./playwright/dist/testing-playwright.cjs.d.ts",
       "default": "./playwright/dist/testing-playwright.esm.js"
     },
     "./react": {
       "import": "./react/dist/testing-react.esm.js",
       "require": "./react/dist/testing-react.cjs.js",
-      "browser": "./react/dist/testing.browser.esm.js",
+      "browser": "./react/dist/testing.esm.js",
       "types": "./react/dist/testing-react.cjs.d.ts",
       "default": "./react/dist/testing-react.esm.js"
     },
@@ -31,10 +32,6 @@
   },
   "main": "dist/testing.cjs.js",
   "module": "dist/testing.esm.js",
-  "browser": {
-    "./dist/testing.cjs.js": "./dist/testing.browser.cjs.js",
-    "./dist/testing.esm.js": "./dist/testing.browser.esm.js"
-  },
   "types": "dist/testing.cjs.d.ts",
   "files": [
     "dist",

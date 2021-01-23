@@ -144,6 +144,15 @@ export interface CommandShape<Parameter extends any[] = []> {
    */
   original: (...args: Parameter) => CommandFunction;
 
+  /**
+   * Commands which are not attached to a node extension or a mark extension can
+   * optionally define custom `isActive` checker.
+   *
+   * This is used for checking if `centerAlign` is active from the
+   * `@remirror/extension-node-formatting`.
+   */
+  active?: () => boolean;
+
   (...args: Parameter): void;
 }
 

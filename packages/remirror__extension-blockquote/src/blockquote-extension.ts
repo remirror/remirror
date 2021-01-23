@@ -29,7 +29,7 @@ export class BlockquoteExtension extends NodeExtension {
   }
 
   createTags() {
-    return [ExtensionTag.Block];
+    return [ExtensionTag.Block, ExtensionTag.FormattingNode];
   }
 
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {

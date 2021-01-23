@@ -34,7 +34,6 @@ export {
   atDocEnd,
   atDocStart,
   canInsertNode,
-  closestElement,
   createDocumentNode,
   endPositionOfParent,
   getChangedNodeRanges,
@@ -48,11 +47,9 @@ export {
   getMarkRange,
   getMarkRanges,
   getMatchString,
-  getNearestNonTextElement,
   getRemirrorJSON,
   getSelectedGroup,
   getSelectedWord,
-  getStyle,
   getTextContentFromSlice,
   getTextSelection,
   htmlToProsemirrorNode,
@@ -61,10 +58,8 @@ export {
   isDefaultDocNode,
   isDocNode,
   isDocNodeEmpty,
-  isDomNode,
   isEditorSchema,
   isEditorState,
-  isElementDomNode,
   isEmptyBlockNode,
   isIdentifierOfType,
   isMarkActive,
@@ -77,7 +72,6 @@ export {
   isRemirrorType,
   isResolvedPos,
   isSelection,
-  isTextDomNode,
   isTextSelection,
   isTransaction,
   joinStyles,
@@ -88,6 +82,18 @@ export {
   startPositionOfParent,
   textBetween,
 } from './core-utils';
+export type { DomSizeUnit, ParsedDomSize } from './dom-utils';
+export {
+  convertPixelsToDomUnit,
+  DOM_SIZE_UNITS,
+  extractPixelSize,
+  getFontSize,
+  getStyle,
+  isDomNode,
+  isElementDomNode,
+  isTextDomNode,
+  parseSizeUnit,
+} from './dom-utils';
 export { environment } from './environment';
 export * from './keyboard-utils';
 export type { NodeWithPosition } from './prosemirror-node-utils';

@@ -1,4 +1,4 @@
-import { Static } from '@remirror/core';
+import { DomSizeUnit, ParsedDomSize, Static } from '@remirror/core';
 
 export interface FontSizeOptions {
   /**
@@ -13,7 +13,7 @@ export interface FontSizeOptions {
    *
    * @default 'pt'
    */
-  unit?: FontSizeUnit;
+  unit?: DomSizeUnit;
 
   /**
    * The amount to increment the font by when the font size is incremented.
@@ -26,7 +26,7 @@ export interface FontSizeOptions {
    * @param direction - `-1` when decreasing the value and `+1` when increasing
    * the value.
    */
-  increment?: number | ((parsedSize: ParsedFontSize, direction: -1 | 1) => number);
+  increment?: number | ((parsedSize: ParsedDomSize, direction: -1 | 1) => number);
 
   /**
    * The maximum font size.
@@ -59,26 +59,3 @@ export interface FontSizeAttributes {
    */
   size?: string;
 }
-
-export const FONT_SIZE_UNITS = [
-  'px',
-  'rem',
-  'em',
-  'in',
-  'q',
-  'mm',
-  'cm',
-  'pt',
-  'pc',
-  'vh',
-  'vw',
-  'vmin',
-  'vmax',
-] as const;
-
-export type FontSizeUnit = typeof FONT_SIZE_UNITS[number];
-
-/**
- * A tuple for the font size and unit.
- */
-export type ParsedFontSize = [size: number, unit: FontSizeUnit];

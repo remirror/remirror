@@ -44,6 +44,7 @@ import {
   NodeWithPosition,
 } from '@remirror/core-utils';
 import { MarkSpec, NodeSpec, Schema } from '@remirror/pm/model';
+import { ignoreUpdateForSuggest } from '@remirror/pm/suggest';
 
 import {
   AnyExtension,
@@ -379,6 +380,9 @@ export class SchemaExtension extends PlainExtension {
 
         // Apply the new dynamic attribute to the node via the transaction.
         tr.setNodeMarkup(pos, undefined, attrs);
+
+        // Ignore this update in the `prosemirror-suggest` plugin
+        ignoreUpdateForSuggest(tr);
       }
     }
   }
@@ -444,6 +448,9 @@ export class SchemaExtension extends PlainExtension {
         // Update the value of the mark. The only way to do this right now is to
         // remove and then add it back again.
         tr.removeMark(from, to, type).addMark(from, to, newMark);
+
+        // Ignore this update in the `prosemirror-suggest` plugin
+        ignoreUpdateForSuggest(tr);
       }
     }
   }
@@ -995,19 +1002,27 @@ function createToDOM(extraAttributes: SchemaAttributes, shouldIgnore: boolean) {
     }
 
     function updateDomAttributes(
-      value: string | [string, string?] | undefined | null,
+      value: string | [string, string?] | Record<string, string> | undefined | null,
       name: string,
     ) {
+      if (!value) {
+        return;
+      }
+
       if (isString(value)) {
         domAttributes[name] = value;
+        return;
       }
 
       if (isArray(value)) {
         const [attr, val] = value;
         domAttributes[attr] = val ?? (item.attrs[name] as string);
+        return;
       }
 
-      return;
+      for (const [attr, val] of entries(value)) {
+        domAttributes[attr] = val;
+      }
     }
 
     for (const [name, config] of entries(extraAttributes)) {

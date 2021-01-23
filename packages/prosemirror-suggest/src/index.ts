@@ -5,7 +5,13 @@
  * @module
  */
 
-export { addSuggester, getSuggestPluginState, removeSuggester, suggest } from './suggest-plugin';
+export {
+  addSuggester,
+  getSuggestPluginState,
+  ignoreUpdateForSuggest,
+  removeSuggester,
+  suggest,
+} from './suggest-plugin';
 export {
   isChangeReason,
   isExitReason,

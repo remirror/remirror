@@ -404,10 +404,11 @@ export interface SchemaAttributesObject {
   toDOM?:
     | string
     | [string, string?]
+    | Record<string, string>
     | ((
         attrs: ProsemirrorAttributes,
         options: NodeMarkOptions,
-      ) => string | [string, string?] | null | undefined);
+      ) => string | [string, string?] | Record<string, string> | null | undefined);
 }
 
 export interface NodeMarkOptions {

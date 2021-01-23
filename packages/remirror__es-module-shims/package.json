@@ -25,7 +25,6 @@
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
   "main": "dist/remirror-es-module-shims.cjs.js",
-  "umd:main": "dist/remirror-es-module-shims.umd.min.js",
   "module": "dist/remirror-es-module-shims.esm.js",
   "browser": {
     "./dist/remirror-es-module-shims.cjs.js": "./dist/remirror-es-module-shims.browser.cjs.js",
@@ -47,8 +46,5 @@
   },
   "@remirror": {
     "sizeLimit": "50 KB"
-  },
-  "preconstruct": {
-    "umdName": "esModuleShims"
   }
 }

@@ -131,6 +131,9 @@
       "path": "../../remirror__extension-native-bridge/src"
     },
     {
+      "path": "../../remirror__extension-node-formatting/src"
+    },
+    {
       "path": "../../remirror__extension-paragraph/src"
     },
     {

@@ -1,9 +1,7 @@
-import { promises } from 'fs';
+import { mkdir, writeFile } from 'fs/promises';
 import looksSame, { createDiff } from 'looks-same';
 import path from 'path';
 import { kebabCase } from '@remirror/core';
-
-const { mkdir, writeFile } = promises;
 
 function tempDir(...paths: string[]) {
   return path.resolve(__dirname, '../..', '__failed-diffs__', ...paths);

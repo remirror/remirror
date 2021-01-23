@@ -3554,6 +3554,18 @@ export const ExtensionImageStyledComponent: ReturnType<typeof styled.div> = styl
   ${extensionImageStyledCss}
 `;
 
+export const extensionNodeFormattingStyledCss: ReturnType<typeof css> = css`
+  /**
+ * Styles extracted from: packages/remirror__theme/src/extension-node-formatting-theme.ts
+ */
+  .remirror-editor .Prosemirror {
+  }
+`;
+
+export const ExtensionNodeFormattingStyledComponent: ReturnType<typeof styled.div> = styled.div`
+  ${extensionNodeFormattingStyledCss}
+`;
+
 export const extensionPlaceholderStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-placeholder-theme.ts
@@ -4055,6 +4067,7 @@ export const allStyledCss: ReturnType<typeof css> = css`
   ${extensionEmojiStyledCss}
   ${extensionGapCursorStyledCss}
   ${extensionImageStyledCss}
+  ${extensionNodeFormattingStyledCss}
   ${extensionPlaceholderStyledCss}
   ${extensionPositionerStyledCss}
   ${extensionTablesStyledCss}
@@ -4072,6 +4085,7 @@ export const AllStyledComponent: ReturnType<typeof styled.div> = styled.div`
   ${extensionEmojiStyledCss}
   ${extensionGapCursorStyledCss}
   ${extensionImageStyledCss}
+  ${extensionNodeFormattingStyledCss}
   ${extensionPlaceholderStyledCss}
   ${extensionPositionerStyledCss}
   ${extensionTablesStyledCss}
