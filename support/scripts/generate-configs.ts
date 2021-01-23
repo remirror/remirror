@@ -10,7 +10,7 @@ import globby from 'globby';
 import os from 'os';
 import pLimit from 'p-limit';
 import path from 'path';
-import { assert, deepMerge, isPlainObject, isString, object, omitUndefined } from 'remirror';
+import { deepMerge, isPlainObject, isString, object, omitUndefined } from 'remirror';
 import sortKeys from 'sort-keys';
 import { PackageJson, TsConfigJson } from 'type-fest';
 import writeJSON from 'write-json-file';
@@ -37,7 +37,8 @@ const paths = {
   rootTsconfig: baseDir('support', 'root', 'tsconfig.json'),
 };
 
-// A list of all the generated files which will be prettified at the end of the process.
+// A list of all the generated files which will be prettified at the end of the
+// process.
 const filesToPrettify: string[] = [];
 
 type Exports = Record<string, ExportField>;
@@ -192,6 +193,74 @@ function getBrowserPath(pkg: PackageJson) {
   return isString(browserPath) ? browserPath : pkg.module;
 }
 
+interface SizeLimitConfig {
+  /**
+   * Relative paths to files. The only mandatory option. It could be a path
+   * "index.js", a pattern "dist/app-*.js" or an array ["index.js",
+   * "dist/app-*.js", "!dist/app-exclude.js"].
+   */
+  path: string | string[];
+
+  /**
+   * Partial import to test tree-shaking. It could be "{ lib }" to test import {
+   * lib } from 'lib' or { "a.js": "{ a }", "b.js": "{ b }" } to test multiple
+   * files.
+   */
+  import?: string | Record<string, string>;
+
+  /**
+   * Size or time limit for files from the path option. It should be a string with
+   * a number and unit, separated by a space. Format: 100 B, 10 KB, 500 ms, 1 s.
+   */
+  limit: string;
+
+  /**
+   * The name of the current section. It will only be useful if you have multiple
+   * sections.
+   */
+  name?: string;
+
+  /**
+   * When using a custom webpack config, a webpack entry could be given. It could
+   * be a string or an array of strings. By default, the total size of all entry
+   * points will be checked.
+   */
+  entry?: string | string[];
+
+  /**
+   * With false it will disable webpack.
+   */
+  webpack?: boolean;
+
+  /**
+   * With false it will disable calculating running time.
+   *
+   * @default false
+   */
+  running?: boolean;
+
+  /**
+   * With false it will disable gzip compression.
+   */
+  gzip?: boolean;
+
+  /**
+   * With true it will use brotli compression and disable gzip compression.
+   */
+  brotli?: boolean;
+
+  /**
+   * A path to a custom webpack config.
+   */
+  config?: string;
+
+  /**
+   * An array of files and dependencies to exclude from the project size
+   * calculation.
+   */
+  ignore?: string[];
+}
+
 /**
  * This generates the `.size-limit.json` file which is currently placed into the
  * `support/root` folder.
@@ -202,27 +271,47 @@ async function generateSizeLimitConfig() {
   // Get all the packages in the `pnpm` monorepo.
   const packages = await getAllDependencies();
 
-  type DesiredPackage = Package & { module: string; meta: Required<RemirrorPackageMeta> };
+  // Container for the size limit config object. This will be written to the
+  // size limit json file.
+  const sizes: SizeLimitConfig[] = [];
 
-  // Transform the packages into the correct sizes.
-  const sizes = packages
-    // Only pick the packages that are ESModules and have a size limit value in the `meta` package.json field.
-    .filter((pkg): pkg is DesiredPackage => !!(pkg.module && pkg['@remirror']?.sizeLimit))
+  for (const pkg of packages) {
+    const limit = pkg['@remirror']?.sizeLimit;
 
-    // Convert the package.json into a valid array of [sizelimit
-    // config](https://github.com/ai/size-limit/blob/HEAD/README.md#config)
-    .map((pkg) => {
-      const relativePath = getBrowserPath(pkg);
-      assert(relativePath, 'A module path must exist for the package.');
+    // Ignore when there is no limit set for the package.
+    if (!limit) {
+      continue;
+    }
 
-      return {
-        name: pkg.name,
-        path: path.join(getRelativePathFromJson(pkg), relativePath),
-        limit: pkg['@remirror']?.sizeLimit,
-        ignore: Object.keys(pkg.peerDependencies ?? {}),
-        running: false,
-      };
+    // The path from the current package to the entry point.
+    const pathToEntryFile = getBrowserPath(pkg);
+
+    if (!pathToEntryFile) {
+      continue;
+    }
+
+    // The path from the root directory to the current package.
+    const pathToPackage = getRelativePathFromJson(pkg);
+
+    // A list of files to ignore in the size calculations.
+    const ignore = [
+      // Ignore all peer dependencies.
+      ...Object.keys(pkg.peerDependencies ?? {}),
+
+      // Ignore all internal dependencies.
+      ...Object.keys(pkg.dependencies ?? {}).filter((name) => name.startsWith('@remirror/')),
+    ];
+
+    // Add the configuration object to the list of sizes to check.
+    sizes.push({
+      name: pkg.name,
+      limit,
+      path: path.join(pathToPackage, pathToEntryFile),
+      ignore,
+      running: false,
+      gzip: true,
     });
+  }
 
   await writeJSON(paths.sizeLimit, sizes);
   filesToPrettify.push(paths.sizeLimit);
@@ -408,7 +497,8 @@ async function resolveTsConfigMeta(
       }
 
       references.push({
-        // Add the dependency which is a path relative to the current package being checked.
+        // Add the dependency which is a path relative to the current package
+        // being checked.
         path: path.join(path.relative(path.dirname(filepath), path.join(dependencyPath, 'src'))),
       });
     }
@@ -524,36 +614,11 @@ async function generatePackageTsConfigs() {
    * Write the file for an individual package.
    */
   function writePackageTsconfig(pkg: Package) {
-    // // Don't add a tsconfig to packages within the support directory.
-    // if (path.relative(baseDir(), pkg.location).startsWith('support')) {
-    //   return;
-    // }
-
-    // // The path for the tsconfig
-    // const tsconfigFilePath = path.join(pkg.location, tsconfigFileName);
-
-    // // The compiler options for the tsconfig file. If this is a typed package
-    // // then it is declared to be composite and if not it is left quite bare.
-    // const tsconfigCompilerOptions = pkg.types
-    //   ? { declaration: true, noEmit: true }
-    //   : { noEmit: true };
-
-    // // Create the json for the tsconfig which will be written to the tsconfig file.
-    // const tsconfig = {
-    //   ...basePackageTsconfig,
-    //   extends: path.relative(pkg.location, baseDir(paths.mainTsconfig)),
-    //   compilerOptions: {
-    //     ...basePackageTsconfig.compilerOptions,
-    //     ...tsconfigCompilerOptions,
-    //   },
-    //   // references,
-    // };
-
     promises.push(
       limit(async () => {
-        const tsconfigs = await resolveTsConfigMeta(pkg, dependencies);
+        const tsconfigFiles = await resolveTsConfigMeta(pkg, dependencies);
 
-        for (const tsconfig of tsconfigs) {
+        for (const tsconfig of tsconfigFiles) {
           if (!tsconfig.shouldReference) {
             continue;
           }
@@ -564,11 +629,11 @@ async function generatePackageTsConfigs() {
         }
 
         // Write the tsconfig files to disk.
-        await Promise.all(tsconfigs.map(({ filepath, json }) => writeJSON(filepath, json)));
+        await Promise.all(tsconfigFiles.map(({ filepath, json }) => writeJSON(filepath, json)));
 
-        // Add the file created to the list of files to prettify at the end of the
-        // script being run.
-        filesToPrettify.push(tsconfigs.map((tsconfig) => tsconfig.filepath).join(' '));
+        // Add the file created to the list of files to prettify at the end of
+        // the script being run.
+        filesToPrettify.push(tsconfigFiles.map((tsconfig) => tsconfig.filepath).join(' '));
       }),
     );
   }

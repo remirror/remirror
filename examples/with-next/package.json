@@ -15,7 +15,7 @@
     "next": "10.0.5",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "refractor": "^3.3.0",
+    "refractor": "^3.3.1",
     "remirror": "1.0.0-next.60"
   },
   "devDependencies": {

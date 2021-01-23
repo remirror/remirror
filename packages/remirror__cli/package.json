@@ -61,7 +61,7 @@
     "yup": "^0.32.8"
   },
   "devDependencies": {
-    "@testing-library/react-hooks": "^5.0.0",
+    "@testing-library/react-hooks": "^5.0.2",
     "@types/ink-spinner": "^3.0.0",
     "@types/ink-testing-library": "^1.0.1",
     "@types/jsesc": "^2.5.1",

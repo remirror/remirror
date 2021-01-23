@@ -1,4 +1,5 @@
 import { render as originalRender, RenderOptions, RenderResult } from '@testing-library/react';
+import * as hooks from '@testing-library/react-hooks';
 import { FC, StrictMode } from 'react';
 import * as React from 'react';
 import { useRemirrorContext } from '@remirror/react';
@@ -27,3 +28,4 @@ export const DefaultEditor: FC = () => {
 };
 
 export * from '@testing-library/react';
+export { hooks };

@@ -25,6 +25,7 @@ export {
   DEFAULT_SUGGESTER,
   findFromSuggesters,
   getSuggesterWithDefaults,
+  IGNORE_SUGGEST_META_KEY,
   markActiveInRange,
   positionHasMarks,
   rangeHasMarks,

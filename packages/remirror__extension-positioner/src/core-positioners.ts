@@ -237,6 +237,7 @@ export const nearestWordPositioner = selectionPositioner.clone(() => ({
     }
 
     const word = getSelectedWord(state);
+    console.log('word is', word);
 
     if (!word) {
       return Positioner.EMPTY;

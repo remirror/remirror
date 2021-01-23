@@ -102,7 +102,7 @@ const turndownService = new TurndownService({ codeBlockStyle: 'fenced', headingS
 
           let border = '---';
           const align = (
-            childNode.getAttribute('align') || ''
+            childNode.getAttribute('align') ?? ''
           ).toLowerCase() as keyof typeof alignMap;
 
           if (align) {
@@ -162,7 +162,7 @@ const turndownService = new TurndownService({ codeBlockStyle: 'fenced', headingS
         message: `Invalid node \`${node.firstChild?.nodeName}\` encountered for codeblock when converting html to markdown.`,
       });
 
-      const className = node.firstChild.getAttribute('class') || '';
+      const className = node.firstChild.getAttribute('class') ?? '';
       const language =
         className.match(/(?:lang|language)-(\S+)/)?.[1] ??
         node.firstChild.getAttribute('data-code-block-language') ??

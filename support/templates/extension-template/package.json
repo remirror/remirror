@@ -36,15 +36,9 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.5"
-  },
-  "devDependencies": {
+    "@babel/runtime": "^7.12.5",
     "@remirror/core": "1.0.0-next.60",
     "@remirror/pm": "1.0.0-next.60"
-  },
-  "peerDependencies": {
-    "@remirror/core": "^1.0.0-next.60",
-    "@remirror/pm": "^1.0.0-next.60"
   },
   "publishConfig": {
     "access": "public"

@@ -37,20 +37,18 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.12.5",
+    "@remirror/core": "1.0.0-next.60",
     "@remirror/messages": "0.0.0",
+    "@remirror/pm": "1.0.0-next.60",
     "nanoevents": "^5.1.10"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60",
     "@types/react": "^16.14.0 || ^17",
     "@types/react-dom": "^16.9.0 || ^17",
     "react": "^16.14.0 || ^17",

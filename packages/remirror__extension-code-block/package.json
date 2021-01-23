@@ -49,21 +49,19 @@
   "dependencies": {
     "@babel/runtime": "^7.12.5",
     "@linaria/core": "^3.0.0-beta.1",
+    "@remirror/core": "1.0.0-next.60",
     "@remirror/messages": "0.0.0",
+    "@remirror/pm": "1.0.0-next.60",
     "@remirror/theme": "1.0.0-next.60",
     "type-fest": "^0.20.2"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60",
     "@types/prettier": "^2.1.6",
     "@types/refractor": "^3.0.0",
     "prettier": "^2.2.1",
-    "refractor": "^3.3.0"
+    "refractor": "^3.3.1"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60",
     "@types/prettier": "^2.1.5",
     "@types/refractor": "^3.0.0",
     "prettier": "^2.2.0",

@@ -35,16 +35,14 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.5"
+    "@babel/runtime": "^7.12.5",
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60",
     "lit-element": "^2.4.0"
   },
   "peerDependencies": {
-    "@remirror/core": "^1.0.0-next.60",
-    "@remirror/pm": "^1.0.0-next.60",
     "lit-element": "^2.4.0"
   },
   "publishConfig": {

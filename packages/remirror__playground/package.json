@@ -79,7 +79,7 @@
     "create-context-state": "0.0.0",
     "eslint": "^7.18.0",
     "file-saver": "^2.0.5",
-    "idb-keyval": "^5.0.1",
+    "idb-keyval": "^5.0.2",
     "json.macro": "^1.3.0",
     "jszip": "^3.5.0",
     "lz-string": "^1.4.4",

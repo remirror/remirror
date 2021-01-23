@@ -471,12 +471,15 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
       return true;
     }
 
+    const commitMaps: StepMap[] = [];
+
+    for (const commit of tracked.commits.slice(index)) {
+      commitMaps.push(...commit.maps);
+    }
+
     // This is the mapping from the document as it was at the start of
     // the commit to the current document.
-    const remap = new Mapping(
-      // eslint-disable-next-line unicorn/no-array-reduce
-      tracked.commits.slice(index).reduce((maps, c) => maps.concat(c.maps), [] as StepMap[]),
-    );
+    const remap = new Mapping(commitMaps);
 
     // Build up a transaction that includes all (inverted) steps in this
     // commit, rebased to the current document. They have to be applied

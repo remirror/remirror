@@ -17,8 +17,8 @@ export default {
     resolve.extensions = resolve.extensions ?? [];
 
     resolve.extensions.push('.ts', '.tsx');
-    plugins.push(new WorkerPlugin());
     plugins.push(
+      new WorkerPlugin(),
       new MonacoEditorWebpackPlugin({
         languages: ['typescript', 'javascript', 'json', 'markdown', 'css'],
       }),

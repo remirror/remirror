@@ -38,7 +38,7 @@ export interface BidiOptions {
   /**
    * Whether or not the extension should automatically infer the direction as you type.
    *
-   * @default true
+   * @default false
    */
   autoUpdate?: boolean;
 
@@ -57,7 +57,7 @@ export interface BidiOptions {
 @extension<BidiOptions>({
   defaultOptions: {
     defaultDirection: undefined,
-    autoUpdate: true,
+    autoUpdate: false,
     excludeNodes: [],
   },
   staticKeys: ['excludeNodes'],

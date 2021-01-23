@@ -43,10 +43,13 @@
     "@babel/runtime": "^7.12.5",
     "@linaria/core": "^3.0.0-beta.1",
     "@lingui/core": "^3.4.0",
+    "@remirror/core": "1.0.0-next.60",
     "@remirror/extension-positioner": "1.0.0-next.60",
     "@remirror/extension-text-color": "0.0.0",
     "@remirror/i18n": "1.0.0-next.60",
     "@remirror/icons": "0.0.0",
+    "@remirror/pm": "1.0.0-next.60",
+    "@remirror/react": "1.0.0-next.60",
     "@remirror/react-hooks": "1.0.0-next.60",
     "@remirror/react-utils": "1.0.0-next.60",
     "@remirror/theme": "1.0.0-next.60",
@@ -61,19 +64,12 @@
     "use-previous": "^1.1.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60",
-    "@remirror/react": "1.0.0-next.60",
-    "@testing-library/react": "^11.2.3",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60",
-    "@remirror/react": "1.0.0-next.60",
     "@types/react": "^16.14.0 || ^17",
     "@types/react-dom": "^16.9.0 || ^17",
     "react": "^16.14.0 || ^17",

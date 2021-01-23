@@ -26,8 +26,6 @@ let config = {
     'plugin:jest-formatting/recommended',
     'plugin:jest/recommended',
     'plugin:jest/style',
-
-    // For `remirror__lit-components`
     'plugin:lit/recommended',
     'plugin:lit-a11y/recommended',
   ],
@@ -114,6 +112,7 @@ let config = {
     'unicorn/prefer-type-error': 'error',
     'unicorn/string-content': 'off',
     'unicorn/throw-new-error': 'error',
+    'unicorn/no-array-push-push': 'error',
 
     'jest/no-test-return-statement': 'off',
     'jest/prefer-strict-equal': 'off',

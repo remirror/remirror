@@ -1,7 +1,6 @@
 import {
   chainableEditorState,
   CommandFunction,
-  EditorSchema,
   ExtensionTag,
   findParentNode,
   NodeType,

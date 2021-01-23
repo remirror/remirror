@@ -246,8 +246,9 @@ export const FloatingActionsMenu = (props: FloatingActionsMenuProps): JSX.Elemen
     ignoredElements,
     enabled = true,
   } = props;
-  const { change } = useSuggest({ char: '/', name: 'actions-dropdown' });
+  const { change } = useSuggest({ char: '/', name: 'actions-dropdown', matchOffset: 0 });
   const query = change?.query.full;
+  console.log({ query });
   const menuState = useMenuState({ unstable_virtual: true, wrap: true, loop: true });
 
   const items = (query
@@ -332,7 +333,7 @@ export const FloatingActionsMenu = (props: FloatingActionsMenuProps): JSX.Elemen
       blurOnInactive={blurOnInactive}
       ignoredElements={ignoredElements}
     >
-      {/* <div style={{ width: 50, height: 50, background: 'red' }} /> */}
+      <div style={{ width: 50, height: 50, background: 'red' }} />
       <ControllableMenu open={!!query && enabled} items={items} menuState={menuState} />
     </FloatingWrapper>
   );

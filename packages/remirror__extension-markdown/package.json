@@ -36,20 +36,14 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.12.5",
+    "@remirror/core": "1.0.0-next.60",
     "@remirror/messages": "0.0.0",
+    "@remirror/pm": "1.0.0-next.60",
     "@types/marked": "^1.2.1",
     "@types/turndown": "^5.0.0",
     "marked": "^1.2.7",
     "turndown": "^7.0.0",
     "turndown-plugin-gfm": "^1.0.2"
-  },
-  "devDependencies": {
-    "@remirror/core": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60"
-  },
-  "peerDependencies": {
-    "@remirror/core": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60"
   },
   "publishConfig": {
     "access": "public"

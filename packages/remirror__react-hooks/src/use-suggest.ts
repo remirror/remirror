@@ -51,32 +51,29 @@ export function useSuggest(props: UseSuggesterProps): UseSuggestReturn {
   }));
 
   // Track changes in the suggester
-  const onChange: SuggestChangeHandler = useCallback(
-    (options) => {
-      const { changeReason, exitReason, match, query, text, range } = options;
-      const stateUpdate: Partial<UseSuggestState> = {};
+  const onChange: SuggestChangeHandler = useCallback((options) => {
+    const { changeReason, exitReason, match, query, text, range } = options;
+    const stateUpdate: Partial<UseSuggestState> = {};
 
-      // Keep track of changes
-      if (changeReason) {
-        stateUpdate.change = { match, query, text, range, reason: changeReason };
-        stateUpdate.shouldResetChangeState = false;
+    // Keep track of changes
+    if (changeReason) {
+      stateUpdate.change = { match, query, text, range, reason: changeReason };
+      stateUpdate.shouldResetChangeState = false;
+    }
+
+    if (exitReason) {
+      stateUpdate.exit = { match, query, text, range, reason: exitReason };
+      stateUpdate.shouldResetExitState = false;
+
+      if (!changeReason) {
+        stateUpdate.change = undefined;
       }
+    }
 
-      if (exitReason) {
-        stateUpdate.exit = { match, query, text, range, reason: exitReason };
-        stateUpdate.shouldResetExitState = false;
-
-        if (!changeReason) {
-          stateUpdate.change = undefined;
-        }
-      }
-
-      if (!isEmptyObject(stateUpdate)) {
-        setHookState((prevState) => ({ ...prevState, ...stateUpdate }));
-      }
-    },
-    [setHookState],
-  );
+    if (!isEmptyObject(stateUpdate)) {
+      setHookState((prevState) => ({ ...prevState, ...stateUpdate }));
+    }
+  }, []);
 
   // This change handler will be called on every editor state update. It keeps
   // the state for the suggester that has been added correct.
@@ -85,6 +82,8 @@ export function useSuggest(props: UseSuggesterProps): UseSuggestReturn {
       if (!hasStateChanged({ tr, state, previousState }) || helpers.getSuggestState().removed) {
         return;
       }
+
+      console.log(tr.steps);
 
       // Call the state function to update the state.
       setHookState((prevState) => {
@@ -110,20 +109,17 @@ export function useSuggest(props: UseSuggesterProps): UseSuggestReturn {
         return stateUpdate;
       });
     },
-    [helpers, setHookState],
+    [helpers],
   );
 
   // Attach the editor state handler to the instance of the remirror editor.
-  useExtension(PluginsExtension, ({ addHandler }) => addHandler('applyState', onApplyState), [
-    onApplyState,
-  ]);
+  useExtension(PluginsExtension, (p) => p.addHandler('applyState', onApplyState), [onApplyState]);
 
   // Add the suggester to the editor via the `useExtension` hook.
-  useExtension(
-    SuggestExtension,
-    ({ addCustomHandler }) => addCustomHandler('suggester', { ...props, onChange }),
-    [onChange, ...Object.values(props)],
-  );
+  useExtension(SuggestExtension, (p) => p.addCustomHandler('suggester', { ...props, onChange }), [
+    onChange,
+    ...Object.values(props),
+  ]);
 
   return useMemo(() => {
     return {

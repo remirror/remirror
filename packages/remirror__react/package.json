@@ -40,11 +40,13 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.12.5",
+    "@remirror/core": "1.0.0-next.60",
     "@remirror/extension-placeholder": "1.0.0-next.60",
     "@remirror/extension-positioner": "1.0.0-next.60",
     "@remirror/extension-react-component": "1.0.0-next.60",
     "@remirror/extension-react-ssr": "1.0.0-next.60",
     "@remirror/i18n": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60",
     "@remirror/preset-core": "1.0.0-next.60",
     "@remirror/preset-react": "1.0.0-next.60",
     "@remirror/react-utils": "1.0.0-next.60",
@@ -59,22 +61,12 @@
     "use-previous": "^1.1.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60",
-    "@testing-library/react": "^11.2.3",
-    "@testing-library/react-hooks": "^5.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "@types/react-test-renderer": "^17.0.0",
-    "@types/testing-library__react-hooks": "^3.4.1",
-    "jest-axe": "^4.1.0",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-test-renderer": "^17.0.1"
+    "react-dom": "^17.0.1"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60",
     "@types/react": "^16.14.0 || ^17",
     "@types/react-dom": "^16.9.0 || ^17",
     "react": "^16.14.0 || ^17",

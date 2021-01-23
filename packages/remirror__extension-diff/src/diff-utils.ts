@@ -92,8 +92,8 @@ export class TrackState {
     return new TrackState({
       blameMap: newBlame,
       commits: this.commits,
-      uncommittedSteps: this.uncommittedSteps.concat(inverted),
-      uncommittedMaps: this.uncommittedMaps.concat(transform.mapping.maps),
+      uncommittedSteps: [...this.uncommittedSteps, ...inverted],
+      uncommittedMaps: [...this.uncommittedMaps, ...transform.mapping.maps],
     });
   }
 
@@ -115,7 +115,7 @@ export class TrackState {
 
     return new TrackState({
       blameMap: this.blameMap,
-      commits: this.commits.concat(commit),
+      commits: [...this.commits, commit],
       uncommittedSteps: [],
       uncommittedMaps: [],
     });

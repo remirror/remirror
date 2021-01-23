@@ -675,6 +675,12 @@ export const DEFAULT_SUGGESTER: PickPartial<Suggester<any>> = {
 };
 
 /**
+ * This can be added to the meta data of an update to let the suggestion plugin
+ * know that it should ignore the update.
+ */
+export const IGNORE_SUGGEST_META_KEY = '__ignore_prosemirror_suggest_update__';
+
+/**
  * Takes the passed through `suggester` and adds all the missing default values.
  */
 export function getSuggesterWithDefaults<Schema extends EditorSchema = EditorSchema>(

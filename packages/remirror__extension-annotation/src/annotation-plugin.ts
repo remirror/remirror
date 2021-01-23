@@ -55,7 +55,7 @@ export class AnnotationState<Type extends Annotation = Annotation> {
         from: addAction.from,
         to: addAction.to,
       } as OmitText<Type>;
-      newAnnotations = this.annotations.concat(newAnnotation);
+      newAnnotations = [...this.annotations, newAnnotation];
     }
 
     if (actionType === ActionType.UPDATE_ANNOTATION) {

@@ -38,20 +38,14 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.12.5",
+    "@remirror/core": "1.0.0-next.60",
     "@remirror/extension-doc": "1.0.0-next.60",
     "@remirror/extension-events": "1.0.0-next.60",
     "@remirror/extension-gap-cursor": "1.0.0-next.60",
     "@remirror/extension-history": "1.0.0-next.60",
     "@remirror/extension-paragraph": "1.0.0-next.60",
     "@remirror/extension-positioner": "1.0.0-next.60",
-    "@remirror/extension-text": "1.0.0-next.60"
-  },
-  "devDependencies": {
-    "@remirror/core": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60"
-  },
-  "peerDependencies": {
-    "@remirror/core": "1.0.0-next.60",
+    "@remirror/extension-text": "1.0.0-next.60",
     "@remirror/pm": "1.0.0-next.60"
   },
   "publishConfig": {

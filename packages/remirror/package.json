@@ -15,7 +15,8 @@
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror",
   "license": "MIT",
   "contributors": [
-    "Ifiok Jr. <ifiokotung@gmail.com>"
+    "Ifiok Jr. <ifiokotung@gmail.com>",
+    "ocavue "
   ],
   "sideEffects": false,
   "exports": {
@@ -160,7 +161,7 @@
     "prettier": "^2.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "refractor": "^3.3.0",
+    "refractor": "^3.3.1",
     "yjs": "^13.4.12"
   },
   "peerDependencies": {
@@ -214,82 +215,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "@remirror": {
-    "_tsconfigs": {
-      "dom": {
-        "compilerOptions": {
-          "declaration": true,
-          "noEmit": false,
-          "composite": true,
-          "emitDeclarationOnly": true,
-          "outDir": "dist/types"
-        },
-        "include": [
-          "./"
-        ]
-      },
-      "extensions": {
-        "compilerOptions": {
-          "declaration": true,
-          "noEmit": false,
-          "composite": true,
-          "emitDeclarationOnly": true,
-          "outDir": "dist/types"
-        },
-        "include": [
-          "./"
-        ]
-      },
-      "icons": {
-        "compilerOptions": {
-          "declaration": true,
-          "noEmit": false,
-          "composite": true,
-          "emitDeclarationOnly": true,
-          "outDir": "dist/types"
-        },
-        "include": [
-          "./"
-        ]
-      },
-      "index": {
-        "compilerOptions": {
-          "declaration": true,
-          "noEmit": false,
-          "composite": true,
-          "emitDeclarationOnly": true,
-          "outDir": "dist/types"
-        },
-        "include": [
-          "./"
-        ]
-      },
-      "playground": {
-        "compilerOptions": {
-          "declaration": true,
-          "noEmit": false,
-          "composite": true,
-          "emitDeclarationOnly": true,
-          "outDir": "dist/types"
-        },
-        "include": [
-          "./"
-        ]
-      },
-      "react": {
-        "compilerOptions": {
-          "declaration": true,
-          "noEmit": false,
-          "composite": true,
-          "emitDeclarationOnly": true,
-          "outDir": "dist/types"
-        },
-        "include": [
-          "./"
-        ]
-      }
-    }
-  },
+  "@remirror": {},
   "preconstruct": {
     "entrypoints": [
       "dom.ts",

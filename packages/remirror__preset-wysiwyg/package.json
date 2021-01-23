@@ -37,6 +37,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.12.5",
+    "@remirror/core": "1.0.0-next.60",
     "@remirror/extension-bidi": "1.0.0-next.60",
     "@remirror/extension-blockquote": "1.0.0-next.60",
     "@remirror/extension-bold": "1.0.0-next.60",
@@ -57,15 +58,8 @@
     "@remirror/extension-tables": "1.0.0-next.60",
     "@remirror/extension-trailing-node": "1.0.0-next.60",
     "@remirror/extension-underline": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60",
     "@remirror/preset-core": "1.0.0-next.60"
-  },
-  "devDependencies": {
-    "@remirror/core": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60"
-  },
-  "peerDependencies": {
-    "@remirror/core": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60"
   },
   "publishConfig": {
     "access": "public"
