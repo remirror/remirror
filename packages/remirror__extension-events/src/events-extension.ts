@@ -2,6 +2,7 @@ import {
   CreateExtensionPlugin,
   EditorState,
   EditorStateProps,
+  EditorView,
   EditorViewProps,
   entries,
   ErrorConstant,
@@ -20,8 +21,11 @@ import {
   NodeWithPosition,
   noop,
   PlainExtension,
+  range,
   ResolvedPos,
 } from '@remirror/core';
+
+import { getPositionFromEvent } from './events-utils';
 
 export interface EventsOptions {
   /**
@@ -85,6 +89,18 @@ export interface EventsOptions {
    * only capturing clicks for marks.
    */
   clickMark?: Handler<ClickMarkHandler>;
+
+  /**
+   * Listen for contextmenu events and pass through props which detail the
+   * direct node and parent nodes which were activated.
+   */
+  contextmenu?: Handler<(props: MouseEventHandlerProps) => boolean | undefined | void>;
+
+  /**
+   * Listen for hover events and pass through details of every node and mark
+   * which was hovered at the current position.
+   */
+  hover?: Handler<(props: HoverEventHandlerProps) => boolean | undefined | void>;
 }
 
 /**
@@ -101,6 +117,7 @@ export interface EventsOptions {
     'mouseleave',
     'click',
     'clickMark',
+    'contextmenu',
   ],
   handlerKeyOptions: {
     blur: { earlyReturnValue: true },
@@ -132,10 +149,15 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
    * a click handler to the node or mark.
    */
   onView(): void {
+    if (
+      // managerSettings excluded this from running
+      this.store.managerSettings.exclude?.clickHandler
+    ) {
+      return;
+    }
+
     for (const extension of this.store.extensions) {
       if (
-        // managerSettings excluded this from running
-        this.store.managerSettings.exclude?.clickHandler ||
         // Method doesn't exist
         !extension.createEventHandlers ||
         // Extension settings exclude it
@@ -223,25 +245,42 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
           focus: (_, event) => {
             return this.options.focus(event) || false;
           },
+
           blur: (_, event) => {
             return this.options.blur(event) || false;
           },
+
           mousedown: (_, event) => {
             this.startMouseover();
             return this.options.mousedown(event) || false;
           },
+
           mouseup: (_, event) => {
             this.endMouseover();
             return this.options.mouseup(event) || false;
           },
+
           mouseleave: (_, event) => {
             this.mouseover = false;
             return this.options.mouseleave(event) || false;
           },
+
           mouseenter: (_, event) => {
             this.mouseover = true;
             return this.options.mouseenter(event) || false;
           },
+
+          mouseout: this.createMouseEventHandler(
+            (props) => this.options.hover({ ...props, hovering: false }) || false,
+          ),
+
+          mouseover: this.createMouseEventHandler(
+            (props) => this.options.hover({ ...props, hovering: true }) || false,
+          ),
+
+          contextmenu: this.createMouseEventHandler(
+            (props) => this.options.contextmenu(props) || false,
+          ),
         },
       },
     };
@@ -281,6 +320,92 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
     this.mousedown = false;
     this.store.commands.emptyUpdate();
   }
+
+  private readonly createMouseEventHandler = (fn: (props: MouseEventHandlerProps) => boolean) => {
+    return (view: EditorView, event: MouseEvent) => {
+      const eventPosition = getPositionFromEvent(view, event);
+
+      if (!eventPosition) {
+        return false;
+      }
+
+      // The nodes that are captured by the context menu. An empty array
+      // means the contextmenu was trigger outside the content. The first
+      // node is always the direct match.
+      const nodes: NodeWithPosition[] = [];
+
+      // The marks wrapping the captured position.
+      const marks: GetMarkRange[] = [];
+
+      const { pos, inside } = eventPosition;
+
+      // Retrieve the resolved position from the current state.
+      const $pos = view.state.doc.resolve(pos);
+
+      // The depth of the current node (which is a direct match)
+      const currentNodeDepth = $pos.depth + 1;
+
+      // This handle the case when the context menu click has no corresponding
+      // nodes or marks because it's outside of any editor content.
+      if (inside > -1) {
+        // Populate the nodes.
+        for (const index of range(currentNodeDepth, 1)) {
+          nodes.push({
+            node: index > $pos.depth && $pos.nodeAfter ? $pos.nodeAfter : $pos.node(index),
+            pos: $pos.before(index),
+          });
+        }
+
+        // Populate the marks.
+        for (const { type } of $pos.marks()) {
+          const range = getMarkRange($pos, type);
+
+          if (range) {
+            marks.push(range);
+          }
+        }
+      }
+
+      const isCaptured = fn({
+        event,
+        view,
+        nodes,
+        marks,
+        getMark: (markType) => {
+          const type = isString(markType) ? view.state.schema.marks[markType] : markType;
+
+          invariant(type, {
+            code: ErrorConstant.EXTENSION,
+            message: `The mark ${markType} being checked does not exist within the editor schema.`,
+          });
+
+          return marks.find((range) => range.mark.type === type);
+        },
+        getNode: (nodeType) => {
+          const type = isString(nodeType) ? view.state.schema.nodes[nodeType] : nodeType;
+
+          invariant(type, {
+            code: ErrorConstant.EXTENSION,
+            message: 'The node being checked does not exist',
+          });
+
+          const nodeWithPos = nodes.find(({ node }) => node.type === type);
+
+          if (!nodeWithPos) {
+            return;
+          }
+
+          return { ...nodeWithPos, isRoot: !!nodes[0]?.node.eq(nodeWithPos.node) };
+        },
+      });
+
+      if (isCaptured) {
+        event.preventDefault();
+      }
+
+      return isCaptured;
+    };
+  };
 }
 
 interface CreateClickMarkStateProps extends BaseEventState {
@@ -396,6 +521,54 @@ interface BaseEventState extends EditorViewProps, EditorStateProps {
    * The editor state before updates from the event.
    */
   state: EditorState;
+}
+
+export interface HoverEventHandlerProps extends MouseEventHandlerProps {
+  /**
+   * This is true when hovering has started and false when hovering has ended.
+   */
+  hovering: boolean;
+}
+
+export interface MouseEventHandlerProps {
+  /**
+   * The editor view.
+   */
+  view: EditorView;
+
+  /**
+   * The marks that currently wrap the context menu.
+   */
+  marks: GetMarkRange[];
+
+  /**
+   * An array of nodes with their positions. The first node is the node that was
+   * acted on directly, and each node after is the parent of the one proceeding.
+   * Consumers of this API can check if a node of a specific type was triggered
+   * to determine how to render their context menu.
+   */
+  nodes: NodeWithPosition[];
+
+  /**
+   * The event that triggered this.
+   */
+  event: MouseEvent;
+
+  /**
+   * Return the mark range if it exists for the clicked position.
+   *
+   *
+   */
+  getMark: (markType: string | MarkType) => GetMarkRange | undefined | void;
+
+  /**
+   * Returns undefined when the nodeType doesn't match. Otherwise returns the
+   * node with a position property and `isRoot` which is true when the node was
+   * clicked on directly.
+   */
+  getNode: (
+    nodeType: string | NodeType,
+  ) => (NodeWithPosition & { isRoot: boolean }) | undefined | void;
 }
 
 declare global {

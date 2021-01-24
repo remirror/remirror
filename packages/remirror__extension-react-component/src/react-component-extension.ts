@@ -89,7 +89,7 @@ export class ReactComponentExtension extends PlainExtension<ReactComponentOption
 
   /**
    * Add the portal container to the manager store. This can be used by the
-   * `ReactEditor` to manage the portals.
+   * `<Remirror />` component to manage portals for node content.
    */
   onCreate(): void {
     this.store.setStoreKey('portalContainer', this.portalContainer);

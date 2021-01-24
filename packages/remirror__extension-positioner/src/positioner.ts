@@ -11,7 +11,7 @@ import {
 /**
  * The events that can trigger a positioner update.
  */
-export type PositionerUpdateEvent = 'scroll' | 'state';
+export type PositionerUpdateEvent = 'scroll' | 'state' | 'hover' | 'context-menu';
 
 export interface Rect {
   /**

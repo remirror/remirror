@@ -14,17 +14,16 @@ Progress slowed because I was scared of introducing breaking changes. It has bec
 
 Here's what's changing in the upcoming beta release.
 
-- Todo list support
-- Markdown support
-- Experimental svelte support
-- Experimental react native support
-- Better testing with `jest-runner-browser`
+- [ ] Todo list support
+- [x] Markdown support
+- ~Experimental svelte support~
+- ~Experimental react native support~
 
 - Remove `Presets` completely from the library. In their place a function that returns a list of `Extension`s. They were clunky, difficult to use and provided little to no value. The change reduces the bundle size quite significantly.
 - `remirror` includes all the core imports from the library as well as extensions and presets. It doesn't include framework specific exports.
-- `remirror/react` now includes all the react exports from `remirror/react-hooks`, `remirror/react-utils`, `remirror/preset-react`.
+- `remirror/react` has been removed and instead you should install `@remirror/react` which includes all the react exports from all the react libraries.
 - `remirror/extensions` now includes all the presets and extension libraries.
-- Remove `@remirror/showcase`
+- Remove `@remirror/showcase` - examples have been provided on how to achieve the same effect.
 - Remove `@remirror/react-social`
 - Remove `@remirror/react-wysiwyg`
 - Rename `useRemirror` -> `useRemirrorContext`
@@ -32,18 +31,18 @@ Here's what's changing in the upcoming beta release.
 - Rename `preset-table` to `extension-tables`
 - Rename `preset-list` to `extension-lists`. `ListPreset` is now `BulletListExtension` and `OrderListExtension`.
 - Create decorations extension
-- Add markdown support via markdown extension
-- Add media extension and media placeholder extension
-- Add support for media placeholder
-- Support handlers used as reducers
-- Deprecate `tags` property on extension and use the `createTags` which is a method instead.
+- Add full markdown support via `@remirror/extension-markdown`
+
+- Create new decorator pattern for adding commands, helper functions and keyBindings. This opens up the door to
+
+- Deprecate `tags` property on extension and encourage the use of `createTags` which is a method instead.
 - Add `onApplyState` and `onInitState` lifecycle methods.
 - Add `onApplyTransaction` method.
 - Rename interface `CreatePluginReturn` to `CreateExtensionPlugin`.
 - Rewrite the `DropCursor` to support animations and interactions with media.
 - Support updating the doc attributes.
+- Deprecate top level context methods `focus` and `blur`. They should now be consumed as commands
 - Remove package `@remirror/extension-auto-link`.
-- `focus` and `blur` are now commands.
 
 ### `ExtensionStore`
 

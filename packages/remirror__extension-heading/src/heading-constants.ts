@@ -1,14 +1,13 @@
 import { CoreIcon, NamedShortcut } from '@remirror/core';
 import { ExtensionHeadingMessages } from '@remirror/messages';
 
-const { DESCRIPTION, LABEL } = ExtensionHeadingMessages;
+const { LABEL } = ExtensionHeadingMessages;
 
 /**
  * Command options for the heading.
  */
 export const toggleHeadingOptions: Remirror.CommandDecoratorOptions = {
   icon: ({ attrs }) => `h${attrs?.level ?? '1'}` as CoreIcon,
-  description: ({ t, attrs }) => t(DESCRIPTION, { level: attrs?.level }),
   label: ({ t, attrs }) => t(LABEL, { level: attrs?.level }),
 };
 

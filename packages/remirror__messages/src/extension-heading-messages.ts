@@ -12,15 +12,3 @@ export const LABEL = defineMessage({
                             6 {Heading 6}
                             other {Heading}}`,
 });
-
-export const DESCRIPTION = defineMessage({
-  id: 'extension.command.toggle-heading.description',
-  comment: 'Description of the heading command with support for levels.',
-  message: `{level, select, 1 {Emphasize the current block as a heading of priority level 1}
-                            2 {Emphasize the current block as a heading of priority level 2}
-                            3 {Emphasize the current block as a heading of priority level 3}
-                            4 {Emphasize the current block as a heading of priority level 4}
-                            5 {Emphasize the current block as a heading of priority level 5}
-                            6 {Emphasize the current block as a heading of priority level 6}
-                            other {Emphasize the current block as a heading}}`,
-});
