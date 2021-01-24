@@ -1,4 +1,5 @@
 import { createNanoEvents, Unsubscribe } from 'nanoevents';
+import type { Except } from 'type-fest';
 import {
   EditorState,
   EditorViewProps,
@@ -7,11 +8,12 @@ import {
   isFunction,
   StateUpdateLifecycleProps,
 } from '@remirror/core';
+import type { HoverEventHandlerProps, MouseEventHandlerProps } from '@remirror/extension-events';
 
 /**
  * The events that can trigger a positioner update.
  */
-export type PositionerUpdateEvent = 'scroll' | 'state' | 'hover' | 'context-menu';
+export type PositionerUpdateEvent = 'scroll' | 'state' | 'hover' | 'contextmenu';
 
 export interface Rect {
   /**
@@ -139,9 +141,23 @@ export interface BasePositionerProps extends Omit<StateUpdateLifecycleProps, 'pr
   event: PositionerUpdateEvent;
 
   /**
-   * The scroll position.
+   * The scroll event information.
    */
-  scrollTop: number;
+  scroll?: {
+    scrollTop: number;
+  };
+
+  /**
+   * The hover event information. This is only present when the update was
+   * triggered by a hover event.
+   */
+  hover?: Except<HoverEventHandlerProps, 'view'>;
+
+  /**
+   * The contextmenu event information. This is only present when the update was
+   * triggered by a contextmenu event.
+   */
+  contextmenu?: Except<MouseEventHandlerProps, 'view'>;
 }
 
 export interface ElementsAddedProps {

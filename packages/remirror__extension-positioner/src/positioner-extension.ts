@@ -1,6 +1,5 @@
 import {
   AddCustomHandler,
-  CreateExtensionPlugin,
   CustomHandler,
   debounce,
   EditorState,
@@ -14,6 +13,7 @@ import {
   StateUpdateLifecycleProps,
   Static,
 } from '@remirror/core';
+import type { CreateEventHandlers } from '@remirror/extension-events';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
 import { ExtensionPositionerTheme } from '@remirror/theme';
 
@@ -49,11 +49,6 @@ export interface PositionerOptions {
    * @default 100
    */
   scrollDebounce?: Static<number>;
-}
-
-interface TriggerUpdateProps {
-  event: PositionerUpdateEvent;
-  firstUpdate: boolean;
 }
 
 /**
@@ -107,33 +102,20 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
     this.onScroll = debounce(this.options.scrollDebounce, this.onScroll.bind(this));
   }
 
-  private getProps({ event, firstUpdate }: TriggerUpdateProps) {
-    const state = this.store.getState();
-    const previousState = this.store.previousState ?? state;
-
+  createEventHandlers(): CreateEventHandlers {
     return {
-      event,
-      firstUpdate,
-      previousState,
-      state,
-      scrollTop: this.store.view.dom.scrollTop,
-    };
-  }
+      scroll: () => {
+        this.onScroll();
+        return false;
+      },
+      hover: (hover) => {
+        this.positioner(this.getBaseProps('hover', { hover }));
 
-  private onScroll(): void {
-    const props = this.getProps({ event: 'scroll', firstUpdate: false });
-    this.positioner(props);
-  }
-
-  createPlugin(): CreateExtensionPlugin {
-    return {
-      props: {
-        handleDOMEvents: {
-          scroll: () => {
-            this.onScroll();
-            return false;
-          },
-        },
+        return false;
+      },
+      contextmenu: (contextmenu) => {
+        this.positioner(this.getBaseProps('contextmenu', { contextmenu }));
+        return false;
       },
     };
   }
@@ -143,7 +125,6 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
       ...update,
       previousState: update.firstUpdate ? undefined : update.previousState,
       event: 'state',
-      scrollTop: this.store.view.dom.scrollTop,
     });
   }
 
@@ -205,6 +186,30 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
       this.triggerPositioner(positioner, update);
     }
   }
+
+  private getBaseProps(
+    event: PositionerUpdateEvent,
+    extra: Partial<BasePositionerProps>,
+  ): BasePositionerProps {
+    const state = this.store.getState();
+    const previousState = this.store.previousState;
+
+    return {
+      event,
+      firstUpdate: false,
+      previousState,
+      state,
+      ...extra,
+    };
+  }
+
+  private onScroll(): void {
+    this.positioner(
+      this.getBaseProps('scroll', {
+        scroll: { scrollTop: this.store.view.dom.scrollTop },
+      }),
+    );
+  }
 }
 
 export interface PositionerHandler {
@@ -240,10 +245,12 @@ export const positioners = {
    * Creates a position which wraps the entire selected block node. This is only active when the block node is empty.
    */
   emptyBlock: emptyBlockNodePositioner,
+
   /**
    * Creates a position which wraps the entire selected block node. This is only active when the block node is empty.
    */
   emptyBlockStart: emptyBlockNodeStartPositioner,
+
   /**
    * Creates a position which wraps the entire selected block node. This is only active when the block node is empty.
    */

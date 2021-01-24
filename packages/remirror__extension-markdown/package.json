@@ -49,6 +49,6 @@
     "access": "public"
   },
   "@remirror": {
-    "sizeLimit": "5 KB"
+    "sizeLimit": "20 KB"
   }
 }

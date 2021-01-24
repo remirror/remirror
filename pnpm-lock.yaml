@@ -1478,17 +1478,21 @@ importers:
     dependencies:
       '@babel/runtime': 7.12.5
       '@remirror/core': link:../remirror__core
+      '@remirror/extension-events': link:../remirror__extension-events
       '@remirror/messages': link:../remirror__messages
       '@remirror/pm': link:../remirror__pm
       '@remirror/theme': link:../remirror__theme
       nanoevents: 5.1.10
+      type-fest: 0.20.2
     specifiers:
       '@babel/runtime': ^7.12.5
       '@remirror/core': 1.0.0-next.60
+      '@remirror/extension-events': 1.0.0-next.60
       '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
       '@remirror/theme': 1.0.0-next.60
       nanoevents: ^5.1.10
+      type-fest: ^0.20.2
   packages/remirror__extension-react-component:
     dependencies:
       '@babel/runtime': 7.12.5
@@ -7092,7 +7096,7 @@ packages:
       integrity: sha512-ueS17mXoVgkWhsA1g2KRmD3syHWVtRmp7hvnuSWzZnsoEa7LgLT19DTEhC5N/JuzbDJf80Fw663zgO+usTixhw==
   /@size-limit/time/4.9.1_size-limit@4.9.1:
     dependencies:
-      estimo: 2.2.2
+      estimo: 2.2.3
       react: 17.0.1
       size-limit: 4.9.1
     dev: false
@@ -10695,7 +10699,7 @@ packages:
   /browserslist/4.10.0:
     dependencies:
       caniuse-lite: 1.0.30001179
-      electron-to-chromium: 1.3.643
+      electron-to-chromium: 1.3.644
       node-releases: 1.1.70
       pkg-up: 3.1.0
     hasBin: true
@@ -10704,7 +10708,7 @@ packages:
   /browserslist/4.14.6:
     dependencies:
       caniuse-lite: 1.0.30001179
-      electron-to-chromium: 1.3.643
+      electron-to-chromium: 1.3.644
       escalade: 3.1.1
       node-releases: 1.1.70
     engines:
@@ -10716,7 +10720,7 @@ packages:
     dependencies:
       caniuse-lite: 1.0.30001179
       colorette: 1.2.1
-      electron-to-chromium: 1.3.643
+      electron-to-chromium: 1.3.644
       escalade: 3.1.1
       node-releases: 1.1.70
     engines:
@@ -12195,7 +12199,7 @@ packages:
       cssesc: 3.0.0
       icss-utils: 4.1.1
       loader-utils: 2.0.0
-      postcss: 7.0.35
+      postcss: 7.0.32
       postcss-modules-extract-imports: 2.0.0
       postcss-modules-local-by-default: 3.0.3
       postcss-modules-scope: 2.2.0
@@ -12434,14 +12438,14 @@ packages:
   /cssnano-preset-simple/1.2.1:
     dependencies:
       caniuse-lite: 1.0.30001179
-      postcss: 7.0.35
+      postcss: 7.0.32
     dev: false
     resolution:
       integrity: sha512-B2KahOIFTV6dw5Ioy9jHshTh/vAYNnUB2enyWRgnAEg3oJBjI/035ExpePaMqS2SwpbH7gCgvQqwpMBH6hTJSw==
   /cssnano-simple/1.2.1:
     dependencies:
       cssnano-preset-simple: 1.2.1
-      postcss: 7.0.35
+      postcss: 7.0.32
     dev: false
     resolution:
       integrity: sha512-9vOyjw8Dj/T12kIOnXPZ5VnEIo6F3YMaIn0wqJXmn277R58cWpI3AvtdlCBtohX7VAUNYcyk2d0dKcXXkb5I6Q==
@@ -13370,9 +13374,9 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-dldq3ZfFtgVTJMLjOe+/3sROTzALlL9E34V4/sDtUd/KlBSS0s6U1/+WPE1B4sj9CXHJpL1M6rhNJnc9Wbal9w==
-  /electron-to-chromium/1.3.643:
+  /electron-to-chromium/1.3.644:
     resolution:
-      integrity: sha512-TGomM4gj8adt/uqRgPbu9F0yhUVAR1deww5X0fvbQgpGr9suSMjLgc4IwQ9YKGkp1t03cDbZum20OfAkiTYjAg==
+      integrity: sha512-N7FLvjDPADxad+OXXBuYfcvDvCBG0aW8ZZGr7G91sZMviYbnQJFxdSvUus4SJ0K7Q8dzMxE+Wx1d/CrJIIJ0sw==
   /element-resize-detector/1.2.1:
     dependencies:
       batch-processor: 1.0.0
@@ -14181,19 +14185,19 @@ packages:
       node: '>=4.0'
     resolution:
       integrity: sha512-KmfKL3b6G+RXvP8N1vr3Tq1kL/oCFgn2NYXEtqP8/L3pKapUA4G8cFVaoF3SU323CD4XypR/ffioHmkti6/Tag==
-  /estimo/2.2.2:
+  /estimo/2.2.3:
     dependencies:
       nanoid: 3.1.20
       puppeteer-core: 5.5.0
       tracium: 0.2.1
-      yargs: 15.4.1
+      yargs: 16.2.0
     dev: false
     engines:
       node: '>=10'
     hasBin: true
     requiresBuild: true
     resolution:
-      integrity: sha512-08KMAaY8mOld50/qqAP4+Zpd8GuPgBxxaEHLF9JWHjiGzSEVWnO8/t5e6lhfYodii8DPvSxRnOZcOYk/kxXrEA==
+      integrity: sha512-x/paClJMxq/tlyR+AOLG824LW24peU4FchHq8s9K8nrwlfuAIBAdtw0Hkr/DCdsVXkGu+fo6WAJsMrGCl8LySg==
   /estraverse/1.5.1:
     dev: false
     engines:
@@ -18573,7 +18577,6 @@ packages:
     resolution:
       integrity: sha512-hk/69oAeaIzchq/v3lS50PXuzn5O2ynldopMC+SWBql7J2WtdptfB9dy8Y7+Og5rPkTCpn83zTiO8FMcqlXJ/g==
   /jsondiffpatch/0.4.1:
-    bundledDependencies: []
     dependencies:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
@@ -22619,7 +22622,7 @@ packages:
       integrity: sha1-thTJcgvmgW6u41+zpfqh26agXds=
   /postcss-modules-extract-imports/2.0.0:
     dependencies:
-      postcss: 7.0.35
+      postcss: 7.0.32
     engines:
       node: '>= 6'
     resolution:
@@ -22644,7 +22647,7 @@ packages:
   /postcss-modules-local-by-default/3.0.3:
     dependencies:
       icss-utils: 4.1.1
-      postcss: 7.0.35
+      postcss: 7.0.32
       postcss-selector-parser: 6.0.4
       postcss-value-parser: 4.1.0
     engines:
@@ -22673,7 +22676,7 @@ packages:
       integrity: sha1-1upkmUx5+XtipytCb75gVqGUu5A=
   /postcss-modules-scope/2.2.0:
     dependencies:
-      postcss: 7.0.35
+      postcss: 7.0.32
       postcss-selector-parser: 6.0.4
     engines:
       node: '>= 6'
@@ -22700,7 +22703,7 @@ packages:
   /postcss-modules-values/3.0.0:
     dependencies:
       icss-utils: 4.1.1
-      postcss: 7.0.35
+      postcss: 7.0.32
     resolution:
       integrity: sha512-1//E5jCBrZ9DmRX+zCtmQtRSV6PV42Ix7Bzj9GbwJceduuf7IqP8MgeTXuRDHOWj2m0VzZD5+roFWDuU8RQjcg==
   /postcss-modules-values/4.0.0_postcss@8.2.4:
@@ -22932,7 +22935,7 @@ packages:
       integrity: sha512-2T5hcEHArDT6X9+9dVSPQdo7QHzG4XKclFT8rU5TzJPDN7RIRTbO9c4drUISOVemLj03aezStHCR2AIcr8XLpw==
   /postcss-safe-parser/4.0.2:
     dependencies:
-      postcss: 7.0.35
+      postcss: 7.0.32
     dev: false
     engines:
       node: '>=6.0.0'
@@ -23080,7 +23083,6 @@ packages:
       chalk: 2.4.2
       source-map: 0.6.1
       supports-color: 6.1.0
-    dev: false
     engines:
       node: '>=6.0.0'
     resolution:

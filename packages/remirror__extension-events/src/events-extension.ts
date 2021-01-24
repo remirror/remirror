@@ -43,6 +43,13 @@ export interface EventsOptions {
   focus?: Handler<(event: FocusEvent) => boolean | undefined | void>;
 
   /**
+   * Listens to scroll events on the editor.
+   *
+   * Return `true` to prevent any other prosemirror listeners from firing.
+   */
+  scroll?: Handler<(event: Event) => boolean | undefined | void>;
+
+  /**
    * Listens for mousedown events on the editor.
    *
    * Return `true` to prevent any other prosemirror listeners from firing.
@@ -118,6 +125,8 @@ export interface EventsOptions {
     'click',
     'clickMark',
     'contextmenu',
+    'hover',
+    'scroll',
   ],
   handlerKeyOptions: {
     blur: { earlyReturnValue: true },
@@ -126,6 +135,9 @@ export interface EventsOptions {
     mouseleave: { earlyReturnValue: true },
     mouseup: { earlyReturnValue: true },
     click: { earlyReturnValue: true },
+    hover: { earlyReturnValue: true },
+    contextmenu: { earlyReturnValue: true },
+    scroll: { earlyReturnValue: true },
   },
   defaultPriority: ExtensionPriority.Low,
 })
@@ -281,6 +293,10 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
           contextmenu: this.createMouseEventHandler(
             (props) => this.options.contextmenu(props) || false,
           ),
+
+          scroll: (_, event) => {
+            return this.options.scroll(event) || false;
+          },
         },
       },
     };

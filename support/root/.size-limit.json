@@ -9,7 +9,7 @@
   },
   {
     "name": "create-context-state",
-    "limit": "1 KB",
+    "limit": "2 KB",
     "path": "packages/create-context-state/dist/create-context-state.browser.esm.js",
     "ignore": ["@types/react", "react"],
     "running": false,
@@ -390,7 +390,7 @@
   },
   {
     "name": "@remirror/extension-markdown",
-    "limit": "5 KB",
+    "limit": "20 KB",
     "path": "packages/remirror__extension-markdown/dist/remirror-extension-markdown.browser.esm.js",
     "ignore": ["@remirror/core", "@remirror/messages", "@remirror/pm"],
     "running": false,
@@ -466,7 +466,13 @@
     "name": "@remirror/extension-positioner",
     "limit": "5 KB",
     "path": "packages/remirror__extension-positioner/dist/remirror-extension-positioner.browser.esm.js",
-    "ignore": ["@remirror/core", "@remirror/messages", "@remirror/pm", "@remirror/theme"],
+    "ignore": [
+      "@remirror/core",
+      "@remirror/extension-events",
+      "@remirror/messages",
+      "@remirror/pm",
+      "@remirror/theme"
+    ],
     "running": false,
     "gzip": true
   },
@@ -789,7 +795,7 @@
   },
   {
     "name": "@remirror/theme",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__theme/dist/remirror-theme.browser.esm.js",
     "ignore": ["@remirror/core-types"],
     "running": false,
