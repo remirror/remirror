@@ -255,11 +255,7 @@ export const FloatingBlockNodeEditor = () => {
 
 export const ActionsEditor = () => {
   const { manager, state } = useRemirror({
-    extensions: () => [
-      ...corePreset(),
-      ...wysiwygPreset({ autoUpdate: false }),
-      new ColumnsExtension(),
-    ],
+    extensions: () => [...corePreset(), ...wysiwygPreset(), new ColumnsExtension()],
     selection: 'end',
     stringHandler: 'html',
   });

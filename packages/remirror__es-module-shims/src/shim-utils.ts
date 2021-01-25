@@ -57,25 +57,29 @@ if (!baseUrl && typeof location !== 'undefined') {
 }
 
 const backslashRegEx = /\\/g;
-export function resolveIfNotPlainOrUrl(relUrl: string, parentUrl?: string): string | undefined {
+export function resolveIfNotPlainOrUrl(
+  relativeUrl: string,
+  parentUrl?: string,
+): string | undefined {
   // strip off any trailing query params or hashes
   parentUrl = parentUrl?.split('#')[0]?.split('?')[0];
 
-  if (relUrl.includes('\\')) {
-    relUrl = relUrl.replace(backslashRegEx, '/');
+  if (relativeUrl.includes('\\')) {
+    relativeUrl = relativeUrl.replace(backslashRegEx, '/');
   }
 
   // protocol-relative
-  if (relUrl[0] === '/' && relUrl[1] === '/') {
-    return parentUrl?.slice(0, parentUrl.indexOf(':') + 1) + relUrl;
+  if (relativeUrl[0] === '/' && relativeUrl[1] === '/') {
+    return `${parentUrl?.slice(0, parentUrl.indexOf(':') + 1)}${relativeUrl}`;
   }
   // relative-url
   else if (
-    (relUrl[0] === '.' &&
-      (relUrl[1] === '/' ||
-        (relUrl[1] === '.' && (relUrl[2] === '/' || (relUrl.length === 2 && (relUrl += '/')))) ||
-        (relUrl.length === 1 && (relUrl += '/')))) ||
-    relUrl[0] === '/'
+    (relativeUrl[0] === '.' &&
+      (relativeUrl[1] === '/' ||
+        (relativeUrl[1] === '.' &&
+          (relativeUrl[2] === '/' || (relativeUrl.length === 2 && (relativeUrl += '/')))) ||
+        (relativeUrl.length === 1 && (relativeUrl += '/')))) ||
+    relativeUrl[0] === '/'
   ) {
     const parentProtocol = parentUrl?.slice(0, parentUrl.indexOf(':') + 1) ?? '';
     // Disabled, but these cases will give inconsistent results for deep backtracking
@@ -101,14 +105,14 @@ export function resolveIfNotPlainOrUrl(relUrl: string, parentUrl?: string): stri
         ) ?? '';
     }
 
-    if (relUrl[0] === '/') {
-      return parentUrl?.slice(0, parentUrl.length - pathname?.length - 1) + relUrl;
+    if (relativeUrl[0] === '/') {
+      return parentUrl?.slice(0, parentUrl.length - pathname?.length - 1) + relativeUrl;
     }
 
     // join together and split for removal of .. and . segments
     // looping the string instead of anything fancy for perf reasons
     // '../../../../../z' resolved to 'x/y' is just 'z'
-    const segmented = pathname.slice(0, pathname.lastIndexOf('/') + 1) + relUrl;
+    const segmented = pathname.slice(0, pathname.lastIndexOf('/') + 1) + relativeUrl;
 
     const output = [];
     let segmentIndex = -1;
@@ -148,7 +152,7 @@ export function resolveIfNotPlainOrUrl(relUrl: string, parentUrl?: string): stri
       output.push(segmented.slice(segmentIndex));
     }
 
-    return parentUrl?.slice(0, parentUrl.length - pathname.length) + output.join('');
+    return `${parentUrl?.slice(0, parentUrl.length - pathname.length)}${output.join('')}`;
   }
 
   return;

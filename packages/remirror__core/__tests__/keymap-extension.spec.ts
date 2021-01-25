@@ -1,6 +1,7 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-import { CodeExtension } from 'remirror/extensions';
-import { ExtensionPriority } from '@remirror/core-constants';
+import { ExtensionPriority } from 'remirror';
+import { CodeExtension, HeadingExtension } from 'remirror/extensions';
+import { TextSelection } from '@remirror/pm/state';
 
 import { KeymapExtension } from '../';
 
@@ -69,9 +70,9 @@ test('it supports updating options at runtime', () => {
     });
 });
 
-describe('exitMark', () => {
-  const editor = renderEditor([new CodeExtension()], {});
-  const { p, doc } = editor.nodes;
+describe('arrow key exits', () => {
+  const editor = renderEditor([new CodeExtension(), new HeadingExtension()], {});
+  const { p, doc, heading } = editor.nodes;
   const { code } = editor.marks;
 
   // Simulate key presses for a real browser.
@@ -79,11 +80,11 @@ describe('exitMark', () => {
     ExtensionPriority.Lowest,
     {
       ArrowRight: ({ tr }) => {
-        editor.selectText(Math.min(tr.selection.from + 1, tr.doc.nodeSize - 2));
+        editor.selectText(TextSelection.near(tr.doc.resolve(tr.selection.anchor + 1), +1));
         return true;
       },
       ArrowLeft: ({ tr }) => {
-        editor.selectText(Math.max(tr.selection.from - 1, 1));
+        editor.selectText(TextSelection.near(tr.doc.resolve(tr.selection.anchor - 1), -1));
         return true;
       },
     },
@@ -96,6 +97,16 @@ describe('exitMark', () => {
       .insertText('abc');
 
     expect(editor.state.doc).toEqualRemirrorDocument(doc(p('abc', code('this ')), p('the end')));
+  });
+
+  it('does not prevent exits when exiting backwards', () => {
+    editor
+      .add(doc(p('the end '), p(code('<cursor>this'))))
+      .press('ArrowLeft')
+      .press('ArrowLeft')
+      .insertText('abc');
+
+    expect(editor.state.doc).toEqualRemirrorDocument(doc(p('the end abc'), p(code('this'))));
   });
 
   it('can exit the mark forwards', () => {
@@ -123,5 +134,33 @@ describe('exitMark', () => {
       .insertText('abc');
 
     expect(editor.state.doc).toEqualRemirrorDocument(doc(p(code('thishabcello'))));
+  });
+
+  it('can exit the empty node backwards', () => {
+    editor
+      .add(doc(p('the end '), heading('<cursor>')))
+      .press('ArrowLeft')
+      .insertText('abc');
+
+    expect(editor.state.doc).toEqualRemirrorDocument(doc(p('the end '), p('abc')));
+  });
+
+  it('can exit the empty node with double arrow keypress', () => {
+    editor
+      .add(doc(p('the end '), heading('<cursor>')))
+      .press('ArrowLeft')
+      .press('ArrowLeft')
+      .insertText('abc');
+
+    expect(editor.state.doc).toEqualRemirrorDocument(doc(p('the end abc'), p('')));
+  });
+
+  it('exits node normally when block node is not empty', () => {
+    editor
+      .add(doc(p('the end '), heading('<cursor>hi')))
+      .press('ArrowLeft')
+      .insertText('abc');
+
+    expect(editor.state.doc).toEqualRemirrorDocument(doc(p('the end abc'), heading('hi')));
   });
 });

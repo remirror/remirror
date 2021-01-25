@@ -9,7 +9,7 @@
   },
   {
     "name": "create-context-state",
-    "limit": "2 KB",
+    "limit": "1 KB",
     "path": "packages/create-context-state/dist/create-context-state.browser.esm.js",
     "ignore": ["@types/react", "react"],
     "running": false,

@@ -226,6 +226,13 @@ export class Positioner<Data = any> {
   #ids: string[] = [];
   #updated = false;
 
+  /**
+   * Store the props for the most recent update. This is used by `React` to
+   * reapply the most recent props to the new positioner when the positioner is
+   * recreated within a component.
+   */
+  recentUpdate?: GetActiveProps;
+
   readonly #constructorProps: BasePositioner<Data>;
   readonly #getActive: BasePositioner<Data>['getActive'];
   readonly #getID?: (data: Data, index: number) => string;
@@ -255,6 +262,7 @@ export class Positioner<Data = any> {
    * Get the active element setters.
    */
   onActiveChanged(props: GetActiveProps): void {
+    this.recentUpdate = props;
     const active = this.#getActive(props);
     this.#active = active;
     this.#props = new Map();

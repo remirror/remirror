@@ -16,7 +16,7 @@ const SnapshotsList = (props: SnapshotsListProps) => {
 
   return (
     <List
-      getKey={(item) => item.name + item.timestamp}
+      getKey={(item) => `${item.name}${item.timestamp}`}
       items={snapshots}
       title={(item) => (
         <ListItem>
@@ -32,7 +32,7 @@ const SnapshotsList = (props: SnapshotsListProps) => {
 };
 
 export const SnapshotsTab = (): JSX.Element => {
-  const { snapshots, actions } = useDevStore(['snapshots', 'actions']);
+  const { snapshots, actions } = useDevStore();
 
   return (
     <SplitView>

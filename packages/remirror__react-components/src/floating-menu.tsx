@@ -69,9 +69,9 @@ interface UseFloatingPositioner extends UseEditorFocusProps {
 
 function useFloatingPositioner(props: UseFloatingPositioner) {
   const {
-    placement = 'top',
     positioner,
     animated,
+    placement = 'top',
     enabled = true,
     blurOnInactive = false,
     ignoredElements = [],
@@ -81,8 +81,8 @@ function useFloatingPositioner(props: UseFloatingPositioner) {
   const popoverState = usePopoverState({ placement, modal: false, animated });
   const [isFocused] = useEditorFocus({ blurOnInactive, ignoredElements });
   const { ref, active, height, x: left, y: top, width, visible } = usePositioner(
-    () => getPositioner(positioner).active(enabled && isFocused),
-    [enabled, isFocused],
+    () => getPositioner(positioner).active(isFocused && enabled),
+    [isFocused, enabled],
   );
   const position = useMemo(() => ({ height, left, top, width }), [height, left, top, width]);
 
@@ -159,6 +159,7 @@ export const FloatingWrapper: FC<FloatingWrapperProps> = (props): JSX.Element =>
             left: position.left,
             width: position.width,
             height: position.height,
+            background: 'blue',
           }}
           ref={positionerRef}
         />
@@ -168,8 +169,6 @@ export const FloatingWrapper: FC<FloatingWrapperProps> = (props): JSX.Element =>
           {...popoverState}
           aria-label={floatingLabel}
           hideOnEsc={true}
-          // hideOnClickOutside={true}
-          // unstable_orphan={true}
           unstable_initialFocusRef={editorRef}
           unstable_finalFocusRef={editorRef}
           className={cx(ComponentsTheme.FLOATING_POPOVER, containerClass)}
@@ -325,7 +324,7 @@ export const FloatingActionsMenu = (props: FloatingActionsMenuProps): JSX.Elemen
 
   return (
     <FloatingWrapper
-      enabled={!!query && enabled}
+      enabled={!!query}
       positioner={positioner}
       placement={placement}
       animated={animated}

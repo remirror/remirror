@@ -22,7 +22,7 @@ test('creates a provider and context hook', () => {
       increment: () => set((state) => ({ count: state.count + 1 })),
       decrement: () => set((state) => ({ count: state.count - 1 })),
       reset: () => set({ count: props.defaultCount }),
-      message: () => `${get('count')} count`,
+      message: () => `${get((p) => p.count)} count`,
     }),
   );
 

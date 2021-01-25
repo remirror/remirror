@@ -26,12 +26,7 @@ interface DevToolsExpandedProps {
 
 export const DevToolsExpanded = (props: DevToolsExpandedProps): JSX.Element => {
   const { close, dock } = props;
-  const { actions, nodePicker, tabState, selectedTab } = useDevStore([
-    'actions',
-    'nodePicker',
-    'tabState',
-    'selectedTab',
-  ]);
+  const { actions, nodePicker, tabState, selectedTab } = useDevStore();
 
   return (
     <Wrapper dock={dock}>
@@ -103,7 +98,7 @@ interface WrapperProps {
 }
 const Wrapper: FC<WrapperProps> = (props) => {
   const { children, dock } = props;
-  const { actions, nodePicker } = useDevStore(['actions', 'nodePicker']);
+  const { actions, nodePicker } = useDevStore();
 
   if (dock) {
     return (

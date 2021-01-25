@@ -17,16 +17,18 @@ import type {
   KeyBindingProps,
   KeyBindings,
   ProsemirrorPlugin,
-  Selection,
   Shape,
 } from '@remirror/core-types';
 import {
+  chainKeyBindingCommands,
   convertCommand,
   environment,
-  findParentNode,
   findParentNodeOfType,
   isDefaultBlockNode,
-  isTextSelection,
+  isEmptyBlockNode,
+  isEndOfTextBlock,
+  isStartOfDoc,
+  isStartOfTextBlock,
   mergeProsemirrorKeyBindings,
 } from '@remirror/core-utils';
 import {
@@ -41,7 +43,6 @@ import { AnyExtension, extension, Helper, PlainExtension } from '../extension';
 import type { AddCustomHandler } from '../extension/base-class';
 import type { OnSetOptionsProps } from '../types';
 import {
-  command,
   helper,
   keyBinding,
   KeybindingDecoratorOptions,
@@ -152,6 +153,12 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
    * via `hooks`.
    */
   private extraKeyBindings: PrioritizedKeyBindings[] = [];
+
+  /**
+   * Track the backward exits from a mark to allow double tapping the left arrow
+   * to move to the previous block node.
+   */
+  private readonly backwardMarkExitTracker = new Map<number, boolean>();
 
   /**
    * Get the shortcut map.
@@ -267,9 +274,11 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
     shortcut: 'ArrowRight',
     isActive: (options) => options.exitMarksOnArrowPress,
   })
-  arrowRight(props: KeyBindingProps): boolean {
-    const marks = this.store.markTags[ExtensionTag.PreventExits];
-    return this.exitMarkForwards(marks)(props);
+  arrowRightShortcut(props: KeyBindingProps): boolean {
+    const excludedMarks = this.store.markTags[ExtensionTag.PreventExits];
+    const excludedNodes = this.store.nodeTags[ExtensionTag.PreventExits];
+
+    return this.exitMarkForwards(excludedMarks, excludedNodes)(props);
   }
 
   /**
@@ -279,10 +288,13 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
     shortcut: 'ArrowLeft',
     isActive: (options) => options.exitMarksOnArrowPress,
   })
-  arrowLeft(props: KeyBindingProps): boolean {
+  arrowLeftShortcut(props: KeyBindingProps): boolean {
     const excludedMarks = this.store.markTags[ExtensionTag.PreventExits];
     const excludedNodes = this.store.nodeTags[ExtensionTag.PreventExits];
-    return this.exitMarkBackwards(excludedMarks, excludedNodes)(props);
+    return chainKeyBindingCommands(
+      this.exitNodeBackwards(excludedNodes),
+      this.exitMarkBackwards(excludedMarks, excludedNodes),
+    )(props);
   }
 
   /**
@@ -295,7 +307,10 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
   backspace(props: KeyBindingProps): boolean {
     const excludedMarks = this.store.markTags[ExtensionTag.PreventExits];
     const excludedNodes = this.store.nodeTags[ExtensionTag.PreventExits];
-    return this.exitMarkBackwards(excludedMarks, excludedNodes)(props);
+    return chainKeyBindingCommands(
+      this.exitNodeBackwards(excludedNodes, true),
+      this.exitMarkBackwards(excludedMarks, excludedNodes, true),
+    )(props);
   }
 
   /**
@@ -409,12 +424,20 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
   /**
    * Exits the mark forwards when at the end of a block node.
    */
-  @command()
-  exitMarkForwards(excludedMarks: string[]): CommandFunction {
+  private exitMarkForwards(excludedMarks: string[], excludedNodes: string[]): CommandFunction {
     return (props) => {
       const { tr, dispatch } = props;
 
-      if (!isEndOfNode(tr.selection)) {
+      if (!isEndOfTextBlock(tr.selection)) {
+        return false;
+      }
+
+      const isInsideExcludedNode = findParentNodeOfType({
+        selection: tr.selection,
+        types: excludedNodes,
+      });
+
+      if (isInsideExcludedNode) {
         return false;
       }
 
@@ -439,15 +462,53 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
     };
   }
 
+  private exitNodeBackwards(excludedNodes: string[], startOfDoc = false): CommandFunction {
+    return (props) => {
+      const { tr } = props;
+      const checker = startOfDoc ? isStartOfDoc : isStartOfTextBlock;
+
+      if (!checker(tr.selection)) {
+        return false;
+      }
+
+      const node = tr.selection.$anchor.node();
+
+      if (
+        !isEmptyBlockNode(node) ||
+        isDefaultBlockNode(node) ||
+        excludedNodes.includes(node.type.name)
+      ) {
+        return false;
+      }
+
+      return this.store.commands.toggleBlockNodeItem.original({ type: node.type })(props);
+    };
+  }
+
   /**
    * Exit a mark when at the beginning of a block node.
    */
-  @command()
-  exitMarkBackwards(excludedMarks: string[], excludedNodes: string[]): CommandFunction {
+  private exitMarkBackwards(
+    excludedMarks: string[],
+    excludedNodes: string[],
+    startOfDoc = false,
+  ): CommandFunction {
     return (props) => {
       const { tr, dispatch } = props;
+      const checker = startOfDoc ? isStartOfDoc : isStartOfTextBlock;
 
-      if (!isStartOfNode(tr.selection)) {
+      if (!checker(tr.selection) || this.backwardMarkExitTracker.has(tr.selection.anchor)) {
+        // Clear the map to prevent it storing stale data.
+        this.backwardMarkExitTracker.clear();
+        return false;
+      }
+
+      const isInsideExcludedNode = findParentNodeOfType({
+        selection: tr.selection,
+        types: excludedNodes,
+      });
+
+      if (isInsideExcludedNode) {
         return false;
       }
 
@@ -456,17 +517,7 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
         (mark) => !excludedMarks.includes(mark.type.name),
       );
 
-      const parentNode = findParentNode({
-        predicate: (node) => node.isBlock,
-        selection: tr.selection,
-      });
-      const shouldUpdateNode =
-        !isDefaultBlockNode(tr.doc) &&
-        !findParentNodeOfType({ selection: tr.selection, types: excludedNodes });
-
-      if (isEmptyArray(marksToRemove) && !shouldUpdateNode) {
-        // There are no marks to remove therefore defer to the empty marks to
-        // remove array.
+      if (isEmptyArray(marksToRemove)) {
         return false;
       }
 
@@ -479,45 +530,12 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
         tr.removeStoredMark(mark);
       }
 
-      if (parentNode) {
-        this.store.commands.toggleBlockNodeItem.original({ type: parentNode.node.type })({
-          ...props,
-          dispatch() {},
-        });
-      }
+      this.backwardMarkExitTracker.set(tr.selection.anchor, true);
 
       dispatch(tr);
       return true;
     };
   }
-}
-
-/**
- * Checks that the selection is an empty text selection at the end of its parent
- * node.
- */
-function isEndOfNode(selection: Selection) {
-  const $pos = selection.$from;
-  return (
-    selection.empty &&
-    isTextSelection(selection) &&
-    $pos.parent.type.isBlock &&
-    $pos.after() === $pos.pos + 1
-  );
-}
-
-/**
- * Checks that the selection is an empty text selection at the start of its
- * parent node.
- */
-function isStartOfNode(selection: Selection) {
-  const $pos = selection.$from;
-  return (
-    selection.empty &&
-    isTextSelection(selection) &&
-    $pos.parent.type.isBlock &&
-    $pos.before() === $pos.pos - 1
-  );
 }
 
 function isNamedShortcut(value: string): value is NamedShortcut {

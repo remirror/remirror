@@ -1,5 +1,6 @@
 import { RefCallback, useMemo, useRef, useState } from 'react';
 import useLayoutEffect from 'use-isomorphic-layout-effect';
+import usePrevious from 'use-previous';
 import { omitUndefined } from '@remirror/core';
 import {
   defaultAbsolutePosition,
@@ -72,12 +73,13 @@ export function useMultiPositioner(
     id: string;
   }
 
-  const positionerRef = useRef(positioner);
-  positionerRef.current = positioner;
-
   const [state, setState] = useState<ElementsAddedProps[]>([]);
   const [memoizedPositioner, setMemoizedPositioner] = useState(() => getPositioner(positioner));
   const [collectRefs, setCollectRefs] = useState<CollectElementRef[]>([]);
+  const positionerRef = useRef(positioner);
+  const previousPositioner = usePrevious(memoizedPositioner);
+
+  positionerRef.current = positioner;
 
   useExtension(
     PositionerExtension,
@@ -116,11 +118,15 @@ export function useMultiPositioner(
       setState(options);
     });
 
+    if (previousPositioner?.recentUpdate) {
+      memoizedPositioner.onActiveChanged(previousPositioner?.recentUpdate);
+    }
+
     return () => {
       disposeUpdate();
       disposeDone();
     };
-  }, [memoizedPositioner]);
+  }, [memoizedPositioner, previousPositioner]);
 
   return useMemo(() => {
     const positions: UseMultiPositionerReturn[] = [];

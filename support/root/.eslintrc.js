@@ -408,7 +408,6 @@ let config = {
       ],
       rules: {
         '@typescript-eslint/explicit-module-boundary-types': 'off',
-        'import/max-dependencies': 'off',
       },
     },
     {
@@ -461,14 +460,6 @@ if (process.env.FULL_ESLINT_CHECK) {
     '@typescript-eslint/restrict-plus-operands': 'warn',
     '@typescript-eslint/no-misused-promises': 'warn',
     '@typescript-eslint/no-unnecessary-type-assertion': 'error',
-    '@typescript-eslint/prefer-nullish-coalescing': [
-      'warn',
-      { ignoreConditionalTests: true, ignoreMixedLogicalExpressions: true },
-    ],
-    '@typescript-eslint/restrict-template-expressions': [
-      'warn',
-      { allowNumber: true, allowBoolean: true, allowAny: true, allowNullish: true },
-    ],
   };
 
   const rulesOff = {};
@@ -484,7 +475,6 @@ if (process.env.FULL_ESLINT_CHECK) {
     rules: {
       ...config.rules,
       'import/no-deprecated': 'warn',
-      'import/max-dependencies': ['warn', { max: 30 }],
       'import/no-default-export': 'warn',
       'import/no-mutable-exports': 'error',
       'import/first': 'error',

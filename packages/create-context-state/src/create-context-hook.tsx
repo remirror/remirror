@@ -1,7 +1,13 @@
-import getPath from 'dash-get';
-import pick from 'object.pick';
-import { ComponentType, Context as ReactContext, createContext, FC, useContext } from 'react';
-import usePrevious from 'use-previous';
+import {
+  ComponentType,
+  Context as ReactContext,
+  createContext,
+  FC,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+} from 'react';
 
 /**
  * Create a `Provider` and `useContext` retriever with a custom hook.
@@ -98,7 +104,7 @@ type UseHook<Context extends object, Props extends object = object> = (props: Pr
 export function contextHookFactory<Context extends object>(
   DefaultContext: ReactContext<Context | null>,
 ): ContextHook<Context> {
-  return (pathOrSelector?: unknown, equalityCheck?: EqualityChecker<Context>) => {
+  return (selector?: unknown, equalityCheck?: EqualityChecker<Context>) => {
     const context = useContext(DefaultContext);
     const previousContext = usePrevious(context);
 
@@ -108,31 +114,23 @@ export function contextHookFactory<Context extends object>(
       );
     }
 
-    if (!pathOrSelector) {
+    if (!selector) {
       return context;
     }
 
-    if (typeof pathOrSelector === 'string') {
-      return getPath(context, pathOrSelector);
-    }
-
-    if (Array.isArray(pathOrSelector)) {
-      return pick(context, pathOrSelector);
-    }
-
-    if (typeof pathOrSelector !== 'function') {
+    if (typeof selector !== 'function') {
       throw new TypeError(
         'invalid arguments passed to `useContextHook`. This hook must be called with zero arguments, a getter function or a path string.',
       );
     }
 
-    const value = pathOrSelector(context);
+    const value = selector(context);
 
     if (!previousContext || !equalityCheck) {
       return value;
     }
 
-    const previousValue = pathOrSelector(previousContext);
+    const previousValue = selector(previousContext);
 
     return equalityCheck(previousValue, value) ? previousValue : value;
   };
@@ -148,36 +146,11 @@ export type EqualityChecker<SelectedValue> = (
 
 export interface ContextHook<Context extends object> {
   (): Context;
-  <Key extends keyof Context>(pickedKeys: Key[]): Pick<Context, Key>;
   <SelectedValue>(
     selector: ContextSelector<Context, SelectedValue>,
     equalityFn?: EqualityChecker<SelectedValue>,
   ): SelectedValue;
-  <Path extends GetPath<Context>>(path: Path): PathValue<Context, Path>;
 }
-
-export type GetRecursivePath<Type, Key extends keyof Type> = Key extends string
-  ? Type[Key] extends Record<string, unknown>
-    ?
-        | `${Key}.${GetRecursivePath<Type[Key], Exclude<keyof Type[Key], keyof any[]>> & string}`
-        | `${Key}.${Exclude<keyof Type[Key], keyof any[]> & string}`
-    : never
-  : never;
-export type GetJoinedPath<Type> = GetRecursivePath<Type, keyof Type> | keyof Type;
-
-export type GetPath<Type> = GetJoinedPath<Type> extends string | keyof Type
-  ? GetJoinedPath<Type>
-  : keyof Type;
-
-export type PathValue<Type, Path extends GetPath<Type>> = Path extends `${infer Key}.${infer Rest}`
-  ? Key extends keyof Type
-    ? Rest extends GetPath<Type[Key]>
-      ? PathValue<Type[Key], Rest>
-      : never
-    : never
-  : Path extends keyof Type
-  ? Type[Path]
-  : never;
 
 /**
  * Split but don't allow empty string.
@@ -195,3 +168,14 @@ export type SplitEmpty<
   Input extends string,
   Splitter extends string
 > = Input extends `${infer T}${Splitter}${infer Rest}` ? [T, ...Split<Rest, Splitter>] : [Input];
+
+function usePrevious<T>(value: T) {
+  const ref = useRef<T>();
+  useIsomorphicLayoutEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
+
+export const useIsomorphicLayoutEffect =
+  typeof document !== 'undefined' ? useLayoutEffect : useEffect;

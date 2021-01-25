@@ -1520,6 +1520,35 @@ function checkForInvalidContent(props: CheckForInvalidContentProps): InvalidCont
   return invalidNodes;
 }
 
+/**
+ * Checks that the selection is an empty text selection at the end of its parent
+ * node.
+ */
+export function isEndOfTextBlock(selection: Selection): selection is TextSelection {
+  return !!(
+    isTextSelection(selection) &&
+    selection.$cursor &&
+    selection.$cursor.parentOffset >= selection.$cursor.parent.content.size
+  );
+}
+
+/**
+ * Checks that the selection is an empty text selection at the start of its
+ * parent node.
+ */
+export function isStartOfTextBlock(selection: Selection): selection is TextSelection {
+  return !!(isTextSelection(selection) && selection.$cursor && selection.$cursor.parentOffset <= 0);
+}
+
+/**
+ * Returns true when the selection is a text selection at the start of the
+ * document.
+ */
+export function isStartOfDoc(selection: Selection): boolean {
+  const selectionAtStart = PMSelection.atStart(selection.$anchor.doc);
+  return !!(isStartOfTextBlock(selection) && selectionAtStart.anchor === selection.anchor);
+}
+
 declare global {
   namespace Remirror {
     /**

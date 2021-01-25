@@ -58,6 +58,6 @@
     "access": "public"
   },
   "@remirror": {
-    "sizeLimit": "2 KB"
+    "sizeLimit": "1 KB"
   }
 }

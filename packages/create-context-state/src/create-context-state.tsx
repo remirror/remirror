@@ -1,14 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import getPath from 'dash-get';
 import { Dispatch, MutableRefObject, useEffect, useRef, useState } from 'react';
 
-import {
-  ContextSelector,
-  createContextHook,
-  CreateContextReturn,
-  GetPath,
-  PathValue,
-} from './create-context-hook';
+import { ContextSelector, createContextHook, CreateContextReturn } from './create-context-hook';
 
 /**
  * Create a context and provider with built in setters and getters.
@@ -129,30 +122,6 @@ export function createContextState<
 
     return context;
   });
-
-  // // Create the initial react context. const DefaultContext =
-  // createContext<Context | null>(null);
-
-  // // Create the hook for retrieving the created context state. const
-  // useContextHook = contextHookFactory(DefaultContext);
-
-  // const Provider = (props: PropsWithChildren<Props>) => {// Keep a ref to the
-  //   context so that the `get` function can always be called // with the
-  //   latest value. const contextRef = useRef<Context | null>(null); const
-  //   setContextRef = useRef<Dispatch<React.SetStateAction<Context>>>();
-
-  //   const [context, setContext] = useState(() => {return creator({ get:
-  //     createGet(contextRef), set: createSet(setContextRef) });
-  //   });
-
-  //   // Keep the refs updated on each render. contextRef.current = context;
-  //   setContextRef.current = setContext;
-
-  //   return <DefaultContext.Provider
-  //   value={context}>{props.children}</DefaultContext.Provider>;
-  // };
-
-  // return [Provider, useContextHook, DefaultContext];
 }
 
 /**
@@ -171,10 +140,6 @@ function createGet<Context extends object>(
 
     if (!pathOrSelector) {
       return ref.current;
-    }
-
-    if (typeof pathOrSelector === 'string') {
-      return getPath(ref.current, pathOrSelector);
     }
 
     if (typeof pathOrSelector !== 'function') {
@@ -210,7 +175,6 @@ function createSet<Context extends object>(
 export interface GetContext<Context extends object> {
   (): Context;
   <SelectedValue>(selector: ContextSelector<Context, SelectedValue>): SelectedValue;
-  <Path extends GetPath<Context>>(path: Path): PathValue<Context, Path>;
 }
 export type PartialContext<Context extends object> =
   | Partial<Context>
