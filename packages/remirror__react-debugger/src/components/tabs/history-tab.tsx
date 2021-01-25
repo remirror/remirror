@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import { Delta } from 'jsondiffpatch';
 import { assertGet, isArray, isNumber } from '@remirror/core';
 
-import { mainTheme } from '../../dev-constants';
-import { useDevStore } from '../../dev-state';
-import { HistoryEntry } from '../../dev-types';
+import { mainTheme } from '../../debugger-constants';
+import { useDebuggerStore } from '../../debugger-state';
+import { HistoryEntry } from '../../debugger-types';
 import { Highlighter } from '../highlighter';
 import { JsonDiff } from '../json-diff';
 import { List } from '../list';
@@ -72,7 +72,7 @@ type WithIndex<Type> = Type & { index: number };
 export const HistoryTab = (): JSX.Element => {
   type HistoryWithIndex = WithIndex<HistoryEntry>;
   type ListedHistoryEntry = HistoryWithIndex | HistoryWithIndex[];
-  const { actions, historyRolledBackTo, history, selectedHistoryIndex } = useDevStore();
+  const { actions, historyRolledBackTo, history, selectedHistoryIndex } = useDebuggerStore();
   const previousItem = history[selectedHistoryIndex + 1];
   const selectedItem = assertGet(history, selectedHistoryIndex);
   const historyRolledBackToItem = isNumber(historyRolledBackTo)

@@ -483,6 +483,9 @@
       "path": "packages/remirror__react-components/src"
     },
     {
+      "path": "packages/remirror__react-debugger/src"
+    },
+    {
       "path": "packages/remirror__react-hooks/__tests__"
     },
     {

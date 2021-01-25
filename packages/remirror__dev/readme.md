@@ -7,9 +7,9 @@ Development tools to make life easier when building your editor.
 ## Installation
 
 ```bash
-yarn add @remirror/dev # yarn
-pnpm add @remirror/dev # pnpm
-npm install @remirror/dev # npm
+yarn add @remirror/dev@next # yarn
+pnpm add @remirror/dev@next # pnpm
+npm install @remirror/dev@next # npm
 ```
 
 ## Usage
@@ -22,29 +22,26 @@ The following will render the development view in your editor. For more informat
 
 ```tsx
 import React from 'react';
-import {
-  BoldExtension,
-  corePreset,
-  ItalicExtension,
-  UnderlineExtension,
-} from 'remirror/extensions';
-import { Remirror, useRemirror } from 'remirror/react';
+import { BoldExtension } from 'remirror/extension/bold';
+import { ItalicExtension } from 'remirror/extension/italic';
+import { UnderlineExtension } from 'remirror/extension/underline';
+import { CorePreset } from 'remirror/preset/core';
+import { RemirrorProvider } from 'remirror/react';
+import { RemirrorProvider, useManager } from 'remirror/react';
 import { ProsemirrorDevTools } from '@remirror/dev';
 
-const extensions = () => [
-  ...corePreset(),
-  new BoldExtension(),
-  new ItalicExtension(),
-  new UnderlineExtension(),
-];
-
 const Editor = () => {
-  const { manager } = useRemirror({ extensions });
+  const manager = useManager([
+    new CorePreset(),
+    new BoldExtension(),
+    new ItalicExtension(),
+    new UnderlineExtension(),
+  ]);
 
   return (
-    <Remirror manager={manager} autoRender={true}>
+    <RemirrorProvider manager={manager} autoRender={true}>
       <ProsemirrorDevTools />
-    </Remirror>
+    </RemirrorProvider>
   );
 };
 ```

@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { ThemeProvider } from '@remirror/react-components';
 
-import { DevStoreProps, DevStoreProvider } from './dev-state';
-import { DevToolsCollapsed } from './dev-tools-collapsed';
-import { DevToolsExpanded } from './dev-tools-expanded';
+import { DebuggerStoreProps, DebuggerStoreProvider } from './debugger-state';
+import { DebuggerToolsCollapsed } from './debugger-tools-collapsed';
+import { DevToolsExpanded } from './debugger-tools-expanded';
 
-interface DevToolsProps extends DevStoreProps {
+interface DevToolsProps extends DebuggerStoreProps {
   supportsToggling?: boolean;
   dock?: boolean;
 }
 
-export const DevTools = (props: DevToolsProps): JSX.Element => {
+export const DebuggerTools = (props: DevToolsProps): JSX.Element => {
   const { manager, diffWorker = false, supportsToggling = false, dock = true } = props;
   const [opened, setOpened] = useState<boolean>(!supportsToggling);
 
@@ -19,13 +19,13 @@ export const DevTools = (props: DevToolsProps): JSX.Element => {
 
   return (
     <ThemeProvider>
-      <DevStoreProvider manager={manager} diffWorker={diffWorker}>
+      <DebuggerStoreProvider manager={manager} diffWorker={diffWorker}>
         {opened ? (
           <DevToolsExpanded close={close} dock={dock} />
         ) : (
-          <DevToolsCollapsed open={open} />
+          <DebuggerToolsCollapsed open={open} />
         )}
-      </DevStoreProvider>
+      </DebuggerStoreProvider>
     </ThemeProvider>
   );
 };

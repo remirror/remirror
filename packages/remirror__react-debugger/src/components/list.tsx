@@ -3,7 +3,7 @@ import { ReactNode, useCallback, useState } from 'react';
 import { assert, isArray, noop } from '@remirror/core';
 import { Icon } from '@remirror/react-components';
 
-import { mainTheme } from '../dev-constants';
+import { mainTheme } from '../debugger-constants';
 
 interface ListItemProps {
   isDimmed: boolean;

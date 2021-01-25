@@ -1,8 +1,8 @@
 import type { DiffPatcher } from 'jsondiffpatch';
 import { uniqueId } from '@remirror/core';
 
-import { JsonDiffInput, JsonDiffOutput, JsonDiffWorkerInput } from './dev-types';
-import { IdleScheduler, TypedPromiseWorker } from './dev-utils';
+import { JsonDiffInput, JsonDiffOutput, JsonDiffWorkerInput } from './debugger-types';
+import { IdleScheduler, TypedPromiseWorker } from './debugger-utils';
 
 export abstract class BaseJsonDiff {
   /**

@@ -48,7 +48,7 @@ export interface HistoryEntry {
   selectionContent: string;
 }
 
-export interface DevSnapshot {
+export interface DebuggerSnapshot {
   name: string;
   timestamp: number;
   content: RemirrorJSON;

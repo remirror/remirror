@@ -9,7 +9,7 @@
 import { DiffPatcher } from 'jsondiffpatch';
 import registerPromiseWorker from 'promise-worker/register';
 
-import type { JsonDiffOutput, JsonDiffWorkerInput } from './dev-types';
+import type { JsonDiffOutput, JsonDiffWorkerInput } from './debugger-types';
 
 const diffPatcher = new DiffPatcher({
   arrays: { detectMove: false, includeValueOnMove: false },

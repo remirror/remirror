@@ -7,7 +7,7 @@
   ],
   "extends": "../../../support/tsconfig.base.json",
   "compilerOptions": {
-    "types": [],
+    "types": ["node", "@types/requestidlecallback"],
     "declaration": true,
     "noEmit": false,
     "composite": true,
@@ -17,10 +17,19 @@
   "include": ["./"],
   "references": [
     {
+      "path": "../../remirror__core/src"
+    },
+    {
       "path": "../../remirror__pm/src"
     },
     {
       "path": "../../remirror__react/src"
+    },
+    {
+      "path": "../../remirror__react-components/src"
+    },
+    {
+      "path": "../../create-context-state/src"
     }
   ]
 }

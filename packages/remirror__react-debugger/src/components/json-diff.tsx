@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { Shape } from '@remirror/core';
 
-import { mainTheme } from '../dev-constants';
+import { mainTheme } from '../debugger-constants';
 import { JsonTree } from './json-tree';
 
 interface JsonDiffProps {

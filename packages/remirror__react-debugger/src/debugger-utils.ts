@@ -17,8 +17,8 @@ import {
 import { DOMSerializer } from '@remirror/pm/model';
 import { isCellSelection } from '@remirror/pm/tables';
 
-import { HISTORY_SIZE, NODE_COLORS } from './dev-constants';
-import type { HistoryEntry, JsonMark, JsonSelection, SelectionType } from './dev-types';
+import { HISTORY_SIZE, NODE_COLORS } from './debugger-constants';
+import type { HistoryEntry, JsonMark, JsonSelection, SelectionType } from './debugger-types';
 
 export class TypedPromiseWorker<Output, Input> extends PromiseWorker {
   /**
@@ -173,7 +173,7 @@ export function updateEditorHistory(
   state: EditorState,
   tr: Transaction = state.tr,
 ): HistoryEntry[] | undefined {
-  const skipHistory = tr.getMeta('_skip-dev-tools-history_');
+  const skipHistory = tr.getMeta('_skip-debugger-history_');
 
   if (skipHistory) {
     return;

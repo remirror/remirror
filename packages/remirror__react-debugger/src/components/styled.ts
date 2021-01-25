@@ -4,7 +4,7 @@ import { Button } from 'reakit/Button';
 // import type * as __ from 'reakit-system';
 import type * as __t from 'reakit-utils'; // For type inference
 
-import { mainTheme } from '../dev-constants';
+import { mainTheme } from '../debugger-constants';
 
 export const Heading = styled.h2`
   color: ${mainTheme.softerMain};

@@ -1,14 +1,14 @@
 import styled from '@emotion/styled';
 
-import { mainTheme } from '../../dev-constants';
-import { DevState, useDevStore } from '../../dev-state';
-import { DevSnapshot } from '../../dev-types';
+import { mainTheme } from '../../debugger-constants';
+import { DebuggerState, useDebuggerStore } from '../../debugger-state';
+import { DebuggerSnapshot } from '../../debugger-types';
 import { List } from '../list';
 import { InfoPanel, SplitView, SplitViewColumn } from '../styled';
 
 interface SnapshotsListProps {
-  actions: DevState;
-  snapshots: DevSnapshot[];
+  actions: DebuggerState;
+  snapshots: DebuggerSnapshot[];
 }
 
 const SnapshotsList = (props: SnapshotsListProps) => {
@@ -32,7 +32,7 @@ const SnapshotsList = (props: SnapshotsListProps) => {
 };
 
 export const SnapshotsTab = (): JSX.Element => {
-  const { snapshots, actions } = useDevStore();
+  const { snapshots, actions } = useDebuggerStore();
 
   return (
     <SplitView>

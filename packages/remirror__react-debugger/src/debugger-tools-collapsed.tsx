@@ -2,11 +2,11 @@ import React from 'react';
 
 import { FloatingButton } from './components';
 
-interface DevToolsCollapsedProps {
+interface DebuggerToolsCollapsedProps {
   open: () => void;
 }
 
-export const DevToolsCollapsed = (props: DevToolsCollapsedProps): JSX.Element => {
+export const DebuggerToolsCollapsed = (props: DebuggerToolsCollapsedProps): JSX.Element => {
   return (
     <FloatingButton onClick={props.open}>
       <svg

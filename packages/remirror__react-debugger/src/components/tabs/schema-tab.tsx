@@ -1,6 +1,6 @@
 import { isObject, Shape } from '@remirror/core';
 
-import { useDevStore } from '../../dev-state';
+import { useDebuggerStore } from '../../debugger-state';
 import { JsonTree } from '../json-tree';
 import { Heading, SplitView, SplitViewColumn } from '../styled';
 
@@ -25,7 +25,7 @@ function postprocessValue(ignore: string[], data: unknown) {
 }
 
 export const SchemaTab = (): JSX.Element => {
-  const schema = useDevStore((store) => store.state.schema);
+  const schema = useDebuggerStore((store) => store.state.schema);
 
   return (
     <SplitView>

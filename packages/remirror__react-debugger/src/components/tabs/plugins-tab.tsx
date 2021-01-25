@@ -1,7 +1,7 @@
 import React from 'react';
 import { assertGet } from 'remirror';
 
-import { useDevStore } from '../../dev-state';
+import { useDebuggerStore } from '../../debugger-state';
 import { JsonTree } from '../json-tree';
 import { List } from '../list';
 import { Heading, InfoPanel, SplitView, SplitViewColumn } from '../styled';
@@ -24,7 +24,7 @@ const PluginState = (props: { pluginState: any }) => {
 };
 
 export const PluginsTab = (): JSX.Element => {
-  const { state, selectedPlugin: selected, actions } = useDevStore();
+  const { state, selectedPlugin: selected, actions } = useDebuggerStore();
   const plugins = state.plugins;
   const selectedPlugin = assertGet(plugins, selected);
   const selectedPluginState = selectedPlugin.getState(state);

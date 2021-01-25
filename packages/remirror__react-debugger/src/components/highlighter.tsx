@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { mainTheme as theme } from '../dev-constants';
+import { mainTheme as theme } from '../debugger-constants';
 
 const CustomPre = styled.pre`
   padding: 9px 0 18px 0 !important;

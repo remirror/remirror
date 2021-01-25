@@ -16,8 +16,8 @@ import {
   StructureTab,
 } from './components';
 import { NodePicker, NodePickerTrigger } from './components/node-picker';
-import { TabName } from './dev-constants';
-import { useDevStore } from './dev-state';
+import { TabName } from './debugger-constants';
+import { useDebuggerStore } from './debugger-state';
 
 interface DevToolsExpandedProps {
   close: () => void;
@@ -26,7 +26,7 @@ interface DevToolsExpandedProps {
 
 export const DevToolsExpanded = (props: DevToolsExpandedProps): JSX.Element => {
   const { close, dock } = props;
-  const { actions, nodePicker, tabState, selectedTab } = useDevStore();
+  const { actions, nodePicker, tabState, selectedTab } = useDebuggerStore();
 
   return (
     <Wrapper dock={dock}>
@@ -98,7 +98,7 @@ interface WrapperProps {
 }
 const Wrapper: FC<WrapperProps> = (props) => {
   const { children, dock } = props;
-  const { actions, nodePicker } = useDevStore();
+  const { actions, nodePicker } = useDebuggerStore();
 
   if (dock) {
     return (

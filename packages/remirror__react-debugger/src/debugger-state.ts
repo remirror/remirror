@@ -13,19 +13,19 @@ import {
 } from '@remirror/core';
 
 import type { NodePicker } from './components';
-import { NODE_PICKER_DEFAULT, SNAPSHOTS_KEY, TabName } from './dev-constants';
-import { BaseJsonDiff, DefaultJsonDiff, WorkerJsonDiff } from './dev-json-diff';
-import type { DevSnapshot, HistoryEntry, JsonMark } from './dev-types';
+import { NODE_PICKER_DEFAULT, SNAPSHOTS_KEY, TabName } from './debugger-constants';
+import { BaseJsonDiff, DefaultJsonDiff, WorkerJsonDiff } from './debugger-json-diff';
+import type { DebuggerSnapshot, HistoryEntry, JsonMark } from './debugger-types';
 import {
   buildColors,
   buildSelection,
   createHistoryEntry,
   getActiveMarks,
   updateEditorHistory,
-} from './dev-utils';
+} from './debugger-utils';
 import { generateJsonNodePath, generateNodePath } from './utils/find-node';
 
-export interface DevStoreContext {
+export interface DebuggerStoreContext {
   selectedTab: TabName | undefined;
   tabState: TabStateReturn;
   manager: RemirrorManager<any>;
@@ -36,7 +36,7 @@ export interface DevStoreContext {
   expandPath: Array<string | number>;
   historyRolledBackTo: false | number;
   selectedHistoryIndex: number;
-  snapshots: DevSnapshot[];
+  snapshots: DebuggerSnapshot[];
   /**
    * When `true` the snapshots are being loaded.
    */
@@ -45,30 +45,34 @@ export interface DevStoreContext {
   selectedPlugin: number;
   selectionExpanded: boolean;
   selectedNode: NodeWithPosition | undefined;
-  actions: DevState;
+  actions: DebuggerState;
 }
-export interface DevStoreProps {
+export interface DebuggerStoreProps {
   manager: RemirrorManager<any>;
   diffWorker?: boolean;
 }
 
-interface DevStoreState {
+interface DebuggerStoreState {
   tab: TabStateReturn;
 }
 
-type DevStateHelpers = ContextCreatorHelpers<DevStoreContext, DevStoreProps, DevStoreState>;
+type DebuggerStateHelpers = ContextCreatorHelpers<
+  DebuggerStoreContext,
+  DebuggerStoreProps,
+  DebuggerStoreState
+>;
 
-export const [DevStoreProvider, useDevStore] = createContextState<
-  DevStoreContext,
-  DevStoreProps,
-  DevStoreState
+export const [DebuggerStoreProvider, useDebuggerStore] = createContextState<
+  DebuggerStoreContext,
+  DebuggerStoreProps,
+  DebuggerStoreState
 >(
   (helpers) => {
     // Cleanup when props have changed.
     helpers.previousContext?.actions.cleanup();
 
     const { props, previousContext, state } = helpers;
-    const actions = new DevState(helpers);
+    const actions = new DebuggerState(helpers);
     const loadingSnapshots = previousContext?.loadingSnapshots ?? true;
 
     if (loadingSnapshots) {
@@ -102,8 +106,8 @@ export const [DevStoreProvider, useDevStore] = createContextState<
   },
 );
 
-class DevState {
-  private readonly helpers: DevStateHelpers;
+class DebuggerState {
+  private readonly helpers: DebuggerStateHelpers;
   private readonly diffWorker: BaseJsonDiff;
 
   /**
@@ -115,7 +119,7 @@ class DevState {
     return this.helpers.props.manager;
   }
 
-  private get context(): DevStoreContext {
+  private get context(): DebuggerStoreContext {
     return this.helpers.get();
   }
 
@@ -123,7 +127,7 @@ class DevState {
     return this.manager.view;
   }
 
-  constructor(helpers: DevStateHelpers) {
+  constructor(helpers: DebuggerStateHelpers) {
     this.helpers = helpers;
     this.diffWorker = helpers.props.diffWorker ? new WorkerJsonDiff() : new DefaultJsonDiff();
     this.cleanup = this.subscribe();
@@ -294,7 +298,7 @@ class DevState {
   /**
    * Set a snapshot to be the active snapshot.
    */
-  readonly loadSnapshot = ({ content, selection }: DevSnapshot): void => {
+  readonly loadSnapshot = ({ content, selection }: DebuggerSnapshot): void => {
     const state = this.manager.createState({ content, selection });
 
     this.helpers.set({
@@ -306,7 +310,7 @@ class DevState {
     this.view.updateState(state);
   };
 
-  readonly deleteSnapshot = async (snapshot: DevSnapshot): Promise<void> => {
+  readonly deleteSnapshot = async (snapshot: DebuggerSnapshot): Promise<void> => {
     let promise: Promise<void> | undefined;
 
     this.helpers.set((previous) => {
@@ -349,7 +353,7 @@ class DevState {
     this.manager.store.chain
       .custom(state.tr)
       .setMeta('addToHistory', false)
-      .setMeta('_skip-dev-tools-history_', true)
+      .setMeta('_skip-debugger-history_', true)
       .focus()
       .run();
 
@@ -360,4 +364,4 @@ class DevState {
   };
 }
 
-export type { DevState };
+export type { DebuggerState };

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { assertGet, Fragment, NodeWithPosition, ProsemirrorNode } from '@remirror/core';
 
-import { mainTheme } from '../../dev-constants';
-import { useDevStore } from '../../dev-state';
+import { mainTheme } from '../../debugger-constants';
+import { useDebuggerStore } from '../../debugger-state';
 import { JsonTree } from '../json-tree';
 import { Heading, HeadingButton, HeadingWithButton, SplitView, SplitViewColumn } from '../styled';
 
@@ -118,7 +118,7 @@ const InlineNode = (props: InlineNodeProps) => {
 };
 
 export const StructureTab = (): JSX.Element => {
-  const { state, nodeColors, selectedNode, actions } = useDevStore();
+  const { state, nodeColors, selectedNode, actions } = useDebuggerStore();
   const selected = selectedNode ? selectedNode.node : state.doc;
 
   return (

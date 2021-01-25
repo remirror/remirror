@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import { ReactNode } from 'react';
 import { Mark, RemirrorJSON } from '@remirror/core';
 
-import { mainTheme } from '../../dev-constants';
-import { useDevStore } from '../../dev-state';
+import { mainTheme } from '../../debugger-constants';
+import { useDebuggerStore } from '../../debugger-state';
 import {
   collapsedStateFormatSelection,
   expandedStateFormatSelection,
@@ -101,7 +101,7 @@ export function shouldExpandNode(
 }
 
 export const StateTab = (): JSX.Element => {
-  const { actions, state, activeMarks, expandPath, selectionExpanded } = useDevStore();
+  const { actions, state, activeMarks, expandPath, selectionExpanded } = useDebuggerStore();
   const doc = state.doc.toJSON() as RemirrorJSON;
 
   return (
