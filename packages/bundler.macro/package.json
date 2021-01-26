@@ -1,0 +1,59 @@
+{
+  "name": "bundler.macro",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Bundle local JavaScript and TypeScript files with parcel.js. ",
+  "keywords": [
+    "remirror"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/bundler.macro",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/bundler.macro",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "require": "./dist/bundler.macro.cjs.js",
+      "types": "./index.d.ts"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/bundler.macro.cjs.js",
+  "types": "index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/parser": "^7.12.11",
+    "@babel/runtime": "^7.12.5",
+    "@babel/types": "^7.12.12",
+    "@remirror/core-helpers": "^1.0.0-next.60",
+    "@rollup/plugin-babel": "^5.2.2",
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^11.1.0",
+    "@rollup/plugin-replace": "^2.3.4",
+    "@sindresorhus/is": "^4.0.0",
+    "@types/babel-plugin-macros": "^2.8.4",
+    "@types/babel__core": "^7.1.12",
+    "@types/babel__parser": "^7.1.1",
+    "@types/parcel-bundler": "^1.12.3",
+    "babel-plugin-macros": "^3.0.1",
+    "make-synchronous": "^0.1.1",
+    "rollup": "^2.38.0"
+  },
+  "devDependencies": {
+    "@types/babel-plugin-tester": "^9.0.1",
+    "babel-plugin-tester": "^10.0.0"
+  },
+  "peerDependencies": {
+    "babel-plugin-macros": "^3.0.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

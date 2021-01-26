@@ -474,27 +474,17 @@ if (process.env.FULL_ESLINT_CHECK) {
     extends: [...config.extends, 'plugin:import/typescript'],
     rules: {
       ...config.rules,
-      'import/no-deprecated': 'warn',
       'import/no-default-export': 'warn',
-      'import/no-mutable-exports': 'error',
       'import/first': 'error',
       'import/no-duplicates': 'error',
-      'import/no-cycle': 'error',
+      // 'import/no-cycle': 'error', // Conflicts with `react-native`.
       'import/no-self-import': 'error',
       'import/newline-after-import': 'error',
 
       // Turn off conflicting import rules
-      'import/order': 'off',
-      // '@typescript-eslint/no-unused-vars-experimental': [
-      //   'error',
-      //   { ignoreArgsIfArgsAfterAreUsed: true },
-      // ],
+      // 'import/order': 'off',
     },
     overrides: [
-      {
-        files: ['./packages/remirror__es-module-shims/**'],
-        rules: { 'import/no-mutable-exports': 'off' },
-      },
       {
         parserOptions: { project: [require.resolve('../tsconfig.lint.json')] },
         files: ['**/!(*.{md,mdx})/*.ts', '**/!(*.{md,mdx})/*.tsx'],

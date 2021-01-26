@@ -78,13 +78,13 @@ export class EditorViewSSR<Schema extends EditorSchema = EditorSchema> {
  * @param props
  * @param forceEnvironment
  */
-export const createEditorView = <Schema extends EditorSchema = EditorSchema>(
+export function createEditorView<Schema extends EditorSchema = EditorSchema>(
   place: Node | ((p: Node) => void) | { mount: Node } | undefined,
   props: DirectEditorProps<Schema>,
   forceEnvironment?: RenderEnvironment,
-): EditorView<Schema> => {
+): EditorView<Schema> {
   const Constructor = shouldUseDomEnvironment(forceEnvironment)
     ? EditorView
     : Cast<typeof EditorView>(EditorViewSSR);
   return new Constructor(place, props);
-};
+}

@@ -21,6 +21,12 @@
       "path": "packages/a11y-status/src"
     },
     {
+      "path": "packages/bundler.macro/__tests__"
+    },
+    {
+      "path": "packages/bundler.macro/src"
+    },
+    {
       "path": "packages/create-context-state/__tests__"
     },
     {
