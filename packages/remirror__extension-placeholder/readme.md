@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-placeholder @remirror/pm
+yarn add @remirror/extension-placeholder
 
 # pnpm
-pnpm add @remirror/extension-placeholder @remirror/pm
+pnpm add @remirror/extension-placeholder
 
 # npm
-npm install @remirror/extension-placeholder @remirror/pm
+npm install @remirror/extension-placeholder
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

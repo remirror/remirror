@@ -35,6 +35,9 @@
       "path": "../../remirror__react/src"
     },
     {
+      "path": "../../remirror__react-debugger/src"
+    },
+    {
       "path": "../../create-context-state/src"
     },
     {

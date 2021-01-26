@@ -40,7 +40,7 @@
       "path": "../../../packages/remirror__pm/src"
     },
     {
-      "path": "../../../packages/remirror__react-components/src"
+      "path": "../../../packages/remirror__react/src"
     },
     {
       "path": "../../../packages/create-context-state/src"

@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-bidi @remirror/pm
+yarn add @remirror/extension-bidi
 
 # pnpm
-pnpm add @remirror/extension-bidi @remirror/pm
+pnpm add @remirror/extension-bidi
 
 # npm
-npm install @remirror/extension-bidi @remirror/pm
+npm install @remirror/extension-bidi
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

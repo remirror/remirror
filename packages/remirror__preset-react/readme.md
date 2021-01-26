@@ -18,13 +18,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/preset-react @remirror/pm
+yarn add @remirror/preset-react
 
 # pnpm
-pnpm add @remirror/preset-react @remirror/pm
+pnpm add @remirror/preset-react
 
 # npm
-npm install @remirror/preset-react @remirror/pm
+npm install @remirror/preset-react
 ```
 
 This package is available via `remirror/presets` when you install `remirror`.

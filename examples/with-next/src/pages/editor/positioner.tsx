@@ -13,7 +13,7 @@ import {
   ThemeProvider,
   useRemirror,
   useRemirrorContext,
-} from 'remirror/react';
+} from '@remirror/react';
 
 const extensions = () => [
   new HeadingExtension(),

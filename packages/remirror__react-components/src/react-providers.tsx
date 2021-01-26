@@ -5,13 +5,19 @@
  */
 
 import { cx } from '@linaria/core';
-import type { ElementType, ReactElement, ReactNode } from 'react';
-import { createContext, useContext, useEffect, useMemo } from 'react';
+import {
+  createContext,
+  ElementType,
+  ReactElement,
+  ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+} from 'react';
 import { Provider as ReakitProvider } from 'reakit';
 import { deepMerge } from '@remirror/core';
 import { I18n, i18n } from '@remirror/i18n';
-import type { RemirrorThemeType } from '@remirror/theme';
-import { createThemeVariables, CSSProperties, Theme } from '@remirror/theme';
+import { createThemeVariables, CSSProperties, RemirrorThemeType, Theme } from '@remirror/theme';
 
 import * as system from './system';
 

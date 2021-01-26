@@ -12,7 +12,7 @@ Get started by creating the editor below, which is currently uncontrolled.
 ```tsx
 import React from 'react';
 import { BoldExtension } from 'remirror/extensions';
-import { Remirror, useRemirror } from 'remirror/react';
+import { Remirror, useRemirror } from '@remirror/react';
 
 // This is a function that returns the list of extensions and presets we want to
 // use. It's helpful to set up this way since the template can be reused
@@ -37,7 +37,7 @@ To simplify this process there are two properties provided by the `useRemirror` 
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { BoldExtension } from 'remirror/extensions';
-import { Remirror, useRemirror } from 'remirror/react';
+import { Remirror, useRemirror } from '@remirror/react';
 
 const extensions = () => [new BoldExtension()];
 
@@ -76,7 +76,7 @@ For example, the following change handler now intercepts the state update in ord
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { BoldExtension } from 'remirror/extensions';
-import { Remirror, useRemirror } from 'remirror/react';
+import { Remirror, useRemirror } from '@remirror/react';
 
 const extensions = () => [new BoldExtension()];
 
@@ -115,7 +115,7 @@ Maybe you don't need to intercept the onChange callback, all you need is access 
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { BoldExtension } from 'remirror/extensions';
-import { Remirror, useRemirror } from 'remirror/react';
+import { Remirror, useRemirror } from '@remirror/react';
 
 const extensions = () => [new BoldExtension()];
 

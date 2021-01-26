@@ -32,9 +32,9 @@ The following code creates adds an `en` translation to your social editor.
 ```tsx
 import { en as enPlurals } from 'make-plural/plurals';
 import React from 'react';
-import { SocialEditor } from 'remirror/react';
 import { i18n } from '@remirror/i18n';
 import en from '@remirror/i18n/en/messages';
+import { SocialEditor } from '@remirror/react';
 
 i18n.loadLocaleData('en', { plurals: anPlurals });
 

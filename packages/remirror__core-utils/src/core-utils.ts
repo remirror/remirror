@@ -1143,7 +1143,7 @@ export interface StringHandlerOptions extends Partial<CustomDocumentProps>, Sche
  *
  * ```tsx
  * import { fromHtml } from 'remirror';
- * import { Remirror, useManager } from 'remirror/react';
+ * import { Remirror, useManager } from '@remirror/react';
  *
  * const Editor = () => {
  *   const manager = useManager([]);

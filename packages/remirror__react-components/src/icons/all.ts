@@ -379,7 +379,6 @@ import {
   closedCaptioningFill,
   closedCaptioningLine,
   closeFill,
-  closeLine,
   cloudFill,
   cloudLine,
   cloudOffFill,
@@ -567,7 +566,6 @@ import {
   draftFill,
   draftLine,
   dragDropFill,
-  dragDropLine,
   dragMove2Fill,
   dragMove2Line,
   dragMoveFill,
@@ -1225,8 +1223,6 @@ import {
   mapPinTimeLine,
   mapPinUserFill,
   mapPinUserLine,
-  markdownFill,
-  markdownLine,
   markPenFill,
   markupFill,
   markupLine,
@@ -5182,14 +5178,6 @@ export const CloseFillIcon: IconType = (props) => {
 };
 
 /**
- * The react component for the `close-line.svg` icon created by [RemixIcons](https://remixicons.com).
- * ![Close Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/close-line.svg)
- */
-export const CloseLineIcon: IconType = (props) => {
-  return GenIcon(closeLine)(props);
-};
-
-/**
  * The react component for the `closed-captioning-fill.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Closed Captioning Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Media/closed-captioning-fill.svg)
  */
@@ -6699,14 +6687,6 @@ export const DraftLineIcon: IconType = (props) => {
  */
 export const DragDropFillIcon: IconType = (props) => {
   return GenIcon(dragDropFill)(props);
-};
-
-/**
- * The react component for the `drag-drop-line.svg` icon created by [RemixIcons](https://remixicons.com).
- * ![Drag Drop Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Design/drag-drop-line.svg)
- */
-export const DragDropLineIcon: IconType = (props) => {
-  return GenIcon(dragDropLine)(props);
 };
 
 /**
@@ -11955,22 +11935,6 @@ export const MapPinUserLineIcon: IconType = (props) => {
  */
 export const MarkPenFillIcon: IconType = (props) => {
   return GenIcon(markPenFill)(props);
-};
-
-/**
- * The react component for the `markdown-fill.svg` icon created by [RemixIcons](https://remixicons.com).
- * ![Markdown Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Document/markdown-fill.svg)
- */
-export const MarkdownFillIcon: IconType = (props) => {
-  return GenIcon(markdownFill)(props);
-};
-
-/**
- * The react component for the `markdown-line.svg` icon created by [RemixIcons](https://remixicons.com).
- * ![Markdown Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Document/markdown-line.svg)
- */
-export const MarkdownLineIcon: IconType = (props) => {
-  return GenIcon(markdownLine)(props);
 };
 
 /**

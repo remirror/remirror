@@ -9,13 +9,14 @@ import globby from 'globby';
 import path from 'path';
 import { camelCase, invariant, pascalCase } from '@remirror/core-helpers';
 
+import { notifyUpdate } from '../cli-utils';
 import { BaseCommand, CommandString, GetShapeOfCommandData } from './base-command';
 
 /**
  * Create a new `@remirror` package.
  */
 export class CreateCommand extends BaseCommand {
-  static paths = [['create'], ['c']];
+  static paths = [['create']];
   static usage = Command.Usage({
     description: 'Create a package from a template directory.',
     category: 'Create',
@@ -61,6 +62,7 @@ export class CreateCommand extends BaseCommand {
       : ('minimal-template' as const);
 
     createPackage(template, this);
+    notifyUpdate(this.context);
   }
 }
 
@@ -198,7 +200,7 @@ async function createPackage(
   { name, description, cwd }: RemirrorCli.Commands['create'],
 ) {
   const templateDirectory = path.join(cwd, 'support/templates', template);
-  const outputDirectory = path.join(cwd, 'packages', name);
+  const outputDirectory = path.join(cwd, 'packages', mangleScopedPackageName(name));
   const stat = await getFileStatSync(outputDirectory);
 
   if (stat?.isDirectory()) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { assertGet } from 'remirror';
+import { assertGet } from '@remirror/core';
 
 import { useDebuggerStore } from '../../debugger-state';
 import { JsonTree } from '../json-tree';

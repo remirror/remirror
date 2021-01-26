@@ -6,8 +6,8 @@
 import { createContextState } from 'create-context-state';
 import { ComponentType, useEffect, useRef } from 'react';
 import { AnyRemirrorManager, EditorState, FromToProps, object, RemirrorJSON } from 'remirror';
-import { useEditorState, useRemirrorContext } from 'remirror/react';
 import useLayoutEffect from 'use-isomorphic-layout-effect';
+import { useEditorState, useRemirrorContext } from '@remirror/react';
 
 import { PLAYGROUND_DEBUG } from '../playground-constants';
 import { DebugComponentProps } from '../playground-types';

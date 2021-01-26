@@ -28,7 +28,7 @@ import {
   ToolbarItemUnion,
   useRemirror,
   UseRemirrorReturn,
-} from 'remirror/react';
+} from '@remirror/react';
 
 /**
  * The editor which is used to create the annotation. Supports formatting.

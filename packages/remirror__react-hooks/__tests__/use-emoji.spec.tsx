@@ -2,9 +2,9 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { RemirrorTestChain } from 'jest-remirror';
 import { FC } from 'react';
 import { EmojiExtension } from 'remirror/extensions';
-import { createReactManager, Remirror, useRemirrorContext } from 'remirror/react';
 import data from 'svgmoji/emoji.json';
 import { act as renderAct, strictRender } from 'testing/react';
+import { createReactManager, Remirror, useRemirrorContext } from '@remirror/react';
 
 import { EmojiState, useEmoji } from '../use-emoji';
 

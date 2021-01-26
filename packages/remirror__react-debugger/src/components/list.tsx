@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { ReactNode, useCallback, useState } from 'react';
 import { assert, isArray, noop } from '@remirror/core';
-import { Icon } from '@remirror/react-components';
+import { Icon } from '@remirror/react';
 
 import { mainTheme } from '../debugger-constants';
 

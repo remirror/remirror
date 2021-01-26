@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import type { FocusType } from '@remirror/core';
-import { useRemirrorContext } from '@remirror/react';
+import { useRemirrorContext } from '@remirror/react-core';
 
 import { useEvents } from './use-events';
 

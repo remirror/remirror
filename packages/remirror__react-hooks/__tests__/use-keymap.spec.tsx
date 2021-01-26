@@ -1,7 +1,7 @@
 import { RemirrorTestChain } from 'jest-remirror';
-import { createReactManager, Remirror, useRemirror } from 'remirror/react';
 import { act, strictRender } from 'testing/react';
 import { ExtensionPriority, prosemirrorNodeToHtml } from '@remirror/core';
+import { createReactManager, Remirror, useRemirror } from '@remirror/react';
 
 import { useKeymap } from '../use-keymap';
 

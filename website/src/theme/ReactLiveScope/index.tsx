@@ -7,7 +7,7 @@ import {
   useManager,
   usePositioner,
   useRemirror,
-} from 'remirror/react';
+} from '@remirror/react';
 
 const exampleUsers = [
   {

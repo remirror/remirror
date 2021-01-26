@@ -29,7 +29,7 @@ import {
   useHelpers,
   useI18n,
   useRemirrorContext,
-} from '@remirror/react';
+} from '@remirror/react-core';
 import { ComponentsTheme } from '@remirror/theme';
 
 import { CommandIcon } from './core-components';

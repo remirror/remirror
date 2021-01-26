@@ -7,9 +7,9 @@ Add mention and suggesters support to remirror.
 ## Installation
 
 ```bash
-yarn add @remirror/extension-mention @remirror/pm # yarn
-pnpm add @remirror/extension-mention @remirror/pm # pnpm
-npm install @remirror/extension-mention @remirror/pm # npm
+yarn add @remirror/extension-mention # yarn
+pnpm add @remirror/extension-mention # pnpm
+npm install @remirror/extension-mention # npm
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

@@ -242,7 +242,7 @@ export class RemirrorManager<Extension extends AnyExtension> {
    *
    * ```tsx
    * import React, { useEffect } from 'react';
-   * import { useRemirror, Remirror } from 'remirror/react';
+   * import { useRemirror, Remirror } from '@remirror/react';
    *
    * const Editor = () => {
    *   const { manager } = useRemirror();
@@ -1022,7 +1022,7 @@ declare global {
        * ```tsx
        * import React from 'react';
        * import { Remirror, InvalidContentHandler } from 'remirror';
-       * import { Remirror, useManager } from 'remirror/react';
+       * import { Remirror, useManager } from '@remirror/react';
        * import { WysiwygPreset } from 'remirror/extensions';
        *
        * const Editor = () => {

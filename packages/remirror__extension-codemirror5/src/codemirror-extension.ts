@@ -1,5 +1,6 @@
 import {
   ApplySchemaAttributes,
+  command,
   CommandFunction,
   EditorView,
   extension,
@@ -94,31 +95,30 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
     };
   }
 
-  createCommands() {
-    return {
-      /**
-       * Creates a CodeMirror block at the current position.
-       *
-       * ```ts
-       * commands.createCodeMirror({ language: 'js' });
-       * ```
-       */
-      createCodeMirror: (attributes: CodeMirrorExtensionAttributes): CommandFunction => {
-        return setBlockType(this.type, attributes);
-      },
+  /**
+   * Creates a CodeMirror block at the current position.
+   *
+   * ```ts
+   * commands.createCodeMirror({ language: 'js' });
+   * ```
+   */
+  @command()
+  createCodeMirror(attributes: CodeMirrorExtensionAttributes): CommandFunction {
+    return setBlockType(this.type, attributes);
+  }
 
-      /**
-       * Update the code block at the current position. Primarily this is used
-       * to change the language.
-       *
-       * ```ts
-       * if (commands.updateCodeMirror.isEnabled()) {
-       *   commands.updateCodeMirror({ language: 'markdown' });
-       * }
-       * ```
-       */
-      updateCodeMirror: (attributes: CodeMirrorExtensionAttributes): CommandFunction =>
-        updateNodeAttributes(this.type)(attributes),
-    };
+  /**
+   * Update the code block at the current position. Primarily this is used
+   * to change the language.
+   *
+   * ```ts
+   * if (commands.updateCodeMirror.isEnabled()) {
+   *   commands.updateCodeMirror({ language: 'markdown' });
+   * }
+   * ```
+   */
+  @command()
+  updateCodeMirror(attributes: CodeMirrorExtensionAttributes): CommandFunction {
+    return updateNodeAttributes(this.type)(attributes);
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-debugger",
-  "version": "1.0.0-next.60",
+  "version": "0.0.0",
   "description": "A debugger forked from prosemirror-dev-tool for your remirror editor",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__dev",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-debugger",
@@ -45,7 +45,6 @@
     "@remirror/core": "1.0.0-next.60",
     "@remirror/pm": "1.0.0-next.60",
     "@remirror/react": "1.0.0-next.60",
-    "@remirror/react-components": "1.0.0-next.40",
     "@types/html": "^1.0.0",
     "@types/prosemirror-dev-tools": "^2.1.0",
     "create-context-state": "0.0.0",

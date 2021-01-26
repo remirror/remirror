@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-font-family @remirror/pm
+yarn add @remirror/extension-font-family
 
 # pnpm
-pnpm add @remirror/extension-font-family @remirror/pm
+pnpm add @remirror/extension-font-family
 
 # npm
-npm install @remirror/extension-font-family @remirror/pm
+npm install @remirror/extension-font-family
 ```
 
 ## Usage

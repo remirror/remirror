@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-text-highlight @remirror/pm
+yarn add @remirror/extension-text-highlight
 
 # pnpm
-pnpm add @remirror/extension-text-highlight @remirror/pm
+pnpm add @remirror/extension-text-highlight
 
 # npm
-npm install @remirror/extension-text-highlight @remirror/pm
+npm install @remirror/extension-text-highlight
 ```
 
 ## Usage

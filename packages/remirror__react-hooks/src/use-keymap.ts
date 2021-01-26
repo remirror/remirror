@@ -1,5 +1,5 @@
 import { ExtensionPriority, KeyBindings, KeymapExtension } from '@remirror/core';
-import { useExtension } from '@remirror/react';
+import { useExtension } from '@remirror/react-core';
 
 /**
  * Add custom keyboard bindings to the editor instance.
@@ -7,7 +7,7 @@ import { useExtension } from '@remirror/react';
  * @remarks
  *
  * ```tsx
- * import { Remirror, useRemirror, useRemirrorContext, useKeymap  } from 'remirror/react';
+ * import { Remirror, useRemirror, useRemirrorContext, useKeymap  } from '@remirror/react';
  *
  * const Editor = () => {
  *   const { manager } = useRemirror({ extensions: () => [] });

@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-node-formatting @remirror/pm
+yarn add @remirror/extension-node-formatting
 
 # pnpm
-pnpm add @remirror/extension-node-formatting @remirror/pm
+pnpm add @remirror/extension-node-formatting
 
 # npm
-npm install @remirror/extension-node-formatting @remirror/pm
+npm install @remirror/extension-node-formatting
 ```
 
 ## Usage

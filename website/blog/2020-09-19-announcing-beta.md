@@ -62,7 +62,7 @@ One of the big changes is a hugely improved API for `@remirror/react`.
 import React from 'react';
 import { fromHtml, toHtml } from 'remirror';
 import { BoldExtension, CorePreset, ItalicExtension } from 'remirror/extension';
-import { Remirror, useRemirror, useRemirrorContext } from 'remirror/react';
+import { Remirror, useRemirror, useRemirrorContext } from '@remirror/react';
 
 const Editor = () => {
   const { manager, onChange, state } = useRemirror({

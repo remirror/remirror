@@ -178,7 +178,7 @@ export interface FrameworkProps<Extension extends AnyExtension> {
    * ```tsx
    * import React from 'react';
    * import { Remirror, InvalidContentHandler } from 'remirror';
-   * import { Remirror, useManager } from 'remirror/react';
+   * import { Remirror, useManager } from '@remirror/react';
    * import { WysiwygPreset } from 'remirror/extensions';
    *
    * const Framework = () => {

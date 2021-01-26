@@ -6,7 +6,7 @@ import {
   MentionAtomNodeAttributes,
 } from '@remirror/extension-mention-atom';
 import { ChangeReason, SuggestChangeHandlerProps } from '@remirror/pm/suggest';
-import { useExtension, useRemirrorContext } from '@remirror/react';
+import { useExtension, useRemirrorContext } from '@remirror/react-core';
 
 import { indexFromArrowPress } from './react-hook-utils';
 import { useKeymap } from './use-keymap';

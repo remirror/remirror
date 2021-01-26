@@ -5,9 +5,9 @@
 ## Installation
 
 ```bash
-yarn add @remirror/extension-tables @remirror/pm # yarn
-pnpm add @remirror/extension-tables @remirror/pm # pnpm
-npm install @remirror/extension-tables @remirror/pm # npm
+yarn add @remirror/extension-tables # yarn
+pnpm add @remirror/extension-tables # pnpm
+npm install @remirror/extension-tables # npm
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

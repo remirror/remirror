@@ -49,7 +49,7 @@ import type { GetOptions, TypedPropertyDescriptor } from '../types';
  * The above helper can now be used within your editor instance.
  *
  * ```tsx
- * import { useRemirrorContext } from 'remirror/react';
+ * import { useRemirrorContext } from '@remirror/react';
  *
  * const MyEditorButton = () => {
  *   const { helpers } = useRemirrorContext();
@@ -113,7 +113,7 @@ export function helper(options: HelperDecoratorOptions = {}) {
  * The above command can now be used within your editor instance.
  *
  * ```tsx
- * import { useRemirrorContext } from 'remirror/react';
+ * import { useRemirrorContext } from '@remirror/react';
  *
  * const MyEditorButton = () => {
  *   const { commands } = useRemirrorContext();

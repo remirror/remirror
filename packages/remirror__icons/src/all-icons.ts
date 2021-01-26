@@ -1,6 +1,6 @@
 /** THIS FILE IS AUTO GENERATED */
 
-import { IconTree } from './icon-types';
+import type { IconTree } from './icon-types';
 
 /**
  * The icon for `twenty-four-hours-fill.svg` created by [RemixIcons](https://remixicons.com).
@@ -5514,21 +5514,6 @@ export const closeFill: IconTree[] = [
 ];
 
 /**
- * The icon for `close-line.svg` created by [RemixIcons](https://remixicons.com).
- * ![Close Line](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/close-line.svg)
- */
-export const closeLine: IconTree[] = [
-  { tag: 'path', attr: { fill: 'none', d: 'M0 0h24v24H0z' } },
-  {
-    tag: 'path',
-    attr: {
-      d:
-        'M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z',
-    },
-  },
-];
-
-/**
  * The icon for `closed-captioning-fill.svg` created by [RemixIcons](https://remixicons.com).
  * ![Closed Captioning Fill](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Media/closed-captioning-fill.svg)
  */
@@ -8353,22 +8338,6 @@ export const dragDropFill: IconTree[] = [
       fillRule: 'nonzero',
       d:
         'M14 6h2v2h5a1 1 0 0 1 1 1v7.5L16 13l.036 8.062 2.223-2.15L20.041 22H9a1 1 0 0 1-1-1v-5H6v-2h2V9a1 1 0 0 1 1-1h5V6zm8 11.338V21a1 1 0 0 1-.048.307l-1.96-3.394L22 17.338zM4 14v2H2v-2h2zm0-4v2H2v-2h2zm0-4v2H2V6h2zm0-4v2H2V2h2zm4 0v2H6V2h2zm4 0v2h-2V2h2zm4 0v2h-2V2h2z',
-    },
-  },
-];
-
-/**
- * The icon for `drag-drop-line.svg` created by [RemixIcons](https://remixicons.com).
- * ![Drag Drop Line](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Design/drag-drop-line.svg)
- */
-export const dragDropLine: IconTree[] = [
-  { tag: 'path', attr: { fill: 'none', d: 'M0 0h24v24H0z' } },
-  {
-    tag: 'path',
-    attr: {
-      fillRule: 'nonzero',
-      d:
-        'M16 13l6.964 4.062-2.973.85 2.125 3.681-1.732 1-2.125-3.68-2.223 2.15L16 13zm-2-7h2v2h5a1 1 0 0 1 1 1v4h-2v-3H10v10h4v2H9a1 1 0 0 1-1-1v-5H6v-2h2V9a1 1 0 0 1 1-1h5V6zM4 14v2H2v-2h2zm0-4v2H2v-2h2zm0-4v2H2V6h2zm0-4v2H2V2h2zm4 0v2H6V2h2zm4 0v2h-2V2h2zm4 0v2h-2V2h2z',
     },
   },
 ];
@@ -18203,37 +18172,6 @@ export const markPenFill: IconTree[] = [
     attr: {
       d:
         'M15.95 2.393l5.657 5.657a1 1 0 0 1 0 1.414l-7.779 7.779-2.12.707-1.415 1.414a1 1 0 0 1-1.414 0l-4.243-4.243a1 1 0 0 1 0-1.414l1.414-1.414.707-2.121 7.779-7.779a1 1 0 0 1 1.414 0zm.707 3.536l-6.364 6.364 1.414 1.414 6.364-6.364-1.414-1.414zM4.282 16.889l2.829 2.829-1.414 1.414-4.243-1.414 2.828-2.829z',
-    },
-  },
-];
-
-/**
- * The icon for `markdown-fill.svg` created by [RemixIcons](https://remixicons.com).
- * ![Markdown Fill](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Document/markdown-fill.svg)
- */
-export const markdownFill: IconTree[] = [
-  { tag: 'path', attr: { fill: 'none', d: 'M0 0h24v24H0z' } },
-  {
-    tag: 'path',
-    attr: {
-      d:
-        'M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm4 12.5v-4l2 2 2-2v4h2v-7h-2l-2 2-2-2H5v7h2zm11-3v-4h-2v4h-2l3 3 3-3h-2z',
-    },
-  },
-];
-
-/**
- * The icon for `markdown-line.svg` created by [RemixIcons](https://remixicons.com).
- * ![Markdown Line](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Document/markdown-line.svg)
- */
-export const markdownLine: IconTree[] = [
-  { tag: 'path', attr: { fill: 'none', d: 'M0 0h24v24H0z' } },
-  {
-    tag: 'path',
-    attr: {
-      fillRule: 'nonzero',
-      d:
-        'M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm1 2v14h16V5H4zm3 10.5H5v-7h2l2 2 2-2h2v7h-2v-4l-2 2-2-2v4zm11-3h2l-3 3-3-3h2v-4h2v4z',
     },
   },
 ];

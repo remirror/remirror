@@ -1,5 +1,5 @@
-import { createReactManager, Remirror, useRemirrorContext } from 'remirror/react';
 import { act, strictRender } from 'testing/react';
+import { createReactManager, Remirror, useRemirrorContext } from '@remirror/react';
 
 import { PortalContainer, RemirrorPortals, usePortals } from '../';
 

@@ -22,6 +22,7 @@ import * as remirrorExtensionBold from '@remirror/extension-bold';
 import * as remirrorExtensionCallout from '@remirror/extension-callout';
 import * as remirrorExtensionCode from '@remirror/extension-code';
 import * as remirrorExtensionCodeBlock from '@remirror/extension-code-block';
+import * as remirrorExtensionCodemirror5 from '@remirror/extension-codemirror5';
 import * as remirrorExtensionCollaboration from '@remirror/extension-collaboration';
 import * as remirrorExtensionColumns from '@remirror/extension-columns';
 import * as remirrorExtensionDiff from '@remirror/extension-diff';
@@ -46,13 +47,14 @@ import * as remirrorExtensionMarkdown from '@remirror/extension-markdown';
 import * as remirrorExtensionMention from '@remirror/extension-mention';
 import * as remirrorExtensionMentionAtom from '@remirror/extension-mention-atom';
 import * as remirrorExtensionNativeBridge from '@remirror/extension-native-bridge';
+import * as remirrorExtensionNodeFormatting from '@remirror/extension-node-formatting';
 import * as remirrorExtensionParagraph from '@remirror/extension-paragraph';
 import * as remirrorExtensionPlaceholder from '@remirror/extension-placeholder';
 import * as remirrorExtensionPositioner from '@remirror/extension-positioner';
-import * as remirrorExtensionReactComponent from '@remirror/extension-react-component';
-import * as remirrorExtensionReactSsr from '@remirror/extension-react-ssr';
 import * as remirrorExtensionSearch from '@remirror/extension-search';
 import * as remirrorExtensionStrike from '@remirror/extension-strike';
+import * as remirrorExtensionSub from '@remirror/extension-sub';
+import * as remirrorExtensionSup from '@remirror/extension-sup';
 import * as remirrorExtensionTables from '@remirror/extension-tables';
 import * as remirrorExtensionText from '@remirror/extension-text';
 import * as remirrorExtensionTextCase from '@remirror/extension-text-case';
@@ -65,13 +67,7 @@ import * as remirrorExtensionWhitespace from '@remirror/extension-whitespace';
 import * as remirrorExtensionYjs from '@remirror/extension-yjs';
 import * as remirrorPresetCore from '@remirror/preset-core';
 import * as remirrorPresetFormatting from '@remirror/preset-formatting';
-import * as remirrorPresetReact from '@remirror/preset-react';
 import * as remirrorPresetWysiwyg from '@remirror/preset-wysiwyg';
-import * as remirrorReact from '@remirror/react';
-import * as remirrorReactRenderers from '@remirror/react/renderers';
-import * as remirrorReactComponents from '@remirror/react-components';
-import * as remirrorReactHooks from '@remirror/react-hooks';
-import * as remirrorReactUtils from '@remirror/react-utils';
 import * as remirrorTheme from '@remirror/theme';
 
 export const PlaygroundImports = {
@@ -122,6 +118,10 @@ export const PlaygroundImports = {
   '@remirror/extension-underline': remirrorExtensionUnderline,
   '@remirror/extension-whitespace': remirrorExtensionWhitespace,
   '@remirror/extension-yjs': remirrorExtensionYjs,
+  '@remirror/extension-codemirror5': remirrorExtensionCodemirror5,
+  '@remirror/extension-node-formatting': remirrorExtensionNodeFormatting,
+  '@remirror/extension-sub': remirrorExtensionSub,
+  '@remirror/extension-sup': remirrorExtensionSup,
 
   // Presets
   '@remirror/preset-core': remirrorPresetCore,
@@ -138,21 +138,4 @@ export const PlaygroundImports = {
 
   // DOM
   '@remirror/dom': remirrorDom,
-
-  // React
-  '@remirror/extension-react-component': remirrorExtensionReactComponent,
-  '@remirror/extension-react-ssr': remirrorExtensionReactSsr,
-  '@remirror/preset-react': remirrorPresetReact,
-  '@remirror/react-components': remirrorReactComponents,
-  '@remirror/react-hooks': remirrorReactHooks,
-  '@remirror/react-utils': remirrorReactUtils,
-  '@remirror/react': remirrorReact,
-  '@remirror/react/renderers': remirrorReactRenderers,
 } as const;
-
-export interface PlaygroundExportProps {
-  /**
-   * Use this component to add a debugger to the rendered editor.
-   */
-  DebugComponent: import('react').ComponentType<{ name?: string }>;
-}

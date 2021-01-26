@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-text-case @remirror/pm
+yarn add @remirror/extension-text-case
 
 # pnpm
-pnpm add @remirror/extension-text-case @remirror/pm
+pnpm add @remirror/extension-text-case
 
 # npm
-npm install @remirror/extension-text-case @remirror/pm
+npm install @remirror/extension-text-case
 ```
 
 ## Usage

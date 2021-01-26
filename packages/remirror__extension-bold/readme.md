@@ -17,9 +17,9 @@
 ## Installation
 
 ```bash
-yarn add @remirror/extension-bold @remirror/pm # yarn
-pnpm add @remirror/extension-bold @remirror/pm # pnpm
-npm install @remirror/extension-bold @remirror/pm # npm
+yarn add @remirror/extension-bold # yarn
+pnpm add @remirror/extension-bold # pnpm
+npm install @remirror/extension-bold # npm
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

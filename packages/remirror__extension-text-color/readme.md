@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-text-color @remirror/pm
+yarn add @remirror/extension-text-color
 
 # pnpm
-pnpm add @remirror/extension-text-color @remirror/pm
+pnpm add @remirror/extension-text-color
 
 # npm
-npm install @remirror/extension-text-color @remirror/pm
+npm install @remirror/extension-text-color
 ```
 
 ## Usage

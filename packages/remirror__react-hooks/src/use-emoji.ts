@@ -7,7 +7,7 @@ import {
   EmojiSuggestHandlerProps,
   FlatEmoji,
 } from '@remirror/extension-emoji';
-import { useExtension, useHelpers } from '@remirror/react';
+import { useExtension, useHelpers } from '@remirror/react-core';
 
 import { indexFromArrowPress } from './react-hook-utils';
 import { useKeymap } from './use-keymap';

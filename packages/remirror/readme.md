@@ -36,7 +36,7 @@ The following creates a controlled editor with React.
 ```tsx
 import React from 'react';
 import { socialPreset } from 'remirror/extensions';
-import { Remirror, SocialEmojiComponent, useRemirror } from 'remirror/react';
+import { Remirror, SocialEmojiComponent, useRemirror } from '@remirror/react';
 
 const EditorWrapper = () => {
   const socialPreset = new SocialPreset();
@@ -54,5 +54,4 @@ These are the entry points available through the `remirror` package.
 
 - `remirror` - All the core functionality available through `@remirror/core`.
 - `remirror/extensions` - All the core extensions and presets made available through the main `remirror` repository. This doesn't include any framework specific extensions and presets.
-- `remirror/react` - All the react specific functionality including, hooks, presets, extensions and the main `Remirror` component.
 - `remirror/dom` - The dom framework implementation of via `createDomEditor`.

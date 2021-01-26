@@ -17,9 +17,9 @@
 ## Installation
 
 ```bash
-yarn add @remirror/extension-paragraph @remirror/pm # yarn
-pnpm add @remirror/extension-paragraph @remirror/pm # pnpm
-npm install @remirror/extension-paragraph @remirror/pm # npm
+yarn add @remirror/extension-paragraph # yarn
+pnpm add @remirror/extension-paragraph # pnpm
+npm install @remirror/extension-paragraph # npm
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

@@ -29,7 +29,7 @@ Whenever an error occurs due to invalid content you will have the chance to inte
 import React from 'react';
 import { InvalidContentHandler } from 'remirror';
 import { wysiwygPreset } from 'remirror/extensions';
-import { Remirror, useRemirror } from 'remirror/react';
+import { Remirror, useRemirror } from '@remirror/react';
 
 const Editor = () => {
   const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {

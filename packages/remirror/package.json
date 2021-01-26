@@ -124,8 +124,6 @@
     "@remirror/extension-paragraph": "1.0.0-next.60",
     "@remirror/extension-placeholder": "1.0.0-next.60",
     "@remirror/extension-positioner": "1.0.0-next.60",
-    "@remirror/extension-react-component": "1.0.0-next.60",
-    "@remirror/extension-react-ssr": "1.0.0-next.60",
     "@remirror/extension-search": "1.0.0-next.60",
     "@remirror/extension-strike": "1.0.0-next.60",
     "@remirror/extension-sub": "0.0.0",
@@ -144,37 +142,24 @@
     "@remirror/pm": "1.0.0-next.60",
     "@remirror/preset-core": "1.0.0-next.60",
     "@remirror/preset-formatting": "0.0.0",
-    "@remirror/preset-react": "1.0.0-next.60",
     "@remirror/preset-wysiwyg": "1.0.0-next.60",
-    "@remirror/react": "1.0.0-next.60",
-    "@remirror/react-components": "1.0.0-next.40",
-    "@remirror/react-hooks": "1.0.0-next.60",
-    "@remirror/react-utils": "1.0.0-next.60",
     "@remirror/theme": "1.0.0-next.60"
   },
   "devDependencies": {
     "@types/codemirror": "^0.0.106",
     "@types/prettier": "^2.1.6",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
     "@types/refractor": "^3.0.0",
     "codemirror": "^5.59.2",
     "prettier": "^2.2.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
     "refractor": "^3.3.1",
     "yjs": "^13.4.12"
   },
   "peerDependencies": {
     "@types/codemirror": "^0.0.98",
     "@types/prettier": "^2.1.5",
-    "@types/react": "^16.14.0 || ^17",
-    "@types/react-dom": "^16.9.0 || ^17",
     "@types/refractor": "^3.0.0",
     "codemirror": "^5.58.2",
     "prettier": "^2.2.0",
-    "react": "^16.14.0 || ^17",
-    "react-dom": "^16.14.0 || ^17",
     "refractor": "^3.2.0",
     "yjs": "^13.4.0"
   },
@@ -185,12 +170,6 @@
     "@types/prettier": {
       "optional": true
     },
-    "@types/react": {
-      "optional": true
-    },
-    "@types/react-dom": {
-      "optional": true
-    },
     "@types/refractor": {
       "optional": true
     },
@@ -198,12 +177,6 @@
       "optional": true
     },
     "prettier": {
-      "optional": true
-    },
-    "react": {
-      "optional": true
-    },
-    "react-dom": {
       "optional": true
     },
     "refractor": {
@@ -223,8 +196,7 @@
       "extensions.ts",
       "icons.ts",
       "index.ts",
-      "playground.ts",
-      "react.ts"
+      "playground.ts"
     ]
   }
 }

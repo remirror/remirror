@@ -28,7 +28,5 @@ cli.runExit(process.argv.slice(2), {
   name,
   internal: false,
   cwd: process.cwd(),
-  stdin: process.stdin,
-  stdout: process.stdout,
-  stderr: process.stderr,
+  ...Cli.defaultContext,
 });

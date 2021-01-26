@@ -121,13 +121,14 @@
     "@remirror/extension-positioner": "1.0.0-next.60",
     "@remirror/i18n": "1.0.0-next.60",
     "@remirror/pm": "1.0.0-next.60",
-    "@remirror/react": "1.0.0-next.60",
+    "@remirror/react-core": "0.0.0",
     "@remirror/react-utils": "1.0.0-next.60",
     "type-fest": "^0.20.2",
     "use-isomorphic-layout-effect": "^1.1.1",
     "use-previous": "^1.1.0"
   },
   "devDependencies": {
+    "@remirror/react": "1.0.0-next.60",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "react": "^17.0.1",

@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-events @remirror/pm @remirror/core
+yarn add @remirror/extension-events @remirror/core
 
 # pnpm
-pnpm add @remirror/extension-events @remirror/pm @remirror/core
+pnpm add @remirror/extension-events @remirror/core
 
 # npm
-npm install @remirror/extension-events @remirror/pm @remirror/core
+npm install @remirror/extension-events @remirror/core
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

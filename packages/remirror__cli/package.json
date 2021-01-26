@@ -84,12 +84,6 @@
         "compilerOptions": {
           "allowJs": true
         }
-      },
-      "./": {
-        "include": [
-          "bin.js",
-          "src"
-        ]
       }
     }
   },

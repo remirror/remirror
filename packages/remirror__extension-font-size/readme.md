@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-font-size @remirror/pm
+yarn add @remirror/extension-font-size
 
 # pnpm
-pnpm add @remirror/extension-font-size @remirror/pm
+pnpm add @remirror/extension-font-size
 
 # npm
-npm install @remirror/extension-font-size @remirror/pm
+npm install @remirror/extension-font-size
 ```
 
 ## Usage

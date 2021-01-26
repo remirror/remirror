@@ -16,7 +16,7 @@ import { Except } from 'type-fest';
 import { ExtensionPriority, isEmptyArray } from '@remirror/core';
 import type { PositionerParam } from '@remirror/extension-positioner';
 import { getPositioner } from '@remirror/extension-positioner';
-import { useEditorDomRef, useHelpers } from '@remirror/react';
+import { useEditorDomRef, useHelpers } from '@remirror/react-core';
 import {
   useEditorFocus,
   UseEditorFocusProps,

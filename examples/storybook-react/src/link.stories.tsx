@@ -16,7 +16,7 @@ import {
   ThemeProvider,
   useExtension,
   useRemirror,
-} from 'remirror/react';
+} from '@remirror/react';
 
 export default { title: 'Link extension' };
 

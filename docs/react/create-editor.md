@@ -12,7 +12,7 @@ Creating an editor consists of two steps.
 ```tsx
 import React from 'react';
 import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions';
-import { Remirror, useRemirror } from 'remirror/react';
+import { Remirror, useRemirror } from '@remirror/react';
 
 const extensions = () => [
   new CorePreset(),
@@ -38,7 +38,7 @@ Let's create a menu and custom div to render the editor into.
 
 ```tsx
 import React from 'react';
-import { useRemirrorContext } from 'remirror/react';
+import { useRemirrorContext } from '@remirror/react';
 
 const Menu = () => {
   // Access the commands and the activity status of the editor.
@@ -85,7 +85,7 @@ Adding this to the initial Editor leaves us with the following.
 ```tsx
 import React from 'react';
 import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions';
-import { Remirror, useRemirror } from 'remirror/react';
+import { Remirror, useRemirror } from '@remirror/react';
 
 import { Menu, TextEditor } from './editor';
 
@@ -116,7 +116,7 @@ To set the initial content for the editor you can pass additional properties to 
 ```tsx
 import React from 'react';
 import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions';
-import { Remirror, useRemirror } from 'remirror/react';
+import { Remirror, useRemirror } from '@remirror/react';
 
 import { Menu } from './editor';
 

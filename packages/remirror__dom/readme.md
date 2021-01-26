@@ -24,13 +24,13 @@ The functionality of the prosemirror library is wrapped up into extensions which
 
 ```bash
 # yarn
-yarn add @remirror/dom @remirror/pm
+yarn add @remirror/dom
 
 # pnpm
-pnpm add @remirror/dom @remirror/pm
+pnpm add @remirror/dom
 
 # npm
-npm install @remirror/dom @remirror/pm
+npm install @remirror/dom
 ```
 
 ## Usage

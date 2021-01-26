@@ -18,13 +18,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/preset-wysiwyg @remirror/pm
+yarn add @remirror/preset-wysiwyg
 
 # pnpm
-pnpm add @remirror/preset-wysiwyg @remirror/pm
+pnpm add @remirror/preset-wysiwyg
 
 # npm
-npm install @remirror/preset-wysiwyg @remirror/pm
+npm install @remirror/preset-wysiwyg
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/presets`.

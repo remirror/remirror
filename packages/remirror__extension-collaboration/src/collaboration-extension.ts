@@ -1,5 +1,6 @@
 import { collab, getVersion, receiveTransaction, sendableSteps } from 'prosemirror-collab';
 import {
+  command,
   CommandFunction,
   debounce,
   EditorSchema,
@@ -43,37 +44,33 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
     this.getSendableSteps = debounce(this.options.debounceMs, this.getSendableSteps);
   }
 
-  createCommands() {
-    return {
-      /**
-       * Send a collaboration update.
-       */
-      sendCollaborationUpdate: (attributes: CollaborationAttributes): CommandFunction => ({
-        state,
-        dispatch,
-      }) => {
-        invariant(isValidCollaborationAttributes(attributes), {
-          message: 'Invalid attributes passed to the collaboration command.',
-        });
+  /**
+   * Send a collaboration update.
+   */
+  @command()
+  sendCollaborationUpdate(attributes: CollaborationAttributes): CommandFunction {
+    return ({ state, dispatch }) => {
+      invariant(isValidCollaborationAttributes(attributes), {
+        message: 'Invalid attributes passed to the collaboration command.',
+      });
 
-        const { version, steps } = attributes;
+      const { version, steps } = attributes;
 
-        if (getVersion(state) > version) {
-          return false;
-        }
+      if (getVersion(state) > version) {
+        return false;
+      }
 
-        if (dispatch) {
-          dispatch(
-            receiveTransaction(
-              state,
-              steps.map((item) => Step.fromJSON(this.store.schema, item)),
-              steps.map((item) => item.clientID),
-            ),
-          );
-        }
+      if (dispatch) {
+        dispatch(
+          receiveTransaction(
+            state,
+            steps.map((item) => Step.fromJSON(this.store.schema, item)),
+            steps.map((item) => item.clientID),
+          ),
+        );
+      }
 
-        return true;
-      },
+      return true;
     };
   }
 

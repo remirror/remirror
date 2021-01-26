@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-native-bridge @remirror/pm
+yarn add @remirror/extension-native-bridge
 
 # pnpm
-pnpm add @remirror/extension-native-bridge @remirror/pm
+pnpm add @remirror/extension-native-bridge
 
 # npm
-npm install @remirror/extension-native-bridge @remirror/pm
+npm install @remirror/extension-native-bridge
 ```
 
 ## Usage

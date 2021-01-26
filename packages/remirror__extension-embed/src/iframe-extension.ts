@@ -2,6 +2,7 @@ import { cx } from '@linaria/core';
 import { parse, stringify } from 'querystringify';
 import {
   ApplySchemaAttributes,
+  command,
   CommandFunction,
   extension,
   ExtensionTag,
@@ -115,49 +116,22 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
   }
 
   /**
-   * Provides the commands for the `iFrame` extension.
+   * Add a custom iFrame to the editor.
    */
-  createCommands() {
-    return {
-      /**
-       * Add a custom iFrame to the editor.
-       */
-      addIframe: (attributes: IframeAttributes): CommandFunction => this.addIframe(attributes),
-
-      /**
-       * Add a YouTube embedded iFrame to the editor.
-       */
-      addYouTubeVideo: (props: CreateYouTubeIframeProps): CommandFunction =>
-        this.addYouTubeVideo(props),
-
-      /**
-       * Update the iFrame source for the currently selected video.
-       */
-      updateIframeSource: (src: string): CommandFunction => this.updateIframeSource(src),
-
-      /**
-       * Update the YouTube video iFrame.
-       */
-      updateYouTubeVideo: (props: CreateYouTubeIframeProps): CommandFunction =>
-        this.updateYouTubeVideo(props),
-    };
-  }
-
-  /**
-   * Creates the command for adding an iFrame to the editor.
-   */
-  private readonly addIframe = (attributes: IframeAttributes): CommandFunction => {
+  @command()
+  addIframe(attributes: IframeAttributes): CommandFunction {
     return ({ tr, dispatch }) => {
       dispatch?.(tr.replaceSelectionWith(this.type.create(attributes)));
 
       return true;
     };
-  };
+  }
 
   /**
-   * The command for adding a YouTube iframe.
+   * Add a YouTube embedded iFrame to the editor.
    */
-  private addYouTubeVideo(props: CreateYouTubeIframeProps): CommandFunction {
+  @command()
+  addYouTubeVideo(props: CreateYouTubeIframeProps): CommandFunction {
     return this.addIframe({
       src: createYouTubeUrl(props),
       frameBorder: 0,
@@ -167,9 +141,10 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
   }
 
   /**
-   * Creates the command for updating the iFrame source.
+   * Update the iFrame source for the currently selected video.
    */
-  private readonly updateIframeSource = (src: string): CommandFunction => {
+  @command()
+  updateIframeSource(src: string): CommandFunction {
     return ({ tr, dispatch }) => {
       const found = findSelectedNodeOfType({ selection: tr.selection, types: this.type });
 
@@ -181,9 +156,13 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
 
       return true;
     };
-  };
+  }
 
-  private updateYouTubeVideo(props: CreateYouTubeIframeProps): CommandFunction {
+  /**
+   * Update the YouTube video iFrame.
+   */
+  @command()
+  updateYouTubeVideo(props: CreateYouTubeIframeProps): CommandFunction {
     return this.updateIframeSource(createYouTubeUrl(props));
   }
 }

@@ -18,13 +18,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/preset-template @remirror/pm
+yarn add @remirror/preset-template
 
 # pnpm
-pnpm add @remirror/preset-template @remirror/pm
+pnpm add @remirror/preset-template
 
 # npm
-npm install @remirror/preset-template @remirror/pm
+npm install @remirror/preset-template
 ```
 
 <br />

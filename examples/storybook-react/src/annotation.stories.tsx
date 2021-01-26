@@ -23,7 +23,7 @@ import {
   usePositioner,
   useRemirror,
   useRemirrorContext,
-} from 'remirror/react';
+} from '@remirror/react';
 
 export default { title: 'Annotation Extension' };
 

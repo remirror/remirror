@@ -107,6 +107,5 @@ export function createFramework(manager: AnyRemirrorManager): TestFramework {
 
 export { diff };
 export * from './object-nodes';
-export * from './typecheck';
 export type { FrameRequestCallback, MockRaf } from '@react-spring/mock-raf';
 export { default as minDocument } from 'min-document';

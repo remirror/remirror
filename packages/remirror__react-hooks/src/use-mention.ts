@@ -7,7 +7,7 @@ import type {
 } from '@remirror/extension-mention';
 import { MentionExtension } from '@remirror/extension-mention';
 import { ChangeReason, ExitReason, SuggestChangeHandlerProps } from '@remirror/pm/suggest';
-import { useExtension, useRemirrorContext } from '@remirror/react';
+import { useExtension, useRemirrorContext } from '@remirror/react-core';
 
 import { indexFromArrowPress } from './react-hook-utils';
 import { useKeymap } from './use-keymap';

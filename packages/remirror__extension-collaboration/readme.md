@@ -15,9 +15,9 @@
 ## Installation
 
 ```bash
-yarn add @remirror/extension-collaboration @remirror/pm # yarn
-pnpm add @remirror/extension-collaboration @remirror/pm # pnpm
-npm install @remirror/extension-collaboration @remirror/pm # npm
+yarn add @remirror/extension-collaboration # yarn
+pnpm add @remirror/extension-collaboration # pnpm
+npm install @remirror/extension-collaboration # npm
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

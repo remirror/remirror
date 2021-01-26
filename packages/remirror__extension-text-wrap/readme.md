@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-text-wrap @remirror/pm
+yarn add @remirror/extension-text-wrap
 
 # pnpm
-pnpm add @remirror/extension-text-wrap @remirror/pm
+pnpm add @remirror/extension-text-wrap
 
 # npm
-npm install @remirror/extension-text-wrap @remirror/pm
+npm install @remirror/extension-text-wrap
 ```
 
 ## Usage

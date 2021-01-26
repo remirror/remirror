@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-callout @remirror/pm
+yarn add @remirror/extension-callout
 
 # pnpm
-pnpm add @remirror/extension-callout @remirror/pm
+pnpm add @remirror/extension-callout
 
 # npm
-npm install @remirror/extension-callout @remirror/pm
+npm install @remirror/extension-callout
 ```
 
 ## Usage

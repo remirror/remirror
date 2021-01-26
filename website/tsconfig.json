@@ -8,10 +8,9 @@
   "extends": "../support/tsconfig.base.json",
   "compilerOptions": {
     "types": [],
-    "declaration": false,
+    "declaration": true,
     "noEmit": true,
-    "allowJs": true,
-    "skipLibCheck": true
+    "allowJs": true
   },
   "include": ["./*.js", "src", "plugins"]
 }

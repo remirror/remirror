@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-annotation @remirror/extension-positioner @remirror/pm
+yarn add @remirror/extension-annotation
 
 # pnpm
-pnpm add @remirror/extension-annotation @remirror/extension-positioner @remirror/pm
+pnpm add @remirror/extension-annotation
 
 # npm
-npm install @remirror/extension-annotation @remirror/extension-positioner @remirror/pm
+npm install @remirror/extension-annotation
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

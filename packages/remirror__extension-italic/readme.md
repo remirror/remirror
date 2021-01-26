@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-italic @remirror/pm
+yarn add @remirror/extension-italic
 
 # pnpm
-pnpm add @remirror/extension-italic @remirror/pm
+pnpm add @remirror/extension-italic
 
 # npm
-npm install @remirror/extension-italic @remirror/pm
+npm install @remirror/extension-italic
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

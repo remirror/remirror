@@ -16,7 +16,7 @@ import type {
   Suggester,
   SuggestState,
 } from '@remirror/pm/suggest';
-import { useExtension, useRemirrorContext } from '@remirror/react';
+import { useExtension, useRemirrorContext } from '@remirror/react-core';
 
 /**
  * This hook allows you to dynamically create a suggester which can respond to

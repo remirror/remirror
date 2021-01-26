@@ -3,7 +3,7 @@ import type { MenuStateReturn } from 'reakit/Menu';
 import type { ToolbarItem as ReakitToolbarItem, ToolbarStateReturn } from 'reakit/Toolbar';
 import type { AnyExtension, ProsemirrorAttributes } from '@remirror/core';
 import type { CoreIcon } from '@remirror/icons';
-import type { ReactFrameworkOutput } from '@remirror/react';
+import type { ReactFrameworkOutput } from '@remirror/react-core';
 
 export enum ComponentItem {
   /**
@@ -205,7 +205,7 @@ export interface CustomToolbarComponentProps {
    * accessible.
    *
    * ```tsx
-   * import { ComponentConstant } from 'remirror/react';
+   * import { ComponentConstant } from '@remirror/react';
    * const toolbar = [{
    *   type: ComponentConstant.Component,
    *   Component: ({ Wrapper, toolbarState }) => <Wrapper {...toolbarState} as='button' />,

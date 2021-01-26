@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-columns @remirror/pm
+yarn add @remirror/extension-columns
 
 # pnpm
-pnpm add @remirror/extension-columns @remirror/pm
+pnpm add @remirror/extension-columns
 
 # npm
-npm install @remirror/extension-columns @remirror/pm
+npm install @remirror/extension-columns
 ```
 
 ## Usage

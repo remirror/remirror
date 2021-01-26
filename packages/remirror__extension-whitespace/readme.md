@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-whitespace @remirror/pm
+yarn add @remirror/extension-whitespace
 
 # pnpm
-pnpm add @remirror/extension-whitespace @remirror/pm
+pnpm add @remirror/extension-whitespace
 
 # npm
-npm install @remirror/extension-whitespace @remirror/pm
+npm install @remirror/extension-whitespace
 ```
 
 ## Usage

@@ -429,7 +429,7 @@
   import React from 'react';
   import { InvalidContentHandler, RemirrorProvider } from 'remirror/core';
   import { WysiwygPreset } from 'remirror/preset/wysiwyg';
-  import { RemirrorProvider, useManager } from 'remirror/react';
+  import { RemirrorProvider, useManager } from '@remirror/react';
 
   const EditorWrapper = () => {
     const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {
@@ -590,7 +590,7 @@
 
   ```tsx
   import React from 'react';
-  import { useRemirror } from 'remirror/react';
+  import { useRemirror } from '@remirror/react';
 
   const EditorButton = () => {
     const { focus } = useRemirror();

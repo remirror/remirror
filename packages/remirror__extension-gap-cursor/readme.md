@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-gap-cursor @remirror/pm
+yarn add @remirror/extension-gap-cursor
 
 # pnpm
-pnpm add @remirror/extension-gap-cursor @remirror/pm
+pnpm add @remirror/extension-gap-cursor
 
 # npm
-npm install @remirror/extension-gap-cursor @remirror/pm
+npm install @remirror/extension-gap-cursor
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

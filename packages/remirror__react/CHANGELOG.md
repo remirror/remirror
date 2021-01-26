@@ -1246,7 +1246,7 @@
 
   ```tsx
   import React from 'react';
-  import { useRemirrorContext } from 'remirror/react';
+  import { useRemirrorContext } from '@remirror/react';
 
   const MyEditor = () => {
     const { focus, getRootProps } = useRemirrorContext();

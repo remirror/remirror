@@ -16,7 +16,7 @@ import {
 } from 'reakit/Composite';
 import { Tooltip, TooltipReference, useTooltipState } from 'reakit/Tooltip';
 import { HuePalette, Palette, palette as defaultPalette } from '@remirror/extension-text-color';
-import { useI18n } from '@remirror/react';
+import { useI18n } from '@remirror/react-core';
 import { ComponentsTheme } from '@remirror/theme';
 
 export interface ColorPickerProps {

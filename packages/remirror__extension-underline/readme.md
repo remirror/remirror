@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-underline @remirror/pm
+yarn add @remirror/extension-underline
 
 # pnpm
-pnpm add @remirror/extension-underline @remirror/pm
+pnpm add @remirror/extension-underline
 
 # npm
-npm install @remirror/extension-underline @remirror/pm
+npm install @remirror/extension-underline
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

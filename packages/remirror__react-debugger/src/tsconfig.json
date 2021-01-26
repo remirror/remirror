@@ -26,9 +26,6 @@
       "path": "../../remirror__react/src"
     },
     {
-      "path": "../../remirror__react-components/src"
-    },
-    {
       "path": "../../create-context-state/src"
     }
   ]

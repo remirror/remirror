@@ -59,7 +59,7 @@ There are also a host of drop in components and hooks being developed. For examp
 
 ```tsx
 import React from 'react';
-import { SocialEmojiComponent, SocialProvider } from 'remirror/react';
+import { SocialEmojiComponent, SocialProvider } from '@remirror/react';
 
 const Editor = () => {
   return (
@@ -125,16 +125,14 @@ To add an editor to your codebase, first install the required dependencies. Make
 
 ```bash
 # yarn
-yarn add remirror @remirror/pm
+yarn add remirror
 
 # pnpm
-pnpm add remirror @remirror/pm
+pnpm add remirror
 
 # npm
-npm install remirror @remirror/pm
+npm install remirror
 ```
-
-`@remirror/pm` is a peer dependency which manages all the ProseMirror packages for you. It means that the conflicts which can sometimes happen between versions are no longer an issue. It's also important because it's quite easy to bundle multiple versions of the same library in your codebase.
 
 ## Usage
 
@@ -143,7 +141,7 @@ Once installed you will be able to add the following code which creates an edito
 ```tsx
 import React, { useCallback } from 'react';
 import { BoldExtension } from 'remirror/extensions';
-import { Remirror, useRemirror, useRemirrorContext } from 'remirror/react';
+import { Remirror, useRemirror, useRemirrorContext } from '@remirror/react';
 
 const Button = () => {
   // `autoUpdate` means that every editor update will recalculate the output

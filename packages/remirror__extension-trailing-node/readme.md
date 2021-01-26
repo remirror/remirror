@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-trailing-node @remirror/pm
+yarn add @remirror/extension-trailing-node
 
 # pnpm
-pnpm add @remirror/extension-trailing-node @remirror/pm
+pnpm add @remirror/extension-trailing-node
 
 # npm
-npm install @remirror/extension-trailing-node @remirror/pm
+npm install @remirror/extension-trailing-node
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

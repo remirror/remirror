@@ -397,14 +397,6 @@
     "gzip": true
   },
   {
-    "name": "@remirror/extension-math",
-    "limit": "5 KB",
-    "path": "packages/remirror__extension-math/dist/remirror-extension-math.browser.esm.js",
-    "ignore": ["@remirror/core", "@remirror/messages", "@remirror/pm"],
-    "running": false,
-    "gzip": true
-  },
-  {
     "name": "@remirror/extension-mention",
     "limit": "5 KB",
     "path": "packages/remirror__extension-mention/dist/remirror-extension-mention.browser.esm.js",
@@ -747,7 +739,7 @@
       "@remirror/i18n",
       "@remirror/icons",
       "@remirror/pm",
-      "@remirror/react",
+      "@remirror/react-core",
       "@remirror/react-hooks",
       "@remirror/react-utils",
       "@remirror/theme"
@@ -773,8 +765,32 @@
       "@remirror/extension-positioner",
       "@remirror/i18n",
       "@remirror/pm",
-      "@remirror/react",
+      "@remirror/react-core",
       "@remirror/react-utils"
+    ],
+    "running": false,
+    "gzip": true
+  },
+  {
+    "name": "@remirror/react-renderer",
+    "limit": "50 KB",
+    "path": "packages/remirror__react-renderer/dist/remirror-react-renderer.browser.esm.js",
+    "ignore": ["@types/react", "react", "@remirror/core"],
+    "running": false,
+    "gzip": true
+  },
+  {
+    "name": "@remirror/react-ssr",
+    "limit": "10 KB",
+    "path": "packages/remirror__react-ssr/dist/remirror-react-ssr.browser.esm.js",
+    "ignore": [
+      "@types/react",
+      "@types/react-dom",
+      "react",
+      "react-dom",
+      "@remirror/core",
+      "@remirror/extension-react-ssr",
+      "@remirror/pm"
     ],
     "running": false,
     "gzip": true

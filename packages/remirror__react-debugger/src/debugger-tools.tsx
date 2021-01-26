@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ThemeProvider } from '@remirror/react-components';
+import { ThemeProvider } from '@remirror/react';
 
 import { DebuggerStoreProps, DebuggerStoreProvider } from './debugger-state';
 import { DebuggerToolsCollapsed } from './debugger-tools-collapsed';

@@ -1,6 +1,7 @@
 import {
   ApplySchemaAttributes,
   chainCommands,
+  command,
   CommandFunction,
   convertCommand,
   extension,
@@ -18,10 +19,6 @@ export interface HardBreakOptions {
    * The a collection of nodes where the hard break is not available.
    */
   excludedNodes?: string[];
-
-  /**
-   *
-   */
 }
 
 /**
@@ -51,6 +48,7 @@ export class HardBreakExtension extends NodeExtension {
     return {
       inline: true,
       selectable: false,
+      atom: true,
       ...override,
       attrs: extra.defaults(),
       parseDOM: [{ tag: 'br', getAttrs: extra.parse }],
@@ -70,19 +68,18 @@ export class HardBreakExtension extends NodeExtension {
     };
   }
 
-  createCommands() {
-    return {
-      /**
-       * Inserts a hardBreak `<br />` tag into the editor.
-       */
-      insertHardBreak: (): CommandFunction => (props) => {
-        const { tr, dispatch } = props;
+  /**
+   * Inserts a hardBreak `<br />` tag into the editor.
+   */
+  @command()
+  insertHardBreak(): CommandFunction {
+    return (props) => {
+      const { tr, dispatch } = props;
 
-        // Create the `hardBreak`
-        dispatch?.(tr.replaceSelectionWith(this.type.create()).scrollIntoView());
+      // Create the `hardBreak`
+      dispatch?.(tr.replaceSelectionWith(this.type.create()).scrollIntoView());
 
-        return true;
-      },
+      return true;
     };
   }
 }

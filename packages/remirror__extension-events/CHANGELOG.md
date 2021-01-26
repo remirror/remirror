@@ -452,7 +452,7 @@
 
   ```ts
   import { EventsExtension } from 'remirror/extension-events';
-  import { useExtension } from 'remirror/react';
+  import { useExtension } from '@remirror/react';
 
   const Editor = () => {
     useExtension(

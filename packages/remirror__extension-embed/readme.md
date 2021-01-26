@@ -18,13 +18,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-embed @remirror/pm
+yarn add @remirror/extension-embed
 
 # pnpm
-pnpm add @remirror/extension-embed @remirror/pm
+pnpm add @remirror/extension-embed
 
 # npm
-npm install @remirror/extension-embed @remirror/pm
+npm install @remirror/extension-embed
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

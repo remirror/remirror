@@ -33,7 +33,7 @@ interface UsePositionerReturn extends MakeOptional<UseMultiPositionerReturn, 're
  * Must apply the ref to the component when called.
  *
  * ```ts
- * import { usePositioner } from 'remirror/react';
+ * import { usePositioner } from '@remirror/react';
  *
  * const MenuComponent: FC = () => {
  *   const positions = usePositioner('bubble');

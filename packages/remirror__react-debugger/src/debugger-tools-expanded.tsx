@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import Dock from 'react-dock';
 import { Tab, TabList, TabPanel } from 'reakit';
-import { CloseLineIcon, DragDropLineIcon } from '@remirror/react-components/all-icons';
+import { Icon } from '@remirror/react';
 
 import {
   CloseButton,
@@ -32,13 +32,13 @@ export const DevToolsExpanded = (props: DevToolsExpandedProps): JSX.Element => {
     <Wrapper dock={dock}>
       <DockContainer>
         <CloseButton onClick={close}>
-          <CloseLineIcon />
+          <Icon name='closeLine' />
         </CloseButton>
         <NodePickerTrigger
           onClick={nodePicker.active ? actions.deactivatePicker : actions.activatePicker}
           isActive={nodePicker.active}
         >
-          <DragDropLineIcon />
+          <Icon name='dragDropLine' />
         </NodePickerTrigger>
         <SaveSnapshotButton onClick={() => actions.saveSnapshot(`${Date.now()}`)}>
           Save Snapshot

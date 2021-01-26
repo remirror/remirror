@@ -15,9 +15,9 @@
 ## Installation
 
 ```bash
-yarn add @remirror/extension-image @remirror/pm # yarn
-pnpm add @remirror/extension-image @remirror/pm # pnpm
-npm install @remirror/extension-image @remirror/pm # npm
+yarn add @remirror/extension-image # yarn
+pnpm add @remirror/extension-image # pnpm
+npm install @remirror/extension-image # npm
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

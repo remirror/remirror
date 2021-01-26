@@ -1,5 +1,6 @@
 import {
   ApplySchemaAttributes,
+  command,
   CommandFunction,
   ErrorConstant,
   extension,
@@ -246,147 +247,6 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
     };
   }
 
-  private shouldSkipInputRule(props: ShouldSkipProps) {
-    const { ruleType, state, end, start } = props;
-
-    if (ruleType === 'node') {
-      return false;
-    }
-
-    if (
-      // Check if the mark for this mention is active anywhere in the captured
-      // input rule group.
-      isMarkActive({ trState: state, type: this.type, from: start, to: end }) ||
-      // Check whether the suggester is active and it's name is one of the
-      // registered matchers.
-      this.isMatcherActive(start, end)
-    ) {
-      return true;
-    }
-
-    return false;
-  }
-
-  /**
-   * Check whether the mark is active within the provided start and end range.
-   */
-  private isMatcherActive(start: number, end: number): boolean {
-    const suggestState = this.store.helpers.getSuggestState();
-    const names = new Set(this.options.matchers.map(({ name }) => name));
-    const activeName = suggestState.match?.suggester.name;
-
-    return (
-      this.options.matchers.some((matcher) => activeName === matcher.name) ||
-      suggestState.decorationSet.find(start, end, ({ name }) => names.has(name)).length > 0
-    );
-  }
-
-  createCommands() {
-    const commands = {
-      /**
-       * This is the command which can be called from the `onChange` handler to
-       * automatically handle exits for you. It decides whether a mention should
-       * be updated, removed or created and also handles invalid splits.
-       *
-       * It does nothing for changes and only acts when an exit occurred.
-       *
-       * @param handler - the parameter that was passed through to the
-       * `onChange` handler.
-       * @param attrs - the options which set the values that will be used (in
-       * case you want to override the defaults).
-       */
-      mentionExitHandler: (
-        handler: SuggestChangeHandlerProps,
-        attrs: MentionChangeHandlerCommandAttributes = {},
-      ): CommandFunction => (props) => {
-        const reason = handler.exitReason ?? handler.changeReason;
-
-        // Get boolean flags of the reason for this exit.
-        const isInvalid = isInvalidSplitReason(reason);
-        const isRemoved = isRemovedReason(reason);
-
-        if (isInvalid || isRemoved) {
-          handler.setMarkRemoved();
-
-          try {
-            // This might fail when a deletion has taken place.
-            return isInvalid && commands.removeMention({ range: handler.range })(props);
-          } catch {
-            // This happens when removing the mention failed. If you select the
-            // whole document and delete while there are mentions active then
-            // this catch block will activate. It's not harmful, just prevents
-            // you seeing `RangeError: Position X out of range`. I'll leave it
-            // like this until more is known about the impact. Please create an
-            // issue if this blocks you in some way.
-            //
-            // TODO test if this still fails.
-            return true;
-          }
-        }
-
-        const { tr } = props;
-        const { range, text, query, name } = handler;
-        const { from, to } = range;
-
-        // Check whether the mention marks is currently active at the provided
-        // for the command.
-        const isActive = isMarkActive({ from, to, type: this.type, trState: tr });
-
-        // Use the correct command, either update when currently active or
-        // create when not active.
-        const command = isActive ? commands.updateMention : commands.createMention;
-
-        // Destructure the `attrs` and using the defaults.
-        const {
-          replacementType = isSplitReason(reason) ? 'partial' : 'full',
-          id = query[replacementType],
-          label = text[replacementType],
-          appendText = this.options.appendText,
-          ...rest
-        } = attrs;
-
-        // Make sure to preserve the selection, if the reason for the exit was a
-        // cursor movement and not due to text being added to the document.
-        const keepSelection = isSelectionExitReason(reason);
-
-        return command({
-          name,
-          id,
-          label,
-          appendText,
-          replacementType,
-          range,
-          keepSelection,
-          ...rest,
-        })(props);
-      },
-      /**
-       * Create a new mention
-       */
-      createMention: (
-        config: NamedMentionExtensionAttributes & KeepSelectionProps,
-      ): CommandFunction => this.createMention(false)(config),
-
-      /**
-       * Update an existing mention.
-       */
-      updateMention: (
-        config: NamedMentionExtensionAttributes & KeepSelectionProps,
-      ): CommandFunction => this.createMention(true)(config),
-
-      /**
-       * Remove the mention(s) at the current selection or provided range.
-       */
-      removeMention: ({ range }: Partial<RangeProps> = {}): CommandFunction => {
-        const value = removeMark({ type: this.type, expand: true, range });
-
-        return value;
-      },
-    };
-
-    return commands;
-  }
-
   /**
    * Manages the paste rules for the mention.
    *
@@ -449,11 +309,9 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
         ...options,
         ...matcher,
         onChange: (props) => {
-          const { mentionExitHandler } = this.store.commands;
-
-          function command(attrs: MentionChangeHandlerCommandAttributes = {}) {
-            mentionExitHandler(props, attrs);
-          }
+          const command = (attrs: MentionChangeHandlerCommandAttributes = {}) => {
+            this.mentionExitHandler(props, attrs)(this.store.helpers.getCommandProp());
+          };
 
           this.options.onChange(
             { ...props, defaultAppendTextValue: this.options.appendText },
@@ -494,66 +352,209 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
   }
 
   /**
+   * This is the command which can be called from the `onChange` handler to
+   * automatically handle exits for you. It decides whether a mention should
+   * be updated, removed or created and also handles invalid splits.
+   *
+   * It does nothing for changes and only acts when an exit occurred.
+   *
+   * @param handler - the parameter that was passed through to the
+   * `onChange` handler.
+   * @param attrs - the options which set the values that will be used (in
+   * case you want to override the defaults).
+   */
+  @command()
+  mentionExitHandler(
+    handler: SuggestChangeHandlerProps,
+    attrs: MentionChangeHandlerCommandAttributes = {},
+  ): CommandFunction {
+    return (props) => {
+      const reason = handler.exitReason ?? handler.changeReason;
+
+      // Get boolean flags of the reason for this exit.
+      const isInvalid = isInvalidSplitReason(reason);
+      const isRemoved = isRemovedReason(reason);
+
+      if (isInvalid || isRemoved) {
+        handler.setMarkRemoved();
+
+        try {
+          // This might fail when a deletion has taken place.
+          return isInvalid && this.removeMention({ range: handler.range })(props);
+        } catch {
+          // This happens when removing the mention failed. If you select the
+          // whole document and delete while there are mentions active then
+          // this catch block will activate. It's not harmful, just prevents
+          // you seeing `RangeError: Position X out of range`. I'll leave it
+          // like this until more is known about the impact. Please create an
+          // issue if this blocks you in some way.
+          //
+          // TODO test if this still fails.
+          return true;
+        }
+      }
+
+      const { tr } = props;
+      const { range, text, query, name } = handler;
+      const { from, to } = range;
+
+      // Check whether the mention marks is currently active at the provided
+      // for the command.
+      const isActive = isMarkActive({ from, to, type: this.type, trState: tr });
+
+      // Use the correct command, either update when currently active or
+      // create when not active.
+      const command = isActive ? this.updateMention.bind(this) : this.createMention.bind(this);
+
+      // Destructure the `attrs` and using the defaults.
+      const {
+        replacementType = isSplitReason(reason) ? 'partial' : 'full',
+        id = query[replacementType],
+        label = text[replacementType],
+        appendText = this.options.appendText,
+        ...rest
+      } = attrs;
+
+      // Make sure to preserve the selection, if the reason for the exit was a
+      // cursor movement and not due to text being added to the document.
+      const keepSelection = isSelectionExitReason(reason);
+
+      return command({
+        name,
+        id,
+        label,
+        appendText,
+        replacementType,
+        range,
+        keepSelection,
+        ...rest,
+      })(props);
+    };
+  }
+
+  /**
+   * Create a new mention
+   */
+  @command()
+  createMention(config: NamedMentionExtensionAttributes & KeepSelectionProps): CommandFunction {
+    return (props) => this.createMentionFactory(config, false)(props);
+  }
+
+  /**
+   * Update an existing mention.
+   */
+  @command()
+  updateMention(config: NamedMentionExtensionAttributes & KeepSelectionProps): CommandFunction {
+    return (props) => this.createMentionFactory(config, true)(props);
+  }
+
+  /**
+   * Remove the mention(s) at the current selection or provided range.
+   */
+  @command()
+  removeMention({ range }: Partial<RangeProps> = {}): CommandFunction {
+    const value = removeMark({ type: this.type, expand: true, range });
+
+    return value;
+  }
+
+  /**
    * The factory method for mention commands to update and create new mentions.
    */
-  private createMention(shouldUpdate: boolean) {
-    return (config: NamedMentionExtensionAttributes & KeepSelectionProps): CommandFunction => {
-      invariant(isValidMentionAttributes(config), {
-        code: ErrorConstant.EXTENSION,
-        message: 'Invalid configuration attributes passed to the MentionExtension command.',
-      });
+  private createMentionFactory(
+    config: NamedMentionExtensionAttributes & KeepSelectionProps,
+    shouldUpdate: boolean,
+  ): CommandFunction {
+    invariant(isValidMentionAttributes(config), {
+      code: ErrorConstant.EXTENSION,
+      message: 'Invalid configuration attributes passed to the MentionExtension command.',
+    });
 
-      const { range, appendText, replacementType, keepSelection, name, ...attributes } = config;
+    const { range, appendText, replacementType, keepSelection, name, ...attributes } = config;
 
-      const allowedNames = this.options.matchers.map(({ name }) => name);
-      const matcher = getMatcher(name, this.options.matchers);
+    const allowedNames = this.options.matchers.map(({ name }) => name);
+    const matcher = getMatcher(name, this.options.matchers);
 
-      invariant(allowedNames.includes(name) && matcher, {
-        code: ErrorConstant.EXTENSION,
-        message: `The name '${name}' specified for this command is invalid. Please choose from: ${JSON.stringify(
-          allowedNames,
-        )}.`,
-      });
+    invariant(allowedNames.includes(name) && matcher, {
+      code: ErrorConstant.EXTENSION,
+      message: `The name '${name}' specified for this command is invalid. Please choose from: ${JSON.stringify(
+        allowedNames,
+      )}.`,
+    });
 
-      return (props) => {
-        const { tr } = props;
-        const { from, to } = {
-          from: range?.from ?? tr.selection.from,
-          to: range?.cursor ?? tr.selection.to,
+    return (props) => {
+      const { tr } = props;
+      const { from, to } = {
+        from: range?.from ?? tr.selection.from,
+        to: range?.cursor ?? tr.selection.to,
+      };
+
+      if (shouldUpdate) {
+        // Remove mark at previous position
+        let { oldFrom, oldTo } = { oldFrom: from, oldTo: range ? range.to : to };
+        const $oldTo = tr.doc.resolve(oldTo);
+
+        ({ from: oldFrom, to: oldTo } = getMarkRange($oldTo, this.type) ?? {
+          from: oldFrom,
+          to: oldTo,
+        });
+
+        tr.removeMark(oldFrom, oldTo, this.type).setMeta('addToHistory', false);
+
+        // Remove mark at current position
+        const $newTo = tr.selection.$from;
+        const { from: newFrom, to: newTo } = getMarkRange($newTo, this.type) ?? {
+          from: $newTo.pos,
+          to: $newTo.pos,
         };
 
-        if (shouldUpdate) {
-          // Remove mark at previous position
-          let { oldFrom, oldTo } = { oldFrom: from, oldTo: range ? range.to : to };
-          const $oldTo = tr.doc.resolve(oldTo);
+        tr.removeMark(newFrom, newTo, this.type).setMeta('addToHistory', false);
+      }
 
-          ({ from: oldFrom, to: oldTo } = getMarkRange($oldTo, this.type) ?? {
-            from: oldFrom,
-            to: oldTo,
-          });
-
-          tr.removeMark(oldFrom, oldTo, this.type).setMeta('addToHistory', false);
-
-          // Remove mark at current position
-          const $newTo = tr.selection.$from;
-          const { from: newFrom, to: newTo } = getMarkRange($newTo, this.type) ?? {
-            from: $newTo.pos,
-            to: $newTo.pos,
-          };
-
-          tr.removeMark(newFrom, newTo, this.type).setMeta('addToHistory', false);
-        }
-
-        return replaceText({
-          keepSelection,
-          type: this.type,
-          attrs: { ...attributes, name },
-          appendText: getAppendText(appendText, matcher.appendText),
-          range: range ? { from, to: replacementType === 'full' ? range.to || to : to } : undefined,
-          content: attributes.label,
-        })(props);
-      };
+      return replaceText({
+        keepSelection,
+        type: this.type,
+        attrs: { ...attributes, name },
+        appendText: getAppendText(appendText, matcher.appendText),
+        range: range ? { from, to: replacementType === 'full' ? range.to || to : to } : undefined,
+        content: attributes.label,
+      })(props);
     };
+  }
+
+  private shouldSkipInputRule(props: ShouldSkipProps) {
+    const { ruleType, state, end, start } = props;
+
+    if (ruleType === 'node') {
+      return false;
+    }
+
+    if (
+      // Check if the mark for this mention is active anywhere in the captured
+      // input rule group.
+      isMarkActive({ trState: state, type: this.type, from: start, to: end }) ||
+      // Check whether the suggester is active and it's name is one of the
+      // registered matchers.
+      this.isMatcherActive(start, end)
+    ) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Check whether the mark is active within the provided start and end range.
+   */
+  private isMatcherActive(start: number, end: number): boolean {
+    const suggestState = this.store.helpers.getSuggestState();
+    const names = new Set(this.options.matchers.map(({ name }) => name));
+    const activeName = suggestState.match?.suggester.name;
+
+    return (
+      this.options.matchers.some((matcher) => activeName === matcher.name) ||
+      suggestState.decorationSet.find(start, end, ({ name }) => names.has(name)).length > 0
+    );
   }
 }
 

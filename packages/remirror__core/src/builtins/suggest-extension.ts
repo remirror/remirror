@@ -1,5 +1,5 @@
 import { includes, isArray } from '@remirror/core-helpers';
-import type { CustomHandler, ProsemirrorPlugin } from '@remirror/core-types';
+import type { CustomHandler, EditorState, ProsemirrorPlugin } from '@remirror/core-types';
 import {
   addSuggester,
   getSuggestPluginState,
@@ -9,8 +9,9 @@ import {
   SuggestState,
 } from '@remirror/pm/suggest';
 
-import { extension, PlainExtension } from '../extension';
+import { extension, Helper, PlainExtension } from '../extension';
 import type { AddCustomHandler } from '../extension/base-class';
+import { helper } from './builtin-decorators';
 
 export interface SuggestOptions {
   /**
@@ -96,58 +97,63 @@ export class SuggestExtension extends PlainExtension<SuggestOptions> {
   };
 
   /**
-   * Add useful helpers to the editor for managing suggest state.
+   * Get the suggest plugin state.
+   *
+   * This may be removed at a later time.
+   *
+   * @experimental
    */
-  createHelpers() {
+  @helper()
+  getSuggestState(state?: EditorState): Helper<SuggestState> {
+    return getSuggestPluginState(state ?? this.store.getState());
+  }
+
+  /**
+   * Get some helpful methods from the SuggestPluginState.
+   */
+  @helper()
+  getSuggestMethods(): Helper<
+    Pick<
+      SuggestState,
+      | 'addIgnored'
+      | 'clearIgnored'
+      | 'removeIgnored'
+      | 'ignoreNextExit'
+      | 'setMarkRemoved'
+      | 'findMatchAtPosition'
+      | 'findNextTextSelection'
+    >
+  > {
+    const {
+      addIgnored,
+      clearIgnored,
+      removeIgnored,
+      ignoreNextExit,
+      setMarkRemoved,
+      findMatchAtPosition,
+      findNextTextSelection,
+    } = this.getSuggestState();
+
     return {
-      /**
-       * Get the suggest plugin state.
-       *
-       * This may be removed at a later time.
-       *
-       * @experimental
-       */
-      getSuggestState: () => this.getState(),
-
-      /**
-       * Get some helpful methods from the SuggestPluginState.
-       */
-      getSuggestMethods: () => {
-        const {
-          addIgnored,
-          clearIgnored,
-          removeIgnored,
-          ignoreNextExit,
-          setMarkRemoved,
-          findMatchAtPosition,
-          findNextTextSelection,
-        } = this.getState();
-
-        return {
-          addIgnored,
-          clearIgnored,
-          removeIgnored,
-          ignoreNextExit,
-          setMarkRemoved,
-          findMatchAtPosition,
-          findNextTextSelection,
-        };
-      },
-
-      /**
-       * Check to see whether the provided name is the currently active
-       * suggester.
-       *
-       * @param name - the name of the suggester to include
-       */
-      isSuggesterActive: (name: string | string[]) => {
-        return includes(isArray(name) ? name : [name], this.getState().match?.suggester.name);
-      },
+      addIgnored,
+      clearIgnored,
+      removeIgnored,
+      ignoreNextExit,
+      setMarkRemoved,
+      findMatchAtPosition,
+      findNextTextSelection,
     };
   }
 
-  private getState(): SuggestState {
-    return getSuggestPluginState(this.store.getState());
+  /**
+   * Check to see whether the provided name is the currently active
+   * suggester.
+   *
+   * @param name - the name of the suggester to include
+   */
+  @helper()
+  isSuggesterActive(name: string | string[]): Helper<boolean> {
+    return includes(isArray(name) ? name : [name], this.getSuggestState().match?.suggester.name);
   }
 }
 

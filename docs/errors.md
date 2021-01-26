@@ -198,7 +198,7 @@ For example the following would trigger this error.
 ```tsx
 import React from 'react';
 import { BoldExtension, CorePreset } from 'remirror/extensions';
-import { Remirror, useRemirror, useRemirrorContext } from 'remirror/react';
+import { Remirror, useRemirror, useRemirrorContext } from '@remirror/react';
 
 const Editor = () => {
   const [boldActive] = useState(false);
@@ -237,7 +237,7 @@ The fixed code could look something like this.
 
 ```tsx
 import React from 'react';
-import { Remirror } from 'remirror/react';
+import { Remirror } from '@remirror/react';
 
 const Menu = () => {
   const { commands, active } = useRemirrorContext({ autoUpdate: true });

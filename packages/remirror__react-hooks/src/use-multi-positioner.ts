@@ -10,7 +10,7 @@ import {
   PositionerParam,
   PositionerPosition,
 } from '@remirror/extension-positioner';
-import { useExtension } from '@remirror/react';
+import { useExtension } from '@remirror/react-core';
 
 export interface UseMultiPositionerReturn extends PositionerPosition {
   /**
@@ -37,7 +37,7 @@ export interface UseMultiPositionerReturn extends PositionerPosition {
  *
  * ```ts
  * import { Positioner } from 'remirror/extensions
- * import { useMultiPositioner } from 'remirror/react';
+ * import { useMultiPositioner } from '@remirror/react';
  *
  * const positioner = Positioner.create({
  *   ...config, // custom config

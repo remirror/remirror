@@ -22,7 +22,7 @@ const REMIRROR_ID = '__remirror';
  * Create a new monorepo project.
  */
 export class BundleCommand extends BaseCommand {
-  static paths = [['bundle'], ['b']];
+  static paths = [['bundle']];
 
   static usage = BaseCommand.Usage({
     description: 'Bundle a remirror editor for use within a webview.',

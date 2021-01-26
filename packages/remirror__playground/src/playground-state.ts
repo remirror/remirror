@@ -519,7 +519,7 @@ export const codeEditorHelper = new CodeEditorHelper();
 const defaultContent = `\
 import { FC } from 'react';
 import { PlaygroundExportProps } from 'remirror/playground';
-import { Remirror, useRemirror, useRemirrorContext } from 'remirror/react';
+import { Remirror, useRemirror, useRemirrorContext } from '@remirror/react';
 
 const extensions = () => [];
 

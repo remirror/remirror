@@ -1,5 +1,4 @@
 import { Command, Option } from 'clipanion';
-import path from 'path';
 import type { ConditionalPick } from 'type-fest';
 
 import type { BaseCommandProps, CommandContext } from '../cli-types';
@@ -8,17 +7,10 @@ export abstract class BaseCommand extends Command<CommandContext> implements Bas
   /**
    * Set the current working directory from the command line.
    */
-  #cwd = Option.String('--cwd', process.cwd(), {
+  cwd: CommandString = Option.String('--cwd', process.cwd(), {
     description: 'Set the current working directory from which the command should be run',
     hidden: true,
   });
-
-  /**
-   * Get the current working directory for this command.
-   */
-  get cwd(): CommandString {
-    return path.isAbsolute(this.#cwd) ? this.#cwd : path.resolve(this.#cwd);
-  }
 
   /**
    * Set whether the command should use verbose logging from the command line.

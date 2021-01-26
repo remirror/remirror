@@ -1,4 +1,5 @@
 import {
+  command,
   CommandFunction,
   CreateExtensionPlugin,
   EditorState,
@@ -7,6 +8,8 @@ import {
   FromToProps,
   Handler,
   hasTransactionChanged,
+  Helper,
+  helper,
   invariant,
   isDomNode,
   isEmptyArray,
@@ -79,85 +82,6 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
   private selections?: HandlerProps[];
 
   /**
-   * Create the command for managing the commits in the document.
-   */
-  createCommands() {
-    return {
-      /**
-       * Attach a commit message to the recent change.
-       */
-      commitChange: (message: string): CommandFunction => this.commit(message),
-
-      /**
-       * Revert the provided commit.
-       */
-      revertCommit: (commit?: Commit): CommandFunction => this.revertCommit(commit),
-
-      /**
-       * Highlight the provided commit.
-       */
-      highlightCommit: (commit: Commit | CommitId): CommandFunction => this.highlightCommit(commit),
-
-      /**
-       * Remove the highlight from the commit.
-       */
-      removeHighlightedCommit: (commit: Commit | CommitId): CommandFunction =>
-        this.removeHighlightedCommit(commit),
-    };
-  }
-
-  createHelpers() {
-    return {
-      /**
-       * Get the full list of commits in the history.
-       */
-      getCommits: () => {
-        return this.getCommits();
-      },
-
-      /**
-       * Get the commit by it's ID.
-       */
-      getCommit: (id: CommitId) => this.getCommit(id),
-    };
-  }
-
-  /**
-   * Get the full list of tracked commit changes
-   */
-  private getCommits() {
-    return this.getPluginState<DiffPluginState>().tracked.commits;
-  }
-
-  private getIndexByName(name: 'first' | 'last') {
-    const length = this.getPluginState<DiffPluginState>().tracked.commits.length;
-
-    switch (name) {
-      case 'first':
-        return 0;
-
-      default:
-        return length - 1;
-    }
-  }
-
-  /**
-   * Get the commit by it's index
-   */
-  private getCommit(id: CommitId) {
-    const commits = this.getPluginState<DiffPluginState>().tracked.commits;
-    const commit = isString(id) ? commits[this.getIndexByName(id)] : commits[id];
-    invariant(commit, {});
-
-    return commit;
-  }
-
-  private getCommitId(commit: Commit) {
-    const { tracked } = this.getPluginState<DiffPluginState>();
-    return tracked.commits.indexOf(commit);
-  }
-
-  /**
    * Create the custom change tracking plugin.
    *
    * This has been adapted from the prosemirror website demo.
@@ -191,6 +115,194 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
         },
       },
     };
+  }
+
+  /**
+   * Highlight the provided commit.
+   */
+  @command()
+  highlightCommit(commit: Commit | CommitId): CommandFunction {
+    return (props) => {
+      const { tr, dispatch } = props;
+
+      if (isString(commit)) {
+        commit = this.getIndexByName(commit);
+      }
+
+      if (!isNumber(commit)) {
+        commit = this.getCommitId(commit);
+      }
+
+      if (dispatch) {
+        dispatch(this.setMeta(tr, { add: commit }));
+      }
+
+      return true;
+    };
+  }
+
+  /**
+   * Remove the highlight from the commit.
+   */
+  @command()
+  removeHighlightedCommit(commit: Commit | CommitId): CommandFunction {
+    return (props) => {
+      const { tr, dispatch } = props;
+
+      if (isString(commit)) {
+        commit = this.getIndexByName(commit);
+      }
+
+      if (!isNumber(commit)) {
+        commit = this.getCommitId(commit);
+      }
+
+      if (dispatch) {
+        dispatch(this.setMeta(tr, { clear: commit }));
+      }
+
+      return true;
+    };
+  }
+
+  /**
+   * Add a commit to the transaction history.
+   */
+  @command()
+  commitChange(message: string): CommandFunction {
+    return (props) => {
+      const { tr, dispatch } = props;
+
+      if (dispatch) {
+        dispatch(this.setMeta(tr, { message }));
+      }
+
+      return true;
+    };
+  }
+
+  /**
+   * Revert a commit which was added to the transaction history.
+   */
+  @command()
+  revertCommit(commit?: Commit): CommandFunction {
+    return (props) => {
+      const { state, tr, dispatch } = props;
+
+      if (!commit) {
+        commit = this.getCommit('last');
+      }
+
+      const { tracked } = this.getPluginState<DiffPluginState>(state);
+      const index = tracked.commits.indexOf(commit);
+
+      // If this commit is not in the history, we can't revert it
+      if (index === -1) {
+        return false;
+      }
+
+      // Reverting is only possible if there are no uncommitted changes
+      if (!isEmptyArray(tracked.uncommittedSteps)) {
+        // return alert('Commit your changes first!');
+        return false; // TODO add a handler here.
+      }
+
+      if (!dispatch) {
+        return true;
+      }
+
+      const commitMaps: StepMap[] = [];
+
+      for (const commit of tracked.commits.slice(index)) {
+        commitMaps.push(...commit.maps);
+      }
+
+      // This is the mapping from the document as it was at the start of
+      // the commit to the current document.
+      const remap = new Mapping(commitMaps);
+
+      // Build up a transaction that includes all (inverted) steps in this
+      // commit, rebased to the current document. They have to be applied
+      // in reverse order.
+      for (let index = commit.steps.length - 1; index >= 0; index--) {
+        // The mapping is sliced to not include maps for this step and the
+        // ones before it.
+        const remapped = commit.steps[index]?.map(remap.slice(index + 1));
+
+        if (!remapped) {
+          continue;
+        }
+
+        const result = tr.maybeStep(remapped);
+
+        // If the step can be applied, add its map to our mapping
+        // pipeline, so that subsequent steps are mapped over it.
+        if (result.doc) {
+          remap.appendMap(remapped.getMap(), index);
+        }
+      }
+
+      // Add a commit message and dispatch.
+      if (tr.docChanged) {
+        this.setMeta(tr, { message: this.options.revertMessage(commit.message) });
+        dispatch(tr);
+      }
+
+      return true;
+    };
+  }
+
+  /**
+   * Get the full list of tracked commit changes
+   */
+  @helper()
+  getCommits(): Helper<Commit[]> {
+    return this.getPluginState<DiffPluginState>().tracked.commits;
+  }
+
+  private getIndexByName(name: 'first' | 'last') {
+    const length = this.getPluginState<DiffPluginState>().tracked.commits.length;
+
+    switch (name) {
+      case 'first':
+        return 0;
+
+      default:
+        return length - 1;
+    }
+  }
+
+  /**
+   * Get the commit by it's index
+   */
+  @helper()
+  getCommit(id: CommitId): Helper<Commit> {
+    const commits = this.getPluginState<DiffPluginState>().tracked.commits;
+    const commit = isString(id) ? commits[this.getIndexByName(id)] : commits[id];
+    invariant(commit, {});
+
+    return commit;
+  }
+
+  private getCommitId(commit: Commit) {
+    const { tracked } = this.getPluginState<DiffPluginState>();
+    return tracked.commits.indexOf(commit);
+  }
+
+  /**
+   * Get the meta data for this custom plugin.
+   */
+  private getMeta(tr: Transaction): DiffMeta {
+    return tr.getMeta(this.pluginKey) ?? {};
+  }
+
+  /**
+   * Set the meta data for the plugin.
+   */
+  private setMeta(tr: Transaction, meta: DiffMeta): Transaction {
+    tr.setMeta(this.pluginKey, { ...this.getMeta(tr), ...meta });
+
+    return tr;
   }
 
   /**
@@ -386,145 +498,6 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
     }
 
     return { tracked };
-  }
-
-  private highlightCommit(commit: Commit | CommitId): CommandFunction {
-    return (props) => {
-      const { tr, dispatch } = props;
-
-      if (isString(commit)) {
-        commit = this.getIndexByName(commit);
-      }
-
-      if (!isNumber(commit)) {
-        commit = this.getCommitId(commit);
-      }
-
-      if (dispatch) {
-        dispatch(this.setMeta(tr, { add: commit }));
-      }
-
-      return true;
-    };
-  }
-
-  private removeHighlightedCommit(commit: Commit | CommitId): CommandFunction {
-    return (props) => {
-      const { tr, dispatch } = props;
-
-      if (isString(commit)) {
-        commit = this.getIndexByName(commit);
-      }
-
-      if (!isNumber(commit)) {
-        commit = this.getCommitId(commit);
-      }
-
-      if (dispatch) {
-        dispatch(this.setMeta(tr, { clear: commit }));
-      }
-
-      return true;
-    };
-  }
-
-  /**
-   * Add a commit to the transaction history.
-   */
-  private commit(message: string): CommandFunction {
-    return (props) => {
-      const { tr, dispatch } = props;
-
-      if (dispatch) {
-        dispatch(this.setMeta(tr, { message }));
-      }
-
-      return true;
-    };
-  }
-
-  /**
-   * Revert a commit which was added to the transaction history.
-   */
-  private readonly revertCommit = (commit?: Commit): CommandFunction => (props) => {
-    const { state, tr, dispatch } = props;
-
-    if (!commit) {
-      commit = this.getCommit('last');
-    }
-
-    const { tracked } = this.getPluginState<DiffPluginState>(state);
-    const index = tracked.commits.indexOf(commit);
-
-    // If this commit is not in the history, we can't revert it
-    if (index === -1) {
-      return false;
-    }
-
-    // Reverting is only possible if there are no uncommitted changes
-    if (!isEmptyArray(tracked.uncommittedSteps)) {
-      // return alert('Commit your changes first!');
-      return false; // TODO add a handler here.
-    }
-
-    if (!dispatch) {
-      return true;
-    }
-
-    const commitMaps: StepMap[] = [];
-
-    for (const commit of tracked.commits.slice(index)) {
-      commitMaps.push(...commit.maps);
-    }
-
-    // This is the mapping from the document as it was at the start of
-    // the commit to the current document.
-    const remap = new Mapping(commitMaps);
-
-    // Build up a transaction that includes all (inverted) steps in this
-    // commit, rebased to the current document. They have to be applied
-    // in reverse order.
-    for (let index = commit.steps.length - 1; index >= 0; index--) {
-      // The mapping is sliced to not include maps for this step and the
-      // ones before it.
-      const remapped = commit.steps[index]?.map(remap.slice(index + 1));
-
-      if (!remapped) {
-        continue;
-      }
-
-      const result = tr.maybeStep(remapped);
-
-      // If the step can be applied, add its map to our mapping
-      // pipeline, so that subsequent steps are mapped over it.
-      if (result.doc) {
-        remap.appendMap(remapped.getMap(), index);
-      }
-    }
-
-    // Add a commit message and dispatch.
-    if (tr.docChanged) {
-      this.setMeta(tr, { message: this.options.revertMessage(commit.message) });
-      dispatch(tr);
-    }
-
-    return true;
-  };
-
-  /**
-   * Get the meta data for this custom plugin.
-   */
-  private getMeta(tr: Transaction): DiffMeta {
-    return tr.getMeta(this.pluginKey) ?? {};
-  }
-
-  /**
-   * Set the meta data for the plugin.
-   */
-  private setMeta(tr: Transaction, meta: DiffMeta): Transaction {
-    tr.setMeta(this.pluginKey, { ...this.getMeta(tr), ...meta });
-
-    return tr;
   }
 }
 

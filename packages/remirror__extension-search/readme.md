@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-search @remirror/pm
+yarn add @remirror/extension-search
 
 # pnpm
-pnpm add @remirror/extension-search @remirror/pm
+pnpm add @remirror/extension-search
 
 # npm
-npm install @remirror/extension-search @remirror/pm
+npm install @remirror/extension-search
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

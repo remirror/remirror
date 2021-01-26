@@ -1,15 +1,15 @@
 # @remirror/react
 
-[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/react.svg?)](https://bundlephobia.com/result?p=@remirror/react) [![npm](https://img.shields.io/npm/dm/@remirror/react.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/react)
+> Hooks and components for consuming `remirror` with your fave framework `React`.
 
-The react components for the remirror editor
+[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/react.svg?)](https://bundlephobia.com/result?p=@remirror/react) [![npm](https://img.shields.io/npm/dm/@remirror/react.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/react)
 
 ## Installation
 
 ```bash
-yarn add @remirror/react @remirror/pm # yarn
-pnpm add @remirror/react @remirror/pm # pnpm
-npm install @remirror/react @remirror/pm # npm
+yarn add @remirror/react # yarn
+pnpm add @remirror/react # pnpm
+npm install @remirror/react # npm
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ For in depth usage with proper code example see the [docs](https://remirror.io).
 import React, { useCallback } from 'react';
 import { fromHtml, RemirrorEventListener } from 'remirror';
 import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions';
-import { createReactManager, ReactExtensions, Remirror, useRemirror } from 'remirror/react';
+import { createReactManager, ReactExtensions, Remirror, useRemirror } from '@remirror/react';
 
 type Extension = ReactExtensions<ListPreset | BoldExtension>;
 const extensions = () => [new BoldExtension(), new ItalicExtension(), new UnderlineExtension()];

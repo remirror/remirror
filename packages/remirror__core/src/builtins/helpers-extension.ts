@@ -281,7 +281,7 @@ declare global {
        *
        * ```
        * // app.tsx
-       * import { useRemirrorContext } from 'remirror/react';
+       * import { useRemirrorContext } from '@remirror/react';
        *
        * const MyEditor = () => {
        *   const { helpers } = useRemirrorContext({ autoUpdate: true });

@@ -143,12 +143,6 @@
       "path": "../../remirror__extension-positioner/src"
     },
     {
-      "path": "../../remirror__extension-react-component/src"
-    },
-    {
-      "path": "../../remirror__extension-react-ssr/src"
-    },
-    {
       "path": "../../remirror__extension-search/src"
     },
     {
@@ -203,22 +197,7 @@
       "path": "../../remirror__preset-formatting/src"
     },
     {
-      "path": "../../remirror__preset-react/src"
-    },
-    {
       "path": "../../remirror__preset-wysiwyg/src"
-    },
-    {
-      "path": "../../remirror__react/src"
-    },
-    {
-      "path": "../../remirror__react-components/src"
-    },
-    {
-      "path": "../../remirror__react-hooks/src"
-    },
-    {
-      "path": "../../remirror__react-utils/src"
     },
     {
       "path": "../../remirror__theme/src"

@@ -5,7 +5,7 @@
  * @see `support/scripts/playground.ts`
  */
 
-import * as CreateContextHook from 'create-context-state';
+import * as CreateContextState from 'create-context-state';
 import * as Multishift from 'multishift';
 import * as ProsemirrorPasteRules from 'prosemirror-paste-rules';
 import * as ProsemirrorSuggest from 'prosemirror-suggest';
@@ -18,7 +18,6 @@ import * as Remirror from 'remirror';
 import * as SubRemirrorDom from 'remirror/dom';
 import * as SubRemirrorExtensions from 'remirror/extensions';
 import { PlaygroundImports } from 'remirror/playground';
-import * as SubRemirrorReact from 'remirror/react';
 import * as RemirrorDev from '@remirror/dev';
 import * as RemirrorPm from '@remirror/pm';
 import * as RemirrorPmDropcursor from '@remirror/pm/dropcursor';
@@ -27,11 +26,17 @@ import * as RemirrorPmHistory from '@remirror/pm/history';
 import * as RemirrorPmInputrules from '@remirror/pm/inputrules';
 import * as RemirrorPmKeymap from '@remirror/pm/keymap';
 import * as RemirrorPmModel from '@remirror/pm/model';
+import * as RemirrorPmPasteRules from '@remirror/pm/paste-rules';
 import * as RemirrorPmSchemaList from '@remirror/pm/schema-list';
 import * as RemirrorPmState from '@remirror/pm/state';
+import * as RemirrorPmSuggest from '@remirror/pm/suggest';
 import * as RemirrorPmTables from '@remirror/pm/tables';
+import * as RemirrorPmTrailingNode from '@remirror/pm/trailing-node';
 import * as RemirrorPmTransform from '@remirror/pm/transform';
 import * as RemirrorPmView from '@remirror/pm/view';
+import * as RemirrorReact from '@remirror/react';
+import { ReactPlaygroundImports } from '@remirror/react/playground';
+import * as RemirrorReactDebugger from '@remirror/react-debugger';
 
 import { INTERNAL_MODULE_PREFIX } from '../playground-constants';
 import { ImportMap, ImportMapImports } from '../playground-types';
@@ -53,6 +58,7 @@ export const IMPORT_CACHE_MODULES: Record<string, any> = {
   '@remirror/extension-callout': PlaygroundImports['@remirror/extension-callout'],
   '@remirror/extension-code': PlaygroundImports['@remirror/extension-code'],
   '@remirror/extension-code-block': PlaygroundImports['@remirror/extension-code-block'],
+  '@remirror/extension-codemirror5': PlaygroundImports['@remirror/extension-codemirror5'],
   '@remirror/extension-collaboration': PlaygroundImports['@remirror/extension-collaboration'],
   '@remirror/extension-columns': PlaygroundImports['@remirror/extension-columns'],
   '@remirror/extension-diff': PlaygroundImports['@remirror/extension-diff'],
@@ -77,13 +83,14 @@ export const IMPORT_CACHE_MODULES: Record<string, any> = {
   '@remirror/extension-mention': PlaygroundImports['@remirror/extension-mention'],
   '@remirror/extension-mention-atom': PlaygroundImports['@remirror/extension-mention-atom'],
   '@remirror/extension-native-bridge': PlaygroundImports['@remirror/extension-native-bridge'],
+  '@remirror/extension-node-formatting': PlaygroundImports['@remirror/extension-node-formatting'],
   '@remirror/extension-paragraph': PlaygroundImports['@remirror/extension-paragraph'],
   '@remirror/extension-placeholder': PlaygroundImports['@remirror/extension-placeholder'],
   '@remirror/extension-positioner': PlaygroundImports['@remirror/extension-positioner'],
-  '@remirror/extension-react-component': PlaygroundImports['@remirror/extension-react-component'],
-  '@remirror/extension-react-ssr': PlaygroundImports['@remirror/extension-react-ssr'],
   '@remirror/extension-search': PlaygroundImports['@remirror/extension-search'],
   '@remirror/extension-strike': PlaygroundImports['@remirror/extension-strike'],
+  '@remirror/extension-sub': PlaygroundImports['@remirror/extension-sub'],
+  '@remirror/extension-sup': PlaygroundImports['@remirror/extension-sup'],
   '@remirror/extension-tables': PlaygroundImports['@remirror/extension-tables'],
   '@remirror/extension-text': PlaygroundImports['@remirror/extension-text'],
   '@remirror/extension-text-case': PlaygroundImports['@remirror/extension-text-case'],
@@ -96,16 +103,24 @@ export const IMPORT_CACHE_MODULES: Record<string, any> = {
   '@remirror/extension-yjs': PlaygroundImports['@remirror/extension-yjs'],
   '@remirror/preset-core': PlaygroundImports['@remirror/preset-core'],
   '@remirror/preset-formatting': PlaygroundImports['@remirror/preset-formatting'],
-  '@remirror/preset-react': PlaygroundImports['@remirror/preset-react'],
   '@remirror/preset-wysiwyg': PlaygroundImports['@remirror/preset-wysiwyg'],
-  '@remirror/react': PlaygroundImports['@remirror/react'],
-  '@remirror/react-components': PlaygroundImports['@remirror/react-components'],
-  '@remirror/react-hooks': PlaygroundImports['@remirror/react-hooks'],
-  '@remirror/react-utils': PlaygroundImports['@remirror/react-utils'],
+
+  // Automated react scoped modules
+  '@remirror/extension-react-component':
+    ReactPlaygroundImports['@remirror/extension-react-component'],
+  '@remirror/extension-react-ssr': ReactPlaygroundImports['@remirror/extension-react-ssr'],
+  '@remirror/preset-react': ReactPlaygroundImports['@remirror/preset-react'],
+  '@remirror/react-components': ReactPlaygroundImports['@remirror/react-components'],
+  '@remirror/react-core': ReactPlaygroundImports['@remirror/react-core'],
+  '@remirror/react-hooks': ReactPlaygroundImports['@remirror/react-hooks'],
+  '@remirror/react-renderer': ReactPlaygroundImports['@remirror/react-renderer'],
+  '@remirror/react-ssr': ReactPlaygroundImports['@remirror/react-ssr'],
+  '@remirror/react-utils': ReactPlaygroundImports['@remirror/react-utils'],
 
   // Automated internal unscoped modules.
-  '@remirror/pm': RemirrorPm,
-  'create-context-state': CreateContextHook,
+  '@remirror/react': RemirrorReact,
+  '@remirror/react-debugger': RemirrorReactDebugger,
+  'create-context-state': CreateContextState,
   multishift: Multishift,
   'prosemirror-paste-rules': ProsemirrorPasteRules,
   'prosemirror-suggest': ProsemirrorSuggest,
@@ -113,10 +128,10 @@ export const IMPORT_CACHE_MODULES: Record<string, any> = {
   remirror: Remirror,
 
   // Manual modules.
+  '@remirror/pm': RemirrorPm,
   '@remirror/dev': RemirrorDev,
   'remirror/extensions': SubRemirrorExtensions,
   'remirror/dom': SubRemirrorDom,
-  'remirror/react': SubRemirrorReact,
   react: React,
   'react/jsx-runtime': ReactJsxRuntime,
   'react/jsx-dev-runtime': ReactJsxDevRuntime,
@@ -132,6 +147,20 @@ export const IMPORT_CACHE_MODULES: Record<string, any> = {
   'prosemirror-tables': RemirrorPmTables,
   'prosemirror-transform': RemirrorPmTransform,
   'prosemirror-view': RemirrorPmView,
+  '@remirror/pm/dropcursor': RemirrorPmDropcursor,
+  '@remirror/pm/gapcursor': RemirrorPmGapcursor,
+  '@remirror/pm/history': RemirrorPmHistory,
+  '@remirror/pm/inputrules': RemirrorPmInputrules,
+  '@remirror/pm/keymap': RemirrorPmKeymap,
+  '@remirror/pm/model': RemirrorPmModel,
+  '@remirror/pm/schema-list': RemirrorPmSchemaList,
+  '@remirror/pm/state': RemirrorPmState,
+  '@remirror/pm/tables': RemirrorPmTables,
+  '@remirror/pm/transform': RemirrorPmTransform,
+  '@remirror/pm/view': RemirrorPmView,
+  '@remirror/pm/suggest': RemirrorPmSuggest,
+  '@remirror/pm/paste-rules': RemirrorPmPasteRules,
+  '@remirror/pm/trailing-node': RemirrorPmTrailingNode,
 };
 
 const imports: ImportMapImports = {};

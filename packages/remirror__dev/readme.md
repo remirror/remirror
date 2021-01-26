@@ -26,9 +26,9 @@ import { BoldExtension } from 'remirror/extension/bold';
 import { ItalicExtension } from 'remirror/extension/italic';
 import { UnderlineExtension } from 'remirror/extension/underline';
 import { CorePreset } from 'remirror/preset/core';
-import { RemirrorProvider } from 'remirror/react';
-import { RemirrorProvider, useManager } from 'remirror/react';
 import { ProsemirrorDevTools } from '@remirror/dev';
+import { RemirrorProvider } from '@remirror/react';
+import { RemirrorProvider, useManager } from '@remirror/react';
 
 const Editor = () => {
   const manager = useManager([

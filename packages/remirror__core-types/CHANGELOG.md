@@ -311,7 +311,7 @@
 
   ```tsx
   import React from 'react';
-  import { useRemirror } from 'remirror/react';
+  import { useRemirror } from '@remirror/react';
 
   const EditorButton = () => {
     const { focus } = useRemirror();

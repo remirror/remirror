@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-blockquote @remirror/pm
+yarn add @remirror/extension-blockquote
 
 # pnpm
-pnpm add @remirror/extension-blockquote @remirror/pm
+pnpm add @remirror/extension-blockquote
 
 # npm
-npm install @remirror/extension-blockquote @remirror/pm
+npm install @remirror/extension-blockquote
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

@@ -201,6 +201,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
             ? { shortcut: helpers.getNamedShortcut(options.shortcut, extension.options) }
             : undefined;
         this.updateDecorated(commandName, { ...options, name: extension.name, ...shortcut });
+
         extensionCommands[commandName] = (extension as Shape)[commandName].bind(extension);
 
         if (options.active) {
@@ -264,7 +265,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    *
    * ```ts
    * import React, { useCallback } from 'react';
-   * import { useRemirror } from 'remirror/react';
+   * import { useRemirror } from '@remirror/react';
    *
    * const MyEditorButton = () => {
    *   const { commands } = useRemirror();
@@ -598,7 +599,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    *
    * ```tsx
    * import { useCallback } from 'react';
-   * import { useRemirrorContext } from 'remirror/react';
+   * import { useRemirrorContext } from '@remirror/react';
    *
    * const MenuButton = () => {
    *   const { chain } = useRemirrorContext();
@@ -886,7 +887,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    * methods.
    */
   @helper()
-  getCommandParam(): Helper<Required<CommandFunctionProps>> {
+  getCommandProp(): Helper<Required<CommandFunctionProps>> {
     return {
       tr: this.transaction,
       dispatch: this.store.view.dispatch,

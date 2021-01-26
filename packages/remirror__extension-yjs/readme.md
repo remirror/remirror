@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add yjs @remirror/extension-yjs @remirror/pm
+yarn add yjs @remirror/extension-yjs
 
 # pnpm
-pnpm add yjs @remirror/extension-yjs @remirror/pm
+pnpm add yjs @remirror/extension-yjs
 
 # npm
-npm install yjs @remirror/extension-yjs @remirror/pm
+npm install yjs @remirror/extension-yjs
 ```
 
 You will also need to install your preferred [`YjsRealtimeProvider`](https://github.com/yjs/yjs#providers).

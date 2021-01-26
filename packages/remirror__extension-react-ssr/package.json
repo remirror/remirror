@@ -48,6 +48,7 @@
     "@remirror/react-utils": "1.0.0-next.60"
   },
   "devDependencies": {
+    "@remirror/react": "1.0.0-next.60",
     "@types/react": "^17.0.0",
     "react": "^17.0.1"
   },

@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-code @remirror/pm
+yarn add @remirror/extension-code
 
 # pnpm
-pnpm add @remirror/extension-code @remirror/pm
+pnpm add @remirror/extension-code
 
 # npm
-npm install @remirror/extension-code @remirror/pm
+npm install @remirror/extension-code
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

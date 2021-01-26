@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/extension-hard-break @remirror/pm
+yarn add @remirror/extension-hard-break
 
 # pnpm
-pnpm add @remirror/extension-hard-break @remirror/pm
+pnpm add @remirror/extension-hard-break
 
 # npm
-npm install @remirror/extension-hard-break @remirror/pm
+npm install @remirror/extension-hard-break
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

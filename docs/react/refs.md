@@ -21,7 +21,7 @@ import {
   ReactFrameworkOutput,
   Remirror,
   useRemirror,
-} from 'remirror/react';
+} from '@remirror/react';
 
 const extensions = () => [new BoldExtension()];
 
@@ -54,7 +54,7 @@ import {
   ReactFrameworkOutput,
   Remirror,
   useRemirror,
-} from 'remirror/react';
+} from '@remirror/react';
 
 const extensions = () => [new BoldExtension()];
 type Extensions = ReactExtensions<BoldExtension>;

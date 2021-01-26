@@ -15,9 +15,9 @@
 ## Installation
 
 ```bash
-yarn add @remirror/extension-codemirror5@next @remirror/pm@next # yarn
-pnpm add @remirror/extension-codemirror5@next @remirror/pm@next # pnpm
-npm install @remirror/extension-codemirror5@next @remirror/pm@next # npm
+yarn add @remirror/extension-codemirror5@next@next # yarn
+pnpm add @remirror/extension-codemirror5@next@next # pnpm
+npm install @remirror/extension-codemirror5@next@next # npm
 ```
 
 You will also need to make sure you have a version of `codemirror@5` installed. If you are using TypeScript you can also install the `@types/codemirror` package alongside.

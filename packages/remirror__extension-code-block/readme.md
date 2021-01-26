@@ -15,9 +15,9 @@
 ## Installation
 
 ```bash
-yarn add refractor @remirror/extension-code-block @remirror/pm # yarn
-pnpm add refractor @remirror/extension-code-block @remirror/pm # pnpm
-npm install refractor @remirror/extension-code-block @remirror/pm # npm
+yarn add refractor @remirror/extension-code-block # yarn
+pnpm add refractor @remirror/extension-code-block # pnpm
+npm install refractor @remirror/extension-code-block # npm
 ```
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.

@@ -70,7 +70,7 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
   /**
    * Whether to ignore next updated.
    */
-  #ignoreNextUpdate = false;
+  private _ignoreNextUpdate = false;
 
   /**
    * Add the bidi property to the top level editor attributes `doc`.
@@ -119,8 +119,8 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
       state: {
         init: () => false,
         apply: (tr) => {
-          if (this.#ignoreNextUpdate) {
-            this.#ignoreNextUpdate = false;
+          if (this._ignoreNextUpdate) {
+            this._ignoreNextUpdate = false;
             return false;
           }
 
@@ -155,7 +155,7 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
           return;
         }
 
-        this.#ignoreNextUpdate = true;
+        this._ignoreNextUpdate = true;
         this.store.chain
           .custom(tr)
           .updateNodeAttributes(pos, { ...node.attrs, dir })

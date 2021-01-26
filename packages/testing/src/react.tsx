@@ -1,7 +1,6 @@
 import { render as originalRender, RenderOptions, RenderResult } from '@testing-library/react';
 import * as hooks from '@testing-library/react-hooks';
-import { FC, StrictMode } from 'react';
-import * as React from 'react';
+import { FC, ReactElement, StrictMode } from 'react';
 import TestRenderer from 'react-test-renderer';
 import { useRemirrorContext } from '@remirror/react';
 
@@ -9,7 +8,7 @@ import { useRemirrorContext } from '@remirror/react';
  * Render the component in `StrictMode`
  */
 export function strictRender(
-  ui: React.ReactElement,
+  ui: ReactElement,
   options?: Omit<RenderOptions, 'queries'>,
 ): RenderResult {
   return originalRender(<StrictMode>{ui}</StrictMode>, options);

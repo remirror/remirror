@@ -35,7 +35,7 @@
       "path": "../../remirror__pm/src"
     },
     {
-      "path": "../../remirror__react/src"
+      "path": "../../remirror__react-core/src"
     },
     {
       "path": "../../remirror__react-hooks/src"

@@ -14,7 +14,9 @@ import isBuiltinModule from 'is-builtin-module';
 import path from 'path';
 import { format, resolveConfig } from 'prettier';
 import { assertGet, ErrorConstant, findMatches, invariant, pascalCase } from 'remirror';
+import { PlaygroundImports } from 'remirror/playground';
 import sortKeys from 'sort-keys';
+import { ReactPlaygroundImports } from '@remirror/react/playground';
 
 import type { DtsCache } from '../../packages/remirror__playground/src/playground-types';
 import { baseDir, formatFiles, log } from './helpers';
@@ -423,25 +425,40 @@ interface ImportGroups {
 }
 
 const externalModules = [
-  ['@remirror/dev', `@remirror/dev`],
-  ['remirror/extensions', `remirror/extensions`],
-  ['remirror/dom', `remirror/dom`],
-  ['remirror/react', `remirror/react`],
-  ['react', `react`],
-  ['react/jsx-runtime', `react/jsx-runtime`],
-  ['react/jsx-dev-runtime', `react/jsx-dev-runtime`],
-  ['react-dom', `react-dom`],
-  ['prosemirror-dropcursor', `@remirror/pm/dropcursor`],
-  ['prosemirror-gapcursor', `@remirror/pm/gapcursor`],
-  ['prosemirror-history', `@remirror/pm/history`],
-  ['prosemirror-inputrules', `@remirror/pm/inputrules`],
-  ['prosemirror-keymap', `@remirror/pm/keymap`],
-  ['prosemirror-model', `@remirror/pm/model`],
-  ['prosemirror-schema-list', `@remirror/pm/schema-list`],
-  ['prosemirror-state', `@remirror/pm/state`],
-  ['prosemirror-tables', `@remirror/pm/tables`],
-  ['prosemirror-transform', `@remirror/pm/transform`],
-  ['prosemirror-view', `@remirror/pm/view`],
+  ['@remirror/pm', '@remirror/pm'],
+  ['@remirror/dev', '@remirror/dev'],
+  ['remirror/extensions', 'remirror/extensions'],
+  ['remirror/dom', 'remirror/dom'],
+  ['react', 'react'],
+  ['react/jsx-runtime', 'react/jsx-runtime'],
+  ['react/jsx-dev-runtime', 'react/jsx-dev-runtime'],
+  ['react-dom', 'react-dom'],
+  ['prosemirror-dropcursor', '@remirror/pm/dropcursor'],
+  ['prosemirror-gapcursor', '@remirror/pm/gapcursor'],
+  ['prosemirror-history', '@remirror/pm/history'],
+  ['prosemirror-inputrules', '@remirror/pm/inputrules'],
+  ['prosemirror-keymap', '@remirror/pm/keymap'],
+  ['prosemirror-model', '@remirror/pm/model'],
+  ['prosemirror-schema-list', '@remirror/pm/schema-list'],
+  ['prosemirror-state', '@remirror/pm/state'],
+  ['prosemirror-tables', '@remirror/pm/tables'],
+  ['prosemirror-transform', '@remirror/pm/transform'],
+  ['prosemirror-view', '@remirror/pm/view'],
+
+  ['@remirror/pm/dropcursor', '@remirror/pm/dropcursor'],
+  ['@remirror/pm/gapcursor', '@remirror/pm/gapcursor'],
+  ['@remirror/pm/history', '@remirror/pm/history'],
+  ['@remirror/pm/inputrules', '@remirror/pm/inputrules'],
+  ['@remirror/pm/keymap', '@remirror/pm/keymap'],
+  ['@remirror/pm/model', '@remirror/pm/model'],
+  ['@remirror/pm/schema-list', '@remirror/pm/schema-list'],
+  ['@remirror/pm/state', '@remirror/pm/state'],
+  ['@remirror/pm/tables', '@remirror/pm/tables'],
+  ['@remirror/pm/transform', '@remirror/pm/transform'],
+  ['@remirror/pm/view', '@remirror/pm/view'],
+  ['@remirror/pm/suggest', '@remirror/pm/suggest'],
+  ['@remirror/pm/paste-rules', '@remirror/pm/paste-rules'],
+  ['@remirror/pm/trailing-node', '@remirror/pm/trailing-node'],
 ];
 
 const manualModules: Set<string> = new Set();
@@ -475,6 +492,7 @@ async function generateCode(props: ImportGroups) {
   // Set up the containers for the data that will be used to populate the
   // templates returned from this function.
   const scopedModules: string[] = [];
+  const reactScopedModules: string[] = [];
   const unscopedModules: string[] = [];
   const dtsCache: DtsCache = {};
 
@@ -488,12 +506,18 @@ async function generateCode(props: ImportGroups) {
     // intellisense for users of the playground.
     dtsCache[meta.name] = declarations;
 
-    const isScoped = meta.name.startsWith('@') && !meta.name.startsWith('@remirror/pm');
+    const isScoped = Object.keys(PlaygroundImports).includes(meta.name);
+    const isReactScoped = Object.keys(ReactPlaygroundImports).includes(meta.name);
 
     if (isScoped) {
       // Add the scoped module to the exported object.
       scopedModules.push(
         `${JSON.stringify(meta.name)}: PlaygroundImports[${JSON.stringify(meta.name)}]`,
+      );
+    } else if (isReactScoped) {
+      // Add the scoped module to the exported object.
+      reactScopedModules.push(
+        `${JSON.stringify(meta.name)}: ReactPlaygroundImports[${JSON.stringify(meta.name)}]`,
       );
     } else {
       // Store the required imports.
@@ -543,6 +567,7 @@ async function generateCode(props: ImportGroups) {
 
 ${[...importDeclarations].join('\n')}
 import { PlaygroundImports } from 'remirror/playground';
+import { ReactPlaygroundImports } from '@remirror/react/playground';
 
 import { INTERNAL_MODULE_PREFIX } from '../playground-constants';
 import { ImportMap, ImportMapImports } from '../playground-types';
@@ -553,6 +578,9 @@ import { ImportMap, ImportMapImports } from '../playground-types';
 export const IMPORT_CACHE_MODULES: Record<string, any> = {
   // Automated scoped modules.
   ${scopedModules.join(',\n  ')},
+
+  // Automated react scoped modules
+  ${reactScopedModules.join(',\n  ')},
 
   // Automated internal unscoped modules.
   ${unscopedModules.join(',\n  ')},
@@ -641,7 +669,7 @@ export const DTS_CACHE: DtsCache = dtsCache;
 }
 
 // Where the generated file will be located.
-const generatedFolder = baseDir('packages', '@remirror', 'playground', 'src', 'generated');
+const generatedFolder = baseDir('packages', 'remirror__playground', 'src', 'generated');
 const modulesPath = path.join(generatedFolder, 'modules.ts');
 const jsonPath = path.join(generatedFolder, 'dts.json');
 const exportsPath = path.join(generatedFolder, 'exports.ts');
@@ -690,7 +718,7 @@ async function formatAndWriteFiles(files: FileFormatterConfig[]) {
  */
 async function ensureActiveBuild() {
   const stat = await getFileStat(
-    path.join(scopedAbsolutePath, 'core', 'dist', 'declarations', 'src', 'index.d.ts'),
+    path.join(packagesFolder, 'remirror__core', 'dist', 'declarations', 'src', 'index.d.ts'),
   );
 
   invariant(stat?.isFile(), {
@@ -771,8 +799,6 @@ async function main() {
   });
 
   const extensions = await populateRemirrorImports({
-    // TODO add support for SSR to codemirror5 extension
-    // excludedNames: ['@remirror/extension-codemirror5'],
     pattern: 'remirror__extension-*/package.json',
   });
 

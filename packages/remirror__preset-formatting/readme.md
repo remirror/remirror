@@ -18,13 +18,13 @@
 
 ```bash
 # yarn
-yarn add @remirror/preset-formatting @remirror/pm
+yarn add @remirror/preset-formatting
 
 # pnpm
-pnpm add @remirror/preset-formatting @remirror/pm
+pnpm add @remirror/preset-formatting
 
 # npm
-npm install @remirror/preset-formatting @remirror/pm
+npm install @remirror/preset-formatting
 ```
 
 <br />
