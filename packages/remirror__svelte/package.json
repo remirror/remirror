@@ -5,6 +5,7 @@
   "keywords": [
     "svelte"
   ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__svelte",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__svelte",
   "exports": {
     ".": {

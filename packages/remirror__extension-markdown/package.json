@@ -6,7 +6,7 @@
     "remirror",
     "extension"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/support/templates/extension-markdown",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-markdown",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-markdown",
   "license": "MIT",
   "contributors": [

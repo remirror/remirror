@@ -6,7 +6,7 @@
   "keywords": [
     "remirror"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/remirror__react-ssr/react-ssr",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-ssr",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-ssr",
   "license": "MIT",
   "contributors": [

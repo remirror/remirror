@@ -6,7 +6,7 @@
     "remirror",
     "extension"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/support/eventss/extension-events",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-events",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-events",
   "license": "MIT",
   "contributors": [

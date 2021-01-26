@@ -8,7 +8,7 @@
     "ssr",
     "text editor"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/support/deprecated/react-portals",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/deprecated/react-portals",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/deprecated/react-portals",
   "license": "MIT",
   "contributors": [

@@ -6,7 +6,7 @@
     "remirror",
     "extension"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__core",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-annotation",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-annotation",
   "license": "MIT",
   "contributors": [

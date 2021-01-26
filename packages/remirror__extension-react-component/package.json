@@ -7,7 +7,7 @@
     "extension",
     "react"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/next/@remirror/extension-react-component",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-react-component",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-react-component",
   "license": "MIT",
   "contributors": [

@@ -2,7 +2,7 @@
   "name": "@remirror/editor-wysiwyg",
   "version": "1.0.0-next.2",
   "description": "**DEPRECATED** - A wysiwyg editor",
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/support/deprecated/editor-wysiwyg",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/deprecated/editor-wysiwyg",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/deprecated/editor-wysiwyg",
   "license": "MIT",
   "contributors": [

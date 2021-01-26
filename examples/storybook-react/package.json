@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "description": "The storybook configuration for the remirror project.",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/examples/storybook-react",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/examples/storybook-react",
   "scripts": {
     "build": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}'  build-storybook -c ./",

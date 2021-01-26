@@ -1,7 +1,7 @@
 {
   "name": "remirror-monorepo",
   "private": true,
-  "homepage": "https://remirror.io",
+  "homepage": "https://github.com/remirror/remirror",
   "repository": "https://github.com/remirror/remirror",
   "type": "module",
   "scripts": {

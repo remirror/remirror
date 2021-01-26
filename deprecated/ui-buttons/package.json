@@ -2,7 +2,7 @@
   "name": "@remirror/ui-buttons",
   "version": "1.0.0-next.1",
   "description": "DEPRECATED - ui-buttons utilities for remirror",
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/support/deprecated/ui-buttons",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/deprecated/ui-buttons",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/deprecated/ui-buttons",
   "license": "MIT",
   "contributors": [

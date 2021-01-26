@@ -2,7 +2,7 @@
   "name": "@remirror/react-core",
   "version": "0.0.0",
   "description": "The core `React` library which can be used if you want to create a specialized bundle without the extra hooks and components available via `@remirror/react`.",
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-core",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-core",
   "license": "MIT",
   "contributors": [

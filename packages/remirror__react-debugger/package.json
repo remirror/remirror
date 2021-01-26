@@ -2,7 +2,7 @@
   "name": "@remirror/react-debugger",
   "version": "0.0.0",
   "description": "A debugger forked from prosemirror-dev-tool for your remirror editor",
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__dev",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-debugger",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-debugger",
   "license": "MIT",
   "contributors": [

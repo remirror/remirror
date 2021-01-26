@@ -2,7 +2,7 @@
   "name": "@remirror/editor-markdown",
   "version": "1.0.0-next.2",
   "description": "**DEPRECATED** - A markdown editor",
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/support/deprecated/editor-markdown",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/deprecated/editor-markdown",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/deprecated/editor-markdown",
   "license": "MIT",
   "contributors": [

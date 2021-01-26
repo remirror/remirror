@@ -6,7 +6,7 @@
   "keywords": [
     "remirror"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/remirror__react-renderer/react-renderer",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-renderer",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-renderer",
   "license": "MIT",
   "contributors": [
