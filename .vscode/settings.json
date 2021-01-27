@@ -14,7 +14,7 @@
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
   "files.exclude": {
-    ".yarn/releases/**": true
+    ".yarn/releases/**": false
   },
 
   // JavaScript

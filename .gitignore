@@ -170,3 +170,5 @@ cc-reporter
 
 ## Storybook
 **/storybook-static
+
+/.detoxrc.json

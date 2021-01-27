@@ -1,10 +1,5 @@
 import { WebjsContext } from '@formidable-webview/webshell';
 
-function MessagingFeature(context: WebjsContext<object>) {
+function _WebMessagingFeature(context: WebjsContext<object>) {
   context.onShellMessage('');
-
 }
-
-
-
-

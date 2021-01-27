@@ -1,6 +1,5 @@
 import {
   cloneElement,
-  ComponentType,
   Fragment,
   isValidElement as isValidReactElement,
   ReactElement,
@@ -9,42 +8,6 @@ import {
 import { ErrorConstant } from '@remirror/core-constants';
 import { invariant, isFunction, isObject, isString } from '@remirror/core-helpers';
 import type { AnyFunction, UnknownShape } from '@remirror/core-types';
-
-export interface RemirrorComponentStaticProperties {
-  /**
-   * Identifies this as a remirror specific component
-   */
-  $$remirrorType: RemirrorType;
-}
-
-export type RemirrorComponentType<Props extends object = object> = ComponentType<Props> &
-  RemirrorComponentStaticProperties;
-export type RemirrorElement<Options extends object = any> = ReactElement & {
-  type: RemirrorComponentType<Options>;
-};
-
-/**
- * These are the constants used to determine whether an element is a remirror constant.
- */
-export enum RemirrorType {
-  SSR = 'ssr',
-  Editor = 'editor',
-
-  /**
-   * The `Remirror` component.
-   */
-  Provider = 'provider',
-
-  /**
-   * Marks the provider for i18n.
-   */
-  I18nProvider = 'i18n-provider',
-
-  /**
-   * Marks this as a provider for the remirror theme.
-   */
-  ThemeProvider = 'theme-provider',
-}
 
 /**
  * A drop in replacement for built in React.isValidElement which accepts a test value of any type

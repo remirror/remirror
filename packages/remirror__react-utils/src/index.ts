@@ -1,8 +1,3 @@
-export type {
-  RemirrorComponentStaticProperties,
-  RemirrorComponentType,
-  RemirrorElement,
-} from './react-utils';
 export {
   addKeyToElement,
   getElementProps,
@@ -10,5 +5,4 @@ export {
   isReactFragment,
   isValidElement,
   propIsFunction,
-  RemirrorType,
 } from './react-utils';
