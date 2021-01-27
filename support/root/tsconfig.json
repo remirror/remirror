@@ -303,12 +303,6 @@
       "path": "packages/remirror__extension-mention/src"
     },
     {
-      "path": "packages/remirror__extension-native-bridge/__tests__"
-    },
-    {
-      "path": "packages/remirror__extension-native-bridge/src"
-    },
-    {
       "path": "packages/remirror__extension-node-formatting/__tests__"
     },
     {
@@ -337,6 +331,12 @@
     },
     {
       "path": "packages/remirror__extension-react-component/src"
+    },
+    {
+      "path": "packages/remirror__extension-react-native-bridge/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-react-native-bridge/src"
     },
     {
       "path": "packages/remirror__extension-react-ssr/__tests__"

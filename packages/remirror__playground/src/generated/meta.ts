@@ -637,10 +637,6 @@ export const INTERNAL_MODULE_META: Array<{ moduleName: string; exports: string[]
     exports: ['MentionAtomExtension'],
   },
   {
-    moduleName: '@remirror/extension-native-bridge',
-    exports: ['NativeBridgeExtension'],
-  },
-  {
     moduleName: '@remirror/extension-node-formatting',
     exports: ['NodeFormattingExtension'],
   },

@@ -423,14 +423,6 @@
     "gzip": true
   },
   {
-    "name": "@remirror/extension-native-bridge",
-    "limit": "5 KB",
-    "path": "packages/remirror__extension-native-bridge/dist/remirror-extension-native-bridge.browser.esm.js",
-    "ignore": ["@remirror/core", "@remirror/messages", "@remirror/pm"],
-    "running": false,
-    "gzip": true
-  },
-  {
     "name": "@remirror/extension-node-formatting",
     "limit": "5 KB",
     "path": "packages/remirror__extension-node-formatting/dist/remirror-extension-node-formatting.browser.esm.js",

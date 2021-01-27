@@ -30,7 +30,6 @@ export * from '@remirror/extension-list';
 export * from '@remirror/extension-markdown';
 export * from '@remirror/extension-mention';
 export * from '@remirror/extension-mention-atom';
-export * from '@remirror/extension-native-bridge';
 export * from '@remirror/extension-node-formatting';
 export * from '@remirror/extension-paragraph';
 export * from '@remirror/extension-placeholder';

@@ -119,7 +119,6 @@
     "@remirror/extension-markdown": "0.0.0",
     "@remirror/extension-mention": "1.0.0-next.60",
     "@remirror/extension-mention-atom": "1.0.0-next.60",
-    "@remirror/extension-native-bridge": "0.0.0",
     "@remirror/extension-node-formatting": "0.0.0",
     "@remirror/extension-paragraph": "1.0.0-next.60",
     "@remirror/extension-placeholder": "1.0.0-next.60",

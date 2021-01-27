@@ -128,9 +128,6 @@
       "path": "../../remirror__extension-mention-atom/src"
     },
     {
-      "path": "../../remirror__extension-native-bridge/src"
-    },
-    {
       "path": "../../remirror__extension-node-formatting/src"
     },
     {

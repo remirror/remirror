@@ -82,7 +82,6 @@ export const IMPORT_CACHE_MODULES: Record<string, any> = {
   '@remirror/extension-markdown': PlaygroundImports['@remirror/extension-markdown'],
   '@remirror/extension-mention': PlaygroundImports['@remirror/extension-mention'],
   '@remirror/extension-mention-atom': PlaygroundImports['@remirror/extension-mention-atom'],
-  '@remirror/extension-native-bridge': PlaygroundImports['@remirror/extension-native-bridge'],
   '@remirror/extension-node-formatting': PlaygroundImports['@remirror/extension-node-formatting'],
   '@remirror/extension-paragraph': PlaygroundImports['@remirror/extension-paragraph'],
   '@remirror/extension-placeholder': PlaygroundImports['@remirror/extension-placeholder'],

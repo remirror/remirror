@@ -46,7 +46,6 @@ import * as remirrorExtensionList from '@remirror/extension-list';
 import * as remirrorExtensionMarkdown from '@remirror/extension-markdown';
 import * as remirrorExtensionMention from '@remirror/extension-mention';
 import * as remirrorExtensionMentionAtom from '@remirror/extension-mention-atom';
-import * as remirrorExtensionNativeBridge from '@remirror/extension-native-bridge';
 import * as remirrorExtensionNodeFormatting from '@remirror/extension-node-formatting';
 import * as remirrorExtensionParagraph from '@remirror/extension-paragraph';
 import * as remirrorExtensionPlaceholder from '@remirror/extension-placeholder';
@@ -102,7 +101,6 @@ export const PlaygroundImports = {
   '@remirror/extension-markdown': remirrorExtensionMarkdown,
   '@remirror/extension-mention-atom': remirrorExtensionMentionAtom,
   '@remirror/extension-mention': remirrorExtensionMention,
-  '@remirror/extension-native-bridge': remirrorExtensionNativeBridge,
   '@remirror/extension-paragraph': remirrorExtensionParagraph,
   '@remirror/extension-placeholder': remirrorExtensionPlaceholder,
   '@remirror/extension-positioner': remirrorExtensionPositioner,

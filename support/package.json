@@ -66,7 +66,7 @@
     "type-fest": "^0.20.2",
     "typedoc": "^0.20.19",
     "typedoc-plugin-external-module-name": "^4.0.6",
-    "typedoc-plugin-markdown": "^3.4.3",
+    "typedoc-plugin-markdown": "^3.4.5",
     "write-json-file": "^4.3.0"
   },
   "@remirror": {
