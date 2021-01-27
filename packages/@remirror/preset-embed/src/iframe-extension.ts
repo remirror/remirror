@@ -36,7 +36,7 @@ export type IframeAttributes = ProsemirrorAttributes<{
   allowFullScreen?: 'true';
   width?: string | number;
   height?: string | number;
-  type?: 'custom' | 'youtube';
+  type?: 'youtube' | string;
 }>;
 
 /**
