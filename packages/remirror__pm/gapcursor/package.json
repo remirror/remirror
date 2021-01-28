@@ -5,5 +5,6 @@
     "./dist/remirror-pm-gapcursor.cjs.js": "./dist/remirror-pm-gapcursor.browser.cjs.js",
     "./dist/remirror-pm-gapcursor.esm.js": "./dist/remirror-pm-gapcursor.browser.esm.js"
   },
-  "types": "dist/remirror-pm-gapcursor.cjs.d.ts"
+  "types": "dist/remirror-pm-gapcursor.cjs.d.ts",
+  "rn:dev": "../src/gapcursor.ts"
 }

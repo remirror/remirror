@@ -1,5 +1,5 @@
 /**
- * @type {import('@linaria/babel').StrictOptions}
+ * @type {import('@linaria/babel-preset').StrictOptions}
  */
 const config = {
   evaluate: true,

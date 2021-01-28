@@ -50,5 +50,6 @@
   "peerDependencies": {
     "svelte": "^3.29.0"
   },
+  "rn:dev": "src/index.ts",
   "svelte": "src/index.ts"
 }

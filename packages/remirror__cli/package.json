@@ -92,5 +92,6 @@
       "index.ts",
       "cli.ts"
     ]
-  }
+  },
+  "rn:dev": "src/index.ts"
 }

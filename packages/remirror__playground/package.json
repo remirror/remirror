@@ -139,5 +139,6 @@
       "worker.prettier.ts",
       "worker.typings.ts"
     ]
-  }
+  },
+  "rn:dev": "src/index.ts"
 }

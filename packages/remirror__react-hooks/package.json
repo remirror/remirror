@@ -175,5 +175,6 @@
       "use-emoji.ts",
       "use-history.ts"
     ]
-  }
+  },
+  "rn:dev": "src/index.ts"
 }

@@ -103,5 +103,6 @@
       "index.ts",
       "worker.json-diff.ts"
     ]
-  }
+  },
+  "rn:dev": "src/index.ts"
 }

@@ -7,7 +7,7 @@
 
 /// <reference types="node" />
 
-import { transform } from '@linaria/babel';
+import { transform } from '@linaria/babel-preset';
 import autoprefixer from 'autoprefixer';
 import { camelCase, pascalCase } from 'case-anything';
 import chalk from 'chalk';

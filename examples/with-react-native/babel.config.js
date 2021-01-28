@@ -1,3 +1,6 @@
+const config = require('../../support/base.babel');
+
 module.exports = {
-  presets: ['module:metro-react-native-babel-preset'],
+  ...config,
+  presets: [...config.presets, 'module:metro-react-native-babel-preset', '@linaria'],
 };

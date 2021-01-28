@@ -87,5 +87,6 @@
         }
       }
     }
-  }
+  },
+  "rn:dev": "src/index.ts"
 }

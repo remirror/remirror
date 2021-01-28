@@ -56,5 +56,6 @@
       "all.ts",
       "index.ts"
     ]
-  }
+  },
+  "rn:dev": "src/index.ts"
 }

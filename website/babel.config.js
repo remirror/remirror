@@ -85,7 +85,7 @@ function babelConfig(api) {
             },
           ],
       require.resolve('@babel/preset-react'),
-      require.resolve('module:@linaria/babel'),
+      require.resolve('@linaria/babel-preset'),
     ],
     plugins: [],
   };

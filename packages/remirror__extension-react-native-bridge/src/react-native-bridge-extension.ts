@@ -1,4 +1,4 @@
-import { createNanoEvents } from 'nanoevents';
+// import { createNanoEvents } from 'nanoevents';
 import { AnyFunction, extension, PlainExtension, StateJSON } from '@remirror/core';
 
 interface ExposedNativeBridgeCommands {}

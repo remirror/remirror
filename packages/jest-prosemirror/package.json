@@ -95,5 +95,6 @@
       "environment.ts",
       "serializer.ts"
     ]
-  }
+  },
+  "rn:dev": "src/index.ts"
 }

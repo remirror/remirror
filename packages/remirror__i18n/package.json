@@ -69,5 +69,6 @@
       "plurals.ts",
       "en/index.ts"
     ]
-  }
+  },
+  "rn:dev": "src/index.ts"
 }

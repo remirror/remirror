@@ -203,5 +203,6 @@
       "transform.ts",
       "view.ts"
     ]
-  }
+  },
+  "rn:dev": "src/index.ts"
 }

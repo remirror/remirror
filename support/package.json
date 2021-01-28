@@ -7,11 +7,10 @@
   "repository": "https://github.com/remirror/remirror/tree/HEAD/support",
   "main": "index.js",
   "dependencies": {
-    "@changesets/get-dependents-graph": "^1.1.3",
+    "@changesets/get-dependents-graph": "^1.2.0",
     "@changesets/pre": "^1.0.5",
     "@changesets/read": "^0.4.6",
-    "@changesets/types": "^3.2.0",
-    "@linaria/babel": "^3.0.0-beta.0",
+    "@changesets/types": "^3.3.0",
     "@lingui/core": "^3.4.0",
     "@manypkg/get-packages": "^1.1.1",
     "@octokit/core": "^3.2.5",

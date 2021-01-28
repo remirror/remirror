@@ -54,7 +54,7 @@
     "@remirror/react-utils": "1.0.0-next.60",
     "@remirror/theme": "1.0.0-next.60",
     "@seznam/compose-react-refs": "^1.0.5",
-    "@types/react-color": "^2.17.5",
+    "@types/react-color": "^3.0.4",
     "create-context-state": "0.0.0",
     "match-sorter": "^6.1.0",
     "multishift": "1.0.0-next.60",
@@ -97,5 +97,6 @@
       "index.ts",
       "all-icons.ts"
     ]
-  }
+  },
+  "rn:dev": "src/index.ts"
 }

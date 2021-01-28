@@ -5,5 +5,6 @@
     "./dist/remirror-pm-paste-rules.cjs.js": "./dist/remirror-pm-paste-rules.browser.cjs.js",
     "./dist/remirror-pm-paste-rules.esm.js": "./dist/remirror-pm-paste-rules.browser.esm.js"
   },
-  "types": "dist/remirror-pm-paste-rules.cjs.d.ts"
+  "types": "dist/remirror-pm-paste-rules.cjs.d.ts",
+  "rn:dev": "../src/paste-rules.ts"
 }

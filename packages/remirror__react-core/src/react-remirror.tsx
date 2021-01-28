@@ -22,7 +22,7 @@ export interface RemirrorProps<Extension extends AnyExtension = Remirror.Extensi
    * This manager composes the extensions provided and provides the
    * functionality used throughout the editor.
    *
-   * It is overriden here since there was an issue with type inference when
+   * It is overridden here since there was an issue with type inference when
    * using the manager inherited from `ReactFrameworkProps`.
    */
   manager: RemirrorManager<any>;
