@@ -1,5 +1,21 @@
 # @remirror/preset-embed
 
+## 1.0.0-next.61
+
+> 2021-01-28
+
+### Minor Changes
+
+- [`e7a1d7c1d`](https://github.com/remirror/remirror/commit/e7a1d7c1db1b42ce5cffc4a821669b734c73eae2) [#849](https://github.com/remirror/remirror/pull/849) Thanks [@ronnyroeller](https://github.com/ronnyroeller)! - Set custom value for "type" of iframe embeds
+
+  The "type" attribute for the iframe-extension indicates the kind of embed. Before, the attribute would allow only for values "youtube" and "custom" (youtube being supported natively by the iframe-extension).This commit allows to set the "type" to any string. With this, one can distinglish between different kinds of custom embeds like "google-drive" vs. "vimeo".
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.61
+  - @remirror/pm@1.0.0-next.61
+
 ## 1.0.0-next.60
 
 > 2020-12-17

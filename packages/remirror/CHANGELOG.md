@@ -1,5 +1,78 @@
 # remirror
 
+## 1.0.0-next.61
+
+> 2021-01-28
+
+### Minor Changes
+
+- [`f6fc2729d`](https://github.com/remirror/remirror/commit/f6fc2729d3a39c76f52dbf1c73d4f2ce1f7f361b) [#837](https://github.com/remirror/remirror/pull/837) Thanks [@cmanou](https://github.com/cmanou)! - Add @remirror/extension-sub extension
+
+* [`db49e4678`](https://github.com/remirror/remirror/commit/db49e467811c3c95f48c29f7bd267dac4c3ff85f) [#839](https://github.com/remirror/remirror/pull/839) Thanks [@cmanou](https://github.com/cmanou)! - Add @remirror/extension-sup extension
+
+### Patch Changes
+
+- Updated dependencies [[`f6fc2729d`](https://github.com/remirror/remirror/commit/f6fc2729d3a39c76f52dbf1c73d4f2ce1f7f361b), [`e7a1d7c1d`](https://github.com/remirror/remirror/commit/e7a1d7c1db1b42ce5cffc4a821669b734c73eae2), [`db49e4678`](https://github.com/remirror/remirror/commit/db49e467811c3c95f48c29f7bd267dac4c3ff85f)]:
+  - @remirror/extension-sub@1.0.0-next.61
+  - @remirror/preset-embed@1.0.0-next.61
+  - @remirror/core@1.0.0-next.61
+  - @remirror/core-constants@1.0.0-next.61
+  - @remirror/core-helpers@1.0.0-next.61
+  - @remirror/core-types@1.0.0-next.61
+  - @remirror/core-utils@1.0.0-next.61
+  - @remirror/dom@1.0.0-next.61
+  - @remirror/extension-annotation@1.0.0-next.61
+  - @remirror/extension-auto-link@1.0.0-next.61
+  - @remirror/extension-bidi@1.0.0-next.61
+  - @remirror/extension-blockquote@1.0.0-next.61
+  - @remirror/extension-bold@1.0.0-next.61
+  - @remirror/extension-callout@1.0.0-next.61
+  - @remirror/extension-code@1.0.0-next.61
+  - @remirror/extension-code-block@1.0.0-next.61
+  - @remirror/extension-codemirror5@1.0.0-next.61
+  - @remirror/extension-collaboration@1.0.0-next.61
+  - @remirror/extension-diff@1.0.0-next.61
+  - @remirror/extension-doc@1.0.0-next.61
+  - @remirror/extension-drop-cursor@1.0.0-next.61
+  - @remirror/extension-emoji@1.0.0-next.61
+  - @remirror/extension-epic-mode@1.0.0-next.61
+  - @remirror/extension-events@1.0.0-next.61
+  - @remirror/extension-gap-cursor@1.0.0-next.61
+  - @remirror/extension-hard-break@1.0.0-next.61
+  - @remirror/extension-heading@1.0.0-next.61
+  - @remirror/extension-history@1.0.0-next.61
+  - @remirror/extension-horizontal-rule@1.0.0-next.61
+  - @remirror/extension-image@1.0.0-next.61
+  - @remirror/extension-italic@1.0.0-next.61
+  - @remirror/extension-link@1.0.0-next.61
+  - @remirror/extension-mention@1.0.0-next.61
+  - @remirror/extension-mention-atom@1.0.0-next.61
+  - @remirror/extension-paragraph@1.0.0-next.61
+  - @remirror/extension-placeholder@1.0.0-next.61
+  - @remirror/extension-positioner@1.0.0-next.61
+  - @remirror/extension-react-component@1.0.0-next.61
+  - @remirror/extension-react-ssr@1.0.0-next.61
+  - @remirror/extension-search@1.0.0-next.61
+  - @remirror/extension-strike@1.0.0-next.61
+  - @remirror/extension-text@1.0.0-next.61
+  - @remirror/extension-trailing-node@1.0.0-next.61
+  - @remirror/extension-underline@1.0.0-next.61
+  - @remirror/extension-yjs@1.0.0-next.61
+  - @remirror/pm@1.0.0-next.61
+  - @remirror/preset-core@1.0.0-next.61
+  - @remirror/preset-list@1.0.0-next.61
+  - @remirror/preset-react@1.0.0-next.61
+  - @remirror/preset-social@1.0.0-next.61
+  - @remirror/preset-table@1.0.0-next.61
+  - @remirror/preset-wysiwyg@1.0.0-next.61
+  - @remirror/react@1.0.0-next.61
+  - @remirror/react-hooks@1.0.0-next.61
+  - @remirror/react-social@1.0.0-next.61
+  - @remirror/react-utils@1.0.0-next.61
+  - @remirror/react-wysiwyg@1.0.0-next.61
+  - @remirror/theme@1.0.0-next.61
+  - @remirror/extension-sup@1.0.0-next.61
+
 ## 1.0.0-next.60
 
 > 2020-12-17

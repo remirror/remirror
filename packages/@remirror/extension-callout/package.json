@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-callout",
-  "version": "1.0.0-next.60",
+  "version": "1.0.0-next.61",
   "description": "Add callouts to your text editor.",
   "keywords": [
     "remirror",
@@ -29,12 +29,12 @@
     "type-fest": "^0.18.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60"
+    "@remirror/core": "1.0.0-next.61",
+    "@remirror/pm": "1.0.0-next.61"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60"
+    "@remirror/core": "1.0.0-next.61",
+    "@remirror/pm": "1.0.0-next.61"
   },
   "publishConfig": {
     "access": "public"

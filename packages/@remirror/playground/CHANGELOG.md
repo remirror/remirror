@@ -1,5 +1,18 @@
 # @remirror/playground
 
+## 1.0.0-next.61
+
+> 2021-01-28
+
+### Patch Changes
+
+- Updated dependencies [[`f6fc2729d`](https://github.com/remirror/remirror/commit/f6fc2729d3a39c76f52dbf1c73d4f2ce1f7f361b), [`db49e4678`](https://github.com/remirror/remirror/commit/db49e467811c3c95f48c29f7bd267dac4c3ff85f)]:
+  - remirror@1.0.0-next.61
+  - @remirror/core@1.0.0-next.61
+  - @remirror/core-helpers@1.0.0-next.61
+  - @remirror/pm@1.0.0-next.61
+  - @remirror/react@1.0.0-next.61
+
 ## 1.0.0-next.60
 
 > 2020-12-17
