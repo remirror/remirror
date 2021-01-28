@@ -1,5 +1,19 @@
 # @remirror/extension-react-ssr
 
+## 1.0.0-next.61
+
+> 2021-01-28
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core@1.0.0-next.61
+  - @remirror/extension-react-component@1.0.0-next.61
+  - @remirror/pm@1.0.0-next.61
+  - @remirror/react-utils@1.0.0-next.61
+
 ## 1.0.0-next.60
 
 > 2020-12-17

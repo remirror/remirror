@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-heading",
-  "version": "1.0.0-next.60",
+  "version": "1.0.0-next.61",
   "description": "Add headings to your text editor.",
   "keywords": [
     "remirror",
@@ -27,12 +27,12 @@
     "@babel/runtime": "^7.12.0"
   },
   "devDependencies": {
-    "@remirror/core": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60"
+    "@remirror/core": "1.0.0-next.61",
+    "@remirror/pm": "1.0.0-next.61"
   },
   "peerDependencies": {
-    "@remirror/core": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60"
+    "@remirror/core": "1.0.0-next.61",
+    "@remirror/pm": "1.0.0-next.61"
   },
   "publishConfig": {
     "access": "public"

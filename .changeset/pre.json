@@ -98,11 +98,14 @@
     "@remirror/extension-base-keymap": "1.0.0-next.13",
     "@remirror/extension-mention-atom": "0.0.0",
     "@remirror/extension-callout": "0.0.0",
-    "@remirror/extension-codemirror5": "0.0.0"
+    "@remirror/extension-codemirror5": "0.0.0",
+    "@remirror/extension-sub": "0.0.0",
+    "@remirror/extension-sup": "0.0.0"
   },
   "changesets": [
     "afraid-pots-know",
     "afraid-spoons-arrive",
+    "angry-papayas-do",
     "beige-birds-develop",
     "big-apples-unite",
     "big-buses-pay",
@@ -232,6 +235,7 @@
     "long-phones-enjoy",
     "long-swans-fry",
     "loud-camels-search",
+    "loud-mirrors-peel",
     "loud-pandas-happen",
     "lovely-lies-lay",
     "lovely-seas-eat",
@@ -329,6 +333,7 @@
     "smart-peaches-mate",
     "smart-pots-thank",
     "smart-readers-promise",
+    "smooth-apes-push",
     "smooth-dryers-impress",
     "smooth-readers-collect",
     "soft-boxes-mate",
