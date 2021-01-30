@@ -1,4 +1,5 @@
 const path = require('path');
+const { getPackagesSync } = require('@manypkg/get-packages');
 const pkg = require('./package.json');
 
 module.exports = {
@@ -83,7 +84,7 @@ module.exports = {
       {
         docs: {
           path: '../docs',
-          sidebarPath: require.resolve('./sidebars.js'),
+          sidebarPath: require.resolve('./sidebar.js'),
           editUrl: 'https://github.com/remirror/remirror/edit/next/website/',
         },
         blog: {
@@ -100,8 +101,23 @@ module.exports = {
   plugins: [
     path.join(__dirname, 'plugins/monaco-editor'),
     require.resolve('@docusaurus/plugin-ideal-image'),
+    [
+      'docusaurus-plugin-typedoc',
+
+      // Plugin / TypeDoc options
+      {
+        entryPoints: [
+          getPackagesSync(path.join(__dirname, '..')).packages.map((pkg) =>
+            path.relative(__dirname, path.join(pkg.dir, 'src', 'index.ts')),
+          ),
+        ],
+        tsconfig: '../packages/tsconfig.json',
+        docsRoot: '../docs',
+      },
+    ],
   ],
   themes: ['@docusaurus/theme-live-codeblock'],
+
   stylesheets: [
     'https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap',
   ],

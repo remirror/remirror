@@ -13,5 +13,7 @@
 /docs/guide/create-editor               /docs/react/create-editor
 /docs/concepts/react-controlled-editor  /docs/react/controlled
 /docs/concepts/react-refs               /docs/react/refs
+/docs/concepts/presets                  /docs/
+/docs/showcase/social                   /docs/examples/social
 
 /docs/concepts/presets      /docs/concepts/extension

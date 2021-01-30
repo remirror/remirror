@@ -143,6 +143,11 @@ export interface RemirrorPackageMeta {
    * False means no tsconfig files will be added to the package.
    */
   tsconfigs?: false | TsConfigMeta;
+
+  /**
+   * Whether to skip the api generation for a package.
+   */
+  skipApi?: boolean;
 }
 
 export interface TsConfigMeta {

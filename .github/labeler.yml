@@ -67,11 +67,7 @@
       ]
 
 'type: playground :joystick:':
-  - any:
-      [
-        'packages/remirror__playground/**/*.{ts,tsx,json}',
-        'support/website/src/pages/playground.tsx',
-      ]
+  - any: ['packages/remirror__playground/**/*.{ts,tsx,json}', 'website/src/pages/playground.tsx']
 
 'type: docs :pencil:':
   - any: ['docs/**/*.{md.mdx}', '**/readme.{md,mdx}']
@@ -89,7 +85,7 @@
   - any:
       [
         'support/**/*',
-        '!support/website/src/pages/playground.tsx',
+        '!website/src/pages/playground.tsx',
         '!test/**',
         '!support/actions/**',
         '!support/azure/**',

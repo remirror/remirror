@@ -1,25 +1,20 @@
 /** @type import('@docusaurus/plugin-content-docs/lib/types').SidebarItem[] */
 const docs = [
+  'introduction',
+  'installation',
   {
     type: 'category',
-    label: 'Remirror',
-    items: ['introduction', 'contributing', 'tooling', 'errors', 'projects', 'faq'],
-  },
-  {
-    type: 'category',
-    label: 'Guides',
+    label: 'React',
     collapsed: false,
-    items: ['guide/installation', 'guide/hello-remirror', 'guide/create-editor'],
+    items: ['react/create-editor', 'react/controlled', 'react/hooks', 'react/refs'],
   },
   {
     type: 'category',
-    label: 'Concepts',
+    label: 'Core',
     items: [
       'concepts/extension',
-      'concepts/presets',
       'concepts/remirror-manager',
-      'concepts/react-controlled-editor',
-      'concepts/react-refs',
+      'concepts/extra-attributes',
       'concepts/priority',
       'concepts/keymap',
       'concepts/error-handling',
@@ -31,9 +26,11 @@ const docs = [
     label: 'Advanced',
     items: ['advanced/creating-extensions', 'advanced/naming-conventions'],
   },
+  'faq',
   {
-    type: 'doc',
-    id: 'api/index',
+    type: 'category',
+    label: 'More',
+    items: ['contributing', 'tooling', 'errors', 'projects'],
   },
 ];
 

@@ -38,6 +38,7 @@ const paths = {
   baseTsconfig: baseDir('support', 'tsconfig.base.json'),
   rootTsconfig: baseDir('support', 'root', tsconfigFileName),
   packagesTsconfig: baseDir('packages', tsconfigFileName),
+  rootTypedoc: baseDir('support', 'root', 'typedoc.json'),
 };
 
 // A list of all the generated files which will be prettified at the end of the
@@ -565,11 +566,16 @@ async function generatePackageTsConfigs() {
   const limit = pLimit(os.cpus().length);
   const references: TsConfigJson.References[] = [];
   const types: Set<string> = new Set();
+  const entryFiles: string[] = [];
 
   /**
    * Write the file for an individual package.
    */
   function writePackageTsconfig(pkg: Package) {
+    if (pkg.types) {
+      entryFiles.push(path.join(getRelativePathFromJson(pkg), 'src', 'index.ts'));
+    }
+
     promises.push(
       limit(async () => {
         const tsconfigFiles = await resolveTsConfigMeta(pkg, dependencies, types);
@@ -616,6 +622,7 @@ async function generatePackageTsConfigs() {
   references.sort((a, b) => a.path.localeCompare(b.path));
   await writeJSON(paths.rootTsconfig, { include: [], files: [], references });
   await writeJSON(paths.packagesTsconfig, packagesTsconfig);
+  await writeJSON(paths.rootTypedoc, { entryFiles, out: 'docs/api' });
   filesToPrettify.push(paths.rootTsconfig);
 }
 

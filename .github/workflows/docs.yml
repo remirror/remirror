@@ -53,7 +53,7 @@ jobs:
       - name: deploy docs
         uses: nwtgck/actions-netlify@develop
         with:
-          publish-dir: './support/website/build'
+          publish-dir: './website/build'
           production-branch: next
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: 'Deploy Docs from GitHub Actions - ${{ github.event.pull_request.title || github.ref }}'

@@ -50,10 +50,10 @@ pnpm docs:dev
 
 Once the build completes (can take a minute the first time) navigate to <http://localhost:3000> (or another port if that one is already being used).
 
-The documentation is written using [docusaurus] and all files and dependencies are available in the `/support/website` subdirectory. To add a new dependency, you will need to add it to `/support/website/package.json` and not the top level package.json file. You can either do this by manually editing the `/support/website/package.json` file or you use the following command.
+The documentation is written using [docusaurus] and all files and dependencies are available in the `/website` subdirectory. To add a new dependency, you will need to add it to `/website/package.json` and not the top level package.json file. You can either do this by manually editing the `/website/package.json` file or you use the following command.
 
 ```bash
-cd support/website
+cd website
 pnpm add <package>
 ```
 

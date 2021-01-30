@@ -32,7 +32,7 @@ const files = globby.sync(['packages/remirror__theme/src/*.{ts,tsx}'], {
   cwd: baseDir(),
   ignore: [
     '**/@remirror/styles',
-    '**/support/website',
+    '**/website',
     '**/playground',
     '**/__tests__',
     '**/__dts__',
