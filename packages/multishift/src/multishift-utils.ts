@@ -668,12 +668,11 @@ export function getChangesFromItemClick<Item = any>({
     props.multiple,
   );
   const isOpen = props.multiple ? true : defaultState.isOpen;
+  const params = { state, getItemId };
   const defaultReturn: MultishiftStateProps<Item> = {
     highlightedGroupEndIndex: defaultState.highlightedGroupEndIndex,
     highlightedGroupStartIndex: props.multiple ? index : defaultState.highlightedGroupStartIndex,
   };
-
-  const params = { state, getItemId };
 
   if (!selectedItem) {
     // TODO check if this logic is desirable

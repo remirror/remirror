@@ -14,8 +14,9 @@ Progress slowed because I was scared of introducing breaking changes. It has bec
 
 Here's what's changing in the upcoming beta release.
 
-- [ ] Todo list support
+- [x] Improved React API
 - [x] Markdown support
+- [ ] Todo list support
 - ~Experimental svelte support~
 - ~Experimental react native support~
 
@@ -30,7 +31,7 @@ Here's what's changing in the upcoming beta release.
 - Replace `useManager` with better `useRemirror` which provides a lot more functionality.
 - Rename `preset-table` to `extension-tables`
 - Rename `preset-list` to `extension-lists`. `ListPreset` is now `BulletListExtension` and `OrderListExtension`.
-- Create decorations extension
+- New `createDecorations` extension method for adding decorations to the prosemirror view.
 - Add full markdown support via `@remirror/extension-markdown`
 
 - Create new decorator pattern for adding commands, helper functions and keyBindings. This opens up the door to
@@ -46,7 +47,6 @@ Here's what's changing in the upcoming beta release.
 
 ### `ExtensionStore`
 
-- Rename plugin update method in the store from `updateExtensionPlugins`.
 - Rename `addOrReplacePlugins` to `updatePlugins` in `ExtensionStore`.
 - Remove `reconfigureStatePlugins` and auto apply it for all plugin updating methods.
 
@@ -54,7 +54,10 @@ One of the big changes is a hugely improved API for `@remirror/react`.
 
 ### Positioners
 
-- Positioners now return a `DOMRect` only. This DOMRect represents an absolute position within the document. It is up to your consuming component to consume the rect.
+- Positioners now return a `visible` property which shows if they are currently visible within the editor viewport.
+- Improved scrolling when using the positioner.
+- Fixed a lot of bugs in the positioner API.
+- This DOMRect represents an absolute position within the document. It is up to your consuming component to consume the rect.
 - `@remirror/react-components` exports `PositionerComponent` which internally
 - Renamed the positioners in line with the new functionality.
 
@@ -128,3 +131,70 @@ Actively test for the following
     }
   }
   ```
+
+### Hooks
+
+- Rename `useKeymap` to `useKeymaps`. The original `useKeymap` now has a different signature.
+
+```tsx
+import { useCallback } from 'react';
+import { BoldExtension } from 'remirror/extensions';
+import { Remirror, useHelpers, useKeymap, useRemirror, useRemirrorContext } from '@remirror/react';
+
+const hooks = [
+  () => {
+    const active = useActive();
+    const { insertText } = useCommands();
+    const boldActive = active.bold();
+    const handler = useCallback(() => {
+      if (!boldActive) {
+        return false;
+      }
+
+      return insertText.original('\n\nWoah there!')(props);
+    }, [boldActive, insertText]);
+
+    useKeymap('Shift-Enter', handler); // Add the handler to the keypress pattern.
+  },
+];
+
+const Editor = () => {
+  const { manager } = useRemirror({ extensions: () => [new BoldExtension()] });
+
+  return <Remirror manager={manager} hooks={hooks} />;
+};
+```
+
+- The `Remirror` component now has a convenient hooks props. The hooks prop takes an array of zero parameter hook functions which are rendered into the `RemirrorContext`. It's a shorthand to writing out your own components. You can see the pattern in use above.
+
+### Commands
+
+There are new hooks for working with commands.
+
+- Each command has an `original` method attached for using the original command that was used to create the command. The original command has the same type signature as the `(...args: any[]) => CommandFunction`. So you would call it with the command arguments and then also provide the CommandProps. This is useful when composing commands together or using commands within keyBindings which need to return a boolean.
+
+  - You can see the `insertText.original` being used in the `useKeymap` example above.
+
+- `useCommands()` provides all the commands as hook. `useChainedCommands` provides all the chainable commands.
+
+  ```tsx
+  import { useCallback } from 'react';
+  import { useChainedCommands, useKeymap } from '@remirror/react';
+
+  function useLetItGo() {
+    const chain = useChainedCommands();
+    const handler = useCallback(() => {
+      chain.selectText('all').insertText('Let it goo 🤫').run();
+    }, [chain]);
+
+    // Whenever the user types `a` they let it all go
+    useKeymap('a', handler);
+  }
+  ```
+
+### Dependencies
+
+- Upgrade React to require minimum versions of ^16.14.0 || ^17. This is because of the codebase now using the [new jsx transform](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html).
+- Upgrade TypeScript to a minimum of `4.1`. Several of the new features make use of the new types and it is a requirement to upgrade.
+- General upgrades across all dependencies to using the latest versions.
+  - All `prosemirror-*` packages

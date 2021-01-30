@@ -48,6 +48,9 @@
     },
     {
       "path": "../../remirror__react-utils/src"
+    },
+    {
+      "path": "../../multishift/src"
     }
   ]
 }

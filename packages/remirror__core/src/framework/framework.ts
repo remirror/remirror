@@ -20,7 +20,6 @@ import type {
   Shape,
   Transaction,
 } from '@remirror/core-types';
-import { getDocument } from '@remirror/core-utils';
 import { CoreTheme } from '@remirror/theme';
 
 import type { BuiltinPreset, UpdatableViewProps } from '../builtins';
@@ -159,12 +158,6 @@ export abstract class Framework<
   }
 
   /**
-   * Create the editor state from a `remirror` content type. This should be
-   * passed in during initialization.
-   */
-  private createStateFromContent: CreateStateFromContent<Extension>;
-
-  /**
    * The instance of the [[`RemirrorManager`]].
    */
   protected get manager(): RemirrorManager<Extension> {
@@ -176,13 +169,6 @@ export abstract class Framework<
    */
   protected get view(): EditorView<this['~Sch']> {
     return this.manager.view;
-  }
-
-  /**
-   * The document to use for rendering and outputting HTML.
-   */
-  get document(): Document {
-    return getDocument(this.props.forceEnvironment);
   }
 
   /**
@@ -205,10 +191,9 @@ export abstract class Framework<
   }
 
   constructor(options: FrameworkOptions<Extension, Props>) {
-    const { getProps, createStateFromContent, initialEditorState, element } = options;
+    const { getProps, initialEditorState, element } = options;
 
     this.#getProps = getProps;
-    this.createStateFromContent = createStateFromContent;
     this.#initialEditorState = initialEditorState;
 
     // Attach the framework instance to the manager. The manager will set up the
@@ -243,9 +228,8 @@ export abstract class Framework<
    * state of this instance.
    */
   update(options: FrameworkOptions<Extension, Props>): this {
-    const { getProps, createStateFromContent } = options;
+    const { getProps } = options;
     this.#getProps = getProps;
-    this.createStateFromContent = createStateFromContent;
 
     return this;
   }
@@ -444,7 +428,7 @@ export abstract class Framework<
     content: RemirrorContentType,
     { triggerChange = false }: TriggerChangeProps = {},
   ) => {
-    const state = this.createStateFromContent(content);
+    const state = this.manager.createState({ content });
 
     if (triggerChange) {
       return this.updateState({ state, triggerChange });
@@ -483,6 +467,13 @@ export abstract class Framework<
       helpers: this.manager.store.helpers,
     };
   }
+
+  protected readonly createStateFromContent: CreateStateFromContent<Extension> = (
+    content,
+    selection,
+  ) => {
+    return this.manager.createState({ content, selection });
+  };
 
   /**
    * Focus the editor.

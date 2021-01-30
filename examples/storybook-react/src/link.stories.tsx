@@ -9,7 +9,7 @@ import {
   ShortcutHandlerProps,
 } from 'remirror/extensions';
 import {
-  ControlledDialog,
+  ControlledDialogComponent,
   FloatingToolbar,
   FloatingWrapper,
   Remirror,
@@ -62,7 +62,7 @@ const FloatingLinkToolbar = () => {
       <FloatingWrapper positioner={linkPositioner} placement='bottom'>
         {/* {linkPositioner ? `${linkPositioner.}` : ''} */}
       </FloatingWrapper>
-      <ControlledDialog visible={visible} onUpdate={onUpdate} backdrop={true}>
+      <ControlledDialogComponent visible={visible} onUpdate={onUpdate} backdrop={true}>
         <Button
           onClick={() => {
             setVisible(false);
@@ -70,7 +70,7 @@ const FloatingLinkToolbar = () => {
         >
           Hello
         </Button>
-      </ControlledDialog>
+      </ControlledDialogComponent>
     </>
   );
 };

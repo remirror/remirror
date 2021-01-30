@@ -7,7 +7,6 @@ import type {
   EditorViewProps,
   PrimitiveSelection,
   RemirrorContentType,
-  RenderEnvironment,
   TextProps,
   Transaction,
   TransactionProps,
@@ -26,12 +25,6 @@ export interface BaseFramework<Extension extends AnyExtension> {
    * The name of the framework being used.
    */
   readonly name: string;
-
-  /**
-   * The document that should be used for rendering. This can be overridden for
-   * frameworks that wish to implement SSR support.
-   */
-  readonly document: Document;
 
   /**
    * The state that is initially passed into the editor.
@@ -62,12 +55,6 @@ export interface FrameworkOptions<
    * A method for getting the passed in props.
    */
   getProps: () => Props;
-
-  /**
-   * A custom method for creating a prosemirror state from content. It allows
-   * users to manage controlled editors more easily.
-   */
-  createStateFromContent: CreateStateFromContent<Extension>;
 
   /**
    * When provided the view will immediately be inserted into the dom within
@@ -160,56 +147,6 @@ export interface FrameworkProps<Extension extends AnyExtension> {
    * @default ''
    */
   label?: string;
-
-  /**
-   * By default remirror will work out whether this is a dom environment or
-   * server environment for SSR rendering. You can override this behaviour here
-   * when required.
-   */
-  forceEnvironment?: RenderEnvironment;
-
-  /**
-   * This is called when the editor has invalid content.
-   *
-   * @remarks
-   *
-   * To add this to the editor the following is needed.
-   *
-   * ```tsx
-   * import React from 'react';
-   * import { Remirror, InvalidContentHandler } from 'remirror';
-   * import { Remirror, useManager } from '@remirror/react';
-   * import { WysiwygPreset } from 'remirror/extensions';
-   *
-   * const Framework = () => {
-   *   const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {
-   *     // Automatically remove all invalid nodes and marks.
-   *     return transformers.remove(json, invalidContent);
-   *   }, []);
-   *
-   *   const manager = useManager(() => [new WysiwygPreset()]);
-   *
-   *   return (
-   *     <Remirror manager={manager} onError={onError}>
-   *       <div />
-   *     </Remirror>
-   *   );
-   * };
-   * ```
-   */
-  onError?: InvalidContentHandler;
-
-  /**
-   * A function which transforms a string into a prosemirror node.
-   *
-   * @remarks
-   *
-   * Can be used to transform markdown / html or any other string format into a
-   * prosemirror node.
-   *
-   * See [[`fromHTML`]] for an example of how this could work.
-   */
-  stringHandler?: keyof Remirror.StringHandlers | StringHandler;
 }
 
 export type AddFrameworkHandler<Extension extends AnyExtension> = <

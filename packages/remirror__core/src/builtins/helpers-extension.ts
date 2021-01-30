@@ -115,6 +115,8 @@ export class HelpersExtension extends PlainExtension {
     this.store.setStoreKey('attrs', attrs);
     this.store.setStoreKey('active', active);
     this.store.setStoreKey('helpers', helpers as any);
+    this.store.setExtensionStore('attrs', attrs);
+    this.store.setExtensionStore('active', active);
     this.store.setExtensionStore('helpers', helpers as any);
   }
 
@@ -318,6 +320,30 @@ declare global {
        * otherwise it will throw an error.
        */
       helpers: HelpersFromExtensions<Extensions>;
+
+      /**
+       * Check which nodes and marks are active under the current user
+       * selection.
+       *
+       * ```ts
+       * const { active } = manager.store;
+       *
+       * return active.bold() ? 'bold' : 'regular';
+       * ```
+       */
+      active: ActiveFromExtensions<Extensions>;
+
+      /**
+       * Get the attributes for the named node or mark from the current user
+       * selection.
+       *
+       * ```ts
+       * const { attrs } = manager.store;
+       *
+       * attrs.heading(); // => { id: 'i1238ha', level: 1 }
+       * ```
+       */
+      attrs: AttrsFromExtensions<Extensions>;
     }
 
     interface ListenerProperties<Extension extends AnyExtension> {

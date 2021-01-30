@@ -39,11 +39,18 @@
     "@lepont/async-storage": "^0.4.2",
     "@lepont/platform": "^0.1.4",
     "@remirror/core": "1.0.0-next.60",
+    "@remirror/extension-react-native-bridge": "0.0.0",
+    "@remirror/pm": "1.0.0-next.60",
+    "@remirror/react-core": "0.0.0",
+    "@types/min-document": "^2.19.0",
     "create-context-state": "0.0.0",
-    "lepont": "^0.11.4"
+    "lepont": "^0.11.4",
+    "min-document": "^2.19.0",
+    "type-fest": "^0.20.2"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
     "@types/react-native": "^0.63.46",
     "bundler.macro": "0.0.0",
     "react": "^17.0.1",
@@ -54,6 +61,7 @@
   },
   "peerDependencies": {
     "@types/react": "^16.14.0 || ^17",
+    "@types/react-dom": "^16.9.0 || ^17",
     "@types/react-native": "^0.63 || ^0.64",
     "react": "^16.14.0 || ^17",
     "react-dom": "^16.14.0 || ^17",

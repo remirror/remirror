@@ -73,6 +73,11 @@ export const Editor = (): JSX.Element => {
 };
 
 interface HookComponentProps {
+  /**
+   * The hook that will be run within the `RemirrorContext`. For access to other
+   * contexts, wrap the `<Remirror />` within other contexts and access their
+   * values with `useContext`.
+   */
   hook: () => void;
 }
 

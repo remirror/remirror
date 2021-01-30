@@ -68,6 +68,12 @@
       "types": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.cjs.d.ts",
       "default": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.esm.js"
     },
+    "./use-menu-navigation": {
+      "import": "./use-menu-navigation/dist/remirror-react-hooks-use-menu-navigation.esm.js",
+      "require": "./use-menu-navigation/dist/remirror-react-hooks-use-menu-navigation.cjs.js",
+      "browser": "./use-menu-navigation/dist/remirror-react-hooks.browser.esm.js",
+      "default": "./use-menu-navigation/dist/remirror-react-hooks-use-menu-navigation.esm.js"
+    },
     "./use-multi-positioner": {
       "import": "./use-multi-positioner/dist/remirror-react-hooks-use-multi-positioner.esm.js",
       "require": "./use-multi-positioner/dist/remirror-react-hooks-use-multi-positioner.cjs.js",
@@ -99,16 +105,17 @@
   "types": "dist/remirror-react-hooks.cjs.d.ts",
   "files": [
     "dist",
-    "use-positioner",
-    "use-suggest",
-    "use-keymap",
-    "use-multi-positioner",
-    "use-events",
     "use-editor-focus",
-    "use-mention",
-    "use-mention-atom",
     "use-emoji",
-    "use-history"
+    "use-events",
+    "use-history",
+    "use-keymap",
+    "use-mention-atom",
+    "use-mention",
+    "use-menu-navigation",
+    "use-multi-positioner",
+    "use-positioner",
+    "use-suggest"
   ],
   "dependencies": {
     "@babel/runtime": "^7.12.5",
@@ -123,6 +130,7 @@
     "@remirror/pm": "1.0.0-next.60",
     "@remirror/react-core": "0.0.0",
     "@remirror/react-utils": "1.0.0-next.60",
+    "multishift": "1.0.0-next.60",
     "type-fest": "^0.20.2",
     "use-isomorphic-layout-effect": "^1.1.1",
     "use-previous": "^1.1.0"
@@ -164,16 +172,17 @@
   "preconstruct": {
     "entrypoints": [
       "index.ts",
-      "use-positioner.ts",
-      "use-suggest.ts",
-      "use-keymap.ts",
-      "use-multi-positioner.ts",
-      "use-events.ts",
       "use-editor-focus.ts",
-      "use-mention.ts",
-      "use-mention-atom.ts",
       "use-emoji.ts",
-      "use-history.ts"
+      "use-events.ts",
+      "use-history.ts",
+      "use-keymap.ts",
+      "use-mention-atom.ts",
+      "use-mention.ts",
+      "use-menu-navigation.ts",
+      "use-multi-positioner.ts",
+      "use-positioner.ts",
+      "use-suggest.ts"
     ]
   },
   "rn:dev": "src/index.ts"

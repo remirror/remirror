@@ -3,7 +3,6 @@ import { FC, useState } from 'react';
 import {
   AnyExtension,
   EditorState,
-  htmlToProsemirrorNode,
   PlainExtension,
   RemirrorEventListener,
   StateUpdateLifecycleProps,
@@ -20,7 +19,7 @@ const props = { label, stringHandler: 'text' as const };
 function create<Extension extends AnyExtension>(
   extensions: Extension[] = [],
 ): RemirrorTestChain<ReactExtensions<Extension>> {
-  return RemirrorTestChain.create(createReactManager(extensions));
+  return RemirrorTestChain.create(createReactManager(extensions, { stringHandler: 'html' }));
 }
 
 let errorSpy = jest.spyOn(console, 'error');
@@ -39,7 +38,6 @@ describe('Remirror Controlled Component', () => {
 
     const value = manager.createState({
       content: '<p>This is the initial value</p>',
-      stringHandler: htmlToProsemirrorNode,
     });
     const onChange = jest.fn();
 
@@ -64,7 +62,6 @@ describe('Remirror Controlled Component', () => {
 
     const value = chain.manager.createState({
       content: '<p>Not terrible</p>',
-      stringHandler: htmlToProsemirrorNode,
     });
     const onChange = jest.fn();
 
@@ -89,7 +86,7 @@ describe('Remirror Controlled Component', () => {
       const [value, setValue] = useState<EditorState>(
         chain.manager.createState({
           content: '<p>some content</p>',
-          stringHandler: htmlToProsemirrorNode,
+
           selection: 'start',
         }),
       );
@@ -123,7 +120,6 @@ describe('Remirror Controlled Component', () => {
       const [state, setState] = useState<EditorState>(
         chain.manager.createState({
           content: '<p>some content</p>',
-          stringHandler: 'html',
           selection: 'start',
         }),
       );
@@ -158,7 +154,6 @@ describe('Remirror Controlled Component', () => {
 
     const value = manager.createState({
       content: '<p>some content</p>',
-      stringHandler: htmlToProsemirrorNode,
     });
 
     const set = jest.fn();
@@ -193,7 +188,6 @@ describe('Remirror Controlled Component', () => {
 
     const value = manager.createState({
       content: '<p>some content</p>',
-      stringHandler: htmlToProsemirrorNode,
     });
 
     const set = jest.fn();
@@ -242,7 +236,7 @@ describe('Remirror Controlled Component', () => {
       const [value, setValue] = useState<EditorState>(() =>
         chain.manager.createState({
           content: doc(p('some content')),
-          stringHandler: htmlToProsemirrorNode,
+
           selection: 'end',
         }),
       );
@@ -302,7 +296,6 @@ test('can run multiple commands', () => {
     const [value, setValue] = useState<EditorState>(
       manager.createState({
         content: '',
-        stringHandler: htmlToProsemirrorNode,
       }),
     );
 
@@ -364,7 +357,6 @@ test('NOTE: this test is to show that synchronous state updates only show the mo
     const [value, setValue] = useState<EditorState>(
       manager.createState({
         content: '',
-        stringHandler: htmlToProsemirrorNode,
       }),
     );
 
@@ -402,7 +394,6 @@ test('support for rendering a nested controlled editor in strict mode', () => {
       manager.createState({
         content: '<p>test</p>',
         selection: 'all',
-        stringHandler: htmlToProsemirrorNode,
       }),
     );
 
@@ -462,7 +453,6 @@ describe('onChange', () => {
       manager.createState({
         content: '<p>A</p>',
         selection: 'end',
-        stringHandler: htmlToProsemirrorNode,
       }),
     );
 

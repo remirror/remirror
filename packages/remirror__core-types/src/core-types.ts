@@ -115,6 +115,25 @@ export type KeyBindingCommandFunction<Schema extends EditorSchema = EditorSchema
 ) => boolean;
 
 /**
+ * Some commonly used keybinding names to help with auto complete.
+ */
+export type KeyBindingNames =
+  | 'Enter'
+  | 'ArrowDown'
+  | 'ArrowUp'
+  | 'ArrowLeft'
+  | 'ArrowRight'
+  | 'PageUp'
+  | 'PageDown'
+  | 'Home'
+  | 'End'
+  | 'Escape'
+  | 'Delete'
+  | 'Backspace'
+  | 'Tab'
+  | 'Shift-Tab';
+
+/**
  * A map of keyboard bindings and their corresponding command functions (a.k.a
  * editing actions).
  *
@@ -134,17 +153,7 @@ export type KeyBindingCommandFunction<Schema extends EditorSchema = EditorSchema
  * will prevent the default flow from executing.
  */
 export type KeyBindings<Schema extends EditorSchema = EditorSchema> = Partial<
-  Record<
-    | 'Enter'
-    | 'ArrowDown'
-    | 'ArrowUp'
-    | 'ArrowLeft'
-    | 'ArrowRight'
-    | 'Escape'
-    | 'Delete'
-    | 'Backspace',
-    KeyBindingCommandFunction<Schema>
-  >
+  Record<KeyBindingNames, KeyBindingCommandFunction<Schema>>
 > &
   Record<string, KeyBindingCommandFunction<Schema>>;
 

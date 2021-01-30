@@ -112,7 +112,7 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
         attributes: () => this.getAttributes(),
         editable: () => this.props.editable ?? true,
       },
-      this.props.forceEnvironment,
+      this.manager.settings.forceEnvironment,
     );
   }
 
@@ -317,11 +317,11 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
    * TODO - this is useless and should be refactored.
    */
   private renderChildren(child: ReactNode = null) {
-    const { forceEnvironment, insertPosition = 'end', suppressHydrationWarning } = this.props;
+    const { insertPosition = 'end', suppressHydrationWarning } = this.props;
     const children = isArray(child) ? child : [child];
 
     if (
-      shouldUseDomEnvironment(forceEnvironment) &&
+      shouldUseDomEnvironment(this.manager.settings.forceEnvironment) &&
       (!suppressHydrationWarning || this.shouldRenderClient)
     ) {
       return children;
@@ -338,10 +338,10 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
    * Return a JSX Element to be used within the ssr rendering phase.
    */
   renderSsr = (): ReactNode => {
-    const { suppressHydrationWarning, forceEnvironment, editable } = this.props;
+    const { suppressHydrationWarning, editable } = this.props;
 
     if (
-      shouldUseDomEnvironment(forceEnvironment) &&
+      shouldUseDomEnvironment(this.manager.settings.forceEnvironment) &&
       (!suppressHydrationWarning || this.shouldRenderClient)
     ) {
       return null;

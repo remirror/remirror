@@ -1,7 +1,7 @@
-import { bundle, transpile } from 'bundler.macro';
+import { rollupBundle, transpileFile } from 'bundler.macro';
 
 test('it can transpile a file', () => {
-  expect(transpile('../__fixtures__/transpile.fixture.ts')).toMatchInlineSnapshot(`
+  expect(transpileFile('../__fixtures__/transpile.fixture.ts')).toMatchInlineSnapshot(`
     "function TestFunction() {
       console.log('This is a function');
     }"
@@ -9,7 +9,7 @@ test('it can transpile a file', () => {
 });
 
 test('it can bundle a file', () => {
-  expect(bundle('../__fixtures__/bundle.fixture.ts', 'Awesome')).toMatchInlineSnapshot(`
+  expect(rollupBundle('../__fixtures__/bundle.fixture.ts', 'Awesome')).toMatchInlineSnapshot(`
     "var Awesome = (function (exports) {
       'use strict';
 

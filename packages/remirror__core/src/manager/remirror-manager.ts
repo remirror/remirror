@@ -24,22 +24,22 @@ import type {
   PrimitiveSelection,
   ProsemirrorNode,
   RemirrorContentType,
+  RenderEnvironment,
   Replace,
   Simplify,
   Transaction,
 } from '@remirror/core-types';
-import type {
+import {
+  createDocumentNode,
   CustomDocumentProps,
+  getDocument,
+  getTextSelection,
   InvalidContentHandler,
+  isIdentifierOfType,
+  isRemirrorType,
   NamedStringHandlers,
   StringHandler,
   StringHandlerProps,
-} from '@remirror/core-utils';
-import {
-  createDocumentNode,
-  getTextSelection,
-  isIdentifierOfType,
-  isRemirrorType,
 } from '@remirror/core-utils';
 import { EditorState } from '@remirror/pm/state';
 
@@ -362,6 +362,13 @@ export class RemirrorManager<Extension extends AnyExtension> {
   }
 
   /**
+   * The document to use for rendering and outputting HTML.
+   */
+  get document(): Document {
+    return this.#settings.document ?? getDocument(this.#settings.forceEnvironment);
+  }
+
+  /**
    * Creates the extension manager which is used to simplify the management of
    * the prosemirror editor.
    *
@@ -487,7 +494,7 @@ export class RemirrorManager<Extension extends AnyExtension> {
       isMounted: { value: () => this.mounted, enumerable },
       getExtension: { value: this.getExtension.bind(this), enumerable },
       manager: { get: () => this, enumerable },
-      document: { get: () => this.#framework?.document, enumerable },
+      document: { get: () => this.document, enumerable },
       stringHandlers: { get: () => this.#stringHandlers, enumerable },
       currentState: {
         get: () => (currentState ??= this.getState()),
@@ -605,19 +612,17 @@ export class RemirrorManager<Extension extends AnyExtension> {
   /**
    * Create the editor state from content passed to this extension manager.
    */
-  createState(props: CreateEditorStateProps): EditorState<GetSchema<Extension>> {
-    const { content, document, onError = this.settings.onError, selection } = props;
+  createState(props: CreateEditorStateProps = {}): EditorState<GetSchema<Extension>> {
+    const { stringHandler, onError, defaultSelection = 'end' } = this.settings;
+    const { content = this.createEmptyDoc(), selection = defaultSelection } = props;
     const { schema, plugins } = this.store;
 
-    const handler = props.stringHandler ?? this.settings.stringHandler;
-    const stringHandler = isString(handler) ? this.stringHandlers[handler] : handler;
-
     const doc = createDocumentNode({
+      stringHandler: isString(stringHandler) ? this.stringHandlers[stringHandler] : stringHandler,
+      document: this.document,
       content,
-      document,
-      schema,
-      stringHandler,
       onError,
+      schema,
       selection,
     });
 
@@ -625,7 +630,7 @@ export class RemirrorManager<Extension extends AnyExtension> {
       schema,
       doc,
       plugins,
-      selection: getTextSelection(selection ?? 'end', doc),
+      selection: getTextSelection(selection, doc),
     });
   }
 
@@ -886,9 +891,7 @@ export function isRemirrorManager<Extension extends AnyExtension = AnyExtension>
   return (value as AnyRemirrorManager).includes(mustIncludeList);
 }
 
-export interface CreateEditorStateProps
-  extends Partial<CustomDocumentProps>,
-    Omit<StringHandlerProps, 'stringHandler'> {
+export interface CreateEditorStateProps extends Omit<StringHandlerProps, 'stringHandler'> {
   /**
    * This is where content can be supplied to the Editor.
    *
@@ -898,19 +901,10 @@ export interface CreateEditorStateProps
    * - a string (which will be parsed by the stringHandler)
    * - JSON object matching Prosemirror expected shape
    * - A top level ProsemirrorNode
-   */
-  content: RemirrorContentType;
-
-  /**
-   * The error handler which is called when the content is a JSON object and is
-   * invalid.
    *
-   * When the content is a string you will be expected to manage any errors in
-   * the `stringHandler`. When the content is an EditorState or a
-   * ProsemirrorNode you will also be expected to handle the errors wherever you
-   * are creating these primitives.
+   * If this is left undefined then the editor will use the default empty `doc`.
    */
-  onError?: InvalidContentHandler;
+  content?: RemirrorContentType;
 
   /**
    * The selection that the user should have in the created node.
@@ -918,11 +912,6 @@ export interface CreateEditorStateProps
    * @default 'end'
    */
   selection?: PrimitiveSelection;
-
-  /**
-   * The string handler method, or the key of the builtin string handler.
-   */
-  stringHandler?: keyof Remirror.StringHandlers | StringHandler;
 }
 
 interface RemirrorManagerConstructor extends Function {
@@ -999,7 +988,7 @@ declare global {
     /**
      * Settings which can be passed into the manager.
      */
-    interface ManagerSettings {
+    interface ManagerSettings extends Partial<CustomDocumentProps> {
       /**
        * Set the extension priority for extension's by their name.
        */
@@ -1044,9 +1033,33 @@ declare global {
       onError?: InvalidContentHandler;
 
       /**
-       * The string handler method, or the key of the builtin string handler.
+       * A function which transforms a string into a prosemirror node.
+       *
+       * @remarks
+       *
+       * Can be used to transform markdown / html or any other string format into a
+       * prosemirror node.
+       *
+       * See [[`fromHTML`]] for an example of how this could work.
        */
       stringHandler?: keyof Remirror.StringHandlers | StringHandler;
+
+      /**
+       * By default remirror will work out whether this is a dom environment or
+       * server environment for SSR rendering. You can override this behaviour here
+       * when required.
+       *
+       * @default undefined
+       */
+      forceEnvironment?: RenderEnvironment;
+
+      /**
+       * The default named selection. This is used when `manager.createState` is
+       * called without providing a selection.
+       *
+       * @default 'end'
+       */
+      defaultSelection?: 'start' | 'end' | 'all';
     }
 
     /**

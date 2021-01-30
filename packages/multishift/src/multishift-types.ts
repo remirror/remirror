@@ -797,6 +797,21 @@ export interface MultishiftHelpers<Item = any> {
   itemHighlightedAtIndex: (index: number) => boolean;
 
   /**
+   * Return true when the provided item index is hovered.
+   */
+  indexIsHovered: (index: number) => boolean;
+
+  /**
+   * Return true when the provided item is hovered.
+   */
+  itemIsHovered: (item: Item) => boolean;
+
+  /**
+   * Return true when the provided item index is selected.
+   */
+  indexIsSelected: (index: number) => boolean;
+
+  /**
    * Return true when the provided item is selected.
    */
   itemIsSelected: (item: Item) => boolean;

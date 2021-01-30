@@ -158,7 +158,7 @@ function replaceParentExpression(options: ReplaceParentExpressionProps) {
 /**
  * Handles loading a single json file with an optional object path parameter.
  */
-function transpile({ reference, state, babel }: MethodProps) {
+function transpileFile({ reference, state, babel }: MethodProps) {
   const filename = getFileName(state);
 
   const { parentPath } = reference;
@@ -192,7 +192,7 @@ function transpile({ reference, state, babel }: MethodProps) {
   replaceParentExpression({ babel, parentPath, value: result.code });
 }
 
-function bundle({ reference, state, babel }: MethodProps) {
+function rollupBundle({ reference, state, babel }: MethodProps) {
   const filename = getFileName(state);
 
   const { parentPath } = reference;
@@ -246,7 +246,7 @@ function bundle({ reference, state, babel }: MethodProps) {
     const bundler = await rollup({
       input,
       plugins: [
-        babel({ cwd }),
+        babel({ cwd, babelHelpers: 'bundled' }),
         json({ namedExports: false }),
         resolve({
           extensions,
@@ -297,8 +297,8 @@ function checkReferenceExists(options: CheckReferenceExistsParameter): void {
 
 /** The supported methods for this macro */
 const supportedMethods = [
-  { name: 'bundle', method: bundle },
-  { name: 'transpile', method: transpile },
+  { name: 'rollupBundle', method: rollupBundle },
+  { name: 'transpileFile', method: transpileFile },
 ];
 
 /**

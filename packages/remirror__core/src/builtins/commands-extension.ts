@@ -23,6 +23,7 @@ import type {
   PrimitiveSelection,
   ProsemirrorAttributes,
   ProsemirrorNode,
+  RemirrorContentType,
   Shape,
   Static,
   Transaction,
@@ -60,6 +61,7 @@ import {
   PlainExtension,
   UiCommandNames,
 } from '../extension';
+import { CreateStateFromContent } from '../framework/base-framework';
 import { throwIfNameNotUnique } from '../helpers';
 import type {
   CommandShape,
@@ -487,6 +489,50 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
     return ({ tr, dispatch }) => {
       dispatch?.(tr.setNodeMarkup(pos, undefined, attrs));
 
+      return true;
+    };
+  }
+
+  /**
+   * Set the content of the editor while preserving history.
+   *
+   * Under the hood this is replacing the content in the document with the new
+   * state.doc of the provided content.
+   *
+   * If the content is a string you will need to ensure you have the proper
+   * string handler set up in the editor.
+   */
+  @command()
+  setContent(content: RemirrorContentType, selection?: PrimitiveSelection): CommandFunction {
+    return (props) => {
+      const { tr, dispatch } = props;
+      const state = this.store.manager.createState({ content, selection });
+
+      if (!state) {
+        return false;
+      }
+
+      dispatch?.(tr.replaceRangeWith(0, tr.doc.nodeSize - 2, state.doc));
+      return true;
+    };
+  }
+
+  /**
+   * Reset the content of the editor while preserving the history.
+   *
+   * This means that undo and redo will still be active since the doc is replaced with a new doc.
+   */
+  @command()
+  resetContent(): CommandFunction {
+    return (props) => {
+      const { tr, dispatch } = props;
+      const doc = this.store.manager.createEmptyDoc();
+
+      if (doc) {
+        return this.setContent(doc)(props);
+      }
+
+      dispatch?.(tr.delete(0, tr.doc.nodeSize));
       return true;
     };
   }

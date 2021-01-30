@@ -7,7 +7,7 @@ import { I18n, i18n as defaultI18n } from '@remirror/i18n';
  * This uses `@lingui/core` in the background. So please star and support the
  * project when you have a moment.
  */
-export const [I18nProvider, useI18n] = createContextState<I18nContext, I18nProps>(({ props }) => {
+export const [I18nProvider, useI18n] = createContextState<UseI18nReturn, I18nProps>(({ props }) => {
   const locale = props.locale ?? 'en';
   const i18n = props.i18n ?? defaultI18n;
   const supportedLocales = props.supportedLocales ?? [locale];
@@ -16,7 +16,7 @@ export const [I18nProvider, useI18n] = createContextState<I18nContext, I18nProps
   return { locale, i18n, supportedLocales, t };
 });
 
-export interface I18nContext extends Required<I18nProps> {
+export interface UseI18nReturn extends Required<I18nProps> {
   /**
    * A translation utility for translating a predefined string.
    */

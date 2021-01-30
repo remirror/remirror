@@ -1,5 +1,12 @@
-export type { UseExtensionCallback, UseRemirrorProps, UseRemirrorReturn } from './hooks';
+export type {
+  I18nProps,
+  UseExtensionCallback,
+  UseI18nReturn,
+  UseRemirrorProps,
+  UseRemirrorReturn,
+} from './hooks';
 export {
+  I18nProvider,
   RemirrorContext,
   useActive,
   useChainedCommands,

@@ -477,6 +477,22 @@
     "gzip": true
   },
   {
+    "name": "@remirror/extension-react-native-bridge",
+    "limit": "5 KB",
+    "path": "packages/remirror__extension-react-native-bridge/dist/remirror-extension-react-native-bridge.browser.esm.js",
+    "ignore": [
+      "@types/react",
+      "@types/react-dom",
+      "react",
+      "react-dom",
+      "@remirror/core",
+      "@remirror/messages",
+      "@remirror/pm"
+    ],
+    "running": false,
+    "gzip": true
+  },
+  {
     "name": "@remirror/extension-react-ssr",
     "limit": "5 KB",
     "path": "packages/remirror__extension-react-ssr/dist/remirror-extension-react-ssr.browser.esm.js",

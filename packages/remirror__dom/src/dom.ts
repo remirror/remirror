@@ -1,12 +1,5 @@
-import type {
-  AnyExtension,
-  BuiltinPreset,
-  EditorState,
-  GetSchema,
-  PrimitiveSelection,
-  RemirrorContentType,
-} from '@remirror/core';
-import { getDocument, isArray, RemirrorManager } from '@remirror/core';
+import type { AnyExtension, BuiltinPreset } from '@remirror/core';
+import { isArray, RemirrorManager } from '@remirror/core';
 import { CorePreset, createCoreManager, CreateCoreManagerOptions } from '@remirror/preset-core';
 
 import { DomFramework, DomFrameworkOutput, DomFrameworkProps } from './dom-framework';
@@ -29,7 +22,7 @@ export function createDomManager<Extension extends AnyExtension>(
  * const element = document.querySelector('#editor');
  *
  * // Create the manager.
- * const manager = createDomManager([], {});
+ * const manager = createDomManager(() => [], {});
  *
  * // Create the dom editor.
  * const editor = createDomEditor({ element, manager });
@@ -44,20 +37,7 @@ export function createDomManager<Extension extends AnyExtension>(
 export function createDomEditor<Extension extends AnyExtension>(
   props: DomFrameworkProps<Extension>,
 ): DomFrameworkOutput<Extension> {
-  const { stringHandler, onError, manager, forceEnvironment, element } = props;
-
-  function createStateFromContent(
-    content: RemirrorContentType,
-    selection?: PrimitiveSelection,
-  ): EditorState<GetSchema<Extension>> {
-    return manager.createState({
-      content,
-      document: getDocument(forceEnvironment),
-      stringHandler,
-      selection,
-      onError,
-    });
-  }
+  const { manager, element } = props;
 
   // Create an empty document.
   const fallback = manager.createEmptyDoc();
@@ -65,10 +45,12 @@ export function createDomEditor<Extension extends AnyExtension>(
   const [initialContent, initialSelection] = isArray(props.initialContent)
     ? props.initialContent
     : ([props.initialContent ?? fallback] as const);
-  const initialEditorState = createStateFromContent(initialContent, initialSelection);
+  const initialEditorState = manager.createState({
+    content: initialContent,
+    selection: initialSelection,
+  });
 
   const framework = new DomFramework<Extension>({
-    createStateFromContent,
     getProps: () => props,
     initialEditorState,
     element,

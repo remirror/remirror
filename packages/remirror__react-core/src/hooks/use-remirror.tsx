@@ -4,8 +4,10 @@ import {
   CreateEditorStateProps,
   EditorState,
   GetSchema,
+  InvalidContentHandler,
   RemirrorEventListener,
   RemirrorManager,
+  StringHandler,
 } from '@remirror/core';
 
 import type {
@@ -28,6 +30,49 @@ export interface UseRemirrorProps<Extension extends AnyExtension>
    * and used within your editor.
    */
   extensions?: (() => Extension[]) | RemirrorManager<any>;
+
+  /**
+   * This is called when the editor has invalid content.
+   *
+   * @remarks
+   *
+   * To add this to the editor the following is needed.
+   *
+   * ```tsx
+   * import React from 'react';
+   * import { Remirror, InvalidContentHandler } from 'remirror';
+   * import { Remirror, useManager } from '@remirror/react';
+   * import { WysiwygPreset } from 'remirror/extensions';
+   *
+   * const Framework = () => {
+   *   const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {
+   *     // Automatically remove all invalid nodes and marks.
+   *     return transformers.remove(json, invalidContent);
+   *   }, []);
+   *
+   *   const manager = useManager(() => [new WysiwygPreset()]);
+   *
+   *   return (
+   *     <Remirror manager={manager} onError={onError}>
+   *       <div />
+   *     </Remirror>
+   *   );
+   * };
+   * ```
+   */
+  onError?: InvalidContentHandler;
+
+  /**
+   * A function which transforms a string into a prosemirror node.
+   *
+   * @remarks
+   *
+   * Can be used to transform markdown / html or any other string format into a
+   * prosemirror node.
+   *
+   * See [[`fromHTML`]] for an example of how this could work.
+   */
+  stringHandler?: keyof Remirror.StringHandlers | StringHandler;
 }
 
 export interface UseRemirrorReturn<Extension extends AnyExtension> {
@@ -114,10 +159,7 @@ export function useRemirror<Extension extends AnyExtension>(
 
   const [state, setState] = useState(() =>
     manager.createState({
-      document,
       selection,
-      stringHandler: settings.stringHandler,
-      onError: settings.onError,
       content: content ?? manager.createEmptyDoc(),
     }),
   );

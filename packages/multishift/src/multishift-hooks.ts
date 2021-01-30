@@ -81,14 +81,7 @@ export function useElementRefs(): UseElementRefs {
   items.current = [];
   ignored.current = [];
 
-  return {
-    toggleButton,
-    input,
-    menu,
-    comboBox,
-    items,
-    ignored,
-  };
+  return { toggleButton, input, menu, comboBox, items, ignored };
 }
 
 /**

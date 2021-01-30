@@ -26,8 +26,7 @@ import {
 } from '@remirror/react-hooks';
 import { ComponentsTheme, ExtensionPositionerTheme } from '@remirror/theme';
 
-import { ControllableMenu } from './react-component-menu';
-import { Toolbar } from './react-component-toolbar';
+import { MenuComponent } from './menu';
 import {
   ComponentItem,
   MenuActionItemUnion,
@@ -35,6 +34,7 @@ import {
   MenuPaneItem,
   ToolbarItem,
 } from './react-component-types';
+import { Toolbar } from './toolbar';
 
 interface UseFloatingPositioner extends UseEditorFocusProps {
   /**
@@ -261,67 +261,6 @@ export const FloatingActionsMenu = (props: FloatingActionsMenuProps): JSX.Elemen
       : { ...item, type: ComponentItem.MenuCommandPane },
   );
 
-  const createArrowBinding = useCallback(
-    (key: 'up' | 'down') => () => {
-      if (!query || isEmptyArray(items)) {
-        return false;
-      }
-
-      key === 'up' ? menuState.up() : menuState.down();
-
-      return true;
-    },
-    [query, items, menuState],
-  );
-
-  const ArrowUp = useMemo(() => createArrowBinding('up'), [createArrowBinding]);
-  const ArrowDown = useMemo(() => createArrowBinding('down'), [createArrowBinding]);
-
-  const bindings = useMemo(
-    () => ({
-      /**
-       * Handle the enter key being pressed
-      //  */
-      // Enter: () => {
-      //   if (!query || isEmptyArray(items)) {
-      //     return false;
-      //   }
-
-      //   menuState
-
-      //   command(emoji);
-
-      //   return true;
-      // },
-
-      // /**
-      //  * Clear suggestions when the escape key is pressed.
-      //  */
-      // Escape: () => {
-      //   if (!state) {
-      //     return false;
-      //   }
-
-      //   menuState.
-
-      //   // Ignore the current mention so that it doesn't show again for this
-      //   // matching area
-      //   helpers
-      //     .getSuggestMethods()
-      //     .addIgnored({ from: state.range.from, name: 'emoji', specific: true });
-
-      //   setState(null);
-      //   return true;
-      // },
-
-      ArrowDown,
-      ArrowUp,
-    }),
-    [ArrowDown, ArrowUp],
-  );
-
-  useKeymap(bindings, ExtensionPriority.High);
-
   return (
     <FloatingWrapper
       enabled={!!query}
@@ -332,13 +271,7 @@ export const FloatingActionsMenu = (props: FloatingActionsMenuProps): JSX.Elemen
       ignoredElements={ignoredElements}
     >
       <div style={{ width: 50, height: 50, background: 'red' }} />
-      <ControllableMenu open={!!query && enabled} items={items} menuState={menuState} />
+      <MenuComponent open={!!query && enabled} items={items} menuState={menuState} />
     </FloatingWrapper>
   );
 };
-
-/**
- * Query the provided items and return a list of items which can be used in the
- * menu.
- */
-// function queryActionItems(actions: MenuActionItemUnion[]) {}

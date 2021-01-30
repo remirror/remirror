@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react';
-import { ExtensionPriority, KeyBindings, Replace } from '@remirror/core';
+import { Replace } from '@remirror/core';
 import type {
   MentionChangeHandler,
   MentionChangeHandlerCommand,
@@ -7,26 +7,12 @@ import type {
 } from '@remirror/extension-mention';
 import { MentionExtension } from '@remirror/extension-mention';
 import { ChangeReason, ExitReason, SuggestChangeHandlerProps } from '@remirror/pm/suggest';
-import { useExtension, useRemirrorContext } from '@remirror/react-core';
+import { useExtension, useHelpers } from '@remirror/react-core';
 
-import { indexFromArrowPress } from './react-hook-utils';
-import { useKeymap } from './use-keymap';
+import { useMenuNavigation, UseMenuNavigationReturn } from './use-menu-navigation';
 
 export interface MentionState<Data extends MentionExtensionAttributes = MentionExtensionAttributes>
   extends Pick<SuggestChangeHandlerProps, 'name' | 'query' | 'text' | 'range'> {
-  /**
-   * The name of the current matcher. When this is undefined there is no
-   * active mention.
-   */
-  name: string;
-
-  /**
-   * The index that should be matched.
-   *
-   * @default 0
-   */
-  index: number;
-
   /**
    * This command when the mention is active.
    */
@@ -124,115 +110,14 @@ function useMentionChangeHandler<
   useExtension(MentionExtension, ({ addHandler }) => addHandler('onChange', onChange), [onChange]);
 }
 
-/**
- * This hook manages the keyboard interactions for the mention plugin.
- */
-function useMentionKeyBindings(
-  props: UseMentionProps,
-  setState: SetMentionState,
-  state: MentionState | null,
-) {
-  const { items, ignoreMatchesOnEscape = true } = props;
-  const { helpers } = useRemirrorContext();
-
-  const createArrowBinding = useCallback(
-    (arrowKey: 'up' | 'down') => () => {
-      // When there is no active state, there is nothing to do.
-      if (!state) {
-        return false;
-      }
-
-      const { index } = state;
-
-      const direction = arrowKey === 'down' ? 'next' : 'previous';
-
-      const activeIndex = indexFromArrowPress({
-        direction,
-        matchLength: items.length,
-        previousIndex: index,
-      });
-
-      setState({ ...state, index: activeIndex });
-
-      return true;
-    },
-    [items, setState, state],
-  );
-
-  const ArrowUp = useMemo(() => createArrowBinding('up'), [createArrowBinding]);
-  const ArrowDown = useMemo(() => createArrowBinding('down'), [createArrowBinding]);
-
-  /**
-   * These are the keyBindings for mentions extension. This allows for
-   * overriding
-   */
-  const bindings: KeyBindings = useMemo(
-    () => ({
-      /**
-       * Handle the enter key being pressed
-       */
-      Enter: () => {
-        if (!state) {
-          // When there is no state, defer to the next keybinding.
-          return false;
-        }
-
-        const { index, command } = state;
-
-        const item = items[index];
-
-        if (!item) {
-          // Return since there's nothing that the enter key press can do.
-          return false;
-        }
-
-        // Call the command with the item (including all the provided attributes which it includes).
-        command(item);
-
-        return true;
-      },
-
-      /**
-       * Hide the suggesters when the escape key is pressed.
-       */
-      Escape: () => {
-        if (!state) {
-          return false;
-        }
-
-        const { range, name } = state;
-
-        // TODO Revisit to see if the following is too extreme
-        if (ignoreMatchesOnEscape) {
-          // Ignore the current mention so that it doesn't show again for this
-          // matching area
-          helpers.getSuggestMethods().addIgnored({ from: range.from, name, specific: true });
-        }
-
-        // Remove the matches.
-        setState(null);
-
-        return true;
-      },
-
-      /**
-       * Handle the up arrow being pressed
-       */
-      ArrowUp,
-
-      /**
-       * Handle the down arrow being pressed
-       */
-      ArrowDown,
-    }),
-    [ArrowUp, ArrowDown, state, items, ignoreMatchesOnEscape, setState, helpers],
-  );
-
-  // Attach the keybindings to the editor.
-  useKeymap(bindings, ExtensionPriority.High);
-}
-
 type SetMentionState = Dispatch<SetStateAction<MentionState | null>>;
+
+export interface UseMentionReturn<
+  Data extends MentionExtensionAttributes = MentionExtensionAttributes
+> {
+  menu: UseMenuNavigationReturn<Data>;
+  mention: MentionState<Data> | null;
+}
 
 /**
  * A hook that provides the state for social mentions that responds to
@@ -254,13 +139,56 @@ type SetMentionState = Dispatch<SetStateAction<MentionState | null>>;
  */
 export function useMention<Data extends MentionExtensionAttributes = MentionExtensionAttributes>(
   props: UseMentionProps<Data>,
-): MentionState | null {
-  const [state, setState] = useState<MentionState | null>(null);
+): UseMentionReturn<Data> {
+  const { items, ignoreMatchesOnEscape } = props;
+  const [mention, setMention] = useState<MentionState | null>(null);
+  const helpers = useHelpers();
 
-  useMentionChangeHandler(props, setState, state?.index);
-  useMentionKeyBindings(props, setState, state);
+  const onDismiss = useCallback(() => {
+    if (!mention) {
+      return false;
+    }
 
-  return state;
+    const { range, name } = mention;
+
+    // TODO Revisit to see if the following is too extreme
+    if (ignoreMatchesOnEscape) {
+      // Ignore the current mention so that it doesn't show again for this
+      // matching area
+      helpers.getSuggestMethods().addIgnored({ from: range.from, name, specific: true });
+    }
+
+    // Remove the matches.
+    setMention(null);
+
+    return true;
+  }, [helpers, ignoreMatchesOnEscape, mention]);
+
+  const onSubmit = useCallback(() => {
+    if (!mention) {
+      // When there is no state, defer to the next keybinding.
+      return false;
+    }
+
+    const { index, command } = mention;
+
+    const item = items[index];
+
+    if (!item) {
+      // Return since there's nothing that the enter key press can do.
+      return false;
+    }
+
+    // Call the command with the item (including all the provided attributes which it includes).
+    command(item);
+
+    return true;
+  }, [items, mention]);
+
+  useMentionChangeHandler(props, setMention, mention?.index);
+  const menu = useMenuNavigation<Data>({ items, isOpen: !!mention, onDismiss, onSubmit });
+
+  return useMemo(() => ({ mention, menu }), [menu, mention]);
 }
 
 export interface UseMentionProps<

@@ -15,6 +15,12 @@
       "path": "examples/with-next/src"
     },
     {
+      "path": "examples/with-react-native/__e2e__"
+    },
+    {
+      "path": "examples/with-react-native/src"
+    },
+    {
       "path": "packages/a11y-status/__tests__"
     },
     {

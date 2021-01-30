@@ -24,6 +24,7 @@
   "main": "dist/bundler.macro.cjs.js",
   "types": "index.d.ts",
   "files": [
+    "index.d.ts",
     "dist"
   ],
   "dependencies": {
@@ -43,7 +44,7 @@
     "@types/parcel-bundler": "^1.12.3",
     "babel-plugin-macros": "^3.0.1",
     "make-synchronous": "^0.1.1",
-    "rollup": "^2.38.0"
+    "rollup": "^2.38.1"
   },
   "devDependencies": {
     "@types/babel-plugin-tester": "^9.0.1",

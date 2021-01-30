@@ -39,7 +39,21 @@
     "@remirror/core": "1.0.0-next.60",
     "@remirror/messages": "0.0.0",
     "@remirror/pm": "1.0.0-next.60",
-    "nanoevents": "^5.1.10"
+    "lepont": "^0.11.4",
+    "type-fest": "^0.20.2"
+  },
+  "devDependencies": {
+    "@remirror/react": "1.0.0-next.60",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "peerDependencies": {
+    "@types/react": "^16.14.0 || ^17",
+    "@types/react-dom": "^16.9.0 || ^17",
+    "react": "^16.14.0 || ^17",
+    "react-dom": "^16.14.0 || ^17"
   },
   "publishConfig": {
     "access": "public"

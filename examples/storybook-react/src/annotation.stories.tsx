@@ -11,7 +11,7 @@ import {
 } from 'remirror/extensions';
 import {
   ComponentItem,
-  ControlledDialog,
+  ControlledDialogComponent,
   EditorComponent,
   FloatingToolbar,
   PositionerPortal,
@@ -208,7 +208,7 @@ const FloatingAnnotations = () => {
           {label}
         </div>
       </PositionerPortal>
-      <ControlledDialog visible={visible} onUpdate={(v) => setVisible(v)} backdrop={true}>
+      <ControlledDialogComponent visible={visible} onUpdate={(v) => setVisible(v)} backdrop={true}>
         <AnnotationEditor onChange={(text) => console.log(text)} />
         <Button
           onClick={() => {
@@ -218,7 +218,7 @@ const FloatingAnnotations = () => {
         >
           Done
         </Button>
-      </ControlledDialog>
+      </ControlledDialogComponent>
     </>
   );
 };

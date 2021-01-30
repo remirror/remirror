@@ -30,6 +30,21 @@
     },
     {
       "path": "../../remirror/src"
+    },
+    {
+      "path": "../../remirror__core/src"
+    },
+    {
+      "path": "../../remirror__extension-react-native-bridge/src"
+    },
+    {
+      "path": "../../remirror__pm/src"
+    },
+    {
+      "path": "../../remirror__react-core/src"
+    },
+    {
+      "path": "../../create-context-state/src"
     }
   ]
 }

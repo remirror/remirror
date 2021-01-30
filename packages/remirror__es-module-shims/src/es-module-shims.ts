@@ -17,7 +17,7 @@ import {
   resolvedPromise,
   resolveIfNotPlainOrUrl,
   resolveImportMap,
-} from './shim-utils.js';
+} from './shim-utils';
 
 let id = 0;
 

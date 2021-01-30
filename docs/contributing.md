@@ -73,9 +73,9 @@ pnpm e2e
 pnpm e2e:watch
 ```
 
-Always create your tests inside of a `__tests__/` sub-folder.
+Always create all your tests inside of the `__tests__/` sub-folder within the package that is being tested. So for `@remirror/react-core` all tests would be placed inside `packages/remirror__react-core/__tests__/`.
 
-Always create your e2e tests inside of a `__e2e__/` folder.
+Always create your e2e tests inside of a `__e2e__/` subfolder within the package or example that is being tested. So for testing stories you would add the new tests to `examples/react-storybook/__e2e__`.
 
 Sometimes you will want to narrow down tests to run only a specific file or folder.
 
@@ -89,12 +89,18 @@ Once in watch mode you can also press `p` and type out the file you want to focu
 **For naming conventions, use the following.**
 
 - Unit tests: `*.spec.ts(x)`
-- Integration tests: `*.e2e.test.ts` within the `/e2e` folder
+- Integration tests: `*.e2e.test.ts` within the `__e2e__/` folder
 
-Unit tests can be run limited to a specific package, e.g. for `extension-bold`:
+Unit tests can be run limited to a specific package or test file name, e.g. for `extension-bold`:
 
 ```bash
 pnpm test extension-bold
+```
+
+This also supports watching the tests for the specific file.
+
+```bash
+pnpm test:watch extension-bold
 ```
 
 <br />

@@ -185,3 +185,29 @@ describe('commands.insertText', () => {
     `);
   });
 });
+
+describe('setContent', () => {
+  it('can set the content while preserving history', () => {
+    const editor = renderEditor([], { stringHandler: 'html' });
+    const { doc, p } = editor.nodes;
+    editor.add(doc(p('my content')));
+
+    editor.commands.setContent('<p>new content</p>', 'start');
+
+    expect(editor.state.doc).toEqualProsemirrorNode(doc(p('new content')));
+    editor.commands.undo();
+    expect(editor.state.doc).toEqualProsemirrorNode(doc(p('my content')));
+  });
+
+  it('can reset the content while preserving history', () => {
+    const editor = renderEditor([], { stringHandler: 'html' });
+    const { doc, p } = editor.nodes;
+    editor.add(doc(p('my content')));
+
+    editor.commands.resetContent();
+
+    expect(editor.state.doc).toEqualProsemirrorNode(doc(p()));
+    editor.commands.undo();
+    expect(editor.state.doc).toEqualProsemirrorNode(doc(p('my content')));
+  });
+});

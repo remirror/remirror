@@ -199,6 +199,29 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
     );
   };
 
+  const indexIsHovered = useCallback(
+    (index: number) => {
+      return index === hoveredIndex;
+    },
+    [hoveredIndex],
+  );
+
+  const itemIsHovered = useCallback(
+    (item: Item) => {
+      return item === items[hoveredIndex];
+    },
+    [hoveredIndex, items],
+  );
+
+  const indexIsSelected = useCallback(
+    (index: number) =>
+      checkItemHighlighted(index, {
+        start: highlightedGroupStartIndex,
+        end: highlightedGroupEndIndex,
+        indexes: highlightedIndexes,
+      }),
+    [highlightedGroupEndIndex, highlightedGroupStartIndex, highlightedIndexes],
+  );
   const itemIsSelected = useCallback(
     (item: Item) => selectedItems.map(getItemId).includes(getItemId(item)),
     [getItemId, selectedItems],
@@ -604,6 +627,9 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
 
     // Helpers
     itemHighlightedAtIndex,
+    indexIsHovered,
+    itemIsHovered,
+    indexIsSelected,
     itemIsSelected,
     indexOfItem,
 

@@ -2,7 +2,6 @@ import {
   AnyExtensionConstructor,
   BaseExtensionOptions,
   ExtensionConstructorProps,
-  htmlToProsemirrorNode,
   isEmptyArray,
   isFunction,
   isMarkExtension,
@@ -93,7 +92,8 @@ export function extensionValidityTest<Type extends AnyExtensionConstructor>(
         expect(isPlainObject(spec)).toBe(true);
 
         renderEditor([extension], {
-          props: { stringHandler: 'html', initialContent: '' },
+          props: { initialContent: '' },
+          stringHandler: 'html',
         });
         expect(isNodeType(extension.type)).toBe(true);
 
@@ -117,7 +117,8 @@ export function extensionValidityTest<Type extends AnyExtensionConstructor>(
         expect(isPlainObject(spec)).toBe(true);
 
         renderEditor([extension], {
-          props: { stringHandler: htmlToProsemirrorNode, initialContent: '' },
+          props: { initialContent: '' },
+          stringHandler: 'html',
         });
         expect(isMarkType(extension.type)).toBe(true);
 

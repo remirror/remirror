@@ -15,13 +15,13 @@ describe('useMention', () => {
 
     strictRender(<Wrapper />);
 
-    expect(result.state).toBeNull();
+    expect(result.mention).toBeNull();
 
     act(() => {
       editor.insertText('@a');
     });
 
-    expect(result.state).toEqual({
+    expect(result.mention).toEqual({
       command: expect.any(Function),
       name: 'at',
       index: 0,
@@ -43,7 +43,7 @@ describe('useMention', () => {
         editor.insertText('@a');
       },
       () => {
-        result.state?.command({ ...assertGet(result.items, 0) });
+        result.mention?.command({ ...assertGet(result.items, 0) });
       },
       () => {
         editor.insertText('more to come');
@@ -75,13 +75,13 @@ describe('useMention', () => {
         editor.insertText('@a');
       },
       () => {
-        result.state?.command({ ...assertGet(result.items, 0) });
+        result.mention?.command({ ...assertGet(result.items, 0) });
       },
       () => {
         editor.selectText(19);
       },
       () => {
-        result.state?.command({ ...assertGet(result.items, 0) });
+        result.mention?.command({ ...assertGet(result.items, 0) });
       },
       () => {
         editor.selectText('end');
@@ -147,13 +147,13 @@ describe('useMention', () => {
       },
     ]);
 
-    expect(result.state).toBeNull();
+    expect(result.mention).toBeNull();
 
     act(() => {
       editor.insertText('a');
     });
 
-    expect(result.state).toBeNull();
+    expect(result.mention).toBeNull();
   });
 
   it('can set `ignoreMatchesOnEscape` to false', () => {
@@ -170,13 +170,13 @@ describe('useMention', () => {
       },
     ]);
 
-    expect(result.state).toBeNull();
+    expect(result.mention).toBeNull();
 
     act(() => {
       editor.insertText('a');
     });
 
-    expect(result.state).toEqual(
+    expect(result.mention).toEqual(
       expect.objectContaining({ text: { full: '#aa', partial: '#aa' } }),
     );
   });
@@ -228,7 +228,7 @@ describe('useMention', () => {
       },
     ]);
 
-    expect(result.state?.index).toBe(1);
+    expect(result.mention?.index).toBe(1);
 
     acts([
       () => {
@@ -239,7 +239,7 @@ describe('useMention', () => {
       },
     ]);
 
-    expect(result.state?.index).toBe(result.items.length - 1);
+    expect(result.mention?.index).toBe(result.items.length - 1);
   });
 });
 
@@ -290,12 +290,12 @@ function createEditor() {
   }
 
   interface Result {
-    state: MentionState | null;
+    mention: MentionState | null;
     items: MentionExtensionAttributes[];
   }
 
   const result: Result = {
-    state: null,
+    mention: null,
     items: [],
   };
 
@@ -311,17 +311,17 @@ function createEditor() {
       command({ href: `/${query.full}` });
     }, []);
 
-    const state = useMention({ items, onExit, ignoreMatchesOnEscape });
+    const { mention } = useMention({ items, onExit, ignoreMatchesOnEscape });
     result.items = items;
-    result.state = state;
+    result.mention = mention;
 
     useEffect(() => {
-      if (!state) {
+      if (!mention) {
         return;
       }
 
-      setItems(getItems({ name: state.name, query: state.query.full }));
-    }, [state]);
+      setItems(getItems({ name: mention.name, query: mention.query.full }));
+    }, [mention]);
 
     return null;
   };

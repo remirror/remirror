@@ -1,4 +1,11 @@
-import { ExtensionPriority, KeyBindings, KeymapExtension } from '@remirror/core';
+import { LiteralUnion } from 'type-fest';
+import {
+  ExtensionPriority,
+  KeyBindingCommandFunction,
+  KeyBindingNames,
+  KeyBindings,
+  KeymapExtension,
+} from '@remirror/core';
 import { useExtension } from '@remirror/react-core';
 
 /**
@@ -7,7 +14,54 @@ import { useExtension } from '@remirror/react-core';
  * @remarks
  *
  * ```tsx
- * import { Remirror, useRemirror, useRemirrorContext, useKeymap  } from '@remirror/react';
+ * import { useCallback } from 'react';
+ * import { BoldExtension } from 'remirror/extensions';
+ * import { Remirror, useHelpers, useKeymap, useRemirror, useRemirrorContext } from '@remirror/react';
+ *
+ * const hooks = [
+ *   () => {
+ *     const active = useActive();
+ *     const { insertText } = useCommands();
+ *     const boldActive = active.bold();
+ *     const handler = useCallback(() => {
+ *       if (!boldActive) {
+ *         return false;
+ *       }
+ *
+ *       // Prevent the keypress from using the default action.
+ *       return insertText.original('\n\nWoah there!')(props);
+ *     }, [boldActive, insertText]);
+ *
+ *     useKeymap('Shift-Enter', handler); // Add the handler to the keypress pattern.
+ *   },
+ * ];
+ *
+ * const Editor = () => {
+ *   const { manager } = useRemirror({ extensions: () => [new BoldExtension()] });
+ *
+ *   return <Remirror manager={manager} hooks={hooks} />;
+ * };
+ * ```
+ */
+export function useKeymap(
+  name: LiteralUnion<KeyBindingNames, string>,
+  handler: KeyBindingCommandFunction,
+  priority = ExtensionPriority.Medium,
+): void {
+  useExtension(
+    KeymapExtension,
+    ({ addCustomHandler }) => addCustomHandler('keymap', [priority, { [name]: handler }]),
+    [priority, name, handler],
+  );
+}
+
+/**
+ * Add custom keyboard bindings to the editor instance.
+ *
+ * @remarks
+ *
+ * ```tsx
+ * import { Remirror, useRemirror, useRemirrorContext, useKeymaps  } from '@remirror/react';
  *
  * const Editor = () => {
  *   const { manager } = useRemirror({ extensions: () => [] });
@@ -22,7 +76,7 @@ import { useExtension } from '@remirror/react-core';
  * const EditorBindings = () => {
  *   const { getRootProps } = useRemirrorContext({ autoUpdate: true });
  *
- *   useKeyBindings({
+ *   useKeymaps({
  *     Enter: () => {
  *       // Prevent the tne enter key from being pressed.
  *       return true;
@@ -33,7 +87,7 @@ import { useExtension } from '@remirror/react-core';
  * };
  * ```
  */
-export function useKeymap(bindings: KeyBindings, priority = ExtensionPriority.Medium): void {
+export function useKeymaps(bindings: KeyBindings, priority = ExtensionPriority.Medium): void {
   useExtension(
     KeymapExtension,
     ({ addCustomHandler }) => addCustomHandler('keymap', [priority, bindings]),

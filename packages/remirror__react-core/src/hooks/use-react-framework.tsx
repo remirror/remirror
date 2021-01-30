@@ -4,7 +4,6 @@ import usePrevious from 'use-previous';
 import {
   AnyExtension,
   ErrorConstant,
-  getDocument,
   GetSchema,
   invariant,
   isArray,
@@ -33,13 +32,7 @@ import type { ReactFrameworkOutput } from '../react-types';
 export function useReactFramework<Extension extends AnyExtension>(
   props: ReactFrameworkProps<Extension>,
 ): ReactFrameworkOutput<Extension> {
-  const {
-    onError,
-    manager,
-    forceEnvironment,
-    state,
-    stringHandler = manager.settings.stringHandler ?? defaultStringHandler,
-  } = props;
+  const { manager, state } = props;
   const { placeholder, editable, suppressHydrationWarning } = props;
   const firstUpdate = useRef(true);
 
@@ -53,38 +46,22 @@ export function useReactFramework<Extension extends AnyExtension>(
     manager.getExtension(ReactExtension).setOptions({ placeholder });
   }, [placeholder, manager]);
 
-  const createStateFromContent = useCallback(
-    (
-      content: RemirrorContentType,
-      selection?: PrimitiveSelection,
-    ): EditorState<GetSchema<Extension>> => {
-      return manager.createState({
-        content,
-        document: getDocument(forceEnvironment),
-        stringHandler,
-        selection,
-        onError,
-      });
-    },
-    [onError, forceEnvironment, manager, stringHandler],
-  );
-
   const fallback = manager.createEmptyDoc();
   const [initialContent, initialSelection] = isArray(props.initialContent)
     ? props.initialContent
     : ([props.initialContent ?? fallback] as const);
   const initialEditorState = state
     ? state
-    : createStateFromContent(initialContent, initialSelection);
+    : manager.createState({ content: initialContent, selection: initialSelection });
   const [shouldRenderClient, setShouldRenderClient] = useState<boolean | undefined>(
     suppressHydrationWarning ? false : undefined,
   );
 
-  // Store all the `logic` in a `ref`
+  // Create the framework which manages the connection between the `@remirror/core`
+  // and React.
   const framework: ReactFramework<Extension> = useFramework<Extension>({
     initialEditorState,
     setShouldRenderClient,
-    createStateFromContent,
     getProps: () => props,
     getShouldRenderClient: () => shouldRenderClient,
   });
@@ -131,18 +108,6 @@ function useFramework<Extension extends AnyExtension>(
   }, [framework]);
 
   return framework;
-}
-
-/**
- * If no string handler is provided, but the user tries to provide a string as
- * content then throw an error.
- */
-function defaultStringHandler(): never {
-  invariant(false, {
-    code: ErrorConstant.REACT_EDITOR_VIEW,
-    message:
-      'No valid string handler. In order to pass in a `string` as `initialContent` you must provide a valid `stringHandler` prop',
-  });
 }
 
 /**

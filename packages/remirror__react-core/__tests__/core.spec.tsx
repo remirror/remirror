@@ -2,7 +2,7 @@ import { axe } from 'jest-axe';
 import { RemirrorTestChain } from 'jest-remirror';
 import { useCallback, useState } from 'react';
 import { renderToString } from 'react-dom/server';
-import { htmlToProsemirrorNode, RemirrorEventListener } from 'remirror';
+import { RemirrorEventListener } from 'remirror';
 import { hideConsoleError, rafMock } from 'testing';
 import { act, fireEvent, render, strictRender } from 'testing/react';
 import {
@@ -82,7 +82,7 @@ describe('basic functionality', () => {
       <Remirror
         label={label}
         {...handlers}
-        manager={createReactManager([], { stringHandler: htmlToProsemirrorNode })}
+        manager={createReactManager([], { stringHandler: 'html' })}
         autoRender='start'
       >
         <Component />
@@ -127,7 +127,7 @@ describe('initialContent', () => {
       <Remirror
         label={label}
         {...handlers}
-        manager={createReactManager([], { stringHandler: htmlToProsemirrorNode })}
+        manager={createReactManager([], { stringHandler: 'html' })}
         initialContent={'<p>Hello</p>'}
         autoRender='start'
       />,
@@ -328,7 +328,7 @@ describe('focus', () => {
 test('`focus` should be chainable', () => {
   const mock = rafMock();
 
-  const manager = createReactManager([]);
+  const manager = createReactManager([], { stringHandler: 'html' });
   const editor = RemirrorTestChain.create(manager);
   let context: ReactFrameworkOutput<Remirror.Extensions>;
 
@@ -342,7 +342,6 @@ test('`focus` should be chainable', () => {
       manager.createState({
         content: '<p>Content </p>',
         selection: 'end',
-        stringHandler: htmlToProsemirrorNode,
       }),
     );
 
