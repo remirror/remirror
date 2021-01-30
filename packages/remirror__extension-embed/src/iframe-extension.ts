@@ -1,5 +1,6 @@
 import { cx } from '@linaria/core';
 import { parse, stringify } from 'querystringify';
+import { LiteralUnion } from 'type-fest';
 import {
   ApplySchemaAttributes,
   command,
@@ -37,7 +38,7 @@ export type IframeAttributes = ProsemirrorAttributes<{
   allowFullScreen?: 'true';
   width?: string | number;
   height?: string | number;
-  type?: 'custom' | 'youtube';
+  type?: LiteralUnion<'youtube', string>;
 }>;
 
 /**

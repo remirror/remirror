@@ -43,7 +43,8 @@
     "@remirror/messages": "0.0.0",
     "@remirror/pm": "1.0.0-next.60",
     "@types/querystringify": "^2.0.0",
-    "querystringify": "^2.2.0"
+    "querystringify": "^2.2.0",
+    "type-fest": "^0.20.2"
   },
   "publishConfig": {
     "access": "public"
