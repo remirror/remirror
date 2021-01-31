@@ -54,6 +54,12 @@
       "types": "./use-keymap/dist/remirror-react-hooks-use-keymap.cjs.d.ts",
       "default": "./use-keymap/dist/remirror-react-hooks-use-keymap.esm.js"
     },
+    "./use-keymaps": {
+      "import": "./use-keymaps/dist/remirror-react-hooks-use-keymaps.esm.js",
+      "require": "./use-keymaps/dist/remirror-react-hooks-use-keymaps.cjs.js",
+      "browser": "./use-keymaps/dist/remirror-react-hooks.browser.esm.js",
+      "default": "./use-keymaps/dist/remirror-react-hooks-use-keymaps.esm.js"
+    },
     "./use-mention": {
       "import": "./use-mention/dist/remirror-react-hooks-use-mention.esm.js",
       "require": "./use-mention/dist/remirror-react-hooks-use-mention.cjs.js",
@@ -110,6 +116,7 @@
     "use-events",
     "use-history",
     "use-keymap",
+    "use-keymaps",
     "use-mention-atom",
     "use-mention",
     "use-menu-navigation",
@@ -177,6 +184,7 @@
       "use-events.ts",
       "use-history.ts",
       "use-keymap.ts",
+      "use-keymaps.ts",
       "use-mention-atom.ts",
       "use-mention.ts",
       "use-menu-navigation.ts",

@@ -1,7 +1,7 @@
 /**
  * @module
  *
- * Create menu navigation handlers when within the editor.
+ * Create menu navigation handlers when showing popup menus inside the editor.
  */
 
 import {
@@ -12,27 +12,14 @@ import {
   useMultishift,
 } from 'multishift';
 import { useCallback, useMemo, useState } from 'react';
-import { ValueOf } from 'type-fest';
-import { KeyBindingCommandFunction } from '@remirror/core';
+import { KeyBindingCommandFunction, KeyBindingNames, KeyBindings } from '@remirror/core';
+import { useCommands } from '@remirror/react-core';
 
 import { indexFromArrowPress } from './react-hook-utils';
 import { useKeymap } from './use-keymap';
+import { useKeymaps } from './use-keymaps';
 
-export const MenuNavigationAction = {
-  Up: 'up',
-  Down: 'down',
-  Left: 'left',
-  Right: 'right',
-  Enter: 'enter',
-  Escape: 'escape',
-  Tab: 'tab',
-  BackTab: 'backTab',
-} as const;
-export type MenuNavigationActionType = ValueOf<typeof MenuNavigationAction>;
-
-type MenuNavigationHandler = (type: 'submit' | 'cancel') => void;
-
-interface MenuNavigationProps<Item = any> {
+interface MenuNavigationProps<Item = any> extends MenuNavigationOptions {
   /**
    * The items that will be rendered as part of the dropdown menu.
    *
@@ -64,14 +51,39 @@ interface MenuNavigationProps<Item = any> {
    * nothing has been done.
    */
   onDismiss: () => boolean;
+}
 
+export interface MenuNavigationOptions {
   /**
    * The direction of the arrow key press.
    *
    * @default 'vertical';
    */
-  direction?: 'horizontal' | 'vertical';
+  direction?: MenuDirection;
+
+  /**
+   * Keys that can submit the selection.
+   *
+   * @default ['Enter']
+   */
+  submitKeys?: KeyBindingNames[];
+
+  /**
+   * Keys that can dismiss the menu.
+   *
+   * @default ['Escape', 'Tab', 'Shift-Tab']
+   */
+  dismissKeys?: KeyBindingNames[];
+
+  /**
+   * When true, refocus the editor when a click is made.
+   *
+   * @default true
+   */
+  focusOnClick?: boolean;
 }
+
+export type MenuDirection = 'horizontal' | 'vertical';
 
 export interface UseMenuNavigationReturn<Item = any>
   extends Pick<MultishiftPropGetters<Item>, 'getMenuProps' | 'getItemProps'>,
@@ -79,7 +91,17 @@ export interface UseMenuNavigationReturn<Item = any>
       MultishiftHelpers<Item>,
       'itemIsSelected' | 'indexIsSelected' | 'indexIsHovered' | 'itemIsHovered'
     >,
-    Pick<MultishiftState<Item>, 'hoveredIndex'> {}
+    Pick<MultishiftState<Item>, 'hoveredIndex'> {
+  /**
+   * The selected index.
+   */
+  index: number;
+
+  setIndex: (index: number) => void;
+}
+
+const DEFAULT_DISMISS_KEYS = ['Escape', 'Tab', 'Shift-Tab'];
+const DEFAULT_SUBMIT_KEYS = ['Enter'];
 
 /**
  * This hook provides the primitives for rendering a dropdown menu within
@@ -87,11 +109,21 @@ export interface UseMenuNavigationReturn<Item = any>
 export function useMenuNavigation<Item = any>(
   props: MenuNavigationProps,
 ): UseMenuNavigationReturn<Item> {
-  const { items, direction = 'vertical', isOpen, onDismiss, onSubmit } = props;
+  const {
+    items,
+    direction = 'vertical',
+    isOpen,
+    onDismiss,
+    onSubmit,
+    focusOnClick = true,
+    dismissKeys = DEFAULT_DISMISS_KEYS,
+    submitKeys = DEFAULT_SUBMIT_KEYS,
+  } = props;
   const [index, setIndex] = useState(0);
+  const { focus } = useCommands();
 
-  const nextShortcut = direction === 'vertical' ? 'ArrowUp' : 'ArrowRight';
-  const previousShortcut = direction === 'vertical' ? 'ArrowDown' : 'ArrowLeft';
+  const nextShortcut = direction === 'vertical' ? 'ArrowDown' : 'ArrowRight';
+  const previousShortcut = direction === 'vertical' ? 'ArrowUp' : 'ArrowLeft';
 
   const {
     getMenuProps,
@@ -107,6 +139,36 @@ export function useMenuNavigation<Item = any>(
     highlightedIndexes: [index],
     type: Type.ControlledMenu,
   });
+
+  /**
+   * Callback used when pressing the next arrow key.
+   */
+  const homeCallback: KeyBindingCommandFunction = useCallback(() => {
+    if (!isOpen) {
+      return false;
+    }
+
+    if (index !== 0) {
+      setIndex(0);
+    }
+
+    return true;
+  }, [index, isOpen]);
+
+  /**
+   * Callback used when pressing the next arrow key.
+   */
+  const endCallback: KeyBindingCommandFunction = useCallback(() => {
+    if (!isOpen) {
+      return false;
+    }
+
+    if (index === items.length - 1) {
+      setIndex(items.length - 1);
+    }
+
+    return true;
+  }, [items, index, isOpen]);
 
   /**
    * Callback used when pressing the next arrow key.
@@ -174,24 +236,50 @@ export function useMenuNavigation<Item = any>(
           onClick: (event) => {
             itemProps.onClick?.(event);
             onSubmit(itemProps.item, 'click');
+
+            if (focusOnClick) {
+              focus();
+            }
           },
         }),
       };
     },
-    [_getItemProps, onSubmit],
+    [_getItemProps, onSubmit, focus, focusOnClick],
   );
+
+  const submitBindings: KeyBindings = useMemo(() => {
+    const bindings: KeyBindings = {};
+
+    for (const key of submitKeys) {
+      bindings[key] = submitCallback;
+    }
+
+    return bindings;
+  }, [submitCallback, submitKeys]);
+
+  const dismissBindings: KeyBindings = useMemo(() => {
+    const bindings: KeyBindings = {};
+
+    for (const key of dismissKeys) {
+      bindings[key] = dismissCallback;
+    }
+
+    return bindings;
+  }, [dismissCallback, dismissKeys]);
 
   // Navigation callbacks
   useKeymap(nextShortcut, nextCallback);
   useKeymap(previousShortcut, previousCallback);
+  useKeymap('Home', homeCallback);
+  useKeymap(`Cmd-${nextShortcut}`, homeCallback);
+  useKeymap('End', nextCallback);
+  useKeymap(`Cmd-${previousShortcut}`, endCallback);
 
-  // Callbacks which submit the action
-  useKeymap('Enter', submitCallback);
+  // Handle the submit keybindings
+  useKeymaps(submitBindings);
 
-  // Callbacks which dismiss the action
-  useKeymap('Escape', dismissCallback);
-  useKeymap('Tab', dismissCallback);
-  useKeymap('Shift-Tab', dismissCallback);
+  // Handle the dismiss bindings.
+  useKeymaps(dismissBindings);
 
   return useMemo(
     () => ({
@@ -202,6 +290,8 @@ export function useMenuNavigation<Item = any>(
       itemIsSelected,
       indexIsHovered,
       itemIsHovered,
+      index,
+      setIndex,
     }),
     [
       getItemProps,
@@ -211,6 +301,7 @@ export function useMenuNavigation<Item = any>(
       indexIsSelected,
       itemIsHovered,
       itemIsSelected,
+      index,
     ],
   );
 }

@@ -1,1 +1,1 @@
-export * from './react-native-webview';
+export * from './native-remirror';

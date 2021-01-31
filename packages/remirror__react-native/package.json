@@ -44,6 +44,7 @@
     "@remirror/react-core": "0.0.0",
     "@types/min-document": "^2.19.0",
     "create-context-state": "0.0.0",
+    "delay": "^4.4.1",
     "lepont": "^0.11.4",
     "min-document": "^2.19.0",
     "type-fest": "^0.20.2"

@@ -465,6 +465,13 @@ export enum NamedShortcut {
   Format = '_|format|_',
 }
 
+/**
+ * Helpful empty array for use when a default array value is needed.
+ *
+ * DO NOT MUTATE!
+ */
+export const EMPTY_ARRAY: never[] = [];
+
 declare global {
   namespace Remirror {
     /**

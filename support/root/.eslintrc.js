@@ -15,6 +15,9 @@ let config = {
     // For `remirror__lit-components`
     'lit',
     'lit-a11y',
+
+    // For custom hooks
+    '@kyleshevlin',
   ],
   extends: [
     'eslint:recommended',
@@ -50,11 +53,10 @@ let config = {
   },
   rules: {
     'prefer-const': ['error', { destructuring: 'all' }],
+
     'unicorn/better-regex': 'error',
     'unicorn/catch-error-name': 'error',
     'unicorn/consistent-destructuring': 'error',
-    'unicorn/custom-error-definition': 'off',
-    'unicorn/empty-brace-spaces': 'error',
     'unicorn/error-message': 'error',
     'unicorn/escape-case': 'error',
     'unicorn/expiring-todo-comments': 'error',
@@ -68,16 +70,11 @@ let config = {
     'unicorn/no-for-loop': 'error',
     'unicorn/no-hex-escape': 'error',
     'unicorn/no-instanceof-array': 'error',
-    'unicorn/no-keyword-prefix': 'off',
     'unicorn/no-lonely-if': 'error',
-    'no-nested-ternary': 'off',
-    'unicorn/no-nested-ternary': 'off',
     'unicorn/no-new-array': 'error',
     'unicorn/no-new-buffer': 'error',
     'unicorn/no-process-exit': 'error',
     'unicorn/no-unreadable-array-destructuring': 'error',
-    'unicorn/no-unsafe-regex': 'off',
-    'unicorn/no-unused-properties': 'off',
     'unicorn/no-useless-undefined': 'error',
     'unicorn/no-zero-fractions': 'error',
     'unicorn/number-literal-case': 'error',
@@ -110,9 +107,17 @@ let config = {
     'unicorn/prefer-string-trim-start-end': 'error',
     'unicorn/prefer-ternary': 'error',
     'unicorn/prefer-type-error': 'error',
-    'unicorn/string-content': 'off',
     'unicorn/throw-new-error': 'error',
     'unicorn/no-array-push-push': 'error',
+
+    'unicorn/no-keyword-prefix': 'off',
+    'no-nested-ternary': 'off',
+    'unicorn/no-nested-ternary': 'off',
+    'unicorn/no-unsafe-regex': 'off',
+    'unicorn/no-unused-properties': 'off',
+    'unicorn/string-content': 'off',
+    'unicorn/custom-error-definition': 'off',
+    'unicorn/empty-brace-spaces': 'off',
 
     'jest/no-test-return-statement': 'off',
     'jest/prefer-strict-equal': 'off',
@@ -271,6 +276,9 @@ let config = {
     'react-hooks/exhaustive-deps': 'error',
     'react-hooks/rules-of-hooks': 'error',
 
+    // See https://kyleshevlin.com/use-encapsulation
+    '@kyleshevlin/prefer-custom-hooks': 'warn',
+
     // Built in eslint rules
     'no-constant-condition': 'off', // To many false positives
     'no-empty': 'warn',
@@ -325,8 +333,9 @@ let config = {
     },
     {
       files: [
-        '**/__tests__/**',
+        '*.spec.{ts,tsx}*',
         '**/__stories__/**',
+        '*.stories.{ts,tsx}',
         'support/**',
         'website/**',
         '**/__dts__/**',
@@ -340,6 +349,7 @@ let config = {
         '@typescript-eslint/no-non-null-assertion': 'off', // Makes writing tests more convenient
         '@typescript-eslint/no-use-before-define': 'off',
         'react/display-name': 'off',
+        '@kyleshevlin/prefer-custom-hooks': 'off',
       },
     },
     {
@@ -398,6 +408,9 @@ let config = {
     },
     {
       files: [
+        '**/__tests__/**',
+        '**/__stories__/**',
+        '**/__fixtures__/**',
         '**/*matchers.ts',
         'website/**',
         'support/**',
@@ -442,7 +455,7 @@ let config = {
         'react-native/split-platform-components': ['error'],
         'react-native/no-inline-styles': ['error'],
         'react-native/no-color-literals': ['error'],
-        'react-native/no-raw-text': ['error'],
+        // 'react-native/no-raw-text': ['error'],
         'react-native/no-single-element-style-arrays': ['error'],
       },
     },
@@ -494,6 +507,7 @@ if (process.env.FULL_ESLINT_CHECK) {
         files: [
           '**/__tests__/**',
           '**/__stories__/**',
+          '**/__fixtures__/**',
           'support/**',
           'website/**',
           '**/__dts__/**',
@@ -524,6 +538,7 @@ if (process.env.FULL_ESLINT_CHECK) {
 
         // Set up rules to be excluded in the markdown blocks.
         rules: {
+          '@kyleshevlin/prefer-custom-hooks': 'off',
           'simple-import-sort/exports': 'warn',
           'simple-import-sort/imports': 'warn',
           'unicorn/filename-case': 'off',

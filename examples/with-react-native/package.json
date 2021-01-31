@@ -2,6 +2,7 @@
   "name": "with-react-native",
   "version": "0.0.1",
   "private": true,
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/examples/with-react-native",
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -43,11 +44,11 @@
       "__e2e__": {
         "compilerOptions": {
           "types": [
-            "detox"
+            "detox",
+            "jest"
           ]
         }
       }
     }
-  },
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/examples/with-react-native"
+  }
 }

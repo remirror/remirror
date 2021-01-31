@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { ThemeProvider } from '@remirror/react';
 
 import { DebuggerStoreProps, DebuggerStoreProvider } from './debugger-state';
@@ -12,10 +12,7 @@ interface DevToolsProps extends DebuggerStoreProps {
 
 export const DebuggerTools = (props: DevToolsProps): JSX.Element => {
   const { manager, diffWorker = false, supportsToggling = false, dock = true } = props;
-  const [opened, setOpened] = useState<boolean>(!supportsToggling);
-
-  const open = () => supportsToggling && setOpened(true);
-  const close = () => supportsToggling && setOpened(false);
+  const { opened, close, open } = useOpenedState(supportsToggling);
 
   return (
     <ThemeProvider>
@@ -29,3 +26,14 @@ export const DebuggerTools = (props: DevToolsProps): JSX.Element => {
     </ThemeProvider>
   );
 };
+
+/**
+ * Use the opened state.
+ */
+function useOpenedState(supportsToggling: boolean) {
+  const [opened, setOpened] = useState<boolean>(!supportsToggling);
+  const open = useCallback(() => supportsToggling && setOpened(true), [supportsToggling]);
+  const close = useCallback(() => supportsToggling && setOpened(false), [supportsToggling]);
+
+  return useMemo(() => ({ open, close, opened }), [close, open, opened]);
+}

@@ -1,7 +1,7 @@
 import { act, strictRender } from 'testing/react';
 import { createReactManager, Remirror, useRemirrorContext } from '@remirror/react';
 
-import { PortalContainer, RemirrorPortals, usePortals } from '../';
+import { MountedPortal, PortalContainer, RemirrorPortals, usePortals } from '../';
 
 test('PortalContainer', () => {
   const portalContainer = new PortalContainer();
@@ -64,21 +64,25 @@ test('access to context via `useRemirrorContext`', () => {
     return <div data-testid='test' />;
   };
 
+  interface Props {
+    portals: Array<[HTMLElement, MountedPortal]>;
+  }
+
+  const Editor = ({ portals }: Props) => {
+    return (
+      <Remirror manager={manager}>
+        <RemirrorPortals portals={portals} />
+      </Remirror>
+    );
+  };
+
   const portalContainer = new PortalContainer();
-  const { rerender } = strictRender(
-    <Remirror manager={manager}>
-      <RemirrorPortals portals={[]} />
-    </Remirror>,
-  );
+  const { rerender } = strictRender(<Editor portals={[]} />);
 
   act(() => {
     document.body.append(container);
     portalContainer.render({ Component, container });
   });
 
-  rerender(
-    <Remirror manager={manager}>
-      <RemirrorPortals portals={[[container, { key: '1', Component }]]} />
-    </Remirror>,
-  );
+  rerender(<Editor portals={[[container, { key: '1', Component }]]} />);
 });

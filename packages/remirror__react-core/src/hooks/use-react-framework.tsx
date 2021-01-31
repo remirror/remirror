@@ -1,17 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import useLayoutEffect from 'use-isomorphic-layout-effect';
 import usePrevious from 'use-previous';
-import {
-  AnyExtension,
-  ErrorConstant,
-  GetSchema,
-  invariant,
-  isArray,
-  isNullOrUndefined,
-  PrimitiveSelection,
-  RemirrorContentType,
-} from '@remirror/core';
-import type { EditorState } from '@remirror/pm/state';
+import { AnyExtension, ErrorConstant, invariant, isArray, isNullOrUndefined } from '@remirror/core';
 import { ReactExtension } from '@remirror/preset-react';
 
 import { ReactFramework, ReactFrameworkOptions, ReactFrameworkProps } from '../react-framework';
@@ -97,15 +87,18 @@ function useFramework<Extension extends AnyExtension>(
   const propsRef = useRef(props);
   propsRef.current = props;
 
-  const [framework, setFramework] = useState(() => new ReactFramework<Extension>(propsRef.current));
+  // const [framework, setFramework] = useState(() => new ReactFramework<Extension>(propsRef.current));
+  // framework.update(props);
 
+  // useEffect(() => {
+  //   return framework.frameworkOutput.addHandler('destroy', () => {
+  //     // console.log('setting the framework');
+  //     setFramework(() => new ReactFramework<Extension>(propsRef.current));
+  //   });
+  // }, [framework]);
+
+  const framework = useMemo(() => new ReactFramework<Extension>(propsRef.current), []);
   framework.update(props);
-
-  useEffect(() => {
-    return framework.frameworkOutput.addHandler('destroy', () => {
-      setFramework(() => new ReactFramework<Extension>(propsRef.current));
-    });
-  }, [framework]);
 
   return framework;
 }

@@ -12,7 +12,6 @@ import type {
   TransactionProps,
   TransactionTransformer,
 } from '@remirror/core-types';
-import type { InvalidContentHandler, StringHandler } from '@remirror/core-utils';
 import type { DirectEditorProps } from '@remirror/pm/view';
 
 import type { UpdatableViewProps } from '../builtins';

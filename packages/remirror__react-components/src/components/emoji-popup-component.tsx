@@ -1,5 +1,4 @@
 import { cx } from 'linaria';
-import { Type, useMultishift } from 'multishift';
 import React, { FC } from 'react';
 import { useCommands } from '@remirror/react-core';
 import { FlatEmojiWithUrl, useEmoji } from '@remirror/react-hooks';
@@ -22,28 +21,23 @@ const EmojiFromCdn = (props: FlatEmojiWithUrl): JSX.Element => {
   );
 };
 
+const emptyList: never[] = [];
+
 /**
  * This component renders the emoji suggestion dropdown for the user.
  */
 export const EmojiPopupComponent: FC = () => {
   const { focus } = useCommands();
-  const state = useEmoji();
+  const { state, getMenuProps, getItemProps, indexIsHovered, indexIsSelected } = useEmoji();
   const enabled = !!state;
-
-  const { getMenuProps, getItemProps, itemHighlightedAtIndex, hoveredIndex } = useMultishift({
-    highlightedIndexes: [state?.index ?? 0],
-    type: Type.ControlledMenu,
-    items: state?.list ?? [],
-    isOpen: true,
-  });
 
   return (
     <FloatingWrapper positioner='nearestWord' enabled={enabled} placement='auto-end'>
       <div {...getMenuProps()}>
         {enabled &&
-          (state?.list ?? []).map((emoji, index) => {
-            const isHighlighted = itemHighlightedAtIndex(index);
-            const isHovered = index === hoveredIndex;
+          (state?.list ?? emptyList).map((emoji, index) => {
+            const isHighlighted = indexIsSelected(index);
+            const isHovered = indexIsHovered(index);
             const shortcode = emoji.shortcodes?.[0] ?? emoji.annotation;
 
             return (

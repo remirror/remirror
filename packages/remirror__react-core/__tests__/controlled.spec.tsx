@@ -9,9 +9,10 @@ import {
 } from 'remirror';
 import { BoldExtension, ItalicExtension } from 'remirror/extensions';
 import { act, fireEvent, render, strictRender } from 'testing/react';
+import { useRemirror } from '@remirror/react';
 
 import type { ReactExtensions } from '../';
-import { createReactManager, Remirror, useManager, useRemirrorContext } from '../';
+import { createReactManager, Remirror, useRemirrorContext } from '../';
 
 const label = 'Remirror editor';
 const props = { label, stringHandler: 'text' as const };
@@ -385,24 +386,19 @@ test('NOTE: this test is to show that synchronous state updates only show the mo
 });
 
 test('support for rendering a nested controlled editor in strict mode', () => {
-  const chain = RemirrorTestChain.create(createReactManager(() => [new BoldExtension()]));
+  const chain = RemirrorTestChain.create(
+    createReactManager(() => [new BoldExtension()], { stringHandler: 'html' }),
+  );
 
   const Component = () => {
-    const manager = useManager(chain.manager);
-
-    const [value, setValue] = useState(
-      manager.createState({
-        content: '<p>test</p>',
-        selection: 'all',
-      }),
-    );
-
-    const onChange: RemirrorEventListener<AnyExtension> = ({ state }) => {
-      setValue(state);
-    };
+    const { manager, state, onChange } = useRemirror({
+      extensions: chain.manager,
+      content: '<p>test</p>',
+      selection: 'all',
+    });
 
     return (
-      <Remirror manager={manager} onChange={onChange} state={value}>
+      <Remirror manager={manager} onChange={onChange} state={state}>
         <div id='1'>
           <TextEditor />
         </div>
@@ -443,29 +439,26 @@ test('support for rendering a nested controlled editor in strict mode', () => {
 });
 
 describe('onChange', () => {
-  let chain = RemirrorTestChain.create(createReactManager([]));
+  let chain = RemirrorTestChain.create(createReactManager([], { stringHandler: 'html' }));
   const mock = jest.fn();
 
   const Component = () => {
-    const manager = useManager(chain.manager);
-
-    const [value, setValue] = useState(
-      manager.createState({
-        content: '<p>A</p>',
-        selection: 'end',
-      }),
-    );
+    const { manager, state, setState } = useRemirror({
+      extensions: chain.manager,
+      content: '<p>A</p>',
+      selection: 'end',
+    });
 
     const onChange: RemirrorEventListener<AnyExtension> = ({ state }) => {
-      setValue(state);
-      mock(value.doc.textContent);
+      setState(state);
+      mock(state.doc.textContent);
     };
 
-    return <Remirror manager={manager} onChange={onChange} state={value} autoRender={true} />;
+    return <Remirror manager={manager} onChange={onChange} state={state} autoRender={true} />;
   };
 
   beforeEach(() => {
-    chain = RemirrorTestChain.create(createReactManager([]));
+    chain = RemirrorTestChain.create(createReactManager([], { stringHandler: 'html' }));
     mock.mockClear();
   });
 
@@ -479,7 +472,7 @@ describe('onChange', () => {
     }
 
     expect(mock).toHaveBeenCalledTimes(9);
-    expect(mock).toHaveBeenLastCalledWith('Amazing');
+    expect(mock).toHaveBeenLastCalledWith('Amazing!');
   });
 
   it('updates values in `StrictMode`', () => {
@@ -492,6 +485,6 @@ describe('onChange', () => {
     }
 
     expect(mock).toHaveBeenCalledTimes(9);
-    expect(mock).toHaveBeenLastCalledWith('Amazing');
+    expect(mock).toHaveBeenLastCalledWith('Amazing!');
   });
 });

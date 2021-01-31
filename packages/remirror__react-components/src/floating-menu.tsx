@@ -1,26 +1,18 @@
-/**
- * @module
- *
- * Exploratory code for the floating elements.
- */
-
 import { cx } from '@linaria/core';
 import composeRefs from '@seznam/compose-react-refs';
 import { matchSorter } from 'match-sorter';
 import type { FC, ReactChild, Ref } from 'react';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useMenuState } from 'reakit/Menu';
 import { Popover, PopoverState, usePopoverState } from 'reakit/Popover';
 import { Except } from 'type-fest';
-import { ExtensionPriority, isEmptyArray } from '@remirror/core';
 import type { PositionerParam } from '@remirror/extension-positioner';
 import { getPositioner } from '@remirror/extension-positioner';
 import { useEditorDomRef, useHelpers } from '@remirror/react-core';
 import {
   useEditorFocus,
   UseEditorFocusProps,
-  useKeymap,
   usePositioner,
   useSuggest,
 } from '@remirror/react-hooks';

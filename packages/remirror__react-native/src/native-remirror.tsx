@@ -1,23 +1,27 @@
-import { createContextHook, createContextState } from 'create-context-state';
+import { createContextState } from 'create-context-state';
+import delay from 'delay';
 import { BridgeOption, Registry, useBridge } from 'lepont';
 import minDocument from 'min-document';
-import { ComponentType, useCallback, useMemo, useRef, useState } from 'react';
+import { ReactNode, useCallback, useMemo, useRef, useState } from 'react';
 import { renderToString } from 'react-dom/server';
-import { View } from 'react-native';
 import WebView, { WebViewProps } from 'react-native-webview';
 import { Except } from 'type-fest';
 import {
   AnyExtension,
-  CommandsFromExtensions,
+  AnyFunction,
+  EMPTY_ARRAY,
   GetSchema,
   RemirrorManager,
+  Shape,
   StateJSON,
+  uniqueId,
 } from '@remirror/core';
 import {
-  DefaultBridgeActions,
-  DefaultBridgeData,
+  CommandDonePayload,
+  CommandPayload,
   HYDRATE_COMPONENT_NAME,
   ReactNativeBridgeEvent,
+  ReactNativeBridgeExtension,
   REMIRROR_NATIVE_ID,
   StateUpdatePayload,
   WebViewEditorType,
@@ -35,8 +39,7 @@ import {
  * Props which are passed into the `useRemirror` hook.
  */
 export interface UseNativeRemirrorProps<Extension extends AnyExtension>
-  extends BaseNativeRemirrorProps,
-    Except<UseRemirrorProps<Extension>, 'extensions' | 'document' | 'forceEnvironment'> {
+  extends Except<UseRemirrorProps<Extension>, 'extensions' | 'document' | 'forceEnvironment'> {
   /**
    * Provide a function that returns an array of extensions which will be used
    * to create the manager.
@@ -83,29 +86,16 @@ export interface UseNativeRemirrorReturn<Extension extends AnyExtension> {
    * ```
    */
   setState: (state: EditorState<GetSchema<Extension>>) => void;
-
-  /**
-   * The HTML webview content.
-   */
-  html: string;
 }
 
 export function useNativeRemirror<Extension extends AnyExtension>(
   props: UseNativeRemirrorProps<Extension>,
 ): UseNativeRemirrorReturn<ReactExtensions<Extension>> {
-  const { WebViewEditor, bundle, name, ...remirrorProps } = props;
-  const { manager, setState, state } = useRemirror({
-    ...remirrorProps,
+  return useRemirror({
+    ...props,
     document: minDocument,
     forceEnvironment: 'ssr',
   });
-  const jsonRef = useRef(state.toJSON() as StateJSON);
-  const html = useMemo(
-    () => createWebViewHtml({ WebViewEditor, bundle, name, json: jsonRef.current }),
-    [WebViewEditor, bundle, name],
-  );
-
-  return useMemo(() => ({ manager, setState, state, html }), [manager, setState, state, html]);
 }
 
 interface BaseNativeRemirrorProps {
@@ -133,20 +123,14 @@ interface BaseNativeRemirrorProps {
   WebViewEditor: WebViewEditorType;
 }
 
-type UseBridgeHookReturn = ReturnType<typeof useBridge>;
-
 /**
  * The context value which are passed from the webview component to the native
  * view layer on every state update.
  */
-export interface NativeRemirrorContext<
-  Extension extends AnyExtension = Remirror.Extensions,
-  Data extends DefaultBridgeData = DefaultBridgeData,
-  Actions extends DefaultBridgeActions = DefaultBridgeActions
-> {
-  data: Data;
-  actions: Actions;
-  commands: CommandsFromExtensions<Extension>;
+export interface NativeRemirrorContext {
+  data: Shape;
+  actions: AsyncCommands;
+  commands: AsyncCommands;
   state: EditorState;
   json: StateJSON;
 
@@ -157,7 +141,42 @@ export interface NativeRemirrorContext<
 }
 export interface NativeRemirrorProps<Extension extends AnyExtension>
   extends NativeRemirrorProviderProps<Extension>,
-    I18nProps {}
+    I18nProps {
+  /**
+   * The optional children which can be passed into the [`Remirror`].
+   */
+  children?: ReactNode;
+
+  /**
+   * Set this to `start` or `end` to automatically render the editor to the dom.
+   *
+   * When set to `start` the editor will be added before all other child
+   * components. If `end` the editable editor will be added after all child
+   * components.
+   *
+   * When no children are provided the editor will automatically be rendered
+   * even without this prop being set.
+   *
+   * `start` is the preferred value since it helps avoid some of the issues that
+   * can arise from `zIndex` issues with floating components rendered within the
+   * context.
+   *
+   * @default undefined
+   */
+  autoRender?: boolean | 'start' | 'end';
+
+  /**
+   * An array of hooks that can be passed through to the `Remirror` component
+   * and will be called in the order provided. Each hook receives no props but
+   * will have access to the `RemirrorContext`.
+   *
+   * If you'd like access to more
+   * state, you can wrap the `Remirror` component in a custom provider and
+   * attach your state there. It can then be accessed inside the hook via
+   * context.
+   */
+  hooks?: Array<() => void>;
+}
 
 type GetWebViewProps = (
   extra?: Partial<Exclude<WebViewProps, 'onMessage' | 'source' | 'javascriptEnabled'>>,
@@ -166,6 +185,8 @@ interface NativeRemirrorState {
   registry: Registry;
   json: StateJSON;
   getWebViewProps: GetWebViewProps;
+  data: Shape;
+  state: EditorState;
 }
 
 interface NativeRemirrorProviderProps<Extension extends AnyExtension>
@@ -173,7 +194,7 @@ interface NativeRemirrorProviderProps<Extension extends AnyExtension>
   /**
    * The manager which is required by the `<Remirror />` component.
    */
-  manager: RemirrorManager<Extension>;
+  manager: RemirrorManager<any>;
 
   /**
    * The initial editor state based on the provided `content` and `selection`
@@ -181,76 +202,163 @@ interface NativeRemirrorProviderProps<Extension extends AnyExtension>
    * default empty doc node as defined by the editor Schema.
    */
   initialState?: EditorState<GetSchema<Extension>>;
-
-  /**
-   * The HTML webview content.
-   */
-  html: string;
 }
 
-const [NativeRemirrorProvider, useNativeRemirrorContext] = createContextState<
+export const [NativeRemirrorProvider, useNativeRemirrorContext] = createContextState<
   NativeRemirrorContext,
   NativeRemirrorProviderProps<AnyExtension>,
   NativeRemirrorState
 >(
   (helpers) => {
-    const { getWebViewProps, json, registry, state } = helpers.state;
+    const { getWebViewProps, json, registry, data, state } = helpers.state;
+    const { manager } = helpers.props;
+    const actionNames = Object.keys(
+      manager.getExtension(ReactNativeBridgeExtension).options.actions,
+    );
+    const {
+      // Only set the commands the very first time this is loaded since they
+      // don't change for the editor.
+      commands = createCommands(
+        Object.keys(manager.store.commands),
+        registry,
+        ReactNativeBridgeEvent.Command,
+      ),
+
+      // Only set the actions once since they don't change during the editor
+      // lifecycle.
+      actions = createCommands(actionNames, registry, ReactNativeBridgeEvent.Action),
+    } = helpers.previousContext ?? {};
+
     return {
-      actions: {},
-      commands: {},
-      data: {},
-      json: {},
-      state: {},
+      actions,
+      commands,
+      data,
+      json,
+      state,
       getWebViewProps,
     };
   },
-  ({ html, initialState, manager }) => {
-    const [json, setJSON] = useState<StateJSON>(() => {
+  (props) => {
+    const { initialState, manager, WebViewEditor, bundle, name } = props;
+    const [payload, setPayload] = useState<StateUpdatePayload>(() => {
+      const bridgeExtension = manager.getExtension(ReactNativeBridgeExtension);
       const fallback = manager.createEmptyDoc();
       const state = initialState ?? manager.createState({ content: fallback });
-      return state.toJSON() as StateJSON;
+      const data = bridgeExtension.generateData(state);
+
+      return { data, state: state.toJSON() as StateJSON };
     });
+
+    const jsonRef = useRef(payload.state);
+    const html = useMemo(
+      () => createWebViewHtml({ WebViewEditor, bundle, name, json: jsonRef.current }),
+      [WebViewEditor, bundle, name],
+    );
 
     const stateUpdateBridge: BridgeOption = useCallback((registry) => {
       registry.register(ReactNativeBridgeEvent.StateUpdate, (payload: StateUpdatePayload) => {
-        setJSON(payload.state);
+        setPayload(payload);
       });
     }, []);
 
-    const [ref, onMessage, { registry }] = useBridge();
-
+    const [ref, onMessage, { registry }] = useBridge(stateUpdateBridge);
     const getWebViewProps: GetWebViewProps = useCallback(
       (props) => ({ ...props, ref, onMessage, source: { html } }),
       [ref, onMessage, html],
     );
 
+    jsonRef.current = payload.state;
+
     return useMemo(
       () => ({
         registry,
         getWebViewProps,
-        json,
-        state: manager.createState({ content: json.doc, selection: json.selection }),
+        json: payload.state,
+        data: payload.data,
+        state: manager.createState({
+          content: payload.state.doc,
+          selection: payload.state.selection,
+        }),
       }),
-      [registry, json, manager, getWebViewProps],
+      [registry, manager, getWebViewProps, payload],
     );
   },
 );
 
+interface HookComponentProps {
+  /**
+   * The hook that will be run within the `RemirrorContext`. For access to other
+   * contexts, wrap the `<Remirror />` within other contexts and access their
+   * values with `useContext`.
+   */
+  hook: () => void;
+}
+
+/**
+ * A component which exists to call a prop-less hook.
+ */
+const HookComponent = (props: HookComponentProps) => {
+  props.hook();
+  return null;
+};
+
 /**
  * The react native remirror component which also acts as a provider.
  */
-export const NativeRemirror = (props: NativeRemirrorProps): JSX.Element => {
-  const { WebViewEditor, bundle, name, i18n, locale, supportedLocales } = props;
-  const jsonRef = useRef();
-  const source = useMemo(() => createWebViewHtml({ WebViewEditor, bundle, name }), []);
-  // const [ref, onMessage] = useBridge((registry) => {
-  //   registry.;
-  // });
+export function NativeRemirror<Extension extends AnyExtension = Remirror.Extensions>(
+  props: NativeRemirrorProps<Extension>,
+): JSX.Element {
+  const {
+    WebViewEditor,
+    bundle,
+    name,
+    i18n,
+    locale,
+    supportedLocales,
+    children,
+    manager,
+    initialState,
+    autoRender,
+    hooks = EMPTY_ARRAY,
+  } = props;
+  // A boolean flag which is true when a default editor should be rendered
+  // first. If no children are provided and no configuration is provided for
+  // autoRender, the editor will automatically be rendered.
+  const autoRenderAtStart =
+    autoRender === 'start' || autoRender === true || (!children && autoRender == null);
+
+  // Whether to render the editor at the end of the editor.
+  const autoRenderAtEnd = autoRender === 'end';
 
   return (
-    <I18nProvider i18n={i18n} locale={locale} supportedLocales={supportedLocales}></I18nProvider>
+    <I18nProvider i18n={i18n} locale={locale} supportedLocales={supportedLocales}>
+      <NativeRemirrorProvider
+        WebViewEditor={WebViewEditor}
+        bundle={bundle}
+        manager={manager}
+        initialState={initialState}
+        name={name}
+      >
+        {hooks.map((hook, index) => (
+          <HookComponent hook={hook} key={index} />
+        ))}
+        {autoRenderAtStart && <AutoWebView />}
+        {children}
+        {autoRenderAtEnd && <AutoWebView />}
+        {children}
+      </NativeRemirrorProvider>
+    </I18nProvider>
   );
-  // return <WebView source={} />;
+}
+
+/**
+ * A component which adds the WebView containing the remirror editor into the
+ * component tree.
+ */
+export const AutoWebView = (): JSX.Element => {
+  const { getWebViewProps } = useNativeRemirrorContext();
+
+  return <WebView {...getWebViewProps()} />;
 };
 
 interface CreateWebViewHtmlProps extends BaseNativeRemirrorProps {
@@ -258,9 +366,50 @@ interface CreateWebViewHtmlProps extends BaseNativeRemirrorProps {
 }
 
 /**
+ * Create the commands object that creates an async bridge to dispatch commands
+ * within the dom editor.
+ */
+function createCommands(
+  names: string[],
+  registry: Registry,
+  type: typeof ReactNativeBridgeEvent.Command | typeof ReactNativeBridgeEvent.Action,
+): AsyncCommands {
+  const commands: Record<string, AnyFunction<Promise<void>>> = {};
+
+  for (const name of names) {
+    commands[name] = (...args: any[]) => {
+      return new Promise((resolve, reject) => {
+        const responseType = `${type}:${name}:${uniqueId()}`;
+
+        registry.register(responseType, (payload: CommandDonePayload) => {
+          if (payload.name === name) {
+            // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+            delete registry.registry[responseType];
+            resolve();
+          }
+        });
+
+        delay(800).then(() => {
+          // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+          delete registry.registry[responseType];
+          reject();
+        });
+
+        registry.sendMessage<CommandPayload>({
+          type,
+          payload: { name, args, responseType },
+        });
+      });
+    };
+  }
+
+  return commands;
+}
+
+/**
  * Create the WebView html source which pre-rendered HTML.
  */
-export function createWebViewHtml(props: CreateWebViewHtmlProps) {
+function createWebViewHtml(props: CreateWebViewHtmlProps): string {
   const { WebViewEditor, bundle, json, name } = props;
   const html = renderToString(<WebViewEditor state={json} />);
 
@@ -282,3 +431,5 @@ export function createWebViewHtml(props: CreateWebViewHtmlProps) {
   </html>\`;
   `;
 }
+
+type AsyncCommands = Record<string, AnyFunction<Promise<void>>>;

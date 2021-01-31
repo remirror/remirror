@@ -7,28 +7,19 @@ import {
   extension,
   ExtensionStore,
   PlainExtension,
+  Shape,
   StateJSON,
   StateUpdateLifecycleProps,
   Static,
 } from '@remirror/core';
 
-export interface DefaultBridgeData {
-  [key: string]: unknown;
-}
-export interface DefaultBridgeActions {
-  [key: string]: AnyFunction<void>;
-}
-
-export interface ReactNativeBridgeOptions<
-  Data extends DefaultBridgeData,
-  Actions extends DefaultBridgeActions
-> {
+export interface ReactNativeBridgeOptions {
   /**
    * Create the data object that will be passed into the store.
    */
-  createData: Static<(state: EditorState, store: ExtensionStore) => Data>;
+  data: Static<Record<string, (state: EditorState, store: ExtensionStore) => any>>;
 
-  createActions: Static<(store: ExtensionStore) => Actions>;
+  actions: Static<Record<string, (store: ExtensionStore) => AnyFunction<void>>>;
 }
 
 export interface ReactNativeBridgeEvents {
@@ -42,17 +33,14 @@ export interface ReactNativeBridgeEvents {
  * Add support for communication between the react native webview and the
  * remirror editor.
  */
-@extension<ReactNativeBridgeOptions<DefaultBridgeData, DefaultBridgeActions>>({
+@extension<ReactNativeBridgeOptions>({
   defaultOptions: {
-    createActions: () => ({}),
-    createData: () => ({}),
+    actions: {},
+    data: {},
   },
-  staticKeys: ['createActions', 'createData'],
+  staticKeys: ['actions', 'data'],
 })
-export class ReactNativeBridgeExtension<
-  Data extends DefaultBridgeData = DefaultBridgeData,
-  Actions extends DefaultBridgeActions = DefaultBridgeActions
-> extends PlainExtension<ReactNativeBridgeOptions<Data, Actions>> {
+export class ReactNativeBridgeExtension extends PlainExtension<ReactNativeBridgeOptions> {
   get name() {
     return 'reactNativeBridge' as const;
   }
@@ -74,7 +62,7 @@ export class ReactNativeBridgeExtension<
       type: ReactNativeBridgeEvent.StateUpdate,
       payload: {
         state: helpers.getStateJSON(state),
-        data: this.options.createData(state, this.store),
+        data: this.generateData(state),
       },
     });
   }
@@ -98,8 +86,21 @@ export class ReactNativeBridgeExtension<
    * Dispatch the custom actions provided to the web view layer..
    */
   private readonly actionListener = (action: string, ...args: any[]) => {
-    this.options.createActions(this.store)[action]?.(...args);
+    this.options.actions[action]?.(this.store)(...args);
   };
+
+  /**
+   * Generate the data provided with a state update.
+   */
+  generateData(state: EditorState): Shape {
+    const data: Shape = {};
+
+    for (const [key, method] of Object.entries(this.options.data)) {
+      data[key] = method(state, this.store);
+    }
+
+    return data;
+  }
 }
 
 export const ReactNativeBridgeEvent = {
@@ -132,9 +133,23 @@ export interface WebViewEditorProps {
   state: StateJSON;
 }
 
-export interface StateUpdatePayload<Data extends DefaultBridgeData = DefaultBridgeData> {
+export interface StateUpdatePayload {
   state: StateJSON;
-  data: Data;
+  data: Shape;
+}
+
+export interface CommandPayload {
+  name: string;
+  args: any[];
+  /**
+   * The unique response type for sending the success message.
+   */
+  responseType: string;
+}
+
+export interface CommandDonePayload {
+  name: string;
+  success: boolean;
 }
 
 export type WebViewEditorType = ComponentType<WebViewEditorProps>;

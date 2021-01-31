@@ -61,7 +61,6 @@ import {
   PlainExtension,
   UiCommandNames,
 } from '../extension';
-import { CreateStateFromContent } from '../framework/base-framework';
 import { throwIfNameNotUnique } from '../helpers';
 import type {
   CommandShape,

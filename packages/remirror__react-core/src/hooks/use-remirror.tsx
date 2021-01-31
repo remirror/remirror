@@ -28,6 +28,9 @@ export interface UseRemirrorProps<Extension extends AnyExtension>
    * to create the manager. If you prefer you can directly provide your own
    * `RemirrorManager` to override this. The manager you provide will be cloned
    * and used within your editor.
+   *
+   * When a `Manager` is provided then several settings are ignored like
+   * [[`stringHandler`]] and [[`onError`]].
    */
   extensions?: (() => Extension[]) | RemirrorManager<any>;
 

@@ -4,11 +4,12 @@ import warning from 'tiny-warning';
 
 /**
  * A `useEffect` function which issues a warning when an update occurs with
- * dependencies which are deeply equal. This only happens development. In
+ * dependencies which are deeply equal. This only happens `development`. In
  * production it aliases the `useEffect` hook.
  *
  * This is used in places where it's important for developers to memoize and
- * wrap methods with `useCallback`.
+ * wrap methods with `useCallback`. Failure to do so will result in multiple
+ * renders for the exact same content and slow down the editing experience.
  *
  * @internal
  */
@@ -42,6 +43,7 @@ export const useEffectWithWarning: typeof useEffect =
 
         const wrappedEffect = () => {
           if (unnecessaryChange.current > 0) {
+            // TODO remove this before release
             throw new Error(`SERIOUS ${unnecessaryChange.current}`);
           }
 

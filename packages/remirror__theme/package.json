@@ -36,7 +36,7 @@
     "@linaria/core": "^3.0.0-beta.1",
     "@remirror/core-types": "1.0.0-next.60",
     "case-anything": "^1.1.2",
-    "color2k": "^1.2.0",
+    "color2k": "~1.1.1",
     "csstype": "^3.0.6",
     "type-fest": "^0.20.2"
   },

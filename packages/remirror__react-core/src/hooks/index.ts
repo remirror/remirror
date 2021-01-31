@@ -1,4 +1,5 @@
 export * from './use-active';
+export * from './use-chained-commands';
 export * from './use-commands';
 export * from './use-editor-dom-ref';
 export * from './use-editor-state';

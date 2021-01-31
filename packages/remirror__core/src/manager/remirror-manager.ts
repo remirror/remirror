@@ -379,10 +379,9 @@ export class RemirrorManager<Extension extends AnyExtension> {
     initialExtension: readonly Extension[],
     settings: Remirror.ManagerSettings = {},
   ) {
-    this.#settings = settings;
-
     const { extensions, extensionMap } = transformExtensions<Extension>(initialExtension, settings);
 
+    this.#settings = settings;
     this.#extensions = freeze(extensions);
     this.#extensionMap = extensionMap;
     this.#extensionStore = this.createExtensionStore();
@@ -613,8 +612,12 @@ export class RemirrorManager<Extension extends AnyExtension> {
    * Create the editor state from content passed to this extension manager.
    */
   createState(props: CreateEditorStateProps = {}): EditorState<GetSchema<Extension>> {
-    const { stringHandler, onError, defaultSelection = 'end' } = this.settings;
-    const { content = this.createEmptyDoc(), selection = defaultSelection } = props;
+    const { onError, defaultSelection = 'end' } = this.settings;
+    const {
+      content = this.createEmptyDoc(),
+      selection = defaultSelection,
+      stringHandler = this.settings.stringHandler,
+    } = props;
     const { schema, plugins } = this.store;
 
     const doc = createDocumentNode({
@@ -912,6 +915,18 @@ export interface CreateEditorStateProps extends Omit<StringHandlerProps, 'string
    * @default 'end'
    */
   selection?: PrimitiveSelection;
+
+  /**
+   * A function which transforms a string into a prosemirror node.
+   *
+   * @remarks
+   *
+   * Can be used to transform markdown / html or any other string format into a
+   * prosemirror node.
+   *
+   * See [[`fromHTML`]] for an example of how this could work.
+   */
+  stringHandler?: keyof Remirror.StringHandlers | StringHandler;
 }
 
 interface RemirrorManagerConstructor extends Function {

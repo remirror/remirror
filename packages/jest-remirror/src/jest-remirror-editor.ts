@@ -264,7 +264,6 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
 
   private constructor(manager: RemirrorManager<Extension>) {
     this.#manager = manager;
-
     this.createDocBuilders();
     this.setupCloneListener();
   }

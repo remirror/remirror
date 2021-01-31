@@ -6,7 +6,7 @@ import data from 'svgmoji/emoji.json';
 import { act as renderAct, strictRender } from 'testing/react';
 import { createReactManager, Remirror, useRemirrorContext } from '@remirror/react';
 
-import { EmojiState, useEmoji } from '../use-emoji';
+import { useEmoji, UseEmojiReturn } from '../use-emoji';
 
 function createChain() {
   const manager = createReactManager(() => [new EmojiExtension({ data })]);
@@ -38,20 +38,22 @@ describe('useEmoji', () => {
       wrapper: Wrapper,
     });
 
-    expect(result.current).toBeNull();
+    expect(result.current?.state).toBeNull();
 
     act(() => {
       chain.insertText(':a');
     });
 
-    expect(result.current).toEqual({
+    expect(result.current?.state).toEqual({
       range: { from: 17, to: 19, cursor: 19 },
       apply: expect.any(Function),
       list: expect.any(Array),
-      index: 0,
+      query: 'a',
     });
 
-    expect(result.current?.list.length).toBeGreaterThan(0);
+    expect(result.current?.index).toBe(0);
+
+    expect(result.current?.state?.list.length).toBeGreaterThan(0);
   });
 
   it('should correctly add the emoji when the command is called', () => {
@@ -65,7 +67,7 @@ describe('useEmoji', () => {
       () => {
         chain.insertText(':red_heart');
       },
-      () => result.current?.apply?.(result.current.list[0]?.emoji ?? ''),
+      () => result.current?.state?.apply(result.current.state?.list[0]?.emoji ?? ''),
     ]);
 
     expect(chain.innerHTML).toMatchSnapshot();
@@ -87,7 +89,7 @@ describe('useEmoji', () => {
       },
     ]);
 
-    expect(result.current).toBeNull();
+    expect(result.current?.state).toBeNull();
 
     acts([
       () => {
@@ -95,7 +97,7 @@ describe('useEmoji', () => {
       },
     ]);
 
-    expect(result.current).toBeNull();
+    expect(result.current?.state).toBeNull();
   });
 
   it('should choose selection when `Enter` key is pressed', () => {
@@ -144,12 +146,42 @@ describe('useEmoji', () => {
       },
     ]);
 
-    expect(result.current?.index).toBe(result.current!.list.length - 1);
+    expect(result.current?.index).toBe(result.current!.state!.list.length - 1);
+  });
+
+  it('should update index when `Arrow` keys are used with `horizontal` direction', () => {
+    const { Wrapper, chain } = createChain();
+
+    const { result } = renderHook(() => useEmoji({ direction: 'horizontal' }), {
+      wrapper: Wrapper,
+    });
+
+    acts([
+      () => {
+        chain.insertText(':');
+      },
+      () => {
+        chain.press('ArrowRight');
+      },
+    ]);
+
+    expect(result.current?.index).toBe(1);
+
+    acts([
+      () => {
+        chain.press('ArrowLeft');
+      },
+      () => {
+        chain.press('ArrowLeft');
+      },
+    ]);
+
+    expect(result.current?.index).toBe(result.current!.state!.list.length - 1);
   });
 
   it('can be used with `autoUpdate`', () => {
     const { Wrapper, chain } = createChain();
-    const ref: { current: EmojiState | null } = { current: null };
+    const ref: { current: UseEmojiReturn | null } = { current: null };
 
     const Component = () => {
       useRemirrorContext({ autoUpdate: true });
@@ -168,6 +200,6 @@ describe('useEmoji', () => {
       chain.insertText(':');
     });
 
-    expect(ref.current).toEqual(expect.objectContaining({ index: 0 }));
+    expect(ref.current).toEqual(expect.objectContaining({ state: expect.any(Object) }));
   });
 });

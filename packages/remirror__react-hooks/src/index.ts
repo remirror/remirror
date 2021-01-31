@@ -4,6 +4,7 @@ export * from './use-emoji';
 export * from './use-events';
 export * from './use-history';
 export * from './use-keymap';
+export * from './use-keymaps';
 export * from './use-mention';
 export * from './use-mention-atom';
 export * from './use-menu-navigation';

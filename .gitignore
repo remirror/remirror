@@ -174,3 +174,4 @@ cc-reporter
 **/storybook-static
 
 /.detoxrc.json
+/typedoc.json

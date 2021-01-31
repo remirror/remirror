@@ -99,7 +99,6 @@ export function createFramework(manager: AnyRemirrorManager): TestFramework {
   }
 
   return new TestFramework({
-    createStateFromContent,
     getProps: () => ({ manager }),
     initialEditorState: createStateFromContent(manager.createEmptyDoc()),
   });

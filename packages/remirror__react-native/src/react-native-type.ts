@@ -1,4 +1,4 @@
-export interface CommandWebviewMessage {
+export interface CommandWebViewMessage {
   type: 'command';
   /**
    * The name of the command.

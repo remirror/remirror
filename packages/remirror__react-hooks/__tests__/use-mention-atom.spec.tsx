@@ -5,7 +5,7 @@ import { act, DefaultEditor, render, strictRender } from 'testing/react';
 import { NON_BREAKING_SPACE_CHAR } from '@remirror/core';
 import { MentionAtomExtension, MentionAtomNodeAttributes } from '@remirror/extension-mention-atom';
 import { ChangeReason } from '@remirror/pm/suggest';
-import { createReactManager, Remirror, useRemirror } from '@remirror/react';
+import { createReactManager, MenuDirection, Remirror, useRemirror } from '@remirror/react';
 
 import { MentionAtomState, useMentionAtom } from '../use-mention-atom';
 
@@ -24,13 +24,13 @@ describe('useMentionAtom', () => {
     expect(result.state).toEqual({
       command: expect.any(Function),
       name: 'at',
-      index: 0,
       reason: ChangeReason.Start,
       query: { full: 'a', partial: 'a' },
       text: { full: '@a', partial: '@a' },
       range: { from: 17, to: 19, cursor: 19 },
     });
     expect(result.items.length > 0).toBeTrue();
+    expect(result.index).toBe(0);
   });
 
   it('should correctly add the mention when the command is called', () => {
@@ -158,10 +158,10 @@ describe('useMentionAtom', () => {
     expect(result.state).toBeNull();
   });
 
-  it('can set `ignoreMatchesOnEscape` to false', () => {
+  it('can set `ignoreMatchesOnDismiss` to false', () => {
     const { editor, Wrapper, result } = createEditor();
 
-    strictRender(<Wrapper ignoreMatchesOnEscape={false} />);
+    strictRender(<Wrapper ignoreMatchesOnDismiss={false} />);
 
     acts([
       () => {
@@ -230,7 +230,7 @@ describe('useMentionAtom', () => {
       },
     ]);
 
-    expect(result.state?.index).toBe(1);
+    expect(result.index).toBe(1);
 
     acts([
       () => {
@@ -241,7 +241,35 @@ describe('useMentionAtom', () => {
       },
     ]);
 
-    expect(result.state?.index).toBe(result.items.length - 1);
+    expect(result.index).toBe(result.items.length - 1);
+  });
+
+  it('should update index when `Arrow` keys are used with a `horizontal` direction', () => {
+    const { editor, Wrapper, result } = createEditor();
+
+    strictRender(<Wrapper direction='horizontal' />);
+
+    acts([
+      () => {
+        editor.insertText('#i');
+      },
+      () => {
+        editor.press('ArrowRight');
+      },
+    ]);
+
+    expect(result.index).toBe(1);
+
+    acts([
+      () => {
+        editor.press('ArrowLeft');
+      },
+      () => {
+        editor.press('ArrowLeft');
+      },
+    ]);
+
+    expect(result.index).toBe(result.items.length - 1);
   });
 
   it('supports deleting the mention', () => {
@@ -317,23 +345,27 @@ function createEditor(controlled = false) {
   interface Result {
     state: MentionAtomState | null;
     items: MentionAtomNodeAttributes[];
+    index: number;
   }
 
   const result: Result = {
     state: null,
     items: [],
+    index: -1,
   };
 
   interface Props {
-    ignoreMatchesOnEscape?: boolean;
+    ignoreMatchesOnDismiss?: boolean;
+    direction?: MenuDirection;
   }
 
-  const Component: FC<Props> = ({ ignoreMatchesOnEscape }) => {
+  const Component: FC<Props> = ({ ignoreMatchesOnDismiss, direction }) => {
     const [items, setItems] = useState(() => getItems());
 
-    const state = useMentionAtom({ items, ignoreMatchesOnEscape });
+    const { state, index } = useMentionAtom({ items, ignoreMatchesOnDismiss, direction });
     result.items = items;
     result.state = state;
+    result.index = index;
 
     useEffect(() => {
       if (!state) {

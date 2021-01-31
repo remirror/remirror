@@ -5,7 +5,7 @@ import { act, DefaultEditor, strictRender } from 'testing/react';
 import { NON_BREAKING_SPACE_CHAR } from '@remirror/core';
 import { MentionExtension, MentionExtensionAttributes } from '@remirror/extension-mention';
 import { ChangeReason } from '@remirror/pm/suggest';
-import { createReactManager, Remirror } from '@remirror/react';
+import { createReactManager, MenuDirection, Remirror } from '@remirror/react';
 
 import { MentionState, useMention, UseMentionExitHandler } from '../use-mention';
 
@@ -15,22 +15,22 @@ describe('useMention', () => {
 
     strictRender(<Wrapper />);
 
-    expect(result.mention).toBeNull();
+    expect(result.state).toBeNull();
 
     act(() => {
       editor.insertText('@a');
     });
 
-    expect(result.mention).toEqual({
+    expect(result.state).toEqual({
       command: expect.any(Function),
       name: 'at',
-      index: 0,
       reason: ChangeReason.Start,
       query: { full: 'a', partial: 'a' },
       text: { full: '@a', partial: '@a' },
       range: { from: 17, to: 19, cursor: 19 },
     });
     expect(result.items.length > 0).toBeTrue();
+    expect(result.index).toBe(0);
   });
 
   it('should correctly add the mention when the command is called', () => {
@@ -43,7 +43,7 @@ describe('useMention', () => {
         editor.insertText('@a');
       },
       () => {
-        result.mention?.command({ ...assertGet(result.items, 0) });
+        result.state?.command({ ...assertGet(result.items, 0) });
       },
       () => {
         editor.insertText('more to come');
@@ -75,13 +75,13 @@ describe('useMention', () => {
         editor.insertText('@a');
       },
       () => {
-        result.mention?.command({ ...assertGet(result.items, 0) });
+        result.state?.command({ ...assertGet(result.items, 0) });
       },
       () => {
         editor.selectText(19);
       },
       () => {
-        result.mention?.command({ ...assertGet(result.items, 0) });
+        result.state?.command({ ...assertGet(result.items, 0) });
       },
       () => {
         editor.selectText('end');
@@ -147,19 +147,19 @@ describe('useMention', () => {
       },
     ]);
 
-    expect(result.mention).toBeNull();
+    expect(result.state).toBeNull();
 
     act(() => {
       editor.insertText('a');
     });
 
-    expect(result.mention).toBeNull();
+    expect(result.state).toBeNull();
   });
 
-  it('can set `ignoreMatchesOnEscape` to false', () => {
+  it('can set `ignoreMatchesOnDismiss` to false', () => {
     const { editor, Wrapper, result } = createEditor();
 
-    strictRender(<Wrapper ignoreMatchesOnEscape={false} />);
+    strictRender(<Wrapper ignoreMatchesOnDismiss={false} />);
 
     acts([
       () => {
@@ -170,13 +170,13 @@ describe('useMention', () => {
       },
     ]);
 
-    expect(result.mention).toBeNull();
+    expect(result.state).toBeNull();
 
     act(() => {
       editor.insertText('a');
     });
 
-    expect(result.mention).toEqual(
+    expect(result.state).toEqual(
       expect.objectContaining({ text: { full: '#aa', partial: '#aa' } }),
     );
   });
@@ -228,7 +228,7 @@ describe('useMention', () => {
       },
     ]);
 
-    expect(result.mention?.index).toBe(1);
+    expect(result.index).toBe(1);
 
     acts([
       () => {
@@ -239,7 +239,35 @@ describe('useMention', () => {
       },
     ]);
 
-    expect(result.mention?.index).toBe(result.items.length - 1);
+    expect(result.index).toBe(result.items.length - 1);
+  });
+
+  it('should update index when `Arrow` keys are used in `horizontal` mode', () => {
+    const { editor, Wrapper, result } = createEditor();
+
+    strictRender(<Wrapper direction='horizontal' />);
+
+    acts([
+      () => {
+        editor.insertText('#i');
+      },
+      () => {
+        editor.press('ArrowRight');
+      },
+    ]);
+
+    expect(result.index).toBe(1);
+
+    acts([
+      () => {
+        editor.press('ArrowLeft');
+      },
+      () => {
+        editor.press('ArrowLeft');
+      },
+    ]);
+
+    expect(result.index).toBe(result.items.length - 1);
   });
 });
 
@@ -290,20 +318,23 @@ function createEditor() {
   }
 
   interface Result {
-    mention: MentionState | null;
+    state: MentionState | null;
+    index: number;
     items: MentionExtensionAttributes[];
   }
 
   const result: Result = {
-    mention: null,
+    state: null,
     items: [],
+    index: -1,
   };
 
   interface Props {
-    ignoreMatchesOnEscape?: boolean;
+    ignoreMatchesOnDismiss?: boolean;
+    direction?: MenuDirection;
   }
 
-  const Component: FC<Props> = ({ ignoreMatchesOnEscape }) => {
+  const Component: FC<Props> = ({ ignoreMatchesOnDismiss, direction }) => {
     const [items, setItems] = useState(() => getItems());
 
     const onExit: UseMentionExitHandler = useCallback(({ query }, command) => {
@@ -311,17 +342,18 @@ function createEditor() {
       command({ href: `/${query.full}` });
     }, []);
 
-    const { mention } = useMention({ items, onExit, ignoreMatchesOnEscape });
+    const { state, index } = useMention({ items, onExit, ignoreMatchesOnDismiss, direction });
     result.items = items;
-    result.mention = mention;
+    result.state = state;
+    result.index = index;
 
     useEffect(() => {
-      if (!mention) {
+      if (!state) {
         return;
       }
 
-      setItems(getItems({ name: mention.name, query: mention.query.full }));
-    }, [mention]);
+      setItems(getItems({ name: state.name, query: state.query.full }));
+    }, [state]);
 
     return null;
   };
