@@ -39,7 +39,7 @@
     "@remirror/core": "1.0.0-next.60",
     "@remirror/messages": "0.0.0",
     "@remirror/pm": "1.0.0-next.60",
-    "@types/marked": "^1.2.1",
+    "@types/marked": "^1.2.2",
     "@types/turndown": "^5.0.0",
     "marked": "^1.2.8",
     "turndown": "^7.0.0",

@@ -15,7 +15,7 @@
     "@manypkg/get-packages": "^1.1.1",
     "@microsoft/api-extractor": "^7.13.0",
     "@remirror/react": "1.0.0-next.60",
-    "@types/autoprefixer": "^9.7.2",
+    "@types/autoprefixer": "^10.2.0",
     "@types/cheerio": "^0.22.23",
     "@types/fontkit": "^1.8.0",
     "@types/keyv": "^3.1.1",
@@ -63,7 +63,7 @@
     "ts-morph": "^9.1.0",
     "tslog": "^3.1.0",
     "type-fest": "^0.20.2",
-    "typedoc": "^0.20.19",
+    "typedoc": "^0.20.20",
     "typedoc-plugin-external-module-name": "^4.0.6",
     "typedoc-plugin-markdown": "^3.4.5",
     "write-json-file": "^4.3.0"

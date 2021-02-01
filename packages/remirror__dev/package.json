@@ -34,7 +34,7 @@
     "@babel/runtime": "^7.12.5",
     "@remirror/pm": "1.0.0-next.60",
     "@remirror/react": "1.0.0-next.60",
-    "@types/prosemirror-dev-tools": "^2.1.0",
+    "@types/prosemirror-dev-tools": "^3.0.0",
     "prosemirror-dev-tools": "^3.0.2"
   },
   "devDependencies": {
