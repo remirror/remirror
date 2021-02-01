@@ -1,8 +1,8 @@
 import { schema } from 'jest-prosemirror';
 import { clone, keys } from '@remirror/core';
 
-import { TagTracker } from '../';
 import { markFactory, nodeFactory, sequence, text } from '../src/jest-remirror-builder';
+import { TagTracker } from '../src/jest-remirror-types';
 
 describe('text', () => {
   it('returns tracker for empty string', () => {
