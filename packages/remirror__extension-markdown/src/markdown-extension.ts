@@ -1,6 +1,7 @@
 import {
   EditorState,
   extension,
+  ExtensionTag,
   Helper,
   helper,
   PlainExtension,
@@ -37,6 +38,17 @@ export interface MarkdownOptions {
    * this method.
    */
   htmlSanitizer?: Static<(html: string) => string>;
+
+  /**
+   * The parent nodes (or tags) where the markdown extension shortcuts are
+   * active.
+   *
+   * @default ['code']
+   *
+   * TODO implement keyboard shortcuts when within an activeNode for the
+   * markdown extension.
+   */
+  activeNodes?: string[];
 }
 
 /**
@@ -59,6 +71,7 @@ export interface MarkdownOptions {
     htmlToMarkdown,
     markdownToHtml,
     htmlSanitizer,
+    activeNodes: [ExtensionTag.Code],
   },
   staticKeys: ['htmlToMarkdown', 'markdownToHtml', 'htmlSanitizer'],
 })

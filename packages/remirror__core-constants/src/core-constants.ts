@@ -175,7 +175,7 @@ const BaseExtensionTag = {
   Behavior: 'behavior',
 
   /**
-   * Marks which store code.
+   * Marks and nodes which contain code.
    */
   Code: 'code',
 

@@ -428,7 +428,11 @@ export abstract class Framework<
     content: RemirrorContentType,
     { triggerChange = false }: TriggerChangeProps = {},
   ) => {
-    const state = this.manager.createState({ content });
+    const { doc } = this.manager.createState({ content });
+    const previousState = this.getState();
+    const { state } = this.getState().applyTransaction(
+      previousState.tr.replaceRangeWith(0, previousState.doc.nodeSize - 2, doc),
+    );
 
     if (triggerChange) {
       return this.updateState({ state, triggerChange });

@@ -57,7 +57,7 @@ export class FontFamilyExtension extends MarkExtension {
         },
         {
           // Get the color from the css style property. This is useful for pasted content.
-          style: 'text-transform',
+          style: 'font-family',
           priority: ExtensionPriority.Low,
           getAttrs: (fontFamily) => {
             if (!isString(fontFamily)) {
