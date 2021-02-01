@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it can bundle a file 1`] = `
+"var __ROLLUP_BUNDLER_MACRO__ = (function (exports) {
+  'use strict';
+
+  function fn() {
+    return 'awesome';
+  }
+
+  const a = /*#__PURE__*/fn();
+
+  exports.a = a;
+  exports.default = fn;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+  return exports;
+
+}({}));
+"
+`;
+
+exports[`it can transpile a file 1`] = `
+"function TestFunction() {
+  console.log('This is a function');
+}"
+`;

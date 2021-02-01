@@ -77,16 +77,36 @@ export class ReactNativeBridgeExtension extends PlainExtension<ReactNativeBridge
 
   /**
    * Dispatch commands issued from the react native app.
+   *
+   * TODO return an error when the command doesn't exist.
    */
-  private readonly commandListener = (command: string, ...args: any[]) => {
-    this.store.commands[command]?.(...args);
+  private readonly commandListener = (payload: CommandPayload) => {
+    const { args, name, responseType } = payload;
+    const command = this.store.commands[name];
+    const message = { type: responseType, payload: { name, success: true } };
+
+    if (!command) {
+      message.payload.success = false;
+    }
+
+    command?.(...args);
+    sendMessage(message);
   };
 
   /**
    * Dispatch the custom actions provided to the web view layer..
    */
-  private readonly actionListener = (action: string, ...args: any[]) => {
-    this.options.actions[action]?.(this.store)(...args);
+  private readonly actionListener = (payload: CommandPayload) => {
+    const { args, name, responseType } = payload;
+    const action = this.options.actions[name];
+    const message = { type: responseType, payload: { name, success: true } };
+
+    if (!action) {
+      message.payload.success = false;
+    }
+
+    action?.(this.store)(...args);
+    sendMessage(message);
   };
 
   /**

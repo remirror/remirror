@@ -53,6 +53,7 @@ importers:
       babel-plugin-macros: 3.0.1
       babel-plugin-template-html-minifier: 4.1.0
       babel-plugin-transform-react-remove-prop-types: 0.4.24
+      bundler.macro: link:packages/bundler.macro
       case-anything: 1.1.2
       core-js: 3.8.3
       cpy-cli: 3.1.1
@@ -162,6 +163,7 @@ importers:
       babel-plugin-macros: ^3.0.1
       babel-plugin-template-html-minifier: ^4.1.0
       babel-plugin-transform-react-remove-prop-types: ^0.4.24
+      bundler.macro: 0.0.0
       case-anything: ^1.1.2
       core-js: ^3.8.2
       cpy-cli: ^3.1.1
@@ -341,6 +343,7 @@ importers:
   examples/with-react-native:
     dependencies:
       '@remirror/core-helpers': link:../../packages/remirror__core-helpers
+      '@remirror/extension-react-native-bridge': link:../../packages/remirror__extension-react-native-bridge
       '@remirror/react': link:../../packages/remirror__react
       '@remirror/react-native': link:../../packages/remirror__react-native
       '@types/react': 17.0.0
@@ -354,7 +357,6 @@ importers:
       '@react-native-community/cli-platform-android': 4.13.0
       '@react-native-community/cli-platform-ios': 4.13.0
       '@react-native-community/eslint-config': 2.0.0
-      bundler.macro: link:../../packages/bundler.macro
       enhanced-resolve: 4.5.0
       find-cache-dir: 3.3.1
       find-up: 5.0.0
@@ -373,11 +375,11 @@ importers:
       '@react-native-community/cli-platform-ios': ^4.13.0
       '@react-native-community/eslint-config': ^2.0.0
       '@remirror/core-helpers': 1.0.0-next.60
+      '@remirror/extension-react-native-bridge': 0.0.0
       '@remirror/react': 1.0.0-next.60
       '@remirror/react-native': 0.0.0
       '@types/react': ^17.0.0
       '@types/react-native': ^0.63.46
-      bundler.macro: 0.0.0
       enhanced-resolve: ^4.3.0
       find-cache-dir: ^3.3.1
       find-up: ^5.0.0
@@ -422,6 +424,8 @@ importers:
       babel-plugin-macros: 3.0.1
       make-synchronous: 0.1.1
       rollup: 2.38.2
+      rollup-plugin-esbuild: 2.6.1_rollup@2.38.2
+      rollup-plugin-terser: 7.0.2_rollup@2.38.2
     devDependencies:
       '@types/babel-plugin-tester': 9.0.1
       babel-plugin-tester: 10.0.0_@babel+core@7.12.10
@@ -445,6 +449,8 @@ importers:
       babel-plugin-tester: ^10.0.0
       make-synchronous: ^0.1.1
       rollup: ^2.38.2
+      rollup-plugin-esbuild: ^2.6.1
+      rollup-plugin-terser: ^7.0.2
   packages/create-context-state:
     dependencies:
       '@babel/runtime': 7.12.5
@@ -7648,7 +7654,6 @@ packages:
       estree-walker: 2.0.2
       picomatch: 2.2.2
       rollup: 2.38.2
-    dev: true
     engines:
       node: '>= 8.0.0'
     peerDependencies:
@@ -19334,6 +19339,12 @@ packages:
       '@sideway/pinpoint': 2.0.0
     resolution:
       integrity: sha512-Qh5gdU6niuYbUIUV5ejbsMiiFmBdw8Kcp8Buj2JntszCkCfxJ9Cz76OtHxOZMPXrt5810iDIXs+n1nNVoquHgg==
+  /joycon/2.2.5:
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-YqvUxoOcVPnCp0VU1/56f+iKSdvIRJYPznH22BdXV3xMk75SFXhWeJkZ8C9XxUWt1b5x2X1SxuFygW1U0FmkEQ==
   /jpeg-js/0.3.7:
     dev: false
     resolution:
@@ -26259,6 +26270,19 @@ packages:
       node: '>=8.3'
     resolution:
       integrity: sha512-euDjCUSBXZa06nqnwCNADbkAcYDfzwowfZQkto9K/TFhiH+QG7I4PUsEMwM9tDgomGWJc//z7KLW8t+tZwxADA==
+  /rollup-plugin-esbuild/2.6.1_rollup@2.38.2:
+    dependencies:
+      '@rollup/pluginutils': 4.1.0_rollup@2.38.2
+      joycon: 2.2.5
+      strip-json-comments: 3.1.1
+    dev: false
+    engines:
+      node: '>=12'
+    peerDependencies:
+      esbuild: '>=0.7.0'
+      rollup: '*'
+    resolution:
+      integrity: sha512-hskMEQQ4Vxlyoeg1OWlFTwWHIhpNaw6q+diOT7p9pdkk34m9Mbk3aymS/JbTqLXy/AbJi22iuXrucknKpeczfg==
   /rollup-plugin-livereload/2.0.0:
     dependencies:
       livereload: 0.9.1
@@ -26288,7 +26312,6 @@ packages:
       rollup: 2.38.2
       serialize-javascript: 4.0.0
       terser: 5.5.1
-    dev: true
     peerDependencies:
       rollup: ^2.0.0
     resolution:

@@ -17,6 +17,9 @@
       "path": "../../../packages/remirror__core-helpers/src"
     },
     {
+      "path": "../../../packages/remirror__extension-react-native-bridge/src"
+    },
+    {
       "path": "../../../packages/remirror__react/src"
     },
     {

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@remirror/core-helpers": "1.0.0-next.60",
+    "@remirror/extension-react-native-bridge": "0.0.0",
     "@remirror/react": "1.0.0-next.60",
     "@remirror/react-native": "0.0.0",
     "@types/react": "^17.0.0",
@@ -25,7 +26,6 @@
     "@react-native-community/cli-platform-android": "^4.13.0",
     "@react-native-community/cli-platform-ios": "^4.13.0",
     "@react-native-community/eslint-config": "^2.0.0",
-    "bundler.macro": "0.0.0",
     "enhanced-resolve": "^4.3.0",
     "find-cache-dir": "^3.3.1",
     "find-up": "^5.0.0",
@@ -44,10 +44,17 @@
       "__e2e__": {
         "compilerOptions": {
           "types": [
-            "detox",
-            "jest"
+            "detox"
           ]
         }
+      },
+      "./": {
+        "exclude": [
+          "node_modules",
+          ".babelrc.js",
+          "metro.config.js",
+          "jest.config.js"
+        ]
       }
     }
   }

@@ -44,7 +44,9 @@
     "@types/parcel-bundler": "^1.12.3",
     "babel-plugin-macros": "^3.0.1",
     "make-synchronous": "^0.1.1",
-    "rollup": "^2.38.2"
+    "rollup": "^2.38.2",
+    "rollup-plugin-esbuild": "^2.6.1",
+    "rollup-plugin-terser": "^7.0.2"
   },
   "devDependencies": {
     "@types/babel-plugin-tester": "^9.0.1",

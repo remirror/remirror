@@ -105,15 +105,10 @@ interface BaseNativeRemirrorProps {
    * ```ts
    * import { bundleWithRollup } from 'bundler.macro';
    *
-   * const bundle = bundWithRollup('./path/to/editor.tsx', 'EditorName');
+   * const bundle = bundleWithRollup('./path/to/editor.tsx');
    * ```
    */
   bundle: string;
-
-  /**
-   * The name given to the bundle when generated with `bundleWithRollup`.
-   */
-  name: string;
 
   /**
    * The editor component that was bundled into a string. It takes no props and
@@ -239,7 +234,7 @@ export const [NativeRemirrorProvider, useNativeRemirrorContext] = createContextS
     };
   },
   (props) => {
-    const { initialState, manager, WebViewEditor, bundle, name } = props;
+    const { initialState, manager, WebViewEditor, bundle } = props;
     const [payload, setPayload] = useState<StateUpdatePayload>(() => {
       const bridgeExtension = manager.getExtension(ReactNativeBridgeExtension);
       const fallback = manager.createEmptyDoc();
@@ -251,8 +246,8 @@ export const [NativeRemirrorProvider, useNativeRemirrorContext] = createContextS
 
     const jsonRef = useRef(payload.state);
     const html = useMemo(
-      () => createWebViewHtml({ WebViewEditor, bundle, name, json: jsonRef.current }),
-      [WebViewEditor, bundle, name],
+      () => createWebViewHtml({ WebViewEditor, bundle, json: jsonRef.current }),
+      [WebViewEditor, bundle],
     );
 
     const stateUpdateBridge: BridgeOption = useCallback((registry) => {
@@ -311,7 +306,6 @@ export function NativeRemirror<Extension extends AnyExtension = Remirror.Extensi
   const {
     WebViewEditor,
     bundle,
-    name,
     i18n,
     locale,
     supportedLocales,
@@ -337,7 +331,6 @@ export function NativeRemirror<Extension extends AnyExtension = Remirror.Extensi
         bundle={bundle}
         manager={manager}
         initialState={initialState}
-        name={name}
       >
         {hooks.map((hook, index) => (
           <HookComponent hook={hook} key={index} />
@@ -382,10 +375,13 @@ function createCommands(
         const responseType = `${type}:${name}:${uniqueId()}`;
 
         registry.register(responseType, (payload: CommandDonePayload) => {
-          if (payload.name === name) {
-            // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-            delete registry.registry[responseType];
+          // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+          delete registry.registry[responseType];
+
+          if (payload.success) {
             resolve();
+          } else {
+            reject();
           }
         });
 
@@ -410,7 +406,7 @@ function createCommands(
  * Create the WebView html source which pre-rendered HTML.
  */
 function createWebViewHtml(props: CreateWebViewHtmlProps): string {
-  const { WebViewEditor, bundle, json, name } = props;
+  const { WebViewEditor, bundle, json } = props;
   const html = renderToString(<WebViewEditor state={json} />);
 
   return `<!DOCTYPE html>
@@ -426,7 +422,7 @@ function createWebViewHtml(props: CreateWebViewHtmlProps): string {
     </body>
   <script>
     ${bundle};
-    window.${HYDRATE_COMPONENT_NAME}(${name}, ${JSON.stringify(name)});
+    window.${HYDRATE_COMPONENT_NAME}(__ROLLUP_BUNDLER_MACRO__['default'], ${JSON.stringify(json)});
   </script>
   </html>\`;
   `;

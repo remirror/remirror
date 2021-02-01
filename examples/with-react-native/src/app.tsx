@@ -1,57 +1,39 @@
+import { rollupBundle } from 'bundler.macro';
 import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import { isString } from 'remirror';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { NativeRemirror, useNativeRemirror } from '@remirror/react-native';
 
-declare const global: { HermesInternal: null | object };
+import WebViewEditor, { extensions } from './webview-editor';
+
+const bundle = rollupBundle('./webview-editor.tsx');
+
+const Editor = () => {
+  const { manager, state } = useNativeRemirror({ extensions });
+
+  return (
+    <NativeRemirror
+      manager={manager}
+      initialState={state}
+      WebViewEditor={WebViewEditor}
+      bundle={bundle}
+    >
+      <Text>Inside the editor!</Text>
+    </NativeRemirror>
+  );
+};
 
 const App = () => {
-  console.log(isString(''));
   return (
     <>
       <StatusBar barStyle='dark-content' />
       <SafeAreaView>
         <ScrollView contentInsetAdjustmentBehavior='automatic' style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.tsx</Text>
-                {isString('') ? (
-                  <Text>to change this screen and then come back to see your edits. YO! </Text>
-                ) : null}
-              </Text>
+              <Text style={styles.sectionTitle}>Editor</Text>
+              <Text style={styles.sectionDescription}>This is the editor eventually!</Text>
+              <Editor />
             </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -62,10 +44,6 @@ const App = () => {
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
   },
   body: {
     backgroundColor: Colors.white,
@@ -84,17 +62,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '400',
     color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
   },
 });
 

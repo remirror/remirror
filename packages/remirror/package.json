@@ -55,13 +55,6 @@
       "types": "./playground/dist/remirror-playground.cjs.d.ts",
       "default": "./playground/dist/remirror-playground.esm.js"
     },
-    "./react": {
-      "import": "./react/dist/remirror-react.esm.js",
-      "require": "./react/dist/remirror-react.cjs.js",
-      "browser": "./react/dist/remirror.browser.esm.js",
-      "types": "./react/dist/remirror-react.cjs.d.ts",
-      "default": "./react/dist/remirror-react.esm.js"
-    },
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
   "main": "dist/remirror.cjs.js",
@@ -77,7 +70,6 @@
     "extensions",
     "icons",
     "playground",
-    "react",
     "styles"
   ],
   "dependencies": {

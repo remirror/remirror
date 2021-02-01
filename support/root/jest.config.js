@@ -24,6 +24,8 @@ module.exports = {
     '!**/__dts__/**',
     '!**/__fixtures__/**',
     '!support/**',
+    '!examples/**',
+    '!website/**',
 
     // This is internal code and doesn't affect the end user experience.
     '!packages/remirror__playground/**',

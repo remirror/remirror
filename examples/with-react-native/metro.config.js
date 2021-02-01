@@ -2,7 +2,6 @@ const path = require('path');
 const { FileStore } = require('metro-cache');
 const findCacheDir = require('find-cache-dir');
 const findUp = require('find-up');
-const Metro = require('metro-core');
 const resolveFrom = require('resolve-from');
 const exclusionList = require('metro-config/src/defaults/blacklist');
 const {
@@ -30,69 +29,28 @@ const cacheFileStore = new FileStore({
 const resolveCtx = {};
 const resolveRequest = makeResolveRequest(resolveCtx);
 
-// See https://facebook.github.io/metro/docs/en/configuration.
 function getConfig() {
   return {
-    // Paths
-    ////////////////////////////////////////////////////////////////////////////
-
     projectRoot: path.resolve(projectRoot),
-
     watchFolders: [
       path.resolve(projectRoot),
       path.join(path.resolve(projectRoot), 'node_modules'),
-
-      /*
-      Only needed for pnpm monorepo usage To avoid the following error we must add the repo root:
-      ```
-      Expected path `/xxx/node_modules/.registry.npmjs.org/@babel/runtime/7.2.0/node_modules/@babel/runtime/helpers/interopRequireDefault.js` to be relative to one of the project roots
-      ```
-      */
       getRepoRoot(),
     ],
 
-    // Caching
-    ////////////////////////////////////////////////////////////////////////////
-
     cacheStores: [cacheFileStore],
-
-    //cacheVersion,
-
     resetCache: true,
-
-    // Reporting
-    ////////////////////////////////////////////////////////////////////////////
-
-    // See
-    // https://github.com/facebook/metro/blob/92f8e5deee2fb574ccf68d7ce4de5fecf7477df6/packages/metro/src/lib/reporting.js#L32
-    // reporter: {update: (event) => {console.log(event); resolveCtx.onReporterUpdate &&
-    // resolveCtx.onReporterUpdate(event);
-    //   },
-    // },
-
     server: {},
-
     transformer: {
       workerPath: getWorkerPath(),
     },
-
-    // Resolver
-    ////////////////////////////////////////////////////////////////////////////
-
     resolver: {
+      resolveRequest,
       blacklistRE: exclusionList([/.*\/default\/.*/, /.*\/\.cache\/.*/, /.*\/nest-orig\/.*/]),
       extraNodeModules: {},
-
-      // NOTE: This will run for all files if watchman fails to start.
-      resolveRequest,
-
       resolverMainFields: ['rn:dev', 'react-native', 'browser', 'module', 'main'],
       sourceExts: ['js', 'json', 'ts', 'tsx', 'cjs', 'mjs', 'jsx'],
-
       useWatchman: false,
-
-      // TODO(vjpr): Could use this perhaps instead of patching. Although I think I looked into this
-      //   and it was not possible. hasteImplModulePath,
     },
   };
 }

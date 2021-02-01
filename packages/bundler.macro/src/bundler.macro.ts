@@ -147,7 +147,7 @@ interface ReplaceParentExpressionProps {
 }
 
 /**
- * Replace the parent expresion with the string value from the bundled file.
+ * Replace the parent expression with the string value from the bundled file.
  */
 function replaceParentExpression(options: ReplaceParentExpressionProps) {
   const { babel, parentPath, value } = options;
@@ -173,6 +173,17 @@ function transpileFile({ reference, state, babel }: MethodProps) {
     }),
     parentPath,
     predicate: is.string,
+  });
+
+  evaluateNodeValue({
+    node: getArgumentNode({
+      parentPath,
+      required: false,
+      maxArguments: 2,
+      index: 1,
+    }),
+    parentPath,
+    predicate: isStringOrUndefined,
   });
 
   let filePath: string;
@@ -209,7 +220,7 @@ function rollupBundle({ reference, state, babel }: MethodProps) {
     predicate: is.string,
   });
 
-  const name = evaluateNodeValue({
+  evaluateNodeValue({
     node: getArgumentNode({
       parentPath,
       required: false,
@@ -231,36 +242,42 @@ function rollupBundle({ reference, state, babel }: MethodProps) {
   interface Rollup {
     input: string;
     cwd: string;
-    name: string | undefined;
   }
 
   const rollup = makeSync(async (props: Rollup) => {
-    const { rollup } = require('rollup');
-    const { babel } = require('@rollup/plugin-babel');
-    const json = require('@rollup/plugin-json');
-    const resolve = require('@rollup/plugin-node-resolve').default;
+    const { rollup }: typeof import('rollup') = require('rollup');
+    const { babel }: typeof import('@rollup/plugin-babel') = require('@rollup/plugin-babel');
+    const json: typeof import('@rollup/plugin-json').default = require('@rollup/plugin-json');
+    const cjs: typeof import('@rollup/plugin-commonjs').default = require('@rollup/plugin-commonjs');
+    const terser = require('rollup-plugin-terser');
+    const {
+      nodeResolve,
+    }: typeof import('@rollup/plugin-node-resolve') = require('@rollup/plugin-node-resolve');
 
-    const extensions = ['.js', '.jsx', '.ts', '.tsx'] as const;
-    const { cwd, input, name } = props;
+    const extensions = ['.js', '.jsx', '.ts', '.tsx', '.mjs', '.node'];
+    const { cwd, input } = props;
 
     const bundler = await rollup({
       input,
       plugins: [
-        babel({ cwd, babelHelpers: 'bundled' }),
+        cjs({ extensions, include: /node_modules/ }),
+        babel({ cwd, extensions, babelHelpers: 'runtime', rootMode: 'upward-optional' }),
         json({ namedExports: false }),
-        resolve({
-          extensions,
-          browser: true,
-        }),
+        nodeResolve({ extensions, browser: true }),
+        process.env.NODE_ENV === 'production' && terser(),
       ],
     });
 
-    const result = await bundler.generate({ format: 'iife', name });
+    const result = await bundler.generate({
+      format: 'iife',
+      name: '__ROLLUP_BUNDLER_MACRO__',
+      exports: 'named',
+    });
 
     return result.output[0].code;
   });
 
-  const value = rollup({ cwd: dirname(input), input, name });
+  const value = rollup({ cwd: dirname(input), input });
   replaceParentExpression({
     babel,
     parentPath,

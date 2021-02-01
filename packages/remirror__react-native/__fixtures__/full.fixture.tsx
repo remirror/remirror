@@ -1,9 +1,9 @@
 import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions';
 import { ReactNativeBridgeExtension } from '@remirror/extension-react-native-bridge';
-import { Remirror, useRemirror } from '@remirror/react';
+import { Remirror, useRemirror } from '@remirror/react-core';
 
 export const extensions = () => [
-  new BoldExtension(),
+  new BoldExtension({}),
   new ItalicExtension(),
   new UnderlineExtension(),
   new ReactNativeBridgeExtension({ actions: {}, data: { cool: (state) => !!state } }),
