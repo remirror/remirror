@@ -1,0 +1,14 @@
+{
+  "name": "@remirror/ui-dropdown",
+  "version": "1.0.0-next.1",
+  "description": "DEPRECATED - The dropdown component used throughout the codebase",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/deprecated/ui-dropdown",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/deprecated/remirror__ui-dropdown",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

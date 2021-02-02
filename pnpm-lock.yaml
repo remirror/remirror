@@ -220,37 +220,47 @@ importers:
       typescript-plugin-css-modules: ^3.1.0
       typescript-snapshots-plugin: ^1.7.0
       typescript-styled-plugin: ^0.15.0
-  deprecated/core-extensions:
+  deprecated/remirror__core-extensions:
     specifiers: {}
-  deprecated/editor-markdown:
+  deprecated/remirror__editor-markdown:
     specifiers: {}
-  deprecated/editor-social:
+  deprecated/remirror__editor-social:
     specifiers: {}
-  deprecated/editor-wysiwyg:
+  deprecated/remirror__editor-wysiwyg:
     specifiers: {}
-  deprecated/extension-base-keymap:
+  deprecated/remirror__extension-auto-link:
     specifiers: {}
-  deprecated/extension-enhanced-link:
+  deprecated/remirror__extension-base-keymap:
     specifiers: {}
-  deprecated/react-node-view:
+  deprecated/remirror__extension-enhanced-link:
     specifiers: {}
-  deprecated/react-portals:
+  deprecated/remirror__preset-social:
     specifiers: {}
-  deprecated/ui:
+  deprecated/remirror__react-node-view:
     specifiers: {}
-  deprecated/ui-a11y-status:
+  deprecated/remirror__react-portals:
     specifiers: {}
-  deprecated/ui-buttons:
+  deprecated/remirror__react-social:
     specifiers: {}
-  deprecated/ui-dropdown:
+  deprecated/remirror__react-wysiwyg:
     specifiers: {}
-  deprecated/ui-icons:
+  deprecated/remirror__showcase:
     specifiers: {}
-  deprecated/ui-menus:
+  deprecated/remirror__ui:
     specifiers: {}
-  deprecated/ui-modal:
+  deprecated/remirror__ui-a11y-status:
     specifiers: {}
-  deprecated/ui-text:
+  deprecated/remirror__ui-buttons:
+    specifiers: {}
+  deprecated/remirror__ui-dropdown:
+    specifiers: {}
+  deprecated/remirror__ui-icons:
+    specifiers: {}
+  deprecated/remirror__ui-menus:
+    specifiers: {}
+  deprecated/remirror__ui-modal:
+    specifiers: {}
+  deprecated/remirror__ui-text:
     specifiers: {}
   examples/storybook-react:
     dependencies:
