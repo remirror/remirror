@@ -1,4 +1,4 @@
-name: rebase pr
+name: rebase pull request
 
 on:
   issue_comment:

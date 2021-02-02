@@ -543,6 +543,9 @@
       "path": "packages/testing/src"
     },
     {
+      "path": "support/actions/src"
+    },
+    {
       "path": "support/templates/extension-template/__tests__"
     },
     {

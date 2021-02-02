@@ -1,7 +1,8 @@
 packages:
-  - 'support/templates/*'
   - 'deprecated/*'
+  - 'examples/*'
   - 'packages/*'
   - 'support'
+  - 'support/actions'
+  - 'support/templates/*'
   - 'website'
-  - 'examples/*'

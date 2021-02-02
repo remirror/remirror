@@ -834,6 +834,14 @@
     "gzip": true
   },
   {
+    "name": "actions",
+    "limit": "50 KB",
+    "path": "support/actions/dist/remirror-actions.browser.esm.js",
+    "ignore": ["@remirror/core-helpers"],
+    "running": false,
+    "gzip": true
+  },
+  {
     "name": "@remirror/extension-template",
     "limit": "5 KB",
     "path": "support/templates/extension-template/dist/remirror-extension-template.browser.esm.js",

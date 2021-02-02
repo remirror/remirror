@@ -385,7 +385,7 @@ let config = {
     },
     {
       files: [
-        'support/scripts/**/*.{js,mjs,ts}',
+        'support/**',
         'packages/testing/**/*.{js,ts}',
         'packages/remirror__playground/**',
         'packages/remirror__playground-deprecated/**',

@@ -93,6 +93,7 @@
     "packages/remirror__theme/src/index.ts",
     "packages/test-keyboard/src/index.ts",
     "packages/testing/src/index.ts",
+    "support/actions/src/index.ts",
     "support/templates/extension-template/src/index.ts",
     "support/templates/minimal-template/src/index.ts",
     "support/templates/preset-template/src/index.ts"

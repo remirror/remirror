@@ -572,7 +572,7 @@ async function generatePackageTsConfigs() {
    * Write the file for an individual package.
    */
   function writePackageTsconfig(pkg: Package) {
-    if (pkg.types) {
+    if (pkg.types && !pkg.private) {
       entryFiles.push(path.join(getRelativePathFromJson(pkg), 'src', 'index.ts'));
     }
 
@@ -622,8 +622,8 @@ async function generatePackageTsConfigs() {
   references.sort((a, b) => a.path.localeCompare(b.path));
   await writeJSON(paths.rootTsconfig, { include: [], files: [], references });
   await writeJSON(paths.packagesTsconfig, packagesTsconfig);
-  await writeJSON(paths.rootTypedoc, { entryFiles, out: 'docs/api' });
-  filesToPrettify.push(paths.rootTsconfig);
+  await writeJSON(paths.rootTypedoc, { entryFiles, out: 'docs/api' }, { detectIndent: true });
+  filesToPrettify.push(paths.rootTsconfig, paths.rootTypedoc);
 }
 
 /**

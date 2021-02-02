@@ -1,0 +1,45 @@
+name: publish pull request
+on:
+  issue_comment:
+    types: [created]
+
+env:
+  PNPM_CACHE_FOLDER: .pnpm-store
+
+jobs:
+  publish_comment:
+    runs-on: ubuntu-latest
+    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/publish')
+    steps:
+      - name: checkout code repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: setup caching
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node.js
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14
+
+      - name: install and audit
+        uses: ./support/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
+
+      - name: publish
+        uses: ./support/actions/pr
+        with:
+          giphyKey: ${{ secrets.GIPHY_API_KEY }}
+          build: pnpm build
+          version: pnpm pr
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
