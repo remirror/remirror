@@ -43,33 +43,34 @@
     "@remirror/pm": "1.0.0-next.60",
     "@remirror/react-core": "0.0.0",
     "@types/min-document": "^2.19.0",
+    "@types/react-dom": "^17.0.0",
     "create-context-state": "0.0.0",
     "delay": "^5.0.0",
     "lepont": "^0.11.4",
     "min-document": "^2.19.0",
+    "react-dom": "^17.0.1",
     "type-fest": "^0.20.2"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
     "@types/react-native": "^0.63.46",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1",
     "react-native": "^0.63.4",
     "react-native-builder-bob": "^0.17.1",
     "react-native-webview": "^11.2.1"
   },
   "peerDependencies": {
     "@types/react": "^16.14.0 || ^17",
-    "@types/react-dom": "^16.9.0 || ^17",
     "@types/react-native": "^0.63 || ^0.64",
     "react": "^16.14.0 || ^17",
-    "react-dom": "^16.14.0 || ^17",
     "react-native": "^0.63 || ^0.64",
     "react-native-webview": "^11"
   },
   "peerDependenciesMeta": {
     "@types/react": {
+      "optional": true
+    },
+    "@types/react-native": {
       "optional": true
     }
   },

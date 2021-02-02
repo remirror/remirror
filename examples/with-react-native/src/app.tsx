@@ -3,9 +3,9 @@ import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View } from 'rea
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { NativeRemirror, useNativeRemirror } from '@remirror/react-native';
 
-import WebViewEditor, { extensions } from './webview-editor';
+import WebViewEditor, { extensions } from './webview/webview-editor';
 
-const bundle = rollupBundle('./webview-editor.tsx');
+const bundle = rollupBundle('./webview/webview-editor.tsx');
 
 const Editor = () => {
   const { manager, state } = useNativeRemirror({ extensions });
@@ -17,7 +17,7 @@ const Editor = () => {
       WebViewEditor={WebViewEditor}
       bundle={bundle}
     >
-      <Text>Inside the editor!</Text>
+      <Text>Inside the editor context!</Text>
     </NativeRemirror>
   );
 };
