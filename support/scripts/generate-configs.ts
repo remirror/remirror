@@ -620,8 +620,12 @@ async function generatePackageTsConfigs() {
   };
 
   references.sort((a, b) => a.path.localeCompare(b.path));
-  await writeJSON(paths.rootTsconfig, { include: [], files: [], references });
-  await writeJSON(paths.packagesTsconfig, packagesTsconfig);
+  await writeJSON(
+    paths.rootTsconfig,
+    { include: [], files: [], references },
+    { detectIndent: true },
+  );
+  await writeJSON(paths.packagesTsconfig, packagesTsconfig, { detectIndent: true });
   await writeJSON(paths.rootTypedoc, { entryFiles, out: 'docs/api' }, { detectIndent: true });
   filesToPrettify.push(paths.rootTsconfig, paths.rootTypedoc);
 }

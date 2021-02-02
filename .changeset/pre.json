@@ -63,7 +63,6 @@
     "@remirror/extension-text-case": "0.0.0",
     "@remirror/extension-text-color": "0.0.0",
     "@remirror/extension-text-highlight": "0.0.0",
-    "@remirror/extension-text-wrap": "0.0.0",
     "@remirror/extension-trailing-node": "1.0.0-next.60",
     "@remirror/extension-underline": "1.0.0-next.60",
     "@remirror/extension-whitespace": "0.0.0",

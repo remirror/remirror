@@ -390,12 +390,6 @@
       "path": "packages/remirror__extension-text-highlight/src"
     },
     {
-      "path": "packages/remirror__extension-text-wrap/__tests__"
-    },
-    {
-      "path": "packages/remirror__extension-text-wrap/src"
-    },
-    {
       "path": "packages/remirror__extension-text/__tests__"
     },
     {

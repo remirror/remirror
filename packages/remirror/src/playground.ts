@@ -59,7 +59,6 @@ import * as remirrorExtensionText from '@remirror/extension-text';
 import * as remirrorExtensionTextCase from '@remirror/extension-text-case';
 import * as remirrorExtensionTextColor from '@remirror/extension-text-color';
 import * as remirrorExtensionTextHighlight from '@remirror/extension-text-highlight';
-import * as remirrorExtensionTextWrap from '@remirror/extension-text-wrap';
 import * as remirrorExtensionTrailingNode from '@remirror/extension-trailing-node';
 import * as remirrorExtensionUnderline from '@remirror/extension-underline';
 import * as remirrorExtensionWhitespace from '@remirror/extension-whitespace';
@@ -110,7 +109,6 @@ export const PlaygroundImports = {
   '@remirror/extension-text-case': remirrorExtensionTextCase,
   '@remirror/extension-text-color': remirrorExtensionTextColor,
   '@remirror/extension-text-highlight': remirrorExtensionTextHighlight,
-  '@remirror/extension-text-wrap': remirrorExtensionTextWrap,
   '@remirror/extension-text': remirrorExtensionText,
   '@remirror/extension-trailing-node': remirrorExtensionTrailingNode,
   '@remirror/extension-underline': remirrorExtensionUnderline,

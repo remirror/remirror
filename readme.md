@@ -21,7 +21,7 @@
 
 <p align="center">
   <a href="https://unpkg.com/@remirror/core/dist/core.browser.esm.js">
-    <img src="https://img.shields.io/bundlephobia/minzip/@remirror/core/next" alt="Bundled sized of core library" title="@remirror/core bundle size">
+    <img src="https://img.shields.io/bundlephobia/minzip/@remirror/core/next" alt="Bundled sized of core [getJSON]brary" title="@remirror/core bundle size">
   </a>
   <a href="https://github.com/remirror/remirror/actions?query=workflow:ci">
     <img src="https://github.com/remirror/remirror/workflows/ci/badge.svg?branch=next" alt="Continuous integration badge for automatic releases" title="GitHub Actions CI Badge" />
@@ -51,22 +51,28 @@
 
 In order to meet these goals, [ProseMirror][prosemirror] was picked as the best choice for the core editor layer. The second decision was to base the structure of the editor on blocks of functionality called `Extensions`. Each extension would be designed to fulfil a specific purpose in the editor. Due to this structure, users would be able to craft a fully custom implementation.
 
-In the `next` version of `remirror`, some of these initial goals are starting to be met. Every single part of the editor is controlled by extensions. For example, the core (`Schema`) is managed by a [built-in extension](https://github.com/remirror/remirror/blob/HEAD/packages/remirror__core/src/builtins/schema-extension.ts). This means that the editor you choose to build is completely customizable.
+In the upcoming version of `remirror`, some of these initial goals are starting to be met. Every single part of the editor is controlled by extensions. For example, the core (`Schema`) is managed by a [built-in extension](https://github.com/remirror/remirror/blob/HEAD/packages/remirror__core/src/builtins/schema-extension.ts). This means that the editor you choose to build is completely customizable.
 
-The API has also improved a lot. Multi-framework support is now possible. Currently there is support for `React` and the `DOM` with support being added for `Preact` in the next few weeks and `Svelte` after that.
+The API has also improved a lot. Multi-framework support is being added in the future. Currently the focus is on `React` and the `DOM`.
 
-There are also a host of drop in components and hooks being developed. For example to add a drop down emoji picker to your react editor the following code is all you need.
+There are also a host of drop in components and hooks being developed. To get started with the simplest possible editor the following will suffice.
 
 ```tsx
 import React from 'react';
-import { SocialEmojiComponent, SocialProvider } from '@remirror/react';
+import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions';
+import { Remirror, useRemirror } from '@remirror/react';
+
+const extensions = () => [new BoldExtension(), new ItalicExtension(), new UnderlineExtension()];
 
 const Editor = () => {
-  return (
-    <SocialProvider>
-      <SocialEmojiComponent />
-    </SocialProvider>
-  );
+  const { manager, onChange, state } = useRemirror({
+    extensions,
+    content: '<p>Hi <strong>Friend</strong></p>',
+    stringHandler: 'html',
+    selection: 'end',
+  });
+
+  return <Remirror onChange={onChange} manager={manager} state={state} />;
 };
 ```
 
@@ -78,14 +84,21 @@ There's so much more to come and I'm glad you're taking a look. I hope `remirror
 
 ## Status
 
-This is the `next` version of remirror. It is undergoing heavy development at the moment and documentation is still being rewritten to capture the updated API.
+This is the `beta` branch of the `remirror` which will be fully released in the coming weeks.
 
-While exploring this project, if you find errors or would like to suggest improvements there are several options.
+In the meantime, you can install the beta version via the following command.
+
+```bash
+yarn add remirror@pr706 @remirror/react@pr706 # Yarn
+
+npm install remirror@pr706 @remirror/react@pr706 # npm
+
+pnpm add remirror@pr706 @remirror/react@pr706 # pnpm
+```
 
 - Open an issue in our [github repo](https://github.com/remirror/remirror/issues).
 - [Join our discord server](https://remirror.io/chat) and discuss the problem with our community.
 - Create a pull request with your proposed improvement by clicking the edit button on the relevant page.
-- Move on, because deadlines are looming and life is too short.
 
 Whatever you decide thanks for taking the time to explore the **remirror** project.
 
@@ -141,18 +154,26 @@ Once installed you will be able to add the following code which creates an edito
 ```tsx
 import React, { useCallback } from 'react';
 import { BoldExtension } from 'remirror/extensions';
-import { Remirror, useRemirror, useRemirrorContext } from '@remirror/react';
+import {
+  EditorComponent,
+  Remirror,
+  useActive,
+  useCommands,
+  useHelpers,
+  useKeymap,
+  useRemirror,
+} from '@remirror/react';
 
 const Button = () => {
   // `autoUpdate` means that every editor update will recalculate the output
   // from `active.bold()` and keep the bold status up to date in the editor.
-  const { active, commands } = useRemirrorContext({ autoUpdate: true });
+  const { bold } = useActive();
 
   return (
     <>
       <button
         onClick={() => commands.toggleBold()}
-        style={{ fontWeight: active.bold() ? 'bold' : undefined }}
+        style={{ fontWeight: bold() ? 'bold' : undefined }}
       >
         Bold
       </button>
@@ -160,24 +181,34 @@ const Button = () => {
   );
 };
 
+// Hooks can be added to the context without the need for creating custom components
+const hooks = [
+  () => {
+    const { getJSON } = useHelpers();
+
+    const onSave = useCallback(
+      (props) => {
+        const { state } = props;
+        saveToBackend(getJSON(state));
+
+        return true; // Prevents any further key handlers from being run.
+      },
+      [getJSON],
+    );
+
+    useKeymap('Mod-s', onSave);
+  },
+];
+
 const Editor = () => {
-  // The `getRootProps` adds the ref to the div element below to inject the
-  // ProseMirror dom. You have full control over where it should be placed.
-  // The first call is the one that is used.
-  const { getRootProps } = useRemirror();
-
-  return <div {...getRootProps()} />;
-};
-
-const EditorWrapper = () => {
-  const manager = useManager(() => [new BoldExtension()]);
+  const { manager, state } = useRemirror({ extensions: () => [new BoldExtension()] });
 
   // The editor is built up like lego blocks of functionality within the editor
   // provider.
   return (
-    <Remirror manager={manager}>
-      <Editor />
+    <Remirror manager={manager} initialContent={state} hooks={hooks}>
       <Button />
+      <EditorComponent />
     </Remirror>
   );
 };

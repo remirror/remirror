@@ -95,7 +95,6 @@ export const IMPORT_CACHE_MODULES: Record<string, any> = {
   '@remirror/extension-text-case': PlaygroundImports['@remirror/extension-text-case'],
   '@remirror/extension-text-color': PlaygroundImports['@remirror/extension-text-color'],
   '@remirror/extension-text-highlight': PlaygroundImports['@remirror/extension-text-highlight'],
-  '@remirror/extension-text-wrap': PlaygroundImports['@remirror/extension-text-wrap'],
   '@remirror/extension-trailing-node': PlaygroundImports['@remirror/extension-trailing-node'],
   '@remirror/extension-underline': PlaygroundImports['@remirror/extension-underline'],
   '@remirror/extension-whitespace': PlaygroundImports['@remirror/extension-whitespace'],

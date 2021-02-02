@@ -41,7 +41,7 @@
     "@babel/runtime": "^7.12.5",
     "@emotion/react": "^11.1.4",
     "@emotion/styled": "^11.0.0",
-    "@lingui/core": "^3.4.0",
+    "@lingui/core": "^3.5.0",
     "@remirror/core": "1.0.0-next.60",
     "@remirror/pm": "1.0.0-next.60",
     "@remirror/react": "1.0.0-next.60",
@@ -63,7 +63,7 @@
     "type-fest": "^0.20.2"
   },
   "devDependencies": {
-    "@testing-library/react": "^11.2.3",
+    "@testing-library/react": "^11.2.5",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "react": "^17.0.1",

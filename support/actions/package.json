@@ -49,7 +49,14 @@
     "access": "public"
   },
   "@remirror": {
-    "sizeLimit": "50 KB"
+    "sizeLimit": "50 KB",
+    "tsconfigs": {
+      "./": {
+        "include": [
+          "src"
+        ]
+      }
+    }
   },
   "preconstruct": {
     "entrypoints": [

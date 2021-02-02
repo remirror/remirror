@@ -42,7 +42,7 @@
     "w3c-keyname": "^2.2.4"
   },
   "devDependencies": {
-    "@testing-library/react": "^11.2.3",
+    "@testing-library/react": "^11.2.5",
     "@types/react": "^17.0.0",
     "react": "^17.0.1"
   },

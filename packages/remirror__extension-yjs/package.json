@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "y-webrtc": "^10.1.8",
-    "yjs": "^13.4.12"
+    "yjs": "^13.4.14"
   },
   "peerDependencies": {
     "yjs": "^13.4.0"

@@ -576,14 +576,6 @@
     "gzip": true
   },
   {
-    "name": "@remirror/extension-text-wrap",
-    "limit": "5 KB",
-    "path": "packages/remirror__extension-text-wrap/dist/remirror-extension-text-wrap.browser.esm.js",
-    "ignore": ["@remirror/core", "@remirror/messages", "@remirror/pm"],
-    "running": false,
-    "gzip": true
-  },
-  {
     "name": "@remirror/extension-trailing-node",
     "limit": "5 KB",
     "path": "packages/remirror__extension-trailing-node/dist/remirror-extension-trailing-node.browser.esm.js",
@@ -677,7 +669,24 @@
     "name": "@remirror/preset-formatting",
     "limit": "10 KB",
     "path": "packages/remirror__preset-formatting/dist/remirror-preset-formatting.browser.esm.js",
-    "ignore": ["@remirror/core", "@remirror/pm"],
+    "ignore": [
+      "@remirror/core",
+      "@remirror/extension-bold",
+      "@remirror/extension-columns",
+      "@remirror/extension-font-size",
+      "@remirror/extension-heading",
+      "@remirror/extension-italic",
+      "@remirror/extension-node-formatting",
+      "@remirror/extension-strike",
+      "@remirror/extension-sub",
+      "@remirror/extension-sup",
+      "@remirror/extension-text-case",
+      "@remirror/extension-text-color",
+      "@remirror/extension-text-highlight",
+      "@remirror/extension-underline",
+      "@remirror/extension-whitespace",
+      "@remirror/pm"
+    ],
     "running": false,
     "gzip": true
   },

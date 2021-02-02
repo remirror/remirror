@@ -1,5 +1,5 @@
 {
-  "name": "@remirror/storybook",
+  "name": "storybook-react",
   "version": "0.0.0",
   "private": true,
   "description": "The storybook configuration for the remirror project.",

@@ -800,6 +800,7 @@ async function main() {
 
   const extensions = await populateRemirrorImports({
     pattern: 'remirror__extension-*/package.json',
+    excludedNames: ['@remirror/extension-react-native-bridge'],
   });
 
   const presets = await populateRemirrorImports({

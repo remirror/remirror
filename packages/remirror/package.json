@@ -124,7 +124,6 @@
     "@remirror/extension-text-case": "0.0.0",
     "@remirror/extension-text-color": "0.0.0",
     "@remirror/extension-text-highlight": "0.0.0",
-    "@remirror/extension-text-wrap": "0.0.0",
     "@remirror/extension-trailing-node": "1.0.0-next.60",
     "@remirror/extension-underline": "1.0.0-next.60",
     "@remirror/extension-whitespace": "0.0.0",
@@ -143,10 +142,10 @@
     "codemirror": "^5.59.2",
     "prettier": "^2.2.1",
     "refractor": "^3.3.1",
-    "yjs": "^13.4.12"
+    "yjs": "^13.4.14"
   },
   "peerDependencies": {
-    "@types/codemirror": "^0.0.98",
+    "@types/codemirror": "*",
     "@types/prettier": "^2.1.5",
     "@types/refractor": "^3.0.0",
     "codemirror": "^5.58.2",

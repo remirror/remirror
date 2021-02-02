@@ -1,7 +1,6 @@
 {
   "name": "@remirror/es-module-shims",
   "version": "0.0.0",
-  "private": true,
   "description": "A fork of es-module-shims to support the remirror playground.",
   "keywords": [
     "remirror"

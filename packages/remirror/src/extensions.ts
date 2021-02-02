@@ -43,7 +43,6 @@ export * from '@remirror/extension-text';
 export * from '@remirror/extension-text-case';
 export * from '@remirror/extension-text-color';
 export * from '@remirror/extension-text-highlight';
-export * from '@remirror/extension-text-wrap';
 export * from '@remirror/extension-trailing-node';
 export * from '@remirror/extension-underline';
 export * from '@remirror/extension-whitespace';

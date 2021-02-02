@@ -1,7 +1,6 @@
 {
   "name": "@remirror/icons",
   "version": "0.0.0",
-  "private": true,
   "description": "RemixIcons for use in your remirror editor.",
   "keywords": [
     "remirror"
