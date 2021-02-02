@@ -291,7 +291,7 @@ importers:
       '@types/webpack': 4.41.26
       '@types/worker-plugin': 4.0.0
       babel-loader: 8.2.2_@babel+core@7.12.10
-      monaco-editor-webpack-plugin: 3.0.0
+      monaco-editor-webpack-plugin: 2.1.0
       worker-plugin: 5.0.0
     specifiers:
       '@babel/core': ^7.12.10
@@ -314,7 +314,7 @@ importers:
       babel-loader: ^8.2.2
       clsx: ^1.1.1
       create-context-state: 0.0.0
-      monaco-editor-webpack-plugin: ^3.0.0
+      monaco-editor-webpack-plugin: ^2.1.0
       react: ^17.0.1
       react-dom: ^17.0.1
       react-is: ^17.0.1
@@ -2770,7 +2770,7 @@ importers:
       '@types/worker-plugin': 4.0.0
       core-js: 3.8.3
       docusaurus-plugin-typedoc: 0.9.0_63da3c7c2c53de10c4225f8689710554
-      monaco-editor-webpack-plugin: 3.0.0
+      monaco-editor-webpack-plugin: 2.1.0
       typedoc: 0.20.20
       typedoc-plugin-markdown: 3.4.5_typedoc@0.20.20
       worker-plugin: 5.0.0
@@ -2801,7 +2801,7 @@ importers:
       docusaurus-plugin-typedoc: ^0.9.0
       framer-motion: ^3.2.2-rc.1
       is-absolute-url: ^3.0.3
-      monaco-editor-webpack-plugin: ^3.0.0
+      monaco-editor-webpack-plugin: ^2.1.0
       prism-react-renderer: ^1.1.1
       react: ^17.0.1
       react-dom: ^17.0.1
@@ -21364,15 +21364,15 @@ packages:
     optional: true
     resolution:
       integrity: sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
-  /monaco-editor-webpack-plugin/3.0.0:
+  /monaco-editor-webpack-plugin/2.1.0:
     dependencies:
       loader-utils: 2.0.0
     dev: true
     peerDependencies:
-      monaco-editor: 0.22.x
+      monaco-editor: 0.21.x
       webpack: ^4.5.0 || 5.x
     resolution:
-      integrity: sha512-oPuYInTZIT5ctj8gjx7VEzxZFjcIBJXazVOaF6wJ/TPCldF0Lb/58jEeKTERXr4nr1Yobgx2tVfKcfkncAlAHg==
+      integrity: sha512-DG7Dpo/ItWEOl/BG2egc/UIiHoCbHjq0EOF0E6eJQT+6QNZBOfSVU4GxaXG+kQJXB8rauxli96Xp1ITnNLZtSw==
   /move-concurrently/1.0.1:
     dependencies:
       aproba: 1.2.0

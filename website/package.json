@@ -49,7 +49,7 @@
     "@types/worker-plugin": "^4.0.0",
     "core-js": "^3.8.2",
     "docusaurus-plugin-typedoc": "^0.9.0",
-    "monaco-editor-webpack-plugin": "^3.0.0",
+    "monaco-editor-webpack-plugin": "^2.1.0",
     "typedoc": "^0.20.20",
     "typedoc-plugin-markdown": "^3.4.5",
     "worker-plugin": "^5.0.0"
