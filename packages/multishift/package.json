@@ -37,7 +37,7 @@
     "@seznam/compose-react-refs": "^1.0.5",
     "a11y-status": "1.0.0-next.60",
     "compute-scroll-into-view": "^1.0.14",
-    "react-use": "^17.0.1",
+    "react-use": "^17.1.0",
     "tiny-warning": "^1.0.3",
     "w3c-keyname": "^2.2.4"
   },
