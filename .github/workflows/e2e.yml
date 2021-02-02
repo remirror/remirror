@@ -42,7 +42,7 @@ jobs:
           node-version: 14
 
       - name: install and audit
-        uses: ./.github/actions/pnpm
+        uses: ./support/actions/pnpm
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
