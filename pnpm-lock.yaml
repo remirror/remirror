@@ -2735,7 +2735,9 @@ importers:
       '@actions/github': 4.0.0
       '@babel/runtime': 7.12.5
       '@remirror/core-helpers': link:../../packages/remirror__core-helpers
+      '@types/fs-extra': 9.0.6
       '@types/giphy-api': 2.0.2
+      fs-extra: 9.1.0
       giphy-api: 2.0.1
     specifiers:
       '@actions/core': ^1.2.6
@@ -2743,7 +2745,9 @@ importers:
       '@actions/github': ^4.0.0
       '@babel/runtime': ^7.12.5
       '@remirror/core-helpers': ^1.0.0-next.60
+      '@types/fs-extra': ^9.0.6
       '@types/giphy-api': ^2.0.2
+      fs-extra: ^9.1.0
       giphy-api: ^2.0.1
   support/templates/extension-template:
     dependencies:
@@ -8799,6 +8803,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-TcUlBem321DFQzBNuz8p0CLLKp0VvF/XH9E4KHNmgwyp4E3AfgI5cjiIVZWlbfThBop2qxFIh4+LeY6hVWWZ2w==
+  /@types/fs-extra/9.0.6:
+    dependencies:
+      '@types/node': 14.14.22
+    dev: false
+    resolution:
+      integrity: sha512-ecNRHw4clCkowNOBJH1e77nvbPxHYnWIXMv1IAoG/9+MYGkgoyr3Ppxr7XYFNL41V422EDhyV4/4SSK8L2mlig==
   /@types/giphy-api/2.0.2:
     dev: false
     resolution:
@@ -19682,6 +19692,7 @@ packages:
     resolution:
       integrity: sha512-hk/69oAeaIzchq/v3lS50PXuzn5O2ynldopMC+SWBql7J2WtdptfB9dy8Y7+Og5rPkTCpn83zTiO8FMcqlXJ/g==
   /jsondiffpatch/0.4.1:
+    bundledDependencies: []
     dependencies:
       chalk: 2.4.2
       diff-match-patch: 1.0.5

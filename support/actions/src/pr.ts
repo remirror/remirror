@@ -7,7 +7,7 @@
 import { getInput, setFailed } from '@actions/core';
 import { exec, ExecOptions } from '@actions/exec';
 import { context, getOctokit } from '@actions/github';
-import { stat, writeFile } from 'fs/promises';
+import { stat, writeFile } from 'fs-extra';
 import giphyApi, { Giphy } from 'giphy-api';
 
 const githubToken = process.env.GITHUB_TOKEN;
