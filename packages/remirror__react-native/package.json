@@ -53,7 +53,6 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-native": "^0.63.46",
-    "bundler.macro": "0.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-native": "^0.63.4",

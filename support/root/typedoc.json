@@ -1,7 +1,6 @@
 {
   "entryFiles": [
     "packages/a11y-status/src/index.ts",
-    "packages/bundler.macro/src/index.ts",
     "packages/create-context-state/src/index.ts",
     "packages/jest-prosemirror/src/index.ts",
     "packages/jest-remirror/src/index.ts",
