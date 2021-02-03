@@ -35,7 +35,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.5",
+    "@babel/runtime": "^7.12.13",
     "@lepont/async-storage": "^0.4.2",
     "@lepont/platform": "^0.1.4",
     "@remirror/core": "1.0.0-next.60",
@@ -52,7 +52,7 @@
     "type-fest": "^0.20.2"
   },
   "devDependencies": {
-    "@types/react": "^17.0.0",
+    "@types/react": "^17.0.1",
     "@types/react-native": "^0.63.46",
     "react": "^17.0.1",
     "react-native": "^0.63.4",

@@ -37,13 +37,13 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.5",
+    "@babel/runtime": "^7.12.13",
     "@remirror/core-constants": "1.0.0-next.60",
     "@remirror/core-helpers": "1.0.0-next.60",
     "@remirror/core-types": "1.0.0-next.60"
   },
   "devDependencies": {
-    "@types/react": "^17.0.0",
+    "@types/react": "^17.0.1",
     "react": "^17.0.1"
   },
   "peerDependencies": {

@@ -30,7 +30,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.5",
+    "@babel/runtime": "^7.12.13",
     "@types/throttle-debounce": "^2.1.0",
     "throttle-debounce": "^3.0.1"
   },

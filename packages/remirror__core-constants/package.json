@@ -31,7 +31,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.5",
+    "@babel/runtime": "^7.12.13",
     "@linaria/core": "^3.0.0-beta.1"
   },
   "publishConfig": {
