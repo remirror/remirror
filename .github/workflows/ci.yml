@@ -179,35 +179,35 @@ jobs:
         run: pnpm test:build
 
   # Check that package sizes are within their boundaries
-  size_check:
-    timeout-minutes: 8
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout code repository
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+  # size_check:
+  #   timeout-minutes: 8
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: checkout code repository
+  #       uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: 0
 
-      - name: setup caching
-        uses: actions/cache@v2
-        with:
-          path: ${{ env.PNPM_CACHE_FOLDER }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
+  #     - name: setup caching
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ${{ env.PNPM_CACHE_FOLDER }}
+  #         key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-pnpm-
 
-      - name: setup node.js
-        uses: actions/setup-node@v2-beta
-        with:
-          node-version: 14
+  #     - name: setup node.js
+  #       uses: actions/setup-node@v2-beta
+  #       with:
+  #         node-version: 14
 
-      - name: install and audit
-        uses: ./support/actions/pnpm
-        with:
-          cache: ${{ env.PNPM_CACHE_FOLDER }}
+  #     - name: install and audit
+  #       uses: ./support/actions/pnpm
+  #       with:
+  #         cache: ${{ env.PNPM_CACHE_FOLDER }}
 
-      - name: build project
-        run: pnpm build
+  #     - name: build project
+  #       run: pnpm build
 
-      - name: check sizes
-        run: pnpm size
+  #     - name: check sizes
+  #       run: pnpm size
