@@ -5,8 +5,8 @@
  * is to provide all the scoped remirror packages to the playground without
  * needing to import them all within the `@remirror/playground`.
  *
- * Currently this is generated manually but it should be automated at some
- * point.
+ * DO NOT EDIT: AUTO-GENERATED FILE
+ * @see `support/scripts/src/generate-playground.ts`
  */
 
 import * as remirrorCore from '@remirror/core';
@@ -63,20 +63,27 @@ import * as remirrorExtensionTrailingNode from '@remirror/extension-trailing-nod
 import * as remirrorExtensionUnderline from '@remirror/extension-underline';
 import * as remirrorExtensionWhitespace from '@remirror/extension-whitespace';
 import * as remirrorExtensionYjs from '@remirror/extension-yjs';
+import * as remirrorIcons from '@remirror/icons';
 import * as remirrorPresetCore from '@remirror/preset-core';
 import * as remirrorPresetFormatting from '@remirror/preset-formatting';
 import * as remirrorPresetWysiwyg from '@remirror/preset-wysiwyg';
 import * as remirrorTheme from '@remirror/theme';
 
 export const PlaygroundImports = {
-  // Extensions
+  '@remirror/core': remirrorCore,
+  '@remirror/core-constants': remirrorCoreConstants,
+  '@remirror/core-helpers': remirrorCoreHelpers,
+  '@remirror/core-types': remirrorCoreTypes,
+  '@remirror/core-utils': remirrorCoreUtils,
+  '@remirror/dom': remirrorDom,
   '@remirror/extension-annotation': remirrorExtensionAnnotation,
   '@remirror/extension-bidi': remirrorExtensionBidi,
   '@remirror/extension-blockquote': remirrorExtensionBlockquote,
   '@remirror/extension-bold': remirrorExtensionBold,
   '@remirror/extension-callout': remirrorExtensionCallout,
-  '@remirror/extension-code-block': remirrorExtensionCodeBlock,
   '@remirror/extension-code': remirrorExtensionCode,
+  '@remirror/extension-code-block': remirrorExtensionCodeBlock,
+  '@remirror/extension-codemirror5': remirrorExtensionCodemirror5,
   '@remirror/extension-collaboration': remirrorExtensionCollaboration,
   '@remirror/extension-columns': remirrorExtensionColumns,
   '@remirror/extension-diff': remirrorExtensionDiff,
@@ -98,40 +105,28 @@ export const PlaygroundImports = {
   '@remirror/extension-link': remirrorExtensionLink,
   '@remirror/extension-list': remirrorExtensionList,
   '@remirror/extension-markdown': remirrorExtensionMarkdown,
-  '@remirror/extension-mention-atom': remirrorExtensionMentionAtom,
   '@remirror/extension-mention': remirrorExtensionMention,
+  '@remirror/extension-mention-atom': remirrorExtensionMentionAtom,
+  '@remirror/extension-node-formatting': remirrorExtensionNodeFormatting,
   '@remirror/extension-paragraph': remirrorExtensionParagraph,
   '@remirror/extension-placeholder': remirrorExtensionPlaceholder,
   '@remirror/extension-positioner': remirrorExtensionPositioner,
   '@remirror/extension-search': remirrorExtensionSearch,
   '@remirror/extension-strike': remirrorExtensionStrike,
+  '@remirror/extension-sub': remirrorExtensionSub,
+  '@remirror/extension-sup': remirrorExtensionSup,
   '@remirror/extension-tables': remirrorExtensionTables,
+  '@remirror/extension-text': remirrorExtensionText,
   '@remirror/extension-text-case': remirrorExtensionTextCase,
   '@remirror/extension-text-color': remirrorExtensionTextColor,
   '@remirror/extension-text-highlight': remirrorExtensionTextHighlight,
-  '@remirror/extension-text': remirrorExtensionText,
   '@remirror/extension-trailing-node': remirrorExtensionTrailingNode,
   '@remirror/extension-underline': remirrorExtensionUnderline,
   '@remirror/extension-whitespace': remirrorExtensionWhitespace,
   '@remirror/extension-yjs': remirrorExtensionYjs,
-  '@remirror/extension-codemirror5': remirrorExtensionCodemirror5,
-  '@remirror/extension-node-formatting': remirrorExtensionNodeFormatting,
-  '@remirror/extension-sub': remirrorExtensionSub,
-  '@remirror/extension-sup': remirrorExtensionSup,
-
-  // Presets
+  '@remirror/icons': remirrorIcons,
   '@remirror/preset-core': remirrorPresetCore,
   '@remirror/preset-formatting': remirrorPresetFormatting,
   '@remirror/preset-wysiwyg': remirrorPresetWysiwyg,
-
-  // Core
-  '@remirror/core-constants': remirrorCoreConstants,
-  '@remirror/core-helpers': remirrorCoreHelpers,
-  '@remirror/core-types': remirrorCoreTypes,
-  '@remirror/core-utils': remirrorCoreUtils,
-  '@remirror/core': remirrorCore,
   '@remirror/theme': remirrorTheme,
-
-  // DOM
-  '@remirror/dom': remirrorDom,
 } as const;

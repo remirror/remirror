@@ -24,13 +24,6 @@
       "browser": "./playground/dist/remirror-react.browser.esm.js",
       "default": "./playground/dist/remirror-react-playground.esm.js"
     },
-    "./renderers": {
-      "import": "./renderers/dist/remirror-react-renderers.esm.js",
-      "require": "./renderers/dist/remirror-react-renderers.cjs.js",
-      "browser": "./renderers/dist/remirror-react.browser.esm.js",
-      "types": "./renderers/dist/remirror-react-renderers.cjs.d.ts",
-      "default": "./renderers/dist/remirror-react-renderers.esm.js"
-    },
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
   "main": "dist/remirror-react.cjs.js",

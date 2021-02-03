@@ -34,12 +34,17 @@ jobs:
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
-      - name: publish
+      - name: build project
+        run: pnpm build
+
+      - name: mutate package.json files
         uses: ./support/actions/pr
+        id: mutate
         with:
           giphyKey: ${{ secrets.GIPHY_API_KEY }}
-          build: pnpm build
-          version: pnpm pr
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: publish pr
+        run: 'pnpm publish -r --tag ${{ steps.mutate.outputs.tag }}'

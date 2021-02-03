@@ -1,0 +1,3 @@
+{
+  "main": "dist/scripts-api-extractor.worker.cjs.js"
+}

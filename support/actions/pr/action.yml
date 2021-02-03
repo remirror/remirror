@@ -1,5 +1,5 @@
-name: 'publish-prs'
-description: 'Publish a pull request by adding \"/publish\" as a comment'
+name: 'mutate pr'
+description: 'Prepare a PR to be published by updating all packages'
 branding:
   icon: 'git-pull-request'
   color: 'green'
@@ -7,12 +7,9 @@ inputs:
   giphyKey:
     required: false
     description: 'api key for giphy comments'
-  version:
-    required: false
-    description: 'command to run which updates the versions of all packages'
-  build:
-    required: true
-    description: 'the command to build all packages after versioning is completed'
+outputs:
+  tag:
+    description: The tag that will be created when releasing the PR.
 runs:
   using: 'node12'
   main: 'dist/actions-pr.cjs.js'

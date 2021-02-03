@@ -4,5 +4,6 @@ packages:
   - 'packages/*'
   - 'support'
   - 'support/actions'
+  - 'support/scripts'
   - 'support/templates/*'
   - 'website'

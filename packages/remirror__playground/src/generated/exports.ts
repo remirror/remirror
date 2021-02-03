@@ -2,7 +2,7 @@
  * @module
  *
  * DO NOT EDIT: AUTO-GENERATED FILE
- * @see `support/scripts/playground.ts`
+ * @see `support/scripts/src/playground.ts`
  */
 
 import { loadJson } from 'json.macro';

@@ -2602,17 +2602,47 @@ importers:
       signal-exit: ^3.0.3
       test-keyboard: 1.0.0-next.60
   support:
+    specifiers: {}
+  support/actions:
     dependencies:
+      '@actions/core': 1.2.6
+      '@actions/exec': 1.0.4
+      '@actions/github': 4.0.0
+      '@babel/runtime': 7.12.13
+      '@remirror/core-helpers': link:../../packages/remirror__core-helpers
+      '@types/fs-extra': 9.0.6
+      '@types/giphy-api': 2.0.2
+      fs-extra: 9.1.0
+      giphy-api: 2.0.1
+      scripts: link:../scripts
+    specifiers:
+      '@actions/core': ^1.2.6
+      '@actions/exec': ^1.0.4
+      '@actions/github': ^4.0.0
+      '@babel/runtime': ^7.12.13
+      '@remirror/core-helpers': ^1.0.0-next.60
+      '@types/fs-extra': ^9.0.6
+      '@types/giphy-api': ^2.0.2
+      fs-extra: ^9.1.0
+      giphy-api: ^2.0.1
+      scripts: 0.0.0
+  support/scripts:
+    dependencies:
+      '@babel/runtime': 7.12.13
       '@changesets/get-dependents-graph': 1.2.0
       '@changesets/pre': 1.0.5
       '@changesets/read': 0.4.6
       '@changesets/types': 3.3.0
+      '@linaria/babel-preset': 3.0.0-beta.1
       '@lingui/core': 3.5.0
       '@manypkg/get-packages': 1.1.1
       '@microsoft/api-extractor': 7.13.0
-      '@remirror/react': link:../packages/remirror__react
+      '@remirror/core-helpers': link:../../packages/remirror__core-helpers
+      '@remirror/icons': link:../../packages/remirror__icons
+      '@remirror/playground': link:../../packages/remirror__playground
       '@types/autoprefixer': 9.7.2
       '@types/cheerio': 0.22.23
+      '@types/exit': 0.1.31
       '@types/fontkit': 1.8.0
       '@types/keyv': 3.1.1
       '@types/lodash.groupby': 4.6.6
@@ -2634,6 +2664,7 @@ importers:
       diffable-html: 4.0.0
       emojibase: 5.1.0
       emojibase-data: 6.1.1_emojibase@5.1.0
+      exit: 0.1.2
       fontkit: 1.8.1
       globby: 11.0.2
       got: 11.8.1
@@ -2643,6 +2674,7 @@ importers:
       jest-worker: 26.6.2
       keyv: 4.0.3
       keyv-file: 0.2.0
+      load-json-file: 6.2.0
       localstorage-polyfill: 1.0.1
       lodash.groupby: 4.6.0
       lodash.isequal: 4.5.0
@@ -2653,7 +2685,9 @@ importers:
       postcss-import: 12.0.1
       postcss-loader: 3.0.0
       postcss-nested: 4.2.3
+      prettier: 2.2.1
       remixicon: 2.5.0
+      rimraf: 3.0.2
       semver: 7.3.4
       sort-keys: 4.2.0
       svg-sprite: 1.5.0
@@ -2666,16 +2700,21 @@ importers:
       typedoc-plugin-markdown: 3.4.5_typedoc@0.20.20
       write-json-file: 4.3.0
     specifiers:
+      '@babel/runtime': ^7.12.13
       '@changesets/get-dependents-graph': ^1.2.0
       '@changesets/pre': ^1.0.5
       '@changesets/read': ^0.4.6
       '@changesets/types': ^3.3.0
+      '@linaria/babel-preset': ^3.0.0-beta.1
       '@lingui/core': ^3.5.0
       '@manypkg/get-packages': ^1.1.1
       '@microsoft/api-extractor': ^7.13.0
-      '@remirror/react': 1.0.0-next.60
+      '@remirror/core-helpers': ^1.0.0-next.60
+      '@remirror/icons': 0.0.0
+      '@remirror/playground': 1.0.0-next.60
       '@types/autoprefixer': ^9.7.2
       '@types/cheerio': ^0.22.23
+      '@types/exit': ^0.1.31
       '@types/fontkit': ^1.8.0
       '@types/keyv': ^3.1.1
       '@types/lodash.groupby': ^4.6.6
@@ -2697,6 +2736,7 @@ importers:
       diffable-html: ^4.0.0
       emojibase: ^5.1.0
       emojibase-data: ^6.1.0
+      exit: ^0.1.2
       fontkit: ^1.8.1
       globby: ^11.0.2
       got: ^11.8.1
@@ -2706,6 +2746,7 @@ importers:
       jest-worker: ^26.6.2
       keyv: ^4.0.3
       keyv-file: ^0.2.0
+      load-json-file: ^6.2.0
       localstorage-polyfill: ^1.0.1
       lodash.groupby: ^4.6.0
       lodash.isequal: ^4.5.0
@@ -2716,7 +2757,9 @@ importers:
       postcss-import: ^12.0.1
       postcss-loader: ^3.0.0
       postcss-nested: ^4.2.3
+      prettier: ^2.2.1
       remixicon: ^2.5.0
+      rimraf: ^3.0.2
       semver: ^7.3.4
       sort-keys: ^4.2.0
       svg-sprite: ^1.5.0
@@ -2728,27 +2771,6 @@ importers:
       typedoc-plugin-external-module-name: ^4.0.6
       typedoc-plugin-markdown: ^3.4.5
       write-json-file: ^4.3.0
-  support/actions:
-    dependencies:
-      '@actions/core': 1.2.6
-      '@actions/exec': 1.0.4
-      '@actions/github': 4.0.0
-      '@babel/runtime': 7.12.13
-      '@remirror/core-helpers': link:../../packages/remirror__core-helpers
-      '@types/fs-extra': 9.0.6
-      '@types/giphy-api': 2.0.2
-      fs-extra: 9.1.0
-      giphy-api: 2.0.1
-    specifiers:
-      '@actions/core': ^1.2.6
-      '@actions/exec': ^1.0.4
-      '@actions/github': ^4.0.0
-      '@babel/runtime': ^7.12.13
-      '@remirror/core-helpers': ^1.0.0-next.60
-      '@types/fs-extra': ^9.0.6
-      '@types/giphy-api': ^2.0.2
-      fs-extra: ^9.1.0
-      giphy-api: ^2.0.1
   support/templates/extension-template:
     dependencies:
       '@babel/runtime': 7.12.13
@@ -3078,6 +3100,9 @@ packages:
     bundledDependencies:
       - jsonschema
       - semver
+    dependencies:
+      jsonschema: 1.4.0
+      semver: 7.3.4
     dev: false
     engines:
       node: '>= 10.13.0 <13 || >=13.7.0'
@@ -3101,6 +3126,7 @@ packages:
       - semver
     dependencies:
       '@aws-cdk/cloud-assembly-schema': 1.87.1
+      semver: 7.3.4
     dev: false
     engines:
       node: '>= 10.13.0 <13 || >=13.7.0'
@@ -3115,6 +3141,8 @@ packages:
   /@aws-cdk/yaml-cfn/1.87.1:
     bundledDependencies:
       - yaml
+    dependencies:
+      yaml: 1.10.0
     dev: false
     engines:
       node: '>= 10.13.0 <13 || >=13.7.0'
@@ -3628,7 +3656,6 @@ packages:
   /@babel/plugin-syntax-dynamic-import/7.8.3:
     dependencies:
       '@babel/helper-plugin-utils': 7.12.13
-    dev: true
     peerDependencies:
       '@babel/core': ^7.0.0-0
     resolution:
@@ -6663,6 +6690,21 @@ packages:
     dev: false
     resolution:
       integrity: sha512-DUPPWXpKaekj3exvtP4E7Ld8zMPg4EU6199dpNsXr7UdlcqU9tajuiS0Gjl8iI8CAQ94d2f/3HcFcFbmWg+Qsw==
+  /@linaria/babel-preset/3.0.0-beta.1:
+    dependencies:
+      '@babel/generator': 7.12.13
+      '@babel/plugin-syntax-dynamic-import': 7.8.3
+      '@babel/template': 7.12.13
+      '@linaria/core': 3.0.0-beta.1
+      '@linaria/logger': 3.0.0-beta.0
+      cosmiconfig: 5.2.1
+      source-map: 0.6.1
+      stylis: 3.5.4
+    dev: false
+    peerDependencies:
+      '@babel/core': '>=7'
+    resolution:
+      integrity: sha512-5ge7RFljNnz2c8EduwAukz+rEQauoDelHqyo5C8TwxhvqFFfx9XOX1ocV3cKx4sCIdoCN7hPkb3JH/DRtzGUrQ==
   /@linaria/babel-preset/3.0.0-beta.1_@babel+core@7.12.13:
     dependencies:
       '@babel/core': 7.12.13
@@ -8767,6 +8809,12 @@ packages:
   /@types/estree/0.0.46:
     resolution:
       integrity: sha512-laIjwTQaD+5DukBZaygQ79K1Z0jb1bPEMRrkXSLjtCcZm+abyp5YbrqpSLzD42FwWW6gK/aS4NYpJ804nG2brg==
+  /@types/exit/0.1.31:
+    dependencies:
+      '@types/node': 14.14.22
+    dev: false
+    resolution:
+      integrity: sha512-ghT0E6Bw64RXc6lM30ExMNlYbUCsyR8oucl/q+ESGGhNOXOmBPpZHYGXCH2T/yTFq9YtudNCnZEQ4puX6aq87A==
   /@types/expect/1.20.4:
     dev: false
     resolution:
@@ -14079,7 +14127,7 @@ packages:
     dependencies:
       domelementtype: 2.1.0
       domhandler: 4.0.0
-      entities: 2.1.0
+      entities: 2.2.0
     dev: false
     resolution:
       integrity: sha512-n6kZFH/KlCrqs/1GHMOd5i2fd/beQHuehKdWvNNffbGHTr/almdhuVvTVFb3V7fglz+nC50fFusu3lY33h12pA==
@@ -19689,6 +19737,7 @@ packages:
     resolution:
       integrity: sha512-hk/69oAeaIzchq/v3lS50PXuzn5O2ynldopMC+SWBql7J2WtdptfB9dy8Y7+Og5rPkTCpn83zTiO8FMcqlXJ/g==
   /jsondiffpatch/0.4.1:
+    bundledDependencies: []
     dependencies:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
@@ -19718,6 +19767,10 @@ packages:
   /jsonify/0.0.0:
     resolution:
       integrity: sha1-LHS27kHZPKUbe1qu6PUDYx0lKnM=
+  /jsonschema/1.4.0:
+    dev: false
+    resolution:
+      integrity: sha512-/YgW6pRMr6M7C+4o8kS+B/2myEpHCrxO4PEWnqJNBFMjn7EWXqlQ4tGwL6xTHeRplwuZmcAncdvfOad1nT2yMw==
   /jsonwebtoken/8.5.1:
     dependencies:
       jws: 3.2.2
@@ -20086,6 +20139,17 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-L19Fq5HjMhYjT9U62rZo607AmTs=
+  /load-json-file/6.2.0:
+    dependencies:
+      graceful-fs: 4.2.4
+      parse-json: 5.2.0
+      strip-bom: 4.0.0
+      type-fest: 0.19.0
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-gUD/epcRms75Cw8RT1pUdHugZYM5ce64ucs2GEISABwkRsOQr0q2wm/MV2TKThycIe5e0ytRweW2RZxclogCdQ==
   /load-yaml-file/0.2.0:
     dependencies:
       graceful-fs: 4.2.4

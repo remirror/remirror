@@ -540,6 +540,9 @@
       "path": "support/actions/src"
     },
     {
+      "path": "support/scripts/src"
+    },
+    {
       "path": "support/templates/extension-template/__tests__"
     },
     {

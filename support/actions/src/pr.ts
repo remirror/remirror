@@ -4,11 +4,11 @@
  * A github action which is responsible for releasing the current PR.
  */
 
-import { getInput, setFailed } from '@actions/core';
-import { exec, ExecOptions } from '@actions/exec';
+import { getInput, setFailed, setOutput } from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import { stat, writeFile } from 'fs-extra';
 import giphyApi, { Giphy } from 'giphy-api';
+import { mutatePackageVersions } from 'scripts';
 
 async function run() {
   const githubToken = process.env.GITHUB_TOKEN;
@@ -19,8 +19,6 @@ async function run() {
   }
 
   const octokit = getOctokit(githubToken);
-  const versionCommand = getInput('version');
-  const buildCommand = getInput('build', { required: true });
   const giphyKey = getInput('giphyKey');
   const prNumber = context.payload.issue?.number as number;
   const owner = context.payload.repository?.full_name?.split('/')[0] as string;
@@ -62,24 +60,10 @@ async function run() {
   }
 
   try {
-    const [versionCommandName, ...versionCommandArgs] = versionCommand.split(/\s+/);
-    const [buildCommandName, ...buildCommandArgs] = buildCommand.split(/\s+/);
-
-    if (versionCommandName) {
-      await exec(versionCommandName, versionCommandArgs, {
-        ...execOptions,
-        env: {
-          CI_PRERELEASE: prerelease,
-        },
-      });
-    }
-
-    if (buildCommandName) {
-      await exec(buildCommandName, buildCommandArgs, execOptions);
-    }
-
+    await mutatePackageVersions(prerelease);
     await createNpmrc();
-    await exec('pnpm', ['publish', '-r', '--tag', tag], execOptions);
+
+    setOutput('tag', tag);
 
     const gif = await getMarkdownGif(giphy, 'whoop whoop');
     await octokit.issues.createComment({
@@ -100,12 +84,13 @@ async function run() {
       repo,
       issue_number: prNumber,
       body: gifComment(
-        `:exclamation: i tried the rebase and failed...`,
+        `:exclamation: publish failed...`,
         gif,
-        `${error}:\n${execLogs}`,
+        `${error}:\n${'Error while mutating package versions.'}`,
       ),
     });
-    setFailed(execLogs);
+
+    setFailed('Error while mutating package versions.');
   }
 }
 
@@ -116,7 +101,7 @@ run();
  */
 async function getMarkdownGif(giphy: Giphy, phrase: string) {
   const gif = await giphy.random(phrase);
-  return `![${phrase}](${gif.data.images.fixed_height_small})`;
+  return `![${phrase}](${gif.data.images.fixed_height_small.url})`;
 }
 
 /**
@@ -154,15 +139,3 @@ async function createGitHubLogin(githubToken: string) {
     `machine github.com\nlogin github-actions[bot]\npassword ${githubToken}`,
   );
 }
-
-let execLogs = '';
-const execOptions: ExecOptions = {
-  listeners: {
-    stdout: (data) => {
-      execLogs += data.toString();
-    },
-    stderr: (data) => {
-      execLogs += data.toString();
-    },
-  },
-};

@@ -45,7 +45,8 @@
     "@types/fs-extra": "^9.0.6",
     "@types/giphy-api": "^2.0.2",
     "fs-extra": "^9.1.0",
-    "giphy-api": "^2.0.1"
+    "giphy-api": "^2.0.1",
+    "scripts": "0.0.0"
   },
   "publishConfig": {
     "access": "public"

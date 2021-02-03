@@ -1,9 +1,11 @@
 /**
  * @module
  *
- * DO NOT EDIT: AUTO-GENERATED FILE
- *
  * Provides the module meta data for internal modules.
+ *
+ * DO NOT EDIT: AUTO-GENERATED FILE
+ * @see `support/scripts/src/playground.ts`
+ *
  */
 
 import { loadJson } from 'json.macro';
