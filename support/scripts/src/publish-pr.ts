@@ -6,11 +6,11 @@
 import { log } from './helpers';
 import { mutatePackageVersions } from './mutatate-packages';
 
-const { TAG } = process.env;
+const { PRERELEASE } = process.env;
 
-if (!TAG) {
-  log.error('No `TAG` environment variable provided.');
+if (!PRERELEASE) {
+  log.error('No `PRERELEASE` environment variable provided.');
   process.exit(1);
 }
 
-mutatePackageVersions(TAG);
+mutatePackageVersions(PRERELEASE);

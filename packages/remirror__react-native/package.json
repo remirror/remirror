@@ -74,5 +74,8 @@
       "optional": true
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "rn:dev": "src/index.ts"
 }

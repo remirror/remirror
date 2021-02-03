@@ -71,7 +71,7 @@
     "lint:md": "eslint -f codeframe  --ignore-pattern='*.js' --ignore-pattern='*.ts' --ignore-pattern='*.tsx' .",
     "lint:prettier": "pnpm run:prettier -- --check",
     "lint:repo": "manypkg check",
-    "mutate:pr": "node supports/scripts/publish-pr",
+    "mutate:pr": "node support/scripts/publish-pr",
     "refresh": "pnpm clean:all; pnpm symlink:root; pnpm install;",
     "prerelease": "pnpm if-not-ci run-s checks:release",
     "release": "pnpm if-publishable run-s release",
