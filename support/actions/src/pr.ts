@@ -66,7 +66,12 @@ async function run() {
     const [buildCommandName, ...buildCommandArgs] = buildCommand.split(/\s+/);
 
     if (versionCommandName) {
-      await exec(versionCommandName, versionCommandArgs, execOptions);
+      await exec(versionCommandName, versionCommandArgs, {
+        ...execOptions,
+        env: {
+          CI_PRERELEASE: prerelease,
+        },
+      });
     }
 
     if (buildCommandName) {

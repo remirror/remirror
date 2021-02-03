@@ -17,7 +17,7 @@ import writeJSON from 'write-json-file';
 
 import { baseDir, getAllDependencies, log } from './helpers';
 
-const prerelease = process.env.PRERELEASE_VALUE;
+const prerelease = process.env.CI_PRERELEASE;
 
 log.debug('\nUpdate all packages for prerelease:', prerelease);
 
