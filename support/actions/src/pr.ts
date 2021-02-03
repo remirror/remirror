@@ -10,31 +10,28 @@ import { context, getOctokit } from '@actions/github';
 import { stat, writeFile } from 'fs-extra';
 import giphyApi, { Giphy } from 'giphy-api';
 
-const githubToken = process.env.GITHUB_TOKEN;
-
-if (!githubToken) {
-  setFailed('Please add the GITHUB_TOKEN to the pr release action');
-  process.exit(1);
-}
-
-const octokit = getOctokit(githubToken);
-const versionCommand = getInput('version');
-const buildCommand = getInput('build', { required: true });
-const giphyKey = getInput('giphyKey');
-const prNumber = context.payload.pull_request?.number as number;
-const owner = context.payload.repository?.full_name?.split('/')[0] as string;
-const repo = context.payload.repository?.name as string;
-
-if (!owner || !repo || !prNumber) {
-  setFailed('Missing information from the pull request');
-  process.exit(1);
-}
-
-const sha = context.sha.slice(0, 9);
-const tag = `pr${prNumber}`;
-const prerelease = `${tag}.${sha}`;
-
 async function run() {
+  const githubToken = process.env.GITHUB_TOKEN;
+
+  if (!githubToken) {
+    setFailed('Please add the GITHUB_TOKEN to the pr release action');
+    process.exit(1);
+  }
+
+  const octokit = getOctokit(githubToken);
+  const versionCommand = getInput('version');
+  const buildCommand = getInput('build', { required: true });
+  const giphyKey = getInput('giphyKey');
+  const prNumber = context.payload.issue?.number as number;
+  const owner = context.payload.repository?.full_name?.split('/')[0] as string;
+  const repo = context.payload.repository?.name as string;
+
+  console.log({ owner, repo, prNumber, payload: JSON.stringify(context.payload) });
+
+  const sha = context.sha.slice(0, 9);
+  const tag = `pr${prNumber}`;
+  const prerelease = `${tag}.${sha}`;
+
   process.env.CI_PRERELEASE = prerelease;
   const giphy = giphyApi(giphyKey);
 
@@ -42,7 +39,7 @@ async function run() {
     setFailed(`this is not a pr comment: ${JSON.stringify(context.payload)}`);
   }
 
-  await createGitHubLogin();
+  await createGitHubLogin(githubToken);
 
   const pr = await octokit.pulls.get({ owner, pull_number: prNumber, repo });
 
@@ -145,7 +142,7 @@ async function createNpmrc() {
   }
 }
 
-async function createGitHubLogin() {
+async function createGitHubLogin(githubToken: string) {
   // Create the github login credentials.
   await writeFile(
     `${process.env.HOME}/.netrc`,
