@@ -5,7 +5,7 @@
  */
 
 import chalk from 'chalk';
-import { readdir } from 'fs/promises';
+import { readdir } from 'fs-extra';
 import globby from 'globby';
 import os from 'os';
 import pLimit from 'p-limit';

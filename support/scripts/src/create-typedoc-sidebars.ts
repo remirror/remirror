@@ -4,7 +4,7 @@
  * This script creates the API sidebars with `typedoc` on the documentation site.
  */
 
-import fs from 'fs/promises';
+import fs from 'fs-extra';
 
 import { baseDir } from './helpers';
 

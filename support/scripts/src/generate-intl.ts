@@ -1,5 +1,5 @@
 import type { Messages } from '@lingui/core';
-import fs from 'fs/promises';
+import fs from 'fs-extra';
 import loadJson from 'load-json-file';
 import path from 'path';
 import { camelCase, pascalCase } from '@remirror/core-helpers';

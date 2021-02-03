@@ -62,7 +62,7 @@
     "jest-diff": "^26.6.2",
     "jest-playwright-preset": "^1.4.5",
     "jest-process-manager": "^0.2.9",
-    "looks-same": "^7.2.3",
+    "looks-same": "^7.3.0",
     "min-document": "^2.19.0",
     "p-limit": "^3.1.0",
     "playwright": "^1.8.0",

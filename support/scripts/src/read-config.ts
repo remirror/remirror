@@ -1,4 +1,4 @@
-import { lstat, readFile } from 'fs/promises';
+import { lstat, readFile } from 'fs-extra';
 import loadJson from 'load-json-file';
 
 import { baseDir, log } from './helpers';

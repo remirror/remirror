@@ -5,7 +5,7 @@
  */
 
 import chalk from 'chalk';
-import fs from 'fs/promises';
+import fs from 'fs-extra';
 import globby from 'globby';
 
 import { baseDir, cliArgs, compareOutput, log } from './helpers';

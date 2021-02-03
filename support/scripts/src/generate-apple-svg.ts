@@ -6,7 +6,7 @@
 
 import { bitmap2vector } from 'bitmap2vector';
 import fontkit, { Glyph } from 'fontkit';
-import { mkdir, writeFile } from 'fs/promises';
+import { mkdir, writeFile } from 'fs-extra';
 import os from 'os';
 import path from 'path';
 

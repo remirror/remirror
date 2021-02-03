@@ -11,7 +11,7 @@ import { transform } from '@linaria/babel-preset';
 import autoprefixer from 'autoprefixer';
 import chalk from 'chalk';
 import cpy from 'cpy';
-import fs from 'fs/promises';
+import fs from 'fs-extra';
 import globby from 'globby';
 import groupBy from 'lodash.groupby';
 import path from 'path';
