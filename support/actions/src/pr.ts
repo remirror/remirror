@@ -6,7 +6,6 @@
 
 import { getInput, setFailed, setOutput } from '@actions/core';
 import { context, getOctokit } from '@actions/github';
-import { stat, writeFile } from 'fs-extra';
 import giphyApi, { Giphy } from 'giphy-api';
 import { mutatePackageVersions } from 'scripts';
 
@@ -37,8 +36,6 @@ async function run() {
     setFailed(`this is not a pr comment: ${JSON.stringify(context.payload)}`);
   }
 
-  await createGitHubLogin(githubToken);
-
   const pr = await octokit.pulls.get({ owner, pull_number: prNumber, repo });
 
   // Don't support releases for already merged pr's.
@@ -61,7 +58,6 @@ async function run() {
 
   try {
     await mutatePackageVersions(prerelease);
-    await createNpmrc();
 
     setOutput('tag', tag);
 
@@ -117,25 +113,5 @@ function gifComment(comment: string, gif: string, details: string) {
     `\n\`\`\`\n` +
     `</p>\n` +
     `</details>`
-  );
-}
-
-async function createNpmrc() {
-  const npmrcPath = `${process.env.HOME}/.npmrc`;
-  const npmrcStat = await stat(npmrcPath);
-
-  if (npmrcStat.isFile()) {
-    console.log('Found existing .npmrc file');
-  } else {
-    console.log('No .npmrc file found, creating one');
-    await writeFile(npmrcPath, `//registry.npmjs.org/:_authToken=${process.env.NPM_TOKEN}`);
-  }
-}
-
-async function createGitHubLogin(githubToken: string) {
-  // Create the github login credentials.
-  await writeFile(
-    `${process.env.HOME}/.netrc`,
-    `machine github.com\nlogin github-actions[bot]\npassword ${githubToken}`,
   );
 }

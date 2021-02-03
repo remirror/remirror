@@ -44,7 +44,11 @@ jobs:
           giphyKey: ${{ secrets.GIPHY_API_KEY }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: publish pr
-        run: 'pnpm publish -r --no-git-checks --tag ${{ steps.mutate.outputs.tag }}'
+        run: |
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > $HOME/.npmrc
+          pnpm publish -r --no-git-checks --tag ${{ steps.mutate.outputs.tag }}
+          rm $HOME/.npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
