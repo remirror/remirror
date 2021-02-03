@@ -44,7 +44,8 @@
     "run-if-config",
     "run-if-mac",
     "run-if-not-ci",
-    "run-if-publishable"
+    "run-if-publishable",
+    "publish-pr"
   ],
   "dependencies": {
     "@babel/runtime": "^7.12.13",
@@ -147,7 +148,8 @@
       "run-if-config.ts",
       "run-if-mac.ts",
       "run-if-not-ci.ts",
-      "run-if-publishable.ts"
+      "run-if-publishable.ts",
+      "publish-pr.ts"
     ]
   }
 }

@@ -47,4 +47,4 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: publish pr
-        run: 'pnpm publish -r --tag ${{ steps.mutate.outputs.tag }}'
+        run: 'pnpm publish -r --no-git-checks --tag ${{ steps.mutate.outputs.tag }}'
