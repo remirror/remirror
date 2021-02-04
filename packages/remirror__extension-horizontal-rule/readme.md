@@ -4,8 +4,8 @@
 
 [![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](#) [![MIT License][license]](#)
 
-[version]: https://flat.badgen.net/npm/v/@remirror/extension-horizontal-rule/next
-[npm]: https://npmjs.com/package/@remirror/extension-horizontal-rule/v/next
+[version]: https://flat.badgen.net/npm/v/@remirror/extension-horizontal-rule
+[npm]: https://npmjs.com/package/@remirror/extension-horizontal-rule
 [license]: https://flat.badgen.net/badge/license/MIT/purple
 [size]: https://bundlephobia.com/result?p=@remirror/extension-horizontal-rule
 [size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-horizontal-rule

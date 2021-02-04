@@ -4,8 +4,8 @@
 
 [![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](#) [![MIT License][license]](#)
 
-[version]: https://flat.badgen.net/npm/v/create-context-state/next
-[npm]: https://npmjs.com/package/create-context-state/v/next
+[version]: https://flat.badgen.net/npm/v/create-context-state
+[npm]: https://npmjs.com/package/create-context-state
 [license]: https://flat.badgen.net/badge/license/MIT/purple
 [size]: https://bundlephobia.com/result?p=create-context-state
 [size-badge]: https://flat.badgen.net/bundlephobia/minzip/create-context-state

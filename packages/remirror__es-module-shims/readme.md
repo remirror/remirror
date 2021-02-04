@@ -4,8 +4,8 @@
 
 [![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](#) [![MIT License][license]](#)
 
-[version]: https://flat.badgen.net/npm/v/@remirror/es-module-shims/next
-[npm]: https://npmjs.com/package/@remirror/es-module-shims/v/next
+[version]: https://flat.badgen.net/npm/v/@remirror/es-module-shims
+[npm]: https://npmjs.com/package/@remirror/es-module-shims
 [license]: https://flat.badgen.net/badge/license/MIT/purple
 [size]: https://bundlephobia.com/result?p=@remirror/es-module-shims
 [size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/es-module-shims

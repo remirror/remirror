@@ -4,8 +4,8 @@
 
 [![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](#) [![MIT License][license]](#)
 
-[version]: https://flat.badgen.net/npm/v/@remirror/extension-font-size/next
-[npm]: https://npmjs.com/package/@remirror/extension-font-size/v/next
+[version]: https://flat.badgen.net/npm/v/@remirror/extension-font-size
+[npm]: https://npmjs.com/package/@remirror/extension-font-size
 [license]: https://flat.badgen.net/badge/license/MIT/purple
 [size]: https://bundlephobia.com/result?p=@remirror/extension-font-size
 [size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-font-size

@@ -4,8 +4,8 @@
 
 [![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](#) [![MIT License][license]](#)
 
-[version]: https://flat.badgen.net/npm/v/prosemirror-trailing-node/next
-[npm]: https://npmjs.com/package/prosemirror-trailing-node/v/next
+[version]: https://flat.badgen.net/npm/v/prosemirror-trailing-node
+[npm]: https://npmjs.com/package/prosemirror-trailing-node
 [license]: https://flat.badgen.net/badge/license/MIT/purple
 [size]: https://bundlephobia.com/result?p=prosemirror-trailing-node
 [size-badge]: https://flat.badgen.net/bundlephobia/minzip/prosemirror-trailing-node

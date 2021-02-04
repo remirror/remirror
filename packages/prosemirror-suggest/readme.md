@@ -4,8 +4,8 @@
 
 [![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](#) [![MIT License][license]](#)
 
-[version]: https://flat.badgen.net/npm/v/prosemirror-suggest/next
-[npm]: https://npmjs.com/package/prosemirror-suggest/v/next
+[version]: https://flat.badgen.net/npm/v/prosemirror-suggest
+[npm]: https://npmjs.com/package/prosemirror-suggest
 [license]: https://flat.badgen.net/badge/license/MIT/purple
 [size]: https://bundlephobia.com/result?p=prosemirror-suggest
 [size-badge]: https://flat.badgen.net/bundlephobia/minzip/prosemirror-suggest

@@ -4,8 +4,8 @@
 
 [![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](#) [![MIT License][license]](#)
 
-[version]: https://flat.badgen.net/npm/v/@remirror/extension-markdown/next
-[npm]: https://npmjs.com/package/@remirror/extension-markdown/v/next
+[version]: https://flat.badgen.net/npm/v/@remirror/extension-markdown
+[npm]: https://npmjs.com/package/@remirror/extension-markdown
 [license]: https://flat.badgen.net/badge/license/MIT/purple
 [size]: https://bundlephobia.com/result?p=@remirror/extension-markdown
 [size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-markdown
