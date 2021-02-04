@@ -1,7 +1,6 @@
 {
   "name": "@remirror/react-ssr",
   "version": "1.0.0-next.60",
-  "private": true,
   "description": "Render the editor in an SSR environment",
   "keywords": [
     "remirror"
