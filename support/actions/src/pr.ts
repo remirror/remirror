@@ -9,6 +9,8 @@ import { context, getOctokit } from '@actions/github';
 import giphyApi, { Giphy } from 'giphy-api';
 import { mutatePackageVersions } from 'scripts';
 
+import { getBuildNumber } from './pr-utils';
+
 async function run() {
   const githubToken = process.env.GITHUB_TOKEN;
 
@@ -25,9 +27,9 @@ async function run() {
 
   console.log({ owner, repo, prNumber, payload: JSON.stringify(context.payload) });
 
-  const sha = context.sha.slice(0, 9);
   const tag = `pr${prNumber}`;
-  const prerelease = `${tag}.${sha}`;
+  const buildNumber = await getBuildNumber(tag);
+  const prerelease = `${tag}.${buildNumber}`;
 
   process.env.CI_PRERELEASE = prerelease;
   const giphy = giphyApi(giphyKey);
@@ -97,7 +99,7 @@ run();
  */
 async function getMarkdownGif(giphy: Giphy, phrase: string) {
   const gif = await giphy.random(phrase);
-  return `![${phrase}](${gif.data.images.fixed_height_small.url})`;
+  return `![${phrase}](${gif.data.images.fixed_height.url})`;
 }
 
 /**

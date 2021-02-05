@@ -2612,9 +2612,14 @@ importers:
       '@remirror/core-helpers': link:../../packages/remirror__core-helpers
       '@types/fs-extra': 9.0.6
       '@types/giphy-api': 2.0.2
+      '@types/semver': 7.3.4
       fs-extra: 9.1.0
       giphy-api: 2.0.1
+      got: 11.8.1
       scripts: link:../scripts
+      semver: 7.3.4
+    devDependencies:
+      nock: 13.0.7
     specifiers:
       '@actions/core': ^1.2.6
       '@actions/exec': ^1.0.4
@@ -2623,9 +2628,13 @@ importers:
       '@remirror/core-helpers': ^1.0.0-next.60
       '@types/fs-extra': ^9.0.6
       '@types/giphy-api': ^2.0.2
+      '@types/semver': ^7.3.4
       fs-extra: ^9.1.0
       giphy-api: ^2.0.1
+      got: ^11.8.1
+      nock: ^13.0.7
       scripts: 0.0.0
+      semver: ^7.3.4
   support/scripts:
     dependencies:
       '@babel/runtime': 7.12.13
@@ -19737,6 +19746,7 @@ packages:
     resolution:
       integrity: sha512-hk/69oAeaIzchq/v3lS50PXuzn5O2ynldopMC+SWBql7J2WtdptfB9dy8Y7+Og5rPkTCpn83zTiO8FMcqlXJ/g==
   /jsondiffpatch/0.4.1:
+    bundledDependencies: []
     dependencies:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
@@ -20468,7 +20478,6 @@ packages:
     resolution:
       integrity: sha1-gNZJLcFHCGS79YNTO2UfQqn1JBU=
   /lodash.set/4.3.2:
-    dev: false
     resolution:
       integrity: sha1-2HV7HagH3eJIFrDWqEvqGnYjCyM=
   /lodash.some/4.6.0:
@@ -21801,6 +21810,17 @@ packages:
       node: '>=4.0.0'
     resolution:
       integrity: sha512-0L9FvHG3nfnnmaEQPjT9xhfN4ISk0A8/2j4M37Np4mcDesJjHgEUfgPhdCyZuFI954tjokaIj/A3NdpFNdEh4Q==
+  /nock/13.0.7:
+    dependencies:
+      debug: 4.3.1
+      json-stringify-safe: 5.0.1
+      lodash.set: 4.3.2
+      propagate: 2.0.1
+    dev: true
+    engines:
+      node: '>= 10.13'
+    resolution:
+      integrity: sha512-WBz73VYIjdbO6BwmXODRQLtn7B5tldA9pNpWJe5QTtTEscQlY5KXU4srnGzBOK2fWakkXj69gfTnXGzmrsaRWw==
   /node-abi/2.19.3:
     dependencies:
       semver: 5.7.1
@@ -24566,6 +24586,12 @@ packages:
       react-is: 16.13.1
     resolution:
       integrity: sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
+  /propagate/2.0.1:
+    dev: true
+    engines:
+      node: '>= 8'
+    resolution:
+      integrity: sha512-vGrhOavPSTz4QVNuBNdcNXePNdNMaO1xj9yBeH1ScQPjk/rhg9sSlCXPhMkFuaNNW/syTvYqsnbIJxMBfRbbag==
   /proper-lockfile/3.2.0:
     dependencies:
       graceful-fs: 4.2.4

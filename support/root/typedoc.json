@@ -78,10 +78,13 @@
     "packages/remirror__preset-react/src/index.ts",
     "packages/remirror__preset-wysiwyg/src/index.ts",
     "packages/remirror__react/src/index.ts",
+    "packages/remirror__react-components/src/index.ts",
     "packages/remirror__react-core/src/index.ts",
     "packages/remirror__react-debugger/src/index.ts",
     "packages/remirror__react-hooks/src/index.ts",
     "packages/remirror__react-native/src/index.ts",
+    "packages/remirror__react-renderer/src/index.ts",
+    "packages/remirror__react-ssr/src/index.ts",
     "packages/remirror__react-utils/src/index.ts",
     "packages/remirror__theme/src/index.ts",
     "packages/test-keyboard/src/index.ts"

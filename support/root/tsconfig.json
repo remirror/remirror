@@ -537,6 +537,9 @@
       "path": "packages/testing/src"
     },
     {
+      "path": "support/actions/__tests__"
+    },
+    {
       "path": "support/actions/src"
     },
     {
