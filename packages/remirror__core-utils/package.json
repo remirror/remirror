@@ -43,7 +43,7 @@
     "type-fest": "^0.20.2"
   },
   "devDependencies": {
-    "@types/node": "^14.14.22",
+    "@types/node": "^14.14.25",
     "domino": "^2.1.6"
   },
   "peerDependencies": {
