@@ -67,9 +67,9 @@ async function run() {
       repo,
       issue_number: prNumber,
       body: gifComment(
-        `:package: successfully released!!! :rocket:`,
+        `:rocket: successfully released packages :package: with tag \`tag\``,
         gif,
-        `To install use the following versions \n\n- \`remirror@${tag}\`\n\n- \`@remirror/react@${tag}\``,
+        `To install use the following versions \n\n- \`remirror@0.0.0-${prerelease}\`\n\n- \`@remirror/react@0.0.0-${prerelease}\``,
       ),
     });
   } catch (error) {

@@ -70,7 +70,7 @@ function getPreReleaseVersion(version: string | undefined, prerelease: string) {
   const semver = parse(version);
   invariant(semver, { message: 'Invalid version provided' });
 
-  return `${semver.major}.${semver.minor}.${semver.patch}-${prerelease}`;
+  return `0.0.0-${prerelease}`;
 }
 
 /**

@@ -28,6 +28,7 @@
     "create:package": "node packages/remirror__cli/bin.js create",
     "css:copy": "cpy packages/remirror__styles/*.css packages/remirror/styles/",
     "css:force": "node support/scripts/check-styles --force",
+    "deprecate:all": "node support/scripts/deprecate-version",
     "dev": "preconstruct watch",
     "docs": "pnpm run docs:dev",
     "docs:dev": "cd website && pnpm start",
