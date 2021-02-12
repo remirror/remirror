@@ -43,7 +43,8 @@
     "@linaria/core": "^3.0.0-beta.1",
     "@remirror/core": "1.0.0-next.60",
     "@remirror/messages": "0.0.0",
-    "y-prosemirror": "^1.0.5"
+    "y-prosemirror": "^1.0.5",
+    "y-protocols": "^1.0.4"
   },
   "devDependencies": {
     "@remirror/pm": "1.0.0-next.60",

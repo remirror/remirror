@@ -1752,7 +1752,8 @@ importers:
       '@linaria/core': 3.0.0-beta.1
       '@remirror/core': link:../remirror__core
       '@remirror/messages': link:../remirror__messages
-      y-prosemirror: 1.0.5_yjs@13.4.14
+      y-prosemirror: 1.0.5_y-protocols@1.0.4+yjs@13.4.14
+      y-protocols: 1.0.4
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       y-webrtc: 10.1.8
@@ -1764,6 +1765,7 @@ importers:
       '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
       y-prosemirror: ^1.0.5
+      y-protocols: ^1.0.4
       y-webrtc: ^10.1.8
       yjs: ^13.4.14
   packages/remirror__i18n:
@@ -31324,9 +31326,10 @@ packages:
       node: '>=0.4'
     resolution:
       integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==
-  /y-prosemirror/1.0.5_yjs@13.4.14:
+  /y-prosemirror/1.0.5_y-protocols@1.0.4+yjs@13.4.14:
     dependencies:
       lib0: 0.2.35
+      y-protocols: 1.0.4
       yjs: 13.4.14
     dev: false
     peerDependencies:
@@ -31343,6 +31346,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-V6ZAmokdogW52+VsIg/YC0R6CHWgG8/hjO3rYL10hAzeT5j464kDiRki31O+GzTj+dMgNYZNd6IDP9X35FLXrw==
+  /y-protocols/1.0.4:
+    dependencies:
+      lib0: 0.2.35
+    dev: false
+    resolution:
+      integrity: sha512-5/Hd6DJ5Y2SlbqLIKq86BictdOS0iAcWJZCVop8MKqx0XWwA+BbMn4538n4Z0CGjFMUGnG1kGzagk3BKGz5SvQ==
   /y-webrtc/10.1.8:
     dependencies:
       lib0: 0.2.35
