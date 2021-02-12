@@ -1,4 +1,3 @@
-import { collab, getVersion, receiveTransaction, sendableSteps } from 'prosemirror-collab';
 import {
   command,
   CommandFunction,
@@ -19,6 +18,7 @@ import {
   Transaction,
   uniqueId,
 } from '@remirror/core';
+import { collab, getVersion, receiveTransaction, sendableSteps } from '@remirror/pm/collab';
 import { Step } from '@remirror/pm/transform';
 
 /**

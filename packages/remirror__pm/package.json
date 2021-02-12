@@ -17,6 +17,12 @@
       "types": "./dist/remirror-pm.cjs.d.ts",
       "default": "./dist/remirror-pm.esm.js"
     },
+    "./collab": {
+      "import": "./collab/dist/remirror-pm-collab.esm.js",
+      "require": "./collab/dist/remirror-pm-collab.cjs.js",
+      "browser": "./collab/dist/remirror-pm.browser.esm.js",
+      "default": "./collab/dist/remirror-pm-collab.esm.js"
+    },
     "./commands": {
       "import": "./commands/dist/remirror-pm-commands.esm.js",
       "require": "./commands/dist/remirror-pm-commands.cjs.js",
@@ -134,6 +140,7 @@
   "types": "dist/remirror-pm.cjs.d.ts",
   "files": [
     "dist",
+    "collab",
     "commands",
     "dropcursor",
     "gapcursor",
@@ -154,6 +161,7 @@
     "@babel/runtime": "^7.12.13",
     "@remirror/core-constants": "1.0.0-next.60",
     "@remirror/core-helpers": "1.0.0-next.60",
+    "@types/prosemirror-collab": "^1.1.1",
     "@types/prosemirror-commands": "^1.0.4",
     "@types/prosemirror-dropcursor": "^1.0.1",
     "@types/prosemirror-gapcursor": "^1.0.2",
@@ -165,6 +173,7 @@
     "@types/prosemirror-state": "^1.2.6",
     "@types/prosemirror-transform": "^1.1.2",
     "@types/prosemirror-view": "^1.17.1",
+    "prosemirror-collab": "^1.2.2",
     "prosemirror-commands": "^1.1.5",
     "prosemirror-dropcursor": "^1.3.3",
     "prosemirror-gapcursor": "^1.1.5",
@@ -172,12 +181,12 @@
     "prosemirror-inputrules": "^1.1.3",
     "prosemirror-keymap": "^1.1.4",
     "prosemirror-model": "^1.13.3",
-    "prosemirror-paste-rules": "^0.0.0",
+    "prosemirror-paste-rules": "0.0.0",
     "prosemirror-schema-list": "^1.1.4",
     "prosemirror-state": "^1.3.4",
-    "prosemirror-suggest": "^1.0.0-next.60",
+    "prosemirror-suggest": "1.0.0-next.60",
     "prosemirror-tables": "^1.1.1",
-    "prosemirror-trailing-node": "^0.0.0",
+    "prosemirror-trailing-node": "0.0.0",
     "prosemirror-transform": "^1.2.8",
     "prosemirror-view": "^1.17.4"
   },
@@ -187,6 +196,7 @@
   "preconstruct": {
     "entrypoints": [
       "index.ts",
+      "collab.ts",
       "commands.ts",
       "dropcursor.ts",
       "gapcursor.ts",

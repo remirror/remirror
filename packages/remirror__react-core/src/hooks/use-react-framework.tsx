@@ -125,8 +125,8 @@ function useControlledEditor<Extension extends AnyExtension>(
     invariant(validUpdate, {
       code: ErrorConstant.REACT_CONTROLLED,
       message: isControlledRef.current
-        ? 'You have attempted to switch from a controlled to an uncontrolled editor. Once you set up an editor as a controlled editor it must always provide a `value` prop.'
-        : 'You have provided a `value` prop to an uncontrolled editor. In order to set up your editor as controlled you must provide the `value` prop from the very first render.',
+        ? 'You have attempted to switch from a controlled to an uncontrolled editor. Once you set up an editor as a controlled editor it must always provide a `state` prop.'
+        : 'You have provided a `state` prop to an uncontrolled editor. In order to set up your editor as controlled you must provide the `state` prop from the very first render.',
     });
 
     if (!state || state === previousValue) {

@@ -680,14 +680,14 @@ importers:
       '@remirror/preset-formatting': link:../remirror__preset-formatting
       '@remirror/preset-wysiwyg': link:../remirror__preset-wysiwyg
       '@remirror/theme': link:../remirror__theme
-    devDependencies:
       '@types/codemirror': 0.0.108
-      '@types/prettier': 2.1.6
       '@types/refractor': 3.0.0
       codemirror: 5.59.2
-      prettier: 2.2.1
       refractor: 3.3.1
       yjs: 13.4.14
+    devDependencies:
+      '@types/prettier': 2.1.6
+      prettier: 2.2.1
     specifiers:
       '@babel/runtime': ^7.12.13
       '@remirror/core': 1.0.0-next.60
@@ -1119,16 +1119,11 @@ importers:
       '@remirror/core': link:../remirror__core
       '@remirror/messages': link:../remirror__messages
       '@remirror/pm': link:../remirror__pm
-      '@types/prosemirror-collab': 1.1.1
-    devDependencies:
-      prosemirror-collab: 1.2.2
     specifiers:
       '@babel/runtime': ^7.12.13
       '@remirror/core': 1.0.0-next.60
       '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
-      '@types/prosemirror-collab': ^1.1.1
-      prosemirror-collab: ^1.2.2
   packages/remirror__extension-columns:
     dependencies:
       '@babel/runtime': 7.12.13
@@ -1894,6 +1889,7 @@ importers:
       '@babel/runtime': 7.12.13
       '@remirror/core-constants': link:../remirror__core-constants
       '@remirror/core-helpers': link:../remirror__core-helpers
+      '@types/prosemirror-collab': 1.1.1
       '@types/prosemirror-commands': 1.0.4
       '@types/prosemirror-dropcursor': 1.0.1
       '@types/prosemirror-gapcursor': 1.0.2
@@ -1905,6 +1901,7 @@ importers:
       '@types/prosemirror-state': 1.2.6
       '@types/prosemirror-transform': 1.1.2
       '@types/prosemirror-view': 1.17.1
+      prosemirror-collab: 1.2.2
       prosemirror-commands: 1.1.5
       prosemirror-dropcursor: 1.3.3
       prosemirror-gapcursor: 1.1.5
@@ -1924,6 +1921,7 @@ importers:
       '@babel/runtime': ^7.12.13
       '@remirror/core-constants': 1.0.0-next.60
       '@remirror/core-helpers': 1.0.0-next.60
+      '@types/prosemirror-collab': ^1.1.1
       '@types/prosemirror-commands': ^1.0.4
       '@types/prosemirror-dropcursor': ^1.0.1
       '@types/prosemirror-gapcursor': ^1.0.2
@@ -1935,6 +1933,7 @@ importers:
       '@types/prosemirror-state': ^1.2.6
       '@types/prosemirror-transform': ^1.1.2
       '@types/prosemirror-view': ^1.17.1
+      prosemirror-collab: ^1.2.2
       prosemirror-commands: ^1.1.5
       prosemirror-dropcursor: ^1.3.3
       prosemirror-gapcursor: ^1.1.5
@@ -1942,12 +1941,12 @@ importers:
       prosemirror-inputrules: ^1.1.3
       prosemirror-keymap: ^1.1.4
       prosemirror-model: ^1.13.3
-      prosemirror-paste-rules: ^0.0.0
+      prosemirror-paste-rules: 0.0.0
       prosemirror-schema-list: ^1.1.4
       prosemirror-state: ^1.3.4
-      prosemirror-suggest: ^1.0.0-next.60
+      prosemirror-suggest: 1.0.0-next.60
       prosemirror-tables: ^1.1.1
-      prosemirror-trailing-node: ^0.0.0
+      prosemirror-trailing-node: 0.0.0
       prosemirror-transform: ^1.2.8
       prosemirror-view: ^1.17.4
   packages/remirror__preset-core:
@@ -8786,7 +8785,6 @@ packages:
   /@types/codemirror/0.0.108:
     dependencies:
       '@types/tern': 0.23.3
-    dev: true
     resolution:
       integrity: sha512-3FGFcus0P7C2UOGCNUVENqObEb4SFk+S8Dnxq7K6aIsLVs/vDtlangl3PEO0ykaKXyK56swVF6Nho7VsA44uhw==
   /@types/configstore/4.0.0:
@@ -9421,7 +9419,6 @@ packages:
   /@types/tern/0.23.3:
     dependencies:
       '@types/estree': 0.0.46
-    dev: true
     resolution:
       integrity: sha512-imDtS4TAoTcXk0g7u4kkWqedB3E4qpjXzCpD2LU5M5NAXHzCDsypyvXSaG7mM8DKYkCRa7tFp4tS/lp/Wo7Q3w==
   /@types/testing-library__jest-dom/5.9.5:
@@ -12462,7 +12459,6 @@ packages:
     resolution:
       integrity: sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
   /codemirror/5.59.2:
-    dev: true
     resolution:
       integrity: sha512-/D5PcsKyzthtSy2NNKCyJi3b+htRkoKv3idswR/tR6UAvMNKA7SrmyZy6fOONJxSRs1JlUWEDAbxqfdArbK8iA==
   /collapse-white-space/1.0.6:
@@ -24620,7 +24616,7 @@ packages:
   /prosemirror-collab/1.2.2:
     dependencies:
       prosemirror-state: 1.3.4
-    dev: true
+    dev: false
     resolution:
       integrity: sha512-tBnHKMLgy5Qmx9MYVcLfs3pAyjtcqYYDd9kp3y+LSiQzkhMQDfZSV3NXWe4Gsly32adSef173BvObwfoSQL5MA==
   /prosemirror-commands/1.1.5:
@@ -30710,7 +30706,6 @@ packages:
   /yjs/13.4.14:
     dependencies:
       lib0: 0.2.35
-    dev: true
     requiresBuild: true
     resolution:
       integrity: sha512-fIhIjFP3t9m69ciAAdFyPkDj+JlE11UQ7fvPQyaHN6xSlpO5mwB/kFiJA01kYUn98nqrifK11IhOVQIw44zOWw==

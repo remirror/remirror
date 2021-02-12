@@ -133,46 +133,26 @@
     "@remirror/preset-core": "1.0.0-next.60",
     "@remirror/preset-formatting": "0.0.0",
     "@remirror/preset-wysiwyg": "1.0.0-next.60",
-    "@remirror/theme": "1.0.0-next.60"
-  },
-  "devDependencies": {
+    "@remirror/theme": "1.0.0-next.60",
     "@types/codemirror": "^0.0.108",
-    "@types/prettier": "^2.1.6",
     "@types/refractor": "^3.0.0",
     "codemirror": "^5.59.2",
-    "prettier": "^2.2.1",
     "refractor": "^3.3.1",
     "yjs": "^13.4.14"
   },
+  "devDependencies": {
+    "@types/prettier": "^2.1.6",
+    "prettier": "^2.2.1"
+  },
   "peerDependencies": {
-    "@types/codemirror": "*",
     "@types/prettier": "^2.1.5",
-    "@types/refractor": "^3.0.0",
-    "codemirror": "^5.58.2",
-    "prettier": "^2.2.0",
-    "refractor": "^3.2.0",
-    "yjs": "^13.4.0"
+    "prettier": "^2.2.0"
   },
   "peerDependenciesMeta": {
-    "@types/codemirror": {
-      "optional": true
-    },
     "@types/prettier": {
       "optional": true
     },
-    "@types/refractor": {
-      "optional": true
-    },
-    "codemirror": {
-      "optional": true
-    },
     "prettier": {
-      "optional": true
-    },
-    "refractor": {
-      "optional": true
-    },
-    "yjs": {
       "optional": true
     }
   },

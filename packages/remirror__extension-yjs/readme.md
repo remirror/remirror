@@ -27,7 +27,9 @@ npm install yjs @remirror/extension-yjs
 
 You will also need to install your preferred [`YjsRealtimeProvider`](https://github.com/yjs/yjs#providers).
 
-This package is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.
+Due to the required peer dependencies this package is not included by default when installing `remirror`.
+
+You will also need to install your preferred yjs protocol
 
 ```bash
 # yarn
@@ -45,9 +47,9 @@ npm install y-webrtc
 The following code creates an instance of this extension.
 
 ```ts
-import { YjsExtension } from 'remirror/extensions';
 import { WebrtcProvider } from 'y-webrtc';
 import { Doc } from 'yjs';
+import { YjsExtension } from '@remirror/extension-yjs';
 
 const extension = new YjsExtension({
   getProvider: () => new WebrtcProvider('global', new Doc()),
