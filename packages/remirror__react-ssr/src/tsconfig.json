@@ -21,9 +21,6 @@
     },
     {
       "path": "../../remirror__extension-react-ssr/src"
-    },
-    {
-      "path": "../../remirror__pm/src"
     }
   ]
 }

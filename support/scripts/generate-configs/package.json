@@ -1,3 +1,4 @@
 {
-  "main": "dist/scripts-generate-configs.cjs.js"
+  "main": "dist/scripts-generate-configs.cjs.js",
+  "module": "dist/scripts-generate-configs.esm.js"
 }

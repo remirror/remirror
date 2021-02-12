@@ -17,9 +17,6 @@
   "include": ["./"],
   "references": [
     {
-      "path": "../../remirror__pm/src"
-    },
-    {
       "path": "../../remirror__react/src"
     }
   ]

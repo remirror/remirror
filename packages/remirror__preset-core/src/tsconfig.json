@@ -39,9 +39,6 @@
     },
     {
       "path": "../../remirror__extension-text/src"
-    },
-    {
-      "path": "../../remirror__pm/src"
     }
   ]
 }

@@ -1,3 +1,4 @@
 {
-  "main": "dist/scripts-run-if-mac.cjs.js"
+  "main": "dist/scripts-run-if-mac.cjs.js",
+  "module": "dist/scripts-run-if-mac.esm.js"
 }

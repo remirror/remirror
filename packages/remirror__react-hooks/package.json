@@ -134,7 +134,6 @@
     "@remirror/extension-mention-atom": "1.0.0-next.60",
     "@remirror/extension-positioner": "1.0.0-next.60",
     "@remirror/i18n": "1.0.0-next.60",
-    "@remirror/pm": "1.0.0-next.60",
     "@remirror/react-core": "0.0.0",
     "@remirror/react-utils": "1.0.0-next.60",
     "multishift": "1.0.0-next.60",
@@ -143,6 +142,7 @@
     "use-previous": "^1.1.0"
   },
   "devDependencies": {
+    "@remirror/pm": "1.0.0-next.60",
     "@remirror/react": "1.0.0-next.60",
     "@types/react": "^17.0.1",
     "@types/react-dom": "^17.0.0",
@@ -151,6 +151,7 @@
     "svgmoji": "^3.0.0"
   },
   "peerDependencies": {
+    "@remirror/pm": "1.0.0-next.60",
     "@types/react": "^16.14.0 || ^17",
     "@types/react-dom": "^16.9.0 || ^17",
     "react": "^16.14.0 || ^17",

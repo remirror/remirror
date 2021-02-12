@@ -18,9 +18,6 @@
   "references": [
     {
       "path": "../../remirror__core-constants/src"
-    },
-    {
-      "path": "../../remirror__pm/src"
     }
   ]
 }

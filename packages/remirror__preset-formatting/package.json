@@ -51,7 +51,12 @@
     "@remirror/extension-text-color": "0.0.0",
     "@remirror/extension-text-highlight": "0.0.0",
     "@remirror/extension-underline": "1.0.0-next.60",
-    "@remirror/extension-whitespace": "0.0.0",
+    "@remirror/extension-whitespace": "0.0.0"
+  },
+  "devDependencies": {
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "peerDependencies": {
     "@remirror/pm": "1.0.0-next.60"
   },
   "publishConfig": {

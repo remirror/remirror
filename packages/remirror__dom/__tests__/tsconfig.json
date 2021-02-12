@@ -35,9 +35,6 @@
       "path": "../../remirror__core/src"
     },
     {
-      "path": "../../remirror__pm/src"
-    },
-    {
       "path": "../../remirror__preset-core/src"
     }
   ]

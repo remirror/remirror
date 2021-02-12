@@ -95,9 +95,6 @@
       "path": "../../remirror__extension-underline/src"
     },
     {
-      "path": "../../remirror__pm/src"
-    },
-    {
       "path": "../../remirror__preset-core/src"
     }
   ]

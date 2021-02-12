@@ -25,6 +25,7 @@
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
   "main": "dist/scripts.cjs.js",
+  "module": "dist/scripts.esm.js",
   "files": [
     "dist",
     "api-extractor.worker",
@@ -83,7 +84,6 @@
     "chalk": "^4.1.0",
     "cheerio": "^1.0.0-rc.5",
     "cpy": "^8.1.1",
-    "diffable-html": "^4.0.0",
     "emojibase": "^5.1.0",
     "emojibase-data": "^6.1.0",
     "execa": "^5.0.0",
@@ -116,7 +116,6 @@
     "sort-keys": "^4.2.0",
     "svg-sprite": "^1.5.0",
     "tar": "^6.1.0",
-    "ts-morph": "^9.1.0",
     "tslog": "^3.1.1",
     "type-fest": "^0.20.2",
     "typedoc": "^0.20.20",

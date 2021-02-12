@@ -6,7 +6,9 @@
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/support",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/support",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "diffable-html": "^4.0.0"
+  },
   "@remirror": {
     "tsconfigs": {
       "src": false,

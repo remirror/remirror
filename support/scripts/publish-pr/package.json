@@ -1,3 +1,4 @@
 {
-  "main": "dist/scripts-publish-pr.cjs.js"
+  "main": "dist/scripts-publish-pr.cjs.js",
+  "module": "dist/scripts-publish-pr.esm.js"
 }

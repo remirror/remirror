@@ -46,7 +46,6 @@
     "@babel/runtime": "^7.12.13",
     "@remirror/core": "1.0.0-next.60",
     "@remirror/messages": "0.0.0",
-    "@remirror/pm": "1.0.0-next.60",
     "@remirror/theme": "1.0.0-next.60",
     "emojibase": "^5.1.0",
     "emojibase-data": "^6.1.0",
@@ -56,6 +55,12 @@
     "match-sorter": "^6.1.0",
     "svgmoji": "^3.0.0",
     "type-fest": "^0.20.2"
+  },
+  "devDependencies": {
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "peerDependencies": {
+    "@remirror/pm": "1.0.0-next.60"
   },
   "publishConfig": {
     "access": "public"

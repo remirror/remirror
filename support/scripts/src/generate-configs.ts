@@ -627,7 +627,7 @@ async function generatePackageTsConfigs() {
   );
   await writeJSON(paths.packagesTsconfig, packagesTsconfig, { detectIndent: true });
   await writeJSON(paths.rootTypedoc, { entryFiles, out: 'docs/api' }, { detectIndent: true });
-  filesToPrettify.push(paths.rootTsconfig, paths.rootTypedoc);
+  filesToPrettify.push(paths.rootTsconfig, paths.rootTypedoc, paths.packagesTsconfig);
 }
 
 /**
