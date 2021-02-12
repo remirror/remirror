@@ -9,7 +9,7 @@ import { context, getOctokit } from '@actions/github';
 import giphyApi, { Giphy } from 'giphy-api';
 import { mutatePackageVersions } from 'scripts';
 
-import { getBuildNumber } from './pr-utils';
+import { createSandboxUrl, getBuildNumber } from './pr-utils';
 
 async function run() {
   const githubToken = process.env.GITHUB_TOKEN;
@@ -62,16 +62,19 @@ async function run() {
     await mutatePackageVersions(prerelease);
 
     setOutput('tag', tag);
-
+    const version = `0.0.0-${prerelease}`;
     const gif = await getMarkdownGif(giphy, 'whoop whoop');
+
     await octokit.issues.createComment({
       owner,
       repo,
       issue_number: prNumber,
       body: gifComment(
-        `:rocket: successfully released packages :package: with tag \`tag\``,
+        `:rocket: successfully released packages :package: with tag \`tag\`\n\n[**Open in CodeSandbox**](${createSandboxUrl(
+          version,
+        )})`,
         gif,
-        `To install use the following versions \n\n- \`remirror@0.0.0-${prerelease}\`\n\n- \`@remirror/react@0.0.0-${prerelease}\``,
+        `To install use the following versions \n\n- \`remirror@${version}\`\n\n- \`@remirror/react@${version}\``,
       ),
     });
   } catch (error) {
