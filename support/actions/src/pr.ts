@@ -70,7 +70,7 @@ async function run() {
       repo,
       issue_number: prNumber,
       body: gifComment(
-        `:rocket: successfully released packages :package: with tag \`tag\`\n\n[**Open in CodeSandbox**](${createSandboxUrl(
+        `:rocket: successfully released packages :package: with tag \`${tag}\`\n\n[**Open in CodeSandbox**](${createSandboxUrl(
           version,
         )})`,
         gif,
