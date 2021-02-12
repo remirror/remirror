@@ -161,6 +161,7 @@
     "case-anything": "^1.1.2",
     "core-js": "^3.8.2",
     "cpy-cli": "^3.1.1",
+    "cross-env": "^7.0.3",
     "delay": "^5.0.0",
     "detox": "^18.2.2",
     "downlevel-dts": "^0.7.0",
