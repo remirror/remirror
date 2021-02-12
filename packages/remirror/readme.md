@@ -16,13 +16,13 @@
 
 ```bash
 # yarn
-yarn add remirror
+yarn add remirror @remirror/pm
 
 # pnpm
-pnpm add remirror
+pnpm add remirror @remirror/pm
 
 # npm
-npm install remirror
+npm install remirror @remirror/pm
 ```
 
 The `remirror` package will automatically install the `@remirror/pm` package for you. You only need to install it yourself if you'd like to ensure consistent versions of the `prosemirror-*` libraries when importing from `@remirror/pm/state` instead of `prosemirror-state` or `@remirror/pm/model` instead of `prosemirror-model`.
