@@ -48,6 +48,9 @@ export async function mutatePackageVersions(prerelease: string) {
     // Change the versions of internal devDependencies.
     mutateDependencies(versionedNames, json.devDependencies);
 
+    // Change the versions of internal peerDependencies.
+    mutateDependencies(versionedNames, json.peerDependencies);
+
     // log.debug(location, json.version);
     promises.push(limit(() => writeJSON(jsonLocation, json, options)));
   }
@@ -58,6 +61,7 @@ export async function mutatePackageVersions(prerelease: string) {
   const rootJson = require(baseDir('package.json'));
   mutateDependencies(versionedNames, rootJson.dependencies);
   mutateDependencies(versionedNames, rootJson.devDependencies);
+  mutateDependencies(versionedNames, rootJson.peerDependencies);
   promises.push(limit(() => writeJSON(rootLocation, rootJson, options)));
 
   await Promise.all(promises);
