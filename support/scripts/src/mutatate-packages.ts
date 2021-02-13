@@ -61,6 +61,7 @@ export async function mutatePackageVersions(prerelease: string) {
   const rootJson = require(baseDir('package.json'));
   mutateDependencies(versionedNames, rootJson.dependencies);
   mutateDependencies(versionedNames, rootJson.devDependencies);
+  mutateDependencies(versionedNames, rootJson.peerDependencies);
   promises.push(limit(() => writeJSON(rootLocation, rootJson, options)));
 
   await Promise.all(promises);
