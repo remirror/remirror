@@ -48,6 +48,9 @@ export async function mutatePackageVersions(prerelease: string) {
     // Change the versions of internal devDependencies.
     mutateDependencies(versionedNames, json.devDependencies);
 
+    // Change the versions of internal peerDependencies.
+    mutateDependencies(versionedNames, json.peerDependencies);
+
     // log.debug(location, json.version);
     promises.push(limit(() => writeJSON(jsonLocation, json, options)));
   }
