@@ -482,6 +482,7 @@ export class RemirrorManager<Extension extends AnyExtension> {
     // Allow current state to default to `getState` for first access.
     // This fixed an issue with #814
     let currentState: EditorState | undefined;
+    let previousState: EditorState | undefined;
 
     Object.defineProperties(store, {
       extensions: { get: () => this.#extensions, enumerable },
@@ -499,6 +500,13 @@ export class RemirrorManager<Extension extends AnyExtension> {
         get: () => (currentState ??= this.getState()),
         set: (state: EditorState) => {
           currentState = state;
+        },
+        enumerable,
+      },
+      previousState: {
+        get: () => previousState,
+        set: (state: EditorState) => {
+          previousState = state;
         },
         enumerable,
       },
