@@ -132,6 +132,17 @@ describe('Manager', () => {
     it('should provide access to `attributes`', () => {
       expect(manager.store.attributes.class).toInclude('custom');
     });
+
+    hideConsoleError(true);
+
+    it('should initialize the `extensionStore` with the correct values', () => {
+      const manager = createCoreManager([]);
+
+      expect(Object.keys(manager.extensionStore)).toMatchSnapshot();
+      expect(manager.extensionStore.previousState).toBeUndefined();
+      expect(() => manager.extensionStore.currentState).toThrowErrorMatchingSnapshot();
+      expect(manager.extensionStore.getState).toEqual(expect.any(Function));
+    });
   });
 
   it('isManager', () => {
@@ -271,15 +282,15 @@ describe('createEmptyDoc', () => {
     const manager = RemirrorManager.create([...corePreset()]);
 
     expect(manager.createEmptyDoc().toJSON()).toMatchInlineSnapshot(`
-    Object {
-      "content": Array [
-        Object {
-          "type": "paragraph",
-        },
-      ],
-      "type": "doc",
-    }
-  `);
+          Object {
+            "content": Array [
+              Object {
+                "type": "paragraph",
+              },
+            ],
+            "type": "doc",
+          }
+      `);
   });
 
   it('creates an empty doc with alternative content', () => {
