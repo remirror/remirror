@@ -21,6 +21,7 @@ module.exports = {
     {
       test: /\.[jt]sx?$/,
       plugins: [
+        ['@babel/plugin-proposal-decorators', { legacy: true }],
         ['@babel/plugin-proposal-class-properties'],
         ['@babel/plugin-proposal-private-methods'],
       ],
@@ -40,8 +41,6 @@ module.exports = {
     '@babel/plugin-proposal-optional-chaining',
     '@babel/plugin-proposal-numeric-separator',
     '@babel/plugin-proposal-logical-assignment-operators',
-    ['@babel/plugin-proposal-decorators', { legacy: true }],
-    'babel-plugin-annotate-pure-calls',
     'babel-plugin-dev-expression',
   ],
   env: { production: nonTestEnv, development: nonTestEnv },
