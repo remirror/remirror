@@ -33,9 +33,6 @@ module.exports = {
     // Currently can't be tested with JSDOM
     '!packages/remirror__extension-epic-mode/**',
 
-    // Tests written but needs more coverage.
-    // '!packages/remirror__extension-codemirror5/**',
-
     // Refactor upcoming for emoji which will change the structure.
     '!packages/remirror__extension-emoji/src/data/**',
 
