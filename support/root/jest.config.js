@@ -34,7 +34,7 @@ module.exports = {
     '!packages/remirror__extension-epic-mode/**',
 
     // Tests written but needs more coverage.
-    '!packages/remirror__extension-codemirror5/**',
+    // '!packages/remirror__extension-codemirror5/**',
 
     // Refactor upcoming for emoji which will change the structure.
     '!packages/remirror__extension-emoji/src/data/**',
@@ -62,12 +62,6 @@ module.exports = {
     '!packages/remirror__extension-image/**',
 
     // Still a wip
-    '!packages/remirror__preset-embed/**',
-
-    // Still a wip
-    '!packages/remirror__preset-list/**',
-
-    // Still a wip
     '!packages/remirror__react-components/**',
 
     // Deprecated package
@@ -85,6 +79,9 @@ module.exports = {
 
     // Still a wip. No tests at the moment due to lack of usage.
     '!packages/remirror__cli/**',
+
+    // Deprecated packages
+    '!deprecated/**',
   ],
   coverageReporters: ['json', 'lcov', 'text-summary', 'clover'],
   collectCoverage: true,

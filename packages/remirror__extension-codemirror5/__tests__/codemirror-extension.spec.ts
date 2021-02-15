@@ -1,22 +1,24 @@
 import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/meta';
 import 'codemirror/mode/python/python';
 import 'codemirror/mode/yaml/yaml';
-import 'codemirror/mode/meta';
 
 import CodeMirror from 'codemirror';
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-import { htmlToProsemirrorNode, object, prosemirrorNodeToHtml } from 'remirror';
+import { htmlToProsemirrorNode, KeymapExtension, object, prosemirrorNodeToHtml } from 'remirror';
 import { createCoreManager } from 'remirror/extensions';
 
 import { CodeMirrorExtension, CodeMirrorExtensionOptions } from '../';
 
 extensionValidityTest(CodeMirrorExtension);
 
-function getCodeMirrorMode(dom: Element) {
-  // get the CodeMirror instance from the dom
-  const cm: CodeMirror.Editor = (dom.querySelector('.CodeMirror') as any).CodeMirror;
-  return cm?.getMode()?.name;
+function getCodeMirrorInstance(dom: Element): CodeMirror.Editor | undefined {
+  return (dom.querySelector('.CodeMirror') as any).CodeMirror;
+}
+
+function getCodeMirrorMode(dom: Element): string | null | undefined {
+  return getCodeMirrorInstance(dom)?.getMode()?.name;
 }
 
 describe('schema', () => {
@@ -120,6 +122,42 @@ describe('nodeView', () => {
         expect(dom.querySelector('.CodeMirror-line')!.innerHTML).toMatchSnapshot();
       });
   });
+
+  describe('selection', () => {
+    it('can be selected around', () => {
+      const { add, plainBlock, doc, p, view } = create();
+      const chain = add(doc(p('1<start>2'), plainBlock(`3`), p('4<end>5')));
+      expect(chain.start).toBe(2);
+      expect(chain.start).toBe(view.state.selection.from);
+      expect(chain.end).toBe(9);
+      expect(chain.end).toBe(view.state.selection.to);
+    });
+
+    it('can be selected around and deleted', () => {
+      const { add, plainBlock, doc, p } = create();
+
+      for (const key of ['Delete', 'Backspace']) {
+        const chain = add(doc(p('1<start>2'), plainBlock(`3`), p('4<end>5'))).press(key);
+        expect(chain.start).toBe(2);
+        expect(chain.end).toBe(2);
+        expect(chain.doc).toEqualRemirrorDocument(doc(p('15')));
+      }
+    });
+
+    it('can set selection inside the codemirror', async () => {
+      const { add, plainBlock, doc, p } = create();
+
+      const chain = add(doc(p('12'), plainBlock(`34567`), p('89')))
+        .selectText({ from: 6, to: 9 })
+        .backspace();
+      expect(chain.doc).toEqualRemirrorDocument(doc(p('12'), plainBlock('37'), p('89')));
+    });
+  });
+
+  // JSDom has a bad implement for keyboard events. We will need to do lots of mock
+  // in order to test the keyboard interaction between CodeMirror and Prosemirror.
+  // jest-playwright might be a better solution for this.
+  it.todo('keymap');
 });
 
 describe('commands', () => {

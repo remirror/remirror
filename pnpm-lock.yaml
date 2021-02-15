@@ -86,7 +86,7 @@ importers:
       jest-circus: 26.6.3
       jest-extended: 0.11.5
       jest-github-reporter: 1.0.1_jest@26.6.3
-      jest-playwright-preset: 1.4.5
+      jest-playwright-preset: 1.4.6
       jest-prosemirror: link:packages/jest-prosemirror
       jest-remirror: link:packages/jest-remirror
       jest-watch-typeahead: 0.6.1_jest@26.6.3
@@ -195,7 +195,7 @@ importers:
       jest-circus: ^26.6.3
       jest-extended: ^0.11.5
       jest-github-reporter: ^1.0.1
-      jest-playwright-preset: ^1.4.5
+      jest-playwright-preset: ^1.4.6
       jest-prosemirror: 1.0.0-next.60
       jest-remirror: 1.0.0-next.60
       jest-watch-typeahead: ^0.6.1
@@ -264,6 +264,7 @@ importers:
     dependencies:
       '@emotion/css': 11.1.3_@babel+core@7.12.13
       '@linaria/core': 3.0.0-beta.1
+      '@remirror/extension-codemirror5': link:../../packages/remirror__extension-codemirror5
       '@remirror/messages': link:../../packages/remirror__messages
       '@remirror/playground': link:../../packages/remirror__playground
       '@remirror/pm': link:../../packages/remirror__pm
@@ -273,8 +274,10 @@ importers:
       '@storybook/addon-links': 6.1.17_react-dom@17.0.1+react@17.0.1
       '@storybook/addons': 6.1.17_react-dom@17.0.1+react@17.0.1
       '@storybook/react': 6.1.17_ea3e1e8c976212f018386548c63de7f5
+      '@types/codemirror': 0.0.108
       '@types/refractor': 3.0.0
       clsx: 1.1.1
+      codemirror: 5.59.2
       create-context-state: link:../../packages/create-context-state
       react: 17.0.1
       react-dom: 17.0.1_react@17.0.1
@@ -295,6 +298,7 @@ importers:
       '@babel/core': ^7.12.13
       '@emotion/css': ^11.1.3
       '@linaria/core': ^3.0.0-beta.1
+      '@remirror/extension-codemirror5': 1.0.0-next.60
       '@remirror/messages': 0.0.0
       '@remirror/playground': 1.0.0-next.60
       '@remirror/pm': 1.0.0-next.60
@@ -304,6 +308,7 @@ importers:
       '@storybook/addon-links': ^6.1.17
       '@storybook/addons': ^6.1.17
       '@storybook/react': ^6.1.17
+      '@types/codemirror': ^0.0.108
       '@types/react': ^17.0.1
       '@types/react-dom': ^17.0.0
       '@types/refractor': ^3.0.0
@@ -311,6 +316,7 @@ importers:
       '@types/worker-plugin': ^4.0.0
       babel-loader: ^8.2.2
       clsx: ^1.1.1
+      codemirror: ^5.59.2
       create-context-state: 0.0.0
       monaco-editor-webpack-plugin: ^2.1.0
       react: ^17.0.1
@@ -2605,7 +2611,7 @@ importers:
       jest: 26.6.3
       jest-dev-server: 4.4.0
       jest-diff: 26.6.2
-      jest-playwright-preset: 1.4.5
+      jest-playwright-preset: 1.4.6
       jest-process-manager: 0.2.9
       looks-same: 7.3.0
       min-document: 2.19.0
@@ -2641,7 +2647,7 @@ importers:
       jest: ^26.6.3
       jest-dev-server: ^4.4.0
       jest-diff: ^26.6.2
-      jest-playwright-preset: ^1.4.5
+      jest-playwright-preset: ^1.4.6
       jest-process-manager: ^0.2.9
       looks-same: ^7.3.0
       min-document: ^2.19.0
@@ -19600,7 +19606,7 @@ packages:
       node: '>= 10.14.2'
     resolution:
       integrity: sha512-YyFjePHHp1LzpzYcmgqkJ0nm0gg/lJx2aZFzFy1S6eUqNjXsOqTK10zNRff2dNfssgokjkG65OlWNcIlgd3zew==
-  /jest-playwright-preset/1.4.5:
+  /jest-playwright-preset/1.4.6:
     dependencies:
       expect-playwright: 0.3.2_playwright-core@1.8.0
       jest-circus: 26.6.3
@@ -19613,7 +19619,7 @@ packages:
       uuid: 8.3.2
     dev: false
     resolution:
-      integrity: sha512-IM/Aw5bNIyjhLelKU2C1+xg8t6WcTgwYtX/23mbSHCV6cCry4J3bwrHQHWmYKAqkv7NM6ONTFTSdYv0125epdg==
+      integrity: sha512-a/3KWUY4X/JLhklZf/VhKD6Epnwt98npV/8j2jmXD2QkHEU5JNvRzwtOMv3BlYKweTWoSj+vFmWGq1OLvMPx2A==
   /jest-pnp-resolver/1.2.2_jest-resolve@26.6.2:
     dependencies:
       jest-resolve: 26.6.2

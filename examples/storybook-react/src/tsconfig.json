@@ -15,6 +15,9 @@
   "include": ["./"],
   "references": [
     {
+      "path": "../../../packages/remirror__extension-codemirror5/src"
+    },
+    {
       "path": "../../../packages/remirror__messages/src"
     },
     {
