@@ -190,7 +190,7 @@
     "jest-circus": "^26.6.3",
     "jest-extended": "^0.11.5",
     "jest-github-reporter": "^1.0.1",
-    "jest-playwright-preset": "^1.4.5",
+    "jest-playwright-preset": "^1.4.6",
     "jest-prosemirror": "1.0.0-next.60",
     "jest-remirror": "1.0.0-next.60",
     "jest-watch-typeahead": "^0.6.1",
