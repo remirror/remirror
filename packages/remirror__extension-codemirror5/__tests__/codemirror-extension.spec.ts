@@ -6,7 +6,7 @@ import 'codemirror/mode/yaml/yaml';
 import CodeMirror from 'codemirror';
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-import { htmlToProsemirrorNode, KeymapExtension, object, prosemirrorNodeToHtml } from 'remirror';
+import { htmlToProsemirrorNode, object, prosemirrorNodeToHtml } from 'remirror';
 import { createCoreManager } from 'remirror/extensions';
 
 import { CodeMirrorExtension, CodeMirrorExtensionOptions } from '../';
