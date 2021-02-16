@@ -13,7 +13,6 @@
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
-  "sideEffects": false,
   "exports": {
     ".": {
       "import": "./dist/remirror-preset-formatting.esm.js",

@@ -8,7 +8,6 @@
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
-  "sideEffects": false,
   "exports": {
     ".": {
       "import": "./dist/remirror-react.esm.js",

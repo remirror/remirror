@@ -5,7 +5,6 @@
   "description": "Test fixtures for remirror unit tests",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/testing",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/testing",
-  "sideEffects": false,
   "exports": {
     ".": {
       "import": "./dist/testing.esm.js",

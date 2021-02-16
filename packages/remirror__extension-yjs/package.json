@@ -16,7 +16,6 @@
     "Benjie Gillam <code@benjiegillam.com>",
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
-  "sideEffects": false,
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-yjs.esm.js",

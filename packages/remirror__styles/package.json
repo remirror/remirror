@@ -8,7 +8,6 @@
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
-  "sideEffects": false,
   "files": [
     "*.css",
     "dist",
