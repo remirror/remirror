@@ -17,6 +17,7 @@
     "Ocavue <ocavue@gmail.com>",
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
+  "sideEffects": false,
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-tables.esm.js",

@@ -13,6 +13,7 @@
     "Ifiok Jr. <ifiokotung@gmail.com>",
     "Christopher Manouvrier <cmanou@mac.com>"
   ],
+  "sideEffects": false,
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-sup.esm.js",

@@ -14,6 +14,7 @@
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
+  "sideEffects": false,
   "exports": {
     ".": {
       "import": "./dist/remirror-react-utils.esm.js",

@@ -18,6 +18,7 @@
     "Ifiok Jr. <ifiokotung@gmail.com>",
     "ocavue "
   ],
+  "sideEffects": false,
   "exports": {
     ".": {
       "import": "./dist/remirror.esm.js",

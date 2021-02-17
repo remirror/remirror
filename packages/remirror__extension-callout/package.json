@@ -12,6 +12,7 @@
   "contributors": [
     "Will Hawker <w.hawker@hotmail.co.uk>"
   ],
+  "sideEffects": false,
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-callout.esm.js",

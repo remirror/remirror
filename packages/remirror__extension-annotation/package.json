@@ -12,6 +12,7 @@
   "contributors": [
     "Ronny Roeller <ronny@nextapp.co>"
   ],
+  "sideEffects": false,
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-annotation.esm.js",
