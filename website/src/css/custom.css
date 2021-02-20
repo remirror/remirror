@@ -1,4 +1,4 @@
-@import '../../../../packages/remirror/styles/all.css';
+@import '../../../packages/remirror__styles/all.css';
 
 :root {
   --ifm-color-primary: #7963d2;

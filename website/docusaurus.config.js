@@ -1,6 +1,25 @@
+const fs = require('fs');
 const path = require('path');
 const { getPackagesSync } = require('@manypkg/get-packages');
 const pkg = require('./package.json');
+
+function getEntryPoints() {
+  const repoRoot = path.join(__dirname, '..');
+  const packagesRoot = path.join(repoRoot, 'packages');
+  const entryPoints = getPackagesSync(repoRoot)
+    .packages.filter((pkg) => !pkg.packageJson.private)
+    .filter((pkg) => pkg.dir.startsWith(packagesRoot))
+    .map((pkg) => path.relative(__dirname, path.join(pkg.dir, 'src', 'index.ts')))
+    .filter((entryPoint) => {
+      if (fs.existsSync(entryPoint)) {
+        return true;
+      }
+
+      console.warn(`failed to find entry point file ${entryPoint}`);
+      return false;
+    });
+  return entryPoints;
+}
 
 module.exports = {
   title: 'Remirror',
@@ -106,11 +125,7 @@ module.exports = {
 
       // Plugin / TypeDoc options
       {
-        entryPoints: [
-          getPackagesSync(path.join(__dirname, '..')).packages.map((pkg) =>
-            path.relative(__dirname, path.join(pkg.dir, 'src', 'index.ts')),
-          ),
-        ],
+        entryPoints: getEntryPoints(),
         tsconfig: '../packages/tsconfig.json',
         docsRoot: '../docs',
       },

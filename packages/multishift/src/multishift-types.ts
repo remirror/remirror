@@ -662,21 +662,21 @@ export interface MultishiftPropGetters<Item = any> {
    * @remarks
    *
    * This method should be applied to the element which contains your list of
-   * items. Typically, this will be a <div> or a <ul> that surrounds a map
+   * items. Typically, this will be a `<div>` or a `<ul>` that surrounds a map
    * expression. This handles the proper ARIA roles and attributes.
    *
    * refKey: if you're rendering a composite component, that component will need
    * to accept a prop which it forwards to the root DOM element. Commonly, folks
    * call this innerRef. So you'd call: getMenuProps({refKey: 'innerRef'}) and
-   * your composite component would forward like: <ul ref={props.innerRef} />.
-   * However, if you are just rendering a primitive component like <div>, there
+   * your composite component would forward like: `<ul ref={props.innerRef} />`.
+   * However, if you are just rendering a primitive component like `<div>`, there
    * is no need to specify this property. Please keep in mind that menus, for
    * accessiblity purposes, should always be rendered, regardless of whether you
    * hide it or not. Otherwise, getMenuProps may throw error if you unmount and
    * remount the menu.
    *
    * aria-label: By default the menu will add an aria-labelledby that refers to
-   * the <label> rendered with getLabelProps. However, if you provide aria-label
+   * the `<label>` rendered with getLabelProps. However, if you provide aria-label
    * to give a more specific label that describes the options available, then
    * aria-labelledby will not be provided and screen readers can use your
    * aria-label instead. In some cases, you might want to completely bypass the
