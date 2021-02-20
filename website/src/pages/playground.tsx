@@ -1,8 +1,5 @@
-/** @jsxImportSource @emotion/react */
-
-import '@fontsource/fira-code';
-import '@fontsource/rubik';
-
+// import '@fontsource/fira-code';
+// import '@fontsource/rubik';
 import Head from '@docusaurus/Head';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
@@ -11,6 +8,7 @@ import AnnouncementBar from '@theme/AnnouncementBar';
 import Navbar from '@theme/Navbar';
 import ThemeProvider from '@theme/ThemeProvider';
 import UserPreferencesProvider from '@theme/UserPreferencesProvider';
+import React from 'react';
 
 const PlaygroundPage = (props: any) => {
   const { siteConfig } = useDocusaurusContext();

@@ -8,7 +8,6 @@
  * This code editor will be loaded asynchronously due to it's size. It will
  * provide the editor.
  *
- * @jsxImportSource @emotion/react
  */
 
 import styled from '@emotion/styled';

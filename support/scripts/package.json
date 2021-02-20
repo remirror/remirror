@@ -118,9 +118,9 @@
     "tar": "^6.1.0",
     "tslog": "^3.1.1",
     "type-fest": "^0.20.2",
-    "typedoc": "^0.20.20",
+    "typedoc": "^0.20.26",
     "typedoc-plugin-external-module-name": "^4.0.6",
-    "typedoc-plugin-markdown": "^3.4.5",
+    "typedoc-plugin-markdown": "^3.5.0",
     "write-json-file": "^4.3.0"
   },
   "publishConfig": {

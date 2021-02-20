@@ -54,11 +54,11 @@ function monacoEditorPlugin(_context, _options) {
             { test: /\.css$/, use: [require.resolve('css-loader')], include: [] },
           ],
         },
-        resolver: {
-          alias: {
-            '@linaria/core': '@emotion/css',
-          },
-        },
+        // resolve: {
+        //   alias: {
+        //     '@linaria/core': '@emotion/css',
+        //   },
+        // },
         plugins: [
           new MonacoEditorWebpackPlugin({ languages: ['typescript', 'javascript'] }),
           new WorkerPlugin(),
