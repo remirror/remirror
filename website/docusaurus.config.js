@@ -3,24 +3,6 @@ const path = require('path');
 const { getPackagesSync } = require('@manypkg/get-packages');
 const pkg = require('./package.json');
 
-function getEntryPoints() {
-  const repoRoot = path.join(__dirname, '..');
-  const packagesRoot = path.join(repoRoot, 'packages');
-  const entryPoints = getPackagesSync(repoRoot)
-    .packages.filter((pkg) => !pkg.packageJson.private)
-    .filter((pkg) => pkg.dir.startsWith(packagesRoot))
-    .map((pkg) => path.relative(__dirname, path.join(pkg.dir, 'src', 'index.ts')))
-    .filter((entryPoint) => {
-      if (fs.existsSync(entryPoint)) {
-        return true;
-      }
-
-      console.warn(`failed to find entry point file ${entryPoint}`);
-      return false;
-    });
-  return entryPoints;
-}
-
 module.exports = {
   title: 'Remirror',
   tagline: pkg.description,
@@ -67,7 +49,7 @@ module.exports = {
             },
             {
               label: 'Installation',
-              to: 'docs/guide/installation',
+              to: 'docs/installation',
             },
           ],
         },
@@ -120,16 +102,6 @@ module.exports = {
   plugins: [
     path.join(__dirname, 'plugins/monaco-editor'),
     require.resolve('@docusaurus/plugin-ideal-image'),
-    [
-      'docusaurus-plugin-typedoc',
-
-      // Plugin / TypeDoc options
-      {
-        entryPoints: getEntryPoints(),
-        tsconfig: '../packages/tsconfig.json',
-        docsRoot: '../docs',
-      },
-    ],
   ],
   themes: ['@docusaurus/theme-live-codeblock'],
 

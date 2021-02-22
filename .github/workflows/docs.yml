@@ -44,9 +44,6 @@ jobs:
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
-      - name: build project
-        run: pnpm build
-
       - name: build docs
         run: pnpm build:docs
 

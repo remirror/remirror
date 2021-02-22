@@ -241,7 +241,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 [introduction]: https://remirror.io/docs
 [contribution guide]: https://remirror.io/docs/contributing
 [projects]: https://remirror.io/projects
-[installation]: https://remirror.io/docs/guide/installation
+[installation]: https://remirror.io/docs/installation
 [typescript]: https://github.com/microsoft/Typescript
 [react]: https://github.com/facebook/react
 [prosemirror]: https://prosemirror.net
