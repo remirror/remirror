@@ -115,7 +115,7 @@ yarn.lock
 **/yarn.lock
 
 ./**/.vscode
-
+/.idea
 
 /report.*.json
 
