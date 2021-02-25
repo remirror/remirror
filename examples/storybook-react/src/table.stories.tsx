@@ -49,10 +49,6 @@ const CommandMenu = () => {
           create a table with custom cell content
         </button>
 
-        <button onClick={() => commands.createTable({ cellContent: customCellContent })}>
-          create a table with custom cell content
-        </button>
-
         <button onClick={() => commands.deleteTableColumn()}>delete the current column</button>
 
         <button onClick={() => commands.deleteTableRow()}>delete the current row</button>
