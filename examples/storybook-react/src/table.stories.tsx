@@ -54,11 +54,11 @@ const CommandMenu = () => {
         <button onClick={() => commands.deleteTableRow()}>delete the current row</button>
 
         <button onClick={() => commands.addTableColumnAfter()}>
-          add a column after the current column
+          add a column after the current one
         </button>
 
         <button onClick={() => commands.addTableRowBefore()}>
-          add a column before the current row
+          add a row before the current one
         </button>
 
         <button onClick={() => commands.deleteTable()}>delete the table</button>
