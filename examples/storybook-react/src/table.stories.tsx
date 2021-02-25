@@ -1,7 +1,13 @@
 import { HeadingExtension } from '@remirror/extension-heading';
 import { TableExtension } from '@remirror/extension-tables';
 import { TextColorExtension } from '@remirror/extension-text-color';
-import { Remirror, ThemeProvider, useRemirror, useRemirrorContext } from '@remirror/react';
+import {
+  EditorComponent,
+  Remirror,
+  ThemeProvider,
+  useRemirror,
+  useRemirrorContext,
+} from '@remirror/react';
 
 export default { title: 'Tables extension' };
 
@@ -67,24 +73,14 @@ const CommandMenu = () => {
   );
 };
 
-const InnerEditor = () => {
-  const { getRootProps } = useRemirrorContext();
-
-  return (
-    <div>
-      <div {...getRootProps()} />
-      <CommandMenu />
-    </div>
-  );
-};
-
 export const Table = (): JSX.Element => {
   const { manager, state } = useRemirror({ extensions });
 
   return (
     <ThemeProvider>
       <Remirror manager={manager} initialContent={state}>
-        <InnerEditor />
+        <EditorComponent />
+        <CommandMenu />
       </Remirror>
     </ThemeProvider>
   );
