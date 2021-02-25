@@ -79,7 +79,7 @@ const InnerEditor = () => {
 };
 
 export const Table = (): JSX.Element => {
-  const { manager, state } = useRemirror({ extensions, content, stringHandler: 'html' });
+  const { manager, state } = useRemirror({ extensions });
 
   return (
     <ThemeProvider>
@@ -96,5 +96,3 @@ Table.args = {
 };
 
 const extensions = () => [new TableExtension(), new HeadingExtension(), new TextColorExtension()];
-
-const content = '';
