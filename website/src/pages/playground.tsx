@@ -8,7 +8,6 @@ import AnnouncementBar from '@theme/AnnouncementBar';
 import Navbar from '@theme/Navbar';
 import ThemeProvider from '@theme/ThemeProvider';
 import UserPreferencesProvider from '@theme/UserPreferencesProvider';
-import React from 'react';
 
 const PlaygroundPage = (props: any) => {
   const { siteConfig } = useDocusaurusContext();

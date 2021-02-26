@@ -375,11 +375,11 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
 
   @keyBinding({ shortcut: 'Enter' })
   enterKey({ dispatch, tr }: KeyBindingProps): boolean {
-    if (!isTextSelection(tr.selection) || !tr.selection.$cursor) {
+    if (!(isTextSelection(tr.selection) && tr.selection.empty)) {
       return false;
     }
 
-    const { nodeBefore, parent } = tr.selection.$from;
+    const { nodeBefore, parent } = tr.selection.$anchor;
 
     if (!nodeBefore || !nodeBefore.isText || !parent.type.isTextblock) {
       return false;

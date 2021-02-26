@@ -10,8 +10,8 @@ export function expandedStateFormatSelection(selection: Selection): object {
     $from: resolvedPosToJSON(selection.$from),
     $to: resolvedPosToJSON(selection.$to),
     $cursor:
-      isTextSelection(selection) && selection.$cursor
-        ? resolvedPosToJSON(selection.$cursor)
+      isTextSelection(selection) && selection.empty
+        ? resolvedPosToJSON(selection.$anchor)
         : undefined,
   };
 }

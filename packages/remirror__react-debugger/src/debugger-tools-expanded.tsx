@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import Dock from 'react-dock';
 import { Tab, TabList, TabPanel } from 'reakit';
 import { Icon } from '@remirror/react';
