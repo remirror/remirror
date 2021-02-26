@@ -54,7 +54,7 @@
     "idb-keyval": "^5.0.2",
     "match-sorter": "^6.1.0",
     "svgmoji": "^3.0.0",
-    "type-fest": "^0.20.2"
+    "type-fest": "^0.21.2"
   },
   "devDependencies": {
     "@remirror/pm": "1.0.0-next.60"

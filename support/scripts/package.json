@@ -117,7 +117,7 @@
     "svg-sprite": "^1.5.0",
     "tar": "^6.1.0",
     "tslog": "^3.1.1",
-    "type-fest": "^0.20.2",
+    "type-fest": "^0.21.2",
     "write-json-file": "^4.3.0"
   },
   "publishConfig": {

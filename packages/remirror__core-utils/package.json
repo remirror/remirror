@@ -39,7 +39,7 @@
     "@types/min-document": "^2.19.0",
     "css-in-js-utils": "^3.1.0",
     "min-document": "^2.19.0",
-    "type-fest": "^0.20.2"
+    "type-fest": "^0.21.2"
   },
   "devDependencies": {
     "@remirror/pm": "1.0.0-next.60",

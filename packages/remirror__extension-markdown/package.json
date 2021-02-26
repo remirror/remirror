@@ -40,7 +40,7 @@
     "@remirror/messages": "0.0.0",
     "@types/marked": "^1.2.2",
     "@types/turndown": "^5.0.0",
-    "marked": "^1.2.9",
+    "marked": "^2.0.0",
     "turndown": "^7.0.0",
     "turndown-plugin-gfm": "^1.0.2"
   },

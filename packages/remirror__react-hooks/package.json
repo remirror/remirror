@@ -137,7 +137,7 @@
     "@remirror/react-core": "0.0.0",
     "@remirror/react-utils": "1.0.0-next.60",
     "multishift": "1.0.0-next.60",
-    "type-fest": "^0.20.2",
+    "type-fest": "^0.21.2",
     "use-isomorphic-layout-effect": "^1.1.1",
     "use-previous": "^1.1.0"
   },
