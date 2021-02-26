@@ -122,7 +122,7 @@
     "@babel/preset-env": "^7.12.13",
     "@babel/preset-react": "^7.12.13",
     "@babel/register": "^7.12.13",
-    "@babel/runtime": "^7",
+    "@babel/runtime": "^7.13.7",
     "@changesets/changelog-github": "^0.2.8",
     "@changesets/cli": "^2.14.0",
     "@jest/types": "^26.6.2",

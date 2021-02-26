@@ -17,7 +17,7 @@
     "dom"
   ],
   "dependencies": {
-    "@babel/runtime": "^7"
+    "@babel/runtime": "^7.13.7"
   },
   "devDependencies": {
     "@emotion/css": "^11.1.3",

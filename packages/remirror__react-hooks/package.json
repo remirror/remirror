@@ -125,7 +125,7 @@
     "use-suggest"
   ],
   "dependencies": {
-    "@babel/runtime": "^7",
+    "@babel/runtime": "^7.13.7",
     "@remirror/core": "1.0.0-next.60",
     "@remirror/extension-emoji": "1.0.0-next.60",
     "@remirror/extension-events": "1.0.0-next.60",
