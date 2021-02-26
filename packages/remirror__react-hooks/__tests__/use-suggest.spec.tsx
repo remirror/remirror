@@ -64,3 +64,19 @@ test('should update the query for each keypress', () => {
 
   expect(result.current?.change?.text.full).toBe('/abc');
 });
+
+test('should not break when deleting content', () => {
+  const editor = RemirrorTestChain.create(createReactManager([]));
+  const { doc, p } = editor.nodes;
+  strictRender(<Wrapper manager={editor.manager} />);
+
+  act(() => {
+    editor.insertText('/');
+  });
+
+  act(() => {
+    editor.add(doc(p('')));
+  });
+
+  expect(result.current?.change).toBeUndefined();
+});

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import type { Except } from 'type-fest';
 import {
   ApplyStateLifecycleProps,
@@ -41,7 +41,6 @@ import { useExtension, useRemirrorContext } from '@remirror/react-core';
  */
 export function useSuggest(props: UseSuggesterProps): UseSuggestReturn {
   const { helpers } = useRemirrorContext<BuiltinPreset>();
-
   const [hookState, setHookState] = useState<UseSuggestState>(() => ({
     change: undefined,
     exit: undefined,
@@ -50,15 +49,28 @@ export function useSuggest(props: UseSuggesterProps): UseSuggestReturn {
     ...helpers.getSuggestMethods(),
   }));
 
+  // Keep track of changes from state updates.
+  const stateRef = useRef<Partial<UseSuggestState>>({});
+
   // Track changes in the suggester
   const onChange: SuggestChangeHandler = useCallback((options) => {
     const { changeReason, exitReason, match, query, text, range } = options;
-    const stateUpdate: Partial<UseSuggestState> = {};
+
+    // Set the state update to be the changes that have happened since the last
+    // change event.
+    const stateUpdate: Partial<UseSuggestState> = { ...stateRef.current };
+
+    // Reset the state ref.
+    stateRef.current = {};
 
     // Keep track of changes
     if (changeReason) {
       stateUpdate.change = { match, query, text, range, reason: changeReason };
       stateUpdate.shouldResetChangeState = false;
+
+      if (!exitReason) {
+        stateUpdate.exit = undefined;
+      }
     }
 
     if (exitReason) {
@@ -83,31 +95,34 @@ export function useSuggest(props: UseSuggesterProps): UseSuggestReturn {
         return;
       }
 
-      // Call the state function to update the state.
-      setHookState((prevState) => {
-        // Group all updates into one object.
-        const stateUpdate: UseSuggestState = { ...prevState };
+      // Copy the values from the current stateRef.
+      const stateUpdate: Partial<UseSuggestState> = { ...stateRef.current };
 
-        if (prevState.shouldResetChangeState && prevState.change) {
-          stateUpdate.change = undefined;
-        }
+      if (
+        (hookState.shouldResetChangeState || stateUpdate.shouldResetChangeState) &&
+        hookState.change
+      ) {
+        stateUpdate.change = undefined;
+      }
 
-        if (prevState.shouldResetExitState && prevState.exit) {
-          stateUpdate.exit = undefined;
-        }
+      if ((hookState.shouldResetExitState || stateUpdate.shouldResetExitState) && hookState.exit) {
+        stateUpdate.exit = undefined;
+      }
 
-        if (!prevState.shouldResetChangeState && prevState.change) {
-          stateUpdate.shouldResetChangeState = true;
-        }
+      if (
+        !(hookState.shouldResetChangeState || stateUpdate.shouldResetChangeState) &&
+        hookState.change
+      ) {
+        stateUpdate.shouldResetChangeState = true;
+      }
 
-        if (!prevState.shouldResetExitState && prevState.exit) {
-          stateUpdate.shouldResetExitState = true;
-        }
+      if (!(hookState.shouldResetExitState || stateUpdate.shouldResetExitState) && hookState.exit) {
+        stateUpdate.shouldResetExitState = true;
+      }
 
-        return stateUpdate;
-      });
+      stateRef.current = stateUpdate;
     },
-    [helpers],
+    [hookState, helpers],
   );
 
   // Attach the editor state handler to the instance of the remirror editor.
@@ -119,8 +134,8 @@ export function useSuggest(props: UseSuggesterProps): UseSuggestReturn {
     ...Object.values(props),
   ]);
 
-  return useMemo(() => {
-    return {
+  return useMemo(
+    () => ({
       addIgnored: hookState.addIgnored,
       change: hookState.change,
       exit: hookState.exit,
@@ -128,17 +143,17 @@ export function useSuggest(props: UseSuggesterProps): UseSuggestReturn {
       ignoreNextExit: hookState.ignoreNextExit,
       removeIgnored: hookState.removeIgnored,
       setMarkRemoved: hookState.setMarkRemoved,
-    };
-  }, [
-    // hookState.shouldResetChangeState,
-    hookState.addIgnored,
-    hookState.change,
-    hookState.clearIgnored,
-    hookState.exit,
-    hookState.ignoreNextExit,
-    hookState.removeIgnored,
-    hookState.setMarkRemoved,
-  ]);
+    }),
+    [
+      hookState.addIgnored,
+      hookState.change,
+      hookState.clearIgnored,
+      hookState.exit,
+      hookState.ignoreNextExit,
+      hookState.removeIgnored,
+      hookState.setMarkRemoved,
+    ],
+  );
 }
 
 /**
@@ -146,7 +161,14 @@ export function useSuggest(props: UseSuggesterProps): UseSuggestReturn {
  */
 export const useSuggester = useSuggest;
 
-export interface UseSuggesterProps extends Except<Suggester, 'onChange'> {}
+export interface UseSuggesterProps extends Except<Suggester, 'onChange'> {
+  /**
+   * Set to `true` to ignore changes which are purely caused by focus events.
+   *
+   * TODO - NOT YET IMPLEMENTED
+   */
+  ignoreFocus?: boolean;
+}
 
 type SuggestStateMethods = Pick<
   SuggestState,

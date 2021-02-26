@@ -13,6 +13,7 @@ export {
   useCommands,
   useEditorDomRef,
   useEditorState,
+  useEditorView,
   useEffectWithWarning,
   useExtension,
   useForceUpdate,
