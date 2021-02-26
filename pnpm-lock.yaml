@@ -269,6 +269,10 @@ importers:
       '@emotion/css': 11.1.3_@babel+core@7.12.17
       '@linaria/core': 3.0.0-beta.1
       '@remirror/extension-codemirror5': link:../../packages/remirror__extension-codemirror5
+      '@remirror/extension-heading': link:../../packages/remirror__extension-heading
+      '@remirror/extension-react-component': link:../../packages/remirror__extension-react-component
+      '@remirror/extension-tables': link:../../packages/remirror__extension-tables
+      '@remirror/extension-text-color': link:../../packages/remirror__extension-text-color
       '@remirror/messages': link:../../packages/remirror__messages
       '@remirror/playground': link:../../packages/remirror__playground
       '@remirror/pm': link:../../packages/remirror__pm
@@ -303,6 +307,10 @@ importers:
       '@emotion/css': ^11.1.3
       '@linaria/core': ^3.0.0-beta.1
       '@remirror/extension-codemirror5': 1.0.0-next.60
+      '@remirror/extension-heading': 1.0.0-next.60
+      '@remirror/extension-react-component': 1.0.0-next.60
+      '@remirror/extension-tables': 1.0.0-next.60
+      '@remirror/extension-text-color': 0.0.0
       '@remirror/messages': 0.0.0
       '@remirror/playground': 1.0.0-next.60
       '@remirror/pm': 1.0.0-next.60
@@ -3168,6 +3176,9 @@ packages:
     bundledDependencies:
       - jsonschema
       - semver
+    dependencies:
+      jsonschema: 1.4.0
+      semver: 7.3.4
     dev: false
     engines:
       node: '>= 10.13.0 <13 || >=13.7.0'
@@ -3191,6 +3202,7 @@ packages:
       - semver
     dependencies:
       '@aws-cdk/cloud-assembly-schema': 1.90.1
+      semver: 7.3.4
     dev: false
     engines:
       node: '>= 10.13.0 <13 || >=13.7.0'
@@ -3205,6 +3217,8 @@ packages:
   /@aws-cdk/yaml-cfn/1.90.1:
     bundledDependencies:
       - yaml
+    dependencies:
+      yaml: 1.10.0
     dev: false
     engines:
       node: '>= 10.13.0 <13 || >=13.7.0'
@@ -10775,7 +10789,7 @@ packages:
       integrity: sha512-0BfJq4NSfQXd+SkFdrvFbG7addhYSBA2mQwISr46pD6E5iqkWg02RAs8vyTT/j0RTnoYmeXauBuSv1qKwR179g==
   /axios/0.21.1:
     dependencies:
-      follow-redirects: 1.13.2_debug@4.3.1
+      follow-redirects: 1.13.2
     resolution:
       integrity: sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
   /axobject-query/2.2.0:
@@ -16356,9 +16370,20 @@ packages:
     dev: false
     resolution:
       integrity: sha512-GRnmB5gPyJpAhTQdSZTSp9uaPSvl09KoYcMQtsB9rQoOmzs9dH6ffeccH+Z+cv6P68Hu5bC6JjRh4Ah/mHSNRw==
+  /follow-redirects/1.13.2:
+    engines:
+      node: '>=4.0'
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    resolution:
+      integrity: sha512-6mPTgLxYm3r6Bkkg0vNM0HTjfGrOEtsfbhagQvbxDEsEkpNhw582upBaoRZylzen6krEmxXJgt9Ju6HiI4O7BA==
   /follow-redirects/1.13.2_debug@4.3.1:
     dependencies:
       debug: 4.3.1_supports-color@6.1.0
+    dev: true
     engines:
       node: '>=4.0'
     peerDependencies:
@@ -20164,6 +20189,10 @@ packages:
   /jsonify/0.0.0:
     resolution:
       integrity: sha1-LHS27kHZPKUbe1qu6PUDYx0lKnM=
+  /jsonschema/1.4.0:
+    dev: false
+    resolution:
+      integrity: sha512-/YgW6pRMr6M7C+4o8kS+B/2myEpHCrxO4PEWnqJNBFMjn7EWXqlQ4tGwL6xTHeRplwuZmcAncdvfOad1nT2yMw==
   /jsonwebtoken/8.5.1:
     dependencies:
       jws: 3.2.2
