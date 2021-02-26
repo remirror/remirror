@@ -84,7 +84,7 @@ function babelConfig(api) {
               exclude: ['transform-typeof-symbol'],
             },
           ],
-      require.resolve('@babel/preset-react'),
+      [require.resolve('@babel/preset-react'), { runtime: 'automatic' }],
       require.resolve('@linaria/babel-preset'),
     ],
     plugins: [],

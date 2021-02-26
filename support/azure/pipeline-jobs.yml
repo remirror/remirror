@@ -27,18 +27,18 @@ jobs:
               pnpm test
             displayName: 'run unit tests across project'
 
-  - ${{ if eq(parameters.name, 'Linux') }}:
-      - job: ${{ parameters.name }}SizeChecks
-        pool:
-          vmImage: ${{ parameters.vmImage }}
-        steps:
-          - template: pipeline-install.yml
+  # - ${{ if eq(parameters.name, 'Linux') }}:
+  #     - job: ${{ parameters.name }}SizeChecks
+  #       pool:
+  #         vmImage: ${{ parameters.vmImage }}
+  #       steps:
+  #         - template: pipeline-install.yml
 
-          - bash: pnpm build
-            displayName: 'build all project dependencies'
+  #         - bash: pnpm build
+  #           displayName: 'build all project dependencies'
 
-          - bash: pnpm size
-            displayName: 'check size limits'
+  #         - bash: pnpm size
+  #           displayName: 'check size limits'
 
   - ${{ if eq(parameters.name, 'Linux') }}:
       - job: ${{ parameters.name }}BuildUnitTests

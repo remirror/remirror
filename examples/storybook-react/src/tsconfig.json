@@ -18,13 +18,13 @@
       "path": "../../../packages/remirror__extension-codemirror5/src"
     },
     {
+      "path": "../../../packages/remirror__extension-heading/src"
+    },
+    {
       "path": "../../../packages/remirror__extension-react-component/src"
     },
     {
       "path": "../../../packages/remirror__extension-tables/src"
-    },
-    {
-      "path": "../../../packages/remirror__extension-heading/src"
     },
     {
       "path": "../../../packages/remirror__extension-text-color/src"
