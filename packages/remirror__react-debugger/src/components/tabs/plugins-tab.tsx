@@ -1,4 +1,3 @@
-import React from 'react';
 import { assertGet } from '@remirror/core';
 
 import { useDebuggerStore } from '../../debugger-state';

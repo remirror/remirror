@@ -1,6 +1,4 @@
-import MonacoEditorWebpackPlugin from 'monaco-editor-webpack-plugin';
 import type { Configuration } from 'webpack';
-import WorkerPlugin from 'worker-plugin';
 
 export default {
   stories: ['./src/*.stories.tsx'],
@@ -17,13 +15,6 @@ export default {
     resolve.extensions = resolve.extensions ?? [];
 
     resolve.extensions.push('.ts', '.tsx');
-    plugins.push(
-      new WorkerPlugin(),
-      new MonacoEditorWebpackPlugin({
-        languages: ['typescript', 'javascript', 'json', 'markdown', 'css'],
-      }),
-    );
-
     const alias = resolve.alias ?? {};
     config.resolve = resolve;
     config.plugins = plugins;

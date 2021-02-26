@@ -3,6 +3,7 @@ export * from './use-chained-commands';
 export * from './use-commands';
 export * from './use-editor-dom-ref';
 export * from './use-editor-state';
+export * from './use-editor-view';
 export * from './use-effect-with-warning';
 export * from './use-extension';
 export * from './use-force-update';

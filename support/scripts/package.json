@@ -50,7 +50,7 @@
     "publish-pr"
   ],
   "dependencies": {
-    "@babel/runtime": "^7",
+    "@babel/runtime": "^7.13.7",
     "@changesets/get-dependents-graph": "^1.2.0",
     "@changesets/pre": "^1.0.5",
     "@changesets/read": "^0.4.6",
@@ -117,7 +117,7 @@
     "svg-sprite": "^1.5.0",
     "tar": "^6.1.0",
     "tslog": "^3.1.1",
-    "type-fest": "^0.20.2",
+    "type-fest": "^0.21.2",
     "write-json-file": "^4.3.0"
   },
   "publishConfig": {

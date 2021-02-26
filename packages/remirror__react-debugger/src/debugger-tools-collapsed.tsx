@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { FloatingButton } from './components';
 
 interface DebuggerToolsCollapsedProps {

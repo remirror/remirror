@@ -134,7 +134,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
 
   @keyBinding({ shortcut: 'Enter' })
   handleEnterKey({ dispatch, tr }: KeyBindingProps): boolean {
-    if (!isTextSelection(tr.selection) || !tr.selection.$cursor) {
+    if (!(isTextSelection(tr.selection) && tr.selection.empty)) {
       return false;
     }
 

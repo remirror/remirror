@@ -14,8 +14,10 @@ import {
   FloatingWrapper,
   Remirror,
   ThemeProvider,
+  useEditorView,
   useExtension,
   useRemirror,
+  useSuggest,
 } from '@remirror/react';
 
 export default { title: 'Link extension' };
@@ -44,6 +46,24 @@ function useLinkShortcut(): ShortcutHandlerProps | undefined {
   return state;
 }
 
+const Suggester = () => {
+  const view = useEditorView();
+  const { change, exit } = useSuggest({ char: '/', name: 'command' });
+  console.log({ change: change, exit: exit });
+
+  if (!change) {
+    return null;
+  }
+
+  const coords = view.coordsAtPos(change.range.from);
+
+  return (
+    <div>
+      Show suggest at {coords.left}/{coords.top}
+    </div>
+  );
+};
+
 const FloatingLinkToolbar = () => {
   const link = useLinkShortcut();
   const [visible, setVisible] = useState(false);
@@ -62,6 +82,7 @@ const FloatingLinkToolbar = () => {
       <FloatingWrapper positioner={linkPositioner} placement='bottom'>
         {/* {linkPositioner ? `${linkPositioner.}` : ''} */}
       </FloatingWrapper>
+      <Suggester />
       <ControlledDialogComponent visible={visible} onUpdate={onUpdate} backdrop={true}>
         <Button
           onClick={() => {

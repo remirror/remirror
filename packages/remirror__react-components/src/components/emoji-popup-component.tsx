@@ -1,5 +1,5 @@
 import { cx } from 'linaria';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useCommands } from '@remirror/react-core';
 import { FlatEmojiWithUrl, useEmoji } from '@remirror/react-hooks';
 import { ExtensionEmojiTheme } from '@remirror/theme';
