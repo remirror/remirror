@@ -380,14 +380,6 @@ const DEFAULT_TSCONFIG_META: Required<TsConfigMeta> = {
     },
     include: ['./'],
   },
-  // './': {
-  //   compilerOptions: {
-  //     declaration: false,
-  //     noEmit: true,
-  //     skipLibCheck: true,
-  //   },
-  //   include: ['src'],
-  // },
 };
 
 interface TsConfigFile {

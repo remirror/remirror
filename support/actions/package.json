@@ -26,10 +26,6 @@
   },
   "main": "dist/remirror-actions.cjs.js",
   "module": "dist/remirror-actions.esm.js",
-  "browser": {
-    "./dist/remirror-actions.cjs.js": "./dist/remirror-actions.browser.cjs.js",
-    "./dist/remirror-actions.esm.js": "./dist/remirror-actions.browser.esm.js"
-  },
   "types": "dist/remirror-actions.cjs.d.ts",
   "files": [
     "dist",
@@ -59,7 +55,6 @@
     "access": "public"
   },
   "@remirror": {
-    "sizeLimit": "50 KB",
     "tsconfigs": {
       "./": {
         "include": [

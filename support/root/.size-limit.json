@@ -9,7 +9,7 @@
   },
   {
     "name": "create-context-state",
-    "limit": "1 KB",
+    "limit": "1.5 KB",
     "path": "packages/create-context-state/dist/create-context-state.browser.esm.js",
     "ignore": ["@types/react", "react"],
     "running": false,
@@ -211,7 +211,7 @@
   },
   {
     "name": "@remirror/extension-codemirror5",
-    "limit": "5 KB",
+    "limit": "15 KB",
     "path": "packages/remirror__extension-codemirror5/dist/remirror-extension-codemirror5.browser.esm.js",
     "ignore": [
       "@remirror/pm",
@@ -839,22 +839,6 @@
     "limit": "10 KB",
     "path": "packages/test-keyboard/dist/test-keyboard.browser.esm.js",
     "ignore": ["@remirror/core-helpers", "@remirror/core-types"],
-    "running": false,
-    "gzip": true
-  },
-  {
-    "name": "actions",
-    "limit": "50 KB",
-    "path": "support/actions/dist/remirror-actions.browser.esm.js",
-    "ignore": ["@remirror/core-helpers"],
-    "running": false,
-    "gzip": true
-  },
-  {
-    "name": "scripts",
-    "limit": "50 KB",
-    "path": "support/scripts/dist/scripts.esm.js",
-    "ignore": ["@remirror/core-helpers", "@remirror/icons", "@remirror/playground"],
     "running": false,
     "gzip": true
   },

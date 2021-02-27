@@ -13,17 +13,6 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "exports": {
-    ".": {
-      "import": "./dist/scripts.esm.js",
-      "require": "./dist/scripts.cjs.js",
-      "browser": "./dist/scripts.esm.js",
-      "types": "./dist/scripts.cjs.d.ts",
-      "default": "./dist/scripts.esm.js"
-    },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
-  },
   "main": "dist/scripts.cjs.js",
   "module": "dist/scripts.esm.js",
   "files": [
@@ -122,9 +111,6 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "@remirror": {
-    "sizeLimit": "50 KB"
   },
   "preconstruct": {
     "entrypoints": [

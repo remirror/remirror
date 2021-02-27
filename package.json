@@ -51,7 +51,7 @@
     "generate:icons": "node support/scripts/generate-icons",
     "generate:intl": "node support/scripts/generate-intl",
     "generate:playground": "node support/scripts/generate-playground",
-    "generate:size": "node support/scripts/generate-configs -- --size",
+    "generate:size": "node support/scripts/generate-configs --size",
     "generate:ts": "node support/scripts/generate-configs --ts-packages",
     "if-clean": "node support/scripts/run-if-clean",
     "if-config": "node support/scripts/run-if-config",

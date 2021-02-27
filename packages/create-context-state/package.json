@@ -34,11 +34,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.7",
-    "@types/object.pick": "^1.3.0",
-    "dash-get": "^1.0.2",
-    "object.pick": "^1.3.0",
-    "use-previous": "^1.1.0"
+    "@babel/runtime": "^7.13.7"
   },
   "devDependencies": {
     "@testing-library/react": "^11.2.5",
@@ -58,7 +54,7 @@
     "access": "public"
   },
   "@remirror": {
-    "sizeLimit": "1 KB"
+    "sizeLimit": "1.5 KB"
   },
   "rn:dev": "src/index.ts"
 }
