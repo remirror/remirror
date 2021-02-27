@@ -3510,6 +3510,7 @@ export const extensionGapCursorStyledCss: ReturnType<typeof css> = css`
   }
   .remirror-editor .ProseMirror-focused.ProseMirror-gapcursor,
   .remirror-editor .ProseMirror-focused .ProseMirror-gapcursor,
+  .remirror-editor.ProseMirror-focused .ProseMirror-gapcursor,
   .remirror-editor.ProseMirror-focused.ProseMirror-gapcursor {
     display: block;
   }
