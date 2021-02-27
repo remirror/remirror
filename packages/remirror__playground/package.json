@@ -96,7 +96,7 @@
     "react-frame-component": "^4.1.3",
     "react-grid-layout": "^1.1.0",
     "react-loadable": "^5.5.0",
-    "react-sizeme": "^2.6.12",
+    "react-sizeme": "^3.0.1",
     "regenerator-runtime": "^0.13.7",
     "remirror": "1.0.0-next.60",
     "tiny-warning": "^1.0.3",
