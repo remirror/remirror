@@ -1,67 +1,10 @@
-import { ComponentType, FC, Fragment } from 'react';
-import { isEmptyArray, isString, object, ObjectMark, RemirrorJSON } from '@remirror/core';
+import { FC, Fragment } from 'react';
+import { isEmptyArray, isString, object, RemirrorJSON } from '@remirror/core';
 
-type MarkMap = Partial<Record<string, string | ComponentType<any>>>;
-interface TextHandlerProps {
-  node: RemirrorJSON;
-  markMap: MarkMap;
-  skipUnknownMarks?: boolean;
-}
+import { CodeBlock, TextHandler } from './handlers';
+import { MarkMap } from './types';
 
-const normalizeMark = (mark: ObjectMark | string) =>
-  isString(mark) ? { type: mark, attrs: {} } : { attrs: {}, ...mark };
-
-const TextHandler: FC<TextHandlerProps> = ({ node, ...props }) => {
-  if (!node.text) {
-    return null;
-  }
-
-  let textElement = <Fragment>{node.text}</Fragment>;
-
-  if (!node.marks) {
-    return textElement;
-  }
-
-  for (const mark of node.marks) {
-    const normalized = normalizeMark(mark);
-    const MarkHandler = props.markMap[normalized.type];
-
-    if (!MarkHandler) {
-      if (!props.skipUnknownMarks) {
-        throw new Error(`No handler for mark type \`${normalized.type}\` registered`);
-      }
-
-      continue;
-    }
-
-    textElement = <MarkHandler {...normalized.attrs}>{textElement}</MarkHandler>;
-  }
-
-  return textElement;
-};
-
-const CodeBlock: FC<{
-  node: RemirrorJSON;
-  markMap: MarkMap;
-}> = (props) => {
-  const content = props.node.content;
-
-  if (!content) {
-    return null;
-  }
-
-  content.map((node, ii) => {
-    return <TextHandler key={ii} {...{ ...props, node }} />;
-  });
-
-  return (
-    <pre>
-      <code>{content}</code>
-    </pre>
-  );
-};
-
-const Doc: FC<SubRenderTreeProps> = ({ node, ...props }) => {
+export const Doc: FC<SubRenderTreeProps> = ({ node, ...props }) => {
   const content = node.content;
 
   if (!content || isEmptyArray(content)) {
