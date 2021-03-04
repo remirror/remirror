@@ -19,11 +19,14 @@ export const Doc: FC<SubRenderTreeProps> = ({ node, ...props }) => {
 };
 
 const defaultTypeMap: MarkMap = {
+  blockquote: 'blockquote',
+  bulletList: 'ul',
   doc: Doc,
   paragraph: 'p',
   image: 'img',
   hardBreak: 'br',
   codeBlock: CodeBlock,
+  orderedList: 'ol',
   text: TextHandler,
 };
 
