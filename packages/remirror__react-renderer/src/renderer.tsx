@@ -2,6 +2,9 @@ import { FC, Fragment } from 'react';
 import { isEmptyArray, isString, object, RemirrorJSON } from '@remirror/core';
 
 import { CodeBlock, TextHandler } from './handlers';
+import { Heading } from './handlers/heading';
+import { createIFrameHandler } from './handlers/iframe';
+import { createLinkHandler } from './handlers/link';
 import { MarkMap } from './types';
 
 export const Doc: FC<SubRenderTreeProps> = ({ node, ...props }) => {
@@ -22,7 +25,9 @@ const defaultTypeMap: MarkMap = {
   blockquote: 'blockquote',
   bulletList: 'ul',
   doc: Doc,
+  heading: Heading,
   paragraph: 'p',
+  iframe: createIFrameHandler(),
   image: 'img',
   hardBreak: 'br',
   codeBlock: CodeBlock,
@@ -34,7 +39,7 @@ const defaultMarkMap: MarkMap = {
   italic: 'em',
   bold: 'strong',
   code: 'code',
-  link: 'a',
+  link: createLinkHandler(),
   underline: 'u',
 };
 
