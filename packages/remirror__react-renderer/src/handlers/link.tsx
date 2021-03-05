@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Literal } from '@remirror/core';
 
-export const createLinkHandler = (overwriteProps?: Record<string, Literal>) => {
+export const createLinkHandler = (overwriteAttrs?: Record<string, Literal>) => {
   const linkHandler: FC<{
     href: string;
     target?: string | null;
@@ -10,7 +10,7 @@ export const createLinkHandler = (overwriteProps?: Record<string, Literal>) => {
     const normalizedAttrs = {
       href,
       target: target ?? undefined,
-      ...overwriteProps,
+      ...overwriteAttrs,
     };
     return <a {...normalizedAttrs}>{children}</a>;
   };

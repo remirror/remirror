@@ -3,7 +3,7 @@ import { Literal, RemirrorJSON } from '@remirror/core';
 
 import { MarkMap } from '../types';
 
-export const createIFrameHandler = (overwriteProps?: Record<string, Literal>) => {
+export const createIFrameHandler = (overwriteAttrs?: Record<string, Literal>) => {
   const iframeHandler: FC<{
     node: RemirrorJSON;
     markMap: MarkMap;
@@ -14,7 +14,7 @@ export const createIFrameHandler = (overwriteProps?: Record<string, Literal>) =>
       ...attrs,
       // Prevent React error that allowFullScreen must be boolean (but is string in remirror)
       allowFullScreen: allowFullScreen !== 'false',
-      ...overwriteProps,
+      ...overwriteAttrs,
     };
     return <iframe {...normalizedAttrs} />;
   };
