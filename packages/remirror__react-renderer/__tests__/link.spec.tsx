@@ -1,6 +1,6 @@
 import { strictRender } from 'testing/react';
 
-import { createLinkHandler } from '../src/handlers/link';
+import { createLinkHandler } from '../';
 
 const LINK = {
   href: 'https://www.example.com',
