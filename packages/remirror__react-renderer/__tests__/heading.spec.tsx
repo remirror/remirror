@@ -1,7 +1,7 @@
 import { strictRender } from 'testing/react';
 import { RemirrorJSON } from '@remirror/core';
 
-import { Heading } from '../src/handlers/heading';
+import { Heading } from '../';
 
 describe('Heading', () => {
   it('renders different heading levels to HTML', () => {

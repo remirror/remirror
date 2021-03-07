@@ -1,6 +1,6 @@
 import { strictRender } from 'testing/react';
 
-import { createIFrameHandler } from '../src/handlers/iframe';
+import { createIFrameHandler } from '../';
 
 const JSON = {
   type: 'iframe',
