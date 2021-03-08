@@ -27,6 +27,7 @@ const defaultTypeMap: MarkMap = {
   doc: Doc,
   heading: Heading,
   paragraph: 'p',
+  horizontalRule: 'hr',
   iframe: createIFrameHandler(),
   image: 'img',
   hardBreak: 'br',
