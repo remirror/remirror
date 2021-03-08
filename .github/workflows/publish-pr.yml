@@ -11,9 +11,29 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/publish')
     steps:
+      - name: get pr information
+        uses: actions/github-script@v3
+        id: pr
+        with:
+          script: |
+            const request = {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            }
+            core.info(`Getting PR #${request.pull_number} from ${request.owner}/${request.repo}`)
+            try {
+              const result = await github.pulls.get(request)
+              core.info(`Got PR: ${JSON.stringify(result.data)}`)
+              return result.data
+            } catch (err) {
+              core.setFailed(`Request failed with error ${err}`)
+            }
+
       - name: checkout code repository
         uses: actions/checkout@v2
         with:
+          ref: ${{ fromJSON(steps.pr.outputs.result).head.ref }}
           fetch-depth: 0
 
       - name: setup caching
