@@ -1,7 +1,7 @@
 import { FC, Fragment } from 'react';
 import { isEmptyArray, isString, object, RemirrorJSON } from '@remirror/core';
 
-import { CodeBlock, TextHandler } from './handlers';
+import { Callout, CodeBlock, TextHandler } from './handlers';
 import { Heading } from './handlers/heading';
 import { createIFrameHandler } from './handlers/iframe';
 import { createLinkHandler } from './handlers/link';
@@ -24,6 +24,7 @@ export const Doc: FC<SubRenderTreeProps> = ({ node, ...props }) => {
 const defaultTypeMap: MarkMap = {
   blockquote: 'blockquote',
   bulletList: 'ul',
+  callout: Callout,
   doc: Doc,
   heading: Heading,
   paragraph: 'p',
