@@ -13,10 +13,10 @@ import { useRemirrorContext } from './use-remirror-context';
  *
  *   return (
  *     <>
- *       <button onClick={() => Helpers.toggleBold()}>
+ *       <button onClick={() => helpers.toggleBold()}>
  *         Click me!
  *       </button>
- *       <button onClick={() => Helpers.chain.toggleBold().toggleItalic().run()}>
+ *       <button onClick={() => helpers.chain.toggleBold().toggleItalic().run()}>
  *         Chain me!
  *       </button>
  *     </>

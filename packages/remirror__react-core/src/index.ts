@@ -9,6 +9,7 @@ export {
   I18nProvider,
   RemirrorContext,
   useActive,
+  useAttrs,
   useChainedCommands,
   useCommands,
   useEditorDomRef,
@@ -23,6 +24,7 @@ export {
   usePortalContainer,
   useRemirror,
   useRemirrorContext,
+  useSelectedText,
 } from './hooks';
 export { createReactManager } from './react-helpers';
 export type { RemirrorProps } from './react-remirror';
