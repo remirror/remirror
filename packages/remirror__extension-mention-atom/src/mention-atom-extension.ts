@@ -153,21 +153,19 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
         label: {},
         name: {},
       },
-      parseDOM: [
-        {
-          tag: `${this.options.mentionTag}[${dataAttributeId}]`,
-          getAttrs: (node) => {
-            if (!isElementDomNode(node)) {
-              return false;
-            }
+      parseDOM: this.options.matchers.map((matcher) => ({
+        tag: `${matcher.mentionTag ?? this.options.mentionTag}[${dataAttributeId}]`,
+        getAttrs: (node) => {
+          if (!isElementDomNode(node)) {
+            return false;
+          }
 
-            const id = node.getAttribute(dataAttributeId);
-            const name = node.getAttribute(dataAttributeName);
-            const label = node.textContent;
-            return { ...extra.parse(node), id, label, name };
-          },
+          const id = node.getAttribute(dataAttributeId);
+          const name = node.getAttribute(dataAttributeName);
+          const label = node.textContent;
+          return { ...extra.parse(node), id, label, name };
         },
-      ],
+      })),
       toDOM: (node) => {
         const { label, id, name } = omitExtraAttributes(
           node.attrs,
@@ -188,7 +186,7 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
           [dataAttributeName]: name,
         };
 
-        return [this.options.mentionTag, attrs, label];
+        return [matcher?.mentionTag ?? this.options.mentionTag, attrs, label];
       },
     };
   }
@@ -386,6 +384,12 @@ export interface MentionAtomExtensionMatcher
    * Provide customs class names for the completed mention.
    */
   mentionClassName?: string;
+
+  /**
+   * An override for the default mention tag. This allows different mentions to
+   * use different tags.
+   */
+  mentionTag?: string;
 }
 
 /**
