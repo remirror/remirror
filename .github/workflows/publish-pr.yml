@@ -9,7 +9,7 @@ env:
 jobs:
   publish_comment:
     runs-on: ubuntu-latest
-    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/publish')
+    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/publish') && github.event.comment.author_association == 'COLLABORATOR'
     steps:
       - name: get pr information
         uses: actions/github-script@v3
