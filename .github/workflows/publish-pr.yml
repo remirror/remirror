@@ -9,7 +9,7 @@ env:
 jobs:
   publish_comment:
     runs-on: ubuntu-latest
-    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/publish') && github.event.comment.author_association == 'COLLABORATOR'
+    if: ${{ github.event.issue.pull_request && github.event.comment.body == '/publish' && (github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'MEMBER' || github.event.comment.author_association == 'COLLABORATOR') }}
     steps:
       - name: get pr information
         uses: actions/github-script@v3
@@ -25,6 +25,9 @@ jobs:
             try {
               const result = await github.pulls.get(request)
               core.info(`Got PR: ${JSON.stringify(result.data)}`)
+              if (result.data.head.repo.full_name !== 'remirror/remirror') {
+                throw new Error(`this workflow is only allowed on the "remirror" repository`)
+              }
               return result.data
             } catch (err) {
               core.setFailed(`Request failed with error ${err}`)
