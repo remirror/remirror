@@ -8,6 +8,7 @@ import type {
   NonChainableCommandFunction,
   ProsemirrorAttributes,
   StringKey,
+  Transaction,
 } from '@remirror/core-types';
 
 import type { CommandShape, GetCommands, GetHelpers } from '../types';
@@ -119,6 +120,12 @@ export type ChainedIntersection<Extension extends AnyExtension> = UnionToInterse
 >;
 
 export type ChainedFromExtensions<
+  Extension extends AnyExtension,
+  Chained extends ChainedIntersection<Extension> = ChainedIntersection<Extension>
+> = _ChainedFromExtensions<Extension, Chained> &
+  ((tr: Transaction) => _ChainedFromExtensions<Extension, Chained>);
+
+type _ChainedFromExtensions<
   Extension extends AnyExtension,
   Chained extends ChainedIntersection<Extension> = ChainedIntersection<Extension>
 > = ChainedCommandProps &

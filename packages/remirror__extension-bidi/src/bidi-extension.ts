@@ -156,10 +156,7 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
         }
 
         this._ignoreNextUpdate = true;
-        this.store.chain
-          .custom(tr)
-          .updateNodeAttributes(pos, { ...node.attrs, dir })
-          .restore();
+        this.store.chain(tr).updateNodeAttributes(pos, { ...node.attrs, dir });
 
         return tr;
       },

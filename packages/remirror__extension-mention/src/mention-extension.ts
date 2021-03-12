@@ -344,8 +344,8 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
           // the history plugin from working.
           cachedRange = range;
 
-          // Remove the mention since it is not valid
-          this.store.chain.custom(tr).removeMention({ range }).restore();
+          // Remove the mention since it is no longer valid.
+          this.store.chain(tr).removeMention({ range });
         },
       };
     });

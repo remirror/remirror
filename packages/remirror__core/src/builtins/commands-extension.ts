@@ -117,10 +117,6 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    * @internal
    */
   get transaction(): Transaction {
-    if (this.customTransaction) {
-      return this.customTransaction;
-    }
-
     // Make sure we have the most up to date state.
     const state = this.store.getState();
 
@@ -167,13 +163,6 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
   private _transaction?: Transaction;
 
   /**
-   * This is used to set the transaction being updated to be a custom one, which
-   * can be useful if you'd like to use the command chain methods available via
-   * remirror on transactions outside of the update lifecycle.
-   */
-  private customTransaction?: Transaction;
-
-  /**
    * Track the decorated command data.
    */
   private readonly decorated = new Map<string, WithName<CommandDecoratorOptions>>();
@@ -189,7 +178,24 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
     const { extensions, helpers } = this.store;
     const commands: Record<string, CommandShape> = object();
     const names = new Set<string>();
-    const chain: Record<string, any> & ChainedCommandProps = object();
+
+    const chain: Record<string, any> & ChainedCommandProps = (tr: Transaction) => {
+      // This function allows for custom chaining.
+      const customChain: Record<string, any> & ChainedCommandProps = object();
+
+      for (const [name, command] of Object.entries(commands)) {
+        // TODO exclude the excluded chained commands.
+        customChain[name] = this.chainedFactory({
+          chain: customChain,
+          command: command.original,
+          tr,
+        });
+      }
+
+      customChain.run = () => view.dispatch(tr);
+
+      return customChain;
+    };
 
     for (const extension of extensions) {
       const extensionCommands: ExtensionCommandReturn = extension.createCommands?.() ?? {};
@@ -230,7 +236,6 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    * Update the cached transaction whenever the state is updated.
    */
   onStateUpdate({ state }: StateUpdateLifecycleProps): void {
-    this.customTransaction = undefined;
     this._transaction = state.tr;
   }
 
@@ -299,45 +304,6 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
   @command()
   customDispatch(command: CommandFunction): CommandFunction {
     return command;
-  }
-
-  /**
-   * Create a custom transaction.
-   *
-   * Use the command at the beginning of the command chain to override the
-   * shared transaction.
-   *
-   * There are times when you want to be sure of the transaction which is
-   * being updated.
-   *
-   * To restore the previous transaction call the `restore` chained method.
-   *
-   * @param tr - the transaction to set
-   *
-   * @remarks
-   *
-   * This is only intended for use within a chainable command chain.
-   *
-   * You **MUST** call the `restore` command after using this to prevent
-   * cryptic errors.
-   */
-  @command()
-  custom(tr: Transaction): CommandFunction {
-    return () => {
-      this.customTransaction = tr;
-      return true;
-    };
-  }
-
-  /**
-   * Restore the shared transaction for future chained commands.
-   */
-  @command()
-  restore(): CommandFunction {
-    return () => {
-      this.customTransaction = undefined;
-      return true;
-    };
   }
 
   /**
@@ -1105,7 +1071,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    */
   private chainedFactory(props: ChainedFactoryProps) {
     return (...args: unknown[]) => {
-      const { chain: chained, command } = props;
+      const { chain: chained, command, tr = this.transaction } = props;
       const { view } = this.store;
       const { state } = view;
 
@@ -1120,13 +1086,13 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
       const dispatch: DispatchFunction = (transaction) => {
         // Throw an error if the transaction being dispatched is not the same as
         // the currently stored transaction.
-        invariant(transaction === this.transaction, {
+        invariant(transaction === tr, {
           message:
             'Chaining currently only supports `CommandFunction` methods which do not use the `state.tr` property. Instead you should use the provided `tr` property.',
         });
       };
 
-      command(...args)({ state, dispatch, view, tr: this.transaction });
+      command(...args)({ state, dispatch, view, tr });
 
       return chained;
     };
@@ -1228,6 +1194,11 @@ interface ChainedFactoryProps {
    * All the chained commands
    */
   chain: Record<string, any>;
+
+  /**
+   * A custom transaction to apply to all the commands in the chain.
+   */
+  tr?: Transaction;
 }
 
 /**
@@ -1398,21 +1369,37 @@ declare global {
        *   name: 'myExtension',
        *   version: '1.0.0',
        *   createCommands: () => {
-       *     // This will throw since it can only be called within the returned methods.
+       *     // This will throw since it can only be called within the returned
+       *     methods.
        *     const chain = this.store.chain; // ❌
        *
        *     return {
        *       // This is good 😋
        *       haveFun() {
-       *         return ({ state, dispatch }) => this.store.chain.insertText('fun!').run(); ✅
+       *         return ({ state, dispatch }) =>
+       *         this.store.chain.insertText('fun!').run(); ✅
        *       },
        *     }
        *   }
        * })
        * ```
        *
-       * This should only be accessed after the `onView` lifecycle method
-       * otherwise it will throw an error.
+       * This should only be accessed after the `EditorView` has been fully
+       * attached to the `RemirrorManager`.
+       *
+       * The chain can also be called as a function with a custom `tr`
+       * parameter. This allows you to provide a custom transaction to use
+       * within the chainable commands.
+       *
+       * Use the command at the beginning of the command chain to override the
+       * shared transaction.
+       *
+       * There are times when you want to be sure of the transaction which is
+       * being updated.
+       *
+       * To restore the previous transaction call the `restore` chained method.
+       *
+       * @param tr - the transaction to set
        */
       chain: ChainedFromExtensions<Extensions | (AnyExtension & { _T: false })>;
     }

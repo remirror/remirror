@@ -380,15 +380,12 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
         // Using the chainable commands so that the selection can be preserved
         // for the update.
-        const { updateLink, removeLink, custom, restore } = this.store.chain;
+        const { updateLink, removeLink } = this.store.chain(tr);
         const { findMatchAtPosition } = getSuggestMethods();
         const selection = tr.selection;
 
         // Keep track of the last removal.
         cachedRange = { from: $pos.pos, to };
-
-        // Set the transaction to update for the chainable commands.
-        custom(tr);
 
         // Remove the link
         removeLink(cachedRange);
@@ -407,9 +404,6 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             range,
           );
         }
-
-        // Make sure to restore the shared transaction to it's default value.
-        restore();
       },
 
       onChange: (details, tr) => {
