@@ -1,22 +1,22 @@
 /**
  * Styles extracted from: packages/remirror__theme/src/extension-tables-theme.ts
  */
-.remirror-editor .ProseMirror .tableWrapper {
+.remirror-editor.ProseMirror .tableWrapper {
   overflow-x: auto;
 }
-.remirror-editor .ProseMirror table {
+.remirror-editor.ProseMirror table {
   border-collapse: collapse;
   table-layout: fixed;
   width: 100%;
   overflow: hidden;
 }
-.remirror-editor .ProseMirror td,
-.remirror-editor .ProseMirror th {
+.remirror-editor.ProseMirror td,
+.remirror-editor.ProseMirror th {
   vertical-align: top;
   box-sizing: border-box;
   position: relative;
 }
-.remirror-editor .ProseMirror .column-resize-handle {
+.remirror-editor.ProseMirror .column-resize-handle {
   position: absolute;
   right: -2px;
   top: 0;
@@ -26,12 +26,12 @@
   background-color: var(--rmr-hue-blue-9);
   pointer-events: none;
 }
-.remirror-editor .ProseMirror .resize-cursor {
+.remirror-editor.ProseMirror .resize-cursor {
   cursor: ew-resize;
   cursor: col-resize;
 }
 /* Give selected cells a blue overlay */
-.remirror-editor .ProseMirror .selectedCell:after {
+.remirror-editor.ProseMirror .selectedCell:after {
   z-index: 2;
   position: absolute;
   content: '';

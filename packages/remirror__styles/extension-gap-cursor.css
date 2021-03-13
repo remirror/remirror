@@ -1,12 +1,12 @@
 /**
  * Styles extracted from: packages/remirror__theme/src/extension-gap-cursor-theme.ts
  */
-.remirror-editor .ProseMirror-gapcursor {
+.remirror-editor.ProseMirror .ProseMirror-gapcursor {
   display: none;
   pointer-events: none;
   position: absolute;
 }
-.remirror-editor .ProseMirror-gapcursor:after {
+.remirror-editor.ProseMirror .ProseMirror-gapcursor:after {
   content: '';
   display: block;
   position: absolute;
@@ -26,8 +26,7 @@
     visibility: hidden;
   }
 }
-.remirror-editor .ProseMirror-focused.ProseMirror-gapcursor,
-.remirror-editor .ProseMirror-focused .ProseMirror-gapcursor,
-.remirror-editor.ProseMirror-focused.ProseMirror-gapcursor {
+.remirror-editor.ProseMirror .ProseMirror-focused .ProseMirror-gapcursor,
+.remirror-editor.ProseMirror.ProseMirror-focused .ProseMirror-gapcursor {
   display: block;
 }

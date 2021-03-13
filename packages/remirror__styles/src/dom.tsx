@@ -662,14 +662,14 @@ export const extensionBlockquoteStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-blockquote-theme.ts
  */
-  .remirror-editor .Prosemirror blockquote {
+  .remirror-editor.Prosemirror blockquote {
     border-left: 3px solid var(--rmr-hue-gray-3);
     margin-left: 0;
     margin-right: 0;
     padding-left: 10px;
     font-style: italic;
   }
-  .remirror-editor .Prosemirror blockquote p {
+  .remirror-editor.Prosemirror blockquote p {
     color: #888;
   }
 `;
@@ -3461,12 +3461,12 @@ export const extensionGapCursorStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-gap-cursor-theme.ts
  */
-  .remirror-editor .ProseMirror-gapcursor {
+  .remirror-editor.ProseMirror .ProseMirror-gapcursor {
     display: none;
     pointer-events: none;
     position: absolute;
   }
-  .remirror-editor .ProseMirror-gapcursor:after {
+  .remirror-editor.ProseMirror .ProseMirror-gapcursor:after {
     content: '';
     display: block;
     position: absolute;
@@ -3486,9 +3486,8 @@ export const extensionGapCursorStyledCss: ReturnType<typeof css> = css`
       visibility: hidden;
     }
   }
-  .remirror-editor .ProseMirror-focused.ProseMirror-gapcursor,
-  .remirror-editor .ProseMirror-focused .ProseMirror-gapcursor,
-  .remirror-editor.ProseMirror-focused.ProseMirror-gapcursor {
+  .remirror-editor.ProseMirror .ProseMirror-focused .ProseMirror-gapcursor,
+  .remirror-editor.ProseMirror.ProseMirror-focused .ProseMirror-gapcursor {
     display: block;
   }
 `;
@@ -3530,7 +3529,7 @@ export const extensionNodeFormattingStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-node-formatting-theme.ts
  */
-  .remirror-editor .Prosemirror {
+  .remirror-editor.Prosemirror {
   }
 `;
 
@@ -3552,7 +3551,7 @@ export const extensionPositionerStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-positioner-theme.ts
  */
-  .remirror-editor {
+  .remirror-editor.ProseMirror {
     position: relative;
   }
 
@@ -3580,22 +3579,22 @@ export const extensionTablesStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-tables-theme.ts
  */
-  .remirror-editor .ProseMirror .tableWrapper {
+  .remirror-editor.ProseMirror .tableWrapper {
     overflow-x: auto;
   }
-  .remirror-editor .ProseMirror table {
+  .remirror-editor.ProseMirror table {
     border-collapse: collapse;
     table-layout: fixed;
     width: 100%;
     overflow: hidden;
   }
-  .remirror-editor .ProseMirror td,
-  .remirror-editor .ProseMirror th {
+  .remirror-editor.ProseMirror td,
+  .remirror-editor.ProseMirror th {
     vertical-align: top;
     box-sizing: border-box;
     position: relative;
   }
-  .remirror-editor .ProseMirror .column-resize-handle {
+  .remirror-editor.ProseMirror .column-resize-handle {
     position: absolute;
     right: -2px;
     top: 0;
@@ -3605,12 +3604,12 @@ export const extensionTablesStyledCss: ReturnType<typeof css> = css`
     background-color: var(--rmr-hue-blue-9);
     pointer-events: none;
   }
-  .remirror-editor .ProseMirror .resize-cursor {
+  .remirror-editor.ProseMirror .resize-cursor {
     cursor: ew-resize;
     cursor: col-resize;
   }
   /* Give selected cells a blue overlay */
-  .remirror-editor .ProseMirror .selectedCell:after {
+  .remirror-editor.ProseMirror .selectedCell:after {
     z-index: 2;
     position: absolute;
     content: '';
@@ -3658,7 +3657,7 @@ export const extensionYjsStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-yjs-theme.ts
  */
-  .remirror-editor .ProseMirror .ProseMirror-yjs-cursor {
+  .remirror-editor.ProseMirror .ProseMirror-yjs-cursor {
     position: absolute;
     border-left: black;
     border-left-style: solid;
@@ -3669,7 +3668,7 @@ export const extensionYjsStyledCss: ReturnType<typeof css> = css`
     pointer-events: none;
   }
 
-  .remirror-editor .ProseMirror .ProseMirror-yjs-cursor > div {
+  .remirror-editor.ProseMirror .ProseMirror-yjs-cursor > div {
     position: relative;
     top: -1.05em;
     font-size: 13px;
@@ -3686,16 +3685,16 @@ export const extensionYjsStyledCss: ReturnType<typeof css> = css`
     padding-left: 2px;
     padding-right: 2px;
   }
-  .remirror-editor .ProseMirror > .ProseMirror-yjs-cursor:first-child {
+  .remirror-editor.ProseMirror > .ProseMirror-yjs-cursor:first-child {
     margin-top: 16px;
   }
-  .remirror-editor .ProseMirror p:first-child,
-  .remirror-editor .ProseMirror h1:first-child,
-  .remirror-editor .ProseMirror h2:first-child,
-  .remirror-editor .ProseMirror h3:first-child,
-  .remirror-editor .ProseMirror h4:first-child,
-  .remirror-editor .ProseMirror h5:first-child,
-  .remirror-editor .ProseMirror h6:first-child {
+  .remirror-editor.ProseMirror p:first-child,
+  .remirror-editor.ProseMirror h1:first-child,
+  .remirror-editor.ProseMirror h2:first-child,
+  .remirror-editor.ProseMirror h3:first-child,
+  .remirror-editor.ProseMirror h4:first-child,
+  .remirror-editor.ProseMirror h5:first-child,
+  .remirror-editor.ProseMirror h6:first-child {
     margin-top: 16px;
   }
   .remirror-editor #y-functions {

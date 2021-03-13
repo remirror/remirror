@@ -350,8 +350,8 @@ class DebuggerState {
     });
 
     this.view.updateState(state);
-    this.manager.store.chain
-      .custom(state.tr)
+    this.manager.store
+      .chain(state.tr)
       .setMeta('addToHistory', false)
       .setMeta('_skip-debugger-history_', true)
       .focus()

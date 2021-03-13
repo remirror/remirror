@@ -29,9 +29,8 @@ export const EDITOR = css`
       }
     }
 
-    .ProseMirror-focused.ProseMirror-gapcursor,
     .ProseMirror-focused .ProseMirror-gapcursor,
-    &.ProseMirror-focused.ProseMirror-gapcursor {
+    &.ProseMirror-focused .ProseMirror-gapcursor {
       display: block;
     }
   }
