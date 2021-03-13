@@ -8,6 +8,7 @@ import {
   BlockquoteExtension,
   BoldExtension,
   BulletListExtension,
+  CheckboxListExtension,
   CodeBlockExtension,
   CodeExtension,
   DocExtension,
@@ -195,6 +196,7 @@ const extensions = () => [
   new HeadingExtension(),
   new LinkExtension(),
   new BlockquoteExtension(),
+  new CheckboxListExtension(),
   new BulletListExtension(),
   new OrderedListExtension(),
   new CodeExtension(),
@@ -275,6 +277,21 @@ const toolbarItems: ToolbarItemUnion[] = [
         commandName: 'toggleBlockquote',
         display: 'icon',
       },
+      {
+        type: ComponentItem.ToolbarCommandButton,
+        commandName: 'toggleBulletList',
+        display: 'icon',
+      },
+      {
+        type: ComponentItem.ToolbarCommandButton,
+        commandName: 'toggleOrderedList',
+        display: 'icon',
+      },
+      {
+        type: ComponentItem.ToolbarCommandButton,
+        commandName: 'toggleCheckboxList',
+        display: 'icon',
+      },
       { type: ComponentItem.ToolbarCommandButton, commandName: 'toggleCodeBlock', display: 'icon' },
     ],
     separator: 'end',
@@ -342,4 +359,7 @@ playtime is just beginning
 1. As is
 2. An ordered
 3. List
+
+- [ ] Checkbox lists
+- [x] Checked
 `;

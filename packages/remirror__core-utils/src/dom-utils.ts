@@ -189,3 +189,28 @@ export function isElementDomNode(domNode: unknown): domNode is HTMLElement {
 export function isTextDomNode(domNode: unknown): domNode is Text {
   return isDomNode(domNode) && domNode.nodeType === Node.TEXT_NODE;
 }
+
+/**
+ * Akin to Element.querySelectorAll, however only searches direct descendants of the element
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/querySelectorAll
+ *
+ * @param domNode - the dom node
+ * @param selector - a comma separated list of CSS selectors to match against
+ */
+export function childSelectorAll(domNode: Element, selector: string): Element[] {
+  return [...domNode.children].filter((node) => node.matches(selector));
+}
+
+/**
+ * Akin to Element.querySelector, however only searches direct descendants of the element
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/querySelector
+ *
+ * @param domNode - the dom node
+ * @param selector - a comma separated list of CSS selectors to match against
+ */
+export function childSelector(domNode: Element, selector: string): Element | null {
+  const match = [...domNode.children].find((node) => node.matches(selector));
+  return match ? match : null;
+}

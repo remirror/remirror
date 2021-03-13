@@ -5,7 +5,7 @@
  * default common mark converter.
  */
 import TurndownService from 'turndown';
-import { ErrorConstant, invariant, isElementDomNode } from '@remirror/core';
+import { childSelector, ErrorConstant, invariant, isElementDomNode } from '@remirror/core';
 
 /**
  * Converts the provide HTML to markdown.
@@ -75,10 +75,18 @@ function cell(content: string, node: Node) {
 const turndownService = new TurndownService({ codeBlockStyle: 'fenced', headingStyle: 'atx' })
   .addRule('taskListItems', {
     filter: (node) => {
-      return (node as HTMLInputElement).type === 'checkbox' && node.parentNode?.nodeName === 'LI';
+      return node.nodeName === 'LI' && node.hasAttribute('data-checkbox');
     },
-    replacement: (_, node) => {
-      return `${(node as HTMLInputElement).checked ? '[x]' : '[ ]'} `;
+    replacement: (content, node) => {
+      const trimmedContent = content
+        .replace(/^\n+/, '') // remove leading newlines
+        .replace(/\n+$/, '\n') // replace trailing newlines with just a single one
+        .replace(/\n/gm, '\n    '); // indent
+
+      const input = childSelector(node as Element, 'input[type=checkbox]') as HTMLInputElement;
+      return `- ${input?.checked ? '[x]' : '[ ]'}   ${trimmedContent}${
+        node.nextSibling && !/\n$/.test(trimmedContent) ? '\n' : ''
+      }`;
     },
   })
   .addRule('tableCell', {

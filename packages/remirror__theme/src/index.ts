@@ -6,6 +6,7 @@ export * as ExtensionCodeBlockTheme from './extension-code-block-theme';
 export * as ExtensionEmojiTheme from './extension-emoji-theme';
 export * as ExtensionGapCursorTheme from './extension-gap-cursor-theme';
 export * as ExtensionImageTheme from './extension-image-theme';
+export * as ExtensionListTheme from './extension-list-theme';
 export * as ExtensionPlaceholderTheme from './extension-placeholder-theme';
 export * as ExtensionPositionerTheme from './extension-positioner-theme';
 export * as ExtensionTablesTheme from './extension-tables-theme';

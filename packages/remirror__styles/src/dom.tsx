@@ -3526,6 +3526,30 @@ export const extensionImageStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
+export const extensionListStyledCss: ReturnType<typeof css> = css`
+  /**
+ * Styles extracted from: packages/remirror__theme/src/extension-list-theme.ts
+ */
+  .remirror-editor ul[data-checkbox] {
+    list-style: none;
+    padding-left: 20px;
+  }
+  .remirror-editor li[data-checkbox] {
+    display: flex;
+    line-height: 1.25;
+  }
+  .remirror-editor li[data-checkbox] > input[type='checkbox'] {
+    cursor: pointer;
+    vertical-align: baseline;
+    position: relative;
+    left: -2px;
+  }
+  .remirror-editor li[data-checkbox] > input[type='checkbox'] + p {
+    flex: none;
+    min-width: 1px;
+  }
+`;
+
 export const extensionNodeFormattingStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-node-formatting-theme.ts
@@ -4011,6 +4035,7 @@ export const allStyledCss: ReturnType<typeof css> = css`
   ${extensionEmojiStyledCss}
   ${extensionGapCursorStyledCss}
   ${extensionImageStyledCss}
+  ${extensionListStyledCss}
   ${extensionNodeFormattingStyledCss}
   ${extensionPlaceholderStyledCss}
   ${extensionPositionerStyledCss}

@@ -12,3 +12,9 @@ export const BULLET_LIST_LABEL: MessageDescriptor = defineMessage({
   comment: 'Description for inserting a bullet list into the editor.',
   message: 'Bulleted list',
 });
+
+export const CHECKBOX_LIST_LABEL: MessageDescriptor = defineMessage({
+  id: 'extension.command.toggle-checkbox-list.description',
+  comment: 'Description for inserting a checkbox list into the editor.',
+  message: 'Checkbox list',
+});

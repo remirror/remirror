@@ -1400,12 +1400,14 @@ importers:
     dependencies:
       '@babel/runtime': 7.13.8
       '@remirror/core': link:../remirror__core
+      '@remirror/extension-events': link:../remirror__extension-events
       '@remirror/messages': link:../remirror__messages
     devDependencies:
       '@remirror/pm': link:../remirror__pm
     specifiers:
       '@babel/runtime': ^7.13.7
       '@remirror/core': 1.0.0-next.60
+      '@remirror/extension-events': 1.0.0-next.60
       '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
   packages/remirror__extension-markdown:
@@ -3111,6 +3113,9 @@ packages:
     bundledDependencies:
       - jsonschema
       - semver
+    dependencies:
+      jsonschema: 1.4.0
+      semver: 7.3.4
     dev: false
     engines:
       node: '>= 10.13.0 <13 || >=13.7.0'
@@ -3134,6 +3139,7 @@ packages:
       - semver
     dependencies:
       '@aws-cdk/cloud-assembly-schema': 1.91.0
+      semver: 7.3.4
     dev: false
     engines:
       node: '>= 10.13.0 <13 || >=13.7.0'
@@ -3148,6 +3154,8 @@ packages:
   /@aws-cdk/yaml-cfn/1.91.0:
     bundledDependencies:
       - yaml
+    dependencies:
+      yaml: 1.10.0
     dev: false
     engines:
       node: '>= 10.13.0 <13 || >=13.7.0'
@@ -20254,6 +20262,10 @@ packages:
   /jsonify/0.0.0:
     resolution:
       integrity: sha1-LHS27kHZPKUbe1qu6PUDYx0lKnM=
+  /jsonschema/1.4.0:
+    dev: false
+    resolution:
+      integrity: sha512-/YgW6pRMr6M7C+4o8kS+B/2myEpHCrxO4PEWnqJNBFMjn7EWXqlQ4tGwL6xTHeRplwuZmcAncdvfOad1nT2yMw==
   /jsonwebtoken/8.5.1:
     dependencies:
       jws: 3.2.2

@@ -87,6 +87,8 @@ export {
 } from './core-utils';
 export type { DomSizeUnit, ParsedDomSize } from './dom-utils';
 export {
+  childSelector,
+  childSelectorAll,
   convertPixelsToDomUnit,
   DOM_SIZE_UNITS,
   extractPixelSize,

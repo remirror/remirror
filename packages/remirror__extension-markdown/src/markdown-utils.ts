@@ -37,7 +37,7 @@ function sanitize(node: Node): void {
 
   // Remove invalid attributes from the node.
   for (const { name } of node.attributes) {
-    if (/^(class|id|name|href|src|alt|align|valign)$/i.test(name)) {
+    if (/^(class|id|name|href|src|alt|align|valign|data-.*|aria-.*)$/i.test(name)) {
       continue;
     }
 
