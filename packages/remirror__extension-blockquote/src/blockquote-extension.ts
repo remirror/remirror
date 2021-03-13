@@ -14,7 +14,6 @@ import {
 import { ExtensionBlockquoteMessages as Messages } from '@remirror/messages';
 import { wrappingInputRule } from '@remirror/pm/inputrules';
 import type { PasteRule } from '@remirror/pm/paste-rules';
-import { ExtensionBlockquoteTheme as Theme } from '@remirror/theme';
 
 /**
  * Add the blockquote block to the editor.
@@ -22,10 +21,6 @@ import { ExtensionBlockquoteTheme as Theme } from '@remirror/theme';
 export class BlockquoteExtension extends NodeExtension {
   get name() {
     return 'blockquote' as const;
-  }
-
-  get classNames(): string[] {
-    return [Theme.EDITOR];
   }
 
   createTags() {

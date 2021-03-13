@@ -255,7 +255,8 @@ export interface CommandUiDecoratorOptions {
   label?: CommandDecoratorMessage;
 
   /**
-   * An i18n compatible description for the command with support for i18n.
+   * An i18n compatible description which can be used to provide extra context
+   * for the command.
    */
   description?: CommandDecoratorMessage;
 

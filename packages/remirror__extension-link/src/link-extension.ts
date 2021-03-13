@@ -413,14 +413,14 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
         // Using the chainable commands so that the selection can be preserved
         // for the update.
-        const { updateLink, removeLink, custom, restore } = this.store.chain;
+
+        const chain = this.store.chain(tr);
         const { getSuggestMethods } = this.store.helpers;
         const { findMatchAtPosition } = getSuggestMethods();
 
         /** Remove the link at the provided range. */
         const remove = () => {
           // Call the command to use a custom transaction rather than the current.
-          custom(tr);
 
           let markRange: ReturnType<typeof getMarkRange> | undefined;
 
@@ -432,7 +432,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             }
           }
 
-          removeLink(markRange ?? range);
+          chain.removeLink(markRange ?? range);
 
           // The mark range for the position after the matched text. If this
           // exists it should be removed to handle cleanup properly.
@@ -450,7 +450,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           }
 
           if (afterMarkRange) {
-            removeLink(afterMarkRange);
+            chain.removeLink(afterMarkRange);
           }
 
           preserveSelection(selection, tr);
@@ -460,15 +460,13 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           );
 
           if (match) {
-            updateLink(
+            chain.updateLink(
               { href: extractHref(match.text.full, this.options.defaultProtocol), auto: true },
               match.range,
             );
           } else {
             setMarkRemoved();
           }
-
-          restore();
         };
 
         // Respond when there is an exit.
@@ -504,12 +502,10 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         }
 
         /** Update the current range with the new link */
-        function update() {
-          custom(tr);
-          updateLink({ href, auto: true }, range);
+        const update = () => {
+          chain.updateLink({ href, auto: true }, range);
           preserveSelection(selection, tr);
-          restore();
-        }
+        };
 
         // Update when there is a value
         if (!value) {
