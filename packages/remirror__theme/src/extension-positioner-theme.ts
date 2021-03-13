@@ -1,7 +1,9 @@
 import { css } from '@linaria/core';
 
 export const EDITOR = css`
-  position: relative;
+  &.ProseMirror {
+    position: relative;
+  }
 `;
 
 export const POSITIONER = css`

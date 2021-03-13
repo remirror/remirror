@@ -6,7 +6,7 @@ import { css } from '@linaria/core';
  * fix:css` to regenerate `@remirror/styles/all.css`.
  */
 export const EDITOR = css`
-  .ProseMirror {
+  &.ProseMirror {
     .ProseMirror-yjs-cursor {
       position: absolute;
       border-left: black;

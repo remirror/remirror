@@ -3,7 +3,7 @@ import { css } from '@linaria/core';
 import { getTheme } from './utils';
 
 export const EDITOR = css`
-  .ProseMirror {
+  &.ProseMirror {
     .tableWrapper {
       overflow-x: auto;
     }
