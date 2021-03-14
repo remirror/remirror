@@ -518,7 +518,7 @@ describe('createDocumentNode', () => {
   });
 });
 
-describe('toHTML', () => {
+describe('prosemirrorNodeToHtml', () => {
   const node = doc(p('hello'));
 
   it('transforms a doc to its inner html', () => {
@@ -542,7 +542,7 @@ describe('toDOM', () => {
   });
 });
 
-describe('fromHTML', () => {
+describe('htmlToProsemirrorNode', () => {
   const content = `<p>Hello</p>`;
 
   it('transform html into a prosemirror node', () => {
