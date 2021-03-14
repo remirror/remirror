@@ -8,7 +8,7 @@ export const toggleTextCaseOptions: Remirror.CommandDecoratorOptions = {
 
 export const TEXT_CASE_ATTRIBUTE = 'data-text-case';
 
-const VALID_CASING = ['upper', 'lower', 'upper', 'capitalize', 'small-caps'];
+const VALID_CASING = ['upper', 'lower', 'upper', 'capitalize', 'smallCaps'];
 
 export function isValidCasing(value: unknown): value is Exclude<Casing, 'none'> {
   return includes(VALID_CASING, value);
@@ -23,7 +23,7 @@ export interface TextCaseOptions {
   defaultCasing?: Static<Casing>;
 }
 
-export type Casing = 'none' | 'upper' | 'lower' | 'upper' | 'capitalize' | 'small-caps';
+export type Casing = 'none' | 'upper' | 'lower' | 'upper' | 'capitalize' | 'smallCaps';
 export type TextCaseAttributes = ProsemirrorAttributes<{
   /**
    * The active text case for the

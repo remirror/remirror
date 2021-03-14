@@ -6,13 +6,13 @@ export const LABEL: MessageDescriptor = defineMessage({
   comment: 'Label for setting the text direction.',
   message: `{dir, select, ltr {Left-To-Right}
                           rtl {Right-To-Left}
-                          other {Reset Direction}`,
+                          other {Reset Direction}}`,
 });
 
 export const DESCRIPTION: MessageDescriptor = defineMessage({
   id: 'extension.command.set-text-direction.description',
   comment: 'Description for setting the text direction.',
-  message: `{dir, select, ltr {Set the text direction from left to right.}
+  message: `{dir, select, ltr {Set the text direction from left to right}
                           rtl {Set the text direction from right to left}
-                          other {Reset text direction}`,
+                          other {Reset text direction}}`,
 });

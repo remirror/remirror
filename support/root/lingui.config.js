@@ -17,5 +17,5 @@ module.exports = {
       exclude: ['**/node_modules/**'],
     },
   ],
-  compileNamespace: 'es',
+  compileNamespace: 'ts',
 };

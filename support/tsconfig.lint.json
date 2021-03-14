@@ -4,7 +4,7 @@
     "checkJs": false,
     "allowJs": false
   },
-  "include": ["../**/*.ts", "../**/*.tsx", "../**/*.js"],
+  "include": ["../**/*.ts", "../**/*.tsx", "../**/*.js", "../packages/remirror__i18n/src"],
   "exclude": [
     "../**/dist/",
     "../**/public/",

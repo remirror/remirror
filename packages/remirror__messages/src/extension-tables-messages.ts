@@ -19,7 +19,7 @@ export const CREATE_COMMAND_DESCRIPTION: MessageDescriptor = defineMessage({
 export const COLUMN_COUNT: MessageDescriptor = defineMessage({
   id: 'extension.table.column_count',
   comment: 'The number of columns',
-  message: '{count, plural one {# column} other {# columns}}',
+  message: '{count, plural, one {# column} other {# columns}}',
 });
 
 /**
@@ -28,5 +28,5 @@ export const COLUMN_COUNT: MessageDescriptor = defineMessage({
 export const ROW_COUNT: MessageDescriptor = defineMessage({
   id: 'extension.table.row_count',
   comment: 'The number of rows',
-  message: '{count, plural one {# row} other {# rows}}',
+  message: '{count, plural, one {# row} other {# rows}}',
 });

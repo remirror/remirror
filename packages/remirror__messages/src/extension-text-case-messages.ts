@@ -7,8 +7,8 @@ export const TOGGLE_LABEL: MessageDescriptor = defineMessage({
   message: `{case, select, upper {Uppercase}
                           lower {Lowercase}
                           capitalize {Sentence case}
-                          small-caps {Small caps}
-                          other {Text case}`,
+                          smallCaps {Small caps}
+                          other {Text case}}`,
 });
 
 export const SET_LABEL: MessageDescriptor = defineMessage({

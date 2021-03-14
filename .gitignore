@@ -150,6 +150,7 @@ cc-reporter
 /globals.d.ts
 /linaria.config.js
 /lingui.config.js
+/lingui.config.json
 /jest.config.js
 /.prettierrc.js
 /.huskyrc

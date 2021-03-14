@@ -1,6 +1,7 @@
 /** @type {import('eslint').Linter.Config} */
 let config = {
   parser: '@typescript-eslint/parser',
+  ignorePatterns: ['*.d.ts'],
   plugins: [
     'jest',
     'jest-formatting',
@@ -396,7 +397,7 @@ let config = {
       },
     },
     {
-      files: ['packages/remirror__i18n/**/*.js'],
+      files: ['packages/remirror__i18n/**/messages.ts'],
       rules: {
         'eslint-comments/disable-enable-pair': 'off',
         'eslint-comments/no-unlimited-disable': 'off',

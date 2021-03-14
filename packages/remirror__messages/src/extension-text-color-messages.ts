@@ -40,7 +40,7 @@ export const GRAY: MessageDescriptor = defineMessage({
 export const GRAY_HUE: MessageDescriptor = defineMessage({
   id: 'ui.text-color.gray.hue',
   comment: 'Gray color hues.',
-  message: `{hue, selectOrdinal, other {Gray #}`,
+  message: `Gray {hue}`,
 });
 
 export const RED: MessageDescriptor = defineMessage({
@@ -52,7 +52,7 @@ export const RED: MessageDescriptor = defineMessage({
 export const RED_HUE: MessageDescriptor = defineMessage({
   id: 'ui.text-color.red.hue',
   comment: 'Red color hues.',
-  message: `{hue, selectOrdinal, other {Red #}`,
+  message: `Red {hue}`,
 });
 
 export const PINK: MessageDescriptor = defineMessage({
@@ -64,7 +64,7 @@ export const PINK: MessageDescriptor = defineMessage({
 export const PINK_HUE: MessageDescriptor = defineMessage({
   id: 'ui.text-color.pink.hue',
   comment: 'Pink color hues.',
-  message: `{hue, selectOrdinal, other {Pink #}`,
+  message: `Pink {hue}`,
 });
 
 export const GRAPE: MessageDescriptor = defineMessage({
@@ -76,7 +76,7 @@ export const GRAPE: MessageDescriptor = defineMessage({
 export const GRAPE_HUE: MessageDescriptor = defineMessage({
   id: 'ui.text-color.grape.hue',
   comment: 'Grape color hues.',
-  message: `{hue, selectOrdinal, other {Grape #}`,
+  message: `Grape {hue}`,
 });
 
 export const VIOLET: MessageDescriptor = defineMessage({
@@ -88,7 +88,7 @@ export const VIOLET: MessageDescriptor = defineMessage({
 export const VIOLET_HUE: MessageDescriptor = defineMessage({
   id: 'ui.text-color.violet.hue',
   comment: 'Violet color hues.',
-  message: `{hue, selectOrdinal, other {Violet #}`,
+  message: `Violet {hue}`,
 });
 
 export const INDIGO: MessageDescriptor = defineMessage({
@@ -100,7 +100,7 @@ export const INDIGO: MessageDescriptor = defineMessage({
 export const INDIGO_HUE: MessageDescriptor = defineMessage({
   id: 'ui.text-color.indigo.hue',
   comment: 'Indigo color hues.',
-  message: `{hue, selectOrdinal, other {Indigo #}`,
+  message: `Indigo {hue}`,
 });
 
 export const BLUE: MessageDescriptor = defineMessage({
@@ -112,7 +112,7 @@ export const BLUE: MessageDescriptor = defineMessage({
 export const BLUE_HUE: MessageDescriptor = defineMessage({
   id: 'ui.text-color.blue.hue',
   comment: 'Blue color hues.',
-  message: `{hue, selectOrdinal, other {Blue #}`,
+  message: `Blue {hue}`,
 });
 
 export const CYAN: MessageDescriptor = defineMessage({
@@ -124,7 +124,7 @@ export const CYAN: MessageDescriptor = defineMessage({
 export const CYAN_HUE: MessageDescriptor = defineMessage({
   id: 'ui.text-color.cyan.hue',
   comment: 'Cyan color hues.',
-  message: `{hue, selectOrdinal, other {Cyan #}`,
+  message: `Cyan {hue}`,
 });
 
 export const TEAL: MessageDescriptor = defineMessage({
@@ -136,7 +136,7 @@ export const TEAL: MessageDescriptor = defineMessage({
 export const TEAL_HUE: MessageDescriptor = defineMessage({
   id: 'ui.text-color.teal.hue',
   comment: 'Teal color hues.',
-  message: `{hue, selectOrdinal, other {Teal #}`,
+  message: `Teal {hue}`,
 });
 
 export const GREEN: MessageDescriptor = defineMessage({
@@ -148,7 +148,7 @@ export const GREEN: MessageDescriptor = defineMessage({
 export const GREEN_HUE: MessageDescriptor = defineMessage({
   id: 'ui.text-color.green.hue',
   comment: 'Green color hues.',
-  message: `{hue, selectOrdinal, other {Green #}`,
+  message: `Green {hue}`,
 });
 
 export const LIME: MessageDescriptor = defineMessage({
@@ -160,7 +160,7 @@ export const LIME: MessageDescriptor = defineMessage({
 export const LIME_HUE: MessageDescriptor = defineMessage({
   id: 'ui.text-color.lime.hue',
   comment: 'Lime color hues.',
-  message: `{hue, selectOrdinal, other {Lime #}`,
+  message: `Lime {hue}`,
 });
 
 export const YELLOW: MessageDescriptor = defineMessage({
@@ -172,7 +172,7 @@ export const YELLOW: MessageDescriptor = defineMessage({
 export const YELLOW_HUE: MessageDescriptor = defineMessage({
   id: 'ui.text-color.yellow.hue',
   comment: 'Yellow color hues.',
-  message: `{hue, selectOrdinal, other {Yellow #}`,
+  message: `Yellow {hue}`,
 });
 
 export const ORANGE: MessageDescriptor = defineMessage({
@@ -184,5 +184,5 @@ export const ORANGE: MessageDescriptor = defineMessage({
 export const ORANGE_HUE: MessageDescriptor = defineMessage({
   id: 'ui.text-color.orange.hue',
   comment: 'Orange color hues.',
-  message: `{hue, selectOrdinal, other {Orange #}`,
+  message: `Orange {hue}`,
 });
