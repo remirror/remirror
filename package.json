@@ -19,7 +19,7 @@
     "checks": "run-s lint typecheck:quick test",
     "checks:disable": "rimraf ./.config.json",
     "checks:enable": "cpy support/.config.sample.json ./ --rename=\".config.json\"",
-    "checks:fix": "run-s -c fix typecheck test build build:dev",
+    "checks:fix": "run-s -c fix typecheck test build size generate:intl generate:playground build:dev",
     "checks:release": "run-s checks build e2e",
     "clean": "pnpm if-clean git clean -- -fdx --exclude=.config.json --exclude=node_modules --exclude=**/node_modules",
     "clean:all": "git clean -fdX --exclude='.config.json'",

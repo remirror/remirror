@@ -102,7 +102,7 @@
   },
   {
     "name": "@remirror/core-types",
-    "limit": "0 KB",
+    "limit": "110 B",
     "path": "packages/remirror__core-types/dist/remirror-core-types.browser.esm.js",
     "ignore": ["@remirror/pm", "@remirror/core-constants", "@remirror/types"],
     "running": false,

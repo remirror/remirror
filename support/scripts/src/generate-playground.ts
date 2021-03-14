@@ -877,7 +877,7 @@ async function main() {
   });
 
   const core = await populateRemirrorImports({
-    pattern: 'remirror__{core-*,core}/package.json',
+    pattern: 'remirror__{core-*,core,types}/package.json',
   });
 
   const react = await populateRemirrorImports({

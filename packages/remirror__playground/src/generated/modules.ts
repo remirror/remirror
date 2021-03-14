@@ -37,6 +37,7 @@ import * as RemirrorPmView from '@remirror/pm/view';
 import * as RemirrorReact from '@remirror/react';
 import { ReactPlaygroundImports } from '@remirror/react/playground';
 import * as RemirrorReactDebugger from '@remirror/react-debugger';
+import * as RemirrorTypes from '@remirror/types';
 
 import { INTERNAL_MODULE_PREFIX } from '../playground-constants';
 import { ImportMap, ImportMapImports } from '../playground-types';
@@ -116,6 +117,7 @@ export const IMPORT_CACHE_MODULES: Record<string, any> = {
   '@remirror/react-utils': ReactPlaygroundImports['@remirror/react-utils'],
 
   // Automated internal unscoped modules.
+  '@remirror/types': RemirrorTypes,
   '@remirror/react': RemirrorReact,
   '@remirror/react-debugger': RemirrorReactDebugger,
   'create-context-state': CreateContextState,
