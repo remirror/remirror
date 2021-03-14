@@ -1,0 +1,8 @@
+{
+  "main": "dist/remirror-react-hooks-use-event.cjs.js",
+  "module": "dist/remirror-react-hooks-use-event.esm.js",
+  "browser": {
+    "./dist/remirror-react-hooks-use-event.cjs.js": "./dist/remirror-react-hooks-use-event.browser.cjs.js",
+    "./dist/remirror-react-hooks-use-event.esm.js": "./dist/remirror-react-hooks-use-event.browser.esm.js"
+  }
+}

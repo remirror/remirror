@@ -3,7 +3,8 @@ import { HistoryExtension, HistoryOptions } from '@remirror/extension-history';
 import { useExtension } from '@remirror/react-core';
 
 /**
- * A hook for to the undo and redo events from the ProseMirror history extension.
+ * A hook which is called every time an undo or redo event is triggered from
+ * within the ProseMirror history extension.
  */
 export function useHistory<Key extends StringKey<GetHandler<HistoryOptions>>>(
   event: Key,

@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { isEmptyArray } from '@remirror/core';
+import { isEmptyArray, take } from '@remirror/core';
 import {
   EmojiExtension,
   EmojiSuggestHandler,
@@ -107,7 +107,7 @@ export function useEmoji(props: UseEmojiProps = {}): UseEmojiReturn {
       if (change) {
         setIndex(0);
         setState({
-          list: moji.search(query).map((emoji) => ({ ...emoji, url: moji.url(emoji) })),
+          list: take(moji.search(query), 20).map((emoji) => ({ ...emoji, url: moji.url(emoji) })),
           apply: (code) => {
             setState(null);
             return apply(code);

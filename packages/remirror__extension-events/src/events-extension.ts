@@ -33,49 +33,49 @@ export interface EventsOptions {
    *
    * Return `true` to prevent any other prosemirror listeners from firing.
    */
-  blur?: Handler<(event: FocusEvent) => boolean | undefined | void>;
+  blur?: Handler<BlurEventHandler>;
 
   /**
    * Listens for focus events on the editor.
    *
    * Return `true` to prevent any other prosemirror listeners from firing.
    */
-  focus?: Handler<(event: FocusEvent) => boolean | undefined | void>;
+  focus?: Handler<FocusEventHandler>;
 
   /**
    * Listens to scroll events on the editor.
    *
    * Return `true` to prevent any other prosemirror listeners from firing.
    */
-  scroll?: Handler<(event: Event) => boolean | undefined | void>;
+  scroll?: Handler<ScrollEventHandler>;
 
   /**
    * Listens for mousedown events on the editor.
    *
    * Return `true` to prevent any other prosemirror listeners from firing.
    */
-  mousedown?: Handler<(event: MouseEvent) => boolean | undefined | void>;
+  mousedown?: Handler<MousedownEventHandler>;
 
   /**
    * Listens for mouseup events on the editor.
    *
    * Return `true` to prevent any other prosemirror listeners from firing.
    */
-  mouseup?: Handler<(event: MouseEvent) => boolean | undefined | void>;
+  mouseup?: Handler<MouseupEventHandler>;
 
   /**
    * Listens for mouseenter events on the editor.
    *
    * Return `true` to prevent any other prosemirror listeners from firing.
    */
-  mouseenter?: Handler<(event: MouseEvent) => boolean | undefined | void>;
+  mouseenter?: Handler<MouseenterEventHandler>;
 
   /**
    * Listens for mouseleave events on the editor.
    *
    * Return `true` to prevent any other prosemirror listeners from firing.
    */
-  mouseleave?: Handler<(event: MouseEvent) => boolean | undefined | void>;
+  mouseleave?: Handler<MouseleaveEventHandler>;
 
   /**
    * Listens for click events and provides information which may be useful in
@@ -101,14 +101,32 @@ export interface EventsOptions {
    * Listen for contextmenu events and pass through props which detail the
    * direct node and parent nodes which were activated.
    */
-  contextmenu?: Handler<(props: MouseEventHandlerProps) => boolean | undefined | void>;
+  contextmenu?: Handler<ContextMenuEventHandler>;
 
   /**
    * Listen for hover events and pass through details of every node and mark
    * which was hovered at the current position.
    */
-  hover?: Handler<(props: HoverEventHandlerProps) => boolean | undefined | void>;
+  hover?: Handler<HoverEventHandler>;
 }
+
+export type BlurEventHandler = (event: FocusEvent) => boolean | undefined | void;
+export type FocusEventHandler = (event: FocusEvent) => boolean | undefined | void;
+export type ScrollEventHandler = (event: Event) => boolean | undefined | void;
+export type MousedownEventHandler = (event: MouseEvent) => boolean | undefined | void;
+export type MouseupEventHandler = (event: MouseEvent) => boolean | undefined | void;
+export type MouseenterEventHandler = (event: MouseEvent) => boolean | undefined | void;
+export type MouseleaveEventHandler = (event: MouseEvent) => boolean | undefined | void;
+export type ClickEventHandler = (
+  event: MouseEvent,
+  state: ClickHandlerState,
+) => boolean | undefined | void;
+export type ClickMarkEventHandler = (
+  event: MouseEvent,
+  state: ClickMarkHandlerState,
+) => boolean | undefined | void;
+export type ContextMenuEventHandler = (props: MouseEventHandlerProps) => boolean | undefined | void;
+export type HoverEventHandler = (props: HoverEventHandlerProps) => boolean | undefined | void;
 
 /**
  * The events extension which listens to events which occur within the
@@ -382,7 +400,7 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
         }
       }
 
-      const isCaptured = fn({
+      return fn({
         event,
         view,
         nodes,
@@ -414,12 +432,6 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
           return { ...nodeWithPos, isRoot: !!nodes[0]?.node.eq(nodeWithPos.node) };
         },
       });
-
-      if (isCaptured) {
-        event.preventDefault();
-      }
-
-      return isCaptured;
     };
   };
 }
@@ -472,12 +484,9 @@ function createClickMarkState(props: CreateClickMarkStateProps): ClickMarkHandle
 }
 
 /**
- * The click handler for events.
+ * @deprecated use [[`ClickEventHandler`]] instead.
  */
-export type ClickHandler = (
-  event: MouseEvent,
-  clickState: ClickHandlerState,
-) => boolean | undefined | void;
+export type ClickHandler = ClickEventHandler;
 
 export interface ClickMarkHandlerState extends BaseEventState {
   /**
@@ -493,12 +502,9 @@ export interface ClickMarkHandlerState extends BaseEventState {
 }
 
 /**
- * An event solely focused on clicks on marks.
+ * @deprecated use [[`ClickMarkEventHandler`]] instead.
  */
-export type ClickMarkHandler = (
-  event: MouseEvent,
-  clickState: ClickMarkHandlerState,
-) => boolean | undefined | void;
+export type ClickMarkHandler = ClickMarkEventHandler;
 
 /**
  * The helpers passed into the `ClickHandler`.

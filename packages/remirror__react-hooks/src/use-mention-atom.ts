@@ -93,6 +93,9 @@ export function useMentionAtom<Data extends MentionAtomNodeAttributes = MentionA
         return false;
       }
 
+      // TODO add option to override the submission here. Return true to
+      // completely override.
+
       // Call the command with the item (including all the provided attributes
       // which it includes).
       state.command(item);

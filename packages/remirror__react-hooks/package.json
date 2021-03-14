@@ -19,6 +19,12 @@
     },
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts",
+    "./use-context-menu": {
+      "import": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.esm.js",
+      "require": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.cjs.js",
+      "browser": "./use-context-menu/dist/remirror-react-hooks.browser.esm.js",
+      "default": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.esm.js"
+    },
     "./use-editor-focus": {
       "import": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.esm.js",
       "require": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.cjs.js",
@@ -33,12 +39,11 @@
       "types": "./use-emoji/dist/remirror-react-hooks-use-emoji.cjs.d.ts",
       "default": "./use-emoji/dist/remirror-react-hooks-use-emoji.esm.js"
     },
-    "./use-events": {
-      "import": "./use-events/dist/remirror-react-hooks-use-events.esm.js",
-      "require": "./use-events/dist/remirror-react-hooks-use-events.cjs.js",
-      "browser": "./use-events/dist/remirror-react-hooks.browser.esm.js",
-      "types": "./use-events/dist/remirror-react-hooks-use-events.cjs.d.ts",
-      "default": "./use-events/dist/remirror-react-hooks-use-events.esm.js"
+    "./use-event": {
+      "import": "./use-event/dist/remirror-react-hooks-use-event.esm.js",
+      "require": "./use-event/dist/remirror-react-hooks-use-event.cjs.js",
+      "browser": "./use-event/dist/remirror-react-hooks.browser.esm.js",
+      "default": "./use-event/dist/remirror-react-hooks-use-event.esm.js"
     },
     "./use-history": {
       "import": "./use-history/dist/remirror-react-hooks-use-history.esm.js",
@@ -46,6 +51,12 @@
       "browser": "./use-history/dist/remirror-react-hooks.browser.esm.js",
       "types": "./use-history/dist/remirror-react-hooks-use-history.cjs.d.ts",
       "default": "./use-history/dist/remirror-react-hooks-use-history.esm.js"
+    },
+    "./use-hover": {
+      "import": "./use-hover/dist/remirror-react-hooks-use-hover.esm.js",
+      "require": "./use-hover/dist/remirror-react-hooks-use-hover.cjs.js",
+      "browser": "./use-hover/dist/remirror-react-hooks.browser.esm.js",
+      "default": "./use-hover/dist/remirror-react-hooks-use-hover.esm.js"
     },
     "./use-keymap": {
       "import": "./use-keymap/dist/remirror-react-hooks-use-keymap.esm.js",
@@ -111,10 +122,12 @@
   "types": "dist/remirror-react-hooks.cjs.d.ts",
   "files": [
     "dist",
+    "use-context-menu",
     "use-editor-focus",
     "use-emoji",
-    "use-events",
+    "use-event",
     "use-history",
+    "use-hover",
     "use-keymap",
     "use-keymaps",
     "use-mention-atom",
@@ -137,18 +150,18 @@
     "@remirror/react-core": "0.0.0",
     "@remirror/react-utils": "1.0.0-next.60",
     "multishift": "1.0.0-next.60",
-    "type-fest": "^0.21.2",
+    "type-fest": "^0.21.3",
     "use-isomorphic-layout-effect": "^1.1.1",
     "use-previous": "^1.1.0"
   },
   "devDependencies": {
     "@remirror/pm": "1.0.0-next.60",
     "@remirror/react": "1.0.0-next.60",
-    "@types/react": "^17.0.1",
-    "@types/react-dom": "^17.0.0",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "svgmoji": "^3.0.0"
+    "svgmoji": "^3.1.0"
   },
   "peerDependencies": {
     "@remirror/pm": "1.0.0-next.60",
@@ -180,10 +193,12 @@
   "preconstruct": {
     "entrypoints": [
       "index.ts",
+      "use-context-menu.ts",
       "use-editor-focus.ts",
       "use-emoji.ts",
-      "use-events.ts",
+      "use-event.ts",
       "use-history.ts",
+      "use-hover.ts",
       "use-keymap.ts",
       "use-keymaps.ts",
       "use-mention-atom.ts",

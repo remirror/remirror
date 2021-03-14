@@ -168,7 +168,7 @@ const Editor = () => {
     stringHandler: '',
   });
 
-  return <Remirror manager={manager} onChange={onChange} state={state}></Remirror>;
+  return <Remirror manager={manager} onChange={onChange} state={state} />;
 };
 ```
 

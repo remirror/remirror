@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import type { FocusType } from '@remirror/core';
 import { useRemirrorContext } from '@remirror/react-core';
 
-import { useEvents } from './use-events';
+import { useEvent } from './use-event';
 
 export interface UseEditorFocusProps {
   /**
@@ -38,7 +38,7 @@ export function useEditorFocus(
   const [isFocused, setIsFocused] = useState(() => view.hasFocus());
 
   // Listen to blur events and set focused to false in those instances.
-  useEvents(
+  useEvent(
     'blur',
     useCallback(
       (_: FocusEvent) => {
@@ -64,7 +64,7 @@ export function useEditorFocus(
   );
 
   // Listen to focus events and set focused to true in those instances.
-  useEvents(
+  useEvent(
     'focus',
     useCallback(
       (_: FocusEvent) => {
