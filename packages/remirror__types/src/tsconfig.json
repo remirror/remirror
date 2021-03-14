@@ -15,9 +15,5 @@
     "outDir": "../dist-types"
   },
   "include": ["./"],
-  "references": [
-    {
-      "path": "../../remirror__core-helpers/src"
-    }
-  ]
+  "references": []
 }

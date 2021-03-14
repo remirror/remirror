@@ -87,6 +87,7 @@
     "packages/remirror__react-ssr/src/index.ts",
     "packages/remirror__react-utils/src/index.ts",
     "packages/remirror__theme/src/index.ts",
+    "packages/remirror__types/src/index.ts",
     "packages/test-keyboard/src/index.ts"
   ],
   "out": "docs/api"

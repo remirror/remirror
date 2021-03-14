@@ -14,11 +14,11 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/types.esm.js",
-      "require": "./dist/types.cjs.js",
-      "browser": "./dist/types.esm.js",
-      "types": "./dist/types.cjs.d.ts",
-      "default": "./dist/types.esm.js"
+      "import": "./dist/remirror-types.esm.js",
+      "require": "./dist/remirror-types.cjs.js",
+      "browser": "./dist/remirror-types.browser.esm.js",
+      "types": "./dist/remirror-types.cjs.d.ts",
+      "default": "./dist/remirror-types.esm.js"
     },
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
@@ -40,6 +40,6 @@
     "access": "public"
   },
   "@remirror": {
-    "sizeLimit": "50 KB"
+    "sizeLimit": "0 KB"
   }
 }

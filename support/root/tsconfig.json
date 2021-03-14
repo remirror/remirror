@@ -528,6 +528,9 @@
       "path": "packages/remirror__theme/src"
     },
     {
+      "path": "packages/remirror__types/src"
+    },
+    {
       "path": "packages/remirror/src"
     },
     {

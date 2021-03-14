@@ -104,7 +104,7 @@
     "name": "@remirror/core-types",
     "limit": "0 KB",
     "path": "packages/remirror__core-types/dist/remirror-core-types.browser.esm.js",
-    "ignore": ["@remirror/pm", "@remirror/core-constants"],
+    "ignore": ["@remirror/pm", "@remirror/core-constants", "@remirror/types"],
     "running": false,
     "gzip": true
   },
@@ -833,6 +833,14 @@
     "limit": "10 KB",
     "path": "packages/remirror__theme/dist/remirror-theme.browser.esm.js",
     "ignore": ["@remirror/core-types"],
+    "running": false,
+    "gzip": true
+  },
+  {
+    "name": "@remirror/types",
+    "limit": "0 KB",
+    "path": "packages/remirror__types/dist/remirror-types.browser.esm.js",
+    "ignore": [],
     "running": false,
     "gzip": true
   },

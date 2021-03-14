@@ -17,12 +17,6 @@
       "types": "./dist/remirror-core-types.cjs.d.ts",
       "default": "./dist/remirror-core-types.esm.js"
     },
-    "./base": {
-      "import": "./base/dist/remirror-core-types-base.esm.js",
-      "require": "./base/dist/remirror-core-types-base.cjs.js",
-      "browser": "./base/dist/remirror-core-types.browser.esm.js",
-      "default": "./base/dist/remirror-core-types-base.esm.js"
-    },
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
