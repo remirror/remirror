@@ -7,6 +7,7 @@ import type {
   EditorSchema,
   EditorState,
   EditorView,
+  Mark,
   ProsemirrorCommandFunction,
   ProsemirrorNode,
   ResolvedPos,
@@ -14,8 +15,8 @@ import type {
 } from '@remirror/pm';
 import type { MarkSpec, NodeSpec } from '@remirror/pm/model';
 import type { Decoration, NodeView } from '@remirror/pm/view';
+import type { Literal, ObjectMark, ProsemirrorAttributes } from '@remirror/types';
 
-import type { Literal, ObjectMark, ProsemirrorAttributes } from './base-types';
 import type { FromToProps, MarkWithAttributes, NodeWithAttributes } from './props-types';
 
 /**
@@ -321,3 +322,99 @@ export type PrimitiveSelection =
   | 'start'
   | 'end'
   | 'all';
+
+/**
+ * A dynamic attributes creator. This is used to create attributes that are
+ * dynamically set when a node is first added to the dom.
+ */
+export type DynamicAttributeCreator = (nodeOrMark: ProsemirrorNode | Mark) => string;
+
+/**
+ * The configuration object for adding extra attributes to the node or mark in
+ * the editor schema.
+ *
+ * Please note that using this will alter the schema, so changes here can cause
+ * breaking changes for users if not managed carefully.
+ *
+ * TODO #462 is being added to support migrations so that breaking changes can
+ * be handled automatically.
+ */
+export interface SchemaAttributesObject {
+  /**
+   * The default value for the attribute being added, if set to `null` then the
+   * initial value for any nodes is not required.
+   *
+   * If set to `undefined` then a value must be provided whenever a node or mark
+   * that has this extra attribute is created. ProseMirror will throw if the
+   * value isn't required. Make sure you know what you're doing before setting
+   * it to undefined as it could cause unintended errors.
+   *
+   * This can also be a function which enables dynamically setting the attribute
+   * based on the value returned.
+   */
+  default: string | null | DynamicAttributeCreator;
+
+  /**
+   * A function used to extract the attribute from the dom and must be applied
+   * to the `parseDOM` method.
+   *
+   * If a string is set this will automatically call
+   * `domNode.getAttribute('<name>')`.
+   */
+  parseDOM?: ((domNode: HTMLElement) => unknown) | string;
+
+  /**
+   * Takes the node attributes and applies them to the dom.
+   *
+   * This is called in the `toDOM` method.
+   *
+   * - If a string is set this will always be the constant value set in the dom.
+   * - If a tuple with two items is set then the first `string` is the attribute
+   *   to set in the dom and the second string is the value that will be stored.
+   *
+   * Return undefined from the function call to skip adding the attribute.
+   */
+  toDOM?:
+    | string
+    | [string, string?]
+    | Record<string, string>
+    | ((
+        attrs: ProsemirrorAttributes,
+        options: NodeMarkOptions,
+      ) => string | [string, string?] | Record<string, string> | null | undefined);
+}
+
+export interface NodeMarkOptions {
+  node?: ProsemirrorNode;
+  mark?: Mark;
+}
+
+export interface ApplySchemaAttributes {
+  /**
+   * A function which returns the object of defaults. Since this is for extra
+   * attributes a default must be provided.
+   */
+  defaults: () => Record<string, { default?: string | null }>;
+
+  /**
+   * Read a value from the dome and convert it into prosemirror attributes.
+   */
+  parse: (domNode: Node | string) => ProsemirrorAttributes;
+
+  /**
+   * Take the node attributes and create the object of string attributes for
+   * storage on the dom node.
+   */
+  dom: (nodeOrMark: ProsemirrorNode | Mark) => Record<string, string>;
+}
+
+/**
+ * A mapping of the attribute name to it's default, getter and setter. If the
+ * value is set to a string then it will be resolved as the `default`.
+ *
+ * If it is set to a function then it will be a dynamic node or mark.
+ */
+export type SchemaAttributes = Record<
+  string,
+  SchemaAttributesObject | string | DynamicAttributeCreator
+>;

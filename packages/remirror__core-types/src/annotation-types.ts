@@ -1,15 +1,15 @@
-import type { ConditionalExcept, ConditionalPick } from 'type-fest';
 import type { ExtensionPriority } from '@remirror/core-constants';
-
 import type {
   AnyFunction,
+  ConditionalExcept,
+  ConditionalPick,
   Flavoring,
   FlipPartialAndRequired,
   PickPartial,
   RemoveFlavoring,
   Shape,
   StringKey,
-} from './base-types';
+} from '@remirror/types';
 
 type StaticAnnotation = Flavoring<'StaticAnnotation'>;
 type DynamicAnnotation = Flavoring<'DynamicAnnotation'>;

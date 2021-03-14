@@ -10,8 +10,7 @@ import type {
   Selection,
   Transaction,
 } from '@remirror/pm';
-
-import type { ProsemirrorAttributes } from './base-types';
+import type { ProsemirrorAttributes } from '@remirror/types';
 
 /**
  * A parameter builder interface containing the `view` property.

@@ -1,5 +1,4 @@
 export * from './annotation-types';
-export * from './base-types';
 export * from './core-types';
 export * from './props-types';
 export type {
@@ -28,3 +27,4 @@ export type {
   Slice,
   Transaction,
 } from '@remirror/pm';
+export * from '@remirror/types';

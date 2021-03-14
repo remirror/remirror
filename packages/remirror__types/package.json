@@ -1,0 +1,45 @@
+{
+  "name": "@remirror/types",
+  "version": "0.0.0",
+  "description": "Base types used throughout the remirror packages.",
+  "keywords": [
+    "remirror"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/remirror__types/types",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__types",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/types.esm.js",
+      "require": "./dist/types.cjs.js",
+      "browser": "./dist/types.esm.js",
+      "types": "./dist/types.cjs.d.ts",
+      "default": "./dist/types.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-types.cjs.js",
+  "module": "dist/remirror-types.esm.js",
+  "browser": {
+    "./dist/remirror-types.cjs.js": "./dist/remirror-types.browser.cjs.js",
+    "./dist/remirror-types.esm.js": "./dist/remirror-types.browser.esm.js"
+  },
+  "types": "dist/remirror-types.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "type-fest": "^0.21.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "50 KB"
+  }
+}
