@@ -917,16 +917,14 @@ importers:
       type-fest: ^0.21.3
   packages/remirror__core-types:
     dependencies:
-      '@babel/runtime': 7.13.10
       '@remirror/core-constants': link:../remirror__core-constants
-      type-fest: 0.21.3
+      '@remirror/types': link:../remirror__types
     devDependencies:
       '@remirror/pm': link:../remirror__pm
     specifiers:
-      '@babel/runtime': ^7.13.7
       '@remirror/core-constants': 1.0.0-next.60
       '@remirror/pm': 1.0.0-next.60
-      type-fest: ^0.21.3
+      '@remirror/types': 0.0.0
   packages/remirror__core-utils:
     dependencies:
       '@babel/runtime': 7.13.10
@@ -2587,6 +2585,11 @@ importers:
       case-anything: ^1.1.2
       color2k: ~1.2.2
       csstype: ^3.0.6
+      type-fest: ^0.21.3
+  packages/remirror__types:
+    dependencies:
+      type-fest: 0.21.3
+    specifiers:
       type-fest: ^0.21.3
   packages/test-keyboard:
     dependencies:

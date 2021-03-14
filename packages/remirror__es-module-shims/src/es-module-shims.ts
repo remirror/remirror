@@ -35,7 +35,7 @@ interface RegistryUrl {
   /**
    * The parsed imports.
    */
-  a?: [imports: ImportSpecifier[], names: string[]];
+  a?: readonly [imports: readonly ImportSpecifier[], names: readonly string[]];
   // deps
   d?: RegistryUrl[];
   // blobUrl
@@ -293,7 +293,7 @@ function getOrCreateLoad(url: string, source?: string): RegistryUrl {
       load.a = [[], []];
     }
     load.S = source;
-    return load.a[0].filter((d) => d.d === -1).map((d) => source?.slice(d.s, d.e) ?? '');
+    return load.a?.[0].filter((d) => d.d === -1).map((d) => source?.slice(d.s, d.e) ?? '') ?? [];
   })();
 
   load.L = load.f?.then(async (deps) => {
