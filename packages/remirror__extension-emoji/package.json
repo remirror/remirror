@@ -53,8 +53,8 @@
     "escape-string-regexp": "^4.0.0",
     "idb-keyval": "^5.0.2",
     "match-sorter": "^6.1.0",
-    "svgmoji": "^3.0.0",
-    "type-fest": "^0.21.2"
+    "svgmoji": "^3.1.0",
+    "type-fest": "^0.21.3"
   },
   "devDependencies": {
     "@remirror/pm": "1.0.0-next.60"

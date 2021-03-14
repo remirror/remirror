@@ -38,7 +38,7 @@
     "case-anything": "^1.1.2",
     "color2k": "~1.2.2",
     "csstype": "^3.0.6",
-    "type-fest": "^0.21.2"
+    "type-fest": "^0.21.3"
   },
   "publishConfig": {
     "access": "public"

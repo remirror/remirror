@@ -319,8 +319,8 @@ importers:
       '@storybook/addons': ^6.1.17
       '@storybook/react': ^6.1.17
       '@types/codemirror': ^0.0.108
-      '@types/react': ^17.0.1
-      '@types/react-dom': ^17.0.0
+      '@types/react': ^17.0.2
+      '@types/react-dom': ^17.0.1
       '@types/refractor': ^3.0.0
       '@types/webpack': ^4.41.26
       '@types/worker-plugin': ^4.0.0
@@ -356,8 +356,8 @@ importers:
       '@preconstruct/next': ^2.0.0
       '@remirror/react': 1.0.0-next.60
       '@remirror/styles': 1.0.0-next.60
-      '@types/react': ^17.0.1
-      '@types/react-dom': ^17.0.0
+      '@types/react': ^17.0.2
+      '@types/react-dom': ^17.0.1
       '@types/refractor': ^3.0.0
       next: 10.0.7
       react: ^17.0.1
@@ -403,7 +403,7 @@ importers:
       '@remirror/extension-react-native-bridge': 0.0.0
       '@remirror/react': 1.0.0-next.60
       '@remirror/react-native': 0.0.0
-      '@types/react': ^17.0.1
+      '@types/react': ^17.0.2
       '@types/react-native': ^0.63.48
       enhanced-resolve: ^4.3.0
       find-cache-dir: ^3.3.1
@@ -441,7 +441,7 @@ importers:
     specifiers:
       '@babel/runtime': ^7.13.7
       '@testing-library/react': ^11.2.5
-      '@types/react': ^17.0.1
+      '@types/react': ^17.0.2
       react: ^17.0.1
   packages/jest-prosemirror:
     dependencies:
@@ -534,7 +534,7 @@ importers:
       '@remirror/core-types': 1.0.0-next.60
       '@seznam/compose-react-refs': ^1.0.5
       '@testing-library/react': ^11.2.5
-      '@types/react': ^17.0.1
+      '@types/react': ^17.0.2
       a11y-status: 1.0.0-next.60
       compute-scroll-into-view: ^1.0.14
       react: ^17.0.1
@@ -547,7 +547,7 @@ importers:
       '@remirror/core-constants': link:../remirror__core-constants
       '@remirror/core-helpers': link:../remirror__core-helpers
       escape-string-regexp: 4.0.0
-      type-fest: 0.21.2
+      type-fest: 0.21.3
     devDependencies:
       '@types/prosemirror-keymap': 1.0.4
       '@types/prosemirror-model': 1.11.3
@@ -568,14 +568,14 @@ importers:
       prosemirror-model: ^1.13.3
       prosemirror-state: ^1.3.4
       prosemirror-view: ^1.17.4
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
   packages/prosemirror-suggest:
     dependencies:
       '@babel/runtime': 7.13.8
       '@remirror/core-constants': link:../remirror__core-constants
       '@remirror/core-helpers': link:../remirror__core-helpers
       escape-string-regexp: 4.0.0
-      type-fest: 0.21.2
+      type-fest: 0.21.3
     devDependencies:
       '@types/prosemirror-keymap': 1.0.4
       '@types/prosemirror-model': 1.11.3
@@ -596,14 +596,14 @@ importers:
       prosemirror-model: ^1.13.3
       prosemirror-state: ^1.3.4
       prosemirror-view: ^1.17.4
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
   packages/prosemirror-trailing-node:
     dependencies:
       '@babel/runtime': 7.13.8
       '@remirror/core-constants': link:../remirror__core-constants
       '@remirror/core-helpers': link:../remirror__core-helpers
       escape-string-regexp: 4.0.0
-      type-fest: 0.21.2
+      type-fest: 0.21.3
     devDependencies:
       '@types/prosemirror-keymap': 1.0.4
       '@types/prosemirror-model': 1.11.3
@@ -624,7 +624,7 @@ importers:
       prosemirror-model: ^1.13.3
       prosemirror-state: ^1.3.4
       prosemirror-view: ^1.17.4
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
   packages/remirror:
     dependencies:
       '@babel/runtime': 7.13.8
@@ -792,7 +792,7 @@ importers:
       react-use: 17.1.1_react@17.0.1
       rimraf: 3.0.2
       terminal-link: 2.1.1
-      type-fest: 0.21.2
+      type-fest: 0.21.3
       update-notifier: 5.1.0
       yup: 0.32.9
     devDependencies:
@@ -815,7 +815,7 @@ importers:
       '@types/ms': ^0.7.31
       '@types/node': ^14.14.25
       '@types/parcel-bundler': ^1.12.3
-      '@types/react': ^17.0.1
+      '@types/react': ^17.0.2
       '@types/rimraf': ^3.0.0
       '@types/update-notifier': ^5.0.0
       '@types/yup': ^0.29.11
@@ -840,7 +840,7 @@ importers:
       react-use: ^17.1.0
       rimraf: ^3.0.2
       terminal-link: ^2.1.1
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
       update-notifier: ^5.1.0
       yup: ^0.32.8
   packages/remirror__core:
@@ -857,7 +857,7 @@ importers:
       '@remirror/theme': link:../remirror__theme
       nanoevents: 5.1.11
       tiny-warning: 1.0.3
-      type-fest: 0.21.2
+      type-fest: 0.21.3
     devDependencies:
       '@remirror/pm': link:../remirror__pm
     specifiers:
@@ -874,7 +874,7 @@ importers:
       '@remirror/theme': 1.0.0-next.60
       nanoevents: ^5.1.10
       tiny-warning: ^1.0.3
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
   packages/remirror__core-constants:
     dependencies:
       '@babel/runtime': 7.13.8
@@ -897,7 +897,7 @@ importers:
       object.omit: 3.0.0
       object.pick: 1.3.0
       throttle-debounce: 3.0.1
-      type-fest: 0.21.2
+      type-fest: 0.21.3
     specifiers:
       '@babel/runtime': ^7.13.7
       '@remirror/core-constants': 1.0.0-next.60
@@ -912,19 +912,19 @@ importers:
       object.omit: ^3.0.0
       object.pick: ^1.3.0
       throttle-debounce: ^3.0.1
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
   packages/remirror__core-types:
     dependencies:
       '@babel/runtime': 7.13.8
       '@remirror/core-constants': link:../remirror__core-constants
-      type-fest: 0.21.2
+      type-fest: 0.21.3
     devDependencies:
       '@remirror/pm': link:../remirror__pm
     specifiers:
       '@babel/runtime': ^7.13.7
       '@remirror/core-constants': 1.0.0-next.60
       '@remirror/pm': 1.0.0-next.60
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
   packages/remirror__core-utils:
     dependencies:
       '@babel/runtime': 7.13.8
@@ -935,7 +935,7 @@ importers:
       '@types/min-document': 2.19.0
       css-in-js-utils: 3.1.0
       min-document: 2.19.0
-      type-fest: 0.21.2
+      type-fest: 0.21.3
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@types/jsdom': 16.2.7
@@ -956,7 +956,7 @@ importers:
       domino: ^2.1.6
       jsdom: ^16.5.1
       min-document: ^2.19.0
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
   packages/remirror__dev:
     dependencies:
       '@babel/runtime': 7.13.8
@@ -976,8 +976,8 @@ importers:
       '@remirror/react': 1.0.0-next.60
       '@testing-library/react': ^11.2.5
       '@types/prosemirror-dev-tools': ^3.0.0
-      '@types/react': ^17.0.1
-      '@types/react-dom': ^17.0.0
+      '@types/react': ^17.0.2
+      '@types/react-dom': ^17.0.1
       prosemirror-dev-tools: ^3.0.2
       react: ^17.0.1
       react-dom: ^17.0.1
@@ -986,7 +986,7 @@ importers:
       '@babel/runtime': 7.13.8
       '@remirror/core': link:../remirror__core
       '@remirror/preset-core': link:../remirror__preset-core
-      type-fest: 0.21.2
+      type-fest: 0.21.3
     devDependencies:
       '@remirror/pm': link:../remirror__pm
     specifiers:
@@ -994,7 +994,7 @@ importers:
       '@remirror/core': 1.0.0-next.60
       '@remirror/pm': 1.0.0-next.60
       '@remirror/preset-core': 1.0.0-next.60
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
   packages/remirror__es-module-shims:
     dependencies:
       '@babel/runtime': 7.13.8
@@ -1070,7 +1070,7 @@ importers:
       '@linaria/core': 3.0.0-beta.1
       '@remirror/core': link:../remirror__core
       '@remirror/messages': link:../remirror__messages
-      type-fest: 0.21.2
+      type-fest: 0.21.3
     devDependencies:
       '@remirror/pm': link:../remirror__pm
     specifiers:
@@ -1079,7 +1079,7 @@ importers:
       '@remirror/core': 1.0.0-next.60
       '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
   packages/remirror__extension-code:
     dependencies:
       '@babel/runtime': 7.13.8
@@ -1099,7 +1099,7 @@ importers:
       '@remirror/core': link:../remirror__core
       '@remirror/messages': link:../remirror__messages
       '@remirror/theme': link:../remirror__theme
-      type-fest: 0.21.2
+      type-fest: 0.21.3
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@types/prettier': 2.2.1
@@ -1117,7 +1117,7 @@ importers:
       '@types/refractor': ^3.0.0
       prettier: ^2.2.1
       refractor: ^3.3.1
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
   packages/remirror__extension-codemirror5:
     dependencies:
       '@babel/runtime': 7.13.8
@@ -1151,7 +1151,7 @@ importers:
       '@babel/runtime': 7.13.8
       '@remirror/core': link:../remirror__core
       '@remirror/messages': link:../remirror__messages
-      type-fest: 0.21.2
+      type-fest: 0.21.3
     devDependencies:
       '@remirror/pm': link:../remirror__pm
     specifiers:
@@ -1159,7 +1159,7 @@ importers:
       '@remirror/core': 1.0.0-next.60
       '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
   packages/remirror__extension-diff:
     dependencies:
       '@babel/runtime': 7.13.8
@@ -1204,7 +1204,7 @@ importers:
       '@remirror/messages': link:../remirror__messages
       '@types/querystringify': 2.0.0
       querystringify: 2.2.0
-      type-fest: 0.21.2
+      type-fest: 0.21.3
     devDependencies:
       '@remirror/pm': link:../remirror__pm
     specifiers:
@@ -1215,7 +1215,7 @@ importers:
       '@remirror/pm': 1.0.0-next.60
       '@types/querystringify': ^2.0.0
       querystringify: ^2.2.0
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
   packages/remirror__extension-emoji:
     dependencies:
       '@babel/runtime': 7.13.8
@@ -1229,7 +1229,7 @@ importers:
       idb-keyval: 5.0.2
       match-sorter: 6.3.0
       svgmoji: 3.1.0
-      type-fest: 0.21.2
+      type-fest: 0.21.3
     devDependencies:
       '@remirror/pm': link:../remirror__pm
     specifiers:
@@ -1244,8 +1244,8 @@ importers:
       escape-string-regexp: ^4.0.0
       idb-keyval: ^5.0.2
       match-sorter: ^6.1.0
-      svgmoji: ^3.0.0
-      type-fest: ^0.21.2
+      svgmoji: ^3.1.0
+      type-fest: ^0.21.3
   packages/remirror__extension-epic-mode:
     dependencies:
       '@babel/runtime': 7.13.8
@@ -1390,7 +1390,7 @@ importers:
       '@remirror/core': link:../remirror__core
       '@remirror/extension-events': link:../remirror__extension-events
       '@remirror/messages': link:../remirror__messages
-      type-fest: 0.21.2
+      type-fest: 0.21.3
     devDependencies:
       '@remirror/pm': link:../remirror__pm
     specifiers:
@@ -1399,7 +1399,7 @@ importers:
       '@remirror/extension-events': 1.0.0-next.60
       '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
   packages/remirror__extension-list:
     dependencies:
       '@babel/runtime': 7.13.8
@@ -1512,7 +1512,7 @@ importers:
       '@remirror/messages': link:../remirror__messages
       '@remirror/theme': link:../remirror__theme
       nanoevents: 5.1.11
-      type-fest: 0.21.2
+      type-fest: 0.21.3
     devDependencies:
       '@remirror/pm': link:../remirror__pm
     specifiers:
@@ -1523,7 +1523,7 @@ importers:
       '@remirror/pm': 1.0.0-next.60
       '@remirror/theme': 1.0.0-next.60
       nanoevents: ^5.1.10
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
   packages/remirror__extension-react-component:
     dependencies:
       '@babel/runtime': 7.13.8
@@ -1543,8 +1543,8 @@ importers:
       '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
       '@remirror/react': 1.0.0-next.60
-      '@types/react': ^17.0.1
-      '@types/react-dom': ^17.0.0
+      '@types/react': ^17.0.2
+      '@types/react-dom': ^17.0.1
       nanoevents: ^5.1.10
       react: ^17.0.1
       react-dom: ^17.0.1
@@ -1554,7 +1554,7 @@ importers:
       '@remirror/core': link:../remirror__core
       '@remirror/messages': link:../remirror__messages
       lepont: 0.11.4
-      type-fest: 0.21.2
+      type-fest: 0.21.3
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@remirror/react': link:../remirror__react
@@ -1568,12 +1568,12 @@ importers:
       '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
       '@remirror/react': 1.0.0-next.60
-      '@types/react': ^17.0.1
-      '@types/react-dom': ^17.0.0
+      '@types/react': ^17.0.2
+      '@types/react-dom': ^17.0.1
       lepont: ^0.11.4
       react: ^17.0.1
       react-dom: ^17.0.1
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
   packages/remirror__extension-react-ssr:
     dependencies:
       '@babel/runtime': 7.13.8
@@ -1594,7 +1594,7 @@ importers:
       '@remirror/pm': 1.0.0-next.60
       '@remirror/react': 1.0.0-next.60
       '@remirror/react-utils': 1.0.0-next.60
-      '@types/react': ^17.0.1
+      '@types/react': ^17.0.2
       react: ^17.0.1
   packages/remirror__extension-search:
     dependencies:
@@ -1875,7 +1875,7 @@ importers:
       remirror: link:../remirror
       tiny-warning: 1.0.3
       tinykeys: 1.1.1
-      type-fest: 0.21.2
+      type-fest: 0.21.3
       use-clipboard-copy: 0.1.2_react@17.0.1
       use-isomorphic-layout-effect: 1.1.1_@types+react@17.0.2+react@17.0.1
       use-previous: 1.1.0_@types+react@17.0.2+react@17.0.1
@@ -1909,8 +1909,8 @@ importers:
       '@types/file-saver': ^2.0.1
       '@types/lz-string': ^1.3.34
       '@types/prettier': ^2.1.6
-      '@types/react': ^17.0.1
-      '@types/react-dom': ^17.0.0
+      '@types/react': ^17.0.2
+      '@types/react-dom': ^17.0.1
       '@types/react-frame-component': ^4.1.1
       '@types/react-grid-layout': ^1.1.1
       '@types/react-loadable': ^5.5.3
@@ -1942,7 +1942,7 @@ importers:
       remirror: 1.0.0-next.60
       tiny-warning: ^1.0.3
       tinykeys: ^1.1.0
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
       use-clipboard-copy: ^0.1.2
       use-isomorphic-layout-effect: ^1.1.1
       use-previous: ^1.1.0
@@ -2097,8 +2097,8 @@ importers:
       '@remirror/extension-react-ssr': 1.0.0-next.60
       '@remirror/pm': 1.0.0-next.60
       '@remirror/react-utils': 1.0.0-next.60
-      '@types/react': ^17.0.1
-      '@types/react-dom': ^17.0.0
+      '@types/react': ^17.0.2
+      '@types/react-dom': ^17.0.1
       react: ^17.0.1
       react-dom: ^17.0.1
   packages/remirror__preset-wysiwyg:
@@ -2185,8 +2185,8 @@ importers:
       '@remirror/react-renderer': 1.0.0-next.60
       '@remirror/react-ssr': 1.0.0-next.60
       '@remirror/react-utils': 1.0.0-next.60
-      '@types/react': ^17.0.1
-      '@types/react-dom': ^17.0.0
+      '@types/react': ^17.0.2
+      '@types/react-dom': ^17.0.1
       react: ^17.0.1
       react-dom: ^17.0.1
   packages/remirror__react-components:
@@ -2212,7 +2212,7 @@ importers:
       reakit: 1.3.5_react-dom@17.0.1+react@17.0.1
       reakit-system-palette: 0.14.1_0dac2dffd7e00d6aaeeb75c36a57d52a
       reakit-utils: 0.15.1_react-dom@17.0.1+react@17.0.1
-      type-fest: 0.21.2
+      type-fest: 0.21.3
       use-previous: 1.1.0_@types+react@17.0.2+react@17.0.1
     devDependencies:
       '@remirror/pm': link:../remirror__pm
@@ -2237,9 +2237,9 @@ importers:
       '@remirror/react-utils': 1.0.0-next.60
       '@remirror/theme': 1.0.0-next.60
       '@seznam/compose-react-refs': ^1.0.5
-      '@types/react': ^17.0.1
+      '@types/react': ^17.0.2
       '@types/react-color': ^3.0.4
-      '@types/react-dom': ^17.0.0
+      '@types/react-dom': ^17.0.1
       create-context-state: 0.0.0
       match-sorter: ^6.1.0
       multishift: 1.0.0-next.60
@@ -2249,7 +2249,7 @@ importers:
       reakit: ^1.3.5
       reakit-system-palette: ^0.14.1
       reakit-utils: ^0.15.1
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
       use-previous: ^1.1.0
   packages/remirror__react-core:
     dependencies:
@@ -2270,7 +2270,7 @@ importers:
       fast-deep-equal: 3.1.3
       resize-observer-polyfill: 1.5.1
       tiny-warning: 1.0.3
-      type-fest: 0.21.2
+      type-fest: 0.21.3
       use-isomorphic-layout-effect: 1.1.1_@types+react@17.0.2+react@17.0.1
       use-previous: 1.1.0_@types+react@17.0.2+react@17.0.1
     devDependencies:
@@ -2296,15 +2296,15 @@ importers:
       '@remirror/react-utils': 1.0.0-next.60
       '@remirror/theme': 1.0.0-next.60
       '@seznam/compose-react-refs': ^1.0.5
-      '@types/react': ^17.0.1
-      '@types/react-dom': ^17.0.0
+      '@types/react': ^17.0.2
+      '@types/react-dom': ^17.0.1
       create-context-state: 0.0.0
       fast-deep-equal: ^3.1.3
       react: ^17.0.1
       react-dom: ^17.0.1
       resize-observer-polyfill: ^1.5.1
       tiny-warning: ^1.0.3
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
       use-isomorphic-layout-effect: ^1.1.1
       use-previous: ^1.1.0
   packages/remirror__react-debugger:
@@ -2330,7 +2330,7 @@ importers:
       reakit: 1.3.5_react-dom@17.0.1+react@17.0.1
       reakit-system: 0.15.1_react-dom@17.0.1+react@17.0.1
       reakit-utils: 0.15.1_react-dom@17.0.1+react@17.0.1
-      type-fest: 0.21.2
+      type-fest: 0.21.3
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@testing-library/react': 11.2.5_react-dom@17.0.1+react@17.0.1
@@ -2349,8 +2349,8 @@ importers:
       '@testing-library/react': ^11.2.5
       '@types/html': ^1.0.0
       '@types/prosemirror-dev-tools': ^3.0.0
-      '@types/react': ^17.0.1
-      '@types/react-dom': ^17.0.0
+      '@types/react': ^17.0.2
+      '@types/react-dom': ^17.0.1
       create-context-state: 0.0.0
       date-fns: ^2.16.1
       html: ^1.0.0
@@ -2366,7 +2366,7 @@ importers:
       reakit: ^1.3.5
       reakit-system: ^0.15.1
       reakit-utils: ^0.15.1
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
   packages/remirror__react-hooks:
     dependencies:
       '@babel/runtime': 7.13.8
@@ -2381,7 +2381,7 @@ importers:
       '@remirror/react-core': link:../remirror__react-core
       '@remirror/react-utils': link:../remirror__react-utils
       multishift: link:../multishift
-      type-fest: 0.21.2
+      type-fest: 0.21.3
       use-isomorphic-layout-effect: 1.1.1_@types+react@17.0.2+react@17.0.1
       use-previous: 1.1.0_@types+react@17.0.2+react@17.0.1
     devDependencies:
@@ -2406,13 +2406,13 @@ importers:
       '@remirror/react': 1.0.0-next.60
       '@remirror/react-core': 0.0.0
       '@remirror/react-utils': 1.0.0-next.60
-      '@types/react': ^17.0.1
-      '@types/react-dom': ^17.0.0
+      '@types/react': ^17.0.2
+      '@types/react-dom': ^17.0.1
       multishift: 1.0.0-next.60
       react: ^17.0.1
       react-dom: ^17.0.1
-      svgmoji: ^3.0.0
-      type-fest: ^0.21.2
+      svgmoji: ^3.1.0
+      type-fest: ^0.21.3
       use-isomorphic-layout-effect: ^1.1.1
       use-previous: ^1.1.0
   packages/remirror__react-native:
@@ -2430,7 +2430,7 @@ importers:
       lepont: 0.11.4
       min-document: 2.19.0
       react-dom: 17.0.1_react@17.0.1
-      type-fest: 0.21.2
+      type-fest: 0.21.3
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@types/react': 17.0.2
@@ -2448,8 +2448,8 @@ importers:
       '@remirror/pm': 1.0.0-next.60
       '@remirror/react-core': 0.0.0
       '@types/min-document': ^2.19.0
-      '@types/react': ^17.0.1
-      '@types/react-dom': ^17.0.0
+      '@types/react': ^17.0.2
+      '@types/react-dom': ^17.0.1
       '@types/react-native': ^0.63.48
       create-context-state: 0.0.0
       delay: ^5.0.0
@@ -2460,7 +2460,7 @@ importers:
       react-native: ^0.63.4
       react-native-builder-bob: ^0.17.1
       react-native-webview: ^11.2.1
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
   packages/remirror__react-renderer:
     dependencies:
       '@babel/runtime': 7.13.8
@@ -2471,7 +2471,7 @@ importers:
     specifiers:
       '@babel/runtime': ^7.13.7
       '@remirror/core': ^1.0.0-next.60
-      '@types/react': ^17.0.1
+      '@types/react': ^17.0.2
       react: ^17.0.1
   packages/remirror__react-ssr:
     dependencies:
@@ -2491,8 +2491,8 @@ importers:
       '@remirror/extension-react-ssr': 1.0.0-next.60
       '@remirror/pm': 1.0.0-next.60
       '@remirror/react': 1.0.0-next.60
-      '@types/react': ^17.0.1
-      '@types/react-dom': ^17.0.0
+      '@types/react': ^17.0.2
+      '@types/react-dom': ^17.0.1
       react: ^17.0.1
       react-dom: ^17.0.1
   packages/remirror__react-utils:
@@ -2509,7 +2509,7 @@ importers:
       '@remirror/core-constants': 1.0.0-next.60
       '@remirror/core-helpers': 1.0.0-next.60
       '@remirror/core-types': 1.0.0-next.60
-      '@types/react': ^17.0.1
+      '@types/react': ^17.0.2
       react: ^17.0.1
   packages/remirror__styles:
     dependencies:
@@ -2527,7 +2527,7 @@ importers:
       '@emotion/css': ^11.1.3
       '@emotion/react': ^11.1.4
       '@emotion/styled': ^11.0.0
-      '@types/react': ^17.0.1
+      '@types/react': ^17.0.2
       '@types/styled-components': ^5.1.7
       react: ^17.0.1
       styled-components: ^5.1.1
@@ -2577,7 +2577,7 @@ importers:
       case-anything: 1.1.2
       color2k: 1.2.4
       csstype: 3.0.7
-      type-fest: 0.21.2
+      type-fest: 0.21.3
     specifiers:
       '@babel/runtime': ^7.13.7
       '@linaria/core': ^3.0.0-beta.1
@@ -2585,7 +2585,7 @@ importers:
       case-anything: ^1.1.2
       color2k: ~1.2.2
       csstype: ^3.0.6
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
   packages/test-keyboard:
     dependencies:
       '@babel/runtime': 7.13.8
@@ -2643,7 +2643,7 @@ importers:
       '@testing-library/react-hooks': ^5.0.3
       '@types/fluent-ffmpeg': ^2.1.16
       '@types/min-document': ^2.19.0
-      '@types/react': ^17.0.1
+      '@types/react': ^17.0.2
       '@types/react-test-renderer': ^17.0.0
       '@types/signal-exit': ^3.0.0
       '@types/wait-on': ^5.2.0
@@ -2773,7 +2773,7 @@ importers:
       svg-sprite: 1.5.0
       tar: 6.1.0
       tslog: 3.1.1
-      type-fest: 0.21.2
+      type-fest: 0.21.3
       write-json-file: 4.3.0
     specifiers:
       '@babel/runtime': ^7.13.7
@@ -2843,7 +2843,7 @@ importers:
       svg-sprite: ^1.5.0
       tar: ^6.1.0
       tslog: ^3.1.1
-      type-fest: ^0.21.2
+      type-fest: ^0.21.3
       write-json-file: ^4.3.0
   support/templates/extension-template:
     dependencies:
@@ -2926,8 +2926,8 @@ importers:
       '@remirror/dev': 1.0.0-next.60
       '@remirror/playground': 1.0.0-next.60
       '@remirror/react': 1.0.0-next.60
-      '@types/react': ^17.0.1
-      '@types/react-dom': ^17.0.0
+      '@types/react': ^17.0.2
+      '@types/react-dom': ^17.0.1
       '@types/worker-plugin': ^4.0.0
       clsx: ^1.1.1
       core-js: ^3.8.2
@@ -3115,6 +3115,9 @@ packages:
     bundledDependencies:
       - jsonschema
       - semver
+    dependencies:
+      jsonschema: 1.4.0
+      semver: 7.3.4
     dev: false
     engines:
       node: '>= 10.13.0 <13 || >=13.7.0'
@@ -3138,6 +3141,7 @@ packages:
       - semver
     dependencies:
       '@aws-cdk/cloud-assembly-schema': 1.91.0
+      semver: 7.3.4
     dev: false
     engines:
       node: '>= 10.13.0 <13 || >=13.7.0'
@@ -3152,6 +3156,8 @@ packages:
   /@aws-cdk/yaml-cfn/1.91.0:
     bundledDependencies:
       - yaml
+    dependencies:
+      yaml: 1.10.0
     dev: false
     engines:
       node: '>= 10.13.0 <13 || >=13.7.0'
@@ -20322,6 +20328,10 @@ packages:
   /jsonify/0.0.0:
     resolution:
       integrity: sha1-LHS27kHZPKUbe1qu6PUDYx0lKnM=
+  /jsonschema/1.4.0:
+    dev: false
+    resolution:
+      integrity: sha512-/YgW6pRMr6M7C+4o8kS+B/2myEpHCrxO4PEWnqJNBFMjn7EWXqlQ4tGwL6xTHeRplwuZmcAncdvfOad1nT2yMw==
   /jsonwebtoken/8.5.1:
     dependencies:
       jws: 3.2.2
@@ -29881,12 +29891,12 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-6lN0zC9ItzVv3jq9NicSaqo7PUjTNnmxGBECiJbz8Vv2TWaGW15mJTBS2BHZUlEKRsclzZzp8gHnBe4kzQRNfg==
-  /type-fest/0.21.2:
+  /type-fest/0.21.3:
     dev: false
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-pvQl0WNazvfQ0rq2XDdhpWv49sohh2t+buFbglaJ9N9+Xj4BhFRpuo+uJxemeARteRxRloJ1m+8gBR6Z2Nfktg==
+      integrity: sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==
   /type-is/1.6.18:
     dependencies:
       media-typer: 0.3.0

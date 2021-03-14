@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "^11.2.5",
-    "@types/react": "^17.0.1",
+    "@types/react": "^17.0.2",
     "react": "^17.0.1"
   },
   "peerDependencies": {
