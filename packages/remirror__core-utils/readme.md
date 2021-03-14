@@ -15,3 +15,9 @@
 ## Installation
 
 This is included by default when you install the recommended `remirror` package. All exports are also available via `remirror/core/utils` and `remirror/core`.
+
+## Usage
+
+If you plan to support SSR and need to parse the html contents of the editor in an SSR environment then `min-document` is automatically added to all node environments.
+
+However, `min-document` can't actually parse the content properly since the implementation is intentionally underpowered. To properly parse content from a html string you will need to install either `jsdom` or `domino`. These dependencies are only included within non-browser builds and won't bloat your bundle size in the browser.
