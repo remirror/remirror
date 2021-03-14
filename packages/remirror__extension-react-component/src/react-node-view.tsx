@@ -339,7 +339,7 @@ export class ReactNodeView implements NodeView {
     if (toDOM) {
       const domSpec = toDOM(node);
 
-      if (isString(domSpec) || isDomNode(domSpec)) {
+      if (isString(domSpec) || isDomNodeOutputSpec(domSpec)) {
         return;
       }
 
@@ -403,3 +403,7 @@ export class ReactNodeView implements NodeView {
 }
 
 type IgnoreMutationProps = MutationRecord | { type: 'selection'; target: Element };
+
+function isDomNodeOutputSpec(value: unknown): value is Node | { dom: Node; contentDOM?: Node } {
+  return isDomNode(value) || (isPlainObject(value) && isDomNode(value.dom));
+}
