@@ -46,6 +46,7 @@ function monacoEditorPlugin(_context, _options) {
         node: {
           fs: 'empty',
         },
+        externals: { jsdom: 'commonjs jsdom', domino: 'commonjs domino' },
         module: {
           rules: [
             { test: /\.ttf$/, use: [require.resolve('file-loader')] },
