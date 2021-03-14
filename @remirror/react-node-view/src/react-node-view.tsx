@@ -198,13 +198,8 @@ export class ReactNodeView<
     );
   }
 
-  public update(
-    node: ProsemirrorNode,
-    _: Decoration[],
-    validUpdate: (currentNode: ProsemirrorNode, newNode: ProsemirrorNode) => boolean = () => true,
-  ) {
-    // see https://github.com/ProseMirror/prosemirror/issues/648
-    const isValidUpdate = this.node.type === node.type && validUpdate(this.node, node);
+  public update(node: ProsemirrorNode) {
+    const isValidUpdate = this.node.type === node.type;
 
     if (!isValidUpdate) {
       return false;
