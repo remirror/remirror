@@ -81,6 +81,7 @@
     "packages/remirror__react-components/src/index.ts",
     "packages/remirror__react-core/src/index.ts",
     "packages/remirror__react-debugger/src/index.ts",
+    "packages/remirror__react-editors/src/index.ts",
     "packages/remirror__react-hooks/src/index.ts",
     "packages/remirror__react-native/src/index.ts",
     "packages/remirror__react-renderer/src/index.ts",

@@ -49,7 +49,7 @@ describe('Remirror Controlled Component', () => {
         manager={manager}
         onChange={onChange}
         autoRender='start'
-      ></Remirror>,
+      />,
     );
 
     expect(getByRole('textbox')).toMatchSnapshot();
@@ -74,7 +74,7 @@ describe('Remirror Controlled Component', () => {
         state={value}
         onChange={onChange}
         autoRender='start'
-      ></Remirror>,
+      />,
     );
 
     expect(chain.dom).toMatchSnapshot();
@@ -101,7 +101,7 @@ describe('Remirror Controlled Component', () => {
             setValue(changeProps.state);
           }}
           autoRender='start'
-        ></Remirror>
+        />
       );
     };
 

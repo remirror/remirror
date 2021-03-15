@@ -35,6 +35,11 @@ export const NULL_CHARACTER = '\0';
 export const STATE_OVERRIDE = '__state_override__';
 
 /**
+ * The global name for the module exported by the remirror webview bundle.
+ */
+export const REMIRROR_WEBVIEW_NAME = '$$__REMIRROR_WEBVIEW_BUNDLE__$$';
+
+/**
  * A character useful for separating inline nodes.
  *
  * @remarks

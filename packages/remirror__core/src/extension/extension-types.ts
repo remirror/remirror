@@ -1,14 +1,16 @@
-import type { ConditionalPick, LiteralUnion, UnionToIntersection } from 'type-fest';
 import type {
   AnyFunction,
   CommandFunction,
+  ConditionalPick,
   ConditionalReturnPick,
   EditorSchema,
   Flavoring,
+  LiteralUnion,
   NonChainableCommandFunction,
   ProsemirrorAttributes,
   StringKey,
   Transaction,
+  UnionToIntersection,
 } from '@remirror/core-types';
 
 import type { CommandShape, GetCommands, GetHelpers } from '../types';

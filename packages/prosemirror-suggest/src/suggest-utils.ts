@@ -8,6 +8,7 @@ import {
   object,
   range,
 } from '@remirror/core-helpers';
+import { PickPartial } from '@remirror/types';
 
 import { isChange, isEntry, isExit, isJump, isMove } from './suggest-predicates';
 import type {
@@ -16,7 +17,6 @@ import type {
   EditorSchema,
   EditorStateProps,
   MakeOptional,
-  PickPartial,
   ReasonProps,
   ResolvedPos,
   ResolvedPosProps,

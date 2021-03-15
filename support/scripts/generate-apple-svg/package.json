@@ -1,4 +1,0 @@
-{
-  "main": "dist/scripts-generate-apple-svg.cjs.js",
-  "module": "dist/scripts-generate-apple-svg.esm.js"
-}

@@ -35,8 +35,8 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.7",
-    "@remirror/core-helpers": "^1.0.0-next.60"
+    "@babel/runtime": "^7.13.10",
+    "@remirror/core-helpers": "1.0.0-next.60"
   },
   "publishConfig": {
     "access": "public"

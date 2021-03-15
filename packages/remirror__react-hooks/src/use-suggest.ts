@@ -1,8 +1,8 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
-import type { Except } from 'type-fest';
 import {
   ApplyStateLifecycleProps,
   BuiltinPreset,
+  Except,
   isEmptyObject,
   PluginsExtension,
   SuggestExtension,

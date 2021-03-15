@@ -52,7 +52,8 @@
       "prosemirror-state",
       "prosemirror-view",
       "@remirror/core-constants",
-      "@remirror/core-helpers"
+      "@remirror/core-helpers",
+      "@remirror/types"
     ],
     "running": false,
     "gzip": true
@@ -201,9 +202,7 @@
     "ignore": [
       "@remirror/pm",
       "@types/prettier",
-      "@types/refractor",
       "prettier",
-      "refractor",
       "@remirror/core",
       "@remirror/messages",
       "@remirror/theme"
@@ -559,6 +558,7 @@
       "@remirror/core",
       "@remirror/i18n",
       "@remirror/messages",
+      "@remirror/pm",
       "@remirror/theme"
     ],
     "running": false,

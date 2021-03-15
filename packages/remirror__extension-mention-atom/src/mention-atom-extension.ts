@@ -59,6 +59,8 @@ export interface MentionAtomOptions
   /**
    * Provide the custom matchers that will be used to match mention text in the
    * editor.
+   *
+   * TODO - add customized tags here.
    */
   matchers: Static<MentionAtomExtensionMatcher[]>;
 

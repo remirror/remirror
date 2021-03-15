@@ -1,4 +1,3 @@
-import type { LiteralUnion } from 'type-fest';
 import { ErrorConstant, ExtensionPriority, NamedShortcut } from '@remirror/core-constants';
 import {
   entries,
@@ -18,6 +17,7 @@ import type {
   EmptyShape,
   Fragment,
   FromToProps,
+  LiteralUnion,
   MarkType,
   NodeType,
   PrimitiveSelection,

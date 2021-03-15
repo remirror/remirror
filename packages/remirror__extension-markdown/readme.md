@@ -25,6 +25,12 @@ pnpm add @remirror/extension-markdown
 npm install @remirror/extension-markdown
 ```
 
+## Why
+
+This extension adds support for converting your Prosemirror content to markdown.
+
+This works by transforming the markdown content you provided into html and then using the built in DOMParser to transform the html to a ProseMirror node.
+
 ## Usage
 
 The following code creates an instance of this extension.
@@ -34,3 +40,5 @@ import { MarkdownExtension } from 'remirror/extension';
 
 const extension = new MarkdownExtension();
 ```
+
+##

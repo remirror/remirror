@@ -32,7 +32,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.7",
+    "@babel/runtime": "^7.13.10",
     "@linaria/core": "^3.0.0-beta.1",
     "@remirror/core-constants": "1.0.0-next.60",
     "@remirror/core-helpers": "1.0.0-next.60",
@@ -42,9 +42,8 @@
     "@remirror/icons": "0.0.0",
     "@remirror/messages": "0.0.0",
     "@remirror/theme": "1.0.0-next.60",
-    "nanoevents": "^5.1.10",
-    "tiny-warning": "^1.0.3",
-    "type-fest": "^0.21.3"
+    "nanoevents": "^5.1.11",
+    "tiny-warning": "^1.0.3"
   },
   "devDependencies": {
     "@remirror/pm": "1.0.0-next.60"

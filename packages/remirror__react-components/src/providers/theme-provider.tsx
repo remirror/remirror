@@ -8,7 +8,7 @@ import { cx } from '@linaria/core';
 import { createContext, ElementType, ReactElement, ReactNode, useContext, useMemo } from 'react';
 import { Provider as ReakitProvider } from 'reakit';
 import { deepMerge } from '@remirror/core';
-import { createThemeVariables, CSSProperties, RemirrorThemeType, Theme } from '@remirror/theme';
+import { createThemeVariables, CSSProperties, RemirrorThemeType, THEME } from '@remirror/theme';
 
 import * as system from '../reakit-system';
 
@@ -42,8 +42,7 @@ export function useTheme(
   const parent = useContext(ThemeContext);
   const theme = useMemo(() => deepMerge(parent, props.theme ?? {}), [parent, props.theme]);
   const style = useMemo(() => createThemeVariables(theme).styles, [theme]);
-
-  const className = cx(Theme.THEME, props.className);
+  const className = cx(THEME, props.className);
 
   return useMemo(() => ({ style, className, theme }), [style, className, theme]);
 }

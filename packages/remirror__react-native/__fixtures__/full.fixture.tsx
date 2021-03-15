@@ -4,8 +4,8 @@ import { Remirror, useRemirror } from '@remirror/react-core';
 
 export const extensions = () => [
   new BoldExtension({}),
-  new ItalicExtension(),
-  new UnderlineExtension(),
+  new ItalicExtension({}),
+  new UnderlineExtension({}),
   new ReactNativeBridgeExtension({ actions: {}, data: { cool: (state) => !!state } }),
 ];
 

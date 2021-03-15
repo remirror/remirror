@@ -1,10 +1,10 @@
-import type { LiteralUnion } from 'type-fest';
 import type { ExtensionPriority } from '@remirror/core-constants';
 import type {
   AnyFunction,
   CommandFunction,
   KeyBindingCommandFunction,
   Listable,
+  LiteralUnion,
   NonChainableCommandFunction,
   ProsemirrorAttributes,
   Shape,

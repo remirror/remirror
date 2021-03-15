@@ -87,16 +87,6 @@ function useFramework<Extension extends AnyExtension>(
   const propsRef = useRef(props);
   propsRef.current = props;
 
-  // const [framework, setFramework] = useState(() => new ReactFramework<Extension>(propsRef.current));
-  // framework.update(props);
-
-  // useEffect(() => {
-  //   return framework.frameworkOutput.addHandler('destroy', () => {
-  //     // console.log('setting the framework');
-  //     setFramework(() => new ReactFramework<Extension>(propsRef.current));
-  //   });
-  // }, [framework]);
-
   const framework = useMemo(() => new ReactFramework<Extension>(propsRef.current), []);
   framework.update(props);
 

@@ -12,8 +12,8 @@ import minimist from 'minimist';
 import path from 'path';
 import _rm from 'rimraf';
 import { Logger } from 'tslog';
-import { PackageJson, TsConfigJson } from 'type-fest';
 import { promisify } from 'util';
+import { PackageJson, TsConfigJson } from '@remirror/types';
 
 /**
  * The `camelCased` argument passed to the cli.
@@ -150,12 +150,16 @@ export interface RemirrorPackageMeta {
   skipApi?: boolean;
 }
 
+export type TsConfigWithPaths = TsConfigJson & {
+  paths?: false | Array<string | [path: string, typesPackage: string, subFolder?: string]>;
+};
+
 export interface TsConfigMeta {
-  [key: string]: TsConfigJson | false | undefined;
-  __dts__?: TsConfigJson | false;
-  __tests__?: TsConfigJson | false;
-  __e2e__?: TsConfigJson | false;
-  src?: TsConfigJson | false;
+  [key: string]: TsConfigWithPaths | false | undefined;
+  __dts__?: TsConfigWithPaths | false;
+  __tests__?: TsConfigWithPaths | false;
+  __e2e__?: TsConfigWithPaths | false;
+  src?: TsConfigWithPaths | false;
 }
 
 export interface Package extends Omit<PackageJson, 'name'> {

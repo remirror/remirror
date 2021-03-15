@@ -39,17 +39,17 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.7",
+    "@babel/runtime": "^7.13.10",
     "@linaria/core": "^3.0.0-beta.1",
     "@remirror/core": "1.0.0-next.60",
     "@remirror/messages": "0.0.0",
-    "y-prosemirror": "^1.0.5",
+    "y-prosemirror": "^1.0.6",
     "y-protocols": "^1.0.4"
   },
   "devDependencies": {
     "@remirror/pm": "1.0.0-next.60",
     "y-webrtc": "^10.1.8",
-    "yjs": "^13.4.14"
+    "yjs": "^13.5.1"
   },
   "peerDependencies": {
     "@remirror/pm": "1.0.0-next.60",

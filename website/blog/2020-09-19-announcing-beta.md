@@ -16,15 +16,15 @@ Here's what's changed in the beta release.
 - [x] i18n support
 - [x] A11y support for react via `reakit`
 - [ ] Component Library (work in progress)
-- [ ] Start adding experimental react native support (mostly done)
-- [ ] Todo list extension (not started)
-- [ ] New math extension (not started)
-- [ ] New pagination extension (not started)
-- [ ] New text wrap extension (not started)
+- [ ] Start adding experimental react native support (work in progress)
+- [ ] Todo list extension (in progress see #854)
 
 ### Delayed
 
 - ~Experimental svelte support~ - This will be added later in the year.
+- ~New math extension~ (will be added after the beta is released)
+- ~New pagination extension~ (will be added after the beta is released)
+- ~New text wrap extension~ (will be added after the beta is released)
 
 ## Breaking
 
@@ -72,48 +72,47 @@ One of the big changes is a hugely improved API for `@remirror/react`.
 
 ```tsx
 import React from 'react';
-import { fromHtml, toHtml } from 'remirror';
-import { BoldExtension, CorePreset, ItalicExtension } from 'remirror/extension';
-import { Remirror, useRemirror, useRemirrorContext } from '@remirror/react';
+import { BoldExtension, CorePreset, ItalicExtension, MarkdownExtension } from 'remirror/extension';
+import { Remirror, useRemirror } from '@remirror/react';
 
 const Editor = () => {
   const { manager, onChange, state } = useRemirror({
     extensions: () => [new BoldExtension(), new ItalicExtension()],
-    content: 'asdfasdf',
-    stringHandler: '',
+    content: '<p><strong>I am strong.</strong> and <em>I am emphasized</em></p>',
+    stringHandler: 'html',
   });
 
-  return <Remirror manager={manager} onChange={onChange} state={state}></Remirror>;
+  return <Remirror manager={manager} onChange={onChange} state={state} />;
 };
 ```
 
-When no children are provided to the
-
 The previous `useRemirror` is now called `useRemirrorContext` since it plucks the context from the outer `Remirror` Component. The `<RemirrorProvider />` has been renamed to `<Remirror />` and automatically renders an editor.
+
+When no children are provided to the `<Remirror />` component it will automatically render a container `div` where the prosemirror editor will be placed. If you do add children it is up to you to import the `<EditorComponent />` and add it to the children or set the `autoRender` prop to `'start' | 'end' | true`.
 
 `useManager` has been marked as `@internal` (although it is still exported) and going forward you should be using `useRemirror` as shown in the above example.
 
-Per library expected changes.
-
 ### `@remirror/extension-tables`
 
-With the new support for extensions which act as parents to other extensions the table extension has now become a preset extension. It is no longer needed and has been renamed to it's initial name
+`@remirror/preset-table` is now `@remirror/extension-tables`. The `TableExtension` uses the new `createExtension` method to inject the `TableRowExtension` which in turn injects the `TableCellExtension` and `TableHeaderCellExtension`. To use tables in your editor the following is sufficient.
+
+```tsx
+import { TableExtension } from 'remirror/extensions';
+import { Remirror, useRemirror } from '@remirror/react';
+
+const Editor = () => {
+  const { manager } = useRemirror(() => [TableExtension()]);
+
+  return <Remirror manager={manager} />;
+};
+```
 
 ### UI Commands
 
-- Add commands with UI configuration and i18n text descriptions
+- Add commands with UI configuration and **i18n** text labels
 - `@command`, `@keyBinding`, `@helper` decorators for more typesafe configuration of extensions.
-- `NameShortcut` keybindings which can be set in the keymap extension
-- `overrides` property
-
-### Accessibility as a priority
-
-Actively test for the following
-
-- [ ] Screen Readers
-- [ ] Braille display
-- [ ] Zoom functionality
-- [ ] High contrast for the default theme
+- `NamedShortcut` keybindings which can be set on the keymap extension. Currently `remirror` supports a google docs keyboard shortcuts.
+- Add the `overrides` property to the extensions which for advanced users allows overriding of the default `NodeSpec` and `MarkSpec`.
 
 ### Caveats around inference
 

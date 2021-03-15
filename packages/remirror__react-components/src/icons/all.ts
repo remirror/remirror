@@ -518,8 +518,6 @@ import {
   deleteBin6Line,
   deleteBin7Fill,
   deleteBin7Line,
-  deleteBinFill,
-  deleteBinLine,
   deviceFill,
   deviceLine,
   deviceRecoverFill,
@@ -1395,8 +1393,6 @@ import {
   pauseMiniLine,
   paypalFill,
   paypalLine,
-  pencilFill,
-  pencilLine,
   pencilRuler2Fill,
   pencilRuler2Line,
   pencilRulerFill,
@@ -6303,22 +6299,6 @@ export const DeleteBin7FillIcon: IconType = (props) => {
  */
 export const DeleteBin7LineIcon: IconType = (props) => {
   return GenIcon(deleteBin7Line)(props);
-};
-
-/**
- * The react component for the `delete-bin-fill.svg` icon created by [RemixIcons](https://remixicons.com).
- * ![Delete Bin Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/delete-bin-fill.svg)
- */
-export const DeleteBinFillIcon: IconType = (props) => {
-  return GenIcon(deleteBinFill)(props);
-};
-
-/**
- * The react component for the `delete-bin-line.svg` icon created by [RemixIcons](https://remixicons.com).
- * ![Delete Bin Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/delete-bin-line.svg)
- */
-export const DeleteBinLineIcon: IconType = (props) => {
-  return GenIcon(deleteBinLine)(props);
 };
 
 /**
@@ -13319,22 +13299,6 @@ export const PenNibFillIcon: IconType = (props) => {
  */
 export const PenNibLineIcon: IconType = (props) => {
   return GenIcon(penNibLine)(props);
-};
-
-/**
- * The react component for the `pencil-fill.svg` icon created by [RemixIcons](https://remixicons.com).
- * ![Pencil Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Design/pencil-fill.svg)
- */
-export const PencilFillIcon: IconType = (props) => {
-  return GenIcon(pencilFill)(props);
-};
-
-/**
- * The react component for the `pencil-line.svg` icon created by [RemixIcons](https://remixicons.com).
- * ![Pencil Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Design/pencil-line.svg)
- */
-export const PencilLineIcon: IconType = (props) => {
-  return GenIcon(pencilLine)(props);
 };
 
 /**

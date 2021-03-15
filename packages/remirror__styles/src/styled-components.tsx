@@ -720,6 +720,10 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-code-block-theme.ts
  */
+  .remirror-wrap {
+    white-space: pre-wrap !important;
+  }
+
   .remirror-a11y-dark code[class*='language-'],
   .remirror-a11y-dark pre[class*='language-'] {
     color: #f8f8f2;
@@ -737,33 +741,41 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     -ms-hyphens: none;
     hyphens: none;
   }
+
   /* Code blocks */
+
   .remirror-a11y-dark pre[class*='language-'] {
     padding: 1em;
     margin: 0.5em 0;
     overflow: auto;
     border-radius: 0.3em;
   }
+
   .remirror-a11y-dark :not(pre) > code[class*='language-'],
   .remirror-a11y-dark pre[class*='language-'] {
     background: #2b2b2b;
   }
+
   /* Inline code */
+
   .remirror-a11y-dark :not(pre) > code[class*='language-'] {
     padding: 0.1em;
     border-radius: 0.3em;
     white-space: normal;
   }
+
   .remirror-a11y-dark .token.comment,
   .remirror-a11y-dark .token.prolog,
   .remirror-a11y-dark .token.doctype,
   .remirror-a11y-dark .token.cdata {
     color: #d4d0ab;
   }
+
   .remirror-a11y-dark .token.punctuation,
   .remirror-a11y-dark .token.punctuation.important {
     color: #fefefe;
   }
+
   .remirror-a11y-dark .token.property,
   .remirror-a11y-dark .token.tag,
   .remirror-a11y-dark .token.constant,
@@ -771,10 +783,12 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
   .remirror-a11y-dark .token.deleted {
     color: #ffa07a;
   }
+
   .remirror-a11y-dark .token.boolean,
   .remirror-a11y-dark .token.number {
     color: #00e0e0;
   }
+
   .remirror-a11y-dark .token.selector,
   .remirror-a11y-dark .token.attr-name,
   .remirror-a11y-dark .token.string,
@@ -783,6 +797,7 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
   .remirror-a11y-dark .token.inserted {
     color: #abe338;
   }
+
   .remirror-a11y-dark .token.operator,
   .remirror-a11y-dark .token.entity,
   .remirror-a11y-dark .token.url,
@@ -791,28 +806,35 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
   .remirror-a11y-dark .token.variable {
     color: #00e0e0;
   }
+
   .remirror-a11y-dark .token.atrule,
   .remirror-a11y-dark .token.attr-value,
   .remirror-a11y-dark .token.function {
     color: #ffd700;
   }
+
   .remirror-a11y-dark .token.keyword {
     color: #00e0e0;
   }
+
   .remirror-a11y-dark .token.regex,
   .remirror-a11y-dark .token.important {
     color: #ffd700;
   }
+
   .remirror-a11y-dark .token.important,
   .remirror-a11y-dark .token.bold {
     font-weight: bold;
   }
+
   .remirror-a11y-dark .token.italic {
     font-style: italic;
   }
+
   .remirror-a11y-dark .token.entity {
     cursor: help;
   }
+
   @media screen and (-ms-high-contrast: active) {
     .remirror-a11y-dark code[class*='language-'],
     .remirror-a11y-dark pre[class*='language-'] {

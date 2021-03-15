@@ -83,8 +83,10 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
     }
 
     this.positioners = [...this.positioners, positioner];
-    // Ensure onStateUpdate is trigger when positioner is added
+
+    // Ensure `onStateUpdate` is trigger when a positioner is added
     this.store.commands.forceUpdate();
+
     return () => {
       this.positioners = this.positioners.filter((handler) => handler !== positioner);
     };
@@ -110,7 +112,6 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
       },
       hover: (hover) => {
         this.positioner(this.getBaseProps('hover', { hover }));
-
         return false;
       },
       contextmenu: (contextmenu) => {
@@ -139,7 +140,7 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
       return DecorationSet.empty;
     }
 
-    // // Use the element as the decoration which is always available at the start of the document.
+    // Use the element as the decoration which is always available at the start of the document.
     const decoration = Decoration.widget(0, this.element, {
       key: 'positioner-widget',
       side: -1,

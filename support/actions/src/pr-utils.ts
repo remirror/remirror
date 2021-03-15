@@ -3,7 +3,7 @@ import got from 'got';
 import { parse } from 'semver';
 import { isNumber } from '@remirror/core-helpers';
 
-export function createSandboxUrl(version: string) {
+export function createSandboxUrl(version: string, extension: 'js' | 'tsx' = 'js') {
   const parameters = getParameters({
     files: {
       'public/index.html': {
@@ -26,7 +26,7 @@ export function createSandboxUrl(version: string) {
 </html>`,
         isBinary: false,
       },
-      'src/index.js': {
+      [`src/index.${extension}`]: {
         content: `import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 
@@ -41,17 +41,25 @@ ReactDOM.render(
 );`,
         isBinary: false,
       },
-      'src/App.js': {
-        content: `import { BoldExtension } from "remirror/extensions";
+      [`src/App.${extension}`]: {
+        content: `import {
+  BoldExtension,
+  ItalicExtension,
+  UnderlineExtension
+} from "remirror/extensions";
 import { useRemirror, Remirror, ThemeProvider } from "@remirror/react";
 import { AllStyledComponent } from "@remirror/styles/emotion";
 
-const extensions = () => [new BoldExtension()];
+const extensions = () => [
+  new BoldExtension({}),
+  new ItalicExtension(),
+  new UnderlineExtension()
+];
 
 export default function App() {
   const { manager, state } = useRemirror({
     extensions,
-    content: "<p>Hello there</p>",
+    content: "<p><u>Hello</u> there <b>friend</b> and <em>partner</em>.</p>",
     stringHandler: "html"
   });
 
@@ -62,16 +70,17 @@ export default function App() {
       </ThemeProvider>
     </AllStyledComponent>
   );
-}`,
+}
+`,
         isBinary: false,
       },
       'package.json': {
         content: JSON.stringify({
-          name: 'remirror-pr-test',
+          name: `remirror-pr-${version}`,
           version,
           description: 'React example starter project',
           keywords: ['react', 'starter'],
-          main: 'src/index.js',
+          main: `src/index.${extension}`,
           dependencies: {
             '@emotion/react': '11.1.5',
             '@emotion/styled': '11.1.5',
@@ -84,7 +93,7 @@ export default function App() {
             remirror: version,
           },
           devDependencies: {
-            typescript: '4.1.3',
+            typescript: '4.1.5',
           },
           scripts: {
             start: 'react-scripts start',

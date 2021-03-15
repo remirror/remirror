@@ -63,6 +63,9 @@ type SetProgress = (progress: number) => void;
  * TODO ->
  * - Captions https://glitch.com/edit/#!/pet-figcaption?path=index.js%3A27%3A1 into a preset
  * - Resizable https://glitch.com/edit/#!/toothsome-shoemaker?path=index.js%3A1%3A0
+ *
+ * TODO => Split this into an image upload extension and image extension.
+ * - Add a base64 image
  */
 @extension<ImageOptions>({
   defaultOptions: {

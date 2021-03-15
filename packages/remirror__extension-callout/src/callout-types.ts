@@ -1,5 +1,4 @@
-import type { LiteralUnion } from 'type-fest';
-import type { ProsemirrorAttributes, Static } from '@remirror/core';
+import type { LiteralUnion, ProsemirrorAttributes, Static } from '@remirror/core';
 
 /**
  * Options available to the [[`CalloutExtension`]].
