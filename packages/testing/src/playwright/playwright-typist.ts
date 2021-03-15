@@ -11,26 +11,21 @@ import { Page } from 'playwright';
 import { isApple, selectAll } from './playwright-modifier-keys';
 
 /**
- * Adapted from
- * https://github.com/testing-library/user-event/tree/c187639cbc7d2651d3392db6967f614a75a32695#typeelement-text-options
- *
- * Types text into the for the current editor.
- *
- * @param text - the text to type with support for special characters (see
- * below).
- * @param options - options which are supported by
- * `@testing-library/user-event`.
+ * The default `typist` instance which expects a global page instance and sets a
+ * typing delay of 10ms.
+ */
+export const typist = createTypist({ delay: 10 });
+
+/**
+ * A function which creates a typist with custom options.
  *
  * ```ts
- * import { renderEditor } from 'jest-remirror';
+ * import { createTypist } from 'playwright-typist';
  *
- * test('`keyBindings`', () => {
- *   renderEditor([])
- *     .add(doc(p('<cursor>')))
- *     .type('Hello,{enter}World!')
- *     .callback(content => {
- *       expect(content.state.doc).toEqualProsemirrorNode(doc(p('Hello,'), p('World')));
- *     });
+ * const typist = createTypist()
+ *
+ * test('this is the typist', () => {
+ *   typist('Hello,{enter}World!')
  * });
  * ```
  *
@@ -51,13 +46,14 @@ import { isApple, selectAll } from './playwright-modifier-keys';
  * | `{alt}`       | Alt       | `altKey`   |                                                                                                                                                                     |
  * | `{meta}`      | OS        | `metaKey`  |                                                                                                                                                                     |
  * | `{cmd}`       | OS        | `metaKey`  | Meta key for mac                                                                                                                                                    |
- * | `{mod}`       | OS        | `metaKey`  | Meta key on mac, Control on Windows.  |
+ * | `{mod}`       | OS        | `metaKey`  | Meta key on mac, Control on Windows.                                                                                                                                |
  *
  *  **A note about modifiers:** Modifier keys (`{shift}`, `{ctrl}`, `{alt}`,
  * `{meta}`) will activate their corresponding event modifiers for the duration
  * of type command or until they are closed (via `{/shift}`, `{/ctrl}`, etc.).
  * If they are not closed explicitly, then events will be fired to close them
  * automatically (to disable this, set the `skipAutoClose` option to `true`).
+ *
  * <!-- space out these notes -->
  *
  * We take the same [stance as
@@ -67,26 +63,17 @@ import { isApple, selectAll } from './playwright-modifier-keys';
  * of an usage with a selection range:
  *
  * ```ts
- * import { renderEditor } from 'jest-remirror';
+ * import { createTypist } from 'playwright-typist';
+ * const typist = createTypist({ delay: 10 });
  *
- * test('`keyBindings`', () => {
- *   renderEditor([])
- *     .add(doc(p('Well, <start>content<end>')))
- *     .type('Hello{enter}World!')
- *     .callback(content => {
- *       expect(content.state.doc).toEqualProsemirrorNode(doc(p('Well, Hello'), p('World')));
- *     });
+ * test('`typing like a pro`', async () => {
+ *   await typist('Hello{enter}World!');
  * });
  * ```
  */
-export const typist = createTypist({ delay: 10 });
-
-/**
- * Create your own `typist` with custom options applied.
- */
 export function createTypist(options: TypistOptions = {}) {
-  return async function typist(text: string): Promise<void> {
-    for (const action of createActionQueue(text, options)) {
+  return async function typist(text: string, optionsOverride?: TypistOptions): Promise<void> {
+    for (const action of createActionQueue(text, { ...options, ...optionsOverride })) {
       await action(options);
     }
   };
@@ -161,11 +148,11 @@ const defaultModifierActions: Record<string, TypistAction> = {
 function createAliasedActions() {
   const homeAction: TypistAction = ({ delay, page: playwrightPage = page }) =>
     isApple() ? Promise.resolve() : playwrightPage.keyboard.press('Home', { delay });
-  homeAction.alias = isApple() ? '{cmd}{arrowright}{/cmd}' : undefined;
+  homeAction.alias = isApple() ? '{cmd}{arrowleft}{/cmd}' : undefined;
 
   const endAction: TypistAction = ({ delay, page: playwrightPage = page }) =>
     isApple() ? Promise.resolve() : playwrightPage.keyboard.press('End', { delay });
-  endAction.alias = isApple() ? '{cmd}{arrowleft}{/cmd}' : undefined;
+  endAction.alias = isApple() ? '{cmd}{arrowright}{/cmd}' : undefined;
 
   return {
     '{home}': homeAction,
