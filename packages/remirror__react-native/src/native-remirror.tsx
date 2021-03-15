@@ -5,11 +5,11 @@ import minDocument from 'min-document';
 import { ReactNode, useCallback, useMemo, useRef, useState } from 'react';
 import { renderToString } from 'react-dom/server';
 import WebView, { WebViewProps } from 'react-native-webview';
-import { Except } from 'type-fest';
 import {
   AnyExtension,
   AnyFunction,
   EMPTY_ARRAY,
+  Except,
   GetSchema,
   RemirrorManager,
   Shape,

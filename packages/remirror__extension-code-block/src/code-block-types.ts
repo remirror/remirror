@@ -51,6 +51,13 @@ export interface CodeBlockOptions {
   defaultLanguage?: string;
 
   /**
+   * Set to true to wrap content by default.
+   *
+   * @default false
+   */
+  defaultWrap?: boolean;
+
+  /**
    * The theme to use for the codeBlocks.
    *
    * @remarks
@@ -153,4 +160,9 @@ export interface CodeBlockAttributes extends ProsemirrorAttributes {
    * The language attribute
    */
   language: string;
+
+  /**
+   * Set to true to active the wrapping of the content within the editor.
+   */
+  wrap?: boolean;
 }

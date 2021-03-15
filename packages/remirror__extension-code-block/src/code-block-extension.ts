@@ -11,6 +11,7 @@ import {
   findParentNodeOfType,
   GetAttributes,
   getMatchString,
+  getStyle,
   InputRule,
   isElementDomNode,
   isNodeActive,
@@ -53,6 +54,7 @@ import {
     formatter: ({ source }) => ({ cursorOffset: 0, formatted: source }),
     syntaxTheme: 'a11y_dark',
     defaultLanguage: 'markup',
+    defaultWrap: false,
     // See https://github.com/remirror/remirror/issues/624 for the ''
     plainTextClassName: '',
     getLanguageFromDom,
@@ -86,9 +88,11 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
       draggable: false,
       ...override,
       code: true,
+
       attrs: {
         ...extra.defaults(),
         language: { default: this.options.defaultLanguage },
+        wrap: { default: this.options.defaultWrap },
       },
       parseDOM: [
         // Add support for github code blocks.
@@ -106,10 +110,12 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
               return false;
             }
 
+            const wrap = getStyle(codeElement, 'white-space') === 'pre-wrap';
             const language = node.className
               .match(githubHighlightRegExp)?.[1]
               ?.replace('language-', '');
-            return { ...extra.parse(node), language };
+
+            return { ...extra.parse(node), language, wrap };
           },
         },
         {
@@ -126,8 +132,10 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
               return false;
             }
 
+            const wrap = getStyle(codeElement, 'white-space') === 'pre-wrap';
             const language = this.options.getLanguageFromDom(codeElement, node);
-            return { ...extra.parse(node), language };
+
+            return { ...extra.parse(node), language, wrap };
           },
         },
       ],

@@ -1,5 +1,5 @@
 import { Command, Option } from 'clipanion';
-import type { ConditionalPick } from 'type-fest';
+import type { ConditionalPick, PickPartial } from '@remirror/core-types';
 
 import type { BaseCommandProps, CommandContext } from '../cli-types';
 
@@ -32,7 +32,17 @@ export type CommandBoolean = Annotate<boolean>;
 export type CommandArray<Type = string> = Annotate<Type[]>;
 export type CommandEnum<Type extends string> = Annotate<Type>;
 
-export type GetShapeOfCommandData<Cmd extends BaseCommand> = ConditionalPick<Cmd, FlaggedCommand>;
+/**
+ * Remove the helper annotation.
+ */
+type RemoveAnnotation<Type> = Type extends Annotate<infer T> ? T : Type;
+type RemoveAnnotations<Type> = {
+  [Key in keyof Type]: RemoveAnnotation<Type[Key]>;
+};
+
+export type GetShapeOfCommandData<Cmd extends BaseCommand> = RemoveAnnotations<
+  ConditionalPick<Cmd, FlaggedCommand> & Partial<ConditionalPick<PickPartial<Cmd>, FlaggedCommand>>
+>;
 
 export type RunSubCommandParams<CommandData extends GetShapeOfCommandData<BaseCommand>> = {
   positional?: string[];

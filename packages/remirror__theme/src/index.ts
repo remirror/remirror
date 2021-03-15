@@ -10,7 +10,8 @@ export * as ExtensionPlaceholderTheme from './extension-placeholder-theme';
 export * as ExtensionPositionerTheme from './extension-positioner-theme';
 export * as ExtensionTablesTheme from './extension-tables-theme';
 export * as ExtensionWhitespaceTheme from './extension-whitespace-theme';
-export * as Theme from './theme';
+export * as ReactEditorsTheme from './react-editors-theme';
+export { THEME } from './theme';
 export type {
   Color,
   CreateThemeVariablesReturn,

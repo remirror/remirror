@@ -70,9 +70,10 @@ async function run() {
       repo,
       issue_number: prNumber,
       body: gifComment(
-        `:rocket: successfully released packages :package: with tag \`${tag}\`\n\n[**Open in CodeSandbox**](${createSandboxUrl(
+        `:rocket: successfully released packages :package: with tag \`${tag}\`\n\n[**Open in CodeSandbox** - _JavaScript_](${createSandboxUrl(
           version,
-        )})`,
+          'js',
+        )})\n[**Open in CodeSandbox** - _TypeScript_](${createSandboxUrl(version, 'tsx')})`,
         gif,
         `To install use the following versions \n\n- \`remirror@${version}\`\n\n- \`@remirror/react@${version}\``,
       ),

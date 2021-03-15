@@ -1,4 +1,4 @@
-import type { ValueOf } from 'type-fest';
+import type { ValueOf } from '@remirror/core';
 
 export const jsonTreeTheme = {
   scheme: 'monokai',

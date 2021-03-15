@@ -15,9 +15,9 @@ import loadJson from 'load-json-file';
 import path from 'path';
 import { format, resolveConfig } from 'prettier';
 import sortKeys from 'sort-keys';
-import type { PackageJson } from 'type-fest';
 import { assertGet, camelCase, findMatches, invariant, pascalCase } from '@remirror/core-helpers';
 import type { DtsCache } from '@remirror/playground';
+import type { PackageJson } from '@remirror/types';
 
 import { baseDir, formatFiles, log } from './helpers';
 

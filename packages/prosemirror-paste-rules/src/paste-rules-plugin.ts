@@ -191,7 +191,7 @@ interface BaseRegexPasteRule extends BasePasteRule {
 
   /**
    * The names of marks for which this paste rule can be ignored. This means
-   * that if the matched content contains this mark it will be ignored..
+   * that if the matched content contains this mark it will be ignored.
    */
   ignoredMarks?: string[];
 

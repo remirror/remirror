@@ -1,9 +1,9 @@
-import { LiteralUnion } from 'type-fest';
 import {
   ExtensionPriority,
   KeyBindingCommandFunction,
   KeyBindingNames,
   KeymapExtension,
+  LiteralUnion,
 } from '@remirror/core';
 import { useExtension } from '@remirror/react-core';
 

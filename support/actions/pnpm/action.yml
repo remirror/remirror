@@ -8,7 +8,7 @@ inputs:
   version: # id of input
     description: 'The version to use'
     required: false
-    default: 5.16.0
+    default: 5.18.6
 
 runs:
   using: 'composite'

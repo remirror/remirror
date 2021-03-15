@@ -87,7 +87,7 @@ interface MenuPaneProps extends BaseMenuBarProps {
 }
 
 const MenuPane = (props: MenuPaneProps): JSX.Element => {
-  return <ReakitMenuItem {...props.menuState}></ReakitMenuItem>;
+  return <ReakitMenuItem {...props.menuState} />;
 };
 
 interface MenuCommandPaneProps extends BaseMenuBarProps {

@@ -13,5 +13,3 @@ declare module 'is-builtin-module' {
 
   export = isBuiltinModule;
 }
-
-declare module 'localstorage-polyfill';

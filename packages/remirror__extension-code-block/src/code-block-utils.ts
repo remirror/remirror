@@ -10,6 +10,7 @@ import {
   isEqual,
   isObject,
   isString,
+  joinStyles,
   NodeType,
   NodeTypeProps,
   NodeWithPosition,
@@ -27,7 +28,8 @@ import { Decoration } from '@remirror/pm/view';
 
 import type { CodeBlockAttributes, CodeBlockOptions, FormattedContent } from './code-block-types';
 
-export const dataAttribute = 'data-code-block-language';
+export const LANGUAGE_ATTRIBUTE = 'data-code-block-language';
+export const WRAP_ATTRIBUTE = 'data-code-block-wrap';
 
 interface ParsedRefractorNode extends TextProps {
   /**
@@ -242,15 +244,20 @@ export function getLanguage(props: GetLanguageProps): string {
  * support the browser runtime.
  */
 export function codeBlockToDOM(node: ProsemirrorNode, extra: ApplySchemaAttributes): DOMOutputSpec {
-  const { language, ...rest } = omitExtraAttributes(node.attrs, extra);
-  const extraAttrs = extra.dom(node);
+  const { language, wrap } = omitExtraAttributes(node.attrs, extra);
+  const { style: _, ...extraAttrs } = extra.dom(node);
+  let style = extraAttrs.style;
+
+  if (wrap) {
+    style = joinStyles({ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }, style);
+  }
+
   const attributes = {
     ...extraAttrs,
-    ...rest,
-    class: cx(rest.class as string, extraAttrs.class, `language-${language}`),
+    class: cx(extraAttrs.class, `language-${language}`),
   };
 
-  return ['pre', attributes, ['code', { [dataAttribute]: language }, 0]];
+  return ['pre', attributes, ['code', { [LANGUAGE_ATTRIBUTE]: language, style }, 0]];
 }
 
 interface FormatCodeBlockFactoryProps
@@ -327,7 +334,7 @@ export function formatCodeBlockFactory(props: FormatCodeBlockFactoryProps) {
  * default implementation in the `CodeExtension` but it can be overridden.
  */
 export function getLanguageFromDom(codeElement: HTMLElement): string | undefined {
-  return (codeElement.getAttribute(dataAttribute) ?? codeElement.classList[0])?.replace(
+  return (codeElement.getAttribute(LANGUAGE_ATTRIBUTE) ?? codeElement.classList[0])?.replace(
     'language-',
     '',
   );

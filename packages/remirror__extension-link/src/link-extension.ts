@@ -1,4 +1,3 @@
-import { LiteralUnion } from 'type-fest';
 import {
   ApplySchemaAttributes,
   command,
@@ -21,6 +20,7 @@ import {
   isTextSelection,
   keyBinding,
   KeyBindingProps,
+  LiteralUnion,
   MarkExtension,
   MarkExtensionSpec,
   MarkSpecOverride,
@@ -182,6 +182,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
   createMarkSpec(extra: ApplySchemaAttributes, override: MarkSpecOverride): MarkExtensionSpec {
     const AUTO_ATTRIBUTE = 'data-link-auto';
+
     return {
       inclusive: false,
       excludes: '_',

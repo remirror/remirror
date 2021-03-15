@@ -35,10 +35,9 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.7",
+    "@babel/runtime": "^7.13.10",
     "@remirror/core": "1.0.0-next.60",
-    "@remirror/preset-core": "1.0.0-next.60",
-    "type-fest": "^0.21.3"
+    "@remirror/preset-core": "1.0.0-next.60"
   },
   "devDependencies": {
     "@remirror/pm": "1.0.0-next.60"

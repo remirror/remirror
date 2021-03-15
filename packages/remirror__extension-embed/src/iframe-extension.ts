@@ -1,6 +1,5 @@
 import { cx } from '@linaria/core';
 import { parse, stringify } from 'querystringify';
-import { LiteralUnion } from 'type-fest';
 import {
   ApplySchemaAttributes,
   command,
@@ -8,6 +7,7 @@ import {
   extension,
   ExtensionTag,
   findSelectedNodeOfType,
+  LiteralUnion,
   NodeExtension,
   NodeExtensionSpec,
   NodeSpecOverride,

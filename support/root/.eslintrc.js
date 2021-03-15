@@ -269,6 +269,7 @@ let config = {
     'react/no-unescaped-entities': 'error',
     'react/no-unused-state': 'error',
     'react/no-children-prop': 'error',
+    'react/self-closing-comp': 'error',
 
     // React Hooks
 
@@ -360,9 +361,11 @@ let config = {
         'examples/**',
         'support/**',
         'website/**',
-        '**/__stories__',
+        '**/__stories__/**',
+        '**/__fixtures__/**',
         '**/*.stories.tsx',
         '**/*.stories.ts',
+        'examples/**',
         'packages/remirror__cli/**',
         'packages/remirror__playground/**',
         'packages/remirror__extension-emoji/src/data/*.ts',

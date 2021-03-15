@@ -2,7 +2,7 @@ import { parse, ParserPlugin } from '@babel/parser';
 import babelTraverse, { NodePath } from '@babel/traverse';
 import * as t from '@babel/types';
 import PromiseWorker from 'promise-worker';
-import { PackageJson } from 'type-fest';
+import type { PackageJson } from '@remirror/core';
 import { findMatches } from '@remirror/core-helpers';
 
 import { DATA_ROOT_URL, GLOBAL_INTERNAL_MODULES, NPM_ROOT_URL } from './playground-constants';
