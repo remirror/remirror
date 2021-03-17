@@ -1,13 +1,16 @@
 import {
+  CreateExtensionPlugin,
   EditorState,
   extension,
   ExtensionTag,
   Helper,
   helper,
   PlainExtension,
+  Slice,
   Static,
   StringHandlerOptions,
 } from '@remirror/core';
+import { DOMSerializer } from '@remirror/pm/model';
 
 import { htmlToMarkdown } from './html-to-markdown';
 import { markdownToHtml } from './markdown-to-html';
@@ -49,6 +52,15 @@ export interface MarkdownOptions {
    * markdown extension.
    */
   activeNodes?: string[];
+
+  /**
+   * Set this to `true` to copy the values from the text editor as markdown.
+   * This means that when pasting into a plain text editor (vscode) for example,
+   * the markdown will be preserved.
+   *
+   * @default false
+   */
+  copyAsMarkdown?: boolean;
 }
 
 /**
@@ -72,6 +84,7 @@ export interface MarkdownOptions {
     markdownToHtml,
     htmlSanitizer,
     activeNodes: [ExtensionTag.Code],
+    copyAsMarkdown: false,
   },
   staticKeys: ['htmlToMarkdown', 'markdownToHtml', 'htmlSanitizer'],
 })
@@ -85,6 +98,25 @@ export class MarkdownExtension extends PlainExtension<MarkdownOptions> {
    */
   onCreate(): void {
     this.store.setStringHandler('markdown', this.markdownToProsemirrorNode.bind(this));
+  }
+
+  createPlugin(): CreateExtensionPlugin {
+    const clipboardTextSerializer = this.options.copyAsMarkdown
+      ? (slice: Slice) => {
+          const wrapper = document.createElement('div');
+          const serializer = DOMSerializer.fromSchema(this.store.schema);
+          wrapper.append(serializer.serializeFragment(slice.content));
+
+          // Here we take the sliced text and transform it into markdown.
+          return this.options.htmlToMarkdown(wrapper.innerHTML);
+        }
+      : undefined;
+
+    return {
+      props: {
+        clipboardTextSerializer,
+      },
+    };
   }
 
   /**
