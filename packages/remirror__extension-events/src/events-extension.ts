@@ -50,6 +50,20 @@ export interface EventsOptions {
   scroll?: Handler<ScrollEventHandler>;
 
   /**
+   * Listens to `copy` events on the editor.
+   *
+   * Return `true` to prevent any other prosemirror listeners from firing.
+   */
+  copy?: Handler<ScrollEventHandler>;
+
+  /**
+   * Listens to `paste` events on the editor.
+   *
+   * Return `true` to prevent any other prosemirror listeners from firing.
+   */
+  paste?: Handler<ScrollEventHandler>;
+
+  /**
    * Listens for mousedown events on the editor.
    *
    * Return `true` to prevent any other prosemirror listeners from firing.
@@ -89,13 +103,13 @@ export interface EventsOptions {
    *
    * Return `true` to prevent any other click listeners from being registered.
    */
-  click?: Handler<ClickHandler>;
+  click?: Handler<ClickEventHandler>;
 
   /**
    * This is similar to the `click` handler, but with better performance when
    * only capturing clicks for marks.
    */
-  clickMark?: Handler<ClickMarkHandler>;
+  clickMark?: Handler<ClickMarkEventHandler>;
 
   /**
    * Listen for contextmenu events and pass through props which detail the
@@ -145,6 +159,8 @@ export type HoverEventHandler = (props: HoverEventHandlerProps) => boolean | und
     'contextmenu',
     'hover',
     'scroll',
+    'copy',
+    'paste',
   ],
   handlerKeyOptions: {
     blur: { earlyReturnValue: true },
@@ -314,6 +330,14 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
 
           scroll: (_, event) => {
             return this.options.scroll(event) || false;
+          },
+
+          copy: (_, event) => {
+            return this.options.copy(event) || false;
+          },
+
+          paste: (_, event) => {
+            return this.options.paste(event) || false;
           },
         },
       },
