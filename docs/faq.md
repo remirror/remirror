@@ -26,3 +26,7 @@ import { htmlToProsemirrorNode } from 'remirror';
 
 const doc = htmlToProsemirrorNode({ html, schema: state.schema });
 ```
+
+### How do I get rich?
+
+The secret is to work hard and make time for the right people. 
