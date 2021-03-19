@@ -34,7 +34,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.7"
+    "@babel/runtime": "^7.13.10"
   },
   "devDependencies": {
     "@testing-library/react": "^11.2.5",

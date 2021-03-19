@@ -39,7 +39,7 @@
     "publish-pr"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.7",
+    "@babel/runtime": "^7.13.10",
     "@changesets/get-dependents-graph": "^1.2.0",
     "@changesets/pre": "^1.0.5",
     "@changesets/read": "^0.4.6",
@@ -55,7 +55,7 @@
     "@types/cheerio": "^0.22.23",
     "@types/exit": "^0.1.31",
     "@types/fontkit": "^1.8.0",
-    "@types/fs-extra": "^9.0.6",
+    "@types/fs-extra": "^9.0.7",
     "@types/keyv": "^3.1.1",
     "@types/lodash.groupby": "^4.6.6",
     "@types/lodash.isequal": "^4.5.5",
