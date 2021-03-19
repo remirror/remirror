@@ -1,6 +1,6 @@
-import { cx } from '@linaria/core';
 import { RoleHTMLProps } from 'reakit/Role/Role';
 import { PaletteRoleOptions } from 'reakit-system-palette/Role';
+import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 
 export type BootstrapRoleOptions = PaletteRoleOptions;

@@ -1,4 +1,3 @@
-import { cx } from '@linaria/core';
 import { unstable_FormHTMLProps, unstable_FormOptions } from 'reakit/Form/Form';
 import { unstable_FormGroupHTMLProps, unstable_FormGroupOptions } from 'reakit/Form/FormGroup';
 import { unstable_FormInputOptions } from 'reakit/Form/FormInput';
@@ -9,6 +8,7 @@ import {
 } from 'reakit/Form/FormMessage';
 import { unstable_FormRemoveButtonOptions } from 'reakit/Form/FormRemoveButton';
 import { unstable_getIn } from 'reakit/Form/utils/getIn';
+import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';

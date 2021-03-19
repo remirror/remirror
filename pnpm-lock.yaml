@@ -825,6 +825,7 @@ importers:
   packages/remirror__core-helpers:
     dependencies:
       '@babel/runtime': 7.13.10
+      '@linaria/core': 3.0.0-beta.1
       '@remirror/core-constants': link:../remirror__core-constants
       '@remirror/types': link:../remirror__types
       '@types/object.omit': 3.0.0
@@ -840,6 +841,7 @@ importers:
       throttle-debounce: 3.0.1
     specifiers:
       '@babel/runtime': ^7.13.10
+      '@linaria/core': ^3.0.0-beta.1
       '@remirror/core-constants': 1.0.0-next.60
       '@remirror/types': 0.0.0
       '@types/object.omit': ^3.0.0

@@ -1,10 +1,10 @@
 import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import { cx } from '@linaria/core';
 import Layout from '@theme/Layout';
 import { ReactElement } from 'react';
 import { isString } from 'remirror';
+import { cx } from '@remirror/core';
 
 import { ExternalIcon } from '../components/external-icon';
 import styles from './styles.module.css';

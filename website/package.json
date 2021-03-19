@@ -21,7 +21,6 @@
     "@emotion/styled": "^11.1.5",
     "@fontsource/fira-code": "^4.2.1",
     "@fontsource/rubik": "^4.2.1",
-    "@linaria/core": "^3.0.0-beta.1",
     "@mdx-js/react": "^1.6.22",
     "@remirror/dev": "1.0.0-next.60",
     "@remirror/playground": "1.0.0-next.60",

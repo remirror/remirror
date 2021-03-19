@@ -1,5 +1,5 @@
-import { cx } from '@linaria/core';
 import { GroupHTMLProps, GroupOptions } from 'reakit/Group/Group';
+import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';

@@ -1,10 +1,10 @@
-import { cx } from '@linaria/core';
 import escapeStringRegexp from 'escape-string-regexp';
 import {
   assertGet,
   command,
   CommandFunction,
   CreateExtensionPlugin,
+  cx,
   DispatchFunction,
   extension,
   findMatches,

@@ -1039,3 +1039,4 @@ export {
 } from 'case-anything';
 export { debounce, throttle } from 'throttle-debounce';
 export { omit, pick };
+export { cx } from '@linaria/core';

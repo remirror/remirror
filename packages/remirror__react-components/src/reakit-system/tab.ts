@@ -1,6 +1,6 @@
-import { cx } from '@linaria/core';
 import { TabHTMLProps, TabOptions } from 'reakit/Tab/Tab';
 import { TabListHTMLProps, TabListOptions } from 'reakit/Tab/TabList';
+import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';

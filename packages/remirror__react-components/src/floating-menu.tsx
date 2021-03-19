@@ -1,4 +1,3 @@
-import { cx } from '@linaria/core';
 import composeRefs from '@seznam/compose-react-refs';
 import { matchSorter } from 'match-sorter';
 import type { FC, ReactChild, Ref } from 'react';
@@ -9,7 +8,7 @@ import { Popover, PopoverState, usePopoverState } from 'reakit/Popover';
 import { Except } from '@remirror/core';
 import type { PositionerParam } from '@remirror/extension-positioner';
 import { getPositioner } from '@remirror/extension-positioner';
-import { useEditorDomRef, useHelpers } from '@remirror/react-core';
+import { cx, useEditorDomRef, useHelpers } from '@remirror/react-core';
 import {
   useEditorFocus,
   UseEditorFocusProps,
