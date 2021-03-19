@@ -36,9 +36,9 @@
     "@actions/core": "^1.2.6",
     "@actions/exec": "^1.0.4",
     "@actions/github": "^4.0.0",
-    "@babel/runtime": "^7.13.7",
-    "@remirror/core-helpers": "^1.0.0-next.60",
-    "@types/fs-extra": "^9.0.6",
+    "@babel/runtime": "^7.13.10",
+    "@remirror/core-helpers": "1.0.0-next.60",
+    "@types/fs-extra": "^9.0.7",
     "@types/giphy-api": "^2.0.2",
     "@types/semver": "^7.3.4",
     "codesandbox": "^2.2.1",
@@ -49,7 +49,7 @@
     "semver": "^7.3.4"
   },
   "devDependencies": {
-    "nock": "^13.0.7"
+    "nock": "^13.0.8"
   },
   "publishConfig": {
     "access": "public"
