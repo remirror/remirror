@@ -6,7 +6,7 @@
 
 import { createContext, ElementType, ReactElement, ReactNode, useContext, useMemo } from 'react';
 import { Provider as ReakitProvider } from 'reakit';
-import { cx , deepMerge } from '@remirror/core';
+import { cx, deepMerge } from '@remirror/core';
 import { createThemeVariables, CSSProperties, RemirrorThemeType, THEME } from '@remirror/theme';
 
 import * as system from '../reakit-system';

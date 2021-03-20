@@ -17,9 +17,10 @@ import {
 } from 'reakit/Toolbar';
 import { Tooltip, TooltipReference, useTooltipState } from 'reakit/Tooltip';
 import { VisuallyHidden } from 'reakit/VisuallyHidden';
-import {   AnyExtension,
+import {
+  AnyExtension,
   CommandDecoratorMessageProps,
-cx ,
+  cx,
   ErrorConstant,
   Except,
   includes,

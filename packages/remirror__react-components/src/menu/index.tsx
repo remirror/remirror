@@ -20,7 +20,7 @@ import {
 } from 'reakit/Menu';
 import { Tooltip, TooltipReference, useTooltipState } from 'reakit/Tooltip';
 import type { AnyExtension, CommandDecoratorMessageProps } from '@remirror/core';
-import { cx , ErrorConstant, includes, invariant, isString } from '@remirror/core';
+import { cx, ErrorConstant, includes, invariant, isString } from '@remirror/core';
 import {
   useActive,
   useChainedCommands,

@@ -49,9 +49,9 @@ export const Basic = () => {
         <Remirror manager={manager} autoFocus onChange={onChange} state={state} autoRender='end'>
           <Toolbar items={toolbarItems} refocusEditor label='Top Toolbar' />
         </Remirror>
-        <pre>
+        {/* <pre>
           <code>{getContext()?.helpers.getMarkdown(state)}</code>
-        </pre>
+        </pre> */}
       </ThemeProvider>
     </>
   );
@@ -205,7 +205,7 @@ const extensions = () => [
   new CodeBlockExtension({ supportedLanguages: [jsx, typescript] }),
   new TrailingNodeExtension(),
   new TableExtension(),
-  new MarkdownExtension(),
+  new MarkdownExtension({ copyAsMarkdown: false }),
 ];
 
 const toolbarItems: ToolbarItemUnion[] = [

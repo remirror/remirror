@@ -385,7 +385,12 @@
     "name": "@remirror/extension-list",
     "limit": "10 KB",
     "path": "packages/remirror__extension-list/dist/remirror-extension-list.browser.esm.js",
-    "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
+    "ignore": [
+      "@remirror/pm",
+      "@remirror/core",
+      "@remirror/extension-events",
+      "@remirror/messages"
+    ],
     "running": false,
     "gzip": true
   },

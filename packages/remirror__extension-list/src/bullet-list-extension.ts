@@ -19,7 +19,7 @@ import { toggleList } from './list-commands';
 import { ListItemExtension } from './list-item-extension';
 
 /**
- * Creates the node for a bullet list.
+ * Create the node for a bullet list.
  */
 @extension({})
 export class BulletListExtension extends NodeExtension {

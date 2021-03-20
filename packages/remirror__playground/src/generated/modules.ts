@@ -37,6 +37,7 @@ import * as RemirrorPmView from '@remirror/pm/view';
 import * as RemirrorReact from '@remirror/react';
 import { ReactPlaygroundImports } from '@remirror/react/playground';
 import * as RemirrorReactDebugger from '@remirror/react-debugger';
+import * as RemirrorReactEditors from '@remirror/react-editors';
 import * as RemirrorTypes from '@remirror/types';
 
 import { INTERNAL_MODULE_PREFIX } from '../playground-constants';
@@ -120,6 +121,7 @@ export const IMPORT_CACHE_MODULES: Record<string, any> = {
   '@remirror/types': RemirrorTypes,
   '@remirror/react': RemirrorReact,
   '@remirror/react-debugger': RemirrorReactDebugger,
+  '@remirror/react-editors': RemirrorReactEditors,
   'create-context-state': CreateContextState,
   multishift: Multishift,
   'prosemirror-paste-rules': ProsemirrorPasteRules,

@@ -33,6 +33,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
+    "@linaria/core": "^3.0.0-beta.1",
     "@remirror/core-types": "1.0.0-next.60",
     "case-anything": "^1.1.2",
     "color2k": "^1.2.4",

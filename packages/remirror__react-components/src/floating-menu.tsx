@@ -5,10 +5,10 @@ import { useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useMenuState } from 'reakit/Menu';
 import { Popover, PopoverState, usePopoverState } from 'reakit/Popover';
-import { Except } from '@remirror/core';
+import { cx, Except } from '@remirror/core';
 import type { PositionerParam } from '@remirror/extension-positioner';
 import { getPositioner } from '@remirror/extension-positioner';
-import { cx, useEditorDomRef, useHelpers } from '@remirror/react-core';
+import { useEditorDomRef, useHelpers } from '@remirror/react-core';
 import {
   useEditorFocus,
   UseEditorFocusProps,
@@ -159,11 +159,10 @@ export const FloatingWrapper: FC<FloatingWrapperProps> = (props): JSX.Element =>
           {...popoverState}
           aria-label={floatingLabel}
           hideOnEsc={true}
-          // un
-          unstable_autoFocusOnHide={false}
-          unstable_autoFocusOnShow={false}
-          // unstable_initialFocusRef={editorRef}
-          // unstable_finalFocusRef={editorRef}
+          // unstable_autoFocusOnHide={false}
+          // unstable_autoFocusOnShow={false}
+          unstable_initialFocusRef={editorRef}
+          unstable_finalFocusRef={editorRef}
           className={cx(ComponentsTheme.FLOATING_POPOVER, containerClass)}
         >
           {animated ? <div className={animatedClass}>{children}</div> : children}

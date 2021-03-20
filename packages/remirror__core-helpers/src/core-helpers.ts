@@ -8,6 +8,7 @@ import type {
   AnyConstructor,
   AnyFunction,
   ConditionalExcept,
+  GetPath,
   Nullable,
   Primitive,
   Shape,

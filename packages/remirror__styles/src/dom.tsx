@@ -3547,6 +3547,14 @@ export const extensionImageStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
+export const extensionListStyledCss: ReturnType<typeof css> = css`
+  /**
+ * Styles extracted from: packages/remirror__theme/src/extension-list-theme.ts
+ */
+  .remirror-editor {
+  }
+`;
+
 export const extensionNodeFormattingStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-node-formatting-theme.ts
@@ -4032,6 +4040,7 @@ export const allStyledCss: ReturnType<typeof css> = css`
   ${extensionEmojiStyledCss}
   ${extensionGapCursorStyledCss}
   ${extensionImageStyledCss}
+  ${extensionListStyledCss}
   ${extensionNodeFormattingStyledCss}
   ${extensionPlaceholderStyledCss}
   ${extensionPositionerStyledCss}
