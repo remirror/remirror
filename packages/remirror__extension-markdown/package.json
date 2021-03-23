@@ -54,7 +54,7 @@
     "access": "public"
   },
   "@remirror": {
-    "sizeLimit": "20 KB"
+    "sizeLimit": "25 KB"
   },
   "rn:dev": "src/index.ts"
 }

@@ -396,7 +396,7 @@
   },
   {
     "name": "@remirror/extension-markdown",
-    "limit": "20 KB",
+    "limit": "25 KB",
     "path": "packages/remirror__extension-markdown/dist/remirror-extension-markdown.browser.esm.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,

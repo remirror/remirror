@@ -1905,7 +1905,7 @@ importers:
       prosemirror-state: ^1.3.4
       prosemirror-suggest: 1.0.0-next.60
       prosemirror-tables: ^1.1.1
-      prosemirror-trailing-node: ^0.0.0
+      prosemirror-trailing-node: 0.0.0
       prosemirror-transform: ^1.2.12
       prosemirror-view: ^1.18.1
   packages/remirror__preset-core:
