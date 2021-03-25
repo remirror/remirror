@@ -341,7 +341,7 @@ function createPasteRuleHandler<Rule extends RegexPasteRule>(
 
       // When the current node is not a text node, recursively dive into it's child nodes.
       if (!child.isText) {
-        nodes.push(child.copy(handler({ fragment: child.content, rule, nodes })));
+        nodes.push(child.copy(handler({ fragment: child.content, rule, nodes: [] })));
         return;
       }
 
