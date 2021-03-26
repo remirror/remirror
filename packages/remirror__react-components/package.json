@@ -41,6 +41,7 @@
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@lingui/core": "^3.7.2",
+    "@popperjs/core": "^2.9.1",
     "@remirror/core": "1.0.0-next.60",
     "@remirror/extension-positioner": "1.0.0-next.60",
     "@remirror/extension-text-color": "0.0.0",
@@ -56,9 +57,11 @@
     "match-sorter": "^6.3.0",
     "multishift": "1.0.0-next.60",
     "react-color": "^2.19.3",
+    "react-popper": "^2.2.5",
     "reakit": "^1.3.5",
     "reakit-system-palette": "^0.14.1",
     "reakit-utils": "^0.15.1",
+    "use-isomorphic-layout-effect": "^1.1.1",
     "use-previous": "^1.1.0"
   },
   "devDependencies": {

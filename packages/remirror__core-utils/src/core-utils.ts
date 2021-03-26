@@ -740,7 +740,7 @@ export function getSelectedGroup(
  * @param state - the editor state or transaction.
  */
 export function getSelectedWord(state: EditorState | Transaction): GetSelectedGroup | undefined {
-  return getSelectedGroup(state, /[\s\0]/);
+  return getSelectedGroup(state, /\W/);
 }
 
 /**

@@ -33,7 +33,7 @@ export interface EventsOptions {
    *
    * Return `true` to prevent any other prosemirror listeners from firing.
    */
-  blur?: Handler<BlurEventHandler>;
+  blur?: Handler<FocusEventHandler>;
 
   /**
    * Listens for focus events on the editor.
@@ -68,28 +68,54 @@ export interface EventsOptions {
    *
    * Return `true` to prevent any other prosemirror listeners from firing.
    */
-  mousedown?: Handler<MousedownEventHandler>;
+  mousedown?: Handler<MouseEventHandler>;
 
   /**
    * Listens for mouseup events on the editor.
    *
    * Return `true` to prevent any other prosemirror listeners from firing.
    */
-  mouseup?: Handler<MouseupEventHandler>;
+  mouseup?: Handler<MouseEventHandler>;
 
   /**
    * Listens for mouseenter events on the editor.
    *
    * Return `true` to prevent any other prosemirror listeners from firing.
    */
-  mouseenter?: Handler<MouseenterEventHandler>;
+  mouseenter?: Handler<MouseEventHandler>;
 
   /**
    * Listens for mouseleave events on the editor.
    *
    * Return `true` to prevent any other prosemirror listeners from firing.
    */
-  mouseleave?: Handler<MouseleaveEventHandler>;
+  mouseleave?: Handler<MouseEventHandler>;
+
+  /**
+   * Handle text input.
+   */
+  textInput?: Handler<TextInputHandler>;
+
+  /**
+   * Listens for keypress events on the editor.
+   *
+   * Return `true` to prevent any other prosemirror listeners from firing.
+   */
+  keypress?: Handler<KeyboardEventHandler>;
+
+  /**
+   * Listens for keypress events on the editor.
+   *
+   * Return `true` to prevent any other prosemirror listeners from firing.
+   */
+  keydown?: Handler<KeyboardEventHandler>;
+
+  /**
+   * Listens for keypress events on the editor.
+   *
+   * Return `true` to prevent any other prosemirror listeners from firing.
+   */
+  keyup?: Handler<KeyboardEventHandler>;
 
   /**
    * Listens for click events and provides information which may be useful in
@@ -124,13 +150,15 @@ export interface EventsOptions {
   hover?: Handler<HoverEventHandler>;
 }
 
-export type BlurEventHandler = (event: FocusEvent) => boolean | undefined | void;
 export type FocusEventHandler = (event: FocusEvent) => boolean | undefined | void;
 export type ScrollEventHandler = (event: Event) => boolean | undefined | void;
-export type MousedownEventHandler = (event: MouseEvent) => boolean | undefined | void;
-export type MouseupEventHandler = (event: MouseEvent) => boolean | undefined | void;
-export type MouseenterEventHandler = (event: MouseEvent) => boolean | undefined | void;
-export type MouseleaveEventHandler = (event: MouseEvent) => boolean | undefined | void;
+export type MouseEventHandler = (event: MouseEvent) => boolean | undefined | void;
+export type TextInputHandler = (props: {
+  from: number;
+  to: number;
+  text: string;
+}) => boolean | undefined | void;
+export type KeyboardEventHandler = (event: KeyboardEvent) => boolean | undefined | void;
 export type ClickEventHandler = (
   event: MouseEvent,
   state: ClickHandlerState,
@@ -154,6 +182,10 @@ export type HoverEventHandler = (props: HoverEventHandlerProps) => boolean | und
     'mouseup',
     'mouseenter',
     'mouseleave',
+    'textInput',
+    'keypress',
+    'keyup',
+    'keydown',
     'click',
     'clickMark',
     'contextmenu',
@@ -173,7 +205,7 @@ export type HoverEventHandler = (props: HoverEventHandlerProps) => boolean | und
     contextmenu: { earlyReturnValue: true },
     scroll: { earlyReturnValue: true },
   },
-  defaultPriority: ExtensionPriority.Low,
+  defaultPriority: ExtensionPriority.High,
 })
 export class EventsExtension extends PlainExtension<EventsOptions> {
   get name() {
@@ -236,6 +268,15 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
 
     return {
       props: {
+        handleKeyPress: (_, event) => {
+          return this.options.keypress(event) || false;
+        },
+        handleKeyDown: (_, event) => {
+          return this.options.keydown(event) || false;
+        },
+        handleTextInput: (_, from, to, text) => {
+          return this.options.textInput({ from, to, text }) || false;
+        },
         handleClickOn: (view, pos, node, nodePos, event, direct) => {
           const state = this.store.currentState;
           const { schema, doc } = state;
@@ -314,6 +355,10 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
           mouseenter: (_, event) => {
             this.mouseover = true;
             return this.options.mouseenter(event) || false;
+          },
+
+          keyup: (_, event) => {
+            return this.options.keyup(event) || false;
           },
 
           mouseout: this.createMouseEventHandler(

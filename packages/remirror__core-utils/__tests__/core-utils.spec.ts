@@ -319,33 +319,39 @@ describe('selections', () => {
 
 describe('getSelectedWord', () => {
   it('should select the word the cursor is currently within', () => {
-    const { state } = createEditor(doc(p('Something thi<cursor>s is a word')));
+    const { state } = createEditor(doc(p('Something thi<cursor>s is a word.')));
 
     expect(getSelectedWord(state)).toEqual({ from: 11, to: 15, text: 'this' });
   });
 
   it('should select the word the cursor is before', () => {
-    const { state } = createEditor(doc(p('Something <cursor>this is a word')));
+    const { state } = createEditor(doc(p('Something <cursor>this is a word.')));
 
     expect(getSelectedWord(state)).toEqual({ from: 11, to: 15, text: 'this' });
   });
 
   it('should still select the word for partial selection is before', () => {
-    const { state } = createEditor(doc(p('Something <start>t<end>his is a word')));
+    const { state } = createEditor(doc(p('Something <start>t<end>his is a word.')));
 
     expect(getSelectedWord(state)).toEqual({ from: 11, to: 15, text: 'this' });
   });
 
   it('should expand the selection', () => {
-    const { state } = createEditor(doc(p('Something th<start>is <end>is a word')));
+    const { state } = createEditor(doc(p('Something th<start>is <end>is a word.')));
 
     expect(getSelectedWord(state)).toEqual({ from: 11, to: 18, text: 'this is' });
   });
 
   it('should return undefined for ambiguous locations', () => {
-    const { state } = createEditor(doc(p('Something this <cursor> is a word')));
+    const { state } = createEditor(doc(p('Something this <cursor> is a word.')));
 
     expect(getSelectedWord(state)).toBeUndefined();
+  });
+
+  it('should not include punctuation', () => {
+    const { state } = createEditor(doc(p('Something this is a w<cursor>ord.')));
+
+    expect(getSelectedWord(state)).toEqual({ from: 21, to: 25, text: 'word' });
   });
 
   it('should return undefined for completely empty locations', () => {

@@ -1,5 +1,6 @@
 import {
   Coords,
+  EditorState,
   findParentNode,
   FindProsemirrorNodeResult,
   getDefaultBlockNode,
@@ -119,59 +120,63 @@ export const emptyBlockNodeEndPositioner = emptyBlockNodePositioner.clone(({ get
   },
 }));
 
+function createSelectionPositioner(isActive: (state: EditorState) => boolean) {
+  return Positioner.create<{
+    from: Coords;
+    to: Coords;
+  }>({
+    hasChanged: hasStateChanged,
+    getActive: (props) => {
+      const { state, view } = props;
+
+      if (!isActive(state)) {
+        return Positioner.EMPTY;
+      }
+
+      const { head, anchor } = state.selection;
+      return [{ from: view.coordsAtPos(anchor), to: view.coordsAtPos(head) }];
+    },
+
+    getPosition(props) {
+      const { element, data, view } = props;
+      const { from, to } = data;
+      const parent = element.offsetParent ?? view.dom;
+      const parentRect = parent.getBoundingClientRect();
+      const height = Math.abs(to.bottom - from.top);
+
+      // True when the selection spans multiple lines.
+      const spansMultipleLines = height > from.bottom - from.top;
+
+      // The position furthest to the left.
+      const leftmost = Math.min(from.left, to.left);
+
+      // The position nearest the top.
+      const topmost = Math.min(from.top, to.top);
+
+      const left =
+        parent.scrollLeft +
+        (spansMultipleLines ? to.left - parentRect.left : leftmost - parentRect.left);
+      const top = parent.scrollTop + topmost - parentRect.top;
+      const width = spansMultipleLines ? 1 : Math.abs(from.left - to.right);
+      const rect = new DOMRect(spansMultipleLines ? to.left : leftmost, topmost, width, height);
+      const visible = isPositionVisible(rect, view.dom);
+
+      return { rect, y: top, x: left, height, width, visible };
+    },
+  });
+}
+
 /**
  * Create a position that fully capture the selected text. When the selection
  * spans multiple lines, the position is created as a box that fully captures
  * the start cursor and end cursor.
  */
-export const selectionPositioner = Positioner.create<{
-  from: Coords;
-  to: Coords;
-}>({
-  hasChanged: hasStateChanged,
-  getActive: (props) => {
-    const { state, view } = props;
-
-    if (state.selection.empty) {
-      return Positioner.EMPTY;
-    }
-
-    const { head, anchor } = state.selection;
-    return [{ from: view.coordsAtPos(anchor), to: view.coordsAtPos(head) }];
-  },
-
-  getPosition(props) {
-    const { element, data, view } = props;
-    const { from, to } = data;
-    const parent = element.offsetParent ?? view.dom;
-    const parentRect = parent.getBoundingClientRect();
-    const height = Math.abs(to.bottom - from.top);
-
-    // True when the selection spans multiple lines.
-    const spansMultipleLines = height > from.bottom - from.top;
-
-    // The position furthest to the left.
-    const leftmost = Math.min(from.left, to.left);
-
-    // The position nearest the top.
-    const topmost = Math.min(from.top, to.top);
-
-    const left =
-      parent.scrollLeft +
-      (spansMultipleLines ? to.left - parentRect.left : leftmost - parentRect.left);
-    const top = parent.scrollTop + topmost - parentRect.top;
-    const width = spansMultipleLines ? 1 : Math.abs(from.left - to.right);
-    const rect = new DOMRect(spansMultipleLines ? to.left : leftmost, topmost, width, height);
-    const visible = isPositionVisible(rect, view.dom);
-
-    return { rect, y: top, x: left, height, width, visible };
-  },
-});
+export const selectionPositioner = createSelectionPositioner((state) => !state.selection.empty);
 
 /**
- * Render a menu that is inline with the first character of the selection. This
- * is useful for suggestions since they should typically appear while typing
- * without a multi character selection.
+ * This can be used to position a menu that is inline with the first character
+ * of the selection. This is useful for suggestions since they should typically
+ * appear while typing without a multi character selection.
  *
  * @remarks
  *
@@ -184,39 +189,12 @@ export const selectionPositioner = Positioner.create<{
  * - `bottom` absolutely positions the element above the text selection.
  * - `top` absolutely positions the element below the text selection
  */
-export const cursorPositioner = Positioner.create<Coords>({
-  hasChanged: hasStateChanged,
+export const cursorPositioner = createSelectionPositioner((state) => state.selection.empty);
 
-  /**
-   * Only active when the selection is empty (one character)
-   */
-  getActive: (props) => {
-    const { state, view } = props;
-
-    if (!state.selection.empty) {
-      return Positioner.EMPTY;
-    }
-
-    return [view.coordsAtPos(state.selection.from)];
-  },
-
-  getPosition(props) {
-    const { element, data, view } = props;
-    const parent = element.offsetParent ?? view.dom;
-
-    // The dimensions of the containing element (should be the Prosemirror editor dom)
-    const parentBox = parent.getBoundingClientRect();
-
-    const left = view.dom.scrollLeft + data.left - parentBox.left;
-    const top = view.dom.scrollTop + data.top - parentBox.top;
-    const width = 1;
-    const height = data.bottom - data.top;
-    const rect = new DOMRect(data.left, data.top, 1, height);
-    const visible = isPositionVisible(rect, view.dom);
-
-    return { y: top, x: left, height, width, rect, visible };
-  },
-});
+/**
+ * Always render a position regardless of selection.
+ */
+export const alwaysPositioner = createSelectionPositioner(() => true);
 
 /**
  * Creates a position which captures the current active word. Nothing is returned

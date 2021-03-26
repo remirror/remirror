@@ -1,5 +1,6 @@
 export type {
   I18nProps,
+  UpdateReason,
   UseExtensionCallback,
   UseI18nReturn,
   UseRemirrorProps,
@@ -12,6 +13,7 @@ export {
   useAttrs,
   useChainedCommands,
   useCommands,
+  useCurrentSelection,
   useEditorDomRef,
   useEditorState,
   useEditorView,
@@ -25,6 +27,7 @@ export {
   useRemirror,
   useRemirrorContext,
   useSelectedText,
+  useUpdateReason,
 } from './hooks';
 export { createReactManager } from './react-helpers';
 export type { RemirrorProps } from './react-remirror';

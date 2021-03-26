@@ -240,12 +240,13 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
   @keyBinding({ shortcut: NamedShortcut.InsertLink })
   shortcut({ state, dispatch, tr }: KeyBindingProps): boolean {
     let selectedText = '';
-    let { from, to, empty } = tr.selection;
+    let { from, to, empty, $from } = tr.selection;
     let expandedSelection = false;
+    const mark = getMarkRange($from, this.type);
 
-    // When the selection is empty, expand it
+    // When the selection is empty, expand it to the active mark
     if (empty) {
-      const selectedWord = getSelectedWord(tr);
+      const selectedWord = mark ?? getSelectedWord(tr);
 
       if (!selectedWord) {
         return false;
@@ -263,12 +264,6 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
       selectedText = tr.doc.textBetween(from, to);
     }
 
-    if (dispatch) {
-      expandedSelection && tr.setSelection(TextSelection.create(state.doc, from, to));
-      dispatch(tr);
-    }
-
-    const mark = getMarkRange(tr.doc.resolve(from), this.type, tr.doc.resolve(to));
     this.options.onActivateLink(selectedText);
     this.options.onShortcut({
       activeLink: mark
@@ -303,6 +298,14 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
       return updateMark({ type: this.type, attrs, range })(props);
     };
+  }
+
+  /**
+   * Select the link at the current location.
+   */
+  @command()
+  selectLink(): CommandFunction {
+    return this.store.commands.selectMark.original(this.type);
   }
 
   /**

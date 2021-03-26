@@ -30,6 +30,7 @@ import type {
 } from '@remirror/core-types';
 import {
   environment,
+  getMarkRange,
   getTextSelection,
   htmlToProsemirrorNode,
   isProsemirrorNode,
@@ -384,6 +385,23 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
       dispatch?.(tr.setSelection(textSelection));
 
       return true;
+    };
+  }
+
+  /**
+   * Select the link at the current location.
+   */
+  @command()
+  selectMark(type: string | MarkType): CommandFunction {
+    return (props) => {
+      const { tr } = props;
+      const range = getMarkRange(tr.selection.$from, type);
+
+      if (!range) {
+        return false;
+      }
+
+      return this.store.commands.selectText.original({ from: range.from, to: range.to })(props);
     };
   }
 
