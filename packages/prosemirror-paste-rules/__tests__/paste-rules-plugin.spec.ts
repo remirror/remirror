@@ -75,7 +75,7 @@ describe('pasteRules', () => {
         });
     });
 
-    it.skip('should transform complex content', () => {
+    it('should transform complex content', () => {
       const plugin = pasteRules([
         { regexp: /(@[a-z]+)/, markType: schema.marks.strong, type: 'mark' },
       ]);
