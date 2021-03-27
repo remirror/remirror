@@ -14,15 +14,15 @@
     "@preconstruct/next": "^2.0.0",
     "@remirror/react": "1.0.0-next.60",
     "@remirror/styles": "1.0.0-next.60",
-    "next": "10.0.8",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "next": "10.0.9",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "refractor": "^3.3.1",
     "remirror": "1.0.0-next.60"
   },
   "devDependencies": {
     "@types/react": "^17.0.2",
-    "@types/react-dom": "^17.0.1",
+    "@types/react-dom": "^17.0.3",
     "@types/refractor": "^3"
   },
   "@remirror": {

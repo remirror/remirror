@@ -168,7 +168,7 @@
     "@types/prosemirror-history": "^1",
     "@types/prosemirror-inputrules": "^1",
     "@types/prosemirror-keymap": "^1.0.4",
-    "@types/prosemirror-model": "^1.12.0",
+    "@types/prosemirror-model": "^1.13.0",
     "@types/prosemirror-schema-list": "^1.0.3",
     "@types/prosemirror-state": "^1.2.6",
     "@types/prosemirror-transform": "^1",
@@ -188,7 +188,7 @@
     "prosemirror-tables": "^1.1.1",
     "prosemirror-trailing-node": "0.0.0",
     "prosemirror-transform": "^1.2.12",
-    "prosemirror-view": "^1.18.1"
+    "prosemirror-view": "^1.18.2"
   },
   "publishConfig": {
     "access": "public"

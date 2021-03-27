@@ -65,16 +65,16 @@
     "looks-same": "^7.3.0",
     "min-document": "^2.19.0",
     "p-limit": "^3.1.0",
-    "playwright": "^1.9.2",
-    "playwright-core": "^1.9.2",
+    "playwright": "^1.10.0",
+    "playwright-core": "^1.10.0",
     "playwright-testing-library": "^2.7.2",
-    "react-test-renderer": "^17.0.1",
+    "react-test-renderer": "^17.0.2",
     "signal-exit": "^3.0.3",
     "test-keyboard": "1.0.0-next.60"
   },
   "devDependencies": {
     "@types/react": "^17.0.2",
-    "react": "^17.0.1"
+    "react": "^17.0.2"
   },
   "peerDependencies": {
     "@types/react": "^16.14.0 || ^17",

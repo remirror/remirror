@@ -25,7 +25,7 @@
     "@emotion/styled": "^11.1.5",
     "@types/react": "^17.0.2",
     "@types/styled-components": "^5.1.9",
-    "react": "^17.0.1",
+    "react": "^17.0.2",
     "styled-components": "^5.1.1"
   },
   "peerDependencies": {
