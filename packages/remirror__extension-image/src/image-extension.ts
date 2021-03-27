@@ -107,6 +107,7 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
           getAttrs: (element) =>
             isElementDomNode(element) ? getImageAttributes({ element, parse: extra.parse }) : {},
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (node) => {
         const attrs = omitExtraAttributes(node.attrs, extra);

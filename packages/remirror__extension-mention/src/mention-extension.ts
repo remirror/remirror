@@ -200,6 +200,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
             return { ...extra.parse(element), id, label, name };
           },
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (mark) => {
         const { id, name } = omitExtraAttributes(mark.attrs, extra);

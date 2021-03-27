@@ -208,6 +208,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             return { ...extra.parse(node), href, auto };
           },
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (node) => {
         const { auto: _, ...rest } = omitExtraAttributes(node.attrs, extra);
@@ -238,7 +239,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
    * Add a handler to the `onActivateLink` to capture when .
    */
   @keyBinding({ shortcut: NamedShortcut.InsertLink })
-  shortcut({ state, dispatch, tr }: KeyBindingProps): boolean {
+  shortcut({ tr }: KeyBindingProps): boolean {
     let selectedText = '';
     let { from, to, empty, $from } = tr.selection;
     let expandedSelection = false;

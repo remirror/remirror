@@ -138,6 +138,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
             return { ...extra.parse(node), language, wrap };
           },
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (node) => codeBlockToDOM(node, extra),
     };

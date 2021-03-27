@@ -46,7 +46,7 @@ export class HorizontalRuleExtension extends NodeExtension<HorizontalRuleOptions
     return {
       ...override,
       attrs: extra.defaults(),
-      parseDOM: [{ tag: 'hr', getAttrs: extra.parse }],
+      parseDOM: [{ tag: 'hr', getAttrs: extra.parse }, ...(override.parseDOM ?? [])],
       toDOM: (node) => ['hr', extra.dom(node)],
     };
   }

@@ -50,6 +50,7 @@ export class CheckboxExtension extends NodeExtension<CheckboxOptions> {
             };
           },
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (mark) => {
         return [

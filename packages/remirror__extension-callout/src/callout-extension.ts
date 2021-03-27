@@ -68,6 +68,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
             return { ...extra.parse(node), type, content };
           },
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (node) => {
         const { type, ...rest } = omitExtraAttributes(node.attrs, extra);

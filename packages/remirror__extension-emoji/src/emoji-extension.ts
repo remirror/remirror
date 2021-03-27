@@ -91,6 +91,7 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
             return { ...extra.parse(node), code };
           },
         },
+        ...(override.parseDOM ?? []),
       ],
 
       toDOM: (node) => {

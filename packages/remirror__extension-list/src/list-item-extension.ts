@@ -40,7 +40,7 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
       draggable: false,
       ...override,
       attrs: { ...extra.defaults(), closed: { default: null } },
-      parseDOM: [{ tag: 'li', getAttrs: extra.parse }],
+      parseDOM: [{ tag: 'li', getAttrs: extra.parse }, ...(override.parseDOM ?? [])],
       toDOM: (node) => {
         if (!enableToggle) {
           return ['li', extra.dom(node), 0];

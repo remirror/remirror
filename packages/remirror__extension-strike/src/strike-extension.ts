@@ -51,6 +51,7 @@ export class StrikeExtension extends MarkExtension {
           style: 'text-decoration',
           getAttrs: (node) => (node === 'line-through' ? {} : false),
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (mark) => ['s', extra.dom(mark), 0],
     };

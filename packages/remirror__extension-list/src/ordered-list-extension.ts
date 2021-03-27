@@ -56,6 +56,7 @@ export class OrderedListExtension extends NodeExtension {
             };
           },
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (node) => {
         const extraAttributes = extra.dom(node);

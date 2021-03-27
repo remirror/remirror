@@ -59,6 +59,7 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
           tag: 'pre',
           getAttrs: (node) => (isElementDomNode(node) ? extra.parse(node) : false),
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM() {
         return ['pre', ['code', 0]];

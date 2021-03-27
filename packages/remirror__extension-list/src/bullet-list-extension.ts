@@ -36,7 +36,7 @@ export class BulletListExtension extends NodeExtension {
       content: 'listItem+',
       ...override,
       attrs: extra.defaults(),
-      parseDOM: [{ tag: 'ul', getAttrs: extra.parse }],
+      parseDOM: [{ tag: 'ul', getAttrs: extra.parse }, ...(override.parseDOM ?? [])],
       toDOM: (node) => ['ul', extra.dom(node), 0],
     };
   }

@@ -247,6 +247,7 @@ export type NodeSpecOverride = Pick<
   | 'code'
   | 'defining'
   | 'isolating'
+  | 'parseDOM'
 >;
 
 /**
@@ -261,7 +262,10 @@ export interface MarkExtensionSpec
   toDOM?: (mark: MarkWithAttributes, inline: boolean) => DOMOutputSpec;
 }
 
-export type MarkSpecOverride = Pick<MarkSpec, 'inclusive' | 'excludes' | 'group' | 'spanning'>;
+export type MarkSpecOverride = Pick<
+  MarkSpec,
+  'inclusive' | 'excludes' | 'group' | 'spanning' | 'parseDOM'
+>;
 
 /**
  * The method signature used to call the Prosemirror `nodeViews`

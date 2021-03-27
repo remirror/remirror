@@ -155,19 +155,22 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
         label: {},
         name: {},
       },
-      parseDOM: this.options.matchers.map((matcher) => ({
-        tag: `${matcher.mentionTag ?? this.options.mentionTag}[${dataAttributeId}]`,
-        getAttrs: (node) => {
-          if (!isElementDomNode(node)) {
-            return false;
-          }
+      parseDOM: [
+        ...this.options.matchers.map((matcher) => ({
+          tag: `${matcher.mentionTag ?? this.options.mentionTag}[${dataAttributeId}]`,
+          getAttrs: (node: string | Node) => {
+            if (!isElementDomNode(node)) {
+              return false;
+            }
 
-          const id = node.getAttribute(dataAttributeId);
-          const name = node.getAttribute(dataAttributeName);
-          const label = node.textContent;
-          return { ...extra.parse(node), id, label, name };
-        },
-      })),
+            const id = node.getAttribute(dataAttributeId);
+            const name = node.getAttribute(dataAttributeName);
+            const label = node.textContent;
+            return { ...extra.parse(node), id, label, name };
+          },
+        })),
+        ...(override.parseDOM ?? []),
+      ],
       toDOM: (node) => {
         const { label, id, name } = omitExtraAttributes(
           node.attrs,

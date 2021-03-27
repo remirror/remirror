@@ -108,7 +108,7 @@ export function createTableNodeSchema(
       attrs: extra.defaults(),
       content: 'tableRow+',
       tableRole: 'table',
-      parseDOM: [{ tag: 'table', getAttrs: extra.parse }],
+      parseDOM: [{ tag: 'table', getAttrs: extra.parse }, ...(override.parseDOM ?? [])],
       toDOM(node) {
         return ['table', ['tbody', extra.dom(node), 0]];
       },
@@ -119,7 +119,7 @@ export function createTableNodeSchema(
       attrs: extra.defaults(),
       content: '(tableCell | tableHeaderCell)*',
       tableRole: 'row',
-      parseDOM: [{ tag: 'tr', getAttrs: extra.parse }],
+      parseDOM: [{ tag: 'tr', getAttrs: extra.parse }, ...(override.parseDOM ?? [])],
       toDOM(node) {
         return ['tr', extra.dom(node), 0];
       },
@@ -136,6 +136,7 @@ export function createTableNodeSchema(
           tag: 'td',
           getAttrs: (dom) => ({ ...extra.parse(dom), ...getCellAttrs(dom as HTMLElement) }),
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM(node) {
         return ['td', { ...extra.dom(node), ...setCellAttrs(node) }, 0];
@@ -153,6 +154,7 @@ export function createTableNodeSchema(
           tag: 'th',
           getAttrs: (dom) => ({ ...extra.parse(dom), ...getCellAttrs(dom as HTMLElement) }),
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM(node) {
         return ['th', { ...extra.dom(node), ...setCellAttrs(node) }, 0];

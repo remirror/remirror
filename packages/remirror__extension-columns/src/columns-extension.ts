@@ -170,6 +170,7 @@ export class ColumnsExtension extends NodeExtension<ColumnsOptions> {
             };
           },
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (node) => {
         const {

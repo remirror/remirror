@@ -45,7 +45,7 @@ export class CodeExtension extends MarkExtension {
       excludes: '_',
       ...override,
       attrs: extra.defaults(),
-      parseDOM: [{ tag: 'code', getAttrs: extra.parse }],
+      parseDOM: [{ tag: 'code', getAttrs: extra.parse }, ...(override.parseDOM ?? [])],
       toDOM: (mark) => ['code', extra.dom(mark), 0],
     };
   }

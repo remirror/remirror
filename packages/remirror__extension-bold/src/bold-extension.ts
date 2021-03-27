@@ -87,6 +87,7 @@ export class BoldExtension extends MarkExtension<BoldOptions> {
           getAttrs: (node) =>
             isString(node) && /^(bold(er)?|[5-9]\d{2,})$/.test(node) ? null : false,
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (node) => {
         const { weight } = this.options;

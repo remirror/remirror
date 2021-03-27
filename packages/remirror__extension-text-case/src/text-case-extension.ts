@@ -85,6 +85,7 @@ export class TextCaseExtension extends MarkExtension<TextCaseOptions> {
             return { casing };
           },
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (mark) => {
         let { casing } = omitExtraAttributes(mark.attrs, extra) as TextCaseAttributes;

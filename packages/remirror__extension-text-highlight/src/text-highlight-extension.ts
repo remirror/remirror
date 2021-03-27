@@ -99,6 +99,7 @@ export class TextHighlightExtension extends MarkExtension<TextHighlightOptions> 
             return { highlight };
           },
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (mark: Mark) => {
         const { highlight, ...other } = omitExtraAttributes<TextHighlightAttributes>(

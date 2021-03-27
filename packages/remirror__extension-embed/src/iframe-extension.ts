@@ -92,6 +92,7 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
             };
           },
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (node) => {
         const { frameBorder, allowFullScreen, src, type, ...rest } = omitExtraAttributes(

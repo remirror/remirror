@@ -76,10 +76,13 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
           default: this.options.defaultLevel,
         },
       },
-      parseDOM: this.options.levels.map((level) => ({
-        tag: `h${level}`,
-        getAttrs: (element) => ({ ...extra.parse(element), level }),
-      })),
+      parseDOM: [
+        ...this.options.levels.map((level) => ({
+          tag: `h${level}`,
+          getAttrs: (element: string | Node) => ({ ...extra.parse(element), level }),
+        })),
+        ...(override.parseDOM ?? []),
+      ],
       toDOM: (node: ProsemirrorNode) => {
         if (!this.options.levels.includes(node.attrs.level)) {
           // Use the first level available

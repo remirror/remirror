@@ -51,7 +51,7 @@ export class HardBreakExtension extends NodeExtension {
       atom: true,
       ...override,
       attrs: extra.defaults(),
-      parseDOM: [{ tag: 'br', getAttrs: extra.parse }],
+      parseDOM: [{ tag: 'br', getAttrs: extra.parse }, ...(override.parseDOM ?? [])],
       toDOM: (node) => ['br', extra.dom(node)],
     };
   }
