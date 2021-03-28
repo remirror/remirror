@@ -108,13 +108,36 @@ export interface ChainedCommandProps {
   /**
    * Dispatches the chained commands.
    *
-   * @remarks
+   * ```ts
+   * chain.insertText('hello').run();
+   * ```
+   *
+   * This will run all commands in the chain regardless of whether a previous
+   * command was not able to be run.
+   *
+   * If `exitEarly` is set to true the commands will stop running at the first
+   * chainable command which doesn't return true.
+   */
+  run: (options?: { exitEarly?: boolean }) => void;
+
+  /**
+   * Applies the updates to the transaction without dispatching the transaction.
+   *
+   * This can be used to update a transaction without applying the update.
+   */
+  tr: () => Transaction;
+
+  /**
+   * Check to see whether the command chain can be run. Returns true when the
+   * command can be run.
    *
    * ```ts
-   * commands.chain.insertText('hello').run();
+   * if (chain.insertText('hello').enabled()) {
+   *   doSomething();
+   * }
    * ```
    */
-  run: () => void;
+  enabled: () => boolean;
 }
 
 export type ChainedIntersection<Extension extends AnyExtension> = UnionToIntersection<

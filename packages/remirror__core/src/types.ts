@@ -129,6 +129,11 @@ export interface CommandShape<Parameter extends any[] = []> {
    *
    * @param args - The same arguments that are applied to the command function.
    */
+  enabled: (...args: Parameter) => boolean;
+
+  /**
+   * @deprecated use `enabled` instead.
+   */
   isEnabled: (...args: Parameter) => boolean;
 
   /**

@@ -960,7 +960,7 @@ importers:
       '@remirror/core': link:../remirror__core
       '@remirror/messages': link:../remirror__messages
       '@types/direction': 1.0.0
-      direction: 2.0.0
+      direction: 1.0.4
     devDependencies:
       '@remirror/pm': link:../remirror__pm
     specifiers:
@@ -969,7 +969,7 @@ importers:
       '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
       '@types/direction': ^1.0.0
-      direction: ^2.0.0
+      direction: ^1.0.4
   packages/remirror__extension-blockquote:
     dependencies:
       '@babel/runtime': 7.13.10
@@ -13548,11 +13548,11 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==
-  /direction/2.0.0:
+  /direction/1.0.4:
     dev: false
     hasBin: true
     resolution:
-      integrity: sha512-J+nMrvyX/yHTCu1FYjylOGSBKB0QCcXoY10VNOW6N0QxJRV3V5VP+QSkQC7yFaVPb3ZL7pVE/Nu0rcf4m1TbpQ==
+      integrity: sha512-GYqKi1aH7PJXxdhTeZBFrg8vUBeKXi+cNprXsC1kpJcbcVnV9wBsrOu1cQEdG0WeQwlfHiy3XvnKfIrJ2R0NzQ==
   /dns-equal/1.0.0:
     dev: true
     resolution:
@@ -19178,6 +19178,7 @@ packages:
     resolution:
       integrity: sha512-hk/69oAeaIzchq/v3lS50PXuzn5O2ynldopMC+SWBql7J2WtdptfB9dy8Y7+Og5rPkTCpn83zTiO8FMcqlXJ/g==
   /jsondiffpatch/0.4.1:
+    bundledDependencies: []
     dependencies:
       chalk: 2.4.2
       diff-match-patch: 1.0.5

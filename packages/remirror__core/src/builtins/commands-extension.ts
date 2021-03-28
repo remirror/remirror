@@ -179,21 +179,80 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
     const { extensions, helpers } = this.store;
     const commands: Record<string, CommandShape> = object();
     const names = new Set<string>();
+    let allDecoratedCommands: Record<string, CommandDecoratorOptions> = object();
 
-    const chain: Record<string, any> & ChainedCommandProps = (tr: Transaction) => {
+    const chain = (tr?: Transaction) => {
       // This function allows for custom chaining.
       const customChain: Record<string, any> & ChainedCommandProps = object();
+      const getTr = () => tr ?? this.transaction;
+      let commandChain: Array<(dispatch?: DispatchFunction) => boolean> = [];
+      const getChain = () => commandChain;
 
       for (const [name, command] of Object.entries(commands)) {
-        // TODO exclude the excluded chained commands.
+        if (allDecoratedCommands[name]?.disableChaining) {
+          continue;
+        }
+
         customChain[name] = this.chainedFactory({
           chain: customChain,
           command: command.original,
-          tr,
+          getTr,
+          getChain,
         });
       }
 
-      customChain.run = () => view.dispatch(tr);
+      /**
+       * This function is used in place of the `view.dispatch` method which is
+       * passed through to all commands.
+       *
+       * It is responsible for checking that the transaction which was
+       * dispatched is the same as the shared transaction which makes chainable
+       * commands possible.
+       */
+      const dispatch: DispatchFunction = (transaction) => {
+        // Throw an error if the transaction being dispatched is not the same as
+        // the currently stored transaction.
+        invariant(transaction === getTr(), {
+          message:
+            'Chaining currently only supports `CommandFunction` methods which do not use the `state.tr` property. Instead you should use the provided `tr` property.',
+        });
+      };
+
+      customChain.run = (options = {}) => {
+        const commands = commandChain;
+        commandChain = [];
+
+        for (const cmd of commands) {
+          const shouldExit = !cmd(dispatch) && options.exitEarly;
+
+          if (shouldExit) {
+            return;
+          }
+        }
+
+        view.dispatch(getTr());
+      };
+
+      customChain.tr = () => {
+        const commands = commandChain;
+        commandChain = [];
+
+        for (const cmd of commands) {
+          cmd(dispatch);
+        }
+
+        return getTr();
+      };
+
+      customChain.enabled = () => {
+        for (const cmd of commandChain) {
+          if (!cmd()) {
+            return false;
+          }
+        }
+
+        return true;
+      };
 
       return customChain;
     };
@@ -202,6 +261,9 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
       const extensionCommands: ExtensionCommandReturn = extension.createCommands?.() ?? {};
       const decoratedCommands = extension.decoratedCommands ?? {};
       const active: Record<string, () => boolean> = {};
+
+      // Augment the decorated commands.
+      allDecoratedCommands = { ...allDecoratedCommands, decoratedCommands };
 
       for (const [commandName, options] of Object.entries(decoratedCommands)) {
         const shortcut =
@@ -222,10 +284,14 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
       }
 
       // Gather the returned commands object from the extension.
-      this.addCommands({ active, names, chain, commands, extensionCommands, decoratedCommands });
+      this.addCommands({ active, names, commands, extensionCommands });
     }
 
-    chain.run = () => view.dispatch(this.transaction);
+    const chainProperty = chain();
+
+    for (const [key, command] of Object.entries(chainProperty)) {
+      (chain as Record<string, any>)[key] = command;
+    }
 
     this.store.setStoreKey('commands', commands as any);
     this.store.setStoreKey('chain', chain as any);
@@ -1028,7 +1094,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    * `original` and `unchained` objects.
    */
   private addCommands(props: AddCommandsProps) {
-    const { extensionCommands, chain, commands, names, decoratedCommands, active } = props;
+    const { extensionCommands, commands, names, active } = props;
 
     for (const [name, command] of entries(extensionCommands)) {
       // Command names must be unique.
@@ -1042,11 +1108,6 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
 
       // Create the unchained command.
       commands[name] = this.createUnchainedCommand(command, active[name]);
-
-      if (!decoratedCommands[name]?.disableChaining) {
-        // Create the chained command.
-        chain[name] = this.chainedFactory({ command, chain: chain });
-      }
     }
   }
 
@@ -1077,7 +1138,8 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
     active: (() => boolean) | undefined,
   ): CommandShape {
     const unchainedCommand: CommandShape = this.unchainedFactory({ command }) as any;
-    unchainedCommand.isEnabled = this.unchainedFactory({ command, shouldDispatch: false });
+    unchainedCommand.enabled = this.unchainedFactory({ command, shouldDispatch: false });
+    unchainedCommand.isEnabled = unchainedCommand.enabled;
     unchainedCommand.original = command;
     unchainedCommand.active = active;
 
@@ -1089,28 +1151,14 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    */
   private chainedFactory(props: ChainedFactoryProps) {
     return (...args: unknown[]) => {
-      const { chain: chained, command, tr = this.transaction } = props;
+      const { chain: chained, command, getTr, getChain } = props;
+      const lazyChain = getChain();
       const { view } = this.store;
       const { state } = view;
 
-      /**
-       * This function is used in place of the `view.dispatch` method which is
-       * passed through to all commands.
-       *
-       * It is responsible for checking that the transaction which was
-       * dispatched is the same as the shared transaction which makes chainable
-       * commands possible.
-       */
-      const dispatch: DispatchFunction = (transaction) => {
-        // Throw an error if the transaction being dispatched is not the same as
-        // the currently stored transaction.
-        invariant(transaction === tr, {
-          message:
-            'Chaining currently only supports `CommandFunction` methods which do not use the `state.tr` property. Instead you should use the provided `tr` property.',
-        });
-      };
-
-      command(...args)({ state, dispatch, view, tr });
+      lazyChain.push((dispatch?: DispatchFunction) => {
+        return command(...args)({ state, dispatch, view, tr: getTr() });
+      });
 
       return chained;
     };
@@ -1158,11 +1206,6 @@ interface AddCommandsProps {
   active: Record<string, () => boolean>;
 
   /**
-   * The currently amassed command chain to mutate for each extension.
-   */
-  chain: Record<string, any> & ChainedCommandProps;
-
-  /**
    * The currently amassed commands (unchained) to mutate for each extension.
    */
   commands: Record<string, CommandShape>;
@@ -1176,11 +1219,6 @@ interface AddCommandsProps {
    * The names of the commands amassed. This allows for a uniqueness test.
    */
   names: Set<string>;
-
-  /**
-   * The command decorations with their options which affect runtime settings.
-   */
-  decoratedCommands: Record<string, CommandDecoratorOptions>;
 }
 
 interface UnchainedFactoryProps {
@@ -1214,15 +1252,20 @@ interface ChainedFactoryProps {
   chain: Record<string, any>;
 
   /**
-   * A custom transaction to apply to all the commands in the chain.
+   * A custom transaction getter to apply to all the commands in the chain.
    */
-  tr?: Transaction;
+  getTr: () => Transaction;
+
+  /**
+   * Get the list of lazy commands.
+   */
+  getChain: () => Array<(dispatch?: DispatchFunction) => boolean>;
 }
 
 /**
  * The names that are forbidden from being used as a command name.
  */
-const forbiddenNames = new Set(['run', 'chain', 'original', 'raw']);
+const forbiddenNames = new Set(['run', 'chain', 'original', 'raw', 'enabled', 'tr']);
 
 declare global {
   namespace Remirror {

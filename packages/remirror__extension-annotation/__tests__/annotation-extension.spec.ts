@@ -197,7 +197,7 @@ describe('commands', () => {
     const id = '1';
 
     add(doc(p('An <start>important<end> note')));
-    chain.addAnnotation({ id }).selectText('end').insertText(' awesome!');
+    chain.addAnnotation({ id }).selectText('end').insertText(' awesome!').tr();
 
     expect(manager.tr.getMeta(AnnotationExtension.name)).toMatchInlineSnapshot(`
       Object {

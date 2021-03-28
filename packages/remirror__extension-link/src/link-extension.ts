@@ -393,7 +393,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         cachedRange = { from: $pos.pos, to };
 
         // Remove the link
-        removeLink(cachedRange);
+        removeLink(cachedRange).tr();
 
         // Make sure the selection gets preserved otherwise the cursor jumps
         // around.
@@ -407,7 +407,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           updateLink(
             { href: extractHref(text.full, this.options.defaultProtocol), auto: true },
             range,
-          );
+          ).tr();
         }
       },
 
@@ -437,7 +437,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             }
           }
 
-          chain.removeLink(markRange ?? range);
+          chain.removeLink(markRange ?? range).tr();
 
           // The mark range for the position after the matched text. If this
           // exists it should be removed to handle cleanup properly.
@@ -455,7 +455,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           }
 
           if (afterMarkRange) {
-            chain.removeLink(afterMarkRange);
+            chain.removeLink(afterMarkRange).tr();
           }
 
           preserveSelection(selection, tr);
@@ -465,10 +465,12 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           );
 
           if (match) {
-            chain.updateLink(
-              { href: extractHref(match.text.full, this.options.defaultProtocol), auto: true },
-              match.range,
-            );
+            chain
+              .updateLink(
+                { href: extractHref(match.text.full, this.options.defaultProtocol), auto: true },
+                match.range,
+              )
+              .tr();
           } else {
             setMarkRemoved();
           }
@@ -508,7 +510,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
         /** Update the current range with the new link */
         const update = () => {
-          chain.updateLink({ href, auto: true }, range);
+          chain.updateLink({ href, auto: true }, range).tr();
           preserveSelection(selection, tr);
         };
 

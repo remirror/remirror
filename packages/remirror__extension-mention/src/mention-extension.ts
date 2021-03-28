@@ -346,7 +346,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
           cachedRange = range;
 
           // Remove the mention since it is no longer valid.
-          this.store.chain(tr).removeMention({ range });
+          return this.store.chain(tr).removeMention({ range }).tr();
         },
       };
     });

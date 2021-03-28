@@ -106,8 +106,8 @@ describe('schema', () => {
 function create(options: LinkOptions = {}) {
   const linkExtension = new LinkExtension(options);
 
-  if (options.onActivateLink) {
-    linkExtension.addHandler('onActivateLink', options.onActivateLink);
+  if (options.onShortcut) {
+    linkExtension.addHandler('onShortcut', options.onShortcut);
   }
 
   if (options.onClick) {
@@ -406,19 +406,20 @@ describe('commands', () => {
 });
 
 describe('keys', () => {
-  const onActivateLink = jest.fn(() => {});
+  const onShortcut = jest.fn(() => {});
 
   it('responds to Mod-k', () => {
     const {
       add,
       nodes: { doc, p },
-    } = create({ onActivateLink });
+    } = create({ onShortcut });
 
     add(doc(p(`<cursor>Link`)))
       .shortcut('Mod-k')
-      .callback(({ start, end }) => {
-        expect({ start, end }).toEqual({ start: 1, end: 5 });
-        expect(onActivateLink).toHaveBeenCalled();
+      .callback(() => {
+        expect(onShortcut).toHaveBeenCalledWith(
+          expect.objectContaining({ from: 1, to: 5, selectedText: 'Link' }),
+        );
       });
   });
 
@@ -426,13 +427,13 @@ describe('keys', () => {
     const {
       add,
       nodes: { doc, p },
-    } = create({ onActivateLink });
+    } = create({ onShortcut });
 
     add(doc(p(`<cursor> Link`)))
       .shortcut('Mod-k')
-      .callback(({ start, end }) => {
-        expect({ start, end }).toEqual({ start: 1, end: 1 });
-        expect(onActivateLink).not.toHaveBeenCalled();
+      .callback(({ from, to }) => {
+        expect({ from, to }).toEqual({ from: 1, to: 1 });
+        expect(onShortcut).not.toHaveBeenCalled();
       });
   });
 });
@@ -448,8 +449,8 @@ describe('plugin', () => {
 
     add(doc(p(testLink('Li<cursor>nk'))))
       .fire({ event: 'click' })
-      .callback(({ start, end }) => {
-        expect({ start, end }).toEqual({ start: 1, end: 5 });
+      .callback(({ from, to }) => {
+        expect({ from, to }).toEqual({ from: 1, to: 5 });
       });
   });
 
