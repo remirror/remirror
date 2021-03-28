@@ -367,15 +367,13 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
         ? escapeStringRegexp(actualSearch)
         : actualSearch;
 
-      if (!direction) {
-        this._activeIndex = 0;
-      } else {
-        this._activeIndex = rotateHighlightedIndex({
-          direction,
-          previousIndex: this._activeIndex,
-          resultsLength: this._results.length,
-        });
-      }
+      this._activeIndex = !direction
+        ? 0
+        : rotateHighlightedIndex({
+            direction,
+            previousIndex: this._activeIndex,
+            resultsLength: this._results.length,
+          });
 
       return this.updateView(tr, dispatch);
     };
