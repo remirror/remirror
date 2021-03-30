@@ -5,7 +5,7 @@ const config = {
   evaluate: true,
   displayName: true,
   classNameSlug: (_hash, title) => {
-    return `remirror-${title.toLowerCase().split('_').join('-')}`;
+    return `${title.startsWith('$') ? '' : 'remirror-'}${title.toLowerCase().split('_').join('-')}`;
   },
   babelOptions: require('../base.babel'),
   rules: [

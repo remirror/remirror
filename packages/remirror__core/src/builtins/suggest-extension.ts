@@ -122,6 +122,7 @@ export class SuggestExtension extends PlainExtension<SuggestOptions> {
       | 'setMarkRemoved'
       | 'findMatchAtPosition'
       | 'findNextTextSelection'
+      | 'setLastChangeFromAppend'
     >
   > {
     const {
@@ -132,6 +133,7 @@ export class SuggestExtension extends PlainExtension<SuggestOptions> {
       setMarkRemoved,
       findMatchAtPosition,
       findNextTextSelection,
+      setLastChangeFromAppend,
     } = this.getSuggestState();
 
     return {
@@ -142,6 +144,7 @@ export class SuggestExtension extends PlainExtension<SuggestOptions> {
       setMarkRemoved,
       findMatchAtPosition,
       findNextTextSelection,
+      setLastChangeFromAppend,
     };
   }
 

@@ -10,6 +10,7 @@ import {
   getTextSelection,
   isElementDomNode,
   isSelectionEmpty,
+  isTextSelection,
   MarkType,
   Shape,
 } from '@remirror/core';
@@ -129,12 +130,16 @@ function createSelectionPositioner(isActive: (state: EditorState) => boolean) {
     getActive: (props) => {
       const { state, view } = props;
 
-      if (!isActive(state)) {
+      if (!isActive(state) || !isTextSelection(state.selection)) {
         return Positioner.EMPTY;
       }
 
-      const { head, anchor } = state.selection;
-      return [{ from: view.coordsAtPos(anchor), to: view.coordsAtPos(head) }];
+      try {
+        const { head, anchor } = state.selection;
+        return [{ from: view.coordsAtPos(anchor), to: view.coordsAtPos(head) }];
+      } catch {
+        return Positioner.EMPTY;
+      }
     },
 
     getPosition(props) {
@@ -220,7 +225,11 @@ export const nearestWordPositioner = selectionPositioner.clone(() => ({
       return Positioner.EMPTY;
     }
 
-    return [{ from: view.coordsAtPos(word.from), to: view.coordsAtPos(word.to) }];
+    try {
+      return [{ from: view.coordsAtPos(word.from), to: view.coordsAtPos(word.to) }];
+    } catch {
+      return Positioner.EMPTY;
+    }
   },
 }));
 
@@ -266,17 +275,21 @@ export function createMarkPositioner(
     getActive: (props) => {
       const { state, view } = props;
       const selection = getTextSelection(all ? 'all' : state.selection, state.doc);
-      const ranges = getMarkRanges(selection, type).map((range) => {
-        const { from, to } = range;
-        const cursor = { from: view.coordsAtPos(from), to: view.coordsAtPos(to) };
-        const visible =
-          isPositionVisible(getCursorRect(cursor.from), view.dom) ||
-          isPositionVisible(getCursorRect(cursor.to), view.dom);
+      try {
+        const ranges = getMarkRanges(selection, type).map((range) => {
+          const { from, to } = range;
+          const cursor = { from: view.coordsAtPos(from), to: view.coordsAtPos(to) };
+          const visible =
+            isPositionVisible(getCursorRect(cursor.from), view.dom) ||
+            isPositionVisible(getCursorRect(cursor.to), view.dom);
 
-        return { ...range, visible, cursor };
-      });
+          return { ...range, visible, cursor };
+        });
 
-      return onlyVisible ? ranges.filter((range) => range.visible) : ranges;
+        return onlyVisible ? ranges.filter((range) => range.visible) : ranges;
+      } catch {
+        return Positioner.EMPTY;
+      }
     },
     getPosition: (props) => {
       const { element, data, view } = props;

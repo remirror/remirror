@@ -184,6 +184,7 @@
   'keyboard.shortcut.shift': 'Shift',
   'keyboard.shortcut.space': 'Space',
   'keyboard.shortcut.tab': 'Tab',
+  'react-components.mention-atom-component.zero-items': 'No items available',
   'react-components.top-menu.label': 'Static Menu',
   'ui.text-color.black': 'Black',
   'ui.text-color.blue': 'Blue',

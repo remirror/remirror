@@ -435,13 +435,15 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
   }: SuggestMatch<Schema>) {
     const decorations = this.#ignored.find();
 
-    return decorations.some(({ spec, from }) => {
+    const shouldIgnore = decorations.some(({ spec, from }) => {
       if (from !== range.from) {
         return false;
       }
 
       return spec.specific ? spec.name === name : true;
     });
+
+    return shouldIgnore;
   }
 
   /**
@@ -603,9 +605,9 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    *
    * @internal
    */
-  setLastChangeFromAppend(): void {
+  setLastChangeFromAppend = (): void => {
     this.#lastChangeFromAppend = true;
-  }
+  };
 }
 interface UpdateReasonsProps<Schema extends EditorSchema = EditorSchema>
   extends EditorStateProps<Schema>,

@@ -13,11 +13,12 @@ import {
   UnderlineExtension,
 } from 'remirror/extensions';
 import {
-  Button,
   ComponentItem,
   FloatingToolbar,
   FloatingWrapper,
-  Icon,
+  MentionAtomNodeAttributes,
+  MentionAtomPopupComponent,
+  MentionAtomState,
   Remirror,
   ThemeProvider,
   Toolbar,
@@ -32,6 +33,21 @@ import {
 } from '@remirror/react';
 
 export default { title: 'Link Extension' };
+
+const mentionAtomItems: MentionAtomNodeAttributes[] = [
+  { id: 'tom', label: '@tom' },
+  { id: 'tolu', label: '@tolu' },
+  { id: 'andy', label: '@andy' },
+  { id: 'ifi', label: '@ifi' },
+  { id: 'bola', label: '@bola' },
+  { id: 'ben', label: '@ben' },
+  { id: 'kemi', label: '@kemi' },
+  { id: 'lizzy', label: '@lizzy' },
+  { id: 'julian', label: '@julian' },
+  { id: 'li', label: '@li' },
+  { id: 'ryo', label: '@ryo' },
+  { id: 'dipok', label: '@dipok' },
+];
 
 const toolbarItems: ToolbarItemUnion[] = [
   {
@@ -173,6 +189,21 @@ export const Basic = (): JSX.Element => {
   );
 };
 
+function useMentionAtomPopupState() {
+  const [items, setItems] = useState(mentionAtomItems);
+
+  const onChange = useCallback((mentionAtomState: MentionAtomState | null) => {
+    console.log({ mentionAtomState });
+    setItems(
+      mentionAtomState
+        ? mentionAtomItems.filter((item) => item.id.includes(mentionAtomState.query.full))
+        : mentionAtomItems,
+    );
+  }, []);
+
+  return useMemo(() => ({ items, onChange }), [items, onChange]);
+}
+
 function useLinkShortcut() {
   const [linkShortcut, setLinkShortcut] = useState<ShortcutHandlerProps | undefined>();
   const [isEditing, setIsEditing] = useState(false);
@@ -298,9 +329,14 @@ const FloatingLinkToolbar = () => {
   const items: ToolbarItemUnion[] = useMemo(() => [...floatingToolbarItems, ...linkEditItems], [
     linkEditItems,
   ]);
+  const mentionAtomPopup = useMentionAtomPopupState();
 
   return (
     <>
+      <MentionAtomPopupComponent
+        items={mentionAtomPopup.items}
+        onChange={mentionAtomPopup.onChange}
+      />
       <FloatingToolbar items={items} positioner='selection' placement='top' enabled={!isEditing} />
       <FloatingToolbar
         items={linkEditItems}

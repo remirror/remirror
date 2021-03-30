@@ -1366,6 +1366,7 @@ importers:
       '@remirror/core': link:../remirror__core
       '@remirror/extension-events': link:../remirror__extension-events
       '@remirror/messages': link:../remirror__messages
+      '@remirror/theme': link:../remirror__theme
     devDependencies:
       '@remirror/pm': link:../remirror__pm
     specifiers:
@@ -1374,6 +1375,7 @@ importers:
       '@remirror/extension-events': 1.0.0-next.60
       '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
+      '@remirror/theme': 1.0.0-next.60
   packages/remirror__extension-node-formatting:
     dependencies:
       '@babel/runtime': 7.13.10
@@ -2094,6 +2096,7 @@ importers:
       '@remirror/extension-text-color': link:../remirror__extension-text-color
       '@remirror/i18n': link:../remirror__i18n
       '@remirror/icons': link:../remirror__icons
+      '@remirror/messages': link:../remirror__messages
       '@remirror/react-core': link:../remirror__react-core
       '@remirror/react-hooks': link:../remirror__react-hooks
       '@remirror/react-utils': link:../remirror__react-utils
@@ -2126,6 +2129,7 @@ importers:
       '@remirror/extension-text-color': 0.0.0
       '@remirror/i18n': 1.0.0-next.60
       '@remirror/icons': 0.0.0
+      '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
       '@remirror/react': 1.0.0-next.60
       '@remirror/react-core': 0.0.0

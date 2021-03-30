@@ -423,7 +423,8 @@
       "@remirror/pm",
       "@remirror/core",
       "@remirror/extension-events",
-      "@remirror/messages"
+      "@remirror/messages",
+      "@remirror/theme"
     ],
     "running": false,
     "gzip": true
@@ -763,6 +764,7 @@
       "@remirror/extension-text-color",
       "@remirror/i18n",
       "@remirror/icons",
+      "@remirror/messages",
       "@remirror/react-core",
       "@remirror/react-hooks",
       "@remirror/react-utils",

@@ -28,6 +28,7 @@ import {
   SuggestChangeHandlerProps,
   Suggester,
 } from '@remirror/pm/suggest';
+import { ExtensionMentionAtomTheme as Theme } from '@remirror/theme';
 
 /**
  * Options available to the [[`MentionAtomExtension`]].
@@ -294,8 +295,8 @@ const DEFAULT_MATCHER = {
   ]),
   appendText: '',
   matchOffset: 1,
-  suggestClassName: 'suggest-atom',
-  mentionClassName: 'mention-atom',
+  suggestClassName: Theme.SUGGEST_ATOM,
+  mentionClassName: Theme.MENTION_ATOM,
 };
 
 export interface OptionalMentionAtomExtensionProps {

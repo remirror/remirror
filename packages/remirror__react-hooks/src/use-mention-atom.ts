@@ -53,7 +53,7 @@ export interface UseMentionAtomReturn<
  * @param props - the props that can be passed through to the mention atom.
  */
 export function useMentionAtom<Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes>(
-  props: MentionAtomProps<Data>,
+  props: UseMentionAtomProps<Data>,
 ): UseMentionAtomReturn<Data> {
   const {
     ignoreMatchesOnDismiss = true,
@@ -75,9 +75,11 @@ export function useMentionAtom<Data extends MentionAtomNodeAttributes = MentionA
     const { range, name } = state;
 
     if (ignoreMatchesOnDismiss) {
+      const { addIgnored, setLastChangeFromAppend } = helpers.getSuggestMethods();
       // Ignore the current mention so that it doesn't show again for this
       // matching area
-      helpers.getSuggestMethods().addIgnored({ from: range.from, name, specific: true });
+      addIgnored({ from: range.from, name, specific: true });
+      setLastChangeFromAppend();
     }
 
     // Remove the matches.
@@ -165,8 +167,9 @@ export function useMentionAtom<Data extends MentionAtomNodeAttributes = MentionA
   return useMemo(() => ({ ...menu, state }), [menu, state]);
 }
 
-interface MentionAtomProps<Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes>
-  extends MenuNavigationOptions {
+export interface UseMentionAtomProps<
+  Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes
+> extends MenuNavigationOptions {
   /**
    * The list of data from which an index can be calculated. Must include at
    * least an `id` and a `label`.
@@ -181,3 +184,5 @@ interface MentionAtomProps<Data extends MentionAtomNodeAttributes = MentionAtomN
    */
   ignoreMatchesOnDismiss?: boolean;
 }
+
+export type { MentionAtomNodeAttributes };

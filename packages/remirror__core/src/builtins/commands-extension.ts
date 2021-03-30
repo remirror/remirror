@@ -223,9 +223,9 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
         commandChain = [];
 
         for (const cmd of commands) {
-          const shouldExit = !cmd(dispatch) && options.exitEarly;
-
-          if (shouldExit) {
+          // Exit early when the command returns false and the option is
+          // provided.
+          if (!cmd(dispatch) && options.exitEarly) {
             return;
           }
         }
