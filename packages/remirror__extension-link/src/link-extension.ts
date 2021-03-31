@@ -163,7 +163,7 @@ export type LinkAttributes = ProsemirrorAttributes<{
     defaultProtocol: '',
     selectTextOnClick: false,
     openLinkOnClick: false,
-    autoLinkRegex: /(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/\S*)?/,
+    autoLinkRegex: /(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,8}(:\d{1,5})?(\/\S*)?/,
     defaultTarget: null,
   },
   staticKeys: ['autoLinkRegex'],
@@ -329,16 +329,17 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
    * Create the paste rules that can transform a pasted link in the document.
    */
   createPasteRules(): MarkPasteRule[] {
-    if (this.options.autoLink) {
-      return [];
-    }
-
     return [
       {
         type: 'mark',
-        regexp: /https?:\/\/(www\.)?[\w#%+.:=@~-]{2,256}\.[a-z]{2,6}\b([\w#%&+./:=?@~-]*)/gi,
+        regexp: /https?:\/\/(www\.)?[\w#%+.:=@~-]{2,256}\.[a-z]{2,8}\b([\w#%&+./:=?@~-]*)/gi,
         markType: this.type,
-        getAttributes: (url) => ({ href: getMatchString(url), auto: true }),
+        getAttributes: (url, isReplacement) => ({
+          href: getMatchString(url),
+          auto: !isReplacement,
+        }),
+        // Only replace the selection for non whitespace selections
+        replaceSelection: (replacedText) => !!replacedText.trim(),
       },
     ];
   }
