@@ -63,7 +63,7 @@ describe('useMentionAtom', () => {
         Initial content
         <span role="presentation"
               href="//test.com/aa"
-              class="mention-atom mention-atom-at"
+              class="remirror-mention-atom remirror-mention-atom-at"
               data-mention-atom-id="aa"
               data-mention-atom-name="at"
         >
@@ -100,7 +100,7 @@ describe('useMentionAtom', () => {
         Initial content
         <span role="presentation"
               href="//test.com/aa"
-              class="mention-atom mention-atom-at"
+              class="remirror-mention-atom remirror-mention-atom-at"
               data-mention-atom-id="aa"
               data-mention-atom-name="at"
         >
@@ -205,7 +205,7 @@ describe('useMentionAtom', () => {
         Initial content
         <span role="presentation"
               href="//test.com/aa"
-              class="mention-atom mention-atom-tag"
+              class="remirror-mention-atom remirror-mention-atom-tag"
               data-mention-atom-id="aa"
               data-mention-atom-name="tag"
         >

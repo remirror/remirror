@@ -1,5 +1,4 @@
 import { FC, useEffect } from 'react';
-import { Portal } from 'reakit';
 import { Dialog, DialogBackdrop, useDialogState } from 'reakit/Dialog';
 import usePrevious from 'use-previous';
 

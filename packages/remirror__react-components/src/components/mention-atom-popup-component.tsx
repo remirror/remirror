@@ -69,7 +69,7 @@ export function MentionAtomPopupComponent<
 
   return (
     <FloatingWrapper positioner='cursor' enabled={!!state} placement='auto-end'>
-      <div {...getMenuProps()}>
+      <div {...getMenuProps()} className={cx(Theme.MENTION_ATOM_POPUP_WRAPPER)}>
         {!!state && isEmptyArray(hookProps.items) ? (
           <ZeroItemsComponent />
         ) : (

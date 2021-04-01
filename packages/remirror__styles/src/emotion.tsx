@@ -3628,7 +3628,6 @@ export const extensionMentionAtomStyledCss: ReturnType<typeof css> = css`
   }
 
   .remirror-mention-atom-popup-wrapper {
-    position: absolute;
     width: -webkit-max-content;
     width: -moz-max-content;
     width: max-content;

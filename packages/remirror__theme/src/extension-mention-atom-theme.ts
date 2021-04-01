@@ -36,7 +36,6 @@ export const MENTION_ATOM_POPUP_HIGHLIGHT = css`
 `;
 
 export const MENTION_ATOM_POPUP_WRAPPER = css`
-  position: absolute;
   width: max-content;
   padding-top: 8px;
   padding-bottom: 8px;

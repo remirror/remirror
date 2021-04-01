@@ -204,7 +204,7 @@ export function usePopper(props: UsePopperProps = {}): PopperStateReturn {
             name: 'updateState',
             phase: 'write',
             requires: ['computeStyles'],
-            enabled: visible && process.env.NODE_ENV !== 'test',
+            enabled: visible,
             fn: ({ state }) => updateState(state),
           },
         ],
