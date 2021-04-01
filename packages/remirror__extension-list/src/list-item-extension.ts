@@ -4,11 +4,11 @@ import {
   cx,
   extension,
   ExtensionTag,
+  findChildren,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
   NodeSpecOverride,
-  NodeView,
   omitExtraAttributes,
   ProsemirrorAttributes,
   Static,
@@ -16,11 +16,13 @@ import {
 import { CreateEventHandlers } from '@remirror/extension-events';
 import { liftListItem, sinkListItem, splitListItem } from '@remirror/pm/schema-list';
 
+import { isList } from './list-commands';
+
 /**
  * Creates the node for a list item.
  */
 @extension<ListItemOptions>({
-  defaultOptions: { enableToggle: true },
+  defaultOptions: { enableToggle: false },
   staticKeys: ['enableToggle'],
 })
 export class ListItemExtension extends NodeExtension<ListItemOptions> {
@@ -39,17 +41,45 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
       defining: true,
       draggable: false,
       ...override,
-      attrs: { ...extra.defaults(), closed: { default: null } },
+      attrs: {
+        ...extra.defaults(),
+        closed: { default: null },
+        checked: { default: null },
+        checkbox: { default: false },
+        nested: { default: false },
+      },
       parseDOM: [{ tag: 'li', getAttrs: extra.parse }, ...(override.parseDOM ?? [])],
       toDOM: (node) => {
-        if (!enableToggle) {
-          return ['li', extra.dom(node), 0];
-        }
+        const canToggle =
+          enableToggle &&
+          findChildren({ node, predicate: (child) => isList(child.node) }).length > 0;
 
-        const { closed } = omitExtraAttributes(node.attrs, extra) as ListItemAttributes;
-        // const className =
+        const toggleDom = canToggle ? [['button', { class: 'toggler' }]] : [];
 
-        return ['li', extra.dom(node), ['span', {}], 0];
+        const { closed, checked, checkbox } = omitExtraAttributes(
+          node.attrs,
+          extra,
+        ) as ListItemAttributes;
+        const attrs = extra.dom(node);
+        attrs.class = cx(
+          attrs.class,
+          closed && 'closed',
+          canToggle && 'can-toggle',
+          checkbox && 'checkbox',
+        );
+
+        const checkboxDom = checkbox
+          ? [
+              [
+                'span',
+                { class: 'pretty p-default' },
+                ['input', { type: 'checkbox', ...(checked ? { checked: '' } : {}) }],
+                ['div', { class: 'state' }, ['label']],
+              ],
+            ]
+          : [];
+
+        return ['li', extra.dom(node), ...toggleDom, ...checkboxDom, ['span', 0]] as any;
       },
     };
   }
@@ -60,8 +90,29 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
         const nodeWithPos = clickState.getNode(this.type);
 
         if (!nodeWithPos || !event) {
-          return;
+          return false;
         }
+
+        const { pos, node } = nodeWithPos;
+
+        if (event.target instanceof HTMLInputElement) {
+          this.store.commands.updateNodeAttributes(pos, {
+            ...node.attrs,
+            checked: !node.attrs.checked,
+          });
+          return true;
+        }
+
+        if (event.target instanceof HTMLButtonElement) {
+          this.store.commands.updateNodeAttributes(pos, {
+            ...node.attrs,
+            closed: !node.attrs.closed,
+          });
+
+          return true;
+        }
+
+        return false;
       },
     };
   }
@@ -86,9 +137,21 @@ export interface ListItemOptions {
 
 export type ListItemAttributes = ProsemirrorAttributes<{
   /**
-   * This is set to true when the
+   * @default false
    */
-  closed?: boolean;
+  closed: boolean;
+
+  /**
+   * The status of the checkbox.
+   *
+   * @default null
+   */
+  checked: null | boolean;
+
+  /**
+   * True when this is a checkable item.
+   */
+  checkbox: boolean;
 }>;
 
 declare global {
