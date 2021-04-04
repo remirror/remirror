@@ -8,6 +8,7 @@ import {
   extension,
   ExtensionPriority,
   ExtensionTag,
+  findParentNodeOfType,
   Helper,
   helper,
   NodeExtension,
@@ -25,6 +26,7 @@ import {
   addColumnBefore,
   addRowAfter,
   addRowBefore,
+  CellSelection,
   columnResizing,
   deleteColumn,
   deleteRow,
@@ -278,6 +280,36 @@ export class TableExtension extends NodeExtension<TableOptions> {
       document.execCommand('enableInlineTableEditing', false, 'false');
       tablesEnabled = true;
     }
+  }
+
+  /**
+   * Update the background of one cell or multiple cells by passing a color
+   * string. You can also remove the color by passing a `null`.
+   */
+  @command()
+  setTableCellBackground(background: string | null): CommandFunction {
+    return (props) => {
+      let { tr } = props;
+      const { dispatch } = props;
+      const { selection } = tr;
+
+      if (selection instanceof CellSelection) {
+        selection.forEachCell((cellNode, pos) => {
+          tr = tr.setNodeMarkup(pos, undefined, { ...cellNode.attrs, background });
+        });
+        dispatch?.(tr);
+        return true;
+      }
+
+      const found = findParentNodeOfType({ selection, types: 'tableCell' });
+
+      if (found) {
+        dispatch?.(tr.setNodeMarkup(found.pos, undefined, { ...found.node.attrs, background }));
+        return true;
+      }
+
+      return false;
+    };
   }
 
   /**

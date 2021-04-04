@@ -371,6 +371,29 @@ export const defaultRemirrorTheme: Remirror.Theme = {
       text: 'HighlightText',
       caret: 'inherit',
     },
+    table: {
+      default: {
+        border: lighten(foreground, 0.8),
+        cell: lighten(foreground, 0.4),
+        controller: defaultRemirrorThemeHue.gray[3],
+      },
+      selected: {
+        border: defaultRemirrorThemeHue.blue[7],
+        cell: defaultRemirrorThemeHue.blue[1],
+        controller: defaultRemirrorThemeHue.blue[5],
+      },
+      preselect: {
+        border: defaultRemirrorThemeHue.blue[7],
+        cell: lighten(foreground, 0.4),
+        controller: defaultRemirrorThemeHue.blue[5],
+      },
+      predelete: {
+        border: defaultRemirrorThemeHue.red[7],
+        cell: defaultRemirrorThemeHue.red[1],
+        controller: defaultRemirrorThemeHue.red[5],
+      },
+      mark: '#91919196',
+    },
   },
   hue: defaultRemirrorThemeHue,
   radius: {
@@ -549,6 +572,32 @@ declare global {
         text: Color;
         shadow: Color;
         caret: Color;
+      };
+      /**
+       * The configuration for the table.
+       */
+      table: {
+        default: {
+          border: Color;
+          cell: Color;
+          controller: Color;
+        };
+        selected: {
+          border: Color;
+          cell: Color;
+          controller: Color;
+        };
+        preselect: {
+          border: Color;
+          cell: Color;
+          controller: Color;
+        };
+        predelete: {
+          border: Color;
+          cell: Color;
+          controller: Color;
+        };
+        mark: Color;
       };
     }
 

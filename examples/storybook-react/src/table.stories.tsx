@@ -8,6 +8,7 @@ import {
   useRemirror,
   useRemirrorContext,
 } from '@remirror/react';
+import { AllStyledComponent } from '@remirror/styles/emotion';
 
 export default { title: 'Tables extension' };
 
@@ -77,12 +78,14 @@ export const Table = (): JSX.Element => {
   const { manager, state } = useRemirror({ extensions });
 
   return (
-    <ThemeProvider>
-      <Remirror manager={manager} initialContent={state}>
-        <EditorComponent />
-        <CommandMenu />
-      </Remirror>
-    </ThemeProvider>
+    <AllStyledComponent>
+      <ThemeProvider>
+        <Remirror manager={manager} initialContent={state}>
+          <EditorComponent />
+          <CommandMenu />
+        </Remirror>
+      </ThemeProvider>
+    </AllStyledComponent>
   );
 };
 

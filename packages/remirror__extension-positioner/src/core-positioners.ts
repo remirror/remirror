@@ -31,10 +31,9 @@ export const defaultAbsolutePosition: PositionerPosition = {
 };
 
 /**
- * Creates a positioner for the current block node. it spans the full width and
- * height of the block node.
+ * Creates a positioner for the current block node.
  *
- * It spans the width and height of the block.
+ * It spans the full width and height of the block.
  */
 export const blockNodePositioner = Positioner.create<FindProsemirrorNodeResult>({
   hasChanged: hasStateChanged,
