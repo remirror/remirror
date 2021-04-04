@@ -208,21 +208,24 @@ export type DOMOutputSpec =
  * The schema spec definition for a node extension
  */
 export interface NodeExtensionSpec
-  extends Pick<
-    NodeSpec,
-    | 'content'
-    | 'marks'
-    | 'group'
-    | 'inline'
-    | 'atom'
-    | 'attrs'
-    | 'selectable'
-    | 'draggable'
-    | 'code'
-    | 'defining'
-    | 'isolating'
-    | 'parseDOM'
-    | 'toDebugString'
+  extends Partial<
+    Pick<
+      NodeSpec,
+      | 'content'
+      | 'marks'
+      | 'group'
+      | 'inline'
+      | 'atom'
+      | 'attrs'
+      | 'selectable'
+      | 'draggable'
+      | 'code'
+      | 'defining'
+      | 'isolating'
+      | 'parseDOM'
+      | 'toDebugString'
+      | 'allowGapCursor'
+    >
   > {
   /**
    * Defines the default way a node of this type should be serialized to

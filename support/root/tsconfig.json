@@ -342,6 +342,12 @@
       "path": "packages/remirror__extension-react-ssr/src"
     },
     {
+      "path": "packages/remirror__extension-react-tables/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-react-tables/src"
+    },
+    {
       "path": "packages/remirror__extension-search/__tests__"
     },
     {

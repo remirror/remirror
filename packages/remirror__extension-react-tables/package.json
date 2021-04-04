@@ -1,0 +1,86 @@
+{
+  "name": "@remirror/extension-react-tables",
+  "version": "1.0.0-next.60",
+  "description": "A table a day keeps the doctor away. Remirror and play keeps the bad times at bay.",
+  "keywords": [
+    "remirror",
+    "preset",
+    "react",
+    "tables",
+    "prosemirror",
+    "table editing"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-react-tables",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-react-tables",
+  "license": "MIT",
+  "contributors": [
+    "Ocavue <ocavue@gmail.com>",
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-react-tables.esm.js",
+      "require": "./dist/remirror-extension-react-tables.cjs.js",
+      "browser": "./dist/remirror-extension-react-tables.browser.esm.js",
+      "types": "./dist/remirror-extension-react-tables.cjs.d.ts",
+      "default": "./dist/remirror-extension-react-tables.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-react-tables.cjs.js",
+  "module": "dist/remirror-extension-react-tables.esm.js",
+  "browser": {
+    "./dist/remirror-extension-react-tables.cjs.js": "./dist/remirror-extension-react-tables.browser.cjs.js",
+    "./dist/remirror-extension-react-tables.esm.js": "./dist/remirror-extension-react-tables.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-react-tables.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@emotion/css": "^11.1.3",
+    "@linaria/core": "^3.0.0-beta.1",
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/core-utils": "1.0.0-next.60",
+    "@remirror/extension-positioner": "1.0.0-next.60",
+    "@remirror/extension-tables": "1.0.0-next.60",
+    "@remirror/icons": "0.0.0",
+    "@remirror/messages": "0.0.0",
+    "@remirror/preset-core": "1.0.0-next.60",
+    "@remirror/react-components": "1.0.0-next.40",
+    "@remirror/react-core": "0.0.0",
+    "@remirror/react-hooks": "1.0.0-next.60",
+    "@remirror/theme": "1.0.0-next.60",
+    "jsx-dom": "^7.0.0-beta.1"
+  },
+  "devDependencies": {
+    "@remirror/pm": "1.0.0-next.60",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "peerDependencies": {
+    "@remirror/pm": "1.0.0-next.60",
+    "react": "^16.14.0 || ^17",
+    "react-dom": "^16.14.0 || ^17"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "20 KB"
+  },
+  "rn:dev": "src/index.ts"
+}

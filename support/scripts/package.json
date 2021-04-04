@@ -67,6 +67,7 @@
     "@types/semver": "^7.3.4",
     "@types/svg-sprite": "^0.0.32",
     "@types/tar": "^4.0.4",
+    "@types/throttle-debounce": "^2.1.0",
     "autoprefixer": "^9.8.6",
     "bitmap2vector": "^0.0.4",
     "camelcase-keys": "^6.2.2",
@@ -105,6 +106,7 @@
     "sort-keys": "^4.2.0",
     "svg-sprite": "^1.5.0",
     "tar": "^6.1.0",
+    "throttle-debounce": "^3.0.1",
     "tslog": "^3.1.1",
     "type-fest": "^0.21.3",
     "write-json-file": "^4.3.0"
