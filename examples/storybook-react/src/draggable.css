@@ -1,0 +1,23 @@
+.remirror-editor {
+  margin: 60px;
+  padding: 60px !important;
+}
+
+.hovering {
+  background-color: pink;
+  position: relative;
+}
+
+.hovering::before {
+  content: '王';
+  display: inline-block;
+  cursor: move;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  left: -40px;
+  top: 2px;
+  opacity: 1;
+  transition: opacity 200ms ease-in-out;
+  background: lightblue;
+}
