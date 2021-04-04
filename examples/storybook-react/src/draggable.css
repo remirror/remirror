@@ -1,6 +1,8 @@
 .remirror-editor {
   margin: 60px;
   padding: 60px !important;
+  height: 1000px !important;
+  min-height: 1000px !important;
 }
 
 .hovering {

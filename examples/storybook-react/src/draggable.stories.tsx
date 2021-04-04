@@ -1,11 +1,19 @@
 import './draggable.css';
 
 import { Story } from '@storybook/react';
+import { useCallback } from 'react';
 import { CreateExtensionPlugin, EditorState, NodeWithPosition, PlainExtension } from 'remirror';
-import { BulletListExtension, OrderedListExtension, ParagraphExtension } from 'remirror/extensions';
+import {
+  BulletListExtension,
+  DropCursorExtension,
+  ListItemExtension,
+  OrderedListExtension,
+  ParagraphExtension,
+} from 'remirror/extensions';
+import { ProsemirrorDevTools } from '@remirror/dev';
 import { ReactComponentExtension } from '@remirror/extension-react-component';
 import { TableComponents, TableExtension } from '@remirror/extension-react-tables';
-import { Plugin, PluginKey, Transaction } from '@remirror/pm/state';
+import { PluginKey, Transaction } from '@remirror/pm/state';
 import { ProsemirrorNode } from '@remirror/pm/suggest';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
 import { EditorComponent, Remirror, ThemeProvider, useEvent, useRemirror } from '@remirror/react';
@@ -71,15 +79,15 @@ class DraggableExtension extends PlainExtension {
 const extensions = () => [
   new ReactComponentExtension(),
   new TableExtension(),
-  new BulletListExtension(),
-  new OrderedListExtension(),
+  new BulletListExtension({ nodeOverride: { draggable: true } }),
+  new OrderedListExtension({ nodeOverride: { draggable: true } }),
+  new ListItemExtension({ nodeOverride: { draggable: true }, priority: 1000 }),
   new DraggableExtension(),
+  new DropCursorExtension({ color: 'blue', width: 4 }),
   new ParagraphExtension({ nodeOverride: { draggable: true } }),
 ];
 
 function findFirstBlockNode(nodes: NodeWithPosition[]): NodeWithPosition | null {
-  console.log('nodes:', nodes);
-
   for (const node of nodes) {
     if (node.node?.type.isBlock) {
       // TODO: node.node could be undefined
@@ -91,19 +99,22 @@ function findFirstBlockNode(nodes: NodeWithPosition[]): NodeWithPosition | null 
 }
 
 function useDraggable() {
-  useEvent('hover', (params) => {
-    console.log('hover event:', params.nodes);
-    const node = findFirstBlockNode(params.nodes);
+  useEvent(
+    'hover',
+    useCallback((params) => {
+      console.log('hover event:', params);
+      const node = findFirstBlockNode(params.nodes);
 
-    if (node) {
-      const { view } = params;
-      const action: Action = {
-        pos: node.pos,
-        node: node.node,
-      };
-      view.dispatch(view.state.tr.setMeta(key, action));
-    }
-  });
+      if (node) {
+        const { view } = params;
+        const action: Action = {
+          pos: node.pos,
+          node: node.node,
+        };
+        view.dispatch(view.state.tr.setMeta(key, action));
+      }
+    }, []),
+  );
 }
 
 export const Main: Story = ({ children }) => {
@@ -115,7 +126,7 @@ export const Main: Story = ({ children }) => {
         <Remirror manager={manager} initialContent={state} hooks={[useDraggable]}>
           <EditorComponent />
           <TableComponents />
-          {children}
+          <ProsemirrorDevTools />
         </Remirror>
       </ThemeProvider>
     </AllStyledComponent>

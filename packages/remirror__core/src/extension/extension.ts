@@ -207,6 +207,8 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
    * @internal
    */
   replaceChildExtension(constructor: AnyExtensionConstructor, extension: this['~E']): void {
+    console.log('[replaceChildExtension]');
+
     if (!this.extensionMap.has(constructor)) {
       return;
     }
