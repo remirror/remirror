@@ -2,17 +2,7 @@ import './draggable.css';
 
 import { Story } from '@storybook/react';
 import { useCallback } from 'react';
-import {
-  ApplySchemaAttributes,
-  CreateExtensionPlugin,
-  EditorState,
-  EditorView,
-  NodeExtension,
-  NodeExtensionSpec,
-  NodeSpecOverride,
-  NodeWithPosition,
-  PlainExtension,
-} from 'remirror';
+import { CreateExtensionPlugin, EditorState, NodeWithPosition, PlainExtension } from 'remirror';
 import {
   BulletListExtension,
   DropCursorExtension,
@@ -28,27 +18,19 @@ import {
 import { ProsemirrorDevTools } from '@remirror/dev';
 import { ReactComponentExtension } from '@remirror/extension-react-component';
 import { TableComponents, TableExtension } from '@remirror/extension-react-tables';
-import { NodeSelection, PluginKey, Transaction } from '@remirror/pm/state';
+import { PluginKey, Transaction } from '@remirror/pm/state';
 import { ProsemirrorNode } from '@remirror/pm/suggest';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
-import {
-  EditorComponent,
-  Remirror,
-  ThemeProvider,
-  useEvent,
-  useHover,
-  useRemirror,
-} from '@remirror/react';
+import { EditorComponent, Remirror, ThemeProvider, useEvent, useRemirror } from '@remirror/react';
 import { AllStyledComponent } from '@remirror/styles/emotion';
 
-export default { title: 'Draggable Blocks' };
+export default { title: 'Draggable' };
 
 const key = new PluginKey('remirrorDraggable');
 
 interface Action {
   pos: number;
   node: ProsemirrorNode;
-  onClick: () => void;
 }
 
 interface HoverPositionerData {
@@ -117,21 +99,14 @@ const hoverPositioner = Positioner.create<HoverPositionerData>({
   events: ['hover'],
 });
 
-class DraggableExtension extends NodeExtension {
+class DraggableExtension extends PlainExtension {
   get name() {
     return 'draggable' as const;
   }
 
-  createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
-    return {
-      group: 'block',
-      draggable: true,
-      content: 'black',
-      ...override,
-      parseDOM: [{ tag: `[data-type="remirror-draggable"]` }],
-      toDOM: () => ['div', { 'data-type': 'remirror-draggable', class: 'remirror-draggable' }, 0],
-    };
-  }
+  // createDecorations(state: EditorState): DecorationSet {
+  //   return null};
+  // }
 
   createPlugin(): CreateExtensionPlugin {
     return {
@@ -156,30 +131,11 @@ class DraggableExtension extends NodeExtension {
             return set.map(tr.mapping, tr.doc);
           }
 
-          // let decoration = Decoration.node(action.pos, action.pos + action.node.nodeSize, {
-          //   class: 'hovering',
-          // });
-
-          const toDom = (): HTMLElement => {
-            const dom = document.createElement('div');
-            dom.classList.add('hovering');
-            // dom.addEventListener('click', (event) => {
-            //   event.preventDefault();
-            //   event.stopPropagation();
-            // });
-            dom.addEventListener('mousedown', (event) => {
-              console.log('handler onclick');
-              action.onClick();
-              event.preventDefault();
-              // event.stopPropagation();
-            });
-
-            return dom;
-          };
-
-          const decoration = Decoration.widget(action.pos, toDom, { side: -1 });
-
-          return DecorationSet.create(tr.doc, [decoration]);
+          return DecorationSet.create(tr.doc, [
+            Decoration.node(action.pos, action.pos + action.node.nodeSize, {
+              class: 'hovering',
+            }),
+          ]);
         },
       },
       props: {
@@ -204,10 +160,8 @@ const extensions = () => [
 
 function findFirstBlockNode(nodes: NodeWithPosition[]): NodeWithPosition | null {
   for (const node of nodes) {
-    if (
-      node.node?.type.isBlock && // TODO: node.node could be undefined. why?
-      node.node.type.name !== 'draggable'
-    ) {
+    if (node.node?.type.isBlock) {
+      // TODO: node.node could be undefined
       return node;
     }
   }
@@ -216,7 +170,8 @@ function findFirstBlockNode(nodes: NodeWithPosition[]): NodeWithPosition | null 
 }
 
 function useDraggable() {
-  useHover(
+  useEvent(
+    'hover',
     useCallback((params) => {
       console.log('hover event:', params);
       const node = findFirstBlockNode(params.nodes);
@@ -226,10 +181,6 @@ function useDraggable() {
         const action: Action = {
           pos: node.pos,
           node: node.node,
-          onClick: () => {
-            const selection = NodeSelection.create(view.state.doc, node.pos);
-            view.dispatch(view.state.tr.setSelection(selection));
-          },
         };
         view.dispatch(view.state.tr.setMeta(key, action));
       }

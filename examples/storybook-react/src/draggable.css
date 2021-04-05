@@ -8,11 +8,6 @@
 .hovering {
   background-color: pink;
   position: relative;
-  min-width: 10px;
-  width: 10px;
-  border-style: solid;
-  border-color: red;
-  border-width: 1px;
 }
 
 .hovering::before {
@@ -27,10 +22,4 @@
   opacity: 1;
   transition: opacity 200ms ease-in-out;
   background: lightblue;
-}
-
-.remirror-draggable {
-  border-style: solid;
-  border-color: green;
-  border-width: 1px;
 }
