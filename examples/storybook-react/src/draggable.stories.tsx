@@ -10,6 +10,7 @@ import {
   EditorState,
   ExtensionPriority,
   ExtensionTag,
+  KeymapExtension,
   NodeExtension,
   NodeExtensionSpec,
   NodeSpecOverride,
@@ -34,10 +35,19 @@ import { ProsemirrorDevTools } from '@remirror/dev';
 import { ReactComponentExtension } from '@remirror/extension-react-component';
 import { TableComponents, TableExtension } from '@remirror/extension-react-tables';
 import { splitBlock } from '@remirror/pm/commands';
+import { Fragment } from '@remirror/pm/model';
 import { AllSelection, PluginKey, Transaction } from '@remirror/pm/state';
 import { ProsemirrorNode } from '@remirror/pm/suggest';
 import { Decoration, DecorationSet, EditorView } from '@remirror/pm/view';
-import { EditorComponent, Remirror, ThemeProvider, useHover, useRemirror } from '@remirror/react';
+import {
+  EditorComponent,
+  Remirror,
+  ThemeProvider,
+  useHover,
+  useKeymap,
+  useKeymaps,
+  useRemirror,
+} from '@remirror/react';
 import { AllStyledComponent } from '@remirror/styles/emotion';
 
 export default { title: 'Draggable Blocks' };
@@ -243,7 +253,12 @@ class DraggableParagraphWrapperExtension extends NodeExtension {
   }
 
   createTags() {
-    return [ExtensionTag.LastNodeCompatible, ExtensionTag.Block, ExtensionTag.FormattingNode];
+    return [
+      ExtensionTag.LastNodeCompatible,
+      ExtensionTag.Block,
+      ExtensionTag.FormattingNode,
+      ExtensionTag.TextBlock,
+    ];
   }
 
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
@@ -266,13 +281,15 @@ class DraggableParagraphWrapperExtension extends NodeExtension {
     console.log('this.store.extensions:', this.store.extensions);
 
     return {
-      Enter: convertCommand(splitBlock),
+      // Enter: convertCommand(splitBlock),
     };
   }
 }
 
 const extensions = () => [
   new DocExtension({ content: 'draggableParagraphWrapper+' }),
+
+  // new KeymapExtension({ priority: ExtensionPriority. }),
 
   new ReactComponentExtension(),
   new TableExtension(),
@@ -348,7 +365,87 @@ function findDraggableNode(view: EditorView, nodes: NodeWithPosition[]): NodeWit
   return candidates[0] || null;
 }
 
+// :: (EditorState, ?(tr: Transaction)) → bool
+// Split the parent block of the selection. If the selection is a text
+// selection, also delete its content.
+export function splitParentBlock(state: EditorState, dispatch: Dispath) {
+  const { $from, $to } = state.selection;
+
+  if (state.selection instanceof NodeSelection && state.selection.node.isBlock) {
+    if (!$from.parentOffset || !canSplit(state.doc, $from.pos)) {
+      return false;
+    }
+
+    if (dispatch) {
+      dispatch(state.tr.split($from.pos).scrollIntoView());
+    }
+
+    return true;
+  }
+
+  if (!$from.parent.isBlock) {
+    return false;
+  }
+
+  if (dispatch) {
+    const atEnd = $to.parentOffset === $to.parent.content.size;
+    const tr = state.tr;
+
+    if (state.selection instanceof TextSelection || state.selection instanceof AllSelection) {
+      tr.deleteSelection();
+    }
+
+    const deflt =
+      $from.depth === 0
+        ? null
+        : defaultBlockAt($from.node(-1).contentMatchAt($from.indexAfter(-1)));
+    let types = atEnd && deflt ? [{ type: deflt }] : null;
+    let can = canSplit(tr.doc, tr.mapping.map($from.pos), 1, types);
+
+    if (
+      !types &&
+      !can &&
+      canSplit(tr.doc, tr.mapping.map($from.pos), 1, deflt && [{ type: deflt }])
+    ) {
+      types = [{ type: deflt }];
+      can = true;
+    }
+
+    if (can) {
+      tr.split(tr.mapping.map($from.pos), 1, types);
+
+      if (
+        !atEnd &&
+        !$from.parentOffset &&
+        $from.parent.type !== deflt &&
+        $from
+          .node(-1)
+          .canReplace(
+            $from.index(-1),
+            $from.indexAfter(-1),
+            Fragment.from([deflt.create(), $from.parent]),
+          )
+      ) {
+        tr.setNodeMarkup(tr.mapping.map($from.before()), deflt);
+      }
+    }
+
+    dispatch(tr.scrollIntoView());
+  }
+
+  return true;
+}
+
 function useDraggable() {
+  useKeymap('Enter', (props) => {
+    console.log('[enter keymap]', props);
+
+    const result = convertCommand(splitBlock)(props);
+
+    console.log('[enter keymap] result:', result);
+    return result;
+  });
+
   useHover(
     useCallback((params) => {
       console.log('hover event:', params);
