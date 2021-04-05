@@ -38,6 +38,10 @@ interface HoverPositionerData {
   node: ProsemirrorNode;
 }
 
+/** it seems that I don't need to use a hover positioner here, because I don't
+ * need to know the precise coordinate of the draggable handler. I can use CSS
+ * `::before` to create the handler and use `top: 0; left: -40px` to place the
+ * handler in the right place. */
 const hoverPositioner = Positioner.create<HoverPositionerData>({
   /**
    * Determines whether anything has changed and whether to continue with a
@@ -151,7 +155,7 @@ const extensions = () => [
   new ListItemExtension({ nodeOverride: { draggable: true }, priority: 1000 }),
   new DraggableExtension(),
   new DropCursorExtension({ color: 'blue', width: 4 }),
-  new ParagraphExtension({ nodeOverride: { draggable: true } }),
+  // new ParagraphExtension({ nodeOverride: { draggable: true } }),
 ];
 
 function findFirstBlockNode(nodes: NodeWithPosition[]): NodeWithPosition | null {
