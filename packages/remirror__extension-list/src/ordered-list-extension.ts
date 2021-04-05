@@ -4,6 +4,7 @@ import {
   command,
   CommandFunction,
   extension,
+  ExtensionPriority,
   ExtensionTag,
   isElementDomNode,
   keyBinding,
@@ -72,7 +73,7 @@ export class OrderedListExtension extends NodeExtension {
    * Automatically add the `ListItemExtension` which is required here.
    */
   createExtensions() {
-    return [new ListItemExtension()];
+    return [new ListItemExtension({ priority: ExtensionPriority.Low })];
   }
 
   /**

@@ -134,7 +134,13 @@ export function splitListItem(
         // type.contentMatch.defaultType?
 
         // Add a second list item with an empty default start node
-        wrap = wrap.append(Fragment.from(type.createAndFill(attrs)));
+        const createdNode = type.createAndFill(attrs);
+
+        if (!createdNode) {
+          return false;
+        }
+
+        wrap = wrap.append(Fragment.from(createdNode));
 
         tr.replace(
           $from.before(keepItem ? undefined : -1),
@@ -154,7 +160,18 @@ export function splitListItem(
 
     const nextType = $to.pos === $from.end() ? grandParent.contentMatchAt(0).defaultType : null;
     tr.delete($from.pos, $to.pos);
-    const types = nextType ? [null, { type: nextType }] : undefined;
+
+    const types = [{ type, attrs }];
+
+    if (nextType) {
+      const attrs: ProsemirrorAttributes = {};
+
+      for (const name of persistedAttributes) {
+        attrs[name] = $from.node().attrs[name];
+      }
+
+      types.push({ type: nextType, attrs });
+    }
 
     if (!canSplit(tr.doc, $from.pos, 2, types)) {
       return false;

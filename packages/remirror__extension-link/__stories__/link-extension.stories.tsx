@@ -14,6 +14,7 @@ import {
 } from 'remirror/extensions';
 import {
   ComponentItem,
+  EditorComponent,
   FloatingToolbar,
   FloatingWrapper,
   MentionAtomNodeAttributes,
@@ -140,40 +141,6 @@ const floatingToolbarItems: ToolbarItemUnion[] = [
       { type: ComponentItem.ToolbarCommandButton, commandName: 'toggleUnderline', display: 'icon' },
     ],
   },
-  // {
-  //   type: ComponentItem.ToolbarGroup,
-  //   label: 'Simple Formatting',
-  //   items: [
-  //     {
-  //       type: ComponentItem.ToolbarCommandButton,
-  //       commandName: 'toggleHeading',
-  //       attrs: { level: 1 },
-  //       display: 'icon',
-  //     },
-  //     {
-  //       type: ComponentItem.ToolbarCommandButton,
-  //       commandName: 'toggleHeading',
-  //       attrs: { level: 2 },
-  //       display: 'icon',
-  //     },
-  //     {
-  //       type: ComponentItem.ToolbarCommandButton,
-  //       commandName: 'toggleHeading',
-  //       attrs: { level: 3 },
-  //       display: 'icon',
-  //     },
-  //   ],
-  // },
-  // {
-  //   type: ComponentItem.ToolbarCommandButton,
-  //   commandName: 'toggleBulletList',
-  //   display: 'icon',
-  // },
-  // {
-  //   type: ComponentItem.ToolbarCommandButton,
-  //   commandName: 'toggleOrderedList',
-  //   display: 'icon',
-  // },
 ];
 
 export const Basic = (): JSX.Element => {
@@ -181,7 +148,8 @@ export const Basic = (): JSX.Element => {
 
   return (
     <ThemeProvider>
-      <Remirror manager={manager} initialContent={state} autoRender='end'>
+      <Remirror manager={manager} initialContent={state}>
+        <EditorComponent />
         <Toolbar items={toolbarItems} refocusEditor label='Top Toolbar' />
         <FloatingLinkToolbar />
       </Remirror>
@@ -236,7 +204,7 @@ function useFloatingLinkState() {
   const linkPositioner = useMemo(() => createMarkPositioner({ type: 'link' }), []);
 
   const onRemove = useCallback(() => {
-    return chain.removeLink().focus();
+    return chain.removeLink().focus().run();
   }, [chain]);
 
   const updateReason = useUpdateReason();
@@ -352,6 +320,7 @@ const FloatingLinkToolbar = () => {
         renderOutsideEditor
       >
         <input
+          style={{ zIndex: 20 }}
           autoFocus
           onChange={(event) => setHref(event.target.value)}
           value={href}
@@ -382,6 +351,7 @@ const extensions = () => [
   new OrderedListExtension(),
   new MarkdownExtension(),
   new MentionAtomExtension({
+    selectable: false,
     matchers: [{ name: 'at', char: '@', appendText: ' ' }],
   }),
 ];

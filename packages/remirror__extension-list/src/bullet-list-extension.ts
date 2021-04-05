@@ -4,6 +4,7 @@ import {
   command,
   CommandFunction,
   extension,
+  ExtensionPriority,
   ExtensionTag,
   keyBinding,
   KeyBindingProps,
@@ -41,11 +42,8 @@ export class BulletListExtension extends NodeExtension {
     };
   }
 
-  /**
-   * Automatically add the `ListItemExtension` which is required here.
-   */
   createExtensions() {
-    return [new ListItemExtension()];
+    return [new ListItemExtension({ priority: ExtensionPriority.Low })];
   }
 
   /**

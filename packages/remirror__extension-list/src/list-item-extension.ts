@@ -14,9 +14,9 @@ import {
   Static,
 } from '@remirror/core';
 import { CreateEventHandlers } from '@remirror/extension-events';
-import { liftListItem, sinkListItem, splitListItem } from '@remirror/pm/schema-list';
+import { liftListItem, sinkListItem } from '@remirror/pm/schema-list';
 
-import { isList } from './list-commands';
+import { isList, splitListItem } from './list-commands';
 
 /**
  * Creates the node for a list item.
@@ -44,8 +44,6 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
       attrs: {
         ...extra.defaults(),
         closed: { default: null },
-        checked: { default: null },
-        checkbox: { default: false },
         nested: { default: false },
       },
       parseDOM: [{ tag: 'li', getAttrs: extra.parse }, ...(override.parseDOM ?? [])],
@@ -56,30 +54,11 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
 
         const toggleDom = canToggle ? [['button', { class: 'toggler' }]] : [];
 
-        const { closed, checked, checkbox } = omitExtraAttributes(
-          node.attrs,
-          extra,
-        ) as ListItemAttributes;
+        const { closed } = omitExtraAttributes(node.attrs, extra) as ListItemAttributes;
         const attrs = extra.dom(node);
-        attrs.class = cx(
-          attrs.class,
-          closed && 'closed',
-          canToggle && 'can-toggle',
-          checkbox && 'checkbox',
-        );
+        attrs.class = cx(attrs.class, closed && 'closed', canToggle && 'can-toggle');
 
-        const checkboxDom = checkbox
-          ? [
-              [
-                'span',
-                { class: 'pretty p-default' },
-                ['input', { type: 'checkbox', ...(checked ? { checked: '' } : {}) }],
-                ['div', { class: 'state' }, ['label']],
-              ],
-            ]
-          : [];
-
-        return ['li', extra.dom(node), ...toggleDom, ...checkboxDom, ['span', 0]] as any;
+        return ['li', extra.dom(node), ...toggleDom, ['span', 0]] as any;
       },
     };
   }
@@ -94,14 +73,6 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
         }
 
         const { pos, node } = nodeWithPos;
-
-        if (event.target instanceof HTMLInputElement) {
-          this.store.commands.updateNodeAttributes(pos, {
-            ...node.attrs,
-            checked: !node.attrs.checked,
-          });
-          return true;
-        }
 
         if (event.target instanceof HTMLButtonElement) {
           this.store.commands.updateNodeAttributes(pos, {
@@ -119,7 +90,7 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
 
   createKeymap(): KeyBindings {
     return {
-      Enter: convertCommand(splitListItem(this.type)),
+      Enter: splitListItem(this.type, ['closed']),
       Tab: convertCommand(sinkListItem(this.type)),
       'Shift-Tab': convertCommand(liftListItem(this.type)),
     };
@@ -140,18 +111,6 @@ export type ListItemAttributes = ProsemirrorAttributes<{
    * @default false
    */
   closed: boolean;
-
-  /**
-   * The status of the checkbox.
-   *
-   * @default null
-   */
-  checked: null | boolean;
-
-  /**
-   * True when this is a checkable item.
-   */
-  checkbox: boolean;
 }>;
 
 declare global {
