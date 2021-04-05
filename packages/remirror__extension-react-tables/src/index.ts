@@ -1,7 +1,4 @@
-export type {
-  TableCellMenuButtonProps,
-  TableCellMenuPopupProps,
-} from './components/table-cell-menu';
+export type { TableCellMenuComponentProps, TableCellMenuProps } from './components/table-cell-menu';
 export { TableCellMenu } from './components/table-cell-menu';
 export { TableComponents } from './components/table-components';
 export * from './components/table-delete-button';

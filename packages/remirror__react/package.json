@@ -43,6 +43,7 @@
     "@remirror/extension-positioner": "1.0.0-next.60",
     "@remirror/extension-react-component": "1.0.0-next.60",
     "@remirror/extension-react-ssr": "1.0.0-next.60",
+    "@remirror/extension-react-tables": "pr706",
     "@remirror/preset-react": "1.0.0-next.60",
     "@remirror/react-components": "1.0.0-next.40",
     "@remirror/react-core": "0.0.0",
