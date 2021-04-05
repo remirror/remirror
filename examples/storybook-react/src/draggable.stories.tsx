@@ -1,9 +1,10 @@
 import './draggable.css';
 
 import { Story } from '@storybook/react';
-import { useCallback } from 'react';
+import { Dispatch, useCallback } from 'react';
 import {
   ApplySchemaAttributes,
+  convertCommand,
   CreateExtensionPlugin,
   EditorSchema,
   EditorState,
@@ -18,6 +19,7 @@ import {
 import {
   BlockquoteExtension,
   BulletListExtension,
+  DocExtension,
   DropCursorExtension,
   GetActiveProps,
   GetPositionProps,
@@ -31,20 +33,12 @@ import {
 import { ProsemirrorDevTools } from '@remirror/dev';
 import { ReactComponentExtension } from '@remirror/extension-react-component';
 import { TableComponents, TableExtension } from '@remirror/extension-react-tables';
-import { PluginKey, Transaction } from '@remirror/pm/state';
+import { splitBlock } from '@remirror/pm/commands';
+import { AllSelection, PluginKey, Transaction } from '@remirror/pm/state';
 import { ProsemirrorNode } from '@remirror/pm/suggest';
 import { Decoration, DecorationSet, EditorView } from '@remirror/pm/view';
-import {
-  EditorComponent,
-  Remirror,
-  ThemeProvider,
-  useEvent,
-  useHover,
-  useRemirror,
-} from '@remirror/react';
+import { EditorComponent, Remirror, ThemeProvider, useHover, useRemirror } from '@remirror/react';
 import { AllStyledComponent } from '@remirror/styles/emotion';
-
-import { NeteaseCloudMusicFillIcon } from '../../../packages/remirror__react/node_modules/@remirror/react-components/src/all-icons';
 
 export default { title: 'Draggable Blocks' };
 
@@ -216,6 +210,33 @@ class DraggableParagraphContentExtension extends NodeExtension {
   }
 }
 
+// :: (EditorState, ?(tr: Transaction)) → bool
+// If a block node is selected, create an empty paragraph before (if
+// it is its parent's first child) or after it.
+// export function createParagraphNear(state: EditorState, dispatch: Dispatch) {
+//   const sel = state.selection;
+//   const { $from, $to } = sel;
+
+//   if (sel instanceof AllSelection || $from.parent.inlineContent || $to.parent.inlineContent) {
+//     return false;
+//   }
+
+//   const type = defaultBlockAt($to.parent.contentMatchAt($to.indexAfter()));
+
+//   if (!type || !type.isTextblock) {
+//     return false;
+//   }
+
+//   if (dispatch) {
+//     const side = (!$from.parentOffset && $to.index() < $to.parent.childCount ? $from : $to).pos;
+//     const tr = state.tr.insert(side, type.createAndFill());
+//     tr.setSelection(TextSelection.create(tr.doc, side + 1));
+//     dispatch(tr.scrollIntoView());
+//   }
+
+//   return true;
+// }
+
 class DraggableParagraphWrapperExtension extends NodeExtension {
   get name() {
     return 'draggableParagraphWrapper' as const;
@@ -227,7 +248,7 @@ class DraggableParagraphWrapperExtension extends NodeExtension {
 
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
     return {
-      content: 'paragraph*',
+      content: 'paragraph',
       draggable: true,
       ...override,
       attrs: {
@@ -240,9 +261,19 @@ class DraggableParagraphWrapperExtension extends NodeExtension {
       },
     };
   }
+
+  createKeymap() {
+    console.log('this.store.extensions:', this.store.extensions);
+
+    return {
+      Enter: convertCommand(splitBlock),
+    };
+  }
 }
 
 const extensions = () => [
+  new DocExtension({ content: 'draggableParagraphWrapper+' }),
+
   new ReactComponentExtension(),
   new TableExtension(),
   new BulletListExtension({ nodeOverride: { draggable: true } }),
@@ -304,13 +335,13 @@ function findDraggableNode(view: EditorView, nodes: NodeWithPosition[]): NodeWit
         to: lastParagraph.pos + lastParagraph.node.nodeSize,
       });
 
-      view.dispatch(
-        view.state.tr.replaceWith(
-          lastParagraph.pos,
-          lastParagraph.pos + lastParagraph.node.nodeSize,
-          wrapper,
-        ),
-      );
+      // view.dispatch(
+      //   view.state.tr.replaceWith(
+      //     lastParagraph.pos,
+      //     lastParagraph.pos + lastParagraph.node.nodeSize,
+      //     wrapper,
+      //   ),
+      // );
     }
   }
 
