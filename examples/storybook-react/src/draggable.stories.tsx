@@ -14,6 +14,7 @@ import {
   PlainExtension,
 } from 'remirror';
 import {
+  BlockquoteExtension,
   BulletListExtension,
   DropCursorExtension,
   GetActiveProps,
@@ -48,7 +49,6 @@ const key = new PluginKey('remirrorDraggable');
 interface Action {
   pos: number;
   node: ProsemirrorNode;
-  onClick: () => void;
 }
 
 interface HoverPositionerData {
@@ -117,76 +117,52 @@ const hoverPositioner = Positioner.create<HoverPositionerData>({
   events: ['hover'],
 });
 
-class DraggableExtension extends NodeExtension {
+interface DraggablePluginState {
+  pos: number; // draggable node's pos
+}
+
+class DraggableExtension extends PlainExtension {
   get name() {
     return 'draggable' as const;
   }
 
-  createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
-    return {
-      group: 'block',
-      draggable: true,
-      content: 'black',
-      ...override,
-      parseDOM: [{ tag: `[data-type="remirror-draggable"]` }],
-      toDOM: () => ['div', { 'data-type': 'remirror-draggable', class: 'remirror-draggable' }, 0],
-    };
-  }
+  // createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
+  //   return {
+  //     group: 'block',
+  //     draggable: true,
+  //     content: 'black',
+  //     ...override,
+  //     parseDOM: [{ tag: `[data-type="remirror-draggable"]` }],
+  //     toDOM: () => ['div', { 'data-type': 'remirror-draggable', class: 'remirror-draggable' }, 0],
+  //   };
+  // }
 
-  createPlugin(): CreateExtensionPlugin {
+  createPlugin(): CreateExtensionPlugin<DraggablePluginState> {
     return {
       state: {
         init() {
-          return DecorationSet.empty;
+          return { pos: -1 };
         },
         apply: (
           tr: Transaction,
-          set: DecorationSet,
+          state: DraggablePluginState,
           oldState: EditorState,
           newState: EditorState,
         ) => {
           const action: Action | null = tr.getMeta(key);
 
           if (!action && !tr.docChanged) {
-            return set;
+            return state;
           }
 
-          if (!action) {
-            // Adjust decoration positions to changes made by the transaction
-            return set.map(tr.mapping, tr.doc);
-          }
-
-          // let decoration = Decoration.node(action.pos, action.pos + action.node.nodeSize, {
-          //   class: 'hovering',
-          // });
-
-          const toDom = (): HTMLElement => {
-            const dom = document.createElement('div');
-            dom.classList.add('hovering');
-            // dom.addEventListener('click', (event) => {
-            //   event.preventDefault();
-            //   event.stopPropagation();
-            // });
-            dom.addEventListener('mousedown', (event) => {
-              console.log('handler onclick');
-              action.onClick();
-              event.preventDefault();
-              // event.stopPropagation();
-            });
-
-            return dom;
-          };
-
-          const decoration = Decoration.widget(action.pos, toDom, { side: -1 });
-
-          return DecorationSet.create(tr.doc, [decoration]);
+          return { pos: -1 };
         },
       },
-      props: {
-        decorations(state) {
-          return this.getState(state);
-        },
-      },
+      // props: {
+      //   decorations(state) {
+      //     // return this.getState(state);
+      //   },
+      // },
     };
   }
 }
@@ -199,7 +175,8 @@ const extensions = () => [
   new ListItemExtension({ nodeOverride: { draggable: true }, priority: 1000 }),
   new DraggableExtension(),
   new DropCursorExtension({ color: 'blue', width: 4 }),
-  // new ParagraphExtension({ nodeOverride: { draggable: true } }),
+  new ParagraphExtension({ nodeOverride: { draggable: false } }),
+  new BlockquoteExtension({ nodeOverride: { draggable: true } }),
 ];
 
 function findFirstBlockNode(nodes: NodeWithPosition[]): NodeWithPosition | null {
@@ -226,10 +203,6 @@ function useDraggable() {
         const action: Action = {
           pos: node.pos,
           node: node.node,
-          onClick: () => {
-            const selection = NodeSelection.create(view.state.doc, node.pos);
-            view.dispatch(view.state.tr.setSelection(selection));
-          },
         };
         view.dispatch(view.state.tr.setMeta(key, action));
       }
