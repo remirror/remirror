@@ -2,8 +2,19 @@ import './draggable.css';
 
 import { Story } from '@storybook/react';
 import { useCallback } from 'react';
-import { CreateExtensionPlugin, EditorState, NodeWithPosition, PlainExtension } from 'remirror';
 import {
+  ApplySchemaAttributes,
+  CreateExtensionPlugin,
+  EditorState,
+  ExtensionPriority,
+  NodeExtension,
+  NodeExtensionSpec,
+  NodeSpecOverride,
+  NodeWithPosition,
+  PlainExtension,
+} from 'remirror';
+import {
+  BlockquoteExtension,
   BulletListExtension,
   DropCursorExtension,
   GetActiveProps,
@@ -147,15 +158,65 @@ class DraggableExtension extends PlainExtension {
   }
 }
 
+class DraggableParagraphExtension extends ParagraphExtension {
+  createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
+    return {
+      content: 'paragraphContent*',
+      draggable: true,
+      ...override,
+      attrs: {
+        ...extra.defaults(),
+      },
+      parseDOM: [
+        {
+          tag: 'p',
+          getAttrs: (node) => ({
+            ...extra.parse(node),
+          }),
+        },
+      ],
+
+      toDOM: (node) => {
+        return ['div', extra.dom(node), 0];
+      },
+    };
+  }
+}
+
+class DraggableParagraphContentExtension extends NodeExtension {
+  get name() {
+    return 'paragraphContent' as const;
+  }
+
+  createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
+    return {
+      content: 'inline*',
+      draggable: false,
+      ...override,
+      attrs: {
+        ...extra.defaults(),
+      },
+      parseDOM: [],
+
+      toDOM: (node) => {
+        return ['p', extra.dom(node), 0];
+      },
+    };
+  }
+}
+
 const extensions = () => [
   new ReactComponentExtension(),
   new TableExtension(),
   new BulletListExtension({ nodeOverride: { draggable: true } }),
   new OrderedListExtension({ nodeOverride: { draggable: true } }),
-  new ListItemExtension({ nodeOverride: { draggable: true }, priority: 1000 }),
+  new ListItemExtension({ nodeOverride: { draggable: true }, priority: ExtensionPriority.High }),
   new DraggableExtension(),
   new DropCursorExtension({ color: 'blue', width: 4 }),
   // new ParagraphExtension({ nodeOverride: { draggable: true } }),
+  new BlockquoteExtension({ nodeOverride: { draggable: true } }),
+  new DraggableParagraphExtension({ priority: ExtensionPriority.High }),
+  new DraggableParagraphContentExtension({ priority: ExtensionPriority.High }),
 ];
 
 function findFirstBlockNode(nodes: NodeWithPosition[]): NodeWithPosition | null {
