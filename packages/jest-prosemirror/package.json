@@ -58,7 +58,7 @@
     "@remirror/core-types": "1.0.0-next.60",
     "@remirror/core-utils": "1.0.0-next.60",
     "@remirror/pm": "1.0.0-next.60",
-    "@testing-library/dom": "^7.30.1",
+    "@testing-library/dom": "^7.30.3",
     "@types/prosemirror-schema-basic": "^1.0.2",
     "@types/prosemirror-test-builder": "^1.0.2",
     "chalk": "^4.1.0",

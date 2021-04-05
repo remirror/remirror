@@ -25,7 +25,7 @@
     "@remirror/dev": "1.0.0-next.60",
     "@remirror/playground": "1.0.0-next.60",
     "@remirror/react": "1.0.0-next.60",
-    "framer-motion": "^4.0.3",
+    "framer-motion": "^4.1.2",
     "is-absolute-url": "^3.0.3",
     "prism-react-renderer": "^1.2.0",
     "react": "^17.0.2",
@@ -46,7 +46,7 @@
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.3",
     "@types/worker-plugin": "^4.0.1",
-    "core-js": "^3.9.1",
+    "core-js": "^3.10.0",
     "monaco-editor-webpack-plugin": "^3.0.0",
     "worker-plugin": "^5.0.0"
   },
