@@ -6,9 +6,14 @@ import { CreateExtensionPlugin, EditorState, NodeWithPosition, PlainExtension } 
 import {
   BulletListExtension,
   DropCursorExtension,
+  GetActiveProps,
+  GetPositionProps,
+  hasStateChanged,
   ListItemExtension,
   OrderedListExtension,
   ParagraphExtension,
+  Positioner,
+  PositionerPosition,
 } from 'remirror/extensions';
 import { ProsemirrorDevTools } from '@remirror/dev';
 import { ReactComponentExtension } from '@remirror/extension-react-component';
@@ -27,6 +32,68 @@ interface Action {
   pos: number;
   node: ProsemirrorNode;
 }
+
+interface HoverPositionerData {
+  pos: number;
+  node: ProsemirrorNode;
+}
+
+const hoverPositioner = Positioner.create<HoverPositionerData>({
+  /**
+   * Determines whether anything has changed and whether to continue with a
+   * recalculation. By default this is only true when the document has or
+   * selection has changed.
+   *
+   * @remarks
+   *
+   * Sometimes it is useful to recalculate the positioner on every state update.
+   * In this case you can set this method to always return true.
+   *
+   * ```ts
+   * const positioner: Positioner = {
+   *   hasStateChanged: () => true
+   * };
+   * ```
+   */
+  hasChanged: hasStateChanged,
+
+  /**
+   * Get the active items that will be passed into the `getPosition` method.
+   */
+  getActive: (props: GetActiveProps): HoverPositionerData[] => {
+    const nodes = props.hover?.nodes;
+
+    if (!nodes) {
+      return [];
+    }
+
+    const node = findFirstBlockNode(nodes);
+
+    if (node) {
+      return [node];
+    }
+
+    return [];
+  },
+
+  /**
+   * Calculate and return an array of `VirtualPosition`'s which represent the
+   * virtual element the positioner represents.
+   */
+  getPosition: (props: GetPositionProps<HoverPositionerData>): PositionerPosition => {
+    return { x: 0, y: 0, width: 0, height: 0, rect: new DOMRect(), visible: true };
+  },
+
+  /**
+   * An array of update listeners to determines when the positioner will update it's position.
+   *
+   * - `state` - updates when the prosemirror state is updated - default.
+   * - `scroll` - updates when the editor is scrolled (debounced)
+   *
+   * @default ['state']
+   */
+  events: ['hover'],
+});
 
 class DraggableExtension extends PlainExtension {
   get name() {
