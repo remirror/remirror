@@ -10,7 +10,7 @@ import {
 
 import { useMultiPositioner, UseMultiPositionerReturn } from './use-multi-positioner';
 
-interface UsePositionerReturn extends MakeOptional<UseMultiPositionerReturn, 'ref'> {
+export interface UsePositionerReturn extends MakeOptional<UseMultiPositionerReturn, 'ref'> {
   /**
    * When `true`, the position is active and the positioner will be displayed.
    */

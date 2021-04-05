@@ -26,7 +26,6 @@ async function webpackFinal(config: Configuration): Promise<Configuration> {
   const externals = config.externals ?? {};
   const plugins = config.plugins ?? [];
   const resolve = config.resolve ?? {};
-  const alias = resolve.alias ?? {};
 
   // Set the ssr helpers for jsdom and domino as externals to the storybook
   // build.
@@ -42,11 +41,6 @@ async function webpackFinal(config: Configuration): Promise<Configuration> {
   config.resolve = resolve;
   config.plugins = plugins;
   config.externals = externals;
-
-  if (process.env.NODE_ENV !== 'production') {
-    // Use emotion as an alias for linaria.
-    alias['@linaria/core'] = '@emotion/css';
-  }
 
   return config;
 }

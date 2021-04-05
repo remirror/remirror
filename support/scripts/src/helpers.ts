@@ -6,11 +6,13 @@ import assert from 'assert';
 import camelCaseKeys from 'camelcase-keys';
 import chalk from 'chalk';
 import { exec as _exec } from 'child_process';
+import fs from 'fs';
 import diff from 'jest-diff';
 import isEqual from 'lodash.isequal';
 import minimist from 'minimist';
 import path from 'path';
 import _rm from 'rimraf';
+import { debounce } from 'throttle-debounce';
 import { Logger } from 'tslog';
 import { promisify } from 'util';
 import { PackageJson, TsConfigJson } from '@remirror/types';
@@ -359,3 +361,23 @@ export const environment = {
     return process.platform === 'darwin';
   },
 };
+
+/**
+ * watch some files and execute a callback function when any file change.
+ *
+ * @param files an array of file paths
+ * @param callback the function that will be called when a file is modified
+ */
+export function watchFiles(files: string[], callback: () => any) {
+  const debounceCallback = debounce(1027, false, callback);
+
+  for (const file of files) {
+    fs.watchFile(file, { interval: 1007 }, (curr, prev) => {
+      // To be notified when the file was modified, not just accessed, it is
+      // necessary to compare curr.mtime and prev.mtime.
+      if (curr.mtime.getTime() !== prev.mtime.getTime()) {
+        debounceCallback();
+      }
+    });
+  }
+}

@@ -516,6 +516,29 @@
     "gzip": true
   },
   {
+    "name": "@remirror/extension-react-tables",
+    "limit": "20 KB",
+    "path": "packages/remirror__extension-react-tables/dist/remirror-extension-react-tables.browser.esm.js",
+    "ignore": [
+      "@remirror/pm",
+      "react",
+      "react-dom",
+      "@remirror/core",
+      "@remirror/core-utils",
+      "@remirror/extension-positioner",
+      "@remirror/extension-tables",
+      "@remirror/icons",
+      "@remirror/messages",
+      "@remirror/preset-core",
+      "@remirror/react-components",
+      "@remirror/react-core",
+      "@remirror/react-hooks",
+      "@remirror/theme"
+    ],
+    "running": false,
+    "gzip": true
+  },
+  {
     "name": "@remirror/extension-search",
     "limit": "5 KB",
     "path": "packages/remirror__extension-search/dist/remirror-extension-search.browser.esm.js",
