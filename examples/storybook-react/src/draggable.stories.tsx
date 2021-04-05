@@ -24,7 +24,7 @@ import { Decoration, DecorationSet } from '@remirror/pm/view';
 import { EditorComponent, Remirror, ThemeProvider, useEvent, useRemirror } from '@remirror/react';
 import { AllStyledComponent } from '@remirror/styles/emotion';
 
-export default { title: 'Draggable' };
+export default { title: 'Draggable Blocks' };
 
 const key = new PluginKey('remirrorDraggable');
 
