@@ -5,8 +5,10 @@ import { useCallback } from 'react';
 import {
   ApplySchemaAttributes,
   CreateExtensionPlugin,
+  EditorSchema,
   EditorState,
   ExtensionPriority,
+  ExtensionTag,
   NodeExtension,
   NodeExtensionSpec,
   NodeSpecOverride,
@@ -31,9 +33,18 @@ import { ReactComponentExtension } from '@remirror/extension-react-component';
 import { TableComponents, TableExtension } from '@remirror/extension-react-tables';
 import { PluginKey, Transaction } from '@remirror/pm/state';
 import { ProsemirrorNode } from '@remirror/pm/suggest';
-import { Decoration, DecorationSet } from '@remirror/pm/view';
-import { EditorComponent, Remirror, ThemeProvider, useEvent, useRemirror } from '@remirror/react';
+import { Decoration, DecorationSet, EditorView } from '@remirror/pm/view';
+import {
+  EditorComponent,
+  Remirror,
+  ThemeProvider,
+  useEvent,
+  useHover,
+  useRemirror,
+} from '@remirror/react';
 import { AllStyledComponent } from '@remirror/styles/emotion';
+
+import { NeteaseCloudMusicFillIcon } from '../../../packages/remirror__react/node_modules/@remirror/react-components/src/all-icons';
 
 export default { title: 'Draggable Blocks' };
 
@@ -82,7 +93,7 @@ const hoverPositioner = Positioner.create<HoverPositionerData>({
       return [];
     }
 
-    const node = findFirstBlockNode(nodes);
+    const node = findDraggableNode(props.view, nodes);
 
     if (node) {
       return [node];
@@ -205,6 +216,32 @@ class DraggableParagraphContentExtension extends NodeExtension {
   }
 }
 
+class DraggableParagraphWrapperExtension extends NodeExtension {
+  get name() {
+    return 'draggableParagraphWrapper' as const;
+  }
+
+  createTags() {
+    return [ExtensionTag.LastNodeCompatible, ExtensionTag.Block, ExtensionTag.FormattingNode];
+  }
+
+  createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
+    return {
+      content: 'paragraph*',
+      draggable: true,
+      ...override,
+      attrs: {
+        ...extra.defaults(),
+      },
+      parseDOM: [],
+
+      toDOM: (node) => {
+        return ['div', extra.dom(node), 0];
+      },
+    };
+  }
+}
+
 const extensions = () => [
   new ReactComponentExtension(),
   new TableExtension(),
@@ -214,28 +251,78 @@ const extensions = () => [
   new DraggableExtension(),
   new DropCursorExtension({ color: 'blue', width: 4 }),
   // new ParagraphExtension({ nodeOverride: { draggable: true } }),
+  new DraggableParagraphWrapperExtension(),
   new BlockquoteExtension({ nodeOverride: { draggable: true } }),
-  new DraggableParagraphExtension({ priority: ExtensionPriority.High }),
-  new DraggableParagraphContentExtension({ priority: ExtensionPriority.High }),
+  // new DraggableParagraphExtension({ priority: ExtensionPriority.High }),
+  // new DraggableParagraphContentExtension({ priority: ExtensionPriority.High }),
 ];
 
-function findFirstBlockNode(nodes: NodeWithPosition[]): NodeWithPosition | null {
+/**
+ * Find the draggable node that should show a draggable handler.
+ */
+function findDraggableNode(view: EditorView, nodes: NodeWithPosition[]): NodeWithPosition | null {
+  let candidates: NodeWithPosition[] = [];
+  let lastParagraph: NodeWithPosition | null = null;
+
   for (const node of nodes) {
-    if (node.node?.type.isBlock) {
-      // TODO: node.node could be undefined
-      return node;
+    console.log('[findDraggableNode] name:', node.node?.type.name);
+
+    if (node.node?.type.name === 'paragraph') {
+      lastParagraph = node;
+    }
+
+    if (node.node?.type.isBlock && node.node.type.spec.draggable) {
+      // TODO: node.node could be undefined, why?
+
+      // all nodes inside a table are not draggable
+      if (node.node.type.name === 'table') {
+        candidates = [];
+      }
+
+      // all nodes insert a blockquote are not draggable
+      if (node.node.type.name === 'blockquote') {
+        candidates = [];
+      }
+
+      candidates.push(node);
     }
   }
 
-  return null;
+  console.log('[findDraggableNode] step 10 candidates:', candidates);
+  console.log('[findDraggableNode] step 10 lastParagraph:', lastParagraph);
+
+  if (candidates.length === 0 && lastParagraph) {
+    console.log('[findDraggableNode] step 11');
+
+    // create a new DraggableParagraphWrapper node
+    const schema: EditorSchema = view.state.schema;
+    const wrapper = schema.nodes.draggableParagraphWrapper?.createAndFill(null, lastParagraph.node);
+
+    if (wrapper) {
+      console.log('[findDraggableNode] step 15', {
+        from: lastParagraph.pos,
+        to: lastParagraph.pos + lastParagraph.node.nodeSize,
+      });
+
+      view.dispatch(
+        view.state.tr.replaceWith(
+          lastParagraph.pos,
+          lastParagraph.pos + lastParagraph.node.nodeSize,
+          wrapper,
+        ),
+      );
+    }
+  }
+
+  return candidates[0] || null;
 }
 
 function useDraggable() {
-  useEvent(
-    'hover',
+  useHover(
     useCallback((params) => {
       console.log('hover event:', params);
-      const node = findFirstBlockNode(params.nodes);
+
+      const node = findDraggableNode(params.view, params.nodes);
 
       if (node) {
         const { view } = params;
