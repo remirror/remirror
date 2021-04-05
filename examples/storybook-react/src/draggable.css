@@ -23,3 +23,9 @@
   transition: opacity 200ms ease-in-out;
   background: lightblue;
 }
+
+blockquote {
+  border-left: 8px solid gray;
+  padding-left: 32px;
+  margin-left: 32px !important;
+}
