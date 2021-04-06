@@ -101,10 +101,26 @@ class FileNodeView implements NodeView {
       },
       'click me',
     );
-    this.menu = h('div', null, this.menuButton);
+    this.menu = h('div', { style: { opacity: 0 } }, this.menuButton);
     this.card = h('div');
     this.contentDOM = h('div');
-    this.dom = h('div', null, this.menu, this.card, this.contentDOM);
+    this.dom = h(
+      'div',
+      {
+        style: {
+          border: '1px solid red',
+        },
+        onMouseEnter: () => {
+          this.menu.style.opacity = '1';
+        },
+        onMouseLeave: () => {
+          this.menu.style.opacity = '0';
+        },
+      },
+      this.menu,
+      this.card,
+      this.contentDOM,
+    );
 
     this.render(this.node);
   }
@@ -132,6 +148,10 @@ class FileNodeView implements NodeView {
 
     this.node = node;
     this.render(this.node);
+    return true;
+  }
+
+  ignoreMutation() {
     return true;
   }
 }
@@ -184,10 +204,7 @@ class FileExtension extends NodeExtension {
   }
 }
 
-const extensions = () => [
-  new ImageExtension(),
-  new FileExtension({ priority: ExtensionPriority.High }),
-];
+const extensions = () => [new ImageExtension(), new FileExtension()];
 
 export const Main: Story = ({ children }) => {
   const { manager, state } = useRemirror({ extensions });
