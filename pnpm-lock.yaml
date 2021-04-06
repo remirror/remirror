@@ -289,6 +289,7 @@ importers:
       clsx: 1.1.1
       codemirror: 5.59.4
       create-context-state: link:../../packages/create-context-state
+      jsx-dom: 7.0.0-beta.1
       react: 17.0.1
       react-dom: 17.0.1_react@17.0.1
       react-is: 17.0.1
@@ -334,6 +335,7 @@ importers:
       clsx: ^1.1.1
       codemirror: ^5.59.2
       create-context-state: 0.0.0
+      jsx-dom: ^7.0.0-beta.1
       monaco-editor-webpack-plugin: ^3.0.0
       react: ^17.0.1
       react-dom: ^17.0.1
