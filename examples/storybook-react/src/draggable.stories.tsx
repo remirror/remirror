@@ -6,6 +6,7 @@ import {
   ApplySchemaAttributes,
   convertCommand,
   CreateExtensionPlugin,
+  DispatchFunction,
   EditorSchema,
   EditorState,
   ExtensionPriority,
@@ -35,9 +36,16 @@ import { ProsemirrorDevTools } from '@remirror/dev';
 import { ReactComponentExtension } from '@remirror/extension-react-component';
 import { TableComponents, TableExtension } from '@remirror/extension-react-tables';
 import { splitBlock } from '@remirror/pm/commands';
-import { Fragment } from '@remirror/pm/model';
-import { AllSelection, PluginKey, Transaction } from '@remirror/pm/state';
+import { ContentMatch, Fragment } from '@remirror/pm/model';
+import {
+  AllSelection,
+  NodeSelection,
+  PluginKey,
+  TextSelection,
+  Transaction,
+} from '@remirror/pm/state';
 import { ProsemirrorNode } from '@remirror/pm/suggest';
+import { canSplit } from '@remirror/pm/transform';
 import { Decoration, DecorationSet, EditorView } from '@remirror/pm/view';
 import {
   EditorComponent,
@@ -365,10 +373,22 @@ function findDraggableNode(view: EditorView, nodes: NodeWithPosition[]): NodeWit
   return candidates[0] || null;
 }
 
+function defaultBlockAt(match: ContentMatch) {
+  for (let i = 0; i < match.edgeCount; i++) {
+    const { type } = match.edge(i);
+
+    if (type.isTextblock && !type.hasRequiredAttrs()) {
+      return type;
+    }
+  }
+
+  return null;
+}
+
 // :: (EditorState, ?(tr: Transaction)) → bool
 // Split the parent block of the selection. If the selection is a text
 // selection, also delete its content.
-export function splitParentBlock(state: EditorState, dispatch: Dispath) {
+export function splitParentBlock(state: EditorState, dispatch: DispatchFunction) {
   const { $from, $to } = state.selection;
 
   if (state.selection instanceof NodeSelection && state.selection.node.isBlock) {
@@ -397,21 +417,22 @@ export function splitParentBlock(state: EditorState, dispatch: Dispath) {
 
     const deflt =
       $from.depth === 0
-        ? null
+        ? undefined
         : defaultBlockAt($from.node(-1).contentMatchAt($from.indexAfter(-1)));
-    let types = atEnd && deflt ? [{ type: deflt }] : null;
+    let types = atEnd && deflt ? [{ type: deflt }] : undefined;
     let can = canSplit(tr.doc, tr.mapping.map($from.pos), 1, types);
 
     if (
       !types &&
       !can &&
-      canSplit(tr.doc, tr.mapping.map($from.pos), 1, deflt && [{ type: deflt }])
+      deflt &&
+      canSplit(tr.doc, tr.mapping.map($from.pos), 1, (deflt && [{ type: deflt }]) || undefined)
     ) {
       types = [{ type: deflt }];
       can = true;
     }
 
-    if (can) {
+    if (deflt && can) {
       tr.split(tr.mapping.map($from.pos), 1, types);
 
       if (
