@@ -261,12 +261,7 @@ class DraggableParagraphWrapperExtension extends NodeExtension {
   }
 
   createTags() {
-    return [
-      ExtensionTag.LastNodeCompatible,
-      ExtensionTag.Block,
-      ExtensionTag.FormattingNode,
-      ExtensionTag.TextBlock,
-    ];
+    return [ExtensionTag.LastNodeCompatible, ExtensionTag.Block, ExtensionTag.FormattingNode];
   }
 
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
