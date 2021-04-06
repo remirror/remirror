@@ -537,7 +537,7 @@ function useDraggable() {
 
   useHover(
     useCallback((params) => {
-      console.log('hover event :', params);
+      console.log('[useHover] hover event :', params.hovering, params);
 
       const node = findOrCreateDraggableNode(params.view, params.nodes);
 
