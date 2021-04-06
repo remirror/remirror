@@ -37,7 +37,8 @@ export const EDITOR = css`
       margin-top: 16px;
     }
 
-    p:first-child,
+    /* 2021-04-06 ocavue: I comment these margin-top since they will break the style of draggable wrapper */
+    /* p:first-child,
     h1:first-child,
     h2:first-child,
     h3:first-child,
@@ -45,7 +46,7 @@ export const EDITOR = css`
     h5:first-child,
     h6:first-child {
       margin-top: 16px;
-    }
+    } */
   }
 
   #y-functions {

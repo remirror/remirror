@@ -3954,6 +3954,17 @@ export const extensionYjsStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-yjs-theme.ts
  */
+  .remirror-editor.ProseMirror {
+    /* p:first-child,
+    h1:first-child,
+    h2:first-child,
+    h3:first-child,
+    h4:first-child,
+    h5:first-child,
+    h6:first-child {
+      margin-top: 16px;
+    } */
+  }
   .remirror-editor.ProseMirror .ProseMirror-yjs-cursor {
     position: absolute;
     border-left: black;
@@ -3964,7 +3975,6 @@ export const extensionYjsStyledCss: ReturnType<typeof css> = css`
     word-break: normal;
     pointer-events: none;
   }
-
   .remirror-editor.ProseMirror .ProseMirror-yjs-cursor > div {
     position: relative;
     top: -1.05em;
@@ -3983,15 +3993,6 @@ export const extensionYjsStyledCss: ReturnType<typeof css> = css`
     padding-right: 2px;
   }
   .remirror-editor.ProseMirror > .ProseMirror-yjs-cursor:first-child {
-    margin-top: 16px;
-  }
-  .remirror-editor.ProseMirror p:first-child,
-  .remirror-editor.ProseMirror h1:first-child,
-  .remirror-editor.ProseMirror h2:first-child,
-  .remirror-editor.ProseMirror h3:first-child,
-  .remirror-editor.ProseMirror h4:first-child,
-  .remirror-editor.ProseMirror h5:first-child,
-  .remirror-editor.ProseMirror h6:first-child {
     margin-top: 16px;
   }
   .remirror-editor #y-functions {

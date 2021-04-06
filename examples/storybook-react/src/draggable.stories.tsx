@@ -105,7 +105,7 @@ const hoverPositioner = Positioner.create<HoverPositionerData>({
       return [];
     }
 
-    const node = findDraggableNode(props.view, nodes);
+    const node = findOrCreateDraggableNode(props.view, nodes);
 
     if (node) {
       return [node];
@@ -271,7 +271,7 @@ class DraggableParagraphWrapperExtension extends NodeExtension {
 
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
     return {
-      content: 'paragraph',
+      content: 'paragraph+',
       draggable: true,
       ...override,
       attrs: {
@@ -281,6 +281,7 @@ class DraggableParagraphWrapperExtension extends NodeExtension {
 
       toDOM: (node) => {
         return ['div', extra.dom(node), 0];
+        // return [0];
       },
     };
   }
@@ -295,7 +296,7 @@ class DraggableParagraphWrapperExtension extends NodeExtension {
 }
 
 const extensions = () => [
-  new DocExtension({ content: 'draggableParagraphWrapper+' }),
+  // new DocExtension({ content: 'draggableParagraphWrapper+' }),
 
   // new KeymapExtension({ priority: ExtensionPriority. }),
 
@@ -316,15 +317,23 @@ const extensions = () => [
 /**
  * Find the draggable node that should show a draggable handler.
  */
-function findDraggableNode(view: EditorView, nodes: NodeWithPosition[]): NodeWithPosition | null {
+function findOrCreateDraggableNode(
+  view: EditorView,
+  nodes: NodeWithPosition[],
+): NodeWithPosition | null {
   let candidates: NodeWithPosition[] = [];
   let lastParagraph: NodeWithPosition | null = null;
+  let lastParagraphWrapper: NodeWithPosition | null = null;
 
   for (const node of nodes) {
-    console.log('[findDraggableNode] name:', node.node?.type.name);
+    console.log('[findOrCreateDraggableNode] name:', node.node?.type.name);
 
     if (node.node?.type.name === 'paragraph') {
       lastParagraph = node;
+    }
+
+    if (node.node?.type.name === 'draggableParagraphWrapper') {
+      lastParagraphWrapper = node;
     }
 
     if (node.node?.type.isBlock && node.node.type.spec.draggable) {
@@ -344,33 +353,75 @@ function findDraggableNode(view: EditorView, nodes: NodeWithPosition[]): NodeWit
     }
   }
 
-  console.log('[findDraggableNode] step 10 candidates:', candidates);
-  console.log('[findDraggableNode] step 10 lastParagraph:', lastParagraph);
+  console.log('[findOrCreateDraggableNode] step 10 candidates:', candidates);
+  console.log('[findOrCreateDraggableNode] step 10 lastParagraph:', lastParagraph);
 
   if (candidates.length === 0 && lastParagraph) {
-    console.log('[findDraggableNode] step 11');
+    console.log('[findOrCreateDraggableNode] step 11');
+    wrapParagraph(view, lastParagraph);
+  } else if (
+    candidates.length > 0 &&
+    lastParagraph &&
+    lastParagraphWrapper &&
+    lastParagraphWrapper.node.childCount > 1
+  ) {
+    console.log('[findOrCreateDraggableNode] step 12');
 
-    // create a new DraggableParagraphWrapper node
-    const schema: EditorSchema = view.state.schema;
-    const wrapper = schema.nodes.draggableParagraphWrapper?.createAndFill(null, lastParagraph.node);
-
-    if (wrapper) {
-      console.log('[findDraggableNode] step 15', {
-        from: lastParagraph.pos,
-        to: lastParagraph.pos + lastParagraph.node.nodeSize,
-      });
-
-      // view.dispatch(
-      //   view.state.tr.replaceWith(
-      //     lastParagraph.pos,
-      //     lastParagraph.pos + lastParagraph.node.nodeSize,
-      //     wrapper,
-      //   ),
-      // );
-    }
+    splitWrapper(view, lastParagraph, lastParagraphWrapper);
   }
 
   return candidates[0] || null;
+}
+
+// create a new DraggableParagraphWrapper node
+function wrapParagraph(view: EditorView, lastParagraph: NodeWithPosition) {
+  const schema: EditorSchema = view.state.schema;
+  const wrapperType = schema.nodes.draggableParagraphWrapper;
+  const wrapper = wrapperType?.createAndFill(null, lastParagraph.node);
+
+  if (!wrapper) {
+    return;
+  }
+
+  console.log('[findOrCreateDraggableNode] step 15', {
+    from: lastParagraph.pos,
+    to: lastParagraph.pos + lastParagraph.node.nodeSize,
+  });
+
+  view.dispatch(
+    view.state.tr.replaceWith(
+      lastParagraph.pos,
+      lastParagraph.pos + lastParagraph.node.nodeSize,
+      wrapper,
+    ),
+  );
+}
+
+function splitWrapper(
+  view: EditorView,
+  lastParagraph: NodeWithPosition,
+  lastParagraphWrapper: NodeWithPosition,
+) {
+  const schema: EditorSchema = view.state.schema;
+  const wrapperType = schema.nodes.draggableParagraphWrapper;
+
+  // const wrapper = wrapperType?.createAndFill(null, lastParagraph.node);
+  if (!wrapperType) {
+    return;
+  }
+
+  const children: ProsemirrorNode[] = [];
+  lastParagraphWrapper.node.forEach((child) => {
+    children.push(wrapperType.createChecked(null, child));
+  });
+  const fragment = Fragment.fromArray(children);
+  view.dispatch(
+    view.state.tr.replaceWith(
+      lastParagraphWrapper.pos,
+      lastParagraphWrapper.pos + lastParagraphWrapper.node.nodeSize,
+      fragment,
+    ),
+  );
 }
 
 function defaultBlockAt(match: ContentMatch) {
@@ -388,8 +439,15 @@ function defaultBlockAt(match: ContentMatch) {
 // :: (EditorState, ?(tr: Transaction)) → bool
 // Split the parent block of the selection. If the selection is a text
 // selection, also delete its content.
-export function splitParentBlock(state: EditorState, dispatch: DispatchFunction) {
+function splitParentBlock(state: EditorState, dispatch: DispatchFunction | undefined) {
+  console.log('[splitParentBlock] step 1');
+
+  if (!state.selection) {
+    return false;
+  }
+
   const { $from, $to } = state.selection;
+  console.log('[splitParentBlock] step 2');
 
   if (state.selection instanceof NodeSelection && state.selection.node.isBlock) {
     if (!$from.parentOffset || !canSplit(state.doc, $from.pos)) {
@@ -400,12 +458,16 @@ export function splitParentBlock(state: EditorState, dispatch: DispatchFunction)
       dispatch(state.tr.split($from.pos).scrollIntoView());
     }
 
+    console.log('[splitParentBlock] step 5');
+
     return true;
   }
 
   if (!$from.parent.isBlock) {
     return false;
   }
+
+  console.log('[splitParentBlock] step 7');
 
   if (dispatch) {
     const atEnd = $to.parentOffset === $to.parent.content.size;
@@ -419,6 +481,9 @@ export function splitParentBlock(state: EditorState, dispatch: DispatchFunction)
       $from.depth === 0
         ? undefined
         : defaultBlockAt($from.node(-1).contentMatchAt($from.indexAfter(-1)));
+
+    console.log('[splitParentBlock] step 9 deflt:', deflt?.name);
+
     let types = atEnd && deflt ? [{ type: deflt }] : undefined;
     let can = canSplit(tr.doc, tr.mapping.map($from.pos), 1, types);
 
@@ -432,7 +497,11 @@ export function splitParentBlock(state: EditorState, dispatch: DispatchFunction)
       can = true;
     }
 
+    console.log('[splitParentBlock] step 12', { can, deflt: deflt?.name });
+
     if (deflt && can) {
+      console.log('[splitParentBlock] step 13');
+
       tr.split(tr.mapping.map($from.pos), 1, types);
 
       if (
@@ -451,27 +520,31 @@ export function splitParentBlock(state: EditorState, dispatch: DispatchFunction)
       }
     }
 
+    console.log('[splitParentBlock] step 30');
+
     dispatch(tr.scrollIntoView());
   }
+
+  console.log('[splitParentBlock] step 31');
 
   return true;
 }
 
 function useDraggable() {
-  useKeymap('Enter', (props) => {
-    console.log('[enter keymap]', props);
+  // useKeymap('Enter', (props) => {
+  //   console.log('[enter keymap]', props);
 
-    const result = convertCommand(splitBlock)(props);
+  //   const result = convertCommand(splitParentBlock)(props);
 
-    console.log('[enter keymap] result:', result);
-    return result;
-  });
+  //   console.log('[enter keymap] result:', result);
+  //   return result;
+  // });
 
   useHover(
     useCallback((params) => {
-      console.log('hover event:', params);
+      console.log('hover event :', params);
 
-      const node = findDraggableNode(params.view, params.nodes);
+      const node = findOrCreateDraggableNode(params.view, params.nodes);
 
       if (node) {
         const { view } = params;
