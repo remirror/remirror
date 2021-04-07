@@ -214,7 +214,7 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
   }
 }
 
-type ImageAttributes = ProsemirrorAttributes<ImageExtensionAttributes>;
+export type ImageAttributes = ProsemirrorAttributes<ImageExtensionAttributes>;
 
 export interface ImageExtensionAttributes {
   align?: 'center' | 'end' | 'justify' | 'left' | 'match-parent' | 'right' | 'start';
