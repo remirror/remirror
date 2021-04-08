@@ -3,6 +3,7 @@ export * from './use-editor-focus';
 export * from './use-emoji';
 export * from './use-event';
 export * from './use-history';
+export * from './use-hover';
 export * from './use-keymap';
 export * from './use-keymaps';
 export * from './use-mention';
