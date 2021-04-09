@@ -29,6 +29,9 @@
       "path": "../../remirror__extension-react-ssr/src"
     },
     {
+      "path": "../../remirror__extension-react-tables/src"
+    },
+    {
       "path": "../../remirror__preset-react/src"
     },
     {

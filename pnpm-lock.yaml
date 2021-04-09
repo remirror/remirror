@@ -2210,6 +2210,7 @@ importers:
       '@remirror/extension-positioner': link:../remirror__extension-positioner
       '@remirror/extension-react-component': link:../remirror__extension-react-component
       '@remirror/extension-react-ssr': link:../remirror__extension-react-ssr
+      '@remirror/extension-react-tables': link:../remirror__extension-react-tables
       '@remirror/preset-react': link:../remirror__preset-react
       '@remirror/react-components': link:../remirror__react-components
       '@remirror/react-core': link:../remirror__react-core
@@ -2228,6 +2229,7 @@ importers:
       '@remirror/extension-positioner': 1.0.0-next.60
       '@remirror/extension-react-component': 1.0.0-next.60
       '@remirror/extension-react-ssr': 1.0.0-next.60
+      '@remirror/extension-react-tables': 1.0.0-next.60
       '@remirror/preset-react': 1.0.0-next.60
       '@remirror/react-components': 1.0.0-next.40
       '@remirror/react-core': 0.0.0
