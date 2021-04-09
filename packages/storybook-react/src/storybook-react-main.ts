@@ -7,13 +7,16 @@ import { isArray, isPlainObject } from '@remirror/core';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const babelConfig = require(baseDir('packages', 'storybook-react', '.babelrc.js'));
 
-const stories = glob.sync(baseDir('packages/*/__stories__/*.stories.(tsx)'), {
+export const stories = glob.sync(baseDir('packages/*/__stories__/*.stories.(tsx)'), {
   ignore: ['**/node_modules'],
 });
 
-const mode = isCI ? 'production' : 'development';
+// export const addons = ['@storybook/addon-postcss'];
 
-async function webpackFinal(config: Configuration): Promise<Configuration> {
+const mode = isCI ? 'production' : 'development';
+// const dev = process.env.NODE_ENV !== 'production';
+
+export async function webpackFinal(config: Configuration): Promise<Configuration> {
   config.mode = mode;
   // config?.plugins?.push(new DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify(mode) } }));
 
@@ -22,6 +25,18 @@ async function webpackFinal(config: Configuration): Promise<Configuration> {
     use: [{ loader: require.resolve('babel-loader'), options: babelConfig }],
     exclude: [/node_modules/],
   });
+
+  // config.module?.rules?.push({
+  //   test: /-theme\.tsx?$/,
+  //   exclude: [/node_modules/],
+  //   use: [
+  //     { loader: require.resolve('babel-loader'), options: babelConfig },
+  //     {
+  //       loader: require.resolve('@linaria/webpack-loader'),
+  //       options: { sourceMap: dev, preprocessor: 'none' },
+  //     },
+  //   ],
+  // });
 
   const externals = config.externals ?? {};
   const plugins = config.plugins ?? [];
@@ -45,7 +60,7 @@ async function webpackFinal(config: Configuration): Promise<Configuration> {
   return config;
 }
 
-export const main = {
-  stories,
-  webpackFinal,
+export const typescript = {
+  check: false,
+  reactDocgen: false,
 };

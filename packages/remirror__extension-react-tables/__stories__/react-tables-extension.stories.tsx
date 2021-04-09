@@ -1,20 +1,17 @@
 import { Story } from '@storybook/react';
 import { useEffect, useState } from 'react';
 import { ProsemirrorDevTools } from '@remirror/dev';
-import { ReactComponentExtension } from '@remirror/extension-react-component';
 import {
   TableComponents,
   tableControllerPluginKey,
   TableExtension,
-} from '@remirror/extension-react-tables';
-import {
   EditorComponent,
+  ReactComponentExtension,
   Remirror,
   ThemeProvider,
   useRemirror,
   useRemirrorContext,
 } from '@remirror/react';
-import { AllStyledComponent } from '@remirror/styles/emotion';
 
 export default { title: 'React Tables extension' };
 
@@ -104,18 +101,15 @@ export const Table: Story = ({ children }) => {
   const { manager, state } = useRemirror({ extensions });
 
   return (
-    <AllStyledComponent>
-      <ThemeProvider>
-        <Remirror manager={manager} initialContent={state}>
-          <EditorComponent />
-          <TableComponents />
-
-          <CommandMenu />
-          <ProsemirrorDocData />
-          {children}
-        </Remirror>
-      </ThemeProvider>
-    </AllStyledComponent>
+    <ThemeProvider>
+      <Remirror manager={manager} initialContent={state}>
+        <EditorComponent />
+        <TableComponents />
+        <CommandMenu />
+        <ProsemirrorDocData />
+        {children}
+      </Remirror>
+    </ThemeProvider>
   );
 };
 

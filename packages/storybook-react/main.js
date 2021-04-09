@@ -1,3 +1,1 @@
-const { main } = require('./storybook-react-main');
-
-module.exports = main;
+module.exports = require('./storybook-react-main');

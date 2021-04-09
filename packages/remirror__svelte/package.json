@@ -36,16 +36,16 @@
     "@rollup/plugin-typescript": "^8.2.1",
     "@tsconfig/svelte": "^1.0.10",
     "@wessberg/rollup-plugin-ts": "^1.3.11",
-    "rollup": "^2.44.0",
+    "rollup": "^2.45.0",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.1.0",
     "rollup-plugin-terser": "^7.0.2",
     "svelte": "^3.37.0",
-    "svelte-check": "^1.3.0",
+    "svelte-check": "^1.4.0",
     "svelte-preprocess": "^4.7.0",
     "svelte-typed-component": "^1.1.1",
-    "tslib": "^2.1.0"
+    "tslib": "^2.2.0"
   },
   "peerDependencies": {
     "svelte": "^3.29.0"

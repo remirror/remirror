@@ -7,3 +7,4 @@ export * from '@remirror/react-hooks';
 export * from '@remirror/react-renderer';
 export * from '@remirror/react-ssr';
 export * from '@remirror/react-utils';
+export * from '@remirror/extension-react-tables';
