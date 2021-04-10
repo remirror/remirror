@@ -270,7 +270,7 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
         return element.getAttribute(NODE_LINE_HEIGHT_ATTRIBUTE) ?? element.style.lineHeight;
       },
       toDOM: (attrs) => {
-        const lineHeight = attrs.nodeTextAlignment;
+        const lineHeight = attrs.nodeLineHeight;
 
         if (!lineHeight) {
           return;
