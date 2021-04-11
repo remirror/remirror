@@ -167,14 +167,6 @@ export interface DOMCompatibleAttributes {
   [attribute: string]: string | number | undefined;
 }
 
-type DOMOutputSpecPos1 = DOMOutputSpecPosX | DOMCompatibleAttributes;
-type DOMOutputSpecPosX =
-  | string
-  | 0
-  | [string, 0]
-  | [string, DOMCompatibleAttributes]
-  | [string, DOMCompatibleAttributes, 0];
-
 /**
  * Defines the return type of the toDOM methods for both nodes and marks
  *
@@ -185,24 +177,31 @@ type DOMOutputSpecPosX =
  *
  * Additionally we don't want to support domNodes in the toDOM spec since this
  * will create problems once SSR is fully supported
+ *
+ * DOMOutputSpec is a description of a DOM structure. Can be either a string,
+ * which is interpreted as a text node, a DOM node (not supported by remirror),
+ * which is interpreted as itself, a {dom: Node, contentDOM: ?Node} object (not
+ * supported by remirror), or an array (DOMOutputSpecArray).
+ *
+ * An array (DOMOutputSpecArray) describes a DOM element. The first value in the
+ * array should be a string—the name of the DOM element, optionally prefixed by
+ * a namespace URL and a space. If the second element is plain object (DOMCompatibleAttributes),
+ * it is interpreted as a set of attributes for the element. Any elements
+ * after that (including the 2nd if it's not an attribute object) are
+ * interpreted as children of the DOM elements, and must either be valid
+ * DOMOutputSpec values, or the number zero.
+ *
+ * The number zero (pronounced “hole”) is used to indicate the place where a
+ * node's child nodes should be inserted. If it occurs in an output spec, it
+ * should be the only child element in its parent node.
  */
-export type DOMOutputSpec =
-  | string
-  | [string, 0?]
-  | [string, DOMCompatibleAttributes, 0?]
-  | [
-      string,
-      DOMOutputSpecPos1?,
-      DOMOutputSpecPosX?,
-      DOMOutputSpecPosX?,
-      DOMOutputSpecPosX?,
-      DOMOutputSpecPosX?,
-      DOMOutputSpecPosX?,
-      DOMOutputSpecPosX?,
-      DOMOutputSpecPosX?,
-      DOMOutputSpecPosX?,
-      DOMOutputSpecPosX?,
-    ];
+export type DOMOutputSpec = string | DOMOutputSpecArray;
+
+type DOMOutputSpecArray =
+  | [string, ...DOMOutputSpec[]]
+  | [string, DOMCompatibleAttributes, ...DOMOutputSpec[]]
+  | [string, 0]
+  | [string, DOMCompatibleAttributes, 0];
 
 /**
  * The schema spec definition for a node extension
