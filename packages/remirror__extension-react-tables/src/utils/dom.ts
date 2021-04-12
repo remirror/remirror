@@ -1,3 +1,9 @@
+import { h, HTMLAttributes } from '@ocavue/jsx-dom';
+
+// Re-export from jsx-dom so that we can easily switch from forked version or upsteam version.
+export type { HTMLAttributes };
+export { h };
+
 export function stopEvent(e: Pick<MouseEvent, 'preventDefault' | 'stopPropagation'>): void {
   e.preventDefault();
   e.stopPropagation();

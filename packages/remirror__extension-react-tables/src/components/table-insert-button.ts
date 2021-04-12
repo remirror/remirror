@@ -1,10 +1,10 @@
-import { h } from 'jsx-dom';
 import { EditorView, Transaction } from '@remirror/core';
 import { addFill } from '@remirror/icons/all';
 import { TableRect } from '@remirror/pm/tables';
 import { ExtensionTablesTheme } from '@remirror/theme';
 
 import { addColumn, addRow } from '../react-table-commands';
+import { h } from '../utils/dom';
 
 export interface InsertButtonAttrs {
   // The center axis (in px) of the TableInsertButton relative to the editor

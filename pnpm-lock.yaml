@@ -91,7 +91,7 @@ importers:
       jest-remirror: link:packages/jest-remirror
       jest-watch-typeahead: 0.6.1_jest@26.6.3
       json.macro: 1.3.0_babel-plugin-macros@3.0.1
-      linaria: /@linaria/core/3.0.0-beta.1
+      linaria: /@linaria/core/3.0.0-beta.2
       lint-staged: 10.5.4
       ms.macro: 2.0.0
       npm-run-all: 4.1.5
@@ -1605,6 +1605,7 @@ importers:
       '@babel/runtime': 7.13.10
       '@emotion/css': 11.1.3
       '@linaria/core': 3.0.0-beta.1
+      '@ocavue/jsx-dom': 7.0.0-beta.2021041204
       '@remirror/core': link:../remirror__core
       '@remirror/core-utils': link:../remirror__core-utils
       '@remirror/extension-positioner': link:../remirror__extension-positioner
@@ -1616,7 +1617,6 @@ importers:
       '@remirror/react-core': link:../remirror__react-core
       '@remirror/react-hooks': link:../remirror__react-hooks
       '@remirror/theme': link:../remirror__theme
-      jsx-dom: 7.0.0-beta.1
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@types/react': 17.0.2
@@ -1627,6 +1627,7 @@ importers:
       '@babel/runtime': ^7.13.10
       '@emotion/css': ^11.1.3
       '@linaria/core': ^3.0.0-beta.1
+      '@ocavue/jsx-dom': ^7.0.0-beta.2021041204
       '@remirror/core': 1.0.0-next.60
       '@remirror/core-utils': 1.0.0-next.60
       '@remirror/extension-positioner': 1.0.0-next.60
@@ -1641,7 +1642,6 @@ importers:
       '@remirror/theme': 1.0.0-next.60
       '@types/react': ^17.0.2
       '@types/react-dom': ^17.0.1
-      jsx-dom: ^7.0.0-beta.1
       react: ^17.0.1
       react-dom: ^17.0.1
   packages/remirror__extension-search:
@@ -6920,6 +6920,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-W8VGvO76PH1EnR26Gix6f0weMv/mBptz24euAo1vC8HahyUP/A9RAYyOPPs3C39iAbHPLiGWA/UtS/UoYQbDZA==
+  /@linaria/core/3.0.0-beta.2:
+    dev: false
+    resolution:
+      integrity: sha512-LgtkokboTgRZQX5eTuso9sdShxjc9jdRxwTqD+qxaneq+XqalSQXSjDrEoJWhw2zkFqICcDHcoQg6JmVFLK0iQ==
   /@linaria/logger/3.0.0-beta.0:
     dependencies:
       debug: 4.3.1
@@ -7256,6 +7260,12 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-1SUf/Cg2GzGDyaf15aR9St9TWlb+XvbZXWpDx8YKs7MLzMH/BCeopv+y9vzrzgkfykCGuWOlSu3mZhj2+FQcrg==
+  /@ocavue/jsx-dom/7.0.0-beta.2021041204:
+    dependencies:
+      csstype: 3.0.7
+    dev: false
+    resolution:
+      integrity: sha512-zlCQKS8r7YSfo38TX31Xux/CsJ09uJmz75E5QbYDs6Per/7IN6iazFV55DVHuB8mxy3saIlBjNb9Ab7y1q2CPw==
   /@octokit/app/4.3.0:
     dependencies:
       '@octokit/request': 5.4.14
@@ -20581,12 +20591,6 @@ packages:
       node: '>=4.0'
     resolution:
       integrity: sha512-EIsmt3O3ljsU6sot/J4E1zDRxfBNrhjyf/OKjlydwgEimQuznlM4Wv7U+ueONJMyEn1WRE0K8dhi3dVAXYT24Q==
-  /jsx-dom/7.0.0-beta.1:
-    dependencies:
-      csstype: 3.0.7
-    dev: false
-    resolution:
-      integrity: sha512-smAb5SMvif+LbFqyBMLZqiX5XliIfdhtDCP2FFHkdPDS+7uC+lY9wrSe4r53q/47vo6fBWqYbJ6QPUvZiVS+gw==
   /jszip/3.6.0:
     dependencies:
       lie: 3.3.0

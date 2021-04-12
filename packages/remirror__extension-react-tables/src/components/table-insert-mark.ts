@@ -1,5 +1,6 @@
-import { h } from 'jsx-dom';
 import { ExtensionTablesTheme } from '@remirror/theme';
+
+import { h } from '../utils/dom';
 
 const TableInsertMark = (): HTMLElement[] => {
   return [

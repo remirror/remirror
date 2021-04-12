@@ -1,10 +1,9 @@
-import { h } from 'jsx-dom';
 import { EditorView } from '@remirror/pm';
 import { ExtensionTablesTheme } from '@remirror/theme';
 
 import { borderWidth } from '../const';
 import { getCellAxisByMouseEvent } from '../utils/controller';
-import { getRelativeCoord } from '../utils/dom';
+import { getRelativeCoord, h } from '../utils/dom';
 import { setNodeAttrs } from '../utils/prosemirror';
 import { CellAxis, FindTable } from '../utils/types';
 import { InsertButtonAttrs } from './table-insert-button';
