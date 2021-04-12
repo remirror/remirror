@@ -1,6 +1,6 @@
 import { h, HTMLAttributes } from 'jsx-dom';
 
-// Re-export from jsx-dom so that we can easily switch from forked version or upsteam version.
+// Re-export from jsx-dom so that we can easily switch the implement behind.
 export type { HTMLAttributes };
 export { h };
 
