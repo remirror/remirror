@@ -1605,7 +1605,6 @@ importers:
       '@babel/runtime': 7.13.10
       '@emotion/css': 11.1.3
       '@linaria/core': 3.0.0-beta.1
-      '@ocavue/jsx-dom': 7.0.0-beta.2021041206
       '@remirror/core': link:../remirror__core
       '@remirror/core-utils': link:../remirror__core-utils
       '@remirror/extension-positioner': link:../remirror__extension-positioner
@@ -1617,6 +1616,7 @@ importers:
       '@remirror/react-core': link:../remirror__react-core
       '@remirror/react-hooks': link:../remirror__react-hooks
       '@remirror/theme': link:../remirror__theme
+      jsx-dom: 6.4.23
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@types/react': 17.0.2
@@ -1627,7 +1627,6 @@ importers:
       '@babel/runtime': ^7.13.10
       '@emotion/css': ^11.1.3
       '@linaria/core': ^3.0.0-beta.1
-      '@ocavue/jsx-dom': ^7.0.0-beta.2021041206
       '@remirror/core': 1.0.0-next.60
       '@remirror/core-utils': 1.0.0-next.60
       '@remirror/extension-positioner': 1.0.0-next.60
@@ -1642,6 +1641,7 @@ importers:
       '@remirror/theme': 1.0.0-next.60
       '@types/react': ^17.0.2
       '@types/react-dom': ^17.0.1
+      jsx-dom: ^6.4.23
       react: ^17.0.1
       react-dom: ^17.0.1
   packages/remirror__extension-search:
@@ -7260,12 +7260,6 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-1SUf/Cg2GzGDyaf15aR9St9TWlb+XvbZXWpDx8YKs7MLzMH/BCeopv+y9vzrzgkfykCGuWOlSu3mZhj2+FQcrg==
-  /@ocavue/jsx-dom/7.0.0-beta.2021041206:
-    dependencies:
-      csstype: 3.0.7
-    dev: false
-    resolution:
-      integrity: sha512-2GQYOWvhU/g4wnR+LEeNE4oIJ1xWHCaAo5a5x1hv+MtRpnG4AEn9bvh+Uf1Vk1usFGleN+/gv8/pFBJitsm/zw==
   /@octokit/app/4.3.0:
     dependencies:
       '@octokit/request': 5.4.14
@@ -20591,6 +20585,12 @@ packages:
       node: '>=4.0'
     resolution:
       integrity: sha512-EIsmt3O3ljsU6sot/J4E1zDRxfBNrhjyf/OKjlydwgEimQuznlM4Wv7U+ueONJMyEn1WRE0K8dhi3dVAXYT24Q==
+  /jsx-dom/6.4.23:
+    dependencies:
+      csstype: 3.0.7
+    dev: false
+    resolution:
+      integrity: sha512-Y0ax82xa4nzqFdbUXs3ma2haDZy4pB638kMZsGRzZqdmtyzY2nAKs7Bh3DrLn0vqMuxmvZQ3g9hq3NtnI5yXtQ==
   /jszip/3.6.0:
     dependencies:
       lie: 3.3.0
