@@ -1,4 +1,4 @@
-import { h, HTMLAttributes } from '@ocavue/jsx-dom';
+import { h, HTMLAttributes } from 'jsx-dom';
 
 // Re-export from jsx-dom so that we can easily switch from forked version or upsteam version.
 export type { HTMLAttributes };
